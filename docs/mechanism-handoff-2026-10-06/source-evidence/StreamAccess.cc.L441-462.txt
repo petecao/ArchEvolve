@@ -1,0 +1,22 @@
+                        if (channel_sent[addr_vec[ADDR_CHANNEL_LEVEL]]) {
+                            DPRINTF(MAAStream, "S[%d] RequestTable: entry %d not added because channel already pushed! paddr=0x%lx\n", my_stream_id, page_it->curr_idx, paddr);
+                            page_it++;
+                            broken = true;
+                            break;
+                        }
+                        uint16_t word_id = (vaddr - block_vaddr) / my_word_size;
+                        if (!request_table->add_entry(spd_idx, paddr,
+                                                      word_id)) {
+                            DPRINTF(MAAStream,
+                                    "S[%d] RequestTable: entry %d not added "
+                                    "because request table is full! "
+                                    "vaddr=0x%lx, paddr=0x%lx wid = %d\n",
+                                    my_stream_id, page_it->curr_idx,
+                                    block_vaddr, paddr, word_id);
+                            (*maa->stats.STR_NumRTFull[my_stream_id])++;
+                            page_it++;
+                            broken = true;
+                            break;
+                        } else {
+                            DPRINTF(MAAStream, "S[%d] RequestTable: entry %d added! vaddr=0x%lx, paddr=0x%lx wid = %d\n",
+                                    my_stream_id, page_it->curr_idx, block_vaddr, paddr, word_id);

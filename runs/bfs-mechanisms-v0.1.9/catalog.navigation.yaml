@@ -1,0 +1,1393 @@
+kind: derived_navigation_tree
+catalog_id: archevolve-hardware
+revision: 0.1.9
+levels:
+- operation
+- execution_role_or_mapping_reference
+- address_pattern
+branches:
+  read:
+    mapping_reference:
+      indirect:
+      - design_id: axi-pack-date2024-sell-required-l2-gather
+        revision: DATE2024 official paper; artifact unauthenticated
+        operation_id: indexed-vector-staging
+        subtype: sell_required_l2_staging
+        support: paper_specified
+        claim_refs:
+        - axi24-index
+        - axi24-staging
+        - axi24-scope-required
+        requirement_ids:
+        - tile-lifetime
+        - address-service
+        - credits-and-order
+        - artifact-binding
+        realization:
+          kind: mapping_role
+          description: CVA6 configures L2 staging and Ara consumes it over ordinary
+            AXI4. CPU/VPC multiply-add, output ownership and result drain remain outside
+            this gather operation.
+          claim_refs:
+          - axi24-staging
+          - axi24-tiles
+      - design_id: spzip-isca2021-push
+        revision: ISCA2021-Push
+        operation_id: spzip-destination-prefetch
+        subtype: prefetch
+        support: paper_specified
+        claim_refs:
+        - spzip-cpu-update
+        - spzip-fetch
+        requirement_ids:
+        - spzip-layout
+        - spzip-phases
+        - spzip-destinations
+        realization:
+          kind: mapping_role
+          description: Only the shared destination-vertex data role in the cited Push
+            mapping; not a generic substitute for every indirect stream.
+          claim_refs:
+          - spzip-cpu-update
+          - spzip-fetch
+      - design_id: tmu-micro2023-fig8-spmv
+        revision: source-scoped-proposal-r1
+        operation_id: required-operand-event-supply
+        subtype: csr_spmv_two_lane_operand_event_supply
+        support: paper_specified
+        claim_refs:
+        - tmu-traversal
+        - tmu-fig8
+        - tmu-cpu
+        - tmu-outq
+        requirement_ids:
+        - csr-layout
+        - cpu-callbacks
+        - boundaries
+        - private-source-lifetime
+        - sizing
+        - representation-types
+        - response-association
+        - chunk-lifetime
+        - fault-drain
+        - visibility
+        realization:
+          kind: mapping_role
+          description: Published Fig8 traversal/LockStep/output sequence supplies
+            required CPU inputs and row callbacks; it is not one generic gather instruction.
+          claim_refs:
+          - tmu-fig8
+          - tmu-cpu
+      ranged_indirect:
+      - design_id: spzip-isca2021-push
+        revision: ISCA2021-Push
+        operation_id: spzip-neighbors
+        subtype: gather
+        support: paper_specified
+        claim_refs:
+        - spzip-fetch
+        requirement_ids:
+        - spzip-layout
+        - spzip-phases
+        - spzip-destinations
+        realization:
+          kind: mapping_role
+          description: Push neighbor/frontier traversal role in the DCL pipeline,
+            with optional decompression.
+          claim_refs:
+          - spzip-fetch
+      - design_id: tmu-micro2023-fig8-spmv
+        revision: source-scoped-proposal-r1
+        operation_id: required-operand-event-supply
+        subtype: csr_spmv_two_lane_operand_event_supply
+        support: paper_specified
+        claim_refs:
+        - tmu-traversal
+        - tmu-fig8
+        - tmu-cpu
+        - tmu-outq
+        requirement_ids:
+        - csr-layout
+        - cpu-callbacks
+        - boundaries
+        - private-source-lifetime
+        - sizing
+        - representation-types
+        - response-association
+        - chunk-lifetime
+        - fault-drain
+        - visibility
+        realization:
+          kind: mapping_role
+          description: Published Fig8 traversal/LockStep/output sequence supplies
+            required CPU inputs and row callbacks; it is not one generic gather instruction.
+          claim_refs:
+          - tmu-fig8
+          - tmu-cpu
+      chained_indirect:
+      - design_id: spzip-isca2021-push
+        revision: ISCA2021-Push
+        operation_id: spzip-neighbors
+        subtype: gather
+        support: paper_specified
+        claim_refs:
+        - spzip-fetch
+        requirement_ids:
+        - spzip-layout
+        - spzip-phases
+        - spzip-destinations
+        realization:
+          kind: mapping_role
+          description: Push neighbor/frontier traversal role in the DCL pipeline,
+            with optional decompression.
+          claim_refs:
+          - spzip-fetch
+      sequential:
+      - design_id: tmu-micro2023-fig8-spmv
+        revision: source-scoped-proposal-r1
+        operation_id: required-operand-event-supply
+        subtype: csr_spmv_two_lane_operand_event_supply
+        support: paper_specified
+        claim_refs:
+        - tmu-traversal
+        - tmu-fig8
+        - tmu-cpu
+        - tmu-outq
+        requirement_ids:
+        - csr-layout
+        - cpu-callbacks
+        - boundaries
+        - private-source-lifetime
+        - sizing
+        - representation-types
+        - response-association
+        - chunk-lifetime
+        - fault-drain
+        - visibility
+        realization:
+          kind: mapping_role
+          description: Published Fig8 traversal/LockStep/output sequence supplies
+            required CPU inputs and row callbacks; it is not one generic gather instruction.
+          claim_refs:
+          - tmu-fig8
+          - tmu-cpu
+    execute:
+      chained_indirect:
+      - design_id: dx100-artifact-e4fc4af
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        operation_id: dxc-chained-gather
+        subtype: gather
+        support: code_observed
+        claim_refs:
+        - dxc-bfs-composition
+        - dxc-gather
+        - dxc-mask
+        requirement_ids:
+        - dxc-region-binding
+        - dxc-widths
+        - dxc-validity
+        - dxc-observer
+        - dxc-numerical
+        - dxc-reuse
+        - dxc-old-destination
+        - dxc-byte-offset
+        - dxc-capacity
+        realization:
+          kind: documented_sequence
+          description: Pinned TDStepMAA passes gathered neighbor IDs into a later
+            parent gather; intermediate tiles and dependencies remain explicit.
+          claim_refs:
+          - dxc-bfs-composition
+          - dxc-gather
+          - dxc-mask
+      - design_id: dx100-paper-v2
+        revision: arxiv-2505.23073v2
+        operation_id: dxp-chained-gather
+        subtype: gather
+        support: paper_specified
+        claim_refs:
+        - dxp-read
+        - dxp-interface
+        requirement_ids:
+        - dxp-writers
+        - dxp-dependence
+        - dxp-wait
+        - dxp-address
+        realization:
+          kind: documented_sequence
+          description: ILD-produced intermediate index tile feeds a later ILD, per
+            §3.2.
+          claim_refs:
+          - dxp-read
+          - dxp-interface
+      indirect:
+      - design_id: dx100-artifact-e4fc4af
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        operation_id: dxc-gather
+        subtype: gather
+        support: code_observed
+        claim_refs:
+        - dxc-gather
+        - dxc-mask
+        requirement_ids:
+        - dxc-region-binding
+        - dxc-widths
+        - dxc-validity
+        - dxc-observer
+        - dxc-numerical
+        - dxc-reuse
+        - dxc-old-destination
+        - dxc-byte-offset
+        - dxc-capacity
+        realization:
+          kind: native_primitive
+          description: INDIR_LD with a supplied index tile; offset multiplication
+            uses the payload word size and uint32 index.
+          claim_refs:
+          - dxc-gather
+          - dxc-mask
+      - design_id: dx100-paper-v2
+        revision: arxiv-2505.23073v2
+        operation_id: dxp-gather
+        subtype: gather
+        support: paper_specified
+        claim_refs:
+        - dxp-read
+        - dxp-interface
+        requirement_ids:
+        - dxp-writers
+        - dxp-dependence
+        - dxp-wait
+        - dxp-address
+        realization:
+          kind: native_primitive
+          description: Single ILD on an existing index tile, with optional condition
+            tile; no range expansion inside ILD.
+          claim_refs:
+          - dxp-read
+          - dxp-interface
+      - design_id: maple-isca2022
+        revision: ISCA2022-paper+public-742a22d-inspection
+        operation_id: maple-lima-produce
+        subtype: gather
+        support: paper_specified
+        claim_refs:
+        - maple-api
+        - maple-lima
+        - maple-queue-order
+        requirement_ids:
+        - maple-stable-target
+        - maple-queue-lifecycle
+        - maple-typed-abi
+        - maple-source-binding
+        - maple-completion
+        - maple-platform
+        - maple-cpu-updates
+        realization:
+          kind: documented_sequence
+          description: Configure bases/bounds and invoke LIMA_PRODUCE for A[B[i]],
+            then consume its produced queue values. One-level indirection over a supplied
+            interval is established; nested CSR range generation is not.
+          claim_refs:
+          - maple-api
+          - maple-lima
+          - maple-queue-order
+      - design_id: maple-isca2022
+        revision: ISCA2022-paper+public-742a22d-inspection
+        operation_id: maple-pointer-fetch
+        subtype: gather
+        support: paper_specified
+        claim_refs:
+        - maple-api
+        - maple-queue-order
+        - maple-acknowledgement
+        requirement_ids:
+        - maple-stable-target
+        - maple-queue-lifecycle
+        - maple-typed-abi
+        - maple-source-binding
+        - maple-completion
+        - maple-platform
+        - maple-cpu-updates
+        realization:
+          kind: documented_sequence
+          description: Host computes the target pointer; PRODUCE_PTR enqueues an asynchronous
+            fetch and CONSUME later retrieves its value. This does not offload the
+            host index-expression evaluation.
+          claim_refs:
+          - maple-api
+          - maple-queue-order
+          - maple-acknowledgement
+      - design_id: terminus-micro2024-cas
+        revision: MICRO2024-default
+        operation_id: term-lookup
+        subtype: lookup
+        support: paper_specified
+        claim_refs:
+        - term-read
+        requirement_ids:
+        - term-graph
+        - term-partitions
+        - term-global
+        - term-atomics
+        realization:
+          kind: documented_sequence
+          description: Hash/B-tree traversal task composes Read, Filter, control and
+            partition operations; not a single lookup primitive.
+          claim_refs:
+          - term-read
+      - design_id: terminus-micro2024-deferred
+        revision: MICRO2024-section-VII-E
+        operation_id: termd-lookup
+        subtype: lookup
+        support: paper_specified
+        claim_refs:
+        - term-read
+        requirement_ids:
+        - term-graph
+        - term-partitions
+        - term-global
+        - termd-handler
+        realization:
+          kind: documented_sequence
+          description: Hash/B-tree traversal task composes Read, Filter, control and
+            partition operations; not a single lookup primitive.
+          claim_refs:
+          - term-read
+      ranged_indirect:
+      - design_id: dx100-artifact-e4fc4af
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        operation_id: dxc-ranged-gather
+        subtype: gather
+        support: code_observed
+        claim_refs:
+        - dxc-range
+        - dxc-gather
+        requirement_ids:
+        - dxc-region-binding
+        - dxc-widths
+        - dxc-validity
+        - dxc-observer
+        - dxc-numerical
+        - dxc-reuse
+        - dxc-old-destination
+        - dxc-byte-offset
+        - dxc-capacity
+        realization:
+          kind: documented_sequence
+          description: RangeFuser emits bounded outer/inner index tiles and continuation
+            state; a dependent indirect-load instruction consumes indices.
+          claim_refs:
+          - dxc-range
+          - dxc-gather
+      - design_id: dx100-paper-v2
+        revision: arxiv-2505.23073v2
+        operation_id: dxp-ranged-gather
+        subtype: gather
+        support: paper_specified
+        claim_refs:
+        - dxp-read
+        - dxp-interface
+        requirement_ids:
+        - dxp-writers
+        - dxp-dependence
+        - dxp-wait
+        - dxp-address
+        realization:
+          kind: documented_sequence
+          description: Bound-producing loads, RNG range expansion and ILD; each instruction
+            has its own operands and completion.
+          claim_refs:
+          - dxp-read
+          - dxp-interface
+      - design_id: maple-isca2022
+        revision: ISCA2022-paper+public-742a22d-inspection
+        operation_id: maple-lima-range
+        subtype: gather
+        support: paper_specified
+        claim_refs:
+        - maple-api
+        - maple-lima
+        requirement_ids:
+        - maple-stable-target
+        - maple-queue-lifecycle
+        - maple-typed-abi
+        - maple-source-binding
+        - maple-completion
+        - maple-platform
+        - maple-cpu-updates
+        realization:
+          kind: documented_sequence
+          description: LIMA_PRODUCE with A=0 supplies B[i] for one caller-provided
+            range, followed by queue consumption. Software obtains CSR bounds; this
+            does not autonomously generate nested row ranges.
+          claim_refs:
+          - maple-api
+          - maple-lima
+      - design_id: terminus-micro2024-cas
+        revision: MICRO2024-default
+        operation_id: term-range
+        subtype: gather
+        support: paper_specified
+        claim_refs:
+        - term-read
+        requirement_ids:
+        - term-graph
+        - term-partitions
+        - term-global
+        - term-atomics
+        realization:
+          kind: native_primitive
+          description: ReadRange fetches between supplied start/end addresses. Data-dependent
+            bound production and a CSR task are separate obligations.
+          claim_refs:
+          - term-read
+      - design_id: terminus-micro2024-deferred
+        revision: MICRO2024-section-VII-E
+        operation_id: termd-range
+        subtype: gather
+        support: paper_specified
+        claim_refs:
+        - term-read
+        requirement_ids:
+        - term-graph
+        - term-partitions
+        - term-global
+        - termd-handler
+        realization:
+          kind: native_primitive
+          description: ReadRange fetches between supplied start/end addresses. Data-dependent
+            bound production and a CSR task are separate obligations.
+          claim_refs:
+          - term-read
+      sequential:
+      - design_id: dx100-artifact-e4fc4af
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        operation_id: dxc-stream_load
+        subtype: stream_load
+        support: code_observed
+        claim_refs:
+        - dxc-stream
+        - dxc-mask
+        requirement_ids:
+        - dxc-region-binding
+        - dxc-widths
+        - dxc-validity
+        - dxc-observer
+        - dxc-numerical
+        - dxc-reuse
+        - dxc-old-destination
+        - dxc-byte-offset
+        - dxc-capacity
+        realization:
+          kind: native_primitive
+          description: STREAM_LD implementation consumes min/max/stride registers
+            and optional mask.
+          claim_refs:
+          - dxc-stream
+          - dxc-mask
+      - design_id: dx100-paper-v2
+        revision: arxiv-2505.23073v2
+        operation_id: dxp-stream_load
+        subtype: stream_load
+        support: paper_specified
+        claim_refs:
+        - dxp-read
+        - dxp-interface
+        requirement_ids:
+        - dxp-writers
+        - dxp-dependence
+        - dxp-wait
+        - dxp-address
+        realization:
+          kind: native_primitive
+          description: SLD instruction with base, loop-bound/stride registers and
+            optional condition tile.
+          claim_refs:
+          - dxp-read
+          - dxp-interface
+      - design_id: maple-isca2022
+        revision: ISCA2022-paper+public-742a22d-inspection
+        operation_id: maple-lima-stream
+        subtype: stream_load
+        support: paper_specified
+        claim_refs:
+        - maple-api
+        - maple-lima
+        requirement_ids:
+        - maple-stable-target
+        - maple-queue-lifecycle
+        - maple-typed-abi
+        - maple-source-binding
+        - maple-completion
+        - maple-platform
+        - maple-cpu-updates
+        realization:
+          kind: documented_sequence
+          description: LIMA_PRODUCE with A=0 requests B[i] over the caller-supplied
+            interval, followed by queue consumption; ranged CSR bounds still come
+            from software.
+          claim_refs:
+          - maple-api
+          - maple-lima
+      - design_id: terminus-micro2024-cas
+        revision: MICRO2024-default
+        operation_id: term-stream
+        subtype: stream_load
+        support: paper_specified
+        claim_refs:
+        - term-read
+        requirement_ids:
+        - term-graph
+        - term-partitions
+        - term-global
+        - term-atomics
+        realization:
+          kind: native_primitive
+          description: Read primitive with datatype, stride and count, producing a
+            terminated value stream.
+          claim_refs:
+          - term-read
+      - design_id: terminus-micro2024-deferred
+        revision: MICRO2024-section-VII-E
+        operation_id: termd-stream
+        subtype: stream_load
+        support: paper_specified
+        claim_refs:
+        - term-read
+        requirement_ids:
+        - term-graph
+        - term-partitions
+        - term-global
+        - termd-handler
+        realization:
+          kind: native_primitive
+          description: Read primitive with datatype, stride and count, producing a
+            terminated value stream.
+          claim_refs:
+          - term-read
+      constant_stride:
+      - design_id: dx100-artifact-e4fc4af
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        operation_id: dxc-stream_load
+        subtype: stream_load
+        support: code_observed
+        claim_refs:
+        - dxc-stream
+        - dxc-mask
+        requirement_ids:
+        - dxc-region-binding
+        - dxc-widths
+        - dxc-validity
+        - dxc-observer
+        - dxc-numerical
+        - dxc-reuse
+        - dxc-old-destination
+        - dxc-byte-offset
+        - dxc-capacity
+        realization:
+          kind: native_primitive
+          description: STREAM_LD implementation consumes min/max/stride registers
+            and optional mask.
+          claim_refs:
+          - dxc-stream
+          - dxc-mask
+      - design_id: dx100-paper-v2
+        revision: arxiv-2505.23073v2
+        operation_id: dxp-stream_load
+        subtype: stream_load
+        support: paper_specified
+        claim_refs:
+        - dxp-read
+        - dxp-interface
+        requirement_ids:
+        - dxp-writers
+        - dxp-dependence
+        - dxp-wait
+        - dxp-address
+        realization:
+          kind: native_primitive
+          description: SLD instruction with base, loop-bound/stride registers and
+            optional condition tile.
+          claim_refs:
+          - dxp-read
+          - dxp-interface
+      - design_id: terminus-micro2024-cas
+        revision: MICRO2024-default
+        operation_id: term-stream
+        subtype: stream_load
+        support: paper_specified
+        claim_refs:
+        - term-read
+        requirement_ids:
+        - term-graph
+        - term-partitions
+        - term-global
+        - term-atomics
+        realization:
+          kind: native_primitive
+          description: Read primitive with datatype, stride and count, producing a
+            terminated value stream.
+          claim_refs:
+          - term-read
+      - design_id: terminus-micro2024-deferred
+        revision: MICRO2024-section-VII-E
+        operation_id: termd-stream
+        subtype: stream_load
+        support: paper_specified
+        claim_refs:
+        - term-read
+        requirement_ids:
+        - term-graph
+        - term-partitions
+        - term-global
+        - termd-handler
+        realization:
+          kind: native_primitive
+          description: Read primitive with datatype, stride and count, producing a
+            terminated value stream.
+          claim_refs:
+          - term-read
+      pointer_chase:
+      - design_id: terminus-micro2024-cas
+        revision: MICRO2024-default
+        operation_id: term-lookup
+        subtype: lookup
+        support: paper_specified
+        claim_refs:
+        - term-read
+        requirement_ids:
+        - term-graph
+        - term-partitions
+        - term-global
+        - term-atomics
+        realization:
+          kind: documented_sequence
+          description: Hash/B-tree traversal task composes Read, Filter, control and
+            partition operations; not a single lookup primitive.
+          claim_refs:
+          - term-read
+      - design_id: terminus-micro2024-deferred
+        revision: MICRO2024-section-VII-E
+        operation_id: termd-lookup
+        subtype: lookup
+        support: paper_specified
+        claim_refs:
+        - term-read
+        requirement_ids:
+        - term-graph
+        - term-partitions
+        - term-global
+        - termd-handler
+        realization:
+          kind: documented_sequence
+          description: Hash/B-tree traversal task composes Read, Filter, control and
+            partition operations; not a single lookup primitive.
+          claim_refs:
+          - term-read
+    assist:
+      indirect:
+      - design_id: maple-isca2022
+        revision: ISCA2022-paper+public-742a22d-inspection
+        operation_id: maple-lima-prefetch
+        subtype: prefetch
+        support: paper_specified
+        claim_refs:
+        - maple-api
+        - maple-lima
+        requirement_ids:
+        - maple-stable-target
+        - maple-queue-lifecycle
+        - maple-typed-abi
+        - maple-source-binding
+        - maple-completion
+        - maple-platform
+        - maple-cpu-updates
+        realization:
+          kind: native_primitive
+          description: LIMA requests speculative LLC fills for the supplied A[B[i]]
+            or A=0 B[i] interval; it does not deliver queue values.
+          claim_refs:
+          - maple-api
+          - maple-lima
+      - design_id: maple-isca2022
+        revision: ISCA2022-paper+public-742a22d-inspection
+        operation_id: maple-pointer-prefetch
+        subtype: prefetch
+        support: paper_specified
+        claim_refs:
+        - maple-api
+        requirement_ids:
+        - maple-stable-target
+        - maple-queue-lifecycle
+        - maple-typed-abi
+        - maple-source-binding
+        - maple-completion
+        - maple-platform
+        - maple-cpu-updates
+        realization:
+          kind: native_primitive
+          description: PREFETCH accepts a host-computed pointer for a speculative
+            LLC fetch.
+          claim_refs:
+          - maple-api
+      - design_id: prodigy-hpca2021
+        revision: HPCA2021-peer-reviewed-manuscript
+        operation_id: prod-prefetch
+        subtype: prefetch
+        support: paper_specified
+        claim_refs:
+        - prod-dig
+        - prod-prefetch
+        requirement_ids:
+        - prod-description
+        - prod-context
+        realization:
+          kind: documented_sequence
+          description: Hardware follows software DIG edges over multiple nonbinding
+            prefetch requests; this is a prefetch algorithm, not a demand-gather instruction.
+          claim_refs:
+          - prod-dig
+          - prod-prefetch
+      ranged_indirect:
+      - design_id: maple-isca2022
+        revision: ISCA2022-paper+public-742a22d-inspection
+        operation_id: maple-lima-prefetch
+        subtype: prefetch
+        support: paper_specified
+        claim_refs:
+        - maple-api
+        - maple-lima
+        requirement_ids:
+        - maple-stable-target
+        - maple-queue-lifecycle
+        - maple-typed-abi
+        - maple-source-binding
+        - maple-completion
+        - maple-platform
+        - maple-cpu-updates
+        realization:
+          kind: native_primitive
+          description: LIMA requests speculative LLC fills for the supplied A[B[i]]
+            or A=0 B[i] interval; it does not deliver queue values.
+          claim_refs:
+          - maple-api
+          - maple-lima
+      - design_id: prodigy-hpca2021
+        revision: HPCA2021-peer-reviewed-manuscript
+        operation_id: prod-prefetch
+        subtype: prefetch
+        support: paper_specified
+        claim_refs:
+        - prod-dig
+        - prod-prefetch
+        requirement_ids:
+        - prod-description
+        - prod-context
+        realization:
+          kind: documented_sequence
+          description: Hardware follows software DIG edges over multiple nonbinding
+            prefetch requests; this is a prefetch algorithm, not a demand-gather instruction.
+          claim_refs:
+          - prod-dig
+          - prod-prefetch
+      sequential:
+      - design_id: maple-isca2022
+        revision: ISCA2022-paper+public-742a22d-inspection
+        operation_id: maple-lima-prefetch
+        subtype: prefetch
+        support: paper_specified
+        claim_refs:
+        - maple-api
+        - maple-lima
+        requirement_ids:
+        - maple-stable-target
+        - maple-queue-lifecycle
+        - maple-typed-abi
+        - maple-source-binding
+        - maple-completion
+        - maple-platform
+        - maple-cpu-updates
+        realization:
+          kind: native_primitive
+          description: LIMA requests speculative LLC fills for the supplied A[B[i]]
+            or A=0 B[i] interval; it does not deliver queue values.
+          claim_refs:
+          - maple-api
+          - maple-lima
+      chained_indirect:
+      - design_id: prodigy-hpca2021
+        revision: HPCA2021-peer-reviewed-manuscript
+        operation_id: prod-prefetch
+        subtype: prefetch
+        support: paper_specified
+        claim_refs:
+        - prod-dig
+        - prod-prefetch
+        requirement_ids:
+        - prod-description
+        - prod-context
+        realization:
+          kind: documented_sequence
+          description: Hardware follows software DIG edges over multiple nonbinding
+            prefetch requests; this is a prefetch algorithm, not a demand-gather instruction.
+          claim_refs:
+          - prod-dig
+          - prod-prefetch
+  write:
+    mapping_reference:
+      unknown:
+      - design_id: cobra-hpca2022-tuple-binning
+        revision: paper-2022-base-cobra-proposal-1
+        operation_id: required-tuple-binning
+        subtype: tuple_bin
+        support: paper_specified
+        claim_refs:
+        - cobra-hierarchy
+        - cobra-insert
+        - cobra-memory-bins
+        - cobra-flush
+        requirement_ids:
+        - application-legality
+        - numeric-order
+        - thread-private-storage
+        - counts-capacity
+        - cache-reservation
+        - va-pa
+        - phase-release
+        - preemption
+        - resource-progress
+        - abi
+        realization:
+          kind: documented_sequence
+          description: bininit per level; initialize per-bin LLC offsets with unnamed
+            instruction; binupdate(index,value) per tuple; binflush then externally
+            bound phase release. Paper interface description only.
+          claim_refs:
+          - cobra-init
+          - cobra-insert
+          - cobra-memory-bins
+          - cobra-flush
+      - design_id: tmu-micro2023-fig8-spmv
+        revision: source-scoped-proposal-r1
+        operation_id: cpu-store
+        subtype: scatter
+        support: unsupported
+        claim_refs:
+        - tmu-scope
+        requirement_ids:
+        - csr-layout
+        - cpu-callbacks
+        - boundaries
+        - private-source-lifetime
+        - sizing
+        - representation-types
+        - response-association
+        - chunk-lifetime
+        - fault-drain
+        - visibility
+        realization: null
+    execute:
+      indirect:
+      - design_id: dx100-artifact-e4fc4af
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        operation_id: dxc-indexed_assignment
+        subtype: indexed_assignment
+        support: code_observed
+        claim_refs:
+        - dxc-old
+        - dxc-mask
+        requirement_ids:
+        - dxc-region-binding
+        - dxc-widths
+        - dxc-validity
+        - dxc-observer
+        - dxc-numerical
+        - dxc-reuse
+        - dxc-old-destination
+        - dxc-byte-offset
+        - dxc-capacity
+        realization:
+          kind: native_primitive
+          description: Scalar or vector indexed-store/RMW opcode; old result requires
+            optional destination tile. No atomic CAS is implied.
+          claim_refs:
+          - dxc-old
+          - dxc-mask
+      - design_id: dx100-paper-v2
+        revision: arxiv-2505.23073v2
+        operation_id: dxp-assignment
+        subtype: indexed_assignment
+        support: paper_specified
+        claim_refs:
+        - dxp-update
+        requirement_ids:
+        - dxp-writers
+        - dxp-dependence
+        - dxp-wait
+        - dxp-address
+        realization:
+          kind: native_primitive
+          description: IST or operator-selected IRMW instruction in Table 2; mask
+            production and CPU synchronization are separate.
+          claim_refs:
+          - dxp-update
+      - design_id: terminus-micro2024-cas
+        revision: MICRO2024-default
+        operation_id: term-assignment
+        subtype: indexed_assignment
+        support: paper_specified
+        claim_refs:
+        - term-write
+        requirement_ids:
+        - term-graph
+        - term-partitions
+        - term-global
+        - term-atomics
+        realization:
+          kind: documented_sequence
+          description: Shown hash-update task locates a key and invokes Write under
+            partition synchronization; Write alone is only the store primitive.
+          claim_refs:
+          - term-write
+      - design_id: terminus-micro2024-deferred
+        revision: MICRO2024-section-VII-E
+        operation_id: termd-assignment
+        subtype: indexed_assignment
+        support: paper_specified
+        claim_refs:
+        - term-write
+        requirement_ids:
+        - term-graph
+        - term-partitions
+        - term-global
+        - termd-handler
+        realization:
+          kind: documented_sequence
+          description: Shown hash-update task locates a key and invokes Write under
+            partition synchronization; Write alone is only the store primitive.
+          claim_refs:
+          - term-write
+      pointer_chase:
+      - design_id: terminus-micro2024-cas
+        revision: MICRO2024-default
+        operation_id: term-assignment
+        subtype: indexed_assignment
+        support: paper_specified
+        claim_refs:
+        - term-write
+        requirement_ids:
+        - term-graph
+        - term-partitions
+        - term-global
+        - term-atomics
+        realization:
+          kind: documented_sequence
+          description: Shown hash-update task locates a key and invokes Write under
+            partition synchronization; Write alone is only the store primitive.
+          claim_refs:
+          - term-write
+      - design_id: terminus-micro2024-deferred
+        revision: MICRO2024-section-VII-E
+        operation_id: termd-assignment
+        subtype: indexed_assignment
+        support: paper_specified
+        claim_refs:
+        - term-write
+        requirement_ids:
+        - term-graph
+        - term-partitions
+        - term-global
+        - termd-handler
+        realization:
+          kind: documented_sequence
+          description: Shown hash-update task locates a key and invokes Write under
+            partition synchronization; Write alone is only the store primitive.
+          claim_refs:
+          - term-write
+  read_modify_write:
+    execute:
+      indirect:
+      - design_id: dx100-artifact-e4fc4af
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        operation_id: dxc-add
+        subtype: add
+        support: code_observed
+        claim_refs:
+        - dxc-old
+        - dxc-mask
+        requirement_ids:
+        - dxc-region-binding
+        - dxc-widths
+        - dxc-validity
+        - dxc-observer
+        - dxc-numerical
+        - dxc-reuse
+        - dxc-old-destination
+        - dxc-byte-offset
+        - dxc-capacity
+        realization:
+          kind: native_primitive
+          description: Scalar or vector indexed-store/RMW opcode; old result requires
+            optional destination tile. No atomic CAS is implied.
+          claim_refs:
+          - dxc-old
+          - dxc-mask
+      - design_id: dx100-artifact-e4fc4af
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        operation_id: dxc-max
+        subtype: max
+        support: code_observed
+        claim_refs:
+        - dxc-old
+        - dxc-mask
+        requirement_ids:
+        - dxc-region-binding
+        - dxc-widths
+        - dxc-validity
+        - dxc-observer
+        - dxc-numerical
+        - dxc-reuse
+        - dxc-old-destination
+        - dxc-byte-offset
+        - dxc-capacity
+        realization:
+          kind: native_primitive
+          description: Scalar or vector indexed-store/RMW opcode; old result requires
+            optional destination tile. No atomic CAS is implied.
+          claim_refs:
+          - dxc-old
+          - dxc-mask
+      - design_id: dx100-artifact-e4fc4af
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        operation_id: dxc-min
+        subtype: min
+        support: code_observed
+        claim_refs:
+        - dxc-old
+        - dxc-mask
+        requirement_ids:
+        - dxc-region-binding
+        - dxc-widths
+        - dxc-validity
+        - dxc-observer
+        - dxc-numerical
+        - dxc-reuse
+        - dxc-old-destination
+        - dxc-byte-offset
+        - dxc-capacity
+        realization:
+          kind: native_primitive
+          description: Scalar or vector indexed-store/RMW opcode; old result requires
+            optional destination tile. No atomic CAS is implied.
+          claim_refs:
+          - dxc-old
+          - dxc-mask
+      - design_id: dx100-paper-v2
+        revision: arxiv-2505.23073v2
+        operation_id: dxp-add
+        subtype: add
+        support: paper_specified
+        claim_refs:
+        - dxp-update
+        requirement_ids:
+        - dxp-writers
+        - dxp-dependence
+        - dxp-wait
+        - dxp-address
+        realization:
+          kind: native_primitive
+          description: IST or operator-selected IRMW instruction in Table 2; mask
+            production and CPU synchronization are separate.
+          claim_refs:
+          - dxp-update
+      - design_id: dx100-paper-v2
+        revision: arxiv-2505.23073v2
+        operation_id: dxp-max
+        subtype: max
+        support: paper_specified
+        claim_refs:
+        - dxp-update
+        requirement_ids:
+        - dxp-writers
+        - dxp-dependence
+        - dxp-wait
+        - dxp-address
+        realization:
+          kind: native_primitive
+          description: IST or operator-selected IRMW instruction in Table 2; mask
+            production and CPU synchronization are separate.
+          claim_refs:
+          - dxp-update
+      - design_id: dx100-paper-v2
+        revision: arxiv-2505.23073v2
+        operation_id: dxp-min
+        subtype: min
+        support: paper_specified
+        claim_refs:
+        - dxp-update
+        requirement_ids:
+        - dxp-writers
+        - dxp-dependence
+        - dxp-wait
+        - dxp-address
+        realization:
+          kind: native_primitive
+          description: IST or operator-selected IRMW instruction in Table 2; mask
+            production and CPU synchronization are separate.
+          claim_refs:
+          - dxp-update
+      - design_id: terminus-micro2024-cas
+        revision: MICRO2024-default
+        operation_id: term-cas
+        subtype: cas
+        support: paper_specified
+        claim_refs:
+        - term-write
+        requirement_ids:
+        - term-graph
+        - term-partitions
+        - term-global
+        - term-atomics
+        realization:
+          kind: native_primitive
+          description: Fig.4 CAS primitive implemented by optional atomic-capable
+            memory unit/L2, with success output.
+          claim_refs:
+          - term-write
+      unknown:
+      - design_id: dx100-artifact-e4fc4af
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        operation_id: dxc-cas
+        subtype: cas
+        support: unsupported
+        claim_refs:
+        - dxc-old
+        requirement_ids:
+        - dxc-region-binding
+        - dxc-widths
+        - dxc-validity
+        - dxc-observer
+        - dxc-numerical
+        - dxc-reuse
+        - dxc-old-destination
+        - dxc-byte-offset
+        - dxc-capacity
+        realization: null
+      - design_id: dx100-paper-v2
+        revision: arxiv-2505.23073v2
+        operation_id: dxp-cas
+        subtype: cas
+        support: unknown
+        claim_refs:
+        - dxp-update
+        requirement_ids:
+        - dxp-writers
+        - dxp-dependence
+        - dxp-wait
+        - dxp-address
+        realization: null
+      - design_id: maple-isca2022
+        revision: ISCA2022-paper+public-742a22d-inspection
+        operation_id: maple-cas
+        subtype: cas
+        support: unknown
+        claim_refs:
+        - maple-future-atomics
+        requirement_ids:
+        - maple-stable-target
+        - maple-queue-lifecycle
+        - maple-typed-abi
+        - maple-source-binding
+        - maple-completion
+        - maple-platform
+        - maple-cpu-updates
+        realization: null
+    mapping_reference:
+      unknown:
+      - design_id: spzip-isca2021-push
+        revision: ISCA2021-Push
+        operation_id: spzip-destination-update
+        subtype: destination_atomic_update
+        support: paper_specified
+        claim_refs:
+        - spzip-cpu-update
+        requirement_ids:
+        - spzip-layout
+        - spzip-phases
+        - spzip-destinations
+        realization:
+          kind: mapping_role
+          description: CPU atomic-update responsibility in the cited Push mapping;
+            the fetcher only assists with destination prefetch.
+          claim_refs:
+          - spzip-cpu-update
+      - design_id: tmu-micro2023-fig8-spmv
+        revision: source-scoped-proposal-r1
+        operation_id: atomic-add
+        subtype: add
+        support: unsupported
+        claim_refs:
+        - tmu-scope
+        requirement_ids:
+        - csr-layout
+        - cpu-callbacks
+        - boundaries
+        - private-source-lifetime
+        - sizing
+        - representation-types
+        - response-association
+        - chunk-lifetime
+        - fault-drain
+        - visibility
+        realization: null
+      - design_id: tmu-micro2023-fig8-spmv
+        revision: source-scoped-proposal-r1
+        operation_id: atomic-cas
+        subtype: cas
+        support: unsupported
+        claim_refs:
+        - tmu-scope
+        requirement_ids:
+        - csr-layout
+        - cpu-callbacks
+        - boundaries
+        - private-source-lifetime
+        - sizing
+        - representation-types
+        - response-association
+        - chunk-lifetime
+        - fault-drain
+        - visibility
+        realization: null
+    assist:
+      indirect:
+      - design_id: terminus-micro2024-deferred
+        revision: MICRO2024-section-VII-E
+        operation_id: termd-cas
+        subtype: cas
+        support: paper_specified
+        claim_refs:
+        - term-deferred
+        - term-host
+        requirement_ids:
+        - term-graph
+        - term-partitions
+        - term-global
+        - termd-handler
+        realization:
+          kind: documented_sequence
+          description: Task defers atomic operation to a CPU handler and resumes or
+            completes through response/release; engine CAS primitive is absent.
+          claim_refs:
+          - term-deferred
+          - term-host
+  reduce:
+    mapping_reference:
+      unknown:
+      - design_id: tmu-micro2023-fig8-spmv
+        revision: source-scoped-proposal-r1
+        operation_id: cpu-reduce
+        subtype: add
+        support: unsupported
+        claim_refs:
+        - tmu-scope
+        requirement_ids:
+        - csr-layout
+        - cpu-callbacks
+        - boundaries
+        - private-source-lifetime
+        - sizing
+        - representation-types
+        - response-association
+        - chunk-lifetime
+        - fault-drain
+        - visibility
+        realization: null
+decision_questions:
+- id: operation-result
+  question: Is the requested result a fetched value, update success, old value, reduction,
+    or only a cache hint?
+  why_it_matters: A cache hint, successful update and returned old word cannot substitute
+    for one another.
+  claim_refs:
+  - dxp-update
+  - dxc-old
+  - term-write
+  - prod-prefetch
+- id: mapping-scope
+  question: Which exact arrays, address ranges, aliases, writers and ROI participate?
+  why_it_matters: A writer restriction applies to participating arrays and their aliases
+    during a defined phase.
+  claim_refs:
+  - dxp-legality
+  - dxc-region
+  - spzip-cpu-update
+  - bfs-mapping-boundary
+- id: order
+  question: Which conflicting operations must serialize, and which result order is
+    observable?
+  why_it_matters: Input-order result delivery does not establish conflict execution
+    order or global atomicity.
+  claim_refs:
+  - term-order
+  - term-host
+  - dxc-local-order
+- id: completion
+  question: Which event permits which observer to consume results or reuse storage?
+  why_it_matters: Ready state, accepted write, visibility and storage reuse name different
+    obligations.
+  claim_refs:
+  - dxc-completion
+  - term-host
+  - dxc-ready-response
+  - dxc-direct-backing
+- id: representation
+  question: Does software supply an instruction sequence, dependency graph, task graph,
+    or compressed stream layout?
+  why_it_matters: A DIG, a DCL pipeline and an ISA sequence require different software
+    preparation.
+  claim_refs:
+  - prod-dig
+  - spzip-fetch
+  - dxp-interface
+  - term-read
+- id: types
+  question: Are payload, index, range-bound and continuation widths independently
+    compatible?
+  why_it_matters: A supported payload width can coexist with narrower indices or range
+    bounds. Address arithmetic can have a narrower intermediate product than the final
+    address.
+  claim_refs:
+  - dxc-gather
+  - dxc-range
+  - bfs-types
+  - dxc-byte-offset-domain
+- id: finite-state
+  question: What bounds concurrent work, and when may queues, tiles, descriptors or
+    translations be reused?
+  why_it_matters: Finite contexts may be full or still owned after values become available.
+  claim_refs:
+  - dxc-range
+  - term-config
+  - prod-config
+  - spzip-config
+  - dxc-reuse-scope
+- id: tmu-executable-contract
+  question: Who binds physical read association, typed ABI, chunk consumption and
+    fault/drain semantics?
+  why_it_matters: Paper logical paths are insufficient for an executable CPU-connected
+    adapter.
+  claim_refs:
+  - tmu-unknowns
+- id: tmu-representation-fit
+  question: Can the workload consume the exact CSR operand/event representation while
+    retaining CPU arithmetic/stores?
+  why_it_matters: Generic gather retrieval cannot prove callback or sparse-layout
+    compatibility.
+  claim_refs:
+  - tmu-fig8
+  - tmu-scope
+interpretation: Non-exclusive classification of source-scoped operation records. Unsupported
+  and unknown leaves remain explicit. This tree does not select winners, discharge
+  requirements or enumerate legal component compositions.

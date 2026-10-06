@@ -1,0 +1,27 @@
+bool RowTableEntry::insert(Addr addr, int itr, int wid, int pass) {
+    int free_entry_id = -1;
+    for (int i = 0; i < num_RT_entries_per_row; i++) {
+        if (entries_valid[i] == true && entries[i].addr == addr) {
+            entries[i].last_itr =
+                offset_table->insert(itr, wid, entries[i].last_itr, pass);
+            DPRINTF(MAARowTable, "ROT[%d] ROW[%d] %s: entry[%d] inserted!\n",
+                    my_table_id, my_table_row_id, __func__, i);
+            return true;
+        } else if (entries_valid[i] == false && free_entry_id == -1) {
+            free_entry_id = i;
+        }
+    }
+    if (free_entry_id == -1) {
+        return false;
+    }
+    entries[free_entry_id].addr = addr;
+    const int offset_entry = offset_table->insert(itr, wid, -1, pass);
+    entries[free_entry_id].first_itr = offset_entry;
+    entries[free_entry_id].last_itr = offset_entry;
+    entries_valid[free_entry_id] = true;
+    DPRINTF(MAARowTable, "ROT[%d] ROW[%d] %s: new entry[%d] addr[0x%lx] inserted!\n",
+            my_table_id, my_table_row_id, __func__, free_entry_id, addr);
+    if (is_stream) {
+        (*maa->stats.STR_NumCacheLineInserted[my_unit_id])++;
+    } else {
+        (*maa->stats.IND_NumCacheLineInserted[my_unit_id])++;

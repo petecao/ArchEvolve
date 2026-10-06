@@ -1,0 +1,37 @@
+---
+config: {"theme": "neutral", "layout": "elk", "flowchart": {"htmlLabels": true, "wrappingWidth": 220, "nodeSpacing": 24, "rankSpacing": 45}}
+---
+flowchart TB
+  scope["Paper logical paths — not a port netlist or a proved BFS mapping"]:::notice
+  n0["host-mmio<br/>Software queue operations through ordinary MMIO<br/>loads/stores"]
+  n1["request-decoder<br/>Decodes queue operation requests"]
+  n2["configuration-pipe<br/>Queue bindings/sizes, LIMA setup and MMU/debug<br/>control"]
+  n3["lima-logic<br/>Index-chunk traversal and target pointer<br/>generation"]
+  n4["produce-pipe<br/>Buffers requests and reserves queue slots"]
+  n5["mmu<br/>Virtual pointer translation"]
+  n6["request-encoder<br/>Memory-side request protocol"]
+  n7["memory-system<br/>LLC or DRAM route selected by operation"]
+  n8["response-decoder<br/>Memory reply and transaction association"]
+  n9["queue-controller<br/>FIFO allocation/head/slot management"]
+  n10["scratchpad<br/>Shared circular FIFO storage"]
+  n11["consume-pipe<br/>Waits for and reads queued values"]
+  n12["response-encoder<br/>Returns acknowledgement/data to core"]
+  n0 -->|"operation request"| n1
+  n1 -->|"configure"| n2
+  n1 -->|"produce"| n4
+  n1 -->|"consume"| n11
+  n2 -->|"bases and interval"| n3
+  n2 -->|"bindings and allocation"| n9
+  n3 -->|"generated pointer/hint"| n4
+  n4 -->|"reserve slot (queue mode)"| n9
+  n4 -->|"virtual target"| n5
+  n5 -->|"translated memory request"| n6
+  n6 -->|"fetch"| n7
+  n7 -->|"reply and transaction ID"| n8
+  n8 -->|"fill reserved slot (queue mode)"| n10
+  n9 -->|"slot/head management"| n10
+  n10 -->|"head data"| n11
+  n11 -->|"consumed value"| n12
+  n4 -->|"issue acknowledgement"| n12
+  n12 -->|"core response"| n0
+  classDef notice fill:#fef3c7,stroke:#d97706,color:#78350f

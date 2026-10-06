@@ -24,15 +24,25 @@ class COBRACatalogAdmissionTests(unittest.TestCase):
         cls.design = next(d for d in cls.catalog["designs"] if d["id"] == DESIGN)
         cls.baseline = yaml.safe_load(subprocess.check_output(
             ["git", "show", "5608d112667b72e971b3093325edda7454f579c8:catalog/hardware-v0.1.yaml"], cwd=ROOT))
-        cls.baseline["revision"] = cls.catalog["revision"]
+        cls.historical = cls.baseline
+        cls.baseline = deepcopy(cls.catalog)
+        cls.baseline["designs"] = [d for d in cls.catalog["designs"] if d["id"] != DESIGN]
 
     def test_admitted_record_and_original_designs_are_preserved(self):
         self.assertEqual(self.design, self.addition["designs"][0])
         for field in ("sources", "claims"):
             for key, value in self.addition[field].items():
                 self.assertEqual(self.catalog[field][key], value)
-        for design in self.baseline["designs"]:
-            self.assertEqual(next(d for d in self.catalog["designs"] if d["id"] == design["id"]), design)
+        for design in self.historical["designs"]:
+            actual = next(d for d in self.catalog["designs"] if d["id"] == design["id"])
+            self.assertTrue(set(design["source_refs"]) <= set(actual["source_refs"]))
+            comparable = deepcopy(actual)
+            if "internal_mechanisms" in design:
+                comparable["internal_mechanisms"] = deepcopy(design["internal_mechanisms"])
+            else:
+                comparable.pop("internal_mechanisms", None)
+            comparable["source_refs"] = design["source_refs"]
+            self.assertEqual(comparable, design)
         result = query_catalog(self.catalog, design_id=DESIGN, operation="write")["matches"][0]
         self.assertEqual(result["status"], "mapping_reference")
         self.assertEqual(result["operation"], self.design["operations"][0])

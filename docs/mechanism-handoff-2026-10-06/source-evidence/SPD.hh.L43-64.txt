@@ -1,0 +1,22 @@
+    const Cycles read_latency, write_latency;
+    const int num_read_ports, num_write_ports;
+    MAA *maa;
+
+public:
+    void check_tile_id(int tile_id, int word_size) {
+        panic_if(tile_id < 0 || tile_id >= visible_tile_count,
+                 "Invalid visible tile_id: %d (visible count %u)\n",
+                 tile_id, visible_tile_count);
+        panic_if(word_size != 4 && word_size != 8,
+                 "Invalid data type size: %d\n", word_size);
+        panic_if(word_size == 8 &&
+                     tile_id >= static_cast<int>(visible_tile_count) - 1,
+                 "Invalid visible tile_id for 8-byte data type: %d\n",
+                 tile_id);
+    }
+    void check_tile_element_id(int tile_id, int element_id, int word_size) {
+        check_tile_id(tile_id, word_size);
+        panic_if(element_id < 0 || element_id >= physical_tile_elements,
+                 "SPD element %d exceeds physical tile capacity %u "
+                 "(logical capacity %u)\n",
+                 element_id, physical_tile_elements, num_tile_elements);
