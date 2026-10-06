@@ -1,0 +1,536 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "workload_characterization",
+  "title": "Workload characterization v1",
+  "description": "Updated: 2026-10-06 ET. See docs/reference/format-v0.4-analytic.md.",
+  "properties": {
+    "kind": {
+      "const": "workload_characterization"
+    },
+    "schema_version": {
+      "const": "0.4"
+    },
+    "format": {
+      "const": "swdb.workload-characterization.v1"
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "implementation",
+            "candidate"
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        }
+      },
+      "required": [
+        "kind",
+        "id"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "implementation"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "id": {
+                "x-ref": "implementation"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "candidate"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "id": {
+                "x-ref": "candidate"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "input": {
+      "anyOf": [
+        {
+          "type": "string",
+          "x-ref": "input"
+        },
+        {
+          "type": "string",
+          "x-ref": "workload"
+        }
+      ]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "build_flags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "run_arguments": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "protected_driver": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "build_flags",
+        "run_arguments",
+        "protected_driver"
+      ]
+    },
+    "host": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "machine": {
+          "type": "string"
+        },
+        "architecture": {
+          "type": "string"
+        },
+        "system": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "machine",
+        "architecture",
+        "system"
+      ]
+    },
+    "toolchain": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "llvm_version": {
+          "type": "string"
+        },
+        "llvm_bin": {
+          "type": "string"
+        },
+        "compiler_flags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "plugin_linkage": {
+          "enum": [
+            "shared_llvm",
+            "host_symbols"
+          ]
+        },
+        "run_library_paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "llvm_version",
+        "llvm_bin",
+        "compiler_flags",
+        "plugin_linkage",
+        "run_library_paths"
+      ]
+    },
+    "counting": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "level": {
+          "const": "source_normalized_ir"
+        },
+        "passes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "native_runs": {
+          "const": 1
+        },
+        "basis": {
+          "const": "measured"
+        },
+        "vector_multiplicity": {
+          "type": "string"
+        },
+        "operation_definition": {
+          "type": "string"
+        },
+        "loop_definition": {
+          "type": "string"
+        },
+        "binary_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "counts_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "output_directory": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "level",
+        "passes",
+        "native_runs",
+        "basis",
+        "vector_multiplicity",
+        "operation_definition",
+        "loop_definition",
+        "binary_sha256",
+        "counts_sha256",
+        "output_directory"
+      ]
+    },
+    "static_analysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "basis": {
+          "const": "code_reading"
+        },
+        "source_ir_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "optimized_ir_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "loops": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "optimized_facts": {
+          "type": "object"
+        },
+        "mapping_note": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "basis",
+        "source_ir_sha256",
+        "optimized_ir_sha256",
+        "loops",
+        "optimized_facts",
+        "mapping_note"
+      ]
+    },
+    "regions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "source_location": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "function": {
+                "type": "string"
+              },
+              "line": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "column": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "function",
+              "line"
+            ]
+          },
+          "mapped": {
+            "type": "boolean"
+          },
+          "kind": {
+            "enum": [
+              "loop",
+              "serial_remainder"
+            ]
+          },
+          "access_patterns": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "$ref": "#/$defs/id"
+                },
+                "source_location": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "function": {
+                      "type": "string"
+                    },
+                    "line": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "column": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": [
+                    "function",
+                    "line"
+                  ]
+                },
+                "address_shape": {
+                  "$ref": "#/$defs/fact"
+                },
+                "stride_bytes": {
+                  "$ref": "#/$defs/fact"
+                },
+                "element_bytes": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "update_kind": {
+                  "enum": [
+                    "read",
+                    "write",
+                    "add-update",
+                    "compare-and-swap"
+                  ]
+                },
+                "element_count": {
+                  "$ref": "#/$defs/count"
+                },
+                "bytes_accessed": {
+                  "$ref": "#/$defs/count"
+                },
+                "observed_address_span_bytes": {
+                  "$ref": "#/$defs/fact"
+                },
+                "address_expression": {
+                  "type": "string"
+                },
+                "ir_lanes": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "required": [
+                "id",
+                "source_location",
+                "address_shape",
+                "stride_bytes",
+                "element_bytes",
+                "update_kind",
+                "element_count",
+                "bytes_accessed",
+                "observed_address_span_bytes",
+                "address_expression",
+                "ir_lanes"
+              ]
+            }
+          },
+          "operation_counts": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "integer": {
+                "$ref": "#/$defs/count"
+              },
+              "floating_point": {
+                "$ref": "#/$defs/count"
+              },
+              "branch": {
+                "$ref": "#/$defs/count"
+              },
+              "atomic": {
+                "$ref": "#/$defs/count"
+              }
+            },
+            "required": [
+              "integer",
+              "floating_point",
+              "branch",
+              "atomic"
+            ]
+          },
+          "dynamic_counts": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "loop_iterations": {
+                "$ref": "#/$defs/count"
+              }
+            },
+            "required": [
+              "loop_iterations"
+            ]
+          },
+          "footprint_bytes": {
+            "$ref": "#/$defs/fact"
+          },
+          "accelerator_calls": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "address_stream_counts": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "source_location",
+          "mapped",
+          "kind",
+          "access_patterns",
+          "operation_counts",
+          "dynamic_counts",
+          "footprint_bytes",
+          "accelerator_calls",
+          "address_stream_counts"
+        ]
+      }
+    },
+    "unmapped_loops": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/id"
+      }
+    },
+    "unmodeled_calls": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "evidence_kind": {
+      "enum": [
+        "execution",
+        "contract_fixture"
+      ]
+    },
+    "identity_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "coverage": {
+      "type": "object"
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "state",
+        "subject_source_identity",
+        "input_record_sha256",
+        "roi",
+        "threads",
+        "run_arguments_sha256",
+        "note"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "fixture",
+            "unverified",
+            "verified"
+          ]
+        },
+        "subject_source_identity": {
+          "type": "object"
+        },
+        "input_record_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "roi": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "threads": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "run_arguments_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "kind",
+    "schema_version",
+    "format",
+    "subject",
+    "input",
+    "source",
+    "host",
+    "toolchain",
+    "counting",
+    "static_analysis",
+    "regions",
+    "unmapped_loops",
+    "unmodeled_calls",
+    "evidence_kind",
+    "identity_sha256",
+    "coverage",
+    "binding"
+  ]
+}

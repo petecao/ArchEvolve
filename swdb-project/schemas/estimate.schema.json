@@ -1,0 +1,318 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "estimate",
+  "description": "Updated: 2026-10-06 ET. Analytic estimates are never timing observations.",
+  "properties": {
+    "kind": {
+      "const": "estimate"
+    },
+    "schema_version": {
+      "const": "0.4"
+    },
+    "format": {
+      "const": "swdb.estimate.v1"
+    },
+    "basis": {
+      "const": "estimated"
+    },
+    "estimator_version": {
+      "type": "string"
+    },
+    "estimator_variant": {
+      "enum": [
+        "team",
+        "research"
+      ]
+    },
+    "calibration_sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "characterization": {
+      "$ref": "#/$defs/id"
+    },
+    "characterization_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "target_description": {
+      "$ref": "#/$defs/id"
+    },
+    "target_description_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "target_description_snapshot": {
+      "type": "object"
+    },
+    "target": {
+      "$ref": "#/$defs/id"
+    },
+    "threads": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "candidate",
+            "implementation"
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        }
+      },
+      "required": [
+        "kind",
+        "id"
+      ]
+    },
+    "input": {
+      "$ref": "#/$defs/id"
+    },
+    "protocol": {
+      "$ref": "#/$defs/id"
+    },
+    "regions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "seconds": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "basis": {
+            "const": "estimated"
+          },
+          "bounds": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "model": {
+                  "type": "string"
+                },
+                "seconds": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "basis": {
+                  "const": "estimated"
+                },
+                "state": {
+                  "enum": [
+                    "known",
+                    "unknown"
+                  ]
+                },
+                "formula": {
+                  "type": "string"
+                },
+                "inputs": {
+                  "type": "object"
+                },
+                "missing": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "notes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "model",
+                "seconds",
+                "basis",
+                "state",
+                "formula",
+                "inputs",
+                "missing",
+                "notes"
+              ]
+            }
+          },
+          "overheads": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "model": {
+                  "type": "string"
+                },
+                "seconds": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "basis": {
+                  "const": "estimated"
+                },
+                "state": {
+                  "enum": [
+                    "known",
+                    "unknown"
+                  ]
+                },
+                "formula": {
+                  "type": "string"
+                },
+                "inputs": {
+                  "type": "object"
+                },
+                "missing": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "notes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "model",
+                "seconds",
+                "basis",
+                "state",
+                "formula",
+                "inputs",
+                "missing",
+                "notes"
+              ]
+            }
+          },
+          "limiting_bound": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "state": {
+            "enum": [
+              "known",
+              "unknown"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "seconds",
+          "basis",
+          "bounds",
+          "overheads",
+          "limiting_bound",
+          "state"
+        ]
+      }
+    },
+    "seconds": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "ratio": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "baseline": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "verdict": {
+      "enum": [
+        "estimated_gain",
+        "within_error",
+        "estimated_no_gain"
+      ]
+    },
+    "error_band": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "llm_parameters": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "evidence_kind": {
+      "enum": [
+        "execution",
+        "contract_fixture"
+      ]
+    },
+    "scope": {
+      "type": "object"
+    },
+    "binding": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "kind",
+    "schema_version",
+    "format",
+    "basis",
+    "estimator_version",
+    "estimator_variant",
+    "calibration_sources",
+    "characterization",
+    "characterization_sha256",
+    "target_description",
+    "target_description_sha256",
+    "target_description_snapshot",
+    "target",
+    "threads",
+    "subject",
+    "input",
+    "protocol",
+    "regions",
+    "seconds",
+    "ratio",
+    "baseline",
+    "verdict",
+    "error_band",
+    "llm_parameters",
+    "evidence_kind",
+    "scope",
+    "binding"
+  ]
+}

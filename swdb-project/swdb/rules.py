@@ -70,7 +70,10 @@ def check(record, ctx):
     yield from _deprecated_by(record, ctx)
     yield from _provenance(record)
     kind = data["kind"]
-    if kind == "kernel":
+    if kind in {"workload_characterization", "target_description", "estimate"}:
+        from swdb.analytic import validate_record
+        yield from validate_record(record, ctx)
+    elif kind == "kernel":
         yield from _kernel(record, ctx)
     elif kind == "implementation":
         yield from _implementation(record, ctx)

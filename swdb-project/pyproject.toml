@@ -21,6 +21,7 @@ swdb = "swdb.cli:main"
 include = ["swdb*"]
 
 [tool.setuptools.package-data]
+"swdb" = ["llvm/*.cpp"]
 "swdb._vendor.lark" = ["grammars/*.lark", "*.lark"]
 "swdb._vendor" = ["licenses/*", "PROVENANCE.md"]
 

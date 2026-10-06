@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "target_description",
+  "description": "Updated: 2026-10-06 ET. Mechanism rates describe the frozen target/thread configuration, not per-thread rates.",
+  "properties": {
+    "kind": {
+      "const": "target_description"
+    },
+    "schema_version": {
+      "const": "0.4"
+    },
+    "format": {
+      "const": "swdb.target-description.v1"
+    },
+    "version": {
+      "type": "string"
+    },
+    "target": {
+      "$ref": "#/$defs/id"
+    },
+    "threads": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "mechanisms": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "model": {
+            "type": "string"
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "value": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "basis": {
+                  "type": "string",
+                  "x-vocab": "basis"
+                },
+                "source": {
+                  "type": "string"
+                },
+                "unit": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "value",
+                "basis",
+                "source",
+                "unit"
+              ],
+              "allOf": [
+                {
+                  "$ref": "#/$defs/basis_rule"
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "model",
+          "parameters"
+        ]
+      }
+    },
+    "dram_address_layout": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "estimator_variant": {
+      "enum": [
+        "team",
+        "research"
+      ]
+    },
+    "calibration_sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "kind",
+    "schema_version",
+    "format",
+    "version",
+    "target",
+    "threads",
+    "mechanisms",
+    "dram_address_layout",
+    "estimator_variant",
+    "calibration_sources"
+  ],
+  "$defs": {
+    "parameter": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "basis": {
+          "type": "string",
+          "x-vocab": "basis"
+        },
+        "source": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "basis",
+        "source",
+        "unit"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/basis_rule"
+        }
+      ]
+    }
+  }
+}
