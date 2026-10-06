@@ -2,7 +2,7 @@
 
 Updated: 2026-10-06 ET. Read-only preparation for ticket11; no ticket claim, estimator/runtime/schema changes, provider call, application timing, or cost inference. Analysis branch base `121177dfe055435958a874660ea4561906ba6c8f`.
 
-The largest missing counts are consistent with source stack wrappers, normalized local temporaries and outlined-worker captures, rather than missing heap payload sizes. Five candidate source-field/local-temporary partitions close exactly against each corresponding region’s unknown count in all five trials of both kernels (50/50 checks). This is arithmetic and source attribution evidence; the observer does not serialize per-access unknown-object membership. Exact root/type/extent attribution is pending the parent-run static projector below. Historical characterization payloads and seals remain unchanged.
+The largest missing counts are consistent with source stack wrappers, normalized local temporaries and outlined-worker captures, rather than missing heap payload sizes. Five candidate source-field/local-temporary partitions close exactly against each corresponding region’s unknown count in all five trials of both kernels (50/50 checks). This is arithmetic and source attribution evidence; the observer does not serialize per-access unknown-object membership. The parent-run static projection now confirms the bounded roots and caller mappings below; runtime admission still requires fresh instrumented counts. Historical characterization payloads and seals remain unchanged.
 
 ## Pinned count evidence
 
@@ -23,7 +23,7 @@ This diagnosis independently verifies both exported YAML byte hashes, source-fil
 | 3 | 2,922,585 /21 | 2,698,060 | 18,056,066 /27 | 16,941,210 |
 | 4 | 2,843,758 /21 | 2,536,534 | 16,410,382 /27 | 15,295,527 |
 
-These are sums of diagnostic per-region requests, not footprint unions or seconds. Five selected regions cover 99.467% of BFS trial0 and 93.534% of BC trial0; later BFS trials have larger TDStep tails, so trial0 coverage must not be transferred to them.
+These are sums of diagnostic per-region requests, not footprint unions or seconds. Five selected regions cover 99.467% of BFS trial 0 and 93.534% of BC trial 0; later BFS trials have larger TDStep tails, so trial 0 coverage must not be transferred to them.
 
 ## Dominant source origins
 
@@ -64,13 +64,13 @@ All executed selected call bins have zero unknown lengths/free lifetimes. Counts
 | BFS memcpy / BC memcpy | 8:47 /8:15 |
 | BFS memmove / BC memmove | 16/51 events; full exact length union in companion JSON |
 
-The new[]/delete[] 262144B imbalance follows the whole-call ROI boundary: a returned pvector backing buffer survives the call. It does not indicate an unknown free size. Source Timer::Start (`timer.h:23`) explains the 8B copy sites; QueueBuffer::flush (`sliding_queue.h:110–115`) explains bulk `std::copy`, and BC vector growth explains a separate relocation family. Those are source-origin inferences pending the parent static projection. The historical call records retain line/length but not source/destination alignment, overlap or allocation roots; do not silently use an allocation-size union or call name as those regime facts.
+The new[]/delete[] 262144B imbalance follows the whole-call ROI boundary: a returned pvector backing buffer survives the call. It does not indicate an unknown free size. Source Timer::Start (`timer.h:23`) explains the 8B copy sites; QueueBuffer::flush (`sliding_queue.h:110–115`) explains bulk `std::copy`, and BC vector growth explains a separate relocation family. The parent static projection confirms those call locations and their bounded wrapper roots; the bulk pointees and allocator regime remain separate. The historical call records retain line/length but not source/destination alignment, overlap or allocation roots; do not silently use an allocation-size union or call name as those regime facts.
 
 ## Parent-run root projection
 
 [11-normalized-root-projector.cpp](11-normalized-root-projector.cpp) reads `normalized.bc` and its actual `source.json` without mutating the module. It cross-checks every access/call number, access function/debug path/line/column, update kind, element width/lanes and call name/line before exporting selected facts. Diagnostic `static_analysis.optimized_facts` is a separate optimized map with different site IDs; it is not an input. [Selected IDs](11-native-origin-root-sites.json) cover all candidate sites in the ten dominant regions and their executed bulk calls.
 
-The probe deduplicates underlying roots, records target-DL alloca/global extents, LLVM lifetime-marker counts, debug-variable annotations, direct-call and `__kmpc_fork_call` shared-argument producers, explicit 4B ABI-view facts, and bulk constant/runtime length, alignment and default-AA alias result. Loaded pointer storage and its unproved pointee are separate. AA facts are static normalized-IR proofs, not observed allocator/address regimes. No pointer addresses, raw instruction bodies or address expressions are exported. The [stored local proof](11-normalized-root-projector-local-proof.json) cross-checks O0:27 accesses/8 calls and O1:22 accesses/6 calls, preserves both input bitcode hashes, and refuses changed-source-map/missing-site cases with exit2 before writing output. It is compiler-only; actual BFS/BC root projections remain pending parent execution.
+The probe deduplicates underlying roots, records target-DL alloca/global extents, LLVM lifetime-marker counts, debug-variable annotations, direct-call and `__kmpc_fork_call` shared-argument producers, explicit 4B ABI-view facts, and bulk constant/runtime length, alignment and default-AA alias result. Loaded pointer storage and its unproved pointee are separate. AA facts are static normalized-IR proofs, not observed allocator/address regimes. No pointer addresses, raw instruction bodies or address expressions are exported. The [stored local proof](11-normalized-root-projector-local-proof.json) cross-checks O0:27 accesses/8 calls and O1:22 accesses/6 calls, preserves both input bitcode hashes, and refuses changed-source-map/missing-site cases with exit2 before writing output. It is compiler-only; the actual BFS/BC static projections are retained and analyzed below.
 
 ```bash
 # Use the parent's verified LLVM22 bin path and GCC13 development environment.
@@ -95,3 +95,30 @@ PY
 ```
 
 Local reproduction: `python3 .../11-root-projector-smoke.py --llvm-bin <LLVM22-bin> --output-directory <external-proof-directory>`. It compiles static O0/O1 fixtures, obtains the counting pass’s public source map, checks fixed/dynamic stack/global/declared/caller/ABI roots, lifetimes and bulk facts, and rejects a changed map or missing requested site before output. This source-only diagnosis provides no new CPU model or error result.
+
+## Confirmed native admission recommendations (2026-10-06 ET)
+
+Actual export commit `a5d983ac09fbc5b36babc4989d83ca4b87fe7e6a` retains [BFS](11-bfs-normalized-root-projection-mbit10-20261006-a1.json), [BC](11-bc-normalized-root-projection-mbit10-20261006-a1.json), and the [execution wrapper](11-normalized-root-projection-mbit10-20261006-a1.json), identity `27651edf0f45001986a3e5bcae7c6e7862d7c7edffa1915dff81006ff202309d`. Node1 lease 532 completed 19:30:12 ET, exit 0/released. All 4436/5551 access sites and 1319/1441 call sites cross-check (9997/2760 total); selected 58/88 access roots and 7/6 bulk calls were exported. Both normalized-IR hashes equal the historical native characterization’s `binding.execution_receipt.source_ir_sha256`; projector/selector hashes, output bytes/hashes and wrapper canonical identity also independently match. Inputs remain byte-identical, and no application timings, raw IR or binary were exported.
+
+| Confirmed source storage | Native target-layout extent | Required admission |
+|---|---:|---|
+| Main-owned `Graph g` | 56B | Register before ROI; follow the existing kernel/outlined capture pointer to this caller object. CSR arrays keep their heap identities. |
+| Main-owned returned `result` and local pvector wrappers | 24B each | Register caller result storage before the call and all local wrapper lifetimes; keep backing arrays separate. |
+| Neighborhood aggregates | 24B | Register outlined local aggregates and resolve PHI-selected actual temporary addresses. |
+| QueueBuffer `lqueue` | 32B | Register each worker-local wrapper; backing queue buffers remain independent heap objects. |
+| Bitmap /Timer | 16B each | Register wrapper lifetime, including exceptional exits; internal 8B Timer copy subranges share one root. |
+| Induction/CAS/reduction/iterator temporaries | 4B or 8B as declared | Register exact IR allocas, including `.omp.lb/.omp.ub`, `old_val/new_val`, `start_offset/max_offset`, `depth`, `awake_count`, and `__result`. |
+
+All 19 BFS and 27 BC projected allocas have fixed extents. Every selected worker-local alloca has one lifetime start/end; parent/main wrappers commonly have one start, two ends and one resume (normal plus exceptional cleanup). No projected function has stackrestore. No projected root is a global, so a global hook is not required to explain this selected population. Preserve unknowns in unprojected regions rather than extending this observation to every workload.
+
+In trial 0, direct static roots classify the selected candidate requests as BFS: 2,543,710 alloca,114,343 PHI,953,013 argument,0 loaded-pointer; BC: 5,726,860 alloca,93,376 PHI,10,326,379 argument,4 loaded-pointer. PHIs in the selected source accesses choose bounded 8B local temporaries. Caller and fork-call mappings connect executed source wrappers to main/parent allocas; unused generic helper argument paths remain unbound in the static map. The four BC loaded-pointer candidate requests and bulk loaded pointees retain explicit static uncertainty; container bounds do not prove their pointee bounds. This classification refines the 50/50 arithmetic match without inventing per-site observed-unknown flags.
+
+The only selected runtime ABI roles are three `global_tid` argument roots (one BFS, two BC); each has a 4B typed microtask referent view. Their selected logical request counts across trials are BFS `[6,6,6,4,4]`, BC `[28,28,24,24,24]`. A view contract may admit these accesses with named call/worker scope, alias/overlap reconciliation and normal/unwind retirement, while retaining unknown full libomp allocation identity/extent/lifetime and physical residency. No selected `bound_tid` root was observed; its generic ABI rule must not be presented as new execution evidence.
+
+| Confirmed bulk sites | Length fact | Source/destination alignment | Static overlap proof |
+|---|---|---:|---|
+| BFS memcpy 105/125/136/148/159; BC memcpy 93/119/134 | Constant 8B, `timer.h:23` | 8B/8B | `NoAlias`; separate subranges within the same 16B Timer root. |
+| BFS memmove 73/89; BC memmove 70/72 | Runtime length, `stl_algobase.h:437` | 4B/4B | `MayAlias`; no static disjointness proof. |
+| BC memmove 88 | Runtime length, vector relocation `stl_uninitialized.h:1131` | 8B/8B | `MayAlias`; call-result/PHI source facts do not establish lifetime/disjointness. |
+
+Ticket09’s minimal next source-only slice is generic whole-TU alloca lifetime registration plus an explicitly distinct typed ABI-view mechanism when its schema/runtime contract is ready. Preserve IDs and normalized operation semantics; any observer extension needs a new observer identity and fresh counts before complete memory-service coverage is claimed. Ticket11 can use exact executed call-length/alignment facts to choose or construct a legitimate calibration regime, retaining inference/unknown transfer where appropriate. These static facts supply no measured runtime cost, first-touch/cache-residency proof, or native error result.
