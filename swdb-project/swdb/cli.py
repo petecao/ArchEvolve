@@ -1,7 +1,8 @@
 """Command line: `swdb <command>`. Exit 0 = success, 1 = the check or command failed,
 2 = usage error. Errors go to stderr; results (YAML or JSON) go to stdout.
 
-Updated: 2026-10-05 ET (code review): the `campaign` and library-operation commands register here
+Updated: 2026-10-06 ET (ticket 03): validate accepts a standalone slide-based crosswalk.
+2026-10-05 ET (code review): the `campaign` and library-operation commands register here
 directly; `promote` states who performed a review and `correct-review` corrects an earlier
 attribution (spec review C1)."""
 
@@ -40,6 +41,7 @@ def main(argv=None):
 
     sub = command("validate", "check records and typed library shapes, pins and clauses")
     sub.add_argument("--library", type=Path)
+    sub.add_argument("--crosswalk", type=Path, help="also validate a slide-based main-database crosswalk")
 
     sub = command("promote", "record a review of one certified library entry or Extensa candidate artifact",
                   db=True, fmt=True)
@@ -285,7 +287,7 @@ def _dispatch(args):
         from swdb.certification import run_cli
         return run_cli(args)
     if args.command == "validate":
-        return _validate(records, args.library)
+        return _validate(records, args.library, args.crosswalk)
     if args.command == "promote":
         from swdb.library import promote
         from swdb.store import Store
@@ -452,10 +454,13 @@ def _dispatch(args):
     raise UsageError(f"unknown command {args.command}")
 
 
-def _validate(records_dir, library_root=None):
+def _validate(records_dir, library_root=None, crosswalk=None):
     from swdb.validate import validate_records
 
     result = validate_records(records_dir, library_root=library_root)
+    if crosswalk is not None:
+        from swdb.crosswalk import validate_crosswalk
+        result.problems.extend(validate_crosswalk(crosswalk))
     for problem in result.problems:
         print(problem, file=sys.stderr)
     if result.problems:
@@ -465,7 +470,8 @@ def _validate(records_dir, library_root=None):
             file=sys.stderr,
         )
         return 1
-    print(f"OK: {result.count} record(s) valid")
+    suffix = "; crosswalk valid" if crosswalk is not None else ""
+    print(f"OK: {result.count} record(s) valid{suffix}")
     return 0
 
 

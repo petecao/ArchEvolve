@@ -1,0 +1,447 @@
+# Slide-derived draft, 2026-10-06 ET. All SQL names not visible in slides 8-9 remain null.
+schema_version: '0.1'
+crosswalk_version: 0
+id: lanl-main-crosswalk-v0
+date: '2026-10-06'
+source_deck:
+  filename: ArchEvolve-project-overview.pdf
+  date: '2026-10-06'
+  sha256: a71e905932a3ef501a801aac2efc63a44c176ec0b7b0d1a645f41ad3826e49c9
+rows:
+- table_label: Kernel information
+  table_identifier: null
+  field_label: null
+  field_identifier: null
+  disposition: proposed
+  research:
+  - record_kind: kernel
+    field: null
+  - record_kind: application
+    field: null
+  status: unverified
+  source_slide: 8
+  note: A slide label, not a known SQL table name. Kernel identity and application membership require
+    schema inspection.
+- table_label: Kernel information
+  table_identifier: null
+  field_label: Extracted kernels and description
+  field_identifier: null
+  disposition: proposed
+  research:
+  - record_kind: kernel
+    field: computes
+  status: unverified
+  source_slide: 8
+  note: The slide's description may include more than computation semantics; this is a proposed semantic
+    mapping.
+- table_label: Source files
+  table_identifier: null
+  field_label: null
+  field_identifier: null
+  disposition: proposed
+  research:
+  - record_kind: source_snapshot
+    field: null
+  - record_kind: implementation
+    field: null
+  status: unverified
+  source_slide: 8
+  note: SWDB retains content-bound source snapshots and code references, not the main database's unseen
+    per-file row identity.
+- table_label: Source files
+  table_identifier: null
+  field_label: Source codes
+  field_identifier: null
+  disposition: proposed
+  research:
+  - record_kind: source_snapshot
+    field: artifact.files
+  - record_kind: implementation
+    field: code
+  status: unverified
+  source_slide: 8
+  note: Source files can correspond to snapshot file metadata and implementation code references. SQL
+    field names are unseen.
+- table_label: definitions
+  table_identifier: null
+  field_label: null
+  field_identifier: null
+  disposition: no_counterpart
+  research: []
+  status: unverified
+  source_slide: 8
+  note: SWDB has no per-definition record for every struct, class, enum or function.
+- table_label: definitions
+  table_identifier: null
+  field_label: 'Top-level definitions: struct, classes, enums, functions'
+  field_identifier: null
+  disposition: no_counterpart
+  research: []
+  status: unverified
+  source_slide: 8
+  note: The definition taxonomy is visible, but no definition-row schema or counterpart is available.
+- table_label: Hardware details
+  table_identifier: null
+  field_label: null
+  field_identifier: null
+  disposition: proposed
+  research:
+  - record_kind: machine
+    field: null
+  status: unverified
+  source_slide: 8
+  note: Host specifications may map to machine records. This is distinct from accelerator target descriptions
+    and hardware templates.
+- table_label: Hardware details
+  table_identifier: null
+  field_label: cores
+  field_identifier: null
+  disposition: proposed
+  research:
+  - record_kind: machine
+    field: cpu
+  status: unverified
+  source_slide: 8
+  note: The slide says cores without stating total versus per-socket counts; map only to the CPU object
+    until the count scope is known.
+- table_label: Hardware details
+  table_identifier: null
+  field_label: memory
+  field_identifier: null
+  disposition: proposed
+  research:
+  - record_kind: machine
+    field: memory_bytes
+  status: unverified
+  source_slide: 8
+  note: The slide says memory without a unit or capacity scope; conversion to bytes awaits the schema.
+- table_label: Run configs
+  table_identifier: null
+  field_label: null
+  field_identifier: null
+  disposition: proposed
+  research:
+  - record_kind: workload
+    field: definition
+  - record_kind: input
+    field: generator.arguments
+  - record_kind: implementation
+    field: run
+  status: unverified
+  source_slide: 8
+  note: Configuration semantics and IDs are unseen. Workload and input describe the data; implementation.run
+    describes execution.
+- table_label: Run configs
+  table_identifier: null
+  field_label: Metadata for benchmarks and validation programs
+  field_identifier: null
+  disposition: proposed
+  research:
+  - record_kind: implementation
+    field: build
+  - record_kind: implementation
+    field: run
+  - record_kind: kernel
+    field: correctness_check
+  status: unverified
+  source_slide: 8
+  note: Benchmark and validation metadata may span build, execution and correctness-check fields; no SQL
+    names are known.
+- table_label: Performance metrics
+  table_identifier: null
+  field_label: null
+  field_identifier: null
+  disposition: proposed
+  research:
+  - record_kind: profile
+    field: null
+  status: unverified
+  source_slide: 8
+  note: Native perf-stat observations would be measured profiles. Counter availability, units, timing
+    scope and run links remain unknown.
+- table_label: Performance metrics
+  table_identifier: null
+  field_label: perf stat metrics
+  field_identifier: null
+  disposition: proposed
+  research:
+  - record_kind: profile
+    field: metrics
+  status: unverified
+  source_slide: 8
+  note: Only supported metrics with explicit units and measured evidence basis can be imported. Counter
+    names are not listed on this slide.
+- table_label: Performance metrics
+  table_identifier: null
+  field_label: build name
+  field_identifier: null
+  disposition: no_counterpart
+  research: []
+  status: unverified
+  source_slide: 8
+  note: profile.build stores compiler, flags, commands and source commits, but no build-name field; do
+    not substitute an unrelated ID.
+- table_label: Data structures
+  table_identifier: null
+  field_label: null
+  field_identifier: null
+  disposition: no_counterpart
+  research: []
+  status: unverified
+  source_slide: 8
+  note: SWDB has no standalone data-structure record; access-pattern array metadata is narrower.
+- table_label: executables
+  table_identifier: null
+  field_label: null
+  field_identifier: null
+  disposition: proposed
+  research:
+  - record_kind: source_snapshot
+    field: artifact.files
+  status: unverified
+  source_slide: 8
+  note: Snapshot files can identify executable artifacts, but SWDB has no executable-table equivalent
+    or stable main-database executable ID.
+- table_label: Code_chunks
+  table_identifier: code_chunks
+  field_label: null
+  field_identifier: null
+  disposition: no_counterpart
+  research: []
+  status: unverified
+  source_slide: 9
+  note: SWDB has no one-per-class/function/struct/enum semantic-search chunk record.
+- table_label: Code_chunks
+  table_identifier: code_chunks
+  field_label: code block
+  field_identifier: null
+  disposition: no_counterpart
+  research: []
+  status: unverified
+  source_slide: 9
+  note: Implementation code excerpts are narrower than the search chunk and do not preserve its row identity.
+- table_label: Code_chunks
+  table_identifier: code_chunks
+  field_label: line numbers
+  field_identifier: null
+  disposition: no_counterpart
+  research: []
+  status: unverified
+  source_slide: 9
+  note: Code-reference line ranges are not a chunk record; retain main-database search rather than inventing
+    one.
+- table_label: Code_chunks
+  table_identifier: code_chunks
+  field_label: chunk_type
+  field_identifier: chunk_type
+  disposition: no_counterpart
+  research: []
+  status: unverified
+  source_slide: 9
+  note: The exact token chunk_type is visible. SWDB has no equivalent chunk taxonomy field.
+- table_label: Embeddings
+  table_identifier: null
+  field_label: null
+  field_identifier: null
+  disposition: no_counterpart
+  research: []
+  status: unverified
+  source_slide: 9
+  note: The table label is visible. SWDB stores no vector-search embedding record; its SQL identifier
+    is not asserted.
+- table_label: Embeddings
+  table_identifier: null
+  field_label: code_chunks_id
+  field_identifier: code_chunks_id
+  disposition: no_counterpart
+  research: []
+  status: unverified
+  source_slide: 9
+  note: The slide exposes this foreign-key token and permits multiple embeddings per chunk. SWDB has neither
+    record kind.
+- table_label: Embeddings
+  table_identifier: null
+  field_label: embedding blob
+  field_identifier: null
+  disposition: no_counterpart
+  research: []
+  status: unverified
+  source_slide: 9
+  note: Vector payloads stay in the main database; no embedding is copied into a research record.
+- table_label: Embeddings
+  table_identifier: null
+  field_label: model_name
+  field_identifier: model_name
+  disposition: no_counterpart
+  research: []
+  status: unverified
+  source_slide: 9
+  note: The exact model_name token is visible; SWDB has no embedding-model identity field.
+- table_label: Embeddings
+  table_identifier: null
+  field_label: embedding dimension
+  field_identifier: null
+  disposition: no_counterpart
+  research: []
+  status: unverified
+  source_slide: 9
+  note: The dimension's SQL field name is not visible and SWDB has no embedding-dimension field.
+separable_extension:
+- concept: optimization strategies
+  research:
+  - record_kind: strategy
+    field: null
+  status: unverified
+  source_slide: 8
+  note: No counterpart is visible in the slide's table inventory. This is not a verified absence from
+    LANL's unseen schema; keep this concept separable under ADR 0014.
+- concept: intrinsics
+  research:
+  - record_kind: intrinsic
+    field: null
+  status: unverified
+  source_slide: 8
+  note: No counterpart is visible in the slide's table inventory. This is not a verified absence from
+    LANL's unseen schema; keep this concept separable under ADR 0014.
+- concept: rewrite proposals
+  research:
+  - record_kind: proposal
+    field: null
+  status: unverified
+  source_slide: 8
+  note: No counterpart is visible in the slide's table inventory. This is not a verified absence from
+    LANL's unseen schema; keep this concept separable under ADR 0014.
+- concept: candidate artifacts
+  research:
+  - record_kind: candidate
+    field: null
+  status: unverified
+  source_slide: 8
+  note: No counterpart is visible in the slide's table inventory. This is not a verified absence from
+    LANL's unseen schema; keep this concept separable under ADR 0014.
+- concept: certifications
+  research:
+  - record_kind: certification
+    field: null
+  status: unverified
+  source_slide: 8
+  note: No counterpart is visible in the slide's table inventory. This is not a verified absence from
+    LANL's unseen schema; keep this concept separable under ADR 0014.
+- concept: evaluations
+  research:
+  - record_kind: evaluation
+    field: null
+  status: unverified
+  source_slide: 8
+  note: No counterpart is visible in the slide's table inventory. This is not a verified absence from
+    LANL's unseen schema; keep this concept separable under ADR 0014.
+- concept: paired evaluation receipts
+  research:
+  - record_kind: evaluation_pair
+    field: null
+  status: unverified
+  source_slide: 8
+  note: No counterpart is visible in the slide's table inventory. This is not a verified absence from
+    LANL's unseen schema; keep this concept separable under ADR 0014.
+- concept: accelerator operations
+  research:
+  - record_kind: operation
+    field: null
+  status: unverified
+  source_slide: 8
+  note: No counterpart is visible in the slide's table inventory. This is not a verified absence from
+    LANL's unseen schema; keep this concept separable under ADR 0014.
+- concept: hardware targets
+  research:
+  - record_kind: hardware_target
+    field: null
+  status: unverified
+  source_slide: 8
+  note: No counterpart is visible in the slide's table inventory. This is not a verified absence from
+    LANL's unseen schema; keep this concept separable under ADR 0014.
+- concept: frozen evaluation protocols
+  research:
+  - record_kind: protocol
+    field: null
+  status: unverified
+  source_slide: 8
+  note: No counterpart is visible in the slide's table inventory. This is not a verified absence from
+    LANL's unseen schema; keep this concept separable under ADR 0014.
+- concept: comparison results
+  research:
+  - record_kind: comparison_result
+    field: null
+  status: unverified
+  source_slide: 8
+  note: No counterpart is visible in the slide's table inventory. This is not a verified absence from
+    LANL's unseen schema; keep this concept separable under ADR 0014.
+- concept: profile packages
+  research:
+  - record_kind: profile_package
+    field: null
+  status: unverified
+  source_slide: 8
+  note: No counterpart is visible in the slide's table inventory. This is not a verified absence from
+    LANL's unseen schema; keep this concept separable under ADR 0014.
+- concept: region profiles
+  research:
+  - record_kind: region_profile
+    field: null
+  status: unverified
+  source_slide: 8
+  note: No counterpart is visible in the slide's table inventory. This is not a verified absence from
+    LANL's unseen schema; keep this concept separable under ADR 0014.
+- concept: retention receipts
+  research:
+  - record_kind: retention
+    field: null
+  status: unverified
+  source_slide: 8
+  note: No counterpart is visible in the slide's table inventory. This is not a verified absence from
+    LANL's unseen schema; keep this concept separable under ADR 0014.
+- concept: team evidence claims
+  research:
+  - record_kind: team_claim
+    field: null
+  status: unverified
+  source_slide: 8
+  note: No counterpart is visible in the slide's table inventory. This is not a verified absence from
+    LANL's unseen schema; keep this concept separable under ADR 0014.
+- concept: review records
+  research:
+  - record_kind: review
+    field: null
+  status: unverified
+  source_slide: 8
+  note: No counterpart is visible in the slide's table inventory. This is not a verified absence from
+    LANL's unseen schema; keep this concept separable under ADR 0014.
+- concept: Extensa campaign summaries
+  research:
+  - record_kind: campaign_summary
+    field: null
+  status: unverified
+  source_slide: 8
+  note: No counterpart is visible in the slide's table inventory. This is not a verified absence from
+    LANL's unseen schema; keep this concept separable under ADR 0014.
+- concept: evidence basis on facts and metrics
+  research:
+  - record_kind: profile
+    field: metrics
+  - record_kind: input
+    field: properties
+  - record_kind: implementation
+    field: access_patterns
+  status: unverified
+  source_slide: 8
+  note: The slide does not expose evidence-basis fields. Preserve measured/simulated/inferred/estimated/unknown
+    labels; unknown values remain null.
+- concept: loops, access patterns and semantics
+  research:
+  - record_kind: implementation
+    field: loops
+  - record_kind: implementation
+    field: access_patterns
+  status: unverified
+  source_slide: 8
+  note: Definitions and data structures alone do not establish equivalents for research access-pattern
+    chains or semantic facts.

@@ -1,7 +1,7 @@
 # Map: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-06 16:11 ET (tickets regenerated as 22 vertical slices, approved by Yan-Ru; ticket 01 kept); 2026-10-06 16:01 ET (ticket 01 resolved; design committed as `6c691e6`)
+Updated: 2026-10-06 ET (ticket 03 resolved with source and validation evidence); 2026-10-06 16:11 ET (tickets regenerated as 22 vertical slices, approved by Yan-Ru; ticket 01 kept); 2026-10-06 16:01 ET (ticket 01 resolved; design committed as `6c691e6`)
 **Type:** ticket map
 **Status:** ready-for-agent (implementation starts on Yan-Ru's go-ahead)
 **Spec:** [spec.md](spec.md)
@@ -14,7 +14,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 |---|---|---|---|---|
 | 01 | [Yan-Ru reviews the design and approves the design-session commit](issues/01-review-and-commit-design.md) | resolved | — | about 20 min of reading |
 | 02 | [Prefactor: one access layer for record reads](issues/02-one-access-layer.md) | ready-for-agent | 01 | 3–4 h |
-| 03 | [Crosswalk v0 from the slides](issues/03-crosswalk-v0.md) | ready-for-agent | 01 | 1 h |
+| 03 | [Crosswalk v0 from the slides](issues/03-crosswalk-v0.md) | resolved | 01 | 1 h |
 
 ## B. The CPU path (first runnable version)
 
@@ -61,3 +61,5 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 - 2026-10-06: design inputs are [lanl-db-notes.md](lanl-db-notes.md) and [three-way-scan-analytic-evaluators.md](three-way-scan-analytic-evaluators.md); decisions D1–D34 in the spec.
 - 2026-10-06 16:01 ET: ticket 01 resolved; Yan-Ru confirmed D8–D34 and the estimator workflow and approved the design-session commit. [01](issues/01-review-and-commit-design.md), [spec](spec.md)
 - 2026-10-06 16:11 ET: the 24 layer-by-layer tickets 02–25 were replaced by 22 vertical slices (02–23), approved by Yan-Ru; the first runnable version is [04](issues/04-first-runnable-estimate.md).
+
+- 2026-10-06 ET: ticket [03](issues/03-crosswalk-v0.md) resolved: [crosswalk v0](../../docs/compatibility/lanl-crosswalk-v0.yaml), [format](../../docs/compatibility/README.md), and [source/test evidence](crosswalk-v0-verification.md). Every mapping remains unverified until LANL grants schema access.
