@@ -53,6 +53,7 @@ def register_cli(commands):
     sub.add_argument('--output', type=Path, help='new folder for compiled pass, IR, counts and run output (default a temporary folder)')
     sub.add_argument('--timeout-s', type=float, default=600)
     sub.add_argument('--fixture', action='store_true', help='label a hand-counted contract fixture, never application evidence')
+    sub.add_argument('--state-budget', type=int, default=524288, help='maximum transient logical observation entries; overflow preserves named unknowns')
     sub.add_argument('--target-description', help='reserved live counting input; target-specific stream counters follow in ticket 05')
     sub.add_argument('--format', choices=['yaml', 'json'], default='yaml')
     sub.set_defaults(analytic_handler=characterize)
@@ -138,7 +139,7 @@ def _uncovered_call(call):
         'no_runtime_operation', 'source_normalized_operations')
 
 
-def _counted_regions(static, counts):
+def _counted_regions(static, counts, count_scope="per_run"):
     regions = []
     for r in static['regions']:
         ops = counts['operations'].get(str(r['index']), [0, 0, 0, 0])
@@ -163,6 +164,24 @@ def _counted_regions(static, counts):
             'dynamic_counts': {'loop_iterations': _count(counts['trips'].get(str(r['index']), 0)) if r['is_loop'] else _count(None, 'unknown')},
             'footprint_bytes': _fact(counts.get('footprints', {}).get(str(r['index']), 0), 'measured', note='Live union of virtual byte ranges in this exclusive IR region; addresses are never persisted.'),
             'accelerator_calls': [], 'address_stream_counts': {}})
+    if 'memory_service_counts' in counts:
+        updates=('read','write','add-update','compare-and-swap','min-max-update','arbitrary')
+        for original,region in zip(static['regions'],regions):
+            observed=counts['memory_service_counts'].get(str(original['index']),{})
+            requests={kind:[] for kind in updates}
+            for item in observed.get('requests',[]):
+                requests[updates[item['update']]].append({'element_bytes':item['element_bytes'],
+                    'requests':{'value':item['requests'],'basis':'measured','scope':count_scope}})
+            missing=observed.get('missing',[])
+            region['memory_service_counts']={'format':'swdb.memory-service-counts.v1',
+                'scope':count_scope,'observation_method':'source_normalized_ir_allocation_relative',
+                'state':'partial' if missing else 'known','requests_by_update_kind':requests,
+                'useful_bytes':_fact(observed.get('useful_bytes',0),'measured'),
+                **{name:_fact(observed.get(name,0),'measured') for name in
+                    ('lifetime_line_union','logical_first_read_pages','logical_first_write_pages',
+                     'pre_roi_allocation_pages','in_roi_allocation_pages','unknown_object_requests')},
+                'missing':missing,'assumption_sha256':artifacts.digest({'line_bytes':64,'page_bytes':4096,
+                    'placement':'allocation_relative','first_touch':'first_source_observer_access'})}
     # Several source loops may map to one existing region; aggregate their counters,
     # while static_analysis.loops retains each loop's identity and source location.
     combined = {}
@@ -177,7 +196,8 @@ def _counted_regions(static, counts):
         else:
             previous = combined[region['id']]
             previous['access_patterns'].extend(region['access_patterns'])
-            previous['footprint_bytes']['value'] = max(previous['footprint_bytes']['value'],region['footprint_bytes']['value'])
+            previous['footprint_bytes']['value'] = (None if previous['footprint_bytes']['value'] is None or region['footprint_bytes']['value'] is None else max(previous['footprint_bytes']['value'],region['footprint_bytes']['value']))
+            previous['footprint_bytes']['basis'] = 'unknown' if previous['footprint_bytes']['value'] is None else 'measured'
             previous['active_workers']['value'] = max(previous['active_workers']['value'],region['active_workers']['value'])
             for key in CLASSES:
                 previous['operation_counts'][key]['value'] += region['operation_counts'][key]['value']
@@ -224,6 +244,8 @@ def characterize(args):
         raise Failure(f'source does not exist: {source}')
     if args.threads < 1:
         raise Failure('--threads must be positive')
+    if args.state_budget < 1:
+        raise Failure('--state-budget must be positive')
     if args.timeout_s <= 0:
         raise Failure('--timeout-s must be positive')
     if args.target_description:
@@ -309,6 +331,7 @@ def characterize(args):
     env['OMP_NUM_THREADS'] = str(args.threads)
     env['OMP_DYNAMIC'] = 'FALSE'
     env['SWDB_ROI_GATED'] = '1' if adapter else '0'
+    env['SWDB_STATE_BUDGET'] = str(args.state_budget)
     env['SWDB_COUNTS_OUTPUT'] = str(output / 'counts.json')
     executed = _run([binary, *args.run_arg], env=env, timeout=args.timeout_s)
     (output / 'stdout.txt').write_text(executed.stdout)
@@ -323,16 +346,16 @@ def characterize(args):
         raise Failure('no source regions matched the requested function/debug information')
     regions, calls = _counted_regions(static, counts)
     trials = []
-    if adapter:
-        if len(counts.get('trials', [])) != args.trials:
+    if counts.get('trials') or adapter:
+        if adapter and len(counts.get('trials', [])) != args.trials:
             raise Failure('counted run lacks the registered trial sequence')
         for index, observed in enumerate(counts['trials']):
-            trial_regions, trial_calls = _counted_regions(static, observed)
+            trial_regions, trial_calls = _counted_regions(static, observed, count_scope='per_trial')
             called_regions = {c['region'] for c in trial_calls if c['execution_count']['value']}
             trials.append({'position': index, 'sources': observed.get('sources', []),
                 'regions': [r for r in trial_regions if any(v['value'] for v in r['operation_counts'].values()) or any(a['element_count']['value'] for a in r['access_patterns']) or r['dynamic_counts']['loop_iterations']['value'] or r['id'] in called_regions],
                 'unmodeled_calls': [c for c in trial_calls if c['execution_count']['value']]})
-        if any(len(t['sources']) != 1 for t in trials):
+        if adapter and any(len(t['sources']) != 1 for t in trials):
             raise Failure('counted trial lacks its exact GAPBS source selection')
     record = _envelope('workload_characterization', args.id,
         'LLVM 22 static pass plus one IR-instrumented native count run; no timing measurement.')
@@ -349,7 +372,7 @@ def characterize(args):
         'toolchain': {'llvm_version': version, 'llvm_bin': str(llvm), 'compiler_flags': toolchain_flags, 'plugin_linkage': plugin_linkage, 'run_library_paths': run_library_paths},
         'counting': {'level': 'source_normalized_ir', 'passes': [pipeline],
             'pipeline_version': pipeline_version,
-            'summary': 'per_trial_then_median_time' if adapter else 'single_run',
+            'summary': 'per_trial_then_median_time' if trials else 'single_run',
             'native_runs': 1, 'basis': 'measured', 'vector_multiplicity': 'instrumented before vectorization and unrolling; existing fixed vectors counted by lane',
             'operation_definition': 'Normalized IR arithmetic/comparison operations; FMA counts two floating-point operations; checked integer arithmetic counts the result and overflow predicate (two per lane); branches count terminator executions; optimizer hints, address and cast instructions excluded.',
             'loop_definition': 'Body entries when the header condition chooses inside/outside; header entries for other loop shapes.',
@@ -364,8 +387,19 @@ def characterize(args):
             'missing_counts': ['callee bodies outside selected debug functions and other translation units'] if any(c['execution_count']['value'] and _uncovered_call(c) for c in calls + [c for t in trials for c in t['unmodeled_calls']]) else []},
         'regions': regions, 'unmapped_loops': [r['id'] for r in regions if r['kind'] == 'loop' and not r['mapped']],
         'unmodeled_calls': calls, 'evidence_kind': 'contract_fixture' if args.fixture else 'execution'})
-    if adapter:
+    if 'memory_service_counts' in counts:
+        record['counting']['observation_format']='swdb.live-count-context.v1'
+        record['observation_contract']={'format':'swdb.live-count-context.v1',
+            'level':'source_normalized_ir','abi':'swdb.access.v2',
+            'line_bytes':64,'page_bytes':4096,'state_budget':args.state_budget,
+            'object_scope':'translation_unit_allocator_calls',
+            'first_access_scope':'first observed access in selected normalized source functions; opaque initialization is not observed',
+            'physical_residency_known':False,
+            'runtime_bundle_sha256':artifacts.digest({name:_sha(llvm_src/name)
+                for name in ('CountingRuntime.cpp','LiveObjects.hpp')})}
+    if trials:
         record['trials'] = trials
+    if adapter:
         record['binding']['note'] = 'Registered source excerpts, input generator and original timed kernel lambda verified; each trial and SourcePicker selection retained.'
         record['coverage']['ambiguous_helper_loops'] = adapter['ambiguous_helper_loops']
         record['pattern_comparison'] = analytic_binding.compare_patterns(subject_record, regions, adapter['ambiguous_helper_loops'], adapter['mapping']['regions'])
@@ -516,6 +550,12 @@ def _payload_problems(data):
             counts = list(region['operation_counts'].values()) + list(region['dynamic_counts'].values())
             counts += [region['footprint_bytes']] + ([region['active_workers']] if 'active_workers' in region else [])
             counts += [a[k] for a in region['access_patterns'] for k in ('element_count', 'bytes_accessed', 'observed_address_span_bytes','observed_unique_bytes') if k in a]
+            if 'memory_service_counts' in region:
+                memory=region['memory_service_counts']
+                counts += [memory[name] for name in ('useful_bytes','lifetime_line_union',
+                    'logical_first_read_pages','logical_first_write_pages','pre_roi_allocation_pages',
+                    'in_roi_allocation_pages','unknown_object_requests')]
+                counts += [item['requests'] for items in memory['requests_by_update_kind'].values() for item in items]
             for count in counts:
                 value = count.get('value')
                 if value is not None and (not isinstance(value, (int, float)) or isinstance(value, bool) or not math.isfinite(value) or value < 0):
