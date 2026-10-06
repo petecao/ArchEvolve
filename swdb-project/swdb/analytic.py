@@ -471,7 +471,7 @@ def characterize(args):
         record['observation_contract']['object_scope_contract']={
             'format':'swdb.object-scopes.v1','abi':'swdb.object-scope.v1',
             'full_objects':['heap','source_alloca'],'bounded_views':[],
-            'retirement':'frame_exit',
+            'retirement':'frame_exit_lifetime_end_stackrestore',
             'observer_sha256':_sha(llvm_src/'ObjectScopes.hpp'),
             'runtime_sha256':_sha(llvm_src/'ObjectScopeRuntime.hpp')}
     if live_contract:

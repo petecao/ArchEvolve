@@ -30,3 +30,8 @@ First vertical slice: the public command rejected the missing `--object-scopes` 
 then the fixed caller/callee fixture passed with the exact six-line/two-page expectation
 and copied-store validation (GREEN: 1 passed, 3.51 s). This slice supports fixed allocas
 and normal frame return only; dynamic/lifetime/unwind/view coverage follows separately.
+
+Dynamic extent slice: six logical requests were unresolved (RED); checked target-element
+size multiplication admitted the 129-byte runtime alloca (GREEN: 2 passed, 6.62 s).
+The normalized fixture contains explicit stacksave/stackrestore and fixed-array lifetime
+start/end; callbacks retire only matching frame-owned allocation identities.
