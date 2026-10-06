@@ -67,6 +67,50 @@
                 }
               ]
             }
+          },
+          "accounting": {
+            "enum": [
+              "resource_bound",
+              "additive_overhead"
+            ]
+          },
+          "selector": {
+            "type": "object",
+            "description": "Model-defined selection; unsupported fields must produce an unknown model result.",
+            "properties": {
+              "event_ids": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "domain": {
+                "enum": [
+                  "host",
+                  "offload"
+                ]
+              },
+              "semantic_role": {
+                "enum": [
+                  "caller",
+                  "target_memory",
+                  "functional_bookkeeping",
+                  "service"
+                ]
+              },
+              "worker_scope": {
+                "type": "string"
+              },
+              "calls": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            },
+            "additionalProperties": true
           }
         },
         "required": [
