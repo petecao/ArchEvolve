@@ -106,6 +106,72 @@
           "pattern": "^[0-9a-f]{64}$"
         }
       }
+    },
+    "source_view": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "format",
+        "variant",
+        "source",
+        "backend",
+        "compile_defines",
+        "evidence_scope"
+      ],
+      "properties": {
+        "format": {
+          "const": "swdb.intrinsic-source-view.v1"
+        },
+        "variant": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]*$"
+        },
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "root",
+            "path",
+            "sha256"
+          ],
+          "properties": {
+            "root": {
+              "const": "library"
+            },
+            "path": {
+              "type": "string",
+              "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        },
+        "backend": {
+          "const": "functional_source"
+        },
+        "evidence_scope": {
+          "const": "functional_source_semantics"
+        },
+        "compile_defines": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+          }
+        },
+        "compile_undefines": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+          }
+        }
+      }
     }
   },
   "required": [
