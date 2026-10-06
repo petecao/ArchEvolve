@@ -18,6 +18,9 @@ extern "C" __attribute__((noinline)) void fixture_nested(unsigned char *base,int
   if(n)fixture_nested(base,n-1);else fixture_read(base,6);
   volatile int prevent_tail=n;(void)prevent_tail;
 }
+extern "C" __attribute__((noinline)) void fixture_setup(){
+  volatile int scratch[8];for(int i=0;i<8;++i)scratch[i]=i*i;
+}
 int main(int argc,char **argv){
   unsigned char *data=static_cast<unsigned char *>(std::calloc(512,1));
   if(!data)return 2;
@@ -25,7 +28,7 @@ int main(int argc,char **argv){
   const char *mode=argc>1?argv[1]:"";
   bool straddle=std::strcmp(mode,"straddle")==0,unknown=std::strcmp(mode,"unknown")==0,fail=std::strcmp(mode,"throw")==0,deep=std::strcmp(mode,"deep")==0;
   __swdb_begin();
-  try{if(deep){fixture_nested(data,160);data[0]=7;}else fixture_read(unknown?other:data+(straddle?62:0),fail?-1:6);}
+  try{if(std::strcmp(mode,"setup")==0){fixture_setup();data[0]=9;}else if(deep){fixture_nested(data,160);data[0]=7;}else fixture_read(unknown?other:data+(straddle?62:0),fail?-1:6);}
   catch(int){data[0]=1;}
   __swdb_end();
   std::free(data);

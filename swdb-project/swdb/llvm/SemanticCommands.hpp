@@ -38,7 +38,7 @@ PreservedAnalyses run(Module &M,ModuleAnalysisManager &){
   auto *commands=observation?observation->getArray("commands"):nullptr;
   if(!commands)report_fatal_error("functional observation lacks commands");
   std::set<Instruction *> original,sourceInvokes;for(Function &F:M)for(Instruction &I:instructions(F))original.insert(&I);
-  struct Binding {unsigned descriptor,base,active;bool activeKnown,activeSigned,alias;};
+  struct Binding {unsigned descriptor,base,active;bool activeKnown,activeSigned,alias,memory;};
   std::map<Function *,Binding> bindings;
   for(Function &F:M){
     auto *SP=F.getSubprogram();if(!SP || F.isDeclaration())continue;
@@ -50,14 +50,15 @@ PreservedAnalyses run(Module &M,ModuleAnalysisManager &){
         if(!hash || *hash!=sourceHash || !((symbol && *symbol==F.getName()) || (debug && *debug==SP->getName())))continue;
         auto base=alias->getInteger("memory_base_argument"),active=alias->getInteger("active_elements_argument");
         auto role=alias->getString("role");
-        if(!base || *base<0 || !role)report_fatal_error("invalid semantic operand binding");
+        bool memory=command->getString("memory_effect").value_or("read")!="none";
+        if((memory && (!base || *base<0)) || !role)report_fatal_error("invalid semantic operand binding");
         if(bindings.count(&F))report_fatal_error("ambiguous semantic function binding");
-        bindings.emplace(&F,Binding{i,unsigned(*base),unsigned(active.value_or(0)),bool(active),alias->getBoolean("active_elements_signed").value_or(false),*role=="backend_alias"});
+        bindings.emplace(&F,Binding{i,unsigned(base.value_or(0)),unsigned(active.value_or(0)),bool(active),alias->getBoolean("active_elements_signed").value_or(false),*role=="backend_alias",memory});
       }
     }
   }
   auto &C=M.getContext();auto *u32=Type::getInt32Ty(C),*u64=Type::getInt64Ty(C);auto *voidTy=Type::getVoidTy(C);
-  auto enter=M.getOrInsertFunction("__swdb_command_enter",voidTy,u32,u32,u32,u64,u32,u64,u32);
+  auto enter=M.getOrInsertFunction("__swdb_command_enter",voidTy,u32,u32,u32,u64,u32,u64,u32,u32);
   auto leave=M.getOrInsertFunction("__swdb_command_leave",voidTy,u32,u32);
   std::vector<CallBase *> sites;
   for(Function &F:M)if(!F.isDeclaration() && !F.getName().starts_with("__swdb_"))
@@ -65,16 +66,16 @@ PreservedAnalyses run(Module &M,ModuleAnalysisManager &){
   unsigned site=0;
   for(auto *call:sites){
     auto binding=bindings.at(call->getCalledFunction());
-    if(binding.base>=call->arg_size() || !call->getArgOperand(binding.base)->getType()->isPointerTy())report_fatal_error("semantic base operand is not a pointer");
+    if(binding.memory && (binding.base>=call->arg_size() || !call->getArgOperand(binding.base)->getType()->isPointerTy()))report_fatal_error("semantic base operand is not a pointer");
     if(binding.activeKnown && (binding.active>=call->arg_size() || !call->getArgOperand(binding.active)->getType()->isIntegerTy()))report_fatal_error("semantic active count operand is not integer");
     if(auto *ordinary=dyn_cast<CallInst>(call))if(ordinary->isMustTailCall())report_fatal_error("semantic musttail boundary is unsupported");
     IRBuilder<> before(call);before.SetCurrentDebugLocation(call->getDebugLoc());
     Value *active=binding.activeKnown?before.CreateZExtOrTrunc(call->getArgOperand(binding.active),u64):before.getInt64(0);
-    Value *activeKnown=before.getInt32(binding.activeKnown);
+    Value *activeKnown=before.getInt32(binding.activeKnown || !binding.memory);
     if(binding.activeKnown && binding.activeSigned)activeKnown=before.CreateZExt(before.CreateICmpSGE(call->getArgOperand(binding.active),ConstantInt::get(call->getArgOperand(binding.active)->getType(),0)),u32);
     before.CreateCall(enter,{before.getInt32(binding.descriptor),before.getInt32(site),before.getInt32(0),
-      before.CreatePtrToInt(call->getArgOperand(binding.base),u64),before.getInt32(binding.alias),
-      active,activeKnown});
+      binding.memory?before.CreatePtrToInt(call->getArgOperand(binding.base),u64):before.getInt64(0),before.getInt32(binding.alias),
+      active,activeKnown,before.getInt32(binding.memory)});
     if(auto *invoke=dyn_cast<InvokeInst>(call)){
       auto *normal=SplitEdge(invoke->getParent(),invoke->getNormalDest());if(!normal)report_fatal_error("semantic normal edge cannot be split");
       IRBuilder<> after(&*normal->getFirstInsertionPt());after.CreateCall(leave,{after.getInt32(site),after.getInt32(0)});

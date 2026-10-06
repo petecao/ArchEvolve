@@ -16,6 +16,16 @@ def payload_problems(target):
     request=observation['request_policy']['transaction_bytes']
     if request is not None and (type(request) is not int or request<1 or request&(request-1)):
         problems.append('transaction_bytes must be a positive power of two or null')
+    for command in observation['commands']:
+        none=command.get('memory_effect','read')=='none'
+        if none:
+            if command['target_access_sources'] or any(alias['memory_base_argument'] is not None for alias in command['aliases']):
+                problems.append('no-memory command requires no target source or memory operand')
+            if command.get('active_elements_policy')!='not_applicable':problems.append('no-memory active-element scope must be not_applicable')
+        elif not command['target_access_sources'] or any(alias['memory_base_argument'] is None for alias in command['aliases']):
+            problems.append('read command requires target access source and memory operand')
+        if command.get('active_elements_policy')=='observed_target_reads' and not command.get('target_reads_per_active_element'):
+            problems.append('observed-target active elements require explicit reads-per-element relation')
     layout=target.get('dram_address_layout')
     if layout is not None:
         occupied=set()
@@ -51,6 +61,8 @@ def prepare(store,target,source,*,fixture=False,compile_flags=()):
             intrinsic=store.get(command['intrinsic'],'intrinsic')
             if not intrinsic or not set(command['hardware_operations'])<=set(intrinsic.get('hardware_operations',[])):
                 raise Failure('functional command lacks its resolvable normative intrinsic/operation binding: '+command['intrinsic'])
+            if (command.get('memory_effect','read')=='none')!=(intrinsic.get('memory_kind')=='none'):
+                raise Failure('functional command memory effect differs from normative intrinsic')
             proof=require_compiled_view(intrinsic,compile_flags)
             bindings['compiled_views'].append(proof)
             bindings['records'][intrinsic['id']]=artifacts.digest(intrinsic)
@@ -112,9 +124,13 @@ def merge(regions,static,counts,contract,scope):
         observed=dynamic.get(key(site),{})
         command=command_specs[site['descriptor']]
         value=observed.get('executions',0)
+        active=None if observed.get('active_unknown') else observed.get('active_elements',0)
+        if command.get('active_elements_policy')=='observed_target_reads':
+            reads=observed.get('useful_accesses',0);relation=command['target_reads_per_active_element']
+            active=None if observed.get('unknown_target') or reads%relation else reads//relation
         region['accelerator_calls'].append({'site':site['site'],'event':command['event'],
             'intrinsic':command['intrinsic'],'hardware_operations':command['hardware_operations'],
-            'execution_count':fact(value),'active_elements':fact(None if observed.get('active_unknown') else observed.get('active_elements',0)),
+            'execution_count':fact(value),'active_elements':fact(active),
             'useful_accesses':fact(None if observed.get('unknown_target') else observed.get('useful_accesses',0)),
             'useful_bytes':fact(None if observed.get('unknown_target') else observed.get('useful_bytes',0)),
             'accounting_domain':'offload','observation_method':'pre_inline_guarded_source_access',
