@@ -4,6 +4,7 @@ Created: 2026-10-06 ET. Values prove logical fixture conventions only.
 import json
 import hashlib
 import yaml
+import pytest
 from conftest import REPO,run_swdb
 from testkit.analytic import digest,target_description
 
@@ -127,3 +128,25 @@ def test_guard_budget_shadows_deeper_frames_and_restores_host_domain(records,tmp
     assert 'command_nesting_state_budget' in data['observation_contract']['semantic_commands']['missing']
     assert all(r['address_stream_counts'][target_hash]['line_requests']['value'] is None for r in data['regions'])
     assert any(a['source_location']['function']=='main' and a['update_kind']=='write' and a['element_count']['value'] for r in data['regions'] for a in r['access_patterns'])
+
+
+def test_negative_logical_request_count_is_refused_after_fixture_resigning(records,tmp_path,llvm22):
+    data,target_hash=characterize_command(records,tmp_path,llvm22)
+    observed=next(r['address_stream_counts'][target_hash] for r in data['regions'] if r['address_stream_counts'][target_hash]['line_requests']['value'])
+    observed['line_requests']['value']=-1
+    data.pop('identity_sha256');data['identity_sha256']=digest(data)
+    records.write('workload_characterizations/fixture.command.yaml',data)
+    result=records.validate()
+    assert result.returncode==1
+    assert 'nonnegative' in result.stdout+result.stderr or 'minimum' in result.stdout+result.stderr
+
+
+@pytest.mark.parametrize('trial',[False,True])
+def test_window_policy_hash_tamper_is_refused_at_aggregate_and_trial_scope(records,tmp_path,llvm22,trial):
+    data,target_hash=characterize_command(records,tmp_path,llvm22)
+    rows=data['trials'][0]['regions'] if trial else data['regions']
+    rows[0]['address_stream_counts'][target_hash]['window_policy_sha256']='f'*64
+    data.pop('identity_sha256');data['identity_sha256']=digest(data)
+    records.write('workload_characterizations/fixture.command.yaml',data)
+    result=records.validate()
+    assert result.returncode==1 and 'window_policy_sha256' in result.stdout+result.stderr

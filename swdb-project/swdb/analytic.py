@@ -613,6 +613,8 @@ def _payload_problems(data):
     """Payload integrity and finite-number checks shared by CLI loading and validate."""
     kind = data['kind']
     if kind == 'workload_characterization':
+        from swdb.offload_observation import count_problems
+        yield from count_problems(data)
         without_identity = {k: v for k, v in data.items() if k != 'identity_sha256'}
         try:
             expected = artifacts.digest(without_identity)

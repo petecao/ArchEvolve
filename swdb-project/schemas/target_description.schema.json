@@ -473,6 +473,157 @@
           ]
         }
       ]
+    },
+    "logical_dram_layout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "channel",
+        "rank",
+        "bank_group",
+        "bank",
+        "row"
+      ],
+      "properties": {
+        "channel": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lsb",
+              "bits"
+            ],
+            "properties": {
+              "lsb": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 63
+              },
+              "bits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 64
+              }
+            }
+          }
+        },
+        "rank": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lsb",
+              "bits"
+            ],
+            "properties": {
+              "lsb": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 63
+              },
+              "bits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 64
+              }
+            }
+          }
+        },
+        "bank_group": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lsb",
+              "bits"
+            ],
+            "properties": {
+              "lsb": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 63
+              },
+              "bits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 64
+              }
+            }
+          }
+        },
+        "bank": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lsb",
+              "bits"
+            ],
+            "properties": {
+              "lsb": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 63
+              },
+              "bits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 64
+              }
+            }
+          }
+        },
+        "row": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lsb",
+              "bits"
+            ],
+            "properties": {
+              "lsb": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 63
+              },
+              "bits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 64
+              }
+            }
+          }
+        }
+      }
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "functional_observation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "dram_address_layout": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/$defs/logical_dram_layout"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
 }

@@ -549,9 +549,13 @@
           "pattern": "^[a-f0-9]{64}$"
         },
         "dram_address_layout": {
-          "type": [
-            "object",
-            "null"
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/logical_dram_layout"
+            }
           ]
         },
         "semantic_commands": {
@@ -799,11 +803,48 @@
         "accelerator_calls": {
           "type": "array",
           "items": {
-            "type": "object"
+            "type": "object",
+            "allOf": [
+              {
+                "if": {
+                  "required": [
+                    "observation_method"
+                  ],
+                  "properties": {
+                    "observation_method": {
+                      "const": "pre_inline_guarded_source_access"
+                    }
+                  }
+                },
+                "then": {
+                  "$ref": "#/$defs/semantic_command_count"
+                }
+              }
+            ]
           }
         },
         "address_stream_counts": {
-          "type": "object"
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "allOf": [
+              {
+                "if": {
+                  "required": [
+                    "format"
+                  ],
+                  "properties": {
+                    "format": {
+                      "const": "swdb.logical-address-counts.v1"
+                    }
+                  }
+                },
+                "then": {
+                  "$ref": "#/$defs/logical_address_counts"
+                }
+              }
+            ]
+          }
         },
         "active_workers": {
           "$ref": "#/$defs/fact"
@@ -1450,6 +1491,334 @@
           ]
         }
       ]
+    },
+    "logical_work_count": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/count"
+        },
+        {
+          "required": [
+            "value"
+          ],
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            }
+          }
+        }
+      ]
+    },
+    "logical_fraction": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/count"
+        },
+        {
+          "required": [
+            "value"
+          ],
+          "properties": {
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        }
+      ]
+    },
+    "logical_address_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "swdb.logical-address-counts.v1"
+        },
+        "target_description_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "level": {
+          "const": "derived_logical_transactions"
+        },
+        "state": {
+          "enum": [
+            "complete",
+            "incomplete"
+          ]
+        },
+        "scope": {
+          "type": "string",
+          "x-vocab": "count_scopes"
+        },
+        "missing": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "layout_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "request_policy_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "placement_assumption_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "window_policy_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "line_requests": {
+          "$ref": "#/$defs/logical_work_count"
+        },
+        "row_groups": {
+          "$ref": "#/$defs/logical_work_count"
+        },
+        "grouped_row_hits": {
+          "$ref": "#/$defs/logical_work_count"
+        },
+        "windows": {
+          "$ref": "#/$defs/logical_work_count"
+        },
+        "staged_bytes": {
+          "$ref": "#/$defs/logical_work_count"
+        },
+        "grouped_row_hit_fraction": {
+          "$ref": "#/$defs/logical_fraction"
+        }
+      },
+      "required": [
+        "format",
+        "target_description_sha256",
+        "level",
+        "state",
+        "scope",
+        "missing",
+        "notes",
+        "layout_sha256",
+        "request_policy_sha256",
+        "placement_assumption_sha256",
+        "window_policy_sha256",
+        "line_requests",
+        "row_groups",
+        "grouped_row_hits",
+        "windows",
+        "staged_bytes",
+        "grouped_row_hit_fraction"
+      ]
+    },
+    "semantic_command_count": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "site": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "event": {
+          "type": "string",
+          "minLength": 1
+        },
+        "intrinsic": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hardware_operations": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "accounting_domain": {
+          "const": "offload"
+        },
+        "observation_method": {
+          "const": "pre_inline_guarded_source_access"
+        },
+        "missing": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "execution_count": {
+          "$ref": "#/$defs/logical_work_count"
+        },
+        "active_elements": {
+          "$ref": "#/$defs/logical_work_count"
+        },
+        "useful_accesses": {
+          "$ref": "#/$defs/logical_work_count"
+        },
+        "useful_bytes": {
+          "$ref": "#/$defs/logical_work_count"
+        }
+      },
+      "required": [
+        "site",
+        "event",
+        "intrinsic",
+        "hardware_operations",
+        "accounting_domain",
+        "observation_method",
+        "missing",
+        "execution_count",
+        "active_elements",
+        "useful_accesses",
+        "useful_bytes"
+      ]
+    },
+    "logical_dram_layout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "channel",
+        "rank",
+        "bank_group",
+        "bank",
+        "row"
+      ],
+      "properties": {
+        "channel": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lsb",
+              "bits"
+            ],
+            "properties": {
+              "lsb": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 63
+              },
+              "bits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 64
+              }
+            }
+          }
+        },
+        "rank": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lsb",
+              "bits"
+            ],
+            "properties": {
+              "lsb": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 63
+              },
+              "bits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 64
+              }
+            }
+          }
+        },
+        "bank_group": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lsb",
+              "bits"
+            ],
+            "properties": {
+              "lsb": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 63
+              },
+              "bits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 64
+              }
+            }
+          }
+        },
+        "bank": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lsb",
+              "bits"
+            ],
+            "properties": {
+              "lsb": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 63
+              },
+              "bits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 64
+              }
+            }
+          }
+        },
+        "row": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lsb",
+              "bits"
+            ],
+            "properties": {
+              "lsb": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 63
+              },
+              "bits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 64
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

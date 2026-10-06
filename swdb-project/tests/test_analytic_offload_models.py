@@ -7,7 +7,7 @@ from conftest import run_swdb
 from testkit.analytic import digest,fixture_characterization,target_description,freeze_protocol
 
 
-def fact(value):return {'value':value,'basis':'reported','scope':'per_call'}
+def fact(value):return {'value':value,'basis':'unknown' if value is None else 'reported','scope':'per_call'}
 def parameter(value,unit):return {'value':value,'basis':'reported','source':'Hand-computed fixture only.','unit':unit}
 
 
@@ -25,7 +25,10 @@ def estimate_fixture(records,tmp_path,model,parameters,*,wrong_hash=False,reques
         'access_patterns':[],'accelerator_calls':[],
         'address_stream_counts':{('f'*64 if wrong_hash else target_hash):{
             'format':'swdb.logical-address-counts.v1','target_description_sha256':target_hash,
-            'level':'derived_logical_transactions','state':'complete','missing':[],
+            'level':'derived_logical_transactions','state':'complete','scope':'per_call','missing':[],
+            **{key:'0'*64 for key in ('layout_sha256','request_policy_sha256','placement_assumption_sha256','window_policy_sha256')},
+            'grouped_row_hits':fact(None if requests is None else requests-groups),
+            'grouped_row_hit_fraction':fact(None if not requests else (requests-groups)/requests),'windows':fact(2),
             'line_requests':fact(requests),'row_groups':fact(groups),'staged_bytes':fact(24),
             'notes':['Hand-computed logical contract fixture only; no physical request evidence.']}}}]
     data.pop('identity_sha256');data['identity_sha256']=digest(data)
