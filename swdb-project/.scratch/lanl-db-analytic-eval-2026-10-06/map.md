@@ -13,7 +13,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | # | Ticket | Status | Blocked by | Time |
 |---|---|---|---|---|
 | 01 | [Yan-Ru reviews the design and approves the design-session commit](issues/01-review-and-commit-design.md) | resolved | — | about 20 min of reading |
-| 02 | [Prefactor: one access layer for record reads](issues/02-one-access-layer.md) | ready-for-agent | 01 | 3–4 h |
+| 02 | [Prefactor: one access layer for record reads](issues/02-one-access-layer.md) | resolved | 01 | 3–4 h |
 | 03 | [Crosswalk v0 from the slides](issues/03-crosswalk-v0.md) | resolved | 01 | 1 h |
 
 ## B. The CPU path (first runnable version)
@@ -63,3 +63,10 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 - 2026-10-06 16:11 ET: the 24 layer-by-layer tickets 02–25 were replaced by 22 vertical slices (02–23), approved by Yan-Ru; the first runnable version is [04](issues/04-first-runnable-estimate.md).
 
 - 2026-10-06 ET: ticket [03](issues/03-crosswalk-v0.md) resolved: [crosswalk v0](../../docs/compatibility/lanl-crosswalk-v0.yaml), [format](../../docs/compatibility/README.md), and [source/test evidence](crosswalk-v0-verification.md). Every mapping remains unverified until LANL grants schema access.
+
+- 2026-10-06 ET: [ticket 02](issues/02-one-access-layer.md#answer) resolved in `bb11cb1`:
+  [`swdb.access`](../../swdb/access.py) owns record/index I/O; existing query APIs remain.
+  [Interface contract](../../docs/reference/database.md#record-and-query-access-interface),
+  [query regressions](../../tests/test_query_index.py), and the ticket Answer record the
+  15 identical old/new outputs and the regression results (171 distinct passes, one
+  existing data-dependent skip; freshness case rerun with one stable package version).
