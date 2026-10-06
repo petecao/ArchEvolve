@@ -1,6 +1,6 @@
 # Implementation progress
 
-Updated: 2026-10-06 17:53 ET
+Updated: 2026-10-06 18:15 ET
 
 Integration: `codex/lanl-analytic-eval`; review base: `2c50e5fb8671e08050921bee06920f92fd153bdd` (`yanrujhou_main`). Yan-Ru amended startup settings commit `fb842a8` to this replacement during startup. Owned branches are rebased so the removed IDE files stay removed. Final delivery merges and pushes `yanrujhou_main`.
 
@@ -9,9 +9,12 @@ Agent assignments: tickets 02–14, 16–17. Human gates 15, 18, 21 stay human-o
 | Ticket | Agent | Branch | State |
 |---|---|---|---|
 | 02–04 | Existing implementers | Merged | Resolved; integration86b2a9a; combined smoke11passed/553valid |
-| 05 | `/root/ticket02` | `codex/lanl-ticket05` | Claimed; corrected BFS/BC counts and final Linux numerator proof passed; bound estimate reports active |
+| 05 | `/root/ticket02` | `codex/lanl-ticket05` | Resolved aa048a3; merged0785871; corrected counts, proof and bound reports completed |
 | 06 | `/root/ticket04` | `codex/lanl-ticket06` | Resolved and merged7c51ee1;41 focused plus real claim1 and integrated7 passed;553 historical valid |
-| 07 | `/root/ticket03` | `codex/lanl-ticket07` | Claimed; a1/a2 measurements, final Linux equivalence and typed calibration tests passed; measured fixture rerun active |
+| 07 | `/root/ticket03` | `codex/lanl-ticket07` | Resolved cee740a; merged8e2156a; measured fixture, typed calibration and provenance checks passed |
+| 08 | `/root/ticket02` | `codex/lanl-ticket08` | Active; isolated Peter report import and outcome redaction |
+| 09 | `/root/ticket04` | `codex/lanl-ticket09` | Assigned; shared runtime/context/placement foundation before DX mechanisms |
+| 11 | `/root/ticket03` | `codex/lanl-ticket11` | Claimed; separate typed native-service calibration and error-band module |
 
 Managed worktrees: `/Users/yanrujhou/.codex/worktrees/lanl-*/ArchEvolve`. Parent owns integration. Inspect liveness before reassigning. File writes and Git metadata there need sandbox escalation, covered by the user's implementation authorization.
 
@@ -58,3 +61,11 @@ Completed06plusprogressfdaf36a fast-forwarded/pushed yanrujhou_main andGit-synch
 Combined05/07 source `b5acc909ef9df813352004e88633fac4db4b55e7` passed7 public compatibility checks in285.23s plus567-record validation, then pushed. Typed calibration source3b00e27 passed14 calibration +14 shared/protocol checks, including refusal to discard a resolved gem5 dependency. The combined clean Git source is isolated at `/data1/yanruj/ArchEvolve-lanl-estimates-20261006`. Bound-target import, actual LLVM22 T1 contract fixture, fresh frozen BFS/BC protocols and per-region reports are ACTIVE on node0g473 since17:52:50ET, tmux `swdb-lanl-bound-estimates-20261006-a1`, raw `/data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1`, outer1200s. Prefix `mbit10.cpu.lanl20261006a2.v2`; native timing arrays/original10 target bytes remain unchanged. Preflight all three leases released, load1.03,117GiB available, disks27.53/57.63GiB free, wrapper hash matched. Node1 stays idle apart from preserved unrelated Quicksilver CPU process. Completion requires real receipt verification and compact Git export before05/07 closure.
 
 Shared09/11 contract: `/private/tmp/lanl-09-11-shared-interface-20261006.md`.09 owns the optional runtime/schema/composition allocation-lifetime/context foundation;11 owns a separate generic CPU service module and error-band admission. Normalized source accesses are logical work, not physical DRAM requests. Existing gem5 DX target stays refused;09 creates a fresh analytic/functional identity from config-only D18 sources. Parent chooses fresh LLVM22/libomp g16 development timings for11; historical GCC13/libgomp rows are separate and excluded from the numerical band. Fresh g17 holdout follows the frozen model/calibration/development width. Preliminary17 method/evidence notes: `/private/tmp/lanl-ticket17-statistical-preparation-20261006.md`; actual analysis policy must freeze before fresh pairs. Evaluation table delivered17:52ET; next scheduled check remains18:10ET. All agents responsive; four of fifteen assigned tickets resolved.
+
+2026-10-06 18:15 ET: six of fifteen assigned tickets resolved. Final05/07 tips aa048a394c156eab08850cb2703bb638238c34f4 and cee740a8b62b55df99ece128404fd88ee79195e4 merged at8e2156a4e1f1bd9da46f2510393901e4e4ca2a65. Merger public smoke5 passed in250.63s; copied portable store584 records valid; actual measured-target frozen fixture replay matched2.2471697927392882e-08 seconds and preserved contract_fixture/within_error. SWDB-only diff/clean tree, other ticket rows unchanged. Portable estimator Python bundle remains645fc669120506b9d87aa32859d72aac928cb6a8e419d48ddc9e54a258595017.
+
+Bound estimates completed18:01:24ET, node0g473exit0/released, raw /data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1. Five derived target descriptions and five typed calibration records, one actualLLVM22 T1 fixture characterization, three protocols and three estimates added:17newrecords,584valid. FixtureT1 targetSHAa5d6c34b6d1d4be0c90a3ade95f9941ae64c9b5e76270aa26889db8cf8a499d2; BF/BCT4 targetSHA0a7b3143000e6f805f20192e6b5c1ea11a74c1d61b7994dd19f718486750b88e. BF27/BC31 observed region reports retain all5trials, zero-only region IDs and129/165 static unmapped IDs; whole-call seconds/ratios remain null due unsupported call/shape/worker scope. Counts and source-normalized logical accesses do not establish CPU DRAM traffic. Aggregated region input templates are labeled root/first-observed diagnostics; exact inputs are retained per trial. Compact structured metadata+records Git-exported/fetched at68df1ddbab971ca6cb51f66ae74ae2f4cb62acca, origin/codex/lanl-bound-estimate-evidence; all raw outputs stay remote. Original10 calibration target bytes and native timing arrays retained unchanged.
+
+08 starts from8e2156a in its own worktree; both supplied v1.2 filenames have content schema1.1, unresolved unit/offset conflicts preserved, performance sections removed from outcome-free role input.11 starts from8e2156a in its own worktree;09 owns shared optional characterization/runtime/target schema and composition foundation,11 separate native-service/band modules. Sharedinterface remains /private/tmp/lanl-09-11-shared-interface-20261006.md.09 is assigned after merger completion; parent owns lane dispatch and Git transfers. No fresh DX paired campaign exists (0/20), no CPU validated error band yet.
+
+Latest host check18:11ET: legacyg77/node0g473/node1g529 released, load1.07, /data1free27.38GiB and/datafree57.43GiB; preserve unrelated node1 Quicksilver process. Required30min table delivered18:13ET, next due18:40ET; all three implementers responsive. Ongoing heartbeat remains ACTIVE until all assigned implementation, actual evaluations, final two-axis review/fixes, tracker and main/remote sync complete.
