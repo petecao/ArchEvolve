@@ -43,11 +43,17 @@ struct Footprint {
   }
 };
 struct AccessCount { uint64_t elements=0,bytes=0,lo=UINT64_MAX,hi=0;Footprint footprint; };
+struct CallShape {
+  uint64_t unknown_lengths=0,unknown_free_lifetimes=0;
+  std::map<uint64_t,uint64_t> lengths,lifetimes;
+};
 struct Counts {
   std::mutex mutex;
   swdb_live::Registry registry;
   std::atomic<bool> active;
   std::map<uint32_t,uint64_t> trips,calls,sizes;
+  std::map<uint32_t,CallShape> call_shapes;
+  uint64_t call_shape_entries=0;
   std::map<std::thread::id,uint64_t> thread_ids;
   std::map<uint32_t,std::set<uint64_t>> active_workers,team_sizes;
   std::map<uint32_t,std::array<uint64_t,4>> ops;
@@ -56,7 +62,7 @@ struct Counts {
   std::vector<uint64_t> sources;
   std::vector<std::string> trials;
   Counts():active(!(std::getenv("SWDB_ROI_GATED") && std::string(std::getenv("SWDB_ROI_GATED"))=="1")){}
-  void clear(){registry.begin();trips.clear();calls.clear();sizes.clear();ops.clear();accesses.clear();footprints.clear();sources.clear();active_workers.clear();team_sizes.clear();thread_ids.clear();}
+  void clear(){registry.begin();call_shapes.clear();call_shape_entries=0;trips.clear();calls.clear();sizes.clear();ops.clear();accesses.clear();footprints.clear();sources.clear();active_workers.clear();team_sizes.clear();thread_ids.clear();}
   void observe(uint32_t region){
     auto token=thread_ids.emplace(std::this_thread::get_id(),thread_ids.size()).first->second;
     active_workers[region].insert(token);team_sizes[region].insert(workers());
@@ -79,7 +85,13 @@ struct Counts {
       out<<"},\""<<item.first<<"\":{";first=true;for(auto &p:*item.second){if(!first)out<<',';first=false;out<<'"'<<p.first<<"\":[";bool sep=false;for(auto token:p.second){if(sep)out<<',';sep=true;out<<token;}out<<']';}
     }
     out<<"},\"sources\":[";first=true;for(auto s:sources){if(!first)out<<',';first=false;out<<s;}
-    out<<"],\"memory_service_counts\":"<<registry.snapshot()<<"}";return out.str();
+    out<<"],\"memory_service_counts\":"<<registry.snapshot()<<",\"call_shapes\":{";first=true;
+    for(auto &p:call_shapes){if(!first)out<<',';first=false;auto &shape=p.second;
+      out<<'"'<<p.first<<"\":{\"unknown_lengths\":"<<shape.unknown_lengths<<",\"unknown_free_lifetimes\":"<<shape.unknown_free_lifetimes;
+      for(auto item:{std::make_pair("known_length_bins",&shape.lengths),std::make_pair("allocation_lifetime_size_bins",&shape.lifetimes)}){
+        out<<",\""<<item.first<<"\":[";bool sep=false;for(auto &bin:*item.second){if(sep)out<<',';sep=true;out<<"{\"bytes\":"<<bin.first<<",\"executions\":"<<bin.second<<'}';}out<<']';
+      }out<<'}';
+    }out<<"}}";return out.str();
   }
   ~Counts(){const char *path=std::getenv("SWDB_COUNTS_OUTPUT");if(!path)return;
     std::ofstream out(path);std::string root=trials.empty()?snapshot():trials.front();root.pop_back();out<<root<<",\"trials\":[";
@@ -105,4 +117,21 @@ extern "C" void __swdb_reallocate(uint64_t old,uint64_t address,uint64_t size,ui
 extern "C" void __swdb_access_v2(uint32_t site,uint32_t region,uint64_t address,uint64_t n,uint64_t width,uint32_t update){
   auto &c=counts();{std::lock_guard<std::mutex> lock(c.mutex);c.registry.observe(region,address,n,width,update,c.active);}
   __swdb_access(site,region,address,n,width);
+}
+
+extern "C" void __swdb_call_v2(uint32_t site,uint64_t size,uint32_t known,uint32_t region,uint64_t pointer,uint32_t action){
+  auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);
+  c.calls[site]++;c.observe(region);if(known)c.sizes[site]+=size;
+  auto &shape=c.call_shapes[site];
+  auto add=[&](std::map<uint64_t,uint64_t> &bins,uint64_t bytes,uint64_t &unknown){
+    auto it=bins.find(bytes);if(it!=bins.end())++it->second;
+    else if(c.call_shape_entries<swdb_live::budget()){bins[bytes]=1;++c.call_shape_entries;}
+    else ++unknown;
+  };
+  if(action==2){
+    auto it=c.registry.objects.find(pointer);
+    if(it==c.registry.objects.end())++shape.unknown_free_lifetimes;
+    else add(shape.lifetimes,it->second.size,shape.unknown_free_lifetimes);
+  } else if(known)add(shape.lengths,size,shape.unknown_lengths);
+  else ++shape.unknown_lengths;
 }
