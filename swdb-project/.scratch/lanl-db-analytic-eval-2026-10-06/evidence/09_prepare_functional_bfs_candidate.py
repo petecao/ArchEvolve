@@ -155,7 +155,7 @@ def main():
     cert_argv = [sys.executable, '-m', 'swdb', 'certify', pins['library']['contract']['id'], '--candidate', candidate['id'],
                  '--records', str(records), '--library', str(ROOT / 'library'), '--runs-dir', str(output / 'strict-certification'),
                  '--command-version', '1.6', '--tile-sizes', '16384,1024', '--threads', '4', '--sources', '0',
-                 '--mode', 'archevolve', '--format', 'json']
+                 '--mode', 'archevolve']
     receipt = {'date': '2026-10-06 ET', 'state': 'unverified_source_candidate_created', 'execution_performed': False,
                'source_preparation_git_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
                'pins_sha256': artifacts.file_hash(args.pins), 'canonical_source_sha256': identity['sha256'],

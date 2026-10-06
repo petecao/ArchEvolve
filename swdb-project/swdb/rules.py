@@ -464,6 +464,10 @@ def _strategy(record, ctx):
 def _intrinsic(record):
     data, rel = record.data, record.rel
     expected = data["name"].lstrip("_")
+    if 'source_view' in data:
+        expected+='.'+data['source_view']['variant']
+        from swdb.intrinsic_source_views import problems
+        for message in problems(data):yield Problem(rel,'source_view',message)
     if data["id"] != expected:
         yield Problem(rel, "id", f"an intrinsic's ID is its C name without leading underscores: {expected!r}")
     if "interface" not in data and not any(p["kind"] == "vendor_reference" and p.get("uri") for p in data["provenance"]):
