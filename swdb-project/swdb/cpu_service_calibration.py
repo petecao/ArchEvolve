@@ -30,6 +30,8 @@ def register_cli(commands):
     run.add_argument('--output', type=Path, required=True)
     run.add_argument('--fixture', action='store_true')
     run.add_argument('--count-only', action='store_true', help='emit ABI/count proof only; no elapsed calibration')
+    run.add_argument('--service-group', choices=['clock', 'allocator'], default='clock')
+    run.add_argument('--size', type=int, action='append', help='exact allocator byte bin; repeat, <=1MiB')
     run.add_argument('--compiler', default='c++')
     run.add_argument('--machine', default='mbit10')
     run.add_argument('--lane', help='exact socket lease-name claim, e.g. mbit10-evaluation-node0; verified from live OS/lease state')
@@ -127,6 +129,11 @@ def validate_record(record, ctx):
 
 
 def calibrate(args):
+    if args.service_group == 'allocator':
+        from swdb.cpu_allocator_calibration import calibrate
+        return calibrate(args)
+    if args.size:
+        raise Failure('--size applies to the allocator service group')
     from swdb.cpu_calibration import _command
     if not 3 <= args.repetitions <= 11 or not math.isfinite(args.max_wall_s) or not 0 < args.max_wall_s <= 900 or not math.isfinite(args.min_trial_s) or not 0 < args.min_trial_s <= .2:
         raise Failure('service timing exceeds repetitions 3–11, wall 900s or per-trial 0.2s caps')

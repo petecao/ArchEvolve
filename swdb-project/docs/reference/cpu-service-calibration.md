@@ -73,3 +73,72 @@ stopped the first remote attempt before any proof; that attempt supplies no
 count/timing evidence. The corrected named lease still requires the real ancestor,
 CPU affinity, memory bind policy and held lease checks; a matching string alone
 does not authorize native execution. Use outer timeout900s and raw data mounts.
+
+## Exact allocator cells (2026-10-06 ET)
+
+`cpu-service-calibrate --service-group allocator` separately times array/scalar
+allocation and deletion. The default matrix has20 cells: array sizes8192,65536,
+227416,262144,524288B and scalar sizes8,16,32,64,128B, each with allocation and
+free cost. These are the complete observed T1 BFS/BC allocation/lifetime bins in
+`evidence/registered-counts-t1-mbit10-20261006-a1.json`. Different allocation/free
+262144B totals reflect the ROI lifetime boundary. Explicit `--size` values test
+all four operations at each selected bin.
+
+One batch has at most65536 events and64MiB of live requested payload. A timed
+pair has at most16777216 events, seven alternating-order repetitions,900s wall
+budget and25MiB raw budget. Timed payload is untouched; the cap describes
+requested live payload, not measured RSS. The gross pilot selects a batch count
+with25% duration margin; native admission requires every gross repetition to
+reach50ms. Each paired driver duration is retained even when shorter than50ms.
+Unresolved subtraction remains null without clamping negative residuals.
+
+The shared noinline C++11 body must retain all four ABI calls under actualO3
+optimization. A separate source-normalized-v2 proof executes each operation at
+3/5 events, service/driver, smallest/largest byte bins. It retains observed
+allocation and free-lifetime size bins, exact ABI, count hashes and the shared
+source identity. Count-only mode never runs the native timer or emits elapsed
+receipts. Preparations and cleanup are outside both the counted service ROI and
+timed segments.
+
+The construction is `fresh_process_repeated_allocate_free_batches`. It measures
+that construction's effective costs; transfer to the application's retained heap
+state is **inferred** and requires an explicit model assumption. No physical
+residency, page-fault rate or instruction-issue latency is claimed. Calibration
+records preserve GLIBC_TUNABLES, actual MALLOC_* variables, preload/audit and
+library-search controls. Their absence is meaningful only under the declared
+scope. Legacy counted receipts lack this allocator-control declaration and cannot
+prove equality. The glibc allocator [tunables](https://sourceware.org/glibc/manual/latest/html_node/Memory-Allocation-Tunables.html)
+include cache and mapping thresholds, so matching requested sizes alone does not
+establish allocator-state equivalence.
+
+Parent-dispatched commands, in a clean immutable Linux checkout and a real named
+node0 lease (raw folder must be new; use a different folder for each phase):
+
+```sh
+python3 -m swdb cpu-service-calibrate --records "$SWDB_RAW_RECORDS" \
+  --service-group allocator --count-only --machine mbit10 \
+  --lane mbit10-evaluation-node0 --llvm-bin "$SWDB_CPU_LLVM" \
+  --toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 \
+  --output "$SWDB_ALLOCATOR_COUNT_RAW" --max-wall-s 600 --format json
+```
+
+After count proof and release of any other socket timing job:
+
+```sh
+python3 -m swdb cpu-service-calibrate --records "$SWDB_RAW_RECORDS" \
+  --service-group allocator --machine mbit10 \
+  --lane mbit10-evaluation-node0 --llvm-bin "$SWDB_CPU_LLVM" \
+  --toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 \
+  --output "$SWDB_ALLOCATOR_ELAPSED_RAW" --repetitions 7 \
+  --min-trial-s .05 --max-wall-s 900 --format json
+python3 -m swdb import-cpu-service-calibration --records "$SWDB_RAW_RECORDS" \
+  --receipt "$SWDB_ALLOCATOR_ELAPSED_RAW/receipt.json" \
+  --id mbit10.cpu.lanl20261006.service.allocator.a1 --format json
+python3 -m swdb validate --records "$SWDB_RAW_RECORDS"
+```
+
+Use600s inner/900s outer for count-only and900s inner/1200s outer for elapsed.
+Keep node1 idle during elapsed calibration. Raw binaries, IR and logs stay remote;
+only the typed service record and compact receipt metadata enter Git. Application
+accuracy remains unsupported until every executed memory/runtime service and the
+matched original-driver timing scope are admitted independently.

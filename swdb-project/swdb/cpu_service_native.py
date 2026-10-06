@@ -61,6 +61,9 @@ def loaded_libraries(binary, command):
 
 
 def validate(raw):
+    if raw.get('settings', {}).get('group') == 'allocator_v1':
+        from swdb.cpu_allocator_calibration import validate
+        return validate(raw)
     context, settings = raw['context'], raw['settings']
     def require(condition, reason):
         if not condition:
