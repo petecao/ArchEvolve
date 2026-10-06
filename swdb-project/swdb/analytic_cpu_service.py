@@ -17,9 +17,12 @@ def _serial(region, context):
 
 def native_service_costs(region, mechanism, *, context=None):
     selector = mechanism.get('selector', {})
-    missing = ['selector.' + key for key in sorted(set(selector) - {'domain', 'worker_scope', 'calls'})]
+    missing = ['selector.' + key for key in sorted(set(selector) - {'domain', 'worker_scope', 'calls', 'characterization_sha256'})]
     if selector.get('domain') != 'host' or selector.get('worker_scope') != 'serial_T1':
         missing.append('selector.host_serial_T1')
+    pin=selector.get('characterization_sha256')
+    if pin is not None and (not isinstance(context,dict) or context.get('characterization_sha256')!=pin):
+        missing.append('service_scope.characterization_sha256')
     calls = selector.get('calls')
     if not isinstance(calls, list) or not calls:
         missing.append('selector.calls')

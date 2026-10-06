@@ -119,3 +119,10 @@ def test_allocator_regime_cannot_waive_a_bulk_copy_call(records, tmp_path):
     assert overhead['inputs']['covered_calls']==[]
     assert 'selector.calls.allocator_abi_bin_kind' in overhead['missing']
     assert any(b['model']=='unmodeled_calls' for b in data['regions'][0]['bounds'])
+
+
+def test_pinned_service_context_cannot_cover_another_characterization(records,tmp_path):
+    data=clock_case(records,tmp_path,extra_selector={'characterization_sha256':'f'*64})
+    overhead=data['regions'][0]['overheads'][0]
+    assert data['seconds'] is None and overhead['inputs']['covered_calls']==[]
+    assert 'service_scope.characterization_sha256' in overhead['missing']

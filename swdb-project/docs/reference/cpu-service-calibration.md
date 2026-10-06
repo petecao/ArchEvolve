@@ -173,3 +173,25 @@ to the full opaque-site count. Unknown lengths, lifetimes, rates, or partial
 coverage retain the opaque call and null its cost. The allocator regime cannot
 cover bulk copies or other ABIs. This explicitly inferred state transfer does
 not establish physical cache state, page faults, or payload initialization cost.
+
+### Bind services without modifying a running calibration source
+
+The separate public module command derives a fresh description and pins the
+complete counted characterization plus typed service records:
+
+```sh
+python3 -m swdb.cpu_service_binding --records "$SWDB_RECORDS" \
+  --target-description mbit10.cpu.lanl20261006a2.v2.t1 \
+  --characterization bfs.kron-g16.t1.characterization.a1 \
+  --calibration mbit10.cpu.lanl20261006.service.clock.a1 \
+  --id mbit10.cpu.lanl20261006.services.bfs.t1.a1 --format json
+```
+
+Repeat `--calibration` for additional independently measured groups. Fixture
+inputs require `--fixture`. Existing descriptions and measurements remain
+byte-identical. Compiler/C/C++ library mismatches and unproven allocator-control
+absence produce null parameters with explicit reasons; the original measured
+trials remain in their dependency records. Consumption requires the pinned
+characterization hash in the model context, so another workload cannot silently
+inherit the original context admission. This binding contributes no application
+timing or error-band evidence.
