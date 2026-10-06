@@ -25,18 +25,21 @@ ALL = [(family, version) for family, table in procedures.PROCEDURES.items() for 
 # A failure here means code a version reads changed. If the behavior changed, add a new version to the
 # table in swdb/certification_procedures.py and leave this list alone; if it is a refactor that keeps
 # the behavior, re-declare the digest in the table and here and say why in the ticket.
+# 2026-10-06 ET: re-declared after JSON attribution serialization (bb7673f) and shared
+# record-reader/hash delegation (bb11cb1); procedure decisions and evaluator files are unchanged.
+# Evidence: .scratch/lanl-db-analytic-eval-2026-10-06/evidence/09-certification-fingerprint-redeclaration.md.
 FROZEN = {
-    ('candidate', '1.3'): 'adb57a16acb2af6ce3af92ffb7af4ae22ac1a83d5e5c3e9d187f3f35388f1011',
-    ('candidate', '1.4'): '98a697d62d23d9cdc37768da01cea8ba7b737c93dda9a1752493d28810039d0c',
-    ('candidate', '1.5'): 'eba9c0d2556e0bbe0dfa1a9d49385266f86500f6b6eb8e89aacc0aaadd638cda',
-    ('candidate', '1.6'): '114c6434430d21d0d93043588500d0c467f98def89762b3e6f7b9e8644e26ea3',
-    ('native', '1.3'): '399799d84479d83249723a088c677ab526e218a2f1005afdb3ed02a0c14bb248',
-    ('native', '1.4'): '700d68f398f6d848dac56e2f68910e49f1e2ceab25c99c58ea47bcec8f81762f',
-    ('native', '1.5'): '642d2fe2bdb743f0d065b1f2bb00d2ff80db35257751f1ca15d2f25ab9ddeddd',
+    ('candidate', '1.3'): '705e697df88b273ef1223e37d95631661b1ba0ca4e98524b4e1dd6729d0122d3',
+    ('candidate', '1.4'): 'b8df5f5cc24e2bb54ee33eb9d609dfdea4009741b00c94de0582b4d71f429515',
+    ('candidate', '1.5'): 'a25e817ea05e512c5cc6686623ee5d69c80ae527f606c91e75566c00062f988e',
+    ('candidate', '1.6'): '309d9cd5140bbb5bf87408ed5f1a4fba40271275704294003be8444829f61311',
+    ('native', '1.3'): '6c3f478005dc25462f495211e7c5a626803b21f720524b0048e4673e5b0025dd',
+    ('native', '1.4'): 'a5d54c7eb50169bd6a686e265750f7a10804bec311a399b9af1a1c47b133f78b',
+    ('native', '1.5'): 'fe72f415409327e00a78fe41fece2b2d7c8705c708ffc90928286dee2740d0c2',
     ('library_operation', '1.0'): '7ffd0a8f3ff6e2fa0da4c966010c5a57a0378140a5a6c777c32fbcd4d3fa8dea',
     ('library_operation', '1.1'): 'f0a84509f5a3b3a44de86f479a2627ad6f61f9f786e29cb980789f1c6766c60e',
     ('library_operation', '1.2'): 'f3ca83e70284d9aae97296de7ee6013ceea28e3578fdeecd46869d4521254ef7',
-    ('lowering_calibration', '1.1'): 'd21e4dfd19584334d8626185784072ee6f2830ba397fbd8e6216f463d3436cd3',
+    ('lowering_calibration', '1.1'): '4ab5d22c2d46d672ae19a87f4426919ebb509fe45497bfd1b51515aa4eb76974',
 }
 
 # F6 (2026-10-05 ET): the DX100 files certify 1.3 and 1.4 read that no library entry, profile or
