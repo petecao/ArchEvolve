@@ -77,7 +77,10 @@ def test_one_fixture_iteration_end_to_end(campaign_team):
     assert [c["class"] for c in it["candidates"]] == ["kronecker", "uniform_random"]
     assert all(c["level"] == "certified" and c["contracts"] == [CONTRACT] for c in it["candidates"])
     calls = summary["setup"]["provider_calls"] + it["provider_calls"]
-    assert [c["role"] for c in calls] == ["profiling", "rewriting", "independent_test_generation"]
+    # Ticket 80 (C7): no certify version takes generated inputs, so no test-generation call is made or charged.
+    assert [c["role"] for c in calls] == ["profiling", "rewriting"]
+    (skipped,) = it["skipped_calls"]
+    assert skipped["role"] == "independent_test_generation" and skipped["contracts"] == [CONTRACT]
     assert all({"role", "model", "effort", "counted"} <= set(c) and c["counted"] for c in calls)
     assert calls[1]["model"] == "gpt-5.6-sol" and calls[1]["effort"] == "xhigh"
     assert summary["stop_reason"] == "max_iterations" and summary["evidence_kind"] == "contract_fixture"
@@ -137,10 +140,10 @@ def test_repaired_patch_is_leakage_scanned_like_a_first_rewrite(campaign_team):
     summary = run(campaign_team, campaign_file(campaign_team), fixture_file(campaign_team, iterations=[row]), config)
     candidates = summary["iterations"][0]["candidates"]
     assert candidates and all(c["level"] == "rejected" for c in candidates)
-    # The first class receives the leaky repair; the per-iteration call budget leaves the
-    # second class without a repair call, so it is rejected for its certification failure.
-    assert candidates[0]["rejection"] == "The patch text states a performance outcome."
-    assert candidates[1]["rejection"].startswith("Certification failed.")
+    # Each class receives the leaky repair (rewrite + two repairs fill the per-iteration budget of 3;
+    # before ticket 80 the test-generation call took one, so the second class got no repair).
+    assert [c["rejection"] for c in candidates] == ["The patch text states a performance outcome."] * 2
+    assert [c["role"] for c in summary["iterations"][0]["provider_calls"]] == ["rewriting", "repair", "repair"]
 
 
 def test_synthesis_usage_limit_pauses_uncounted_and_is_retried_on_resume(campaign_team):

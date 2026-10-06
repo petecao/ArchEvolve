@@ -70,11 +70,16 @@ def test_login_failure_also_pauses_uncounted(campaign_team):
 def test_total_provider_call_budget_stops_with_provider_calls(campaign_team):
     path = campaign_file(campaign_team, budgets={"max_iterations": 2, "provider_calls_per_iteration": 2,
                                         "provider_calls_setup": 0})
-    # Each attempt: the rewrite call is counted, the test-generation call hits the usage
-    # limit (uncounted) and pauses. Counted calls of paused attempts stay counted, so the
-    # campaign-wide total (2 x 2) eventually refuses the next rewrite call.
-    config = provider(campaign_team, {"rewriting": [rewrite()], "testgen": ["usage_limit"]})
-    fx = fixture_file(campaign_team)
+    # Each attempt: the rewrite call is counted, Kronecker's certification fails and its repair
+    # call hits the usage limit (uncounted) and pauses. Counted calls of paused attempts stay
+    # counted, so the campaign-wide total (2 x 2) eventually refuses the next rewrite call.
+    # (Ticket 80, C7: the test-generation call this test used before is no longer made.)
+    config = provider(campaign_team, {"rewriting": [rewrite()], "repair": ["usage_limit"]})
+    failing = {"kronecker": {"certification": ["failed", "certified"],
+                             "comparisons": {"fork_scalar_tdstep": comparison(1.2), "upstream_do_bfs": comparison(0.9)}},
+               "uniform_random": {"comparisons": {"fork_scalar_tdstep": comparison(1.2),
+                                                  "upstream_do_bfs": comparison(0.9)}}}
+    fx = fixture_file(campaign_team, iterations=[failing])
     result = run(campaign_team, path, fx, config)
     for _ in range(6):
         if result.get("state") != "paused":

@@ -75,6 +75,12 @@ CAPACITY_WAIT_S = 3600
 GUARD_RETRIES = 2
 GUARD_RETRY_S = 30
 
+#: Ticket 80 (C7, 2026-10-05 ET): the independent test-generation role's inputs reach no certify version yet,
+#: so the campaign makes (and charges) no test-generation call until one accepts them.
+TEST_GENERATION_WIRED = False
+TEST_GENERATION_REASON = ("no certify command version accepts generated differential-test inputs yet; the call "
+                          "is not made and not charged until one does (ticket 80)")
+
 
 def guard_retry_s():
     """The wait before a retry; SWDB_GUARD_RETRY_S overrides it for tests."""
@@ -598,15 +604,31 @@ class Campaign:
                                f"{kind} calls for its own runtime limit: {stopped}") from None
                 delay = guard_retry_s()
                 iteration_row["provider_calls"][-1]["retry_after_s"] = delay
-                time.sleep(delay)
+                self._wait(delay, "guard retry wait")
             except _Capacity as capacity:
                 delay = schedule.pop(0) if schedule else None
                 if delay is None or waited + delay > CAPACITY_WAIT_S:
                     raise Stop("infrastructure_failure",
                                f"the provider stayed unavailable after {waited:.0f} s of backoff: {capacity}") from None
                 iteration_row["provider_calls"][-1]["backoff_s"] = delay
-                time.sleep(delay)
+                self._wait(delay, "capacity backoff")
                 waited += delay
+
+    def _wait(self, seconds, why):
+        """Ticket 80 (C6, 2026-10-05 ET; agent-decided under Yan-Ru's delegation, revisable): a provider wait
+        (capacity backoff, guard retry) is lane time and is charged to the lane-hour cap.
+
+        The socket lease belongs to the `socket_lane.sh` wrapper for the whole life of the campaign process,
+        so a wait inside the process cannot release it; only a pause (the process exits) does. The waits stay
+        uncounted as provider calls and iterations (D7). A wait that would exceed the cap is not started: the
+        campaign stops `lane_hours`."""
+        if self.state["lane_hours"] + seconds / 3600 > self.budget.lane_hours:
+            raise Stop("lane_hours", f"the {why} of {seconds:.0f} s would exceed {self.budget.lane_hours} lane-hours")
+        started = time.monotonic()
+        time.sleep(seconds)
+        hours = (time.monotonic() - started) / 3600
+        self.state["lane_hours"] += hours
+        self.state["provider_wait_hours"] = self.state.get("provider_wait_hours", 0.0) + hours
 
     def _call_once(self, kind, files, prompt, iteration_row):
         from swdb import provider_adapters, provider_roles
@@ -953,7 +975,21 @@ class Campaign:
         return entry
 
     def _test_generation(self, contracts, row):
-        """D7: one independent test-generation call per contract per campaign, at first use."""
+        """D7: one independent test-generation call per contract per campaign, at first use.
+
+        Ticket 80 (C7, 2026-10-05 ET; agent-decided under Yan-Ru's delegation, revisable): no certify command
+        version takes extra differential-test inputs (each version's matrix is frozen in
+        `swdb.certification_procedures`), so a generated input could never reach certification. Until a
+        certify version accepts them, the call is not made and nothing is charged; the first use of each
+        contract is recorded under the iteration's `skipped_calls`."""
+        if not TEST_GENERATION_WIRED:
+            skipped = self.state.setdefault("test_generation_skipped", [])
+            new = [cid for cid in contracts if cid not in skipped]
+            if new:
+                skipped.extend(new)
+                row.setdefault("skipped_calls", []).append(
+                    {"role": "independent_test_generation", "contracts": new, "reason": TEST_GENERATION_REASON})
+            return []
         tests = []
         for cid in contracts:
             if cid in self.state["tested_contracts"]:
@@ -1020,7 +1056,13 @@ class Campaign:
             else:
                 key = f"{cls}/{role}"
                 if key not in self.state["baselines"]:
+                    # Ticket 80 (C5, 2026-10-05 ET): the class's one gem5 baseline evaluation is a job of its
+                    # own, charged to the lane-hour cap exactly as `--baselines-only` charges it; the candidate's
+                    # comparison is then checked as the next job.
+                    started = time.monotonic()
                     self.state["baselines"][key] = self.adapter.baseline_evaluation(cls, role)
+                    self._spent("evaluation", started)
+                    self._step("evaluation", job=True)
                 baseline_eval = self.state["baselines"][key]
             started = time.monotonic()
             result = self.adapter.compare(candidate, cls, role, iteration, attempt, baseline_evaluation=baseline_eval)
@@ -1227,6 +1269,9 @@ class Campaign:
                 "provider_calls_counted": self.ledger.counted_calls,
                 "provider_calls_uncounted": self.ledger.uncounted_calls,
                 "disk_gb_peak": round(max(self.state.get("disk_bytes_peak", 0), _du(self.folder)) / 1e9, 6)}
+        if self.state.get("provider_wait_hours"):
+            # Ticket 80 (C6): the part of `lane_hours` spent waiting on capacity backoffs and guard retries.
+            used["provider_wait_hours"] = round(self.state["provider_wait_hours"], 6)
         artifacts_list = []
         for row in self.state["iterations"]:
             for c in row["candidates"]:
