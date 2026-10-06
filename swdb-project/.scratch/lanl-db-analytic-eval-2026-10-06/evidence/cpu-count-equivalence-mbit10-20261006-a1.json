@@ -1,0 +1,277 @@
+{
+  "format": "swdb.cpu-calibration-pipeline-equivalence.v1",
+  "evidence_kind": "count_only",
+  "runtime_commit": "67f1b3b70a599881e9dd5b423d61ce3d8cc17d67",
+  "runtime_dirty": false,
+  "previous_receipt_sha256": "edde78d5210d8c55ebea529781c2707e2a18dfe44908603ce18a888019feb286",
+  "host": "mbit10",
+  "architecture": "x86_64",
+  "source_sha256": "18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393",
+  "compiler_version": "clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin",
+  "toolchain_flags": [
+    "--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13"
+  ],
+  "build_flags": [
+    "-std=c++17",
+    "-pthread"
+  ],
+  "compute_counts": {
+    "integer": {
+      "old_pipeline": {
+        "version": "source-normalized-v1",
+        "passes": [
+          "mem2reg",
+          "loop-simplify"
+        ]
+      },
+      "old_pipeline_basis": "code_reading",
+      "old_pipeline_source_commit": "97f5f196bd5e1c1405b2f24326e73761890f9930",
+      "old_validation_points": [
+        [
+          32,
+          840
+        ],
+        [
+          64,
+          1672
+        ],
+        [
+          96,
+          2504
+        ]
+      ],
+      "new_pipeline": {
+        "version": "source-normalized-v2",
+        "passes": [
+          "function(sroa,mem2reg),cgscc(inline),function(loop-simplify)"
+        ]
+      },
+      "source_sha256": "18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393",
+      "old_per_iteration": 26,
+      "old_per_invocation": 8,
+      "per_iteration": 26,
+      "per_invocation": 8,
+      "validation_points": [
+        [
+          32,
+          840
+        ],
+        [
+          64,
+          1672
+        ],
+        [
+          96,
+          2504
+        ]
+      ],
+      "characterization_sha256": [
+        "b1dd787d53ad1b504d8893aee71117c48268da11df61d048d4d6db9b5b0d7836",
+        "97ca7823fab3c33b4aaaa14fbae2360287c5d94b41c566241d748ce2b5e7165b",
+        "9d71f7bc676ebee0dcbd946cfbd5d6786c6b95caa135d3bdce86a9fd3f5bfd66"
+      ],
+      "coefficients_identical": true
+    },
+    "floating_point": {
+      "old_pipeline": {
+        "version": "source-normalized-v1",
+        "passes": [
+          "mem2reg",
+          "loop-simplify"
+        ]
+      },
+      "old_pipeline_basis": "code_reading",
+      "old_pipeline_source_commit": "97f5f196bd5e1c1405b2f24326e73761890f9930",
+      "old_validation_points": [
+        [
+          32,
+          261
+        ],
+        [
+          64,
+          517
+        ],
+        [
+          96,
+          773
+        ]
+      ],
+      "new_pipeline": {
+        "version": "source-normalized-v2",
+        "passes": [
+          "function(sroa,mem2reg),cgscc(inline),function(loop-simplify)"
+        ]
+      },
+      "source_sha256": "18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393",
+      "old_per_iteration": 8,
+      "old_per_invocation": 5,
+      "per_iteration": 8,
+      "per_invocation": 5,
+      "validation_points": [
+        [
+          32,
+          261
+        ],
+        [
+          64,
+          517
+        ],
+        [
+          96,
+          773
+        ]
+      ],
+      "characterization_sha256": [
+        "8e4bcd2fe4f0682264d9245d2926bb6220a473decc67e17afc89441ac73a8982",
+        "050909c01ed32136b53b04838e5ecb54ac8e1d495e35ef2e08e381bdcd56958f",
+        "2c370113c4950d860b066bd9b4aedc54e09fe75efc345baf85542c4fb42baec8"
+      ],
+      "coefficients_identical": true
+    },
+    "branch": {
+      "old_pipeline": {
+        "version": "source-normalized-v1",
+        "passes": [
+          "mem2reg",
+          "loop-simplify"
+        ]
+      },
+      "old_pipeline_basis": "code_reading",
+      "old_pipeline_source_commit": "97f5f196bd5e1c1405b2f24326e73761890f9930",
+      "old_validation_points": [
+        [
+          32,
+          163
+        ],
+        [
+          64,
+          323
+        ],
+        [
+          96,
+          483
+        ]
+      ],
+      "new_pipeline": {
+        "version": "source-normalized-v2",
+        "passes": [
+          "function(sroa,mem2reg),cgscc(inline),function(loop-simplify)"
+        ]
+      },
+      "source_sha256": "18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393",
+      "old_per_iteration": 5,
+      "old_per_invocation": 3,
+      "per_iteration": 5,
+      "per_invocation": 3,
+      "validation_points": [
+        [
+          32,
+          163
+        ],
+        [
+          64,
+          323
+        ],
+        [
+          96,
+          483
+        ]
+      ],
+      "characterization_sha256": [
+        "0b4fe4c3db33fbf858caa6566821e874bc966e7a4c51d6e7704b42cf694d461c",
+        "bbfe3849e8550f08661d15fe7f836d1ce860cc1352625c9d68f5257e45fc3144",
+        "2c012891168b33205a287b3d5855a253162cab6fb5f3a557499bf632fbf35315"
+      ],
+      "coefficients_identical": true
+    },
+    "atomic": {
+      "old_pipeline": {
+        "version": "source-normalized-v1",
+        "passes": [
+          "mem2reg",
+          "loop-simplify"
+        ]
+      },
+      "old_pipeline_basis": "code_reading",
+      "old_pipeline_source_commit": "97f5f196bd5e1c1405b2f24326e73761890f9930",
+      "old_validation_points": [
+        [
+          32,
+          32
+        ],
+        [
+          64,
+          64
+        ],
+        [
+          96,
+          96
+        ]
+      ],
+      "new_pipeline": {
+        "version": "source-normalized-v2",
+        "passes": [
+          "function(sroa,mem2reg),cgscc(inline),function(loop-simplify)"
+        ]
+      },
+      "source_sha256": "18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393",
+      "old_per_iteration": 1,
+      "old_per_invocation": 0,
+      "per_iteration": 1,
+      "per_invocation": 0,
+      "validation_points": [
+        [
+          32,
+          32
+        ],
+        [
+          64,
+          64
+        ],
+        [
+          96,
+          96
+        ]
+      ],
+      "characterization_sha256": [
+        "64eb53ff9c1d6dcaf48b346379ba51b8438f7e6b10f7f91cccc00e0a49e87cf0",
+        "79e96a3ed864a796d450fd1525c74cbced1399d7c4c7c7d39f5bc8ac870a097b",
+        "adc01a13213bd85a73d98829f08b4be1060f43572ba7502de90dea4ab56e6514"
+      ],
+      "coefficients_identical": true
+    }
+  },
+  "all_coefficients_identical": true,
+  "timings_rerun": false,
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-count-equivalence-20261006-a1",
+  "raw_transferred": false,
+  "identity_sha256": "be6b9c432e2f52cdac0c24fe8cd07af70cc014aeb544aca60aee1176f55b01e9",
+  "helper_source_commit": "695e900d4f46d18fa50a0f66c11852c52aaffbcf",
+  "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+      "timeout",
+      "--signal=TERM",
+      "--kill-after=60",
+      "1200",
+      "bash",
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-count-equivalence-20261006-a1/job.sh"
+    ],
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "ended_utc": "2026-10-06T21:28:54Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "swdb-lanl-count-equivalence-20261006-a1",
+    "lease_generation": 470,
+    "lease_name": "mbit10-evaluation-node0",
+    "load1_at_start": 4.04,
+    "load1_max": 32,
+    "node": 0,
+    "numa_memory_policy": "bind:0",
+    "numactl": "--cpunodebind=0 --membind=0",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-06T21:27:41Z"
+  },
+  "equivalence_file_sha256": "95bbff3c061943c08800680b701db2c3991ca73f9a3fc30c003395952992adfe"
+}
