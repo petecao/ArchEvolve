@@ -1,6 +1,6 @@
 # Implementation progress
 
-Updated: 2026-10-06 17:17 ET
+Updated: 2026-10-06 17:27 ET
 
 Integration: `codex/lanl-analytic-eval`; review base: `2c50e5fb8671e08050921bee06920f92fd153bdd` (`yanrujhou_main`). Yan-Ru amended startup settings commit `fb842a8` to this replacement during startup. Owned branches are rebased so the removed IDE files stay removed. Final delivery merges and pushes `yanrujhou_main`.
 
@@ -9,9 +9,9 @@ Agent assignments: tickets 02–14, 16–17. Human gates 15, 18, 21 stay human-o
 | Ticket | Agent | Branch | State |
 |---|---|---|---|
 | 02–04 | Existing implementers | Merged | Resolved; integration86b2a9a; combined smoke11passed/553valid |
-| 05 | `/root/ticket02` | `codex/lanl-ticket05` | Indirect shapes and full per-trial BFS/BC ROI counts |
-| 06 | `/root/ticket04` | `codex/lanl-ticket06` | Frozen estimate protocols and recursive team gem5 refusal |
-| 07 | `/root/ticket03` | `codex/lanl-ticket07` | CPU microbenchmarks and measured target descriptions |
+| 05 | `/root/ticket02` | `codex/lanl-ticket05` | Claimed; real g16 BFS/BC counts active on two sockets; merge compatibility tests active |
+| 06 | `/root/ticket04` | `codex/lanl-ticket06` | Resolved and merged7c51ee1;41 focused plus real claim1 and integrated7 passed;553 historical valid |
+| 07 | `/root/ticket03` | `codex/lanl-ticket07` | Claimed; a1/a2 measurements passed; Linuxv2 count equivalence and typed calibration lineage pending |
 
 Managed worktrees: `/Users/yanrujhou/.codex/worktrees/lanl-*/ArchEvolve`. Parent owns integration. Inspect liveness before reassigning. File writes and Git metadata there need sandbox escalation, covered by the user's implementation authorization.
 
@@ -42,3 +42,7 @@ Requested30min heartbeat `lanl-analytic-evaluator-progress` ACTIVE. Inspect tick
 2026-10-06 17:11 ET: required30min evaluation-status table delivered; next due17:41ET. All three agents responsive.07primary curves fail only final3point relative range (25.5–42.7%), with small C16→32 changes; a preregistered unchanged-criterion C1/16/32/64/128 repeat is authorized to test sustained saturation. New75cell full matrix, same256MiB/seven trials, fresh context/version, inner900s; no pooling or forced known values. Await tested parser/cap extension commit before fresh node0 preflight/dispatch.05finishes source-hashed region IDs and actual distinct executing-worker participation;06focused boundary fixes green. Latest integration759094f before this progress commit.
 
 2026-10-06 17:17 ET: preregistered07repeat ACTIVE node0g468 since17:15:07ET; immutable40435a907559a27e6a0cfe8ae4c17140a591405d Git-synced to owned calibration checkout. Raw/tmux `lanl-analytic-cpu-calibration-20261006-a2` (tmux swdb- prefix);75cells, C1/16/32/64/128, T1/2/4/8/16,7reps,256MiB/8MiB, inner900s/outer1200s. Both sockets/legacy free before dispatch, load1.24,117GiBavailable, disks28/59GiBfree. Prereg SHA dfd7f109996165cf623205f6576386dc0a1822554e41ccdff5f665e4f6b965ea; timing C++/CpuWork unchanged. Hold node1 idle until timing completes.05remote-ready source67f1b3b70a599881e9dd5b423d61ce3d8cc17d67 pushed/Git-synced to clean detached `/data1/yanruj/ArchEvolve-lanl-count-20261006`; no count job yet. It includes fixed fixture --counting-pipeline v1/v2 choices, registered v2 refusal ofv1, exact Linux OpenMP lib path and call-only trial-region retention. Realv2 n17 hand-count seam3checks passed.07must rerun12compute points under actualv2 after integration, retain pipeline IDs/passes, and regenerate numerator-only target versions if coefficients change.06final24-case/import/writer/doc batch still active with no new failures reported. Next status table17:41ET.
+
+2026-10-06 17:27 ET:06 resolved/merged7c51ee1 clean; merged focused7checks passed. CPUrepeat a2 finished17:19:51ET, node0g468released,exit0,75cells×7trials,563records valid. All five thread counts satisfy unchanged preregistered plateau rule; constructed effective requests/thread T1/2/4/8/16 =10.533/10.784/11.372/7.883/4.219, inferred and workload-specific. Immutable five descriptions+compact summary exported only through Git at9e224c6c3c12a97a1d48cc378f58c9f553f155b4, origin/codex/lanl-cpu-calibration-evidence-a2; receipt aa2dd212a7e5a4ecd67962d428fa8cdf497f07857092378ae8c8d60fd5f3a088. Calibration source released.07merger owns typed calibration provenance seam identified by06 audit: explanatory calibration_sources strings cannot satisfy frozen dependency identities; create typed/derived lineage, do not weaken recursive guard or rewrite measured snapshots.
+
+Registered05counts ACTIVE17:24:08ET, clean67f1b3b in isolated count checkout: BFSnode0g469 andBCnode1g528;5trials g16k16T4, complete BenchmarkKernel lambda ROI, v2 normalized pipeline,1800inner/2100outer. Each uses separate raw record store under /data/yanruj/EvolveSWDB_runs/lanl-analytic-counts-20261006-a1/{bfs,bc}; no third job. LLVM/libomp/GCC13 paths verified. Preflight all leases released, wrapper hash matched, load1.20,117GiBavailable,28/59GiBfree; preserved unrelated node1 CPU process.07Linux12pointv2 numerator-only helper waits for a free lane; local ARMv2 coefficients match a1 but do not establish Linux equivalence.06agent prepares11 read-only;05 merges06 in own worktree with public frozen-protocol memory fixture updates. Next required status table17:41ET.
