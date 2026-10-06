@@ -2,7 +2,7 @@
 
 Created: 2026-10-06
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 01
 **Spec:** `../spec.md`
 **Time estimate:** 1.5–2 days
@@ -17,3 +17,7 @@ Created: 2026-10-06
 - [ ] An unknown parameter makes the bound that needs it unknown, never zero.
 - [ ] Counts are taken at source level and record the host (D12).
 - [ ] Tests run through the commands on a copied record store and skip cleanly when LLVM 22 is missing.
+
+## Comments
+
+2026-10-06: Claimed by ticket04 implementer on `codex/lanl-ticket04`, based on integration commit `fb842a8`. Confirmed public seams are characterize/estimate commands on a copied record store and validate.
