@@ -13,6 +13,26 @@
 #include <vector>
 #include <thread>
 #include "LiveObjects.hpp"
+#ifdef __APPLE__
+#include <mach-o/dyld.h>
+#elif defined(__linux__)
+#include <link.h>
+#endif
+std::string loadedImages(){
+  std::set<std::string> names;
+#ifdef __APPLE__
+  for(uint32_t i=0;i<_dyld_image_count();++i){const char *name=_dyld_get_image_name(i);if(name && name[0]=='/')names.insert(name);}
+#elif defined(__linux__)
+  dl_iterate_phdr([](struct dl_phdr_info *info,size_t,void *opaque){
+    if(info->dlpi_name && info->dlpi_name[0]=='/')static_cast<std::set<std::string> *>(opaque)->insert(info->dlpi_name);
+    return 0;
+  },&names);
+#endif
+  std::ostringstream out;out<<'[';bool sep=false;
+  for(auto &name:names){if(sep)out<<',';sep=true;out<<'"';
+    for(char c:name){if(c=='"' || c=='\\')out<<'\\';out<<c;}out<<'"';
+  }out<<']';return out.str();
+}
 #ifdef _OPENMP
 #include <omp.h>
 #endif
@@ -95,7 +115,7 @@ struct Counts {
   }
   ~Counts(){const char *path=std::getenv("SWDB_COUNTS_OUTPUT");if(!path)return;
     std::ofstream out(path);std::string root=trials.empty()?snapshot():trials.front();root.pop_back();out<<root<<",\"trials\":[";
-    bool first=true;for(auto &trial:trials){if(!first)out<<',';first=false;out<<trial;}out<<"]}\n";
+    bool first=true;for(auto &trial:trials){if(!first)out<<',';first=false;out<<trial;}out<<"],\"loaded_images\":"<<loadedImages()<<"}\n";
   }
 };
 Counts &counts(){static Counts value;return value;}

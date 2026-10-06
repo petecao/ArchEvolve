@@ -407,6 +407,28 @@ def characterize(args):
             'missing_counts': ['callee bodies outside selected debug functions and other translation units'] if any(c['execution_count']['value'] and _uncovered_call(c) for c in calls + [c for t in trials for c in t['unmodeled_calls']]) else []},
         'regions': regions, 'unmapped_loops': [r['id'] for r in regions if r['kind'] == 'loop' and not r['mapped']],
         'unmodeled_calls': calls, 'evidence_kind': 'contract_fixture' if args.fixture else 'execution'})
+    native_libraries = {}
+    native_missing = []
+    for loaded_path in counts.get('loaded_images', []):
+        library = Path(loaded_path).resolve()
+        key = library.name
+        if key in native_libraries and native_libraries[key]['path'] != str(library):
+            native_missing.append('loaded_library_basename_collision:' + key)
+            key = str(library)
+        library_hash = _sha(library) if library.is_file() else None
+        if library_hash is None:
+            native_missing.append('loaded_library_hash:' + key)
+        native_libraries[key] = {'path': str(library), 'sha256': library_hash}
+    if not native_libraries:
+        native_missing.append('process_loaded_images')
+    native_environment = {name: value for name, value in sorted(env.items())
+        if name.startswith(('OMP_', 'KMP_', 'GOMP_'))
+        or name in ('LD_LIBRARY_PATH', 'DYLD_LIBRARY_PATH')}
+    native_runtime = {'compiler_version': _run([llvm / 'clang++', '--version']).stdout.strip(),
+        'compiler_sha256': _sha((llvm / 'clang++').resolve()),
+        'environment': native_environment, 'loaded_libraries': native_libraries,
+        'observation_method': 'process_loaded_images', 'scope': 'counted_instrumented_binary',
+        'missing': native_missing}
     if 'memory_service_counts' in counts:
         record['counting']['observation_format']='swdb.live-count-context.v1'
         record['observation_contract']={'format':'swdb.live-count-context.v1',
@@ -414,7 +436,7 @@ def characterize(args):
             'line_bytes':64,'page_bytes':4096,'state_budget':args.state_budget,
             'object_scope':'translation_unit_allocator_calls',
             'first_access_scope':'first observed access in selected normalized source functions; opaque initialization is not observed',
-            'physical_residency_known':False,
+            'physical_residency_known':False,'native_runtime':native_runtime,
             'runtime_bundle_sha256':artifacts.digest({name:_sha(llvm_src/name)
                 for name in ('CountingRuntime.cpp','LiveObjects.hpp')})}
     if trials:

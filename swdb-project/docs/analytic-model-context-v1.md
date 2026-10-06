@@ -87,3 +87,11 @@ refused by the global state budget remain explicit; execution totals still
 include them. No pointer, allocation list, or call order is serialized. A model
 requiring lengths must cover every counted bin and unknown event before clearing
 an opaque call cost. Registered C++11 source flags also apply to the runtime.
+
+Optional `observation_contract.native_runtime` seals the actual counted process's
+loaded-image inventory, available file hashes, Clang binary/version, and only
+OMP/KMP/GOMP settings plus library search paths from its execution environment.
+This is the instrumented count binary's identity; it does not certify a separate
+native timing binary. A library unavailable as a regular file (for example a
+macOS shared-cache image) keeps its hash null and a named missing fact. Historical
+receipts without this optional field keep their prior identity and unknown scope.
