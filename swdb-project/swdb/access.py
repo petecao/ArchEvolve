@@ -74,7 +74,9 @@ def read_record(path):
     cached = _PARSED.get(name)
     if cached is not None and cached[0] == before:
         return json.loads(cached[1])
-    data = yamlio.load(path)
+    # JSON's exponent-only numbers (1e-6) are not YAML 1.1 numeric scalars.
+    # Preserve their numeric meaning for canonical receipt hashes.
+    data = json.loads(read_record_bytes(path)) if Path(path).suffix.lower() == '.json' else yamlio.load(path)
     try:
         text = json.dumps(data, allow_nan=False)
         cacheable = json.loads(text) == data and _stamp(path) == before

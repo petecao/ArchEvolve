@@ -115,6 +115,9 @@ and [pass-writing documentation](https://llvm.org/docs/WritingAnLLVMNewPMPass.ht
 
 ## Target description v1
 
+The [native CPU calibration commands](cpu-calibration.md) measure separate per-T
+constructed-work rates and import immutable descriptions with trial spread.
+
 A target description is a record with `kind: target_description`,
 `format: swdb.target-description.v1`, envelope fields, `version`, `target`, `threads`,
 `estimator_variant` (`team` or `research`), `calibration_sources`,
