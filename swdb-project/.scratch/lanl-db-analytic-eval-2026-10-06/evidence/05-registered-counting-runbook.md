@@ -93,3 +93,13 @@ implementation in `sources`. `input_run_arguments.kron-g16-k16` is exactly
 The freeze persists the target snapshot/hash, calibration closure and implementation
 bundle hash. After estimate/validate, the compact helper emits per-trial/per-region
 costs and exact executed-call/worker inventories. All unsupported costs remain null.
+
+
+Aggregate report interpretation (2026-10-06 ET): top-level per-region and bound
+seconds are medians across trial estimates. Their input dictionaries are diagnostic
+templates from the root/first observed bound, rather than one formula evaluation
+that reproduces that median. `inputs_scope` labels this distinction in the compact
+helper. Exact formula inputs are in `trials[].regions[].bounds[].inputs`. The overall
+time is the median of complete per-trial region sums; region medians do not generally
+sum to that overall median. Existing raw helper reports and estimate IDs/hashes stay
+unchanged; metadata wrappers may add these interpretation labels.

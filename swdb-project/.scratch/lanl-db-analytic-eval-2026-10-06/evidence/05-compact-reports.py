@@ -49,11 +49,12 @@ def compact(value):
     return value
 
 
-def region_report(region):
+def region_report(region, *, aggregate=False):
     return {'id': region['id'], 'seconds': region['seconds'], 'state': region['state'],
         'limiting_bound': region['limiting_bound'], 'bounds': [
             {'model': bound['model'], 'seconds': bound['seconds'], 'state': bound['state'],
                 'formula': bound['formula'], 'inputs': compact(bound['inputs']),
+                'inputs_scope': 'diagnostic template; exact formula inputs are in trial bounds' if aggregate else 'this trial or single run',
                 'missing': bound['missing'], 'notes': bound.get('notes', [])}
             for bound in region['bounds']]}
 
@@ -76,7 +77,7 @@ def application(characterization_path, estimate_path):
     for region in estimated['regions']:
         if region['id'] not in observed and region['seconds'] == 0:
             continue
-        rows.append(region_report(region))
+        rows.append(region_report(region, aggregate=bool(estimated.get('trials'))))
     selected = {row['id'] for row in rows}
     return {'subject': source['subject'], 'input': source['input'],
         'characterization': {'id': source['id'], 'file_sha256': digest(characterization_path),
