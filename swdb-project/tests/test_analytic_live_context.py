@@ -192,9 +192,24 @@ def test_original_gapbs_trial_driver_keeps_five_count_snapshots_with_observer_is
     assert data['observation_contract']['observer_isolation']=='thread_local_reentrancy_guard'
     assert data['observation_contract']['native_runtime']['environment']['OMP_DYNAMIC']=='FALSE'
     # The runtime contract is part of the registered payload seal, not a loose annotation.
-    data['observation_contract']['native_runtime']['environment']['OMP_DYNAMIC']='TRUE'
+    data['observation_contract']['native_runtime']['environment']['GLIBC_TUNABLES']='glibc.malloc.arena_max=99'
     data.pop('identity_sha256');data['identity_sha256']=digest(data)
     records.write('workload_characterizations/fixture.registered.observer.yaml',data)
     checked=records.validate()
     assert checked.returncode==1
     assert 'counted_payload_sha256' in checked.stdout+checked.stderr
+
+
+def test_allocator_interposer_environment_scope_retains_explicit_absence(records,tmp_path,llvm22,monkeypatch):
+    monkeypatch.setenv('GLIBC_TUNABLES','glibc.malloc.arena_max=2')
+    monkeypatch.setenv('MALLOC_ARENA_MAX','2')
+    monkeypatch.delenv('LD_PRELOAD',raising=False)
+    data=characterize_lifetimes(records,tmp_path,llvm22)
+    runtime=data['observation_contract']['native_runtime']
+    assert runtime['environment_scope']['format']=='swdb.native-environment.v1'
+    assert runtime['environment_scope']['prefixes']==['OMP_','KMP_','GOMP_','MALLOC_']
+    assert runtime['environment']['GLIBC_TUNABLES']=='glibc.malloc.arena_max=2'
+    assert runtime['environment']['MALLOC_ARENA_MAX']=='2'
+    assert runtime['environment']['LD_PRELOAD'] is None
+    assert 'LD_AUDIT' in runtime['environment_scope']['exact_variables']
+    assert runtime['environment_scope']['absence_semantics']=='null_or_absent_is_unset_under_declared_scope'

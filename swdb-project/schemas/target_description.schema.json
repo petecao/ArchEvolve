@@ -136,6 +136,9 @@
       "items": {
         "type": "string"
       }
+    },
+    "functional_observation": {
+      "$ref": "#/$defs/functional_observation"
     }
   },
   "required": [
@@ -181,6 +184,293 @@
       "allOf": [
         {
           "$ref": "#/$defs/basis_rule"
+        }
+      ]
+    },
+    "functional_observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "swdb.functional-observation.v1"
+        },
+        "commands": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "event": {
+                "type": "string"
+              },
+              "intrinsic": {
+                "type": "string"
+              },
+              "hardware_operations": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "aliases": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "debug_name": {
+                      "type": "string"
+                    },
+                    "source_sha256": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    "source": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "root": {
+                          "enum": [
+                            "library",
+                            "repository"
+                          ]
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "sha256": {
+                          "type": "string",
+                          "pattern": "^[a-f0-9]{64}$"
+                        }
+                      },
+                      "required": [
+                        "root",
+                        "path",
+                        "sha256"
+                      ]
+                    },
+                    "memory_base_argument": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "active_elements_argument": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "role": {
+                      "enum": [
+                        "command",
+                        "backend_alias"
+                      ]
+                    },
+                    "active_elements_signed": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "source_sha256",
+                    "memory_base_argument",
+                    "role"
+                  ],
+                  "oneOf": [
+                    {
+                      "required": [
+                        "symbol"
+                      ],
+                      "not": {
+                        "required": [
+                          "debug_name"
+                        ]
+                      }
+                    },
+                    {
+                      "required": [
+                        "debug_name"
+                      ],
+                      "not": {
+                        "required": [
+                          "symbol"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              "target_access_sources": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/semantic_source"
+                }
+              },
+              "bookkeeping_access_sources": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/semantic_source"
+                }
+              }
+            },
+            "required": [
+              "event",
+              "intrinsic",
+              "hardware_operations",
+              "aliases",
+              "target_access_sources",
+              "bookkeeping_access_sources"
+            ]
+          },
+          "maxItems": 64
+        },
+        "request_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "transaction_bytes": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1
+            },
+            "read_coalescing": {
+              "enum": [
+                "none",
+                "window_unique_lines"
+              ]
+            }
+          },
+          "required": [
+            "transaction_bytes",
+            "read_coalescing"
+          ]
+        },
+        "placement": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "policy": {
+              "enum": [
+                "isolated_row_aligned_allocations",
+                "unknown"
+              ]
+            },
+            "basis": {
+              "enum": [
+                "inferred",
+                "unknown"
+              ]
+            },
+            "physical_placement_known": {
+              "const": false
+            }
+          },
+          "required": [
+            "policy",
+            "basis",
+            "physical_placement_known"
+          ]
+        },
+        "window": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "policy": {
+              "const": "logical_fixed_requests_per_command_worker"
+            },
+            "requests": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1
+            },
+            "basis": {
+              "enum": [
+                "inferred",
+                "unknown"
+              ]
+            },
+            "source": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "policy",
+            "requests",
+            "basis",
+            "source"
+          ]
+        }
+      },
+      "required": [
+        "format",
+        "commands",
+        "request_policy",
+        "placement",
+        "window"
+      ]
+    },
+    "semantic_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_sha256"
+      ],
+      "properties": {
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "symbol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "debug_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "root": {
+              "enum": [
+                "library",
+                "repository"
+              ]
+            },
+            "path": {
+              "type": "string"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          "required": [
+            "root",
+            "path",
+            "sha256"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "symbol"
+          ]
+        },
+        {
+          "required": [
+            "debug_name"
+          ]
         }
       ]
     }
