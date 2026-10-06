@@ -122,14 +122,20 @@ def collect(args):
         raise Failure('native timing requires complete actual counted compiler/runtime context')
     runtime = copy.deepcopy(counted_runtime.get('environment', {})) if counted_runtime else {
         'OMP_NUM_THREADS': '1', 'OMP_DYNAMIC': 'FALSE'}
-    keys = {key for key in os.environ if key.startswith(('OMP_', 'KMP_', 'GOMP_'))}
+    declaration = (counted_runtime or {}).get('environment_scope', {})
+    prefixes = tuple(declaration.get('prefixes', ['OMP_', 'KMP_', 'GOMP_']))
+    exact = declaration.get('exact_variables', [])
+    if not all(isinstance(k, str) for k in (*prefixes, *exact)) or any(not isinstance(k,str) or (v is not None and not isinstance(v,str)) for k,v in runtime.items()):
+        raise Failure('counted runtime environment scope/values are invalid')
+    keys = {key for key in os.environ if key.startswith(prefixes)}
+    keys.update(exact)
     keys.update(runtime)
     keys.update(('LD_LIBRARY_PATH', 'DYLD_LIBRARY_PATH'))
     previous = {key: os.environ.get(key) for key in keys}
     try:
         for key in keys:
             os.environ.pop(key, None)
-        os.environ.update(runtime)
+        os.environ.update({key:value for key,value in runtime.items() if value is not None})
         if not counted_runtime:
             for key in ('LD_LIBRARY_PATH','DYLD_LIBRARY_PATH'):
                 os.environ[key] = os.pathsep.join(str(p) for p in libraries)

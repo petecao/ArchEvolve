@@ -37,3 +37,22 @@ def test_unknown_complete_costs_freeze_failed_band_with_region_diagnosis(records
     assert region['id']=='fixture.unknown' and region['seconds'] is None
     assert any('floating_point_ops_per_s' in b['missing'] for b in region['bounds'])
     assert records.validate().returncode==0
+    request={'message_version':'1.0','id':'fixture.band-bound.protocol','version':1,
+        'settings':{'mode':'estimated','estimator_version':'swdb.analytic.v1',
+            'target_description':str(target),'inputs':['tiny-sym'],'roi':'fixture.stream.v1',
+            'threads':1,'cpu_error_band':'fixture.failed.band'}}
+    file=tmp_path/'band-protocol.yaml';file.write_text(yaml.safe_dump(request))
+    frozen=run_swdb('freeze-protocol',file,'--records',records.path,'--format','json')
+    assert frozen.returncode==0,frozen.stdout+frozen.stderr
+    frozen_data=json.loads(frozen.stdout)
+    pin=frozen_data['settings']['cpu_error_band']
+    assert pin['id']=='fixture.failed.band' and pin['snapshot']['state']=='failed'
+    bound=run_swdb('estimate','--records',records.path,'--characterization','fixture.counts',
+        '--target-description',target,'--protocol',frozen_data['id'],
+        '--id','fixture.band-bound.estimate','--format','json')
+    assert bound.returncode==0,bound.stdout+bound.stderr
+    output=json.loads(bound.stdout)
+    assert output['verdict']=='within_error'
+    assert output['error_band']['state']=='failed' and output['error_band']['width_log'] is None
+    assert output['error_band']['validated'] is False
+    assert records.validate().returncode==0

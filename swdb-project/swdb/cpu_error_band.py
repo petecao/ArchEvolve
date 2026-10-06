@@ -59,8 +59,8 @@ def _pair(store, estimate, validation, fixture):
         if not _positive(native - half):
             missing.append('printed_time_resolution')
         else:
-            log_error = math.log(predicted / native)
-            worst_error = max(abs(math.log(predicted / (native-half))), abs(math.log(predicted / (native+half))))
+            log_error = math.log(predicted) - math.log(native)
+            worst_error = max(abs(math.log(predicted) - math.log(native-half)), abs(math.log(predicted) - math.log(native+half)))
     return {'estimate': estimate['id'], 'estimate_sha256': artifacts.digest(estimate),
         'validation': None if validation is None else validation['id'],
         'validation_sha256': None if validation is None else artifacts.digest(validation),
@@ -116,8 +116,49 @@ def require_holdout(store, rid, characterization, *, protocol):
     return band
 
 
+def freeze_pin(settings, store):
+    rid = settings['cpu_error_band']
+    if not isinstance(rid, str):
+        raise Failure('cpu_error_band must name a persisted band record before freeze')
+    band = _load(store, rid, 'cpu_error_band')
+    from swdb.archevolve import require_team_safe
+    require_team_safe(store, band, command='freeze-protocol CPU error band')
+    from swdb.extensa_boundary import closure
+    settings['cpu_error_band'] = {'id':band['id'], 'sha256':artifacts.digest(band), 'snapshot':copy.deepcopy(band)}
+    settings['cpu_error_band_dependencies'] = {key:artifacts.digest(store.get(key)) for key in sorted(closure(store,[rid]))}
+    validate_pin(settings, store)
+
+
+def validate_pin(settings, store):
+    pin = settings['cpu_error_band']
+    if not isinstance(pin, dict) or set(pin) != {'id','sha256','snapshot'}:
+        raise Failure('CPU error band requires a frozen ID/hash/snapshot')
+    band = pin['snapshot']
+    current = store.get(pin['id'],'cpu_error_band')
+    if not isinstance(band,dict) or band.get('kind')!='cpu_error_band' or band.get('id')!=pin['id'] or current is None or artifacts.digest(band)!=pin['sha256'] or artifacts.digest(current)!=pin['sha256'] or band.get('identity_sha256')!=identity(band):
+        raise Failure('CPU error band snapshot or persisted record changed')
+    from swdb.archevolve import require_team_safe
+    require_team_safe(store, band, command='frozen CPU error band')
+    if band['estimator_sha256']!=settings['estimator_sha256'] or band['target_description_sha256']!=settings['target_description']['sha256'] or band['threads']!=settings['threads']:
+        raise Failure('CPU error band model/calibration/threads differ from protocol')
+    from swdb.extensa_boundary import closure
+    expected={key:artifacts.digest(store.get(key)) for key in sorted(closure(store,[pin['id']]))}
+    if settings.get('cpu_error_band_dependencies')!=expected:
+        raise Failure('CPU error band dependency closure changed')
+    return band
+
+
 def finalize_estimate(result, *, store, protocol, characterization, target_description):
-    # An absent or unvalidated band preserves historical within_error behavior.
+    settings = protocol['settings']
+    if 'cpu_error_band' not in settings:
+        return result
+    band = validate_pin(settings,store)
+    result['error_band'] = {'id':band['id'],'sha256':artifacts.digest(band),'state':band['state'],
+        'width_log':band['width_log'],'validated':False,
+        'missing':copy.deepcopy(band['admission']['missing']),
+        'admission_reason':'Failed, fixture or development-only band; prospective scoped holdout admission unavailable.'}
+    result['verdict']='within_error'
+    result['notes'].append('The frozen CPU band is retained beside this verdict; it grants no validated confidence.')
     return result
 
 
