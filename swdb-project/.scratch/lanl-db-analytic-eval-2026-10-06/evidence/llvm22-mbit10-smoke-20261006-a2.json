@@ -1,0 +1,42 @@
+{
+  "source_commit": "86b2a9af732555b2ac2071a2afaf38062d920293",
+  "host": {
+    "machine": "mbit10",
+    "architecture": "x86_64",
+    "system": "Linux-6.8.0-136-generic-x86_64-with-glibc2.39"
+  },
+  "llvm_version": "22.1.8",
+  "plugin_linkage": "host_symbols",
+  "evidence_kind": "contract_fixture",
+  "binding_state": "fixture",
+  "iterations": 17,
+  "floating_point_operations": 34,
+  "read_elements": 17,
+  "write_elements": 17,
+  "compute_bound_fixture_s": 2.125,
+  "stream_bound_fixture_s": 4.25,
+  "target_description_sha256": "40021c80c302b198ed87105c1a24ec625ebae13f87f4ba9104a789fdc10a0501",
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-llvm-smoke-20261006-a2",
+  "files_sha256": {
+    "characterization.json": "5acacbe5e628c7c7d47e22bceed02f8f72640a640f361959b8b2e0dc0f0133ae",
+    "estimate.json": "c4cf666eea04091f296e1b9ee409c23d1db2190db021b0e7a64239ee66fa1919",
+    "validate.log": "c2880c1d6eff82a8e42d27ac89a16d8cf84ef20cef3131013911f4dbc06abfe4"
+  },
+  "lane": {
+    "node": 0,
+    "lease_name": "mbit10-evaluation-node0",
+    "lease_generation": 466,
+    "started_utc": "2026-10-06T20:46:36Z",
+    "ended_utc": "2026-10-06T20:47:13Z",
+    "exit_code": 0,
+    "load1_at_start": 1.09,
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "numa_memory_policy": "bind:0"
+  },
+  "lane_sha256": "2e82a2d30d4fd20165fd5066a786dcf08406b17d205332d7f842170902b97afc",
+  "validation": "OK: 555 record(s) valid",
+  "unavailable_controls": [
+    "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor",
+    "/sys/devices/system/cpu/intel_pstate/no_turbo"
+  ]
+}
