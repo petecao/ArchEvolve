@@ -23,7 +23,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | 04 | [First runnable version: estimate a streaming loop on the mbit10 CPU](issues/04-first-runnable-estimate.md) | resolved | 01 | 1.5–2 days |
 | 05 | [Indirect accesses and the BFS baseline on the CPU](issues/05-indirect-and-bfs-baseline.md) | claimed | 04 | 1.5–2 days |
 | 06 | [Estimate protocols and the gem5 refusal](issues/06-estimate-protocols-and-gem5-refusal.md) | resolved | 04 | 3–4 h |
-| 07 | [Measured mbit10 parameters](issues/07-measured-mbit10-parameters.md) | claimed | 04 | 2–3 h plus about 1 h of lane time (mbit10) |
+| 07 | [Measured mbit10 parameters](issues/07-measured-mbit10-parameters.md) | resolved | 04 | 2–3 h plus about 1 h of lane time (mbit10) |
 | 08 | [Peter's feature reports as an input](issues/08-peter-feature-reports-input.md) | ready-for-agent | 05 | 3–4 h |
 
 ## C. DX100 and ArchEvolve mode
@@ -88,3 +88,11 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
   mbit10 counts and frozen per-region estimates are still being completed; the
   [runbook](evidence/05-registered-counting-runbook.md) records exact commands and
   semantic/evidence limits. No whole-call CPU agreement is claimed.
+
+- 2026-10-06 ET: [ticket 07](issues/07-measured-mbit10-parameters.md#answer) resolved:
+  real socket-lane a1/a2 measurements, independently rebound v2 compute numerators,
+  fresh per-T descriptions with typed calibration dependencies, and the actual
+  [T1 frozen-hash fixture receipt](evidence/bound-calibration-fixture-mbit10-20261006-a1.json).
+  All 584 records validate; old 10 measured target bytes/native trials are unchanged.
+  [CPU calibration contract](../../docs/reference/cpu-calibration.md) records caps,
+  units, plateau premises and cache/service limits. No CPU error-band claim.
