@@ -142,7 +142,7 @@ bool heapRelease(StringRef name) {
 struct Region { std::string id, function; unsigned line=0; Loop *loop=nullptr; bool mapped=false; std::string file,symbol; };
 struct Access { Instruction *inst; Value *ptr; unsigned site, region, bytes, lanes; bool write; unsigned update; };
 struct Op { Instruction *inst; unsigned region, category, amount; };
-struct Call { Instruction *inst; unsigned site; Value *size=nullptr; bool known=false; unsigned region=0; };
+struct Call { Instruction *inst; unsigned site; Value *size=nullptr; bool known=false; unsigned region=0; Value *factor=nullptr,*pointer=nullptr; unsigned action=0; };
 
 class BindROI : public PassInfoMixin<BindROI> {
 public:
@@ -310,7 +310,14 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
               callRow["semantics_note"]=hint?"Optimizer hint or alias-scope metadata; no runtime operation is added.":"One logical arithmetic operation and one overflow predicate per lane; machine lowering cost is not inferred.";
             }
             callRows.push_back(std::move(callRow));
-            calls.push_back({&I,callSite++,size,size!=nullptr,rid});
+            Call observed{&I,callSite++,size,size!=nullptr,rid};
+            if(heapRelease(called)){observed.pointer=CB->getArgOperand(0);observed.action=2;}
+            else if(heapAllocation(called)){
+              observed.action=called=="realloc"?3:1;
+              if(called=="calloc"){observed.size=CB->getArgOperand(0);observed.factor=CB->getArgOperand(1);observed.known=true;}
+              if(called=="realloc"){observed.size=CB->getArgOperand(1);observed.pointer=CB->getArgOperand(0);observed.known=true;}
+            }
+            calls.push_back(observed);
           }
         } else {
           callRows.push_back(json::Object{{"site",int64_t(callSite)},{"region",regions[rid].id},{"name","indirect-call"},{"line",0}});
@@ -334,7 +341,7 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
   LLVMContext &C=M.getContext(); auto *u64=Type::getInt64Ty(C), *u32=Type::getInt32Ty(C);
   auto tripFn=M.getOrInsertFunction("__swdb_trip",Type::getVoidTy(C),u32,u64);
   auto opFn=M.getOrInsertFunction("__swdb_op",Type::getVoidTy(C),u32,u32,u64);
-  auto callFn=M.getOrInsertFunction("__swdb_call",Type::getVoidTy(C),u32,u64,u32,u32);
+  auto callFn=M.getOrInsertFunction("__swdb_call_v2",Type::getVoidTy(C),u32,u64,u32,u32,u64,u32);
   auto accessFn=M.getOrInsertFunction("__swdb_access_v2",Type::getVoidTy(C),u32,u32,u64,u64,u64,u32);
   for (unsigned i=0;i<regions.size();++i) if (auto *L=regions[i].loop) {
     auto *term=L->getHeader()->getTerminator(); IRBuilder<> B(term); Value *n=B.getInt64(1);
@@ -345,7 +352,16 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
     B.CreateCall(tripFn,{B.getInt32(i),n});
   }
   for (auto &op:operations) { IRBuilder<> B(op.inst); B.CreateCall(opFn,{B.getInt32(op.region),B.getInt32(op.category),B.getInt64(op.amount)}); }
-  for (auto &call:calls) { IRBuilder<> B(call.inst); B.CreateCall(callFn,{B.getInt32(call.site),call.size?B.CreateZExtOrTrunc(call.size,u64):B.getInt64(0),B.getInt32(call.known?1:0),B.getInt32(call.region)}); }
+  for(auto &call:calls){
+    IRBuilder<> B(call.inst);Value *size=call.size?B.CreateZExtOrTrunc(call.size,u64):B.getInt64(0),*known=B.getInt32(call.known?1:0);
+    if(call.factor){
+      auto mul=M.getOrInsertFunction("llvm.umul.with.overflow.i64",StructType::get(u64,B.getInt1Ty()),u64,u64);
+      auto product=B.CreateCall(mul,{size,B.CreateZExtOrTrunc(call.factor,u64)});
+      size=B.CreateExtractValue(product,0);known=B.CreateZExt(B.CreateNot(B.CreateExtractValue(product,1)),u32);
+    }
+    B.CreateCall(callFn,{B.getInt32(call.site),size,known,B.getInt32(call.region),
+        call.pointer?B.CreatePtrToInt(call.pointer,u64):B.getInt64(0),B.getInt32(call.action)});
+  }
   std::map<std::string,unsigned> canonical;
   for(unsigned i=0;i<regions.size();++i)canonical.emplace(regions[i].id,i);
   for (auto &a:accesses) { IRBuilder<> B(a.inst); B.CreateCall(accessFn,{B.getInt32(a.site),B.getInt32(canonical.at(regions[a.region].id)),B.CreatePtrToInt(a.ptr,u64),B.getInt64(a.lanes),B.getInt64(a.bytes),B.getInt32(a.update)}); }

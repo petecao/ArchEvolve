@@ -94,3 +94,48 @@ def test_negative_observer_work_is_refused_even_with_a_resigned_fixture_identity
     result=records.validate()
     assert result.returncode==1
     assert 'nonnegative' in result.stdout+result.stderr
+
+
+def characterize_services(records,tmp_path,llvm22,*extra):
+    records.add_stub()
+    result=run_swdb('characterize','--records',records.path,
+        '--source',REPO/'tests/fixtures/analytic/services.cpp','--implementation','stub-impl',
+        '--input','tiny-sym','--function','services','--roi','fixture.services.v1',
+        '--id','fixture.services','--llvm-bin',llvm22,'--output',tmp_path/'counted',
+        '--fixture','--format','json',*extra)
+    assert result.returncode==0,result.stderr+result.stdout
+    data=json.loads(result.stdout)
+    return data
+
+
+def test_executed_call_lengths_and_free_lifetimes_are_counted_without_addresses(records,tmp_path,llvm22):
+    data=characterize_services(records,tmp_path,llvm22)
+    calls=[call for region in data['regions'] for call in region['call_shape_counts']['calls']]
+    allocated=next(c for c in calls if c['name']=='malloc')
+    freed=next(c for c in calls if c['name']=='free')
+    assert allocated['execution_count']['value']==freed['execution_count']['value']==3
+    assert [(b['bytes'],b['execution_count']['value']) for b in allocated['known_length_bins']]==[(64,2),(128,1)]
+    assert [(b['bytes'],b['execution_count']['value']) for b in freed['allocation_lifetime_size_bins']]==[(64,2),(128,1)]
+    assert freed['unknown_free_lifetimes']['value']==0
+    assert data['observation_contract']['call_abi']=='swdb.call.v2'
+    checked=records.validate()
+    assert checked.returncode==0,checked.stdout+checked.stderr
+
+
+def test_call_histogram_budget_preserves_execution_totals_and_unknown_bins(records,tmp_path,llvm22):
+    data=characterize_services(records,tmp_path,llvm22,'--state-budget','1')
+    calls=[call for region in data['regions'] for call in region['call_shape_counts']['calls']]
+    allocated=next(c for c in calls if c['name']=='malloc')
+    freed=next(c for c in calls if c['name']=='free')
+    assert allocated['execution_count']['value']==3
+    # The actual pre-loop memcpy consumes the sole global histogram bin.
+    assert allocated['unknown_lengths']['value']==3
+    assert sum(b['execution_count']['value'] for b in allocated['known_length_bins'])+allocated['unknown_lengths']['value']==3
+    assert freed['unknown_free_lifetimes']['value']==3
+
+
+def test_registered_cxx11_build_contract_keeps_live_objects(records,tmp_path,llvm22):
+    data=characterize_lifetimes(records,tmp_path,llvm22,'--build-flag=-std=c++11')
+    memory=next(r for r in data['regions'] if r['id']=='fixture.loads')['memory_service_counts']
+    assert memory['lifetime_line_union']['value']==5
+    assert memory['unknown_object_requests']['value']==0

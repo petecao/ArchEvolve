@@ -9,7 +9,10 @@
 
 namespace swdb_live {
 inline uint64_t budget(){const char *v=std::getenv("SWDB_STATE_BUDGET");return v?std::strtoull(v,nullptr,10):524288;}
-struct Object {uint64_t base,size,id,born;std::set<uint64_t> touched_pages;bool touches_complete=true;};
+struct Object {
+  uint64_t base,size,id,born;std::set<uint64_t> touched_pages;bool touches_complete;
+  Object(uint64_t b,uint64_t s,uint64_t i,uint64_t e):base(b),size(s),id(i),born(e),touches_complete(true){}
+};
 struct Service {
   std::map<std::pair<uint32_t,uint64_t>,uint64_t> requests;
   uint64_t useful_bytes=0,unknown_requests=0,first_read=0,first_write=0;
@@ -32,7 +35,7 @@ struct Registry {
     release(base);
     if(!known || !size || size>UINT64_MAX-base)return;
     if(objects.size()>=budget()){object_budget_exhausted=true;return;}
-    objects.emplace(base,Object{base,size,next_id++,epoch,{},true});
+    objects.emplace(base,Object(base,size,next_id++,epoch));
   }
   void release(uint64_t base){auto it=objects.find(base);if(it!=objects.end()){touch_entries-=it->second.touched_pages.size();objects.erase(it);}}
   void reallocate(uint64_t old,uint64_t result,uint64_t size,bool known){

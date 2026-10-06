@@ -430,6 +430,9 @@
         "runtime_bundle_sha256": {
           "type": "string",
           "pattern": "^[a-f0-9]{64}$"
+        },
+        "call_abi": {
+          "const": "swdb.call.v2"
         }
       },
       "required": [
@@ -880,6 +883,122 @@
             "unknown_object_requests",
             "missing",
             "assumption_sha256"
+          ]
+        },
+        "call_shape_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "format": {
+              "const": "swdb.call-shape-counts.v1"
+            },
+            "scope": {
+              "enum": [
+                "per_run",
+                "per_trial"
+              ]
+            },
+            "calls": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "site": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "event": {
+                    "type": "string"
+                  },
+                  "execution_count": {
+                    "$ref": "#/$defs/count"
+                  },
+                  "body_counted": {
+                    "type": "boolean"
+                  },
+                  "known_length_bins": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "bytes": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "execution_count": {
+                          "$ref": "#/$defs/count"
+                        }
+                      },
+                      "required": [
+                        "bytes",
+                        "execution_count"
+                      ]
+                    }
+                  },
+                  "unknown_lengths": {
+                    "$ref": "#/$defs/count"
+                  },
+                  "allocation_lifetime_size_bins": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "bytes": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "execution_count": {
+                          "$ref": "#/$defs/count"
+                        }
+                      },
+                      "required": [
+                        "bytes",
+                        "execution_count"
+                      ]
+                    }
+                  },
+                  "unknown_free_lifetimes": {
+                    "$ref": "#/$defs/count"
+                  },
+                  "scope": {
+                    "enum": [
+                      "per_run",
+                      "per_trial"
+                    ]
+                  },
+                  "missing": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "site",
+                  "name",
+                  "event",
+                  "execution_count",
+                  "body_counted",
+                  "known_length_bins",
+                  "unknown_lengths",
+                  "allocation_lifetime_size_bins",
+                  "unknown_free_lifetimes",
+                  "scope",
+                  "missing"
+                ]
+              }
+            }
+          },
+          "required": [
+            "format",
+            "scope",
+            "calls"
           ]
         }
       },

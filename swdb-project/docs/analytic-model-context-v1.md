@@ -78,3 +78,12 @@ scenarios require separate assumptions and evidence.
 Manual begin/end fixture calls retain independent trials with their original fixture
 binding. Registered GAPBS source/input/ROI rules are unchanged. Aggregate and trial
 regions share one strict schema; missing optional fields mean unobserved, not zero.
+
+Executed call shapes use `swdb.call-shape-counts.v1`. Each region records exact
+per-site length histograms and free-call allocation-lifetime size histograms,
+with scoped execution counts. The standard allocator registry resolves a free
+only while that exact allocation is live. Unknown lengths/lifetimes and bins
+refused by the global state budget remain explicit; execution totals still
+include them. No pointer, allocation list, or call order is serialized. A model
+requiring lengths must cover every counted bin and unknown event before clearing
+an opaque call cost. Registered C++11 source flags also apply to the runtime.

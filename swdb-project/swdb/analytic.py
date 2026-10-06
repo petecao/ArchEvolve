@@ -215,6 +215,26 @@ def _counted_regions(static, counts, count_scope="per_run"):
         called['execution_count'] = _count(counts.get('calls', {}).get(str(called['site']), 0))
         called['size_bytes'] = _fact(counts.get('call_size_bytes', {}).get(str(called['site'])), 'measured')
         calls.append(called)
+    if 'call_shapes' in counts:
+        for region in regions:
+            shaped=[]
+            for call in calls:
+                if call['region']!=region['id']:continue
+                observed=counts['call_shapes'].get(str(call['site']),{})
+                def bins(name):
+                    return [{'bytes':item['bytes'],'execution_count':{'value':item['executions'],
+                        'basis':'measured','scope':count_scope}} for item in observed.get(name,[])]
+                unknown_lengths=observed.get('unknown_lengths',0)
+                unknown_free=observed.get('unknown_free_lifetimes',0)
+                shaped.append({'site':call['site'],'name':call['name'],'event':call.get('event','external_call'),
+                    'execution_count':{'value':call['execution_count']['value'],'basis':'measured','scope':count_scope},
+                    'body_counted':call.get('body_counted',False),'known_length_bins':bins('known_length_bins'),
+                    'unknown_lengths':{'value':unknown_lengths,'basis':'measured','scope':count_scope},
+                    'allocation_lifetime_size_bins':bins('allocation_lifetime_size_bins'),
+                    'unknown_free_lifetimes':{'value':unknown_free,'basis':'measured','scope':count_scope},
+                    'scope':count_scope,'missing':(['call_length'] if unknown_lengths else [])+
+                        (['free_allocation_lifetime'] if unknown_free else [])})
+            region['call_shape_counts']={'format':'swdb.call-shape-counts.v1','scope':count_scope,'calls':shaped}
     return regions, calls
 
 
@@ -390,7 +410,7 @@ def characterize(args):
     if 'memory_service_counts' in counts:
         record['counting']['observation_format']='swdb.live-count-context.v1'
         record['observation_contract']={'format':'swdb.live-count-context.v1',
-            'level':'source_normalized_ir','abi':'swdb.access.v2',
+            'level':'source_normalized_ir','abi':'swdb.access.v2','call_abi':'swdb.call.v2',
             'line_bytes':64,'page_bytes':4096,'state_budget':args.state_budget,
             'object_scope':'translation_unit_allocator_calls',
             'first_access_scope':'first observed access in selected normalized source functions; opaque initialization is not observed',
@@ -556,6 +576,9 @@ def _payload_problems(data):
                     'logical_first_read_pages','logical_first_write_pages','pre_roi_allocation_pages',
                     'in_roi_allocation_pages','unknown_object_requests')]
                 counts += [item['requests'] for items in memory['requests_by_update_kind'].values() for item in items]
+            for call in region.get('call_shape_counts',{}).get('calls',[]):
+                counts += [call[name] for name in ('execution_count','unknown_lengths','unknown_free_lifetimes')]
+                counts += [item['execution_count'] for name in ('known_length_bins','allocation_lifetime_size_bins') for item in call[name]]
             for count in counts:
                 value = count.get('value')
                 if value is not None and (not isinstance(value, (int, float)) or isinstance(value, bool) or not math.isfinite(value) or value < 0):
