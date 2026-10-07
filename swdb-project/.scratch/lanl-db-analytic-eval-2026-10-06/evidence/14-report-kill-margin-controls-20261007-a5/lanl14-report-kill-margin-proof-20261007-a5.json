@@ -1,0 +1,62 @@
+{
+  "format": "swdb.lanl14-report-kill-margin-preparation.v1",
+  "updated": "2026-10-07 ET",
+  "scope": "Preparation only: external dispatch KILL allowance adds 20 seconds of scheduling margin beyond the existing maximum owned cleanup sequence. No report dispatch, scientific change, runtime prediction or new cleanup execution.",
+  "baseline": {
+    "path": "/private/tmp/lanl14_final_reports_catalog_caps_a4.py",
+    "sha256": "bc00fa90d0ba8ebf351f34b13b372e9c55d3f853d53326b75126f525bf9d22de",
+    "bytes": 23351
+  },
+  "selected": {
+    "path": "/private/tmp/lanl14_final_reports_catalog_caps_a5.py",
+    "sha256": "e79e4b2e295f07967a1f4f67e7501c35d9d402101330ac9347f98cfb282bf63a",
+    "bytes": 23351
+  },
+  "edit": {
+    "function": "dispatch",
+    "line": 159,
+    "column": 33,
+    "old": "--kill-after=40s",
+    "new": "--kill-after=60s",
+    "ast_constant_edits": 1
+  },
+  "byte_reversal_exact": true,
+  "ast_reversal_exact_including_locations": true,
+  "all_other_bytes_unchanged": true,
+  "unchanged_exporter": {
+    "path": "/private/tmp/lanl14_final_export_catalog_caps_a4.py",
+    "sha256": "bf5add9eb35daa5402a0359f6ace5c542a289f9b60b14cbd00aa763097a9645d",
+    "manifest_binding": "actual report helper hash is bound dynamically"
+  },
+  "preserved_scopes": [
+    "decoded science",
+    "metadata caps",
+    "arguments",
+    "source/ref/F6 gates",
+    "raw tag/paths",
+    "owned cleanup primitive and budgets",
+    "all LOCALPR controls/accepted artifacts"
+  ],
+  "reused_linux_cleanup_evidence": {
+    "path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket14/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-linux-cleanup-smoke-mbit10-20261006-a1.json",
+    "file_sha256": "50b4b0bc44af1a8991227e00c8050ba472226dc0f6b562cd8a8eb2ffa9661613",
+    "receipt_identity_sha256": "414be978a6776e08185fef5b90adbbb142fa93ea2434e4779dc2beed618a416b",
+    "helper_sha256": "31e1d71bc6e9ef4a5a5f1d5fbff136ceef249935f8f00601edf45277fce249ec",
+    "processes_py_sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+    "actual_cleanup_repeated": false
+  },
+  "portable_checks": {
+    "syntax": true,
+    "help_exit_code": 0,
+    "help_wall_budget_seconds": 15
+  },
+  "patch": {
+    "path": "/private/tmp/lanl14-report-kill-margin-20261007-a5.patch",
+    "sha256": "bd828331252e1b15fb085241f496c74482b5f140411d84c593a1a590592cb78d"
+  },
+  "native_execution": 0,
+  "provider_calls": 0,
+  "remote_actions": 0,
+  "actual_nine_reports": 0,
+  "identity_sha256": "e58f0590a1877a681b3f1c81f0e9fc7d35c39cb3be244b2a3d73751da8723fe7"
+}
