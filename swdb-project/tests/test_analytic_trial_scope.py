@@ -28,3 +28,29 @@ def test_public_count_labels_each_trial_window_without_changing_root_scope(recor
     check(value['regions'],value['unmodeled_calls'],'per_run')
     for trial in value['trials']:check(trial['regions'],trial['unmodeled_calls'],'per_trial')
     assert sum(a['element_count']['value'] for r in value['trials'][1]['regions'] for a in r['access_patterns']) > sum(a['element_count']['value'] for r in value['trials'][0]['regions'] for a in r['access_patterns'])
+
+
+def test_public_estimate_reconciles_sealed_legacy_trial_scope_only_in_context(records,tmp_path):
+    import hashlib
+    import yaml
+    from testkit.analytic import freeze_protocol
+    records.copy_repo()
+    path=records.path/'workload_characterizations/bfs.functional.kron-g16.t4.characterization.objects.a2.yaml'
+    original=hashlib.sha256(path.read_bytes()).hexdigest()
+    counted=records.read(path.relative_to(records.path))
+    assert all(c['execution_count']['scope']=='per_run' for t in counted['trials'] for c in t['unmodeled_calls'])
+    target=tmp_path/'target.yaml'
+    target.write_text(yaml.safe_dump(counted['observation_contract']['counted_target_description_snapshot'],sort_keys=False))
+    protocol=freeze_protocol(records.path,tmp_path,target,roi=counted['binding']['roi'],threads=4,
+        input_id=counted['input'],arguments=counted['source']['run_arguments'])
+    result=run_swdb('estimate','--records',records.path,'--characterization',counted['id'],
+        '--target-description',target,'--protocol',protocol,'--id','fixture.legacy.scopes.estimate',
+        '--format','json',timeout=240)
+    assert result.returncode==0,result.stdout+result.stderr
+    value=json.loads(result.stdout)
+    proofs=value['extensions']['legacy_trial_scope_reconciliations']
+    assert [p['position'] for p in proofs]==list(range(5))
+    assert all(p['basis']=='inferred' and p['counted_payload_sha256']==counted['binding']['execution_receipt']['counted_payload_sha256'] for p in proofs)
+    assert all(c['execution_count']['scope']=='per_trial' for t in value['trials'] for r in t['regions'] for b in r['bounds'] if b['model']=='unmodeled_calls' for c in b['inputs']['calls'])
+    assert value['seconds'] is None  # Scope correction supplies no missing resource cost.
+    assert hashlib.sha256(path.read_bytes()).hexdigest()==original
