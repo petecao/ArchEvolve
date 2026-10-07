@@ -97,6 +97,7 @@ def run(args):
         raw_artifacts=[],gain_claim=False,evidence_kind=characterization['evidence_kind'],
         context={'evaluator':EVALUATOR,'target':target['target'],'basis':'estimated','threads':target['threads'],
             'candidate_sha256':candidate['artifact']['sha256'],'protocol':request['protocol'],
+            'request_sha256':artifacts.digest(request),
             'roi':characterization['binding']['roi'],'correctness_scope':'functional-target',
             'hardware_correctness_claim':False,'performance_timing_collected':False})
     stage='certification'
@@ -160,7 +161,8 @@ def verify(data,store):
         'functional evaluation candidate binding changed')
     request=data.get('request',{})
     _require(request.get('id')==data['id'] and request.get('candidate')==candidate['id']
-        and request.get('protocol')==context.get('protocol'),
+        and request.get('protocol')==context.get('protocol')
+        and (context.get('request_sha256') is None or context['request_sha256']==artifacts.digest(request)),
         'functional evaluation request binding differs')
     pin=context.get('certification')
     if pin is not None:
@@ -197,6 +199,12 @@ def verify(data,store):
             and characterization['binding']['roi']==context['roi']
             and characterization['evidence_kind']==data['evidence_kind'],
             'functional estimate request, subject or target binding differs')
+        # Older archives predate literal request pins. Registered target IDs can
+        # still be checked without reopening external file-sourced targets.
+        if context.get('request_sha256') is None:
+            requested=store.get(request.get('target_description'),'target_description')
+            _require(requested is None or artifacts.digest(requested)==estimate['target_description_sha256'],
+                'functional evaluation request binding differs')
         hardware=store.get(target['target'],'hardware_target')
         _require(hardware is not None and hardware.get('backend',{}).get('id')=='functional-source',
             'functional estimate requires a source-only functional hardware target')

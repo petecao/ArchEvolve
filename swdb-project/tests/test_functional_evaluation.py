@@ -93,6 +93,32 @@ def test_strict_certified_candidate_gets_estimated_handoff_without_target_timing
     assert message['content']['performance_claim']=='none'
     checked=records.validate();assert checked.returncode==0,checked.stdout+checked.stderr
 
+    # The literal caller request must remain tied to the archived result.
+    altered=copy.deepcopy(data)
+    altered['request']['target_description']='fixture.unrequested.target'
+    records.write('evaluations/'+data['id']+'.yaml',altered)
+    refused=run_swdb('handoff-message','evaluation_result',data['id'],
+        '--records',records.path,'--format','json')
+    assert refused.returncode!=0,refused.stdout+refused.stderr
+    checked=records.validate()
+    assert checked.returncode!=0 and 'functional evaluation request binding' in checked.stdout+checked.stderr
+    records.write('evaluations/'+data['id']+'.yaml',data)
+
+    legacy=copy.deepcopy(data)
+    legacy['context'].pop('request_sha256',None)
+    legacy['request']['target_description']='mbit10.cpu.lanl20261006a2.v2.t1'
+    records.write('evaluations/'+data['id']+'.yaml',legacy)
+    refused=run_swdb('handoff-message','evaluation_result',data['id'],
+        '--records',records.path,'--format','json')
+    assert refused.returncode!=0 and 'functional evaluation request binding' in refused.stderr
+    records.write('evaluations/'+data['id']+'.yaml',data)
+
+    # A file-sourced target remains portable through its immutable snapshot.
+    Path(data['request']['target_description']).unlink()
+    rendered=run_swdb('handoff-message','evaluation_result',data['id'],
+        '--records',records.path,'--format','json')
+    assert rendered.returncode==0,rendered.stdout+rendered.stderr
+
     # A handoff verifies the archived estimate before publishing compact fields.
     altered=copy.deepcopy(data)
     altered['context']['analytic_estimate']['ratio']=123.0
