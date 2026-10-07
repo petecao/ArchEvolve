@@ -1,6 +1,6 @@
 # ArchEvolve — hardware exploration prototype
 
-The active target is the **DX100-modified GAP BFS**, using Peter's v1.2 sparse and fully connected reports. Eric's [hardware evidence catalog](docs/hardware-catalog-handoff.md) is the default hardware knowledge input: **11 source/version/configuration/mapping records, 48 operations and 139 located claims** (data revision **0.1.11**). TMU, COBRA and AXI-Pack are scoped mapping records, not generic gather replacements.
+The active target is the **DX100-modified GAP BFS**, using Peter's v1.2 sparse and fully connected reports. Eric's [hardware evidence catalog](docs/hardware-catalog-handoff.md) is the default hardware knowledge input: **12 source/version/configuration/mapping records, 50 operations and 145 located claims** (data revision **0.1.12**). TMU, COBRA and AXI-Pack are scoped mapping records, not generic gather replacements.
 
 The [current mechanism handoff](docs/mechanism-handoff-2026-10-06/README.md) explains scheduling, grouping, response association, credits, completion and unresolved implementation details. It includes a small executable association scaffold; no cycle model, RTL or target-performance validation is implied.
 
@@ -17,13 +17,14 @@ python3 -m venv .venv
 .venv/bin/python -m unittest discover -s tests -v
 ```
 
-The default catalog is `catalog/hardware-v0.1.yaml` (format v0.1, data revision 0.1.11); `--catalog` may be omitted. The received feature files still use schema 1.1 despite being report revision v1.2.
+The default catalog is `catalog/hardware-v0.1.yaml` (format v0.1, data revision 0.1.12); `--catalog` may be omitted. The received feature files still use schema 1.1 despite being report revision v1.2.
 
 ## Results and handoff
 
 - **[Peter's intrinsic handoff](docs/peter-intrinsics-handoff.md)**: current images, operation contracts, and source requirements.
 - **[Hardware behavior and acceleration mechanisms](docs/hardware-behavior-handoff.md)**: October 6 response to Peter, with separate source-scoped DX100/MAPLE sheets and automatic behavior output for future packages.
 - [Pipette queue/RA mechanisms](docs/pipette-catalog-admission/README.md): committed register queues, rollback, finite shared storage and a portable lifecycle subset from the MICRO 2020 reference.
+- [PHI bulk scatter mechanisms](docs/phi-catalog-admission/README.md): cache partial reductions, selective update bins and explicit flush/visibility phases from the MICRO 2019 reference.
 - **[MAPLE/DX100 handoff](docs/maple-dx100-handoff.md)**: the selected second fetcher, known internal mechanisms, diagrams and typed/mapping gaps.
 - [Validated v0.1.9 mechanism-rich BFS comparison](runs/bfs-mechanisms-v0.1.9/README.md).
 - [Earlier focused BFS comparison](runs/bfs-maple-comparison-v0.1/README.md).
