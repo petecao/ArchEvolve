@@ -1,0 +1,112 @@
+{
+  "format": "swdb.cpu-enriched-catalogue-administrative-cap-preparation.v1",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "rows": [
+    {
+      "role": "model-validation",
+      "baseline_path": "lanl-dispatch-cpu-model-validation-a3.py",
+      "baseline_sha256": "b280f3d7bbc96d77f396c12999fdffed985191afef0503fb4de01f0269b0f1b3",
+      "path": "lanl-dispatch-cpu-model-validation-a3-metadata2400.py",
+      "sha256": "f1ddb874189abb28fecb7ef4431f6382d3c09442ae1a75afd0164f4562f276bc",
+      "changes": [
+        {
+          "before": "'runner_s':10000,'outer_s':10300,'public_stage_s':1400,'collect_process_s':2100,'validate_s':1400,'native_collector_s':900",
+          "after": "'runner_s':18000,'outer_s':18300,'public_stage_s':2400,'collect_process_s':3600,'validate_s':2400,'native_collector_s':900"
+        },
+        {
+          "before": "deadline=time.monotonic()+10000",
+          "after": "deadline=time.monotonic()+18000"
+        },
+        {
+          "before": "def run(args,name,cap=1400):",
+          "after": "def run(args,name,cap=2400):"
+        },
+        {
+          "before": "'collect-'+kernel+'-g'+str(scale),2100",
+          "after": "'collect-'+kernel+'-g'+str(scale),3600"
+        },
+        {
+          "before": "'validate',1400",
+          "after": "'validate',2400"
+        },
+        {
+          "before": "'10300s'",
+          "after": "'18300s'"
+        }
+      ],
+      "explicit_reversal_all_other_bytes_unchanged": true,
+      "decoded_runner_ast_identical_after_only_cap_reversal": true,
+      "all_decoded_string_refs_unchanged": true
+    },
+    {
+      "role": "band-report",
+      "baseline_path": "lanl-dispatch-cpu-band-report-a3-freeze1800.py",
+      "baseline_sha256": "512cc097b41a7607d3c1b91c73bb831378da399366ece10272a78424dc9e7f44",
+      "path": "lanl-dispatch-cpu-band-report-a3-metadata2400.py",
+      "sha256": "83b2683b5bb21534d7dbd962555770842b8dd24748ba5119abec9339d53b0ad2",
+      "changes": [
+        {
+          "before": "'runner_s':9200,'outer_s':9500,'public_stage_s':1400,'protocol_freeze_s':1800,'validate_s':1400",
+          "after": "'runner_s':18000,'outer_s':18300,'public_stage_s':2400,'protocol_freeze_s':3600,'validate_s':2400"
+        },
+        {
+          "before": "deadline=time.monotonic()+9200",
+          "after": "deadline=time.monotonic()+18000"
+        },
+        {
+          "before": "'freeze-'+kernel,1800",
+          "after": "'freeze-'+kernel,3600"
+        },
+        {
+          "before": "'estimate-'+kernel,1400",
+          "after": "'estimate-'+kernel,2400"
+        },
+        {
+          "before": "def run(args,name,cap=1400):",
+          "after": "def run(args,name,cap=2400):"
+        },
+        {
+          "before": "'validate',1400",
+          "after": "'validate',2400"
+        },
+        {
+          "before": "'9500s'",
+          "after": "'18300s'"
+        }
+      ],
+      "explicit_reversal_all_other_bytes_unchanged": true,
+      "decoded_runner_ast_identical_after_only_cap_reversal": true,
+      "all_decoded_string_refs_unchanged": true
+    }
+  ],
+  "exporters_unchanged": {
+    "lanl-export-cpu-model-validation-a3.py": "2d59a2d5f6ce54d4692fc962dbc9e38dab4f86076f1873ab78a1484522c681f6",
+    "lanl-export-cpu-band-report-a3.py": "788c5cfd72433916daac544420de5251eb6d549c56afaeba455a82416f11dbb1"
+  },
+  "active_model_a3_helpers_unchanged": true,
+  "source_or_scientific_recipe_changes": false,
+  "application_or_remote_execution": false,
+  "raw_paths_c_17a1_openmp_refs_unchanged": true,
+  "native_collector_s_unchanged": 900,
+  "limits": {
+    "development_holdout": {
+      "runner_s": 18000,
+      "outer_s": 18300,
+      "public_s": 2400,
+      "collect_process_s": 3600,
+      "validate_s": 2400
+    },
+    "report": {
+      "runner_s": 18000,
+      "outer_s": 18300,
+      "public_s": 2400,
+      "protocol_freeze_s": 3600,
+      "validate_s": 2400
+    }
+  },
+  "audit_path": "lanl-ticket11-future-metadata-cost-audit-20261007.md",
+  "audit_sha256": "1ac823192b9dc15ac09fc717661edd84baf626b8a8577fff3623ba954d3c1e32",
+  "scope": "Distinct finite administrative caps selected before application outcomes due enriched catalogue metadata work. No statistical/scientific or measured runtime guarantee.",
+  "identity_sha256": "a545add000b6e51101e4ae8328baf348dddc17a493041daa16e093a2fbf66ed7"
+}

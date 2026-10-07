@@ -1,0 +1,84 @@
+{
+  "format": "swdb.cpu-enriched-catalogue-administrative-cap-verified.v1",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "preparation_identity": "a545add000b6e51101e4ae8328baf348dddc17a493041daa16e093a2fbf66ed7",
+  "model_mock_identity": "e4b116932959e9d782f69d3ccda44279f374b1cba1122c4dd8b0dd156d344c5d",
+  "report_mock_identity": "7b66e92bf345441a35ca2b38195e044c4d4a04c7110878a955052cae39480129",
+  "helpers": {
+    "lanl-dispatch-cpu-model-validation-a3-metadata2400.py": "f1ddb874189abb28fecb7ef4431f6382d3c09442ae1a75afd0164f4562f276bc",
+    "lanl-dispatch-cpu-band-report-a3-metadata2400.py": "83b2683b5bb21534d7dbd962555770842b8dd24748ba5119abec9339d53b0ad2"
+  },
+  "exporters_unchanged": {
+    "lanl-export-cpu-model-validation-a3.py": "2d59a2d5f6ce54d4692fc962dbc9e38dab4f86076f1873ab78a1484522c681f6",
+    "lanl-export-cpu-band-report-a3.py": "788c5cfd72433916daac544420de5251eb6d549c56afaeba455a82416f11dbb1"
+  },
+  "limits": {
+    "development_holdout": {
+      "runner_s": 18000,
+      "outer_s": 18300,
+      "public_s": 2400,
+      "collect_process_s": 3600,
+      "validate_s": 2400
+    },
+    "report": {
+      "runner_s": 18000,
+      "outer_s": 18300,
+      "public_s": 2400,
+      "protocol_freeze_s": 3600,
+      "validate_s": 2400
+    }
+  },
+  "source_derived_full_store_counts": {
+    "development": 12,
+    "heldout": 12,
+    "report": 19
+  },
+  "source_derived_full_validation_counts": {
+    "development": 5,
+    "heldout": 5,
+    "report": 9
+  },
+  "source_derived_sqlite_rebuild_counts": {
+    "development": 0,
+    "heldout": 0,
+    "report": 2
+  },
+  "audit_sha256": "1ac823192b9dc15ac09fc717661edd84baf626b8a8577fff3623ba954d3c1e32",
+  "initial_count_error_retained": {
+    "path": "lanl-ticket11-future-metadata-cost-audit-20261007-initial18stores.md",
+    "sha256": "c4d813c6df0e9c997c2056c8637a92507d87c28180cc2050ca19bfa973a3ab7a",
+    "correction": "Report has a separate final saved-pin Store reload;19 rather than18. Public per-stage and development/heldout counts unchanged."
+  },
+  "immutable_evidence_refs": [
+    {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-linux-cleanup-smoke-mbit10-20261006-a1.json",
+      "sha256": "50b4b0bc44af1a8991227e00c8050ba472226dc0f6b562cd8a8eb2ffa9661613"
+    },
+    {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-bfs.g16-projection-mbit10-20261006-a1.json",
+      "sha256": "a540cfbb98d105cbad8bab41359b1838b51a251780c495395f96fbe6534d5761"
+    },
+    {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-bfs.g17-projection-mbit10-20261006-a1.json",
+      "sha256": "9a2244b3680e6810651183c51786976b80e3679d082145c6a94a48732fb540a1"
+    },
+    {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-bc.g16-projection-mbit10-20261006-a1.json",
+      "sha256": "e2014d2d2c71cb8b18ce69ab87abb4c6f6c805d98e27e266ee9fb39c607bd999"
+    },
+    {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-bc.g17-projection-mbit10-20261006-a1.json",
+      "sha256": "4f3884043652063b4f5d15a96f44a48c052241fe4659bda10abd9d87a5a203eb"
+    }
+  ],
+  "native_collector": {
+    "max_wall_s": 900,
+    "source_sha256": "86e6aef4b04142fe87fd4fb68144b2395916b0ea611454153733ddfbe6eb5d2e",
+    "deadline_placement": "After initial Store/count/protocol/environment preflight; all collector commands use remaining time. Writer commit occurs after retained timing ends, outside this scientific command deadline."
+  },
+  "active_model_helpers_and_clean_c_unchanged": true,
+  "application_or_remote_execution": false,
+  "scope": "Distinct reviewed administrative preparation before application outcomes, with exact cap-only reversal. Forecast/rate/input/runtime/ROI/recipe/per-kernel widths and all raw paths unchanged.",
+  "identity_sha256": "48d1273d525f7b54391f3b96141d11b1e886d761e33bba3b27e423b031146f7e"
+}

@@ -1,0 +1,162 @@
+{
+  "format": "swdb.cpu-band-report-mocked-proof.v1",
+  "scope": "Local syntax/AST and mocked protocol/report/export admission checks plus bounded Python subprocess SIGTERM cleanup. No remote calls, provider inference, compiler or application execution.",
+  "dispatcher_sha256": "83b2683b5bb21534d7dbd962555770842b8dd24748ba5119abec9339d53b0ad2",
+  "exporter_sha256": "788c5cfd72433916daac544420de5251eb6d549c56afaeba455a82416f11dbb1",
+  "checks": [
+    {
+      "extra_export_record_refused": true
+    },
+    {
+      "prior_bytes_tamper_refused": true
+    },
+    {
+      "state": "validated",
+      "freeze_commands": 2,
+      "estimate_commands": 2,
+      "source_argv_preserved": true,
+      "costs_unchanged": true
+    },
+    {
+      "extra_export_record_refused": true
+    },
+    {
+      "prior_bytes_tamper_refused": true
+    },
+    {
+      "state": "failed",
+      "freeze_commands": 2,
+      "estimate_commands": 2,
+      "source_argv_preserved": true,
+      "costs_unchanged": true
+    },
+    {
+      "state": "validated",
+      "refusal": true,
+      "commands_before_refusal": 0
+    },
+    {
+      "state": "validated",
+      "refusal": true,
+      "commands_before_refusal": 0
+    },
+    {
+      "state": "validated",
+      "refusal": true,
+      "commands_before_refusal": 0
+    },
+    {
+      "state": "validated",
+      "refusal": true,
+      "commands_before_refusal": 0
+    },
+    {
+      "state": "validated",
+      "refusal": true,
+      "commands_before_refusal": 0
+    },
+    {
+      "state": "validated",
+      "refusal": true,
+      "commands_before_refusal": 0
+    },
+    {
+      "state": "validated",
+      "refusal": true,
+      "commands_before_refusal": 0
+    },
+    {
+      "state": "validated",
+      "refusal": true,
+      "commands_before_refusal": 2
+    },
+    {
+      "state": "validated",
+      "refusal": true,
+      "commands_before_refusal": 2
+    },
+    {
+      "state": "failed",
+      "refusal": true,
+      "commands_before_refusal": 2
+    },
+    {
+      "state": "validated",
+      "refusal": true,
+      "commands_before_refusal": 2
+    },
+    {
+      "sigterm_child_process_group_cleanup": true
+    },
+    {
+      "preflight_case": "ready",
+      "mocked_tmux_calls": 1,
+      "real_external_calls": 0
+    },
+    {
+      "preflight_case": "hostname",
+      "refused_before_mocked_tmux": true
+    },
+    {
+      "preflight_case": "dirty_source",
+      "refused_before_mocked_tmux": true
+    },
+    {
+      "preflight_case": "held_lease",
+      "refused_before_mocked_tmux": true
+    },
+    {
+      "preflight_case": "disk",
+      "refused_before_mocked_tmux": true
+    },
+    {
+      "preflight_case": "wrapper",
+      "refused_before_mocked_tmux": true
+    },
+    {
+      "preflight_case": "prior_exit",
+      "refused_before_mocked_tmux": true
+    },
+    {
+      "preflight_case": "prior_source",
+      "refused_before_mocked_tmux": true
+    },
+    {
+      "preflight_case": "load",
+      "refused_before_mocked_tmux": true
+    },
+    {
+      "preflight_case": "raw_exists",
+      "refused_before_mocked_tmux": true
+    }
+  ],
+  "exports": [
+    {
+      "state": "validated",
+      "new_records": 4,
+      "prior_records_preserved": 16
+    },
+    {
+      "state": "failed",
+      "new_records": 4,
+      "prior_records_preserved": 16
+    }
+  ],
+  "controls": {
+    "preflight_guards_mock_tested": true,
+    "live_remote_state_verified": false,
+    "requires_current_wrapper_and_released_owned_leases": true,
+    "requires_other_owned_lane_idle_and_clean_same_source": true,
+    "disk_min_bytes": {
+      "data1": 22548578304,
+      "data": 10737418240
+    },
+    "runner_s": 18000,
+    "outer_s": 18300,
+    "public_stage_s": 2400,
+    "protocol_freeze_s": 3600,
+    "validate_s": 2400
+  },
+  "dispatch_executed": false,
+  "identity_sha256": "7b66e92bf345441a35ca2b38195e044c4d4a04c7110878a955052cae39480129"
+}
