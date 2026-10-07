@@ -1,0 +1,244 @@
+{
+  "count_only_receipt": {
+    "context": {
+      "architecture": "x86_64",
+      "binary_executed": false,
+      "binary_sha256": "8ff2813441e3a8987d6e96877f4bec2cb3b286083fdac7f6ce2df6769e8febf5",
+      "commit": "e71ed828797178a158bebdd5d73e37b65c635328",
+      "compiler_version": "clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin",
+      "cpus": [
+        0
+      ],
+      "dirty": false,
+      "end_state": {
+        "available_memory": "MemTotal:       131426264 kB\nMemFree:        24774636 kB\nMemAvailable:   121390144 kB\nBuffers:        12211324 kB\nCached:         56088032 kB\nSwapCached:            0 kB\nActive:          4377172 kB\nInactive:       65549648 kB\nActive(anon):    1601324 kB\nInactive(anon):    55864 kB\nActive(file):    2775848 kB\nInactive(file): 65493784 kB\nUnevictable:       39252 kB\nMlocked:           36180 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:              6464 kB\nWriteback:             0 kB\nAnonPages:       1667228 kB\nMapped:          1126524 kB\nShmem:             14900 kB\nKReclaimable:   29664476 kB\nSlab:           32171580 kB\nSReclaimable:   29580644 kB\nSUnreclaim:      2590936 kB\nKernelStack:       25776 kB\nPageTables:        31216 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    65713132 kB\nCommitted_AS:    5647256 kB\nVmallocTotal:   13743895347199 kB\nVmallocUsed:      432724 kB\nVmallocChunk:          0 kB\nPercpu:           367872 kB\nHardwareCorrupted:     8 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nUnaccepted:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:    40398820 kB\nDirectMap2M:    91160576 kB\nDirectMap1G:     4194304 kB",
+        "governor": null,
+        "load": [
+          1.81982421875,
+          1.396484375,
+          1.24267578125
+        ],
+        "no_turbo": null,
+        "time_ns": 1791326362608043095
+      },
+      "flags": [
+        "-O3",
+        "-std=c++17",
+        "--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13"
+      ],
+      "free_disk_bytes": 61668524032,
+      "host": "mbit10",
+      "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 475)",
+      "loaded_libraries": {
+        "ld-linux-x86-64.so.2": {
+          "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+          "sha256": "c20a2dc8917c755f02b94049356320fe1f62ac7d9f8994731f807d9df39302da"
+        },
+        "libc.so.6": {
+          "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+          "sha256": "3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf"
+        },
+        "libgcc_s.so.1": {
+          "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1",
+          "sha256": "d93224d2b0dab4247598be683adca02f5cf00586f99c187579cd7e92058fb7cb"
+        },
+        "libm.so.6": {
+          "path": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+          "sha256": "fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0"
+        },
+        "libstdc++.so.6.0.33": {
+          "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33",
+          "sha256": "1fd75fe70354a416d75aef22bcae68c47bd25d20e2d0568c30b1a9838cf62f11"
+        }
+      },
+      "machine_sha256": "fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79",
+      "source_sha256": {
+        "CpuServiceCount.cpp": "9745a510ad04ae9b9aa2250d5cd49577f09a5d73e1fc2a2e8b666e274409f2d9",
+        "CpuServiceTimer.cpp": "14332e159810563b8d49a03569099f8a336d495cd5a8b0bd76663f8283d0e669",
+        "CpuServiceWork.h": "07d7bf48b5d9afb1b0725f2abf7a57f301c17d355b72676d214186ba1d7150cf"
+      },
+      "start_state": {
+        "available_memory": "MemTotal:       131426264 kB\nMemFree:        26014280 kB\nMemAvailable:   122622964 kB\nBuffers:        12211236 kB\nCached:         56081712 kB\nSwapCached:            0 kB\nActive:          4350104 kB\nInactive:       65543240 kB\nActive(anon):    1574248 kB\nInactive(anon):    55868 kB\nActive(file):    2775856 kB\nInactive(file): 65487372 kB\nUnevictable:       39252 kB\nMlocked:           36180 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:                 0 kB\nWriteback:             0 kB\nAnonPages:       1640176 kB\nMapped:          1126512 kB\nShmem:             14900 kB\nKReclaimable:   29664056 kB\nSlab:           32171024 kB\nSReclaimable:   29580224 kB\nSUnreclaim:      2590800 kB\nKernelStack:       25440 kB\nPageTables:        31308 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    65713132 kB\nCommitted_AS:    5621656 kB\nVmallocTotal:   13743895347199 kB\nVmallocUsed:      432340 kB\nVmallocChunk:          0 kB\nPercpu:           367872 kB\nHardwareCorrupted:     8 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nUnaccepted:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:    40398820 kB\nDirectMap2M:    91160576 kB\nDirectMap1G:     4194304 kB",
+        "governor": null,
+        "load": [
+          1.61279296875,
+          1.314453125,
+          1.2109375
+        ],
+        "no_turbo": null,
+        "time_ns": 1791326331867507957
+      },
+      "system": "Linux"
+    },
+    "count_proof": {
+      "characterization_sha256": [
+        "bbce7b6db90ab1841956a689b5887a6c9d0b6609a4f1a09d700974492b2f4abb",
+        "a5abd641799db541c58b3791ee6144ddfeb9ea4df23979ac1f3e5c392d1d653b",
+        "17c2d7df8e0e5b7ba7dc541f2c0506606c5741689fe15b9a655670e1f02d1239",
+        "9af7394a14f231f67291e76609957613d5d80c60f751fbd8577356d10688b0e2",
+        "09dd324ccae05f239cfd89b5d1129a3eb4efcf74990b7940cc1d882513fffd26",
+        "ec299395cb7da7a2f9e222cf3ea8b512946df511c91e96eb0ef1987f279e498c"
+      ],
+      "count_driver_sha256": "9745a510ad04ae9b9aa2250d5cd49577f09a5d73e1fc2a2e8b666e274409f2d9",
+      "driver_validation_points": [
+        [
+          32,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          96,
+          0
+        ]
+      ],
+      "event_abi": "_ZNSt6chrono3_V212system_clock3nowEv",
+      "format": "swdb.cpu-service-count-proof.v1",
+      "pipeline": {
+        "passes": [
+          "function(sroa,mem2reg),cgscc(inline),function(loop-simplify)"
+        ],
+        "version": "source-normalized-v2"
+      },
+      "plugin_source_sha256": "96d2e643d2d8679b09e601c79027b6740f2d1910b37983e3d30ffc4d2d371bd2",
+      "runtime_source_sha256": "1726eb79d187fbbaa8560eed4c8236b4efc14a41a8d5778551f0c439cda6cbc7",
+      "service_validation_points": [
+        [
+          32,
+          32
+        ],
+        [
+          64,
+          64
+        ],
+        [
+          96,
+          96
+        ]
+      ],
+      "source_sha256": "07d7bf48b5d9afb1b0725f2abf7a57f301c17d355b72676d214186ba1d7150cf"
+    },
+    "evidence_kind": "native_count_only",
+    "format": "swdb.cpu-service-count-only.v1",
+    "identity_sha256": "4c6753e0a68a1d26cfd9fb4fed01759cba32c4a2f25f0d40af5f33b4ed32cf22",
+    "machine": "mbit10",
+    "threads": 1,
+    "timings_collected": false
+  },
+  "count_only_receipt_file_sha256": "aa70937e221060d85c7cd77e0a6e06db15eff1d43e553f871f9d062eb16a41e6",
+  "created": "2026-10-06",
+  "elapsed_artifacts_absent": [
+    "receipt.json",
+    "partial-trials.json"
+  ],
+  "environment": {
+    "checked_utc": "2026-10-06T22:38:16.561590+00:00",
+    "cpu_affinity": [
+      0,
+      2,
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      30,
+      32,
+      34,
+      36,
+      38,
+      40,
+      42,
+      44,
+      46,
+      48,
+      50,
+      52,
+      54,
+      56,
+      58,
+      60,
+      62
+    ],
+    "df": "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd1       1.8T  1.7T   28G  99% /data1\n/dev/sdb1       1.8T  1.7T   58G  97% /data\n",
+    "git_commit": "e71ed828797178a158bebdd5d73e37b65c635328",
+    "git_status": "",
+    "governor": null,
+    "lscpu": "Architecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           46 bits physical, 57 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  64\nOn-line CPU(s) list:                     0-63\nVendor ID:                               GenuineIntel\nModel name:                              Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz\nCPU family:                              6\nModel:                                   106\nThread(s) per core:                      2\nCore(s) per socket:                      16\nSocket(s):                               2\nStepping:                                6\nBogoMIPS:                                5800.00\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 intel_ppin ssbd mba ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local split_lock_detect wbnoinvd dtherm ida arat pln pts vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg tme avx512_vpopcntdq la57 rdpid fsrm md_clear pconfig flush_l1d arch_capabilities\nVirtualization:                          VT-x\nL1d cache:                               1.5 MiB (32 instances)\nL1i cache:                               1 MiB (32 instances)\nL2 cache:                                40 MiB (32 instances)\nL3 cache:                                48 MiB (2 instances)\nNUMA node(s):                            2\nNUMA node0 CPU(s):                       0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62\nNUMA node1 CPU(s):                       1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63\nVulnerability Gather data sampling:      Mitigation; Microcode\nVulnerability Indirect target selection: Mitigation; Aligned branch/return thunks\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Mitigation; Clear CPU buffers; SMT vulnerable\nVulnerability Reg file data sampling:    Not affected\nVulnerability Retbleed:                  Not affected\nVulnerability Spec rstack overflow:      Not affected\nVulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; Enhanced / Automatic IBRS; IBPB conditional; PBRSB-eIBRS SW sequence; BHI SW loop, KVM SW loop\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Not affected\nVulnerability Tsx async abort:           Not affected\nVulnerability Vmscape:                   Not affected\n",
+    "no_turbo": null,
+    "numactl": "available: 2 nodes (0-1)\nnode 0 cpus: 0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62\nnode 0 size: 63849 MB\nnode 0 free: 21618 MB\nnode 1 cpus: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31 33 35 37 39 41 43 45 47 49 51 53 55 57 59 61 63\nnode 1 size: 64496 MB\nnode 1 free: 4209 MB\nnode distances:\nnode   0   1 \n  0:  10  20 \n  1:  20  10 \n",
+    "omp_threads": "1",
+    "perf_event_paranoid": "4",
+    "uname": "Linux mbit10 6.8.0-136-generic #136-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 21:53:05 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux\n",
+    "uptime": " 18:38:16 up 67 days, 10:57, 10 users,  load average: 1.30, 1.23, 1.18\n"
+  },
+  "evidence_scope": "Native count-only constructed clock ABI proof; no service elapsed rates or application accuracy evidence",
+  "failed_attempt": {
+    "exit_code": 1,
+    "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-counts-20261006-a1",
+    "reason": "Numeric --lane0 claim disagreed with named lease; rejected before count or timing evidence",
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "none",
+      "command": [
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-counts-20261006-a1/run.sh"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "2026-10-06T22:37:16Z",
+      "exit_code": 1,
+      "host": "mbit10",
+      "job": "swdb-lanl-service-counts-20261006-a1",
+      "lease_generation": 474,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 1.47,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-06T22:36:40Z"
+    }
+  },
+  "format": "swdb.lanl-service-count-evidence.v1",
+  "identity_sha256": "37b7da697c16139f4888045d41e4891e5fac2de97fd90a0b12070d13202bc5c0",
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-counts-20261006-a2",
+  "raw_retained_only": [
+    "IR",
+    "binaries",
+    "instrumented point records",
+    "compiler logs"
+  ],
+  "socket_lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "none",
+    "command": [
+      "bash",
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-counts-20261006-a2/run.sh"
+    ],
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "ended_utc": "2026-10-06T22:39:22Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "swdb-lanl-service-counts-20261006-a2",
+    "lease_generation": 475,
+    "lease_name": "mbit10-evaluation-node0",
+    "load1_at_start": 1.3,
+    "load1_max": 32,
+    "node": 0,
+    "numa_memory_policy": "bind:0",
+    "numactl": "--cpunodebind=0 --membind=0",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-06T22:38:16Z"
+  },
+  "source_commit": "e71ed828797178a158bebdd5d73e37b65c635328"
+}

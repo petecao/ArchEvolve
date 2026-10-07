@@ -1,0 +1,604 @@
+kind: cpu_memory_resource_calibration
+schema_version: '0.4'
+id: mbit10.cpu.lanl20261006.resource.float-memory.a1
+status: draft
+created: '2026-10-06'
+updated: '2026-10-06'
+provenance:
+- id: total-cell-resource
+  kind: source_code
+  description: Prospective inferred total-cell recipe over independently measured/request-counted cells;
+    includes driver work, max composition, never application timing.
+  uri: null
+format: swdb.cpu-memory-resource-calibration.v1
+recipe:
+  id: gross_constructed_resource_v1
+  denominator: source_normalized_logical_requests
+  elapsed: gross_uninstrumented_native_cell
+  includes_driver_work: true
+  composition: max_with_compute
+  transfer_basis: inferred
+  physical_instruction_latency: false
+  proven_application_upper_bound: false
+source_calibration: mbit10.cpu.lanl20261006.service.float-memory.a1
+source_calibration_sha256: eca80cffb766770b9480e0576f3976ee69b8a4a7624ee21300078e6ac3147fd5
+source_receipt_sha256: a403142340ca0c6f7a454b859e3eebdb326d43c556af36ac2053dc2175683efb
+calibration_sources:
+- mbit10.cpu.lanl20261006.service.float-memory.a1
+target: mbit10
+threads: 1
+backend: native
+evidence_kind: native
+context:
+  compiler_version: |-
+    clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)
+    Target: x86_64-unknown-linux-gnu
+    Thread model: posix
+    InstalledDir: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin
+  flags:
+  - -O3
+  - -std=c++11
+  - -fopenmp
+  - --gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13
+  host: mbit10
+  architecture: x86_64
+  source_sha256:
+    CpuFloatMemoryWork.h: 577f9d772da4de811b6f779d862ca5735c83cfda8d4c58f5041bb8f7c7f6a6a0
+    CpuFloatMemoryTimer.cpp: 647db310646980a1a76d64e6b82080a03f8195cc44e58d5121c936b62c09bd33
+    CpuFloatMemoryCount.cpp: 2515a5ddd0d184004eb7ac1588781d11ed24daea75afe54e1b875870076bc297
+  binary_sha256: 0fbe8a6180de44c9152f0160919a4347bb1e1fd3573df517e909f61befbb8e8e
+  compiler_sha256: 31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113
+  instrumented_timer: false
+  optimized_work:
+    ir_sha256: 7d511e45248b5897ceae962f867187d4f0bebe684aa8c0f94cd0ac48863a7815
+    primitive:
+      opcode: atomicrmw
+      value_kind: floating
+      element_bits: 64
+      update_opcode: fadd
+      atomic_ordering: monotonic
+  control_environment:
+    GLIBC_TUNABLES: null
+    LD_PRELOAD: null
+    LD_AUDIT: null
+    LD_LIBRARY_PATH: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu
+    DYLD_LIBRARY_PATH: null
+    DYLD_INSERT_LIBRARIES: null
+  control_environment_scope:
+    format: swdb.service-control-environment.v1
+    prefixes: [MALLOC_]
+    exact_variables: [GLIBC_TUNABLES, LD_PRELOAD, LD_AUDIT, LD_LIBRARY_PATH, DYLD_LIBRARY_PATH, DYLD_INSERT_LIBRARIES]
+    absence_semantics: null_or_absent_is_unset_under_declared_scope
+  lane: 'mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 499)'
+  cpus: [0]
+  machine_sha256: fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79
+  system: Linux
+  start_state:
+    load: [1.92724609375, 1.77392578125, 1.8828125]
+    time_ns: 1791344213535532622
+    available_memory: |-
+      MemTotal:       131426264 kB
+      MemFree:        17568976 kB
+      MemAvailable:   122451824 kB
+      Buffers:        12133672 kB
+      Cached:         64024964 kB
+      SwapCached:            0 kB
+      Active:          5971824 kB
+      Inactive:       71933352 kB
+      Active(anon):    1720604 kB
+      Inactive(anon):    55668 kB
+      Active(file):    4251220 kB
+      Inactive(file): 71877684 kB
+      Unevictable:       39252 kB
+      Mlocked:           36180 kB
+      SwapTotal:             0 kB
+      SwapFree:              0 kB
+      Zswap:                 0 kB
+      Zswapped:              0 kB
+      Dirty:                12 kB
+      Writeback:             0 kB
+      AnonPages:       1786108 kB
+      Mapped:          1130024 kB
+      Shmem:             14900 kB
+      KReclaimable:   30072544 kB
+      Slab:           32611292 kB
+      SReclaimable:   29988712 kB
+      SUnreclaim:      2622580 kB
+      KernelStack:       25536 kB
+      PageTables:        32144 kB
+      SecPageTables:         0 kB
+      NFS_Unstable:          0 kB
+      Bounce:                0 kB
+      WritebackTmp:          0 kB
+      CommitLimit:    65713132 kB
+      Committed_AS:    5804060 kB
+      VmallocTotal:   13743895347199 kB
+      VmallocUsed:      432436 kB
+      VmallocChunk:          0 kB
+      Percpu:           376832 kB
+      HardwareCorrupted:     8 kB
+      AnonHugePages:         0 kB
+      ShmemHugePages:        0 kB
+      ShmemPmdMapped:        0 kB
+      FileHugePages:         0 kB
+      FilePmdMapped:         0 kB
+      Unaccepted:            0 kB
+      HugePages_Total:       0
+      HugePages_Free:        0
+      HugePages_Rsvd:        0
+      HugePages_Surp:        0
+      Hugepagesize:       2048 kB
+      Hugetlb:               0 kB
+      DirectMap4k:    40398820 kB
+      DirectMap2M:    91160576 kB
+      DirectMap1G:     4194304 kB
+    governor: null
+    no_turbo: null
+  free_disk_bytes: 55175356416
+  commit: 3006d91e2d076db0104f3b7734131dec5f26caad
+  dirty: false
+  loaded_libraries:
+    libstdc++.so.6.0.33:
+      path: /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33
+      sha256: 1fd75fe70354a416d75aef22bcae68c47bd25d20e2d0568c30b1a9838cf62f11
+    libm.so.6:
+      path: /usr/lib/x86_64-linux-gnu/libm.so.6
+      sha256: fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0
+    libomp.so:
+      path: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu/libomp.so
+      sha256: bed4495bf5821b0acdba90d671512859b381c5d2caa029f6c3b82f1337da614e
+    libgcc_s.so.1:
+      path: /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+      sha256: d93224d2b0dab4247598be683adca02f5cf00586f99c187579cd7e92058fb7cb
+    libc.so.6:
+      path: /usr/lib/x86_64-linux-gnu/libc.so.6
+      sha256: 3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf
+    ld-linux-x86-64.so.2:
+      path: /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+      sha256: c20a2dc8917c755f02b94049356320fe1f62ac7d9f8994731f807d9df39302da
+  end_state:
+    load: [2.037109375, 1.81396484375, 1.89404296875]
+    time_ns: 1791344245122589879
+    available_memory: |-
+      MemTotal:       131426264 kB
+      MemFree:        16288004 kB
+      MemAvailable:   121177848 kB
+      Buffers:        12133768 kB
+      Cached:         64031508 kB
+      SwapCached:            0 kB
+      Active:          6220952 kB
+      Inactive:       71939988 kB
+      Active(anon):    1969712 kB
+      Inactive(anon):    55668 kB
+      Active(file):    4251240 kB
+      Inactive(file): 71884320 kB
+      Unevictable:       39252 kB
+      Mlocked:           36180 kB
+      SwapTotal:             0 kB
+      SwapFree:              0 kB
+      Zswap:                 0 kB
+      Zswapped:              0 kB
+      Dirty:              1716 kB
+      Writeback:             0 kB
+      AnonPages:       2035648 kB
+      Mapped:          1130024 kB
+      Shmem:             14900 kB
+      KReclaimable:   30072884 kB
+      Slab:           32611760 kB
+      SReclaimable:   29989052 kB
+      SUnreclaim:      2622708 kB
+      KernelStack:       25680 kB
+      PageTables:        32052 kB
+      SecPageTables:         0 kB
+      NFS_Unstable:          0 kB
+      Bounce:                0 kB
+      WritebackTmp:          0 kB
+      CommitLimit:    65713132 kB
+      Committed_AS:    6056988 kB
+      VmallocTotal:   13743895347199 kB
+      VmallocUsed:      432660 kB
+      VmallocChunk:          0 kB
+      Percpu:           376832 kB
+      HardwareCorrupted:     8 kB
+      AnonHugePages:         0 kB
+      ShmemHugePages:        0 kB
+      ShmemPmdMapped:        0 kB
+      FileHugePages:         0 kB
+      FilePmdMapped:         0 kB
+      Unaccepted:            0 kB
+      HugePages_Total:       0
+      HugePages_Free:        0
+      HugePages_Rsvd:        0
+      HugePages_Surp:        0
+      Hugepagesize:       2048 kB
+      Hugetlb:               0 kB
+      DirectMap4k:    40398820 kB
+      DirectMap2M:    91160576 kB
+      DirectMap1G:     4194304 kB
+    governor: null
+    no_turbo: null
+settings:
+  group: memory_float_v1
+  repetitions: 7
+  min_trial_s: 0.05
+  max_wall_s: 900.0
+  event_cap: 134217728
+  count_build_cap_bytes: 67108864
+  timed_data_cap_bytes: 26214400
+  live_payload_cap_bytes: 8388608
+  footprint_bytes: [32768, 8388608]
+  trial_resolution_scope: gross_aggregate_only; paired driver retained
+services:
+- id: memory.floating-add-update.8.32768
+  unit: seconds/request
+  event_definition: One exactly proved floating64 monotonic fadd logical source request. Preparation/checks
+    untimed; physical instruction latency/application residency unknown.
+  scope:
+    worker_scope: serial
+    memory_regime: resident_serial_constructed_requests
+    operation: floating-add-update
+    update_kind: add-update
+    element_bytes: 8
+    footprint_bytes: 32768
+    transfer_basis: inferred
+    source_primitive:
+      opcode: atomicrmw
+      value_kind: floating
+      element_bits: 64
+      update_opcode: fadd
+      atomic_ordering: monotonic
+    construction: sequential uncontended floating64 monotonic atomic add; prepared zero buffer
+    cache_state: prepared buffers and repeated calls; physical cache level unverified
+    first_touch: preparation excluded
+  denominator:
+    level: source_normalized_work
+    basis: measured
+    proof:
+      format: swdb.cpu-float-memory-count-proof.v1
+      pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      points:
+      - invoke: true
+        events: 3
+        requests: 3
+        atomic_events: 3
+        opaque_events: 0
+        primitive:
+          opcode: atomicrmw
+          value_kind: floating
+          element_bits: 64
+          update_opcode: fadd
+          atomic_ordering: monotonic
+        active_sites: [access.0]
+        characterization_sha256: 51760ffa4603b2dede0b6f4a14b702184939e7dccf991c724257fe8dc3022b81
+      - invoke: true
+        events: 5
+        requests: 5
+        atomic_events: 5
+        opaque_events: 0
+        primitive:
+          opcode: atomicrmw
+          value_kind: floating
+          element_bits: 64
+          update_opcode: fadd
+          atomic_ordering: monotonic
+        active_sites: [access.0]
+        characterization_sha256: 87c517c9d01e6cb4295f70cfdf79fbfa06400ef040022f7121ddc1abdfa22b19
+      - invoke: false
+        events: 3
+        requests: 0
+        atomic_events: 0
+        opaque_events: 0
+        primitive:
+          opcode: atomicrmw
+          value_kind: floating
+          element_bits: 64
+          update_opcode: fadd
+          atomic_ordering: monotonic
+        active_sites: []
+        characterization_sha256: f0817bdc64c50956e69ad34fe0b021ca50567d950e5c17a0379db3541f0ad17d
+      - invoke: false
+        events: 5
+        requests: 0
+        atomic_events: 0
+        opaque_events: 0
+        primitive:
+          opcode: atomicrmw
+          value_kind: floating
+          element_bits: 64
+          update_opcode: fadd
+          atomic_ordering: monotonic
+        active_sites: []
+        characterization_sha256: 59fd142eeebfca80c6efe10145619cb17fb618cc5fad099a9ef9322c220edcaf
+      source_sha256: 577f9d772da4de811b6f779d862ca5735c83cfda8d4c58f5041bb8f7c7f6a6a0
+      count_driver_sha256: 2515a5ddd0d184004eb7ac1588781d11ed24daea75afe54e1b875870076bc297
+      plugin_source_sha256: b461fd7025cfa675d5c191d7d73fee8bd04525c0344cd315dffedb61575b65a0
+      runtime_source_sha256: 43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e
+  trials:
+  - events: 8388608
+    batch_events: 4096
+    batches: 2048
+    gross_seconds: 0.06341118200000005
+    driver_seconds: 0.005847676000000118
+    verified_updates: 8388608
+    order: service_first
+  - events: 8388608
+    batch_events: 4096
+    batches: 2048
+    gross_seconds: 0.06334378500000012
+    driver_seconds: 0.0058699330000000745
+    verified_updates: 8388608
+    order: driver_first
+  - events: 8388608
+    batch_events: 4096
+    batches: 2048
+    gross_seconds: 0.0633719410000001
+    driver_seconds: 0.0058516340000001246
+    verified_updates: 8388608
+    order: service_first
+  - events: 8388608
+    batch_events: 4096
+    batches: 2048
+    gross_seconds: 0.06337541799999993
+    driver_seconds: 0.0058511710000000786
+    verified_updates: 8388608
+    order: driver_first
+  - events: 8388608
+    batch_events: 4096
+    batches: 2048
+    gross_seconds: 0.0633360640000001
+    driver_seconds: 0.005857959000000162
+    verified_updates: 8388608
+    order: service_first
+  - events: 8388608
+    batch_events: 4096
+    batches: 2048
+    gross_seconds: 0.06336814599999999
+    driver_seconds: 0.005882843000000136
+    verified_updates: 8388608
+    order: driver_first
+  - events: 8388608
+    batch_events: 4096
+    batches: 2048
+    gross_seconds: 0.06335406300000014
+    driver_seconds: 0.005859145000000102
+    verified_updates: 8388608
+    order: service_first
+  seconds_per_event:
+    values: [7.559201955795294e-09, 7.551167607307449e-09, 7.554524064064038e-09, 7.554938554763786e-09,
+      7.550247192382824e-09, 7.554071664810179e-09, 7.552392840385454e-09]
+    median: 7.554071664810179e-09
+    min: 7.550247192382824e-09
+    max: 7.559201955795294e-09
+    spread: 8.954763412470506e-12
+    repetitions: 7
+  missing: []
+  parameter:
+    value: 7.554071664810179e-09
+    basis: inferred
+    unit: seconds/request
+    source: Constructed total-cell resource mbit10.cpu.lanl20261006.resource.float-memory.a1; mbit10.cpu.lanl20261006.service.float-memory.a1/memory.floating-add-update.8.32768;
+      gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer
+      and max composition with compute, no physical latency or upper-bound claim.
+  paired_residual:
+    parameter:
+      value: 6.85392832756043e-09
+      basis: measured
+      source: Service calibration mbit10.cpu.lanl20261006.service.float-memory.a1; memory.floating-add-update.8.32768;
+        paired elapsed/work trials.
+      unit: seconds/request
+    seconds_per_event:
+      values: [6.8621046543121256e-09, 6.851417064666754e-09, 6.856954932212826e-09, 6.857424616813642e-09,
+        6.8519240617751994e-09, 6.852782130241376e-09, 6.85392832756043e-09]
+      median: 6.85392832756043e-09
+      min: 6.851417064666754e-09
+      max: 6.8621046543121256e-09
+      spread: 1.068758964537186e-11
+      repetitions: 7
+    missing: []
+  cost_basis: gross_constructed_resource_v1
+  gross_seconds_per_request:
+    values: [7.559201955795294e-09, 7.551167607307449e-09, 7.554524064064038e-09, 7.554938554763786e-09,
+      7.550247192382824e-09, 7.554071664810179e-09, 7.552392840385454e-09]
+    median: 7.554071664810179e-09
+    min: 7.550247192382824e-09
+    max: 7.559201955795294e-09
+    spread: 8.954763412470506e-12
+    repetitions: 7
+  driver_seconds_per_request:
+    values: [6.970973014831684e-10, 6.997505426406949e-10, 6.975691318512111e-10, 6.975139379501436e-10,
+      6.983231306076242e-10, 7.012895345688028e-10, 6.984645128250244e-10]
+    median: 6.983231306076242e-10
+    min: 6.970973014831684e-10
+    max: 7.012895345688028e-10
+    spread: 4.1922330856343935e-12
+    repetitions: 7
+- id: memory.floating-add-update.8.8388608
+  unit: seconds/request
+  event_definition: One exactly proved floating64 monotonic fadd logical source request. Preparation/checks
+    untimed; physical instruction latency/application residency unknown.
+  scope:
+    worker_scope: serial
+    memory_regime: resident_serial_constructed_requests
+    operation: floating-add-update
+    update_kind: add-update
+    element_bytes: 8
+    footprint_bytes: 8388608
+    transfer_basis: inferred
+    source_primitive:
+      opcode: atomicrmw
+      value_kind: floating
+      element_bits: 64
+      update_opcode: fadd
+      atomic_ordering: monotonic
+    construction: sequential uncontended floating64 monotonic atomic add; prepared zero buffer
+    cache_state: prepared buffers and repeated calls; physical cache level unverified
+    first_touch: preparation excluded
+  denominator:
+    level: source_normalized_work
+    basis: measured
+    proof:
+      format: swdb.cpu-float-memory-count-proof.v1
+      pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      points:
+      - invoke: true
+        events: 3
+        requests: 3
+        atomic_events: 3
+        opaque_events: 0
+        primitive:
+          opcode: atomicrmw
+          value_kind: floating
+          element_bits: 64
+          update_opcode: fadd
+          atomic_ordering: monotonic
+        active_sites: [access.0]
+        characterization_sha256: 51760ffa4603b2dede0b6f4a14b702184939e7dccf991c724257fe8dc3022b81
+      - invoke: true
+        events: 5
+        requests: 5
+        atomic_events: 5
+        opaque_events: 0
+        primitive:
+          opcode: atomicrmw
+          value_kind: floating
+          element_bits: 64
+          update_opcode: fadd
+          atomic_ordering: monotonic
+        active_sites: [access.0]
+        characterization_sha256: 87c517c9d01e6cb4295f70cfdf79fbfa06400ef040022f7121ddc1abdfa22b19
+      - invoke: false
+        events: 3
+        requests: 0
+        atomic_events: 0
+        opaque_events: 0
+        primitive:
+          opcode: atomicrmw
+          value_kind: floating
+          element_bits: 64
+          update_opcode: fadd
+          atomic_ordering: monotonic
+        active_sites: []
+        characterization_sha256: f0817bdc64c50956e69ad34fe0b021ca50567d950e5c17a0379db3541f0ad17d
+      - invoke: false
+        events: 5
+        requests: 0
+        atomic_events: 0
+        opaque_events: 0
+        primitive:
+          opcode: atomicrmw
+          value_kind: floating
+          element_bits: 64
+          update_opcode: fadd
+          atomic_ordering: monotonic
+        active_sites: []
+        characterization_sha256: 59fd142eeebfca80c6efe10145619cb17fb618cc5fad099a9ef9322c220edcaf
+      source_sha256: 577f9d772da4de811b6f779d862ca5735c83cfda8d4c58f5041bb8f7c7f6a6a0
+      count_driver_sha256: 2515a5ddd0d184004eb7ac1588781d11ed24daea75afe54e1b875870076bc297
+      plugin_source_sha256: b461fd7025cfa675d5c191d7d73fee8bd04525c0344cd315dffedb61575b65a0
+      runtime_source_sha256: 43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e
+  trials:
+  - events: 8388608
+    batch_events: 1048576
+    batches: 8
+    gross_seconds: 0.063440989
+    driver_seconds: 0.006039102
+    verified_updates: 8388608
+    order: service_first
+  - events: 8388608
+    batch_events: 1048576
+    batches: 8
+    gross_seconds: 0.06350043799999999
+    driver_seconds: 0.0058277419999999995
+    verified_updates: 8388608
+    order: driver_first
+  - events: 8388608
+    batch_events: 1048576
+    batches: 8
+    gross_seconds: 0.06349853
+    driver_seconds: 0.005822351
+    verified_updates: 8388608
+    order: service_first
+  - events: 8388608
+    batch_events: 1048576
+    batches: 8
+    gross_seconds: 0.06342508399999999
+    driver_seconds: 0.005821270000000001
+    verified_updates: 8388608
+    order: driver_first
+  - events: 8388608
+    batch_events: 1048576
+    batches: 8
+    gross_seconds: 0.063485192
+    driver_seconds: 0.005815836999999999
+    verified_updates: 8388608
+    order: service_first
+  - events: 8388608
+    batch_events: 1048576
+    batches: 8
+    gross_seconds: 0.06349858700000001
+    driver_seconds: 0.005821394000000001
+    verified_updates: 8388608
+    order: driver_first
+  - events: 8388608
+    batch_events: 1048576
+    batches: 8
+    gross_seconds: 0.063429239
+    driver_seconds: 0.005816232
+    verified_updates: 8388608
+    order: service_first
+  seconds_per_event:
+    values: [7.562755227088929e-09, 7.569842100143432e-09, 7.56961464881897e-09, 7.560859203338622e-09,
+      7.568024635314941e-09, 7.569621443748475e-09, 7.561354517936706e-09]
+    median: 7.568024635314941e-09
+    min: 7.560859203338622e-09
+    max: 7.569842100143432e-09
+    spread: 8.982896804809534e-12
+    repetitions: 7
+  missing: []
+  parameter:
+    value: 7.568024635314941e-09
+    basis: inferred
+    unit: seconds/request
+    source: Constructed total-cell resource mbit10.cpu.lanl20261006.resource.float-memory.a1; mbit10.cpu.lanl20261006.service.float-memory.a1/memory.floating-add-update.8.8388608;
+      gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer
+      and max composition with compute, no physical latency or upper-bound claim.
+  paired_residual:
+    parameter:
+      value: 6.874722838401794e-09
+      basis: measured
+      source: Service calibration mbit10.cpu.lanl20261006.service.float-memory.a1; memory.floating-add-update.8.8388608;
+        paired elapsed/work trials.
+      unit: seconds/request
+    seconds_per_event:
+      values: [6.842838168144227e-09, 6.875121116638183e-09, 6.875536322593688e-09, 6.866909742355345e-09,
+        6.874722838401794e-09, 6.8756572008132945e-09, 6.868005633354187e-09]
+      median: 6.874722838401794e-09
+      min: 6.842838168144227e-09
+      max: 6.8756572008132945e-09
+      spread: 3.281903266906773e-11
+      repetitions: 7
+    missing: []
+  cost_basis: gross_constructed_resource_v1
+  gross_seconds_per_request:
+    values: [7.562755227088929e-09, 7.569842100143432e-09, 7.56961464881897e-09, 7.560859203338622e-09,
+      7.568024635314941e-09, 7.569621443748475e-09, 7.561354517936706e-09]
+    median: 7.568024635314941e-09
+    min: 7.560859203338622e-09
+    max: 7.569842100143432e-09
+    spread: 8.982896804809534e-12
+    repetitions: 7
+  driver_seconds_per_request:
+    values: [7.199170589447022e-10, 6.94720983505249e-10, 6.940783262252808e-10, 6.939494609832765e-10,
+      6.933017969131469e-10, 6.939642429351807e-10, 6.933488845825196e-10]
+    median: 6.939642429351807e-10
+    min: 6.933017969131469e-10
+    max: 7.199170589447022e-10
+    spread: 2.661526203155531e-11
+    repetitions: 7
+identity_sha256: c6ef995368ca6eb13a505f264f23b520b34914ff4b42997868d557d634e57e30

@@ -262,6 +262,273 @@
           "sha256"
         ]
       }
+    },
+    "paired_estimate": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "swdb.cpu-paired-estimate.v1"
+        },
+        "basis": {
+          "const": "estimated"
+        },
+        "state": {
+          "enum": [
+            "known",
+            "unavailable",
+            "excluded",
+            "paired"
+          ]
+        },
+        "seconds": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "estimate": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "native_timing_decides": {
+          "const": true
+        },
+        "missing": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "slots": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source_position",
+              "repetition",
+              "source",
+              "estimate",
+              "characterization",
+              "counted_payload_sha256",
+              "protocol",
+              "target_description",
+              "seconds",
+              "kernel_seconds",
+              "missing",
+              "runtime_admission",
+              "error_band",
+              "error_band_reason",
+              "prediction_quantity",
+              "elapsed_interval_uncertainty"
+            ],
+            "properties": {
+              "source_position": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "repetition": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "source": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "estimate": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "sha256"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              },
+              "characterization": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "sha256"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              },
+              "protocol": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "sha256"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              },
+              "target_description": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "id",
+                  "sha256"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              },
+              "counted_payload_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "seconds": {
+                "type": "null"
+              },
+              "kernel_seconds": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "missing": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "runtime_admission": {
+                "type": "object"
+              },
+              "error_band": {
+                "type": "null"
+              },
+              "error_band_reason": {
+                "type": "string"
+              },
+              "prediction_quantity": {
+                "const": "semantic_kernel_call_seconds"
+              },
+              "elapsed_interval_uncertainty": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "state",
+                  "seconds",
+                  "reason"
+                ],
+                "properties": {
+                  "state": {
+                    "const": "unknown"
+                  },
+                  "seconds": {
+                    "type": "null"
+                  },
+                  "reason": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "kernel_seconds": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "error_band": {
+          "type": "null"
+        },
+        "evaluation_scope_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "prepared_before_native_timing": {
+          "const": true
+        },
+        "agreement_claim": {
+          "const": false
+        }
+      },
+      "required": [
+        "format",
+        "basis",
+        "state",
+        "seconds",
+        "estimate",
+        "native_timing_decides",
+        "missing",
+        "reason"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "paired"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "slots",
+              "kernel_seconds",
+              "error_band",
+              "evaluation_scope_sha256",
+              "prepared_before_native_timing",
+              "agreement_claim"
+            ],
+            "properties": {
+              "seconds": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
     }
   },
   "required": [

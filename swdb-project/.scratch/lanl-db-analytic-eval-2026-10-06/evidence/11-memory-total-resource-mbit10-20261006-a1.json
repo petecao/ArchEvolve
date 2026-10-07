@@ -1,0 +1,1043 @@
+{
+  "format": "swdb.cpu-memory-resource-recipe-evidence.v1",
+  "source_calibration": {
+    "id": "mbit10.cpu.lanl20261006.service.memory.a1",
+    "sha256": "496657fbf17bc57b01df5edd2682631ce2f44071b239fc9cd16240c9110160a4",
+    "identity_sha256": "afc4fd5354dba7baaecfcef6501380445e162d6e48345ddd4ebb56681f34e342",
+    "file_sha256": "6c5c58473435acd7a394f6382f38facd191cc1f00aba81bf87a7123459cb4eca",
+    "unresolved_parameters": [
+      "memory.write.8.32768",
+      "memory.write.8.8388608"
+    ]
+  },
+  "resource_calibration": {
+    "id": "mbit10.cpu.lanl20261006.resource.memory.a1",
+    "sha256": "caa186def5fd2afeaf28b4dc17495bd7b3997ffb973ec8a178d07d749e06133d",
+    "identity_sha256": "f1572c1d7ed0871e9a1a359bc49f6a6815883114439adce4547faa975420b6d5"
+  },
+  "recipe_preregistration_commit": "fb0eebdad703082941d981e61fa57dd1b9638531",
+  "recipe": {
+    "id": "gross_constructed_resource_v1",
+    "denominator": "source_normalized_logical_requests",
+    "elapsed": "gross_uninstrumented_native_cell",
+    "includes_driver_work": true,
+    "composition": "max_with_compute",
+    "transfer_basis": "inferred",
+    "physical_instruction_latency": false,
+    "proven_application_upper_bound": false
+  },
+  "cells": 20,
+  "trials_per_cell": 7,
+  "original_trials_and_denominator_and_residual_parameters_identical": true,
+  "timings_rerun": false,
+  "application_timings_used": false,
+  "transfer_basis": "inferred",
+  "derivation_command": "python3 -m swdb.cpu_memory_resource --records records --source-calibration mbit10.cpu.lanl20261006.service.memory.a1 --id mbit10.cpu.lanl20261006.resource.memory.a1 --format json",
+  "services": [
+    {
+      "id": "memory.read.4.32768",
+      "parameter": {
+        "value": 1.5012517422438412e-09,
+        "basis": "inferred",
+        "unit": "seconds/request",
+        "source": "Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory.a1; mbit10.cpu.lanl20261006.service.memory.a1/memory.read.4.32768; gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer and max composition with compute, no physical latency or upper-bound claim."
+      },
+      "gross_spread": {
+        "values": [
+          1.501929104328285e-09,
+          1.4969821572304517e-09,
+          1.5012517422438412e-09,
+          1.4959231615067008e-09,
+          1.5028897076846089e-09,
+          1.496130019426393e-09,
+          1.5014164894819867e-09
+        ],
+        "median": 1.5012517422438412e-09,
+        "min": 1.4959231615067008e-09,
+        "max": 1.5028897076846089e-09,
+        "spread": 6.9665461779081314e-12,
+        "repetitions": 7
+      },
+      "paired_residual": {
+        "parameter": {
+          "value": 9.246078431607038e-10,
+          "basis": "measured",
+          "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.read.4.32768; paired elapsed/work trials.",
+          "unit": "seconds/request"
+        },
+        "seconds_per_event": {
+          "values": [
+            9.253190457822162e-10,
+            9.16327610611967e-10,
+            9.246078431607038e-10,
+            9.154245555401005e-10,
+            9.261194318533832e-10,
+            9.154102504253666e-10,
+            9.24820065498406e-10
+          ],
+          "median": 9.246078431607038e-10,
+          "min": 9.154102504253666e-10,
+          "max": 9.261194318533832e-10,
+          "spread": 1.0709181428016614e-11,
+          "repetitions": 7
+        },
+        "missing": []
+      }
+    },
+    {
+      "id": "memory.read.4.8388608",
+      "parameter": {
+        "value": 2.152584743499756e-08,
+        "basis": "inferred",
+        "unit": "seconds/request",
+        "source": "Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory.a1; mbit10.cpu.lanl20261006.service.memory.a1/memory.read.4.8388608; gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer and max composition with compute, no physical latency or upper-bound claim."
+      },
+      "gross_spread": {
+        "values": [
+          2.1432734012603763e-08,
+          2.1548301458358766e-08,
+          2.1547784328460695e-08,
+          2.1456099033355713e-08,
+          2.1547499179840088e-08,
+          2.152584743499756e-08,
+          2.148114490509033e-08
+        ],
+        "median": 2.152584743499756e-08,
+        "min": 2.1432734012603763e-08,
+        "max": 2.1548301458358766e-08,
+        "spread": 1.1556744575500284e-10,
+        "repetitions": 7
+      },
+      "paired_residual": {
+        "parameter": {
+          "value": 2.0951327800750735e-08,
+          "basis": "measured",
+          "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.read.4.8388608; paired elapsed/work trials.",
+          "unit": "seconds/request"
+        },
+        "seconds_per_event": {
+          "values": [
+            2.085876488685608e-08,
+            2.0973372697830203e-08,
+            2.0972958803176882e-08,
+            2.0881991624832153e-08,
+            2.0959901332855224e-08,
+            2.0951327800750735e-08,
+            2.0907188415527342e-08
+          ],
+          "median": 2.0951327800750735e-08,
+          "min": 2.085876488685608e-08,
+          "max": 2.0973372697830203e-08,
+          "spread": 1.1460781097412123e-10,
+          "repetitions": 7
+        },
+        "missing": []
+      }
+    },
+    {
+      "id": "memory.read.8.32768",
+      "parameter": {
+        "value": 1.449591547250719e-09,
+        "basis": "inferred",
+        "unit": "seconds/request",
+        "source": "Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory.a1; mbit10.cpu.lanl20261006.service.memory.a1/memory.read.8.32768; gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer and max composition with compute, no physical latency or upper-bound claim."
+      },
+      "gross_spread": {
+        "values": [
+          1.4506652206181981e-09,
+          1.4446081966162581e-09,
+          1.449591547250719e-09,
+          1.445511862635588e-09,
+          1.4501104205847285e-09,
+          1.4453172534704051e-09,
+          1.454095184803035e-09
+        ],
+        "median": 1.449591547250719e-09,
+        "min": 1.4446081966162581e-09,
+        "max": 1.454095184803035e-09,
+        "spread": 9.486988186776843e-12,
+        "repetitions": 7
+      },
+      "paired_residual": {
+        "parameter": {
+          "value": 8.703213781119001e-10,
+          "basis": "measured",
+          "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.read.8.32768; paired elapsed/work trials.",
+          "unit": "seconds/request"
+        },
+        "seconds_per_event": {
+          "values": [
+            8.723595142364524e-10,
+            8.631090819837294e-10,
+            8.714081645012535e-10,
+            8.641511201858949e-10,
+            8.703213781119001e-10,
+            8.640788346529529e-10,
+            8.730532526971348e-10
+          ],
+          "median": 8.703213781119001e-10,
+          "min": 8.631090819837294e-10,
+          "max": 8.730532526971348e-10,
+          "spread": 9.944170713405367e-12,
+          "repetitions": 7
+        },
+        "missing": []
+      }
+    },
+    {
+      "id": "memory.read.8.8388608",
+      "parameter": {
+        "value": 2.1667417526245115e-08,
+        "basis": "inferred",
+        "unit": "seconds/request",
+        "source": "Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory.a1; mbit10.cpu.lanl20261006.service.memory.a1/memory.read.8.8388608; gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer and max composition with compute, no physical latency or upper-bound claim."
+      },
+      "gross_spread": {
+        "values": [
+          2.1680874824523927e-08,
+          2.1598206758499143e-08,
+          2.167450761795044e-08,
+          2.1625335693359374e-08,
+          2.1667417526245115e-08,
+          2.167795443534851e-08,
+          2.159321355819702e-08
+        ],
+        "median": 2.1667417526245115e-08,
+        "min": 2.159321355819702e-08,
+        "max": 2.1680874824523927e-08,
+        "spread": 8.766126632690672e-11,
+        "repetitions": 7
+      },
+      "paired_residual": {
+        "parameter": {
+          "value": 2.109397268295288e-08,
+          "basis": "measured",
+          "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.read.8.8388608; paired elapsed/work trials.",
+          "unit": "seconds/request"
+        },
+        "seconds_per_event": {
+          "values": [
+            2.1105213165283204e-08,
+            2.1022702932357786e-08,
+            2.1101055622100833e-08,
+            2.1050166130065916e-08,
+            2.109397268295288e-08,
+            2.110445713996887e-08,
+            2.1020401716232297e-08
+          ],
+          "median": 2.109397268295288e-08,
+          "min": 2.1020401716232297e-08,
+          "max": 2.1105213165283204e-08,
+          "spread": 8.481144905090691e-11,
+          "repetitions": 7
+        },
+        "missing": []
+      }
+    },
+    {
+      "id": "memory.write.4.32768",
+      "parameter": {
+        "value": 5.857899859548021e-10,
+        "basis": "inferred",
+        "unit": "seconds/request",
+        "source": "Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory.a1; mbit10.cpu.lanl20261006.service.memory.a1/memory.write.4.32768; gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer and max composition with compute, no physical latency or upper-bound claim."
+      },
+      "gross_spread": {
+        "values": [
+          5.86838603019696e-10,
+          5.827531889081502e-10,
+          5.857899859548021e-10,
+          5.826008617878712e-10,
+          5.857947841287221e-10,
+          5.825506672263363e-10,
+          5.859046056866688e-10
+        ],
+        "median": 5.857899859548021e-10,
+        "min": 5.825506672263363e-10,
+        "max": 5.86838603019696e-10,
+        "spread": 4.287935793359675e-12,
+        "repetitions": 7
+      },
+      "paired_residual": {
+        "parameter": {
+          "value": 9.687960147813666e-12,
+          "basis": "measured",
+          "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.write.4.32768; paired elapsed/work trials.",
+          "unit": "seconds/request"
+        },
+        "seconds_per_event": {
+          "values": [
+            1.0026678442837369e-11,
+            3.741227090309817e-12,
+            9.745500981754722e-12,
+            3.1890571117174456e-12,
+            9.687960147813666e-12,
+            3.4335479139520853e-12,
+            9.862534701738758e-12
+          ],
+          "median": 9.687960147813666e-12,
+          "min": 3.1890571117174456e-12,
+          "max": 1.0026678442837369e-11,
+          "spread": 6.837621331119923e-12,
+          "repetitions": 7
+        },
+        "missing": []
+      }
+    },
+    {
+      "id": "memory.write.4.8388608",
+      "parameter": {
+        "value": 5.810126289725305e-10,
+        "basis": "inferred",
+        "unit": "seconds/request",
+        "source": "Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory.a1; mbit10.cpu.lanl20261006.service.memory.a1/memory.write.4.8388608; gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer and max composition with compute, no physical latency or upper-bound claim."
+      },
+      "gross_spread": {
+        "values": [
+          5.82108162343502e-10,
+          5.808786973357201e-10,
+          5.81338681280613e-10,
+          5.808314681053162e-10,
+          5.810126289725305e-10,
+          5.809659287333487e-10,
+          5.815196633338929e-10
+        ],
+        "median": 5.810126289725305e-10,
+        "min": 5.808314681053162e-10,
+        "max": 5.82108162343502e-10,
+        "spread": 1.2766942381857645e-12,
+        "repetitions": 7
+      },
+      "paired_residual": {
+        "parameter": {
+          "value": 6.623141467571385e-12,
+          "basis": "measured",
+          "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.write.4.8388608; paired elapsed/work trials.",
+          "unit": "seconds/request"
+        },
+        "seconds_per_event": {
+          "values": [
+            7.817178964614647e-12,
+            5.1558539271354265e-12,
+            7.159031927585625e-12,
+            6.291732192039521e-12,
+            6.588429212570494e-12,
+            6.623141467571385e-12,
+            6.988801062107169e-12
+          ],
+          "median": 6.623141467571385e-12,
+          "min": 5.1558539271354265e-12,
+          "max": 7.817178964614647e-12,
+          "spread": 2.6613250374792202e-12,
+          "repetitions": 7
+        },
+        "missing": []
+      }
+    },
+    {
+      "id": "memory.write.8.32768",
+      "parameter": {
+        "value": 5.805229619146057e-10,
+        "basis": "inferred",
+        "unit": "seconds/request",
+        "source": "Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory.a1; mbit10.cpu.lanl20261006.service.memory.a1/memory.write.8.32768; gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer and max composition with compute, no physical latency or upper-bound claim."
+      },
+      "gross_spread": {
+        "values": [
+          5.805229619146057e-10,
+          5.783228129148995e-10,
+          5.816043689847701e-10,
+          5.783831924200519e-10,
+          5.809675231576512e-10,
+          5.786744356156638e-10,
+          5.810523256660095e-10
+        ],
+        "median": 5.805229619146057e-10,
+        "min": 5.783228129148995e-10,
+        "max": 5.816043689847701e-10,
+        "spread": 3.2815560698705575e-12,
+        "repetitions": 7
+      },
+      "paired_residual": {
+        "parameter": {
+          "value": null,
+          "basis": "unknown",
+          "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.write.8.32768; paired elapsed/work trials.",
+          "unit": "seconds/request"
+        },
+        "seconds_per_event": {
+          "values": [
+            2.5215223430839587e-12,
+            -2.2885948420578714e-12,
+            3.705404698778131e-12,
+            -2.9627531767803244e-12,
+            2.9475465416143345e-12,
+            -6.950192153524483e-12,
+            3.1247735022670345e-12
+          ],
+          "median": 2.5215223430839587e-12,
+          "min": -6.950192153524483e-12,
+          "max": 3.705404698778131e-12,
+          "spread": 1.0655596852302614e-11,
+          "repetitions": 7
+        },
+        "missing": [
+          "paired_driver_subtraction_resolution"
+        ]
+      }
+    },
+    {
+      "id": "memory.write.8.8388608",
+      "parameter": {
+        "value": 5.751372650265695e-10,
+        "basis": "inferred",
+        "unit": "seconds/request",
+        "source": "Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory.a1; mbit10.cpu.lanl20261006.service.memory.a1/memory.write.8.8388608; gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer and max composition with compute, no physical latency or upper-bound claim."
+      },
+      "gross_spread": {
+        "values": [
+          5.752783343195915e-10,
+          5.751372650265695e-10,
+          5.74954882264137e-10,
+          5.747510865330696e-10,
+          5.752335786819459e-10,
+          5.746519938111304e-10,
+          5.754995942115782e-10
+        ],
+        "median": 5.751372650265695e-10,
+        "min": 5.746519938111304e-10,
+        "max": 5.754995942115782e-10,
+        "spread": 8.476004004477632e-13,
+        "repetitions": 7
+      },
+      "paired_residual": {
+        "parameter": {
+          "value": null,
+          "basis": "unknown",
+          "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.write.8.8388608; paired elapsed/work trials.",
+          "unit": "seconds/request"
+        },
+        "seconds_per_event": {
+          "values": [
+            9.319931268690563e-13,
+            -8.773207664488619e-13,
+            2.2058188915222757e-13,
+            -7.347166538237337e-13,
+            8.450448513033295e-13,
+            -4.3656677007712524e-13,
+            -1.1856183409696533e-12
+          ],
+          "median": -4.3656677007712524e-13,
+          "min": -1.1856183409696533e-12,
+          "max": 9.319931268690563e-13,
+          "spread": 2.1176114678387096e-12,
+          "repetitions": 7
+        },
+        "missing": [
+          "paired_driver_subtraction_resolution"
+        ]
+      }
+    },
+    {
+      "id": "memory.add-update.4.32768",
+      "parameter": {
+        "value": 5.196472942829178e-09,
+        "basis": "inferred",
+        "unit": "seconds/request",
+        "source": "Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory.a1; mbit10.cpu.lanl20261006.service.memory.a1/memory.add-update.4.32768; gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer and max composition with compute, no physical latency or upper-bound claim."
+      },
+      "gross_spread": {
+        "values": [
+          5.197314083576235e-09,
+          5.178208291530637e-09,
+          5.196876704692868e-09,
+          5.1768683195114494e-09,
+          5.227954328060191e-09,
+          5.177127897739437e-09,
+          5.196472942829178e-09
+        ],
+        "median": 5.196472942829178e-09,
+        "min": 5.1768683195114494e-09,
+        "max": 5.227954328060191e-09,
+        "spread": 5.1086008548741276e-11,
+        "repetitions": 7
+      },
+      "paired_residual": {
+        "parameter": {
+          "value": 4.620632767677355e-09,
+          "basis": "measured",
+          "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.add-update.4.32768; paired elapsed/work trials.",
+          "unit": "seconds/request"
+        },
+        "seconds_per_event": {
+          "values": [
+            4.621184706687958e-09,
+            4.5841490626335504e-09,
+            4.620799422264137e-09,
+            4.582944571971936e-09,
+            4.651972055435232e-09,
+            4.581887066364323e-09,
+            4.620632767677355e-09
+          ],
+          "median": 4.620632767677355e-09,
+          "min": 4.581887066364323e-09,
+          "max": 4.651972055435232e-09,
+          "spread": 7.008498907090901e-11,
+          "repetitions": 7
+        },
+        "missing": []
+      }
+    },
+    {
+      "id": "memory.add-update.4.8388608",
+      "parameter": {
+        "value": 5.187673628330231e-09,
+        "basis": "inferred",
+        "unit": "seconds/request",
+        "source": "Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory.a1; mbit10.cpu.lanl20261006.service.memory.a1/memory.add-update.4.8388608; gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer and max composition with compute, no physical latency or upper-bound claim."
+      },
+      "gross_spread": {
+        "values": [
+          5.187673628330231e-09,
+          5.185628950595856e-09,
+          5.187910199165344e-09,
+          5.187325596809387e-09,
+          5.187081098556518e-09,
+          5.203225314617158e-09,
+          5.1896681189537044e-09
+        ],
+        "median": 5.187673628330231e-09,
+        "min": 5.185628950595856e-09,
+        "max": 5.203225314617158e-09,
+        "spread": 1.7596364021301262e-11,
+        "repetitions": 7
+      },
+      "paired_residual": {
+        "parameter": {
+          "value": 4.61327487230301e-09,
+          "basis": "measured",
+          "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.add-update.4.8388608; paired elapsed/work trials.",
+          "unit": "seconds/request"
+        },
+        "seconds_per_event": {
+          "values": [
+            4.61327487230301e-09,
+            4.61123549938202e-09,
+            4.613548874855042e-09,
+            4.613099753856659e-09,
+            4.612874209880829e-09,
+            4.628623366355896e-09,
+            4.614775896072388e-09
+          ],
+          "median": 4.61327487230301e-09,
+          "min": 4.61123549938202e-09,
+          "max": 4.628623366355896e-09,
+          "spread": 1.7387866973876674e-11,
+          "repetitions": 7
+        },
+        "missing": []
+      }
+    },
+    {
+      "id": "memory.add-update.8.32768",
+      "parameter": {
+        "value": 5.1965228915217414e-09,
+        "basis": "inferred",
+        "unit": "seconds/request",
+        "source": "Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory.a1; mbit10.cpu.lanl20261006.service.memory.a1/memory.add-update.8.32768; gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer and max composition with compute, no physical latency or upper-bound claim."
+      },
+      "gross_spread": {
+        "values": [
+          5.203389465809103e-09,
+          5.182683765888505e-09,
+          5.1965228915217414e-09,
+          5.1776340007784275e-09,
+          5.1981940865519535e-09,
+          5.178366422653521e-09,
+          5.1972565054896e-09
+        ],
+        "median": 5.1965228915217414e-09,
+        "min": 5.1776340007784275e-09,
+        "max": 5.203389465809103e-09,
+        "spread": 2.5755465030675253e-11,
+        "repetitions": 7
+      },
+      "paired_residual": {
+        "parameter": {
+          "value": 4.6185910105708225e-09,
+          "basis": "measured",
+          "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.add-update.8.32768; paired elapsed/work trials.",
+          "unit": "seconds/request"
+        },
+        "seconds_per_event": {
+          "values": [
+            4.625556290149937e-09,
+            4.586216747761057e-09,
+            4.6185910105708225e-09,
+            4.5814335942270534e-09,
+            4.620445907116219e-09,
+            4.583053529262862e-09,
+            4.619293928146611e-09
+          ],
+          "median": 4.6185910105708225e-09,
+          "min": 4.5814335942270534e-09,
+          "max": 4.625556290149937e-09,
+          "spread": 4.4122695922883506e-11,
+          "repetitions": 7
+        },
+        "missing": []
+      }
+    },
+    {
+      "id": "memory.add-update.8.8388608",
+      "parameter": {
+        "value": 5.201973378658294e-09,
+        "basis": "inferred",
+        "unit": "seconds/request",
+        "source": "Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory.a1; mbit10.cpu.lanl20261006.service.memory.a1/memory.add-update.8.8388608; gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer and max composition with compute, no physical latency or upper-bound claim."
+      },
+      "gross_spread": {
+        "values": [
+          5.201736807823181e-09,
+          5.200178623199463e-09,
+          5.218393445014954e-09,
+          5.205570816993713e-09,
+          5.202831089496613e-09,
+          5.2005395889282224e-09,
+          5.201973378658294e-09
+        ],
+        "median": 5.201973378658294e-09,
+        "min": 5.200178623199463e-09,
+        "max": 5.218393445014954e-09,
+        "spread": 1.8214821815491095e-11,
+        "repetitions": 7
+      },
+      "paired_residual": {
+        "parameter": {
+          "value": 4.627341687679291e-09,
+          "basis": "measured",
+          "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.add-update.8.8388608; paired elapsed/work trials.",
+          "unit": "seconds/request"
+        },
+        "seconds_per_event": {
+          "values": [
+            4.627341687679291e-09,
+            4.625550568103791e-09,
+            4.643884599208833e-09,
+            4.6298282146453855e-09,
+            4.62874037027359e-09,
+            4.6257874965667724e-09,
+            4.62732845544815e-09
+          ],
+          "median": 4.627341687679291e-09,
+          "min": 4.625550568103791e-09,
+          "max": 4.643884599208833e-09,
+          "spread": 1.8334031105041996e-11,
+          "repetitions": 7
+        },
+        "missing": []
+      }
+    },
+    {
+      "id": "memory.cas-success.4.32768",
+      "parameter": {
+        "value": 5.543528497219049e-09,
+        "basis": "inferred",
+        "unit": "seconds/request",
+        "source": "Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory.a1; mbit10.cpu.lanl20261006.service.memory.a1/memory.cas-success.4.32768; gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer and max composition with compute, no physical latency or upper-bound claim."
+      },
+      "gross_spread": {
+        "values": [
+          5.546947896480522e-09,
+          5.53172165155406e-09,
+          5.545566082000696e-09,
+          5.529125094413728e-09,
+          5.543528497219049e-09,
+          5.52955776453014e-09,
+          5.547227740287745e-09
+        ],
+        "median": 5.543528497219049e-09,
+        "min": 5.529125094413728e-09,
+        "max": 5.547227740287745e-09,
+        "spread": 1.810264587401668e-11,
+        "repetitions": 7
+      },
+      "paired_residual": {
+        "parameter": {
+          "value": 4.967234313487971e-09,
+          "basis": "measured",
+          "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.cas-success.4.32768; paired elapsed/work trials.",
+          "unit": "seconds/request"
+        },
+        "seconds_per_event": {
+          "values": [
+            4.970821738243072e-09,
+            4.937505125999409e-09,
+            4.9694309234618835e-09,
+            4.935087800025916e-09,
+            4.967234313487971e-09,
+            4.935607016086543e-09,
+            4.971129238605465e-09
+          ],
+          "median": 4.967234313487971e-09,
+          "min": 4.935087800025916e-09,
+          "max": 4.971129238605465e-09,
+          "spread": 3.604143857954851e-11,
+          "repetitions": 7
+        },
+        "missing": []
+      }
+    },
+    {
+      "id": "memory.cas-success.4.8388608",
+      "parameter": {
+        "value": 5.530250728130341e-09,
+        "basis": "inferred",
+        "unit": "seconds/request",
+        "source": "Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory.a1; mbit10.cpu.lanl20261006.service.memory.a1/memory.cas-success.4.8388608; gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer and max composition with compute, no physical latency or upper-bound claim."
+      },
+      "gross_spread": {
+        "values": [
+          5.529868185520172e-09,
+          5.529487431049347e-09,
+          5.530722141265869e-09,
+          5.530250728130341e-09,
+          5.542885065078734e-09,
+          5.549220442771912e-09,
+          5.5298514366149905e-09
+        ],
+        "median": 5.530250728130341e-09,
+        "min": 5.529487431049347e-09,
+        "max": 5.549220442771912e-09,
+        "spread": 1.9733011722565018e-11,
+        "repetitions": 7
+      },
+      "paired_residual": {
+        "parameter": {
+          "value": 4.95573490858078e-09,
+          "basis": "measured",
+          "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.cas-success.4.8388608; paired elapsed/work trials.",
+          "unit": "seconds/request"
+        },
+        "seconds_per_event": {
+          "values": [
+            4.955828011035919e-09,
+            4.954587519168854e-09,
+            4.956760823726654e-09,
+            4.95573490858078e-09,
+            4.954863369464873e-09,
+            4.974663674831391e-09,
+            4.955558061599732e-09
+          ],
+          "median": 4.95573490858078e-09,
+          "min": 4.954587519168854e-09,
+          "max": 4.974663674831391e-09,
+          "spread": 2.007615566253665e-11,
+          "repetitions": 7
+        },
+        "missing": []
+      }
+    },
+    {
+      "id": "memory.cas-success.8.32768",
+      "parameter": {
+        "value": 5.8381847739218665e-09,
+        "basis": "inferred",
+        "unit": "seconds/request",
+        "source": "Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory.a1; mbit10.cpu.lanl20261006.service.memory.a1/memory.cas-success.8.32768; gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer and max composition with compute, no physical latency or upper-bound claim."
+      },
+      "gross_spread": {
+        "values": [
+          5.840505897998676e-09,
+          5.824476063251408e-09,
+          5.8381847739218665e-09,
+          5.823874354362393e-09,
+          5.852910757064721e-09,
+          5.829056799411733e-09,
+          5.84253549575795e-09
+        ],
+        "median": 5.8381847739218665e-09,
+        "min": 5.823874354362393e-09,
+        "max": 5.852910757064721e-09,
+        "spread": 2.903640270232857e-11,
+        "repetitions": 7
+      },
+      "paired_residual": {
+        "parameter": {
+          "value": 5.260326683521181e-09,
+          "basis": "measured",
+          "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.cas-success.8.32768; paired elapsed/work trials.",
+          "unit": "seconds/request"
+        },
+        "seconds_per_event": {
+          "values": [
+            5.262567639350772e-09,
+            5.2284452319144265e-09,
+            5.260326683521181e-09,
+            5.2278206944464645e-09,
+            5.274800539016633e-09,
+            5.2333622574805716e-09,
+            5.2646121978758754e-09
+          ],
+          "median": 5.260326683521181e-09,
+          "min": 5.2278206944464645e-09,
+          "max": 5.274800539016633e-09,
+          "spread": 4.697984457016863e-11,
+          "repetitions": 7
+        },
+        "missing": []
+      }
+    },
+    {
+      "id": "memory.cas-success.8.8388608",
+      "parameter": {
+        "value": 5.831679105758666e-09,
+        "basis": "inferred",
+        "unit": "seconds/request",
+        "source": "Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory.a1; mbit10.cpu.lanl20261006.service.memory.a1/memory.cas-success.8.8388608; gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer and max composition with compute, no physical latency or upper-bound claim."
+      },
+      "gross_spread": {
+        "values": [
+          5.8314478397369384e-09,
+          5.832133114337922e-09,
+          5.8326583504676824e-09,
+          5.831679105758666e-09,
+          5.831098258495332e-09,
+          5.830942988395691e-09,
+          5.8318669199943545e-09
+        ],
+        "median": 5.831679105758666e-09,
+        "min": 5.830942988395691e-09,
+        "max": 5.8326583504676824e-09,
+        "spread": 1.7153620719913572e-12,
+        "repetitions": 7
+      },
+      "paired_residual": {
+        "parameter": {
+          "value": 5.256823718547822e-09,
+          "basis": "measured",
+          "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.cas-success.8.8388608; paired elapsed/work trials.",
+          "unit": "seconds/request"
+        },
+        "seconds_per_event": {
+          "values": [
+            5.256982147693634e-09,
+            5.2574000954628e-09,
+            5.2582522630691534e-09,
+            5.256816923618316e-09,
+            5.256585061550142e-09,
+            5.248714685440063e-09,
+            5.256823718547822e-09
+          ],
+          "median": 5.256823718547822e-09,
+          "min": 5.248714685440063e-09,
+          "max": 5.2582522630691534e-09,
+          "spread": 9.537577629090182e-12,
+          "repetitions": 7
+        },
+        "missing": []
+      }
+    },
+    {
+      "id": "memory.cas-failure.4.32768",
+      "parameter": {
+        "value": 5.544070601463285e-09,
+        "basis": "inferred",
+        "unit": "seconds/request",
+        "source": "Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory.a1; mbit10.cpu.lanl20261006.service.memory.a1/memory.cas-failure.4.32768; gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer and max composition with compute, no physical latency or upper-bound claim."
+      },
+      "gross_spread": {
+        "values": [
+          5.544585347175546e-09,
+          5.527039408683748e-09,
+          5.544070601463285e-09,
+          5.528729438781711e-09,
+          5.550797641277264e-09,
+          5.52772748470302e-09,
+          5.545050978660549e-09
+        ],
+        "median": 5.544070601463285e-09,
+        "min": 5.527039408683748e-09,
+        "max": 5.550797641277264e-09,
+        "spread": 2.3758232593516556e-11,
+        "repetitions": 7
+      },
+      "paired_residual": {
+        "parameter": {
+          "value": 4.967860579490635e-09,
+          "basis": "measured",
+          "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.cas-failure.4.32768; paired elapsed/work trials.",
+          "unit": "seconds/request"
+        },
+        "seconds_per_event": {
+          "values": [
+            4.96852993965145e-09,
+            4.933611094951609e-09,
+            4.967860579490635e-09,
+            4.933310568332651e-09,
+            4.974634230136838e-09,
+            4.935398638248408e-09,
+            4.968759357929205e-09
+          ],
+          "median": 4.967860579490635e-09,
+          "min": 4.933310568332651e-09,
+          "max": 4.974634230136838e-09,
+          "spread": 4.13236618041874e-11,
+          "repetitions": 7
+        },
+        "missing": []
+      }
+    },
+    {
+      "id": "memory.cas-failure.4.8388608",
+      "parameter": {
+        "value": 5.530259847640991e-09,
+        "basis": "inferred",
+        "unit": "seconds/request",
+        "source": "Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory.a1; mbit10.cpu.lanl20261006.service.memory.a1/memory.cas-failure.4.8388608; gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer and max composition with compute, no physical latency or upper-bound claim."
+      },
+      "gross_spread": {
+        "values": [
+          5.5294536948204036e-09,
+          5.530259847640991e-09,
+          5.53177410364151e-09,
+          5.530463755130768e-09,
+          5.530123770236968e-09,
+          5.530679225921631e-09,
+          5.529417932033539e-09
+        ],
+        "median": 5.530259847640991e-09,
+        "min": 5.529417932033539e-09,
+        "max": 5.53177410364151e-09,
+        "spread": 2.3561716079709504e-12,
+        "repetitions": 7
+      },
+      "paired_residual": {
+        "parameter": {
+          "value": 4.956064641475678e-09,
+          "basis": "measured",
+          "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.cas-failure.4.8388608; paired elapsed/work trials.",
+          "unit": "seconds/request"
+        },
+        "seconds_per_event": {
+          "values": [
+            4.954927802085876e-09,
+            4.956159889698028e-09,
+            4.9574285149574275e-09,
+            4.956064641475678e-09,
+            4.9559069275856015e-09,
+            4.956089973449707e-09,
+            4.954903304576874e-09
+          ],
+          "median": 4.956064641475678e-09,
+          "min": 4.954903304576874e-09,
+          "max": 4.9574285149574275e-09,
+          "spread": 2.525210380553492e-12,
+          "repetitions": 7
+        },
+        "missing": []
+      }
+    },
+    {
+      "id": "memory.cas-failure.8.32768",
+      "parameter": {
+        "value": 5.8349113464354336e-09,
+        "basis": "inferred",
+        "unit": "seconds/request",
+        "source": "Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory.a1; mbit10.cpu.lanl20261006.service.memory.a1/memory.cas-failure.8.32768; gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer and max composition with compute, no physical latency or upper-bound claim."
+      },
+      "gross_spread": {
+        "values": [
+          5.843954741954703e-09,
+          5.82178777456276e-09,
+          5.8376807570456505e-09,
+          5.820080578327095e-09,
+          5.8349113464354336e-09,
+          5.821551918983353e-09,
+          5.8386403322219e-09
+        ],
+        "median": 5.8349113464354336e-09,
+        "min": 5.820080578327095e-09,
+        "max": 5.843954741954703e-09,
+        "spread": 2.387416362760819e-11,
+        "repetitions": 7
+      },
+      "paired_residual": {
+        "parameter": {
+          "value": 5.256640315055731e-09,
+          "basis": "measured",
+          "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.cas-failure.8.32768; paired elapsed/work trials.",
+          "unit": "seconds/request"
+        },
+        "seconds_per_event": {
+          "values": [
+            5.2660591602324265e-09,
+            5.225232899188916e-09,
+            5.259558916091824e-09,
+            5.22938537597646e-09,
+            5.256640315055731e-09,
+            5.226203382015109e-09,
+            5.25959724187843e-09
+          ],
+          "median": 5.256640315055731e-09,
+          "min": 5.225232899188916e-09,
+          "max": 5.2660591602324265e-09,
+          "spread": 4.082626104351072e-11,
+          "repetitions": 7
+        },
+        "missing": []
+      }
+    },
+    {
+      "id": "memory.cas-failure.8.8388608",
+      "parameter": {
+        "value": 5.832301795482636e-09,
+        "basis": "inferred",
+        "unit": "seconds/request",
+        "source": "Constructed total-cell resource mbit10.cpu.lanl20261006.resource.memory.a1; mbit10.cpu.lanl20261006.service.memory.a1/memory.cas-failure.8.8388608; gross uninstrumented elapsed / exactly proved logical requests, includes driver work; inferred transfer and max composition with compute, no physical latency or upper-bound claim."
+      },
+      "gross_spread": {
+        "values": [
+          5.8324747085571285e-09,
+          5.832301795482636e-09,
+          5.831892609596253e-09,
+          5.833061516284942e-09,
+          5.832051813602448e-09,
+          5.835800945758819e-09,
+          5.831289052963257e-09
+        ],
+        "median": 5.832301795482636e-09,
+        "min": 5.831289052963257e-09,
+        "max": 5.835800945758819e-09,
+        "spread": 4.511892795561891e-12,
+        "repetitions": 7
+      },
+      "paired_residual": {
+        "parameter": {
+          "value": 5.257581472396851e-09,
+          "basis": "measured",
+          "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.cas-failure.8.8388608; paired elapsed/work trials.",
+          "unit": "seconds/request"
+        },
+        "seconds_per_event": {
+          "values": [
+            5.256959855556487e-09,
+            5.257539629936218e-09,
+            5.257581472396851e-09,
+            5.258045077323913e-09,
+            5.2575838565826425e-09,
+            5.261032700538634e-09,
+            5.2568446993827815e-09
+          ],
+          "median": 5.257581472396851e-09,
+          "min": 5.2568446993827815e-09,
+          "max": 5.261032700538634e-09,
+          "spread": 4.188001155852502e-12,
+          "repetitions": 7
+        },
+        "missing": []
+      }
+    }
+  ],
+  "identity_sha256": "c60743028eee55d48cd18692ed4b55fc67e3841e43c0fcc58a4a9a431fb1ed69"
+}

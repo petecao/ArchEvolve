@@ -10,8 +10,9 @@ import yaml
 from conftest import REPO
 
 
-def build_proposal_setup(records, tmp_path):
-    records.copy_repo()
+def build_proposal_setup(records, tmp_path, *, copy_all=True):
+    if copy_all:
+        records.copy_repo()
     runs = tmp_path / "runs"
     created = records.swdb("source-snapshot", "gapbs-bfs-do", "--runs-dir", runs,
                            "--id", "test-source", "--format", "json")

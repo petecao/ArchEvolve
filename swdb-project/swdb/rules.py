@@ -79,6 +79,8 @@ def check(record, ctx):
     elif kind == "evaluation":
         from swdb.functional_evaluation import validate_record
         yield from validate_record(record, ctx)
+        from swdb.cpu_pairing import validate_record as validate_cpu_pairing
+        yield from validate_cpu_pairing(record, ctx)
     elif kind == "campaign_summary":
         from swdb.extensa_pairing import validate_summary
         yield from validate_summary(record, ctx)
@@ -90,6 +92,24 @@ def check(record, ctx):
         yield from validate_record(record, ctx)
     elif kind == "cpu_calibration":
         from swdb.cpu_calibration_records import validate_record
+        yield from validate_record(record, ctx)
+    elif kind == "cpu_error_band":
+        from swdb.cpu_error_band import validate_record
+        yield from validate_record(record, ctx)
+    elif kind == "cpu_native_validation":
+        from swdb import cpu_native_validation
+        yield from cpu_native_validation.validate_record(record, ctx)
+    elif kind == "cpu_allocator_resource_calibration":
+        from swdb.cpu_allocator_resource import validate_record
+        yield from validate_record(record, ctx)
+    elif kind == "cpu_bulk_resource_calibration":
+        from swdb.cpu_bulk_resource import validate_record
+        yield from validate_record(record, ctx)
+    elif kind == "cpu_memory_resource_calibration":
+        from swdb.cpu_memory_resource import validate_record
+        yield from validate_record(record, ctx)
+    elif kind == "cpu_service_calibration":
+        from swdb.cpu_service_calibration import validate_record
         yield from validate_record(record, ctx)
     elif kind == "kernel":
         yield from _kernel(record, ctx)

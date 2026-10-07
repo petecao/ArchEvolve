@@ -1,0 +1,89 @@
+{
+  "format": "swdb.cpu-float-memory-preregistration.v1",
+  "created": "2026-10-06 ET",
+  "application_outcomes_observed": false,
+  "rationale": "Exact sealed BC g16/g17 PBFS access.266 executes floating64 monotonic fadd; existing integer seq_cst add cells cannot cover it. BFS/other atomic sites remain separate.",
+  "characterization_allowlist": [
+    {
+      "id": "bfs.kron-g16.t1.characterization.objects.a1",
+      "sha256": "535d43719d2e9269dc557e900886c625b80c5aa686e7682861a4f6d045e143bc"
+    },
+    {
+      "id": "bfs.kron-g17.t1.characterization.objects.a1",
+      "sha256": "49b5c58f3551b065c91c49c1fb09f54de2d2d71f08b6a4e1eedf3aad5ec415c5"
+    },
+    {
+      "id": "bc.kron-g16.t1.characterization.objects.a1",
+      "sha256": "8561948088366aa18409da1db1f204ac2579cdb8ee90f1a2c76079a96e2eb4fd"
+    },
+    {
+      "id": "bc.kron-g17.t1.characterization.objects.a1",
+      "sha256": "6b8d515b3f38a13bfd302993f8ac5e88bd77615da171c710b4ecd81d058c67db"
+    }
+  ],
+  "required_primitive": {
+    "opcode": "atomicrmw",
+    "value_kind": "floating",
+    "element_bits": 64,
+    "update_opcode": "fadd",
+    "atomic_ordering": "monotonic"
+  },
+  "count_points": [
+    {
+      "events": 3,
+      "invoke": true,
+      "expected_requests": 3
+    },
+    {
+      "events": 5,
+      "invoke": true,
+      "expected_requests": 5
+    },
+    {
+      "events": 3,
+      "invoke": false,
+      "expected_requests": 0
+    },
+    {
+      "events": 5,
+      "invoke": false,
+      "expected_requests": 0
+    }
+  ],
+  "native_plan": {
+    "threads": 1,
+    "footprint_bytes": [
+      32768,
+      8388608
+    ],
+    "repetitions": 7,
+    "min_gross_trial_s": 0.05,
+    "driver_resolution": "retained finite positive diagnostic; no claimed matched50ms driver threshold",
+    "event_cap": 134217728,
+    "max_wall_s": 900,
+    "count_build_cap_bytes": 67108864,
+    "timed_data_cap_bytes": 26214400,
+    "live_payload_cap_bytes": 8388608,
+    "state": "prepared zero double buffer; sequential uncontended updates; warm invocation and per-element value checks outside timed work"
+  },
+  "resource_recipe": {
+    "id": "gross_constructed_resource_v1",
+    "denominator": "source_normalized_logical_requests",
+    "elapsed": "gross_uninstrumented_native_cell",
+    "includes_driver_work": true,
+    "composition": "max_with_compute",
+    "transfer_basis": "inferred",
+    "physical_instruction_latency": false,
+    "proven_application_upper_bound": false
+  },
+  "transfer": "inferred construction; application address/locality/operand/runtime internal state and physical residency remain unverified; no physical latency or proven upper bound",
+  "partition": "Full exact source site counts and primitive semantics partition coarse update-kind/width bucket. Their sum must equal the original bucket; absent or mismatched classes remain unknown.",
+  "source_sha256": {
+    "CpuFloatMemoryWork.h": "577f9d772da4de811b6f779d862ca5735c83cfda8d4c58f5041bb8f7c7f6a6a0",
+    "CpuFloatMemoryTimer.cpp": "647db310646980a1a76d64e6b82080a03f8195cc44e58d5121c936b62c09bd33",
+    "CpuFloatMemoryCount.cpp": "2515a5ddd0d184004eb7ac1588781d11ed24daea75afe54e1b875870076bc297"
+  },
+  "immutable_prior_evidence": "Existing integer/byte memory helper files, receipts and inferred resource records remain unchanged; new costs are never substituted for integer parameters or pooled.",
+  "raw_policy": "Raw external mbit10 only; Git source and compact sealed metadata/typed records only.",
+  "identity_sha256": "02407e58cdc668c79ef2ae2ecaf063344a5d2ad1c9d65e0294de308ff07e26a0"
+}

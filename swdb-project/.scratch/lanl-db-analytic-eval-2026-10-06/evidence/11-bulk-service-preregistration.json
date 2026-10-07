@@ -1,0 +1,140 @@
+{
+  "format": "swdb.cpu-bulk-preregistration.v1",
+  "created": "2026-10-06 ET",
+  "application_timings_observed": false,
+  "input_inventory": {
+    "path": ".scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-object-counts-mbit10-20261006-a1.json",
+    "file_sha256": "b8ad78de127faef908cc74313ee6f6b4fbffe69bd03c3fc34ba00332d4ad39cb",
+    "identity_sha256": "d2170d131ce847772d947f6d06041eaab682c417414603a410ca638e6982db88",
+    "source_commit": "502fea76159cb7b4c692291ee779dd0235b20c8b",
+    "characterizations": [
+      {
+        "id": "bfs.kron-g16.t1.characterization.objects.a1",
+        "file_sha256": "cda2c51423c167249fd760f359ee0ead180bcb2e2d4db2c722c9b724120458ba",
+        "counted_identity_sha256": "4379d1ed06e37b58eacc5bee61b568e47c4e9c03ed363f8240df6c1fea16dd2c"
+      },
+      {
+        "id": "bc.kron-g16.t1.characterization.objects.a1",
+        "file_sha256": "d12b5f57c61007219d367942ee554db1d27ee1d8614e2c1279e1164230f534e8",
+        "counted_identity_sha256": "2cf2bb052911835c28ad092c3257e835e3fb2c72b12ea6604467247579222081"
+      },
+      {
+        "id": "bfs.kron-g17.t1.characterization.objects.a1",
+        "file_sha256": "3acba4d734334e61221ae6dd1856fffc9bbc231616fec805288c1a5d806c1033",
+        "counted_identity_sha256": "d7a7be75479635f93e446ff22ceeb3b54c8880008671ebb5963e86c1d2e5d210"
+      },
+      {
+        "id": "bc.kron-g17.t1.characterization.objects.a1",
+        "file_sha256": "e3e5d69e1d6a5310dad6c693112b7eb7d86dae9d533ee85ef86450d09831daf4",
+        "counted_identity_sha256": "b2a1d317a5a55cea0db19200ad89fe2ec6e1b68169d8858e849f17a4a5410e7a"
+      }
+    ]
+  },
+  "batches": [
+    {
+      "id": "bulk.a1",
+      "memmove_sizes": [
+        8,
+        16,
+        20,
+        32,
+        40,
+        48,
+        64,
+        68,
+        88,
+        292,
+        2848,
+        3548,
+        4472,
+        5820,
+        9252,
+        11264,
+        13600,
+        17112,
+        18760,
+        20412,
+        23888,
+        24864,
+        27576,
+        46708,
+        47592,
+        65536
+      ],
+      "memcpy_sizes": [
+        8
+      ]
+    },
+    {
+      "id": "bulk.a2",
+      "memmove_sizes": [
+        12,
+        60,
+        116,
+        136,
+        428,
+        1512,
+        1524,
+        1576,
+        1580,
+        4304,
+        4324,
+        7452,
+        10992,
+        11896,
+        12384,
+        16316,
+        18212,
+        19128,
+        21000,
+        23052,
+        36712,
+        38848
+      ],
+      "memcpy_sizes": [
+        8
+      ]
+    }
+  ],
+  "new_allocator_sizes": [
+    16384,
+    466112,
+    524284,
+    1048568
+  ],
+  "profiles": {
+    "memcpy": "constant8_noalias_align8",
+    "memmove": [
+      "dynamic_length_disjoint_align4",
+      "dynamic_length_overlap_forward4_align4",
+      "dynamic_length_overlap_backward4_align4"
+    ]
+  },
+  "source_overlap": "Application MayAlias does not prove overlap. Three constructed profiles are distinct cells. Any later max-profile transfer is explicit inferred, never a proven upper bound.",
+  "sampling": {
+    "repetitions": 7,
+    "min_both_gross_driver_seconds": 0.05,
+    "max_wall_seconds_per_batch": 900,
+    "max_memmove_sizes_per_batch": 32,
+    "count_points_per_batch": 4,
+    "elapsed_cells_per_batch": [
+      79,
+      67
+    ]
+  },
+  "caps": {
+    "count_build_bytes": 67108864,
+    "timed_data_bytes": 26214400,
+    "live_requested_payload_bytes": 3146048,
+    "events_per_trial": 134217728
+  },
+  "admission": "Exact shared-source coefficient and bins, O3 retained memcpy8 word copy/dynamic memmove, verified one-core lane/runtime/control identities; unresolved paired differences remain null.",
+  "prohibitions": [
+    "no instrumented elapsed",
+    "no fitting application outcomes",
+    "no interpolating unmatched byte bins",
+    "no pooling duplicate memcpy8 profiles between batches",
+    "no physical cache/page/traffic or full-view-allocation claims"
+  ],
+  "identity_sha256": "62a66fc5876c34a906604debcd13bcaa9115146de0fac5c7515f8bba407bec9d"
+}

@@ -262,6 +262,12 @@ def main(argv=None):
     feature_reports.register_cli(commands)
     from swdb import cpu_calibration
     cpu_calibration.register_cli(commands)
+    from swdb import cpu_service_calibration
+    cpu_service_calibration.register_cli(commands)
+    from swdb import cpu_error_band
+    cpu_error_band.register_cli(commands)
+    from swdb import cpu_native_validation
+    cpu_native_validation.register_cli(commands)
 
     from swdb import archevolve
     archevolve.register_cli(commands)
@@ -296,6 +302,15 @@ def _dispatch(args):
         return 0
     if hasattr(args, "cpu_calibration_handler"):
         _emit(args.cpu_calibration_handler(args), args.format)
+        return 0
+    if hasattr(args, "cpu_error_band_handler"):
+        _emit(args.cpu_error_band_handler(args), args.format)
+        return 0
+    if hasattr(args, "cpu_native_validation_handler"):
+        _emit(args.cpu_native_validation_handler(args), args.format)
+        return 0
+    if hasattr(args, "cpu_service_calibration_handler"):
+        _emit(args.cpu_service_calibration_handler(args), args.format)
         return 0
     if hasattr(args, "_annotation_handler"):
         _emit(args._annotation_handler(args), args.format)

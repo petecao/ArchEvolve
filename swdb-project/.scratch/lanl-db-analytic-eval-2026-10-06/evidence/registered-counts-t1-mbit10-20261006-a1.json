@@ -1,0 +1,961 @@
+{
+  "created": "2026-10-06 19:07 ET",
+  "environment": {
+    "cpu": "Architecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           46 bits physical, 57 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  64\nOn-line CPU(s) list:                     0-63\nVendor ID:                               GenuineIntel\nModel name:                              Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz\nCPU family:                              6\nModel:                                   106\nThread(s) per core:                      2\nCore(s) per socket:                      16\nSocket(s):                               2\nStepping:                                6\nBogoMIPS:                                5800.00\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 intel_ppin ssbd mba ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local split_lock_detect wbnoinvd dtherm ida arat pln pts vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg tme avx512_vpopcntdq la57 rdpid fsrm md_clear pconfig flush_l1d arch_capabilities\nVirtualization:                          VT-x\nL1d cache:                               1.5 MiB (32 instances)\nL1i cache:                               1 MiB (32 instances)\nL2 cache:                                40 MiB (32 instances)\nL3 cache:                                48 MiB (2 instances)\nNUMA node(s):                            2\nNUMA node0 CPU(s):                       0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62\nNUMA node1 CPU(s):                       1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63\nVulnerability Gather data sampling:      Mitigation; Microcode\nVulnerability Indirect target selection: Mitigation; Aligned branch/return thunks\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Mitigation; Clear CPU buffers; SMT vulnerable\nVulnerability Reg file data sampling:    Not affected\nVulnerability Retbleed:                  Not affected\nVulnerability Spec rstack overflow:      Not affected\nVulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; Enhanced / Automatic IBRS; IBPB conditional; PBRSB-eIBRS SW sequence; BHI SW loop, KVM SW loop\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Not affected\nVulnerability Tsx async abort:           Not affected\nVulnerability Vmscape:                   Not affected\n",
+    "created": "2026-10-06 18:58 ET",
+    "disk_free_bytes": {
+      "/data": 61561077760,
+      "/data1": 28879659008
+    },
+    "environment": {
+      "GOMP_CPU_AFFINITY": null,
+      "KMP_AFFINITY": null,
+      "LD_LIBRARY_PATH": null,
+      "OMP_DYNAMIC": null,
+      "OMP_NUM_THREADS": "1",
+      "OMP_PLACES": "cores",
+      "OMP_PROC_BIND": "close"
+    },
+    "governor": null,
+    "host": "mbit10",
+    "load": [
+      1.060546875,
+      1.1103515625,
+      1.17578125
+    ],
+    "no_turbo": null,
+    "numa": "available: 2 nodes (0-1)\nnode 0 cpus: 0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62\nnode 0 size: 63849 MB\nnode 0 free: 21496 MB\nnode 1 cpus: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31 33 35 37 39 41 43 45 47 49 51 53 55 57 59 61 63\nnode 1 size: 64496 MB\nnode 1 free: 3897 MB\nnode distances:\nnode   0   1 \n  0:  10  20 \n  1:  20  10 \n",
+    "physical_core": 0,
+    "source_commit": "eb1b2419f03c09d4ccbd97286fa7d1109f3f495b",
+    "system": "Linux mbit10 6.8.0-136-generic #136-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 21:53:05 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux",
+    "threads": 1,
+    "timings_collected": false
+  },
+  "exports": [
+    {
+      "counted_binary_sha256": "2be1add2897833f4fb79d751978aabf266d4d1f02311dde93f5a47b9614884a8",
+      "counts_sha256": "96dd7f7d56582724dea74e1807afab339cfd9dc14cbab93dc029dd7eb0645eae",
+      "id": "bfs.kron-g16.t1.characterization.a1",
+      "kernel": "bfs",
+      "observation_contract": {
+        "abi": "swdb.access.v2",
+        "call_abi": "swdb.call.v2",
+        "first_access_scope": "first observed access in selected normalized source functions; opaque initialization is not observed",
+        "format": "swdb.live-count-context.v1",
+        "level": "source_normalized_ir",
+        "line_bytes": 64,
+        "native_runtime": {
+          "compiler_sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113",
+          "compiler_version": "clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin",
+          "environment": {
+            "DYLD_LIBRARY_PATH": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu",
+            "LD_LIBRARY_PATH": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu",
+            "OMP_DYNAMIC": "FALSE",
+            "OMP_NUM_THREADS": "1",
+            "OMP_PLACES": "cores",
+            "OMP_PROC_BIND": "close"
+          },
+          "loaded_libraries": {
+            "ld-linux-x86-64.so.2": {
+              "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+              "sha256": "c20a2dc8917c755f02b94049356320fe1f62ac7d9f8994731f807d9df39302da"
+            },
+            "libarcher.so": {
+              "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu/libarcher.so",
+              "sha256": "65843469f5c4b24ce32f95b3b8129492e710f022f03945dc5f076ec7781161d0"
+            },
+            "libc.so.6": {
+              "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+              "sha256": "3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf"
+            },
+            "libgcc_s.so.1": {
+              "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1",
+              "sha256": "d93224d2b0dab4247598be683adca02f5cf00586f99c187579cd7e92058fb7cb"
+            },
+            "libm.so.6": {
+              "path": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+              "sha256": "fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0"
+            },
+            "libomp.so": {
+              "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu/libomp.so",
+              "sha256": "bed4495bf5821b0acdba90d671512859b381c5d2caa029f6c3b82f1337da614e"
+            },
+            "libstdc++.so.6.0.33": {
+              "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33",
+              "sha256": "1fd75fe70354a416d75aef22bcae68c47bd25d20e2d0568c30b1a9838cf62f11"
+            }
+          },
+          "missing": [],
+          "observation_method": "process_loaded_images",
+          "scope": "counted_instrumented_binary"
+        },
+        "object_scope": "translation_unit_allocator_calls",
+        "observer_isolation": "thread_local_reentrancy_guard",
+        "page_bytes": 4096,
+        "physical_residency_known": false,
+        "runtime_bundle_sha256": "4b720739950425dd7bdc3b63785138ceb2158061351f3432fe66228cba1d2386",
+        "state_budget": 524288
+      },
+      "record_bytes": 11161170,
+      "record_file_sha256": "875fa3fa7db2df2f77e41b72220ce257092014cf5c9e46a5c83f073762516e03",
+      "record_identity_sha256": "515cdab3be689090a9d418c883fab6164dd29c98320c5cdce27f252d89ec15ab",
+      "record_path": "swdb-project/records/workload_characterizations/bfs.kron-g16.t1.characterization.a1.yaml",
+      "trials": [
+        {
+          "call_shape_missing_region_count": {
+            "_ZNSt6chrono3_V212system_clock3nowEv:call_length": 10,
+            "__kmpc_dispatch_deinit:call_length": 1,
+            "__kmpc_dispatch_init_4:call_length": 1,
+            "__kmpc_dispatch_next_4:call_length": 1,
+            "__kmpc_end_reduce_nowait:call_length": 2,
+            "__kmpc_for_static_fini:call_length": 5,
+            "__kmpc_for_static_init_4:call_length": 3,
+            "__kmpc_for_static_init_8:call_length": 2,
+            "__kmpc_fork_call:call_length": 6,
+            "__kmpc_reduce_nowait:call_length": 2
+          },
+          "diagnostic_unknown_object_requests_region_sum": 3630415,
+          "exact_length_bins": {
+            "_Znam": {
+              "262144": 2,
+              "65536": 5,
+              "8192": 2
+            },
+            "llvm.memcpy.p0.p0.i64": {
+              "8": 10
+            },
+            "llvm.memmove.p0.p0.i64": {
+              "2848": 1,
+              "292": 1
+            }
+          },
+          "free_lifetime_size_bins": {
+            "_ZdaPv": {
+              "262144": 1,
+              "65536": 5,
+              "8192": 2
+            }
+          },
+          "memory_missing_region_count": {
+            "object_identity_or_extent": 24
+          },
+          "opaque_call_executions": {
+            "_ZNSt6chrono3_V212system_clock3nowEv": 20,
+            "_ZdaPv": 8,
+            "_Znam": 9,
+            "__kmpc_dispatch_deinit": 3,
+            "__kmpc_dispatch_init_4": 3,
+            "__kmpc_dispatch_next_4": 6,
+            "__kmpc_end_reduce_nowait": 7,
+            "__kmpc_for_static_fini": 8,
+            "__kmpc_for_static_init_4": 3,
+            "__kmpc_for_static_init_8": 5,
+            "__kmpc_fork_call": 11,
+            "__kmpc_reduce_nowait": 7,
+            "llvm.memcpy.p0.p0.i64": 10,
+            "llvm.memmove.p0.p0.i64": 2
+          },
+          "position": 0,
+          "sources": [
+            64863
+          ]
+        },
+        {
+          "call_shape_missing_region_count": {
+            "_ZNSt6chrono3_V212system_clock3nowEv:call_length": 10,
+            "__kmpc_dispatch_deinit:call_length": 1,
+            "__kmpc_dispatch_init_4:call_length": 1,
+            "__kmpc_dispatch_next_4:call_length": 1,
+            "__kmpc_end_reduce_nowait:call_length": 2,
+            "__kmpc_for_static_fini:call_length": 5,
+            "__kmpc_for_static_init_4:call_length": 3,
+            "__kmpc_for_static_init_8:call_length": 2,
+            "__kmpc_fork_call:call_length": 6,
+            "__kmpc_reduce_nowait:call_length": 2
+          },
+          "diagnostic_unknown_object_requests_region_sum": 3436017,
+          "exact_length_bins": {
+            "_Znam": {
+              "262144": 2,
+              "65536": 5,
+              "8192": 2
+            },
+            "llvm.memcpy.p0.p0.i64": {
+              "8": 10
+            },
+            "llvm.memmove.p0.p0.i64": {
+              "11264": 1,
+              "20": 1,
+              "88": 1
+            }
+          },
+          "free_lifetime_size_bins": {
+            "_ZdaPv": {
+              "262144": 1,
+              "65536": 5,
+              "8192": 2
+            }
+          },
+          "memory_missing_region_count": {
+            "object_identity_or_extent": 21
+          },
+          "opaque_call_executions": {
+            "_ZNSt6chrono3_V212system_clock3nowEv": 20,
+            "_ZdaPv": 8,
+            "_Znam": 9,
+            "__kmpc_dispatch_deinit": 3,
+            "__kmpc_dispatch_init_4": 3,
+            "__kmpc_dispatch_next_4": 6,
+            "__kmpc_end_reduce_nowait": 7,
+            "__kmpc_for_static_fini": 8,
+            "__kmpc_for_static_init_4": 3,
+            "__kmpc_for_static_init_8": 5,
+            "__kmpc_fork_call": 11,
+            "__kmpc_reduce_nowait": 7,
+            "llvm.memcpy.p0.p0.i64": 10,
+            "llvm.memmove.p0.p0.i64": 3
+          },
+          "position": 1,
+          "sources": [
+            35711
+          ]
+        },
+        {
+          "call_shape_missing_region_count": {
+            "_ZNSt6chrono3_V212system_clock3nowEv:call_length": 10,
+            "__kmpc_dispatch_deinit:call_length": 1,
+            "__kmpc_dispatch_init_4:call_length": 1,
+            "__kmpc_dispatch_next_4:call_length": 1,
+            "__kmpc_end_reduce_nowait:call_length": 2,
+            "__kmpc_for_static_fini:call_length": 5,
+            "__kmpc_for_static_init_4:call_length": 3,
+            "__kmpc_for_static_init_8:call_length": 2,
+            "__kmpc_fork_call:call_length": 6,
+            "__kmpc_reduce_nowait:call_length": 2
+          },
+          "diagnostic_unknown_object_requests_region_sum": 3412104,
+          "exact_length_bins": {
+            "_Znam": {
+              "262144": 2,
+              "65536": 4,
+              "8192": 2
+            },
+            "llvm.memcpy.p0.p0.i64": {
+              "8": 9
+            },
+            "llvm.memmove.p0.p0.i64": {
+              "13600": 1,
+              "32": 1,
+              "68": 1
+            }
+          },
+          "free_lifetime_size_bins": {
+            "_ZdaPv": {
+              "262144": 1,
+              "65536": 4,
+              "8192": 2
+            }
+          },
+          "memory_missing_region_count": {
+            "object_identity_or_extent": 21
+          },
+          "opaque_call_executions": {
+            "_ZNSt6chrono3_V212system_clock3nowEv": 18,
+            "_ZdaPv": 7,
+            "_Znam": 8,
+            "__kmpc_dispatch_deinit": 3,
+            "__kmpc_dispatch_init_4": 3,
+            "__kmpc_dispatch_next_4": 6,
+            "__kmpc_end_reduce_nowait": 6,
+            "__kmpc_for_static_fini": 7,
+            "__kmpc_for_static_init_4": 3,
+            "__kmpc_for_static_init_8": 4,
+            "__kmpc_fork_call": 10,
+            "__kmpc_reduce_nowait": 6,
+            "llvm.memcpy.p0.p0.i64": 9,
+            "llvm.memmove.p0.p0.i64": 3
+          },
+          "position": 2,
+          "sources": [
+            18064
+          ]
+        },
+        {
+          "call_shape_missing_region_count": {
+            "_ZNSt6chrono3_V212system_clock3nowEv:call_length": 10,
+            "__kmpc_dispatch_deinit:call_length": 1,
+            "__kmpc_dispatch_init_4:call_length": 1,
+            "__kmpc_dispatch_next_4:call_length": 1,
+            "__kmpc_end_reduce_nowait:call_length": 2,
+            "__kmpc_for_static_fini:call_length": 5,
+            "__kmpc_for_static_init_4:call_length": 3,
+            "__kmpc_for_static_init_8:call_length": 2,
+            "__kmpc_fork_call:call_length": 6,
+            "__kmpc_reduce_nowait:call_length": 2
+          },
+          "diagnostic_unknown_object_requests_region_sum": 2922585,
+          "exact_length_bins": {
+            "_Znam": {
+              "262144": 2,
+              "65536": 5,
+              "8192": 2
+            },
+            "llvm.memcpy.p0.p0.i64": {
+              "8": 9
+            },
+            "llvm.memmove.p0.p0.i64": {
+              "27576": 1,
+              "40": 1,
+              "48": 1,
+              "9252": 1
+            }
+          },
+          "free_lifetime_size_bins": {
+            "_ZdaPv": {
+              "262144": 1,
+              "65536": 5,
+              "8192": 2
+            }
+          },
+          "memory_missing_region_count": {
+            "object_identity_or_extent": 21
+          },
+          "opaque_call_executions": {
+            "_ZNSt6chrono3_V212system_clock3nowEv": 18,
+            "_ZdaPv": 8,
+            "_Znam": 9,
+            "__kmpc_dispatch_deinit": 2,
+            "__kmpc_dispatch_init_4": 2,
+            "__kmpc_dispatch_next_4": 4,
+            "__kmpc_end_reduce_nowait": 6,
+            "__kmpc_for_static_fini": 8,
+            "__kmpc_for_static_init_4": 3,
+            "__kmpc_for_static_init_8": 5,
+            "__kmpc_fork_call": 10,
+            "__kmpc_reduce_nowait": 6,
+            "llvm.memcpy.p0.p0.i64": 9,
+            "llvm.memmove.p0.p0.i64": 4
+          },
+          "position": 3,
+          "sources": [
+            30164
+          ]
+        },
+        {
+          "call_shape_missing_region_count": {
+            "_ZNSt6chrono3_V212system_clock3nowEv:call_length": 10,
+            "__kmpc_dispatch_deinit:call_length": 1,
+            "__kmpc_dispatch_init_4:call_length": 1,
+            "__kmpc_dispatch_next_4:call_length": 1,
+            "__kmpc_end_reduce_nowait:call_length": 2,
+            "__kmpc_for_static_fini:call_length": 5,
+            "__kmpc_for_static_init_4:call_length": 3,
+            "__kmpc_for_static_init_8:call_length": 2,
+            "__kmpc_fork_call:call_length": 6,
+            "__kmpc_reduce_nowait:call_length": 2
+          },
+          "diagnostic_unknown_object_requests_region_sum": 2843758,
+          "exact_length_bins": {
+            "_Znam": {
+              "262144": 2,
+              "65536": 5,
+              "8192": 2
+            },
+            "llvm.memcpy.p0.p0.i64": {
+              "8": 9
+            },
+            "llvm.memmove.p0.p0.i64": {
+              "32": 2,
+              "4472": 1,
+              "47592": 1
+            }
+          },
+          "free_lifetime_size_bins": {
+            "_ZdaPv": {
+              "262144": 1,
+              "65536": 5,
+              "8192": 2
+            }
+          },
+          "memory_missing_region_count": {
+            "object_identity_or_extent": 21
+          },
+          "opaque_call_executions": {
+            "_ZNSt6chrono3_V212system_clock3nowEv": 18,
+            "_ZdaPv": 8,
+            "_Znam": 9,
+            "__kmpc_dispatch_deinit": 2,
+            "__kmpc_dispatch_init_4": 2,
+            "__kmpc_dispatch_next_4": 4,
+            "__kmpc_end_reduce_nowait": 6,
+            "__kmpc_for_static_fini": 8,
+            "__kmpc_for_static_init_4": 3,
+            "__kmpc_for_static_init_8": 5,
+            "__kmpc_fork_call": 10,
+            "__kmpc_reduce_nowait": 6,
+            "llvm.memcpy.p0.p0.i64": 9,
+            "llvm.memmove.p0.p0.i64": 4
+          },
+          "position": 4,
+          "sources": [
+            1014
+          ]
+        }
+      ],
+      "verification": "Exact source/input/whole-call/runtime payload and available counted execution artifacts verified."
+    },
+    {
+      "counted_binary_sha256": "f399131f4c828926cb5c0c29f9f42bcbc64be92700a4af51530418b3feaa0294",
+      "counts_sha256": "7f36d46391a51a6e8f8d39734610ab3a61c67119c5cf000be0cb1c4e55d386b3",
+      "id": "bc.kron-g16.t1.characterization.a1",
+      "kernel": "bc",
+      "observation_contract": {
+        "abi": "swdb.access.v2",
+        "call_abi": "swdb.call.v2",
+        "first_access_scope": "first observed access in selected normalized source functions; opaque initialization is not observed",
+        "format": "swdb.live-count-context.v1",
+        "level": "source_normalized_ir",
+        "line_bytes": 64,
+        "native_runtime": {
+          "compiler_sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113",
+          "compiler_version": "clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin",
+          "environment": {
+            "DYLD_LIBRARY_PATH": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu",
+            "LD_LIBRARY_PATH": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu",
+            "OMP_DYNAMIC": "FALSE",
+            "OMP_NUM_THREADS": "1",
+            "OMP_PLACES": "cores",
+            "OMP_PROC_BIND": "close"
+          },
+          "loaded_libraries": {
+            "ld-linux-x86-64.so.2": {
+              "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+              "sha256": "c20a2dc8917c755f02b94049356320fe1f62ac7d9f8994731f807d9df39302da"
+            },
+            "libarcher.so": {
+              "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu/libarcher.so",
+              "sha256": "65843469f5c4b24ce32f95b3b8129492e710f022f03945dc5f076ec7781161d0"
+            },
+            "libc.so.6": {
+              "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+              "sha256": "3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf"
+            },
+            "libgcc_s.so.1": {
+              "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1",
+              "sha256": "d93224d2b0dab4247598be683adca02f5cf00586f99c187579cd7e92058fb7cb"
+            },
+            "libm.so.6": {
+              "path": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+              "sha256": "fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0"
+            },
+            "libomp.so": {
+              "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu/libomp.so",
+              "sha256": "bed4495bf5821b0acdba90d671512859b381c5d2caa029f6c3b82f1337da614e"
+            },
+            "libstdc++.so.6.0.33": {
+              "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33",
+              "sha256": "1fd75fe70354a416d75aef22bcae68c47bd25d20e2d0568c30b1a9838cf62f11"
+            }
+          },
+          "missing": [],
+          "observation_method": "process_loaded_images",
+          "scope": "counted_instrumented_binary"
+        },
+        "object_scope": "translation_unit_allocator_calls",
+        "observer_isolation": "thread_local_reentrancy_guard",
+        "page_bytes": 4096,
+        "physical_residency_known": false,
+        "runtime_bundle_sha256": "4b720739950425dd7bdc3b63785138ceb2158061351f3432fe66228cba1d2386",
+        "state_budget": 524288
+      },
+      "record_bytes": 13382631,
+      "record_file_sha256": "c7230866c0b70e003fd6f3ec7523a11457d29f1efe142e08a2a9c358822a2bb0",
+      "record_identity_sha256": "5e4d4462e2b073a2cc0fe5c00b4d5cffd434cd4d917f4cd31b7d7165db22a8dc",
+      "record_path": "swdb-project/records/workload_characterizations/bc.kron-g16.t1.characterization.a1.yaml",
+      "trials": [
+        {
+          "call_shape_missing_region_count": {
+            "_ZNSt6chrono3_V212system_clock3nowEv:call_length": 6,
+            "__kmpc_barrier:call_length": 2,
+            "__kmpc_dispatch_deinit:call_length": 2,
+            "__kmpc_dispatch_init_8:call_length": 2,
+            "__kmpc_dispatch_next_8:call_length": 2,
+            "__kmpc_end_reduce_nowait:call_length": 1,
+            "__kmpc_end_single:call_length": 1,
+            "__kmpc_for_static_fini:call_length": 5,
+            "__kmpc_for_static_init_4:call_length": 2,
+            "__kmpc_for_static_init_8:call_length": 3,
+            "__kmpc_fork_call:call_length": 8,
+            "__kmpc_reduce_nowait:call_length": 1,
+            "__kmpc_single:call_length": 1
+          },
+          "diagnostic_unknown_object_requests_region_sum": 17262809,
+          "exact_length_bins": {
+            "_Znam": {
+              "227416": 1,
+              "262144": 4,
+              "524288": 1,
+              "65536": 1
+            },
+            "_Znwm": {
+              "128": 1,
+              "16": 1,
+              "32": 1,
+              "64": 1,
+              "8": 1
+            },
+            "llvm.memcpy.p0.p0.i64": {
+              "8": 3
+            },
+            "llvm.memmove.p0.p0.i64": {
+              "16": 1,
+              "2848": 1,
+              "292": 1,
+              "32": 1,
+              "46708": 1,
+              "5820": 1,
+              "64": 1,
+              "65536": 2,
+              "8": 1
+            }
+          },
+          "free_lifetime_size_bins": {
+            "_ZdaPv": {
+              "227416": 1,
+              "262144": 3,
+              "524288": 1,
+              "65536": 1
+            },
+            "_ZdlPv": {
+              "128": 1,
+              "16": 1,
+              "32": 1,
+              "64": 1,
+              "8": 1
+            }
+          },
+          "memory_missing_region_count": {
+            "object_identity_or_extent": 30
+          },
+          "opaque_call_executions": {
+            "_ZNSt6chrono3_V212system_clock3nowEv": 6,
+            "_ZdaPv": 6,
+            "_ZdlPv": 5,
+            "_Znam": 7,
+            "_Znwm": 5,
+            "__kmpc_barrier": 14,
+            "__kmpc_dispatch_deinit": 14,
+            "__kmpc_dispatch_init_8": 14,
+            "__kmpc_dispatch_next_8": 28,
+            "__kmpc_end_reduce_nowait": 1,
+            "__kmpc_end_single": 7,
+            "__kmpc_for_static_fini": 6,
+            "__kmpc_for_static_init_4": 2,
+            "__kmpc_for_static_init_8": 4,
+            "__kmpc_fork_call": 15,
+            "__kmpc_reduce_nowait": 1,
+            "__kmpc_single": 7,
+            "llvm.memcpy.p0.p0.i64": 3,
+            "llvm.memmove.p0.p0.i64": 10
+          },
+          "position": 0,
+          "sources": [
+            64863
+          ]
+        },
+        {
+          "call_shape_missing_region_count": {
+            "_ZNSt6chrono3_V212system_clock3nowEv:call_length": 6,
+            "__kmpc_barrier:call_length": 2,
+            "__kmpc_dispatch_deinit:call_length": 2,
+            "__kmpc_dispatch_init_8:call_length": 2,
+            "__kmpc_dispatch_next_8:call_length": 2,
+            "__kmpc_end_reduce_nowait:call_length": 1,
+            "__kmpc_end_single:call_length": 1,
+            "__kmpc_for_static_fini:call_length": 5,
+            "__kmpc_for_static_init_4:call_length": 2,
+            "__kmpc_for_static_init_8:call_length": 3,
+            "__kmpc_fork_call:call_length": 8,
+            "__kmpc_reduce_nowait:call_length": 1,
+            "__kmpc_single:call_length": 1
+          },
+          "diagnostic_unknown_object_requests_region_sum": 19223858,
+          "exact_length_bins": {
+            "_Znam": {
+              "227416": 1,
+              "262144": 4,
+              "524288": 1,
+              "65536": 1
+            },
+            "_Znwm": {
+              "128": 1,
+              "16": 1,
+              "32": 1,
+              "64": 1,
+              "8": 1
+            },
+            "llvm.memcpy.p0.p0.i64": {
+              "8": 3
+            },
+            "llvm.memmove.p0.p0.i64": {
+              "11264": 1,
+              "16": 1,
+              "20": 1,
+              "20412": 1,
+              "23888": 1,
+              "32": 1,
+              "64": 1,
+              "65536": 2,
+              "8": 1,
+              "88": 1
+            }
+          },
+          "free_lifetime_size_bins": {
+            "_ZdaPv": {
+              "227416": 1,
+              "262144": 3,
+              "524288": 1,
+              "65536": 1
+            },
+            "_ZdlPv": {
+              "128": 1,
+              "16": 1,
+              "32": 1,
+              "64": 1,
+              "8": 1
+            }
+          },
+          "memory_missing_region_count": {
+            "object_identity_or_extent": 27
+          },
+          "opaque_call_executions": {
+            "_ZNSt6chrono3_V212system_clock3nowEv": 6,
+            "_ZdaPv": 6,
+            "_ZdlPv": 5,
+            "_Znam": 7,
+            "_Znwm": 5,
+            "__kmpc_barrier": 14,
+            "__kmpc_dispatch_deinit": 14,
+            "__kmpc_dispatch_init_8": 14,
+            "__kmpc_dispatch_next_8": 28,
+            "__kmpc_end_reduce_nowait": 1,
+            "__kmpc_end_single": 7,
+            "__kmpc_for_static_fini": 6,
+            "__kmpc_for_static_init_4": 2,
+            "__kmpc_for_static_init_8": 4,
+            "__kmpc_fork_call": 15,
+            "__kmpc_reduce_nowait": 1,
+            "__kmpc_single": 7,
+            "llvm.memcpy.p0.p0.i64": 3,
+            "llvm.memmove.p0.p0.i64": 11
+          },
+          "position": 1,
+          "sources": [
+            35711
+          ]
+        },
+        {
+          "call_shape_missing_region_count": {
+            "_ZNSt6chrono3_V212system_clock3nowEv:call_length": 6,
+            "__kmpc_barrier:call_length": 2,
+            "__kmpc_dispatch_deinit:call_length": 2,
+            "__kmpc_dispatch_init_8:call_length": 2,
+            "__kmpc_dispatch_next_8:call_length": 2,
+            "__kmpc_end_reduce_nowait:call_length": 1,
+            "__kmpc_end_single:call_length": 1,
+            "__kmpc_for_static_fini:call_length": 5,
+            "__kmpc_for_static_init_4:call_length": 2,
+            "__kmpc_for_static_init_8:call_length": 3,
+            "__kmpc_fork_call:call_length": 8,
+            "__kmpc_reduce_nowait:call_length": 1,
+            "__kmpc_single:call_length": 1
+          },
+          "diagnostic_unknown_object_requests_region_sum": 19176267,
+          "exact_length_bins": {
+            "_Znam": {
+              "227416": 1,
+              "262144": 4,
+              "524288": 1,
+              "65536": 1
+            },
+            "_Znwm": {
+              "16": 1,
+              "32": 1,
+              "64": 1,
+              "8": 1
+            },
+            "llvm.memcpy.p0.p0.i64": {
+              "8": 3
+            },
+            "llvm.memmove.p0.p0.i64": {
+              "13600": 1,
+              "16": 1,
+              "17112": 1,
+              "24864": 1,
+              "32": 2,
+              "65536": 2,
+              "68": 1,
+              "8": 1
+            }
+          },
+          "free_lifetime_size_bins": {
+            "_ZdaPv": {
+              "227416": 1,
+              "262144": 3,
+              "524288": 1,
+              "65536": 1
+            },
+            "_ZdlPv": {
+              "16": 1,
+              "32": 1,
+              "64": 1,
+              "8": 1
+            }
+          },
+          "memory_missing_region_count": {
+            "object_identity_or_extent": 27
+          },
+          "opaque_call_executions": {
+            "_ZNSt6chrono3_V212system_clock3nowEv": 6,
+            "_ZdaPv": 6,
+            "_ZdlPv": 4,
+            "_Znam": 7,
+            "_Znwm": 4,
+            "__kmpc_barrier": 12,
+            "__kmpc_dispatch_deinit": 12,
+            "__kmpc_dispatch_init_8": 12,
+            "__kmpc_dispatch_next_8": 24,
+            "__kmpc_end_reduce_nowait": 1,
+            "__kmpc_end_single": 6,
+            "__kmpc_for_static_fini": 6,
+            "__kmpc_for_static_init_4": 2,
+            "__kmpc_for_static_init_8": 4,
+            "__kmpc_fork_call": 14,
+            "__kmpc_reduce_nowait": 1,
+            "__kmpc_single": 6,
+            "llvm.memcpy.p0.p0.i64": 3,
+            "llvm.memmove.p0.p0.i64": 10
+          },
+          "position": 2,
+          "sources": [
+            18064
+          ]
+        },
+        {
+          "call_shape_missing_region_count": {
+            "_ZNSt6chrono3_V212system_clock3nowEv:call_length": 6,
+            "__kmpc_barrier:call_length": 2,
+            "__kmpc_dispatch_deinit:call_length": 2,
+            "__kmpc_dispatch_init_8:call_length": 2,
+            "__kmpc_dispatch_next_8:call_length": 2,
+            "__kmpc_end_reduce_nowait:call_length": 1,
+            "__kmpc_end_single:call_length": 1,
+            "__kmpc_for_static_fini:call_length": 5,
+            "__kmpc_for_static_init_4:call_length": 2,
+            "__kmpc_for_static_init_8:call_length": 3,
+            "__kmpc_fork_call:call_length": 8,
+            "__kmpc_reduce_nowait:call_length": 1,
+            "__kmpc_single:call_length": 1
+          },
+          "diagnostic_unknown_object_requests_region_sum": 18056066,
+          "exact_length_bins": {
+            "_Znam": {
+              "227416": 1,
+              "262144": 4,
+              "524288": 1,
+              "65536": 1
+            },
+            "_Znwm": {
+              "16": 1,
+              "32": 1,
+              "64": 1,
+              "8": 1
+            },
+            "llvm.memcpy.p0.p0.i64": {
+              "8": 3
+            },
+            "llvm.memmove.p0.p0.i64": {
+              "16": 1,
+              "18760": 1,
+              "27576": 1,
+              "32": 1,
+              "40": 1,
+              "48": 1,
+              "65536": 2,
+              "8": 1,
+              "9252": 1
+            }
+          },
+          "free_lifetime_size_bins": {
+            "_ZdaPv": {
+              "227416": 1,
+              "262144": 3,
+              "524288": 1,
+              "65536": 1
+            },
+            "_ZdlPv": {
+              "16": 1,
+              "32": 1,
+              "64": 1,
+              "8": 1
+            }
+          },
+          "memory_missing_region_count": {
+            "object_identity_or_extent": 27
+          },
+          "opaque_call_executions": {
+            "_ZNSt6chrono3_V212system_clock3nowEv": 6,
+            "_ZdaPv": 6,
+            "_ZdlPv": 4,
+            "_Znam": 7,
+            "_Znwm": 4,
+            "__kmpc_barrier": 12,
+            "__kmpc_dispatch_deinit": 12,
+            "__kmpc_dispatch_init_8": 12,
+            "__kmpc_dispatch_next_8": 24,
+            "__kmpc_end_reduce_nowait": 1,
+            "__kmpc_end_single": 6,
+            "__kmpc_for_static_fini": 6,
+            "__kmpc_for_static_init_4": 2,
+            "__kmpc_for_static_init_8": 4,
+            "__kmpc_fork_call": 14,
+            "__kmpc_reduce_nowait": 1,
+            "__kmpc_single": 6,
+            "llvm.memcpy.p0.p0.i64": 3,
+            "llvm.memmove.p0.p0.i64": 10
+          },
+          "position": 3,
+          "sources": [
+            30164
+          ]
+        },
+        {
+          "call_shape_missing_region_count": {
+            "_ZNSt6chrono3_V212system_clock3nowEv:call_length": 6,
+            "__kmpc_barrier:call_length": 2,
+            "__kmpc_dispatch_deinit:call_length": 2,
+            "__kmpc_dispatch_init_8:call_length": 2,
+            "__kmpc_dispatch_next_8:call_length": 2,
+            "__kmpc_end_reduce_nowait:call_length": 1,
+            "__kmpc_end_single:call_length": 1,
+            "__kmpc_for_static_fini:call_length": 5,
+            "__kmpc_for_static_init_4:call_length": 2,
+            "__kmpc_for_static_init_8:call_length": 3,
+            "__kmpc_fork_call:call_length": 8,
+            "__kmpc_reduce_nowait:call_length": 1,
+            "__kmpc_single:call_length": 1
+          },
+          "diagnostic_unknown_object_requests_region_sum": 16410382,
+          "exact_length_bins": {
+            "_Znam": {
+              "227416": 1,
+              "262144": 4,
+              "524288": 1,
+              "65536": 1
+            },
+            "_Znwm": {
+              "16": 1,
+              "32": 1,
+              "64": 1,
+              "8": 1
+            },
+            "llvm.memcpy.p0.p0.i64": {
+              "8": 3
+            },
+            "llvm.memmove.p0.p0.i64": {
+              "16": 1,
+              "32": 3,
+              "3548": 1,
+              "4472": 1,
+              "47592": 1,
+              "65536": 2,
+              "8": 1
+            }
+          },
+          "free_lifetime_size_bins": {
+            "_ZdaPv": {
+              "227416": 1,
+              "262144": 3,
+              "524288": 1,
+              "65536": 1
+            },
+            "_ZdlPv": {
+              "16": 1,
+              "32": 1,
+              "64": 1,
+              "8": 1
+            }
+          },
+          "memory_missing_region_count": {
+            "object_identity_or_extent": 27
+          },
+          "opaque_call_executions": {
+            "_ZNSt6chrono3_V212system_clock3nowEv": 6,
+            "_ZdaPv": 6,
+            "_ZdlPv": 4,
+            "_Znam": 7,
+            "_Znwm": 4,
+            "__kmpc_barrier": 12,
+            "__kmpc_dispatch_deinit": 12,
+            "__kmpc_dispatch_init_8": 12,
+            "__kmpc_dispatch_next_8": 24,
+            "__kmpc_end_reduce_nowait": 1,
+            "__kmpc_end_single": 6,
+            "__kmpc_for_static_fini": 6,
+            "__kmpc_for_static_init_4": 2,
+            "__kmpc_for_static_init_8": 4,
+            "__kmpc_fork_call": 14,
+            "__kmpc_reduce_nowait": 1,
+            "__kmpc_single": 6,
+            "llvm.memcpy.p0.p0.i64": 3,
+            "llvm.memmove.p0.p0.i64": 10
+          },
+          "position": 4,
+          "sources": [
+            1014
+          ]
+        }
+      ],
+      "verification": "Exact source/input/whole-call/runtime payload and available counted execution artifacts verified."
+    }
+  ],
+  "format": "swdb.lanl-native-t1-count-inventory.v1",
+  "identity_sha256": "06c1c13c57fd03ca560e6e176b79965a120f361d8ccea73b9f03b059d0a179ba",
+  "notes": [
+    "Diagnostic sums of per-region unknown-object requests are not whole-call footprint unions or physical residency observations.",
+    "All raw logs, IR, binaries, address-count streams and instrumented driver times remain remote."
+  ],
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-t1-counts-20261006-a1",
+  "scope": "Counts only from five original advancing source calls; no uninstrumented application timing or numerical CPU error band. Instrumented driver output is not admitted performance evidence.",
+  "socket_lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "none",
+    "command": [
+      "timeout",
+      "2400s",
+      "bash",
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-t1-counts-20261006-a1/run.sh"
+    ],
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "ended_utc": "2026-10-06T23:05:15Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "swdb-lanl-cpu-t1-counts-20261006-a1",
+    "lease_generation": 477,
+    "lease_name": "mbit10-evaluation-node0",
+    "load1_at_start": 1.06,
+    "load1_max": 32,
+    "node": 0,
+    "numa_memory_policy": "bind:0",
+    "numactl": "--cpunodebind=0 --membind=0",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-06T22:58:12Z"
+  },
+  "source_commit": "eb1b2419f03c09d4ccbd97286fa7d1109f3f495b",
+  "source_worktree": "/data1/yanruj/ArchEvolve-lanl-cpu-t1-20261006",
+  "uninstrumented_application_timings_collected": false,
+  "validation": {
+    "exit_code": 0,
+    "records_valid": 587
+  }
+}

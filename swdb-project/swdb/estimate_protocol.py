@@ -46,6 +46,9 @@ def freeze(args, request, store):
     require_team_safe(store, settings, target, command="freeze-protocol")
     settings['target_description'] = {'id': target['id'], 'sha256': artifacts.digest(target), 'snapshot': target}
     settings['dependency_identities'] = _dependency_identities(store, target)
+    if 'cpu_error_band' in settings:
+        from swdb.cpu_error_band import freeze_pin
+        freeze_pin(settings, store)
     validate_settings(settings, store)
     inputs = {rid: artifacts.digest(_input(store, rid)) for rid in settings['inputs']}
     sources = {}
@@ -85,6 +88,9 @@ def validate_settings(settings, store):
              and pin['id'] == snapshot.get('id') and re.fullmatch(r'[0-9a-f]{64}', str(pin['sha256']))
              and pin['sha256'] == artifacts.digest(snapshot), 'frozen target-description snapshot/hash differs')
     _require(snapshot['threads'] == settings['threads'], 'estimated protocol and target thread counts differ')
+    if 'cpu_error_band' in settings:
+        from swdb.cpu_error_band import validate_pin
+        validate_pin(settings, store)
     dependencies = settings.get('dependency_identities')
     _require(isinstance(dependencies, dict) and all(isinstance(rid, str)
              and re.fullmatch(r'[0-9a-f]{64}', str(digest)) for rid, digest in dependencies.items()),

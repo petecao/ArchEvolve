@@ -706,16 +706,28 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
         template = Path(driver_template).read_text()
         wrapper.write_text(template.replace("#include SWDB_SOURCE_INCLUDE", "#include " + json.dumps(str(source))))
         binary = build_folder / plugin.native_binary
-        command = [compiler, *flags, *(f"-I{p}" for p in includes), str(wrapper), "-o", str(binary)]
+        from swdb.analytic_cpu_binding import build_extensions
+        selected_toolchain, selected_libraries = build_extensions(request)
+        if request.get('protocol') and (selected_toolchain or selected_libraries):
+            selected=store.get(request['protocol'],'protocol')['settings'].get('build',{})
+            if selected.get('toolchain_flags')!=selected_toolchain or selected.get('run_library_paths')!=selected_libraries:
+                raise Failure('native toolchain/runtime selection differs from frozen native protocol')
+        for name in ('LD_LIBRARY_PATH','DYLD_LIBRARY_PATH'):
+            if selected_libraries:env[name]=os.pathsep.join(selected_libraries+([env[name]] if env.get(name) else []))
+        native_library_flags=[flag for directory in selected_libraries for flag in ('-L'+directory,'-Wl,-rpath,'+directory)]
+        command = [compiler, *flags, *(f"-I{p}" for p in includes), str(wrapper), "-o", str(binary), *selected_toolchain, *native_library_flags]
         data["build"] = {"directory": str(build_folder), "compiler": compiler, "flags": flags, "command": command,
-                         "wrapper_sha256": artifacts.file_hash(wrapper), "template_sha256": artifacts.file_hash(driver_template)}
+                         "wrapper_sha256": artifacts.file_hash(wrapper), "template_sha256": artifacts.file_hash(driver_template),
+                         "toolchain_flags":selected_toolchain,"run_library_paths":selected_libraries}
         if reuse is None:
             version_log = session.execute("compiler_identity", [compiler, "--version"], min(30, budget["build_seconds"]))
             data["build"]["compiler_version"] = version_log.read_text(errors="replace").splitlines()[:2]
             session.execute("build", command, budget["build_seconds"])
         else:
             if (reuse["candidate"] != candidate["id"] or reuse["build"]["compiler"] != compiler
-                    or reuse["build"]["flags"] != flags or reuse["build"].get("native_runtime") != actual_runtime):
+                    or reuse["build"]["flags"] != flags or reuse["build"].get("native_runtime") != actual_runtime
+                    or reuse["build"].get("toolchain_flags",[])!=selected_toolchain
+                    or reuse["build"].get("run_library_paths",[])!=selected_libraries):
                 raise Failure("A/A executable reuse requires identical candidate and build settings")
             session.begin("build_reuse", evaluation=reuse["id"])
             data["build"] = copy.deepcopy(reuse["build"])
@@ -742,6 +754,15 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
             data["build"]["verifier"] = {**identity, "compiler": verifier_command[0], "command": verifier_command,
                                          "binary": str(verifier_binary),
                                          "binary_sha256": artifacts.file_hash(verifier_binary)}
+        session.begin('analytic_pairing')
+        from swdb import analytic_cpu_binding, cpu_pairing
+        if not v2:
+            prospective_context=analytic_cpu_binding.scope(store,request,candidate,plugin,compiler,flags,includes,source,workload,env)
+            data['context']['analytic_evaluator_scope']=prospective_context
+            data['paired_estimate']=cpu_pairing.prepare(store,data,request,prospective_context,binary)
+        else:
+            data['paired_estimate']=cpu_pairing.paired_estimate(store,data,request)
+        session.finish()
         session.save()
         slot = yield data
         for repetition in range(repetitions):
@@ -852,4 +873,6 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
         if session:
             session.kill()
             session.restore_handlers()
+    from swdb.cpu_pairing import paired_estimate
+    data["paired_estimate"] = paired_estimate(store, data, request)
     return workflow.persist(args.records, data, getattr(args, "db", None))

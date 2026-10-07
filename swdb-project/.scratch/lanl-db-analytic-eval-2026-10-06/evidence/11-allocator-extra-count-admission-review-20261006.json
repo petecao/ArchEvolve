@@ -1,0 +1,39 @@
+{
+  "format": "swdb.allocator-extra-count-admission-local-review.v1",
+  "wrapper_identity_sha256": "c191123377c71ca6dd6eef9ac51371c1972a8db58a33b9d1015fc980330b7522",
+  "count_identity_sha256": "c9254337a7259ab38d3e350f74716899daead7ec50f44d2333d0e89f2161bcbe",
+  "count_file_sha256": "5ba31c489f6ee1a51476985cd768789c1c5b74ad1a8ae4016eb57f9e7cb5a574",
+  "plan_identity_sha256": "5c525239b33340949bf5e91e276d3d1ba465acabc1f2c7992474a09f3bfbc801",
+  "source_commit": "1703c98717ff303fdaa83b8044ac9b4060fedb78",
+  "count_points": 32,
+  "observed_count_size_endpoints": [
+    16384,
+    1048568
+  ],
+  "planned_independent_elapsed_size_bins": [
+    16384,
+    466112,
+    524284,
+    1048568
+  ],
+  "exact_abi_signatures": [
+    "_Znam",
+    "_ZdaPv",
+    "_Znwm",
+    "_ZdlPv"
+  ],
+  "events_per_invoked_profile": [
+    3,
+    5
+  ],
+  "driver_selected_events": 0,
+  "exact_allocation_or_free_lifetime_bins_verified": true,
+  "frozen_native_source_and_observer_sha256_verified": true,
+  "control_runtime_source_identities_verified": true,
+  "count_only_classification_preserved": true,
+  "native_timing_parameters_admitted": 0,
+  "elapsed_calibration_pending": true,
+  "no_intermediate_bin_count_measurement_claim": true,
+  "boundary": "Source-normalized endpoint/event proof for the exact shared dynamic-size construction. No elapsed calibration, allocation-state transfer, residency, physical latency or application accuracy claim.",
+  "identity_sha256": "11d8c0f1992e058000910515cb59303ca90432123edc3ee1a1e858f13d01fe97"
+}

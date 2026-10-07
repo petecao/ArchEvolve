@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-07 ET",
+  "scope": "Public canonical protected-driver count, freeze/estimate/evaluate/validate fixture; hypothetical costs only, no native application accuracy or transferable band.",
+  "protected_gate": {
+    "passed": 1,
+    "seconds": 491.36,
+    "log_sha256": "ab14464c1654f64fc9388c71a8f46a7613643fe1a42280223dd7a4068e7911a8",
+    "checks": [
+      "positive persisted semantic kernel prediction carried exactly before native invocation",
+      "timing/correctness remain authoritative",
+      "elapsed stopwatch boundary and error band remain null",
+      "archived scope digest, estimate digest, kernel prediction and actual wrapper tampering rejected",
+      "different source slot excluded",
+      "withheld costs remain paired/null",
+      "ambiguous automatic persisted selection unavailable"
+    ]
+  },
+  "runtime_boundary": {
+    "passed": 3,
+    "seconds": 0.04,
+    "red_log_sha256": "c072a9b99aac50c933438da9ddac4331e5f213af7f686a109fbe74ee54e9b90a",
+    "query_red_log_sha256": "8eb04ad99d76fcb4e6b28504db19b5c6b6dc4142bcfecf30f7d51095aec4059b",
+    "green_log_sha256": "86288ee89a493b657a4f02c2118272c4f6a9a7afa049f10741e60f3a564db934",
+    "checks": [
+      "unsupported host retains counted projection/resolved null/missing",
+      "bounded runtime query failure remains unknown",
+      "contract fixture cannot claim native accuracy"
+    ]
+  },
+  "archived_scope_red": {
+    "accepted_before_fix": true,
+    "log_sha256": "133201836ace52abbb5493bdc2fede4859d6004e796c1de144fbfd301491fad1"
+  },
+  "archived_scope_green": {
+    "rejected_after_fix": true,
+    "log_sha256": "231d5d2203b80a6bef0199b727907bb4c297d26f83e9a0097fe3d5027c072c74"
+  },
+  "source_files": {
+    "swdb/analytic_cpu_binding.py": "5b864ea47a76551229ee6a638b3169a9a436ca37e90679b58f222e4a82f92ab3",
+    "swdb/cpu_pairing.py": "1cafc5c74d822cb4a569949a37960a78a45b81529988b592695b3f313a62d696",
+    "swdb/analytic.py": "3061fe9a8b3f22872cfc3081595e4449a8ed0975b9da5a299673250503c50ac4",
+    "swdb/analytic_binding.py": "94716649980d9d208744d17de0f1ce851eb2f6ac17c862e8cea450ddd901f7d0",
+    "swdb/bfs_native.py": "fa5b121aea9ad80aa90f35d470d5ad475b76931f39c30d1dbf4087c3cf47476d",
+    "swdb/rules.py": "8785a1d6ffdb528c4a09e87b284cbdbb2039589117b063f8ea56a8ca43a82f49",
+    "schemas/evaluation.schema.json": "f59ac0cff97a7c8d7f88553c724846a3355d0017267942b00ea9a37a3cad064f"
+  },
+  "application_timings_opened": false,
+  "identity_sha256": "f041e220723b6aec2c9b4d64b680ae31fabb98f00a68546923686eefbea9bae4"
+}

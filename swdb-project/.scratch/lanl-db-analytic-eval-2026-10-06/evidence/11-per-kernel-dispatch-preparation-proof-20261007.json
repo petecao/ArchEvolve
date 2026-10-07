@@ -1,0 +1,224 @@
+{
+  "date": "2026-10-07 ET",
+  "scope": "Prior local syntax/AST/mocked external-helper checks; no remote dispatch or application outcomes.",
+  "helper_sha256": {
+    "lanl-dispatch-cpu-model-validation-a1.py": "acdccfd81a0675beb4044a921a6fdb7f4d39ded49f2acbb1c400f55cb211c7b6",
+    "lanl-export-cpu-model-validation-a1.py": "dbdebe03437cd58fed8bdcf224344df79b106870c4d244b6a32a312a978b29ce",
+    "lanl-dispatch-cpu-band-report-a1.py": "f83555b2d8ee1199a8d3582f335de8227f063642d1488f974689470f0a46e895",
+    "lanl-export-cpu-band-report-a1.py": "544511da28df91f8a2404deb4f00f9623cd824eeb65f75aa0166a38a6422ef4c"
+  },
+  "model_mock_proof": {
+    "format": "swdb.cpu-dispatch-helper-mocked-proof.v1",
+    "scope": "Local syntax/AST and mocked command/ID/argv/lineage checks only; no remote dispatch, compiler invocation or application execution.",
+    "external_helper_sha256": "acdccfd81a0675beb4044a921a6fdb7f4d39ded49f2acbb1c400f55cb211c7b6",
+    "runner_syntax_phases": [
+      "model",
+      "development",
+      "holdout"
+    ],
+    "model_freeze_commands_mocked": 2,
+    "model_estimate_commands_mocked": 4,
+    "per_kernel_exact_input_argv": true,
+    "captured_content_suffixed_ids": true,
+    "same_target_bundle_calibrations": true,
+    "band_common_identity_guard_passed": true,
+    "later_phases": [
+      {
+        "phase": "development",
+        "native_commands_mocked": 2,
+        "protocol_ids_preserved": true
+      },
+      {
+        "phase": "holdout",
+        "native_commands_mocked": 2,
+        "protocol_ids_preserved": true
+      }
+    ],
+    "changed_prior_model_estimate_refused_before_native_commands": true,
+    "caps_preserved": {
+      "runner_s": 3850,
+      "outer_s": 3950,
+      "native_inner_s": 900,
+      "native_child_cap_s": 950,
+      "public_s": 600
+    },
+    "dispatch_started": false,
+    "identity_sha256": "ae32b8e7cf213ef80d68bb2f1838f7bdb83f2675cbfddfb1137b515e6415bfb4"
+  },
+  "report_mock_proof": {
+    "format": "swdb.cpu-band-report-mocked-proof.v1",
+    "scope": "Local syntax/AST and mocked protocol/report/export admission checks plus bounded Python subprocess SIGTERM cleanup. No remote calls, provider inference, compiler or application execution.",
+    "dispatcher_sha256": "f83555b2d8ee1199a8d3582f335de8227f063642d1488f974689470f0a46e895",
+    "exporter_sha256": "544511da28df91f8a2404deb4f00f9623cd824eeb65f75aa0166a38a6422ef4c",
+    "checks": [
+      {
+        "extra_export_record_refused": true
+      },
+      {
+        "prior_bytes_tamper_refused": true
+      },
+      {
+        "state": "validated",
+        "freeze_commands": 2,
+        "estimate_commands": 2,
+        "source_argv_preserved": true,
+        "costs_unchanged": true
+      },
+      {
+        "extra_export_record_refused": true
+      },
+      {
+        "prior_bytes_tamper_refused": true
+      },
+      {
+        "state": "failed",
+        "freeze_commands": 2,
+        "estimate_commands": 2,
+        "source_argv_preserved": true,
+        "costs_unchanged": true
+      },
+      {
+        "state": "validated",
+        "refusal": true,
+        "commands_before_refusal": 0
+      },
+      {
+        "state": "validated",
+        "refusal": true,
+        "commands_before_refusal": 0
+      },
+      {
+        "state": "validated",
+        "refusal": true,
+        "commands_before_refusal": 0
+      },
+      {
+        "state": "validated",
+        "refusal": true,
+        "commands_before_refusal": 0
+      },
+      {
+        "state": "validated",
+        "refusal": true,
+        "commands_before_refusal": 0
+      },
+      {
+        "state": "validated",
+        "refusal": true,
+        "commands_before_refusal": 0
+      },
+      {
+        "state": "validated",
+        "refusal": true,
+        "commands_before_refusal": 0
+      },
+      {
+        "state": "validated",
+        "refusal": true,
+        "commands_before_refusal": 2
+      },
+      {
+        "state": "validated",
+        "refusal": true,
+        "commands_before_refusal": 2
+      },
+      {
+        "state": "failed",
+        "refusal": true,
+        "commands_before_refusal": 2
+      },
+      {
+        "state": "validated",
+        "refusal": true,
+        "commands_before_refusal": 2
+      },
+      {
+        "sigterm_child_process_group_cleanup": true
+      },
+      {
+        "preflight_case": "ready",
+        "mocked_tmux_calls": 1,
+        "real_external_calls": 0
+      },
+      {
+        "preflight_case": "hostname",
+        "refused_before_mocked_tmux": true
+      },
+      {
+        "preflight_case": "dirty_source",
+        "refused_before_mocked_tmux": true
+      },
+      {
+        "preflight_case": "held_lease",
+        "refused_before_mocked_tmux": true
+      },
+      {
+        "preflight_case": "disk",
+        "refused_before_mocked_tmux": true
+      },
+      {
+        "preflight_case": "wrapper",
+        "refused_before_mocked_tmux": true
+      },
+      {
+        "preflight_case": "prior_exit",
+        "refused_before_mocked_tmux": true
+      },
+      {
+        "preflight_case": "prior_source",
+        "refused_before_mocked_tmux": true
+      },
+      {
+        "preflight_case": "load",
+        "refused_before_mocked_tmux": true
+      },
+      {
+        "preflight_case": "raw_exists",
+        "refused_before_mocked_tmux": true
+      }
+    ],
+    "exports": [
+      {
+        "state": "validated",
+        "new_records": 4,
+        "prior_records_preserved": 16
+      },
+      {
+        "state": "failed",
+        "new_records": 4,
+        "prior_records_preserved": 16
+      }
+    ],
+    "controls": {
+      "preflight_guards_mock_tested": true,
+      "live_remote_state_verified": false,
+      "requires_current_wrapper_and_released_owned_leases": true,
+      "requires_other_owned_lane_idle_and_clean_same_source": true,
+      "disk_min_bytes": {
+        "data1": 22548578304,
+        "data": 10737418240
+      },
+      "runner_s": 3300,
+      "outer_s": 3400,
+      "public_stage_s": 600,
+      "validate_s": 700
+    },
+    "dispatch_executed": false,
+    "identity_sha256": "7e608c00a7142e69a9433ca2cb03453e35b4884b54fbe18129bc5d1f389e3b05"
+  },
+  "separate_bands": {
+    "development": {
+      "bfs": "lanl.cpu.bfs.t1.development-band.v1",
+      "bc": "lanl.cpu.bc.t1.development-band.v1"
+    },
+    "heldout": {
+      "bfs": "lanl.cpu.bfs.t1.heldout-band.v1",
+      "bc": "lanl.cpu.bc.t1.heldout-band.v1"
+    }
+  },
+  "rule": "Each kernel uses its own unchanged rounding-aware maximum rule; both development widths known before either holdout; no global pooled accuracy claim.",
+  "cleanup_helper_sha256": "31e1d71bc6e9ef4a5a5f1d5fbff136ceef249935f8f00601edf45277fce249ec",
+  "processes_sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+  "native_application_timings_opened": false,
+  "identity_sha256": "6921231c834dac3b2fcae6cf645338ce9a43b9e331a93903dd543a59eae933f2"
+}
