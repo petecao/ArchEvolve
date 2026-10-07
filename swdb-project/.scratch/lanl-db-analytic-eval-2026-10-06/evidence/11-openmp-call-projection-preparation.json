@@ -1,0 +1,75 @@
+{
+  "format": "swdb.openmp-call-projection-preparation.v1",
+  "updated": "2026-10-06 21:00 ET",
+  "state": "public_static_fixtures_passed; native_projection_pending",
+  "verified_enumeration_origin": "a9dbe11faa1f4a834ec048fe636ace2b27b09563",
+  "count_metadata_commit": "e361e83b64578890003ac001e7d6e344556a1876",
+  "count_metadata_identity_sha256": "d2170d131ce847772d947f6d06041eaab682c417414603a410ca638e6982db88",
+  "sources": {
+    "scripts/openmp_call_projection.py": "cf924b0b9a4c63554f622b407dc94ab127a71830b8ed4c252209b5e149f418d8",
+    "swdb/llvm/OpenMPCallProjection.cpp": "70ddc2fb597aa60a784a3fed50faae6e090e54cde5a8586085ccdfee45311066",
+    "tests/fixtures/analytic/openmp_abi.cpp": "46f09e9993782a0303861d01c03dc9f4801249ae094313731f8f4fa29e2ee272",
+    "tests/test_openmp_call_projection.py": "f200d5bed60368b443cd8519d1022c5e9f939f47d890d9a7b8c3e1f7a9b71cd0"
+  },
+  "public_checks": {
+    "command": "python3 -m pytest -q tests/test_openmp_call_projection.py",
+    "passed": 7,
+    "seconds": 7.1,
+    "llvm_version": "22.1.8",
+    "observed_red_slices": [
+      "missing public command",
+      "conflicting execution receipt IR hash admitted",
+      "externally initialized ident flags admitted",
+      "missing trial inventory became zero",
+      "missing exact compiler hash/wrapper argv receipt"
+    ],
+    "application_execution": false,
+    "raw_ir_exported": false
+  },
+  "cases": [
+    {
+      "kernel": "bfs",
+      "scale": 16,
+      "characterization_id": "bfs.kron-g16.t1.characterization.objects.a1",
+      "record_path": "records/workload_characterizations/bfs.kron-g16.t1.characterization.objects.a1.yaml",
+      "record_file_sha256": "cda2c51423c167249fd760f359ee0ead180bcb2e2d4db2c722c9b724120458ba",
+      "record_identity_sha256": "4379d1ed06e37b58eacc5bee61b568e47c4e9c03ed363f8240df6c1fea16dd2c",
+      "source_ir_sha256": "a2f1abc6e73ff8f3f796cba142dd7bd349f7c0e3697562fc699c585d57df081d",
+      "counted_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-20261006-a1/bfs/counted",
+      "trial_count": 5
+    },
+    {
+      "kernel": "bc",
+      "scale": 16,
+      "characterization_id": "bc.kron-g16.t1.characterization.objects.a1",
+      "record_path": "records/workload_characterizations/bc.kron-g16.t1.characterization.objects.a1.yaml",
+      "record_file_sha256": "d12b5f57c61007219d367942ee554db1d27ee1d8614e2c1279e1164230f534e8",
+      "record_identity_sha256": "2cf2bb052911835c28ad092c3257e835e3fb2c72b12ea6604467247579222081",
+      "source_ir_sha256": "d29c88a35798fc69ad9d166fa98bd47590f2a9d1112f237227fb01a2be92df93",
+      "counted_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-20261006-a1/bc/counted",
+      "trial_count": 5
+    },
+    {
+      "kernel": "bfs",
+      "scale": 17,
+      "characterization_id": "bfs.kron-g17.t1.characterization.objects.a1",
+      "record_path": "records/workload_characterizations/bfs.kron-g17.t1.characterization.objects.a1.yaml",
+      "record_file_sha256": "3acba4d734334e61221ae6dd1856fffc9bbc231616fec805288c1a5d806c1033",
+      "record_identity_sha256": "d7a7be75479635f93e446ff22ceeb3b54c8880008671ebb5963e86c1d2e5d210",
+      "source_ir_sha256": "a2f1abc6e73ff8f3f796cba142dd7bd349f7c0e3697562fc699c585d57df081d",
+      "counted_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-g17-20261006-a1/bfs/counted",
+      "trial_count": 5
+    },
+    {
+      "kernel": "bc",
+      "scale": 17,
+      "characterization_id": "bc.kron-g17.t1.characterization.objects.a1",
+      "record_path": "records/workload_characterizations/bc.kron-g17.t1.characterization.objects.a1.yaml",
+      "record_file_sha256": "e3e5d69e1d6a5310dad6c693112b7eb7d86dae9d533ee85ef86450d09831daf4",
+      "record_identity_sha256": "b2a1d317a5a55cea0db19200ad89fe2ec6e1b68169d8858e849f17a4a5410e7a",
+      "source_ir_sha256": "d29c88a35798fc69ad9d166fa98bd47590f2a9d1112f237227fb01a2be92df93",
+      "counted_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-g17-20261006-a1/bc/counted",
+      "trial_count": 5
+    }
+  ]
+}
