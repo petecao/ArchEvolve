@@ -1,7 +1,7 @@
 {
   "format": "swdb.prospective-agreement-input-plan.v1",
-  "updated": "2026-10-06 20:37 ET",
-  "state": "preparation_not_frozen_or_executed",
+  "updated": "2026-10-06 21:04 ET",
+  "state": "a2_preparation_not_frozen_or_dispatched",
   "repository_commit": "d94dd75d0a13e9d552a2c28da67a7bacf74066c8",
   "dx_source_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
   "generator_directory_sha256": "9b15a2ad58d672d534a14c808320a5d666af62cbe017f14703d955bea2279cc1",
@@ -39,6 +39,9 @@
     "public_register_cli": "help-only passed",
     "graph_generation": false,
     "remote_execution": false,
-    "source_hashes": "directory and all eight source files matched"
-  }
+    "source_hashes": "directory and all eight source files matched",
+    "external_helper_import": "passed from a real external script with exact recipe PYTHONPATH export; empty and inherited paths",
+    "external_helper_import_evidence": "17-external-helper-import-smoke.json"
+  },
+  "runbook_revision_parent": "b80b2b0407afb7caeeec43fa3ebc00bd9895defb"
 }

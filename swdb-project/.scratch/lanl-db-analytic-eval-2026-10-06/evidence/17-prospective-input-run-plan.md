@@ -1,6 +1,6 @@
 # Prospective ticket 17 inputs and runs
 
-Updated: 2026-10-06 20:37 ET. Preparation only: no ticket claim, graph generation, remote dispatch,
+Updated: 2026-10-06 21:04 ET. Preparation only: no ticket claim, graph generation, remote dispatch,
 report or statistical/population freeze. Parent and the ticket 17 implementer freeze the
 actual population before any timed pair. No historical application timings or paper
 speedups are inputs to this plan.
@@ -27,7 +27,11 @@ The seed comes from `util.h`; block reseeding and vertex permutation remain unch
 Do not use the existing `bfs_generate_workload.py` CLI for this matrix: it hardcodes
 edge factor 16. Its public `widen_sg` function is reusable and preserves the neighbors.
 
-The following shell recipe is unexecuted preparation. Run it from `swdb-project/` only
+Parent reported that a1 generated the first graph, then failed before registration when
+the external `prepare-request.py` could not import `swdb`. The failed a1 raw folder is
+preserved. This a2 recipe uses fresh paths/producer IDs and exports the SWDB cwd on
+`PYTHONPATH` for external Python helpers while preserving any existing entries.
+The following a2 shell recipe is unexecuted preparation. Run it from `swdb-project/` only
 when parent schedules the lane. Use fresh external directories; all generated data stays
 on mbit10. The limiter caps each child at 48 GiB and kills its process group on timeout or catchable interruption. Parent still checks for
 remaining descendants after an outer forced kill; SIGKILL cannot run cleanup handlers.
@@ -38,8 +42,9 @@ compact metadata exports only source, arguments, hashes and graph structure.
 ```sh
 set -euo pipefail
 export LANL_SWDB="$(pwd -P)"
-export LANL_RAW=/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a1
-export LANL_BUILD=/data1/yanruj/EvolveSWDB_builds/lanl17-prospective-inputs-20261006-a1
+export PYTHONPATH="$LANL_SWDB${PYTHONPATH:+:$PYTHONPATH}"
+export LANL_RAW=/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2
+export LANL_BUILD=/data1/yanruj/EvolveSWDB_builds/lanl17-prospective-inputs-20261006-a2
 export LANL_RECORDS="$LANL_RAW/records"
 test ! -e "$LANL_RAW"
 test ! -e "$LANL_BUILD"
@@ -95,7 +100,7 @@ for LANL_FAMILY in kronecker uniform_random; do
   export LANL_GEN_FLAG
   for LANL_FACTOR in 14 15 17 18; do
     export LANL_FACTOR
-    export LANL_CASE_ID="lanl17-prospective-20261006-${LANL_FAMILY}.g18.k${LANL_FACTOR}"
+    export LANL_CASE_ID="lanl17-prospective-20261006-a2-${LANL_FAMILY}.g18.k${LANL_FACTOR}"
     export LANL_CASE="$LANL_RAW/$LANL_CASE_ID"
     export LANL_CASE_BUILD="$LANL_BUILD/$LANL_CASE_ID"
     test ! -e "$LANL_CASE"
@@ -205,4 +210,8 @@ Source pointers: `scripts/bfs_generate_workload.py` (converter and widening),
 `swdb/read_only_checks.py::companion_acceptance`, `swdb/campaign.py::select`,
 `swdb/extensa/search.py::record_iteration`, and spec D16/D26/D30. The public CLI syntax
 passed help-only checking. `bash -n` and all three embedded Python blocks passed
-syntax checks without execution; actual graph/parser/freshness acceptance remains pending.
+syntax checks without graph execution. A real external-script import reproduced the
+a1 failure with `PYTHONPATH` absent and passed with the exact a2 export, both with no
+existing path and with an inherited path preserved. See
+[the import smoke](17-external-helper-import-smoke.json). Actual a2
+graph/parser/freshness acceptance remains pending.
