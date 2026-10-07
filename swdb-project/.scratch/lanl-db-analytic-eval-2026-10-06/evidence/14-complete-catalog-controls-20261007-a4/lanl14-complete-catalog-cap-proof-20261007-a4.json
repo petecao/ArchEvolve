@@ -1,0 +1,267 @@
+{
+  "format": "swdb.lanl14-complete-catalog-cap-only-proof.v1",
+  "updated": "2026-10-07 ET",
+  "scope": "Distinct unexecuted administrative ceilings for complete-catalogue custody. No narrowed catalogue, science/source C/F6/input/count/ROI/thread/target/allowlist/parameter/command/cleanup/lease/provider/native change. Explicit selected administrative reversal restores all old bytes, raw IDs and paths. No broad literal replacement.",
+  "preparation_integration": "cbe99ee",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "generic_estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "helpers": [
+    {
+      "original": "/private/tmp/lanl14-pr-final-local-runner-20261007-a3.py",
+      "original_sha256": "0f4bf77738f3df5e39c28308b94dac6fac0f894955f1c7348c1a5f32c42227df",
+      "revision": "/private/tmp/lanl14-pr-final-local-runner-catalog-caps-20261007-a4.py",
+      "revision_sha256": "d0209039a6f39f6824229918db3c927d47f68c468f90382aa58deecbd0be7ed7",
+      "explicit_administrative_reversal_byte_identical": true,
+      "source_path_independent_ast_equality": true,
+      "approved_edits": [
+        {
+          "line": 125,
+          "from": 1800,
+          "to": 3600,
+          "reason": "local freeze metadata deadline",
+          "start": 10596,
+          "end": 10600,
+          "old": "1800",
+          "new": "3600"
+        },
+        {
+          "line": 127,
+          "from": 1400,
+          "to": 2400,
+          "reason": "local estimate metadata deadline",
+          "start": 10830,
+          "end": 10834,
+          "old": "1400",
+          "new": "2400"
+        },
+        {
+          "line": 128,
+          "from": 1000,
+          "to": 2400,
+          "reason": "local checker metadata deadline",
+          "start": 11129,
+          "end": 11133,
+          "old": "1000",
+          "new": "2400"
+        }
+      ]
+    },
+    {
+      "original": "/private/tmp/lanl14_final_reports_freeze_caps_a3.py",
+      "original_sha256": "a877644dd08473d8eb91d8ea7fd6eb66adbf2ed82775699bc7026208ff7b9dd4",
+      "revision": "/private/tmp/lanl14_final_reports_catalog_caps_a4.py",
+      "revision_sha256": "bc00fa90d0ba8ebf351f34b13b372e9c55d3f853d53326b75126f525bf9d22de",
+      "explicit_administrative_reversal_byte_identical": true,
+      "source_path_independent_ast_equality": true,
+      "approved_edits": [
+        {
+          "line": 147,
+          "from": 1800,
+          "to": 6000,
+          "reason": "manifest freeze_s",
+          "start": 13399,
+          "end": 13403,
+          "old": "1800",
+          "new": "6000"
+        },
+        {
+          "line": 147,
+          "from": 1400,
+          "to": 4000,
+          "reason": "manifest estimate_s",
+          "start": 13417,
+          "end": 13421,
+          "old": "1400",
+          "new": "4000"
+        },
+        {
+          "line": 147,
+          "from": 1400,
+          "to": 3600,
+          "reason": "manifest validate_s",
+          "start": 13435,
+          "end": 13439,
+          "old": "1400",
+          "new": "3600"
+        },
+        {
+          "line": 147,
+          "from": 1000,
+          "to": 3600,
+          "reason": "manifest report_s",
+          "start": 13451,
+          "end": 13455,
+          "old": "1000",
+          "new": "3600"
+        },
+        {
+          "line": 147,
+          "from": 36600,
+          "to": 108000,
+          "reason": "manifest outer_s",
+          "start": 13466,
+          "end": 13471,
+          "old": "36600",
+          "new": "108000"
+        },
+        {
+          "line": 159,
+          "from": "36600s",
+          "to": "108000s",
+          "reason": "existing wrapper outer administrative deadline",
+          "start": 14987,
+          "end": 14995,
+          "old": "'36600s'",
+          "new": "'108000s'"
+        },
+        {
+          "line": 185,
+          "from": 1400,
+          "to": 3600,
+          "reason": "public validation metadata deadline",
+          "start": 17424,
+          "end": 17428,
+          "old": "1400",
+          "new": "3600"
+        },
+        {
+          "line": 194,
+          "from": 1800,
+          "to": 6000,
+          "reason": "public protocol freeze metadata deadline",
+          "start": 18450,
+          "end": 18454,
+          "old": "1800",
+          "new": "6000"
+        },
+        {
+          "line": 197,
+          "from": 1400,
+          "to": 4000,
+          "reason": "public estimate metadata deadline",
+          "start": 18927,
+          "end": 18931,
+          "old": "1400",
+          "new": "4000"
+        },
+        {
+          "line": 208,
+          "from": 1000,
+          "to": 3600,
+          "reason": "public all-nine report metadata deadline",
+          "start": 20563,
+          "end": 20567,
+          "old": "1000",
+          "new": "3600"
+        },
+        {
+          "line": 210,
+          "from": 1400,
+          "to": 3600,
+          "reason": "public validation metadata deadline",
+          "start": 20935,
+          "end": 20939,
+          "old": "1400",
+          "new": "3600"
+        }
+      ]
+    },
+    {
+      "original": "/private/tmp/lanl14-pr-final-local-envelope-20261007-a3.py",
+      "original_sha256": "921ca0d1c37514a69e009cf09df6abfcb3e3f0e96081e15de03ee5456e999ac9",
+      "revision": "/private/tmp/lanl14-pr-final-local-envelope-catalog-caps-20261007-a4.py",
+      "revision_sha256": "99ed6a5922c6e65e4be0cd3dcc1cb0fa5f37469fe85a3d0751af5a59aa3c69d2",
+      "explicit_administrative_reversal_byte_identical": true,
+      "source_path_independent_ast_equality": true,
+      "approved_edits": [
+        {
+          "line": 2,
+          "from": "4900-second local metadata envelope for the explicitly pinned cap-only runner.\nNo extra subprocesses, native/compiler/provider jobs or remote actions.\n",
+          "to": "10000-second local metadata envelope for the explicitly pinned cap-only runner.\nNo extra subprocesses, native/compiler/provider jobs or remote actions.\n",
+          "reason": "envelope bound documentation",
+          "start": 23,
+          "end": 180,
+          "old": "\"\"\"4900-second local metadata envelope for the explicitly pinned cap-only runner.\nNo extra subprocesses, native/compiler/provider jobs or remote actions.\n\"\"\"",
+          "new": "'10000-second local metadata envelope for the explicitly pinned cap-only runner.\\nNo extra subprocesses, native/compiler/provider jobs or remote actions.\\n'"
+        },
+        {
+          "line": 11,
+          "from": "/private/tmp/lanl14-pr-final-local-runner-20261007-a3.py",
+          "to": "/private/tmp/lanl14-pr-final-local-runner-catalog-caps-20261007-a4.py",
+          "reason": "distinct revised helper path",
+          "start": 281,
+          "end": 339,
+          "old": "'/private/tmp/lanl14-pr-final-local-runner-20261007-a3.py'",
+          "new": "'/private/tmp/lanl14-pr-final-local-runner-catalog-caps-20261007-a4.py'"
+        },
+        {
+          "line": 12,
+          "from": "0f4bf77738f3df5e39c28308b94dac6fac0f894955f1c7348c1a5f32c42227df",
+          "to": "d0209039a6f39f6824229918db3c927d47f68c468f90382aa58deecbd0be7ed7",
+          "reason": "exact revised helper hash",
+          "start": 352,
+          "end": 418,
+          "old": "'0f4bf77738f3df5e39c28308b94dac6fac0f894955f1c7348c1a5f32c42227df'",
+          "new": "'d0209039a6f39f6824229918db3c927d47f68c468f90382aa58deecbd0be7ed7'"
+        },
+        {
+          "line": 23,
+          "from": 4900,
+          "to": 10000,
+          "reason": "local outer administrative deadline",
+          "start": 1073,
+          "end": 1077,
+          "old": "4900",
+          "new": "10000"
+        }
+      ]
+    },
+    {
+      "original": "/private/tmp/lanl14_final_export_caps_a2.py",
+      "original_sha256": "d8e97dc6a1153c30c3c6a0e329cc091ded63d3627f8dd905de7470166b60c833",
+      "revision": "/private/tmp/lanl14_final_export_catalog_caps_a4.py",
+      "revision_sha256": "bf5add9eb35daa5402a0359f6ace5c542a289f9b60b14cbd00aa763097a9645d",
+      "explicit_administrative_reversal_byte_identical": true,
+      "source_path_independent_ast_equality": true,
+      "approved_edits": [
+        {
+          "line": 68,
+          "from": 1400,
+          "to": 3600,
+          "reason": "export public validation metadata deadline",
+          "start": 6293,
+          "end": 6297,
+          "old": "1400",
+          "new": "3600"
+        }
+      ]
+    }
+  ],
+  "local_caps": {
+    "freeze_s": 3600,
+    "estimate_s": 2400,
+    "checker_s": 2400,
+    "outer_s": 10000,
+    "stage_sum_s": 8400,
+    "reserve_s": 1600
+  },
+  "nine_caps": {
+    "freeze_s": 6000,
+    "estimate_s": 4000,
+    "validate_s": 3600,
+    "report_s": 3600,
+    "outer_s": 108000,
+    "stage_sum_s": 100800,
+    "reserve_s": 7200,
+    "export_validation_s": 3600
+  },
+  "caps_are_predicted_runtime": false,
+  "future_duration_bound_proven": false,
+  "complete_catalogue_retained": true,
+  "old_a3_controls_unchanged": true,
+  "actual_execution": false,
+  "native_execution": 0,
+  "provider_calls": 0,
+  "remote_actions": 0,
+  "identity_sha256": "ec99e3a4b35b90b3b1e018319f69c74113eefa3d2f8d39d80564c031cdf9c223"
+}

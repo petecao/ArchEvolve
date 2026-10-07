@@ -1,0 +1,23 @@
+{
+  "format": "swdb.lanl14-local-metadata-envelope-cleanup-proof.v1",
+  "updated": "2026-10-07 ET",
+  "scope": "Bounded local sleep-process fixture; only the fixture alarm shortened to0.25s. Actual envelope observes10000s and unwinds existing finally; no application/compiler/provider/remote execution or actual PR acceptance.",
+  "envelope_sha256": "99ed6a5922c6e65e4be0cd3dcc1cb0fa5f37469fe85a3d0751af5a59aa3c69d2",
+  "runner_sha256": "d0209039a6f39f6824229918db3c927d47f68c468f90382aa58deecbd0be7ed7",
+  "global_bound_s": 10000,
+  "alarm_unwinds_child_finally": true,
+  "owned_group_empty": true,
+  "separate_sibling_survived": true,
+  "source_commit": "cbe99ee16ce7f353b1c23cbb7aa3ac214056a185",
+  "source_clean": true,
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "module_count": 185,
+  "preserved_request_and_checker_file_pins": {
+    "14-pr-final-freeze-request-20261007-a1.json": "2ee4a07880bb1bca74b5e3611d0a7147befc9ebabb340a832935c4c32443fe90",
+    "14-check-pr-final-replay-20261007.py": "86df23903c131913cd952d3648cfed58e43824982308082bb235579d4b7da3bf"
+  },
+  "application_execution": 0,
+  "provider_calls": 0,
+  "remote_actions": 0,
+  "identity_sha256": "c235f442a7538dc6848da8652042da71ba02c1432dfe0dd818a1ed937fc82da8"
+}
