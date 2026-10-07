@@ -1,0 +1,628 @@
+{
+  "format": "swdb.cpu-openmp-elapsed-local-admission.v1",
+  "updated": "2026-10-06 ET",
+  "record": {
+    "id": "mbit10.cpu.lanl20261006.service.openmp.a1",
+    "sha256": "ced0d3ee5501e26532eca3682e1d041642cf4f211a114cd4409dd9839c79c067",
+    "identity_sha256": "80b7a554e97b1d61f25a28066d9fcbc12e7bd7e88dde7d6bab1200b8b15f67e7",
+    "file_sha256": "5a42507a23ef57642a4864f06f79dbafcf8def6fafa0a5aebe56fd5312ff1a32"
+  },
+  "wrapper_identity_sha256": "b64a9858a335dfc237f8a31dd315249d9c16781a75a4cee345baeff0cddee5af",
+  "receipt_identity_sha256": "f72400c4649f18866b809d085e5c49ded07b5713f5faf6199e9891512ed0381d",
+  "native_admission_replayed": true,
+  "source_files_match_frozen_collector": true,
+  "scope_compatibility": [
+    {
+      "id": "bfs.kron-g16.t1.characterization.objects.a1",
+      "sha256": "535d43719d2e9269dc557e900886c625b80c5aa686e7682861a4f6d045e143bc",
+      "identity_sha256": "4379d1ed06e37b58eacc5bee61b568e47c4e9c03ed363f8240df6c1fea16dd2c",
+      "missing": []
+    },
+    {
+      "id": "bc.kron-g16.t1.characterization.objects.a1",
+      "sha256": "8561948088366aa18409da1db1f204ac2579cdb8ee90f1a2c76079a96e2eb4fd",
+      "identity_sha256": "2cf2bb052911835c28ad092c3257e835e3fb2c72b12ea6604467247579222081",
+      "missing": []
+    },
+    {
+      "id": "bfs.kron-g17.t1.characterization.objects.a1",
+      "sha256": "49b5c58f3551b065c91c49c1fb09f54de2d2d71f08b6a4e1eedf3aad5ec415c5",
+      "identity_sha256": "d7a7be75479635f93e446ff22ceeb3b54c8880008671ebb5963e86c1d2e5d210",
+      "missing": []
+    },
+    {
+      "id": "bc.kron-g17.t1.characterization.objects.a1",
+      "sha256": "6b8d515b3f38a13bfd302993f8ac5e88bd77615da171c710b4ecd81d058c67db",
+      "identity_sha256": "b2a1d317a5a55cea0db19200ad89fe2ec6e1b68169d8858e849f17a4a5410e7a",
+      "missing": []
+    }
+  ],
+  "band_scope": {
+    "bfs": {
+      "g16_g17_normalized_source_runtime_scope_matches": true,
+      "scope_sha256": "cce21f45cfaa69cd31b2e382f78f786594dfabb4fb9659241c798c02222023c9"
+    },
+    "bc": {
+      "g16_g17_normalized_source_runtime_scope_matches": true,
+      "scope_sha256": "8a86439f7ec3baeba7f574fabe6217f994f23b12181ae898ddd28425f60aa287"
+    }
+  },
+  "cells": [
+    {
+      "id": "openmp.0",
+      "event_abi": "__kmpc_fork_call",
+      "value_ns_per_call": 93.19946718545157,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          9.333516931826239e-08,
+          9.319946718545156e-08,
+          9.304502773586547e-08,
+          9.258572840992624e-08,
+          9.487806320533887e-08,
+          9.412445450179223e-08,
+          9.263735914525951e-08
+        ],
+        "median": 9.319946718545156e-08,
+        "min": 9.258572840992624e-08,
+        "max": 9.487806320533887e-08,
+        "spread": 2.2923347954126275e-09,
+        "repetitions": 7
+      },
+      "relative_range": 0.024596007516344054,
+      "minimum_gross_s": 0.46074426501246063,
+      "minimum_driver_s": 0.0722939839997566
+    },
+    {
+      "id": "openmp.1",
+      "event_abi": "__kmpc_fork_call",
+      "value_ns_per_call": 94.02714515083446,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          9.350859237057314e-08,
+          9.601647997203687e-08,
+          9.340125847198511e-08,
+          9.390636349066985e-08,
+          9.402714515083446e-08,
+          9.580569076843151e-08,
+          9.520935845694364e-08
+        ],
+        "median": 9.402714515083446e-08,
+        "min": 9.340125847198511e-08,
+        "max": 9.601647997203687e-08,
+        "spread": 2.6152215000517584e-09,
+        "repetitions": 7
+      },
+      "relative_range": 0.027813473394906633,
+      "minimum_gross_s": 0.46407065701384637,
+      "minimum_driver_s": 0.0723173849997653
+    },
+    {
+      "id": "openmp.2",
+      "event_abi": "__kmpc_fork_call",
+      "value_ns_per_call": 97.30642628926815,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          9.804990625632818e-08,
+          9.730642628926814e-08,
+          9.873286223637797e-08,
+          9.491809535354425e-08,
+          9.752076435350635e-08,
+          9.505500388480872e-08,
+          9.575580072720426e-08
+        ],
+        "median": 9.730642628926814e-08,
+        "min": 9.491809535354425e-08,
+        "max": 9.873286223637797e-08,
+        "spread": 3.8147668828337175e-09,
+        "repetitions": 7
+      },
+      "relative_range": 0.03920364798408433,
+      "minimum_gross_s": 0.4710523780138416,
+      "minimum_driver_s": 0.07231107099976274
+    },
+    {
+      "id": "openmp.3",
+      "event_abi": "__kmpc_fork_call",
+      "value_ns_per_call": 97.25490045806168,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          9.818753671937587e-08,
+          9.533461666411969e-08,
+          9.570356798495412e-08,
+          9.745670104276625e-08,
+          9.76982429052652e-08,
+          9.53494241269504e-08,
+          9.725490045806168e-08
+        ],
+        "median": 9.725490045806168e-08,
+        "min": 9.533461666411969e-08,
+        "max": 9.818753671937587e-08,
+        "spread": 2.852920055256188e-09,
+        "repetitions": 7
+      },
+      "relative_range": 0.029334460698835694,
+      "minimum_gross_s": 0.47244236201316053,
+      "minimum_driver_s": 0.07232734299976046
+    },
+    {
+      "id": "openmp.4",
+      "event_abi": "__kmpc_fork_call",
+      "value_ns_per_call": 99.89446330277481,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          9.863967657318344e-08,
+          1.0057225203718223e-07,
+          1.0108228111468476e-07,
+          1.0054591226785162e-07,
+          9.869391489259533e-08,
+          9.877315688355962e-08,
+          9.98944633027748e-08
+        ],
+        "median": 9.98944633027748e-08,
+        "min": 9.863967657318344e-08,
+        "max": 1.0108228111468476e-07,
+        "spread": 2.4426045415013177e-09,
+        "repetitions": 7
+      },
+      "relative_range": 0.02445185109106511,
+      "minimum_gross_s": 0.48605459000937445,
+      "minimum_driver_s": 0.07229145999976844
+    },
+    {
+      "id": "openmp.5",
+      "event_abi": "__kmpc_fork_call",
+      "value_ns_per_call": 101.37855744555308,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          1.0167733431062172e-07,
+          1.005274393579123e-07,
+          1.0657113003871147e-07,
+          1.0137855744555309e-07,
+          1.0068667364322823e-07,
+          1.0135144472323763e-07,
+          1.0151602220740845e-07
+        ],
+        "median": 1.0137855744555309e-07,
+        "min": 1.005274393579123e-07,
+        "max": 1.0657113003871147e-07,
+        "spread": 6.043690680799169e-09,
+        "repetitions": 7
+      },
+      "relative_range": 0.05961507870187467,
+      "minimum_gross_s": 0.4940888510084318,
+      "minimum_driver_s": 0.07232237299976904
+    },
+    {
+      "id": "openmp.6",
+      "event_abi": "__kmpc_barrier",
+      "value_ns_per_call": 8.171279192536135,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          8.163392305961344e-09,
+          9.764170407988088e-09,
+          8.215634823410771e-09,
+          8.09341788346566e-09,
+          9.318595409393667e-09,
+          8.111839056568313e-09,
+          8.171279192536135e-09
+        ],
+        "median": 8.171279192536135e-09,
+        "min": 8.09341788346566e-09,
+        "max": 9.764170407988088e-09,
+        "spread": 1.6707525245224287e-09,
+        "repetitions": 7
+      },
+      "relative_range": 0.20446645930890953,
+      "minimum_gross_s": 0.10642435000214012,
+      "minimum_driver_s": 0.07224656999974366
+    },
+    {
+      "id": "openmp.7",
+      "event_abi": "__kmpc_barrier",
+      "value_ns_per_call": 8.20600748119597,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          8.20600748119597e-09,
+          1.026939344355374e-08,
+          8.199701071346066e-09,
+          8.582695484481561e-09,
+          8.18514108713761e-09,
+          8.117041588359507e-09,
+          9.401013851140558e-09
+        ],
+        "median": 8.20600748119597e-09,
+        "min": 8.117041588359507e-09,
+        "max": 1.026939344355374e-08,
+        "spread": 2.152351855194233e-09,
+        "repetitions": 7
+      },
+      "relative_range": 0.26228977491506533,
+      "minimum_gross_s": 0.10650295800206641,
+      "minimum_driver_s": 0.07225742299976044
+    },
+    {
+      "id": "openmp.8",
+      "event_abi": "__kmpc_for_static_init_4",
+      "value_ns_per_call": 6.527805090976548,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          6.5540425787571985e-09,
+          6.48814749819412e-09,
+          6.527805090976548e-09,
+          6.435491562917972e-09,
+          8.491116762577625e-09,
+          7.45944619259866e-09,
+          6.519483567303703e-09
+        ],
+        "median": 6.527805090976548e-09,
+        "min": 6.435491562917972e-09,
+        "max": 8.491116762577625e-09,
+        "spread": 2.0556251996596532e-09,
+        "repetitions": 7
+      },
+      "relative_range": 0.3149029683041801,
+      "minimum_gross_s": 0.09949092400412896,
+      "minimum_driver_s": 0.07226747899978049
+    },
+    {
+      "id": "openmp.9",
+      "event_abi": "__kmpc_for_static_init_8",
+      "value_ns_per_call": 6.289549351723113,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          6.289549351723113e-09,
+          6.102265120589142e-09,
+          8.121729851356668e-09,
+          6.139598370623976e-09,
+          6.225698233703403e-09,
+          6.412657261879329e-09,
+          6.521838427619185e-09
+        ],
+        "median": 6.289549351723113e-09,
+        "min": 6.102265120589142e-09,
+        "max": 8.121729851356668e-09,
+        "spread": 2.019464730767526e-09,
+        "repetitions": 7
+      },
+      "relative_range": 0.32108257966276466,
+      "minimum_gross_s": 0.0980211460041724,
+      "minimum_driver_s": 0.07223179299976334
+    },
+    {
+      "id": "openmp.10",
+      "event_abi": "__kmpc_for_static_fini",
+      "value_ns_per_call": 1.7057144643144644,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          1.7600328923842832e-09,
+          1.6793637277143223e-09,
+          1.6975789071617358e-09,
+          1.7057144643144644e-09,
+          1.767024994062117e-09,
+          1.6882016660211854e-09,
+          1.7581110002797167e-09
+        ],
+        "median": 1.7057144643144644e-09,
+        "min": 1.6793637277143223e-09,
+        "max": 1.767024994062117e-09,
+        "spread": 8.766126634779468e-11,
+        "repetitions": 7
+      },
+      "relative_range": 0.051392696832776294,
+      "minimum_gross_s": 0.07947862200043608,
+      "minimum_driver_s": 0.07224824799974737
+    },
+    {
+      "id": "openmp.11",
+      "event_abi": "__kmpc_reduce_nowait",
+      "value_ns_per_call": 8.819259405398476,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          9.249621152941167e-09,
+          8.663824558540445e-09,
+          8.819259405398476e-09,
+          1.0348654984923669e-08,
+          8.512811422758694e-09,
+          8.486073017442454e-09,
+          1.0646570443490534e-08
+        ],
+        "median": 8.819259405398476e-09,
+        "min": 8.486073017442454e-09,
+        "max": 1.0646570443490534e-08,
+        "spread": 2.16049742604808e-09,
+        "repetitions": 7
+      },
+      "relative_range": 0.24497492666170914,
+      "minimum_gross_s": 0.1079547380014863,
+      "minimum_driver_s": 0.07224941899976382
+    },
+    {
+      "id": "openmp.12",
+      "event_abi": "__kmpc_end_reduce_nowait",
+      "value_ns_per_call": 4.237239362417181,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          4.2372393624171816e-09,
+          4.153509141650045e-09,
+          4.25460529488215e-09,
+          4.950229169253483e-09,
+          4.461772443427463e-09,
+          4.146305324246585e-09,
+          4.235940934850176e-09
+        ],
+        "median": 4.2372393624171816e-09,
+        "min": 4.146305324246585e-09,
+        "max": 4.950229169253483e-09,
+        "spread": 8.039238450068978e-10,
+        "repetitions": 7
+      },
+      "relative_range": 0.1897282112824257,
+      "minimum_gross_s": 0.08980378200651255,
+      "minimum_driver_s": 0.07226221999975563
+    },
+    {
+      "id": "openmp.13",
+      "event_abi": "__kmpc_single",
+      "value_ns_per_call": 8.097225666650957,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          8.004217386878265e-09,
+          9.44626760473331e-09,
+          8.257532835514384e-09,
+          7.912160158786708e-09,
+          8.097225666650957e-09,
+          9.384413480693635e-09,
+          8.001634121541833e-09
+        ],
+        "median": 8.097225666650957e-09,
+        "min": 7.912160158786708e-09,
+        "max": 9.44626760473331e-09,
+        "spread": 1.534107445946601e-09,
+        "repetitions": 7
+      },
+      "relative_range": 0.18946087327971356,
+      "minimum_gross_s": 0.10566250600248168,
+      "minimum_driver_s": 0.07231342899978076
+    },
+    {
+      "id": "openmp.14",
+      "event_abi": "__kmpc_end_single",
+      "value_ns_per_call": 3.358433010117486,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          5.123027326012762e-09,
+          3.235014917377174e-09,
+          3.3877143878873513e-09,
+          3.2748639602741854e-09,
+          3.358433010117486e-09,
+          3.338600875821161e-09,
+          3.578874828262788e-09
+        ],
+        "median": 3.358433010117486e-09,
+        "min": 3.235014917377174e-09,
+        "max": 5.123027326012762e-09,
+        "spread": 1.8880124086355877e-09,
+        "repetitions": 7
+      },
+      "relative_range": 0.5621706322406415,
+      "minimum_gross_s": 0.08600862300785354,
+      "minimum_driver_s": 0.07226468699976858
+    },
+    {
+      "id": "openmp.15",
+      "event_abi": "__kmpc_dispatch_init_4",
+      "value_ns_per_call": 17.69422698029252,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          1.769422698029252e-08,
+          1.7564913034504553e-08,
+          1.9823888301647673e-08,
+          1.7619400978172102e-08,
+          1.8747389793308077e-08,
+          1.7660557031725162e-08,
+          1.7712631702545438e-08
+        ],
+        "median": 1.769422698029252e-08,
+        "min": 1.7564913034504553e-08,
+        "max": 1.9823888301647673e-08,
+        "spread": 2.25897526714312e-09,
+        "repetitions": 7
+      },
+      "relative_range": 0.1276673612053876,
+      "minimum_gross_s": 0.14631236700000158,
+      "minimum_driver_s": 0.07238274499976376
+    },
+    {
+      "id": "openmp.16",
+      "event_abi": "__kmpc_dispatch_init_8",
+      "value_ns_per_call": 17.622737884590396,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          1.7687366485695705e-08,
+          1.7557191848843918e-08,
+          1.7622737884590395e-08,
+          1.757079195983881e-08,
+          1.848925900452277e-08,
+          1.7557752132464427e-08,
+          1.8161367178012528e-08
+        ],
+        "median": 1.7622737884590395e-08,
+        "min": 1.7557191848843918e-08,
+        "max": 1.848925900452277e-08,
+        "spread": 9.320671556788517e-10,
+        "repetitions": 7
+      },
+      "relative_range": 0.052890031150827375,
+      "minimum_gross_s": 0.14605213800000333,
+      "minimum_driver_s": 0.07228513599976417
+    },
+    {
+      "id": "openmp.17",
+      "event_abi": "__kmpc_dispatch_next_4",
+      "value_ns_per_call": 8.277379036439289,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          8.260256529354085e-09,
+          1.0171394824544407e-08,
+          8.375501394733908e-09,
+          8.421216965125486e-09,
+          8.257748365933965e-09,
+          8.265332699309506e-09,
+          8.277379036439288e-09
+        ],
+        "median": 8.277379036439288e-09,
+        "min": 8.257748365933965e-09,
+        "max": 1.0171394824544407e-08,
+        "spread": 1.913646458610441e-09,
+        "repetitions": 7
+      },
+      "relative_range": 0.23118990325150576,
+      "minimum_gross_s": 0.10698348200200862,
+      "minimum_driver_s": 0.07234077599977551
+    },
+    {
+      "id": "openmp.18",
+      "event_abi": "__kmpc_dispatch_next_4",
+      "value_ns_per_call": 7.449879885574623,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          7.430971384896929e-09,
+          9.412444114630489e-09,
+          7.449879885574622e-09,
+          7.419232130884646e-09,
+          7.462584496388295e-09,
+          7.449550629484558e-09,
+          7.558059693199336e-09
+        ],
+        "median": 7.449879885574622e-09,
+        "min": 7.419232130884646e-09,
+        "max": 9.412444114630489e-09,
+        "spread": 1.993211983745843e-09,
+        "repetitions": 7
+      },
+      "relative_range": 0.26754954634978023,
+      "minimum_gross_s": 0.10347459400329678,
+      "minimum_driver_s": 0.07226682299977101
+    },
+    {
+      "id": "openmp.19",
+      "event_abi": "__kmpc_dispatch_next_8",
+      "value_ns_per_call": 7.658613444127473,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          7.677872181682539e-09,
+          7.623617649827325e-09,
+          7.627518416230831e-09,
+          7.62670040206723e-09,
+          7.658613444127474e-09,
+          7.809751749709122e-09,
+          7.667937994763321e-09
+        ],
+        "median": 7.658613444127474e-09,
+        "min": 7.623617649827325e-09,
+        "max": 7.809751749709122e-09,
+        "spread": 1.8613409988179643e-10,
+        "repetitions": 7
+      },
+      "relative_range": 0.024303890154492868,
+      "minimum_gross_s": 0.1042778110030361,
+      "minimum_driver_s": 0.07228567999976546
+    },
+    {
+      "id": "openmp.20",
+      "event_abi": "__kmpc_dispatch_next_8",
+      "value_ns_per_call": 7.277171374260427,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          7.333240509918133e-09,
+          7.277171374260427e-09,
+          7.307912589019161e-09,
+          7.2486400613064004e-09,
+          7.240625382364349e-09,
+          7.234492541233832e-09,
+          7.288930893838553e-09
+        ],
+        "median": 7.277171374260427e-09,
+        "min": 7.234492541233832e-09,
+        "max": 7.333240509918133e-09,
+        "spread": 9.874796868430073e-11,
+        "repetitions": 7
+      },
+      "relative_range": 0.013569553828782329,
+      "minimum_gross_s": 0.10273518100349831,
+      "minimum_driver_s": 0.07223939999977493
+    },
+    {
+      "id": "openmp.21",
+      "event_abi": "__kmpc_dispatch_deinit",
+      "value_ns_per_call": 1.4791533947365858,
+      "basis": "measured",
+      "missing": [],
+      "spread_seconds_per_event": {
+        "values": [
+          1.4992218018030026e-09,
+          1.4331748485838079e-09,
+          1.6129090787546188e-09,
+          1.4776008129279795e-09,
+          1.4791533947365857e-09,
+          1.4548132419962464e-09,
+          1.4828917980638276e-09
+        ],
+        "median": 1.4791533947365857e-09,
+        "min": 1.4331748485838079e-09,
+        "max": 1.6129090787546188e-09,
+        "spread": 1.7973423017081092e-10,
+        "repetitions": 7
+      },
+      "relative_range": 0.12151155573882774,
+      "minimum_gross_s": 0.0783870909999235,
+      "minimum_driver_s": 0.07228159299976405
+    }
+  ],
+  "known_parameters": 22,
+  "unknown_parameters": 0,
+  "interpretation": "Independent legal selected-event paired probes; source-normalized selected ABI denominator. Warm serialized T1 application transfer is inferred. All spread/trials retained; no physical latency, complete whole-call cost or application accuracy claim. No new application execution or remote access.",
+  "identity_sha256": "1e8ce49033c67a1f150c18077ac2b4d71bacc327284985808f69bae766a461bf"
+}
