@@ -1,0 +1,115 @@
+{
+  "format": "swdb.ignored-generated-input-retention.v1",
+  "canonical_ensure_ascii": true,
+  "created_utc": "2026-10-07T16:54:42.843762+00:00",
+  "base_integration_commit": "0bf8dc77a190a136e363e665b35c5158e958f316",
+  "base_tree": "b4e92d9786d9c02cb36e914e3608854746b1b688",
+  "owned_branch": "codex/lanl-ticket11",
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "production_source_git_entries_unchanged_from_C": 223,
+  "canonical_yaml_files_preserved": 686,
+  "entries": [
+    {
+      "path": "ticket10-compatible-preparation-a1/inputs/characterization.json",
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket10/ArchEvolve/swdb-project/build/ticket10-compatible-preparation-a1/inputs/characterization.json",
+      "retained_copy_source_path": "/private/tmp/lanl-owned-ignored-input-retention-20261007-1246/lanl-ticket10/build/ticket10-compatible-preparation-a1/inputs/characterization.json",
+      "bytes": 99178,
+      "sha256": "77d7e4101368ab29252695e4f8c6cdd52629f3dbe0d9be858862d5096b89ec00",
+      "format": "swdb.estimation-characterization.v1",
+      "original_plan_input_sha256": "77d7e4101368ab29252695e4f8c6cdd52629f3dbe0d9be858862d5096b89ec00",
+      "canonical_ensure_ascii": true,
+      "exact_generator_serialization": true,
+      "custody": "exact original generated input bytes"
+    },
+    {
+      "path": "ticket10-compatible-preparation-a1/inputs/parameters.json",
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket10/ArchEvolve/swdb-project/build/ticket10-compatible-preparation-a1/inputs/parameters.json",
+      "retained_copy_source_path": "/private/tmp/lanl-owned-ignored-input-retention-20261007-1246/lanl-ticket10/build/ticket10-compatible-preparation-a1/inputs/parameters.json",
+      "bytes": 1750,
+      "sha256": "b16f04ce73ad69fb25695e571ecff181129ae167bff9be236c0c1dbb1e600ebb",
+      "format": "swdb.estimation-parameters.v1",
+      "original_plan_input_sha256": "b16f04ce73ad69fb25695e571ecff181129ae167bff9be236c0c1dbb1e600ebb",
+      "canonical_ensure_ascii": true,
+      "exact_generator_serialization": true,
+      "custody": "exact original generated input bytes"
+    },
+    {
+      "path": "ticket10-compatible-preparation-a1/inputs/profile.json",
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket10/ArchEvolve/swdb-project/build/ticket10-compatible-preparation-a1/inputs/profile.json",
+      "retained_copy_source_path": "/private/tmp/lanl-owned-ignored-input-retention-20261007-1246/lanl-ticket10/build/ticket10-compatible-preparation-a1/inputs/profile.json",
+      "bytes": 236,
+      "sha256": "0430c35f7a4c0d96f6c71db73f07810e55a19edd6053084d042767871ae9843a",
+      "format": "swdb.estimation-profile.v1",
+      "original_plan_input_sha256": "0430c35f7a4c0d96f6c71db73f07810e55a19edd6053084d042767871ae9843a",
+      "canonical_ensure_ascii": true,
+      "exact_generator_serialization": true,
+      "custody": "exact original generated input bytes"
+    },
+    {
+      "path": "original-unsealed-inventory.json",
+      "source_path": "/private/tmp/lanl-owned-ignored-input-retention-20261007-1246/inventory.json",
+      "bytes": 3271,
+      "sha256": "c042e9e932823ff2730f5d490deb838342ab8521f7ab5eab7969bd98932af689",
+      "original_seal": "absent; original sealed=false retained unchanged",
+      "custody": "exact original unsealed parent byte-copy inventory"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3454,
+      "sha256": "782334b1f00cb410feffd90138adf1eb0cfc7e137cfa3bba3c578de3d3a8e41f",
+      "custody": "new dated retention context"
+    }
+  ],
+  "original_inventory_unsealed": true,
+  "original_ignored_sources_and_retained_copies_unchanged": true,
+  "old_preparation_archive": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-ignored-preparation-retention-20261007",
+    "manifest_identity_sha256": "281c951ce2e3f889deae2ed5ff8e40755783463775b9ccb15002345c67164852",
+    "manifest_file_sha256": "5fcf0494d57f5c5e0276775680cf05283481157cab2d5f551fa1b6c05d505c6c",
+    "files": [
+      {
+        "path": "ticket10-compatible-preparation-a1/plan.json",
+        "bytes": 12642,
+        "sha256": "141190de4102be58bd86fd905d2af3c1f4ff563f5c48f41984da3f1c513d6404"
+      },
+      {
+        "path": "ticket10-compatible-preparation-receipt-a1.json",
+        "bytes": 12643,
+        "sha256": "4a0a53660222552a9e164114a5e09d5471a6ff0e135be310ba23dad4116aa16e"
+      }
+    ],
+    "duplicated_in_new_archive": false
+  },
+  "generator_source_inspection": [
+    {
+      "path": "swdb-project/swdb/estimation_parameters.py",
+      "bytes": 25670,
+      "sha256": "1603428b67b7cc899d2e2ce6d42fbd2c178e93e51513800a76aee0dabca54ffc",
+      "inspection": "source text read only; no import or invocation"
+    },
+    {
+      "path": "swdb-project/swdb/estimation_contract.py",
+      "bytes": 2607,
+      "sha256": "6dfd028eb52fae2c0a3c0072011a512debf4f01c433fcab580b41d656053391f",
+      "inspection": "source text read only; no import or invocation"
+    }
+  ],
+  "input_relationships": {
+    "total_input_bytes": 101164,
+    "all_three_original_plan_input_hashes_match": true,
+    "raw_bytes_equal_original_compact_canonical_serialization": true,
+    "parameters_target_matches_plan_base": true,
+    "parameters_unknowns_match_plan_unknowns": true,
+    "historical_plan_state": "prepared",
+    "historical_plan_provider_launched": false
+  },
+  "privacy_inspection_scope": "Passive JSON and generator text inspection: only allowlisted hashed structural research/count/parameter/profile facts; no credentials, prompts, provider/auth streams, raw source or remote raw run artifacts observed. No inference about underlying count provenance or scientific accuracy.",
+  "state": "byte retention only; original preparation and later actual inference history unchanged",
+  "new_preparation_provider_native_scientific_test_or_remote_execution": false,
+  "source_import_or_Store_execution": false,
+  "worktree_archive_or_cleanup_executed": false,
+  "preservation_scope": "All earlier tracked blobs and modes are unchanged except the exact appended ticket10 retention pointer; no status/map/progress/production/record changes.",
+  "manifest_identity_semantics": "Whole-object canonical JSON digest excluding identity_sha256, ensure_ascii=true; original inventory remains unsealed",
+  "identity_sha256": "947c62affdcd70ed183491d199a6faca5ba96094166e3b0e8f54d95f2f1e5c71"
+}
