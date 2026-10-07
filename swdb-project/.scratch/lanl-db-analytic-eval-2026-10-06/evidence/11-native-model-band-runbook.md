@@ -38,33 +38,52 @@ python3 -m swdb.cpu_service_binding --records "$LANL_CPU_STORE" \
 
 The explicit 8MiB memory construction is a conditional inferred scenario. Logical bounded views establish neither full libomp allocation identity nor physical residency. Exact primitive/type/order guards remain active. BC floating64 monotonic fadd consumes its separate resource; integer seq_cst add and floating fadd in the same coarse bucket are partitioned by exact source sites before charging, with the sum cross-checked against the original observation. Original residual-null write8 records remain immutable; the separately typed gross resource includes retained loop work and composes with compute by maximum. Bulk profile maxima and legal warmed OpenMP state are inferred transfer, not physical latencies or proven application upper bounds. Duplicate copy measurements are selected explicitly, never pooled.
 
-Persist a protocol request in the external raw directory with these settings:
+Freeze two per-kernel protocols against the same target, bundle, calibrations and four-characterization allowlist. BFS and BC have different original argv (BC has its `-i 1` argument), while `input_run_arguments` is keyed by input ID. One shared per-input argv map cannot represent both kernels. Set `LANL_CPU_PROTOCOL_DIR` to a new external raw subdirectory and generate each request directly from its immutable counted records:
 
-```yaml
-message_version: '1.0'
-id: lanl.cpu.t1.native-model.v1
-version: 1
-settings:
-  mode: estimated
-  estimator_version: swdb.analytic.v1
-  target_description: mbit10.cpu.lanl20261006.t1.services.v1
-  inputs: [kron-g16-k16, kron-g17-k16]
-  roi: gapbs.trial_lambda.v1
-  threads: 1
+```sh
+python3 - <<'PY'
+import json, os
+from pathlib import Path
+from swdb.store import Store
+store = Store(Path(os.environ['LANL_CPU_STORE']))
+folder = Path(os.environ['LANL_CPU_PROTOCOL_DIR'])
+folder.mkdir(parents=True, exist_ok=False)
+for kernel in ('bfs', 'bc'):
+    observed = [store.get(kernel+'.kron-g'+str(g)+'.t1.characterization.objects.a1',
+                          'workload_characterization') for g in (16, 17)]
+    assert len({c['subject']['id'] for c in observed}) == 1
+    arguments = {c['input']: c['source']['run_arguments'] for c in observed}
+    request = {'message_version': '1.0',
+        'id': 'lanl.cpu.'+kernel+'.t1.native-model.v1', 'version': 1,
+        'settings': {'mode': 'estimated', 'estimator_version': 'swdb.analytic.v1',
+            'target_description': 'mbit10.cpu.lanl20261006.t1.services.v1',
+            'inputs': list(arguments), 'input_run_arguments': arguments,
+            'sources': [observed[0]['subject']['id']],
+            'roi': 'gapbs.trial_lambda.v1', 'threads': 1}}
+    (folder/(kernel+'.request.json')).write_text(json.dumps(request, indent=2)+'\n')
+PY
+for kernel in bfs bc; do
+  python3 -m swdb freeze-protocol "$LANL_CPU_PROTOCOL_DIR/$kernel.request.json" \
+    --records "$LANL_CPU_STORE" --format json > "$LANL_CPU_PROTOCOL_DIR/$kernel.frozen.json"
+done
+LANL_CPU_BFS_PROTOCOL="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["id"])' "$LANL_CPU_PROTOCOL_DIR/bfs.frozen.json")"
+LANL_CPU_BC_PROTOCOL="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["id"])' "$LANL_CPU_PROTOCOL_DIR/bc.frozen.json")"
 ```
 
-Freeze it with `python3 -m swdb freeze-protocol REQUEST.yaml --records "$LANL_CPU_STORE" --format json`. This pins the actual final estimator bundle, target snapshot and recursive typed calibration/characterization closure. No CPU error-band pin exists yet. Run public `estimate` separately on each of the four named characterizations with this target/protocol and fresh IDs `lanl.cpu.{bfs,bc}.g{16,17}.t1.estimate.v1`. No application executes during estimation.
+`freeze-protocol` returns a content-suffixed immutable ID. Use these returned IDs in all subsequent commands; the unsuffixed request IDs are not persisted protocol IDs. Estimate the two BFS characterizations with `--protocol "$LANL_CPU_BFS_PROTOCOL"`, and the two BC characterizations with `--protocol "$LANL_CPU_BC_PROTOCOL"`. Use fresh estimate IDs `lanl.cpu.{bfs,bc}.g{16,17}.t1.estimate.v1`. No application executes during estimation.
+
+Both protocols pin the same final model and recursive typed closure. Persist both exact protocol IDs/hashes, all four estimate hashes and the exact per-input argv in the model acceptance receipt. Later development/holdout phases retrieve each kernel's protocol ID from its unchanged immutable estimate and verify it against the model receipt before any native command. The CPU band compares target/bundle/thread/target/evidence identities across pairs; distinct per-kernel protocols do not relax source/runtime scope or holdout chronology. No CPU error-band pin exists yet.
 
 Before application timing, retain a sealed preregistration with source tip, Python bundle hash, target/protocol hashes, all four characterization hashes, all calibration hashes and explicit conditional recipes. Check every complete whole-call result is positive and every structural compatibility missing list is empty. Unknown per-region union/page/lifetime facts remain retained; they cannot be filled as physical facts. If a whole-call estimate is null, retain the exact failed completeness report and fix only defensible independent missing service prerequisites before a new prospective freeze. No application outcome may select or fit those costs.
 
 ## 2. Development timing after model freeze
 
-Set `LANL_CPU_RAW` to a new external raw directory. Under the named node0 lease, for BFS then BC, run the matched collector with a separate new output directory and ID. It verifies source/runtime correspondence, executes a separate `-v` five-call correctness process, then the original no-v five-call timing process. Keep the same source/model/protocol unchanged through both collectors.
+Set `LANL_CPU_RAW` to a new external raw directory. Under the named node0 lease, for BFS then BC, run the matched collector with a separate new output directory and ID. It verifies source/runtime correspondence, executes a separate `-v` five-call correctness process, then the original no-v five-call timing process. Keep the same source/model and both frozen protocols unchanged through both collectors.
 
 ```sh
 python3 -m swdb collect-cpu-native-validation --records "$LANL_CPU_STORE" \
   --characterization bfs.kron-g16.t1.characterization.objects.a1 \
-  --estimate-protocol lanl.cpu.t1.native-model.v1 \
+  --estimate-protocol "$LANL_CPU_BFS_PROTOCOL" \
   --id lanl.cpu.bfs.g16.t1.validation.v1 --output "$LANL_CPU_RAW/bfs.g16" \
   --machine mbit10 --lane mbit10-evaluation-node0 \
   --llvm-bin /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin \
@@ -72,7 +91,7 @@ python3 -m swdb collect-cpu-native-validation --records "$LANL_CPU_STORE" \
   --max-wall-s 900 --format json
 ```
 
-Repeat with BC's exact characterization, ID and output. The collector derives the compiler flags, runtime environment and run arguments from the counted binding; do not inject a different graph/source policy. It pins only the child binary to the first core, while the collector retains full socket lease affinity. Retain all five printed TrialTime values with 10us resolution and +/-5us intervals. Their median is one workload-pair observation; the five advancing/state-sharing trials are not five independent error samples.
+Repeat with BC's exact characterization, ID, output and `--estimate-protocol "$LANL_CPU_BC_PROTOCOL"`. The collector derives the compiler flags, runtime environment and run arguments from the counted binding; do not inject a different graph/source policy. It pins only the child binary to the first core, while the collector retains full socket lease affinity. Retain all five printed TrialTime values with 10us resolution and +/-5us intervals. Their median is one workload-pair observation; the five advancing/state-sharing trials are not five independent error samples.
 
 Freeze the development width immediately after both matched validations:
 
@@ -87,7 +106,7 @@ The frozen width is the maximum rounding-aware absolute log error across the two
 
 ## 3. Prospective holdout with the unchanged width
 
-Only after a known native development band is frozen, run the same matched collector for both g17 characterizations, supplying `--development-band lanl.cpu.t1.development-band.v1` as well as the unchanged estimate protocol. Use fresh IDs `lanl.cpu.{bfs,bc}.g17.t1.validation.v1` and new raw directories. The collector refuses a previously used input, changed source/runtime/ROI scope, or timing before the frozen width. Never re-estimate width from g17.
+Only after a known native development band is frozen, run the same matched collector for both g17 characterizations, supplying `--development-band lanl.cpu.t1.development-band.v1` as well as that kernel's unchanged returned estimate protocol ID. Use fresh IDs `lanl.cpu.{bfs,bc}.g17.t1.validation.v1` and new raw directories. The collector refuses a previously used input, changed source/runtime/ROI scope, or timing before the frozen width. Never re-estimate width from g17.
 
 ```sh
 python3 -m swdb validate-cpu-error-band --records "$LANL_CPU_STORE" \

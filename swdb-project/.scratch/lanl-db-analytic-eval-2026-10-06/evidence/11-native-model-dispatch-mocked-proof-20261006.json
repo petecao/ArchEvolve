@@ -1,0 +1,38 @@
+{
+  "format": "swdb.cpu-dispatch-helper-mocked-proof.v1",
+  "scope": "Local syntax/AST and mocked command/ID/argv/lineage checks only; no remote dispatch, compiler invocation or application execution.",
+  "external_helper_sha256": "879d4b8da5922886da43ddecc5e3e241073b925744176940333426c99d26f1ad",
+  "runner_syntax_phases": [
+    "model",
+    "development",
+    "holdout"
+  ],
+  "model_freeze_commands_mocked": 2,
+  "model_estimate_commands_mocked": 4,
+  "per_kernel_exact_input_argv": true,
+  "captured_content_suffixed_ids": true,
+  "same_target_bundle_calibrations": true,
+  "band_common_identity_guard_passed": true,
+  "later_phases": [
+    {
+      "phase": "development",
+      "native_commands_mocked": 2,
+      "protocol_ids_preserved": true
+    },
+    {
+      "phase": "holdout",
+      "native_commands_mocked": 2,
+      "protocol_ids_preserved": true
+    }
+  ],
+  "changed_prior_model_estimate_refused_before_native_commands": true,
+  "caps_preserved": {
+    "runner_s": 3850,
+    "outer_s": 3950,
+    "native_inner_s": 900,
+    "native_child_cap_s": 950,
+    "public_s": 600
+  },
+  "dispatch_started": false,
+  "identity_sha256": "c84aa009b6dd14868b39588ea8d74b5cafb4ad7100a887752941e38c87c82781"
+}
