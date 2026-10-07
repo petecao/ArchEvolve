@@ -1,0 +1,60 @@
+{
+  "format": "swdb.lanl14-final-pr-replay-controls-integrated-custody.v1",
+  "integration_base": "b6426f093144b463005679a07214ed32944f1838",
+  "incoming_tip": "97023167a1fa42acf903c365100ef7ae4e6ef64c",
+  "merged_tip": "3f39839dab7e39cf2782a217c9aa0fa0c010bf9a",
+  "prospective_tree": "21ed10937e61018dd8a4a060d26fe3a8005fffa8",
+  "actual_tree_matches_prospective": true,
+  "integration_method": "ordinary_three_way_merge",
+  "scope": "Five preparation/request/checker/control files only; actual final PR/services and nine forecasts are pending.",
+  "all_prior_git_blobs_preserved": true,
+  "prior_blob_count": 3465,
+  "prior_tree_manifest_sha256": "7cbbfdadd7c6249fa84fbaf402c6619ce828e39c85ce7acafdaa2ade56ac246d",
+  "protected_blob_count": 1150,
+  "protected_manifest_sha256": "3fb1f1fa1ff5fe44fe1b0d52920b8fb1cc53b07b54cb70e3c1dc12d9ee04d093",
+  "canonical_yaml_count": 665,
+  "new_canonical_records": 0,
+  "all_observer_runtime_native_sources_helpers_config_maps_issues_progress_preserved": true,
+  "final_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "C_generic_source_unchanged": true,
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "added_files": [
+    {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-check-pr-final-replay-20261007.py",
+      "sha256": "86df23903c131913cd952d3648cfed58e43824982308082bb235579d4b7da3bf"
+    },
+    {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-final-acceptance-preparation-20261007.json",
+      "sha256": "f1ee892e7bba2126f4effea5113a12b30ccd3186fd2dc3745469d3af00cddd59"
+    },
+    {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-pr-final-freeze-request-20261007-a1.json",
+      "sha256": "2ee4a07880bb1bca74b5e3611d0a7147befc9ebabb340a832935c4c32443fe90"
+    },
+    {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-pr-final-gate-controls-proof-20261007.json",
+      "sha256": "2373cace50e2a9bb9e20065a5b714941c7187fc35ce379f9984bb37e3f49f92c"
+    },
+    {
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-pr-final-replay-runbook-20261007.md",
+      "sha256": "3305ef5a15aace4abf6f76be26768e49e7e4ac30fa837204098e443edbb9c1b1"
+    }
+  ],
+  "preparation_identity_sha256": "f6c4eac5929ab81f3aa3f997e170e06afbeb6dced23589fa046fbd35c4fd6c47",
+  "controls_identity_sha256": "41f244ca892cfd1e38efbaf35ae679b5bd63b8fe2b56c2c802d8f06c0ca00292",
+  "portable_controls_reused": 11,
+  "actual_acceptance": false,
+  "application_execution": 0,
+  "provider_calls": 0,
+  "parameter_retuning": 0,
+  "recovery_used": false,
+  "model_export": null,
+  "actual_final_replay": null,
+  "final_nine_reports": null,
+  "redundant_tests_or_validation_run": 0,
+  "no_ssh_actions": true,
+  "no_main_push": true,
+  "ticket14_state": "claimed",
+  "ticket17_state": "claimed",
+  "identity_sha256": "e822419c37979fdae1dab23c91fc0ef24ca8b85c6de8631f5c77dd433a619b45"
+}
