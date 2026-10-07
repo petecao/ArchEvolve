@@ -1,6 +1,6 @@
 # ArchEvolve — hardware exploration prototype
 
-The active target is the **DX100-modified GAP BFS**, using Peter's v1.2 sparse and fully connected reports. Eric's [hardware evidence catalog](docs/hardware-catalog-handoff.md) is the default hardware knowledge input: **16 source/version/configuration/mapping records, 58 operations and 170 located claims** (data revision **0.1.16**). TMU, COBRA and AXI-Pack are scoped mapping records, not generic gather replacements.
+The active target is the **DX100-modified GAP BFS**, using Peter's v1.2 sparse and fully connected reports. Eric's [hardware evidence catalog](docs/hardware-catalog-handoff.md) is the default hardware knowledge input: **20 source/version/configuration/mapping records, 62 operations and 204 located claims** (data revision **0.1.17**). TMU, COBRA and AXI-Pack are scoped mapping records, not generic gather replacements.
 
 The [current mechanism handoff](docs/mechanism-handoff-2026-10-06/README.md) explains scheduling, grouping, response association, credits, completion and unresolved implementation details. It includes a small executable association scaffold; no cycle model, RTL or target-performance validation is implied.
 
@@ -17,7 +17,7 @@ python3 -m venv .venv
 .venv/bin/python -m unittest discover -s tests -v
 ```
 
-The default catalog is `catalog/hardware-v0.1.yaml` (format v0.1, data revision 0.1.16); `--catalog` may be omitted. The received feature files still use schema 1.1 despite being report revision v1.2.
+The default catalog is `catalog/hardware-v0.1.yaml` (format v0.1, data revision 0.1.17); `--catalog` may be omitted. The received feature files still use schema 1.1 despite being report revision v1.2.
 
 ## Results and handoff
 
@@ -62,3 +62,16 @@ The October 1 generator accepts located internal-mechanism annotations and prese
 The [source checkouts](sources/README.md), [source review](docs/bfs-source-review.md), [received reports](examples/received), and [measurement-method review](docs/measurement-methodology-review.md) remain available. The current reports reconcile 32-bit offsets with the recorded DX100 revision, but raw profiling and trial/ROI linkage are not independently verified.
 
 Historical [SPARTA diagrams](diagrams/sparta/preview.md), [family-seed BFS runs](runs/bfs-offline-v1.2/README.md), and [v0.1 schemas](schemas/README.md) are retained. The old selector can still be exercised explicitly with `--catalog catalog/seed.yaml --max-candidates 3`; it is no longer the default. Historical family partitions must not be mistaken for verified hardware interfaces.
+
+## Recent scoped catalog additions
+
+Catalog revision 0.1.17 adds four records while retaining the earlier sixteen designs and project selection.
+
+| Design | Examined operation |
+| --- | --- |
+| azul-micro2024 | mapped_sparse_row_partial_sum |
+| telos-isca2025-public-model | stencil_neighbor_contribution_sum |
+| svr-micro2024 | transient_indirect_chain_prefetch |
+| triangel-isca2024 | temporal_address_prefetch |
+
+Azul is limited to mapped sparse row partial sums, and Telos describes the public stencil source model. SVR and Triangel provide prefetch assistance. Each record retains its type, interface and implementation evidence requirements. The Telos private repair experiments remain separate from the examined public source.

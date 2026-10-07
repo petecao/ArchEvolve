@@ -1,5 +1,5 @@
 catalog_id: archevolve-hardware
-revision: 0.1.16
+revision: 0.1.17
 format: hardware-catalog-v0.1
 status: research_reviewed_prototype
 project_selections:
@@ -516,6 +516,72 @@ sources:
     publication_year: 2019
     doi: 10.1145/3352460.3358272
     reviewed_on: '2026-10-06'
+  azul-paper:
+    title: 'Azul: An Accelerator for Sparse Iterative Solvers Leveraging Distributed On-Chip Memory'
+    edition: MICRO2024 author-hosted proceedings PDF,14 pages
+    url: https://feldmann.nyc/micro24_iterative.pdf
+    doi: 10.1109/MICRO61859.2024.00054
+    document_type: conference_paper
+    conference: MICRO
+    publication_year: 2024
+    locator_basis: One-based PDF pages; published pages643-656.
+    sha256: 8e50a17550104027759fe84732e250eb1ebe548f5865558801960aac5d9aa5f5
+  telos-code-preprocesssptrsv:
+    title: Telos public model sim/PreprocessSpTRSV.py
+    edition: Author artifact commit 56654e2625989637b858e16f7748dc7247927971
+    url: https://raw.githubusercontent.com/pku-liang/telos/56654e2625989637b858e16f7748dc7247927971/sim/PreprocessSpTRSV.py
+    document_type: source_code
+    sha256: 91b661679ef38cc7d4ce357cee06d4a80440bc83716331a363a6c92ec8edc18b
+    locator_basis: One-based source lines in immutable public Python model.
+    provenance_notes:
+    - SimPy model source; not independently bound to evaluated RTL or paper hardware.
+  telos-code-pearray:
+    title: Telos public model sim/PEArray.py
+    edition: Author artifact commit 56654e2625989637b858e16f7748dc7247927971
+    url: https://raw.githubusercontent.com/pku-liang/telos/56654e2625989637b858e16f7748dc7247927971/sim/PEArray.py
+    document_type: source_code
+    sha256: adb369c187474170ba93e2d8a34ec1a4dca917a31029540c60de92ade0c8378a
+    locator_basis: One-based source lines in immutable public Python model.
+    provenance_notes:
+    - SimPy model source; not independently bound to evaluated RTL or paper hardware.
+  telos-code-memory:
+    title: Telos public model sim/Memory.py
+    edition: Author artifact commit 56654e2625989637b858e16f7748dc7247927971
+    url: https://raw.githubusercontent.com/pku-liang/telos/56654e2625989637b858e16f7748dc7247927971/sim/Memory.py
+    document_type: source_code
+    sha256: 60d37eabc858ab2de6d59f481a59a7b071a38ac87d59f26216913b78260cba1a
+    locator_basis: One-based source lines in immutable public Python model.
+    provenance_notes:
+    - SimPy model source; not independently bound to evaluated RTL or paper hardware.
+  telos-code-accelerator:
+    title: Telos public model sim/Accelerator.py
+    edition: Author artifact commit 56654e2625989637b858e16f7748dc7247927971
+    url: https://raw.githubusercontent.com/pku-liang/telos/56654e2625989637b858e16f7748dc7247927971/sim/Accelerator.py
+    document_type: source_code
+    sha256: e3b7e402daa059ab12ebe9eb4dd83685a6780438a0d2eeb7d02641c7d30ed5bf
+    locator_basis: One-based source lines in immutable public Python model.
+    provenance_notes:
+    - SimPy model source; not independently bound to evaluated RTL or paper hardware.
+  svr-paper:
+    title: Scalar Vector Runahead
+    edition: MICRO2024 author-hosted proceedings PDF,15 pages
+    url: https://ajnaithani.github.io/docs/micro24.pdf
+    doi: 10.1109/MICRO61859.2024.00101
+    document_type: conference_paper
+    conference: MICRO
+    publication_year: 2024
+    sha256: 2d6ebfc22997049150b9835664b908942ce883b2387005ef925b048627bb70e1
+    locator_basis: One-based PDF pages, printed1367-1381; distinct from IEEE Micro2025 Top Picks.
+  triangel-paper:
+    title: 'Triangel: A High-Performance, Accurate, Timely On-Chip Temporal Prefetcher'
+    edition: arXiv2406.10627v1,15June2024
+    url: https://arxiv.org/abs/2406.10627v1
+    doi: 10.1109/ISCA59077.2024.00090
+    document_type: conference_paper
+    conference: ISCA
+    publication_year: 2024
+    sha256: ee6dc56dbbcbea16e023ef8d1378e23038509cf90bbe20b589a9a42fd6f630ca
+    locator_basis: One-based15-page author preprint, arXiv2406.10627v1. Publisher/evaluated code correspondence unproved.
 claims:
   maple-api:
     source_refs:
@@ -2415,6 +2481,284 @@ claims:
     limitations:
     - New synthetic instruction/consumer sequence only; actual published software wrappers and concurrent
       behavior not inspected or certified.
+  azul-local-task-memory:
+    source_refs:
+    - azul-paper
+    locator: IV-A; PDF pages6
+    statement: Mapped tile-local tasks communicate by messages instead of remote memory loads.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; evaluated implementation not independently executed.
+  azul-partial-row-delivery:
+    source_refs:
+    - azul-paper
+    locator: IV-A, Listing2; PDF pages6,7
+    statement: Local row contributions finish before sending their partial sum to its result owner.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; evaluated implementation not independently executed.
+  azul-mapping-objectives:
+    source_refs:
+    - azul-paper
+    locator: IV-B; PDF pages7
+    statement: Placement balances memory capacity, communication demand, and computation dependencies.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; evaluated implementation not independently executed.
+  azul-temporal-balance:
+    source_refs:
+    - azul-paper
+    locator: IV-C; PDF pages8
+    statement: Topological-depth quantiles constrain load balance; row hyperedges receive greater weight.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; evaluated implementation not independently executed.
+  azul-communication-trees:
+    source_refs:
+    - azul-paper
+    locator: IV-D, Fig18; PDF pages8
+    statement: Compiler-generated multicast and reduction trees limit redundant inter-tile traffic.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; evaluated implementation not independently executed.
+  azul-specialized-pipeline:
+    source_refs:
+    - azul-paper
+    locator: V-A, Fig19/TableIII; PDF pages9
+    statement: Data and accumulator SRAM reads feed FP64 arithmetic and writeback or message delivery.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; evaluated implementation not independently executed.
+  azul-conflict-scheduling:
+    source_refs:
+    - azul-paper
+    locator: V-A; PDF pages9,10
+    statement: Dependency checks prevent conflicting accumulator operations; the earliest eligible task supplies operations.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; evaluated implementation not independently executed.
+  azul-message-overflow:
+    source_refs:
+    - azul-paper
+    locator: V-A/B; PDF pages10
+    statement: Incoming message-buffer overflow spills into Data SRAM; routers form a two-dimensional torus.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; evaluated implementation not independently executed.
+  azul-memory-shape:
+    source_refs:
+    - azul-paper
+    locator: V-A,TableIII; PDF9-10
+    statement: TableIII specifies72KiB Data and36KiB Accumulator SRAM per tile; V-A specifies FP64 data and32 metadata
+      bits per96-bit word.
+    evidence_kind: paper_specification
+    limitations:
+    - Introduction's96KB per-tile statement differs; retain TableIII decomposition. Metadata width is not an index
+      ABI.
+  telos-plane-packing:
+    source_refs:
+    - telos-code-preprocesssptrsv
+    locator: sim/PreprocessSpTRSV.py lines 38-96
+    statement: Plane packing uses a staged matrix layout and schedule bubbles.
+    evidence_kind: code_inspection
+    limitations:
+    - Static model source observation; no hardware protocol or performance certification.
+  telos-wavefront-tile-order:
+    source_refs:
+    - telos-code-preprocesssptrsv
+    locator: sim/PreprocessSpTRSV.py lines 98-115
+    statement: A wavefront ordering or sequential ordering enumerates logical tiles.
+    evidence_kind: code_inspection
+    limitations:
+    - Static model source observation; no hardware protocol or performance certification.
+  telos-scalar-dependency-inputs:
+    source_refs:
+    - telos-code-pearray
+    locator: sim/PEArray.py lines 95-142
+    statement: Scalar execution waits for domain operands and required directional/plane contributions.
+    evidence_kind: code_inspection
+    limitations:
+    - Static model source observation; no hardware protocol or performance certification.
+  telos-staged-vector-flow:
+    source_refs:
+    - telos-code-pearray
+    locator: sim/PEArray.py lines 196-283
+    statement: Shifted solution values supply scheduled vector terms and validity checks.
+    evidence_kind: code_inspection
+    limitations:
+    - Static model source observation; no hardware protocol or performance certification.
+  telos-directional-queues:
+    source_refs:
+    - telos-code-pearray
+    locator: sim/PEArray.py lines 5-37
+    statement: Directional and aggregation interfaces use finite SimPy stores.
+    evidence_kind: code_inspection
+    limitations:
+    - Static model source observation; no hardware protocol or performance certification.
+  telos-modeled-memory-bandwidth:
+    source_refs:
+    - telos-code-memory
+    locator: sim/Memory.py lines 5-64
+    statement: SRAM token accounting and DRAM transfer delays model bandwidth.
+    evidence_kind: code_inspection
+    limitations:
+    - Static model source observation; no hardware protocol or performance certification.
+  telos-domain-write-completion:
+    source_refs:
+    - telos-code-accelerator
+    locator: sim/Accelerator.py lines 68-82
+    statement: Completion waits for domain DRAM writes; a separate array-equality check assesses modeled results.
+    evidence_kind: code_inspection
+    limitations:
+    - Static model source observation; no hardware protocol or performance certification.
+  telos-neighbor-sum:
+    source_refs:
+    - telos-code-pearray
+    locator: sim/PEArray.py lines 113-142; especially sum=in_i+in_j+R_k at126
+    statement: ScalarUnit sums required directional and plane contributions before computing (b-sum)/aii and forwarding
+      the solution with its domain index.
+    evidence_kind: code_inspection
+    limitations:
+    - A stencil-mapped intermediate sum, not a generic address-indexed reduction primitive. Python arithmetic does
+      not establish hardware width or rounding.
+  svr-stride-trigger-range:
+    source_refs:
+    - svr-paper
+    locator: IV-A1; Fig5-6; PDF4,5
+    statement: Stride history, head-load identity and prior prefetch range control piggyback activation.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; implementation not independently executed.
+  svr-taint-register-mapping:
+    source_refs:
+    - svr-paper
+    locator: IV-A2-3; Fig8; PDF5
+    statement: Taint follows dependent instructions; evicted speculative mappings disable their dependent vectorization.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; implementation not independently executed.
+  svr-scalar-copy-issue:
+    source_refs:
+    - svr-paper
+    locator: IV; IV-A4; PDF4,6
+    statement: Transient scalar copies share existing functional units and speculative register storage.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; implementation not independently executed.
+  svr-return-count-dependency:
+    source_refs:
+    - svr-paper
+    locator: IV-A4; PDF6
+    statement: A return counter gates consumers until their scalar-vector producers have returned.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; implementation not independently executed.
+  svr-termination-waiting:
+    source_refs:
+    - svr-paper
+    locator: IV-A5; PDF6
+    statement: Head-load recurrence or timeout ends a round; waiting avoids overlapping prefetch ranges.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; implementation not independently executed.
+  svr-divergent-lane-mask:
+    source_refs:
+    - svr-paper
+    locator: IV-B1; PDF7
+    statement: Divergent lanes are masked; transient execution follows the architectural instruction path.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; implementation not independently executed.
+  svr-history-and-bound-prediction:
+    source_refs:
+    - svr-paper
+    locator: IV-B2; Fig10; PDF7,8
+    statement: History and observed loop comparisons predict how many future iterations to fetch.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; implementation not independently executed.
+  svr-usefulness-feedback:
+    source_refs:
+    - svr-paper
+    locator: IV-A7; PDF7
+    statement: L1 use/eviction feedback can disable triggering, with periodic opportunities to retry.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; implementation not independently executed.
+  svr-transient-assistance:
+    source_refs:
+    - svr-paper
+    locator: IV opening, PDF4; Fig4-5
+    statement: Transient instruction copies prefetch for architectural execution without delivering architectural
+      register results.
+    evidence_kind: paper_specification
+    limitations:
+    - No standalone gather result, old-value RMW, physical-response ABI or payload-width contract inferred.
+  triangel-temporal-address-training:
+    source_refs:
+    - triangel-paper
+    locator: 4.1-4.2;Fig5; PDF4,5
+    statement: Per-PC address history trains temporal mappings with reuse and pattern confidence.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; no hardware/prediction/workload reproduction executed.
+  triangel-markov-target-encoding:
+    source_refs:
+    - triangel-paper
+    locator: 4.3;Fig6; PDF5,6
+    statement: Hashed lookup tags and encoded targets reduce Markov metadata footprint.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; no hardware/prediction/workload reproduction executed.
+  triangel-history-reuse-sampling:
+    source_refs:
+    - triangel-paper
+    locator: 4.4.1; PDF5,6
+    statement: Per-PC reuse-distance sampling controls whether patterns merit metadata allocation.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; no hardware/prediction/workload reproduction executed.
+  triangel-second-chance-pattern:
+    source_refs:
+    - triangel-paper
+    locator: 4.4.2;Fig8; PDF6
+    statement: Second-chance sampling recognizes useful targets beyond immediate successor matches.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; no hardware/prediction/workload reproduction executed.
+  triangel-adaptive-lookahead:
+    source_refs:
+    - triangel-paper
+    locator: 4.5; PDF6,7
+    statement: Confidence controls longer lookahead and prefetch degree for timeliness.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; no hardware/prediction/workload reproduction executed.
+  triangel-metadata-reuse-buffer:
+    source_refs:
+    - triangel-paper
+    locator: 4.6; PDF8
+    statement: Metadata reuse buffers reduce repeated accesses to Markov cache storage.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; no hardware/prediction/workload reproduction executed.
+  triangel-cache-partition-duelling:
+    source_refs:
+    - triangel-paper
+    locator: 4.7;Fig9; PDF8
+    statement: Set duelling balances Markov metadata allocation against retained data-cache utility.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper mechanism; no hardware/prediction/workload reproduction executed.
+  triangel-temporal-assistance:
+    source_refs:
+    - triangel-paper
+    locator: 4.1-4.3;Fig5-6; PDF4-6
+    statement: Learned address-pair replay supplies speculative cache prefetches; no architectural result delivery
+      or loaded-value indirection ABI is established.
+    evidence_kind: paper_specification
+    limitations:
+    - Temporal correlation is not semantic proof of A[B[i]] or arbitrary pointer-chain execution.
 mechanism_families:
 - id: queue-latency-tolerance
   name: Queue-backed asynchronous access
@@ -2458,6 +2802,14 @@ mechanism_families:
 - id: flat-hta-key-map-and-fallback
   description: Hash-key cache-line map with explicit resolved/fallback branch interface and software overflow;
     no general indexed-memory or atomic-RMW capability inheritance.
+- id: azul-message-driven-sram
+  description: Located tile-local computation and task-message communication; no inherited capabilities.
+- id: telos-stencil-dataflow-model
+  description: Source-modeled point dependency flow; no inherited operation capability.
+- id: svr-piggyback-runahead
+  description: Source-scoped prefetch-assistance navigation; no inherited operation support.
+- id: triangel-temporal-replay
+  description: Temporal prediction navigation only; no inherited operation capabilities.
 decision_questions:
 - id: operation-result
   question: Is the requested result a fetched value, update success, old value, reduction, or only a cache hint?
@@ -8445,3 +8797,672 @@ designs:
     source.
   - No floating-point equality/type, general gather/CAS or Hierarchical-HTA stash capabilities.
   - Actual implementation/register packing and concurrency behavior remain unbound.
+- id: azul-micro2024
+  name: Azul
+  revision: MICRO2024 proceedings
+  record_kind: design_version
+  source_refs:
+  - azul-paper
+  mechanism_refs:
+  - azul-message-driven-sram
+  summary: Mapped sparse solver tasks on distributed SRAM tiles.
+  interface:
+    software_supplies: Data placement, task definitions, message types and communication trees.
+    invocation: Message-triggered tile-local tasks.
+    outputs: Distributed mapped result values.
+    claim_refs:
+    - azul-partial-row-delivery
+    - azul-local-task-memory
+  operations:
+  - id: azul-partial-row-reduce
+    operation: reduce
+    subtype: mapped_sparse_row_partial_sum
+    execution_role: execute
+    address_patterns: []
+    support: paper_specified
+    claim_refs:
+    - azul-partial-row-delivery
+    - azul-local-task-memory
+    result:
+      form: distributed_sram_result
+      old_value: not_returned
+      validity: Mapped solver tasks and their required partial contributions.
+      claim_refs:
+      - azul-partial-row-delivery
+      - azul-local-task-memory
+    ordering:
+      scope: mapped task dataflow
+      description: Dependency-eligible tasks; no global FIFO or generic memory-ordering ABI established.
+      claim_refs:
+      - azul-conflict-scheduling
+    completion:
+      event: All reductions finish and distributed result is stored.
+      visibility: No CPU-coherence or host-visible retirement protocol established.
+      claim_refs:
+      - azul-partial-row-delivery
+      - azul-local-task-memory
+    datatype_notes: FP64 partial values; generic index ABI unknown.
+    limitations:
+    - Kernel-specialized SpMV/SpTRSV mapping, not generic scatter or atomic RMW.
+    realization:
+      kind: documented_sequence
+      description: Local column tasks, partial dispatch, and result-owner reductions.
+      claim_refs:
+      - azul-partial-row-delivery
+      - azul-local-task-memory
+    type_constraints:
+      payload_types:
+      - float64
+      index_width_bits: []
+      notes: FP64 in V-A; metadata32 is not borrowed as index width.
+      claim_refs:
+      - azul-memory-shape
+  internal_mechanisms:
+  - id: local-task-memory
+    kind: other
+    status: described
+    description: Mapped tile-local tasks communicate by messages instead of remote memory loads.
+    claim_refs:
+    - azul-local-task-memory
+  - id: partial-row-delivery
+    kind: completion
+    status: described
+    description: Local row contributions finish before sending their partial sum to its result owner.
+    claim_refs:
+    - azul-partial-row-delivery
+  - id: mapping-objectives
+    kind: other
+    status: described
+    description: Placement balances memory capacity, communication demand, and computation dependencies.
+    claim_refs:
+    - azul-mapping-objectives
+  - id: temporal-balance
+    kind: other
+    status: described
+    description: Topological-depth quantiles constrain load balance; row hyperedges receive greater weight.
+    claim_refs:
+    - azul-temporal-balance
+  - id: communication-trees
+    kind: other
+    status: described
+    description: Compiler-generated multicast and reduction trees limit redundant inter-tile traffic.
+    claim_refs:
+    - azul-communication-trees
+  - id: specialized-pipeline
+    kind: issue_policy
+    status: described
+    description: Data and accumulator SRAM reads feed FP64 arithmetic and writeback or message delivery.
+    claim_refs:
+    - azul-specialized-pipeline
+  - id: conflict-scheduling
+    kind: dependency_tracking
+    status: described
+    description: Dependency checks prevent conflicting accumulator operations; the earliest eligible task supplies
+      operations.
+    claim_refs:
+    - azul-conflict-scheduling
+  - id: message-overflow
+    kind: buffering
+    status: described
+    description: Incoming message-buffer overflow spills into Data SRAM; routers form a two-dimensional torus.
+    claim_refs:
+    - azul-message-overflow
+  - id: generic-address-coalescing
+    kind: coalescing
+    status: unknown
+    description: null
+    claim_refs: []
+  requirements:
+  - id: placement
+    description: Explicit tile ownership for every matrix/vector/partial-result element.
+    scope: mapped sparse solver kernel
+    verification: required
+    claim_refs:
+    - azul-partial-row-delivery
+    - azul-local-task-memory
+  - id: capacity
+    description: Separate capacity accounting for data, accumulators, and overflow messages.
+    scope: mapped sparse solver kernel
+    verification: required
+    claim_refs:
+    - azul-partial-row-delivery
+    - azul-local-task-memory
+  - id: association
+    description: Message-to-task and row-contribution identity; expected update counts.
+    scope: mapped sparse solver kernel
+    verification: required
+    claim_refs:
+    - azul-partial-row-delivery
+    - azul-local-task-memory
+  - id: dependency
+    description: In-flight accumulator hazards and eligible-task scheduling.
+    scope: mapped sparse solver kernel
+    verification: required
+    claim_refs:
+    - azul-partial-row-delivery
+    - azul-local-task-memory
+  - id: compiler
+    description: Generated multicast/reduction trees with complete destination coverage.
+    scope: mapped sparse solver kernel
+    verification: required
+    claim_refs:
+    - azul-partial-row-delivery
+    - azul-local-task-memory
+  - id: completion
+    description: All required reductions finish before distributed output completion.
+    scope: mapped sparse solver kernel
+    verification: required
+    claim_refs:
+    - azul-partial-row-delivery
+    - azul-local-task-memory
+  parameters:
+  - id: data-sram
+    state: fixed_reference
+    value: 73728
+    domain: null
+    unit: bytes/tile
+    notes: TableIII evaluated configuration, not scalable ABI.
+    claim_refs:
+    - azul-memory-shape
+  - id: accumulator-sram
+    state: fixed_reference
+    value: 36864
+    domain: null
+    unit: bytes/tile
+    notes: TableIII evaluated configuration, not scalable ABI.
+    claim_refs:
+    - azul-memory-shape
+  limitations:
+  - packet ABI
+  - memory visibility protocol
+  - FP rounding/control behavior
+  - duplicate message recovery
+  - network global FIFO
+  - fault/rollback protocol
+  - public RTL and evaluated-build correspondence
+  - No generic gather/scatter operation record is inferred.
+- id: telos-isca2025-public-model
+  name: Telos public cycle model
+  revision: 56654e2625989637b858e16f7748dc7247927971
+  record_kind: configuration
+  source_refs:
+  - telos-code-preprocesssptrsv
+  - telos-code-pearray
+  - telos-code-memory
+  - telos-code-accelerator
+  mechanism_refs:
+  - telos-stencil-dataflow-model
+  summary: Author-distributed stencil solver model with plane packing, point dependencies and modeled bandwidth.
+  interface:
+    software_supplies: Structured stencil arrays, shape, tile and schedule configuration.
+    invocation: Python model preprocessing and Accelerator construction.
+    outputs: Modeled domain solution or SpMV result arrays.
+    claim_refs:
+    - telos-neighbor-sum
+    - telos-scalar-dependency-inputs
+    - telos-domain-write-completion
+  operations:
+  - id: telos-stencil-neighbor-sum
+    operation: reduce
+    subtype: stencil_neighbor_contribution_sum
+    execution_role: execute
+    support: code_observed
+    address_patterns: []
+    claim_refs:
+    - telos-neighbor-sum
+    - telos-scalar-dependency-inputs
+    result:
+      form: pe_local_intermediate
+      old_value: not_applicable
+      validity: Required directional and prior-plane contributions for one mapped domain point.
+      claim_refs:
+      - telos-neighbor-sum
+      - telos-scalar-dependency-inputs
+    ordering:
+      scope: source-modeled point dependency flow
+      description: ScalarUnit waits on the required inputs for its point; global FIFO and memory ordering remain
+        unknown.
+      claim_refs:
+      - telos-neighbor-sum
+      - telos-scalar-dependency-inputs
+    completion:
+      event: Local sum feeds the scalar solve; Accelerator waits only on domain DRAM write completion.
+      visibility: No physical response/ACK, CPU coherence or whole-network drain protocol established.
+      claim_refs:
+      - telos-domain-write-completion
+      - telos-neighbor-sum
+    realization:
+      kind: documented_sequence
+      description: Directional input retrieval, sum, scalar solve and index-associated modeled output.
+      claim_refs:
+      - telos-neighbor-sum
+      - telos-scalar-dependency-inputs
+    type_constraints:
+      payload_types: []
+      index_width_bits: []
+      notes: DataWidth is bandwidth byte accounting. Python/NumPy values do not prove hardware FP32/FP64 or index
+        ABI.
+      claim_refs: []
+    datatype_notes: Hardware payload and index types unknown.
+    limitations:
+    - Source-model scope only; generic gather/scatter/RMW and unstructured CSR operation support unproved.
+  internal_mechanisms:
+  - id: plane-packing
+    kind: buffering
+    status: described
+    description: Plane packing uses a staged matrix layout and schedule bubbles.
+    claim_refs:
+    - telos-plane-packing
+  - id: wavefront-tile-order
+    kind: issue_policy
+    status: described
+    description: A wavefront ordering or sequential ordering enumerates logical tiles.
+    claim_refs:
+    - telos-wavefront-tile-order
+  - id: scalar-dependency-inputs
+    kind: dependency_tracking
+    status: described
+    description: Scalar execution waits for domain operands and required directional/plane contributions.
+    claim_refs:
+    - telos-scalar-dependency-inputs
+  - id: staged-vector-flow
+    kind: issue_policy
+    status: described
+    description: Shifted solution values supply scheduled vector terms and validity checks.
+    claim_refs:
+    - telos-staged-vector-flow
+  - id: directional-queues
+    kind: buffering
+    status: described
+    description: Directional and aggregation interfaces use finite SimPy stores.
+    claim_refs:
+    - telos-directional-queues
+  - id: modeled-memory-bandwidth
+    kind: other
+    status: described
+    description: SRAM token accounting and DRAM transfer delays model bandwidth.
+    claim_refs:
+    - telos-modeled-memory-bandwidth
+  - id: domain-write-completion
+    kind: completion
+    status: described
+    description: Completion waits for domain DRAM writes; a separate array-equality check assesses modeled results.
+    claim_refs:
+    - telos-domain-write-completion
+  - id: physical-request-coalescing
+    kind: coalescing
+    status: unknown
+    description: null
+    claim_refs: []
+  requirements:
+  - id: source-prerequisite-0
+    description: Stencil-selector and dimensional API agreement
+    scope: source-model stencil mapping
+    verification: required
+    claim_refs:
+    - telos-neighbor-sum
+    - telos-scalar-dependency-inputs
+  - id: source-prerequisite-1
+    description: Padded coordinates excluded independently of flattened address
+    scope: source-model stencil mapping
+    verification: required
+    claim_refs:
+    - telos-neighbor-sum
+    - telos-scalar-dependency-inputs
+  - id: source-prerequisite-2
+    description: Stage packing and dependency queues agree on identity and horizon
+    scope: source-model stencil mapping
+    verification: required
+    claim_refs:
+    - telos-neighbor-sum
+    - telos-scalar-dependency-inputs
+  - id: source-prerequisite-3
+    description: DataWidth and numerical datatype bound separately
+    scope: source-model stencil mapping
+    verification: required
+    claim_refs:
+    - telos-neighbor-sum
+    - telos-scalar-dependency-inputs
+  - id: source-prerequisite-4
+    description: Full result/input/config and drain evidence before performance use
+    scope: source-model stencil mapping
+    verification: required
+    claim_refs:
+    - telos-neighbor-sum
+    - telos-scalar-dependency-inputs
+  parameters:
+  - id: hardware-arithmetic-width
+    state: unknown
+    value: null
+    domain: null
+    unit: bits
+    notes: Do not infer from DataWidth configuration.
+    claim_refs: []
+  limitations:
+  - ISCA2025 bibliographic identity verified separately; paper fulltext mechanisms not reviewed.
+  - Model source is not RTL correspondence evidence.
+  - Public source anomalies and separate private successor fixes do not change this exact-public-version record.
+  - Full-network drain, physical requests, fairness and hardware resource geometry unproved.
+- id: svr-micro2024
+  name: Scalar Vector Runahead
+  revision: MICRO2024 proceedings
+  record_kind: design_version
+  source_refs:
+  - svr-paper
+  mechanism_refs:
+  - svr-piggyback-runahead
+  summary: Transient scalar-copy memory-chain prefetching on stall-on-use in-order cores.
+  interface:
+    software_supplies: Existing architectural instruction and load stream.
+    invocation: Stride/load-history triggered piggyback runahead.
+    outputs: Prefetched cache lines; architectural results remain main-thread owned.
+    claim_refs:
+    - svr-transient-assistance
+    - svr-scalar-copy-issue
+  operations:
+  - id: svr-transient-chain-prefetch
+    operation: read
+    subtype: transient_indirect_chain_prefetch
+    execution_role: assist
+    address_patterns:
+    - constant_stride
+    - indirect
+    support: paper_specified
+    claim_refs:
+    - svr-transient-assistance
+    - svr-scalar-copy-issue
+    result:
+      form: cache_warming
+      old_value: not_returned
+      validity: Prefetch opportunities for the real architectural instruction stream.
+      claim_refs:
+      - svr-transient-assistance
+      - svr-scalar-copy-issue
+    ordering:
+      scope: piggyback runahead round
+      description: Future scalar copies depend on taint/mapping and follow the real instruction path; no generic
+        global memory order.
+      claim_refs:
+      - svr-taint-register-mapping
+      - svr-divergent-lane-mask
+    completion:
+      event: Return counter gates local scalar-vector dependencies; rounds terminate and clear taint.
+      visibility: No architectural result-return or host-visible accelerator completion protocol.
+      claim_refs:
+      - svr-return-count-dependency
+      - svr-termination-waiting
+    realization:
+      kind: documented_sequence
+      description: Stride-triggered transient copies and their tainted indirect dependents warm caches.
+      claim_refs:
+      - svr-transient-assistance
+      - svr-scalar-copy-issue
+    type_constraints:
+      payload_types: []
+      index_width_bits: []
+      notes: Speculative register storage dimensions do not establish operation payload/index ABI.
+      claim_refs: []
+    datatype_notes: Payload and index ABI unbound.
+    limitations:
+    - Assistance only; main-thread memory operations still supply program values.
+    - No generic gather/scatter/RMW or arbitrary pointer-chase execution record.
+  internal_mechanisms:
+  - id: stride-trigger-range
+    kind: issue_policy
+    status: described
+    description: Stride history, head-load identity and prior prefetch range control piggyback activation.
+    claim_refs:
+    - svr-stride-trigger-range
+  - id: taint-register-mapping
+    kind: dependency_tracking
+    status: described
+    description: Taint follows dependent instructions; evicted speculative mappings disable their dependent vectorization.
+    claim_refs:
+    - svr-taint-register-mapping
+  - id: scalar-copy-issue
+    kind: issue_policy
+    status: described
+    description: Transient scalar copies share existing functional units and speculative register storage.
+    claim_refs:
+    - svr-scalar-copy-issue
+  - id: return-count-dependency
+    kind: completion
+    status: described
+    description: A return counter gates consumers until their scalar-vector producers have returned.
+    claim_refs:
+    - svr-return-count-dependency
+  - id: termination-waiting
+    kind: dependency_tracking
+    status: described
+    description: Head-load recurrence or timeout ends a round; waiting avoids overlapping prefetch ranges.
+    claim_refs:
+    - svr-termination-waiting
+  - id: divergent-lane-mask
+    kind: issue_policy
+    status: described
+    description: Divergent lanes are masked; transient execution follows the architectural instruction path.
+    claim_refs:
+    - svr-divergent-lane-mask
+  - id: history-and-bound-prediction
+    kind: issue_policy
+    status: described
+    description: History and observed loop comparisons predict how many future iterations to fetch.
+    claim_refs:
+    - svr-history-and-bound-prediction
+  - id: usefulness-feedback
+    kind: other
+    status: described
+    description: L1 use/eviction feedback can disable triggering, with periodic opportunities to retry.
+    claim_refs:
+    - svr-usefulness-feedback
+  - id: physical-request-coalescing
+    kind: coalescing
+    status: unknown
+    description: null
+    claim_refs: []
+  requirements:
+  - id: svr-prerequisite-0
+    description: Keep transient and architectural result channels separate.
+    scope: piggyback indirect-chain assistance
+    verification: required
+    claim_refs:
+    - svr-transient-assistance
+    - svr-scalar-copy-issue
+  - id: svr-prerequisite-1
+    description: Preserve per-copy dependence and return-count ownership.
+    scope: piggyback indirect-chain assistance
+    verification: required
+    claim_refs:
+    - svr-transient-assistance
+    - svr-scalar-copy-issue
+  - id: svr-prerequisite-2
+    description: Invalidate taint consumers when speculative mappings are recycled.
+    scope: piggyback indirect-chain assistance
+    verification: required
+    claim_refs:
+    - svr-transient-assistance
+    - svr-scalar-copy-issue
+  - id: svr-prerequisite-3
+    description: Bound rounds, restart ranges and active-lane masks.
+    scope: piggyback indirect-chain assistance
+    verification: required
+    claim_refs:
+    - svr-transient-assistance
+    - svr-scalar-copy-issue
+  - id: svr-prerequisite-4
+    description: Model loop prediction and cache usefulness feedback separately.
+    scope: piggyback indirect-chain assistance
+    verification: required
+    claim_refs:
+    - svr-transient-assistance
+    - svr-scalar-copy-issue
+  - id: svr-prerequisite-5
+    description: Bind memory/ISA widths before selecting typed operations.
+    scope: piggyback indirect-chain assistance
+    verification: required
+    claim_refs:
+    - svr-transient-assistance
+    - svr-scalar-copy-issue
+  parameters:
+  - id: scalar-copies
+    state: fixed_reference
+    value: 16
+    domain: null
+    unit: copies/SVI
+    notes: Default in IV opening, not vector ISA width or payload type.
+    claim_refs:
+    - svr-scalar-copy-issue
+  limitations:
+  - Primary paper reviewed; no public artifact or RTL correspondence established.
+  - No performance ranking or original workload execution.
+  - Physical request/response, fault handling and typed payload ABI remain unbound.
+- id: triangel-isca2024
+  name: Triangel
+  revision: arXiv2406.10627v1 author preprint
+  record_kind: design_version
+  source_refs:
+  - triangel-paper
+  mechanism_refs:
+  - triangel-temporal-replay
+  summary: Sampling-controlled temporal prefetching using on-chip Markov metadata.
+  interface:
+    software_supplies: Observed demand address/PC stream; no explicit semantic indirection descriptor established.
+    invocation: Training and replay on memory accesses.
+    outputs: Speculative prefetch requests and cache warming.
+    claim_refs:
+    - triangel-temporal-assistance
+    - triangel-temporal-address-training
+  operations:
+  - id: triangel-temporal-prefetch
+    operation: read
+    subtype: temporal_address_prefetch
+    execution_role: assist
+    support: paper_specified
+    address_patterns: []
+    claim_refs:
+    - triangel-temporal-assistance
+    - triangel-temporal-address-training
+    result:
+      form: cache_warming
+      old_value: not_returned
+      validity: Predicted temporal address correlations; architectural values remain demand-load owned.
+      claim_refs:
+      - triangel-temporal-assistance
+      - triangel-temporal-address-training
+    ordering:
+      scope: learned temporal mapping and speculative lookup
+      description: No generic semantic occurrence/order contract or architectural memory-order guarantee.
+      claim_refs:
+      - triangel-temporal-assistance
+      - triangel-temporal-address-training
+    completion:
+      event: Speculative candidate prefetches produced from learned metadata.
+      visibility: No original architectural result/old-value/host accelerator completion protocol inferred.
+      claim_refs:
+      - triangel-temporal-assistance
+      - triangel-temporal-address-training
+    realization:
+      kind: documented_sequence
+      description: Address-pair training, confidence sampling and metadata replay.
+      claim_refs:
+      - triangel-temporal-assistance
+      - triangel-temporal-address-training
+    type_constraints:
+      payload_types: []
+      index_width_bits: []
+      notes: Encoded target/tag widths do not establish payload or semantic index ABI.
+      claim_refs: []
+    datatype_notes: Payload and semantic index types unbound.
+    limitations:
+    - Assistance, not functional gather/scatter/RMW execution.
+  internal_mechanisms:
+  - id: temporal-address-training
+    kind: dependency_tracking
+    status: described
+    description: Per-PC address history trains temporal mappings with reuse and pattern confidence.
+    claim_refs:
+    - triangel-temporal-address-training
+  - id: markov-target-encoding
+    kind: other
+    status: described
+    description: Hashed lookup tags and encoded targets reduce Markov metadata footprint.
+    claim_refs:
+    - triangel-markov-target-encoding
+  - id: history-reuse-sampling
+    kind: issue_policy
+    status: described
+    description: Per-PC reuse-distance sampling controls whether patterns merit metadata allocation.
+    claim_refs:
+    - triangel-history-reuse-sampling
+  - id: second-chance-pattern
+    kind: issue_policy
+    status: described
+    description: Second-chance sampling recognizes useful targets beyond immediate successor matches.
+    claim_refs:
+    - triangel-second-chance-pattern
+  - id: adaptive-lookahead
+    kind: issue_policy
+    status: described
+    description: Confidence controls longer lookahead and prefetch degree for timeliness.
+    claim_refs:
+    - triangel-adaptive-lookahead
+  - id: metadata-reuse-buffer
+    kind: buffering
+    status: described
+    description: Metadata reuse buffers reduce repeated accesses to Markov cache storage.
+    claim_refs:
+    - triangel-metadata-reuse-buffer
+  - id: cache-partition-duelling
+    kind: buffering
+    status: described
+    description: Set duelling balances Markov metadata allocation against retained data-cache utility.
+    claim_refs:
+    - triangel-cache-partition-duelling
+  - id: physical-request-coalescing
+    kind: coalescing
+    status: unknown
+    description: null
+    claim_refs: []
+  requirements:
+  - id: triangel-prerequisite-0
+    description: Separate temporal address prediction from loaded-value dependency execution.
+    scope: temporal-prefetch assistance
+    verification: required
+    claim_refs:
+    - triangel-temporal-assistance
+    - triangel-temporal-address-training
+  - id: triangel-prerequisite-1
+    description: Bind metadata replacement, target encoding and reuse-buffer fields together.
+    scope: temporal-prefetch assistance
+    verification: required
+    claim_refs:
+    - triangel-temporal-assistance
+    - triangel-temporal-address-training
+  - id: triangel-prerequisite-2
+    description: Preserve confidence, sampling and cache-partition accounting.
+    scope: temporal-prefetch assistance
+    verification: required
+    claim_refs:
+    - triangel-temporal-assistance
+    - triangel-temporal-address-training
+  - id: triangel-prerequisite-3
+    description: Do not certify speculative candidates as architectural returned values.
+    scope: temporal-prefetch assistance
+    verification: required
+    claim_refs:
+    - triangel-temporal-assistance
+    - triangel-temporal-address-training
+  parameters:
+  - id: encoded-target-bits
+    state: fixed_reference
+    value: 31
+    domain: null
+    unit: bits/Markov target
+    notes: Paper4.3 storage encoding only; not index/address/payload interface width.
+    claim_refs:
+    - triangel-markov-target-encoding
+  limitations:
+  - Current author-linked799c source is2026 supplemental evidence; evaluated2024 correspondence unknown.
+  - Optional current-source MRB/LUT fixes are private proposed derivatives, not paper/runtime correctness certificates.
+  - No timing, power or benchmark performance reproduced.
+  - Physical prefetch response and typed payload ABI remain unknown.
