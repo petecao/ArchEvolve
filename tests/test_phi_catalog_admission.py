@@ -20,9 +20,12 @@ class PhiAdmissionTests(unittest.TestCase):
                           if d["id"] == "phi-micro2019-relaxed-bulk-scatter")
 
     def test_prior_records_and_project_choices_unchanged(self):
-        self.assertEqual(self.catalog["designs"][:-1], self.base["designs"])
+        by_id = {d["id"]: d for d in self.catalog["designs"]}
+        self.assertEqual([by_id[d["id"]] for d in self.base["designs"]], self.base["designs"])
         self.assertEqual(self.catalog["project_selections"], self.base["project_selections"])
-        self.assertEqual(self.catalog["mechanism_families"][:-1], self.base["mechanism_families"])
+        by_family = {m["id"]: m for m in self.catalog["mechanism_families"]}
+        self.assertEqual([by_family[m["id"]] for m in self.base["mechanism_families"]],
+                         self.base["mechanism_families"])
         for group in ("sources", "claims"):
             for key, value in self.base[group].items():
                 self.assertEqual(self.catalog[group][key], value)
