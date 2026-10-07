@@ -1,5 +1,6 @@
 """Public bounded object/frame observer contract. Updated: 2026-10-06 ET."""
 import json
+import pytest
 import copy
 from testkit.analytic import digest
 from conftest import REPO, run_swdb, make_records
@@ -124,3 +125,32 @@ def test_source_nonlocal_exit_keeps_unproved_recovered_frame_unknown(records,tmp
     assert memory['useful_bytes']['value']==3
     assert memory['unknown_object_requests']['value']==3
     assert 'nonlocal_control_flow' in memory['missing']
+
+
+@pytest.mark.parametrize('mode',['ordinary','throw'])
+def test_object_scopes_preserve_functional_command_domains_and_request_partitions(records,tmp_path,llvm22,mode):
+    from test_analytic_commands import characterize_command
+    extra=('--object-scopes',)+(('--run-arg','throw') if mode=='throw' else ())
+    data,target_hash=characterize_command(records,tmp_path,llvm22,extra=extra)
+    assert data['observation_contract']['object_scope_contract']['format']=='swdb.object-scopes.v1'
+    if mode=='ordinary':
+        assert data['observation_contract']['semantic_commands']['complete'] is True
+        observed=next(region['address_stream_counts'][target_hash] for region in data['regions']
+            if region['address_stream_counts'][target_hash]['line_requests']['value'])
+        assert observed['line_requests']['value']==6
+        assert observed['row_groups']['value']==3 and observed['windows']['value']==2
+    else:
+        assert any('command_unwind' in region['address_stream_counts'][target_hash]['missing'] for region in data['regions'])
+        host_stores=[access for region in data['regions'] for access in region['access_patterns']
+            if access['source_location']['function']=='main' and access['update_kind']=='write' and access['element_count']['value']]
+        assert host_stores
+    for region in data['regions']:
+        memory=region['memory_service_counts']
+        requests=sum(item['requests']['value'] for rows in memory['requests_by_update_kind'].values() for item in rows)
+        if 'object_scope_counts' in memory:
+            facts=memory['object_scope_counts']
+            assert sum(facts[name]['value'] for name in
+                ('full_allocation_requests','bounded_view_requests','unresolved_requests'))==requests
+        else:
+            assert requests==0 # No executed host access; offload requests stay in their command domain.
+    checked=records.validate();assert checked.returncode==0,checked.stdout+checked.stderr

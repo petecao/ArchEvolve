@@ -1,6 +1,6 @@
 # Bounded source objects and ABI referent views
 
-Updated: 2026-10-06 20:08 ET. Delegated ticket11 prerequisite; ticket09/11 custody is unchanged.
+Updated: 2026-10-06 20:17 ET. Delegated ticket11 prerequisite; ticket09/11 custody is unchanged.
 
 The public seam is `swdb characterize --object-scopes` on copied-store source fixtures.
 The observer is optional. Absent optional fields retain historical receipt identities and
@@ -74,3 +74,30 @@ merge. No application timing or fresh BFS/BC outcome is claimed by these fixture
 
 The compiler basis is the pinned LLVM 22 DataLayout and [alloca/lifetime/stack semantics](https://llvm.org/docs/LangRef.html#alloca-instruction).
 The bounded OpenMP view follows the documented [kmpc_micro ABI](https://openmp.llvm.org/doxygen/group__PARALLEL.html), not a deduction of libomp's full allocation.
+
+
+## Final portable handoff
+
+The integrated 27-case gate passed in 126.21 seconds, including the registered-functional
+source adapter, C++11 live-object counts, observer reentrancy and command-unwind context.
+Canonical validation accepted 589 records. The alias-owner budget regression reproduced
+a falsely admitted ownerless view; rejection before insertion now preserves the request
+as unresolved, with the correct bounded-state reason. Its complete callback protocol plus
+actual OpenMP source gate passed 16 cases in 5.07 seconds. The existing registry-capacity
+diagnostic is preserved when both budgets are exhausted.
+
+[Public proof and source hashes](11-bounded-object-scopes-public-proof.json) records the clean
+implementation commit, focused gates and unchanged historical record/tracker byte boundary.
+[Final reserved shared insertion](11-object-scopes-final-insertion.diff) supersedes the earlier
+first-slice snapshots. [Fresh T1 count commands](11-object-scopes-counting-runbook.md) retain
+five trial selections and the frozen v2 normalization recipe. Actual opt-in BFS/BC outcomes
+remain pending; ticket09/11 remains under its implementer's custody. Exact CPU primitive
+opcode/type/ordering metadata is a separate additive slice owned by09; absent proof cannot
+admit an ordinary-store or integer-atomic cost.
+
+The final two public command-composition checks passed in 7.63 seconds. Normal target
+reads remain in the offload command domain; an offload-only region does not acquire a
+phantom host request or a fabricated scope fact. Exceptional recovery retains the
+caller store in the host domain and validates its observed coverage partition. Both
+fresh g16 runbook argument lists also passed the public CLI parser with help-only
+execution; actual mbit10 count outcomes remain pending.
