@@ -1,10 +1,10 @@
 # Implementation progress
 
-Updated: 2026-10-07 07:10 ET
+Updated: 2026-10-07 07:39 ET
 
 **12 of15 assigned tickets resolved and integrated.** Status: 2:resolved, 3:resolved, 4:resolved, 5:resolved, 6:resolved, 7:resolved, 8:resolved, 9:resolved, 10:resolved, 11:claimed, 12:resolved, 13:resolved, 14:claimed, 16:resolved, 17:claimed. Actual final evaluations, two-axis review/fixes, ticket/map sync, recoverable owned-worktree cleanup and heartbeat pause remain required. Parent owns all SSH and dispatch. Agents03/04 are responsive;02 completed the exact nine-report execution note and remains available.
 
-Checkpoint parent `54b6ac1e054098e3510110cf9966b03fe34eb236` is delivered to integration/origin/`yanrujhou_main` and mbit10 primary. Catalog: **682 canonical YAML**. Execution sourceC `f893fed400347ed23d92e917d8bde21b75e5375d` remains clean and separate; F6 `f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3` covers185 Python modules. Final review base `2c50e5fb8671e08050921bee06920f92fd153bdd`. Root human rule and remote retention lock preserved.
+Checkpoint parent `2ab707209dcbc4bf8360c3ff1dce0e5f4e2d9871` is delivered to integration/origin/`yanrujhou_main` and mbit10 primary. Catalog: **682 canonical YAML**. Execution sourceC `f893fed400347ed23d92e917d8bde21b75e5375d` remains clean and separate; F6 `f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3` covers185 Python modules. Final review base `2c50e5fb8671e08050921bee06920f92fd153bdd`. Root human rule and remote retention lock preserved.
 
 | Ticket | Actual state | Remaining gate |
 |---|---|---|
@@ -15,10 +15,10 @@ Checkpoint parent `54b6ac1e054098e3510110cf9966b03fe34eb236` is delivered to int
 
 | CPU phase | Live observed state | Raw canonical files |
 |---|---|---:|
-| model | Remote completion observed; export and local admission are separate gates | 672 |
-| development | Remote completion observed; export and local admission are separate gates | 676 |
-| holdout | Remote completion observed; export and local admission are separate gates | 680 |
-| band-report | Stopped; retain attempt and inspect | 0 |
+| model | Admitted; four inferred forecasts frozen | 672 |
+| development | Admitted; widths frozen before held-out timing | 676 |
+| holdout | Admitted; BFS broad-band pass, BC failed unchanged | 680 |
+| band-report | Original g508 startup failure; exact failure retained | 0 |
 | band-report-a4 | Active; latest output freeze-bfs.stderr; completion pending | 680 |
 
 Live metadata does not replace numerical admission or receipt/source/lane/cleanup checks. Model/development/held/report raw catalog totals are672/676/680/684; integration additionally preserves two PR records. The metadata reader parses no numerical outcomes. Completed held-out outcomes below come from admitted5268 evidence; report retry outcomes remain unread.
@@ -45,7 +45,9 @@ Actual held-out g507 completed10:43:50Z, all0/full680 validation/empty cleanup/r
 
 BC retains exact `empirical_holdout_outside_frozen_width`; no width enlargement or retuning. BFS broad pass does not establish accuracy. There is one development and one held-out scoped workload pair per kernel; five shared-process calls are not independent pairs. Regional diagnosticffcfbe43 uses actual median forecast trials, with inferred memory shares99.9836% BFS/99.9938% BC, not measured regional attribution. Consumed held-out export removed once10:51:58Z, recovering677,380,096B; raw/source/Git retained.
 
-Original report a3 g508 failed10:52:31Z before started/Store/new records, because decoded runner lacked `hashlib`. Exact compact failure7b67aec7 and original raw/control bytes are retained. Prepared fresh a4 controls543b79/1d1251/bfc76a/26f6b8 change only the import and attempt paths; decoded science, costs, widths, caps and sourceC/F6 are unchanged. Isolated original RED and fresh GREEN plus two tamper negatives passed; static preparationdd160dce/readiness48d2c180 are distinct from actual staginge7d7d5e5 and dispatch. Parent staged controls11:02:43Z, then dispatched retry once11:03:17Z on node0g509. Actual raw path is `lanl-analytic-cpu-band-report-20261007-a4`; canonical/logical study a3 names remain unchanged with explicit retry custody. Public acceptance/export/local admission remain pending. No report values are read before completion.
+Original report a3 g508 failed10:52:31Z before started/Store/new records, because decoded runner lacked `hashlib`. Exact compact failure7b67aec7 and original raw/control bytes are retained. Prepared fresh a4 controls543b79/1d1251/bfc76a/26f6b8 change only the import and attempt paths; decoded science, costs, widths, caps and sourceC/F6 are unchanged. Isolated original RED and fresh GREEN plus two tamper negatives passed; static preparationdd160dce/readiness48d2c180 are distinct from actual staginge7d7d5e5 and dispatch. Parent staged controls11:02:43Z, then dispatched retry once11:03:17Z on node0g509. Actual raw path is `lanl-analytic-cpu-band-report-20261007-a4`; canonical/logical study a3 names remain unchanged with explicit retry custody. Public acceptance/export/local admission remain pending. No report values are read before completion. Exact20 original sources/receipts and dated context are archived under `11-report-startup-recovery-controls-20261007-a4/`, manifestce2bf977, integrated proof04fa3214 at2ab7072. Five original seals and three original unsealed receipts or dispatch stream remain exact. The original unified-diff context line24 is preserved with its pinned single space; no scientific source edits.
+
+Two meaningful ignored ticket10 preparation JSONs and their original unsealed inventory were retained byte-exact under `10-ignored-preparation-retention-20261007/`, manifest281c951c and integrated proof0d071ea1. Their original `prepared`/provider_launchedfalse labels remain unchanged; separate historical provider success is referenced precisely. Managed local worktree archival remains pending final review.
 
 Selected a4 helper28d/original4d Linux check g54709:14:38–09:14:53Z passed; supervisorfa703/unchangeda848 fixture g54809:15:54–09:16:45Z passed returned/timeout/TERM0/124/143. Owned PID/start identities disappeared, siblings survived, wrappers0/all leases released. Actual helper proof is rawroot-direct `/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261007-a4/receipt.json` seal18e58a44; supervisor proofea9751ee is separate. Compact63ded110/f0b2f8cf and six exact snapshots are in `17-cleanup60-controls-actual-20261007-a4/`, manifest0e29dcc9 and integrated proof49f2c4fe. Earlier actual a1/a2/a3 proofs and original NOTRUN source-preparation chronology remain byte-exact.
 
@@ -55,9 +57,9 @@ PR replay remains admitted at96685eac: freeze865.004s/estimate486.878s/checker12
 
 CPU native900s/metadata2400/collector3600/inner18000/outer18300/KILL60 controls preserve runner science.17 preparevalidate3600/freeze6000, finalvalidate3600/export6000/report14400, supervisor18000/78000 and outer18300/78300/KILL60 are finite policies, not runtime guarantees. Full Store/library/certification gates remain. Four actual campaigns retain eight iterations/plateau4/provider caps/24h/20GB; at most two same-population lanes, queue if capacity requires. D30 still requires20 unique pairs/tau/CI/top3 and valid dependency bootstrap; unsupported/no-switch if unmet, no padding.
 
-Live `2026-10-07T11:10:17.459492+00:00`: node0=held, node1=released, legacy=released; load1=2.28, available memory120,939,917,312B, data1 free24,172,957,696B, data free49,981,165,568B. Unrelated jobs/raw/source/build/IR preserved. Only specifically consumed/export-guarded checkouts were removed.
+Live `2026-10-07T11:38:46.599813+00:00`: node0=held, node1=released, legacy=released; load1=2.05, available memory116,644,618,240B, data1 free24,172,277,760B, data free49,981,165,568B. Unrelated jobs/raw/source/build/IR preserved. Only specifically consumed/export-guarded checkouts were removed.
 
-Human15/18/21 and prerequisite/triage/access19/20/22/23 remain separate. No external communication.19 owned local managed worktrees remain registered through final review/fixes and recoverable cleanup. Heartbeat ACTIVE. **Next required status/agent-health table:2026-10-07 07:39 ET.**
+Human15/18/21 and prerequisite/triage/access19/20/22/23 remain separate. No external communication.19 owned local managed worktrees remain registered through final review/fixes and recoverable cleanup. Heartbeat ACTIVE. **Next required status/agent-health table:2026-10-07 08:09 ET.**
 
 ## Remote preparation
 
