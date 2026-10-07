@@ -1,0 +1,48 @@
+{
+  "format": "swdb.stateless-llvm-support-proof.v1",
+  "updated": "2026-10-06 20:50 ET",
+  "source_base": "2c14809",
+  "scope": "Public LLVM22 static-distribution proxy using local native ARM LLVM archive; Linux native retry remains the parent\u2019s separate execution receipt.",
+  "regressions": [
+    {
+      "cases": 2,
+      "seconds": 39.74,
+      "result": "passed",
+      "tests": [
+        "test_static_pass_resolves_exact_sha256_without_full_static_llvm",
+        "test_static_llvm_distribution_loads_pass_via_host_symbols"
+      ]
+    },
+    {
+      "cases": 12,
+      "seconds": 325.24,
+      "result": "passed",
+      "tests": [
+        "tests/test_analytic_llvm_support.py",
+        "tests/test_intrinsic_source_views.py"
+      ]
+    }
+  ],
+  "red": "The functional public fixture initially left llvm::SHA256::hash undefined in Characterize.so.",
+  "green": "The pass defines the exact LLVM SHA-256 routine; six source-hash-bound logical requests are preserved; replacing object identity while re-signing only the outer fixture record is refused.",
+  "native_tools": [
+    "llvm-config --libdir",
+    "llvm-ar t/p",
+    "llvm-nm --defined-only/--undefined-only --demangle"
+  ],
+  "archive_member": "SHA256.cpp.o",
+  "whole_static_archive_linked": false,
+  "support_object_state": "SHA256 methods and LLVM ABI check anchor only; no extra LLVM globals or initializer functions",
+  "receipt_fields": [
+    "toolchain.plugin_support_objects",
+    "observation_contract.plugin_support_objects_sha256"
+  ],
+  "source_sha256": {
+    "swdb/analytic_llvm_support.py": "262b13c9fb55c82b877c7ef979e2e3aa77f97fcf342f9e746781e3cb9429a227",
+    "swdb/analytic.py": "5cc110e4bef8780041ae3ee7e38bdaada9ede9c3fd6bceed03d21ff0bffaf481",
+    "schemas/workload_characterization.schema.json": "7bfbc2a2e9cb17d0dac1a8991dc25e9389b0dea364e85ab638814ffb4c7e9749"
+  },
+  "no_application_timing": true,
+  "no_gem5_output": true,
+  "failed_remote_a1_preserved": true
+}

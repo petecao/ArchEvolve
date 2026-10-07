@@ -160,6 +160,14 @@
           "items": {
             "type": "string"
           }
+        },
+        "plugin_support_objects": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "$ref": "#/$defs/stateless_llvm_support"
+          }
         }
       },
       "required": [
@@ -684,6 +692,10 @@
             "observer_sha256",
             "runtime_sha256"
           ]
+        },
+        "plugin_support_objects_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
         }
       },
       "required": [
@@ -2274,6 +2286,41 @@
         "volatile",
         "weak",
         "update_opcode"
+      ]
+    },
+    "stateless_llvm_support": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "swdb.stateless-llvm-support.v1"
+        },
+        "archive": {
+          "type": "string",
+          "minLength": 1
+        },
+        "archive_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "member": {
+          "const": "SHA256.cpp.o"
+        },
+        "object_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "verification": {
+          "const": "sha256_methods_and_abi_anchor_only_no_global_initializers"
+        }
+      },
+      "required": [
+        "format",
+        "archive",
+        "archive_sha256",
+        "member",
+        "object_sha256",
+        "verification"
       ]
     }
   }

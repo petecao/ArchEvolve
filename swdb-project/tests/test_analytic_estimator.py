@@ -185,7 +185,7 @@ def test_static_llvm_distribution_loads_pass_via_host_symbols(copied_records, tm
     # libLLVM shared object while retaining real LLVM analysis/instrumentation.
     proxy = tmp_path / 'llvm-static-bin'
     proxy.mkdir()
-    for name in ('opt', 'clang++'):
+    for name in ('opt', 'clang++', 'llvm-ar', 'llvm-nm'):
         (proxy / name).symlink_to(llvm22 / name)
     config = proxy / 'llvm-config'
     config.write_text(f'#!{sys.executable}\n' +

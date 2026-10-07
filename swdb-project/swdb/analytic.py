@@ -333,6 +333,12 @@ def characterize(args):
         llvm_flags.extend(['-Wl,-undefined,dynamic_lookup'])
     # Never link a static libLLVM into the plugin: duplicate registries/LLVM globals
     # would conflict with opt. A static opt distribution must export its host symbols.
+    plugin_support_objects = []
+    if plugin_linkage == 'host_symbols':
+        from swdb.analytic_llvm_support import source_sha256_object
+        support_object, support_identity = source_sha256_object(llvm, output, _run, args.timeout_s)
+        llvm_flags.append(str(support_object))
+        plugin_support_objects.append(support_identity)
     run_library_paths = [str(p.resolve()) for p in args.run_library_path]
     llvm_src = Path(__file__).with_name('llvm')
     build = [llvm / 'clang++', '-shared', '-fPIC', llvm_src / 'Characterize.cpp', '-o', plugin,
@@ -437,6 +443,8 @@ def characterize(args):
             'missing_counts': ['callee bodies outside selected debug functions and other translation units'] if any(c['execution_count']['value'] and _uncovered_call(c) for c in calls + [c for t in trials for c in t['unmodeled_calls']]) else []},
         'regions': regions, 'unmapped_loops': [r['id'] for r in regions if r['kind'] == 'loop' and not r['mapped']],
         'unmodeled_calls': calls, 'evidence_kind': 'contract_fixture' if args.fixture else 'execution'})
+    if plugin_support_objects:
+        record['toolchain']['plugin_support_objects'] = plugin_support_objects
     native_libraries = {}
     native_missing = []
     for loaded_path in counts.get('loaded_images', []):
@@ -477,6 +485,8 @@ def characterize(args):
             'observer_isolation':'thread_local_reentrancy_guard',
             'runtime_bundle_sha256':artifacts.digest({name:_sha(llvm_src/name)
                 for name in ('CountingRuntime.cpp','LiveObjects.hpp','LogicalCommands.hpp')})}
+    if plugin_support_objects:
+        record['observation_contract']['plugin_support_objects_sha256'] = artifacts.digest(plugin_support_objects)
     if args.object_scopes:
         record['observation_contract']['object_scope_contract']={
             'format':'swdb.object-scopes.v1','abi':'swdb.object-scope.v1',
@@ -668,6 +678,11 @@ def _payload_problems(data):
         ids = [r['id'] for r in data['regions']]
         if len(set(ids)) != len(ids):
             yield 'regions', 'region IDs must be unique after loop aggregation'
+        support = data.get('toolchain', {}).get('plugin_support_objects')
+        support_sha = data.get('observation_contract', {}).get('plugin_support_objects_sha256')
+        if support is not None or support_sha is not None:
+            if support_sha != artifacts.digest(support):
+                yield 'toolchain.plugin_support_objects', 'native stateless support differs from sealed observation metadata'
         groups=[('regions',data['regions'])]+[(f'trials[{i}].regions',trial.get('regions',[])) for i,trial in enumerate(data.get('trials',[]))]
         for group, rows in groups:
           for i, region in enumerate(rows):
