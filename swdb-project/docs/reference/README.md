@@ -1,11 +1,16 @@
 # Reference
 
-Updated: 2026-10-06 ET.
+Updated: 2026-10-07 (Eastern Time).
 
 Use the [tutorial](../tutorial/README.md) first. Open these documents when you need
 exact fields, invariants, or a target-specific procedure. Navigation was updated
 during consolidation; each document's content date still identifies its scope.
 Dated measurements and host snapshots are historical, not live state.
+
+New ArchEvolve evidence excludes gem5 execution and calibration dependencies.
+The DX100 simulator procedures below apply to Extensa research; public backend
+commands need `--mode extensa --campaign ID`, unless a campaign sets the context.
+The [tutorial workflow](../tutorial/04-bfs-workflow.md) explains both modes.
 
 Current commands and plain paths are relative to `ArchEvolve/swdb-project/`;
 run `cd swdb-project` from the monorepo root. Archived procedures retain their
@@ -17,6 +22,9 @@ original paths and context.
 |---|---|
 | Characterize source and estimate time | [Analytic formats and commands](format-v0.4-analytic.md) |
 | Freeze unknown numerical parameters | [Estimation role](estimation-role.md) |
+| Run research loops and inspect agreement | [Extensa fields and commands](format-v0.4-extensa.md) |
+| Inspect reusable certified rewrites | [Typed library](bfs-typed-library.md) |
+| Check main-database compatibility | [Crosswalk draft](../compatibility/README.md) |
 | Write catalog records | [Format 0.3](format-v0.3.md), [format 0.4 additions](format-v0.4.md) |
 | Add source, loops, access patterns, inputs | [Application checklist](adding-an-application.md) |
 | Add a strategy or intrinsic | [Strategy checklist](adding-a-strategy.md) |

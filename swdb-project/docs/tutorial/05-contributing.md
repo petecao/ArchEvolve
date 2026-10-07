@@ -1,6 +1,6 @@
 # 5. Contribute records and understand profiling
 
-Updated: 2026-09-30 (Eastern Time). Reading budget: 7 minutes.
+Updated: 2026-10-07 (Eastern Time). Reading budget: 7 minutes.
 
 [Tutorial](README.md) · [Previous](04-bfs-workflow.md)
 
@@ -33,12 +33,10 @@ with TemporaryDirectory(prefix="swdb-tutorial-") as work:
 PY
 ```
 
-The fixture is a complete `input` record referring to a checked-in edge-list
-file and its hash. Its node count comes from code reading; edge counts remain
-unknown until measured. `add --agent` retains draft status and adds agent-run
-provenance. The canonical destination is `inputs/tiny-sym.yaml`; `get` retrieves
-the same identity through the generated index. The temporary directory is
-removed when the block exits.
+The fixture refers to a checked-in edge list and hash. Its node count is read
+from code; edge counts remain unknown. `add --agent` records draft status and
+agent provenance at `inputs/tiny-sym.yaml`; `get` retrieves that identity.
+The temporary directory is removed when the block exits.
 
 ## Extend the catalog deliberately
 
@@ -59,18 +57,17 @@ For a new application, work through these dependencies:
    environment, and raw-output locations. Review the evidence before treating
    the record as reviewed.
 
-Copy a structurally similar record, but re-establish its facts for the new code.
-Each implementation's seven semantic fields cover duplicate indices, index
-modification, loop-carried dependencies, shared targets, required atomic updates,
-ordering, and numerical requirements. A compare-and-swap retry loop keeps
-`compare_and_swap` as its update kind even if the algorithm implements a minimum.
-Array aliases matter when computing footprints.
+Copy a similar record, then re-establish its facts. Describe duplicate indices,
+index modification, dependencies, sharing, atomic requirements, ordering, and
+numerical requirements. A compare-and-swap retry loop keeps update kind `compare_and_swap`,
+even when implementing a minimum. Record aliases to avoid double-counted footprints.
 
 For a new strategy, first check whether its **target plus typed effect** already
 exists. Tile sizes and prefetch distances are parameters, not new identities.
 Record machine-checkable preconditions, remaining `unchecked` requirements, and
-reported benefits with sources. Intrinsic records retain the exact wrapper name,
-header, ISA requirements, lane/element widths, and memory behavior. Derived
+reported benefits with sources. Catalog intrinsic records retain exact names,
+headers, ISA requirements, lane/element widths, and memory behavior. Accelerator
+intrinsics also need typed-library semantics, lowerings, and certifications. Derived
 implementations name the strategies they apply and intrinsics they call.
 
 Use the [application checklist](../reference/adding-an-application.md) and
@@ -81,7 +78,11 @@ from ticket statuses.
 
 Sealed workloads and protocols use `register-workload` and `freeze-protocol`;
 assembled packages use `profile-package`. `add` is not the creation interface for
-those records. Experimental fields belong under `extensions` where supported.
+those records. Typed-library entries belong in `library/`, not `add`; validate
+their clauses, code pins, and dependency hashes. Certification and promotion
+create evidence/review records without rewriting normative content. Agent reviews
+must record delegation and attribution. Experimental fields belong under
+`extensions` where supported.
 
 ## Understand what ordinary profiling collects
 
@@ -101,12 +102,11 @@ diagnostic; its cache metrics have `basis: simulated`. Index-stream features
 describe properties such as repetition and locality in the declared visit order.
 BFS uses the separate evaluator/protocol machinery from chapter 4.
 
-For mbit10, enter measurements through the current socket-lane wrapper, after
-checking both socket leases and the legacy lease. There are at most two
-measurement jobs, one per socket. Verify the exact checkout and current disk,
-load, and counter availability. Builds/sources belong under `/data1/yanruj/`;
-raw output stays outside git on the producing host. Sync code through git and
-avoid updating a checkout while it is measuring.
+On mbit10, check both socket leases and the legacy lease, then use the current
+socket-lane wrapper. Permit at most two measurement jobs, one per socket.
+Check source commit, disk, load, and counter availability. Builds/sources belong
+under `/data1/yanruj/`; raw output stays outside git on its producing host.
+Sync through git without updating a measuring checkout.
 
 The local Mac is ARM and mbit10 is x86_64. Local catalog exercises need neither
 OpenMP nor a simulator; running native or simulated workloads has additional

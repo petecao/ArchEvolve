@@ -1,6 +1,6 @@
 # EvolveSWDB tutorial
 
-Updated: 2026-09-30 (Eastern Time).
+Updated: 2026-10-07 (Eastern Time).
 
 Start with the overview. Then read chapters 2–5 in order. Basic familiarity
 with code and command-line tools is enough; no ArchEvolve or simulator knowledge
@@ -11,7 +11,7 @@ is required.
 | 1 | [Overview](01-overview.md) | 10 min | Explain SWDB and follow a PageRank query |
 | 2 | [Records and queries](02-records-and-queries.md) | 7 min | Read records and interpret evidence |
 | 3 | [Components](03-components.md) | 7 min | Find the code for each operation |
-| 4 | [BFS workflow](04-bfs-workflow.md) | 9 min | Trace source, rewrite, evaluation, and comparison |
+| 4 | [BFS workflow](04-bfs-workflow.md) | 9 min | Trace rewrites, estimates, and research campaigns |
 | 5 | [Contributing and profiling](05-contributing.md) | 7 min | Extend the catalog and choose a procedure |
 
 The overview and both navigation pages stay below 1,200 words. Chapters 2–5
@@ -26,7 +26,7 @@ describe interfaces, not a campaign launch sequence. Mermaid diagrams have
 accompanying explanations.
 
 Code and local examples were checked against `yanrujhou_main` source commit
-`d985216d921cbd5a0685175445e35618ca7b3e7b` on 2026-09-30. Remote paths and dated
+`ecc36ed7f11a45946bcc743ff3a49f6577bee8de` on 2026-10-07. Remote paths and dated
 results remain retained metadata; this review ran no measurements on mbit10.
 
 **[Begin the overview →](01-overview.md)**

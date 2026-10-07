@@ -3,7 +3,13 @@
 Navigation updated: 2026-09-28 (Eastern Time).
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-26 (Eastern Time)
+Updated: 2026-10-07 (Eastern Time)
+
+This procedure applies to Extensa research. New `dx100-profile`, `dx100-compile`,
+`dx100-execute`, and backend-linked query calls need
+`--mode extensa --campaign ID` with a valid campaign ID, unless inherited from
+the campaign. Default ArchEvolve calls refuse gem5 dependencies. The historical
+observations below are unchanged. Work inside `ArchEvolve/swdb-project/`.
 
 `dx100-profile REQUEST --runs-dir DIR --format json` retains a `region_profile` and attaches exact simulated ROI timing to the selected evaluation. The request contains `message_version: '1.0'`, a new `id`, `evaluation`, `discovery_profile`, and `budget: {total_seconds: 60}`. The maximum collector budget is 600 seconds. The referenced compiler discovery must identify the same candidate; every returned source extent is checked against the current candidate bytes. Native timing observations are discarded rather than copied to the simulated profile.
 

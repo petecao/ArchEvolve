@@ -8,6 +8,8 @@ Updated: 2026-10-04 (Eastern Time): statement facts and pattern-key tables for t
 
 Updated: 2026-10-06 (Eastern Time): one record/index access interface (analytic-evaluation ticket 02).
 
+Updated: 2026-10-07 (Eastern Time): current evidence-basis interpretation.
+
 Run commands inside `ArchEvolve/swdb-project/`. [The database builder](../../swdb/db.py)
 writes `build/swdb.sqlite` beside `records/` by default (another records folder
 `X` gets `build/swdb-X.sqlite`). It recreates every table in a temporary file,
@@ -311,7 +313,7 @@ One row per metric of each profile.
 | `value` | numeric value, or null when the value is a histogram or unknown |
 | `value_json` | the value as JSON (histograms live here) |
 | `unit` | unit (fixed per metric name) |
-| `basis` | measured, simulated, inferred, or unknown |
+| `basis` | Recorded basis from [`vocab/basis.yaml`](../../vocab/basis.yaml); ordinary profiling normally produces measured, simulated, inferred, or unknown facts. Estimated time belongs to estimate records. |
 | `threads` | thread count, for per-thread metrics |
 | `array_name` | the array, for per-array metrics |
 | `scope` | count scope, where one applies |

@@ -1,6 +1,6 @@
 # Adding records
 
-Updated: 2026-09-30 (Eastern Time).
+Updated: 2026-10-07 (Eastern Time).
 
 [Guide](README.md) · [Application field checklist](reference/adding-an-application.md)
 · [Strategy field checklist](reference/adding-a-strategy.md)
@@ -71,7 +71,8 @@ provenance. Each `evidence_refs` value names provenance in that same record.
 A strategy is identified by its **target plus typed effect**. Check existing
 records before adding one; tile sizes and distances are parameters. Choose the
 target (`access_pattern`, `loop`, or `input`) and effects such as reshape, add
-pattern, hint, widen, reorder, or restructure loop.
+pattern, hint, widen, reorder, restructure loop, or offload selected access steps
+to named hardware operations. Offload applies only to access-pattern targets.
 
 Put checkable preconditions in the shape, update-kind, and semantic requirements;
 put the rest in `unchecked`. Cite sources. `benefits_when` contains only reported
@@ -82,6 +83,12 @@ For an intrinsic, cite the vendor reference and record its exact C name, ISA
 extensions, header, element width, lanes, and memory behavior. Its ID removes the
 C name's leading underscores. Add missing vocabulary entries with definitions.
 Add intrinsics before strategies that reference them.
+
+Accelerator intrinsics can instead pin a hardware interface, operations, and a
+typed-library entry with exact source provenance. Normative semantics, lowerings,
+library operations, and rewrite contracts live in `library/`; `add` is not their
+authoring interface. Use the [typed-library reference](reference/bfs-typed-library.md)
+for content pins, certification, review attribution, and shared/experimental tiers.
 
 ```sh
 python3 -m swdb sql "select id, target, json_extract(json, '$.effect') from strategies"

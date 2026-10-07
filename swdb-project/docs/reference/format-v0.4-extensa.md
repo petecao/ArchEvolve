@@ -212,3 +212,34 @@ carries `site_finder` (`format`, `query_sha256`, `parameters`, `database` finger
 builder, and `rejected`: each considered site with `entry`, `region` and `reason`), and the
 summary carries `site_finder` (`format`, `query_sha256`, `parameters`; null for a fixed
 list). The decision procedure is documented in `swdb/site_finder.py`.
+
+## Prospective paired estimates and agreement
+
+Updated for these fields: 2026-10-07 (Eastern Time).
+
+[Campaign pairing](../../swdb/extensa_pairing.py) records an immutable
+`paired_estimate` before reading each timing outcome. It pins `timing_context`,
+`context_sha256`, and `estimated_at`; `eligible_for_agreement` distinguishes
+usable application estimates from fixtures and unknowns. Current application
+pairing has no verified complete-call adapter: real seconds remain null and
+cannot become agreement samples. Timing still controls campaign selection.
+
+A summary's `paired_estimates` ledger retains `enabled`, records,
+`outcome_accesses`, `outcome_access_started_at`, and optional `timing_contexts`.
+`prior_outcome_exposure` records earlier exposure explicitly.
+`eligible_application_estimates` currently stays zero; `selection_policy` stays
+`unchanged_timing_only`. Validation checks exact context and estimate-before-access
+ordering. A ledger does not establish a functional-to-native or MMIO bridge.
+
+[Agreement commands](../../swdb/extensa_agreement.py) use two record kinds:
+
+| Record | Fields and meaning |
+|---|---|
+| `agreement_policy` | `population` pins selected campaign configurations and `campaign_file_sha256`; workload pins retain `canonical_sha256` and `generation`. `provider_config_sha256`, `statistics`, and `D30` freeze the provider/analysis/admission policy prospectively. |
+| `agreement_report` | `policy`, `policy_sha256`, and `policy_snapshot` bind the freeze; `summaries` and `summary_identities` bind inspected campaign results. `reported_at`, `blind_order`, `rank`, `top3`, and `recommendation` retain reporting time, ordering, agreement statistics, and whether the unchanged gate was met. |
+
+Run `agreement-freeze --help` and `agreement-report --help` for exact inputs.
+A report retains exclusions and unsupported scope; fixture agreement is not
+measured application agreement. No report silently enables screening or replaces
+the campaign's frozen selection policy. Existing summaries without these fields
+retain their historical interpretation.

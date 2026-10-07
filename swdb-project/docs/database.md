@@ -1,13 +1,14 @@
 # Records and queries
 
-Updated: 2026-09-30 (Eastern Time).
+Updated: 2026-10-07 (Eastern Time).
 
 [Guide](README.md) · [Complete table and query reference](reference/database.md)
 
 ## Storage and identity
 
-Edit or add YAML records, then validate. `swdb build` regenerates SQLite from
-those records. Queries refresh a stale index; BFS queries load one record
+Research records are YAML; typed-library entries and pinned code live separately
+in `library/`. Validate both. `swdb build` regenerates SQLite from them.
+Queries refresh a stale index; BFS queries load one record
 snapshot and check external artifacts separately. An up-to-date index says
 nothing about whether a remote binary or raw measurement is available.
 
@@ -21,6 +22,7 @@ Records start as `draft` and become `reviewed` after human review.
 |---|---|
 | `measured` | Produced by execution on a real machine |
 | `simulated` | Produced by a model, including Cachegrind |
+| `estimated` | Analytic time bound from counted work and target parameters |
 | `code_reading` | Established from identified source |
 | `reported` | Stated by a cited person or publication |
 | `inferred` | Derived by a stated rule |
@@ -73,8 +75,13 @@ does not replace the frozen evaluation workflow's gain decision.
 | Inputs and machines | `inputs`, `input_properties`, `machines`, `machine_flags` |
 | Strategies and intrinsics | `strategies`, `strategy_effects`, `strategy_intrinsics`, `applied_strategies`, `implementation_intrinsics`, `intrinsics`, `intrinsic_extensions` |
 | Measurements | `profiles`, `metrics` |
+| Typed library | `library_entries`, `library_dependencies`, `library_clauses`, `library_pattern_keys`, `library_pattern_key_steps` |
+| Statement observations | `statements`, `statement_steps`, `statement_facts` |
 
 The `records.json` column contains every record kind, including workflow records.
 Use `json_extract` for fields without a dedicated table. In semantic/property
 columns stored as JSON text, distinguish `'true'`, `'false'`, and `'null'` and
 check the accompanying basis. See the reference for exact columns and joins.
+
+LANL main-database access is unimplemented. The [crosswalk](compatibility/README.md)
+is a validated compatibility draft, separate from research records and queries.

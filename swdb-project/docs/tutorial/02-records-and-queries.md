@@ -1,6 +1,6 @@
 # 2. Read records and ask useful questions
 
-Updated: 2026-09-30 (Eastern Time). Reading budget: 7 minutes.
+Updated: 2026-10-07 (Eastern Time). Reading budget: 7 minutes.
 
 [Tutorial](README.md) · [Previous](01-overview.md) · [Next](03-components.md)
 
@@ -24,7 +24,7 @@ flowchart TD
     L --> W
 ```
 
-The complete set of record kinds is small enough to learn by purpose:
+Learn record groups by purpose; optional references cover every field:
 
 | Purpose | Record kinds | Question answered |
 |---|---|---|
@@ -35,6 +35,13 @@ The complete set of record kinds is small enough to learn by purpose:
 | Bind execution | `workload`, `protocol`, `evaluation`, `evaluation_pair` | Which graph/sources, policy, stage outcomes, and paired trial order? |
 | Explain and assess execution | `region_profile`, `profile_package`, `comparison_result` | Where was work observed, what was handed off, and what comparison passed? |
 | Describe a target interface | `hardware_target`, `operation` | Which model/backend and source-backed accelerator operations? |
+| Estimate and qualify time | `workload_characterization`, `target_description`, `estimate`, CPU calibration/validation/error records | What work was counted, what model applies, and what error is established? |
+| Retain research/evidence custody | `certification`, `review`, `campaign_summary`, `paired_estimate`, `agreement_policy`, `agreement_report`, `team_claim`, `retention` | Which tests, reviews, research comparisons, and artifacts support reuse? |
+
+Typed-library entries live in `library/`, outside the record envelope. SQLite
+indexes their normative content and derived evidence state separately. LANL's
+main database is not connected; the [crosswalk](../compatibility/README.md) is
+validated compatibility metadata, not an import.
 
 A BFS `workload` binds graph representations and ordered traversal sources. A
 **workload view** exports the retained historical SPARTA 0.1 format.
@@ -72,13 +79,15 @@ updates. Record semantics for the actual access expression and loop context.
 | `code_reading` | Supported by identified source |
 | `measured` | Observed through real execution |
 | `simulated` | Produced by a machine/cache model |
+| `estimated` | Analytic time bound from counted work and target parameters |
 | `reported` | Stated by a cited source |
 | `inferred` | Derived using an explained rule |
 | `unknown` | Not established; `value` must be `null` |
 
-Also inspect units, thread count, input, tool, and scope. Whole-run counts can
-include setup that kernel or ROI counts exclude. A profile's `complete` field
-does not replace its correctness and per-part outcomes.
+Also inspect units, threads, input, tool, and scope. Whole-run counts can include
+setup that ROI counts exclude. `complete` does not replace correctness or
+per-part outcomes. An estimate's `null` total leaves component bounds visible.
+Functional-target correctness is distinct from hardware-target correctness.
 
 ## Query from broad to specific
 
@@ -99,7 +108,7 @@ python3 -B -m swdb strategies --input gapbs-pr-jacobi
 python3 -B -m swdb get packing --format json
 ```
 
-The first query returns `gapbs-pr-jacobi` in the inspected catalog. Known
+The first query includes `gapbs-pr-jacobi` in the inspected catalog. Known
 contradictions make a strategy `illegal`; missing required semantic facts make
 it `undetermined`. `check_by_hand` survives even a `legal` result.
 `find --strategy packing` omits illegal matches but can retain undetermined ones.
@@ -129,12 +138,22 @@ Some semantic/property columns contain JSON text, so compare `'false'`,
 `'true'`, and `'null'` as documented, checking the associated basis. Use
 [`database.md`](../reference/database.md) for exact columns.
 
+The typed-library tables include `library_entries`, `library_dependencies`,
+`library_clauses`, `library_pattern_keys`, and `library_pattern_key_steps`.
+`get contract.bfs_read_offload --format json` returns normative content with its
+hash, current tier/status, and review attribution. A shared tier is a review
+decision; certification and target evaluation are separate evidence states.
+
 ## What the tools preserve
 
 `get ID --chain` traverses supported relationships to expose linked source,
 proposal, candidate, evaluation, and other records. It does not make remote raw
 files available. Package queries separately report current evidence validation;
 an old package can remain sealed while a later check finds unavailable evidence.
+
+Extensa records carry `mode: extensa` and `campaign` from creation; tags cannot
+be rewritten. Retrieval preserves historical records, while new team evidence
+commands enforce their mode and provenance boundaries.
 
 `implementations --applies STRATEGY` retains a historical ancestry-based pairing
 interface. `compare` instead selects exact ordinary profiles and an explicit

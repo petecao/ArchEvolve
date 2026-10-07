@@ -283,3 +283,14 @@ Top-3 boundary ties use expected overlap under uniform choice and contribute
 fractionally. The cost contradiction rule is absolute rank difference greater
 than 1. Annotation reports and Callgrind ranks establish no native or hardware
 gain.
+
+## Exact intrinsic source views
+
+Updated for these fields: 2026-10-07 (Eastern Time).
+
+An intrinsic's `source_view` pins one source branch and `variant`, with
+`compile_defines`, `compile_undefines`, and `evidence_scope`. The
+[source-view checker](../../swdb/intrinsic_source_views.py) verifies that the actual
+build selects that branch before functional observation can bind it. Functional
+and MMIO source variants are distinct evidence; a matching C name alone does not
+establish correspondence or hardware-target correctness.

@@ -1,200 +1,184 @@
-# 4. Follow BFS from source to comparison
+# 4. Follow BFS through rewrites and evidence
 
-Updated: 2026-09-30 (Eastern Time). Reading budget: 9 minutes.
+Updated: 2026-10-07 (Eastern Time). Reading budget: 9 minutes.
 
 [Tutorial](README.md) · [Previous](03-components.md) · [Next](05-contributing.md)
 
-Breadth-first search (BFS) finds vertices reachable from a starting vertex and
-their distance in graph edges. Its parent array identifies the traversal tree.
-EvolveSWDB's BFS workflow tracks changes to this computation while keeping the
-graph, correctness check, timing boundaries, and comparison policy explicit.
+Breadth-first search (BFS) finds reachable vertices and their distance from a
+starting vertex. Its parent array describes the traversal tree. SWDB keeps source,
+graph, traversal sources, correctness scope, and speed evidence bound together.
 
-## One kernel, multiple source contexts
+## Choose the mode before collecting evidence
 
-The upstream direction-optimizing implementation `gapbs-bfs-do` and DX100 scalar
-top-down implementation `dx100-bfs-scalar` share kernel `gapbs-bfs`. Their
-application source, build, and evaluator contexts differ. Format `0.4`
-implementations name those contexts explicitly; older catalog records resolve
-historical defaults through their kernel.
+| Mode | Speed evidence | Correctness and selection |
+|---|---|---|
+| ArchEvolve, the default | Analytic estimates; native CPU timing remains available for validation | One proposal with bounded build/correctness repair. Functional-target checks where hardware cannot execute; no gem5 execution/calibration dependencies |
+| Extensa research | Native timing or gem5; paired estimates assess agreement | Budgeted rewrite/certify/evaluate iterations. Rank certification first, then qualified performance, separately per workload class |
 
-`source_ancestor` identifies ancestry; `source_baseline` identifies the application's
-baseline; `comparison_baseline` selects the performance comparator. A candidate
-can be compared against a different implementation of the same kernel.
+[Team policy](../../swdb/archevolve.py) checks dependency records before new
+operations. Explicit research commands use `--mode extensa --campaign ID`, with
+a valid Extensa campaign ID; campaign execution sets these tags itself. Historical
+simulator records remain valid and retrievable. They cannot become new team evidence
+by omitting their mode or relabeling their basis.
 
-## The evidence chain
+## Bind source, workload, and policy
+
+Upstream direction-optimizing `gapbs-bfs-do` and DX100 scalar top-down
+`dx100-bfs-scalar` share kernel `gapbs-bfs`. Their application source, build, and
+evaluator contexts differ. Format `0.4` names these explicitly; older records
+resolve historical defaults through their kernel.
+
+`source_ancestor` describes ancestry. `source_baseline` names the application's
+baseline. `comparison_baseline` selects the comparator, which may be another
+implementation of the same kernel. Rewriting one source does not select that
+comparison automatically.
 
 ```mermaid
 flowchart TD
-    S[Source snapshot] --> B[Unchanged baseline candidate]
-    B --> E0[Baseline evaluation and region profile]
-    E0 --> P[Profile package]
-    P --> R[Producer selects intent and submits proposal]
+    S[Exact source snapshot] --> B[Unchanged baseline artifact]
+    B --> P[Evaluation/profile package]
+    P --> R[Selected intent and rewrite proposal]
     R --> C[Candidate artifact]
-    C --> E1[Independent candidate evaluation]
-    E1 --> PC[Candidate profile package]
-    E0 --> CMP[Explicit comparison]
-    E1 --> CMP
-    W[Registered workload] --> F[Frozen protocol]
-    F --> E0
-    F --> E1
-    F --> CMP
-    CMP --> H[Retained result and handoff]
+    C --> K[Certification and correctness]
+    C --> A[Characterization and estimate]
+    C --> T[Native or Extensa gem5 evaluation]
+    F[Frozen inputs, target, ROI, and policy] --> A
+    F --> T
+    K --> H[Scoped result and handoff]
+    A --> H
+    T --> H
 ```
 
-The diagram shows a qualified comparison path. Diagnostic evaluations can also
-run without a frozen protocol, but cannot establish a gain. Pilot measurements
-inform protocol selection; subsequent comparison evidence must match the freeze.
+The last branches are alternatives according to mode, not a requirement to run
+every evaluator. ROI means **region of interest**, the computation boundary whose
+work or time is assessed. Diagnostic profiles do not replace that boundary.
 
-1. **Identify source.** `source-snapshot` retains a buildable source manifest,
-   hashes, context, regions, and evaluator protections. `baseline-candidate`
-   materializes unchanged source without inventing a patch.
-2. **Identify workload and policy.** `register-workload` checks graph
-   representations against canonical adjacency. An ordered source-vertex list
-   matters as well as graph identity. `freeze-protocol` seals workload and
-   comparison settings; changing them requires a new protocol.
-3. **Evaluate and profile.** Native evaluation retains the exact build, primary
-   ROI timing, and independent parent-array checks. Discovery/profiling records
-   functions, loops, diagnostic timing, and dynamic-memory observations.
-4. **Assemble a package.** `profile-package` joins matching source, evaluation,
-   regions, workload, target, threads, and ROI. Missing observations produce
-   explicit incompleteness reasons. Assembly versions retain earlier handoffs.
-5. **Rewrite selected intent.** A producer selects source regions and a change.
-   The worker retains the original request and creates a candidate, rejection,
-   or unresolved result. Rewritten source needs its own evaluation and package.
-6. **Compare and report.** Exact baseline/candidate evaluations are compared
-   under the frozen policy. The report distinguishes evidence availability,
-   correctness, coverage, and profitability.
+1. **Retain source.** `source-snapshot` records buildable source, hashes, regions,
+   context, and protections. `baseline-candidate` copies it unchanged.
+2. **Identify input.** `register-workload` checks graph representations against
+   canonical adjacency and retains an ordered source-vertex list.
+3. **Freeze policy.** `freeze-protocol` seals identities and settings. Estimated
+   protocols additionally pin the target description, input arguments, dependencies,
+   and estimator source bundle. Changes require a fresh freeze.
+4. **Assemble context.** `profile-package` joins matching source, evaluation,
+   regions, workload, target, threads, and ROI. Missing observations leave explicit
+   incompleteness reasons. Later versions retain earlier handoffs.
+5. **Rewrite and check.** Submit intent, permitted files, required operations, and
+   source/package identity. Retain the candidate artifact or rejection. Apply
+   certification and the relevant kernel check before interpreting speed evidence.
+6. **Assess.** Use explicit baseline identities and compatible evidence. Read the
+   result's scope, unknowns, and verdict; command completion alone is not a gain.
 
-## Who controls a rewrite?
+## A contract gives a rewrite testable obligations
 
-Proposals carry natural language, structured instructions, annotated source, or
-a patch, plus source/package identity, regions, intent, editable files, and
-required operations. Instructions still require provider interpretation.
+The typed library contains intrinsics, **lowerings** (code implementing an
+intrinsic over a hardware interface), library operations, and rewrite contracts.
+A contract matches access patterns by role and states applicability, legality,
+preservation obligations, and tunable knobs.
 
-```mermaid
-sequenceDiagram
-    participant P as Producer/operator
-    participant W as SWDB worker
-    participant R as Rewrite provider
-    participant E as Evaluator
-    P->>W: Intent, source/package, edit scope
-    W->>R: Guarded workspace and proposal
-    R->>R: Read, edit, build, synthetic tests
-    R-->>W: Interpretation and unresolved requirements
-    W->>W: Audit events, compute source diff, check protections
-    W-->>P: Candidate or retained rejection
-    P->>E: Candidate and evaluation request
-    E-->>P: Build, correctness, timing, failures
-    opt Eligible build/correctness failure within budget
-        P->>W: Candidate and failure evidence
-        W-->>P: New candidate or retained failure
-    end
+Normative entries and code pins live in `library/`. Certification/review records
+derive their state. Certification tests exact content and negative controls;
+it does not prove arbitrary inputs correct or establish target performance.
+Formal clauses currently have label `stated`; no formal verifier grants `proven`.
+
+ArchEvolve proposals that cite a library contract must pin its dependencies and
+use current shared certified entries. Experimental entries belong to Extensa.
+Candidate certification level is derived from current receipts, not stored as a
+mutable assertion. Inspect an existing contract without executing it:
+
+```sh
+# Run inside ArchEvolve/swdb-project/.
+python3 -B -m swdb get contract.bfs_read_offload --format json
 ```
 
-The operator must select `--provider-config` independently of proposal text.
-Workspace mode is the default, with two pinned real providers:
+## The provider edits; the evaluator judges
 
-| Kind | Model | Effort |
-|---|---|---|
-| Codex (default) | `gpt-5.6-sol` | `xhigh` |
-| Claude | `claude-sonnet-5-5` | `high` |
+The operator selects `--provider-config` independently of proposal text.
+Real providers are pinned in [adapters](../../swdb/provider_adapters.py): Codex
+`gpt-5.6-sol`/`xhigh` or Claude `claude-sonnet-5-5`/`high`; overrides are refused.
+Real roles run on mbit10 in an owned socket lane, with evaluator inputs, workload
+data, other candidate artifacts, and authors' accelerated code hidden.
 
-Use `kind: codex` or `kind: claude`; model/effort overrides are rejected. Real
-sessions run on mbit10 under SWDB's Linux Landlock guard, using one CPU in an
-owned socket lane. Evaluator inputs, workloads, records, and other candidates
-are hidden. The final response contains `interpretation` and `unresolved`;
-SWDB audits events, computes permitted source edits, discards build outputs,
-and deletes the login copy.
+The workspace route confines the process tree, audits events, computes permitted
+source edits, writes refreshed same-account login state back under a session lock,
+then removes build outputs and the login copy. Its guard has documented
+limits, including unrestricted UDP and the readable login copy during a session;
+see the optional [worker contract](../reference/bfs-rewrite-worker.md).
+Deterministic providers are fixtures. Prompt-only mode is retained separately.
 
-The [guard](../../swdb/provider_guard.py) bounds the process tree and audits
-connections. The [event audit](../../swdb/provider_audit.py) rejects forbidden
-file access, package managers, network commands, and incomplete logs. Guards have
-recorded limitations, including unrestricted UDP and a readable login copy during
-the session. The optional [worker contract](../reference/bfs-rewrite-worker.md)
-explains limits and enforcement. A completed provider turn still needs evaluation.
+Repair handles eligible build/correctness failures and unavailable providers,
+preserving intent and provider settings. A usage-limit failure consumes elapsed
+time without a repair attempt. A valid regression triggers no ArchEvolve tuning.
+Extensa's performance loop is a separate interface.
 
-DX100 from-scratch proposals use the scalar-only snapshot
-`bfs-dx100-scalar-only-20260929-a1.source`; full source supports declared author-code
-reuse. `workspace: false` selects the retained prompt-only route. Deterministic
-providers are fixtures. Proposals retain settings, budgets, guard/audit receipts,
-and log identity; verifier, input, driver, and ROI protections still apply.
+## Estimates retain unknowns
 
-[Repair](../../swdb/workflow.py) addresses eligible build/correctness failures,
-keeping the intent, provider kind/model/effort, and fixture-versus-real
-classification. Missing historical model settings cannot be invented. A valid
-regression does not trigger tuning. A failed provider session with usage-limit
-evidence becomes `provider_unavailable`; it consumes elapsed time without using a
-repair attempt. Unsupported requirements and exhausted budgets remain visible.
+`characterize` compiles one C/C++ translation unit with LLVM 22 and runs an
+instrumented binary to count work. Registered adapters verify source/input/trial
+binding; arbitrary source hashes alone leave application binding unverified.
+Counts are observations of work, not hardware-target time.
 
-## Inspect a retained example locally
+`estimate` combines the characterization with a **target description**, whose
+mechanism models and parameters describe hardware behavior. It retains
+`basis: estimated`, known component bounds, and missing facts. Unknown required
+costs, unsupported access mechanisms, or unspecified resource overlap leave the
+total `null`. For trial characterizations, it estimates each whole call and takes
+the median; diagnostic region medians need not sum to that result.
 
-From `ArchEvolve/swdb-project/`, retrieve a retained test-client proposal:
+`fill-target-parameters` can freeze supported numerical unknowns as estimated
+facts. It cannot supply missing source coverage, mechanisms, or composition
+premises. Estimates require a matching frozen protocol; a source-bundle change
+requires a fresh one. Without applicable error qualification, a ratio does not
+establish a qualified gain. See [analytic inputs](../reference/format-v0.4-analytic.md)
+for the optional runnable fixture and supported adapters.
+
+For source-only DX100 targets, `evaluate-functional` joins current strict-functional
+execution certification with a frozen estimate. It retains
+`correctness_scope: functional-target`, no performance timing, and
+`hardware_correctness_claim: false`. Its handoff uses version 1.1.
+
+## Timed research evidence has its own gates
+
+Native evaluation retains exact timed results, independent parent-array checks,
+build/source/input identities, trials, and environment. Paired collection orders
+A/A repeatability or A/B comparisons prospectively. Native `bfs.complete_call.v1`
+and the DX100 author's internal ROI have different boundaries.
+
+Extensa gem5 needs compatible model/binary/checkpoint/input identities and observed
+accelerator/completion evidence. Simulator exit and source-level operation support
+do not establish correctness. Full-tile, tail-tile, and competing-parent cases
+are separate coverage questions.
+
+`campaign` applies declared iteration, lane-hour, provider-call, and disk budgets.
+Native campaigns gate each workload class on an A/A pilot under their frozen
+speed rule. Failed classes remain `baseline_unstable`; rules are not loosened
+mid-run. Non-promoted evidence stays in the campaign store; the summary also
+enters the repository record store. Export retains tags. Promotion requires a
+recorded review and fresh evaluation under a derived team protocol; team policy
+still applies to its dependencies.
+
+Current campaign pairing has no verified complete-call application adapter;
+real paired-estimate seconds stay `null`. Fixture agreement tests do not establish
+measured application agreement or enable screening.
+
+## Read a historical handoff without reinterpreting it
 
 ```sh
 python3 -B -m swdb get \
   bfs-campaign-preparation-20260925-a1.dx100-patch --chain --format json
-
-python3 -B -m swdb handoff-message rewrite_proposal \
-  bfs-campaign-preparation-20260925-a1.dx100-patch --format json
 ```
 
-The [rendered example](../bfs-handoff-examples/rewrite-proposal.sw-patch.json)
-requests dynamic scheduling and removal of a redundant parent store. Read its
-intent, payload, editable files, attempts, and candidate link together.
+The [proposal example](../bfs-handoff-examples/rewrite-proposal.sw-patch.json)
+requests dynamic scheduling and removal of a redundant store. Its completed
+[evaluation example](../bfs-handoff-examples/evaluation-result.dx100-patch-kronecker.json)
+is inconclusive. Later T17 [Kronecker](../../records/comparison_results/bfs-t17-handoff-20260929-a1.kronecker18.yaml)
+and [uniform](../../records/comparison_results/bfs-t17-handoff-20260929-a1.uniform18.yaml)
+records retain `gain` with attribution `joint_hardware_software`: both source
+and accelerator presence changed. These historical decisions do not establish
+hardware-only gain or authorize a new ArchEvolve gem5 handoff.
 
-Compare the [completed evaluation message](../bfs-handoff-examples/evaluation-result.dx100-patch-kronecker.json)
-with the [interrupted evaluation message](../bfs-handoff-examples/evaluation-result.dx100-patch-uniform-interrupted.json).
-Interruption differs from incorrectness. The completed example's comparison is
-inconclusive; completion alone does not establish a gain.
+Package completeness, correctness, accelerator coverage, raw-file availability,
+and profitability remain separate. Locally unavailable remote artifacts remain
+`remote_unverified`; this reading path does not reverify them.
 
-## Native and simulated execution answer different questions
-
-| Path | Primary evidence | Additional checks |
-|---|---|---|
-| Native BFS | Wall time for the declared computational ROI | Exact timed result, structural correctness, build/source/workload identities, lane/environment |
-| Native region profiling | Diagnostic function/loop timing and modeled memory events | Attribution coverage, instrumentation, event consistency; these do not replace primary ROI timing |
-| DX100 simulation | ROI ticks interpreted using recorded simulator frequency/configuration | Model/binary/checkpoint/input identity, verifier/completion evidence, observed accelerator work |
-
-The native `bfs.complete_call.v1` boundary preserves the complete computation
-call. The pinned DX100 author's internal ROI has different boundaries. Compare
-only evidence admitted by the relevant protocol; do not divide durations from
-different scopes or mix host execution cost with simulated target time.
-
-DX100 needs model build, compilation, compatible checkpoints, execution, and
-profiling. Its pinned sources use different serialized-graph offset widths;
-a `.sg` suffix does not establish compatibility. Simulator exit alone does not
-establish correctness.
-
-Accelerator assessment needs observed instructions and completed unit traces.
-Full-tile, tail-tile, and competing-parent cases are separate coverage questions.
-Hardware operation records describe support; they cannot substitute for these
-observations.
-
-## What makes a comparison admissible?
-
-A frozen protocol binds workload/sources, repetitions, target configuration,
-thread count, build/instrumentation, ROI, verifier, and profitability policy.
-Simulator comparisons additionally bind model/runtime identities. Native paired
-collection records prospective interleaved A/A or A/B trials, where A/A assesses
-repeatability and A/B compares selected candidates. Simulator aggregation checks
-the required trial coverage before comparison.
-
-`compare-evaluations` retains the compatibility and decision evidence.
-`bfs-coverage` reconstructs the requested evidence matrix and acceptance checks.
-Keep package completeness, passed correctness, accelerator coverage, raw-file
-verification, and a qualified performance decision separate. A remote artifact
-that cannot be checked locally remains `remote_unverified`.
-
-For a dated report regeneration command, use the
-[BFS task guide](../bfs-handoff.md#final-report-regeneration--2026-09-27).
-Its exit code reports whether the query succeeded; read `gain_gate`, per-cell
-states, and reasons to assess the result. Later T17 comparison records report
-`gain` for [Kronecker](../../records/comparison_results/bfs-t17-handoff-20260929-a1.kronecker18.yaml)
-and [uniform-random](../../records/comparison_results/bfs-t17-handoff-20260929-a1.uniform18.yaml)
-workloads. Their attribution is `joint_hardware_software`: the candidate changes
-both source and accelerator presence. These retained decisions have that scope;
-this local documentation review does not reverify remote raw files. The dated
-[resume checkpoint](../../.scratch/bfs-rewrite-evaluation-2026-09-25/resume.md)
-describes the older campaign; consult newer requests before continuing execution.
-
-**[Next: contribute records and understand profiling →](05-contributing.md)**
+**[Next: contribute records and choose a profiling procedure →](05-contributing.md)**

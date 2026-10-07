@@ -1,6 +1,6 @@
 # BFS workflow
 
-Updated: 2026-09-30 (Eastern Time).
+Updated: 2026-10-07 (Eastern Time).
 
 [Guide](README.md) · [Workflow reference](reference/README.md#bfs-contracts)
 · [Dated handoff and results](archive/bfs-handoff-20260927.md)
@@ -14,6 +14,13 @@ producer selects the intent; the worker applies it; the evaluator owns the graph
 trusted driver, verifier, ROI, target configuration, and comparison policy.
 A failure or regression is a retained outcome, not permission to search for a
 new strategy.
+
+New ArchEvolve operations default to analytic estimates and exclude gem5 execution
+dependencies. `evaluate-functional` joins strict-functional correctness with an
+estimate for source-only targets; it establishes no hardware-target correctness.
+Extensa research retains timed native/gem5 campaigns. Read the
+[current mode and contract sequence](tutorial/04-bfs-workflow.md) before choosing
+an execution path; the table below describes the retained timed workflow.
 
 ## The sequence
 
@@ -76,31 +83,41 @@ acceptance request pins its hash.
 ```sh
 python3 -m swdb handoff-message profile_package PACKAGE_ID --format json
 python3 -m swdb get PROPOSAL_ID --chain --format json
-python3 scripts/bfs_handoff_examples.py --check
+python3 scripts/bfs_handoff_examples.py --help
 ```
 
 ## Final report regeneration — 2026-09-27
 
-The retained request selects explicit protocols and reference comparisons.
-Regenerate its assessment from `ArchEvolve/swdb-project/`:
+The retained request selects explicit protocols and simulator comparisons.
+Its original regeneration command is preserved in the
+[dated archive](archive/bfs-handoff-20260927.md#final-report-regeneration--2026-09-27).
+Current ArchEvolve policy refuses those gem5 dependencies before reporting.
+Inspect the historical request and records without interpreting them as new team
+evidence. For example, retrieve a retained comparison:
 
 ```sh
 query_dir=$(mktemp -d "${TMPDIR:-/tmp}/bfs-acceptance.XXXXXX")
-python3 -B -m swdb bfs-coverage \
-  .scratch/bfs-rewrite-evaluation-2026-09-25/requests/acceptance-report-20260927-e1.json \
-  --db "$query_dir/index.sqlite" --format json > "$query_dir/report.json"
+python3 -B -m swdb get bfs-t17-handoff-20260929-a1.kronecker18 \
+  --db "$query_dir/index.sqlite" --format json > "$query_dir/comparison.json"
 ```
 
 Read the per-cell workflow, accelerator, package, comparison, and raw-verification
-states separately, then AC01–AC20, `gain_gate`, `accounting`, and
+states separately in retained coverage reports, then AC01–AC20, `gain_gate`, `accounting`, and
 `selection_audit`. Exit zero means the query succeeded, not that acceptance passed.
 When evidence or selections change, create a new dated request. Preserve the
 original request and its contract hash.
 
+Historical example rendering is also policy-bound. The checker accepts explicit
+`--mode extensa --campaign ID` for a valid research rendering context, creates
+no campaign records, and launches no evaluator. Default rendering can refuse
+backend-linked examples under the current team policy. Functional 1.1 messages
+have their own [contract](bfs-handoff-contract-v1.1.md).
+
 The [2026-09-27 handoff](archive/bfs-handoff-20260927.md#final-report-regeneration--2026-09-27)
 reported incomplete acceptance and no qualified gain. Treat dated counts and
-ratios there as a snapshot; the command above produces a fresh assessment for
-that request's selections. Its [resume checkpoint](../.scratch/bfs-rewrite-evaluation-2026-09-25/resume.md)
+ratios there as a snapshot; the command above retrieves a retained T17 comparison.
+A fresh assessment needs a policy-compatible request. The
+[resume checkpoint](../.scratch/bfs-rewrite-evaluation-2026-09-25/resume.md)
 records the older campaign's pause, not the latest status of all BFS work.
 
 Later retained T17 comparisons report `gain` for

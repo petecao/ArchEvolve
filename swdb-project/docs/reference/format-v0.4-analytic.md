@@ -1,6 +1,6 @@
 # Analytic estimator: portable inputs and source counts
 
-Updated: 2026-10-06 ET.
+Updated: 2026-10-07 (Eastern Time).
 
 `swdb characterize` compiles a buildable C/C++ translation unit, analyzes its LLVM IR,
 and runs a separately instrumented binary once. `swdb estimate` combines those recorded
@@ -91,7 +91,10 @@ that a later timing necessarily covers exactly that scope.
 
 Both paths use the caller's build flags and `clang++ -O3 -g -emit-llvm`. The static path
 keeps the fully optimized IR. The counting path disables LLVM optimization in the
-frontend, then applies only `mem2reg` and `loop-simplify`. The same LLVM pass uses
+frontend, then applies the selected normalization pipeline. Version
+`source-normalized-v1` uses `mem2reg,loop-simplify`; version
+`source-normalized-v2` adds scalar replacement and call inlining before loop
+simplification. Fixtures default to v1; registered adapters require v2. The same LLVM pass uses
 LoopInfo, ScalarEvolution and debug locations on each path, and inserts counters into
 the normalized path before vectorization, unrolling, loop deletion or call elimination.
 Its separately compiled binary can then be optimized without losing calls to counters.
@@ -434,3 +437,161 @@ payload, runtime and trial position. Original observations are immutable. Arbitr
 scopes, unsealed fixture state and mismatched partitions retain existing unknown/refusal
 behavior. Sensitivity recomposition uses the same copied scope inference; it establishes
 no new cost, hardware request, residency, functional/MMIO correspondence or error band.
+
+## Source and logical observation fields
+
+These fields describe counted work and its assumptions. They do not establish
+physical residency, target timing, or a functional-to-MMIO execution bridge.
+The producers are [analytic.py](../../swdb/analytic.py),
+[offload_observation.py](../../swdb/offload_observation.py), and the
+[LLVM source/runtime](../../swdb/llvm/). The
+[characterization schema](../../schemas/workload_characterization.schema.json)
+and [target schema](../../schemas/target_description.schema.json) define shapes.
+
+### Freeze the observer configuration
+
+| Fields | Meaning |
+|---|---|
+| `observation_contract`, `observation_format`, `pipeline_version`, `abi`, `call_abi`, `observation_method` | Versioned counting format, normalization pipeline, and source/call observation conventions. |
+| `observer_bundle_sha256`, `runtime_bundle_sha256`, `plugin_support_objects_sha256` | Content identities of observer code, runtime, and native LLVM support. |
+| `observer_isolation`, `host_counting_policy`, `semantic_commands` | Separate host work from guarded functional commands; observer bookkeeping is not counted as application work. |
+| `normative_bindings`, `compiled_views` | Pins to registered targets, intrinsic/operation records, library content, and exact compiled source views. |
+| `state_budget`, `object_scope`, `first_access_scope`, `line_bytes`, `page_bytes`, `physical_residency_known` | Bounded logical-state policy and address granularity. Logical first access is not a physical page fault or cache-residency observation. |
+| `object_scope_contract`, `full_objects`, `bounded_views`, `retirement` | Full-allocation and function-scoped referent views, with explicit lifetime retirement. Unresolved requests stay unresolved. |
+| `native_runtime`, `compiler_sha256`, `loaded_libraries`, `environment_scope` | Native runtime/compiler/library identities needed for CPU transfer compatibility. |
+| `exact_variables`, `prefixes`, `absence_semantics` | The environment variables selected for that runtime receipt, including what an absent variable means. |
+| `counted_target_description_snapshot`, `target_observation_policy_format`, `target_observation_policy_sha256` | Immutable original target/observer policy for later count-reuse checks. |
+
+### Describe functional commands and address layout
+
+`functional_observation` in a target description declares `commands`, their
+`aliases`, and the command's `memory_effect`. Each alias binds a `symbol`,
+`debug_name`, pinned source, `memory_base_argument`, `active_elements_argument`,
+and `active_elements_signed`. `target_access_sources` and
+`bookkeeping_access_sources` separate semantic target reads from functional-model
+housekeeping. `active_elements_policy` and `target_reads_per_active_element`
+define how observed reads establish active work; no-memory commands have no
+memory operand and use the not-applicable policy.
+
+`request_policy` binds `transaction_bytes` and `read_coalescing`; `window` binds
+logical grouping. `placement` states assumptions and
+`physical_placement_known`. A logical DRAM layout describes `channel`, `rank`,
+`bank_group`, `bank`, and `row` using nonoverlapping bit ranges (`lsb`, `bits`).
+It is an address-mapping premise, not a measured physical mapping.
+
+Within `accelerator_calls`, `accounting_domain`, `active_elements`, and
+`useful_accesses` describe semantic work. `functional_bookkeeping` retains
+separate `accesses` and `opaque_calls`; it is not target traffic.
+Logical counts retain `line_requests`, `row_groups`, `grouped_row_hits`,
+`windows`, `staged_bytes`, and `grouped_row_hit_fraction`, with
+`layout_sha256`, `request_policy_sha256`, `placement_assumption_sha256`, and
+`window_policy_sha256`. Missing layout/placement/window facts keep affected
+counts incomplete; a row-hit fraction is not observed DRAM timing.
+
+### Read source primitive and object counts
+
+| Fields | Meaning |
+|---|---|
+| `primitive_semantics`, `opcode`, `update_opcode`, `value_kind`, `vector` | Actual LLVM load/store/atomic primitive, its operation and value type; vector multiplicity stays explicit. |
+| `atomic_ordering`, `failure_ordering`, `volatile`, `weak` | Atomic success/failure ordering and source semantics; these cannot be inferred from an aggregate atomic count. |
+| `llvm_function`, `worker_context`, `team_sizes`, `measurement` | Exact LLVM function and observed worker/team context. Team size is not an active-worker multiplier. |
+| `memory_service_counts`, `requests_by_update_kind` | Typed logical requests grouped by read/write or `add-update`, `compare-and-swap`, `min-max-update`, and `arbitrary`. |
+| `lifetime_line_union`, `logical_first_read_pages`, `logical_first_write_pages` | Allocation-relative logical line/page observations within the declared lifetime/scope. |
+| `pre_roi_allocation_pages`, `in_roi_allocation_pages`, `unknown_object_requests`, `assumption_sha256` | Allocation timing relative to the ROI, unavailable object associations, and the observation-premise hash. |
+| `object_scope_counts`, `full_allocation_requests`, `bounded_view_requests`, `unresolved_requests`, `bounded_view_line_union` | Full-object versus bounded referent-view coverage; unavailable extents do not become full objects. |
+| `call_shape_counts`, `site`, `execution_count`, `known_length_bins`, `unknown_lengths` | Executed call sites and known/unknown byte-length partitions. |
+| `allocation_lifetime_size_bins`, `unknown_free_lifetimes` | Exact known freed-allocation sizes and unresolved free lifetimes. These affect cost compatibility independently of call count. |
+
+### Select mechanisms and reuse counts
+
+A mechanism's `selector` binds `event_ids`, `semantic_role`, and `worker_scope`.
+It selects the exact observed work a service model can consume. The composition
+contract's `resource_domain_overlap` declares serial or full-overlap premises;
+missing overlap is not silently inferred.
+
+[Count reuse](../../swdb/analytic_count_reuse.py) retains `count_reuse` with
+`counted_characterization_sha256`, `counted_target_description_sha256`,
+`requested_target_description_sha256`, `count_observation_context_sha256`,
+`observation_policy_format`, and `observation_policy_sha256`. Only recognized
+numerical service changes with identical complete observation policy may reuse
+counts. Changed layout, selector, window, capacity, or unknown policy facts
+require fresh observation. The original characterization stays unchanged.
+
+## Parameter-fill custody and sensitivity fields
+
+[Parameter filling](../../swdb/estimation_parameters.py) writes one immutable
+`parameter_estimation` receipt. See [the role procedure](estimation-role.md)
+for invocation and restrictions.
+
+| Fields | Meaning |
+|---|---|
+| `base_sha256`, `base_snapshot` | Exact target version before any numerical fill. |
+| `input_record_sha256s`, `input_records`, `stored` | Original input record identities and whether each resolves in the store. |
+| `input_snapshots`, `characterization.json`, `profile.json`, `parameters.json` | The three bounded sanitized documents actually supplied to the provider. |
+| `projection`, `source_sha256s`, `builder`, `omitted_raw_fields` | Projection implementation/contract pins and hashes of fields omitted from provider visibility. |
+| `input_sha256`, `roi_sha256`, `region_sha256`, `position` | Sanitized input/ROI/region identities and trial positions. |
+| `category`, `count`, `access_groups`, `shape`, `elements`, `useful_bytes` | Typed operation counts and grouped source-access work in each projected region. |
+| `logical_counts`, `description_sha256`, `unique_lines` | Logical counts and their target identity; line/row/window/staged-byte fields keep their original units. |
+| `known`, `target_sha256` | Frozen known parameter facts and the target identity; the output cannot override them. |
+| `cli_version`, `executable_sha256`, `workspace_manifest_sha256`, `lane_sha256` | Actual provider executable, workspace, and lane receipts. |
+| `audit_sha256`, `audit_passed`, `guard_enforced`, `guard_passed`, `guard_policy_sha256`, `guard_result_sha256` | Separate event-audit and confinement identities/outcomes. A fixture is not real guarded execution. |
+
+[Parameter reports](../../swdb/analytic_sensitivity.py) list `dependent_bounds`,
+`priority_rank`, and `sensitivity_state` for unknown numerical facts. This priority
+is dependency ordering, not a guessed numerical impact. Structural rows retain
+`models`, `formulas`, and `parameter_fill_allowed` so missing mechanisms are not
+mistaken for fillable rates.
+
+Sensitivity rows retain `scenario_values`, `scenario_target_description_sha256`,
+`component_seconds`, and `whole_call_seconds` for `half`, `base`, and `double`.
+Whole-call scenarios recompose each trial before taking the median. Component
+medians remain diagnostic. A required unknown keeps whole-call impact/rank null.
+
+## Native CPU calibration and paired-estimate fields
+
+The [calibration procedure](cpu-calibration.md),
+[service procedure](cpu-service-calibration.md), and
+[error-band procedure](cpu-native-error.md) provide detailed usage.
+These records describe their frozen evidence, not the current host state.
+
+| Fields | Meaning |
+|---|---|
+| `series`, `compute_counts`, `concurrency_curve`, `plateau`, `source_count_equivalence` | Constructed-work calibration series, independently checked logical counts, and concurrency/plateau evidence. |
+| `lineage`, `dirty` | Source lineage and whether the collected source context had changes. |
+| `recipe`, `frozen_ns`, `source_calibration`, `source_calibration_sha256`, `source_receipt_sha256` | Distinct immutable resource derivation, its freeze time and exact independent calibration/receipt. |
+| `services`, `event_definition`, `denominator`, `parameter`, `seconds_per_event` | Typed service cells, their logical event denominator, resulting fact and trial statistics. |
+| `gross_seconds`, `driver_seconds`, `gross_seconds_per_event`, `driver_seconds_per_event`, `cost_basis` | Uninstrumented gross/driver windows and allocator costs normalized per event. Gross resource transfer is inferred, includes driver work, and is not physical instruction latency. |
+| `gross_seconds_per_request`, `driver_seconds_per_request` | Equivalent gross/driver statistics for typed memory requests. |
+| `paired_residual`, `paired_admission` | Original subtraction evidence and its admission result retained beside the distinct gross recipe; no failed resolution gate is erased. |
+| `estimate_protocol`, `timing_arguments` | Native-validation protocol and exact arguments; a compatible input ID alone is insufficient. |
+| `development_band`, `width_log`, `admission` | Error-band development evidence, logarithmic width, and prospective held-out admission. |
+
+The resource producers are [allocator](../../swdb/cpu_allocator_resource.py)
+and [memory](../../swdb/cpu_memory_resource.py). Their inferred gross-cost recipes
+are conditional resource scenarios, not proven application upper bounds.
+
+[Native CPU pairing](../../swdb/cpu_pairing.py) attaches `paired_estimate` to an
+evaluation, with `evaluation_scope_sha256`, `prepared_before_native_timing`,
+`native_timing_decides`, and `agreement_claim`. Its `slots` bind
+`counted_payload_sha256`, `prediction_quantity`, `kernel_seconds`,
+`runtime_admission`, `elapsed_interval_uncertainty`, and `error_band_reason`.
+Counts/estimate preparation precedes application timing; native timing still
+decides the execution result. Unknown costs or incompatible runtime/scope keep
+unsupported predictions explicit rather than admitting an agreement claim.
+
+## Reported inputs and stateless LLVM support
+
+[Feature-report import](../../swdb/feature_reports.py) adds `reported_inputs` to a
+new characterization without changing counted observations. `source_report`
+pins original and sanitized bytes; `filename_version` can disagree with content
+version and remains a conflict. `base_characterization`, `array_aliases`,
+`methodology`, `methodology_text`, and `manifest` retain supplied context.
+`features`, `conflicts`, and `redactions` preserve sanitized claims and unresolved
+source/unit/scope mismatches. Supporting documents also retain
+`sanitized_sha256` and `sanitizer_version`. Reported claims do not replace measured
+counts or close a missing application binding.
+
+For static LLVM distributions, `plugin_support_objects` records
+[isolated stateless support](../../swdb/analytic_llvm_support.py): `archive`,
+`archive_sha256`, `member`, and `object_sha256`. Only the native `SHA256.cpp.o`
+member is admitted after symbol checks; whole LLVM registries are not duplicated.

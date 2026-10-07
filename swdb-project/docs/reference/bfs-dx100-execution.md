@@ -3,7 +3,14 @@
 Navigation updated: 2026-09-28 (Eastern Time).
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-26 (Eastern Time)
+Updated: 2026-10-07 (Eastern Time)
+
+New simulator execution belongs to Extensa research. Public `dx100-build`,
+`dx100-compile`, and `dx100-execute` calls require
+`--mode extensa --campaign ID` with a valid Extensa campaign ID, unless the
+campaign supplies that context. ArchEvolve's default policy refuses gem5
+dependencies before dispatch. The dated results below retain their original scope.
+Commands and paths are relative to `ArchEvolve/swdb-project/`.
 
 On the pinned model, `src/python/m5/simulate.py:332–336` creates an empty literal
 `cpt.%d` directory before the C++ serializer expands the tick. The adapter

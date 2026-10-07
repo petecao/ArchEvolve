@@ -3,7 +3,14 @@
 Navigation updated: 2026-09-28 (Eastern Time).
 
 Created: 2026-09-25 (Eastern Time)
-Updated: 2026-09-25 (Eastern Time)
+Updated: 2026-10-07 (Eastern Time)
+
+New simulator work belongs to Extensa research. This older driver forwards no
+`--mode` or `--campaign` flags; its child commands inherit the environment.
+Without an inherited valid `SWDB_EXTENSA_CAMPAIGN` context, current ArchEvolve
+policy refuses its gem5 stages. Use the `campaign` interface for the maintained
+research loop. The driver behavior and dated bounds below describe the retained
+series machinery, not an authorized standalone launch sequence.
 
 `scripts/bfs_simulator_series.py` collects one exact registered workload for an
 identified candidate through the public SWDB commands. It must run on mbit10 in
