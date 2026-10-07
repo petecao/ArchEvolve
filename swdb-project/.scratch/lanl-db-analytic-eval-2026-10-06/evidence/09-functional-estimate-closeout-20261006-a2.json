@@ -1,0 +1,343 @@
+{
+  "format": "swdb.functional-estimate-closeout.v1",
+  "updated": "2026-10-06 21:17 ET",
+  "source_commit": "bc26c9b538c623813ea83db865a368b609d6df2c",
+  "count_source_commit": "9ba9277b2b7cfed25569b4fa73aa683679a588e0",
+  "count_record": {
+    "id": "bfs.functional.kron-g16.t4.characterization.objects.a2",
+    "self_identity_sha256": "2b68d09d5b7de821913ccabe03230785d89b9c99591d303558e796b1ee3dacfe",
+    "frozen_record_sha256": "07d446f8b5f5932339d384f7faa8c8215e59e4dc4ee965945610d5425a09c6e8",
+    "file_sha256": "dfbb5791ebe8bf63b544a548541fd8b5a7eeb8e033fe3aef2316c4c7467e325a"
+  },
+  "protocol": {
+    "id": "bfs.functional.kron-g16.t4.estimate.protocol.a2.3c10575e0635e4cc",
+    "identity_sha256": "3c10575e0635e4cc2301244b1f59d6c29a0a7046f6c0569328bed60196a6ddec",
+    "estimator_sha256": "3ad3ce75dc7ed90f7093c3a867ff187cf2884723adf7a98264b005c207018475",
+    "frozen_at": "2026-10-07T01:06:06.356975+00:00"
+  },
+  "estimate": {
+    "id": "bfs.functional.kron-g16.t4.estimate.a2",
+    "record_sha256": "6e6d5fdf39bd997433fbc2accb6e5182a073a7f98d554616d8c4953f3aaea0ea",
+    "file_sha256": "d20726a5f596f944abfe8b2bfa94f4e04843adfa77a8b6ccd94146c7d760af60",
+    "target_description": "dx100-e4fc4af-functional-analytic-v1.t4",
+    "target_description_sha256": "6351828a0ba1536f6862d428a2522ae36ea5a39753879abdb5b637b26d8ce211",
+    "observation_policy_sha256": "51126925c6bbe20df4cd4a5805c752691fb26dddbd175d9cec55a923eee7a180",
+    "seconds": null,
+    "ratio": null,
+    "error_band": null,
+    "verdict": "within_error",
+    "static_region_count": 284,
+    "unmapped_loop_count": 153,
+    "observed_region_union": 26,
+    "zero_only_region_count": 258
+  },
+  "report": {
+    "path": ".scratch/lanl-db-analytic-eval-2026-10-06/evidence/09-functional-application-report-mbit10-20261006-a2.json",
+    "sha256": "f91554ca759e807af32733698f8e20a54906a0dc0b036c4c7d06e31a04324171",
+    "bytes": 3824819
+  },
+  "trials": [
+    {
+      "position": 0,
+      "sources": [
+        43491
+      ],
+      "observed_region_count": 26,
+      "logical_line_requests": 580126,
+      "logical_row_groups": 23846,
+      "ideal_grouped_hits": 556280,
+      "ideal_grouped_row_hit_fraction": 0.9588951365737788,
+      "semantic_useful_staged_bytes": 22390212,
+      "semantic_setup_event_executions": 1351,
+      "whole_call_seconds": null
+    },
+    {
+      "position": 1,
+      "sources": [
+        20508
+      ],
+      "observed_region_count": 23,
+      "logical_line_requests": 578081,
+      "logical_row_groups": 25373,
+      "ideal_grouped_hits": 552708,
+      "ideal_grouped_row_hit_fraction": 0.9561082270477667,
+      "semantic_useful_staged_bytes": 22388268,
+      "semantic_setup_event_executions": 1351,
+      "whole_call_seconds": null
+    },
+    {
+      "position": 2,
+      "sources": [
+        39814
+      ],
+      "observed_region_count": 23,
+      "logical_line_requests": 580167,
+      "logical_row_groups": 24254,
+      "ideal_grouped_hits": 555913,
+      "ideal_grouped_row_hit_fraction": 0.9581947956364288,
+      "semantic_useful_staged_bytes": 22369392,
+      "semantic_setup_event_executions": 1322,
+      "whole_call_seconds": null
+    },
+    {
+      "position": 3,
+      "sources": [
+        48991
+      ],
+      "observed_region_count": 23,
+      "logical_line_requests": 581502,
+      "logical_row_groups": 28817,
+      "ideal_grouped_hits": 552685,
+      "ideal_grouped_row_hit_fraction": 0.9504438505800495,
+      "semantic_useful_staged_bytes": 22297944,
+      "semantic_setup_event_executions": 1333,
+      "whole_call_seconds": null
+    },
+    {
+      "position": 4,
+      "sources": [
+        13959
+      ],
+      "observed_region_count": 23,
+      "logical_line_requests": 581800,
+      "logical_row_groups": 27751,
+      "ideal_grouped_hits": 554049,
+      "ideal_grouped_row_hit_fraction": 0.9523014781711928,
+      "semantic_useful_staged_bytes": 22289520,
+      "semantic_setup_event_executions": 1322,
+      "whole_call_seconds": null
+    }
+  ],
+  "parameters": {
+    "unknowns": [
+      {
+        "parameter": "mechanisms[0].parameters.atomic_ops_per_s",
+        "model": "compute_throughput",
+        "required_for_total": true,
+        "priority_rank": 1,
+        "impact_rank": null,
+        "impact_magnitude_seconds": null
+      },
+      {
+        "parameter": "mechanisms[0].parameters.branch_ops_per_s",
+        "model": "compute_throughput",
+        "required_for_total": true,
+        "priority_rank": 1,
+        "impact_rank": null,
+        "impact_magnitude_seconds": null
+      },
+      {
+        "parameter": "mechanisms[0].parameters.integer_ops_per_s",
+        "model": "compute_throughput",
+        "required_for_total": true,
+        "priority_rank": 1,
+        "impact_rank": null,
+        "impact_magnitude_seconds": null
+      },
+      {
+        "parameter": "mechanisms[1].parameters.effective_memory_parallelism",
+        "model": "reorder_window_rows",
+        "required_for_total": true,
+        "priority_rank": 1,
+        "impact_rank": null,
+        "impact_magnitude_seconds": null
+      },
+      {
+        "parameter": "mechanisms[2].parameters.admission_requests_per_s",
+        "model": "fetch_queue",
+        "required_for_total": true,
+        "priority_rank": 1,
+        "impact_rank": null,
+        "impact_magnitude_seconds": null
+      },
+      {
+        "parameter": "mechanisms[2].parameters.fetch_latency_s",
+        "model": "fetch_queue",
+        "required_for_total": true,
+        "priority_rank": 1,
+        "impact_rank": null,
+        "impact_magnitude_seconds": null
+      },
+      {
+        "parameter": "mechanisms[3].parameters.staging_bytes_per_s",
+        "model": "tile_staging",
+        "required_for_total": true,
+        "priority_rank": 1,
+        "impact_rank": null,
+        "impact_magnitude_seconds": null
+      },
+      {
+        "parameter": "mechanisms[4].parameters.seconds_per_event",
+        "model": "offload_setup",
+        "required_for_total": true,
+        "priority_rank": 1,
+        "impact_rank": null,
+        "impact_magnitude_seconds": null
+      },
+      {
+        "parameter": "mechanisms[0].parameters.floating_point_ops_per_s",
+        "model": "compute_throughput",
+        "required_for_total": false,
+        "priority_rank": 2,
+        "impact_rank": null,
+        "impact_magnitude_seconds": null
+      }
+    ],
+    "sensitivities": [
+      {
+        "parameter": "mechanisms[1].parameters.row_hit_service_s",
+        "value": 1.25e-08,
+        "basis": "inferred",
+        "sensitivity_state": "local_components_only",
+        "impact_rank": null,
+        "impact_magnitude_seconds": null,
+        "scenario_values": {
+          "half": 6.25e-09,
+          "base": 1.25e-08,
+          "double": 2.5e-08
+        },
+        "whole_call_seconds": {
+          "half": null,
+          "base": null,
+          "double": null
+        }
+      },
+      {
+        "parameter": "mechanisms[1].parameters.row_miss_service_s",
+        "value": 3.75e-08,
+        "basis": "inferred",
+        "sensitivity_state": "local_components_only",
+        "impact_rank": null,
+        "impact_magnitude_seconds": null,
+        "scenario_values": {
+          "half": 1.875e-08,
+          "base": 3.75e-08,
+          "double": 7.5e-08
+        },
+        "whole_call_seconds": {
+          "half": null,
+          "base": null,
+          "double": null
+        }
+      },
+      {
+        "parameter": "mechanisms[2].parameters.queue_entries",
+        "value": 32,
+        "basis": "code_reading",
+        "sensitivity_state": "requires_fresh_observation",
+        "impact_rank": null,
+        "impact_magnitude_seconds": null,
+        "scenario_values": {
+          "half": 16.0,
+          "base": 32,
+          "double": 64.0
+        },
+        "whole_call_seconds": {
+          "half": null,
+          "base": null,
+          "double": null
+        }
+      }
+    ],
+    "structural_missing": [
+      "aggregate_rate_worker_scope",
+      "call_cost._ZNSo3putEc",
+      "call_cost._ZNSo5flushEv",
+      "call_cost._ZNSo9_M_insertImEERSoT_",
+      "call_cost._ZNSt6chrono3_V212system_clock3nowEv",
+      "call_cost._ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l",
+      "call_cost._ZdaPv",
+      "call_cost._Znam",
+      "call_cost.__kmpc_barrier",
+      "call_cost.__kmpc_dispatch_deinit",
+      "call_cost.__kmpc_dispatch_init_8u",
+      "call_cost.__kmpc_dispatch_next_8u",
+      "call_cost.__kmpc_for_static_fini",
+      "call_cost.__kmpc_for_static_init_4",
+      "call_cost.__kmpc_for_static_init_8u",
+      "call_cost.__kmpc_fork_call",
+      "call_cost.llvm.memcpy.p0.p0.i64",
+      "call_cost.llvm.memmove.p0.p0.i64",
+      "call_cost.malloc",
+      "call_cost.omp_get_max_threads",
+      "call_cost.omp_get_thread_num",
+      "call_cost.printf",
+      "call_cost.strlen",
+      "composition_contract.resource_domain_overlap",
+      "host_memory_service_model"
+    ]
+  },
+  "checks": {
+    "all_615_original_yaml_bytes_preserved": true,
+    "five_trial_sources_region_sets_and_null_totals_preserved": true,
+    "all_bounds_and_additive_overheads_preserved": true,
+    "report_parameter_payload_equals_frozen_estimate": true,
+    "count_record_and_original_receipt_immutable": true,
+    "public_validation": {
+      "file_sha256": "031b75c9dd31215df8d017244c7f775833cbf41c902deae253ce88cc13f002fb",
+      "output": "OK: 617 record(s) valid\n"
+    },
+    "canonical_validation": {
+      "file_sha256": "031b75c9dd31215df8d017244c7f775833cbf41c902deae253ce88cc13f002fb",
+      "output": "OK: 617 record(s) valid\n"
+    },
+    "final_estimator_bundle_unchanged": true
+  },
+  "tests": [
+    {
+      "scope": "Stateless native LLVM support and exact source-view/receipt guards",
+      "passed": 12,
+      "seconds": 325.24
+    },
+    {
+      "scope": "Host/offload resource composition, additive setup and mechanism cases",
+      "passed": 15,
+      "seconds": 18.82
+    },
+    {
+      "scope": "Final affected public sensitivity/composition/offload/streaming gate",
+      "passed": 22,
+      "seconds": 329.09
+    },
+    {
+      "scope": "Review canonical repeated-region routing, exact live union, call histograms and prior lifetime/budget regressions",
+      "passed": 3,
+      "seconds": 10.35
+    }
+  ],
+  "scope": "Actual registered FUNC source execution and allocation-relative logical observations; no physical DX100 result, hardware row hits, gem5 outputs, native uninstrumented performance, or validated agreement band. Missing mechanisms and overlap are structural gaps, not role-fillable rates.",
+  "notes": [
+    "Eight required null references have dependency priority 1; unused floating-point rate has priority 2. No guessed numerical impact ranking is claimed.",
+    "Known half/double row scenarios retain local component nulls while parallelism is unknown; queue-capacity changes require fresh observations.",
+    "D25 requires within_error until a band is validated; this token does not assert measured agreement.",
+    "The packaging contract_fixture, candidate unverified and source unchecked labels remain unchanged; strict certification and execution binding are distinct evidence."
+  ],
+  "review_aggregation": {
+    "finding": "No dropped memory/object facts: source access callbacks route to the first canonical source-region index before computing live unions. Calls/histograms are collected after IDs combine; operation counters sum original exclusive indexes.",
+    "source_pointer": "swdb/llvm/Characterize.cpp:426",
+    "actual_mapping": {
+      "normalized_loop_ids": 153,
+      "unique_loop_ids": 153,
+      "serial_regions": 131,
+      "unique_serial_symbols": 131,
+      "loop_serial_overlap": 0,
+      "total_regions": 284
+    },
+    "public_regression": {
+      "case": "tests/test_analytic_live_context.py::test_repeated_region_routes_all_accesses_to_one_live_union_and_retains_calls",
+      "two_lowered_loops_one_source_id": true,
+      "requests": 8,
+      "useful_bytes": 32,
+      "full_allocation_requests": 8,
+      "exact_lifetime_line_union": 5,
+      "footprint_bytes": 28,
+      "allocation_call_sites_execution_counts": [
+        3,
+        5
+      ],
+      "free_executions": 8,
+      "only_canonical_runtime_memory_row_present": true,
+      "addresses_serialized": false
+    }
+  }
+}

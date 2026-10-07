@@ -112,3 +112,23 @@ static receipts; ticket 03 owns model admission and transfer uncertainty.
 Source pointers: `scripts/openmp_call_projection.py`, `swdb/llvm/OpenMPCallProjection.cpp`,
 `tests/test_openmp_call_projection.py`, verified root-projector commit `a9dbe11`, and the
 count metadata commit `e361e83`. Ticket 09/10 merger/frontier work remains independent.
+
+
+Selected-function calibration projection — 2026-10-06 21:26 ET.
+
+When the characterization declares `coverage.scope: function`, pass its exact
+`coverage.function` as `--function`, for example `--function service_openmp_matrix`.
+The option matches Characterize's debug owner name or exact LLVM symbol; outlined
+workers use the source-parent owner. Omission or a different value refuses before
+creating output. The helper enumerates and cross-checks every site in that selected
+source map; opaque prepare/cleanup functions outside that counted scope are excluded.
+This changes no observer, source IR, counters, or characterization identity. Whole
+translation-unit application projections continue to omit the option, and all four
+historical compact application projections retain their original IDs and helper pins.
+
+The public filtered-module fixture includes a separate noinline helper with a memory
+access and OpenMP call. Both debug-name and LLVM-symbol selections cross-check the
+seven selected call sites while the absent/wrong selections refuse. Exact input,
+helper, compiler and argv hashes remain in each newly generated projection receipt.
+[The follow-up proof](11-openmp-selected-function-projection-proof-20261006.json)
+records the public RED → GREEN and unchanged estimator/observer boundaries.

@@ -1,0 +1,35 @@
+{
+  "format": "swdb.openmp-selected-function-projection-proof.v1",
+  "updated": "2026-10-06 21:26 ET",
+  "base_integration": "4eaf95a95ed581f3b258d881a719a33f24c80ab2",
+  "red": {
+    "case": "test_exact_function_filter_crosschecks_selected_map_without_helper_sites[fixture_openmp]",
+    "exit_code": 1,
+    "reason": "unrecognized arguments: --function fixture_openmp",
+    "seconds": 2.21
+  },
+  "green": {
+    "command": "python3 -m pytest -q tests/test_openmp_call_projection.py",
+    "passed": 10,
+    "seconds": 11.12,
+    "exit_code": 0
+  },
+  "contract": {
+    "option": "--function",
+    "persisted_selection": "coverage.function",
+    "required_scope": "function",
+    "matching": "Characterize owner(F,M) debug name or exact F.getName(); outlined source-parent ownership",
+    "unknown_dynamic_operands": "unchanged explicit states",
+    "default_application_projection": "translation-unit enumeration unchanged; historical four proof identities remain immutable",
+    "no_observer_or_counter_change": true,
+    "new_projections_keep_exact_source_map_ir_characterization_helper_compiler_argv_hashes": true
+  },
+  "hashes": {
+    "scripts/openmp_call_projection.py": "3192ce0c6ca60cbc30d66afeee23b02ae1a0f3434b584310d954a1835f00f822",
+    "swdb/llvm/OpenMPCallProjection.cpp": "8b93e0a7419d51779e3fc010eddfa2853034f5e54b54010e134bf93bc3818330",
+    "swdb/llvm/Characterize.cpp": "b461fd7025cfa675d5c191d7d73fee8bd04525c0344cd315dffedb61575b65a0",
+    "swdb/llvm/CountingRuntime.cpp": "43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e"
+  },
+  "estimator_bundle_sha256": "3ad3ce75dc7ed90f7093c3a867ff187cf2884723adf7a98264b005c207018475",
+  "direct_old_fixture_smoke": "Not performed: supplied pytest501 fixture was already removed by normal pytest retention. New independent filtered module fixtures passed; ticket11 implementer consumes the seam on its live count fixture."
+}

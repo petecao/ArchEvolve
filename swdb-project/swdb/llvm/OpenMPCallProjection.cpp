@@ -61,8 +61,16 @@ static json::Object identFlags(const CallBase &call) {
   row["state"]="constant";row["bits"]=32;row["signed_decimal"]=decimal.str().str();return row;
 }
 
+static std::string owner(Function &function,Module &module) {
+  StringRef symbol=function.getName();size_t pos=symbol.find(".omp_outlined");
+  if(pos!=StringRef::npos)if(auto *base=module.getFunction(symbol.substr(0,pos)))
+    if(auto *debug=base->getSubprogram())return debug->getName().str();
+  return function.getSubprogram()?function.getSubprogram()->getName().str():symbol.str();
+}
+
 int main(int argc,char **argv) {
-  if(argc!=6)return fail("usage: openmp-projector normalized.bc source.json output.json call-sites expected-ir-sha256");
+  if(argc!=6 && argc!=7)return fail("usage: openmp-projector normalized.bc source.json output.json call-sites expected-ir-sha256 [exact-function]");
+  StringRef selected=argc==7?argv[6]:"";
   const std::string irHash=hashFile(argv[1]),mapHash=hashFile(argv[2]);
   if(irHash.empty() || irHash!=argv[5])return fail("source_ir_sha256 mismatch");
   LLVMContext context;SMDiagnostic diagnostic;auto module=parseIRFile(argv[1],diagnostic,context);
@@ -78,6 +86,7 @@ int main(int argc,char **argv) {
   const auto &layout=module->getDataLayout();
   for(Function &function:*module) {
     if(function.isDeclaration() || function.getName().starts_with("__swdb_") || !function.getSubprogram())continue;
+    if(!selected.empty() && selected!=owner(function,*module) && selected!=function.getName())continue;
     for(Instruction &inst:instructions(function)) {
       if(inst.getMetadata("swdb.observer") || isa<DbgInfoIntrinsic>(inst) || isa<PHINode>(inst) || isa<AllocaInst>(inst))continue;
       Value *pointer=nullptr;Type *type=nullptr;StringRef update="read";

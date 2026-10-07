@@ -23,14 +23,12 @@ def command(argv, **kwargs):
     return result
 
 
-@pytest.fixture(scope='module')
-def static_openmp(tmp_path_factory):
+def build_static_openmp(folder, *, function=None, filename='openmp_abi.cpp'):
     llvm = Path(os.environ.get('SWDB_LLVM_BIN', '/opt/homebrew/opt/llvm/bin'))
     if not (llvm / 'llvm-config').is_file():
         pytest.skip('LLVM22 required for static projection fixtures')
     if not command([llvm / 'llvm-config', '--version']).stdout.startswith('22.'):
         pytest.skip('LLVM22 required')
-    folder = tmp_path_factory.mktemp('openmp-static')
     plugin = folder / ('Characterize.dylib' if sys.platform == 'darwin' else 'Characterize.so')
     flags = shlex.split(command([llvm / 'llvm-config', '--cxxflags', '--ldflags']).stdout)
     link = subprocess.run([llvm / 'llvm-config', '--link-shared', '--libs', 'core',
@@ -40,9 +38,9 @@ def static_openmp(tmp_path_factory):
     command([llvm / 'clang++', '-shared', '-fPIC', REPO / 'swdb/llvm/Characterize.cpp', *flags, '-o', plugin])
     ir, raw, mapping = (folder / name for name in ('normalized.bc', 'raw.bc', 'source.json'))
     command([llvm / 'clang++', '-g', '-O0', '-Xclang', '-disable-O0-optnone', '-emit-llvm',
-             '-c', REPO / 'tests/fixtures/analytic/openmp_abi.cpp', '-o', raw])
+             '-c', REPO / 'tests/fixtures/analytic' / filename, '-o', raw])
     command([llvm / 'opt', '-passes=mem2reg,loop-simplify', raw, '-o', ir])
-    env = dict(os.environ, SWDB_COUNT_FUNCTION='', SWDB_INSTRUMENT='0',
+    env = dict(os.environ, SWDB_COUNT_FUNCTION=function or '', SWDB_INSTRUMENT='0',
                SWDB_SUBJECT='fixture.openmp', SWDB_ANALYSIS_OUTPUT=str(mapping))
     env.pop('SWDB_REGION_MAP', None)
     command([llvm / 'opt', '-load-pass-plugin=' + str(plugin), '-passes=swdb-characterize',
@@ -59,10 +57,23 @@ def static_openmp(tmp_path_factory):
               'evidence_kind': 'contract_fixture',
               'static_analysis': {'source_ir_sha256': hashlib.sha256(ir.read_bytes()).hexdigest()},
               'unmodeled_calls': rows, 'trials': trials}
+    if function:
+        record['coverage'] = {'scope': 'function', 'function': function}
     record['identity_sha256'] = artifacts.digest(record)
     char = folder / 'characterization.json'
     char.write_text(json.dumps(record))
     return {'llvm': llvm, 'ir': ir, 'mapping': mapping, 'char': char, 'record': record}
+
+
+@pytest.fixture(scope='module')
+def static_openmp(tmp_path_factory):
+    return build_static_openmp(tmp_path_factory.mktemp('openmp-static'))
+
+
+@pytest.fixture(scope='module')
+def filtered_openmp(tmp_path_factory):
+    return build_static_openmp(tmp_path_factory.mktemp('openmp-filtered'),
+                               function='fixture_openmp', filename='openmp_abi_filtered.cpp')
 
 
 def project(fixture, output, **paths):
@@ -70,7 +81,7 @@ def project(fixture, output, **paths):
         '--llvm-bin', str(fixture['llvm']), '--source-ir', str(paths.get('ir', fixture['ir'])),
         '--source-map', str(paths.get('mapping', fixture['mapping'])),
         '--characterization', str(paths.get('char', fixture['char'])),
-        '--output-directory', str(output)], cwd=REPO, capture_output=True, text=True, timeout=120)
+        '--output-directory', str(output), *(['--function', paths['function']] if paths.get('function') else [])], cwd=REPO, capture_output=True, text=True, timeout=120)
 
 
 def test_projects_all_trial_executed_sites_and_exact_abi_literals(static_openmp, tmp_path):
@@ -190,3 +201,33 @@ def test_known_zero_openmp_calls_produce_empty_verified_projection(static_openmp
     proof = json.loads(result.stdout)
     assert proof['calls'] == []
     assert proof['all_source_json_sites_cross_checked'] is True and proof['enumerated_call_sites'] == 7
+
+
+@pytest.mark.parametrize('function', ['fixture_openmp', '_Z14fixture_openmpiil'])
+def test_exact_function_filter_crosschecks_selected_map_without_helper_sites(filtered_openmp, tmp_path, function):
+    record = json.loads(filtered_openmp['char'].read_text())
+    record['coverage']['function'] = function
+    record.pop('identity_sha256')
+    record['identity_sha256'] = artifacts.digest(record)
+    character = tmp_path / 'filtered-characterization.json'
+    character.write_text(json.dumps(record))
+    before = {key: filtered_openmp[key].read_bytes() for key in ('ir', 'mapping', 'char')}
+    result = project(filtered_openmp, tmp_path / 'filtered', char=character, function=function)
+    assert result.returncode == 0, result.stderr + result.stdout
+    proof = json.loads(result.stdout)
+    assert proof['function_selection']['function'] == function
+    assert proof['enumerated_call_sites'] == 7
+    assert proof['all_source_json_sites_cross_checked'] is True
+    assert len(proof['calls']) == 6
+    assert all(call['llvm_function'] == '_Z14fixture_openmpiil' for call in proof['calls'])
+    assert proof['receipt']['projection_argv'][-1] == function
+    assert {key: filtered_openmp[key].read_bytes() for key in before} == before
+
+
+def test_function_filter_must_equal_persisted_count_selection(filtered_openmp, tmp_path):
+    for index, function in enumerate((None, 'excluded_prepare')):
+        output = tmp_path / str(index)
+        result = project(filtered_openmp, output, function=function)
+        assert result.returncode == 2
+        assert 'function selection differs from characterization coverage.function' in result.stderr
+        assert not output.exists()
