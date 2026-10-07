@@ -26,8 +26,8 @@ RECIPE={'id':'gross_constructed_resource_v1','denominator':'source_normalized_lo
 
 
 def _services(source, identifier):
-    if source.get('settings',{}).get('group')!='memory_v1':
-        raise Failure('total-cell recipe requires independent memory_v1 calibration')
+    if source.get('settings',{}).get('group') not in ('memory_v1','memory_float_v1'):
+        raise Failure('total-cell recipe requires independent typed integer/ordinary or floating memory calibration')
     result=[]
     for service in source['services']:
         if service['unit']!='seconds/request':

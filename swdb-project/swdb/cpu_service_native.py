@@ -61,6 +61,9 @@ def loaded_libraries(binary, command):
 
 
 def validate(raw):
+    if raw.get('settings', {}).get('group') == 'memory_float_v1':
+        from swdb.cpu_float_memory_calibration import validate
+        return validate(raw)
     if raw.get('settings', {}).get('group') == 'bulk_total_v2':
         from swdb.cpu_bulk_total_calibration import validate
         return validate(raw)

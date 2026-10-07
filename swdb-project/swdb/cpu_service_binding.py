@@ -84,7 +84,7 @@ def _scope_compatibility(target,char,calibration,service,fixture,scopes):
     missing=[reason if len(scopes)==1 else 'scope.'+row['characterization']+'.'+reason for row in values for reason in row['missing']]
     return missing,values
 
-MEMORY_KINDS={'read':'read','write':'write','add-update':'add-update',
+MEMORY_KINDS={'read':'read','write':'write','add-update':'add-update','floating-add-update':'add-update',
     'cas-success':'compare-and-swap','cas-failure':'compare-and-swap'}
 CAS_POLICY='max_constructed_success_failure_median'
 MEMORY_MODELS={'streaming_bandwidth','requests_in_flight_latency','cache_fit','memory_service_scenario'}
@@ -101,6 +101,9 @@ def _memory_binding(args,target,char,cells,scopes):
         scope=service.get('scope',{});op=scope.get('operation');width=scope.get('element_bytes');size=scope.get('footprint_bytes')
         if op not in MEMORY_KINDS or type(width) is not int or width not in (1,4,8) or type(size) is not int:
             raise Failure('unsupported constructed memory service cell')
+        if op=='floating-add-update':
+            from swdb.cpu_float_memory_calibration import PRIMITIVE
+            if width!=8 or scope.get('source_primitive')!=PRIMITIVE:raise Failure('unsupported exact floating monotonic primitive')
         small=width==1
         regime='fixed_small_byte_read_constructed_requests' if small else 'resident_serial_constructed_requests'
         if scope.get('update_kind')!=MEMORY_KINDS[op] or scope.get('memory_regime')!=regime or scope.get('worker_scope')!='serial' or scope.get('transfer_basis')!='inferred' or (small and (op!='read' or size!=256)):
@@ -135,7 +138,7 @@ def _memory_binding(args,target,char,cells,scopes):
                 'unit':'seconds/request','source':'Maximum of the separately retained constructed success/failure medians; no application outcome mix or physical upper bound is established.'}
             construction['outcome_policy']=CAS_POLICY
             construction['primitive']='integer_strong_seq_cst_compare_exchange'
-        else:construction['primitive']={'read':'ordinary_read','write':'ordinary_write','add-update':'integer_seq_cst_add'}[op]
+        else:construction['primitive']={'read':'ordinary_read','write':'ordinary_write','add-update':'integer_seq_cst_add','floating-add-update':'floating_monotonic_add'}[op]
         requests.append({'update_kind':MEMORY_KINDS[op],'element_bytes':width,'parameter':parameter,'construction':construction})
     if any(op=='cas-failure' and ('cas-success',width) not in selected for op,width in selected):
         raise Failure('constructed CAS binding needs both independent success and failure cells')

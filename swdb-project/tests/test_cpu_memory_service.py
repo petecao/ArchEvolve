@@ -14,7 +14,7 @@ def memory_case(records,tmp_path,*,missing_write=False,primitive_case=None,extra
     char=records.read('workload_characterizations/fixture.counts.yaml');char['id']='fixture.memory.counts'
     fact=lambda n:{'value':n,'basis':'reported' if n is not None else 'unknown','scope':'per_run'}
     counts={k:[] for k in ('read','write','add-update','compare-and-swap','min-max-update','arbitrary')}
-    read_kind='add-update' if primitive_case in ('floating_add','integer_add') else 'read'
+    read_kind='add-update' if primitive_case in ('floating_add','integer_add','mixed_add') else 'read'
     counts[read_kind]=[{'element_bytes':8,'requests':fact(3)}]
     counts['write']=[{'element_bytes':4,'requests':fact(2)}]
     char['regions'][0]['memory_service_counts']={'format':'swdb.memory-service-counts.v1','scope':'per_run',
@@ -38,13 +38,20 @@ def memory_case(records,tmp_path,*,missing_write=False,primitive_case=None,extra
             'primitive_semantics':primitive(opcode,width*8)})
     if primitive_case=='absent':
         for access in accesses:access.pop('primitive_semantics')
-    elif primitive_case in ('floating_add','integer_add'):
+    elif primitive_case in ('floating_add','integer_add','mixed_add'):
         accesses[0]['read_write']=True
         accesses[0]['primitive_semantics'].update(opcode='atomicrmw',value_kind='floating' if primitive_case=='floating_add' else 'integer',
             update_opcode='fadd' if primitive_case=='floating_add' else 'add',atomic_ordering='seq_cst')
     elif primitive_case=='exchange':accesses[1]['primitive_semantics'].update(opcode='atomicrmw',update_opcode='xchg',atomic_ordering='seq_cst')
     elif primitive_case=='vector':accesses[0]['primitive_semantics']['vector']=True;accesses[0]['ir_lanes']=4
     elif primitive_case=='count_gap':accesses[0]['element_count']['value']=2
+    if primitive_case=='mixed_add':
+        import copy
+        floating=copy.deepcopy(accesses[0]);floating.update(id='access.3')
+        floating['element_count']['value']=2;floating['bytes_accessed']['value']=16
+        floating['primitive_semantics'].update(value_kind='floating',update_opcode='fadd',atomic_ordering='monotonic')
+        accesses.append(floating);counts['add-update'][0]['requests']['value']=5
+        char['regions'][0]['memory_service_counts']['useful_bytes']['value']=48
     char['regions'][0]['access_patterns']=accesses
     char.pop('identity_sha256');char['identity_sha256']=digest(char)
     records.write('workload_characterizations/fixture.memory.counts.yaml',char)
@@ -63,6 +70,14 @@ def memory_case(records,tmp_path,*,missing_write=False,primitive_case=None,extra
         'parameters':{'read8_s':{'value':.5,'basis':'reported','unit':'seconds/request','source':'Hand dependent-read cell.'},
             'write4_s':{'value':None if missing_write else .5,'basis':'unknown' if missing_write else 'reported',
                 'unit':'seconds/request','source':'Hand store cell.'}}})
+    if primitive_case=='mixed_add':
+        import copy
+        model=target['mechanisms'][-1]
+        floating=copy.deepcopy(model['selector']['requests'][0]);floating['parameter']='fadd8_s'
+        floating['construction']['primitive']='floating_monotonic_add'
+        floating['construction']['source_services']=[{'calibration':'hand.float','service':'hand.fadd8','parameter':'fadd8_s'}]
+        model['selector']['requests'].append(floating)
+        model['parameters']['fadd8_s']={'value':2.,'basis':'reported','unit':'seconds/request','source':'Separate hand floating monotonic cell.'}
     target['mechanisms'][-1]['selector'].update(extra_selector or {})
     path=tmp_path/'memory-target.yaml';path.write_text(yaml.safe_dump(target,sort_keys=False))
     frozen=tmp_path/'memory-freeze.yaml'
@@ -119,3 +134,14 @@ def test_memory_context_admission_is_independent_of_numeric_cost(records,tmp_pat
     assert data['seconds']==expected and model['seconds']==expected
     assert not any(m=='selector.calibration_admission' for m in model['missing'])
     assert model['inputs']['calibration_admission']==reasons
+
+
+def test_mixed_integer_and_floating_atomic_requests_partition_by_exact_source_primitive(records,tmp_path):
+    data=memory_case(records,tmp_path,primitive_case='mixed_add')
+    model=next(b for b in data['regions'][0]['bounds'] if b['model']=='memory_service_scenario')
+    assert model['seconds']==6.5 and data['seconds']==6.5
+    by_site={row['site']:row for row in model['inputs']['source_accesses']}
+    assert by_site['access.1']['parameter']=='read8_s'
+    assert by_site['access.3']['parameter']=='fadd8_s'
+    assert by_site['access.1']['requests']['value']==3 and by_site['access.3']['requests']['value']==2
+    assert records.validate().returncode==0

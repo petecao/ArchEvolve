@@ -78,3 +78,28 @@ def test_binding_requires_explicit_memory_footprint_and_cas_policy_before_writin
         '--calibration','fixture.memory.costs','--id','fixture.implicit.memory','--fixture')
     assert rejected.returncode!=0 and 'explicit memory footprint' in rejected.stderr
     assert not (records.path/'target_descriptions/fixture.implicit.memory.yaml').exists()
+
+
+def test_binding_keeps_distinct_integer_and_floating_add_cells_in_one_coarse_bucket(records,tmp_path):
+    setup(records,tmp_path)
+    from swdb.cpu_service_calibration import identity
+    from swdb.cpu_float_memory_calibration import PRIMITIVE
+    raw={'format':'swdb.cpu-service-calibration.v1','evidence_kind':'fixture','machine':'testhost','threads':1,
+        'context':{'compiler_version':'hand fixture'},'settings':{'group':'memory_float_v1','repetitions':3},
+        'services':[{'id':'memory.floating-add-update.8.8388608','unit':'seconds/request','event_definition':'Separate hand floating monotonic fixture, never native evidence.',
+            'scope':{'operation':'floating-add-update','update_kind':'add-update','element_bytes':8,'footprint_bytes':8388608,
+                'memory_regime':'resident_serial_constructed_requests','transfer_basis':'inferred','worker_scope':'serial','source_primitive':PRIMITIVE},
+            'denominator':{'level':'source_normalized_work','basis':'reported','proof':'Hand floating event coefficient only.'},
+            'trials':[{'events':10,'gross_seconds':2.,'driver_seconds':1.,'order':'service_first' if i%2==0 else 'driver_first'} for i in range(3)]}]}
+    raw['identity_sha256']=identity(raw);path=tmp_path/'float-binding.json';path.write_text(json.dumps(raw))
+    imported=run_swdb('import-cpu-service-calibration','--records',records.path,'--receipt',path,'--id','fixture.float.cost','--fixture')
+    assert imported.returncode==0,imported.stderr+imported.stdout
+    result=run_bind(records,'--target-description','fixture.memory.base','--characterization','fixture.counts',
+        '--calibration','fixture.memory.costs','--calibration','fixture.float.cost','--memory-footprint-bytes','8388608',
+        '--memory-cas-policy','max_constructed_success_failure_median','--id','fixture.mixed.memory.bound','--fixture')
+    assert result.returncode==0,result.stderr+result.stdout
+    rows=json.loads(result.stdout)['mechanisms'][-1]['selector']['requests']
+    adds=[row for row in rows if row['update_kind']=='add-update' and row['element_bytes']==8]
+    assert len(adds)==2 and len({row['parameter'] for row in adds})==2
+    assert {row['construction']['primitive'] for row in adds}=={'integer_seq_cst_add','floating_monotonic_add'}
+    assert records.validate().returncode==0
