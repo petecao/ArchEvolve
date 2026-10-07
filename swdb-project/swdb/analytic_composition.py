@@ -26,3 +26,21 @@ def resource_composition(bounds,target):
         {'domain_maxima':maxima,'composition_contract':contract,'composition_domain':'composed'},missing,
         ['Resource maxima compete within a domain; the description explicitly supplies cross-domain overlap.',
          'A declared overlap scenario is an analytic premise, not observed execution scheduling. Required unknowns remain null.'])]
+
+
+def host_memory_coverage(region,target):
+    models={m['model'] for m in target['mechanisms'] if domain(m)=='host'}
+    whole=bool(models & {'cache_fit','memory_service_scenario'})
+    uncovered=[]
+    for access in region['access_patterns']:
+        if access['element_count']['value']==0:continue
+        shape=access['address_shape']['value']
+        applicable=(whole or shape=='stream' and 'streaming_bandwidth' in models
+                    or shape!='stream' and 'requests_in_flight_latency' in models)
+        if not applicable:uncovered.append(access['id'])
+    if not uncovered:return []
+    return [bound('host_memory_coverage',None,'required source memory service coverage',
+        {'uncovered_source_accesses':uncovered,'composition_domain':'host'},['host_memory_service_model'],
+        ['Executed or unresolved source accesses require an applicable host memory mechanism.',
+         'Offload transaction/row/staging models do not cover caller or scalar fallback source memory.',
+         'Missing mechanisms are structural policy gaps; numerical rate filling cannot repair them.'])]

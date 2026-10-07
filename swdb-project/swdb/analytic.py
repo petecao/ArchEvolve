@@ -566,6 +566,7 @@ def _estimate_regions(source_regions, source_calls, target, observation_contract
             bounds.append(analytic_models.bound('unmodeled_calls', None,
                 'sum(call execution count * call cost)', {'calls': uncovered},
                 ['call_cost.' + c['name'] for c in uncovered]))
+        bounds.extend(analytic_composition.host_memory_coverage(region,target))
         bounds.extend(analytic_composition.resource_composition(bounds,target))
         unknown = any(b['seconds'] is None for b in bounds + overheads)
         seconds = None if unknown else max((b['seconds'] for b in bounds), default=0.) + sum(b['seconds'] for b in overheads)

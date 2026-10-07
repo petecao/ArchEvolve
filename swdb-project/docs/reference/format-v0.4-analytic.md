@@ -164,6 +164,17 @@ including the serial remainder. If any required bound is unknown, that region an
 total stay null. Executed unmodeled calls add an unknown-cost bound. Known component
 bounds remain visible.
 
+When more than one resource domain has executed or unknown work, optional
+`composition_contract` must declare `resource_domain_overlap: serial` or
+`full_overlap`, with its basis and source. Serial sums domain maxima; full overlap
+takes their maximum. Both are explicit analytic scenarios, not measured scheduling.
+Absent overlap keeps each known component visible and the required total null.
+Executed or unknown host source accesses also require an applicable streaming,
+requests-in-flight, cache or native memory-service model; offload row/queue/staging
+models cover a separate domain. Missing host memory mechanisms remain structural
+unknowns that numerical parameter filling cannot repair. Proven zero work needs
+neither a service rate nor an overlap policy. Additive overheads remain charged once.
+
 An optional `--baseline` names an explicit estimate. Its input, target-description hash,
 protocol, thread count and evidence kind must match. The ratio is baseline seconds /
 candidate seconds; it stays null without known positive candidate time. Until a validated
