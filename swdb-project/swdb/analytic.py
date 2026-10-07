@@ -30,6 +30,8 @@ PIPELINES = {'source-normalized-v1': 'mem2reg,loop-simplify',
 
 
 def register_cli(commands):
+    from swdb.estimation_parameters import register_cli as register_estimation
+    register_estimation(commands)
     sub = commands.add_parser('characterize', help='count source-normalized LLVM operations and accesses in one native run')
     sub.add_argument('--records', type=Path, default=paths.RECORDS)
     sub.add_argument('--source', type=Path, help='one buildable C/C++ translation unit with its protected driver')
@@ -731,6 +733,8 @@ def _payload_problems(data):
                 if value is not None and (not isinstance(value, (int, float)) or isinstance(value, bool) or not math.isfinite(value) or value < 0):
                     yield f'{group}[{i}]', 'work counts must be finite nonnegative numbers or null'
     elif kind == 'target_description':
+        from swdb.estimation_parameters import payload_problems as estimation_problems
+        yield from estimation_problems(data)
         from swdb.offload_observation import payload_problems
         for message in payload_problems(data):yield 'functional_observation',message
         for i, mechanism in enumerate(data['mechanisms']):
@@ -770,6 +774,9 @@ def validate_record(record, ctx):
     from swdb.problems import Problem
     for field, reason in _payload_problems(record.data):
         yield Problem(record.rel, field, reason)
+    if record.kind == 'target_description':
+        from swdb.estimation_parameters import binding_problems as estimation_bindings
+        for reason in estimation_bindings(record.data,ctx.store):yield Problem(record.rel,'parameter_estimation',reason)
     if record.kind == 'workload_characterization':
         from swdb.offload_observation import binding_problems
         for reason in binding_problems(record.data,ctx.store):yield Problem(record.rel,'observation_contract.normative_bindings',reason)

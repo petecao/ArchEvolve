@@ -7,7 +7,7 @@ from swdb import artifacts
 from swdb.cli import Failure
 
 # These fields are record metadata/provenance, not observer configuration.
-METADATA=frozenset({'id','version','status','created','updated','provenance','notes','deprecated_by','calibration_sources'})
+METADATA=frozenset({'id','version','status','created','updated','provenance','notes','deprecated_by','calibration_sources','parameter_estimation'})
 # Only these recognized numerical service premises may change without counting.
 # Model/selector/accounting and every unknown parameter/field remain in the digest.
 POLICY_FORMAT='swdb.observation-policy.v1'

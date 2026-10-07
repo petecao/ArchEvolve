@@ -31,7 +31,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | # | Ticket | Status | Blocked by | Time |
 |---|---|---|---|---|
 | 09 | [DX100 estimate](issues/09-dx100-estimate.md) | resolved | 05 | 1.5–2 days |
-| 10 | [The estimation role fills unknowns](issues/10-estimation-role.md) | ready-for-agent | 09 | 4–6 h |
+| 10 | [The estimation role fills unknowns](issues/10-estimation-role.md) | resolved | 09 | 4–6 h |
 | 11 | [CPU error check and paired estimates in ArchEvolve mode](issues/11-cpu-error-check-and-paired-estimates.md) | claimed | 05, 06, 07 | 4–6 h |
 | 12 | [ArchEvolve-mode DX100 evaluation without gem5](issues/12-archevolve-dx100-evaluation.md) | resolved | 06, 09 | 1 day |
 | 13 | [DX100 sanity check against the paper](issues/13-dx100-sanity-check.md) | ready-for-agent | 10 | 2 h |
@@ -120,3 +120,15 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
   10/12/16, with 16 prioritized for fresh blind campaign preparation.
 
 - 2026-10-06 22:35 ET: [ticket 12](issues/12-archevolve-dx100-evaluation.md#answer) resolved. Retained strict functional certification, immutable estimated evaluation and handoff 1.1 passed exact-artifact mbit10 no-child acceptance; unknown totals/ratio/band remain null with `within_error`. Three final coexistence cases passed; 628 canonical records valid and all 888 prior protected blobs preserved. [Final proof](evidence/12-final-public-coexistence-proof-20261006.json).
+
+- 2026-10-06 ET: [ticket 10](issues/10-estimation-role.md#answer) resolved. Closed
+  three-file numerical fill uses existing guarded provider pins/audit and freezes
+  one output per base version. Actual a2 completed once; separate postfill acceptance
+  passed with seven estimated/two unknown values and honest null whole-call and
+  sensitivity results. [Actual receipt](evidence/10-estimation-role-mbit10-20261006-a2-postfill-a1.json),
+  [failure custody](evidence/10-estimation-role-postfill-custody-mbit10-20261006-a2.json),
+  [public reference](../../docs/reference/estimation-role.md) and
+  [integrated proof](evidence/10-integrated-closeout-proof-20261006.json): eight affected
+  public paths passed, 631 records valid, 628 prior YAML/876 protected blobs unchanged.
+  Historical bundle `b238c61b…` remains immutable; future execution must freeze the
+  integrated bundle. No timing/accuracy claim; 13/14 can proceed after integration.
