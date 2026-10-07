@@ -1,7 +1,7 @@
 # Map: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-07 00:09 ET (12 of 15 assigned tickets resolved; 11, 14 and 17 active)
+Updated: 2026-10-07 09:56 ET (13 of 15 assigned tickets resolved; 14 and 17 active)
 **Type:** ticket map
 **Status:** claimed (implementation and actual evaluations in progress)
 **Spec:** [spec.md](spec.md)
@@ -32,7 +32,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 |---|---|---|---|---|
 | 09 | [DX100 estimate](issues/09-dx100-estimate.md) | resolved | 05 | 1.5–2 days |
 | 10 | [The estimation role fills unknowns](issues/10-estimation-role.md) | resolved | 09 | 4–6 h |
-| 11 | [CPU error check and paired estimates in ArchEvolve mode](issues/11-cpu-error-check-and-paired-estimates.md) | claimed | 05, 06, 07 | 4–6 h |
+| 11 | [CPU error check and paired estimates in ArchEvolve mode](issues/11-cpu-error-check-and-paired-estimates.md) | resolved | 05, 06, 07 | 4–6 h |
 | 12 | [ArchEvolve-mode DX100 evaluation without gem5](issues/12-archevolve-dx100-evaluation.md) | resolved | 06, 09 | 1 day |
 | 13 | [DX100 sanity check against the paper](issues/13-dx100-sanity-check.md) | resolved | 10 | 2 h |
 
@@ -136,3 +136,16 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 - 2026-10-06 ET — Ticket 13 resolved: `issues/13-dx100-sanity-check.md#answer`; cited weak report `evidence/13-dx100-paper-sanity-20261006-a1/report.md`, sealed closeout `evidence/13-paper-sanity-closeout-20261006.json`. Actual BFS ratio unknown; BC/PR estimates absent pending 14; 9 public tests passed, generic source unchanged.
 
 - 2026-10-06 ET — Ticket 14 claimed; actual Jacobi source count prerequisite tested, MAPLE FPGA data admitted with unknown services. Parent count commands and all-nine admission plan: `evidence/14-nine-pair-runbook-20261006.md`; prepared MAPLE requests remain unfrozen. Final reports await actual counts and generic 11/17 bundle.
+
+- 2026-10-07 09:56 ET: [ticket 11](issues/11-cpu-error-check-and-paired-estimates.md#answer) resolved.
+  Exact T1 native development/held-out validation and fresh verdict-reading reports
+  retain BFS's broad validated envelope and BC's observed failed envelope with its
+  original width. g17 forecast/native ratios are 53.9×/39.3×; both public
+  `within_error` tokens are qualified by the separate validation state. Protected
+  CPU evaluation carries a bound semantic estimate while timing still decides;
+  timer/ROI transfer and historical mismatches remain unknown. No retuning or
+  general accuracy claim. [Actual report admission and cleanup custody](evidence/11-report-admission-closeout-20261007-a4/README.md),
+  [report receipt](evidence/11-cpu-band-report-mbit10-20261006-a3.json),
+  [per-region explanation](evidence/11-holdout-admission-20261007-a3/README.md).
+  Source C/F6 and all previous records are unchanged; actual report public
+  validation passed 684 records, delivered integration retains 686.
