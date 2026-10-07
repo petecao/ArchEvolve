@@ -1,34 +1,47 @@
 # Implementation progress
 
-Updated: 2026-10-07 00:39 ET
+Updated: 2026-10-07 02:09 ET
 
-**12 of 15 assigned tickets are resolved and integrated.** Tickets 11, 14 and 17 remain active. Final review, fixes and cleanup follow their actual evaluations.
+**12 of 15 assigned tickets are resolved and integrated.** Tickets 11, 14 and 17 remain active. Actual evaluations, final two-axis review, fixes, tracker closeout, synchronization and cleanup remain required.
 
-Integration: `codex/lanl-analytic-eval`. Review base: `2c50e5fb8671e08050921bee06920f92fd153bdd`. Delivery branch: `yanrujhou_main`; local, origin and mbit10 primary synchronized through `dda186f` before this checkpoint. The unrelated uncommitted root rule edit remains preserved.
+Integration: `codex/lanl-analytic-eval`, checkpoint parent `0640028b4f48594864f16393cc83c60cd969efba`. Review base: `2c50e5fb8671e08050921bee06920f92fd153bdd`. Delivery: `yanrujhou_main`. Root/origin/mbit10 primary were synchronized to0640028 before this checkpoint; preserve the unrelated root rule edit and remote retention files.
 
 | Tickets | Owner | Current state |
 |---|---|---|
-| 02–10, 12–13, 16 | Assigned implementers | Resolved and integrated; public checks and compact evidence linked from each Answer |
-| 11 | `/root/ticket03` | Services admitted; known prospective pairing passed; final mismatch/reference and evaluator compatibility gates active |
-| 14 | `/root/ticket02` | All six fresh count cases passed; ten-record compact export validating; actual final-target reports pending |
-| 17 | `/root/ticket04` | Source and merged public checks passed; four actual campaigns and agreement report pending |
+| 02–10, 12–13, 16 | Assigned implementers | Resolved and integrated; actual checks and evidence linked from Answers |
+| 11 | `/root/ticket03` | C/F6 unchanged; actual a2 processing failure sealed; a3 missing-stage continuation active |
+| 14 | `/root/ticket02` | Six original count cases and actual 30-trial replay passed; intentionally waiting for actual complete CPU model before PR replay and nine reports |
+| 17 | `/root/ticket04` | Updated metadata caps reviewed; fresh actual Linux cleanup passed; required budget regressions active; four campaigns not run |
 
-| Evaluation | Evidence state | Next action |
+| Evaluation | Actual evidence state | Next action |
 |---|---|---|
-| Guarded parameter estimation | Complete; numeric assumptions filled, structural gaps and null totals retained | Preserve original provider result |
-| Functional evaluation and handoff | Complete; null timing/ratio and strict functional scope retained | Preserve immutable archived result |
-| Independent CPU services | Count and elapsed evidence admitted, including floating64 monotonic fadd | Freeze exact compatible model after remaining implementation |
-| Extra allocator sizes | Paired-window promise failed; paired rates excluded | Use uniform separately labeled inferred gross resources, frozen before application timing |
-| CPU accuracy | No application timings opened; separate BFS/BC band helpers mock-tested | Finish pairing safeguards; freeze four forecasts, then g16 development and unchanged g17 holdout |
-| Six fresh generality counts | All six original attempts passed with both exits zero; both socket leases released | Complete the combined catalogue validation and integrate the exact ten-record closure |
-| Nine BFS/BC/PR reports | Projection and provisional PR allowlist checks passed; final helper review complete | Bind final targets/source and preserve unknown accelerator/PR transfers |
-| D30 agreement | No eligible fresh pairs; actual campaigns pending | Freeze policy before four genuine trajectories; report unsupported/no-switch if bridge remains absent |
+| Independent CPU services | Nine calibrations and original target binding retained | Reuse target; no calibration/binder rerun |
+| CPU model-a1 | Freeze exceeded600s metadata cap; target published; exits1/cleanup no survivors | Preserve original custody8ddb9825… |
+| CPU model-a2 | Stopped01:50:21 ET after BFS freeze exceeded1100s; target+BFS published; exits1/cleanup no survivors | Preserve actual custodyf12b499f…; never repeat published BFS freeze |
+| CPU model-a3 | Started01:58:58 ET,node0g505; BC freeze active; no error/acceptance yet | Missing BC protocol, four positive forecasts, full public validation |
+| CPU accuracy | Application performance timings unopened | Separate BFS/BC g16 development widths, then unchanged g17 holdout; failed bands remain failed |
+| Six generality counts | All six original attempts passed; ten records integrated;30 trial projections/13,784 access scopes replayed | No recount/recovery |
+| Nine kernel–target reports | Final controls staged; actual PR/services.v1 and nine final estimates pending | One complete F6 bundle; fresh DX BFS reference first; unknown PR/MAPLE services honest |
+| Linux cleanup for17 cap helper | Actual node1g54301:57:26–42 ET,exit0; descendants reaped; unrelated sibling survived; zero app/provider calls | Use exact new09136 helper and new receipt for future17 preparation |
+| D30 agreement | Four actual campaigns unexecuted; no eligible fresh numeric pairs established | Freeze unchanged D30 before outcomes; actual four campaigns, unsupported/no-switch if bridge absent |
 
-All three implementers are live. Both socket leases and the legacy lease are released. Latest free space: `/data1` 22.0 GiB, `/data` 49.9 GiB; load 1.99. Parent owns all SSH/dispatch and preserves unrelated host work. Raw artifacts stay remote.
+03/04 are responsive;02 intentionally awaits its real-model dependency. A separate read-only metadata audit traced the catalog overhead and finished without source, test, remote or scientific mutations. Parent owns all SSH and lane dispatch. Live snapshot `2026-10-07T06:09:22.045154+00:00`: node0 held, node1/legacy released; load1=2.17; `/data1` free23,239,499,776B, `/data`52,605,493,248B; memory available121,866,108,928B. Preserve the unrelated Quicksilver process; raw outputs stay remote.
 
-Human gates 15, 18 and 21 remain human-owned. Tickets 19–20 require their recorded prerequisites; 22–23 require LANL access. No external communication. The 30-minute progress/liveness check remains active; next due 2026-10-07 01:09 ET.
+Scientific source C: `f893fed400347ed23d92e917d8bde21b75e5375d`;185-module F6: `f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3`. C remains clean at `/data1/yanruj/ArchEvolve-lanl-cpu-model-validation-20261006-a1`;665 original canonical records validated and905 prior protected blobs preserved. Public fixture transport checks do not establish native accuracy.
 
-Managed worktrees: `/Users/yanrujhou/.codex/worktrees/lanl-*/ArchEvolve`. Parent owns integration. File writes and Git metadata there need sandbox escalation, covered by the user's implementation authorization.
+Failed a2 raw `/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2` retains667 complete canonical files,665 originals byte-identical plus target and BFS protocol. Actual failure custody seal `f12b499ff1a82dc31e5b03411ee90458ba12411c11dece9b066420be0b30f0a7`; original a1 custody `8ddb9825fb7ccefff7088ea550af290379f8ea48744065b9d156196b7947db5a` is retained. Target file SHA `cee03869aa2ab624d0eb1ef54b8807603d2a222d749113c7d65d847549c45c6d`; immutable BFS semantic SHA `e5058d50462a65ede57fdbf219273df46d884fa5d507f4ee84edafbe5734b58a`, file SHA `ff538076ca2048c03672e7dcd1a7046895bed05b41be05979ec3e7493f8f4d5b`. CLI stage did not finish; published protocol was independently verified before reuse. No app outcomes, BC protocol or estimate existed in a2.
+
+Active a3 raw `/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3`; preregistration seal `0d57949ab6e056c0f350e2db57f4cce44bc31ff1b538ba866d90bbb06ca45ba3`. Dispatcher90f28f9a…/exporter62119529… are parent-reviewed and14 portable controls passed. Metadata1800s/final validation1400s/runner15000s/outer15200s with45s cleanup reserve. Only missing freeze/estimate commands run; binder and published BFS freeze are skipped. Both exact raw protocol requests are retained for the later band reader. Export exactly seven cumulative model records plus compact receipt, including both original failed custodies, only after acceptance/both exits0/no survivors/all leases released.
+
+The public team protocol freeze constructs five Stores, runs three full validations and rebuilds the derived index after canonical publication. Public team estimate constructs three Stores with one full writer validation and no index rebuild. There is no supported index-skip switch. These source counts explain processing overhead; no measured phase breakdown or scientific-cost claim is made. All processing-cap changes preserve C/F6, protocols, inputs, calibrations and native900s deadline.
+
+Future downstream a3 controls are independently exact-byte reviewed, staged and unexecuted until actual positive model acceptance. Dispatch b280f3d7…/export2d59a2d5…; band dispatchf5fb834e…/export788c5cfd…; cleanup534834a4…. Preparation seal `4d49aa806b92aad4e6c1ea372129ff44a07b62ecfb228239e9b41d9bb396f8e1` verifies only explicit a2→a3 path literals changed; all other bytes, original17-a1 cleanup proof, four11 OMP projections, native900s, trial/band/ordering rules unchanged. Metadata/validate1400s and2100s enclosing collector process cover pre/post work only; native commands share the original900s deadline. Development/holdout10000s/10300s; report8400s/8700s. Superseded unexecuted controls are preserved by hash.
+
+Separate14 cap-only controls remain reviewed/staged/unexecuted: local runnerfa99126e… through4500s envelope134de689…; remote reports0c4eeb81…/exportd8e97dc6… with1400s freeze/estimate/validation,1000s report and33000s enclosing run. Real model export file/inner seals/all seven pins and unchanged F6 must pass before local PR replay. No PR BF/BC scope transfer or timing/band invention.
+
+17 helper09136ee5… differs from original31e1d71b… only at four full-catalog metadata limits, each1400s. All campaign/D30/provider/24h/600s cleanup/selection/budget/source bytes remain identical. Fresh actual Linux proof `/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261007-a2/smoke/receipt.json`, seal `3b2ab676c70098fb054fe40396dabc77d935817ae7eed72bc92d541c727e92d0`, file SHA `b1c34be10178dad05c9bfad64da7a19ea0961162ded1becc0982060111ec4232`; smoke4d0bdf1d…/processesbcc9ccdc… unchanged. Parent smoke completed once; receipt-check field/digest lookup was repaired read-only, with no test repetition. Original31e/a1 proof remains immutable for CPU controls. Future17 prepare/finalize envelopes4500s/12000s are metadata only; no campaign is launched until CPU elapsed collection ends and population policy is frozen and exported.
+
+Keep source C and every evidence-referenced execution/raw directory. Consumed compact export cleanup is read-only by default and guarded by exact clean integrated branch/origin-main ancestry, released leases, process and raw-link checks. All19 owned local worktrees remain registered for final recoverable cleanup. Human15/18/21 and access/prerequisite gates19/20/22/23 remain separate; no external messages. Heartbeat ACTIVE; next required checkpoint2026-10-07 02:39 ET. Final review/fixes/tracker/sync/cleanup remain mandatory; no partial completion.
 
 ## Remote preparation
 
