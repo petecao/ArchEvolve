@@ -29,3 +29,6 @@ Claimed: 2026-10-06 22:22 ET by ticket17 implementer; base `9a5057f45c7a1c3b8756
 
 
 2026-10-07 04:36 ET — cleanup60 future controls archived at `../evidence/17-cleanup60-metadata-controls-20261007-a4/README.md`: helper28d116 changes only campaign outer cleanup40→60s; supervisorfa703 changes only HELPER_SHA. Parent portable nine passed0.256s, separately retained from preparation NOTRUN chronology. Guard9c5d prospectively reviewed; actual prepare selects immutableC cleanup project with explicit finalR; finalize detachedR. New full-hash original4d/a848 Linux checks, final11/14 catalogue, population/four campaigns/D30 remain pending. All old controls/proofs and scientific/source/canonical bytes unchanged; claimed.
+
+
+2026-10-07 05:22 ET — separate actual cleanup60 addendum at `../evidence/17-cleanup60-controls-actual-20261007-a4/README.md`: parent verified helper28d/original4d node1g547 and supervisorfa703/a848 node1g548 once after development release, with all owned descendants gone, unrelated siblings alive and all leases released. Exact helper proof `/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261007-a4/receipt.json` is rawroot-direct. Six exact snapshots retain dispatch/compact/staging custody; prior NOTRUN/a3 chronology and all scientific/source bytes preserved. Catalogue/explicitR/population/four actual campaigns/D30 remain pending; claimed.
