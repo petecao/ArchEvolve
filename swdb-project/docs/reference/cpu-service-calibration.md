@@ -247,3 +247,88 @@ python3 -m swdb validate --records "$SWDB_RAW_RECORDS"
 Use a 900s outer containment timeout and retain the runner's process-group signal
 cleanup. Export only the typed compact record and receipt metadata through Git;
 this refresh remains independent service calibration, not application accuracy.
+
+### Preregistered independent memory request cells
+
+The separate `python3 -m swdb.cpu_memory_calibration` runner constructs twenty
+cells: dependent permuted-ring reads, sequential volatile writes, uncontended
+sequentially consistent add, and deterministic compare-and-swap success/failure,
+each at 4B/8B and 32KiB/8MiB data footprints. A stable `service_memory32` or
+`service_memory64` wrapper encloses the same typed body in the count and timing
+programs. Forty separate public count points cover both widths and every primitive
+at n=3/5 with service/driver invocation; the driver has zero source requests, and
+every service has exactly n requests of its declared update kind and width. Both
+source-normalized operation inventories are retained. O3 IR is retained and its
+volatile-load/store, add and compare-and-swap lowering must be checked independently.
+
+The timing process prepares/touches buffers and performs an untimed warm-up.
+Each measured batch visits the complete requested data footprint; CAS success
+uses each prepared zero slot once and checks its observed success count, while
+failure checks zero successes. No concurrent worker modifies the constructed
+objects. The conditional-loop/index driver is separately timed and subtracted;
+negative or unresolved residuals remain unknown. The subtraction is effective
+constructed work, not an isolated physical instruction latency. Shape/dependence,
+residency, and outcome transfer to an application remain explicitly inferred;
+this runner provides no first-touch/page-fault or full-allocation evidence.
+
+Budgets are seven alternating pairs with gross duration >=0.05s, at most 900s
+inner wall time, 134217728 requests per trial, <=8MiB data plus <=8MiB permutation
+arrays, 64MiB counted-build artifacts, and separate 25MiB timed data. All partial
+sealed artifacts remain after failure. The named native socket lease, immutable
+Git source, LLVM22 compiler, actual C/C++ libraries, and explicit interposer controls
+are required. Keep the other socket idle for elapsed collection. Count-only proof
+may be dispatched separately with a new raw ID; it supplies no elapsed evidence.
+
+```sh
+python3 -m swdb.cpu_memory_calibration --records "$SWDB_RAW_RECORDS" \
+  --machine mbit10 --lane mbit10-evaluation-node0 --llvm-bin "$SWDB_CPU_LLVM" \
+  --toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 \
+  --output "$SWDB_MEMORY_RAW" --repetitions 7 --min-trial-s .05 --max-wall-s 900
+```
+
+Use 1200s outer containment. Add `--count-only --max-wall-s 600` for a separate
+forty-point proof. Native dispatch remains gated on the tested full-width proof,
+complete native receipt/import validation, and a clean source tip. No native rates
+or application accuracy are established by the local reported hand fixtures.
+
+
+The separate byte-read follow-up is preregistered because the actual g16/T1
+inventory contains executed 1B read requests. Use only `--operation read
+--element-bytes 1 --footprint-bytes 256`; the runner rejects larger byte rings or
+other byte primitives. An 8-bit index follows one complete 256-element permuted
+cycle, verified before timing; every timed batch retains its verified cycle extent.
+Four independent n=3/5 service/driver count points establish 1B logical reads,
+without widening to 4B or claiming a 32KiB/8MiB working set. Its scope is
+`fixed_small_byte_read_constructed_requests`; application locality transfer is
+inferred and the physical cache level remains unverified. O3 retention checks the
+separate `service_memory8` volatile i8 read. No byte-write/RMW/CAS rate is supplied.
+
+The twenty-cell primary and one-cell byte follow-up use separate raw receipts and
+are never pooled. Native import validates the complete selected typed count
+matrix, source/observer/compiler/runtime hashes, optimized primitive retention,
+full-footprint workloads, alternating orders and deterministic CAS outcomes.
+Every native gross duration must resolve >=0.05s; paired driver values and all
+negative residuals are preserved, with unresolved service parameters null.
+The forty-point primary public proof and four-point byte proof pass on the local
+LLVM22 toolchain; these are reported portable proofs, not native elapsed evidence.
+
+```sh
+python3 -m swdb import-cpu-service-calibration --records "$SWDB_RAW_RECORDS" \
+  --receipt "$SWDB_MEMORY_RAW/receipt.json" \
+  --id mbit10.cpu.lanl20261006.service.memory.a1 --format json
+python3 -m swdb.cpu_memory_calibration --records "$SWDB_RAW_RECORDS" \
+  --machine mbit10 --lane mbit10-evaluation-node0 --llvm-bin "$SWDB_CPU_LLVM" \
+  --toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 \
+  --output "$SWDB_BYTE_READ_RAW" --operation read --element-bytes 1 \
+  --footprint-bytes 256 --repetitions 7 --min-trial-s .05 --max-wall-s 600
+python3 -m swdb import-cpu-service-calibration --records "$SWDB_RAW_RECORDS" \
+  --receipt "$SWDB_BYTE_READ_RAW/receipt.json" \
+  --id mbit10.cpu.lanl20261006.service.byte-read.a1 --format json
+python3 -m swdb validate --records "$SWDB_RAW_RECORDS"
+```
+
+Keep the other socket idle throughout both elapsed commands. Use separate 1200s
+and 900s outer containment timeouts, preserve process-group signal cleanup, and
+retain raw count/build/timing artifacts remotely. Export typed calibration records
+and compact receipt/context/trial metadata through Git; do not export raw IR,
+binaries or addresses. Neither native cell establishes application accuracy.
