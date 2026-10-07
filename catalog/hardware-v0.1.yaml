@@ -1,5 +1,5 @@
 catalog_id: archevolve-hardware
-revision: 0.1.10
+revision: 0.1.11
 format: hardware-catalog-v0.1
 status: research_reviewed_prototype
 project_selections:
@@ -448,6 +448,16 @@ sources:
     locator_basis: Pinned reviewed code spans, not paper evaluated RTL configuration
     provenance_notes:
     - Whole evaluated configuration, timing and universal policy not established.
+  pipette-micro2020-author-primary:
+    title: 'Pipette: Improving Core Utilization on Irregular Applications through Intra-Core Pipeline Parallelism'
+    edition: 13-page MICRO2020 author proceedings PDF;official MICRO53 program verified
+    url: https://people.csail.mit.edu/sanchez/papers/2020.pipette.micro.pdf
+    sha256: 6bb73f8ef39a8241098b966c7f1a19a2b238f7d936926f7f4dd25f315a03a52f
+    locator_basis: 1-based PDF/printed pages;cached text matched edition
+    document_type: conference_paper
+    conference: MICRO
+    publication_year: 2020
+    reviewed_on: '2026-10-06'
 claims:
   maple-api:
     source_refs:
@@ -1937,6 +1947,79 @@ claims:
     limitations:
     - Publication mechanism only; public realization/commit, concrete ID lifetime, backpressure and complete transaction
       ABI remain independently unbound.
+  pipette-register-mapping:
+    source_refs:
+    - pipette-micro2020-author-primary
+    locator: PDF pp4,6 §III-A TableII and §IV-A queue ownership
+    statement: Architectural register reads/writes map to blocking FIFO dequeue/enqueue;peek exposes the
+      head without consuming ordinary data. Point-to-point queue ownership is one enqueuer and one dequeuer.
+    evidence_kind: paper_specification
+    limitations:
+    - No authenticated executable simulator/RTL revision or numerical/performance measurement is supplied
+      by this proposal.
+  pipette-control-handlers:
+    source_refs:
+    - pipette-micro2020-author-primary
+    locator: PDFp5 §III-B
+    statement: Control-bit entries redirect the dequeue/peek consumer to a user-level handler. skip_to_ctrl
+      discards data through the next control value;when absent,it blocks and the producer next enqueue redirects
+      to its control handler.
+    evidence_kind: paper_specification
+    limitations:
+    - No authenticated executable simulator/RTL revision or numerical/performance measurement is supplied
+      by this proposal.
+  pipette-speculation:
+    source_refs:
+    - pipette-micro2020-author-primary
+    locator: PDFpp6-7 §IV-A Fig7
+    statement: QRM maintains speculative/committed head/tail. Consumers use only committed producer values.
+      Producer rollback releases speculative enqueue registers;consumer rollback restores speculative head.
+      Consumer commit releases registers.
+    evidence_kind: paper_specification
+    limitations:
+    - No authenticated executable simulator/RTL revision or numerical/performance measurement is supplied
+      by this proposal.
+  pipette-reference-access:
+    source_refs:
+    - pipette-micro2020-author-primary
+    locator: PDFp7 §IV-B
+    statement: A configured reference accelerator consumes an index stream for A[i],or start/end pairs for
+      half-open A[start:end),and produces returned values through its output queue. It uses the existing
+      load/store unit and virtual addresses;faults interrupt its associated producer thread.
+    evidence_kind: paper_specification
+    limitations:
+    - No authenticated executable simulator/RTL revision or numerical/performance measurement is supplied
+      by this proposal.
+  pipette-finite-config:
+    source_refs:
+    - pipette-micro2020-author-primary
+    locator: PDFp8 TablesIII-IV §IV-D
+    statement: Evaluated reference uses148 QRM register entries,at most16 queues,default depth24,4 RAs and4
+      connectors. RA RTL includes a32-entry outstanding-load completion buffer. These are evaluated reference
+      numbers,not 16 independent queues times24 storage.
+    evidence_kind: paper_specification
+    limitations:
+    - No authenticated executable simulator/RTL revision or numerical/performance measurement is supplied
+      by this proposal.
+  pipette-core-connectors:
+    source_refs:
+    - pipette-micro2020-author-primary
+    locator: PDFpp6,8 §III-C/IV-C
+    statement: Queue mapping cannot change while active. OS drains/saves architectural queues on deschedule;connectors
+      enforce receiver capacity with credits and must quiesce before consumer deschedule.
+    evidence_kind: paper_specification
+    limitations:
+    - No authenticated executable simulator/RTL revision or numerical/performance measurement is supplied
+      by this proposal.
+  pipette-issue-sharing:
+    source_refs:
+    - pipette-micro2020-author-primary
+    locator: PDFp7 §IV-A issue logic and §IV-B RA implementation
+    statement: Pipette retains standard ICOUNT thread prioritization. RAs opportunistically use spare rename
+      and register bandwidth and existing load/store machinery. Queue-full/empty stalls preserve issue legality.
+    evidence_kind: paper_specification
+    limitations:
+    - No authenticated simulator/RTL revision or measured issue/circuit cost supplied.
 mechanism_families:
 - id: queue-latency-tolerance
   name: Queue-backed asynchronous access
@@ -1962,6 +2045,9 @@ mechanism_families:
 - id: axi-pack-required-l2-staging
   description: Programmed required operand staging into L2 with bounded request-window block coalescing; no inherited
     capabilities or generic gather substitution.
+- id: pipette-register-queue-reference-access
+  description: Committed inter-thread register queues with explicit configurable reference-access endpoints;no
+    family-inherited operations.
 decision_questions:
 - id: operation-result
   question: Is the requested result a fetched value, update success, old value, reduction, or only a cache hint?
@@ -6410,3 +6496,262 @@ designs:
     - axi24-staging
     - axi24-tiles
     - axi24-scope-unknown
+
+- id: pipette-micro2020-committed-queue-ra
+  name: Pipette MICRO2020 committed register queues and reference access
+  revision: primary-paper-explicit-scope-r1
+  record_kind: design_version
+  summary: ISA/core queue mechanism and optional RA indirect/scan interface,not a generic indexed gather
+    accelerator.
+  mechanism_refs:
+  - pipette-register-queue-reference-access
+  source_refs:
+  - pipette-micro2020-author-primary
+  interface:
+    software_supplies: Transformed pipeline stages,mapped input/output registers/queues,handler PCs and
+      RA A/S/mode.
+    invocation: Privileged queue/handler mapping followed byimplicit mapped register access andconfigured
+      RA consumption.
+    outputs: Architecturally queued data/control values;RA VM faults route to associated producer.
+    claim_refs:
+    - pipette-reference-access
+    - pipette-speculation
+    - pipette-register-mapping
+    - pipette-control-handlers
+  operations:
+  - id: indirect
+    operation: read
+    subtype: pipette_ra_indirect
+    execution_role: execute
+    address_patterns:
+    - indirect
+    support: paper_specified
+    claim_refs:
+    - pipette-reference-access
+    - pipette-speculation
+    - pipette-register-mapping
+    realization:
+      kind: documented_sequence
+      description: Configure RA input/output queues,array base and element size;consume index orrange
+        descriptors and return values through mapped queue registers.
+      claim_refs:
+      - pipette-reference-access
+      - pipette-speculation
+      - pipette-register-mapping
+    result:
+      form: Returned array values in an explicitly mapped inter-thread queue.
+      old_value: not_applicable
+      validity: Correct queue ownership,program mapping,address/type/bounds and producer-thread fault
+        handling.
+      claim_refs:
+      - pipette-reference-access
+      - pipette-speculation
+      - pipette-register-mapping
+    ordering:
+      scope: Per point-to-point architectural queue;CPU programs obeyordinary memory consistency
+      description: Consumers cannot use speculative producer entries;rollback is local. No global FIFO,memory-request
+        response order orFP reduction/reassociation guarantee inferred. Exact RA completion-order implementation
+        still needs code binding.
+      claim_refs:
+      - pipette-speculation
+      - pipette-reference-access
+    completion:
+      event: Committed queued results consumed/retired by designated consumer;virtual-memory fault delivered
+        to associated producer.
+      visibility: LSU/cache/coherence andOS queue save/quiesce constraints remain mandatory.
+      claim_refs:
+      - pipette-reference-access
+      - pipette-core-connectors
+    type_constraints:
+      payload_types: []
+      index_width_bits: []
+      claim_refs: []
+      notes: Configurable S and64-bit physical integer-register storage are not a universal payload/index
+        ABI;exact supported types require source/code mapping.
+    datatype_notes: No numerical update/FP reduction or atomic old-value operation is advertised.
+    limitations:
+    - Explicit Pipette queue/RA interface only;not a generic gather substitution.
+    - Actual RA return association/order,bounds,permission andfault restart must be established.
+  - id: scan
+    operation: read
+    subtype: pipette_ra_scan
+    execution_role: execute
+    address_patterns:
+    - ranged_indirect
+    support: paper_specified
+    claim_refs:
+    - pipette-reference-access
+    - pipette-speculation
+    - pipette-register-mapping
+    realization:
+      kind: documented_sequence
+      description: Configure RA input/output queues,array base and element size;consume index orrange
+        descriptors and return values through mapped queue registers.
+      claim_refs:
+      - pipette-reference-access
+      - pipette-speculation
+      - pipette-register-mapping
+    result:
+      form: Returned array values in an explicitly mapped inter-thread queue.
+      old_value: not_applicable
+      validity: Correct queue ownership,program mapping,address/type/bounds and producer-thread fault
+        handling.
+      claim_refs:
+      - pipette-reference-access
+      - pipette-speculation
+      - pipette-register-mapping
+    ordering:
+      scope: Per point-to-point architectural queue;CPU programs obeyordinary memory consistency
+      description: Consumers cannot use speculative producer entries;rollback is local. No global FIFO,memory-request
+        response order orFP reduction/reassociation guarantee inferred. Exact RA completion-order implementation
+        still needs code binding.
+      claim_refs:
+      - pipette-speculation
+      - pipette-reference-access
+    completion:
+      event: Committed queued results consumed/retired by designated consumer;virtual-memory fault delivered
+        to associated producer.
+      visibility: LSU/cache/coherence andOS queue save/quiesce constraints remain mandatory.
+      claim_refs:
+      - pipette-reference-access
+      - pipette-core-connectors
+    type_constraints:
+      payload_types: []
+      index_width_bits: []
+      claim_refs: []
+      notes: Configurable S and64-bit physical integer-register storage are not a universal payload/index
+        ABI;exact supported types require source/code mapping.
+    datatype_notes: No numerical update/FP reduction or atomic old-value operation is advertised.
+    limitations:
+    - Explicit Pipette queue/RA interface only;not a generic gather substitution.
+    - Actual RA return association/order,bounds,permission andfault restart must be established.
+  requirements:
+  - id: queue-ownership
+    description: Bind one producer/consumer andprivileged mappings/handler PCs;no active remap.
+    scope: Pipette explicit queue/reference-access mapping
+    verification: required
+    claim_refs:
+    - pipette-register-mapping
+    - pipette-core-connectors
+  - id: speculation
+    description: Bind committed-only producer visibility and head/tail rollback/free register lifetimes.
+    scope: Pipette explicit queue/reference-access mapping
+    verification: required
+    claim_refs:
+    - pipette-speculation
+  - id: memory-mapping
+    description: Prove original VA/elementsize/index/range bounds and associated producer fault semantics.
+    scope: Pipette explicit queue/reference-access mapping
+    verification: required
+    claim_refs:
+    - pipette-reference-access
+  - id: completion-code
+    description: Authenticate actual32-entry completion buffer protocol/order and source/RTL revision.
+    scope: Pipette explicit queue/reference-access mapping
+    verification: unknown
+    claim_refs: []
+  - id: type-abi
+    description: Bind exact payload/index ABI;no inference from PRF width alone.
+    scope: Pipette explicit queue/reference-access mapping
+    verification: unknown
+    claim_refs: []
+  - id: aggregate-credit
+    description: Allocate aggregate QRM <= 148 and preserve shared PRF/LSU/port resources;default 24 depths
+      are not all simultaneous independent capacities.
+    scope: Pipette explicit queue/reference-access mapping
+    verification: required
+    claim_refs:
+    - pipette-finite-config
+  parameters:
+  - id: qrm-registers
+    unit: aggregate register entries
+    state: fixed_reference
+    value: 148
+    domain: null
+    claim_refs:
+    - pipette-finite-config
+    notes: Paper evaluated reference;not independent unrestricted capacity ormeasured implementation.
+  - id: max-queues
+    unit: queues
+    state: fixed_reference
+    value: 16
+    domain: null
+    claim_refs:
+    - pipette-finite-config
+    notes: Paper evaluated reference;not independent unrestricted capacity ormeasured implementation.
+  - id: default-depth
+    unit: elements perconfigured queue
+    state: fixed_reference
+    value: 24
+    domain: null
+    claim_refs:
+    - pipette-finite-config
+    notes: Paper evaluated reference;not independent unrestricted capacity ormeasured implementation.
+  - id: ra-completion
+    unit: outstanding slots per RA
+    state: fixed_reference
+    value: 32
+    domain: null
+    claim_refs:
+    - pipette-finite-config
+    notes: Paper evaluated reference;not independent unrestricted capacity ormeasured implementation.
+  internal_mechanisms:
+  - id: qrm-storage
+    kind: buffering
+    status: described
+    description: Physical register-backed circular queues with aggregate QRM allocation and separate head/tail
+      pointers.
+    claim_refs:
+    - pipette-speculation
+  - id: commit-frontier
+    kind: dependency_tracking
+    status: described
+    description: Only committed producer values available to consumers;full/empty blocking uses speculative
+      versus committed frontiers.
+    claim_refs:
+    - pipette-speculation
+  - id: rollback
+    kind: reordering
+    status: described
+    description: Misspeculation rolls back local speculative pointers;producer rollback frees its speculative
+      register allocations.
+    claim_refs:
+    - pipette-speculation
+  - id: core-issue
+    kind: issue_policy
+    status: described
+    description: Uses existing SMT ICOUNT;RA opportunistically uses spare rename/register bandwidth and
+      existing LSU.
+    claim_refs:
+    - pipette-issue-sharing
+    - pipette-reference-access
+  - id: fault-completion
+    kind: completion
+    status: described
+    description: RA returns into an output queue and reports VM fault toproducer;precise completion-order
+      code binding remainsrequired.
+    claim_refs:
+    - pipette-reference-access
+  - id: control-values
+    kind: other
+    status: described
+    description: Control-bit queue entries and producer/consumer handler redirects coordinate loop boundaries/cancellation.
+    claim_refs:
+    - pipette-control-handlers
+  - id: network-credit
+    kind: buffering
+    status: described
+    description: Cross-core connector credits protect receiver capacity and require quiesce on deschedule.
+    claim_refs:
+    - pipette-core-connectors
+  - id: address-coalescing
+    kind: coalescing
+    status: unknown
+    description: null
+    claim_refs: []
+  limitations:
+  - No generic BFS default selection change or standalone arbitrary gather ABI.
+  - No authenticated paper RTL/model code identity,FP type/order certification,performance orpaper circuit
+    cost reproduced.
+  - Abstract queue contract models committed/speculative subset;skip-to-control,handler restart,RA response-order
+    and cross-core teardown microprotocols remain source/code obligations.
