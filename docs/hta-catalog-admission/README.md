@@ -43,3 +43,13 @@ The [primary binding](primary-binding.json) identifies the cached paper by hash
 and DOI. Sections 3.1–4.4, physical PDF pages 4–6 and Figures 4–9 ground the
 line format, branch interface, functional unit and software fallback. No corpus
 PDF is copied.
+
+The [post-lock recheck witness](consumer-fixture.md) uses two host threads to
+demonstrate wrong absence when a continuously present key moves from software
+to hardware before the fallback lock is acquired. Rechecking under the lock
+repairs that interleaving. Its mutex-backed atomic-result fixture is not actual
+HTA ISA execution or a complete concurrent protocol proof. Run both new witnesses:
+
+```sh
+python3 examples/mechanism-scaffolds/run_consumer_fixtures.py --output-dir /tmp/new-consumer-fixtures
+```
