@@ -44,6 +44,11 @@ and DOI. Sections 3.1–4.4, physical PDF pages 4–6 and Figures 4–9 ground t
 line format, branch interface, functional unit and software fallback. No corpus
 PDF is copied.
 
+The [reproduction source request](reproduction/README.md) distinguishes the
+paper's modified-ZSim/surrogate-NOP experiment from RTL component synthesis.
+Original artifact code is not bound; a future reconstruction must be labeled a
+new implementation until original lineage and ABI are established.
+
 The [post-lock recheck witness](consumer-fixture.md) uses two host threads to
 demonstrate wrong absence when a continuously present key moves from software
 to hardware before the fallback lock is acquired. Rechecking under the lock

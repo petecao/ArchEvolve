@@ -1,0 +1,65 @@
+{
+  "schema": "HTA_actual_source_request_v1",
+  "status": "ORIGINAL_IMPLEMENTATION_SOURCE_NOT_BOUND",
+  "paper_doi": "10.1145/3352460.3358272",
+  "preferred_mode": "zsim_execution_driven",
+  "source_root": null,
+  "artifact_repository": null,
+  "artifact_commit": null,
+  "roles": {
+    "modified_zsim": {
+      "path": null,
+      "sha256": null,
+      "obligation": "HTA functional-unit, cache request and retirement implementation"
+    },
+    "nop_decoder": {
+      "path": null,
+      "sha256": null,
+      "obligation": "Exact surrogate NOP bytes, decoder match and four instruction actions"
+    },
+    "isa_wrappers": {
+      "path": null,
+      "sha256": null,
+      "obligation": "Key/value register mapping, clobbers, branch targets and result flags"
+    },
+    "table_and_overflow": {
+      "path": null,
+      "sha256": null,
+      "obligation": "Sentinel/hash initialization, victim/duplicate/resize and lock/recheck"
+    },
+    "build_manifest": {
+      "path": null,
+      "sha256": null,
+      "obligation": "Pinned dependencies, toolchain, build argv and source flags"
+    },
+    "test_harness": {
+      "path": null,
+      "sha256": null,
+      "obligation": "Defined inputs and full hit/miss/victim/ownership correctness checks"
+    },
+    "functional_unit_rtl": {
+      "path": null,
+      "sha256": null,
+      "obligation": "Actual RTL top, ports, widths, reset and operation/result handshake"
+    },
+    "rtl_testbench": {
+      "path": null,
+      "sha256": null,
+      "obligation": "Finite unit vectors and checked expected outputs"
+    },
+    "synthesis_script": {
+      "path": null,
+      "sha256": null,
+      "obligation": "Yosys recipe and technology-library identity references"
+    }
+  },
+  "unbound_ABI": [
+    "surrogate NOP encodings",
+    "CRC32 seed/word order",
+    "register packing/result flag polarity",
+    "atomic retirement and fault behavior"
+  ],
+  "next_command": "python3 source_request.py inspect SOURCE_PACKAGE.json",
+  "native_x86_execution_permitted": false,
+  "source_provenance_and_semantic_acceptance": "Separate owner review required"
+}
