@@ -69,7 +69,7 @@
       "$ref": "#/$defs/extensa_campaign_id"
     },
     "basis": {
-      "const": "code_reading"
+      "const": "simulated"
     },
     "estimator_variant": {
       "const": "research"
@@ -79,6 +79,14 @@
     },
     "producer": {
       "type": "object"
+    },
+    "evidence_kind": {
+      "enum": [
+        "execution",
+        "contract_fixture",
+        "mixed_sources",
+        "unavailable"
+      ]
     }
   },
   "required": [
@@ -104,7 +112,8 @@
     "basis",
     "estimator_variant",
     "message_version",
-    "producer"
+    "producer",
+    "evidence_kind"
   ],
   "$defs": {
     "hash": {

@@ -26,6 +26,9 @@ def test_public_report_keeps_fixture_forecasts_ineligible_and_d30_unsupported(ca
                      '--mode', 'extensa', '--campaign', GEM5, '--format', 'json')
     assert result.returncode == 0, result.stderr
     report = json.loads(result.stdout)
+    assert report['basis'] == 'simulated'
+    assert report['evidence_kind'] == 'contract_fixture'
+    assert all(row['timing_basis'] == 'simulated' and row['structural_missing'] for row in report['pairs'])
     assert report['counts']['observed_candidate_rows'] > 0
     assert report['counts']['unique_eligible_dx100_pairs'] == 0
     assert report['gate']['state'] == 'unsupported'

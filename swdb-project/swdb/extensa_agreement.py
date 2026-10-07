@@ -34,7 +34,7 @@ POLICY_KEYS = ('format', 'mode', 'campaign', 'basis', 'estimator_variant', 'froz
     'estimator_sha256', 'provider_config_sha256', 'population', 'statistics', 'D30', 'structural_missing')
 REPORT_KEYS = ('format', 'mode', 'campaign', 'basis', 'estimator_variant', 'policy', 'policy_sha256',
     'policy_snapshot', 'reported_at', 'summaries', 'summary_identities', 'counts', 'pairs',
-    'blind_order', 'rank', 'top3', 'gate', 'recommendation', 'selection_policy')
+    'blind_order', 'rank', 'top3', 'gate', 'recommendation', 'selection_policy', 'evidence_kind')
 
 
 def kendall_tau_b(pairs):
@@ -147,7 +147,8 @@ def _research():
 
 def _new(kind, fields):
     data = workflow.record(kind, workflow.CREATION_TAGS['campaign'] + '.agreement',
-        mode='extensa', campaign=workflow.CREATION_TAGS['campaign'], basis='code_reading',
+        mode='extensa', campaign=workflow.CREATION_TAGS['campaign'],
+        basis='simulated' if kind == 'agreement_report' else 'code_reading',
         estimator_variant='research', **fields)
     data['identity_sha256'] = identity(data)
     data['id'] += '.' + data['identity_sha256'][:16]
@@ -273,6 +274,8 @@ def _analyse(policy, summaries):
                         'candidate_artifact_sha256': candidate['artifact_sha256'], 'comparison': comparison['comparison'],
                         'baseline_evaluation': comparison['baseline_evaluation'], 'pair_identity_sha256': key,
                         'forecast_ids': [row['id'] for row in forecasts], 'timing_speedup': comparison['ratio'],
+                        'timing_basis': summary['evidence_basis'], 'timing_evidence_kind': summary['evidence_kind'],
+                        'structural_missing': sorted({reason for row in forecasts for reason in row['structural_missing']}),
                         'estimated_speedup': None, 'relative_error': None, 'eligible': False,
                         'exclusions': exclusions})
         for row in summary['per_class']:
@@ -310,6 +313,8 @@ def report(args):
     data = _new('agreement_report', {'format': 'swdb.extensa-agreement-report.v1',
         'policy': policy['id'], 'policy_sha256': policy['identity_sha256'], 'policy_snapshot': copy.deepcopy(policy),
         'reported_at': writer.now(), 'summaries': summaries,
+        'evidence_kind': ('unavailable' if not summaries else 'mixed_sources' if
+                         len({s['evidence_kind'] for s in summaries}) > 1 else summaries[0]['evidence_kind']),
         'summary_identities': {s['id']: artifacts.digest(s) for s in summaries}, **_analyse(policy, summaries)})
     return workflow.persist(args.records, data, create=True)
 
