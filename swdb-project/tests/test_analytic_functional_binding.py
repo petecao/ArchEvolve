@@ -73,11 +73,13 @@ def test_registered_canonical_candidate_observes_guarded_read_commands_without_e
     result=run_swdb('characterize','--records',records.path,'--source',source,'--candidate',CANDIDATE,
         '--input',input_id,'--adapter','registered-functional','--threads','1','--trials','1',
         '--id','fixture.functional.guarded','--llvm-bin',llvm22,'--run-library-path',llvm22.parent/'lib',
-        '--target-description','dx100-e4fc4af-functional-analytic-v1.t1',
+        '--target-description','dx100-e4fc4af-functional-analytic-v1.t1','--object-scopes',
         '--output',tmp_path/'counted','--timeout-s','45','--format','json',timeout=150)
     assert result.returncode==0,result.stdout+result.stderr
     data=json.loads(result.stdout)
     assert data['observation_contract']['semantic_commands']['complete'] is True
+    assert data['observation_contract']['object_scope_contract']['format']=='swdb.object-scopes.v1'
+    assert all('primitive_semantics' in a for r in data['trials'][0]['regions'] for a in r['access_patterns'])
     calls=[c for r in data['trials'][0]['regions'] for c in r['accelerator_calls']]
     reads=[c for c in calls if c['event'] in ('dx100.functional.gather','dx100.functional.stream_load') and c['execution_count']['value']]
     assert {c['event'] for c in reads}=={'dx100.functional.gather','dx100.functional.stream_load'}

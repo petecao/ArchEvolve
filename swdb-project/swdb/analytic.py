@@ -54,6 +54,7 @@ def register_cli(commands):
     sub.add_argument('--output', type=Path, help='new folder for compiled pass, IR, counts and run output (default a temporary folder)')
     sub.add_argument('--timeout-s', type=float, default=600)
     sub.add_argument('--fixture', action='store_true', help='label a hand-counted contract fixture, never application evidence')
+    sub.add_argument('--object-scopes', action='store_true', help='observe bounded source objects and function-scoped ABI referent views; no residency claim')
     sub.add_argument('--state-budget', type=int, default=524288, help='maximum transient logical observation entries; overflow preserves named unknowns')
     sub.add_argument('--target-description', help='frozen description for generic functional-command and allocation-relative logical window counts')
     sub.add_argument('--format', choices=['yaml', 'json'], default='yaml')
@@ -173,7 +174,7 @@ def _counted_regions(static, counts, count_scope="per_run", observation_contract
             requests={kind:[] for kind in updates}
             for item in observed.get('requests',[]):
                 requests[updates[item['update']]].append({'element_bytes':item['element_bytes'],
-                    'requests':{'value':item['requests'],'basis':'measured','scope':count_scope}})
+                    'requests':{'value':item['requests'],'basis':'unknown' if item['requests'] is None else 'measured','scope':count_scope}})
             missing=observed.get('missing',[])
             region['memory_service_counts']={'format':'swdb.memory-service-counts.v1',
                 'scope':count_scope,'observation_method':'source_normalized_ir_allocation_relative',
@@ -184,6 +185,11 @@ def _counted_regions(static, counts, count_scope="per_run", observation_contract
                      'pre_roi_allocation_pages','in_roi_allocation_pages','unknown_object_requests')},
                 'missing':missing,'assumption_sha256':artifacts.digest({'line_bytes':64,'page_bytes':4096,
                     'placement':'allocation_relative','first_touch':'first_source_observer_access'})}
+    if any('object_scope_counts' in row for row in counts.get('memory_service_counts',{}).values()):
+        for original,region in zip(static['regions'],regions):
+            observed=counts['memory_service_counts'].get(str(original['index']),{}).get('object_scope_counts',{})
+            region['memory_service_counts']['object_scope_counts']={name:_fact(observed.get(name,0),'measured')
+                for name in ('full_allocation_requests','bounded_view_requests','unresolved_requests','bounded_view_line_union')}
     # Several source loops may map to one existing region; aggregate their counters,
     # while static_analysis.loops retains each loop's identity and source location.
     combined = {}
@@ -360,6 +366,8 @@ def characterize(args):
     env['SWDB_REGION_MAP'] = str(args.region_map.resolve()) if args.region_map else ''
     env['SWDB_ANALYSIS_OUTPUT'] = str(output / 'optimized.json')
     env['SWDB_INSTRUMENT'] = '0'
+    env.pop('SWDB_OBJECT_SCOPES',None)
+    if args.object_scopes:env['SWDB_OBJECT_SCOPES']='1'
     _run([llvm / 'opt', '-load-pass-plugin=' + str(plugin), '-passes=swdb-characterize', optimized, '-disable-output'], env=env, timeout=args.timeout_s)
     env['SWDB_ANALYSIS_OUTPUT'] = str(output / 'source.json')
     env['SWDB_INSTRUMENT'] = '1'
@@ -469,6 +477,13 @@ def characterize(args):
             'observer_isolation':'thread_local_reentrancy_guard',
             'runtime_bundle_sha256':artifacts.digest({name:_sha(llvm_src/name)
                 for name in ('CountingRuntime.cpp','LiveObjects.hpp','LogicalCommands.hpp')})}
+    if args.object_scopes:
+        record['observation_contract']['object_scope_contract']={
+            'format':'swdb.object-scopes.v1','abi':'swdb.object-scope.v1',
+            'full_objects':['heap','source_alloca','defined_global_non_tls'],'bounded_views':['openmp_microtask_int32_referent'],
+            'retirement':'frame_exit_lifetime_end_stackrestore',
+            'observer_sha256':_sha(llvm_src/'ObjectScopes.hpp'),
+            'runtime_sha256':_sha(llvm_src/'ObjectScopeRuntime.hpp')}
     if live_contract:
         from swdb.analytic_count_reuse import policy_sha256,POLICY_FORMAT
         command_specs=live_contract['functional_observation']['commands']
@@ -661,6 +676,27 @@ def _payload_problems(data):
                 counts += [memory[name] for name in ('useful_bytes','lifetime_line_union',
                     'logical_first_read_pages','logical_first_write_pages','pre_roi_allocation_pages',
                     'in_roi_allocation_pages','unknown_object_requests')]
+                scope_facts=memory.get('object_scope_counts')
+                if scope_facts is not None:
+                    field=f'{group}[{i}].memory_service_counts.object_scope_counts'
+                    if not data.get('observation_contract',{}).get('object_scope_contract'):
+                        yield field,'object scope facts require their sealed optional observation contract'
+                    values={name:fact.get('value') for name,fact in scope_facts.items()}
+                    if any(value is not None and (not isinstance(value,int) or isinstance(value,bool) or value<0) for value in values.values()):
+                        yield field,'object scope counts must be nonnegative integers or null'
+                    partition=[values.get(name) for name in ('full_allocation_requests','bounded_view_requests','unresolved_requests')]
+                    requests=[item['requests'].get('value') for items in memory['requests_by_update_kind'].values() for item in items]
+                    if all(isinstance(value,int) and not isinstance(value,bool) for value in partition+requests):
+                        if sum(partition)!=sum(requests):yield field,'scope coverage partition must match executed requests'
+                    if values.get('unresolved_requests')!=memory['unknown_object_requests'].get('value'):
+                        yield field,'unresolved scope requests must match unknown object requests'
+                    if isinstance(values.get('bounded_view_requests'),int) and values['bounded_view_requests']>0:
+                        if 'bounded_view_not_full_allocation' not in memory['missing']:
+                            yield field,'bounded views must state that full allocation facts remain unknown'
+                        if any(memory[name].get('value') is not None for name in ('lifetime_line_union','logical_first_read_pages',
+                            'logical_first_write_pages','pre_roi_allocation_pages','in_roi_allocation_pages')):
+                            yield field,'bounded views cannot establish full allocation lifetime or page facts'
+                counts += list(memory.get('object_scope_counts',{}).values())
                 counts += [item['requests'] for items in memory['requests_by_update_kind'].values() for item in items]
             for call in region.get('call_shape_counts',{}).get('calls',[]):
                 counts += [call[name] for name in ('execution_count','unknown_lengths','unknown_free_lifetimes')]

@@ -644,6 +644,50 @@
         },
         "target_observation_policy_format": {
           "const": "swdb.observation-policy.v1"
+        },
+        "object_scope_contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "format": {
+              "const": "swdb.object-scopes.v1"
+            },
+            "abi": {
+              "const": "swdb.object-scope.v1"
+            },
+            "full_objects": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "bounded_views": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "retirement": {
+              "type": "string"
+            },
+            "observer_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "runtime_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          "required": [
+            "format",
+            "abi",
+            "full_objects",
+            "bounded_views",
+            "retirement",
+            "observer_sha256",
+            "runtime_sha256"
+          ]
         }
       },
       "required": [
@@ -1123,6 +1167,30 @@
             "assumption_sha256": {
               "type": "string",
               "pattern": "^[a-f0-9]{64}$"
+            },
+            "object_scope_counts": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "full_allocation_requests": {
+                  "$ref": "#/$defs/fact"
+                },
+                "bounded_view_requests": {
+                  "$ref": "#/$defs/fact"
+                },
+                "unresolved_requests": {
+                  "$ref": "#/$defs/fact"
+                },
+                "bounded_view_line_union": {
+                  "$ref": "#/$defs/fact"
+                }
+              },
+              "required": [
+                "full_allocation_requests",
+                "bounded_view_requests",
+                "unresolved_requests",
+                "bounded_view_line_union"
+              ]
             }
           },
           "required": [

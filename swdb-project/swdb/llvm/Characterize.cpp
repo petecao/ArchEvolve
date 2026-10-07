@@ -182,6 +182,7 @@ struct Op { Instruction *inst; unsigned region, category, amount; };
 struct Call { Instruction *inst; unsigned site; Value *size=nullptr; bool known=false; unsigned region=0; Value *factor=nullptr,*pointer=nullptr; unsigned action=0; bool semantic_body=false; };
 
 #include "SemanticCommands.hpp"
+#include "ObjectScopes.hpp"
 
 class BindROI : public PassInfoMixin<BindROI> {
 public:
@@ -402,6 +403,7 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
   auto opFn=semantic?M.getOrInsertFunction("__swdb_domain_op",Type::getVoidTy(C),u32,u32,u64,u32):M.getOrInsertFunction("__swdb_op",Type::getVoidTy(C),u32,u32,u64);
   auto callFn=semantic?M.getOrInsertFunction("__swdb_domain_call",Type::getVoidTy(C),u32,u64,u32,u32,u64,u32,u32,u32,u64,u64):M.getOrInsertFunction("__swdb_call_v2",Type::getVoidTy(C),u32,u64,u32,u32,u64,u32);
   auto accessFn=semantic?M.getOrInsertFunction("__swdb_domain_access",Type::getVoidTy(C),u32,u32,u64,u64,u64,u32,u32,u64,u64):M.getOrInsertFunction("__swdb_access_v2",Type::getVoidTy(C),u32,u32,u64,u64,u64,u32);
+  instrumentObjectScopes(M);
   for (unsigned i=0;i<regions.size();++i) if (auto *L=regions[i].loop) {
     auto *term=L->getHeader()->getTerminator(); IRBuilder<> B(term); Value *n=B.getInt64(1);
     if (auto *br=dyn_cast<BranchInst>(term); br && br->isConditional()) {
