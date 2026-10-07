@@ -47,3 +47,6 @@ Claimed: 2026-10-06 22:22 ET by ticket17 implementer; base `9a5057f45c7a1c3b8756
 
 
 2026-10-07 11:56 ET — source-only field and selected-body readiness notes retained at `../evidence/17-actual-input-readiness-notes-20261007/README.md`. No existing required body over 32MiB demonstrated and no future-size clearance inferred; actual direct/full closure size pins remain required. Distinct index-source bounds enlarge no selected consumer. Original notes assign no actual input/approval, and no controls, bounds, source C/F6 or scientific action changed; four campaigns/D30 remain pending, status claimed.
+
+
+2026-10-07 12:21 ET — separate actual index-writer source staging retained at `../evidence/17-full-record-index-source-staging-20261007-a1/README.md`: three exact originals preserve driver, earlier NOTRUN handoff and later original True receipt. Parent staged exact reviewed7a67/33,445B once at 12:19 ET from deliveredf8ef into fresh owned mbit10 index-source-a1; writer/main, actual requests/inventory/catalog/index, Store/validate/tests/native/provider/campaign and scientific admission remain false. Prior a2r1/a3 stages, source C/F6 and all controls/budgets unchanged; archive repeats no stage/test/SSH action. Actual inputs/four substantive normal-terminal campaigns/D30 remain pending; status claimed.
