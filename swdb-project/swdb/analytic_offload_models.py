@@ -9,7 +9,7 @@ def counts(region,mechanism,context):
     selector=mechanism.get('selector',{})
     missing.extend('selector.'+key for key in sorted(set(selector)-{'domain'}))
     if selector.get('domain')!='offload':missing.append('selector.domain.offload')
-    target=(context or {}).get('target_description_sha256')
+    target=(context or {}).get('logical_count_target_description_sha256') or (context or {}).get('target_description_sha256')
     observed=region.get('address_stream_counts',{}).get(target)
     if not target or not isinstance(observed,dict):
         missing.append('address_stream_counts.requested_target_description')
@@ -46,7 +46,8 @@ def reorder_window_rows(region,mechanism,*,context=None):
     return bound('reorder_window_rows',seconds,
         '(row_groups * row_miss_service_s + grouped_hits * row_hit_service_s) / effective_memory_parallelism',
         {'line_requests':requests,'row_groups':groups,'parameters':mechanism['parameters'],
-         'target_description_sha256':(context or {}).get('target_description_sha256')},missing,
+         'target_description_sha256':(context or {}).get('target_description_sha256'),
+         'counted_target_description_sha256':(context or {}).get('logical_count_target_description_sha256') or (context or {}).get('target_description_sha256')},missing,
         ['Ideal grouping within declared logical windows; no physical row-buffer state or execution schedule is observed.'])
 
 
@@ -63,7 +64,8 @@ def fetch_queue(region,mechanism,*,context=None):
     return bound('fetch_queue',seconds,
         'max(line_requests / admission_requests_per_s, line_requests * fetch_latency_s / queue_entries)',
         {'line_requests':requests,'parameters':mechanism['parameters'],
-         'target_description_sha256':(context or {}).get('target_description_sha256')},missing,
+         'target_description_sha256':(context or {}).get('target_description_sha256'),
+         'counted_target_description_sha256':(context or {}).get('logical_count_target_description_sha256') or (context or {}).get('target_description_sha256')},missing,
         ['A capacity/latency lower bound over declared logical requests; queue occupancy and physical scheduling are not observed.'])
 
 
@@ -75,5 +77,6 @@ def tile_staging(region,mechanism,*,context=None):
     return bound('tile_staging',None if missing else staged/rate if staged else 0.,
         'dynamic staged bytes / staging_bytes_per_s',
         {'staged_bytes':staged,'staging_bytes_per_s':mechanism['parameters'].get('staging_bytes_per_s'),
-         'target_description_sha256':(context or {}).get('target_description_sha256')},missing,
+         'target_description_sha256':(context or {}).get('target_description_sha256'),
+         'counted_target_description_sha256':(context or {}).get('logical_count_target_description_sha256') or (context or {}).get('target_description_sha256')},missing,
         ['Dynamic semantic useful stage bytes; tile capacity and physical transfer multiplicity are not inferred.'])

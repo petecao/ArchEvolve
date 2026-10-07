@@ -157,7 +157,8 @@ def _counted_regions(static, counts, count_scope="per_run", observation_contract
                 'bytes_accessed': _count(dynamic['bytes']),
                 'observed_address_span_bytes': _fact(dynamic['address_span_bytes'], 'measured'),
                 'observed_unique_bytes': _fact(dynamic.get('unique_bytes', 0), 'measured'),
-                'address_expression': a['address_expression'], 'ir_lanes': a['ir_lanes']})
+                'address_expression': a['address_expression'], 'ir_lanes': a['ir_lanes'],
+                **({'primitive_semantics': a['primitive_semantics']} if 'primitive_semantics' in a else {})})
         regions.append({'id': r['id'], 'source_location': {'function': r['function'], 'line': r['line'], 'path': r.get('path',''), 'llvm_function': r.get('llvm_function','')},
             'active_workers': _fact(counts.get('active_workers',{}).get(str(r['index']),0), 'measured'),
             'mapped': r['mapped'], 'kind': 'loop' if r['is_loop'] else 'serial_remainder',
@@ -469,6 +470,7 @@ def characterize(args):
             'runtime_bundle_sha256':artifacts.digest({name:_sha(llvm_src/name)
                 for name in ('CountingRuntime.cpp','LiveObjects.hpp','LogicalCommands.hpp')})}
     if live_contract:
+        from swdb.analytic_count_reuse import policy_sha256,POLICY_FORMAT
         command_specs=live_contract['functional_observation']['commands']
         observed_descriptors={site['descriptor'] for site in static.get('semantic_sites',[])}
         semantic_missing=counts.get('semantic_missing',[])
@@ -477,6 +479,9 @@ def characterize(args):
             record['observation_contract']['normative_bindings']=live_contract['normative_bindings']
         record['observation_contract'].update(level='functional_semantic_access',
             functional_observation=live_contract['functional_observation'],
+            counted_target_description_snapshot=live_contract['counted_target_description_snapshot'],
+            target_observation_policy_format=POLICY_FORMAT,
+            target_observation_policy_sha256=policy_sha256(live_contract['counted_target_description_snapshot']),
             requested_target_description_sha256=live_contract['target_description_sha256'],
             dram_address_layout=live_contract['dram_address_layout'],
             host_counting_policy='exclusive_host_outside_guarded_functional_commands',
@@ -501,7 +506,7 @@ def characterize(args):
     return record
 
 
-def _estimate_regions(source_regions, source_calls, target, observation_contract=None, *, characterization=None):
+def _estimate_regions(source_regions, source_calls, target, observation_contract=None, *, characterization=None,count_reuse=None):
     from swdb import analytic_models
 
     characterization_sha256=artifacts.digest(characterization) if characterization else None
@@ -509,11 +514,12 @@ def _estimate_regions(source_regions, source_calls, target, observation_contract
     for region in source_regions:
         called = [c for c in source_calls if c.get('region') == region['id']]
         context = {'target_description_sha256': artifacts.digest(target),
+            'logical_count_target_description_sha256':count_reuse['counted_target_description_sha256'] if count_reuse else artifacts.digest(target),
             'configured_threads': target['threads'], 'observation_contract': observation_contract,
             'characterization_id': characterization['id'] if characterization else None,
             'characterization_sha256': characterization_sha256,
             'selected_domain': None, 'composition_contract': target.get('composition_contract'),
-            'source_calls': called}
+            'source_calls': called, 'source_accesses': region['access_patterns']}
         bounds, overheads = [], []
         covered = set()
         for mechanism in target['mechanisms']:
@@ -557,10 +563,12 @@ def estimate(args):
     protocol = bind(store, args.protocol, characterization, target)
     if target['threads'] != characterization['binding']['threads']:
         raise Failure('target thread count differs from the counted workload thread identity')
-    regions, seconds = _estimate_regions(characterization['regions'], characterization['unmodeled_calls'], target, characterization.get('observation_contract'),characterization=characterization)
+    from swdb.analytic_count_reuse import resolve
+    count_reuse=resolve(characterization,target)
+    regions, seconds = _estimate_regions(characterization['regions'], characterization['unmodeled_calls'], target, characterization.get('observation_contract'),characterization=characterization,count_reuse=count_reuse)
     trial_estimates=[]
     for trial in characterization.get('trials',[]):
-        rows,total=_estimate_regions(trial['regions'],trial['unmodeled_calls'],target,characterization.get('observation_contract'))
+        rows,total=_estimate_regions(trial['regions'],trial['unmodeled_calls'],target,characterization.get('observation_contract'),characterization=characterization,count_reuse=count_reuse)
         trial_estimates.append({'position':trial['position'],'sources':trial['sources'],'regions':rows,'seconds':total})
     if trial_estimates:
         seconds=None if any(t['seconds'] is None for t in trial_estimates) else statistics.median(t['seconds'] for t in trial_estimates)
@@ -604,6 +612,7 @@ def estimate(args):
         record['trials'] = trial_estimates
         record['summary'] = 'median_whole_call_seconds'
         record['notes'].append('Estimate each trial by summing exclusive region maxima; the reported total is the median whole-call trial time. Per-region medians are diagnostic and do not generally sum to that median.')
+    if count_reuse is not None:record['count_reuse']=count_reuse
     if args.baseline:
         baseline = _load(store, args.baseline, 'estimate')
         require_team_safe(store, baseline, command='estimate')
@@ -628,6 +637,8 @@ def _payload_problems(data):
         yield from payload_problems(data)
         from swdb.offload_observation import count_problems
         yield from count_problems(data)
+        from swdb.analytic_count_reuse import snapshot_problems
+        yield from snapshot_problems(data)
         without_identity = {k: v for k, v in data.items() if k != 'identity_sha256'}
         try:
             expected = artifacts.digest(without_identity)

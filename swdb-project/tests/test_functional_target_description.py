@@ -1,7 +1,7 @@
 """Fresh configuration-only target is admitted without historical execution dependencies. 2026-10-06 ET."""
 import json
 import yaml
-from conftest import run_swdb
+from conftest import REPO,run_swdb
 
 TARGET='dx100-e4fc4af-functional-analytic-v1'
 DESCRIPTION='dx100-e4fc4af-functional-analytic-v1.t4'
@@ -9,7 +9,7 @@ DESCRIPTION='dx100-e4fc4af-functional-analytic-v1.t4'
 
 def test_fresh_functional_target_validates_and_freezes_code_only_dependencies(records,tmp_path):
     records.copy_repo()
-    checked=records.validate()
+    checked=run_swdb('validate','--records',records.path,'--library',REPO/'library')
     assert checked.returncode==0,checked.stdout+checked.stderr
     request=tmp_path/'freeze.yaml'
     request.write_text(yaml.safe_dump({'message_version':'1.0','id':'fixture.functional.target.protocol','version':1,

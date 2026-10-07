@@ -11,6 +11,7 @@
 #include "llvm/ADT/SmallPtrSet.h"
 #include "llvm/ADT/StringExtras.h"
 #include "llvm/Support/SHA256.h"
+#include "llvm/Support/AtomicOrdering.h"
 #include "llvm/Passes/PassBuilder.h"
 #include "llvm/Plugins/PassPlugin.h"
 #include "llvm/Support/JSON.h"
@@ -28,6 +29,39 @@ using namespace llvm;
 namespace {
 std::string env(const char *name) { const char *v=std::getenv(name); return v ? v : ""; }
 std::string scevText(const SCEV *s) { std::string text; raw_string_ostream os(text); s->print(os); return text; }
+// Exact source-normalized primitive facts. Coarse update buckets remain unchanged;
+// a store arithmetic producer alone never establishes a read-modify-write.
+json::Object memoryPrimitive(Instruction &I, Type *T, const DataLayout &DL) {
+  Type *element=T->getScalarType();
+  std::string kind=element->isIntegerTy()?"integer":element->isFloatingPointTy()?"floating":
+      element->isPointerTy()?"pointer":element->isAggregateType()?"aggregate":"unknown";
+  json::Value bits=nullptr;
+  if(element->isIntegerTy())bits=int64_t(element->getIntegerBitWidth());
+  else if(element->isFloatingPointTy() || element->isPointerTy()) {
+    auto width=DL.getTypeSizeInBits(element);
+    if(!width.isScalable())bits=int64_t(width.getFixedValue());
+  }
+  AtomicOrdering ordering=AtomicOrdering::NotAtomic;
+  bool vol=false; json::Value failure=nullptr, weak=nullptr, update=nullptr;
+  if(auto *load=dyn_cast<LoadInst>(&I)){ordering=load->getOrdering();vol=load->isVolatile();}
+  if(auto *store=dyn_cast<StoreInst>(&I)) {
+    ordering=store->getOrdering();vol=store->isVolatile();
+    if(auto *binary=dyn_cast<BinaryOperator>(store->getValueOperand()))update=binary->getOpcodeName();
+  }
+  if(auto *rmw=dyn_cast<AtomicRMWInst>(&I)) {
+    ordering=rmw->getOrdering();vol=rmw->isVolatile();
+    update=AtomicRMWInst::getOperationName(rmw->getOperation()).str();
+  }
+  if(auto *cas=dyn_cast<AtomicCmpXchgInst>(&I)) {
+    ordering=cas->getSuccessOrdering();failure=toIRString(cas->getFailureOrdering());
+    vol=cas->isVolatile();weak=cas->isWeak();
+  }
+  return json::Object{{"format","swdb.source-memory-primitive.v1"},{"opcode",I.getOpcodeName()},
+    {"value_kind",kind},{"element_bits",std::move(bits)},{"vector",T->isVectorTy()},
+    {"atomic_ordering",toIRString(ordering)},{"failure_ordering",std::move(failure)},
+    {"volatile",vol},{"weak",std::move(weak)},{"update_opcode",std::move(update)}};
+}
+
 // Follow SSA dependencies, never source spelling. Cycles terminate at the visited set.
 bool depends(Value *v, Value *wanted, SmallPtrSetImpl<Value *> &seen) {
   if(v==wanted)return true;
@@ -277,7 +311,7 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
         unsigned col=I.getDebugLoc() ? I.getDebugLoc().getCol() : 0;
         json::Object row{{"site",int64_t(site)},{"region",regions[rid].id},{"region_index",int64_t(rid)},
           {"function",name},{"path",path(I.getDebugLoc()?I.getDebugLoc()->getScope()->getFile():SP->getFile())},{"llvm_function",F.getName().str()},{"line",int64_t(line)},{"column",int64_t(col)},
-          {"update_kind",update},{"read_write",readWrite},{"address_shape",shape},
+          {"update_kind",update},{"read_write",readWrite},{"primitive_semantics",memoryPrimitive(I,T,DL)},{"address_shape",shape},
           {"stride_bytes",std::move(stride)},{"element_bytes",int64_t(bytes)},
           {"ir_lanes",int64_t(lanes)},{"address_expression",scevText(S)}};
         accessRows.push_back(std::move(row)); accesses.push_back({&I,ptr,site++,rid,bytes,lanes,write,update=="read"?0u:update=="write" && !readWrite?1u:update=="add-update"?2u:update=="compare-and-swap"?3u:update=="min-max-update"?4u:5u});

@@ -142,3 +142,30 @@ not establish physical placement, hardware traffic, row state or scheduling.
 The native fixture suite hand-checks alias deduplication, straddling byte ranges,
 partial windows, missing objects/windows, row/nesting budgets, reference-check
 attribution and unwind restoration. Fixture evidence remains `contract_fixture`.
+
+
+## Count reuse under an identical observation contract (2026-10-06 ET)
+
+A new functional characterization retains its complete counted target-description snapshot and a canonical, versioned `swdb.observation-policy.v1` digest. Its classification table remains immutable for historical validation; later classification changes require a new policy version. Only named rate/cost parameters with their declared units and record metadata/provenance are classified as observation independent. The model, selector, accounting policy, target identity, thread count, commands, aliases, source/backend pins, widths, layout, request/coalescing policy, logical window and placement remain in the digest. Literal values are required by the v1 layout/window/request schema. If a retained policy field names a removed rate parameter, its resolved fact is also pinned. Every extra or unknown field/parameter remains in the digest; it cannot gain admission by resembling a rate. Queue/cache capacity changes also require fresh counts under this conservative rule.
+
+The original characterization and execution receipt are never rewritten. An estimate for a rates-only description exposes `count_reuse` with both counted and requested target hashes, the unchanged characterization hash, complete policy digest and original observation-context hash. The original context includes the state budget, source/LLVM/runtime bundle identities, loaded libraries and declared environment controls. Production normative bindings also pin the counted registered target configuration. Changing the original context fails its count receipt; a new description cannot request a new state budget through reuse. Changing any observation policy requires a fresh count. Historical descriptions/counts continue to work at their exact original hash; historical receipts without the complete snapshot cannot reuse rows for a changed description.
+
+Numeric provenance is still checked recursively by ADR 0013 and pinned by the frozen protocol. A rates-only change does not waive input/source/ROI/trial/runtime binding, grant physical DRAM placement or convert logical row groups into measured row hits. Error-band bindings are independently frozen protocol evidence and never modify the counted observation policy.
+
+## Exact source memory primitives
+
+Updated: 2026-10-06 ET. Optional `access_patterns[].primitive_semantics` uses
+`swdb.source-memory-primitive.v1` and describes the normalized LLVM load/store/
+atomicrmw/cmpxchg instruction. It retains scalar value kind and bit width (pointer
+width comes from that module's DataLayout), vector flag, exact LLVM ordering,
+CAS failure ordering and weak flag, volatility, and exact atomic update opcode.
+A store can retain its arithmetic value producer's opcode; this alone does not
+establish a read-modify-write or matching loaded address. Existing access IDs,
+coarse update buckets, counts and callback ABIs are unchanged.
+
+Model context `source_accesses` contains that region's exact static/dynamic access
+patterns, including trial-scoped element counts. A service model must cover every
+executed site in each claimed kind/width cell and refuse unsupported or absent
+primitive facts. The optional facts are source semantics, never native instruction
+counts, physical requests, or CPU timing evidence. Historical absent fields remain
+unknown; registered receipts seal new facts with their counted payload.

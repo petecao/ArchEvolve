@@ -303,6 +303,67 @@
     "estimator_sha256": {
       "type": "string",
       "pattern": "^[0-9a-f]{64}$"
+    },
+    "count_reuse": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "counted_target_description_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "requested_target_description_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "counted_characterization_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "count_observation_context_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "format": {
+          "const": "swdb.identical-observation-reuse.v1"
+        },
+        "state": {
+          "enum": [
+            "exact_counted_target",
+            "identical_observation_policy"
+          ]
+        },
+        "observation_policy_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "observation_policy_format": {
+          "enum": [
+            "swdb.observation-policy.v1",
+            null
+          ]
+        }
+      },
+      "required": [
+        "counted_target_description_sha256",
+        "requested_target_description_sha256",
+        "counted_characterization_sha256",
+        "count_observation_context_sha256",
+        "format",
+        "state",
+        "observation_policy_sha256",
+        "notes",
+        "observation_policy_format"
+      ]
     }
   },
   "required": [
