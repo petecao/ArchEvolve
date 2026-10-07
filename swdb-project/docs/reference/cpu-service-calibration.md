@@ -512,3 +512,28 @@ for application bins or change the existing20-cell record. All original records
 and failed residuals stay byte-identical. View-only page/lifetime and bounded
 state unions remain unknown even though every final logical object request is
 now assigned to a full allocation or explicit bounded referent view.
+
+
+## Frozen bulk transfer recipe (2026-10-06 ET)
+
+The binder requires `--bulk-profile-policy max_constructed_profiles_median`
+when consuming these typed bulk receipts. For each exact memmove length it
+retains the disjoint, forward4 and backward4 parameters and creates an inferred
+maximum of their medians. Every source profile must have a known positive cost
+and compatible context. An unresolved profile keeps the envelope unknown. The
+model verifies the retained maximum again during estimation and sensitivity;
+changing a raw parameter alone cannot silently invalidate the frozen recipe.
+
+Both elapsed batches retain their own memcpy8 measurement. Select one exact
+record with `--bulk-copy-calibration mbit10.cpu.lanl20261006.service.bulk.a1`;
+the duplicate is retained in the dependency closure and is never averaged.
+Duplicate memmove length/profile cells are rejected even when the copy selection
+is explicit. The constant copy construction admits only its proved8B bin.
+
+The selector declares `prepared_reused_bulk_buffers`, inferred transfer,
+unverified application overlap/alignment and `physical_upper_bound:false`.
+This is a conditional effective constructed scenario. It does not establish
+application disjointness, a physical instruction latency or a proven upper
+bound. Public estimation clears an opaque site only when all of its exact
+scoped length counts have known selected rates. Missing bins, incomplete
+profiles and unsupported physical claims leave the whole site unknown.

@@ -1,33 +1,10 @@
 """Native service calibration through public commands. Created: 2026-10-06 ET."""
-import hashlib
 import json
 
 import pytest
 
 from conftest import run_swdb
-
-
-def save_receipt(tmp_path, data):
-    data['identity_sha256'] = hashlib.sha256(json.dumps(data, sort_keys=True,
-        separators=(',', ':'), allow_nan=False).encode()).hexdigest()
-    path = tmp_path / 'service-receipt.json'
-    path.write_text(json.dumps(data))
-    return path
-
-
-def fixture_receipt():
-    return {'format': 'swdb.cpu-service-calibration.v1', 'evidence_kind': 'fixture',
-        'machine': 'mbit10', 'threads': 1,
-        'context': {'compiler_version': 'hand fixture', 'architecture': 'fixture'},
-        'settings': {'repetitions': 3},
-        'services': [{'id': 'clock.now', 'unit': 'seconds/call',
-            'event_definition': 'One system_clock::now call; hand fixture only.',
-            'scope': {'worker_scope': 'serial', 'cache_state': 'warm'},
-            'denominator': {'level': 'source_normalized_work', 'basis': 'reported',
-                'proof': 'Hand-computed fixture, not native count evidence.'},
-            'trials': [{'events': 10, 'gross_seconds': seconds, 'driver_seconds': 1.0,
-                'order': order} for seconds, order in [(2.0, 'service_first'),
-                    (2.2, 'driver_first'), (1.8, 'service_first')]]}]}
+from testkit.cpu_service import fixture_receipt, save_receipt
 
 
 def test_import_service_fixture_retains_paired_trials_and_reported_cost(records, tmp_path):

@@ -56,7 +56,7 @@ def native_service_costs(region, mechanism, *, context=None):
             continue
         seen.add(name)
         rate = _rate(mechanism,selection['parameter']) if scalar else None
-        shape_parameters, shape_missing = _shape_parameters(selection) if shaped else ({},[])
+        shape_parameters, shape_missing = _shape_parameters(selection,mechanism) if shaped else ({},[])
         missing.extend(shape_missing)
         for call in source:
             if call.get('name') != name:
@@ -86,7 +86,8 @@ def native_service_costs(region, mechanism, *, context=None):
         'sum(exact selected opaque call size-bin executions * independently scoped seconds/call)' ,
         {'calls': selected, 'covered_calls': covered if not missing else []}, sorted(set(missing)),
         ['A counted callee body receives no second service charge. Exact site/full-count coverage is required.',
-         'Service scope is serial T1; size-bin allocator-state transfer is explicitly inferred. Unsupported length/lifetime/selector semantics remain unknown.'])
+         'Service scope is serial T1; size-bin allocator-state transfer is explicitly inferred. Unsupported length/lifetime/selector semantics remain unknown.',
+         'Bulk profile maxima are explicitly inferred constructed scenarios; application overlap and alignment remain unverified. No physical latency or proven application upper bound is established.'])
 
 
 
@@ -95,24 +96,55 @@ def _rate(mechanism,name,unit='seconds/call'):
     return None if fact.get('basis')=='unknown' else parameter(mechanism,name,unit)
 
 
-def _shape_parameters(selection):
+BULK_PROFILES=('dynamic_length_disjoint_align4','dynamic_length_overlap_forward4_align4','dynamic_length_overlap_backward4_align4')
+BULK_ABIS={'memcpy':'copy','llvm.memcpy.p0.p0.i64':'copy','memmove':'move','llvm.memmove.p0.p0.i64':'move'}
+BULK_ASSUMPTION={'regime':'prepared_reused_bulk_buffers','transfer_basis':'inferred','profile_policy':'max_constructed_profiles_median',
+    'source_overlap':'unverified','source_alignment':'unverified','physical_upper_bound':False}
+
+
+def _bulk_profile_parameters(item,selection,mechanism):
+    source=item.get('source_profiles');copy=BULK_ABIS[selection['name']]=='copy'
+    expected=('constant8_noalias_align8',) if copy else BULK_PROFILES
+    if (not isinstance(source,list) or len(source)!=len(expected) or any(not isinstance(row,dict) or set(row)!={'regime','parameter','calibration','service'} or any(not isinstance(v,str) or not v for v in row.values()) for row in source)):
+        return ['selector.calls.exact_constructed_bulk_profiles']
+    if tuple(row['regime'] for row in source)!=expected or len({(r['calibration'],r['service']) for r in source})!=len(source):
+        return ['selector.calls.exact_constructed_bulk_profiles']
+    if copy and item['bytes']!=8:return ['selector.calls.constant8_bulk_bin']
+    rates=[_rate(mechanism,r['parameter']) for r in source]
+    expected_rate=max(rates) if all(r is not None and r>0 for r in rates) else None
+    actual=_rate(mechanism,item['parameter'])
+    if (actual!=expected_rate or (copy and item['parameter']!=source[0]['parameter']) or
+        (not copy and mechanism['parameters'].get(item['parameter'],{}).get('basis')!=('inferred' if expected_rate is not None else 'unknown'))):
+        return ['selector.calls.exact_constructed_bulk_envelope']
+    return []
+
+
+def _shape_parameters(selection,mechanism):
     missing=[]
     allocator_fields={'_Znam':'known_length_bins','_Znwm':'known_length_bins',
         '_ZdaPv':'allocation_lifetime_size_bins','_ZdlPv':'allocation_lifetime_size_bins'}
-    if allocator_fields.get(selection['name']) != selection['bin_kind']:
-        missing.append('selector.calls.allocator_abi_bin_kind')
+    bulk=selection['name'] in BULK_ABIS
+    if bulk:
+        if selection['bin_kind']!='known_length_bins':missing.append('selector.calls.bulk_abi_bin_kind')
+        if isinstance(selection['scope_assumption'],dict) and selection['scope_assumption'].get('regime')=='fresh_process_repeated_allocate_free_batches':missing.append('selector.calls.allocator_abi_bin_kind')
+        if selection['scope_assumption']!=BULK_ASSUMPTION or selection['scope_assumption'].get('physical_upper_bound') is not False:
+            missing.append('selector.calls.explicit_constructed_bulk_transfer')
+    else:
+        if allocator_fields.get(selection['name']) != selection['bin_kind']:
+            missing.append('selector.calls.allocator_abi_bin_kind')
+        if selection['scope_assumption']!={'regime':'fresh_process_repeated_allocate_free_batches','transfer_basis':'inferred'}:
+            missing.append('selector.calls.explicit_allocator_regime_transfer')
     if selection['bin_kind'] not in ('known_length_bins','allocation_lifetime_size_bins'):
         missing.append('selector.calls.bin_kind')
-    if selection['scope_assumption']!={'regime':'fresh_process_repeated_allocate_free_batches','transfer_basis':'inferred'}:
-        missing.append('selector.calls.explicit_allocator_regime_transfer')
-    bins=selection['bins']
-    values={}
-    if not isinstance(bins,list) or not bins:
-        return {},missing+['selector.calls.bins']
+    bins=selection['bins'];values={}
+    if not isinstance(bins,list) or not bins:return {},missing+['selector.calls.bins']
     for item in bins:
-        if not isinstance(item,dict) or set(item)!={'bytes','parameter'} or type(item.get('bytes')) is not int or item['bytes']<0 or not isinstance(item.get('parameter'),str) or not item['parameter'] or item['bytes'] in values:
+        fields={'bytes','parameter','source_profiles'} if bulk else {'bytes','parameter'}
+        if not isinstance(item,dict) or set(item)!=fields or type(item.get('bytes')) is not int or item['bytes']<(8 if bulk else 0) or (bulk and item['bytes']>1048576) or not isinstance(item.get('parameter'),str) or not item['parameter'] or item['bytes'] in values:
             missing.append('selector.calls.unique_exact_byte_bins')
-        else:values[item['bytes']]=item['parameter']
+        else:
+            values[item['bytes']]=item['parameter']
+            if bulk:missing.extend(_bulk_profile_parameters(item,selection,mechanism))
     return values,missing
 
 

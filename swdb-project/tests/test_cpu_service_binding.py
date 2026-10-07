@@ -1,18 +1,11 @@
 """Immutable service bindings through the separate public module CLI (2026-10-06 ET)."""
 import json
-import subprocess
-import sys
 
 import yaml
 
 from conftest import run_swdb
-from test_cpu_service_calibration import fixture_receipt, save_receipt
+from testkit.cpu_service import fixture_receipt, save_receipt, bind
 from testkit.analytic import target_description, fixture_characterization, digest
-
-
-def bind(records, *args):
-    return subprocess.run([sys.executable,'-m','swdb.cpu_service_binding','--records',str(records.path),
-        *map(str,args),'--format','json'], capture_output=True,text=True)
 
 
 def test_binding_pins_typed_receipt_and_preserves_original_target(records,tmp_path):

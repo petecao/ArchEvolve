@@ -5,7 +5,7 @@ import pytest
 import yaml
 
 from conftest import run_swdb
-from test_analytic_cpu_service import clock_case
+from testkit.cpu_service import clock_case
 from testkit.analytic import digest, freeze_protocol
 
 

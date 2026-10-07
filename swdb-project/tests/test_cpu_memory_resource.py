@@ -8,7 +8,7 @@ import pytest
 import yaml
 
 from conftest import run_swdb
-from test_cpu_service_calibration import fixture_receipt, save_receipt
+from testkit.cpu_service import fixture_receipt, save_receipt, bind
 from testkit.analytic import digest
 
 
@@ -72,7 +72,6 @@ def test_recipe_rejects_tampered_source_and_output_with_resealed_identity(record
 
 
 def test_resource_binding_pins_total_and_original_records_and_explicit_recipe(records,tmp_path):
-    from test_cpu_service_binding import bind
     from testkit.analytic import target_description, fixture_characterization
     records.add_stub()
     base=yaml.safe_load(target_description(tmp_path).read_text());base.update(id='fixture.cpu.base',target='mbit10')

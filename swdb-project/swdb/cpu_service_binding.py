@@ -137,6 +137,62 @@ def _memory_binding(args,target,char,cells,scopes):
     return mechanism,compatibility
 
 
+def _bulk_binding(args,target,char,cells,scopes):
+    from swdb.analytic_cpu_service import BULK_ASSUMPTION, BULK_PROFILES
+    if args.bulk_profile_policy!='max_constructed_profiles_median':
+        raise Failure('bulk binding requires explicit --bulk-profile-policy max_constructed_profiles_median')
+    parameters={};groups={};copies=[];rows=[]
+    for calibration,service in cells:
+        scope=service['scope'];abi=scope.get('event_abi');regime=scope.get('bulk_regime');size=scope.get('size_bytes')
+        if (service.get('unit')!='seconds/call' or scope.get('worker_scope')!='serial' or scope.get('transfer_basis')!='inferred' or
+            scope.get('first_touch')!='preparation excluded' or scope.get('cache_state')!='prepared reused buffers; physical cache level unverified' or
+            type(size) is not int or not 8<=size<=1048576):raise Failure('unsupported exact bulk construction scope')
+        if abi=='memcpy' and regime=='constant8_noalias_align8' and size==8 and scope.get('alignment_min_bytes')==8:copies.append((calibration,service))
+        elif abi=='memmove' and regime in BULK_PROFILES and scope.get('alignment_min_bytes')==4:
+            group=groups.setdefault(size,{})
+            if regime in group:raise Failure('ambiguous duplicate bulk ABI/size/profile')
+            group[regime]=(calibration,service)
+        else:raise Failure('unsupported exact bulk ABI/profile/alignment')
+    if copies:
+        if args.bulk_copy_calibration is not None:
+            chosen=[pair for pair in copies if pair[0]['id']==args.bulk_copy_calibration]
+            if len(chosen)!=1:raise Failure('bulk copy selection must name one exact calibration receipt')
+            selected_copy=chosen[0]
+        elif len(copies)==1:selected_copy=copies[0]
+        else:raise Failure('duplicate bulk copy receipts require explicit --bulk-copy-calibration; no pooling')
+    else:
+        if args.bulk_copy_calibration is not None:raise Failure('bulk copy selection has no matching cell')
+        selected_copy=None
+    def retained(pair):
+        calibration,service=pair;missing,scope_rows=_scope_compatibility(target,char,calibration,service,args.fixture,scopes)
+        name='bulk_raw_'+str(len(parameters));value=copy.deepcopy(service['parameter'])
+        value['source']+='; exact context binding; reused-buffer construction transfer is inferred; application alignment/overlap unverified'
+        if missing:value.update(value=None,basis='unknown')
+        parameters[name]=value
+        rows.append({'calibration':calibration['id'],'service':service['id'],'parameter':name,'missing':missing,'scopes':scope_rows})
+        return {'regime':service['scope']['bulk_regime'],'parameter':name,'calibration':calibration['id'],'service':service['id']}
+    selectors={}
+    if selected_copy is not None:
+        profile=retained(selected_copy);bin={'bytes':8,'parameter':profile['parameter'],'source_profiles':[profile]}
+        for name in ('memcpy','llvm.memcpy.p0.p0.i64'):
+            selectors[name]={'name':name,'unit':'seconds/call','bin_kind':'known_length_bins','bins':[copy.deepcopy(bin)],'scope_assumption':copy.deepcopy(BULK_ASSUMPTION)}
+    bins=[]
+    for size,group in sorted(groups.items()):
+        if set(group)!=set(BULK_PROFILES):raise Failure('bulk maximum requires all three distinct constructed profiles at each exact bin')
+        profiles=[retained(group[r]) for r in BULK_PROFILES]
+        facts=[parameters[row['parameter']] for row in profiles]
+        known=all(p.get('basis')!='unknown' and type(p.get('value')) in (int,float) and math.isfinite(p['value']) and p['value']>0 for p in facts)
+        name='bulk_envelope_'+str(size)
+        parameters[name]={'value':max(p['value'] for p in facts) if known else None,'basis':'inferred' if known else 'unknown',
+            'unit':'seconds/call','source':'Maximum separately retained disjoint/forward4/backward4 constructed medians; no application overlap/alignment or proven physical upper bound.'}
+        bins.append({'bytes':size,'parameter':name,'source_profiles':profiles})
+    if bins:
+        for name in ('memmove','llvm.memmove.p0.p0.i64'):
+            selectors[name]={'name':name,'unit':'seconds/call','bin_kind':'known_length_bins','bins':copy.deepcopy(bins),'scope_assumption':copy.deepcopy(BULK_ASSUMPTION)}
+    return selectors,parameters,rows
+
+
+
 def bind(args):
     from swdb.archevolve import require_team_safe
     from swdb import workflow
@@ -151,7 +207,7 @@ def bind(args):
     require_team_safe(store,target,*scopes,*args.calibration,command='bind-cpu-services')
     result=copy.deepcopy(target)
     result.update(id=args.id,created=writer.today(),updated=writer.today())
-    parameters={}; selectors={}; proofs=[]; rows=[]; memory_cells=[]
+    parameters={}; selectors={}; proofs=[]; rows=[]; memory_cells=[];bulk_cells=[]
     for identifier in args.calibration:
         found=store.by_id.get(identifier)
         if found is None:
@@ -170,6 +226,8 @@ def bind(args):
         for service in calibration['services']:
             missing,scope_rows=_scope_compatibility(target,char,calibration,service,args.fixture,scopes)
             scope=service.get('scope',{})
+            if scope.get('bulk_regime'):
+                bulk_cells.append((calibration,service));continue
             if service.get('unit')=='seconds/request':
                 memory_cells.append((calibration,service));continue
             proof=service.get('denominator',{}).get('proof',{})
@@ -194,6 +252,12 @@ def bind(args):
             else:
                 if abi in selectors:raise Failure('ambiguous duplicate scalar service ABI')
                 selectors[abi]={'name':abi,'parameter':param,'unit':'seconds/call'}
+    if bulk_cells:
+        bulk_selectors,bulk_parameters,bulk_rows=_bulk_binding(args,target,char,bulk_cells,scopes)
+        if set(selectors)&set(bulk_selectors):raise Failure('ambiguous scalar/bulk ABI selection')
+        selectors.update(bulk_selectors);parameters.update(bulk_parameters);rows.extend(bulk_rows)
+    elif args.bulk_profile_policy is not None or args.bulk_copy_calibration is not None:
+        raise Failure('bulk selection policy requires typed bulk calibration cells')
     if not selectors and not memory_cells:raise Failure('binding needs at least one independently scoped service')
     removed=[]
     if memory_cells:
@@ -214,6 +278,7 @@ def bind(args):
         'characterization':{'id':char['id'],'sha256':artifacts.digest(char)},'characterization_allowlist':allowlist,'calibrations':proofs,'compatibility':rows,
         'models':[m['model'] for m in result['mechanisms'] if m['model'] in ('native_service_costs','memory_service_scenario')],
         'memory_selection':{'footprint_bytes':args.memory_footprint_bytes,'cas_policy':args.memory_cas_policy,'superseded_memory_models':removed} if memory_cells else None,
+        'bulk_selection':{'profile_policy':args.bulk_profile_policy,'copy_calibration':args.bulk_copy_calibration,'application_overlap':'unverified','application_alignment':'unverified','physical_upper_bound':False} if bulk_cells else None,
         'model':'native_service_costs','transfer_basis':'inferred','timings_rerun':False}
     result.setdefault('extensions',{})['cpu_services_binding']=evidence
     result['version']=artifacts.digest(evidence)
@@ -232,6 +297,8 @@ def main():
     parser.add_argument('--fixture',action='store_true')
     parser.add_argument('--memory-footprint-bytes',type=int,help='explicit constructed 4/8B memory footprint; byte reads retain their separate256B scope')
     parser.add_argument('--memory-cas-policy',choices=[CAS_POLICY],help='explicit inferred transfer of the larger independent constructed success/failure median')
+    parser.add_argument('--bulk-profile-policy',choices=['max_constructed_profiles_median'],help='explicit inferred maximum of separately retained exact bulk constructions, no physical upper bound')
+    parser.add_argument('--bulk-copy-calibration',help='one exact receipt for duplicate constant8 copy cells; never pool')
     parser.add_argument('--format',choices=['yaml','json'],default='json')
     args=parser.parse_args()
     try:
