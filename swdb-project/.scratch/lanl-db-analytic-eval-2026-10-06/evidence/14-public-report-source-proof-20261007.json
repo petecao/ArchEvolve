@@ -1,0 +1,28 @@
+{
+  "format": "swdb.lanl14-public-report-source-proof.v1",
+  "updated": "2026-10-07 ET",
+  "state": "public_source_ready_actual_reports_pending",
+  "source_paths": {
+    "scripts/generality_report.py": "26f6d803d17381a70241e77bed5a28a3340f03549135100e475f550c4e252303",
+    "tests/test_generality_report.py": "2c370ed78c937cc819dada943dad1d38a77f1f28aaaddb3b790a588d4546a0cd"
+  },
+  "public_tests": {
+    "cases": 3,
+    "passed": 3,
+    "seconds": 0.65,
+    "scope": "independent pinned fixture; no application execution",
+    "red_protocol_identity_seal": true
+  },
+  "prior_maple_cases": {
+    "passed": 2,
+    "seconds": 2.22,
+    "scope": "reported units and target boundary"
+  },
+  "generic_bundle_unchanged": true,
+  "estimator_sha256": "fec496c6dec0930aada7bc760991c125907fffe739ea2e9d4d3e03e3748faa52",
+  "actual_nine_reports_complete": false,
+  "remote_actions": 0,
+  "provider_calls": 0,
+  "application_timings": 0,
+  "identity_sha256": "6d5d97b36d428927263b19b3db7b7c7b3790cbc55286cfd28951cc550f9ec6e4"
+}
