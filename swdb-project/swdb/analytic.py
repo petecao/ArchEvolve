@@ -109,8 +109,8 @@ def _fact(value, basis, **extra):
     return {'value': value, 'basis': 'unknown' if value is None else basis, **extra}
 
 
-def _count(value, basis='measured', formula=None):
-    return _fact(value, basis, formula=formula, scope='per_run')
+def _count(value, basis='measured', formula=None, *, scope='per_run'):
+    return _fact(value, basis, formula=formula, scope=scope)
 
 
 def _sha(path):
@@ -144,6 +144,9 @@ def _uncovered_call(call):
 
 
 def _counted_regions(static, counts, count_scope="per_run", observation_contract=None):
+    def count(value,basis='measured'):
+        return _count(value,basis,scope=count_scope)
+
     regions = []
     for r in static['regions']:
         ops = counts['operations'].get(str(r['index']), [0, 0, 0, 0])
@@ -156,8 +159,8 @@ def _counted_regions(static, counts, count_scope="per_run", observation_contract
                 'source_location': {'function': a['function'], 'line': a['line'], 'column': a['column'], 'path': a.get('path',''), 'llvm_function': a.get('llvm_function','')},
                 'address_shape': _fact(None if a['address_shape'] == 'unknown' else a['address_shape'], 'code_reading'),
                 'stride_bytes': _fact(a['stride_bytes'], 'code_reading'), 'element_bytes': a['element_bytes'],
-                'update_kind': a['update_kind'], 'read_write': a.get('read_write',False), 'element_count': _count(dynamic['elements']),
-                'bytes_accessed': _count(dynamic['bytes']),
+                'update_kind': a['update_kind'], 'read_write': a.get('read_write',False), 'element_count': count(dynamic['elements']),
+                'bytes_accessed': count(dynamic['bytes']),
                 'observed_address_span_bytes': _fact(dynamic['address_span_bytes'], 'measured'),
                 'observed_unique_bytes': _fact(dynamic.get('unique_bytes', 0), 'measured'),
                 'address_expression': a['address_expression'], 'ir_lanes': a['ir_lanes'],
@@ -165,8 +168,8 @@ def _counted_regions(static, counts, count_scope="per_run", observation_contract
         regions.append({'id': r['id'], 'source_location': {'function': r['function'], 'line': r['line'], 'path': r.get('path',''), 'llvm_function': r.get('llvm_function','')},
             'active_workers': _fact(counts.get('active_workers',{}).get(str(r['index']),0), 'measured'),
             'mapped': r['mapped'], 'kind': 'loop' if r['is_loop'] else 'serial_remainder',
-            'access_patterns': accesses, 'operation_counts': {name: _count(ops[i]) for i, name in enumerate(CLASSES)},
-            'dynamic_counts': {'loop_iterations': _count(counts['trips'].get(str(r['index']), 0)) if r['is_loop'] else _count(None, 'unknown')},
+            'access_patterns': accesses, 'operation_counts': {name: count(ops[i]) for i, name in enumerate(CLASSES)},
+            'dynamic_counts': {'loop_iterations': count(counts['trips'].get(str(r['index']), 0)) if r['is_loop'] else count(None, 'unknown')},
             'footprint_bytes': _fact(counts.get('footprints', {}).get(str(r['index']), 0), 'measured', note='Live union of virtual byte ranges in this exclusive IR region; addresses are never persisted.'),
             'accelerator_calls': [], 'address_stream_counts': {}})
     if 'memory_service_counts' in counts:
@@ -211,7 +214,7 @@ def _counted_regions(static, counts, count_scope="per_run", observation_contract
             previous['active_workers']['value'] = max(previous['active_workers']['value'],region['active_workers']['value'])
             for key in CLASSES:
                 previous['operation_counts'][key]['value'] += region['operation_counts'][key]['value']
-            previous['dynamic_counts']['loop_iterations'] = _count(None, 'unknown')
+            previous['dynamic_counts']['loop_iterations'] = count(None, 'unknown')
             previous['dynamic_counts']['loop_iterations']['note'] = 'Several lowered LLVM loops share this source region; unique source-loop iterations are not inferred by summing them.'
     regions = list(combined.values())
     for region in regions:
@@ -222,8 +225,8 @@ def _counted_regions(static, counts, count_scope="per_run", observation_contract
     calls = []
     for original in static['unmodeled_calls']:
         called = dict(original)
-        called['execution_count'] = _count(counts.get('calls', {}).get(str(called['site']), 0))
-        called['size_bytes'] = _fact(counts.get('call_size_bytes', {}).get(str(called['site'])), 'measured')
+        called['execution_count'] = count(counts.get('calls', {}).get(str(called['site']), 0))
+        called['size_bytes'] = count(counts.get('call_size_bytes', {}).get(str(called['site'])))
         calls.append(called)
     if 'call_shapes' in counts:
         for region in regions:
@@ -600,8 +603,12 @@ def estimate(args):
     count_reuse=resolve(characterization,target)
     characterization_sha256=artifacts.digest(characterization)
     regions, seconds = _estimate_regions(characterization['regions'], characterization['unmodeled_calls'], target, characterization.get('observation_contract'),characterization=characterization,count_reuse=count_reuse,characterization_sha256=characterization_sha256)
-    trial_estimates=[]
-    for trial in characterization.get('trials',[]):
+    from swdb.analytic_trial_scope import reconcile_trial
+    trial_estimates=[];model_trials=[];scope_proofs=[]
+    for original_trial in characterization.get('trials',[]):
+        trial,proof=reconcile_trial(characterization,original_trial,store)
+        model_trials.append(trial)
+        if proof is not None:scope_proofs.append(proof)
         rows,total=_estimate_regions(trial['regions'],trial['unmodeled_calls'],target,characterization.get('observation_contract'),characterization=characterization,count_reuse=count_reuse,characterization_sha256=characterization_sha256)
         trial_estimates.append({'position':trial['position'],'sources':trial['sources'],'regions':rows,'seconds':total})
     if trial_estimates:
@@ -646,6 +653,9 @@ def estimate(args):
         record['trials'] = trial_estimates
         record['summary'] = 'median_whole_call_seconds'
         record['notes'].append('Estimate each trial by summing exclusive region maxima; the reported total is the median whole-call trial time. Per-region medians are diagnostic and do not generally sum to that median.')
+    if scope_proofs:
+        record.setdefault('extensions',{})['legacy_trial_scope_reconciliations']=scope_proofs
+        record['notes'].append('Legacy source count scopes were inferred in copied trial contexts from sealed registered ROI windows and exact call/bin and memory partitions; the characterization remains immutable.')
     if count_reuse is not None:record['count_reuse']=count_reuse
     if args.baseline:
         baseline = _load(store, args.baseline, 'estimate')
@@ -657,7 +667,8 @@ def estimate(args):
         if seconds is not None and seconds > 0 and baseline['seconds'] is not None:
             record['ratio'] = baseline['seconds'] / seconds
     from swdb.analytic_sensitivity import report
-    record['parameter_report']=report(record,target,characterization)
+    scenario_characterization={**characterization,'trials':model_trials} if model_trials else characterization
+    record['parameter_report']=report(record,target,scenario_characterization)
     record['llm_parameters']=[row for row in record['parameter_report']['sensitivities'] if row['basis']=='estimated']
     from swdb.analytic_extensions import finalize_estimate
     record = finalize_estimate(record, store=store, protocol=protocol,

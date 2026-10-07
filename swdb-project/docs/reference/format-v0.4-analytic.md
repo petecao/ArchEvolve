@@ -422,3 +422,15 @@ versions. `structural_missing` separately lists source facts, missing mechanisms
 opaque costs and composition policies. These cannot be silently repaired by the
 unknown-parameter filling role. Public validation checks every report fact against
 its frozen target, its base whole-call value, and its exact policy identity.
+
+### Registered trial-window scope
+
+New trial count facts use `scope: per_trial`; root snapshot counts retain `per_run`.
+Legacy source labels may be inferred only in a copied estimation context after
+verified registered ROI/trial binding and exact call-site/bin and source-memory
+partitions. The estimate retains inferred proof under
+`extensions.legacy_trial_scope_reconciliations`, pinning the original characterization,
+payload, runtime and trial position. Original observations are immutable. Arbitrary
+scopes, unsealed fixture state and mismatched partitions retain existing unknown/refusal
+behavior. Sensitivity recomposition uses the same copied scope inference; it establishes
+no new cost, hardware request, residency, functional/MMIO correspondence or error band.

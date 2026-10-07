@@ -1,0 +1,31 @@
+{
+  "format": "swdb.lanl-trial-scope-producer-merger.v1",
+  "base": "6ec9e0183a4765cd0793d88efda301687328e63c",
+  "merged_tip": "b27c75a16c0e780609cc6014940b9714fc3fb814",
+  "scope": "New captured trial windows; legacy sealed observations unchanged",
+  "protected_blob_count": 1075,
+  "protected_bytes_preserved": true,
+  "canonical_yaml_count": 633,
+  "only_changed_paths": [
+    "swdb-project/swdb/analytic.py",
+    "swdb-project/tests/fixtures/analytic/trial_scopes.cpp",
+    "swdb-project/tests/test_analytic_trial_scope.py"
+  ],
+  "new_producer_trial_scope": "per_trial",
+  "root_scope": "per_run",
+  "llvm_runtime_and_observer_unchanged": true,
+  "processes_sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+  "control_helper_sha256": {
+    "/private/tmp/lanl17_parent_helpers.py": "31e1d71bc6e9ef4a5a5f1d5fbff136ceef249935f8f00601edf45277fce249ec",
+    "/private/tmp/lanl17_parent_helpers_linux_smoke.py": "4d0bdf1d4c8d2ce96d948085a785cde15c389a4c50413962bc7db14df57cf9d6"
+  },
+  "estimator_sha256": "116ec8de6cf9f201579dc525c430fdf64716b0571a1a4e9c1e375cef8e5a80ca",
+  "public_regression": {
+    "test": "tests/test_analytic_trial_scope.py::test_public_count_labels_each_trial_window_without_changing_root_scope",
+    "red_reproduced": true,
+    "passed": 1,
+    "seconds": 3.2
+  },
+  "no_remote_evaluation_or_main_push": true,
+  "identity_sha256": "d132e89a9c31e3abbdfe09c9945854fc2d58d3f190134280240e254175a1d573"
+}
