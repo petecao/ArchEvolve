@@ -1,0 +1,17 @@
+# Selected trajectory controls — preparation and review archive
+
+Archived 2026-10-07 08:34 ET. This retains source preparation and review for future ticket 17 inputs. Ticket 17 remains claimed. No actual population freeze, campaign, trajectory admission or D30 success is established.
+
+The original 77907 auditor trio and a2 packet remain immutable preparation history. Confirmed source/path/privacy and substantive-trajectory gaps led to the separate r1 collector b08db809 and auditor 5be66dfa. The original single escaped-dot regex was correct; the review finding was withdrawn and no regex change was made. The r1 source proof retains 47 exact public/scientific/safe-projection AST comparisons.
+
+The selected final auditor is `lanl17_selected_record_trajectory_auditor_a2r1s1_20261007.py` (6a91ed10); the selected collector remains `lanl17_compact_attempt_custody_a2r1_20261007.py` (b08db809). The narrow s1 change requires an identity and explicit canonical ensure_ascii policy at 19 claimed sealed-input reads. Original unsealed campaign exports, summaries, indices and status facts remain distinct. All prior packet bytes and their original pending-review/NOTRUN labels are retained.
+
+Ticket03 ran one authorized isolated stdlib synthetic regression of extracted pure functions: 18 cases passed. Original nested sentinel leakage was reproduced and revised safe projection/path/seal checks passed. The initial harness setup failed before executing any case; its source and original unsealed custody are retained separately. No successful cases were repeated. Neither full auditor nor collector main, Store, actual campaign inputs, provider, native execution, staging or SSH scientific action was exercised by that regression.
+
+The exact parent review approves these static controls only for future actual inputs under the explicit accepted-input contract. Parent account observation is a direct read-only response, not a separately original account receipt. Actual capture must recheck Linux mbit10, account UID114316761/user yanruj, canonical source/project and owned paths each time. The exact prospective construction note is `lanl17-r1s1-future-actual-input-construction-plan-20261007.md`; it specifies canonical writers, parent-attestation boundaries, interrupted/rejected selected bodies and safe export handling without guessed actual IDs or outcomes.
+
+Existing immutable launch/cleanup controls are referenced in `../17-cleanup60-metadata-controls-20261007-a4/` (28d116 helper, fa703 supervisor, 9c5d guard), with actual cleanup chronology in `../17-cleanup60-controls-actual-20261007-a4/`. This archive changes none of those controls, scientific source F6, budgets, canonical records or public admission rules.
+
+Concrete final11/14 admission, actual R/EF/ER/M1/M2/policy/publication pins, four genuine normal substantive trajectories and final D30 report remain future gates. Administrative completion cannot create eligible numerical pairs. Structural unknowns remain unknown; zero eligible pairs means unsupported rank/top-3 evidence and no switch, independently of trajectory completion. No runtime success is inferred from source preparation.
+
+`manifest.json` seals the snapshot inventory and verification observations. Every source snapshot is byte-exact; original unsealed JSON is not retroactively sealed. Verification-matching canonical policies in the inventory are recomputation facts and do not invent a missing original writer declaration.

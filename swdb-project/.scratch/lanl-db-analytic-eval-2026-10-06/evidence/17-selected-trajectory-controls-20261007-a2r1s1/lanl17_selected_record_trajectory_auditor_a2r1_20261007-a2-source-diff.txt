@@ -1,0 +1,232 @@
+--- /private/tmp/lanl17_selected_record_trajectory_auditor_a2_20261007.py
++++ /private/tmp/lanl17_selected_record_trajectory_auditor_a2r1_20261007.py
+@@ -27,6 +27,7 @@
+     require(isinstance(code,str) and re.fullmatch('[a-z0-9_.-]+',code),'Closed reason code required');return code
+ class Refused(ValueError): pass
+ class Pending(ValueError): pass
++Failure=Refused  # Coherent fail-closed name used by the exact lifted public context method.
+ def require(condition,reason):
+     if not condition: raise Refused(reason)
+ def need(obj,key):
+@@ -711,44 +712,76 @@
+             'input': {'id': workload['id'], 'identity_sha256': workload['identity_sha256'], **input_facts},
+             'execution': execution}
+ 
+-CALL_KEYS=('role','invocation','outcome','counted','model','effort','classification')
+-
+-CANDIDATE_KEYS=('id','class','artifact_sha256','patch_sha256','contracts','knobs','certification','comparisons','level','selection')
+-
++CALL_KEYS=('role','invocation','outcome','counted','model','effort')
++CANDIDATE_KEYS=('id','class','artifact_sha256','patch_sha256','level')
+ ITERATION_KEYS=('index','started','ended','improved_classes')
+-
+-STATE_KEYS=('campaign','campaign_sha256','started','stopped','stop_reason','clean_exit','setup_done','resumes','lane_hours','provider_wait_hours','disk_bytes_peak','prepared','preflights','baselines')
+-
+-def project_calls(rows):return [{k:r[k] for k in CALL_KEYS if k in r} for r in rows]
++STATE_KEYS=('campaign','campaign_sha256','started','stopped','stop_reason','clean_exit','setup_done','resumes','lane_hours','provider_wait_hours','disk_bytes_peak')
++PROJECTION_CONTRACT='swdb.lanl17-safe-control-projection.v1'
++
++def public_token(value,nullable=False):
++    if value is None and nullable:return None
++    require(isinstance(value,str) and len(value)<=256 and re.fullmatch('[A-Za-z0-9_.:/+-]+',value),'bounded public scalar token required')
++    return value
++
++def public_scalar(value):
++    require(value is None or type(value) in (int,float,bool,str),'public scalar required')
++    if isinstance(value,str):return public_token(value)
++    if type(value) is float:require(value==value and abs(value)!=float('inf'),'finite public scalar required')
++    return value
++
++def public_fields(row,keys):
++    require(isinstance(row,dict),'public field mapping required')
++    return {k:public_scalar(row[k]) for k in keys if k in row}
++
++def excluded_fields(row,keys):
++    # Hash the entire excluded values; do not copy their nested content or text.
++    return {k:{'json_type':type(row[k]).__name__,'semantic_sha256':digest(row[k]),'values_exported':False} for k in keys if k in row}
++
++def project_calls(rows):
++    require(isinstance(rows,list) and len(rows)<=500,'bounded public call rows required')
++    return [{**public_fields(r,CALL_KEYS),'excluded_metadata':excluded_fields(r,('classification',))} for r in rows]
+ 
+ def project_candidate(row):
+-    result={k:row[k] for k in CANDIDATE_KEYS if k in row}
+-    # These are public candidate/certification/comparison counters and IDs only;
+-    # no _patch, feedback, regions, source snippets or rewrite/provider inputs.
++    result=public_fields(row,CANDIDATE_KEYS)
++    result['excluded_provider_values']=excluded_fields(row,('knobs','contracts'))
++    certification=row.get('certification')
++    result['certification']=None if certification is None else {
++        **public_fields(certification,('record','outcome','level_at_summary')),
++        'excluded_metadata':excluded_fields(certification,('failed_checks',))}
++    comparisons=row.get('comparisons',[])
++    require(isinstance(comparisons,list) and len(comparisons)<=32,'bounded comparison rows required')
++    result['comparisons']=[{**public_fields(r,('baseline_role','comparison','baseline_evaluation','ratio','lower','upper','relative_ci_width','spread','verdict')),'excluded_metadata':excluded_fields(r,('level_mix',))} for r in comparisons]
++    selection=row.get('selection')
++    result['selection']=None if selection is None else public_fields(selection,('lower','verdict','ratio'))
+     return result
+ 
+ def project_iteration(row):
+-    return {**{k:row[k] for k in ITERATION_KEYS if k in row},'provider_calls':project_calls(row.get('provider_calls',[])),
+-            'candidates':[project_candidate(r) for r in row.get('candidates',[])],
+-            'source_row_sha256':digest(row)}
++    result=public_fields(row,('index','started','ended'))
++    improved=row.get('improved_classes',[])
++    require(isinstance(improved,list) and len(improved)<=32,'bounded improved class IDs required')
++    result.update(improved_classes=[public_token(x) for x in improved],provider_calls=project_calls(row.get('provider_calls',[])),
++        candidates=[project_candidate(r) for r in row.get('candidates',[])],source_row_sha256=digest(row))
++    return result
+ 
+ def project_state(state):
+-    result={k:state[k] for k in STATE_KEYS if k in state}
++    result=public_fields(state,STATE_KEYS)
++    result['projection_contract']=PROJECTION_CONTRACT
+     result['ledger']={k:state['ledger'][k] for k in ('iteration','iterations_completed','plateau','calls','iterations','terminal','iteration_calls','setup_calls')}
+-    result['ledger']['calls']=[{k:r[k] for k in ('index','iteration','role','invocation','outcome','counted')} for r in state['ledger']['calls']]
+-    result['ledger']['iterations']=[{k:r[k] for k in ('index','outcome','advanced_plateau','plateau_counter')} for r in state['ledger']['iterations']]
++    result['ledger']['calls']=[public_fields(r,('index','iteration','role','invocation','outcome','counted')) for r in state['ledger']['calls']]
++    result['ledger']['iterations']=[public_fields(r,('index','outcome','advanced_plateau','plateau_counter')) for r in state['ledger']['iterations']]
+     require(result['ledger']==state['ledger'],'unexpected private/unknown ledger field')
+     result['ledger_sha256']=digest(state['ledger'])
+     result['iterations']=[project_iteration(r) for r in state['iterations']]
+     result['setup_calls']=project_calls(state.get('setup_calls',[]))
+-    result['pauses']=[{**{k:r[k] for k in ('at','resumed_at','iteration') if k in r},
+-                      'reason':safe_code(r['reason']),'provider_calls':project_calls(r.get('provider_calls',[])),
+-                      'source_row_sha256':digest(r)} for r in state['pauses']]
++    result['pauses']=[{**public_fields(r,('at','resumed_at','iteration')),
++        'reason':safe_code(r['reason']),'provider_calls':project_calls(r.get('provider_calls',[])),
++        'source_row_sha256':digest(r)} for r in state['pauses']]
+     if state.get('interrupted_iteration'):result['interrupted_iteration']=project_iteration(state['interrupted_iteration'])
+-    result['protocol_id']=state.get('protocol',{}).get('id')
+-    result['protocol_identity_sha256']=state.get('protocol',{}).get('identity_sha256')
+-    # Detail may contain externally supplied STOP text or exception snippets:
+-    # hash it, never export raw text. Parent can attest its category separately.
++    result['prepared']=[public_token(x) for x in state.get('prepared',[])]
++    result['preflights']=[public_fields(r,('step','state')) for r in state.get('preflights',[])]
++    result['baselines']={public_token(k):public_token(v) for k,v in state.get('baselines',{}).items()}
++    result['protocol_id']=public_token(state.get('protocol',{}).get('id'),nullable=True)
++    result['protocol_identity_sha256']=public_token(state.get('protocol',{}).get('identity_sha256'),nullable=True)
+     result['stop_detail_sha256']=digest(state.get('stop_detail'))
+     result['source_state_semantic_sha256']=digest(state)
+     return result
+@@ -781,7 +814,7 @@
+         require(re.fullmatch('[0-9a-f]{64}',expected) is not None,'Explicit file SHA required')
+         if 'commit' in pin: raw=self.blob(pin['commit'],need(pin,'path'))
+         else:
+-            p=pathlib.Path(need(pin,'path'));require(p.is_absolute() and p.is_file() and not p.is_symlink(),'Pinned local regular compact file required')
++            p=pathlib.Path(need(pin,'path'));require(p.is_absolute() and '..' not in p.parts and p.is_file() and all(not x.is_symlink() for x in (p,*p.parents)),'Pinned local regular compact file without symlink components required')
+             require(p.stat().st_size==size,'Pinned compact file size differs');raw=p.read_bytes()
+         require(len(raw)==size and sha(raw)==expected,'Selected compact/Git file bytes differ')
+         return raw
+@@ -873,6 +906,8 @@
+         require(set(row['campaign'] for row in policy['population'])==set(CIDS) and len(policy['population'])==4,'Four exact frozen campaigns required')
+         require(policy['mode']=='extensa' and policy['basis']=='code_reading' and policy['estimator_variant']=='research','Policy boundary differs')
+         provider_path=need(self.EF,'provider_configuration_path');require(sha(self.blob(self.EF['commit'],provider_path))==policy['provider_config_sha256'],'Frozen provider config differs')
++        self.provider_configuration=yaml.load(self.blob(self.EF['commit'],provider_path),Loader=RecordLoader)
++        require(self.provider_configuration['kind']=='codex','Actual official provider config required; fixture calls are not campaign work')
+         configs=need(self.EF,'campaign_configuration_paths');require(set(configs)==set(CIDS),'Frozen config path inventory differs')
+         require(set(configs.values())|{provider_path}==set(self.EF['configuration_paths']),'Frozen configuration export has unexpected files')
+         require(all(path.startswith(EVIDENCE+'17-frozen-configs-'+m2['tag']+'/') for path in self.EF['configuration_paths']),'Frozen config folder differs from original helper export')
+@@ -911,6 +946,10 @@
+             require(selected['export_commit']==export and selected['estimator_sha256']==F6,'Dependency export/F6 differs')
+             inherited=self.json(need(admission,'actual_export_receipt_pin'))
+             require(inherited['identity_sha256']==admission['actual_export_receipt_identity'],'Dependency actual export receipt differs')
++            sole_source=C if ticket==11 else need(admission,'final_source_commit')
++            require(self.text('rev-list','--parents','-n','1',export).split()==[export,sole_source],'Dependency export does not have its declared actual source as sole parent')
++            require(inherited['source_commit']==sole_source and inherited['source_clean'] is True,'Dependency original clean source receipt differs')
++            require(inherited['format']==('swdb.cpu-band-report-compact-receipt.v1' if ticket==11 else 'swdb.lanl14-final-report-export.v1'),'Dependency actual export receipt format differs')
+             if ticket==11:
+                 require(selected['format']=='swdb.cpu-future-phase-local-readonly-admission.v1' and selected['phase']=='report' and selected['admitted'] is True and selected['source_commit']==C,'Actual final CPU report admission missing')
+                 require(selected['actual_compact_receipt_identity']==inherited['identity_sha256'],'CPU reader/export receipt linkage differs')
+@@ -924,7 +963,7 @@
+                 direct=selected['direct_observations'];pre=selected['inherited_pinned_export_preconditions']
+                 require(direct['lane_exit_code']==0 and direct['cleanup_survivors']=={} and pre['runner_exit_code']==pre['wrapper_exit_code']==0 and pre['new_native_or_compiler_execution']==0,'Generality direct/inherited execution preconditions differ')
+                 require(selected['provider_calls']==selected['application_timings']==selected['reader_native_compiler_provider_remote_actions']==0,'Generality selected-reader scope differs')
+-                require(selected['reader_sha256']==need(admission,'selected_reader_source_sha256'),'Generality original reader pin differs')
++                require(selected['reader_sha256']==sha(self.raw(need(admission,'reader_source_pin')))==need(admission,'selected_reader_source_sha256'),'Generality original reader source file pin differs')
+                 scope='Checks nine-pair selected disclosure/direct facts and explicitly inherited pinned-export/full-catalogue preconditions; no admitted:true is invented'
+             result[str(ticket)]={'actual_export_commit':export,'receipt_identity':selected['identity_sha256'],'admission_boundary':scope,'numerical_accuracy_not_required_for_completed_dependency':True}
+         return result
+@@ -948,7 +987,9 @@
+         ledger=state['ledger'];require(digest(ledger)==state['ledger_sha256'],'Retained ledger projection hash differs')
+         calls_by_invocation={r['invocation']:r for r in ledger['calls']}
+         require(len(calls_by_invocation)==len(ledger['calls']) and [r['index'] for r in ledger['calls']]==list(range(1,len(ledger['calls'])+1)),'Duplicate/nonconsecutive provider calls')
+-        replay=SearchLedger(SearchBudget.from_mapping(BUDGETS,summary['campaign_file']['sha256']));used=set()
++        replay=SearchLedger(SearchBudget.from_mapping(BUDGETS,summary['campaign_file']['sha256']));used=set();substantive=[]
++        cfg=next(p['configuration'] for p in self.policy['population'] if p['campaign']==summary['campaign'])
++        require(self.provider_configuration['kind']=='codex' and cfg['provider']['name']=='codex','Substantive work requires frozen actual official provider configuration')
+         def replay_calls(rows,index):
+             for row in rows:
+                 invocation=row['invocation'];require(invocation in calls_by_invocation and invocation not in used,'Provider projection missing/duplicated')
+@@ -975,6 +1016,12 @@
+                 body=need(projection,'infrastructure_iteration_provider_partition')
+                 require(body['index']==index,'Infrastructure session partition differs')
+             replay_calls(body['provider_calls'],index)
++            if saved['outcome'] in ('improved','not_improved'):
++                rewriting=[r for r in body['provider_calls'] if r['role']=='rewriting' and r['counted'] is True]
++                require(rewriting and all(r['outcome'] is not None and r['outcome'] not in {x.value for x in UNCOUNTED_CALL_OUTCOMES} for r in rewriting),'Completed session lacks exact retained closed counted rewriting invocation')
++                for call in rewriting:
++                    require(call['model']==cfg['provider']['model'] and call['effort']==cfg['provider']['effort'] and call['counted'] is True,'Completed rewriting model/effort differs from frozen campaign provider')
++                substantive.append({'index':index,'rewriting_invocations':[r['invocation'] for r in rewriting],'invalid_or_failed_output_still_closed_work':True,'candidate_not_required':True})
+             require(replay.record_iteration(IterationOutcome(saved['outcome'])).to_dict()==saved,'Plateau/paused/completion transition differs')
+         require(pause_position==len(pauses),'Additional paused session not in retained ledger')
+         if ledger['iteration']:
+@@ -1001,7 +1048,7 @@
+         require(administrative['unsaved_provider_or_step_events_independently_replayed'] is False and administrative['summary_time_disk_usage_independently_reconstructed'] is False,'Unsupported independent budget replay claim')
+         if winner in (StopReason.LANE_HOURS,StopReason.DISK):
+             require(administrative['terminal_premise']['state']=='parent_attested_from_original_source_enforcement' and administrative['terminal_premise']['prospective_refusal_may_occur_below_used_limit'] is True,'Exact unsaved exhaustion premise must be explicitly inherited, never guessed')
+-        return {'retained_ledger':'exact_public_replay','completed':replay.iterations_completed,'plateau':replay.plateau,'provider_counted':replay.counted_calls,'provider_uncounted':replay.uncounted_calls,'terminal_conditions':[r.value for r in conditions],'lane_disk_unsaved_event_boundary':administrative,'disk_later_du_not_used':True}
++        return {'retained_ledger':'exact_public_replay','substantive_completed_sessions':substantive,'substantive_closed_rewriting_calls':sum(len(r['rewriting_invocations']) for r in substantive),'frozen_provider_config_sha256':self.policy['provider_config_sha256'],'completed':replay.iterations_completed,'plateau':replay.plateau,'provider_counted':replay.counted_calls,'provider_uncounted':replay.uncounted_calls,'terminal_conditions':[r.value for r in conditions],'lane_disk_unsaved_event_boundary':administrative,'disk_later_du_not_used':True}
+ 
+     def attempt_states(self,attempts,projection,cid,stopped):
+         previous=None;previous_invocations=None;facts=[]
+@@ -1013,6 +1060,9 @@
+                 require(value['format']=='swdb.lanl17-attempt-control-custody.v2' and value['phase']==phase and value['campaign']==cid and value['attempt']==number,'Original state custody identity differs')
+                 require(value['source_commit']==self.R['commit'] and value['estimator_sha256']==F6 and value['helper_sha256']==HELPER and value['collector_sha256']==self.pins['collector_sha256'] and value['manifest_identity_sha256']==self.m2['identity_sha256'] and value['policy']==self.m2['policy'],'State custody changes R/M2/policy/control')
+                 require(value['raw_state_snapshots_transferred'] is False and value['provider_prompts_auth_logs_argv_read'] is False,'Private original state was transferred/read beyond scope')
++                expected=need(self.pins,'collector_account');account=value['execution_account']
++                require(expected['host']==account['host']=='mbit10' and account['platform']=='linux' and account['uid']==account['effective_uid']==expected['uid'] and type(expected['uid']) is int and expected['uid']>0 and account['user']==expected['user'],'Actual collector host/own-UID custody differs')
++                require(value['projection_contract']==PROJECTION_CONTRACT and value['actual_git_worktree_root']==self.m2['source'] and value['actual_project_directory']==str(pathlib.Path(self.m2['source'])/'swdb-project'),'Collector does not bind exact frozen manifest source/project')
+             require(before['resume']==dispatch['resume'] and before['baselines_only']==dispatch['baselines_only'],'State guard action differs from dispatch')
+             require(after['before_identity_sha256']==before['identity_sha256'] and after['dispatch_identity_sha256']==dispatch['identity_sha256'] and after['stopped_identity_sha256']==stop['identity_sha256'] and after['released']==release,'Released post-state custody differs')
+             require(utc(before['checked_utc'])<=utc(dispatch['checked_utc'])<=utc(stop['started_utc'])<utc(stop['ended_utc'])<=utc(release['checked_utc'])<=utc(after['checked_utc']),'Original before/launch/stop/release/after order differs')
+@@ -1055,7 +1105,14 @@
+                 raw=next((r for r in need(projection,'outcome_accesses_without_component') if r['event_sha256']==digest(event)),None)
+                 if raw is None:raise Pending('Outcome access lacks selected original component or explicit no-evaluator parent custody: '+component_id)
+                 require(raw['component_id']==component_id and raw['basis']=='explicit_parent_attestation_of_preflight_or_evaluator_refusal' and raw['accepted'] is True and raw['source_commit']==self.R['commit'],'Absent execution body cannot be treated as completed evidence')
+-                attested.append(raw);continue
++                boundaries={'host_preflight_refused':'after_forecast_before_evaluator','evaluator_failed_without_record':'evaluator_invoked_no_record'}
++                require(raw['refusal_class'] in boundaries and raw['refusal_stage']==event['stage'] and raw['refusal_boundary']==boundaries[raw['refusal_class']],'Missing execution requires closed concrete refusal class/stage/boundary')
++                custody=self.json(need(raw,'refusal_custody_pin'))
++                require(custody['format']=='swdb.lanl17-outcome-refusal-custody.v1' and custody['basis']=='explicit_parent_attestation_from_original_refusal_source' and custody['source_commit']==self.R['commit'] and custody['event_sha256']==digest(event) and custody['component_id']==component_id,'Original parent refusal custody does not bind the exact outcome boundary')
++                require(all(custody[k]==raw[k] for k in ('refusal_class','refusal_stage','refusal_boundary')) and custody['execution_source_sha256']==PINNED_SOURCE_FILES['swdb/campaign_targets.py'],'Original refusal class/stage/source differs')
++                require(re.fullmatch('[0-9a-f]{64}',custody['original_refusal_source_sha256']) and custody['original_refusal_source_sha256']==raw['original_refusal_source_sha256'],'Exact original sanitized refusal-source pin missing')
++                require(custody['completed_execution_evidence'] is False and custody['raw_logs_or_exception_text_transferred'] is False and utc(custody['checked_utc'])>=utc(event['outcome_access_started_at']),'Refusal custody cannot claim completed evaluator work or transfer raw text')
++                attested.append({'event_sha256':digest(event),'component_id':component_id,'refusal_class':raw['refusal_class'],'refusal_stage':raw['refusal_stage'],'refusal_boundary':raw['refusal_boundary'],'refusal_custody_identity':custody['identity_sha256'],'original_refusal_source_sha256':custody['original_refusal_source_sha256'],'scope':'Concrete original parent-attested refusal; no independent completed execution claim'});continue
+             component=self.record(component_id,'evaluation');roots.add(component_id)
+             request=component['request'];role=request['protocol_role'];workload=request['workload']['id'];subject=self.record(request['candidate'],'candidate')
+             require(component['id']==request['id']==component_id and component.get('candidate',request['candidate'])==request['candidate'] and component.get('campaign')==cid and component.get('mode')=='extensa' and component['evidence_kind']=='execution','Execution request/subject/campaign/mode differs')
+@@ -1206,8 +1263,13 @@
+             for record in exported['records']:
+                 value=self.record(record['id'],record['kind']);require(self.record_pins[record['id']]['sha256']==record['sha256'],'Public exported closure bytes differ')
+         require(exported_candidates==set(need(projection,'public_export_candidate_ids')),'Original public selected-candidate export inventory is missing/different')
++        selected=self.json(need(row,'public_candidate_export_selection_custody'))
++        require(selected['format']=='swdb.lanl17-original-public-candidate-selection-custody.v1' and selected['basis']=='explicit_parent_check_of_original_28d_non_rejected_completed_selection' and selected['source_commit']==self.R['commit'] and selected['helper_sha256']==HELPER and selected['campaign']==cid and selected['summary_sha256']==digest(summary) and selected['accepted'] is True,'Original public selected-candidate choice requires concrete parent selection custody')
++        require(set(selected['candidate_ids'])==exported_candidates and selected['selection_completeness_independently_derived_by_auditor'] is False,'Public export selection completeness is explicitly inherited; do not infer it from supplied IDs')
++        completed_materialized={r['id'] for it in summary['iterations'] for r in it['candidates'] if r.get('id')}
++        require(set(selected['completed_materialized_candidate_ids'])==completed_materialized and selected['original_named_candidate_ids']==sorted(exported_candidates) and exported_candidates<=completed_materialized,'Parent original named selection must bind the actual completed candidate population; interrupted candidates remain separate')
+         interrupted_index=interrupted.get('index') if interrupted else None
+-        return {'campaign':cid,'attempts':len(attempts),'lanes':[d['node'] for d,s,r in stopped],'terminal_reason':summary['stop_reason'],'normal_terminal':normal,'substantive_completed_iterations':len(completed)>0,'completed_iterations':len(completed),'interrupted_iteration':interrupted_index,'candidate_rows':candidate_rows,'prematerialization_refusal_rows':sum(1 for it in summary['iterations']+([summary['interrupted_iteration']] if summary.get('interrupted_iteration') else []) for candidate in it['candidates'] if not candidate.get('id')),'distinct_materialized_artifact_hashes':len(artifacts_seen),'selected_closure_records':len(reached),'outcome_accesses':len(events),'prior_exposure_forecasts':sum(bool(f['timing_context'].get('prior_outcome_exposure')) for f in forecasts),'eligible_pairs':0,'final_attempt_succeeded':final_success,'terminal_infrastructure_summary_not_resumable':summary['stop_reason']=='infrastructure_failure','source_of_completion':'Pinned original per-attempt state/ledger, not summary existence','attempt_state_custody':attempt_custody,'retained_accounting':accounting,'timing_selection_replay':selection,'exact_outcome_linkage':linkage}
++        return {'campaign':cid,'attempts':len(attempts),'lanes':[d['node'] for d,s,r in stopped],'terminal_reason':summary['stop_reason'],'normal_terminal':normal,'substantive_completed_iterations':bool(completed) and len(accounting['substantive_completed_sessions'])==len(completed),'completed_iterations':len(completed),'interrupted_iteration':interrupted_index,'candidate_rows':candidate_rows,'prematerialization_refusal_rows':sum(1 for it in summary['iterations']+([summary['interrupted_iteration']] if summary.get('interrupted_iteration') else []) for candidate in it['candidates'] if not candidate.get('id')),'distinct_materialized_artifact_hashes':len(artifacts_seen),'selected_closure_records':len(reached),'outcome_accesses':len(events),'prior_exposure_forecasts':sum(bool(f['timing_context'].get('prior_outcome_exposure')) for f in forecasts),'eligible_pairs':0,'final_attempt_succeeded':final_success,'terminal_infrastructure_summary_not_resumable':summary['stop_reason']=='infrastructure_failure','source_of_completion':'Pinned original per-attempt state/ledger, not summary existence','attempt_state_custody':attempt_custody,'retained_accounting':accounting,'timing_selection_replay':selection,'exact_outcome_linkage':linkage,'public_candidate_export_selection_boundary':{'basis':selected['basis'],'receipt_identity':selected['identity_sha256'],'independently_derived_completeness':False}}
+     def audit(self):
+         global CURRENT_R
+         CURRENT_R=self.R['commit'];custody=self.custody()
+@@ -1229,7 +1291,7 @@
+ def main():
+     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--repository',required=True);parser.add_argument('--accepted-pins',required=True);parser.add_argument('--accepted-pins-sha256',required=True)
+     args=parser.parse_args();path=pathlib.Path(args.accepted_pins)
+-    require(path.is_absolute() and path.is_file() and not path.is_symlink() and path.stat().st_size<=8*1024*1024,'Bounded accepted local pin file required')
++    require(path.is_absolute() and '..' not in path.parts and path.is_file() and all(not x.is_symlink() for x in (path,*path.parents)) and path.stat().st_size<=8*1024*1024,'Bounded accepted local pin file without symlink components required')
+     raw=path.read_bytes();require(sha(raw)==args.accepted_pins_sha256,'Explicit parent-accepted pin file SHA differs')
+     pins=strict_json(raw);require(pins['format']=='swdb.lanl17-selected-admission-pins.v2','Accepted pins format differs');receipt_seal(pins,pins['identity_sha256'])
+     require(pins['parent_approved_actual_inputs'] is True and pins['fixtures_or_replays_allowed'] is False,'Actual parent-approved evidence only')
