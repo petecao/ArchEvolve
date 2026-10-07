@@ -354,3 +354,14 @@ calibration lineage remain available in the fresh description. Context mismatch
 makes service costs unknown. Exact source primitive/type/order evidence is
 required before consuming ordinary store, integer-add or integer-CAS costs;
 collapsed update kinds do not prove that evidence.
+
+Before any application timing, additional outcome-free counts may be frozen with
+`--scope-characterization <id>` (repeat for g16/g17 BFS/BC). The resulting target
+pins every exact ID/hash as a typed dependency and accepts only that allowlist.
+Every service's compiler/runtime/thread compatibility is checked against every
+member; a mismatch keeps the shared parameter unknown. Source rates, footprint
+and CAS policy remain fixed across development and holdout. This permits one
+unchanged target hash while retaining exact counted-source admission. New or
+unmatched allocator length/lifetime bins stay unknown; any needed independent
+exact-bin measurements must precede the common model freeze and application
+outcomes. No silent interpolation or post-timing recalibration is allowed.

@@ -126,3 +126,20 @@ def test_pinned_service_context_cannot_cover_another_characterization(records,tm
     overhead=data['regions'][0]['overheads'][0]
     assert data['seconds'] is None and overhead['inputs']['covered_calls']==[]
     assert 'service_scope.characterization_sha256' in overhead['missing']
+
+
+def test_exact_characterization_allowlist_admits_only_named_counted_scope(records,tmp_path):
+    from conftest import make_records
+    clock_case(records,tmp_path)
+    char=records.read('workload_characterizations/fixture.counts.yaml')
+    allowed=[{'id':'fixture.counts','sha256':digest(char)},{'id':'fixture.outcome.free.holdout','sha256':'f'*64}]
+    def isolated(name,selector):
+        directory=tmp_path/name;directory.mkdir()
+        return clock_case(make_records(directory),directory,extra_selector=selector)
+    known=isolated('allowed',{'characterization_allowlist':allowed})
+    assert known['seconds']==2.4
+    unmatched=isolated('unmatched',{'characterization_allowlist':[{'id':'other','sha256':digest(char)}]})
+    assert unmatched['seconds'] is None
+    assert 'service_scope.characterization_allowlist' in unmatched['regions'][0]['overheads'][0]['missing']
+    ambiguous=isolated('ambiguous',{'characterization_allowlist':allowed,'characterization_sha256':digest(char)})
+    assert ambiguous['seconds'] is None

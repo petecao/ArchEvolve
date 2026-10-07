@@ -69,13 +69,19 @@ def _compatibility(target, char, calibration, service, fixture):
 
 
 
+
+def _scope_compatibility(target,char,calibration,service,fixture,scopes):
+    values=[{'characterization':c['id'],'missing':_compatibility(target,c,calibration,service,fixture)} for c in scopes]
+    missing=[reason if len(scopes)==1 else 'scope.'+row['characterization']+'.'+reason for row in values for reason in row['missing']]
+    return missing,values
+
 MEMORY_KINDS={'read':'read','write':'write','add-update':'add-update',
     'cas-success':'compare-and-swap','cas-failure':'compare-and-swap'}
 CAS_POLICY='max_constructed_success_failure_median'
 MEMORY_MODELS={'streaming_bandwidth','requests_in_flight_latency','cache_fit','memory_service_scenario'}
 
 
-def _memory_binding(args,target,char,cells):
+def _memory_binding(args,target,char,cells,scopes):
     footprint=args.memory_footprint_bytes
     if type(footprint) is not int or not 64<=footprint<=8388608 or footprint&(footprint-1):
         raise Failure('memory binding requires an explicit memory footprint power-of-two bin from64B to8MiB')
@@ -93,13 +99,13 @@ def _memory_binding(args,target,char,cells):
         if not small and size!=footprint:continue
         key=(op,width)
         if key in selected:raise Failure('ambiguous duplicate constructed memory cell')
-        missing=_compatibility(target,char,calibration,service,args.fixture)
+        missing,scope_rows=_scope_compatibility(target,char,calibration,service,args.fixture,scopes)
         name='memory_'+str(len(parameters));parameter=copy.deepcopy(service['parameter'])
         parameter['source']+='; context binding '+char['id']+'; constructed request transfer is inferred'
         if missing:parameter.update(value=None,basis='unknown')
         parameters[name]=parameter
         selected[key]={'parameter':name,'calibration':calibration['id'],'service':service['id'],'footprint_bytes':size,'regime':regime}
-        compatibility.append({'calibration':calibration['id'],'service':service['id'],'parameter':name,'missing':missing})
+        compatibility.append({'calibration':calibration['id'],'service':service['id'],'parameter':name,'missing':missing,'scopes':scope_rows})
     if not selected:raise Failure('selected memory footprint has no measured/reported cells')
     requests=[]
     for (op,width),cell in sorted(selected.items()):
@@ -136,8 +142,11 @@ def bind(args):
     store=Store(args.records)
     target=_load(store,args.target_description,'target_description')
     char=_load(store,args.characterization,'workload_characterization')
+    scope_ids=list(dict.fromkeys([args.characterization,*args.scope_characterization]))
+    scopes=[char if identifier==args.characterization else _load(store,identifier,'workload_characterization') for identifier in scope_ids]
+    allowlist=[{'id':c['id'],'sha256':artifacts.digest(c)} for c in scopes]
     if target.get('estimator_variant')!='team':raise Failure('CPU service binding requires team target description')
-    require_team_safe(store,target,char,*args.calibration,command='bind-cpu-services')
+    require_team_safe(store,target,*scopes,*args.calibration,command='bind-cpu-services')
     result=copy.deepcopy(target)
     result.update(id=args.id,created=writer.today(),updated=writer.today())
     parameters={}; selectors={}; proofs=[]; rows=[]; memory_cells=[]
@@ -147,7 +156,7 @@ def bind(args):
         if problems:raise Failure('invalid service calibration: '+str(problems[0]))
         proofs.append({'id':identifier,'sha256':artifacts.digest(calibration)})
         for service in calibration['services']:
-            missing=_compatibility(target,char,calibration,service,args.fixture)
+            missing,scope_rows=_scope_compatibility(target,char,calibration,service,args.fixture,scopes)
             scope=service.get('scope',{})
             if service.get('unit')=='seconds/request':
                 memory_cells.append((calibration,service));continue
@@ -160,7 +169,7 @@ def bind(args):
             value['source']+='; context binding '+char['id']+'; constructed work transfer, no physical issue-latency claim'
             if missing:value.update(value=None,basis='unknown')
             parameters[param]=value
-            rows.append({'calibration':identifier,'service':service['id'],'parameter':param,'missing':missing})
+            rows.append({'calibration':identifier,'service':service['id'],'parameter':param,'missing':missing,'scopes':scope_rows})
             if scope.get('allocator_regime'):
                 if abi not in ALLOCATOR_FIELDS or type(scope.get('size_bytes')) is not int:
                     raise Failure('unsupported allocator service ABI/size')
@@ -177,15 +186,20 @@ def bind(args):
     removed=[]
     if memory_cells:
         if target.get('extensions',{}).get('cpu_services_binding'):raise Failure('bind memory services from an unbound immutable base description')
-        memory,memory_rows=_memory_binding(args,target,char,memory_cells);rows.extend(memory_rows)
+        memory,memory_rows=_memory_binding(args,target,char,memory_cells,scopes);rows.extend(memory_rows)
         removed=[m['model'] for m in result['mechanisms'] if m['model'] in MEMORY_MODELS]
         result['mechanisms']=[m for m in result['mechanisms'] if m['model'] not in MEMORY_MODELS]
     if selectors:result['mechanisms'].append({'model':'native_service_costs','accounting':'additive_overhead',
         'selector':{'domain':'host','worker_scope':'serial_T1','characterization_sha256':artifacts.digest(char),'calls':list(selectors.values())},'parameters':parameters})
     if memory_cells:result['mechanisms'].append(memory)
-    result['calibration_sources']=list(dict.fromkeys([*target['calibration_sources'],*args.calibration,char['id']]))
+    if len(scopes)>1:
+        for mechanism in result['mechanisms']:
+            if mechanism['model'] in ('native_service_costs','memory_service_scenario'):
+                mechanism['selector'].pop('characterization_sha256',None)
+                mechanism['selector']['characterization_allowlist']=allowlist
+    result['calibration_sources']=list(dict.fromkeys([*target['calibration_sources'],*args.calibration,*scope_ids]))
     evidence={'format':'swdb.cpu-services-binding.v1','base':{'id':target['id'],'sha256':artifacts.digest(target)},
-        'characterization':{'id':char['id'],'sha256':artifacts.digest(char)},'calibrations':proofs,'compatibility':rows,
+        'characterization':{'id':char['id'],'sha256':artifacts.digest(char)},'characterization_allowlist':allowlist,'calibrations':proofs,'compatibility':rows,
         'models':[m['model'] for m in result['mechanisms'] if m['model'] in ('native_service_costs','memory_service_scenario')],
         'memory_selection':{'footprint_bytes':args.memory_footprint_bytes,'cas_policy':args.memory_cas_policy,'superseded_memory_models':removed} if memory_cells else None,
         'model':'native_service_costs','transfer_basis':'inferred','timings_rerun':False}
@@ -200,6 +214,7 @@ def main():
     parser.add_argument('--records',type=Path,default=paths.RECORDS)
     parser.add_argument('--target-description',required=True)
     parser.add_argument('--characterization',required=True)
+    parser.add_argument('--scope-characterization',action='append',default=[],help='additional immutable outcome-free count scope to freeze before any application timing')
     parser.add_argument('--calibration',action='append',required=True)
     parser.add_argument('--id',required=True)
     parser.add_argument('--fixture',action='store_true')

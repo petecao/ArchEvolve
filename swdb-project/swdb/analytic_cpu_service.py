@@ -3,6 +3,7 @@
 Costs represent scoped independent constructed work, never physical issue latency.
 """
 import math
+import re
 
 from swdb.analytic_models import bound, parameter
 
@@ -15,14 +16,26 @@ def _serial(region, context):
     return []
 
 
+
+def _scope_missing(selector,context,prefix,*,required=False):
+    allowed=selector.get('characterization_allowlist')
+    if allowed is not None:
+        valid=isinstance(allowed,list) and bool(allowed) and all(isinstance(row,dict) and set(row)=={'id','sha256'} and isinstance(row['id'],str) and bool(row['id']) and re.fullmatch('[0-9a-f]{64}',str(row['sha256'])) for row in allowed)
+        if valid:valid=len({row['id'] for row in allowed})==len(allowed) and len({row['sha256'] for row in allowed})==len(allowed)
+        if not valid or 'characterization_sha256' in selector or not isinstance(context,dict) or {'id':context.get('characterization_id'),'sha256':context.get('characterization_sha256')} not in allowed:
+            return [prefix+'.characterization_allowlist']
+        return []
+    pin=selector.get('characterization_sha256')
+    if (required or pin is not None) and (not pin or not isinstance(context,dict) or context.get('characterization_sha256')!=pin):
+        return [prefix+'.characterization_sha256']
+    return []
+
 def native_service_costs(region, mechanism, *, context=None):
     selector = mechanism.get('selector', {})
-    missing = ['selector.' + key for key in sorted(set(selector) - {'domain', 'worker_scope', 'calls', 'characterization_sha256'})]
+    missing = ['selector.' + key for key in sorted(set(selector) - {'domain', 'worker_scope', 'calls', 'characterization_sha256','characterization_allowlist'})]
     if selector.get('domain') != 'host' or selector.get('worker_scope') != 'serial_T1':
         missing.append('selector.host_serial_T1')
-    pin=selector.get('characterization_sha256')
-    if pin is not None and (not isinstance(context,dict) or context.get('characterization_sha256')!=pin):
-        missing.append('service_scope.characterization_sha256')
+    missing.extend(_scope_missing(selector,context,'service_scope'))
     calls = selector.get('calls')
     if not isinstance(calls, list) or not calls:
         missing.append('selector.calls')
@@ -127,14 +140,12 @@ def _shape_cost(region,call,selection,parameters,mechanism):
 
 def memory_service_scenario(region, mechanism, *, context=None):
     selector=mechanism.get('selector',{})
-    allowed={'domain','worker_scope','scenario','transfer_basis','object_scope','characterization_sha256','requests'}
+    allowed={'domain','worker_scope','scenario','transfer_basis','object_scope','characterization_sha256','characterization_allowlist','requests'}
     missing=['selector.'+k for k in sorted(set(selector)-allowed)]
     required={'domain':'host','worker_scope':'serial_T1','scenario':'resident_serial_constructed_requests',
         'transfer_basis':'inferred','object_scope':'logical_requests_and_bounded_referent_views'}
     if any(selector.get(k)!=v for k,v in required.items()):missing.append('memory_scenario.explicit_supported_transfer')
-    pin=selector.get('characterization_sha256')
-    if not pin or not isinstance(context,dict) or context.get('characterization_sha256')!=pin:
-        missing.append('memory_scenario.characterization_sha256')
+    missing.extend(_scope_missing(selector,context,'memory_scenario',required=True))
     rates={}
     selected=selector.get('requests')
     if not isinstance(selected,list):selected=[];missing.append('selector.requests')
