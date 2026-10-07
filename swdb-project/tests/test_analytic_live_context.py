@@ -213,3 +213,60 @@ def test_allocator_interposer_environment_scope_retains_explicit_absence(records
     assert runtime['environment']['LD_PRELOAD'] is None
     assert 'LD_AUDIT' in runtime['environment_scope']['exact_variables']
     assert runtime['environment_scope']['absence_semantics']=='null_or_absent_is_unset_under_declared_scope'
+
+
+def test_repeated_region_routes_all_accesses_to_one_live_union_and_retains_calls(records,tmp_path,llvm22):
+    records.add_stub()
+    source=tmp_path/'repeated.cpp'
+    source.write_text("""// Created: 2026-10-06 ET. Repeated source-region contract fixture only.
+#include <cstdlib>
+extern "C" void __swdb_begin();
+extern "C" void __swdb_end();
+extern "C" __attribute__((noinline)) int observe(const int *p) {
+  int total=0;
+  for(int i=0;i<3;++i){void *temporary=std::malloc(4);std::free(temporary);total+=p[i];}
+  for(int j=0;j<5;++j){void *temporary=std::malloc(4);std::free(temporary);total+=p[j*16];}
+  return total;
+}
+int main(){int *p=(int*)std::calloc(80,sizeof(int));if(!p)return 2;
+  __swdb_begin();int result=observe(p);__swdb_end();std::free(p);return result;}
+""")
+    mapping=tmp_path/'regions.json'
+    mapping.write_text(json.dumps({'regions':[{'id':'fixture.shared','function':'observe','line_start':1,'line_end':100}]}))
+    result=run_swdb('characterize','--records',records.path,'--source',source,
+        '--implementation','stub-impl','--input','tiny-sym','--function','observe',
+        '--region-map',mapping,'--roi','fixture.repeated.v1','--id','fixture.repeated',
+        '--object-scopes','--llvm-bin',llvm22,'--output',tmp_path/'counted','--fixture','--format','json')
+    assert result.returncode==0,result.stdout+result.stderr
+    data=json.loads(result.stdout)
+    assert sum(loop['region']=='fixture.shared' for loop in data['static_analysis']['loops'])==2
+    region=next(r for r in data['regions'] if r['id']=='fixture.shared')
+    memory=region['memory_service_counts']
+    assert sum(a['element_count']['value'] for a in region['access_patterns'])==8
+    assert memory['requests_by_update_kind']['read']==[{'element_bytes':4,'requests':{'value':8,'basis':'measured','scope':'per_run'}}]
+    assert memory['useful_bytes']['value']==32
+    assert memory['object_scope_counts']['full_allocation_requests']['value']==8
+    assert memory['object_scope_counts']['bounded_view_requests']['value']==0
+    assert memory['object_scope_counts']['unresolved_requests']['value']==0
+    assert memory['logical_first_read_pages']['value']==1
+    assert memory['lifetime_line_union']['value']==5
+    assert memory['pre_roi_allocation_pages']['value']==1
+    assert region['footprint_bytes']['value']==28
+    assert memory['state']=='known' and memory['missing']==[]
+    calls=region['call_shape_counts']['calls']
+    allocations=[call for call in calls if call['event']=='allocation']
+    releases=[call for call in calls if call['name']=='free']
+    assert sorted(call['execution_count']['value'] for call in allocations)==[3,5]
+    assert sum(call['execution_count']['value'] for call in releases)==8
+    assert sum(bin['execution_count']['value'] for call in allocations for bin in call['known_length_bins'])==8
+    raw=json.loads((tmp_path/'counted/counts.json').read_text())
+    static=json.loads((tmp_path/'counted/source.json').read_text())
+    lowered=[r['index'] for r in static['regions'] if r['id']=='fixture.shared']
+    assert len(lowered)==2
+    # The source pass routes every access to the first canonical ID before the
+    # live observer computes its exact union; these are not per-loop union totals.
+    assert raw['memory_service_counts'][str(lowered[0])]['requests'][0]['requests']==8
+    assert str(lowered[1]) not in raw['memory_service_counts']
+    assert str(lowered[1]) not in raw['footprints']
+    assert all(key not in json.dumps(raw) for key in ('allocation_base','address_sequence','decoded_rows'))
+    checked=records.validate();assert checked.returncode==0,checked.stdout+checked.stderr

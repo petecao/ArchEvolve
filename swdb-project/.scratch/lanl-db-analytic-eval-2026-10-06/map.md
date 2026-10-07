@@ -30,7 +30,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 
 | # | Ticket | Status | Blocked by | Time |
 |---|---|---|---|---|
-| 09 | [DX100 estimate](issues/09-dx100-estimate.md) | claimed | 05 | 1.5–2 days |
+| 09 | [DX100 estimate](issues/09-dx100-estimate.md) | resolved | 05 | 1.5–2 days |
 | 10 | [The estimation role fills unknowns](issues/10-estimation-role.md) | ready-for-agent | 09 | 4–6 h |
 | 11 | [CPU error check and paired estimates in ArchEvolve mode](issues/11-cpu-error-check-and-paired-estimates.md) | ready-for-agent | 05, 06, 07 | 4–6 h |
 | 12 | [ArchEvolve-mode DX100 evaluation without gem5](issues/12-archevolve-dx100-evaluation.md) | ready-for-agent | 06, 09 | 1 day |
@@ -105,3 +105,16 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
   conflicts, and validate with 579 records. The [compact receipt](evidence/08-reported-input-imports-20261006.json)
   separates original import and final-source hashes; final 15 public tests and
   canonical 584-record validation passed. No native unknown cost is promoted.
+
+
+- 2026-10-06 21:15 ET: [ticket 09](issues/09-dx100-estimate.md#answer) resolved:
+  generic live command/object/window counting and four DX mechanism compositions,
+  source/config-only functional target, and the [actual five-trial T4 candidate report](evidence/09-functional-application-report-mbit10-20261006-a2.json).
+  The [closeout proof](evidence/09-functional-estimate-closeout-20261006-a2.json) retains
+  26 observed regions, all 284 static IDs/153 unmapped loops, exact setup and source
+  hashes, nine ranked-by-dependency unknown references and honest null numerical
+  impacts. Missing host memory/overlap/runtime costs keep total/ratio unknown;
+  no hardware timing or gem5 agreement is claimed. Frozen bundle `3ad3ce75…`,
+  final 22-case public gate, native static SHA support and 617-record validation
+  passed; all 615 original canonical YAML bytes are preserved. Stable seams unblock
+  10/12/16, with 16 prioritized for fresh blind campaign preparation.
