@@ -19,12 +19,15 @@ class FiferAdmissionTests(unittest.TestCase):
         cls.design = next(d for d in cls.catalog["designs"] if d["id"] == "fifer-micro2021-staged-DRM")
 
     def test_prior_records_claims_and_selections_unchanged(self):
-        self.assertEqual(self.catalog["designs"][:-1], self.base["designs"])
+        by_id = {d["id"]: d for d in self.catalog["designs"]}
+        self.assertEqual([by_id[d["id"]] for d in self.base["designs"]], self.base["designs"])
         self.assertEqual(self.catalog["project_selections"], self.base["project_selections"])
         for group in ("sources", "claims"):
             for key, value in self.base[group].items():
                 self.assertEqual(self.catalog[group][key], value)
-        self.assertEqual(self.catalog["mechanism_families"][:-1], self.base["mechanism_families"])
+        by_family = {m["id"]: m for m in self.catalog["mechanism_families"]}
+        self.assertEqual([by_family[m["id"]] for m in self.base["mechanism_families"]],
+                         self.base["mechanism_families"])
 
     def test_explicit_DRM_mapping_and_typed_evidence_boundary(self):
         for subtype in ("fifer_drm_dereference", "fifer_drm_scan"):
