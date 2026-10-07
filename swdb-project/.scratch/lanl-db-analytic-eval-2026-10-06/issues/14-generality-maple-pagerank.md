@@ -1,7 +1,7 @@
 # 14 — Generality: MAPLE and PageRank
 
 Created: 2026-10-06
-Updated: 2026-10-06 ET
+Updated: 2026-10-07 ET
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 05, 09, 10
@@ -23,3 +23,5 @@ Updated: 2026-10-06 ET. Tested source/count prerequisites are ready; ticket rema
 Parent-owned six fresh count routes and all-nine admission choices: `evidence/14-nine-pair-runbook-20261006.md`, with `14-count-pagerank-20261006.sh` and `14-count-bfs-bc-20261006.sh`. MAPLE report/protocol requests are explicitly prepared, not frozen: `evidence/14-prepared-maple-report-requests-20261006.json`. Nominal byte-capacity conversions are labeled inferred; GB is retained literally with byte capacity unknown. Final estimates must share a fresh final DX BFS bundle after generic 11/17 settles. PR gets no BF/BC CPU service or error-envelope transfer.
 
 Final source-prerequisite gate after integration `208a0a4` (then metadata-only `6539640` consumed): two MAPLE public cases passed (2.22 s), all 633 canonical records valid. Prior canonical/library/application/generic source bytes are preserved; complete Python bundle remains `fec496c6…`. Sealed custody and exact source/count-route pins: `evidence/14-source-prerequisite-proof-20261006.json`. This is source readiness, not final nine-report acceptance.
+
+Current preparation (2026-10-07 ET): the six original fresh count cases and ten-record closure are complete and immutable; local strict selector/trial-scope replay is recorded in `evidence/14-actual-count-export-local-replay-20261007-a1.json`. Parent-selected administrative metadata limits and their exact custody/controls are archived in `evidence/14-selected-metadata-caps-runbook-20261007-a3.md` and `evidence/14-selected-metadata-caps-custody-20261007-a3.json`. All 185 F6 modules, canonical/library/app bytes and the original PR request/checker are preserved. Actual accepted seven-record CPU model export, real PR unknown-transfer replay and nine final frozen reports remain pending; acceptance boxes stay open.
