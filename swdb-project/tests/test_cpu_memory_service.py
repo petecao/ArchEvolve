@@ -14,7 +14,7 @@ def memory_case(records,tmp_path,*,missing_write=False,primitive_case=None,extra
     char=records.read('workload_characterizations/fixture.counts.yaml');char['id']='fixture.memory.counts'
     fact=lambda n:{'value':n,'basis':'reported' if n is not None else 'unknown','scope':'per_run'}
     counts={k:[] for k in ('read','write','add-update','compare-and-swap','min-max-update','arbitrary')}
-    read_kind='add-update' if primitive_case in ('floating_add','integer_add','mixed_add') else 'read'
+    read_kind='add-update' if primitive_case in ('floating_add','integer_add','mixed_add','volatile_integer_add') else 'read'
     counts[read_kind]=[{'element_bytes':8,'requests':fact(3)}]
     counts['write']=[{'element_bytes':4,'requests':fact(2)}]
     char['regions'][0]['memory_service_counts']={'format':'swdb.memory-service-counts.v1','scope':'per_run',
@@ -38,11 +38,12 @@ def memory_case(records,tmp_path,*,missing_write=False,primitive_case=None,extra
             'primitive_semantics':primitive(opcode,width*8)})
     if primitive_case=='absent':
         for access in accesses:access.pop('primitive_semantics')
-    elif primitive_case in ('floating_add','integer_add','mixed_add'):
+    elif primitive_case in ('floating_add','integer_add','mixed_add','volatile_integer_add'):
         accesses[0]['read_write']=True
         accesses[0]['primitive_semantics'].update(opcode='atomicrmw',value_kind='floating' if primitive_case=='floating_add' else 'integer',
             update_opcode='fadd' if primitive_case=='floating_add' else 'add',atomic_ordering='seq_cst')
-    elif primitive_case=='exchange':accesses[1]['primitive_semantics'].update(opcode='atomicrmw',update_opcode='xchg',atomic_ordering='seq_cst')
+    if primitive_case=='volatile_integer_add':accesses[0]['primitive_semantics']['volatile']=True
+    if primitive_case=='exchange':accesses[1]['primitive_semantics'].update(opcode='atomicrmw',update_opcode='xchg',atomic_ordering='seq_cst')
     elif primitive_case=='vector':accesses[0]['primitive_semantics']['vector']=True;accesses[0]['ir_lanes']=4
     elif primitive_case=='count_gap':accesses[0]['element_count']['value']=2
     if primitive_case=='mixed_add':
@@ -112,7 +113,7 @@ def test_missing_executed_memory_cell_keeps_compute_bound_and_null_total(records
     assert next(b for b in bounds if b['model']=='compute_throughput')['seconds']==2
 
 
-@pytest.mark.parametrize('primitive_case',['absent','floating_add','exchange','vector','count_gap'])
+@pytest.mark.parametrize('primitive_case',['absent','floating_add','exchange','vector','count_gap','volatile_integer_add'])
 def test_unproved_or_different_primitive_never_consumes_integer_constructed_cost(records,tmp_path,primitive_case):
     data=memory_case(records,tmp_path,primitive_case=primitive_case)
     model=next(b for b in data['regions'][0]['bounds'] if b['model']=='memory_service_scenario')

@@ -225,7 +225,7 @@ def _primitive_supported(access,construction):
     if profile in ('ordinary_read','ordinary_write'):
         return op==('load' if profile=='ordinary_read' else 'store') and order=='not_atomic' and p.get('failure_ordering') is None and p.get('weak') is None and access.get('read_write') is False
     if profile=='floating_monotonic_add':return width==8 and p.get('value_kind')=='floating' and access.get('read_write') is True and op=='atomicrmw' and p.get('update_opcode')=='fadd' and order=='monotonic' and p.get('failure_ordering') is None and p.get('weak') is None and p.get('volatile') is False
-    if p.get('value_kind')!='integer' or access.get('read_write') is not True:return False
+    if p.get('value_kind')!='integer' or access.get('read_write') is not True or p.get('volatile') is not False:return False
     if profile=='integer_seq_cst_add':return op=='atomicrmw' and p.get('update_opcode')=='add' and order=='seq_cst' and p.get('failure_ordering') is None and p.get('weak') is None
     if profile=='integer_strong_seq_cst_compare_exchange':return op=='cmpxchg' and p.get('update_opcode') is None and order=='seq_cst' and p.get('failure_ordering')=='seq_cst' and p.get('weak') is False
     return False
@@ -312,6 +312,6 @@ def memory_service_scenario(region, mechanism, *, context=None):
          'calibration_admission':selector.get('calibration_admission',{})},sorted(set(missing)),
         ['Residency/dependence transfer from constructed cells is explicitly inferred; this is a conditional service scenario.',
          'Logical source requests and bounded referent views do not establish full allocation identity, physical cache misses, first-touch faults or page residency.',
-         'Exact scalar opcode/type/order/strong-CAS proof and exact source-site partitions are required; floating64 monotonic fadd needs its separate construction. Collapsed kinds do not admit other floating RMW, atomic exchange, weak CAS or vectors. Compiler retention/locality transfer remains inferred.',
+         'Exact scalar opcode/type/order/strong-CAS proof and exact source-site partitions are required; constructed atomic profiles require nonvolatile source atomics; floating64 monotonic fadd needs its separate construction. Collapsed kinds do not admit other floating RMW, atomic exchange, weak CAS or vectors. Compiler retention/locality transfer remains inferred.',
          'Total-cell resource costs include retained driver work and compose as a maximum with counted compute; their application transfer is inferred, not a proven upper bound. Paired-subtraction inputs remain separately pinned.',
          'This mechanism supplies no opaque-call coverage or separate first-touch service. Unsupported executed update-kind/width cells remain unknown.'])
