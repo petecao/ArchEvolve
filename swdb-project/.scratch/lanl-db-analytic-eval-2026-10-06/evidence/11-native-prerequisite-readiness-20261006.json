@@ -1,0 +1,809 @@
+{
+  "format": "swdb.cpu-native-prerequisite-readiness.v1",
+  "created": "2026-10-06 ET",
+  "source_commit": "5bff7c63f43e45bada200bda808720641aacd002",
+  "method": "Read immutable full canonical records through swdb.access; enumerate each of five trial inventories, positive opaque callees and exact per-site bulk/allocator shape bins. Primitive-class totals are active static-site/trial occurrences, not dynamic request totals.",
+  "scope": "Outcome-free registered BFS/BC g16/g17 T1 original advancing-source five-call collector. No application timing executed or consumed.",
+  "admitted_bulk_resources": [
+    {
+      "id": "mbit10.cpu.lanl20261006.resource.bulk-total.a1",
+      "sha256": "cd4544668956e6d0b135cd08515ddcbe5e73b6ca0989e78639f29e7361a82654",
+      "cells": 79
+    },
+    {
+      "id": "mbit10.cpu.lanl20261006.resource.bulk-total.a2",
+      "sha256": "d684af9ed2486e9a6854fb66dafd9c0223e82f7cadb78df6adceb137edf079a0",
+      "cells": 67
+    }
+  ],
+  "admitted_allocator": {
+    "id": "mbit10.cpu.lanl20261006.service.allocator.a1",
+    "sha256": "7efd40f960ea01da9348d4fc614a73e07c9694eb916a250a2497e63b64b3a5eb"
+  },
+  "pending_prerequisites": [
+    "legal serialized T1 OpenMP independently counted/timed cells",
+    "exact extra allocator sizes 16384/466112/524284/1048568",
+    "separate floating64 monotonic atomic fadd resource"
+  ],
+  "readiness": "structural inventories covered by admitted or preregistered classes; numerical completeness and application agreement not established",
+  "limits": [
+    "View/unresolved sums are region/trial diagnostics; they are not whole-call unions or physical allocation/page/residency proof.",
+    "No wildcard OpenMP cost is admitted: exact static ABI projection, legal profile, context and all required measured parameters remain mandatory.",
+    "Non-atomic ordinary loads/stores retain exact width/opcode; immediate arithmetic producers do not establish atomic RMW.",
+    "BC floating fadd is never charged from integer seq_cst add; unsupported order/type/vector/weak semantics remain null.",
+    "All short-driver bulk paired residual parameters remain null; separate gross resource rates have inferred constructed-work scope.",
+    "Known full-call estimates, a frozen development width and unchanged prospective holdout are still required."
+  ],
+  "characterizations": [
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "sha256": "535d43719d2e9269dc557e900886c625b80c5aa686e7682861a4f6d045e143bc",
+      "trials": 5,
+      "opaque_event_totals_by_name": {
+        "_ZNSt6chrono3_V212system_clock3nowEv": 94,
+        "_ZdaPv": 39,
+        "_Znam": 44,
+        "__kmpc_dispatch_deinit": 13,
+        "__kmpc_dispatch_init_4": 13,
+        "__kmpc_dispatch_next_4": 26,
+        "__kmpc_end_reduce_nowait": 32,
+        "__kmpc_for_static_fini": 39,
+        "__kmpc_for_static_init_4": 15,
+        "__kmpc_for_static_init_8": 24,
+        "__kmpc_fork_call": 52,
+        "__kmpc_reduce_nowait": 32,
+        "llvm.memcpy.p0.p0.i64": 47,
+        "llvm.memmove.p0.p0.i64": 16
+      },
+      "pending_extra_allocator_bin_event_totals": {},
+      "unsupported_opaque_names": [],
+      "uncovered_shape_facts": [],
+      "bounded_view_request_diagnostic_sum": 162,
+      "unresolved_request_diagnostic_sum": 0,
+      "active_site_trial_primitive_classes": [
+        {
+          "opcode": "atomicrmw",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "add",
+          "atomic_ordering": "seq_cst",
+          "active_site_trial_occurrences": 10
+        },
+        {
+          "opcode": "cmpxchg",
+          "value_kind": "integer",
+          "element_bytes": 4,
+          "update_opcode": null,
+          "atomic_ordering": "seq_cst",
+          "active_site_trial_occurrences": 5
+        },
+        {
+          "opcode": "cmpxchg",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "seq_cst",
+          "active_site_trial_occurrences": 5
+        },
+        {
+          "opcode": "load",
+          "value_kind": "integer",
+          "element_bytes": 1,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 15
+        },
+        {
+          "opcode": "load",
+          "value_kind": "integer",
+          "element_bytes": 4,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 277
+        },
+        {
+          "opcode": "load",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 404
+        },
+        {
+          "opcode": "load",
+          "value_kind": "pointer",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 455
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 4,
+          "update_opcode": "sub",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 20
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 4,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 157
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "add",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 40
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "or",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 10
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "sdiv",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 10
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "sub",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 10
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "xor",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 3
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 266
+        },
+        {
+          "opcode": "store",
+          "value_kind": "pointer",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 110
+        }
+      ]
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "sha256": "8561948088366aa18409da1db1f204ac2579cdb8ee90f1a2c76079a96e2eb4fd",
+      "trials": 5,
+      "opaque_event_totals_by_name": {
+        "_ZNSt6chrono3_V212system_clock3nowEv": 30,
+        "_ZdaPv": 30,
+        "_ZdlPv": 22,
+        "_Znam": 35,
+        "_Znwm": 22,
+        "__kmpc_barrier": 64,
+        "__kmpc_dispatch_deinit": 64,
+        "__kmpc_dispatch_init_8": 64,
+        "__kmpc_dispatch_next_8": 128,
+        "__kmpc_end_reduce_nowait": 5,
+        "__kmpc_end_single": 32,
+        "__kmpc_for_static_fini": 30,
+        "__kmpc_for_static_init_4": 10,
+        "__kmpc_for_static_init_8": 20,
+        "__kmpc_fork_call": 72,
+        "__kmpc_reduce_nowait": 5,
+        "__kmpc_single": 32,
+        "llvm.memcpy.p0.p0.i64": 15,
+        "llvm.memmove.p0.p0.i64": 51
+      },
+      "pending_extra_allocator_bin_event_totals": {},
+      "unsupported_opaque_names": [],
+      "uncovered_shape_facts": [],
+      "bounded_view_request_diagnostic_sum": 417,
+      "unresolved_request_diagnostic_sum": 0,
+      "active_site_trial_primitive_classes": [
+        {
+          "opcode": "atomicrmw",
+          "value_kind": "floating",
+          "element_bytes": 8,
+          "update_opcode": "fadd",
+          "atomic_ordering": "monotonic",
+          "active_site_trial_occurrences": 5
+        },
+        {
+          "opcode": "atomicrmw",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "add",
+          "atomic_ordering": "seq_cst",
+          "active_site_trial_occurrences": 10
+        },
+        {
+          "opcode": "cmpxchg",
+          "value_kind": "integer",
+          "element_bytes": 4,
+          "update_opcode": null,
+          "atomic_ordering": "seq_cst",
+          "active_site_trial_occurrences": 5
+        },
+        {
+          "opcode": "cmpxchg",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "seq_cst",
+          "active_site_trial_occurrences": 5
+        },
+        {
+          "opcode": "load",
+          "value_kind": "floating",
+          "element_bytes": 4,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 55
+        },
+        {
+          "opcode": "load",
+          "value_kind": "floating",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 20
+        },
+        {
+          "opcode": "load",
+          "value_kind": "integer",
+          "element_bytes": 1,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 15
+        },
+        {
+          "opcode": "load",
+          "value_kind": "integer",
+          "element_bytes": 4,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 337
+        },
+        {
+          "opcode": "load",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 439
+        },
+        {
+          "opcode": "load",
+          "value_kind": "pointer",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 773
+        },
+        {
+          "opcode": "store",
+          "value_kind": "floating",
+          "element_bytes": 4,
+          "update_opcode": "fadd",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 5
+        },
+        {
+          "opcode": "store",
+          "value_kind": "floating",
+          "element_bytes": 4,
+          "update_opcode": "fdiv",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 5
+        },
+        {
+          "opcode": "store",
+          "value_kind": "floating",
+          "element_bytes": 4,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 40
+        },
+        {
+          "opcode": "store",
+          "value_kind": "floating",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 15
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 4,
+          "update_opcode": "add",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 10
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 4,
+          "update_opcode": "sub",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 10
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 4,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 132
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "add",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 15
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "or",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 5
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "sdiv",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 25
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "sub",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 25
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "xor",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 3
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 291
+        },
+        {
+          "opcode": "store",
+          "value_kind": "pointer",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 223
+        }
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "sha256": "49b5c58f3551b065c91c49c1fb09f54de2d2d71f08b6a4e1eedf3aad5ec415c5",
+      "trials": 5,
+      "opaque_event_totals_by_name": {
+        "_ZNSt6chrono3_V212system_clock3nowEv": 96,
+        "_ZdaPv": 41,
+        "_Znam": 46,
+        "__kmpc_dispatch_deinit": 12,
+        "__kmpc_dispatch_init_4": 12,
+        "__kmpc_dispatch_next_4": 24,
+        "__kmpc_end_reduce_nowait": 33,
+        "__kmpc_for_static_fini": 41,
+        "__kmpc_for_static_init_4": 15,
+        "__kmpc_for_static_init_8": 26,
+        "__kmpc_fork_call": 53,
+        "__kmpc_reduce_nowait": 33,
+        "llvm.memcpy.p0.p0.i64": 48,
+        "llvm.memmove.p0.p0.i64": 21
+      },
+      "pending_extra_allocator_bin_event_totals": {
+        "16384": 20,
+        "524284": 15
+      },
+      "unsupported_opaque_names": [],
+      "uncovered_shape_facts": [],
+      "bounded_view_request_diagnostic_sum": 163,
+      "unresolved_request_diagnostic_sum": 0,
+      "active_site_trial_primitive_classes": [
+        {
+          "opcode": "atomicrmw",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "add",
+          "atomic_ordering": "seq_cst",
+          "active_site_trial_occurrences": 12
+        },
+        {
+          "opcode": "cmpxchg",
+          "value_kind": "integer",
+          "element_bytes": 4,
+          "update_opcode": null,
+          "atomic_ordering": "seq_cst",
+          "active_site_trial_occurrences": 5
+        },
+        {
+          "opcode": "cmpxchg",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "seq_cst",
+          "active_site_trial_occurrences": 5
+        },
+        {
+          "opcode": "load",
+          "value_kind": "integer",
+          "element_bytes": 1,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 15
+        },
+        {
+          "opcode": "load",
+          "value_kind": "integer",
+          "element_bytes": 4,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 283
+        },
+        {
+          "opcode": "load",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 408
+        },
+        {
+          "opcode": "load",
+          "value_kind": "pointer",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 462
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 4,
+          "update_opcode": "sub",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 20
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 4,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 153
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "add",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 40
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "or",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 10
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "sdiv",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 10
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "sub",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 10
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "xor",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 3
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 268
+        },
+        {
+          "opcode": "store",
+          "value_kind": "pointer",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 112
+        }
+      ]
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "sha256": "6b8d515b3f38a13bfd302993f8ac5e88bd77615da171c710b4ecd81d058c67db",
+      "trials": 5,
+      "opaque_event_totals_by_name": {
+        "_ZNSt6chrono3_V212system_clock3nowEv": 30,
+        "_ZdaPv": 30,
+        "_ZdlPv": 23,
+        "_Znam": 35,
+        "_Znwm": 23,
+        "__kmpc_barrier": 66,
+        "__kmpc_dispatch_deinit": 66,
+        "__kmpc_dispatch_init_8": 66,
+        "__kmpc_dispatch_next_8": 132,
+        "__kmpc_end_reduce_nowait": 5,
+        "__kmpc_end_single": 33,
+        "__kmpc_for_static_fini": 30,
+        "__kmpc_for_static_init_4": 10,
+        "__kmpc_for_static_init_8": 20,
+        "__kmpc_fork_call": 73,
+        "__kmpc_reduce_nowait": 5,
+        "__kmpc_single": 33,
+        "llvm.memcpy.p0.p0.i64": 15,
+        "llvm.memmove.p0.p0.i64": 67
+      },
+      "pending_extra_allocator_bin_event_totals": {
+        "466112": 10,
+        "524284": 35,
+        "1048568": 10
+      },
+      "unsupported_opaque_names": [],
+      "uncovered_shape_facts": [],
+      "bounded_view_request_diagnostic_sum": 428,
+      "unresolved_request_diagnostic_sum": 0,
+      "active_site_trial_primitive_classes": [
+        {
+          "opcode": "atomicrmw",
+          "value_kind": "floating",
+          "element_bytes": 8,
+          "update_opcode": "fadd",
+          "atomic_ordering": "monotonic",
+          "active_site_trial_occurrences": 5
+        },
+        {
+          "opcode": "atomicrmw",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "add",
+          "atomic_ordering": "seq_cst",
+          "active_site_trial_occurrences": 10
+        },
+        {
+          "opcode": "cmpxchg",
+          "value_kind": "integer",
+          "element_bytes": 4,
+          "update_opcode": null,
+          "atomic_ordering": "seq_cst",
+          "active_site_trial_occurrences": 5
+        },
+        {
+          "opcode": "cmpxchg",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "seq_cst",
+          "active_site_trial_occurrences": 5
+        },
+        {
+          "opcode": "load",
+          "value_kind": "floating",
+          "element_bytes": 4,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 55
+        },
+        {
+          "opcode": "load",
+          "value_kind": "floating",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 20
+        },
+        {
+          "opcode": "load",
+          "value_kind": "integer",
+          "element_bytes": 1,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 15
+        },
+        {
+          "opcode": "load",
+          "value_kind": "integer",
+          "element_bytes": 4,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 343
+        },
+        {
+          "opcode": "load",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 439
+        },
+        {
+          "opcode": "load",
+          "value_kind": "pointer",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 772
+        },
+        {
+          "opcode": "store",
+          "value_kind": "floating",
+          "element_bytes": 4,
+          "update_opcode": "fadd",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 5
+        },
+        {
+          "opcode": "store",
+          "value_kind": "floating",
+          "element_bytes": 4,
+          "update_opcode": "fdiv",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 5
+        },
+        {
+          "opcode": "store",
+          "value_kind": "floating",
+          "element_bytes": 4,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 40
+        },
+        {
+          "opcode": "store",
+          "value_kind": "floating",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 15
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 4,
+          "update_opcode": "add",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 10
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 4,
+          "update_opcode": "sub",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 10
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 4,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 133
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "add",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 15
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "or",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 5
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "sdiv",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 25
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "sub",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 25
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": "xor",
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 3
+        },
+        {
+          "opcode": "store",
+          "value_kind": "integer",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 291
+        },
+        {
+          "opcode": "store",
+          "value_kind": "pointer",
+          "element_bytes": 8,
+          "update_opcode": null,
+          "atomic_ordering": "not_atomic",
+          "active_site_trial_occurrences": 222
+        }
+      ]
+    }
+  ],
+  "identity_sha256": "3bbe9246e76dc2a81b93bcd103752f3e8499f21f4b81946e182456f8c5b40227"
+}
