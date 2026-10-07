@@ -1,0 +1,160 @@
+{
+  "format": "swdb.lanl17-original-index-writer-private-outer-capture-parent-source-review.v1",
+  "observed_utc": "2026-10-07T19:29:25.755006+00:00",
+  "state": "SOURCE_REVIEWED_NOT_RUN_REAL_INPUT_NATIVE_BOOTSTRAP_AND_FULL_ARGV_REVIEW_REQUIRED",
+  "canonical_ensure_ascii": true,
+  "prepared_packet_pins": {
+    "outer_source": {
+      "path": "/private/tmp/lanl17_remote_original_index_writer_private_outer_capture_20261007.py",
+      "bytes": 34658,
+      "sha256": "59c06dd5ea606414827a85d6e27f4aff1bc381827624590b2449415198399544"
+    },
+    "bootstrap_source": {
+      "path": "/private/tmp/lanl17_original_index_writer_outermost_private_bootstrap_20261007.sh",
+      "bytes": 6549,
+      "sha256": "0d1eb650d1bcb1a9f491d5fb790f083e371875ddd20fe0bf1f42d5fce05a9217"
+    },
+    "handoff": {
+      "path": "/private/tmp/lanl17-original-index-writer-private-outer-capture-source-handoff-20261007.md",
+      "bytes": 11699,
+      "sha256": "ef90d5653f473dbe089ca9208e1dee44c6c84c8e078d3bc5b3a34e93d20e17df"
+    },
+    "preparation": {
+      "path": "/private/tmp/lanl17-original-index-writer-private-outer-capture-source-preparation-20261007.json",
+      "bytes": 7504,
+      "sha256": "568c866abc6cff7197d7b487ad59ff6361eb37f259ee8c66bdbbe8ba1f3dd7f5"
+    },
+    "comparison": {
+      "path": "/private/tmp/lanl17-original-index-writer-private-outer-capture-static-source-comparison-20261007.json",
+      "bytes": 7846,
+      "sha256": "87453c4b10b8bdc70d4d4d133a430a3dd79f9ec6d485c4059f7661b4331501f9"
+    }
+  },
+  "unchanged_original_packet_pins": {
+    "original_envelope": {
+      "path": "/private/tmp/lanl17_remote_original_index_writer_privacy_envelope_20261007.py",
+      "bytes": 38790,
+      "sha256": "1ee5ffbdf1ef322cfd5bfec4b6e402c29d23c776e855f01d25208ebbece0fcfc"
+    },
+    "original_handoff": {
+      "path": "/private/tmp/lanl17-original-index-writer-privacy-envelope-source-handoff-20261007.md",
+      "bytes": 8850,
+      "sha256": "3436128bf534b97a8d3970cc10cdd2d8d3b7a207eaf8d1b45a6f05948bcaff89"
+    },
+    "original_preparation": {
+      "path": "/private/tmp/lanl17-original-index-writer-privacy-envelope-source-preparation-20261007.json",
+      "bytes": 6763,
+      "sha256": "ec35f405ecd2a7dac3437bc138fcd9eed9a96c65a1da879d40009ea4e4072ab1"
+    },
+    "original_comparison": {
+      "path": "/private/tmp/lanl17-original-index-writer-privacy-envelope-static-source-comparison-20261007.json",
+      "bytes": 7169,
+      "sha256": "dde47bbf5d20f5b4f902e32557f5f218e61c92b218695c22e78bd52f5f381c6a"
+    },
+    "original_parent_review": {
+      "path": "/private/tmp/lanl17-original-index-writer-privacy-envelope-parent-review-20261007.json",
+      "bytes": 7051,
+      "sha256": "70beddcfeb95e3b612476b358021581b288b031321be01b2e95c6dfd4f3c383a"
+    },
+    "existing_linux_receipt": {
+      "path": "/private/tmp/lanl17-cleanup60-helper-linux-actual-20261007-a4.json",
+      "bytes": 6807,
+      "sha256": "08ff2b2d10045b70ddbdf64714f5f7bf1223738ff511ec200c11fba14f2182e6"
+    }
+  },
+  "verified_original_True_seals": {
+    "preparation": "e94cc1d15c7e9f9b4b3fb766063a4329bbe56cadd1f4f14715f9923a6d9866e7",
+    "original_preparation": "d87fb17569b4701ae092067293d8bd8c421296f4236df787255797c364ec62fe",
+    "original_parent_review": "4a1023632f0db9da20860d1ade13efac5503bea6eabd0854a1432208cfb4a443",
+    "existing_linux_receipt": "63ded110c4f3e18e8f105aa54f87db2daef24f74a9fe6cb44300c091ebd6b296"
+  },
+  "independently_verified_function_class_AST_names": [
+    "Refused",
+    "require",
+    "sha",
+    "digest",
+    "exact",
+    "full_hash",
+    "strict_json",
+    "remaining",
+    "checked_path",
+    "stamp",
+    "file_pin",
+    "returned_bytes",
+    "fresh_output",
+    "original_seal",
+    "stop_group",
+    "own_processes",
+    "cleanup_owned",
+    "enable_subreaper",
+    "Interruption",
+    "PrivateParser",
+    "private_path",
+    "pinned_control",
+    "executable_pin",
+    "bundle_pins",
+    "private_file",
+    "stream_pin",
+    "bounded_print"
+  ],
+  "independently_verified_constant_Assign_AST_names": [
+    "C",
+    "F6",
+    "HELPER",
+    "AUDITOR",
+    "COLLECTOR",
+    "CIDS",
+    "MAX_CATALOG_FILE",
+    "MAX_CATALOG_TOTAL",
+    "MAX_METADATA",
+    "MAX_RECORDS",
+    "MAX_DEADLINE",
+    "STAMP_KEYS",
+    "INDEX_WRITER",
+    "INDEX_WRITER_BYTES",
+    "AUTHOR_SHA256",
+    "AUTHOR_BYTES",
+    "CLEANUP_SHA256",
+    "CLEANUP_BYTES",
+    "PROCESSES_SHA256",
+    "STAGED_WRITER",
+    "LOG_FILE_CAP",
+    "RECEIPT_CAP",
+    "SIGNALS",
+    "FORBIDDEN"
+  ],
+  "original_ordered_fourteen_flags_unchanged": true,
+  "complete_parent_packet_read": true,
+  "complete_independent_ticket04_packet_read": true,
+  "concrete_source_blockers_found": [],
+  "source_preservation_and_prospective_staging_reviewed": true,
+  "actual_invocation_reviewed": false,
+  "future_actual_parent_prerequisites": [
+    "real pinned original eight-field request/review/M2 and complete real enclosing18flags plus full56argument shell vector",
+    "exact real M2 source/raw/fourcampaign routes before bootstrap directory creation; never guessed paths",
+    "fresh disjoint bootstrap/writer/inner/outer paths and actual ownership/nonsymlink metadata",
+    "real Linuxmbit10 UID114316761 accountyanruj and native runtime/confinement",
+    "independently pinned native Bash/Python/GNUtimeout/SHA256/bytecount/mkdir binaries before any bootstrap utility executes",
+    "trusted Bash startup/no injected startupfiles and1024-byte ulimit units; no HOME/authentication changes",
+    "exact script/source1ee/source59c/a2/7a/28d/BCC9/current185moduleF6 pins",
+    "outer task supervision/existing owned cleanup and original-output selected-input acceptance"
+  ],
+  "no_new_execution_or_scientific_evidence": true,
+  "review_markdown_pin": {
+    "path": "/private/tmp/lanl17-original-index-writer-private-outer-capture-parent-review-20261007.md",
+    "bytes": 2109,
+    "sha256": "cc60d4cb44cf539830dd72e4f5893d4713e3cf17aad58606bb53aa1360665fa8"
+  },
+  "not_performed": {
+    "target_or_control_import_or_compilation": 0,
+    "main_or_copied_callable_execution": 0,
+    "Bash_invocation_or_syntax_test": 0,
+    "test_or_synthetic_repeat": 0,
+    "actual_request_index_catalog_argv_or_input_construction": 0,
+    "SWDB_Store_or_public_validation": 0,
+    "native_compiler_provider_scientific_execution": 0,
+    "SSH_remote_staging_or_Git_worktree_mutation": 0,
+    "actual14_reader_or_reports": 0
+  },
+  "identity_sha256": "b471b2d9e12fd4d54c3e74b25ed56782c6e319a4df59e271b5ddacde7befa687"
+}
