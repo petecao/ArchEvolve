@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "agreement_report",
-  "description": "Created2026-10-06 ET: immutable research-only prospective D30 evidence.",
+  "description": "Created: 2026-10-06 ET: immutable research-only prospective D30 evidence.",
   "type": "object",
   "properties": {
     "policy": {
@@ -12,7 +12,7 @@
       "$ref": "#/$defs/hash"
     },
     "policy_snapshot": {
-      "type": "object"
+      "$ref": "#/$defs/policy_snapshot"
     },
     "reported_at": {
       "type": "string"
@@ -110,6 +110,171 @@
     "hash": {
       "type": "string",
       "pattern": "^[0-9a-f]{64}$"
+    },
+    "frozen_workload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "class",
+        "id",
+        "identity_sha256",
+        "record_sha256",
+        "canonical_sha256",
+        "sources",
+        "generation"
+      ],
+      "properties": {
+        "class": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "x-ref": "workload"
+        },
+        "identity_sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "record_sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "canonical_sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "generation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "family",
+            "generator"
+          ],
+          "properties": {
+            "family": {
+              "type": "string"
+            },
+            "generator": {
+              "type": [
+                "object",
+                "null"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "population_member": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "campaign",
+        "campaign_file_sha256",
+        "configuration",
+        "workloads"
+      ],
+      "properties": {
+        "campaign": {
+          "$ref": "#/$defs/extensa_campaign_id"
+        },
+        "campaign_file_sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "configuration": {
+          "type": "object"
+        },
+        "workloads": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/frozen_workload"
+          }
+        }
+      }
+    },
+    "policy_snapshot": {
+      "type": "object",
+      "properties": {
+        "frozen_at": {
+          "type": "string"
+        },
+        "estimator_sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "provider_config_sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "population": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/population_member"
+          }
+        },
+        "statistics": {
+          "type": "object"
+        },
+        "D30": {
+          "type": "object"
+        },
+        "structural_missing": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "kind": {
+          "const": "agreement_policy"
+        },
+        "format": {
+          "const": "swdb.extensa-agreement-policy.v1"
+        },
+        "identity_sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "mode": {
+          "const": "extensa"
+        },
+        "campaign": {
+          "$ref": "#/$defs/extensa_campaign_id"
+        },
+        "basis": {
+          "const": "code_reading"
+        },
+        "estimator_variant": {
+          "const": "research"
+        },
+        "message_version": {
+          "type": "string"
+        },
+        "producer": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "frozen_at",
+        "estimator_sha256",
+        "provider_config_sha256",
+        "population",
+        "statistics",
+        "D30",
+        "structural_missing",
+        "kind",
+        "format",
+        "identity_sha256",
+        "mode",
+        "campaign",
+        "basis",
+        "estimator_variant",
+        "message_version",
+        "producer",
+        "id"
+      ]
     }
   }
 }

@@ -1,4 +1,4 @@
-"""Prospective agreement through public freeze/report commands. Created2026-10-06 ET.
+"""Prospective agreement through public freeze/report commands. Created: 2026-10-06 ET.
 
 Contract fixture numbers never become application agreement evidence.
 """
@@ -63,3 +63,21 @@ def test_public_freeze_is_immutable_for_the_same_prospective_campaign_population
     refused = run_swdb(*args)
     assert refused.returncode == 1
     assert 'frozen population' in refused.stderr
+
+
+def test_public_validate_refuses_malformed_frozen_population_without_crashing(repo_team):
+    import yaml
+    file = gem5_campaign(repo_team, max_iterations=1)
+    config = provider(repo_team, {})
+    cid = yaml.safe_load(file.read_text())['id']
+    result = run_swdb('agreement-freeze', '--campaign-file', file, '--provider-config', config,
+                     '--records', repo_team['records'], '--mode', 'extensa', '--campaign', cid, '--format', 'json')
+    assert result.returncode == 0, result.stderr
+    policy = json.loads(result.stdout)
+    path = repo_team['records'] / 'agreement_policies' / (policy['id'] + '.yaml')
+    damaged = yaml.safe_load(path.read_text())
+    damaged['population'] = [{}]
+    path.write_text(yaml.safe_dump(damaged, sort_keys=False))
+    result = run_swdb('validate', '--records', repo_team['records'])
+    assert result.returncode == 1 and 'population' in result.stderr
+    assert 'Traceback' not in result.stderr

@@ -1,4 +1,4 @@
-"""Prospective Extensa agreement policy and retained report. Created2026-10-06 ET.
+"""Prospective Extensa agreement policy and retained report. Created: 2026-10-06 ET.
 
 No application numeric adapter is registered by ticket16. Unknown and fixture
 forecasts therefore cannot demonstrate D30, irrespective of campaign duration.
@@ -228,8 +228,27 @@ def validate_record(record, ctx):
         if data['D30'] != D30 or data['statistics'] != STATISTICS:
             yield Problem(record.rel, 'D30', 'prospective D30/statistical policy differs from version1 rule')
         own_campaigns = {row['campaign'] for row in data['population']}
+        if len(own_campaigns) != len(data['population']) or data['campaign'] not in own_campaigns:
+            yield Problem(record.rel, 'population', 'population campaign identities/anchor differ')
+        for member in data['population']:
+            configuration = member['configuration']
+            problems = campaign.campaign_problems(configuration)
+            if problems or configuration.get('id') != member['campaign'] or configuration.get('target') != 'dx100_gem5':
+                yield Problem(record.rel, 'population', 'frozen campaign configuration differs or is invalid')
+            for workload in member['workloads']:
+                source = ctx.passed(workload['id'], 'workload')
+                if source is None or artifacts.digest(source) != workload['record_sha256']:
+                    yield Problem(record.rel, 'population', 'frozen workload metadata/hash differs or is unavailable')
+                    continue
+                definition = source['definition']
+                if (workload['identity_sha256'] != source['identity_sha256'] or
+                    workload['canonical_sha256'] != definition['canonical_sha256'] or
+                    workload['sources'] != definition['sources'] or
+                    workload['generation'] != {'family': definition['family'], 'generator': definition.get('generator')}):
+                    yield Problem(record.rel, 'population', 'frozen graph/source/generator dependency differs')
         for other in ctx.store.of_kind('agreement_policy'):
-            if other.id != record.id and own_campaigns & {p['campaign'] for p in other.data['population']}:
+            source = ctx.passed(other.id, 'agreement_policy')
+            if source is not None and other.id != record.id and own_campaigns & {p['campaign'] for p in source['population']}:
                 yield Problem(record.rel, 'population', 'campaign belongs to more than one immutable frozen population')
         try:
             extensa_pairing._time(data['frozen_at'])
@@ -237,6 +256,14 @@ def validate_record(record, ctx):
             yield Problem(record.rel, 'frozen_at', 'policy timestamp must declare UTC')
         return
     policy = data['policy_snapshot']
+    source_policy = ctx.passed(data['policy'], 'agreement_policy')
+    if source_policy is None or source_policy['identity_sha256'] != data['policy_sha256']:
+        yield Problem(record.rel, 'policy', 'frozen policy dependency differs or is unavailable')
+    try:
+        if extensa_pairing._time(data['reported_at']) <= extensa_pairing._time(policy['frozen_at']):
+            yield Problem(record.rel, 'reported_at', 'report must follow its prospective policy freeze')
+    except (TypeError, ValueError):
+        yield Problem(record.rel, 'reported_at', 'report timestamp must declare UTC')
     if identity(policy) != data['policy_sha256'] or policy['id'] != data['policy']:
         yield Problem(record.rel, 'policy_sha256', 'frozen policy snapshot/hash differs')
         return
