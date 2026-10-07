@@ -38,3 +38,6 @@ Claimed: 2026-10-06 22:22 ET by ticket17 implementer; base `9a5057f45c7a1c3b8756
 
 
 2026-10-07 10:47 ET — prospective input controls archived at `../evidence/17-future-input-controls-20261007-a3/README.md`: original assembler/producer A1/A2 and selected R1/spec/A3 source/preparation/review chains retained byte-exact. One original isolated batch had 12 setup errors and zero test bodies; one separate corrected loader batch passed 12 actual bodies. Both exact runners/receipts and original unsealed synthetic outputs retained; earlier NOTRUN labels unchanged. Original b08 receipt proves only collector source staging. No actual requests/input capture/main/Store/native/provider/SSH/campaign or D30 admission; unchanged 6a/b08/F6/28d/fa703/9c5d, status remains claimed.
+
+
+2026-10-07 10:55 ET — separate source-staging custody at `../evidence/17-reviewed-input-controls-source-staging-20261007-a3/README.md`: parent copied exact delivered Git blobs for assembler/specification writer/producer/auditor to a fresh owned mbit10 directory. Original driver and sealed receipt retained; no selected control, main, request/input, Store, provider/native/campaign or scientific admission executed. Prior preparations and b08 staging remain exact; actual inputs and four campaigns still pending, status claimed.
