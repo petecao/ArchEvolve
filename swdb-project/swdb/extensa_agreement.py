@@ -69,8 +69,6 @@ def freeze(args):
         _fail(not problems, 'campaign configuration invalid: ' + '; '.join(map(str, problems)))
         _fail(configuration['target'] == 'dx100_gem5', 'D30 population requires DX100 gem5 campaigns')
         _fail(configuration.get('paired_estimates', {}).get('enabled', True), 'paired estimates cannot be disabled')
-        _fail(not any(r.data['campaign'] == configuration['id'] for r in store.of_kind('campaign_summary')),
-              'population already has campaign outcomes; freeze before fresh campaign execution')
         workloads = []
         for row in configuration['workload_classes']:
             workload = store.get(row['workload'], 'workload')
@@ -91,6 +89,20 @@ def freeze(args):
         'estimator_sha256': estimator_identity(), 'provider_config_sha256': artifacts.file_hash(args.provider_config),
         'population': population, 'statistics': copy.deepcopy(STATISTICS), 'D30': copy.deepcopy(D30),
         'structural_missing': ['no_verified_canonical_graph_complete_call_mmio_numeric_adapter']})
+    ids = {row['campaign'] for row in population}
+    overlapping = [row.data for row in store.of_kind('agreement_policy')
+                   if ids & {p['campaign'] for p in row.data['population']}]
+    if overlapping:
+        comparison_keys = [key for key in POLICY_KEYS if key != 'frozen_at']
+        _fail(len(overlapping) == 1 and all(overlapping[0][key] == data[key] for key in comparison_keys),
+              'frozen population already exists with different source/configuration; use fresh campaign identities')
+        return copy.deepcopy(overlapping[0])  # Query the original freeze; never replace its timestamp.
+    for row in population:
+        cid = row['campaign']
+        events = Path(row['configuration']['runs_root']) / 'extensa' / cid / 'pairing' / 'outcome-accesses.jsonl'
+        _fail(not any(r.data['campaign'] == cid for r in store.of_kind('campaign_summary')) and
+              not (events.is_file() and events.stat().st_size),
+              'population already has outcome access; freeze before fresh campaign execution')
     return workflow.persist(args.records, data, create=True)
 
 
@@ -215,6 +227,10 @@ def validate_record(record, ctx):
     if data['kind'] == 'agreement_policy':
         if data['D30'] != D30 or data['statistics'] != STATISTICS:
             yield Problem(record.rel, 'D30', 'prospective D30/statistical policy differs from version1 rule')
+        own_campaigns = {row['campaign'] for row in data['population']}
+        for other in ctx.store.of_kind('agreement_policy'):
+            if other.id != record.id and own_campaigns & {p['campaign'] for p in other.data['population']}:
+                yield Problem(record.rel, 'population', 'campaign belongs to more than one immutable frozen population')
         try:
             extensa_pairing._time(data['frozen_at'])
         except (TypeError, ValueError):

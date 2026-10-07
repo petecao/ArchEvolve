@@ -39,3 +39,27 @@ def test_public_report_keeps_fixture_forecasts_ineligible_and_d30_unsupported(ca
                for row in report['top3']['strata'])
     checked = run_swdb('validate', '--records', campaign_team['records'])
     assert checked.returncode == 0, checked.stderr
+
+from testkit.extensa_targets import gem5_campaign
+
+
+def test_public_freeze_is_immutable_for_the_same_prospective_campaign_population(repo_team):
+    file = gem5_campaign(repo_team, max_iterations=1)
+    config = provider(repo_team, {})
+    import yaml
+    cid = yaml.safe_load(file.read_text())['id']
+    args = ('agreement-freeze', '--campaign-file', file, '--provider-config', config,
+            '--records', repo_team['records'], '--mode', 'extensa', '--campaign', cid, '--format', 'json')
+    first = run_swdb(*args)
+    assert first.returncode == 0, first.stderr
+    first = json.loads(first.stdout)
+    again = run_swdb(*args)
+    assert again.returncode == 0, again.stderr
+    again = json.loads(again.stdout)
+    assert again['id'] == first['id'] and again['frozen_at'] == first['frozen_at']
+    changed = yaml.safe_load(file.read_text())
+    changed['budgets']['max_iterations'] = 2
+    file.write_text(yaml.safe_dump(changed, sort_keys=False))
+    refused = run_swdb(*args)
+    assert refused.returncode == 1
+    assert 'frozen population' in refused.stderr
