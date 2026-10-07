@@ -156,7 +156,8 @@ def test_proposal_message_retains_provider_capture_and_edit_format(actual, tmp_p
 
 
 def test_checked_in_handoff_examples_are_current():
-    done = subprocess.run([sys.executable, "scripts/bfs_handoff_examples.py", "--check"],
+    done = subprocess.run([sys.executable, "scripts/bfs_handoff_examples.py", "--check",
+                           "--mode", "extensa", "--campaign", "extensa-gem5-bfs-20261004-a7"],
                           cwd=REPO, capture_output=True, text=True, timeout=900)
     assert done.returncode == 0, done.stderr
 

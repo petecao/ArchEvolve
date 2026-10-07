@@ -195,6 +195,10 @@ def main(argv=None):
     sub.add_argument("--runs-dir", type=Path, required=True)
     sub.add_argument("--lane")
 
+    sub = command("evaluate-functional", "combine strict-functional correctness and a frozen analytic estimate", fmt=True)
+    sub.add_argument("file", type=Path)
+    sub.add_argument("--library", type=Path, default=paths.HOME / "library")
+
     sub = command("evaluate-pair", "collect a prospective interleaved native A/A or A/B pair", db=True, fmt=True)
     sub.add_argument("file", type=Path)
     sub.add_argument("--runs-dir", type=Path, required=True)
@@ -355,6 +359,12 @@ def _dispatch(args):
         result = dx100_profile.collect(args)
         _emit(result, args.format)
         return 1 if result.get("outcome", {}).get("state") in {"failed", "rejected", "unresolved"} else 0
+
+    if args.command == "evaluate-functional":
+        from swdb.functional_evaluation import run
+        result = run(args)
+        _emit(result, args.format)
+        return 0 if result["outcome"]["state"] == "complete" else 1
 
     if args.command == "evaluate":
         from swdb import bfs_native
