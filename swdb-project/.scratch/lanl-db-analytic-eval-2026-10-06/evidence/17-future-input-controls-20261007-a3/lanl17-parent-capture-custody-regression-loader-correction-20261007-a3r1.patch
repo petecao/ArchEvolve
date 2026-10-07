@@ -1,0 +1,28 @@
+--- lanl17_parent_capture_custody_isolated_regression_a3_20261007.py
++++ lanl17_parent_capture_custody_isolated_regression_a3r1_20261007.py
+@@ -40,16 +40,20 @@
+     tree = ast.parse(raw)
+     named = {node.name: node for node in tree.body
+              if isinstance(node, (ast.FunctionDef, ast.ClassDef))}
+-    constants = {}
++    constant_nodes = {}
+     for node in tree.body:
+         if (isinstance(node, ast.Assign) and len(node.targets) == 1
+                 and isinstance(node.targets[0], ast.Name)
+                 and node.targets[0].id in ('HELPER', 'F6', 'MAX_BYTES')):
+-            constants[node.targets[0].id] = ast.literal_eval(node.value)
++            # Lift only these three reviewed source assignments verbatim.
++            # MAX_BYTES is the reviewed integer multiplication, not a literal
++            # accepted by ast.literal_eval; no general expression evaluator.
++            constant_nodes[node.targets[0].id] = copy.deepcopy(node)
+     namespace = {'Path': Path, 'os': os, 'stat': stat, 'hashlib': hashlib,
+-                 're': re, 'json': json, 'sys': sys, 'yaml': yaml,
+-                 **constants}
+-    selected = [copy.deepcopy(named[name]) for name in LIFTED_NAMES]
++                 're': re, 'json': json, 'sys': sys, 'yaml': yaml}
++    if set(constant_nodes) != {'HELPER', 'F6', 'MAX_BYTES'}:
++        raise RuntimeError('isolated regression reviewed constant inventory differs')
++    selected = list(constant_nodes.values()) + [copy.deepcopy(named[name]) for name in LIFTED_NAMES]
+     main_ast = named['main']
+     for role, message in GUARD_MESSAGES.items():
+         matches = [node for node in main_ast.body

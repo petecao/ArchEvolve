@@ -1,0 +1,109 @@
+{
+  "format": "swdb.lanl17-parent-capture-producer-source-preparation.v1",
+  "updated": "2026-10-07 ET",
+  "revision": "a3 parent-authorized custody/privacy source corrections only",
+  "producer": {
+    "path": "/private/tmp/lanl17_parent_capture_projection_producer_a3_20261007.py",
+    "bytes": 46165,
+    "sha256": "32bead204337aa66d0a732b6f143216946abafc5d2eb752577b0d90f7190b7b6"
+  },
+  "preserved_a2_source": {
+    "path": "/private/tmp/lanl17_parent_capture_projection_producer_a2_20261007.py",
+    "bytes": 42560,
+    "sha256": "2bb2a3a78ad590cbf640959b2d0b51eb6c839b485bed9605a91e7a24d974a7fb"
+  },
+  "preserved_a2_proof": {
+    "path": "/private/tmp/lanl17-parent-capture-producer-source-proof-20261007-a2.json",
+    "bytes": 4164,
+    "sha256": "952142f724b649c8cbc691be624744107c101215435eb16c7a918ad2d956639b",
+    "identity_sha256": "c4ce07ad8c2a0233ec970e9ecd36a503aa923909ac96dc51fbb8c60c38958ee1"
+  },
+  "bounded_diff": {
+    "path": "/private/tmp/lanl17-parent-capture-producer-custody-corrections-20261007-a3.patch",
+    "bytes": 10239,
+    "sha256": "95ac7b0c3af4f43e79b40c7aa97d7f842987c1cb67a00e05765b80303392c4aa"
+  },
+  "copied_projection_source": {
+    "path": "/private/tmp/lanl17_selected_record_trajectory_auditor_a2r1s1_20261007.py",
+    "sha256": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da",
+    "exact_AST_symbols": [
+      "RecordLoader",
+      "RecordLoader.yaml_implicit_resolvers",
+      "no_duplicates",
+      "RecordLoader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, no_duplicates)",
+      "CALL_KEYS",
+      "CANDIDATE_KEYS",
+      "STATE_KEYS",
+      "PROJECTION_CONTRACT",
+      "public_token",
+      "public_scalar",
+      "public_fields",
+      "excluded_fields",
+      "project_calls",
+      "project_candidate",
+      "project_iteration",
+      "project_state"
+    ],
+    "symbol_count": 16
+  },
+  "original_pins": {
+    "PLAN": "e3420b334ce05f7268699b0079987d1d2afc98fe5cb5503e6069a89038b59170",
+    "AUDITOR": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da",
+    "COLLECTOR": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c",
+    "HELPER": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414",
+    "SUPERVISOR": "fa703bbd4c71bb4bcf56f47d1e224449f627d5921295e00b9cc105f21e95bde0",
+    "PROCESSES": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+    "C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+    "F6": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "CAMPAIGN_SOURCE": "13e3e66a469c3934dee2f0f372a5c17812f5a680cb451f63766ad889d13c3d1d",
+    "SEARCH_SOURCE": "348b07b38a7955a65b5c13629dd8234453609f152a78d27524df6bf840a989e7",
+    "TARGET_SOURCE": "727d4399e4bde1996484e3013770e5ab21ef4a30e8fa7313c4697aaa6359211f"
+  },
+  "AST_difference": {
+    "new_helpers": [
+      "returned_bytes",
+      "manifest_output_roots"
+    ],
+    "changed_existing_top_level": [
+      "Inputs",
+      "main"
+    ],
+    "only_new_import": "stat",
+    "eight_capture_formats_unchanged": true,
+    "all_eight_role_fact_builders_unchanged": true,
+    "sixteen_original_AST_symbols_unchanged": true,
+    "parent_requested_exception_handler_changed": true
+  },
+  "checks": {
+    "syntax_compiled_without_execution": true,
+    "no_original_control_or_auditor_or_collector_edits": true,
+    "no_SWDB_Store_auditor_collector_Git_SSH_native_provider_dispatch": true,
+    "every_capture_requires_exact_original_M2": true,
+    "output_exclusions_bind_original_M2_source_and_raw_plus_exact_28d_b08_campaign_routing": true,
+    "raw_campaign_boundary_never_caller_guessed": true,
+    "input_and_request_returned_bytes_hash_size_and_fd_path_stat_checked_before_parse": true,
+    "own_source_rechecked_before_publication_and_success": true,
+    "yaml_parser_errors_are_caught": true,
+    "diagnostic_only_exception_class_and_message_hash_no_original_prose": true,
+    "import_modules": [
+      "argparse",
+      "datetime",
+      "hashlib",
+      "json",
+      "os",
+      "pathlib",
+      "pwd",
+      "re",
+      "socket",
+      "stat",
+      "sys",
+      "yaml"
+    ]
+  },
+  "scope": "Source-only syntax/AST/diff review. No actual campaign/state/public/control/index inputs, specifications or captures constructed or read; no fixture/test repeated; no producer/auditor/collector/Store execution. Missing observations remain explicit required inputs.",
+  "actual_inputs_constructed": false,
+  "captures_executed": false,
+  "synthetic_regressions_executed": false,
+  "tracked_edits": false,
+  "identity_sha256": "64fa86ec7bda1032360e6b2500649d7b0e89069e3956d7f6bf302ce5891d1880"
+}
