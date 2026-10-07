@@ -1,32 +1,37 @@
 # Implementation progress
 
-Updated: 2026-10-07 00:39 ET
+Updated: 2026-10-07 01:09 ET
 
-**12 of 15 assigned tickets are resolved and integrated.** Tickets 11, 14 and 17 remain active. Final review, fixes and cleanup follow their actual evaluations.
+**12 of 15 assigned tickets are resolved and integrated.** Tickets 11, 14 and 17 remain active. Their actual evaluations, final two-axis review, fixes, tracker closeout and cleanup are still required.
 
-Integration: `codex/lanl-analytic-eval`. Review base: `2c50e5fb8671e08050921bee06920f92fd153bdd`. Delivery branch: `yanrujhou_main`; local, origin and mbit10 primary synchronized through `dda186f` before this checkpoint. The unrelated uncommitted root rule edit remains preserved.
+Integration: `codex/lanl-analytic-eval`. Review base: `2c50e5fb8671e08050921bee06920f92fd153bdd`. Delivery branch: `yanrujhou_main`; local, origin and mbit10 primary synchronized through `c08e8be827971f6c5ced59ccadedc96c6c3b5a71` before this checkpoint. The unrelated root rule edit is preserved.
 
 | Tickets | Owner | Current state |
 |---|---|---|
 | 02–10, 12–13, 16 | Assigned implementers | Resolved and integrated; public checks and compact evidence linked from each Answer |
-| 11 | `/root/ticket03` | Services admitted; known prospective pairing passed; final mismatch/reference and evaluator compatibility gates active |
-| 14 | `/root/ticket02` | All six fresh count cases passed; ten-record compact export validating; actual final-target reports pending |
-| 17 | `/root/ticket04` | Source and merged public checks passed; four actual campaigns and agreement report pending |
+| 11 | `/root/ticket03` | Final immutable source validated and pushed; actual model-only binding active; development, holdout and band-reader reports pending |
+| 14 | `/root/ticket02` | All six fresh count cases and actual local replay passed; final PR/services.v1 acceptance and nine reports pending |
+| 17 | `/root/ticket04` | Live owner and merger; frozen controls ready; actual policy freeze, four campaigns and agreement report pending |
 
 | Evaluation | Evidence state | Next action |
 |---|---|---|
-| Guarded parameter estimation | Complete; numeric assumptions filled, structural gaps and null totals retained | Preserve original provider result |
-| Functional evaluation and handoff | Complete; null timing/ratio and strict functional scope retained | Preserve immutable archived result |
-| Independent CPU services | Count and elapsed evidence admitted, including floating64 monotonic fadd | Freeze exact compatible model after remaining implementation |
-| Extra allocator sizes | Paired-window promise failed; paired rates excluded | Use uniform separately labeled inferred gross resources, frozen before application timing |
-| CPU accuracy | No application timings opened; separate BFS/BC band helpers mock-tested | Finish pairing safeguards; freeze four forecasts, then g16 development and unchanged g17 holdout |
-| Six fresh generality counts | All six original attempts passed with both exits zero; both socket leases released | Complete the combined catalogue validation and integrate the exact ten-record closure |
-| Nine BFS/BC/PR reports | Projection and provisional PR allowlist checks passed; final helper review complete | Bind final targets/source and preserve unknown accelerator/PR transfers |
-| D30 agreement | No eligible fresh pairs; actual campaigns pending | Freeze policy before four genuine trajectories; report unsupported/no-switch if bridge remains absent |
+| Parameter estimation and functional handoff | Complete; structural unknowns and null totals retained | Preserve original provider/evaluation receipts |
+| Independent CPU services | All required receipts admitted; gross allocator/memory/bulk resources explicitly inferred | Bind the unchanged independently constructed model |
+| CPU model | Node0 generation503, started 2026-10-07 01:01:47 ET; service-binding public stage active | Require four positive forecasts and empty compatibility gaps before timing |
+| CPU accuracy | Application timings unopened | Separate BFS/BC g16 development widths, then unchanged g17 holdout; failed bands stay failed |
+| Six generality counts | All six original attempts passed; ten-record export integrated; 30 trial projections and 13,784 access scopes replayed | Preserve original successes; recovery unused |
+| Nine BFS/BC/PR reports | Counts and report controls ready; actual PR target-transfer gate pending | Use final complete bundle and exact actual target; preserve unknown accelerator/PR services |
+| D30 agreement | Four actual campaigns unexecuted; no eligible fresh pairs established | Freeze unchanged D30 policy before outcomes; honest unsupported/no-switch if the bridge is absent |
 
-All three implementers are live. Both socket leases and the legacy lease are released. Latest free space: `/data1` 22.0 GiB, `/data` 49.9 GiB; load 1.99. Parent owns all SSH/dispatch and preserves unrelated host work. Raw artifacts stay remote.
+All three implementers are responsive. Node0 holds the model-only job; node1 and the legacy lease are released. Latest free space: `/data1` 23,240,183,808B (21.6GiB), `/data` 53,262,172,160B (49.6GiB); load1 2.00. Parent owns SSH/dispatch and preserves the unrelated Quicksilver job. Raw outputs remain remote.
 
-Human gates 15, 18 and 21 remain human-owned. Tickets 19–20 require their recorded prerequisites; 22–23 require LANL access. No external communication. The 30-minute progress/liveness check remains active; next due 2026-10-07 01:09 ET.
+Final immutable CPU source: `f893fed400347ed23d92e917d8bde21b75e5375d`; 185-module bundle `f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3`. Final 665 canonical records validate; all 905 prior record/library/app/tool blobs are preserved. Protected public gate 1 passed, adjacent legacy/native-output gate 6 passed, runtime unknown-envelope gate 3 passed. Final public fixture freeze/estimate/re-pair passed with positive semantic kernel seconds and null elapsed/band confidence. This fixture is not native accuracy evidence. Worker proof `evidence/11-final-source-validation-proof-20261007.json`; merger proof `evidence/11-final-source-integrated-merger-proof-20261007.json`.
+
+Model raw directory: `/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1`; immutable detached source: `/data1/yanruj/ArchEvolve-lanl-cpu-model-validation-20261006-a1`. Exact four helpers are staged and byte-verified in `/data1/yanruj/lanl-cpu-controls-20261007-a1/`. Do not repeat a completed phase or modify this source. Read runner/wrapper exits, stopped cleanup, acceptance and released leases before exporting or advancing.
+
+The consumed count-export checkout was safely removed at 2026-10-07 00:46 ET after integration/origin ancestry, clean exact branch, 274 readable process references and 24 raw symlinks were checked; 295,460,864B recovered. Original count source, raw evidence and pushed Git history are retained. A bounded read-only-by-default CPU export cleanup helper is prepared (`/data1/yanruj/lanl-remove-consumed-cpu-export-20261007.py`, SHA256 `445c3c5e0782afc34e50f0fcdf088b15b353dd7b2a9a4380a0e46aa30c941063`). Remove only a complete consumed export after exact origin/main ancestry, released lanes and process/raw-link checks, preserving the immutable C source and all raw evidence.
+
+Human gates 15, 18 and 21 remain human-owned. Tickets 19–20 retain prerequisites; 22–23 require LANL access. No external communication. The 30-minute progress/liveness heartbeat remains active; next due 2026-10-07 01:39 ET.
 
 Managed worktrees: `/Users/yanrujhou/.codex/worktrees/lanl-*/ArchEvolve`. Parent owns integration. File writes and Git metadata there need sandbox escalation, covered by the user's implementation authorization.
 
