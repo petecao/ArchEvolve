@@ -1,8 +1,9 @@
 # 14 — Generality: MAPLE and PageRank
 
 Created: 2026-10-06
+Updated: 2026-10-06 ET
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 05, 09, 10
 **Spec:** `../spec.md`
 **Time estimate:** 1 day
