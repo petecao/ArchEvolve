@@ -22,6 +22,7 @@ The default catalog is `catalog/hardware-v0.1.yaml` (format v0.1, data revision 
 ## Results and handoff
 
 - **[Peter's intrinsic handoff](docs/peter-intrinsics-handoff.md)**: current images, operation contracts, and source requirements.
+- **[How all 20 hardware records accelerate work](docs/hardware-mechanism-overview.md)**: work delegated, operand/result movement, and software synchronization, with 71 linked catalog claims.
 - **[Hardware behavior and acceleration mechanisms](docs/hardware-behavior-handoff.md)**: October 6 response to Peter, with separate source-scoped DX100/MAPLE sheets and automatic behavior output for future packages.
 - [Pipette queue/RA mechanisms](docs/pipette-catalog-admission/README.md): committed register queues, rollback, finite shared storage and a portable lifecycle subset from the MICRO 2020 reference.
 - [Flat-HTA key-map mechanisms](docs/hta-catalog-admission/README.md): cache-line lookup/branch operations with explicit tombstone and overflow ownership.
