@@ -1,5 +1,6 @@
 """Public cross-domain composition and required source coverage. 2026-10-06 ET."""
 import json
+import copy
 import yaml
 import pytest
 from conftest import run_swdb
@@ -7,16 +8,19 @@ from testkit.analytic import digest,fixture_characterization,target_description,
 
 
 def fact(value):return {'value':value,'basis':'reported','scope':'per_call'}
-def rate(value,unit):return {'value':value,'basis':'reported','source':'Hand-computed fixture only.','unit':unit}
+def rate(value,unit):return {'value':value,'basis':'unknown' if value is None else 'reported','source':'Hand-computed fixture only.','unit':unit}
 
 
-def estimate_domains(records,tmp_path,*,overlap=None,host_work=1,memory=False,memory_model=False):
+def estimate_domains(records,tmp_path,*,overlap=None,host_work=1,memory=False,memory_model=False,host_rate=1,stage_rate=12,queue=False,stage_basis=None,trial_pairs=None):
     records.add_stub()
     path=target_description(tmp_path)
     target=yaml.safe_load(path.read_text());target['target']='testhost'
     target['mechanisms']=[{'model':'compute_throughput','parameters':{
-        kind+'_ops_per_s':rate(1,'operations/s') for kind in ('integer','floating_point','branch','atomic')}},
-        {'model':'tile_staging','selector':{'domain':'offload'},'parameters':{'staging_bytes_per_s':rate(12,'bytes/s')}}]
+        kind+'_ops_per_s':rate(host_rate if kind=='integer' else 1,'operations/s') for kind in ('integer','floating_point','branch','atomic')}},
+        {'model':'tile_staging','selector':{'domain':'offload'},'parameters':{'staging_bytes_per_s':rate(stage_rate,'bytes/s')}}]
+    if stage_basis is not None:target['mechanisms'][1]['parameters']['staging_bytes_per_s']['basis']=stage_basis
+    if queue:target['mechanisms'].append({'model':'fetch_queue','selector':{'domain':'offload'},'parameters':{
+        'queue_entries':rate(2,'entries'),'fetch_latency_s':rate(.1,'seconds/request'),'admission_requests_per_s':rate(10,'requests/s')}})
     if memory_model:target['mechanisms'].append({'model':'streaming_bandwidth','parameters':{'bytes_per_s':rate(16,'bytes/s')}})
     if overlap is not None:target['composition_contract']={'format':'swdb.composition-contract.v1',
         'resource_domain_overlap':overlap,'basis':'inferred','source':'Declared hand-computed serial/overlap fixture premise.'}
@@ -36,6 +40,19 @@ def estimate_domains(records,tmp_path,*,overlap=None,host_work=1,memory=False,me
             **{name:'0'*64 for name in ('layout_sha256','request_policy_sha256','placement_assumption_sha256','window_policy_sha256')},
             'line_requests':fact(6),'row_groups':fact(3),'grouped_row_hits':fact(3),'grouped_row_hit_fraction':fact(.5),
             'windows':fact(2),'staged_bytes':fact(24),'notes':['Logical hand-counted fixture; no hardware evidence.']}}}]
+    if trial_pairs is not None:
+        first=copy.deepcopy(data['regions'][0]);second=copy.deepcopy(first)
+        first['id']='fixture.a';second['id']='fixture.b'
+        for region in (first,second):
+            observed=region['address_stream_counts'][pin]
+            for field in ('line_requests','row_groups','grouped_row_hits','windows','staged_bytes'):observed[field]=fact(0)
+            observed['grouped_row_hit_fraction']={'value':None,'basis':'unknown','scope':'per_call'}
+        trials=[]
+        for position,(left,right) in enumerate(trial_pairs):
+            regions=copy.deepcopy([first,second])
+            for region,value in zip(regions,(left,right)):region['operation_counts']['integer']=fact(value)
+            trials.append({'position':position,'sources':[],'regions':regions,'unmodeled_calls':[]})
+        data['regions']=copy.deepcopy(trials[0]['regions']);data['trials']=trials
     data.pop('identity_sha256');data['identity_sha256']=digest(data)
     records.write('workload_characterizations/fixture.counts.yaml',data)
     protocol=freeze_protocol(records.path,tmp_path,path,roi='fixture.stream.v1',input_id='tiny-sym')
@@ -76,3 +93,58 @@ def test_proven_zero_host_work_requires_no_cross_domain_policy(records,tmp_path)
     result=estimate_domains(records,tmp_path,host_work=0)
     assert result['seconds']==2.
     assert all(b['model']!='domain_composition' for b in result['regions'][0]['bounds'])
+
+
+def test_unknown_parameter_report_keeps_impact_unranked_and_structural_gaps_separate(records,tmp_path):
+    result=estimate_domains(records,tmp_path,host_rate=None,memory=True)
+    report=result['parameter_report']
+    unknown=report['unknowns'][0]
+    assert unknown['parameter']=='mechanisms[0].parameters.integer_ops_per_s'
+    assert unknown['required_for_total'] is True and unknown['priority_rank']==1
+    assert unknown['impact_rank'] is None and unknown['impact_magnitude_seconds'] is None
+    assert unknown['sensitivity_state']=='unknown_reference'
+    assert {row['missing'] for row in report['structural_missing']} >= {'host_memory_service_model','composition_contract.resource_domain_overlap'}
+    assert all(row['parameter_fill_allowed'] is False for row in report['structural_missing'])
+    staging=next(row for row in report['sensitivities'] if row['parameter'].endswith('.staging_bytes_per_s'))
+    assert staging['whole_call_seconds']=={'half':None,'base':None,'double':None}
+    assert staging['component_seconds']['half']['fixture.region.bounds.tile_staging']==4.
+    assert staging['component_seconds']['double']['fixture.region.bounds.tile_staging']==1.
+    assert staging['impact_rank'] is None
+    assert result['seconds'] is None
+
+
+def test_known_numeric_sensitivity_ranks_full_call_and_lists_frozen_estimated_parameters(records,tmp_path):
+    result=estimate_domains(records,tmp_path,overlap='serial',stage_basis='estimated')
+    stage=next(row for row in result['parameter_report']['sensitivities'] if row['model']=='tile_staging')
+    assert stage['whole_call_seconds']=={'half':5.,'base':3.,'double':2.}
+    assert stage['impact_magnitude_seconds']==2. and stage['impact_rank']==1
+    assert stage['sensitivity_state']=='whole_call_numeric_scenario'
+    assert result['llm_parameters']==[stage]
+    checked=records.validate();assert checked.returncode==0,checked.stdout+checked.stderr
+
+
+def test_observation_affecting_capacity_sensitivity_requires_fresh_counts(records,tmp_path):
+    result=estimate_domains(records,tmp_path,overlap='full_overlap',queue=True)
+    capacity=next(row for row in result['parameter_report']['sensitivities'] if row['parameter'].endswith('.queue_entries'))
+    assert capacity['sensitivity_state']=='requires_fresh_observation'
+    assert capacity['whole_call_seconds']=={'half':None,'base':2.,'double':None}
+    assert capacity['scenario_values']=={'half':1.,'base':2,'double':4.}
+    assert capacity['impact_magnitude_seconds'] is None and capacity['impact_rank'] is None
+
+
+def test_public_validation_refuses_sensitivity_detached_from_frozen_parameter(records,tmp_path):
+    result=estimate_domains(records,tmp_path,overlap='serial')
+    result['parameter_report']['sensitivities'][0]['value']=999.
+    records.write('estimates/fixture.composed.yaml',result)
+    refused=records.validate()
+    assert refused.returncode==1 and 'parameter differs from its frozen target fact' in refused.stdout+refused.stderr
+
+
+def test_sensitivity_recomposes_each_trial_before_whole_call_median(records,tmp_path):
+    result=estimate_domains(records,tmp_path,trial_pairs=[(10,0),(0,10),(6,6)])
+    assert result['seconds']==10.
+    assert sum(region['seconds'] for region in result['regions'])==12.
+    integer=next(row for row in result['parameter_report']['sensitivities'] if row['parameter'].endswith('.integer_ops_per_s'))
+    assert integer['whole_call_seconds']=={'half':20.,'base':10.,'double':5.}
+    assert integer['component_seconds']['half']['fixture.a.bounds.compute_throughput']==12.
+    assert integer['component_seconds']['half']['fixture.b.bounds.compute_throughput']==12.

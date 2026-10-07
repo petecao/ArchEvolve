@@ -531,15 +531,17 @@ def characterize(args):
     return record
 
 
-def _estimate_regions(source_regions, source_calls, target, observation_contract=None, *, characterization=None,count_reuse=None):
+def _estimate_regions(source_regions, source_calls, target, observation_contract=None, *, characterization=None,count_reuse=None,characterization_sha256=None):
     from swdb import analytic_models,analytic_composition
 
-    characterization_sha256=artifacts.digest(characterization) if characterization else None
+    if characterization_sha256 is None:
+        characterization_sha256=artifacts.digest(characterization) if characterization else None
+    target_sha256=artifacts.digest(target)
     regions = []
     for region in source_regions:
         called = [c for c in source_calls if c.get('region') == region['id']]
-        context = {'target_description_sha256': artifacts.digest(target),
-            'logical_count_target_description_sha256':count_reuse['counted_target_description_sha256'] if count_reuse else artifacts.digest(target),
+        context = {'target_description_sha256': target_sha256,
+            'logical_count_target_description_sha256':count_reuse['counted_target_description_sha256'] if count_reuse else target_sha256,
             'configured_threads': target['threads'], 'observation_contract': observation_contract,
             'characterization_id': characterization['id'] if characterization else None,
             'characterization_sha256': characterization_sha256,
@@ -594,10 +596,11 @@ def estimate(args):
         raise Failure('target thread count differs from the counted workload thread identity')
     from swdb.analytic_count_reuse import resolve
     count_reuse=resolve(characterization,target)
-    regions, seconds = _estimate_regions(characterization['regions'], characterization['unmodeled_calls'], target, characterization.get('observation_contract'),characterization=characterization,count_reuse=count_reuse)
+    characterization_sha256=artifacts.digest(characterization)
+    regions, seconds = _estimate_regions(characterization['regions'], characterization['unmodeled_calls'], target, characterization.get('observation_contract'),characterization=characterization,count_reuse=count_reuse,characterization_sha256=characterization_sha256)
     trial_estimates=[]
     for trial in characterization.get('trials',[]):
-        rows,total=_estimate_regions(trial['regions'],trial['unmodeled_calls'],target,characterization.get('observation_contract'),characterization=characterization,count_reuse=count_reuse)
+        rows,total=_estimate_regions(trial['regions'],trial['unmodeled_calls'],target,characterization.get('observation_contract'),characterization=characterization,count_reuse=count_reuse,characterization_sha256=characterization_sha256)
         trial_estimates.append({'position':trial['position'],'sources':trial['sources'],'regions':rows,'seconds':total})
     if trial_estimates:
         seconds=None if any(t['seconds'] is None for t in trial_estimates) else statistics.median(t['seconds'] for t in trial_estimates)
@@ -651,6 +654,9 @@ def estimate(args):
         record['baseline'] = {'id': baseline['id'], 'sha256': artifacts.digest(baseline)}
         if seconds is not None and seconds > 0 and baseline['seconds'] is not None:
             record['ratio'] = baseline['seconds'] / seconds
+    from swdb.analytic_sensitivity import report
+    record['parameter_report']=report(record,target,characterization)
+    record['llm_parameters']=[row for row in record['parameter_report']['sensitivities'] if row['basis']=='estimated']
     from swdb.analytic_extensions import finalize_estimate
     record = finalize_estimate(record, store=store, protocol=protocol,
         characterization=characterization, target_description=target)
@@ -733,6 +739,8 @@ def _payload_problems(data):
                 if value is not None and not math.isfinite(value):
                     yield f'mechanisms[{i}].parameters.{name}.value', 'target parameters must be finite or null'
     elif kind == 'estimate':
+        from swdb.analytic_sensitivity import payload_problems
+        yield from payload_problems(data)
         try:
             expected = artifacts.digest(data['target_description_snapshot'])
         except (ValueError, TypeError):

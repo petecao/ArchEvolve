@@ -364,6 +364,9 @@
         "notes",
         "observation_policy_format"
       ]
+    },
+    "parameter_report": {
+      "$ref": "#/$defs/parameter_report"
     }
   },
   "required": [
@@ -396,5 +399,381 @@
     "binding",
     "protocol_sha256",
     "estimator_sha256"
-  ]
+  ],
+  "$defs": {
+    "parameter_report": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "swdb.parameter-sensitivity.v1"
+        },
+        "basis": {
+          "const": "estimated"
+        },
+        "target_description_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "observation_policy_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "unknowns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "parameter": {
+                "type": "string",
+                "pattern": "^mechanisms\\[[0-9]+\\]\\.parameters\\..+$"
+              },
+              "model": {
+                "type": "string"
+              },
+              "value": {
+                "const": null
+              },
+              "basis": {
+                "type": "string",
+                "x-vocab": "basis"
+              },
+              "source": {
+                "type": "string"
+              },
+              "unit": {
+                "type": "string"
+              },
+              "dependent_bounds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "required_for_total": {
+                "type": "boolean"
+              },
+              "priority_rank": {
+                "enum": [
+                  1,
+                  2
+                ]
+              },
+              "impact_rank": {
+                "const": null
+              },
+              "impact_magnitude_seconds": {
+                "const": null
+              },
+              "sensitivity_state": {
+                "const": "unknown_reference"
+              }
+            },
+            "required": [
+              "parameter",
+              "model",
+              "value",
+              "basis",
+              "source",
+              "unit",
+              "dependent_bounds",
+              "required_for_total",
+              "priority_rank",
+              "impact_rank",
+              "impact_magnitude_seconds",
+              "sensitivity_state"
+            ]
+          }
+        },
+        "sensitivities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "parameter": {
+                "type": "string",
+                "pattern": "^mechanisms\\[[0-9]+\\]\\.parameters\\..+$"
+              },
+              "model": {
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              },
+              "basis": {
+                "type": "string",
+                "x-vocab": "basis"
+              },
+              "source": {
+                "type": "string"
+              },
+              "unit": {
+                "type": "string"
+              },
+              "dependent_bounds": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "required_for_total": {
+                "type": "boolean"
+              },
+              "priority_rank": {
+                "enum": [
+                  1,
+                  2
+                ]
+              },
+              "impact_rank": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 1
+              },
+              "impact_magnitude_seconds": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "sensitivity_state": {
+                "enum": [
+                  "invalid_numeric_reference",
+                  "unsupported_numeric_scenario",
+                  "requires_fresh_observation",
+                  "whole_call_numeric_scenario",
+                  "local_components_only"
+                ]
+              },
+              "whole_call_seconds": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "half": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "minimum": 0
+                  },
+                  "base": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "minimum": 0
+                  },
+                  "double": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "half",
+                  "base",
+                  "double"
+                ]
+              },
+              "component_seconds": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "half": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": [
+                        "number",
+                        "null"
+                      ],
+                      "minimum": 0
+                    }
+                  },
+                  "base": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": [
+                        "number",
+                        "null"
+                      ],
+                      "minimum": 0
+                    }
+                  },
+                  "double": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": [
+                        "number",
+                        "null"
+                      ],
+                      "minimum": 0
+                    }
+                  }
+                },
+                "required": [
+                  "half",
+                  "base",
+                  "double"
+                ]
+              },
+              "scenario_values": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "half": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "base": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "double": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "half",
+                  "base",
+                  "double"
+                ]
+              },
+              "scenario_target_description_sha256": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "half": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "base": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "double": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                },
+                "required": [
+                  "half",
+                  "base",
+                  "double"
+                ]
+              }
+            },
+            "required": [
+              "parameter",
+              "model",
+              "value",
+              "basis",
+              "source",
+              "unit",
+              "dependent_bounds",
+              "required_for_total",
+              "priority_rank",
+              "impact_rank",
+              "impact_magnitude_seconds",
+              "sensitivity_state",
+              "whole_call_seconds",
+              "component_seconds",
+              "scenario_values",
+              "scenario_target_description_sha256"
+            ]
+          }
+        },
+        "structural_missing": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "missing": {
+                "type": "string"
+              },
+              "regions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "models": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "formulas": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "required_for_total": {
+                "const": true
+              },
+              "parameter_fill_allowed": {
+                "const": false
+              },
+              "impact_rank": {
+                "const": null
+              },
+              "impact_magnitude_seconds": {
+                "const": null
+              }
+            },
+            "required": [
+              "missing",
+              "regions",
+              "models",
+              "formulas",
+              "required_for_total",
+              "parameter_fill_allowed",
+              "impact_rank",
+              "impact_magnitude_seconds"
+            ]
+          }
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "format",
+        "basis",
+        "target_description_sha256",
+        "observation_policy_sha256",
+        "unknowns",
+        "sensitivities",
+        "structural_missing",
+        "notes"
+      ]
+    }
+  }
 }

@@ -392,3 +392,33 @@ feature reports with basis `reported`. Existing count fields, native binding and
 receipts remain unchanged. [Reported feature input commands, field mapping and
 conflicts](feature-report-inputs.md) explain the supplied BFS reports, unresolved
 source/array scope, units and timing/PMU sanitization.
+
+
+## Parameter dependencies and sensitivity report
+
+Updated: 2026-10-06 ET (ticket 09). Optional `parameter_report` uses
+`swdb.parameter-sensitivity.v1` and binds the frozen target and full observation
+policy hashes. Historical estimates without this addition remain valid.
+
+`unknowns` retain each exact parameter path, null value, basis/source/unit,
+dependent bounds and `required_for_total`. Required unknowns share dependency
+priority 1; unused references have priority 2. A null reference has no defensible
+half/double magnitude, so `impact_magnitude_seconds` and `impact_rank` stay null.
+This dependency ordering does not claim a numerical ranking of unsupported guesses.
+
+`sensitivities` vary one positive frozen value by half and double, recompose every
+whole trial and then its median, and report diagnostic component medians separately.
+A supported whole-call magnitude is the largest absolute change from the base
+seconds; descending magnitudes receive dense numerical ranks. If another required
+bound stays unknown, local component scenarios remain visible while whole-call
+magnitude/rank stay null. `llm_parameters` lists the frozen parameters whose basis
+is `estimated`, including their source/reason and this sensitivity. A non-finite,
+nonpositive or policy-invalidating scenario supplies no numerical impact.
+
+Observation-policy changes (including referenced capacity/window/layout/backend
+facts) are `requires_fresh_observation`; old row/count facts are not relabeled or
+rewritten. Numeric scenarios are analytic hypotheses, not new frozen target
+versions. `structural_missing` separately lists source facts, missing mechanisms,
+opaque costs and composition policies. These cannot be silently repaired by the
+unknown-parameter filling role. Public validation checks every report fact against
+its frozen target, its base whole-call value, and its exact policy identity.
