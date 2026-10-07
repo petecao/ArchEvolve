@@ -1,0 +1,290 @@
+kind: cpu_service_calibration
+schema_version: '0.4'
+id: mbit10.cpu.lanl20261006.service.clock.a2
+status: draft
+created: '2026-10-06'
+updated: '2026-10-06'
+provenance:
+- id: cpu-service
+  kind: measurement
+  description: Independent service/driver elapsed and counted work; not application timing or CPU accuracy
+    evidence.
+  uri: null
+format: swdb.cpu-service-calibration-record.v1
+backend: native
+evidence_kind: native
+receipt_sha256: e0432bdb0fbbd1a9f2057b2e081f7f024100df26965e7e297eb120cc4a10f961
+target: mbit10
+threads: 1
+context:
+  compiler_version: |-
+    clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)
+    Target: x86_64-unknown-linux-gnu
+    Thread model: posix
+    InstalledDir: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin
+  flags:
+  - -O3
+  - -std=c++17
+  - --gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13
+  host: mbit10
+  architecture: x86_64
+  source_sha256:
+    CpuServiceTimer.cpp: 14332e159810563b8d49a03569099f8a336d495cd5a8b0bd76663f8283d0e669
+    CpuServiceWork.h: 07d7bf48b5d9afb1b0725f2abf7a57f301c17d355b72676d214186ba1d7150cf
+    CpuServiceCount.cpp: 9745a510ad04ae9b9aa2250d5cd49577f09a5d73e1fc2a2e8b666e274409f2d9
+  binary_sha256: 8ff2813441e3a8987d6e96877f4bec2cb3b286083fdac7f6ce2df6769e8febf5
+  instrumented_timer: false
+  control_environment:
+    GLIBC_TUNABLES: null
+    LD_PRELOAD: null
+    LD_AUDIT: null
+    LD_LIBRARY_PATH: null
+    DYLD_LIBRARY_PATH: null
+    DYLD_INSERT_LIBRARIES: null
+  control_environment_scope:
+    format: swdb.service-control-environment.v1
+    prefixes: [MALLOC_]
+    exact_variables: [GLIBC_TUNABLES, LD_PRELOAD, LD_AUDIT, LD_LIBRARY_PATH, DYLD_LIBRARY_PATH, DYLD_INSERT_LIBRARIES]
+    absence_semantics: null_or_absent_is_unset_under_declared_scope
+  lane: 'mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 481)'
+  cpus: [0]
+  machine_sha256: fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79
+  system: Linux
+  start_state:
+    load: [1.57861328125, 1.486328125, 1.708984375]
+    time_ns: 1791330964058035138
+    available_memory: |-
+      MemTotal:       131426264 kB
+      MemFree:        22544496 kB
+      MemAvailable:   122562752 kB
+      Buffers:        12232880 kB
+      Cached:         59318576 kB
+      SwapCached:            0 kB
+      Active:          4367740 kB
+      Inactive:       68800084 kB
+      Active(anon):    1590356 kB
+      Inactive(anon):    55780 kB
+      Active(file):    2777384 kB
+      Inactive(file): 68744304 kB
+      Unevictable:       39252 kB
+      Mlocked:           36180 kB
+      SwapTotal:             0 kB
+      SwapFree:              0 kB
+      Zswap:                 0 kB
+      Zswapped:              0 kB
+      Dirty:                 0 kB
+      Writeback:             0 kB
+      AnonPages:       1656016 kB
+      Mapped:          1127404 kB
+      Shmem:             14900 kB
+      KReclaimable:   29815168 kB
+      Slab:           32335688 kB
+      SReclaimable:   29731336 kB
+      SUnreclaim:      2604352 kB
+      KernelStack:       25392 kB
+      PageTables:        31676 kB
+      SecPageTables:         0 kB
+      NFS_Unstable:          0 kB
+      Bounce:                0 kB
+      WritebackTmp:          0 kB
+      CommitLimit:    65713132 kB
+      Committed_AS:    5673912 kB
+      VmallocTotal:   13743895347199 kB
+      VmallocUsed:      432260 kB
+      VmallocChunk:          0 kB
+      Percpu:           370176 kB
+      HardwareCorrupted:     8 kB
+      AnonHugePages:         0 kB
+      ShmemHugePages:        0 kB
+      ShmemPmdMapped:        0 kB
+      FileHugePages:         0 kB
+      FilePmdMapped:         0 kB
+      Unaccepted:            0 kB
+      HugePages_Total:       0
+      HugePages_Free:        0
+      HugePages_Rsvd:        0
+      HugePages_Surp:        0
+      Hugepagesize:       2048 kB
+      Hugetlb:               0 kB
+      DirectMap4k:    40398820 kB
+      DirectMap2M:    91160576 kB
+      DirectMap1G:     4194304 kB
+    governor: null
+    no_turbo: null
+  free_disk_bytes: 60315475968
+  commit: 05e1b7b05220c06fa1bea39af8881fdda38f818f
+  dirty: false
+  loaded_libraries:
+    libstdc++.so.6.0.33:
+      path: /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33
+      sha256: 1fd75fe70354a416d75aef22bcae68c47bd25d20e2d0568c30b1a9838cf62f11
+    libm.so.6:
+      path: /usr/lib/x86_64-linux-gnu/libm.so.6
+      sha256: fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0
+    libgcc_s.so.1:
+      path: /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+      sha256: d93224d2b0dab4247598be683adca02f5cf00586f99c187579cd7e92058fb7cb
+    libc.so.6:
+      path: /usr/lib/x86_64-linux-gnu/libc.so.6
+      sha256: 3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf
+    ld-linux-x86-64.so.2:
+      path: /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+      sha256: c20a2dc8917c755f02b94049356320fe1f62ac7d9f8994731f807d9df39302da
+  end_state:
+    load: [2.60986328125, 1.7890625, 1.798828125]
+    time_ns: 1791331026151450453
+    available_memory: |-
+      MemTotal:       131426264 kB
+      MemFree:        21764680 kB
+      MemAvailable:   121791780 kB
+      Buffers:        12233036 kB
+      Cached:         59326768 kB
+      SwapCached:            0 kB
+      Active:          4447528 kB
+      Inactive:       68808496 kB
+      Active(anon):    1670140 kB
+      Inactive(anon):    55780 kB
+      Active(file):    2777388 kB
+      Inactive(file): 68752716 kB
+      Unevictable:       39252 kB
+      Mlocked:           36180 kB
+      SwapTotal:             0 kB
+      SwapFree:              0 kB
+      Zswap:                 0 kB
+      Zswapped:              0 kB
+      Dirty:               560 kB
+      Writeback:             0 kB
+      AnonPages:       1735780 kB
+      Mapped:          1127412 kB
+      Shmem:             14900 kB
+      KReclaimable:   29815596 kB
+      Slab:           32336452 kB
+      SReclaimable:   29731764 kB
+      SUnreclaim:      2604688 kB
+      KernelStack:       25760 kB
+      PageTables:        31520 kB
+      SecPageTables:         0 kB
+      NFS_Unstable:          0 kB
+      Bounce:                0 kB
+      WritebackTmp:          0 kB
+      CommitLimit:    65713132 kB
+      Committed_AS:    5757880 kB
+      VmallocTotal:   13743895347199 kB
+      VmallocUsed:      432660 kB
+      VmallocChunk:          0 kB
+      Percpu:           370176 kB
+      HardwareCorrupted:     8 kB
+      AnonHugePages:         0 kB
+      ShmemHugePages:        0 kB
+      ShmemPmdMapped:        0 kB
+      FileHugePages:         0 kB
+      FilePmdMapped:         0 kB
+      Unaccepted:            0 kB
+      HugePages_Total:       0
+      HugePages_Free:        0
+      HugePages_Rsvd:        0
+      HugePages_Surp:        0
+      Hugepagesize:       2048 kB
+      Hugetlb:               0 kB
+      DirectMap4k:    40398820 kB
+      DirectMap2M:    91160576 kB
+      DirectMap1G:     4194304 kB
+    governor: null
+    no_turbo: null
+settings:
+  repetitions: 7
+  min_trial_s: 0.05
+  max_wall_s: 600.0
+  resident_payload_bytes: 0
+  raw_output_cap_bytes: 26214400
+  iteration_cap: 134217728
+services:
+- id: clock.now
+  unit: seconds/call
+  event_definition: One system_clock::now per service iteration; matched conditional-loop driver, checksum
+    consumption and return. Effective constructed service difference, not physical instruction latency.
+  scope:
+    worker_scope: serial
+    cache_state: steady_repeated_calls
+    runtime: hash-bound loaded C/C++ libraries; exact counted clock ABI
+  denominator:
+    level: source_normalized_work
+    basis: measured
+    proof:
+      format: swdb.cpu-service-count-proof.v1
+      pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      source_sha256: 07d7bf48b5d9afb1b0725f2abf7a57f301c17d355b72676d214186ba1d7150cf
+      count_driver_sha256: 9745a510ad04ae9b9aa2250d5cd49577f09a5d73e1fc2a2e8b666e274409f2d9
+      event_abi: _ZNSt6chrono3_V212system_clock3nowEv
+      service_validation_points:
+      - [32, 32]
+      - [64, 64]
+      - [96, 96]
+      driver_validation_points:
+      - [32, 0]
+      - [64, 0]
+      - [96, 0]
+      characterization_sha256:
+      - d0491f75f102333fb2f34b2b2c6da04b060cb0d307a9e7b3756d5e255b9a307b
+      - 2a766698844e926a26d5754790629533774ce7348af3a502e9537d20dcc8ed9e
+      - 069bc15686fcbb73162b9352d387dc008148deafabccb08ea74cd78d9be577a8
+      - 6f3712ebe54ad8906675d94bc38104a52e4fe6adfa71202c7acad1a0ebf4d057
+      - 53caca1dd74aec78860b1970df893008bd52e10cb4c5fee7f93f93435223f79d
+      - c618eb022087d1e9c0fbd40a7303beabd5816d41880e86a700230cd04e265024
+      plugin_source_sha256: 079105affe9a8c01b5766dab26da5f96ab309abccb8dd8c15d2982fe902b90ef
+      runtime_source_sha256: aad5d7667e3359bddac47cb0b73a1693fd1ae321fbf1bc34347c7a5f69ec89af
+  trials:
+  - events: 134217728
+    gross_seconds: 2.357550841
+    driver_seconds: 0.056078059
+    order: service_first
+    checksum: 136601722758
+  - events: 134217728
+    gross_seconds: 2.356781356
+    driver_seconds: 0.053902318
+    order: driver_first
+    checksum: 3845464089
+  - events: 134217728
+    gross_seconds: 2.358449554
+    driver_seconds: 0.055171203
+    order: service_first
+    checksum: 3861709669
+  - events: 134217728
+    gross_seconds: 2.35602487
+    driver_seconds: 0.052598077
+    order: driver_first
+    checksum: 16203029725
+  - events: 134217728
+    gross_seconds: 2.356907734
+    driver_seconds: 0.053803472
+    order: service_first
+    checksum: 3727619460
+  - events: 134217728
+    gross_seconds: 2.356676872
+    driver_seconds: 0.052964393
+    order: driver_first
+    checksum: 2070440211
+  - events: 134217728
+    gross_seconds: 2.368375075
+    driver_seconds: 0.05354705
+    order: service_first
+    checksum: 1021988776
+  seconds_per_event:
+    values: [1.7147308453917505e-08, 1.715778587758541e-08, 1.716076099127531e-08, 1.716186697036028e-08,
+      1.7159463927149774e-08, 1.7163995496928693e-08, 1.7246812768280504e-08]
+    median: 1.716076099127531e-08
+    min: 1.7147308453917505e-08
+    max: 1.7246812768280504e-08
+    spread: 9.950431436299877e-11
+    repetitions: 7
+  missing: []
+  parameter:
+    value: 1.716076099127531e-08
+    basis: measured
+    source: Service calibration mbit10.cpu.lanl20261006.service.clock.a2; clock.now; paired elapsed/work
+      trials.
+    unit: seconds/call
+identity_sha256: 58428d627ee36b10f39f23d6156264faa32db6494e976ea91c02b17bfdeb8a72
