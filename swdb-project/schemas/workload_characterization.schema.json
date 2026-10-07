@@ -674,6 +674,16 @@
             "observer_sha256",
             "runtime_sha256"
           ]
+        },
+        "counted_target_description_snapshot": {
+          "type": "object"
+        },
+        "target_observation_policy_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "target_observation_policy_format": {
+          "const": "swdb.observation-policy.v1"
         }
       },
       "required": [
