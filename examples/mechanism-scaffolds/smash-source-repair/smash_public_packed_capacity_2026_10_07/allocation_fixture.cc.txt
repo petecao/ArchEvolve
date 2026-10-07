@@ -1,0 +1,13 @@
+#include <cassert>
+#include <cstdint>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <iostream>
+struct smash {unsigned long *bitmap0=nullptr,*bitmap1=nullptr;int bitmap0_bits=128,bitmap1_bits=0,compression_ratio0=4,compression_ratio1=4,bitmap0_blocks=0;};
+#ifdef READER_FIXED
+#include "functions-reader-fixed.inc"
+#else
+#include "functions-original.inc"
+#endif
+int main(){smash f;f.bitmap0=(unsigned long*)calloc(2,sizeof(unsigned long));auto*input=f.bitmap0;for(int i=0;i<17;++i)set_bit(input,i*4);construct_bitmap1(&f);free(input);free(f.bitmap0);free(f.bitmap1);return 0;}

@@ -43,3 +43,8 @@ The [typed-mask source review](wordmask-review.md) records a subsequent minimal
 three-site correction for narrow signed-int shifts on the 64-bit bitmap registers.
 It composes with the zero guard and preserves the distinction between primitive
 behavior and complete indexer/kernel correctness.
+
+The [coherent repair batch](repair-batch/README.md) now supplies portable
+exact-parent constructor/setter/reader/capacity transformations and new fixture
+extraction. It admits only the tested complete same-ratio metadata domain;
+NZA values and whole-kernel numerical correctness remain unbound.
