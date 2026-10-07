@@ -44,3 +44,6 @@ Claimed: 2026-10-06 22:22 ET by ticket17 implementer; base `9a5057f45c7a1c3b8756
 
 
 2026-10-07 11:47 ET — distinct full-record-index supplier retained at `../evidence/17-parent-full-record-index-controls-20261007/README.md`: exact writer/test/preparation/handoff/audit/review/runner and separate original test outputs. One later isolated local batch passed all eight actual bodies; earlier preparation remains NOTRUN history. Future index is parent-generated unsealed metadata with explicitly inherited original full validation/quiescence, not an original 28d output or independent validator. New source-read bounds alter no old control. Actual writer main/requests/catalog/index, ticket 17 preparation/four campaigns/D30 remain pending; source C/F6/controls unchanged and status claimed.
+
+
+2026-10-07 11:56 ET — source-only field and selected-body readiness notes retained at `../evidence/17-actual-input-readiness-notes-20261007/README.md`. No existing required body over 32MiB demonstrated and no future-size clearance inferred; actual direct/full closure size pins remain required. Distinct index-source bounds enlarge no selected consumer. Original notes assign no actual input/approval, and no controls, bounds, source C/F6 or scientific action changed; four campaigns/D30 remain pending, status claimed.
