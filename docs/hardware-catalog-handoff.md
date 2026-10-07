@@ -2,11 +2,11 @@
 
 Eric supplies the hardware knowledge. Josh owns architecture selection/composition and its implementation; Peter derives the software specification; Yan-Ru rewrites the benchmark.
 
-The catalog is now the offline pipeline's default. Data revision 0.1.10 contains ten records and 46 operations, including scoped TMU, COBRA and AXI-Pack mappings. The [current internal-mechanism handoff](mechanism-handoff-2026-10-06/README.md) includes the expanded MAPLE contract and an executable association scaffold. Implementations and hardware performance remain unverified.
+The catalog is now the offline pipeline's default. Data revision 0.1.11 contains eleven records and 48 operations, including scoped TMU, COBRA and AXI-Pack mappings and the explicit Pipette queue/RA interface. The [current internal-mechanism handoff](mechanism-handoff-2026-10-06/README.md) includes the expanded MAPLE contract and an executable association scaffold. The [Pipette admission](pipette-catalog-admission/README.md) adds a committed/speculative queue lifecycle subset. Implementations and hardware performance remain unverified.
 
 ## What is here
 
-- [catalog/hardware-v0.1.yaml](../catalog/hardware-v0.1.yaml): ten source-scoped records covering DX100 paper/artifact, two Terminus configurations, Prodigy, SpZip, MAPLE, TMU, COBRA and AXI-Pack; 46 operations.
+- [catalog/hardware-v0.1.yaml](../catalog/hardware-v0.1.yaml): eleven source-scoped records covering DX100 paper/artifact, two Terminus configurations, Prodigy, SpZip, MAPLE, TMU, COBRA, AXI-Pack and Pipette; 48 operations.
 - [Field reference](hardware-catalog-format.md): input, output, operation support, requirements, parameters and evidence fields.
 - [Source evidence](hardware-catalog-evidence.md): paper/artifact distinctions and limitations.
 - `archevolve/hardware_catalog.py`: optional validation/inspection/query interface. Direct YAML loading is also supported.
