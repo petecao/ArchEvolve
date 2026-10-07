@@ -406,3 +406,28 @@ the already explicit footprint/CAS policy. Every construction records
 `cost_basis: gross_constructed_resource_v1`; mixed subtraction/total-cell CAS
 inputs are rejected. The frozen protocol recursively pins both the resource and
 original calibration. Previous descriptions and unresolved residuals stay intact.
+
+### Prospective empirical held-out check
+
+`freeze-cpu-error-band` rejects pooled model/calibration/bundle/thread/target
+identities and retains the independent workload pairs and five-trial rounding.
+Every matched native validation must pin the same prior frozen estimate protocol.
+A development width cannot reuse held-out timings.
+
+`validate-cpu-error-band --development-band <id> --estimate <id> --validation <id>
+--id <new-id>` checks each pair against the unchanged width. Exact source/ROI,
+advancing-source and process policy, compiler/runtime/environment, flags and graph
+generation shape must match development. Native held-out timing also requires
+its exact outcome-free characterization in the common target's prospective
+allowlist, a new input, prior band binding and timing after the width freeze.
+An out-of-band pair or unsupported scope creates an explicit failed receipt
+with the original width and measured diagnostics; it never widens the envelope.
+Reported fixture pass/failure verifies this API but grants no native confidence.
+
+A validated empirical envelope applies only to exact held-out characterization
+identities. It does not generalize to unseen candidates, kernels, threads or
+targets. For an admitted estimate and baseline, the ratio's log interval uses
+plus/minus twice the single-estimate width; `estimated_gain` requires the lower
+ratio above1.05, `estimated_no_gain` requires the upper below1.05, and other cases
+remain `within_error`. CPU native timing continues to decide established
+ArchEvolve evaluations; this separate analytic verdict never replaces selection.
