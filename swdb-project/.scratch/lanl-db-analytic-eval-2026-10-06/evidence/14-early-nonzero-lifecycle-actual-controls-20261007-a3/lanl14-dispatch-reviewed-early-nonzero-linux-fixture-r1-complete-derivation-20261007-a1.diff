@@ -1,0 +1,17 @@
+--- lanl14-dispatch-reviewed-early-nonzero-linux-fixture-20261007-a1.py
++++ lanl14-dispatch-reviewed-early-nonzero-linux-fixture-20261007-a1-r1.py
+@@ -80,9 +80,12 @@
+  checked(PRIMARY,directory=True);checked(PROJECT,directory=True);checked(MEMACC,directory=True)
+  require(text_git(PRIMARY,'branch','--show-current')=='yanrujhou_main','primary branch differs')
+  require(text_git(PRIMARY,'rev-parse','HEAD')==text_git(PRIMARY,'rev-parse','origin/yanrujhou_main')==revision,'delivered primary/origin revision differs')
+- require(not git(PRIMARY,'status','--porcelain'),'primary tracked/untracked changes retained; refusing')
++ require(not git(PRIMARY,'diff','--name-only') and not git(PRIMARY,'diff','--cached','--name-only'),'primary tracked/staged changes retained; refusing')
++ require(git(PRIMARY,'status','--porcelain')==b'?? swdb-project/records/.retention.lock\n','only original untracked primary retention lock is allowed')
++ retention=checked(PRIMARY/'swdb-project/records/.retention.lock');retention_status=retention.stat();retention_raw=retention.read_bytes()
++ require(retention_status.st_size==len(retention_raw)==0 and hashlib.sha256(retention_raw).hexdigest()=='e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' and retention.stat()==retention_status,'original empty owned retention lock differs')
+  require(text_git(PROJECT.parent,'rev-parse','HEAD')==C and not git(PROJECT.parent,'status','--porcelain'),'immutable C worktree differs; ignored history is retained')
+- projections={}
++ projections={'primary_retention_lock':{'path':str(retention),'bytes':0,'sha256':'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855','uid':retention_status.st_uid,'device':retention_status.st_dev,'inode':retention_status.st_ino,'mode':stat.S_IMODE(retention_status.st_mode)}}
+  for root in (PRIMARY/'swdb-project',PROJECT):
+   paths=sorted((root/'swdb').rglob('*.py'));require(len(paths)==185,'portable module count differs')
+   files={p.relative_to(root/'swdb').as_posix():file_sha(checked(p)) for p in paths}

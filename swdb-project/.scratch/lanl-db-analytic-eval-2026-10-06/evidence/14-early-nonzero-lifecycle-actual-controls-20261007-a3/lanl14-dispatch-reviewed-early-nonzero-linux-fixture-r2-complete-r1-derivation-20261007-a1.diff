@@ -1,0 +1,20 @@
+--- lanl14-dispatch-reviewed-early-nonzero-linux-fixture-20261007-a1-r1.py
++++ lanl14-dispatch-reviewed-early-nonzero-linux-fixture-20261007-a1-r2.py
+@@ -59,7 +59,7 @@
+  return p
+ def read_json(path,maximum=8*1024*1024):
+  p=checked(path);s=p.stat();require(0<s.st_size<=maximum,'metadata bound differs');raw=p.read_bytes()
+- require(len(raw)==s.st_size and p.stat()==s,'metadata changed during read')
++ require(len(raw)==s.st_size and ((read_after := p.stat()).st_dev,read_after.st_ino,read_after.st_mode,read_after.st_nlink,read_after.st_uid,read_after.st_gid,read_after.st_size,read_after.st_mtime_ns,read_after.st_ctime_ns)==(s.st_dev,s.st_ino,s.st_mode,s.st_nlink,s.st_uid,s.st_gid,s.st_size,s.st_mtime_ns,s.st_ctime_ns),'metadata changed during read')
+  return json.loads(raw),{'path':str(p),'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()}
+ def private(path,raw):
+  fd=os.open(path,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+@@ -83,7 +83,7 @@
+  require(not git(PRIMARY,'diff','--name-only') and not git(PRIMARY,'diff','--cached','--name-only'),'primary tracked/staged changes retained; refusing')
+  require(git(PRIMARY,'status','--porcelain')==b'?? swdb-project/records/.retention.lock\n','only original untracked primary retention lock is allowed')
+  retention=checked(PRIMARY/'swdb-project/records/.retention.lock');retention_status=retention.stat();retention_raw=retention.read_bytes()
+- require(retention_status.st_size==len(retention_raw)==0 and hashlib.sha256(retention_raw).hexdigest()=='e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' and retention.stat()==retention_status,'original empty owned retention lock differs')
++ require(retention_status.st_size==len(retention_raw)==0 and hashlib.sha256(retention_raw).hexdigest()=='e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' and ((retention_after := retention.stat()).st_dev,retention_after.st_ino,retention_after.st_mode,retention_after.st_nlink,retention_after.st_uid,retention_after.st_gid,retention_after.st_size,retention_after.st_mtime_ns,retention_after.st_ctime_ns)==(retention_status.st_dev,retention_status.st_ino,retention_status.st_mode,retention_status.st_nlink,retention_status.st_uid,retention_status.st_gid,retention_status.st_size,retention_status.st_mtime_ns,retention_status.st_ctime_ns),'original empty owned retention lock differs')
+  require(text_git(PROJECT.parent,'rev-parse','HEAD')==C and not git(PROJECT.parent,'status','--porcelain'),'immutable C worktree differs; ignored history is retained')
+  projections={'primary_retention_lock':{'path':str(retention),'bytes':0,'sha256':'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855','uid':retention_status.st_uid,'device':retention_status.st_dev,'inode':retention_status.st_ino,'mode':stat.S_IMODE(retention_status.st_mode)}}
+  for root in (PRIMARY/'swdb-project',PROJECT):
