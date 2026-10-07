@@ -1,0 +1,67 @@
+{
+  "format": "swdb.lanl17-parent-index-isolated-tests-actual.v1",
+  "started_utc": "2026-10-07T15:44:16.039255+00:00",
+  "ended_utc": "2026-10-07T15:44:16.189462+00:00",
+  "canonical_ensure_ascii": true,
+  "actual_subprocess_returncode": 0,
+  "actual_timed_out": false,
+  "actual_reported_test_count": 8,
+  "actual_reported_OK": true,
+  "actual_successful_test_method_names": [
+    "test_added_or_deleted_inventory_body_refuses",
+    "test_changed_returned_bytes_refuse_even_with_same_length",
+    "test_duplicate_record_ids_refuse_full_index",
+    "test_exact_whole_record_digest_file_sha_and_original_string_date",
+    "test_final_original_source_change_refuses_before_publication",
+    "test_final_source_recheck_after_publication_precedes_success",
+    "test_path_inode_swap_during_open_read_refuses",
+    "test_top_and_nested_duplicate_yaml_keys_refuse"
+  ],
+  "elapsed_parent_seconds": 0.15068241709377617,
+  "original_preparation_identity": "9be4d961e49fedf415c9f068318c8480a47e1331737399d4405fb113fa33519c",
+  "source_pins": {
+    "/private/tmp/lanl17_parent_full_record_index_isolated_test_source_20261007.py": {
+      "sha256": "02395edfab3000e8ffac2dba895bbd1d3d78eb6fefa4cb15585dc88c5b77fa40",
+      "bytes": 10704
+    },
+    "/private/tmp/lanl17_write_parent_full_record_index_20261007.py": {
+      "sha256": "7a67d46f8ad7d453fe07bd458a21f663bd4dc7ec12e71de83ad8b5caaf28894b",
+      "bytes": 33445
+    },
+    "/private/tmp/lanl17-parent-full-record-index-source-preparation-20261007.json": {
+      "sha256": "54d916f5933da0af661e1245856f8e93b30bdc6147a569626aad066a60b7eb88",
+      "bytes": 5057
+    },
+    "/private/tmp/lanl17-parent-full-record-index-writer-source-handoff-20261007.md": {
+      "sha256": "1ad58ed923ea8c6b20f6d57b6f07a8fc89d266ccf0f88c83bd871dcf07c8118c",
+      "bytes": 10048
+    }
+  },
+  "outputs": {
+    "start.json": {
+      "path": "/private/tmp/lanl17-parent-full-record-index-tests-actual-20261007.start.json",
+      "bytes": 446,
+      "sha256": "6b422151eba2668f7e02f2a0a7a55ef9ce9ff26ffb6bb1183434c29ebb8dfa89",
+      "original_sealed": false
+    },
+    "stdout": {
+      "path": "/private/tmp/lanl17-parent-full-record-index-tests-actual-20261007.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_sealed": false
+    },
+    "stderr": {
+      "path": "/private/tmp/lanl17-parent-full-record-index-tests-actual-20261007.stderr",
+      "bytes": 1302,
+      "sha256": "17349655a5b86fb5e46389ec9de10e6fbc15a5a2e5dcaada467e7292da0fc5f6",
+      "original_sealed": false
+    }
+  },
+  "batch_invocations": 1,
+  "source_and_preparation_preserved": true,
+  "scientific_admission": false,
+  "actual_inputs_constructed": false,
+  "writer_main_or_Store_validate_provider_native_campaign_actions": 0,
+  "scope": "One local eight-case synthetic batch, lifting closed exact original helper AST only. No actual writer main, request, catalogue, index, SWDB, Store, validator, selected collector/auditor, SSH, native or provider execution. Original preparation stays NOTRUN history.",
+  "identity_sha256": "ea39a791dfc7abe475a6f85035c1b7864cdef4536a72ad22358320bf17b0ae4b"
+}
