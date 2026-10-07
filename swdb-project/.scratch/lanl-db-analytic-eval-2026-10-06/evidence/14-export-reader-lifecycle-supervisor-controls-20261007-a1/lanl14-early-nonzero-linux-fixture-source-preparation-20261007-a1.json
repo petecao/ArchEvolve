@@ -1,0 +1,90 @@
+{
+  "format": "swdb.lanl14-early-nonzero-linux-fixture-source-preparation.v1",
+  "updated": "2026-10-07 ET",
+  "created_utc": "2026-10-07T23:03:15.509679+00:00",
+  "canonical_ensure_ascii": true,
+  "pins": [
+    {
+      "path": "/private/tmp/lanl14_export_reader_early_nonzero_linux_fixture_20261007_a1.py",
+      "bytes": 16418,
+      "sha256": "388b9b1be3ce29c3d677ab2796c049793bf763504d4be7ad8e9f399c94354624"
+    },
+    {
+      "path": "/private/tmp/lanl14-early-nonzero-linux-fixture-complete-a848-derivation-20261007-a1.diff",
+      "bytes": 24846,
+      "sha256": "15f302bcf37c9bb709e0eab3ec23a3794fdb2ab674b93bae3c61505ae3baabed"
+    },
+    {
+      "path": "/private/tmp/lanl14-early-nonzero-linux-fixture-source-handoff-20261007-a1.md",
+      "bytes": 8212,
+      "sha256": "106bd9a649162fc453a8aeb072d91120e926972b98b0375b525ace590ca9418f"
+    }
+  ],
+  "original_fixture": {
+    "path": "/private/tmp/lanl17_metadata_supervisor_cleanup60_a4_linux_fixture.py",
+    "bytes": 9555,
+    "sha256": "a848ef2d5c6dba58e6814bf80d8bdf24edeb33812bda343ecf25ff6f28745b0f"
+  },
+  "selected_supervisor": {
+    "path": "/private/tmp/lanl14_export_reader_administrative_supervisor_20261007_a1_r1.py",
+    "bytes": 14547,
+    "sha256": "503fc5defcf96a5177599185a9895c00ae64b3e1b0058128b9e283ef3bd39f3f"
+  },
+  "supervisor_fa703_complete_derivation": {
+    "path": "/private/tmp/lanl14-export-reader-supervisor-r1-complete-fa703-derivation-20261007-a1.diff",
+    "bytes": 18782,
+    "sha256": "29d705206ea8528322c8c63cf7c0f7ceca6ef740fe4c0576978618015a3910eb"
+  },
+  "original_cleanup": {
+    "path": "/private/tmp/lanl17_parent_helpers.py",
+    "bytes": 38190,
+    "sha256": "31e1d71bc6e9ef4a5a5f1d5fbff136ceef249935f8f00601edf45277fce249ec"
+  },
+  "selected_exporter": {
+    "path": "/private/tmp/lanl14_final_export_lossless_gzip_20261007_a1.py",
+    "bytes": 22967,
+    "sha256": "928af82facd9f36dfdbca6595d2c2e9d1091dd0064c9fe53fc41c163879e026e"
+  },
+  "processes_py": {
+    "path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/swdb/processes.py",
+    "bytes": 912,
+    "sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289"
+  },
+  "unchanged_original_definition_ASTs": [
+    "FixtureFailure",
+    "FixtureDeadline",
+    "require",
+    "sha"
+  ],
+  "source_analysis": "AST parsing and full hashes/derivation only; no target compile/import/main/test",
+  "one_prospective_case": "early_nonzero7",
+  "expected_worker_exit": 7,
+  "expected_supervisor_state": "child_failed",
+  "shared_supervise_action": "exporter",
+  "fixture_flag": true,
+  "production_caps_unchanged": {
+    "exporter": 18000,
+    "reader": 14400
+  },
+  "fixture_only_allowances": {
+    "worker_wait_s": 100,
+    "harness_alarm_s": 240,
+    "GNU_outer_s": 360,
+    "GNU_kill_after_s": 60,
+    "duration_guarantee": false
+  },
+  "runtime_receipt_canonical_ensure_ascii": false,
+  "reader_mode_runtime_proof": false,
+  "actual_paths_native_argv_supplied": false,
+  "target_imported": false,
+  "target_compiled": false,
+  "target_main_executed": false,
+  "tests_executed": false,
+  "Linux_cleanup_proof": false,
+  "scientific_admission": false,
+  "SSH": false,
+  "Git_mutation": false,
+  "staged": false,
+  "scope": "NOTRUN one isolated Linux process lifecycle fixture source. Does not execute selected exporter/reader main, Store/validate/compiler/evaluator/provider/Git/SSH or establish scientific admission.",
+  "identity_sha256": "5f366ba78bd70ccec771e74ae8914f9e6eb1d5139b07d2696aa8136c5996566c"
+}

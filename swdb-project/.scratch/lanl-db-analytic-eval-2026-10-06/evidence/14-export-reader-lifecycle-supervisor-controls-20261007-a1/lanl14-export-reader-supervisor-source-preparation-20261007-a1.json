@@ -1,0 +1,91 @@
+{
+  "format": "swdb.lanl14-export-reader-supervisor-source-preparation.v1",
+  "updated": "2026-10-07 ET",
+  "created_utc": "2026-10-07T22:58:26.335633+00:00",
+  "canonical_ensure_ascii": true,
+  "source": {
+    "path": "/private/tmp/lanl14_export_reader_administrative_supervisor_20261007_a1.py",
+    "bytes": 14471,
+    "sha256": "8cad3bc1986de0ae160535d71fbea580deddaf400658753ffe1dfdee76374837"
+  },
+  "base": {
+    "path": "/private/tmp/lanl17_metadata_supervisor_cleanup60_a4.py",
+    "bytes": 8014,
+    "sha256": "fa703bbd4c71bb4bcf56f47d1e224449f627d5921295e00b9cc105f21e95bde0"
+  },
+  "complete_derivation": {
+    "path": "/private/tmp/lanl14-export-reader-supervisor-complete-derivation-20261007-a1.diff",
+    "bytes": 18702,
+    "sha256": "e2d98fbe1101ea2604d03f318f6edd81aae1af75c869bbcbb9356e41fbb93e0e"
+  },
+  "handoff": {
+    "path": "/private/tmp/lanl14-export-reader-supervisor-source-handoff-20261007-a1.md",
+    "bytes": 10141,
+    "sha256": "851cb20caf706e991f293eaa547a0297ad9402eba7df09ad40d7315fed6a27b3"
+  },
+  "original_inputs": [
+    {
+      "path": "/private/tmp/lanl17_parent_helpers.py",
+      "bytes": 38190,
+      "sha256": "31e1d71bc6e9ef4a5a5f1d5fbff136ceef249935f8f00601edf45277fce249ec"
+    },
+    {
+      "path": "/private/tmp/lanl14_final_export_lossless_gzip_20261007_a1.py",
+      "bytes": 22967,
+      "sha256": "928af82facd9f36dfdbca6595d2c2e9d1091dd0064c9fe53fc41c163879e026e"
+    },
+    {
+      "path": "/private/tmp/lanl14_readonly_nine_export_admission_lossless_gzip_20261007_a1.py",
+      "bytes": 37647,
+      "sha256": "6909c422990a071b1a8d08c634c1c086f0218c5851d38996b6f4798759499570"
+    },
+    {
+      "path": "/private/tmp/lanl14-export-reader-descendant-boundary-source-review-20261007.md",
+      "bytes": 5455,
+      "sha256": "f33980054c708030f8ce22eafb76f0085de6e2be8c9682815f7ce418cdceccaa"
+    },
+    {
+      "path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/swdb/processes.py",
+      "bytes": 912,
+      "sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289"
+    }
+  ],
+  "unchanged_definition_ASTs": [
+    "Refusal",
+    "Interruption",
+    "digest",
+    "seal",
+    "sha",
+    "now",
+    "bundle_identity",
+    "require",
+    "load_module",
+    "enable_subreaper"
+  ],
+  "changed_original_definition_ASTs": [
+    "load_context",
+    "supervise",
+    "main"
+  ],
+  "source_analysis": "ast.parse, full source reading, file hashes and complete difflib derivation only; no target imports/compile/execution",
+  "administrative_caps_prospective": {
+    "exporter_child_wait_s": 18000,
+    "reader_child_wait_s": 14400,
+    "outer_margin_s": 120,
+    "outer_kill_after_s": 60,
+    "duration_guarantee": false
+  },
+  "target_main_executed": false,
+  "target_imported": false,
+  "harness_prepared": false,
+  "tests_executed": false,
+  "linux_cleanup_proof": false,
+  "native_python_actual_pin_supplied": false,
+  "actual_invocation_supplied": false,
+  "scientific_admission": false,
+  "SSH": false,
+  "Git_mutation": false,
+  "staged": false,
+  "scope": "Source-only proposed administrative lifecycle derivative. Selected exporter/reader, original cleanup, processes and F6 remain unchanged; no actual output/cleanup/scientific claim.",
+  "identity_sha256": "4d71f37f11f260fc3c2d23decdf5de5aa98cbd9d4a31bdd1c572586c08d61b33"
+}
