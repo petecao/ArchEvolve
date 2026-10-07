@@ -1,0 +1,275 @@
+{
+  "format": "swdb.cpu-model-admission-cleanup60-custody.v1",
+  "updated": "2026-10-07 ET",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "pure_model_export_commit": "887d9bfd319a08df20d6f6cf3571bde8db71406c",
+  "archive_integration_base": "dfb1e1c4c885b0ef95edd6742e2403526907eda9",
+  "actual_model_admission_identity": "fe2890f8e7d8c95d6841ddd78b61762667e07c02688567676aca5d8fc4f4e3bd",
+  "actual_model_receipt_identity": "ea12a575bf4c70cf77dbc436f1f1df17b54b03cfc944f11627424b1c45521fec",
+  "verified_control_identity": "9fbc8101ad1ea27a61528ee39296a741539ea7362cd8a5b3773c418e061ef9c0",
+  "rows": [
+    {
+      "path": "lanl-readonly-cpu-model-a3-admission.py",
+      "original_path": "/private/tmp/lanl-readonly-cpu-model-a3-admission.py",
+      "sha256": "d0d47273aa6c6c8c3b6f0285800facd98bf74f544cd48c5987012ee1661b4ec3",
+      "bytes": 15407,
+      "classification": "actual_model_local_readonly_admission"
+    },
+    {
+      "path": "lanl-cpu-model-a3-local-admission-20261007.json",
+      "original_path": "/private/tmp/lanl-cpu-model-a3-local-admission-20261007.json",
+      "sha256": "e9525390a35a91c28c0844b5eb8f47520b7205aacaef8dcb3c938d86a11967ba",
+      "bytes": 6623,
+      "classification": "actual_model_local_readonly_admission",
+      "canonical_document_sha256": "0dadcb293e6201d2845b4a03fc04aaea8a81b9d2a248047a3fc110094abf0571",
+      "identity_sha256": "fe2890f8e7d8c95d6841ddd78b61762667e07c02688567676aca5d8fc4f4e3bd"
+    },
+    {
+      "path": "lanl-parent-model-export-check-20261007.json",
+      "original_path": "/private/tmp/lanl-parent-model-export-check-20261007.json",
+      "sha256": "f7978f466e1ecea5a313c24162085cc05fad2f0a9487694c46e3c4a8ccfa4dec",
+      "bytes": 2523,
+      "classification": "parent_actual_export_check_snapshot",
+      "canonical_document_sha256": "f1aecab827428b0399927aec4aeb00005c7936b1357245427b9b36b827160ee8",
+      "original_document_seal": "absent; original bytes retained; file and canonical digests pinned by this custody manifest"
+    },
+    {
+      "path": "lanl-consumed-old-exports-preflight-20261007.json",
+      "original_path": "/private/tmp/lanl-consumed-old-exports-preflight-20261007.json",
+      "sha256": "6eb5a9da550c474f91431db5ad2f0b2bdd6a40079e92499fe06b11cbd6fda2b0",
+      "bytes": 2888,
+      "classification": "parent_actual_cleanup_custody_snapshot",
+      "canonical_document_sha256": "e7dd44c5d6706f1b054304ed5625ca0a7f629d7b2db71fa990aeeaa10aeeec6c",
+      "original_document_seal": "absent; original bytes retained; file and canonical digests pinned by this custody manifest"
+    },
+    {
+      "path": "lanl-consumed-old-exports-cleanup-actual-20261007.json",
+      "original_path": "/private/tmp/lanl-consumed-old-exports-cleanup-actual-20261007.json",
+      "sha256": "b4a5124b511da002ee0b5be33d2df152d0c43f4371ffbfe657f54136c71ddbeb",
+      "bytes": 2896,
+      "classification": "parent_actual_cleanup_custody_snapshot",
+      "canonical_document_sha256": "26d487a8a48fcf75cd89cedd061749b098d01d5a56f67ee7fbb3b2533d34f589",
+      "original_document_seal": "absent; original bytes retained; file and canonical digests pinned by this custody manifest"
+    },
+    {
+      "path": "lanl-model-a3-export-cleanup-preflight-20261007.json",
+      "original_path": "/private/tmp/lanl-model-a3-export-cleanup-preflight-20261007.json",
+      "sha256": "b945d2c9e53062831ffa4d0257326c60b41d18ac2da6af008e445eff239d7f99",
+      "bytes": 490,
+      "classification": "parent_actual_cleanup_custody_snapshot",
+      "canonical_document_sha256": "c6e6e2407f60b53ddb34b9efb04a67a75c6c004c66fd74bf81f9936f427d66dc",
+      "original_document_seal": "absent; original bytes retained; file and canonical digests pinned by this custody manifest"
+    },
+    {
+      "path": "lanl-model-a3-export-cleanup-actual-20261007.json",
+      "original_path": "/private/tmp/lanl-model-a3-export-cleanup-actual-20261007.json",
+      "sha256": "7faae7cd8a4b6bd178aee23d0e7740b551a3b60db01306334d0d265c2112a87e",
+      "bytes": 497,
+      "classification": "parent_actual_cleanup_custody_snapshot",
+      "canonical_document_sha256": "89f9b5778a344c3d42d1fb56c61676dc06661b1f81e2890f9d28dbf2622c9811",
+      "original_document_seal": "absent; original bytes retained; file and canonical digests pinned by this custody manifest"
+    },
+    {
+      "path": "lanl-parent-check-cpu-cleanup60-20261007.py",
+      "original_path": "/private/tmp/lanl-parent-check-cpu-cleanup60-20261007.py",
+      "sha256": "00e9fdeb9adf7c26f3929e3e552dc417e81fd11296c1efe8b86a405301e62a28",
+      "bytes": 2387,
+      "classification": "parent_reported_readonly_check_source"
+    },
+    {
+      "path": "lanl-dispatch-cpu-model-validation-a3-metadata2400-cleanup60.py",
+      "original_path": "/private/tmp/lanl-dispatch-cpu-model-validation-a3-metadata2400-cleanup60.py",
+      "sha256": "804fb08298bf1469c6098dfcd1a50710f2cc941f9478895482c1fe7d901e6ecb",
+      "bytes": 15896,
+      "classification": "selected_native_phases_unexecuted"
+    },
+    {
+      "path": "lanl-dispatch-cpu-band-report-a3-metadata2400-cleanup60.py",
+      "original_path": "/private/tmp/lanl-dispatch-cpu-band-report-a3-metadata2400-cleanup60.py",
+      "sha256": "dd74dbbe238c1d0c8222d894acd94ef1d344049da257d2a0d744afefb3d2b120",
+      "bytes": 17764,
+      "classification": "selected_native_phases_unexecuted"
+    },
+    {
+      "path": "lanl-admit-cpu-future-phase-cleanup60-20261007.py",
+      "original_path": "/private/tmp/lanl-admit-cpu-future-phase-cleanup60-20261007.py",
+      "sha256": "b406d3d06b3bddb2cd433cf8f3c47fa80f03314b23795a4b40c045a9120a1e93",
+      "bytes": 4370,
+      "classification": "selected_native_phases_unexecuted"
+    },
+    {
+      "path": "lanl-cpu-model-validation-a3-metadata2400-cleanup60-runner.py",
+      "original_path": "/private/tmp/lanl-cpu-model-validation-a3-metadata2400-cleanup60-runner.py",
+      "sha256": "32ece041d91b51a83d7d682da3825e2eb0fe0f3acba9d325a415029e4a889eb4",
+      "bytes": 11769,
+      "classification": "selected_native_phases_unexecuted"
+    },
+    {
+      "path": "lanl-cpu-band-report-a3-metadata2400-cleanup60-runner.py",
+      "original_path": "/private/tmp/lanl-cpu-band-report-a3-metadata2400-cleanup60-runner.py",
+      "sha256": "38d75a7b4a89a20d5978ca860729fa4352506b085e8f91faa9af19595d0dcb47",
+      "bytes": 13933,
+      "classification": "selected_native_phases_unexecuted"
+    },
+    {
+      "path": "lanl-export-cpu-model-validation-a3.py",
+      "original_path": "/private/tmp/lanl-export-cpu-model-validation-a3.py",
+      "sha256": "2d59a2d5f6ce54d4692fc962dbc9e38dab4f86076f1873ab78a1484522c681f6",
+      "bytes": 5860,
+      "classification": "selected_native_phases_unexecuted"
+    },
+    {
+      "path": "lanl-export-cpu-band-report-a3.py",
+      "original_path": "/private/tmp/lanl-export-cpu-band-report-a3.py",
+      "sha256": "788c5cfd72433916daac544420de5251eb6d549c56afaeba455a82416f11dbb1",
+      "bytes": 12921,
+      "classification": "selected_native_phases_unexecuted"
+    },
+    {
+      "path": "lanl-prepare-cpu-cleanup60-controls-20261007.py",
+      "original_path": "/private/tmp/lanl-prepare-cpu-cleanup60-controls-20261007.py",
+      "sha256": "b14f426a466c58d8bc7f818cba6e91c6528bef1265861fac6a81b4cfe20117f0",
+      "bytes": 7523,
+      "classification": "portable_preparation_or_mock_only"
+    },
+    {
+      "path": "lanl-test-cpu-model-dispatch-a3-metadata2400-cleanup60.py",
+      "original_path": "/private/tmp/lanl-test-cpu-model-dispatch-a3-metadata2400-cleanup60.py",
+      "sha256": "babdc1a19eb91c2b42b6bd924ac07ef77531bc95ead5128154d53c3f12fdb55b",
+      "bytes": 8676,
+      "classification": "portable_preparation_or_mock_only"
+    },
+    {
+      "path": "lanl-test-cpu-band-report-a3-metadata2400-cleanup60.py",
+      "original_path": "/private/tmp/lanl-test-cpu-band-report-a3-metadata2400-cleanup60.py",
+      "sha256": "d5cb28a443f131d9eea5e7b1d7176b2272ddcddf96388041453feccaade09b0c",
+      "bytes": 18844,
+      "classification": "portable_preparation_or_mock_only"
+    },
+    {
+      "path": "lanl-test-cpu-cleanup60-guard-20261007.py",
+      "original_path": "/private/tmp/lanl-test-cpu-cleanup60-guard-20261007.py",
+      "sha256": "e4a1cacc260d8a3f06685dcfa8ccf8b44c67db1fb40c035e6fc2c2684dccd69c",
+      "bytes": 9471,
+      "classification": "portable_preparation_or_mock_only"
+    },
+    {
+      "path": "lanl-cpu-cleanup60-preparation-proof-20261007.json",
+      "original_path": "/private/tmp/lanl-cpu-cleanup60-preparation-proof-20261007.json",
+      "sha256": "75368a6993ca5ec245fa3283e2728237feae06c33c6fa52cd5a944cd7c28af6a",
+      "bytes": 3524,
+      "classification": "portable_preparation_or_mock_only",
+      "canonical_document_sha256": "9ddf11d93b8af2c7c68bd7525fb076620611948e0ace896c77e511231a2bc67f",
+      "identity_sha256": "e5558f00a9c82400d65c6a15c5e732b4003380b1652e3f14e8770b1bce4997cf"
+    },
+    {
+      "path": "lanl-cpu-cleanup60-verified-proof-20261007.json",
+      "original_path": "/private/tmp/lanl-cpu-cleanup60-verified-proof-20261007.json",
+      "sha256": "0832233f4eb1e294956728c65993d74ea2e3925cba782742b8a423a339e1ec7d",
+      "bytes": 5079,
+      "classification": "portable_preparation_or_mock_only",
+      "canonical_document_sha256": "b83ca8d138aa1b2fd599781630b4f5bd88828067dcdeb96b935e6b24fbe7a717",
+      "identity_sha256": "9fbc8101ad1ea27a61528ee39296a741539ea7362cd8a5b3773c418e061ef9c0"
+    },
+    {
+      "path": "lanl-cpu-model-dispatch-a3-metadata2400-cleanup60-mocked-proof.json",
+      "original_path": "/private/tmp/lanl-cpu-model-dispatch-a3-metadata2400-cleanup60-mocked-proof.json",
+      "sha256": "830a7c5335d2a8b6ec5b3b6121f5e277c7d95648a4c8d74e652887bf021869f9",
+      "bytes": 1282,
+      "classification": "portable_preparation_or_mock_only",
+      "canonical_document_sha256": "ac33bc901067d8c7442904e712db0b3200a0b256fe299e89f1532e50f37a8429",
+      "identity_sha256": "cc081b056178f11af5474c680127e96b088acc4af085e0cab5e2cc8bba29ee5e"
+    },
+    {
+      "path": "lanl-cpu-band-report-a3-metadata2400-cleanup60-mocked-proof.json",
+      "original_path": "/private/tmp/lanl-cpu-band-report-a3-metadata2400-cleanup60-mocked-proof.json",
+      "sha256": "9613fa4900a8a5c46b5a4123fa32d6aebe9d8e3d24dbab90bdf0d687984e0021",
+      "bytes": 3856,
+      "classification": "portable_preparation_or_mock_only",
+      "canonical_document_sha256": "9a2832cf64f72e346d32a1b4691ffc484dbde0207e3e75da5c4d34be879d7f8e",
+      "identity_sha256": "e26dbc9086201a3bb65bfec042d3502041c62de51cb847e90dfb5d086c6eb8ac"
+    },
+    {
+      "path": "lanl-cpu-cleanup60-admission-guard-portable-proof-20261007.json",
+      "original_path": "/private/tmp/lanl-cpu-cleanup60-admission-guard-portable-proof-20261007.json",
+      "sha256": "ef1a9b01323d420a1077e122cced34fd96efb8c63dc925167ef5e03f29b63a5a",
+      "bytes": 4369,
+      "classification": "portable_preparation_or_mock_only",
+      "canonical_document_sha256": "130ddb6f08a41728fb6981cb8ae791332453a694f171cf7e14bc7101bfd8f9ad",
+      "identity_sha256": "202fb34efa7cbbf55c6705c73285ea2c86bc1921bdbf7fa9c6de5174a50aba5f"
+    },
+    {
+      "path": "lanl-admit-cpu-future-phase-20261007.py",
+      "original_path": "/private/tmp/lanl-admit-cpu-future-phase-20261007.py",
+      "sha256": "f461d5c36065ee4b31e6cb137a763ea95811940746117813fff4c0760ba1b3ac",
+      "bytes": 4350,
+      "classification": "historical_unexecuted_parent_guard_review"
+    },
+    {
+      "path": "lanl-cpu-future-phase-static-review-20261007.json",
+      "original_path": "/private/tmp/lanl-cpu-future-phase-static-review-20261007.json",
+      "sha256": "6f66038a31ca68a6d8a060d737efd98ca89580136cf10f9d8d8123bc4f14a12e",
+      "bytes": 1515,
+      "classification": "historical_unexecuted_parent_guard_review",
+      "canonical_document_sha256": "dddcbb6f64a9d2e96e83a85b3375c9fa1f2f7f7584f6e5e8b9dfa0c6940e801a",
+      "identity_sha256": "297aae9ba227950898e9b64fde794a7a29a014dcdbeed5c1fff100c11e5f2b03"
+    },
+    {
+      "path": "README.md",
+      "sha256": "28574b2759b03acbac20b73672632f300facaa17f301b6685e75a8e15147a1ab",
+      "bytes": 6502,
+      "classification": "dated_custody_explanation_and_unexecuted_parent_recipe"
+    }
+  ],
+  "previous_archives": [
+    {
+      "path": "../11-native-controls-20261007/manifest.json",
+      "file_sha256": "83a6e2d5315baa2ae879ab080e7182c80fe865a240bc42fe1ce454853feeb0ac",
+      "identity_sha256": "c11f1f8cb7126e1e9bcfab5a47deb40b37737b1a7d689c15382f2e0474b0ee22"
+    },
+    {
+      "path": "../11-enriched-metadata-controls-20261007/manifest.json",
+      "file_sha256": "4eaf2c4f24870d6a0310421a15e23a07b41b850d20810402b24f57b237ecf64f",
+      "identity_sha256": "f5fff3dc100be883a163d16918d42b84a7860166af232e163ffef054f4c7fcd6"
+    }
+  ],
+  "prior_bytes_preserved": true,
+  "scope": "Exact-byte compact custody; no product source, canonical record, tracker or prior archive changes; no native/provider/remote execution.",
+  "actual_local_admission": {
+    "execution_count": 1,
+    "export_head_at_execution": "887d9bfd319a08df20d6f6cf3571bde8db71406c",
+    "positive_forecasts": 4,
+    "independent_trial_compositions": 20,
+    "recursive_dependencies": 36,
+    "prior_records_preserved": 665,
+    "a2_completed_records_preserved": 667
+  },
+  "source_clean_base_verified": true,
+  "parent_reported_readonly_checker": {
+    "path": "lanl-parent-check-cpu-cleanup60-20261007.py",
+    "reported_exit_code": 0,
+    "not_reexecuted_for_archive": true
+  },
+  "application_performance_timings_collected": false,
+  "development_holdout_report_status": "Unexecuted at snapshot; parent owns live gating and dispatch",
+  "cleanup": {
+    "declared_sequential_wait_s": 40,
+    "selected_outer_hard_kill_margin_s": 60,
+    "nominal_headroom_s": 20,
+    "duration_is_not_an_actual_worst_case_measurement": true
+  },
+  "unchanged_caps": {
+    "native_deadline_s": 900,
+    "metadata_s": 2400,
+    "native_enclosing_process_s": 3600,
+    "report_protocol_freeze_s": 3600,
+    "inner_s": 18000,
+    "outer_s": 18300
+  },
+  "helper_exporter_argv": {
+    "development_holdout": "phase revision",
+    "band": "revision"
+  },
+  "identity_sha256": "c32e3a794924eae994b03f1bd512f45f1152902dd59ac4ecde474671f9521c6b"
+}

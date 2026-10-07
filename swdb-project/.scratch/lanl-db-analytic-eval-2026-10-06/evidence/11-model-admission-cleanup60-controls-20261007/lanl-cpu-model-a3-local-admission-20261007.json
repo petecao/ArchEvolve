@@ -1,0 +1,164 @@
+{
+  "format": "swdb.cpu-model-local-readonly-admission.v1",
+  "checked_utc": "2026-10-07T07:53:09.814839+00:00",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "export_commit": "887d9bfd319a08df20d6f6cf3571bde8db71406c",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "actual_compact_receipt_identity": "ea12a575bf4c70cf77dbc436f1f1df17b54b03cfc944f11627424b1c45521fec",
+  "actual_acceptance_identity": "eccdcfca3b0e5d41fcd95c5e73db63c716bfe9cb79bc319bf2ae51979af3bf1a",
+  "target_sha256": "9fec46b1ab4c8ac2e8e501e61cf137c075ec40b6eef128a247cf28dd54fca76b",
+  "protocols": {
+    "bfs": {
+      "id": "lanl.cpu.bfs.t1.native-model.v1.c74c7a1046e0e5f1",
+      "sha256": "e5058d50462a65ede57fdbf219273df46d884fa5d507f4ee84edafbe5734b58a"
+    },
+    "bc": {
+      "id": "lanl.cpu.bc.t1.native-model.v1.35eaffdaadffeea0",
+      "sha256": "26462e09eec81c71c63c2ea3d080e9c6ab760b53756c3abcacabc3fe127964ed"
+    }
+  },
+  "new_record_pins": [
+    {
+      "id": "lanl.cpu.bc.g16.t1.estimate.v1",
+      "kind": "estimate",
+      "path": "estimates/lanl.cpu.bc.g16.t1.estimate.v1.yaml",
+      "sha256": "adb4a93491f6dab2d6f85935ec36830e5ac135f65cec32663224dd36b206b749",
+      "file_sha256": "896b4edeb91917cec165401419192ab3851b32818f567cbb438fc231a8de1bb8",
+      "bytes": 70540153
+    },
+    {
+      "id": "lanl.cpu.bc.g17.t1.estimate.v1",
+      "kind": "estimate",
+      "path": "estimates/lanl.cpu.bc.g17.t1.estimate.v1.yaml",
+      "sha256": "9f3c912fbb00e9746acd420da69e03be189a813aca879ddf8a1d6e4db762907a",
+      "file_sha256": "8881f27316ab856e15c7ce099a32855021f897283158d016aff7dfb42a39da76",
+      "bytes": 70599282
+    },
+    {
+      "id": "lanl.cpu.bfs.g16.t1.estimate.v1",
+      "kind": "estimate",
+      "path": "estimates/lanl.cpu.bfs.g16.t1.estimate.v1.yaml",
+      "sha256": "91141811b3bf23102552104b85a64663803201fcd29e3c412fb2f36f3c783407",
+      "file_sha256": "dc4035f1a48302f13ae0e22ad29865b2ade2aa43ba42f924e9252c1cb0ae9269",
+      "bytes": 53583441
+    },
+    {
+      "id": "lanl.cpu.bfs.g17.t1.estimate.v1",
+      "kind": "estimate",
+      "path": "estimates/lanl.cpu.bfs.g17.t1.estimate.v1.yaml",
+      "sha256": "0e915796ee04ac829f2d97b382c12923a00a0a75d85b612175a961d13ab50328",
+      "file_sha256": "ee39a6d578cf38cb0cd1d86caaa9e9d6135ba3b0179e3060a40732bf318a159e",
+      "bytes": 53717401
+    },
+    {
+      "id": "lanl.cpu.bc.t1.native-model.v1.35eaffdaadffeea0",
+      "kind": "protocol",
+      "path": "protocols/lanl.cpu.bc.t1.native-model.v1.35eaffdaadffeea0.yaml",
+      "sha256": "26462e09eec81c71c63c2ea3d080e9c6ab760b53756c3abcacabc3fe127964ed",
+      "file_sha256": "4140edcbc930859ea7f05f78772c29e3cc752632c9d44aaeae57ed8201da3f33",
+      "bytes": 692249
+    },
+    {
+      "id": "lanl.cpu.bfs.t1.native-model.v1.c74c7a1046e0e5f1",
+      "kind": "protocol",
+      "path": "protocols/lanl.cpu.bfs.t1.native-model.v1.c74c7a1046e0e5f1.yaml",
+      "sha256": "e5058d50462a65ede57fdbf219273df46d884fa5d507f4ee84edafbe5734b58a",
+      "file_sha256": "ff538076ca2048c03672e7dcd1a7046895bed05b41be05979ec3e7493f8f4d5b",
+      "bytes": 692147
+    },
+    {
+      "id": "mbit10.cpu.lanl20261006.t1.services.v1",
+      "kind": "target_description",
+      "path": "target_descriptions/mbit10.cpu.lanl20261006.t1.services.v1.yaml",
+      "sha256": "9fec46b1ab4c8ac2e8e501e61cf137c075ec40b6eef128a247cf28dd54fca76b",
+      "file_sha256": "cee03869aa2ab624d0eb1ef54b8807603d2a222d749113c7d65d847549c45c6d",
+      "bytes": 597632
+    }
+  ],
+  "recursive_protocol_dependencies_checked": 36,
+  "prior_record_bytes_preserved": 665,
+  "a2_complete_records_preserved": 667,
+  "full_catalog_validation": {
+    "kind": "parent_actual_receipt",
+    "result": "OK: 672 record(s) valid"
+  },
+  "local_scope": "Selected canonical records, dependency pins, immutable prior bytes, scope proofs and trial composition only; no full Store/validation or execution.",
+  "application_performance_timings_collected": false,
+  "forecasts": [
+    {
+      "kernel": "bc",
+      "scale": 16,
+      "threads": 1,
+      "predicted_seconds": 0.64771215194357,
+      "trial_predicted_seconds": [
+        0.6217165624263594,
+        0.6859480202354461,
+        0.6843911837152211,
+        0.64771215194357,
+        0.593827013486272
+      ],
+      "estimate": "lanl.cpu.bc.g16.t1.estimate.v1",
+      "sha256": "adb4a93491f6dab2d6f85935ec36830e5ac135f65cec32663224dd36b206b749",
+      "model_admission": "supported_conditional_constructed_resources",
+      "native_seconds": null,
+      "error_band": null
+    },
+    {
+      "kernel": "bc",
+      "scale": 17,
+      "threads": 1,
+      "predicted_seconds": 1.154672610067664,
+      "trial_predicted_seconds": [
+        1.1508927311564174,
+        1.3487679537025135,
+        1.154672610067664,
+        1.1332785015223297,
+        1.2525179992889017
+      ],
+      "estimate": "lanl.cpu.bc.g17.t1.estimate.v1",
+      "sha256": "9f3c912fbb00e9746acd420da69e03be189a813aca879ddf8a1d6e4db762907a",
+      "model_admission": "supported_conditional_constructed_resources",
+      "native_seconds": null,
+      "error_band": null
+    },
+    {
+      "kernel": "bfs",
+      "scale": 16,
+      "threads": 1,
+      "predicted_seconds": 0.08459283293734217,
+      "trial_predicted_seconds": [
+        0.09159660635516073,
+        0.08532983663560992,
+        0.08459283293734217,
+        0.07285218727724584,
+        0.0709206509204969
+      ],
+      "estimate": "lanl.cpu.bfs.g16.t1.estimate.v1",
+      "sha256": "91141811b3bf23102552104b85a64663803201fcd29e3c412fb2f36f3c783407",
+      "model_admission": "supported_conditional_constructed_resources",
+      "native_seconds": null,
+      "error_band": null
+    },
+    {
+      "kernel": "bfs",
+      "scale": 17,
+      "threads": 1,
+      "predicted_seconds": 0.14771765534735024,
+      "trial_predicted_seconds": [
+        0.20292054606755472,
+        0.14771765534735024,
+        0.19983335123417523,
+        0.14615460069887418,
+        0.14473713245869346
+      ],
+      "estimate": "lanl.cpu.bfs.g17.t1.estimate.v1",
+      "sha256": "0e915796ee04ac829f2d97b382c12923a00a0a75d85b612175a961d13ab50328",
+      "model_admission": "supported_conditional_constructed_resources",
+      "native_seconds": null,
+      "error_band": null
+    }
+  ],
+  "admitted_for_parent_development": true,
+  "scope": "Exact four original-driver T1 BF/BC scopes. Constructed gross resources and compatibility transfers remain inferred. No physical latency, residency, upper-bound, accuracy or validated-band claim.",
+  "identity_sha256": "fe2890f8e7d8c95d6841ddd78b61762667e07c02688567676aca5d8fc4f4e3bd"
+}
