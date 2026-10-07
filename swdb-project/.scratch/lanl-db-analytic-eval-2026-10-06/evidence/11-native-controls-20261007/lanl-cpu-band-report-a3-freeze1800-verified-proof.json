@@ -1,0 +1,22 @@
+{
+  "format": "swdb.cpu-band-report-administrative-cap-verified.v1",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "preparation_identity": "94a7ee9603a3bf0f21fe66b49af68044743825382b008d4ede12f219fc111e47",
+  "mock_identity": "63cdccfa287f08f6e8747478ea41b9797cff5f185263d1e7c0decb0c79735370",
+  "dispatcher_sha256": "512cc097b41a7607d3c1b91c73bb831378da399366ece10272a78424dc9e7f44",
+  "exporter_sha256": "788c5cfd72433916daac544420de5251eb6d549c56afaeba455a82416f11dbb1",
+  "caps": {
+    "runner_s": 9200,
+    "outer_s": 9500,
+    "protocol_freeze_s": 1800,
+    "estimate_s": 1400,
+    "validate_s": 1400
+  },
+  "unchanged_active_model_source_and_helpers": true,
+  "unchanged_paths_and_science": true,
+  "native_collector_s_unchanged": 900,
+  "application_or_remote_execution": false,
+  "scope": "Only future report protocol freeze caps and corresponding finite outer/inner administration changed. Parent-reported completed BC freeze1266.086438s motivates headroom; this is not a guaranteed cap or a science recipe change.",
+  "identity_sha256": "0f528e62c01961627f712cfa3e7853bc29011249837aa6d17af93ad7cd812b21"
+}

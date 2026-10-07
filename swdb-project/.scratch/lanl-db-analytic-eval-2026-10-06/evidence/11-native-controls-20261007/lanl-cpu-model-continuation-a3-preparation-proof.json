@@ -1,0 +1,65 @@
+{
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "condition": "Only actual failed a2 processing-cap custody; successful/unfinished/scientific failure must not resume.",
+  "dispatch_sha256": "90f28f9ad2dd65f87e74d194d376e26e4af7bd45d654fdba8c8a633afb33b7bc",
+  "export_sha256": "621195299978672c86bee80365261105abe9f13ca076c3d557cd2643194c6956",
+  "unchanged_active_a2_sha256": "181f6c9d4000e6a85d5686afe2e6487d6c78908b1e8c0d47faae49c2fa04b4ee",
+  "unchanged_active_a2_export_sha256": "347a807c8ddab990cfea52419aa13a03dd5d2a3d6d4d5ac1eabc4388a8dfd837",
+  "explicit_literal_cap_changes": [
+    [
+      "FAILED = Path('/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1')",
+      "FAILED = Path('/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2')"
+    ],
+    [
+      "RAW = Path('/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2')",
+      "RAW = Path('/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3')"
+    ],
+    [
+      "INNER_S, OUTER_S, META_S, VALIDATE_S = 8000, 8200, 1100, 1000",
+      "INNER_S, OUTER_S, META_S, VALIDATE_S = 15000, 15200, 1800, 1400"
+    ],
+    [
+      "'swdb-lanl-cpu-model-20261006-a2'",
+      "'swdb-lanl-cpu-model-20261006-a3'"
+    ]
+  ],
+  "explicit_export_changes": [
+    [
+      "DISPATCH_SHA = '181f6c9d4000e6a85d5686afe2e6487d6c78908b1e8c0d47faae49c2fa04b4ee'",
+      "DISPATCH_SHA = '90f28f9ad2dd65f87e74d194d376e26e4af7bd45d654fdba8c8a633afb33b7bc'"
+    ],
+    [
+      "'lanl-dispatch-cpu-model-continuation-a2.py'",
+      "'lanl-dispatch-cpu-model-continuation-a3.py'"
+    ],
+    [
+      "'/data1/yanruj/ArchEvolve-lanl-cpu-model-evidence-20261006-a2'",
+      "'/data1/yanruj/ArchEvolve-lanl-cpu-model-evidence-20261006-a3'"
+    ],
+    [
+      "'codex/lanl-cpu-model-evidence-a2'",
+      "'codex/lanl-cpu-model-evidence-a3'"
+    ],
+    [
+      "11-cpu-model-mbit10-20261006-a2.json",
+      "11-cpu-model-mbit10-20261006-a3.json"
+    ]
+  ],
+  "original_a1_custody_identity": "8ddb9825fb7ccefff7088ea550af290379f8ea48744065b9d156196b7947db5a",
+  "science_functions_ast_identical": [
+    "metadata_argv",
+    "request",
+    "select_protocol",
+    "estimate_guard",
+    "estimate_command",
+    "freeze_command",
+    "admitted"
+  ],
+  "reused_protocol_request_snapshot_preserved": true,
+  "all_other_bytes_unchanged_after_explicit_cap_path_and_custody_reversal": true,
+  "native_or_provider_commands": 0,
+  "source_or_active_helper_mutations": false,
+  "remote_execution": false,
+  "identity_sha256": "25b79db78a8bffc0281cfdc2f1e538b37327d378744d5f1c524db7611f8c9ee9"
+}
