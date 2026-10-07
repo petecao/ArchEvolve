@@ -138,6 +138,65 @@ def _shape_cost(region,call,selection,parameters,mechanism):
     return (None if missing else cost),missing
 
 
+
+def _memory_construction(item,mechanism):
+    construction=item.get('construction');kind=item.get('update_kind');width=item.get('element_bytes')
+    expected={'read':'ordinary_read','write':'ordinary_write','add-update':'integer_seq_cst_add',
+        'compare-and-swap':'integer_strong_seq_cst_compare_exchange'}.get(kind)
+    required={'primitive','regime','footprint_bytes','transfer_basis','physical_cache_level','source_services'}
+    if kind=='compare-and-swap':required.add('outcome_policy')
+    if not isinstance(construction,dict) or set(construction)!=required:return None,['memory_scenario.explicit_construction']
+    size=construction['footprint_bytes'];small=width==1
+    if (expected is None or construction['primitive']!=expected or construction['regime']!=('fixed_small_byte_read_constructed_requests' if small else 'resident_serial_constructed_requests') or
+        construction['transfer_basis']!='inferred' or construction['physical_cache_level']!='unverified' or type(size) is not int or size<64 or size>8388608 or size&(size-1) or
+        (small and (kind!='read' or size!=256))):return None,['memory_scenario.supported_construction']
+    sources=construction['source_services']
+    if not isinstance(sources,list) or len(sources)!=(2 if kind=='compare-and-swap' else 1) or any(not isinstance(s,dict) or set(s)!={'calibration','service','parameter'} or any(not isinstance(v,str) or not v for v in s.values()) for s in sources):
+        return None,['memory_scenario.typed_source_services']
+    if len({(s['calibration'],s['service']) for s in sources})!=len(sources):return None,['memory_scenario.unique_source_services']
+    if kind=='compare-and-swap':
+        if construction['outcome_policy']!='max_constructed_success_failure_median':return None,['memory_scenario.collapse_outcome_policy']
+        values=[_rate(mechanism,s['parameter'],'seconds/request') for s in sources]
+        expected_rate=max(values) if all(v is not None for v in values) else None
+        actual=_rate(mechanism,item['parameter'],'seconds/request')
+        if actual!=expected_rate or (actual is not None and mechanism['parameters'][item['parameter']].get('basis')!='inferred'):
+            return None,['memory_scenario.exact_constructed_outcome_envelope']
+    elif sources[0]['parameter']!=item['parameter']:return None,['memory_scenario.exact_source_parameter']
+    return construction,[]
+
+
+def _primitive_supported(access,construction):
+    p=access.get('primitive_semantics',{});width=access.get('element_bytes')
+    if (p.get('format')!='swdb.source-memory-primitive.v1' or p.get('vector') is not False or access.get('ir_lanes')!=1 or
+        p.get('element_bits')!=8*width or p.get('value_kind') not in ('integer','floating','pointer')):return False
+    profile=construction['primitive'];op=p.get('opcode');order=p.get('atomic_ordering')
+    if profile in ('ordinary_read','ordinary_write'):
+        return op==('load' if profile=='ordinary_read' else 'store') and order=='not_atomic' and p.get('failure_ordering') is None and p.get('weak') is None and access.get('read_write') is False
+    if p.get('value_kind')!='integer' or access.get('read_write') is not True:return False
+    if profile=='integer_seq_cst_add':return op=='atomicrmw' and p.get('update_opcode')=='add' and order=='seq_cst' and p.get('failure_ordering') is None and p.get('weak') is None
+    if profile=='integer_strong_seq_cst_compare_exchange':return op=='cmpxchg' and p.get('update_opcode') is None and order=='seq_cst' and p.get('failure_ordering')=='seq_cst' and p.get('weak') is False
+    return False
+
+
+def _source_memory_proof(context,observed,cells):
+    sources=context.get('source_accesses') if isinstance(context,dict) else None
+    if not isinstance(sources,list):return {},[],['memory_scenario.exact_source_access_inventory']
+    totals={};inputs=[];missing=[];seen=set()
+    for access in sources:
+        identifier=access.get('id');width=access.get('element_bytes');kind=access.get('update_kind');fact=access.get('element_count',{});n=fact.get('value')
+        if not isinstance(identifier,str) or not identifier or identifier in seen or type(width) is not int or width<=0 or type(n) is not int or n<0 or fact.get('basis')=='unknown' or fact.get('scope')!=observed.get('scope'):
+            missing.append('memory_scenario.exact_source_scoped_counts');continue
+        seen.add(identifier);key=(kind,width);totals[key]=totals.get(key,0)+n
+        if not n:continue
+        profile=cells.get(key,{}).get('construction')
+        valid=profile is not None and _primitive_supported(access,profile)
+        inputs.append({'site':identifier,'requests':fact,'primitive_semantics':access.get('primitive_semantics'),'supported':valid})
+        if not valid:missing.append('memory_scenario.primitive.'+identifier)
+        b=access.get('bytes_accessed',{})
+        if b.get('value')!=n*width or b.get('basis')=='unknown' or b.get('scope')!=observed.get('scope'):
+            missing.append('memory_scenario.exact_source_useful_bytes')
+    return totals,inputs,missing
+
 def memory_service_scenario(region, mechanism, *, context=None):
     selector=mechanism.get('selector',{})
     allowed={'domain','worker_scope','scenario','transfer_basis','object_scope','characterization_sha256','characterization_allowlist','requests'}
@@ -150,15 +209,17 @@ def memory_service_scenario(region, mechanism, *, context=None):
     selected=selector.get('requests')
     if not isinstance(selected,list):selected=[];missing.append('selector.requests')
     for item in selected:
-        if not isinstance(item,dict) or set(item)!={'update_kind','element_bytes','parameter'} or not isinstance(item.get('update_kind'),str) or type(item.get('element_bytes')) is not int or item['element_bytes']<=0 or not isinstance(item.get('parameter'),str):
+        if not isinstance(item,dict) or set(item)!={'update_kind','element_bytes','parameter','construction'} or not isinstance(item.get('update_kind'),str) or type(item.get('element_bytes')) is not int or item['element_bytes']<=0 or not isinstance(item.get('parameter'),str):
             missing.append('selector.exact_request_cells');continue
         key=(item['update_kind'],item['element_bytes'])
         if key in rates:missing.append('selector.duplicate_request_cell')
-        rates[key]=item['parameter']
+        construction,reasons=_memory_construction(item,mechanism);missing.extend(reasons)
+        rates[key]={'parameter':item['parameter'],'construction':construction}
     observed=region.get('memory_service_counts',{})
     if observed.get('format')!='swdb.memory-service-counts.v1' or observed.get('scope') not in ('per_run','per_trial'):
         missing.append('memory_service_counts.format_scope')
     rows=observed.get('requests_by_update_kind',{})
+    source_totals,source_inputs,source_missing=_source_memory_proof(context,observed,rates);missing.extend(source_missing)
     inputs=[];seconds=0.;useful_bytes=0;executed=0;seen=set()
     for kind,items in rows.items():
         for item in items:
@@ -168,18 +229,21 @@ def memory_service_scenario(region, mechanism, *, context=None):
             key=(kind,width)
             if key in seen:missing.append('memory_service_counts.duplicate_request_cell')
             seen.add(key);executed+=count;useful_bytes+=count*width
-            rate=_rate(mechanism,rates[key],'seconds/request') if key in rates else None
+            if source_totals.get(key,0)!=count:missing.append('memory_scenario.exact_source_cell_sum.'+kind+'.'+str(width))
+            rate=_rate(mechanism,rates[key]['parameter'],'seconds/request') if key in rates else None
             inputs.append({'update_kind':kind,'element_bytes':width,'requests':fact,'seconds_per_request':rate})
             if count and rate is None:missing.append('memory_scenario.cell.'+kind+'.'+str(width))
             elif count:seconds+=count*rate
+    if any(n and key not in seen for key,n in source_totals.items()):missing.append('memory_scenario.exact_source_complete_cell_set')
     if useful_bytes!=observed.get('useful_bytes',{}).get('value') or observed.get('useful_bytes',{}).get('basis')=='unknown':
         missing.append('memory_service_counts.complete_useful_byte_sum')
     if executed:missing.extend(_serial(region,context))
     if not math.isfinite(seconds):missing.append('memory_scenario.finite_seconds')
     return bound('memory_service_scenario',None if missing else seconds,
         'sum(exact logical source requests * independently constructed resident serial seconds/request)',
-        {'requests':inputs,'useful_bytes':useful_bytes,'unknown_object_requests':observed.get('unknown_object_requests'),
+        {'requests':inputs,'source_accesses':source_inputs,'useful_bytes':useful_bytes,'unknown_object_requests':observed.get('unknown_object_requests'),
          'object_scope_counts':observed.get('object_scope_counts'),'physical_residency_known':False},sorted(set(missing)),
         ['Residency/dependence transfer from constructed cells is explicitly inferred; this is a conditional service scenario.',
          'Logical source requests and bounded referent views do not establish full allocation identity, physical cache misses, first-touch faults or page residency.',
+         'Exact scalar opcode/type/order/strong-CAS proof is required; collapsed update kinds do not admit floating RMW, atomic exchange, weak CAS or vectors. Compiler retention/locality transfer remains inferred.',
          'This mechanism supplies no opaque-call coverage or separate first-touch service. Unsupported executed update-kind/width cells remain unknown.'])

@@ -365,3 +365,10 @@ unchanged target hash while retaining exact counted-source admission. New or
 unmatched allocator length/lifetime bins stay unknown; any needed independent
 exact-bin measurements must precede the common model freeze and application
 outcomes. No silent interpolation or post-timing recalibration is allowed.
+
+The model also requires exact per-site source request totals to equal the logical
+service container. Executed sites must carry scalar primitive evidence: ordinary
+non-atomic loads/stores, integer sequentially consistent atomic add, or strong
+sequentially consistent compare/exchange. Floating RMW, atomic exchange, weak CAS,
+vector lanes and absent primitive facts remain unsupported. A zero-count site
+does not require a service rate. These guards apply independently in every trial.
