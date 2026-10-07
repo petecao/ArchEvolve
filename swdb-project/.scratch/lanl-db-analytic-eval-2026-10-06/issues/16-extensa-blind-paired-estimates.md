@@ -63,3 +63,10 @@ Evidence: [final public gate](../evidence/16-pairing-final-public-proof-20261006
 [runbook](../evidence/16-blind-pairing-runbook.md),
 [first adapter gate](../evidence/16-pairing-adapters-proof-20261006.json), and
 [resume/chronology RED→GREEN](../evidence/16-pairing-integrity-proof-20261006.json).
+
+Merger verification, 2026-10-06 ET: four integrated public compatibility checks
+passed in **321.81 s**, and canonical validation passed **625 records**. All
+**865** prior record/library/app blobs, including **617** prior record YAMLs,
+remain byte-identical. The LLVM observer/runtime sources and every other ticket
+state remain unchanged; the tested bundle is still `884e76a5…`. See the
+[integrated merger proof](../evidence/16-integrated-merger-proof-20261006.json).
