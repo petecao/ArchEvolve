@@ -132,3 +132,5 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
   public paths passed, 631 records valid, 628 prior YAML/876 protected blobs unchanged.
   Historical bundle `b238c61b…` remains immutable; future execution must freeze the
   integrated bundle. No timing/accuracy claim; 13/14 can proceed after integration.
+
+- 2026-10-06 ET — Ticket 14 claimed; actual Jacobi source count prerequisite tested, MAPLE FPGA data admitted with unknown services. Parent count commands and all-nine admission plan: `evidence/14-nine-pair-runbook-20261006.md`; prepared MAPLE requests remain unfrozen. Final reports await actual counts and generic 11/17 bundle.
