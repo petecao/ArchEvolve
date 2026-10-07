@@ -2,7 +2,7 @@
 
 Created: 2026-10-06
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 16
 **Spec:** `../spec.md`
 **Time estimate:** 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs)
@@ -15,3 +15,5 @@ Created: 2026-10-06
 - [ ] Blindness verified for every pair (D26).
 - [ ] Any research variant is refused by team protocols.
 - [ ] A short recommendation for ticket 18.
+
+Claimed: 2026-10-06 22:22 ET by ticket17 implementer; base `9a5057f45c7a1c3b8756cfccd39f000d72f95253`.
