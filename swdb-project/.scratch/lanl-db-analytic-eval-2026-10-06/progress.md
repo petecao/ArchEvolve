@@ -1,16 +1,16 @@
 # Implementation progress
 
-Updated: 2026-10-07 00:09 ET
+Updated: 2026-10-07 00:39 ET
 
 **12 of 15 assigned tickets are resolved and integrated.** Tickets 11, 14 and 17 remain active. Final review, fixes and cleanup follow their actual evaluations.
 
-Integration: `codex/lanl-analytic-eval`. Review base: `2c50e5fb8671e08050921bee06920f92fd153bdd`. Delivery branch: `yanrujhou_main`; local, origin and mbit10 primary synchronized through `fe5ca3c` before this checkpoint. The unrelated uncommitted root rule edit remains preserved.
+Integration: `codex/lanl-analytic-eval`. Review base: `2c50e5fb8671e08050921bee06920f92fd153bdd`. Delivery branch: `yanrujhou_main`; local, origin and mbit10 primary synchronized through `dda186f` before this checkpoint. The unrelated uncommitted root rule edit remains preserved.
 
 | Tickets | Owner | Current state |
 |---|---|---|
 | 02–10, 12–13, 16 | Assigned implementers | Resolved and integrated; public checks and compact evidence linked from each Answer |
-| 11 | `/root/ticket03` | Services admitted; strict legacy scope checks passed; completing prospective protected-evaluator pairing before model freeze |
-| 14 | `/root/ticket02` | Two fresh count cases complete, two active, two queued; final report helpers under review |
+| 11 | `/root/ticket03` | Services admitted; known prospective pairing passed; final mismatch/reference and evaluator compatibility gates active |
+| 14 | `/root/ticket02` | All six fresh count cases passed; ten-record compact export validating; actual final-target reports pending |
 | 17 | `/root/ticket04` | Source and merged public checks passed; four actual campaigns and agreement report pending |
 
 | Evaluation | Evidence state | Next action |
@@ -19,14 +19,14 @@ Integration: `codex/lanl-analytic-eval`. Review base: `2c50e5fb8671e08050921bee0
 | Functional evaluation and handoff | Complete; null timing/ratio and strict functional scope retained | Preserve immutable archived result |
 | Independent CPU services | Count and elapsed evidence admitted, including floating64 monotonic fadd | Freeze exact compatible model after remaining implementation |
 | Extra allocator sizes | Paired-window promise failed; paired rates excluded | Use uniform separately labeled inferred gross resources, frozen before application timing |
-| CPU accuracy | No application timings opened; separate BFS/BC band helpers mock-tested | Finalize evaluator binding; freeze four forecasts, then g16 development and unchanged g17 holdout |
-| Six fresh generality counts | BFS/MAPLE and PR/CPU complete; PR/DX100 and PR/MAPLE active; BC cases queued | Finish six, strictly verify access-byte scopes, export canonical closure |
-| Nine BFS/BC/PR reports | Public projection checks passed; final helper review active | Bind final targets/source and preserve unknown accelerator/PR transfers |
+| CPU accuracy | No application timings opened; separate BFS/BC band helpers mock-tested | Finish pairing safeguards; freeze four forecasts, then g16 development and unchanged g17 holdout |
+| Six fresh generality counts | All six original attempts passed with both exits zero; both socket leases released | Complete the combined catalogue validation and integrate the exact ten-record closure |
+| Nine BFS/BC/PR reports | Projection and provisional PR allowlist checks passed; final helper review complete | Bind final targets/source and preserve unknown accelerator/PR transfers |
 | D30 agreement | No eligible fresh pairs; actual campaigns pending | Freeze policy before four genuine trajectories; report unsupported/no-switch if bridge remains absent |
 
-All three implementers are live. Node 0: PR/MAPLE count, generation 501. Node 1: PR/DX100 count, generation 541. Legacy lease released. Latest free space: `/data1` 22.2 GiB, `/data` 50.5 GiB; load 4.44. Parent owns all SSH/dispatch and preserves unrelated host work. Raw artifacts stay remote.
+All three implementers are live. Both socket leases and the legacy lease are released. Latest free space: `/data1` 22.0 GiB, `/data` 49.9 GiB; load 1.99. Parent owns all SSH/dispatch and preserves unrelated host work. Raw artifacts stay remote.
 
-Human gates 15, 18 and 21 remain human-owned. Tickets 19–20 require their recorded prerequisites; 22–23 require LANL access. No external communication. The 30-minute progress/liveness check remains active; next due 2026-10-07 00:39 ET.
+Human gates 15, 18 and 21 remain human-owned. Tickets 19–20 require their recorded prerequisites; 22–23 require LANL access. No external communication. The 30-minute progress/liveness check remains active; next due 2026-10-07 01:09 ET.
 
 Managed worktrees: `/Users/yanrujhou/.codex/worktrees/lanl-*/ArchEvolve`. Parent owns integration. File writes and Git metadata there need sandbox escalation, covered by the user's implementation authorization.
 
@@ -270,3 +270,15 @@ At the check node0 holds allocator count validation; node1 and legacy are releas
 Count source 821023a remains clean and isolated in `/data1/yanruj/ArchEvolve-lanl-generality-counts-20261006-a1`; manifest identity 131979bade43c96bcedd36591b288742c613ef2a82f2efc192e9cf5b9f333247. BFS/MAPLE node1 generation540 completed 00:01:13 ET, both exits0/634 valid, acceptance 271b2241f2f1a5dda9e0810e8bab80db7cb447b8b4d09810c5d6f3a18a6af728. PR/CPU node0 generation500 completed 00:05:20 ET, both exits0/635 valid, acceptance cbdc6b7c2aa16da9e1df085f05e87caeb9d550b2281f4a4fac350913cba17121. PR/MAPLE node0 generation501 and PR/DX100 node1 generation541 are active; BC/MAPLE and BC/DX100 await release. Only two owned count jobs; legacy lease released. Latest metadata check 04:09:20Z; disk reserves 23,867,969,536 bytes on /data1 and 54,180,380,672 on /data. No application timing/provider invoked by these counts.
 
 Dispatcher b797 remains frozen. Reviewed export revision 7d77776f7b2582ae24c6be8254f34ea9fff632d777a8297c7d2fe8437f71ec09 adds explicit actual `bytes_accessed`/element per-trial checks, with21 portable positive/refusal controls. Actual combined export and nine final estimates remain pending. Only two clean, pushed and consumed floating-service export worktrees were removed at23:55 ET after274 process-reference and24 raw-link checks, recovering553,824,256 bytes; execution/source worktrees, raw evidence and Git commits/branches retained. Next scheduled check00:39 ET; final two-axis review/fixes/tracker sync/worktree cleanup/heartbeat pause remain required.
+
+2026-10-07 00:39 ET: Required 30-minute progress and liveness check completed; all three implementers responsive, next check 01:09 ET. Twelve of fifteen assigned tickets remain resolved and integrated. The scoped PageRank fixture proof is synchronized to main/origin/mbit10 at dda186f; public bind/freeze/estimate returned zero and retained explicit CPU service/memory allowlist gaps. It uses independent hand-counted PR data and is not the actual final-target replay.
+
+| Actual evaluation | Receipt state | Remaining work |
+|---|---|---|
+| Six fresh count routes | All six original a1 attempts passed; PR/CPU, PR/DX100, PR/MAPLE, BFS/MAPLE, BC/MAPLE and BC/DX100 each have zero runner/wrapper/lane exits and validated copied catalogues | Original byte-scope exporter is validating the combined exact ten-record closure; no timeout recovery or success rerun |
+| CPU pairing | Public known semantic prediction passed (143.33 s); original archived pair accepted and altered scope/estimate/prediction/wrapper references rejected; five legacy cases green | Complete final safeguards and default evaluator compatibility before immutable source C |
+| CPU accuracy | Independent service evidence complete; no application performance timings opened | Freeze all four positive forecasts before separate BFS/BC g16 development widths; test g17 with unchanged widths |
+| Nine generality reports | Final helpers reviewed; PR provisional allowlist gate passed | Actual g16 PR/final services.v1 replay and all nine same-bundle reports |
+| Four campaigns and D30 | Config/catalog/baseline preparation audit passed; no actual campaign trajectories yet | Freeze policy before outcomes, execute four genuine trajectories, retain unsupported/no-switch if the numeric bridge remains absent |
+
+Live host check 04:39:31Z: both socket/legacy leases released; /data1 free 23,569,903,616 bytes, /data free 53,588,135,936 bytes, load 1.99. Parent retains all raw/execution worktrees and unrelated host work. The exact reviewed CPU controls are copied to a fresh external mbit10 directory with matching hashes; no CPU model or timing dispatch has occurred. Final two-axis review, fixes, tracker closeout, sync and owned-worktree cleanup remain pending actual evaluations.
