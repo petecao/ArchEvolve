@@ -68,8 +68,16 @@ def derive_service(service, record_id, evidence_kind, repetitions):
         rates.append((trial['gross_seconds'] - trial['driver_seconds']) / n)
     result = copy.deepcopy(service)
     result['seconds_per_event'] = stats(rates)
-    resolved = all(value > 0 for value in rates)
-    result['missing'] = [] if resolved else ['paired_driver_subtraction_resolution']
+    result['missing'] = [] if all(value > 0 for value in rates) else ['paired_driver_subtraction_resolution']
+    policy=service.get('scope',{}).get('residual_policy')
+    if policy is not None:
+        threshold=policy.get('minimum_window_s') if isinstance(policy,dict) else None
+        if (not isinstance(policy,dict) or set(policy)!={'id','minimum_window_s'} or policy['id']!='both_windows_meet_declared_threshold' or
+            type(threshold) not in (int,float) or not math.isfinite(threshold) or not 0<threshold<=.2):
+            raise Failure('unsupported paired residual resolution policy')
+        if any(min(t['gross_seconds'],t['driver_seconds'])<threshold for t in trials):
+            result['missing'].append('paired_driver_window_resolution')
+    resolved = not result['missing']
     result['parameter'] = {'value': result['seconds_per_event']['median'] if resolved else None,
         'basis': ('reported' if evidence_kind == 'fixture' else 'measured') if resolved else 'unknown',
         'source': f'Service calibration {record_id}; {service["id"]}; paired elapsed/work trials.',
@@ -124,7 +132,7 @@ def validate_record(record, ctx):
                 yield Problem(record.rel, f'services[{i}]', 'service cost/spread differs from paired elapsed/work inputs')
         if data['evidence_kind'] == 'native':
             from swdb.cpu_service_native import validate
-            validate({'threads':data['threads'], 'machine':data['target'], 'context':data['context'], 'settings':data['settings'], 'services':data['services']})
+            validate({'format':'swdb.cpu-service-calibration.v1','evidence_kind':data['evidence_kind'],'threads':data['threads'], 'machine':data['target'], 'context':data['context'], 'settings':data['settings'], 'services':data['services']})
     except (Failure, ValueError, KeyError, TypeError) as exc:
         yield Problem(record.rel, 'services', str(exc))
 

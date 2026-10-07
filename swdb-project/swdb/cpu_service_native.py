@@ -61,6 +61,12 @@ def loaded_libraries(binary, command):
 
 
 def validate(raw):
+    if raw.get('settings', {}).get('group') == 'bulk_total_v2':
+        from swdb.cpu_bulk_total_calibration import validate
+        return validate(raw)
+    if raw.get('settings', {}).get('group') == 'openmp_v1':
+        from swdb.cpu_openmp_calibration import validate
+        return validate(raw)
     if raw.get('settings', {}).get('group') == 'bulk_v1':
         from swdb.cpu_bulk_calibration import validate
         return validate(raw)

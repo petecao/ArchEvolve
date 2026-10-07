@@ -7,7 +7,7 @@ from testkit.cpu_bulk import native_bulk_receipt
 from testkit.cpu_service import bind
 
 
-def setup(records,tmp_path, *, second_copy_only=False):
+def setup(records,tmp_path, *, second_copy_only=False, gross=False):
     from swdb.cpu_service_calibration import identity
     records.add_stub()
     base=yaml.safe_load(target_description(tmp_path).read_text());base.update(id='fixture.cpu.base',target='testhost')
@@ -20,6 +20,11 @@ def setup(records,tmp_path, *, second_copy_only=False):
             service['denominator']['basis']='reported'
             op=int(service['id'].split('.')[1])
             for trial in service['trials']:trial['gross_seconds']=trial['driver_seconds']+(.01+.01*op)
+        if gross:
+            raw['settings']['group']='bulk_total_v2'
+            for service in raw['services']:
+                service['scope']['residual_policy']={'id':'both_windows_meet_declared_threshold','minimum_window_s':.05}
+                for trial in service['trials']:trial['driver_seconds']=.00001
         raw['identity_sha256']=identity(raw);receipt=tmp_path/(identifier+'.json');receipt.write_text(json.dumps(raw))
         result=run_swdb('import-cpu-service-calibration','--records',records.path,'--receipt',receipt,'--id',identifier,'--fixture')
         assert result.returncode==0,result.stderr+result.stdout
@@ -67,4 +72,22 @@ def test_duplicate_copy_choice_retains_one_exact_receipt_and_never_pools(records
     rows=target['extensions']['cpu_services_binding']['compatibility']
     assert len([r for r in rows if r['service']=='bulk.0.8'])==1
     assert target['calibration_sources'][:2]==['fixture.bulk.a1','fixture.bulk.a2']
+    assert records.validate().returncode==0
+
+
+def test_gross_bulk_binding_pins_distinct_recipe_and_retains_unknown_residual_source(records,tmp_path):
+    import subprocess,sys
+    setup(records,tmp_path,gross=True)
+    derived=subprocess.run([sys.executable,'-m','swdb.cpu_bulk_resource','--records',str(records.path),
+        '--source-calibration','fixture.bulk.a1','--id','fixture.bulk.gross.resource','--fixture'],capture_output=True,text=True)
+    assert derived.returncode==0,derived.stderr+derived.stdout
+    result=bind(records,'--target-description','fixture.cpu.base','--characterization','fixture.counts',
+        '--calibration','fixture.bulk.gross.resource','--fixture','--bulk-profile-policy','max_constructed_profiles_median',
+        '--id','fixture.bulk.gross.bound')
+    assert result.returncode==0,result.stderr+result.stdout
+    target=json.loads(result.stdout);model=target['mechanisms'][-1]
+    assert all(c['scope_assumption']['cost_basis']=='gross_bulk_loop_resource_v1' and c['scope_assumption']['includes_loop_control'] is True
+        for c in model['selector']['calls'])
+    assert all(p['value']>0 for p in model['parameters'].values())
+    assert target['calibration_sources'][0]=='fixture.bulk.gross.resource'
     assert records.validate().returncode==0

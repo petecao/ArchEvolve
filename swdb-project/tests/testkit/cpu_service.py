@@ -63,7 +63,7 @@ def clock_case(records, tmp_path, *, cost=.1, events=4, body_counted=False, extr
 
 
 def save_receipt(tmp_path, data):
-    data['identity_sha256'] = hashlib.sha256(json.dumps(data, sort_keys=True,
+    data['identity_sha256'] = hashlib.sha256(json.dumps({k:v for k,v in data.items() if k!='identity_sha256'}, sort_keys=True,
         separators=(',', ':'), allow_nan=False).encode()).hexdigest()
     path = tmp_path / 'service-receipt.json'
     path.write_text(json.dumps(data))

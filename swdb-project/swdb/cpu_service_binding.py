@@ -138,9 +138,13 @@ def _memory_binding(args,target,char,cells,scopes):
 
 
 def _bulk_binding(args,target,char,cells,scopes):
-    from swdb.analytic_cpu_service import BULK_ASSUMPTION, BULK_PROFILES
+    from swdb.analytic_cpu_service import BULK_ASSUMPTION, BULK_RESOURCE_ASSUMPTION, BULK_PROFILES
     if args.bulk_profile_policy!='max_constructed_profiles_median':
         raise Failure('bulk binding requires explicit --bulk-profile-policy max_constructed_profiles_median')
+    recipes={service.get('cost_basis','paired_driver_subtraction') for _,service in cells}
+    if len(recipes)!=1 or not recipes<={'paired_driver_subtraction','gross_bulk_loop_resource_v1'}:
+        raise Failure('bulk cells must share one explicit supported cost recipe')
+    assumption=BULK_RESOURCE_ASSUMPTION if 'gross_bulk_loop_resource_v1' in recipes else BULK_ASSUMPTION
     parameters={};groups={};copies=[];rows=[]
     for calibration,service in cells:
         scope=service['scope'];abi=scope.get('event_abi');regime=scope.get('bulk_regime');size=scope.get('size_bytes')
@@ -175,7 +179,7 @@ def _bulk_binding(args,target,char,cells,scopes):
     if selected_copy is not None:
         profile=retained(selected_copy);bin={'bytes':8,'parameter':profile['parameter'],'source_profiles':[profile]}
         for name in ('memcpy','llvm.memcpy.p0.p0.i64'):
-            selectors[name]={'name':name,'unit':'seconds/call','bin_kind':'known_length_bins','bins':[copy.deepcopy(bin)],'scope_assumption':copy.deepcopy(BULK_ASSUMPTION)}
+            selectors[name]={'name':name,'unit':'seconds/call','bin_kind':'known_length_bins','bins':[copy.deepcopy(bin)],'scope_assumption':copy.deepcopy(assumption)}
     bins=[]
     for size,group in sorted(groups.items()):
         if set(group)!=set(BULK_PROFILES):raise Failure('bulk maximum requires all three distinct constructed profiles at each exact bin')
@@ -188,7 +192,7 @@ def _bulk_binding(args,target,char,cells,scopes):
         bins.append({'bytes':size,'parameter':name,'source_profiles':profiles})
     if bins:
         for name in ('memmove','llvm.memmove.p0.p0.i64'):
-            selectors[name]={'name':name,'unit':'seconds/call','bin_kind':'known_length_bins','bins':copy.deepcopy(bins),'scope_assumption':copy.deepcopy(BULK_ASSUMPTION)}
+            selectors[name]={'name':name,'unit':'seconds/call','bin_kind':'known_length_bins','bins':copy.deepcopy(bins),'scope_assumption':copy.deepcopy(assumption)}
     return selectors,parameters,rows
 
 
@@ -214,10 +218,13 @@ def bind(args):
             from swdb import access
             kind=access.read_record(Path(identifier)).get('kind')
         else:kind=found.kind
-        if kind not in ('cpu_service_calibration','cpu_memory_resource_calibration'):
+        if kind not in ('cpu_service_calibration','cpu_memory_resource_calibration','cpu_bulk_resource_calibration'):
             raise Failure('unsupported typed CPU service/resource calibration kind')
         calibration=_load(store,identifier,kind)
-        if kind=='cpu_memory_resource_calibration':
+        if kind=='cpu_bulk_resource_calibration':
+            from swdb.cpu_bulk_resource import validate_record as validate_resource
+            problems=list(validate_resource(Record(Path(identifier),calibration),store))
+        elif kind=='cpu_memory_resource_calibration':
             from swdb.cpu_memory_resource import validate_record as validate_resource
             problems=list(validate_resource(Record(Path(identifier),calibration),store))
         else:problems=list(validate_record(Record(Path(identifier),calibration),None))

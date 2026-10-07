@@ -537,3 +537,32 @@ application disjointness, a physical instruction latency or a proven upper
 bound. Public estimation clears an opaque site only when all of its exact
 scoped length counts have known selected rates. Missing bins, incomplete
 profiles and unsupported physical claims leave the whole site unknown.
+
+### Distinct gross bulk resource
+
+The separate `swdb.cpu_bulk_total_calibration` collector keeps the shared bulk
+helper unchanged and preregisters a gross-window pilot. Each gross work-loop window
+must reach50ms natively; short driver values remain retained diagnostics. The
+source calibration explicitly keeps paired costs null unless both windows meet
+that declared threshold and every subtraction is positive. It never relaxes the
+older `bulk_v1` paired-window recipe or rewrites its bounded attempts.
+
+`swdb.cpu_bulk_resource` derives a new typed immutable
+`cpu_bulk_resource_calibration` with recipe `gross_bulk_loop_resource_v1`, exact
+source dependency/hash, all paired trials/spread, and original null residuals.
+Its inferred gross/event cost includes measured constructed loop control and is
+conditional additive opaque overhead. It is not physical latency or a proven
+application bound. The prospective matrix, caps and dispatch commands are in
+[11-bulk-total-runbook.md](../../.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-bulk-total-runbook.md).
+
+### Independent legal OpenMP probes
+
+The separate `swdb.cpu_openmp_calibration` command proves22 selected ABI classes
+at four N3/5×service/driver points with the public static projection seam. Each
+actual target event is prepared and cleaned up legally outside its measurement
+window; the driver measures an empty clock window and executes the target outside
+it. Return, team/level and event counts remain in every alternating-order trial.
+Native import and Store replay require exact libomp/compiler/control identity,
+source/IR/projection hashes, the fixed matrix and declared budgets. Unsupported
+states or nonpositive residuals remain null. The prospective legal-state scope
+and dispatch commands are in [11-openmp-service-runbook.md](../../.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-service-runbook.md).

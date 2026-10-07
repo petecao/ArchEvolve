@@ -100,6 +100,7 @@ BULK_PROFILES=('dynamic_length_disjoint_align4','dynamic_length_overlap_forward4
 BULK_ABIS={'memcpy':'copy','llvm.memcpy.p0.p0.i64':'copy','memmove':'move','llvm.memmove.p0.p0.i64':'move'}
 BULK_ASSUMPTION={'regime':'prepared_reused_bulk_buffers','transfer_basis':'inferred','profile_policy':'max_constructed_profiles_median',
     'source_overlap':'unverified','source_alignment':'unverified','physical_upper_bound':False}
+BULK_RESOURCE_ASSUMPTION={**BULK_ASSUMPTION,'cost_basis':'gross_bulk_loop_resource_v1','includes_loop_control':True}
 
 
 def _bulk_profile_parameters(item,selection,mechanism):
@@ -127,7 +128,7 @@ def _shape_parameters(selection,mechanism):
     if bulk:
         if selection['bin_kind']!='known_length_bins':missing.append('selector.calls.bulk_abi_bin_kind')
         if isinstance(selection['scope_assumption'],dict) and selection['scope_assumption'].get('regime')=='fresh_process_repeated_allocate_free_batches':missing.append('selector.calls.allocator_abi_bin_kind')
-        if selection['scope_assumption']!=BULK_ASSUMPTION or selection['scope_assumption'].get('physical_upper_bound') is not False:
+        if selection['scope_assumption'] not in (BULK_ASSUMPTION,BULK_RESOURCE_ASSUMPTION) or selection['scope_assumption'].get('physical_upper_bound') is not False:
             missing.append('selector.calls.explicit_constructed_bulk_transfer')
     else:
         if allocator_fields.get(selection['name']) != selection['bin_kind']:
