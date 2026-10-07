@@ -4,6 +4,8 @@ No application numeric adapter is registered by ticket16. Unknown and fixture
 forecasts therefore cannot demonstrate D30, irrespective of campaign duration.
 """
 import copy
+import math
+import random
 from pathlib import Path
 
 from swdb import artifacts, campaign, extensa_pairing, paths, workflow, writer, yamlio
@@ -33,6 +35,99 @@ POLICY_KEYS = ('format', 'mode', 'campaign', 'basis', 'estimator_variant', 'froz
 REPORT_KEYS = ('format', 'mode', 'campaign', 'basis', 'estimator_variant', 'policy', 'policy_sha256',
     'policy_snapshot', 'reported_at', 'summaries', 'summary_identities', 'counts', 'pairs',
     'blind_order', 'rank', 'top3', 'gate', 'recommendation', 'selection_policy')
+
+
+def kendall_tau_b(pairs):
+    """Tie-aware rank statistic for finite mathematical pairs; no evidence admission.
+
+    Definition: SciPy primary documentation, scipy.stats.kendalltau (tau-b).
+    Undefined/constant rankings return None, rather than an agreement value.
+    """
+    pairs = list(pairs)
+    if any(len(row) != 2 or any(type(value) not in (int, float) or not math.isfinite(value)
+                               for value in row) for row in pairs):
+        raise ValueError('rank pairs must contain two finite mathematical numbers')
+    concordant = discordant = tied_x = tied_y = 0
+    for i, (x1, y1) in enumerate(pairs):
+        for x2, y2 in pairs[i + 1:]:
+            dx, dy = (x1 > x2) - (x1 < x2), (y1 > y2) - (y1 < y2)
+            if dx == 0 and dy == 0:
+                continue
+            if dx == 0:
+                tied_x += 1
+            elif dy == 0:
+                tied_y += 1
+            elif dx == dy:
+                concordant += 1
+            else:
+                discordant += 1
+    denominator = math.sqrt((concordant + discordant + tied_x) *
+                            (concordant + discordant + tied_y))
+    return (concordant - discordant) / denominator if denominator else None
+
+
+def rank_statistics(samples):
+    """Conditional mathematical ranking; samples never acquire application eligibility.
+
+    Dependency keys are explicit facts. A shared key unions its samples, including
+    transitive candidate/seed/trajectory links. Unknown closure cannot support CI.
+    """
+    samples = list(samples)
+    if len(samples) > 256:
+        raise ValueError('bounded mathematical rank interface supports at most256 samples')
+    pairs = [(row['estimated_speedup'], row['timing_speedup']) for row in samples]
+    result = {'state': 'unsupported', 'tau_b': kendall_tau_b(pairs), 'interval_95': None,
+              'dependency_component_count': 0, 'defined_bootstrap_replicates': 0,
+              'reason': 'zero_eligible_numeric_application_pairs'}
+    if not samples:
+        return result
+    if any(not row.get('dependencies_complete') or not row.get('dependency_keys') or
+           any(not isinstance(key, str) or not key for key in row['dependency_keys']) for row in samples):
+        result.update(dependency_component_count=None, reason='unresolved_dependency_closure')
+        return result
+    parent, owner = list(range(len(samples))), {}
+    def root(i):
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]
+            i = parent[i]
+        return i
+    for i, row in enumerate(samples):
+        for key in row['dependency_keys']:
+            if key in owner:
+                parent[root(i)] = root(owner[key])
+            else:
+                owner[key] = i
+    groups = {}
+    for i, pair in enumerate(pairs):
+        groups.setdefault(root(i), []).append(pair)
+    result['dependency_component_count'] = len(groups)
+    if len(groups) < STATISTICS['minimum_supported_independent_components']:
+        result['reason'] = 'too_few_supported_dependency_components'
+    elif result['tau_b'] is None:
+        result['reason'] = 'degenerate_ranking'
+    else:
+        rng = random.Random(STATISTICS['bootstrap_seed'])
+        blocks, draws = list(groups.values()), []
+        for _ in range(STATISTICS['bootstrap_samples']):
+            draw = [pair for block in rng.choices(blocks, k=len(blocks)) for pair in block]
+            tau = kendall_tau_b(draw)
+            if tau is not None:
+                draws.append(tau)
+        result['defined_bootstrap_replicates'] = len(draws)
+        if len(draws) < STATISTICS['minimum_defined_bootstrap_replicates']:
+            result['reason'] = 'too_few_defined_bootstrap_replicates'
+            return result
+        draws.sort()
+        limits = []
+        for quantile in STATISTICS['quantiles']:
+            position = (len(draws) - 1) * quantile
+            lo, hi = math.floor(position), math.ceil(position)
+            limits.append(draws[lo] + (draws[hi] - draws[lo]) * (position - lo))
+        if limits[0] == limits[1]:
+            result['reason'] = 'degenerate_bootstrap_distribution'
+        else:
+            result.update(state='supported', interval_95=limits, reason=None)
+    return result
 
 
 def identity(data):
@@ -192,8 +287,7 @@ def _analyse(policy, summaries):
         'blind_order': {'state': 'unverified' if blind_problems or absent else 'verified',
                         'problems': blind_problems, 'missing_campaigns': absent,
                         'scope': 'receipt_order_only; unknown forecasts never establish numeric agreement'},
-        'rank': {'state': 'unsupported', 'tau_b': None, 'interval_95': None,
-                 'reason': 'zero_eligible_numeric_application_pairs'},
+        'rank': rank_statistics([]),
         'top3': {'state': 'unsupported', 'strata': strata},
         'gate': {'state': 'unsupported', 'D30': copy.deepcopy(D30),
                  'reason': 'minimum20_eligible_pairs_and_supported_rank_interval_top3_not_demonstrated'},
