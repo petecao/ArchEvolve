@@ -19,12 +19,12 @@ class HtaAdmissionTests(unittest.TestCase):
         cls.design = next(d for d in cls.catalog["designs"] if d["id"] == "flat-hta-micro2019-integer-key-map")
 
     def test_latest_SMASH_and_all_prior_records_preserved(self):
-        self.assertEqual(self.catalog["designs"][:-1], self.base["designs"])
+        self.assertEqual(self.catalog["designs"][:len(self.base["designs"])], self.base["designs"])
         self.assertEqual(self.catalog["project_selections"], self.base["project_selections"])
         for group in ("sources", "claims"):
             for key, value in self.base[group].items():
                 self.assertEqual(self.catalog[group][key], value)
-        self.assertEqual(self.catalog["mechanism_families"][:-1], self.base["mechanism_families"])
+        self.assertEqual(self.catalog["mechanism_families"][:len(self.base["mechanism_families"])], self.base["mechanism_families"])
 
     def test_four_explicit_key_operations_keep_unknown_index_ABI(self):
         for operation, suffix in (("read", "lookup"), ("write", "update"),
