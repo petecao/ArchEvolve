@@ -102,3 +102,37 @@ def test_real_adapters_persist_estimates_before_every_evaluator_entry(repo_team,
                 assert all(r['estimated_at'] < boundary['started'] for r in rows
                            if r['timing_context']['subject']['id'] == candidate)
         assert all('functional_trial_lambda_to_mmio_complete_call_bridge' in r['structural_missing'] for r in rows)
+
+
+@pytest.mark.parametrize('damage', ['missing_events', 'policy_changed'])
+def test_resume_refuses_lost_or_changed_prior_baseline_estimate_before_provider(campaign_team, damage):
+    from testkit.extensa import GEM5
+    import yaml
+    path = campaign_file(campaign_team, cid=GEM5, target='dx100_gem5')
+    fixture, config = fixture_file(campaign_team), provider(campaign_team, {})
+    prepared = run(campaign_team, path, fixture, config, '--baselines-only')
+    assert prepared['baselines'] and prepared['paired_estimates']['records']
+    folder = campaign_team['root'] / 'runs/extensa' / GEM5
+    if damage == 'missing_events':
+        (folder / 'pairing/outcome-accesses.jsonl').unlink()
+    else:
+        policy = json.loads((folder / 'pairing/policy.json').read_text())
+        policy['estimator_sha256'] = '0' * 64
+        (folder / 'pairing/policy.json').write_text(json.dumps(policy))
+    result = run_swdb('campaign', path, '--records', campaign_team['records'], '--fixture', fixture,
+                      '--provider-config', config, '--resume', '--format', 'json')
+    assert result.returncode == 1, result.stderr + result.stdout[:500]
+    assert 'paired estimate' in result.stderr
+    assert not (campaign_team['root'] / 'provider-log.jsonl').exists()
+
+
+def test_team_summary_validates_embedded_pairing_hashes_and_chronology(campaign_team):
+    import yaml
+    summary = run(campaign_team, campaign_file(campaign_team), fixture_file(campaign_team), provider(campaign_team, {}))
+    path = campaign_team['records'] / 'campaign_summaries' / (summary['id'] + '.yaml')
+    data = yaml.safe_load(path.read_text())
+    data['paired_estimates']['outcome_accesses'][0]['outcome_access_started_at'] = '1900-01-01T00:00:00+00:00'
+    path.write_text(yaml.safe_dump(data, sort_keys=False))
+    result = run_swdb('validate', '--records', campaign_team['records'])
+    assert result.returncode == 1, result.stderr + result.stdout[:500]
+    assert 'paired_estimates' in result.stderr and 'preced' in result.stderr

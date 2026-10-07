@@ -1150,6 +1150,7 @@ class Campaign:
             if self.query:
                 self._check_sites()
         with self._tags():
+            self.adapter.pairing.verify_resume(self.state)
             try:
                 if not self.state["setup_done"]:
                     self._setup()

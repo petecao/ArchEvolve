@@ -5,6 +5,7 @@ never an agreement sample. Functional trial-lambda observations do not prove a
 complete-call MMIO or native-driver bridge. Timing remains the selection input.
 """
 import copy
+from datetime import datetime
 import json
 import os
 from pathlib import Path
@@ -41,6 +42,63 @@ def validate_record(record, ctx):
         yield Problem(record.rel, 'seconds', 'fixture estimate requires its synthetic estimated seconds')
 
 
+def _time(value):
+    value = datetime.fromisoformat(value)
+    if value.tzinfo is None or value.utcoffset().total_seconds() != 0:
+        raise ValueError('pairing timestamps must declare UTC')
+    return value
+
+
+def ledger_problems(ledger, campaign):
+    """Validate a self-contained copied ledger, without reopening raw timing files."""
+    rows = ledger['records']
+    by_id = {row['id']: row for row in rows}
+    if len(by_id) != len(rows):
+        yield 'records contain duplicate paired estimate IDs'
+    if not ledger['enabled'] and (rows or ledger['outcome_accesses']):
+        yield 'disabled legacy pairing cannot carry paired evidence'
+    for row in rows:
+        if row['campaign'] != campaign or row['mode'] != 'extensa':
+            yield 'record belongs to a different campaign/mode'
+        if identity(row) != row['identity_sha256'] or not row['id'].endswith('.' + identity(row)[:16]):
+            yield 'embedded paired estimate immutable payload/hash differs'
+        if artifacts.digest(row['timing_context']) != row['context_sha256']:
+            yield 'embedded paired estimate context/hash differs'
+        try:
+            _time(row['estimated_at'])
+        except (ValueError, TypeError):
+            yield 'embedded estimate timestamp is not UTC'
+    for event in ledger['outcome_accesses']:
+        try:
+            started = _time(event['outcome_access_started_at'])
+            if not event['paired_estimates'] or any(rid not in by_id or
+                    _time(by_id[rid]['estimated_at']) >= started for rid in event['paired_estimates']):
+                yield 'outcome access lacks a preceding immutable paired estimate'
+        except (ValueError, TypeError):
+            yield 'outcome access timestamp is not UTC'
+
+
+def validate_summary(record, ctx):
+    if 'paired_estimates' not in record.data:
+        return  # Historical campaign summaries remain valid.
+    ledger = record.data['paired_estimates']
+    from swdb.schemas import SchemaSet
+    from swdb import paths
+    validator = SchemaSet(paths.SCHEMAS, ctx.vocabs).for_kind('paired_estimate')
+    malformed = False
+    for i, row in enumerate(ledger['records']):
+        errors = list(validator.iter_errors(row))
+        for error in errors:
+            malformed = True
+            yield Problem(record.rel, f'paired_estimates.records[{i}]', error.message)
+        if not errors:
+            from swdb.store import Record
+            yield from validate_record(Record(record.rel, row), ctx)
+    if not malformed:
+        for problem in ledger_problems(ledger, record.data['campaign']):
+            yield Problem(record.rel, 'paired_estimates', problem)
+
+
 class PairingLedger:
     """Persist estimates before opening any outcome-bearing evaluator route.
 
@@ -71,6 +129,21 @@ class PairingLedger:
                 stream.flush()
                 os.fsync(stream.fileno())
         return value
+
+    def verify_resume(self, state):
+        if not self.enabled:
+            return
+        had_outcomes = bool(state.get('pilot') or state.get('baselines') or
+            any(candidate.get('comparisons') for iteration in state.get('iterations', [])
+                for candidate in iteration.get('candidates', [])))
+        if had_outcomes and (not (self.folder / 'policy.json').is_file() or
+                             not (self.folder / 'outcome-accesses.jsonl').is_file()):
+            raise Failure('paired estimate history is missing for prior pilot/shared-baseline outcomes; start a fresh campaign')
+        self._policy()  # Refuse implementation/configuration drift before any provider/outcome access.
+        if had_outcomes:
+            value = self.summary()
+            if not value['records'] or not value['outcome_accesses']:
+                raise Failure('paired estimate history is empty for prior outcomes; start a fresh campaign')
 
     def _context(self, store, request):
         candidate = store.get(request['candidate'], 'candidate')
@@ -166,11 +239,9 @@ class PairingLedger:
                    if r.data['campaign'] == self.campaign['id']]
         path = self.folder / 'outcome-accesses.jsonl'
         events = [json.loads(line) for line in path.read_text().splitlines()] if path.exists() else []
-        by_id = {row['id']: row for row in records}
-        for event in events:
-            if not event['paired_estimates'] or any(rid not in by_id or
-                    by_id[rid]['estimated_at'] >= event['outcome_access_started_at'] for rid in event['paired_estimates']):
-                raise Failure('campaign outcome access lacks a preceding immutable paired estimate')
-        return {'format': LEDGER, 'enabled': self.enabled, 'records': records, 'outcome_accesses': events,
-                'eligible_application_estimates': 0,
-                'selection_policy': 'unchanged_timing_only'}
+        value = {'format': LEDGER, 'enabled': self.enabled, 'records': records, 'outcome_accesses': events,
+                 'eligible_application_estimates': 0, 'selection_policy': 'unchanged_timing_only'}
+        problems = list(ledger_problems(value, self.campaign['id']))
+        if problems:
+            raise Failure('paired estimate ledger refuses continuation: ' + '; '.join(problems))
+        return value
