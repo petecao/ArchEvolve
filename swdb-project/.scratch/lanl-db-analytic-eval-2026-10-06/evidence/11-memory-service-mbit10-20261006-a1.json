@@ -1,0 +1,3443 @@
+{
+  "completed_at": "2026-10-07T00:25:50.697005+00:00",
+  "context": {
+    "architecture": "x86_64",
+    "binary_sha256": "b8f306e8a2ab2f1498c9c28b1a7116e139339353a248abba8a6402ee9f2d08ff",
+    "commit": "8e54d74e64c08a29b20eec183b070f3e77a77e43",
+    "compiler_sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113",
+    "compiler_version": "clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin",
+    "control_environment": {
+      "DYLD_INSERT_LIBRARIES": null,
+      "DYLD_LIBRARY_PATH": null,
+      "GLIBC_TUNABLES": null,
+      "LD_AUDIT": null,
+      "LD_LIBRARY_PATH": null,
+      "LD_PRELOAD": null
+    },
+    "control_environment_scope": {
+      "absence_semantics": "null_or_absent_is_unset_under_declared_scope",
+      "exact_variables": [
+        "GLIBC_TUNABLES",
+        "LD_PRELOAD",
+        "LD_AUDIT",
+        "LD_LIBRARY_PATH",
+        "DYLD_LIBRARY_PATH",
+        "DYLD_INSERT_LIBRARIES"
+      ],
+      "format": "swdb.service-control-environment.v1",
+      "prefixes": [
+        "MALLOC_"
+      ]
+    },
+    "cpus": [
+      0
+    ],
+    "dirty": false,
+    "end_state": {
+      "available_memory": "MemTotal:       131426264 kB\nMemFree:        21696460 kB\nMemAvailable:   122117060 kB\nBuffers:        12237000 kB\nCached:         59699768 kB\nSwapCached:            0 kB\nActive:          4364220 kB\nInactive:       69184632 kB\nActive(anon):    1586060 kB\nInactive(anon):    55768 kB\nActive(file):    2778160 kB\nInactive(file): 69128864 kB\nUnevictable:       39252 kB\nMlocked:           36180 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:                40 kB\nWriteback:             0 kB\nAnonPages:       1651660 kB\nMapped:          1127380 kB\nShmem:             14900 kB\nKReclaimable:   29832176 kB\nSlab:           32354632 kB\nSReclaimable:   29748344 kB\nSUnreclaim:      2606288 kB\nKernelStack:       26112 kB\nPageTables:        31244 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    65713132 kB\nCommitted_AS:    5671276 kB\nVmallocTotal:   13743895347199 kB\nVmallocUsed:      433172 kB\nVmallocChunk:          0 kB\nPercpu:           370688 kB\nHardwareCorrupted:     8 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nUnaccepted:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:    40398820 kB\nDirectMap2M:    91160576 kB\nDirectMap1G:     4194304 kB",
+      "governor": null,
+      "load": [
+        2.203125,
+        1.8603515625,
+        1.5810546875
+      ],
+      "no_turbo": null,
+      "time_ns": 1791332587764082403
+    },
+    "flags": [
+      "-O3",
+      "-std=c++11",
+      "--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13"
+    ],
+    "free_disk_bytes": 60187447296,
+    "host": "mbit10",
+    "instrumented_timer": false,
+    "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 482)",
+    "loaded_libraries": {
+      "ld-linux-x86-64.so.2": {
+        "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+        "sha256": "c20a2dc8917c755f02b94049356320fe1f62ac7d9f8994731f807d9df39302da"
+      },
+      "libc.so.6": {
+        "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+        "sha256": "3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf"
+      },
+      "libgcc_s.so.1": {
+        "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1",
+        "sha256": "d93224d2b0dab4247598be683adca02f5cf00586f99c187579cd7e92058fb7cb"
+      },
+      "libm.so.6": {
+        "path": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+        "sha256": "fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0"
+      },
+      "libstdc++.so.6.0.33": {
+        "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33",
+        "sha256": "1fd75fe70354a416d75aef22bcae68c47bd25d20e2d0568c30b1a9838cf62f11"
+      }
+    },
+    "machine_sha256": "fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79",
+    "optimized_work": {
+      "ir_sha256": "796c6597f55f011dc9ca829ab16177af7f1d8d7734c611e39b7f400214c1d19b",
+      "retained_primitives": {
+        "1": [
+          "volatile_read"
+        ],
+        "4": [
+          "volatile_read",
+          "volatile_write",
+          "seq_cst_add",
+          "seq_cst_compare_exchange"
+        ],
+        "8": [
+          "volatile_read",
+          "volatile_write",
+          "seq_cst_add",
+          "seq_cst_compare_exchange"
+        ]
+      },
+      "scope": "Actual O3 typed wrapper lowering; normalized request numerator proof is independent."
+    },
+    "source_sha256": {
+      "CpuMemoryCount.cpp": "80e341dc62c3ce4600dd92bbf6ee52c1e535a3b1b93d0f230b4b3cdc43f01e04",
+      "CpuMemoryTimer.cpp": "081d90708aa61daab04f70a5986d6b196ca40a70ef904a1dd37359ddf0d76cc4",
+      "CpuMemoryWork.h": "ea8d348c417067f4d0bdb2c86ac7718e5def5ed1662b5f06bc3545ee5c55de7a"
+    },
+    "start_state": {
+      "available_memory": "MemTotal:       131426264 kB\nMemFree:        22216228 kB\nMemAvailable:   122578004 kB\nBuffers:        12236424 kB\nCached:         59643784 kB\nSwapCached:            0 kB\nActive:          4368748 kB\nInactive:       69128648 kB\nActive(anon):    1591104 kB\nInactive(anon):    55780 kB\nActive(file):    2777644 kB\nInactive(file): 69072868 kB\nUnevictable:       39252 kB\nMlocked:           36180 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:               592 kB\nWriteback:             0 kB\nAnonPages:       1656860 kB\nMapped:          1127180 kB\nShmem:             14900 kB\nKReclaimable:   29829864 kB\nSlab:           32351816 kB\nSReclaimable:   29746032 kB\nSUnreclaim:      2605784 kB\nKernelStack:       25440 kB\nPageTables:        31616 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    65713132 kB\nCommitted_AS:    5670252 kB\nVmallocTotal:   13743895347199 kB\nVmallocUsed:      432356 kB\nVmallocChunk:          0 kB\nPercpu:           370688 kB\nHardwareCorrupted:     8 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nUnaccepted:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:    40398820 kB\nDirectMap2M:    91160576 kB\nDirectMap1G:     4194304 kB",
+      "governor": null,
+      "load": [
+        1.65869140625,
+        1.2392578125,
+        1.32666015625
+      ],
+      "no_turbo": null,
+      "time_ns": 1791332289215041977
+    },
+    "system": "Linux"
+  },
+  "denominator_proof": {
+    "count_driver_sha256": "80e341dc62c3ce4600dd92bbf6ee52c1e535a3b1b93d0f230b4b3cdc43f01e04",
+    "format": "swdb.cpu-memory-count-proof.v1",
+    "pipeline": {
+      "passes": [
+        "function(sroa,mem2reg),cgscc(inline),function(loop-simplify)"
+      ],
+      "version": "source-normalized-v2"
+    },
+    "plugin_source_sha256": "079105affe9a8c01b5766dab26da5f96ab309abccb8dd8c15d2982fe902b90ef",
+    "points": [
+      {
+        "characterization_sha256": "f84fcbcc1cc053a30d74dfdc8a97924fe8e994a1db9547f14c75920af1cf20ba",
+        "checked_success_events": null,
+        "element_bytes": 4,
+        "events": 3,
+        "invoke": true,
+        "opaque_events": 0,
+        "operation": "read",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 20,
+          "floating_point": 0,
+          "integer": 11
+        },
+        "requests": 3,
+        "requests_by_kind_width": [
+          {
+            "element_bytes": 4,
+            "requests": 3,
+            "update_kind": "read"
+          }
+        ]
+      },
+      {
+        "characterization_sha256": "e219bd05fa5c482165736084fd688927545502deec148eab5db3be1a89b9d348",
+        "checked_success_events": null,
+        "element_bytes": 4,
+        "events": 5,
+        "invoke": true,
+        "opaque_events": 0,
+        "operation": "read",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 32,
+          "floating_point": 0,
+          "integer": 17
+        },
+        "requests": 5,
+        "requests_by_kind_width": [
+          {
+            "element_bytes": 4,
+            "requests": 5,
+            "update_kind": "read"
+          }
+        ]
+      },
+      {
+        "characterization_sha256": "d11d85b80fa1a08faa3ef79c0d1ec7df24a44a278249db45e849ec55f9b8bd81",
+        "checked_success_events": null,
+        "element_bytes": 4,
+        "events": 3,
+        "invoke": false,
+        "opaque_events": 0,
+        "operation": "read",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 14,
+          "floating_point": 0,
+          "integer": 17
+        },
+        "requests": 0,
+        "requests_by_kind_width": []
+      },
+      {
+        "characterization_sha256": "3d330081ef2b160cbbfc89318595624b27a26232d4e600119c3be88a3ef950e5",
+        "checked_success_events": null,
+        "element_bytes": 4,
+        "events": 5,
+        "invoke": false,
+        "opaque_events": 0,
+        "operation": "read",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 22,
+          "floating_point": 0,
+          "integer": 27
+        },
+        "requests": 0,
+        "requests_by_kind_width": []
+      },
+      {
+        "characterization_sha256": "d634f46d3aaa14fc46f557f71d895da62cdb8c595d987a214cfeab5f70873a12",
+        "checked_success_events": null,
+        "element_bytes": 8,
+        "events": 3,
+        "invoke": true,
+        "opaque_events": 0,
+        "operation": "read",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 20,
+          "floating_point": 0,
+          "integer": 11
+        },
+        "requests": 3,
+        "requests_by_kind_width": [
+          {
+            "element_bytes": 8,
+            "requests": 3,
+            "update_kind": "read"
+          }
+        ]
+      },
+      {
+        "characterization_sha256": "ca0097118fcf0e615abcf88faa8442039121add16c8098e19aa962b0110fab21",
+        "checked_success_events": null,
+        "element_bytes": 8,
+        "events": 5,
+        "invoke": true,
+        "opaque_events": 0,
+        "operation": "read",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 32,
+          "floating_point": 0,
+          "integer": 17
+        },
+        "requests": 5,
+        "requests_by_kind_width": [
+          {
+            "element_bytes": 8,
+            "requests": 5,
+            "update_kind": "read"
+          }
+        ]
+      },
+      {
+        "characterization_sha256": "4ce8516f1c3c2bddb51709825ab486016e3e6f2042f1bea14721741465fddebe",
+        "checked_success_events": null,
+        "element_bytes": 8,
+        "events": 3,
+        "invoke": false,
+        "opaque_events": 0,
+        "operation": "read",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 14,
+          "floating_point": 0,
+          "integer": 17
+        },
+        "requests": 0,
+        "requests_by_kind_width": []
+      },
+      {
+        "characterization_sha256": "4b7b7fb1448ee680e940ce500da8154812726892560dba9b97d7d51d5a3c69a4",
+        "checked_success_events": null,
+        "element_bytes": 8,
+        "events": 5,
+        "invoke": false,
+        "opaque_events": 0,
+        "operation": "read",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 22,
+          "floating_point": 0,
+          "integer": 27
+        },
+        "requests": 0,
+        "requests_by_kind_width": []
+      },
+      {
+        "characterization_sha256": "36cd9e4058f4f537dc7e377d8a7f2fa447fb774fc27a99da3479182efc874d02",
+        "checked_success_events": null,
+        "element_bytes": 4,
+        "events": 3,
+        "invoke": true,
+        "opaque_events": 0,
+        "operation": "write",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 26,
+          "floating_point": 0,
+          "integer": 23
+        },
+        "requests": 3,
+        "requests_by_kind_width": [
+          {
+            "element_bytes": 4,
+            "requests": 3,
+            "update_kind": "write"
+          }
+        ]
+      },
+      {
+        "characterization_sha256": "97c26985ab9ce2b587614ee338a245e0462323aa74301b2e372605b32326cb29",
+        "checked_success_events": null,
+        "element_bytes": 4,
+        "events": 5,
+        "invoke": true,
+        "opaque_events": 0,
+        "operation": "write",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 42,
+          "floating_point": 0,
+          "integer": 37
+        },
+        "requests": 5,
+        "requests_by_kind_width": [
+          {
+            "element_bytes": 4,
+            "requests": 5,
+            "update_kind": "write"
+          }
+        ]
+      },
+      {
+        "characterization_sha256": "7353377755986affbed24a8ffce8d930ba7fdf354db11dd13e27c5cd87626746",
+        "checked_success_events": null,
+        "element_bytes": 4,
+        "events": 3,
+        "invoke": false,
+        "opaque_events": 0,
+        "operation": "write",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 14,
+          "floating_point": 0,
+          "integer": 17
+        },
+        "requests": 0,
+        "requests_by_kind_width": []
+      },
+      {
+        "characterization_sha256": "596a9615a632a667cb9cd061ffa976bf3d69dbf2725af83ce36d60e521110db9",
+        "checked_success_events": null,
+        "element_bytes": 4,
+        "events": 5,
+        "invoke": false,
+        "opaque_events": 0,
+        "operation": "write",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 22,
+          "floating_point": 0,
+          "integer": 27
+        },
+        "requests": 0,
+        "requests_by_kind_width": []
+      },
+      {
+        "characterization_sha256": "e9811204706195d6b00f703169e3328d109f8ab48c75c2379cf4145214580035",
+        "checked_success_events": null,
+        "element_bytes": 8,
+        "events": 3,
+        "invoke": true,
+        "opaque_events": 0,
+        "operation": "write",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 26,
+          "floating_point": 0,
+          "integer": 23
+        },
+        "requests": 3,
+        "requests_by_kind_width": [
+          {
+            "element_bytes": 8,
+            "requests": 3,
+            "update_kind": "write"
+          }
+        ]
+      },
+      {
+        "characterization_sha256": "e1dd25555b54af4f0eca16fb372c80c852991778f5efad1f9afa32eecb7c8ae8",
+        "checked_success_events": null,
+        "element_bytes": 8,
+        "events": 5,
+        "invoke": true,
+        "opaque_events": 0,
+        "operation": "write",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 42,
+          "floating_point": 0,
+          "integer": 37
+        },
+        "requests": 5,
+        "requests_by_kind_width": [
+          {
+            "element_bytes": 8,
+            "requests": 5,
+            "update_kind": "write"
+          }
+        ]
+      },
+      {
+        "characterization_sha256": "891ab61ea2ec064033a1e9702188e0deece4e460de9c5daad1da5a86a514a79c",
+        "checked_success_events": null,
+        "element_bytes": 8,
+        "events": 3,
+        "invoke": false,
+        "opaque_events": 0,
+        "operation": "write",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 14,
+          "floating_point": 0,
+          "integer": 17
+        },
+        "requests": 0,
+        "requests_by_kind_width": []
+      },
+      {
+        "characterization_sha256": "c572365756649aea95cc624e58046a1994fc31f6583799494fcbe3cee85c99ff",
+        "checked_success_events": null,
+        "element_bytes": 8,
+        "events": 5,
+        "invoke": false,
+        "opaque_events": 0,
+        "operation": "write",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 22,
+          "floating_point": 0,
+          "integer": 27
+        },
+        "requests": 0,
+        "requests_by_kind_width": []
+      },
+      {
+        "characterization_sha256": "ee6aacfccc2d23fa81328ec37a351b2b9a80a3d65b416481656c0e9d35cf646f",
+        "checked_success_events": null,
+        "element_bytes": 4,
+        "events": 3,
+        "invoke": true,
+        "opaque_events": 0,
+        "operation": "add-update",
+        "operation_counts": {
+          "atomic": 3,
+          "branch": 32,
+          "floating_point": 0,
+          "integer": 29
+        },
+        "requests": 3,
+        "requests_by_kind_width": [
+          {
+            "element_bytes": 4,
+            "requests": 3,
+            "update_kind": "add-update"
+          }
+        ]
+      },
+      {
+        "characterization_sha256": "40c3f7634b33ab2b7a21cc528c7db4cb11ac93a5f1beb007c34fd322e478a14f",
+        "checked_success_events": null,
+        "element_bytes": 4,
+        "events": 5,
+        "invoke": true,
+        "opaque_events": 0,
+        "operation": "add-update",
+        "operation_counts": {
+          "atomic": 5,
+          "branch": 52,
+          "floating_point": 0,
+          "integer": 47
+        },
+        "requests": 5,
+        "requests_by_kind_width": [
+          {
+            "element_bytes": 4,
+            "requests": 5,
+            "update_kind": "add-update"
+          }
+        ]
+      },
+      {
+        "characterization_sha256": "29a729838d9ede9afac958edd8b3f6bc9077a2890f5755604ce60d725d5a7f8d",
+        "checked_success_events": null,
+        "element_bytes": 4,
+        "events": 3,
+        "invoke": false,
+        "opaque_events": 0,
+        "operation": "add-update",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 14,
+          "floating_point": 0,
+          "integer": 17
+        },
+        "requests": 0,
+        "requests_by_kind_width": []
+      },
+      {
+        "characterization_sha256": "bd9da75916ad48ec8e1b252cb8af524680f4e2ab69bcefc53b4679324b754e9a",
+        "checked_success_events": null,
+        "element_bytes": 4,
+        "events": 5,
+        "invoke": false,
+        "opaque_events": 0,
+        "operation": "add-update",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 22,
+          "floating_point": 0,
+          "integer": 27
+        },
+        "requests": 0,
+        "requests_by_kind_width": []
+      },
+      {
+        "characterization_sha256": "8a131712b9f90831f879655d3c436fdbf314a8d010eb436f303184827d1377a0",
+        "checked_success_events": null,
+        "element_bytes": 8,
+        "events": 3,
+        "invoke": true,
+        "opaque_events": 0,
+        "operation": "add-update",
+        "operation_counts": {
+          "atomic": 3,
+          "branch": 32,
+          "floating_point": 0,
+          "integer": 29
+        },
+        "requests": 3,
+        "requests_by_kind_width": [
+          {
+            "element_bytes": 8,
+            "requests": 3,
+            "update_kind": "add-update"
+          }
+        ]
+      },
+      {
+        "characterization_sha256": "e0d082fa5121bd5a9601074f9cad15171ad8a640227962fee77223a85e71510c",
+        "checked_success_events": null,
+        "element_bytes": 8,
+        "events": 5,
+        "invoke": true,
+        "opaque_events": 0,
+        "operation": "add-update",
+        "operation_counts": {
+          "atomic": 5,
+          "branch": 52,
+          "floating_point": 0,
+          "integer": 47
+        },
+        "requests": 5,
+        "requests_by_kind_width": [
+          {
+            "element_bytes": 8,
+            "requests": 5,
+            "update_kind": "add-update"
+          }
+        ]
+      },
+      {
+        "characterization_sha256": "9124cab59f0876ce50f31f216cf657e6ddf122562210c26c52b5054929aed518",
+        "checked_success_events": null,
+        "element_bytes": 8,
+        "events": 3,
+        "invoke": false,
+        "opaque_events": 0,
+        "operation": "add-update",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 14,
+          "floating_point": 0,
+          "integer": 17
+        },
+        "requests": 0,
+        "requests_by_kind_width": []
+      },
+      {
+        "characterization_sha256": "3b9e25e0ea5c8cab385114dfb657d4ba47d201969a60a081592e2ddc61948b18",
+        "checked_success_events": null,
+        "element_bytes": 8,
+        "events": 5,
+        "invoke": false,
+        "opaque_events": 0,
+        "operation": "add-update",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 22,
+          "floating_point": 0,
+          "integer": 27
+        },
+        "requests": 0,
+        "requests_by_kind_width": []
+      },
+      {
+        "characterization_sha256": "015275c6553432559c5a455ca9ac1233b6af61f1248d3b8eda4256bf6975e849",
+        "checked_success_events": 3,
+        "element_bytes": 4,
+        "events": 3,
+        "invoke": true,
+        "opaque_events": 0,
+        "operation": "cas-success",
+        "operation_counts": {
+          "atomic": 3,
+          "branch": 35,
+          "floating_point": 0,
+          "integer": 32
+        },
+        "requests": 3,
+        "requests_by_kind_width": [
+          {
+            "element_bytes": 4,
+            "requests": 3,
+            "update_kind": "compare-and-swap"
+          }
+        ]
+      },
+      {
+        "characterization_sha256": "5deb052ae9c5c21bd042b8ceee2521f011ccfa5603f6fd0d66b3794b0d25e5e6",
+        "checked_success_events": 5,
+        "element_bytes": 4,
+        "events": 5,
+        "invoke": true,
+        "opaque_events": 0,
+        "operation": "cas-success",
+        "operation_counts": {
+          "atomic": 5,
+          "branch": 57,
+          "floating_point": 0,
+          "integer": 52
+        },
+        "requests": 5,
+        "requests_by_kind_width": [
+          {
+            "element_bytes": 4,
+            "requests": 5,
+            "update_kind": "compare-and-swap"
+          }
+        ]
+      },
+      {
+        "characterization_sha256": "086c6d03f0cd586a4158c82ddecb39e1f2c3ad5795faf06b2d7cf8a67bfdc5e1",
+        "checked_success_events": null,
+        "element_bytes": 4,
+        "events": 3,
+        "invoke": false,
+        "opaque_events": 0,
+        "operation": "cas-success",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 14,
+          "floating_point": 0,
+          "integer": 17
+        },
+        "requests": 0,
+        "requests_by_kind_width": []
+      },
+      {
+        "characterization_sha256": "7b2311726c409b8f8d782056e472a07ade431d4fec8db81c33b415d9a516d42e",
+        "checked_success_events": null,
+        "element_bytes": 4,
+        "events": 5,
+        "invoke": false,
+        "opaque_events": 0,
+        "operation": "cas-success",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 22,
+          "floating_point": 0,
+          "integer": 27
+        },
+        "requests": 0,
+        "requests_by_kind_width": []
+      },
+      {
+        "characterization_sha256": "a30a35acdc298e0835b1fe56ce8e307e348a4058c09f6e8744b60498ae720337",
+        "checked_success_events": 3,
+        "element_bytes": 8,
+        "events": 3,
+        "invoke": true,
+        "opaque_events": 0,
+        "operation": "cas-success",
+        "operation_counts": {
+          "atomic": 3,
+          "branch": 35,
+          "floating_point": 0,
+          "integer": 32
+        },
+        "requests": 3,
+        "requests_by_kind_width": [
+          {
+            "element_bytes": 8,
+            "requests": 3,
+            "update_kind": "compare-and-swap"
+          }
+        ]
+      },
+      {
+        "characterization_sha256": "37fd88f9684e60506e9a27d4ecc15ebe41ab7f01eb22d66eb576407b5ad1cf13",
+        "checked_success_events": 5,
+        "element_bytes": 8,
+        "events": 5,
+        "invoke": true,
+        "opaque_events": 0,
+        "operation": "cas-success",
+        "operation_counts": {
+          "atomic": 5,
+          "branch": 57,
+          "floating_point": 0,
+          "integer": 52
+        },
+        "requests": 5,
+        "requests_by_kind_width": [
+          {
+            "element_bytes": 8,
+            "requests": 5,
+            "update_kind": "compare-and-swap"
+          }
+        ]
+      },
+      {
+        "characterization_sha256": "3b30e5cbee924ebc7c3f50389d2fbc01e0dacbd1f3de02c222aaf289b4457da1",
+        "checked_success_events": null,
+        "element_bytes": 8,
+        "events": 3,
+        "invoke": false,
+        "opaque_events": 0,
+        "operation": "cas-success",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 14,
+          "floating_point": 0,
+          "integer": 17
+        },
+        "requests": 0,
+        "requests_by_kind_width": []
+      },
+      {
+        "characterization_sha256": "51bc064aaccbfd306782f50cae7f3978a29b51555281f676d7121a7f28002fe9",
+        "checked_success_events": null,
+        "element_bytes": 8,
+        "events": 5,
+        "invoke": false,
+        "opaque_events": 0,
+        "operation": "cas-success",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 22,
+          "floating_point": 0,
+          "integer": 27
+        },
+        "requests": 0,
+        "requests_by_kind_width": []
+      },
+      {
+        "characterization_sha256": "d284ec951ecac331a2a8c3bbbb266807d0caba06762b03ebe39e4b29ab60d718",
+        "checked_success_events": 0,
+        "element_bytes": 4,
+        "events": 3,
+        "invoke": true,
+        "opaque_events": 0,
+        "operation": "cas-failure",
+        "operation_counts": {
+          "atomic": 3,
+          "branch": 38,
+          "floating_point": 0,
+          "integer": 32
+        },
+        "requests": 3,
+        "requests_by_kind_width": [
+          {
+            "element_bytes": 4,
+            "requests": 3,
+            "update_kind": "compare-and-swap"
+          }
+        ]
+      },
+      {
+        "characterization_sha256": "c6a7ebe4311451eb94ca821a3484c1dc29679ae54acd05bc5f82fb4003522a13",
+        "checked_success_events": 0,
+        "element_bytes": 4,
+        "events": 5,
+        "invoke": true,
+        "opaque_events": 0,
+        "operation": "cas-failure",
+        "operation_counts": {
+          "atomic": 5,
+          "branch": 62,
+          "floating_point": 0,
+          "integer": 52
+        },
+        "requests": 5,
+        "requests_by_kind_width": [
+          {
+            "element_bytes": 4,
+            "requests": 5,
+            "update_kind": "compare-and-swap"
+          }
+        ]
+      },
+      {
+        "characterization_sha256": "fa6a55b700bf68ec3a3b6fba1a239369edb7ffd7665f7ab33d4fea65b1c3534e",
+        "checked_success_events": null,
+        "element_bytes": 4,
+        "events": 3,
+        "invoke": false,
+        "opaque_events": 0,
+        "operation": "cas-failure",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 14,
+          "floating_point": 0,
+          "integer": 17
+        },
+        "requests": 0,
+        "requests_by_kind_width": []
+      },
+      {
+        "characterization_sha256": "f875080ca166eacb6f458a64efcd0d29fad26ccf79c5d9d7514d1dbc2cbd7c16",
+        "checked_success_events": null,
+        "element_bytes": 4,
+        "events": 5,
+        "invoke": false,
+        "opaque_events": 0,
+        "operation": "cas-failure",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 22,
+          "floating_point": 0,
+          "integer": 27
+        },
+        "requests": 0,
+        "requests_by_kind_width": []
+      },
+      {
+        "characterization_sha256": "e97dfabecc3aa75b6ddea3feee80ca0e2a08e303373f7ba6eea9385a937a06eb",
+        "checked_success_events": 0,
+        "element_bytes": 8,
+        "events": 3,
+        "invoke": true,
+        "opaque_events": 0,
+        "operation": "cas-failure",
+        "operation_counts": {
+          "atomic": 3,
+          "branch": 38,
+          "floating_point": 0,
+          "integer": 32
+        },
+        "requests": 3,
+        "requests_by_kind_width": [
+          {
+            "element_bytes": 8,
+            "requests": 3,
+            "update_kind": "compare-and-swap"
+          }
+        ]
+      },
+      {
+        "characterization_sha256": "437bcba00e135ace518710be1aadf47030d314a71c8fe0aaefc9f4c5082aefaa",
+        "checked_success_events": 0,
+        "element_bytes": 8,
+        "events": 5,
+        "invoke": true,
+        "opaque_events": 0,
+        "operation": "cas-failure",
+        "operation_counts": {
+          "atomic": 5,
+          "branch": 62,
+          "floating_point": 0,
+          "integer": 52
+        },
+        "requests": 5,
+        "requests_by_kind_width": [
+          {
+            "element_bytes": 8,
+            "requests": 5,
+            "update_kind": "compare-and-swap"
+          }
+        ]
+      },
+      {
+        "characterization_sha256": "84924e55d769674cfa64326bd33433af20f85d99141cb59a1c38b50571250913",
+        "checked_success_events": null,
+        "element_bytes": 8,
+        "events": 3,
+        "invoke": false,
+        "opaque_events": 0,
+        "operation": "cas-failure",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 14,
+          "floating_point": 0,
+          "integer": 17
+        },
+        "requests": 0,
+        "requests_by_kind_width": []
+      },
+      {
+        "characterization_sha256": "aa39eff112a52fbaaec3c8e243d95054b7815ec565f3b06e45c02e419890f535",
+        "checked_success_events": null,
+        "element_bytes": 8,
+        "events": 5,
+        "invoke": false,
+        "opaque_events": 0,
+        "operation": "cas-failure",
+        "operation_counts": {
+          "atomic": 0,
+          "branch": 22,
+          "floating_point": 0,
+          "integer": 27
+        },
+        "requests": 0,
+        "requests_by_kind_width": []
+      }
+    ],
+    "runtime_source_sha256": "aad5d7667e3359bddac47cb0b73a1693fd1ae321fbf1bc34347c7a5f69ec89af",
+    "source_sha256": "ea8d348c417067f4d0bdb2c86ac7718e5def5ed1662b5f06bc3545ee5c55de7a"
+  },
+  "environment": {
+    "checked_utc": "2026-10-07T00:17:18.720570+00:00",
+    "cpu_affinity": [
+      0,
+      2,
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      30,
+      32,
+      34,
+      36,
+      38,
+      40,
+      42,
+      44,
+      46,
+      48,
+      50,
+      52,
+      54,
+      56,
+      58,
+      60,
+      62
+    ],
+    "disk_free_bytes": {
+      "/data": 60306931712,
+      "/data1": 27008684032
+    },
+    "environment": {
+      "OMP_DYNAMIC": "FALSE",
+      "OMP_NUM_THREADS": "1",
+      "OMP_PLACES": "cores",
+      "OMP_PROC_BIND": "close"
+    },
+    "evidence_scope": "Independent constructed memory requests; application transfer inferred and application accuracy unverified.",
+    "governor": null,
+    "load": [
+      1.2099609375,
+      1.09765625,
+      1.28759765625
+    ],
+    "lscpu": "Architecture:                            x86_64\nCPU op-mode(s):                          32-bit, 64-bit\nAddress sizes:                           46 bits physical, 57 bits virtual\nByte Order:                              Little Endian\nCPU(s):                                  64\nOn-line CPU(s) list:                     0-63\nVendor ID:                               GenuineIntel\nModel name:                              Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz\nCPU family:                              6\nModel:                                   106\nThread(s) per core:                      2\nCore(s) per socket:                      16\nSocket(s):                               2\nStepping:                                6\nBogoMIPS:                                5800.00\nFlags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 intel_ppin ssbd mba ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local split_lock_detect wbnoinvd dtherm ida arat pln pts vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg tme avx512_vpopcntdq la57 rdpid fsrm md_clear pconfig flush_l1d arch_capabilities\nVirtualization:                          VT-x\nL1d cache:                               1.5 MiB (32 instances)\nL1i cache:                               1 MiB (32 instances)\nL2 cache:                                40 MiB (32 instances)\nL3 cache:                                48 MiB (2 instances)\nNUMA node(s):                            2\nNUMA node0 CPU(s):                       0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62\nNUMA node1 CPU(s):                       1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63\nVulnerability Gather data sampling:      Mitigation; Microcode\nVulnerability Indirect target selection: Mitigation; Aligned branch/return thunks\nVulnerability Itlb multihit:             Not affected\nVulnerability L1tf:                      Not affected\nVulnerability Mds:                       Not affected\nVulnerability Meltdown:                  Not affected\nVulnerability Mmio stale data:           Mitigation; Clear CPU buffers; SMT vulnerable\nVulnerability Reg file data sampling:    Not affected\nVulnerability Retbleed:                  Not affected\nVulnerability Spec rstack overflow:      Not affected\nVulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:                Mitigation; Enhanced / Automatic IBRS; IBPB conditional; PBRSB-eIBRS SW sequence; BHI SW loop, KVM SW loop\nVulnerability Srbds:                     Not affected\nVulnerability Tsa:                       Not affected\nVulnerability Tsx async abort:           Not affected\nVulnerability Vmscape:                   Not affected\n",
+    "no_turbo": null,
+    "numactl": "available: 2 nodes (0-1)\nnode 0 cpus: 0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62\nnode 0 size: 63849 MB\nnode 0 free: 20757 MB\nnode 1 cpus: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31 33 35 37 39 41 43 45 47 49 51 53 55 57 59 61 63\nnode 1 size: 64496 MB\nnode 1 free: 1497 MB\nnode distances:\nnode   0   1 \n  0:  10  20 \n  1:  20  10 \n",
+    "perf_event_paranoid": "4",
+    "source_clean": true,
+    "source_commit": "8e54d74e64c08a29b20eec183b070f3e77a77e43",
+    "uname": "Linux mbit10 6.8.0-136-generic #136-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 21:53:05 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux\n",
+    "who": "yanruj   pts/0        2026-10-06 20:17 (tmux(359742).%696)\n"
+  },
+  "evidence_scope": "Independent constructed logical request costs; context and primitive transfer must be checked. Residency/shape transfer is inferred, physical instruction latency and application accuracy remain unverified. Nonpositive residuals stay unknown.",
+  "exit_code": 0,
+  "export_policy": "Typed record and compact source/context/count/trial metadata only; raw IR, binaries, addresses and logs remain on mbit10.",
+  "format": "swdb.lanl-independent-service-evidence.v1",
+  "identity_sha256": "d56beffa8ab1e6a1b727d60a0e817388d4c025347f6c9634248df44bbca1af11",
+  "lane": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "none",
+      "command": [
+        "python3",
+        "/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-memory-20261006-a1/runner.py"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "2026-10-07T00:25:50Z",
+      "exit_code": 0,
+      "host": "mbit10",
+      "job": "swdb-lanl-service-memory-20261006-a1",
+      "lease_generation": 482,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 1.21,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-07T00:17:18Z"
+    }
+  },
+  "lease_release": {
+    "active_session": null,
+    "attempt_pid": null,
+    "attempt_start_token": null,
+    "heartbeat_at": "2026-10-07T00:25:50Z",
+    "lease": {
+      "acquired_at": "2026-10-07T00:17:18Z",
+      "daemon_pid": 2030106,
+      "daemon_start_token": "sh2030106-1791332238",
+      "generation": 482,
+      "host": "mbit10",
+      "lease_name": "mbit10-evaluation-node0",
+      "mode": "measure",
+      "session_id": null
+    },
+    "recovered_from_generation": null,
+    "released_at": "2026-10-07T00:25:50Z",
+    "session_note": null,
+    "session_state": "none",
+    "state": "released",
+    "writer": "hostlock.sh"
+  },
+  "minimum_gross_seconds": 0.07712848499999998,
+  "preregistered_input": {
+    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-memory-20261006-a1/preregistration.json",
+    "sha256": "1e5b91b4361ac631018bb9314f9d1baf5747dc5b8acac656deac02d444e84d48"
+  },
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-memory-20261006-a1",
+  "receipt": {
+    "file_sha256": "d010215a10b409beb0b48fec754f4a40d0cf871e50c8ad8e8671abfb3f18ff79",
+    "identity_sha256": "476e99938b2759f5b877c7fdf7dc14e56b2da303592e44dfea989056a2df741d",
+    "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-memory-20261006-a1/calibration/receipt.json"
+  },
+  "record": {
+    "bytes": 452232,
+    "file_sha256": "6c5c58473435acd7a394f6382f38facd191cc1f00aba81bf87a7123459cb4eca",
+    "id": "mbit10.cpu.lanl20261006.service.memory.a1",
+    "identity_sha256": "afc4fd5354dba7baaecfcef6501380445e162d6e48345ddd4ebb56681f34e342",
+    "path": "records/cpu_service_calibrations/mbit10.cpu.lanl20261006.service.memory.a1.yaml"
+  },
+  "resolved_cells": 18,
+  "run_id": "lanl-analytic-service-memory-20261006-a1",
+  "services": [
+    {
+      "id": "memory.read.4.32768",
+      "missing": [],
+      "parameter": {
+        "basis": "measured",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.read.4.32768; paired elapsed/work trials.",
+        "unit": "seconds/request",
+        "value": 9.246078431607038e-10
+      },
+      "scope": {
+        "cache_state": "prepared buffers and repeated calls; physical cache level unverified",
+        "construction": "dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells",
+        "element_bytes": 4,
+        "first_touch": "preparation excluded",
+        "footprint_bytes": 32768,
+        "memory_regime": "resident_serial_constructed_requests",
+        "operation": "read",
+        "transfer_basis": "inferred",
+        "update_kind": "read",
+        "worker_scope": "serial"
+      },
+      "seconds_per_event": {
+        "max": 9.261194318533832e-10,
+        "median": 9.246078431607038e-10,
+        "min": 9.154102504253666e-10,
+        "repetitions": 7,
+        "spread": 1.0709181428016614e-11,
+        "values": [
+          9.253190457822162e-10,
+          9.16327610611967e-10,
+          9.246078431607038e-10,
+          9.154245555401005e-10,
+          9.261194318533832e-10,
+          9.154102504253666e-10,
+          9.24820065498406e-10
+        ]
+      },
+      "trials": [
+        {
+          "batch_events": 8192,
+          "batches": 8192,
+          "checksum": 0,
+          "cycle_verified_elements": 8192,
+          "driver_seconds": 0.03869564600000017,
+          "events": 67108864,
+          "gross_seconds": 0.10079275600000868,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 8192,
+          "batches": 8192,
+          "checksum": 0,
+          "cycle_verified_elements": 8192,
+          "driver_seconds": 0.03896706700000155,
+          "events": 67108864,
+          "gross_seconds": 0.100460772000005,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 8192,
+          "batches": 8192,
+          "checksum": 0,
+          "cycle_verified_elements": 8192,
+          "driver_seconds": 0.03869791699999999,
+          "events": 67108864,
+          "gross_seconds": 0.100747299000005,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 8192,
+          "batches": 8192,
+          "checksum": 0,
+          "cycle_verified_elements": 8192,
+          "driver_seconds": 0.038956602000002165,
+          "events": 67108864,
+          "gross_seconds": 0.10038970400000322,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 8192,
+          "batches": 8192,
+          "checksum": 0,
+          "cycle_verified_elements": 8192,
+          "driver_seconds": 0.03870639800000021,
+          "events": 67108864,
+          "gross_seconds": 0.10085722100000617,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 8192,
+          "batches": 8192,
+          "checksum": 0,
+          "cycle_verified_elements": 8192,
+          "driver_seconds": 0.0389714440000013,
+          "events": 67108864,
+          "gross_seconds": 0.10040358600000317,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 8192,
+          "batches": 8192,
+          "checksum": 0,
+          "cycle_verified_elements": 8192,
+          "driver_seconds": 0.038694731000000454,
+          "events": 67108864,
+          "gross_seconds": 0.10075835500000407,
+          "order": "service_first",
+          "success_events": null
+        }
+      ]
+    },
+    {
+      "id": "memory.read.4.8388608",
+      "missing": [],
+      "parameter": {
+        "basis": "measured",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.read.4.8388608; paired elapsed/work trials.",
+        "unit": "seconds/request",
+        "value": 2.0951327800750735e-08
+      },
+      "scope": {
+        "cache_state": "prepared buffers and repeated calls; physical cache level unverified",
+        "construction": "dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells",
+        "element_bytes": 4,
+        "first_touch": "preparation excluded",
+        "footprint_bytes": 8388608,
+        "memory_regime": "resident_serial_constructed_requests",
+        "operation": "read",
+        "transfer_basis": "inferred",
+        "update_kind": "read",
+        "worker_scope": "serial"
+      },
+      "seconds_per_event": {
+        "max": 2.0973372697830203e-08,
+        "median": 2.0951327800750735e-08,
+        "min": 2.085876488685608e-08,
+        "repetitions": 7,
+        "spread": 1.1460781097412123e-10,
+        "values": [
+          2.085876488685608e-08,
+          2.0973372697830203e-08,
+          2.0972958803176882e-08,
+          2.0881991624832153e-08,
+          2.0959901332855224e-08,
+          2.0951327800750735e-08,
+          2.0907188415527342e-08
+        ]
+      },
+      "trials": [
+        {
+          "batch_events": 2097152,
+          "batches": 2,
+          "checksum": 0,
+          "cycle_verified_elements": 2097152,
+          "driver_seconds": 0.002407401,
+          "events": 4194304,
+          "gross_seconds": 0.08989540200000001,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 2,
+          "checksum": 0,
+          "cycle_verified_elements": 2097152,
+          "driver_seconds": 0.002411426,
+          "events": 4194304,
+          "gross_seconds": 0.090380127,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 2,
+          "checksum": 0,
+          "cycle_verified_elements": 2097152,
+          "driver_seconds": 0.002410993,
+          "events": 4194304,
+          "gross_seconds": 0.09037795800000001,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 2,
+          "checksum": 0,
+          "cycle_verified_elements": 2097152,
+          "driver_seconds": 0.002407981,
+          "events": 4194304,
+          "gross_seconds": 0.089993402,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 2,
+          "checksum": 0,
+          "cycle_verified_elements": 2097152,
+          "driver_seconds": 0.002464564,
+          "events": 4194304,
+          "gross_seconds": 0.090376762,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 2,
+          "checksum": 0,
+          "cycle_verified_elements": 2097152,
+          "driver_seconds": 0.00240971,
+          "events": 4194304,
+          "gross_seconds": 0.090285948,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 2,
+          "checksum": 0,
+          "cycle_verified_elements": 2097152,
+          "driver_seconds": 0.002407348,
+          "events": 4194304,
+          "gross_seconds": 0.090098452,
+          "order": "service_first",
+          "success_events": null
+        }
+      ]
+    },
+    {
+      "id": "memory.read.8.32768",
+      "missing": [],
+      "parameter": {
+        "basis": "measured",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.read.8.32768; paired elapsed/work trials.",
+        "unit": "seconds/request",
+        "value": 8.703213781119001e-10
+      },
+      "scope": {
+        "cache_state": "prepared buffers and repeated calls; physical cache level unverified",
+        "construction": "dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells",
+        "element_bytes": 8,
+        "first_touch": "preparation excluded",
+        "footprint_bytes": 32768,
+        "memory_regime": "resident_serial_constructed_requests",
+        "operation": "read",
+        "transfer_basis": "inferred",
+        "update_kind": "read",
+        "worker_scope": "serial"
+      },
+      "seconds_per_event": {
+        "max": 8.730532526971348e-10,
+        "median": 8.703213781119001e-10,
+        "min": 8.631090819837294e-10,
+        "repetitions": 7,
+        "spread": 9.944170713405367e-12,
+        "values": [
+          8.723595142364524e-10,
+          8.631090819837294e-10,
+          8.714081645012535e-10,
+          8.641511201858949e-10,
+          8.703213781119001e-10,
+          8.640788346529529e-10,
+          8.730532526971348e-10
+        ]
+      },
+      "trials": [
+        {
+          "batch_events": 4096,
+          "batches": 16384,
+          "checksum": 0,
+          "cycle_verified_elements": 4096,
+          "driver_seconds": 0.038809438999996504,
+          "events": 67108864,
+          "gross_seconds": 0.09735249499999665,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 4096,
+          "batches": 16384,
+          "checksum": 0,
+          "cycle_verified_elements": 4096,
+          "driver_seconds": 0.03902374499999478,
+          "events": 67108864,
+          "gross_seconds": 0.09694601500000573,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 4096,
+          "batches": 16384,
+          "checksum": 0,
+          "cycle_verified_elements": 4096,
+          "driver_seconds": 0.03880122999999383,
+          "events": 67108864,
+          "gross_seconds": 0.09728044199999808,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 4096,
+          "batches": 16384,
+          "checksum": 0,
+          "cycle_verified_elements": 4096,
+          "driver_seconds": 0.039014458999995484,
+          "events": 67108864,
+          "gross_seconds": 0.09700665899999836,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 4096,
+          "batches": 16384,
+          "checksum": 0,
+          "cycle_verified_elements": 4096,
+          "driver_seconds": 0.038908983999999265,
+          "events": 67108864,
+          "gross_seconds": 0.09731526300000334,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 4096,
+          "batches": 16384,
+          "checksum": 0,
+          "cycle_verified_elements": 4096,
+          "driver_seconds": 0.03900624999999544,
+          "events": 67108864,
+          "gross_seconds": 0.09699359899999895,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 4096,
+          "batches": 16384,
+          "checksum": 0,
+          "cycle_verified_elements": 4096,
+          "driver_seconds": 0.03899306399999209,
+          "events": 67108864,
+          "gross_seconds": 0.09758267600000174,
+          "order": "service_first",
+          "success_events": null
+        }
+      ]
+    },
+    {
+      "id": "memory.read.8.8388608",
+      "missing": [],
+      "parameter": {
+        "basis": "measured",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.read.8.8388608; paired elapsed/work trials.",
+        "unit": "seconds/request",
+        "value": 2.109397268295288e-08
+      },
+      "scope": {
+        "cache_state": "prepared buffers and repeated calls; physical cache level unverified",
+        "construction": "dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells",
+        "element_bytes": 8,
+        "first_touch": "preparation excluded",
+        "footprint_bytes": 8388608,
+        "memory_regime": "resident_serial_constructed_requests",
+        "operation": "read",
+        "transfer_basis": "inferred",
+        "update_kind": "read",
+        "worker_scope": "serial"
+      },
+      "seconds_per_event": {
+        "max": 2.1105213165283204e-08,
+        "median": 2.109397268295288e-08,
+        "min": 2.1020401716232297e-08,
+        "repetitions": 7,
+        "spread": 8.481144905090691e-11,
+        "values": [
+          2.1105213165283204e-08,
+          2.1022702932357786e-08,
+          2.1101055622100833e-08,
+          2.1050166130065916e-08,
+          2.109397268295288e-08,
+          2.110445713996887e-08,
+          2.1020401716232297e-08
+        ]
+      },
+      "trials": [
+        {
+          "batch_events": 1048576,
+          "batches": 4,
+          "checksum": 0,
+          "cycle_verified_elements": 1048576,
+          "driver_seconds": 0.0024145,
+          "events": 4194304,
+          "gross_seconds": 0.09093618,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 4,
+          "checksum": 0,
+          "cycle_verified_elements": 1048576,
+          "driver_seconds": 0.002413838,
+          "events": 4194304,
+          "gross_seconds": 0.09058944499999999,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 4,
+          "checksum": 0,
+          "cycle_verified_elements": 1048576,
+          "driver_seconds": 0.002405232,
+          "events": 4194304,
+          "gross_seconds": 0.090909474,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 4,
+          "checksum": 0,
+          "cycle_verified_elements": 1048576,
+          "driver_seconds": 0.002412436,
+          "events": 4194304,
+          "gross_seconds": 0.090703232,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 4,
+          "checksum": 0,
+          "cycle_verified_elements": 1048576,
+          "driver_seconds": 0.002405202,
+          "events": 4194304,
+          "gross_seconds": 0.09087973599999999,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 4,
+          "checksum": 0,
+          "cycle_verified_elements": 1048576,
+          "driver_seconds": 0.002405422,
+          "events": 4194304,
+          "gross_seconds": 0.090923931,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 4,
+          "checksum": 0,
+          "cycle_verified_elements": 1048576,
+          "driver_seconds": 0.002402547,
+          "events": 4194304,
+          "gross_seconds": 0.090568502,
+          "order": "service_first",
+          "success_events": null
+        }
+      ]
+    },
+    {
+      "id": "memory.write.4.32768",
+      "missing": [],
+      "parameter": {
+        "basis": "measured",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.write.4.32768; paired elapsed/work trials.",
+        "unit": "seconds/request",
+        "value": 9.687960147813666e-12
+      },
+      "scope": {
+        "cache_state": "prepared buffers and repeated calls; physical cache level unverified",
+        "construction": "dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells",
+        "element_bytes": 4,
+        "first_touch": "preparation excluded",
+        "footprint_bytes": 32768,
+        "memory_regime": "resident_serial_constructed_requests",
+        "operation": "write",
+        "transfer_basis": "inferred",
+        "update_kind": "write",
+        "worker_scope": "serial"
+      },
+      "seconds_per_event": {
+        "max": 1.0026678442837369e-11,
+        "median": 9.687960147813666e-12,
+        "min": 3.1890571117174456e-12,
+        "repetitions": 7,
+        "spread": 6.837621331119923e-12,
+        "values": [
+          1.0026678442837369e-11,
+          3.741227090309817e-12,
+          9.745500981754722e-12,
+          3.1890571117174456e-12,
+          9.687960147813666e-12,
+          3.4335479139520853e-12,
+          9.862534701738758e-12
+        ]
+      },
+      "trials": [
+        {
+          "batch_events": 8192,
+          "batches": 16384,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07741838600001333,
+          "events": 134217728,
+          "gross_seconds": 0.07876414399999754,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 8192,
+          "batches": 16384,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07771367000001328,
+          "events": 134217728,
+          "gross_seconds": 0.07821580900000671,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 8192,
+          "batches": 16384,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07731538200001256,
+          "events": 134217728,
+          "gross_seconds": 0.07862340100000545,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 8192,
+          "batches": 16384,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07776733600001313,
+          "events": 134217728,
+          "gross_seconds": 0.07819536400001009,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 8192,
+          "batches": 16384,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07732374900001344,
+          "events": 134217728,
+          "gross_seconds": 0.07862404500000754,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 8192,
+          "batches": 16384,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07772778400001314,
+          "events": 134217728,
+          "gross_seconds": 0.07818862700000292,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 8192,
+          "batches": 16384,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07731505800001204,
+          "events": 134217728,
+          "gross_seconds": 0.07863878500000057,
+          "order": "service_first",
+          "success_events": null
+        }
+      ]
+    },
+    {
+      "id": "memory.write.4.8388608",
+      "missing": [],
+      "parameter": {
+        "basis": "measured",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.write.4.8388608; paired elapsed/work trials.",
+        "unit": "seconds/request",
+        "value": 6.623141467571385e-12
+      },
+      "scope": {
+        "cache_state": "prepared buffers and repeated calls; physical cache level unverified",
+        "construction": "dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells",
+        "element_bytes": 4,
+        "first_touch": "preparation excluded",
+        "footprint_bytes": 8388608,
+        "memory_regime": "resident_serial_constructed_requests",
+        "operation": "write",
+        "transfer_basis": "inferred",
+        "update_kind": "write",
+        "worker_scope": "serial"
+      },
+      "seconds_per_event": {
+        "max": 7.817178964614647e-12,
+        "median": 6.623141467571385e-12,
+        "min": 5.1558539271354265e-12,
+        "repetitions": 7,
+        "spread": 2.6613250374792202e-12,
+        "values": [
+          7.817178964614647e-12,
+          5.1558539271354265e-12,
+          7.159031927585625e-12,
+          6.291732192039521e-12,
+          6.588429212570494e-12,
+          6.623141467571385e-12,
+          6.988801062107169e-12
+        ]
+      },
+      "trials": [
+        {
+          "batch_events": 2097152,
+          "batches": 64,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07708003100000002,
+          "events": 134217728,
+          "gross_seconds": 0.07812923499999999,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 64,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.077272212,
+          "events": 134217728,
+          "gross_seconds": 0.077964219,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 64,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.077065088,
+          "events": 134217728,
+          "gross_seconds": 0.078025957,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 64,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.077113418,
+          "events": 134217728,
+          "gross_seconds": 0.07795788000000001,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 64,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07709791099999998,
+          "events": 134217728,
+          "gross_seconds": 0.07798219500000002,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 64,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07708698399999997,
+          "events": 134217728,
+          "gross_seconds": 0.07797592699999999,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 64,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.077112227,
+          "events": 134217728,
+          "gross_seconds": 0.07805024800000002,
+          "order": "service_first",
+          "success_events": null
+        }
+      ]
+    },
+    {
+      "id": "memory.write.8.32768",
+      "missing": [
+        "paired_driver_subtraction_resolution"
+      ],
+      "parameter": {
+        "basis": "unknown",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.write.8.32768; paired elapsed/work trials.",
+        "unit": "seconds/request",
+        "value": null
+      },
+      "scope": {
+        "cache_state": "prepared buffers and repeated calls; physical cache level unverified",
+        "construction": "dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells",
+        "element_bytes": 8,
+        "first_touch": "preparation excluded",
+        "footprint_bytes": 32768,
+        "memory_regime": "resident_serial_constructed_requests",
+        "operation": "write",
+        "transfer_basis": "inferred",
+        "update_kind": "write",
+        "worker_scope": "serial"
+      },
+      "seconds_per_event": {
+        "max": 3.705404698778131e-12,
+        "median": 2.5215223430839587e-12,
+        "min": -6.950192153524483e-12,
+        "repetitions": 7,
+        "spread": 1.0655596852302614e-11,
+        "values": [
+          2.5215223430839587e-12,
+          -2.2885948420578714e-12,
+          3.705404698778131e-12,
+          -2.9627531767803244e-12,
+          2.9475465416143345e-12,
+          -6.950192153524483e-12,
+          3.1247735022670345e-12
+        ]
+      },
+      "trials": [
+        {
+          "batch_events": 4096,
+          "batches": 32768,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07757804000001894,
+          "events": 134217728,
+          "gross_seconds": 0.07791647300000891,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 4096,
+          "batches": 32768,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.0779283440000204,
+          "events": 134217728,
+          "gross_seconds": 0.07762117400000687,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 4096,
+          "batches": 32768,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07756428600001898,
+          "events": 134217728,
+          "gross_seconds": 0.0780616170000095,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 4096,
+          "batches": 32768,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07802693200001842,
+          "events": 134217728,
+          "gross_seconds": 0.07762927800000619,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 4096,
+          "batches": 32768,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07758052800001759,
+          "events": 134217728,
+          "gross_seconds": 0.07797614100000733,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 4096,
+          "batches": 32768,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07860120700002617,
+          "events": 134217728,
+          "gross_seconds": 0.07766836800001668,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 4096,
+          "batches": 32768,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.077568123000019,
+          "events": 134217728,
+          "gross_seconds": 0.07798752300000789,
+          "order": "service_first",
+          "success_events": null
+        }
+      ]
+    },
+    {
+      "id": "memory.write.8.8388608",
+      "missing": [
+        "paired_driver_subtraction_resolution"
+      ],
+      "parameter": {
+        "basis": "unknown",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.write.8.8388608; paired elapsed/work trials.",
+        "unit": "seconds/request",
+        "value": null
+      },
+      "scope": {
+        "cache_state": "prepared buffers and repeated calls; physical cache level unverified",
+        "construction": "dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells",
+        "element_bytes": 8,
+        "first_touch": "preparation excluded",
+        "footprint_bytes": 8388608,
+        "memory_regime": "resident_serial_constructed_requests",
+        "operation": "write",
+        "transfer_basis": "inferred",
+        "update_kind": "write",
+        "worker_scope": "serial"
+      },
+      "seconds_per_event": {
+        "max": 9.319931268690563e-13,
+        "median": -4.3656677007712524e-13,
+        "min": -1.1856183409696533e-12,
+        "repetitions": 7,
+        "spread": 2.1176114678387096e-12,
+        "values": [
+          9.319931268690563e-13,
+          -8.773207664488619e-13,
+          2.2058188915222757e-13,
+          -7.347166538237337e-13,
+          8.450448513033295e-13,
+          -4.3656677007712524e-13,
+          -1.1856183409696533e-12
+        ]
+      },
+      "trials": [
+        {
+          "batch_events": 1048576,
+          "batches": 128,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07708746100000001,
+          "events": 134217728,
+          "gross_seconds": 0.07721255099999999,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 128,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.077311369,
+          "events": 134217728,
+          "gross_seconds": 0.07719361700000002,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 128,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07713953200000001,
+          "events": 134217728,
+          "gross_seconds": 0.07716913799999997,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 128,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07724039699999999,
+          "events": 134217728,
+          "gross_seconds": 0.077141785,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 128,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07709312399999999,
+          "events": 134217728,
+          "gross_seconds": 0.07720654400000002,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 128,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07718708000000003,
+          "events": 134217728,
+          "gross_seconds": 0.07712848499999998,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 128,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.07740137900000005,
+          "events": 134217728,
+          "gross_seconds": 0.07724224799999997,
+          "order": "service_first",
+          "success_events": null
+        }
+      ]
+    },
+    {
+      "id": "memory.add-update.4.32768",
+      "missing": [],
+      "parameter": {
+        "basis": "measured",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.add-update.4.32768; paired elapsed/work trials.",
+        "unit": "seconds/request",
+        "value": 4.620632767677355e-09
+      },
+      "scope": {
+        "cache_state": "prepared buffers and repeated calls; physical cache level unverified",
+        "construction": "dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells",
+        "element_bytes": 4,
+        "first_touch": "preparation excluded",
+        "footprint_bytes": 32768,
+        "memory_regime": "resident_serial_constructed_requests",
+        "operation": "add-update",
+        "transfer_basis": "inferred",
+        "update_kind": "add-update",
+        "worker_scope": "serial"
+      },
+      "seconds_per_event": {
+        "max": 4.651972055435232e-09,
+        "median": 4.620632767677355e-09,
+        "min": 4.581887066364323e-09,
+        "repetitions": 7,
+        "spread": 7.008498907090901e-11,
+        "values": [
+          4.621184706687958e-09,
+          4.5841490626335504e-09,
+          4.620799422264137e-09,
+          4.582944571971936e-09,
+          4.651972055435232e-09,
+          4.581887066364323e-09,
+          4.620632767677355e-09
+        ]
+      },
+      "trials": [
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.00966584700000003,
+          "events": 16777216,
+          "gross_seconds": 0.08719646100000054,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009966659999999862,
+          "events": 16777216,
+          "gross_seconds": 0.08687591900000047,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009664972999999822,
+          "events": 16777216,
+          "gross_seconds": 0.08718912300000047,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009964386999999885,
+          "events": 16777216,
+          "gross_seconds": 0.0868534380000006,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009663378999999818,
+          "events": 16777216,
+          "gross_seconds": 0.08771051900000068,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009986483999999868,
+          "events": 16777216,
+          "gross_seconds": 0.08685779300000045,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009660994999999962,
+          "events": 16777216,
+          "gross_seconds": 0.08718234900000077,
+          "order": "service_first",
+          "success_events": null
+        }
+      ]
+    },
+    {
+      "id": "memory.add-update.4.8388608",
+      "missing": [],
+      "parameter": {
+        "basis": "measured",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.add-update.4.8388608; paired elapsed/work trials.",
+        "unit": "seconds/request",
+        "value": 4.61327487230301e-09
+      },
+      "scope": {
+        "cache_state": "prepared buffers and repeated calls; physical cache level unverified",
+        "construction": "dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells",
+        "element_bytes": 4,
+        "first_touch": "preparation excluded",
+        "footprint_bytes": 8388608,
+        "memory_regime": "resident_serial_constructed_requests",
+        "operation": "add-update",
+        "transfer_basis": "inferred",
+        "update_kind": "add-update",
+        "worker_scope": "serial"
+      },
+      "seconds_per_event": {
+        "max": 4.628623366355896e-09,
+        "median": 4.61327487230301e-09,
+        "min": 4.61123549938202e-09,
+        "repetitions": 7,
+        "spread": 1.7387866973876674e-11,
+        "values": [
+          4.61327487230301e-09,
+          4.61123549938202e-09,
+          4.613548874855042e-09,
+          4.613099753856659e-09,
+          4.612874209880829e-09,
+          4.628623366355896e-09,
+          4.614775896072388e-09
+        ]
+      },
+      "trials": [
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009636812,
+          "events": 16777216,
+          "gross_seconds": 0.08703472100000001,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009636723,
+          "events": 16777216,
+          "gross_seconds": 0.08700041700000001,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009636183999999999,
+          "events": 16777216,
+          "gross_seconds": 0.08703869,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009633910999999998,
+          "events": 16777216,
+          "gross_seconds": 0.087028882,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009633593000000001,
+          "events": 16777216,
+          "gross_seconds": 0.08702478,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009640221000000001,
+          "events": 16777216,
+          "gross_seconds": 0.08729563500000001,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009645091000000001,
+          "events": 16777216,
+          "gross_seconds": 0.087068183,
+          "order": "service_first",
+          "success_events": null
+        }
+      ]
+    },
+    {
+      "id": "memory.add-update.8.32768",
+      "missing": [],
+      "parameter": {
+        "basis": "measured",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.add-update.8.32768; paired elapsed/work trials.",
+        "unit": "seconds/request",
+        "value": 4.6185910105708225e-09
+      },
+      "scope": {
+        "cache_state": "prepared buffers and repeated calls; physical cache level unverified",
+        "construction": "dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells",
+        "element_bytes": 8,
+        "first_touch": "preparation excluded",
+        "footprint_bytes": 32768,
+        "memory_regime": "resident_serial_constructed_requests",
+        "operation": "add-update",
+        "transfer_basis": "inferred",
+        "update_kind": "add-update",
+        "worker_scope": "serial"
+      },
+      "seconds_per_event": {
+        "max": 4.625556290149937e-09,
+        "median": 4.6185910105708225e-09,
+        "min": 4.5814335942270534e-09,
+        "repetitions": 7,
+        "spread": 4.4122695922883506e-11,
+        "values": [
+          4.625556290149937e-09,
+          4.586216747761057e-09,
+          4.6185910105708225e-09,
+          4.5814335942270534e-09,
+          4.620445907116219e-09,
+          4.583053529262862e-09,
+          4.619293928146611e-09
+        ]
+      },
+      "trials": [
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009694431999999774,
+          "events": 16777216,
+          "gross_seconds": 0.08729838900000393,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.010007056000000117,
+          "events": 16777216,
+          "gross_seconds": 0.08695100500000488,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009696087999999851,
+          "events": 16777216,
+          "gross_seconds": 0.08718318700000482,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.010002583000000216,
+          "events": 16777216,
+          "gross_seconds": 0.08686628400000385,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.00969300600000007,
+          "events": 16777216,
+          "gross_seconds": 0.08721122500000482,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009987693000000061,
+          "events": 16777216,
+          "gross_seconds": 0.08687857200000541,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009696603000000026,
+          "events": 16777216,
+          "gross_seconds": 0.0871954950000042,
+          "order": "service_first",
+          "success_events": null
+        }
+      ]
+    },
+    {
+      "id": "memory.add-update.8.8388608",
+      "missing": [],
+      "parameter": {
+        "basis": "measured",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.add-update.8.8388608; paired elapsed/work trials.",
+        "unit": "seconds/request",
+        "value": 4.627341687679291e-09
+      },
+      "scope": {
+        "cache_state": "prepared buffers and repeated calls; physical cache level unverified",
+        "construction": "dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells",
+        "element_bytes": 8,
+        "first_touch": "preparation excluded",
+        "footprint_bytes": 8388608,
+        "memory_regime": "resident_serial_constructed_requests",
+        "operation": "add-update",
+        "transfer_basis": "inferred",
+        "update_kind": "add-update",
+        "worker_scope": "serial"
+      },
+      "seconds_per_event": {
+        "max": 4.643884599208833e-09,
+        "median": 4.627341687679291e-09,
+        "min": 4.625550568103791e-09,
+        "repetitions": 7,
+        "spread": 1.8334031105041996e-11,
+        "values": [
+          4.627341687679291e-09,
+          4.625550568103791e-09,
+          4.643884599208833e-09,
+          4.6298282146453855e-09,
+          4.62874037027359e-09,
+          4.6257874965667724e-09,
+          4.62732845544815e-09
+        ]
+      },
+      "trials": [
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009636751,
+          "events": 16777216,
+          "gross_seconds": 0.087270662,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009640659000000001,
+          "events": 16777216,
+          "gross_seconds": 0.08724452,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009638659,
+          "events": 16777216,
+          "gross_seconds": 0.08755011400000001,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009659358,
+          "events": 16777216,
+          "gross_seconds": 0.08733498599999999,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009631644000000002,
+          "events": 16777216,
+          "gross_seconds": 0.08728902100000001,
+          "order": "service_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.00964274,
+          "events": 16777216,
+          "gross_seconds": 0.087250576,
+          "order": "driver_first",
+          "success_events": null
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009640942,
+          "events": 16777216,
+          "gross_seconds": 0.08727463099999999,
+          "order": "service_first",
+          "success_events": null
+        }
+      ]
+    },
+    {
+      "id": "memory.cas-success.4.32768",
+      "missing": [],
+      "parameter": {
+        "basis": "measured",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.cas-success.4.32768; paired elapsed/work trials.",
+        "unit": "seconds/request",
+        "value": 4.967234313487971e-09
+      },
+      "scope": {
+        "cache_state": "prepared buffers and repeated calls; physical cache level unverified",
+        "construction": "dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells",
+        "element_bytes": 4,
+        "first_touch": "preparation excluded",
+        "footprint_bytes": 32768,
+        "memory_regime": "resident_serial_constructed_requests",
+        "operation": "cas-success",
+        "transfer_basis": "inferred",
+        "update_kind": "compare-and-swap",
+        "worker_scope": "serial"
+      },
+      "seconds_per_event": {
+        "max": 4.971129238605465e-09,
+        "median": 4.967234313487971e-09,
+        "min": 4.935087800025916e-09,
+        "repetitions": 7,
+        "spread": 3.604143857954851e-11,
+        "values": [
+          4.970821738243072e-09,
+          4.937505125999409e-09,
+          4.9694309234618835e-09,
+          4.935087800025916e-09,
+          4.967234313487971e-09,
+          4.935607016086543e-09,
+          4.971129238605465e-09
+        ]
+      },
+      "trials": [
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 8192,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009665792999999872,
+          "events": 16777216,
+          "gross_seconds": 0.09306234299999935,
+          "order": "service_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 8192,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009969298999999899,
+          "events": 16777216,
+          "gross_seconds": 0.0928068889999992,
+          "order": "driver_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 8192,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009665943999999902,
+          "events": 16777216,
+          "gross_seconds": 0.09303915999999939,
+          "order": "service_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 8192,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009966291999999908,
+          "events": 16777216,
+          "gross_seconds": 0.09276332599999951,
+          "order": "driver_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 8192,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009668611999999976,
+          "events": 16777216,
+          "gross_seconds": 0.09300497499999938,
+          "order": "service_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 8192,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009964839999999892,
+          "events": 16777216,
+          "gross_seconds": 0.0927705849999993,
+          "order": "driver_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 8192,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009665328999999973,
+          "events": 16777216,
+          "gross_seconds": 0.0930670379999994,
+          "order": "service_first",
+          "success_events": 16777216
+        }
+      ]
+    },
+    {
+      "id": "memory.cas-success.4.8388608",
+      "missing": [],
+      "parameter": {
+        "basis": "measured",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.cas-success.4.8388608; paired elapsed/work trials.",
+        "unit": "seconds/request",
+        "value": 4.95573490858078e-09
+      },
+      "scope": {
+        "cache_state": "prepared buffers and repeated calls; physical cache level unverified",
+        "construction": "dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells",
+        "element_bytes": 4,
+        "first_touch": "preparation excluded",
+        "footprint_bytes": 8388608,
+        "memory_regime": "resident_serial_constructed_requests",
+        "operation": "cas-success",
+        "transfer_basis": "inferred",
+        "update_kind": "compare-and-swap",
+        "worker_scope": "serial"
+      },
+      "seconds_per_event": {
+        "max": 4.974663674831391e-09,
+        "median": 4.95573490858078e-09,
+        "min": 4.954587519168854e-09,
+        "repetitions": 7,
+        "spread": 2.007615566253665e-11,
+        "values": [
+          4.955828011035919e-09,
+          4.954587519168854e-09,
+          4.956760823726654e-09,
+          4.95573490858078e-09,
+          4.954863369464873e-09,
+          4.974663674831391e-09,
+          4.955558061599732e-09
+        ]
+      },
+      "trials": [
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 2097152,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009630796,
+          "events": 16777216,
+          "gross_seconds": 0.092775793,
+          "order": "service_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 2097152,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.00964522,
+          "events": 16777216,
+          "gross_seconds": 0.092769405,
+          "order": "driver_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 2097152,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009629473000000001,
+          "events": 16777216,
+          "gross_seconds": 0.09279012,
+          "order": "service_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 2097152,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009638776,
+          "events": 16777216,
+          "gross_seconds": 0.092782211,
+          "order": "driver_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 2097152,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009865367,
+          "events": 16777216,
+          "gross_seconds": 0.09299417999999998,
+          "order": "service_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 2097152,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009639463,
+          "events": 16777216,
+          "gross_seconds": 0.09310047,
+          "order": "driver_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 2097152,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009635044,
+          "events": 16777216,
+          "gross_seconds": 0.092775512,
+          "order": "service_first",
+          "success_events": 16777216
+        }
+      ]
+    },
+    {
+      "id": "memory.cas-success.8.32768",
+      "missing": [],
+      "parameter": {
+        "basis": "measured",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.cas-success.8.32768; paired elapsed/work trials.",
+        "unit": "seconds/request",
+        "value": 5.260326683521181e-09
+      },
+      "scope": {
+        "cache_state": "prepared buffers and repeated calls; physical cache level unverified",
+        "construction": "dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells",
+        "element_bytes": 8,
+        "first_touch": "preparation excluded",
+        "footprint_bytes": 32768,
+        "memory_regime": "resident_serial_constructed_requests",
+        "operation": "cas-success",
+        "transfer_basis": "inferred",
+        "update_kind": "compare-and-swap",
+        "worker_scope": "serial"
+      },
+      "seconds_per_event": {
+        "max": 5.274800539016633e-09,
+        "median": 5.260326683521181e-09,
+        "min": 5.2278206944464645e-09,
+        "repetitions": 7,
+        "spread": 4.697984457016863e-11,
+        "values": [
+          5.262567639350772e-09,
+          5.2284452319144265e-09,
+          5.260326683521181e-09,
+          5.2278206944464645e-09,
+          5.274800539016633e-09,
+          5.2333622574805716e-09,
+          5.2646121978758754e-09
+        ]
+      },
+      "trials": [
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 4096,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.00969619499999975,
+          "events": 16777216,
+          "gross_seconds": 0.09798742899999775,
+          "order": "service_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 4096,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009999738000000105,
+          "events": 16777216,
+          "gross_seconds": 0.09771849299999853,
+          "order": "driver_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 4096,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009694849999999823,
+          "events": 16777216,
+          "gross_seconds": 0.09794848699999832,
+          "order": "service_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 4096,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.010000121000000072,
+          "events": 16777216,
+          "gross_seconds": 0.0977083979999984,
+          "order": "driver_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 4096,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009699079999999877,
+          "events": 16777216,
+          "gross_seconds": 0.09819554799999836,
+          "order": "service_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 4096,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.00999409600000014,
+          "events": 16777216,
+          "gross_seconds": 0.09779534499999931,
+          "order": "driver_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 4096,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009695943999999899,
+          "events": 16777216,
+          "gross_seconds": 0.0980214799999982,
+          "order": "service_first",
+          "success_events": 16777216
+        }
+      ]
+    },
+    {
+      "id": "memory.cas-success.8.8388608",
+      "missing": [],
+      "parameter": {
+        "basis": "measured",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.cas-success.8.8388608; paired elapsed/work trials.",
+        "unit": "seconds/request",
+        "value": 5.256823718547822e-09
+      },
+      "scope": {
+        "cache_state": "prepared buffers and repeated calls; physical cache level unverified",
+        "construction": "dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells",
+        "element_bytes": 8,
+        "first_touch": "preparation excluded",
+        "footprint_bytes": 8388608,
+        "memory_regime": "resident_serial_constructed_requests",
+        "operation": "cas-success",
+        "transfer_basis": "inferred",
+        "update_kind": "compare-and-swap",
+        "worker_scope": "serial"
+      },
+      "seconds_per_event": {
+        "max": 5.2582522630691534e-09,
+        "median": 5.256823718547822e-09,
+        "min": 5.248714685440063e-09,
+        "repetitions": 7,
+        "spread": 9.537577629090182e-12,
+        "values": [
+          5.256982147693634e-09,
+          5.2574000954628e-09,
+          5.2582522630691534e-09,
+          5.256816923618316e-09,
+          5.256585061550142e-09,
+          5.248714685440063e-09,
+          5.256823718547822e-09
+        ]
+      },
+      "trials": [
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 1048576,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009637935,
+          "events": 16777216,
+          "gross_seconds": 0.09783546,
+          "order": "service_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 1048576,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009642419999999999,
+          "events": 16777216,
+          "gross_seconds": 0.09784695700000001,
+          "order": "driver_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 1048576,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009636935000000001,
+          "events": 16777216,
+          "gross_seconds": 0.09785576900000001,
+          "order": "service_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 1048576,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009644587,
+          "events": 16777216,
+          "gross_seconds": 0.09783933999999998,
+          "order": "driver_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 1048576,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009638732,
+          "events": 16777216,
+          "gross_seconds": 0.09782959500000002,
+          "order": "service_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 1048576,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009768170000000001,
+          "events": 16777216,
+          "gross_seconds": 0.09782699,
+          "order": "driver_first",
+          "success_events": 16777216
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 1048576,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009647623999999999,
+          "events": 16777216,
+          "gross_seconds": 0.097842491,
+          "order": "service_first",
+          "success_events": 16777216
+        }
+      ]
+    },
+    {
+      "id": "memory.cas-failure.4.32768",
+      "missing": [],
+      "parameter": {
+        "basis": "measured",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.cas-failure.4.32768; paired elapsed/work trials.",
+        "unit": "seconds/request",
+        "value": 4.967860579490635e-09
+      },
+      "scope": {
+        "cache_state": "prepared buffers and repeated calls; physical cache level unverified",
+        "construction": "dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells",
+        "element_bytes": 4,
+        "first_touch": "preparation excluded",
+        "footprint_bytes": 32768,
+        "memory_regime": "resident_serial_constructed_requests",
+        "operation": "cas-failure",
+        "transfer_basis": "inferred",
+        "update_kind": "compare-and-swap",
+        "worker_scope": "serial"
+      },
+      "seconds_per_event": {
+        "max": 4.974634230136838e-09,
+        "median": 4.967860579490635e-09,
+        "min": 4.933310568332651e-09,
+        "repetitions": 7,
+        "spread": 4.13236618041874e-11,
+        "values": [
+          4.96852993965145e-09,
+          4.933611094951609e-09,
+          4.967860579490635e-09,
+          4.933310568332651e-09,
+          4.974634230136838e-09,
+          4.935398638248408e-09,
+          4.968759357929205e-09
+        ]
+      },
+      "trials": [
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.00966460599999978,
+          "events": 16777216,
+          "gross_seconds": 0.09302270599999912,
+          "order": "service_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009956074999999856,
+          "events": 16777216,
+          "gross_seconds": 0.09272833399999951,
+          "order": "driver_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009667199999999886,
+          "events": 16777216,
+          "gross_seconds": 0.09301406999999945,
+          "order": "service_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009989470999999896,
+          "events": 16777216,
+          "gross_seconds": 0.09275668799999955,
+          "order": "driver_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009666417999999729,
+          "events": 16777216,
+          "gross_seconds": 0.09312693099999918,
+          "order": "service_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009937628999999868,
+          "events": 16777216,
+          "gross_seconds": 0.09273987799999926,
+          "order": "driver_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 8192,
+          "batches": 2048,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009668568999999835,
+          "events": 16777216,
+          "gross_seconds": 0.09303051799999942,
+          "order": "service_first",
+          "success_events": 0
+        }
+      ]
+    },
+    {
+      "id": "memory.cas-failure.4.8388608",
+      "missing": [],
+      "parameter": {
+        "basis": "measured",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.cas-failure.4.8388608; paired elapsed/work trials.",
+        "unit": "seconds/request",
+        "value": 4.956064641475678e-09
+      },
+      "scope": {
+        "cache_state": "prepared buffers and repeated calls; physical cache level unverified",
+        "construction": "dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells",
+        "element_bytes": 4,
+        "first_touch": "preparation excluded",
+        "footprint_bytes": 8388608,
+        "memory_regime": "resident_serial_constructed_requests",
+        "operation": "cas-failure",
+        "transfer_basis": "inferred",
+        "update_kind": "compare-and-swap",
+        "worker_scope": "serial"
+      },
+      "seconds_per_event": {
+        "max": 4.9574285149574275e-09,
+        "median": 4.956064641475678e-09,
+        "min": 4.954903304576874e-09,
+        "repetitions": 7,
+        "spread": 2.525210380553492e-12,
+        "values": [
+          4.954927802085876e-09,
+          4.956159889698028e-09,
+          4.9574285149574275e-09,
+          4.956064641475678e-09,
+          4.9559069275856015e-09,
+          4.956089973449707e-09,
+          4.954903304576874e-09
+        ]
+      },
+      "trials": [
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009638945,
+          "events": 16777216,
+          "gross_seconds": 0.09276883899999999,
+          "order": "service_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009631799000000002,
+          "events": 16777216,
+          "gross_seconds": 0.09278236399999999,
+          "order": "driver_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009635920000000001,
+          "events": 16777216,
+          "gross_seconds": 0.092807769,
+          "order": "service_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009636818,
+          "events": 16777216,
+          "gross_seconds": 0.09278578500000001,
+          "order": "driver_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009633759999999998,
+          "events": 16777216,
+          "gross_seconds": 0.09278008099999999,
+          "order": "service_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009640008,
+          "events": 16777216,
+          "gross_seconds": 0.09278940000000001,
+          "order": "driver_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 2097152,
+          "batches": 8,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009638756,
+          "events": 16777216,
+          "gross_seconds": 0.092768239,
+          "order": "service_first",
+          "success_events": 0
+        }
+      ]
+    },
+    {
+      "id": "memory.cas-failure.8.32768",
+      "missing": [],
+      "parameter": {
+        "basis": "measured",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.cas-failure.8.32768; paired elapsed/work trials.",
+        "unit": "seconds/request",
+        "value": 5.256640315055731e-09
+      },
+      "scope": {
+        "cache_state": "prepared buffers and repeated calls; physical cache level unverified",
+        "construction": "dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells",
+        "element_bytes": 8,
+        "first_touch": "preparation excluded",
+        "footprint_bytes": 32768,
+        "memory_regime": "resident_serial_constructed_requests",
+        "operation": "cas-failure",
+        "transfer_basis": "inferred",
+        "update_kind": "compare-and-swap",
+        "worker_scope": "serial"
+      },
+      "seconds_per_event": {
+        "max": 5.2660591602324265e-09,
+        "median": 5.256640315055731e-09,
+        "min": 5.225232899188916e-09,
+        "repetitions": 7,
+        "spread": 4.082626104351072e-11,
+        "values": [
+          5.2660591602324265e-09,
+          5.225232899188916e-09,
+          5.259558916091824e-09,
+          5.22938537597646e-09,
+          5.256640315055731e-09,
+          5.226203382015109e-09,
+          5.25959724187843e-09
+        ]
+      },
+      "trials": [
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.00969547900000028,
+          "events": 16777216,
+          "gross_seconds": 0.09804529099999831,
+          "order": "service_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.010008530000000066,
+          "events": 16777216,
+          "gross_seconds": 0.09767339099999874,
+          "order": "driver_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009699274999999988,
+          "events": 16777216,
+          "gross_seconds": 0.0979400309999984,
+          "order": "service_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009910221000000297,
+          "events": 16777216,
+          "gross_seconds": 0.09764474899999859,
+          "order": "driver_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009701778000000053,
+          "events": 16777216,
+          "gross_seconds": 0.0978935679999981,
+          "order": "service_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009988291000000208,
+          "events": 16777216,
+          "gross_seconds": 0.09766943399999821,
+          "order": "driver_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 4096,
+          "batches": 4096,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009714730999999909,
+          "events": 16777216,
+          "gross_seconds": 0.09795612999999857,
+          "order": "service_first",
+          "success_events": 0
+        }
+      ]
+    },
+    {
+      "id": "memory.cas-failure.8.8388608",
+      "missing": [],
+      "parameter": {
+        "basis": "measured",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.memory.a1; memory.cas-failure.8.8388608; paired elapsed/work trials.",
+        "unit": "seconds/request",
+        "value": 5.257581472396851e-09
+      },
+      "scope": {
+        "cache_state": "prepared buffers and repeated calls; physical cache level unverified",
+        "construction": "dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells",
+        "element_bytes": 8,
+        "first_touch": "preparation excluded",
+        "footprint_bytes": 8388608,
+        "memory_regime": "resident_serial_constructed_requests",
+        "operation": "cas-failure",
+        "transfer_basis": "inferred",
+        "update_kind": "compare-and-swap",
+        "worker_scope": "serial"
+      },
+      "seconds_per_event": {
+        "max": 5.261032700538634e-09,
+        "median": 5.257581472396851e-09,
+        "min": 5.2568446993827815e-09,
+        "repetitions": 7,
+        "spread": 4.188001155852502e-12,
+        "values": [
+          5.256959855556487e-09,
+          5.257539629936218e-09,
+          5.257581472396851e-09,
+          5.258045077323913e-09,
+          5.2575838565826425e-09,
+          5.261032700538634e-09,
+          5.2568446993827815e-09
+        ]
+      },
+      "trials": [
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009655537,
+          "events": 16777216,
+          "gross_seconds": 0.097852688,
+          "order": "service_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009642909,
+          "events": 16777216,
+          "gross_seconds": 0.09784978700000001,
+          "order": "driver_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009635342,
+          "events": 16777216,
+          "gross_seconds": 0.09784292200000001,
+          "order": "service_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009647175000000001,
+          "events": 16777216,
+          "gross_seconds": 0.09786253299999999,
+          "order": "driver_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009637973000000001,
+          "events": 16777216,
+          "gross_seconds": 0.09784559300000001,
+          "order": "service_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009643011,
+          "events": 16777216,
+          "gross_seconds": 0.09790849299999999,
+          "order": "driver_first",
+          "success_events": 0
+        },
+        {
+          "batch_events": 1048576,
+          "batches": 16,
+          "checksum": 0,
+          "cycle_verified_elements": null,
+          "driver_seconds": 0.009637577000000001,
+          "events": 16777216,
+          "gross_seconds": 0.097832796,
+          "order": "service_first",
+          "success_events": 0
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "count_build_cap_bytes": 67108864,
+    "element_bytes": [
+      4,
+      8
+    ],
+    "event_cap": 134217728,
+    "footprint_bytes": [
+      32768,
+      8388608
+    ],
+    "group": "memory_v1",
+    "live_payload_cap_bytes": 16777216,
+    "max_wall_s": 900.0,
+    "min_trial_s": 0.05,
+    "operations": [
+      "read",
+      "write",
+      "add-update",
+      "cas-success",
+      "cas-failure"
+    ],
+    "repetitions": 7,
+    "timed_data_cap_bytes": 26214400,
+    "trial_resolution_scope": "gross_aggregate_only; paired driver retained"
+  },
+  "source_clean": true,
+  "source_commit": "8e54d74e64c08a29b20eec183b070f3e77a77e43",
+  "started_at": "2026-10-07T00:17:18.720320+00:00",
+  "unresolved_cells": 2,
+  "validation": "OK: 595 record(s) valid"
+}
