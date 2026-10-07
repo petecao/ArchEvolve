@@ -15,10 +15,16 @@ TARGET='dx100-e4fc4af-functional-analytic-v1'
 
 def prepared(records,tmp_path):
     records.copy_repo()
-    # Historical count streams and estimates do not belong to this literal
-    # zero-work fixture. Remove only the copies; its full validation stays public.
+    # Historical streams, estimates and their functional evaluation copies
+    # do not belong to this literal zero-work fixture. Original records are
+    # untouched; the copied fixture still uses full public validation.
     for folder in ('workload_characterizations','estimates'):
         for path in (records.path/folder).glob('*.yaml'):
+            path.unlink()
+    for path in (records.path/'evaluations').glob('*.yaml'):
+        data=yaml.safe_load(path.read_text())
+        context=data.get('context',{})
+        if isinstance(context,dict) and context.get('evaluator')=='swdb.strict-functional-estimate.v1':
             path.unlink()
     candidate=records.read('candidates/'+CANDIDATE+'.yaml')
     count=fixture_characterization(records.path)
