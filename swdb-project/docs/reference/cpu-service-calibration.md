@@ -584,3 +584,10 @@ A dispatch-next call requires both independently retained success and terminal
 costs; their prospective maximum is inferred, and either unknown keeps it null.
 Exact full-site counts are covered once. A callee body already counted receives
 no service charge; an ABI name alone does not waive an unsupported call.
+
+
+### Structural calibration admission
+
+`bind-cpu-services` retains missing compiler/runtime/control transfer premises in both `extensions.cpu_services_binding.compatibility[]` and the applicable model selector's `calibration_admission` map. The map keys are exact parameter names; values are nonempty lists of structural reason codes. Native call, exact shape-bin, memory and OpenMP return-class models refuse those parameter costs even if a later numeric estimate supplies a positive value. Zero execution and already-counted callee bodies need no service cost. A null numeric rate with an empty compatibility list remains distinct from an unsupported transfer context; no missing context is established by a numeric guess.
+
+The optional map is validated independently of rate basis. Malformed premises remain unknown. Supported selectors omit the map or retain an empty map. Both the immutable target snapshot and protocol hash pin this admission policy alongside the explanation and typed calibration closure.

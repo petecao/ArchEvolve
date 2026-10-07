@@ -9,7 +9,7 @@ from testkit.cpu_service import clock_case
 from testkit.analytic import digest, freeze_protocol
 
 
-def memory_case(records,tmp_path,*,missing_write=False,primitive_case=None):
+def memory_case(records,tmp_path,*,missing_write=False,primitive_case=None,extra_selector=None):
     clock_case(records,tmp_path,events=0)
     char=records.read('workload_characterizations/fixture.counts.yaml');char['id']='fixture.memory.counts'
     fact=lambda n:{'value':n,'basis':'reported' if n is not None else 'unknown','scope':'per_run'}
@@ -63,6 +63,7 @@ def memory_case(records,tmp_path,*,missing_write=False,primitive_case=None):
         'parameters':{'read8_s':{'value':.5,'basis':'reported','unit':'seconds/request','source':'Hand dependent-read cell.'},
             'write4_s':{'value':None if missing_write else .5,'basis':'unknown' if missing_write else 'reported',
                 'unit':'seconds/request','source':'Hand store cell.'}}})
+    target['mechanisms'][-1]['selector'].update(extra_selector or {})
     path=tmp_path/'memory-target.yaml';path.write_text(yaml.safe_dump(target,sort_keys=False))
     frozen=tmp_path/'memory-freeze.yaml'
     frozen.write_text(yaml.safe_dump({'message_version':'1.0','id':'fixture.memory.protocol','version':1,
@@ -108,3 +109,13 @@ def test_exact_integer_seq_cst_add_is_separately_admitted(records,tmp_path):
     data=memory_case(records,tmp_path,primitive_case='integer_add')
     model=next(b for b in data['regions'][0]['bounds'] if b['model']=='memory_service_scenario')
     assert model['seconds']==2.5
+
+
+@pytest.mark.parametrize('blocked,expected',[(False,2.5),(True,None)])
+def test_memory_context_admission_is_independent_of_numeric_cost(records,tmp_path,blocked,expected):
+    reasons={'read8_s':['service_compiler_identity']} if blocked else {}
+    data=memory_case(records,tmp_path,extra_selector={'calibration_admission':reasons})
+    model=next(b for b in data['regions'][0]['bounds'] if b['model']=='memory_service_scenario')
+    assert data['seconds']==expected and model['seconds']==expected
+    assert not any(m=='selector.calibration_admission' for m in model['missing'])
+    assert model['inputs']['calibration_admission']==reasons

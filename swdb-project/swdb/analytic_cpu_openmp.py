@@ -1,6 +1,5 @@
 """Exact static OpenMP ABI classes with explicit inferred legal T1 transfer.2026-10-06 ET."""
 import math
-from swdb.analytic_models import parameter
 from swdb.cpu_openmp_calibration import check_signature
 from swdb.cpu_openmp_profiles import PROFILES, STATE, PROBE
 from swdb.cpu_service_calibration import identity
@@ -50,8 +49,8 @@ def cost(region,call,selection,mechanism,context):
         return unknown('exact_source_parameters')
     def rate(name):
         if not isinstance(name,str) or not name:return None
-        if mechanism['parameters'].get(name,{}).get('basis')=='unknown':return None
-        return parameter(mechanism,name,'seconds/call')
+        from swdb.analytic_cpu_service import _rate
+        return _rate(mechanism,name,'seconds/call')
     rates=[rate(p['parameter']) for p in source]
     if any(v is None or not math.isfinite(v) or v<=0 for v in rates):return unknown('all_constructed_return_costs')
     expected=max(rates);actual=rate(row['parameter'])

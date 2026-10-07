@@ -298,6 +298,13 @@ def bind(args):
             if mechanism['model'] in ('native_service_costs','memory_service_scenario'):
                 mechanism['selector'].pop('characterization_sha256',None)
                 mechanism['selector']['characterization_allowlist']=allowlist
+    # Keep compiler/runtime/control premises sealed apart from numeric rates.
+    # An estimated number cannot establish a missing transfer context.
+    for mechanism in result['mechanisms']:
+        if mechanism['model'] in ('native_service_costs','memory_service_scenario'):
+            admission={row['parameter']:copy.deepcopy(row['missing']) for row in rows
+                if row['missing'] and row['parameter'] in mechanism['parameters']}
+            if admission:mechanism['selector']['calibration_admission']=admission
     result['calibration_sources']=list(dict.fromkeys([*target['calibration_sources'],*args.calibration,*scope_ids]))
     evidence={'format':'swdb.cpu-services-binding.v1','base':{'id':target['id'],'sha256':artifacts.digest(target)},
         'characterization':{'id':char['id'],'sha256':artifacts.digest(char)},'characterization_allowlist':allowlist,'calibrations':proofs,'compatibility':rows,

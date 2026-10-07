@@ -92,3 +92,15 @@ def test_exact_characterization_allowlist_admits_only_named_counted_scope(record
     assert 'service_scope.characterization_allowlist' in unmatched['regions'][0]['overheads'][0]['missing']
     ambiguous=isolated('ambiguous',{'characterization_allowlist':allowed,'characterization_sha256':digest(char)})
     assert ambiguous['seconds'] is None
+
+
+@pytest.mark.parametrize('blocked,events,expected',[(False,4,2.4),(True,4,None),(True,0,2.)])
+def test_numeric_rate_cannot_override_structural_calibration_admission(records,tmp_path,blocked,events,expected):
+    reasons={'clock_s':['service_runtime.libc.so']} if blocked else {}
+    data=clock_case(records,tmp_path,events=events,extra_selector={'calibration_admission':reasons},
+        setup=lambda d,t:t['mechanisms'][-1]['parameters']['clock_s'].update(basis='estimated'))
+    model=data['regions'][0]['overheads'][0]
+    assert data['seconds']==expected
+    assert not any(m=='selector.calibration_admission' for m in model['missing'])
+    assert model['inputs']['calibration_admission']==reasons
+    if blocked:assert model['inputs']['covered_calls']==[] and model['seconds']==(None if events else 0)

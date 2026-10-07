@@ -32,10 +32,11 @@ def _scope_missing(selector,context,prefix,*,required=False):
 
 def native_service_costs(region, mechanism, *, context=None):
     selector = mechanism.get('selector', {})
-    missing = ['selector.' + key for key in sorted(set(selector) - {'domain', 'worker_scope', 'calls', 'characterization_sha256','characterization_allowlist','openmp_projections'})]
+    missing = ['selector.' + key for key in sorted(set(selector) - {'domain', 'worker_scope', 'calls', 'characterization_sha256','characterization_allowlist','openmp_projections','calibration_admission'})]
     if selector.get('domain') != 'host' or selector.get('worker_scope') != 'serial_T1':
         missing.append('selector.host_serial_T1')
     missing.extend(_scope_missing(selector,context,'service_scope'))
+    missing.extend(_admission_missing(mechanism))
     calls = selector.get('calls')
     if not isinstance(calls, list) or not calls:
         missing.append('selector.calls')
@@ -89,7 +90,8 @@ def native_service_costs(region, mechanism, *, context=None):
                 covered.append({'site': call['site'], 'execution_count': count})
     return bound('native_service_costs', None if missing else seconds,
         'sum(exact selected opaque call size-bin executions * independently scoped seconds/call)' ,
-        {'calls': selected, 'covered_calls': covered if not missing else []}, sorted(set(missing)),
+        {'calls': selected, 'covered_calls': covered if not missing else [],
+         'calibration_admission':selector.get('calibration_admission',{})}, sorted(set(missing)),
         ['A counted callee body receives no second service charge. Exact site/full-count coverage is required.',
          'Service scope is serial T1; size-bin allocator-state transfer is explicitly inferred. Unsupported length/lifetime/selector semantics remain unknown.',
          'OpenMP requires full characterization/static-site projection and exact ABI classes. Legal warmed-T1 state, dynamic bounds and pointer-state transfer remain inferred; both dispatch return-profile costs are required.',
@@ -97,7 +99,17 @@ def native_service_costs(region, mechanism, *, context=None):
 
 
 
+def _admission_missing(mechanism):
+    admission=mechanism.get('selector',{}).get('calibration_admission',{})
+    valid=isinstance(admission,dict) and all(isinstance(name,str) and name in mechanism.get('parameters',{}) and
+        isinstance(reasons,list) and bool(reasons) and all(isinstance(r,str) and bool(r) for r in reasons)
+        for name,reasons in admission.items())
+    return [] if valid else ['calibration_admission.valid_structural_premises']
+
+
 def _rate(mechanism,name,unit='seconds/call'):
+    # Structural context admission remains independent of any numeric fill.
+    if _admission_missing(mechanism) or name in mechanism.get('selector',{}).get('calibration_admission',{}):return None
     fact=mechanism['parameters'].get(name,{})
     return None if fact.get('basis')=='unknown' else parameter(mechanism,name,unit)
 
@@ -239,12 +251,13 @@ def _source_memory_proof(context,observed,cells):
 
 def memory_service_scenario(region, mechanism, *, context=None):
     selector=mechanism.get('selector',{})
-    allowed={'domain','worker_scope','scenario','transfer_basis','object_scope','characterization_sha256','characterization_allowlist','requests'}
+    allowed={'domain','worker_scope','scenario','transfer_basis','object_scope','characterization_sha256','characterization_allowlist','requests','calibration_admission'}
     missing=['selector.'+k for k in sorted(set(selector)-allowed)]
     required={'domain':'host','worker_scope':'serial_T1','scenario':'resident_serial_constructed_requests',
         'transfer_basis':'inferred','object_scope':'logical_requests_and_bounded_referent_views'}
     if any(selector.get(k)!=v for k,v in required.items()):missing.append('memory_scenario.explicit_supported_transfer')
     missing.extend(_scope_missing(selector,context,'memory_scenario',required=True))
+    missing.extend(_admission_missing(mechanism))
     rates={}
     selected=selector.get('requests')
     if not isinstance(selected,list):selected=[];missing.append('selector.requests')
@@ -283,7 +296,8 @@ def memory_service_scenario(region, mechanism, *, context=None):
     return bound('memory_service_scenario',None if missing else seconds,
         'sum(exact logical source requests * independently constructed resident serial seconds/request)',
         {'requests':inputs,'source_accesses':source_inputs,'useful_bytes':useful_bytes,'unknown_object_requests':observed.get('unknown_object_requests'),
-         'object_scope_counts':observed.get('object_scope_counts'),'physical_residency_known':False},sorted(set(missing)),
+         'object_scope_counts':observed.get('object_scope_counts'),'physical_residency_known':False,
+         'calibration_admission':selector.get('calibration_admission',{})},sorted(set(missing)),
         ['Residency/dependence transfer from constructed cells is explicitly inferred; this is a conditional service scenario.',
          'Logical source requests and bounded referent views do not establish full allocation identity, physical cache misses, first-touch faults or page residency.',
          'Exact scalar opcode/type/order/strong-CAS proof is required; collapsed update kinds do not admit floating RMW, atomic exchange, weak CAS or vectors. Compiler retention/locality transfer remains inferred.',

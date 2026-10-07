@@ -47,3 +47,14 @@ def test_unsupported_openmp_class_or_missing_return_cost_stays_unknown(records,t
     overhead=data['regions'][0]['overheads'][0]
     assert data['seconds'] is None and overhead['seconds'] is None and overhead['inputs']['covered_calls']==[]
     assert any('openmp' in reason for reason in overhead['missing'])
+
+
+def test_openmp_constructed_return_cost_cannot_override_context_admission(records,tmp_path):
+    def blocked(data,target):
+        setup(data,target)
+        target['mechanisms'][-1]['selector']['calibration_admission']={'failure':['service_runtime.libomp']}
+    data=clock_case(records,tmp_path,setup=blocked)
+    model=data['regions'][0]['overheads'][0]
+    assert data['seconds'] is None and model['inputs']['covered_calls']==[]
+    assert 'openmp.all_constructed_return_costs' in model['missing']
+    assert 'selector.calibration_admission' not in model['missing']
