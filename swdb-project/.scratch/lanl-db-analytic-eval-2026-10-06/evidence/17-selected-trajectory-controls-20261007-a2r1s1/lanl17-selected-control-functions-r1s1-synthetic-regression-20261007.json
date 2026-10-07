@@ -1,0 +1,167 @@
+{
+  "format": "swdb.lanl17-selected-pure-synthetic-regression.v1",
+  "checked_utc": "2026-10-07T12:28:34.222287+00:00",
+  "state": "passed",
+  "sources": {
+    "a2_collector": {
+      "path": "/private/tmp/lanl17_compact_attempt_custody_a2_20261007.py",
+      "sha256": "edb822dc9b69796321e86ed042ad8debda33d00479d25f10fbc856b4d8e65780",
+      "bytes": 19050
+    },
+    "r1_collector": {
+      "path": "/private/tmp/lanl17_compact_attempt_custody_a2r1_20261007.py",
+      "sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c",
+      "bytes": 24818
+    },
+    "r1s1_auditor": {
+      "path": "/private/tmp/lanl17_selected_record_trajectory_auditor_a2r1s1_20261007.py",
+      "sha256": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da",
+      "bytes": 115130
+    }
+  },
+  "isolated_child": true,
+  "prepared_module_or_main_imports": 0,
+  "actual_campaign_or_dependency_inputs_read": 0,
+  "store_native_compiler_provider_ssh_or_staging_actions": 0,
+  "original_source_bytes_unchanged": true,
+  "selected_definition_AST_sha256": {
+    "a2": {
+      "candidate": "a762f09e6aede93fe78536c721b7837dc4711a05938db7335f6d831f5cfdd2f9",
+      "calls": "48cc901feb011d0f751248119dd9a6df026c829ef4c5292363d31eb40215522b",
+      "CANDIDATE_KEYS": "11910960e0ab2ea123253da30d694095f447d200c6dafe58440fdb202dbd557a",
+      "CALL_KEYS": "eb50d8151805ef0d1d8d91ff02cb5119a30c9769c6c2f1addf95345ae720c6ef"
+    },
+    "r1": {
+      "require": "e735c28d552207dcb4496601a9a356a67c9550ae253f55d90d547a590009c188",
+      "sha": "5d2f17cf600e426b5b233fbac6acbf635ebc09f06bca0fad37d5385c1d852ed6",
+      "digest": "503ab7e510778f07165d477598e25c487d1f7629abac61bf8fea913025f5ada3",
+      "safe_code": "ec51facc8ef7e3e6f55f80f04b0922fe8eddc06d462f389f723c6fdccff55eae",
+      "public_token": "679c856d200e90b3cbc042859faa90a60b60388b0a552c22f63f3318d35561dc",
+      "public_scalar": "65f3d1e57527ef5eef0f1800a035f951073c8829e96c59a59f72205e2db32816",
+      "public_fields": "2170c32f3f3fe49f985919f9d0ee0cde500c5fde8478d2436407ba90540e0546",
+      "excluded_fields": "a39f9a2a8833a02c8a63aa8ade0365114e171fae926d4a512bcebcccc3da4757",
+      "candidate": "2b45a03f9856ad1aca425e6541e73c3fa37694c0f4be0764504b8dbfc25b5457",
+      "calls": "223abef7b58a1a4a30ce88a63366ba1b4bd56645101e2e6abdbcde13fc1b8b0a",
+      "checked_path": "2119fc6ede7ee4974ff7dd15ffd2dd31905d103bf40aa2eb5ef71aad6d4b26e2",
+      "pin": "b0e9c953efb6a67359816f5e100c89c25fcc606a7b2ed9970d910b8164753394",
+      "CANDIDATE_KEYS": "74d81593c35d56c15ee3e637ecef09d451172eccc7a9d3da78c4d6d4d046882a",
+      "CALL_KEYS": "b78de1fcebc4c621af635dd25fa86dbd09eae51b5f00179ea24fc50e739602a3",
+      "MAX_BYTES": "3bc09362e5cb54d93afe0d9f11b28db2ea0248a9ee92e2754d1ef026ffded3a6"
+    },
+    "r1s1": {
+      "require": "68c7f8ec7d40b501741f9c6817e4bea4d5ff92cd79ac19130d46ecde25b1b619",
+      "need": "3fe83b036f873594035c7ec7698f361859695a021ad4e3152f2e416cbeeaf992",
+      "sha": "87191a4a1d6f9f9404d87bb99ad2beeb2e96ca92d77fbcf51ac3740484fdfda6",
+      "strict_json": "fa1d6a71185fd22c93b744631ebe6ad095738c9923e7cdbee97b4ed80dcda484",
+      "digest": "149afd3a4ff9fdcc144b823c0e51da675721d0e32fe890a1e4bd6ee16714b605",
+      "receipt_seal": "1538072db67b8291b6402be3f0002ac2e267844f252fae9a9da801ed1b67f83c",
+      "Refused": "61ffda5d5f7957d3d8c9b57d0f0cb5e03030fa1af0d61e8c24abe1ffc69efb29",
+      "Pending": "584cfb86c6a80bb5fff415ef877d5182949c7085840d78a1358d53d0f2461c8d"
+    }
+  },
+  "lifted_path_fragment_AST_sha256": {
+    "project_binding": "764b8149b52999546b78cb3f8e866780ea434c9197381699dcb68a821e9b48a5",
+    "destination": "94f8fcb7b6b298ce2abaee0c055bbd62d9397e8a1da5b2f619c4a66097ada001"
+  },
+  "selected_receipt_method_AST_sha256": {
+    "raw": "f8f266b7ba61656b37211420de70e57a4394dfaaf87cb1c8470f8fb1ecfb3646",
+    "json": "e589469e34c4682820b0ac1ee078574e7e5d20e155a12dd5ff441650238786c4",
+    "sealed_json": "e5fa1db4e9944811b5493e468b6c4ae4f43f14363ec74c95303a607426231a6e"
+  },
+  "cases": [
+    {
+      "case": "original_a2_nested_projection_preservation",
+      "state": "RED_reproduced_as_expected",
+      "synthetic_sentinel_dimensions_disclosed": [
+        "knobs",
+        "contracts",
+        "failed_checks",
+        "level_mix",
+        "classification"
+      ]
+    },
+    {
+      "case": "r1_nested_projection_preservation",
+      "state": "GREEN",
+      "excluded_dimensions": 5,
+      "all_excluded_digests_exact": true,
+      "original_synthetic_objects_unchanged": true
+    },
+    {
+      "case": "exact_synthetic_manifest_project_binding",
+      "state": "GREEN"
+    },
+    {
+      "case": "different_same-shaped_clone_project",
+      "state": "refused_as_required"
+    },
+    {
+      "case": "normal_fresh_private_tmp_destination",
+      "state": "GREEN",
+      "destination_not_created": true
+    },
+    {
+      "case": "symlink_ancestor_destination",
+      "state": "refused_as_required"
+    },
+    {
+      "case": "destination_inside_source_project",
+      "state": "refused_as_required"
+    },
+    {
+      "case": "destination_inside_campaign",
+      "state": "refused_as_required"
+    },
+    {
+      "case": "lexical_parent_traversal",
+      "state": "refused_as_required"
+    },
+    {
+      "case": "symlink_ancestor_input",
+      "state": "refused_as_required"
+    },
+    {
+      "case": "valid_explicit_original_canonical_policy_seal",
+      "state": "GREEN"
+    },
+    {
+      "case": "missing_claimed_identity_pin",
+      "state": "refused_as_required"
+    },
+    {
+      "case": "missing_original_canonical_policy",
+      "state": "refused_as_required"
+    },
+    {
+      "case": "nonboolean_canonical_policy",
+      "state": "refused_as_required"
+    },
+    {
+      "case": "wrong_original_canonical_policy",
+      "state": "refused_as_required"
+    },
+    {
+      "case": "self_claimed_seal_payload_tamper_even_with_matching_file_pin",
+      "state": "refused_as_required"
+    },
+    {
+      "case": "original_file_sha_tamper",
+      "state": "refused_as_required"
+    },
+    {
+      "case": "original_unsealed_public_campaign_export_parse",
+      "state": "GREEN",
+      "identity_not_invented": true,
+      "not_candidate_or_campaign_admission": true
+    }
+  ],
+  "scope": "One synthetic pure-function/path/seal regression only. Not actual host/account execution, campaign/dependency admission, full reader/main execution or scientific success.",
+  "identity_sha256": "331ae34ec1510378c791d23648087729518ba68a2dd25b5be34676610b5ba62f",
+  "regression_source": {
+    "path": "/private/tmp/lanl17-test-selected-control-functions-r1s1-20261007.py",
+    "bytes": 16616,
+    "sha256": "040c15fb60a449358b27c4ef7ac055e2bb06bd8c3dad738d2101484fffab59f3"
+  },
+  "child_exit_code": 0,
+  "child_stderr_bytes": 0
+}

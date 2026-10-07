@@ -1,0 +1,130 @@
+{
+  "format": "swdb.lanl17-auditor-pure-projection-preparation.v1",
+  "source_files": {
+    "swdb/extensa_pairing.py": "30a62539769c21f5d0ecbc3fb2800bd60c935332f13a6c6c1eba638558a1896a",
+    "swdb/extensa_agreement.py": "d078cf8a26fbbd65f0d27d0a64dbde56e4f190e1ec4c07b9e4eb311ad3a5174f"
+  },
+  "projections": [
+    {
+      "source": "swdb/extensa_pairing.py",
+      "symbol": "FORMAT",
+      "source_sha256": "d87c2ede48dddc115ca6e01d9ceaaf9d38a40b1a29b2dc7118068f047f2b8e4a",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_pairing.py",
+      "symbol": "LEDGER",
+      "source_sha256": "be014f605d7e194d87fcbccde4a38401efe25016d5b3706337cab76a3ae6e5f4",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_pairing.py",
+      "symbol": "VERSION",
+      "source_sha256": "8c1f41af76c2f9ff92e39d4e4d4e4cf5bf2c64153f7d359c158060a7324c0427",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_pairing.py",
+      "symbol": "PAYLOAD",
+      "source_sha256": "c58ecb40409dab22947b642cfaac9a6963962bc91dfd255cdd92ee73bfca4564",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_pairing.py",
+      "symbol": "identity",
+      "source_sha256": "808103a661747c6dbcb228c7d498743dbe34aa45c5cca73ff8677aa540f240ab",
+      "copied_sha256": "c31721bb82ffb7da2a12e1b73ade395369e1e17320a2a1dd5213672172c6f5e6",
+      "change": "identity function renamed paired_identity"
+    },
+    {
+      "source": "swdb/extensa_pairing.py",
+      "symbol": "request_identity",
+      "source_sha256": "12f2c65fac6e74508ff4d29c58ec76e011f54678256a2ca01bf7d3b1b23b1ec6",
+      "copied_sha256": "12f2c65fac6e74508ff4d29c58ec76e011f54678256a2ca01bf7d3b1b23b1ec6",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_pairing.py",
+      "symbol": "_time",
+      "source_sha256": "367b7b4e04e28fb9564809d2df434142ea3bfdfee48c7dbd539e0020abf0edf2",
+      "copied_sha256": "367b7b4e04e28fb9564809d2df434142ea3bfdfee48c7dbd539e0020abf0edf2",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_pairing.py",
+      "symbol": "ledger_problems",
+      "source_sha256": "7c567033b44a315c7885bf0208988c49252e0b1bf3d02a08d05c3a54e445d72a",
+      "copied_sha256": "824fb078ee18316e592b30a56eb2782034048dc0f4b8ddaabd64dc79feb62f3a",
+      "change": "identity call renamed paired_identity"
+    },
+    {
+      "source": "swdb/extensa_agreement.py",
+      "symbol": "D30",
+      "source_sha256": "8c3f6b64240cc58caec3ebc398b74f85b97404b1b9ecec5833560af221eb8776",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_agreement.py",
+      "symbol": "STATISTICS",
+      "source_sha256": "406e3615ef28fe98df88faa3e41751dc67d94d66c9e205b097fffd8603d27187",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_agreement.py",
+      "symbol": "POLICY_KEYS",
+      "source_sha256": "1caab0cb4b54bf5ac6f830e0e7fb1d7d2c6b01318f3f693e600c49a909a19bf5",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_agreement.py",
+      "symbol": "REPORT_KEYS",
+      "source_sha256": "355dd0429326027fdf34dd810ef8224283fc8c3f7d21dc559870b5e6cb951eb8",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_agreement.py",
+      "symbol": "kendall_tau_b",
+      "source_sha256": "19a9f8a79bdf8bbb6fa57409dbd2ca279ba46a37602119597580bcce2cbd92be",
+      "copied_sha256": "19a9f8a79bdf8bbb6fa57409dbd2ca279ba46a37602119597580bcce2cbd92be",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_agreement.py",
+      "symbol": "rank_statistics",
+      "source_sha256": "aa2405d353c86a7ab094eb0425d02bb81ecd4c0325b7565a681f5ebd4895c564",
+      "copied_sha256": "aa2405d353c86a7ab094eb0425d02bb81ecd4c0325b7565a681f5ebd4895c564",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_agreement.py",
+      "symbol": "identity",
+      "source_sha256": "4b504916af51c26513cb579ac9b4a76e2c95f4ed00b6129d5d8e919890279b5d",
+      "copied_sha256": "79a79efebe8e34c3847a6fcf1de6b6432c9d67b24d1c811ec627e65d40f28820",
+      "change": "identity function renamed agreement_identity"
+    },
+    {
+      "source": "swdb/extensa_agreement.py",
+      "symbol": "_forecasts",
+      "source_sha256": "1adf75a1b89b0f479a0254cb6fc92a5a42126a303787425ce1007364b28fab6f",
+      "copied_sha256": "1adf75a1b89b0f479a0254cb6fc92a5a42126a303787425ce1007364b28fab6f",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_agreement.py",
+      "symbol": "_analyse",
+      "source_sha256": "32520c45ee2a7f5641324bc5f0235f24c45771549cc4b8cbdba55f7911d96b26",
+      "copied_sha256": "32520c45ee2a7f5641324bc5f0235f24c45771549cc4b8cbdba55f7911d96b26",
+      "change": "none"
+    }
+  ],
+  "no_source_module_import_or_execution": true,
+  "status": "AST/source extraction only; actual auditor not executed",
+  "auditor_sha256": "77907ba07636397c55ce38cf337034d3dca5d0217bfaea4678b4b05ffd9dfd2d",
+  "auditor_bytes": 56358,
+  "AST_parse_passed": true,
+  "auditor_executed": false,
+  "actual_inputs_read": false,
+  "no_tracked_or_control_edits": true,
+  "no_network_Git_reads_only": true,
+  "identity_sha256": "3c2a6622b043c95c0f651ddc033a4923a6f3d70380604d4959723512abf4ea46"
+}

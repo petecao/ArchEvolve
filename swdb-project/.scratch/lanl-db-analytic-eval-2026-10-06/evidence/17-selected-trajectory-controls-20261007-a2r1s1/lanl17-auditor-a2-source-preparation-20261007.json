@@ -1,0 +1,308 @@
+{
+  "format": "swdb.lanl17-auditor-a2-source-preparation.v1",
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "original_auditor_sha256": "77907ba07636397c55ce38cf337034d3dca5d0217bfaea4678b4b05ffd9dfd2d",
+  "original_artifacts_preserved": true,
+  "source_AST_parse_passed": true,
+  "auditor_executed": false,
+  "collector_executed": false,
+  "Store_tests_actual_inputs_native_provider_SSH": false,
+  "new_exact_public_projections": [
+    {
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/swdb/extensa/search.py",
+      "source_sha256": "348b07b38a7955a65b5c13629dd8234453609f152a78d27524df6bf840a989e7",
+      "name": "StopReason",
+      "parent": null,
+      "auditor_name": "StopReason",
+      "source_AST_sha256": "0c899aef88d41fedc08290ee8a670c4f403b2a62a55743d72112206d5e8bebd2",
+      "transformation": "exact source text / AST"
+    },
+    {
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/swdb/extensa/search.py",
+      "source_sha256": "348b07b38a7955a65b5c13629dd8234453609f152a78d27524df6bf840a989e7",
+      "name": "STOP_PRECEDENCE",
+      "parent": null,
+      "auditor_name": "STOP_PRECEDENCE",
+      "source_AST_sha256": "20844e311e0afc8b1075e22d3eb24c9680eca0348a82cdd617f11d57f3d66852",
+      "transformation": "exact source text / AST"
+    },
+    {
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/swdb/extensa/search.py",
+      "source_sha256": "348b07b38a7955a65b5c13629dd8234453609f152a78d27524df6bf840a989e7",
+      "name": "IterationOutcome",
+      "parent": null,
+      "auditor_name": "IterationOutcome",
+      "source_AST_sha256": "ee5f21d2af11d51c14ec8fa77060f609608c6a0c6f87d5bd4fb8aa5aaec58d54",
+      "transformation": "exact source text / AST"
+    },
+    {
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/swdb/extensa/search.py",
+      "source_sha256": "348b07b38a7955a65b5c13629dd8234453609f152a78d27524df6bf840a989e7",
+      "name": "COMPLETED_ITERATION_OUTCOMES",
+      "parent": null,
+      "auditor_name": "COMPLETED_ITERATION_OUTCOMES",
+      "source_AST_sha256": "7f31798dbe21b8c3f386bbc14edafceb85485e40fc9f10b84c3423218ea7d946",
+      "transformation": "exact source text / AST"
+    },
+    {
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/swdb/extensa/search.py",
+      "source_sha256": "348b07b38a7955a65b5c13629dd8234453609f152a78d27524df6bf840a989e7",
+      "name": "CallOutcome",
+      "parent": null,
+      "auditor_name": "CallOutcome",
+      "source_AST_sha256": "d6f994c5aaeab056e719dee9b8114b96ef77e2f30e1b901371c1e4812f20df7c",
+      "transformation": "exact source text / AST"
+    },
+    {
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/swdb/extensa/search.py",
+      "source_sha256": "348b07b38a7955a65b5c13629dd8234453609f152a78d27524df6bf840a989e7",
+      "name": "UNCOUNTED_CALL_OUTCOMES",
+      "parent": null,
+      "auditor_name": "UNCOUNTED_CALL_OUTCOMES",
+      "source_AST_sha256": "dc7a6d8ef743b2f38d7609736670d232bcee04536cc0c8f79846a3bc388081c7",
+      "transformation": "exact source text / AST"
+    },
+    {
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/swdb/extensa/search.py",
+      "source_sha256": "348b07b38a7955a65b5c13629dd8234453609f152a78d27524df6bf840a989e7",
+      "name": "BUDGET_KEYS",
+      "parent": null,
+      "auditor_name": "BUDGET_KEYS",
+      "source_AST_sha256": "0e8dde97d16d72d8752d58cc447251048f442024a85f48ec8246c4e193c3846a",
+      "transformation": "exact source text / AST"
+    },
+    {
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/swdb/extensa/search.py",
+      "source_sha256": "348b07b38a7955a65b5c13629dd8234453609f152a78d27524df6bf840a989e7",
+      "name": "SearchBudget",
+      "parent": null,
+      "auditor_name": "SearchBudget",
+      "source_AST_sha256": "cdb0f2d87431b9d7d4c7afa397136b005c9a1931d441df89c7692e0d47ed102a",
+      "transformation": "exact source text / AST"
+    },
+    {
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/swdb/extensa/search.py",
+      "source_sha256": "348b07b38a7955a65b5c13629dd8234453609f152a78d27524df6bf840a989e7",
+      "name": "CallRecord",
+      "parent": null,
+      "auditor_name": "CallRecord",
+      "source_AST_sha256": "bff0e8107e4e4046b3bd045d963edd2db81caf328bc2c5d79e8bebf0610b3525",
+      "transformation": "exact source text / AST"
+    },
+    {
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/swdb/extensa/search.py",
+      "source_sha256": "348b07b38a7955a65b5c13629dd8234453609f152a78d27524df6bf840a989e7",
+      "name": "IterationRecord",
+      "parent": null,
+      "auditor_name": "IterationRecord",
+      "source_AST_sha256": "cb078a81104d59d345a05e678281ea041771ede9a6b2520faa6c73cba9e84ae8",
+      "transformation": "exact source text / AST"
+    },
+    {
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/swdb/extensa/search.py",
+      "source_sha256": "348b07b38a7955a65b5c13629dd8234453609f152a78d27524df6bf840a989e7",
+      "name": "CallRefused",
+      "parent": null,
+      "auditor_name": "CallRefused",
+      "source_AST_sha256": "7aadbeaeab9318870b1cd7811c4f2a8ffaad9fbbc80de06ec8ca2ef99e7cd0bb",
+      "transformation": "exact source text / AST"
+    },
+    {
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/swdb/extensa/search.py",
+      "source_sha256": "348b07b38a7955a65b5c13629dd8234453609f152a78d27524df6bf840a989e7",
+      "name": "SearchLedger",
+      "parent": null,
+      "auditor_name": "SearchLedger",
+      "source_AST_sha256": "36021361eb74011ab5459dfeb561d7dba23be36837c19bef93b1c4394d20870c",
+      "transformation": "exact source text / AST"
+    },
+    {
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/swdb/campaign.py",
+      "source_sha256": "13e3e66a469c3934dee2f0f372a5c17812f5a680cb451f63766ad889d13c3d1d",
+      "name": "LEVEL_RANK",
+      "parent": null,
+      "auditor_name": "LEVEL_RANK",
+      "source_AST_sha256": "9c9c992533c8129b2c3e8cfc6b98f71cbf071789c795587c0851101b6c0fa8cf",
+      "transformation": "exact source text / AST"
+    },
+    {
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/swdb/campaign.py",
+      "source_sha256": "13e3e66a469c3934dee2f0f372a5c17812f5a680cb451f63766ad889d13c3d1d",
+      "name": "selection_key",
+      "parent": null,
+      "auditor_name": "selection_key",
+      "source_AST_sha256": "ec316db495807e6f476dde4c54448b4bdf55348e8dc14df7e5aa0ee2efa039ab",
+      "transformation": "exact source text / AST"
+    },
+    {
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/swdb/campaign.py",
+      "source_sha256": "13e3e66a469c3934dee2f0f372a5c17812f5a680cb451f63766ad889d13c3d1d",
+      "name": "select",
+      "parent": null,
+      "auditor_name": "select",
+      "source_AST_sha256": "315b38b12084dd66db92f7c351d526e286658915b8d358e63c9a9e148a1c4ff7",
+      "transformation": "exact source text / AST"
+    },
+    {
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/swdb/campaign_targets.py",
+      "source_sha256": "727d4399e4bde1996484e3013770e5ab21ef4a30e8fa7313c4697aaa6359211f",
+      "name": "_pairing_request",
+      "parent": "Gem5Adapter",
+      "auditor_name": "source_pairing_request",
+      "source_AST_sha256": "8071fbdc6b08108b23ae00d33dfa682ebddb4ff0c9d98e801f9536c2f7d7d62d",
+      "transformation": "method lifted to module and function name changed"
+    },
+    {
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/swdb/extensa_pairing.py",
+      "source_sha256": "30a62539769c21f5d0ecbc3fb2800bd60c935332f13a6c6c1eba638558a1896a",
+      "name": "_context",
+      "parent": "PairingLedger",
+      "auditor_name": "source_pairing_context",
+      "source_AST_sha256": "f180248b622942fe0b4135c4df2e7b44d2e58ac2ec1699301c169c139ace8044",
+      "transformation": "method lifted to module and function name changed"
+    }
+  ],
+  "original_public_projections_retained": [
+    {
+      "source": "swdb/extensa_pairing.py",
+      "symbol": "FORMAT",
+      "source_sha256": "d87c2ede48dddc115ca6e01d9ceaaf9d38a40b1a29b2dc7118068f047f2b8e4a",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_pairing.py",
+      "symbol": "LEDGER",
+      "source_sha256": "be014f605d7e194d87fcbccde4a38401efe25016d5b3706337cab76a3ae6e5f4",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_pairing.py",
+      "symbol": "VERSION",
+      "source_sha256": "8c1f41af76c2f9ff92e39d4e4d4e4cf5bf2c64153f7d359c158060a7324c0427",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_pairing.py",
+      "symbol": "PAYLOAD",
+      "source_sha256": "c58ecb40409dab22947b642cfaac9a6963962bc91dfd255cdd92ee73bfca4564",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_pairing.py",
+      "symbol": "identity",
+      "source_sha256": "808103a661747c6dbcb228c7d498743dbe34aa45c5cca73ff8677aa540f240ab",
+      "copied_sha256": "c31721bb82ffb7da2a12e1b73ade395369e1e17320a2a1dd5213672172c6f5e6",
+      "change": "identity function renamed paired_identity"
+    },
+    {
+      "source": "swdb/extensa_pairing.py",
+      "symbol": "request_identity",
+      "source_sha256": "12f2c65fac6e74508ff4d29c58ec76e011f54678256a2ca01bf7d3b1b23b1ec6",
+      "copied_sha256": "12f2c65fac6e74508ff4d29c58ec76e011f54678256a2ca01bf7d3b1b23b1ec6",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_pairing.py",
+      "symbol": "_time",
+      "source_sha256": "367b7b4e04e28fb9564809d2df434142ea3bfdfee48c7dbd539e0020abf0edf2",
+      "copied_sha256": "367b7b4e04e28fb9564809d2df434142ea3bfdfee48c7dbd539e0020abf0edf2",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_pairing.py",
+      "symbol": "ledger_problems",
+      "source_sha256": "7c567033b44a315c7885bf0208988c49252e0b1bf3d02a08d05c3a54e445d72a",
+      "copied_sha256": "824fb078ee18316e592b30a56eb2782034048dc0f4b8ddaabd64dc79feb62f3a",
+      "change": "identity call renamed paired_identity"
+    },
+    {
+      "source": "swdb/extensa_agreement.py",
+      "symbol": "D30",
+      "source_sha256": "8c3f6b64240cc58caec3ebc398b74f85b97404b1b9ecec5833560af221eb8776",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_agreement.py",
+      "symbol": "STATISTICS",
+      "source_sha256": "406e3615ef28fe98df88faa3e41751dc67d94d66c9e205b097fffd8603d27187",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_agreement.py",
+      "symbol": "POLICY_KEYS",
+      "source_sha256": "1caab0cb4b54bf5ac6f830e0e7fb1d7d2c6b01318f3f693e600c49a909a19bf5",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_agreement.py",
+      "symbol": "REPORT_KEYS",
+      "source_sha256": "355dd0429326027fdf34dd810ef8224283fc8c3f7d21dc559870b5e6cb951eb8",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_agreement.py",
+      "symbol": "kendall_tau_b",
+      "source_sha256": "19a9f8a79bdf8bbb6fa57409dbd2ca279ba46a37602119597580bcce2cbd92be",
+      "copied_sha256": "19a9f8a79bdf8bbb6fa57409dbd2ca279ba46a37602119597580bcce2cbd92be",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_agreement.py",
+      "symbol": "rank_statistics",
+      "source_sha256": "aa2405d353c86a7ab094eb0425d02bb81ecd4c0325b7565a681f5ebd4895c564",
+      "copied_sha256": "aa2405d353c86a7ab094eb0425d02bb81ecd4c0325b7565a681f5ebd4895c564",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_agreement.py",
+      "symbol": "identity",
+      "source_sha256": "4b504916af51c26513cb579ac9b4a76e2c95f4ed00b6129d5d8e919890279b5d",
+      "copied_sha256": "79a79efebe8e34c3847a6fcf1de6b6432c9d67b24d1c811ec627e65d40f28820",
+      "change": "identity function renamed agreement_identity"
+    },
+    {
+      "source": "swdb/extensa_agreement.py",
+      "symbol": "_forecasts",
+      "source_sha256": "1adf75a1b89b0f479a0254cb6fc92a5a42126a303787425ce1007364b28fab6f",
+      "copied_sha256": "1adf75a1b89b0f479a0254cb6fc92a5a42126a303787425ce1007364b28fab6f",
+      "change": "none"
+    },
+    {
+      "source": "swdb/extensa_agreement.py",
+      "symbol": "_analyse",
+      "source_sha256": "32520c45ee2a7f5641324bc5f0235f24c45771549cc4b8cbdba55f7911d96b26",
+      "copied_sha256": "32520c45ee2a7f5641324bc5f0235f24c45771549cc4b8cbdba55f7911d96b26",
+      "change": "none"
+    }
+  ],
+  "collector_projection_transform": "Copy exact functions, rename only local projection helper function names",
+  "files": [
+    {
+      "path": "/private/tmp/lanl17_selected_record_trajectory_auditor_a2_20261007.py",
+      "bytes": 105674,
+      "sha256": "b15e0e433730b1906c937e2248350278c2b6642d8ff1f909ccf749867f043060"
+    },
+    {
+      "path": "/private/tmp/lanl17_compact_attempt_custody_a2_20261007.py",
+      "bytes": 19050,
+      "sha256": "edb822dc9b69796321e86ed042ad8debda33d00479d25f10fbc856b4d8e65780"
+    },
+    {
+      "path": "/private/tmp/lanl17_auditor_a2_methods_20261007.txt",
+      "bytes": 26139,
+      "sha256": "37ff892d200beaa4087b191efc89973dafc2f1fcbfe6d2f673b542f6cb2c4117"
+    },
+    {
+      "path": "/private/tmp/lanl17_prepare_auditor_a2_source_20261007.py",
+      "bytes": 16812,
+      "sha256": "ae9f8d6d6ffaf999c646537e824b088263e16fa1873d9f11bb84caa5eb036c2f"
+    }
+  ],
+  "limitations": [
+    "No actual final R or campaigns",
+    "Unsaved provider/step-time/DU completeness requires explicit parent-attestation boundary",
+    "Collector cannot atomically own frozen helper lane lock; parent immediate dispatch-state corroboration required",
+    "Interrupted materialized/rejected bodies may require separately validated selected exports beyond original finalize"
+  ],
+  "identity_sha256": "868100b0139e8b162875e420f006e66e7c45460104ce25b5d21585dd1c3ae081"
+}

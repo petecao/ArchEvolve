@@ -1,0 +1,254 @@
+{
+  "format": "swdb.lanl17-auditor-a2r1-source-AST-preparation.v1",
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "source_AST_parse_passed": true,
+  "checked_projections": [
+    {
+      "symbol": "FORMAT",
+      "scope": "Unchanged original exact scientific/public projection"
+    },
+    {
+      "symbol": "LEDGER",
+      "scope": "Unchanged original exact scientific/public projection"
+    },
+    {
+      "symbol": "VERSION",
+      "scope": "Unchanged original exact scientific/public projection"
+    },
+    {
+      "symbol": "PAYLOAD",
+      "scope": "Unchanged original exact scientific/public projection"
+    },
+    {
+      "symbol": "paired_identity",
+      "scope": "Unchanged original exact scientific/public projection"
+    },
+    {
+      "symbol": "request_identity",
+      "scope": "Unchanged original exact scientific/public projection"
+    },
+    {
+      "symbol": "_time",
+      "scope": "Unchanged original exact scientific/public projection"
+    },
+    {
+      "symbol": "ledger_problems",
+      "scope": "Unchanged original exact scientific/public projection"
+    },
+    {
+      "symbol": "D30",
+      "scope": "Unchanged original exact scientific/public projection"
+    },
+    {
+      "symbol": "STATISTICS",
+      "scope": "Unchanged original exact scientific/public projection"
+    },
+    {
+      "symbol": "POLICY_KEYS",
+      "scope": "Unchanged original exact scientific/public projection"
+    },
+    {
+      "symbol": "REPORT_KEYS",
+      "scope": "Unchanged original exact scientific/public projection"
+    },
+    {
+      "symbol": "kendall_tau_b",
+      "scope": "Unchanged original exact scientific/public projection"
+    },
+    {
+      "symbol": "rank_statistics",
+      "scope": "Unchanged original exact scientific/public projection"
+    },
+    {
+      "symbol": "agreement_identity",
+      "scope": "Unchanged original exact scientific/public projection"
+    },
+    {
+      "symbol": "_forecasts",
+      "scope": "Unchanged original exact scientific/public projection"
+    },
+    {
+      "symbol": "_analyse",
+      "scope": "Unchanged original exact scientific/public projection"
+    },
+    {
+      "symbol": "StopReason",
+      "scope": "Unchanged exact source accounting/selection/context; documented method name lifting only"
+    },
+    {
+      "symbol": "STOP_PRECEDENCE",
+      "scope": "Unchanged exact source accounting/selection/context; documented method name lifting only"
+    },
+    {
+      "symbol": "IterationOutcome",
+      "scope": "Unchanged exact source accounting/selection/context; documented method name lifting only"
+    },
+    {
+      "symbol": "COMPLETED_ITERATION_OUTCOMES",
+      "scope": "Unchanged exact source accounting/selection/context; documented method name lifting only"
+    },
+    {
+      "symbol": "CallOutcome",
+      "scope": "Unchanged exact source accounting/selection/context; documented method name lifting only"
+    },
+    {
+      "symbol": "UNCOUNTED_CALL_OUTCOMES",
+      "scope": "Unchanged exact source accounting/selection/context; documented method name lifting only"
+    },
+    {
+      "symbol": "BUDGET_KEYS",
+      "scope": "Unchanged exact source accounting/selection/context; documented method name lifting only"
+    },
+    {
+      "symbol": "SearchBudget",
+      "scope": "Unchanged exact source accounting/selection/context; documented method name lifting only"
+    },
+    {
+      "symbol": "CallRecord",
+      "scope": "Unchanged exact source accounting/selection/context; documented method name lifting only"
+    },
+    {
+      "symbol": "IterationRecord",
+      "scope": "Unchanged exact source accounting/selection/context; documented method name lifting only"
+    },
+    {
+      "symbol": "CallRefused",
+      "scope": "Unchanged exact source accounting/selection/context; documented method name lifting only"
+    },
+    {
+      "symbol": "SearchLedger",
+      "scope": "Unchanged exact source accounting/selection/context; documented method name lifting only"
+    },
+    {
+      "symbol": "LEVEL_RANK",
+      "scope": "Unchanged exact source accounting/selection/context; documented method name lifting only"
+    },
+    {
+      "symbol": "selection_key",
+      "scope": "Unchanged exact source accounting/selection/context; documented method name lifting only"
+    },
+    {
+      "symbol": "select",
+      "scope": "Unchanged exact source accounting/selection/context; documented method name lifting only"
+    },
+    {
+      "symbol": "source_pairing_request",
+      "scope": "Unchanged exact source accounting/selection/context; documented method name lifting only"
+    },
+    {
+      "symbol": "source_pairing_context",
+      "scope": "Unchanged exact source accounting/selection/context; documented method name lifting only"
+    },
+    {
+      "symbol": "CALL_KEYS",
+      "scope": "Exact new safe collector projection; only local function names renamed"
+    },
+    {
+      "symbol": "CANDIDATE_KEYS",
+      "scope": "Exact new safe collector projection; only local function names renamed"
+    },
+    {
+      "symbol": "ITERATION_KEYS",
+      "scope": "Exact new safe collector projection; only local function names renamed"
+    },
+    {
+      "symbol": "STATE_KEYS",
+      "scope": "Exact new safe collector projection; only local function names renamed"
+    },
+    {
+      "symbol": "PROJECTION_CONTRACT",
+      "scope": "Exact new safe collector projection; only local function names renamed"
+    },
+    {
+      "symbol": "public_token",
+      "scope": "Exact new safe collector projection; only local function names renamed"
+    },
+    {
+      "symbol": "public_scalar",
+      "scope": "Exact new safe collector projection; only local function names renamed"
+    },
+    {
+      "symbol": "public_fields",
+      "scope": "Exact new safe collector projection; only local function names renamed"
+    },
+    {
+      "symbol": "excluded_fields",
+      "scope": "Exact new safe collector projection; only local function names renamed"
+    },
+    {
+      "symbol": "project_calls",
+      "scope": "Exact new safe collector projection; only local function names renamed"
+    },
+    {
+      "symbol": "project_candidate",
+      "scope": "Exact new safe collector projection; only local function names renamed"
+    },
+    {
+      "symbol": "project_iteration",
+      "scope": "Exact new safe collector projection; only local function names renamed"
+    },
+    {
+      "symbol": "project_state",
+      "scope": "Exact new safe collector projection; only local function names renamed"
+    }
+  ],
+  "projection_count": 47,
+  "exact_scientific_public_projections": 34,
+  "exact_safe_collector_projections": 13,
+  "original_a2_file_pins": [
+    {
+      "path": "/private/tmp/lanl17_selected_record_trajectory_auditor_a2_20261007.py",
+      "sha256": "b15e0e433730b1906c937e2248350278c2b6642d8ff1f909ccf749867f043060"
+    },
+    {
+      "path": "/private/tmp/lanl17_compact_attempt_custody_a2_20261007.py",
+      "sha256": "edb822dc9b69796321e86ed042ad8debda33d00479d25f10fbc856b4d8e65780"
+    }
+  ],
+  "single_escaped_dot_regex_preserved": true,
+  "regex_review_correction": "Original a2 already contains one escaped dot; nested JSON rendering was misread. No regex change claimed.",
+  "files": [
+    {
+      "path": "/private/tmp/lanl17_selected_record_trajectory_auditor_a2r1_20261007.py",
+      "bytes": 114510,
+      "sha256": "5be66dfa7d12feb0230e3e7b11e3571bc6631718ace1c1fe2c5f2cdbc6860d07"
+    },
+    {
+      "path": "/private/tmp/lanl17_compact_attempt_custody_a2r1_20261007.py",
+      "bytes": 24818,
+      "sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c"
+    },
+    {
+      "path": "/private/tmp/lanl17_prepare_auditor_a2r1_20261007.py",
+      "bytes": 21830,
+      "sha256": "abd201be7eac4eb889848f14550bb79063611ea2b9728298889eb84cc234c63b"
+    },
+    {
+      "path": "/private/tmp/lanl17_auditor_a2r1_safe_projection_20261007.txt",
+      "bytes": 4848,
+      "sha256": "4914d20851359cfa9913994f5020446cbfed7f4886cd966485b8810d7b9eeaa5"
+    },
+    {
+      "path": "/private/tmp/lanl17_auditor_a2r1_exact_AST_projection_check_20261007.py",
+      "bytes": 5559,
+      "sha256": "b3bdebc4ff78b662116c94e534c71b1d3f8c6ab381afce8057e89c016d7d90d2"
+    }
+  ],
+  "source_diffs": [
+    {
+      "path": "/private/tmp/lanl17_selected_record_trajectory_auditor_a2r1_20261007-a2-source-diff.txt",
+      "bytes": 27532,
+      "sha256": "d5705ca5d5f2fe97adb4423ead95491030b671a7693437a3304d5e59af9ad916"
+    },
+    {
+      "path": "/private/tmp/lanl17_compact_attempt_custody_a2r1_20261007-a2-source-diff.txt",
+      "bytes": 24338,
+      "sha256": "d7759ec622c293cccdfe814df4d141bd526b461e265b90e65d4d8c578b63d5eb"
+    }
+  ],
+  "auditor_or_collector_executed_or_imported": false,
+  "actual_inputs_Store_tests_scientific_commands_native_provider_SSH": false,
+  "immutable_controls_and_C_F6_modified": false,
+  "status": "prospective_source_only_parent_review_pending",
+  "identity_sha256": "0be43c9049c53f68a253d2d4055f085d1585c85b198e0b4b0cd7f14174e72672"
+}
