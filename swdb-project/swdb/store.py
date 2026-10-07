@@ -21,7 +21,8 @@ PLURAL = {"application": "applications", "kernel": "kernels", "implementation": 
           "region_profile": "region_profiles", "evaluation_pair": "evaluation_pairs",
           "retention": "retentions", "team_claim": "team_claims", "certification": "certifications", "review": "reviews",
           "campaign_summary": "campaign_summaries", "workload_characterization": "workload_characterizations",
-          "target_description": "target_descriptions", "estimate": "estimates", "cpu_calibration": "cpu_calibrations", "cpu_service_calibration": "cpu_service_calibrations", "cpu_memory_resource_calibration": "cpu_memory_resource_calibrations", "cpu_bulk_resource_calibration": "cpu_bulk_resource_calibrations", "cpu_allocator_resource_calibration": "cpu_allocator_resource_calibrations", "cpu_native_validation": "cpu_native_validations", "cpu_error_band": "cpu_error_bands", "paired_estimate": "paired_estimates"}
+          "target_description": "target_descriptions", "estimate": "estimates", "cpu_calibration": "cpu_calibrations", "cpu_service_calibration": "cpu_service_calibrations", "cpu_memory_resource_calibration": "cpu_memory_resource_calibrations", "cpu_bulk_resource_calibration": "cpu_bulk_resource_calibrations", "cpu_allocator_resource_calibration": "cpu_allocator_resource_calibrations", "cpu_native_validation": "cpu_native_validations", "cpu_error_band": "cpu_error_bands", "paired_estimate": "paired_estimates",
+          "agreement_policy": "agreement_policies", "agreement_report": "agreement_reports"}
 
 
 @dataclass
