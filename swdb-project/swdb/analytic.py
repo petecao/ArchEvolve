@@ -157,7 +157,8 @@ def _counted_regions(static, counts, count_scope="per_run", observation_contract
                 'bytes_accessed': _count(dynamic['bytes']),
                 'observed_address_span_bytes': _fact(dynamic['address_span_bytes'], 'measured'),
                 'observed_unique_bytes': _fact(dynamic.get('unique_bytes', 0), 'measured'),
-                'address_expression': a['address_expression'], 'ir_lanes': a['ir_lanes']})
+                'address_expression': a['address_expression'], 'ir_lanes': a['ir_lanes'],
+                **({'primitive_semantics': a['primitive_semantics']} if 'primitive_semantics' in a else {})})
         regions.append({'id': r['id'], 'source_location': {'function': r['function'], 'line': r['line'], 'path': r.get('path',''), 'llvm_function': r.get('llvm_function','')},
             'active_workers': _fact(counts.get('active_workers',{}).get(str(r['index']),0), 'measured'),
             'mapped': r['mapped'], 'kind': 'loop' if r['is_loop'] else 'serial_remainder',
@@ -518,7 +519,7 @@ def _estimate_regions(source_regions, source_calls, target, observation_contract
             'characterization_id': characterization['id'] if characterization else None,
             'characterization_sha256': characterization_sha256,
             'selected_domain': None, 'composition_contract': target.get('composition_contract'),
-            'source_calls': called}
+            'source_calls': called, 'source_accesses': region['access_patterns']}
         bounds, overheads = [], []
         covered = set()
         for mechanism in target['mechanisms']:

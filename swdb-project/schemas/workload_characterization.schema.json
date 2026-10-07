@@ -804,6 +804,9 @@
               },
               "read_write": {
                 "type": "boolean"
+              },
+              "primitive_semantics": {
+                "$ref": "#/$defs/source_memory_primitive"
               }
             },
             "required": [
@@ -2109,6 +2112,101 @@
           "const": "reported"
         }
       }
+    },
+    "source_memory_primitive": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "swdb.source-memory-primitive.v1"
+        },
+        "opcode": {
+          "enum": [
+            "load",
+            "store",
+            "atomicrmw",
+            "cmpxchg"
+          ]
+        },
+        "value_kind": {
+          "enum": [
+            "integer",
+            "floating",
+            "pointer",
+            "aggregate",
+            "unknown"
+          ]
+        },
+        "element_bits": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "vector": {
+          "type": "boolean"
+        },
+        "atomic_ordering": {
+          "enum": [
+            "not_atomic",
+            "unordered",
+            "monotonic",
+            "consume",
+            "acquire",
+            "release",
+            "acq_rel",
+            "seq_cst"
+          ]
+        },
+        "failure_ordering": {
+          "anyOf": [
+            {
+              "enum": [
+                "not_atomic",
+                "unordered",
+                "monotonic",
+                "consume",
+                "acquire",
+                "release",
+                "acq_rel",
+                "seq_cst"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "volatile": {
+          "type": "boolean"
+        },
+        "weak": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "update_opcode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      },
+      "required": [
+        "format",
+        "opcode",
+        "value_kind",
+        "element_bits",
+        "vector",
+        "atomic_ordering",
+        "failure_ordering",
+        "volatile",
+        "weak",
+        "update_opcode"
+      ]
     }
   }
 }

@@ -151,3 +151,21 @@ A new functional characterization retains its complete counted target-descriptio
 The original characterization and execution receipt are never rewritten. An estimate for a rates-only description exposes `count_reuse` with both counted and requested target hashes, the unchanged characterization hash, complete policy digest and original observation-context hash. The original context includes the state budget, source/LLVM/runtime bundle identities, loaded libraries and declared environment controls. Production normative bindings also pin the counted registered target configuration. Changing the original context fails its count receipt; a new description cannot request a new state budget through reuse. Changing any observation policy requires a fresh count. Historical descriptions/counts continue to work at their exact original hash; historical receipts without the complete snapshot cannot reuse rows for a changed description.
 
 Numeric provenance is still checked recursively by ADR 0013 and pinned by the frozen protocol. A rates-only change does not waive input/source/ROI/trial/runtime binding, grant physical DRAM placement or convert logical row groups into measured row hits. Error-band bindings are independently frozen protocol evidence and never modify the counted observation policy.
+
+## Exact source memory primitives
+
+Updated: 2026-10-06 ET. Optional `access_patterns[].primitive_semantics` uses
+`swdb.source-memory-primitive.v1` and describes the normalized LLVM load/store/
+atomicrmw/cmpxchg instruction. It retains scalar value kind and bit width (pointer
+width comes from that module's DataLayout), vector flag, exact LLVM ordering,
+CAS failure ordering and weak flag, volatility, and exact atomic update opcode.
+A store can retain its arithmetic value producer's opcode; this alone does not
+establish a read-modify-write or matching loaded address. Existing access IDs,
+coarse update buckets, counts and callback ABIs are unchanged.
+
+Model context `source_accesses` contains that region's exact static/dynamic access
+patterns, including trial-scoped element counts. A service model must cover every
+executed site in each claimed kind/width cell and refuse unsupported or absent
+primitive facts. The optional facts are source semantics, never native instruction
+counts, physical requests, or CPU timing evidence. Historical absent fields remain
+unknown; registered receipts seal new facts with their counted payload.
