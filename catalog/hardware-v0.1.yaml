@@ -1,5 +1,5 @@
 catalog_id: archevolve-hardware
-revision: 0.1.13
+revision: 0.1.14
 format: hardware-catalog-v0.1
 status: research_reviewed_prototype
 project_selections:
@@ -481,6 +481,17 @@ sources:
     conference: MICRO
     publication_year: 2019
     doi: 10.1145/3352460.3358275
+    reviewed_on: '2026-10-06'
+  fifer-micro2021-proceedings:
+    title: 'Fifer: Practical Acceleration of Irregular Applications on Reconfigurable Architectures'
+    edition: MICRO2021 proceedings pp1064-1077,14pagecachedprimary,DOI10.1145/3466752.3480048
+    url: https://doi.org/10.1145/3466752.3480048
+    sha256: 114175b4fe9ec70432b7d07a57fc0da3d09b27166c16d8ee0cc821003e975c48
+    locator_basis: 1-based cached proceedings PDF pages; printed page numbers1-14
+    document_type: conference_paper
+    conference: MICRO
+    publication_year: 2021
+    doi: 10.1145/3466752.3480048
     reviewed_on: '2026-10-06'
 claims:
   maple-api:
@@ -2169,6 +2180,74 @@ claims:
     evidence_kind: paper_specification
     limitations:
     - Paper-level contract; no authenticated RTL, DMA/register ABI, physical ownership or measured reproduction.
+  fifer-regular-stage-mapping:
+    source_refs:
+    - fifer-micro2021-proceedings
+    locator: PDFpp5-6 §4 Fig6-7
+    statement: Programs are manually partitioned to decouple irregular memory operations; LLVM IR regular
+      stages are mapped through DFGs and generated bitstreams. Queue control values delineate stage control
+      boundaries.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper architecture scope only; exact RTL, compiled stage configurations and memory/queue ABI require
+      implementation binding.
+  fifer-rapid-reconfiguration:
+    source_refs:
+    - fifer-micro2021-proceedings
+    locator: PDFpp6-7 §5.1 Fig8
+    statement: New configuration loads into inactive double-buffered cells while the active fabric stops
+      accepting inputs and drains in-flight operations. Activation follows both completion conditions. Required
+      stage state is drained to L1 for preservation; the evaluated activation dead time is two cycles.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper architecture scope only; exact RTL, compiled stage configurations and memory/queue ABI require
+      implementation binding.
+  fifer-ready-scheduling:
+    source_refs:
+    - fifer-micro2021-proceedings
+    locator: PDFp7 §5.2
+    statement: A PE retains its current stage until input empty or output full. The next stage is selected
+      among unblocked stages according to greatest work available in input queues; no detailed tie-breaking
+      policy is supplied.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper architecture scope only; exact RTL, compiled stage configurations and memory/queue ABI require
+      implementation binding.
+  fifer-queue-ownership:
+    source_refs:
+    - fifer-micro2021-proceedings
+    locator: PDFpp5,7 §3, §5.3
+    statement: Each PE has statically partitioned circular queue storage in a16KB SRAM reference. Additional
+      head/tail pointers support intra-PE stage queues alongside inter-PE queues. This is distinct from
+      Pipette physical-register-file queue storage.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper architecture scope only; exact RTL, compiled stage configurations and memory/queue ABI require
+      implementation binding.
+  fifer-independent-DRM:
+    source_refs:
+    - fifer-micro2021-proceedings
+    locator: PDFpp7-8 §5.4 Fig9
+    statement: DRMs receive address operands for dereference or address-range pairs for sequential scanning.
+      Their accesses can complete out of order, but an available result waits for earlier accesses before
+      output enqueue. DRMs are configured at initialization and keep operating independently of the scheduled
+      fabric stage.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper architecture scope only; exact RTL, compiled stage configurations and memory/queue ABI require
+      implementation binding.
+  fifer-control-token:
+    source_refs:
+    - fifer-micro2021-proceedings
+    locator: PDFpp6,8 §4, §5.5-5.6
+    statement: An additional control bit travels in queues and through functional units, preserving order
+      boundaries. Data-parallel stage replicas can dequeue multiple data values together; control values
+      are handled one per cycle. Spatial partitioning sends owned work to another PE instead of shared-memory
+      synchronization.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper architecture scope only; exact RTL, compiled stage configurations and memory/queue ABI require
+      implementation binding.
 mechanism_families:
 - id: queue-latency-tolerance
   name: Queue-backed asynchronous access
@@ -2203,6 +2282,9 @@ mechanism_families:
 - id: extensor-hierarchical-coordinate-intersection
   description: Configured tensor-fiber coordinate intersections with position-tagged operand delivery
     across a memory hierarchy; no inherited general gather capability.
+- id: fifer-temporal-CGRA-pipeline
+  description: Regular CGRA stages time-multiplexed by queue readiness with independent FIFO-return DRMs;
+    no operation inheritance from Pipette.
 decision_questions:
 - id: operation-result
   question: Is the requested result a fetched value, update success, old value, reduction, or only a cache hint?
@@ -7372,3 +7454,254 @@ designs:
   - Physical translation, protection, cache coherence, exception and callback credit ABI unknown.
   - No inheritance of arbitrary indexed-load or graph traversal capabilities.
   - Abstract finite merge helper does not implement optimized CAM SkipTo or hierarchy timing.
+
+- id: fifer-micro2021-staged-DRM
+  name: Fifer MICRO2021 temporal CGRA stages with DRMs
+  revision: primary-scoped-proposal-r1
+  record_kind: mapping
+  summary: Queue-ready temporal stage scheduling with double-buffered reconfiguration and independent
+    in-order DRM result delivery.
+  mechanism_refs:
+  - fifer-temporal-CGRA-pipeline
+  source_refs:
+  - fifer-micro2021-proceedings
+  interface:
+    software_supplies: Manually partitioned regular stages, compiled DFG/bitstream configurations, queue
+      partition/connections and initial DRM dereference/scan configuration.
+    invocation: Runtime PE scheduler retains unblocked stage, selects queue-ready work, drains fabric
+      while loading inactive configuration, then activates it. Stages enqueue DRM address/range operands.
+    outputs: Queue-delivered load values and control tokens; fabric state preserved across stage changes.
+    claim_refs:
+    - fifer-regular-stage-mapping
+    - fifer-rapid-reconfiguration
+    - fifer-ready-scheduling
+    - fifer-queue-ownership
+    - fifer-independent-DRM
+    - fifer-control-token
+  operations:
+  - id: drm_dereference
+    operation: read
+    subtype: fifer_drm_dereference
+    execution_role: execute
+    support: paper_specified
+    address_patterns:
+    - indirect
+    claim_refs:
+    - fifer-independent-DRM
+    realization:
+      kind: documented_sequence
+      description: Explicit stage-generated addresses enter the initialization-bound DRM input FIFO; loaded
+        values return in request order to the next-stage queue.
+      claim_refs:
+      - fifer-independent-DRM
+      - fifer-regular-stage-mapping
+    result:
+      form: Loaded opaque values in the configured DRM output FIFO.
+      old_value: not_applicable
+      validity: Explicit staged program mapping, initial DRM configuration and queue/storage/memory ownership;
+        no CPU-register or generic gather ABI inferred.
+      claim_refs:
+      - fifer-independent-DRM
+      - fifer-queue-ownership
+    ordering:
+      scope: One DRM request/output stream
+      description: Memory responses may complete out of order. Result enqueue waits for earlier accesses;
+        queue control tokens retain sequence boundaries. No global ordering across DRMs/PEs is inferred.
+      claim_refs:
+      - fifer-independent-DRM
+      - fifer-control-token
+    completion:
+      event: Returned value becomes available in output queue after earlier requests complete.
+      visibility: Stage/FIFO availability does not certify host-visible program completion or store fences;
+        concrete integration must bind those separately.
+      claim_refs:
+      - fifer-independent-DRM
+    type_constraints:
+      payload_types: []
+      index_width_bits: []
+      claim_refs: []
+      notes: Exact payload/address width and scalar datatype transport ABI are not established by the
+        inspected source sections.
+    datatype_notes: No arbitrary float/integer width, FP reassociation, atomics or vector mask capability
+      is granted.
+    limitations:
+    - Only the explicit DRM/staged-program interface; no generic gather capability.
+    - Range inclusivity, byte stride, faults/protection and actual memory-response identity ABI need binding.
+  - id: drm_scan
+    operation: read
+    subtype: fifer_drm_scan
+    execution_role: execute
+    support: paper_specified
+    address_patterns:
+    - sequential
+    claim_refs:
+    - fifer-independent-DRM
+    realization:
+      kind: documented_sequence
+      description: Explicit address-range operands enter the initialization-bound DRM; sequentially fetched
+        values return to its configured output queue.
+      claim_refs:
+      - fifer-independent-DRM
+      - fifer-regular-stage-mapping
+    result:
+      form: Loaded opaque values in the configured DRM output FIFO.
+      old_value: not_applicable
+      validity: Explicit staged program mapping, initial DRM configuration and queue/storage/memory ownership;
+        no CPU-register or generic gather ABI inferred.
+      claim_refs:
+      - fifer-independent-DRM
+      - fifer-queue-ownership
+    ordering:
+      scope: One DRM request/output stream
+      description: Memory responses may complete out of order. Result enqueue waits for earlier accesses;
+        queue control tokens retain sequence boundaries. No global ordering across DRMs/PEs is inferred.
+      claim_refs:
+      - fifer-independent-DRM
+      - fifer-control-token
+    completion:
+      event: Returned value becomes available in output queue after earlier requests complete.
+      visibility: Stage/FIFO availability does not certify host-visible program completion or store fences;
+        concrete integration must bind those separately.
+      claim_refs:
+      - fifer-independent-DRM
+    type_constraints:
+      payload_types: []
+      index_width_bits: []
+      claim_refs: []
+      notes: Exact payload/address width and scalar datatype transport ABI are not established by the
+        inspected source sections.
+    datatype_notes: No arbitrary float/integer width, FP reassociation, atomics or vector mask capability
+      is granted.
+    limitations:
+    - Only the explicit DRM/staged-program interface; no generic gather capability.
+    - Range inclusivity, byte stride, faults/protection and actual memory-response identity ABI need binding.
+  requirements:
+  - id: stage-partition
+    scope: Explicit Fifer staged-program mapping
+    verification: required
+    description: Bind actual stage partition, LLVM/DFG mapping and compiled fabric state; scalar code
+      or Pipette queue tokens cannot substitute.
+    claim_refs:
+    - fifer-regular-stage-mapping
+  - id: queue-capacity
+    scope: Explicit Fifer staged-program mapping
+    verification: required
+    description: Declare per-stage/DRM endpoints, statically allocated queue capacities, head/tail state,
+      backpressure and control/data encoding.
+    claim_refs:
+    - fifer-queue-ownership
+    - fifer-control-token
+  - id: switch-drain
+    scope: Explicit Fifer staged-program mapping
+    verification: required
+    description: Stop accepting active-stage inputs and finish in-flight fabric operations; preserve final
+      old state and complete new configuration before activation.
+    claim_refs:
+    - fifer-rapid-reconfiguration
+  - id: DRM-order
+    scope: Explicit Fifer staged-program mapping
+    verification: required
+    description: Bind every outstanding request to its original DRM/output stream; completion out of order
+      must not reorder consumer result delivery. Fabric switches must not reassign pending DRM results.
+    claim_refs:
+    - fifer-independent-DRM
+  - id: program-ownership
+    scope: Explicit Fifer staged-program mapping
+    verification: required
+    description: Preserve per-stage/PE data ownership and control boundaries. Physical memory translation,
+      permissions and queue routes require actual implementation proof.
+    claim_refs:
+    - fifer-control-token
+    - fifer-independent-DRM
+  - id: physical-ABI-completion
+    scope: Implementation binding
+    verification: unknown
+    description: Authenticate exact memory/queue ABI, datatype/width, protection/coherence, faults and
+      host-visible completion.
+    claim_refs: []
+  parameters:
+  - id: queue-SRAM
+    unit: paper KB per PE
+    state: fixed_reference
+    value: 16
+    domain: null
+    claim_refs:
+    - fifer-queue-ownership
+    notes: Reference total statically divided among queues; not per-queue capacity or inferred PRF ownership.
+  - id: configuration-activation
+    unit: cycles in evaluated model
+    state: fixed_reference
+    value: 2
+    domain: null
+    claim_refs:
+    - fifer-rapid-reconfiguration
+    notes: Activation dead time only, excludes variable fabric drain/configuration loads; not measured
+      by this helper.
+  - id: DRM-inflight-capacity
+    unit: requests
+    state: unknown
+    value: null
+    domain: null
+    claim_refs: []
+    notes: Explicit actual capacity must be bound before issuing requests.
+  internal_mechanisms:
+  - id: circular-SRAM-queues
+    kind: buffering
+    status: described
+    description: Statically partitioned intra/inter-PE queues persist while stages switch; distinct from
+      Pipette PRF queues.
+    claim_refs:
+    - fifer-queue-ownership
+  - id: inactive-configuration
+    kind: buffering
+    status: described
+    description: Active/inactive configuration cells overlap load with drain; final old stage state is
+      preserved through L1.
+    claim_refs:
+    - fifer-rapid-reconfiguration
+  - id: ready-stage-selection
+    kind: issue_policy
+    status: described
+    description: Retain current unblocked stage; choose unblocked stage with greatest available input
+      work when blocked.
+    claim_refs:
+    - fifer-ready-scheduling
+  - id: fabric-and-DRM-separation
+    kind: dependency_tracking
+    status: described
+    description: Fabric drain gates activation; initialization-bound DRMs may remain outstanding independent
+      of scheduled stage.
+    claim_refs:
+    - fifer-rapid-reconfiguration
+    - fifer-independent-DRM
+  - id: response-order-restoration
+    kind: reordering
+    status: described
+    description: Out-of-order memory completion is restored to request order before DRM result enqueue.
+    claim_refs:
+    - fifer-independent-DRM
+  - id: tagged-control
+    kind: dependency_tracking
+    status: described
+    description: Control bit travels in order with data; serial control-token handling establishes local
+      phase boundaries.
+    claim_refs:
+    - fifer-control-token
+  - id: queue-result-completion
+    kind: completion
+    status: described
+    description: Result is delivered only when available and earlier requests have completed. No global
+      host-visible fence is supplied.
+    claim_refs:
+    - fifer-independent-DRM
+  - id: cacheline-coalescing
+    kind: coalescing
+    status: unknown
+    description: null
+    claim_refs: []
+  limitations:
+  - Abstract tested single-input/single-output stage lifecycle is not compiled CGRA execution, RTL or
+    measured timing.
+  - Exact memory-result buffer, queue word width and protection/atomic/fence ABI unknown.
+  - Most-work tie-breaking and multichannel readiness arbitration not established.
+  - No inherited Pipette queue-register capacity, general gather or BFS acceptance.

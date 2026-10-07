@@ -20,12 +20,15 @@ class ExTensorAdmissionTests(unittest.TestCase):
                           if d["id"] == "extensor-micro2019-ordered-fiber-operands")
 
     def test_prior_semantics_claims_and_selection_unchanged(self):
-        self.assertEqual(self.catalog["designs"][:-1], self.base["designs"])
+        by_id = {d["id"]: d for d in self.catalog["designs"]}
+        self.assertEqual([by_id[d["id"]] for d in self.base["designs"]], self.base["designs"])
         self.assertEqual(self.catalog["project_selections"], self.base["project_selections"])
         for group in ("claims", "sources"):
             for key, value in self.base[group].items():
                 self.assertEqual(self.catalog[group][key], value)
-        self.assertEqual(self.catalog["mechanism_families"][:-1], self.base["mechanism_families"])
+        by_family = {m["id"]: m for m in self.catalog["mechanism_families"]}
+        self.assertEqual([by_family[m["id"]] for m in self.base["mechanism_families"]],
+                         self.base["mechanism_families"])
 
     def test_generic_gather_reduction_and_old_value_not_inherited(self):
         base = deepcopy(self.base)
