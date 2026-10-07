@@ -17,3 +17,6 @@ Created: 2026-10-06
 - [ ] A short recommendation for ticket 18.
 
 Claimed: 2026-10-06 22:22 ET by ticket17 implementer; base `9a5057f45c7a1c3b8756cfccd39f000d72f95253`.
+
+
+2026-10-07 03:36 ET — parent-reviewed metadata supervisor/source-audit custody archived at `../evidence/17-metadata-supervisor-controls-20261007/README.md`. Nine portable controls passed; the actual Linux fixture passed three process-cleanup cases on node 1 generation 544 (returned leader, timeout, external TERM), with no survivors and unrelated sibling survival. Exact helper09136, processesbcc9 and F6 and original/draft preparation history retained. This is cleanup evidence only; no new child cap, population freeze, provider, campaign, unique numerical pair or D30 admission. Four actual campaigns/report remain pending; status stays claimed.
