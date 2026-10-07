@@ -1,8 +1,9 @@
 # 13 — DX100 sanity check against the paper
 
 Created: 2026-10-06
+Updated: 2026-10-06 ET
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 10
 **Spec:** `../spec.md`
 **Time estimate:** 2 h

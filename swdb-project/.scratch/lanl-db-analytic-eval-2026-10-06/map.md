@@ -34,7 +34,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | 10 | [The estimation role fills unknowns](issues/10-estimation-role.md) | resolved | 09 | 4–6 h |
 | 11 | [CPU error check and paired estimates in ArchEvolve mode](issues/11-cpu-error-check-and-paired-estimates.md) | ready-for-agent | 05, 06, 07 | 4–6 h |
 | 12 | [ArchEvolve-mode DX100 evaluation without gem5](issues/12-archevolve-dx100-evaluation.md) | resolved | 06, 09 | 1 day |
-| 13 | [DX100 sanity check against the paper](issues/13-dx100-sanity-check.md) | ready-for-agent | 10 | 2 h |
+| 13 | [DX100 sanity check against the paper](issues/13-dx100-sanity-check.md) | claimed | 10 | 2 h |
 
 ## D. Generality, Scott, Extensa
 
