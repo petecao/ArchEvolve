@@ -1,0 +1,47 @@
+{
+  "created": "2026-10-06 ET",
+  "scope": "Public campaign CLI and real adapters with established contract-fixture evaluator/host seams; no application performance outcomes.",
+  "green": {
+    "tests": 12,
+    "passed": 12,
+    "seconds": 575.8,
+    "command": "python -m pytest -q tests/test_extensa_pairing.py tests/test_extensa_targets.py::test_gem5_baselines_only_runs_no_provider_call_and_resume_reuses_them"
+  },
+  "red": {
+    "batch_tests": 4,
+    "product_boundary_failures": 2,
+    "passing_recursive_refusal": 1,
+    "test_authoring_failure": 1,
+    "seconds": 391.51,
+    "details": "Both real adapter checks lacked actual outcome timing_contexts. Initial selection assertion used the wrong summary field; corrected to artifact_sha256 and budgets.used before GREEN."
+  },
+  "checks": [
+    "Immutable Extensa-tagged forecasts before fixture pilots/comparisons.",
+    "Native A/A and both paired sides before evaluator entry.",
+    "Gem5 shared baselines, primary and diagnostic companions before evaluator entry.",
+    "Artifact-content aliases reuse forecasts created before first artifact outcome; actual requested IDs/contexts remain in boundary ledger.",
+    "Missing ledger or changed policy refuses resume before provider access.",
+    "Copied summaries reject chronology, artifact, input and backend tampering.",
+    "Synthetic predicted candidate slowdown does not change measured gain selection or iteration/stop policy.",
+    "Team freeze recursively refuses paired estimates through an intermediate machine; explicit Extensa freeze and validation remain functional.",
+    "Provider-free baselines_only and successful resume reuse original shared baseline outcomes."
+  ],
+  "synthetic_selection_premise": {
+    "baseline_seconds": 0.1,
+    "candidate_seconds": 10,
+    "fixture_timing_verdict": "gain",
+    "agreement_eligible": false
+  },
+  "real_adapter_admission": {
+    "seconds": null,
+    "eligible_application_estimates": 0,
+    "structural_missing": [
+      "exact_registered_graph_complete_call_count_binding",
+      "counted_backend_build_runtime_correspondence",
+      "complete_required_mechanisms_and_composition",
+      "prospective_artifact_input_configuration_freshness",
+      "functional_trial_lambda_to_mmio_complete_call_bridge"
+    ]
+  },
+  "runbook": "16-blind-pairing-runbook.md"
+}

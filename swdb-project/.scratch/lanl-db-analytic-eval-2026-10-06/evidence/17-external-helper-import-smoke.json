@@ -1,0 +1,42 @@
+{
+  "format": "swdb.external-helper-import-smoke.v1",
+  "updated": "2026-10-06 21:04 ET",
+  "scope": "External helper import only; no graph/application/remote execution.",
+  "runbook_parent_commit": "b80b2b0407afb7caeeec43fa3ebc00bd9895defb",
+  "helper_sha256": "aef88a599db47739c9af5298dbe41a6e5f5e655dff6e1ed8526a0f752093d3f2",
+  "recipe_export": "export PYTHONPATH=\"$LANL_SWDB${PYTHONPATH:+:$PYTHONPATH}\"",
+  "checks": [
+    {
+      "inherited_pythonpath": null,
+      "exit_code": 0,
+      "package_from_swdb_cwd": true,
+      "existing_entries_preserved": true,
+      "imports": [
+        "swdb",
+        "artifacts",
+        "bfs_protocol"
+      ]
+    },
+    {
+      "inherited_pythonpath": "/private/tmp/lanl17-existing-pythonpath",
+      "exit_code": 0,
+      "package_from_swdb_cwd": true,
+      "existing_entries_preserved": true,
+      "imports": [
+        "swdb",
+        "artifacts",
+        "bfs_protocol"
+      ]
+    }
+  ],
+  "recipe_shell_syntax": "passed",
+  "embedded_python_syntax_blocks": 3,
+  "graph_or_application_execution": false,
+  "remote_execution": false,
+  "baseline_without_pythonpath": {
+    "exit_code": 1,
+    "refusal": "ModuleNotFoundError: No module named 'swdb'",
+    "same_helper_source_sha256": "aef88a599db47739c9af5298dbe41a6e5f5e655dff6e1ed8526a0f752093d3f2"
+  },
+  "helper_source": "import json, os\nfrom pathlib import Path\nimport swdb\nfrom swdb import artifacts, bfs_protocol\nroot=Path(os.environ['LANL_SWDB']).resolve()\nassert Path(swdb.__file__).resolve().parent==root/'swdb'\nassert Path(artifacts.__file__).resolve().parent==root/'swdb'\nassert Path(bfs_protocol.__file__).resolve().parent==root/'swdb'\nprint(json.dumps({'package_root':str(Path(swdb.__file__).resolve().parent),\n                 'pythonpath':os.environ['PYTHONPATH'], 'imports':['swdb','artifacts','bfs_protocol']}))\n"
+}

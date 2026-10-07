@@ -1,0 +1,60 @@
+{
+  "format": "swdb.public-functional-evaluation-proof.v1",
+  "updated": "2026-10-06 ET",
+  "base_commit": "4eaf95a95ed581f3b258d881a719a33f24c80ab2",
+  "scope": "Public local CLI acceptance over copied canonical records and explicit zero-work count fixture. Remote acceptance pending; no application performance or hardware correctness claim.",
+  "public_seams": [
+    "evaluate-functional",
+    "handoff-message evaluation_result",
+    "canonical validate"
+  ],
+  "red": [
+    {
+      "case": "missing evaluate-functional command",
+      "elapsed_s": 84.74
+    },
+    {
+      "case": "cached ratio tampering was published by handoff",
+      "elapsed_s": 41.1
+    }
+  ],
+  "final_gates": [
+    {
+      "cases": [
+        "strict certified functional evaluation, handoff, cached-result integrity, no child sentinel",
+        "stale certification and recursive team refusal",
+        "archived handoff examples with explicit Extensa render policy"
+      ],
+      "passed": 3,
+      "elapsed_s": 353.83
+    },
+    {
+      "cases": [
+        "legacy completed/incomplete handoffs",
+        "historical contract document pin"
+      ],
+      "passed": 3,
+      "elapsed_s": 245.73,
+      "batch_note": "These three passed in the earlier six-case batch whose archived example checker exposed an independently reproduced default-team policy refusal; the checker was repaired and passed in the final gate."
+    }
+  ],
+  "unique_public_cases": 6,
+  "protected_semantics": {
+    "finite_functional_target_correctness": true,
+    "hardware_correctness_claim": false,
+    "timing_rows": [],
+    "gain_claim": false,
+    "estimated_basis": true,
+    "unknown_whole_call_seconds": null,
+    "unknown_ratio": null,
+    "unknown_error_band": null,
+    "unknown_verdict": "within_error",
+    "handoff_format_version": "1.1",
+    "historical_v1_contract_bytes_preserved": true,
+    "default_team_gem5_refusal_preserved": true,
+    "stale_certificate_outcome": "incompatible/unverified",
+    "child_process_sentinel": "all subprocess.Popen refused around the public evaluation command; no sentinel created. The remote acceptance additionally guards handoff."
+  },
+  "remote_acceptance": "pending",
+  "identity_sha256": "b0805e6af55e2987803c113990541c7b7cd1a9ae16e9d2ed190af9e088905d25"
+}

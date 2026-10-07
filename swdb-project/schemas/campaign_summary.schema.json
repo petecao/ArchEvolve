@@ -286,6 +286,9 @@
           "type": "object"
         }
       }
+    },
+    "paired_estimates": {
+      "$ref": "#/$defs/pairing_ledger"
     }
   },
   "required": [
@@ -309,5 +312,124 @@
     "stop_reason",
     "artifacts",
     "retentions"
-  ]
+  ],
+  "$defs": {
+    "pairing_ledger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "format",
+        "enabled",
+        "records",
+        "outcome_accesses",
+        "eligible_application_estimates",
+        "selection_policy"
+      ],
+      "properties": {
+        "format": {
+          "const": "swdb.extensa-pairing-ledger.v1"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "outcome_accesses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "stage",
+              "paired_estimates",
+              "outcome_access_started_at"
+            ],
+            "properties": {
+              "stage": {
+                "type": "string",
+                "minLength": 1
+              },
+              "paired_estimates": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/id"
+                }
+              },
+              "outcome_access_started_at": {
+                "type": "string"
+              },
+              "timing_contexts": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "subject",
+                    "input",
+                    "execution"
+                  ],
+                  "properties": {
+                    "subject": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "artifact_sha256"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "artifact_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        }
+                      }
+                    },
+                    "input": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "identity_sha256"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "identity_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        }
+                      }
+                    },
+                    "execution": {
+                      "type": "object"
+                    },
+                    "prior_outcome_exposure": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "eligible_application_estimates": {
+          "const": 0
+        },
+        "selection_policy": {
+          "const": "unchanged_timing_only"
+        }
+      }
+    }
+  }
 }

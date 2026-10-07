@@ -33,7 +33,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | 09 | [DX100 estimate](issues/09-dx100-estimate.md) | resolved | 05 | 1.5–2 days |
 | 10 | [The estimation role fills unknowns](issues/10-estimation-role.md) | claimed | 09 | 4–6 h |
 | 11 | [CPU error check and paired estimates in ArchEvolve mode](issues/11-cpu-error-check-and-paired-estimates.md) | ready-for-agent | 05, 06, 07 | 4–6 h |
-| 12 | [ArchEvolve-mode DX100 evaluation without gem5](issues/12-archevolve-dx100-evaluation.md) | ready-for-agent | 06, 09 | 1 day |
+| 12 | [ArchEvolve-mode DX100 evaluation without gem5](issues/12-archevolve-dx100-evaluation.md) | resolved | 06, 09 | 1 day |
 | 13 | [DX100 sanity check against the paper](issues/13-dx100-sanity-check.md) | ready-for-agent | 10 | 2 h |
 
 ## D. Generality, Scott, Extensa
@@ -42,7 +42,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 |---|---|---|---|---|
 | 14 | [Generality: MAPLE and PageRank](issues/14-generality-maple-pagerank.md) | ready-for-agent | 05, 09, 10 | 1 day |
 | 15 | [Show Scott the counting approach](issues/15-show-scott-counting.md) | ready-for-human | 09 | about 15 min |
-| 16 | [Extensa flow A: blind paired estimates](issues/16-extensa-blind-paired-estimates.md) | ready-for-agent | 06, 09 | 4–6 h |
+| 16 | [Extensa flow A: blind paired estimates](issues/16-extensa-blind-paired-estimates.md) | resolved | 06, 09 | 4–6 h |
 | 17 | [Agreement report](issues/17-agreement-report.md) | ready-for-agent | 16 | 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs) |
 | 18 | [Decide on flow B](issues/18-decide-flow-b.md) | ready-for-human | 17 | about 15 min |
 
@@ -118,3 +118,5 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
   final 22-case public gate, native static SHA support and 617-record validation
   passed; all 615 original canonical YAML bytes are preserved. Stable seams unblock
   10/12/16, with 16 prioritized for fresh blind campaign preparation.
+
+- 2026-10-06 22:35 ET: [ticket 12](issues/12-archevolve-dx100-evaluation.md#answer) resolved. Retained strict functional certification, immutable estimated evaluation and handoff 1.1 passed exact-artifact mbit10 no-child acceptance; unknown totals/ratio/band remain null with `within_error`. Three final coexistence cases passed; 628 canonical records valid and all 888 prior protected blobs preserved. [Final proof](evidence/12-final-public-coexistence-proof-20261006.json).
