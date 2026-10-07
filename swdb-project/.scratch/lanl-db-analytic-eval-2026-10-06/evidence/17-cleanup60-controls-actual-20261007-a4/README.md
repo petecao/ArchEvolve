@@ -1,0 +1,14 @@
+# Actual cleanup60 ticket17 controls a4
+
+2026-10-07 ET. Separate actual custody addendum to the reviewed cleanup60 preparation. Parent ran each new full-hash Linux check once after successful development completion/release; the supervisor preregistration confirms holdout/report absent. No actual prepare/finalize, population freeze, provider or campaign action was executed by either cleanup check. Original preparation NOTRUN fields and all a1/a2/a3 history remain byte-identical.
+
+| Actual check | Lane and UTC | Evidence |
+|---|---|---|
+| Helper28d116 with immutable original4d smoke | node1 generation547,09:14:38–09:14:53Z;wrapper0/released | Receipt18e58a44, compact63ded110; same-group/escaped owned descendants gone, unrelated sibling alive |
+| Supervisorfa703 with immutable parameterizeda848 fixture | node1 generation548,09:15:54–09:16:45Z;wrapper0/released | Receiptea9751ee, compactf0b2f8cf; returned/timeout/externalTERM exits0/124/143; all owned descendants reaped and each sibling survived |
+
+Actual new helper cleanup proof is `/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261007-a4/receipt.json`, directly under the raw root. No `/smoke/` component. Separate supervisor fixture receipt is `/data/yanruj/EvolveSWDB_runs/lanl17-metadata-supervisor-fixture-20261007-a4/receipt.json`. Parent verified every nested source/receipt/preregistration seal, raw file hash, owned PID/start-time disappearance, sibling survival, clean immutableC/F6 and all three released leases. These compact facts do not re-run Linux checks or query live processes locally. Raw fixtures/output stay remote.
+
+The six snapshots are both dispatch result JSONs, both Linux compact wrappers, the exact26eb static stager source and its sealed5e886 staging receipt. The dispatch result JSONs are not self-sealed; their exact bytes and preregistration identities are bound by manifest.json and the corresponding sealed compact wrapper. The staging receipt records copy-only deployment of e79 ticket14 reports and28d/fa/9c ticket17 controls without execution; it remains distinct from actual Linux checks. The already archived dispatcher/verifier sources remain in the preparation folder; unified verifier5984 was run read-only once per actual wrapper by the parent.
+
+manifest.json pins six exact external snapshots and ten nested JSON seals plus its own seal. Immutable sourceC and185-moduleF6 are preserved, as are678 canonical YAML, library/root/checkpoint/maps/other trackers, all controls and scientific/campaign/provider/selection/plateau budgets. The only allowed prior-file change is this ticket17 claimed append. Numerical CPU admission, complete11/14 catalogue admission, explicit finalR, fresh population freeze/four actual campaigns and final D30 agreement report remain separate. Cleanup evidence establishes neither eligible unique pairs nor forecast accuracy or independence. Metadata guard9c5d is still unexecuted. Ticket17 remains claimed.
