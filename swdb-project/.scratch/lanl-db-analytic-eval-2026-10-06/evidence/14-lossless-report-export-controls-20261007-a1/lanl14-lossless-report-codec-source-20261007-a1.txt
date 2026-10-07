@@ -1,0 +1,168 @@
+# Lossless report-transfer codec; source-only prospective administration.
+MAX_GIT_REPORT_BYTES = 100 * 1024 * 1024
+MAX_ORIGINAL_REPORT_BYTES = 1024 * 1024 * 1024
+REPORT_CODEC_SECONDS = 3600
+REPORT_TRANSFER_POLICY = 'swdb.lanl14-lossless-report-transfer.v1'
+REPORT_STAT_KEYS = ('st_dev','st_ino','st_uid','st_mode','st_size','st_mtime_ns','st_ctime_ns')
+
+def _report_require(condition, reason):
+ if not condition: raise ValueError(reason)
+
+def _report_deadline():
+ return time.monotonic() + REPORT_CODEC_SECONDS
+
+def _report_remaining(deadline):
+ _report_require(time.monotonic() < deadline, 'Report codec administrative deadline exceeded')
+
+def _report_stamp(path):
+ path=Path(path)
+ _report_require(path.is_absolute() and '..' not in path.parts, 'Report path must be absolute')
+ _report_require(not any(p.is_symlink() for p in (path,*path.parents)), 'Report symlink refused')
+ _report_require(path.resolve(strict=True)==path, 'Report path resolution differs')
+ current=path.stat()
+ _report_require(stat.S_ISREG(current.st_mode) and current.st_uid==os.getuid(), 'Report regular owned file required')
+ _report_require(current.st_nlink==1 and not current.st_mode&0o022, 'Report link or writable file refused')
+ return {k:getattr(current,k) for k in REPORT_STAT_KEYS}
+
+def _report_chunks(path, maximum, deadline, expected=None):
+ _report_remaining(deadline);path=Path(path);before=_report_stamp(path)
+ _report_require(0<before['st_size']<=maximum, 'Report file byte bound exceeded')
+ if expected is not None:
+  _report_require(before['st_size']==expected['bytes'], 'Report pinned byte size differs')
+  if 'stat' in expected: _report_require(before==expected['stat'], 'Report pinned stat differs')
+ fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW)
+ count=0;hasher=hashlib.sha256()
+ with os.fdopen(fd,'rb') as stream:
+  opened={k:getattr(os.fstat(stream.fileno()),k) for k in REPORT_STAT_KEYS}
+  _report_require(opened==before, 'Report opened stat differs')
+  while True:
+   _report_remaining(deadline);block=stream.read(min(1024*1024,maximum-count+1))
+   if not block: break
+   count+=len(block);_report_require(count<=maximum, 'Report read byte bound exceeded')
+   hasher.update(block);yield block
+  closed={k:getattr(os.fstat(stream.fileno()),k) for k in REPORT_STAT_KEYS}
+ _report_require(closed==before==_report_stamp(path), 'Report source changed during read')
+ _report_require(count==before['st_size'], 'Report returned bytes differ from stat')
+ if expected is not None:
+  _report_require(hasher.hexdigest()==expected['sha256'], 'Report pinned returned-byte hash differs')
+
+def _report_file_pin(path, maximum, deadline=None, expected=None):
+ deadline=_report_deadline() if deadline is None else deadline
+ before=_report_stamp(path);hasher=hashlib.sha256();count=0
+ for block in _report_chunks(path,maximum,deadline,expected):hasher.update(block);count+=len(block)
+ _report_require(before==_report_stamp(path), 'Report source changed while pinned')
+ return {'bytes':count,'sha256':hasher.hexdigest(),'stat':before}
+
+class _ReportCappedWriter:
+ def __init__(self, stream, maximum, deadline):
+  self.stream=stream;self.maximum=maximum;self.deadline=deadline;self.total=0
+ def write(self, value):
+  _report_remaining(self.deadline)
+  _report_require(self.total+len(value)<=self.maximum, 'Compressed report exceeds Git blob bound')
+  written=self.stream.write(value)
+  _report_require(written==len(value), 'Compressed report short write')
+  self.total+=written;return written
+ def flush(self):
+  _report_remaining(self.deadline);self.stream.flush()
+
+def _report_transfer_contract(transfer):
+ expected={'format','encoding','original','exported','report_identity_sha256','Git_blob_max_bytes',
+           'original_report_max_bytes','gzip','original_remote_report_unchanged',
+           'decoded_original_bytes_equal','JSON_reserialized'}
+ _report_require(set(transfer)==expected, 'Report transfer fields differ')
+ _report_require(transfer['format']==REPORT_TRANSFER_POLICY, 'Report transfer policy differs')
+ _report_require(transfer['Git_blob_max_bytes']==MAX_GIT_REPORT_BYTES and transfer['original_report_max_bytes']==MAX_ORIGINAL_REPORT_BYTES, 'Report transfer administrative bounds differ')
+ for name in ('original','exported'):
+  pin=transfer[name]
+  _report_require(set(pin)==({'bytes','sha256','path'} if name=='exported' else {'bytes','sha256'}), 'Report transfer pin fields differ')
+  _report_require(type(pin['bytes']) is int and 0<pin['bytes']<=(MAX_GIT_REPORT_BYTES if name=='exported' else MAX_ORIGINAL_REPORT_BYTES), 'Report transfer size refused')
+  _report_require(type(pin['sha256']) is str and re.fullmatch('[a-f0-9]{64}',pin['sha256']) is not None, 'Report transfer SHA refused')
+ _report_require(type(transfer['report_identity_sha256']) is str and re.fullmatch('[a-f0-9]{64}',transfer['report_identity_sha256']) is not None, 'Report semantic identity refused')
+ _report_require(transfer['original_remote_report_unchanged'] is True and transfer['decoded_original_bytes_equal'] is True and transfer['JSON_reserialized'] is False, 'Lossless report custody differs')
+ if transfer['original']['bytes']>MAX_GIT_REPORT_BYTES:
+  _report_require(transfer['encoding']=='gzip' and transfer['gzip']=={'filename':'','mtime':0,'compresslevel':9,'members':1}, 'Conditional deterministic gzip policy differs')
+ else:
+  _report_require(transfer['encoding']=='identity' and transfer['gzip'] is None, 'Small report must retain original representation')
+  _report_require({k:v for k,v in transfer['exported'].items() if k!='path'}==transfer['original'], 'Original uncompressed report pin differs')
+ _report_require(type(transfer['exported']['path']) is str, 'Report transfer pathname refused')
+
+
+def _report_decoded_chunks(path, transfer, deadline):
+ _report_transfer_contract(transfer)
+ original=transfer['original'];expected=transfer['exported'];total=0;hasher=hashlib.sha256()
+ if transfer['encoding']=='identity':
+  pieces=_report_chunks(path,MAX_GIT_REPORT_BYTES,deadline,expected)
+  for block in pieces:
+   total+=len(block);_report_require(total<=original['bytes'], 'Decoded original byte bound exceeded')
+   hasher.update(block);yield block
+ else:
+  decoder=zlib.decompressobj(31);first=True
+  for block in _report_chunks(path,MAX_GIT_REPORT_BYTES,deadline,expected):
+   _report_require(not decoder.eof, 'Trailing or concatenated gzip report refused')
+   if first:
+    _report_require(block[:10]==b'\x1f\x8b\x08\x00\x00\x00\x00\x00\x02\xff', 'Deterministic gzip header differs')
+    first=False
+   pending=block
+   while pending:
+    _report_remaining(deadline);previous=len(pending)
+    output=decoder.decompress(pending,min(1024*1024,original['bytes']-total+1))
+    total+=len(output);_report_require(total<=original['bytes'], 'Decoded original byte bound exceeded')
+    hasher.update(output)
+    if output:yield output
+    pending=decoder.unconsumed_tail
+    _report_require(not decoder.unused_data, 'Trailing or concatenated gzip report refused')
+    _report_require(not pending or len(pending)<previous or output, 'Gzip decoder made no progress')
+  _report_require(not first and decoder.eof and not decoder.unconsumed_tail and not decoder.unused_data, 'Incomplete gzip report refused')
+ _report_require(total==original['bytes'] and hasher.hexdigest()==original['sha256'], 'Decoded original report bytes/hash differ')
+
+
+def read_report_transfer(path, transfer):
+ """Read one exact pinned original byte sequence; no JSON interpretation."""
+ return b''.join(_report_decoded_chunks(Path(path),transfer,_report_deadline()))
+
+
+def _report_compare_original(source, transfer_path, transfer, original_pin, deadline):
+ decoded=iter(_report_decoded_chunks(transfer_path,transfer,deadline));buffer=bytearray()
+ for original in _report_chunks(source,MAX_ORIGINAL_REPORT_BYTES,deadline,original_pin):
+  while len(buffer)<len(original):
+   try:buffer.extend(next(decoded))
+   except StopIteration:raise ValueError('Decoded report omitted original bytes') from None
+  _report_require(bytes(buffer[:len(original)])==original, 'Decoded report differs byte-for-byte')
+  del buffer[:len(original)]
+ _report_require(not buffer, 'Decoded report contains extra bytes')
+ for extra in decoded:_report_require(not extra, 'Decoded report contains extra bytes')
+
+
+def prepare_report_transfer(source, gzip_path, report_identity_sha256):
+ """Prepare conditional lossless transfer before any mutable Git operation."""
+ source=Path(source);gzip_path=Path(gzip_path);deadline=_report_deadline()
+ original=_report_file_pin(source,MAX_ORIGINAL_REPORT_BYTES,deadline)
+ _report_require(type(report_identity_sha256) is str and re.fullmatch('[a-f0-9]{64}',report_identity_sha256) is not None, 'Report semantic identity refused')
+ compressed=original['bytes']>MAX_GIT_REPORT_BYTES
+ selected=source
+ if compressed:
+  _report_require(gzip_path.is_absolute() and '..' not in gzip_path.parts and not any(p.is_symlink() for p in (gzip_path,*gzip_path.parents)), 'Fresh gzip path refused')
+  parent=gzip_path.parent;parent_stat=parent.stat()
+  _report_require(parent.resolve(strict=True)==parent and stat.S_ISDIR(parent_stat.st_mode) and parent_stat.st_uid==os.getuid() and not parent_stat.st_mode&0o022, 'Gzip parent custody refused')
+  _report_require(not gzip_path.exists(), 'Existing gzip report preserved; replay refused')
+  fd=os.open(gzip_path,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+  with os.fdopen(fd,'wb') as stream:
+   writer=_ReportCappedWriter(stream,MAX_GIT_REPORT_BYTES,deadline)
+   with gzip.GzipFile(filename='',mode='wb',compresslevel=9,fileobj=writer,mtime=0) as archive:
+    for block in _report_chunks(source,MAX_ORIGINAL_REPORT_BYTES,deadline,original):archive.write(block)
+   stream.flush();os.fsync(stream.fileno())
+  directory_fd=os.open(parent,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+  try:os.fsync(directory_fd)
+  finally:os.close(directory_fd)
+  selected=gzip_path
+ exported=_report_file_pin(selected,MAX_GIT_REPORT_BYTES,deadline)
+ transfer={'format':REPORT_TRANSFER_POLICY,'encoding':'gzip' if compressed else 'identity',
+           'original':{k:original[k] for k in ('bytes','sha256')},
+           'exported':{'path':selected.name,**{k:exported[k] for k in ('bytes','sha256')}},
+           'report_identity_sha256':report_identity_sha256,'Git_blob_max_bytes':MAX_GIT_REPORT_BYTES,
+           'original_report_max_bytes':MAX_ORIGINAL_REPORT_BYTES,
+           'gzip':{'filename':'','mtime':0,'compresslevel':9,'members':1} if compressed else None,
+           'original_remote_report_unchanged':True,'decoded_original_bytes_equal':True,'JSON_reserialized':False}
+ _report_compare_original(source,selected,transfer,original,deadline)
+ _report_require(_report_file_pin(source,MAX_ORIGINAL_REPORT_BYTES,deadline)==original and _report_file_pin(selected,MAX_GIT_REPORT_BYTES,deadline)==exported, 'Report transfer changed after exact comparison')
+ return selected,transfer,original,exported
