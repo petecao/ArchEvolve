@@ -1,5 +1,5 @@
 catalog_id: archevolve-hardware
-revision: 0.1.14
+revision: 0.1.15
 format: hardware-catalog-v0.1
 status: research_reviewed_prototype
 project_selections:
@@ -492,6 +492,18 @@ sources:
     conference: MICRO
     publication_year: 2021
     doi: 10.1145/3466752.3480048
+    reviewed_on: '2026-10-06'
+  smash-micro2019-proceedings:
+    title: 'SMASH: Co-designing Software Compression and Hardware-Accelerated Indexing for Efficient Sparse
+      Matrix Operations'
+    edition: MICRO2019 proceedings;15-pagecachedprimary; DOI10.1145/3352460.3358286
+    url: https://doi.org/10.1145/3352460.3358286
+    sha256: d9ce2e054976dabaeaf6a9cdb45894f12cc6c9d0e9c839d9d9581426b8598b8a
+    locator_basis: 1-based cached proceedings PDF pages
+    document_type: conference_paper
+    conference: MICRO
+    publication_year: 2019
+    doi: 10.1145/3352460.3358286
     reviewed_on: '2026-10-06'
 claims:
   maple-api:
@@ -2248,6 +2260,71 @@ claims:
     limitations:
     - Paper architecture scope only; exact RTL, compiled stage configurations and memory/queue ABI require
       implementation binding.
+  smash-hierarchical-format:
+    source_refs:
+    - smash-micro2019-proceedings
+    locator: PDFpp5-6 §4.1,§4.1.3 Fig4
+    statement: A set Bitmap-0 bit represents a nonzero block of fixed compression-ratio size in the contiguous
+      NZA. A higher-level set bit represents a lower bitmap region with at least one set bit. Only nonzero
+      blocks of lower bitmaps are stored; NZA blocks are appended in format order.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper specification only. Actual BMU/ISA, bit encoding, address translation and physical-memory identities
+      remain unbound.
+  smash-zero-lanes:
+    source_refs:
+    - smash-micro2019-proceedings
+    locator: PDFp5 §4.1.1-4.1.2 Fig5
+    statement: Increasing block compression can retain zero elements inside represented NZA blocks. An indexed
+      nonzero block therefore does not establish individual lane nonzero validity.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper specification only. Actual BMU/ISA, bit encoding, address translation and physical-memory identities
+      remain unbound.
+  smash-BMU-buffers:
+    source_refs:
+    - smash-micro2019-proceedings
+    locator: PDFp6 §4.2.1 Fig6
+    statement: BMU groups each dedicate bitmap SRAM buffers, configuration state and row/column output registers
+      to one matrix. The examined implementation uses256-byte buffers and constrains bitmap compression
+      to fit buffer traversal.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper specification only. Actual BMU/ISA, bit encoding, address translation and physical-memory identities
+      remain unbound.
+  smash-depth-first-index:
+    source_refs:
+    - smash-micro2019-proceedings
+    locator: PDFpp6-7 §4.2.2-4.2.3
+    statement: BMU traverses hierarchical set bits depth first, retaining each level index. Compression
+      ratios combine those indices into the original matrix flat block index; division/modulo by matrix
+      columns gives its row/column.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper specification only. Actual BMU/ISA, bit encoding, address translation and physical-memory identities
+      remain unbound.
+  smash-command-interface:
+    source_refs:
+    - smash-micro2019-proceedings
+    locator: PDFp7 §4.3 Table1
+    statement: MATINFO sets dimensions/group; BMAPINFO sets per-level compression/group; RDBMAP fills a
+      selected bitmap buffer from memory; PBMAP scans and updates next block row/column; RDIND copies current
+      row/column to two destination registers.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper specification only. Actual BMU/ISA, bit encoding, address translation and physical-memory identities
+      remain unbound.
+  smash-consumer-separation:
+    source_refs:
+    - smash-micro2019-proceedings
+    locator: PDFpp7-8 §5.1-5.2 Algorithms1-2 Figs7-8
+    statement: CPU consumer software iterates block rank and elements to address NZA and performs operand
+      loads and arithmetic. SpMM compares separate matrix block indices before inner-product work. BMU index
+      production alone does not execute those loads or arithmetic.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper specification only. Actual BMU/ISA, bit encoding, address translation and physical-memory identities
+      remain unbound.
 mechanism_families:
 - id: queue-latency-tolerance
   name: Queue-backed asynchronous access
@@ -2285,6 +2362,9 @@ mechanism_families:
 - id: fifer-temporal-CGRA-pipeline
   description: Regular CGRA stages time-multiplexed by queue readiness with independent FIFO-return DRMs;
     no operation inheritance from Pipette.
+- id: smash-hierarchical-bitmap-indexing
+  description: Software hierarchical compression with group-scoped BMU indexing and CPU consumer; no inherited
+    operand-load or arithmetic capability.
 decision_questions:
 - id: operation-result
   question: Is the requested result a fetched value, update success, old value, reduction, or only a cache hint?
@@ -7705,3 +7785,194 @@ designs:
   - Exact memory-result buffer, queue word width and protection/atomic/fence ABI unknown.
   - Most-work tie-breaking and multichannel readiness arbitration not established.
   - No inherited Pipette queue-register capacity, general gather or BFS acceptance.
+
+- id: smash-micro2019-bitmap-block-index
+  name: SMASH MICRO2019 bitmap block-index assistance
+  revision: primary-scoped-proposal-r1
+  record_kind: mapping
+  summary: Group-scoped hierarchical bitmap indexing returns matrix coordinates for represented NZA blocks;
+    CPU still performs data loads and numerical operations.
+  mechanism_refs:
+  - smash-hierarchical-bitmap-indexing
+  source_refs:
+  - smash-micro2019-proceedings
+  interface:
+    software_supplies: Matrix dimensions, per-level compression ratios and compact bitmaps/NZA, group
+      selection, bitmap buffer loads and consumer block-rank state.
+    invocation: MATINFO/BMAPINFO configure; RDBMAP loads selected bitmaps; PBMAP advances scanner; RDIND
+      reads current row/column.
+    outputs: Matrix coordinates of represented blocks. NZA rank and per-element arithmetic/load addressing
+      remain CPU consumer responsibilities.
+    claim_refs:
+    - smash-command-interface
+    - smash-hierarchical-format
+    - smash-consumer-separation
+  operations:
+  - id: block_index
+    operation: read
+    subtype: smash_bitmap_block_index
+    execution_role: assist
+    support: paper_specified
+    address_patterns:
+    - sequential
+    - indirect
+    claim_refs:
+    - smash-depth-first-index
+    - smash-command-interface
+    realization:
+      kind: documented_sequence
+      description: Load/configure group-scoped compressed bitmap hierarchy, depth-first scan a next represented
+        block, retrieve its original matrix row/column and maintain consumer NZA rank separately.
+      claim_refs:
+      - smash-hierarchical-format
+      - smash-depth-first-index
+      - smash-command-interface
+    result:
+      form: Two block-coordinate register outputs; no loaded matrix payload or scalar arithmetic result.
+      old_value: not_applicable
+      validity: Only explicitly configured SMASH matrix encoding with correct dimensions/compression/group
+        state and consumer NZA rank.
+      claim_refs:
+      - smash-command-interface
+      - smash-hierarchical-format
+    ordering:
+      scope: One group and declared bitmap traversal
+      description: Depth-first set-bit traversal establishes original block coordinates; consumer block
+        rank follows format order. No universal physical request or scalar FP order is implied.
+      claim_refs:
+      - smash-depth-first-index
+      - smash-hierarchical-format
+    completion:
+      event: PBMAP updates current row/column and RDIND retrieves them.
+      visibility: Index availability is not operand-read, arithmetic, writeback or host-visible kernel
+        completion. Hardware EOF/fault signaling is not specified by this operation record.
+      claim_refs:
+      - smash-command-interface
+      - smash-consumer-separation
+    type_constraints:
+      payload_types: []
+      index_width_bits: []
+      claim_refs: []
+      notes: BMU returns coordinates; concrete coordinate/register bit widths and matrix payload transport
+        datatype are not proved by inspected sections.
+    datatype_notes: No matrix FP/integer type, per-lane nonzero predicate or arithmetic ABI is inferred.
+    limitations:
+    - Block can contain zero lanes; exact per-lane validity unavailable from bitmap alone.
+    - No generic gather, returned operand payload or ordered reduction capability.
+  requirements:
+  - id: encoded-hierarchy
+    description: Prove per-level compression, nonzero child block storage order, bit ordering, matrix
+      extent and snapshot integrity; declared parent bits must match lower bitmap blocks.
+    scope: Explicit SMASH bitmap-index mapping
+    verification: required
+    claim_refs:
+    - smash-hierarchical-format
+  - id: NZA-rank
+    description: Bind each represented block to its format rank and complete NZA extent; do not mistake
+      a block-present bit for all lanes nonzero.
+    scope: Explicit SMASH bitmap-index mapping
+    verification: required
+    claim_refs:
+    - smash-hierarchical-format
+    - smash-zero-lanes
+  - id: group-lifetime
+    description: Bind configuration and RDBMAP/PBMAP/RDIND to the same selected matrix/group generation.
+      Group0 is valid only when actually selected, never a missing-owner default.
+    scope: Explicit SMASH bitmap-index mapping
+    verification: required
+    claim_refs:
+    - smash-BMU-buffers
+    - smash-command-interface
+  - id: buffer-geometry
+    description: Prove actual ratio units and per-level encoded byte footprints fit selected BMU buffers.
+      A semantic decoded bitmap is not a physical transport admission proof.
+    scope: Explicit SMASH bitmap-index mapping
+    verification: required
+    claim_refs:
+    - smash-BMU-buffers
+  - id: consumer-bounds
+    description: Prove original consumer block/element bounds, edge padding and matrix indexing independently;
+      BMU coordinates do not certify arithmetic or load correctness.
+    scope: Explicit SMASH bitmap-index mapping
+    verification: required
+    claim_refs:
+    - smash-consumer-separation
+  - id: actual-ISA-memory-ABI
+    description: Authenticate BMU/ISA source, coordinate width, transport endianness, fault/EOF behavior,
+      ownership, translation/protection and kernel completion.
+    scope: Implementation binding
+    verification: unknown
+    claim_refs: []
+  parameters:
+  - id: bitmap-buffer
+    unit: bytes per bitmap buffer
+    state: fixed_reference
+    value: 256
+    domain: null
+    claim_refs:
+    - smash-BMU-buffers
+    notes: Examined implementation reference; not NZA payload capacity.
+  - id: max-ratio-reference
+    unit: paper compression-ratio units
+    state: fixed_reference
+    value: 2048
+    domain: null
+    claim_refs:
+    - smash-BMU-buffers
+    notes: Paper256-byte bitmap/2048:1 reference. Actual level units and byte footprints must be bound;
+      helper semantic acceptance cannot substitute.
+  - id: group-count
+    unit: groups
+    state: unknown
+    value: null
+    domain: null
+    claim_refs: []
+    notes: Paper supports multiple independent matrix groups; universal count/selector ABI not inferred
+      from examples.
+  internal_mechanisms:
+  - id: bitmap-SRAM
+    kind: buffering
+    status: described
+    description: Per-group SRAM holds one bitmap block at a time; configuration and output registers belong
+      to the selected matrix group.
+    claim_refs:
+    - smash-BMU-buffers
+  - id: depth-first-issue
+    kind: issue_policy
+    status: described
+    description: Set-bit traversal descends represented child blocks and combines retained level indices
+      into a block coordinate.
+    claim_refs:
+    - smash-depth-first-index
+  - id: configuration-and-rank
+    kind: dependency_tracking
+    status: described
+    description: Dimension/ratio/group state and saved traversal indices establish block coordinates;
+      consumer NZA rank tracks contiguous block order.
+    claim_refs:
+    - smash-command-interface
+    - smash-hierarchical-format
+    - smash-depth-first-index
+  - id: index-result
+    kind: completion
+    status: described
+    description: RDIND reads current coordinate outputs after PBMAP. CPU loads and computes separately.
+    claim_refs:
+    - smash-command-interface
+    - smash-consumer-separation
+  - id: cacheline-coalescing
+    kind: coalescing
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: out-of-order-requests
+    kind: reordering
+    status: unknown
+    description: null
+    claim_refs: []
+  limitations:
+  - Abstract canonical bitmap contract is not BMU RTL, an executable SMASH ISA or measured hardware.
+  - Partial logical NZA blocks need an explicit edge-padding contract; helper rejects them rather than
+    inventing padding.
+  - Concrete bit packing/endianness, register widths, faults and EOF transport unspecified.
+  - No generic graph traversal, gather, arithmetic or original benchmark correctness is granted.
