@@ -1,0 +1,44 @@
+{
+  "format": "swdb.lanl-legacy-trial-scope-source-proof.v1",
+  "state": "tested_source_prerequisite",
+  "producer_tip": "b27c75a16c0e780609cc6014940b9714fc3fb814",
+  "reconciliation_tip": "fb9dff0e67332b5a633b618d53433e125605310a",
+  "estimator_sha256": "b062619b14901a42d23349802a5f5b1eb35e5a12e1a5e954214675c6b51936f3",
+  "protected_blob_count": 0,
+  "protected_record_library_app_observer_runtime_and_process_bytes_preserved": true,
+  "root_scope": "per_run",
+  "trial_scope": "per_trial",
+  "original_observations_rewritten": false,
+  "cost_model_guards_changed": false,
+  "model_aware_cpu_positive_and_negative_gate": "Separate ticket11 worker is running this gate; not inferred from the functional unknown test.",
+  "public_gates": [
+    {
+      "tests": "tests/test_analytic_trial_scope.py",
+      "passed": 2,
+      "seconds": 155.89,
+      "scope": "Actual compiled independent two-window fixture plus unchanged sealed registered functional a2 replay; full functional time remains unknown."
+    },
+    {
+      "tests": [
+        "test_analytic_composition.py::test_sensitivity_recomposes_each_trial_before_whole_call_median",
+        "test_analytic_count_reuse.py::test_rates_only_reuse_retains_original_counts_and_both_target_identities",
+        "test_analytic_composition.py::test_executed_host_memory_requires_a_declared_applicable_model"
+      ],
+      "passed": 3,
+      "seconds": 8.02
+    }
+  ],
+  "inference_proof_extension": "extensions.legacy_trial_scope_reconciliations",
+  "inference_basis": "inferred",
+  "requirements": [
+    "verified registered source/input/whole-trial-ROI and ordered trial receipt",
+    "original counted payload seal",
+    "exact source call site/name/event/count and nonempty size-bin partitions",
+    "exact normalized source memory update-kind/element-width/byte partition"
+  ],
+  "unsupported_scope_or_fixture_or_mismatch_behavior": "unchanged context; existing strict service coverage guards retain unknown/refusal",
+  "timing_or_native_recount": false,
+  "ticket17_state": "claimed; four actual campaigns and final agreement report still required",
+  "no_main_push_or_remote_action": true,
+  "identity_sha256": "9ceabe8f92938d949dc7e7a24877cafb75b3550bca7fe71fa361097b0eb5e75c"
+}
