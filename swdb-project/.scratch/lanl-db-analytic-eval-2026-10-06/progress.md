@@ -1,32 +1,34 @@
 # Implementation progress
 
-Updated: 2026-10-06 23:39 ET
+Updated: 2026-10-07 00:09 ET
 
 **12 of 15 assigned tickets are resolved and integrated.** Tickets 11, 14 and 17 remain active. Final review, fixes and cleanup follow their actual evaluations.
 
-Integration: `codex/lanl-analytic-eval`. Review base: `2c50e5fb8671e08050921bee06920f92fd153bdd`. Delivery branch: `yanrujhou_main`; local, origin and mbit10 primary synchronized through `208a0a4`. The unrelated uncommitted root rule edit remains preserved.
+Integration: `codex/lanl-analytic-eval`. Review base: `2c50e5fb8671e08050921bee06920f92fd153bdd`. Delivery branch: `yanrujhou_main`; local, origin and mbit10 primary synchronized through `fe5ca3c` before this checkpoint. The unrelated uncommitted root rule edit remains preserved.
 
 | Tickets | Owner | Current state |
 |---|---|---|
 | 02–10, 12–13, 16 | Assigned implementers | Resolved and integrated; public checks and compact evidence linked from each Answer |
-| 11 | `/root/ticket03` | Admitting independent CPU services before freezing predictions and collecting native accuracy timings |
-| 14 | `/root/ticket02` | Jacobi registration/count public test passed; preparing admitted routes for nine kernel–target reports |
-| 17 | `/root/ticket04` | Implementation and merged public checks passed; four fresh gem5 campaigns still pending |
+| 11 | `/root/ticket03` | Services admitted; strict legacy scope checks passed; completing prospective protected-evaluator pairing before model freeze |
+| 14 | `/root/ticket02` | Two fresh count cases complete, two active, two queued; final report helpers under review |
+| 17 | `/root/ticket04` | Source and merged public checks passed; four actual campaigns and agreement report pending |
 
 | Evaluation | Evidence state | Next action |
 |---|---|---|
-| Actual guarded parameter estimation | Complete; numeric assumptions filled, structural gaps and null totals retained | Preserve original provider result |
+| Guarded parameter estimation | Complete; numeric assumptions filled, structural gaps and null totals retained | Preserve original provider result |
 | Functional evaluation and handoff | Complete; null timing/ratio and strict functional scope retained | Preserve immutable archived result |
-| OpenMP services | Admitted independent count and elapsed evidence | Bind exact supported CPU scopes |
-| Extra allocator sizes | Actual count and elapsed runs completed; written paired-window promise failed | Exclude paired rates; derive a separately labeled inferred gross resource |
-| Floating-point atomic service | Count proof passed (629 valid); elapsed collection complete, public import active | Validate and strictly admit service/resource evidence |
-| CPU accuracy | No application timings opened yet | Freeze four forecasts; g16 development, then unchanged g17 holdout |
-| Nine BFS/BC/PR reports | Preparation active | Use admitted fresh counts; retain missing accelerator/PR transfer facts |
-| D30 agreement | No eligible fresh pairs | Run four actual campaigns; report unsupported/no-switch honestly |
+| Independent CPU services | Count and elapsed evidence admitted, including floating64 monotonic fadd | Freeze exact compatible model after remaining implementation |
+| Extra allocator sizes | Paired-window promise failed; paired rates excluded | Use uniform separately labeled inferred gross resources, frozen before application timing |
+| CPU accuracy | No application timings opened; separate BFS/BC band helpers mock-tested | Finalize evaluator binding; freeze four forecasts, then g16 development and unchanged g17 holdout |
+| Six fresh generality counts | BFS/MAPLE and PR/CPU complete; PR/DX100 and PR/MAPLE active; BC cases queued | Finish six, strictly verify access-byte scopes, export canonical closure |
+| Nine BFS/BC/PR reports | Public projection checks passed; final helper review active | Bind final targets/source and preserve unknown accelerator/PR transfers |
+| D30 agreement | No eligible fresh pairs; actual campaigns pending | Freeze policy before four genuine trajectories; report unsupported/no-switch if bridge remains absent |
 
-Human gates 15, 18 and 21 remain human-owned. Tickets 19–20 require their recorded prerequisites; 22–23 require LANL access. No external communication. The 30-minute progress/liveness check remains active; next due 2026-10-07 00:09 ET.
+All three implementers are live. Node 0: PR/MAPLE count, generation 501. Node 1: PR/DX100 count, generation 541. Legacy lease released. Latest free space: `/data1` 22.2 GiB, `/data` 50.5 GiB; load 4.44. Parent owns all SSH/dispatch and preserves unrelated host work. Raw artifacts stay remote.
 
-Managed worktrees: `/Users/yanrujhou/.codex/worktrees/lanl-*/ArchEvolve`. Parent owns integration. Inspect liveness before reassigning. File writes and Git metadata there need sandbox escalation, covered by the user's implementation authorization.
+Human gates 15, 18 and 21 remain human-owned. Tickets 19–20 require their recorded prerequisites; 22–23 require LANL access. No external communication. The 30-minute progress/liveness check remains active; next due 2026-10-07 00:39 ET.
+
+Managed worktrees: `/Users/yanrujhou/.codex/worktrees/lanl-*/ArchEvolve`. Parent owns integration. File writes and Git metadata there need sandbox escalation, covered by the user's implementation authorization.
 
 ## Remote preparation
 
@@ -261,3 +263,10 @@ At the check node0 holds allocator count validation; node1 and legacy are releas
 2026-10-06 23:30 ET: Ticket 13 integrated at 17a4432 after nine public checks passed (4.12 s); 1,059 protected blobs and campaign files unchanged, no new canonical records. Main pushed and mbit10 primary fast-forwarded; execution worktrees and retention lock preserved. Extra allocator elapsed finished with both exits 0 and 630 valid records; compact Git export 2cbd99dddda2f468c1b241efd86b327ef885acf3 preserves all 16 cells. Strict admission found that driver windows do not satisfy the written 50 ms paired-window promise, so paired rates are excluded; independent gross observations remain immutable and a separate inferred construction is being tested before application outcomes. Floating count dispatch uses unchanged source 3006d91e2d076db0104f3b7734131dec5f26caad, no application timing. Ticket 14 public Jacobi registration/count passed 182.73 s and source 728fea38 is pushed; native T1/T4/T2 work is not relabeled as accelerator lowering. Ticket 17 final own ten cases passed 598.79 s, then merged two cases passed 197.23 s; actual helper review and Linux cleanup verification remain pending. All three implementers responsive.
 
 2026-10-06 23:39 ET: Required 30-minute status and agent liveness check completed; all three implementers responsive, next check 2026-10-07 00:09 ET. Twelve of fifteen assigned tickets resolved and integrated. Ticket 17 tested prerequisite merged at 208a0a4 and synchronized to main/origin/mbit10 primary; canonical/library/apps/campaign bytes preserved. Actual Linux cleanup test passed node 1 generation 539, 23:34:48–23:35:03 ET, with no owned survivors and an unrelated sibling preserved; the exact sealed receipt and lane facts are in evidence/17-linux-cleanup-smoke-mbit10-20261006-a1.json. This is process cleanup evidence only, with zero provider calls/application outcomes. Float count passed both exits 0, 629 valid, no canonical additions; compact export 24992e1c95b5b0e423fe671db7fb8e4a9286427c. Float elapsed now uses frozen 3006d91 source on node 0 generation 499; collection finished, public import/validation active without error. Native application accuracy timings remain unopened. Allocator resource implementation passed five new public cases and 27 focused compatibility checks (38.76 s); two uniform gross derived records and exact 36-cell/all-20-trial coverage are under admission, with archived source/paired data unchanged. Ticket 14 Jacobi public count and two MAPLE public cases passed; remaining genuine native count paths and final same-bundle reports pending. mbit10 node 1 and legacy leases released; load 2.04, /data1 free 23,796,068,352 bytes and /data free 55,168,573,440 bytes. Unrelated Quicksilver process preserved. Two clean pushed reviewed allocator export checkouts were removed only after process/symlink checks, recovering 551,956,480 bytes; raw/execution worktrees/commits/origin retained. Four actual gem5 campaigns, D30 report, final two-axis review/fixes and final cleanup remain pending.
+
+
+2026-10-07 00:09 ET required checkpoint: 12/15 assigned tickets resolved/integrated; all three implementers live. Source and report prerequisites synchronized through fe5ca3c. Producer b27 consistently scopes trial operations/trips/access elements and bytes/call executions and sizes; strict copied-context reconciliation fb9 preserves sealed historical records, with five model-aware positive/refusal checks passed. Established CPU pairing had only unconditional refusal scaffolding; ticket11 is completing a distinct prospective protected-driver binding before any application timing. Separate per-kernel development/holdout helpers replace the shared-envelope scaffold before outcomes; exact tested Linux cleanup is reused.
+
+Count source 821023a remains clean and isolated in `/data1/yanruj/ArchEvolve-lanl-generality-counts-20261006-a1`; manifest identity 131979bade43c96bcedd36591b288742c613ef2a82f2efc192e9cf5b9f333247. BFS/MAPLE node1 generation540 completed 00:01:13 ET, both exits0/634 valid, acceptance 271b2241f2f1a5dda9e0810e8bab80db7cb447b8b4d09810c5d6f3a18a6af728. PR/CPU node0 generation500 completed 00:05:20 ET, both exits0/635 valid, acceptance cbdc6b7c2aa16da9e1df085f05e87caeb9d550b2281f4a4fac350913cba17121. PR/MAPLE node0 generation501 and PR/DX100 node1 generation541 are active; BC/MAPLE and BC/DX100 await release. Only two owned count jobs; legacy lease released. Latest metadata check 04:09:20Z; disk reserves 23,867,969,536 bytes on /data1 and 54,180,380,672 on /data. No application timing/provider invoked by these counts.
+
+Dispatcher b797 remains frozen. Reviewed export revision 7d77776f7b2582ae24c6be8254f34ea9fff632d777a8297c7d2fe8437f71ec09 adds explicit actual `bytes_accessed`/element per-trial checks, with21 portable positive/refusal controls. Actual combined export and nine final estimates remain pending. Only two clean, pushed and consumed floating-service export worktrees were removed at23:55 ET after274 process-reference and24 raw-link checks, recovering553,824,256 bytes; execution/source worktrees, raw evidence and Git commits/branches retained. Next scheduled check00:39 ET; final two-axis review/fixes/tracker sync/worktree cleanup/heartbeat pause remain required.
