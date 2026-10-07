@@ -53,7 +53,57 @@
       "type": "object"
     },
     "timing_context": {
-      "type": "object"
+      "type": "object",
+      "required": [
+        "subject",
+        "input",
+        "execution"
+      ],
+      "properties": {
+        "subject": {
+          "type": "object",
+          "required": [
+            "id",
+            "artifact_sha256"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "artifact_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        "input": {
+          "type": "object",
+          "required": [
+            "id",
+            "identity_sha256"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "identity_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        "execution": {
+          "type": "object"
+        },
+        "prior_outcome_exposure": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
     },
     "seconds": {
       "type": [
