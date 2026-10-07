@@ -1,39 +1,44 @@
 # Implementation progress
 
-Updated: 2026-10-07 01:09 ET
+Updated: 2026-10-07 01:39 ET
 
-**12 of 15 assigned tickets are resolved and integrated.** Tickets 11, 14 and 17 remain active. Their actual evaluations, final two-axis review, fixes, tracker closeout and cleanup are still required.
+**12 of 15 assigned tickets are resolved and integrated.** Tickets 11, 14 and 17 remain active. Actual evaluations, final two-axis review, fixes, tracker closeout and cleanup remain required.
 
-Integration: `codex/lanl-analytic-eval`. Review base: `2c50e5fb8671e08050921bee06920f92fd153bdd`. Delivery branch: `yanrujhou_main`; local, origin and mbit10 primary synchronized through `c08e8be827971f6c5ced59ccadedc96c6c3b5a71` before this checkpoint. The unrelated root rule edit is preserved.
+Integration: `codex/lanl-analytic-eval`, checkpoint parent `a845361132b4c3ad47acc389c09f29f858151bb3`. Review base: `2c50e5fb8671e08050921bee06920f92fd153bdd`. Delivery: `yanrujhou_main`; local, origin and mbit10 primary matched `b6426f093144b463005679a07214ed32944f1838` before this checkpoint. The PR final-admission preparation is integrated at a845361; this checkpoint is also delivered. The unrelated root rule edit is preserved.
 
 | Tickets | Owner | Current state |
 |---|---|---|
 | 02–10, 12–13, 16 | Assigned implementers | Resolved and integrated; public checks and compact evidence linked from each Answer |
-| 11 | `/root/ticket03` | Final immutable source validated and pushed; actual model-only binding active; development, holdout and band-reader reports pending |
-| 14 | `/root/ticket02` | All six fresh count cases and actual local replay passed; final PR/services.v1 acceptance and nine reports pending |
-| 17 | `/root/ticket04` | Live owner and merger; frozen controls ready; actual policy freeze, four campaigns and agreement report pending |
+| 11 | `/root/ticket03` | Immutable final source validated; actual model-a1 target bound, freeze processing timed out; sealed metadata-only a2 continuation active |
+| 14 | `/root/ticket02` | Six original count cases and actual replay passed; PR/services.v1 admission and nine reports pending |
+| 17 | `/root/ticket04` | Live owner and merger; frozen controls ready; actual population freeze, four campaigns and agreement report pending |
 
-| Evaluation | Evidence state | Next action |
+| Evaluation | Actual evidence state | Next action |
 |---|---|---|
-| Parameter estimation and functional handoff | Complete; structural unknowns and null totals retained | Preserve original provider/evaluation receipts |
-| Independent CPU services | All required receipts admitted; gross allocator/memory/bulk resources explicitly inferred | Bind the unchanged independently constructed model |
-| CPU model | Node0 generation503, started 2026-10-07 01:01:47 ET; service-binding public stage active | Require four positive forecasts and empty compatibility gaps before timing |
-| CPU accuracy | Application timings unopened | Separate BFS/BC g16 development widths, then unchanged g17 holdout; failed bands stay failed |
-| Six generality counts | All six original attempts passed; ten-record export integrated; 30 trial projections and 13,784 access scopes replayed | Preserve original successes; recovery unused |
-| Nine BFS/BC/PR reports | Counts and report controls ready; actual PR target-transfer gate pending | Use final complete bundle and exact actual target; preserve unknown accelerator/PR services |
-| D30 agreement | Four actual campaigns unexecuted; no eligible fresh pairs established | Freeze unchanged D30 policy before outcomes; honest unsupported/no-switch if the bridge is absent |
+| Parameter estimation / functional handoff | Complete; unknown totals retained | Preserve original provider/evaluation receipts |
+| Independent CPU services | Required calibrations admitted; gross resources explicitly inferred | Reuse exact completed target binding |
+| CPU model-a1 | Stopped 2026-10-07 01:23:05 ET; runner/outer1; freeze-protocol exceeded600s metadata cap; cleanup has no survivors | Preserve all raw files and completed target; no binder repeat |
+| CPU model-a2 | Active node0 since01:29:01 ET; first public BFS freeze active; no errors or acceptance yet | Require two immutable protocols, four positive execution forecasts and full validation |
+| CPU accuracy | Application performance timings unopened | Separate BFS/BC g16 development widths, then unchanged g17 holdout; failed bands stay failed |
+| Six generality counts | All six original attempts passed; ten-record export integrated;30 trial projections/13,784 access scopes replayed | Preserve successes; no recovery/recount |
+| Nine BFS/BC/PR reports | Counts and metadata controls ready; actual PR/services.v1 transfer gate pending | Final complete bundle and real target; unknown accelerator/PR services retained |
+| D30 agreement | Four actual campaigns unexecuted; no eligible fresh pairs established | Freeze unchanged D30 before outcomes; honest unsupported/no-switch if bridge remains absent |
 
-All three implementers are responsive. Node0 holds the model-only job; node1 and the legacy lease are released. Latest free space: `/data1` 23,240,183,808B (21.6GiB), `/data` 53,262,172,160B (49.6GiB); load1 2.00. Parent owns SSH/dispatch and preserves the unrelated Quicksilver job. Raw outputs remain remote.
+All three implementers are responsive at01:39 ET. Node0 holds the metadata continuation; node1 and legacy leases are released. At01:38:46 ET, load1=2.08; `/data1` free23,239,901,184B(21.6GiB), `/data`52,933,808,128B(49.3GiB), available memory121,797,058,560B(113GiB). Parent owns SSH/dispatch and preserves the unrelated Quicksilver job. Raw outputs remain remote.
 
-Final immutable CPU source: `f893fed400347ed23d92e917d8bde21b75e5375d`; 185-module bundle `f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3`. Final 665 canonical records validate; all 905 prior record/library/app/tool blobs are preserved. Protected public gate 1 passed, adjacent legacy/native-output gate 6 passed, runtime unknown-envelope gate 3 passed. Final public fixture freeze/estimate/re-pair passed with positive semantic kernel seconds and null elapsed/band confidence. This fixture is not native accuracy evidence. Worker proof `evidence/11-final-source-validation-proof-20261007.json`; merger proof `evidence/11-final-source-integrated-merger-proof-20261007.json`.
+Scientific source C: `f893fed400347ed23d92e917d8bde21b75e5375d`;185-module bundle F6: `f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3`. C remains clean. Its665 canonical records validate and all905 prior protected blobs are preserved. Final public fixture checks prove the implementation seam, not native accuracy.
 
-Model raw directory: `/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1`; immutable detached source: `/data1/yanruj/ArchEvolve-lanl-cpu-model-validation-20261006-a1`. Exact four helpers are staged and byte-verified in `/data1/yanruj/lanl-cpu-controls-20261007-a1/`. Do not repeat a completed phase or modify this source. Read runner/wrapper exits, stopped cleanup, acceptance and released leases before exporting or advancing.
+Model source stays `/data1/yanruj/ArchEvolve-lanl-cpu-model-validation-20261006-a1`. Failed raw `/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1` retains665 original canonical byte hashes and its sole new target (fileSHA `cee03869aa2ab624d0eb1ef54b8807603d2a222d749113c7d65d847549c45c6d`). Administrative failure custody seal `8ddb9825fb7ccefff7088ea550af290379f8ea48744065b9d156196b7947db5a`; application performance timings collected=false. Fresh continuation raw `/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2`, preregistration seal `997f4c709b0090674b1ea9d1ab8e76a8785a8ca1f8b2f5f186fad4a3ef822d3a`. Its public-command allowlist is only freeze-protocol/estimate/validate; completed outputs are reused and preserved. Limits: metadata1100s, final validation1000s, runner8000s/outer8200s. No native/provider command or recipe change.
 
-The consumed count-export checkout was safely removed at 2026-10-07 00:46 ET after integration/origin ancestry, clean exact branch, 274 readable process references and 24 raw symlinks were checked; 295,460,864B recovered. Original count source, raw evidence and pushed Git history are retained. A bounded read-only-by-default CPU export cleanup helper is prepared (`/data1/yanruj/lanl-remove-consumed-cpu-export-20261007.py`, SHA256 `445c3c5e0782afc34e50f0fcdf088b15b353dd7b2a9a4380a0e46aa30c941063`). Remove only a complete consumed export after exact origin/main ancestry, released lanes and process/raw-link checks, preserving the immutable C source and all raw evidence.
+Reviewed helpers are staged under `/data1/yanruj/lanl-cpu-controls-20261007-a1/`. Active continuation dispatcher `lanl-dispatch-cpu-model-continuation-a2.py` SHA `181f6c9d4000e6a85d5686afe2e6487d6c78908b1e8c0d47faae49c2fa04b4ee`; exporter `347a807c8ddab990cfea52419aa13a03dd5d2a3d6d4d5ac1eabc4388a8dfd837`. Export only after acceptance, stopped cleanup, both exits0 and all released leases.
 
-Human gates 15, 18 and 21 remain human-owned. Tickets 19–20 retain prerequisites; 22–23 require LANL access. No external communication. The 30-minute progress/liveness heartbeat remains active; next due 2026-10-07 01:39 ET.
+Future downstream controls are corrected, independently reviewed, staged and unexecuted. Use ONLY development/holdout dispatcher `lanl-dispatch-cpu-model-validation-a2.py` SHA `70619cbf44dfb8c850178b73e61afbc157d7247cb36b86908543bd7c0ee42d4f` and band-report dispatcher `lanl-dispatch-cpu-band-report-a2.py` SHA `f8eb4847bd791fdf8d90f75b1ddbea1f74e76f2ebf16ab9926532d3eb9bc609b`. Intermediate c221/f532 controls were never executed and are retained as superseded files. Exact literal reversal and9 tamper/path tests preserve the original C checkout,17 Linux cleanup receipt and all four11 OpenMP projection references. Final preparation proof `/private/tmp/lanl-cpu-downstream-a2-strict-paths-proof.json`, seal `643f4f2b364f4f67caf44f7aee62844e3eb52f8e45d10e7d941abe48b586123a`. Original measured native900s deadline, trials, per-kernel bands, widths and ordering remain fixed. Expanded1400s metadata/2100s collector-process envelope covers catalog pre/post work only. Native deadline begins after preflight and is unchanged. Development/holdout runner10000s/outer10300s; band reader8400s/8700s.
 
-Managed worktrees: `/Users/yanrujhou/.codex/worktrees/lanl-*/ArchEvolve`. Parent owns integration. File writes and Git metadata there need sandbox escalation, covered by the user's implementation authorization.
+Separate14 metadata cap-only revisions are reviewed and unexecuted: local runner `/private/tmp/lanl14-pr-final-local-runner-20261007-a2.py` SHA `fa99126eb9735e7aac9ab4f8dbfb1adbfabab40be8b6c9067e6904c95d7a806b` via4500s envelope `134de6899dd6c530f815defb7a4a31ad3159620310f8edf2dcdabed759682df2`; actual model receipt file/inner seals/all seven exported pins must pass before replay. Remote final-report helper `/data1/yanruj/lanl14_final_reports_caps_a2.py` SHA `0c4eeb817df34d513819302c1dd7dbd469bab58eba0cfa008748596d8ff77158`, exporter `d8e97dc6a1153c30c3c6a0e329cc091ded63d3627f8dd905de7470166b60c833`. Freeze/estimate/validate1400s/report1000s, outer33000s. These change only finite metadata budgets; no source/ROI/count/allowlist or scientific changes. Source remains F6.
+
+Consumed count export was safely removed at00:46 ET; raw/source/pushed history retained. Future CPU consumed-export cleanup is read-only by default: staged `lanl-remove-consumed-cpu-export-a2-20261007.py` SHA `0cc65f1a8dc5c8311c82e38b89035c1e554aeebd8e1682ea89dbc54bedc6f413`. Remove only an exact clean integrated/origin-main ancestor export after released-lease/process/raw-link guards. Keep C execution source and all raw evidence.
+
+Human gates15/18/21 remain human-owned;19–20 retain prerequisites and22–23 require LANL access. No external communication. All19 owned local worktrees are registered for final recoverable cleanup. The30-minute heartbeat remains ACTIVE; next required checkpoint2026-10-07 02:09 ET. Final review/fixes/sync/cleanup remain mandatory; do not report partial completion.
 
 ## Remote preparation
 
