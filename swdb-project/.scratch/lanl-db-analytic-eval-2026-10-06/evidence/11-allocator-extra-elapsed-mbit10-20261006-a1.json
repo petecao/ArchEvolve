@@ -1,0 +1,142 @@
+{
+  "format": "swdb.independent-service-compact-receipt.v1",
+  "updated": "2026-10-06 ET",
+  "kind": "allocator-extra",
+  "phase": "elapsed",
+  "source_commit": "1703c98717ff303fdaa83b8044ac9b4060fedb78",
+  "source_clean": true,
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-elapsed-20261006-a1",
+  "raw_transferred": false,
+  "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+      "python3",
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-elapsed-20261006-a1/runner.py"
+    ],
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "ended_utc": "2026-10-07T03:24:15Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "swdb-lanl-allocator-extra-elapsed-20261006-a1",
+    "lease_generation": 497,
+    "lease_name": "mbit10-evaluation-node0",
+    "load1_at_start": 1.23,
+    "load1_max": 32,
+    "node": 0,
+    "numa_memory_policy": "bind:0",
+    "numactl": "--cpunodebind=0 --membind=0",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-07T03:11:48Z"
+  },
+  "new_records": [
+    {
+      "id": "mbit10.cpu.lanl20261006.service.allocator-extra.a1",
+      "kind": "cpu_service_calibration",
+      "path": "cpu_service_calibrations/mbit10.cpu.lanl20261006.service.allocator-extra.a1.yaml",
+      "sha256": "11005fecb02a7ca8578d642bcc7209803b71e4f7596863cc1ad51a404f718cc9",
+      "identity_sha256": "2fca2d7caf1d919de1a44c5988a2feea9a20842ca5219d41b1b62bc867c48be1",
+      "file_sha256": "b68c95fb58105bd698435537e1afa2e777fcfff6a3542ed22d02fbf4c52e20d7",
+      "bytes": 207613,
+      "service_cells": 16,
+      "evidence_kind": "native"
+    }
+  ],
+  "preregistration_sha256": "69285ec6234d87acdd26c5a40a04802719bdb59085a9c60c890f818c4938d7da",
+  "validation": "OK: 630 record(s) valid",
+  "completed_utc": "2026-10-07T03:24:15.060645+00:00",
+  "prior_record_bytes_preserved": true,
+  "scope": "Exact independent service construction; no application accuracy or physical latency claim.",
+  "receipt": {
+    "identity_sha256": "6e32f4d497b65be25030d036eff5a6fc56c3f48279c22e501392ac6b0f829bab",
+    "file_sha256": "e8576116bf7a3eac863b97da672abd316efe74a20928547c150678f1c0219c16",
+    "bytes": 286174,
+    "service_cells": 16,
+    "settings": {
+      "group": "allocator_v1",
+      "repetitions": 7,
+      "min_trial_s": 0.05,
+      "trial_resolution_scope": "gross_aggregate_only; paired driver retained",
+      "max_wall_s": 900.0,
+      "live_payload_cap_bytes": 67108864,
+      "batch_event_cap": 65536,
+      "event_cap": 16777216,
+      "timed_data_cap_bytes": 26214400,
+      "count_build_cap_bytes": 67108864,
+      "sizes": [
+        16384,
+        466112,
+        524284,
+        1048568
+      ],
+      "cells": [
+        {
+          "operation": "new_array",
+          "size_bytes": 16384
+        },
+        {
+          "operation": "new_array",
+          "size_bytes": 466112
+        },
+        {
+          "operation": "new_array",
+          "size_bytes": 524284
+        },
+        {
+          "operation": "new_array",
+          "size_bytes": 1048568
+        },
+        {
+          "operation": "delete_array",
+          "size_bytes": 16384
+        },
+        {
+          "operation": "delete_array",
+          "size_bytes": 466112
+        },
+        {
+          "operation": "delete_array",
+          "size_bytes": 524284
+        },
+        {
+          "operation": "delete_array",
+          "size_bytes": 1048568
+        },
+        {
+          "operation": "new_scalar",
+          "size_bytes": 16384
+        },
+        {
+          "operation": "new_scalar",
+          "size_bytes": 466112
+        },
+        {
+          "operation": "new_scalar",
+          "size_bytes": 524284
+        },
+        {
+          "operation": "new_scalar",
+          "size_bytes": 1048568
+        },
+        {
+          "operation": "delete_scalar",
+          "size_bytes": 16384
+        },
+        {
+          "operation": "delete_scalar",
+          "size_bytes": 466112
+        },
+        {
+          "operation": "delete_scalar",
+          "size_bytes": 524284
+        },
+        {
+          "operation": "delete_scalar",
+          "size_bytes": 1048568
+        }
+      ]
+    },
+    "context_sha256": "a45ab3e2fadf2fc9352e5b909f065699e90183a7eab6b6b67e919bea5bb7de63"
+  },
+  "identity_sha256": "7c49a30965f6124e9e07145d17567cae386c06556fb9dc59cc389d5d81580511"
+}
