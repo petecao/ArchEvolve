@@ -1,0 +1,47 @@
+{
+  "format": "swdb.lanl17-isolated-custody-regression-actual.v1",
+  "started_utc": "2026-10-07T14:40:58.119475+00:00",
+  "ended_utc": "2026-10-07T14:40:58.266436+00:00",
+  "canonical_ensure_ascii": true,
+  "actual_subprocess_returncode": 1,
+  "actual_reported_case_count": 12,
+  "actual_reported_OK": false,
+  "elapsed_parent_seconds": 0.14689170802012086,
+  "original_preparation_identity": "7ac9e87f563311422760d91439ad3731a8eb5ac1a5858aa7da93a9be28a830c5",
+  "test_source": {
+    "path": "/private/tmp/lanl17_parent_capture_custody_isolated_regression_a3_20261007.py",
+    "bytes": 14003,
+    "sha256": "e1fbd54de38492f1706002f6755b8d5d09c5ad5fb21a7f2a3b3ca3ca132048f7"
+  },
+  "producer_source": {
+    "path": "/private/tmp/lanl17_parent_capture_projection_producer_a3_20261007.py",
+    "bytes": 46165,
+    "sha256": "32bead204337aa66d0a732b6f143216946abafc5d2eb752577b0d90f7190b7b6"
+  },
+  "outputs": {
+    "start.json": {
+      "path": "/private/tmp/lanl17-parent-capture-custody-regression-actual-20261007-a3.start.json",
+      "bytes": 503,
+      "sha256": "7e0c567d2180ed1d4d70cc222ad93f5217dc690ca6e7145c77875f99817f1d35",
+      "original_sealed": false
+    },
+    "stdout": {
+      "path": "/private/tmp/lanl17-parent-capture-custody-regression-actual-20261007-a3.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_sealed": false
+    },
+    "stderr": {
+      "path": "/private/tmp/lanl17-parent-capture-custody-regression-actual-20261007-a3.stderr",
+      "bytes": 20591,
+      "sha256": "9fa8870988e446f170b13bb43efd2cbfd5555665f71d3ba7959e806d1dcea022",
+      "original_sealed": false
+    }
+  },
+  "source_and_preparation_preserved": true,
+  "batch_invocations": 1,
+  "scientific_admission": false,
+  "actual_campaign_or_input_capture": false,
+  "scope": "One actual synthetic local 12-case batch: exact custody-helper/guard/diagnostic AST only. Original producer/main/role builders/Store/SWDB/auditor/collector/SSH/native/provider never executed; original 47/18 checks not repeated. This establishes selected helper regression behavior only.",
+  "identity_sha256": "b5f71558d42a6338c2397ec4998e497767f40c1a0f2950c6ef4bec632edeb9fa"
+}

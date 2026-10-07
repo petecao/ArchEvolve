@@ -1,0 +1,48 @@
+{
+  "format": "swdb.lanl17-parent-capture-producer-source-preparation.v1",
+  "updated": "2026-10-07 ET",
+  "producer": {
+    "path": "/private/tmp/lanl17_parent_capture_projection_producer_20261007.py",
+    "bytes": 37646,
+    "sha256": "3bf559a3a47b138f0c662d21628503fad8d6b57076293ae867cc64b1c1883a9f"
+  },
+  "copied_projection_source": {
+    "path": "/private/tmp/lanl17_selected_record_trajectory_auditor_a2r1s1_20261007.py",
+    "sha256": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da",
+    "exact_AST_symbols": [
+      "RecordLoader",
+      "RecordLoader.yaml_implicit_resolvers",
+      "no_duplicates",
+      "RecordLoader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, no_duplicates)",
+      "CALL_KEYS",
+      "CANDIDATE_KEYS",
+      "STATE_KEYS",
+      "PROJECTION_CONTRACT",
+      "public_token",
+      "public_scalar",
+      "public_fields",
+      "excluded_fields",
+      "project_calls",
+      "project_candidate",
+      "project_iteration",
+      "project_state"
+    ],
+    "symbol_count": 16
+  },
+  "original_collector_sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c",
+  "original_control_sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414",
+  "checks": {
+    "syntax_compiled_without_execution": true,
+    "exact_projection_and_yaml_loader_AST": true,
+    "no_SWDB_Store_auditor_collector_import": true,
+    "no_subprocess_Git_SSH_native_provider_dispatch": true,
+    "new_capture_canonical_ensure_ascii": true,
+    "original_inputs_require_own_explicit_seal_policy_or_unsealed_classification": true
+  },
+  "scope": "Source-only preparation, not approval of an actual capture request. No original campaign/state/input/summary/status/control artifacts read or constructed; no fixture/test repeated; no producer/auditor/collector execution.",
+  "actual_inputs_constructed": false,
+  "captures_executed": false,
+  "synthetic_regressions_executed": false,
+  "tracked_edits": false,
+  "identity_sha256": "b00291db64339e7c8564c8efd1937e82ca37fc4a5bfcfed51ff5c17d96fda081"
+}
