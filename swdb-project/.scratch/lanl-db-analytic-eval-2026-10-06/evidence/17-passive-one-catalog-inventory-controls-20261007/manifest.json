@@ -1,0 +1,191 @@
+{
+  "format": "swdb.lanl17-passive-one-catalog-inventory-archive.v1",
+  "canonical_ensure_ascii": true,
+  "updated": "2026-10-07 ET",
+  "base_commit": "1ae93624b5ed178917092b31a3cf10f3b0508523",
+  "own_prior_head": "bbe37a95e8c9f7f7c791e406095f1f19f58f249f",
+  "base_consumption": "fast_forward_only",
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "python_modules": 185,
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "snapshots": {
+    "lanl17_passive_one_catalog_inventory_isolated_test_source_20261007.py": {
+      "role": "test_source_pin",
+      "origin": "/private/tmp/lanl17_passive_one_catalog_inventory_isolated_test_source_20261007.py",
+      "size_bytes": 10723,
+      "sha256": "5619408d758e7d58dbeb50bb1d5be93904d8206fc82109813862a4281e6ed232"
+    },
+    "lanl17-passive-one-catalog-inventory-isolated-test-source-handoff-20261007.md": {
+      "role": "handoff_pin",
+      "origin": "/private/tmp/lanl17-passive-one-catalog-inventory-isolated-test-source-handoff-20261007.md",
+      "size_bytes": 4192,
+      "sha256": "8bb57a6e40b39c5574fd40a902316305507db5208798c69c85a11f9c3ce8f64f"
+    },
+    "lanl17_read_passive_one_catalog_inventory_20261007.py": {
+      "role": "reviewed_reader_source_pin",
+      "origin": "/private/tmp/lanl17_read_passive_one_catalog_inventory_20261007.py",
+      "size_bytes": 29653,
+      "sha256": "76b86959ceca7a162a34b7a2d1e633ee9523d0b9cc7f629e9fbeeb4e101aa176"
+    },
+    "lanl17-passive-one-catalog-inventory-source-handoff-20261007.md": {
+      "role": "immutable_reader_handoff_pin",
+      "origin": "/private/tmp/lanl17-passive-one-catalog-inventory-source-handoff-20261007.md",
+      "size_bytes": 9237,
+      "sha256": "5f28d42b208dd1ed288fd5c732215679d789ec9546aef816d702cece978a36cc"
+    },
+    "lanl17-passive-one-catalog-inventory-source-preparation-20261007.json": {
+      "role": "immutable_reader_preparation_pin",
+      "origin": "/private/tmp/lanl17-passive-one-catalog-inventory-source-preparation-20261007.json",
+      "size_bytes": 4238,
+      "sha256": "c49a6aa4422d69b2ff1d463eed7ca72dd88f56ae84e346a2b14cd85bddbfc842"
+    },
+    "lanl17_write_parent_full_record_index_20261007.py": {
+      "role": "original_supplier_0",
+      "origin": "/private/tmp/lanl17_write_parent_full_record_index_20261007.py",
+      "size_bytes": 33445,
+      "sha256": "7a67d46f8ad7d453fe07bd458a21f663bd4dc7ec12e71de83ad8b5caaf28894b"
+    },
+    "lanl17_author_parent_full_record_index_request_r1_20261007.py": {
+      "role": "original_supplier_1",
+      "origin": "/private/tmp/lanl17_author_parent_full_record_index_request_r1_20261007.py",
+      "size_bytes": 38266,
+      "sha256": "a2e69aef10deb6186ac49401516ffba9a165b2f3cc94c8001646b6ac9a5b701d"
+    },
+    "lanl17_parent_helpers_cleanup60_a4.py": {
+      "role": "original_supplier_2",
+      "origin": "/private/tmp/lanl17_parent_helpers_cleanup60_a4.py",
+      "size_bytes": 38195,
+      "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+    },
+    "lanl17_compact_attempt_custody_a2r1_20261007.py": {
+      "role": "original_supplier_3",
+      "origin": "/private/tmp/lanl17_compact_attempt_custody_a2r1_20261007.py",
+      "size_bytes": 24818,
+      "sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c"
+    },
+    "lanl17-actual-parent-template-capture-field-checklist-20261007.md": {
+      "role": "original_supplier_4",
+      "origin": "/private/tmp/lanl17-actual-parent-template-capture-field-checklist-20261007.md",
+      "size_bytes": 13484,
+      "sha256": "45313085d7d010be749f9b9aec7c9aadf0b5b8d1e7c385bfb9f79fd384cc6fe0"
+    },
+    "lanl17-passive-one-catalog-inventory-isolated-test-source-preparation-20261007.json": {
+      "role": "original_test_source_preparation",
+      "origin": "/private/tmp/lanl17-passive-one-catalog-inventory-isolated-test-source-preparation-20261007.json",
+      "size_bytes": 3690,
+      "sha256": "d7f046280e51efa53e99305e4830b165b8fe86dd7d486506f96a1b2d792526cc"
+    },
+    "lanl17-passive-inventory-tests-driver-20261007.py": {
+      "role": "reviewed_execution_driver",
+      "origin": "/private/tmp/lanl17-passive-inventory-tests-driver-20261007.py",
+      "size_bytes": 5388,
+      "sha256": "58c91576fb6f1a31fde9773fe01dc04db8b2c37ab1df9edd3f11d7a75fae5eb9"
+    },
+    "lanl17-passive-inventory-tests-actual-20261007.start.json": {
+      "role": "actual_start",
+      "origin": "/private/tmp/lanl17-passive-inventory-tests-actual-20261007.start.json",
+      "size_bytes": 399,
+      "sha256": "f1134de0bcad09fa16b15a3522ba6cf4704afa9c4bab22a1dbad6d99174b9cbd"
+    },
+    "lanl17-passive-inventory-tests-actual-20261007.stdout": {
+      "role": "actual_stdout",
+      "origin": "/private/tmp/lanl17-passive-inventory-tests-actual-20261007.stdout",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "lanl17-passive-inventory-tests-actual-20261007.stderr": {
+      "role": "actual_stderr",
+      "origin": "/private/tmp/lanl17-passive-inventory-tests-actual-20261007.stderr",
+      "size_bytes": 842,
+      "sha256": "93f9707b3160bed0056bbe35722abddcd6bf9e635d6a30a60a9762ecc5262242"
+    },
+    "lanl17-passive-inventory-tests-actual-20261007.json": {
+      "role": "actual_tests_receipt",
+      "origin": "/private/tmp/lanl17-passive-inventory-tests-actual-20261007.json",
+      "size_bytes": 5410,
+      "sha256": "254aa9eb6de146e68a0372d2dcc3f5bb60925e38297ba0bd3cf6ae891fadb96a"
+    },
+    "lanl17-passive-inventory-parent-review-20261007.md": {
+      "role": "parent_review_note",
+      "origin": "/private/tmp/lanl17-passive-inventory-parent-review-20261007.md",
+      "size_bytes": 2983,
+      "sha256": "79468246aad018e47860499785f12227563d400d39020495e6ac861ac58401a4"
+    },
+    "lanl17-passive-inventory-parent-review-20261007.json": {
+      "role": "parent_review_json",
+      "origin": "/private/tmp/lanl17-passive-inventory-parent-review-20261007.json",
+      "size_bytes": 5062,
+      "sha256": "44bc9076f5cc1451112c5b01dccd467fcdfde0d2dfe01525c04e56f25d97058f"
+    }
+  },
+  "snapshot_count": 18,
+  "snapshot_total_bytes": 230025,
+  "sealed_snapshot_objects": [
+    {
+      "path": "lanl17-passive-one-catalog-inventory-source-preparation-20261007.json",
+      "identity_sha256": "ebd42ae1579b4aeaa439f97fd1d14edec598afff5941371e1f704585058da5b6",
+      "canonical_ensure_ascii": true
+    },
+    {
+      "path": "lanl17-passive-one-catalog-inventory-isolated-test-source-preparation-20261007.json",
+      "identity_sha256": "5c80086a95a3e8cd8ca5123d9ca5cfe4a02dc69a1cd91f82d404f90ff43deac7",
+      "canonical_ensure_ascii": true
+    },
+    {
+      "path": "lanl17-passive-inventory-tests-actual-20261007.json",
+      "identity_sha256": "49ba1127d0c9b5b8b2d04fbbff87021e17dc4971e5ee4aaa911eaf8396865784",
+      "canonical_ensure_ascii": true
+    },
+    {
+      "path": "lanl17-passive-inventory-parent-review-20261007.json",
+      "identity_sha256": "2845ba8c4d085c6d03b41bb5332fd144eb930b25f6bfd08801c16301de80dc21",
+      "canonical_ensure_ascii": true
+    }
+  ],
+  "unsealed_original_streams": [
+    "lanl17-passive-inventory-tests-actual-20261007.start.json",
+    "lanl17-passive-inventory-tests-actual-20261007.stdout",
+    "lanl17-passive-inventory-tests-actual-20261007.stderr"
+  ],
+  "readme": {
+    "size_bytes": 2773,
+    "sha256": "2b3c07856b1b499545024517ef0680b787ba25398e070e263d845632ead030c3"
+  },
+  "prior_tracked_blobs": 3908,
+  "prior_blobs_and_modes_preserved": 3907,
+  "only_allowed_prior_change": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/issues/17-agreement-report.md",
+    "operation": "append_only",
+    "status": "claimed",
+    "mode": "100644",
+    "previous_sha256": "e694ae543c83f4ec343900c2c1d0da5c8162d22ac73c1603873405af660e3295",
+    "append_sha256": "06a87f6dd055a6a1cc31e23b50efbb355c6dde36ff9f1e1989c9050b48e35a15",
+    "result_sha256": "af44659000cbe408278fa9fded6daf009e4c37dd9ed50b81c5edf1d6cca166ff"
+  },
+  "new_archive_files": 20,
+  "canonical_yaml": 686,
+  "canonical_blobs_and_modes_preserved": true,
+  "generic_source_changed": false,
+  "root_progress_map_or_other_issue_changed": false,
+  "actual_synthetic": {
+    "batch_invocations": 1,
+    "test_bodies_passed": 4,
+    "returncode": 0,
+    "timeout": false,
+    "scientific_admission": false,
+    "receipt_identity_sha256": "49ba1127d0c9b5b8b2d04fbbff87021e17dc4971e5ee4aaa911eaf8396865784"
+  },
+  "archive_actions": {
+    "source_main_or_imports": 0,
+    "tests_repeated": 0,
+    "Store_or_public_validation": 0,
+    "actual_inputs": 0,
+    "native_compiler_provider_campaign": 0,
+    "remote_staging_SSH": 0,
+    "cleanup": 0
+  },
+  "ticket17_status": "claimed",
+  "ticket14_reader3a_unchanged_NOTRUN": true,
+  "future_actual_input_parent_review_still_required": true,
+  "identity_sha256": "3494b0fa965fc6bfc1f0425f5b3630f76f1723d72e7a979a4e90ac83824f143e"
+}

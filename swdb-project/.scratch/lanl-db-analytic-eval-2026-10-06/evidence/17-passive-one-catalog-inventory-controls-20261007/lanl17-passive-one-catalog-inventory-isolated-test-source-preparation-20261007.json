@@ -1,0 +1,101 @@
+{
+  "format": "swdb.lanl17-passive-inventory-isolated-test-source-preparation.v1",
+  "prepared_date_ET": "2026-10-07",
+  "state": "source_only_NOT_RUN",
+  "test_source_pin": {
+    "path": "/private/tmp/lanl17_passive_one_catalog_inventory_isolated_test_source_20261007.py",
+    "bytes": 10723,
+    "sha256": "5619408d758e7d58dbeb50bb1d5be93904d8206fc82109813862a4281e6ed232"
+  },
+  "handoff_pin": {
+    "path": "/private/tmp/lanl17-passive-one-catalog-inventory-isolated-test-source-handoff-20261007.md",
+    "bytes": 4192,
+    "sha256": "8bb57a6e40b39c5574fd40a902316305507db5208798c69c85a11f9c3ce8f64f"
+  },
+  "reviewed_reader_source_pin": {
+    "path": "/private/tmp/lanl17_read_passive_one_catalog_inventory_20261007.py",
+    "bytes": 29653,
+    "sha256": "76b86959ceca7a162a34b7a2d1e633ee9523d0b9cc7f629e9fbeeb4e101aa176"
+  },
+  "immutable_reader_handoff_pin": {
+    "path": "/private/tmp/lanl17-passive-one-catalog-inventory-source-handoff-20261007.md",
+    "bytes": 9237,
+    "sha256": "5f28d42b208dd1ed288fd5c732215679d789ec9546aef816d702cece978a36cc"
+  },
+  "immutable_reader_preparation_pin": {
+    "path": "/private/tmp/lanl17-passive-one-catalog-inventory-source-preparation-20261007.json",
+    "bytes": 4238,
+    "sha256": "c49a6aa4422d69b2ff1d463eed7ca72dd88f56ae84e346a2b14cd85bddbfc842"
+  },
+  "closed_AST_source_inspection": {
+    "helper_or_class_names": [
+      "RecordLoader",
+      "Refused",
+      "checked_path",
+      "digest",
+      "exact",
+      "full_hash",
+      "no_duplicates",
+      "observe_inventory_row",
+      "observe_one_inventory",
+      "observe_present_summary",
+      "plain_record",
+      "privacy_path",
+      "record_relative",
+      "remaining",
+      "require",
+      "require_inventory_equal",
+      "returned_bytes",
+      "scan_catalog",
+      "sha",
+      "stamp"
+    ],
+    "helper_or_class_count": 20,
+    "constant_Assign_names": [
+      "FORBIDDEN_NAMES",
+      "MAX_CATALOG_FILE",
+      "MAX_CATALOG_TOTAL",
+      "MAX_RECORDS",
+      "STAMP_KEYS"
+    ],
+    "constant_count": 5,
+    "loader_policy_nodes": [
+      "timestamp_resolvers",
+      "duplicate_keys"
+    ],
+    "exact_selected_node_count": 27,
+    "unittest_method_names": [
+      "test_sorted_exact_inventory_hashes_opaque_bodies_without_YAML_parse",
+      "test_same_size_same_bytes_inode_replacement_refuses_before_hash",
+      "test_unique_one_catalog_2GiB_overflow_refuses_before_body_hashing",
+      "test_explicit_present_summary_exact_policy_and_wrong_CID_source_refusal"
+    ],
+    "method_count": 4,
+    "full_source_main_or_module_imported": false,
+    "selected_nodes_compiled_or_executed_in_preparation": false,
+    "no_arbitrary_expression_evaluation": true
+  },
+  "coverage_boundaries": [
+    "opaque ordinary bodies never YAML-parsed",
+    "same-size identical-byte inode replacement expectedstat refusal before hash",
+    "unique-one-catalog aggregate overflow before body hashing",
+    "explicit present summary complete canonical true string-date digest and wrongCID/source refusal"
+  ],
+  "actions_executed": {
+    "test_module_imports": 0,
+    "test_bodies": 0,
+    "lifted_nodes": 0,
+    "target_main": 0,
+    "actual_catalog_M2_request_inputs": 0,
+    "SWDB_Store_public_validation": 0,
+    "writer_auditor_collector": 0,
+    "native_compiler_provider_campaign": 0,
+    "Git_or_SSH": 0,
+    "tracked_edits": 0
+  },
+  "original_source_and_preparation_unchanged": true,
+  "original_8_writer_and_5_author_test_batches_repeated": false,
+  "ticket14_reader3a_unchanged_NOT_RUN": true,
+  "parent_full_source_review_and_execution_authorization_still_required": true,
+  "identity_sha256": "5c80086a95a3e8cd8ca5123d9ca5cfe4a02dc69a1cd91f82d404f90ff43deac7"
+}
