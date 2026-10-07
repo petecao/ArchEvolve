@@ -1,6 +1,6 @@
 # Implementation progress
 
-Updated: 2026-10-06 21:30 ET
+Updated: 2026-10-06 22:09 ET
 
 Integration: `codex/lanl-analytic-eval`; review base: `2c50e5fb8671e08050921bee06920f92fd153bdd` (`yanrujhou_main`). Yan-Ru amended startup settings commit `fb842a8` to this replacement during startup. Owned branches are rebased so the removed IDE files stay removed. Final delivery merges and pushes `yanrujhou_main`.
 
@@ -209,3 +209,17 @@ Prospective input setup c9be522 remained clean. Subsequent socket1 validation pa
 The separately preregistered gross-bulk source1703c98717ff303fdaa83b8044ac9b4060fedb78 was dispatched for counts at21:41 ET on node0, full collector socket affinity; new raw `/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-count-20261006-a1`. Plan1e3f1ea6c00c9c5c1c9bf11f32ef79f5b7e57676057b504d7735f5c9cae70022; dispatch56b7c4dd6f0cacf0aeecdde185c905004b2b90bbdbb6c95fa08650497c5caba2. The revised gross-only pilot retains every short-driver value with unknown subtraction. Both original79/67 exact matrices are preserved; elapsed requires successful count validation and idle other socket. No application timing or supported error band has been observed.
 
 At the check, node0 and legacy were released, node1 held input validation, load1.90, `/data1`23.4GiB free; later input validation released and gross-bulk counts took node0. Unrelated Quicksilver remains untouched. No eligible statistical pairs exist. Final review, remaining tickets, tracker delivery, main/remote sync and owned worktree cleanup remain required.
+
+
+2026-10-06 22:09 ET required 30-minute check: 8/15 assigned tickets resolved/integrated. All three implementers are active; no dead agent observed. Next required table22:39 ET.
+
+| Evaluation / ticket | State | Evidence and next step |
+|---|---|---|
+| 11 gross bulk resources | Validating | Both 79/67-cell elapsed batches produced receipts under unchanged1703c987 source; first import/resource complete, second resource conversion active. No receipt admitted locally until runner/validation/lease exit0. |
+| 11 CPU model and band | Active | Final outcome-free binder guards and context checks pass. OpenMP22 classes and extra allocator bins await fresh count/elapsed runs. Exact BC PBFS source-site audit found one executed floating64 monotonic atomicrmw fadd; it requires a distinct independent probe, retaining integer costs separately. Application timing remains held. |
+| 10 parameter role | Ready for remote run | Clean final a7a9b9e pushed;27 role cases and44 compatibility cases passed. Fresh guarded provider invocation remains pending; sanitized9-unknown inputs unchanged. |
+| 12 functional evaluation | Ready for remote acceptance | Six public cases across recorded gates passed; clean source bef54f9661d099dcf381538522bd4d9573d6fe0c pushed. Remote exact-artifact acceptance will retain current certificate/counts, fresh bundle protocol, no-child sentinel and handoff1.1. |
+| 16 blind pairing | Active | Native/gem5 entry, aliases and summary tamper gates are green so far; final selection/refusal/resume batch active. All real forecast contexts are structural unknown,0 eligible numerical pairs. |
+| 17 agreement | Preparation | Eight distinct source0-valid SG inputs and prior-population collision checks passed. Fresh campaigns, statistical population freeze and D30 report remain pending. |
+
+Node0 holds gross-bulk elapsed a1; node1 and legacy are released. Both collected elapsed receipts remain on mbit10; raw IR/builds/logs are not transferred. Native timing jobs keep the other owned lane idle. The unrelated Quicksilver CPU process is preserved. Final tickets13/14/17, two-axis review/fixes, tracker/main/remote synchronization and owned worktree cleanup remain required.

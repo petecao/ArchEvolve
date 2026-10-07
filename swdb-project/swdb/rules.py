@@ -79,6 +79,12 @@ def check(record, ctx):
     elif kind == "evaluation":
         from swdb.functional_evaluation import validate_record
         yield from validate_record(record, ctx)
+    elif kind == "campaign_summary":
+        from swdb.extensa_pairing import validate_summary
+        yield from validate_summary(record, ctx)
+    elif kind == "paired_estimate":
+        from swdb.extensa_pairing import validate_record
+        yield from validate_record(record, ctx)
     elif kind == "cpu_calibration":
         from swdb.cpu_calibration_records import validate_record
         yield from validate_record(record, ctx)
