@@ -1,0 +1,83 @@
+{
+  "format": "swdb.lanl17-index-privacy-envelope-source-staging-parent-source-review.v1",
+  "reviewed_utc": "2026-10-07T19:12:18.753730+00:00",
+  "canonical_ensure_ascii": true,
+  "state": "SOURCE_COPY_REVIEWED_NOTRUN_PENDING_EXACT_FULLY_DELIVERED_REVISION",
+  "pins": [
+    {
+      "path": "/private/tmp/lanl-stage-reviewed17-index-privacy-envelope-source-from-git-20261007-a1.py",
+      "bytes": 19246,
+      "sha256": "103b7557c5428b04626db360922907b1873440d089cb093dd7da0e122364551b"
+    },
+    {
+      "path": "/private/tmp/lanl17-index-privacy-envelope-source-staging-source-handoff-20261007-a1.md",
+      "bytes": 5226,
+      "sha256": "6735104d947bac29c20ad76dc1d3a926c2dc504c69bcd6c606b8016609de307a"
+    },
+    {
+      "path": "/private/tmp/lanl17-index-privacy-envelope-source-staging-derivation-20261007-a1.diff",
+      "bytes": 16814,
+      "sha256": "dcdb2f9be846715f6f2c57520cdb6d9fd6bb042b0f04a76b9b8b8e993ffe09f5"
+    },
+    {
+      "path": "/private/tmp/lanl17-index-privacy-envelope-source-staging-static-derivation-20261007-a1.json",
+      "bytes": 5446,
+      "sha256": "75ebc4376f6bc0c0acc896177c74b057c533142a7ad09bae37b55ca2928d9cdf"
+    },
+    {
+      "path": "/private/tmp/lanl17-index-privacy-envelope-source-staging-NOTRUN-preparation-20261007-a1.json",
+      "bytes": 5169,
+      "sha256": "f77fc31b7bc4bf0c489cebe2681956e6d240338aabe992f433dbe906627bb4fd"
+    },
+    {
+      "path": "/private/tmp/lanl-stage-reviewed17-input-author-sources-from-git-20261007-a1-r1.py",
+      "bytes": 23612,
+      "sha256": "d5780992722de678ea22e4f92fb5b6c1316cc12f038ae9c2a239780cb6c1f09f"
+    }
+  ],
+  "preparation_identity_sha256": "87503b37b4bac29f7074aa92c26babd8c18b3df6dc4f639563ad37825fac7ad0",
+  "parent_note": {
+    "path": "/private/tmp/lanl17-index-privacy-envelope-source-staging-parent-review-20261007-a1.md",
+    "bytes": 2071,
+    "sha256": "ad9692b169fdf2fbb32c70bc6f998e0e626b1ae7e3c324ad716decca5c470420"
+  },
+  "full_parent_and_independent04_source_packet_review": true,
+  "parent_independent_entire_original_byte_reversal": true,
+  "parent_independent_remote_closed_reversal": true,
+  "parent_independent_local4_remote_top4_nested10_AST_exact": true,
+  "exact_selected_Git_CONFIG": [
+    {
+      "target": "envelope.py",
+      "source": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-privacy-envelope-controls-20261007/lanl17_remote_original_index_writer_privacy_envelope_20261007.py",
+        "bytes": 38790,
+        "sha256": "1ee5ffbdf1ef322cfd5bfec4b6e402c29d23c776e855f01d25208ebbece0fcfc"
+      },
+      "review": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-privacy-envelope-controls-20261007/lanl17-original-index-writer-privacy-envelope-parent-review-20261007.json",
+        "bytes": 7051,
+        "sha256": "70beddcfeb95e3b612476b358021581b288b031321be01b2e95c6dfd4f3c383a",
+        "format": "swdb.lanl17-original-index-writer-privacy-envelope-parent-source-review.v1",
+        "identity_sha256": "4a1023632f0db9da20860d1ade13efac5503bea6eabd0854a1432208cfb4a443"
+      },
+      "manifest": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-privacy-envelope-controls-20261007/manifest.json",
+        "bytes": 8784,
+        "sha256": "69e9ee241ad19e45dd89cfd974c311633926a6c10b41ffb8242a4e5b2febf03a",
+        "format": "swdb.lanl17-original-index-writer-privacy-envelope-archival-custody.v1",
+        "identity_sha256": "0e916296aea2b8c0ba930c5bf11f15e0b4b2b7de05192594a2786fa496e4de1d"
+      }
+    }
+  ],
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_F6_inherited_original_custody": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "concrete_blockers_found": [],
+  "prospective_source_copy_reviewed": true,
+  "actual_source_copy_or_SSH_executed": false,
+  "actual_source_envelope_writer_main_or_inputs_reviewed": false,
+  "scientific_admission": false,
+  "required_actual_argv_review": "Exact fully delivered lowercase40hex revision must match primary HEAD/yanrujhou_main and selected exact Git pins before one copy. No future tip defaulted.",
+  "earlier_stage_or_catalog_read_or_modification": false,
+  "tests_or_scientific_execution_repeated": false,
+  "identity_sha256": "163ca6059d5fbeb9399cb497f11373ef135faebe850f034da7b4e3976567a038"
+}
