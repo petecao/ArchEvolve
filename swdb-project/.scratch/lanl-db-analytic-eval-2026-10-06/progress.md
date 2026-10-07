@@ -1,10 +1,10 @@
 # Implementation progress
 
-Updated: 2026-10-07 07:39 ET
+Updated: 2026-10-07 08:09 ET
 
 **12 of15 assigned tickets resolved and integrated.** Status: 2:resolved, 3:resolved, 4:resolved, 5:resolved, 6:resolved, 7:resolved, 8:resolved, 9:resolved, 10:resolved, 11:claimed, 12:resolved, 13:resolved, 14:claimed, 16:resolved, 17:claimed. Actual final evaluations, two-axis review/fixes, ticket/map sync, recoverable owned-worktree cleanup and heartbeat pause remain required. Parent owns all SSH and dispatch. Agents03/04 are responsive;02 completed the exact nine-report execution note and remains available.
 
-Checkpoint parent `2ab707209dcbc4bf8360c3ff1dce0e5f4e2d9871` is delivered to integration/origin/`yanrujhou_main` and mbit10 primary. Catalog: **682 canonical YAML**. Execution sourceC `f893fed400347ed23d92e917d8bde21b75e5375d` remains clean and separate; F6 `f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3` covers185 Python modules. Final review base `2c50e5fb8671e08050921bee06920f92fd153bdd`. Root human rule and remote retention lock preserved.
+Checkpoint parent `6e186236ecdb28ae3bf78bb612269d6477d6c074` is delivered to integration/origin/`yanrujhou_main` and mbit10 primary. Catalog: **682 canonical YAML**. Execution sourceC `f893fed400347ed23d92e917d8bde21b75e5375d` remains clean and separate; F6 `f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3` covers185 Python modules. Final review base `2c50e5fb8671e08050921bee06920f92fd153bdd`. Root human rule and remote retention lock preserved.
 
 | Ticket | Actual state | Remaining gate |
 |---|---|---|
@@ -19,7 +19,7 @@ Checkpoint parent `2ab707209dcbc4bf8360c3ff1dce0e5f4e2d9871` is delivered to int
 | development | Admitted; widths frozen before held-out timing | 676 |
 | holdout | Admitted; BFS broad-band pass, BC failed unchanged | 680 |
 | band-report | Original g508 startup failure; exact failure retained | 0 |
-| band-report-a4 | Active; latest output freeze-bfs.stderr; completion pending | 680 |
+| band-report-a4 | Active; latest output freeze-bc.stderr; completion pending | 682 |
 
 Live metadata does not replace numerical admission or receipt/source/lane/cleanup checks. Model/development/held/report raw catalog totals are672/676/680/684; integration additionally preserves two PR records. The metadata reader parses no numerical outcomes. Completed held-out outcomes below come from admitted5268 evidence; report retry outcomes remain unread.
 
@@ -55,11 +55,11 @@ Four static e79/28/fa/9c controls were staged08:46:44Z without execution, stagin
 
 PR replay remains admitted at96685eac: freeze865.004s/estimate486.878s/checker122.805s, all0/groupsgone. Five trial and aggregate whole seconds/baseline/ratio/band null, exact two characterization_allowlist gaps; no BFS/BC scope invented for Jacobi. Prior674files means672YAML plus two registered `.cc` files. Future14 e79 a5 changes externalKILL only; exporterbf5 and prospective approved reader3a0 are unchanged. Fresh DXBF FIRST/all9 wait for11 final catalog. MAPLE remains estimate-only with no invented whole timing/accuracy.
 
-CPU native900s/metadata2400/collector3600/inner18000/outer18300/KILL60 controls preserve runner science.17 preparevalidate3600/freeze6000, finalvalidate3600/export6000/report14400, supervisor18000/78000 and outer18300/78300/KILL60 are finite policies, not runtime guarantees. Full Store/library/certification gates remain. Four actual campaigns retain eight iterations/plateau4/provider caps/24h/20GB; at most two same-population lanes, queue if capacity requires. D30 still requires20 unique pairs/tau/CI/top3 and valid dependency bootstrap; unsupported/no-switch if unmet, no padding.
+CPU native900s/metadata2400/collector3600/inner18000/outer18300/KILL60 controls preserve runner science.17 preparevalidate3600/freeze6000, finalvalidate3600/export6000/report14400, supervisor18000/78000 and outer18300/78300/KILL60 are finite policies, not runtime guarantees. Full Store/library/certification gates remain. Four actual campaigns retain eight iterations/plateau4/provider caps/24h/20GB; at most two same-population lanes, queue if capacity requires. Prospective selected-record trajectory auditor77907 was reviewed statically only; prior-attempt resumability, counter replay, interrupted-candidate closure, exact baseline/evaluation linkage and dependency-admission semantics require revision before use. No auditor execution or actual17 metadata/campaign dispatch is implied. Distinct a2 auditorb15e0e43 and collector edb822dc are ready for source review only; packetd6e731f2 explicitly records no execution, actual inputs, staging or approval. The collector leaves original state bytes remote and labels unsaved accounting and dispatch ownership as parent-attestation boundaries. Parent and03 review remain in progress. D30 still requires20 unique pairs/tau/CI/top3 and valid dependency bootstrap; unsupported/no-switch if unmet, no padding.
 
-Live `2026-10-07T11:38:46.599813+00:00`: node0=held, node1=released, legacy=released; load1=2.05, available memory116,644,618,240B, data1 free24,172,277,760B, data free49,981,165,568B. Unrelated jobs/raw/source/build/IR preserved. Only specifically consumed/export-guarded checkouts were removed.
+Live `2026-10-07T12:08:17.860413+00:00`: node0=held, node1=released, legacy=released; load1=2.02, available memory120,882,122,752B, data1 free24,155,123,712B, data free49,302,372,352B. Unrelated jobs/raw/source/build/IR preserved. Only specifically consumed/export-guarded checkouts were removed.
 
-Human15/18/21 and prerequisite/triage/access19/20/22/23 remain separate. No external communication.19 owned local managed worktrees remain registered through final review/fixes and recoverable cleanup. Heartbeat ACTIVE. **Next required status/agent-health table:2026-10-07 08:09 ET.**
+Human15/18/21 and prerequisite/triage/access19/20/22/23 remain separate. No external communication.19 owned local managed worktrees remain registered through final review/fixes and recoverable cleanup. Heartbeat ACTIVE. **Next required status/agent-health table:2026-10-07 08:39 ET.**
 
 ## Remote preparation
 
