@@ -9,8 +9,8 @@ from swdb import workflow
 from swdb.cli import Failure
 from swdb.store import Store
 
-EVIDENCE_COMMANDS = {'characterize', 'estimate', 'freeze-protocol', 'dx100-build', 'dx100-compile',
-    'dx100-execute', 'dx100-profile', 'evaluate', 'evaluate-pair', 'compare', 'compare-evaluations',
+EVIDENCE_COMMANDS = {'fill-target-parameters', 'characterize', 'estimate', 'freeze-protocol', 'dx100-build', 'dx100-compile',
+    'dx100-execute', 'dx100-profile', 'evaluate', 'evaluate-functional', 'evaluate-pair', 'compare', 'compare-evaluations',
     'aggregate-evaluations', 'bfs-profile', 'bfs-hotspots', 'profile-package', 'profile-strategies',
     'strategy-regions', 'bfs-coverage', 'handoff-message', 'submit', 'repair', 'profile', 'annotate',
     'claim', 'add', 'annotate-score', 'certify', 'synthesize', 'recompute-cachegrind', 'agreement-freeze', 'agreement-report'}

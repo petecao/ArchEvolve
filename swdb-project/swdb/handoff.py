@@ -205,6 +205,8 @@ def _result_class(data, candidate):
 
 
 def evaluation_result(store, data):
+    from swdb.functional_evaluation import verify
+    verify(data, store)
     context = _mapping(data.get("context"))
     candidate = store.get(data.get("candidate"), "candidate")
     proposal = store.get(data.get("proposal") or _mapping(candidate).get("proposal"), "proposal") or {}
@@ -260,13 +262,30 @@ def evaluation_result(store, data):
         "performance_claim": "frozen_policy_gain" if gain else "none",
         "evidence_kind": data.get("evidence_kind"),
     }
+    analytic_estimate = _mapping(context.get("analytic_estimate"))
+    functional = context.get("evaluator") == "swdb.strict-functional-estimate.v1"
+    if functional:
+        content["performance_claim"] = "none"
+        content["estimate"] = analytic_estimate or None
+        content["correctness"]["scope"] = context.get("correctness_scope")
+        content["correctness"]["hardware_correctness_claim"] = False
+        content["correctness"]["certification"] = context.get("certification")
+        content["roi_measurements"]["note"] = "Functional host execution is correctness evidence; hardware speed is estimated."
     inputs = [_ref(store, proposal.get("id"), "proposal"), _ref(store, data.get("candidate"), "candidate"),
               _ref(store, context.get("protocol"), "protocol"),
               _ref(store, _mapping(context.get("workload")).get("id"), "workload"),
               _ref(store, _mapping(context.get("pairing")).get("pair_id"), "evaluation_pair"),
               *(_ref(store, row["id"], "profile_package") for row in packages),
               *(_ref(store, row["id"], "comparison_result") for row in comparisons)]
-    return _envelope("evaluation_result", data, inputs, content, submission=proposal.get("producer"))
+    if functional:
+        inputs.extend([_ref(store, analytic_estimate.get("id"), "estimate"),
+                       _ref(store, _mapping(context.get("certification")).get("id") or _mapping(data.get("request")).get("certification"), "certification"),
+                       _ref(store, analytic_estimate.get("characterization"), "workload_characterization"),
+                       _ref(store, _mapping(analytic_estimate.get("baseline")).get("id"), "estimate")])
+    envelope = _envelope("evaluation_result", data, inputs, content, submission=proposal.get("producer"))
+    if functional:
+        envelope["format_version"] = "1.1"
+    return envelope
 
 
 def message(args):

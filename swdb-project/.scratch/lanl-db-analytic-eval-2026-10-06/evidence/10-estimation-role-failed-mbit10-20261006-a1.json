@@ -1,0 +1,46 @@
+{
+  "format": "swdb.estimation-role-failed-dispatch.v1",
+  "updated": "2026-10-06 ET",
+  "source_commit": "a7a9b9e8b9d52245490b7dfd372f3be05f67ce27",
+  "source_clean": true,
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-estimation-role-20261006-a1",
+  "raw_transferred": false,
+  "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "none",
+    "command": [
+      "python3",
+      "/data/yanruj/EvolveSWDB_runs/lanl-estimation-role-20261006-a1/runner.py"
+    ],
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "ended_utc": "2026-10-07T02:17:18Z",
+    "exit_code": 1,
+    "host": "mbit10",
+    "job": "swdb-lanl-estimation-role-20261006-a1",
+    "lease_generation": 491,
+    "lease_name": "mbit10-evaluation-node0",
+    "load1_at_start": 2.24,
+    "load1_max": 32,
+    "node": 0,
+    "numa_memory_policy": "bind:0",
+    "numactl": "--cpunodebind=0 --membind=0",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-07T02:14:43Z"
+  },
+  "preregistration_sha256": "a9dd5996dbfa0ad69e10409494e0758cd1cf0cb437231170ca279c36b2640bb2",
+  "provider_inference_launched": false,
+  "provider_receipt_present": false,
+  "reason": "swdb fill-target-parameters: provider login home CODEX_HOME is unset; on a lab host it must name a folder outside $HOME (for example under /data1/yanruj)",
+  "prior_files_preserved": 619,
+  "new_canonical_records": 0,
+  "prepared_input_bytes": 101164,
+  "prepared_input_sha256s": {
+    "characterization.json": "77d7e4101368ab29252695e4f8c6cdd52629f3dbe0d9be858862d5096b89ec00",
+    "profile.json": "0430c35f7a4c0d96f6c71db73f07810e55a19edd6053084d042767871ae9843a",
+    "parameters.json": "b16f04ce73ad69fb25695e571ecff181129ae167bff9be236c0c1dbb1e600ebb"
+  },
+  "unknown_parameters": 9,
+  "completed_utc": "2026-10-07T02:17:17.791472+00:00",
+  "scope": "Lane environment admission failure before provider login or inference. Original source/counts/target and preparation are preserved; no values admitted.",
+  "identity_sha256": "f26fdb135032db0cf5989b783bb8fde1406c68e3e44be6a5450d0da5fc8e63d3"
+}
