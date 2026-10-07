@@ -1,6 +1,13 @@
 """Blind campaign pairing through public fixture campaigns; all fixture numbers are synthetic."""
+import copy
+from datetime import datetime, timezone
 import json
+from pathlib import Path
 
+import pytest
+import yaml
+
+from swdb.store import Store
 from conftest import run_swdb
 from testkit.extensa import campaign_file, campaign_store, fixture_file, provider, records_of, run
 
@@ -24,11 +31,6 @@ def test_fixture_freezes_each_artifact_input_before_pilot_and_comparison(campaig
 
 # The real campaign loop and adapters run; only the evaluator/host are contract
 # fixtures at the established evaluator seam. No application performance evidence.
-from datetime import datetime, timezone
-from pathlib import Path
-
-import pytest
-from swdb.store import Store
 from testkit.extensa import knob_rows
 from testkit.extensa_targets import FakeHost, FakeRunner, common, gem5_campaign, inside_patch, run as run_target, write_campaign
 
@@ -89,6 +91,16 @@ def test_real_adapters_persist_estimates_before_every_evaluator_entry(repo_team,
     assert runner.boundaries
     rows = summary['paired_estimates']['records']
     assert rows and all(r['seconds'] is None and not r['eligible_for_agreement'] for r in rows)
+    # A new candidate record ID cannot make identical artifact content blind again.
+    catalog = Store(loop.store_dir)
+    for boundary in runner.boundaries:
+        subjects = ([boundary['request'][side]['candidate'] for side in ('baseline', 'candidate')]
+                    if target == 'native_cpu' else [boundary['request']['candidate']])
+        for subject in subjects:
+            sha = catalog.get(subject)['artifact']['sha256']
+            assert all(r['estimated_at'] < boundary['started'] for r in rows
+                       if r['timing_context']['subject']['artifact_sha256'] == sha)
+    assert all(boundary['event']['timing_contexts'] for boundary in runner.boundaries)
     if target == 'native_cpu':
         assert sum('.pilot.' in row['stage'] for row in runner.boundaries) == 4
         assert all(len(row['event']['paired_estimates']) == 2 for row in runner.boundaries)
@@ -126,13 +138,71 @@ def test_resume_refuses_lost_or_changed_prior_baseline_estimate_before_provider(
     assert not (campaign_team['root'] / 'provider-log.jsonl').exists()
 
 
-def test_team_summary_validates_embedded_pairing_hashes_and_chronology(campaign_team):
+@pytest.mark.parametrize('damage', ['chronology', 'artifact', 'backend', 'input'])
+def test_team_summary_validates_embedded_pairing_hashes_and_chronology(campaign_team, damage):
     import yaml
     summary = run(campaign_team, campaign_file(campaign_team), fixture_file(campaign_team), provider(campaign_team, {}))
     path = campaign_team['records'] / 'campaign_summaries' / (summary['id'] + '.yaml')
     data = yaml.safe_load(path.read_text())
-    data['paired_estimates']['outcome_accesses'][0]['outcome_access_started_at'] = '1900-01-01T00:00:00+00:00'
+    event = data['paired_estimates']['outcome_accesses'][0]
+    if damage == 'chronology':
+        event['outcome_access_started_at'] = '1900-01-01T00:00:00+00:00'
+    elif damage == 'artifact':
+        event['timing_contexts'][0]['subject']['artifact_sha256'] = '0' * 64
+    elif damage == 'input':
+        event['timing_contexts'][0]['input']['identity_sha256'] = '0' * 64
+    else:
+        event['timing_contexts'][0]['execution']['backend'] = 'spoofed_mmio_backend'
     path.write_text(yaml.safe_dump(data, sort_keys=False))
     result = run_swdb('validate', '--records', campaign_team['records'])
     assert result.returncode == 1, result.stderr + result.stdout[:500]
     assert 'paired_estimates' in result.stderr and 'preced' in result.stderr
+
+
+def test_synthetic_estimates_do_not_change_timing_selection_or_plateau(campaign_team):
+    fixture = fixture_file(campaign_team, estimate_fixture={
+        'work_units': {'baseline': 10, 'candidate': 1000}, 'units_per_second': 100})
+    config = provider(campaign_team, {})
+    enabled = run(campaign_team, campaign_file(campaign_team), fixture, config)
+    disabled = run(campaign_team, campaign_file(campaign_team, cid='extensa-native-bfs-20261004-a2',
+                   paired_estimates={'enabled': False}), fixture, config)
+    rows = enabled['paired_estimates']['records']
+    assert {r['seconds'] for r in rows} == {0.1, 10}
+    assert all(r['evidence_kind'] == 'contract_fixture' and not r['eligible_for_agreement'] for r in rows)
+    assert not disabled['paired_estimates']['records']
+    def selected(summary):
+        return [(c['class'], c['level'], c['selection'], c['artifact_sha256'])
+                for iteration in summary['iterations'] for c in iteration['candidates']]
+    assert selected(enabled) == selected(disabled)
+    assert enabled['stop_reason'] == disabled['stop_reason'] == 'max_iterations'
+    assert enabled['budgets']['used']['iterations'] == disabled['budgets']['used']['iterations']
+    assert all(c['selection']['verdict'] == 'gain' for it in enabled['iterations'] for c in it['candidates'])
+
+
+def test_team_protocol_recursively_refuses_paired_receipt_but_extensa_keeps_dispatch(campaign_team):
+    summary = run(campaign_team, campaign_file(campaign_team), fixture_file(campaign_team), provider(campaign_team, {}))
+    records = campaign_store(campaign_team)
+    paired = summary['paired_estimates']['records'][0]['id']
+    catalog = Store(records)
+    relay = copy.deepcopy(catalog.get(campaign_team['machine']))
+    relay['id'] = 'native-pairing-relay'
+    relay.setdefault('notes', []).append(paired)
+    relay_file = campaign_team['root'] / 'relay.yaml'
+    relay_file.write_text(yaml.safe_dump(relay, sort_keys=False))
+    added = run_swdb('add', relay_file, '--records', records, '--mode', 'extensa',
+                     '--campaign', summary['campaign'])
+    assert added.returncode == 0, added.stderr + added.stdout[:500]
+    settings = copy.deepcopy(catalog.get(campaign_team['protocol'])['settings'])
+    settings['differences']['software'].append(relay['id'])
+    request = campaign_team['root'] / 'freeze-paired.yaml'
+    request.write_text(yaml.safe_dump({'message_version': '1.0', 'id': 'fixture.paired.boundary',
+                                     'version': 1, 'settings': settings}, sort_keys=False))
+    refused = run_swdb('freeze-protocol', request, '--records', records, '--mode', 'archevolve')
+    assert refused.returncode == 1 and all(term in refused.stderr for term in ('ADR 0013', paired, relay['id']))
+    accepted = run_swdb('freeze-protocol', request, '--records', records, '--mode', 'extensa',
+                        '--campaign', summary['campaign'], '--format', 'json')
+    assert accepted.returncode == 0, accepted.stderr + accepted.stdout[:500]
+    frozen = json.loads(accepted.stdout)
+    assert frozen['mode'] == 'extensa' and frozen['campaign'] == summary['campaign']
+    checked = run_swdb('validate', '--records', records)
+    assert checked.returncode == 0, checked.stderr + checked.stdout[:500]

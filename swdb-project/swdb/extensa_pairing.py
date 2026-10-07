@@ -28,6 +28,26 @@ def identity(data):
     return artifacts.digest({key: data[key] for key in PAYLOAD})
 
 
+def request_identity(context):
+    """Match record aliases of the same outcome-free observation request.
+
+    Keep the actual context in the receipt/event. Only subject record names and
+    a guest build's output name/path may differ; guest executable bytes and every
+    compiler/backend/input/configuration fact must remain equal. This reuses an
+    unknown forecast, never functional/MMIO counts or an application estimate.
+    """
+    facts = copy.deepcopy(context)
+    facts.pop('prior_outcome_exposure', None)
+    facts['subject'].pop('id', None)
+    execution = facts['execution']
+    binary, build = execution.get('binary', {}), execution.get('timing_policy', {}).get('build', {})
+    if (binary.get('sha256') and binary.get('sha256') == build.get('binary_sha256') and
+            all(key in build for key in ('compiler', 'compiler_version', 'flags', 'adapter'))):
+        execution.pop('candidate_build', None)
+        binary.pop('path', None)
+    return artifacts.digest(facts)
+
+
 def validate_record(record, ctx):
     data = record.data
     if identity(data) != data['identity_sha256'] or not data['id'].endswith('.' + identity(data)[:16]):
@@ -40,6 +60,10 @@ def validate_record(record, ctx):
         yield Problem(record.rel, 'seconds', 'no verified complete-call application timing adapter is registered')
     if data['state'] == 'fixture_estimate' and data['seconds'] is None:
         yield Problem(record.rel, 'seconds', 'fixture estimate requires its synthetic estimated seconds')
+    try:
+        _time(data['estimated_at'])
+    except (ValueError, TypeError):
+        yield Problem(record.rel, 'estimated_at', 'paired estimate timestamp must declare UTC')
 
 
 def _time(value):
@@ -69,6 +93,11 @@ def ledger_problems(ledger, campaign):
         except (ValueError, TypeError):
             yield 'embedded estimate timestamp is not UTC'
     for event in ledger['outcome_accesses']:
+        contexts = event.get('timing_contexts')
+        if contexts is not None and (len(contexts) != len(event['paired_estimates']) or any(
+                rid not in by_id or request_identity(context) != request_identity(by_id[rid]['timing_context'])
+                for context, rid in zip(contexts, event['paired_estimates']))):
+            yield 'outcome request differs from the preceding immutable artifact/input/build/policy estimate'
         try:
             started = _time(event['outcome_access_started_at'])
             if not event['paired_estimates'] or any(rid not in by_id or
@@ -179,12 +208,12 @@ class PairingLedger:
             return []
         policy = self._policy()
         store, result, pending = Store(self.store_dir), [], []
-        frozen = {r.data['context_sha256']: r.data for r in store.of_kind('paired_estimate')
+        frozen = {request_identity(r.data['timing_context']): r.data for r in store.of_kind('paired_estimate')
                   if r.data['campaign'] == self.campaign['id']}
         for request in requests:
             context = self._context(store, request)
-            digest = artifacts.digest(context)
-            existing = frozen.get(digest)
+            key = request_identity(context)
+            existing = frozen.get(key)
             if existing:
                 if existing['policy_sha256'] != artifacts.digest(policy):
                     raise Failure('paired estimate context has ambiguous or changed frozen policy')
@@ -203,6 +232,11 @@ class PairingLedger:
                 state, missing = 'fixture_estimate', ['contract_fixture_never_application_agreement']
             if self.campaign['target'] == 'dx100_gem5':
                 missing.append('functional_trial_lambda_to_mmio_complete_call_bridge')
+            exposure = self._prior_exposure(store, context['subject']['artifact_sha256'])
+            if exposure:
+                context['prior_outcome_exposure'] = exposure
+                missing.append('prior_artifact_outcome_access_not_fresh_by_record_name')
+            digest = artifacts.digest(context)
             data = workflow.record('paired_estimate', self.campaign['id'] + '.paired', format=FORMAT,
                 mode='extensa', campaign=self.campaign['id'], basis='estimated', estimator_variant='research',
                 estimator_version=VERSION, estimator_sha256=policy['estimator_sha256'],
@@ -212,7 +246,7 @@ class PairingLedger:
             data['identity_sha256'] = identity(data)
             data['id'] += '.' + data['identity_sha256'][:16]
             pending.append(data)
-            frozen[digest] = data
+            frozen[key] = data
             result.append(data['id'])
         if pending:
             # One transaction validates all contexts before the first outcome,
@@ -222,12 +256,45 @@ class PairingLedger:
             db.build(self.store_dir, db.default_path(self.store_dir))
         return result
 
+    def _prior_exposure(self, store, artifact_sha256):
+        """Read retained identity/access metadata only, never any duration/ratio.
+
+        Prior artifact access is a conservative disclosure, not proof that a new
+        artifact+input+configuration tuple is fresh. Unindexed raw history remains
+        unverified; every real estimate is still structurally unknown/ineligible.
+        """
+        result = []
+        for record in store.of_kind('evaluation'):
+            data = record.data
+            if not data.get('timing'):
+                continue  # Compile-only records have no timing observations.
+            candidate = store.get(data.get('candidate'), 'candidate')
+            sha = data.get('context', {}).get('candidate_sha256')
+            if sha is None and candidate is not None:
+                sha = candidate['artifact']['sha256']
+            if sha == artifact_sha256:
+                result.append({'record': data['id'], 'scope': 'prior_artifact_timing_record_metadata'})
+        path = self.folder / 'outcome-accesses.jsonl'
+        if path.exists():
+            rows = {r.id: r.data for r in store.of_kind('paired_estimate')}
+            for event in (json.loads(line) for line in path.read_text().splitlines()):
+                for rid in event['paired_estimates']:
+                    row = rows.get(rid)
+                    if row and row['timing_context']['subject']['artifact_sha256'] == artifact_sha256:
+                        result.append({'record': rid, 'stage': event['stage'],
+                                       'scope': 'prior_artifact_outcome_access_boundary'})
+        return sorted({json.dumps(row, sort_keys=True): row for row in result}.values(),
+                      key=lambda row: json.dumps(row, sort_keys=True))
+
     def before(self, stage, requests):
         """Durably retain the boundary before the caller reads or starts timing."""
         if not self.enabled:
             return []
         refs = self.freeze(requests)
-        event = {'stage': stage, 'paired_estimates': refs, 'outcome_access_started_at': writer.now()}
+        store = Store(self.store_dir)
+        event = {'stage': stage, 'paired_estimates': refs,
+                 'timing_contexts': [self._context(store, request) for request in requests],
+                 'outcome_access_started_at': writer.now()}
         with (self.folder / 'outcome-accesses.jsonl').open('a') as stream:
             stream.write(json.dumps(event, sort_keys=True, allow_nan=False) + '\n')
             stream.flush()
