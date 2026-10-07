@@ -209,6 +209,30 @@ def _bulk_binding(args,target,char,cells,scopes):
 
 
 
+
+def _allocator_resource_binding(args,target,char,cells,scopes):
+    from swdb.analytic_cpu_service import ALLOCATOR_RESOURCE_ASSUMPTION
+    parameters={}; selectors={}; rows=[]
+    for calibration,service in cells:
+        scope=service['scope'];abi=scope.get('event_abi');size=scope.get('size_bytes')
+        if (service.get('cost_basis')!='gross_allocator_loop_resource_v1' or abi not in ALLOCATOR_FIELDS or
+            type(size) is not int or size<=0 or size>1048576 or scope.get('allocator_regime')!='fresh_process_repeated_allocate_free_batches'):
+            raise Failure('unsupported exact gross allocator ABI/size/regime')
+        selection=selectors.setdefault(abi,{'name':abi,'unit':'seconds/call','bin_kind':ALLOCATOR_FIELDS[abi],
+            'bins':[],'scope_assumption':copy.deepcopy(ALLOCATOR_RESOURCE_ASSUMPTION)})
+        if any(row['bytes']==size for row in selection['bins']):raise Failure('ambiguous duplicate gross allocator ABI/size')
+        name='allocator_gross_'+str(len(parameters));parameter=copy.deepcopy(service['parameter'])
+        missing,scope_rows=_scope_compatibility(target,char,calibration,service,args.fixture,scopes)
+        if missing:parameter.update(value=None,basis='unknown')
+        parameter['source']+='; exact context binding; constructed gross allocator transfer and resource/compute overlap remain inferred'
+        parameters[name]=parameter;selection['bins'].append({'bytes':size,'parameter':name})
+        rows.append({'calibration':calibration['id'],'service':service['id'],'parameter':name,'missing':missing,'scopes':scope_rows})
+    mechanism={'model':'native_service_costs','accounting':'resource_bound',
+        'selector':{'domain':'host','worker_scope':'serial_T1','characterization_sha256':artifacts.digest(char),
+            'resource_recipe':'gross_allocator_loop_resource_v1','calls':list(selectors.values())},'parameters':parameters}
+    return mechanism,rows
+
+
 def bind(args):
     from swdb.archevolve import require_team_safe
     from swdb import workflow
@@ -223,17 +247,20 @@ def bind(args):
     require_team_safe(store,target,*scopes,*args.calibration,command='bind-cpu-services')
     result=copy.deepcopy(target)
     result.update(id=args.id,created=writer.today(),updated=writer.today())
-    parameters={}; selectors={}; proofs=[]; rows=[]; memory_cells=[];bulk_cells=[];openmp_cells=[];openmp_documents=[]
+    parameters={}; selectors={}; proofs=[]; rows=[]; memory_cells=[];bulk_cells=[];allocator_resource_cells=[];openmp_cells=[];openmp_documents=[]
     for identifier in args.calibration:
         found=store.by_id.get(identifier)
         if found is None:
             from swdb import access
             kind=access.read_record(Path(identifier)).get('kind')
         else:kind=found.kind
-        if kind not in ('cpu_service_calibration','cpu_memory_resource_calibration','cpu_bulk_resource_calibration'):
+        if kind not in ('cpu_service_calibration','cpu_memory_resource_calibration','cpu_bulk_resource_calibration','cpu_allocator_resource_calibration'):
             raise Failure('unsupported typed CPU service/resource calibration kind')
         calibration=_load(store,identifier,kind)
-        if kind=='cpu_bulk_resource_calibration':
+        if kind=='cpu_allocator_resource_calibration':
+            from swdb.cpu_allocator_resource import validate_record as validate_resource
+            problems=list(validate_resource(Record(Path(identifier),calibration),store))
+        elif kind=='cpu_bulk_resource_calibration':
             from swdb.cpu_bulk_resource import validate_record as validate_resource
             problems=list(validate_resource(Record(Path(identifier),calibration),store))
         elif kind=='cpu_memory_resource_calibration':
@@ -245,6 +272,8 @@ def bind(args):
         for service in calibration['services']:
             missing,scope_rows=_scope_compatibility(target,char,calibration,service,args.fixture,scopes)
             scope=service.get('scope',{})
+            if kind=='cpu_allocator_resource_calibration':
+                allocator_resource_cells.append((calibration,service));continue
             if scope.get('openmp_regime'):
                 openmp_cells.append((calibration,service));continue
             if scope.get('bulk_regime'):
@@ -286,7 +315,12 @@ def bind(args):
         selectors.update(bulk_selectors);parameters.update(bulk_parameters);rows.extend(bulk_rows)
     elif args.bulk_profile_policy is not None or args.bulk_copy_calibration is not None:
         raise Failure('bulk selection policy requires typed bulk calibration cells')
-    if not selectors and not memory_cells:raise Failure('binding needs at least one independently scoped service')
+    allocator_resource=None
+    if allocator_resource_cells:
+        allocator_resource,resource_rows=_allocator_resource_binding(args,target,char,allocator_resource_cells,scopes);rows.extend(resource_rows)
+        if set(selectors)&{item['name'] for item in allocator_resource['selector']['calls']}:
+            raise Failure('paired and gross allocator ABI selections cannot mix; use one complete gross resource family')
+    if not selectors and not memory_cells and not allocator_resource:raise Failure('binding needs at least one independently scoped service')
     removed=[]
     if memory_cells:
         if target.get('extensions',{}).get('cpu_services_binding'):raise Failure('bind memory services from an unbound immutable base description')
@@ -296,6 +330,7 @@ def bind(args):
     if selectors:result['mechanisms'].append({'model':'native_service_costs','accounting':'additive_overhead',
         'selector':{'domain':'host','worker_scope':'serial_T1','characterization_sha256':artifacts.digest(char),'calls':list(selectors.values()),**({'openmp_projections':openmp_documents} if openmp_documents else {})},'parameters':parameters})
     if memory_cells:result['mechanisms'].append(memory)
+    if allocator_resource:result['mechanisms'].append(allocator_resource)
     if len(scopes)>1:
         for mechanism in result['mechanisms']:
             if mechanism['model'] in ('native_service_costs','memory_service_scenario'):
@@ -312,6 +347,7 @@ def bind(args):
     evidence={'format':'swdb.cpu-services-binding.v1','base':{'id':target['id'],'sha256':artifacts.digest(target)},
         'characterization':{'id':char['id'],'sha256':artifacts.digest(char)},'characterization_allowlist':allowlist,'calibrations':proofs,'compatibility':rows,
         'models':[m['model'] for m in result['mechanisms'] if m['model'] in ('native_service_costs','memory_service_scenario')],
+        'allocator_resource_selection':{'recipe':'gross_allocator_loop_resource_v1','composition':'max_with_counted_compute_resource','paired_rates_used':False} if allocator_resource_cells else None,
         'memory_selection':{'footprint_bytes':args.memory_footprint_bytes,'cas_policy':args.memory_cas_policy,'superseded_memory_models':removed} if memory_cells else None,
         'bulk_selection':{'profile_policy':args.bulk_profile_policy,'copy_calibration':args.bulk_copy_calibration,'application_overlap':'unverified','application_alignment':'unverified','physical_upper_bound':False} if bulk_cells else None,
         'model':'native_service_costs','transfer_basis':'inferred','timings_rerun':False}

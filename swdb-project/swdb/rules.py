@@ -94,6 +94,9 @@ def check(record, ctx):
     elif kind == "cpu_native_validation":
         from swdb import cpu_native_validation
         yield from cpu_native_validation.validate_record(record, ctx)
+    elif kind == "cpu_allocator_resource_calibration":
+        from swdb.cpu_allocator_resource import validate_record
+        yield from validate_record(record, ctx)
     elif kind == "cpu_bulk_resource_calibration":
         from swdb.cpu_bulk_resource import validate_record
         yield from validate_record(record, ctx)

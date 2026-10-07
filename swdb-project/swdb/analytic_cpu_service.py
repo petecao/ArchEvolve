@@ -32,11 +32,14 @@ def _scope_missing(selector,context,prefix,*,required=False):
 
 def native_service_costs(region, mechanism, *, context=None):
     selector = mechanism.get('selector', {})
-    missing = ['selector.' + key for key in sorted(set(selector) - {'domain', 'worker_scope', 'calls', 'characterization_sha256','characterization_allowlist','openmp_projections','calibration_admission'})]
+    missing = ['selector.' + key for key in sorted(set(selector) - {'domain', 'worker_scope', 'calls', 'characterization_sha256','characterization_allowlist','openmp_projections','calibration_admission','resource_recipe'})]
     if selector.get('domain') != 'host' or selector.get('worker_scope') != 'serial_T1':
         missing.append('selector.host_serial_T1')
     missing.extend(_scope_missing(selector,context,'service_scope'))
     missing.extend(_admission_missing(mechanism))
+    resource=selector.get('resource_recipe')
+    if resource is not None and (resource!='gross_allocator_loop_resource_v1' or mechanism.get('accounting')!='resource_bound'):
+        missing.append('allocator_resource.explicit_max_composition')
     calls = selector.get('calls')
     if not isinstance(calls, list) or not calls:
         missing.append('selector.calls')
@@ -52,6 +55,10 @@ def native_service_costs(region, mechanism, *, context=None):
         if not (scalar or shaped or openmp) or selection.get('unit') != 'seconds/call' or not isinstance(selection.get('name'),str) or not selection['name'] or (scalar and not isinstance(selection.get('parameter'),str)):
             missing.append('selector.calls.scalar_seconds_per_call')
             continue
+        if resource is not None and (not shaped or selection.get('scope_assumption')!=ALLOCATOR_RESOURCE_ASSUMPTION):
+            missing.append('allocator_resource.exact_gross_selector')
+        if shaped and selection.get('scope_assumption')==ALLOCATOR_RESOURCE_ASSUMPTION and resource is None:
+            missing.append('allocator_resource.explicit_max_composition')
         name = selection['name']
         if name in seen:
             missing.append('selector.calls.duplicate_name')
@@ -95,6 +102,7 @@ def native_service_costs(region, mechanism, *, context=None):
         ['A counted callee body receives no second service charge. Exact site/full-count coverage is required.',
          'Service scope is serial T1; size-bin allocator-state transfer is explicitly inferred. Unsupported length/lifetime/selector semantics remain unknown.',
          'OpenMP requires full characterization/static-site projection and exact ABI classes. Legal warmed-T1 state, dynamic bounds and pointer-state transfer remain inferred; both dispatch return-profile costs are required.',
+         'Gross allocator loops retain paired diagnostics but use their separate explicit resource maximum with counted compute; inferred overlap, no paired latency or proven upper bound.',
          'Bulk profile maxima are explicitly inferred constructed scenarios; application overlap and alignment remain unverified. No physical latency or proven application upper bound is established.'])
 
 
@@ -113,6 +121,9 @@ def _rate(mechanism,name,unit='seconds/call'):
     fact=mechanism['parameters'].get(name,{})
     return None if fact.get('basis')=='unknown' else parameter(mechanism,name,unit)
 
+
+ALLOCATOR_RESOURCE_ASSUMPTION={'regime':'fresh_process_repeated_allocate_free_batches','transfer_basis':'inferred',
+    'cost_basis':'gross_allocator_loop_resource_v1','includes_loop_control':True,'composition':'max_with_counted_compute_resource'}
 
 BULK_PROFILES=('dynamic_length_disjoint_align4','dynamic_length_overlap_forward4_align4','dynamic_length_overlap_backward4_align4')
 BULK_ABIS={'memcpy':'copy','llvm.memcpy.p0.p0.i64':'copy','memmove':'move','llvm.memmove.p0.p0.i64':'move'}
@@ -151,7 +162,7 @@ def _shape_parameters(selection,mechanism):
     else:
         if allocator_fields.get(selection['name']) != selection['bin_kind']:
             missing.append('selector.calls.allocator_abi_bin_kind')
-        if selection['scope_assumption']!={'regime':'fresh_process_repeated_allocate_free_batches','transfer_basis':'inferred'}:
+        if selection['scope_assumption'] not in ({'regime':'fresh_process_repeated_allocate_free_batches','transfer_basis':'inferred'},ALLOCATOR_RESOURCE_ASSUMPTION):
             missing.append('selector.calls.explicit_allocator_regime_transfer')
     if selection['bin_kind'] not in ('known_length_bins','allocation_lifetime_size_bins'):
         missing.append('selector.calls.bin_kind')
