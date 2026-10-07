@@ -1,5 +1,5 @@
 catalog_id: archevolve-hardware
-revision: 0.1.15
+revision: 0.1.16
 format: hardware-catalog-v0.1
 status: research_reviewed_prototype
 project_selections:
@@ -504,6 +504,17 @@ sources:
     conference: MICRO
     publication_year: 2019
     doi: 10.1145/3352460.3358286
+    reviewed_on: '2026-10-06'
+  hta-micro2019-proceedings:
+    title: Leveraging Caches to Accelerate Hash Tables and Memoization
+    edition: MICRO2019 proceedings;13-pagecachedprimary; DOI10.1145/3352460.3358272
+    url: https://doi.org/10.1145/3352460.3358272
+    sha256: 7a37d55b777edb1b37af9e70d907396d088f78da13e640a58ce80e5c026f8263
+    locator_basis: 1-based cached proceedings PDF pages
+    document_type: conference_paper
+    conference: MICRO
+    publication_year: 2019
+    doi: 10.1145/3352460.3358272
     reviewed_on: '2026-10-06'
 claims:
   maple-api:
@@ -2325,6 +2336,85 @@ claims:
     limitations:
     - Paper specification only. Actual BMU/ISA, bit encoding, address translation and physical-memory identities
       remain unbound.
+  hta-line-format:
+    source_refs:
+    - hta-micro2019-proceedings
+    locator: PDFp4 §3.1 Fig4
+    statement: Flat-HTA stores fixed-size key/value pairs associatively within the single cache line selected
+      by hashing. Invalid sentinel keys hash to a different line; deleted keys differ from invalid keys,
+      prevent lookup from terminating, and are reusable by update/swap.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper-level Flat-HTA integer-word subset; exact ISA/compiler/hash/atomic implementation identity and
+      consumer wrapper still require binding.
+  hta-branch-lookup:
+    source_refs:
+    - hta-micro2019-proceedings
+    locator: PDFp4 §3.2 Fig5
+    statement: Table descriptors specify starting address/size; four are supported in the described implementation.
+      Lookup handles up to four key words and one value word. The x86-64 integer example uses64-bit registers.
+      Found keys or available invalid slots resolve with a taken branch; absent keys in a full line fall
+      through to software.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper-level Flat-HTA integer-word subset; exact ISA/compiler/hash/atomic implementation identity and
+      consumer wrapper still require binding.
+  hta-update-swap-delete:
+    source_refs:
+    - hta-micro2019-proceedings
+    locator: PDFpp4-5 §3.2 Fig6
+    statement: Update changes a matching key or reusable slot and otherwise falls through without modification.
+      Full-line swap installs the new pair and returns a randomly selected victim key/value to software.
+      Delete writes a deleted-key sentinel on a hit and falls through on a miss.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper-level Flat-HTA integer-word subset; exact ISA/compiler/hash/atomic implementation identity and
+      consumer wrapper still require binding.
+  hta-overflow-software:
+    source_refs:
+    - hta-micro2019-proceedings
+    locator: PDFpp5-6 §3.2,§4.3
+    statement: Software overflow stores displaced pairs. Full-swap insertion software preserves the victim
+      and removes a stale copy of the newly inserted key if present. Software counters can trigger table
+      resizing/reinsertion of all pairs.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper-level Flat-HTA integer-word subset; exact ISA/compiler/hash/atomic implementation identity and
+      consumer wrapper still require binding.
+  hta-core-implementation:
+    source_refs:
+    - hta-micro2019-proceedings
+    locator: PDFpp5-6 §4.1 Fig7
+    statement: An HTA functional unit hashes using x86 CRC32 with power-of-two table sizes, fetches one
+      line, compares keys and resolves the branch/result. Decoder emits operand-feed, start, branch and
+      result micro-operations; existing prediction mechanisms overlap the software or continuation path.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper-level Flat-HTA integer-word subset; exact ISA/compiler/hash/atomic implementation identity and
+      consumer wrapper still require binding.
+  hta-concurrent-fallback:
+    source_refs:
+    - hta-micro2019-proceedings
+    locator: PDFp6 §4.4 Figs8-9
+    statement: Atomic HTA instructions handle resolved operations. Software fallback uses line locks and
+      lookup recheck after acquiring a lock; thread-safe insertion first tries no-eviction update and performs
+      swap under the fallback lock. This does not certify an arbitrary Python or unlocked software map.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper-level Flat-HTA integer-word subset; exact ISA/compiler/hash/atomic implementation identity and
+      consumer wrapper still require binding.
+  hta-mixed-owner-obligation:
+    source_refs:
+    - hta-micro2019-proceedings
+    locator: PDFpp4-6 §3.2/§4.3 plus owned synthetic table_contract regression
+    statement: A consumer that skips all software bookkeeping on a taken branch can leave a stale overflow
+      key after deleted-slot reuse and expose it after deletion. The tested single-threaded wrapper enforces
+      exclusive ownership on every insertion/deletion. This is a source-derived integration obligation,
+      not a demonstrated fault in an authenticated published wrapper.
+    evidence_kind: research_inference
+    limitations:
+    - New synthetic instruction/consumer sequence only; actual published software wrappers and concurrent
+      behavior not inspected or certified.
 mechanism_families:
 - id: queue-latency-tolerance
   name: Queue-backed asynchronous access
@@ -2365,6 +2455,9 @@ mechanism_families:
 - id: smash-hierarchical-bitmap-indexing
   description: Software hierarchical compression with group-scoped BMU indexing and CPU consumer; no inherited
     operand-load or arithmetic capability.
+- id: flat-hta-key-map-and-fallback
+  description: Hash-key cache-line map with explicit resolved/fallback branch interface and software overflow;
+    no general indexed-memory or atomic-RMW capability inheritance.
 decision_questions:
 - id: operation-result
   question: Is the requested result a fetched value, update success, old value, reduction, or only a cache hint?
@@ -7976,3 +8069,379 @@ designs:
     inventing padding.
   - Concrete bit packing/endianness, register widths, faults and EOF transport unspecified.
   - No generic graph traversal, gather, arithmetic or original benchmark correctness is granted.
+
+- id: flat-hta-micro2019-integer-key-map
+  name: Flat-HTA MICRO2019 integer-word key map with software fallback
+  revision: primary-scoped-proposal-r1
+  record_kind: mapping
+  summary: One hashed cache-line key map with resolved/fallback branch instructions and software victim
+    handling; conservative integer-word subset.
+  mechanism_refs:
+  - flat-hta-key-map-and-fallback
+  source_refs:
+  - hta-micro2019-proceedings
+  interface:
+    software_supplies: Table descriptor/base/size, integer key tuple and optional value, reserved-slot
+      sentinel/hash setup, continuation target and software overflow/ownership strategy.
+    invocation: hta_lookup/update/swap/delete; resolved operations branch to continuation, unresolved
+      operations execute the software path. Concurrent fallback locks and rechecks.
+    outputs: Lookup hit/miss or fallback status, optional matching value, and displaced victim pair on
+      full-line swap.
+    claim_refs:
+    - hta-line-format
+    - hta-branch-lookup
+    - hta-update-swap-delete
+    - hta-overflow-software
+    - hta-core-implementation
+    - hta-concurrent-fallback
+  operations:
+  - id: integer64_lookup
+    operation: read
+    subtype: flat_hta_integer64_key_lookup
+    execution_role: execute
+    support: paper_specified
+    address_patterns:
+    - indirect
+    claim_refs:
+    - hta-branch-lookup
+    - hta-update-swap-delete
+    - hta-line-format
+    realization:
+      kind: documented_sequence
+      description: Return a matching key value or resolved miss; absent key with no invalid slot requires
+        software overflow lookup. Complete the original software fallback and ownership protocol; concurrent
+        maps require atomic instructions, lock/recheck and locked eviction.
+      claim_refs:
+      - hta-branch-lookup
+      - hta-update-swap-delete
+      - hta-overflow-software
+      - hta-concurrent-fallback
+    result:
+      form: Return a matching key value or resolved miss; absent key with no invalid slot requires software
+        overflow lookup.
+      old_value: not_applicable
+      validity: Explicit Flat-HTA key map, correct hash/line/sentinel/descriptor and complete software
+        consumer. A returned eviction victim is not the old value of the requested key.
+      claim_refs:
+      - hta-line-format
+      - hta-update-swap-delete
+    ordering:
+      scope: One key operation plus its necessary software fallback
+      description: Branch taken means hardware resolution, not necessarily key found or no software ownership
+        obligation. Atomic fast path and locked concurrent fallback must be established separately.
+      claim_refs:
+      - hta-branch-lookup
+      - hta-concurrent-fallback
+    completion:
+      event: Hardware branch/result resolved and all required software victim/duplicate/delete bookkeeping
+        complete.
+      visibility: Concurrent use also requires the original atomic/lock/recheck protocol; Python single-threaded
+        completion is not a hardware fence.
+      claim_refs:
+      - hta-overflow-software
+      - hta-concurrent-fallback
+    type_constraints:
+      payload_types:
+      - uint64
+      index_width_bits: []
+      claim_refs:
+      - hta-branch-lookup
+      notes: Scoped opaque64-bit integer register-word transport. Key tuple width1-4 words is not an array-index
+        ABI; signed arithmetic and FP key/value semantics unclaimed.
+    datatype_notes: Opaque raw integer words; no numerical operation, FP comparison, arbitrary value width
+      or generic CAS semantics.
+    limitations:
+    - Only explicit hash-key map subtype; no ordinary gather or generic atomic returned-old-value capability.
+    - Software duplicate/tombstone ownership needs concrete wrapper binding.
+  - id: integer64_update
+    operation: write
+    subtype: flat_hta_integer64_key_update
+    execution_role: execute
+    support: paper_specified
+    address_patterns:
+    - indirect
+    claim_refs:
+    - hta-branch-lookup
+    - hta-update-swap-delete
+    - hta-line-format
+    realization:
+      kind: documented_sequence
+      description: Update matching pair or invalid/deleted slot; full-line failure leaves the HTA line
+        unchanged and falls through. Complete the original software fallback and ownership protocol; concurrent
+        maps require atomic instructions, lock/recheck and locked eviction.
+      claim_refs:
+      - hta-branch-lookup
+      - hta-update-swap-delete
+      - hta-overflow-software
+      - hta-concurrent-fallback
+    result:
+      form: Update matching pair or invalid/deleted slot; full-line failure leaves the HTA line unchanged
+        and falls through.
+      old_value: not_applicable
+      validity: Explicit Flat-HTA key map, correct hash/line/sentinel/descriptor and complete software
+        consumer. A returned eviction victim is not the old value of the requested key.
+      claim_refs:
+      - hta-line-format
+      - hta-update-swap-delete
+    ordering:
+      scope: One key operation plus its necessary software fallback
+      description: Branch taken means hardware resolution, not necessarily key found or no software ownership
+        obligation. Atomic fast path and locked concurrent fallback must be established separately.
+      claim_refs:
+      - hta-branch-lookup
+      - hta-concurrent-fallback
+    completion:
+      event: Hardware branch/result resolved and all required software victim/duplicate/delete bookkeeping
+        complete.
+      visibility: Concurrent use also requires the original atomic/lock/recheck protocol; Python single-threaded
+        completion is not a hardware fence.
+      claim_refs:
+      - hta-overflow-software
+      - hta-concurrent-fallback
+    type_constraints:
+      payload_types:
+      - uint64
+      index_width_bits: []
+      claim_refs:
+      - hta-branch-lookup
+      notes: Scoped opaque64-bit integer register-word transport. Key tuple width1-4 words is not an array-index
+        ABI; signed arithmetic and FP key/value semantics unclaimed.
+    datatype_notes: Opaque raw integer words; no numerical operation, FP comparison, arbitrary value width
+      or generic CAS semantics.
+    limitations:
+    - Only explicit hash-key map subtype; no ordinary gather or generic atomic returned-old-value capability.
+    - Software duplicate/tombstone ownership needs concrete wrapper binding.
+  - id: integer64_swap
+    operation: write
+    subtype: flat_hta_integer64_key_swap
+    execution_role: execute
+    support: paper_specified
+    address_patterns:
+    - indirect
+    claim_refs:
+    - hta-branch-lookup
+    - hta-update-swap-delete
+    - hta-line-format
+    realization:
+      kind: documented_sequence
+      description: Update/insert pair; if the line is full, evict a selected victim and return its key/value
+        for software ownership maintenance. Complete the original software fallback and ownership protocol;
+        concurrent maps require atomic instructions, lock/recheck and locked eviction.
+      claim_refs:
+      - hta-branch-lookup
+      - hta-update-swap-delete
+      - hta-overflow-software
+      - hta-concurrent-fallback
+    result:
+      form: Update/insert pair; if the line is full, evict a selected victim and return its key/value
+        for software ownership maintenance.
+      old_value: not_applicable
+      validity: Explicit Flat-HTA key map, correct hash/line/sentinel/descriptor and complete software
+        consumer. A returned eviction victim is not the old value of the requested key.
+      claim_refs:
+      - hta-line-format
+      - hta-update-swap-delete
+    ordering:
+      scope: One key operation plus its necessary software fallback
+      description: Branch taken means hardware resolution, not necessarily key found or no software ownership
+        obligation. Atomic fast path and locked concurrent fallback must be established separately.
+      claim_refs:
+      - hta-branch-lookup
+      - hta-concurrent-fallback
+    completion:
+      event: Hardware branch/result resolved and all required software victim/duplicate/delete bookkeeping
+        complete.
+      visibility: Concurrent use also requires the original atomic/lock/recheck protocol; Python single-threaded
+        completion is not a hardware fence.
+      claim_refs:
+      - hta-overflow-software
+      - hta-concurrent-fallback
+    type_constraints:
+      payload_types:
+      - uint64
+      index_width_bits: []
+      claim_refs:
+      - hta-branch-lookup
+      notes: Scoped opaque64-bit integer register-word transport. Key tuple width1-4 words is not an array-index
+        ABI; signed arithmetic and FP key/value semantics unclaimed.
+    datatype_notes: Opaque raw integer words; no numerical operation, FP comparison, arbitrary value width
+      or generic CAS semantics.
+    limitations:
+    - Only explicit hash-key map subtype; no ordinary gather or generic atomic returned-old-value capability.
+    - Software duplicate/tombstone ownership needs concrete wrapper binding.
+  - id: integer64_delete
+    operation: write
+    subtype: flat_hta_integer64_key_delete
+    execution_role: execute
+    support: paper_specified
+    address_patterns:
+    - indirect
+    claim_refs:
+    - hta-branch-lookup
+    - hta-update-swap-delete
+    - hta-line-format
+    realization:
+      kind: documented_sequence
+      description: Replace a matching key with the deleted sentinel; a miss requires software fallback.
+        Complete the original software fallback and ownership protocol; concurrent maps require atomic
+        instructions, lock/recheck and locked eviction.
+      claim_refs:
+      - hta-branch-lookup
+      - hta-update-swap-delete
+      - hta-overflow-software
+      - hta-concurrent-fallback
+    result:
+      form: Replace a matching key with the deleted sentinel; a miss requires software fallback.
+      old_value: not_applicable
+      validity: Explicit Flat-HTA key map, correct hash/line/sentinel/descriptor and complete software
+        consumer. A returned eviction victim is not the old value of the requested key.
+      claim_refs:
+      - hta-line-format
+      - hta-update-swap-delete
+    ordering:
+      scope: One key operation plus its necessary software fallback
+      description: Branch taken means hardware resolution, not necessarily key found or no software ownership
+        obligation. Atomic fast path and locked concurrent fallback must be established separately.
+      claim_refs:
+      - hta-branch-lookup
+      - hta-concurrent-fallback
+    completion:
+      event: Hardware branch/result resolved and all required software victim/duplicate/delete bookkeeping
+        complete.
+      visibility: Concurrent use also requires the original atomic/lock/recheck protocol; Python single-threaded
+        completion is not a hardware fence.
+      claim_refs:
+      - hta-overflow-software
+      - hta-concurrent-fallback
+    type_constraints:
+      payload_types:
+      - uint64
+      index_width_bits: []
+      claim_refs:
+      - hta-branch-lookup
+      notes: Scoped opaque64-bit integer register-word transport. Key tuple width1-4 words is not an array-index
+        ABI; signed arithmetic and FP key/value semantics unclaimed.
+    datatype_notes: Opaque raw integer words; no numerical operation, FP comparison, arbitrary value width
+      or generic CAS semantics.
+    limitations:
+    - Only explicit hash-key map subtype; no ordinary gather or generic atomic returned-old-value capability.
+    - Software duplicate/tombstone ownership needs concrete wrapper binding.
+  requirements:
+  - id: descriptor-and-hash
+    scope: Explicit Flat-HTA key map
+    verification: required
+    description: Bind exact table/word count, descriptor, power-of-two geometry, actual CRC/hash and each
+      selected line. No missing-line/context default is allowed.
+    claim_refs:
+    - hta-line-format
+    - hta-core-implementation
+  - id: invalid-deleted-domain
+    scope: Explicit Flat-HTA key map
+    verification: required
+    description: Sentinel values must hash away from the line they mark. Lookup must not treat deleted
+      as invalid; update/swap may reuse it.
+    claim_refs:
+    - hta-line-format
+  - id: exclusive-owner
+    scope: Explicit Flat-HTA key map
+    verification: required
+    description: Bind hardware/software duplicate cleanup on insertion and deletion, victim preservation
+      and resizing. The paper full-swap cleanup alone does not establish an arbitrary mixed-operation
+      wrapper.
+    claim_refs:
+    - hta-overflow-software
+    - hta-mixed-owner-obligation
+  - id: concurrent-protocol
+    scope: Explicit Flat-HTA key map
+    verification: required
+    description: Prove atomic hardware operations and software fallback lock/recheck, update-before-lock
+      and swap-under-lock protocol before concurrent use.
+    claim_refs:
+    - hta-concurrent-fallback
+  - id: software-branch
+    scope: Explicit Flat-HTA key map
+    verification: required
+    description: Differentiate resolved miss from hit and unresolved fallback; do not expose undefined
+      miss value as0 or return an eviction victim as the requested key old value.
+    claim_refs:
+    - hta-branch-lookup
+    - hta-update-swap-delete
+  - id: actual-source-and-memory
+    scope: Implementation binding
+    verification: unknown
+    description: Authenticate actual ISA/register packing/compiler/hash/atomic/software wrapper and memory
+      translation/coherence/protection. Do not import physical stash restrictions from Hierarchical-HTA.
+    claim_refs: []
+  parameters:
+  - id: reference-line
+    unit: bytes
+    state: fixed_reference
+    value: 64
+    domain: null
+    claim_refs:
+    - hta-line-format
+    notes: Fig4 cache-line reference; raw helper capacity derives from fixed key/value words.
+  - id: reference-descriptors
+    unit: table descriptors
+    state: fixed_reference
+    value: 4
+    domain: null
+    claim_refs:
+    - hta-branch-lookup
+    notes: Architectural descriptor reference, not table owner/context count.
+  internal_mechanisms:
+  - id: line-associative-pairs
+    kind: buffering
+    status: described
+    description: One hash-selected cache line holds any matching key in its fixed pair slots; separate
+      software map stores overflow.
+    claim_refs:
+    - hta-line-format
+    - hta-overflow-software
+  - id: hash-compare-branch
+    kind: issue_policy
+    status: described
+    description: Functional unit receives key words/table descriptor, hashes and fetches one line, compares
+      keys, resolves branch and result.
+    claim_refs:
+    - hta-core-implementation
+  - id: software-key-maintenance
+    kind: dependency_tracking
+    status: described
+    description: Unresolved paths preserve victims and handle stale key copies; concurrent paths lock
+      and recheck before fallback access.
+    claim_refs:
+    - hta-overflow-software
+    - hta-concurrent-fallback
+  - id: speculative-path-selection
+    kind: other
+    status: described
+    description: Existing branch prediction overlaps software or continuation execution; actual misprediction/retirement
+      obligations require implementation binding.
+    claim_refs:
+    - hta-core-implementation
+  - id: resolved-or-fallback
+    kind: completion
+    status: described
+    description: Instruction resolves branch/result; unresolved logical map operation still requires software
+      completion and concurrency protocol.
+    claim_refs:
+    - hta-branch-lookup
+    - hta-concurrent-fallback
+  - id: request-coalescing
+    kind: coalescing
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: cross-operation-order
+    kind: reordering
+    status: unknown
+    description: null
+    claim_refs: []
+  limitations:
+  - Raw-word helper models a finite single-threaded normalized table, not ISA execution, actual CRC32
+    or atomic/cache behavior.
+  - Its mixed-operation cleanup is an explicit corrected consumer contract, not proof of published wrapper
+    source.
+  - No floating-point equality/type, general gather/CAS or Hierarchical-HTA stash capabilities.
+  - Actual implementation/register packing and concurrency behavior remain unbound.
