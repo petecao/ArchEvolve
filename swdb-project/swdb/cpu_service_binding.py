@@ -65,6 +65,15 @@ def _compatibility(target, char, calibration, service, fixture):
             measured={k:v for k,v in context.get('allocator_environment',{}).items() if k.startswith('MALLOC_') or k in exact_controls}
             if any(controls.get(k)!=v for k,v in measured.items()) or any(measured.get(k)!=v for k,v in controls.items()):
                 missing.append('service_allocator_controls')
+    if service.get('scope',{}).get('openmp_regime'):
+        observed=_library_hashes(native.get('loaded_libraries',{}),'libomp')
+        measured_libs=_library_hashes(context.get('loaded_libraries',{}),'libomp')
+        if not observed or None in observed or observed!=measured_libs:missing.append('service_runtime.libomp')
+        prefixes=('OMP_','KMP_','GOMP_')
+        if not set(prefixes)<=set(declaration.get('prefixes',[])):
+            missing.append('service_openmp_control_absence_scope')
+        actual_openmp={k:v for k,v in actual.items() if k.startswith(prefixes)}
+        if actual_openmp!=context.get('openmp_environment',{}):missing.append('service_openmp_controls')
     return missing
 
 
@@ -211,7 +220,7 @@ def bind(args):
     require_team_safe(store,target,*scopes,*args.calibration,command='bind-cpu-services')
     result=copy.deepcopy(target)
     result.update(id=args.id,created=writer.today(),updated=writer.today())
-    parameters={}; selectors={}; proofs=[]; rows=[]; memory_cells=[];bulk_cells=[]
+    parameters={}; selectors={}; proofs=[]; rows=[]; memory_cells=[];bulk_cells=[];openmp_cells=[];openmp_documents=[]
     for identifier in args.calibration:
         found=store.by_id.get(identifier)
         if found is None:
@@ -233,6 +242,8 @@ def bind(args):
         for service in calibration['services']:
             missing,scope_rows=_scope_compatibility(target,char,calibration,service,args.fixture,scopes)
             scope=service.get('scope',{})
+            if scope.get('openmp_regime'):
+                openmp_cells.append((calibration,service));continue
             if scope.get('bulk_regime'):
                 bulk_cells.append((calibration,service));continue
             if service.get('unit')=='seconds/request':
@@ -259,6 +270,13 @@ def bind(args):
             else:
                 if abi in selectors:raise Failure('ambiguous duplicate scalar service ABI')
                 selectors[abi]={'name':abi,'parameter':param,'unit':'seconds/call'}
+    if openmp_cells:
+        from swdb.cpu_openmp_binding import binding as openmp_binding
+        selected,known,openmp_rows,openmp_documents=openmp_binding(args,target,char,scopes,openmp_cells)
+        if set(selectors)&set(selected):raise Failure('ambiguous scalar/OpenMP ABI selection')
+        selectors.update(selected);parameters.update(known);rows.extend(openmp_rows)
+    elif args.openmp_projection or args.openmp_next_policy is not None:
+        raise Failure('OpenMP projection policy requires typed independent OpenMP calibration')
     if bulk_cells:
         bulk_selectors,bulk_parameters,bulk_rows=_bulk_binding(args,target,char,bulk_cells,scopes)
         if set(selectors)&set(bulk_selectors):raise Failure('ambiguous scalar/bulk ABI selection')
@@ -273,7 +291,7 @@ def bind(args):
         removed=[m['model'] for m in result['mechanisms'] if m['model'] in MEMORY_MODELS]
         result['mechanisms']=[m for m in result['mechanisms'] if m['model'] not in MEMORY_MODELS]
     if selectors:result['mechanisms'].append({'model':'native_service_costs','accounting':'additive_overhead',
-        'selector':{'domain':'host','worker_scope':'serial_T1','characterization_sha256':artifacts.digest(char),'calls':list(selectors.values())},'parameters':parameters})
+        'selector':{'domain':'host','worker_scope':'serial_T1','characterization_sha256':artifacts.digest(char),'calls':list(selectors.values()),**({'openmp_projections':openmp_documents} if openmp_documents else {})},'parameters':parameters})
     if memory_cells:result['mechanisms'].append(memory)
     if len(scopes)>1:
         for mechanism in result['mechanisms']:
@@ -304,6 +322,8 @@ def main():
     parser.add_argument('--fixture',action='store_true')
     parser.add_argument('--memory-footprint-bytes',type=int,help='explicit constructed 4/8B memory footprint; byte reads retain their separate256B scope')
     parser.add_argument('--memory-cas-policy',choices=[CAS_POLICY],help='explicit inferred transfer of the larger independent constructed success/failure median')
+    parser.add_argument('--openmp-projection',type=Path,action='append',default=[],help='exact sealed all-trial ABI projection for each frozen characterization')
+    parser.add_argument('--openmp-next-policy',choices=['max_constructed_success_failure_median'],help='explicit inferred maximum of independently retained success/terminal probes')
     parser.add_argument('--bulk-profile-policy',choices=['max_constructed_profiles_median'],help='explicit inferred maximum of separately retained exact bulk constructions, no physical upper bound')
     parser.add_argument('--bulk-copy-calibration',help='one exact receipt for duplicate constant8 copy cells; never pool')
     parser.add_argument('--format',choices=['yaml','json'],default='json')

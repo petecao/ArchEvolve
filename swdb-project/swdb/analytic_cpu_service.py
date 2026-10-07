@@ -32,7 +32,7 @@ def _scope_missing(selector,context,prefix,*,required=False):
 
 def native_service_costs(region, mechanism, *, context=None):
     selector = mechanism.get('selector', {})
-    missing = ['selector.' + key for key in sorted(set(selector) - {'domain', 'worker_scope', 'calls', 'characterization_sha256','characterization_allowlist'})]
+    missing = ['selector.' + key for key in sorted(set(selector) - {'domain', 'worker_scope', 'calls', 'characterization_sha256','characterization_allowlist','openmp_projections'})]
     if selector.get('domain') != 'host' or selector.get('worker_scope') != 'serial_T1':
         missing.append('selector.host_serial_T1')
     missing.extend(_scope_missing(selector,context,'service_scope'))
@@ -47,7 +47,8 @@ def native_service_costs(region, mechanism, *, context=None):
     for selection in calls:
         scalar = isinstance(selection,dict) and set(selection)=={'name','parameter','unit'}
         shaped = isinstance(selection,dict) and set(selection)=={'name','unit','bin_kind','bins','scope_assumption'}
-        if not (scalar or shaped) or selection.get('unit') != 'seconds/call' or not isinstance(selection.get('name'),str) or not selection['name'] or (scalar and not isinstance(selection.get('parameter'),str)):
+        openmp = isinstance(selection,dict) and set(selection)=={'name','unit','abi_sites','scope_assumption'}
+        if not (scalar or shaped or openmp) or selection.get('unit') != 'seconds/call' or not isinstance(selection.get('name'),str) or not selection['name'] or (scalar and not isinstance(selection.get('parameter'),str)):
             missing.append('selector.calls.scalar_seconds_per_call')
             continue
         name = selection['name']
@@ -70,7 +71,11 @@ def native_service_costs(region, mechanism, *, context=None):
                 missing.append('call_count.' + name)
                 continue
             missing.extend(_serial(region, context))
-            if shaped:
+            if openmp:
+                from swdb.analytic_cpu_openmp import cost as openmp_cost
+                cost,reasons=openmp_cost(region,call,selection,mechanism,context)
+                missing.extend(reasons)
+            elif shaped:
                 cost, reasons = _shape_cost(region,call,selection,shape_parameters,mechanism)
                 missing.extend(reasons)
             else:
@@ -87,6 +92,7 @@ def native_service_costs(region, mechanism, *, context=None):
         {'calls': selected, 'covered_calls': covered if not missing else []}, sorted(set(missing)),
         ['A counted callee body receives no second service charge. Exact site/full-count coverage is required.',
          'Service scope is serial T1; size-bin allocator-state transfer is explicitly inferred. Unsupported length/lifetime/selector semantics remain unknown.',
+         'OpenMP requires full characterization/static-site projection and exact ABI classes. Legal warmed-T1 state, dynamic bounds and pointer-state transfer remain inferred; both dispatch return-profile costs are required.',
          'Bulk profile maxima are explicitly inferred constructed scenarios; application overlap and alignment remain unverified. No physical latency or proven application upper bound is established.'])
 
 

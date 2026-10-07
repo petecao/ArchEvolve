@@ -566,3 +566,21 @@ Native import and Store replay require exact libomp/compiler/control identity,
 source/IR/projection hashes, the fixed matrix and declared budgets. Unsupported
 states or nonpositive residuals remain null. The prospective legal-state scope
 and dispatch commands are in [11-openmp-service-runbook.md](../../.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-service-runbook.md).
+
+### Exact OpenMP site binding
+
+Supply one `--openmp-projection` per frozen outcome-free characterization and the
+explicit `--openmp-next-policy max_constructed_success_failure_median` when adding
+the typed22-class OpenMP record. The binder verifies each complete record hash,
+normalized source IR, native projection compiler, and exact all-trial executed
+site union. The target retains those complete sealed projection snapshots.
+Compiler, libomp, interposer and actual declared OMP/KMP/GOMP environment mismatch
+keeps every affected parameter unknown.
+
+Each executed call selects its exact ABI/argument-count/literal/ident class and
+source outlined/caller context. Dynamic bounds, pointer state and internal runtime
+state remain unverified inferred transfer from legal warmed serializedT1 probes.
+A dispatch-next call requires both independently retained success and terminal
+costs; their prospective maximum is inferred, and either unknown keeps it null.
+Exact full-site counts are covered once. A callee body already counted receives
+no service charge; an ABI name alone does not waive an unsupported call.
