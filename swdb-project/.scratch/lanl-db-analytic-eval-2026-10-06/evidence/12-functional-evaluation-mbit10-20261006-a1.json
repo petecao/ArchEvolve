@@ -1,0 +1,125 @@
+{
+  "format": "swdb.functional-evaluation-compact-receipt.v1",
+  "updated": "2026-10-06 ET",
+  "source_commit": "bef54f9661d099dcf381538522bd4d9573d6fe0c",
+  "source_clean": true,
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-functional-evaluation-20261006-a1",
+  "raw_transferred": false,
+  "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+      "python3",
+      "/data/yanruj/EvolveSWDB_runs/lanl-functional-evaluation-20261006-a1/runner.py"
+    ],
+    "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+    "ended_utc": "2026-10-07T02:19:24Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "swdb-lanl-functional-evaluation-20261006-a1",
+    "lease_generation": 538,
+    "lease_name": "mbit10-evaluation-node1",
+    "load1_at_start": 1.56,
+    "load1_max": 32,
+    "node": 1,
+    "numa_memory_policy": "bind:1",
+    "numactl": "--cpunodebind=1 --membind=1",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-07T02:12:35Z"
+  },
+  "acceptance": {
+    "format": "swdb.functional-evaluation-acceptance.v1",
+    "updated": "2026-10-06 ET",
+    "source_commit": "bef54f9661d099dcf381538522bd4d9573d6fe0c",
+    "source_clean": true,
+    "raw_transferred": false,
+    "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-functional-evaluation-20261006-a1",
+    "application_performance_timings_collected": false,
+    "child_process_attempted": false,
+    "validation": "OK: 620 record(s) valid",
+    "preserved_prior_files": 619,
+    "new_files": [
+      "estimates/bfs.functional.evaluation.20261006.a1.estimate.yaml",
+      "evaluations/bfs.functional.evaluation.20261006.a1.yaml",
+      "protocols/bfs.functional.evaluation.protocol.20261006.a1.04ea188992780bf8.yaml"
+    ],
+    "evaluation": {
+      "id": "bfs.functional.evaluation.20261006.a1",
+      "sha256": "186741d5ec038faef1c507c2c4ef4de28971aab842a3fccd4d385ef91b53f472",
+      "correctness_scope": "functional-target",
+      "hardware_correctness_claim": false,
+      "outcome": {
+        "state": "complete",
+        "stage": "estimate",
+        "reason": null
+      }
+    },
+    "certification": {
+      "id": "certification.23f81442358b4dcc8688140a394a1f08",
+      "sha256": "bc26259cdb5a671dc364f6389b3a036a4ccf74c3ce68e25587a90886f23b8f90",
+      "procedure_version": "1.6",
+      "matrix_cells": 10,
+      "negative_controls": 20,
+      "reuse": "retained_exact_current_identity"
+    },
+    "characterization": {
+      "id": "bfs.functional.kron-g16.t4.characterization.objects.a2",
+      "sha256": "07d446f8b5f5932339d384f7faa8c8215e59e4dc4ee965945610d5425a09c6e8",
+      "identity_sha256": "2b68d09d5b7de821913ccabe03230785d89b9c99591d303558e796b1ee3dacfe"
+    },
+    "estimate": {
+      "id": "bfs.functional.evaluation.20261006.a1.estimate",
+      "sha256": "b7dba3f6bea6acdb410fe92d1031b17c60fe31193c1ee1ba0a5486e4ea351b53",
+      "basis": "estimated",
+      "seconds": null,
+      "ratio": null,
+      "verdict": "within_error",
+      "error_band": null,
+      "baseline": null,
+      "characterization": "bfs.functional.kron-g16.t4.characterization.objects.a2",
+      "characterization_sha256": "07d446f8b5f5932339d384f7faa8c8215e59e4dc4ee965945610d5425a09c6e8",
+      "target_description": "dx100-e4fc4af-functional-analytic-v1.t4",
+      "target_description_sha256": "6351828a0ba1536f6862d428a2522ae36ea5a39753879abdb5b637b26d8ce211",
+      "protocol": "bfs.functional.evaluation.protocol.20261006.a1.04ea188992780bf8",
+      "protocol_sha256": "04ea188992780bf82a226e8a6233b51023f49c904f4b9d78067d20d0b3c27b53",
+      "estimator_sha256": "5cecff8810524aa8ea145044a65c7d28eec362f9686237bad2610fdb4188a9e5"
+    },
+    "protocol": {
+      "id": "bfs.functional.evaluation.protocol.20261006.a1.04ea188992780bf8",
+      "identity_sha256": "04ea188992780bf82a226e8a6233b51023f49c904f4b9d78067d20d0b3c27b53",
+      "sha256": "b0f16026bc607464de2fae13ac175b2c2be381daa3ab0be2373cc2b9899fe370"
+    },
+    "handoff_sha256": "00a541c781665e3bfb8ed6083b9b25f0c8e5c4e64cff9dddb78e97f42eabd00b",
+    "completed_utc": "2026-10-07T02:19:24.655149+00:00",
+    "identity_sha256": "d9f3942b414c0ea702ff47e438e3477ed571ac93c6c618bada200da0825da8a5"
+  },
+  "new_records": [
+    {
+      "id": "bfs.functional.evaluation.20261006.a1.estimate",
+      "kind": "estimate",
+      "path": "estimates/bfs.functional.evaluation.20261006.a1.estimate.yaml",
+      "sha256": "b7dba3f6bea6acdb410fe92d1031b17c60fe31193c1ee1ba0a5486e4ea351b53",
+      "file_sha256": "cd97d2c60722609ed8aaa19af6aad380d371b62444a778bef1e944505f1eeb53",
+      "bytes": 4131682
+    },
+    {
+      "id": "bfs.functional.evaluation.20261006.a1",
+      "kind": "evaluation",
+      "path": "evaluations/bfs.functional.evaluation.20261006.a1.yaml",
+      "sha256": "186741d5ec038faef1c507c2c4ef4de28971aab842a3fccd4d385ef91b53f472",
+      "file_sha256": "c853cc9eefe0884a6636ceca60aec7082691dba6194035f979726d9a60b62a82",
+      "bytes": 9146
+    },
+    {
+      "id": "bfs.functional.evaluation.protocol.20261006.a1.04ea188992780bf8",
+      "kind": "protocol",
+      "path": "protocols/bfs.functional.evaluation.protocol.20261006.a1.04ea188992780bf8.yaml",
+      "sha256": "b0f16026bc607464de2fae13ac175b2c2be381daa3ab0be2373cc2b9899fe370",
+      "file_sha256": "189546aeb3e8e0dec5a0ac2f9433df715a3a9eb1d90753aaa8826a121a3bde5c",
+      "bytes": 17798
+    }
+  ],
+  "preregistration_sha256": "2854c241bacb7d6f0133581f55f3836aabf04c4d11a76123e7a4d1a738e9dede",
+  "prior_file_bytes_preserved": 619,
+  "identity_sha256": "4505d82a5ea85484f32d73b1b43b71a7a9d2dcfeedb4a4584d62e5c1f28c1a9e"
+}
