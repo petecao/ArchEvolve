@@ -70,6 +70,10 @@ def project(args):
     record = access.read_record(args.characterization)
     if not isinstance(record, dict) or record.get('kind') != 'workload_characterization' or not record.get('id'):
         raise Refusal('a workload_characterization record is required')
+    coverage = record.get('coverage', {})
+    counted_function = coverage.get('function')
+    if args.function != counted_function or (args.function and coverage.get('scope') != 'function'):
+        raise Refusal('function selection differs from characterization coverage.function')
     expected = record.get('static_analysis', {}).get('source_ir_sha256')
     before = {'ir': file_hash(args.source_ir), 'map': file_hash(args.source_map),
               'record': access.record_hash(args.characterization)}
@@ -101,6 +105,8 @@ def project(args):
     raw_output = output / 'static.json'
     projection_argv = [binary, args.source_ir.resolve(), args.source_map.resolve(), raw_output,
                        ','.join(map(str, sorted(selected))), expected]
+    if args.function:
+        projection_argv.append(args.function)
     run(projection_argv, args.timeout_s)
     proof = access.read_record(raw_output)
     after = {'ir': file_hash(args.source_ir), 'map': file_hash(args.source_map),
@@ -123,6 +129,9 @@ def project(args):
             'inputs_byte_identical_after_projection': True,
             'application_execution': False, 'raw_ir_exported': False,
             'characterization_runtime_validation': 'Required separately before model admission; this proof adds only static ABI facts.'}})
+    if args.function:
+        proof['function_selection'] = {'scope': 'function', 'function': args.function,
+            'matching': 'Characterize debug owner name or exact LLVM symbol; outlined owner follows its source parent.'}
     proof['identity_sha256'] = artifacts.digest(proof)
     (output / 'projection.json').write_text(json.dumps(proof, indent=2) + '\n')
     return proof
@@ -133,6 +142,7 @@ def main():
     parser.add_argument('--characterization', type=Path, required=True, help='immutable YAML/JSON characterization file')
     parser.add_argument('--source-ir', type=Path, required=True, help='host-local normalized.bc; never exported')
     parser.add_argument('--source-map', type=Path, required=True, help='matching host-local source.json')
+    parser.add_argument('--function', help='exact debug owner name or LLVM symbol; must equal persisted coverage.function')
     parser.add_argument('--llvm-bin', type=Path, required=True)
     parser.add_argument('--output-directory', type=Path, required=True, help='new host-local helper/projection folder')
     parser.add_argument('--toolchain-flag', action='append', default=[])
