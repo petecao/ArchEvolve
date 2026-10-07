@@ -431,3 +431,84 @@ plus/minus twice the single-estimate width; `estimated_gain` requires the lower
 ratio above1.05, `estimated_no_gain` requires the upper below1.05, and other cases
 remain `within_error`. CPU native timing continues to decide established
 ArchEvolve evaluations; this separate analytic verdict never replaces selection.
+
+
+## Prospective exact bulk service matrix (2026-10-06 ET)
+
+The preregistration is
+`.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-bulk-service-preregistration.json`.
+It binds the unchanged final four g16/g17 BF/BC count records and the compact
+inventory receipt. There are **48** executed memmove sizes, split into26 g16
+union bins and22 additional g17 bins. No uninstrumented application timing has
+been observed. Each batch independently retains a constant8B memcpy cell plus
+three separate memmove constructions for every exact size: disjoint buffers,
+forward4B overlap and backward4B overlap, with minimum4B pointer alignment.
+The constant8B construction uses disjoint8B-aligned subranges and retains its
+actual optimized word load/store. Dynamic memmove must retain its callee under
+O3. These are effective constructed-work costs, not physical latency or a proven
+application upper bound. Application MayAlias remains unknown overlap; it cannot
+be relabeled disjoint. A future maximum-profile transfer must be explicitly
+inferred and cannot manufacture a measured overlap fact.
+
+`python3 -m swdb.cpu_bulk_calibration` runs four source-normalized-v2 matrix
+points (3/5 events, service/driver), covering **every** exact profile/size bin.
+The count wrapper forces visibility of the identical shared loop with
+always-inline; native elapsed wrappers remain noinline. The proof binds the
+header, count driver, observer, normalized IR/source map and exact intrinsic
+sites to each profile. Empty inline assembly keeps memory work observable and
+appears as an indirect-call diagnostic in the count inventory; it is not a bulk
+ABI event. Instrumented runs supply only numerators, never elapsed values.
+
+The uninstrumented timer checks one copy against the source snapshot before
+timing, prepares buffers and16 warm copies, then retains7 alternating-order
+pairs. Each trial records exact size, source/destination separation, overlap
+bytes and minimum alignments. Both gross and driver durations must reach50ms.
+A nonpositive paired residual remains null. The runner permits at most32 size
+bins per batch,1MiB per copy,134217728 events per trial,900s inner wall time,
+64MiB counted-build evidence,25MiB timed data and3MiB+320B live requested buffer
+payload (storage plus the untimed correctness snapshot). Reused prepared buffers
+do not establish an application cache level, page state or first-touch cost.
+
+Parent dispatches count-only first in a clean committed Linux checkout and a
+real named node0 lease. Use new raw roots for each phase; the following script
+reads the committed fixed matrix and never application performance output:
+
+```sh
+SWDB_BULK_PHASE=count SWDB_BULK_RAW="$NEW_EXTERNAL_BULK_COUNT_ROOT" python3 - <<'PY_RUN'
+import json, os, subprocess, sys
+from pathlib import Path
+spec=json.loads(Path('.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-bulk-service-preregistration.json').read_text())
+for batch in spec['batches']:
+    command=[sys.executable,'-m','swdb.cpu_bulk_calibration','--records',os.environ['SWDB_RAW_RECORDS'],
+        '--machine','mbit10','--lane','mbit10-evaluation-node0','--llvm-bin',os.environ['SWDB_CPU_LLVM'],
+        '--toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13',
+        '--output',str(Path(os.environ['SWDB_BULK_RAW'])/batch['id']),
+        '--max-wall-s','600' if os.environ['SWDB_BULK_PHASE']=='count' else '900']
+    command += [item for size in batch['memmove_sizes'] for item in ('--size',str(size))]
+    if os.environ['SWDB_BULK_PHASE']=='count':command+=['--count-only']
+    subprocess.run(command,check=True)
+PY_RUN
+```
+
+After both proofs pass and the other socket is idle, repeat the exact script with
+`SWDB_BULK_PHASE=elapsed` and a distinct `$NEW_EXTERNAL_BULK_ELAPSED_ROOT`.
+Elapsed collection regenerates its own sealed four-point numerator proof before
+timing. Use900s outer per count batch/1200s outer per elapsed batch; a sequential
+phase wrapper needs2100s/2700s respectively. Preserve failed/partial artifacts.
+Import each native elapsed receipt separately:
+
+```sh
+python3 -m swdb import-cpu-service-calibration --records "$SWDB_RAW_RECORDS"   --receipt "$SWDB_BULK_RAW/bulk.a1/receipt.json"   --id mbit10.cpu.lanl20261006.service.bulk.a1 --format json
+python3 -m swdb import-cpu-service-calibration --records "$SWDB_RAW_RECORDS"   --receipt "$SWDB_BULK_RAW/bulk.a2/receipt.json"   --id mbit10.cpu.lanl20261006.service.bulk.a2 --format json
+```
+
+The duplicate memcpy8 cell is retained separately and must not be pooled; a
+frozen model selects one exact receipt. New g17 array bins16384,466112,524284,
+1048568B likewise need prospective independent allocation/deletion cells. Run
+the existing allocator command with these four repeated `--size` arguments,
+new count/elapsed raw roots and the same native controls/admission; it measures
+all four allocator ABIs per bin. Extra unused scalar cells cannot substitute
+for application bins or change the existing20-cell record. All original records
+and failed residuals stay byte-identical. View-only page/lifetime and bounded
+state unions remain unknown even though every final logical object request is
+now assigned to a full allocation or explicit bounded referent view.
