@@ -1231,6 +1231,7 @@ class Campaign:
         self.adapter.release_lane()
         self._save()
         return {"state": "prepared", "campaign": self.cid, "baselines": self.state["baselines"],
+                "paired_estimates": self.adapter.pairing.summary(),
                 "lane_hours": self.state["lane_hours"], "resume": f"swdb campaign {self.file} --resume"}
 
     def _class_row(self, c):
@@ -1333,7 +1334,7 @@ class Campaign:
             pauses=copy.deepcopy(self.state["pauses"]), stop_reason=reason.value,
             stop_detail=self.state.get("stop_detail"), artifacts=artifacts_list,
             retentions=list(self.state["retentions"]), library_entries=library_entries,
-            site_finder=self.state.get("site_finder"))
+            site_finder=self.state.get("site_finder"), paired_estimates=self.adapter.pairing.summary())
         if self.state.get("interrupted_iteration"):
             record["interrupted_iteration"] = copy.deepcopy(self.state["interrupted_iteration"])
         record["mode"], record["campaign"] = MODE, self.cid

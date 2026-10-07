@@ -281,6 +281,14 @@ class TargetAdapter:
     def admit(self, candidate, contracts):
         """Refuse a candidate artifact the target cannot evaluate (raise Refused); default: admit."""
 
+    @property
+    def pairing(self):
+        from swdb.extensa_pairing import PairingLedger
+        if not hasattr(self, '_pairing'):
+            self._pairing = PairingLedger(self.campaign, self.store_dir, self.folder,
+                fixture_model=getattr(self, 'fx', {}).get('estimate_fixture'))
+        return self._pairing
+
     def reference_files(self):
         """Read-only references shown to the provider when the campaign names contracts."""
         return {}

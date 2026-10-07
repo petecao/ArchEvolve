@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "paired_estimate",
+  "description": "Created 2026-10-06 ET. A frozen Extensa estimate; unknowns and contract fixtures never establish application agreement.",
+  "properties": {
+    "message_version": {
+      "type": "string"
+    },
+    "estimator_version": {
+      "type": "string"
+    },
+    "estimated_at": {
+      "type": "string"
+    },
+    "identity_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "estimator_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "policy_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "context_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "kind": {
+      "const": "paired_estimate"
+    },
+    "schema_version": {
+      "const": "0.4"
+    },
+    "format": {
+      "const": "swdb.extensa-paired-estimate.v1"
+    },
+    "mode": {
+      "const": "extensa"
+    },
+    "campaign": {
+      "$ref": "#/$defs/extensa_campaign_id"
+    },
+    "basis": {
+      "const": "estimated"
+    },
+    "estimator_variant": {
+      "const": "research"
+    },
+    "producer": {
+      "type": "object"
+    },
+    "timing_context": {
+      "type": "object"
+    },
+    "seconds": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "state": {
+      "enum": [
+        "unknown",
+        "fixture_estimate"
+      ]
+    },
+    "structural_missing": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence_kind": {
+      "enum": [
+        "execution",
+        "contract_fixture"
+      ]
+    },
+    "eligible_for_agreement": {
+      "const": false
+    }
+  },
+  "required": [
+    "message_version",
+    "estimator_version",
+    "estimated_at",
+    "identity_sha256",
+    "estimator_sha256",
+    "policy_sha256",
+    "context_sha256",
+    "kind",
+    "schema_version",
+    "format",
+    "mode",
+    "campaign",
+    "basis",
+    "estimator_variant",
+    "producer",
+    "timing_context",
+    "seconds",
+    "state",
+    "structural_missing",
+    "evidence_kind",
+    "eligible_for_agreement"
+  ]
+}
