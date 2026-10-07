@@ -1,0 +1,90 @@
+{
+  "format": "swdb.lanl17-cleanup60-source-preparation.v1",
+  "updated_utc": "2026-10-07T08:23:48.381024+00:00",
+  "base_helper_sha256": "69dcfe546d3042228ccca4fb29e8409da88443ba15680f30bfdc929ea12ae2b9",
+  "base_supervisor_sha256": "16661d7a9347e328a5263b06d807f3632c5abcfcf41a0bd97655a6bba302176b",
+  "snapshots": {
+    "lanl17_parent_helpers_cleanup60_a4.py": {
+      "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414",
+      "size_bytes": 38195,
+      "path": "/private/tmp/lanl17_parent_helpers_cleanup60_a4.py"
+    },
+    "lanl17_metadata_supervisor_cleanup60_a4.py": {
+      "sha256": "fa703bbd4c71bb4bcf56f47d1e224449f627d5921295e00b9cc105f21e95bde0",
+      "size_bytes": 8014,
+      "path": "/private/tmp/lanl17_metadata_supervisor_cleanup60_a4.py"
+    },
+    "lanl17_metadata_supervisor_cleanup60_a4_portable_controls.py": {
+      "sha256": "4ed72681d1c944594543be59a5ecc3d40c115def58fa9a2e6ac3f505f014ca47",
+      "size_bytes": 5331,
+      "path": "/private/tmp/lanl17_metadata_supervisor_cleanup60_a4_portable_controls.py"
+    },
+    "lanl17_metadata_supervisor_cleanup60_a4_linux_fixture.py": {
+      "sha256": "a848ef2d5c6dba58e6814bf80d8bdf24edeb33812bda343ecf25ff6f28745b0f",
+      "size_bytes": 9555,
+      "path": "/private/tmp/lanl17_metadata_supervisor_cleanup60_a4_linux_fixture.py"
+    },
+    "lanl17-cleanup60-controls-a4-20261007.patch": {
+      "sha256": "9c0cbf97b89a37b5cb5543e13bea455b511d68b4cf99fd5dba2f15db61291431",
+      "size_bytes": 727,
+      "path": "/private/tmp/lanl17-cleanup60-controls-a4-20261007.patch"
+    }
+  },
+  "only_helper_change": {
+    "function": "dispatch",
+    "line": 467,
+    "column": 40,
+    "old": "--kill-after=40s",
+    "new": "--kill-after=60s",
+    "decoded_literal_changes": 1
+  },
+  "helper_full_byte_reversal_to69dc": true,
+  "supervisor_HELPER_SHA_only_full_reversal_to1666": true,
+  "portable_binding_only_two_paths_changed": true,
+  "portable_wiring_cases_available": 9,
+  "portable_wiring_cases_run": 0,
+  "parameterized_a848_fixture_bytes_identical": true,
+  "six_selected_metadata_caps_unchanged": [
+    {
+      "function": "prepare",
+      "line": 336,
+      "cap": 3600
+    },
+    {
+      "function": "prepare",
+      "line": 342,
+      "cap": 6000
+    },
+    {
+      "function": "finalize",
+      "line": 609,
+      "cap": 3600
+    },
+    {
+      "function": "finalize",
+      "line": 621,
+      "cap": 6000
+    },
+    {
+      "function": "finalize",
+      "line": 626,
+      "cap": 14400
+    },
+    {
+      "function": "finalize",
+      "line": 630,
+      "cap": 3600
+    }
+  ],
+  "all_scientific_campaign_provider_defaultHOME_input_ROI_and_other_bytes_unchanged": true,
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "source_C_F6_untouched": true,
+  "old69_166_actual_proofs_preserved": true,
+  "fresh_original4d_smoke": "not_run",
+  "fresh_a848_fixture": "not_run",
+  "future_actual_cleanup_proof_path": "/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261007-a4/receipt.json",
+  "no_control_import_test_Store_catalog_action_ssh_or_population_execution": true,
+  "scope": "Distinct future campaign cleanup grace60 administrative variant; parent review and new exact-hash actual cleanup admission required before prepare.",
+  "identity_sha256": "a54a5bd80926276cba55ee689f91e665d3dc199a6832cdce0948c654d612009d"
+}
