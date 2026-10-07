@@ -16,6 +16,9 @@ ADAPTER='registered-gapbs.v1'
 
 
 def prepare(store,args,subject,input_record):
+    if args.adapter=='registered-functional':
+        from swdb.analytic_functional_binding import prepare as functional_prepare
+        return functional_prepare(store,args,subject,input_record)
     if args.candidate or args.fixture:
         raise Failure('registered-gapbs requires a registered baseline implementation, not a candidate/fixture')
     if args.counting_pipeline not in (None,'source-normalized-v2'):
@@ -127,13 +130,17 @@ def compare_patterns(subject,regions,ambiguous=(),mapping=()):
 
 
 def counted_payload(record):
-    return {'regions':record['regions'],'trials':record.get('trials',[]),
+    payload={'regions':record['regions'],'trials':record.get('trials',[]),
         'unmodeled_calls':record['unmodeled_calls']}
+    if 'observation_contract' in record:
+        payload['observation_contract']=record['observation_contract']
+        payload['observation_format']=record['counting'].get('observation_format')
+    return payload
 
 
 def execution_receipt(record,graph,plugin_source,runtime_source):
     binding=record['binding'];identity=binding['subject_source_identity'];counting=record['counting']
-    return {'format':'swdb.registered-count-receipt.v1','adapter':ADAPTER,
+    return {'format':'swdb.registered-count-receipt.v1','adapter':identity.get('adapter',ADAPTER),
         'subject_record_sha256':identity['subject_record_sha256'],
         'source_root_sha256':identity['source_root_sha256'],'source_sha256':record['source']['sha256'],
         'input_record_sha256':binding['input_record_sha256'],'run_arguments_sha256':binding['run_arguments_sha256'],
@@ -154,6 +161,9 @@ def _verify_binding(record,store,require_available=False):
     New executions also verify the available registered source tree and raw counts.
     """
     problems=[];binding=record.get('binding',{});identity=binding.get('subject_source_identity',{})
+    if identity.get('adapter')=='registered-functional.v1':
+        from swdb.analytic_functional_binding import verify
+        return verify(record,store,require_available)
     receipt=binding.get('execution_receipt')
     if not isinstance(receipt,dict) or receipt.get('format')!='swdb.registered-count-receipt.v1':
         return ['verified binding requires a registered counted execution receipt']
@@ -216,5 +226,5 @@ def _verify_binding(record,store,require_available=False):
 
 def verify_binding(record,store,require_available=False):
     try:return _verify_binding(record,store,require_available)
-    except (KeyError,TypeError,ValueError,AttributeError) as exc:
+    except (KeyError,TypeError,ValueError,AttributeError,Failure,OSError) as exc:
         return ['malformed registered execution binding: '+str(exc)]
