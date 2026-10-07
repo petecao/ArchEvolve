@@ -31,11 +31,12 @@ is historical. See [ADRs](../adr/) for decisions.
 
 | Area | Reference |
 |---|---|
-| Messages and source ownership | [Handoff 1.0](../bfs-handoff-contract-v1.md), [source identity](bfs-source-identity.md), [examples](../bfs-handoff-examples/) |
+| Messages and source ownership | [Handoff 1.0](../bfs-handoff-contract-v1.md), [functional 1.1](../bfs-handoff-contract-v1.1.md), [source identity](bfs-source-identity.md), [examples](../bfs-handoff-examples/) |
 | Workload and comparison identity | [Frozen protocols](bfs-protocol.md), [pilot review/freezing](bfs-pilot-freeze.md) |
 | Native execution | [Evaluator](bfs-native-evaluator-design.md), [paired collection](bfs-native-paired.md), [region comparisons](bfs-native-region-comparison.md) |
 | Profile evidence | [Native collection](bfs-profiling.md), [packages and strategy queries](bfs-profile-packages.md), [persistence cost](bfs-persistence-cost.md) |
 | Rewriting and hardware | [Worker and repairs](bfs-rewrite-worker.md), [capabilities](bfs-capabilities.md) |
+| Functional correctness and estimated speed | [Functional evaluation](bfs-functional-estimates.md) |
 | DX100 execution | [Design](bfs-dx100-design.md), [build/checkpoint/execute](bfs-dx100-execution.md), [serialized inputs](bfs-dx100-inputs.md) |
 | DX100 observations | [Profiling](bfs-dx100-profiling.md), [completion witness](bfs-dx100-witness-v2.md), [trial identity](bfs-dx100-trial-identity.md), [sample grids](bfs-simulator-series.md) |
 | Assessment | [Coverage contract](bfs-coverage.md), [report command](../bfs-handoff.md#final-report-regeneration--2026-09-27) |
