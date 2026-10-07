@@ -109,3 +109,22 @@ def test_binding_freezes_exact_outcome_free_characterization_allowlist_and_check
         '--id','fixture.cpu.partly.unmatched','--fixture')
     assert unknown.returncode==0,unknown.stderr+unknown.stdout
     assert json.loads(unknown.stdout)['mechanisms'][-1]['parameters']['service_0']['basis']=='unknown'
+
+
+def test_extensa_tagged_native_service_record_never_enters_team_binding(records,tmp_path):
+    records.add_stub()
+    base=yaml.safe_load(target_description(tmp_path).read_text());base.update(id='fixture.cpu.base',target='testhost')
+    records.write('target_descriptions/fixture.cpu.base.yaml',base)
+    fixture_characterization(records.path,subject_id='stub-impl',input_id='tiny-sym')
+    raw=fixture_receipt();raw['machine']='testhost';raw['services'][0]['denominator']['proof']={'event_abi':'fixture.clock.abi'}
+    created=run_swdb('import-cpu-service-calibration','--records',records.path,'--receipt',save_receipt(tmp_path,raw),
+        '--id','fixture.research.service','--fixture')
+    assert created.returncode==0,created.stderr+created.stdout
+    data=records.read('cpu_service_calibrations/fixture.research.service.yaml')
+    data.update(mode='extensa',campaign='extensa-native-bfs-20261004-a1')
+    data.pop('identity_sha256');data['identity_sha256']=digest(data)
+    records.write('cpu_service_calibrations/fixture.research.service.yaml',data)
+    result=bind(records,'--target-description','fixture.cpu.base','--characterization','fixture.counts',
+        '--calibration',data['id'],'--id','fixture.cpu.research.mixed','--fixture')
+    assert result.returncode!=0 and 'Extensa research evidence' in result.stderr
+    assert not (records.path/'target_descriptions/fixture.cpu.research.mixed.yaml').exists()
