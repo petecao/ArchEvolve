@@ -1,0 +1,148 @@
+{
+  "format": "swdb.lanl17-private-outer-source-staging-r1-parent-source-review.v1",
+  "observed_utc": "2026-10-07T20:03:47.674547+00:00",
+  "canonical_ensure_ascii": true,
+  "state": "SOURCE_REVIEWED_ONE_EXACT_COPY_ARGV_READY_ACTUAL_COPY_NOTRUN",
+  "packet_pins": {
+    "original_reviewed_driver": {
+      "path": "/private/tmp/lanl-stage-reviewed17-index-privacy-envelope-source-from-git-20261007-a1.py",
+      "bytes": 19246,
+      "sha256": "103b7557c5428b04626db360922907b1873440d089cb093dd7da0e122364551b"
+    },
+    "selected_corrected_R1_driver": {
+      "path": "/private/tmp/lanl-stage-reviewed17-index-private-outer-sources-from-git-20261007-a1-r1.py",
+      "bytes": 21778,
+      "sha256": "e217f97e7392119d33f1e20a7868b9c0ad6af535511acbdca55742a521741bb6"
+    },
+    "complete_unsealed_derivation_diff": {
+      "path": "/private/tmp/lanl17-private-outer-source-staging-r1-derivation-20261007-a1.diff",
+      "bytes": 14243,
+      "sha256": "994b6c8954007709f91f1b457ef1bc4b7f39e97a587646e5e4ba6b7c7d66c3df"
+    },
+    "unsealed_reversal_static_comparison": {
+      "path": "/private/tmp/lanl17-private-outer-source-staging-r1-reversal-static-comparison-20261007-a1.json",
+      "bytes": 8821,
+      "sha256": "fdea81b267dc243b75e121f8b8a98f579695526a2b86f2916d67eb4865f240ee"
+    },
+    "full_source_handoff": {
+      "path": "/private/tmp/lanl17-private-outer-source-staging-r1-final-source-handoff-20261007-a1.md",
+      "bytes": 8718,
+      "sha256": "309e1fb0ee82ac4cacec9a0af61eb7c511c63afab5c0b80012780c453d43f270"
+    },
+    "preserved_unselected_never_run_draft": {
+      "path": "/private/tmp/lanl-stage-reviewed17-index-private-outer-sources-from-git-20261007-a1.py",
+      "bytes": 20843,
+      "sha256": "0beff183ad15786643b63d99ca1ceb9d29666f1dfc8e75b6f1b4764e64dcb87f"
+    },
+    "preserved_unselected_unsealed_diff": {
+      "path": "/private/tmp/lanl17-private-outer-source-staging-derivation-20261007-a1.diff",
+      "bytes": 17452,
+      "sha256": "fccd529311053890dd3f630cb07e4382ef4c41ec125ab094276d42e989b5674e"
+    }
+  },
+  "final_preparation_pin": {
+    "path": "/private/tmp/lanl17-private-outer-source-staging-r1-final-source-preparation-20261007-a1.json",
+    "bytes": 22087,
+    "sha256": "f2a12c22ed6aed97af5fd8d1f4bfd04e69bac3b52f87f6131cccfabe6e78a31d",
+    "identity_sha256": "71ca5a35fa56f8dc1fdfa040386f0cc874eed570110c5406bc887c5177737895"
+  },
+  "preserved_preliminary_documents": {
+    "uncorrected_handoff": {
+      "path": "/private/tmp/lanl17-private-outer-source-staging-r1-source-handoff-20261007-a1.md",
+      "bytes": 8664,
+      "sha256": "aa6ed25e16348ca7e82759fdb5d55af421a17afd8f69ac28a6c571ee33cd8749"
+    },
+    "preliminary_True_preparation": {
+      "path": "/private/tmp/lanl17-private-outer-source-staging-r1-source-preparation-20261007-a1.json",
+      "bytes": 20785,
+      "sha256": "6409c6f1232d18e5b33ea0ad10fd559f904589f89f63e9692176a8e9fc9a657a",
+      "canonical_ensure_ascii": true,
+      "identity_sha256": "15c999eb4197f119e2c1c8330b4026de61385220211e335bb8e9e5e740b6a3d7"
+    },
+    "chronology": "Preliminary True preparation was written immediately before parent wording correction arrived; both originals retained byte-identical. No execution/admission occurred.",
+    "handoff_only_exact_correction": {
+      "before": "CONFIG retains the original two-row list structure.",
+      "after": "CONFIG retains the original row shape and list structure; cardinality changes from one source row to two.",
+      "occurrences": 1,
+      "byte_reversal_equals_preliminary": true
+    },
+    "selected_source_diff_static_pins_unchanged": true
+  },
+  "complete_parent_packet_read": true,
+  "complete_independent_ticket04_packet_read": true,
+  "concrete_source_blockers_found": [],
+  "whole_byte_forward_reverse_seven_hunks_verified": true,
+  "unchanged_helper_AST_count_including_nested_JSON_helpers": 22,
+  "unchanged_constant_Assign_AST_count": 6,
+  "exact_CONFIG": [
+    {
+      "target": "outer_capture.py",
+      "source": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17_remote_original_index_writer_private_outer_capture_20261007.py",
+        "bytes": 34658,
+        "sha256": "59c06dd5ea606414827a85d6e27f4aff1bc381827624590b2449415198399544"
+      },
+      "review": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17-original-index-writer-private-outer-capture-parent-review-20261007.json",
+        "bytes": 6493,
+        "sha256": "a9ab95d10d8e26a0a4b170f7184c31970d88c3b8f04f9dea6d02d38c3079e262",
+        "format": "swdb.lanl17-original-index-writer-private-outer-capture-parent-source-review.v1",
+        "identity_sha256": "b471b2d9e12fd4d54c3e74b25ed56782c6e319a4df59e271b5ddacde7befa687"
+      },
+      "manifest": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/manifest.json",
+        "bytes": 10568,
+        "sha256": "9d07052f2b54033a9a3c3fd860cf2ba657dfbb73fe381e03d6cfda0a45d3228c",
+        "format": "swdb.lanl17-original-index-writer-private-outer-capture-archival-custody.v1",
+        "identity_sha256": "00b2aa6a7e6542f4e3ac26325dd5c2fdabe37cd19347836b86e30d65edc71eae"
+      }
+    },
+    {
+      "target": "bootstrap.sh",
+      "source": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17_original_index_writer_outermost_private_bootstrap_20261007.sh",
+        "bytes": 6549,
+        "sha256": "0d1eb650d1bcb1a9f491d5fb790f083e371875ddd20fe0bf1f42d5fce05a9217"
+      },
+      "review": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17-original-index-writer-private-outer-capture-parent-review-20261007.json",
+        "bytes": 6493,
+        "sha256": "a9ab95d10d8e26a0a4b170f7184c31970d88c3b8f04f9dea6d02d38c3079e262",
+        "format": "swdb.lanl17-original-index-writer-private-outer-capture-parent-source-review.v1",
+        "identity_sha256": "b471b2d9e12fd4d54c3e74b25ed56782c6e319a4df59e271b5ddacde7befa687"
+      },
+      "manifest": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/manifest.json",
+        "bytes": 10568,
+        "sha256": "9d07052f2b54033a9a3c3fd860cf2ba657dfbb73fe381e03d6cfda0a45d3228c",
+        "format": "swdb.lanl17-original-index-writer-private-outer-capture-archival-custody.v1",
+        "identity_sha256": "00b2aa6a7e6542f4e3ac26325dd5c2fdabe37cd19347836b86e30d65edc71eae"
+      }
+    }
+  ],
+  "four_unique_delivered_Git_pins_and_two_True_closures_verified": true,
+  "one_exact_source_copy_argv_reviewed": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+    "/private/tmp/lanl-stage-reviewed17-index-private-outer-sources-from-git-20261007-a1-r1.py",
+    "7398fc4e0ddf4013dabbe87a506941ce1d910ce3"
+  ],
+  "native_local_interpreter_observation": {
+    "executable": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+    "platform": "darwin",
+    "machine": "arm64",
+    "version": [
+      3,
+      12,
+      6
+    ]
+  },
+  "actual_staging_driver_executed": false,
+  "copied_control_invocation_reviewed": false,
+  "source_or_synthetic_scientific_execution": false,
+  "review_markdown_pin": {
+    "path": "/private/tmp/lanl17-private-outer-source-staging-r1-parent-review-20261007-a1.md",
+    "bytes": 1575,
+    "sha256": "8b3d492c075a820f32db051e0ce781b42271c54ac9ee53bd58055012e113e987"
+  },
+  "identity_sha256": "0f3c617e7bb07d19a99ee29edd953d1bfeb05580d62531d8ef1bb497b984ced5"
+}

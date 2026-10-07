@@ -1,0 +1,356 @@
+{
+  "format": "swdb.lanl17-private-outer-source-staging-r1-static-derivation.v1",
+  "state": "SOURCE_ONLY_NOT_RUN_UNSEALED_COMPARISON",
+  "original_driver_pin": {
+    "path": "/private/tmp/lanl-stage-reviewed17-index-privacy-envelope-source-from-git-20261007-a1.py",
+    "bytes": 19246,
+    "sha256": "103b7557c5428b04626db360922907b1873440d089cb093dd7da0e122364551b"
+  },
+  "corrected_r1_driver_pin": {
+    "path": "/private/tmp/lanl-stage-reviewed17-index-private-outer-sources-from-git-20261007-a1-r1.py",
+    "bytes": 21778,
+    "sha256": "e217f97e7392119d33f1e20a7868b9c0ad6af535511acbdca55742a521741bb6"
+  },
+  "complete_unsealed_forward_diff_pin": {
+    "path": "/private/tmp/lanl17-private-outer-source-staging-r1-derivation-20261007-a1.diff",
+    "bytes": 14243,
+    "sha256": "994b6c8954007709f91f1b457ef1bc4b7f39e97a587646e5e4ba6b7c7d66c3df"
+  },
+  "complete_byte_forward_application_equal": true,
+  "complete_byte_reverse_application_equal_original103b": true,
+  "diff_hunks": 7,
+  "original_source_re_read_byte_pin_preserved": true,
+  "unchanged_helper_function_ASTs": [
+    {
+      "scope": "local",
+      "function": "sha",
+      "original_lines": [
+        219,
+        220
+      ],
+      "r1_lines": [
+        245,
+        246
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "local",
+      "function": "digest",
+      "original_lines": [
+        223,
+        225
+      ],
+      "r1_lines": [
+        249,
+        251
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "local",
+      "function": "strict_json",
+      "original_lines": [
+        228,
+        237
+      ],
+      "r1_lines": [
+        254,
+        263
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "local",
+      "function": "strict_json.pairs",
+      "original_lines": [
+        229,
+        234
+      ],
+      "r1_lines": [
+        255,
+        260
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "local",
+      "function": "strict_json.nonfinite",
+      "original_lines": [
+        235,
+        236
+      ],
+      "r1_lines": [
+        261,
+        262
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "local",
+      "function": "checked_file",
+      "original_lines": [
+        240,
+        256
+      ],
+      "r1_lines": [
+        266,
+        282
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "remote",
+      "function": "sha",
+      "original_lines": [
+        12,
+        12
+      ],
+      "r1_lines": [
+        12,
+        12
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "remote",
+      "function": "digest",
+      "original_lines": [
+        13,
+        13
+      ],
+      "r1_lines": [
+        13,
+        13
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "remote",
+      "function": "strict_json",
+      "original_lines": [
+        14,
+        22
+      ],
+      "r1_lines": [
+        14,
+        22
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "remote",
+      "function": "strict_json.pairs",
+      "original_lines": [
+        15,
+        20
+      ],
+      "r1_lines": [
+        15,
+        20
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "remote",
+      "function": "strict_json.nonfinite",
+      "original_lines": [
+        21,
+        21
+      ],
+      "r1_lines": [
+        21,
+        21
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "remote",
+      "function": "alarm",
+      "original_lines": [
+        23,
+        23
+      ],
+      "r1_lines": [
+        23,
+        23
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "remote",
+      "function": "perform.remaining",
+      "original_lines": [
+        30,
+        32
+      ],
+      "r1_lines": [
+        30,
+        32
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "remote",
+      "function": "perform.checked",
+      "original_lines": [
+        33,
+        41
+      ],
+      "r1_lines": [
+        33,
+        41
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "remote",
+      "function": "perform.git",
+      "original_lines": [
+        43,
+        50
+      ],
+      "r1_lines": [
+        43,
+        50
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "remote",
+      "function": "perform.source_gate",
+      "original_lines": [
+        51,
+        55
+      ],
+      "r1_lines": [
+        51,
+        55
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "remote",
+      "function": "perform.python_tree",
+      "original_lines": [
+        56,
+        65
+      ],
+      "r1_lines": [
+        56,
+        65
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "remote",
+      "function": "perform.original_blob",
+      "original_lines": [
+        66,
+        73
+      ],
+      "r1_lines": [
+        66,
+        73
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "remote",
+      "function": "perform.sealed",
+      "original_lines": [
+        74,
+        78
+      ],
+      "r1_lines": [
+        74,
+        78
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "remote",
+      "function": "perform.exact_pin",
+      "original_lines": [
+        79,
+        80
+      ],
+      "r1_lines": [
+        79,
+        80
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "remote",
+      "function": "perform.entry",
+      "original_lines": [
+        81,
+        88
+      ],
+      "r1_lines": [
+        81,
+        88
+      ],
+      "AST_equal": true
+    },
+    {
+      "scope": "remote",
+      "function": "perform.target_checked",
+      "original_lines": [
+        134,
+        145
+      ],
+      "r1_lines": [
+        146,
+        157
+      ],
+      "AST_equal": true
+    }
+  ],
+  "unchanged_helper_AST_count": 22,
+  "unchanged_local_constant_AST_names": [
+    "SOURCE_C",
+    "ESTIMATOR_F6",
+    "KEYS"
+  ],
+  "unchanged_remote_constant_AST_names": [
+    "SOURCE_C",
+    "F6",
+    "KEYS"
+  ],
+  "CONFIG_same_original_row_keys": true,
+  "exact_two_source_targets": [
+    "outer_capture.py",
+    "bootstrap.sh"
+  ],
+  "one_shared_review_manifest_group": true,
+  "exact_four_unique_original_metadata_pins_read_only": {
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17_remote_original_index_writer_private_outer_capture_20261007.py": {
+      "path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket11/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17_remote_original_index_writer_private_outer_capture_20261007.py",
+      "bytes": 34658,
+      "sha256": "59c06dd5ea606414827a85d6e27f4aff1bc381827624590b2449415198399544"
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17-original-index-writer-private-outer-capture-parent-review-20261007.json": {
+      "path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket11/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17-original-index-writer-private-outer-capture-parent-review-20261007.json",
+      "bytes": 6493,
+      "sha256": "a9ab95d10d8e26a0a4b170f7184c31970d88c3b8f04f9dea6d02d38c3079e262"
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/manifest.json": {
+      "path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket11/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/manifest.json",
+      "bytes": 10568,
+      "sha256": "9d07052f2b54033a9a3c3fd860cf2ba657dfbb73fe381e03d6cfda0a45d3228c"
+    },
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17_original_index_writer_outermost_private_bootstrap_20261007.sh": {
+      "path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket11/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-private-outer-capture-controls-20261007/lanl17_original_index_writer_outermost_private_bootstrap_20261007.sh",
+      "bytes": 6549,
+      "sha256": "0d1eb650d1bcb1a9f491d5fb790f083e371875ddd20fe0bf1f42d5fce05a9217"
+    }
+  },
+  "two_original_True_seals": {
+    "review": "b471b2d9e12fd4d54c3e74b25ed56782c6e319a4df59e271b5ddacde7befa687",
+    "manifest": "00b2aa6a7e6542f4e3ac26325dd5c2fdabe37cd19347836b86e30d65edc71eae"
+  },
+  "no_future_Git_revision_supplied_or_inferred": true,
+  "scope": "Source bytes/ASTs/diff and exact existing archive metadata only; no copied callable, driver/remote main/import/test/Git/SSH/W mutation or staging."
+}
