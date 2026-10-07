@@ -1,0 +1,104 @@
+{
+  "format": "swdb.lanl10-ignored-generated-input-retention-integrated-merger-proof.v1",
+  "checked_at": "2026-10-07 12:58 ET",
+  "canonical_ensure_ascii": true,
+  "base": "0bf8dc77a190a136e363e665b35c5158e958f316",
+  "incoming": "90fc15cc1d457fd19a648447a657b665b1ec7ea7",
+  "merge": "0d95f798c8d94c80eb71e2752c9e3d8307e7f41d",
+  "merge_parents": [
+    "0bf8dc77a190a136e363e665b35c5158e958f316",
+    "90fc15cc1d457fd19a648447a657b665b1ec7ea7"
+  ],
+  "incoming_parent": "0bf8dc77a190a136e363e665b35c5158e958f316",
+  "base_tree": "b4e92d9786d9c02cb36e914e3608854746b1b688",
+  "incoming_tree": "3e1a0b9318e921bb29f4d3cf52a14ed8364fb8fa",
+  "merge_tree": "3e1a0b9318e921bb29f4d3cf52a14ed8364fb8fa",
+  "ordinary_two_parent_merge": true,
+  "merge_tree_exact_incoming_tree": true,
+  "base_tracked_blobs": 3883,
+  "unchanged_prior_blobs_and_modes": 3882,
+  "prior_tree_path_mode_type_blob_sha256": "44eaddcfb6c593428de43a829a42b7ab692c0a812bd48301256c099ec9e97c40",
+  "preserved_other_prior_path_mode_type_blob_sha256": "855e376e4a732b2e73ce226916a66832f0b5d77c0891a0cfb34732a53d6ac624",
+  "prior_deleted_paths": [],
+  "changed_prior_paths": [
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/issues/10-estimation-role.md"
+  ],
+  "only_exact_ticket10_resolved_issue_append": true,
+  "issue_base_file_sha256": "6d6359afc332a369b4607abc5ee748dfdd8754697a5a35269826e42bf5b9e9d0",
+  "issue_incoming_file_sha256": "22001be3d3bf8e58a9c269e8bb1b0dfe30364e9615914634b48b50241b886dff",
+  "issue_append_sha256": "2e35081a86a4ab283882ef5625f016b191c703262033c6407a936b31c7ee0b6d",
+  "added_paths": [
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-ignored-generated-input-retention-20261007/README.md",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-ignored-generated-input-retention-20261007/manifest.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-ignored-generated-input-retention-20261007/original-unsealed-inventory.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-ignored-generated-input-retention-20261007/ticket10-compatible-preparation-a1/inputs/characterization.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-ignored-generated-input-retention-20261007/ticket10-compatible-preparation-a1/inputs/parameters.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-ignored-generated-input-retention-20261007/ticket10-compatible-preparation-a1/inputs/profile.json"
+  ],
+  "exact_new_generated_input_files": 3,
+  "exact_generated_input_bytes": 101164,
+  "original_plan_input_hashes_and_total_match": true,
+  "exact_external_original_inventory_snapshot": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-ignored-generated-input-retention-20261007/original-unsealed-inventory.json",
+    "bytes": 3271,
+    "file_sha256": "c042e9e932823ff2730f5d490deb838342ab8521f7ab5eab7969bd98932af689",
+    "original_sealed": false,
+    "original_identity_absent": true,
+    "bytes_bound_before_passive_parse": true,
+    "original_copy_phase_no_parse_statement_unchanged": true
+  },
+  "new_original_input_and_inventory_snapshots": [
+    {
+      "path": "ticket10-compatible-preparation-a1/inputs/characterization.json",
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket10/ArchEvolve/swdb-project/build/ticket10-compatible-preparation-a1/inputs/characterization.json",
+      "bytes": 99178,
+      "sha256": "77d7e4101368ab29252695e4f8c6cdd52629f3dbe0d9be858862d5096b89ec00"
+    },
+    {
+      "path": "ticket10-compatible-preparation-a1/inputs/parameters.json",
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket10/ArchEvolve/swdb-project/build/ticket10-compatible-preparation-a1/inputs/parameters.json",
+      "bytes": 1750,
+      "sha256": "b16f04ce73ad69fb25695e571ecff181129ae167bff9be236c0c1dbb1e600ebb"
+    },
+    {
+      "path": "ticket10-compatible-preparation-a1/inputs/profile.json",
+      "source_path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket10/ArchEvolve/swdb-project/build/ticket10-compatible-preparation-a1/inputs/profile.json",
+      "bytes": 236,
+      "sha256": "0430c35f7a4c0d96f6c71db73f07810e55a19edd6053084d042767871ae9843a"
+    },
+    {
+      "path": "original-unsealed-inventory.json",
+      "source_path": "/private/tmp/lanl-owned-ignored-input-retention-20261007-1246/inventory.json",
+      "bytes": 3271,
+      "sha256": "c042e9e932823ff2730f5d490deb838342ab8521f7ab5eab7969bd98932af689"
+    }
+  ],
+  "three_live_inputs_and_retained_copies_byte_equal": true,
+  "all_five_original_inventory_live_files_and_retained_copies_byte_equal": true,
+  "earlier_two_preparation_files_and_281_manifest_referenced_not_duplicated": true,
+  "historical_plan_prepared_provider_launched_false_is_not_later_provider_outcome": true,
+  "passive_byte_and_original_plan_relationship_inspection_only": true,
+  "archive_manifest": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-ignored-generated-input-retention-20261007/manifest.json",
+    "identity_sha256": "947c62affdcd70ed183491d199a6faca5ba96094166e3b0e8f54d95f2f1e5c71",
+    "file_sha256": "4a8af1fd8061f8410eebec3928efbe43bf08bec873c6bdd415abdbe99e3ad81b",
+    "bytes": 6504
+  },
+  "archive_readme": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-ignored-generated-input-retention-20261007/README.md",
+    "file_sha256": "782334b1f00cb410feffd90138adf1eb0cfc7e137cfa3bba3c578de3d3a8e41f",
+    "bytes": 3454
+  },
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "source_C_ref_retained": "refs/heads/codex/lanl-ticket11-source-c",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "production_source_entries_exact_C": 223,
+  "Python_modules_exact_C": 185,
+  "canonical_YAML_unchanged": 686,
+  "all_prior_root_docs_library_maps_progress_checkpoint_controls_ticket14_and17_claims_and_archives_exact": true,
+  "byte_retention_is_not_new_preparation_or_scientific_evidence_or_acceptance": true,
+  "no_tests_SSH_Store_generator_import_main_native_provider_science_or_cleanup_execution": true,
+  "no_ticket_status_or_resolution_changes": true,
+  "new_proof_only_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-ignored-generated-input-retention-integrated-merger-proof-20261007.json",
+  "identity_sha256": "b51b577784fb262e31066bba492caf091ea02e470006a10337b607eb27f2d2ae"
+}
