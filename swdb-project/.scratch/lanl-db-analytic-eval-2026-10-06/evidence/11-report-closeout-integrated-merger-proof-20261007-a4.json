@@ -1,0 +1,104 @@
+{
+  "format": "swdb.lanl11-report-closeout-integrated-merger.v1",
+  "updated_utc": "2026-10-07T14:02:50.090577+00:00",
+  "canonical_ensure_ascii": true,
+  "base_commit": "c24adc656a3c514eb9aa250f79c54e932f057e1b",
+  "incoming_commit": "4fd623b192b152e681354bf139a507090574e105",
+  "ordinary_merge_commit": "d78617bf64c32f49fb8110fd59849a5b94b0cc73",
+  "merge_parents": [
+    "c24adc656a3c514eb9aa250f79c54e932f057e1b",
+    "4fd623b192b152e681354bf139a507090574e105"
+  ],
+  "base_tree": "0e474a131cf89d7ea7cf85e7a2f29547e20845f6",
+  "incoming_tree": "6b06a936e93a488d5fbccfa3220391ef95f03eb9",
+  "ordinary_merge_tree": "6b06a936e93a488d5fbccfa3220391ef95f03eb9",
+  "precheck_identity_sha256": "096a87201269a59017a58189d02a93ee5ada14ad373e7e77340cd8496f1c46b9",
+  "prior_tracked_blob_count": 3786,
+  "all_other_prior_blobs_modes_preserved": 3784,
+  "exact_reviewed_modified_paths": [
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/issues/11-cpu-error-check-and-paired-estimates.md",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/map.md"
+  ],
+  "reviewed_modified_path_file_sha256": {
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/issues/11-cpu-error-check-and-paired-estimates.md": "bb2b0af0c3a001f29794b48fd80300c3411a549d295880f7b7534713047983b5",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/map.md": "412523f67f4fdc2481039d3d6f55047608bd2edba4c66d46c302c6e850d2bd6a"
+  },
+  "exact_archive_additions": [
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-report-admission-closeout-20261007-a4/README.md",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-report-admission-closeout-20261007-a4/lanl-cpu-band-report-a4-export-cleanup-actual-20261007.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-report-admission-closeout-20261007-a4/lanl-cpu-band-report-a4-export-cleanup-preflight-20261007.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-report-admission-closeout-20261007-a4/lanl-cpu-band-report-a4-local-admission-20261007.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-report-admission-closeout-20261007-a4/lanl-cpu-band-report-export-a4-actual-20261007.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-report-admission-closeout-20261007-a4/lanl-cpu-future-phase-reader-preparation-20261007.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-report-admission-closeout-20261007-a4/lanl-readonly-cpu-future-phase-admission-20261007.py",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-report-admission-closeout-20261007-a4/lanl-remove-consumed-cpu-export-a3-20261007.py",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-report-admission-closeout-20261007-a4/manifest.json"
+  ],
+  "exact_external_snapshots": [
+    "lanl-cpu-band-report-a4-local-admission-20261007.json",
+    "lanl-readonly-cpu-future-phase-admission-20261007.py",
+    "lanl-cpu-band-report-export-a4-actual-20261007.json",
+    "lanl-remove-consumed-cpu-export-a3-20261007.py",
+    "lanl-cpu-band-report-a4-export-cleanup-preflight-20261007.json",
+    "lanl-cpu-band-report-a4-export-cleanup-actual-20261007.json",
+    "lanl-cpu-future-phase-reader-preparation-20261007.json"
+  ],
+  "original_sealed_documents": [
+    {
+      "path": "lanl-cpu-band-report-a4-local-admission-20261007.json",
+      "identity_sha256": "ab5c80d246fe8c7419a48b82eafb395c37e850c11c10fbd509de545fa62ae578",
+      "file_sha256": "6e1a9bc81196b286f82e2403d350e5cf16c125bb7c15f22f6a89f5ce9e3fd5b3"
+    },
+    {
+      "path": "lanl-cpu-future-phase-reader-preparation-20261007.json",
+      "identity_sha256": "52507715d35c812472b9879c32f6ff781d4c6c378a09cecd9a8765dfd89f1ee5",
+      "file_sha256": "44c6ea1680fb9c1198adb8bc2a452798c1bf5e99f9954bcf98e59a6369ea07ce"
+    }
+  ],
+  "original_unsealed_documents": [
+    {
+      "path": "lanl-cpu-band-report-export-a4-actual-20261007.json",
+      "file_sha256": "a7c8c3289bc3f4d6dd76c5e5729b4696653991a134493881277442bd25d2e3ba",
+      "canonical_document_sha256": "3b1ff30124a650e783bf1714c58f79b78b8c9fb42f3909877652cfe1e40ea2ca"
+    },
+    {
+      "path": "lanl-cpu-band-report-a4-export-cleanup-preflight-20261007.json",
+      "file_sha256": "d23e4b7583e6752875f787bee9548dc183d4eba1187fc84682863c664fe41ec3",
+      "canonical_document_sha256": "5be4fb2b0218db8c43554e617839741ff82115877813839024d86157d7792705"
+    },
+    {
+      "path": "lanl-cpu-band-report-a4-export-cleanup-actual-20261007.json",
+      "file_sha256": "80e82f7c3cb5aa8caabe8775f6aa58c60473486d3758be8d2875e346232e1f40",
+      "canonical_document_sha256": "88bc65b328d9c64fa0ce3e95da3f1da004970de1c813bac987db0b53a5a8c63a"
+    }
+  ],
+  "archive_manifest": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-report-admission-closeout-20261007-a4/manifest.json",
+    "identity_sha256": "776f70208700be734a693338485e69b3eac712687120a63f47b4c476a6ff6756",
+    "file_sha256": "4e25b0bd2303f4710e844928595bec218401288ee38f93b42db455546c916071"
+  },
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "python_modules_exact_C": 185,
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "canonical_YAML_unchanged": 686,
+  "protected_prior_subtrees_preserved": {
+    "swdb-project/swdb": "a8e0c96076e1167c2b6ed10b612ecf1fc64bf5b6",
+    "swdb-project/schemas": "56b62ce78c53160e9a4bf1019c01c18961f21651",
+    "swdb-project/vocab": "fe4b5a82e94243733b06072702f53a001506eb68",
+    "swdb-project/records": "b698226310bdf054f8af16a59fd25db1060f6d3a",
+    "swdb-project/library": "efd78f19dd19389f18a3cae36eb3c86d06459b55",
+    "swdb-project/apps": "09fb65f4b5c4ab842f49d8f15fa532f3df50f23a",
+    "swdb-project/tools": "c7643f80330662aae8be7247c22cc8da01a6e497",
+    "swdb-project/scripts": "0ed42bc8e74c87d997e7d7dfd5280505fa9a3e72"
+  },
+  "root_docs_checkpoint_progress_library_maps_other_than_reviewed11_trackers_and17_preserved": true,
+  "source_C_reference": "refs/heads/codex/lanl-ticket11-source-c",
+  "source_C_reference_actual_sha": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "ticket11_resolved_with_faithful_observed_BC_failure_BFS_broad_envelope": true,
+  "ticket14_and17_claimed_unchanged": true,
+  "acceptance_inherited_from_exact_parent_approved_readout_identity": "ab5c80d246fe8c7419a48b82eafb395c37e850c11c10fbd509de545fa62ae578",
+  "no_numerical_readout_recomputed": true,
+  "no_Store_tests_native_provider_compiler_SSH_or_cleanup_repeat": true,
+  "separate_proof_only_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-report-closeout-integrated-merger-proof-20261007-a4.json",
+  "identity_sha256": "35a2fb185e82837b43228386ea2f1776be7dde2b01d265ea7097fdb5f3affb83"
+}
