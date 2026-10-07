@@ -1,0 +1,98 @@
+{
+  "format": "swdb.lanl14-actual-count-export-local-replay.v1",
+  "updated": "2026-10-07 ET",
+  "scope": "Read-only exact canonical closure, observer/source/binding and strict trial-scope replay; no application/provider/native execution or rate transfer.",
+  "source_head": "df1b6c73ebd3c623a330ad00846cd6dcd9bbbda9",
+  "source_bundle": "b062619b14901a42d23349802a5f5b1eb35e5a12e1a5e954214675c6b51936f3",
+  "count_source_commit": "821023a86e6c3bb3bf9b2e4fca3722b0edddb4e2",
+  "export_commit": "84b53a4372d2fdbd70d7e18127530e09cbe4ca07",
+  "export_receipt": {
+    "file_sha256": "3679c37e531aea944e0e7efb227f460c72e63bdd6f5577251db9ac972660c3e1",
+    "identity_sha256": "a1f32091c52141d83cf7acd9515562d827cd2020bd2694577a1abb3528ab904a",
+    "source_commit": "821023a86e6c3bb3bf9b2e4fca3722b0edddb4e2",
+    "six_fresh_cases": true,
+    "export_time_bytes_accessed_scope_checked": true
+  },
+  "new_record_count": 10,
+  "new_record_bytes": 89788777,
+  "prior_canonical_bytes_preserved_by_add_only_merge": true,
+  "other_ticket_map_issue_progress_bytes_preserved": true,
+  "cases": [
+    {
+      "case": "pr-cpu",
+      "characterization": "pagerank.jacobi.kron-g16.cpu.t1.characterization.generality.a1",
+      "threads": 1,
+      "trials": 5,
+      "roi": "gapbs.functional_trial_lambda.v1",
+      "access_observations_checked": 1080,
+      "whole_call_verified": true,
+      "binding_problems": [],
+      "compact_trials_equal": true
+    },
+    {
+      "case": "pr-dx100",
+      "characterization": "pagerank.jacobi.kron-g16.dx100.t4.characterization.generality.a1",
+      "threads": 4,
+      "trials": 5,
+      "roi": "gapbs.functional_trial_lambda.v1",
+      "access_observations_checked": 1080,
+      "whole_call_verified": true,
+      "binding_problems": [],
+      "compact_trials_equal": true
+    },
+    {
+      "case": "pr-maple",
+      "characterization": "pagerank.jacobi.kron-g16.maple.t2.characterization.generality.a1",
+      "threads": 2,
+      "trials": 5,
+      "roi": "gapbs.functional_trial_lambda.v1",
+      "access_observations_checked": 1080,
+      "whole_call_verified": true,
+      "binding_problems": [],
+      "compact_trials_equal": true
+    },
+    {
+      "case": "bfs-maple",
+      "characterization": "bfs.kron-g16.bfs-maple.t2.characterization.generality.a1",
+      "threads": 2,
+      "trials": 5,
+      "roi": "gapbs.trial_lambda.v1",
+      "access_observations_checked": 3258,
+      "whole_call_verified": true,
+      "binding_problems": [],
+      "compact_trials_equal": true
+    },
+    {
+      "case": "bc-maple",
+      "characterization": "bc.kron-g16.bc-maple.t2.characterization.generality.a1",
+      "threads": 2,
+      "trials": 5,
+      "roi": "gapbs.trial_lambda.v1",
+      "access_observations_checked": 3638,
+      "whole_call_verified": true,
+      "binding_problems": [],
+      "compact_trials_equal": true
+    },
+    {
+      "case": "bc-dx100",
+      "characterization": "bc.kron-g16.bc-dx100.t4.characterization.generality.a1",
+      "threads": 4,
+      "trials": 5,
+      "roi": "gapbs.functional_trial_lambda.v1",
+      "access_observations_checked": 3648,
+      "whole_call_verified": true,
+      "binding_problems": [],
+      "compact_trials_equal": true
+    }
+  ],
+  "all_30_trial_projections_equal": true,
+  "helper_sha256": "0adb2357c02d666aad22649d35ae6627204430592ad07b498fffa8623f256756",
+  "elapsed_seconds": 62.27,
+  "public_remote_validation": "OK: 643 record(s) valid",
+  "canonical_validation_repeated": false,
+  "native_execution": 0,
+  "provider_calls": 0,
+  "actual_final_pr_services_gate_pending": true,
+  "final_nine_report_pending": true,
+  "identity_sha256": "a769e3303329ef6c265170e9060a54a3b552639e1bafa5f8d4ab1e382dc6641c"
+}
