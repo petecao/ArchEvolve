@@ -35,6 +35,12 @@ int main(int argc,char **argv) {
     __swdb_begin();read(p);__swdb_end();
     __swdb_object_scope_leave(child);
     __swdb_begin();read(p);__swdb_end();__swdb_object_scope_leave(parent);
+  } else if(argc>1 && std::strcmp(argv[1],"owner-budget")==0){
+    __swdb_object_scope_view(parent,p,4);auto child=__swdb_object_scope_enter();
+    __swdb_object_scope_view(child,p,4);auto grandchild=__swdb_object_scope_enter();
+    __swdb_object_scope_view(grandchild,p,4);__swdb_object_scope_view(grandchild,q,4);
+    __swdb_begin();read(p);read(q);__swdb_end();
+    __swdb_object_scope_leave(grandchild);__swdb_object_scope_leave(child);__swdb_object_scope_leave(parent);
   } else if(argc>1 && std::strcmp(argv[1],"full-alias")==0){
     __swdb_object_scope_alloc(parent,p,129,1);auto child=__swdb_object_scope_enter();
     __swdb_object_scope_view(child,p+8,4);__swdb_object_scope_leave(child);

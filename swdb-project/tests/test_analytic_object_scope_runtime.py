@@ -126,3 +126,11 @@ def test_process_finalization_closes_scope_callbacks_before_late_source_destruct
     assert result.returncode==0,result.stderr
     assert 'closed=1' in result.stderr
     assert json.loads(path.read_text())['trials']
+
+
+def test_view_owner_budget_never_creates_an_ownerless_admitted_view(callback_binary,tmp_path):
+    [memory]=callback_counts(callback_binary,tmp_path,'owner-budget',budget=3)
+    assert sum(r['requests'] for r in memory['requests'])==2
+    assert memory['object_scope_counts']['bounded_view_requests']==1
+    assert memory['unknown_object_requests']==1
+    assert 'state_budget.view_owners' in memory['missing']

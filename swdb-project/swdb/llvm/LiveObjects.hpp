@@ -63,12 +63,12 @@ struct Registry {
     if(!owner || !base || !size || size>UINT64_MAX-base){scope_missing.insert("abi_referent_extent_unknown");return;}
     if(resolve(base,size))return;
     auto key=std::make_pair(base,size);auto existing=views.find(key);
+    if(existing!=views.end() && existing->second.owners.count(owner))return;
+    if(existing==views.end() && objects.size()+views.size()>=budget()){object_budget_exhausted=true;return;}
+    if(view_owner_entries>=budget()){scope_missing.insert("state_budget.view_owners");return;}
     if(existing==views.end()){
-      if(objects.size()+views.size()>=budget()){object_budget_exhausted=true;return;}
       existing=views.emplace(key,View{base,size,next_id++,{}}).first;
     }
-    if(existing->second.owners.count(owner))return;
-    if(view_owner_entries>=budget()){scope_missing.insert("state_budget.view_owners");return;}
     existing->second.owners.insert(owner);++view_owner_entries;
   }
   void retire_views(uint64_t owner){
