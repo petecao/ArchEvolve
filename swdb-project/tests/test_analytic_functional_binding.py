@@ -93,6 +93,28 @@ def test_registered_canonical_candidate_observes_guarded_read_commands_without_e
     assert data['observation_contract']['counted_target_description_snapshot']['id']=='dx100-e4fc4af-functional-analytic-v1.t1'
     assert data['observation_contract']['target_observation_policy_format']=='swdb.observation-policy.v1'
     checked=records.validate();assert checked.returncode==0,checked.stdout+checked.stderr
+    # The public frozen estimate uses the registered artifact/input/whole ROI;
+    # fixture packaging states remain unmodified and required costs stay null.
+    import yaml
+    request=tmp_path/'estimate-freeze.yaml'
+    request.write_text(yaml.safe_dump({'message_version':'1.0','id':'fixture.functional.protocol',
+        'version':1,'settings':{'mode':'estimated','estimator_version':'swdb.analytic.v1',
+            'target_description':'dx100-e4fc4af-functional-analytic-v1.t1','threads':1,
+            'roi':'gapbs.functional_trial_lambda.v1','sources':[CANDIDATE],'inputs':[input_id],
+            'input_run_arguments':{input_id:data['source']['run_arguments']}}},sort_keys=False))
+    frozen=run_swdb('freeze-protocol',request,'--records',records.path,'--format','json')
+    assert frozen.returncode==0,frozen.stdout+frozen.stderr
+    protocol=json.loads(frozen.stdout)
+    estimated=run_swdb('estimate','--records',records.path,'--characterization',data['id'],
+        '--target-description','dx100-e4fc4af-functional-analytic-v1.t1',
+        '--protocol',protocol['id'],'--id','fixture.functional.estimate','--format','json')
+    assert estimated.returncode==0,estimated.stdout+estimated.stderr
+    result=json.loads(estimated.stdout)
+    assert result['seconds'] is None and result['ratio'] is None
+    assert result['binding']['state']=='verified' and result['evidence_kind']=='execution'
+    assert result['count_reuse']['state']=='exact_counted_target'
+    assert len(result['trials'])==1 and result['trials'][0]['seconds'] is None
+    assert records.read('candidates/'+CANDIDATE+'.yaml')['state']=='unverified'
     target_path='hardware_targets/dx100-e4fc4af-functional-analytic-v1.yaml'
     target=records.read(target_path);original=json.loads(json.dumps(target))
     target['configuration']['tile_elements']+=1;records.write(target_path,target)
