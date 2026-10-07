@@ -1,24 +1,30 @@
 # Implementation progress
 
-Updated: 2026-10-06 22:09 ET
+Updated: 2026-10-06 23:30 ET
 
-Integration: `codex/lanl-analytic-eval`; review base: `2c50e5fb8671e08050921bee06920f92fd153bdd` (`yanrujhou_main`). Yan-Ru amended startup settings commit `fb842a8` to this replacement during startup. Owned branches are rebased so the removed IDE files stay removed. Final delivery merges and pushes `yanrujhou_main`.
+**12 of 15 assigned tickets are resolved and integrated.** Tickets 11, 14 and 17 remain active. Final review, fixes and cleanup follow their actual evaluations.
 
-Agent assignments: tickets 02–14, 16–17. Human gates 15, 18, 21 stay human-owned; 19–20 need triage; 22–23 require LANL access. No external communication.
+Integration: `codex/lanl-analytic-eval`. Review base: `2c50e5fb8671e08050921bee06920f92fd153bdd`. Delivery branch: `yanrujhou_main`; local, origin and mbit10 primary synchronized through `17a4432`. The unrelated uncommitted root rule edit remains preserved.
 
-| Ticket | Agent | Branch | State |
-|---|---|---|---|
-| 02–04 | Existing implementers | Merged | Resolved; integration86b2a9a; combined smoke11passed/553valid |
-| 05 | `/root/ticket02` | `codex/lanl-ticket05` | Resolved aa048a3; merged0785871; corrected counts, proof and bound reports completed |
-| 06 | `/root/ticket04` | `codex/lanl-ticket06` | Resolved and merged7c51ee1;41 focused plus real claim1 and integrated7 passed;553 historical valid |
-| 07 | `/root/ticket03` | `codex/lanl-ticket07` | Resolved cee740a; merged8e2156a; measured fixture, typed calibration and provenance checks passed |
-| 08 | `/root/ticket02` | `codex/lanl-ticket08` | Resolved bcaa238; merged c109994; 15 public acceptance cases and 2 merged protocol smokes passed |
-| 09 | `/root/ticket04`; merger02 | `codex/lanl-ticket09` | Resolved and integrated aff923c; 7 public integrated cases passed617.64s and617 valid; actual five-trial report retains null totals and25 structural gaps |
-| 11 | `/root/ticket03` | `codex/lanl-ticket11` | Claimed; independent clock calibration and fresh BFS/BC T1 counts passed; service gaps and error-band admission active before native timing |
+| Tickets | Owner | Current state |
+|---|---|---|
+| 02–10, 12–13, 16 | Assigned implementers | Resolved and integrated; public checks and compact evidence linked from each Answer |
+| 11 | `/root/ticket03` | Admitting independent CPU services before freezing predictions and collecting native accuracy timings |
+| 14 | `/root/ticket02` | Jacobi registration/count public test passed; preparing admitted routes for nine kernel–target reports |
+| 17 | `/root/ticket04` | Implementation and merged public checks passed; four fresh gem5 campaigns still pending |
 
-| 10 | `/root/ticket02` | `codex/lanl-ticket10` | Starting from integrated09; fresh sanitized guarded provider invocation is required before actual fills |
-| 12 | `/root` | `codex/lanl-ticket12` | Claimed; public command/handoff RED passed; current certification dependency refusal under diagnosis |
-| 16 | `/root/ticket04` | `codex/lanl-ticket16` | Claimed; public campaign pairing RED passed, immutable Extensa-only receipt ledger GREEN active |
+| Evaluation | Evidence state | Next action |
+|---|---|---|
+| Actual guarded parameter estimation | Complete; numeric assumptions filled, structural gaps and null totals retained | Preserve original provider result |
+| Functional evaluation and handoff | Complete; null timing/ratio and strict functional scope retained | Preserve immutable archived result |
+| OpenMP services | Admitted independent count and elapsed evidence | Bind exact supported CPU scopes |
+| Extra allocator sizes | Actual count and elapsed runs completed; written paired-window promise failed | Exclude paired rates; derive a separately labeled inferred gross resource |
+| Floating-point atomic service | Count collection complete; full store validation active | Admit count proof, then collect independent elapsed cells |
+| CPU accuracy | No application timings opened yet | Freeze four forecasts; g16 development, then unchanged g17 holdout |
+| Nine BFS/BC/PR reports | Preparation active | Use admitted fresh counts; retain missing accelerator/PR transfer facts |
+| D30 agreement | No eligible fresh pairs | Run four actual campaigns; report unsupported/no-switch honestly |
+
+Human gates 15, 18 and 21 remain human-owned. Tickets 19–20 require their recorded prerequisites; 22–23 require LANL access. No external communication. The 30-minute progress/liveness check remains active; next due 23:39 ET.
 
 Managed worktrees: `/Users/yanrujhou/.codex/worktrees/lanl-*/ArchEvolve`. Parent owns integration. Inspect liveness before reassigning. File writes and Git metadata there need sandbox escalation, covered by the user's implementation authorization.
 
@@ -251,3 +257,5 @@ Remote space maintenance removed only six clean pushed **export** worktrees, pre
 | 13/14 | Frontier preparation | Weak cited paper check and data-only Jacobi registration/nine reports follow integration10. Generic source-free functional adapter already supports the source policy; final reports and fresh DX reference must share unchanged final estimator/mechanism bytes. |
 
 At the check node0 holds allocator count validation; node1 and legacy are released. Other owned socket stays idle for elapsed services. `/data1` free23,617,818,624B and `/data`55,849,689,088B at03:08:53Z; original raw evidence/execution worktrees and unrelated Quicksilver are preserved. Actual10 first export helper failed before Git mutation on integer audit counters; helper-only strict-counter correction passed eight controls and exported from the original sealed acceptance without repeating inference or altering any of17 protected original artifacts. Final tickets/evaluations, two-axis review/fixes, tracker/main/remote sync and owned worktree cleanup remain required.
+
+2026-10-06 23:30 ET: Ticket 13 integrated at 17a4432 after nine public checks passed (4.12 s); 1,059 protected blobs and campaign files unchanged, no new canonical records. Main pushed and mbit10 primary fast-forwarded; execution worktrees and retention lock preserved. Extra allocator elapsed finished with both exits 0 and 630 valid records; compact Git export 2cbd99dddda2f468c1b241efd86b327ef885acf3 preserves all 16 cells. Strict admission found that driver windows do not satisfy the written 50 ms paired-window promise, so paired rates are excluded; independent gross observations remain immutable and a separate inferred construction is being tested before application outcomes. Floating count dispatch uses unchanged source 3006d91e2d076db0104f3b7734131dec5f26caad, no application timing. Ticket 14 public Jacobi registration/count passed 182.73 s and source 728fea38 is pushed; native T1/T4/T2 work is not relabeled as accelerator lowering. Ticket 17 final own ten cases passed 598.79 s, then merged two cases passed 197.23 s; actual helper review and Linux cleanup verification remain pending. All three implementers responsive.
