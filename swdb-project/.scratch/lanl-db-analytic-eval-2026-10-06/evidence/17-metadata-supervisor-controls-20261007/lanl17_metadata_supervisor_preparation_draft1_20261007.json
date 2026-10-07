@@ -1,0 +1,76 @@
+{
+  "format": "swdb.lanl17-metadata-supervisor-preparation.v1",
+  "checked_utc": "2026-10-07T07:25:21.450558+00:00",
+  "integration_commit": "945e4892026df578e0b734c6e70f97339adc9303",
+  "files": {
+    "lanl17_metadata_supervisor.py": {
+      "sha256": "32a0211aaaf093338aad469ef5a8b794358c95cff6c76ca2448f3e80c815f174",
+      "size_bytes": 8014
+    },
+    "lanl17_metadata_supervisor_portable_controls.py": {
+      "sha256": "1e5da5449d55a7aa5f64df7a5b91b0d857e09bbb8276aa843e14a2663a535728",
+      "size_bytes": 5313
+    },
+    "lanl17_metadata_supervisor_linux_fixture.py": {
+      "sha256": "7b25603843d7035abbc246f64b6e583d8829d26184ce076dea1bd54924dccc9f",
+      "size_bytes": 9398
+    }
+  },
+  "frozen_files_unchanged": {
+    "lanl17_parent_helpers.py": "31e1d71bc6e9ef4a5a5f1d5fbff136ceef249935f8f00601edf45277fce249ec",
+    "lanl17_parent_helpers_caps_a2.py": "09136ee553984b2c0cf929a6746f037aa4e1874f863aa2e83e0e0842a8b65ed9",
+    "lanl17_parent_helpers_linux_smoke.py": "4d0bdf1d4c8d2ce96d948085a785cde15c389a4c50413962bc7db14df57cf9d6"
+  },
+  "processes_py_sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "python_modules": 185,
+  "portable_controls": {
+    "state": "passed",
+    "cases": 9,
+    "elapsed_s": 0.195,
+    "case_names": [
+      "test_disallowed_action_refuses_before_child_launch",
+      "test_external_term_unwinds_finally_and_restores_handlers",
+      "test_failed_subreaper_never_launches_or_cleans_unowned_descendants",
+      "test_linux_only_subreaper_gate",
+      "test_mismatched_helper_refuses_before_import_or_launch",
+      "test_nonfinite_or_nonpositive_timeout_refuses",
+      "test_returned_leader_still_runs_owned_cleanup",
+      "test_survivor_never_reports_success",
+      "test_timeout_unwinds_cleanup_and_seals_timeout"
+    ],
+    "scope": "Mocked Popen/cleanup and real in-process TERM wiring only; no Linux descendant-cleanup admission."
+  },
+  "syntax_checks": 3,
+  "linux_fixture": {
+    "state": "not_run",
+    "parent_review": "pending",
+    "cases": [
+      "returned_leader_escaped_term_ignoring_grandchild",
+      "finite_timeout",
+      "external_SIGTERM_to_supervisor"
+    ],
+    "unrelated_sibling": "required_to_survive_each_case",
+    "inner_alarm_s": 120,
+    "worker_wait_cap_s": 55,
+    "child_fixture_wait_caps_s": {
+      "returned": 30,
+      "timeout": 5,
+      "term": 30
+    },
+    "scope": "No actual prepare/finalize/provider/campaign action."
+  },
+  "actions": [
+    "prepare",
+    "finalize"
+  ],
+  "nested_exports": "Existing helper only; no invented standalone export action.",
+  "future_metadata_timeout_selection": "Not selected by this preparation. CLI requires explicit finite positive timeout; existing 1400/900/1200 child caps unchanged.",
+  "receipt_privacy": "Only argv hash, error type and process identities; no full argv/environment/auth.",
+  "application_outcomes": 0,
+  "provider_calls": 0,
+  "actual_metadata_actions": 0,
+  "repository_unchanged": true,
+  "scope": "Separate external parent supervisor and unexecuted Linux fixture preparation. Does not validate scientific models/population/accuracy or admit D30.",
+  "identity_sha256": "072661ea9fe570b8845d84fa36684e193997211090fa8d0e9177605428468543"
+}
