@@ -1,0 +1,218 @@
+{
+  "format": "swdb.cpu-native-control-custody.v1",
+  "updated": "2026-10-07 ET",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "scope": "Exact-byte administrative control and portable proof snapshots, outside the estimator source package. Archive does not execute helpers or admit experiment outcomes.",
+  "rows": [
+    {
+      "path": "lanl-dispatch-cpu-model-continuation-a3.py",
+      "sha256": "90f28f9ad2dd65f87e74d194d376e26e4af7bd45d654fdba8c8a633afb33b7bc",
+      "bytes": 22210,
+      "classification": "model_a3_active"
+    },
+    {
+      "path": "lanl-export-cpu-model-continuation-a3.py",
+      "sha256": "621195299978672c86bee80365261105abe9f13ca076c3d557cd2643194c6956",
+      "bytes": 8165,
+      "classification": "model_a3_active"
+    },
+    {
+      "path": "lanl-test-cpu-model-continuation-a3.py",
+      "sha256": "4ef0577819f669d04a2267ec24928603a416d0ea96b41fe4e3e3f61d2cbec3ce",
+      "bytes": 11337,
+      "classification": "model_a3_active"
+    },
+    {
+      "path": "lanl-cpu-model-continuation-a3-preparation-proof.json",
+      "sha256": "8ee5153c85f40112aa87bb729c64d0472ec69f03929b26cf016dfd422a021c2b",
+      "bytes": 2670,
+      "classification": "model_a3_active",
+      "identity_sha256": "25b79db78a8bffc0281cfdc2f1e538b37327d378744d5f1c524db7611f8c9ee9"
+    },
+    {
+      "path": "lanl-cpu-model-continuation-a3-mocked-proof.json",
+      "sha256": "d5b7d19c295762be36c156406531a3b2e92843575be460cd16636025d294962a",
+      "bytes": 851,
+      "classification": "model_a3_active",
+      "identity_sha256": "84dfd106af48428bf99369c3c843f552cef1708c59c5e62a2059a6fe07a35bf6"
+    },
+    {
+      "path": "lanl-ticket11-model-processing-recovery-a3-plan-20261007.md",
+      "sha256": "b2738f167a4fabb1e365a0408021948f5374f220fb6aca86044d8d65fd058cf8",
+      "bytes": 3196,
+      "classification": "model_a3_active"
+    },
+    {
+      "path": "lanl-ticket11-real-model-a3-admission-checklist-20261007.md",
+      "sha256": "0c3177d74c89dd50ebe50bc250b90d54b8475f975f27252de0cc763b3556a7ba",
+      "bytes": 4528,
+      "classification": "model_a3_active"
+    },
+    {
+      "path": "lanl-dispatch-cpu-model-validation-a3.py",
+      "sha256": "b280f3d7bbc96d77f396c12999fdffed985191afef0503fb4de01f0269b0f1b3",
+      "bytes": 15896,
+      "classification": "development_holdout_unexecuted"
+    },
+    {
+      "path": "lanl-export-cpu-model-validation-a3.py",
+      "sha256": "2d59a2d5f6ce54d4692fc962dbc9e38dab4f86076f1873ab78a1484522c681f6",
+      "bytes": 5860,
+      "classification": "development_holdout_unexecuted"
+    },
+    {
+      "path": "lanl-test-cpu-model-dispatch-a3.py",
+      "sha256": "e2a2b4794b676a5d7f80e3b6fcfd3e69a3a60a03cdd9c409d297d1493b711e11",
+      "bytes": 8384,
+      "classification": "development_holdout_unexecuted"
+    },
+    {
+      "path": "lanl-cpu-model-dispatch-a3-mocked-proof.json",
+      "sha256": "0e03a91c48c47489feb7953d858341d3a358da8ca269670b00fa85ac164b7507",
+      "bytes": 1282,
+      "classification": "development_holdout_unexecuted",
+      "identity_sha256": "b613b38971d851d806c1e9d443c8322eff8d785870ca2ac2bcf4b80630fceced"
+    },
+    {
+      "path": "lanl-cpu-downstream-a3-preparation-proof.json",
+      "sha256": "b03526a9499c9ed68758e82cbd094905b6d046e498f623f2808dea382a065f9f",
+      "bytes": 9769,
+      "classification": "development_holdout_unexecuted",
+      "identity_sha256": "4d49aa806b92aad4e6c1ea372129ff44a07b62ecfb228239e9b41d9bb396f8e1"
+    },
+    {
+      "path": "lanl-dispatch-cpu-band-report-a3-freeze1800.py",
+      "sha256": "512cc097b41a7607d3c1b91c73bb831378da399366ece10272a78424dc9e7f44",
+      "bytes": 17760,
+      "classification": "band_report_unexecuted"
+    },
+    {
+      "path": "lanl-export-cpu-band-report-a3.py",
+      "sha256": "788c5cfd72433916daac544420de5251eb6d549c56afaeba455a82416f11dbb1",
+      "bytes": 12921,
+      "classification": "band_report_unexecuted"
+    },
+    {
+      "path": "lanl-test-cpu-band-report-a3-freeze1800.py",
+      "sha256": "7426400bf5ea2f67fc0b6dff3dddf4f85c6c9eb4b44ecd27a0cda7fb976dec46",
+      "bytes": 18654,
+      "classification": "band_report_unexecuted"
+    },
+    {
+      "path": "lanl-cpu-band-report-a3-freeze1800-runner.py",
+      "sha256": "7177dce872d84a21438fb9fa8ab8ff7183d73b83bdbf45403a671f27e307f2b6",
+      "bytes": 13932,
+      "classification": "band_report_unexecuted"
+    },
+    {
+      "path": "lanl-cpu-band-report-a3-freeze1800-preparation-proof.json",
+      "sha256": "69069e9d280619c564c8bd6075bd209aaab8c510ea4de937b1d975013232be98",
+      "bytes": 1958,
+      "classification": "band_report_unexecuted",
+      "identity_sha256": "94a7ee9603a3bf0f21fe66b49af68044743825382b008d4ede12f219fc111e47"
+    },
+    {
+      "path": "lanl-cpu-band-report-a3-freeze1800-mocked-proof.json",
+      "sha256": "a8f41406784001350b405bddee4de2451c89bbde83bb3496e3534b1cdbcd8e3c",
+      "bytes": 3854,
+      "classification": "band_report_unexecuted",
+      "identity_sha256": "63cdccfa287f08f6e8747478ea41b9797cff5f185263d1e7c0decb0c79735370"
+    },
+    {
+      "path": "lanl-cpu-band-report-a3-freeze1800-verified-proof.json",
+      "sha256": "2d0ce5cc05579a6335655f8da84631eeee8a89d05a94010cbaba6765f6665f54",
+      "bytes": 1226,
+      "classification": "band_report_unexecuted",
+      "identity_sha256": "0f528e62c01961627f712cfa3e7853bc29011249837aa6d17af93ad7cd812b21"
+    },
+    {
+      "path": "lanl-ticket11-band-report-freeze1800-note-20261007.md",
+      "sha256": "f6d1db6070421187fc191b1df775fb240a4cd55ab88cc796a6e14ab13b143be6",
+      "bytes": 1706,
+      "classification": "band_report_unexecuted"
+    },
+    {
+      "path": "lanl-remove-consumed-cpu-export-a3-20261007.py",
+      "sha256": "534834a42ab56d7005fd39a2a691a6972c9262ff59bb102a455f3c8f18263508",
+      "bytes": 4549,
+      "classification": "consumed_export_cleanup_unexecuted"
+    },
+    {
+      "path": "lanl17_parent_helpers.py",
+      "sha256": "31e1d71bc6e9ef4a5a5f1d5fbff136ceef249935f8f00601edf45277fce249ec",
+      "bytes": 38190,
+      "classification": "cleanup_dependency_linux_proven"
+    },
+    {
+      "path": "lanl-cpu-downstream-a2-strict-paths-proof.json",
+      "sha256": "42cca7d82db83ed61650023607671c7740aeb96fff9d0b25a82500c1fc9834df",
+      "bytes": 12390,
+      "classification": "historical_preparation_no_outcome_admission",
+      "identity_sha256": "643f4f2b364f4f67caf44f7aee62844e3eb52f8e45d10e7d941abe48b586123a"
+    },
+    {
+      "path": "lanl-cpu-downstream-a2-reviewed-e7294bd5.json",
+      "sha256": "5bf9f74e3cff522309fddfe2fdae8160e24577fa2ce8ffe7a049357eb96b72dc",
+      "bytes": 5022,
+      "classification": "historical_preparation_no_outcome_admission",
+      "identity_sha256": "e7294bd5b6c6b6ddffbd9f5c6232539f3cc8fbd83fce378f75d216a06e6e2fab"
+    },
+    {
+      "path": "lanl-cpu-downstream-a2-path-allowlist-proof.json",
+      "sha256": "a7f60bacb79fd2bc73f21573af269ebdc6b8d4bffdd577709f27db1e456f7403",
+      "bytes": 6244,
+      "classification": "historical_preparation_no_outcome_admission",
+      "identity_sha256": "51625bf160da0468dc39f5e95c767fb13c19448026036a4303d5f70310744696"
+    },
+    {
+      "path": "lanl-metadata-cost-audit-20261007.md",
+      "sha256": "480f3b6736e7e37adb82bbd97fca6b6b6dfc1e89a682475f8bb15d45cba38a6b",
+      "bytes": 8221,
+      "classification": "read_only_cost_audit"
+    }
+  ],
+  "archive_helper_execution": false,
+  "source_runtime_or_canonical_record_changes": false,
+  "model_a3": {
+    "state": "active_parent_dispatch",
+    "application_performance_timings_collected": false,
+    "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3",
+    "parent_reported_preregistration_identity": "0d57949ab6e056c0f350e2db57f4cce44bc31ff1b538ba866d90bbb06ca45ba3",
+    "parent_reported_bc_public_freeze_exit": 0,
+    "parent_reported_bc_public_freeze_s": 1266.086438,
+    "acceptance": "pending_actual_export_and_read_only_admission"
+  },
+  "failed_metadata_attempts": [
+    {
+      "attempt": "a1",
+      "cause": "metadata_processing_cap",
+      "parent_reported_failure_custody_identity": "8ddb9825fb7ccefff7088ea550af290379f8ea48744065b9d156196b7947db5a"
+    },
+    {
+      "attempt": "a2",
+      "cause": "metadata_processing_cap",
+      "parent_reported_failure_custody_identity": "f12b499ff1a82dc31e5b03411ee90458ba12411c11dece9b066420be0b30f0a7"
+    }
+  ],
+  "future_phases": {
+    "development": "unexecuted",
+    "heldout": "unexecuted",
+    "band_report": "unexecuted",
+    "native_collector_s": 900,
+    "development_bands": "separate_bfs_bc_before_either_g17_outcome",
+    "band_report_protocol_freeze_s": 1800,
+    "band_report_estimate_validate_s": 1400,
+    "band_report_inner_outer_s": [
+      9200,
+      9500
+    ]
+  },
+  "immutable_refs": {
+    "cleanup_proof": "../17-linux-cleanup-smoke-mbit10-20261006-a1.json",
+    "processes_py_sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+    "runbook": "../11-native-model-band-runbook.md"
+  },
+  "custody_note": "Failure and active-stage facts above are explicitly parent-reported; their actual sealed custody/acceptance arrives via additive Git metadata. Portable mocks, administrative caps, and source preservation do not establish native agreement.",
+  "identity_sha256": "c11f1f8cb7126e1e9bcfab5a47deb40b37737b1a7d689c15382f2e0474b0ee22"
+}

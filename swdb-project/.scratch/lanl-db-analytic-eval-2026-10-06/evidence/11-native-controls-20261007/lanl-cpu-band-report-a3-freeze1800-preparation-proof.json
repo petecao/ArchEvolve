@@ -1,0 +1,46 @@
+{
+  "format": "swdb.cpu-band-report-administrative-cap-preparation.v1",
+  "scope": "Inert cap-only administrative version after actual same-C BC public freeze completed in1266.086438s. No source, model, rate, width, input, raw path, scientific command or active helper changes.",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "parent_reported_same_source_freeze_s": 1266.086438,
+  "old_helper_sha256": "f5fb834e3f6fc06c1b17d16e50f8dddeec4f534f05c19c66913f8a2a0abf8694",
+  "new_helper_sha256": "512cc097b41a7607d3c1b91c73bb831378da399366ece10272a78424dc9e7f44",
+  "exporter_sha256": "788c5cfd72433916daac544420de5251eb6d549c56afaeba455a82416f11dbb1",
+  "exporter_unchanged": true,
+  "changes": [
+    {
+      "before": "'runner_s':8400,'outer_s':8700,'public_stage_s':1400,'validate_s':1400",
+      "after": "'runner_s':9200,'outer_s':9500,'public_stage_s':1400,'protocol_freeze_s':1800,'validate_s':1400"
+    },
+    {
+      "before": "deadline=time.monotonic()+8400",
+      "after": "deadline=time.monotonic()+9200"
+    },
+    {
+      "before": "'freeze-'+kernel,1400",
+      "after": "'freeze-'+kernel,1800"
+    },
+    {
+      "before": "'8700s'",
+      "after": "'9500s'"
+    }
+  ],
+  "all_other_bytes_unchanged": true,
+  "runner_only_deadline_and_freeze_cap_changed": true,
+  "input_admission_and_cleanup_functions_ast_identical": true,
+  "paths_and_scientific_refs_unchanged": true,
+  "active_a3_model_helpers_mutated": false,
+  "limits": {
+    "runner_s": 9200,
+    "outer_s": 9500,
+    "protocol_freeze_s": 1800,
+    "estimate_s": 1400,
+    "validate_s": 1400
+  },
+  "native_collector_s_unchanged": 900,
+  "native_or_provider_commands": 0,
+  "test_sha256": "7426400bf5ea2f67fc0b6dff3dddf4f85c6c9eb4b44ecd27a0cda7fb976dec46",
+  "remote_execution": false,
+  "identity_sha256": "94a7ee9603a3bf0f21fe66b49af68044743825382b008d4ede12f219fc111e47"
+}
