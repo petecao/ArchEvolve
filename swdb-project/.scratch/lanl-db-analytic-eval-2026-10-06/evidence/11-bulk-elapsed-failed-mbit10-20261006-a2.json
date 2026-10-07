@@ -1,0 +1,63 @@
+{
+  "format": "swdb.cpu-service-failed-attempt.v1",
+  "updated": "2026-10-06 21:38 ET",
+  "source_commit": "aaf9a9d24a3b2f18af9a7ad8c445025fea366162",
+  "raw_remote_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-elapsed-20261006-a2",
+  "raw_transferred": false,
+  "application_outcomes_observed": false,
+  "admitted_service_receipts": [],
+  "status": "bounded_timeout",
+  "reason": "Empty size-independent driver determines the paired pilot; first batch exceeded its unchanged 900-second collector budget.",
+  "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+      "python3",
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-elapsed-20261006-a2/runner.py"
+    ],
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "ended_utc": "2026-10-07T01:36:51Z",
+    "exit_code": 1,
+    "host": "mbit10",
+    "job": "swdb-lanl-bulk-elapsed-20261006-a2",
+    "lease_generation": 488,
+    "lease_name": "mbit10-evaluation-node0",
+    "load1_at_start": 1.64,
+    "load1_max": 32,
+    "node": 0,
+    "numa_memory_policy": "bind:0",
+    "numactl": "--cpunodebind=0 --membind=0",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-07T01:20:19Z"
+  },
+  "completed_utc": "2026-10-07T01:36:51.434166+00:00",
+  "partial_cells": 22,
+  "files": {
+    "preregistration.json": {
+      "bytes": 48055,
+      "sha256": "025bde1ececc7f74899411e32ef059cbe350bd5c20833d9e4ba8657e35670c7d"
+    },
+    "environment.json": {
+      "bytes": 5013,
+      "sha256": "25c6e1934c523b240d39c42b88df5fdefb35227c5eead205bd7a3a62a7baa5b7"
+    },
+    "lane.json": {
+      "bytes": 733,
+      "sha256": "dca1465330113322e8ac3a6edc541c7b6e34eddc768d8d26f712b46175d7db98"
+    },
+    "runner-error.txt": {
+      "bytes": 41,
+      "sha256": "7bf8b428606c094c18561d9ab0622311e434ae4c1001476146192ca5fa5e408e"
+    },
+    "bulk.a1.stderr.log": {
+      "bytes": 95,
+      "sha256": "8b41c761af880326b4c584a859e442ad2b6ed3a9f194a28b05d3390d1a574a2a"
+    },
+    "bulk.a1/partial-trials.json": {
+      "bytes": 2110817,
+      "sha256": "c8c76b03af04a3bcd62bc3a5d4cef7fda666201fb15fc70f4f1583091713644a"
+    }
+  },
+  "scope": "Partial constructed-service trials stay remote and are not imported, pooled, or used for application bands.",
+  "identity_sha256": "57c2e47ddc569264b3e44e2a4a2e7cbd7c58a2a6b8cc8087d92c5b14334723f5"
+}
