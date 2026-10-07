@@ -1,9 +1,11 @@
 """Public bounded object/frame observer contract. Updated: 2026-10-06 ET."""
 import json
-from conftest import REPO, run_swdb
+import copy
+from testkit.analytic import digest
+from conftest import REPO, run_swdb, make_records
 
 
-def characterize_scopes(records,tmp_path,llvm22,*extra,function="scope_reads",fixture="object_scopes.cpp"):
+def characterize_scopes(records,tmp_path,llvm22,*extra,function="scope_reads",fixture="object_scopes.cpp",scopes=True):
     records.add_stub()
     mapping=tmp_path/'regions.json'
     mapping.write_text(json.dumps({'regions':[{'id':'fixture.scopes','function':function,'line_start':1,'line_end':100}]}))
@@ -11,7 +13,8 @@ def characterize_scopes(records,tmp_path,llvm22,*extra,function="scope_reads",fi
         REPO/'tests/fixtures/analytic'/fixture,'--implementation','stub-impl',
         '--input','tiny-sym','--function',function,'--region-map',mapping,
         '--roi','fixture.scopes.v1','--id','fixture.scopes','--llvm-bin',llvm22,
-        '--output',tmp_path/'counted','--fixture','--object-scopes','--format','json',*extra)
+        '--output',tmp_path/'counted','--fixture','--format','json',
+        *(['--object-scopes'] if scopes else []),*extra)
     assert result.returncode==0,result.stderr+result.stdout
     return json.loads(result.stdout)
 
@@ -54,3 +57,70 @@ def test_openmp_abi_referent_view_covers_logical_load_without_allocation_claim(r
     assert all(m['pre_roi_allocation_pages']['value'] is None for m in scoped)
     assert all('bounded_view_not_full_allocation' in m['missing'] for m in scoped)
     assert records.validate().returncode==0
+
+
+def test_caught_exception_retires_child_frames_before_caller_lifetime_start(records,tmp_path,llvm22):
+    data=characterize_scopes(records,tmp_path,llvm22,'--run-arg','recover',function='scope_recover')
+    memory=next(r for r in data['regions'] if r['id']=='fixture.scopes')['memory_service_counts']
+    assert memory['useful_bytes']['value']==3
+    assert memory['unknown_object_requests']['value']==0
+    assert memory['lifetime_line_union']['value']==3
+    assert memory['in_roi_allocation_pages']['value']==1
+
+
+def test_defined_global_has_declared_extent_and_pre_roi_lifetime(records,tmp_path,llvm22):
+    data=characterize_scopes(records,tmp_path,llvm22,'--run-arg','global',function='scope_global')
+    memory=next(r for r in data['regions'] if r['id']=='fixture.scopes')['memory_service_counts']
+    assert memory['useful_bytes']['value']==3
+    assert memory['unknown_object_requests']['value']==0
+    assert memory['lifetime_line_union']['value']==3
+    assert memory['pre_roi_allocation_pages']['value']==1
+    assert memory['in_roi_allocation_pages']['value']==0
+
+
+def test_optional_scope_observer_preserves_original_source_ids_and_counts_when_absent(tmp_path,llvm22,monkeypatch):
+    plain=tmp_path/'plain';plain.mkdir();scoped=tmp_path/'scoped';scoped.mkdir()
+    monkeypatch.setenv('SWDB_OBJECT_SCOPES','1')
+    legacy=characterize_scopes(make_records(plain),plain,llvm22,scopes=False)
+    current=characterize_scopes(make_records(scoped),scoped,llvm22)
+    assert 'object_scope_contract' not in legacy['observation_contract']
+    assert legacy['static_analysis']['source_ir_sha256']==current['static_analysis']['source_ir_sha256']
+    assert json.loads((plain/'counted/source.json').read_text())==json.loads((scoped/'counted/source.json').read_text())
+    for old,new in zip(legacy['regions'],current['regions']):
+        assert old['id']==new['id']
+        assert old['access_patterns']==new['access_patterns']
+        assert old['operation_counts']==new['operation_counts']
+        assert old['dynamic_counts']==new['dynamic_counts']
+        assert 'object_scope_counts' not in old['memory_service_counts']
+
+
+def test_all_optional_scope_facts_reject_negative_values_after_fixture_resigning(records,tmp_path,llvm22):
+    original=characterize_scopes(records,tmp_path,llvm22)
+    for name in ('full_allocation_requests','bounded_view_requests','unresolved_requests','bounded_view_line_union'):
+        data=copy.deepcopy(original)
+        region=next(r for r in data['regions'] if r['id']=='fixture.scopes')
+        region['memory_service_counts']['object_scope_counts'][name]['value']=-1
+        data.pop('identity_sha256');data['identity_sha256']=digest(data)
+        records.write('workload_characterizations/fixture.scopes.yaml',data)
+        checked=records.validate()
+        assert checked.returncode==1
+        assert 'nonnegative' in checked.stdout+checked.stderr
+
+
+def test_scope_coverage_partition_must_match_executed_requests(records,tmp_path,llvm22):
+    data=characterize_scopes(records,tmp_path,llvm22)
+    memory=next(r for r in data['regions'] if r['id']=='fixture.scopes')['memory_service_counts']
+    memory['object_scope_counts']['full_allocation_requests']['value']=5
+    data.pop('identity_sha256');data['identity_sha256']=digest(data)
+    records.write('workload_characterizations/fixture.scopes.yaml',data)
+    result=records.validate()
+    assert result.returncode==1
+    assert 'partition' in result.stdout+result.stderr
+
+
+def test_source_nonlocal_exit_keeps_unproved_recovered_frame_unknown(records,tmp_path,llvm22):
+    data=characterize_scopes(records,tmp_path,llvm22,'--run-arg','nonlocal',function='scope_nonlocal')
+    memory=next(r for r in data['regions'] if r['id']=='fixture.scopes')['memory_service_counts']
+    assert memory['useful_bytes']['value']==3
+    assert memory['unknown_object_requests']['value']==3
+    assert 'nonlocal_control_flow' in memory['missing']

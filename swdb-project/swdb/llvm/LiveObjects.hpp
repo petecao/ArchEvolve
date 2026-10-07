@@ -20,13 +20,13 @@ struct Service {
   std::set<std::pair<uint64_t,uint64_t>> lines,pre_pages,in_pages;
   bool lines_complete=true,pages_complete=true,first_complete=true,bytes_complete=true;
   uint64_t full_requests=0,view_requests=0;
-  std::set<std::pair<uint64_t,uint64_t>> view_lines;bool views_complete=true;
+  std::set<std::pair<uint64_t,uint64_t>> view_lines;bool views_complete=true,requests_complete=true;
 };
 struct Registry {
   std::map<uint64_t,Object> objects;
   std::map<uint32_t,Service> services;
   uint64_t next_id=1,epoch=0,touch_entries=0,service_entries=0;
-  bool object_budget_exhausted=false,scope_enabled=false;
+  bool object_budget_exhausted=false,scope_enabled=false;uint64_t view_owner_entries=0;
   std::map<std::pair<uint64_t,uint64_t>,View> views;
   std::set<std::string> scope_missing;
   void begin(){++epoch;services.clear();service_entries=0;}
@@ -56,7 +56,7 @@ struct Registry {
     scope_enabled=true;auto existing=objects.find(base);
     if(existing!=objects.end() && existing->second.origin==2 && existing->second.size==size)return;
     if(existing!=objects.end()){existing->second.ambiguous=true;scope_missing.insert("overlapping_full_object_extents");return;}
-    allocate(base,size,known,2);
+    allocate(base,size,known,2);auto created=objects.find(base);if(created!=objects.end())created->second.born=0;
   }
   void view(uint64_t owner,uint64_t base,uint64_t size){
     scope_enabled=true;
@@ -67,11 +67,12 @@ struct Registry {
       if(objects.size()+views.size()>=budget()){object_budget_exhausted=true;return;}
       existing=views.emplace(key,View{base,size,next_id++,{}}).first;
     }
-    if(existing->second.owners.size()>=budget() && !existing->second.owners.count(owner)){scope_missing.insert("state_budget.view_owners");return;}
-    existing->second.owners.insert(owner);
+    if(existing->second.owners.count(owner))return;
+    if(view_owner_entries>=budget()){scope_missing.insert("state_budget.view_owners");return;}
+    existing->second.owners.insert(owner);++view_owner_entries;
   }
   void retire_views(uint64_t owner){
-    for(auto it=views.begin();it!=views.end();){it->second.owners.erase(owner);if(it->second.owners.empty())it=views.erase(it);else ++it;}
+    for(auto it=views.begin();it!=views.end();){view_owner_entries-=it->second.owners.erase(owner);if(it->second.owners.empty())it=views.erase(it);else ++it;}
   }
   View *resolve_view(uint64_t address,uint64_t size){
     View *found=nullptr;
@@ -94,11 +95,13 @@ struct Registry {
     auto *object=range_known?resolve(address,bytes):nullptr;
     auto *bounded=scope_enabled && range_known && !object?resolve_view(address,bytes):nullptr;
     Service *s=active?&services[region]:nullptr;
-    if(s){s->requests[{update,width}]+=n;
+    if(s){auto increment=[&](uint64_t &counter){
+      if(scope_enabled && counter>UINT64_MAX-n){s->requests_complete=false;counter=UINT64_MAX;}else counter+=n;
+    };increment(s->requests[{update,width}]);
       if(!range_known || s->useful_bytes>UINT64_MAX-bytes)s->bytes_complete=false;
       else s->useful_bytes+=bytes;
-      if(!object && !bounded)s->unknown_requests+=n;
-      if(scope_enabled){if(object)s->full_requests+=n;else if(bounded)s->view_requests+=n;}
+      if(!object && !bounded)increment(s->unknown_requests);
+      if(scope_enabled){if(object)increment(s->full_requests);else if(bounded)increment(s->view_requests);}
     }
     if(bounded && s && bytes && s->views_complete){
       uint64_t offset=address-bounded->base,hi=offset+bytes-1;
@@ -126,15 +129,16 @@ struct Registry {
     std::ostringstream out;out<<'{';bool sep=false;
     for(auto &p:services){if(sep)out<<',';sep=true;auto &s=p.second;
       out<<'"'<<p.first<<"\":{\"requests\":[";bool entry=false;
-      for(auto &r:s.requests){if(entry)out<<',';entry=true;out<<"{\"update\":"<<r.first.first<<",\"element_bytes\":"<<r.first.second<<",\"requests\":"<<r.second<<'}';}
+      for(auto &r:s.requests){if(entry)out<<',';entry=true;out<<"{\"update\":"<<r.first.first<<",\"element_bytes\":"<<r.first.second<<",\"requests\":"<<(s.requests_complete?std::to_string(r.second):"null")<<'}';}
       out<<"],\"useful_bytes\":"<<(s.bytes_complete?std::to_string(s.useful_bytes):"null")
-        <<",\"lifetime_line_union\":"<<(s.lines_complete && !s.unknown_requests && !s.view_requests?std::to_string(s.lines.size()):"null")
-        <<",\"logical_first_read_pages\":"<<(s.first_complete && !s.unknown_requests && !s.view_requests?std::to_string(s.first_read):"null")
-        <<",\"logical_first_write_pages\":"<<(s.first_complete && !s.unknown_requests && !s.view_requests?std::to_string(s.first_write):"null")
-        <<",\"pre_roi_allocation_pages\":"<<(s.pages_complete && !s.unknown_requests && !s.view_requests?std::to_string(s.pre_pages.size()):"null")
-        <<",\"in_roi_allocation_pages\":"<<(s.pages_complete && !s.unknown_requests && !s.view_requests?std::to_string(s.in_pages.size()):"null")
-        <<",\"unknown_object_requests\":"<<s.unknown_requests<<",\"missing\":[";
+        <<",\"lifetime_line_union\":"<<(s.requests_complete && s.lines_complete && !s.unknown_requests && !s.view_requests?std::to_string(s.lines.size()):"null")
+        <<",\"logical_first_read_pages\":"<<(s.requests_complete && s.first_complete && !s.unknown_requests && !s.view_requests?std::to_string(s.first_read):"null")
+        <<",\"logical_first_write_pages\":"<<(s.requests_complete && s.first_complete && !s.unknown_requests && !s.view_requests?std::to_string(s.first_write):"null")
+        <<",\"pre_roi_allocation_pages\":"<<(s.requests_complete && s.pages_complete && !s.unknown_requests && !s.view_requests?std::to_string(s.pre_pages.size()):"null")
+        <<",\"in_roi_allocation_pages\":"<<(s.requests_complete && s.pages_complete && !s.unknown_requests && !s.view_requests?std::to_string(s.in_pages.size()):"null")
+        <<",\"unknown_object_requests\":"<<(s.requests_complete?std::to_string(s.unknown_requests):"null")<<",\"missing\":[";
       bool missing=false;auto emit=[&](const char *name){if(missing)out<<',';missing=true;out<<'"'<<name<<'"';};
+      if(!s.requests_complete)emit("request_count_overflow");
       if(s.unknown_requests)emit("object_identity_or_extent");
       if(s.view_requests)emit("bounded_view_not_full_allocation");
       if(scope_enabled){if(!s.views_complete)emit("state_budget.bounded_view_line_union");for(auto &reason:scope_missing)emit(reason.c_str());}
@@ -144,9 +148,9 @@ struct Registry {
       if(!s.bytes_complete)emit("byte_range_overflow");
       if(object_budget_exhausted)emit("state_budget.object_registry");
       out<<']';
-      if(scope_enabled)out<<",\"object_scope_counts\":{\"full_allocation_requests\":"<<s.full_requests
-        <<",\"bounded_view_requests\":"<<s.view_requests<<",\"unresolved_requests\":"<<s.unknown_requests
-        <<",\"bounded_view_line_union\":"<<(s.views_complete && !s.unknown_requests?std::to_string(s.view_lines.size()):"null")<<'}';
+      if(scope_enabled)out<<",\"object_scope_counts\":{\"full_allocation_requests\":"<<(s.requests_complete?std::to_string(s.full_requests):"null")
+        <<",\"bounded_view_requests\":"<<(s.requests_complete?std::to_string(s.view_requests):"null")<<",\"unresolved_requests\":"<<(s.requests_complete?std::to_string(s.unknown_requests):"null")
+        <<",\"bounded_view_line_union\":"<<(s.requests_complete && s.views_complete && !s.unknown_requests?std::to_string(s.view_lines.size()):"null")<<'}';
       out<<'}';
     }out<<'}';return out.str();
   }
