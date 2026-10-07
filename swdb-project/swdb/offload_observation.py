@@ -53,6 +53,10 @@ def prepare(store,target,source,*,fixture=False,compile_flags=()):
         from swdb.intrinsic_source_views import require_compiled_view,source_file
         from swdb.library import Library
         library=Library(paths.HOME/'library',store)
+        counted_target=store.get(target['target'])
+        if counted_target is None or counted_target['kind'] not in {'machine','hardware_target'}:
+            raise Failure('functional observation requires its exact registered target configuration')
+        bindings['records'][target['target']]=artifacts.digest(counted_target)
         # A fabricated debug filename cannot redirect a binding into shipped code.
         # Registered artifact/source protection supplies the enclosing source proof.
         if re.search(r'^\s*#\s*(?:line\b|[0-9]+)',source.read_text(),re.M):
@@ -102,6 +106,7 @@ def prepare(store,target,source,*,fixture=False,compile_flags=()):
     for name in FIELDS:
         env['SWDB_LOGICAL_FIELD_'+name.upper()]=','.join(str(field['lsb'])+':'+str(field['bits']) for field in (layout or {}).get(name,[]))
     return {'target_description_sha256':artifacts.digest(target),
+        'counted_target_description_snapshot':target,
         'functional_observation':observation,'dram_address_layout':layout,
         'layout_sha256':artifacts.digest(layout),
         'request_policy_sha256':artifacts.digest(request),
@@ -207,6 +212,8 @@ def binding_problems(data,store):
     library=Library(paths.HOME/'library',store);issues=[]
     commands=contract.get('functional_observation',{}).get('commands',[])
     required={c['intrinsic'] for c in commands}|{op for c in commands for op in c['hardware_operations']}
+    if contract.get('counted_target_description_snapshot') is not None:
+        required.add(contract['counted_target_description_snapshot']['target'])
     if set(pins['records'])!=required:issues.append('functional normative record pin coverage differs')
     for rid,digest in pins['records'].items():
         record=store.get(rid)

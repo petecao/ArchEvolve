@@ -6,41 +6,8 @@ import hashlib
 import yaml
 import pytest
 from conftest import REPO,run_swdb
-from testkit.analytic import digest,target_description
+from testkit.analytic import digest,target_description,characterize_command
 
-
-def characterize_command(records,tmp_path,llvm22,*,window=4,transaction=64,producer='fixture_backend',setup=False,extra=()):
-    records.add_stub()
-    source=REPO/'tests/fixtures/analytic/commands.cpp'
-    path=target_description(tmp_path);target=yaml.safe_load(path.read_text());target['target']='testhost'
-    target['dram_address_layout']={name:[] for name in ('channel','rank','bank_group','bank')}
-    target['dram_address_layout']['row']=[{'lsb':7,'bits':10}]
-    target['functional_observation']={'format':'swdb.functional-observation.v1','commands':[{
-        'event':'fixture.read','intrinsic':'fixture.intrinsic.read','hardware_operations':['fixture.operation.read'],
-        'target_access_sources':[{'debug_name':producer,'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest()}],
-        'bookkeeping_access_sources':[{'debug_name':'fixture_check','source_sha256':hashlib.sha256(source.read_bytes()).hexdigest()}],
-        'aliases':[{'symbol':symbol,'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
-            'memory_base_argument':0,'active_elements_argument':1,'active_elements_signed':True,'role':role}
-            for symbol,role in [('fixture_read','command'),('fixture_backend','backend_alias'),('fixture_nested','backend_alias')]]}],
-        'request_policy':{'transaction_bytes':transaction,'read_coalescing':'none'},
-        'placement':{'policy':'isolated_row_aligned_allocations','basis':'inferred','physical_placement_known':False},
-        'window':{'policy':'logical_fixed_requests_per_command_worker','requests':window,'basis':'inferred',
-            'source':'Hand-worked fixture convention, not physical queue capacity.'}}
-    if setup:
-        target['functional_observation']['commands'].append({'event':'fixture.setup',
-            'intrinsic':'fixture.intrinsic.setup','hardware_operations':['fixture.operation.setup'],
-            'memory_effect':'none','active_elements_policy':'not_applicable',
-            'target_access_sources':[],'bookkeeping_access_sources':[],
-            'aliases':[{'symbol':'fixture_setup','source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
-                'memory_base_argument':None,'role':'command'}]})
-    path.write_text(yaml.safe_dump(target,sort_keys=False))
-    result=run_swdb('characterize','--records',records.path,'--source',source,
-        '--implementation','stub-impl','--input','tiny-sym','--function','main',
-        '--roi','fixture.command.v1','--id','fixture.command','--llvm-bin',llvm22,
-        '--counting-pipeline','source-normalized-v2','--target-description',path,
-        '--output',tmp_path/'counted','--fixture','--format','json',*extra)
-    assert result.returncode==0,result.stdout+result.stderr
-    return json.loads(result.stdout),digest(target)
 
 
 def test_real_command_alias_counts_once_and_closes_final_partial_window(records,tmp_path,llvm22):
