@@ -66,3 +66,25 @@ def test_registered_candidate_refuses_generator_parameter_mismatch(records,tmp_p
         '--id','fixture.refused','--output',tmp_path/'counted')
     assert result.returncode==1 and 'scale differs from generator arguments' in result.stdout+result.stderr
     assert not (tmp_path/'counted').exists()
+
+
+def test_registered_canonical_candidate_observes_guarded_read_commands_without_emulator_double_count(records,tmp_path,llvm22):
+    source,input_id=registered_tree(records,tmp_path)
+    result=run_swdb('characterize','--records',records.path,'--source',source,'--candidate',CANDIDATE,
+        '--input',input_id,'--adapter','registered-functional','--threads','1','--trials','1',
+        '--id','fixture.functional.guarded','--llvm-bin',llvm22,'--run-library-path',llvm22.parent/'lib',
+        '--target-description','dx100-e4fc4af-functional-analytic-v1.t1',
+        '--output',tmp_path/'counted','--timeout-s','45','--format','json',timeout=150)
+    assert result.returncode==0,result.stdout+result.stderr
+    data=json.loads(result.stdout)
+    assert data['observation_contract']['semantic_commands']['complete'] is True
+    calls=[c for r in data['trials'][0]['regions'] for c in r['accelerator_calls']]
+    reads=[c for c in calls if c['event'] in ('dx100.functional.gather','dx100.functional.stream_load') and c['execution_count']['value']]
+    assert {c['event'] for c in reads}=={'dx100.functional.gather','dx100.functional.stream_load'}
+    assert all(c['active_elements']['value']==c['useful_accesses']['value'] and c['active_elements']['value']>0 for c in reads)
+    logical=[v for r in data['trials'][0]['regions'] for v in r.get('address_stream_counts',{}).values()]
+    known=[v for v in logical if v['line_requests']['value'] is not None and v['line_requests']['value']>0]
+    assert known and all(v['row_groups']['value'] is not None and v['row_groups']['value']<=v['line_requests']['value'] for v in known)
+    assert sum(c['functional_bookkeeping']['accesses']['value'] for c in calls)>0
+    assert data['observation_contract']['host_counting_policy']=='exclusive_host_outside_guarded_functional_commands'
+    assert data['binding']['state']=='verified'
