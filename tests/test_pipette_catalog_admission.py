@@ -18,12 +18,15 @@ class PipetteAdmissionTests(unittest.TestCase):
         ], cwd=ROOT))
 
     def test_existing_records_and_project_selection_unchanged(self):
-        self.assertEqual(self.catalog["designs"][:-1], self.base["designs"])
+        by_id = {d["id"]: d for d in self.catalog["designs"]}
+        self.assertEqual([by_id[d["id"]] for d in self.base["designs"]], self.base["designs"])
         self.assertEqual(self.catalog["project_selections"], self.base["project_selections"])
         for group in ("sources", "claims"):
             for key, value in self.base[group].items():
                 self.assertEqual(self.catalog[group][key], value)
-        self.assertEqual(self.catalog["mechanism_families"][:-1], self.base["mechanism_families"])
+        by_family = {m["id"]: m for m in self.catalog["mechanism_families"]}
+        self.assertEqual([by_family[m["id"]] for m in self.base["mechanism_families"]],
+                         self.base["mechanism_families"])
         self.assertEqual(self.catalog["decision_questions"], self.base["decision_questions"])
 
     def test_explicit_reads_remain_conditional_with_unknown_types(self):
@@ -51,7 +54,7 @@ class PipetteAdmissionTests(unittest.TestCase):
                                       design_id="pipette-micro2020-committed-queue-ra")["matches"])
 
     def test_aggregate_resources_and_unbound_coalescing_remain_explicit(self):
-        design = self.catalog["designs"][-1]
+        design = next(d for d in self.catalog["designs"] if d["id"] == "pipette-micro2020-committed-queue-ra")
         self.assertEqual(len(design["internal_mechanisms"]), 8)
         parameters = {p["id"]: p for p in design["parameters"]}
         self.assertEqual(parameters["qrm-registers"]["value"], 148)
