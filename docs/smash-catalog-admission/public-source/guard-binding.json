@@ -1,0 +1,8 @@
+{
+  "parent_sha256": "05a3da8a240870e48b4a9ad2dea70d9a87d77b5188e8740e81d1cab15572bb83",
+  "patched_sha256": "c3637761636fd6f473c01036973b6b6189880b42f25319c06f9b8a7786baab1b",
+  "patch_sha256": "e25629f5681c10c684554cab5e11a08fff5f1045a8eb7bef16a838b08b478402",
+  "change": "Guard zero before CTZ; existing nonzero operations unchanged",
+  "actual_kernel_compile_or_run": false,
+  "patch_context": "zero context; exact parent SHA mandatory"
+}

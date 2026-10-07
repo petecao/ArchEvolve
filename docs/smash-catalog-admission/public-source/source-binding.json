@@ -1,0 +1,89 @@
+{
+  "repository": "https://github.com/CMU-SAFARI/SMASH",
+  "commit": "70af92c09e6e36ee4fef80c926c9e56b79784bb9",
+  "tree_url": "https://api.github.com/repos/CMU-SAFARI/SMASH/git/trees/70af92c09e6e36ee4fef80c926c9e56b79784bb9?recursive=1",
+  "tree_sha256": "59abc85f2cb026a99083d362ab7785a3343a36f2a13b82a315ba5e9e307faf17",
+  "tree_entries": 35,
+  "sources": [
+    {
+      "path": "README.md",
+      "url": "https://raw.githubusercontent.com/CMU-SAFARI/SMASH/70af92c09e6e36ee4fef80c926c9e56b79784bb9/README.md",
+      "git_blob": "345e08165088c86ac75ace0beee084440de471ab",
+      "sha256": "db640ed3bacb71af106142ca2085e93e28c3bc0df9981a574d70883675544658",
+      "bytes": 3971
+    },
+    {
+      "path": "src/bitmap/Makefile",
+      "url": "https://raw.githubusercontent.com/CMU-SAFARI/SMASH/70af92c09e6e36ee4fef80c926c9e56b79784bb9/src/bitmap/Makefile",
+      "git_blob": "6b6095a3b879c3dd3fbdf9555a16c0b2ebb6affa",
+      "sha256": "010ebd55213a6fbd46f4f6cd2e3793bdeec20171aaa03d449ecb55f5fd88d71c",
+      "bytes": 65
+    },
+    {
+      "path": "src/bitmap/bitmap.h",
+      "url": "https://raw.githubusercontent.com/CMU-SAFARI/SMASH/70af92c09e6e36ee4fef80c926c9e56b79784bb9/src/bitmap/bitmap.h",
+      "git_blob": "d1fb42be5994e9ad9925155bb1cf56413512271b",
+      "sha256": "05a3da8a240870e48b4a9ad2dea70d9a87d77b5188e8740e81d1cab15572bb83",
+      "bytes": 13388
+    },
+    {
+      "path": "src/bitmap/csr.h",
+      "url": "https://raw.githubusercontent.com/CMU-SAFARI/SMASH/70af92c09e6e36ee4fef80c926c9e56b79784bb9/src/bitmap/csr.h",
+      "git_blob": "1a2e4517b19bb3e056d387dd618824e991939284",
+      "sha256": "fe0b42f88f7204adb3798878810b8087f14186aef556820e46644b72f77940bd",
+      "bytes": 2290
+    },
+    {
+      "path": "src/bitmap/matrix.h",
+      "url": "https://raw.githubusercontent.com/CMU-SAFARI/SMASH/70af92c09e6e36ee4fef80c926c9e56b79784bb9/src/bitmap/matrix.h",
+      "git_blob": "18d878f80927d802f7f15e56d4afdc935a811ff7",
+      "sha256": "f251836c660e4cfb034d8feaa60303a8dce93dcfef8132c8fef7acda5bfea42b",
+      "bytes": 1096
+    },
+    {
+      "path": "src/bitmap/test.c",
+      "url": "https://raw.githubusercontent.com/CMU-SAFARI/SMASH/70af92c09e6e36ee4fef80c926c9e56b79784bb9/src/bitmap/test.c",
+      "git_blob": "808ee5b3ed6258f310b502e5e772536b97062578",
+      "sha256": "8b8293f0c34e03d1bae0cc0a858a59a5e1cf00c5f385eb99647bed8197b1b61c",
+      "bytes": 771
+    },
+    {
+      "path": "src/spmm/Makefile",
+      "url": "https://raw.githubusercontent.com/CMU-SAFARI/SMASH/70af92c09e6e36ee4fef80c926c9e56b79784bb9/src/spmm/Makefile",
+      "git_blob": "935c892b0269921c745d2a183ae7a95ffb477743",
+      "sha256": "8a660de9a8ff201d66b00c0d107a8d62b7683d7fd91de19ab6c71c5a55b4cd76",
+      "bytes": 1341
+    },
+    {
+      "path": "src/spmv/Makefile",
+      "url": "https://raw.githubusercontent.com/CMU-SAFARI/SMASH/70af92c09e6e36ee4fef80c926c9e56b79784bb9/src/spmv/Makefile",
+      "git_blob": "c4683b4910bc7bbcb8d702d633c9f11dcd553e7e",
+      "sha256": "278b5e756436946b49820d995b4e61e8ad003350c9cc9b2e1872aa314674695b",
+      "bytes": 1362
+    },
+    {
+      "path": "src/spmv/matrix_generator.h",
+      "url": "https://raw.githubusercontent.com/CMU-SAFARI/SMASH/70af92c09e6e36ee4fef80c926c9e56b79784bb9/src/spmv/matrix_generator.h",
+      "git_blob": "ca8760e944e6265cedcaa9671afaab9c1eb4076c",
+      "sha256": "bcccea4bfc50e9787888def9b7cecb5d053aab4cb6e96299e03ef3f87b3a8a87",
+      "bytes": 8547
+    },
+    {
+      "path": "src/spmv/spmv_bitmap.c",
+      "url": "https://raw.githubusercontent.com/CMU-SAFARI/SMASH/70af92c09e6e36ee4fef80c926c9e56b79784bb9/src/spmv/spmv_bitmap.c",
+      "git_blob": "d29b4073ef82111612f523812bcfd32124b8e519",
+      "sha256": "cd7e6514bf9efc8a6306f0dc9d5c7f20841c26db5ebfb2218e39092a9514940d",
+      "bytes": 4655
+    },
+    {
+      "path": "src/spmv/zsim_hooks.h",
+      "url": "https://raw.githubusercontent.com/CMU-SAFARI/SMASH/70af92c09e6e36ee4fef80c926c9e56b79784bb9/src/spmv/zsim_hooks.h",
+      "git_blob": "3bf91789b41f493e9b9534d36c6ad0d8969ef4f4",
+      "sha256": "88353ba4ac3e3de876c8fb764beeaddfdf3634b46875464a87d00919e4a49def",
+      "bytes": 1398
+    }
+  ],
+  "selected_scope": "README/license, bitmap/spmv source and Makefiles only",
+  "source_executions": 0,
+  "license": null
+}

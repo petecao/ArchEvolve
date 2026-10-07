@@ -37,6 +37,11 @@ locators cover sections 4.1–4.3 and 5, physical PDF pages 5–8, Table 1 and
 Algorithms 1–2. The 256-byte bitmap buffers are an examined reference, not a
 universal selected capacity.
 
+The [public implementation binding](public-source/README.md) identifies the
+official software snapshot and separates native CTZ indexing from external SIM
+instrumentation. It documents the reviewed zero-CTZ guard and remaining consumer,
+initialization and BMU-handler obligations without changing the paper capability.
+
 The [block-lane consumer witness](consumer-fixture.md) compares the printed
 Algorithm 1 indexing expression with a declared flat-block layout. Its corrected
 coordinate calculation is a conditional consumer obligation, not an authenticated
