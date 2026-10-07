@@ -1,0 +1,77 @@
+{
+  "format": "swdb.cpu-development-admission-archive.v1",
+  "base_integration_commit": "59724aec70459d71ee6eeeeb4dd5b51e0d89a851",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "actual_development_export_commit": "791824ff8b9332da51eb97bdaaa74b4537ed4751",
+  "actual_compact_receipt_identity": "38401c86af174cbd8087684e2e8101263c027fb57fae3d598792e8aa8ac5db4f",
+  "actual_local_admission_identity": "6cd637d4903cb8595ce31efad000e1492fd6af7b0b0f9879231d6a757d983fb6",
+  "diagnostic_included_after_parent_review": true,
+  "entries": [
+    {
+      "path": "lanl-cpu-development-a3-local-admission-20261007.json",
+      "source_path": "/private/tmp/lanl-cpu-development-a3-local-admission-20261007.json",
+      "bytes": 6013,
+      "sha256": "85c609d9409b7c18e629892708d8203a6d3633dfcf2c868e600e6b3c6f434a43",
+      "custody": "exact_bytes",
+      "identity_sha256": "6cd637d4903cb8595ce31efad000e1492fd6af7b0b0f9879231d6a757d983fb6"
+    },
+    {
+      "path": "lanl-readonly-cpu-future-phase-admission-20261007.py",
+      "source_path": "/private/tmp/lanl-readonly-cpu-future-phase-admission-20261007.py",
+      "bytes": 24241,
+      "sha256": "8b85e34287a4dc67e5ff0c9a535aefd46a6c2ecf6051a934607f853074f90016",
+      "custody": "exact_bytes"
+    },
+    {
+      "path": "lanl-cpu-future-phase-reader-preparation-20261007.json",
+      "source_path": "/private/tmp/lanl-cpu-future-phase-reader-preparation-20261007.json",
+      "bytes": 1690,
+      "sha256": "44c6ea1680fb9c1198adb8bc2a452798c1bf5e99f9954bcf98e59a6369ea07ce",
+      "custody": "exact_bytes",
+      "identity_sha256": "52507715d35c812472b9879c32f6ff781d4c6c378a09cecd9a8765dfd89f1ee5"
+    },
+    {
+      "path": "lanl-development-a3-export-cleanup-preflight-20261007.json",
+      "source_path": "/private/tmp/lanl-development-a3-export-cleanup-preflight-20261007.json",
+      "bytes": 508,
+      "sha256": "a019e3d7c1e0d561f89e2cb232ed76be7e28d170e9cc34f25869ba5a7cf25c97",
+      "custody": "exact_bytes",
+      "original_seal": "absent",
+      "canonical_document_sha256": "d82f5fae938c02da0807d7f551a5d1531f9fe08c584d8b2a4d0405c16c34ce31"
+    },
+    {
+      "path": "lanl-development-a3-export-cleanup-actual-20261007.json",
+      "source_path": "/private/tmp/lanl-development-a3-export-cleanup-actual-20261007.json",
+      "bytes": 515,
+      "sha256": "4aba14a6a6f4da58d5ad652c06cccf4b50bba6d2e1e833ae2e67bd1a5e9574f3",
+      "custody": "exact_bytes",
+      "original_seal": "absent",
+      "canonical_document_sha256": "ba2cbc238d99235fb7d5ed511a7dfebab23f2a8ef439d2e25a8f9aa7c64b27ba"
+    },
+    {
+      "path": "lanl-development-region-error-audit-20261007.py",
+      "source_path": "/private/tmp/lanl-development-region-error-audit-20261007.py",
+      "bytes": 5155,
+      "sha256": "5284c86797b333ad19aef76d2bbe15748af24139a6c98c95e666ee6b1c9a4309",
+      "custody": "exact_bytes"
+    },
+    {
+      "path": "lanl-cpu-development-region-error-diagnostic-20261007.json",
+      "source_path": "/private/tmp/lanl-cpu-development-region-error-diagnostic-20261007.json",
+      "bytes": 36660,
+      "sha256": "74e9f98c17c3525aa9855d74b6e5f78c830e5b7641874160d0e8e77ec43cabd4",
+      "custody": "exact_bytes",
+      "identity_sha256": "6b5fda6f48bcd715cde3d6367767865304c311d2d091b3216e54e911f5724c7d"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5411,
+      "sha256": "24b879234abc7fa5c38cc3d04b5dda374f507afecf1ea34ae507bcaa8e5dda4b",
+      "custody": "dated_context"
+    }
+  ],
+  "evidence_scope": "Accepted native development plus once-only local selected-record admission. Held-out/report admission remains pending; no new measurements or model changes.",
+  "manifest_identity_semantics": "SHA256 of canonical JSON excluding identity_sha256; manifest does not recursively hash itself.",
+  "identity_sha256": "b6ad00e76c5d62a656b19f817fc8e17d55ac6eca82e9b36cf4b04b99725de57d"
+}
