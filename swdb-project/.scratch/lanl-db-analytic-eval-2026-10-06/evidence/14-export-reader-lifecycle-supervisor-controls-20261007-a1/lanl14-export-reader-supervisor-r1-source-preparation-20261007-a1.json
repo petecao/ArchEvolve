@@ -1,0 +1,65 @@
+{
+  "format": "swdb.lanl14-export-reader-supervisor-r1-source-preparation.v1",
+  "updated": "2026-10-07 ET",
+  "created_utc": "2026-10-07T22:58:58.972567+00:00",
+  "canonical_ensure_ascii": true,
+  "pins": [
+    {
+      "path": "/private/tmp/lanl14_export_reader_administrative_supervisor_20261007_a1_r1.py",
+      "bytes": 14547,
+      "sha256": "503fc5defcf96a5177599185a9895c00ae64b3e1b0058128b9e283ef3bd39f3f"
+    },
+    {
+      "path": "/private/tmp/lanl14-export-reader-supervisor-r1-narrow-derivation-20261007-a1.diff",
+      "bytes": 831,
+      "sha256": "f33ed921c184b62adb4419ad16ccecedf9cca40ee94e5584b09cfa71b5299edb"
+    },
+    {
+      "path": "/private/tmp/lanl14-export-reader-supervisor-r1-complete-fa703-derivation-20261007-a1.diff",
+      "bytes": 18782,
+      "sha256": "29d705206ea8528322c8c63cf7c0f7ceca6ef740fe4c0576978618015a3910eb"
+    },
+    {
+      "path": "/private/tmp/lanl14-export-reader-supervisor-r1-source-handoff-20261007-a1.md",
+      "bytes": 2634,
+      "sha256": "e4f4cc2f25944f1477acb6d859c53fc968e9f12368af8bebcdbab83bcf1579d0"
+    }
+  ],
+  "draft_history": [
+    {
+      "path": "/private/tmp/lanl14_export_reader_administrative_supervisor_20261007_a1.py",
+      "bytes": 14471,
+      "sha256": "8cad3bc1986de0ae160535d71fbea580deddaf400658753ffe1dfdee76374837"
+    },
+    {
+      "path": "/private/tmp/lanl14-export-reader-supervisor-complete-derivation-20261007-a1.diff",
+      "bytes": 18702,
+      "sha256": "e2d98fbe1101ea2604d03f318f6edd81aae1af75c869bbcbb9356e41fbb93e0e"
+    },
+    {
+      "path": "/private/tmp/lanl14-export-reader-supervisor-source-handoff-20261007-a1.md",
+      "bytes": 10141,
+      "sha256": "851cb20caf706e991f293eaa547a0297ad9402eba7df09ad40d7315fed6a27b3"
+    },
+    {
+      "path": "/private/tmp/lanl14-export-reader-supervisor-source-preparation-20261007-a1.json",
+      "bytes": 3336,
+      "sha256": "826b45891fe102cf5c8a2b19f44b76f4d61aa730738966bfc35b72e947523941"
+    }
+  ],
+  "single_added_requirement": "require(action==context.action,'selected context/action identity differs')",
+  "exact_byte_reversal": true,
+  "all_other_AST_definitions_exact": true,
+  "source_analysis": "ast.parse, hashes, full one-line derivation only; no target imports/main/compile/test",
+  "target_main_executed": false,
+  "target_imported": false,
+  "harness_prepared": false,
+  "tests_executed": false,
+  "Linux_cleanup_proof": false,
+  "actual_host_argv_supplied": false,
+  "SSH": false,
+  "staging": false,
+  "Git_mutation": false,
+  "scientific_admission": false,
+  "identity_sha256": "bd94b3bf80ed101bf9196e3abb70a8ea7eb170f266cf14d3107aafe33844a505"
+}
