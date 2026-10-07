@@ -1,0 +1,60 @@
+{
+  "format": "swdb.integrated-ticket-merger-proof.v1",
+  "updated": "2026-10-06 21:29 ET",
+  "ticket": "09",
+  "source_tip": "6a4b02058e663b42c4bf769d7e2c4781f5ae8741",
+  "integration_base": "408cc1aa36cef7b98d4ce1dd03484aae75227477",
+  "integration_merge": "4eaf95a95ed581f3b258d881a719a33f24c80ab2",
+  "scope": {
+    "all_changed_paths_inside_swdb": true,
+    "pre_existing_blob_count": 812,
+    "pre_existing_record_yaml_count": 584,
+    "pre_existing_blob_manifest_sha256": "37f9b8817bce8d71eccc0120822dbcdb94c11bbf826b0449242311a7bab34921",
+    "all_pre_existing_record_library_app_control_blobs_identical": true,
+    "other_ticket_issue_bytes_unchanged": true,
+    "only_ticket09_status_changed": true
+  },
+  "public_gate": {
+    "passed": 7,
+    "seconds": 617.64,
+    "exit_code": 0,
+    "cases": [
+      "test_analytic_functional_binding.py::test_registered_canonical_candidate_observes_guarded_read_commands_without_emulator_double_count",
+      "test_analytic_count_reuse.py::test_rates_only_reuse_retains_original_counts_and_both_target_identities",
+      "test_analytic_count_reuse.py::test_observation_policy_changes_require_fresh_counts[window]",
+      "test_analytic_composition.py::test_sensitivity_recomposes_each_trial_before_whole_call_median",
+      "test_feature_reports.py::test_report_import_withholds_nested_timing_and_pmu_outcomes",
+      "test_analytic_protocol.py::test_estimate_uses_frozen_protocol_and_preserves_fixture_state",
+      "test_analytic_live_context.py::test_repeated_region_routes_all_accesses_to_one_live_union_and_retains_calls"
+    ]
+  },
+  "canonical_validation": {
+    "exit_code": 0,
+    "output": "OK: 617 record(s) valid\n"
+  },
+  "frozen_artifact_checks": {
+    "estimator_bundle_sha256": "3ad3ce75dc7ed90f7093c3a867ff187cf2884723adf7a98264b005c207018475",
+    "count_file_and_full_record_hashes_match_closeout": true,
+    "protocol_identity_and_bundle_match_closeout": true,
+    "estimate_file_and_full_record_hashes_match_closeout": true,
+    "compact_report_sha256_matches_closeout": true,
+    "all_five_trial_seconds_and_whole_call_ratio_null": true
+  },
+  "cpu_aggregation_audit": {
+    "source_commit": "e361e83b64578890003ac001e7d6e344556a1876",
+    "runs": 4,
+    "trials": 20,
+    "bfs_repeated_loop_regions": [
+      "loop:bfs.cc:1717:6e2a9b58e359bcfa"
+    ],
+    "bc_repeated_loop_regions": [
+      "gapbs-bc-brandes/pbfs-frontier",
+      "gapbs-bc-brandes/back-vertex",
+      "gapbs-bc-brandes/normalize-max"
+    ],
+    "per_region_access_vs_service_request_mismatches": 0,
+    "observer_canonical_routing": "Characterize.cpp:426",
+    "disposition": "No loss: memory callbacks use the first canonical index before computing live unions; preserve counts and receipts. Parent raw-source/count audit and the public repeated-region fixture independently corroborate routing."
+  },
+  "boundary": "Actual registered functional source and logical allocation-relative observations; required runtime, host memory, worker-rate and overlap gaps remain explicit. No hardware timing, measured row-buffer hit rate, gain or CPU agreement claim."
+}
