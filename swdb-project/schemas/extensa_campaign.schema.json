@@ -76,6 +76,11 @@
         "max_repairs": {"type": "integer", "minimum": 0, "maximum": 5}
       }
     },
+    "paired_estimates": {
+      "type": "object", "additionalProperties": false,
+      "properties": {"enabled": {"type": "boolean"}},
+      "description": "Default enabled; explicit legacy opt-out never produces eligible paired evidence."
+    },
     "runs_root": {"type": "string", "minLength": 1},
     "approval": {
       "type": "object", "additionalProperties": false, "required": ["by", "date", "scope"],

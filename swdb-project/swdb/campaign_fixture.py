@@ -95,7 +95,15 @@ class FixtureAdapter(TargetAdapter):
         row = rows[min(iteration, len(rows)) - 1] if rows else {}
         return row.get(cls) or {}
 
+    def _estimate_request(self, candidate, cls):
+        return {'candidate': candidate, 'workload': {'id': self._workload(cls)},
+                'fixture': True, 'backend': 'contract_fixture',
+                'roi': self.campaign['protocol']['roi'], 'threads': self.campaign['protocol']['threads']}
+
     def pilot(self, cls, role):
+        self.pairing.freeze([self._estimate_request(b['candidate'], c['class'])
+            for b in self.campaign['baselines'] for c in self.campaign['workload_classes']])
+        self.pairing.before(f'pilot.{cls}.{role}', [self._estimate_request(self.baseline(role), cls)])
         row = self.fx["pilot"][cls][role]
         if isinstance(row, dict):              # ticket 66: an A/A ratio and CI for the CI-width rule
             return {"spread": float(row.get("spread", 0.0)), "ratio": float(row["ratio"]),
@@ -161,10 +169,17 @@ class FixtureAdapter(TargetAdapter):
     def baseline_evaluation(self, cls, role):
         """gem5: the fork's scalar TDStep is measured once per class."""
         baseline = self.baseline(role)
+        self.pairing.freeze([self._estimate_request(b['candidate'], c['class'])
+            for b in self.campaign['baselines'] for c in self.campaign['workload_classes']])
+        self.pairing.before(f'baseline.{cls}.{role}', [self._estimate_request(baseline, cls)])
         return self._evaluation(f"{self.cid}.baseline.{cls}.{role}", baseline, role)
 
     def compare(self, candidate, cls, role, iteration, attempt, baseline_evaluation=None):
         """Native: a paired block (its own baseline evaluation); gem5: cite the class baseline."""
+        self.pairing.freeze([self._estimate_request(candidate['id'], c['class'])
+            for c in self.campaign['workload_classes']])
+        self.pairing.before(f'comparison.{iteration}.{cls}.{role}',
+            [self._estimate_request(self.baseline(role), cls), self._estimate_request(candidate['id'], cls)])
         numbers = (self._iteration(iteration, cls).get("comparisons") or {}).get(role)
         if numbers is None:
             raise Stop("infrastructure_failure", f"fixture has no comparison for {cls}/{role}")

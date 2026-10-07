@@ -281,6 +281,14 @@ class TargetAdapter:
     def admit(self, candidate, contracts):
         """Refuse a candidate artifact the target cannot evaluate (raise Refused); default: admit."""
 
+    @property
+    def pairing(self):
+        from swdb.extensa_pairing import PairingLedger
+        if not hasattr(self, '_pairing'):
+            self._pairing = PairingLedger(self.campaign, self.store_dir, self.folder,
+                fixture_model=getattr(self, 'fx', {}).get('estimate_fixture'))
+        return self._pairing
+
     def reference_files(self):
         """Read-only references shown to the provider when the campaign names contracts."""
         return {}
@@ -646,6 +654,7 @@ class NativeAdapter(TargetAdapter):
     def freeze_protocol(self, settings):
         """One frozen native protocol per baseline role; the base-source one is the campaign's."""
         frozen = {}
+        self._pairing_settings = {}
         for role in [b["role"] for b in self.campaign["baselines"]]:
             template = self._get(NATIVE_TEMPLATES[role], "protocol")["settings"]
             out = {key: copy.deepcopy(template[key]) for key in
@@ -690,6 +699,8 @@ class NativeAdapter(TargetAdapter):
             if code or not record or record.get("kind") != "protocol":
                 raise _stop("infrastructure_failure", f"native protocol freeze for {role} failed (see jobs/freeze-{role})")
             frozen[role] = {"id": record["id"], "identity_sha256": record["identity_sha256"]}
+            self._pairing_settings[record["id"]] = copy.deepcopy(out)
+            frozen[role]["pairing_settings"] = copy.deepcopy(out)
             if out["builds"]["baseline"] != out["builds"]["candidate"]:
                 # Ticket 63 (2026-10-04 ET): the A/A pilot times this role's baseline against
                 # itself, so it needs a protocol whose candidate side is the baseline build
@@ -706,6 +717,8 @@ class NativeAdapter(TargetAdapter):
                     raise _stop("infrastructure_failure",
                                 f"native A/A protocol freeze for {role} failed (see jobs/freeze-{role}-aa)")
                 frozen[role]["aa"] = record["id"]
+                self._pairing_settings[record["id"]] = copy.deepcopy(aa)
+                frozen[role]["aa_pairing_settings"] = copy.deepcopy(aa)
         self.protocols = {role: row["id"] for role, row in frozen.items()}
         self.aa_protocols = {role: row.get("aa", row["id"]) for role, row in frozen.items()}
         base = frozen[self.campaign["base_source"]]
@@ -715,6 +728,11 @@ class NativeAdapter(TargetAdapter):
         if state.get("protocol") and getattr(self, "protocols", None) is None:      # a resumed campaign
             self.protocols = {role: row["id"] for role, row in state["protocol"]["by_role"].items()}
             self.aa_protocols = {role: row.get("aa", row["id"]) for role, row in state["protocol"]["by_role"].items()}
+            self._pairing_settings = {}
+            for row in state["protocol"]["by_role"].values():
+                for rid, key in ((row["id"], "pairing_settings"), (row.get("aa"), "aa_pairing_settings")):
+                    if rid and key in row:
+                        self._pairing_settings[rid] = copy.deepcopy(row[key])
 
     def _member(self, rid, candidate, role, cls, side, protocol=None):
         return {"message_version": "1.0", "id": rid, "candidate": candidate, "machine": self.campaign["machine"],
@@ -738,6 +756,39 @@ class NativeAdapter(TargetAdapter):
         """The class workload's registered (timed) sources (ticket 64)."""
         return list(self._get(self._workload(cls), "workload")["definition"]["sources"])
 
+    def _pairing_member(self, request):
+        out = copy.deepcopy(request)
+        settings = getattr(self, '_pairing_settings', {}).get(request['protocol'])
+        if settings is None:
+            settings = self._get(request['protocol'], 'protocol')['settings']
+        # Copy the frozen source/build/runtime policy, never evaluation outcomes.
+        side = request['protocol_role']
+        out['timing_policy'] = {key: copy.deepcopy(settings[key]) for key in
+            ('mode', 'roi', 'threads', 'native_runtime', 'evaluator', 'sampling') if key in settings}
+        for key in ('builds', 'instrumentation', 'targets'):
+            out['timing_policy'][key] = copy.deepcopy(settings[key][side])
+        from swdb.bfs_native_pair import METHOD
+        out['collection'] = {'method': METHOD, 'order_seed': NATIVE_ORDER_SEED}
+        return out
+
+    def _prefreeze_pairing(self, candidate):
+        requests = []
+        # Freeze every baseline/build/class before the first A/A pilot outcome.
+        for baseline in self.campaign['baselines']:
+            role = baseline['role']
+            for row in self.campaign['workload_classes']:
+                for protocol in {self.protocols[role], self.aa_protocols[role]}:
+                    for side in ('baseline', 'candidate'):
+                        requests.append(self._pairing_member(self._member('pairing', baseline['candidate'],
+                            role, row['class'], side, protocol)))
+        # A shared artifact may later serve another class or baseline role; those
+        # estimates also precede its first outcome under any of these contexts.
+        for role in self.protocols:
+            for row in self.campaign['workload_classes']:
+                requests.append(self._pairing_member(self._member('pairing', candidate, role,
+                    row['class'], 'candidate', self.protocols[role])))
+        self.pairing.freeze(requests)
+
     def _block(self, tag, candidate, role, cls, protocol=None):
         """One paired block (its own baseline evaluation) and its comparison."""
         protocol = protocol or self.protocols[role]
@@ -746,6 +797,8 @@ class NativeAdapter(TargetAdapter):
                 "order_seed": NATIVE_ORDER_SEED}, "budget": {"total_seconds": 7200},
                 "baseline": self._member(f"{tag}.baseline-eval", self.baseline(role), role, cls, "baseline", protocol),
                 "candidate": self._member(f"{tag}.candidate-eval", candidate, role, cls, "candidate", protocol)}
+        self._prefreeze_pairing(candidate)
+        self.pairing.before(f'{tag}.pair', [self._pairing_member(pair[side]) for side in ('baseline', 'candidate')])
         code, record = self.runner("evaluate-pair", pair, stage=f"{tag}.pair", timeout=7500,
                                    extra=["--runs-dir", self.runs, "--lane", self.lane])
         if not record or record.get("outcome", {}).get("state") != "complete":
@@ -1007,7 +1060,7 @@ class Gem5Adapter(TargetAdapter):
                 "hardware_target": self.protocol["settings"]["targets"][role]["id"],
                 "model_root": model["context"]["model_root"], "build_evaluation": model["id"]}
 
-    def _execute(self, label, candidate_id, build, role, workload, *, companion=False):
+    def _execution_request(self, label, candidate_id, build, role, workload, *, companion=False):
         settings = self.protocol["settings"]
         representation = self._representation(workload)
         configuration = settings["targets"][role]["configuration"]
@@ -1029,6 +1082,24 @@ class Gem5Adapter(TargetAdapter):
                               "memory_gib": GEM5_MEMORY_GIB, "storage_gib": GEM5_STORAGE_GIB}}
         if companion:
             request["protocol_companion"] = "parent_gather_race"
+        return request
+
+    def _pairing_request(self, request, build):
+        out = copy.deepcopy(request)
+        settings = self.protocol['settings']
+        role = request['protocol_role']
+        out['timing_policy'] = {key: copy.deepcopy(settings[key]) for key in
+            ('mode', 'roi', 'threads', 'sampling', 'simulation_identity') if key in settings}
+        out['timing_policy']['instrumentation'] = copy.deepcopy(settings['instrumentation'][role])
+        out['timing_policy']['target'] = copy.deepcopy(settings['targets'][role])
+        out['timing_policy']['build'] = {key: copy.deepcopy(build['build'][key]) for key in
+            ('compiler', 'compiler_version', 'flags', 'adapter', 'binary_sha256') if key in build['build']}
+        out['backend'] = 'gem5_mmio'
+        return out
+
+    def _execute(self, label, candidate_id, build, role, workload, *, companion=False):
+        request = self._execution_request(label, candidate_id, build, role, workload, companion=companion)
+        self.pairing.before(label, [self._pairing_request(request, build)])
         self.runs.mkdir(parents=True, exist_ok=True)
         self.host.preflight(self.runs, self.lane, storage_bytes=GEM5_STORAGE_GIB * GIB,
                             memory_bytes=GEM5_MEMORY_GIB * GIB)
@@ -1052,6 +1123,8 @@ class Gem5Adapter(TargetAdapter):
             raise _stop("infrastructure_failure", f"baseline guest build failed: {exc.explanation}") from None
         label = f"{self.cid}.baseline.{cls}"
         workload = self._workload(cls)
+        self.pairing.freeze([self._pairing_request(self._execution_request('pairing', baseline, build,
+            'baseline', row['workload']), build) for row in self.campaign['workload_classes']])
         observed = self._execute(label, baseline, build, "baseline", workload)
         if not observed or observed.get("outcome", {}).get("state") != "complete" \
                 or observed.get("correctness", {}).get("state") != "passed":
@@ -1071,6 +1144,11 @@ class Gem5Adapter(TargetAdapter):
         primary = self._compile(candidate_id, "primary", True)
         diagnostic = self._compile(candidate_id, "diagnostic", True, diagnostic=True)
         workload = self.protocol["settings"]["correctness"]["companion_cases"]["parent_gather_race"]["workload"]
+        requests = [self._pairing_request(self._execution_request('pairing', candidate_id, primary,
+            'candidate', row['workload']), primary) for row in self.campaign['workload_classes']]
+        requests += [self._pairing_request(self._execution_request('pairing', candidate_id, build,
+            'candidate', workload, companion=True), build) for build in (primary, diagnostic)]
+        self.pairing.freeze(requests)
         runs = {}
         for name, build in (("timed", primary), ("diagnostic", diagnostic)):
             runs[name] = self._execute(f"{candidate_id}.companion.{name}", candidate_id, build, "candidate",
