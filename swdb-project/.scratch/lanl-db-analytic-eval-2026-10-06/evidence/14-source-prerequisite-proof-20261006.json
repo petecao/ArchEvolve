@@ -1,0 +1,87 @@
+{
+  "format": "swdb.lanl14-source-prerequisite.v1",
+  "updated": "2026-10-06 ET",
+  "state": "tested_source_prerequisite_only",
+  "integration_base": "6539640c65cb9abbebf636410b093353b0021ee2",
+  "source_merge_commit": "997b258734c53fdf8da9690aa832688273179491",
+  "all_changes_inside_swdb_project": true,
+  "new_canonical_records": [
+    {
+      "id": "gapbs-pr-jacobi-analytic-v1",
+      "kind": "implementation",
+      "sha256": "ade54caf365f2ed368fbf3bb86cbd86e008c15da25ea8bc5d3d5c11ebb7c69a3"
+    },
+    {
+      "id": "maple-isca2022.fpga-reference.t2",
+      "kind": "target_description",
+      "sha256": "74face99dcf178f0c9d7e057b77a840245fff0f2f33e500db677516cbd3ee7e8"
+    }
+  ],
+  "protected_prior_blobs": {
+    "count": 1074,
+    "canonical_yaml_count": 631,
+    "by_area": {
+      "apps": 99,
+      "library": 147,
+      "records": 633,
+      "swdb": 181,
+      "tools": 14
+    },
+    "manifest_sha256": "62c8a28be8037092ee2eaa976b5f434d4d401b40e637f6aa982abca49f94eff4",
+    "bytes_preserved": true
+  },
+  "estimator_sha256": "fec496c6dec0930aada7bc760991c125907fffe739ea2e9d4d3e03e3748faa52",
+  "estimator_modules_manifest_sha256": "fec496c6dec0930aada7bc760991c125907fffe739ea2e9d4d3e03e3748faa52",
+  "generic_estimator_mechanism_observer_adapter_code_unchanged": true,
+  "public_gates": [
+    {
+      "command": "python3 -m pytest -q tests/test_pagerank_generality.py::test_registered_jacobi_counts_original_source_free_roi",
+      "passed": 1,
+      "seconds": 182.73,
+      "source_commit": "728fea38fcc51d2d57a3a4e8677c5f727d4db81c",
+      "scope": "Registered original Jacobi g8/k4 T1 one-trial count fixture; not remote g16 application evidence."
+    },
+    {
+      "command": "python3 -m pytest -q tests/test_maple_generality.py",
+      "passed": 2,
+      "seconds": 2.22,
+      "scope": "Public target add/freeze and independent contract-fixture unknown-cost estimate; explicit unit basis."
+    }
+  ],
+  "canonical_validation": {
+    "records": 633,
+    "command": "python3 -m swdb validate --records records",
+    "log_sha256": "d24f71d00085cee3384f25718dc97e2be584784c0565b79afc3c5602a732e51c"
+  },
+  "shell_syntax_checks": [
+    {
+      "path": "14-count-pagerank-20261006.sh",
+      "sha256": "0d14c8366d463a72ef0b11ce1bf28c49ae48de9b513b1ffa71b829b2ef688cbc",
+      "passed": true
+    },
+    {
+      "path": "14-count-bfs-bc-20261006.sh",
+      "sha256": "c9ac04475741b6586b60e89eb2da0ef76feae6b20e78fc9a8e22ec69cc3b2227",
+      "passed": true
+    }
+  ],
+  "source_fact_pins": {
+    "jacobi_source_sha256": "ea1e58b6957b0bcc1e76f4fde54131aa52bdefd2014dae604a9b7d9d1a5dae70",
+    "catalog_sha256": "adf17f3e114878ed0edbe55abb8ea219445fa2aef3c97e6c369230b796872fb0",
+    "maple_paper_sha256": "0be1b38cfdeb187750516dfb00c2e756ce1f36c52715a1c56fa181b12d44f133"
+  },
+  "prepared_maple_requests_sha256": "cc26ff43dfa016c256cdabf6fac85c0b697015bdb7cb1d8eb90b97c8c87d8cb4",
+  "prepared_protocols_frozen": false,
+  "maple_estimate_only": true,
+  "maple_paired_timing": null,
+  "pr_cpu_service_and_error_band_transfer_admitted": false,
+  "remaining": [
+    "Six parent-owned fresh native target-thread count routes.",
+    "Final generic 11/17 integration.",
+    "Fresh final DX BFS reference and nine exact-bundle per-region public estimates."
+  ],
+  "ticket_state": "claimed",
+  "no_remote_actions": true,
+  "identity_sha256": "52d91dace03608d1f5b79870601e3a8aab59a53bcfc72a25a17bdb8e17191177",
+  "post_gate_integration_changes": "Parent progress and final 17 helper custody/actual Linux cleanup metadata only; Python, canonical records and observer code identical. No gate repetition necessary."
+}

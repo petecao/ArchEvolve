@@ -40,7 +40,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 
 | # | Ticket | Status | Blocked by | Time |
 |---|---|---|---|---|
-| 14 | [Generality: MAPLE and PageRank](issues/14-generality-maple-pagerank.md) | ready-for-agent | 05, 09, 10 | 1 day |
+| 14 | [Generality: MAPLE and PageRank](issues/14-generality-maple-pagerank.md) | claimed | 05, 09, 10 | 1 day |
 | 15 | [Show Scott the counting approach](issues/15-show-scott-counting.md) | ready-for-human | 09 | about 15 min |
 | 16 | [Extensa flow A: blind paired estimates](issues/16-extensa-blind-paired-estimates.md) | resolved | 06, 09 | 4–6 h |
 | 17 | [Agreement report](issues/17-agreement-report.md) | claimed | 16 | 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs) |
@@ -134,3 +134,5 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
   integrated bundle. No timing/accuracy claim; 13/14 can proceed after integration.
 
 - 2026-10-06 ET — Ticket 13 resolved: `issues/13-dx100-sanity-check.md#answer`; cited weak report `evidence/13-dx100-paper-sanity-20261006-a1/report.md`, sealed closeout `evidence/13-paper-sanity-closeout-20261006.json`. Actual BFS ratio unknown; BC/PR estimates absent pending 14; 9 public tests passed, generic source unchanged.
+
+- 2026-10-06 ET — Ticket 14 claimed; actual Jacobi source count prerequisite tested, MAPLE FPGA data admitted with unknown services. Parent count commands and all-nine admission plan: `evidence/14-nine-pair-runbook-20261006.md`; prepared MAPLE requests remain unfrozen. Final reports await actual counts and generic 11/17 bundle.
