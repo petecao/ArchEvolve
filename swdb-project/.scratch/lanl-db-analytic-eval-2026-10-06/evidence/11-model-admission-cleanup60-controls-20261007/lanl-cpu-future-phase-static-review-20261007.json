@@ -1,0 +1,24 @@
+{
+  "format": "swdb.cpu-future-phase-static-review.v1",
+  "reviewed_utc": "2026-10-07T07:24:03Z",
+  "helper_path": "/private/tmp/lanl-admit-cpu-future-phase-20261007.py",
+  "helper_sha256": "f461d5c36065ee4b31e6cb137a763ea95811940746117813fff4c0760ba1b3ac",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "scope": "Read-only source comparison against the selected frozen metadata2400 runners and actual model acceptance schema; no helper execution, Store parsing, mocks, native collection or provider invocation.",
+  "checks": [
+    "exact four forecast IDs and positive finite execution forecasts",
+    "model source/bundle/ready/not-yet-timed pins",
+    "actual all-zero runner/outer/lane cleanup plus released bind:0 lease",
+    "development/holdout exact frozen-model identity and protocol linkage",
+    "actual development/holdout timing flags and nonnegative finite development widths",
+    "failed held-out state remains reportable unchanged",
+    "phase-then-C development/holdout argv; C-only report argv",
+    "selected f1ddb874 and83b2683b helper hashes",
+    "MemAvailable80GiB,data1>=21GiB,data>=10GiB; no campaign24GiB capacity call",
+    "240s bounds detached helper launch; native900s remains in frozen selected runners"
+  ],
+  "unexecuted_at_review": true,
+  "actual_model_acceptance_pending": true,
+  "identity_sha256": "297aae9ba227950898e9b64fde794a7a29a014dcdbeed5c1fff100c11e5f2b03"
+}

@@ -1,0 +1,163 @@
+{
+  "format": "swdb.cpu-cleanup60-admission-guard-portable-proof.v1",
+  "guard_sha256": "b406d3d06b3bddb2cd433cf8f3c47fa80f03314b23795a4b40c045a9120a1e93",
+  "actual_model_acceptance_identity": "eccdcfca3b0e5d41fcd95c5e73db63c716bfe9cb79bc319bf2ae51979af3bf1a",
+  "actual_local_admission_identity": "fe2890f8e7d8c95d6841ddd78b61762667e07c02688567676aca5d8fc4f4e3bd",
+  "checks": [
+    {
+      "phase": "development",
+      "case": "ready",
+      "correct_phase_then_C_or_report_C_argv": true,
+      "mocked_launches": 1
+    },
+    {
+      "phase": "holdout",
+      "case": "ready",
+      "correct_phase_then_C_or_report_C_argv": true,
+      "mocked_launches": 1
+    },
+    {
+      "phase": "report",
+      "case": "ready",
+      "correct_phase_then_C_or_report_C_argv": true,
+      "mocked_launches": 1
+    },
+    {
+      "phase": "report",
+      "case": "validated_report",
+      "correct_phase_then_C_or_report_C_argv": true,
+      "mocked_launches": 1
+    },
+    {
+      "phase": "development",
+      "case": "floor22_not24",
+      "correct_phase_then_C_or_report_C_argv": true,
+      "mocked_launches": 1
+    },
+    {
+      "phase": "development",
+      "case": "dirty_source",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "development",
+      "case": "dirty_source_late",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "development",
+      "case": "held_lease",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "development",
+      "case": "memory",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "development",
+      "case": "disk_data1",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "development",
+      "case": "disk_data",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "development",
+      "case": "model_id",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "development",
+      "case": "model_negative",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "development",
+      "case": "model_estimator",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "development",
+      "case": "model_timings",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "development",
+      "case": "model_source",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "development",
+      "case": "model_seal",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "development",
+      "case": "prior_model_exit",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "development",
+      "case": "helper_tamper",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "holdout",
+      "case": "development_model",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "holdout",
+      "case": "development_protocols",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "holdout",
+      "case": "development_timings",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "holdout",
+      "case": "development_negative_width",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "holdout",
+      "case": "development_not_ready",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "holdout",
+      "case": "prior_development_exit",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "report",
+      "case": "holdout_model",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "report",
+      "case": "holdout_protocols",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "report",
+      "case": "holdout_timings",
+      "refused_before_mocked_launch": true
+    },
+    {
+      "phase": "report",
+      "case": "holdout_state",
+      "refused_before_mocked_launch": true
+    }
+  ],
+  "cases_passed": 29,
+  "no_actual_dispatch": true,
+  "no_Store_compiler_application_provider": true,
+  "scope": "Production parent dispatch-only guard AST with paths/imports/capacity/launch mocked. Actual model receipt supplies frozen pins; development/holdout receipts are explicitly fabricated portable fixtures and provide no native accuracy evidence.",
+  "identity_sha256": "202fb34efa7cbbf55c6705c73285ea2c86bc1921bdbf7fa9c6de5174a50aba5f"
+}
