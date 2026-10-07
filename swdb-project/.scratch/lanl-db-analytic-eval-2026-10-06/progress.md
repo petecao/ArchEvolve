@@ -1,10 +1,12 @@
 # Implementation progress
 
-Updated: 2026-10-07 05:39 ET
+Updated: 2026-10-07 06:14 ET
 
-**12 of15 assigned tickets resolved and integrated.** Status: 2:resolved, 3:resolved, 4:resolved, 5:resolved, 6:resolved, 7:resolved, 8:resolved, 9:resolved, 10:resolved, 11:claimed, 12:resolved, 13:resolved, 14:claimed, 16:resolved, 17:claimed. Actual final evaluations, two-axis review/fixes, ticket/map sync, recoverable owned-worktree cleanup and heartbeat pause remain required. Parent owns all SSH and dispatch. Agents03/04 are responsive;02 is preparing exact nine-report command pointers and remains available.
+Scheduled 06:09 ET checkpoint captured at 2026-10-07 06:14 ET; next scheduled checkpoint remains06:39 ET.
 
-Checkpoint parent `39592becb3350166ee9163044e3b92678ae39ee6` is delivered to integration/origin/`yanrujhou_main` and mbit10 primary. Catalog: **678 canonical YAML**. Execution sourceC `f893fed400347ed23d92e917d8bde21b75e5375d` remains clean and separate; F6 `f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3` covers185 Python modules. Final review base `2c50e5fb8671e08050921bee06920f92fd153bdd`. Root human rule and remote retention lock preserved.
+**12 of15 assigned tickets resolved and integrated.** Status: 2:resolved, 3:resolved, 4:resolved, 5:resolved, 6:resolved, 7:resolved, 8:resolved, 9:resolved, 10:resolved, 11:claimed, 12:resolved, 13:resolved, 14:claimed, 16:resolved, 17:claimed. Actual final evaluations, two-axis review/fixes, ticket/map sync, recoverable owned-worktree cleanup and heartbeat pause remain required. Parent owns all SSH and dispatch. Agents03/04 are responsive;02 completed the exact nine-report execution note and remains available.
+
+Checkpoint parent `3b78cb012d0a5b639867f27baf3bbf4fcebfb505` is delivered to integration/origin/`yanrujhou_main` and mbit10 primary. Catalog: **678 canonical YAML**. Execution sourceC `f893fed400347ed23d92e917d8bde21b75e5375d` remains clean and separate; F6 `f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3` covers185 Python modules. Final review base `2c50e5fb8671e08050921bee06920f92fd153bdd`. Root human rule and remote retention lock preserved.
 
 | Ticket | Actual state | Remaining gate |
 |---|---|---|
@@ -17,14 +19,14 @@ Checkpoint parent `39592becb3350166ee9163044e3b92678ae39ee6` is delivered to int
 |---|---|---:|
 | model | Remote completion observed; export and local admission are separate gates | 672 |
 | development | Remote completion observed; export and local admission are separate gates | 676 |
-| holdout | Active; latest output collect-bfs-g17.stderr; completion pending | 676 |
+| holdout | Active; latest output band-bfs.stdout; completion pending | 679 |
 | band-report | Unstarted | - |
 
 Live metadata does not replace numerical admission or receipt/source/lane/cleanup checks. Model/development/held/report raw catalog totals are672/676/680/684; integration additionally preserves two PR records. No unfinished held-out outcomes are parsed by the status reader.
 
 Actual model a3 completed g50507:41:15Z with runner/outer0, full672 validation, empty cleanup and release. Pure export887d9bfd/receiptea12a575 and local admissionfe2890f8 are integrated. Frozen forecasts: BFSg16=0.08459283293734217s, BFSg17=0.14771765534735024s, BCg16=0.64771215194357s, BCg17=1.154672610067664s, T1. Conditional inferred constructed-resource forecasts are not native timings, physical bounds or established accuracy. Whole totals are medians of five whole trials, not sums of regional medians.
 
-Actual development completed g50609:10:56Z, all0/full676 validation/empty cleanup/release. Pure export791824ff, receipt38401c86 and separate integrated merger proof029376cd were checked independently; local unchanged8b85 reader admitted once6cd637d4. Both kernel widths are frozen before blind g17, launched09:29:04Z on node0g507 using unchanged804 helper and b406 parent guard.
+Actual development completed g50609:10:56Z, all0/full676 validation/empty cleanup/release. Pure export791824ff, receipt38401c86 and separate integrated merger proof029376cd were checked independently; local unchanged8b85 reader admitted once6cd637d4. Both kernel widths were frozen before blind g17, launched09:29:04Z on node0g507 using unchanged804 helper and b406 parent guard.
 
 | Kernel | g16 forecast s | Native median s | Frozen log width | Envelope |
 |---|---:|---:|---:|---:|
@@ -43,9 +45,9 @@ PR replay remains admitted at96685eac: freeze865.004s/estimate486.878s/checker12
 
 CPU native900s/metadata2400/collector3600/inner18000/outer18300/KILL60 controls preserve runner science.17 preparevalidate3600/freeze6000, finalvalidate3600/export6000/report14400, supervisor18000/78000 and outer18300/78300/KILL60 are finite policies, not runtime guarantees. Full Store/library/certification gates remain. Four actual campaigns retain eight iterations/plateau4/provider caps/24h/20GB; at most two same-population lanes, queue if capacity requires. D30 still requires20 unique pairs/tau/CI/top3 and valid dependency bootstrap; unsupported/no-switch if unmet, no padding.
 
-Live `2026-10-07T09:39:19.200354+00:00`: node0=held, node1=released, legacy=released; load1=2.00, available memory119,267,835,904B, data1 free24,182,173,696B, data free50,594,148,352B. Unrelated jobs/raw/source/build/IR preserved. Only specifically consumed/export-guarded checkouts were removed.
+Live `2026-10-07T10:14:05.191031+00:00`: node0=held, node1=released, legacy=released; load1=2.12, available memory123,425,320,960B, data1 free24,182,112,256B, data free50,584,477,696B. Unrelated jobs/raw/source/build/IR preserved. Only specifically consumed/export-guarded checkouts were removed.
 
-Human15/18/21 and prerequisite/triage/access19/20/22/23 remain separate. No external communication.19 owned local managed worktrees remain registered through final review/fixes and recoverable cleanup. Heartbeat ACTIVE. **Next required status/agent-health table:2026-10-07 06:09 ET.**
+Human15/18/21 and prerequisite/triage/access19/20/22/23 remain separate. No external communication.19 owned local managed worktrees remain registered through final review/fixes and recoverable cleanup. Heartbeat ACTIVE. **Next required status/agent-health table:2026-10-07 06:39 ET.**
 
 ## Remote preparation
 
