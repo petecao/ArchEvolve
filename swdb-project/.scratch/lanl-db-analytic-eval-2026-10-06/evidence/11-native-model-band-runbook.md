@@ -16,8 +16,8 @@ python3 -m swdb.cpu_service_binding --records "$LANL_CPU_STORE" \
   --scope-characterization bfs.kron-g17.t1.characterization.objects.a1 \
   --scope-characterization bc.kron-g17.t1.characterization.objects.a1 \
   --calibration mbit10.cpu.lanl20261006.service.clock.a2 \
-  --calibration mbit10.cpu.lanl20261006.service.allocator.a1 \
-  --calibration mbit10.cpu.lanl20261006.service.allocator-extra.a1 \
+  --calibration mbit10.cpu.lanl20261006.resource.allocator.a1 \
+  --calibration mbit10.cpu.lanl20261006.resource.allocator-extra.a1 \
   --calibration mbit10.cpu.lanl20261006.resource.memory.a1 \
   --calibration mbit10.cpu.lanl20261006.resource.float-memory.a1 \
   --calibration mbit10.cpu.lanl20261006.service.byte-read.a1 \
@@ -35,6 +35,10 @@ python3 -m swdb.cpu_service_binding --records "$LANL_CPU_STORE" \
   --openmp-projection .scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-bc.g17-projection-mbit10-20261006-a1.json \
   --id mbit10.cpu.lanl20261006.t1.services.v1 --format json
 ```
+
+The two canonical allocator resource records are derived once from unchanged `service.allocator.a1` and `service.allocator-extra.a1` receipts with `python3 -m swdb.cpu_allocator_resource`. The final source includes those immutable derived records; the model dispatcher consumes them directly and never regenerates their timestamps or identities. This distinct `gross_allocator_loop_resource_v1` recipe was frozen after independent service collection and before any native application timing. It uses gross uninstrumented loop elapsed divided by exactly counted ABI events, retains all driver/paired trials, and composes its aggregate resource by maximum with counted compute. Application allocator-state transfer and compute overlap remain inferred; the recipe establishes neither physical call latency nor a proven application upper bound.
+
+The extra allocator plan promised both gross and driver windows of at least50ms. Its actual driver windows are below that promise, so the archived extra paired parameters are excluded from the final model. The primary plan independently promised only gross50ms; its archived paired parameters retain that original admission. Final selection uses a uniform gross resource family across both records: one exact ABI/size/lifetime mechanism with36 unique bins, rather than separate mechanisms rejecting each other's bins or charging twice. The exact four-characterization compatibility and ABI/size partition checks across all20 trials are retained in `11-allocator-resource-scope-precheck-20261006.json`. That precheck also retains the strict legacy trial scope-label gap; tested context reconciliation must resolve it before final whole-call model admission. Neither source receipt is rewritten, and no allocator timing is rerun to obtain a positive subtraction.
 
 The explicit 8MiB memory construction is a conditional inferred scenario. Logical bounded views establish neither full libomp allocation identity nor physical residency. Exact primitive/type/order guards remain active. BC floating64 monotonic fadd consumes its separate resource; integer seq_cst add and floating fadd in the same coarse bucket are partitioned by exact source sites before charging, with the sum cross-checked against the original observation. Original residual-null write8 records remain immutable; the separately typed gross resource includes retained loop work and composes with compute by maximum. Bulk profile maxima and legal warmed OpenMP state are inferred transfer, not physical latencies or proven application upper bounds. Duplicate copy measurements are selected explicitly, never pooled.
 

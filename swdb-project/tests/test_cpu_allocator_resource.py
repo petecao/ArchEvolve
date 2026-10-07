@@ -7,15 +7,15 @@ from conftest import run_swdb
 from testkit.cpu_service import fixture_receipt, save_receipt
 
 
-def source_case(records, tmp_path):
+def source_case(records, tmp_path, *, size=16384, identifier="fixture.allocator.source"):
     records.add_stub(); raw=fixture_receipt();raw['machine']='testhost'
-    raw['settings'].update(group='allocator_v1',sizes=[16384],cells=[{'operation':'new_array','size_bytes':16384}],min_trial_s=.05)
-    cell=raw['services'][0];cell.update(id='allocator.new_array.16384',event_definition='Hand fixture exact new[] event.')
-    cell['scope']={'worker_scope':'serial','operation':'new_array','event_abi':'_Znam','size_bytes':16384,
+    raw['settings'].update(group='allocator_v1',sizes=[size],cells=[{'operation':'new_array','size_bytes':size}],min_trial_s=.05)
+    cell=raw['services'][0];cell.update(id='allocator.new_array.'+str(size),event_definition='Hand fixture exact new[] event.')
+    cell['scope']={'worker_scope':'serial','operation':'new_array','event_abi':'_Znam','size_bytes':size,
         'allocator_regime':'fresh_process_repeated_allocate_free_batches','transfer_basis':'inferred','payload_touch':False}
     for trial in cell['trials']:trial['driver_seconds']=.00001
     result=run_swdb('import-cpu-service-calibration','--records',records.path,'--receipt',save_receipt(tmp_path,raw),
-        '--id','fixture.allocator.source','--fixture','--format','json')
+        '--id',identifier,'--fixture','--format','json')
     assert result.returncode==0,result.stderr+result.stdout
     return json.loads(result.stdout)
 
@@ -43,24 +43,32 @@ def test_gross_allocator_recipe_retains_unadmitted_short_driver_and_source(recor
     assert path.read_bytes()==before and records.validate().returncode==0
 
 
-def test_gross_allocator_resource_composes_as_maximum_with_compute(records,tmp_path):
+@pytest.mark.parametrize("two_sources", [False, True])
+def test_gross_allocator_resource_composes_as_maximum_with_compute(records,tmp_path,two_sources):
     import yaml
     from testkit.cpu_service import clock_case, bind, fact
     from testkit.analytic import freeze_protocol
     source_case(records,tmp_path);derived=derive(records,'--fixture')
     assert derived.returncode==0,derived.stderr+derived.stdout
+    extra_calibration=[]
+    if two_sources:
+        source_case(records,tmp_path,size=32768,identifier='fixture.allocator.source.extra')
+        extra=derive(records,'--source-calibration','fixture.allocator.source.extra',
+                     '--id','fixture.allocator.resource.extra','--fixture')
+        assert extra.returncode==0,extra.stderr+extra.stdout
+        extra_calibration=['--calibration','fixture.allocator.resource.extra']
     def setup(char,target):
         target['mechanisms']=target['mechanisms'][:1]
-        char['unmodeled_calls'][0]['execution_count'].update(value=1,scope='per_run')
+        char['unmodeled_calls'][0]['execution_count'].update(value=2 if two_sources else 1,scope='per_run')
         row=char['regions'][0]['call_shape_counts']['calls'][0]
-        row['execution_count'].update(value=1,scope='per_run')
-        row['known_length_bins']=[{'bytes':16384,'execution_count':{**fact(1),'scope':'per_run'}}]
+        row['execution_count'].update(value=2 if two_sources else 1,scope='per_run')
+        row['known_length_bins']=[{'bytes':16384,'execution_count':{**fact(1),'scope':'per_run'}}]+([{'bytes':32768,'execution_count':{**fact(1),'scope':'per_run'}}] if two_sources else [])
     initial=clock_case(records,tmp_path,shaped=True,setup=setup)
     assert initial['seconds'] is None
     target=yaml.safe_load((tmp_path/'target.yaml').read_text());target['id']='fixture.allocator.base'
     records.write('target_descriptions/fixture.allocator.base.yaml',target)
     outcome=bind(records,'--target-description',target['id'],'--characterization','fixture.counts',
-        '--calibration','fixture.allocator.resource','--id','fixture.allocator.bound','--fixture')
+        '--calibration','fixture.allocator.resource',*extra_calibration,'--id','fixture.allocator.bound','--fixture')
     assert outcome.returncode==0,outcome.stderr+outcome.stdout
     bound=json.loads(outcome.stdout);mechanism=bound['mechanisms'][-1]
     assert mechanism['accounting']=='resource_bound'
@@ -78,6 +86,15 @@ def test_gross_allocator_resource_composes_as_maximum_with_compute(records,tmp_p
     estimate=json.loads(result.stdout)
     assert estimate['seconds']==2.0  # 32 FP operations at16/s dominate one0.2s allocator event.
     assert estimate['regions'][0]['overheads']==[]
+    resource=next(b for b in estimate['regions'][0]['bounds'] if b['model']=='native_service_costs')
+    assert resource['seconds']==pytest.approx(.4 if two_sources else .2)
+    assert resource['inputs']['covered_calls']==[{'site':29,'execution_count':2 if two_sources else 1}]
+    assert len(mechanism['selector']['calls'])==1 and len(mechanism['parameters'])==(2 if two_sources else 1)
+    if two_sources:
+        mixed=bind(records,'--target-description',target['id'],'--characterization','fixture.counts',
+            '--calibration','fixture.allocator.resource','--calibration','fixture.allocator.source',
+            '--id','fixture.allocator.invalid.mixed','--fixture')
+        assert mixed.returncode!=0 and 'paired and gross allocator ABI selections cannot mix' in mixed.stderr
     assert records.validate().returncode==0
 
 
