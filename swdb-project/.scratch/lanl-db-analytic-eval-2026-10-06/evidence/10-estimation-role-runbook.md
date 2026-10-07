@@ -1,6 +1,6 @@
 # Frozen parameter-fill execution
 
-Updated: 2026-10-06 21:59 ET. Ticket 10 remains claimed until its handoff is accepted.
+Updated: 2026-10-06 ET. Actual a2 fill and postfill acceptance are recorded below.
 
 `fill-target-parameters` reads registered characterization facts, a matching profile, and a
 base target description. It writes a new target version after strict output, guard/audit and
@@ -107,3 +107,50 @@ Report provider execution as real only when guard enforcement/result, event audi
 model/effort, executable/version and login cleanup all passed. These are estimated assumptions,
 not a performance measurement or an accuracy/error-band validation. Whole-call unknowns must
 remain null even when numerical service premises are filled.
+
+## Actual accepted fill and recovery
+
+The a2 provider ran once at frozen source `a7a9b9e`, using Codex CLI 0.153.0 and
+the existing pinned model/effort. Its guarded workspace contained the exact three
+sanitized files (101,164 bytes). Seven numerical answers are `estimated`;
+`floating_point_ops_per_s` and `seconds_per_event` remain null/`unknown`. Known
+facts, observation policy, source/count/receipt identities and prior bytes are unchanged.
+
+| Attempt | Provider | Runner / acceptance | Custody |
+|---|---|---|---|
+| a1 | Not launched | Failed before login | [Original failure](10-estimation-role-failed-mbit10-20261006-a1.json) |
+| a2 | Completed successfully, passing guard/audit/cleanup | Original runner exited 1 after its postfill wrapper/native hash comparison | [Unchanged failure and completed-provider receipt](10-estimation-role-postfill-custody-mbit10-20261006-a2.json) |
+| a2 postfill a1 | Existing a2 output; no provider repeat | Fresh leased freeze/estimate/validation exited 0 at 2026-10-07 02:55:16Z (2026-10-06 22:55 ET); 620 records valid | [Compact acceptance](10-estimation-role-mbit10-20261006-a2-postfill-a1.json) |
+
+The lane wrapper removes the ambient provider configuration. The a2 dispatcher
+passed the verified existing login-home location through a task-specific token and
+restored the provider's own setting inside the runner. Account HOME stayed intact;
+authentication contents were neither read by the dispatcher nor exported.
+
+`CodexAdapter.launch_command` admits the official npm platform package and selects
+its native executable. The configured JavaScript entrypoint SHA
+`61b0194f3bb6534439c8d26a3ed57d0805f84b884588b761795323eeb92fcf70` and the
+actual native executable SHA
+`fce635028842bfe9257140e8b7d53162732945e2f356fc35225be0702b4974be` are distinct
+identities. Postfill verified each independently against the original receipts
+and frozen adapter selection without calling the CLI/provider again. Original a2
+exit-1/error artifacts remain verbatim and hash-preserved.
+
+The first compact-export helper incorrectly treated integer audit counters as lists.
+It failed before Git mutation. The corrected external helper accepted only nonnegative
+integer counters (eight control checks), without changing source, provider output,
+postfill acceptance or canonical records. Only the new target/protocol/estimate and
+compact proof/custody were exported; raw provider streams, prompt, authentication,
+IR and address streams remain remote.
+
+The frozen target is `dx100-e4fc4af-functional-analytic-v1.t4.estimated.a2`. Its
+protocol is `bfs.functional.kron-g16.t4.estimated.protocol.llm.a2.postfill.a1.3fef19dcd9d39c07`
+and estimate is `bfs.functional.kron-g16.t4.estimate.llm.a2.postfill.a1`. Historical
+bundle `b238c61b…` remains sealed. Later integrated code requires a fresh protocol
+for new execution; it does not rewrite this receipt.
+
+Whole-call seconds, ratio, error band and all five trial totals remain null. Each
+of the seven estimated parameters has null half/base/double whole-call sensitivity
+and impact rank because host memory, runtime and composition premises remain
+unsupported. This acceptance freezes numerical assumptions; it establishes no
+performance accuracy, CPU error band or hardware/gem5 agreement.

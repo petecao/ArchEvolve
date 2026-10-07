@@ -26,6 +26,16 @@ def prepared(records,tmp_path):
         context=data.get('context',{})
         if isinstance(context,dict) and context.get('evaluator')=='swdb.strict-functional-estimate.v1':
             path.unlink()
+    # Parameter-filled targets and protocols seal the historical counts removed
+    # above. Exclude that complete dependency closure from the copied zero-work
+    # fixture; canonical source records remain unchanged and validated separately.
+    for path in (records.path/'target_descriptions').glob('*.yaml'):
+        if yaml.safe_load(path.read_text()).get('parameter_estimation'):
+            path.unlink()
+    for path in (records.path/'protocols').glob('*.yaml'):
+        snapshot=yaml.safe_load(path.read_text()).get('settings',{}).get('target_description',{})
+        if isinstance(snapshot,dict) and snapshot.get('snapshot',{}).get('parameter_estimation'):
+            path.unlink()
     candidate=records.read('candidates/'+CANDIDATE+'.yaml')
     count=fixture_characterization(records.path)
     count['subject']={'kind':'candidate','id':CANDIDATE}
