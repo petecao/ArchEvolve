@@ -38,3 +38,8 @@ deterministic initialization and complete scalar-oracle integration. An actual
 BMU experiment additionally needs authenticated handler/RTL, register/queue ABI,
 physical input ownership and completion behavior. Existing catalog capabilities
 and all prior scientific results are unchanged.
+
+The [typed-mask source review](wordmask-review.md) records a subsequent minimal
+three-site correction for narrow signed-int shifts on the 64-bit bitmap registers.
+It composes with the zero guard and preserves the distinction between primitive
+behavior and complete indexer/kernel correctness.
