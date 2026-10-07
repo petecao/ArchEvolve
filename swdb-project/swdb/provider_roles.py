@@ -1,6 +1,6 @@
 """Role-specific inputs over the shared provider process, guard and audit.
 
-Updated: 2026-10-05 ET (code review: login via provider_login.start, public checked_inputs and
+Updated: 2026-10-06 ET (strict estimation inputs); 2026-10-05 ET (code review: login via provider_login.start, public checked_inputs and
 verified_lane); 2026-10-05 ET (ticket 74: guard runtime-limit stops raise GuardInfrastructure);
 2026-10-04 ET (ticket 69: strict-mode keyword check); 2026-10-04 (login write-back). Inputs are
 built by trusted SWDB callers, never copied by walking a repository. Each file is explicit; real
@@ -18,6 +18,7 @@ from jsonschema import Draft202012Validator
 from swdb import (artifacts, provider_adapters, provider_audit, provider_guard, provider_login,
                   provider_workspace, rewrite)
 from swdb.cli import Failure
+from swdb.estimation_contract import OUTPUT_SCHEMA as ESTIMATION_OUTPUT_SCHEMA
 
 FORBIDDEN_KEYS = {"evaluator", "verification", "correctness_check", "protections",
                   "workloads", "workload", "candidates", "candidate", "input_args",
@@ -41,6 +42,7 @@ class Role:
 
 
 ROLES = {
+    "estimation": Role("estimation", ESTIMATION_OUTPUT_SCHEMA),
     "rewriting": Role("rewriting", provider_workspace.FINAL_SCHEMA, read_only=False),
     "independent_test_generation": Role("independent_test_generation", {
         "type": "object", "additionalProperties": False, "required": ["tests", "unresolved"],
@@ -157,6 +159,11 @@ def checked_inputs(files):
 
 
 def prepare(role, files, folder, config):
+    if role.name == 'estimation':
+        from swdb.estimation_parameters import checked_input_files
+        if role.output_schema != ESTIMATION_OUTPUT_SCHEMA:
+            raise Failure('estimation output contract cannot be overridden')
+        checked_input_files(files)
     files = checked_inputs(files)
     folder = Path(folder).resolve()
     folder.mkdir(parents=True, exist_ok=False)
