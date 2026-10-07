@@ -118,6 +118,38 @@ python3 -m swdb validate-cpu-error-band --records "$LANL_CPU_STORE" \
 
 A failed holdout remains failed with the original width. A validated record grants confidence only to the exact supported held-out characterizations and frozen T1 target/model/runtime. It supplies no unseen-candidate, kernel, thread or target generalization. Any final estimate protocol that uses `cpu_error_band: lanl.cpu.t1.heldout-band.v1` must be newly frozen without changing the target or implementation; the band pin is separate from target calibration closure.
 
+### Public verdict-reader replay after the completed held-out phase
+
+Use the same final source, target, estimates and completed held-out Store. This is a reporting replay of immutable counts, with no additional native timing. Preserve the pre-outcome protocol/estimate records. Freeze two new report protocols using the original raw per-kernel requests and the persisted band ID; capture their returned content-suffixed IDs again. If the held-out band failed, the replay must retain `validated: false`; it cannot claim confidence or change the width. If development failed and held-out timing was prohibited, use that persisted failed development band instead and label the missing held-out observation explicitly.
+
+```bash
+export LANL_CPU_MODEL_RAW=/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1
+export LANL_CPU_REPORT_RAW=/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261006-a1
+export LANL_CPU_BAND=lanl.cpu.t1.heldout-band.v1
+mkdir "$LANL_CPU_REPORT_RAW"
+python3 - <<'PY'
+import json,os
+from pathlib import Path
+for kernel in ('bfs','bc'):
+ request=json.loads((Path(os.environ['LANL_CPU_MODEL_RAW'])/(kernel+'-protocol-request.json')).read_text())
+ request['id']='lanl.cpu.'+kernel+'.t1.report-model.v1'
+ request['settings']['cpu_error_band']=os.environ['LANL_CPU_BAND']
+ (Path(os.environ['LANL_CPU_REPORT_RAW'])/(kernel+'-request.json')).write_text(json.dumps(request,indent=2)+'\n')
+PY
+for lanl_kernel in bfs bc; do
+  python3 -m swdb freeze-protocol "$LANL_CPU_REPORT_RAW/$lanl_kernel-request.json" \
+    --records "$LANL_CPU_STORE" --format json > "$LANL_CPU_REPORT_RAW/$lanl_kernel-protocol.json"
+  lanl_report_protocol=$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["id"])' "$LANL_CPU_REPORT_RAW/$lanl_kernel-protocol.json")
+  python3 -m swdb estimate --records "$LANL_CPU_STORE" \
+    --characterization "$lanl_kernel.kron-g17.t1.characterization.objects.a1" \
+    --target-description mbit10.cpu.lanl20261006.t1.services.v1 \
+    --protocol "$lanl_report_protocol" --id "lanl.cpu.$lanl_kernel.g17.t1.report.v1" \
+    --format json > "$LANL_CPU_REPORT_RAW/$lanl_kernel-estimate.json"
+done
+```
+
+Check each report's exact characterization and target/bundle hashes against the pre-outcome estimate; seconds and per-region costs must be unchanged. The report's `error_band` must pin the actual persisted band digest, state and unchanged width. `validated` is true only for a validated native band and its exact held-out characterization; a failed/development/fixture band grants no confidence. Export the two new protocol and two estimate records with their compact reporting receipt through Git, preserving all prior bytes. There is no new application outcome or retuning in this step.
+
 Export canonical validation/band/estimate/protocol records and compact preregistration/context/hash/trial summaries through Git. Raw binaries, logs and LLVM artifacts remain remote. Report whole-call errors and the predicted per-region contributions/assumptions. There are no measured region timing/error claims. Existing CPU native timing selection is unchanged; historical unsupported comparisons retain their explicit null/exclusion reports. Until a validated band exists, D25's `within_error` token with null error_band/seconds is not evidence of agreement.
 
 ### Actual OpenMP prerequisite admission (2026-10-06 ET)
