@@ -71,3 +71,18 @@ its five advancing calls are not independent error observations. Both widths are
 frozen before any g17 outcome. Exact admission and reader custody are in
 `evidence/11-development-admission-20261007-a3/`. Ticket remains claimed pending
 actual held-out validation and fresh verdict-reading report; parent owns dispatch.
+
+2026-10-07 06:57 ET actual held-out admission: the unchanged selected-record
+reader passed once against the accepted g17 native export. BFS prediction
+0.14771765534735024 s versus native median 0.00274 s is inside its broad
+55.4707101-fold development envelope. BC prediction 1.154672610067664 s versus
+median 0.0294 s is outside its frozen 33.6911392-fold envelope; BC remains failed
+and unvalidated with width 3.5172348723064677 unchanged. Both development widths
+were frozen before either held-out native timing. Exact admission, reproducible
+forecast-only per-region diagnostics and unsealed cleanup custody are in
+`evidence/11-holdout-admission-20261007-a3/`; g16 history is retained. No rates,
+recipes or costs are retuned. Fixed inferred serial memory terms dominate more
+than 99.98% of each forecast; this is not measured regional error attribution.
+Each kernel has one development pair and one held-out pair, not five independent
+error observations. Ticket remains claimed pending the public report reader,
+which must preserve failed BC confidence and unchanged forecast costs.
