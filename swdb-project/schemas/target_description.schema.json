@@ -139,6 +139,69 @@
     },
     "functional_observation": {
       "$ref": "#/$defs/functional_observation"
+    },
+    "composition_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "swdb.composition-contract.v1"
+        },
+        "resource_domain_overlap": {
+          "enum": [
+            "serial",
+            "full_overlap",
+            null
+          ]
+        },
+        "basis": {
+          "enum": [
+            "code_reading",
+            "reported",
+            "inferred",
+            "unknown"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "format",
+        "resource_domain_overlap",
+        "basis",
+        "source"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "resource_domain_overlap": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "basis": {
+                "const": "unknown"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "basis": {
+                "enum": [
+                  "code_reading",
+                  "reported",
+                  "inferred"
+                ]
+              }
+            }
+          }
+        }
+      ]
     }
   },
   "required": [

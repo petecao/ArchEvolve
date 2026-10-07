@@ -522,7 +522,7 @@ def characterize(args):
 
 
 def _estimate_regions(source_regions, source_calls, target, observation_contract=None, *, characterization=None,count_reuse=None):
-    from swdb import analytic_models
+    from swdb import analytic_models,analytic_composition
 
     characterization_sha256=artifacts.digest(characterization) if characterization else None
     regions = []
@@ -539,7 +539,9 @@ def _estimate_regions(source_regions, source_calls, target, observation_contract
         covered = set()
         for mechanism in target['mechanisms']:
             result = analytic_models.evaluate(region, mechanism,
-                [m['model'] for m in target['mechanisms']], target['threads'], context=context)
+                [m['model'] for m in target['mechanisms']], target['threads'],
+                context={**context,'selected_domain':analytic_composition.domain(mechanism)})
+            result['inputs']={**result['inputs'],'composition_domain':analytic_composition.domain(mechanism)}
             (overheads if mechanism.get('accounting', 'resource_bound') == 'additive_overhead' else bounds).append(result)
             if result['seconds'] is not None:
                 for claim in result['inputs'].get('covered_calls', []):
@@ -554,6 +556,7 @@ def _estimate_regions(source_regions, source_calls, target, observation_contract
             bounds.append(analytic_models.bound('unmodeled_calls', None,
                 'sum(call execution count * call cost)', {'calls': uncovered},
                 ['call_cost.' + c['name'] for c in uncovered]))
+        bounds.extend(analytic_composition.resource_composition(bounds,target))
         unknown = any(b['seconds'] is None for b in bounds + overheads)
         seconds = None if unknown else max((b['seconds'] for b in bounds), default=0.) + sum(b['seconds'] for b in overheads)
         limiting = None if unknown or not bounds else max(bounds, key=lambda b: b['seconds'])['model']
