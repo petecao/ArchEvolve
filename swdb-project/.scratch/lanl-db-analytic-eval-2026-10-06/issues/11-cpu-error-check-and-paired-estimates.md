@@ -59,3 +59,15 @@ carries fixture semantic kernel_seconds=7.92e-05 with elapsed seconds and band
 null. This is transport evidence only. Evidence:
 `evidence/11-final-source-validation-proof-20261007.json` and linked public proofs.
 Status remains claimed until actual model, development, held-out and report phases.
+
+2026-10-07 05:23 ET actual development admission: the accepted native g16 T1
+export preserves five LLVM/libomp original-driver trials and separate correctness
+per kernel. The unchanged selected-record reader passed once; source C/F6 remains
+frozen. BFS median 0.00153 s versus forecast 0.08459283293734217 s gives frozen
+rounding-aware log width 4.015855135911417; BC median 0.01923 s versus forecast
+0.64771215194357 s gives width 3.5172348723064677. These broad development
+envelopes are not validated accuracy; each kernel has one workload pair, and
+its five advancing calls are not independent error observations. Both widths are
+frozen before any g17 outcome. Exact admission and reader custody are in
+`evidence/11-development-admission-20261007-a3/`. Ticket remains claimed pending
+actual held-out validation and fresh verdict-reading report; parent owns dispatch.
