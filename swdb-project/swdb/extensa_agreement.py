@@ -74,7 +74,7 @@ def rank_statistics(samples):
     """
     samples = list(samples)
     if len(samples) > 256:
-        raise ValueError('bounded mathematical rank interface supports at most256 samples')
+        raise ValueError('bounded mathematical rank interface supports at most 256 samples')
     pairs = [(row['estimated_speedup'], row['timing_speedup']) for row in samples]
     result = {'state': 'unsupported', 'tau_b': kendall_tau_b(pairs), 'interval_95': None,
               'dependency_component_count': 0, 'defined_bootstrap_replicates': 0,
@@ -220,7 +220,8 @@ def _forecasts(ledger, artifact, workload):
     return [row for row in ledger.get('records', [])
         if row['timing_context']['subject']['artifact_sha256'] == artifact
         and row['timing_context']['input']['id'] == workload
-        and not row['timing_context']['execution'].get('protocol_companion')]
+        and not row['timing_context']['execution'].get('protocol_companion')
+        and row['timing_context']['execution'].get('protocol_role', 'candidate') == 'candidate']
 
 
 def _analyse(policy, summaries):
@@ -246,6 +247,8 @@ def _analyse(policy, summaries):
                   'agreement policy did not precede campaign forecast/outcome access')
         for event in ledger.get('outcome_accesses', []):
             _fail(event.get('timing_contexts'), 'fresh outcome access lacks exact timing request contexts')
+        accessed_requests = {extensa_pairing.request_identity(context)
+            for event in ledger.get('outcome_accesses', []) for context in event['timing_contexts']}
         for iteration in summary['iterations']:
             for candidate in iteration['candidates']:
                 for comparison in candidate.get('comparisons', []):
@@ -258,6 +261,11 @@ def _analyse(policy, summaries):
                         exclusions.append('contract_fixture')
                     if not forecasts:
                         exclusions.append('missing_preceding_estimate_receipts')
+                    if not forecasts or any(extensa_pairing.request_identity(row['timing_context'])
+                                             not in accessed_requests for row in forecasts):
+                        exclusions.append('missing_matching_outcome_request')
+                        blind_problems.append({'campaign': cid, 'candidate': candidate['id'],
+                                               'reason': 'missing_matching_outcome_request'})
                     if any(row['seconds'] is None for row in forecasts):
                         exclusions.append('unknown_forecast')
                     # Ticket16 currently admits no application numeric forecast.
@@ -283,7 +291,9 @@ def _analyse(policy, summaries):
                            'state': 'unsupported', 'estimate_top3': None,
                            'reason': 'complete_finite_application_prediction_ranking_unavailable'})
     absent = sorted(set(planned) - {summary['campaign'] for summary in summaries})
-    return {'counts': {'observed_candidate_rows': len(pairs), 'unique_observed_pair_contents': len(seen),
+    return {'evidence_kind': ('unavailable' if not summaries else 'mixed_sources' if
+                             len({s['evidence_kind'] for s in summaries}) > 1 else summaries[0]['evidence_kind']),
+        'counts': {'observed_candidate_rows': len(pairs), 'unique_observed_pair_contents': len(seen),
             'unique_eligible_dx100_pairs': 0, 'excluded_candidate_rows': len(pairs),
             'planned_campaigns': len(planned), 'observed_campaigns': len(summaries)},
         'pairs': pairs,
@@ -313,8 +323,6 @@ def report(args):
     data = _new('agreement_report', {'format': 'swdb.extensa-agreement-report.v1',
         'policy': policy['id'], 'policy_sha256': policy['identity_sha256'], 'policy_snapshot': copy.deepcopy(policy),
         'reported_at': writer.now(), 'summaries': summaries,
-        'evidence_kind': ('unavailable' if not summaries else 'mixed_sources' if
-                         len({s['evidence_kind'] for s in summaries}) > 1 else summaries[0]['evidence_kind']),
         'summary_identities': {s['id']: artifacts.digest(s) for s in summaries}, **_analyse(policy, summaries)})
     return workflow.persist(args.records, data, create=True)
 

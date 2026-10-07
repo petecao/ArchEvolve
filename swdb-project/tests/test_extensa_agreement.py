@@ -84,3 +84,27 @@ def test_public_validate_refuses_malformed_frozen_population_without_crashing(re
     result = run_swdb('validate', '--records', repo_team['records'])
     assert result.returncode == 1 and 'population' in result.stderr
     assert 'Traceback' not in result.stderr
+
+
+def test_public_report_does_not_claim_pair_blindness_from_baseline_events_alone(campaign_team):
+    import yaml
+    file = campaign_file(campaign_team, cid=GEM5, target='dx100_gem5')
+    config = provider(campaign_team, {})
+    frozen = run_swdb('agreement-freeze', '--campaign-file', file, '--provider-config', config,
+                     '--records', campaign_team['records'], '--mode', 'extensa', '--campaign', GEM5, '--format', 'json')
+    assert frozen.returncode == 0, frozen.stderr
+    policy = json.loads(frozen.stdout)
+    summary = run(campaign_team, file, fixture_file(campaign_team), config)
+    source = campaign_store(campaign_team, GEM5)
+    summary['paired_estimates']['outcome_accesses'] = [row for row in summary['paired_estimates']['outcome_accesses']
+                                                     if not row['stage'].startswith('comparison.')]
+    assert summary['paired_estimates']['outcome_accesses']
+    path = source / 'campaign_summaries' / (summary['id'] + '.yaml')
+    path.write_text(yaml.safe_dump(summary, sort_keys=False))
+    result = run_swdb('agreement-report', '--policy', policy['id'], '--campaign-records', source,
+                     '--records', campaign_team['records'], '--mode', 'extensa', '--campaign', GEM5, '--format', 'json')
+    assert result.returncode == 0, result.stderr
+    report = json.loads(result.stdout)
+    assert report['blind_order']['state'] == 'unverified'
+    assert all('missing_matching_outcome_request' in row['exclusions'] for row in report['pairs'])
+    assert report['gate']['state'] == 'unsupported' and report['counts']['unique_eligible_dx100_pairs'] == 0
