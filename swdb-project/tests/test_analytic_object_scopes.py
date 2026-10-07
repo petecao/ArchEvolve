@@ -129,7 +129,7 @@ def test_source_nonlocal_exit_keeps_unproved_recovered_frame_unknown(records,tmp
 
 @pytest.mark.parametrize('mode',['ordinary','throw'])
 def test_object_scopes_preserve_functional_command_domains_and_request_partitions(records,tmp_path,llvm22,mode):
-    from test_analytic_commands import characterize_command
+    from testkit.analytic import characterize_command
     extra=('--object-scopes',)+(('--run-arg','throw') if mode=='throw' else ())
     data,target_hash=characterize_command(records,tmp_path,llvm22,extra=extra)
     assert data['observation_contract']['object_scope_contract']['format']=='swdb.object-scopes.v1'
