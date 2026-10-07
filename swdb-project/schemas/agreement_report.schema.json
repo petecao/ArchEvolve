@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "agreement_report",
+  "description": "Created2026-10-06 ET: immutable research-only prospective D30 evidence.",
+  "type": "object",
+  "properties": {
+    "policy": {
+      "type": "string",
+      "x-ref": "agreement_policy"
+    },
+    "policy_sha256": {
+      "$ref": "#/$defs/hash"
+    },
+    "policy_snapshot": {
+      "type": "object"
+    },
+    "reported_at": {
+      "type": "string"
+    },
+    "summaries": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "summary_identities": {
+      "type": "object"
+    },
+    "counts": {
+      "type": "object"
+    },
+    "pairs": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "blind_order": {
+      "type": "object"
+    },
+    "rank": {
+      "type": "object"
+    },
+    "top3": {
+      "type": "object"
+    },
+    "gate": {
+      "type": "object"
+    },
+    "recommendation": {
+      "const": "do_not_switch_to_flow_b"
+    },
+    "selection_policy": {
+      "const": "unchanged_timing_only"
+    },
+    "kind": {
+      "const": "agreement_report"
+    },
+    "format": {
+      "const": "swdb.extensa-agreement-report.v1"
+    },
+    "identity_sha256": {
+      "$ref": "#/$defs/hash"
+    },
+    "mode": {
+      "const": "extensa"
+    },
+    "campaign": {
+      "$ref": "#/$defs/extensa_campaign_id"
+    },
+    "basis": {
+      "const": "code_reading"
+    },
+    "estimator_variant": {
+      "const": "research"
+    },
+    "message_version": {
+      "type": "string"
+    },
+    "producer": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "policy",
+    "policy_sha256",
+    "policy_snapshot",
+    "reported_at",
+    "summaries",
+    "summary_identities",
+    "counts",
+    "pairs",
+    "blind_order",
+    "rank",
+    "top3",
+    "gate",
+    "recommendation",
+    "selection_policy",
+    "kind",
+    "format",
+    "identity_sha256",
+    "mode",
+    "campaign",
+    "basis",
+    "estimator_variant",
+    "message_version",
+    "producer"
+  ],
+  "$defs": {
+    "hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

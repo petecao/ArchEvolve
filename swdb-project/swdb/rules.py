@@ -79,6 +79,9 @@ def check(record, ctx):
     elif kind == "campaign_summary":
         from swdb.extensa_pairing import validate_summary
         yield from validate_summary(record, ctx)
+    elif kind in {"agreement_policy", "agreement_report"}:
+        from swdb.extensa_agreement import validate_record
+        yield from validate_record(record, ctx)
     elif kind == "paired_estimate":
         from swdb.extensa_pairing import validate_record
         yield from validate_record(record, ctx)

@@ -13,7 +13,7 @@ EVIDENCE_COMMANDS = {'characterize', 'estimate', 'freeze-protocol', 'dx100-build
     'dx100-execute', 'dx100-profile', 'evaluate', 'evaluate-pair', 'compare', 'compare-evaluations',
     'aggregate-evaluations', 'bfs-profile', 'bfs-hotspots', 'profile-package', 'profile-strategies',
     'strategy-regions', 'bfs-coverage', 'handoff-message', 'submit', 'repair', 'profile', 'annotate',
-    'claim', 'add', 'annotate-score', 'certify', 'synthesize', 'recompute-cachegrind'}
+    'claim', 'add', 'annotate-score', 'certify', 'synthesize', 'recompute-cachegrind', 'agreement-freeze', 'agreement-report'}
 
 
 def register_cli(commands):
@@ -80,7 +80,7 @@ def require_team_safe(store, *values, command):
                 walk(child, owner, source_read=source_read)
             return
         owner = value.get('id', owner) if isinstance(value.get('id', owner), str) else owner
-        if value.get('mode') == 'extensa' and value.get('kind') in {'protocol', 'target_description', 'estimate', 'workload_characterization', 'paired_estimate'}:
+        if value.get('mode') == 'extensa' and value.get('kind') in {'protocol', 'target_description', 'estimate', 'workload_characterization', 'paired_estimate', 'agreement_policy', 'agreement_report'}:
             refuse(owner, 'Extensa research evidence never enters team protocols')
         if value.get('estimator_variant') == 'research':
             refuse(owner, 'research estimator variants never enter team protocols')
