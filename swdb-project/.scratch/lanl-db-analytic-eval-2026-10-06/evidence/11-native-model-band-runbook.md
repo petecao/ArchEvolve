@@ -1,0 +1,101 @@
+# Frozen native T1 model and prospective band sequence
+
+Created: 2026-10-06 ET. Parent owns mbit10 preflight, source deployment, named leases and all dispatch. This runbook is preparation, not evidence of successful application timing. Use the final clean combined source after every service receipt is admitted; the independent collector source `1703c987` remains immutable during its own calibration runs. Keep node1 idle during native application timing.
+
+The scope is the original registered LLVM22/libomp BFS and BC baseline driver, serial T1, five advancing deterministic SourcePicker calls in one process. Exact source/runtime/control identity, graph-generation contract, observed graph metadata, all five printed times and separate verifier output are retained. This scope is separate from protected `evaluate`/`evaluate-pair`; historical GCC/libgomp/candidate records retain their explicit exclusions in `11-historical-native-scope-audit.json`.
+
+## 1. Bind outcome-free counts and admitted services
+
+Copy canonical records into a new external raw store. Set `LANL_CPU_STORE` to its `records/` directory. All service IDs below are required expected output IDs, not evidence that the pending services succeeded. Failed or missing receipts keep their parameters unknown. Use the final immutable source checkout's `swdb-project/` working directory.
+
+```sh
+python3 -m swdb.cpu_service_binding --records "$LANL_CPU_STORE" \
+  --target-description mbit10.cpu.lanl20261006a2.v2.t1 \
+  --characterization bfs.kron-g16.t1.characterization.objects.a1 \
+  --scope-characterization bc.kron-g16.t1.characterization.objects.a1 \
+  --scope-characterization bfs.kron-g17.t1.characterization.objects.a1 \
+  --scope-characterization bc.kron-g17.t1.characterization.objects.a1 \
+  --calibration mbit10.cpu.lanl20261006.service.clock.a2 \
+  --calibration mbit10.cpu.lanl20261006.service.allocator.a1 \
+  --calibration mbit10.cpu.lanl20261006.service.allocator-extra.a1 \
+  --calibration mbit10.cpu.lanl20261006.resource.memory.a1 \
+  --calibration mbit10.cpu.lanl20261006.service.byte-read.a1 \
+  --calibration mbit10.cpu.lanl20261006.resource.bulk-total.a1 \
+  --calibration mbit10.cpu.lanl20261006.resource.bulk-total.a2 \
+  --calibration mbit10.cpu.lanl20261006.service.openmp.a1 \
+  --memory-footprint-bytes 8388608 \
+  --memory-cas-policy max_constructed_success_failure_median \
+  --bulk-profile-policy max_constructed_profiles_median \
+  --bulk-copy-calibration mbit10.cpu.lanl20261006.resource.bulk-total.a1 \
+  --openmp-next-policy max_constructed_success_failure_median \
+  --openmp-projection .scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-bfs.g16-projection-mbit10-20261006-a1.json \
+  --openmp-projection .scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-bc.g16-projection-mbit10-20261006-a1.json \
+  --openmp-projection .scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-bfs.g17-projection-mbit10-20261006-a1.json \
+  --openmp-projection .scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-bc.g17-projection-mbit10-20261006-a1.json \
+  --id mbit10.cpu.lanl20261006.t1.services.v1 --format json
+```
+
+The explicit 8MiB memory construction is a conditional inferred scenario. Logical bounded views establish neither full libomp allocation identity nor physical residency. Exact primitive/type/order guards remain active. Original residual-null write8 records remain immutable; the separately typed gross resource includes retained loop work and composes with compute by maximum. Bulk profile maxima and legal warmed OpenMP state are inferred transfer, not physical latencies or proven application upper bounds. Duplicate copy measurements are selected explicitly, never pooled.
+
+Persist a protocol request in the external raw directory with these settings:
+
+```yaml
+message_version: '1.0'
+id: lanl.cpu.t1.native-model.v1
+version: 1
+settings:
+  mode: estimated
+  estimator_version: swdb.analytic.v1
+  target_description: mbit10.cpu.lanl20261006.t1.services.v1
+  inputs: [kron-g16-k16, kron-g17-k16]
+  roi: gapbs.trial_lambda.v1
+  threads: 1
+```
+
+Freeze it with `python3 -m swdb freeze-protocol REQUEST.yaml --records "$LANL_CPU_STORE" --format json`. This pins the actual final estimator bundle, target snapshot and recursive typed calibration/characterization closure. No CPU error-band pin exists yet. Run public `estimate` separately on each of the four named characterizations with this target/protocol and fresh IDs `lanl.cpu.{bfs,bc}.g{16,17}.t1.estimate.v1`. No application executes during estimation.
+
+Before application timing, retain a sealed preregistration with source tip, Python bundle hash, target/protocol hashes, all four characterization hashes, all calibration hashes and explicit conditional recipes. Check every complete whole-call result is positive and every structural compatibility missing list is empty. Unknown per-region union/page/lifetime facts remain retained; they cannot be filled as physical facts. If a whole-call estimate is null, retain the exact failed completeness report and fix only defensible independent missing service prerequisites before a new prospective freeze. No application outcome may select or fit those costs.
+
+## 2. Development timing after model freeze
+
+Set `LANL_CPU_RAW` to a new external raw directory. Under the named node0 lease, for BFS then BC, run the matched collector with a separate new output directory and ID. It verifies source/runtime correspondence, executes a separate `-v` five-call correctness process, then the original no-v five-call timing process. Keep the same source/model/protocol unchanged through both collectors.
+
+```sh
+python3 -m swdb collect-cpu-native-validation --records "$LANL_CPU_STORE" \
+  --characterization bfs.kron-g16.t1.characterization.objects.a1 \
+  --estimate-protocol lanl.cpu.t1.native-model.v1 \
+  --id lanl.cpu.bfs.g16.t1.validation.v1 --output "$LANL_CPU_RAW/bfs.g16" \
+  --machine mbit10 --lane mbit10-evaluation-node0 \
+  --llvm-bin /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin \
+  --run-library-path /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu \
+  --max-wall-s 900 --format json
+```
+
+Repeat with BC's exact characterization, ID and output. The collector derives the compiler flags, runtime environment and run arguments from the counted binding; do not inject a different graph/source policy. It pins only the child binary to the first core, while the collector retains full socket lease affinity. Retain all five printed TrialTime values with 10us resolution and +/-5us intervals. Their median is one workload-pair observation; the five advancing/state-sharing trials are not five independent error samples.
+
+Freeze the development width immediately after both matched validations:
+
+```sh
+python3 -m swdb freeze-cpu-error-band --records "$LANL_CPU_STORE" \
+  --estimate lanl.cpu.bfs.g16.t1.estimate.v1 --validation lanl.cpu.bfs.g16.t1.validation.v1 \
+  --estimate lanl.cpu.bc.g16.t1.estimate.v1 --validation lanl.cpu.bc.g16.t1.validation.v1 \
+  --id lanl.cpu.t1.development-band.v1 --format json
+```
+
+The frozen width is the maximum rounding-aware absolute log error across the two independently scoped workload pairs. A failed or null width does not authorize holdout timing or an agreement/gain claim. Preserve any failure honestly. No rate, recipe, target or implementation adjustment may use these application outcomes.
+
+## 3. Prospective holdout with the unchanged width
+
+Only after a known native development band is frozen, run the same matched collector for both g17 characterizations, supplying `--development-band lanl.cpu.t1.development-band.v1` as well as the unchanged estimate protocol. Use fresh IDs `lanl.cpu.{bfs,bc}.g17.t1.validation.v1` and new raw directories. The collector refuses a previously used input, changed source/runtime/ROI scope, or timing before the frozen width. Never re-estimate width from g17.
+
+```sh
+python3 -m swdb validate-cpu-error-band --records "$LANL_CPU_STORE" \
+  --development-band lanl.cpu.t1.development-band.v1 \
+  --estimate lanl.cpu.bfs.g17.t1.estimate.v1 --validation lanl.cpu.bfs.g17.t1.validation.v1 \
+  --estimate lanl.cpu.bc.g17.t1.estimate.v1 --validation lanl.cpu.bc.g17.t1.validation.v1 \
+  --id lanl.cpu.t1.heldout-band.v1 --format json
+```
+
+A failed holdout remains failed with the original width. A validated record grants confidence only to the exact supported held-out characterizations and frozen T1 target/model/runtime. It supplies no unseen-candidate, kernel, thread or target generalization. Any final estimate protocol that uses `cpu_error_band: lanl.cpu.t1.heldout-band.v1` must be newly frozen without changing the target or implementation; the band pin is separate from target calibration closure.
+
+Export canonical validation/band/estimate/protocol records and compact preregistration/context/hash/trial summaries through Git. Raw binaries, logs and LLVM artifacts remain remote. Report whole-call errors and the predicted per-region contributions/assumptions. There are no measured region timing/error claims. Existing CPU native timing selection is unchanged; historical unsupported comparisons retain their explicit null/exclusion reports. Until a validated band exists, D25's `within_error` token with null error_band/seconds is not evidence of agreement.
