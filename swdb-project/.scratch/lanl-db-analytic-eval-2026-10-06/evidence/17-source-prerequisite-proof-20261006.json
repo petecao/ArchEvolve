@@ -1,0 +1,76 @@
+{
+  "format": "swdb.lanl17-source-prerequisite-proof.v1",
+  "created_utc": "2026-10-07T03:32:27.739997+00:00",
+  "source_commit": "f951eec9e98b5fcd6b9a3c5a9d64724e1b6ffe7c",
+  "tested_integration_source_commit": "31d774c33427f13203b8ff937680086f7d815148",
+  "integration_baseline": "88640bc4b2a6ccd0aa02e57e33221ff374572f90",
+  "estimator_sha256": "fec496c6dec0930aada7bc760991c125907fffe739ea2e9d4d3e03e3748faa52",
+  "scope": "Tested implementation prerequisite only; ticket remains claimed pending four actual campaigns/report.",
+  "checks": [
+    {
+      "name": "final_owned_public_and_mathematical_gate",
+      "passed": 10,
+      "seconds": 598.79,
+      "command": "python -m pytest -q tests/test_extensa_agreement.py tests/test_extensa_agreement_statistics.py"
+    },
+    {
+      "name": "post_integration_public_report_and_recursive_boundary",
+      "passed": 2,
+      "seconds": 197.23,
+      "command": "python -m pytest -q tests/test_extensa_agreement.py::test_public_report_keeps_fixture_forecasts_ineligible_and_d30_unsupported tests/test_extensa_agreement.py::test_public_team_recursively_refuses_policy_and_report_but_extensa_accepts"
+    },
+    {
+      "name": "canonical_validate",
+      "records": 631,
+      "result": "OK: 631 record(s) valid"
+    }
+  ],
+  "preserved_tree_identities": {
+    "records": "4b526c6b42c784b4bac05cc32b45ff47cb70d6d4",
+    "library": "efd78f19dd19389f18a3cae36eb3c86d06459b55",
+    "apps": "09fb65f4b5c4ab842f49d8f15fa532f3df50f23a",
+    "tools": "c7643f80330662aae8be7247c22cc8da01a6e497",
+    "scripts": "b42f7fe43875acbf69ef0dc677c06f5060f4f991"
+  },
+  "all_changes_inside_swdb_project": true,
+  "prospective_population_frozen": false,
+  "actual_campaigns": 0,
+  "eligible_application_pairs": 0,
+  "D30_state": "unsupported",
+  "selection_policy": "unchanged_timing_only",
+  "candidate_content_uniqueness": "unverified; retained request digest count is distinct from unique pair content",
+  "external_parent_control": {
+    "path": "/private/tmp/lanl17_parent_helpers.py",
+    "sha256": "f68cd91b1302177038c5e9388d6e57b2ca205df3dacb3b81fb009c43f2047957",
+    "portable_proof": {
+      "helper_sha256": "f68cd91b1302177038c5e9388d6e57b2ca205df3dacb3b81fb009c43f2047957",
+      "checks": [
+        "canonical_digest_matches_swdb_unicode",
+        "canonical_seal_roundtrip",
+        "tamper_refused",
+        "synthetic_login_path_no_auth_read",
+        "changed_login_path_refused",
+        "local_host_refused",
+        "mock_exact_wrapper_holder_admitted",
+        "mock_foreign_wrapper_refused",
+        "mock_foreign_generation_refused",
+        "mock_widened_affinity_refused",
+        "mock_unbound_numa_refused",
+        "mock_foreign_population_refused",
+        "mock_changed_child_command_refused",
+        "mock_foreign_lease_descriptor_refused"
+      ],
+      "remote_actions": 0,
+      "provider_calls": 0,
+      "campaigns": 0,
+      "population_freezes": 0,
+      "linux_cleanup_tested": false,
+      "scope": "Portable seals/synthetic auth and kernel-file mocks only. Actual Linux cleanup/live files remain parent-owned verification."
+    },
+    "linux_smoke_path": "/private/tmp/lanl17_parent_helpers_linux_smoke.py",
+    "linux_smoke_sha256": "6b032df7f1f1eacb6a62c5d6c3581efc3e19f8696d23800f4b58de8b6b7230f0",
+    "linux_smoke_executed": false,
+    "parent_review_and_linux_smoke_required": true
+  },
+  "final_combined_source": "Parent must combine final generic changes, then freeze a fresh policy under immutable W before any actual campaign outcome. Historical source protocols remain valid."
+}

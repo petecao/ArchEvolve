@@ -43,7 +43,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | 14 | [Generality: MAPLE and PageRank](issues/14-generality-maple-pagerank.md) | ready-for-agent | 05, 09, 10 | 1 day |
 | 15 | [Show Scott the counting approach](issues/15-show-scott-counting.md) | ready-for-human | 09 | about 15 min |
 | 16 | [Extensa flow A: blind paired estimates](issues/16-extensa-blind-paired-estimates.md) | resolved | 06, 09 | 4–6 h |
-| 17 | [Agreement report](issues/17-agreement-report.md) | ready-for-agent | 16 | 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs) |
+| 17 | [Agreement report](issues/17-agreement-report.md) | claimed | 16 | 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs) |
 | 18 | [Decide on flow B](issues/18-decide-flow-b.md) | ready-for-human | 17 | about 15 min |
 
 ## E. Later or blocked

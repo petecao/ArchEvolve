@@ -250,6 +250,8 @@ def main(argv=None):
     extensa_boundary.register_cli(commands, paths)
     library_operations.register_cli(commands, paths)
     campaign.register_cli(commands, paths)
+    from swdb import extensa_agreement
+    extensa_agreement.register_cli(commands)
     annotation.register_cli(commands)
     certification.register_cli(commands)
     retention.register_cli(commands)
