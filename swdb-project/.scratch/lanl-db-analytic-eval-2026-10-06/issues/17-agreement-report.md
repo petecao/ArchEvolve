@@ -41,3 +41,6 @@ Claimed: 2026-10-06 22:22 ET by ticket17 implementer; base `9a5057f45c7a1c3b8756
 
 
 2026-10-07 10:55 ET — separate source-staging custody at `../evidence/17-reviewed-input-controls-source-staging-20261007-a3/README.md`: parent copied exact delivered Git blobs for assembler/specification writer/producer/auditor to a fresh owned mbit10 directory. Original driver and sealed receipt retained; no selected control, main, request/input, Store, provider/native/campaign or scientific admission executed. Prior preparations and b08 staging remain exact; actual inputs and four campaigns still pending, status claimed.
+
+
+2026-10-07 11:47 ET — distinct full-record-index supplier retained at `../evidence/17-parent-full-record-index-controls-20261007/README.md`: exact writer/test/preparation/handoff/audit/review/runner and separate original test outputs. One later isolated local batch passed all eight actual bodies; earlier preparation remains NOTRUN history. Future index is parent-generated unsealed metadata with explicitly inherited original full validation/quiescence, not an original 28d output or independent validator. New source-read bounds alter no old control. Actual writer main/requests/catalog/index, ticket 17 preparation/four campaigns/D30 remain pending; source C/F6/controls unchanged and status claimed.

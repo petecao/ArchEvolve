@@ -1,0 +1,108 @@
+{
+  "format": "swdb.lanl17-parent-record-index-parent-review.v1",
+  "checked_utc": "2026-10-07T15:45:46.789393+00:00",
+  "canonical_ensure_ascii": true,
+  "state": "source_approved_for_future_explicit_actual_inputs_with_one_synthetic_batch_passed",
+  "original_preparation_identity": "9be4d961e49fedf415c9f068318c8480a47e1331737399d4405fb113fa33519c",
+  "original_preparation_file_sha256": "54d916f5933da0af661e1245856f8e93b30bdc6147a569626aad066a60b7eb88",
+  "packet_pins_verified": {
+    "writer_source": {
+      "path": "/private/tmp/lanl17_write_parent_full_record_index_20261007.py",
+      "bytes": 33445,
+      "sha256": "7a67d46f8ad7d453fe07bd458a21f663bd4dc7ec12e71de83ad8b5caaf28894b"
+    },
+    "isolated_test_source": {
+      "path": "/private/tmp/lanl17_parent_full_record_index_isolated_test_source_20261007.py",
+      "bytes": 10704,
+      "sha256": "02395edfab3000e8ffac2dba895bbd1d3d78eb6fefa4cb15585dc88c5b77fa40"
+    },
+    "source_handoff": {
+      "path": "/private/tmp/lanl17-parent-full-record-index-writer-source-handoff-20261007.md",
+      "bytes": 10048,
+      "sha256": "1ad58ed923ea8c6b20f6d57b6f07a8fc89d266ccf0f88c83bd871dcf07c8118c"
+    },
+    "supplier_source_audit": {
+      "path": "/private/tmp/lanl17-record-index-supplier-source-audit-20261007.md",
+      "bytes": 5158,
+      "sha256": "acff77a27f43920e635d367c8f9c06243b855ab45013f4c746bb8409580f7237"
+    },
+    "selected_auditor": {
+      "path": "/private/tmp/lanl17_selected_record_trajectory_auditor_a2r1s1_20261007.py",
+      "bytes": 115130,
+      "sha256": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da"
+    },
+    "selected_collector": {
+      "path": "/private/tmp/lanl17_compact_attempt_custody_a2r1_20261007.py",
+      "bytes": 24818,
+      "sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c"
+    },
+    "selected_helper": {
+      "path": "/private/tmp/lanl17_parent_helpers_cleanup60_a4.py",
+      "bytes": 38195,
+      "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+    },
+    "selected_capture_producer": {
+      "path": "/private/tmp/lanl17_parent_capture_projection_producer_a3_20261007.py",
+      "bytes": 46165,
+      "sha256": "32bead204337aa66d0a732b6f143216946abafc5d2eb752577b0d90f7190b7b6"
+    },
+    "selected_assembler": {
+      "path": "/private/tmp/lanl17_assemble_selected_actual_input_pins_r1_20261007.py",
+      "bytes": 33584,
+      "sha256": "de669e4c0928876f9d033f6d9c1fc820ab3a1eb915aba20c5b6755b9866d7e6a"
+    },
+    "selected_spec_writer": {
+      "path": "/private/tmp/lanl17_write_parent_input_specification_20261007.py",
+      "bytes": 11868,
+      "sha256": "339ea0dc1abb6778f0f016e9c03f2b29c5f1916154b668f5416747b2768a9231"
+    },
+    "original_construction_plan": {
+      "path": "/private/tmp/lanl17-r1s1-future-actual-input-construction-plan-20261007.md",
+      "bytes": 11817,
+      "sha256": "e3420b334ce05f7268699b0079987d1d2afc98fe5cb5503e6069a89038b59170"
+    },
+    "original_accepted_input_contract": {
+      "path": "/private/tmp/lanl17-auditor-a2r1s1-accepted-input-contract-20261007.md",
+      "bytes": 5288,
+      "sha256": "192eb5d1c2b461f9d42b3532a934c8dc107bb193f29fabbb5ba2dec94acd2978"
+    }
+  },
+  "parent_full_source_test_handoff_preparation_read": true,
+  "independent_agent02_full_source_only_review": "no concrete blocker; no execution or edits",
+  "independent_agent04_full_writer_handoff_interface_review": "no interface blocker; no execution or edits",
+  "original_6a_timestamp_resolver_AST_exact": true,
+  "selected_source_and_scientific_controls_changed": false,
+  "actual_synthetic_test_receipt": {
+    "path": "/private/tmp/lanl17-parent-full-record-index-tests-actual-20261007.json",
+    "bytes": 3175,
+    "sha256": "e8e4255a3348551c1a329bf3353c9d2d02e989b22828a2e269d05614d8de235f",
+    "identity_sha256": "ea39a791dfc7abe475a6f85035c1b7864cdef4536a72ad22358320bf17b0ae4b"
+  },
+  "review_note": {
+    "path": "/private/tmp/lanl17-parent-full-record-index-parent-review-20261007.md",
+    "bytes": 3504,
+    "sha256": "a7550c731ba4a7a8415511b940fb39d40d9e41779c3dc2c40d2e33a73ea1101e"
+  },
+  "actual_synthetic_driver": {
+    "path": "/private/tmp/lanl17-run-reviewed-parent-index-isolated-tests-20261007.py",
+    "bytes": 5926,
+    "sha256": "6c91bb2e0e4ed0096be361e51fefd6f61fc7cc7f5beed834d1e4a27ae5975266"
+  },
+  "actual_synthetic_batches": 1,
+  "actual_successful_test_methods": [
+    "test_added_or_deleted_inventory_body_refuses",
+    "test_changed_returned_bytes_refuse_even_with_same_length",
+    "test_duplicate_record_ids_refuse_full_index",
+    "test_exact_whole_record_digest_file_sha_and_original_string_date",
+    "test_final_original_source_change_refuses_before_publication",
+    "test_final_source_recheck_after_publication_precedes_success",
+    "test_path_inode_swap_during_open_read_refuses",
+    "test_top_and_nested_duplicate_yaml_keys_refuse"
+  ],
+  "actual_writer_main_executed": false,
+  "actual_inputs_constructed": false,
+  "scientific_admission": false,
+  "actual_17_metadata_campaign_or_selected_control_main_executed": false,
+  "validation_boundary": "Future real index is parent-generated unsealed metadata with original28d prior full validation and explicit parent-reviewed unchanged quiescent snapshot inherited; no independent validator/process/normal trajectory claim.",
+  "identity_sha256": "7b3b5a02b14ce8fa16c86539869897f8bd8bf7fb8a2578cde3a3b97f166d8f39"
+}
