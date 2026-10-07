@@ -64,3 +64,6 @@ records source/bundle identities and preservation. Historical actual bundle
 `b238c61b…` stays frozen; later implementation `e3216982…` requires a fresh protocol
 for new execution. Other ticket states and native observer/source/count bytes
 are preserved.
+
+
+2026-10-07 ET retention note: [Three original ignored generated inputs](../evidence/10-ignored-generated-input-retention-20261007/README.md) are retained byte for byte with the original unsealed five-file inventory. Their three plan input hashes and 101,164-byte total match the earlier archived preparation; no preparation/provider/native/test execution or scientific acceptance was repeated. Existing resolved status and actual evaluation history remain unchanged.
