@@ -1,0 +1,23 @@
+{
+  "format": "swdb.lanl14-pr-final-gate-controls.v1",
+  "scope": "Portable independent metadata fixtures and refusal controls only; not actual model/count/estimate acceptance.",
+  "passed": true,
+  "controls": [
+    "independent-null-transfer-metadata-fixture",
+    "numeric-total",
+    "borrowed-band",
+    "trial-zero-with-null-total",
+    "source-position-drift",
+    "missing-admission-reason",
+    "wrong-thread",
+    "fixture-as-execution",
+    "wrong-source",
+    "target-snapshot-drift",
+    "repinned-expanded-pr-allowlist"
+  ],
+  "helper_sha256": "86df23903c131913cd952d3648cfed58e43824982308082bb235579d4b7da3bf",
+  "application_execution": 0,
+  "provider_calls": 0,
+  "actual_acceptance": false,
+  "identity_sha256": "41f244ca892cfd1e38efbaf35ae679b5bd63b8fe2b56c2c802d8f06c0ca00292"
+}
