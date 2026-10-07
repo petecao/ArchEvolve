@@ -131,14 +131,89 @@ def cache_fit(region,mechanism):
          'Outside the modeled cache capacity this mechanism has no supported bound, so its required result remains unknown.'])
 
 
+def offload_setup(region, mechanism, *, context=None):
+    selector = mechanism.get('selector', {})
+    unsupported = set(selector) - {'event_ids'}
+    missing = ['selector.' + key for key in sorted(unsupported)]
+    events = selector.get('event_ids')
+    if not events:
+        missing.append('selector.event_ids')
+    if mechanism.get('accounting') != 'additive_overhead':
+        missing.append('accounting.additive_overhead')
+    selected = [call for call in region.get('accelerator_calls', []) if call.get('event') in (events or [])]
+    executions = 0
+    if not selected:
+        observed = (context or {}).get('observation_contract') or {}
+        commands = observed.get('semantic_commands', {})
+        if not commands.get('complete') or not set(events or []) <= set(commands.get('event_ids', [])):
+            missing.append('accelerator_calls.event_coverage')
+    for call in selected:
+        value = call.get('execution_count', {}).get('value')
+        if value is None:
+            missing.append('accelerator_calls.execution_count')
+        elif not isinstance(value, int) or isinstance(value, bool) or value < 0:
+            missing.append('accelerator_calls.invalid_execution_count')
+        else:
+            executions += value
+    rate = parameter(mechanism, 'seconds_per_event', 'seconds/event')
+    if executions and rate is None:
+        missing.append('seconds_per_event')
+    return bound('offload_setup', None if missing else executions * rate if executions else 0.,
+        'sum(selected semantic event executions) * seconds_per_event',
+        {'events': selected, 'executions': executions, 'seconds_per_event': mechanism['parameters'].get('seconds_per_event')},
+        missing, ['An additive semantic setup event is charged once; it is not a functional body time.'])
+
+
+def _cpu_model(name, region, mechanism, *, context=None):
+    from importlib import import_module
+    try:
+        module = import_module('swdb.analytic_cpu_service')
+    except ModuleNotFoundError as exc:
+        if exc.name != 'swdb.analytic_cpu_service':
+            raise
+        return bound(name, None, 'optional mechanism module unavailable', mechanism['parameters'],
+                     ['mechanism_module.analytic_cpu_service'])
+    return getattr(module, name)(region, mechanism, context=context)
+
+
+def native_service_costs(region, mechanism, *, context=None):
+    return _cpu_model('native_service_costs', region, mechanism, context=context)
+
+
+def memory_service_scenario(region, mechanism, *, context=None):
+    return _cpu_model('memory_service_scenario', region, mechanism, context=context)
+
+
+def reorder_window_rows(region,mechanism,*,context=None):
+    from swdb.analytic_offload_models import reorder_window_rows as implementation
+    return implementation(region,mechanism,context=context)
+
+
+def fetch_queue(region,mechanism,*,context=None):
+    from swdb.analytic_offload_models import fetch_queue as implementation
+    return implementation(region,mechanism,context=context)
+
+
+def tile_staging(region,mechanism,*,context=None):
+    from swdb.analytic_offload_models import tile_staging as implementation
+    return implementation(region,mechanism,context=context)
+
+
 MODELS = {'compute_throughput':compute_throughput,'streaming_bandwidth':streaming_bandwidth,
-          'requests_in_flight_latency':requests_in_flight_latency,'cache_fit':cache_fit}
+          'requests_in_flight_latency':requests_in_flight_latency,'cache_fit':cache_fit,
+          'offload_setup':offload_setup,'native_service_costs':native_service_costs,
+          'memory_service_scenario':memory_service_scenario,'reorder_window_rows':reorder_window_rows,'fetch_queue':fetch_queue,'tile_staging':tile_staging}
 
 
-def evaluate(region,mechanism,models=(),target_threads=1):
+def evaluate(region,mechanism,models=(),target_threads=1, *, context=None):
     implementation=MODELS.get(mechanism['model'])
     if implementation is None:
         return bound(mechanism['model'],None,'unsupported mechanism model',mechanism['parameters'],['mechanism_model.'+mechanism['model']])
+    if mechanism['model'] in {'offload_setup','native_service_costs','memory_service_scenario','reorder_window_rows','fetch_queue','tile_staging'}:
+        return implementation(region,mechanism,context=context)
+    if mechanism.get('selector'):
+        return bound(mechanism['model'],None,'unsupported selector for established mechanism',mechanism['parameters'],
+                     ['selector.'+key for key in sorted(mechanism['selector'])])
     if mechanism['model']=='streaming_bandwidth':
         result=implementation(region,mechanism,covered_nonstream=bool(set(models)&{'requests_in_flight_latency','cache_fit'}))
         uses_rate=result['inputs']['bytes']>0

@@ -1,0 +1,1100 @@
+{
+  "format": "swdb.public-functional-count-proof.v1",
+  "scope": "Public registered-artifact fixture input g8/k4/T1/one trial; no representative application evaluation or hardware timing.",
+  "source_tip": "502fea7",
+  "candidate": {
+    "kind": "candidate",
+    "id": "bfs-functional-read-offload-20261006-a1.proposal.candidate-1"
+  },
+  "input": "fixture.functional.kron.g8-k4",
+  "binding_state": "verified",
+  "candidate_artifact_sha256": "991de65287fe1fae3a20412704cccb6140a93f84cc11200032b20214f5174ff1",
+  "characterization_sha256": "12e8036e7b6f68d28cf626a1a65ccd5a3d364fd878e53aea89414afcdb211611",
+  "protocol": "fixture.functional.protocol.1b21f2c51b63079f",
+  "estimator_sha256": "5070399097efcb6ca2488aac2d565bdc31f2c3a3d411be4f42f78221ad91bb37",
+  "observation_contract": {
+    "format": "swdb.live-count-context.v1",
+    "level": "functional_semantic_access",
+    "abi": "swdb.access.v2",
+    "call_abi": "swdb.call.v2",
+    "line_bytes": 64,
+    "page_bytes": 4096,
+    "state_budget": 524288,
+    "object_scope": "translation_unit_allocator_calls",
+    "first_access_scope": "first observed access in selected normalized source functions; opaque initialization is not observed",
+    "physical_residency_known": false,
+    "native_runtime": {
+      "compiler_version": "Homebrew clang version 22.1.8\nTarget: arm64-apple-darwin27.0.0\nThread model: posix\nInstalledDir: /opt/homebrew/Cellar/llvm/22.1.8/bin\nConfiguration file: /opt/homebrew/Cellar/llvm/22.1.8/etc/clang/arm64-apple-darwin27.cfg",
+      "compiler_sha256": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395",
+      "environment": {
+        "DYLD_LIBRARY_PATH": "/opt/homebrew/Cellar/llvm/22.1.8/lib",
+        "LD_LIBRARY_PATH": "/opt/homebrew/Cellar/llvm/22.1.8/lib",
+        "OMP_DYNAMIC": "FALSE",
+        "OMP_NUM_THREADS": "1",
+        "DYLD_INSERT_LIBRARIES": null,
+        "LD_PRELOAD": null,
+        "LD_AUDIT": null,
+        "GLIBC_TUNABLES": null,
+        "MALLOC_ARENA_MAX": null,
+        "MALLOC_ARENA_TEST": null,
+        "MALLOC_CHECK_": null,
+        "MALLOC_PERTURB_": null,
+        "MALLOC_MMAP_THRESHOLD_": null,
+        "MALLOC_TRIM_THRESHOLD_": null,
+        "MALLOC_TOP_PAD_": null,
+        "MALLOC_MMAP_MAX_": null
+      },
+      "environment_scope": {
+        "format": "swdb.native-environment.v1",
+        "prefixes": [
+          "OMP_",
+          "KMP_",
+          "GOMP_",
+          "MALLOC_"
+        ],
+        "exact_variables": [
+          "LD_LIBRARY_PATH",
+          "DYLD_LIBRARY_PATH",
+          "DYLD_INSERT_LIBRARIES",
+          "LD_PRELOAD",
+          "LD_AUDIT",
+          "GLIBC_TUNABLES",
+          "MALLOC_ARENA_MAX",
+          "MALLOC_ARENA_TEST",
+          "MALLOC_CHECK_",
+          "MALLOC_PERTURB_",
+          "MALLOC_MMAP_THRESHOLD_",
+          "MALLOC_TRIM_THRESHOLD_",
+          "MALLOC_TOP_PAD_",
+          "MALLOC_MMAP_MAX_"
+        ],
+        "absence_semantics": "null_or_absent_is_unset_under_declared_scope"
+      },
+      "loaded_libraries": {
+        "libomp.dylib": {
+          "path": "/opt/homebrew/Cellar/llvm/22.1.8/lib/libomp.dylib",
+          "sha256": "78c96358a6579cd93bf65424f4700160435eedcdf30d7a8dabf3cd57deece8c9"
+        },
+        "counted": {
+          "path": "/private/tmp/lanl09-registered-count-estimate-proof-20261006-a1/test_registered_canonical_cand0/counted/counted",
+          "sha256": "c661673c3bc56728f0e3475d93ea1823056784d09ce5d42412bbd2f997adab21"
+        },
+        "libRosetta.dylib": {
+          "path": "/usr/lib/libRosetta.dylib",
+          "sha256": null
+        },
+        "libSystem.B.dylib": {
+          "path": "/usr/lib/libSystem.B.dylib",
+          "sha256": null
+        },
+        "libc++.1.dylib": {
+          "path": "/usr/lib/libc++.1.dylib",
+          "sha256": null
+        },
+        "libc++abi.dylib": {
+          "path": "/usr/lib/libc++abi.dylib",
+          "sha256": null
+        },
+        "libobjc.A.dylib": {
+          "path": "/usr/lib/libobjc.A.dylib",
+          "sha256": null
+        },
+        "libsharedcache.dylib": {
+          "path": "/usr/lib/libsharedcache.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend1.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend1.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend10.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend10.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend11.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend11.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend12.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend12.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend13.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend13.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend14.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend14.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend15.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend15.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend16.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend16.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend17.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend17.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend18.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend18.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend19.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend19.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend2.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend2.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend20.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend20.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend21.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend21.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend22.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend22.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend23.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend23.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend24.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend24.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend25.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend25.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend26.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend26.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend27.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend27.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend28.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend28.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend29.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend29.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend3.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend3.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend30.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend30.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend31.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend31.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend32.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend32.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend33.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend33.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend34.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend34.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend4.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend4.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend5.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend5.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend6.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend6.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend7.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend7.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend8.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend8.dylib",
+          "sha256": null
+        },
+        "libobjcMsgSend9.dylib": {
+          "path": "/usr/lib/objc/libobjcMsgSend9.dylib",
+          "sha256": null
+        },
+        "libcache.dylib": {
+          "path": "/usr/lib/system/libcache.dylib",
+          "sha256": null
+        },
+        "libcommonCrypto.dylib": {
+          "path": "/usr/lib/system/libcommonCrypto.dylib",
+          "sha256": null
+        },
+        "libcompiler_rt.dylib": {
+          "path": "/usr/lib/system/libcompiler_rt.dylib",
+          "sha256": null
+        },
+        "libcopyfile.dylib": {
+          "path": "/usr/lib/system/libcopyfile.dylib",
+          "sha256": null
+        },
+        "libcorecrypto.dylib": {
+          "path": "/usr/lib/system/libcorecrypto.dylib",
+          "sha256": null
+        },
+        "libdispatch.dylib": {
+          "path": "/usr/lib/system/libdispatch.dylib",
+          "sha256": null
+        },
+        "libdyld.dylib": {
+          "path": "/usr/lib/system/libdyld.dylib",
+          "sha256": null
+        },
+        "libkeymgr.dylib": {
+          "path": "/usr/lib/system/libkeymgr.dylib",
+          "sha256": null
+        },
+        "libmacho.dylib": {
+          "path": "/usr/lib/system/libmacho.dylib",
+          "sha256": null
+        },
+        "libquarantine.dylib": {
+          "path": "/usr/lib/system/libquarantine.dylib",
+          "sha256": null
+        },
+        "libremovefile.dylib": {
+          "path": "/usr/lib/system/libremovefile.dylib",
+          "sha256": null
+        },
+        "libsystem_asl.dylib": {
+          "path": "/usr/lib/system/libsystem_asl.dylib",
+          "sha256": null
+        },
+        "libsystem_blocks.dylib": {
+          "path": "/usr/lib/system/libsystem_blocks.dylib",
+          "sha256": null
+        },
+        "libsystem_c.dylib": {
+          "path": "/usr/lib/system/libsystem_c.dylib",
+          "sha256": null
+        },
+        "libsystem_collections.dylib": {
+          "path": "/usr/lib/system/libsystem_collections.dylib",
+          "sha256": null
+        },
+        "libsystem_configuration.dylib": {
+          "path": "/usr/lib/system/libsystem_configuration.dylib",
+          "sha256": null
+        },
+        "libsystem_containermanager.dylib": {
+          "path": "/usr/lib/system/libsystem_containermanager.dylib",
+          "sha256": null
+        },
+        "libsystem_coreservices.dylib": {
+          "path": "/usr/lib/system/libsystem_coreservices.dylib",
+          "sha256": null
+        },
+        "libsystem_darwin.dylib": {
+          "path": "/usr/lib/system/libsystem_darwin.dylib",
+          "sha256": null
+        },
+        "libsystem_darwindirectory.dylib": {
+          "path": "/usr/lib/system/libsystem_darwindirectory.dylib",
+          "sha256": null
+        },
+        "libsystem_dnssd.dylib": {
+          "path": "/usr/lib/system/libsystem_dnssd.dylib",
+          "sha256": null
+        },
+        "libsystem_eligibility.dylib": {
+          "path": "/usr/lib/system/libsystem_eligibility.dylib",
+          "sha256": null
+        },
+        "libsystem_featureflags.dylib": {
+          "path": "/usr/lib/system/libsystem_featureflags.dylib",
+          "sha256": null
+        },
+        "libsystem_info.dylib": {
+          "path": "/usr/lib/system/libsystem_info.dylib",
+          "sha256": null
+        },
+        "libsystem_kernel.dylib": {
+          "path": "/usr/lib/system/libsystem_kernel.dylib",
+          "sha256": "5dcf1ba649b1c83e68417eb9b29469e29233db26bc950e7d7554987ef20e8a67"
+        },
+        "libsystem_m.dylib": {
+          "path": "/usr/lib/system/libsystem_m.dylib",
+          "sha256": null
+        },
+        "libsystem_malloc.dylib": {
+          "path": "/usr/lib/system/libsystem_malloc.dylib",
+          "sha256": null
+        },
+        "libsystem_networkextension.dylib": {
+          "path": "/usr/lib/system/libsystem_networkextension.dylib",
+          "sha256": null
+        },
+        "libsystem_notify.dylib": {
+          "path": "/usr/lib/system/libsystem_notify.dylib",
+          "sha256": null
+        },
+        "libsystem_platform.dylib": {
+          "path": "/usr/lib/system/libsystem_platform.dylib",
+          "sha256": "022722ccb69ef29a3f97bedf8e4c0581ddf22601e8b2cda9aeb725953b053484"
+        },
+        "libsystem_pthread.dylib": {
+          "path": "/usr/lib/system/libsystem_pthread.dylib",
+          "sha256": "0b30a4c933466c5ff2adc3d4f32be6ae468c7bcd6bce66176830320d37af5880"
+        },
+        "libsystem_sandbox.dylib": {
+          "path": "/usr/lib/system/libsystem_sandbox.dylib",
+          "sha256": null
+        },
+        "libsystem_sanitizers.dylib": {
+          "path": "/usr/lib/system/libsystem_sanitizers.dylib",
+          "sha256": null
+        },
+        "libsystem_secinit.dylib": {
+          "path": "/usr/lib/system/libsystem_secinit.dylib",
+          "sha256": null
+        },
+        "libsystem_symptoms.dylib": {
+          "path": "/usr/lib/system/libsystem_symptoms.dylib",
+          "sha256": null
+        },
+        "libsystem_trace.dylib": {
+          "path": "/usr/lib/system/libsystem_trace.dylib",
+          "sha256": null
+        },
+        "libsystem_trial.dylib": {
+          "path": "/usr/lib/system/libsystem_trial.dylib",
+          "sha256": null
+        },
+        "libunwind.dylib": {
+          "path": "/usr/lib/system/libunwind.dylib",
+          "sha256": null
+        },
+        "libxpc.dylib": {
+          "path": "/usr/lib/system/libxpc.dylib",
+          "sha256": null
+        }
+      },
+      "observation_method": "process_loaded_images",
+      "scope": "counted_instrumented_binary",
+      "missing": [
+        "loaded_library_hash:libRosetta.dylib",
+        "loaded_library_hash:libSystem.B.dylib",
+        "loaded_library_hash:libc++.1.dylib",
+        "loaded_library_hash:libc++abi.dylib",
+        "loaded_library_hash:libobjc.A.dylib",
+        "loaded_library_hash:libsharedcache.dylib",
+        "loaded_library_hash:libobjcMsgSend.dylib",
+        "loaded_library_hash:libobjcMsgSend1.dylib",
+        "loaded_library_hash:libobjcMsgSend10.dylib",
+        "loaded_library_hash:libobjcMsgSend11.dylib",
+        "loaded_library_hash:libobjcMsgSend12.dylib",
+        "loaded_library_hash:libobjcMsgSend13.dylib",
+        "loaded_library_hash:libobjcMsgSend14.dylib",
+        "loaded_library_hash:libobjcMsgSend15.dylib",
+        "loaded_library_hash:libobjcMsgSend16.dylib",
+        "loaded_library_hash:libobjcMsgSend17.dylib",
+        "loaded_library_hash:libobjcMsgSend18.dylib",
+        "loaded_library_hash:libobjcMsgSend19.dylib",
+        "loaded_library_hash:libobjcMsgSend2.dylib",
+        "loaded_library_hash:libobjcMsgSend20.dylib",
+        "loaded_library_hash:libobjcMsgSend21.dylib",
+        "loaded_library_hash:libobjcMsgSend22.dylib",
+        "loaded_library_hash:libobjcMsgSend23.dylib",
+        "loaded_library_hash:libobjcMsgSend24.dylib",
+        "loaded_library_hash:libobjcMsgSend25.dylib",
+        "loaded_library_hash:libobjcMsgSend26.dylib",
+        "loaded_library_hash:libobjcMsgSend27.dylib",
+        "loaded_library_hash:libobjcMsgSend28.dylib",
+        "loaded_library_hash:libobjcMsgSend29.dylib",
+        "loaded_library_hash:libobjcMsgSend3.dylib",
+        "loaded_library_hash:libobjcMsgSend30.dylib",
+        "loaded_library_hash:libobjcMsgSend31.dylib",
+        "loaded_library_hash:libobjcMsgSend32.dylib",
+        "loaded_library_hash:libobjcMsgSend33.dylib",
+        "loaded_library_hash:libobjcMsgSend34.dylib",
+        "loaded_library_hash:libobjcMsgSend4.dylib",
+        "loaded_library_hash:libobjcMsgSend5.dylib",
+        "loaded_library_hash:libobjcMsgSend6.dylib",
+        "loaded_library_hash:libobjcMsgSend7.dylib",
+        "loaded_library_hash:libobjcMsgSend8.dylib",
+        "loaded_library_hash:libobjcMsgSend9.dylib",
+        "loaded_library_hash:libcache.dylib",
+        "loaded_library_hash:libcommonCrypto.dylib",
+        "loaded_library_hash:libcompiler_rt.dylib",
+        "loaded_library_hash:libcopyfile.dylib",
+        "loaded_library_hash:libcorecrypto.dylib",
+        "loaded_library_hash:libdispatch.dylib",
+        "loaded_library_hash:libdyld.dylib",
+        "loaded_library_hash:libkeymgr.dylib",
+        "loaded_library_hash:libmacho.dylib",
+        "loaded_library_hash:libquarantine.dylib",
+        "loaded_library_hash:libremovefile.dylib",
+        "loaded_library_hash:libsystem_asl.dylib",
+        "loaded_library_hash:libsystem_blocks.dylib",
+        "loaded_library_hash:libsystem_c.dylib",
+        "loaded_library_hash:libsystem_collections.dylib",
+        "loaded_library_hash:libsystem_configuration.dylib",
+        "loaded_library_hash:libsystem_containermanager.dylib",
+        "loaded_library_hash:libsystem_coreservices.dylib",
+        "loaded_library_hash:libsystem_darwin.dylib",
+        "loaded_library_hash:libsystem_darwindirectory.dylib",
+        "loaded_library_hash:libsystem_dnssd.dylib",
+        "loaded_library_hash:libsystem_eligibility.dylib",
+        "loaded_library_hash:libsystem_featureflags.dylib",
+        "loaded_library_hash:libsystem_info.dylib",
+        "loaded_library_hash:libsystem_m.dylib",
+        "loaded_library_hash:libsystem_malloc.dylib",
+        "loaded_library_hash:libsystem_networkextension.dylib",
+        "loaded_library_hash:libsystem_notify.dylib",
+        "loaded_library_hash:libsystem_sandbox.dylib",
+        "loaded_library_hash:libsystem_sanitizers.dylib",
+        "loaded_library_hash:libsystem_secinit.dylib",
+        "loaded_library_hash:libsystem_symptoms.dylib",
+        "loaded_library_hash:libsystem_trace.dylib",
+        "loaded_library_hash:libsystem_trial.dylib",
+        "loaded_library_hash:libunwind.dylib",
+        "loaded_library_hash:libxpc.dylib"
+      ]
+    },
+    "observer_isolation": "thread_local_reentrancy_guard",
+    "runtime_bundle_sha256": "cd43cd3a46beecb0760b122caac37b7b874dd2f8654ed1307a6db353729d0e42",
+    "object_scope_contract": {
+      "format": "swdb.object-scopes.v1",
+      "abi": "swdb.object-scope.v1",
+      "full_objects": [
+        "heap",
+        "source_alloca",
+        "defined_global_non_tls"
+      ],
+      "bounded_views": [
+        "openmp_microtask_int32_referent"
+      ],
+      "retirement": "frame_exit_lifetime_end_stackrestore",
+      "observer_sha256": "5c81304e2ef3714b7da07c947cbec750342d1886e92d50defa920d9a9e9ab794",
+      "runtime_sha256": "39d52fea4be446d80c1c9adbdfcc4b06d2c7ab69ce69d1f667454ec9b5651373"
+    },
+    "normative_bindings": {
+      "format": "swdb.functional-source-bindings.v1",
+      "records": {
+        "dx100-e4fc4af-functional-analytic-v1": "67451736d931b1958848525ca37e9a174006c6cdf92638947ed4bfc38682a520",
+        "dxc_session_begin.functional-v1": "3aa36f3c0a65e03714205f6897405f309170c9db077d3743e2bd0b9accb9f76d",
+        "dx100.functional.v1.session_begin": "ec0fcb95ccc828ee9b08588a254d7c581cff428ea61e1f2de5804e849c832708",
+        "dxc_thread_context.functional-v1": "e653a989e9d28fab194cb7be0de91aaf5ea064e8cc50f8bfc18966447fe4a4a3",
+        "dx100.functional.v1.thread_context": "a789a6096e9d999249cb4d25ff6b2ebc440071dea04b89cdfee7f500df35789a",
+        "dxc_const_i32.functional-v1": "4889627278bd251e6753cfe53dfd20a918df576667535b9f4731a7fe6d90e4c7",
+        "dx100.functional.v1.const_i32": "f731c4088ba4153c03d0fa34a63c1870f6f2e0d5beba8e839624fac1a3e4c3f0",
+        "dxc_wait.functional-v1": "7d606c9e4997af11149864643505d57e453709bfd1ff667d77b6fdbff8c4eedb",
+        "dx100.functional.v1.wait": "9beebb85e761bad0296345d1dcd8ee2e07a51ddf4afcc58fb26c551a802be549",
+        "dxc_gather.functional-v1": "e7c4205517ca1dc5d734e7b1914c38985db9e132b4331b55bc5268c5d5dd6ddc",
+        "dx100.functional.v1.gather": "e9ce8f9c5607fc1ccfd3f1353f38d020efbe0f6cc3f722f6b60275d86db4a10c",
+        "dxc_stream_load.functional-v1": "6a30d1278ad4c6eb7fd7abbddea6619211c6d9003008e408239dcf762229169b",
+        "dx100.functional.v1.stream_load": "13b7d71262133d1e71a250425e1ed69845aa6bea6610754d0b2053154505d044",
+        "dxc_range_loop.functional-v1": "6c7c2891f089a3d3628ac1186e269710b420bf2c0cb14925d32cb0d0419e80a2",
+        "dx100.functional.v1.range_loop": "20d32a586306af9e9800b86cac8be6ea0b2f51d0e0c2b70b5fa6ed639fa8fbf0",
+        "dxc_tile_size.functional-v1": "62b165834d4b8342f82b5ed984dd829599fa79ac95de55bb9a372e288a578111",
+        "dx100.functional.v1.tile_size": "c5b341fc59a367b75e32a20055d66bbbe88c3f7f3d6f8fee4288f9a14ff6a010",
+        "dxc_tile_pointer.functional-v1": "90c1fd9a9a2823d06fe40a8e08bdf8e43e9590f336efce8517cd8fa4cac9d99c",
+        "dx100.functional.v1.tile_pointer": "40cbf6796c73a28bbbb8a3fedf0e6e7b540bf64aab0e9228f28c64dc7c35be00"
+      },
+      "library_entries": {
+        "intrinsic.dxc_session_begin.functional-v1": "9d9d4908147578ce372a8b1ddedc0e9c8869e7e6d92830aec790f05697466ed2",
+        "lowering.dxc_session_begin.functional-v1.dx100-functional-source.1.0-e4fc4af": "ccb0415ee0d4fe0683461d3445156b960b4dd2af58c40f6bf2fbab81339df7c5",
+        "intrinsic.dxc_thread_context.functional-v1": "5240f99aa0cf66c932848980b76e6d206eea9452913a2fd3bb86fa727c907fcd",
+        "lowering.dxc_thread_context.functional-v1.dx100-functional-source.1.0-e4fc4af": "77ae8264c78c0df1e2eee3d64b9dac3da331ebb2433e78f614ea67dbe0cdefff",
+        "intrinsic.dxc_const_i32.functional-v1": "807b0e93e79dc424dff94c244e3738ff30bd43c90eb09d8d101ffd9fee88aabb",
+        "lowering.dxc_const_i32.functional-v1.dx100-functional-source.1.0-e4fc4af": "c7f5af73134ba67e37b7680ca7c397fdfbe016d8b07c8a49be5e9d18fb1a01ce",
+        "intrinsic.dxc_wait.functional-v1": "559839ed065267774e9d851aa8ea9131daf61e0a43d604a28a42077f1697277e",
+        "lowering.dxc_wait.functional-v1.dx100-functional-source.1.0-e4fc4af": "27e169174df1fbd149c003f4ede75ded340fb65413baee3f422df4639817cbe2",
+        "intrinsic.dxc_gather.functional-v1": "585fd81fe94f6099a4371dd3e2cb6be2e87488b6b39575e7679a4372d0b53478",
+        "lowering.dxc_gather.functional-v1.dx100-functional-source.1.0-e4fc4af": "0fb3228a600bba131e47050cc7b27cd1bec92b2f2a90ad0b36b8d878a490efe0",
+        "intrinsic.dxc_stream_load.functional-v1": "9eadc6a7f689b5fdf892e663730805ce1b57456bbbcac0eeda02c4b1a94d75bc",
+        "lowering.dxc_stream_load.functional-v1.dx100-functional-source.1.0-e4fc4af": "4ad35cd87fbcc351c53a5b682cd9fff6baeb24bb7cd6d78a08dc645eb512f9ce",
+        "intrinsic.dxc_range_loop.functional-v1": "06a3191fb7e2838bab54d517cb2a5e57d083192bc0b0e1c8a45cb0fe60654317",
+        "lowering.dxc_range_loop.functional-v1.dx100-functional-source.1.0-e4fc4af": "71c2c7f286b80722cb9706daf18de56747cb9f353688c45a87db8a39ef8ae15c",
+        "intrinsic.dxc_tile_size.functional-v1": "9c333f3510049299ac8317e6cce981ef3995a06123fe428c416ae13530216c70",
+        "lowering.dxc_tile_size.functional-v1.dx100-functional-source.1.0-e4fc4af": "42a615a47876cb3334096275ef8e2cfcddef4de9a6f3a1f59edfe9ba11b25cfb",
+        "intrinsic.dxc_tile_pointer.functional-v1": "83e540994ddb21f8d837992ed0a1e05756ef9e586442c058cab651372da3788f",
+        "lowering.dxc_tile_pointer.functional-v1.dx100-functional-source.1.0-e4fc4af": "1545872657ae27b692ace6c0792f5ffc20aff14863970bd619c68ff33d717808"
+      },
+      "compiled_views": [
+        {
+          "intrinsic": "dxc_session_begin.functional-v1",
+          "intrinsic_sha256": "3aa36f3c0a65e03714205f6897405f309170c9db077d3743e2bd0b9accb9f76d",
+          "source_view_sha256": "d75011fa5c79296c65f0e765e82e8c461bedd4624f469c665204895fb66f07f5",
+          "source": {
+            "root": "library",
+            "path": "dx100/dxc_lowering.hpp",
+            "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+          },
+          "backend": "functional_source",
+          "compile_defines": {
+            "FUNC": "1"
+          },
+          "evidence_scope": "functional_source_semantics"
+        },
+        {
+          "intrinsic": "dxc_thread_context.functional-v1",
+          "intrinsic_sha256": "e653a989e9d28fab194cb7be0de91aaf5ea064e8cc50f8bfc18966447fe4a4a3",
+          "source_view_sha256": "d75011fa5c79296c65f0e765e82e8c461bedd4624f469c665204895fb66f07f5",
+          "source": {
+            "root": "library",
+            "path": "dx100/dxc_lowering.hpp",
+            "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+          },
+          "backend": "functional_source",
+          "compile_defines": {
+            "FUNC": "1"
+          },
+          "evidence_scope": "functional_source_semantics"
+        },
+        {
+          "intrinsic": "dxc_const_i32.functional-v1",
+          "intrinsic_sha256": "4889627278bd251e6753cfe53dfd20a918df576667535b9f4731a7fe6d90e4c7",
+          "source_view_sha256": "d75011fa5c79296c65f0e765e82e8c461bedd4624f469c665204895fb66f07f5",
+          "source": {
+            "root": "library",
+            "path": "dx100/dxc_lowering.hpp",
+            "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+          },
+          "backend": "functional_source",
+          "compile_defines": {
+            "FUNC": "1"
+          },
+          "evidence_scope": "functional_source_semantics"
+        },
+        {
+          "intrinsic": "dxc_wait.functional-v1",
+          "intrinsic_sha256": "7d606c9e4997af11149864643505d57e453709bfd1ff667d77b6fdbff8c4eedb",
+          "source_view_sha256": "d75011fa5c79296c65f0e765e82e8c461bedd4624f469c665204895fb66f07f5",
+          "source": {
+            "root": "library",
+            "path": "dx100/dxc_lowering.hpp",
+            "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+          },
+          "backend": "functional_source",
+          "compile_defines": {
+            "FUNC": "1"
+          },
+          "evidence_scope": "functional_source_semantics"
+        },
+        {
+          "intrinsic": "dxc_gather.functional-v1",
+          "intrinsic_sha256": "e7c4205517ca1dc5d734e7b1914c38985db9e132b4331b55bc5268c5d5dd6ddc",
+          "source_view_sha256": "d75011fa5c79296c65f0e765e82e8c461bedd4624f469c665204895fb66f07f5",
+          "source": {
+            "root": "library",
+            "path": "dx100/dxc_lowering.hpp",
+            "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+          },
+          "backend": "functional_source",
+          "compile_defines": {
+            "FUNC": "1"
+          },
+          "evidence_scope": "functional_source_semantics"
+        },
+        {
+          "intrinsic": "dxc_stream_load.functional-v1",
+          "intrinsic_sha256": "6a30d1278ad4c6eb7fd7abbddea6619211c6d9003008e408239dcf762229169b",
+          "source_view_sha256": "d75011fa5c79296c65f0e765e82e8c461bedd4624f469c665204895fb66f07f5",
+          "source": {
+            "root": "library",
+            "path": "dx100/dxc_lowering.hpp",
+            "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+          },
+          "backend": "functional_source",
+          "compile_defines": {
+            "FUNC": "1"
+          },
+          "evidence_scope": "functional_source_semantics"
+        },
+        {
+          "intrinsic": "dxc_range_loop.functional-v1",
+          "intrinsic_sha256": "6c7c2891f089a3d3628ac1186e269710b420bf2c0cb14925d32cb0d0419e80a2",
+          "source_view_sha256": "d75011fa5c79296c65f0e765e82e8c461bedd4624f469c665204895fb66f07f5",
+          "source": {
+            "root": "library",
+            "path": "dx100/dxc_lowering.hpp",
+            "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+          },
+          "backend": "functional_source",
+          "compile_defines": {
+            "FUNC": "1"
+          },
+          "evidence_scope": "functional_source_semantics"
+        },
+        {
+          "intrinsic": "dxc_tile_size.functional-v1",
+          "intrinsic_sha256": "62b165834d4b8342f82b5ed984dd829599fa79ac95de55bb9a372e288a578111",
+          "source_view_sha256": "d75011fa5c79296c65f0e765e82e8c461bedd4624f469c665204895fb66f07f5",
+          "source": {
+            "root": "library",
+            "path": "dx100/dxc_lowering.hpp",
+            "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+          },
+          "backend": "functional_source",
+          "compile_defines": {
+            "FUNC": "1"
+          },
+          "evidence_scope": "functional_source_semantics"
+        },
+        {
+          "intrinsic": "dxc_tile_pointer.functional-v1",
+          "intrinsic_sha256": "90c1fd9a9a2823d06fe40a8e08bdf8e43e9590f336efce8517cd8fa4cac9d99c",
+          "source_view_sha256": "d75011fa5c79296c65f0e765e82e8c461bedd4624f469c665204895fb66f07f5",
+          "source": {
+            "root": "library",
+            "path": "dx100/dxc_lowering.hpp",
+            "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+          },
+          "backend": "functional_source",
+          "compile_defines": {
+            "FUNC": "1"
+          },
+          "evidence_scope": "functional_source_semantics"
+        }
+      ]
+    },
+    "functional_observation": {
+      "format": "swdb.functional-observation.v1",
+      "commands": [
+        {
+          "event": "dx100.functional.session_begin",
+          "intrinsic": "dxc_session_begin.functional-v1",
+          "hardware_operations": [
+            "dx100.functional.v1.session_begin"
+          ],
+          "aliases": [
+            {
+              "debug_name": "__dxc_session_begin",
+              "source": {
+                "root": "library",
+                "path": "dx100/dxc_lowering.hpp",
+                "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+              },
+              "source_sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c",
+              "memory_base_argument": null,
+              "role": "command"
+            }
+          ],
+          "target_access_sources": [],
+          "bookkeeping_access_sources": [],
+          "memory_effect": "none",
+          "active_elements_policy": "not_applicable"
+        },
+        {
+          "event": "dx100.functional.thread_context",
+          "intrinsic": "dxc_thread_context.functional-v1",
+          "hardware_operations": [
+            "dx100.functional.v1.thread_context"
+          ],
+          "aliases": [
+            {
+              "debug_name": "__dxc_thread_context",
+              "source": {
+                "root": "library",
+                "path": "dx100/dxc_lowering.hpp",
+                "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+              },
+              "source_sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c",
+              "memory_base_argument": null,
+              "role": "command"
+            }
+          ],
+          "target_access_sources": [],
+          "bookkeeping_access_sources": [],
+          "memory_effect": "none",
+          "active_elements_policy": "not_applicable"
+        },
+        {
+          "event": "dx100.functional.const_i32",
+          "intrinsic": "dxc_const_i32.functional-v1",
+          "hardware_operations": [
+            "dx100.functional.v1.const_i32"
+          ],
+          "aliases": [
+            {
+              "debug_name": "__dxc_const_i32",
+              "source": {
+                "root": "library",
+                "path": "dx100/dxc_lowering.hpp",
+                "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+              },
+              "source_sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c",
+              "memory_base_argument": null,
+              "role": "command"
+            }
+          ],
+          "target_access_sources": [],
+          "bookkeeping_access_sources": [],
+          "memory_effect": "none",
+          "active_elements_policy": "not_applicable"
+        },
+        {
+          "event": "dx100.functional.wait",
+          "intrinsic": "dxc_wait.functional-v1",
+          "hardware_operations": [
+            "dx100.functional.v1.wait"
+          ],
+          "aliases": [
+            {
+              "debug_name": "__dxc_wait",
+              "source": {
+                "root": "library",
+                "path": "dx100/dxc_lowering.hpp",
+                "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+              },
+              "source_sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c",
+              "memory_base_argument": null,
+              "role": "command"
+            }
+          ],
+          "target_access_sources": [],
+          "bookkeeping_access_sources": [],
+          "memory_effect": "none",
+          "active_elements_policy": "not_applicable"
+        },
+        {
+          "event": "dx100.functional.gather",
+          "intrinsic": "dxc_gather.functional-v1",
+          "hardware_operations": [
+            "dx100.functional.v1.gather"
+          ],
+          "aliases": [
+            {
+              "debug_name": "__dxc_gather<int>",
+              "source": {
+                "root": "library",
+                "path": "dx100/dxc_lowering.hpp",
+                "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+              },
+              "source_sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c",
+              "memory_base_argument": 0,
+              "role": "command"
+            },
+            {
+              "debug_name": "maa_indirect_load<int>",
+              "source": {
+                "root": "project",
+                "path": "apps/dx100/benchmarks/API/MAA_functional.hpp",
+                "sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc"
+              },
+              "source_sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc",
+              "memory_base_argument": 0,
+              "role": "backend_alias"
+            }
+          ],
+          "target_access_sources": [
+            {
+              "debug_name": "maa_indirect_load<int>",
+              "source": {
+                "root": "project",
+                "path": "apps/dx100/benchmarks/API/MAA_functional.hpp",
+                "sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc"
+              },
+              "source_sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc"
+            }
+          ],
+          "bookkeeping_access_sources": [
+            {
+              "debug_name": "get_region",
+              "source": {
+                "root": "project",
+                "path": "apps/dx100/benchmarks/API/MAA_functional.hpp",
+                "sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc"
+              },
+              "source_sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc"
+            },
+            {
+              "debug_name": "check_region",
+              "source": {
+                "root": "project",
+                "path": "apps/dx100/benchmarks/API/MAA_functional.hpp",
+                "sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc"
+              },
+              "source_sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc"
+            }
+          ],
+          "memory_effect": "read",
+          "active_elements_policy": "observed_target_reads",
+          "target_reads_per_active_element": 1
+        },
+        {
+          "event": "dx100.functional.stream_load",
+          "intrinsic": "dxc_stream_load.functional-v1",
+          "hardware_operations": [
+            "dx100.functional.v1.stream_load"
+          ],
+          "aliases": [
+            {
+              "debug_name": "__dxc_stream_load<int>",
+              "source": {
+                "root": "library",
+                "path": "dx100/dxc_lowering.hpp",
+                "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+              },
+              "source_sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c",
+              "memory_base_argument": 0,
+              "role": "command"
+            },
+            {
+              "debug_name": "maa_stream_load<int>",
+              "source": {
+                "root": "project",
+                "path": "apps/dx100/benchmarks/API/MAA_functional.hpp",
+                "sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc"
+              },
+              "source_sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc",
+              "memory_base_argument": 0,
+              "role": "backend_alias"
+            }
+          ],
+          "target_access_sources": [
+            {
+              "debug_name": "maa_stream_load<int>",
+              "source": {
+                "root": "project",
+                "path": "apps/dx100/benchmarks/API/MAA_functional.hpp",
+                "sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc"
+              },
+              "source_sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc"
+            }
+          ],
+          "bookkeeping_access_sources": [
+            {
+              "debug_name": "get_region",
+              "source": {
+                "root": "project",
+                "path": "apps/dx100/benchmarks/API/MAA_functional.hpp",
+                "sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc"
+              },
+              "source_sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc"
+            },
+            {
+              "debug_name": "check_region",
+              "source": {
+                "root": "project",
+                "path": "apps/dx100/benchmarks/API/MAA_functional.hpp",
+                "sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc"
+              },
+              "source_sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc"
+            }
+          ],
+          "memory_effect": "read",
+          "active_elements_policy": "observed_target_reads",
+          "target_reads_per_active_element": 1
+        },
+        {
+          "event": "dx100.functional.range_loop",
+          "intrinsic": "dxc_range_loop.functional-v1",
+          "hardware_operations": [
+            "dx100.functional.v1.range_loop"
+          ],
+          "aliases": [
+            {
+              "debug_name": "__dxc_range_loop",
+              "source": {
+                "root": "library",
+                "path": "dx100/dxc_lowering.hpp",
+                "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+              },
+              "source_sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c",
+              "memory_base_argument": null,
+              "role": "command"
+            }
+          ],
+          "target_access_sources": [],
+          "bookkeeping_access_sources": [],
+          "memory_effect": "none",
+          "active_elements_policy": "not_applicable"
+        },
+        {
+          "event": "dx100.functional.tile_size",
+          "intrinsic": "dxc_tile_size.functional-v1",
+          "hardware_operations": [
+            "dx100.functional.v1.tile_size"
+          ],
+          "aliases": [
+            {
+              "debug_name": "__dxc_tile_size",
+              "source": {
+                "root": "library",
+                "path": "dx100/dxc_lowering.hpp",
+                "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+              },
+              "source_sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c",
+              "memory_base_argument": null,
+              "role": "command"
+            }
+          ],
+          "target_access_sources": [],
+          "bookkeeping_access_sources": [],
+          "memory_effect": "none",
+          "active_elements_policy": "not_applicable"
+        },
+        {
+          "event": "dx100.functional.tile_pointer",
+          "intrinsic": "dxc_tile_pointer.functional-v1",
+          "hardware_operations": [
+            "dx100.functional.v1.tile_pointer"
+          ],
+          "aliases": [
+            {
+              "debug_name": "__dxc_tile_pointer<int>",
+              "source": {
+                "root": "library",
+                "path": "dx100/dxc_lowering.hpp",
+                "sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c"
+              },
+              "source_sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c",
+              "memory_base_argument": null,
+              "role": "command"
+            }
+          ],
+          "target_access_sources": [],
+          "bookkeeping_access_sources": [],
+          "memory_effect": "none",
+          "active_elements_policy": "not_applicable"
+        }
+      ],
+      "request_policy": {
+        "transaction_bytes": 64,
+        "read_coalescing": "window_unique_lines"
+      },
+      "placement": {
+        "policy": "isolated_row_aligned_allocations",
+        "basis": "inferred",
+        "physical_placement_known": false
+      },
+      "window": {
+        "policy": "logical_fixed_requests_per_command_worker",
+        "requests": 16384,
+        "basis": "inferred",
+        "source": "Pinned scripts/sim.py tile capacity16384 motivates a declared logical request-window scenario; it is not a hardware queue, physical placement, or row-hit observation."
+      }
+    },
+    "target_observation_policy_format": "swdb.observation-policy.v1",
+    "target_observation_policy_sha256": "b4340f895b2043caf05ec2036bd65ff9e18b614779cb5dd1b6f441e24b6f98e3",
+    "requested_target_description_sha256": "77927522f8cb456b04176c5dbae7774edf6d18d5555ba5c77e9d72b4cc430cd5",
+    "dram_address_layout": {
+      "channel": [
+        {
+          "lsb": 6,
+          "bits": 1
+        }
+      ],
+      "rank": [],
+      "bank_group": [
+        {
+          "lsb": 14,
+          "bits": 2
+        }
+      ],
+      "bank": [
+        {
+          "lsb": 16,
+          "bits": 2
+        }
+      ],
+      "row": [
+        {
+          "lsb": 18,
+          "bits": 16
+        }
+      ]
+    },
+    "host_counting_policy": "exclusive_host_outside_guarded_functional_commands",
+    "observer_bundle_sha256": "a6b9eb47fdcd75ee74bf5bf5e48a03e8b463653896d82c197e0f20d165f0f4da",
+    "semantic_commands": {
+      "complete": true,
+      "event_ids": [
+        "dx100.functional.session_begin",
+        "dx100.functional.thread_context",
+        "dx100.functional.const_i32",
+        "dx100.functional.wait",
+        "dx100.functional.gather",
+        "dx100.functional.stream_load",
+        "dx100.functional.range_loop",
+        "dx100.functional.tile_size",
+        "dx100.functional.tile_pointer"
+      ],
+      "missing": []
+    }
+  },
+  "trial_sources": [
+    227
+  ],
+  "semantic_event_executions": 48,
+  "semantic_target_reads": 4698,
+  "functional_bookkeeping_accesses": 18789,
+  "derived_logical_line_requests": 265,
+  "derived_logical_row_groups": 24,
+  "line_or_row_missing": [],
+  "estimate": {
+    "seconds": null,
+    "ratio": null,
+    "verdict": "within_error",
+    "count_reuse": {
+      "format": "swdb.identical-observation-reuse.v1",
+      "state": "exact_counted_target",
+      "counted_target_description_sha256": "77927522f8cb456b04176c5dbae7774edf6d18d5555ba5c77e9d72b4cc430cd5",
+      "requested_target_description_sha256": "77927522f8cb456b04176c5dbae7774edf6d18d5555ba5c77e9d72b4cc430cd5",
+      "observation_policy_format": "swdb.observation-policy.v1",
+      "observation_policy_sha256": "b4340f895b2043caf05ec2036bd65ff9e18b614779cb5dd1b6f441e24b6f98e3",
+      "counted_characterization_sha256": "12e8036e7b6f68d28cf626a1a65ccd5a3d364fd878e53aea89414afcdb211611",
+      "count_observation_context_sha256": "473f1f6abac4fd041559747bd406645a9d38faad1f43458b9f1ac374a8cf9742",
+      "notes": [
+        "The original count and execution receipt are immutable. Only explicitly classified numerical service rates/costs and record provenance may differ.",
+        "Source/backend/command/role/width/layout/window/placement/unknown parameter policies require fresh counts; recorded state budget and runtime context remain sealed in the original characterization.",
+        "Error-band bindings belong to the frozen protocol and do not change the counted observation policy."
+      ]
+    }
+  },
+  "tests": [
+    {
+      "case": "Exact primitive/pointer DL/live/C++11/semantic command regressions",
+      "passed": 19,
+      "seconds": 67.31
+    },
+    {
+      "case": "Merged primitive/libomp/object-command domains/canonical candidate count/receipt seals",
+      "passed": 5,
+      "seconds": 222.89
+    },
+    {
+      "case": "Genuine canonical candidate public count/freeze/estimate and exact receipt tamper guards",
+      "passed": 1,
+      "seconds": 326.56
+    }
+  ],
+  "notes": [
+    "The copied-store final intentional tamper remains in its fixture store; this compact proof reconstructs only the original pre-tamper object in memory and checks it against the frozen estimate characterization hash.",
+    "Full static and runtime source facts remain at the local temporary test output; no address sequence, allocation base, row list or application timing is exported.",
+    "The immutable candidate remains unverified and source verification remains unchecked; execution binding and strict certification are separate evidence."
+  ]
+}

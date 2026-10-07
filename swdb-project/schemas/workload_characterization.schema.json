@@ -160,6 +160,14 @@
           "items": {
             "type": "string"
           }
+        },
+        "plugin_support_objects": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "$ref": "#/$defs/stateless_llvm_support"
+          }
         }
       },
       "required": [
@@ -214,6 +222,9 @@
         },
         "summary": {
           "type": "string"
+        },
+        "observation_format": {
+          "const": "swdb.live-count-context.v1"
         }
       },
       "required": [
@@ -269,228 +280,7 @@
     "regions": {
       "type": "array",
       "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "string",
-            "minLength": 1,
-            "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]*$"
-          },
-          "source_location": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "function": {
-                "type": "string"
-              },
-              "line": {
-                "type": "integer",
-                "minimum": 0
-              },
-              "column": {
-                "type": "integer",
-                "minimum": 0
-              },
-              "path": {
-                "type": "string"
-              },
-              "llvm_function": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "function",
-              "line"
-            ]
-          },
-          "mapped": {
-            "type": "boolean"
-          },
-          "kind": {
-            "enum": [
-              "loop",
-              "serial_remainder"
-            ]
-          },
-          "access_patterns": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "additionalProperties": false,
-              "properties": {
-                "id": {
-                  "$ref": "#/$defs/id"
-                },
-                "source_location": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "properties": {
-                    "function": {
-                      "type": "string"
-                    },
-                    "line": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "column": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
-                    "path": {
-                      "type": "string"
-                    },
-                    "llvm_function": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "function",
-                    "line"
-                  ]
-                },
-                "address_shape": {
-                  "$ref": "#/$defs/fact"
-                },
-                "stride_bytes": {
-                  "$ref": "#/$defs/fact"
-                },
-                "element_bytes": {
-                  "type": "integer",
-                  "minimum": 1
-                },
-                "update_kind": {
-                  "enum": [
-                    "read",
-                    "write",
-                    "add-update",
-                    "compare-and-swap",
-                    "min-max-update",
-                    "arbitrary"
-                  ]
-                },
-                "element_count": {
-                  "$ref": "#/$defs/count"
-                },
-                "bytes_accessed": {
-                  "$ref": "#/$defs/count"
-                },
-                "observed_address_span_bytes": {
-                  "$ref": "#/$defs/fact"
-                },
-                "address_expression": {
-                  "type": "string"
-                },
-                "ir_lanes": {
-                  "type": "integer",
-                  "minimum": 1
-                },
-                "observed_unique_bytes": {
-                  "$ref": "#/$defs/fact"
-                },
-                "read_write": {
-                  "type": "boolean"
-                }
-              },
-              "required": [
-                "id",
-                "source_location",
-                "address_shape",
-                "stride_bytes",
-                "element_bytes",
-                "update_kind",
-                "element_count",
-                "bytes_accessed",
-                "observed_address_span_bytes",
-                "address_expression",
-                "ir_lanes"
-              ]
-            }
-          },
-          "operation_counts": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "integer": {
-                "$ref": "#/$defs/count"
-              },
-              "floating_point": {
-                "$ref": "#/$defs/count"
-              },
-              "branch": {
-                "$ref": "#/$defs/count"
-              },
-              "atomic": {
-                "$ref": "#/$defs/count"
-              }
-            },
-            "required": [
-              "integer",
-              "floating_point",
-              "branch",
-              "atomic"
-            ]
-          },
-          "dynamic_counts": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "loop_iterations": {
-                "$ref": "#/$defs/count"
-              }
-            },
-            "required": [
-              "loop_iterations"
-            ]
-          },
-          "footprint_bytes": {
-            "$ref": "#/$defs/fact"
-          },
-          "accelerator_calls": {
-            "type": "array",
-            "items": {
-              "type": "object"
-            }
-          },
-          "address_stream_counts": {
-            "type": "object"
-          },
-          "active_workers": {
-            "$ref": "#/$defs/fact"
-          },
-          "worker_context": {
-            "type": "object",
-            "properties": {
-              "team_sizes": {
-                "type": "array",
-                "items": {
-                  "type": "integer",
-                  "minimum": 1
-                }
-              },
-              "measurement": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "team_sizes",
-              "measurement"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "required": [
-          "id",
-          "source_location",
-          "mapped",
-          "kind",
-          "access_patterns",
-          "operation_counts",
-          "dynamic_counts",
-          "footprint_bytes",
-          "accelerator_calls",
-          "address_stream_counts"
-        ]
+        "$ref": "#/$defs/observed_region"
       }
     },
     "unmapped_loops": {
@@ -569,7 +359,39 @@
     "trials": {
       "type": "array",
       "items": {
-        "type": "object"
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "position": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "regions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/observed_region"
+            }
+          },
+          "unmodeled_calls": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "position",
+          "sources",
+          "regions",
+          "unmodeled_calls"
+        ]
       }
     },
     "pattern_comparison": {
@@ -577,6 +399,317 @@
       "items": {
         "type": "object"
       }
+    },
+    "observation_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "swdb.live-count-context.v1"
+        },
+        "level": {
+          "enum": [
+            "source_normalized_ir",
+            "functional_semantic_access"
+          ]
+        },
+        "abi": {
+          "const": "swdb.access.v2"
+        },
+        "line_bytes": {
+          "const": 64
+        },
+        "page_bytes": {
+          "const": 4096
+        },
+        "state_budget": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "object_scope": {
+          "type": "string"
+        },
+        "first_access_scope": {
+          "type": "string"
+        },
+        "physical_residency_known": {
+          "const": false
+        },
+        "runtime_bundle_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "call_abi": {
+          "const": "swdb.call.v2"
+        },
+        "native_runtime": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "compiler_version": {
+              "type": "string"
+            },
+            "compiler_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "environment": {
+              "type": "object",
+              "additionalProperties": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "loaded_libraries": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ]
+              }
+            },
+            "observation_method": {
+              "const": "process_loaded_images"
+            },
+            "scope": {
+              "const": "counted_instrumented_binary"
+            },
+            "missing": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "environment_scope": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "format",
+                "prefixes",
+                "exact_variables",
+                "absence_semantics"
+              ],
+              "properties": {
+                "format": {
+                  "const": "swdb.native-environment.v1"
+                },
+                "prefixes": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "exact_variables": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "absence_semantics": {
+                  "const": "null_or_absent_is_unset_under_declared_scope"
+                }
+              }
+            }
+          },
+          "required": [
+            "compiler_version",
+            "compiler_sha256",
+            "environment",
+            "loaded_libraries",
+            "observation_method",
+            "scope",
+            "missing"
+          ]
+        },
+        "observer_isolation": {
+          "const": "thread_local_reentrancy_guard"
+        },
+        "functional_observation": {
+          "$ref": "#/$defs/functional_observation"
+        },
+        "requested_target_description_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "observer_bundle_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "dram_address_layout": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/logical_dram_layout"
+            }
+          ]
+        },
+        "semantic_commands": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "complete": {
+              "type": "boolean"
+            },
+            "event_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "missing": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "complete",
+            "event_ids",
+            "missing"
+          ]
+        },
+        "host_counting_policy": {
+          "const": "exclusive_host_outside_guarded_functional_commands"
+        },
+        "normative_bindings": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "format",
+            "records",
+            "library_entries",
+            "compiled_views"
+          ],
+          "properties": {
+            "format": {
+              "const": "swdb.functional-source-bindings.v1"
+            },
+            "records": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "library_entries": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "compiled_views": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "intrinsic",
+                  "intrinsic_sha256",
+                  "source_view_sha256",
+                  "source",
+                  "backend",
+                  "compile_defines",
+                  "evidence_scope"
+                ]
+              }
+            }
+          }
+        },
+        "counted_target_description_snapshot": {
+          "type": "object"
+        },
+        "target_observation_policy_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "target_observation_policy_format": {
+          "const": "swdb.observation-policy.v1"
+        },
+        "object_scope_contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "format": {
+              "const": "swdb.object-scopes.v1"
+            },
+            "abi": {
+              "const": "swdb.object-scope.v1"
+            },
+            "full_objects": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "bounded_views": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "retirement": {
+              "type": "string"
+            },
+            "observer_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "runtime_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          "required": [
+            "format",
+            "abi",
+            "full_objects",
+            "bounded_views",
+            "retirement",
+            "observer_sha256",
+            "runtime_sha256"
+          ]
+        },
+        "plugin_support_objects_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "format",
+        "level",
+        "abi",
+        "line_bytes",
+        "page_bytes",
+        "state_budget",
+        "object_scope",
+        "first_access_scope",
+        "physical_residency_known",
+        "runtime_bundle_sha256"
+      ]
     },
     "reported_inputs": {
       "type": "array",
@@ -605,6 +738,1314 @@
     "binding"
   ],
   "$defs": {
+    "observed_region": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/+-]*$"
+        },
+        "source_location": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "function": {
+              "type": "string"
+            },
+            "line": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "column": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "path": {
+              "type": "string"
+            },
+            "llvm_function": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "function",
+            "line"
+          ]
+        },
+        "mapped": {
+          "type": "boolean"
+        },
+        "kind": {
+          "enum": [
+            "loop",
+            "serial_remainder"
+          ]
+        },
+        "access_patterns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/id"
+              },
+              "source_location": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "function": {
+                    "type": "string"
+                  },
+                  "line": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "column": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "llvm_function": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "function",
+                  "line"
+                ]
+              },
+              "address_shape": {
+                "$ref": "#/$defs/fact"
+              },
+              "stride_bytes": {
+                "$ref": "#/$defs/fact"
+              },
+              "element_bytes": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "update_kind": {
+                "enum": [
+                  "read",
+                  "write",
+                  "add-update",
+                  "compare-and-swap",
+                  "min-max-update",
+                  "arbitrary"
+                ]
+              },
+              "element_count": {
+                "$ref": "#/$defs/count"
+              },
+              "bytes_accessed": {
+                "$ref": "#/$defs/count"
+              },
+              "observed_address_span_bytes": {
+                "$ref": "#/$defs/fact"
+              },
+              "address_expression": {
+                "type": "string"
+              },
+              "ir_lanes": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "observed_unique_bytes": {
+                "$ref": "#/$defs/fact"
+              },
+              "read_write": {
+                "type": "boolean"
+              },
+              "primitive_semantics": {
+                "$ref": "#/$defs/source_memory_primitive"
+              }
+            },
+            "required": [
+              "id",
+              "source_location",
+              "address_shape",
+              "stride_bytes",
+              "element_bytes",
+              "update_kind",
+              "element_count",
+              "bytes_accessed",
+              "observed_address_span_bytes",
+              "address_expression",
+              "ir_lanes"
+            ]
+          }
+        },
+        "operation_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "integer": {
+              "$ref": "#/$defs/count"
+            },
+            "floating_point": {
+              "$ref": "#/$defs/count"
+            },
+            "branch": {
+              "$ref": "#/$defs/count"
+            },
+            "atomic": {
+              "$ref": "#/$defs/count"
+            }
+          },
+          "required": [
+            "integer",
+            "floating_point",
+            "branch",
+            "atomic"
+          ]
+        },
+        "dynamic_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "loop_iterations": {
+              "$ref": "#/$defs/count"
+            }
+          },
+          "required": [
+            "loop_iterations"
+          ]
+        },
+        "footprint_bytes": {
+          "$ref": "#/$defs/fact"
+        },
+        "accelerator_calls": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "allOf": [
+              {
+                "if": {
+                  "required": [
+                    "observation_method"
+                  ],
+                  "properties": {
+                    "observation_method": {
+                      "const": "pre_inline_guarded_source_access"
+                    }
+                  }
+                },
+                "then": {
+                  "$ref": "#/$defs/semantic_command_count"
+                }
+              }
+            ]
+          }
+        },
+        "address_stream_counts": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "allOf": [
+              {
+                "if": {
+                  "required": [
+                    "format"
+                  ],
+                  "properties": {
+                    "format": {
+                      "const": "swdb.logical-address-counts.v1"
+                    }
+                  }
+                },
+                "then": {
+                  "$ref": "#/$defs/logical_address_counts"
+                }
+              }
+            ]
+          }
+        },
+        "active_workers": {
+          "$ref": "#/$defs/fact"
+        },
+        "worker_context": {
+          "type": "object",
+          "properties": {
+            "team_sizes": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "measurement": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "team_sizes",
+            "measurement"
+          ],
+          "additionalProperties": false
+        },
+        "memory_service_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "format": {
+              "const": "swdb.memory-service-counts.v1"
+            },
+            "scope": {
+              "enum": [
+                "per_run",
+                "per_trial"
+              ]
+            },
+            "observation_method": {
+              "const": "source_normalized_ir_allocation_relative"
+            },
+            "state": {
+              "enum": [
+                "known",
+                "partial",
+                "unknown"
+              ]
+            },
+            "requests_by_update_kind": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "read": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "element_bytes": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "requests": {
+                        "$ref": "#/$defs/count"
+                      }
+                    },
+                    "required": [
+                      "element_bytes",
+                      "requests"
+                    ]
+                  }
+                },
+                "write": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "element_bytes": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "requests": {
+                        "$ref": "#/$defs/count"
+                      }
+                    },
+                    "required": [
+                      "element_bytes",
+                      "requests"
+                    ]
+                  }
+                },
+                "add-update": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "element_bytes": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "requests": {
+                        "$ref": "#/$defs/count"
+                      }
+                    },
+                    "required": [
+                      "element_bytes",
+                      "requests"
+                    ]
+                  }
+                },
+                "compare-and-swap": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "element_bytes": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "requests": {
+                        "$ref": "#/$defs/count"
+                      }
+                    },
+                    "required": [
+                      "element_bytes",
+                      "requests"
+                    ]
+                  }
+                },
+                "min-max-update": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "element_bytes": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "requests": {
+                        "$ref": "#/$defs/count"
+                      }
+                    },
+                    "required": [
+                      "element_bytes",
+                      "requests"
+                    ]
+                  }
+                },
+                "arbitrary": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "element_bytes": {
+                        "type": "integer",
+                        "minimum": 1
+                      },
+                      "requests": {
+                        "$ref": "#/$defs/count"
+                      }
+                    },
+                    "required": [
+                      "element_bytes",
+                      "requests"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "read",
+                "write",
+                "add-update",
+                "compare-and-swap",
+                "min-max-update",
+                "arbitrary"
+              ]
+            },
+            "useful_bytes": {
+              "$ref": "#/$defs/fact"
+            },
+            "lifetime_line_union": {
+              "$ref": "#/$defs/fact"
+            },
+            "logical_first_read_pages": {
+              "$ref": "#/$defs/fact"
+            },
+            "logical_first_write_pages": {
+              "$ref": "#/$defs/fact"
+            },
+            "pre_roi_allocation_pages": {
+              "$ref": "#/$defs/fact"
+            },
+            "in_roi_allocation_pages": {
+              "$ref": "#/$defs/fact"
+            },
+            "unknown_object_requests": {
+              "$ref": "#/$defs/fact"
+            },
+            "missing": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "assumption_sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "object_scope_counts": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "full_allocation_requests": {
+                  "$ref": "#/$defs/fact"
+                },
+                "bounded_view_requests": {
+                  "$ref": "#/$defs/fact"
+                },
+                "unresolved_requests": {
+                  "$ref": "#/$defs/fact"
+                },
+                "bounded_view_line_union": {
+                  "$ref": "#/$defs/fact"
+                }
+              },
+              "required": [
+                "full_allocation_requests",
+                "bounded_view_requests",
+                "unresolved_requests",
+                "bounded_view_line_union"
+              ]
+            }
+          },
+          "required": [
+            "format",
+            "scope",
+            "observation_method",
+            "state",
+            "requests_by_update_kind",
+            "useful_bytes",
+            "lifetime_line_union",
+            "logical_first_read_pages",
+            "logical_first_write_pages",
+            "pre_roi_allocation_pages",
+            "in_roi_allocation_pages",
+            "unknown_object_requests",
+            "missing",
+            "assumption_sha256"
+          ]
+        },
+        "call_shape_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "format": {
+              "const": "swdb.call-shape-counts.v1"
+            },
+            "scope": {
+              "enum": [
+                "per_run",
+                "per_trial"
+              ]
+            },
+            "calls": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "site": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "event": {
+                    "type": "string"
+                  },
+                  "execution_count": {
+                    "$ref": "#/$defs/count"
+                  },
+                  "body_counted": {
+                    "type": "boolean"
+                  },
+                  "known_length_bins": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "bytes": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "execution_count": {
+                          "$ref": "#/$defs/count"
+                        }
+                      },
+                      "required": [
+                        "bytes",
+                        "execution_count"
+                      ]
+                    }
+                  },
+                  "unknown_lengths": {
+                    "$ref": "#/$defs/count"
+                  },
+                  "allocation_lifetime_size_bins": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "bytes": {
+                          "type": "integer",
+                          "minimum": 0
+                        },
+                        "execution_count": {
+                          "$ref": "#/$defs/count"
+                        }
+                      },
+                      "required": [
+                        "bytes",
+                        "execution_count"
+                      ]
+                    }
+                  },
+                  "unknown_free_lifetimes": {
+                    "$ref": "#/$defs/count"
+                  },
+                  "scope": {
+                    "enum": [
+                      "per_run",
+                      "per_trial"
+                    ]
+                  },
+                  "missing": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "site",
+                  "name",
+                  "event",
+                  "execution_count",
+                  "body_counted",
+                  "known_length_bins",
+                  "unknown_lengths",
+                  "allocation_lifetime_size_bins",
+                  "unknown_free_lifetimes",
+                  "scope",
+                  "missing"
+                ]
+              }
+            }
+          },
+          "required": [
+            "format",
+            "scope",
+            "calls"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "source_location",
+        "mapped",
+        "kind",
+        "access_patterns",
+        "operation_counts",
+        "dynamic_counts",
+        "footprint_bytes",
+        "accelerator_calls",
+        "address_stream_counts"
+      ]
+    },
+    "functional_observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "swdb.functional-observation.v1"
+        },
+        "commands": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "event": {
+                "type": "string"
+              },
+              "intrinsic": {
+                "type": "string"
+              },
+              "hardware_operations": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "aliases": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "symbol": {
+                      "type": "string"
+                    },
+                    "debug_name": {
+                      "type": "string"
+                    },
+                    "source_sha256": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    "source": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "root": {
+                          "enum": [
+                            "library",
+                            "project",
+                            "repository"
+                          ]
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "sha256": {
+                          "type": "string",
+                          "pattern": "^[a-f0-9]{64}$"
+                        }
+                      },
+                      "required": [
+                        "root",
+                        "path",
+                        "sha256"
+                      ]
+                    },
+                    "memory_base_argument": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
+                      "minimum": 0
+                    },
+                    "active_elements_argument": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "role": {
+                      "enum": [
+                        "command",
+                        "backend_alias"
+                      ]
+                    },
+                    "active_elements_signed": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "source_sha256",
+                    "memory_base_argument",
+                    "role"
+                  ],
+                  "oneOf": [
+                    {
+                      "required": [
+                        "symbol"
+                      ],
+                      "not": {
+                        "required": [
+                          "debug_name"
+                        ]
+                      }
+                    },
+                    {
+                      "required": [
+                        "debug_name"
+                      ],
+                      "not": {
+                        "required": [
+                          "symbol"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              "target_access_sources": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/semantic_source"
+                }
+              },
+              "bookkeeping_access_sources": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/semantic_source"
+                }
+              },
+              "memory_effect": {
+                "enum": [
+                  "read",
+                  "none"
+                ]
+              },
+              "active_elements_policy": {
+                "enum": [
+                  "operand_argument",
+                  "observed_target_reads",
+                  "not_applicable"
+                ]
+              },
+              "target_reads_per_active_element": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "event",
+              "intrinsic",
+              "hardware_operations",
+              "aliases",
+              "target_access_sources",
+              "bookkeeping_access_sources"
+            ]
+          },
+          "maxItems": 64
+        },
+        "request_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "transaction_bytes": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1
+            },
+            "read_coalescing": {
+              "enum": [
+                "none",
+                "window_unique_lines"
+              ]
+            }
+          },
+          "required": [
+            "transaction_bytes",
+            "read_coalescing"
+          ]
+        },
+        "placement": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "policy": {
+              "enum": [
+                "isolated_row_aligned_allocations",
+                "unknown"
+              ]
+            },
+            "basis": {
+              "enum": [
+                "inferred",
+                "unknown"
+              ]
+            },
+            "physical_placement_known": {
+              "const": false
+            }
+          },
+          "required": [
+            "policy",
+            "basis",
+            "physical_placement_known"
+          ]
+        },
+        "window": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "policy": {
+              "const": "logical_fixed_requests_per_command_worker"
+            },
+            "requests": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1
+            },
+            "basis": {
+              "enum": [
+                "inferred",
+                "unknown"
+              ]
+            },
+            "source": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "policy",
+            "requests",
+            "basis",
+            "source"
+          ]
+        }
+      },
+      "required": [
+        "format",
+        "commands",
+        "request_policy",
+        "placement",
+        "window"
+      ]
+    },
+    "semantic_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_sha256"
+      ],
+      "properties": {
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "symbol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "debug_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "root": {
+              "enum": [
+                "library",
+                "project",
+                "repository"
+              ]
+            },
+            "path": {
+              "type": "string"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          "required": [
+            "root",
+            "path",
+            "sha256"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "symbol"
+          ]
+        },
+        {
+          "required": [
+            "debug_name"
+          ]
+        }
+      ]
+    },
+    "logical_work_count": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/count"
+        },
+        {
+          "required": [
+            "value"
+          ],
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            }
+          }
+        }
+      ]
+    },
+    "logical_fraction": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/count"
+        },
+        {
+          "required": [
+            "value"
+          ],
+          "properties": {
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        }
+      ]
+    },
+    "logical_address_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "swdb.logical-address-counts.v1"
+        },
+        "target_description_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "level": {
+          "const": "derived_logical_transactions"
+        },
+        "state": {
+          "enum": [
+            "complete",
+            "incomplete"
+          ]
+        },
+        "scope": {
+          "type": "string",
+          "x-vocab": "count_scopes"
+        },
+        "missing": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "layout_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "request_policy_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "placement_assumption_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "window_policy_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "line_requests": {
+          "$ref": "#/$defs/logical_work_count"
+        },
+        "row_groups": {
+          "$ref": "#/$defs/logical_work_count"
+        },
+        "grouped_row_hits": {
+          "$ref": "#/$defs/logical_work_count"
+        },
+        "windows": {
+          "$ref": "#/$defs/logical_work_count"
+        },
+        "staged_bytes": {
+          "$ref": "#/$defs/logical_work_count"
+        },
+        "grouped_row_hit_fraction": {
+          "$ref": "#/$defs/logical_fraction"
+        }
+      },
+      "required": [
+        "format",
+        "target_description_sha256",
+        "level",
+        "state",
+        "scope",
+        "missing",
+        "notes",
+        "layout_sha256",
+        "request_policy_sha256",
+        "placement_assumption_sha256",
+        "window_policy_sha256",
+        "line_requests",
+        "row_groups",
+        "grouped_row_hits",
+        "windows",
+        "staged_bytes",
+        "grouped_row_hit_fraction"
+      ]
+    },
+    "semantic_command_count": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "site": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "event": {
+          "type": "string",
+          "minLength": 1
+        },
+        "intrinsic": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hardware_operations": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "accounting_domain": {
+          "const": "offload"
+        },
+        "observation_method": {
+          "const": "pre_inline_guarded_source_access"
+        },
+        "missing": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "execution_count": {
+          "$ref": "#/$defs/logical_work_count"
+        },
+        "active_elements": {
+          "$ref": "#/$defs/logical_work_count"
+        },
+        "useful_accesses": {
+          "$ref": "#/$defs/logical_work_count"
+        },
+        "useful_bytes": {
+          "$ref": "#/$defs/logical_work_count"
+        },
+        "functional_bookkeeping": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "accesses",
+            "operation_counts",
+            "opaque_calls"
+          ],
+          "properties": {
+            "accesses": {
+              "$ref": "#/$defs/count"
+            },
+            "operation_counts": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "integer",
+                "floating_point",
+                "branch",
+                "atomic"
+              ],
+              "properties": {
+                "integer": {
+                  "$ref": "#/$defs/count"
+                },
+                "floating_point": {
+                  "$ref": "#/$defs/count"
+                },
+                "branch": {
+                  "$ref": "#/$defs/count"
+                },
+                "atomic": {
+                  "$ref": "#/$defs/count"
+                }
+              }
+            },
+            "opaque_calls": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "site",
+                  "name",
+                  "execution_count"
+                ],
+                "properties": {
+                  "site": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "execution_count": {
+                    "$ref": "#/$defs/count"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "site",
+        "event",
+        "intrinsic",
+        "hardware_operations",
+        "accounting_domain",
+        "observation_method",
+        "missing",
+        "execution_count",
+        "active_elements",
+        "useful_accesses",
+        "useful_bytes"
+      ]
+    },
+    "logical_dram_layout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "channel",
+        "rank",
+        "bank_group",
+        "bank",
+        "row"
+      ],
+      "properties": {
+        "channel": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lsb",
+              "bits"
+            ],
+            "properties": {
+              "lsb": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 63
+              },
+              "bits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 64
+              }
+            }
+          }
+        },
+        "rank": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lsb",
+              "bits"
+            ],
+            "properties": {
+              "lsb": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 63
+              },
+              "bits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 64
+              }
+            }
+          }
+        },
+        "bank_group": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lsb",
+              "bits"
+            ],
+            "properties": {
+              "lsb": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 63
+              },
+              "bits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 64
+              }
+            }
+          }
+        },
+        "bank": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lsb",
+              "bits"
+            ],
+            "properties": {
+              "lsb": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 63
+              },
+              "bits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 64
+              }
+            }
+          }
+        },
+        "row": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lsb",
+              "bits"
+            ],
+            "properties": {
+              "lsb": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 63
+              },
+              "bits": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 64
+              }
+            }
+          }
+        }
+      }
+    },
     "reported_input": {
       "type": "object",
       "additionalProperties": false,
@@ -751,6 +2192,136 @@
           "const": "reported"
         }
       }
+    },
+    "source_memory_primitive": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "swdb.source-memory-primitive.v1"
+        },
+        "opcode": {
+          "enum": [
+            "load",
+            "store",
+            "atomicrmw",
+            "cmpxchg"
+          ]
+        },
+        "value_kind": {
+          "enum": [
+            "integer",
+            "floating",
+            "pointer",
+            "aggregate",
+            "unknown"
+          ]
+        },
+        "element_bits": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "vector": {
+          "type": "boolean"
+        },
+        "atomic_ordering": {
+          "enum": [
+            "not_atomic",
+            "unordered",
+            "monotonic",
+            "consume",
+            "acquire",
+            "release",
+            "acq_rel",
+            "seq_cst"
+          ]
+        },
+        "failure_ordering": {
+          "anyOf": [
+            {
+              "enum": [
+                "not_atomic",
+                "unordered",
+                "monotonic",
+                "consume",
+                "acquire",
+                "release",
+                "acq_rel",
+                "seq_cst"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "volatile": {
+          "type": "boolean"
+        },
+        "weak": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "update_opcode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      },
+      "required": [
+        "format",
+        "opcode",
+        "value_kind",
+        "element_bits",
+        "vector",
+        "atomic_ordering",
+        "failure_ordering",
+        "volatile",
+        "weak",
+        "update_opcode"
+      ]
+    },
+    "stateless_llvm_support": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "swdb.stateless-llvm-support.v1"
+        },
+        "archive": {
+          "type": "string",
+          "minLength": 1
+        },
+        "archive_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "member": {
+          "const": "SHA256.cpp.o"
+        },
+        "object_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "verification": {
+          "const": "sha256_methods_and_abi_anchor_only_no_global_initializers"
+        }
+      },
+      "required": [
+        "format",
+        "archive",
+        "archive_sha256",
+        "member",
+        "object_sha256",
+        "verification"
+      ]
     }
   }
 }

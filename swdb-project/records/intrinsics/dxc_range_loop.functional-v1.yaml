@@ -1,0 +1,41 @@
+kind: intrinsic
+schema_version: '0.4'
+id: dxc_range_loop.functional-v1
+status: draft
+created: '2026-10-06'
+updated: '2026-10-06'
+provenance:
+- id: functional-source
+  kind: source_code
+  description: Fresh functional-source/configuration identity; no output, calibration,
+    build-readiness or performance evidence imported.
+  uri: https://github.com/arkhadem/DX100/tree/e4fc4afdf894f295442cef3604667a469fab8e62
+name: __dxc_range_loop
+interface:
+  id: dx100-functional-source
+  version: 1.0-e4fc4af
+hardware_operations:
+- dx100.functional.v1.range_loop
+memory_kind: none
+address_shape: null
+element_bits: null
+lanes: null
+library_entry:
+  id: intrinsic.dxc_range_loop.functional-v1
+  path: library/intrinsics/dxc_range_loop.functional-v1.yaml
+  content_sha256: 06a3191fb7e2838bab54d517cb2a5e57d083192bc0b0e1c8a45cb0fe60654317
+source_view:
+  format: swdb.intrinsic-source-view.v1
+  variant: functional-v1
+  source:
+    root: library
+    path: dx100/dxc_lowering.hpp
+    sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+  backend: functional_source
+  compile_defines:
+  - FUNC
+  compile_undefines:
+  - GEM5
+  - SWDB_STRICT
+  - SWDB_DXC_DIAGNOSTIC
+  evidence_scope: functional_source_semantics

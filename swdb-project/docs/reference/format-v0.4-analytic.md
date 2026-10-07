@@ -164,6 +164,17 @@ including the serial remainder. If any required bound is unknown, that region an
 total stay null. Executed unmodeled calls add an unknown-cost bound. Known component
 bounds remain visible.
 
+When more than one resource domain has executed or unknown work, optional
+`composition_contract` must declare `resource_domain_overlap: serial` or
+`full_overlap`, with its basis and source. Serial sums domain maxima; full overlap
+takes their maximum. Both are explicit analytic scenarios, not measured scheduling.
+Absent overlap keeps each known component visible and the required total null.
+Executed or unknown host source accesses also require an applicable streaming,
+requests-in-flight, cache or native memory-service model; offload row/queue/staging
+models cover a separate domain. Missing host memory mechanisms remain structural
+unknowns that numerical parameter filling cannot repair. Proven zero work needs
+neither a service rate nor an overlap policy. Additive overheads remain charged once.
+
 An optional `--baseline` names an explicit estimate. Its input, target-description hash,
 protocol, thread count and evidence kind must match. The ratio is baseline seconds /
 candidate seconds; it stays null without known positive candidate time. Until a validated
@@ -238,7 +249,7 @@ Envelope and portable fields: `architecture`, `atomic`, `branch`, `characterizat
 
 Binding keys are `state`, `subject_source_identity`, `input_record_sha256`, `roi`, `threads`, `run_arguments_sha256` and `note`. The first slice emits fixture or unverified state; verified state is reserved for a registered-source/protocol adapter.
 
-Compiler distributions with a shared LLVM library link the pass against it; static LLVM distributions load the pass against `opt` host symbols, avoiding a duplicate static LLVM registry. `plugin_linkage` records this choice. Repeatable `--run-library-path` supplies native library folders (such as libomp): each enters link search, binary RPATH and runtime library search, and is retained as `run_library_paths`.
+Compiler distributions with a shared LLVM library link the pass against it; static LLVM distributions load the pass against `opt` host symbols, avoiding a duplicate static LLVM registry. `plugin_linkage` records this choice. Static distributions also require the configured `llvm-ar`, `llvm-nm` and native `libLLVMSupport.a`. The builder extracts only `SHA256.cpp.o`, verifies SHA-256 methods plus the ABI check anchor with no extra LLVM globals or initializer functions, and links that stateless object; it never links the archive or duplicate registries. Optional `toolchain.plugin_support_objects` retains the native archive/member/object identities, sealed by `observation_contract.plugin_support_objects_sha256`. Existing records without those fields retain their original seals. Missing or unsuitable native support fails before counting. Repeatable `--run-library-path` supplies native library folders (such as libomp): each enters link search, binary RPATH and runtime library search, and is retained as `run_library_paths`.
 
 ## Registered GAPBS trials and indirect memory bounds
 
@@ -381,3 +392,33 @@ feature reports with basis `reported`. Existing count fields, native binding and
 receipts remain unchanged. [Reported feature input commands, field mapping and
 conflicts](feature-report-inputs.md) explain the supplied BFS reports, unresolved
 source/array scope, units and timing/PMU sanitization.
+
+
+## Parameter dependencies and sensitivity report
+
+Updated: 2026-10-06 ET (ticket 09). Optional `parameter_report` uses
+`swdb.parameter-sensitivity.v1` and binds the frozen target and full observation
+policy hashes. Historical estimates without this addition remain valid.
+
+`unknowns` retain each exact parameter path, null value, basis/source/unit,
+dependent bounds and `required_for_total`. Required unknowns share dependency
+priority 1; unused references have priority 2. A null reference has no defensible
+half/double magnitude, so `impact_magnitude_seconds` and `impact_rank` stay null.
+This dependency ordering does not claim a numerical ranking of unsupported guesses.
+
+`sensitivities` vary one positive frozen value by half and double, recompose every
+whole trial and then its median, and report diagnostic component medians separately.
+A supported whole-call magnitude is the largest absolute change from the base
+seconds; descending magnitudes receive dense numerical ranks. If another required
+bound stays unknown, local component scenarios remain visible while whole-call
+magnitude/rank stay null. `llm_parameters` lists the frozen parameters whose basis
+is `estimated`, including their source/reason and this sensitivity. A non-finite,
+nonpositive or policy-invalidating scenario supplies no numerical impact.
+
+Observation-policy changes (including referenced capacity/window/layout/backend
+facts) are `requires_fresh_observation`; old row/count facts are not relabeled or
+rewritten. Numeric scenarios are analytic hypotheses, not new frozen target
+versions. `structural_missing` separately lists source facts, missing mechanisms,
+opaque costs and composition policies. These cannot be silently repaired by the
+unknown-parameter filling role. Public validation checks every report fact against
+its frozen target, its base whole-call value, and its exact policy identity.

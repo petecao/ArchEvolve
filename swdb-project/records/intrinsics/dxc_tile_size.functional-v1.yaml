@@ -1,0 +1,41 @@
+kind: intrinsic
+schema_version: '0.4'
+id: dxc_tile_size.functional-v1
+status: draft
+created: '2026-10-06'
+updated: '2026-10-06'
+provenance:
+- id: functional-source
+  kind: source_code
+  description: Fresh functional-source/configuration identity; no output, calibration,
+    build-readiness or performance evidence imported.
+  uri: https://github.com/arkhadem/DX100/tree/e4fc4afdf894f295442cef3604667a469fab8e62
+name: __dxc_tile_size
+interface:
+  id: dx100-functional-source
+  version: 1.0-e4fc4af
+hardware_operations:
+- dx100.functional.v1.tile_size
+memory_kind: none
+address_shape: null
+element_bits: null
+lanes: null
+library_entry:
+  id: intrinsic.dxc_tile_size.functional-v1
+  path: library/intrinsics/dxc_tile_size.functional-v1.yaml
+  content_sha256: 9c333f3510049299ac8317e6cce981ef3995a06123fe428c416ae13530216c70
+source_view:
+  format: swdb.intrinsic-source-view.v1
+  variant: functional-v1
+  source:
+    root: library
+    path: dx100/dxc_lowering.hpp
+    sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+  backend: functional_source
+  compile_defines:
+  - FUNC
+  compile_undefines:
+  - GEM5
+  - SWDB_STRICT
+  - SWDB_DXC_DIAGNOSTIC
+  evidence_scope: functional_source_semantics
