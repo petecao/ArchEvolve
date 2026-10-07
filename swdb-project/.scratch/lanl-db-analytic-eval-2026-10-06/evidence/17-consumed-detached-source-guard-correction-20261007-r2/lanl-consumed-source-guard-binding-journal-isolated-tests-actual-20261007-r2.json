@@ -1,0 +1,61 @@
+{
+  "format": "swdb.consumed-source-guard-isolated-synthetic-tests.v1",
+  "canonical_ensure_ascii": true,
+  "started_at": "2026-10-07T22:23:17.867897+00:00",
+  "finished_at": "2026-10-07T22:23:17.958132+00:00",
+  "elapsed_seconds": 0.09018362499773502,
+  "argv": [
+    "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+    "-B",
+    "/private/tmp/lanl_consumed_source_guard_binding_journal_isolated_test_source_20261007_r2.py"
+  ],
+  "cwd": "/private/tmp/lanl-consumed-source-guard-binding-journal-isolated-tests-20261007-r2",
+  "native_interpreter": {
+    "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+    "bytes": 33816,
+    "sha256": "08fa4dbadc420090dfee2acf433b827ae05541f728d1478d96879122f53b4328"
+  },
+  "runner": {
+    "path": "/private/tmp/lanl_consumed_source_guard_binding_journal_isolated_test_runner_20261007_r2.py",
+    "bytes": 3966,
+    "sha256": "5564c6a5986f837bc9890692f61712202c7d3ad322e9eedab9acaa9f3ad295c0"
+  },
+  "source_pins_before_and_after_equal": true,
+  "source_pins": [
+    {
+      "path": "/private/tmp/lanl_consumed_source_guard_binding_journal_isolated_test_source_20261007_r2.py",
+      "bytes": 14456,
+      "sha256": "9376fd62312916d67fddd6f84b7398480c5efa9922e53ea907fa3aa996b768bf"
+    },
+    {
+      "path": "/private/tmp/lanl_consumed_detached_source_guard_r1_20261007.py",
+      "bytes": 64859,
+      "sha256": "66944bb04d05a690dc1c81ced7c203c0494cc028c6c9c1531e1fcb9cecd110e1"
+    },
+    {
+      "path": "/private/tmp/lanl_consumed_detached_source_guard_r2_20261007.py",
+      "bytes": 65830,
+      "sha256": "3ff7bde67947adf524d0c4f556047fcf1377bc6ddb1e64c9ac58409c3e0acfeb"
+    }
+  ],
+  "original_streams": [
+    {
+      "path": "/private/tmp/lanl-consumed-source-guard-binding-journal-isolated-tests-20261007-r2/stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/lanl-consumed-source-guard-binding-journal-isolated-tests-20261007-r2/stderr.txt",
+      "bytes": 1110,
+      "sha256": "c492a7cc7da7f723f0a3cbcdc5645b21127e38bedc61e3dc0b915000dc235de4"
+    }
+  ],
+  "returncode": 0,
+  "timed_out": false,
+  "timeout_seconds": 60,
+  "test_method_count": 6,
+  "passed": true,
+  "scope": "SYNTHETIC exact isolated AST binding and interruption-custody blocks only",
+  "actual_guard_main_plan_filesystem_removal_host_visibility_capacity_scientific_admission": false,
+  "identity_sha256": "4af33429c3e3c4e8d2b2a77b7e1247a2473af91029dde0a8646b8ca3db614504"
+}
