@@ -1,0 +1,32 @@
+{
+  "format": "swdb.functional-request-integrity-public-proof.v1",
+  "updated": "2026-10-06 23:09 ET",
+  "base_commit": "97ca4dfdb0af4c709a35b04b5855a5f9c42d1a84",
+  "red": {
+    "public_case": "test_strict_certified_candidate_gets_estimated_handoff_without_target_timing",
+    "elapsed_s": 49.23,
+    "failure": "A changed caller target reference still produced a successful handoff."
+  },
+  "green": {
+    "public_cases": 2,
+    "elapsed_s": 119.42,
+    "canonical_validation": "OK: 628 record(s) valid"
+  },
+  "verified_behavior": [
+    "New functional evaluations pin the complete literal request digest.",
+    "Changed request targets refuse through public handoff and validation.",
+    "Legacy registered target content must equal the retained estimate snapshot.",
+    "Removing the original file-sourced target preserves archive handoff via the snapshot.",
+    "Cached ratio tamper remains rejected.",
+    "Stale certification remains unverified; gem5 lineage refuses before writes.",
+    "No child process starts during strict functional evaluation."
+  ],
+  "preservation": {
+    "prior_protected_blobs": 876,
+    "prior_yaml_records": 628,
+    "all_bytes_unchanged": true,
+    "new_canonical_records": 0
+  },
+  "boundary": "Request integrity checking changes, not costs, observations, certification or historical evidence. Original actual12 source/receipt and records remain immutable; new estimates require a fresh bundle freeze.",
+  "identity_sha256": "3af78cac9298c254b1dc25c7809dd5246ab60b1c5385d7ef266e2498a9a3c890"
+}
