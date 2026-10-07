@@ -1,9 +1,9 @@
 # Map: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-06 ET (ticket 03 resolved with source and validation evidence); 2026-10-06 16:11 ET (tickets regenerated as 22 vertical slices, approved by Yan-Ru; ticket 01 kept); 2026-10-06 16:01 ET (ticket 01 resolved; design committed as `6c691e6`)
+Updated: 2026-10-07 00:09 ET (12 of 15 assigned tickets resolved; 11, 14 and 17 active)
 **Type:** ticket map
-**Status:** ready-for-agent (implementation starts on Yan-Ru's go-ahead)
+**Status:** claimed (implementation and actual evaluations in progress)
 **Spec:** [spec.md](spec.md)
 
 Each ticket is a vertical slice: it delivers something runnable and checkable on its own, from format to command to tests. Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (Yan-Ru decides first); needs-info (waits on LANL access). Ticket 07 runs on mbit10 under the standing approval of 2026-10-05.
@@ -32,7 +32,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 |---|---|---|---|---|
 | 09 | [DX100 estimate](issues/09-dx100-estimate.md) | resolved | 05 | 1.5–2 days |
 | 10 | [The estimation role fills unknowns](issues/10-estimation-role.md) | resolved | 09 | 4–6 h |
-| 11 | [CPU error check and paired estimates in ArchEvolve mode](issues/11-cpu-error-check-and-paired-estimates.md) | ready-for-agent | 05, 06, 07 | 4–6 h |
+| 11 | [CPU error check and paired estimates in ArchEvolve mode](issues/11-cpu-error-check-and-paired-estimates.md) | claimed | 05, 06, 07 | 4–6 h |
 | 12 | [ArchEvolve-mode DX100 evaluation without gem5](issues/12-archevolve-dx100-evaluation.md) | resolved | 06, 09 | 1 day |
 | 13 | [DX100 sanity check against the paper](issues/13-dx100-sanity-check.md) | resolved | 10 | 2 h |
 
