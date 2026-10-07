@@ -19,6 +19,7 @@ python3 -m swdb.cpu_service_binding --records "$LANL_CPU_STORE" \
   --calibration mbit10.cpu.lanl20261006.service.allocator.a1 \
   --calibration mbit10.cpu.lanl20261006.service.allocator-extra.a1 \
   --calibration mbit10.cpu.lanl20261006.resource.memory.a1 \
+  --calibration mbit10.cpu.lanl20261006.resource.float-memory.a1 \
   --calibration mbit10.cpu.lanl20261006.service.byte-read.a1 \
   --calibration mbit10.cpu.lanl20261006.resource.bulk-total.a1 \
   --calibration mbit10.cpu.lanl20261006.resource.bulk-total.a2 \
@@ -35,7 +36,7 @@ python3 -m swdb.cpu_service_binding --records "$LANL_CPU_STORE" \
   --id mbit10.cpu.lanl20261006.t1.services.v1 --format json
 ```
 
-The explicit 8MiB memory construction is a conditional inferred scenario. Logical bounded views establish neither full libomp allocation identity nor physical residency. Exact primitive/type/order guards remain active. Original residual-null write8 records remain immutable; the separately typed gross resource includes retained loop work and composes with compute by maximum. Bulk profile maxima and legal warmed OpenMP state are inferred transfer, not physical latencies or proven application upper bounds. Duplicate copy measurements are selected explicitly, never pooled.
+The explicit 8MiB memory construction is a conditional inferred scenario. Logical bounded views establish neither full libomp allocation identity nor physical residency. Exact primitive/type/order guards remain active. BC floating64 monotonic fadd consumes its separate resource; integer seq_cst add and floating fadd in the same coarse bucket are partitioned by exact source sites before charging, with the sum cross-checked against the original observation. Original residual-null write8 records remain immutable; the separately typed gross resource includes retained loop work and composes with compute by maximum. Bulk profile maxima and legal warmed OpenMP state are inferred transfer, not physical latencies or proven application upper bounds. Duplicate copy measurements are selected explicitly, never pooled.
 
 Persist a protocol request in the external raw directory with these settings:
 
