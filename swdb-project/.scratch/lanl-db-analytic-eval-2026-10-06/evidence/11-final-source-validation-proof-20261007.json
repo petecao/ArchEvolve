@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-07 ET",
+  "parent_integration": "8f0eda2c6ff6cce7097a91c1a1b7673ce9903918",
+  "review_base": "2c50e5f",
+  "review_base_ancestor": true,
+  "scope": "swdb-project only",
+  "tracked_idea_files": 0,
+  "protected_prior_blobs_unchanged": 905,
+  "protected_paths": [
+    "records",
+    "library",
+    "apps",
+    "tools"
+  ],
+  "canonical_validation": {
+    "valid_records": 665,
+    "log_sha256": "b4ab463830f79ecf373a4e4cb1a03258011defced97cf05530495ba6fc449f12"
+  },
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "frozen_prior_source": [
+    {
+      "path": "swdb/llvm/Characterize.cpp",
+      "sha256": "b461fd7025cfa675d5c191d7d73fee8bd04525c0344cd315dffedb61575b65a0"
+    },
+    {
+      "path": "swdb/llvm/CountingRuntime.cpp",
+      "sha256": "43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e"
+    },
+    {
+      "path": "swdb/processes.py",
+      "sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289"
+    }
+  ],
+  "public_proofs": [
+    "11-protected-cpu-public-proof-20261007.json",
+    "11-legacy-trial-scope-public-proof-20261007.json",
+    "11-per-kernel-dispatch-preparation-proof-20261007.json",
+    "11-final-source-public-replay-20261007.json"
+  ],
+  "ticket_state": "claimed",
+  "application_timing_opened": false,
+  "limitations": [
+    "Fixture prediction proves semantic annotation transport, not native model accuracy.",
+    "Protected fresh-process stopwatch boundary and original-driver band transfer remain unknown.",
+    "Actual model/development/held-out/report receipts are required before resolution."
+  ],
+  "identity_sha256": "c7430c8ed161bd2f7da687d55b5a982d74dddb7f5f92b415ea8cc0f93243409b"
+}

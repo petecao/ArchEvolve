@@ -16,6 +16,9 @@ ADAPTER='registered-gapbs.v1'
 
 
 def prepare(store,args,subject,input_record):
+    if args.adapter=='registered-cpu':
+        from swdb.analytic_cpu_binding import prepare as cpu_prepare
+        return cpu_prepare(store,args,subject,input_record)
     if args.adapter=='registered-functional':
         from swdb.analytic_functional_binding import prepare as functional_prepare
         return functional_prepare(store,args,subject,input_record)
@@ -161,6 +164,9 @@ def _verify_binding(record,store,require_available=False):
     New executions also verify the available registered source tree and raw counts.
     """
     problems=[];binding=record.get('binding',{});identity=binding.get('subject_source_identity',{})
+    if identity.get('adapter')=='registered-cpu.v1':
+        from swdb.analytic_cpu_binding import verify
+        return verify(record,store,require_available)
     if identity.get('adapter')=='registered-functional.v1':
         from swdb.analytic_functional_binding import verify
         return verify(record,store,require_available)

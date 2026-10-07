@@ -97,30 +97,34 @@ python3 -m swdb collect-cpu-native-validation --records "$LANL_CPU_STORE" \
 
 Repeat with BC's exact characterization, ID, output and `--estimate-protocol "$LANL_CPU_BC_PROTOCOL"`. The collector derives the compiler flags, runtime environment and run arguments from the counted binding; do not inject a different graph/source policy. It pins only the child binary to the first core, while the collector retains full socket lease affinity. Retain all five printed TrialTime values with 10us resolution and +/-5us intervals. Their median is one workload-pair observation; the five advancing/state-sharing trials are not five independent error samples.
 
-Freeze the development width immediately after both matched validations:
+Freeze a separate development width for each kernel immediately after both matched validations:
 
 ```sh
-python3 -m swdb freeze-cpu-error-band --records "$LANL_CPU_STORE" \
-  --estimate lanl.cpu.bfs.g16.t1.estimate.v1 --validation lanl.cpu.bfs.g16.t1.validation.v1 \
-  --estimate lanl.cpu.bc.g16.t1.estimate.v1 --validation lanl.cpu.bc.g16.t1.validation.v1 \
-  --id lanl.cpu.t1.development-band.v1 --format json
+for lanl_kernel in bfs bc; do
+  python3 -m swdb freeze-cpu-error-band --records "$LANL_CPU_STORE" \
+    --estimate "lanl.cpu.$lanl_kernel.g16.t1.estimate.v1" \
+    --validation "lanl.cpu.$lanl_kernel.g16.t1.validation.v1" \
+    --id "lanl.cpu.$lanl_kernel.t1.development-band.v1" --format json
+done
 ```
 
-The frozen width is the maximum rounding-aware absolute log error across the two independently scoped workload pairs. A failed or null width does not authorize holdout timing or an agreement/gain claim. Preserve any failure honestly. No rate, recipe, target or implementation adjustment may use these application outcomes.
+Each width uses the unchanged maximum rounding-aware absolute log-error rule on that kernel's single development workload pair. BFS and BC widths are separately measured empirical envelopes; they are not pooled into a global accuracy claim. A failed or null width prohibits the holdout phase. Both development bands must be known before opening either g17 outcome. No rate, recipe, target or implementation adjustment may use application outcomes.
 
 ## 3. Prospective holdout with the unchanged width
 
-Only after a known native development band is frozen, run the same matched collector for both g17 characterizations, supplying `--development-band lanl.cpu.t1.development-band.v1` as well as that kernel's unchanged returned estimate protocol ID. Use fresh IDs `lanl.cpu.{bfs,bc}.g17.t1.validation.v1` and new raw directories. The collector refuses a previously used input, changed source/runtime/ROI scope, or timing before the frozen width. Never re-estimate width from g17.
+Only after both known per-kernel native development bands are frozen, run the same matched collector for both g17 characterizations, supplying `--development-band lanl.cpu.$lanl_kernel.t1.development-band.v1` as well as that kernel's unchanged returned estimate protocol ID. Use fresh IDs `lanl.cpu.{bfs,bc}.g17.t1.validation.v1` and new raw directories. The collector refuses a previously used input, changed source/runtime/ROI scope, or timing before the frozen width. Never re-estimate width from g17.
 
 ```sh
-python3 -m swdb validate-cpu-error-band --records "$LANL_CPU_STORE" \
-  --development-band lanl.cpu.t1.development-band.v1 \
-  --estimate lanl.cpu.bfs.g17.t1.estimate.v1 --validation lanl.cpu.bfs.g17.t1.validation.v1 \
-  --estimate lanl.cpu.bc.g17.t1.estimate.v1 --validation lanl.cpu.bc.g17.t1.validation.v1 \
-  --id lanl.cpu.t1.heldout-band.v1 --format json
+for lanl_kernel in bfs bc; do
+  python3 -m swdb validate-cpu-error-band --records "$LANL_CPU_STORE" \
+    --development-band "lanl.cpu.$lanl_kernel.t1.development-band.v1" \
+    --estimate "lanl.cpu.$lanl_kernel.g17.t1.estimate.v1" \
+    --validation "lanl.cpu.$lanl_kernel.g17.t1.validation.v1" \
+    --id "lanl.cpu.$lanl_kernel.t1.heldout-band.v1" --format json
+done
 ```
 
-A failed holdout remains failed with the original width. A validated record grants confidence only to the exact supported held-out characterizations and frozen T1 target/model/runtime. It supplies no unseen-candidate, kernel, thread or target generalization. Any final estimate protocol that uses `cpu_error_band: lanl.cpu.t1.heldout-band.v1` must be newly frozen without changing the target or implementation; the band pin is separate from target calibration closure.
+Each failed holdout preserves its own original width. A validated record grants confidence only to that kernel's exact supported held-out characterization and frozen T1 target/model/runtime. It supplies no unseen-candidate, kernel, thread or target generalization. Any final report protocol pins its own `lanl.cpu.{bfs,bc}.t1.heldout-band.v1` without changing the target or implementation. Band pins remain separate from target calibration closure.
 
 ### Public verdict-reader replay after the completed held-out phase
 
@@ -129,7 +133,6 @@ Use the same final source, target, estimates and completed held-out Store. This 
 ```bash
 export LANL_CPU_MODEL_RAW=/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1
 export LANL_CPU_REPORT_RAW=/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261006-a1
-export LANL_CPU_BAND=lanl.cpu.t1.heldout-band.v1
 mkdir "$LANL_CPU_REPORT_RAW"
 python3 - <<'PY'
 import json,os
@@ -137,7 +140,7 @@ from pathlib import Path
 for kernel in ('bfs','bc'):
  request=json.loads((Path(os.environ['LANL_CPU_MODEL_RAW'])/(kernel+'-protocol-request.json')).read_text())
  request['id']='lanl.cpu.'+kernel+'.t1.report-model.v1'
- request['settings']['cpu_error_band']=os.environ['LANL_CPU_BAND']
+ request['settings']['cpu_error_band']='lanl.cpu.'+kernel+'.t1.heldout-band.v1'
  (Path(os.environ['LANL_CPU_REPORT_RAW'])/(kernel+'-request.json')).write_text(json.dumps(request,indent=2)+'\n')
 PY
 for lanl_kernel in bfs bc; do
@@ -152,13 +155,13 @@ for lanl_kernel in bfs bc; do
 done
 ```
 
-Check each report's exact characterization and target/bundle hashes against the pre-outcome estimate; seconds and per-region costs must be unchanged. The report's `error_band` must pin the actual persisted band digest, state and unchanged width. `validated` is true only for a validated native band and its exact held-out characterization; a failed/development/fixture band grants no confidence. Export the two new protocol and two estimate records with their compact reporting receipt through Git, preserving all prior bytes. There is no new application outcome or retuning in this step.
+Check each report's exact characterization and target/bundle hashes against the pre-outcome estimate; seconds and per-region costs must be unchanged. The report's `error_band` must pin the actual persisted band digest, state and that kernel's unchanged width. `validated` is true only for a validated native band and its exact held-out characterization; a failed/development/fixture band grants no confidence. Export the two new protocol and two estimate records with their compact reporting receipt through Git, preserving all prior bytes. There is no new application outcome or retuning in this step.
 
 Export canonical validation/band/estimate/protocol records and compact preregistration/context/hash/trial summaries through Git. Raw binaries, logs and LLVM artifacts remain remote. Report whole-call errors and the predicted per-region contributions/assumptions. There are no measured region timing/error claims. Existing CPU native timing selection is unchanged; historical unsupported comparisons retain their explicit null/exclusion reports. Until a validated band exists, D25's `within_error` token with null error_band/seconds is not evidence of agreement.
 
 ### Prepared bounded reporting automation
 
-The separate parent-owned helpers are prepared at `/private/tmp/lanl-dispatch-cpu-band-report-a1.py` (SHA256 `302f45f765db493d23858174601c551d6bc38f45cb03cd814cfcb0ec31224f6a`) and `/private/tmp/lanl-export-cpu-band-report-a1.py` (SHA256 `9a67e381ee1997adff1ce53630238c365e182df5f3ff609c631b1bcfe005820f`). Each takes the same final immutable source SHA used by the model/development/held-out phases. Parent stages these exact helper bytes on mbit10; neither has been dispatched.
+The separate parent-owned helpers are prepared at `/private/tmp/lanl-dispatch-cpu-band-report-a1.py` (SHA256 `f83555b2d8ee1199a8d3582f335de8227f063642d1488f974689470f0a46e895`) and `/private/tmp/lanl-export-cpu-band-report-a1.py` (SHA256 `544511da28df91f8a2404deb4f00f9623cd824eeb65f75aa0166a38a6422ef4c`). Each takes the same final immutable source SHA used by the model/development/held-out phases. Parent stages these exact helper bytes on mbit10; neither has been dispatched.
 
 The dispatcher requires mbit10, the unchanged clean model checkout, successful model/held-out exits, the current verified socket wrapper, all released owned leases, the other owned lane idle, load <=32 and free space >=21GiB on `/data1` and >=10GiB on `/data`. Its fresh raw folder is `/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261006-a1`. It verifies sealed model/held-out receipts, exact target/calibration/four-characterization/four-estimate/two-kernel protocol pins and the unchanged development width before any public command. Limits are 3300s runner, 3400s outer, 600s per public stage and 700s validation, with active child-group cleanup on interruption.
 
@@ -170,4 +173,16 @@ The exporter waits for release and exit0, independently rechecks all four new re
 
 The immutable `mbit10.cpu.lanl20261006.service.openmp.a1` record passed local replay of the full native ABI/count/probe/runtime admission. All 22 parameters retain seven positive paired residuals; minimum gross and driver windows are 0.078387 s and 0.072232 s. All four exact characterization hashes pass service compatibility. The read-only binder replay also admits all 106 executed static OpenMP sites from the four sealed projections, with 22 raw and 6 derived success/terminal envelope parameters; none is unknown. The largest retained relative range is 0.562 (`openmp.14`, `__kmpc_end_single`); no spread or trial is dropped. This is a legal selected-event construction with inferred warmed serial T1 transfer, not a physical latency or application accuracy claim.
 
-[The compact admission review](11-openmp-elapsed-admission-review-20261006.json) pins the typed record, original receipt and full characterization digests separately from the counted-payload identities. It also verifies that each kernel's g16/g17 normalized source/runtime band scope matches. The independent floating primitive admission now passed: two separately retained footprint cells, four exact source-normalized count points, seven gross windows >=50ms per cell, pinned source/runtime controls and empty compatibility premises for exactly four BF/BC scopes. The chosen8MiB gross cell is7.568024635314941ns/request; physical latency/working-set transfer remain unproved. `11-float-memory-admission-review-20261006.json` verifies every aggregate memory region and the exact BC floating-site partition. The archived trial scope-label correction still gates complete trial estimates and final model freeze; no application timing has started.
+[The compact admission review](11-openmp-elapsed-admission-review-20261006.json) pins the typed record, original receipt and full characterization digests separately from the counted-payload identities. It also verifies that each kernel's g16/g17 normalized source/runtime band scope matches. The independent floating primitive admission now passed: two separately retained footprint cells, four exact source-normalized count points, seven gross windows >=50ms per cell, pinned source/runtime controls and empty compatibility premises for exactly four BF/BC scopes. The chosen8MiB gross cell is7.568024635314941ns/request; physical latency/working-set transfer remain unproved. `11-float-memory-admission-review-20261006.json` verifies every aggregate memory region and the exact BC floating-site partition. The strict archived trial scope-label reconciliation is now tested: exact sealed registered calls and memory partitions are normalized only in copied estimation contexts. Five public positive/refusal cases passed; original characterization bytes and seals remain unchanged. Final numerical freeze still waits for the complete protected-evaluator and adjacent public source gate; no application timing has started.
+
+### Prospective per-kernel envelope and orchestration custody (2026-10-07 ET)
+
+The model helper creates one target, two returned immutable kernel protocols and four estimates. Development and held-out exports each add two native-validation records and two distinct kernel-band records. The report export still adds two protocols and two g17 estimates. Source/target/calibration/characterization pins and original estimates remain unchanged across phases. Local mocks deliberately use different BFS/BC widths and confirm each holdout/report consumes only its own band's width.
+
+All model/development/holdout/report runners pin `swdb/processes.py` SHA256 `bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289`, parent helper SHA256 `31e1d71bc6e9ef4a5a5f1d5fbff136ceef249935f8f00601edf45277fce249ec` and the actual `17-linux-cleanup-smoke-mbit10-20261006-a1.json` receipt. The exact parent helper is staged at `/data1/yanruj/lanl17-control-20261006.py`. They enable Linux subreaping and stop the active process group even after its leader has returned, then invoke the previously tested owned-descendant cleanup and retain survivor receipts. Command caps leave 45 seconds for cleanup within each remaining phase deadline. A fixture/macOS signal test is not a substitute for the pinned actual Linux cleanup proof.
+
+### Protected ArchEvolve evaluator admission (2026-10-07 ET)
+
+`characterize --adapter registered-cpu --evaluation-request REQUEST --source-position P --repetition R --trials 1` derives one canonical-v1 protected evaluator count invocation from the candidate's immutable artifact and prospective evaluation request. It inserts existing observer markers around exactly the kernel invocation in a separate derived wrapper. Original candidate files, driver templates, LLVM pass and runtime are unchanged. Graph/setup and post-call verification are excluded. Native mode requires a registered canonical workload; scalable SG remains unsupported by this first adapter. Candidate, graph/input, source slot, process policy, compiler/flags/runtime controls, protected driver and counted execution/payload seals enter the receipt.
+
+Before any established native evaluation invocation, its paired-estimate annotation selects exact persisted matching estimates (or an explicit complete per-slot table) and checks the counted context, frozen model/protocol and runtime relation. Matching semantic predictions are carried even when required model costs are unknown. No original advancing-driver error band transfers to this new protected ROI. Kernel prediction remains separate from uncalibrated `steady_clock` measurement-boundary uncertainty; a system_clock calibration cannot fill that cost. Native timing/correctness selection remains authoritative. Tiny public fixture estimates prove contract behavior only, never application accuracy.

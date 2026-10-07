@@ -38,3 +38,24 @@ Shared API agreement is `/private/tmp/lanl-09-11-shared-interface-20261006.md`;
 plans are `/private/tmp/lanl-ticket11-readonly-plan-20261006.md` and
 `/private/tmp/lanl-ticket11-t1-completeness-appendix-20261006.md`. Actual dependent
 counter/calibration jobs wait for the integrated09 foundation and stable plugin.
+
+2026-10-07 ET: Implementation remains claimed pending actual model/development/held-out
+and verdict-reader receipts. All nine independent native calibrations and four
+outcome-free BF/BC characterizations are retained. The prospective freeze uses
+separate BFS and BC development/held-out bands with unchanged rounding-aware rules.
+The protected CPU evaluator now has an exact canonical graph/source-slot count
+adapter and pre-timing persisted-estimate admission. A public hypothetical-cost
+fixture carries positive semantic kernel seconds; steady_clock boundary confidence
+and original-driver band transfer remain unknown. Archived annotation pins,
+source-slot mismatch, ambiguous selection and withheld-cost public guards are
+being finalized before immutable source handoff. Parent owns all remote dispatch.
+
+2026-10-07 01:00 ET final source handoff: protected positive/mismatch/unknown/archived
+public gate passed (1 case, 491.36 s); strict legacy and prior paired behavior
+passed (6 cases, 370.51 s); runtime unknown-envelope controls passed (3 cases).
+Final catalogue validates all 665 records; all 905 parent protected blobs remain
+byte-identical. A final-source public freeze/estimate/module pairing replay
+carries fixture semantic kernel_seconds=7.92e-05 with elapsed seconds and band
+null. This is transport evidence only. Evidence:
+`evidence/11-final-source-validation-proof-20261007.json` and linked public proofs.
+Status remains claimed until actual model, development, held-out and report phases.

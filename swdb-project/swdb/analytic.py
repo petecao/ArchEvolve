@@ -39,7 +39,10 @@ def register_cli(commands):
     subject.add_argument('--implementation')
     subject.add_argument('--candidate')
     sub.add_argument('--input', required=True)
-    sub.add_argument('--adapter', choices=['registered-gapbs','registered-functional'], help='verify registered GAPBS source/input/trial-lambda binding')
+    sub.add_argument('--adapter', choices=['registered-gapbs','registered-functional','registered-cpu'], help='verify registered GAPBS source/input/trial-lambda binding')
+    sub.add_argument('--evaluation-request', type=Path, help='prospective protected CPU evaluator request; required by registered-cpu')
+    sub.add_argument('--source-position', type=int, default=0, help='exact prospective protected CPU source slot')
+    sub.add_argument('--repetition', type=int, default=0, help='exact prospective protected CPU repetition slot')
     sub.add_argument('--source-snapshot', help='immutable baseline snapshot for registered-functional; candidates pin their own snapshot')
     sub.add_argument('--counting-pipeline', choices=tuple(PIPELINES), help='fixed source normalization recipe; fixtures default v1, registered adapter requires v2')
     sub.add_argument('--trials', type=int, default=5, help='registered GAPBS trial count; preserve each invocation separately')
@@ -266,6 +269,8 @@ def characterize(args):
     subject_record = store.get(subject, kind)
     input_record = store.get(args.input, 'input') or store.get(args.input, 'workload')
     adapter = None
+    if args.adapter != 'registered-cpu' and (args.evaluation_request or args.source_position or args.repetition):
+        raise Failure('prospective CPU request/slot options require registered-cpu')
     if args.source_snapshot and args.adapter!='registered-functional':
         raise Failure('--source-snapshot requires registered-functional')
     if args.adapter:
@@ -358,10 +363,10 @@ def characterize(args):
     _run([*base, '-Xclang', '-disable-llvm-passes', '-o', raw], timeout=args.timeout_s)
     # Adapter boundary hooks are inserted before helper inlining, preserving the exact source call.
     bound_ir = output / 'bound.bc'
-    if adapter:
+    if adapter and not adapter.get('explicit_roi'):
         gate_env = dict(os.environ, SWDB_ROI_PATH=adapter['roi_path'], SWDB_ROI_LINE=str(adapter['roi_line']))
         _run([llvm / 'opt', '-load-pass-plugin=' + str(plugin), '-passes=swdb-bind-roi', raw, '-o', bound_ir], env=gate_env, timeout=args.timeout_s)
-    analysis_input=bound_ir if adapter else raw
+    analysis_input=bound_ir if adapter and not adapter.get('explicit_roi') else raw
     if live_contract:
         command_ir=output/'commands.bc'
         command_env=dict(os.environ,SWDB_FUNCTIONAL_OBSERVATION=str(command_contract))
@@ -386,8 +391,11 @@ def characterize(args):
     binary = output / 'counted'
     native_library_flags = [flag for folder in run_library_paths for flag in ('-L' + folder, '-Wl,-rpath,' + folder)]
     _run([llvm / 'clang++', '-O3', instrumented, llvm_src / 'CountingRuntime.cpp', '-o', binary, *flags, *toolchain_flags, *native_library_flags], timeout=args.timeout_s)
-    for name in ('LD_LIBRARY_PATH', 'DYLD_LIBRARY_PATH'):
-        env[name] = os.pathsep.join(run_library_paths + ([env[name]] if env.get(name) else []))
+    if adapter and adapter.get('environment') is not None:
+        env={**adapter['environment'],**{key:value for key,value in env.items() if key.startswith('SWDB_')}}
+    else:
+        for name in ('LD_LIBRARY_PATH', 'DYLD_LIBRARY_PATH'):
+            env[name] = os.pathsep.join(run_library_paths + ([env[name]] if env.get(name) else []))
     env['OMP_NUM_THREADS'] = str(args.threads)
     env['OMP_DYNAMIC'] = 'FALSE'
     env['SWDB_ROI_GATED'] = '1' if adapter else '0'
@@ -424,7 +432,7 @@ def characterize(args):
         'subject': {'kind': kind, 'id': subject}, 'input': args.input,
         'source': {'path': str(source), 'sha256': _sha(source), 'build_flags': flags,
                    'run_arguments': list(args.run_arg), 'protected_driver': 'unchanged; separately compiled instrumentation'},
-        'binding': {'state': 'verified' if adapter else 'fixture' if args.fixture else 'unverified',
+        'binding': {'state': 'fixture' if args.fixture else 'verified' if adapter else 'unverified',
             'subject_source_identity': source_identity, 'input_record_sha256': artifacts.digest(input_record),
             'roi': args.roi, 'threads': args.threads,
             'run_arguments_sha256': artifacts.digest(list(args.run_arg)),
@@ -522,15 +530,19 @@ def characterize(args):
     if adapter:
         record['binding']['note'] = 'Registered source excerpts, input generator and original timed kernel lambda verified; each trial and SourcePicker selection retained.'
         record['coverage']['ambiguous_helper_loops'] = adapter['ambiguous_helper_loops']
-        record['pattern_comparison'] = [] if args.adapter=='registered-functional' else analytic_binding.compare_patterns(subject_record, regions, adapter['ambiguous_helper_loops'], adapter['mapping']['regions'])
-        graph = re.search(r'Graph has ([0-9]+) nodes and ([0-9]+) (un)?directed edges', executed.stdout)
-        if not graph:
-            raise Failure('registered counting run lacks graph identity')
-        observed_graph = {'num_nodes': int(graph[1]), 'reported_edges': int(graph[2]), 'directed': graph[3] is None}
-        record['binding']['execution_receipt'] = analytic_binding.execution_receipt(record, observed_graph, llvm_src / 'Characterize.cpp', llvm_src / 'CountingRuntime.cpp')
-        problems = analytic_binding.verify_binding(record, store, require_available=True)
-        if problems:
-            raise Failure('registered execution binding failed: ' + '; '.join(problems))
+        record['pattern_comparison'] = [] if args.adapter in ('registered-functional','registered-cpu') else analytic_binding.compare_patterns(subject_record, regions, adapter['ambiguous_helper_loops'], adapter['mapping']['regions'])
+        if args.adapter == 'registered-cpu':
+            from swdb.analytic_cpu_binding import finish
+            finish(adapter, record, store)
+        else:
+            graph = re.search(r'Graph has ([0-9]+) nodes and ([0-9]+) (un)?directed edges', executed.stdout)
+            if not graph:
+                raise Failure('registered counting run lacks graph identity')
+            observed_graph = {'num_nodes': int(graph[1]), 'reported_edges': int(graph[2]), 'directed': graph[3] is None}
+            record['binding']['execution_receipt'] = analytic_binding.execution_receipt(record, observed_graph, llvm_src / 'Characterize.cpp', llvm_src / 'CountingRuntime.cpp')
+            problems = analytic_binding.verify_binding(record, store, require_available=True)
+            if problems:
+                raise Failure('registered execution binding failed: ' + '; '.join(problems))
     record['identity_sha256'] = artifacts.digest(record)
     writer.commit(args.records, new=[record])
     return record

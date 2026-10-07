@@ -16,7 +16,7 @@ CHARACTERIZATION = 'bfs.kron-g16.t1.characterization.objects.a1'
 REGION = 'gapbs-bfs-do/serial.433918642650629990'
 
 
-def legacy_case(records, tmp_path):
+def legacy_case(records, tmp_path, change=None):
     paths = {path.stem: path for path in (REPO / 'records').rglob('*.yaml')}
     pending = ['gapbs-bfs-do', 'kron-g16-k16', 'mbit10']
     copied = set()
@@ -38,6 +38,13 @@ def legacy_case(records, tmp_path):
         pending.extend(references(access.read_record(source)))
     original = REPO / 'records/workload_characterizations' / (CHARACTERIZATION + '.yaml')
     char = access.read_record(original)
+    if change is not None:
+        change(char)
+        from swdb.analytic_binding import counted_payload
+        if 'execution_receipt' in char['binding']:
+            char['binding']['execution_receipt']['counted_payload_sha256'] = artifacts.digest(counted_payload(char))
+        char.pop('identity_sha256')
+        char['identity_sha256'] = artifacts.digest(char)
     portable = tmp_path / 'sealed-characterization.json'
     portable.write_text(json.dumps(char))
     target_path = target_description(tmp_path)
@@ -78,3 +85,30 @@ def test_sealed_registered_trial_scopes_reconcile_before_strict_size_bin_model(r
     assert original.read_bytes() == before
     assert char['trials'][0]['unmodeled_calls'][0]['execution_count']['scope'] == 'per_run'
     assert estimate['seconds'] is None  # Independent opaque costs remain unsupported in this narrow test.
+
+
+@pytest.mark.parametrize('mismatch', ['size_bin', 'source_scope', 'memory_partition', 'fixture'])
+def test_unproved_trial_context_keeps_strict_allocator_cost_unknown(records, tmp_path, mismatch):
+    def change(char):
+        trial = char['trials'][0]
+        region = next(row for row in trial['regions'] if row['id'] == REGION)
+        call = next(row for row in trial['unmodeled_calls'] if row['site'] == 64)
+        if mismatch == 'size_bin':
+            row = next(row for row in region['call_shape_counts']['calls'] if row['site'] == 64)
+            row['known_length_bins'][0]['execution_count']['value'] = 3
+        elif mismatch == 'source_scope':
+            call['execution_count']['scope'] = 'per_call'
+        elif mismatch == 'memory_partition':
+            access = next(row for row in region['access_patterns'] if row['element_count']['value'])
+            access['bytes_accessed']['value'] += access['element_bytes']
+        else:
+            char['binding']['state'] = 'fixture'
+            char['evidence_kind'] = 'contract_fixture'
+            char['binding'].pop('execution_receipt')
+    _, estimate = legacy_case(records, tmp_path, change)
+    region = next(row for row in estimate['trials'][0]['regions'] if row['id'] == REGION)
+    cost = next(row for row in region['overheads'] if row['model'] == 'native_service_costs')
+    assert cost['seconds'] is None and cost['inputs']['covered_calls'] == []
+    assert 'call_shape.complete_scoped_bins._Znam' in cost['missing']
+    assert all(proof['position'] != 0 for proof in estimate.get('extensions', {}).get('legacy_trial_scope_reconciliations', []))
+    assert estimate['seconds'] is None
