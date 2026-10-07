@@ -1,0 +1,30 @@
+{
+  "format": "swdb.cpu-band-report-a4-original-failure-binding.v1",
+  "portable_readiness_identity_sha256": "48d2c1800c9986b782b92ef26e1e4ee4b444d7939f71edbc6bdcef425a5b4e97",
+  "portable_readiness_file_sha256": "e3415ec21e03b3a9db4fa471886a8e1a63aa6e7d51ecf402be459a3c0f714f7d",
+  "actual_failed_a3_custody": {
+    "path": "/private/tmp/lanl-cpu-band-report-startup-failure-custody-actual-20261007-a3.json",
+    "identity_sha256": "7b67aec7b399c9da63923d66dd5678bcaf5cf516a751c3da94981da4b8b06455",
+    "file_sha256": "1c67e7273505dd80e636fe2b5557f6003b24309318ec2ff38c76b714aad9e625",
+    "generated_runner_sha256": "226783708a80758f585cf327631433168134d9dc967ebf3a96385dd40aa5678d",
+    "selected_helper_sha256": "dd74dbbe238c1d0c8222d894acd94ef1d344049da257d2a0d744afefb3d2b120",
+    "local_decoded_template_binding_verified": true,
+    "lane": {
+      "node": 0,
+      "lease_generation": 508,
+      "started_utc": "2026-10-07T10:52:31Z",
+      "ended_utc": "2026-10-07T10:52:31Z",
+      "exit_code": 1,
+      "numa_memory_policy": "bind:0"
+    },
+    "zero_records_stage_outputs_started_and_acceptance_absent": true,
+    "all_leases_released": true
+  },
+  "actual_failure_reader": {
+    "path": "/private/tmp/lanl-read-band-report-startup-failure-custody-20261007-a3.py",
+    "sha256": "b814c912a16c6f757429c80398123ac5bde17a9758401d8a4826791a28d6ed3f"
+  },
+  "new_controls_changed_after_parent_handoff": false,
+  "binding_scope": "Separate preparation custody addendum; retry guards retain reviewed exact pins and parent checks original failure. No raw log read/transfer, staging, retry, Store or scientific action.",
+  "identity_sha256": "57aba2a60c29c18db84a007d22bbd10d07b1b6da6387d0b1e72a98a2a1f9cdb0"
+}

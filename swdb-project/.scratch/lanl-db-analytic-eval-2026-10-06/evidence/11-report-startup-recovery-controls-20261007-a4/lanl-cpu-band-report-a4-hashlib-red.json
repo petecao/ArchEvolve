@@ -1,0 +1,19 @@
+{
+  "format": "swdb.cpu-report-startup-regression.v1",
+  "dispatcher": "/private/tmp/lanl-dispatch-cpu-band-report-a3-metadata2400-cleanup60.py",
+  "dispatcher_sha256": "dd74dbbe238c1d0c8222d894acd94ef1d344049da257d2a0d744afefb3d2b120",
+  "fixture_sha256": {
+    "cleanup": "cb228126759976d7625c5b6bcafca7adbae4178bdb2c0f0279fe504a695cc551",
+    "processes": "49a5a5a58a13a805d9e589b02fcaca65f46c7aa1295b07462fac5fc6b46a9b7c"
+  },
+  "cases": {
+    "startup": {
+      "returncode": 1,
+      "error": "NameError: name 'hashlib' is not defined",
+      "actual_sha_assertions": 2,
+      "isolated_fresh_namespace": true,
+      "executed_Store_cleanup_native_provider": false
+    }
+  },
+  "passed": false
+}

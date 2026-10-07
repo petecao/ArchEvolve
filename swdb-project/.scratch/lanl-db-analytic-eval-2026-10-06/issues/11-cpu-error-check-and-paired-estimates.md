@@ -86,3 +86,12 @@ than 99.98% of each forecast; this is not measured regional error attribution.
 Each kernel has one development pair and one held-out pair, not five independent
 error observations. Ticket remains claimed pending the public report reader,
 which must preserve failed BC confidence and unchanged forecast costs.
+
+2026-10-07 07:14 ET report administrative startup custody: original a3 generation 508
+failed before Store or report publication because the standalone runner lacked
+hashlib. The reviewed import-only repair and fresh raw attempt a4, portable
+RED→GREEN checks, actual failure/staging custody and original unsealed dispatch
+stream are preserved in `evidence/11-report-startup-recovery-controls-20261007-a4/`.
+Logical canonical study IDs remain a3; source C/F6, forecasts, regional costs and
+BFS/BC widths are unchanged. Retry acceptance and the public verdict reader are
+pending. BC remains failed and unvalidated. Status remains claimed.
