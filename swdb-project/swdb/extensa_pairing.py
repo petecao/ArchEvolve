@@ -88,6 +88,10 @@ class PairingLedger:
             for row in definition.get('representations', [])]
         execution = {key: copy.deepcopy(value) for key, value in request.items()
                      if key not in {'id', 'message_version', 'candidate', 'workload', 'budget', 'build_directory'}}
+        selected = {key: copy.deepcopy(value) for key, value in request['workload'].items() if key != 'id'}
+        if isinstance(selected.get('representation'), dict):
+            selected['representation'].pop('path', None)
+        execution['selected_input'] = selected
         execution['target'] = self.campaign['target']
         execution.setdefault('roi', self.campaign['protocol']['roi'])
         execution.setdefault('threads', self.campaign['protocol']['threads'])
@@ -101,16 +105,17 @@ class PairingLedger:
         if not self.enabled:
             return []
         policy = self._policy()
-        store, result = Store(self.store_dir), []
+        store, result, pending = Store(self.store_dir), [], []
+        frozen = {r.data['context_sha256']: r.data for r in store.of_kind('paired_estimate')
+                  if r.data['campaign'] == self.campaign['id']}
         for request in requests:
             context = self._context(store, request)
             digest = artifacts.digest(context)
-            existing = [r.data for r in store.of_kind('paired_estimate')
-                        if r.data['context_sha256'] == digest and r.data['campaign'] == self.campaign['id']]
+            existing = frozen.get(digest)
             if existing:
-                if len(existing) != 1 or existing[0]['policy_sha256'] != artifacts.digest(policy):
+                if existing['policy_sha256'] != artifacts.digest(policy):
                     raise Failure('paired estimate context has ambiguous or changed frozen policy')
-                result.append(existing[0]['id'])
+                result.append(existing['id'])
                 continue
             seconds, state, missing = None, 'unknown', [
                 'exact_registered_graph_complete_call_count_binding',
@@ -133,9 +138,15 @@ class PairingLedger:
                 evidence_kind=evidence, eligible_for_agreement=False)
             data['identity_sha256'] = identity(data)
             data['id'] += '.' + data['identity_sha256'][:16]
-            workflow.persist(self.store_dir, data, create=True)
-            store = Store(self.store_dir)
+            pending.append(data)
+            frozen[digest] = data
             result.append(data['id'])
+        if pending:
+            # One transaction validates all contexts before the first outcome,
+            # avoiding repeated catalog validation while pre-freezing a population.
+            from swdb import db
+            writer.commit(self.store_dir, new=pending)
+            db.build(self.store_dir, db.default_path(self.store_dir))
         return result
 
     def before(self, stage, requests):
