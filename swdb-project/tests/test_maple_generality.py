@@ -24,6 +24,10 @@ def test_reported_fpga_target_freezes_without_simulation_or_service_fabrication(
     assert reference['core_frequency_hz']['value']==60000000
     assert reference['dram_latency_cycles']['value']==300
     assert reference['shared_l2_bytes']['value']==65536
+    assert reference['shared_l2_bytes']['basis']=='inferred'
+    assert reference['dram_capacity_reported']=={'value':1,'basis':'reported','unit':'GB',
+        'source':'Author PDF page 9, Table 2; literal unit retained.'}
+    assert reference['dram_bytes']['value'] is None and reference['dram_bytes']['basis']=='unknown'
     assert reference['dram_bandwidth_bytes_per_s']['value'] is None
     assert target['extensions']['accuracy_validation'] is False
     assert target['extensions']['estimate_only'] is True
