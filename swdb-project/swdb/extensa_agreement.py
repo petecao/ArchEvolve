@@ -175,8 +175,15 @@ def freeze(args):
                 'canonical_sha256': definition['canonical_sha256'], 'sources': list(definition['sources']),
                 'generation': {'family': definition['family'],
                     'generator': copy.deepcopy(definition.get('generator'))}})
+        baselines = []
+        for row in configuration['baselines']:
+            source = store.get(row['candidate'], 'candidate')
+            _fail(source is not None, 'population baseline is missing: ' + row['candidate'])
+            baselines.append({'role': row['role'], 'candidate': source['id'],
+                              'record_sha256': artifacts.digest(source),
+                              'artifact_sha256': source['artifact']['sha256']})
         population.append({'campaign': configuration['id'], 'campaign_file_sha256': artifacts.file_hash(file),
-                           'configuration': configuration, 'workloads': workloads})
+                           'configuration': configuration, 'workloads': workloads, 'baselines': baselines})
     _fail(len({row['campaign'] for row in population}) == len(population), 'population has duplicate campaigns')
     _fail(workflow.CREATION_TAGS['campaign'] in {row['campaign'] for row in population},
           'Extensa campaign tag must anchor a campaign in the frozen population')
@@ -235,6 +242,14 @@ def _analyse(policy, summaries):
         _fail(summary['campaign_file']['sha256'] == plan['campaign_file_sha256'],
               'summary campaign configuration differs from prospective freeze')
         _fail(summary['target'] == 'dx100_gem5', 'agreement summary target is not DX100')
+        _fail({row['role']: row['candidate'] for row in summary['baselines']} ==
+              {row['role']: row['candidate'] for row in plan['baselines']},
+              'summary baseline population differs from prospective freeze')
+        for row in plan['baselines']:
+            _fail(all(receipt['timing_context']['subject']['artifact_sha256'] == row['artifact_sha256']
+                      for receipt in (summary.get('paired_estimates') or {}).get('records', [])
+                      if receipt['timing_context']['subject']['id'] == row['candidate']),
+                  'baseline forecast source artifact differs from prospective freeze')
         classes = {row['class']: row['id'] for row in plan['workloads']}
         _fail({row['class']: row['workload'] for row in summary['workload_classes']} == classes,
               'summary workload population differs from prospective freeze')
@@ -269,7 +284,7 @@ def _analyse(policy, summaries):
                     if any(row['seconds'] is None for row in forecasts):
                         exclusions.append('unknown_forecast')
                     # Ticket16 currently admits no application numeric forecast.
-                    exclusions.append('no_verified_complete_call_numeric_adapter')
+                    exclusions.extend(['no_verified_complete_call_numeric_adapter', 'unverified_unique_pair_content'])
                     key = artifacts.digest({'campaign_configuration': plan['configuration'],
                         'input': next(row for row in plan['workloads'] if row['class'] == candidate['class']),
                         'candidate_artifact_sha256': candidate['artifact_sha256'],
@@ -280,7 +295,8 @@ def _analyse(policy, summaries):
                     seen.add(key)
                     pairs.append({'campaign': cid, 'class': candidate['class'], 'candidate': candidate['id'],
                         'candidate_artifact_sha256': candidate['artifact_sha256'], 'comparison': comparison['comparison'],
-                        'baseline_evaluation': comparison['baseline_evaluation'], 'pair_identity_sha256': key,
+                        'baseline_evaluation': comparison['baseline_evaluation'], 'pair_identity_sha256': None,
+                        'request_digest_sha256': key,
                         'forecast_ids': [row['id'] for row in forecasts], 'timing_speedup': comparison['ratio'],
                         'timing_basis': summary['evidence_basis'], 'timing_evidence_kind': summary['evidence_kind'],
                         'structural_missing': sorted({reason for row in forecasts for reason in row['structural_missing']}),
@@ -293,7 +309,7 @@ def _analyse(policy, summaries):
     absent = sorted(set(planned) - {summary['campaign'] for summary in summaries})
     return {'evidence_kind': ('unavailable' if not summaries else 'mixed_sources' if
                              len({s['evidence_kind'] for s in summaries}) > 1 else summaries[0]['evidence_kind']),
-        'counts': {'observed_candidate_rows': len(pairs), 'unique_observed_pair_contents': len(seen),
+        'counts': {'observed_candidate_rows': len(pairs), 'unique_observed_pair_contents': None, 'unique_retained_request_digests': len(seen),
             'unique_eligible_dx100_pairs': 0, 'excluded_candidate_rows': len(pairs),
             'planned_campaigns': len(planned), 'observed_campaigns': len(summaries)},
         'pairs': pairs,
@@ -342,6 +358,15 @@ def validate_record(record, ctx):
             problems = campaign.campaign_problems(configuration)
             if problems or configuration.get('id') != member['campaign'] or configuration.get('target') != 'dx100_gem5':
                 yield Problem(record.rel, 'population', 'frozen campaign configuration differs or is invalid')
+                continue  # Malformed embedded configurations are data errors, not Python exceptions.
+            if ({row['role']: row['candidate'] for row in member['baselines']} !=
+                    {row['role']: row['candidate'] for row in configuration['baselines']}):
+                yield Problem(record.rel, 'population', 'frozen baseline configuration differs')
+            for baseline in member['baselines']:
+                source = ctx.passed(baseline['candidate'], 'candidate')
+                if (source is None or artifacts.digest(source) != baseline['record_sha256'] or
+                        source['artifact']['sha256'] != baseline['artifact_sha256']):
+                    yield Problem(record.rel, 'population', 'frozen baseline artifact/metadata differs or is unavailable')
             for workload in member['workloads']:
                 source = ctx.passed(workload['id'], 'workload')
                 if source is None or artifacts.digest(source) != workload['record_sha256']:
