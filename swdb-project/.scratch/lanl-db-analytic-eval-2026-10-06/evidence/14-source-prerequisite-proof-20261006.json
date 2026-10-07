@@ -2,8 +2,8 @@
   "format": "swdb.lanl14-source-prerequisite.v1",
   "updated": "2026-10-06 ET",
   "state": "tested_source_prerequisite_only",
-  "integration_base": "208a0a45a27f5ea2f1ac019002202a9d06a6fe30",
-  "source_merge_commit": "9c9bda4c04643bd36ba539ddb235e68a30274df2",
+  "integration_base": "6539640c65cb9abbebf636410b093353b0021ee2",
+  "source_merge_commit": "997b258734c53fdf8da9690aa832688273179491",
   "all_changes_inside_swdb_project": true,
   "new_canonical_records": [
     {
@@ -82,5 +82,6 @@
   ],
   "ticket_state": "claimed",
   "no_remote_actions": true,
-  "identity_sha256": "f09ca944e9975784b5bee39666ecaab9476d8953e55bf401bf215baa8a0eae54"
+  "identity_sha256": "52d91dace03608d1f5b79870601e3a8aab59a53bcfc72a25a17bdb8e17191177",
+  "post_gate_integration_changes": "Parent progress and final 17 helper custody/actual Linux cleanup metadata only; Python, canonical records and observer code identical. No gate repetition necessary."
 }
