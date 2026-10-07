@@ -104,7 +104,8 @@ def _memory_binding(args,target,char,cells,scopes):
         parameter['source']+='; context binding '+char['id']+'; constructed request transfer is inferred'
         if missing:parameter.update(value=None,basis='unknown')
         parameters[name]=parameter
-        selected[key]={'parameter':name,'calibration':calibration['id'],'service':service['id'],'footprint_bytes':size,'regime':regime}
+        selected[key]={'parameter':name,'calibration':calibration['id'],'service':service['id'],'footprint_bytes':size,'regime':regime,
+            'cost_basis':service.get('cost_basis','paired_driver_subtraction')}
         compatibility.append({'calibration':calibration['id'],'service':service['id'],'parameter':name,'missing':missing,'scopes':scope_rows})
     if not selected:raise Failure('selected memory footprint has no measured/reported cells')
     requests=[]
@@ -112,10 +113,11 @@ def _memory_binding(args,target,char,cells,scopes):
         if op=='cas-failure':continue
         source_services=[{k:cell[k] for k in ('calibration','service','parameter')}]
         parameter=cell['parameter'];construction={'regime':cell['regime'],'footprint_bytes':cell['footprint_bytes'],
-            'transfer_basis':'inferred','source_services':source_services,'physical_cache_level':'unverified'}
+            'transfer_basis':'inferred','source_services':source_services,'physical_cache_level':'unverified','cost_basis':cell['cost_basis']}
         if op=='cas-success':
             other=selected.get(('cas-failure',width))
             if not other:raise Failure('constructed CAS binding needs both independent success and failure cells')
+            if other['cost_basis']!=cell['cost_basis']:raise Failure('constructed CAS cells must share a resource recipe')
             source_services.append({k:other[k] for k in ('calibration','service','parameter')})
             rates=[parameters[x['parameter']] for x in (cell,other)]
             known=all(r.get('basis')!='unknown' and type(r.get('value')) in (int,float) and math.isfinite(r['value']) and r['value']>0 for r in rates)
@@ -151,8 +153,18 @@ def bind(args):
     result.update(id=args.id,created=writer.today(),updated=writer.today())
     parameters={}; selectors={}; proofs=[]; rows=[]; memory_cells=[]
     for identifier in args.calibration:
-        calibration=_load(store,identifier,'cpu_service_calibration')
-        problems=list(validate_record(Record(Path(identifier),calibration),None))
+        found=store.by_id.get(identifier)
+        if found is None:
+            from swdb import access
+            kind=access.read_record(Path(identifier)).get('kind')
+        else:kind=found.kind
+        if kind not in ('cpu_service_calibration','cpu_memory_resource_calibration'):
+            raise Failure('unsupported typed CPU service/resource calibration kind')
+        calibration=_load(store,identifier,kind)
+        if kind=='cpu_memory_resource_calibration':
+            from swdb.cpu_memory_resource import validate_record as validate_resource
+            problems=list(validate_resource(Record(Path(identifier),calibration),store))
+        else:problems=list(validate_record(Record(Path(identifier),calibration),None))
         if problems:raise Failure('invalid service calibration: '+str(problems[0]))
         proofs.append({'id':identifier,'sha256':artifacts.digest(calibration)})
         for service in calibration['services']:

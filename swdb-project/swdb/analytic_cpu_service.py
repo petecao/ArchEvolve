@@ -145,7 +145,8 @@ def _memory_construction(item,mechanism):
         'compare-and-swap':'integer_strong_seq_cst_compare_exchange'}.get(kind)
     required={'primitive','regime','footprint_bytes','transfer_basis','physical_cache_level','source_services'}
     if kind=='compare-and-swap':required.add('outcome_policy')
-    if not isinstance(construction,dict) or set(construction)!=required:return None,['memory_scenario.explicit_construction']
+    if not isinstance(construction,dict) or set(construction)-{'cost_basis'}!=required:return None,['memory_scenario.explicit_construction']
+    if construction.get('cost_basis','paired_driver_subtraction') not in ('paired_driver_subtraction','gross_constructed_resource_v1'):return None,['memory_scenario.resource_recipe']
     size=construction['footprint_bytes'];small=width==1
     if (expected is None or construction['primitive']!=expected or construction['regime']!=('fixed_small_byte_read_constructed_requests' if small else 'resident_serial_constructed_requests') or
         construction['transfer_basis']!='inferred' or construction['physical_cache_level']!='unverified' or type(size) is not int or size<64 or size>8388608 or size&(size-1) or
@@ -231,7 +232,8 @@ def memory_service_scenario(region, mechanism, *, context=None):
             seen.add(key);executed+=count;useful_bytes+=count*width
             if source_totals.get(key,0)!=count:missing.append('memory_scenario.exact_source_cell_sum.'+kind+'.'+str(width))
             rate=_rate(mechanism,rates[key]['parameter'],'seconds/request') if key in rates else None
-            inputs.append({'update_kind':kind,'element_bytes':width,'requests':fact,'seconds_per_request':rate})
+            inputs.append({'update_kind':kind,'element_bytes':width,'requests':fact,'seconds_per_request':rate,
+                'construction':rates.get((kind,width),{}).get('construction')})
             if count and rate is None:missing.append('memory_scenario.cell.'+kind+'.'+str(width))
             elif count:seconds+=count*rate
     if any(n and key not in seen for key,n in source_totals.items()):missing.append('memory_scenario.exact_source_complete_cell_set')
@@ -246,4 +248,5 @@ def memory_service_scenario(region, mechanism, *, context=None):
         ['Residency/dependence transfer from constructed cells is explicitly inferred; this is a conditional service scenario.',
          'Logical source requests and bounded referent views do not establish full allocation identity, physical cache misses, first-touch faults or page residency.',
          'Exact scalar opcode/type/order/strong-CAS proof is required; collapsed update kinds do not admit floating RMW, atomic exchange, weak CAS or vectors. Compiler retention/locality transfer remains inferred.',
+         'Total-cell resource costs include retained driver work and compose as a maximum with counted compute; their application transfer is inferred, not a proven upper bound. Paired-subtraction inputs remain separately pinned.',
          'This mechanism supplies no opaque-call coverage or separate first-touch service. Unsupported executed update-kind/width cells remain unknown.'])

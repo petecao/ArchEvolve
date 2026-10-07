@@ -372,3 +372,37 @@ non-atomic loads/stores, integer sequentially consistent atomic add, or strong
 sequentially consistent compare/exchange. Floating RMW, atomic exchange, weak CAS,
 vector lanes and absent primitive facts remain unsupported. A zero-count site
 does not require a service rate. These guards apply independently in every trial.
+
+### Prospective total-cell resource recipe
+
+The two native8B-write paired differences in memory a1 are unresolved and stay
+null. A separate typed `cpu_memory_resource_calibration` applies the frozen recipe
+`gross_constructed_resource_v1`: each trial's uninstrumented gross elapsed divided
+by its exactly proved logical request denominator, with the median as the cost.
+All driver elapsed, full trials, source/observer/compiler/runtime proof, compute
+count diagnostics and original paired residual statistics/parameters remain
+retained. The typed source record, receipt and complete source hash are pinned;
+the source record is never rewritten. Native parameters have basis `inferred`
+and fixture parameters remain `reported`.
+
+This resource includes the constructed loop/index/driver work. It composes as a
+maximum with counted compute, instead of adding that compute again. Transferring
+constructed locality and dependency behavior to an application is explicitly
+inferred; the recipe supplies neither physical instruction latency nor a proven
+application upper bound. Exact primitive, width, context and frozen characterization
+allowlist guards still apply. The recipe/source/calibration identities must freeze
+before any application timing. It cannot resolve opaque calls or separate first
+touch costs. This prospective recipe uses no new elapsed run and no application
+outcome to adjust its rates.
+
+```bash
+python3 -m swdb.cpu_memory_resource --records "$SWDB_RAW_RECORDS" \
+  --source-calibration mbit10.cpu.lanl20261006.service.memory.a1 \
+  --id mbit10.cpu.lanl20261006.resource.memory.a1 --format json
+```
+
+Pass the new typed resource ID to `swdb.cpu_service_binding --calibration` with
+the already explicit footprint/CAS policy. Every construction records
+`cost_basis: gross_constructed_resource_v1`; mixed subtraction/total-cell CAS
+inputs are rejected. The frozen protocol recursively pins both the resource and
+original calibration. Previous descriptions and unresolved residuals stay intact.
