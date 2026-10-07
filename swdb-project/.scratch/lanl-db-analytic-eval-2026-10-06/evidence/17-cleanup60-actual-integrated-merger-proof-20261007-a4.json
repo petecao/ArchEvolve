@@ -1,0 +1,97 @@
+{
+  "format": "swdb.lanl17-cleanup60-actual-integrated-merger.v1",
+  "updated_utc": "2026-10-07T09:31:17.636262+00:00",
+  "base_commit": "59724aec70459d71ee6eeeeb4dd5b51e0d89a851",
+  "incoming_commit": "6fba254e5aaf84fdb8fc3132b2f7957c993a6ba0",
+  "ordinary_merge_commit": "808b66ed3565722f259a3f958b35b9b331bbfe29",
+  "ordinary_merge_tree": "6b4dd78232339a71242cf020d6f722665a3bd018",
+  "merge_parents": [
+    "59724aec70459d71ee6eeeeb4dd5b51e0d89a851",
+    "6fba254e5aaf84fdb8fc3132b2f7957c993a6ba0"
+  ],
+  "precheck_identity_sha256": "f473c5a134084b46efb79827e437b964d6166a344539689e036ae0cac1058f44",
+  "prior_tracked_blobs": 3679,
+  "prior_unchanged_blobs": 3678,
+  "only_allowed_prior_change": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/issues/17-agreement-report.md",
+    "operation": "append_only",
+    "status": "claimed"
+  },
+  "exact_incoming_additions": [
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-controls-actual-20261007-a4/README.md",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-controls-actual-20261007-a4/lanl-cleanup60-static-controls-staging-actual-20261007-a4.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-controls-actual-20261007-a4/lanl-stage-cleanup60-review-controls-20261007-a4.py",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-controls-actual-20261007-a4/lanl17-cleanup60-helper-dispatch-actual-20261007-a4.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-controls-actual-20261007-a4/lanl17-cleanup60-helper-linux-actual-20261007-a4.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-controls-actual-20261007-a4/lanl17-cleanup60-supervisor-dispatch-actual-20261007-a4.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-controls-actual-20261007-a4/lanl17-cleanup60-supervisor-linux-actual-20261007-a4.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-controls-actual-20261007-a4/manifest.json"
+  ],
+  "exact_external_snapshot_bytes": 6,
+  "nested_actual_seals_verified": 10,
+  "sealed_manifest_verified": true,
+  "manifest": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-controls-actual-20261007-a4/manifest.json",
+    "identity_sha256": "0e29dcc9dec3194cc99c6d8560d484285b58be9bcb7a528ede4b5b854374e1c3",
+    "file_sha256": "ed3b4adb429ff640a707d0d7a626567dcd05e7c1b95fe06a64d758e9bbe725fd"
+  },
+  "actual_helper_smoke": {
+    "state": "passed_once",
+    "generation": 547,
+    "wrapper_identity_sha256": "63ded110c4f3e18e8f105aa54f87db2daef24f74a9fe6cb44300c091ebd6b296",
+    "receipt_identity_sha256": "18e58a44476709cc7520f9760ac94161cd67248e39ff662fbfb16378855d7ca1",
+    "receipt_file_sha256": "873d36971b55e903731c9ab44a93ba5f1d8f3c563d0cf6dcefb2a48c8a6b063e",
+    "lane": {
+      "node": 1,
+      "started_utc": "2026-10-07T09:14:38Z",
+      "ended_utc": "2026-10-07T09:14:53Z",
+      "exit_code": 0
+    }
+  },
+  "actual_supervisor_fixture": {
+    "state": "passed_once",
+    "generation": 548,
+    "cases": [
+      "returned",
+      "timeout",
+      "term"
+    ],
+    "wrapper_identity_sha256": "f0b2f8cf69ce5406e69af94977696dd1f67e39207241f8871695e3c76b591b08",
+    "receipt_identity_sha256": "ea9751eef12bc519be0c4159813e29fa5aa378693c6a31caea137599c5db744b",
+    "receipt_file_sha256": "12546c476589f3eceb6f779f53b710b8bd623c643b3417461fd4f21774c07436",
+    "lane": {
+      "node": 1,
+      "started_utc": "2026-10-07T09:15:54Z",
+      "ended_utc": "2026-10-07T09:16:45Z",
+      "exit_code": 0
+    }
+  },
+  "actual_cleanup_proof_path": "/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261007-a4/receipt.json",
+  "actual_supervisor_fixture_proof_path": "/data/yanruj/EvolveSWDB_runs/lanl17-metadata-supervisor-fixture-20261007-a4/receipt.json",
+  "static_staging_identity_sha256": "5e88686cba8cce53fcb6427a9d39a2ed6081fdf9aa791da3215058150c775c11",
+  "static_staging_execution": false,
+  "preparation_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/manifest.json",
+  "preparation_identity_sha256": "10c665ba12ec80447fb01fe7680b4dfaf32d298f966c9af70520c11019417851",
+  "all_original_NOTRUN_a3_and_scientific_history_preserved": true,
+  "canonical_yaml_preserved": 678,
+  "library_blobs_preserved": 147,
+  "root_blobs_preserved": 450,
+  "checkpoint_progress_blob_preserved": "100644 blob 4115f70075b1cf50f32f5341480e28b46dedbb7a",
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "python_modules": 185,
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "helper_sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414",
+  "supervisor_sha256": "fa703bbd4c71bb4bcf56f47d1e224449f627d5921295e00b9cc105f21e95bde0",
+  "guard_sha256": "9c5d9658b524db94805a6b51453dc9edef7096a27312677896d595d39b94f6c6",
+  "parent_verifier_once_each_reused": true,
+  "parent_verified_PID_start_disappearance_sibling_survival_and_all_leases_released": true,
+  "scientific_campaign_provider_selection_plateau_controls_source_observer_root_maps_other_trackers_preserved": true,
+  "no_Store_control_test_compiler_native_provider_ssh_or_scientific_action_repeat": true,
+  "metadata_guard_action": "not_run",
+  "ticket17_status": "claimed",
+  "actual17campaigns": 0,
+  "population_frozen": false,
+  "final11_14_admission": "pending",
+  "scope": "Ordinary custody merge of separate exact actual bounded cleanup/staging evidence. Original preparation chronology preserved; numerical/catalogue/explicitR/population/campaign/D30 admission remains separate.",
+  "identity_sha256": "49f2c4fe6ad4f2d0fde9171e5cd2344598af822d88263aeb6e98bd574a364a27"
+}
