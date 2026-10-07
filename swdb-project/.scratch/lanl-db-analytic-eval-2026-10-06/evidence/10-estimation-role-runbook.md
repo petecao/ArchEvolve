@@ -1,6 +1,6 @@
 # Frozen parameter-fill execution
 
-Updated: 2026-10-06 21:52 ET. Ticket 10 remains claimed until its handoff is accepted.
+Updated: 2026-10-06 21:59 ET. Ticket 10 remains claimed until its handoff is accepted.
 
 `fill-target-parameters` reads registered characterization facts, a matching profile, and a
 base target description. It writes a new target version after strict output, guard/audit and
@@ -13,6 +13,11 @@ metrics, timings, PMU values/ratios, source text, evaluator material, paths, oth
 free-form annotations are omitted. Full-record identities, compact snapshots and omission hashes
 stay in the sealed target receipt. The existing functional profile is source-structure context
 for the same registered snapshot/base implementation, not a candidate measurement.
+
+A CPU service binding with a failed aggregate or per-characterization compatibility premise
+is refused before workspace creation or provider launch. A withheld transfer rate is a structural
+gap; it cannot become an estimated value. Valid binding premises and numerical residual unknowns
+remain distinct. The prepared DX target has no CPU service binding.
 
 Unknown capacity/layout/window/admission facts that change observation policy cannot be filled
 by this role. Unsupported parameter contracts are refused. Unresolved answers must explicitly

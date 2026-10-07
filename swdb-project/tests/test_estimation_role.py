@@ -313,3 +313,47 @@ def test_public_output_requires_one_answer_per_unknown(records,tmp_path,answers)
     assert result.returncode!=0
     assert 'every declared unknown' in result.stderr or 'duplicate parameter' in result.stderr
     assert not list((records.path/'target_descriptions').glob('*.yaml'))
+
+
+def test_public_failed_service_compatibility_refuses_before_provider(records,tmp_path):
+    _,target,profile,config=setup_role(records,tmp_path)
+    data=yaml.safe_load(target.read_text())
+    data['extensions']={'cpu_services_binding':{
+        'format':'swdb.cpu-services-binding.v1',
+        'models':['streaming_bandwidth'],
+        'compatibility':[{'calibration':'fixture.service','service':'fixture.read',
+            'parameter':'bytes_per_s','missing':['service_compiler_identity'],
+            'scopes':[{'characterization':'fixture.counts','missing':['service_compiler_identity']}]}]}}
+    target.write_text(yaml.safe_dump(data,sort_keys=False))
+    before=target.read_bytes()
+    result=fill(records,tmp_path,target,profile,config)
+    assert result.returncode!=0
+    assert 'structural service compatibility gap' in result.stderr
+    assert not (tmp_path/'role').exists()
+    assert target.read_bytes()==before
+    assert not list((records.path/'target_descriptions').glob('*.yaml'))
+
+
+@pytest.mark.parametrize('missing,scope_missing',[
+    ([],[]),([],['service_serial_T1']),
+])
+def test_public_service_compatibility_keeps_scoped_premises(records,tmp_path,missing,scope_missing):
+    _,target,profile,config=setup_role(records,tmp_path)
+    data=yaml.safe_load(target.read_text())
+    data['extensions']={'cpu_services_binding':{
+        'format':'swdb.cpu-services-binding.v1',
+        'models':['streaming_bandwidth'],
+        'compatibility':[{'calibration':'fixture.service','service':'fixture.read',
+            'parameter':'bytes_per_s','missing':missing,
+            'scopes':[{'characterization':'fixture.counts','missing':scope_missing}]}]}}
+    target.write_text(yaml.safe_dump(data,sort_keys=False))
+    result=fill(records,tmp_path,target,profile,config)
+    if scope_missing:
+        assert result.returncode!=0 and 'structural service compatibility gap' in result.stderr
+        assert not (tmp_path/'role').exists()
+    else:
+        assert result.returncode==0,result.stdout+result.stderr
+        new=json.loads(result.stdout)
+        assert new['mechanisms'][1]['parameters']['bytes_per_s']['value']==32.0
+        assert new['extensions']==data['extensions']
+        assert records.validate().returncode==0

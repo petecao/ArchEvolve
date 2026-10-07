@@ -33,7 +33,28 @@ def domain(unit,model,name):
     return 'positive_integer' if unit in {'bytes','entries'} else 'positive'
 
 
+def require_service_compatibility(target):
+    binding=target.get('extensions',{}).get('cpu_services_binding')
+    if binding is None:return
+    if not isinstance(binding,dict) or binding.get('format')!='swdb.cpu-services-binding.v1':
+        raise Failure('invalid structural service compatibility binding')
+    rows=binding.get('compatibility')
+    if not isinstance(rows,list):raise Failure('invalid structural service compatibility rows')
+    for row in rows:
+        if not isinstance(row,dict) or not isinstance(row.get('missing'),list):
+            raise Failure('invalid structural service compatibility premises')
+        scopes=row.get('scopes',[])
+        if not isinstance(scopes,list) or any(not isinstance(scope,dict) or
+                not isinstance(scope.get('missing'),list) for scope in scopes):
+            raise Failure('invalid structural service compatibility scopes')
+        if row['missing'] or any(scope['missing'] for scope in scopes):
+            # Binding incompatibility withholds a value; it does not establish
+            # an unknown numerical rate which an estimator may replace.
+            raise Failure('structural service compatibility gap: '+str(row.get('parameter','unknown')))
+
+
 def parameters(target):
+    require_service_compatibility(target)
     known=[];unknown=[]
     for i,mechanism in enumerate(target['mechanisms']):
         model=mechanism['model']
