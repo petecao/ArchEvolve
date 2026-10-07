@@ -1,6 +1,6 @@
 # Implementation progress
 
-Updated: 2026-10-06 21:09 ET
+Updated: 2026-10-06 21:30 ET
 
 Integration: `codex/lanl-analytic-eval`; review base: `2c50e5fb8671e08050921bee06920f92fd153bdd` (`yanrujhou_main`). Yan-Ru amended startup settings commit `fb842a8` to this replacement during startup. Owned branches are rebased so the removed IDE files stay removed. Final delivery merges and pushes `yanrujhou_main`.
 
@@ -13,8 +13,12 @@ Agent assignments: tickets 02–14, 16–17. Human gates 15, 18, 21 stay human-o
 | 06 | `/root/ticket04` | `codex/lanl-ticket06` | Resolved and merged7c51ee1;41 focused plus real claim1 and integrated7 passed;553 historical valid |
 | 07 | `/root/ticket03` | `codex/lanl-ticket07` | Resolved cee740a; merged8e2156a; measured fixture, typed calibration and provenance checks passed |
 | 08 | `/root/ticket02` | `codex/lanl-ticket08` | Resolved bcaa238; merged c109994; 15 public acceptance cases and 2 merged protocol smokes passed |
-| 09 | `/root/ticket04` | `codex/lanl-ticket09` | Claimed in implementer branch; observer fix1f67c76 and generic mechanismsade2d2c tested; live command/row binding active; fresh strict1.6 certified10positive/20negative; source/target adapter and actual DX count/report active |
+| 09 | `/root/ticket04`; merger02 | `codex/lanl-ticket09` | Resolved and integrated aff923c; 7 public integrated cases passed617.64s and617 valid; actual five-trial report retains null totals and25 structural gaps |
 | 11 | `/root/ticket03` | `codex/lanl-ticket11` | Claimed; independent clock calibration and fresh BFS/BC T1 counts passed; service gaps and error-band admission active before native timing |
+
+| 10 | `/root/ticket02` | `codex/lanl-ticket10` | Starting from integrated09; fresh sanitized guarded provider invocation is required before actual fills |
+| 12 | `/root` | `codex/lanl-ticket12` | Claimed; public command/handoff RED passed; current certification dependency refusal under diagnosis |
+| 16 | `/root/ticket04` | `codex/lanl-ticket16` | Claimed; public campaign pairing RED passed, immutable Extensa-only receipt ledger GREEN active |
 
 Managed worktrees: `/Users/yanrujhou/.codex/worktrees/lanl-*/ArchEvolve`. Parent owns integration. Inspect liveness before reassigning. File writes and Git metadata there need sandbox escalation, covered by the user's implementation authorization.
 
@@ -177,3 +181,12 @@ Prospective graph setup a1 stopped before registration at the external helper's 
 Bulk count a1 was rejected before measurement by the native lane guard because the parent pinned the collector to CPU0 before its full-socket check; node0 generation 486 released. Corrected orchestration keeps the collector in the full verified socket and lets the existing timer pin CPU0 internally. Fresh count a2 is active on node0 generation 487 from unchanged aaf9a9d24a3b2f18af9a7ad8c445025fea366162, tmux swdb-lanl-bulk-count-20261006-a2, raw /data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-count-20261006-a2; original a1 remains. Preregistration SHA 37a937a489c54603930e59075e61bbc8c3e0b2de316966f9e101980a12113621. The exact inventory has 48 memmove sizes, split 26+22, with distinct disjoint/forward4B/backward4B profiles and separate memcpy8 cells (79/67 elapsed cells). Count proofs precede elapsed work; the other socket must be idle for primary elapsed services. Four new allocator bins likewise await independent coverage.
 
 At the 21:09 ET check, node0g487 and node1g536 are held by these owned jobs; legacy generation77 is released. Load1 3.27, /data1 free 25,432,326,144B (23.69GiB), /data free 58,423,595,008B (54.41GiB). Each dispatch reverified the fetched socket wrapper, both socket/legacy leases, process/load and capacity; unrelated Quicksilver CPU work remains untouched.
+
+
+2026-10-06 21:30 ET: 09 resolved and merged at4eaf95a; metadata-only integrated preservation proof ataff923ca77df5b100ad147006db1c28426b65609. Seven narrow public cases passed617.64s;617 canonical records valid. All812 prior record/library/app/control blobs, including584 prior YAML records, were unchanged. Five actual DX trials retain unknown whole-call seconds/ratio, nine parameter unknowns and25 structural/call gaps. The repeated-source-region concern was disproved: raw BFS [18,19] andBC [18,19],[32,33],[36,37], both g16/g17 andfive trials, store memory requests on the first canonical row and omit later rows. All20-trial access totals reconcile; public exact-union regression passed. No observer change, new count replay or estimator-bundle change was required. Archived bundle3ad3ce75 remains historical current at09 closure. Later legitimate Python implementation changes require a fresh final reference protocol before14, without recounting under unchanged complete observation policy.
+
+Prospective input setupa2 completed21:19:42 ET, node1g536 exit0/released, immutablec9be522 source remained clean. Eight registration outputs have distinct canonical adjacency hashes. Both SG32/SG64 header identities equal parser realization; fixed source0 has positive degree3 in all four Kronecker cases and21/24/25/26 in the uniform cases. Full copied-store validation, prior-graph freshness audit and compact Git export are queued until the other socket can be used without perturbing primary service calibration. No population/statistical freeze, application outcome or eligible D30 pair exists yet.
+
+Bulk counta2 completed21:14:30 ET, node0g487 exit0/released, both exact matrices and626-record validation passed. Compact native count proofs exported via Git3cf1369979d6533f3e4e7565872fd56e5747dd9c (origin/codex/lanl-bulk-count-evidence-a2), wrapperc23cd6aa67f88b6c899bfd51db7ee115fc0217ef257b6960d0d06652fc3e8935. Corrected orchestration preserves faileda1 full-socket-affinity rejection. Elapseda2 started21:20:20 ET onnode0 from unchangedaaf9a9d source, other socket idle, all three leases previously released, load1.64, /data1free25,432,252,416B and/data57,984,258,048B; prereg025bde1ececc7f74899411e32ef059cbe350bd5c20833d9e4ba8657e35670c7d. Source audit shows v1's both-gross50ms rule makes79/67-cell coverage implausible in900s perbatch because empty-driver work is size-independent; the bounded attempt is retained unchanged. 11 is preparing a separately preregistered gross-work resource version, with undersized driver subtraction retained null, not a relaxation of v1 or outcome fit. Four new allocator bins and OpenMP services remain pending.
+
+All three agents responsive. Eight of15 assigned tickets are resolved/integrated;10/11/12/16 active. Next required30min check remains21:39 ET. Final remaining implementation, fresh evaluations, review/fixes, tracker/delivery and cleanup are pending.
