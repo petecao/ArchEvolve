@@ -1,0 +1,59 @@
+{
+  "format": "swdb.lanl17-selected-metadata-caps-portable-proof.v1",
+  "updated": "2026-10-07 ET",
+  "exact_edit_proof_identity_sha256": "6242a639061ab079baad21cfb7805d7d591d141389ab7f88c4a06a75ae4675e5",
+  "files": {
+    "lanl17_parent_helpers_caps_a3.py": {
+      "sha256": "69dcfe546d3042228ccca4fb29e8409da88443ba15680f30bfdc929ea12ae2b9",
+      "size_bytes": 38195
+    },
+    "lanl17_metadata_supervisor_caps_a3.py": {
+      "sha256": "16661d7a9347e328a5263b06d807f3632c5abcfcf41a0bd97655a6bba302176b",
+      "size_bytes": 8014
+    },
+    "lanl17_metadata_supervisor_caps_a3_portable_controls.py": {
+      "sha256": "c7ea495b77158848d301fcc15fc48b988c3f10c97bfa7f92756ede63e8e0226b",
+      "size_bytes": 5321
+    },
+    "lanl17_metadata_supervisor_caps_a3_linux_fixture.py": {
+      "sha256": "a848ef2d5c6dba58e6814bf80d8bdf24edeb33812bda343ecf25ff6f28745b0f",
+      "size_bytes": 9555
+    }
+  },
+  "portable_wiring": {
+    "cases": 9,
+    "state": "passed",
+    "elapsed_s": 0.265,
+    "python": "3.12.6",
+    "case_names": [
+      "test_disallowed_action_refuses_before_child_launch",
+      "test_external_term_unwinds_finally_and_restores_handlers",
+      "test_failed_subreaper_never_launches_or_cleans_unowned_descendants",
+      "test_linux_only_subreaper_gate",
+      "test_mismatched_helper_refuses_before_import_or_launch",
+      "test_nonfinite_or_nonpositive_timeout_refuses",
+      "test_returned_leader_still_runs_owned_cleanup",
+      "test_survivor_never_reports_success",
+      "test_timeout_unwinds_cleanup_and_seals_timeout"
+    ],
+    "scope": "Pinned helper declarations/processes module only; Popen/cleanup mocked and in-process TERM handled. No metadata/scientific function call or Linux descendant admission."
+  },
+  "helper_six_cap_literals_full091_byte_reversal": true,
+  "supervisor_only_HELPER_SHA_changed": true,
+  "control_paths_only_changed": true,
+  "four_files_syntax_passed": true,
+  "linux4d_new_helper_smoke": "not_run",
+  "new_supervisor_a848_linux_fixture": "not_run",
+  "current_controls_proofs_preserved": true,
+  "science_budgets_selection_D30_unchanged": true,
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "metadata_17_actions": 0,
+  "population_frozen": false,
+  "campaigns": 0,
+  "provider_calls": 0,
+  "application_outcomes": 0,
+  "ssh": false,
+  "scope": "Selected finite metadata allowances/portable wiring only. Fresh actual proofs/final catalog gates still required.",
+  "identity_sha256": "6a4013a31b6d3092828fa31c2cc4b7ba3af11f4910f69eaf2018c3d19e677105"
+}
