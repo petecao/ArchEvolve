@@ -603,8 +603,12 @@ def estimate(args):
     count_reuse=resolve(characterization,target)
     characterization_sha256=artifacts.digest(characterization)
     regions, seconds = _estimate_regions(characterization['regions'], characterization['unmodeled_calls'], target, characterization.get('observation_contract'),characterization=characterization,count_reuse=count_reuse,characterization_sha256=characterization_sha256)
-    trial_estimates=[]
-    for trial in characterization.get('trials',[]):
+    from swdb.analytic_trial_scope import reconcile_trial
+    trial_estimates=[];model_trials=[];scope_proofs=[]
+    for original_trial in characterization.get('trials',[]):
+        trial,proof=reconcile_trial(characterization,original_trial,store)
+        model_trials.append(trial)
+        if proof is not None:scope_proofs.append(proof)
         rows,total=_estimate_regions(trial['regions'],trial['unmodeled_calls'],target,characterization.get('observation_contract'),characterization=characterization,count_reuse=count_reuse,characterization_sha256=characterization_sha256)
         trial_estimates.append({'position':trial['position'],'sources':trial['sources'],'regions':rows,'seconds':total})
     if trial_estimates:
@@ -649,6 +653,9 @@ def estimate(args):
         record['trials'] = trial_estimates
         record['summary'] = 'median_whole_call_seconds'
         record['notes'].append('Estimate each trial by summing exclusive region maxima; the reported total is the median whole-call trial time. Per-region medians are diagnostic and do not generally sum to that median.')
+    if scope_proofs:
+        record.setdefault('extensions',{})['legacy_trial_scope_reconciliations']=scope_proofs
+        record['notes'].append('Legacy source count scopes were inferred in copied trial contexts from sealed registered ROI windows and exact call/bin and memory partitions; the characterization remains immutable.')
     if count_reuse is not None:record['count_reuse']=count_reuse
     if args.baseline:
         baseline = _load(store, args.baseline, 'estimate')
@@ -660,7 +667,8 @@ def estimate(args):
         if seconds is not None and seconds > 0 and baseline['seconds'] is not None:
             record['ratio'] = baseline['seconds'] / seconds
     from swdb.analytic_sensitivity import report
-    record['parameter_report']=report(record,target,characterization)
+    scenario_characterization={**characterization,'trials':model_trials} if model_trials else characterization
+    record['parameter_report']=report(record,target,scenario_characterization)
     record['llm_parameters']=[row for row in record['parameter_report']['sensitivities'] if row['basis']=='estimated']
     from swdb.analytic_extensions import finalize_estimate
     record = finalize_estimate(record, store=store, protocol=protocol,
