@@ -1,0 +1,104 @@
+{
+  "format": "swdb.lanl14-actual-pr-replay-additive-custody.v1",
+  "updated": "2026-10-07 ET",
+  "scope": "Actual public portable PR freeze/estimate/checker against final exported CPU target; outside its exact four BF/BC scopes. Two exact new canonical records plus compact acceptance/custody only. No raw stdout/stderr/index/IR/count/address streams transferred.",
+  "tested_source_commit": "dfb1e1c4c885b0ef95edd6742e2403526907eda9",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "target_description_sha256": "9fec46b1ab4c8ac2e8e501e61cf137c075ec40b6eef128a247cf28dd54fca76b",
+  "actual_acceptance_identity_sha256": "988f8c9e476711296835839fabc188461bcc510ea10ce6001e70efffba159989",
+  "actual_runner_custody_identity_sha256": "7b72b1b0e42f095610ca25b26739e2ec9f636683c484ac4252cea86b7ce1133f",
+  "new_records": [
+    {
+      "id": "generality.pagerank.cpu.kron-g16.t1.estimate.final-admission.a1",
+      "kind": "estimate",
+      "path": "estimates/generality.pagerank.cpu.kron-g16.t1.estimate.final-admission.a1.yaml",
+      "sha256": "57d431a1f2dbddc23bd5ac64d6e7c80add9d4ea840f12bba61ec8e236f303eb5",
+      "file_sha256": "3b4aabe99cc3731e4a332288bcc2a85020038bed0dde122ecb9b2c2ade2adfa6",
+      "bytes": 64833239
+    },
+    {
+      "id": "generality.pagerank.cpu.kron-g16.t1.protocol.final-admission.a1.2fba4a33689c3b71",
+      "kind": "protocol",
+      "path": "protocols/generality.pagerank.cpu.kron-g16.t1.protocol.final-admission.a1.2fba4a33689c3b71.yaml",
+      "sha256": "6282a5b524dc0bb8a9e571e2bcdb85969f321cd31eca5142c093d818ca246faa",
+      "file_sha256": "5f2e9537398b2c4ae67121a816f1bfd514e34d73b86130680f72b786c7f93844",
+      "bytes": 692267
+    }
+  ],
+  "compact_proofs": [
+    {
+      "path": "14-actual-pr-final-services-acceptance-20261007-a1.json",
+      "file_sha256": "3cf316fca2a247782ad58e8260d104b5a382ea6d6f39cc583e191bc6349965cc",
+      "bytes": 2266
+    },
+    {
+      "path": "14-actual-pr-final-services-custody-20261007-a1.json",
+      "file_sha256": "c6c5a4adb915b83f92e78f0e556e9afb3a9a72618394e7239ff90878baa38c27",
+      "bytes": 11092
+    }
+  ],
+  "result": {
+    "trials": 5,
+    "seconds": null,
+    "ratio": null,
+    "error_band": null,
+    "missing": [
+      "memory_scenario.characterization_allowlist",
+      "service_scope.characterization_allowlist"
+    ],
+    "four_scope_allowlist": [
+      {
+        "id": "bfs.kron-g16.t1.characterization.objects.a1",
+        "sha256": "535d43719d2e9269dc557e900886c625b80c5aa686e7682861a4f6d045e143bc"
+      },
+      {
+        "id": "bc.kron-g16.t1.characterization.objects.a1",
+        "sha256": "8561948088366aa18409da1db1f204ac2579cdb8ee90f1a2c76079a96e2eb4fd"
+      },
+      {
+        "id": "bfs.kron-g17.t1.characterization.objects.a1",
+        "sha256": "49b5c58f3551b065c91c49c1fb09f54de2d2d71f08b6a4e1eedf3aad5ec415c5"
+      },
+      {
+        "id": "bc.kron-g17.t1.characterization.objects.a1",
+        "sha256": "6b8d515b3f38a13bfd302993f8ac5e88bd77615da171c710b4ecd81d058c67db"
+      }
+    ]
+  },
+  "children": [
+    {
+      "stage": "freeze",
+      "budget_seconds": 3600,
+      "wall_seconds": 865.0039919590345,
+      "exit_code": 0,
+      "timed_out": false,
+      "owned_process_group_empty": true
+    },
+    {
+      "stage": "estimate",
+      "budget_seconds": 2400,
+      "wall_seconds": 486.8781918749446,
+      "exit_code": 0,
+      "timed_out": false,
+      "owned_process_group_empty": true
+    },
+    {
+      "stage": "checker",
+      "budget_seconds": 2400,
+      "wall_seconds": 122.80503883305937,
+      "exit_code": 0,
+      "timed_out": false,
+      "owned_process_group_empty": true
+    }
+  ],
+  "prior_record_files_preserved": 674,
+  "prior_library_files_preserved": 147,
+  "source_protected_files_preserved": 920,
+  "ticket14_status": "claimed",
+  "actual_nine_report_acceptance": null,
+  "native_execution": 0,
+  "compiler_execution": 0,
+  "provider_calls": 0,
+  "remote_actions": 0,
+  "identity_sha256": "76ad540c946a73c2083e706b5391085df92d9eb51d071b34030ece1f78009243"
+}
