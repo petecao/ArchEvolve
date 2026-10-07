@@ -332,3 +332,25 @@ and 900s outer containment timeouts, preserve process-group signal cleanup, and
 retain raw count/build/timing artifacts remotely. Export typed calibration records
 and compact receipt/context/trial metadata through Git; do not export raw IR,
 binaries or addresses. Neither native cell establishes application accuracy.
+
+
+### Immutable conditional memory binding
+
+The separate `swdb.cpu_service_binding` command requires an explicit
+`--memory-footprint-bytes 8388608` and
+`--memory-cas-policy max_constructed_success_failure_median` when memory service
+records are supplied. Each chosen scalar cost retains its exact typed calibration
+record and service ID. The byte-read cell keeps its own256B extent. The CAS
+parameter is inferred as the larger of separately retained success/failure
+medians; it does not establish the application's outcome mix or a physical upper
+bound, and either unresolved input keeps the derived parameter unknown.
+
+A fresh conditional description supersedes the base's streaming/cache/latency
+memory mechanisms with this explicit memory-service scenario. Its extension
+records exactly which mechanisms were superseded and pins the immutable base.
+The earlier measured descriptions remain unchanged; stream rates are never copied
+into dependent-memory or allocator service parameters. Compute rates and typed
+calibration lineage remain available in the fresh description. Context mismatch
+makes service costs unknown. Exact source primitive/type/order evidence is
+required before consuming ordinary store, integer-add or integer-CAS costs;
+collapsed update kinds do not prove that evidence.

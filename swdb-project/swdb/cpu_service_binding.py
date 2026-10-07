@@ -5,6 +5,7 @@ Standalone public module CLI keeps an active calibration runner immutable.
 import argparse
 import copy
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -37,6 +38,8 @@ def _compatibility(target, char, calibration, service, fixture):
     context=calibration['context']
     if native.get('compiler_version','').strip()!=context.get('compiler_version','').strip():
         missing.append('service_compiler_identity')
+    if context.get('compiler_sha256') is not None and native.get('compiler_sha256')!=context['compiler_sha256']:
+        missing.append('service_compiler_sha256')
     for prefix in ('libc.so','libstdc++'):
         observed=_library_hashes(native.get('loaded_libraries',{}),prefix)
         measured=_library_hashes(context.get('loaded_libraries',{}),prefix)
@@ -52,17 +55,78 @@ def _compatibility(target, char, calibration, service, fixture):
     elif any(actual.get(k)!=measured.get(k) or actual.get(k) is not None for k in interposers):
         missing.append('service_interposer_controls_unsupported')
     if service.get('scope',{}).get('allocator_regime'):
-        exact_controls=('GLIBC_TUNABLES','LD_PRELOAD','LD_AUDIT','LD_LIBRARY_PATH','DYLD_LIBRARY_PATH')
+        exact_controls=('GLIBC_TUNABLES','LD_PRELOAD','LD_AUDIT')
         declared=native.get('environment_scope',{})
         actual=native.get('environment',{})
         if 'MALLOC_' not in declared.get('prefixes',[]) or 'GLIBC_TUNABLES' not in declared.get('exact_variables',[]):
             missing.append('service_allocator_control_absence_scope')
         else:
             controls={k:v for k,v in actual.items() if k.startswith('MALLOC_') or k in exact_controls}
-            measured=context.get('allocator_environment',{})
+            measured={k:v for k,v in context.get('allocator_environment',{}).items() if k.startswith('MALLOC_') or k in exact_controls}
             if any(controls.get(k)!=v for k,v in measured.items()) or any(measured.get(k)!=v for k,v in controls.items()):
                 missing.append('service_allocator_controls')
     return missing
+
+
+
+MEMORY_KINDS={'read':'read','write':'write','add-update':'add-update',
+    'cas-success':'compare-and-swap','cas-failure':'compare-and-swap'}
+CAS_POLICY='max_constructed_success_failure_median'
+MEMORY_MODELS={'streaming_bandwidth','requests_in_flight_latency','cache_fit','memory_service_scenario'}
+
+
+def _memory_binding(args,target,char,cells):
+    footprint=args.memory_footprint_bytes
+    if type(footprint) is not int or not 64<=footprint<=8388608 or footprint&(footprint-1):
+        raise Failure('memory binding requires an explicit memory footprint power-of-two bin from64B to8MiB')
+    if args.memory_cas_policy!=CAS_POLICY:
+        raise Failure('memory binding requires the explicit constructed CAS success/failure median policy')
+    selected={};parameters={};compatibility=[]
+    for calibration,service in cells:
+        scope=service.get('scope',{});op=scope.get('operation');width=scope.get('element_bytes');size=scope.get('footprint_bytes')
+        if op not in MEMORY_KINDS or type(width) is not int or width not in (1,4,8) or type(size) is not int:
+            raise Failure('unsupported constructed memory service cell')
+        small=width==1
+        regime='fixed_small_byte_read_constructed_requests' if small else 'resident_serial_constructed_requests'
+        if scope.get('update_kind')!=MEMORY_KINDS[op] or scope.get('memory_regime')!=regime or scope.get('worker_scope')!='serial' or scope.get('transfer_basis')!='inferred' or (small and (op!='read' or size!=256)):
+            raise Failure('unsupported memory construction regime/primitive/width')
+        if not small and size!=footprint:continue
+        key=(op,width)
+        if key in selected:raise Failure('ambiguous duplicate constructed memory cell')
+        missing=_compatibility(target,char,calibration,service,args.fixture)
+        name='memory_'+str(len(parameters));parameter=copy.deepcopy(service['parameter'])
+        parameter['source']+='; context binding '+char['id']+'; constructed request transfer is inferred'
+        if missing:parameter.update(value=None,basis='unknown')
+        parameters[name]=parameter
+        selected[key]={'parameter':name,'calibration':calibration['id'],'service':service['id'],'footprint_bytes':size,'regime':regime}
+        compatibility.append({'calibration':calibration['id'],'service':service['id'],'parameter':name,'missing':missing})
+    if not selected:raise Failure('selected memory footprint has no measured/reported cells')
+    requests=[]
+    for (op,width),cell in sorted(selected.items()):
+        if op=='cas-failure':continue
+        source_services=[{k:cell[k] for k in ('calibration','service','parameter')}]
+        parameter=cell['parameter'];construction={'regime':cell['regime'],'footprint_bytes':cell['footprint_bytes'],
+            'transfer_basis':'inferred','source_services':source_services,'physical_cache_level':'unverified'}
+        if op=='cas-success':
+            other=selected.get(('cas-failure',width))
+            if not other:raise Failure('constructed CAS binding needs both independent success and failure cells')
+            source_services.append({k:other[k] for k in ('calibration','service','parameter')})
+            rates=[parameters[x['parameter']] for x in (cell,other)]
+            known=all(r.get('basis')!='unknown' and type(r.get('value')) in (int,float) and math.isfinite(r['value']) and r['value']>0 for r in rates)
+            parameter='memory_cas_envelope_'+str(width)
+            parameters[parameter]={'value':max(r['value'] for r in rates) if known else None,'basis':'inferred' if known else 'unknown',
+                'unit':'seconds/request','source':'Maximum of the separately retained constructed success/failure medians; no application outcome mix or physical upper bound is established.'}
+            construction['outcome_policy']=CAS_POLICY
+            construction['primitive']='integer_strong_seq_cst_compare_exchange'
+        else:construction['primitive']={'read':'ordinary_read','write':'ordinary_write','add-update':'integer_seq_cst_add'}[op]
+        requests.append({'update_kind':MEMORY_KINDS[op],'element_bytes':width,'parameter':parameter,'construction':construction})
+    if any(op=='cas-failure' and ('cas-success',width) not in selected for op,width in selected):
+        raise Failure('constructed CAS binding needs both independent success and failure cells')
+    mechanism={'model':'memory_service_scenario','accounting':'resource_bound','parameters':parameters,
+        'selector':{'domain':'host','worker_scope':'serial_T1','scenario':'resident_serial_constructed_requests',
+            'transfer_basis':'inferred','object_scope':'logical_requests_and_bounded_referent_views',
+            'characterization_sha256':artifacts.digest(char),'requests':requests}}
+    return mechanism,compatibility
 
 
 def bind(args):
@@ -76,7 +140,7 @@ def bind(args):
     require_team_safe(store,target,char,*args.calibration,command='bind-cpu-services')
     result=copy.deepcopy(target)
     result.update(id=args.id,created=writer.today(),updated=writer.today())
-    parameters={}; selectors={}; proofs=[]; rows=[]
+    parameters={}; selectors={}; proofs=[]; rows=[]; memory_cells=[]
     for identifier in args.calibration:
         calibration=_load(store,identifier,'cpu_service_calibration')
         problems=list(validate_record(Record(Path(identifier),calibration),None))
@@ -85,6 +149,8 @@ def bind(args):
         for service in calibration['services']:
             missing=_compatibility(target,char,calibration,service,args.fixture)
             scope=service.get('scope',{})
+            if service.get('unit')=='seconds/request':
+                memory_cells.append((calibration,service));continue
             proof=service.get('denominator',{}).get('proof',{})
             abi=scope.get('event_abi') or (proof.get('event_abi') if isinstance(proof,dict) else None)
             if service.get('unit')!='seconds/call':raise Failure('unsupported service binding unit')
@@ -107,12 +173,21 @@ def bind(args):
             else:
                 if abi in selectors:raise Failure('ambiguous duplicate scalar service ABI')
                 selectors[abi]={'name':abi,'parameter':param,'unit':'seconds/call'}
-    if not selectors:raise Failure('binding needs at least one independently scoped service')
-    result['mechanisms'].append({'model':'native_service_costs','accounting':'additive_overhead',
+    if not selectors and not memory_cells:raise Failure('binding needs at least one independently scoped service')
+    removed=[]
+    if memory_cells:
+        if target.get('extensions',{}).get('cpu_services_binding'):raise Failure('bind memory services from an unbound immutable base description')
+        memory,memory_rows=_memory_binding(args,target,char,memory_cells);rows.extend(memory_rows)
+        removed=[m['model'] for m in result['mechanisms'] if m['model'] in MEMORY_MODELS]
+        result['mechanisms']=[m for m in result['mechanisms'] if m['model'] not in MEMORY_MODELS]
+    if selectors:result['mechanisms'].append({'model':'native_service_costs','accounting':'additive_overhead',
         'selector':{'domain':'host','worker_scope':'serial_T1','characterization_sha256':artifacts.digest(char),'calls':list(selectors.values())},'parameters':parameters})
+    if memory_cells:result['mechanisms'].append(memory)
     result['calibration_sources']=list(dict.fromkeys([*target['calibration_sources'],*args.calibration,char['id']]))
     evidence={'format':'swdb.cpu-services-binding.v1','base':{'id':target['id'],'sha256':artifacts.digest(target)},
         'characterization':{'id':char['id'],'sha256':artifacts.digest(char)},'calibrations':proofs,'compatibility':rows,
+        'models':[m['model'] for m in result['mechanisms'] if m['model'] in ('native_service_costs','memory_service_scenario')],
+        'memory_selection':{'footprint_bytes':args.memory_footprint_bytes,'cas_policy':args.memory_cas_policy,'superseded_memory_models':removed} if memory_cells else None,
         'model':'native_service_costs','transfer_basis':'inferred','timings_rerun':False}
     result.setdefault('extensions',{})['cpu_services_binding']=evidence
     result['version']=artifacts.digest(evidence)
@@ -128,6 +203,8 @@ def main():
     parser.add_argument('--calibration',action='append',required=True)
     parser.add_argument('--id',required=True)
     parser.add_argument('--fixture',action='store_true')
+    parser.add_argument('--memory-footprint-bytes',type=int,help='explicit constructed 4/8B memory footprint; byte reads retain their separate256B scope')
+    parser.add_argument('--memory-cas-policy',choices=[CAS_POLICY],help='explicit inferred transfer of the larger independent constructed success/failure median')
     parser.add_argument('--format',choices=['yaml','json'],default='json')
     args=parser.parse_args()
     try:
