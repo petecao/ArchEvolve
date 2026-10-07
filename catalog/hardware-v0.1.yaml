@@ -1,5 +1,5 @@
 catalog_id: archevolve-hardware
-revision: 0.1.12
+revision: 0.1.13
 format: hardware-catalog-v0.1
 status: research_reviewed_prototype
 project_selections:
@@ -470,6 +470,17 @@ sources:
     conference: MICRO
     publication_year: 2019
     doi: 10.1145/3352460.3358254
+    reviewed_on: '2026-10-06'
+  extensor-micro2019-proceedings:
+    title: 'ExTensor: An Accelerator for Sparse Tensor Algebra'
+    edition: MICRO-52 2019 proceedings, pp319-333, DOI10.1145/3352460.3358275; cached primary15pages
+    url: https://doi.org/10.1145/3352460.3358275
+    sha256: f39050e259e177bfe6c115164f12486f53b8ad1140152e91756e784d5f7bc88b
+    locator_basis: 1-based cached PDF pages; proceedings page numbers319-333
+    document_type: conference_paper
+    conference: MICRO
+    publication_year: 2019
+    doi: 10.1145/3352460.3358275
     reviewed_on: '2026-10-06'
 claims:
   maple-api:
@@ -2099,6 +2110,65 @@ claims:
     limitations:
     - Paper specification only;actual instruction/ALU/coherence/flush/bin source and numeric legality need
       binding.
+  extensor-ordered-intersection:
+    source_refs:
+    - extensor-micro2019-proceedings
+    locator: PDFpp4-5 §4.1-4.2 Fig5-6
+    statement: Scanners emit increasing coordinates and EOS; Intersect consumes matching heads together,
+      drops the smaller head, and flushes when either stream ends.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper-level contract; no authenticated RTL, DMA/register ABI, physical ownership or measured reproduction.
+  extensor-skip-synchronization:
+    source_refs:
+    - extensor-micro2019-proceedings
+    locator: PDFpp6-7 §5.1-5.2 Fig8-9
+    statement: Bidirectional SkipTo hints originate only from successfully output coordinates. A subsequent
+      hint cannot be consumed before the previous hint frontier is reached. A coarse CAM tracks coordinates
+      and metadata addresses; its registers are double buffered with a second metadata read port.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper-level contract; no authenticated RTL, DMA/register ABI, physical ownership or measured reproduction.
+  extensor-coordinate-position:
+    source_refs:
+    - extensor-micro2019-proceedings
+    locator: PDFpp7-8 §6.1-6.2 Fig10-11
+    statement: Sequencer configuration supplies loop bounds, strides and tensor-dimension maps. Iterate
+      selects a level and parent. Coordinate-position tuples surviving intersection address separate operand
+      data storage; tile coordinates accompany delivered data.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper-level contract; no authenticated RTL, DMA/register ABI, physical ownership or measured reproduction.
+  extensor-hierarchical-staging:
+    source_refs:
+    - extensor-micro2019-proceedings
+    locator: PDFpp8-9 §7.1-7.4 Fig12-13
+    statement: DRAM-level scanners sequence tiles; LLB intersects PE metadata with post-intersection fills;
+      PEs intersect datapath metadata with pre-intersection scalar fills. Input tensors are tiled compressed
+      sparse fibers in the evaluated design, and oversized PE tiles may be split across PEs.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper-level contract; no authenticated RTL, DMA/register ABI, physical ownership or measured reproduction.
+  extensor-partial-output:
+    source_refs:
+    - extensor-micro2019-proceedings
+    locator: PDFpp9-10 §7.5
+    statement: PE partial outputs carry coordinates to a hash-table partial output buffer; COO output tiles
+      are converted on fill and unloaded by sequential hash iteration. Reduction reorderability is assumed
+      for the tensor algebra; it does not establish source-order IEEE bit equality.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper-level contract; no authenticated RTL, DMA/register ABI, physical ownership or measured reproduction.
+  extensor-configuration-and-types:
+    source_refs:
+    - extensor-micro2019-proceedings
+    locator: PDFp10 §7.6, §8.1-8.2
+    statement: Configuration specifies tensor tiling, loop nest/dataflow and connectivity; low-level DMA,
+      buffer partition, control FSM and routes are omitted. Evaluated tensors use double precision, with
+      128 PEs, 64 KB PEB per PE and CAM T=32. TACO configuration generation is future work.
+    evidence_kind: paper_specification
+    limitations:
+    - Paper-level contract; no authenticated RTL, DMA/register ABI, physical ownership or measured reproduction.
 mechanism_families:
 - id: queue-latency-tolerance
   name: Queue-backed asynchronous access
@@ -2130,6 +2200,9 @@ mechanism_families:
 - id: phi-hierarchical-bulk-update
   description: Explicit bulk commutative scatter-update interface with hierarchy coalescing,selective
     bins andflush;no generic gather capability.
+- id: extensor-hierarchical-coordinate-intersection
+  description: Configured tensor-fiber coordinate intersections with position-tagged operand delivery
+    across a memory hierarchy; no inherited general gather capability.
 decision_questions:
 - id: operation-result
   question: Is the requested result a fetched value, update success, old value, reduction, or only a cache hint?
@@ -7082,3 +7155,220 @@ designs:
   - No current source/RTL/model identity,FP bitwise equivalence,performance orcompatibility acceptance.
   - The no-intervening-read/flush/physical contiguity requirements are stronger than genericgraph workload
     labels.
+
+- id: extensor-micro2019-ordered-fiber-operands
+  name: ExTensor MICRO2019 ordered fiber operand delivery
+  revision: primary-scoped-proposal-r1
+  record_kind: mapping
+  summary: Explicit compressed tensor mapping that intersects sorted coordinates before delivering position-addressed
+    operands; scalar arithmetic is outside this operation.
+  mechanism_refs:
+  - extensor-hierarchical-coordinate-intersection
+  source_refs:
+  - extensor-micro2019-proceedings
+  interface:
+    software_supplies: Tiled tensor metadata/data, canonical fibers, parent/tile coordinates, loop bounds/strides/dimension
+      maps and buffer/routes configuration.
+    invocation: Configure sequencers and Scanner Iterate(level,parent); optional synchronized SkipTo.
+      Low-level register/DMA ABI is not supplied.
+    outputs: Matched coordinate with separate A/B positions and tagged scalar or subtile operand data.
+    claim_refs:
+    - extensor-coordinate-position
+    - extensor-configuration-and-types
+  operations:
+  - id: matched_fiber_operands
+    operation: read
+    subtype: extensor_ordered_fiber_operand_pair
+    execution_role: execute
+    support: paper_specified
+    address_patterns:
+    - sequential
+    - indirect
+    claim_refs:
+    - extensor-ordered-intersection
+    - extensor-coordinate-position
+    realization:
+      kind: documented_sequence
+      description: Select canonical tensor fibers, merge increasing coordinates, retain both positions
+        and parent/tile identities, fetch matched operand values, terminate at EOS and drain outstanding
+        delivery.
+      claim_refs:
+      - extensor-ordered-intersection
+      - extensor-coordinate-position
+    result:
+      form: Coordinate-tagged operand pair; not a generic CPU gather return or scalar reduction result.
+      validity: Only explicitly configured canonical fiber/tensor mapping with authenticated positions,
+        owners and finite bounds.
+      old_value: not_applicable
+      claim_refs:
+      - extensor-coordinate-position
+    ordering:
+      scope: Within one declared pair of increasing coordinate fibers
+      description: Matching coordinates are emitted in increasing order. No global FIFO, request/response
+        ABI or source-ordered partial-sum semantics follows.
+      claim_refs:
+      - extensor-ordered-intersection
+      - extensor-partial-output
+    completion:
+      event: Intersect observes stream EOS and flushes unmatched remainder; concrete integration must
+        additionally drain all issued operand reads.
+      visibility: Host-visible kernel/writeback completion and physical coherence are unproved by stream
+        EOS.
+      claim_refs:
+      - extensor-ordered-intersection
+      - extensor-partial-output
+    type_constraints:
+      payload_types:
+      - float64
+      index_width_bits: []
+      claim_refs:
+      - extensor-configuration-and-types
+      notes: Double-precision evaluation supports this scoped payload; coordinate/index bit width and
+        concrete transport encoding remain unknown.
+    datatype_notes: Opaque float64 operand bits only; no product, accumulation, rounding, FMA or IEEE
+      order claim.
+    limitations:
+    - No generic gather, BFS traversal, scatter atomic or returned old value capability.
+    - Canonical unique fibers are an explicit conservative restriction; duplicate-coordinate ABI unknown.
+  requirements:
+  - id: canonical-fibers
+    description: Explicitly map sorted unique compressed fibers, per-level parent and tile identity, coordinate-to-position
+      storage bounds. Duplicate handling is not specified; this proposal requires canonical unique coordinates.
+    scope: Explicit ExTensor tensor mapping
+    verification: required
+    claim_refs:
+    - extensor-ordered-intersection
+    - extensor-coordinate-position
+  - id: sequencer-mapping
+    description: Prove tensor format, level/dimension maps, loop nesting/strides, tile partition and per-owner
+      data positions; no arbitrary program-address stream substitution.
+    scope: Explicit ExTensor tensor mapping
+    verification: required
+    claim_refs:
+    - extensor-coordinate-position
+    - extensor-hierarchical-staging
+  - id: skip-frontier
+    description: If optimized SkipTo is enabled, only successfully output coordinates may create hints;
+      preserve previous hint frontier and double-buffer lifetimes.
+    scope: Explicit ExTensor tensor mapping
+    verification: required
+    claim_refs:
+    - extensor-skip-synchronization
+  - id: capacity-and-backpressure
+    description: Declare finite metadata/data/output capacities; no matching operand pair may be consumed
+      without output storage. Handle overfull PE tiles by a proved partition.
+    scope: Explicit ExTensor tensor mapping
+    verification: required
+    claim_refs:
+    - extensor-hierarchical-staging
+  - id: completion-visibility
+    description: 'Stream EOS is not kernel memory visibility: prove all outstanding value reads, partial-output
+      merges, writebacks and software completion separately.'
+    scope: Explicit ExTensor tensor mapping
+    verification: required
+    claim_refs:
+    - extensor-ordered-intersection
+    - extensor-partial-output
+  - id: numeric-order
+    description: Scalar arithmetic and partial sums need independent original numerical legality. No ordered
+      floating-point reduction equivalence is granted.
+    scope: Explicit ExTensor tensor mapping
+    verification: required
+    claim_refs:
+    - extensor-partial-output
+    - extensor-configuration-and-types
+  - id: actual-implementation
+    description: Authenticate model/RTL, DMA and physical-memory ownership, instruction/command interface
+      and completion mechanism before integration.
+    scope: Implementation binding
+    verification: unknown
+    claim_refs: []
+  parameters:
+  - id: PE-count
+    unit: PEs
+    state: fixed_reference
+    value: 128
+    domain: null
+    claim_refs:
+    - extensor-configuration-and-types
+    notes: Evaluated reference only; not an inferred allocation or universal capacity.
+  - id: PEB-size
+    unit: paper KB
+    state: fixed_reference
+    value: 64
+    domain: null
+    claim_refs:
+    - extensor-configuration-and-types
+    notes: Evaluated reference only; not an inferred allocation or universal capacity.
+  - id: CAM-T
+    unit: comparators
+    state: fixed_reference
+    value: 32
+    domain: null
+    claim_refs:
+    - extensor-configuration-and-types
+    notes: Evaluated reference only; not an inferred allocation or universal capacity.
+  internal_mechanisms:
+  - id: metadata-data-separation
+    kind: buffering
+    status: described
+    description: Metadata scanner storage and separate data storage preserve coordinate-position associations;
+      comparator registers are double buffered.
+    claim_refs:
+    - extensor-coordinate-position
+    - extensor-skip-synchronization
+  - id: merge-and-skip
+    kind: issue_policy
+    status: described
+    description: Basic smaller-head drop/matching-head issue, optionally synchronized bidirectional SkipTo
+      hints; sequencer skips empty parents.
+    claim_refs:
+    - extensor-ordered-intersection
+    - extensor-skip-synchronization
+    - extensor-coordinate-position
+  - id: tagged-parent-state
+    kind: dependency_tracking
+    status: described
+    description: Level/parent/tile coordinates and positions accompany survivors; previous SkipTo frontier
+      constrains new hints.
+    claim_refs:
+    - extensor-coordinate-position
+    - extensor-skip-synchronization
+  - id: hierarchy-work-staging
+    kind: other
+    status: described
+    description: LLB post-intersection tile fills and PE pre-intersection scalar fills filter work at
+      distinct granularities.
+    claim_refs:
+    - extensor-hierarchical-staging
+  - id: coordinate-partial-merge
+    kind: coalescing
+    status: described
+    description: POB hashes output coordinates and locally accumulates partial results, allocating entries
+      on first use.
+    claim_refs:
+    - extensor-partial-output
+  - id: algebraic-output-reordering
+    kind: reordering
+    status: described
+    description: Paper assumes associative tensor reduction permits partial outputs to be reordered; actual
+      IEEE numerical legality remains required.
+    claim_refs:
+    - extensor-partial-output
+  - id: stream-eos
+    kind: completion
+    status: described
+    description: EOS ends intersection and flushes unmatched streams. Kernel software fence/DMA completion
+      ABI is not specified.
+    claim_refs:
+    - extensor-ordered-intersection
+  - id: host-completion-ABI
+    kind: completion
+    status: unknown
+    description: null
+    claim_refs: []
+  limitations:
+  - Logical paper mapping, not RTL/port netlist or measured implementation.
+  - Physical translation, protection, cache coherence, exception and callback credit ABI unknown.
+  - No inheritance of arbitrary indexed-load or graph traversal capabilities.
+  - Abstract finite merge helper does not implement optimized CAM SkipTo or hierarchy timing.
