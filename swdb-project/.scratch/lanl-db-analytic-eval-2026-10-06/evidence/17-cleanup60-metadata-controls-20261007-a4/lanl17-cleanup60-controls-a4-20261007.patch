@@ -1,0 +1,11 @@
+--- /private/tmp/lanl17_parent_helpers_caps_a3.py
++++ /private/tmp/lanl17_parent_helpers_cleanup60_a4.py
+@@ -464,7 +464,7 @@
+     dump(attempt / 'dispatch-preregistration.json', checked)
+     # External inspected helper is preserved byte-identically with each stopped attempt.
+     shutil.copyfile(__file__, attempt / 'helper.py')
+-    argv = ['timeout', '--signal=TERM', '--kill-after=40s', str(OUTER_S) + 's', 'bash', manifest['wrapper']['path'],
++    argv = ['timeout', '--signal=TERM', '--kill-after=60s', str(OUTER_S) + 's', 'bash', manifest['wrapper']['path'],
+             str(args.node), session, '--record', str(attempt / 'lane.json'), '--lease-timeout-s', '30']
+     if not active:
+         argv.append('--no-align')
