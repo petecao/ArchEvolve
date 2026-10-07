@@ -1,0 +1,96 @@
+{
+  "format": "swdb.lanl11-band-report-integrated-merger.v1",
+  "updated_utc": "2026-10-07T13:43:43.219646+00:00",
+  "canonical_ensure_ascii": false,
+  "base_commit": "ac485b910570afccf17ae7a87d47e3df05794000",
+  "incoming_commit": "8969d567599cb9f0d071f77936ab283fcb97c137",
+  "ordinary_merge_commit": "7084a6d39656ccb9dfcb743f6cb99cdba5964a2d",
+  "base_tree": "3ae027f9571d0e3f0e6fe6d04c8c234d3bfcdd48",
+  "incoming_tree": "549482096f9f580a830e03a9736b3e851ab78f2d",
+  "ordinary_merge_tree": "04d04322a4bf75a5f973bcef8117540036117090",
+  "merge_parents": [
+    "ac485b910570afccf17ae7a87d47e3df05794000",
+    "8969d567599cb9f0d071f77936ab283fcb97c137"
+  ],
+  "precheck_identity_sha256": "0edb1ba15a6ad284dfe3dd69dd5f994f8f78751e351ef709dfa35a8fab43bfcc",
+  "prior_tracked_blobs_preserved": 3780,
+  "no_prior_blob_modification_or_deletion": true,
+  "exact_incoming_additions": [
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-cpu-band-report-mbit10-20261006-a3.json",
+    "swdb-project/records/estimates/lanl.cpu.bc.g17.t1.report.v1.yaml",
+    "swdb-project/records/estimates/lanl.cpu.bfs.g17.t1.report.v1.yaml",
+    "swdb-project/records/protocols/lanl.cpu.bc.t1.report-model.v1.4122574ca4db5098.yaml",
+    "swdb-project/records/protocols/lanl.cpu.bfs.t1.report-model.v1.57192fc6d5fbdc07.yaml"
+  ],
+  "new_canonical_yaml": 4,
+  "prior_canonical_yaml_preserved": 682,
+  "result_canonical_yaml": 686,
+  "fifteen_previously_integrated_model_development_holdout_records_identical": true,
+  "incoming_exact20_sourceC_additions_verified": true,
+  "library_blobs_preserved": 147,
+  "root_blobs_preserved": 450,
+  "concurrent18_document_C031_baseline_exact": true,
+  "accepted_document_commit": "c0318a1a957602d9b54c584c29ceac19f4da51a3",
+  "checkpoint_progress_blob_preserved": "100644 blob de131e5f5618b70a5edd1d78f1c35966c505a6e4",
+  "receipt": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-cpu-band-report-mbit10-20261006-a3.json",
+    "identity_sha256": "f11ba2b40361b489169f48e6160a4dc9b927b1802f987264acab6354285f8db1",
+    "file_sha256": "58cd556e4ce0b289e16458ea1683347828ecc591ee831479de344336522e8b0e",
+    "acceptance_identity_sha256": "da7c59fdde44b6e8a80d04270f42c09e05859b3363d44fefa459911016b858f9"
+  },
+  "new_record_pins": [
+    {
+      "id": "lanl.cpu.bc.g17.t1.report.v1",
+      "kind": "estimate",
+      "path": "estimates/lanl.cpu.bc.g17.t1.report.v1.yaml",
+      "sha256": "2b6018372b7a7d5c5cc444ce1a08acde1aa296c268b71b27f263d8faa4481fe4",
+      "file_sha256": "6bf293d9654b415b20abe6b332ed2c52dc3aaf1fa5d63c7d7eb73993ff5e6045",
+      "bytes": 70599862
+    },
+    {
+      "id": "lanl.cpu.bfs.g17.t1.report.v1",
+      "kind": "estimate",
+      "path": "estimates/lanl.cpu.bfs.g17.t1.report.v1.yaml",
+      "sha256": "7ede4be0d716ba4838ad67dbaf1760705cd98d421e4dae92ff936064bd659ef9",
+      "file_sha256": "d12423e64b4684b0f101642d2a6840ddb0bd518de252f6a9de25f0092fa591d0",
+      "bytes": 53717875
+    },
+    {
+      "id": "lanl.cpu.bc.t1.report-model.v1.4122574ca4db5098",
+      "kind": "protocol",
+      "path": "protocols/lanl.cpu.bc.t1.report-model.v1.4122574ca4db5098.yaml",
+      "sha256": "b3b8c117543f9ba0d06aed365c31d270a7fb1e8255b23932580cc5b4fe463ce3",
+      "file_sha256": "67b41accce7f5acf46cbcd6cba3e7260998ace9ddc155b2f6dbff6024540682b",
+      "bytes": 5560287
+    },
+    {
+      "id": "lanl.cpu.bfs.t1.report-model.v1.57192fc6d5fbdc07",
+      "kind": "protocol",
+      "path": "protocols/lanl.cpu.bfs.t1.report-model.v1.57192fc6d5fbdc07.yaml",
+      "sha256": "e5429b8e0684f3e88c431eaee1c581f6e496fae84430cbb32227d170e3709d0e",
+      "file_sha256": "f8e91ff6e6defe255cc80a298c8b36d42a908ec6c22dc9d233dab7b3c97eaf42",
+      "bytes": 4923667
+    }
+  ],
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "python_modules": 185,
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "actual_report_custody": {
+    "logical_study": "20261006-a3",
+    "raw_attempt": "20261007-a4",
+    "generation": 509,
+    "node": 0,
+    "ended_utc": "2026-10-07T13:26:35Z",
+    "selected_store_remote_validation": "OK: 684 record(s) valid",
+    "runner_outer0_cleanup_empty_all_three_leases_free": "parent verified before approval",
+    "original_failed_a3_and_a4_startup_mapping_preserved": true,
+    "new_native_timings_or_raw_transfer": false
+  },
+  "local_numerical_admission": "pending separate unchanged selected-record reader; administrative completion is not accuracy success",
+  "PR_records_17_archives_maps_checkpoint_other_trackers_preserved": true,
+  "ticket11_and17_resolution_unchanged": true,
+  "no_Store_test_model_native_provider_compiler_or_ssh_repeat": true,
+  "scope": "Ordinary immutable completed report export custody only. Numerical admission and qualified within_error semantics remain the separate selected-record reader task.",
+  "separate_proof_only_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-cpu-band-report-integrated-merger-proof-20261007-a3.json",
+  "identity_sha256": "cf83444bf0593467ae39f0cf6e5cb5d76f2db0272e7a1c33e4b38f1542d1af9b"
+}
