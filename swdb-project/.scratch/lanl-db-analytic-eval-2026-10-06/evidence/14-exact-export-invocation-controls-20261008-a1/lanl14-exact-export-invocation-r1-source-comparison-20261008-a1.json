@@ -1,0 +1,76 @@
+{
+  "format": "swdb.lanl14-exact-export-invocation-r1-source-comparison.v1",
+  "sealed": false,
+  "status": "SOURCE_ONLY_NOT_RUN",
+  "draft": {
+    "path": "/private/tmp/lanl14_invoke_reviewed_supervised_export_20261008_a1.py",
+    "bytes": 41865,
+    "sha256": "fe07b9e3492804a4e7baf3959e0d53d146b9558bb5041842dc54e4d2e86a2fb0"
+  },
+  "selected_source": {
+    "path": "/private/tmp/lanl14_invoke_reviewed_supervised_export_20261008_a1_r1.py",
+    "bytes": 29841,
+    "sha256": "52dc4ff21cd22113ff415f617380761d5c42b7a75cfab8d3aaf3b8f5be182c13"
+  },
+  "runtime_readonly_import": {
+    "source_sha256": "ee12a535ea2c3e6976c920f483c72e8367cd36ec311bf26585137023a2d29ec7",
+    "bytes": 29985,
+    "path": "explicit parent-supplied primary archive path required; not invented",
+    "main_called": false,
+    "fchmod_called": false,
+    "returned_verified_bytes_compile_only_at_future_runtime": true
+  },
+  "node_map": {
+    "PrivateParser": {
+      "original_names_to_h": 0,
+      "additional_literal_source_changes": false
+    },
+    "exact_commit": {
+      "original_names_to_h": 0,
+      "additional_literal_source_changes": false
+    },
+    "fixed_git": {
+      "original_names_to_h": 1,
+      "additional_literal_source_changes": false
+    },
+    "fresh_absent": {
+      "original_names_to_h": 0,
+      "additional_literal_source_changes": false
+    },
+    "source_checks": {
+      "original_names_to_h": 5,
+      "additional_literal_source_changes": true
+    },
+    "native_checks": {
+      "original_names_to_h": 2,
+      "additional_literal_source_changes": false
+    },
+    "correction": {
+      "original_names_to_h": 6,
+      "additional_literal_source_changes": false
+    },
+    "gates": {
+      "original_names_to_h": 7,
+      "additional_literal_source_changes": true
+    },
+    "absent_outputs": {
+      "original_names_to_h": 1,
+      "additional_literal_source_changes": false
+    },
+    "argv": {
+      "original_names_to_h": 0,
+      "additional_literal_source_changes": false
+    },
+    "supervisor_result": {
+      "original_names_to_h": 1,
+      "additional_literal_source_changes": false
+    },
+    "main": {
+      "original_names_to_h": 13,
+      "additional_literal_source_changes": true
+    }
+  },
+  "copied_23_function_class_definitions_removed": true,
+  "empty_stderr_original_supported": true,
+  "new_target_execution_or_tests": 0
+}

@@ -1,0 +1,72 @@
+--- /private/tmp/lanl14_invoke_reviewed_supervised_export_20261008_a1_r1.py
++++ /private/tmp/lanl14_invoke_reviewed_supervised_export_20261008_a1_r2.py
+@@ -75,6 +75,7 @@
+     str(PROCESSES): (912, "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289"),
+     str(SOURCE / "swdb-project/scripts/generality_report.py"): (None, "26f6d803d17381a70241e77bed5a28a3340f03549135100e475f550c4e252303"),
+ }
++CORRECTION = ARCHIVE / "14-completed-report-transfer-mode-controls-20261008-a1/lanl14_correct_completed_report_transfer_modes_20261008_a1.py"
+ CORRECTION_SHA = "ee12a535ea2c3e6976c920f483c72e8367cd36ec311bf26585137023a2d29ec7"
+ # Exact reviewed ee12a source; its main and mutation APIs are never called.
+ ENV_OVERRIDES = {
+@@ -133,9 +134,9 @@
+ 
+ 
+ def reviewed_helpers(path):
+-    require(path.is_relative_to(ARCHIVE), "reviewed_correction_durable_archive")
++    require(path == CORRECTION, "reviewed_correction_exact_durable_archive")
+     pin, raw = bootstrap_source(path, CORRECTION_SHA)
+-    require(pin["bytes"] == 29985, "ee12a_bytes")
++    require(pin["bytes"] == 29985 and stat.S_IMODE(pin["stat"]["st_mode"]) == 0o644, "ee12a_bytes_mode0644")
+     # Future runtime import of exactly returned/hash-checked bytes. This unique module name
+     # keeps original __main__ false; no correction.main/fchmod/output_root is called.
+     spec = importlib.util.spec_from_file_location("lanl14_reviewed_readonly_correction_primitives", path)
+@@ -210,9 +211,9 @@
+     c_map = {p.relative_to(C_PROJECT / "swdb").as_posix():h.read_file(p, MAX_JSON, budget)[0]["sha256"]
+              for p in c_modules}
+     require(h.true_digest(c_map) == F6, "C_F6")
+-    hp, _ = h.read_file(args.correction_source, MAX_JSON, budget, CORRECTION_SHA)
++    hp, _ = h.read_file(CORRECTION, MAX_JSON, budget, CORRECTION_SHA)
+     require(not hp["stat"]["st_mode"] & 0o022 and hp["bytes"] == 29985, "readonly_helper_pin_mode")
+-    pins[str(args.correction_source)] = hp
++    pins[str(CORRECTION)] = hp
+     return {"code": pins, "R14": identity, "C": C, "C_modules": 185,
+             "C_estimator_sha256": F6, "primary": args.expected_primary}
+ 
+@@ -374,7 +375,6 @@
+     parser.add_argument("--expected-primary", required=True, type=exact_commit)
+     parser.add_argument("--wrapper-upstream-commit", required=True, type=exact_commit)
+     parser.add_argument("--mode-receipt", required=True, type=Path)
+-    parser.add_argument("--correction-source", required=True, type=Path)
+     parser.add_argument("--report-bytes", required=True, type=int)
+     parser.add_argument("--markdown-bytes", required=True, type=int)
+     parser.add_argument("--metadata-deadline-s", required=True, type=int)
+@@ -387,10 +387,10 @@
+             pwd.getpwuid(UID).pw_name == "yanruj" and Path(sys.executable).resolve(strict=True) == PY,
+             "exact_native_account_before_reviewed_import")
+     own_bootstrap, _ = bootstrap_source(Path(__file__).absolute(), args.source_sha256)
+-    h, helper_pin = reviewed_helpers(args.correction_source)
++    h, helper_pin = reviewed_helpers(CORRECTION)
+     budget = h.Budget(args.metadata_deadline_s)
+     before_native = native_checks(budget)
+-    require(h.read_file(args.correction_source, MAX_JSON, budget, CORRECTION_SHA)[0] == helper_pin, "helper_pin_current")
++    require(h.read_file(CORRECTION, MAX_JSON, budget, CORRECTION_SHA)[0] == helper_pin, "helper_pin_current")
+     before_source = source_checks(args, budget)
+     before_source["reviewed_readonly_helper"] = helper_pin
+     # The helper pin is separately checked; source_checks remains exact for subsequent comparisons.
+@@ -398,6 +398,7 @@
+     before_gates = gates(args, budget)
+     absence = absent_outputs(budget)
+     require(h.released(budget) == before_gates["released_leases"], "prelaunch_leases_changed")
++    require(bootstrap_source(CORRECTION, CORRECTION_SHA)[0] == helper_pin, "prelaunch_exact_helper")
+     require(source_checks(args, budget) == base_source and native_checks(budget) == before_native,
+             "prelaunch_source_native_changed")
+     # Originals are created only after every concrete completion/correction/absence gate.
+@@ -441,7 +442,7 @@
+                 "post_source_native_changed")
+         require(h.released(after) == before_gates["released_leases"], "post_released_leases_changed")
+         require(invocation_exit == compact["supervisor_exit"], "GNU_and_original_supervisor_status")
+-        require(bootstrap_source(args.correction_source, CORRECTION_SHA)[0] == helper_pin and
++        require(bootstrap_source(CORRECTION, CORRECTION_SHA)[0] == helper_pin and
+                 bootstrap_source(Path(__file__).absolute(), args.source_sha256)[0] == own_bootstrap, "final_own_helper_source")
+     except BaseException as exc:
+         failure = type(exc).__name__

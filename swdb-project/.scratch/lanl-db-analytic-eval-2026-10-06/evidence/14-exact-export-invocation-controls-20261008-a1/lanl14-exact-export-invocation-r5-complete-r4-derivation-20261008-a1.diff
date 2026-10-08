@@ -1,0 +1,175 @@
+--- /private/tmp/lanl14_invoke_reviewed_supervised_export_20261008_a1_r4.py
++++ /private/tmp/lanl14_invoke_reviewed_supervised_export_20261008_a1_r5.py
+@@ -75,6 +75,16 @@
+     str(PROCESSES): (912, "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289"),
+     str(SOURCE / "swdb-project/scripts/generality_report.py"): (None, "26f6d803d17381a70241e77bed5a28a3340f03549135100e475f550c4e252303"),
+ }
++# Exactly three historical0664 byte-pinned sources; no other022 source exemption.
++INHERITED0664 = {
++    str(HELPER): Path("/data1/yanruj"),
++    str(COUNT): Path("/data/yanruj"),
++    str(SOURCE / "swdb-project/scripts/generality_report.py"): Path("/data1/yanruj"),
++}
++RETENTION = PRIMARY / "swdb-project/records/.retention.lock"
++RETENTION_E3 = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++RETENTION_FIXED = {"st_dev":2097,"st_ino":54947305,"st_uid":UID,"st_gid":0,"st_nlink":1,"st_size":0}
++DIRECTORY_ID_KEYS = ("st_dev","st_ino","st_mode","st_uid","st_gid")
+ CORRECTION = ARCHIVE / "14-completed-report-transfer-mode-controls-20261008-a1/lanl14_correct_completed_report_transfer_modes_20261008_a1.py"
+ CORRECTION_SHA = "ee12a535ea2c3e6976c920f483c72e8367cd36ec311bf26585137023a2d29ec7"
+ # Exact reviewed ee12a source; its main and mutation APIs are never called.
+@@ -155,7 +165,8 @@
+     fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+     try:
+         require(h.stamp(os.fstat(fd)) == h.stamp(before) == h.stamp(path.lstat()) and
+-                os.read(fd, 1) == b"", "empty_original_stream")
++                os.read(fd, 1) == b"" and
++                h.stamp(os.fstat(fd)) == h.stamp(before) == h.stamp(path.lstat()), "empty_original_stream")
+     finally:
+         os.close(fd)
+     budget.check()
+@@ -187,22 +198,72 @@
+     for parent in path.parents:
+         require(not parent.is_symlink(), "fresh_parent_symlink")
+ 
++def private_ancestor_witnesses(budget):
++    budget.check()
++    result = {}
++    for path in (Path("/data1/yanruj"), Path("/data/yanruj")):
++        path = h.checked(path, True)
++        status = path.lstat()
++        require(stat.S_IMODE(status.st_mode) == 0o700, "literal_private_ancestor0700")
++        result[str(path)] = {"path":str(path),"stat":h.stamp(status),
++            "stable_privacy_identity":{k:getattr(status,k) for k in DIRECTORY_ID_KEYS},
++            "effective_privacy_basis":"exact owned nonsymlink0700 ancestor; no permission action"}
++    budget.check()
++    return result
++
++
++def retention_original(budget):
++    pin = stream_pin(RETENTION, 1, budget)
++    require(pin["bytes"] == 0 and pin["sha256"] == RETENTION_E3 and
++            stat.S_IMODE(pin["stat"]["st_mode"]) == 0o666 and
++            all(pin["stat"][k] == value for k,value in RETENTION_FIXED.items()), "exact_retained_E3_original")
++    return pin
++
++
++def report_directory(args, budget):
++    budget.check()
++    path = h.checked(RAW / "report", True)
++    status = path.lstat()
++    needs_gzip = args.report_bytes > MAX_OTHER
++    require(not needs_gzip or not status.st_mode & 0o022, "conditional_original928_gzip_parent022")
++    budget.check()
++    return {"path":str(path),"stat":h.stamp(status),
++        "stable_directory_identity":{k:getattr(status,k) for k in DIRECTORY_ID_KEYS},
++        "conditional_gzip_gate_required":needs_gzip,
++        "supplier_requirement":"original928 requires no022 on existing gzip parent only when report>100MiB",
++        "permission_action_performed":False}
++
++
+ def source_checks(args, budget):
+     pins = {str(Path(__file__).absolute()): h.read_file(Path(__file__).absolute(), MAX_JSON, budget,
+                                                      args.source_sha256)[0]}
+     own = Path(__file__).absolute()
+     require(all(not own.is_relative_to(p) for p in (PRIMARY, SOURCE, C_ROOT, RAW, EXPORT_W, ADMIN)),
+             "own_source_external")
++    privacy = private_ancestor_witnesses(budget)
+     for path, (size, digest) in CODE.items():
+         pin, _ = h.read_file(path, MAX_JSON, budget, digest)
+-        require(not pin["stat"]["st_mode"] & 0o022 and (size is None or pin["bytes"] == size),
+-                "reviewed_code_mode_size")
++        inherited = stat.S_IMODE(pin["stat"]["st_mode"]) == 0o664 and path in INHERITED0664
++        if inherited:
++            require(Path(path).is_relative_to(INHERITED0664[path]) and
++                    str(INHERITED0664[path]) in privacy, "exact_inherited0664_private_ancestor")
++        else:
++            require(not pin["stat"]["st_mode"] & 0o022, "all_other_code_strict_no022")
++        require(size is None or pin["bytes"] == size, "reviewed_code_size")
++        pin["mode_policy"] = "exact_inherited0664_private0700" if inherited else "strict_no022"
+         pins[path] = pin
+     require(not pins[str(own)]["stat"]["st_mode"] & 0o022, "own_source_mode")
+     for root, revision in ((PRIMARY, args.expected_primary), (C_ROOT, C)):
+         require(fixed_git(root, ["rev-parse", "HEAD"], budget)[1].decode().strip() == revision,
+                 "primary_or_C_HEAD")
+-        require(not fixed_git(root, ["status", "--porcelain"], budget)[1], "primary_or_C_clean")
++        if root == PRIMARY:
++            require(fixed_git(root, ["status", "--porcelain", "--untracked-files=all"], budget)[1]
++                    == b"?? swdb-project/records/.retention.lock\n", "primary_only_exact_retention_untracked")
++            require(fixed_git(root, ["diff", "--quiet", "--exit-code"], budget)[0] == 0 and
++                    fixed_git(root, ["diff", "--cached", "--quiet", "--exit-code"], budget)[0] == 0,
++                    "primary_tracked_cached_clean")
++        else:
++            require(not fixed_git(root, ["status", "--porcelain"], budget)[1], "C_clean")
+     require(fixed_git(PRIMARY, ["rev-parse", "origin/yanrujhou_main"], budget)[1].decode().strip()
+             == args.expected_primary, "delivered_primary_upstream")
+     require(fixed_git(PRIMARY, ["symbolic-ref", "--short", "HEAD"], budget)[1].decode().strip()
+@@ -217,7 +278,9 @@
+     require(not hp["stat"]["st_mode"] & 0o022 and hp["bytes"] == 29985, "readonly_helper_pin_mode")
+     pins[str(CORRECTION)] = hp
+     return {"code": pins, "R14": identity, "C": C, "C_modules": 185,
+-            "C_estimator_sha256": F6, "primary": args.expected_primary}
++            "C_estimator_sha256": F6, "primary": args.expected_primary,
++            "exact_retention_original":retention_original(budget),
++            "effective_private_ancestors":{p:v["stable_privacy_identity"] for p,v in privacy.items()}}
+ 
+ def native_checks(budget):
+     require(platform.machine() == "x86_64" and pwd.getpwuid(UID).pw_name == "yanruj", "native_arch_account")
+@@ -405,6 +468,8 @@
+     # The helper pin is separately checked; source_checks remains exact for subsequent comparisons.
+     base_source = {k:v for k,v in before_source.items() if k != "reviewed_readonly_helper"}
+     before_gates = gates(args, budget)
++    before_privacy = private_ancestor_witnesses(budget)
++    before_report_directory = report_directory(args, budget)
+     absence = absent_outputs(budget)
+     require(h.released(budget) == before_gates["released_leases"], "prelaunch_leases_changed")
+     require(bootstrap_source(CORRECTION, CORRECTION_SHA)[0] == helper_pin, "prelaunch_exact_helper")
+@@ -418,17 +483,25 @@
+         "public_argv":argv(),"explicit_environment_overrides":ENV_OVERRIDES,
+         "inherited_environment_or_auth_dumped":False,"cwd":str(SOURCE / "swdb-project"),"uid":UID,
+         "native":before_native,"sources":before_source,"actual_completion_and_correction":before_gates,
+-        "fresh_outputs":absence,"umask":"0o077","GNU_outer_s":18120,"GNU_KILL_allowance_s":60,
++        "fresh_outputs":absence,"effective_privacy_ancestors_before":before_privacy,
++        "original_report_directory_before":before_report_directory,
++        "umask":"0o077","GNU_outer_s":18120,"GNU_KILL_allowance_s":60,
+         "unchanged_supervisor_child_s":18000,"invocation_wait_s":INVOCATION_WAIT_S,
++        "metadata_preflight_s":args.metadata_deadline_s,"metadata_postflight_s":args.metadata_deadline_s,
++        "nominal_segment_sum_s":2*args.metadata_deadline_s+INVOCATION_WAIT_S,
++        "enclosing_budget_requirement":"parent must explicitly review finite outer for2D+18300 plus bootstrap/publication/transport margin; blocked filesystem bounds unproved",
+         "administrative_duration_sufficiency":"unproved","report_body_parsed_or_transferred":False,
+         "no_retry":True,"reader_not_invoked":True}
+     prereg = h.private_json(ADMIN / "preregistration.json", registered)
+     start = h.now(); launched = False; invocation_exit = None; failure = None; compact = None; cleanup_success = False
+     out_pin = err_pin = status_pin = None
++    after_privacy = after_report_directory = None
+     try:
+         require(not any(name in os.environ for name in STARTUP), "prechild_startup_override")
+         require(h.released(budget) == before_gates["released_leases"], "immediate_leases_changed")
+         require(source_checks(args, budget) == base_source, "immediate_code_changed")
++        require(report_directory(args, budget)["stable_directory_identity"] ==
++                before_report_directory["stable_directory_identity"], "immediate_report_directory_changed")
+         out_fd = os.open(ADMIN / "supervisor.stdout", os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW, 0o600)
+         with os.fdopen(out_fd, "wb") as out:
+             err_fd = os.open(ADMIN / "supervisor.stderr", os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW, 0o600)
+@@ -450,6 +523,12 @@
+         require(source_checks(args, after) == base_source and native_checks(after) == before_native,
+                 "post_source_native_changed")
+         require(h.released(after) == before_gates["released_leases"], "post_released_leases_changed")
++        after_privacy = private_ancestor_witnesses(after)
++        require({p:v["stable_privacy_identity"] for p,v in after_privacy.items()} ==
++                {p:v["stable_privacy_identity"] for p,v in before_privacy.items()}, "post_private_ancestor_identity")
++        after_report_directory = report_directory(args, after)
++        require(after_report_directory["stable_directory_identity"] ==
++                before_report_directory["stable_directory_identity"], "post_report_directory_identity")
+         require(invocation_exit == compact["supervisor_exit"], "GNU_and_original_supervisor_status")
+         require(bootstrap_source(CORRECTION, CORRECTION_SHA)[0] == helper_pin and
+                 bootstrap_source(Path(__file__).absolute(), args.source_sha256)[0] == own_bootstrap, "final_own_helper_source")
+@@ -461,6 +540,9 @@
+         status = {"format":"swdb.lanl14-exact-export-invocation-status.v1","sealed":False,
+             "started_utc":start,"ended_utc":h.now(),"launched":launched,"invocation_exit":invocation_exit,
+             "failure_type":failure,"original_preregistration":prereg,"supervisor_result":compact,
++            "effective_privacy_ancestors_before":before_privacy,"effective_privacy_ancestors_after":after_privacy,
++            "original_report_directory_before":before_report_directory,"original_report_directory_after":after_report_directory,
++            "directory_witness_scope":"identity/type/owner/mode stable; full before/after stats retained; mtime/ctime/nlink may legitimately change from fresh export/gzip descendants",
+             "original_private_stdout":out_pin,"original_private_stderr":err_pin,
+             "supervision_success":failure is None and invocation_exit == 0 and cleanup_success,
+             "scientific_admission":False,"raw_streams_transferred":False,"reader_invoked":False,

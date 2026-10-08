@@ -1,0 +1,25 @@
+--- /private/tmp/lanl14_invoke_reviewed_supervised_export_20261008_a1_r3.py
++++ /private/tmp/lanl14_invoke_reviewed_supervised_export_20261008_a1_r4.py
+@@ -311,7 +311,7 @@
+     disks = {mount:os.statvfs(mount).f_bavail * os.statvfs(mount).f_frsize for mount in ("/data1", "/data")}
+     require(available >= 48 * 1024**3 and disks["/data1"] >= 21 * 1024**3 and disks["/data"] >= 24 * 1024**3,
+             "unchanged_reserve")
+-    require(not os.path.lexists(RAW / "control/error.json"), "original_runner_error_preserved")
++    require(not os.path.lexists(RAW / "control/runner-error.txt"), "original_runner_error_preserved")
+     return {"original_inputs": inputs, "manifest_identity_sha256": manifest["identity_sha256"],
+             "acceptance_identity_sha256": accept["identity_sha256"], "original_correction": cp,
+             "wrapper": wp, "wrapper_upstream_commit": args.wrapper_upstream_commit,
+@@ -356,6 +356,13 @@
+             result["supervisor_sha256"] == CODE[str(SUP)][1] and result["native_python_sha256"] == NATIVE[str(PY)][1] and
+             result["timeout_s"] == 18000 and result["fixture"] is False and result["scientific_admission"] is False and
+             result["child_scientific_result_assessed"] is False, "supervisor_exact_scope")
++    public = argv()
++    selected_argv = [str(PY), "-B", str(EXPORTER), *public[public.index("--")+1:]]
++    selected_hash = hashlib.sha256(json.dumps(selected_argv,sort_keys=True,separators=(",",":"),ensure_ascii=False).encode()).hexdigest()
++    require(result["argv_sha256"] == selected_hash and result["estimator_sha256"] == F6 and
++            result["estimator_modules"] == 185 and result["uid"] == UID and
++            result["cleanup_implementation_sha256"] == CODE[str(CLEANUP)][1] and
++            result["processes_py_sha256"] == CODE[str(PROCESSES)][1], "original_exact_child_argv_F6_cleanup")
+     compact = {"receipt":pin,"identity_sha256":result["identity_sha256"],"action":result["action"],
+                "state":result["state"],"supervisor_exit":result["supervisor_exit"],
+                "cleanup_survivor_count":result["cleanup"]["survivor_count"],"scientific_admission":False}
