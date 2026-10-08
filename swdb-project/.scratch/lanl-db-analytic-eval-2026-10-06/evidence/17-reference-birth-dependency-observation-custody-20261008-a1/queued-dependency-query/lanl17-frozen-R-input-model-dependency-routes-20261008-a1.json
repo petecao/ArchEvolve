@@ -1,0 +1,2109 @@
+{
+  "authoritative_helper": {
+    "bytes": 38195,
+    "lines": "188\u2013227; preparation metadata_pins at325; dispatch/live repeat390\u2013391",
+    "path": "/private/tmp/lanl17_parent_helpers_cleanup60_a4.py",
+    "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+  },
+  "baselines": [
+    {
+      "application": "dx100-gapbs",
+      "application_source": {
+        "commit": "e4fc4afdf894f295442cef3604667a469fab8e62",
+        "local_path": "apps/dx100",
+        "origin": "upstream",
+        "uri": "https://github.com/arkhadem/DX100"
+      },
+      "candidate_artifact": {
+        "files": [
+          {
+            "bytes": 1208,
+            "executable": false,
+            "path": "LICENSE",
+            "sha256": "b8c77da160595e378d8fa7635b1c777c7a84c56c79a24efbbbcd9203375231c2"
+          },
+          {
+            "bytes": 661,
+            "executable": false,
+            "path": "PROVENANCE.md",
+            "sha256": "9d4f2794ed7b492fae1cb946cce45b3247d9e27c7dfaae11df71d310701206a5"
+          },
+          {
+            "bytes": 4907,
+            "executable": false,
+            "path": "SHA256SUMS",
+            "sha256": "8cc8eb45740c436260623bda72b765524ec4692ddfee5c1c7dfd5f48ca8caf9a"
+          },
+          {
+            "bytes": 14,
+            "executable": false,
+            "path": "benchmarks/API/.gitignore",
+            "sha256": "ca7fabf7f4bedcc521ae2346c034463db580111de0da3494ed3f58c2558b7a88"
+          },
+          {
+            "bytes": 1323,
+            "executable": false,
+            "path": "benchmarks/API/MAA.hpp",
+            "sha256": "4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd"
+          },
+          {
+            "bytes": 845,
+            "executable": false,
+            "path": "benchmarks/API/MAA_atomics.hpp",
+            "sha256": "896459489ded4a790a2b52da62b337f00b7310a4bafc6d3ceaa9d8c4f1eb026a"
+          },
+          {
+            "bytes": 4089,
+            "executable": false,
+            "path": "benchmarks/API/MAA_compiler_api.cpp",
+            "sha256": "15df982719e46110a9ba3d1a86ac34b65019f37c5b00199eaace7379159370d5"
+          },
+          {
+            "bytes": 25345,
+            "executable": false,
+            "path": "benchmarks/API/MAA_functional.hpp",
+            "sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc"
+          },
+          {
+            "bytes": 27473,
+            "executable": false,
+            "path": "benchmarks/API/MAA_gem5.hpp",
+            "sha256": "5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174"
+          },
+          {
+            "bytes": 9802,
+            "executable": false,
+            "path": "benchmarks/API/MAA_gem5_magic.hpp",
+            "sha256": "e3353661cce76167a2f986385e448c2a6aef471fc8424762183bae11ba769c32"
+          },
+          {
+            "bytes": 786,
+            "executable": false,
+            "path": "benchmarks/API/MAA_utility.hpp",
+            "sha256": "3fb818fff3a37e14d77ea009a2246788213c1e938a05515b361aceb010a2b10e"
+          },
+          {
+            "bytes": 6773,
+            "executable": false,
+            "path": "benchmarks/API/README.md",
+            "sha256": "f67f7c2e7e8f08f1f92f701accf39fcd981df373552caa1ad24ead487505a328"
+          },
+          {
+            "bytes": 354,
+            "executable": false,
+            "path": "benchmarks/API/gen_chkpt.sh",
+            "sha256": "f4a89124276963302b13546a84745cf25d3ce2b7032956201e7263384e2726ac"
+          },
+          {
+            "bytes": 4253,
+            "executable": false,
+            "path": "benchmarks/API/make.sh",
+            "sha256": "a3ebeedbe09348c70a7ac8f87a8ba796bf1c58e50f910029b16900e62468ee3f"
+          },
+          {
+            "bytes": 550,
+            "executable": false,
+            "path": "benchmarks/API/make_functional.sh",
+            "sha256": "09b2c73bccf0ada756ede4292d6c35f65972f77d892beef7c541eca4960adbe3"
+          },
+          {
+            "bytes": 11952,
+            "executable": false,
+            "path": "benchmarks/API/prefetch_depricated.cpp",
+            "sha256": "b0d93940467e0a72964f3e0a53e32f7da0a86fead090ef074aaf16be22611f8c"
+          },
+          {
+            "bytes": 886,
+            "executable": false,
+            "path": "benchmarks/API/run_chkpt.sh",
+            "sha256": "bf097be9e4ff373e9dafd11f20163446e8f1d105549d89970953c09162329010"
+          },
+          {
+            "bytes": 88043,
+            "executable": false,
+            "path": "benchmarks/API/test.cpp",
+            "sha256": "5157dd85b88d9ca2ef0a7126e7d88dfea027031cd1053a6e3979cb1ce7cb75d1"
+          },
+          {
+            "bytes": 2122,
+            "executable": false,
+            "path": "benchmarks/API/test_compiler.cpp",
+            "sha256": "9384dbb08f1e8e7897ba517074e5d528d02d82349ceea292282ffbd4eb6d0a48"
+          },
+          {
+            "bytes": 67088,
+            "executable": false,
+            "path": "benchmarks/API/test_functional.cpp",
+            "sha256": "20a8702bd7051b2214a18529ffa025dd956c0aaa6591eec1f5cf792549d46dc4"
+          },
+          {
+            "bytes": 66926,
+            "executable": false,
+            "path": "benchmarks/API/test_strided.cpp",
+            "sha256": "f2cf4aca9883ebb0e777b114624002f2ac83c3117161a9c712fadfbef5147cc0"
+          },
+          {
+            "bytes": 47822,
+            "executable": false,
+            "path": "benchmarks/API/test_tested_parallel.cpp",
+            "sha256": "9012d12c6664fe383798038f403c214c5da73ea3ed9a8e37471960a571f090f7"
+          },
+          {
+            "bytes": 4342,
+            "executable": false,
+            "path": "benchmarks/API/test_vectorized.cpp",
+            "sha256": "0281c06ae9918703f4d5e51b062cd35d5a7328f11274282cd7096b4e5a411335"
+          },
+          {
+            "bytes": 1499,
+            "executable": false,
+            "path": "benchmarks/gapbs/LICENSE",
+            "sha256": "bc33e6a6a2571d48fde7fc7d30be3aa11fb0558edd46173861274ac7a1f74fc3"
+          },
+          {
+            "bytes": 3375,
+            "executable": false,
+            "path": "benchmarks/gapbs/Makefile",
+            "sha256": "cc5a39f4950dc8bdfbbc32834043e379b13d9db79e4f96158d7960ac561f9daa"
+          },
+          {
+            "bytes": 33804,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/bc.cc",
+            "sha256": "9732327b347c5da72526923f44b4250afcd7816c3b0ca1d0c8a43cd1d77f36ea"
+          },
+          {
+            "bytes": 8682,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/bc_maa_full.cc",
+            "sha256": "a5f0e1467edfa7931db7546b6bcb4a41669a448d55cbe43c3846cd19c15dbaae"
+          },
+          {
+            "bytes": 41934,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/bc_new.cc",
+            "sha256": "b34131eaea5d8afa460b9fffbe7de83fe6abb5bde1d2b2ad6e9575ff7e2db0f0"
+          },
+          {
+            "bytes": 3565,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/benchmark.h",
+            "sha256": "87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f"
+          },
+          {
+            "bytes": 20517,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/bfs.cc",
+            "sha256": "6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465"
+          },
+          {
+            "bytes": 4616,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/bfs_bu.cc",
+            "sha256": "ecd5f574fd10458703ad4af3bdf85ec522cca3821591e15456309f9906c70986"
+          },
+          {
+            "bytes": 1706,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/bitmap.h",
+            "sha256": "6f6e444c82b0e7d797cc9218ba85be7f5f702e95d4c134715c90e6a5b1288465"
+          },
+          {
+            "bytes": 16778,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/builder.h",
+            "sha256": "2d3646e12dc2ae9776cfa429aaec699d031b4826c79a356983cf109753f1eb01"
+          },
+          {
+            "bytes": 7422,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/cc.cc",
+            "sha256": "0986d8a21cf79e85c88b4615ef1b8aacc1ec1090784b2437d92ee22ae1163fd6"
+          },
+          {
+            "bytes": 4994,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/cc_sv.cc",
+            "sha256": "f239bd71cee27cba37f3824ae7b2520c291b116ccc83a329d09484b631c599ee"
+          },
+          {
+            "bytes": 8511,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/command_line.h",
+            "sha256": "de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2"
+          },
+          {
+            "bytes": 775,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/converter.cc",
+            "sha256": "8c5ce5fc37304103c16390f67f27b565aa4f7d3d178dc02cf12b3f5e25b42648"
+          },
+          {
+            "bytes": 6418,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/generator.h",
+            "sha256": "24bfdab312afdf6e552ef9a23d124332984761cdb94f109bb15009710d1dbafe"
+          },
+          {
+            "bytes": 8276,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/graph.h",
+            "sha256": "79a271a3e3b01d6f02750b2b828ad94b3696eff080eb068bc3fcf80bc81139e0"
+          },
+          {
+            "bytes": 4198,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/platform_atomics.h",
+            "sha256": "9c8dbe6419b34d850af33ef14ea724c1c64de369d052a8f3c6e20038dcabe9cd"
+          },
+          {
+            "bytes": 12267,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/pr.cc",
+            "sha256": "9379044698f6c296b8d2a17e1dcc651e7d2f45a147882ccc4dd5334b332727c0"
+          },
+          {
+            "bytes": 3540,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/pr_spmv.cc",
+            "sha256": "ea1e58b6957b0bcc1e76f4fde54131aa52bdefd2014dae604a9b7d9d1a5dae70"
+          },
+          {
+            "bytes": 4265,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/pvector.h",
+            "sha256": "b3280b03eb774fdd27bbc1967c4f274e46d42179f149275e1b2c394986ebe03d"
+          },
+          {
+            "bytes": 9268,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/reader.h",
+            "sha256": "951fb6e82df079389b953f35363e8a502d79da4f3c56b8ce6eab7faac38800e1"
+          },
+          {
+            "bytes": 2502,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/sliding_queue.h",
+            "sha256": "3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c"
+          },
+          {
+            "bytes": 21897,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/sssp.cc",
+            "sha256": "a3442b7f4c5f155dde5b3d76896d2dfc7d1a72deb7bea4581401f2d281b316b2"
+          },
+          {
+            "bytes": 13800,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/sssp_maa.cc",
+            "sha256": "3ed0f58d042c107aa8abdaa476ed86ab38d47670b55b1c36931b6dc3798d4c67"
+          },
+          {
+            "bytes": 4327,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/tc.cc",
+            "sha256": "de3a1a453e1e632ab2338a36c5a8f846a078a096f5c9ab7e7320b9448bbb43cb"
+          },
+          {
+            "bytes": 1161,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/timer.h",
+            "sha256": "3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb"
+          },
+          {
+            "bytes": 1953,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/util.h",
+            "sha256": "a103e6c5767d724adc9b6b421ecade4b2d2c4351e5ea0da5d2c9bf16a9fcecf6"
+          },
+          {
+            "bytes": 2898,
+            "executable": false,
+            "path": "benchmarks/gapbs/src/writer.h",
+            "sha256": "3fd16ac75a8c069c7cf09d540ca35b66ec51813406b5fd2f8149253bebd9ebea"
+          },
+          {
+            "bytes": 5479,
+            "executable": false,
+            "path": "include/gem5/asm/generic/m5ops.h",
+            "sha256": "28efe83deb0cd19d5d15b73d3544c7f45238c2744531657f5aa881da643e868d"
+          },
+          {
+            "bytes": 3937,
+            "executable": false,
+            "path": "include/gem5/m5ops.h",
+            "sha256": "bbef6be56e1fb63a820da56fe4306fbce67ee7bedbb43b6e72e0281c947f07e8"
+          }
+        ],
+        "path": "/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-gem5-20261003-a2.baseline/source",
+        "sha256": "d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d"
+      },
+      "id": "typed-library-bfs-gem5-20261003-a2.baseline",
+      "implementation": "dx100-bfs-scalar",
+      "implementation_code": [
+        {
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "root": "application",
+          "sha256": "6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465"
+        }
+      ],
+      "snapshot_artifact_identity": {
+        "manifest_files": 53,
+        "path": "/data1/yanruj/EvolveSWDB_sources/bfs-dx100-compile-20260925-a1.source/source",
+        "sha256": "d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d"
+      },
+      "source_snapshot": "bfs-dx100-compile-20260925-a1.source"
+    }
+  ],
+  "boundary": {
+    "actual_population_or_manifest_created": false,
+    "actual_remote_dependency_files_read": false,
+    "code_check_files_success_claimed": false,
+    "executed_selected_controls": false,
+    "imported_swdb_or_store": false,
+    "only_reads": "selected bounded frozen Git YAML/source bytes and local original helper/guard source; output is an unsealed private note",
+    "remote_availability_or_completeness_claimed": false,
+    "ssh": false
+  },
+  "cleanup_rows_source": {
+    "bytes": 88872,
+    "path": "/private/tmp/lanl_consumed_detached_source_guard_r5_20261008_a1.py",
+    "rows": {
+      "ArchEvolve-lanl-allocator-a2-20261006": {
+        "head": "b9dabf361b429f0c07717f1891573f5d5f31b1ab",
+        "path": "/data1/yanruj/ArchEvolve-lanl-allocator-a2-20261006"
+      },
+      "ArchEvolve-lanl-bulk-services-20261006-a1": {
+        "head": "aaf9a9d24a3b2f18af9a7ad8c445025fea366162",
+        "path": "/data1/yanruj/ArchEvolve-lanl-bulk-services-20261006-a1"
+      },
+      "ArchEvolve-lanl-bulk-total-services-20261006-a1": {
+        "head": "1703c98717ff303fdaa83b8044ac9b4060fedb78",
+        "path": "/data1/yanruj/ArchEvolve-lanl-bulk-total-services-20261006-a1"
+      },
+      "ArchEvolve-lanl-clock-a2-20261006": {
+        "head": "05e1b7b05220c06fa1bea39af8881fdda38f818f",
+        "path": "/data1/yanruj/ArchEvolve-lanl-clock-a2-20261006"
+      },
+      "ArchEvolve-lanl-count-20261006": {
+        "head": "cda8f2db11996402bcb483bf98440eedc07feaa7",
+        "path": "/data1/yanruj/ArchEvolve-lanl-count-20261006"
+      },
+      "ArchEvolve-lanl-estimates-20261006": {
+        "head": "b5acc909ef9df813352004e88633fac4db4b55e7",
+        "path": "/data1/yanruj/ArchEvolve-lanl-estimates-20261006"
+      },
+      "ArchEvolve-lanl-estimation-role-20261006-a1": {
+        "head": "a7a9b9e8b9d52245490b7dfd372f3be05f67ce27",
+        "path": "/data1/yanruj/ArchEvolve-lanl-estimation-role-20261006-a1"
+      },
+      "ArchEvolve-lanl-estimation-role-20261006-a2": {
+        "head": "a7a9b9e8b9d52245490b7dfd372f3be05f67ce27",
+        "path": "/data1/yanruj/ArchEvolve-lanl-estimation-role-20261006-a2"
+      },
+      "ArchEvolve-lanl-float-memory-services-20261006-a1": {
+        "head": "3006d91e2d076db0104f3b7734131dec5f26caad",
+        "path": "/data1/yanruj/ArchEvolve-lanl-float-memory-services-20261006-a1"
+      },
+      "ArchEvolve-lanl-functional-evaluation-20261006-a1": {
+        "head": "bef54f9661d099dcf381538522bd4d9573d6fe0c",
+        "path": "/data1/yanruj/ArchEvolve-lanl-functional-evaluation-20261006-a1"
+      },
+      "ArchEvolve-lanl-functional-object-counts-20261006-a2": {
+        "head": "9ba9277b2b7cfed25569b4fa73aa683679a588e0",
+        "path": "/data1/yanruj/ArchEvolve-lanl-functional-object-counts-20261006-a2"
+      },
+      "ArchEvolve-lanl-functional-strict-20261006": {
+        "head": "dcb66fc4b9564dc742b310e036e6ee5495330df8",
+        "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006"
+      },
+      "ArchEvolve-lanl-independent-services-20261006-a1": {
+        "head": "1703c98717ff303fdaa83b8044ac9b4060fedb78",
+        "path": "/data1/yanruj/ArchEvolve-lanl-independent-services-20261006-a1"
+      },
+      "ArchEvolve-lanl-memory-a1-20261006": {
+        "head": "8e54d74e64c08a29b20eec183b070f3e77a77e43",
+        "path": "/data1/yanruj/ArchEvolve-lanl-memory-a1-20261006"
+      },
+      "ArchEvolve-lanl-native-object-counts-20261006-a1": {
+        "head": "502fea76159cb7b4c692291ee779dd0235b20c8b",
+        "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1"
+      },
+      "ArchEvolve-lanl-openmp-projections-20261006-a1": {
+        "head": "8949e10fc228bc1009de19fa9df6c9e1a61808ef",
+        "path": "/data1/yanruj/ArchEvolve-lanl-openmp-projections-20261006-a1"
+      },
+      "ArchEvolve-lanl-prospective-inputs-20261006-a2": {
+        "head": "c9be522053dffcd8e3308a7c723e2468b942e2a1",
+        "path": "/data1/yanruj/ArchEvolve-lanl-prospective-inputs-20261006-a2"
+      },
+      "ArchEvolve-lanl-root-projection-20261006": {
+        "head": "30f425b5275765c7ccdb5115ab8bb00f8b5f5e98",
+        "path": "/data1/yanruj/ArchEvolve-lanl-root-projection-20261006"
+      }
+    },
+    "rows_count": 18,
+    "sha256": "a84dc9ca7ccd20e6485cc8e9a2007b3b982fad9c5ae19dacbb1f164d664748cb"
+  },
+  "companion": {
+    "id": "bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e",
+    "prior_exposure": "existing companion; no freshness certification in this audit",
+    "representation": {
+      "adjacency_verified": true,
+      "application": "dx100-gapbs",
+      "bytes": 622829,
+      "canonical_sha256": "e03a3905f9105b898b730387092d92a68b854cdd44280adb39b1bd9423a4a968",
+      "format": "gapbs_sg32le",
+      "id": "bfs-dx100-coverage-20260926-a2.sg32",
+      "loader": "swdb.gapbs-representation.v1",
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/graph/coverage.sg",
+      "sha256": "d4697713f585b9670e1c44d26df94c72889f4c82fbd68b72e15627e6a0b39a56"
+    }
+  },
+  "configs": [
+    {
+      "baseline_rows": [
+        {
+          "candidate": "typed-library-bfs-gem5-20261003-a2.baseline",
+          "role": "fork_scalar_tdstep"
+        }
+      ],
+      "id": "extensa-gem5-bfs-20261006-p1",
+      "machine": "mbit10",
+      "pin": {
+        "bytes": 1544,
+        "file_sha256": "d43cd9c44e54f3e4eb3e38a35c1b3cd113012913b26198e18703d254ff1a327d",
+        "git_blob": "f9c79f9ed2f3d8c852bb23a8e8dd99ae3e1791b5",
+        "git_mode": "100644",
+        "git_object_kind": "blob",
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-prospective-configs/extensa-gem5-bfs-20261006-p1.yaml"
+      },
+      "roi": "bfs.complete_call.v1",
+      "sources": [
+        0
+      ],
+      "threads": 4,
+      "workload_classes": [
+        {
+          "class": "kronecker",
+          "workload": "lanl17-prospective-20261006-a2-kronecker.g18.k14.061b9007efcdebb7"
+        },
+        {
+          "class": "uniform_random",
+          "workload": "lanl17-prospective-20261006-a2-uniform_random.g18.k14.9027c7c5f57e8926"
+        }
+      ]
+    },
+    {
+      "baseline_rows": [
+        {
+          "candidate": "typed-library-bfs-gem5-20261003-a2.baseline",
+          "role": "fork_scalar_tdstep"
+        }
+      ],
+      "id": "extensa-gem5-bfs-20261006-p2",
+      "machine": "mbit10",
+      "pin": {
+        "bytes": 1544,
+        "file_sha256": "c351d5b4ada54e78dc63402c7b23cc13bec1cd821693e19bd09f156691500ea8",
+        "git_blob": "3cf03373598e657b1559b512d7b633d2dce1867e",
+        "git_mode": "100644",
+        "git_object_kind": "blob",
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-prospective-configs/extensa-gem5-bfs-20261006-p2.yaml"
+      },
+      "roi": "bfs.complete_call.v1",
+      "sources": [
+        0
+      ],
+      "threads": 4,
+      "workload_classes": [
+        {
+          "class": "kronecker",
+          "workload": "lanl17-prospective-20261006-a2-kronecker.g18.k15.15b1ec00b24140f4"
+        },
+        {
+          "class": "uniform_random",
+          "workload": "lanl17-prospective-20261006-a2-uniform_random.g18.k15.34444aebb8080315"
+        }
+      ]
+    },
+    {
+      "baseline_rows": [
+        {
+          "candidate": "typed-library-bfs-gem5-20261003-a2.baseline",
+          "role": "fork_scalar_tdstep"
+        }
+      ],
+      "id": "extensa-gem5-bfs-20261006-p3",
+      "machine": "mbit10",
+      "pin": {
+        "bytes": 1544,
+        "file_sha256": "59cbfc702702a829ab62697ccba68f14db9e6edc1da5ba719cf0674e95fb2956",
+        "git_blob": "00fa8d1665783bedec8d99bba220d7610c3d69a0",
+        "git_mode": "100644",
+        "git_object_kind": "blob",
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-prospective-configs/extensa-gem5-bfs-20261006-p3.yaml"
+      },
+      "roi": "bfs.complete_call.v1",
+      "sources": [
+        0
+      ],
+      "threads": 4,
+      "workload_classes": [
+        {
+          "class": "kronecker",
+          "workload": "lanl17-prospective-20261006-a2-kronecker.g18.k17.7c5f5ee1ddda25c4"
+        },
+        {
+          "class": "uniform_random",
+          "workload": "lanl17-prospective-20261006-a2-uniform_random.g18.k17.451edf9faac833c0"
+        }
+      ]
+    },
+    {
+      "baseline_rows": [
+        {
+          "candidate": "typed-library-bfs-gem5-20261003-a2.baseline",
+          "role": "fork_scalar_tdstep"
+        }
+      ],
+      "id": "extensa-gem5-bfs-20261006-p4",
+      "machine": "mbit10",
+      "pin": {
+        "bytes": 1544,
+        "file_sha256": "3667e6fbcddbe26c901a0290ff7dfd5281e7a836b2344688d51b93e3c35110fc",
+        "git_blob": "0b19769d2d4474c3be6bde7f29dacd3683830591",
+        "git_mode": "100644",
+        "git_object_kind": "blob",
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-prospective-configs/extensa-gem5-bfs-20261006-p4.yaml"
+      },
+      "roi": "bfs.complete_call.v1",
+      "sources": [
+        0
+      ],
+      "threads": 4,
+      "workload_classes": [
+        {
+          "class": "kronecker",
+          "workload": "lanl17-prospective-20261006-a2-kronecker.g18.k18.feb23b36a57d4c05"
+        },
+        {
+          "class": "uniform_random",
+          "workload": "lanl17-prospective-20261006-a2-uniform_random.g18.k18.c0396050e37ceed6"
+        }
+      ]
+    }
+  ],
+  "directories": [
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "symbolic source root requires concrete future source/SWDB_HOME route",
+      "live_filesystem_dependency": true,
+      "notes": "paths.HOME default is imported SWDB source root; supplied SWDB_HOME overrides. .resolve() may resolve an external app alias, which this local audit did not follow. Neither apps/dx100 nor apps/gapbs is in frozen R17 Git tree.",
+      "path": "${SWDB_HOME_OR_IMPORTED_SOURCE_SWDB}/apps/dx100",
+      "record": "dx100-gapbs",
+      "role": "metadata_pins baseline selected application source; full manifest comparison",
+      "type": "directory"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "metadata_pins validates its recorded content against live application source without opening this saved artifact path; later baseline compilation does open it.",
+      "path": "/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-gem5-20261003-a2.baseline/source",
+      "record": "typed-library-bfs-gem5-20261003-a2.baseline",
+      "role": "saved baseline candidate artifact; later dx100-compile calls artifacts.verify",
+      "type": "directory"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": false,
+      "notes": "validate_baseline_source compares recorded SHA/files, not this saved snapshot directory. Preserve provenance; not a claim the path is unavailable or deletable.",
+      "path": "/data1/yanruj/EvolveSWDB_sources/bfs-dx100-compile-20260925-a1.source/source",
+      "record": "bfs-dx100-compile-20260925-a1.source",
+      "role": "saved full source snapshot artifact identity",
+      "type": "directory"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "symbolic source root requires concrete future source/SWDB_HOME route",
+      "live_filesystem_dependency": true,
+      "notes": "script materialize54\u201370 reads original BFS plus licensed/header subsets; before manifest is full artifact identity. No tracked R17 app route establishes remote availability.",
+      "path": "${FROZEN_SOURCE_SWDB}/apps/dx100",
+      "record": "bfs-dx100-scalar-only-20260929-a1.source",
+      "role": "scalar snapshot reconstruction full pinned original source",
+      "type": "directory"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "path": "/data1/yanruj/DX100-bfs-e4fc4af",
+      "record": "bfs-dx100-build-20260925-a2",
+      "role": "pinned simulator model and runtime/include/config source tree",
+      "type": "directory"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "path": "/data1/yanruj/DX100-bfs-e4fc4af/include",
+      "record": "bfs-dx100-build-20260925-a2",
+      "role": "later real dx100 candidate guest compilation include directory",
+      "type": "directory"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "path": "/data1/yanruj/DX100-bfs-e4fc4af/util/m5/src",
+      "record": "bfs-dx100-build-20260925-a2",
+      "role": "later real dx100 candidate guest compilation include directory",
+      "type": "directory"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/API",
+      "record": "bfs-dx100-build-20260925-a2",
+      "role": "later real dx100 candidate guest compilation include directory",
+      "type": "directory"
+    }
+  ],
+  "files": [
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "symbolic source root requires concrete future source/SWDB_HOME route",
+      "live_filesystem_dependency": true,
+      "path": "${SWDB_HOME_OR_IMPORTED_SOURCE_SWDB}/apps/dx100/benchmarks/gapbs/src/bfs.cc",
+      "pin": {
+        "sha256": "6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465"
+      },
+      "record": "dx100-bfs-scalar",
+      "role": "selected baseline implementation code",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "symbolic source root requires concrete future source/SWDB_HOME route",
+      "live_filesystem_dependency": true,
+      "notes": "script ROOT is its containing source SWDB, separately from paths.HOME/SWDB_HOME. materialize reads this ROOT/apps/dx100; this alias must therefore be supplied even if SWDB_HOME differs.",
+      "path": "${FROZEN_SOURCE_SWDB}/scripts/prepare_dx100_scalar_snapshot.py",
+      "pin": {
+        "sha256": "34e27805753ecff9d5bf789166c13a061991c8278c94a48e42482ca0d473dc3c"
+      },
+      "record": "bfs-dx100-scalar-only-20260929-a1.source",
+      "role": "campaign scalar-only source reconstruction",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "application=dx100-gapbs; format=gapbs_sg32le",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-kronecker.g18.k14/graph-dx100.sg",
+      "pin": {
+        "bytes": 27889273,
+        "canonical_sha256": "b09810ebb77becb46667314439bd044c892f268fa9692df8b15338930d670f10",
+        "sha256": "057b291b9e74fc3b3af901bc668058162c03d5fc89e0572de848bc46d9d5a46d"
+      },
+      "record": "lanl17-prospective-20261006-a2-kronecker.g18.k14.061b9007efcdebb7",
+      "role": "metadata_pins workload representation + source0 out-degree read",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "application=gapbs; format=gapbs_sg64le",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-kronecker.g18.k14/graph-upstream.sg",
+      "pin": {
+        "bytes": 28937857,
+        "canonical_sha256": "b09810ebb77becb46667314439bd044c892f268fa9692df8b15338930d670f10",
+        "sha256": "6d2630e322256c2a773e033cff99b0c474532a7e110c1032d9ad5e1d3ff43dc5"
+      },
+      "record": "lanl17-prospective-20261006-a2-kronecker.g18.k14.061b9007efcdebb7",
+      "role": "metadata_pins workload representation + source0 out-degree read",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "application=dx100-gapbs; format=gapbs_sg32le",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-kronecker.g18.k15/graph-dx100.sg",
+      "pin": {
+        "bytes": 29694769,
+        "canonical_sha256": "91955e7e5528a8c43dcf03f6d3cdafb649e98ed33dd7c83bf8cbf1e09d269f5d",
+        "sha256": "98b26ec50c9e1fd8fea935b3326095fc120416089322242bb29cf55889eb7e58"
+      },
+      "record": "lanl17-prospective-20261006-a2-kronecker.g18.k15.15b1ec00b24140f4",
+      "role": "metadata_pins workload representation + source0 out-degree read",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "application=gapbs; format=gapbs_sg64le",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-kronecker.g18.k15/graph-upstream.sg",
+      "pin": {
+        "bytes": 30743353,
+        "canonical_sha256": "91955e7e5528a8c43dcf03f6d3cdafb649e98ed33dd7c83bf8cbf1e09d269f5d",
+        "sha256": "2b8ba2ba5bb5ffe4c7ce7e3aaee80d71d958f263fd7cdb339f64d57d1ad29bda"
+      },
+      "record": "lanl17-prospective-20261006-a2-kronecker.g18.k15.15b1ec00b24140f4",
+      "role": "metadata_pins workload representation + source0 out-degree read",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "application=dx100-gapbs; format=gapbs_sg32le",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-kronecker.g18.k17/graph-dx100.sg",
+      "pin": {
+        "bytes": 33279465,
+        "canonical_sha256": "5e5f73be345c10f99bab522935aa4455e656de497301e4734784089f18873db3",
+        "sha256": "ffb5c1be95e33373a23431124a9a97f4a7a72311d542cc021ddcf24fb449913e"
+      },
+      "record": "lanl17-prospective-20261006-a2-kronecker.g18.k17.7c5f5ee1ddda25c4",
+      "role": "metadata_pins workload representation + source0 out-degree read",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "application=gapbs; format=gapbs_sg64le",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-kronecker.g18.k17/graph-upstream.sg",
+      "pin": {
+        "bytes": 34328049,
+        "canonical_sha256": "5e5f73be345c10f99bab522935aa4455e656de497301e4734784089f18873db3",
+        "sha256": "7915eabf66188be9117175eba2577bcc2ef44a88c73c4494b42c60f1b8b649c8"
+      },
+      "record": "lanl17-prospective-20261006-a2-kronecker.g18.k17.7c5f5ee1ddda25c4",
+      "role": "metadata_pins workload representation + source0 out-degree read",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "application=dx100-gapbs; format=gapbs_sg32le",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-kronecker.g18.k18/graph-dx100.sg",
+      "pin": {
+        "bytes": 35055097,
+        "canonical_sha256": "a8230c56a80fee0503f51fdad6e8b4dc629bafdacfc9786fa9bc7b7d765c65e6",
+        "sha256": "ccb58058e568aec62b8076829cce949a61a9a7a27ccdefab59a4b75f31ee5150"
+      },
+      "record": "lanl17-prospective-20261006-a2-kronecker.g18.k18.feb23b36a57d4c05",
+      "role": "metadata_pins workload representation + source0 out-degree read",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "application=gapbs; format=gapbs_sg64le",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-kronecker.g18.k18/graph-upstream.sg",
+      "pin": {
+        "bytes": 36103681,
+        "canonical_sha256": "a8230c56a80fee0503f51fdad6e8b4dc629bafdacfc9786fa9bc7b7d765c65e6",
+        "sha256": "b580c7572d5225354a8df599d9107610995a3afa11f9bebe691a34d59289aab1"
+      },
+      "record": "lanl17-prospective-20261006-a2-kronecker.g18.k18.feb23b36a57d4c05",
+      "role": "metadata_pins workload representation + source0 out-degree read",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "application=dx100-gapbs; format=gapbs_sg32le",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k14/graph-dx100.sg",
+      "pin": {
+        "bytes": 30406989,
+        "canonical_sha256": "b94b39953e922462ffd10813844e6aada09c9886420586f907380b1d94c5e3cc",
+        "sha256": "6390201bf8d08ac3d876a416d10f40b63fba818df314055bc4eeb47f8fce1c65"
+      },
+      "record": "lanl17-prospective-20261006-a2-uniform_random.g18.k14.9027c7c5f57e8926",
+      "role": "metadata_pins workload representation + source0 out-degree read",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "application=gapbs; format=gapbs_sg64le",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k14/graph-upstream.sg",
+      "pin": {
+        "bytes": 31455577,
+        "canonical_sha256": "b94b39953e922462ffd10813844e6aada09c9886420586f907380b1d94c5e3cc",
+        "sha256": "f88e85fbde5219af215b83769e3358ead93449f13d76e4a2dc7767ba768e4efc"
+      },
+      "record": "lanl17-prospective-20261006-a2-uniform_random.g18.k14.9027c7c5f57e8926",
+      "role": "metadata_pins workload representation + source0 out-degree read",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "application=dx100-gapbs; format=gapbs_sg32le",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k15/graph-dx100.sg",
+      "pin": {
+        "bytes": 32503877,
+        "canonical_sha256": "22ab35e7e7cee0b8779c613cc4ae8bae5937c0ebe9ddb20d1be82b4dbce93fb9",
+        "sha256": "25394b3f3d123983fc309dbda4f93b8e979e29795328bc38cfa2ac479daae754"
+      },
+      "record": "lanl17-prospective-20261006-a2-uniform_random.g18.k15.34444aebb8080315",
+      "role": "metadata_pins workload representation + source0 out-degree read",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "application=gapbs; format=gapbs_sg64le",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k15/graph-upstream.sg",
+      "pin": {
+        "bytes": 33552465,
+        "canonical_sha256": "22ab35e7e7cee0b8779c613cc4ae8bae5937c0ebe9ddb20d1be82b4dbce93fb9",
+        "sha256": "5abecb2f3ecc4cf7eaa0de9ff34def7c34437e6210afc19e9da74d62cf6bfccf"
+      },
+      "record": "lanl17-prospective-20261006-a2-uniform_random.g18.k15.34444aebb8080315",
+      "role": "metadata_pins workload representation + source0 out-degree read",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "application=dx100-gapbs; format=gapbs_sg32le",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k17/graph-dx100.sg",
+      "pin": {
+        "bytes": 36697701,
+        "canonical_sha256": "ba748ecd829b1f8fee9402c6ea9356d9cacbe8472e150ddda97de3a59a851a2a",
+        "sha256": "d13ac3c69856dffb0f8cf4c7e46c7a2047b7d56483a76a03226e175a3b4d1a43"
+      },
+      "record": "lanl17-prospective-20261006-a2-uniform_random.g18.k17.451edf9faac833c0",
+      "role": "metadata_pins workload representation + source0 out-degree read",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "application=gapbs; format=gapbs_sg64le",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k17/graph-upstream.sg",
+      "pin": {
+        "bytes": 37746289,
+        "canonical_sha256": "ba748ecd829b1f8fee9402c6ea9356d9cacbe8472e150ddda97de3a59a851a2a",
+        "sha256": "6961434d06a2905e4daaacc700ebecdc2a89f1b9b5eb11e6413465c9d655dd29"
+      },
+      "record": "lanl17-prospective-20261006-a2-uniform_random.g18.k17.451edf9faac833c0",
+      "role": "metadata_pins workload representation + source0 out-degree read",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "application=dx100-gapbs; format=gapbs_sg32le",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k18/graph-dx100.sg",
+      "pin": {
+        "bytes": 38794573,
+        "canonical_sha256": "327b80162cc83609a18e13dcb67f1e66e4468edeb13e43112975fcfb7e524925",
+        "sha256": "e03ad54f66292dbf9abe4dcb657ed4f1a1728a7ee80d88bacc1ea42ba7123914"
+      },
+      "record": "lanl17-prospective-20261006-a2-uniform_random.g18.k18.c0396050e37ceed6",
+      "role": "metadata_pins workload representation + source0 out-degree read",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "application=gapbs; format=gapbs_sg64le",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k18/graph-upstream.sg",
+      "pin": {
+        "bytes": 39843161,
+        "canonical_sha256": "327b80162cc83609a18e13dcb67f1e66e4468edeb13e43112975fcfb7e524925",
+        "sha256": "a3ecc6241ca27276fd3d8e0ea62fc5437ea1e783097b64528809b8e3a854ad23"
+      },
+      "record": "lanl17-prospective-20261006-a2-uniform_random.g18.k18.c0396050e37ceed6",
+      "role": "metadata_pins workload representation + source0 out-degree read",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926-a2/bfs-dx100-coverage-20260926-a2/graph/coverage.sg",
+      "pin": {
+        "bytes": 622829,
+        "canonical_sha256": "e03a3905f9105b898b730387092d92a68b854cdd44280adb39b1bd9423a4a968",
+        "sha256": "d4697713f585b9670e1c44d26df94c72889f4c82fbd68b72e15627e6a0b39a56"
+      },
+      "record": "bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e",
+      "role": "metadata_pins companion representation read; later companion simulation input",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "build-receipt JSON is also parsed and compared to recorded build.details by original public code; this audit did not read that remote body.",
+      "path": "/data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt",
+      "pin": {
+        "sha256": "f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b"
+      },
+      "record": "bfs-dx100-build-20260925-a2",
+      "role": "metadata_pins _simulation_identity(check_files=True)",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "build-receipt JSON is also parsed and compared to recorded build.details by original public code; this audit did not read that remote body.",
+      "path": "/data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/libramulator.so",
+      "pin": {
+        "bytes": 177789736,
+        "sha256": "46b5dbd87a77845ebadd1854e990d8e5c04c41253ad76315a766d61b77ca43dd"
+      },
+      "record": "bfs-dx100-build-20260925-a2",
+      "role": "metadata_pins _simulation_identity(check_files=True)",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "build-receipt JSON is also parsed and compared to recorded build.details by original public code; this audit did not read that remote body.",
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/build/build-receipt.json",
+      "pin": {
+        "sha256": "c465447ddc5cc37faa7cb3127a7f9f00b6b557c326e8319e5d694ee9933f8d6c"
+      },
+      "record": "bfs-dx100-build-20260925-a2",
+      "role": "metadata_pins _simulation_identity(check_files=True)",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "build-receipt JSON is also parsed and compared to recorded build.details by original public code; this audit did not read that remote body.",
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/runtime-dependencies.json",
+      "pin": {
+        "sha256": "ae7389a0b6848fa21eae7c527211948a88e3010f9a5135754a2241dc6f5542c4"
+      },
+      "record": "bfs-dx100-build-20260925-a2",
+      "role": "metadata_pins _simulation_identity(check_files=True)",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "path": "/data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml",
+      "pin": {
+        "sha256": "aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b"
+      },
+      "record": "typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0",
+      "role": "frozen simulation target Ramulator configuration",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "compiler version/flags are pinned in settings; actual executable SHA is not supplied by this protocol field.",
+      "path": "/usr/bin/g++-13",
+      "record": "typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0",
+      "role": "frozen guest-build compiler identity",
+      "type": "file"
+    },
+    {
+      "cleanup_rows_containing_literal_path": [],
+      "comparison_status": "literal lexical comparison only; no path resolution/availability check",
+      "live_filesystem_dependency": true,
+      "notes": "dx100_candidate340\u2013342 requires a regular nonsymlink model assembly file; no individual SHA extracted from a record here.",
+      "path": "/data1/yanruj/DX100-bfs-e4fc4af/util/m5/src/abi/x86/m5op.S",
+      "record": "bfs-dx100-build-20260925-a2",
+      "role": "later real dx100 candidate guest compilation",
+      "type": "file"
+    }
+  ],
+  "format": "unsealed.local-frozen-source-dependency-route-audit.v1",
+  "frozen_git_revision": "0a2d41ceff5d7a9a6c0732f692ae3c679539289d",
+  "frozen_git_tree": "49535c2e11458c2054f49cf9350712d1557cb2d5",
+  "frozen_source_pins": {
+    "swdb-project/scripts/prepare_dx100_scalar_snapshot.py": {
+      "bytes": 9988,
+      "file_sha256": "34e27805753ecff9d5bf789166c13a061991c8278c94a48e42482ca0d473dc3c",
+      "git_blob": "8c51842061c6c6ebc0a7fad1474da275c92894ca",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/scripts/prepare_dx100_scalar_snapshot.py"
+    },
+    "swdb-project/swdb/artifacts.py": {
+      "bytes": 6244,
+      "file_sha256": "6368cc18061ee3ddc6256b96a76bf2cfaad3fae283104291723939b725c2dccd",
+      "git_blob": "a0af594130cde4b7014798598c1207497a6da51a",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/swdb/artifacts.py"
+    },
+    "swdb-project/swdb/bfs_protocol.py": {
+      "bytes": 97563,
+      "file_sha256": "fdf5d38c29e321dbb300a3eb681f0c9a5619a0bd05733aabb410991de3589596",
+      "git_blob": "c8497b2bf884184c252d14b314cb20068bef445c",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/swdb/bfs_protocol.py"
+    },
+    "swdb-project/swdb/campaign_targets.py": {
+      "bytes": 71343,
+      "file_sha256": "727d4399e4bde1996484e3013770e5ab21ef4a30e8fa7313c4697aaa6359211f",
+      "git_blob": "868dc606961e5a5e52b866753a775de81df7dc73",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/swdb/campaign_targets.py"
+    },
+    "swdb-project/swdb/certification.py": {
+      "bytes": 77561,
+      "file_sha256": "b7de18069b2bfc0d0e008c0c0e898a613cfcf9297e388d724f271eb9fa5299e7",
+      "git_blob": "ce60cde65870a58987cbd3289a52f3e8f3c57305",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/swdb/certification.py"
+    },
+    "swdb-project/swdb/dx100_candidate.py": {
+      "bytes": 23980,
+      "file_sha256": "7d48201fc2d87d4ed52946cab6cbe834e1772841d89aac964fa7ab172427f676",
+      "git_blob": "20b171b3b92a429db1252663835372b648d9a84f",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/swdb/dx100_candidate.py"
+    },
+    "swdb-project/swdb/kernels/bfs.py": {
+      "bytes": 6532,
+      "file_sha256": "1c17cb82f14d87cf3e98607a374f3a99135c7768e7650e003584261c8a189893",
+      "git_blob": "170b2083e242825d7e97ee78b7d94e71344b9223",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/swdb/kernels/bfs.py"
+    },
+    "swdb-project/swdb/paths.py": {
+      "bytes": 1221,
+      "file_sha256": "788ec6ee5b17e77ec6ca0ab1b3034f7763a69cd71569d119af44a7c85f92b0ef",
+      "git_blob": "d800faa9c97104d6229a27df6f019b90297e46dc",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/swdb/paths.py"
+    },
+    "swdb-project/swdb/sg_graph.py": {
+      "bytes": 5144,
+      "file_sha256": "6580ddca362bf8bd987a0c7fc8d44e9e59ef18300ac16bbe7766884d4830a2a2",
+      "git_blob": "1df56e6e3670d79cf844d9cdacf6e040573e851f",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/swdb/sg_graph.py"
+    },
+    "swdb-project/swdb/store.py": {
+      "bytes": 7364,
+      "file_sha256": "8c4a750318215a90e26ba6f07c1f007fa3297f337da638c52a0319bfd947ea86",
+      "git_blob": "60f98cddb09645236e4df8622cc0bc60bf9a7d70",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/swdb/store.py"
+    },
+    "swdb-project/swdb/yamlio.py": {
+      "bytes": 2336,
+      "file_sha256": "8c92d644f5abca0f7031ce52e1577892cf1b7c79bc730484112eedb3e39439c0",
+      "git_blob": "3c5aedd0d06a4665dc7d258ff4c3bedcad00c06f",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/swdb/yamlio.py"
+    }
+  },
+  "literal_dependencies_under_any_18_cleanup_row": [],
+  "literal_original_source_fields": [
+    {
+      "interpretation": "catalog original-source location annotation; same logical application BFS TU already listed; not a new physical absolute root",
+      "jsonpath": "$.extensions.statements.source_mappings[0].original_source",
+      "record": "dx100-bfs-scalar",
+      "value": {
+        "lines": [
+          240,
+          240
+        ],
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+        "root": "application"
+      }
+    },
+    {
+      "interpretation": "catalog original-source location annotation; same logical application BFS TU already listed; not a new physical absolute root",
+      "jsonpath": "$.extensions.statements.source_mappings[1].original_source",
+      "record": "dx100-bfs-scalar",
+      "value": {
+        "lines": [
+          241,
+          241
+        ],
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+        "root": "application"
+      }
+    },
+    {
+      "interpretation": "catalog original-source location annotation; same logical application BFS TU already listed; not a new physical absolute root",
+      "jsonpath": "$.extensions.statements.source_mappings[2].original_source",
+      "record": "dx100-bfs-scalar",
+      "value": {
+        "lines": [
+          242,
+          242
+        ],
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+        "root": "application"
+      }
+    },
+    {
+      "interpretation": "catalog original-source location annotation; same logical application BFS TU already listed; not a new physical absolute root",
+      "jsonpath": "$.extensions.statements.source_mappings[3].original_source",
+      "record": "dx100-bfs-scalar",
+      "value": {
+        "lines": [
+          243,
+          243
+        ],
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+        "root": "application"
+      }
+    },
+    {
+      "interpretation": "catalog original-source location annotation; same logical application BFS TU already listed; not a new physical absolute root",
+      "jsonpath": "$.extensions.statements.source_mappings[4].original_source",
+      "record": "dx100-bfs-scalar",
+      "value": {
+        "lines": [
+          247,
+          247
+        ],
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+        "root": "application"
+      }
+    },
+    {
+      "interpretation": "catalog original-source location annotation; same logical application BFS TU already listed; not a new physical absolute root",
+      "jsonpath": "$.extensions.statements.source_mappings[5].original_source",
+      "record": "dx100-bfs-scalar",
+      "value": {
+        "lines": [
+          248,
+          248
+        ],
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+        "root": "application"
+      }
+    },
+    {
+      "interpretation": "catalog original-source location annotation; same logical application BFS TU already listed; not a new physical absolute root",
+      "jsonpath": "$.extensions.statements.source_mappings[6].original_source",
+      "record": "dx100-bfs-scalar",
+      "value": {
+        "lines": [
+          249,
+          249
+        ],
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+        "root": "application"
+      }
+    },
+    {
+      "interpretation": "catalog original-source location annotation; same logical application BFS TU already listed; not a new physical absolute root",
+      "jsonpath": "$.extensions.statement_annotation_scores[0].statements[0].source_mapping.original_source",
+      "record": "dx100-bfs-scalar",
+      "value": {
+        "lines": [
+          240,
+          240
+        ],
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+        "root": "application"
+      }
+    },
+    {
+      "interpretation": "catalog original-source location annotation; same logical application BFS TU already listed; not a new physical absolute root",
+      "jsonpath": "$.extensions.statement_annotation_scores[0].statements[1].source_mapping.original_source",
+      "record": "dx100-bfs-scalar",
+      "value": {
+        "lines": [
+          241,
+          241
+        ],
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+        "root": "application"
+      }
+    },
+    {
+      "interpretation": "catalog original-source location annotation; same logical application BFS TU already listed; not a new physical absolute root",
+      "jsonpath": "$.extensions.statement_annotation_scores[0].statements[2].source_mapping.original_source",
+      "record": "dx100-bfs-scalar",
+      "value": {
+        "lines": [
+          242,
+          242
+        ],
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+        "root": "application"
+      }
+    },
+    {
+      "interpretation": "catalog original-source location annotation; same logical application BFS TU already listed; not a new physical absolute root",
+      "jsonpath": "$.extensions.statement_annotation_scores[0].statements[3].source_mapping.original_source",
+      "record": "dx100-bfs-scalar",
+      "value": {
+        "lines": [
+          243,
+          243
+        ],
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+        "root": "application"
+      }
+    },
+    {
+      "interpretation": "catalog original-source location annotation; same logical application BFS TU already listed; not a new physical absolute root",
+      "jsonpath": "$.extensions.statement_annotation_scores[0].statements[4].source_mapping.original_source",
+      "record": "dx100-bfs-scalar",
+      "value": {
+        "lines": [
+          247,
+          247
+        ],
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+        "root": "application"
+      }
+    },
+    {
+      "interpretation": "catalog original-source location annotation; same logical application BFS TU already listed; not a new physical absolute root",
+      "jsonpath": "$.extensions.statement_annotation_scores[0].statements[5].source_mapping.original_source",
+      "record": "dx100-bfs-scalar",
+      "value": {
+        "lines": [
+          248,
+          248
+        ],
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+        "root": "application"
+      }
+    },
+    {
+      "interpretation": "catalog original-source location annotation; same logical application BFS TU already listed; not a new physical absolute root",
+      "jsonpath": "$.extensions.statement_annotation_scores[0].statements[6].source_mapping.original_source",
+      "record": "dx100-bfs-scalar",
+      "value": {
+        "lines": [
+          249,
+          249
+        ],
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+        "root": "application"
+      }
+    }
+  ],
+  "model_build": {
+    "check_files_references": [
+      {
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt",
+        "sha256": "f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b"
+      },
+      {
+        "bytes": 177789736,
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/libramulator.so",
+        "sha256": "46b5dbd87a77845ebadd1854e990d8e5c04c41253ad76315a766d61b77ca43dd"
+      },
+      {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/build/build-receipt.json",
+        "sha256": "c465447ddc5cc37faa7cb3127a7f9f00b6b557c326e8319e5d694ee9933f8d6c"
+      },
+      {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/runtime-dependencies.json",
+        "sha256": "ae7389a0b6848fa21eae7c527211948a88e3010f9a5135754a2241dc6f5542c4"
+      }
+    ],
+    "historical_non_so_build_binary_paths_note": "other recorded BFS/converter binaries are historical model-build inventory; metadata_pins does not open them. Future guest compilation creates fresh candidate binaries.",
+    "id": "bfs-dx100-build-20260925-a2",
+    "recorded_binaries": [
+      {
+        "bytes": 676472872,
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt",
+        "sha256": "f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b"
+      },
+      {
+        "bytes": 1146480,
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/bfs",
+        "sha256": "70301ad2e587c2dd55a730da5e0135337cb6b46ddd72999a843f86fd4b070dd1"
+      },
+      {
+        "bytes": 1146496,
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/bfs_maa",
+        "sha256": "6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d"
+      },
+      {
+        "bytes": 1146416,
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/bfs_maa_1K",
+        "sha256": "aa039418a0534277d9cb4202eec2b5392d4904876d94bc1e4166c1c16c979af8"
+      },
+      {
+        "bytes": 1131784,
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/converter",
+        "sha256": "268d35cd10937578e85506ad5f53b636e28fe33e95ca6dc148685fc56878759c"
+      },
+      {
+        "bytes": 177789736,
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/libramulator.so",
+        "sha256": "46b5dbd87a77845ebadd1854e990d8e5c04c41253ad76315a766d61b77ca43dd"
+      }
+    ],
+    "source_tree": "/data1/yanruj/DX100-bfs-e4fc4af"
+  },
+  "original_source_field_boundary": "Fourteen literal original_source fields are statement source annotations in dx100-bfs-scalar (seven source_mappings repeated in seven annotation-score mappings). Every one points to root=application, benchmarks/gapbs/src/bfs.cc at e4fc4af; no new absolute path. Actual original source is linked by candidate.source_snapshot, scalar context.source_derivation.full_snapshot, and implementation/application records. Saved artifact.path is not interchangeable with live application source_root.",
+  "practical_pending_boundaries": [
+    "Protect all16 workload representation files, companion graph, full baseline artifact, original/model source trees, simulator/library/config and build/runtime receipt paths.",
+    "Bind fresh frozen source SWDB/apps/dx100 and any explicit SWDB_HOME/app route physically before public prepare. Git lacks these app roots; local audit neither follows symlinks nor establishes absence remotely.",
+    "The scalar reconstruction script uses its own source ROOT/apps/dx100 even when paths.HOME is overridden. The app gapbs source is a catalog relation; metadata_pins requires its graph representation but does not open apps/gapbs for this gem5 baseline.",
+    "No literal remote path listed is beneath an18 cleanup ROWS path. Symbolic source-root aliases need exact future resolution; this is not cleanup, storage, reference or capacity admission.",
+    "Additional runtime library paths contained only inside the remote runtime-dependencies/build receipt JSON are not expanded here. Preserve those originals and let unchanged public checks parse them."
+  ],
+  "prepared_date_et": "2026-10-08",
+  "record_hash_policy": "ordinary SafeLoader duplicate-key refusal, timestamp resolver removed to preserve strings; whole-record compact sorted JSON ensure_ascii=true/allow_nan=false matches frozen yamlio/artifacts policy",
+  "record_pins": {
+    "bfs-dx100-build-20260925-a2": {
+      "bytes": 11533,
+      "file_sha256": "e61de36a9c80a5f2c272c08bf12f0050c3ba9c25c7243432e2ea6cb4e29cecaf",
+      "git_blob": "ec6db8a43db6fcb6af668f835475e04e7a05fb83",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/records/evaluations/bfs-dx100-build-20260925-a2.yaml",
+      "record_sha256_ensure_ascii_true": "13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea"
+    },
+    "bfs-dx100-compile-20260925-a1.source": {
+      "bytes": 45318,
+      "file_sha256": "79453b2a9a7af40991fe3cd4ab0039911e650f2335496cccaae9a9cb44b4cf9d",
+      "git_blob": "8bacdd6a22f8e747f1aa9c096e7cdd696c26c9fc",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/records/source_snapshots/bfs-dx100-compile-20260925-a1.source.yaml",
+      "record_sha256_ensure_ascii_true": "ea9df8f1958a2e09550f8b82d4fb486f5dc805e6dec069e46d578cfebe5c0412"
+    },
+    "bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e": {
+      "bytes": 1851,
+      "file_sha256": "00c99c6804b4353472a1d6604b620d1374e6b5f05ba250789a0ec8419a971662",
+      "git_blob": "8292af32b3845a5436495fcef209cf43b7d15646",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/records/workloads/bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e.yaml",
+      "record_sha256_ensure_ascii_true": "1e6d910df66c8b9393fd6b33bcd18afe3b6d398afa39532f2867d1a884e8232e"
+    },
+    "bfs-dx100-scalar-only-20260929-a1.source": {
+      "bytes": 20754,
+      "file_sha256": "738fd3d0b266bc09df6d9b2bf0ed22cccdad8cd56b82b9a5e32654fa25506668",
+      "git_blob": "42a5d19716c2cb4bc14a1ac3a174418169002e9c",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/records/source_snapshots/bfs-dx100-scalar-only-20260929-a1.source.yaml",
+      "record_sha256_ensure_ascii_true": "672b3882a738eed3cf4a558cc43bef7fff72c552ddf578602a75d7f985d3bc9c"
+    },
+    "dx100-bfs-scalar": {
+      "bytes": 64525,
+      "file_sha256": "16d2b66647da0b440d67df486cfbb8d2f954696e8496a6178101939242cc4562",
+      "git_blob": "c9bb39a337600c936d4c713a14541810d619c2e2",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/records/implementations/dx100-bfs-scalar.yaml",
+      "record_sha256_ensure_ascii_true": "6a5fc2439e5ef61f96dd22e36a7c8fe15864ddc2761ac1b97a623183b558c929"
+    },
+    "dx100-gapbs": {
+      "bytes": 906,
+      "file_sha256": "3a7d5da7fa082c845aa29c700d3d50cdba8db65e4a45320d5f7c365d91c2b6bf",
+      "git_blob": "84bfd1e5e717a660540abd5c5ea792e7b5deed20",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/records/applications/dx100-gapbs.yaml",
+      "record_sha256_ensure_ascii_true": "91b80a49137bde5a32ce4146497a45a9e5befbd2553c4406e4429f2ca0cd7f4d"
+    },
+    "lanl17-prospective-20261006-a2-kronecker.g18.k14.061b9007efcdebb7": {
+      "bytes": 3665,
+      "file_sha256": "d3264a5a4a2cbd80d278ad4551a8e704263813f968ee9d56bd62dcc02e03dca9",
+      "git_blob": "932063803de0802a59cb7828655b597fe78479e7",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/records/workloads/lanl17-prospective-20261006-a2-kronecker.g18.k14.061b9007efcdebb7.yaml",
+      "record_sha256_ensure_ascii_true": "66bd953b83cf500c8e64060389cbe23802216b23710e2f73a3c322c434e8b432"
+    },
+    "lanl17-prospective-20261006-a2-kronecker.g18.k15.15b1ec00b24140f4": {
+      "bytes": 3665,
+      "file_sha256": "fd2a8d40467c6c9828c90170354771c2edf44ce0d60e3d2db3b25614fcf12265",
+      "git_blob": "5f958e15ff1869c858844f7bfe7a8782098d4823",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/records/workloads/lanl17-prospective-20261006-a2-kronecker.g18.k15.15b1ec00b24140f4.yaml",
+      "record_sha256_ensure_ascii_true": "0ae57c824211a55ec9de42c1c56f09ee5e85b899069ea5d52815e87ba1db3503"
+    },
+    "lanl17-prospective-20261006-a2-kronecker.g18.k17.7c5f5ee1ddda25c4": {
+      "bytes": 3665,
+      "file_sha256": "2a8673e261464d1a989465946bb904ba338e680dfd77efd1b16f1e3a25b0d2f2",
+      "git_blob": "3a03b87854baa9a91a9f6563c6587bc4750108f4",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/records/workloads/lanl17-prospective-20261006-a2-kronecker.g18.k17.7c5f5ee1ddda25c4.yaml",
+      "record_sha256_ensure_ascii_true": "4da40ef2af7c95e6e0562920f5f544c6acb64a37caf9bc53a29aace070b57500"
+    },
+    "lanl17-prospective-20261006-a2-kronecker.g18.k18.feb23b36a57d4c05": {
+      "bytes": 3665,
+      "file_sha256": "5230414e5be2a326b1767a0980ec00edefb4cbfabecb279923fbecc91114c76c",
+      "git_blob": "b33ba4925cb7f86649440eee2122e23c1c86ba43",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/records/workloads/lanl17-prospective-20261006-a2-kronecker.g18.k18.feb23b36a57d4c05.yaml",
+      "record_sha256_ensure_ascii_true": "8aaea47bc07d958a795274ea2b01fe048995af95ca0282310c7c8144262284ea"
+    },
+    "lanl17-prospective-20261006-a2-uniform_random.g18.k14.9027c7c5f57e8926": {
+      "bytes": 3698,
+      "file_sha256": "b61a1e005ada316fb36b5598567a787440cbe38930d7f7e90db2a1d7753312a9",
+      "git_blob": "3fad74c4fc1c00c6ec2a8330766ac575d28fe3a8",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/records/workloads/lanl17-prospective-20261006-a2-uniform_random.g18.k14.9027c7c5f57e8926.yaml",
+      "record_sha256_ensure_ascii_true": "0bf4ec97fe3b7bf3c8fd25d887960bda6be23bbede8b8f4b690061bfc53a42f7"
+    },
+    "lanl17-prospective-20261006-a2-uniform_random.g18.k15.34444aebb8080315": {
+      "bytes": 3698,
+      "file_sha256": "0ef0edc16ac71419ecf4e46abbacff50b1b9f876ccdc43129603dac5eb8b5621",
+      "git_blob": "d10d5bcc49ee05bd1eaa5f70005761146b77d31a",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/records/workloads/lanl17-prospective-20261006-a2-uniform_random.g18.k15.34444aebb8080315.yaml",
+      "record_sha256_ensure_ascii_true": "e3063a5c9f8402822456da31bb7880abceee58472d1b8f436aea9a3c1801eaf2"
+    },
+    "lanl17-prospective-20261006-a2-uniform_random.g18.k17.451edf9faac833c0": {
+      "bytes": 3699,
+      "file_sha256": "c4087f406a9aa1c47e467383243343fcd50e18e22fea61475c6e79d0029fc3a4",
+      "git_blob": "9504151033b530efcb450d642727d95d274d74f7",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/records/workloads/lanl17-prospective-20261006-a2-uniform_random.g18.k17.451edf9faac833c0.yaml",
+      "record_sha256_ensure_ascii_true": "71d3646ef6452b796ef7f91a083cf2eff483d906d296f68f0e92331be8ba5133"
+    },
+    "lanl17-prospective-20261006-a2-uniform_random.g18.k18.c0396050e37ceed6": {
+      "bytes": 3699,
+      "file_sha256": "4c4ed8cec59848d9c744576a78cbbc286ead39c0a244bcfdf4020b88774a5c40",
+      "git_blob": "f217792058204019daf3a9261677019c6829526b",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/records/workloads/lanl17-prospective-20261006-a2-uniform_random.g18.k18.c0396050e37ceed6.yaml",
+      "record_sha256_ensure_ascii_true": "ff1c946b6c13b12ac3beb597f8332fa384849e8ed3af6fbc3b45a212e847d79c"
+    },
+    "typed-library-bfs-gem5-20261003-a2.baseline": {
+      "bytes": 22563,
+      "file_sha256": "2f568da8a4d8a484b9f65619178c38619b8aa75babd9b4da48bc7504ac2499ed",
+      "git_blob": "fa01195d810e6fe4360904a61b9eebcae2a16c83",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/records/candidates/typed-library-bfs-gem5-20261003-a2.baseline.yaml",
+      "record_sha256_ensure_ascii_true": "fde1e81baa8ead0579982c9cb164d65583fc300fb5cec42a4448c30408a4f1bc"
+    },
+    "typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0": {
+      "bytes": 13077,
+      "file_sha256": "fd91b10f7d9400eb862c8148475996e6265ad14243413c80d5a9a84454d40444",
+      "git_blob": "2b18692c9d39d345363d5a9f4b7b2265db75747d",
+      "git_mode": "100644",
+      "git_object_kind": "blob",
+      "path": "swdb-project/records/protocols/typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0.yaml",
+      "record_sha256_ensure_ascii_true": "acd297ea9eaf36f5d4fda79c42030c3fd792d2757c9f7c635a498bb4fbbb73e6"
+    }
+  },
+  "saved_provenance_paths": [
+    {
+      "live_path_opened_by_materialize_snapshot": false,
+      "path": "/data1/yanruj/EvolveSWDB_runs/provider-scalar-20260929-a1/bfs-dx100-scalar-only-20260929-a1.source/source",
+      "record": "bfs-dx100-scalar-only-20260929-a1.source",
+      "role": "saved scalar-only snapshot artifact; campaign reconstructs from checkout prepare_dx100_scalar_snapshot script + apps/dx100 rather than opening saved artifact",
+      "sha256": "2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af",
+      "source_derivation": {
+        "date": "2026-09-29",
+        "decision": "docs/adr/0006-rewrite-providers-work-in-a-guarded-workspace.md",
+        "excluded_material": "Other benchmark translation units, API examples/scripts, and old manifests.",
+        "full_snapshot": "bfs-dx100-compile-20260925-a1.source",
+        "full_source_artifact_sha256": "d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d",
+        "purpose": "From-scratch proposals cannot read the authors' accelerator BFS answer key.",
+        "removed_functions": [
+          "TDStepMAA",
+          "DOBFSMAA"
+        ],
+        "removed_main_selection": "MAA branch calling DOBFSMAA",
+        "removed_pinned_line_ranges": [
+          [
+            63,
+            225
+          ],
+          [
+            366,
+            443
+          ]
+        ],
+        "upstream_bfs_sha256": "6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465"
+      }
+    }
+  ],
+  "source_read_route_evidence": [
+    {
+      "behavior": "Exact authoritative metadata_pins closure; 325 preparation and390\u2013391 live repeat.",
+      "lines": "188\u2013227",
+      "source": "helper28d"
+    },
+    {
+      "behavior": "Application local_path resolved under paths.HOME; implementation code hashes and full manifest identity compared.",
+      "lines": "99\u2013113;48\u201372",
+      "source": "swdb-project/swdb/artifacts.py"
+    },
+    {
+      "behavior": "SWDB_HOME override else imported source SWDB root; no app alias supplied by Git record.",
+      "lines": "11",
+      "source": "swdb-project/swdb/paths.py"
+    },
+    {
+      "behavior": "Workload physical path/hash; simulation check_files list+receipt content; baseline live source vs recorded manifest.",
+      "lines": "347\u2013364;365\u2013411;741\u2013754",
+      "source": "swdb-project/swdb/bfs_protocol.py"
+    },
+    {
+      "behavior": "Additional scalar snapshot root, reconstruct base source, compilation opens candidate artifact, current-source driver hashes and actual representations.",
+      "lines": "374\u2013405;452\u2013459;948\u2013952;977\u2013990;1018\u20131053",
+      "source": "swdb-project/swdb/campaign_targets.py"
+    },
+    {
+      "behavior": "Scalar snapshot reconstruction invokes checkout script rather than saved artifact root.",
+      "lines": "370\u2013394",
+      "source": "swdb-project/swdb/certification.py"
+    },
+    {
+      "behavior": "Own source ROOT/apps/dx100 supplies pinned BFS/license/header subset and full upstream source identity.",
+      "lines": "21;54\u201370;93\u2013102",
+      "source": "swdb-project/scripts/prepare_dx100_scalar_snapshot.py"
+    },
+    {
+      "behavior": "Real guest compilation checks original snapshot relation, saved candidate artifact/model receipt, regular m5op.S and model include directories.",
+      "lines": "254\u2013328;338\u2013353;405",
+      "source": "swdb-project/swdb/dx100_candidate.py"
+    }
+  ],
+  "source_relative_files_checked_later": [
+    {
+      "identity": "actual current frozen-source hash during protocol freeze; historical template verifier hash is replaced",
+      "path": "${FROZEN_SOURCE_SWDB}/scripts/dx100_verify.py",
+      "source": "campaign_targets988"
+    },
+    {
+      "identity": "actual current frozen-source hash during protocol freeze",
+      "path": "${FROZEN_SOURCE_SWDB}/swdb/dx100_witness.py",
+      "source": "campaign_targets989"
+    },
+    {
+      "identity": "actual current frozen-source hash during protocol freeze",
+      "path": "${FROZEN_SOURCE_SWDB}/scripts/dx100_host_memory.py",
+      "source": "campaign_targets990"
+    },
+    {
+      "identity": "current library is a campaign input copied by helper307\u2013308; candidate source reference uses exact library header",
+      "path": "${FROZEN_SOURCE_SWDB}/library/dx100/dxc_lowering.hpp",
+      "source": "campaign_targets967\u2013969;484 onward"
+    }
+  ],
+  "template": {
+    "builds": {
+      "baseline": {
+        "adapter": "dx100.complete_call.v2",
+        "compiler": "/usr/bin/g++-13",
+        "compiler_version": [
+          "g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+          "Copyright (C) 2023 Free Software Foundation, Inc."
+        ],
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-g",
+          "-fopenmp",
+          "-DGEM5",
+          "-DNUM_CORES=4",
+          "-DTILE_SIZE=16384"
+        ]
+      },
+      "candidate": {
+        "adapter": "dx100.complete_call.v2",
+        "compiler": "/usr/bin/g++-13",
+        "compiler_version": [
+          "g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+          "Copyright (C) 2023 Free Software Foundation, Inc."
+        ],
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-g",
+          "-fopenmp",
+          "-DGEM5",
+          "-DNUM_CORES=4",
+          "-DTILE_SIZE=16384",
+          "-DMAA"
+        ]
+      }
+    },
+    "id": "typed-library-bfs-gem5-20261003-a2.protocol.84229924369fc6b0",
+    "ramulator_configuration_roles": {
+      "baseline": {
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml",
+        "sha256": "aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b"
+      },
+      "candidate": {
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml",
+        "sha256": "aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b"
+      }
+    },
+    "roi": "bfs.complete_call.v1",
+    "simulation_identity": {
+      "model_build": {
+        "evaluation": "bfs-dx100-build-20260925-a2",
+        "sha256": "13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea"
+      },
+      "simulator": {
+        "path": "/data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt",
+        "sha256": "f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b"
+      },
+      "version": "1.0"
+    },
+    "threads": 4
+  },
+  "workloads": [
+    {
+      "canonical_sha256": "b09810ebb77becb46667314439bd044c892f268fa9692df8b15338930d670f10",
+      "id": "lanl17-prospective-20261006-a2-kronecker.g18.k14.061b9007efcdebb7",
+      "identity_sha256": "061b9007efcdebb7839092f23a02de1e55fc9df4b9b4df1d307315fcca58ae3d",
+      "representations": [
+        {
+          "adjacency_verified": true,
+          "application": "dx100-gapbs",
+          "bytes": 27889273,
+          "canonical_sha256": "b09810ebb77becb46667314439bd044c892f268fa9692df8b15338930d670f10",
+          "format": "gapbs_sg32le",
+          "id": "lanl17-prospective-20261006-a2-kronecker.g18.k14.dx100",
+          "loader": "swdb.gapbs-representation.v1",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-kronecker.g18.k14/graph-dx100.sg",
+          "sha256": "057b291b9e74fc3b3af901bc668058162c03d5fc89e0572de848bc46d9d5a46d",
+          "verification": {
+            "budgets": {
+              "compile_timeout_s": 60,
+              "timeout_s": 900
+            },
+            "compiler": "/usr/bin/x86_64-linux-gnu-g++-13",
+            "method": "exact_mmap_csr_transpose_membership",
+            "parser_sha256": "ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893"
+          }
+        },
+        {
+          "adjacency_verified": true,
+          "application": "gapbs",
+          "bytes": 28937857,
+          "canonical_sha256": "b09810ebb77becb46667314439bd044c892f268fa9692df8b15338930d670f10",
+          "format": "gapbs_sg64le",
+          "id": "lanl17-prospective-20261006-a2-kronecker.g18.k14.upstream",
+          "loader": "swdb.gapbs-representation.v1",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-kronecker.g18.k14/graph-upstream.sg",
+          "sha256": "6d2630e322256c2a773e033cff99b0c474532a7e110c1032d9ad5e1d3ff43dc5",
+          "verification": {
+            "budgets": {
+              "compile_timeout_s": 60,
+              "timeout_s": 900
+            },
+            "compiler": "/usr/bin/x86_64-linux-gnu-g++-13",
+            "method": "exact_mmap_csr_transpose_membership",
+            "parser_sha256": "ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893"
+          }
+        }
+      ],
+      "sources": [
+        0
+      ]
+    },
+    {
+      "canonical_sha256": "91955e7e5528a8c43dcf03f6d3cdafb649e98ed33dd7c83bf8cbf1e09d269f5d",
+      "id": "lanl17-prospective-20261006-a2-kronecker.g18.k15.15b1ec00b24140f4",
+      "identity_sha256": "15b1ec00b24140f482a9d77638e89a21ca0c4a670d51782005b8db0d845291c3",
+      "representations": [
+        {
+          "adjacency_verified": true,
+          "application": "dx100-gapbs",
+          "bytes": 29694769,
+          "canonical_sha256": "91955e7e5528a8c43dcf03f6d3cdafb649e98ed33dd7c83bf8cbf1e09d269f5d",
+          "format": "gapbs_sg32le",
+          "id": "lanl17-prospective-20261006-a2-kronecker.g18.k15.dx100",
+          "loader": "swdb.gapbs-representation.v1",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-kronecker.g18.k15/graph-dx100.sg",
+          "sha256": "98b26ec50c9e1fd8fea935b3326095fc120416089322242bb29cf55889eb7e58",
+          "verification": {
+            "budgets": {
+              "compile_timeout_s": 60,
+              "timeout_s": 900
+            },
+            "compiler": "/usr/bin/x86_64-linux-gnu-g++-13",
+            "method": "exact_mmap_csr_transpose_membership",
+            "parser_sha256": "ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893"
+          }
+        },
+        {
+          "adjacency_verified": true,
+          "application": "gapbs",
+          "bytes": 30743353,
+          "canonical_sha256": "91955e7e5528a8c43dcf03f6d3cdafb649e98ed33dd7c83bf8cbf1e09d269f5d",
+          "format": "gapbs_sg64le",
+          "id": "lanl17-prospective-20261006-a2-kronecker.g18.k15.upstream",
+          "loader": "swdb.gapbs-representation.v1",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-kronecker.g18.k15/graph-upstream.sg",
+          "sha256": "2b8ba2ba5bb5ffe4c7ce7e3aaee80d71d958f263fd7cdb339f64d57d1ad29bda",
+          "verification": {
+            "budgets": {
+              "compile_timeout_s": 60,
+              "timeout_s": 900
+            },
+            "compiler": "/usr/bin/x86_64-linux-gnu-g++-13",
+            "method": "exact_mmap_csr_transpose_membership",
+            "parser_sha256": "ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893"
+          }
+        }
+      ],
+      "sources": [
+        0
+      ]
+    },
+    {
+      "canonical_sha256": "5e5f73be345c10f99bab522935aa4455e656de497301e4734784089f18873db3",
+      "id": "lanl17-prospective-20261006-a2-kronecker.g18.k17.7c5f5ee1ddda25c4",
+      "identity_sha256": "7c5f5ee1ddda25c49a97dcdd52ae8e6e5e19e55fa25b289c1fe92cf917c2bb6d",
+      "representations": [
+        {
+          "adjacency_verified": true,
+          "application": "dx100-gapbs",
+          "bytes": 33279465,
+          "canonical_sha256": "5e5f73be345c10f99bab522935aa4455e656de497301e4734784089f18873db3",
+          "format": "gapbs_sg32le",
+          "id": "lanl17-prospective-20261006-a2-kronecker.g18.k17.dx100",
+          "loader": "swdb.gapbs-representation.v1",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-kronecker.g18.k17/graph-dx100.sg",
+          "sha256": "ffb5c1be95e33373a23431124a9a97f4a7a72311d542cc021ddcf24fb449913e",
+          "verification": {
+            "budgets": {
+              "compile_timeout_s": 60,
+              "timeout_s": 900
+            },
+            "compiler": "/usr/bin/x86_64-linux-gnu-g++-13",
+            "method": "exact_mmap_csr_transpose_membership",
+            "parser_sha256": "ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893"
+          }
+        },
+        {
+          "adjacency_verified": true,
+          "application": "gapbs",
+          "bytes": 34328049,
+          "canonical_sha256": "5e5f73be345c10f99bab522935aa4455e656de497301e4734784089f18873db3",
+          "format": "gapbs_sg64le",
+          "id": "lanl17-prospective-20261006-a2-kronecker.g18.k17.upstream",
+          "loader": "swdb.gapbs-representation.v1",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-kronecker.g18.k17/graph-upstream.sg",
+          "sha256": "7915eabf66188be9117175eba2577bcc2ef44a88c73c4494b42c60f1b8b649c8",
+          "verification": {
+            "budgets": {
+              "compile_timeout_s": 60,
+              "timeout_s": 900
+            },
+            "compiler": "/usr/bin/x86_64-linux-gnu-g++-13",
+            "method": "exact_mmap_csr_transpose_membership",
+            "parser_sha256": "ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893"
+          }
+        }
+      ],
+      "sources": [
+        0
+      ]
+    },
+    {
+      "canonical_sha256": "a8230c56a80fee0503f51fdad6e8b4dc629bafdacfc9786fa9bc7b7d765c65e6",
+      "id": "lanl17-prospective-20261006-a2-kronecker.g18.k18.feb23b36a57d4c05",
+      "identity_sha256": "feb23b36a57d4c059dc3b1afd8d30808bfb038d3d39f7004dc439f62429f14c3",
+      "representations": [
+        {
+          "adjacency_verified": true,
+          "application": "dx100-gapbs",
+          "bytes": 35055097,
+          "canonical_sha256": "a8230c56a80fee0503f51fdad6e8b4dc629bafdacfc9786fa9bc7b7d765c65e6",
+          "format": "gapbs_sg32le",
+          "id": "lanl17-prospective-20261006-a2-kronecker.g18.k18.dx100",
+          "loader": "swdb.gapbs-representation.v1",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-kronecker.g18.k18/graph-dx100.sg",
+          "sha256": "ccb58058e568aec62b8076829cce949a61a9a7a27ccdefab59a4b75f31ee5150",
+          "verification": {
+            "budgets": {
+              "compile_timeout_s": 60,
+              "timeout_s": 900
+            },
+            "compiler": "/usr/bin/x86_64-linux-gnu-g++-13",
+            "method": "exact_mmap_csr_transpose_membership",
+            "parser_sha256": "ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893"
+          }
+        },
+        {
+          "adjacency_verified": true,
+          "application": "gapbs",
+          "bytes": 36103681,
+          "canonical_sha256": "a8230c56a80fee0503f51fdad6e8b4dc629bafdacfc9786fa9bc7b7d765c65e6",
+          "format": "gapbs_sg64le",
+          "id": "lanl17-prospective-20261006-a2-kronecker.g18.k18.upstream",
+          "loader": "swdb.gapbs-representation.v1",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-kronecker.g18.k18/graph-upstream.sg",
+          "sha256": "b580c7572d5225354a8df599d9107610995a3afa11f9bebe691a34d59289aab1",
+          "verification": {
+            "budgets": {
+              "compile_timeout_s": 60,
+              "timeout_s": 900
+            },
+            "compiler": "/usr/bin/x86_64-linux-gnu-g++-13",
+            "method": "exact_mmap_csr_transpose_membership",
+            "parser_sha256": "ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893"
+          }
+        }
+      ],
+      "sources": [
+        0
+      ]
+    },
+    {
+      "canonical_sha256": "b94b39953e922462ffd10813844e6aada09c9886420586f907380b1d94c5e3cc",
+      "id": "lanl17-prospective-20261006-a2-uniform_random.g18.k14.9027c7c5f57e8926",
+      "identity_sha256": "9027c7c5f57e89268a1aaab2864424bc415a161d1cf8d3175c11a8ac346c078b",
+      "representations": [
+        {
+          "adjacency_verified": true,
+          "application": "dx100-gapbs",
+          "bytes": 30406989,
+          "canonical_sha256": "b94b39953e922462ffd10813844e6aada09c9886420586f907380b1d94c5e3cc",
+          "format": "gapbs_sg32le",
+          "id": "lanl17-prospective-20261006-a2-uniform_random.g18.k14.dx100",
+          "loader": "swdb.gapbs-representation.v1",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k14/graph-dx100.sg",
+          "sha256": "6390201bf8d08ac3d876a416d10f40b63fba818df314055bc4eeb47f8fce1c65",
+          "verification": {
+            "budgets": {
+              "compile_timeout_s": 60,
+              "timeout_s": 900
+            },
+            "compiler": "/usr/bin/x86_64-linux-gnu-g++-13",
+            "method": "exact_mmap_csr_transpose_membership",
+            "parser_sha256": "ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893"
+          }
+        },
+        {
+          "adjacency_verified": true,
+          "application": "gapbs",
+          "bytes": 31455577,
+          "canonical_sha256": "b94b39953e922462ffd10813844e6aada09c9886420586f907380b1d94c5e3cc",
+          "format": "gapbs_sg64le",
+          "id": "lanl17-prospective-20261006-a2-uniform_random.g18.k14.upstream",
+          "loader": "swdb.gapbs-representation.v1",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k14/graph-upstream.sg",
+          "sha256": "f88e85fbde5219af215b83769e3358ead93449f13d76e4a2dc7767ba768e4efc",
+          "verification": {
+            "budgets": {
+              "compile_timeout_s": 60,
+              "timeout_s": 900
+            },
+            "compiler": "/usr/bin/x86_64-linux-gnu-g++-13",
+            "method": "exact_mmap_csr_transpose_membership",
+            "parser_sha256": "ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893"
+          }
+        }
+      ],
+      "sources": [
+        0
+      ]
+    },
+    {
+      "canonical_sha256": "22ab35e7e7cee0b8779c613cc4ae8bae5937c0ebe9ddb20d1be82b4dbce93fb9",
+      "id": "lanl17-prospective-20261006-a2-uniform_random.g18.k15.34444aebb8080315",
+      "identity_sha256": "34444aebb8080315c86fc46f5895f1bf97ee09703ac01016cbbb9cc82a130a40",
+      "representations": [
+        {
+          "adjacency_verified": true,
+          "application": "dx100-gapbs",
+          "bytes": 32503877,
+          "canonical_sha256": "22ab35e7e7cee0b8779c613cc4ae8bae5937c0ebe9ddb20d1be82b4dbce93fb9",
+          "format": "gapbs_sg32le",
+          "id": "lanl17-prospective-20261006-a2-uniform_random.g18.k15.dx100",
+          "loader": "swdb.gapbs-representation.v1",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k15/graph-dx100.sg",
+          "sha256": "25394b3f3d123983fc309dbda4f93b8e979e29795328bc38cfa2ac479daae754",
+          "verification": {
+            "budgets": {
+              "compile_timeout_s": 60,
+              "timeout_s": 900
+            },
+            "compiler": "/usr/bin/x86_64-linux-gnu-g++-13",
+            "method": "exact_mmap_csr_transpose_membership",
+            "parser_sha256": "ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893"
+          }
+        },
+        {
+          "adjacency_verified": true,
+          "application": "gapbs",
+          "bytes": 33552465,
+          "canonical_sha256": "22ab35e7e7cee0b8779c613cc4ae8bae5937c0ebe9ddb20d1be82b4dbce93fb9",
+          "format": "gapbs_sg64le",
+          "id": "lanl17-prospective-20261006-a2-uniform_random.g18.k15.upstream",
+          "loader": "swdb.gapbs-representation.v1",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k15/graph-upstream.sg",
+          "sha256": "5abecb2f3ecc4cf7eaa0de9ff34def7c34437e6210afc19e9da74d62cf6bfccf",
+          "verification": {
+            "budgets": {
+              "compile_timeout_s": 60,
+              "timeout_s": 900
+            },
+            "compiler": "/usr/bin/x86_64-linux-gnu-g++-13",
+            "method": "exact_mmap_csr_transpose_membership",
+            "parser_sha256": "ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893"
+          }
+        }
+      ],
+      "sources": [
+        0
+      ]
+    },
+    {
+      "canonical_sha256": "ba748ecd829b1f8fee9402c6ea9356d9cacbe8472e150ddda97de3a59a851a2a",
+      "id": "lanl17-prospective-20261006-a2-uniform_random.g18.k17.451edf9faac833c0",
+      "identity_sha256": "451edf9faac833c0e0ceba0f41bd3e94fb55b2281a4cb6e5b5317128036fe998",
+      "representations": [
+        {
+          "adjacency_verified": true,
+          "application": "dx100-gapbs",
+          "bytes": 36697701,
+          "canonical_sha256": "ba748ecd829b1f8fee9402c6ea9356d9cacbe8472e150ddda97de3a59a851a2a",
+          "format": "gapbs_sg32le",
+          "id": "lanl17-prospective-20261006-a2-uniform_random.g18.k17.dx100",
+          "loader": "swdb.gapbs-representation.v1",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k17/graph-dx100.sg",
+          "sha256": "d13ac3c69856dffb0f8cf4c7e46c7a2047b7d56483a76a03226e175a3b4d1a43",
+          "verification": {
+            "budgets": {
+              "compile_timeout_s": 60,
+              "timeout_s": 900
+            },
+            "compiler": "/usr/bin/x86_64-linux-gnu-g++-13",
+            "method": "exact_mmap_csr_transpose_membership",
+            "parser_sha256": "ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893"
+          }
+        },
+        {
+          "adjacency_verified": true,
+          "application": "gapbs",
+          "bytes": 37746289,
+          "canonical_sha256": "ba748ecd829b1f8fee9402c6ea9356d9cacbe8472e150ddda97de3a59a851a2a",
+          "format": "gapbs_sg64le",
+          "id": "lanl17-prospective-20261006-a2-uniform_random.g18.k17.upstream",
+          "loader": "swdb.gapbs-representation.v1",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k17/graph-upstream.sg",
+          "sha256": "6961434d06a2905e4daaacc700ebecdc2a89f1b9b5eb11e6413465c9d655dd29",
+          "verification": {
+            "budgets": {
+              "compile_timeout_s": 60,
+              "timeout_s": 900
+            },
+            "compiler": "/usr/bin/x86_64-linux-gnu-g++-13",
+            "method": "exact_mmap_csr_transpose_membership",
+            "parser_sha256": "ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893"
+          }
+        }
+      ],
+      "sources": [
+        0
+      ]
+    },
+    {
+      "canonical_sha256": "327b80162cc83609a18e13dcb67f1e66e4468edeb13e43112975fcfb7e524925",
+      "id": "lanl17-prospective-20261006-a2-uniform_random.g18.k18.c0396050e37ceed6",
+      "identity_sha256": "c0396050e37ceed6a26806a6b5f1b84c6593068f9b08d2cb9f0bc82aba1aa20f",
+      "representations": [
+        {
+          "adjacency_verified": true,
+          "application": "dx100-gapbs",
+          "bytes": 38794573,
+          "canonical_sha256": "327b80162cc83609a18e13dcb67f1e66e4468edeb13e43112975fcfb7e524925",
+          "format": "gapbs_sg32le",
+          "id": "lanl17-prospective-20261006-a2-uniform_random.g18.k18.dx100",
+          "loader": "swdb.gapbs-representation.v1",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k18/graph-dx100.sg",
+          "sha256": "e03ad54f66292dbf9abe4dcb657ed4f1a1728a7ee80d88bacc1ea42ba7123914",
+          "verification": {
+            "budgets": {
+              "compile_timeout_s": 60,
+              "timeout_s": 900
+            },
+            "compiler": "/usr/bin/x86_64-linux-gnu-g++-13",
+            "method": "exact_mmap_csr_transpose_membership",
+            "parser_sha256": "ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893"
+          }
+        },
+        {
+          "adjacency_verified": true,
+          "application": "gapbs",
+          "bytes": 39843161,
+          "canonical_sha256": "327b80162cc83609a18e13dcb67f1e66e4468edeb13e43112975fcfb7e524925",
+          "format": "gapbs_sg64le",
+          "id": "lanl17-prospective-20261006-a2-uniform_random.g18.k18.upstream",
+          "loader": "swdb.gapbs-representation.v1",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k18/graph-upstream.sg",
+          "sha256": "a3ecc6241ca27276fd3d8e0ea62fc5437ea1e783097b64528809b8e3a854ad23",
+          "verification": {
+            "budgets": {
+              "compile_timeout_s": 60,
+              "timeout_s": 900
+            },
+            "compiler": "/usr/bin/x86_64-linux-gnu-g++-13",
+            "method": "exact_mmap_csr_transpose_membership",
+            "parser_sha256": "ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893"
+          }
+        }
+      ],
+      "sources": [
+        0
+      ]
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "bounds": {
+    "output_bytes": 262144,
+    "seconds": 600,
+    "source_file_bytes": 1073741824,
+    "total_bytes": 17179869184
+  },
+  "complete_derivation": {
+    "bytes": 778,
+    "path": "/private/tmp/lanl17-fixed-queued-dependency-byte-query-r1-complete-a1-derivation-20261008.diff",
+    "sha256": "c1a441eb4c528ed92a9a65636de112ee95bce049e9e19fe27a0eaff72452c3a1"
+  },
+  "execution": {
+    "Git_mutation": false,
+    "SSH": false,
+    "native_or_scientific_execution": false,
+    "project_write": false,
+    "selected_main": false,
+    "selected_source_import": false,
+    "tests": false
+  },
+  "format": "swdb.fixed-queued17-dependency-byte-query.source-preparation.v1",
+  "handoff": {
+    "bytes": 8343,
+    "path": "/private/tmp/lanl17-fixed-queued-dependency-byte-query-r1-source-handoff-20261008-a1.md",
+    "sha256": "03f2e47a2698ae97470f70c665161a45d09729a22e58e825dac739145f17a56f"
+  },
+  "known_graph_bytes": 537655005,
+  "known_graph_model_bytes": 1391917613,
+  "literal_directory_rows": 6,
+  "literal_file_rows": 24,
+  "local_analysis_setup_corrections": [
+    "nonliteral native-pin assignment omitted from literal-only AST extraction",
+    "original file rows compared using explicit retained projection fields",
+    "source-relative renamed keys mapped explicitly to original symbolic fields"
+  ],
+  "original_native_observation": {
+    "bytes": 1794,
+    "path": "/private/tmp/lanl-detached-administration-native-pin-original-20261008-a1.json",
+    "sha256": "aee82e2b7d4ba8a50a55927f3cf8278918702e52b8d0067999b9564ced6c6694"
+  },
+  "original_route_audit": {
+    "bytes": 96495,
+    "path": "/private/tmp/lanl17-frozen-R-input-model-dependency-routes-20261008-a1.json",
+    "sha256": "2628a596f5683e3f3b0008fb5319ad87df17954849ba1bea8e90ba51a2b0e591"
+  },
+  "policy": "UNSEALED source-only preparation; not an actual query receipt",
+  "prepared_date_et": "2026-10-08",
+  "preserved_first_source": {
+    "bytes": 33728,
+    "path": "/private/tmp/lanl17_query_fixed_queued_dependency_bytes_20261008_a1.py",
+    "sha256": "5829dab174a31740713f5f1697e161ff269c744db57a897b26bcb9f1a0460ede"
+  },
+  "relative_Git_rows": 4,
+  "selected_source": {
+    "bytes": 33776,
+    "path": "/private/tmp/lanl17_query_fixed_queued_dependency_bytes_20261008_a1_r1.py",
+    "sha256": "ef9b4e57f7e7636f8275fe1a712b5ca4abae6773f70f56064d8d5ad21691ec10"
+  },
+  "static_checks": {
+    "changed_function_AST": [
+      "git"
+    ],
+    "complete_R1_reverse_exact": true,
+    "original_projected_route_associations_checked": true,
+    "other_exact_function_AST_count": 15,
+    "syntax_AST_parsed": true
+  },
+  "symbolic_pending_rows": 4,
+  "unknown_size_literal_files": [
+    "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/build/build-receipt.json",
+    "/data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-build-20260925-a2/runtime-dependencies.json",
+    "/data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml",
+    "/usr/bin/g++-13",
+    "/data1/yanruj/DX100-bfs-e4fc4af/util/m5/src/abi/x86/m5op.S"
+  ]
+}

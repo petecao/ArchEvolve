@@ -1,0 +1,37 @@
+--- /private/tmp/lanl_copy_reviewed_portal_role_sources_and_inputs_from_git_20261008_a1.py
++++ /private/tmp/lanl_copy_reviewed_portal_role_sources_and_inputs_from_git_20261008_a1_r1.py
+@@ -16,7 +16,7 @@
+  ('/private/tmp/lanl17-fuse-service-public-identity-original-20261008-a1.json',ROLE/'public-identity.json',4103,'1ea76b7519827bae6f81902c2bebd6b16e22c303fcada24257bf1bab73174489'),
+  ('/private/tmp/lanl17-exact-checkout-inode-birth-query-original-20261008-a1.json',ROLE/'checkout-inode-birth.json',14762700,'e228811f4b119a7e0c97b666b7da249374f3637cef8b17c0b10b54c4ff422fb7'),
+  ('/private/tmp/lanl17-exact-worktree-administration-inode-birth-original-actual-20261008-a1.json',ROLE/'git-admin-inode-birth.json',139083,'a62b53bd4c9f89c3a212690750905c6cf13203fca8fceee560a9ad9ee25a1dd5'),
+- ('/private/tmp/lanl17_publish_checked_dx100_deployment_inputs_20261008_a1_r2.py',BASE/'lanl17_publish_checked_dx100_deployment_inputs_20261008_a1_r2.py',27860,'4036c275fb5df7f345999c0b99144e0e1bbef84b4b94c262212a2f34c7539f7e'),
++ ('/private/tmp/lanl17_publish_checked_dx100_deployment_inputs_20261008_a1_r3.py',BASE/'lanl17_publish_checked_dx100_deployment_inputs_20261008_a1_r3.py',27901,'55558276d912c924df9a6701d1848829f42a758233c20ad6da1e06bc6b176f29'),
+  ('/private/tmp/lanl17-original-dx100-deployment-prerequisites-query-actual-20261008-a1-r3.json',INPUTS/'original-dx100-deployment-facts.json',60682,'0252f42cde88946aadc6866af53b867b55b782bc9883eae3bb8b85a5ee56823e'),
+  ('/private/tmp/lanl17-dx100-live-source-facts-parent-review-20261008-a1.json',INPUTS/'dx100-parent-review.json',1132,'5072c3025b0c372d6d4455d213d1e57d8ba6dda3f0b087883b447026828c4d07'),
+  ('/private/tmp/lanl17-native-pyyaml-package-facts-original-actual-20261008-a1.json',INPUTS/'original-pyyaml-facts.json',14870,'bf5f733f184049264ba1ee45a7db09c64c2096a37216f4a153fa64a91b0be6b1'),
+@@ -106,6 +106,7 @@
+  need(sys.dont_write_bytecode and sys.flags.optimize==0 and re.fullmatch('[a-f0-9]{40}',args.expected_primary),'unoptimized_B_and_exact_revision')
+  need(all(re.fullmatch('[a-f0-9]{64}',v) for v in (args.manifest_sha256,args.manifest_identity_sha256,args.role_review_sha256,args.role_review_identity_sha256,args.source_sha256)),'required_SHA_pins')
+  need(0<args.role_review_bytes<=LIMITS['role_review_bytes'] and P(args.role_review_original_path).parent==P('/private/tmp') and P(args.role_review_original_path).suffix=='.json','explicit_closed_future_role_original')
++ need(P(sys.executable).resolve(strict=True)==P('/usr/bin/python3.12'),'actual_native_python_route')
+  private(BASE);CHECKOUTS={p:checkout(p) for p in (PRIMARY,C)}
+  own=P(__file__).absolute();need(own.parent==BASE,'source_direct_private_BASE');ownraw,ownstat=read(own,256*1024,mode=0o600);need(sha(ownraw)==args.source_sha256,'own_source_byte_pin')
+  native={}
+@@ -128,14 +129,15 @@
+   rel=PREFIX/relative;need(0<=row['stored_bytes']<=LIMITS['one_file_bytes'] and size<=LIMITS['one_file_bytes'],'selected_file_bounds')
+   stored,source_stat=read(PRIMARY/rel,LIMITS['one_file_bytes']);need(len(stored)==row['stored_bytes'] and sha(stored)==row['stored_sha256'],'physical_stored_original_pin')
+   mode=git(PRIMARY,'ls-tree','-z',args.expected_primary,'--',str(rel));need(mode.startswith(b'100644 blob ') and mode.endswith(b'\t'+str(rel).encode()+b'\0') and mode.count(b'\0')==1,'Git100644_selected_blob')
+-  # Its exact physical stored size is already bounded before native Gitshow allocation.
++  need(git(PRIMARY,'cat-file','-s',args.expected_primary+':'+str(rel),cap=64)==(str(len(stored))+'\n').encode(),'Git_stored_blob_size_before_body_read')
++  # Exact immutable Git object size is now bounded before Gitshow allocation.
+   need(git(PRIMARY,'show',args.expected_primary+':'+str(rel),cap=LIMITS['one_file_bytes'])==stored,'Git_delivered_original_byte_equality')
+   raw=decode(row,stored,size,digest);copies.append((original,dest,raw,rel,stored,source_stat))
+  role=strict(copies[-1][2]);need(role['format']=='swdb.exact-portal-autounmount-semantic-parent-review.v1' and role['canonical_ensure_ascii'] is True and role['shared_helper_sha256']==HELPER and role['identity_sha256']==args.role_review_identity_sha256==sha(canonical({k:v for k,v in role.items() if k!='identity_sha256'})),'explicit_actual_role_True_seal_and_helper')
+  need(role['accepted_exact_role_only'] is True and role['global_reference_free_or_cleanup_capacity_or_scientific_admission'] is False and role['other_consumers_parent_or_descendants_exempted'] is False,'role_scope_not_capacity_or_other_consumers')
+  for key,filename,size,digest in (('public_identity','public-identity.json',4103,FIXED[4][3]),('checkout_birth','checkout-inode-birth.json',14762700,FIXED[5][3]),('git_admin_birth','git-admin-inode-birth.json',139083,FIXED[6][3])):
+   r=role['original_pins'][key];need(r['path']==str(ROLE/filename) and r['bytes']==size and r['sha256']==digest,'actual_role_original_routes')
+- for p in (SOURCES,ROLE,INPUTS,BASE/'lanl17_publish_checked_dx100_deployment_inputs_20261008_a1_r2.py'):need(not os.path.lexists(p),'destination_already_exists_no_repair')
++ for p in (SOURCES,ROLE,INPUTS,BASE/'lanl17_publish_checked_dx100_deployment_inputs_20261008_a1_r3.py'):need(not os.path.lexists(p),'destination_already_exists_no_repair')
+  # Explicit reviewed administrative ref refresh only; C physical HEAD/source stays fixed.
+  for repo in (PRIMARY,C):
+   git(repo,'fetch','origin','codex/lanl-analytic-eval');need(git(repo,'rev-parse','origin/codex/lanl-analytic-eval').decode().strip()==args.expected_primary,'integration_ref_not_final_delivered')

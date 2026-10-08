@@ -1,0 +1,474 @@
+--- /private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r6.py
++++ /private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r7_r1.py
+@@ -27,9 +27,9 @@
+ PRIMARY = BASE/'ArchEvolve'
+ RAW = P('/data/yanruj/EvolveSWDB_runs')
+ EV = PRIMARY/'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence'
+-R3 = BASE/'lanl-storage-admin-selected-source-20261008-a4/lanl_consumed_detached_source_guard_r5_20261008_a1.py'
+-R3_BYTES = 88872
+-R3_SHA = 'a84dc9ca7ccd20e6485cc8e9a2007b3b982fad9c5ae19dacbb1f164d664748cb'
++R3 = BASE/'lanl-storage-admin-selected-source-20261008-a5/lanl_consumed_detached_source_guard_r6_20261008_a1.py'
++R3_BYTES = 116443
++R3_SHA = '6118592610fbff77a7da3ea8196c772331066d3188ded29627218486c106b326'
+ GIT = P('/usr/bin/git')
+ GIT_BYTES = 4019024
+ GIT_SHA = '06b2aa74919b1993f9fd7e47060ea98d98c27206f16ccc2d35f51ced7e7877eb'
+@@ -261,6 +261,391 @@
+             'other_consumers_parent_and_descendants_exempted':False,
+             'signal_blocked_mask_zero_or_nonzero_is_not_predicated':True}
+ 
++
++PORTAL_HELPER_SHA = '36fc3b3fdede68b15fca931c199b649303cda4db559f1226ea13474ab5c0e44c'
++
++def portal_inode_birth_rows(document, row_definitions, admin=False, check_deadline=None):
++    """Pure metadata validation. No path reads; symlink targets are not covered."""
++    fields = ['dev','ino','mode','uid','gid','nlink','size','blocks','mtime_ns','ctime_ns']
++    encoding = document['object_encoding']
++    require(encoding['format']=='ordered-array.v1'
++            and encoding['original_stat_fields']==fields
++            and encoding['original_statx_fields']==['returned_mask','requested_mask','attributes',
++                'attributes_mask','mount_id_or_null','birth_supported','birth_seconds','birth_nanoseconds']
++            and encoding['object_fields']==['relative_path','original_stat','original_statx',
++                'directory_names_count_or_null','directory_names_digest_or_null','type_code'],
++            'portal_birth_array_encoding_changed')
++    require(document['sealed'] is False and 'identity_sha256' not in document
++            and document['cleanup_capacity_or_scientific_admission'] is False
++            and document['boot_clock_interval_equal'] is True
++            and document['clock_before']['boot_epoch_seconds']==1785498067
++            and document['clock_after']['boot_epoch_seconds']==1785498067
++            and document['clock_before']['clock_ticks_per_second']==100
++            and document['clock_after']['clock_ticks_per_second']==100,
++            'portal_original_birth_policy_or_boot_changed')
++    if not admin:
++        require(document['format']=='swdb.exact-portal-helper-checkout-inode-birth-query.v1'
++                and document['all_eighteen_walks_completed_and_metadata_stable'] is True
++                and document['g5_source_sha256']=='a84dc9ca7ccd20e6485cc8e9a2007b3b982fad9c5ae19dacbb1f164d664748cb'
++                and document['symlink_targets_and_shared_git_admin_not_traversed'] is True,
++                'portal_checkout_birth_original_changed')
++    else:
++        require(document['format']=='swdb.exact-portal-helper-worktree-administration-inode-birth-query.v1'
++                and document['all_eighteen_walks_completed_and_metadata_stable'] is True
++                and document['administration_anchor_metadata_interval_equal'] is True
++                and document['public_identity_interval_equal'] is True
++                and document['genuine_prior_checkout_birth_original_pin']['bytes']==14762700
++                and document['genuine_prior_checkout_birth_original_pin']['sha256']=='e228811f4b119a7e0c97b666b7da249374f3637cef8b17c0b10b54c4ff422fb7',
++                'portal_admin_birth_original_incomplete')
++    originals = document['rows']
++    require(isinstance(originals,list) and len(originals)==len(row_definitions)==18
++            and {r['row'] for r in originals}==set(row_definitions), 'portal_birth_rows_incomplete')
++    result = {}
++    cutoff_numerator = (1785498067+1)*100+559081545+1
++    for row in originals:
++        if check_deadline is not None:check_deadline()
++        name = row['row']
++        root = str(PRIMARY/'.git/worktrees'/name) if admin else row_definitions[name]['path']
++        require(name not in result and row['path']==root
++                and row['first_pass_completed'] is True and row['second_pass_completed'] is True
++                and row['metadata_equal_between_passes'] is True,
++                'portal_birth_row_route_or_stability_changed')
++        if admin:
++            require(row['original_pointer_route']==root and row['g5_definition']==row_definitions[name],
++                    'portal_admin_pointer_route_changed')
++        else:
++            require(row['g5_definition']==row_definitions[name]
++                    and row['git_indirection']['original_pointer_route']==str(PRIMARY/'.git/worktrees'/name),
++                    'portal_checkout_definition_or_git_pointer_changed')
++        objects = row['original_objects']; digest=hashlib.sha256(); by_path={}; counts=[0,0,0]
++        require(isinstance(objects,list) and 0<len(objects)<=400000, 'portal_original_object_count_limit')
++        for obj in objects:
++            if check_deadline is not None:check_deadline()
++            require(isinstance(obj,list) and len(obj)==6, 'portal_birth_object_shape')
++            relative, s, x, names_count, names_digest, kind = obj
++            require(isinstance(relative,str) and relative and len(relative.encode())<=4096
++                    and (relative=='.' or (not relative.startswith('/')
++                         and all(part not in ('','.', '..') for part in relative.split('/'))))
++                    and relative not in by_path and isinstance(s,list) and len(s)==10
++                    and all(type(v) is int for v in s) and isinstance(x,list) and len(x)==8,
++                    'portal_birth_path_or_stat_shape')
++            require(s[0]==2097 and s[3]==UID and s[5]>0
++                    and kind in (0,1,2) and type(kind) is int
++                    and (stat.S_ISDIR(s[2]) if kind==0 else stat.S_ISREG(s[2]) if kind==1 else stat.S_ISLNK(s[2]))
++                    and (kind==0 or s[5]==1), 'portal_birth_type_owner_device_or_links_changed')
++            require(x[0]==8191 and x[1]==8191 and x[4]==136 and x[5] is True
++                    and type(x[6]) is int and type(x[7]) is int
++                    and x[6]>0 and 0<=x[7]<1000000000
++                    and (x[6]*1000000000+x[7])*100 > cutoff_numerator*1000000000,
++                    'portal_birth_unsupported_or_not_strictly_after_helper')
++            require((kind==0 and type(names_count) is int and names_count>=0
++                     and isinstance(names_digest,str) and re.fullmatch('[0-9a-f]{64}',names_digest))
++                    or (kind!=0 and names_count is None and names_digest is None),
++                    'portal_birth_directory_names_shape')
++            if kind==2:
++                require(not admin and relative in (
++                    'swdb-project/weeklogs/2026-09-24/.build/node_modules',
++                    'swdb-project/weeklogs/2026-09-30/.build/node_modules'),
++                    'portal_birth_unreviewed_symlink')
++            by_path[relative]=obj; counts[kind]+=1
++            encoded=canonical(obj); digest.update(len(encoded).to_bytes(8,'big')); digest.update(encoded)
++        require('.' in by_path and by_path['.'][5]==0
++                and len(objects)==row['first_objects_observed']==row['second_objects_observed']
++                and digest.hexdigest()==row['first_metadata_sha256']==row['second_metadata_sha256'],
++                'portal_birth_count_or_complete_digest_changed')
++        children_by_parent={relative:[] for relative,obj in by_path.items() if obj[5]==0}
++        for relative in by_path:
++            if check_deadline is not None:check_deadline()
++            if relative!='.':
++                parent,slash,leaf=relative.rpartition('/')
++                parent=parent or '.'; leaf=leaf if slash else relative
++                require(parent in children_by_parent, 'portal_birth_parent_object_missing')
++                children_by_parent[parent].append(leaf)
++        for relative,obj in by_path.items():
++            if check_deadline is not None:check_deadline()
++            if obj[5]==0:
++                children=sorted(children_by_parent[relative], key=os.fsencode)
++                require(len(children)==obj[3] and sha(b'\0'.join(os.fsencode(p) for p in children))==obj[4],
++                        'portal_birth_complete_directory_inventory_changed')
++        require(counts[2]==(0 if admin else 2), 'portal_birth_symlink_scope_changed')
++        result[name]={'root':root,'objects':by_path,'count':len(objects),'counts':counts,
++                      'metadata_sha256':digest.hexdigest(),
++                      'git_pointer':None if admin else row['git_indirection']}
++    return result
++
++def exact_portal_autounmount_identification(review_pin, row_definitions, selected_rows, removed_rows,
++                                            enclosing_review_identity, helper_sha256,
++                                            check_deadline, charge_bytes, charge_metadata):
++    """One exact protected helper under explicit OS-image/clock assumptions.
++
++    Caller ordinary reference, alias, Git retention and selection gates remain
++    mandatory. This does not observe protected child fields or clear other tasks.
++    """
++    private=BASE/'lanl-portal-helper-inode-review-20261008-a1'
++    require(review_pin['path']==str(private/'parent-review.json')
++            and type(review_pin['bytes']) is int and 0<review_pin['bytes']<=256*1024
++            and re.fullmatch('[0-9a-f]{64}',review_pin['sha256'])
++            and re.fullmatch('[0-9a-f]{64}',enclosing_review_identity), 'portal_review_pin_missing')
++
++    def stat_fact(s):
++        return [getattr(s,'st_'+key) for key in
++                ('dev','ino','mode','uid','gid','nlink','size','blocks','mtime_ns','ctime_ns')]
++
++    def actual_stat(path):
++        check_deadline(); charge_metadata(0,1,0)
++        return path.lstat()
++
++    def route(path):
++        require(path.is_absolute() and '..' not in path.parts, 'portal_noncanonical_path')
++        for q in (path,*path.parents):
++            require(not stat.S_ISLNK(actual_stat(q).st_mode), 'portal_route_symlink')
++        charge_metadata(0,len(path.parts),0)  # Conservative debit for resolution's component stats.
++        require(path.resolve(strict=True)==path, 'portal_route_redirect')
++        return actual_stat(path)
++
++    def read_file(pin, cap, owner=UID, mode=0o600):
++        path=P(pin['path']); before=route(path)
++        require(type(pin['bytes']) is int and 0<=pin['bytes']<=cap
++                and stat.S_ISREG(before.st_mode) and before.st_uid==owner and before.st_nlink==1
++                and stat.S_IMODE(before.st_mode)==mode and before.st_size==pin['bytes'],
++                'portal_original_or_native_file_identity')
++        fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC)
++        try:
++            charge_metadata(0,1,0)
++            require(stat_fact(os.fstat(fd))==stat_fact(before), 'portal_file_open_changed')
++            parts=[]; count=0
++            while True:
++                check_deadline(); part=os.read(fd,min(1024*1024,cap-count+1))
++                if not part:break
++                charge_bytes(len(part)); count+=len(part)
++                require(count<=cap, 'portal_read_cap'); parts.append(part)
++            raw=b''.join(parts); charge_metadata(0,1,0)
++            require(len(raw)==pin['bytes'] and sha(raw)==pin['sha256']
++                    and stat_fact(os.fstat(fd))==stat_fact(before)==stat_fact(actual_stat(path)),
++                    'portal_original_or_native_bytes_changed')
++        finally:os.close(fd)
++        return raw, {'path':str(path),'bytes':len(raw),'sha256':sha(raw),'stat':stamp(before)}
++
++    def review_binding(review):
++        require(review['format']=='swdb.exact-portal-autounmount-semantic-parent-review.v1'
++                and review['canonical_ensure_ascii'] is True
++                and sha(canonical({k:v for k,v in review.items() if k!='identity_sha256'}))==review['identity_sha256']
++                and review['accepted_exact_role_only'] is True
++                and review['shared_helper_sha256']==helper_sha256
++                and review['pid']==1654291 and review['start_ticks']==559081545
++                and review['parent_pid']==1654279 and review['parent_start_ticks']==559081538,
++                'portal_semantic_review_binding_changed')
++        required_assumptions=('trusted_host_clock_and_inode_birth_history',
++            'installed_native_image_matches_running_child',
++            'installed_packages_correspond_to_reviewed_exact_source',
++            'libfuse_3_14_wait_loop_has_only_control_socket_and_fixed_mount_target',
++            'all_potentially_removed_checkout_and_git_admin_inodes_postdate_helper',
++            'node_modules_symlink_targets_are_not_followed_or_removed',
++            'ordinary_portal_parent_and_other_consumers_still_checked',
++            'existing_git_shared_objects_refs_and_alias_gates_remain_mandatory')
++        require(set(review['explicit_assumptions'])==set(required_assumptions)
++                and all(review['explicit_assumptions'][k] is True for k in required_assumptions)
++                and review['inherited_file_descriptors_not_generically_closed'] is True
++                and review['protected_child_fields']=={k:'UNOBSERVED' for k in
++                    ('fd','cwd','root','exe','maps','syscall','wait_channel')}
++                and review['global_reference_free_or_cleanup_capacity_or_scientific_admission'] is False
++                and review['other_consumers_parent_or_descendants_exempted'] is False,
++                'portal_semantic_assumption_or_scope_missing')
++        require(review['admin_birth_producer_pin']=={'bytes':52031,
++                    'sha256':'b2b08374ea997679df9e08894fc14d139cce9f9c90ab3dabd324db36d6f661a3'},
++                'portal_admin_birth_producer_review_pin_pending')
++        require(review['lifecycle_research_pin']=={'bytes':13046,
++                    'sha256':'9c83f802ed7d467c8411c3253be9bac330827ba01a935a11bb7a6ed9eb248840'},
++                'portal_exact_lifecycle_research_pin_changed')
++
++    base_before=actual_stat(BASE); private_before=route(private)
++    require(stat.S_ISDIR(base_before.st_mode) and base_before.st_uid==UID
++            and stat.S_IMODE(base_before.st_mode)==0o700
++            and stat.S_ISDIR(private_before.st_mode) and private_before.st_uid==UID
++            and stat.S_IMODE(private_before.st_mode)==0o700, 'portal_evidence_private_ancestor')
++    raw_review,review_fact=read_file(review_pin,256*1024); review=strict_json(raw_review)
++    review_binding(review)
++    require(review_pin.get('canonical_ensure_ascii') is True
++            and review_pin.get('identity_sha256')==review['identity_sha256'],
++            'portal_review_pin_explicit_True_identity_missing')
++    fixed_originals={
++        'public_identity':('public-identity.json',4103,
++            '1ea76b7519827bae6f81902c2bebd6b16e22c303fcada24257bf1bab73174489'),
++        'checkout_birth':('checkout-inode-birth.json',14762700,
++            'e228811f4b119a7e0c97b666b7da249374f3637cef8b17c0b10b54c4ff422fb7'),
++        'git_admin_birth':('git-admin-inode-birth.json',139083,
++            'a62b53bd4c9f89c3a212690750905c6cf13203fca8fceee560a9ad9ee25a1dd5')}
++    documents={}; original_facts=[]
++    for key,(name,size,digest) in fixed_originals.items():
++        pin=review['original_pins'][key]
++        require(pin['path']==str(private/name) and pin['bytes']==size and pin['sha256']==digest,
++                'portal_fixed_original_pin_changed')
++        raw,fact=read_file(pin,32*1024*1024); documents[key]=strict_json(raw); original_facts.append(fact)
++    original=documents['public_identity']
++    require(original['format']=='swdb.portal-fuse-service-public-identity.v1'
++            and original['sealed'] is False and 'identity_sha256' not in original
++            and original['public_role_identity_stable_at_end'] is True
++            and original['parent_semantic_exclusion_cleanup_or_global_reference_free_claimed'] is False,
++            'portal_original_identity_policy_changed')
++    checkout=portal_inode_birth_rows(documents['checkout_birth'],row_definitions,check_deadline=check_deadline)
++    admin=portal_inode_birth_rows(documents['git_admin_birth'],row_definitions,True,check_deadline)
++    require(isinstance(selected_rows,list) and len(set(selected_rows))==len(selected_rows)
++            and set(selected_rows)<=set(row_definitions)
++            and isinstance(removed_rows,list) and len(set(removed_rows))==len(removed_rows)
++            and set(removed_rows)<=set(selected_rows), 'portal_removed_journal_scope_changed')
++    remaining=sorted(set(selected_rows)-set(removed_rows)); evidence_stats={x['path']:x['stat'] for x in original_facts+[review_fact]}
++
++    def proc_read(path,cap):
++        check_deadline(); fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC)
++        try:
++            parts=[]; count=0
++            while True:
++                check_deadline(); part=os.read(fd,min(1024*1024,cap-count+1))
++                if not part:break
++                charge_bytes(len(part)); count+=len(part)
++                require(count<=cap,'portal_proc_read_cap'); parts.append(part)
++            return b''.join(parts)
++        finally:os.close(fd)
++
++    def process_fields(raw_stat,raw_status,pid,start,ppid,child):
++        values=raw_stat[raw_stat.rfind(b')')+2:].split(); fields={}
++        for line in raw_status.decode().splitlines():
++            if ':' in line:
++                key,value=line.split(':',1); require(key not in fields,'portal_duplicate_status'); fields[key]=value.strip()
++        require(int(raw_stat.split(b' ',1)[0])==pid and int(values[19])==start
++                and int(values[1])==ppid and int(fields['Pid'])==pid and int(fields['PPid'])==ppid
++                and fields['Name']==('fusermount3' if child else 'xdg-document-po')
++                and [int(v) for v in fields['Uid'].split()]==([UID,0,0,0] if child else [UID]*4)
++                and [int(v) for v in fields['Gid'].split()]==[UID]*4
++                and values[0]==b'S' and fields['State'].split()[0]=='S'
++                and int(fields['TracerPid'])==0
++                and (int(fields['Threads'])==1 if child else int(fields['Threads'])>0),
++                'portal_current_public_process_identity_changed')
++        caps={key:fields[key] for key in ('CapInh','CapPrm','CapEff','CapBnd','CapAmb')}
++        require(caps==original['child' if child else 'parent']['capability_hex'], 'portal_current_capabilities_changed')
++        return {'pid':pid,'start_ticks':start,'ppid':ppid,'state':'S',
++                'uids':[int(v) for v in fields['Uid'].split()], 'threads':int(fields['Threads'])}
++
++    def public_link(path):
++        check_deadline(); value=os.readlink(path); charge_metadata(0,1,0); charge_bytes(len(os.fsencode(value)))
++        return value
++
++    def current_pair():
++        pair=[]
++        for pid,start,ppid,child,key in ((1654291,559081545,1654279,True,'child'),
++                (1654279,559081538,359655,False,'parent')):
++            root=P('/proc')/str(pid)
++            item=process_fields(proc_read(root/'stat',16384),proc_read(root/'status',32768),pid,start,ppid,child)
++            cmd=proc_read(root/'cmdline',4096); pin=original[key+'_cmdline_pin']
++            require(len(cmd)==pin['bytes'] and sha(cmd)==pin['sha256'], 'portal_current_fixed_command_changed')
++            item['cmdline_pin']=pin; pair.append(item)
++        require(public_link(P('/proc/1654279/exe'))=='/usr/libexec/xdg-document-portal', 'portal_parent_exe_changed')
++        return pair
++
++    def boot_and_mount():
++        boot=[v for v in proc_read(P('/proc/stat'),1024*1024).splitlines() if v.startswith(b'btime ')]
++        require(len(boot)==1 and int(boot[0].split()[1])==1785498067
++                and os.sysconf('SC_CLK_TCK')==100, 'portal_current_boot_or_ticks_changed')
++        require(public_link(P('/proc/self/ns/mnt'))==public_link(P('/proc/1654279/ns/mnt')),
++                'portal_parent_mount_namespace_differs')
++        mounts=[]
++        for line in proc_read(P('/proc/1654279/mountinfo'),16*1024*1024).decode().splitlines():
++            before,after=line.split(' - ',1); left=before.split(); right=after.split()
++            if left[4]=='/run/user/114316761/doc':
++                mounts.append({'mount_id':left[0],'parent_mount_id':left[1],'device':left[2],
++                    'root':left[3],'mount_point':left[4],'mount_options':left[5],
++                    'optional_fields':left[6:],'filesystem':right[0],'source':right[1],'super_options':right[2]})
++        require(mounts==original['parent_namespace_exact_portal_mount'] and len(mounts)==1
++                and mounts[0]['device']=='0:48' and mounts[0]['filesystem']=='fuse.portal'
++                and mounts[0]['mount_point']=='/run/user/114316761/doc', 'portal_mount_route_changed')
++        return mounts[0]
++
++    def live_scope(scope):
++        summaries=[]
++        for name in remaining:
++            row=scope[name]; root=P(row['root']); route(root); digest=hashlib.sha256(); observed={}
++            stack=[(root,'.')]
++            while stack:
++                path,relative=stack.pop(); charge_metadata(1,0,0); before=actual_stat(path)
++                require(relative in row['objects'] and stat_fact(before)==row['objects'][relative][1],
++                        'portal_current_inode_or_stat_changed')
++                obj=row['objects'][relative]; observed[relative]=stat_fact(before)
++                if obj[5]==0:
++                    fd=os.open(path,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC)
++                    try:
++                        charge_metadata(0,1,0)
++                        require(stat_fact(os.fstat(fd))==stat_fact(before),'portal_directory_open_changed')
++                        names=[]
++                        with os.scandir(fd) as entries:
++                            for entry in entries:
++                                check_deadline(); value=entry.name
++                                require('/' not in value and value not in ('.','..')
++                                        and len(names)<obj[3], 'portal_directory_names_invalid_or_added')
++                                charge_bytes(len(os.fsencode(value))+1); names.append(value)
++                        names.sort(key=os.fsencode)
++                        name_bytes=b'\0'.join(os.fsencode(value) for value in names)
++                        require(len(names)==obj[3] and sha(name_bytes)==obj[4], 'portal_directory_inventory_changed')
++                        charge_metadata(0,1,0)
++                        require(stat_fact(os.fstat(fd))==stat_fact(before)==stat_fact(actual_stat(path)),
++                                'portal_directory_changed_during_listing')
++                    finally:os.close(fd)
++                    stack.extend((path/value, value if relative=='.' else relative+'/'+value) for value in reversed(names))
++                else:
++                    require(stat_fact(actual_stat(path))==stat_fact(before), 'portal_leaf_changed_during_metadata')
++                encoded=canonical(obj); digest.update(len(encoded).to_bytes(8,'big')); digest.update(encoded)
++            require(set(observed)==set(row['objects']) and digest.hexdigest()==row['metadata_sha256'],
++                    'portal_current_full_inode_scope_incomplete')
++            summaries.append({'row':name,'path':row['root'],'objects':len(observed),
++                              'metadata_sha256':digest.hexdigest()})
++        return summaries
++
++    pair_before=current_pair(); mount_before=boot_and_mount(); native_facts=[]
++    for name in remaining:
++        pointer=checkout[name]['git_pointer']
++        pin={'path':str(P(checkout[name]['root'])/'.git'),'bytes':pointer['bytes'],'sha256':pointer['sha256']}
++        raw,fact=read_file(pin,4096,UID,stat.S_IMODE(pointer['file_stat']['mode']))
++        require(stat_fact(actual_stat(P(pin['path'])))==[pointer['file_stat'][key] for key in
++            ('dev','ino','mode','uid','gid','nlink','size','blocks','mtime_ns','ctime_ns')]
++            and raw==('gitdir: '+admin[name]['root']+'\n').encode(), 'portal_live_git_indirection_changed')
++    for pin in original['native_file_pins']:
++        expected=('/usr/bin/fusermount3',39296,'d278775c1528dd32efc85c2cb322423ee93aa8dcf76aaa595f7022d427910704',0o4755) if pin['path']=='/usr/bin/fusermount3' else (
++            '/usr/libexec/xdg-document-portal',195560,'44dd7e1eb2df2a4de1d8c1189a3fee4451539ffab5db6ba4d21718c6d43af3dc',0o755)
++        require((pin['path'],pin['bytes'],pin['sha256'])==expected[:3], 'portal_native_original_pin_changed')
++        raw,fact=read_file(pin,256*1024,0,expected[3]); require(fact['stat']==pin['stat'],'portal_native_installed_identity_changed')
++        native_facts.append(fact)
++    first_checkout=live_scope(checkout); first_admin=live_scope(admin)
++    second_checkout=live_scope(checkout); second_admin=live_scope(admin)
++    require(first_checkout==second_checkout and first_admin==second_admin, 'portal_live_scope_interval_changed')
++    pair_after=current_pair(); mount_after=boot_and_mount()
++    require(pair_before==pair_after and mount_before==mount_after, 'portal_public_identity_interval_changed')
++    for path,expected in evidence_stats.items():
++        require(stamp(actual_stat(P(path)))==expected,'portal_original_or_review_stat_changed_at_end')
++    for fact in native_facts:
++        require(stamp(actual_stat(P(fact['path'])))==fact['stat'],'portal_native_stat_changed_at_end')
++    require(stat_fact(actual_stat(BASE))==stat_fact(base_before)
++            and stat_fact(actual_stat(private))==stat_fact(private_before), 'portal_private_ancestor_interval_changed')
++    for pid,start,ppid in ((1654291,559081545,1654279),(1654279,559081538,359655)):
++        raw=proc_read(P('/proc')/str(pid)/'stat',16384); values=raw[raw.rfind(b')')+2:].split()
++        require(int(raw.split(b' ',1)[0])==pid and int(values[19])==start and int(values[1])==ppid
++                and values[0]==b'S', 'portal_final_public_identity_anchor_changed')
++    check_deadline()
++    return {'classification':'excluded_exact_portal_autounmount_helper','pid':1654291,
++        'start_ticks':559081545,'parent_pid':1654279,'parent_start_ticks':559081538,
++        'semantic_review_identity_sha256':review['identity_sha256'],
++        'enclosing_parent_review_identity_sha256':enclosing_review_identity,
++        'original_file_pins':original_facts,'before_public_identity':pair_before,'after_public_identity':pair_after,
++        'portal_mount':mount_before,'native_file_pins':native_facts,
++        'remaining_checkout_inode_scopes':second_checkout,'remaining_git_admin_inode_scopes':second_admin,
++        'selected_rows_from_unchanged_caller_scope':list(selected_rows),
++        'already_removed_rows_only_from_completed_journal':list(removed_rows),
++        'strict_helper_birth_upper_bound_rational':{'numerator':179108888346,'denominator':100},
++        'protected_child_fields':review['protected_child_fields'],
++        'explicit_assumptions':review['explicit_assumptions'],
++        'inherited_file_descriptors_not_generically_closed':True,
++        'symlink_targets_not_followed_or_removed_and_not_reference_cleared':True,
++        'shared_git_objects_refs_and_unselected_administration_not_cleared':True,
++        'parent_and_other_consumers_still_require_ordinary_checks':True,
++        'global_reference_free_or_cleanup_capacity_or_scientific_admission':False}
+ 
+ RAW_TOP_LANE_SIDECAR_PIN={'path': '/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261006-a1.lane.json', 'bytes': 988, 'sha256': '83ba263a56756047716a2e550c3acc7a9d73eadefbbc9e245cdb697092369c1c', 'stat': {'ctime_ns': 1791344103814358923, 'dev': 2065, 'gid': 114316761, 'ino': 9345428, 'mode': 33204, 'mtime_ns': 1791344103814358923, 'nlink': 1, 'size': 988, 'uid': 114316761}}
+ 
+@@ -594,6 +979,26 @@
+         self.output['observations']['account_service_original_semantic_review_input']=item
+         return helper,original_pin,review['identity_sha256']
+ 
++    def portal_service_review(self):
++        path=P(self.args.portal_service_review)
++        require(path==BASE/'lanl-portal-helper-inode-review-20261008-a1/parent-review.json',
++                'fixed_portal_service_review_route')
++        pin,raw=self.bounded_read(path,256*1024)
++        require(raw is not None and pin['sha256']==self.args.portal_service_review_sha256,
++                'portal_service_review_original_byte_pin')
++        review=self.m.strict_json(raw)
++        require(review['canonical_ensure_ascii'] is True and re.fullmatch('[0-9a-f]{64}',review['identity_sha256'])
++                and sha(canonical({k:v for k,v in review.items() if k!='identity_sha256'}))==review['identity_sha256']
++                and review['shared_helper_sha256']==PORTAL_HELPER_SHA==self.m.PORTAL_HELPER_SHA,
++                'portal_service_review_original_True_seal_or_shared_source')
++        self.output['observations']['portal_service_original_semantic_review_input']={
++            'original_file_pin':pin,'original_policy':'explicit_original_True',
++            'identity_sha256':review['identity_sha256'],
++            'semantic_assumptions_inherited_from_parent_review':True,
++            'capacity_plan_cleanup_or_scientific_admission_generated':False}
++        pin=dict(pin,identity_sha256=review['identity_sha256'],canonical_ensure_ascii=True)
++        return pin,review['identity_sha256']
++
+     def owned_processes(self):
+         snapshots={};inaccessible_foreign=0
+         procs=sorted((p for p in P('/proc').iterdir() if p.name.isdecimal()),key=lambda p:int(p.name))
+@@ -625,6 +1030,7 @@
+                 if parent in owned:relevant.add(pid);break
+                 parent=snapshots[parent]['ppid']
+         helper,identification_pin,review_identity=self.account_service_review()
++        portal_pin,portal_review_identity=self.portal_service_review()
+         def charge_service_bytes(count):
+             self.g.read_bytes+=count
+             require(self.g.read_bytes<=LIMITS['total_file_bytes'],'cumulative_account_service_read_limit')
+@@ -634,6 +1040,19 @@
+             before=self.g.proc_read(proc/'stat',LIMITS['one_proc_bytes'])
+             if before is None:continue
+             start=int(before[before.rfind(b')')+2:].split()[19]);hits=[]
++            if pid==1654291:
++                # Exact errors are outside the inherited disappearing-process catch.
++                def charge_portal_metadata(entries,checks,unused_fds):
++                    require(unused_fds==0,'portal_unexpected_process_FD_debit')
++                    self.g.walk_entries+=entries;self.g.stat_checks+=checks
++                    require(self.g.walk_entries<=LIMITS['walk_entries']
++                            and self.g.stat_checks<=self.m.LIMITS['stat_checks'],'portal_metadata_limit')
++                    self.left()
++                audit=self.m.exact_portal_autounmount_identification(portal_pin,self.m.ROWS,sorted(self.m.ROWS),[],
++                    portal_review_identity,PORTAL_HELPER_SHA,self.left,charge_service_bytes,charge_portal_metadata)
++                require(start==audit['start_ticks'],'portal_snapshot_PID_changed')
++                self.charge(audit);excluded.append(audit)
++                continue
+             if pid==359656:
+                 # Deliberately outside the inherited disappearing-process catch:
+                 # missing native/original evidence must fail, never skip the predicate.
+@@ -819,8 +1238,11 @@
+     parser.add_argument('--source-sha256',required=True)
+     parser.add_argument('--account-service-review',required=True)
+     parser.add_argument('--account-service-review-sha256',required=True)
++    parser.add_argument('--portal-service-review',required=True)
++    parser.add_argument('--portal-service-review-sha256',required=True)
+     args=parser.parse_args();require(re.fullmatch('[0-9a-f]{40}',args.expected_primary),'exact40_expected_primary')
+     require(re.fullmatch('[0-9a-f]{64}',args.account_service_review_sha256),'account_service_review_file_pin_argument')
++    require(re.fullmatch('[0-9a-f]{64}',args.portal_service_review_sha256),'portal_service_review_file_pin_argument')
+     require(re.fullmatch('[0-9a-f]{64}',args.source_sha256),'own_source_pin_argument')
+     require(sys.platform=='linux' and socket.gethostname().split('.')[0]=='mbit10' and os.uname().machine=='x86_64'
+             and os.getuid()==os.geteuid()==UID and pwd.getpwuid(UID).pw_name==ACCOUNT,'host_account')

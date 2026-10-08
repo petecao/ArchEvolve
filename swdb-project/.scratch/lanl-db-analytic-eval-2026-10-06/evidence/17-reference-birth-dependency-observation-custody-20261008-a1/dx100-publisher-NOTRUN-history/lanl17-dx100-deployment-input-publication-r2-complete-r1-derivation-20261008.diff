@@ -1,0 +1,10 @@
+--- /private/tmp/lanl17_publish_checked_dx100_deployment_inputs_20261008_a1_r1.py
++++ /private/tmp/lanl17_publish_checked_dx100_deployment_inputs_20261008_a1_r2.py
+@@ -89,6 +89,7 @@
+ 
+ 
+ def canonical_path(p):
++    require(not set(p.parts) & {'.codex', '.aws', '.ssh'} and p.name != 'auth.json', 'credential_route_forbidden')
+     require(p.is_absolute() and p.resolve(strict=True) == p
+             and not any(x.is_symlink() for x in (p, *p.parents)), 'noncanonical_or_symlink')
+ 

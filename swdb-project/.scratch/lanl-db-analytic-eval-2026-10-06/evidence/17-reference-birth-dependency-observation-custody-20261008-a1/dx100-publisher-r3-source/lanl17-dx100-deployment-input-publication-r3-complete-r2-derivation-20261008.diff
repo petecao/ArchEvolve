@@ -1,0 +1,11 @@
+--- /private/tmp/lanl17_publish_checked_dx100_deployment_inputs_20261008_a1_r2.py
++++ /private/tmp/lanl17_publish_checked_dx100_deployment_inputs_20261008_a1_r3.py
+@@ -261,7 +261,7 @@
+         route = shutil.which(name, path=prepare_path)
+         require(route is not None, 'original_necessary_command_unavailable')
+         p = Path(route).resolve(strict=True)
+-        raw, s = read(p, 64 * 1024 * 1024, 0)
++        raw, s = read(p, 128 * 1024 * 1024 if name == 'node' else 64 * 1024 * 1024, 0)
+         require(s['mode'] & 0o111 and not s['mode'] & 0o022, 'necessary_command_mode')
+         result[name] = {'resolved_path': str(p), 'bytes': len(raw), 'sha256': sha(raw), 'stat': s}
+     require(result['git']['resolved_path'] == str(GIT) and result['python3']['resolved_path'] == str(PYTHON),

@@ -1,0 +1,101 @@
+--- /private/tmp/lanl_copy_reviewed_portal_role_sources_and_inputs_from_git_20261008_a1_r2.py
++++ /private/tmp/lanl_copy_reviewed_portal_role_sources_and_inputs_from_git_20261008_a1_r3.py
+@@ -24,10 +24,20 @@
+ NATIVES={P('/usr/bin/python3.12'):(8020928,'e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f'),P('/usr/bin/git'):(4019024,'06b2aa74919b1993f9fd7e47060ea98d98c27206f16ccc2d35f51ced7e7877eb')}
+ LIMITS={'seconds':300,'Git_seconds':120,'manifest_bytes':2*1024*1024,'one_file_bytes':32*1024*1024,'total_read_bytes':256*1024*1024,'role_review_bytes':256*1024,'stdout_bytes':32*1024,'Git_stderr_bytes':256*1024}
+ END=None;READ=0;CHECKOUTS={};CREATED=[]
++CONTROL_SIGNALS=(signal.SIGTERM,signal.SIGHUP,signal.SIGINT)
++RECEIVED_SIGNAL=None;IN_GIT_CLEANUP=False
+ class Refused(Exception):pass
++def received_signal(signum,frame):
++ global RECEIVED_SIGNAL
++ if RECEIVED_SIGNAL is None:RECEIVED_SIGNAL=signum
++ # Do not raise inside a finally or syscall: the next bounded checkpoint unwinds.
++ for selected in CONTROL_SIGNALS:signal.signal(selected,signal.SIG_IGN)
++def signal_refusal():
++ if RECEIVED_SIGNAL is not None and not IN_GIT_CLEANUP:raise Refused('external_signal_'+str(RECEIVED_SIGNAL))
+ def need(ok,code):
+  if not ok:raise Refused(code)
+-def tick():need(END is not None and time.monotonic()<END,'copy_deadline')
++def tick():
++ signal_refusal();need(END is not None and time.monotonic()<END,'copy_deadline')
+ def charge(n):
+  global READ
+  tick();READ+=n;need(READ<=LIMITS['total_read_bytes'],'cumulative_read_limit')
+@@ -72,6 +82,7 @@
+  finally:os.close(fd)
+  bound();return b''.join(pieces),stamp(s)
+ def git(repo,*argv,cap=8192):
++ global IN_GIT_CLEANUP
+  need(repo in (PRIMARY,C),'Git_fixed_checkout');bound();tick()
+  env={'PATH':'/usr/bin:/bin','LC_ALL':'C','GIT_OPTIONAL_LOCKS':'0','GIT_TERMINAL_PROMPT':'0','GIT_CONFIG_NOSYSTEM':'1','GIT_CONFIG_GLOBAL':'/dev/null'}
+  command=['/usr/bin/git','--no-replace-objects','-c','core.hooksPath=/dev/null','-c','core.fsmonitor=false','-C',str(repo),*argv]
+@@ -91,22 +102,26 @@
+   code=child.wait(timeout=max(.1,deadline-time.monotonic()));need(code==0,'Git_nonzero')
+   return b''.join(parts['stdout'])
+  finally:
+-  selector.close()
+-  if child is not None:
+-   # Only this new-session native Git group; never another source, daemon or lane.
+-   try:os.killpg(child.pid,signal.SIGTERM)
+-   except ProcessLookupError:pass
+-   stop=time.monotonic()+15
+-   while time.monotonic()<stop:
+-    try:os.killpg(child.pid,0)
+-    except ProcessLookupError:break
+-    time.sleep(.05)
+-   else:
+-    try:os.killpg(child.pid,signal.SIGKILL)
++  IN_GIT_CLEANUP=True
++  try:
++   selector.close()
++   if child is not None:
++    # Only this new-session native Git group; never another source, daemon or lane.
++    try:os.killpg(child.pid,signal.SIGTERM)
+     except ProcessLookupError:pass
+-   child.wait(timeout=5)
+-   child.stdout.close();child.stderr.close()
+-  bound()
++    stop=time.monotonic()+15
++    while time.monotonic()<stop:
++     try:os.killpg(child.pid,0)
++     except ProcessLookupError:break
++     time.sleep(.05)
++    else:
++     try:os.killpg(child.pid,signal.SIGKILL)
++     except ProcessLookupError:pass
++    child.wait(timeout=5)
++    child.stdout.close();child.stderr.close()
++   bound()
++  finally:IN_GIT_CLEANUP=False
++  signal_refusal()
+ def source_state(head):
+  need(git(PRIMARY,'rev-parse','HEAD').decode().strip()==git(PRIMARY,'rev-parse','origin/yanrujhou_main').decode().strip()==head,'fully_delivered_primary_HEAD')
+  need(git(PRIMARY,'branch','--show-current').decode().strip()=='yanrujhou_main','primary_branch')
+@@ -185,10 +200,20 @@
+  need(read(retention,0)==(rb,rs),'original_retention_changed');source_state(args.expected_primary);bound()
+  return {'format':'swdb.git-reviewed-portal-role-source-input-private-copy.v1','sealed':False,'checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'expected_primary':args.expected_primary,'manifest_file_sha256':sha(mb),'manifest_identity_sha256':m['identity_sha256'],'actual_role_review_file_sha256':args.role_review_sha256,'actual_role_review_identity_sha256':args.role_review_identity_sha256,'copies':published,'native_pins':native,'read_bytes_charged':READ,'limits':LIMITS,'created_paths':CREATED,'C_physical_HEAD_preserved':CORE,'source_refs_refreshed_at_exact_expected_primary':True,'selected_G_O_publisher_or_other_mains_invoked':False,'new_plan_subset_capacity_or_scientific_admission':False}
+ if __name__=='__main__':
++ previous_handlers={}
+  try:
+-  result=main();code=0
+- except BaseException as exc:
+-  result={'format':'swdb.git-reviewed-portal-role-private-copy-failure.v1','sealed':False,'error_class':type(exc).__name__,'reason':str(exc) if isinstance(exc,Refused) else 'original_exception_text_not_transferred','created_paths_preserved':CREATED,'read_bytes_charged':READ,'selected_mains_invoked':False,'capacity_or_scientific_admission':False};code=1
+- raw=json.dumps(result,sort_keys=True,ensure_ascii=True,allow_nan=False).encode()+b'\n'
+- if len(raw)>LIMITS['stdout_bytes']:raw=b'{"sealed":false,"failure":"compact_copy_status_limit","no_success_inferred":true}\n';code=1
+- sys.stdout.buffer.write(raw);raise SystemExit(code)
++  for selected in CONTROL_SIGNALS:previous_handlers[selected]=signal.signal(selected,received_signal)
++  try:
++   try:result=main()
++   finally:
++    # Publication cannot be interrupted by a repeat signal after owned cleanup.
++    for selected in CONTROL_SIGNALS:signal.signal(selected,signal.SIG_IGN)
++   signal_refusal();code=0
++  except BaseException as exc:
++   result={'format':'swdb.git-reviewed-portal-role-private-copy-failure.v1','sealed':False,'error_class':type(exc).__name__,'reason':str(exc) if isinstance(exc,Refused) else 'original_exception_text_not_transferred','created_paths_preserved':CREATED,'read_bytes_charged':READ,'selected_mains_invoked':False,'capacity_or_scientific_admission':False};code=1
++  result['received_signal']=RECEIVED_SIGNAL
++  raw=json.dumps(result,sort_keys=True,ensure_ascii=True,allow_nan=False).encode()+b'\n'
++  if len(raw)>LIMITS['stdout_bytes']:raw=b'{"sealed":false,"failure":"compact_copy_status_limit","no_success_inferred":true}\n';code=1
++  sys.stdout.buffer.write(raw);raise SystemExit(code)
++ finally:
++  for selected,handler in previous_handlers.items():signal.signal(selected,handler)

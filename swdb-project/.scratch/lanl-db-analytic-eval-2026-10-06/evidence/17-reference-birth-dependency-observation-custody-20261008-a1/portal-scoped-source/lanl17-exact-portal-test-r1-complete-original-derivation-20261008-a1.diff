@@ -1,0 +1,46 @@
+--- /private/tmp/lanl17_exact_portal_role_isolated_test_source_20261008_a1.py
++++ /private/tmp/lanl17_exact_portal_role_isolated_test_source_20261008_a1_r1.py
+@@ -14,9 +14,9 @@
+ import types
+ import unittest
+ 
+-G=pathlib.Path('/private/tmp/lanl_consumed_detached_source_guard_r6_20261008_a1.py')
+-G_SHA='6118592610fbff77a7da3ea8196c772331066d3188ded29627218486c106b326'
+-HELPER_SHA='36fc3b3fdede68b15fca931c199b649303cda4db559f1226ea13474ab5c0e44c'
++G=pathlib.Path('/private/tmp/lanl_consumed_detached_source_guard_r7_20261008_a1.py')
++G_SHA='97219cdb326edf76e6d341aab4a2a8d58a4750e3da8d2e24a5f9e1097f4a69be'
++HELPER_SHA='c195eccf8f728f7752dd89e0588af4fe6f0c05f50c7aa6cb47e5bd95f9ecb46b'
+ UID=114316761
+ BASE=pathlib.Path('/data1/yanruj')
+ PRIMARY=BASE/'ArchEvolve'
+@@ -30,8 +30,8 @@
+ 
+ def lift(name,nested=None,extra=None):
+     # This future loader parses one exact bounded source; no module evaluation.
+-    with G.open('rb') as source:raw=source.read(116443+1)
+-    require(len(raw)==116443 and sha(raw)==G_SHA,'fixture_source_byte_pin')
++    with G.open('rb') as source:raw=source.read(117232+1)
++    require(len(raw)==117232 and sha(raw)==G_SHA,'fixture_source_byte_pin')
+     module=ast.parse(raw);node=next(x for x in module.body if isinstance(x,ast.FunctionDef) and x.name==name)
+     if nested is not None:
+         node=next(x for x in node.body if isinstance(x,ast.FunctionDef) and x.name==nested)
+@@ -124,6 +124,19 @@
+     return rs,('\n'.join(k+': '+v for k,v in fields.items())+'\n').encode(),caps
+ 
+ class Contracts(unittest.TestCase):
++    def test_actual_remaining_scope_and_no_fake_journal(self):
++        defs=definitions();names=list(defs);selected=names[:3];removed=[names[0]]
++        f=lift('exact_portal_autounmount_identification','continuity_scope',{'row_definitions':defs})
++        before=canonical([selected,removed])
++        self.assertEqual(f(selected,removed,None),sorted(names[1:3]))
++        self.assertEqual(f(selected,removed,[names[2]]),[names[2]])
++        self.assertEqual(canonical([selected,removed]),before)
++        for continuity in ([names[0]],[names[3]],[names[1],names[1]],[]):
++            with self.assertRaisesRegex(Refused,'continuity_scope'):f(selected,removed,continuity)
++        for bad_removed in ([names[3]],[names[0],names[0]]):
++            with self.assertRaisesRegex(Refused,'journal_scope'):f(selected,bad_removed,None)
++
++
+     def setUp(self):self.validate=lift('portal_inode_birth_rows')
+     def test_complete_both_scopes_and_input_immutability(self):
+         for admin in (False,True):

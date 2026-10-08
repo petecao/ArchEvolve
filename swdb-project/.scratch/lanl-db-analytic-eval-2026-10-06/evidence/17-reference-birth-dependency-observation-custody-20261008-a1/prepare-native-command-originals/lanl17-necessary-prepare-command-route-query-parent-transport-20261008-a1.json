@@ -1,0 +1,35 @@
+{
+  "argv": [
+    "ssh",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=15",
+    "mbit10",
+    "env -u PYTHONPATH -u PYTHONHOME -u PYTHONSTARTUP -u PYTHONINSPECT -u LD_PRELOAD -u LD_LIBRARY_PATH /usr/bin/timeout --signal=TERM --kill-after=10s 90s /usr/bin/python3.12 -B -s -"
+  ],
+  "elapsed_seconds": 0.8604448750847951,
+  "ended_utc": "2026-10-08T07:54:39.570399+00:00",
+  "exit_code": 1,
+  "format": "swdb.parent-readonly-query-transport-original.v1",
+  "originals": [
+    {
+      "bytes": 194,
+      "path": "/private/tmp/lanl17-necessary-prepare-command-route-query-original-actual-20261008-a1.json",
+      "sha256": "510b4a201140208650a8b07f70cb7e095f5a3ede6466a2bb69c2166186a26ff2"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/lanl17-necessary-prepare-command-route-query-original-actual-20261008-a1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "sealed": false,
+  "selected_main_science_or_remote_mutation": false,
+  "source": {
+    "bytes": 5719,
+    "path": "/private/tmp/lanl17-read-exact-prepare-command-route-facts-20261008-a1-r1.py",
+    "sha256": "609038b83af0e96da0394abf293066a43d7c89937192c273e6cb47392f5bc05b"
+  },
+  "started_utc": "2026-10-08T07:54:38.711497+00:00"
+}

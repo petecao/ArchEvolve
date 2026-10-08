@@ -1,0 +1,34 @@
+{
+  "argv": [
+    "ssh",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=15",
+    "mbit10",
+    "env -u PYTHONPATH -u PYTHONHOME -u PYTHONSTARTUP -u PYTHONINSPECT -u LD_PRELOAD -u LD_LIBRARY_PATH /usr/bin/timeout --signal=TERM --kill-after=10s 45s /usr/bin/python3.12 -B -s -"
+  ],
+  "elapsed_seconds": 0.5557951669907197,
+  "ended_utc": "2026-10-08T07:55:34.647086+00:00",
+  "exit_code": 0,
+  "format": "swdb.parent-fixed-stat-diagnostic-transport-original.v1",
+  "originals": [
+    {
+      "bytes": 2445,
+      "path": "/private/tmp/lanl17-prepare-command-route-stat-diagnostic-original-actual-20261008-a1.json",
+      "sha256": "ce8b2df563276b91f0277389a174409abc1e0e47f4265c867d188bd44d51c56a"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/lanl17-prepare-command-route-stat-diagnostic-original-actual-20261008-a1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "sealed": false,
+  "source": {
+    "bytes": 1179,
+    "path": "/private/tmp/lanl17-read-fixed-prepare-command-route-stat-diagnostic-20261008-a1.py",
+    "sha256": "e158e3a09cf2959a44b7da17126bc8cc5c90dd5766489773b0f7da810f314416"
+  },
+  "started_utc": "2026-10-08T07:55:34.091170+00:00"
+}

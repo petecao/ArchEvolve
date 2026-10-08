@@ -1,0 +1,71 @@
+{
+  "actual_parent_R3_review": {
+    "bytes": 1132,
+    "path": "/private/tmp/lanl17-dx100-live-source-facts-parent-review-20261008-a1.json",
+    "sha256": "5072c3025b0c372d6d4455d213d1e57d8ba6dda3f0b087883b447026828c4d07"
+  },
+  "actual_parent_package_review": {
+    "bytes": 1164,
+    "path": "/private/tmp/lanl17-native-pyyaml-original-parent-semantic-review-20261008-a1.json",
+    "sha256": "c53e8e57c1118065be79bf1b5efbdfca636c1ed2c6a484c89f55e0b3998c4e9d"
+  },
+  "complete_initial_derivation": {
+    "bytes": 6318,
+    "path": "/private/tmp/lanl17-dx100-deployment-input-publication-r1-complete-a1-derivation-20261008.diff",
+    "sha256": "3e3911ff4281389efe8ca273290951184b907cb2ff1e7d2fb60427e7dde3927f"
+  },
+  "format": "swdb.lanl17-dx100-deployment-input-publication-source-only-comparison.v1",
+  "initial_draft_preserved": {
+    "bytes": 26333,
+    "path": "/private/tmp/lanl17_publish_checked_dx100_deployment_inputs_20261008_a1.py",
+    "sha256": "8e26efe4fb8d54370797ee8ff6824cd80ad70a681ef6fc098142d2b9fc129c4b"
+  },
+  "only_changed_definitions": [
+    "verify_package",
+    "main"
+  ],
+  "original_R3_facts": {
+    "bytes": 60682,
+    "path": "/private/tmp/lanl17-original-dx100-deployment-prerequisites-query-actual-20261008-a1-r3.json",
+    "sha256": "0252f42cde88946aadc6866af53b867b55b782bc9883eae3bb8b85a5ee56823e"
+  },
+  "original_package_facts": {
+    "bytes": 14870,
+    "path": "/private/tmp/lanl17-native-pyyaml-package-facts-original-actual-20261008-a1.json",
+    "sha256": "bf5f733f184049264ba1ee45a7db09c64c2096a37216f4a153fa64a91b0be6b1"
+  },
+  "preparation_boundary": "Parent full selected source/argv/native/environment review, source-only durability and concrete delivered finalR required before ONE actual publisher. No source worktree/request or hook exists yet.",
+  "sealed": false,
+  "selected_source": {
+    "bytes": 27745,
+    "path": "/private/tmp/lanl17_publish_checked_dx100_deployment_inputs_20261008_a1_r1.py",
+    "sha256": "9eb3853750ac29f2ef2eadedbb49ec0f9a5a9b2a027bcd427cb3e52e3bd70d7f"
+  },
+  "source_core_controls_or_worktree_mutations": false,
+  "target_main_import_compile_test_SSH_or_publication_executed": false,
+  "two_added_package_original_pin_constants": true,
+  "unchanged_definitions": [
+    "require",
+    "tick",
+    "sha",
+    "canonical",
+    "pairs",
+    "parse",
+    "values",
+    "stamp",
+    "identity",
+    "canonical_path",
+    "read",
+    "original_json",
+    "directory",
+    "absent",
+    "native",
+    "git",
+    "verify_target",
+    "verify_hooks",
+    "package_pin",
+    "commands",
+    "write_original"
+  ],
+  "updated_et": "2026-10-08"
+}

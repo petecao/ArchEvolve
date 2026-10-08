@@ -1,0 +1,22 @@
+--- /private/tmp/lanl_read_detached_R4_administration_originals_20261008_a1_r2.py
++++ /private/tmp/lanl_read_detached_R4_administration_originals_20261008_a1_r3.py
+@@ -10,8 +10,8 @@
+   b=f.read(cap+1);assert len(b)==s.st_size and stamp(s)==stamp(os.fstat(f.fileno()))==stamp(p.lstat())
+  return b,{'path':str(p),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest(),'stat':stamp(s)}
+ PACKET_CAP=64*1024*1024
+-WRAPPER_SHA='52f379d99721c51677ba44a1e9f3d55138527e26be1073c6267fbe09c8a93853'
+-GUARD_SHA='a84dc9ca7ccd20e6485cc8e9a2007b3b982fad9c5ae19dacbb1f164d664748cb'
++WRAPPER_SHA='63558833d2337681ba80d36c8048ce3c2e33c006740c88be4ea97cf583161091'
++GUARD_SHA='6118592610fbff77a7da3ea8196c772331066d3188ded29627218486c106b326'
+ CONTROL_ROUTES=('/data1/yanruj/lanl17-detached-r4-inspection-a1','/data1/yanruj/lanl17-detached-r4-removal-a1')
+ TERMINAL_STATES=('guard_completed','guard_refused_or_failed','preflight_refused_no_guard_launch','administrative_postflight_failed','guard_launch_started','guard_running','GNU_supervision_not_returned_within_wrapper_wait')
+ FILES=[('status.json',16384),('configuration.json',16384),('tmux.conf',16384),('launch-status.json',16384),('launch.stdout',16384),('launch.stderr',16384),('guard.stdout',256*1024),('guard.stderr',256*1024)]
+@@ -42,7 +42,7 @@
+   if status.get('format')=='swdb.lanl17-detached-exact-R4-administration-status.v1' and status.get('sealed') is False and type(inputs) is dict:
+    wrapper=inputs.get('wrapper');guard=inputs.get('guard')
+    if type(wrapper) is dict and type(guard) is dict and all(k in wrapper and k in guard for k in ('sha256','bytes')):
+-    assert wrapper['sha256']==WRAPPER_SHA and wrapper['bytes']==24000 and guard['sha256']==GUARD_SHA and guard['bytes']==88872
++    assert wrapper['sha256']==WRAPPER_SHA and wrapper['bytes']==24002 and guard['sha256']==GUARD_SHA and guard['bytes']==116443
+     result['selected_source_pins_bound']=True
+     attempt=status.get('guard_attempt')
+     if type(attempt) is str and re.fullmatch('a[1-9][0-9]*',attempt):

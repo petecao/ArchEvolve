@@ -1,0 +1,91 @@
+--- /private/tmp/lanl17_detach_passive_observer_administration_20261008_a1_r5.py
++++ /private/tmp/lanl17_detach_passive_observer_administration_20261008_a1_r6.py
+@@ -7,7 +7,7 @@
+ E = BASE/'ArchEvolve-lanl-generality-final-export-20261007-a1'
+ R = BASE/'ArchEvolve-lanl-generality-final-20261007-a1'
+ C = BASE/'ArchEvolve-lanl-cpu-model-validation-20261006-a1'
+-OBSERVER_SHA = '488fb42df44d338204b5cff58b10e7f0ff9c7feaee6490b33ba94201ba4f7665'
++OBSERVER_SHA = 'f5ab095a9734e2a0251d1dabbf3c61b4ae9001d1848c756194cd443e7acbad14'
+ REVIEW = BASE/'lanl-account-pam-service-identification-20261008-a1/parent-review.json'
+ REVIEW_SHA = 'fcf92eee1c4b8bdfaed979dc8bedab004c6c4b7e2b1410c7614bc92d60349f4a'
+ NATIVE = {
+@@ -110,19 +110,21 @@
+  except (FileNotFoundError,ProcessLookupError): return True,'original_PID_absent'
+  if current['start_ticks']!=original['start_ticks']: return True,'PID_reused_original_start_absent'
+  return False,'original_transport_still_live'
+-def inputs(own,own_sha,observer):
++def inputs(own,own_sha,observer,portal_review_sha):
+  private_dir(BASE)
+  need(own.is_relative_to(BASE) and observer.is_relative_to(BASE)
+       and own!=observer and not any(p.is_relative_to(q) for p in (own,observer) for q in (PRIMARY,E,R,C)),'private_sources_outside_projects')
+  own_raw,own_pin=file_bytes(own,256*1024,UID,own_sha)
+- unused,observer_pin=file_bytes(observer,58750,UID,OBSERVER_SHA,58750)
++ unused,observer_pin=file_bytes(observer,87826,UID,OBSERVER_SHA,87826)
+  unused,review_pin=file_bytes(REVIEW,256*1024,UID,REVIEW_SHA,3258)
++ need(re.fullmatch('[a-f0-9]{64}',portal_review_sha or ''),'explicit_future_portal_review_file_pin')
++ unused,portal_review_pin=file_bytes(BASE/'lanl-portal-helper-inode-review-20261008-a1/parent-review.json',256*1024,UID,portal_review_sha)
+  native={}
+  for path,(size,digest) in NATIVE.items():
+   unused,native[path]=file_bytes(P(path),16*1024*1024,0,digest,size,0o755)
+- return {'wrapper':own_pin,'observer':observer_pin,'service_review':review_pin,'native':native}
++ return {'wrapper':own_pin,'observer':observer_pin,'service_review':review_pin,'portal_review':portal_review_pin,'native':native}
+ def launch(args):
+- own=P(__file__).absolute(); pins=inputs(own,args.source_sha256,P(args.observer_source))
++ own=P(__file__).absolute(); pins=inputs(own,args.source_sha256,P(args.observer_source),args.portal_service_review_sha256)
+  transport=bind_transport(); folder=P(args.control_directory)
+  need(folder.parent==BASE and folder.name.startswith('lanl17-detached-observer-') and len(folder.name)<=48
+       and not os.path.lexists(folder),'fresh_direct_private_control_directory')
+@@ -142,7 +144,7 @@
+  argv=['/usr/bin/tmux','-S',str(socket_path),'-f',str(folder/'tmux.conf'),'new-session','-d',
+        '-s','passive-observer-administration','-c',str(BASE),command]
+  config_again=file_bytes(folder/'configuration.json',16384,UID,cp['sha256'])[1]
+- need(config_again==cp and inputs(own,args.source_sha256,P(args.observer_source))==pins,'launch_inputs_rechecked')
++ need(config_again==cp and inputs(own,args.source_sha256,P(args.observer_source),args.portal_service_review_sha256)==pins,'launch_inputs_rechecked')
+  out=os.open(folder/'launch.stdout',os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+  err=os.open(folder/'launch.stderr',os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+  start=now()
+@@ -175,7 +177,7 @@
+         'inputs':cfg['inputs'],'state':'preflight','scientific_admission':False,'capacity_admission':False,
+         'SSH_role_exemption':False,'global_consumer_clearance_claimed':False}
+  try:
+-  need(inputs(own,args.source_sha256,observer)==cfg['inputs'],'exact_detached_inputs')
++  need(inputs(own,args.source_sha256,observer,cfg['inputs']['portal_review']['sha256'])==cfg['inputs'],'exact_detached_inputs')
+   original=cfg['transport']['account_transport']
+   need(not any(item['pid']==original['pid'] and item['start_ticks']==original['start_ticks'] for item in ancestry()),
+        'worker_not_under_original_transport')
+@@ -186,10 +188,11 @@
+    time.sleep(.1)
+   need(observed is not None,'original_transport_did_not_disappear_within_60s')
+   state['transport_original_termination']=observed
+-  need(inputs(own,args.source_sha256,observer)==cfg['inputs'] and
++  need(inputs(own,args.source_sha256,observer,cfg['inputs']['portal_review']['sha256'])==cfg['inputs'] and
+        file_bytes(folder/'configuration.json',16384,UID,args.configuration_sha256)[0]==raw,'immediate_detached_source_and_request_recheck')
+   argv=['/usr/bin/timeout','--signal=TERM','--kill-after=60s','1200s','/usr/bin/python3.12','-B',str(observer),
+-        '--expected-primary',cfg['expected_primary'],'--source-sha256',OBSERVER_SHA,'--account-service-review',str(REVIEW),'--account-service-review-sha256',REVIEW_SHA]
++        '--expected-primary',cfg['expected_primary'],'--source-sha256',OBSERVER_SHA,'--account-service-review',str(REVIEW),'--account-service-review-sha256',REVIEW_SHA,'--portal-service-review',cfg['inputs']['portal_review']['path'],
++        '--portal-service-review-sha256',cfg['inputs']['portal_review']['sha256']]
+   state['observer_argv']=argv; state['observer_started_utc']=now()
+   so_fd=os.open(folder/'observer.stdout',os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+   se_fd=os.open(folder/'observer.stderr',os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+@@ -208,7 +211,7 @@
+   state['observer_exit_code']=code; state['state']='observer_completed' if code==0 else 'observer_refused_or_failed'
+   state['observer_stdout']=file_bytes(folder/'observer.stdout',32*1024*1024,UID)[1]
+   state['observer_stderr']=file_bytes(folder/'observer.stderr',256*1024,UID)[1]
+-  need(inputs(own,args.source_sha256,observer)==cfg['inputs'] and
++  need(inputs(own,args.source_sha256,observer,cfg['inputs']['portal_review']['sha256'])==cfg['inputs'] and
+        file_bytes(folder/'configuration.json',16384,UID,args.configuration_sha256)[0]==raw,'post_observer_immutable_inputs')
+   return code
+  except BaseException as error:
+@@ -226,10 +229,11 @@
+  parser.add_argument('--worker',action='store_true'); parser.add_argument('--source-sha256',required=True)
+  parser.add_argument('--control-directory',required=True); parser.add_argument('--configuration-sha256')
+  parser.add_argument('--expected-primary'); parser.add_argument('--observer-source')
++ parser.add_argument('--portal-service-review-sha256')
+  args=parser.parse_args(); need(re.fullmatch('[a-f0-9]{64}',args.source_sha256),'own_source_exact_SHA')
+  if args.worker:
+   need(re.fullmatch('[a-f0-9]{64}',args.configuration_sha256 or '') and args.expected_primary is None
+-       and args.observer_source is None,'worker_only_closed_arguments')
++       and args.observer_source is None and args.portal_service_review_sha256 is None,'worker_only_closed_arguments')
+   return worker(args)
+  need(args.configuration_sha256 is None and re.fullmatch('[a-f0-9]{40}',args.expected_primary or '')
+       and args.observer_source is not None,'launcher_exact_parent_revision_and_source')

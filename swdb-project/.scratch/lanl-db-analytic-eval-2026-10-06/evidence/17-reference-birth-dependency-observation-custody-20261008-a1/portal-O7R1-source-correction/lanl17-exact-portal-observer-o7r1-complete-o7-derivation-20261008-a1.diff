@@ -1,0 +1,11 @@
+--- /private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r7.py
++++ /private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r7_r1.py
+@@ -1048,7 +1048,7 @@
+                     require(self.g.walk_entries<=LIMITS['walk_entries']
+                             and self.g.stat_checks<=self.m.LIMITS['stat_checks'],'portal_metadata_limit')
+                     self.left()
+-                audit=exact_portal_autounmount_identification(portal_pin,self.m.ROWS,sorted(self.m.ROWS),[],
++                audit=self.m.exact_portal_autounmount_identification(portal_pin,self.m.ROWS,sorted(self.m.ROWS),[],
+                     portal_review_identity,PORTAL_HELPER_SHA,self.left,charge_service_bytes,charge_portal_metadata)
+                 require(start==audit['start_ticks'],'portal_snapshot_PID_changed')
+                 self.charge(audit);excluded.append(audit)
