@@ -20,22 +20,6 @@ Updated: 2026-10-08 10:29 ET
 
 Claimed: 2026-10-06 22:22 ET by ticket17 implementer; base `9a5057f45c7a1c3b8756cfccd39f000d72f95253`.
 
-2026-10-08 10:29 ET — **Paused at Yan-Ru's request.** See the
-[resume guide](../resume.md) and [original pause custody](../evidence/17-user-pause-custody-20261008-a1/README.md).
-The corrected DEFAULT a3 original receipt passed limited storage inspection;
-the distinct RETIRE a4 worker launched using fresh plan a5, but its result is
-unassessed. No SSH or collection during closeout. Full remote quiet continues
-through 2026-10-08 10:48:28 ET; the next resumed session collects this existing
-attempt once and assesses originals before further work. Retirement, recovery,
-fresh capacity admission, PREPARE, population freeze, four substantive campaigns
-(0/4), finalize/index/auditor and final two-axis review remain pending. The
-30-minute heartbeat is PAUSED and all implementers completed their current
-source-only tasks. Keep `Status: claimed` because the tracker has no paused status;
-this work-state field records the user pause without resolving acceptance.
-The two pending custody archives are integrated with this checkpoint; GitHub
-sync is part of closeout. mbit10 checkout sync is deferred until the existing
-worker is collected and the frozen-primary guard is handled explicitly.
-
 
 2026-10-07 03:36 ET — parent-reviewed metadata supervisor/source-audit custody archived at `../evidence/17-metadata-supervisor-controls-20261007/README.md`. Nine portable controls passed; the actual Linux fixture passed three process-cleanup cases on node 1 generation 544 (returned leader, timeout, external TERM), with no survivors and unrelated sibling survival. Exact helper09136, processesbcc9 and F6 and original/draft preparation history retained. This is cleanup evidence only; no new child cap, population freeze, provider, campaign, unique numerical pair or D30 admission. Four actual campaigns/report remain pending; status stays claimed.
 
@@ -101,3 +85,21 @@ worker is collected and the frozen-primary guard is handled explicitly.
 
 
 2026-10-07 20:30 ET — [R3 effective-private-ancestor custody](../evidence/17-consumed-detached-source-guard-correction-20261008-r3/README.md) retains thirteen exact originals (115,317 B): five guard packet files, three fixture packet files, once-runner and four actual originals. Original True source/fixture NOTRUN preparation and unsealed mode observation stay exact; ONE later parent local virtual-permission batch at2026-10-08 00:21:14Z=2026-10-07 20:21 ET passed8 bodies/0.011s test/0.0898855s enclosing/exit0, no timeout. Original True41fb6bca receipt and unsealed start/empty stdout/stderr are retained separately. OldR2 and its six-body history remain unchanged and unrepeated. No actual guard main/live privacy/plan/subset/remote modes/process visibility/removal/capacity/scientific clearance follows; all actual gates remain pending. Archival retention performed no import/main/test/SSH/mode/removal action; status stays claimed and existing Answer/history/maps/progress/source/records remain unchanged.
+
+## Comments
+
+2026-10-08 10:29 ET — **Paused at Yan-Ru's request.** See the
+[resume guide](../resume.md) and [original pause custody](../evidence/17-user-pause-custody-20261008-a1/README.md).
+The corrected DEFAULT a3 original receipt passed limited storage inspection;
+the distinct RETIRE a4 worker launched using fresh plan a5, but its result is
+unassessed. No SSH or collection during closeout. Full remote quiet continues
+through 2026-10-08 10:48:28 ET; the next resumed session collects this existing
+attempt once and assesses originals before further work. Retirement, recovery,
+fresh capacity admission, PREPARE, population freeze, four substantive campaigns
+(0/4), finalize/index/auditor and final two-axis review remain pending. The
+30-minute heartbeat is PAUSED and all implementers completed their current
+source-only tasks. Keep `Status: claimed` because the tracker has no paused status;
+this work-state field records the user pause without resolving acceptance.
+The two pending custody archives are integrated with this checkpoint; GitHub
+sync is part of closeout. mbit10 checkout sync is deferred until the existing
+worker is collected and the frozen-primary guard is handled explicitly.
