@@ -1,0 +1,73 @@
+{
+  "record_kind": "primary_source_review",
+  "reviewed_on": "2026-10-08",
+  "repository_sources": [
+    {
+      "repository": "https://github.com/algorithmicsuperintelligence/openevolve",
+      "commit": "9196d8763300d1e46cc8b48cb0dc987966db3d48",
+      "commit_date": "2026-10-06T06:08:15Z",
+      "retrieved_on": "2026-10-08",
+      "inspected_file_sha256": {
+        "README.md": "33121847244dd0988d57f5de541b341587105f9f699bca35cfffb53965f99de1",
+        "examples/llm_prompt_optimization/README.md": "a8624d2180c63a2a9b2a5d89d2347fe590ae05323a1bcf9f4fef859f3c5e61c3",
+        "openevolve/prompt/sampler.py": "9e71234def141426fdf6372d9793301308dc55cdafe5f4d2a067ae9e1ee59eb3"
+      },
+      "execution": "not_installed_or_run",
+      "code_reused": false
+    },
+    {
+      "repository": "https://github.com/inter-co/science-codeevolve",
+      "commit": "c077959e1ab24b060aaa6d4c563bca2e9cbe8617",
+      "commit_date": "2026-04-08T14:38:23Z",
+      "retrieved_on": "2026-10-08",
+      "inspected_file_sha256": {
+        "README.md": "a081bf5fb45ee5fe0ec3676ee38e00567c3035610002dc5b037ca56edc87546d",
+        "src/codeevolve/evolution.py": "13c673e4f6d83ccf5038cccdd4016904ab550044d9642fb8abdefe958738b4a5",
+        "src/codeevolve/prompt/sampler.py": "6b5d7e1b0687df6598d02f32609b4075bd1ac25b38e2911ccf43bbc498a703d9",
+        "src/codeevolve/prompt/template.py": "ce3dc4635517b489c99a670d5b66057a3e1dc3307a8d838af660242394dcbbff"
+      },
+      "execution": "not_installed_or_run",
+      "code_reused": false
+    },
+    {
+      "repository": "https://github.com/gepa-ai/gepa",
+      "commit": "fb1ed589fd83372caef499cffc2c73173d3b096b",
+      "commit_date": "2026-10-01T23:53:49Z",
+      "retrieved_on": "2026-10-08",
+      "inspected_file_sha256": {
+        "README.md": "10d7f30035b21bb38fde51fb3ccc0fc64d5e8b64ab51c09731606132782a57b2"
+      },
+      "execution": "not_installed_or_run",
+      "code_reused": false
+    }
+  ],
+  "publication_sources": [
+    {
+      "id": "alphaevolve",
+      "url": "https://arxiv.org/html/2506.13131v1",
+      "locators": [
+        "Section 2.2 prompt sampling",
+        "Section 4 ablation of meta prompt evolution"
+      ],
+      "finding": "Meta prompt evolution is explicitly described; separate prompt/context database is prior work."
+    },
+    {
+      "id": "gepa-paper",
+      "url": "https://arxiv.org/abs/2507.19457",
+      "locators": [
+        "Abstract"
+      ],
+      "finding": "Reflective prompt optimization using trajectories and evaluator feedback is prior work."
+    },
+    {
+      "id": "openai-prompt-guidance",
+      "url": "https://developers.openai.com/api/docs/guides/prompt-optimizer",
+      "locators": [
+        "Prepare your data",
+        "Optimize your prompt"
+      ],
+      "finding": "Specific feedback/graders and evaluation/review of revised prompts; conceptual guidance only, no hosted dependency."
+    }
+  ],
+  "scope": "Targeted primary-source review, not an exhaustive novelty survey or verification of reported framework benchmark results."
+}

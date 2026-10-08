@@ -21,6 +21,7 @@ The default catalog is `catalog/hardware-v0.1.yaml` (format v0.1, data revision 
 
 ## Results and handoff
 
+- **[Architecture evolution and adaptive prompts](docs/designs/evolution-loop/README.md)**: two-loop design, prior-art correction, prompt templates, BFS walkthrough, experiment plan and tested offline selection/revision policies; live search remains unconnected.
 - **[October 8 feature-interface audit](docs/audits/peter-features-20261008/README.md)**: minimum additions requested from Peter for region cost/phase accounting, helper findings and a null-valued discussion template.
 - **[October 8 BFS hybrid sketch](docs/designs/bfs-maple-dx100-hybrid/README.md)**: annotated thought experiment assigning next-batch row bounds to MAPLE, current-batch neighbors to DX100, and parent/queue effects to the CPU; includes bounded ownership and drain semantics.
 - **[Peter's intrinsic handoff](docs/peter-intrinsics-handoff.md)**: current images, operation contracts, and source requirements.

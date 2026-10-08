@@ -1,5 +1,7 @@
 # Hardware Ensemble Agent — draft 0.2
 
+October 8 extension: the [architecture and adaptive-prompt loop design](designs/evolution-loop/README.md) defines source-bound mutations, feedback/lineage, separate planning and target-measured frontiers, and tested reference-policy checks. [The BFS hybrid](designs/bfs-maple-dx100-hybrid/README.md) is the first human reference example. This earlier forward-pipeline document remains historical for its catalog counts/revisions; live evolution and evaluator integration are not connected yet.
+
 Updated for the September 24, 2026 meeting. The responsibilities and BFS target below come from that meeting. Field names, local agent structure, and checks remain proposals.
 
 ## Immediate objective
