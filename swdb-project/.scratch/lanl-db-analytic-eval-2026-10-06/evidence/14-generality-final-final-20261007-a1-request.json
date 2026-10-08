@@ -1,0 +1,363 @@
+{
+  "format": "swdb.generality-report-request.v1",
+  "updated": "2026-10-07 ET",
+  "scope": "Fresh final-bundle public estimates of nine exact counted scopes. No new measured performance, PR CPU service/error-band transfer, MAPLE accuracy, or fabricated accelerator observation.",
+  "reference": {
+    "kernel": "bfs",
+    "target": "dx100"
+  },
+  "pairs": [
+    {
+      "kernel": "bfs",
+      "target": "dx100",
+      "subject": {
+        "path": "candidates/bfs-functional-read-offload-20261006-a1.proposal.candidate-1.yaml",
+        "id": "bfs-functional-read-offload-20261006-a1.proposal.candidate-1",
+        "kind": "candidate",
+        "sha256": "a363372725572862c236f95bb208ba531926952748b991d9a4c4df7026a18840",
+        "file_sha256": "f65a0420bf336eda43fd983790dd505cbe5935268cfc3a249cb5c4d2fac504ab"
+      },
+      "implementation": {
+        "path": "implementations/dx100-bfs-scalar.yaml",
+        "id": "dx100-bfs-scalar",
+        "kind": "implementation",
+        "sha256": "6a5fc2439e5ef61f96dd22e36a7c8fe15864ddc2761ac1b97a623183b558c929",
+        "file_sha256": "16d2b66647da0b440d67df486cfbb8d2f954696e8496a6178101939242cc4562"
+      },
+      "characterization": {
+        "path": "workload_characterizations/bfs.functional.kron-g16.t4.characterization.objects.a2.yaml",
+        "id": "bfs.functional.kron-g16.t4.characterization.objects.a2",
+        "kind": "workload_characterization",
+        "sha256": "07d446f8b5f5932339d384f7faa8c8215e59e4dc4ee965945610d5425a09c6e8",
+        "file_sha256": "dfbb5791ebe8bf63b544a548541fd8b5a7eeb8e033fe3aef2316c4c7467e325a"
+      },
+      "protocol": {
+        "path": "protocols/generality.bfs.dx100.kron-g16.t4.protocol.final-20261007-a1.52dfffe9a9104dd6.yaml",
+        "id": "generality.bfs.dx100.kron-g16.t4.protocol.final-20261007-a1.52dfffe9a9104dd6",
+        "kind": "protocol",
+        "sha256": "6b0c67711c258cd3ec2dda26617abb142fb2803baa97e4fd56c9e02878e00252",
+        "file_sha256": "fe19253e60e943f1e338fc22f0c17a285b1a317fa195115e7d60b60f474c7c1e"
+      },
+      "estimate": {
+        "path": "estimates/generality.bfs.dx100.kron-g16.t4.estimate.final-20261007-a1.yaml",
+        "id": "generality.bfs.dx100.kron-g16.t4.estimate.final-20261007-a1",
+        "kind": "estimate",
+        "sha256": "4534ea6cb4e427503b2288546fb45100b439d620796973ef509ef2b3509ac38e",
+        "file_sha256": "8f76ca8949b8461b5e95c9eff5c419dfdbd6f089bf6441133f654c6dd3f06873"
+      }
+    },
+    {
+      "kernel": "bfs",
+      "target": "cpu",
+      "subject": {
+        "path": "implementations/gapbs-bfs-do.yaml",
+        "id": "gapbs-bfs-do",
+        "kind": "implementation",
+        "sha256": "9bf61bf51ce76a09a7b4a8aaf163d28b1ce7284f8a708aaeecb8129550e10190",
+        "file_sha256": "133435ae7e732ec6a1407be3544649d1c4fe5db21a1248f3ab438464502d9fbb"
+      },
+      "implementation": {
+        "path": "implementations/gapbs-bfs-do.yaml",
+        "id": "gapbs-bfs-do",
+        "kind": "implementation",
+        "sha256": "9bf61bf51ce76a09a7b4a8aaf163d28b1ce7284f8a708aaeecb8129550e10190",
+        "file_sha256": "133435ae7e732ec6a1407be3544649d1c4fe5db21a1248f3ab438464502d9fbb"
+      },
+      "characterization": {
+        "path": "workload_characterizations/bfs.kron-g16.t1.characterization.objects.a1.yaml",
+        "id": "bfs.kron-g16.t1.characterization.objects.a1",
+        "kind": "workload_characterization",
+        "sha256": "535d43719d2e9269dc557e900886c625b80c5aa686e7682861a4f6d045e143bc",
+        "file_sha256": "cda2c51423c167249fd760f359ee0ead180bcb2e2d4db2c722c9b724120458ba"
+      },
+      "protocol": {
+        "path": "protocols/generality.bfs.cpu.kron-g16.t1.protocol.final-20261007-a1.6bafb63ffddb2984.yaml",
+        "id": "generality.bfs.cpu.kron-g16.t1.protocol.final-20261007-a1.6bafb63ffddb2984",
+        "kind": "protocol",
+        "sha256": "c339de50e7be948418d166354b75338a8673476a3e97f41f867edc31d2c3bb42",
+        "file_sha256": "3de2c55caff706a138de66219f67a3df5844b2b852ba6900970102e14cbff8fd"
+      },
+      "estimate": {
+        "path": "estimates/generality.bfs.cpu.kron-g16.t1.estimate.final-20261007-a1.yaml",
+        "id": "generality.bfs.cpu.kron-g16.t1.estimate.final-20261007-a1",
+        "kind": "estimate",
+        "sha256": "0ae53541e61715ff4f8cb003b2b6ac4ee031e7bd35ca129010163b14e862b130",
+        "file_sha256": "41b68583d97570372776da3037db2cc895fee7107b271a2a35976508e31027f0"
+      }
+    },
+    {
+      "kernel": "bc",
+      "target": "cpu",
+      "subject": {
+        "path": "implementations/gapbs-bc-brandes.yaml",
+        "id": "gapbs-bc-brandes",
+        "kind": "implementation",
+        "sha256": "2c6d1eea7f7349ff9838ac4309fc20d5abffa6ef4529b46b50e200d6f3e6c43e",
+        "file_sha256": "57d924c8ad974d3515bded53cc5bf37593f79d02a6794e8d1581d5beb3f8f0c1"
+      },
+      "implementation": {
+        "path": "implementations/gapbs-bc-brandes.yaml",
+        "id": "gapbs-bc-brandes",
+        "kind": "implementation",
+        "sha256": "2c6d1eea7f7349ff9838ac4309fc20d5abffa6ef4529b46b50e200d6f3e6c43e",
+        "file_sha256": "57d924c8ad974d3515bded53cc5bf37593f79d02a6794e8d1581d5beb3f8f0c1"
+      },
+      "characterization": {
+        "path": "workload_characterizations/bc.kron-g16.t1.characterization.objects.a1.yaml",
+        "id": "bc.kron-g16.t1.characterization.objects.a1",
+        "kind": "workload_characterization",
+        "sha256": "8561948088366aa18409da1db1f204ac2579cdb8ee90f1a2c76079a96e2eb4fd",
+        "file_sha256": "d12b5f57c61007219d367942ee554db1d27ee1d8614e2c1279e1164230f534e8"
+      },
+      "protocol": {
+        "path": "protocols/generality.bc.cpu.kron-g16.t1.protocol.final-20261007-a1.d69a3f63a21ec882.yaml",
+        "id": "generality.bc.cpu.kron-g16.t1.protocol.final-20261007-a1.d69a3f63a21ec882",
+        "kind": "protocol",
+        "sha256": "d43184c3ab821dd7c3196e83c89ce8905ba7f4329a7c762e6a5fcac67d64d7d9",
+        "file_sha256": "b53765ee55c739a922358f94d88e006237bad295ab3a502430f75f7994c2d343"
+      },
+      "estimate": {
+        "path": "estimates/generality.bc.cpu.kron-g16.t1.estimate.final-20261007-a1.yaml",
+        "id": "generality.bc.cpu.kron-g16.t1.estimate.final-20261007-a1",
+        "kind": "estimate",
+        "sha256": "59f7a287b5bb709927f4a7c7ca64b3ce15309ee398ea1fb7aa6703275157f7a6",
+        "file_sha256": "a93f431beae805949cb423e4f8497229dd0813134eb95bbd9e29f3f7fb23e3d8"
+      }
+    },
+    {
+      "kernel": "pagerank",
+      "target": "cpu",
+      "subject": {
+        "path": "implementations/gapbs-pr-jacobi-analytic-v1.yaml",
+        "id": "gapbs-pr-jacobi-analytic-v1",
+        "kind": "implementation",
+        "sha256": "ade54caf365f2ed368fbf3bb86cbd86e008c15da25ea8bc5d3d5c11ebb7c69a3",
+        "file_sha256": "bb86d5ea24960e4cd7f5d8802d7decd9edd4c385e5411431caf5585798c94fa7"
+      },
+      "implementation": {
+        "path": "implementations/gapbs-pr-jacobi-analytic-v1.yaml",
+        "id": "gapbs-pr-jacobi-analytic-v1",
+        "kind": "implementation",
+        "sha256": "ade54caf365f2ed368fbf3bb86cbd86e008c15da25ea8bc5d3d5c11ebb7c69a3",
+        "file_sha256": "bb86d5ea24960e4cd7f5d8802d7decd9edd4c385e5411431caf5585798c94fa7"
+      },
+      "characterization": {
+        "path": "workload_characterizations/pagerank.jacobi.kron-g16.cpu.t1.characterization.generality.a1.yaml",
+        "id": "pagerank.jacobi.kron-g16.cpu.t1.characterization.generality.a1",
+        "kind": "workload_characterization",
+        "sha256": "73b9bd54b5e3a89f431325b4d6ac211c18a925aecafaba5fdd994cf9c2c70e18",
+        "file_sha256": "168204cc10fb9b0956add8a974ff702da41f9acbc9a74c90320701f8d1b05c76"
+      },
+      "protocol": {
+        "path": "protocols/generality.pagerank.cpu.kron-g16.t1.protocol.final-20261007-a1.0e004982f7de2cb1.yaml",
+        "id": "generality.pagerank.cpu.kron-g16.t1.protocol.final-20261007-a1.0e004982f7de2cb1",
+        "kind": "protocol",
+        "sha256": "8597cfb616ec7685f44c260b88e8bf0c5e61aa581d84d969698dfc8419572a47",
+        "file_sha256": "41672cf77a91e831e0e0880d2f3064bde35f233efd44718cf0f5e4890585ba75"
+      },
+      "estimate": {
+        "path": "estimates/generality.pagerank.cpu.kron-g16.t1.estimate.final-20261007-a1.yaml",
+        "id": "generality.pagerank.cpu.kron-g16.t1.estimate.final-20261007-a1",
+        "kind": "estimate",
+        "sha256": "e37dd1ee013b0555b734d77dd61137da469e5d6a4d5417fd62f1301bec7de269",
+        "file_sha256": "f67e0d27cf96650e06844fb299924e40cf7d2f378c7fb953519b2ea59c499ec4"
+      }
+    },
+    {
+      "kernel": "pagerank",
+      "target": "dx100",
+      "subject": {
+        "path": "implementations/gapbs-pr-jacobi-analytic-v1.yaml",
+        "id": "gapbs-pr-jacobi-analytic-v1",
+        "kind": "implementation",
+        "sha256": "ade54caf365f2ed368fbf3bb86cbd86e008c15da25ea8bc5d3d5c11ebb7c69a3",
+        "file_sha256": "bb86d5ea24960e4cd7f5d8802d7decd9edd4c385e5411431caf5585798c94fa7"
+      },
+      "implementation": {
+        "path": "implementations/gapbs-pr-jacobi-analytic-v1.yaml",
+        "id": "gapbs-pr-jacobi-analytic-v1",
+        "kind": "implementation",
+        "sha256": "ade54caf365f2ed368fbf3bb86cbd86e008c15da25ea8bc5d3d5c11ebb7c69a3",
+        "file_sha256": "bb86d5ea24960e4cd7f5d8802d7decd9edd4c385e5411431caf5585798c94fa7"
+      },
+      "characterization": {
+        "path": "workload_characterizations/pagerank.jacobi.kron-g16.dx100.t4.characterization.generality.a1.yaml",
+        "id": "pagerank.jacobi.kron-g16.dx100.t4.characterization.generality.a1",
+        "kind": "workload_characterization",
+        "sha256": "afffad835e125f7439af05cf49f610edfb308791929985b8818a8e552a69422f",
+        "file_sha256": "5e778e45ec60a274f39ebe86d3cb40f0cea1688dd47284a3286cd0b082cc24ef"
+      },
+      "protocol": {
+        "path": "protocols/generality.pagerank.dx100.kron-g16.t4.protocol.final-20261007-a1.e73f8ab682b7c779.yaml",
+        "id": "generality.pagerank.dx100.kron-g16.t4.protocol.final-20261007-a1.e73f8ab682b7c779",
+        "kind": "protocol",
+        "sha256": "738347eb479c5a2000d3fb446875cb5d1aea24592390962f664a98f218f07a59",
+        "file_sha256": "21650afd13cec2116b177f54f2ade6b25837a3dc050f2233fda436d42b1c7403"
+      },
+      "estimate": {
+        "path": "estimates/generality.pagerank.dx100.kron-g16.t4.estimate.final-20261007-a1.yaml",
+        "id": "generality.pagerank.dx100.kron-g16.t4.estimate.final-20261007-a1",
+        "kind": "estimate",
+        "sha256": "f244e1a6020c83acc44196bb2fd7b95ce700349eb54f43e3add10ccc037ffdf7",
+        "file_sha256": "a2e35ca50d60db2178437f7d415936c5b5e90dfb5ecd18f2bd706bbaf0be900b"
+      }
+    },
+    {
+      "kernel": "pagerank",
+      "target": "maple",
+      "subject": {
+        "path": "implementations/gapbs-pr-jacobi-analytic-v1.yaml",
+        "id": "gapbs-pr-jacobi-analytic-v1",
+        "kind": "implementation",
+        "sha256": "ade54caf365f2ed368fbf3bb86cbd86e008c15da25ea8bc5d3d5c11ebb7c69a3",
+        "file_sha256": "bb86d5ea24960e4cd7f5d8802d7decd9edd4c385e5411431caf5585798c94fa7"
+      },
+      "implementation": {
+        "path": "implementations/gapbs-pr-jacobi-analytic-v1.yaml",
+        "id": "gapbs-pr-jacobi-analytic-v1",
+        "kind": "implementation",
+        "sha256": "ade54caf365f2ed368fbf3bb86cbd86e008c15da25ea8bc5d3d5c11ebb7c69a3",
+        "file_sha256": "bb86d5ea24960e4cd7f5d8802d7decd9edd4c385e5411431caf5585798c94fa7"
+      },
+      "characterization": {
+        "path": "workload_characterizations/pagerank.jacobi.kron-g16.maple.t2.characterization.generality.a1.yaml",
+        "id": "pagerank.jacobi.kron-g16.maple.t2.characterization.generality.a1",
+        "kind": "workload_characterization",
+        "sha256": "d1528de0047c030604b440b651e539c0ed8ea5048efe295bd3784659e87816ef",
+        "file_sha256": "dff0188da068723a81cc7503240f1e4ee6124bcb8efe8a7f0a77eaf7c798ee17"
+      },
+      "protocol": {
+        "path": "protocols/generality.pagerank.maple.kron-g16.t2.protocol.final-20261007-a1.cf35b54d65d924d9.yaml",
+        "id": "generality.pagerank.maple.kron-g16.t2.protocol.final-20261007-a1.cf35b54d65d924d9",
+        "kind": "protocol",
+        "sha256": "8c447c746fe04080cf38e4d434a684b809ff316f646d9b19ae3a8e4046e90f9a",
+        "file_sha256": "698754443318797aea8ba2ed566adea14eadcb82d1696102a7b62945d82707c4"
+      },
+      "estimate": {
+        "path": "estimates/generality.pagerank.maple.kron-g16.t2.estimate.final-20261007-a1.yaml",
+        "id": "generality.pagerank.maple.kron-g16.t2.estimate.final-20261007-a1",
+        "kind": "estimate",
+        "sha256": "2295bfb3c5ba9678da1859f845b65bfbdaeb499b93f6dbefc5e512ad0dac49a2",
+        "file_sha256": "149867d31a34491c7f5768a7178bc3d63df14bba4b3865b8d691a842a4522314"
+      }
+    },
+    {
+      "kernel": "bfs",
+      "target": "maple",
+      "subject": {
+        "path": "implementations/gapbs-bfs-do.yaml",
+        "id": "gapbs-bfs-do",
+        "kind": "implementation",
+        "sha256": "9bf61bf51ce76a09a7b4a8aaf163d28b1ce7284f8a708aaeecb8129550e10190",
+        "file_sha256": "133435ae7e732ec6a1407be3544649d1c4fe5db21a1248f3ab438464502d9fbb"
+      },
+      "implementation": {
+        "path": "implementations/gapbs-bfs-do.yaml",
+        "id": "gapbs-bfs-do",
+        "kind": "implementation",
+        "sha256": "9bf61bf51ce76a09a7b4a8aaf163d28b1ce7284f8a708aaeecb8129550e10190",
+        "file_sha256": "133435ae7e732ec6a1407be3544649d1c4fe5db21a1248f3ab438464502d9fbb"
+      },
+      "characterization": {
+        "path": "workload_characterizations/bfs.kron-g16.bfs-maple.t2.characterization.generality.a1.yaml",
+        "id": "bfs.kron-g16.bfs-maple.t2.characterization.generality.a1",
+        "kind": "workload_characterization",
+        "sha256": "4cb670966a7e20713542a75b404aa034eba273e2513ac63b7b5c8a4b097454a7",
+        "file_sha256": "e09e835f1e132834eaec3b1720fa4f4887fdce7d0602764b1433adfd2fce7c61"
+      },
+      "protocol": {
+        "path": "protocols/generality.bfs.maple.kron-g16.t2.protocol.final-20261007-a1.f8a5a1dc25ff2a2c.yaml",
+        "id": "generality.bfs.maple.kron-g16.t2.protocol.final-20261007-a1.f8a5a1dc25ff2a2c",
+        "kind": "protocol",
+        "sha256": "fdd1d0c76992625cc14f502b083cc2320286fe6f18fa84e553b445360e4e30c7",
+        "file_sha256": "da354d9f088c640c71cc822907c684dbecee2a878b752b35d59d36a857de9d07"
+      },
+      "estimate": {
+        "path": "estimates/generality.bfs.maple.kron-g16.t2.estimate.final-20261007-a1.yaml",
+        "id": "generality.bfs.maple.kron-g16.t2.estimate.final-20261007-a1",
+        "kind": "estimate",
+        "sha256": "40a2079739d71ffe09134e460e0fbf5423940f798ee8c4412020f1640bdf01a7",
+        "file_sha256": "45466017119539b60ed58a9ef5e363cd8cc91eed10dd1ba294925e429610763b"
+      }
+    },
+    {
+      "kernel": "bc",
+      "target": "maple",
+      "subject": {
+        "path": "implementations/gapbs-bc-brandes.yaml",
+        "id": "gapbs-bc-brandes",
+        "kind": "implementation",
+        "sha256": "2c6d1eea7f7349ff9838ac4309fc20d5abffa6ef4529b46b50e200d6f3e6c43e",
+        "file_sha256": "57d924c8ad974d3515bded53cc5bf37593f79d02a6794e8d1581d5beb3f8f0c1"
+      },
+      "implementation": {
+        "path": "implementations/gapbs-bc-brandes.yaml",
+        "id": "gapbs-bc-brandes",
+        "kind": "implementation",
+        "sha256": "2c6d1eea7f7349ff9838ac4309fc20d5abffa6ef4529b46b50e200d6f3e6c43e",
+        "file_sha256": "57d924c8ad974d3515bded53cc5bf37593f79d02a6794e8d1581d5beb3f8f0c1"
+      },
+      "characterization": {
+        "path": "workload_characterizations/bc.kron-g16.bc-maple.t2.characterization.generality.a1.yaml",
+        "id": "bc.kron-g16.bc-maple.t2.characterization.generality.a1",
+        "kind": "workload_characterization",
+        "sha256": "260bce0e30ca710ead6af88a0f4df8566bfedd67a6986917a0bc42c823d4be14",
+        "file_sha256": "201d779d3249273188efe548438313b5467f5d5164deb934e82043943a5838b3"
+      },
+      "protocol": {
+        "path": "protocols/generality.bc.maple.kron-g16.t2.protocol.final-20261007-a1.3a5a92be01adff67.yaml",
+        "id": "generality.bc.maple.kron-g16.t2.protocol.final-20261007-a1.3a5a92be01adff67",
+        "kind": "protocol",
+        "sha256": "30ebc403a2641aefd26a823341a095e4de50d81a3262a20ce07304d4a43e19b4",
+        "file_sha256": "f6ed84eaca1710aadd265c1cb9a940607a10abf138ddd8ee86034fbeef6fc93c"
+      },
+      "estimate": {
+        "path": "estimates/generality.bc.maple.kron-g16.t2.estimate.final-20261007-a1.yaml",
+        "id": "generality.bc.maple.kron-g16.t2.estimate.final-20261007-a1",
+        "kind": "estimate",
+        "sha256": "22451420e4bf908ee62fec0f426176f85092d1ec4c9f2167adee1aeca6e1ffb5",
+        "file_sha256": "802163ca7a8a23b4b9091445a199e282718b19bd7b9218fe38c80f50d21cbb53"
+      }
+    },
+    {
+      "kernel": "bc",
+      "target": "dx100",
+      "subject": {
+        "path": "implementations/dx100-bc-scalar.yaml",
+        "id": "dx100-bc-scalar",
+        "kind": "implementation",
+        "sha256": "51d4c045bb8437ee33fd2b3c59dd22ca3506c81e9ec887ffae9e769492a89d24",
+        "file_sha256": "a274605771f669aaa5bf10644dd90f2986490ae3ffa6f86b900485f754336970"
+      },
+      "implementation": {
+        "path": "implementations/dx100-bc-scalar.yaml",
+        "id": "dx100-bc-scalar",
+        "kind": "implementation",
+        "sha256": "51d4c045bb8437ee33fd2b3c59dd22ca3506c81e9ec887ffae9e769492a89d24",
+        "file_sha256": "a274605771f669aaa5bf10644dd90f2986490ae3ffa6f86b900485f754336970"
+      },
+      "characterization": {
+        "path": "workload_characterizations/bc.kron-g16.bc-dx100.t4.characterization.generality.a1.yaml",
+        "id": "bc.kron-g16.bc-dx100.t4.characterization.generality.a1",
+        "kind": "workload_characterization",
+        "sha256": "a7c8c1632675edff3a4091922f2464ab2d0e1c388a271fdc3bb43289cf9cdd6b",
+        "file_sha256": "246cb8cb6cfa35bab88cee46edf2b0d0f555b2c17b878edb0e49a561a7d1d7eb"
+      },
+      "protocol": {
+        "path": "protocols/generality.bc.dx100.kron-g16.t4.protocol.final-20261007-a1.a9db91ca386a566b.yaml",
+        "id": "generality.bc.dx100.kron-g16.t4.protocol.final-20261007-a1.a9db91ca386a566b",
+        "kind": "protocol",
+        "sha256": "8cac833a7cf0f4ff6574afb24a0537186a1887b55791bc4f48673219ce9ba66e",
+        "file_sha256": "c8c375a5dbdd0028aaa975bdbce845590e9b92d78f3eb19fdbf07a413b2969ac"
+      },
+      "estimate": {
+        "path": "estimates/generality.bc.dx100.kron-g16.t4.estimate.final-20261007-a1.yaml",
+        "id": "generality.bc.dx100.kron-g16.t4.estimate.final-20261007-a1",
+        "kind": "estimate",
+        "sha256": "9b8366f447ae29853b2d7cbb2e3ba30ac6195ec953ca04cd34d7200a0051456a",
+        "file_sha256": "48e76f9ac816aa8cd7a09cab375c31905171a5b24b6d80ca1e1d5875fce7895b"
+      }
+    }
+  ],
+  "identity_sha256": "784e91f7893fb69750a70da8f41e90d4f350c878210b68a91e224942754cd986"
+}
