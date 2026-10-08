@@ -241,6 +241,45 @@ def target_inventory(target, pins, files, uid, base, creator_gid):
     require(all(stamp(target / rel) == s for rel, s in pins.items()), "target_changed_after_hash")
 
 
+def tracked_checkout_manifest(path, files, command, source, revision, uid, base, creator_gid):
+    """Verify the original artifact already materialized by Git; never replace it."""
+    require(not path.is_symlink() and path.is_dir(), "alias_already_exists")
+    owned_route(path, base, uid, creator_gid)
+    root_stat = stamp(path)
+    pins = {p.relative_to(path).as_posix(): stamp(p) for p in sorted(path.rglob("*"))}
+    names = {row["path"] for row in files}
+    directories = {parent.as_posix() for name in names for parent in PurePosixPath(name).parents
+                   if parent != PurePosixPath(".")}
+    require(set(pins) == names | directories, "tracked_checkout_namespace_mismatch")
+    target_inventory(path, pins, files, uid, base, creator_gid)
+    prefix = "swdb-project/apps/dx100/"
+    rows = git(command, source, "ls-tree", "-r", "-z", revision, "--", prefix).split(b"\0")
+    tracked = {}
+    for row in rows:
+        if not row:
+            continue
+        metadata, name = row.split(b"\t", 1)
+        mode, kind, blob = metadata.split()
+        name = name.decode()
+        require(name.startswith(prefix) and kind == b"blob" and mode in (b"100644", b"100755"),
+                "tracked_checkout_tree_mismatch")
+        rel = name[len(prefix):]
+        require(rel in names and rel not in tracked, "tracked_checkout_tree_mismatch")
+        raw, original_stat = read(path / rel, 32 * 1024 * 1024, uid)
+        require(original_stat == pins[rel]
+                and hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest() == blob.decode()
+                and bool(original_stat["mode"] & 0o111) == (mode == b"100755"),
+                "tracked_checkout_blob_or_mode_mismatch")
+        tracked[rel] = {"mode": mode.decode(), "blob": blob.decode()}
+    require(set(tracked) == names and stamp(path) == root_stat
+            and all(stamp(path / rel) == value for rel, value in pins.items()),
+            "tracked_checkout_tree_mismatch")
+    return {"source_path": str(path), "source_stat": root_stat,
+            "source_manifest_sha256": sha(canonical(files)),
+            "source_stat_inventory_sha256": sha(canonical(pins)),
+            "source_tracked_tree_sha256": sha(canonical(tracked))}
+
+
 def main():
     os.umask(0o077)
     request_path = os.environ.get("SWDB_DX100_BINDING_REQUEST")
@@ -301,23 +340,31 @@ def main():
         require(not os.path.lexists(apps), "apps_parent_redirect")
         apps.mkdir(mode=0o700)
     alias = apps / "dx100"
-    require(not os.path.lexists(alias), "alias_already_exists")
+    existing = os.path.lexists(alias)
+    checkout = (tracked_checkout_manifest(alias, files, command, source, revision, uid, base, creator_gid)
+                if existing else None)
     receipt = {"format": "swdb.dx100-source-deployment-original.v1", "source": str(source),
                "source_revision": revision, "request_sha256": sha(raw), "hook_sha256": sha(hook_raw),
                "target": str(target), "target_stat": request["target"]["stat"], "target_file_count": 53,
                "artifact_sha256": sha(canonical(files)), "record_pins": request["records"],
-               "started_utc": datetime.now(timezone.utc).isoformat(), "outcome": "binding_started"}
+               "started_utc": datetime.now(timezone.utc).isoformat(), "outcome": "binding_started",
+               "binding_type": "tracked_checkout_manifest" if existing else "symlink_to_protected_artifact"}
+    if checkout is not None:
+        receipt.update(checkout)
     # Exclusive receipt reservation precedes the only alias mutation. Preserve partials on failure.
     fd = os.open(receipt_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
     try:
-        os.symlink(str(target), alias)
+        if not existing:
+            os.symlink(str(target), alias)
         alias_created_stat = stamp(alias)
         receipt["outcome"] = "binding_postflight_pending"
         target_inventory(target, request["target_stats"], files, uid, base, creator_gid)
+        binding_verified = (tracked_checkout_manifest(alias, files, command, source, revision, uid, base, creator_gid) == checkout
+                            if existing else alias.is_symlink() and alias.readlink() == target)
         require(stamp(target) == request["target"]["stat"] and identity(source) == source_identity
                 and git(command, source, "status", "--porcelain", "--untracked-files=all") == b""
                 and git(command, source, "rev-parse", "HEAD").strip().decode() == revision
-                and alias.is_symlink() and alias.readlink() == target
+                and binding_verified
                 and stamp(alias) == alias_created_stat, "binding_postflight_failed")
         require(read(p, 2 * 1024 * 1024, uid) == (raw, request_stat)
                 and read(Path(__file__).absolute(), 1024 * 1024, uid) == (hook_raw, hook_stat), "source_or_request_changed")
@@ -326,7 +373,8 @@ def main():
         require(identity(control) == request["control"]["identity"], "control_changed")
         native(request["git"])
         native(request["python"])
-        receipt["alias_stat"] = stamp(alias)
+        if not existing:
+            receipt["alias_stat"] = stamp(alias)
         receipt["source_identity"] = source_identity
         receipt["git_pin"] = request["git"]
         receipt["python_pin"] = request["python"]

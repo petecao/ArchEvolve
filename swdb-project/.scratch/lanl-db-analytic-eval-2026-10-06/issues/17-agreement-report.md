@@ -1,10 +1,10 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-08 11:11 ET
+Updated: 2026-10-08 11:20 ET
 **Type:** slice
 **Status:** claimed
-**Work state:** paused-by-user (2026-10-08; resume in another session)
+**Work state:** active (explicitly resumed 2026-10-08)
 **Blocked by:** 16
 **Spec:** `../spec.md`
 **Time estimate:** 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs)
@@ -107,3 +107,7 @@ worker is collected and the frozen-primary guard is handled explicitly.
 2026-10-08 10:53 ET — Yan-Ru approved [branch cleanup](../branch-cleanup-result-20261008.md): 37 merged remote refs deleted with exact-tip leases; four retained for current mbit10 worktree use. A read-only host check after quiet observed the existing a4 wrapper reporting completion/exit 0. Original retirement receipt remains uncollected/unassessed; no retirement count, recovery, capacity or scientific admission is inferred. Implementation/evaluation and heartbeat remain PAUSED, 0/4 scientific campaigns, all acceptance pending. No host fetch/prune/source sync, checkout change or new evaluation.
 
 2026-10-08 11:11 ET — Yan-Ru requested final rule commit and [local worktree cleanup](../local-worktree-cleanup-20261008.md). Seventeen completed local checkouts and their merged local branch refs were removed after recoverable archival; seven ignored originals were preserved. Main, integration and this ticket's exact reviewed checkout path remain. No remote worktree or source change, retirement collection or evaluation occurred. Status remains `claimed`, work remains paused, acceptance stays unchecked and the heartbeat remains PAUSED.
+
+2026-10-08 11:20 ET — Yan-Ru resumed assigned work. Root collected existing RETIRE a4 originals once; all sixteen retirements succeeded, preserving library/Git evidence. See [assessment](../evidence/17-resumed-retirement-assessment-20261008-a1/README.md). Fresh storage/lease/native observation supports prospective serial preparation; no scientific campaign or D30 admission is inferred. Four campaigns/report/final review remain pending; acceptance boxes unchanged.
+
+2026-10-08 11:29 ET — Actual PREPARE a4 failed at Git source worktree creation: hook `alias_already_exists`, because frozen R tracks the exact original53-file DX100 directory. No freeze/provider/application outcome; original supervisor cleanup has no survivors. [Original failure and compatibility fix](../evidence/17-failed-prepare-and-tracked-manifest-fix-20261008-a1/README.md) retained; hook now verifies the exact tracked manifest without altering files, with23passed/2platformskips and independent review. New fresh a5 attempt remains pending; ticket acceptance unchanged.

@@ -1,10 +1,10 @@
 # Map: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-08 11:11 ET (14 of 15 assigned tickets resolved; 17 paused by user)
+Updated: 2026-10-08 11:20 ET (14 of 15 assigned tickets resolved; 17 resumed)
 **Type:** ticket map
-**Status:** claimed (unfinished implementation/evaluation; paused by user)
-**Work state:** paused-by-user; [resume guide](resume.md)
+**Status:** claimed (unfinished implementation/evaluation)
+**Work state:** active; [resume guide](resume.md)
 **Spec:** [spec.md](spec.md)
 
 Each ticket is a vertical slice: it delivers something runnable and checkable on its own, from format to command to tests. Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (Yan-Ru decides first); needs-info (waits on LANL access). Ticket 07 runs on mbit10 under the standing approval of 2026-10-05.
@@ -44,7 +44,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | 14 | [Generality: MAPLE and PageRank](issues/14-generality-maple-pagerank.md) | resolved | 05, 09, 10 | 1 day |
 | 15 | [Show Scott the counting approach](issues/15-show-scott-counting.md) | ready-for-human | 09 | about 15 min |
 | 16 | [Extensa flow A: blind paired estimates](issues/16-extensa-blind-paired-estimates.md) | resolved | 06, 09 | 4–6 h |
-| 17 | [Agreement report](issues/17-agreement-report.md) | claimed (paused by user) | 16 | 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs) |
+| 17 | [Agreement report](issues/17-agreement-report.md) | claimed | 16 | 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs) |
 | 18 | [Decide on flow B](issues/18-decide-flow-b.md) | ready-for-human | 17 | about 15 min |
 
 ## E. Later or blocked
@@ -58,6 +58,10 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | 23 | [Export and round-trip test](issues/23-export-and-round-trip.md) | needs-info | 22 | 1 day |
 
 ## Context pointers
+
+- 2026-10-08 11:29 ET: [Failed PREPARE and tracked-source fix](evidence/17-failed-prepare-and-tracked-manifest-fix-20261008-a1/README.md) preserves actual failure. Hook now admits only an exact tracked original53-file manifest; scientific source/budgets remain frozen. Fresh a5 preparation pending.
+
+- 2026-10-08 11:20 ET: Yan-Ru resumed assigned work and authorized ongoing implementation/evaluation/sync. [Original retirement assessment](evidence/17-resumed-retirement-assessment-20261008-a1/README.md) confirms sixteen successful library-preserving retirements. Fresh host storage permits serial preparation; four campaigns/report remain pending. The 30-minute heartbeat now targets the resumed chat and is ACTIVE.
 
 - 2026-10-08 11:11 ET: approved [local worktree cleanup](local-worktree-cleanup-20261008.md) archived and removed 17 completed checkouts and their merged local branches. Main, integration and ticket 17 remain; seven ignored originals are preserved. Writing-preference rule committed as `cb6f75ae`. Evaluation and heartbeat remain PAUSED; original retirement collection is still pending.
 - 2026-10-08 10:53 ET: approved [remote branch cleanup](branch-cleanup-result-20261008.md) removed 37 merged refs, retained four mbit10 worktree-linked candidates, and preserved local/recovery/resume state. Branch-only host observation reports the retirement wrapper complete/exit 0; original receipt collection and assessment remain pending. Ticket 17 and all new evaluations stay paused.

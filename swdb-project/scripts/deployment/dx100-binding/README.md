@@ -2,13 +2,17 @@
 
 Updated: 2026-10-08 ET. Actual remote deployment remains parent-owned and unexecuted.
 
-This hook provisions exactly `S/swdb-project/apps/dx100` during the original helper's
-ordinary `git worktree add --detach S R`. It binds that alias to a protected source
-artifact matching the original 53-file baseline and source-snapshot manifest. It does
+This hook checks exactly `S/swdb-project/apps/dx100` during the original helper's
+ordinary `git worktree add --detach S R`. When Git materializes the tracked application,
+the hook verifies its complete 53-file baseline and source-snapshot manifest, all tracked
+paths, Git blobs and executable modes. It preserves those files in place. When the path
+is absent, it provisions an alias to the protected source artifact. It does
 nothing in EF, ER or any other cwd. The original baseline validator still runs afterward.
 
-The tracked `/apps/dx100` rule ignores only the intentional runtime alias, including a
-symlink; it has no trailing slash. Other app paths and all tracked modifications remain
+The tracked `/apps/dx100` rule ignores the intentional runtime alias, including a
+symlink; it has no trailing slash and does not prevent Git from checking out tracked
+application files. The hook checks the complete application namespace independently
+of that ignore rule. Other app paths and all tracked modifications remain
 visible. No shared Git config or info/exclude is changed. Git's documented
 [post-checkout behavior](https://git-scm.com/docs/githooks) includes worktree creation;
 [per-invocation config](https://git-scm.com/docs/git-config) can select hooksPath without
@@ -97,8 +101,13 @@ not a reason to silently widen limits or replay a partial attempt.
 
 After successful binding, `control/dx100-binding-original.json` is an exclusive 0600
 **unsealed** physical receipt, with original request/source/artifact/record/native pins,
-exact alias and target facts, timestamps and `outcome: bound`. An existing alias or receipt
-is refused, including broken links. Preflight failure creates no alias; once receipt
+target facts, timestamps and `outcome: bound`. `binding_type: tracked_checkout_manifest`
+records the source directory stat, original manifest digest, full stat inventory digest
+and tracked path/blob/mode inventory digest. It makes no symlink claim and changes no
+tracked file, mode or Git index. The protected target remains independently verified.
+`binding_type: symlink_to_protected_artifact` records the created alias stat and target.
+Existing symlinks, ordinary files, untracked application trees, extra paths, altered
+bytes or modes, and existing receipts are refused. Preflight failure creates no alias; once receipt
 reservation/alias creation starts, failures retain partials and an error class/digest.
 No overwrite, rollback or cleanup is performed. Parent accepts only original hook/Git
 exit zero plus receipt and independent live binding checks; receipt content alone proves

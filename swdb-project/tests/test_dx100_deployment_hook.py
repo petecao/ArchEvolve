@@ -113,7 +113,7 @@ def deployment(tmp_path):
     }
     request_path = control / "request.json"
 
-    def execute(change=None, destination=None):
+    def execute(change=None, destination=None, *, hook_only=False):
         if change:
             change(request)
         raw = json.dumps(request, sort_keys=True).encode()
@@ -124,6 +124,9 @@ def deployment(tmp_path):
                     "GIT_CONFIG_COUNT": "1", "GIT_CONFIG_KEY_0": "core.hooksPath",
                     "GIT_CONFIG_VALUE_0": str(hooks), "SWDB_DX100_BINDING_REQUEST": str(request_path),
                     "SWDB_DX100_BINDING_REQUEST_SHA256": sha(raw), "PYTHONDONTWRITEBYTECODE": "1"})
+        if hook_only:
+            return subprocess.run([str(python), str(hook), "0" * 40, request["expected_revision"], "1"],
+                                  cwd=source, env=env, capture_output=True, text=True, timeout=20)
         return run_git(repo, "worktree", "add", "--detach", str(destination or source), run_git(repo, "rev-parse", "HEAD").stdout.strip(), env=env)
 
     return {"execute": execute, "request": request, "source": source, "target": target,
@@ -160,6 +163,87 @@ def refusal(result, code):
     assert result.returncode != 0
     value = json.loads(result.stderr.splitlines()[-1])
     assert value["error_sha256"] == sha(code.encode()), result.stderr
+
+
+def track_original_application(deployment, *, extra=False):
+    application = deployment["repo"] / "swdb-project/apps/dx100"
+    shutil.copytree(deployment["target"], application)
+    if extra:
+        (application / "extra.txt").write_bytes(b"outside original artifact")
+    assert run_git(deployment["repo"], "add", "-f", "swdb-project/apps/dx100").returncode == 0
+    assert run_git(deployment["repo"], "-c", "user.name=Synthetic", "-c", "user.email=synthetic@example.invalid",
+                   "-c", "core.hooksPath=/dev/null", "commit", "-qm", "tracked original application fixture").returncode == 0
+    deployment["request"]["expected_revision"] = run_git(deployment["repo"], "rev-parse", "HEAD").stdout.strip()
+
+
+def materialize_without_hook(deployment):
+    result = run_git(deployment["repo"], "-c", "core.hooksPath=/dev/null", "worktree", "add", "--detach",
+                     str(deployment["source"]), deployment["request"]["expected_revision"])
+    assert result.returncode == 0, result.stderr
+
+
+def test_real_worktree_add_verifies_tracked_original_application(deployment):
+    track_original_application(deployment)
+    result = deployment["execute"]()
+    assert result.returncode == 0, result.stderr
+    application = deployment["source"] / "swdb-project/apps/dx100"
+    assert application.is_dir() and not application.is_symlink()
+    receipt = json.loads((deployment["control"] / "dx100-binding-original.json").read_bytes())
+    assert receipt["binding_type"] == "tracked_checkout_manifest" and receipt["outcome"] == "bound"
+    assert "alias_stat" not in receipt and "identity_sha256" not in receipt
+    assert receipt["source_path"] == str(application) and receipt["source_stat"] == stamp(application)
+    assert receipt["source_manifest_sha256"] == receipt["artifact_sha256"]
+    assert len(receipt["source_tracked_tree_sha256"]) == 64
+    assert run_git(deployment["source"], "status", "--porcelain", "--untracked-files=all").stdout == ""
+    for original in deployment["target"].rglob("*"):
+        if original.is_file():
+            copy = application / original.relative_to(deployment["target"])
+            assert copy.read_bytes() == original.read_bytes()
+            assert bool(copy.stat().st_mode & 0o111) == bool(original.stat().st_mode & 0o111)
+
+
+@pytest.mark.parametrize("change", ["untracked_file", "untracked_directory", "mutated_tracked", "untracked_tree"])
+def test_existing_application_requires_exact_clean_tracked_original(deployment, change):
+    if change != "untracked_tree":
+        track_original_application(deployment)
+    materialize_without_hook(deployment)
+    application = deployment["source"] / "swdb-project/apps/dx100"
+    if change == "untracked_tree":
+        shutil.copytree(deployment["target"], application)
+        code = "tracked_checkout_tree_mismatch"
+    elif change == "untracked_file":
+        (application / "extra.txt").write_bytes(b"must survive refusal")
+        code = "tracked_checkout_namespace_mismatch"
+    elif change == "untracked_directory":
+        (application / "extra-directory").mkdir()
+        code = "tracked_checkout_namespace_mismatch"
+    else:
+        (application / "benchmarks/gapbs/src/bfs.cc").write_bytes(b"mutated tracked source")
+        code = "source_not_clean_at_revision"
+    before = {p.relative_to(application).as_posix(): stamp(p) for p in application.rglob("*")}
+    refusal(deployment["execute"](hook_only=True), code)
+    assert {p.relative_to(application).as_posix(): stamp(p) for p in application.rglob("*")} == before
+    assert not (deployment["control"] / "dx100-binding-original.json").exists()
+
+
+def test_extra_tracked_application_file_is_refused_without_mutation(deployment):
+    track_original_application(deployment, extra=True)
+    refusal(deployment["execute"](), "tracked_checkout_namespace_mismatch")
+    assert (deployment["source"] / "swdb-project/apps/dx100/extra.txt").read_bytes() == b"outside original artifact"
+    assert not (deployment["control"] / "dx100-binding-original.json").exists()
+
+
+def test_existing_tracked_application_symlink_is_refused(deployment):
+    alias = deployment["repo"] / "swdb-project/apps/dx100"
+    alias.parent.mkdir()
+    alias.symlink_to(deployment["target"], target_is_directory=True)
+    assert run_git(deployment["repo"], "add", "-f", "swdb-project/apps/dx100").returncode == 0
+    assert run_git(deployment["repo"], "-c", "user.name=Synthetic", "-c", "user.email=synthetic@example.invalid",
+                   "-c", "core.hooksPath=/dev/null", "commit", "-qm", "existing symlink fixture").returncode == 0
+    deployment["request"]["expected_revision"] = run_git(deployment["repo"], "rev-parse", "HEAD").stdout.strip()
+    refusal(deployment["execute"](), "alias_already_exists")
+    assert (deployment["source"] / "swdb-project/apps/dx100").readlink() == deployment["target"]
+    assert not (deployment["control"] / "dx100-binding-original.json").exists()
 
 
 def test_wrong_requested_revision_refuses_before_binding(deployment):
@@ -275,7 +359,8 @@ def test_creator_group_sgid_suid_and_sticky_target_directories_are_refused(deplo
     deployment["target"].chmod(mode)
     refresh_group_pins(deployment)
     assert stamp(deployment["target"])["gid"] == os.getgid()
-    assert stamp(deployment["target"])["mode"] & 0o7000 == mode & 0o7000
+    if stamp(deployment["target"])["mode"] & 0o7000 != mode & 0o7000:
+        pytest.skip("filesystem does not preserve the requested directory special mode")
     refusal(deployment["execute"](), "unsafe_owned_directory_route")
     assert not (deployment["source"] / "swdb-project/apps/dx100").exists()
     assert not (deployment["control"] / "dx100-binding-original.json").exists()
