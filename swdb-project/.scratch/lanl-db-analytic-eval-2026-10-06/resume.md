@@ -1,6 +1,6 @@
 # Continue the analytic evaluator work
 
-Updated: 2026-10-08 12:42 ET
+Updated: 2026-10-08 12:54 ET
 
 **Active after Yan-Ru explicitly resumed work.** Fourteen of fifteen assigned agent tickets are resolved. Ticket 17 remains claimed; its acceptance boxes remain unchecked. The 30-minute heartbeat is ACTIVE on the resumed chat.
 
@@ -9,7 +9,7 @@ Updated: 2026-10-08 12:42 ET
 | CPU ticket 11 | Resolved; held-out BFS broad-band pass, BC failure | Preserve both outcomes |
 | Generality ticket 14 | Resolved; nine pairs, 45 trials; seven whole-call totals unknown | Preserve qualified results |
 | Storage RETIRE a4 / plan a5 | Existing attempt collected once; successful original receipt, all sixteen rows retired | Do not repeat retirement or DEFAULT |
-| Ticket 17 science | a5 PREPARE and FIRST publication succeeded; 0/4 substantive campaigns | First serial dispatch input checks active, then four trajectories and report |
+| Ticket 17 science | a5 PREPARE/FIRST passed; p1 active node0/g511; 0/4 complete | Monitor p1, collect released after-custody, then p2–p4 and report |
 | Standards + Spec review | Full-feature base 7941ccba selected | Run both axes and fix findings after scientific closeout |
 
 [Original collection and assessment](evidence/17-resumed-retirement-assessment-20261008-a1/README.md) preserves the original retirement receipt, wrapper state and separate read-only host query. Receipt SHA256 is `93e99138ae34869de92f46d81f0b2ccd5f3da8097555dc92f7f772f17dc22b29`; all sixteen selected/retired/completed rows match, failure is null, two full RAW passes passed. Recovery was 3,051,552,768 bytes. This proves the bounded administrative action, not current capacity or scientific success.
@@ -26,7 +26,11 @@ Use the existing [concrete scientific sequence](evidence/17-user-pause-custody-2
 
 [Actual completion and FIRST publication](evidence/17-actual-prepare-first-publication-20261008-a5/README.md) retain reviewed original supervisor/public command/stream/exit/M2/EF/policy metadata. PREPARE returned 0 at12:23 ET; unchanged FIRST791/32 returned 0 at12:35 ET before outcomes. Freeze export is `44652dd359e352480065f0c6281730dd61523ea6`; FIRST custody SHA256 is `e1fa63af665bea9937375b4be17fe3de7f013a1da0e1106e36817c828fc3d5e1`. All seventeen preparation originals and publication/before/control/transport originals are archived with byte pins.
 
-Actual p1 before custody shows absent state. The first wrapper refused before helper execution at the physical helper permission check; tightening only alias mode0664→0600 preserved bytes/inode/mtime and all scientific bindings. Fresh dispatcher capture `/private/tmp/lanl17-normal-campaign-dispatch-capture-20261008-a5-p1-a2` is active, tool session97865. It is checking frozen inputs; no attempt directory existed in the12:41 ET monitor. Inspect this retained capture and current attempt/lease metadata before any further action; never blindly rerun after uncertain transport.
+Actual p1 before custody shows absent state. The first wrapper refused before helper execution at the physical helper permission check; tightening only alias mode0664→0600 preserved bytes/inode/mtime and all scientific bindings. Fresh dispatcher capture `/private/tmp/lanl17-normal-campaign-dispatch-capture-20261008-a5-p1-a2` completed0 without transport error. Do not repeat dispatch.
+
+[Actual p1 dispatch](evidence/17-actual-p1-dispatch-20261008-a5/README.md) retains original preregistration and dispatch-state32 custody. p1 attempt1 is active in tmux `swdb-lanl17-20261007-a5-p1-a1`, actual node0 nativegeneration511. RAW/attempts/extensa-gem5-bfs-20261006-p1/attempt-1 is the real attempt root. The12:51 ET monitor shows matched owned held lease and no stopped receipt; zero iterations/state so far while in-lane source checks run. Other CIDs remain queued. Original dispatch SHA2567e63d493; dispatch-state custody SHA25670c88da3. Inspect actual native/state/attempt facts; never launch a duplicate p1 or blindly resume.
+
+Use pinned remote monitor `/data1/yanruj/lanl17-campaign-status-20261008-a5.py`, SHA256 `c87a1eeeb9ec098a081546f019c5c315f30a8ce5a7a7975113e0f719196259a1`, with `--manifest RAW/manifest.json --format json`. Parent capture source is archived with preparation evidence. Actual public startup follows the in-lane helper's repeated full input checks. Keep node0 from reuse until final lane/exits/native release, release32 and b08after are collected. The source-only release and FINALIZE/index/audit worksheets are archived with actual dispatch evidence; future inputs are still required.
 
 Fresh12:34 ET capacity was/data37.9GiB and/data121.6GiB. All three leases were released and memory116.8GiB available. Continue serially while/data remains below the unchanged44GiB concurrent floor. Keep all four original full catalogs and all budgets unchanged.
 

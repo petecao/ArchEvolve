@@ -1,7 +1,7 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-08 12:43 ET
+Updated: 2026-10-08 12:54 ET
 **Type:** slice
 **Status:** claimed
 **Work state:** active (explicitly resumed 2026-10-08)
@@ -118,3 +118,6 @@ worker is collected and the frozen-primary guard is handled explicitly.
 
 
 2026-10-08 12:43 ET — [Actual preparation and FIRST publication](../evidence/17-actual-prepare-first-publication-20261008-a5/README.md) retained: PREPARE a5 returned0 at12:23ET, canonical704 validated, pure seven-file freeze export44652dd published, unchanged author791 and producer32 returned0 before campaign outcomes. Actual FIRST7701B/e1fa63af custody and original M2/policy/supervisor/source/transport links passed root and independent review. p1-before state absent and no invocations. First wrapper refused before helper execution due alias0664; tightening only mode0600 preserved bytes/inode/mtime. Fresh serial node0 dispatch input checks active;12:41 monitor had no attempt directory. All budgets/full catalogs/F6/R unchanged.0/4 substantive campaigns; actual report/audit/final two-axis review and ticket closure remain pending.
+
+
+2026-10-08 12:54 ET — [Actual p1 dispatch](../evidence/17-actual-p1-dispatch-20261008-a5/README.md) returned0; original preregistration44,229B/7e63d493 and producer32 dispatch-state6,971B/70c88da3 reviewed. Node0 held by matching owned attempt1, nativegeneration511; node1/legacy released. In-lane helper input checks active; zero state/iterations in12:51 monitor.0/4 substantive normal completions. No source/policy/budget/catalog changes; heartbeat ACTIVE with current paths. Future release/after and FINALIZE/index/audit source worksheets retained.
