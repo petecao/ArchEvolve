@@ -1,0 +1,27 @@
+--- /private/tmp/lanl_copy_reviewed_sidecar_corrected_storage_sources_from_git_20261008_a1_r1.py
++++ /private/tmp/lanl_copy_reviewed_passive_receipt_scope_sources_from_git_20261008_a1.py
+@@ -1,14 +1,10 @@
+ import argparse,pathlib,os,stat,hashlib,json,subprocess,datetime,re
+ P=pathlib.Path;BASE=P('/data1/yanruj');PRIMARY=BASE/'ArchEvolve';C=BASE/'ArchEvolve-lanl-cpu-model-validation-20261006-a1';UID=114316761
+-REL=P('swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-detached-E-inspection-failure-and-source-custody-20261008-a1')
+-DEST=BASE/'lanl-storage-admin-selected-source-20261008-a2'
++REL=P('swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-passive-receipt-scope-correction-20261008-a1')
++DEST=BASE/'lanl-storage-admin-selected-source-20261008-a3'
+ EXPECTED={
+- 'lanl14_remove_consumed_export_checkout_20261008_a1_r3.py':(26370,'7f92b6f85f4e0c574f3ade7a806c2d6de02108fb8f32579f2e37343e9dc566f9'),
+- 'lanl14_detach_exact_E_cleanup_administration_20261008_a1_r3.py':(18369,'a04486d04c8f3a5f0ceee1d6ff58aeeacdb5aa2f4a9dec9e6befa8f40056cfaf'),
+- 'lanl_consumed_detached_source_guard_r4_20261008_r3.py':(88521,'96e033426d492fab3be2a07757ab1e89665a7a67d0f06d3941f274b1214dd294'),
+- 'lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r4.py':(58634,'1c5a39575e66bb1deea654a586e11a4f9c7437e06547144bdb0347375e1542cf'),
+- 'lanl17_detach_exact_R4_storage_administration_20261008_a1_r3.py':(24000,'3f5cc9397c9be47232f0c070ca70def25c55a3c69af404af257da992ad105e01'),
+- 'lanl17_detach_passive_observer_administration_20261008_a1_r3.py':(15359,'f26a2f7790ccf5df117acf19496e7510be778deb44892b4d54b15245efa317b2')}
++ 'lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r5.py':(58755,'50ad9bf511f90429a040bf5c25cc9a4bd15b12cb28419ad414d586269e5cdc99'),
++ 'lanl17_detach_passive_observer_administration_20261008_a1_r4.py':(15359,'6453bfc0d74259d497569eb018e91ff7972b8812d39a3eacc6fe51324cf9709f')}
+ def sha(b):return hashlib.sha256(b).hexdigest()
+ def stamp(s):return {k:getattr(s,'st_'+k) for k in ('dev','ino','mode','uid','gid','nlink','size','mtime_ns','ctime_ns')}
+ def private(p):
+@@ -74,4 +70,4 @@
+ assert git(C,'rev-parse','HEAD').decode().strip()=='f893fed400347ed23d92e917d8bde21b75e5375d' and not git(C,'status','--porcelain').strip()
+ assert read(retention_path,0)==(retention_bytes,retention_stat)
+ bound_checkouts()
+-print(json.dumps({'format':'swdb.git-reviewed-sidecar-corrected-storage-source-private-copy.v1','sealed':False,'checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'expected_primary':args.expected_primary,'source_copies':result,'archive_manifest_file_sha256':sha(mb),'archive_manifest_identity_sha256':m['identity_sha256'],'source_refs_refreshed_at_expected_primary':True,'bound_checkout_root_stats':{str(path):original for path,original in CHECKOUT_IDENTITIES.items()},'original_empty_retention_file':{'path':str(retention_path),'bytes':len(retention_bytes),'sha256':sha(retention_bytes),'stat':retention_stat,'unchanged_before_after':True},'selected_mains_invoked':False,'cleanup_capacity_or_scientific_admission':False},sort_keys=True))
++print(json.dumps({'format':'swdb.git-reviewed-passive-receipt-scope-source-private-copy.v1','sealed':False,'checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'expected_primary':args.expected_primary,'source_copies':result,'archive_manifest_file_sha256':sha(mb),'archive_manifest_identity_sha256':m['identity_sha256'],'source_refs_refreshed_at_expected_primary':True,'bound_checkout_root_stats':{str(path):original for path,original in CHECKOUT_IDENTITIES.items()},'original_empty_retention_file':{'path':str(retention_path),'bytes':len(retention_bytes),'sha256':sha(retention_bytes),'stat':retention_stat,'unchanged_before_after':True},'selected_mains_invoked':False,'cleanup_capacity_or_scientific_admission':False},sort_keys=True))
