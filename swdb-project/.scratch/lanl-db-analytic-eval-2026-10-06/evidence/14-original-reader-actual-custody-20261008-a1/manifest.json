@@ -1,0 +1,253 @@
+{
+  "README": {
+    "bytes": 3841,
+    "sha256": "dae0247fe9ab160d0048b1365f280a0326ad12ba6c1e929bdc17dea7ea025b70"
+  },
+  "actual_original_scope": {
+    "MAPLE_estimate_only_pairs": 3,
+    "accuracy_or_measured_speedup_claimed": false,
+    "all_ratios_and_bands_null": true,
+    "dated_postflight_not_current_host_claim": true,
+    "exact_postflight_transfer_5_original_payloads": true,
+    "existing_catalogue_686_unchanged": true,
+    "export_commit": "43256ee0300a59a03919833075fbb13fb3ba9ab3",
+    "nine_pairs": 9,
+    "no_invented_native_preflight_file": true,
+    "original503f_explicitFalse_identity": "a8231230f780ed715c9104dce8b16e24c19985272d2e7cb5708b717d10c3cf82",
+    "original503f_scientific_admission_false_preserved": true,
+    "original690_defaultTrue_identity": "720bdb6655036b6226947656ee6440bb9ce6c972f9f045ec3cedec86a5a1ab3e",
+    "original690_no_admitted_field": true,
+    "original_result_validation_704_inherited": true,
+    "other_seven_seconds_null": true,
+    "pure_E_acceptance_inherited_not_integrated": true,
+    "recorded_UTC_chronology": [
+      "2026-10-08T01:41:48.228410+00:00",
+      "2026-10-08T01:41:49.692938+00:00",
+      "2026-10-08T01:41:50.508904+00:00",
+      "2026-10-08T01:45:25.085319+00:00",
+      "2026-10-08T01:45:25.124918+00:00",
+      "2026-10-08T01:51:06.264080+00:00",
+      "2026-10-08T01:52:18.538273+00:00"
+    ],
+    "separate_parent_assessment_defaultTrue_identity": "97c8bff5a9133b255e474d4b6f99f544e0677d05fe8dfee41e5a3156f63e53f9",
+    "source_commit": "c4ab2fdbb0b0c57ee9f515522835897f24466d6b",
+    "source_history_NOTRUN_preserved_as_creation_time": true,
+    "trials": 45,
+    "two_CPU_totals": {
+      "bc": 0.64771215194357,
+      "bfs": 0.08459283293734217
+    }
+  },
+  "archive_actions": {
+    "local_Git_stage_commit": true,
+    "permission_or_cleanup_action": false,
+    "remote_source_staging": false,
+    "scientific_or_new_reader_admission": false,
+    "selected_import_main_test_Store_SSH": false
+  },
+  "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-original-reader-actual-custody-20261008-a1",
+  "canonical_ensure_ascii": true,
+  "created_et": "2026-10-07 21:58 ET",
+  "delivered_base": "a9c02e918374070ff2654e3f9696bd550230cbbb",
+  "format": "swdb.lanl14-scoped-packet-byte-retention.v1",
+  "identity_sha256": "fb16ac44211983e67ea0a2cf588597af28d7c60e62ac17461baa6eb93b7cb4b3",
+  "incoming_parent": "c0b78122e7e3761ac6d3acd4aa135acd0dae17f9",
+  "original_count": 14,
+  "original_total_bytes": 127905,
+  "originals": [
+    {
+      "archive_relative_path": "local/preregistration.json",
+      "bytes": 3322,
+      "original_path": "/private/tmp/lanl14-reader-ssh-capture-20261008-a1/preregistration.json",
+      "policy": {
+        "original_canonical_ensure_ascii_present": false,
+        "original_identity_or_policy_changed": false,
+        "original_identity_sha256_present": false,
+        "original_seal": "unsealed",
+        "original_sealed_field": false
+      },
+      "role": "original unsealed local SSH preregistration",
+      "sha256": "7d2b4dd7557d119590942a09c9adefe138b9b14e8dd7cb048182caf1f3881370"
+    },
+    {
+      "archive_relative_path": "local/status.json",
+      "bytes": 1228,
+      "original_path": "/private/tmp/lanl14-reader-ssh-capture-20261008-a1/status.json",
+      "policy": {
+        "original_canonical_ensure_ascii_present": false,
+        "original_identity_or_policy_changed": false,
+        "original_identity_sha256_present": false,
+        "original_seal": "unsealed",
+        "original_sealed_field": false
+      },
+      "role": "original unsealed local SSH status",
+      "sha256": "2e429ff24b2dffaf42827835c231d3058ea6de0dd13ad578ea51c09034b96dc9"
+    },
+    {
+      "archive_relative_path": "local/stdout",
+      "bytes": 303,
+      "original_path": "/private/tmp/lanl14-reader-ssh-capture-20261008-a1/stdout",
+      "policy": {
+        "identity_field_is_reference_not_own_seal": true,
+        "original_canonical_ensure_ascii_present": false,
+        "original_identity_or_policy_changed": false,
+        "original_identity_sha256_present": true,
+        "original_seal": "unsealed summary",
+        "referenced_supervisor_identity_sha256": "a8231230f780ed715c9104dce8b16e24c19985272d2e7cb5708b717d10c3cf82"
+      },
+      "role": "original unsealed local summary stream",
+      "sha256": "6efa6f15d77556d51bfb241ad1c88efafbb30601ad5568a00d6f1051e1e5da46"
+    },
+    {
+      "archive_relative_path": "local/stderr",
+      "bytes": 0,
+      "original_path": "/private/tmp/lanl14-reader-ssh-capture-20261008-a1/stderr",
+      "policy": {
+        "original_identity_or_policy_changed": false,
+        "original_seal": "unsealed source/text/stream"
+      },
+      "role": "original empty local stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_relative_path": "remote/remote-reader-preregistration.json",
+      "bytes": 26060,
+      "original_path": "/private/tmp/lanl14-reader-actual-originals-20261008-a1/remote-reader-preregistration.json",
+      "policy": {
+        "original_canonical_ensure_ascii_present": false,
+        "original_identity_or_policy_changed": false,
+        "original_identity_sha256_present": false,
+        "original_seal": "unsealed",
+        "original_sealed_field": false
+      },
+      "role": "original unsealed native reader preregistration",
+      "sha256": "d36bc154d2f41fcd457c87f34cabdfd8682d4513c33bb4bcffa0edbbb46423a3"
+    },
+    {
+      "archive_relative_path": "remote/remote-reader-receipt.json",
+      "bytes": 2058,
+      "original_path": "/private/tmp/lanl14-reader-actual-originals-20261008-a1/remote-reader-receipt.json",
+      "policy": {
+        "original_canonical_ensure_ascii": false,
+        "original_canonical_ensure_ascii_present": true,
+        "original_identity_or_policy_changed": false,
+        "original_identity_sha256": "a8231230f780ed715c9104dce8b16e24c19985272d2e7cb5708b717d10c3cf82",
+        "original_identity_sha256_present": true,
+        "original_seal": "explicit"
+      },
+      "role": "original explicitly False-sealed administrative supervisor receipt",
+      "sha256": "7d9f500c2966b611f064b6418b2ca4fcfbb51a271733dcc046a6f9fc55852bc2"
+    },
+    {
+      "archive_relative_path": "remote/remote-reader-cleanup.json",
+      "bytes": 79,
+      "original_path": "/private/tmp/lanl14-reader-actual-originals-20261008-a1/remote-reader-cleanup.json",
+      "policy": {
+        "original_canonical_ensure_ascii_present": false,
+        "original_identity_or_policy_changed": false,
+        "original_identity_sha256_present": false,
+        "original_seal": "unsealed"
+      },
+      "role": "original unsealed cleanup receipt",
+      "sha256": "8c452fb7048138b148a0191aa4e3c94d8390c4839cf6286798791c8ef15f31b0"
+    },
+    {
+      "archive_relative_path": "remote/remote-reader-stdout.json",
+      "bytes": 14421,
+      "original_path": "/private/tmp/lanl14-reader-actual-originals-20261008-a1/remote-reader-stdout.json",
+      "policy": {
+        "original_canonical_ensure_ascii": true,
+        "original_canonical_ensure_ascii_present": false,
+        "original_identity_or_policy_changed": false,
+        "original_identity_sha256": "720bdb6655036b6226947656ee6440bb9ce6c972f9f045ec3cedec86a5a1ab3e",
+        "original_identity_sha256_present": true,
+        "original_seal": "default"
+      },
+      "role": "original default-True sealed selected-nine reader result; no admitted field",
+      "sha256": "bbcbf34ac330da9f2e92173cf7385c9e2d2bc4b4aa7ed982c006bd39937f7bbc"
+    },
+    {
+      "archive_relative_path": "remote/remote-reader-stderr",
+      "bytes": 0,
+      "original_path": "/private/tmp/lanl14-reader-actual-originals-20261008-a1/remote-reader-stderr",
+      "policy": {
+        "original_identity_or_policy_changed": false,
+        "original_seal": "unsealed source/text/stream"
+      },
+      "role": "original empty native reader stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_relative_path": "lanl14_reader_actual_postflight_20261008_a1.py",
+      "bytes": 6557,
+      "original_path": "/private/tmp/lanl14_reader_actual_postflight_20261008_a1.py",
+      "policy": {
+        "original_identity_or_policy_changed": false,
+        "original_seal": "unsealed source/text/stream"
+      },
+      "role": "exact executed parent read-only postflight/transfer source",
+      "sha256": "f6f4d985a3010c2d1fe82df5f798fd10dd77537ec111b9bbbf6ec1b1545f12cb"
+    },
+    {
+      "archive_relative_path": "lanl14-reader-actual-postflight-originals-transfer-20261008-a1.json",
+      "bytes": 62359,
+      "original_path": "/private/tmp/lanl14-reader-actual-postflight-originals-transfer-20261008-a1.json",
+      "policy": {
+        "original_canonical_ensure_ascii_present": false,
+        "original_identity_or_policy_changed": false,
+        "original_identity_sha256_present": false,
+        "original_seal": "unsealed",
+        "original_sealed_field": false
+      },
+      "role": "original unsealed exact-byte transfer and separate dated native postflight",
+      "sha256": "b7d5b6f7dd85b093e0787aa8c16fbb7bf8f2677d842f8d44bf665acc6a06b878"
+    },
+    {
+      "archive_relative_path": "lanl14_assess_original_reader_actual_20261008_a1.py",
+      "bytes": 8023,
+      "original_path": "/private/tmp/lanl14_assess_original_reader_actual_20261008_a1.py",
+      "policy": {
+        "original_identity_or_policy_changed": false,
+        "original_seal": "unsealed source/text/stream"
+      },
+      "role": "exact executed parent local assessment source",
+      "sha256": "46e2e25be171fffb937fed42f1f1464cb8f1cfbb077b153d59807a008645d75a"
+    },
+    {
+      "archive_relative_path": "lanl14-reader-original-actual-parent-assessment-20261008-a1.json",
+      "bytes": 1490,
+      "original_path": "/private/tmp/lanl14-reader-original-actual-parent-assessment-20261008-a1.json",
+      "policy": {
+        "original_canonical_ensure_ascii": true,
+        "original_canonical_ensure_ascii_present": false,
+        "original_identity_or_policy_changed": false,
+        "original_identity_sha256": "97c8bff5a9133b255e474d4b6f99f544e0677d05fe8dfee41e5a3156f63e53f9",
+        "original_identity_sha256_present": true,
+        "original_seal": "default"
+      },
+      "role": "original default-True sealed separate parent assessment",
+      "sha256": "b3f9237b360610af118d367770b20d438edcaa77d56a42b8c4bdfa519dbeb9f7"
+    },
+    {
+      "archive_relative_path": "lanl14-original-reader-actual-independent-reconciliation-20261008-a1.md",
+      "bytes": 2005,
+      "original_path": "/private/tmp/lanl14-original-reader-actual-independent-reconciliation-20261008-a1.md",
+      "policy": {
+        "original_identity_or_policy_changed": false,
+        "original_seal": "unsealed source/text/stream"
+      },
+      "role": "exact accepted independent local read-only reconciliation; no action",
+      "sha256": "63b1e1ccc86128b84e533ae3e4bed5c2115f3799f3b1091bcf9007e7519936db"
+    }
+  ],
+  "preservation": {
+    "C_source_entries": 223,
+    "F6": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "all_other_prior_blobs_modes_exact": true,
+    "claimed_issue14_prefix_Answer_history_unchanged": true,
+    "durable_canonical_yaml": 686,
+    "python_modules": 185,
+    "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d"
+  },
+  "scope": "Exact original reader actual custody; separate inherited parent acceptance, no new scientific admission."
+}
