@@ -1,7 +1,7 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-08 14:15 ET
+Updated: 2026-10-08 14:41 ET
 **Type:** slice
 **Status:** claimed
 **Work state:** active (explicitly resumed 2026-10-08)
@@ -132,3 +132,5 @@ worker is collected and the frozen-primary guard is handled explicitly.
 2026-10-08 14:03 ET — [First p1 iteration and release readiness](../evidence/17-p1-first-iteration-and-release-readiness-20261008-a5/README.md) retain13:45 ET active node0/g511 with1 completed iteration, live owned provider and no stopped/error receipt. R1 release/AFTER drafts remain nonexecutable future inputs. R2 exact metadata observer staged once14:00, readonly14:01 query confirms held511/matching kernel lock/FD9, release_ready=False; no native/scientific mutation. Corrected fresh-live-check ordering reviewed; no release32/AFTER executed. Agents complete/responsive, next heartbeat14:15 ET. Four normal trajectories/finalreport/review remain pending; ticket stays claimed.
 
 2026-10-08 14:15 ET — [P1 iteration progress and queued custody](../evidence/17-p1-iteration-progress-and-queued-custody-20261008-a5/README.md) preserve the14:15 ET heartbeat. Fresh14:14 ET originals show p1 active node0/g511,3 completed iterations/6 completed candidate rows, no stopped receipt or reported infrastructure error. Owned helper/provider tree is live; R2 confirms held matching kernel lock/FD9 and release_ready=False. All agents completed responsive scoped work and source reviews; no stranded worker. P3/P4 BEFORE/dispatch and p2–p4 dispatch-state32 drafts are reviewed future inputs only; actual hashes/seals/generations/UTC/admission remain required. Raw output stays remote; no duplicate science/native mutation.0/4 normal trajectories; ticket17 stays claimed. Next scheduled table/agent check14:45 ET; report/audit/final Standards+Spec review/fixes still pending.
+
+2026-10-08 14:41 ET — [Normal terminal request readiness](../evidence/17-normal-terminal-request-readiness-20261008-a5/README.md) retains the reviewed owned0664 terminal readerR1/bdf2 and local release request finalizerR3/47ec, plus exact14:29 native wrapper metadata10510B/00c269/0777. Generic private file pins would refuse writable native modes; preserve all modes and use selected reader/producer original byte checks. Fresh native/wrapper checks before32 and before/after b08 remain mandatory. Latest14:39 ET monitor observes4 iterations/8 candidate rows and public plateau summary, but no original helper stop/final exits and held511;0/4 normal completions remain admitted. Select terminal action draftR3/e647 and local finalizerR3 only after actualrelease_ready AND normal_exit_set_only and original matching stop/exits/normal state facts. All drafts/authors/terminal controls remain NOTRUN; no finalized request exists. Agents complete/responsive. Next required table/health check14:45 ET.
