@@ -1,6 +1,6 @@
 # Resume the analytic evaluator work
 
-Updated: 2026-10-08 10:29 ET
+Updated: 2026-10-08 10:53 ET
 
 **Paused at Yan-Ru's request.** Fourteen of fifteen assigned tickets are resolved.
 Ticket 17 remains `claimed`, with work paused; its acceptance boxes stay unchecked.
@@ -12,7 +12,7 @@ No agent remains running. Resume monitoring only when work is explicitly resumed
 | CPU ticket 11 | Resolved; held-out BFS passed its broad band, BC failed | Preserve both results |
 | Generality ticket 14 | Resolved; nine pairs, 45 trials; seven whole-call totals unknown | Preserve qualified results |
 | Corrected storage DEFAULT a3 | Original receipt reviewed; guard exit 0 | Do not repeat |
-| Storage RETIRE a4, plan a5 | Launch transport 0; actual worker result unassessed | Collect this existing attempt once |
+| Storage RETIRE a4, plan a5 | Wrapper reports completion/exit 0; original receipt unassessed | Collect this existing attempt once |
 | Ticket 17 science | PREPARE/freeze NOTRUN; 0/4 substantive campaigns | Wait for genuine storage and capacity admission |
 | Final Standards + Spec review | Pending after assigned work completes | Complete review and fixes before final ticket closure |
 
@@ -31,7 +31,7 @@ are integrated too. Originals and earlier NOTRUN labels are unchanged.
 [launch/quiet original](evidence/17-user-pause-custody-20261008-a1/originals/lanl17-retirement-a4-launch-and-quiet-window-original-20261008-a1.json).
 Waiting past this boundary establishes neither completion nor success.
 The user pause stopped new launches and monitoring; it did not terminate this
-already detached, bounded worker. Its terminal state is unknown.
+already detached, bounded worker. The later approved branch-use check observed its wrapper reporting `guard_completed` and exit 0. The original retirement receipt remains uncollected and unassessed.
 
 The root agent alone should collect the existing control directory
 `/data1/yanruj/lanl17-detached-sparse-retire-a4` exactly once. Use the reviewed
@@ -78,7 +78,8 @@ Do not infer sixteen retired checkouts, recovered capacity or scientific clearan
 
 GitHub and local main/integration receive the pause checkpoint. **mbit10 checkout
 synchronization is deferred**: its last observed primary remains
-`5e12a9796432654d88def24ecea617d16ca605b2`. Closeout makes no SSH calls.
+`5e12a9796432654d88def24ecea617d16ca605b2`. Original pause closeout made no SSH
+calls; the later approved branch-only observation changed no host checkout or source.
 Do not pull or change primary during the existing worker. After collection and
 assessment, handle administrative checkpoint synchronization explicitly: the
 retirement/host-query controls bind primary to `5e12a979`, so advancing it requires
@@ -102,5 +103,4 @@ actual evaluation, and use at most two lanes through the current `socket_lane.sh
 The current dated storage plan favors serial campaigns; two free lanes are not
 established by this checkpoint. Retain worktrees and remote raw/library state for resume.
 
-Remote branch cleanup is a separate pending discussion. No branch deletion is
-authorized by this checkpoint; see [the proposed list](branch-cleanup-proposal-20261008.md).
+Approved [remote branch cleanup](branch-cleanup-result-20261008.md) deleted 37 merged refs and retained four candidates attached to mbit10 worktrees. Recovery SHAs and the exact retained set are recorded. Local branches/worktrees and all resume branches remain available. The later branch-only host check changed no host checkout or source; original retirement collection is still the first evaluation-resume action.

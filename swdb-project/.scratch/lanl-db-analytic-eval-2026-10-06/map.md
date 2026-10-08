@@ -1,7 +1,7 @@
 # Map: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-08 10:29 ET (14 of 15 assigned tickets resolved; 17 paused by user)
+Updated: 2026-10-08 10:53 ET (14 of 15 assigned tickets resolved; 17 paused by user)
 **Type:** ticket map
 **Status:** claimed (unfinished implementation/evaluation; paused by user)
 **Work state:** paused-by-user; [resume guide](resume.md)
@@ -59,6 +59,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 
 ## Context pointers
 
+- 2026-10-08 10:53 ET: approved [remote branch cleanup](branch-cleanup-result-20261008.md) removed 37 merged refs, retained four mbit10 worktree-linked candidates, and preserved local/recovery/resume state. Branch-only host observation reports the retirement wrapper complete/exit 0; original receipt collection and assessment remain pending. Ticket 17 and all new evaluations stay paused.
 - 2026-10-08 10:29 ET: Yan-Ru requested pause, ticket/status sync and commit.
   [Resume](resume.md), [latest exact custody](evidence/17-user-pause-custody-20261008-a1/README.md),
   [library-preserving controls](evidence/17-library-preserving-sparse-retirement-custody-20261008-a1/README.md)

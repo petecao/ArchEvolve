@@ -1,8 +1,8 @@
 # Proposed remote development branch cleanup
 
-Updated: 2026-10-08 10:29 ET
+Updated: 2026-10-08 10:53 ET
 
-**Discussion only: no branches deleted.** Yan-Ru requested a deletion plan before any removal.
+**Approved and executed:** 37 candidates deleted; four retained for mbit10 worktree use. See [the result](branch-cleanup-result-20261008.md). The audit and candidate table below describe the original proposal before deletion.
 
 The current audit finds **41 candidates** among 55 remote `codex/` branches. Every candidate tip is an ancestor of observed GitHub `yanrujhou_main` (`5e12a9796432654d88def24ecea617d16ca605b2`). The upcoming pause checkpoint retains that full history.
 
@@ -56,4 +56,4 @@ The [machine-readable audit](branch-cleanup-proposal-20261008.json) retains ever
 
 Retain the integration branch `codex/lanl-analytic-eval`, pending storage branch `codex/lanl17-storage-guard-cost`, original ticket-17 branch, and every remote branch checked out in a retained worktree or sharing its current tip. No candidate is an open PR head in the current connector observation. The existing PR from `yanrujhou_main` to `main` is unchanged.
 
-This proposal does not authorize deletion. Confirm this list with Yan-Ru, then refresh and apply the checks above.
+Yan-Ru subsequently approved this proposal. Fresh checks and exact-tip leases were applied; the result records the actual deleted and retained sets.
