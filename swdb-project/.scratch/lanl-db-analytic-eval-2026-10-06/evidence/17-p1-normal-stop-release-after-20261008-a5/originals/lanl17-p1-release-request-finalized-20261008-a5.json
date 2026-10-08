@@ -1,0 +1,155 @@
+{
+  "auditor_sha256": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da",
+  "capture": "release",
+  "collector_sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c",
+  "context": {
+    "account": {
+      "host": "mbit10",
+      "platform": "linux",
+      "uid": 114316761,
+      "user": "yanruj"
+    },
+    "attempt": 1,
+    "campaign": "extensa-gem5-bfs-20261006-p1",
+    "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "helper_sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414",
+    "manifest_identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7",
+    "policy": {
+      "frozen_at": "2026-10-08T16:05:25.347884+00:00",
+      "id": "extensa-gem5-bfs-20261006-p1.agreement.5bae2f42d9078864",
+      "identity_sha256": "5bae2f42d9078864caad73e81a16007edb6458f0b101628ded04a7ef3aedbf7d"
+    },
+    "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+    "source_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+    "source_path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5"
+  },
+  "format": "swdb.lanl17-parent-capture-request.v1",
+  "identity_sha256": "9d81c7b64212b9daa7809299f0d277277f4908aff5e8064aa9fcee89761d8b83",
+  "inputs": {
+    "authoritative_lease_observation": {
+      "bytes": 5403,
+      "encoding": "hash_only",
+      "path": "/data1/yanruj/lanl17-p1-native-release-observation-20261008-a5.json",
+      "sealed": false,
+      "sha256": "8bdd2c65e2de959e14e0ea07688d33969a21c26d005c03437144ea05b3074d34",
+      "writer_source": {
+        "path": "/data1/yanruj/lanl17-p1-native-release-query-20261008-a5-r2.py",
+        "bytes": 15125,
+        "sha256": "df19c76a0a3c667f5d1b901677c72641a0f367e6971b4ee2e37a62871bbc7626"
+      }
+    },
+    "dispatch": {
+      "bytes": 44229,
+      "canonical_ensure_ascii": true,
+      "canonical_policy_sources": [
+        {
+          "bytes": 38195,
+          "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+          "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+        }
+      ],
+      "encoding": "json",
+      "identity_sha256": "ee2d7bebe5a8003403a136b3fd8f62b1d72b743b6b47c1f8f97c4abb31ac53dd",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/dispatch-preregistration.json",
+      "sealed": true,
+      "sha256": "7e63d49398eb8f8e2f0d9332b84c1350276acd5b50b9287b2d0b694ec565a6b4",
+      "writer_source": {
+        "bytes": 38195,
+        "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+        "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+      }
+    },
+    "lane": {
+      "bytes": 1085,
+      "encoding": "hash_only",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/lane.json",
+      "sealed": false,
+      "sha256": "e3096fa6b2f1c0ca0335f242f6d7614ae7048c43c5012e5ed33b15120bee46d4",
+      "writer_source": {
+        "path": "/data1/yanruj/Memacc-repro-20260925/AgenticRefiner/scripts/host/socket_lane.sh",
+        "bytes": 10510,
+        "sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8"
+      }
+    },
+    "manifest_M2": {
+      "bytes": 292401,
+      "canonical_ensure_ascii": true,
+      "canonical_policy_sources": [
+        {
+          "bytes": 38195,
+          "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+          "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+        }
+      ],
+      "encoding": "json",
+      "identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+      "sealed": true,
+      "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1",
+      "writer_source": {
+        "bytes": 38195,
+        "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+        "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+      }
+    },
+    "runner_exit": {
+      "bytes": 2,
+      "encoding": "integer_exit",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/runner.exit-code.txt",
+      "sealed": false,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "writer_source": {
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/helper.py",
+        "bytes": 38195,
+        "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+      }
+    },
+    "stopped": {
+      "bytes": 1355,
+      "canonical_ensure_ascii": true,
+      "canonical_policy_sources": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/helper.py",
+          "bytes": 38195,
+          "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+        }
+      ],
+      "encoding": "json",
+      "identity_sha256": "d1c6fa2460bffc5b22633dd2ce1b4d16e8d180dccbf0aafb42d343468f8d963e",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/stopped-receipt.json",
+      "sealed": true,
+      "sha256": "6868ce197cf840f3a4d1869f8f92c0c70ef7208c8599bade0642c9d215be1a7b",
+      "writer_source": {
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/helper.py",
+        "bytes": 38195,
+        "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+      }
+    },
+    "wrapper_exit": {
+      "bytes": 2,
+      "encoding": "integer_exit",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/wrapper.exit-code.txt",
+      "sealed": false,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "writer_source": {
+        "bytes": 38195,
+        "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+        "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+      }
+    }
+  },
+  "observations": {
+    "lease_released": true,
+    "lease_generation": 511,
+    "checked_utc": "2026-10-08T18:57:06.908817+00:00"
+  },
+  "producer_sha256": "32bead204337aa66d0a732b6f143216946abafc5d2eb752577b0d90f7190b7b6",
+  "read_roots": [
+    "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5",
+    "/data1/yanruj/Memacc-repro-20260925/AgenticRefiner/scripts/host/socket_lane.sh",
+    "/data1/yanruj/lanl17-p1-native-release-observation-20261008-a5.json",
+    "/data1/yanruj/lanl17-p1-native-release-query-20261008-a5-r2.py"
+  ],
+  "source_plan_sha256": "e3420b334ce05f7268699b0079987d1d2afc98fe5cb5503e6069a89038b59170"
+}

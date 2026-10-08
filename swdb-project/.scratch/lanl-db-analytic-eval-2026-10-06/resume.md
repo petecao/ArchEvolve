@@ -1,6 +1,6 @@
 # Continue the analytic evaluator work
 
-Updated: 2026-10-08 14:47 ET
+Updated: 2026-10-08 15:03 ET
 
 **Active after Yan-Ru explicitly resumed work.** Fourteen of fifteen assigned agent tickets are resolved. Ticket 17 remains claimed; its acceptance boxes remain unchecked. The 30-minute heartbeat is ACTIVE on the resumed chat.
 
@@ -9,7 +9,7 @@ Updated: 2026-10-08 14:47 ET
 | CPU ticket 11 | Resolved; held-out BFS broad-band pass, BC failure | Preserve both outcomes |
 | Generality ticket 14 | Resolved; nine pairs, 45 trials; seven whole-call totals unknown | Preserve qualified results |
 | Storage RETIRE a4 / plan a5 | Existing attempt collected once; successful original receipt, all sixteen rows retired | Do not repeat retirement or DEFAULT |
-| Ticket 17 science | a5 PREPARE/FIRST passed; p1 plateau summary,4 iterations; custody incomplete,0/4 admitted | Monitor p1, collect released after-custody, then p2–p4 and report |
+| Ticket 17 science | a5 PREPARE/FIRST passed; p1 normal plateau4 with stop/release/AFTER custody; final audit pending | p2 dispatch active; finish p2–p4, FINALIZE/report and strict audit |
 | Standards + Spec review | Full-feature base 7941ccba selected | Run both axes and fix findings after scientific closeout |
 
 [Original collection and assessment](evidence/17-resumed-retirement-assessment-20261008-a1/README.md) preserves the original retirement receipt, wrapper state and separate read-only host query. Receipt SHA256 is `93e99138ae34869de92f46d81f0b2ccd5f3da8097555dc92f7f772f17dc22b29`; all sixteen selected/retired/completed rows match, failure is null, two full RAW passes passed. Recovery was 3,051,552,768 bytes. This proves the bounded administrative action, not current capacity or scientific success.
@@ -49,3 +49,5 @@ Fresh12:34 ET capacity was/data37.9GiB and/data121.6GiB. All three leases were r
 Four genuine normal substantive campaign trajectories are mandatory. Current application forecasts yield zero eligible DX100 numerical pairs: unsupported rank/top-three/interval statistics and no-switch recommendation are valid report outcomes; baseline-only runs or unsupported pairs alone do not fulfill ticket 17.
 
 Raw output stays on mbit10. Actual measurement dispatch uses the current Memacc socket_lane.sh and no more than two admitted lanes. Preserve source/execution worktrees, library/raw evidence, historical failure receipts, and human-owned/LANL-access-blocked ticket gates. Send no external messages. The historical pause custody remains unchanged at [pause archive](evidence/17-user-pause-custody-20261008-a1/README.md).
+
+2026-10-08 15:03 ET — [Original p1 normal stop/release/AFTER](evidence/17-p1-normal-stop-release-after-20261008-a5/README.md) complete: four iterations/eight candidate rows/nine completed calls, plateau4, all four exits0, source clean/no survivors. Release32 c6ed81b5 and B08 AFTER aed96b7d originals/seals/links passed root and independent interim review. Fresh native checks before32 and before/afterAFTER show released node0g511/no matching kernel lock/no FD9. Native whole-second precision fixed only in extra private readerR2/finalizerR4; originals and frozen controls unchanged. One normal trajectory has complete custody; final strict audit/D30 admission remain pending. p2 BEFORE766efc49 shows absent state/no invocations; refreshed single-lane floors/leases/sourceR/process/load/GPU admission passed, and unchanged p2 attempt1 node0 dispatcher is running once. Serial evaluation preserves unrelated Quicksilver. Ticket17 claimed/all acceptance unchecked, other tickets untouched. Next required table/agent-health15:15 ET; final three campaigns/FINALIZE/report/audit/review/sync pending.

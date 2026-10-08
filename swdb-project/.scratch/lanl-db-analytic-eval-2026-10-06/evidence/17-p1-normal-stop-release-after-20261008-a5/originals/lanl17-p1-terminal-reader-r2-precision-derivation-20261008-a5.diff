@@ -1,0 +1,24 @@
+--- /private/tmp/lanl17_read_p1_normal_terminal_originals_20261008_a5_r1.py
++++ /private/tmp/lanl17_read_p1_normal_terminal_originals_20261008_a5_r2.py
+@@ -47,6 +47,12 @@
+     need(type(v) is str and 0<len(v)<=64,'UTC_type')
+     t=datetime.datetime.fromisoformat(v.replace('Z','+00:00'));need(t.tzinfo is not None and t.utcoffset()==datetime.timedelta(0),'UTC_offset');return t
+ 
++def stop_within_native_end(stop_end,lane_end):
++    # Native socket_lane.sh now_utc emits whole seconds; retain that half-open bin.
++    t=utc(lane_end);v=utc(stop_end)
++    need(re.fullmatch(r'[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z',lane_end) is not None,'native_whole_second_end')
++    return v<t+datetime.timedelta(seconds=1)
++
+ def read():
+     need(sys.platform=='linux' and socket.gethostname().split('.')[0]=='mbit10' and os.getuid()==os.geteuid()==UID and pwd.getpwuid(UID).pw_name=='yanruj','actual_account')
+     need(Path('/proc/self/exe').resolve()==Path('/usr/bin/python3.12') and sys.flags.dont_write_bytecode and not sys.flags.optimize,'native_Python_flags')
+@@ -71,7 +77,7 @@
+     need(type(stop['runner_exit_code']) is int and type(stop['public_exit_code']) is int and stop['runner_exit_code']==stop['public_exit_code']==0,'normal_public_runner_exit')
+     need(s.get('node')==0 and s.get('lease_name')=='mbit10-evaluation-node0' and type(s.get('lease_generation')) is int and s['lease_generation']==511 and s.get('job')=='swdb-lanl17-20261007-a5-p1-a1','final_lane_binding')
+     need(type(s.get('exit_code')) is int and s['exit_code']==0 and 'record_errors' not in s,'normal_lane_exit')
+-    need(utc(s['started_utc'])<=utc(stop['started_utc'])<utc(stop['ended_utc'])<=utc(s['ended_utc']),'original_terminal_time_order')
++    need(utc(s['started_utc'])<=utc(stop['started_utc'])<utc(stop['ended_utc']) and stop_within_native_end(stop['ended_utc'],s['ended_utc']),'original_terminal_time_order')
+     for name,cap in caps.items():
+         b,pin=metadata(A/name,cap);need(b==raws[name] and pin==rows[name],'terminal_snapshot_race')
+     return {'format':'swdb.lanl17-normal-terminal-originals-readonly.v1','sealed':False,'scientific_admission':False,'normal_metadata_ready':True,'checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'native_freshness_and_generation_not_policed_by_this_reader':True,'files':{n:{**rows[n],'base64':base64.b64encode(raws[n]).decode('ascii')} for n in caps}}
