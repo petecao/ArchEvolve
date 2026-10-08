@@ -3,7 +3,7 @@
 Created: 2026-10-06
 Updated: 2026-10-07 ET
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 05, 09, 10
 **Spec:** `../spec.md`
 **Time estimate:** 1 day
@@ -12,9 +12,9 @@ Updated: 2026-10-07 ET
 
 ## Acceptance
 
-- [ ] The estimator and mechanism-model code are unchanged between the DX100 BFS estimate and the new pairs (diff shown).
-- [ ] MAPLE results are labeled estimate-only, since no paired timing exists for it.
-- [ ] Per-region reports for all nine kernel–target pairs.
+- [x] The estimator and mechanism-model code are unchanged between the DX100 BFS estimate and the new pairs (diff shown).
+- [x] MAPLE results are labeled estimate-only, since no paired timing exists for it.
+- [x] Per-region reports for all nine kernel–target pairs.
 
 ## Implementation progress
 
@@ -83,3 +83,38 @@ After the accepted actual PR replay completed, the parent independently selected
 
 
 2026-10-07 21:58 ET — [ONE original690 reader actual custody](../evidence/14-original-reader-actual-custody-20261008-a1/README.md) retains14 exact originals / 127,905B, including separate accepted independent local reconciliation. Local SSH01:41:48.228410–01:45:25.124918Z0; original503f child/supervisor0/no timeout/signal/error/subreaper true/survivors{}, explicit-False scientific_admission=false unchanged. Original690 default-True720b selected-nine result has no admitted flag: nine pairs/45 trials, BFSCPU0.08459283293734217 and BCCPU0.64771215194357, seven whole-call nulls, all ratios/bands null, three MAPLE estimate-only; no accuracy or measured-speedup claim. Separate dated01:51:06Z postflight pins primaryA9c/C/E/R14/native/source185F6/retention/all3 released/no selected processes; parent01:52:18Z default-True97c8 assessment accepts the original format, without changing it. Exact base64/stream/seal policies reconcile; original creation-time NOTRUN and old history remain intact. PureE43256ee/18 new/704 and prior22-addition closure are inherited accepted provenance, not integrated here. Archive repeats no selected import/main/test/Store/SSH/action/science; status claimed/Answer/maps/progress/C223/185F6/durable686 unchanged.
+
+
+## Answer
+
+Resolved after the actual nine-pair public run, exact additive export and accepted original selected-record reader. The [original reader custody](../evidence/14-original-reader-actual-custody-20261008-a1/README.md), [export receipt](../evidence/14-generality-final-final-20261007-a1-export.json) and [per-region report](../evidence/14-generality-final-final-20261007-a1-report.md) establish the three acceptance items. Earlier preparation and NOTRUN statements above retain their original observation times; later actual receipts supply the completion evidence.
+
+**Same estimator and mechanism code.** The fresh DX100 BFS reference was frozen and estimated first, followed by the other eight pairs on final source `c4ab2fdbb0b0c57ee9f515522835897f24466d6b`. All nine protocols, estimates and report rows use the same complete 185-module bundle `f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3`. The report and sealed export receipt contain the same complete module-hash map and `estimator_and_mechanism_diff: []`; the accepted reader independently checks both against the source files. The protected C223 source inventory, LLVM observer/runtime and object/command contracts remain unchanged. The shown export diff from that source to pure export `43256ee0300a59a03919833075fbb13fb3ba9ab3` is data only:
+
+```text
+18 A  swdb-project/records/{protocols,estimates}/...yaml  (9 frozen protocols + 9 estimates)
+ 4 A  swdb-project/.scratch/.../evidence/14-generality-final-final-20261007-a1-*
+ 0    estimator/mechanism/observer/runtime source changes; 0 prior blob changes
+```
+
+**All nine per-region reports.** The public workflow and export passed complete-catalogue validation with `OK: 704 record(s) valid`, preserving all 686 prior canonical records plus library/application bytes and adding exactly 18 canonical records. The original reader retains nine pairs, five original trials each, 104 selected dependency records, exact source/count/input/configuration/macro/backend/target/ROI/thread pins, and every observed trial region. Fresh counts and the three historical count-reuse predicates remain individually bound; the original counts were not relabeled or repeated for this closeout. Registered `gapbs-pr-jacobi-analytic-v1` supplies actual source-free Jacobi PageRank.
+
+| Kernel | Target / threads | Aggregate region IDs | Observed regions in trials 0–4 | Estimated whole-call seconds |
+|---|---|---:|---|---:|
+| BFS | DX100 / 4 | 284 | 26, 23, 23, 23, 23 | unknown |
+| BFS | mbit10 CPU / 1 | 256 | 27, 24, 24, 24, 24 | 0.08459283293734217 |
+| BC | mbit10 CPU / 1 | 308 | 31, 28, 28, 28, 28 | 0.64771215194357 |
+| PageRank | mbit10 CPU / 1 | 266 | 11, 11, 11, 11, 11 | unknown |
+| PageRank | DX100 / 4 | 266 | 11, 11, 11, 11, 11 | unknown |
+| PageRank | MAPLE / 2 | 266 | 11, 11, 11, 11, 11 | unknown |
+| BFS | MAPLE / 2 | 256 | 27, 24, 24, 24, 24 | unknown |
+| BC | MAPLE / 2 | 308 | 31, 28, 28, 28, 28 | unknown |
+| BC | DX100 / 4 | 387 | 36, 33, 33, 33, 33 | unknown |
+
+The two numeric totals are estimated medians of complete trial totals. Aggregate regions are diagnostics, never a sum used to obtain whole-call time; exact formula inputs, costs, counts and missing facts remain in each trial's region report. All nine ratios, baselines and error bands are null. Seven whole-call totals remain unknown; absent costs are not treated as zero.
+
+**MAPLE and transfer limits.** All three MAPLE rows are explicitly `estimate_only: true`, `accuracy_validation: false`, with no paired timing. Their whole-call/trial totals and error bands remain null. PageRank/CPU preserves both `service_scope.characterization_allowlist` and `memory_scenario.characterization_allowlist` gaps in aggregate and every trial; the target retains the exact four BF/BC characterization scopes. No BF/BC service costs or error envelope transfer to PageRank. Ticket 11's broad BFS envelope and observed failed BC envelope keep their separate qualified validation states; these nine reports claim no new accuracy envelope.
+
+**Actual evidence boundary.** Original reader output is `swdb.lanl14-selected-nine-export-admission.v1`, identity `720bdb6655036b6226947656ee6440bb9ce6c972f9f045ec3cedec86a5a1ab3e`, without an `admitted` field. Parent acceptance `97c8bff5a9133b255e474d4b6f99f544e0677d05fe8dfee41e5a3156f63e53f9` separately accepts the exact original result, three zero exits, no timeout and empty cleanup survivors. Full-catalogue public admission is inherited from the pinned export receipt, not replaced by selected-record reading. Runner/wrapper zeros retain that explicit inherited boundary. The 68,324,111-byte report transfers as original plaintext with identical file SHA `c340d66bce2d968aa5ef70b2bc0b4042484af2a7fc711a639e9d4af9b32f04e2`; conditional gzip was not needed. Original remote bytes and semantic seal remain unchanged.
+
+This metadata workflow makes predicted estimates, not measured speedup or accuracy claims. It launches no new application timing, compiler/native evaluation or provider call. Final code-review and ticket 17's four actual campaigns/agreement report remain pending.

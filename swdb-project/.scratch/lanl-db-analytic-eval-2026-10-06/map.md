@@ -1,7 +1,7 @@
 # Map: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-07 09:56 ET (13 of 15 assigned tickets resolved; 14 and 17 active)
+Updated: 2026-10-07 ET (14 of 15 assigned tickets resolved; 17 active)
 **Type:** ticket map
 **Status:** claimed (implementation and actual evaluations in progress)
 **Spec:** [spec.md](spec.md)
@@ -40,7 +40,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 
 | # | Ticket | Status | Blocked by | Time |
 |---|---|---|---|---|
-| 14 | [Generality: MAPLE and PageRank](issues/14-generality-maple-pagerank.md) | claimed | 05, 09, 10 | 1 day |
+| 14 | [Generality: MAPLE and PageRank](issues/14-generality-maple-pagerank.md) | resolved | 05, 09, 10 | 1 day |
 | 15 | [Show Scott the counting approach](issues/15-show-scott-counting.md) | ready-for-human | 09 | about 15 min |
 | 16 | [Extensa flow A: blind paired estimates](issues/16-extensa-blind-paired-estimates.md) | resolved | 06, 09 | 4–6 h |
 | 17 | [Agreement report](issues/17-agreement-report.md) | claimed | 16 | 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs) |
@@ -149,3 +149,15 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
   [per-region explanation](evidence/11-holdout-admission-20261007-a3/README.md).
   Source C/F6 and all previous records are unchanged; actual report public
   validation passed 684 records, delivered integration retains 686.
+
+- 2026-10-07 ET: [ticket 14](issues/14-generality-maple-pagerank.md#answer) resolved.
+  The [actual per-region report](evidence/14-generality-final-final-20261007-a1-report.md)
+  and [original reader custody](evidence/14-original-reader-actual-custody-20261008-a1/README.md)
+  retain all nine pairs/five trials each, the fresh DX100 BFS reference, identical
+  185-module F6 estimator/mechanism code, and exact target-specific counting policies.
+  The data-only pure export adds nine protocols/nine estimates; public validation
+  passed 704 records with all 686 prior canonical bytes unchanged. Only CPU BFS/BC
+  have predicted whole-call totals; seven totals and all ratios/error bands remain
+  null. MAPLE is estimate-only; PR inherits no BF/BC service or error-band admission.
+  Ticket 11's broad/failed CPU envelopes remain separately qualified. No measured
+  speedup or new accuracy claim. Final code-review and ticket 17 remain pending.
