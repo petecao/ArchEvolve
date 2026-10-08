@@ -1,8 +1,9 @@
 # 15 — Show Scott the counting approach
 
 Created: 2026-10-06
+Updated: 2026-10-08 12:00 ET (resolved)
 **Type:** task
-**Status:** ready-for-human
+**Status:** resolved
 **Blocked by:** 09
 **Spec:** `../spec.md`
 **Time estimate:** about 15 min
@@ -11,4 +12,11 @@ Created: 2026-10-06
 
 ## Acceptance
 
-- [ ] Scott's answer is recorded in the spec with its date.
+- [x] Scott's answer is recorded in the spec with its date.
+
+## Answer
+
+2026-10-08 12:00 ET: Yan-Ru reports that Scott approved the strategies. Counting over the
+real address stream stays as the accelerator memory mechanism (D17). The fallback to
+paper-reported parameters (D34) is not triggered. Recorded in the spec's D34 row and
+accepted-risks line.

@@ -1,7 +1,7 @@
 # Spec: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-06 16:11 ET (ticket number reference updated for the regenerated tickets); 2026-10-06 16:07 ET (rewritten to the full spec template: problem, solution, user stories,
+Updated: 2026-10-08 12:00 ET (Scott's answer on D34 recorded: approved); 2026-10-06 16:11 ET (ticket number reference updated for the regenerated tickets); 2026-10-06 16:07 ET (rewritten to the full spec template: problem, solution, user stories,
 implementation and testing decisions; decisions D1–D34 unchanged); 2026-10-06 ET, before the 16:01 ET
 design-session commit `6c691e6` (D8–D15 confirmed; grilling rounds 1–4 added D16–D34; estimator
 workflow approved)
@@ -248,7 +248,7 @@ Decided in the grilling (Yan-Ru, 2026-10-06):
 | D31 | Ticket 30 of the typed-library map (sending the first gem5 result as a team claim) is closed as wontfix under ADR 0013. |
 | D32 | Version 1 estimates time only; energy later, as an extension of the mechanism models. |
 | D33 | Regions are the existing profile-package and site-finder regions, with the same IDs; unmapped loops are listed. |
-| D34 | Scott sees the counting approach after the estimator works; accepted risk: if he calls it simulation, counting falls back to paper-reported parameters. |
+| D34 | Scott sees the counting approach after the estimator works; accepted risk: if he calls it simulation, counting falls back to paper-reported parameters. **Answer (2026-10-08, reported by Yan-Ru): Scott approved the strategies. Counting over the address stream stays; the paper-parameter fallback is not triggered.** |
 
 ### Estimator workflow and tools
 
@@ -402,7 +402,7 @@ same output before and after.
   profiling data). No surveyed model estimates a shared, programmable indirect-access accelerator on
   graph kernels without a simulator; that gap is the research contribution.
 - **Accepted risks:** Scott may call address-stream counting simulation (D34; fallback to
-  paper-reported parameters); DX100's error band stays loose in ArchEvolve mode (D14); the agreement
+  paper-reported parameters; closed 2026-10-08: Scott approved); DX100's error band stays loose in ArchEvolve mode (D14); the agreement
   report needs about 13 h of gem5 lane time for 20 pairs.
 - **Open item for flow B:** whether certification cost depends on knob values. If it does, variants
   differ only in knobs, so one certification covers them all.
