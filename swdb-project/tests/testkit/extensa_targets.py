@@ -1,6 +1,7 @@
-"""Real Extensa target adapters on fixture runners: a copy of the repository records
+"""Real Extensa target adapters on fixture runners: a subset of repository dependencies
 (`repo_team`, renamed from `team`), fake host and runner, campaign writers. Created
-2026-10-05 ET (code review T1), from tests/test_extensa_targets.py."""
+2026-10-05 ET (code review T1), from tests/test_extensa_targets.py. Updated
+2026-10-08 ET: omit unrelated analytic campaign evidence from the fixture stores."""
 
 import copy
 import difflib
@@ -13,6 +14,7 @@ import yaml
 from conftest import REPO
 from swdb import campaign, campaign_targets, certification
 from swdb.store import Store
+from testkit.record_subset import copy_record_subset
 
 CONTRACT = "contract.bfs_read_offload"
 KRON18_S0 = "bfs-20260928-kronecker18-s0.cf4283236c5cb50c"
@@ -23,14 +25,26 @@ GEM5_BASELINE = "typed-library-bfs-gem5-20261003-a2.baseline"
 @pytest.fixture(scope="module")
 def base_source(tmp_path_factory):
     folder = tmp_path_factory.mktemp("base")
-    tree, _ = certification.materialize_snapshot(Store(REPO / "records"), campaign_targets.SNAPSHOT, folder)
+    records = folder / "records"
+    copy_record_subset(REPO / "records", records, [campaign_targets.SNAPSHOT])
+    tree, _ = certification.materialize_snapshot(Store(records), campaign_targets.SNAPSHOT, folder)
     return (tree / campaign_targets.BFS).read_text()
 
 
 @pytest.fixture(scope="module")
 def repo_team_template(tmp_path_factory):
     root = tmp_path_factory.mktemp("team")
-    shutil.copytree(REPO / "records", root / "records")
+    copy_record_subset(REPO / "records", root / "records", [
+        GEM5_BASELINE, campaign_targets.SNAPSHOT, campaign_targets.GEM5_TEMPLATE,
+        *campaign_targets.NATIVE_TEMPLATES.values(), KRON18_S0, UNIFORM18_S0, "mbit10",
+        "bfs-native-pilot-20260925-dx10018-a1.baseline",
+        "bfs-native-pilot-20260925-upstream18-a2.baseline",
+        "bfs-20260925-kronecker18.48de8267ac2098d5",
+        "bfs-20260925-uniform18.cd2169a5c421baf7",
+        "bfs-20261004-kronecker22.3dc69be403db57e9",
+        "bfs-20261004-uniform22.facb16e6260c3a82",
+        "bfs-20260925-uniform22.f23b09bb0c0601b5",
+    ])
     return root / "records"
 
 

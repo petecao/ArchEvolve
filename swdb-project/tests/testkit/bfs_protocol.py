@@ -1,6 +1,7 @@
 """Workload, freeze and comparison fixtures and helpers. Created 2026-10-05 ET (code
 review T1), from tests/test_bfs_protocol.py. The protocol seed runs the end-to-end
-evaluation boundary once per module through the plain builders."""
+evaluation boundary once per module through the plain builders. Updated
+2026-10-08 ET: seed only the real dependencies used by these contract fixtures."""
 
 import copy
 import datetime
@@ -16,6 +17,7 @@ import yaml
 from conftest import REPO, make_records
 from testkit.bfs_native import PROGRAM, build_evaluation_setup
 from testkit.proposals import build_proposal_setup
+from testkit.record_subset import copy_record_subset
 
 NORMALIZATION = {"remove_self_loops": True, "deduplicate": True, "sort_neighbors": True,
                  "symmetrize_undirected": True}
@@ -133,7 +135,9 @@ def protocol_seed(tmp_path_factory):
     # isolated authoritative records and performs fresh public CLI requests.
     path = tmp_path_factory.mktemp("protocol-seed")
     records = make_records(path)
-    proposal = build_proposal_setup(records, path)
+    copy_record_subset(REPO / "records", records.path,
+                       ["gapbs-bfs-do", "gapbs", "dx100-gapbs", "mbit10"])
+    proposal = build_proposal_setup(records, path, copy_all=False)
     evaluation = build_evaluation_setup(proposal, path)
     return _seed_protocol(evaluation, path)
 

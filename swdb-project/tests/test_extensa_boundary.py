@@ -3,7 +3,8 @@
 Created: 2026-10-03 ET. Fixture records only (evidence_kind contract_fixture); no
 record here is execution evidence. Updated 2026-10-05 ET (spec review C1, C3, C9, C18): who
 performed a review, promotion evidence of the current contract content, levels from the newest
-command version, no promotion from a superseded team protocol.
+command version, no promotion from a superseded team protocol. Updated 2026-10-08 ET:
+tag and writer fixtures retain only their real record dependencies.
 """
 
 import copy
@@ -14,6 +15,7 @@ import yaml
 
 from conftest import REPO, run_swdb
 from testkit.bfs_protocol import _command, _payload
+from testkit.record_subset import copy_record_subset
 
 CAMPAIGN = "extensa-native-bfs-20261004-a1"
 CANDIDATE = "test-proposal.candidate-1"
@@ -22,7 +24,8 @@ KRON = "inputs/kron-g16-k16.yaml"
 
 @pytest.fixture
 def repo(records):
-    return records.copy_repo()
+    copy_record_subset(REPO / "records", records.path, ["kron-g16-k16"])
+    return records
 
 
 def _tag(records, rel, campaign=CAMPAIGN):
