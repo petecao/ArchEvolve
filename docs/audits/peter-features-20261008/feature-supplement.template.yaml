@@ -1,0 +1,119 @@
+# Proposed discussion supplement only. Not an agreed schema, not measurements,
+# and not accepted by the current normalizer as a replacement feature input.
+format: feature-audit-supplement-draft-0.1
+record_kind: unfilled_template
+ready_for_estimation: false
+binds_feature_report:
+  path: null
+  sha256: null
+source_and_run:
+  source_revision: null
+  source_file: benchmarks/gapbs/src/bfs.cc
+  binary_build_id_or_sha256: null
+  build_flags: null
+  baseline_machine_ref: null
+  thread_count: null
+  graph_identity_or_hash: null
+  generator_seed: null
+  bfs_root: null
+  run_id: null
+  trial_id: null
+  roi_id: null
+  roi_begin: null
+  roi_end: null
+baseline_cost:
+  elapsed_seconds: null
+  attribution_method: null
+  evidence_basis: unknown # measured, sampled, derived, or modeled; name assumptions
+  event: null
+  percent_type: null # local/global and period/hits if using perf annotate
+  denominator_id: null
+  denominator_value: null
+  denominator_unit: null
+  aggregation: null # wall time is not the sum of parallel-thread elapsed times
+  raw_evidence_refs: []
+  stat_run_id: null
+  record_run_id: null # separate execution unless actual binding establishes otherwise
+  run_correspondence: unknown
+region_cost_partition:
+  status: unbound_to_profile_and_IR
+  coverage: null # exclusive/full vs partial/overlapping; describe missing coverage
+  unattributed_cost: null # unknown must not become zero
+  regions:
+    # Reuse stable source IDs; IR subsets must distinguish the two meanings of line 241.
+    - id: frontier_load
+      statement_ids: [bfs-td-frontier]
+      baseline_ir_refs: []
+      cost_value: null
+      cost_unit: null
+      share_pct_of_named_denominator: null
+    - id: row_bound_loads
+      statement_ids: [bfs-td-row-bounds]
+      baseline_ir_refs: []
+      cost_value: null
+      cost_unit: null
+      share_pct_of_named_denominator: null
+    - id: inner_loop_index_control
+      statement_ids: [bfs-td-row-bounds]
+      baseline_ir_refs: []
+      cost_value: null
+      cost_unit: null
+      share_pct_of_named_denominator: null
+    - id: neighbor_load
+      statement_ids: [bfs-td-neighbor]
+      baseline_ir_refs: []
+      cost_value: null
+      cost_unit: null
+      share_pct_of_named_denominator: null
+    - id: parent_load
+      statement_ids: [bfs-td-parent-read]
+      baseline_ir_refs: []
+      cost_value: null
+      cost_unit: null
+      share_pct_of_named_denominator: null
+    - id: parent_CAS
+      statement_ids: [bfs-td-parent-cas]
+      baseline_ir_refs: []
+      cost_value: null
+      cost_unit: null
+      share_pct_of_named_denominator: null
+    - id: retained_parent_store
+      statement_ids: [bfs-td-parent-store]
+      baseline_ir_refs: []
+      cost_value: null
+      cost_unit: null
+      share_pct_of_named_denominator: null
+    - id: queue_push_and_flush
+      statement_ids: [bfs-td-queue-append]
+      baseline_ir_refs: [] # include actual flush implementation/outlined work as applicable
+      cost_value: null
+      cost_unit: null
+      share_pct_of_named_denominator: null
+    - id: remaining_CPU_work
+      statement_ids: []
+      baseline_ir_refs: []
+      cost_value: null
+      cost_unit: null
+      share_pct_of_named_denominator: null
+level_records:
+  - level_id: null
+    run_id: null
+    trial_id: null
+    bfs_root: null
+    frontier_vertices: null
+    visited_edges: null
+    maximum_frontier_vertex_degree: null
+    degree_distribution_ref: null # optional
+    logical_access_counts: null # separate from IR loads and physical memory requests
+    locality_ref: null # units, pair/segment scope and actual ordering must be stated
+    active_footprint_ref: null # optional; total allocation bytes are a separate quantity
+    evidence_basis: unknown
+    evidence_refs: []
+semantic_context:
+  access_chains_ref: null # input/index/result roles, functions and dependencies
+  mutation_alias_and_ordering_ref: null
+  source_statement_mapping_ref: null # reuse established mapping; bind it to this source
+status_notes:
+  - New snapshot/submission/staging/wait/drain costs belong to candidate/evaluator accounting.
+  - This layout proposes measurement bindings; it does not select hardware or grant legality.
+  - Field names can be aligned with Peter/Yan-Ru/LANL before implementing an adapter.

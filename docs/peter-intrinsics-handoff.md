@@ -1,5 +1,9 @@
 # BFS intrinsic handoff — Eric's hardware evidence catalog
 
+## October 8: next feature handoff
+
+The [feature-interface audit](audits/peter-features-20261008/README.md) identifies what the hybrid/evaluator needs beyond v1.2: scoped baseline cost with source/IR bindings, run-bound per-level work counts, and collection provenance. It reuses the existing statement mapping and separates optional locality/working-set refinements from the minimal request. Helper findings and a message draft are included; no profiling data or tool code was changed.
+
 ## October 8: BFS hybrid thought experiment
 
 The [annotated MAPLE/DX100 BFS sketch](designs/bfs-maple-dx100-hybrid/README.md) is the concrete point design requested in the October 8 meeting. Its invented sketch intrinsics partition row-bound fetching, CPU staging, neighbor fetching and CPU discovery, with per-worker ownership, finite queue admission, range continuation and final drain. It is a separate proposal for review, not an executable replacement or a change to existing typed-library pins.
