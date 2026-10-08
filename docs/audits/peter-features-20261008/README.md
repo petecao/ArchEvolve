@@ -61,7 +61,3 @@ These checks concern the current helper implementation. They do not establish ho
 Once the minimal handoff works, useful optional signals include degree distributions, zero-degree frequency, per-window unique lines/bytes, duplicate targets, reuse with defined scope, and dependencies between simultaneous access chains. Synthetic deeper-indirection/multiple-access examples can extend coverage; they are not required to finish the existing BFS sketch.
 
 The [small supplement template](feature-supplement.template.yaml) is a discussion example with null values, not an agreed schema or profiler output. It is deliberately separate from the unchanged v1.2 inputs and is not accepted by the current pipeline as measured data. LANL's eventual exchange format may supersede it.
-
-## Suggested message
-
-See [message-to-peter.md](message-to-peter.md) for a concise draft. No message has been sent.

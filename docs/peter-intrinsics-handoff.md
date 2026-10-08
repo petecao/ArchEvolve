@@ -2,7 +2,7 @@
 
 ## October 8: next feature handoff
 
-The [feature-interface audit](audits/peter-features-20261008/README.md) identifies what the hybrid/evaluator needs beyond v1.2: scoped baseline cost with source/IR bindings, run-bound per-level work counts, and collection provenance. It reuses the existing statement mapping and separates optional locality/working-set refinements from the minimal request. Helper findings and a message draft are included; no profiling data or tool code was changed.
+The [feature-interface audit](audits/peter-features-20261008/README.md) identifies what the hybrid/evaluator needs beyond v1.2: scoped baseline cost with source/IR bindings, run-bound per-level work counts, and collection provenance. It reuses the existing statement mapping and separates optional locality/working-set refinements from the minimal request. Helper findings are included; no profiling data or tool code was changed.
 
 ## October 8: BFS hybrid thought experiment
 
