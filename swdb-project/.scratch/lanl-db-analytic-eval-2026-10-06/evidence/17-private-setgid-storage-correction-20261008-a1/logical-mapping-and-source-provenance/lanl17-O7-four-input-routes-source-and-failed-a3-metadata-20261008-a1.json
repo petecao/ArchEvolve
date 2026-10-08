@@ -1,0 +1,265 @@
+{
+  "format": "swdb.local-O7-input-route-original-provenance-and-failed-observer-comparison.v1",
+  "date_ET": "2026-10-08",
+  "scope": "Four O7 input routes traced without guessing filenames. Only two source.json bodies had recorded SHA256 among metadata-only root reads. The bitcode filenames, sizes, stats and bodies have no recorded file pins in that scope; their logical routes and original digests are bound by original count records and producer. O7 physical checkout and RAW remain protected.",
+  "sealed": false,
+  "failed_observer_original_pin": {
+    "path": "/private/tmp/lanl17-detached-passive-observer-originals-20261008-a3/observer.stdout",
+    "bytes": 21616756,
+    "sha256": "93c08ff387147c8709d53e8cc39569afcaeac2e5cb667602a6859e2eee6e63e5"
+  },
+  "original_observer_outcome": {
+    "failure": {
+      "class": "Refused",
+      "code": "special_permission_bits"
+    },
+    "observation_complete_within_finite_scope": false,
+    "stable_at_end_of_observation": false
+  },
+  "original_O7_receipt_pin": {
+    "local_path": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-normalized-root-projection-mbit10-20261006-a1.json",
+    "bytes": 4304,
+    "sha256": "dc8c3a6751b65bcd39f9af41e9d70ed3a61ded4b6305a4e68ba12fab3d9145d6"
+  },
+  "original_prior_count_receipt_pin": {
+    "commit": "a15d9eade7d90e210fd4a37f30bbab9ab6612d72",
+    "relative_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/registered-counts-t1-mbit10-20261006-a1.json",
+    "bytes": 38365,
+    "sha256": "f58e996d2c25300034db53c0fc1bed1bc9868d5c127cf140faa7dbd919207a3e"
+  },
+  "original_count_producer_pin": {
+    "commit": "eb1b2419f03c09d4ccbd97286fa7d1109f3f495b",
+    "relative_path": "swdb-project/swdb/analytic.py",
+    "bytes": 45836,
+    "sha256": "fd9f34cf4200631b265d85ccb860f0fb6eda4c679e694e7c2c737a2ac2874a49"
+  },
+  "original_O7_source_runbook_pin": {
+    "commit": "30f425b5275765c7ccdb5115ab8bb00f8b5f5e98",
+    "relative_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-native-unknown-object-origins.md",
+    "bytes": 12655,
+    "sha256": "050d615c2039b9e2db4e41eaa0e0b2874425eacfeb5990e391b59671c8fb778e"
+  },
+  "four_input_claims": [
+    {
+      "original_O7_receipt_JSON_path": [
+        "execution",
+        "results",
+        0,
+        "input_sha256",
+        "normalized.bc"
+      ],
+      "original_O7_SHA256": "8c15ca5a8491f0e2d394abb0122cb9b3039327b179720d6bb058ef0b79ab6acf",
+      "logical_route": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-t1-counts-20261006-a1/bc-counted/normalized.bc",
+      "route_provenance": {
+        "original_count_record_pin": {
+          "commit": "a15d9eade7d90e210fd4a37f30bbab9ab6612d72",
+          "relative_path": "swdb-project/records/workload_characterizations/bc.kron-g16.t1.characterization.a1.yaml",
+          "bytes": 13382631,
+          "sha256": "c7230866c0b70e003fd6f3ec7523a11457d29f1efe142e08a2a9c358822a2bb0"
+        },
+        "exact_original_count_record_line_witness": [
+          {
+            "line": 134,
+            "text": "    source_ir_sha256: 8c15ca5a8491f0e2d394abb0122cb9b3039327b179720d6bb058ef0b79ab6acf"
+          },
+          {
+            "line": 172,
+            "text": "  output_directory: /data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-t1-counts-20261006-a1/bc-counted"
+          },
+          {
+            "line": 176,
+            "text": "  source_ir_sha256: 8c15ca5a8491f0e2d394abb0122cb9b3039327b179720d6bb058ef0b79ab6acf"
+          }
+        ],
+        "original_count_source_commit": "eb1b2419f03c09d4ccbd97286fa7d1109f3f495b",
+        "original_producer_route_lines": [
+          {
+            "line": 324,
+            "source_text": "    normalized = output / 'normalized.bc'"
+          },
+          {
+            "line": 399,
+            "source_text": "            'binary_sha256': _sha(binary), 'counts_sha256': _sha(output / 'counts.json'), 'output_directory': str(output)},"
+          },
+          {
+            "line": 400,
+            "source_text": "        'static_analysis': {'basis': 'code_reading', 'source_ir_sha256': _sha(normalized), 'optimized_ir_sha256': _sha(optimized),"
+          }
+        ],
+        "additional_original_source_note": "O7-source Git runbook78/90\u201391 names RAW/{kernel}-counted/{normalized.bc,source.json}; this is a prospective recipe, not claimed retained actual argv."
+      },
+      "failed_a3_recorded_file_fact": null,
+      "observer_root_hash_scope": "metadata_suffixes_only",
+      "mechanical_result": "original_IR_SHA_and_logical_route_bound_but_no_observed_bitcode_file_pin_in_metadata_scope",
+      "boundary": "Original route/provenance and failed-observation metadata only; no current availability/end stability or admission."
+    },
+    {
+      "original_O7_receipt_JSON_path": [
+        "execution",
+        "results",
+        0,
+        "input_sha256",
+        "source.json"
+      ],
+      "original_O7_SHA256": "00a4d6af06c67c3f26f9914090e1752a8a9fac39c9f7790e16bce87b6905c943",
+      "logical_route": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-t1-counts-20261006-a1/bc-counted/source.json",
+      "route_provenance": {
+        "original_count_record_pin": {
+          "commit": "a15d9eade7d90e210fd4a37f30bbab9ab6612d72",
+          "relative_path": "swdb-project/records/workload_characterizations/bc.kron-g16.t1.characterization.a1.yaml",
+          "bytes": 13382631,
+          "sha256": "c7230866c0b70e003fd6f3ec7523a11457d29f1efe142e08a2a9c358822a2bb0"
+        },
+        "exact_original_count_record_line_witness": [
+          {
+            "line": 134,
+            "text": "    source_ir_sha256: 8c15ca5a8491f0e2d394abb0122cb9b3039327b179720d6bb058ef0b79ab6acf"
+          },
+          {
+            "line": 172,
+            "text": "  output_directory: /data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-t1-counts-20261006-a1/bc-counted"
+          },
+          {
+            "line": 176,
+            "text": "  source_ir_sha256: 8c15ca5a8491f0e2d394abb0122cb9b3039327b179720d6bb058ef0b79ab6acf"
+          }
+        ],
+        "original_count_source_commit": "eb1b2419f03c09d4ccbd97286fa7d1109f3f495b",
+        "original_producer_route_lines": [],
+        "additional_original_source_note": "O7-source Git runbook78/90\u201391 names RAW/{kernel}-counted/{normalized.bc,source.json}; this is a prospective recipe, not claimed retained actual argv."
+      },
+      "failed_a3_recorded_file_fact": {
+        "bytes": 4165025,
+        "candidate_reference_rows": [],
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-t1-counts-20261006-a1/bc-counted/source.json",
+        "reference_classification": "unclassified_literal_bytes",
+        "sha256": "00a4d6af06c67c3f26f9914090e1752a8a9fac39c9f7790e16bce87b6905c943",
+        "stat": {
+          "ctime_ns": 1791327657353057432,
+          "dev": 2065,
+          "gid": 114316761,
+          "ino": 14160232,
+          "mode": 33204,
+          "mtime_ns": 1791327657353057432,
+          "nlink": 1,
+          "size": 4165025,
+          "uid": 114316761
+        }
+      },
+      "observer_root_hash_scope": "metadata_suffixes_only",
+      "mechanical_result": "recorded_source_json_SHA_equal",
+      "boundary": "Original route/provenance and failed-observation metadata only; no current availability/end stability or admission."
+    },
+    {
+      "original_O7_receipt_JSON_path": [
+        "execution",
+        "results",
+        1,
+        "input_sha256",
+        "normalized.bc"
+      ],
+      "original_O7_SHA256": "a65f27c06439fbf5212d2ec42bf0647e8b3538ebe2382bec52e31fdf05e3126a",
+      "logical_route": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-t1-counts-20261006-a1/bfs-counted/normalized.bc",
+      "route_provenance": {
+        "original_count_record_pin": {
+          "commit": "a15d9eade7d90e210fd4a37f30bbab9ab6612d72",
+          "relative_path": "swdb-project/records/workload_characterizations/bfs.kron-g16.t1.characterization.a1.yaml",
+          "bytes": 11161170,
+          "sha256": "875fa3fa7db2df2f77e41b72220ce257092014cf5c9e46a5c83f073762516e03"
+        },
+        "exact_original_count_record_line_witness": [
+          {
+            "line": 136,
+            "text": "    source_ir_sha256: a65f27c06439fbf5212d2ec42bf0647e8b3538ebe2382bec52e31fdf05e3126a"
+          },
+          {
+            "line": 174,
+            "text": "  output_directory: /data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-t1-counts-20261006-a1/bfs-counted"
+          },
+          {
+            "line": 178,
+            "text": "  source_ir_sha256: a65f27c06439fbf5212d2ec42bf0647e8b3538ebe2382bec52e31fdf05e3126a"
+          }
+        ],
+        "original_count_source_commit": "eb1b2419f03c09d4ccbd97286fa7d1109f3f495b",
+        "original_producer_route_lines": [
+          {
+            "line": 324,
+            "source_text": "    normalized = output / 'normalized.bc'"
+          },
+          {
+            "line": 399,
+            "source_text": "            'binary_sha256': _sha(binary), 'counts_sha256': _sha(output / 'counts.json'), 'output_directory': str(output)},"
+          },
+          {
+            "line": 400,
+            "source_text": "        'static_analysis': {'basis': 'code_reading', 'source_ir_sha256': _sha(normalized), 'optimized_ir_sha256': _sha(optimized),"
+          }
+        ],
+        "additional_original_source_note": "O7-source Git runbook78/90\u201391 names RAW/{kernel}-counted/{normalized.bc,source.json}; this is a prospective recipe, not claimed retained actual argv."
+      },
+      "failed_a3_recorded_file_fact": null,
+      "observer_root_hash_scope": "metadata_suffixes_only",
+      "mechanical_result": "original_IR_SHA_and_logical_route_bound_but_no_observed_bitcode_file_pin_in_metadata_scope",
+      "boundary": "Original route/provenance and failed-observation metadata only; no current availability/end stability or admission."
+    },
+    {
+      "original_O7_receipt_JSON_path": [
+        "execution",
+        "results",
+        1,
+        "input_sha256",
+        "source.json"
+      ],
+      "original_O7_SHA256": "1e743800d737bd1688b6b94a9494c3fd7746ba5105ad423d3eb8659cca0734ae",
+      "logical_route": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-t1-counts-20261006-a1/bfs-counted/source.json",
+      "route_provenance": {
+        "original_count_record_pin": {
+          "commit": "a15d9eade7d90e210fd4a37f30bbab9ab6612d72",
+          "relative_path": "swdb-project/records/workload_characterizations/bfs.kron-g16.t1.characterization.a1.yaml",
+          "bytes": 11161170,
+          "sha256": "875fa3fa7db2df2f77e41b72220ce257092014cf5c9e46a5c83f073762516e03"
+        },
+        "exact_original_count_record_line_witness": [
+          {
+            "line": 136,
+            "text": "    source_ir_sha256: a65f27c06439fbf5212d2ec42bf0647e8b3538ebe2382bec52e31fdf05e3126a"
+          },
+          {
+            "line": 174,
+            "text": "  output_directory: /data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-t1-counts-20261006-a1/bfs-counted"
+          },
+          {
+            "line": 178,
+            "text": "  source_ir_sha256: a65f27c06439fbf5212d2ec42bf0647e8b3538ebe2382bec52e31fdf05e3126a"
+          }
+        ],
+        "original_count_source_commit": "eb1b2419f03c09d4ccbd97286fa7d1109f3f495b",
+        "original_producer_route_lines": [],
+        "additional_original_source_note": "O7-source Git runbook78/90\u201391 names RAW/{kernel}-counted/{normalized.bc,source.json}; this is a prospective recipe, not claimed retained actual argv."
+      },
+      "failed_a3_recorded_file_fact": {
+        "bytes": 3177577,
+        "candidate_reference_rows": [],
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-t1-counts-20261006-a1/bfs-counted/source.json",
+        "reference_classification": "unclassified_literal_bytes",
+        "sha256": "1e743800d737bd1688b6b94a9494c3fd7746ba5105ad423d3eb8659cca0734ae",
+        "stat": {
+          "ctime_ns": 1791327538772873173,
+          "dev": 2065,
+          "gid": 114316761,
+          "ino": 14160210,
+          "mode": 33204,
+          "mtime_ns": 1791327538772873173,
+          "nlink": 1,
+          "size": 3177577,
+          "uid": 114316761
+        }
+      },
+      "observer_root_hash_scope": "metadata_suffixes_only",
+      "mechanical_result": "recorded_source_json_SHA_equal",
+      "boundary": "Original route/provenance and failed-observation metadata only; no current availability/end stability or admission."
+    }
+  ],
+  "execution_scope": "Read-only local metadata/Git blob inspection and private unsealed JSON; no SSH, selected imports/mains/tests, project changes or plan flags."
+}

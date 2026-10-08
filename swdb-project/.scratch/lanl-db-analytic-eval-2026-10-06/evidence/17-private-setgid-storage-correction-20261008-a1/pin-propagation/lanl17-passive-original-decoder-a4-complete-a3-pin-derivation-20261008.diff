@@ -1,0 +1,33 @@
+--- /private/tmp/lanl_decode_detached_passive_observer_original_custody_20261008_a3.py
++++ /private/tmp/lanl_decode_detached_passive_observer_original_custody_20261008_a4.py
+@@ -1,8 +1,8 @@
+ import argparse,pathlib,os,stat,json,hashlib,base64
+ P=pathlib.Path
+ PACKET_CAP=64*1024*1024
+-WRAPPER_SHA='6453bfc0d74259d497569eb018e91ff7972b8812d39a3eacc6fe51324cf9709f'
+-OBSERVER_SHA='50ad9bf511f90429a040bf5c25cc9a4bd15b12cb28419ad414d586269e5cdc99'
++WRAPPER_SHA='fb0a7cf1e6b6a2dbfeb8a91d5d2651a15044d7da51631d42d891d236b8de9da0'
++OBSERVER_SHA='488fb42df44d338204b5cff58b10e7f0ff9c7feaee6490b33ba94201ba4f7665'
+ TERMINAL_STATES=('observer_completed','observer_refused_or_failed','preflight_refused_no_observer_launch','administrative_postflight_failed','observer_launch_started','observer_running','GNU_supervision_not_returned_within_wrapper_wait')
+ FILES=[('status.json',16384),('configuration.json',16384),('tmux.conf',16384),('launch-status.json',16384),('launch.stdout',16384),('launch.stderr',16384),('observer.stdout',32*1024*1024),('observer.stderr',256*1024)]
+ def sha(b):return hashlib.sha256(b).hexdigest()
+@@ -25,8 +25,8 @@
+ b,packet_stat=local_read(p,PACKET_CAP);d=strict(b)
+ assert d['format']=='swdb.detached-passive-observer-administration-original-custody-transfer.v1' and d['sealed'] is False and d['no_success_or_admission_inferred'] is True and d['state_label_is_not_launch_or_liveness_proof'] is True and d['packet_byte_limit']==PACKET_CAP
+ assert d['selected_wrapper_source_sha256']==WRAPPER_SHA and d['selected_observer_source_sha256']==OBSERVER_SHA
+-remote=P(d['control_directory']);assert remote==P('/data1/yanruj/lanl17-detached-observer-a3')
+-dest=P(args.output_directory);assert dest.parent==P('/private/tmp') and dest.name=='lanl17-detached-passive-observer-originals-20261008-a3' and not os.path.lexists(dest)
++remote=P(d['control_directory']);assert remote==P('/data1/yanruj/lanl17-detached-observer-a4')
++dest=P(args.output_directory);assert dest.parent==P('/private/tmp') and dest.name=='lanl17-detached-passive-observer-originals-20261008-a4' and not os.path.lexists(dest)
+ allowed=dict(FILES);seen=set();decoded=[];total=0
+ for pin in d['originals']:
+  rp=P(pin['path']);name=rp.name;assert rp.parent==remote and name in allowed and name not in seen;seen.add(name)
+@@ -36,7 +36,7 @@
+ assert {'status.json','configuration.json','tmux.conf','launch-status.json','launch.stdout','launch.stderr'}<=seen
+ byname={name:(raw,pin) for name,raw,pin in decoded};status,status_pin=byname['status.json'];s=strict(status)
+ assert s['format']=='swdb.lanl17-detached-passive-observer-administration-status.v1' and s['sealed'] is False and s['state'] in TERMINAL_STATES and type(s['ended_utc']) is str
+-assert s['inputs']['wrapper']['sha256']==WRAPPER_SHA and s['inputs']['wrapper']['bytes']==15359 and s['inputs']['observer']['sha256']==OBSERVER_SHA and s['inputs']['observer']['bytes']==58755
++assert s['inputs']['wrapper']['sha256']==WRAPPER_SHA and s['inputs']['wrapper']['bytes']==15359 and s['inputs']['observer']['sha256']==OBSERVER_SHA and s['inputs']['observer']['bytes']==58750
+ assert s['scientific_admission'] is False and s['capacity_admission'] is False
+ if s['state'] in ('observer_completed','observer_refused_or_failed','administrative_postflight_failed'):assert type(s.get('observer_exit_code')) is int
+ missing=[name for name,cap in FILES if name not in seen];assert missing==d['missing_original_stream_names'] and (not missing or s['state']=='preflight_refused_no_observer_launch')
