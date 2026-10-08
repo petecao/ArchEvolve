@@ -1,7 +1,7 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-08 13:19 ET
+Updated: 2026-10-08 14:03 ET
 **Type:** slice
 **Status:** claimed
 **Work state:** active (explicitly resumed 2026-10-08)
@@ -127,3 +127,6 @@ worker is collected and the frozen-primary guard is handled explicitly.
 
 
 2026-10-08 13:19 ET — The13:15 ET [phase addendum](../evidence/17-active-p1-startup-and-p2-preparation-20261008-a5/README.md) confirms public freeze.command return0 and live owned Codex setup call1 on matching held node0/g511. No provider outcome body, iteration or normal trajectory is admitted. Original failed generic-mode collection remains separate from exact native metadata-reader capture; no chmod/scientific repeat. Agents complete/responsive; next heartbeat13:45 ET. Ticket17 stays claimed and all acceptance gates remain pending.
+
+
+2026-10-08 14:03 ET — [First p1 iteration and release readiness](../evidence/17-p1-first-iteration-and-release-readiness-20261008-a5/README.md) retain13:45 ET active node0/g511 with1 completed iteration, live owned provider and no stopped/error receipt. R1 release/AFTER drafts remain nonexecutable future inputs. R2 exact metadata observer staged once14:00, readonly14:01 query confirms held511/matching kernel lock/FD9, release_ready=False; no native/scientific mutation. Corrected fresh-live-check ordering reviewed; no release32/AFTER executed. Agents complete/responsive, next heartbeat14:15 ET. Four normal trajectories/finalreport/review remain pending; ticket stays claimed.

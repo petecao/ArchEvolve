@@ -1,6 +1,6 @@
 # Implementation progress
 
-Updated: 2026-10-08 13:19 ET
+Updated: 2026-10-08 14:03 ET
 
 **Current state: ACTIVE after Yan-Ru's explicit resumption; 14/15 assigned tickets resolved.**
 Ticket 17 remains `claimed`, with acceptance pending. Start from [resume.md](resume.md).
@@ -10,6 +10,8 @@ Readiness and evidence-review agents are responsive; completed subtasks are reta
 [Current p1 startup checkpoint](evidence/17-active-p1-startup-and-p2-preparation-20261008-a5/README.md):13:11 ET metadata confirms public query-index completion, pairing/setup entry and advancing owned CPU. State/iterations and protocol/provider/terminal receipts remain absent. Source-only p2 commands are reviewed, with fresh admission still required. The13:11 ET evaluation table and responsive agent check are complete; next required table13:41 ET.
 
 The13:15 ET heartbeat [phase addendum](evidence/17-active-p1-startup-and-p2-preparation-20261008-a5/README.md) confirms completed public protocol-freeze return0 and a live owned Codex setup-call process. Zero completed iterations/normal trajectories; node0/g511 stays held. Native permissions remain unchanged; failed generic collection and distinct exact metadata-reader collection are retained separately. Agents are complete/responsive; next heartbeat due13:45 ET.
+
+[First p1 iteration and release readiness](evidence/17-p1-first-iteration-and-release-readiness-20261008-a5/README.md):13:45 ET ledger/row agree at1, owned provider live, no stop/error. Reviewed future R1 release/AFTER drafts and actual14:00 source-stage/14:01 held-lease query retained. R2 observer correctly refuses release on held511/matching kernel lock/FD9/missing terminal files. Fresh native checks before32 and before/after b08 remain required. Agents complete/responsive; next heartbeat14:15 ET.
 
 Approved [local cleanup](local-worktree-cleanup-20261008.md) archived and removed
 17 completed checkouts and their merged local branches. Main, integration and
@@ -22,7 +24,7 @@ writing-preference rule is committed as `cb6f75ae`. Evaluation state is unchange
 | Ticket 14 generality | Resolved; nine pairs/45 trials, seven unknown totals | Preserve original receipts and qualified unknowns |
 | Corrected storage DEFAULT a3 | Actual original receipt reviewed; guard exit 0 | Limited inspection only; do not repeat |
 | Storage RETIRE a4 / actual a5 | Original successful sixteen-row receipt reviewed and retained | Do not repeat retirement or DEFAULT |
-| Ticket 17 science | PREPARE and FIRST publication succeeded; 0/4 substantive normal campaigns | p1 setup provider active node0/g511; four normal trajectories and report pending |
+| Ticket 17 science | PREPARE and FIRST publication succeeded; 0/4 substantive normal campaigns | p1 active node0/g511; 1 iteration; four normal trajectories/report pending |
 | Final review and completion | Pending after all assigned work completes | Standards + Spec review, fixes, final ticket closure |
 
 The following paragraphs retain pause-era observations; the current active state is above.
