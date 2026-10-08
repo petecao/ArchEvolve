@@ -1,7 +1,7 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-08 11:20 ET
+Updated: 2026-10-08 12:43 ET
 **Type:** slice
 **Status:** claimed
 **Work state:** active (explicitly resumed 2026-10-08)
@@ -115,3 +115,6 @@ worker is collected and the frozen-primary guard is handled explicitly.
 2026-10-08 11:42 ET — [Fresh a5 preparation](../evidence/17-fresh-a5-preparation-controls-20261008-a1/README.md) active; corrected tracked53hook bound successfully at11:35ET. All original controls/R/C185F6/proof4/scientific policies unchanged. Canonical704valid, mathematical3passed. Publicsuite fixture600s timeout diagnosed as overbroad1GiB catalogue; test-only boundedclosure repair active. No population/four-campaign/D30 admission yet.
 
 2026-10-08 ET — [Test-only fixture repair](../evidence/17-test-fixture-regression-20261008/README.md) verified: 73 passed, 1 unchanged canonical validation test deselected; other shared-fixture consumers 38 passed; bounded dependency-copy regressions 2 passed. Canonical public validation independently passed all 704 records. Fixtures copy the original required closure instead of the full 1,023,048,889-byte catalog. Scientific source, public validation, timeouts and evaluation controls remain unchanged. Initial setup/repair failures are disclosed in the regression summary. Remote PREPARE a5 passed public validation and is running policy freeze; four campaigns remain 0/4.
+
+
+2026-10-08 12:43 ET — [Actual preparation and FIRST publication](../evidence/17-actual-prepare-first-publication-20261008-a5/README.md) retained: PREPARE a5 returned0 at12:23ET, canonical704 validated, pure seven-file freeze export44652dd published, unchanged author791 and producer32 returned0 before campaign outcomes. Actual FIRST7701B/e1fa63af custody and original M2/policy/supervisor/source/transport links passed root and independent review. p1-before state absent and no invocations. First wrapper refused before helper execution due alias0664; tightening only mode0600 preserved bytes/inode/mtime. Fresh serial node0 dispatch input checks active;12:41 monitor had no attempt directory. All budgets/full catalogs/F6/R unchanged.0/4 substantive campaigns; actual report/audit/final two-axis review and ticket closure remain pending.

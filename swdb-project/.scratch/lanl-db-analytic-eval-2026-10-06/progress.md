@@ -1,11 +1,11 @@
 # Implementation progress
 
-Updated: 2026-10-08 11:11 ET
+Updated: 2026-10-08 12:42 ET
 
-**Current state: PAUSED at Yan-Ru's request; 14/15 assigned tickets resolved.**
-Ticket 17 retains tracker status `claimed`, with work paused and acceptance pending.
-Start the next session from [resume.md](resume.md). The 30-minute heartbeat
-`lanl-analytic-evaluator-progress` is PAUSED; all three implementers are completed.
+**Current state: ACTIVE after Yan-Ru's explicit resumption; 14/15 assigned tickets resolved.**
+Ticket 17 remains `claimed`, with acceptance pending. Start from [resume.md](resume.md).
+The 30-minute heartbeat `lanl-analytic-evaluator-progress` is ACTIVE on the resumed chat.
+Readiness and evidence-review agents are responsive; completed subtasks are retained.
 
 Approved [local cleanup](local-worktree-cleanup-20261008.md) archived and removed
 17 completed checkouts and their merged local branches. Main, integration and
@@ -17,8 +17,8 @@ writing-preference rule is committed as `cb6f75ae`. Evaluation state is unchange
 | Ticket 11 CPU | Resolved; held-out BFS broad-band pass and BC failure retained | Preserve both results |
 | Ticket 14 generality | Resolved; nine pairs/45 trials, seven unknown totals | Preserve original receipts and qualified unknowns |
 | Corrected storage DEFAULT a3 | Actual original receipt reviewed; guard exit 0 | Limited inspection only; do not repeat |
-| Storage RETIRE a4 / fresh plan a5 | Wrapper reports completion/exit 0; original receipt unassessed | Collect existing attempt once after 2026-10-08 10:48:28 ET |
-| Ticket 17 science | PREPARE/freeze NOTRUN; 0/4 substantive normal campaigns | Original retirement assessment, fresh capacity/lease admission |
+| Storage RETIRE a4 / actual a5 | Original successful sixteen-row receipt reviewed and retained | Do not repeat retirement or DEFAULT |
+| Ticket 17 science | PREPARE and FIRST publication succeeded; 0/4 substantive normal campaigns | First serial dispatch input checks active; four trajectories and report pending |
 | Final review and completion | Pending after all assigned work completes | Standards + Spec review, fixes, final ticket closure |
 
 [Pause custody](evidence/17-user-pause-custody-20261008-a1/README.md) preserves
@@ -421,3 +421,6 @@ Live host check 04:39:31Z: both socket/legacy leases released; /data1 free 23,56
 2026-10-08 11:42 ET — [Fresh a5 preparation](evidence/17-fresh-a5-preparation-controls-20261008-a1/README.md) active; corrected tracked53hook bound successfully at11:35ET. All original controls/R/C185F6/proof4/scientific policies unchanged. Canonical704valid, mathematical3passed. Publicsuite fixture600s timeout diagnosed as overbroad1GiB catalogue; test-only boundedclosure repair active. No population/four-campaign/D30 admission yet.
 
 2026-10-08 ET — [Test-only fixture repair](evidence/17-test-fixture-regression-20261008/README.md) verified: 73 passed, 1 unchanged canonical validation test deselected; other shared-fixture consumers 38 passed; bounded dependency-copy regressions 2 passed. Canonical public validation independently passed all 704 records. Fixtures copy the original required closure instead of the full 1,023,048,889-byte catalog. Scientific source, public validation, timeouts and evaluation controls remain unchanged. Initial setup/repair failures are disclosed in the regression summary. Remote PREPARE a5 passed public validation and is running policy freeze; four campaigns remain 0/4.
+
+
+2026-10-08 12:43 ET — [Actual preparation and FIRST publication](evidence/17-actual-prepare-first-publication-20261008-a5/README.md) retained: PREPARE a5 returned0 at12:23ET, canonical704 validated, pure seven-file freeze export44652dd published, unchanged author791 and producer32 returned0 before campaign outcomes. Actual FIRST7701B/e1fa63af custody and original M2/policy/supervisor/source/transport links passed root and independent review. p1-before state absent and no invocations. First wrapper refused before helper execution due alias0664; tightening only mode0600 preserved bytes/inode/mtime. Fresh serial node0 dispatch input checks active;12:41 monitor had no attempt directory. All budgets/full catalogs/F6/R unchanged.0/4 substantive campaigns; actual report/audit/final two-axis review and ticket closure remain pending.
