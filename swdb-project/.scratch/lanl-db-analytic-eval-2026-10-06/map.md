@@ -1,7 +1,7 @@
 # Map: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-08 18:00 ET
+Updated: 2026-10-08 18:32 ET
 **Type:** ticket map
 **Status:** claimed (unfinished implementation/evaluation)
 **Work state:** active; [resume guide](resume.md)
@@ -219,3 +219,6 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 
 
 2026-10-08 18:00 ET — [P3 public startup heartbeat](evidence/17-actual-p3-dispatch-and-release-readiness-20261008-a5/README.md) retains three exact17:59:45–46 ET monitor/process/native originals. Actual p3 publicPID2290441/start599863751 is live R with7964 CPUticks/teamrecordFD, campaign directory/publicargv metadata present; state/provider/stop/finalexit absent. Monitoractive/0completed iterations/no reported infrastructure error. R2held513/matching FLOCK/daemonFD9/release_readyfalse/no unknown. Node1g550/legacyg77 reported released; p1/p2 normal interim custody complete, p4 queued with source-only controls reviewed. All scoped agents responsive/completed, no stranded worker. Required18:00 table/health completed; next18:30 ET. Ticket17 claimed/acceptance unchecked; final campaigns/FINALIZE/report/full strict audit/Standards+Spec review/fixes/ticket/Git sync pending. Heartbeat ACTIVE; remotePRIMARY+origin remainR. No repeated dispatch/custody/science/native mutation.
+
+
+2026-10-08 18:32 ET — [P3 first iteration heartbeat](evidence/17-actual-p3-dispatch-and-release-readiness-20261008-a5/README.md) retains actual18:31:57–58 ET monitor/process/native originals. P3 attempt1 has1 completed ledger/iteration row and2 completed candidate rows,0interrupted/no reported infrastructure error. Owned publicPID2290441/start599863751 advances to164456 userticks and has live owned Codex provider; three provider receipt files are stat observations only, not a separately admitted completed-call count. Full public query index951750656B/pairing/freeze/state metadata exist; no original stop/finalexits/summary. Selected nativeR2held513/matching kernelFLOCK/daemonFD9/release_readyfalse/no unknown. Node1g550/legacyg77 reported released; p1/p2 normal interim custody complete, p4 queued. All scoped agents responsive/completed, no stranded worker. Required18:32 table/health completed; next19:00 ET. Ticket17 claimed/all acceptance unchecked; final campaigns/FINALIZE/report/full strict audit/Standards+Spec review/fixes/ticket/Git synchronization pending. Heartbeat ACTIVE and remotePRIMARY+origin remainR. No repeated dispatch/custody/science/native mutation; budgets/source/policy/fullcatalogs/native modes unchanged. Raw output stays remote.
