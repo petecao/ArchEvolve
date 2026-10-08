@@ -1,0 +1,136 @@
+{
+  "status": "APPROVE_SCOPED_CSR_ADMISSION_NO_DEFECT_FOUND",
+  "owner": "w41:p7D",
+  "source_pins": {
+    "/data1/nier/worktrees/codex-sessions/hybrid-sustained-performance-20260923-20260923-215821-2fdb4d4f/DX100-virtualization-selected-integration-cont-20260826/experiments/analysis/smash_public_csr_input_admission_2026_10_07/csr_input_admission.h": "e6ce472ad696ddc862bbbb03504a22d82d001f009a6dadd779b476a83425afca",
+    "/data1/nier/worktrees/codex-sessions/hybrid-sustained-performance-20260923-20260923-215821-2fdb4d4f/DX100-virtualization-selected-integration-cont-20260826/experiments/analysis/smash_public_csr_input_admission_2026_10_07/construct_csr_admitted.h": "aa58089eab579a52451071ddc65306bb7400397f2dc43b5a334d709112183ec0",
+    "/data1/nier/worktrees/codex-sessions/hybrid-sustained-performance-20260923-20260923-215821-2fdb4d4f/DX100-virtualization-selected-integration-cont-20260826/experiments/analysis/smash_public_constructor_extent_2026_10_06/geometry_admission.h": "3d57d1b93c5625ec385916d25bc7799fb82b72f5f331b14718eeb4b5328fd41e",
+    "/tmp/smash-csr-admission-package-r2/bitmap.h": "ab6acdac30e7a4b747f1cbf84c96356ac70dd35a7a9e6e93c6555c750e710de4",
+    "/data1/nier/worktrees/codex-sessions/hybrid-sustained-performance-20260923-20260923-215821-2fdb4d4f/DX100-virtualization-selected-integration-cont-20260826/experiments/analysis/smash_public_csr_input_admission_2026_10_07/execution-receipt.json": "cd1b8e5fd945b1fe02ccd6dd6c53e6f95b072d326e2466f72f389f7a46453e27",
+    "/data1/nier/worktrees/codex-sessions/hybrid-sustained-performance-20260923-20260923-215821-2fdb4d4f/DX100-virtualization-selected-integration-cont-20260826/experiments/analysis/smash_public_csr_input_admission_2026_10_07/test_csr_admission.cc": "c06c69c4b5c964f144378088bc908173a04771fa826874f387a60f4bc32a67ca",
+    "/data1/nier/worktrees/codex-sessions/hybrid-sustained-performance-20260923-20260923-215821-2fdb4d4f/DX100-virtualization-selected-integration-cont-20260826/experiments/analysis/smash_public_csr_input_admission_2026_10_07/test_constructor_admission.cc.txt": "ef4fae3b8b8e96031ca2e04603958583d018196921695507418bec9b10213fbb",
+    "/data1/nier/worktrees/codex-sessions/hybrid-sustained-performance-20260923-20260923-215821-2fdb4d4f/DX100-virtualization-selected-integration-cont-20260826/experiments/analysis/smash_public_csr_input_admission_2026_10_07/test_c_api_storage.c": "39971ae5b14e2c8e5045a5fff2c2969f29c601db02a1cfb8be6a74c1363a60b6"
+  },
+  "findings": [],
+  "evidence": [
+    {
+      "topic": "caller counts",
+      "file": "/data1/nier/worktrees/codex-sessions/hybrid-sustained-performance-20260923-20260923-215821-2fdb4d4f/DX100-virtualization-selected-integration-cont-20260826/experiments/analysis/smash_public_csr_input_admission_2026_10_07/csr_input_admission.h",
+      "lines": [
+        21,
+        24,
+        40,
+        48
+      ],
+      "verdict": "declared nnz<=INT_MAX; row/column/value prefixes checked before array use; counts remain trusted caller inputs and are not inferred from untrusted tail"
+    },
+    {
+      "topic": "row bounds",
+      "file": "/data1/nier/worktrees/codex-sessions/hybrid-sustained-performance-20260923-20260923-215821-2fdb4d4f/DX100-virtualization-selected-integration-cont-20260826/experiments/analysis/smash_public_csr_input_admission_2026_10_07/csr_input_admission.h",
+      "lines": [
+        49,
+        58
+      ],
+      "verdict": "origin0, nonnegative monotonic offsets, every end<=declared nnz, exact final nnz before column traversal"
+    },
+    {
+      "topic": "column bounds",
+      "file": "/data1/nier/worktrees/codex-sessions/hybrid-sustained-performance-20260923-20260923-215821-2fdb4d4f/DX100-virtualization-selected-integration-cont-20260826/experiments/analysis/smash_public_csr_input_admission_2026_10_07/csr_input_admission.h",
+      "lines": [
+        59,
+        72
+      ],
+      "verdict": "all columns0<=col<size; strict increasing per row intentionally excludes duplicate/unsorted inputs for bitmap subset"
+    },
+    {
+      "topic": "empty input",
+      "file": "/data1/nier/worktrees/codex-sessions/hybrid-sustained-performance-20260923-20260923-215821-2fdb4d4f/DX100-virtualization-selected-integration-cont-20260826/experiments/analysis/smash_public_csr_input_admission_2026_10_07/csr_input_admission.h",
+      "lines": [
+        40,
+        44,
+        53,
+        58,
+        61,
+        62
+      ],
+      "verdict": "size0 rejected; positive size with nnz0/all row offsets0 permits null columns/values and performs no column dereference"
+    },
+    {
+      "topic": "pre-mutation rejection",
+      "file": "/data1/nier/worktrees/codex-sessions/hybrid-sustained-performance-20260923-20260923-215821-2fdb4d4f/DX100-virtualization-selected-integration-cont-20260826/experiments/analysis/smash_public_csr_input_admission_2026_10_07/construct_csr_admitted.h",
+      "lines": [
+        16,
+        29
+      ],
+      "verdict": "null and CSR failures return before geometry; geometry failure returns before original constructor call; view construction/validation does not write format or matrix"
+    },
+    {
+      "topic": "integer constructor bounds",
+      "file": "/data1/nier/worktrees/codex-sessions/hybrid-sustained-performance-20260923-20260923-215821-2fdb4d4f/DX100-virtualization-selected-integration-cont-20260826/experiments/analysis/smash_public_constructor_extent_2026_10_06/geometry_admission.h",
+      "lines": [
+        9,
+        15
+      ],
+      "verdict": "geometry proves positive size/ratio, size^2<=INT_MAX, complete groups and bitmap-rounding headroom; valid monotone dense coordinates keep constructor block and nza-block products bounded"
+    },
+    {
+      "topic": "empty actual constructor",
+      "file": "/tmp/smash-csr-admission-package-r2/bitmap.h",
+      "lines": [
+        164,
+        214
+      ],
+      "verdict": "for nnz0 row loops have zero inner iterations; no column/value pointer dereference; bitmap allocated for positive supported extent, NZA starts one float and nza_blocks stays0"
+    }
+  ],
+  "existing_test_receipts_reused": {
+    "new_structural_fixture": {
+      "compile_rc": 0,
+      "run_rc": 0,
+      "sanitizers": [
+        "address",
+        "undefined"
+      ],
+      "checks": [
+        "row/column/value-prefix truncation",
+        "missing/origin/order/tail/count malformed metadata",
+        "negative/out-of-range columns",
+        "unsupported duplicates and unsorted columns",
+        "valid and empty structural input"
+      ]
+    },
+    "new_constructor_fixture": {
+      "compile_rc": 0,
+      "run_rc": 0,
+      "sanitizers": [
+        "address",
+        "undefined"
+      ],
+      "before": "actual completed constructor writes bit4 outside declared four-bit extent for column4 in size4 matrix",
+      "after": "admitted entry rejects invalid column, wrong row origin and truncated row prefix before fields/allocation mutate; valid column3 invokes unchanged constructor"
+    },
+    "old_geometry_or_source_suites_replayed": 0,
+    "actual_payload_model_science_applications": 0,
+    "scope": "Values never read; initialized prefix capacities remain caller obligation",
+    "new_C11_storage_fixture": {
+      "compile_rc": 0,
+      "run_rc": 0,
+      "checks": "null format/matrix/rows/columns/values and invalid size all reject without invoking constructor stub; actual C header ABI compilation",
+      "sanitizers": [
+        "address",
+        "undefined"
+      ]
+    }
+  },
+  "new_tests_or_builds": 0,
+  "simulations": 0,
+  "CG_capture_reads": 0,
+  "caller_obligations": [
+    "initialized accessible matrix/format objects",
+    "truthful readable initialized row/column prefix counts and retained original declared nnz",
+    "values capacity/definedness remains caller-owned; values never read by this structural admission",
+    "legacy constructor/read_csr bypasses admission; use opt-in entry point"
+  ],
+  "review_limit": "structural CSR/constructor admission only; allocation failure handling, NZA/value initialization and full indexer/numerics not granted",
+  "recommendation": "Use the opt-in admitted entry only after parser/caller retains trustworthy counts and conversion/definedness evidence. No change required to reviewed headers."
+}

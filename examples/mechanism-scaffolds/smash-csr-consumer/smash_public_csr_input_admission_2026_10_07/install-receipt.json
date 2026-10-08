@@ -1,0 +1,13 @@
+{
+  "parent_sha256": "ab6acdac30e7a4b747f1cbf84c96356ac70dd35a7a9e6e93c6555c750e710de4",
+  "files": {
+    "bitmap.h": "ab6acdac30e7a4b747f1cbf84c96356ac70dd35a7a9e6e93c6555c750e710de4",
+    "csr_input_admission.h": "e6ce472ad696ddc862bbbb03504a22d82d001f009a6dadd779b476a83425afca",
+    "construct_csr_admitted.h": "aa58089eab579a52451071ddc65306bb7400397f2dc43b5a334d709112183ec0",
+    "geometry_admission.h": "3d57d1b93c5625ec385916d25bc7799fb82b72f5f331b14718eeb4b5328fd41e"
+  },
+  "legacy_header_unchanged": true,
+  "explicit_call": "include construct_csr_admitted.h after the original types/constructor; call construct_bitmap0_nza_admitted(format,matrix,row_words,column_words,value_words,declared_nnz)",
+  "required_parser_obligation": "Retain original declared nnz and trusted allocated/initialized prefix lengths; original read_csr does not return them or certify successful conversions.",
+  "scope": "Structural admission only; no value/NZA initialization, parser safety or wholekernel numerical grant"
+}
