@@ -1,0 +1,46 @@
+{
+  "format": "design-sketch-manifest-v0.1",
+  "proposal_id": "proposal.bfs-maple-dx100-outer-inner.v0",
+  "date": "2026-10-08",
+  "repository_base_commit": "1dc45cdb7b46b389f5e958dc6d227efc8e343743",
+  "catalog": {
+    "path": "catalog/hardware-v0.1.yaml",
+    "revision": "0.1.17",
+    "sha256": "7adeb7f901b546955bd8fd9327ea55c373958a4998aa949317d37b5145d2b85d",
+    "use": "Source references only; this hybrid is not admitted to the catalog."
+  },
+  "source": {
+    "repository": "https://github.com/arkhadem/DX100",
+    "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+    "path": "benchmarks/gapbs/src/bfs.cc",
+    "function": "TDStep",
+    "lines": [
+      227,
+      259
+    ],
+    "scope": "One level of top-down BFS; driver and next-level transition remain external.",
+    "sha256": "6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465"
+  },
+  "artifacts": {
+    "README.md": "4f65a2e26f0964bf4739e2cb9a9436c37678643d58978b1fa7e6f79ff025c673",
+    "bfs_hybrid.pseudo.cpp": "62161abfb58c5ca749080b33a6d57782365709ede5378675c74b18c1f5610c5c",
+    "partition.yaml": "df912d9378f9d897c76514de83e6e7dc114551228239bff83fb21d0c5dca4d6c",
+    "pipeline.mmd": "758d103fcae2c5ca52d53ff5dfdf7f3d32c73b3c2fb9c680babe1efb6c02e45b",
+    "pipeline.png": "1bdb136c264a21122b93a58a20d1cb4a043ea8d72bb5c249b890397713aedead",
+    "pipeline.svg": "fc4dab595b7b5a9893964e7d59e2ccfe428f0c598a0a8bb72d76a54c458118dc",
+    "review.md": "6bb809c357ebc2a4dd83cd700f20ccf9301fa7a62e08c1ae431e37969a2f593d",
+    "schedule.mmd": "643ff5bca36b7cfe2eb4d52c762edebea66c57bba89579d895f3d466cb859234",
+    "schedule.png": "e7b696b1ce1b23755402d96cfc447710aa5abb4783b2ea2025a6637b0ef69014",
+    "schedule.svg": "4daa4989d0a5a0d65642c7f8bf18df1468bb91b9e31708a9de7c420b6d8cb51b"
+  },
+  "validation": {
+    "yaml_and_reference_checks": "passed",
+    "seven_statement_source_bindings": "matched pinned source lines",
+    "region_markers": "checked",
+    "worked_example": "independent scalar enumeration of five tuples and next frontier [3,4]",
+    "mermaid": "both diagrams rendered and visually inspected",
+    "hybrid_executed": false,
+    "hardware_evaluated": false,
+    "performance_claim": null
+  }
+}

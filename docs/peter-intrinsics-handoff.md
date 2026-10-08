@@ -1,5 +1,9 @@
 # BFS intrinsic handoff — Eric's hardware evidence catalog
 
+## October 8: BFS hybrid thought experiment
+
+The [annotated MAPLE/DX100 BFS sketch](designs/bfs-maple-dx100-hybrid/README.md) is the concrete point design requested in the October 8 meeting. Its invented sketch intrinsics partition row-bound fetching, CPU staging, neighbor fetching and CPU discovery, with per-worker ownership, finite queue admission, range continuation and final drain. It is a separate proposal for review, not an executable replacement or a change to existing typed-library pins.
+
 ## October 6: how the hardware accelerates
 
 Peter's requested mechanism/semantics layer is available in the [hardware behavior guide](hardware-behavior-handoff.md) and [compact DX100/MAPLE sheets](../handoffs/hardware-behavior-20261006/README.md). Future generated packages include `hardware-behavior.md` and `.yaml`: observable operation semantics, internal request/response handling, conditional payoff hypotheses, implementation obligations and source evidence.

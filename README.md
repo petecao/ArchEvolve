@@ -21,6 +21,7 @@ The default catalog is `catalog/hardware-v0.1.yaml` (format v0.1, data revision 
 
 ## Results and handoff
 
+- **[October 8 BFS hybrid sketch](docs/designs/bfs-maple-dx100-hybrid/README.md)**: annotated thought experiment assigning next-batch row bounds to MAPLE, current-batch neighbors to DX100, and parent/queue effects to the CPU; includes bounded ownership and drain semantics.
 - **[Peter's intrinsic handoff](docs/peter-intrinsics-handoff.md)**: current images, operation contracts, and source requirements.
 - **[How all 20 hardware records accelerate work](docs/hardware-mechanism-overview.md)**: work delegated, operand/result movement, and software synchronization, with 71 linked catalog claims.
 - **[Hardware behavior and acceleration mechanisms](docs/hardware-behavior-handoff.md)**: October 6 response to Peter, with separate source-scoped DX100/MAPLE sheets and automatic behavior output for future packages.

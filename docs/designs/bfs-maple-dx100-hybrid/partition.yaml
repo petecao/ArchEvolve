@@ -1,0 +1,142 @@
+format: hybrid-design-sketch-v0.1
+proposal_id: proposal.bfs-maple-dx100-outer-inner.v0
+status: human_review_thought_experiment
+created: '2026-10-08'
+executable: false
+hardware_evaluated: false
+catalog_admitted: false
+purpose: Make the outer metadata / inner neighbor split precise before evolving designs.
+source:
+  repository: https://github.com/arkhadem/DX100
+  revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  path: benchmarks/gapbs/src/bfs.cc
+  function: TDStep
+  lines: [227, 259]
+  scope: One level of top-down BFS; driver and next-level transition remain external.
+invented_api_prefix: SKETCH_
+api_status: Desired behaviors only; no concrete ABI or callable implementation supplied.
+hardware_references:
+  maple:
+    design_id: maple-isca2022
+    operation_ids: [maple-pointer-fetch]
+    mode: Required queue values through host-supplied pointers; not LLC prefetch hints.
+  dx100:
+    design_id: dx100-artifact-e4fc4af
+    operation_ids: [dxc-ranged-gather, dxc-gather]
+    mode: Range expansion and neighbor reads with original row/result association.
+  composition_status: Not established by either catalog entry; a common deployment is required.
+regions:
+  - id: H0
+    actor: CPU
+    work: Admission, session/resource/region setup, current-frontier snapshot and publication.
+    accounting: Added setup/copy work; include in comparison boundary.
+  - id: H1
+    actor: CPU
+    work: Bind batch IDs/vertices; form pointers and issue two MAPLE commands per vertex.
+    source_statement_ids: [bfs-td-frontier]
+    accounting: Host submission and address computation remain CPU work.
+  - id: M1
+    actor: MAPLE
+    work: Fetch VertexOffsets[u] and VertexOffsets[u+1] into two owned FIFO streams.
+    source_statement_ids: [bfs-td-row-bounds]
+    logical_values_per_vertex: 2
+    accounting: Device fetch work; actual requests/traffic are not inferred from logical count.
+  - id: H2
+    actor: CPU
+    work: Consume exactly the admitted logical result counts and form host row-bound arrays.
+    accounting: Consumption, decode and wait costs; acknowledgement is not data readiness.
+  - id: X1
+    actor: CPU_to_DX100
+    work: Copy current row bounds to owned source tiles, publish valid counts and visibility.
+    accounting: Added transfer/publication work; not zero-cost or direct device-to-device.
+  - id: D1
+    actor: CPU_control
+    work: Initialize continuation/stride register values via allocated register handles.
+    accounting: Host MMIO/control setup is separate from device execution cost.
+  - id: D2
+    actor: DX100
+    work: Enumerate current CSR intervals into row_slot and absolute edge_index chunks.
+    source_statement_ids: [bfs-td-row-bounds]
+    accounting: Device range work plus separately recorded host issue/wait overhead.
+  - id: D3
+    actor: DX100
+    work: Gather g.out_neighbors_[edge_index] and retain row_slot/result association.
+    source_statement_ids: [bfs-td-neighbor]
+    accounting: Device gather work plus separately recorded host issue/wait overhead.
+  - id: C1
+    actor: CPU
+    work: Parent load, conditional CAS, retained parent store and thread-local queue push.
+    source_statement_ids:
+      - bfs-td-parent-read
+      - bfs-td-parent-cas
+      - bfs-td-parent-store
+      - bfs-td-queue-append
+    accounting: Retained semantics; unchanged timing is only a prototype-model assumption.
+  - id: H3
+    actor: CPU_and_DX100
+    work: Finish all tile consumers/host reads and make chunk/batch storage reusable.
+    accounting: Required synchronization/reuse work.
+  - id: H4
+    actor: CPU_and_devices
+    work: Finish known requests/consumes, establish quiescence, flush outputs and join workers.
+    accounting: Drain/teardown and level-boundary costs.
+resources:
+  metadata_batch_vertices_B: null
+  neighbor_chunk_capacity_T: null
+  worker_count_W: null
+  selected_values: none
+  per_worker:
+    maple_queues: 2
+    pending_metadata_batches_per_queue_pair: 1
+    host_metadata_buffers: 2
+    dx100_contexts: 1
+    logical_dx_tiles_before_adapter_extras: 5
+    logical_dx_registers_before_adapter_extras: 3
+    cpu_queue_buffers: 1
+  constraints:
+    - B, T and W are positive for every admitted nonempty step.
+    - B fits each queue in decoded logical offset values and the DX row tiles.
+    - Every batch including tails has a supported packed-consume/count representation.
+    - T is the actual producer chunk limit; a smaller cap needs a proved lowering, and size bookkeeping must fit.
+    - All mapped indexes, payloads and byte-offset products fit their concrete domains.
+    - W is bounded by admitted queue pairs and nonaliasing DX contexts.
+    - Each queue pair starts exclusively owned, empty and quiescent; OPEN alone is insufficient.
+    - Metadata buffers and DX tiles cannot be reused until all their consumers finish.
+memory_ownership:
+  graph_offsets: Stable from publication through final device/consumer completion.
+  graph_neighbors: Stable from publication through final device/consumer completion.
+  frontier_snapshot_F: CPU-created immutable snapshot; remains live for the whole step.
+  parent: CPU reads and updates only; no accelerator hint in this proposal.
+  next_frontier: CPU QueueBuffer effects; made visible at the original level boundary.
+  metadata_slots: Worker-private; CPU consumption fills host arrays, then CPU stages DX tiles.
+  queue_binding: Fixed for the step; per-queue FIFO association, no global ordering assumption.
+schedule:
+  warmup: Submit and consume metadata for the first batch.
+  steady_state: Submit bounds for n+1 before DX100/CPU process n; future metadata fits its queues.
+  handoff: Consume future metadata only after current batch retires; exchange host slots.
+  last_batch: Issue no further lookahead request.
+  completion: Known-count consumes plus deployment quiescence; CLOSE is not a universal drain.
+correctness_obligations:
+  - Worker spans cover each frontier occurrence once; batch IDs preserve identities.
+  - Two bound results at ordinal r belong to the same vertices[r].
+  - Range chunks enumerate each original (frontier occurrence, edge index) exactly once.
+  - Duplicate destinations retain their logical occurrences; CPU CAS decides discovery.
+  - Range continuation survives short chunks and high-degree rows until completed exhaustion.
+  - Result association survives internal request/response reordering.
+  - Host/device publication, initialization visibility and tile reuse are established separately.
+  - CPU effects and queue flush complete before the next BFS level.
+fallback:
+  before_effects: Whole-step scalar TDStep if the complete composition cannot be admitted.
+  after_effects: Abort/inconclusive; no replay over modified parent/queue without recovery semantics.
+future_validation:
+  functional: BFSVerifier, per-level frontier counts, once-enqueue checks and tuple-association checks.
+  witness: Both M1 and D2/D3 must execute when their path is selected.
+  parent_equality: Exact parent arrays may differ across valid concurrent executions.
+  performance: CPU-only, DX100-only, MAPLE-only and hybrid on matched inputs and boundaries.
+open_bindings:
+  - Common platform, address space, memory routes and translation/fault handling.
+  - MAPLE typed pointer/offset representation, packing, queue credit and tail consumption.
+  - CPU-to-DX source-tile publication, valid count and observer/reuse protocols.
+  - Worker/core/resource ownership and progress under finite shared memory resources.
+  - Exact empty-range exhaustion indication and final queue/device quiescence.
+  - Quantitative stage timing, contention and parameterized area/cost.

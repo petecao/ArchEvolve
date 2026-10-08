@@ -1,0 +1,25 @@
+---
+title: "Proposed BFS hybrid — desired dataflow"
+config: {"theme": "neutral", "layout": "elk", "flowchart": {"htmlLabels": true, "wrappingWidth": 240, "rankSpacing": 55}}
+---
+flowchart TB
+  f["CPU: immutable frontier snapshot F<br/>batch vertex IDs u"]:::cpu
+  m["MAPLE: fetch row bounds for batch b<br/>offsets[u], offsets[u+1]<br/>two bounded FIFO streams per worker"]:::maple
+  h["CPU: consume matched bounds for the same batch b<br/>host metadata buffer + retained vertex IDs"]:::cpu
+  x["CPU: stage bounds into DX source tiles<br/>publish count and visibility<br/>new adapter contract required"]:::cpu
+  d["DX100: neighbor stage for batch b<br/>expand CSR ranges with continuation<br/>gather neighbor IDs in chunks"]:::dx
+  c["CPU: associate u with each v<br/>parent load, CAS, retained store<br/>successful discovery queue push"]:::cpu
+  out["CPU: flush next frontier<br/>join workers and finish the level"]:::cpu
+  f -->|"CPU forms pointers"| m
+  m -->|"consume delivers data; issue ACK is earlier"| h
+  h --> x
+  h -->|"CPU retains vertices[row_slot] association"| c
+  x --> d
+  d -->|"row ordinal + neighbor value; wait before reading"| c
+  c --> out
+  overlap["Intended overlap:<br/>MAPLE(n+1) runs while DX100 + CPU process n.<br/>Transfer, capacity and contention can limit benefit."]:::note
+  noParent["Both accelerators read stable graph data.<br/>parent and next-frontier effects stay on CPU.<br/>Every SKETCH API is an unimplemented proposal."]:::note
+  classDef cpu fill:#dbeafe,stroke:#2563eb,color:#172554
+  classDef maple fill:#dcfce7,stroke:#16a34a,color:#14532d
+  classDef dx fill:#f3e8ff,stroke:#9333ea,color:#581c87
+  classDef note fill:#fef3c7,stroke:#d97706,color:#78350f
