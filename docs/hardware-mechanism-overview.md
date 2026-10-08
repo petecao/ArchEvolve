@@ -4,6 +4,8 @@ Bound to published catalog revision 0.1.17, commit `d13caa7ba5aaabf551f31ddd6027
 
 “Work removed” means delegated work or memory-latency assistance, not a measured speedup. Synchronization summarizes existing catalog requirements. “Missing” means this catalog does not establish an explanation or concrete interface; it does not prove the mechanism is absent. No new implementation, numerical, or performance claims are added.
 
+For worked examples, see [MAPLE, TMU, and COBRA flows](hardware-programmer-guide/concrete-flows.md). For mapping decisions across all 20 records, see the [programmer comparison](hardware-programmer-guide/programmer-comparison.md).
+
 ## Unit, trigger, and result paths
 
 The rows summarize functional mappings, not complete RTL or register interfaces. Three paths below make the work-performing actor and its inputs/outputs explicit using the same cited evidence.

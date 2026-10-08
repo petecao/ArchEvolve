@@ -1,0 +1,180 @@
+{
+  "maple-api": {
+    "source_refs": [
+      "maple-paper"
+    ],
+    "locator": "PDF pp.4\u20135, \u00a7\u00a73.1\u20133.2, Figs.2\u20134",
+    "statement": "MMIO queue operations initialize and bind queues, enqueue data or pointers, and consume values. PRODUCE_PTR requests a fetch whose value is delivered through a queue; LIMA_PRODUCE supplies an indexed range of values to a queue, while LIMA and PREFETCH target the LLC.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "API names and abstract arguments are described, but concrete C types, header, packing and index-width domains are not established by this paper."
+    ]
+  },
+  "maple-lima": {
+    "source_refs": [
+      "maple-paper"
+    ],
+    "locator": "PDF pp.5\u20136, \u00a7\u00a73.2,3.4, Fig.6",
+    "statement": "LIMA accepts two array bases and caller-provided begin/end bounds for A[B[i]]; A=0 requests B[i]. It reads adjacent B data in 64-byte chunks into scratchpad, computes target addresses word by word, and feeds pointer-fetch or LLC-prefetch requests into the produce path.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Caller-provided range bounds do not prove autonomous nested CSR traversal or arbitrary index functions.",
+      "A shared B chunk is not evidence that arbitrary A addresses are sorted or merged by locality."
+    ]
+  },
+  "maple-queue-order": {
+    "source_refs": [
+      "maple-paper"
+    ],
+    "locator": "PDF pp.5\u20136, \u00a73.1 produce/consume timeline and \u00a73.4, Figs.3,6",
+    "statement": "A pointer fetch reserves a FIFO slot and uses its slot index as the memory transaction ID. Out-of-order memory replies are deposited into the associated reserved slots, preserving the software-visible queue sequence. Consumes take values from the queue head.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Per-queue value association does not establish global order across queues, cores or memory updates."
+    ]
+  },
+  "maple-acknowledgement": {
+    "source_refs": [
+      "maple-paper"
+    ],
+    "locator": "PDF p.5, \u00a73.1 steps 1\u20136 and A\u2013C; p.7 \u00a73.6",
+    "statement": "The core retires the pointer-produce store on MAPLE acknowledgement before the memory reply arrives. The reply later fills the reserved queue entry. A consume finishes when its load response returns the queue value.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Pointer-produce acknowledgement is not fetched-data readiness or a general shared-memory visibility fence."
+    ]
+  },
+  "maple-stable-data": {
+    "source_refs": [
+      "maple-paper"
+    ],
+    "locator": "PDF p.7, \u00a73.6, Efficient paragraph",
+    "statement": "Requests can select coherent LLC loads or noncoherent direct-memory loads. Queue scratchpad values have no coherence guarantee after fetch; the compiler or DSL must ensure fetched arrays receive no further writes during their use, with epoch-separated updates discussed as an example.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Coherent fetch routing does not make a previously queued value track later CPU writes.",
+      "Concurrent parent CAS in the current BFS source does not satisfy this stable-array condition merely because the proposed engine operation is a read."
+    ]
+  },
+  "maple-future-atomics": {
+    "source_refs": [
+      "maple-paper"
+    ],
+    "locator": "PDF p.4, \u00a73 opening; p.7 \u00a73.6 Extensible",
+    "statement": "Read-modify-write atomics are mentioned as a possible extension of the programming model. The examined API and implementation description establishes loads, queues and prefetching, not a MAPLE CAS executor.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "An extensible opcode space is not current CAS support; absence of a contract is recorded as unknown, not a universal impossibility."
+    ]
+  },
+  "tmu-fig8": {
+    "source_refs": [
+      "tmu-micro2023-primary"
+    ],
+    "locator": "PDF p6, Fig. 8 lines 2\u201321; \u00a74.4; PDF p5 \u00a74.2",
+    "statement": "Fig8 traverses row pointers with DnsFbrT(0,num_rows), broadcasts row begin/end to two RngFbrT lanes with offsets 0/1 and stride 2, loads column indexes and nnz values, loads b through column indexes, LockStep-marshals paired vectors, and registers GITE ri and GEND re.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Two lanes are the illustration, not the Table 5 evaluated eight-lane system or a legal tuning interval. Boundaries require padding or an msk predicate (\u00a74.2); Fig8 omits a concrete predicate/padding ABI."
+    ]
+  },
+  "tmu-cpu": {
+    "source_refs": [
+      "tmu-micro2023-primary"
+    ],
+    "locator": "PDF p5 Fig. 4; PDF p6 Fig. 6 and \u00a74.3",
+    "statement": "TMU supplies required operands and ordered callback IDs. CPU ri multiplies vector operands and reduces/accumulates into sum; CPU re stores x[i++] and resets sum.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "A CPU store is not a TMU scatter capability; CPU reduction is not TMU arithmetic."
+    ]
+  },
+  "tmu-outq": {
+    "source_refs": [
+      "tmu-micro2023-primary"
+    ],
+    "locator": "PDF p6 \u00a74.3; PDF p7 \u00a75.3",
+    "statement": "Head/body/tail callbacks have IDs and scalar/vector/predicate operands. TG output FSMs serialize across groups with previous/next waiting states to preserve callback/operand order. outQ and its buffers are double-buffered; the core processes a full chunk while TMU fills another.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Callback order is not physical memory-response order or global CPU visibility. Ready/consumed acknowledgment, reuse and final partial chunk protocol are unspecified in inspected sections."
+    ]
+  },
+  "tmu-unknowns": {
+    "source_refs": [
+      "tmu-micro2023-primary"
+    ],
+    "locator": "PDF p5 Tables 1\u20132; p6 Fig. 8/\u00a74.3; p7 \u00a7\u00a75.1\u20135.4; pp8\u20139 \u00a75.6",
+    "statement": "Inspected primary sections do not establish concrete configuration/register encodings, numeric widths, physical response tags, chunk ownership/consumption/finalpartial protocol or complete fault/drain/replay ordering.",
+    "evidence_kind": "research_inference",
+    "limitations": [
+      "Evidence limit only; unknown is not unsupported."
+    ]
+  },
+  "cobra-init": {
+    "source_refs": [
+      "cobra-hpca2022-paper"
+    ],
+    "locator": "PDF p. 6, \u00a7V.A, Fig. 7",
+    "statement": "bininit operands are cache-level identifier, number of reserved ways, number of unique indices, and tuple size in bytes. It reserves ways, computes the smallest power-of-two bin range whose C-Buffers fit, stores the range, and records actually used ways so unused reserved capacity can be reclaimed.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "No encoding, header, C prototype, error convention or complete legal configuration interval is specified."
+    ]
+  },
+  "cobra-insert": {
+    "source_refs": [
+      "cobra-hpca2022-paper"
+    ],
+    "locator": "PDF pp. 6\u20137, \u00a7V.B\u2013C, Fig. 7",
+    "statement": "binupdate takes an index and update value and appends that pair to the selected L1 C-Buffer. Index high bits select buffer/set/way after removing log2(bin range) low bits. Per-buffer counters select the next tuple slot and wrap when full. C-Buffers are not byte addressable and exist outside shared-memory address space.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "The supplied index selects a partition, not a direct store to the application destination address. No old destination value is returned by this collection contract."
+    ]
+  },
+  "cobra-hierarchy": {
+    "source_refs": [
+      "cobra-hpca2022-paper"
+    ],
+    "locator": "PDF p. 5, \u00a7IV, Fig. 6",
+    "statement": "Hardware-managed per-level cacheline C-Buffers collect tuples over progressively narrower index ranges; full L1/L2 buffers are unpacked and repartitioned into next-level C-Buffers; full LLC buffers go to per-thread memory bins. This combines inexpensive small-buffer-set Binning with many bins for Accumulate.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Coalescing here means tuple collection, not same-index arithmetic reduction."
+    ]
+  },
+  "cobra-memory-bins": {
+    "source_refs": [
+      "cobra-hpca2022-paper"
+    ],
+    "locator": "PDF pp. 7\u20138, \u00a7V.E, Fig. 9",
+    "statement": "Each thread has contiguous tuples per bin with precomputed counts and starting BinOffset entries. An unnamed ISA instruction initializes LLC tag offsets from buffer ID and starting offset. A full LLC buffer writes to BinBasePtr + BinOffset[binID], advances the offset by its tuple count, and resets its counter.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "The text alternates pointer/offset and tuple-count descriptions; physical byte scaling and register binding are not a specified ABI. Bin base initialization and the unnamed instruction\u2019s encoding remain unknown."
+    ]
+  },
+  "cobra-flush": {
+    "source_refs": [
+      "cobra-hpca2022-paper"
+    ],
+    "locator": "PDF p. 8, \u00a7V.E, Flushing the Cache After Binning",
+    "statement": "binflush marks end of Binning. Each core walks nonempty C-Buffers serially, L1 then L2 then its LLC bank, writing residual tuples to memory; eviction buffers, binning engines and offset logic must handle partial lines using tuple counters. All remaining tuples must reach bins before Accumulate.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper states the phase requirement, but does not specify a software-visible done/ack event, inter-core join, memory ordering/fence semantics, cancellation, or global write completion. binupdate retirement alone cannot release Accumulate."
+    ]
+  },
+  "cobra-phase-boundary": {
+    "source_refs": [
+      "cobra-hpca2022-paper"
+    ],
+    "locator": "PDF pp. 3\u20134, \u00a7III.A\u2013B, Fig. 3, Algorithms 1\u20132",
+    "statement": "PB materializes index/value tuples during Binning, then software Accumulate reads bins and applies destination updates. Neighbor-Populate bins (e.src,e.dst); Algorithm 2 partitions bins across Accumulate workers and uses ordinary Add on offsets, whereas Algorithm 1 uses AtomicAdd. Unordered neighbor lists permit the changed order.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "No general permission to reorder noncommutative operations or floating-point arithmetic; no hardware destination update/atomic executor."
+    ]
+  }
+}
