@@ -1,0 +1,25 @@
+--- lanl17_copy_sparse_retirement_sources_from_administrative_git_20261008_a1_r1.py
++++ lanl17_copy_sparse_retirement_sources_from_administrative_git_20261008_a2.py
+@@ -18,7 +18,8 @@
+ PRIMARY=BASE/'ArchEvolve'
+ FROZEN='5e12a9796432654d88def24ecea617d16ca605b2'
+ ADMIN_REF='refs/remotes/origin/codex/lanl17-storage-guard-cost'
+-EVIDENCE_DIR='swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-library-preserving-sparse-retirement-custody-20261008-a1'
++ADMIN_PARENT='28446e8682b0a55ef4bb2050de9c46e072c39ce6'
++EVIDENCE_DIR='swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-sparse-read-budget-custody-correction-20261008-a1'
+ STOP_SIGNAL=None
+ NATIVES={Path('/usr/bin/git'):(4019024,'06b2aa74919b1993f9fd7e47060ea98d98c27206f16ccc2d35f51ced7e7877eb'),
+          Path('/usr/bin/python3.12'):(8020928,'e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f')}
+@@ -126,8 +127,10 @@
+         files[name]={'role':role,'bytes':size,'sha256':digest,'relative_path':directory+'/selected-sparse-control-source/'+name}
+     before=core_state();ref_pin=refs()
+     require(git('rev-parse','--verify',ADMIN_REF).strip().decode()==args.administrative40,'delivered_administrative_ref')
+-    git('merge-base','--is-ancestor',FROZEN,args.administrative40)
+-    diff=git('diff','--name-status','--no-renames','-z',FROZEN,args.administrative40).split(b'\0')
++    git('merge-base','--is-ancestor',FROZEN,ADMIN_PARENT)
++    git('merge-base','--is-ancestor',ADMIN_PARENT,args.administrative40)
++    # Earlier additive custody remains immutable; only this new prefix is added.
++    diff=git('diff','--name-status','--no-renames','-z',ADMIN_PARENT,args.administrative40).split(b'\0')
+     require(diff[-1]==b'' and len(diff)%2==1,'administrative_diff_shape')
+     paths=[]
+     for i in range(0,len(diff)-1,2):

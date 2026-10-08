@@ -1,0 +1,12 @@
+--- lanl_sparse_retire_consumed_source_guard_20261008_a1_r4.py
++++ lanl_sparse_retire_consumed_source_guard_20261008_a1_r5.py
+@@ -2449,7 +2449,8 @@
+         self.facts['full_raw_byte_passes'] = 2 if self.facts['admitted'] else 'incomplete'
+         self.facts['per_retirement_full_remaining_catalog_rehash'] = False
+         self.facts['identity_sha256'] = sha(canonical(self.facts))
+-        body = json.dumps(self.facts, sort_keys=True, indent=2, ensure_ascii=True, allow_nan=False).encode()+b'\n'
++        # Compact original JSON keeps complete witnesses within the unchanged cap.
++        body = canonical(self.facts)+b'\n'
+         require(len(body) <= LIMITS['receipt_bytes'], 'compact_receipt_limit')
+         # Only a fresh private administrative receipt; raw/source/old scripts remain untouched.
+         require(sys.platform == 'linux' and socket.gethostname().split('.')[0] == 'mbit10'

@@ -1,0 +1,44 @@
+--- lanl17_detach_library_preserving_sparse_administration_20261008_a1_r1.py
++++ lanl17_detach_library_preserving_sparse_administration_20261008_a1_r2.py
+@@ -1,4 +1,4 @@
+-"""SOURCE-ONLY preparation: detached unchanged R4r2 storage administration, never an SSH exemption."""
++"""SOURCE-ONLY preparation: detached selected sparse storage administration, never an SSH exemption."""
+ import argparse, datetime, hashlib, json, os, pathlib, re, shlex, socket, stat, subprocess, sys, time
+ P = pathlib.Path
+ UID = 114316761
+@@ -7,7 +7,7 @@
+ E = BASE/'ArchEvolve-lanl-generality-final-export-20261007-a1'
+ R = BASE/'ArchEvolve-lanl-generality-final-20261007-a1'
+ C = BASE/'ArchEvolve-lanl-cpu-model-validation-20261006-a1'
+-GUARD_SHA = '4956a7453ae569d7ccf6e1a9ed98a1a933bee2e35cca1774932afbfba819bd26'
++GUARD_SHA = 'd75baaf9dbe7192b02812cab525ccd6c50c81fd312d67cbfae7b9c8fdf955301'
+ REVIEW = BASE/'lanl-account-pam-service-identification-20261008-a1/parent-review.json'
+ REVIEW_SHA = 'fcf92eee1c4b8bdfaed979dc8bedab004c6c4b7e2b1410c7614bc92d60349f4a'
+ NATIVE = {
+@@ -115,7 +115,7 @@
+  need(own.is_relative_to(BASE) and guard.is_relative_to(BASE)
+       and own!=guard and not any(p.is_relative_to(q) for p in (own,guard) for q in (PRIMARY,E,R,C)),'private_sources_outside_projects')
+  own_raw,own_pin=file_bytes(own,256*1024,UID,own_sha)
+- unused,guard_pin=file_bytes(guard,166145,UID,GUARD_SHA,166145)
++ unused,guard_pin=file_bytes(guard,180887,UID,GUARD_SHA,180887)
+  unused,review_pin=file_bytes(REVIEW,256*1024,UID,REVIEW_SHA,3258)
+  native={}
+  for path,(size,digest) in NATIVE.items():
+@@ -134,7 +134,7 @@
+       and document.get('expected_primary')==expected_primary and document.get('selected_rows')==selected,
+       'original_guard_plan_source_order_revision_and_seal')
+  return {'file':pin,'identity_sha256':document['identity_sha256'],'checked_at':document['checked_at'],
+-         'original_300s_plan_freshness_and_all_admission_checks_remain_in_unchanged_guard':True}
++         'original_300s_plan_freshness_and_all_admission_checks_remain_in_selected_guard':True}
+ def fresh_guard_output(attempt):
+  need(re.fullmatch('a[1-9][0-9]*',attempt),'original_guard_fresh_attempt_token')
+  path=BASE/('lanl-library-preserving-sparse-retirement-20261008-'+attempt)
+@@ -181,7 +181,7 @@
+  return {'status':status_pin,'stdout':stdout_pin,'original_guard_receipt':receipt_pin,
+          'default_reviewed_plan':status['reviewed_plan'],
+          'same_ordered_rows_source_primary_required':True,
+-         'retirement_requires_separately_fresh_parent_plan_in_unchanged_guard':True,
++         'retirement_requires_separately_fresh_parent_plan_in_selected_guard':True,
+          'parent_review_is_inherited_explicit_invocation_authority':True}
+ def launch(args):
+  own=P(__file__).absolute(); pins=inputs(own,args.source_sha256,P(args.guard_source))
