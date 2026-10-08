@@ -1,7 +1,7 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-08 10:53 ET
+Updated: 2026-10-08 11:11 ET
 **Type:** slice
 **Status:** claimed
 **Work state:** paused-by-user (2026-10-08; resume in another session)
@@ -105,3 +105,5 @@ sync is part of closeout. mbit10 checkout sync is deferred until the existing
 worker is collected and the frozen-primary guard is handled explicitly.
 
 2026-10-08 10:53 ET — Yan-Ru approved [branch cleanup](../branch-cleanup-result-20261008.md): 37 merged remote refs deleted with exact-tip leases; four retained for current mbit10 worktree use. A read-only host check after quiet observed the existing a4 wrapper reporting completion/exit 0. Original retirement receipt remains uncollected/unassessed; no retirement count, recovery, capacity or scientific admission is inferred. Implementation/evaluation and heartbeat remain PAUSED, 0/4 scientific campaigns, all acceptance pending. No host fetch/prune/source sync, checkout change or new evaluation.
+
+2026-10-08 11:11 ET — Yan-Ru requested final rule commit and [local worktree cleanup](../local-worktree-cleanup-20261008.md). Seventeen completed local checkouts and their merged local branch refs were removed after recoverable archival; seven ignored originals were preserved. Main, integration and this ticket's exact reviewed checkout path remain. No remote worktree or source change, retirement collection or evaluation occurred. Status remains `claimed`, work remains paused, acceptance stays unchecked and the heartbeat remains PAUSED.

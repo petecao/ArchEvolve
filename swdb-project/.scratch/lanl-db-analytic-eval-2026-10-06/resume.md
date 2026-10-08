@@ -1,11 +1,16 @@
 # Resume the analytic evaluator work
 
-Updated: 2026-10-08 10:53 ET
+Updated: 2026-10-08 11:11 ET
 
 **Paused at Yan-Ru's request.** Fourteen of fifteen assigned tickets are resolved.
 Ticket 17 remains `claimed`, with work paused; its acceptance boxes stay unchecked.
 The 30-minute heartbeat `lanl-analytic-evaluator-progress` is **PAUSED**.
 No agent remains running. Resume monitoring only when work is explicitly resumed.
+
+[Local cleanup](local-worktree-cleanup-20261008.md) removed 17 completed worktrees
+with recoverable snapshots and deleted their merged local branches. Only main,
+integration and ticket 17 remain. Ticket 17's exact reviewed source path below
+is preserved; private control files and remote worktrees were not removed.
 
 | Evaluation | Saved state | Next action |
 |---|---|---|
@@ -101,6 +106,7 @@ DX100 numerical pairs or baselines alone do not fulfill them. D30 stays unchange
 Keep raw output on mbit10, recheck both socket leases and legacy lease before any
 actual evaluation, and use at most two lanes through the current `socket_lane.sh`.
 The current dated storage plan favors serial campaigns; two free lanes are not
-established by this checkpoint. Retain worktrees and remote raw/library state for resume.
+established by this checkpoint. Retain the integration and ticket 17 worktrees,
+remote worktrees and remote raw/library state for resume.
 
-Approved [remote branch cleanup](branch-cleanup-result-20261008.md) deleted 37 merged refs and retained four candidates attached to mbit10 worktrees. Recovery SHAs and the exact retained set are recorded. Local branches/worktrees and all resume branches remain available. The later branch-only host check changed no host checkout or source; original retirement collection is still the first evaluation-resume action.
+Approved [remote branch cleanup](branch-cleanup-result-20261008.md) deleted 37 merged refs and retained four candidates attached to mbit10 worktrees. Recovery SHAs and the exact retained set are recorded. That remote-only cleanup preserved local branches/worktrees; the subsequent approved local cleanup removed completed ones while preserving integration and ticket 17 for resume. The branch-only host check changed no host checkout or source; original retirement collection is still the first evaluation-resume action.
