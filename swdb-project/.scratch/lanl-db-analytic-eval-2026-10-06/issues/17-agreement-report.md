@@ -1,7 +1,7 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-08 19:03 ET
+Updated: 2026-10-08 19:43 ET
 **Type:** slice
 **Status:** claimed
 **Work state:** active (explicitly resumed 2026-10-08)
@@ -164,3 +164,6 @@ worker is collected and the frozen-primary guard is handled explicitly.
 
 
 2026-10-08 19:03 ET — [P3 third iteration heartbeat](../evidence/17-actual-p3-dispatch-and-release-readiness-20261008-a5/README.md) retains actual19:01:52–54 ET monitor/process/native originals. P3 attempt1 has3 completed ledger/iteration rows and6 completed candidate rows,0interrupted/no reported infrastructure error. Owned publicPID2290441/start599863751 advances to300114 userticks and has live owned Codex provider; five provider receipt files are stat observations only, not an admitted completed-call count. No original stop/finalexits/summary. Selected R2nativeheld513/matching kernelFLOCK/daemonFD9/release_readyfalse/no unknown. Node1g550/legacyg77 reported released; p1/p2 normal interim custody complete, p4 queued. All scoped agents responsive/completed, no stranded worker. Required19:02 table/health completed; next19:30 ET. Ticket17 claimed/all acceptance unchecked; final campaigns/FINALIZE/report/full strict audit/Standards+Spec review/fixes/ticket/Git sync pending. Heartbeat ACTIVE; remotePRIMARY+origin remainR. Source/policy/budgets/fullcatalogs/native modes preserved; no repeated dispatch/custody/science/native mutation; raw output stays remote.
+
+
+2026-10-08 19:43 ET — [P3 original normal custody](../evidence/17-p3-normal-stop-release-after-20261008-a5/README.md) passed root24 and independent84 checks: plateau4,4 iterations,8 candidates,5 distinct completed counted calls,all4 exits0/sourceclean/no survivors. Original stop e030cba3,release32 5e99a2b7 and AFTER7ad57fbd succeeded once; native stayed released513 with no kernel lock/FD9 through AFTER. Three trajectories now have complete interim custody; final numerical/D30 admission and full strict scientific audit remain pending. [P4 BEFORE/admission](../evidence/17-p4-before-and-admission-20261008-a5/README.md) shows absent state/no invocations and fresh serial80/21/24GiB admission (116.9/21.6/35.2GiB observed),all3 leases released/sourceR/PRIMARYoriginR/nativeN unchanged. P4 dispatcher invoked once19:42 ET,initial full source/manifest checks active; acquired generation remains unsupplied until actual originals. No repeat science/custody or stopped-state resume. Agents responsive with scoped archive and actual admission/source review; no stranded worker. Ticket17 claimed/all acceptance unchecked; P4/FINALIZE/report/index/full strict audit/final Standards+Spec review/fixes/ticket+Git sync pending. Heartbeat ACTIVE same30min schedule/target; next required table/health20:00 ET. RemotePRIMARY+origin remainR; human-owned tickets/concurrent work preserved; raw output stays remote.
