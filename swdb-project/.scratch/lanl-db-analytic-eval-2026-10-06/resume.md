@@ -1,6 +1,6 @@
 # Continue the analytic evaluator work
 
-Updated: 2026-10-08 14:41 ET
+Updated: 2026-10-08 14:47 ET
 
 **Active after Yan-Ru explicitly resumed work.** Fourteen of fifteen assigned agent tickets are resolved. Ticket 17 remains claimed; its acceptance boxes remain unchecked. The 30-minute heartbeat is ACTIVE on the resumed chat.
 
@@ -19,6 +19,8 @@ The 11:18 ET observation reports /data1 available 25,680,244,736 B, above the un
 [P1 iteration progress and queued custody](evidence/17-p1-iteration-progress-and-queued-custody-20261008-a5/README.md) preserve the14:15 ET heartbeat. Fresh14:14 ET originals show p1 active node0/g511,3 completed iterations/6 completed candidate rows, no stopped receipt or reported infrastructure error. Owned helper/provider tree is live; R2 confirms held matching kernel lock/FD9 and release_ready=False. All agents completed responsive scoped work and source reviews; no stranded worker. P3/P4 BEFORE/dispatch and p2–p4 dispatch-state32 drafts are reviewed future inputs only; actual hashes/seals/generations/UTC/admission remain required. Raw output stays remote; no duplicate science/native mutation.0/4 normal trajectories; ticket17 stays claimed. Next scheduled table/agent check14:45 ET; report/audit/final Standards+Spec review/fixes still pending.
 
 [Normal terminal request readiness](evidence/17-normal-terminal-request-readiness-20261008-a5/README.md) retains the reviewed owned0664 terminal readerR1/bdf2 and local release request finalizerR3/47ec, plus exact14:29 native wrapper metadata10510B/00c269/0777. Generic private file pins would refuse writable native modes; preserve all modes and use selected reader/producer original byte checks. Fresh native/wrapper checks before32 and before/after b08 remain mandatory. Latest14:39 ET monitor observes4 iterations/8 candidate rows and public plateau summary, but no original helper stop/final exits and held511;0/4 normal completions remain admitted. Select terminal action draftR3/e647 and local finalizerR3 only after actualrelease_ready AND normal_exit_set_only and original matching stop/exits/normal state facts. All drafts/authors/terminal controls remain NOTRUN; no finalized request exists. Agents complete/responsive. Next required table/health check14:45 ET.
+
+The14:45 ET scheduled [native/process/status addendum](evidence/17-normal-terminal-request-readiness-20261008-a5/README.md) confirms4 completed iterations/8 candidate rows and matched publicplateau summary, but original stop/exits remainabsent. Owned public process CPU advances; R2 actualnative511 remainsheld with matching kernel lock/FD9, release_ready=False and no unknown reasons. No source/scientific/native mutation or terminal/control collection occurred. All agents completed responsive scoped reviews; no stranded worker.0/4 normal trajectories admitted; next required table/health check15:15 ET. Public summary precedes final catalog commit/state stop in _finish; keep waiting for true originals.
 
 ## Frozen source and next action
 

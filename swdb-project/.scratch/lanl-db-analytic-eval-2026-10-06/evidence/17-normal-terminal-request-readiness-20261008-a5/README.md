@@ -1,6 +1,6 @@
 # Normal terminal request readiness
 
-Updated: 2026-10-08 14:41 ET.
+Updated: 2026-10-08 14:47 ET.
 
 **p1 has a public plateau summary after four iterations, while original final stop/exits and native release remain incomplete. No terminal collection or normal scientific completion is admitted.** Exact14:17/14:23/14:27/14:31 ET monitor originals are retained. The14:27 process query matches the owned helper and public campaign; its CPU advanced49,829 user and6,158 kernel ticks from the14:14 observation. Eight provider receipt files are present, but file counts are not completed/counted-call claims. All four substantive normal trajectories and final report/audit/review remain pending.
 
@@ -20,3 +20,5 @@ The staged R2 native observer remains15125B/df19. Obtain fresh actual release_re
 Actual root14:29 physical wrapper query uses exact inherited functions and returns stable bounded10510-byte file hash/stat only, no wrapper body. Its actual packet/transport/start/original are retained; it is historical provenance, not future live clearance. Earlier source/config/finalizer versions and chronology remain unchanged NOTRUN. Native permissions, scientific R/C/F6/M2/FIRST, controls/source/policy/full catalogs/budgets and canonical records remain unchanged. Raw outputs stay remote. Agents completed responsive reviews; no stranded worker. This unsealed archive/inventory preserves exact originals and supplies no normal trajectory/D30/report acceptance.
 
 The14:39 ET monitor now observes4 completed iterations/8 completed candidate rows and a matched public summary stop_reason=plateau. Original helper stopped/final exits are still absent, lane exit remains-1 and owned native511 staysheld. terminal_receipts_consistent/genuine_normal_trajectory_completion remainFalse; no normal completion or native release is inferred from the public summary alone. Terminal metadata/finalizer/32/AFTER remain NOTRUN.
+
+The14:45 ET required table and agent-health check are complete. Three independent actual read-only captures returned SSH0/remote0: monitor retains4 completed iterations/8 candidate rows/public plateau summary, while stop/final exits remainabsent and normal completionFalse; R2 confirms held511/matching kernel lock/FD9/no terminal files, release_ready=False/no unknown reasons; owned helper/public process is live with advancing CPU. All scoped agents completed responsive reviews, no stranded worker. Source _finish writes the public summary before the final team catalog commit/state stop; no normal stop/release is inferred from the summary. Next required table/health check15:15 ET. All original terminal/finalizer/32/AFTER operations remain NOTRUN.
