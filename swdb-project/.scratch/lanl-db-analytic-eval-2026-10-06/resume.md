@@ -1,6 +1,6 @@
 # Continue the analytic evaluator work
 
-Updated: 2026-10-08 14:03 ET
+Updated: 2026-10-08 14:15 ET
 
 **Active after Yan-Ru explicitly resumed work.** Fourteen of fifteen assigned agent tickets are resolved. Ticket 17 remains claimed; its acceptance boxes remain unchecked. The 30-minute heartbeat is ACTIVE on the resumed chat.
 
@@ -9,12 +9,14 @@ Updated: 2026-10-08 14:03 ET
 | CPU ticket 11 | Resolved; held-out BFS broad-band pass, BC failure | Preserve both outcomes |
 | Generality ticket 14 | Resolved; nine pairs, 45 trials; seven whole-call totals unknown | Preserve qualified results |
 | Storage RETIRE a4 / plan a5 | Existing attempt collected once; successful original receipt, all sixteen rows retired | Do not repeat retirement or DEFAULT |
-| Ticket 17 science | a5 PREPARE/FIRST passed; p1 active node0/g511; 1 iteration, 0/4 complete | Monitor p1, collect released after-custody, then p2–p4 and report |
+| Ticket 17 science | a5 PREPARE/FIRST passed; p1 active node0/g511; 3 iterations, 0/4 complete | Monitor p1, collect released after-custody, then p2–p4 and report |
 | Standards + Spec review | Full-feature base 7941ccba selected | Run both axes and fix findings after scientific closeout |
 
 [Original collection and assessment](evidence/17-resumed-retirement-assessment-20261008-a1/README.md) preserves the original retirement receipt, wrapper state and separate read-only host query. Receipt SHA256 is `93e99138ae34869de92f46d81f0b2ccd5f3da8097555dc92f7f772f17dc22b29`; all sixteen selected/retired/completed rows match, failure is null, two full RAW passes passed. Recovery was 3,051,552,768 bytes. This proves the bounded administrative action, not current capacity or scientific success.
 
 The 11:18 ET observation reports /data1 available 25,680,244,736 B, above the unchanged planned requirement 25,547,235,328 B. /data is 46,785,994,752 B, below the 44 GiB concurrent floor. All three leases are released; 11:19 ET consumer inspection preserves unrelated Quicksilver work. Begin serially on a freshly released lane. Recheck current source/native/proofs/leases/consumers/capacity immediately before scientific entry; dated observations are not locks.
+
+[P1 iteration progress and queued custody](evidence/17-p1-iteration-progress-and-queued-custody-20261008-a5/README.md) preserve the14:15 ET heartbeat. Fresh14:14 ET originals show p1 active node0/g511,3 completed iterations/6 completed candidate rows, no stopped receipt or reported infrastructure error. Owned helper/provider tree is live; R2 confirms held matching kernel lock/FD9 and release_ready=False. All agents completed responsive scoped work and source reviews; no stranded worker. P3/P4 BEFORE/dispatch and p2–p4 dispatch-state32 drafts are reviewed future inputs only; actual hashes/seals/generations/UTC/admission remain required. Raw output stays remote; no duplicate science/native mutation.0/4 normal trajectories; ticket17 stays claimed. Next scheduled table/agent check14:45 ET; report/audit/final Standards+Spec review/fixes still pending.
 
 ## Frozen source and next action
 

@@ -59,6 +59,8 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 
 ## Context pointers
 
+- 2026-10-08 14:15 ET: [P1 iteration progress and queued custody](evidence/17-p1-iteration-progress-and-queued-custody-20261008-a5/README.md) preserve the14:15 ET heartbeat. Fresh14:14 ET originals show p1 active node0/g511,3 completed iterations/6 completed candidate rows, no stopped receipt or reported infrastructure error. Owned helper/provider tree is live; R2 confirms held matching kernel lock/FD9 and release_ready=False. All agents completed responsive scoped work and source reviews; no stranded worker. P3/P4 BEFORE/dispatch and p2–p4 dispatch-state32 drafts are reviewed future inputs only; actual hashes/seals/generations/UTC/admission remain required. Raw output stays remote; no duplicate science/native mutation.0/4 normal trajectories; ticket17 stays claimed. Next scheduled table/agent check14:45 ET; report/audit/final Standards+Spec review/fixes still pending.
+
 - 2026-10-08 14:03 ET: [First p1 iteration and release readiness](evidence/17-p1-first-iteration-and-release-readiness-20261008-a5/README.md) records1 completed iteration/active held511, 0/4 normal trajectories. Future release/AFTER drafts reviewed; actual staged observer confirms not-release-ready. Final campaign/report/review gates remain pending.
 
 - 2026-10-08 13:13 ET: [Active p1 startup and queued p2 preparation](evidence/17-active-p1-startup-and-p2-preparation-20261008-a5/README.md) confirm public setup/advancing CPU, 0/4 normal trajectories. Source-only p2 commands reviewed; live admission and all final report/review gates remain pending.

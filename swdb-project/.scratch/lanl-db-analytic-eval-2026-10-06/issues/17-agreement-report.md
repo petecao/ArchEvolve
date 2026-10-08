@@ -1,7 +1,7 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-08 14:03 ET
+Updated: 2026-10-08 14:15 ET
 **Type:** slice
 **Status:** claimed
 **Work state:** active (explicitly resumed 2026-10-08)
@@ -130,3 +130,5 @@ worker is collected and the frozen-primary guard is handled explicitly.
 
 
 2026-10-08 14:03 ET — [First p1 iteration and release readiness](../evidence/17-p1-first-iteration-and-release-readiness-20261008-a5/README.md) retain13:45 ET active node0/g511 with1 completed iteration, live owned provider and no stopped/error receipt. R1 release/AFTER drafts remain nonexecutable future inputs. R2 exact metadata observer staged once14:00, readonly14:01 query confirms held511/matching kernel lock/FD9, release_ready=False; no native/scientific mutation. Corrected fresh-live-check ordering reviewed; no release32/AFTER executed. Agents complete/responsive, next heartbeat14:15 ET. Four normal trajectories/finalreport/review remain pending; ticket stays claimed.
+
+2026-10-08 14:15 ET — [P1 iteration progress and queued custody](../evidence/17-p1-iteration-progress-and-queued-custody-20261008-a5/README.md) preserve the14:15 ET heartbeat. Fresh14:14 ET originals show p1 active node0/g511,3 completed iterations/6 completed candidate rows, no stopped receipt or reported infrastructure error. Owned helper/provider tree is live; R2 confirms held matching kernel lock/FD9 and release_ready=False. All agents completed responsive scoped work and source reviews; no stranded worker. P3/P4 BEFORE/dispatch and p2–p4 dispatch-state32 drafts are reviewed future inputs only; actual hashes/seals/generations/UTC/admission remain required. Raw output stays remote; no duplicate science/native mutation.0/4 normal trajectories; ticket17 stays claimed. Next scheduled table/agent check14:45 ET; report/audit/final Standards+Spec review/fixes still pending.
