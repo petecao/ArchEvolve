@@ -1,0 +1,436 @@
+{
+  "E2r1_default_state": "Two original failed inspections a2/a3; R1 a1 separately failed; E removal NOTRUN. Stdout/stderr originals preserved.",
+  "archival_copy_only": true,
+  "canonical_ensure_ascii": true,
+  "capacity_scientific_or_cleanup_admission": false,
+  "created_utc": "2026-10-08T02:55:32.875701+00:00",
+  "format": "swdb.lanl17-storage-administrative-source-custody.v1",
+  "identity_sha256": "60ae7b36706c5e56cec7b32446e4d26c48bde95ba648cc18797adb73af1dfec2",
+  "original_bytes": 501984,
+  "original_files": [
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl14_remove_consumed_export_checkout_20261008_a1_r2_r1.py",
+      "bytes": 22209,
+      "original_path": "/private/tmp/lanl14_remove_consumed_export_checkout_20261008_a1_r2_r1.py",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "5a227cb9d68f638a5475e054bef6b4b85b1d477e857f18de04b54bf4097d160e"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl14-consumed-export-cleanup-r1-to-selected-r2-20261008.diff",
+      "bytes": 20566,
+      "original_path": "/private/tmp/lanl14-consumed-export-cleanup-r1-to-selected-r2-20261008.diff",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "349659793ee33359db3a5656c5a66d2404760599508ae4ab418633491439b759"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl14-consumed-export-cleanup-selected-r2-source-handoff-20261008.md",
+      "bytes": 5737,
+      "original_path": "/private/tmp/lanl14-consumed-export-cleanup-selected-r2-source-handoff-20261008.md",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "5cef50a15e86aac7e4e76b274c6d67d2152c005d405acdb3d2b8214a4f35299d"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl14-consumed-export-cleanup-selected-r2-final-source-comparison-20261008.json",
+      "bytes": 2629,
+      "original_path": "/private/tmp/lanl14-consumed-export-cleanup-selected-r2-final-source-comparison-20261008.json",
+      "original_policy": {
+        "canonical_policy_field_present": false,
+        "identity_field_present": false,
+        "kind": "original_JSON"
+      },
+      "sha256": "319293dae00c679c87e96faed465e93f8791fb90c307f6ffea79d74771bc2455"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl14_detach_exact_E_cleanup_administration_20261008_a1_r1.py",
+      "bytes": 18113,
+      "original_path": "/private/tmp/lanl14_detach_exact_E_cleanup_administration_20261008_a1_r1.py",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "252c9735c034b3a305235dbcf95dd461a837e5d70dd031c7198ec7ac95cfeb24"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl14_detach_exact_E_cleanup_administration_20261008_a1_r2.py",
+      "bytes": 18218,
+      "original_path": "/private/tmp/lanl14_detach_exact_E_cleanup_administration_20261008_a1_r2.py",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "0783d6a26275abcc185608303c442ca3b17d0dfbca52a484746923ba089c2401"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl14-detached-exact-E-administration-source-handoff-20261008-a1-r1.md",
+      "bytes": 10172,
+      "original_path": "/private/tmp/lanl14-detached-exact-E-administration-source-handoff-20261008-a1-r1.md",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "4360d630ecf9c70c6b748b69630475a3487fbe2d0073c1ebe4e4b5e39fe16d3c"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl14-detached-exact-E-administration-source-handoff-20261008-a1-r2.md",
+      "bytes": 4592,
+      "original_path": "/private/tmp/lanl14-detached-exact-E-administration-source-handoff-20261008-a1-r2.md",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "0590868361e05b5b5940356f5e7dc2e5c50b80ca08caaed79338e5b99f3e1eed"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl14-detached-exact-E-administration-r2-complete-r1-derivation-20261008.diff",
+      "bytes": 1403,
+      "original_path": "/private/tmp/lanl14-detached-exact-E-administration-r2-complete-r1-derivation-20261008.diff",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "ee540803b485e9c0c51b6ba3858318d42b1b0b08710103f9873ac40d15c97663"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl14-detached-exact-E-administration-r1-independent-source-review-20261008.md",
+      "bytes": 5757,
+      "original_path": "/private/tmp/lanl14-detached-exact-E-administration-r1-independent-source-review-20261008.md",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "b7b28716857091969325e11cd702e68d231440e8d2f59e6f8b668ee0bdff2606"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl14-detached-exact-E-administration-r2-independent-source-review-20261008.md",
+      "bytes": 2234,
+      "original_path": "/private/tmp/lanl14-detached-exact-E-administration-r2-independent-source-review-20261008.md",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "f6547095647df579a3fc549712d695184dac040b2e454e377cc6e7d30d0f0287"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl_consumed_detached_source_guard_r4_20261008_r1.py",
+      "bytes": 81694,
+      "original_path": "/private/tmp/lanl_consumed_detached_source_guard_r4_20261008_r1.py",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "d30481a540a40f0c4b4695e105dc25f6febf152e391b5a34861b817d0d6960a6"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl_consumed_detached_source_guard_r4_20261008_r2.py",
+      "bytes": 84381,
+      "original_path": "/private/tmp/lanl_consumed_detached_source_guard_r4_20261008_r2.py",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "78a0c850e515f6ebb589a28f53a2c99d7a6430dcf5da46aea4869368d2cd3df9"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl-consumed-detached-source-guard-r4r1-complete-r3-derivation-20261008.diff",
+      "bytes": 14255,
+      "original_path": "/private/tmp/lanl-consumed-detached-source-guard-r4r1-complete-r3-derivation-20261008.diff",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "76567dff2762a29e484c18105ada01644aa4e42908d82b8a3a577a271f909ca3"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl-consumed-detached-source-guard-r4r1-source-handoff-20261008.md",
+      "bytes": 9041,
+      "original_path": "/private/tmp/lanl-consumed-detached-source-guard-r4r1-source-handoff-20261008.md",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "de781ce08d465633d4a6b659b824f308dd5d1e40e26107fa1b5a48c7a94de500"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl-consumed-detached-source-guard-r4r1-source-preparation-20261008.json",
+      "bytes": 3167,
+      "original_path": "/private/tmp/lanl-consumed-detached-source-guard-r4r1-source-preparation-20261008.json",
+      "original_policy": {
+        "canonical_policy_field_present": false,
+        "identity_field_present": false,
+        "kind": "original_JSON"
+      },
+      "sha256": "157883589f4987953507552ebad885704d26ce56842fd9bec602266cb5abae75"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl-consumed-detached-source-guard-r4r2-complete-r4r1-derivation-20261008.diff",
+      "bytes": 4355,
+      "original_path": "/private/tmp/lanl-consumed-detached-source-guard-r4r2-complete-r4r1-derivation-20261008.diff",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "f4aa5938a824141e5502409cc6dc5e0f9b29f07f92826681ffb9c66c72504ce2"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r2.py",
+      "bytes": 51132,
+      "original_path": "/private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r2.py",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "c85df7ccad501a3e1cc5ea01d0e4da1c36c031db48f4af9e32d9e278bb585572"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r3.py",
+      "bytes": 54009,
+      "original_path": "/private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r3.py",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "5a52e36ea84122cd303c540d6c177d014e36d22c70b2d9cdcd210d863e177cc8"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl17-passive-consumed-source-metadata-acquisition-r2-complete-r1-derivation-20261008.diff",
+      "bytes": 20607,
+      "original_path": "/private/tmp/lanl17-passive-consumed-source-metadata-acquisition-r2-complete-r1-derivation-20261008.diff",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "34bf4ef16fbc181e37b8165544d07e8f8f9cef3f369c687ecf2ab3e0608aa3de"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl17-passive-consumed-source-metadata-acquisition-r2-source-handoff-20261008.md",
+      "bytes": 8717,
+      "original_path": "/private/tmp/lanl17-passive-consumed-source-metadata-acquisition-r2-source-handoff-20261008.md",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "6a7a5d50b4dcd42b62253baf7ee0667d923e11bb6a2dbc4071783304455fa9dc"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl17-passive-consumed-source-observer-r2-independent-source-review-20261008.md",
+      "bytes": 4452,
+      "original_path": "/private/tmp/lanl17-passive-consumed-source-observer-r2-independent-source-review-20261008.md",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "a0b35228016a0ce60f6de01c3b373fc86061c246a35a254b254f0f7dfcd8edcc"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl17-passive-consumed-source-metadata-acquisition-r3-complete-r2-derivation-20261008.diff",
+      "bytes": 5077,
+      "original_path": "/private/tmp/lanl17-passive-consumed-source-metadata-acquisition-r3-complete-r2-derivation-20261008.diff",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "f51286ef5d8f53ab400148981defe7e3c82e4639c0db256358fc432c522571e9"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl-stable-terminal-zombie-handling-source-handoff-20261008-a1.md",
+      "bytes": 7940,
+      "original_path": "/private/tmp/lanl-stable-terminal-zombie-handling-source-handoff-20261008-a1.md",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "acd3f8b047c82f5c9197805dc517766a72f2dd38c50b801e36ba0461d7114503"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl-stable-terminal-zombie-handling-source-preparation-20261008-a1.json",
+      "bytes": 4640,
+      "original_path": "/private/tmp/lanl-stable-terminal-zombie-handling-source-preparation-20261008-a1.json",
+      "original_policy": {
+        "canonical_policy_field_present": false,
+        "identity_field_present": false,
+        "kind": "original_JSON",
+        "original_sealed": false
+      },
+      "sha256": "f542a862fb0445de20c2b9d8bb43289d7df3059f34424c3b41b5cca19636fde9"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl-stable-terminal-zombie-handling-independent-source-review-20261008-a1.md",
+      "bytes": 4795,
+      "original_path": "/private/tmp/lanl-stable-terminal-zombie-handling-independent-source-review-20261008-a1.md",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "4c1b439dce171ef5fbcb0e763bfe05d9accef362a4af70fa814e3d1a991a51e3"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl17-prepare-dispatch-finalize-storage-budget-source-note-20261008-a1.md",
+      "bytes": 8685,
+      "original_path": "/private/tmp/lanl17-prepare-dispatch-finalize-storage-budget-source-note-20261008-a1.md",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "6cc2587cd5a4d40934ba15eb0daa8471855c2e7be94042f2d5a4498f8c817700"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl-exact-account-pam-service-original-identification-20261008-a1.json",
+      "bytes": 3818,
+      "original_path": "/private/tmp/lanl-exact-account-pam-service-original-identification-20261008-a1.json",
+      "original_policy": {
+        "canonical_policy_field_present": false,
+        "identity_field_present": false,
+        "kind": "original_JSON",
+        "original_sealed": false
+      },
+      "sha256": "ece0155e6a1e61e07cabb8a05e2a13ac9577a9ee1418e8f8eed450ce310ce0fa"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl-account-pam-service-semantic-parent-review-20261008-a1.json",
+      "bytes": 3258,
+      "original_path": "/private/tmp/lanl-account-pam-service-semantic-parent-review-20261008-a1.json",
+      "original_policy": {
+        "canonical_policy_field_present": true,
+        "identity_field_present": true,
+        "kind": "original_JSON",
+        "original_ensure_ascii": true,
+        "original_identity_sha256": "d02a195ddf6445bcb4dab65f6b14775b481c927340ad0ef0191bb7b1deddab2f",
+        "whole_minus_identity_verified": true
+      },
+      "sha256": "fcf92eee1c4b8bdfaed979dc8bedab004c6c4b7e2b1410c7614bc92d60349f4a"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl-owned-process-2189310-public-identity-probe-20261008-a1.py",
+      "bytes": 2586,
+      "original_path": "/private/tmp/lanl-owned-process-2189310-public-identity-probe-20261008-a1.py",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "5a6b62b1c028308ac55a811aa4e712d774f7f864a77ddcb1aebad8d6473d4153"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl-owned-process-2189310-public-identity-original-20261008-a1.json",
+      "bytes": 489,
+      "original_path": "/private/tmp/lanl-owned-process-2189310-public-identity-original-20261008-a1.json",
+      "original_policy": {
+        "canonical_policy_field_present": false,
+        "identity_field_present": false,
+        "kind": "original_JSON",
+        "original_sealed": false
+      },
+      "sha256": "a758a86f4dae13279fb4dad13044fe5db39bac705efa431252e39b957766a21b"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl-owned-process-2189310-public-identity-original-20261008-a1.stderr",
+      "bytes": 0,
+      "original_path": "/private/tmp/lanl-owned-process-2189310-public-identity-original-20261008-a1.stderr",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl-inaccessible-owned-process-public-role-observer-20261008-a1.py",
+      "bytes": 2854,
+      "original_path": "/private/tmp/lanl-inaccessible-owned-process-public-role-observer-20261008-a1.py",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "562154aa7325d5d7f3df02652f83cdc9c4dbf0e3e2b60721f0b502b3624ca724"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl-inaccessible-owned-process-public-role-original-20261008-a1.json",
+      "bytes": 7121,
+      "original_path": "/private/tmp/lanl-inaccessible-owned-process-public-role-original-20261008-a1.json",
+      "original_policy": {
+        "canonical_policy_field_present": false,
+        "identity_field_present": false,
+        "kind": "original_JSON",
+        "original_sealed": false
+      },
+      "sha256": "83d88e0c3ba7a414d42b3b96bbf63a7ffa8c76e3393da5d53363ce946d01f732"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl-inaccessible-owned-process-public-role-original-20261008-a1.stderr",
+      "bytes": 0,
+      "original_path": "/private/tmp/lanl-inaccessible-owned-process-public-role-original-20261008-a1.stderr",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl-detached-administration-native-pin-original-20261008-a1.json",
+      "bytes": 1794,
+      "original_path": "/private/tmp/lanl-detached-administration-native-pin-original-20261008-a1.json",
+      "original_policy": {
+        "canonical_policy_field_present": false,
+        "identity_field_present": false,
+        "kind": "original_JSON",
+        "original_sealed": false
+      },
+      "sha256": "aee82e2b7d4ba8a50a55927f3cf8278918702e52b8d0067999b9564ced6c6694"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl14-consumed-E-default-inspection-20261008-a1.stdout.json",
+      "bytes": 0,
+      "original_path": "/private/tmp/lanl14-consumed-E-default-inspection-20261008-a1.stdout.json",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl14-consumed-E-default-inspection-20261008-a1.stderr",
+      "bytes": 493,
+      "original_path": "/private/tmp/lanl14-consumed-E-default-inspection-20261008-a1.stderr",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "2ac40c5ea0172071affe74924c15c5f6ad91244b06a743df02a6979f537495cf"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl14-consumed-E-default-inspection-20261008-a2.stdout.json",
+      "bytes": 0,
+      "original_path": "/private/tmp/lanl14-consumed-E-default-inspection-20261008-a2.stdout.json",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl14-consumed-E-default-inspection-20261008-a2.stderr",
+      "bytes": 497,
+      "original_path": "/private/tmp/lanl14-consumed-E-default-inspection-20261008-a2.stderr",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "383b375e9a1a96b74506c91b1c27d496be1f5694e1a64b2810b1e62abe5c3a9a"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl14-consumed-E-default-inspection-20261008-a3.stdout.json",
+      "bytes": 0,
+      "original_path": "/private/tmp/lanl14-consumed-E-default-inspection-20261008-a3.stdout.json",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-storage-administrative-sources-20261008-a1/lanl14-consumed-E-default-inspection-20261008-a3.stderr",
+      "bytes": 497,
+      "original_path": "/private/tmp/lanl14-consumed-E-default-inspection-20261008-a3.stderr",
+      "original_policy": {
+        "kind": "opaque_original_bytes"
+      },
+      "sha256": "9ace5b7bed704f87160571537e7c177fa65f34b9bbfb4723500a359d3530f0f5"
+    }
+  ],
+  "originals_modified_or_resealed": false,
+  "parent": "380d4638f488157e1ea397b6ce8d4c157da5669b",
+  "selected_sources": {
+    "lanl14_detach_exact_E_cleanup_administration_20261008_a1_r2.py": [
+      18218,
+      "0783d6a26275abcc185608303c442ca3b17d0dfbca52a484746923ba089c2401"
+    ],
+    "lanl14_remove_consumed_export_checkout_20261008_a1_r2_r1.py": [
+      22209,
+      "5a227cb9d68f638a5475e054bef6b4b85b1d477e857f18de04b54bf4097d160e"
+    ],
+    "lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r3.py": [
+      54009,
+      "5a52e36ea84122cd303c540d6c177d014e36d22c70b2d9cdcd210d863e177cc8"
+    ],
+    "lanl_consumed_detached_source_guard_r4_20261008_r2.py": [
+      84381,
+      "78a0c850e515f6ebb589a28f53a2c99d7a6430dcf5da46aea4869368d2cd3df9"
+    ]
+  },
+  "selected_wrapper_R2_R4r2_observerR3_main_state": "NOTRUN at archive creation",
+  "ticket17_selected_prepare_campaigns_finalize_and_auditor_state": "NOTRUN"
+}
