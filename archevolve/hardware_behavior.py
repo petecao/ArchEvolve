@@ -9,6 +9,53 @@ from tools.render_mermaid import RequestError
 
 FORMAT = "hardware-behavior-v0.1"
 
+# These links explain the published record scope; they are not capability evidence.
+_PROGRAMMER_GUIDE_COMMIT = "54cc9cbb3aa0cdfb957b86648f03cf3617f7b506"
+_PROGRAMMER_GUIDE_RECORDS = frozenset([
+    'dx100-paper-v2',
+    'dx100-artifact-e4fc4af',
+    'terminus-micro2024-cas',
+    'terminus-micro2024-deferred',
+    'prodigy-hpca2021',
+    'spzip-isca2021-push',
+    'maple-isca2022',
+    'tmu-micro2023-fig8-spmv',
+    'cobra-hpca2022-tuple-binning',
+    'axi-pack-date2024-sell-required-l2-gather',
+    'pipette-micro2020-committed-queue-ra',
+    'phi-micro2019-relaxed-bulk-scatter',
+    'extensor-micro2019-ordered-fiber-operands',
+    'fifer-micro2021-staged-DRM',
+    'smash-micro2019-bitmap-block-index',
+    'flat-hta-micro2019-integer-key-map',
+    'azul-micro2024',
+    'telos-isca2025-public-model',
+    'svr-micro2024',
+    'triangel-isca2024',
+])
+_CONCRETE_FLOW_RECORDS = frozenset({
+    "maple-isca2022", "tmu-micro2023-fig8-spmv", "cobra-hpca2022-tuple-binning",
+})
+
+
+def programmer_guides(design_id):
+    """Link existing explanations only for records covered by that publication."""
+    if design_id not in _PROGRAMMER_GUIDE_RECORDS:
+        return []
+    root = "https://github.com/petecao/ArchEvolve/blob/" + _PROGRAMMER_GUIDE_COMMIT + "/docs/"
+    guides = [
+        ("Hardware mechanism overview", "hardware-mechanism-overview.md"),
+        ("Programmer contract comparison", "hardware-programmer-guide/programmer-comparison.md"),
+    ]
+    if design_id in _CONCRETE_FLOW_RECORDS:
+        guides.append(("Concrete input/unit/output flow", "hardware-programmer-guide/concrete-flows.md"))
+    return [{"title": title, "url": root + path, "covered_design_id": design_id,
+             "publication_commit": _PROGRAMMER_GUIDE_COMMIT,
+             "capability_evidence": False,
+             "scope": "explanatory documentation; source contracts and unknowns remain authoritative"}
+            for title, path in guides]
+
+
 
 def describe_behavior(request, candidate):
     """Project exact contracts; internal annotations do not widen operation support."""
@@ -52,6 +99,7 @@ def describe_behavior(request, candidate):
         "input_sha256": request["input_sha256"],
         "semantic_scope": "Observable contract for the selected source-scoped operations, conditional on mapping requirements; not a new ABI or whole-accelerator composition.",
         "software_interface": deepcopy(candidate["software_handoff"]["interface"]),
+        "programmer_guides": programmer_guides(candidate["catalog_design_id"]),
         "desired_observable_semantics": operations,
         "internal_mechanisms": mechanisms["annotations"],
         "internal_scope": "Located edition-specific descriptions; annotation list is not an executable state machine or complete timing policy.",
@@ -105,6 +153,12 @@ def render_behavior(record):
              "## What software asks hardware to do", "", md(record["software_interface"]["software_supplies"]), "",
              "Invocation: " + md(record["software_interface"]["invocation"]), "",
              "## What software must observe", ""]
+    guides = record.get("programmer_guides", [])
+    if guides:
+        lines += ["## Published programmer guides", "",
+                  "Explanatory context only; these links do not change selected operations or resolve unknown contracts.", ""]
+        lines += [f"- [{md(guide['title'])}]({guide['url']})" for guide in guides]
+        lines += [""]
     for op in record["desired_observable_semantics"]:
         lines += [f"### {md(op['operation_id'])}", "",
                   f"Role: **{md(op['execution_role'])}**; support: **{md(op['support'])}**.", "",
