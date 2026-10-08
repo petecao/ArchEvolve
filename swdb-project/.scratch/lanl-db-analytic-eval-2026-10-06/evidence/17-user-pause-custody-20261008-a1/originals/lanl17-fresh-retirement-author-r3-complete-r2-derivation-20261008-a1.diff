@@ -1,0 +1,11 @@
+--- /private/tmp/lanl17_author_fresh_sparse_retirement_parent_request_20261008_a1_r2.py
++++ /private/tmp/lanl17_author_fresh_sparse_retirement_parent_request_20261008_a1_r3.py
+@@ -563,7 +563,7 @@
+         need(0<=(datetime.datetime.now(datetime.timezone.utc)-timestamp(out['checked_at'])).total_seconds()<=120,
+              'fresh_capacity_expired_during_authoring')
+         destination = Path(args.output)
+-        need(destination==TMP/'lanl17-actual-sparse-retirement-parent-request-20261008-a4.json'
++        need(destination==TMP/'lanl17-actual-sparse-retirement-parent-request-20261008-a5.json'
+              and not os.path.lexists(destination),
+              'fresh_direct_tmp_unsealed_request_required')
+         raw = canonical(out)+b'\n'; need(len(raw)<=2097152,'bounded_unsealed_request_required')

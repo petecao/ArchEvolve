@@ -1,6 +1,42 @@
 # Implementation progress
 
-Updated: 2026-10-08 00:32 ET
+Updated: 2026-10-08 10:29 ET
+
+**Current state: PAUSED at Yan-Ru's request; 14/15 assigned tickets resolved.**
+Ticket 17 retains tracker status `claimed`, with work paused and acceptance pending.
+Start the next session from [resume.md](resume.md). The 30-minute heartbeat
+`lanl-analytic-evaluator-progress` is PAUSED; all three implementers are completed.
+
+| Evaluation | Current saved evidence | Next gate |
+|---|---|---|
+| Ticket 11 CPU | Resolved; held-out BFS broad-band pass and BC failure retained | Preserve both results |
+| Ticket 14 generality | Resolved; nine pairs/45 trials, seven unknown totals | Preserve original receipts and qualified unknowns |
+| Corrected storage DEFAULT a3 | Actual original receipt reviewed; guard exit 0 | Limited inspection only; do not repeat |
+| Storage RETIRE a4 / fresh plan a5 | Actual launch transport 0; worker result unassessed | Collect existing attempt once after 2026-10-08 10:48:28 ET |
+| Ticket 17 science | PREPARE/freeze NOTRUN; 0/4 substantive normal campaigns | Original retirement assessment, fresh capacity/lease admission |
+| Final review and completion | Pending after all assigned work completes | Standards + Spec review, fixes, final ticket closure |
+
+[Pause custody](evidence/17-user-pause-custody-20261008-a1/README.md) preserves
+168 exact originals and the newest failed/corrected preparations, successful
+DEFAULT, pending RETIRE and future NOTRUN controls. The two completed custody
+commits `28446e86` and `9eee5ebe` are integrated locally and included in the
+requested checkpoint sync. Scientific R remains `5e12a979`; canonical records,
+estimator/mechanism code and scientific policies remain unchanged.
+
+Closeout performs no mbit10 SSH. Last observed primary remains `5e12a979`;
+checkout sync is deferred until original worker collection and explicit handling
+of the frozen-primary guard. The dated 09:42 ET capacity observation is not
+current admission. The user pause stopped new launches and monitoring, preserving
+the already detached bounded retirement worker and its journals. No success,
+retirement count, recovered capacity or scientific result is inferred.
+
+Remote branch cleanup is [proposed separately](branch-cleanup-proposal-20261008.md).
+No branch has been deleted; discussion is required before deletion.
+
+## Earlier checkpoints (historical)
+
+The entries below retain their original observations and work states. Current
+pause/monitor/sync state is the checkpoint above and the resume guide.
 
 **14 of15 assigned tickets resolved and integrated.** Status: 2:resolved, 3:resolved, 4:resolved, 5:resolved, 6:resolved, 7:resolved, 8:resolved, 9:resolved, 10:resolved, 11:resolved, 12:resolved, 13:resolved, 14:resolved, 16:resolved, 17:claimed. Ticket14 original nine-pair run, export and selected-nine reader are admitted and its Answer/map closure is integrated. Nine pairs/45 trials retain two predicted CPU totals, seven unknown totals, all null ratios/bands and MAPLE estimate-only; no accuracy or measured speedup claim. Ticket17 remains claimed; the fresh, separately byte-pinned parent declaration below records its actual phase and control/campaign state. Frozen population before outcomes, four substantive normal-terminal campaigns and unchanged D30 remain its requirements. Parent owns SSH/dispatch; agents are checked at this checkpoint. Final two-axis review/fixes, final ticket sync, recoverable owned-worktree cleanup and heartbeat pause remain required.
 

@@ -1,9 +1,10 @@
 # Map: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-07 ET (14 of 15 assigned tickets resolved; 17 active)
+Updated: 2026-10-08 10:29 ET (14 of 15 assigned tickets resolved; 17 paused by user)
 **Type:** ticket map
-**Status:** claimed (implementation and actual evaluations in progress)
+**Status:** claimed (unfinished implementation/evaluation; paused by user)
+**Work state:** paused-by-user; [resume guide](resume.md)
 **Spec:** [spec.md](spec.md)
 
 Each ticket is a vertical slice: it delivers something runnable and checkable on its own, from format to command to tests. Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (Yan-Ru decides first); needs-info (waits on LANL access). Ticket 07 runs on mbit10 under the standing approval of 2026-10-05.
@@ -43,7 +44,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | 14 | [Generality: MAPLE and PageRank](issues/14-generality-maple-pagerank.md) | resolved | 05, 09, 10 | 1 day |
 | 15 | [Show Scott the counting approach](issues/15-show-scott-counting.md) | ready-for-human | 09 | about 15 min |
 | 16 | [Extensa flow A: blind paired estimates](issues/16-extensa-blind-paired-estimates.md) | resolved | 06, 09 | 4–6 h |
-| 17 | [Agreement report](issues/17-agreement-report.md) | claimed | 16 | 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs) |
+| 17 | [Agreement report](issues/17-agreement-report.md) | claimed (paused by user) | 16 | 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs) |
 | 18 | [Decide on flow B](issues/18-decide-flow-b.md) | ready-for-human | 17 | about 15 min |
 
 ## E. Later or blocked
@@ -58,6 +59,15 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 
 ## Context pointers
 
+- 2026-10-08 10:29 ET: Yan-Ru requested pause, ticket/status sync and commit.
+  [Resume](resume.md), [latest exact custody](evidence/17-user-pause-custody-20261008-a1/README.md),
+  [library-preserving controls](evidence/17-library-preserving-sparse-retirement-custody-20261008-a1/README.md)
+  and [read-budget correction](evidence/17-sparse-read-budget-custody-correction-20261008-a1/README.md)
+  preserve completed work. DEFAULT a3 original passed; RETIRE a4/plan a5 launched,
+  result unassessed. Quiet until 10:48:28 ET; no closeout SSH. Ticket 17 remains
+  incomplete, scientific campaigns 0/4, final review pending, heartbeat PAUSED.
+  mbit10 checkout sync awaits original collection and explicit frozen-primary handling.
+  Remote branch deletions await the separate user discussion.
 - 2026-10-06: design inputs are [lanl-db-notes.md](lanl-db-notes.md) and [three-way-scan-analytic-evaluators.md](three-way-scan-analytic-evaluators.md); decisions D1–D34 in the spec.
 - 2026-10-06 16:01 ET: ticket 01 resolved; Yan-Ru confirmed D8–D34 and the estimator workflow and approved the design-session commit. [01](issues/01-review-and-commit-design.md), [spec](spec.md)
 - 2026-10-06 16:11 ET: the 24 layer-by-layer tickets 02–25 were replaced by 22 vertical slices (02–23), approved by Yan-Ru; the first runnable version is [04](issues/04-first-runnable-estimate.md).

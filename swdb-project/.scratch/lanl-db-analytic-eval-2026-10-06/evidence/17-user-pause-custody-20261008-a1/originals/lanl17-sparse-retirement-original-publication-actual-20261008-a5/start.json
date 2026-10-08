@@ -1,0 +1,50 @@
+{
+  "argv": [
+    "/usr/bin/ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=30",
+    "mbit10",
+    "exec /usr/bin/bash --noprofile --norc -p -c 'for key in \"${!GIT_@}\"; do unset \"$key\" || exit 2; done\nunset PYTHONPATH PYTHONHOME PYTHONSTARTUP PYTHONINSPECT PYTHONOPTIMIZE LD_PRELOAD LD_LIBRARY_PATH BASH_ENV ENV || exit 2\nexport PATH=/usr/bin:/bin:/usr/local/bin PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1 PYTHONSAFEPATH=1\nexec \"$@\"\n' reviewed-existing-pinned-publisher-prestartup /usr/bin/timeout --signal=TERM --kill-after=60s 120s /usr/bin/python3.12 -B -s /data1/yanruj/lanl17-publish-sparse-parent-originals-20261008-a3.py --source-sha256 5e667fa8ca26ece4825631e5d51feca490f3e154688a38399518bf9c237df2d9"
+  ],
+  "execution_not_yet_started": true,
+  "existing_publisher_reused": true,
+  "local_wait_seconds": 210,
+  "packet": {
+    "bytes": 880235,
+    "path": "/private/tmp/lanl17-sparse-retirement-original-publication-framing-20261008-a5.bin",
+    "sha256": "e7cf7c36829ae6fe037cc54d8ca5c58613fffac9882df451783bd8927f164078",
+    "stat": {
+      "ctime_ns": 1791467065332372347,
+      "dev": 16777229,
+      "gid": 0,
+      "ino": 350044124,
+      "mode": 33152,
+      "mtime_ns": 1791467065332372347,
+      "nlink": 1,
+      "size": 880235,
+      "uid": 501
+    }
+  },
+  "sealed": false,
+  "selected_guard_wrapper_science_main_called": false,
+  "started_utc": "2026-10-08T13:44:25.336289+00:00",
+  "whole_review": {
+    "bytes": 2964,
+    "path": "/private/tmp/lanl17-parent-fresh-sparse-retirement-plan-complete-review-20261008-a5.json",
+    "sha256": "1f629c5bef4ca2de3535e7462b2cee096b032c4626053871f56b686a70cb8646",
+    "stat": {
+      "ctime_ns": 1791467065333707604,
+      "dev": 16777229,
+      "gid": 0,
+      "ino": 350044125,
+      "mode": 33152,
+      "mtime_ns": 1791467065333707604,
+      "nlink": 1,
+      "size": 2964,
+      "uid": 501
+    }
+  }
+}
