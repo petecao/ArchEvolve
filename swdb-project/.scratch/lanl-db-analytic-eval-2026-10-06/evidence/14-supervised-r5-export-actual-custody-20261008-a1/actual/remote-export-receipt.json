@@ -1,0 +1,52 @@
+{
+  "format": "swdb.lanl14-export-reader-administrative-supervisor.v1",
+  "updated": "2026-10-07 ET",
+  "action": "exporter",
+  "started_utc": "2026-10-08T01:15:45.178871+00:00",
+  "ended_utc": "2026-10-08T01:33:52.262939+00:00",
+  "elapsed_control_s": 1087.0840677684173,
+  "timeout_s": 18000.0,
+  "timed_out": false,
+  "signal_received": null,
+  "state": "child_returned",
+  "returned_child_exit": 0,
+  "child_exit": 0,
+  "supervisor_exit": 0,
+  "argv_sha256": "699fa07e4c3240efe2be1039a6e32b49dadd84717a2d1b697bfafb32656c6964",
+  "selected_source_sha256": "928af82facd9f36dfdbca6595d2c2e9d1091dd0064c9fe53fc41c163879e026e",
+  "cleanup_implementation_sha256": "31e1d71bc6e9ef4a5a5f1d5fbff136ceef249935f8f00601edf45277fce249ec",
+  "processes_py_sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "estimator_modules": 185,
+  "supervisor_sha256": "503fc5defcf96a5177599185a9895c00ae64b3e1b0058128b9e283ef3bd39f3f",
+  "native_python_sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+  "uid": 114316761,
+  "cleanup": {
+    "subreaper": true,
+    "survivor_count": 0,
+    "terminated_owned_process_count": 2,
+    "original_private_cleanup": {
+      "sha256": "5192c6321cca72d7a3c56cf9f6b38acfe6d5d7ae08d8385acbaaea70ed303a39",
+      "bytes": 269
+    }
+  },
+  "cleanup_errors": [],
+  "error_type": null,
+  "original_private_streams": {
+    "stdout": {
+      "bytes": 340,
+      "mode": 384
+    },
+    "stderr": {
+      "bytes": 2907,
+      "mode": 384
+    }
+  },
+  "fixture": false,
+  "supervision_success": true,
+  "scientific_admission": false,
+  "child_scientific_result_assessed": false,
+  "canonical_ensure_ascii": false,
+  "scope": "Selected metadata child status and original owned cleanup custody only. Scientific admission remains separate. Full argv/environment/auth and original private stdout/stderr omitted; no retry.",
+  "identity_sha256": "5bef382377c1be27dea5d50f107d942a546936046b408e553691d8b4c483b5da"
+}
