@@ -1,6 +1,6 @@
 # Actual p2 dispatch and release readiness
 
-Updated: 2026-10-08 15:30 ET.
+Updated: 2026-10-08 15:31 ET.
 
 **p2 attempt1 is active on node0, acquired native generation512. Original dispatch and dispatch-state32 custody succeeded. No p2 terminal stop, normal completion or release is admitted.** p1 normal plateau4 has complete stop/release/AFTER custody; final strict scientific audit remains pending. p3–p4 are queued. Fourteen of fifteen assigned tickets are resolved;17 stays claimed.
 
@@ -31,3 +31,5 @@ This unsealed archive preserves exact approved compact metadata/project sources 
 Independent actual dispatch-state32 and future terminal/AFTER draft review passed: original receipt6971B/109b, terminaldraft9088B/02ab22 and AFTERdraft3398B/806b9e. Source correction changes historical provenance only; no future terminal action executed.
 
 At15:22 ET the owned public campaign process started after immutable in-lane checks. Exact15:28 ET originals show publicPID2274215/start598927272 advancing from480 to34062 user ticks, full public query index951750656B and pairing/records directory present. State, provider calls, iterations and terminal metadata remain absent; node0g512 stays matched/held. Monitor5037B/SHA0bfc2a14320cd34dabb56743e53684592e5ead58b427660de35e4aeb39fbef2a and process3904B/SHAf9eaffe0f320ba18be633d2fd82e8caddf07f756252872bd42f2780a05f5af8b are exact decoded originals, not reconstructed JSON. All scoped agents are responsive/completed. Next required table/agent check15:45 ET. No source, budget, catalog, native lease or campaign dispatch changed.
+
+The15:31 ET heartbeat captured current facts at19:30:57UTC=15:30:57ET. The `1534` capture directory suffix is a unique label, not the check time. Exact monitor5037B/af3d555be41762e121dec8a03cc0f94a38a1dd2aafa448ea3a180e058e904e33; process3905B/630ce63b0677606772b616ed66e49f18f7b1ee01d699b18a175fa12bafda9828; native5083B/b1d257e39e0a1a9b560cc711716d1b19211ce4ed28b1bd910bd47602203e1d24. Public PID2274215/start598927272 now51251 user ticks, state/iterations/provider calls remain absent. Current observer again refuses release on held512/matching FLOCK/FD9/missing terminal originals; no unknown reasons. Agent health checked responsive/completed, table reported, conservative next checkpoint15:45 ET. No terminal collection or new dispatch.
