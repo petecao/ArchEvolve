@@ -1,0 +1,31 @@
+# Actual p2 dispatch and release readiness
+
+Updated: 2026-10-08 15:20 ET.
+
+**p2 attempt1 is active on node0, acquired native generation512. Original dispatch and dispatch-state32 custody succeeded. No p2 terminal stop, normal completion or release is admitted.** p1 normal plateau4 has complete stop/release/AFTER custody; final strict scientific audit remains pending. p3–p4 are queued. Fourteen of fifteen assigned tickets are resolved;17 stays claimed.
+
+| Actual original | Bytes | SHA256 |
+|---|---:|---|
+| p2 BEFORE | 3148 | `766efc494edb201820d503b58c4666a16d88e96d525256698cc6d21da9bdb4f7` |
+| p2 dispatch | 44111 | `c0c35fa265e2860a77e7ce1c528a21aa6cd18008b8d59d2e4c31ece6ac81dc69` |
+| p2 initial native lane | 1065 | `326295198afffd2aa85061bf59600b2d5521924d82d259ead8133b92c27da484` |
+| p2 dispatch-state32 | 6971 | `109b559926e61d28603d0971b69983cbb456c9c81474408c489a043c4a80eeec` |
+| p2 15:17 native observation | 5083 | `157ec29ddc242ac40b6f99b59e38aaa521c4e709df9352bd8e7cfc01c9e726e3` |
+
+Original BEFORE and fresh full host admission are retained in [p1 custody archive](../17-p1-normal-stop-release-after-20261008-a5/README.md). Both socket and legacy leases were released; PRIMARY+its origin and clean scientific source remained R. Memory/storage exceeded unchanged serial floors; /data remained below concurrent44GiB. Preserve unrelated Quicksilver. Original successful a2 dispatcher76de ran once and returned SSH0 without timeout or failure. Its preregistration seal is eb3979dd9836ab99ecdf5340bfa6bb72decac86a7a01abce663ccf0cd7b1a9f2. No resume or baseline-only flag; all original source/policy/full catalogs/budgets retained.
+
+The original manifest checks took about ten minutes before lane acquisition, consistent with p1's original ten-minute pre-dispatch duration. Bounded owned helper snapshots show the same PID/start advancing CPU and read counters; no duplicate dispatch or deadline extension. Pre-dispatch state remained absent/no provider directories. At15:13 ET, acquired lane/native originals agree on generation512, jobp2-a1/node0/lease, owned stable all-nine stats; this observation supplies generation rather than a counter guess. In-lane owned helper tree is live. The inherited startup format/anchor label retains p1 wording while actual campaign and process_class fields bind p2; no p1 process claim is inferred from that label.
+
+Original dispatch-state32 seal75b9d75e973771b602e3f45cbb80faa908e280b3cb43d6a57147bb7f80c9b2fe binds exact M2/BEFORE/dispatch and explicit parent exclusive pre-state attestation. Root and independent request/action review passed before the unchanged producer ran. Receipt/seal/source/context links are checked separately from scientific completeness.
+
+Selected p2 native observerR2 is15125B/SHA3f89941c85bbf0dd4b080d3f75b1ab07089327dcee7e7b6f0b4f92d4fea4e029, staged once0600 at `/data1/yanruj/lanl17-p2-native-release-query-20261008-a5-r2.py`. Action config is `/private/tmp/lanl17-p2-native-release-query-action-config-r2-20261008-a5.json`. Actual15:17 ET observer reports not_release_ready, held512 with matching kernel FLOCK and daemon FD9, missing final metadata, no unknown reasons. SSH0/inner0 is not native release. A local decoder initially assumed a different state label; checking the actual not_release_ready contract corrected it with no remote rerun or original rewrite.
+
+After actual dispatch/lane capture, reviewed local generatorR1 created source-only p2 observer/reader/draft/author. Source review found an inherited historical predecessor path mechanically renamed to absentp2. Corrected selected draftR2 preserves the actual originalp1 predecessor10877B/3f04 reference, labeled provenance only; producer request_template is identical. Selected authorR5 changes only draft basename/size/hash:18684B/SHA8578b270673f4e215cd6990b1ba228419f2d3d006e3e086ef1cbd2fd57ee3e5e at `/private/tmp/lanl17_finalize_p2_normal_release_request_20261008_a5_r5.py`. Observer3f899 and terminal reader7926B/53af remain unchanged and reviewed. Original generated draftR1/authorR4 are preserved NOTUSED for custody. Future generatorR2 (11301B/2937192c) preserves historical provenance for actual p3/p4 derivations; never inherit512.
+
+Future normal terminal action and B08 AFTER drafts are nonexecutable. Require fresh release_ready AND normal_exit_set_only, final original stop/four exits/source/cleanup/state/summary and exact generation512 before unwrapping reader. Never resume stopped=true. Author R5 needs actual decoded terminal originals and exact earlier R2 native observation, explicit fresh parent normal/source/no-holder/no-reuse review, finite<=300s interval and fresh output paths. Fresh native checks and physical nativewrapper10510/00c269 verification remain mandatory before release32; fresh selected native checks before/after B08 AFTER; reserve node0 until all custody finishes. Resolve AFTER stop/release hashes from originals only. No terminal author/request/32/AFTER has run for p2.
+
+Required15:15 ET table and agent-health check completed: p1 normal custody complete, p2 active with0 iterations, p3/p4 queued, report/final strict audit/full Standards+Spec review/fixes pending. Agents responsive, no stranded worker. Next required checkpoint15:45 ET. Existing heartbeat remains ACTIVE with same30-minute schedule/target; prompt now reflects actual p1/p2 facts. Do not pause it until all assigned work, evaluations, final review/fixes, ticket and Git synchronization complete. Remote primary remains R until original custody/finalize guards finish; administrative Git commits advance separately.
+
+This unsealed archive preserves exact approved compact metadata/project sources only; original state/provider/log/build output stays remote. It is not final trajectory/pair/D30 admission. Inventory verifies every copied original. Finalize/report/full catalog indices/accepted pins/strict audit and human-owned ticket18 recommendation remain required; human-owned statuses are preserved.
+
+Independent actual dispatch-state32 and future terminal/AFTER draft review passed: original receipt6971B/109b, terminaldraft9088B/02ab22 and AFTERdraft3398B/806b9e. Source correction changes historical provenance only; no future terminal action executed.
