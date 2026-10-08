@@ -19,7 +19,7 @@ A parent-reviewed request is an **unsealed original JSON**, not an admission. It
 
 | Field | Required original fact |
 | --- | --- |
-| `format`, `uid` | `swdb.dx100-source-deployment-request.v1`; actual account UID |
+| `format`, `uid`, `creator_gid` | `swdb.dx100-source-deployment-request.v1`; actual account UID and identical real/effective primary creator GID |
 | `source`, `expected_revision` | Exact absent S before launch, canonical direct child of private base; final 40-character R |
 | `private_base`, `control_base` | `{path, identity}`; canonical nonsymlink 0700 owned roots |
 | `control` | `{path, identity}`; already-created owned 0700 directory beneath control_base, disjoint from S and target |
@@ -33,9 +33,13 @@ An `identity` is `{dev, ino, mode, uid, gid}`. A full `stat` also contains `nlin
 `mtime_ns`, `ctime_ns`, all integers. `mode` includes file-type bits. Atime is excluded
 because the reads themselves can change it. Private-base directory identity is stable
 across creation of S; parent must not pin its mutable size/mtime as an identity field.
-Targets are owned by the account, on the private-base device and group. Directory SGID
-is allowed under that actual private base; SUID/sticky, symlinks and special files are
-refused. Regular target files must be single-link. No modes are changed by this hook.
+Targets and traversed directories are owned by the account and on the pinned private-base
+device. Ordinary directories and target files may use only the private-base GID or the
+explicit actual creator GID. SGID directories must use the private-base GID; SUID/sticky,
+symlinks and special files are refused. Every target file retains its independent exact
+stat and original manifest byte pin. Regular target files must be single-link. No modes
+are changed by this hook. This handles the observed private BASE GID0 alongside C/fresh
+source creator GID114316761, without accepting other supplementary groups.
 
 The four record pins are exactly:
 

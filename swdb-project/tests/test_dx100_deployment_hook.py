@@ -98,7 +98,7 @@ def deployment(tmp_path):
     git = Path(shutil.which("git")).resolve()
     python = Path(sys.executable).resolve()
     request = {
-        "format": "swdb.dx100-source-deployment-request.v1", "uid": os.getuid(),
+        "format": "swdb.dx100-source-deployment-request.v1", "uid": os.getuid(), "creator_gid": os.getgid(),
         "source": str(source), "expected_revision": revision,
         "private_base": {"path": str(base), "identity": identity(base)},
         "control_base": {"path": str(base), "identity": identity(base)},
@@ -226,3 +226,74 @@ def test_exact_alias_ignore_does_not_hide_another_application(deployment):
     other.write_bytes(b"unrelated source remains visible")
     assert run_git(deployment["source"], "status", "--porcelain", "--untracked-files=all").stdout == (
         "?? swdb-project/apps/other-source.txt\n")
+
+
+def alternate_group():
+    groups = sorted(set(os.getgroups()) - {os.getgid()})
+    if not groups:
+        pytest.skip("requires one supplementary group for real owned synthetic directory metadata")
+    return groups[0]
+
+
+def refresh_group_pins(deployment):
+    request = deployment["request"]
+    request["private_base"]["identity"] = identity(deployment["base"])
+    request["control_base"]["identity"] = identity(deployment["base"])
+    request["target"]["stat"] = stamp(deployment["target"])
+    request["target_stats"] = {str(path.relative_to(deployment["target"])): stamp(path)
+                               for path in sorted(deployment["target"].rglob("*"))}
+
+
+def test_creator_group_paths_beneath_a_different_private_base_group_are_bound(deployment):
+    os.chown(deployment["base"], -1, alternate_group())
+    refresh_group_pins(deployment)
+    assert deployment["request"]["private_base"]["identity"]["gid"] != os.getgid()
+    assert deployment["request"]["target"]["stat"]["gid"] == os.getgid()
+    result = deployment["execute"]()
+    assert result.returncode == 0, result.stderr
+    assert (deployment["source"] / "swdb-project/apps/dx100").readlink() == deployment["target"]
+    assert run_git(deployment["source"], "status", "--porcelain").stdout == ""
+
+
+def test_base_group_sgid_directories_and_target_files_are_bound(deployment):
+    group = alternate_group()
+    os.chown(deployment["base"], -1, group)
+    for path in (deployment["target"], *deployment["target"].rglob("*")):
+        os.chown(path, -1, group)
+        if path.is_dir():
+            path.chmod(0o2775)
+    refresh_group_pins(deployment)
+    result = deployment["execute"]()
+    assert result.returncode == 0, result.stderr
+    assert (deployment["source"] / "swdb-project/apps/dx100").readlink() == deployment["target"]
+    assert run_git(deployment["source"], "status", "--porcelain").stdout == ""
+
+
+@pytest.mark.parametrize("mode", [0o2775, 0o4775, 0o1775])
+def test_creator_group_sgid_suid_and_sticky_target_directories_are_refused(deployment, mode):
+    os.chown(deployment["base"], -1, alternate_group())
+    deployment["target"].chmod(mode)
+    refresh_group_pins(deployment)
+    assert stamp(deployment["target"])["gid"] == os.getgid()
+    assert stamp(deployment["target"])["mode"] & 0o7000 == mode & 0o7000
+    refusal(deployment["execute"](), "unsafe_owned_directory_route")
+    assert not (deployment["source"] / "swdb-project/apps/dx100").exists()
+    assert not (deployment["control"] / "dx100-binding-original.json").exists()
+
+
+def test_unlisted_target_file_group_is_refused_even_with_exact_stat_pin(deployment):
+    base_group = alternate_group()
+    others = sorted(set(os.getgroups()) - {os.getgid(), base_group})
+    if not others:
+        pytest.skip("requires two supplementary groups for real owned synthetic file metadata")
+    os.chown(deployment["base"], -1, base_group)
+    file = deployment["target"] / "benchmarks/gapbs/src/bfs.cc"
+    os.chown(file, -1, others[0])
+    refresh_group_pins(deployment)
+    refusal(deployment["execute"](), "target_owner_or_redirect")
+    assert not (deployment["source"] / "swdb-project/apps/dx100").exists()
+
+
+def test_request_cannot_claim_a_different_creator_group(deployment):
+    refusal(deployment["execute"](lambda req: req.update(creator_gid=alternate_group())), "request_identity")
+    assert not (deployment["source"] / "swdb-project/apps/dx100").exists()

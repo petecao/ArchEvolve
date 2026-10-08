@@ -127,15 +127,17 @@ def beneath(path, root):
     return path == root or root in path.parents
 
 
-def owned_route(path, root, uid):
+def owned_route(path, root, uid, creator_gid):
     require(beneath(path, root), "outside_private_root")
+    root_stat = stamp(root)
     for part in reversed((path, *path.parents)):
         if not beneath(part, root):
             continue
         s = stamp(part)
-        require(s["uid"] == uid and s["gid"] == root.stat().st_gid
-                and s["dev"] == root.stat().st_dev and stat.S_ISDIR(s["mode"])
-                and not s["mode"] & 0o5000, "unsafe_owned_directory_route")
+        require(s["uid"] == uid and s["gid"] in {root_stat["gid"], creator_gid}
+                and s["dev"] == root_stat["dev"] and stat.S_ISDIR(s["mode"])
+                and not s["mode"] & 0o5000
+                and (not s["mode"] & 0o2000 or s["gid"] == root_stat["gid"]), "unsafe_owned_directory_route")
 
 
 def native(pin):
@@ -212,8 +214,9 @@ def original_manifest(records):
     return files
 
 
-def target_inventory(target, pins, files, uid, base):
+def target_inventory(target, pins, files, uid, base, creator_gid):
     observed = {}
+    base_stat = stamp(base)
     def fail(error):
         raise ValueError("incomplete_target_visibility") from error
     for current, dirs, names in os.walk(target, followlinks=False, onerror=fail):
@@ -222,11 +225,13 @@ def target_inventory(target, pins, files, uid, base):
             p = Path(current) / name
             rel = p.relative_to(target).as_posix()
             s = stamp(p)
-            require(s["uid"] == uid and s["gid"] == base.stat().st_gid and s["dev"] == base.stat().st_dev
+            require(s["uid"] == uid and s["gid"] in {base_stat["gid"], creator_gid} and s["dev"] == base_stat["dev"]
                     and not stat.S_ISLNK(s["mode"]), "target_owner_or_redirect")
             require(s == pins.get(rel), "target_stat_mismatch")
             if stat.S_ISDIR(s["mode"]):
-                require(not s["mode"] & 0o5000, "target_directory_special_mode")
+                require(not s["mode"] & 0o5000
+                        and (not s["mode"] & 0o2000 or s["gid"] == base_stat["gid"]),
+                        "target_directory_special_mode")
             else:
                 raw, _ = read(p, 32 * 1024 * 1024, uid)
                 observed[rel] = {"path": rel, "sha256": sha(raw), "bytes": len(raw),
@@ -246,22 +251,25 @@ def main():
     require(stat.S_IMODE(request_stat["mode"]) == 0o600
             and sha(raw) == os.environ.get("SWDB_DX100_BINDING_REQUEST_SHA256"), "request_bytes_mismatch")
     request = json.loads(raw, object_pairs_hook=pairs, parse_constant=lambda _: require(False, "nonfinite_json"))
-    require(request["format"] == FORMAT and type(request["uid"]) is int and request["uid"] == os.getuid(), "request_identity")
+    require(request["format"] == FORMAT and type(request["uid"]) is int and request["uid"] == os.getuid()
+            and type(request["creator_gid"]) is int
+            and request["creator_gid"] == os.getgid() == os.getegid(), "request_identity")
     source = Path(request["source"])
     if Path.cwd() != source:
         return 0
     source = absolute(str(source))
     uid = request["uid"]
+    creator_gid = request["creator_gid"]
     base = private_root(request["private_base"], uid)
     control_base = private_root(request["control_base"], uid)
     require(source.parent == base, "fresh_source_not_direct_private_child")
-    owned_route(source, base, uid)
+    owned_route(source, base, uid, creator_gid)
     control = absolute(request["control"]["path"])
-    owned_route(control, control_base, uid)
+    owned_route(control, control_base, uid, creator_gid)
     require(identity(control) == request["control"]["identity"] and stat.S_IMODE(control.stat().st_mode) == 0o700
             and not beneath(control, source) and not beneath(source, control), "control_identity_or_overlap")
     target = absolute(request["target"]["path"])
-    owned_route(target, base, uid)
+    owned_route(target, base, uid, creator_gid)
     require(target != base and not any(beneath(target, base / name) for name in CONSUMED)
             and not any(beneath(a, b) for a, b in ((target, source), (source, target), (target, control), (control, target))),
             "target_is_consumed_or_overlapping")
@@ -282,13 +290,13 @@ def main():
     require(b"/apps/dx100" in ignore.splitlines(), "exact_ignore_rule_required")
     records = {name: record(request["records"][name], command, source, revision, path) for name, path in RECORDS.items()}
     files = original_manifest(records)
-    target_inventory(target, request["target_stats"], files, uid, base)
+    target_inventory(target, request["target_stats"], files, uid, base, creator_gid)
     source_identity = identity(source)
     receipt_path = control / "dx100-binding-original.json"
     require(not os.path.lexists(receipt_path), "receipt_already_exists")
     apps = source / "swdb-project/apps"
     if apps.exists():
-        owned_route(apps, base, uid)
+        owned_route(apps, base, uid, creator_gid)
     else:
         require(not os.path.lexists(apps), "apps_parent_redirect")
         apps.mkdir(mode=0o700)
@@ -305,7 +313,7 @@ def main():
         os.symlink(str(target), alias)
         alias_created_stat = stamp(alias)
         receipt["outcome"] = "binding_postflight_pending"
-        target_inventory(target, request["target_stats"], files, uid, base)
+        target_inventory(target, request["target_stats"], files, uid, base, creator_gid)
         require(stamp(target) == request["target"]["stat"] and identity(source) == source_identity
                 and git(command, source, "status", "--porcelain", "--untracked-files=all") == b""
                 and git(command, source, "rev-parse", "HEAD").strip().decode() == revision
