@@ -1,0 +1,95 @@
+{
+  "format": "swdb.consumed-source-guard-r3-effective-private-ancestor-source-preparation.v1",
+  "canonical_ensure_ascii": true,
+  "prepared_utc": "2026-10-08T00:16:13.725570+00:00",
+  "original_R2": {
+    "path": "/private/tmp/lanl_consumed_detached_source_guard_r2_20261007.py",
+    "bytes": 65830,
+    "sha256": "3ff7bde67947adf524d0c4f556047fcf1377bc6ddb1e64c9ac58409c3e0acfeb"
+  },
+  "selected_R3": {
+    "path": "/private/tmp/lanl_consumed_detached_source_guard_r3_20261008.py",
+    "bytes": 69303,
+    "sha256": "552cd7424138adcf025db119e0a132e0bc70d733d61aaaddda0effe2932c5371"
+  },
+  "complete_derivation": {
+    "path": "/private/tmp/lanl-consumed-source-guard-r3-complete-r2-derivation-20261008-a1.diff",
+    "bytes": 9829,
+    "sha256": "2210d629328909c77fb0ad016f79895640767f213e6c481f07c89b9d19c42098"
+  },
+  "handoff": {
+    "path": "/private/tmp/lanl-consumed-source-guard-r3-effective-private-ancestor-source-handoff-20261008-a1.md",
+    "bytes": 6394,
+    "sha256": "8c85eba0fe8c7b49ce3e1810154df759a7468080d658b80a43aaec9ad0e48f70"
+  },
+  "original_UNSEALED_mode_observation": {
+    "path": "/private/tmp/lanl-consumed-source-physical-mode-metadata-observed-20261008-a1.json",
+    "bytes": 1572,
+    "sha256": "3bdc599b9f9a0087d3e061f6a3f0124e42b7ad576bb228f70134f3a48c60df67"
+  },
+  "original_observation_policy": "UNSEALED mode/UID/size metadata only; no reseal or new live clearance",
+  "exact_R3_to_R2_full_byte_reversal": true,
+  "explicit_replacement_count": 18,
+  "module_assignment_ASTs_unchanged": 20,
+  "all_inherited_module_function_ASTs_unchanged": [
+    "any_inside",
+    "canonical",
+    "inside",
+    "main",
+    "now",
+    "require",
+    "sha",
+    "stamp",
+    "strict_json"
+  ],
+  "added_pure_module_function": "tracked_mode_equivalent",
+  "changed_Guard_methods": [
+    "__init__",
+    "gate",
+    "git",
+    "path",
+    "perform",
+    "pre_remove_gate",
+    "publish",
+    "read",
+    "stable_inventory",
+    "tree"
+  ],
+  "added_Guard_methods": [
+    "check_private_root",
+    "privacy_gate",
+    "private_ancestor"
+  ],
+  "all_other_Guard_method_ASTs_unchanged": [
+    "aliases_and_sources",
+    "leases",
+    "left",
+    "native_git",
+    "pin_fact",
+    "pinned",
+    "proc_read",
+    "process_references",
+    "protect",
+    "raw_inventory",
+    "receipts_and_raw",
+    "retain_git",
+    "sealed",
+    "text_git",
+    "walk"
+  ],
+  "R2_review_config_and_removal_journal_byte_exact": true,
+  "old_LIMITS_and_all_literal_rows_receipts_pins_unchanged": true,
+  "syntax_AST_only": true,
+  "target_imported": false,
+  "main_executed": false,
+  "tests_executed": false,
+  "permission_fixture_prepared": false,
+  "Git_project_mutation": false,
+  "SSH": false,
+  "chmod_or_mode_normalization": false,
+  "guard_plan_subset_assessment_or_removal": false,
+  "source_stage_Store_native_provider_scientific_admission": false,
+  "original_R2_six_body_SYNTHETIC_history_unchanged": true,
+  "future_actual_finalR14_release_allfree_finalR17_allocation_original_inventories_and_plan": "Pending, not inferred from historical mode facts or source review.",
+  "identity_sha256": "6b727cf18ffe305c247de980278b84fe2db2f06539c4a19c567856f78f1fa861"
+}

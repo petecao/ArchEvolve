@@ -1,0 +1,196 @@
+--- /private/tmp/lanl_consumed_detached_source_guard_r2_20261007.py
++++ /private/tmp/lanl_consumed_detached_source_guard_r3_20261008.py
+@@ -88,6 +88,13 @@
+ def now():
+     return datetime.datetime.now(datetime.timezone.utc).isoformat()
+ 
++def tracked_mode_equivalent(physical_mode, git_mode, effective_private):
++    # Keep all read/execute/owner bits exact; only historical optional 022 is allowed.
++    require(git_mode in ('100644', '100755'), 'unsupported_tracked_permission_kind')
++    expected = 0o755 if git_mode == '100755' else 0o644
++    return physical_mode == expected or (effective_private and
++                                          physical_mode & ~0o022 == expected)
++
+ class Guard:
+     def __init__(self, args):
+         self.args = args
+@@ -111,6 +118,7 @@
+         self.symlink_stats = {}
+         self.raw_namespace = None
+         self.stat_checks = 0
++        self.private_root_stats = {}
+         self.facts = {'format': 'swdb.consumed-detached-source-guard.v1',
+                       'canonical_ensure_ascii': True, 'started_at': now(),
+                       'remove_requested': args.remove, 'selected_rows': args.select,
+@@ -126,6 +134,49 @@
+         n = self.deadline-time.monotonic()
+         require(n > 0, 'inspection_deadline')
+         return n
++
++    def check_private_root(self, root):
++        # Literal roots only. This is POSIX traversal privacy, not privileged clearance.
++        require(root in (BASE, P('/data/yanruj')), 'private_ancestor_not_literal')
++        require(not any(q.is_symlink() for q in (root, *root.parents))
++                and root.resolve(strict=True) == root, 'private_ancestor_redirect')
++        s = root.lstat()
++        require(stat.S_ISDIR(s.st_mode) and s.st_uid == UID
++                and stat.S_IMODE(s.st_mode) == 0o700, 'private_ancestor_owner_mode')
++        current = stamp(s)
++        fixed = {k: current[k] for k in ('dev', 'ino', 'mode', 'uid', 'gid')}
++        key = str(root)
++        if key not in self.private_root_stats:
++            self.private_root_stats[key] = {'initial_stat': current,
++                                            'fixed_privacy_identity': fixed,
++                                            'latest_stat': current, 'checks': 1}
++        else:
++            previous = self.private_root_stats[key]
++            require(previous['fixed_privacy_identity'] == fixed,
++                    'private_ancestor_identity_or_mode_changed')
++            previous['latest_stat'] = current
++            previous['checks'] += 1
++        # Own output creation/removal can change root times/nlink; never chmod them.
++        return True
++
++    def private_ancestor(self, path):
++        p = P(path)
++        if p == BASE or BASE in p.parents:
++            return self.check_private_root(BASE)
++        # Data-root privacy permits only the already-scoped RAW namespace, no siblings.
++        if p == RAW or RAW in p.parents:
++            return self.check_private_root(P('/data/yanruj'))
++        return False
++
++    def privacy_gate(self):
++        for root in (BASE, P('/data/yanruj')):
++            self.check_private_root(root)
++        # Independent snapshots avoid mutating already-sealed receipt facts later.
++        return {key: {'initial_stat': dict(value['initial_stat']),
++                      'fixed_privacy_identity': dict(value['fixed_privacy_identity']),
++                      'latest_stat': dict(value['latest_stat']),
++                      'checks': value['checks']}
++                for key, value in self.private_root_stats.items()}
+ 
+     def path(self, path, directory=False, allow_primary_mode=False):
+         p = P(path)
+@@ -144,7 +195,8 @@
+                 'wrong_file_type')
+         special = allow_primary_mode and p == PRIMARY and \
+             p.parent.stat().st_uid == UID and stat.S_IMODE(p.parent.stat().st_mode) == 0o700
+-        require(not s.st_mode & 0o022 or special, 'writable_untrusted_path')
++        private = self.private_ancestor(p)
++        require(not s.st_mode & 0o022 or special or private, 'writable_untrusted_path')
+         require(not s.st_mode & 0o7000 or special, 'special_permission_bits')
+         return p, s
+ 
+@@ -172,6 +224,7 @@
+             require(count == before.st_size and stamp(os.fstat(fd)) == stamp(before)
+                     and stamp(p.lstat()) == stamp(before), 'file_read_identity_changed')
+             raw = b''.join(pieces)
++            self.private_ancestor(p)
+             if str(p) in self.passive_stats:
+                 require(self.passive_stats[str(p)] == stamp(before), 'baseline_file_identity_changed')
+             self.passive_stats[str(p)] = stamp(before)
+@@ -244,6 +297,7 @@
+ 
+     def git(self, path, *args):
+         self.left()
++        self.privacy_gate()
+         self.native_git()
+         env = {'PATH': '/usr/bin:/bin', 'LANG': 'C', 'GIT_NO_LAZY_FETCH': '1',
+                'GIT_TERMINAL_PROMPT': '0', 'GIT_OPTIONAL_LOCKS': '0', 'GIT_PAGER': 'cat',
+@@ -255,6 +309,7 @@
+         require(len(r.stdout)+len(r.stderr) <= LIMITS['git_output'], 'git_output_limit')
+         self.native_git()
+         require(r.returncode == 0 and not r.stderr, 'git_refused')
++        self.privacy_gate()
+         return r.stdout
+ 
+     def text_git(self, path, *args):
+@@ -344,7 +399,8 @@
+                 self.symlink_stats[str(p)] = {'stat':stamp(before),'link':os.readlink(p)}
+             else:
+                 data, got = self.read(p)
+-                require(stat.S_IMODE(before.st_mode) == (0o755 if mode == '100755' else 0o644),
++                require(tracked_mode_equivalent(stat.S_IMODE(before.st_mode), mode,
++                                                self.private_ancestor(p)),
+                         'tracked_permission_mode_changed')
+                 require(got == stamp(before), 'tracked_identity_changed')
+             actual_oid = hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
+@@ -375,6 +431,7 @@
+                 and len(r.stdout.splitlines()) == len(ids)
+                 and all(x.split()[-1] in (b'blob', b'tree', b'commit', b'tag')
+                         for x in r.stdout.splitlines()), 'retained_git_object_missing')
++        self.privacy_gate()
+         return {'head': expected_head, 'tree': self.text_git(path, 'rev-parse', 'HEAD^{tree}'),
+                 'tracked_entries': len(rows), 'tracked_logical_bytes': total,
+                 'tracked_allocated_bytes_observed': allocated,
+@@ -699,6 +756,7 @@
+             self.pin_fact(pin)
+ 
+     def stable_inventory(self):
++        self.privacy_gate()
+         def removed(path):
+             return any(inside(path,BASE/name) for name in self.facts['removed_rows'])
+         for path,expected in self.passive_stats.items():
+@@ -727,11 +785,13 @@
+                         'raw_link_live_source_dependency')
+         names = sorted(p.name for p in RAW.iterdir() if p.name.startswith(('lanl-','lanl17-')))
+         require(names == self.raw_namespace, 'raw_namespace_changed')
++        self.privacy_gate()
+         return {'stat_checks':self.stat_checks,'unchanged_files':len(self.passive_stats),
+                 'unchanged_directories':len(self.directory_stats),
+                 'unchanged_symlinks':len(self.symlink_stats)}
+ 
+     def pre_remove_gate(self, name):
++        self.privacy_gate()
+         leases = self.leases()
+         self.retain_git(); self.protect(); self.stable_inventory()
+         current = self.tree(BASE/name,ROWS[name]['head'])
+@@ -741,10 +801,12 @@
+         require({k:v['sha256'] for k,v in later.items()}=={k:v['sha256'] for k,v in leases.items()},
+                 'released_lease_generation_changed_during_check')
+         self.retain_git()
++        self.privacy_gate()
+         return current
+ 
+     def gate(self, compare=False):
+         self.left()
++        self.privacy_gate()
+         leases = self.leases()
+         sources = self.retain_git()
+         self.protect()
+@@ -763,7 +825,9 @@
+         require({k:v['sha256'] for k,v in later.items()} == {k:v['sha256'] for k,v in leases.items()},
+                 'released_lease_generation_changed_during_check')
+         self.retain_git()
++        private_roots = self.privacy_gate()
+         return {'leases': leases, 'sources': sources, 'trees': trees,
++                'effective_private_ancestor_roots': private_roots,
+                 'raw_tree_count': len(raw), 'raw_tree_inventory_sha256': sha(canonical(raw)),
+                 'aliases': aliases, 'processes': processes}
+ 
+@@ -771,6 +835,7 @@
+         require(sys.platform == 'linux' and socket.gethostname().split('.')[0] == 'mbit10'
+                 and os.getuid() == os.geteuid() == UID
+                 and pwd.getpwuid(UID).pw_name == ACCOUNT, 'wrong_host_account')
++        self.privacy_gate()
+         base, s = self.path(BASE, True)
+         require(stat.S_IMODE(s.st_mode) == 0o700, 'private_source_parent_required')
+         self.path(PRIMARY, True, True)
+@@ -898,6 +963,8 @@
+         self.facts['capacity_admission'] = False
+ 
+     def publish(self):
++        self.facts['effective_private_ancestor_roots'] = self.privacy_gate()
++        self.facts['privacy_after_receipt_write_check'] = 'Source-enforced fixed root identity/mode check; receipt carries its pre-seal snapshots.'
+         self.facts['finished_at'] = now()
+         self.facts['bytes_read'] = self.read_bytes
+         self.facts['walk_entries_checked'] = self.walk_entries
+@@ -924,6 +991,7 @@
+                 f.write(body); f.flush(); os.fsync(f.fileno())
+         except BaseException:
+             raise Refused('receipt_publication_failed')
++        self.privacy_gate()
+         print(json.dumps({'format':'swdb.consumed-source-guard-return.v1',
+                           'path':str(out/'receipt.json'), 'bytes':len(body), 'sha256':sha(body),
+                           'identity_sha256':self.facts['identity_sha256'],
