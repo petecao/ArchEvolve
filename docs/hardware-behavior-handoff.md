@@ -66,3 +66,36 @@ The current BFS parent-read/CAS mapping still needs its named visibility/freshne
 ```
 
 Choose a fresh output directory to preserve published content pins. The compact October 6 handoff contains behavior sheets and their originating draft contracts; this command also produces the full query/diagram pipeline. All generation remains offline.
+
+## Follow a selected behavior handoff and its programmer guides
+
+The repository [quickstart](../README.md#current-offline-forward-path) already supplies the complete environment setup and CLI for the received sparse/fully-connected BFS inputs, DX100/MAPLE focus, and a four-candidate budget. Run that existing command from the repository root with a **fresh output directory**; keep all input/config options unchanged. No additional selector or prototype is needed.
+
+For the quickstart's output root, `runs/bfs-maple-comparison-v0.1` (substitute your fresh directory name):
+
+1. Open the output root's `README.md` and choose the case, then its `handoffs/README.md` package index.
+2. Choose the row identified by the desired `catalog_entry` (for example a MAPLE queue-delivery option). Follow its package folder; candidate numbers alone are not stable design identifiers.
+3. Open that folder's `hardware-behavior.md` for the readable contract, or `hardware-behavior.yaml` for the machine-readable contract. The YAML has `design_id`, selected `desired_observable_semantics`, `internal_mechanisms`, `implementation_requirements`, and `source_evidence`.
+4. Follow the Markdown's **Published programmer guides** links or the YAML's `programmer_guides[].url`. The overview/comparison explain the published record; MAPLE/TMU/COBRA also link their concrete flows. Each link declares its publication commit, covered design and explanatory scope.
+
+This small reader command prints the existing generated MAPLE package paths and links. It only reads the artifacts; it does not select operations or execute a workload:
+
+```sh
+.venv/bin/python - <<'PY'
+from pathlib import Path
+import yaml
+
+run = Path("runs/bfs-maple-comparison-v0.1")  # Your fresh output directory.
+for path in sorted(run.glob("case-*/handoffs/candidate-*/hardware-behavior.yaml")):
+    behavior = yaml.safe_load(path.read_text())
+    if behavior["design_id"] != "maple-isca2022":
+        continue
+    print(path)
+    print("  selected operations:",
+          [op["operation_id"] for op in behavior["desired_observable_semantics"]])
+    for guide in behavior.get("programmer_guides", []):
+        print(" ", guide["title"], guide["url"])
+PY
+```
+
+Guide links are design-wide explanations and may discuss modes other than the selected operation. They have `capability_evidence: false`; they do not replace the selected source contract, discharge requirements, or resolve unknown semantics. Use the YAML's actual catalog revision/hash and evidence when binding an implementation. Historical generated snapshots can lack this new field; preserve them and generate a new package with the current exporter rather than editing old content pins.
