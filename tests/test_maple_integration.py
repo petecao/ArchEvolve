@@ -71,6 +71,17 @@ class MapleIntegrationTests(unittest.TestCase):
         self.assertIsNone(annotations["maple-target-coalescing"]["description"])
         self.assertEqual(annotations["maple-index-chunks"]["kind"], "buffering")
 
+    def test_supplemental_readiness_and_credit_keep_code_scope(self):
+        annotations = {m["id"]: m for m in self.maple["internal_mechanisms"]}
+        for mid in ("maple-pinned-head-readiness", "maple-pinned-credit-transfer"):
+            annotation = annotations[mid]
+            self.assertIn("public RTL 742a22d", annotation["description"])
+            self.assertTrue(all(self.catalog["claims"][ref]["evidence_kind"] == "code_inspection"
+                                for ref in annotation["claim_refs"]))
+        self.assertIn("before", annotations["maple-pinned-credit-transfer"]["description"])
+        self.assertEqual([d["id"] for d in self.catalog["designs"]
+                          if d["id"].startswith("maple-")], ["maple-isca2022"])
+
     def test_focus_retains_full_trace_and_produces_both_maple_modes(self):
         focus = ["dx100-artifact-e4fc4af", "maple-isca2022"]
         request, trace = select_candidates(self.case, self.catalog, str(self.path), self.digest, 4, focus)

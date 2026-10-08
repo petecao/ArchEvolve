@@ -88,7 +88,7 @@ def prepare_run(input_paths, catalog_path, root=ROOT, max_candidates=3, methods_
                       "input_sha256":case["input_sha256"], "selected_entries":[c["catalog_entry"] for c in request["candidates"]],
                       "issues":case["issues"], "hardware_request_sha256":request_digest})
     code_hash = hashlib.sha256(b"".join((root / name).read_bytes() for name in (
-        "archevolve/normalize.py", "archevolve/measurement_methods.py", "archevolve/select.py", "archevolve/evidence_select.py", "archevolve/hardware_catalog.py", "archevolve/mechanisms.py", "archevolve/workload_context.py", "archevolve/intrinsic_handoff.py", "archevolve/comparison.py", "archevolve/__main__.py", "tools/render_mermaid.py"))).hexdigest()
+        "archevolve/normalize.py", "archevolve/measurement_methods.py", "archevolve/select.py", "archevolve/evidence_select.py", "archevolve/hardware_catalog.py", "archevolve/mechanisms.py", "archevolve/workload_context.py", "archevolve/intrinsic_handoff.py", "archevolve/hardware_behavior.py", "archevolve/comparison.py", "archevolve/__main__.py", "tools/render_mermaid.py"))).hexdigest()
     run_key = {"inputs":[c["input_sha256"] for c in cases], "catalog_sha256":catalog_digest,
                "max_candidates":max_candidates, "code_sha256":code_hash, "reference":reference, "methodology_sha256":methods_digest,
                "source_context_sha256":context_digest, "comparison_design_ids":compare_design_ids, "focus_design_ids":focus_design_ids}

@@ -1,5 +1,11 @@
 # BFS intrinsic handoff — Eric's hardware evidence catalog
 
+## October 6: how the hardware accelerates
+
+Peter's requested mechanism/semantics layer is available in the [hardware behavior guide](hardware-behavior-handoff.md) and [compact DX100/MAPLE sheets](../handoffs/hardware-behavior-20261006/README.md). Future generated packages include `hardware-behavior.md` and `.yaml`: observable operation semantics, internal request/response handling, conditional payoff hypotheses, implementation obligations and source evidence.
+
+These separate sheets use a pinned snapshot of Eric's 0.1.10 catalog, now merged to main in PR #3. The October 1 handoff files used by Yan-Ru's library are unchanged; any future executable proposal needs deliberate catalog/content re-binding. No implementation, source-scope widening or performance certification is implied.
+
 ## Latest: MAPLE is the second fetcher
 
 Eric's selected [MAPLE ISCA 2022 paper](https://jbalkind.github.io/docs/isca2022_maple.pdf) is now cataloged as `maple-isca2022` (data revision 0.1.3). The latest [DX100/MAPLE handoff guide](maple-dx100-handoff.md) links both BFS comparisons, intrinsic drafts, operation diagrams, workload context and paper logical block paths.

@@ -1,0 +1,417 @@
+[
+  {
+    "op": "add",
+    "path": "/sources/phi-micro2019-author-primary",
+    "value": {
+      "title": "PHI: Architectural Support for Synchronization- and Bandwidth-Efficient Commutative Scatter Updates",
+      "edition": "14-page MICRO2019 author proceedings PDF;DOI10.1145/3352460.3358254 andofficial author provenance verified",
+      "url": "https://people.csail.mit.edu/sanchez/papers/2019.phi.micro.pdf",
+      "sha256": "920407e24e07f432b087ec842996059a29f198fab79dedcfa046dd2773bbb57b",
+      "locator_basis": "1-based PDF pages,printed MICRO52 footer;cached primary hash in separate provenance",
+      "document_type": "conference_paper",
+      "conference": "MICRO",
+      "publication_year": 2019,
+      "doi": "10.1145/3352460.3358254",
+      "reviewed_on": "2026-10-06"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/claims/phi-partial-lines",
+    "value": {
+      "source_refs": [
+        "phi-micro2019-author-primary"
+      ],
+      "locator": "PDFp5 \u00a73.1.1 Fig6",
+      "statement": "Cache lines marked as buffered updates contain identity-initialized partial reductions rather than fetched original data. Per-level ALU coalesces updates on hits.",
+      "evidence_kind": "paper_specification",
+      "limitations": [
+        "Paper specification only;actual instruction/ALU/coherence/flush/bin source and numeric legality need binding."
+      ]
+    }
+  },
+  {
+    "op": "add",
+    "path": "/claims/phi-selective-batching",
+    "value": {
+      "source_refs": [
+        "phi-micro2019-author-primary"
+      ],
+      "locator": "PDFp6 \u00a73.1.1 Fig7",
+      "statement": "LLC evictions choose in-place apply versus tagged update-bin streaming based on nonidentity element density;the threshold is derived from update/index byte sizes. Replay disables further batching and applies bin updates.",
+      "evidence_kind": "paper_specification",
+      "limitations": [
+        "Paper specification only;actual instruction/ALU/coherence/flush/bin source and numeric legality need binding."
+      ]
+    }
+  },
+  {
+    "op": "add",
+    "path": "/claims/phi-program-interface",
+    "value": {
+      "source_refs": [
+        "phi-micro2019-author-primary"
+      ],
+      "locator": "PDFpp6-8 \u00a73.1.2/\u00a73.3 Listing2",
+      "statement": "Software configures operation and bin starting addresses,then uses a push-update instruction with destination address and value source operands. CPU computes index/address;configuration uses memory-mapped registers.",
+      "evidence_kind": "paper_specification",
+      "limitations": [
+        "Paper specification only;actual instruction/ALU/coherence/flush/bin source and numeric legality need binding."
+      ]
+    }
+  },
+  {
+    "op": "add",
+    "path": "/claims/phi-flush-consistency",
+    "value": {
+      "source_refs": [
+        "phi-micro2019-author-primary"
+      ],
+      "locator": "PDFpp7-8 \u00a73.2.1/\u00a73.2.2",
+      "statement": "Buffered private partial lines are outside ordinary coherence and flush to shared banks. Bulk updates require relaxed-atomic annotation and phi_sync before reads;PHI does not transparently gather private partials for intervening reads. Mixing conventional atomics with PHI updates to the updated region is outside the stated discipline.",
+      "evidence_kind": "paper_specification",
+      "limitations": [
+        "Paper specification only;actual instruction/ALU/coherence/flush/bin source and numeric legality need binding."
+      ]
+    }
+  },
+  {
+    "op": "add",
+    "path": "/claims/phi-physical-bins",
+    "value": {
+      "source_refs": [
+        "phi-micro2019-author-primary"
+      ],
+      "locator": "PDFp8 \u00a73.3",
+      "statement": "The examined batching implementation requires contiguous physical update storage to derive index from physical address. Bin chunks/pointers are physical,cache-bank-striped,and full chunks interrupt allocation with batching disabled temporarily. Paging out requires disabling batching.",
+      "evidence_kind": "paper_specification",
+      "limitations": [
+        "Paper specification only;actual instruction/ALU/coherence/flush/bin source and numeric legality need binding."
+      ]
+    }
+  },
+  {
+    "op": "add",
+    "path": "/claims/phi-types-reference",
+    "value": {
+      "source_refs": [
+        "phi-micro2019-author-primary"
+      ],
+      "locator": "PDFp9 Table3 and adjacent64B-line description",
+      "statement": "Evaluated PageRank/PageRankDelta/SpMV use8-byte double add;integer min/add examples use4-byte objects and radii uses8-byte bitwiseOR. Exact integer signedness and full ISA type/width ABI are not specified by table alone.",
+      "evidence_kind": "paper_specification",
+      "limitations": [
+        "Paper specification only;actual instruction/ALU/coherence/flush/bin source and numeric legality need binding."
+      ]
+    }
+  },
+  {
+    "op": "add",
+    "path": "/mechanism_families/-",
+    "value": {
+      "id": "phi-hierarchical-bulk-update",
+      "description": "Explicit bulk commutative scatter-update interface with hierarchy coalescing,selective bins andflush;no generic gather capability."
+    }
+  },
+  {
+    "op": "add",
+    "path": "/designs/-",
+    "value": {
+      "id": "phi-micro2019-relaxed-bulk-scatter",
+      "name": "PHI MICRO2019 bulk relaxed-atomic scatter update",
+      "revision": "primary-scoped-proposal-r1",
+      "record_kind": "design_version",
+      "summary": "Hierarchical partial-update buffering/ALUs with selective LLC binning and explicit visibility phase.",
+      "mechanism_refs": [
+        "phi-hierarchical-bulk-update"
+      ],
+      "source_refs": [
+        "phi-micro2019-author-primary"
+      ],
+      "interface": {
+        "software_supplies": "Commutative operation/identity,update address/value stream,bins/data physicalmapping andbulk phase boundaries.",
+        "invocation": "Configuration registers pluspush-updateinstruction;framework disables batching/replays bins andcalls phi_sync.",
+        "outputs": "Updatedmemory afterexplicit flush/fence;no old-value return.",
+        "claim_refs": [
+          "phi-partial-lines",
+          "phi-selective-batching",
+          "phi-program-interface",
+          "phi-flush-consistency",
+          "phi-physical-bins",
+          "phi-types-reference"
+        ]
+      },
+      "operations": [
+        {
+          "id": "float64_add",
+          "operation": "reduce",
+          "subtype": "phi_bulk_float64_add",
+          "execution_role": "execute",
+          "address_patterns": [
+            "indirect"
+          ],
+          "support": "paper_specified",
+          "claim_refs": [
+            "phi-program-interface",
+            "phi-types-reference",
+            "phi-flush-consistency"
+          ],
+          "realization": {
+            "kind": "documented_sequence",
+            "description": "Configure operation/bin storage,push commutative address/value updates,disable batching and replay bins,flush private partial lines andsynchronize before CPU reads.",
+            "claim_refs": [
+              "phi-partial-lines",
+              "phi-selective-batching",
+              "phi-program-interface",
+              "phi-flush-consistency",
+              "phi-physical-bins",
+              "phi-types-reference"
+            ]
+          },
+          "result": {
+            "form": "Deferred update of destination memory;ordinary read after required synchronization obtains final merged data.",
+            "old_value": "not_returned",
+            "validity": "Bulk relaxed-atomic commutative semantics,no intervening reads,correct algebra/identity/numeric legality,actual physical/bin/flush proofs.",
+            "claim_refs": [
+              "phi-flush-consistency",
+              "phi-program-interface"
+            ]
+          },
+          "ordering": {
+            "scope": "Declared bulk commutative update domain",
+            "description": "Coalescing and batching may change update order;does not grant bit-exact IEEE source-order equality,reassociation permission or arbitrary atomic/CAS substitution.",
+            "claim_refs": [
+              "phi-partial-lines",
+              "phi-flush-consistency"
+            ]
+          },
+          "completion": {
+            "event": "All bins replayed with batching disabled and phi_sync/privateflush completed before destination reads.",
+            "visibility": "Ordinary coherence retained for other data;shared buffered line reads merge residualpartials in-place.",
+            "claim_refs": [
+              "phi-selective-batching",
+              "phi-flush-consistency"
+            ]
+          },
+          "type_constraints": {
+            "payload_types": [
+              "float64"
+            ],
+            "index_width_bits": [],
+            "claim_refs": [
+              "phi-types-reference"
+            ],
+            "notes": "Double-add example supports scoped float64;integer signedness/universal index ABI unknown. Address/value instruction isnot an index vector ABI."
+          },
+          "datatype_notes": "FP order/nan/signed-zero/overflow numericalrequirements must beproved;originalbenchmarks not relaxed.",
+          "limitations": [
+            "No returned priorvalue,genericgather ormixed intervening reads.",
+            "Float64paper example does notcertifyoriginalorderedbit-oracle equivalence."
+          ]
+        },
+        {
+          "id": "integer_update",
+          "operation": "reduce",
+          "subtype": "phi_bulk_integer_update",
+          "execution_role": "execute",
+          "address_patterns": [
+            "indirect"
+          ],
+          "support": "paper_specified",
+          "claim_refs": [
+            "phi-program-interface",
+            "phi-types-reference",
+            "phi-flush-consistency"
+          ],
+          "realization": {
+            "kind": "documented_sequence",
+            "description": "Configure operation/bin storage,push commutative address/value updates,disable batching and replay bins,flush private partial lines andsynchronize before CPU reads.",
+            "claim_refs": [
+              "phi-partial-lines",
+              "phi-selective-batching",
+              "phi-program-interface",
+              "phi-flush-consistency",
+              "phi-physical-bins",
+              "phi-types-reference"
+            ]
+          },
+          "result": {
+            "form": "Deferred update of destination memory;ordinary read after required synchronization obtains final merged data.",
+            "old_value": "not_returned",
+            "validity": "Bulk relaxed-atomic commutative semantics,no intervening reads,correct algebra/identity/numeric legality,actual physical/bin/flush proofs.",
+            "claim_refs": [
+              "phi-flush-consistency",
+              "phi-program-interface"
+            ]
+          },
+          "ordering": {
+            "scope": "Declared bulk commutative update domain",
+            "description": "Coalescing and batching may change update order;does not grant bit-exact IEEE source-order equality,reassociation permission or arbitrary atomic/CAS substitution.",
+            "claim_refs": [
+              "phi-partial-lines",
+              "phi-flush-consistency"
+            ]
+          },
+          "completion": {
+            "event": "All bins replayed with batching disabled and phi_sync/privateflush completed before destination reads.",
+            "visibility": "Ordinary coherence retained for other data;shared buffered line reads merge residualpartials in-place.",
+            "claim_refs": [
+              "phi-selective-batching",
+              "phi-flush-consistency"
+            ]
+          },
+          "type_constraints": {
+            "payload_types": [],
+            "index_width_bits": [],
+            "claim_refs": [],
+            "notes": "Double-add example supports scoped float64;integer signedness/universal index ABI unknown. Address/value instruction isnot an index vector ABI."
+          },
+          "datatype_notes": "FP order/nan/signed-zero/overflow numericalrequirements must beproved;originalbenchmarks not relaxed.",
+          "limitations": [
+            "No returned priorvalue,genericgather ormixed intervening reads.",
+            "Float64paper example does notcertifyoriginalorderedbit-oracle equivalence."
+          ]
+        }
+      ],
+      "requirements": [
+        {
+          "id": "bulk-no-reads",
+          "description": "No destination reads during ingest/replay;explicit relaxed-atomic annotation required. Do not mix conventional atomics on the updated region.",
+          "scope": "PHI explicit bulk mapping",
+          "verification": "required",
+          "claim_refs": [
+            "phi-flush-consistency"
+          ]
+        },
+        {
+          "id": "flush-before-read",
+          "description": "Prove replay completion,private partialflush,phi_sync andshared readmerge visibility.",
+          "scope": "PHI explicit bulk mapping",
+          "verification": "required",
+          "claim_refs": [
+            "phi-flush-consistency",
+            "phi-selective-batching"
+          ]
+        },
+        {
+          "id": "physical-data-bins",
+          "description": "Contiguous physical destination storage andbank-local striped bins/chunks;disable batching before paging andrefill.",
+          "scope": "PHI explicit bulk mapping",
+          "verification": "required",
+          "claim_refs": [
+            "phi-physical-bins"
+          ]
+        },
+        {
+          "id": "numeric-legality",
+          "description": "Prove reduction/reordering is legal under unchanged original oracle;identity,NaN, signed zero,overflow androunding constraints not discharged.",
+          "scope": "PHI explicit bulk mapping",
+          "verification": "required",
+          "claim_refs": [
+            "phi-types-reference",
+            "phi-flush-consistency"
+          ]
+        },
+        {
+          "id": "not-old-value",
+          "description": "Mapping must not need returned priorvalue,CASsuccess orimmediate nonatomicvisibility.",
+          "scope": "PHI explicit bulk mapping",
+          "verification": "required",
+          "claim_refs": [
+            "phi-program-interface"
+          ]
+        },
+        {
+          "id": "actual-source",
+          "description": "Exact opcode/ALU/bin/flush implementation source/model must be authenticated.",
+          "scope": "PHI explicit bulk mapping",
+          "verification": "unknown",
+          "claim_refs": []
+        }
+      ],
+      "parameters": [
+        {
+          "id": "line-bytes",
+          "unit": "bytes",
+          "state": "fixed_reference",
+          "value": 64,
+          "domain": null,
+          "claim_refs": [
+            "phi-types-reference"
+          ],
+          "notes": "Evaluated cacheline reference;not universal index/operand ABI."
+        },
+        {
+          "id": "bin-chunk",
+          "unit": "bytes perphysicalbinchunk",
+          "state": "unknown",
+          "value": null,
+          "domain": null,
+          "claim_refs": [],
+          "notes": "Paper cites256KB example;actualOSallocation/capacity needs binding."
+        }
+      ],
+      "internal_mechanisms": [
+        {
+          "id": "identity-lines",
+          "kind": "buffering",
+          "status": "described",
+          "description": "Identity-initialized partial lines withbuffered-update tag coexist withordinary coherent data.",
+          "claim_refs": [
+            "phi-partial-lines"
+          ]
+        },
+        {
+          "id": "cache-alu",
+          "kind": "coalescing",
+          "status": "described",
+          "description": "Private/sharedcache ALU combines updates byword offset without fetching original data first.",
+          "claim_refs": [
+            "phi-partial-lines"
+          ]
+        },
+        {
+          "id": "density-choice",
+          "kind": "reordering",
+          "status": "described",
+          "description": "LLC eviction either applies in-place orstreams index/value updates tobins based on density;replay phase disables rebatching.",
+          "claim_refs": [
+            "phi-selective-batching"
+          ]
+        },
+        {
+          "id": "bulk-dependencies",
+          "kind": "dependency_tracking",
+          "status": "described",
+          "description": "Relaxed-atomic domain forbidsinterveningreads untilbinsandprivate partials areflushed.",
+          "claim_refs": [
+            "phi-flush-consistency"
+          ]
+        },
+        {
+          "id": "striped-bin-issue",
+          "kind": "issue_policy",
+          "status": "described",
+          "description": "LLCbanks independentlyupdate bank-local binpointers/partial lines;fullchunkinterrupt temporarily disablesbatching.",
+          "claim_refs": [
+            "phi-physical-bins"
+          ]
+        },
+        {
+          "id": "read-visibility",
+          "kind": "completion",
+          "status": "described",
+          "description": "Explicitphi_sync flushesprivate partials;shared readmerges remaininglinepartial before returning data.",
+          "claim_refs": [
+            "phi-flush-consistency"
+          ]
+        }
+      ],
+      "limitations": [
+        "Examined bulk commutative update operation,not ordinaryBFSparentCAS/defaultgather.",
+        "No current source/RTL/model identity,FP bitwise equivalence,performance orcompatibility acceptance.",
+        "The no-intervening-read/flush/physical contiguity requirements are stronger than genericgraph workload labels."
+      ]
+    }
+  }
+]

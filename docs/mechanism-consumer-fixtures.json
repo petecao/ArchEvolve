@@ -1,0 +1,19 @@
+{
+  "scope": "Portable consumer counterexamples/obligations; catalog capability fields unchanged",
+  "fixtures": [
+    {
+      "source": "examples/mechanism-scaffolds/smash/consumer_fixture.cc",
+      "sha256": "b075e344ee6574bc10ffbf30bd389886015601bce50ae16349cd817d048e08d6",
+      "notes": "docs/smash-catalog-admission/consumer-fixture.md",
+      "source_worktree_commit": "f23d5582",
+      "actual_public_implementation_fault_proven": false
+    },
+    {
+      "source": "examples/mechanism-scaffolds/hta/recheck_fixture.cc",
+      "sha256": "3740c688515c246b55d9d65ebd29a5fd4d9653afef2123e7ee020cad6984190f",
+      "notes": "docs/hta-catalog-admission/consumer-fixture.md",
+      "source_worktree_commit": "3f4761f5",
+      "actual_public_implementation_fault_proven": false
+    }
+  ]
+}

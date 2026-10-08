@@ -1,0 +1,754 @@
+{
+  "axi24-scope-unknown": {
+    "statement": "Exact host ready/drain/register/result-lifetime/translation ABI is not established by inspected evidence.",
+    "source_refs": [
+      "axi-pack-coalescer"
+    ],
+    "locator": "PDF pp.2\u20133 \u00a7II versus public artifact inventory in this report",
+    "evidence_kind": "research_inference",
+    "limitations": [
+      "Publication-scoped evidence; no runnable binding or independent reproduction."
+    ]
+  },
+  "axi24-staging": {
+    "statement": "CVA6 programs L2-SPM contiguous/indirect staging; prefetcher AXI-Pack path is distinct from Ara/CVA6 ordinary AXI4 consumer access.",
+    "source_refs": [
+      "axi-pack-coalescer"
+    ],
+    "locator": "PDF p.3 \u00a7II-C Fig.2c",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Publication-scoped evidence; no runnable binding or independent reproduction."
+    ]
+  },
+  "axi24-tiles": {
+    "statement": "Six L2 arrays hold slice pointers, results, double-buffered nonzeros and indexed vectors; execution interrupts on pointer depletion or full result array and signals refresh.",
+    "source_refs": [
+      "axi-pack-coalescer"
+    ],
+    "locator": "PDF p.3 \u00a7II-C",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Publication-scoped evidence; no runnable binding or independent reproduction."
+    ]
+  },
+  "azul-communication-trees": {
+    "source_refs": [
+      "azul-paper"
+    ],
+    "locator": "IV-D, Fig18; PDF pages8",
+    "statement": "Compiler-generated multicast and reduction trees limit redundant inter-tile traffic.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper mechanism; evaluated implementation not independently executed."
+    ]
+  },
+  "azul-conflict-scheduling": {
+    "source_refs": [
+      "azul-paper"
+    ],
+    "locator": "V-A; PDF pages9,10",
+    "statement": "Dependency checks prevent conflicting accumulator operations; the earliest eligible task supplies operations.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper mechanism; evaluated implementation not independently executed."
+    ]
+  },
+  "azul-local-task-memory": {
+    "source_refs": [
+      "azul-paper"
+    ],
+    "locator": "IV-A; PDF pages6",
+    "statement": "Mapped tile-local tasks communicate by messages instead of remote memory loads.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper mechanism; evaluated implementation not independently executed."
+    ]
+  },
+  "azul-partial-row-delivery": {
+    "source_refs": [
+      "azul-paper"
+    ],
+    "locator": "IV-A, Listing2; PDF pages6,7",
+    "statement": "Local row contributions finish before sending their partial sum to its result owner.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper mechanism; evaluated implementation not independently executed."
+    ]
+  },
+  "cobra-flush": {
+    "source_refs": [
+      "cobra-hpca2022-paper"
+    ],
+    "locator": "PDF p. 8, \u00a7V.E, Flushing the Cache After Binning",
+    "statement": "binflush marks end of Binning. Each core walks nonempty C-Buffers serially, L1 then L2 then its LLC bank, writing residual tuples to memory; eviction buffers, binning engines and offset logic must handle partial lines using tuple counters. All remaining tuples must reach bins before Accumulate.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper states the phase requirement, but does not specify a software-visible done/ack event, inter-core join, memory ordering/fence semantics, cancellation, or global write completion. binupdate retirement alone cannot release Accumulate."
+    ]
+  },
+  "cobra-hierarchy": {
+    "source_refs": [
+      "cobra-hpca2022-paper"
+    ],
+    "locator": "PDF p. 5, \u00a7IV, Fig. 6",
+    "statement": "Hardware-managed per-level cacheline C-Buffers collect tuples over progressively narrower index ranges; full L1/L2 buffers are unpacked and repartitioned into next-level C-Buffers; full LLC buffers go to per-thread memory bins. This combines inexpensive small-buffer-set Binning with many bins for Accumulate.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Coalescing here means tuple collection, not same-index arithmetic reduction."
+    ]
+  },
+  "cobra-insert": {
+    "source_refs": [
+      "cobra-hpca2022-paper"
+    ],
+    "locator": "PDF pp. 6\u20137, \u00a7V.B\u2013C, Fig. 7",
+    "statement": "binupdate takes an index and update value and appends that pair to the selected L1 C-Buffer. Index high bits select buffer/set/way after removing log2(bin range) low bits. Per-buffer counters select the next tuple slot and wrap when full. C-Buffers are not byte addressable and exist outside shared-memory address space.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "The supplied index selects a partition, not a direct store to the application destination address. No old destination value is returned by this collection contract."
+    ]
+  },
+  "cobra-phase-boundary": {
+    "source_refs": [
+      "cobra-hpca2022-paper"
+    ],
+    "locator": "PDF pp. 3\u20134, \u00a7III.A\u2013B, Fig. 3, Algorithms 1\u20132",
+    "statement": "PB materializes index/value tuples during Binning, then software Accumulate reads bins and applies destination updates. Neighbor-Populate bins (e.src,e.dst); Algorithm 2 partitions bins across Accumulate workers and uses ordinary Add on offsets, whereas Algorithm 1 uses AtomicAdd. Unordered neighbor lists permit the changed order.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "No general permission to reorder noncommutative operations or floating-point arithmetic; no hardware destination update/atomic executor."
+    ]
+  },
+  "dxc-completion": {
+    "source_refs": [
+      "dx100-port",
+      "dx100-indirect",
+      "dx100-maa",
+      "dx100-api",
+      "dx100-cpuport",
+      "dx100-spd-code"
+    ],
+    "locator": "Port.cc L313\u2013328 and L387\u2013402; IndirectAccess.cc L742\u2013791 and L843\u2013866; MAA.cc L605\u2013623; MAA_gem5.hpp L98\u2013101; CpuSidePort.cc L295\u2013315; SPD.cc L120\u2013138; MAA.cc L652\u2013676",
+    "statement": "No-response write acceptance/replacement feeds write accounting. Pending packet counts, response counts and modeled latency gate finish; finishInstructionCompute updates tile readiness. wait_ready performs a mapped load held until its ready counter clears, then mfence.",
+    "evidence_kind": "code_inspection",
+    "limitations": [
+      "Accounting callbacks are not global visibility acknowledgements. Direct Ramulator2 backing mutation is separately scoped in dxc-direct-backing.",
+      "The held status-read path is established; end-to-end CPU/compiler/coherence sequencing and safe reuse remain separate obligations."
+    ]
+  },
+  "dxc-gather": {
+    "source_refs": [
+      "dx100-api",
+      "dx100-indirect"
+    ],
+    "locator": "MAA_gem5.hpp L270\u2013287; IndirectAccess.cc L491\u2013527 and L898\u2013924",
+    "statement": "Indirect load API supplies array base, index tile, result tile and optional mask. Execution reads uint32 indices, calculates base + word_size * index, range-checks addresses and writes response words into original iteration slots.",
+    "evidence_kind": "code_inspection",
+    "limitations": [
+      "Element width and index width are different: 64-bit payloads do not establish 64-bit indices."
+    ]
+  },
+  "dxc-old": {
+    "source_refs": [
+      "dx100-api",
+      "dx100-indirect"
+    ],
+    "locator": "MAA_gem5.hpp L289\u2013362; IndirectAccess.cc L898\u20131165",
+    "statement": "Scalar/vector indirect stores and RMW APIs accept an optional destination tile. recvData copies the current word to that tile before assignment or arithmetic; RMW execution has ADD/MIN/MAX branches for uint32, int32, float, uint64, int64 and double.",
+    "evidence_kind": "code_inspection",
+    "limitations": [
+      "No CAS comparison-and-update branch exists in the inspected indirect operation path.",
+      "No independent runtime correctness or CPU-interoperable atomicity is established.",
+      "Floating NaNs, signed zero, overflow and reordering require explicit workload numerical contracts."
+    ]
+  },
+  "dxc-reuse-scope": {
+    "source_refs": [
+      "dx100-maa",
+      "dx100-spd",
+      "dx100-spd-code",
+      "dx100-if"
+    ],
+    "locator": "MAA.cc L556\u2013582 and L605\u2013623; SPD.hh L30\u201334; SPD.cc L120\u2013138; IF.cc L193\u2013220",
+    "statement": "Dispatch/completion update ready counts for dst1/dst2/src1/src2 tile operands. condSpdID participates in scoreboard conflicts but is absent from those ready-count updates; ready is equality to zero in uint8 storage.",
+    "evidence_kind": "code_inspection",
+    "limitations": [
+      "A condition-only tile wait is not established as a safe host reuse barrier.",
+      "No reachable counter-overflow defect is alleged: actual instruction admission and dependency bounds must be checked."
+    ],
+    "disposition": "research_only_unresolved_mapping_obligation"
+  },
+  "dxp-interface": {
+    "source_refs": [
+      "dx100-paper"
+    ],
+    "locator": "PDF pp.6\u20137 \u00a7\u00a73.5\u20134.2, Fig.6 and Fig.7",
+    "statement": "Software provides typed tiles/registers, array bases and instructions through memory-mapped stores. Wait synchronizes before consuming scratchpad outputs or accessing memory updated by DX100; ready bits mark retired instructions.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper-level synchronization promise is distinct from static simulator-path evidence."
+    ]
+  },
+  "dxp-legality": {
+    "source_refs": [
+      "dx100-paper"
+    ],
+    "locator": "PDF p.6 \u00a73.6 and p.7 \u00a74.2 Legality",
+    "statement": "Indirect arrays are exclusively written by DX100 during the ROI. Compiler legality requires no core stores to accessed memory regions in the loop body and no inter-iteration dependencies.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Scope is the mapped arrays and offloaded region, not all CPU memory.",
+      "Repeated updates and reduction legality require a concrete mapping; this text does not authorize arbitrary duplicate assignment or concurrent CPU atomics."
+    ]
+  },
+  "dxp-read": {
+    "source_refs": [
+      "dx100-paper"
+    ],
+    "locator": "PDF pp.4\u20136, Table 2, \u00a7\u00a73.1\u20133.4, Figs.3 and 5",
+    "statement": "SLD fetches constant-stride elements; ILD gathers base-plus-index elements to scratchpad slots. Chaining tiles supports multiple indirections. RNG expands active half-open ranges into outer/inner index tiles for subsequent accesses.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Ranged and chained gathers are instruction compositions, not one monolithic ILD opcode.",
+      "\u00a74.1 p.7 excludes conventional random-base pointer chasing."
+    ]
+  },
+  "dxp-update": {
+    "source_refs": [
+      "dx100-paper"
+    ],
+    "locator": "PDF pp.4\u20135, Table 2, \u00a7\u00a73.1\u20133.2, Fig.3",
+    "statement": "IST assigns values at indirect addresses. IRMW supports a restricted reordered update class including ADD, MIN and MAX. A condition tile controls whether each access executes.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Table 2 has no IRMW destination tile; a fetch-old interface is not established by this edition.",
+      "Arithmetic/ALU operator enumeration does not imply every operator is an IRMW.",
+      "No CAS instruction is established. Floating numerical equivalence under reordering is workload-specific."
+    ]
+  },
+  "extensor-coordinate-position": {
+    "source_refs": [
+      "extensor-micro2019-proceedings"
+    ],
+    "locator": "PDFpp7-8 \u00a76.1-6.2 Fig10-11",
+    "statement": "Sequencer configuration supplies loop bounds, strides and tensor-dimension maps. Iterate selects a level and parent. Coordinate-position tuples surviving intersection address separate operand data storage; tile coordinates accompany delivered data.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper-level contract; no authenticated RTL, DMA/register ABI, physical ownership or measured reproduction."
+    ]
+  },
+  "extensor-ordered-intersection": {
+    "source_refs": [
+      "extensor-micro2019-proceedings"
+    ],
+    "locator": "PDFpp4-5 \u00a74.1-4.2 Fig5-6",
+    "statement": "Scanners emit increasing coordinates and EOS; Intersect consumes matching heads together, drops the smaller head, and flushes when either stream ends.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper-level contract; no authenticated RTL, DMA/register ABI, physical ownership or measured reproduction."
+    ]
+  },
+  "extensor-partial-output": {
+    "source_refs": [
+      "extensor-micro2019-proceedings"
+    ],
+    "locator": "PDFpp9-10 \u00a77.5",
+    "statement": "PE partial outputs carry coordinates to a hash-table partial output buffer; COO output tiles are converted on fill and unloaded by sequential hash iteration. Reduction reorderability is assumed for the tensor algebra; it does not establish source-order IEEE bit equality.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper-level contract; no authenticated RTL, DMA/register ABI, physical ownership or measured reproduction."
+    ]
+  },
+  "fifer-independent-DRM": {
+    "source_refs": [
+      "fifer-micro2021-proceedings"
+    ],
+    "locator": "PDFpp7-8 \u00a75.4 Fig9",
+    "statement": "DRMs receive address operands for dereference or address-range pairs for sequential scanning. Their accesses can complete out of order, but an available result waits for earlier accesses before output enqueue. DRMs are configured at initialization and keep operating independently of the scheduled fabric stage.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper architecture scope only; exact RTL, compiled stage configurations and memory/queue ABI require implementation binding."
+    ]
+  },
+  "fifer-rapid-reconfiguration": {
+    "source_refs": [
+      "fifer-micro2021-proceedings"
+    ],
+    "locator": "PDFpp6-7 \u00a75.1 Fig8",
+    "statement": "New configuration loads into inactive double-buffered cells while the active fabric stops accepting inputs and drains in-flight operations. Activation follows both completion conditions. Required stage state is drained to L1 for preservation; the evaluated activation dead time is two cycles.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper architecture scope only; exact RTL, compiled stage configurations and memory/queue ABI require implementation binding."
+    ]
+  },
+  "fifer-regular-stage-mapping": {
+    "source_refs": [
+      "fifer-micro2021-proceedings"
+    ],
+    "locator": "PDFpp5-6 \u00a74 Fig6-7",
+    "statement": "Programs are manually partitioned to decouple irregular memory operations; LLVM IR regular stages are mapped through DFGs and generated bitstreams. Queue control values delineate stage control boundaries.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper architecture scope only; exact RTL, compiled stage configurations and memory/queue ABI require implementation binding."
+    ]
+  },
+  "hta-branch-lookup": {
+    "source_refs": [
+      "hta-micro2019-proceedings"
+    ],
+    "locator": "PDFp4 \u00a73.2 Fig5",
+    "statement": "Table descriptors specify starting address/size; four are supported in the described implementation. Lookup handles up to four key words and one value word. The x86-64 integer example uses64-bit registers. Found keys or available invalid slots resolve with a taken branch; absent keys in a full line fall through to software.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper-level Flat-HTA integer-word subset; exact ISA/compiler/hash/atomic implementation identity and consumer wrapper still require binding."
+    ]
+  },
+  "hta-concurrent-fallback": {
+    "source_refs": [
+      "hta-micro2019-proceedings"
+    ],
+    "locator": "PDFp6 \u00a74.4 Figs8-9",
+    "statement": "Atomic HTA instructions handle resolved operations. Software fallback uses line locks and lookup recheck after acquiring a lock; thread-safe insertion first tries no-eviction update and performs swap under the fallback lock. This does not certify an arbitrary Python or unlocked software map.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper-level Flat-HTA integer-word subset; exact ISA/compiler/hash/atomic implementation identity and consumer wrapper still require binding."
+    ]
+  },
+  "hta-overflow-software": {
+    "source_refs": [
+      "hta-micro2019-proceedings"
+    ],
+    "locator": "PDFpp5-6 \u00a73.2,\u00a74.3",
+    "statement": "Software overflow stores displaced pairs. Full-swap insertion software preserves the victim and removes a stale copy of the newly inserted key if present. Software counters can trigger table resizing/reinsertion of all pairs.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper-level Flat-HTA integer-word subset; exact ISA/compiler/hash/atomic implementation identity and consumer wrapper still require binding."
+    ]
+  },
+  "hta-update-swap-delete": {
+    "source_refs": [
+      "hta-micro2019-proceedings"
+    ],
+    "locator": "PDFpp4-5 \u00a73.2 Fig6",
+    "statement": "Update changes a matching key or reusable slot and otherwise falls through without modification. Full-line swap installs the new pair and returns a randomly selected victim key/value to software. Delete writes a deleted-key sentinel on a hit and falls through on a miss.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper-level Flat-HTA integer-word subset; exact ISA/compiler/hash/atomic implementation identity and consumer wrapper still require binding."
+    ]
+  },
+  "maple-acknowledgement": {
+    "source_refs": [
+      "maple-paper"
+    ],
+    "locator": "PDF p.5, \u00a73.1 steps 1\u20136 and A\u2013C; p.7 \u00a73.6",
+    "statement": "The core retires the pointer-produce store on MAPLE acknowledgement before the memory reply arrives. The reply later fills the reserved queue entry. A consume finishes when its load response returns the queue value.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Pointer-produce acknowledgement is not fetched-data readiness or a general shared-memory visibility fence."
+    ]
+  },
+  "maple-api": {
+    "source_refs": [
+      "maple-paper"
+    ],
+    "locator": "PDF pp.4\u20135, \u00a7\u00a73.1\u20133.2, Figs.2\u20134",
+    "statement": "MMIO queue operations initialize and bind queues, enqueue data or pointers, and consume values. PRODUCE_PTR requests a fetch whose value is delivered through a queue; LIMA_PRODUCE supplies an indexed range of values to a queue, while LIMA and PREFETCH target the LLC.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "API names and abstract arguments are described, but concrete C types, header, packing and index-width domains are not established by this paper."
+    ]
+  },
+  "maple-lima": {
+    "source_refs": [
+      "maple-paper"
+    ],
+    "locator": "PDF pp.5\u20136, \u00a7\u00a73.2,3.4, Fig.6",
+    "statement": "LIMA accepts two array bases and caller-provided begin/end bounds for A[B[i]]; A=0 requests B[i]. It reads adjacent B data in 64-byte chunks into scratchpad, computes target addresses word by word, and feeds pointer-fetch or LLC-prefetch requests into the produce path.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Caller-provided range bounds do not prove autonomous nested CSR traversal or arbitrary index functions.",
+      "A shared B chunk is not evidence that arbitrary A addresses are sorted or merged by locality."
+    ]
+  },
+  "maple-stable-data": {
+    "source_refs": [
+      "maple-paper"
+    ],
+    "locator": "PDF p.7, \u00a73.6, Efficient paragraph",
+    "statement": "Requests can select coherent LLC loads or noncoherent direct-memory loads. Queue scratchpad values have no coherence guarantee after fetch; the compiler or DSL must ensure fetched arrays receive no further writes during their use, with epoch-separated updates discussed as an example.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Coherent fetch routing does not make a previously queued value track later CPU writes.",
+      "Concurrent parent CAS in the current BFS source does not satisfy this stable-array condition merely because the proposed engine operation is a read."
+    ]
+  },
+  "omi-spzip-cpu": {
+    "source_refs": [
+      "spzip-paper"
+    ],
+    "locator": "PDF p.4 \u00a7II-C, Fig.5, Listing 2; pp.8\u20139 \u00a7III-D",
+    "statement": "Fetcher/compressor use coherent accesses and queue synchronization. Read-only adjacency and phase-separated read/write streams can be served directly; shared Push destination data needing parallel atomic RMW is prefetched into nearby cache but not served as authoritative data by the fetcher. CPU performs atomics. Context switches require engine quiescence and saving/restoring contexts.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "CPU update result, visibility and synchronization remain CPU/application responsibilities; queue consumption is not update completion.",
+      "No blanket claim that the whole SpZip design cannot write, nor a generic atomics executor."
+    ]
+  },
+  "omi-spzip-markers": {
+    "source_refs": [
+      "spzip-paper"
+    ],
+    "locator": "PDF pp.6\u20137 \u00a7III-B; Fig.11, Listing 4; PDF pp.3\u20134 \u00a7II-C, Figs.5\u20136, Listing 2",
+    "statement": "Queues tag each 32-bit word with a marker bit. A range fetch emits a marker after each range, may associate a value with it, and operators pass input markers through to output queues. Markers delimit neighbor sets/frontier ranges so the CPU interprets dequeued stream elements. Push pipelines supply required adjacency/source streams, while destination indirection prefetch has no output queue.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Markers establish stream/chunk identity, not a generic global task tag or cross-queue CPU update order.",
+      "A marker is not a fence for completion of CPU atomics or all engine writes; exact context reuse timing remains unspecified."
+    ]
+  },
+  "omi-term-rob": {
+    "source_refs": [
+      "terminus-paper"
+    ],
+    "locator": "PDF pp.5\u20136 \u00a7IV-B, Fig.7; pp.8\u20139 \u00a7V-C, Fig.15; p.10 Table II",
+    "statement": "Each task allocates a ROB entry in arrival order. Its taskID is the ROB position, propagated with task data; finished tasks write results to the ROB for enqueue-order core consumption. ROB stores up to 32 bytes of task context; each PE row accesses an 8-byte slice. Reference configuration has 256 entries.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "ROB result order is not a global write-visibility fence.",
+      "Exact ROB entry reclamation cycle, full-ROB admission/retry behavior and taskID generation/reuse protection are unspecified."
+    ]
+  },
+  "phi-flush-consistency": {
+    "source_refs": [
+      "phi-micro2019-author-primary"
+    ],
+    "locator": "PDFpp7-8 \u00a73.2.1/\u00a73.2.2",
+    "statement": "Buffered private partial lines are outside ordinary coherence and flush to shared banks. Bulk updates require relaxed-atomic annotation and phi_sync before reads;PHI does not transparently gather private partials for intervening reads. Mixing conventional atomics with PHI updates to the updated region is outside the stated discipline.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper specification only;actual instruction/ALU/coherence/flush/bin source and numeric legality need binding."
+    ]
+  },
+  "phi-program-interface": {
+    "source_refs": [
+      "phi-micro2019-author-primary"
+    ],
+    "locator": "PDFpp6-8 \u00a73.1.2/\u00a73.3 Listing2",
+    "statement": "Software configures operation and bin starting addresses,then uses a push-update instruction with destination address and value source operands. CPU computes index/address;configuration uses memory-mapped registers.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper specification only;actual instruction/ALU/coherence/flush/bin source and numeric legality need binding."
+    ]
+  },
+  "phi-selective-batching": {
+    "source_refs": [
+      "phi-micro2019-author-primary"
+    ],
+    "locator": "PDFp6 \u00a73.1.1 Fig7",
+    "statement": "LLC evictions choose in-place apply versus tagged update-bin streaming based on nonidentity element density;the threshold is derived from update/index byte sizes. Replay disables further batching and applies bin updates.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper specification only;actual instruction/ALU/coherence/flush/bin source and numeric legality need binding."
+    ]
+  },
+  "pipette-reference-access": {
+    "source_refs": [
+      "pipette-micro2020-author-primary"
+    ],
+    "locator": "PDFp7 \u00a7IV-B",
+    "statement": "A configured reference accelerator consumes an index stream for A[i],or start/end pairs for half-open A[start:end),and produces returned values through its output queue. It uses the existing load/store unit and virtual addresses;faults interrupt its associated producer thread.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "No authenticated executable simulator/RTL revision or numerical/performance measurement is supplied by this proposal."
+    ]
+  },
+  "pipette-register-mapping": {
+    "source_refs": [
+      "pipette-micro2020-author-primary"
+    ],
+    "locator": "PDF pp4,6 \u00a7III-A TableII and \u00a7IV-A queue ownership",
+    "statement": "Architectural register reads/writes map to blocking FIFO dequeue/enqueue;peek exposes the head without consuming ordinary data. Point-to-point queue ownership is one enqueuer and one dequeuer.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "No authenticated executable simulator/RTL revision or numerical/performance measurement is supplied by this proposal."
+    ]
+  },
+  "pipette-speculation": {
+    "source_refs": [
+      "pipette-micro2020-author-primary"
+    ],
+    "locator": "PDFpp6-7 \u00a7IV-A Fig7",
+    "statement": "QRM maintains speculative/committed head/tail. Consumers use only committed producer values. Producer rollback releases speculative enqueue registers;consumer rollback restores speculative head. Consumer commit releases registers.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "No authenticated executable simulator/RTL revision or numerical/performance measurement is supplied by this proposal."
+    ]
+  },
+  "prod-dig": {
+    "source_refs": [
+      "prodigy-paper"
+    ],
+    "locator": "PDF pp.5\u20137 \u00a7\u00a7III-A\u2013B, Figs.5\u20139",
+    "statement": "Software registers node base/bounds/element size, traversal edges and trigger edges in a Data Indirection Graph. Runtime stores configure prefetcher tables; DIG describes data relationships rather than an offloaded instruction stream.",
+    "evidence_kind": "paper_specification",
+    "limitations": []
+  },
+  "prod-prefetch": {
+    "source_refs": [
+      "prodigy-paper"
+    ],
+    "locator": "PDF p.3 introduction and pp.7\u20139 \u00a7\u00a7IV-B\u2013G, Figs.10\u201311",
+    "statement": "Demand loads in trigger regions and prefetch fills advance nonbinding L1D prefetch sequences through single-valued and ranged indirections. PFHRs track sequences; lagging sequences may be discarded.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Cache fills are assistance, not architecturally returned load values or update completion.",
+      "The paper leaves a general prefetch throttling mechanism to future work."
+    ]
+  },
+  "smash-command-interface": {
+    "source_refs": [
+      "smash-micro2019-proceedings"
+    ],
+    "locator": "PDFp7 \u00a74.3 Table1",
+    "statement": "MATINFO sets dimensions/group; BMAPINFO sets per-level compression/group; RDBMAP fills a selected bitmap buffer from memory; PBMAP scans and updates next block row/column; RDIND copies current row/column to two destination registers.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper specification only. Actual BMU/ISA, bit encoding, address translation and physical-memory identities remain unbound."
+    ]
+  },
+  "smash-consumer-separation": {
+    "source_refs": [
+      "smash-micro2019-proceedings"
+    ],
+    "locator": "PDFpp7-8 \u00a75.1-5.2 Algorithms1-2 Figs7-8",
+    "statement": "CPU consumer software iterates block rank and elements to address NZA and performs operand loads and arithmetic. SpMM compares separate matrix block indices before inner-product work. BMU index production alone does not execute those loads or arithmetic.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper specification only. Actual BMU/ISA, bit encoding, address translation and physical-memory identities remain unbound."
+    ]
+  },
+  "smash-hierarchical-format": {
+    "source_refs": [
+      "smash-micro2019-proceedings"
+    ],
+    "locator": "PDFpp5-6 \u00a74.1,\u00a74.1.3 Fig4",
+    "statement": "A set Bitmap-0 bit represents a nonzero block of fixed compression-ratio size in the contiguous NZA. A higher-level set bit represents a lower bitmap region with at least one set bit. Only nonzero blocks of lower bitmaps are stored; NZA blocks are appended in format order.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper specification only. Actual BMU/ISA, bit encoding, address translation and physical-memory identities remain unbound."
+    ]
+  },
+  "spzip-cpu-update": {
+    "source_refs": [
+      "spzip-paper"
+    ],
+    "locator": "PDF p.4 \u00a7II-C, Listing 2; pp.8\u20139 \u00a7III-D Coherence and consistency",
+    "statement": "SpZip uses coherent accesses and queue synchronization. For shared destination data requiring parallel atomic RMW, the fetcher prefetches but does not supply the authoritative data; the CPU performs atomics.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "This is a mapping-specific destination rule, not an assertion that SpZip has no writes or cannot handle phase-separated read/write arrays."
+    ]
+  },
+  "spzip-fetch": {
+    "source_refs": [
+      "spzip-paper"
+    ],
+    "locator": "PDF pp.2\u20134 \u00a7\u00a7II-A\u2013C, Figs.1\u20136; p.6 \u00a7III-B",
+    "statement": "DCL specifies queue-connected indirection, range fetch and compression/decompression operators. The Push mapping fetches neighbor streams, while a destination prefetch indirection has no output queue.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "This record describes the Push graph mapping, not every application or the compressor engine."
+    ]
+  },
+  "svr-return-count-dependency": {
+    "source_refs": [
+      "svr-paper"
+    ],
+    "locator": "IV-A4; PDF6",
+    "statement": "A return counter gates consumers until their scalar-vector producers have returned.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper mechanism; implementation not independently executed."
+    ]
+  },
+  "svr-scalar-copy-issue": {
+    "source_refs": [
+      "svr-paper"
+    ],
+    "locator": "IV; IV-A4; PDF4,6",
+    "statement": "Transient scalar copies share existing functional units and speculative register storage.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper mechanism; implementation not independently executed."
+    ]
+  },
+  "svr-transient-assistance": {
+    "source_refs": [
+      "svr-paper"
+    ],
+    "locator": "IV opening, PDF4; Fig4-5",
+    "statement": "Transient instruction copies prefetch for architectural execution without delivering architectural register results.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "No standalone gather result, old-value RMW, physical-response ABI or payload-width contract inferred."
+    ]
+  },
+  "telos-domain-write-completion": {
+    "source_refs": [
+      "telos-code-accelerator"
+    ],
+    "locator": "sim/Accelerator.py lines 68-82",
+    "statement": "Completion waits for domain DRAM writes; a separate array-equality check assesses modeled results.",
+    "evidence_kind": "code_inspection",
+    "limitations": [
+      "Static model source observation; no hardware protocol or performance certification."
+    ]
+  },
+  "telos-neighbor-sum": {
+    "source_refs": [
+      "telos-code-pearray"
+    ],
+    "locator": "sim/PEArray.py lines 113-142; especially sum=in_i+in_j+R_k at126",
+    "statement": "ScalarUnit sums required directional and plane contributions before computing (b-sum)/aii and forwarding the solution with its domain index.",
+    "evidence_kind": "code_inspection",
+    "limitations": [
+      "A stencil-mapped intermediate sum, not a generic address-indexed reduction primitive. Python arithmetic does not establish hardware width or rounding."
+    ]
+  },
+  "telos-plane-packing": {
+    "source_refs": [
+      "telos-code-preprocesssptrsv"
+    ],
+    "locator": "sim/PreprocessSpTRSV.py lines 38-96",
+    "statement": "Plane packing uses a staged matrix layout and schedule bubbles.",
+    "evidence_kind": "code_inspection",
+    "limitations": [
+      "Static model source observation; no hardware protocol or performance certification."
+    ]
+  },
+  "telos-scalar-dependency-inputs": {
+    "source_refs": [
+      "telos-code-pearray"
+    ],
+    "locator": "sim/PEArray.py lines 95-142",
+    "statement": "Scalar execution waits for domain operands and required directional/plane contributions.",
+    "evidence_kind": "code_inspection",
+    "limitations": [
+      "Static model source observation; no hardware protocol or performance certification."
+    ]
+  },
+  "term-deferred": {
+    "source_refs": [
+      "terminus-paper"
+    ],
+    "locator": "PDF p.12 \u00a7VII-E and Fig.22; p.9 \u00a7V-E",
+    "statement": "An evaluated variant removes atomics and multiplication primitives, deferring atomic and hash operations to the CPU.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "This record cannot execute CAS in the engine.",
+      "The evaluated distinction is not a separate published version or an invented microarchitecture."
+    ]
+  },
+  "term-host": {
+    "source_refs": [
+      "terminus-paper"
+    ],
+    "locator": "PDF pp.6\u20139 \u00a7\u00a7IV-D, V-C, V-E",
+    "statement": "Core enqueue/dequeue instructions exchange tasks/results. Acquire is asynchronous and notifies after running partition users drain. Deferred tasks retain partitions; handlers respond or complete/release. Concurrent CLHT uses shared node locks in addition to local serialization.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Issuing acquire is not immediate permission to modify data.",
+      "Exact cross-observer write visibility is not proved from task-result delivery alone."
+    ]
+  },
+  "term-read": {
+    "source_refs": [
+      "terminus-paper"
+    ],
+    "locator": "PDF pp.4\u20137 \u00a7\u00a7IV-A\u2013E; Figs.4\u20137, Listing 1",
+    "statement": "Read accepts an address, datatype, stride and count; ReadRange consumes start/end addresses. Composed tasks implement dependent hash-table lookup including linked-list traversal and B-tree traversal.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "A verified general gather lowering for the received BFS source is not supplied by this paper."
+    ]
+  },
+  "term-write": {
+    "source_refs": [
+      "terminus-paper"
+    ],
+    "locator": "PDF pp.5\u20136 Fig.4, Fig.7, Listing 2, \u00a7\u00a7IV-A\u2013B",
+    "statement": "Write consumes addresses and values. The hash-table update task replaces the matching value and returns a success indication. CAS has address, expected and new inputs and a success output.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "CAS is an engine primitive only in configurations with memory-unit/L2 atomic support.",
+      "Success output is not a returned old value. Generic fetch-add/min/max tasks are not verified here."
+    ]
+  },
+  "tmu-cpu": {
+    "source_refs": [
+      "tmu-micro2023-primary"
+    ],
+    "locator": "PDF p5 Fig. 4; PDF p6 Fig. 6 and \u00a74.3",
+    "statement": "TMU supplies required operands and ordered callback IDs. CPU ri multiplies vector operands and reduces/accumulates into sum; CPU re stores x[i++] and resets sum.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "A CPU store is not a TMU scatter capability; CPU reduction is not TMU arithmetic."
+    ]
+  },
+  "tmu-fig8": {
+    "source_refs": [
+      "tmu-micro2023-primary"
+    ],
+    "locator": "PDF p6, Fig. 8 lines 2\u201321; \u00a74.4; PDF p5 \u00a74.2",
+    "statement": "Fig8 traverses row pointers with DnsFbrT(0,num_rows), broadcasts row begin/end to two RngFbrT lanes with offsets 0/1 and stride 2, loads column indexes and nnz values, loads b through column indexes, LockStep-marshals paired vectors, and registers GITE ri and GEND re.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Two lanes are the illustration, not the Table 5 evaluated eight-lane system or a legal tuning interval. Boundaries require padding or an msk predicate (\u00a74.2); Fig8 omits a concrete predicate/padding ABI."
+    ]
+  },
+  "tmu-outq": {
+    "source_refs": [
+      "tmu-micro2023-primary"
+    ],
+    "locator": "PDF p6 \u00a74.3; PDF p7 \u00a75.3",
+    "statement": "Head/body/tail callbacks have IDs and scalar/vector/predicate operands. TG output FSMs serialize across groups with previous/next waiting states to preserve callback/operand order. outQ and its buffers are double-buffered; the core processes a full chunk while TMU fills another.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Callback order is not physical memory-response order or global CPU visibility. Ready/consumed acknowledgment, reuse and final partial chunk protocol are unspecified in inspected sections."
+    ]
+  },
+  "tmu-unknowns": {
+    "source_refs": [
+      "tmu-micro2023-primary"
+    ],
+    "locator": "PDF p5 Tables 1\u20132; p6 Fig. 8/\u00a74.3; p7 \u00a7\u00a75.1\u20135.4; pp8\u20139 \u00a75.6",
+    "statement": "Inspected primary sections do not establish concrete configuration/register encodings, numeric widths, physical response tags, chunk ownership/consumption/finalpartial protocol or complete fault/drain/replay ordering.",
+    "evidence_kind": "research_inference",
+    "limitations": [
+      "Evidence limit only; unknown is not unsupported."
+    ]
+  },
+  "triangel-temporal-address-training": {
+    "source_refs": [
+      "triangel-paper"
+    ],
+    "locator": "4.1-4.2;Fig5; PDF4,5",
+    "statement": "Per-PC address history trains temporal mappings with reuse and pattern confidence.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Paper mechanism; no hardware/prediction/workload reproduction executed."
+    ]
+  },
+  "triangel-temporal-assistance": {
+    "source_refs": [
+      "triangel-paper"
+    ],
+    "locator": "4.1-4.3;Fig5-6; PDF4-6",
+    "statement": "Learned address-pair replay supplies speculative cache prefetches; no architectural result delivery or loaded-value indirection ABI is established.",
+    "evidence_kind": "paper_specification",
+    "limitations": [
+      "Temporal correlation is not semantic proof of A[B[i]] or arbitrary pointer-chain execution."
+    ]
+  }
+}

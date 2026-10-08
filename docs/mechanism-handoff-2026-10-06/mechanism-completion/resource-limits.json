@@ -1,0 +1,517 @@
+[
+  {
+    "design_id": "tmu-micro2023-fig8-spmv",
+    "parameters": [
+      {
+        "id": "fig8-lanes",
+        "unit": "lanes",
+        "state": "fixed_reference",
+        "value": 2,
+        "domain": null,
+        "claim_refs": [
+          "tmu-fig8"
+        ],
+        "notes": "Illustrative Fig8 mapping only. No legal tuning range established."
+      },
+      {
+        "id": "fig8-inner-stride",
+        "unit": "elements",
+        "state": "fixed_reference",
+        "value": 2,
+        "domain": null,
+        "claim_refs": [
+          "tmu-fig8"
+        ],
+        "notes": "Paired offsets 0/1 in this mapping. No legal tuning range established."
+      },
+      {
+        "id": "evaluated-lanes",
+        "unit": "lanes",
+        "state": "fixed_reference",
+        "value": 8,
+        "domain": null,
+        "claim_refs": [
+          "tmu-reference"
+        ],
+        "notes": "Table5 evaluated system, distinct from Fig8. No legal tuning range established."
+      },
+      {
+        "id": "evaluated-tgs",
+        "unit": "groups",
+        "state": "fixed_reference",
+        "value": 4,
+        "domain": null,
+        "claim_refs": [
+          "tmu-reference"
+        ],
+        "notes": "Table5 evaluated system. No legal tuning range established."
+      },
+      {
+        "id": "evaluated-lane-storage",
+        "unit": "KB as printed",
+        "state": "fixed_reference",
+        "value": 2,
+        "domain": null,
+        "claim_refs": [
+          "tmu-reference"
+        ],
+        "notes": "Table5 prints 2KB; not converted into an assumed byte ABI. No legal tuning range established."
+      },
+      {
+        "id": "evaluated-outstanding-requests",
+        "unit": "requests",
+        "state": "fixed_reference",
+        "value": 128,
+        "domain": null,
+        "claim_refs": [
+          "tmu-reference"
+        ],
+        "notes": "Table5 evaluated system. No legal tuning range established."
+      },
+      {
+        "id": "legal-queue-capacity",
+        "unit": "elements",
+        "state": "unknown",
+        "value": null,
+        "domain": null,
+        "claim_refs": [
+          "tmu-unknowns"
+        ],
+        "notes": "Unestablished; reference values do not select this domain."
+      },
+      {
+        "id": "outq-chunk-capacity",
+        "unit": "bytes",
+        "state": "unknown",
+        "value": null,
+        "domain": null,
+        "claim_refs": [
+          "tmu-unknowns"
+        ],
+        "notes": "Unestablished; reference values do not select this domain."
+      },
+      {
+        "id": "payload-width",
+        "unit": "bits",
+        "state": "unknown",
+        "value": null,
+        "domain": null,
+        "claim_refs": [
+          "tmu-unknowns"
+        ],
+        "notes": "Unestablished; reference values do not select this domain."
+      },
+      {
+        "id": "index-width",
+        "unit": "bits",
+        "state": "unknown",
+        "value": null,
+        "domain": null,
+        "claim_refs": [
+          "tmu-unknowns"
+        ],
+        "notes": "Unestablished; reference values do not select this domain."
+      }
+    ],
+    "scope": "EXACT_UNCHANGED_CATALOGUE_PARAMETERS; reference counts are not complete legal domains",
+    "unestablished": [
+      "runtime geometry selection",
+      "all coupled capacity constraints",
+      "bit-width ABI",
+      "production source/evaluated revision binding"
+    ]
+  },
+  {
+    "design_id": "cobra-hpca2022-tuple-binning",
+    "parameters": [
+      {
+        "id": "cores",
+        "unit": "cores",
+        "state": "fixed_reference",
+        "value": 16,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "Table II evaluated architecture; not a legal range or selected target configuration."
+      },
+      {
+        "id": "core-frequency",
+        "unit": "GHz",
+        "state": "fixed_reference",
+        "value": 2.66,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "Table II evaluated architecture; not a legal range or selected target configuration."
+      },
+      {
+        "id": "issue-width",
+        "unit": "instructions/cycle",
+        "state": "fixed_reference",
+        "value": 4,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "Table II evaluated architecture; not a legal range or selected target configuration."
+      },
+      {
+        "id": "rob",
+        "unit": "entries",
+        "state": "fixed_reference",
+        "value": 128,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "Table II evaluated architecture; not a legal range or selected target configuration."
+      },
+      {
+        "id": "load-queue",
+        "unit": "entries",
+        "state": "fixed_reference",
+        "value": 48,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "Table II evaluated architecture; not a legal range or selected target configuration."
+      },
+      {
+        "id": "store-queue",
+        "unit": "entries",
+        "state": "fixed_reference",
+        "value": 32,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "Table II evaluated architecture; not a legal range or selected target configuration."
+      },
+      {
+        "id": "l1-size",
+        "unit": "KB",
+        "state": "fixed_reference",
+        "value": 32,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "Table II evaluated architecture; not a legal range or selected target configuration."
+      },
+      {
+        "id": "l1-associativity",
+        "unit": "ways",
+        "state": "fixed_reference",
+        "value": 8,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "Table II evaluated architecture; not a legal range or selected target configuration."
+      },
+      {
+        "id": "l2-size",
+        "unit": "KB",
+        "state": "fixed_reference",
+        "value": 256,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "Table II evaluated architecture; not a legal range or selected target configuration."
+      },
+      {
+        "id": "l2-associativity",
+        "unit": "ways",
+        "state": "fixed_reference",
+        "value": 8,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "Table II evaluated architecture; not a legal range or selected target configuration."
+      },
+      {
+        "id": "llc-per-core",
+        "unit": "MB/core",
+        "state": "fixed_reference",
+        "value": 2,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "Table II evaluated architecture; not a legal range or selected target configuration."
+      },
+      {
+        "id": "llc-associativity",
+        "unit": "ways",
+        "state": "fixed_reference",
+        "value": 16,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "Table II evaluated architecture; not a legal range or selected target configuration."
+      },
+      {
+        "id": "l1-load-to-use",
+        "unit": "cycles",
+        "state": "fixed_reference",
+        "value": 3,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "Table II evaluated architecture; not a legal range or selected target configuration."
+      },
+      {
+        "id": "l2-load-to-use",
+        "unit": "cycles",
+        "state": "fixed_reference",
+        "value": 8,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "Table II evaluated architecture; not a legal range or selected target configuration."
+      },
+      {
+        "id": "llc-local-load-to-use",
+        "unit": "cycles",
+        "state": "fixed_reference",
+        "value": 21,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "Table II evaluated architecture; not a legal range or selected target configuration."
+      },
+      {
+        "id": "dram-latency",
+        "unit": "ns",
+        "state": "fixed_reference",
+        "value": 80,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "Table II evaluated architecture; not a legal range or selected target configuration."
+      },
+      {
+        "id": "l1-reserved-ways",
+        "unit": "ways",
+        "state": "fixed_reference",
+        "value": 7,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "Derived from all-but-one and 8-way L1."
+      },
+      {
+        "id": "l2-reserved-ways",
+        "unit": "ways",
+        "state": "fixed_reference",
+        "value": 1,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "Default with L2 stream prefetcher; not universal."
+      },
+      {
+        "id": "llc-reserved-ways",
+        "unit": "ways",
+        "state": "fixed_reference",
+        "value": 15,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "Derived from all-but-one and 16-way LLC."
+      },
+      {
+        "id": "line-size-example",
+        "unit": "bytes",
+        "state": "fixed_reference",
+        "value": 64,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "\u00a7V.C example cacheline."
+      },
+      {
+        "id": "neighbor-populate-tuple",
+        "unit": "bytes",
+        "state": "fixed_reference",
+        "value": 8,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "\u00a7VI evaluated Neighbor-Populate tuple; \u00a7V.C illustrates 4 B index and 4 B value."
+      },
+      {
+        "id": "l1-l2-eviction-buffer",
+        "unit": "cacheline entries",
+        "state": "fixed_reference",
+        "value": 32,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "\u00a7V.D/\u00a7VII.B DES burst-aware setting; Little\u2019s Law 14 is an estimate, not this setting."
+      },
+      {
+        "id": "l2-llc-eviction-buffer-estimate",
+        "unit": "cacheline entries",
+        "state": "fixed_reference",
+        "value": 1,
+        "domain": null,
+        "claim_refs": [
+          "cobra-parameters"
+        ],
+        "notes": "\u00a7V.D/\u00a7VII.B Little\u2019s Law estimate only; no general burst guarantee."
+      },
+      {
+        "id": "namespace-size",
+        "unit": "unique indices",
+        "state": "unknown",
+        "value": null,
+        "domain": null,
+        "claim_refs": [
+          "cobra-init",
+          "cobra-memory-bins",
+          "cobra-flush"
+        ],
+        "notes": "Application supplied; no chosen value or legal interval."
+      },
+      {
+        "id": "per-level-bin-range",
+        "unit": "indices/bin",
+        "state": "unknown",
+        "value": null,
+        "domain": null,
+        "claim_refs": [
+          "cobra-init",
+          "cobra-memory-bins",
+          "cobra-flush"
+        ],
+        "notes": "Computed smallest power-of-two range fitting reserved ways; capacity coupled, no invented interval."
+      },
+      {
+        "id": "bin-base-and-offsets",
+        "unit": "implementation-defined",
+        "state": "unknown",
+        "value": null,
+        "domain": null,
+        "claim_refs": [
+          "cobra-init",
+          "cobra-memory-bins",
+          "cobra-flush"
+        ],
+        "notes": "Precomputed software storage and offsets; ABI unit binding unresolved."
+      },
+      {
+        "id": "consumer-release-event",
+        "unit": "event",
+        "state": "unknown",
+        "value": null,
+        "domain": null,
+        "claim_refs": [
+          "cobra-init",
+          "cobra-memory-bins",
+          "cobra-flush"
+        ],
+        "notes": "Software-visible done/ack/fence binding not specified."
+      }
+    ],
+    "scope": "EXACT_UNCHANGED_CATALOGUE_PARAMETERS; reference counts are not complete legal domains",
+    "unestablished": [
+      "runtime geometry selection",
+      "all coupled capacity constraints",
+      "bit-width ABI",
+      "production source/evaluated revision binding"
+    ]
+  },
+  {
+    "design_id": "axi-pack-date2024-sell-required-l2-gather",
+    "parameters": [
+      {
+        "id": "target_block_bits",
+        "unit": "bits",
+        "state": "fixed_reference",
+        "value": 512,
+        "domain": null,
+        "claim_refs": [
+          "axi24-reference"
+        ],
+        "notes": "Evaluated reference only; not selected geometry or complete legal domain."
+      },
+      {
+        "id": "reference_window",
+        "unit": "narrow requests",
+        "state": "fixed_reference",
+        "value": 256,
+        "domain": null,
+        "claim_refs": [
+          "axi24-reference"
+        ],
+        "notes": "Evaluated reference only; not selected geometry or complete legal domain."
+      },
+      {
+        "id": "hitmap_depth",
+        "unit": "hitmap FIFO entries",
+        "state": "fixed_reference",
+        "value": 128,
+        "domain": null,
+        "claim_refs": [
+          "axi24-reference"
+        ],
+        "notes": "Evaluated reference only; not selected geometry or complete legal domain."
+      },
+      {
+        "id": "l2_size",
+        "unit": "KB (paper notation)",
+        "state": "fixed_reference",
+        "value": 384,
+        "domain": null,
+        "claim_refs": [
+          "axi24-reference"
+        ],
+        "notes": "Evaluated reference only; not selected geometry or complete legal domain. The paper label is retained; exact byte conversion is not established here."
+      },
+      {
+        "id": "request_ports_N",
+        "unit": "narrow request ports",
+        "state": "unknown",
+        "value": null,
+        "domain": null,
+        "claim_refs": [],
+        "notes": "Necessary paper conditions only: N,W are powers of two, W>=N; evaluated N and full legal domain unknown."
+      },
+      {
+        "id": "window_W",
+        "unit": "narrow requests",
+        "state": "open",
+        "value": null,
+        "domain": null,
+        "claim_refs": [
+          "axi24-window"
+        ],
+        "notes": "Necessary coupled power-of-two constraints are not a complete legal parameter domain; offsets reference depth 2048/W adds unresolved legality constraints."
+      }
+    ],
+    "scope": "EXACT_UNCHANGED_CATALOGUE_PARAMETERS; reference counts are not complete legal domains",
+    "unestablished": [
+      "runtime geometry selection",
+      "all coupled capacity constraints",
+      "bit-width ABI",
+      "production source/evaluated revision binding"
+    ]
+  }
+]

@@ -1,0 +1,733 @@
+normalizer_version: offline-0.1
+case_id: gapbs_bfs_top_down_step
+input_ref: examples/received/bfs-sparse.features.v1.2.yaml
+input_sha256: 379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
+kernel:
+  name: gapbs_bfs_top_down_step
+  benchmark: gapbs
+  algorithm: Breadth-First Search (Top-Down Push Traversal)
+  source_file: benchmarks/gapbs/src/bfs.cc
+  source_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  function: TDStep
+  archetype: frontier_driven_indirect_sparse_push
+source_binding:
+  status: revision_reported_matching
+  reported_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  reference_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+reported_loop_structure:
+  outer_level:
+    loop_variable: i
+    domain: queue.shared_out_start .. queue.shared_out_end
+    trip_count_type: dynamic_per_level
+    trip_count_range:
+    - 1
+    - num_nodes
+    parallelism: data_parallel
+  inner_level:
+    loop_variable: j
+    domain: VertexOffsets[u] .. VertexOffsets[u + 1]
+    trip_count_type: data_dependent (degree of vertex u)
+    trip_count_distribution: power_law / log-normal
+    trip_count_typical_range:
+    - 0
+    - 10000
+evidence_status: reported_not_reproduced
+accesses:
+- id: access-01
+  array: queue.shared
+  statement_ids: []
+  source_location: null
+  reported_stream_kind: streaming_read
+  indexed_addressing: false
+  reported_index_expression: null
+  operation: read
+  rmw_subtype: null
+  reported_element_type: int32_t (NodeID)
+  reported_element_bytes: 4
+  reference_element_bytes: 4
+  diagram_element_bytes: 4
+  width_status: reported
+  reported_mean_index_distance: null
+  reported_mean_byte_stride: null
+  reported_stream_stride_bytes: 4
+  reuse_distance: null
+  reuse_frequency: null
+  tile_working_set_bytes: null
+  evidence_refs:
+  - input:379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
+  - field:memory_streams.queue.shared
+- id: access-02
+  array: VertexOffsets
+  statement_ids: []
+  source_location: null
+  reported_stream_kind: indirect_gather_read
+  indexed_addressing: true
+  reported_index_expression: queue.shared[i]
+  operation: read
+  rmw_subtype: null
+  reported_element_type: int32_t (SGOffset)
+  reported_element_bytes: 4
+  reference_element_bytes: 4
+  diagram_element_bytes: 4
+  width_status: reported
+  reported_mean_index_distance: 19279.5
+  reported_mean_byte_stride: 77118.0
+  reported_stream_stride_bytes: 77118.0
+  reuse_distance: null
+  reuse_frequency: null
+  tile_working_set_bytes: null
+  evidence_refs:
+  - input:379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
+  - field:memory_streams.VertexOffsets
+  - field:indirect_access_distances.VertexOffsets
+  adjacent_pair_proximity:
+  - metric: fraction_of_adjacent_pairs_with_absolute_byte_distance_at_most_threshold
+    threshold_bytes: 64
+    comparison: <=
+    fraction: 0.0632
+    reported_value: 6.32%
+    original_label: within_same_64B_cacheline
+    status: reported_relabelled_by_method
+    scope: adjacent_positions_within_each_frontier
+    measures_cache_hits: false
+    measures_same_block_membership: false
+  - metric: fraction_of_adjacent_pairs_with_absolute_byte_distance_at_most_threshold
+    threshold_bytes: 4096
+    comparison: <=
+    fraction: 0.5123
+    reported_value: 51.23%
+    original_label: within_same_4KB_page
+    status: reported_relabelled_by_method
+    scope: adjacent_positions_within_each_frontier
+    measures_cache_hits: false
+    measures_same_block_membership: false
+  reported_mean_distance_scope: adjacent_positions_within_each_frontier
+  distance_sequence: queue.shared[i], queue.shared[i+1]
+  cross_segment_pairs_included: false
+  runtime_thread_interleaving_observed: false
+- id: access-03
+  array: g.out_neighbors_
+  statement_ids: []
+  source_location: null
+  reported_stream_kind: burst_streaming_read
+  indexed_addressing: false
+  reported_index_expression: null
+  operation: read
+  rmw_subtype: null
+  reported_element_type: int32_t (NodeID)
+  reported_element_bytes: 4
+  reference_element_bytes: 4
+  diagram_element_bytes: 4
+  width_status: reported
+  reported_mean_index_distance: null
+  reported_mean_byte_stride: null
+  reported_stream_stride_bytes: 4
+  reuse_distance: null
+  reuse_frequency: null
+  tile_working_set_bytes: null
+  evidence_refs:
+  - input:379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
+  - field:memory_streams.g.out_neighbors_
+- id: access-04
+  array: parent
+  statement_ids: []
+  source_location: null
+  reported_stream_kind: indirect_rmw (read + conditional CAS)
+  indexed_addressing: true
+  reported_index_expression: g.out_neighbors_[j]
+  operation: read_modify_write
+  rmw_subtype: conditional_compare_and_swap
+  reported_element_type: int32_t (NodeID)
+  reported_element_bytes: 4
+  reference_element_bytes: 4
+  diagram_element_bytes: 4
+  width_status: reported
+  reported_mean_index_distance: 7153.9
+  reported_mean_byte_stride: 28615.6
+  reported_stream_stride_bytes: 28615.6
+  reuse_distance: null
+  reuse_frequency: null
+  tile_working_set_bytes: null
+  evidence_refs:
+  - input:379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
+  - field:memory_streams.parent
+  - field:indirect_access_distances.parent
+  adjacent_pair_proximity:
+  - metric: fraction_of_adjacent_pairs_with_absolute_byte_distance_at_most_threshold
+    threshold_bytes: 64
+    comparison: <=
+    fraction: 0.0678
+    reported_value: 6.78%
+    original_label: within_same_64B_cacheline
+    status: reported_relabelled_by_method
+    scope: adjacent_neighbors_within_each_vertex_row
+    measures_cache_hits: false
+    measures_same_block_membership: false
+  - metric: fraction_of_adjacent_pairs_with_absolute_byte_distance_at_most_threshold
+    threshold_bytes: 4096
+    comparison: <=
+    fraction: 0.6393
+    reported_value: 63.93%
+    original_label: within_same_4KB_page
+    status: reported_relabelled_by_method
+    scope: adjacent_neighbors_within_each_vertex_row
+    measures_cache_hits: false
+    measures_same_block_membership: false
+  reported_mean_distance_scope: adjacent_neighbors_within_each_vertex_row
+  distance_sequence: out_neighbors_[j], out_neighbors_[j+1]
+  cross_segment_pairs_included: false
+  runtime_thread_interleaving_observed: false
+rmw:
+  kind: conditional_compare_and_swap
+  reported_details:
+    subtype: conditional_atomic_compare_and_swap
+    primitive: CAS(addr=&parent[v], expected=curr_val, new_val=u)
+    atomicity_granularity: 4_bytes
+    conflict_frequency: high_to_extreme on hub nodes
+    coherence_effect: cache line bouncing and pipeline stalls (LOCK prefix)
+  must_preserve: true
+  phase_execution: {}
+reported_topology: null
+reported_footprints_and_reuse:
+  scale_examples:
+    small_scale_g18:
+      num_nodes: 262143
+      num_directed_edges: 7610898
+      parent_footprint_mb: 1.05
+      offsets_footprint_mb: 1.05
+      neighbors_footprint_mb: 30.44
+      total_working_set_mb: 32.54
+    large_scale_g24:
+      num_nodes: 16777212
+      num_directed_edges: 520753420
+      parent_footprint_mb: 67.11
+      offsets_footprint_mb: 67.11
+      neighbors_footprint_mb: 2083.01
+      total_working_set_mb: 2217.23
+  cache_fit: exceeds L1/L2 by 10x - 1000x; spans LLC to main DRAM
+  reuse_characteristics:
+    intra_level_edge_reuse: 0.0
+    intra_level_vertex_reuse: high for popular v (5x to 100x redundant visits in dense
+      frontiers)
+    cross_level_reuse: parent array is mutated progressively; offsets and neighbors
+      are static
+reported_counters:
+  measurement_tool: Linux perf 5.15 (PMU hardware performance counters)
+  metrics:
+    instructions_per_cycle_ipc: 0.39
+    cycles_frequency_ghz: 3.5
+    branch_miss_rate: 11.07%
+    l1_dcache_load_miss_rate: 15.14%
+    llc_load_miss_rate: 24.71%
+    atomic_cas_overhead_cycles: 15.97% (lock cmpxchg stall)
+    average_trial_time_sec: 0.00733
+profiling_provenance:
+  benchmark_target: GAPBS BFS (Top-Down Step / TDStep)
+  source_file: benchmarks/gapbs/src/bfs.cc
+  source_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  compiler_toolchain: g++ (Ubuntu 11.4.0) -std=c++11 -O3 -fopenmp
+  execution_environment: 16-core Intel Xeon Gold 6226R @ 2.90GHz, 125 GB RAM
+  command_line: OMP_NUM_THREADS=16 ./bfs -g 18 -k 16 -n 5
+  profiled_graph: Kronecker scale 18 (|V|=262,143, |E|=7,610,898 directed)
+frontier_evolution_profile:
+  measurement_scope: Kronecker scale 18, 1 BFS trial traversal
+  traversal_depth: 7
+  levels:
+  - level: 1
+    frontier_size: 1
+    mean_queue_distance: 0.0
+  - level: 2
+    frontier_size: 3
+    mean_queue_distance: 54136.5
+  - level: 3
+    frontier_size: 204
+    mean_queue_distance: 6365.3
+  - level: 4
+    frontier_size: 68519
+    mean_queue_distance: 1287.0
+  - level: 5
+    frontier_size: 103284
+    mean_queue_distance: 30007.1
+  - level: 6
+    frontier_size: 1883
+    mean_queue_distance: 86673.6
+  - level: 7
+    frontier_size: 6
+    mean_queue_distance: 127605.0
+profiling_context:
+  evidence_status: reported_not_reproduced
+  reported_command_line: OMP_NUM_THREADS=16 ./bfs -g 18 -k 16 -n 5
+  counter_measurement_scope: null
+  frontier_measurement_scope: Kronecker scale 18, 1 BFS trial traversal
+  cross_section_trial_binding: not_established
+  aggregation_policy: retain_sections_separately_no_level_weighting_or_counter_join
+  frontier_level_observations:
+  - level: 1
+    frontier_size: 1
+    reported_mean_queue_distance: 0.0
+    usable_mean_queue_distance: null
+    distance_status: not_applicable_no_adjacent_pairs
+  - level: 2
+    frontier_size: 3
+    reported_mean_queue_distance: 54136.5
+    usable_mean_queue_distance: 54136.5
+    distance_status: reported
+  - level: 3
+    frontier_size: 204
+    reported_mean_queue_distance: 6365.3
+    usable_mean_queue_distance: 6365.3
+    distance_status: reported
+  - level: 4
+    frontier_size: 68519
+    reported_mean_queue_distance: 1287.0
+    usable_mean_queue_distance: 1287.0
+    distance_status: reported
+  - level: 5
+    frontier_size: 103284
+    reported_mean_queue_distance: 30007.1
+    usable_mean_queue_distance: 30007.1
+    distance_status: reported
+  - level: 6
+    frontier_size: 1883
+    reported_mean_queue_distance: 86673.6
+    usable_mean_queue_distance: 86673.6
+    distance_status: reported
+  - level: 7
+    frontier_size: 6
+    reported_mean_queue_distance: 127605.0
+    usable_mean_queue_distance: 127605.0
+    distance_status: reported
+hardware_hypotheses:
+- field: indirect_access_distances.VertexOffsets.hardware_implication
+  text: Average stride (~75 KB) significantly exceeds L1 data cache capacity (32-48
+    KB). Sequential frontier processing results in low L1 hit rate without  frontier
+    sorting or a Decoupled Access-Execute (DAE) prefetch queue.
+  use: hypothesis_not_constraint
+- field: indirect_access_distances.parent.hardware_implication
+  text: Average stride (~28 KB) causes severe L1 cache thrashing (only 6.8% hits the
+    same cache line). However, 63.9% of consecutive accesses fall within the same
+    4KB page, indicating that TLB misses are moderate, but cache line fill buffers
+    are overwhelmed. A hardware coalescing/reordering buffer (MSHR/binning buffer)
+    is mandatory.
+  use: hypothesis_not_constraint
+excluded_from_selection:
+- field: indirect_access_distances.VertexOffsets.statistics.spatial_locality_distribution
+  reported_value:
+    within_same_64B_cacheline: 6.32%
+    within_same_4KB_page: 51.23%
+    cross_page_jump: 48.77%
+  reason: A distance threshold does not establish same cache-line/page membership
+    or cache-hit rate. Excluded from selection rules.
+- field: indirect_access_distances.parent.statistics.spatial_locality_distribution
+  reported_value:
+    within_same_64B_cacheline: 6.78%
+    within_same_4KB_page: 63.93%
+    cross_page_jump: 36.07%
+  reason: A distance threshold does not establish same cache-line/page membership
+    or cache-hit rate. Excluded from selection rules.
+issues:
+- id: raw-profile-missing
+  severity: needs_clarification
+  message: Profiling provenance is supplied and retained as reported context. Raw
+    artifacts, exact collection/ROI boundaries and cross-trial correspondence remain
+    unverified; no measurements were reproduced locally.
+  fields:
+  - profiling_provenance
+  - hardware_performance_profile
+  - indirect_access_distances
+  affects:
+  - performance_claims
+- id: frontier-profile-scope
+  severity: interpretation_resolved
+  message: The reported per-level scope is preserved separately from the command/counter
+    context. No counter values are apportioned to levels, and no level means are aggregated
+    across trials.
+  fields:
+  - frontier_evolution_profile
+  - hardware_performance_profile
+  affects:
+  - measurement_scope
+- id: frontier-distance-no-pairs
+  severity: interpretation_resolved
+  message: A frontier with fewer than two entries has no adjacent pairs. The reported
+    mean remains in the raw section, but its analysis value is null rather than a
+    measured zero-distance observation.
+  fields:
+  - frontier_evolution_profile.levels
+  affects:
+  - distance_interpretation
+- id: locality-not-hit-rate
+  severity: interpretation_resolved
+  message: Peter's instrumentation measures adjacent-index proximity, not same cache-line/page
+    membership or cache-hit rates. Values are relabeled descriptively and remain outside
+    selection rules.
+  fields:
+  - indirect_access_distances.VertexOffsets.statistics.spatial_locality_distribution
+  - indirect_access_distances.parent.statistics.spatial_locality_distribution
+  affects:
+  - performance_claims
+  - hardware_priority
+- id: footprint-not-working-set
+  severity: interpretation_resolved
+  message: Peter confirmed capacity-based array footprints. Exact bytes and decimal/binary
+    conversions are derived separately; active tile/phase working sets remain unknown
+    and do not fix storage parameters.
+  fields:
+  - working_set
+  affects:
+  - storage_sizing
+- id: multiple-scales
+  severity: needs_clarification
+  message: This report includes several graph scales without binding each statistic
+    to a run. Do not transfer values between scales.
+  fields:
+  - working_set.scale_examples
+  - indirect_access_distances
+  affects:
+  - measurement_scope
+- id: statement-locations-missing
+  severity: needs_clarification
+  message: Array-level features are usable for exploratory retrieval; exact statement
+    IDs and profiled-source locations are still absent.
+  fields:
+  - memory_streams
+  - kernel.source_file
+  affects:
+  - intrinsic_placement
+- id: pair-sequence-scope
+  severity: interpretation_resolved
+  message: 'The snippets enumerate adjacent positions within frontiers/rows, excluding
+    segment transitions and thread interleaving; they do not establish a global hardware-access
+    trace. VertexOffsets: adjacent_positions_within_each_frontier; parent: adjacent_neighbors_within_each_vertex_row'
+  fields:
+  - indirect_access_distances
+  affects:
+  - stride_scope
+  - reuse_interpretation
+- id: footprint-unit-inconsistency
+  severity: needs_clarification
+  message: Some reported footprints do not use the claimed binary conversion. Original
+    numbers are preserved; exact byte-derived values are separate.
+  details:
+  - small_scale_g18.parent_footprint_mb=1.05 matches decimal conversion; explanation
+    claims binary.
+  - small_scale_g18.offsets_footprint_mb=1.05 matches decimal conversion; explanation
+    claims binary.
+  - small_scale_g18.neighbors_footprint_mb=30.44 matches decimal conversion; explanation
+    claims binary.
+  - large_scale_g24.parent_footprint_mb=67.11 matches decimal conversion; explanation
+    claims binary.
+  - large_scale_g24.offsets_footprint_mb=67.11 matches decimal conversion; explanation
+    claims binary.
+  - large_scale_g24.neighbors_footprint_mb=2083.01 matches decimal conversion; explanation
+    claims binary.
+  fields:
+  - working_set
+  affects:
+  - footprint_units
+signals:
+  always: true
+  has_indirect_access: true
+  has_regular_stream: true
+  has_read_stream: true
+  has_conditional_cas: true
+  reported_large_jumps: true
+  reported_near_unit_indices: false
+heuristic_policy:
+  large_jump_threshold_elements: 16
+  near_unit_upper_bound_elements: 1.1
+  meaning: Exploration ordering only; not a bottleneck classifier or speedup estimate.
+methodology:
+  status: reported_method_bound_to_input
+  record_sha256: c1dc5b86c68c5bd0c16eab522b57690ba3131af70d3f5ed78c6f909fe0ac2d9a
+  source_ref: examples/received/peter-measurement-methodology.v1.2.txt
+  source_sha256: 0f8d421aed3aa68e85e258c8f7eb844a6d8f5c5f98d4a1d6f39f9e4e1e3ba385
+  verification: instrumentation_not_reproduced
+derived_array_capacities:
+- scope: small_scale_g18
+  status: derived_from_reported_dimensions_and_widths_not_measured_residency
+  arrays:
+    parent:
+      element_count: 262143
+      reported_element_bytes: 4
+      capacity_bytes: 1048572
+      KiB: 1023.99609375
+      MiB: 0.9999961853027344
+      kB: 1048.572
+      MB: 1.048572
+      reported_unit_checks:
+      - field: parent_footprint_mb
+        reported_value: 1.05
+        matches_conversion: decimal
+    VertexOffsets:
+      element_count: 262144
+      reported_element_bytes: 4
+      capacity_bytes: 1048576
+      KiB: 1024.0
+      MiB: 1.0
+      kB: 1048.576
+      MB: 1.048576
+      reported_unit_checks:
+      - field: offsets_footprint_mb
+        reported_value: 1.05
+        matches_conversion: decimal
+    g.out_neighbors_:
+      element_count: 7610898
+      reported_element_bytes: 4
+      capacity_bytes: 30443592
+      KiB: 29730.0703125
+      MiB: 29.03327178955078
+      kB: 30443.592
+      MB: 30.443592
+      reported_unit_checks:
+      - field: neighbors_footprint_mb
+        reported_value: 30.44
+        matches_conversion: decimal
+    queue.shared:
+      element_count: 262143
+      reported_element_bytes: 4
+      capacity_bytes: 1048572
+      KiB: 1023.99609375
+      MiB: 0.9999961853027344
+      kB: 1048.572
+      MB: 1.048572
+      reported_unit_checks: []
+  listed_array_capacity_bytes: 33589312
+  excludes: allocator overhead, padding, per-thread queue buffers, and other program
+    state
+  active_working_set_bytes: null
+- scope: large_scale_g24
+  status: derived_from_reported_dimensions_and_widths_not_measured_residency
+  arrays:
+    parent:
+      element_count: 16777212
+      reported_element_bytes: 4
+      capacity_bytes: 67108848
+      KiB: 65535.984375
+      MiB: 63.99998474121094
+      kB: 67108.848
+      MB: 67.108848
+      reported_unit_checks:
+      - field: parent_footprint_mb
+        reported_value: 67.11
+        matches_conversion: decimal
+    VertexOffsets:
+      element_count: 16777213
+      reported_element_bytes: 4
+      capacity_bytes: 67108852
+      KiB: 65535.98828125
+      MiB: 63.9999885559082
+      kB: 67108.852
+      MB: 67.108852
+      reported_unit_checks:
+      - field: offsets_footprint_mb
+        reported_value: 67.11
+        matches_conversion: decimal
+    g.out_neighbors_:
+      element_count: 520753420
+      reported_element_bytes: 4
+      capacity_bytes: 2083013680
+      KiB: 2034193.046875
+      MiB: 1986.5166473388672
+      kB: 2083013.68
+      MB: 2083.01368
+      reported_unit_checks:
+      - field: neighbors_footprint_mb
+        reported_value: 2083.01
+        matches_conversion: decimal
+    queue.shared:
+      element_count: 16777212
+      reported_element_bytes: 4
+      capacity_bytes: 67108848
+      KiB: 65535.984375
+      MiB: 63.99998474121094
+      kB: 67108.848
+      MB: 67.108848
+      reported_unit_checks: []
+  listed_array_capacity_bytes: 2284340228
+  excludes: allocator overhead, padding, per-thread queue buffers, and other program
+    state
+  active_working_set_bytes: null
+source_context:
+  status: bound_manual_source_review
+  ref: examples/bfs.source-observations.yaml
+  sha256: 4abf18a26cb638f5243887cefcdf54fac45492ea9eeb4db5e2cbc5695560abac
+  analysis_origin: Manual source review by Codex; not Peter feature extraction or
+    profiling.
+  mismatched_fields: []
+  profile_statement_binding: not_confirmed_by_Peter
+  record:
+    contract_version: draft-0.2
+    record_kind: source_analysis
+    analysis_origin: Manual source review by Codex; not Peter feature extraction or
+      profiling.
+    kernel:
+      id: gap-bfs-dx100
+      repository: https://github.com/arkhadem/DX100
+      revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      source_file: benchmarks/gapbs/src/bfs.cc
+      local_source: sources/DX100/benchmarks/gapbs/src/bfs.cc
+      feature_function_proposal: TDStep
+      accelerated_reference_function: TDStepMAA
+      selection_confirmed_by_team: false
+      annotated_source_ref: null
+    type_evidence:
+    - file: benchmarks/gapbs/src/benchmark.h
+      line: 29
+      declaration: typedef int32_t NodeID;
+    - file: benchmarks/gapbs/src/graph.h
+      line: 90
+      declaration: typedef int32_t SGOffset;
+    statements:
+    - id: bfs-td-frontier
+      location:
+        file: benchmarks/gapbs/src/bfs.cc
+        start_line: 240
+        end_line: 240
+      code: NodeID u = queue.shared[i];
+      operation: read
+      access_expression: queue.shared[i]
+      data_type: NodeID = int32_t
+      array_element_bits: 32
+      related_statement_ids: []
+      interpretation: Sequential frontier read in logical i order; thread interleaving
+        depends on execution.
+    - id: bfs-td-row-bounds
+      location:
+        file: benchmarks/gapbs/src/bfs.cc
+        start_line: 241
+        end_line: 241
+      code: for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+      operation: read
+      access_expression: VertexOffsets[u] and VertexOffsets[u + 1]
+      data_type: SGOffset = int32_t
+      array_element_bits: 32
+      related_statement_ids:
+      - bfs-td-frontier
+      interpretation: Two offset accesses indexed by a loaded vertex ID; the +1 is
+        index arithmetic.
+    - id: bfs-td-neighbor
+      location:
+        file: benchmarks/gapbs/src/bfs.cc
+        start_line: 242
+        end_line: 242
+      code: NodeID v = g.out_neighbors_[j];
+      operation: read
+      access_expression: g.out_neighbors_[j]
+      data_type: NodeID = int32_t
+      array_element_bits: 32
+      related_statement_ids:
+      - bfs-td-row-bounds
+      interpretation: Sequential within each adjacency segment; transitions between
+        segments are data-dependent.
+    - id: bfs-td-parent-read
+      location:
+        file: benchmarks/gapbs/src/bfs.cc
+        start_line: 243
+        end_line: 243
+      code: NodeID curr_val = parent[v];
+      operation: read
+      access_expression: parent[v]
+      data_type: NodeID = int32_t
+      array_element_bits: 32
+      related_statement_ids:
+      - bfs-td-neighbor
+      interpretation: Indirect read indexed by the loaded neighbor ID.
+    - id: bfs-td-parent-cas
+      location:
+        file: benchmarks/gapbs/src/bfs.cc
+        start_line: 247
+        end_line: 247
+      code: if (compare_and_swap(parent[v], curr_val, u)) {
+      operation: read_modify_write
+      access_expression: compare_and_swap(parent[v], curr_val, u)
+      data_type: NodeID = int32_t
+      array_element_bits: 32
+      related_statement_ids:
+      - bfs-td-frontier
+      - bfs-td-neighbor
+      - bfs-td-parent-read
+      interpretation: Subtype is compare-and-swap, guarded by curr_val < 0; successful
+        discovery controls queue insertion.
+    - id: bfs-td-parent-store
+      location:
+        file: benchmarks/gapbs/src/bfs.cc
+        start_line: 248
+        end_line: 248
+      code: parent[v] = u;
+      operation: write
+      access_expression: parent[v] = u
+      data_type: NodeID = int32_t
+      array_element_bits: 32
+      related_statement_ids:
+      - bfs-td-parent-cas
+      interpretation: Explicit store inside the successful CAS branch; preserve in
+        any analysis of side effects.
+    - id: bfs-td-queue-append
+      location:
+        file: benchmarks/gapbs/src/bfs.cc
+        start_line: 249
+        end_line: 249
+      code: lqueue.push_back(v);
+      operation: call_with_side_effects
+      access_expression: lqueue.push_back(v)
+      data_type: NodeID = int32_t
+      array_element_bits: 32
+      related_statement_ids:
+      - bfs-td-parent-cas
+      interpretation: Thread-local queue buffering followed by lqueue.flush(); not
+        a plain target-array access.
+    unmeasured_features:
+      reuse_distance: null
+      reuse_frequency: null
+      average_irregular_stride: null
+      working_set_bytes: null
+      runtime: null
+      dataset: null
+      profile_environment: null
+    access_bindings:
+    - array: queue.shared
+      purpose: read
+      statement_ids:
+      - bfs-td-frontier
+    - array: VertexOffsets
+      purpose: read
+      statement_ids:
+      - bfs-td-row-bounds
+    - array: g.out_neighbors_
+      purpose: read
+      statement_ids:
+      - bfs-td-neighbor
+    - array: parent
+      purpose: read
+      statement_ids:
+      - bfs-td-parent-read
+    - array: parent
+      purpose: update
+      statement_ids:
+      - bfs-td-parent-cas
+    request_groups:
+    - id: bfs-td-traversal-and-discovery
+      description: Source dependency chain from frontier load through row bounds and
+        neighbor traversal to parent read and conditional CAS. The successful CAS
+        also controls an explicit parent store and queue append. This context group
+        is a manual proposal, not a proved single-accelerator mapping.
+      statement_ids:
+      - bfs-td-frontier
+      - bfs-td-row-bounds
+      - bfs-td-neighbor
+      - bfs-td-parent-read
+      - bfs-td-parent-cas
+      - bfs-td-parent-store
+      - bfs-td-queue-append
+    notes:
+    - These are source observations and proposed IDs for discussion, not measured
+      features or the agreed Peter-to-Josh YAML.
+    - Array elements are explicitly 32-bit types. A byte width of 4 applies to the
+      artifact x86 build; no run was performed.
+    - The exact graph and iteration/frontier determine reuse, irregular stride, duplicate
+      destinations, and working set.
+    - TDStep is proposed as feature input; TDStepMAA is existing accelerator code
+      for reference. Confirm this choice with Peter/Yan-Ru.
+    - Host while/do-while loops remain in the artifact. Do not model all loop control
+      as accelerated.

@@ -1,0 +1,115 @@
+{
+  "format": "drt-independent-review-sources-v1",
+  "proposal_commit": "8d0d3c09e85ef647c896e913aafc73a2f60bb76f",
+  "root_copy": "b98757e (user-supplied alias; not separately reviewed)",
+  "base_commit": "c44ca66b5b1a121ed258d0d972172cda2de307b6",
+  "cached_sources": {
+    "tactile-paper": {
+      "title": "Accelerating Sparse Data Orchestration via Dynamic Reflexive Tiling",
+      "authors": [
+        "Toluwanimi O. Odemuyiwa",
+        "Hadi Asghari-Moghaddam",
+        "Michael Pellauer",
+        "Kartik Hegde",
+        "Po-An Tsai",
+        "Neal Crago",
+        "Aamer Jaleel",
+        "John D. Owens",
+        "Edgar Solomonik",
+        "Joel S. Emer",
+        "Christopher W. Fletcher"
+      ],
+      "venue": "ASPLOS2023 Volume 3",
+      "year": 2023,
+      "doi": "10.1145/3582016.3582064",
+      "url": "https://doi.org/10.1145/3582016.3582064",
+      "download_url": "https://www.nealcrago.com/wp-content/uploads/TACTile_ASPLOS2023.pdf",
+      "retrieved_at": "2026-09-30T03:54:51.086721+00:00",
+      "path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/latency/corpus/tactile.pdf",
+      "sha256": "e3df45525aeafcfffd7e8b79696f2b6ff844a9a9480cef1f0723284d3eff1dd8",
+      "bytes": 1657169,
+      "pages": 15,
+      "document_type": "author-hosted publication PDF",
+      "locator_basis": "PDF page 1 = proceedings page 18; PDF pages 4\u20139 = proceedings pages 21\u201326"
+    },
+    "drt-readme": {
+      "repository": "https://github.com/FPSG-UIUC/DRT",
+      "commit": "dc8023a27057b6568cc66ab9e1b506092f79c559",
+      "source_path": "README.md",
+      "url": "https://raw.githubusercontent.com/FPSG-UIUC/DRT/dc8023a27057b6568cc66ab9e1b506092f79c559/README.md",
+      "path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/latency/corpus/drt-artifact-README.md",
+      "sha256": "acdf007740c819784f9e10bb048d26377d51de73884fbf89a251ee95e4f3b517",
+      "bytes": 4998,
+      "retrieved_at": "2026-09-30T04:06:47.637254+00:00",
+      "document_type": "pinned public simulator source",
+      "edition_limit": "Public revision not authenticated as the ASPLOS2023 evaluated revision."
+    },
+    "drt-scheduler": {
+      "repository": "https://github.com/FPSG-UIUC/DRT",
+      "commit": "dc8023a27057b6568cc66ab9e1b506092f79c559",
+      "source_path": "src/scheduler_8.cpp",
+      "url": "https://raw.githubusercontent.com/FPSG-UIUC/DRT/dc8023a27057b6568cc66ab9e1b506092f79c559/src/scheduler_8.cpp",
+      "path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/latency/corpus/drt-artifact-src_scheduler_8.cpp",
+      "sha256": "291e7e9e7623e20d1404792113b5503998893ae48ce381ce11725dec162989e1",
+      "bytes": 81186,
+      "retrieved_at": "2026-09-30T04:06:47.873637+00:00",
+      "document_type": "pinned public simulator source",
+      "edition_limit": "Public revision not authenticated as the ASPLOS2023 evaluated revision."
+    }
+  },
+  "publisher_metadata": {
+    "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/metadata/tactile-crossref.json",
+    "sha256": "aa2646a9cbe06e36a4ee193c197b7a8e4c217d8e89d76a620adfb35816f196a0",
+    "bytes": 13136,
+    "url": "https://api.crossref.org/works/10.1145/3582016.3582064",
+    "document_type": "cached raw Crossref metadata; reused, not freshly retrieved"
+  },
+  "artifact_tree": {
+    "path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/latency/corpus/drt-artifact-tree.json",
+    "sha256": "cee557c2dde4d66d5eabf0d780a097bbac6e958e1a0fe2c330347139b4813ec8",
+    "git_tree_sha1": "dc8023a27057b6568cc66ab9e1b506092f79c559",
+    "url": "https://api.github.com/repos/FPSG-UIUC/DRT/git/trees/dc8023a27057b6568cc66ab9e1b506092f79c559"
+  },
+  "additional_sources": [
+    {
+      "source_path": "src/llb_mem.cpp",
+      "url": "https://raw.githubusercontent.com/FPSG-UIUC/DRT/dc8023a27057b6568cc66ab9e1b506092f79c559/src/llb_mem.cpp",
+      "path": "/tmp/drt-review-source/llb_mem.cpp",
+      "sha256": "e1699d64bc73e9c40f27e7f8daa20bd1fbdbd3b6caa19cd1ab48620037e04144",
+      "bytes": 4478,
+      "retrieved_at": "2026-10-04T01:57:14.468412+00:00",
+      "commit": "dc8023a27057b6568cc66ab9e1b506092f79c559",
+      "git_blob_sha1": "cf0b56248e3e0d5de79d2416e01b4a8d6604f6b4",
+      "document_type": "pinned public simulator source",
+      "local_storage": "Temporary /tmp inspection copy; canonical pinned URL and hashes are durable provenance."
+    },
+    {
+      "source_path": "src/SpMSpM_TACTile_twoInp.cpp",
+      "url": "https://raw.githubusercontent.com/FPSG-UIUC/DRT/dc8023a27057b6568cc66ab9e1b506092f79c559/src/SpMSpM_TACTile_twoInp.cpp",
+      "path": "/tmp/drt-review-source/SpMSpM_TACTile_twoInp.cpp",
+      "sha256": "276c337aca102100438f4b5d95390520a75e31fa54be5514d34e6c4c9cfb7f23",
+      "bytes": 6018,
+      "retrieved_at": "2026-10-04T01:57:14.599029+00:00",
+      "commit": "dc8023a27057b6568cc66ab9e1b506092f79c559",
+      "git_blob_sha1": "1a70c3ee962f6725081e5c721a16ac6ce1e9503f",
+      "document_type": "pinned public simulator source",
+      "local_storage": "Temporary /tmp inspection copy; canonical pinned URL and hashes are durable provenance."
+    },
+    {
+      "source_path": "src/parameters.h",
+      "url": "https://raw.githubusercontent.com/FPSG-UIUC/DRT/dc8023a27057b6568cc66ab9e1b506092f79c559/src/parameters.h",
+      "path": "/tmp/drt-review-source/parameters.h",
+      "sha256": "3f174bc559c4380cc9e74056776adee71303d2fd776ee85f976ed85824a78131",
+      "bytes": 23514,
+      "retrieved_at": "2026-10-04T01:57:14.736675+00:00",
+      "commit": "dc8023a27057b6568cc66ab9e1b506092f79c559",
+      "git_blob_sha1": "f8c8079620536fb0e642468a9305bd02c8077aa1",
+      "document_type": "pinned public simulator source",
+      "local_storage": "Temporary /tmp inspection copy; canonical pinned URL and hashes are durable provenance."
+    }
+  ],
+  "new_download_files": 3,
+  "new_download_bytes": 34010,
+  "download_limit_bytes": 16777216,
+  "edition_limit": "Public dc8023a revision is not authenticated as the ASPLOS 2023 evaluated revision. No PDF or corpus changes."
+}

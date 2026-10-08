@@ -1,0 +1,7 @@
+# Parent disposition: retain research, defer v0 admission
+
+Independent review `696ac3c3ebb7a45176c51b5334b542316c23b261` supports retaining the exact DRT proposal, with no production v0 addition. [Review](../../review/drt-asplos2023/README.md) distinguishes required tile/work construction from ordinary read results and optional assistance. A rejected vocabulary trial does not prove that a formal DSL or the proposal's whole query vocabulary is necessary. We will not expand the current format solely to fit this record.
+
+The new pinned source inspection checks total and per-tensor capacity maxima. Caller defaults name `constant_initial`, but the ordinary non-ideal branch also serves adaptive repartitioning; parser overrides and uninspected capacity setters prevent a complete effective-allocation binding. Output pressure is handled after computation by modeled log eviction, not by proven pre-admission reservation or observer-visible completion. First-row zero admission lacks a demonstrated shrink/progress path in the inspected code; no runtime hang was executed or established.
+
+Consumer release, dirty-output visibility, pointer/tile lifetime, response association, CPU/coherent binding and numeric correctness remain open. These unknowns stay in research. The catalog remains eight admitted records, including TMU's separately reviewed mapping reference. Future DRT admission should begin with one concrete observable supply/result boundary and effective configuration, rather than pretending the whole extractor is a generic gather.

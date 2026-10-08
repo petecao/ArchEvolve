@@ -1,0 +1,22 @@
+{
+  "new_generic_cursor_fixture": {
+    "compile_rc": 0,
+    "run_rc": 0,
+    "scope": "columns2/startcol1/width2 is generic cursor coverage, not asserted to be an aligned source block"
+  },
+  "new_source_aligned_block_fixture": {
+    "compile_rc": 0,
+    "run_rc": 0,
+    "input": "complete2x2 matrix/ratio4, flat block start0, width4",
+    "original": "attempted vector indexes0,1,2; checked metadata trap prevents actual out-of-range access",
+    "fixed": "vector0,1,0,1; output rows0,0,1,1; final cursor2,0"
+  },
+  "sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "FP_payload_reads_or_arithmetic": 0,
+  "indexer_calls": 0,
+  "model_native_kernel_old_evidence_applications": 0,
+  "unchanged_interior_case": "new generic fixture one-element interior cursor unchanged"
+}

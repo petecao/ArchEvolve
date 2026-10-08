@@ -1,0 +1,288 @@
+{
+  "format": "cobra-proposal-validation-v1",
+  "base_commit": "5608d112667b72e971b3093325edda7454f579c8",
+  "production_admitted": false,
+  "in_memory_validation": {
+    "valid": true,
+    "format": "hardware-catalog-v0.1",
+    "designs": 9,
+    "claims": 109,
+    "scope": "Structure and evidence-reference checks only; no hardware correctness, composition legality or performance certification."
+  },
+  "production_validation": {
+    "valid": true,
+    "format": "hardware-catalog-v0.1",
+    "designs": 8,
+    "claims": 96,
+    "scope": "Structure and evidence-reference checks only; no hardware correctness, composition legality or performance certification."
+  },
+  "production_catalog_sha256": "c17f7dc4463949035e66333e8e524055ca15a4cc36cc7641fb936f30c8df94d5",
+  "loader_digest": "c17f7dc4463949035e66333e8e524055ca15a4cc36cc7641fb936f30c8df94d5",
+  "source_checks": [
+    {
+      "path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/latency/corpus/cobra.pdf",
+      "sha256": "4028d0f2742286ae436e15a9536a0181091563b4e0a7d69b41fe197eb85683e5",
+      "bytes": 1083944
+    },
+    {
+      "path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/latency/corpus/cobra.txt",
+      "sha256": "9febbe08a364bf2c667e2925068b8bfc017245151bf75127c2ec0b293cbb4e2b",
+      "bytes": 131282
+    },
+    {
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/metadata/cobra-crossref.json",
+      "sha256": "988f9ecee2d53bed3e1b6422d77f35b2e81210e0b7d5cff1df8e2913f9bd2334",
+      "bytes": 9689
+    },
+    {
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/README.md",
+      "sha256": "d6239cdaa1db1fb54cb57c3fb16358deb56d8ec2adbbfc4fb498d0f7b8b8d9c6",
+      "bytes": 18927
+    },
+    {
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/sources.json",
+      "sha256": "c11dbe1b1d70d521d278c9a7fbc2e6ee3562f782fc7542c505ce6eccb2247819",
+      "bytes": 16475
+    },
+    {
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/records.json",
+      "sha256": "8ba3d6b7814cdac629e33fab0c888b220b7650a040cb706481eb94e706a9af00",
+      "bytes": 10297
+    },
+    {
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/artifacts.json",
+      "sha256": "32d840dcc5c2cb4f439254e95fe71b89d67bf1b961e64a2b284d1799cccbca5e",
+      "bytes": 1791
+    },
+    {
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/validation.json",
+      "sha256": "d2ff06e49c8a37fa27cb7449920ba59786fa8332976f29e0cb4bc634fa34e91e",
+      "bytes": 1038
+    },
+    {
+      "path": "/data1/nier/worktrees/codex-sessions/cobra-record-proposal-20261003-220453-89c0c478/ArchEvolve/archevolve/hardware_catalog.py",
+      "sha256": "c585bb3cf99a018b44eb4b4d77e2d826da5d6469287afec77b80365f7221a623",
+      "bytes": 24055
+    },
+    {
+      "path": "/data1/nier/worktrees/codex-sessions/cobra-record-proposal-20261003-220453-89c0c478/ArchEvolve/docs/hardware-catalog-format.md",
+      "sha256": "689de04a5a124d898fdd217ada95562c204776a225b69135df0c4b89551a9291",
+      "bytes": 6780
+    },
+    {
+      "path": "/data1/nier/worktrees/codex-sessions/cobra-record-proposal-20261003-220453-89c0c478/ArchEvolve/catalog/hardware-v0.1.yaml",
+      "sha256": "c17f7dc4463949035e66333e8e524055ca15a4cc36cc7641fb936f30c8df94d5",
+      "bytes": 224114
+    },
+    {
+      "path": "/data1/nier/worktrees/codex-sessions/cobra-record-proposal-20261003-220453-89c0c478/ArchEvolve/docs/proposals/drt-asplos2023/admission-decision.md",
+      "sha256": "931ba7fb310d76618513e6459f1323d89dfc130ac75ab7323848ab60843abcc8",
+      "bytes": 1548
+    }
+  ],
+  "query_checks": [
+    {
+      "query": {
+        "operation": "write",
+        "subtype": "tuple_bin"
+      },
+      "expected": "mapping_reference",
+      "proposal_rows": 1,
+      "unchanged_existing_entries": true
+    },
+    {
+      "query": {
+        "operation": "write"
+      },
+      "expected": "mapping_reference",
+      "proposal_rows": 1,
+      "unchanged_existing_entries": true
+    },
+    {
+      "query": {
+        "operation": "write",
+        "subtype": "tuple_bin",
+        "execution_role": "assist"
+      },
+      "expected": null,
+      "proposal_rows": 0,
+      "unchanged_existing_entries": true
+    },
+    {
+      "query": {
+        "operation": "write",
+        "subtype": "tuple_bin",
+        "require_old_value": true
+      },
+      "expected": "excluded",
+      "proposal_rows": 1,
+      "unchanged_existing_entries": true
+    },
+    {
+      "query": {
+        "operation": "write",
+        "subtype": "tuple_bin",
+        "address_pattern": "sequential"
+      },
+      "expected": "needs_evidence",
+      "proposal_rows": 1,
+      "unchanged_existing_entries": true
+    },
+    {
+      "query": {
+        "operation": "write",
+        "subtype": "tuple_bin",
+        "address_pattern": "constant_stride"
+      },
+      "expected": "needs_evidence",
+      "proposal_rows": 1,
+      "unchanged_existing_entries": true
+    },
+    {
+      "query": {
+        "operation": "write",
+        "subtype": "tuple_bin",
+        "address_pattern": "indirect"
+      },
+      "expected": "needs_evidence",
+      "proposal_rows": 1,
+      "unchanged_existing_entries": true
+    },
+    {
+      "query": {
+        "operation": "write",
+        "subtype": "tuple_bin",
+        "address_pattern": "ranged_indirect"
+      },
+      "expected": "needs_evidence",
+      "proposal_rows": 1,
+      "unchanged_existing_entries": true
+    },
+    {
+      "query": {
+        "operation": "write",
+        "subtype": "tuple_bin",
+        "address_pattern": "chained_indirect"
+      },
+      "expected": "needs_evidence",
+      "proposal_rows": 1,
+      "unchanged_existing_entries": true
+    },
+    {
+      "query": {
+        "operation": "write",
+        "subtype": "tuple_bin",
+        "address_pattern": "pointer_chase"
+      },
+      "expected": "needs_evidence",
+      "proposal_rows": 1,
+      "unchanged_existing_entries": true
+    },
+    {
+      "query": {
+        "operation": "write",
+        "subtype": "tuple_bin",
+        "payload_type": "uint32",
+        "index_width_bits": 32
+      },
+      "expected": "needs_evidence",
+      "proposal_rows": 1,
+      "unchanged_existing_entries": true
+    },
+    {
+      "query": {
+        "operation": "write",
+        "subtype": "tuple_bin",
+        "payload_type": "float32",
+        "index_width_bits": 32
+      },
+      "expected": "needs_evidence",
+      "proposal_rows": 1,
+      "unchanged_existing_entries": true
+    },
+    {
+      "query": {
+        "operation": "write",
+        "subtype": "tuple_bin",
+        "payload_type": "float64",
+        "index_width_bits": 64
+      },
+      "expected": "needs_evidence",
+      "proposal_rows": 1,
+      "unchanged_existing_entries": true
+    },
+    {
+      "query": {
+        "operation": "read",
+        "subtype": "gather"
+      },
+      "expected": null,
+      "proposal_rows": 0,
+      "unchanged_existing_entries": true
+    },
+    {
+      "query": {
+        "operation": "read",
+        "subtype": "stream_load"
+      },
+      "expected": null,
+      "proposal_rows": 0,
+      "unchanged_existing_entries": true
+    },
+    {
+      "query": {
+        "operation": "read",
+        "subtype": "prefetch"
+      },
+      "expected": null,
+      "proposal_rows": 0,
+      "unchanged_existing_entries": true
+    },
+    {
+      "query": {
+        "operation": "write",
+        "subtype": "scatter"
+      },
+      "expected": null,
+      "proposal_rows": 0,
+      "unchanged_existing_entries": true
+    },
+    {
+      "query": {
+        "operation": "read_modify_write",
+        "subtype": "add"
+      },
+      "expected": null,
+      "proposal_rows": 0,
+      "unchanged_existing_entries": true
+    },
+    {
+      "query": {
+        "operation": "read_modify_write",
+        "subtype": "cas"
+      },
+      "expected": null,
+      "proposal_rows": 0,
+      "unchanged_existing_entries": true
+    },
+    {
+      "query": {
+        "operation": "reduce",
+        "subtype": "add"
+      },
+      "expected": null,
+      "proposal_rows": 0,
+      "unchanged_existing_entries": true
+    }
+  ],
+  "dangling_reference_rejected": "designs.cobra-hpca2022-tuple-binning.operations.required-tuple-binning.claim_refs: unknown reference(s): ['missing-cobra-claim'].",
+  "unchanged_existing_designs": 8,
+  "unchanged_existing_query_trials": 88,
+  "all_existing_records_unchanged": true,
+  "free_bytes": {
+    "/data1/nier/worktrees/codex-sessions/cobra-record-proposal-20261003-220453-89c0c478/ArchEvolve": 26573942784,
+    "/tmp": 19037667328
+  },
+  "new_download_bytes": 0,
+  "scope": "Structure, references, source-byte/identity provenance and query boundaries only; no executable hardware, numeric correctness, OS binding, reorder legality or performance certification."
+}

@@ -1,0 +1,990 @@
+format: intrinsic-handoff-v0.1
+status: draft_requires_review
+backend: offline_contract_projection
+llm_calls: 0
+kernel_id: gapbs_bfs_top_down_step
+candidate_id: gapbs_bfs_top_down_step--maple-isca2022--read_assist
+catalog_design_id: maple-isca2022
+catalog_design_revision: ISCA2022-paper+public-742a22d-inspection
+provenance:
+  input_sha256: 379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
+  catalog_sha256: 39603c232003a110dd43d9e28a250d7bc67da0c801fedb7250c2dbc2b45af04d
+  source_context_sha256: 4abf18a26cb638f5243887cefcdf54fac45492ea9eeb4db5e2cbc5695560abac
+  evidence_ref: candidate.yaml#source_evidence
+operations:
+- id: maple-lima-prefetch
+  intent: Configure prefetch assistance for accesses to queue.shared, VertexOffsets,
+    g.out_neighbors_, parent; the program still obtains its required values/updates
+    through its original execution path.
+  execution_role: assist
+  operation: read
+  subtype: prefetch
+  support: paper_specified
+  realization:
+    kind: native_primitive
+    description: LIMA requests speculative LLC fills for the supplied A[B[i]] or A=0
+      B[i] interval; it does not deliver queue values.
+    claim_refs:
+    - maple-api
+    - maple-lima
+  logical_inputs:
+  - request_id: access-01-read
+    target_array: queue.shared
+    address_pattern: sequential
+    requested_payload_type: int32
+    requested_index_width_bits: null
+    mutable_target: false
+    index_width_status: not_applicable_to_loaded_index_request
+    statement_ids:
+    - bfs-td-frontier
+    source_locations:
+    - file: benchmarks/gapbs/src/bfs.cc
+      start_line: 240
+      end_line: 240
+    statement_binding_status: manual_source_proposal
+    mapping_basis: Reported sequential stream; actual bounds/stride and source binding
+      remain requirements.
+  - request_id: access-02-read
+    target_array: VertexOffsets
+    address_pattern: indirect
+    requested_payload_type: int32
+    requested_index_width_bits: 32
+    mutable_target: false
+    index_width_status: requested
+    statement_ids:
+    - bfs-td-row-bounds
+    source_locations:
+    - file: benchmarks/gapbs/src/bfs.cc
+      start_line: 241
+      end_line: 241
+    statement_binding_status: manual_source_proposal
+    mapping_basis: Reported loaded-index expression; near-unit measured distance does
+      not turn this into a proven stream.
+  - request_id: access-03-read
+    target_array: g.out_neighbors_
+    address_pattern: ranged_indirect
+    requested_payload_type: int32
+    requested_index_width_bits: 32
+    mutable_target: false
+    index_width_status: requested
+    statement_ids:
+    - bfs-td-neighbor
+    source_locations:
+    - file: benchmarks/gapbs/src/bfs.cc
+      start_line: 242
+      end_line: 242
+    statement_binding_status: manual_source_proposal
+    mapping_basis: Reported CSR row bounds plus segmented neighbor traversal; range
+      realization/continuation still needs mapping proof.
+  - request_id: access-04-read
+    target_array: parent
+    address_pattern: indirect
+    requested_payload_type: int32
+    requested_index_width_bits: 32
+    mutable_target: true
+    index_width_status: requested
+    statement_ids:
+    - bfs-td-parent-read
+    source_locations:
+    - file: benchmarks/gapbs/src/bfs.cc
+      start_line: 243
+      end_line: 243
+    statement_binding_status: manual_source_proposal
+    mapping_basis: Reported loaded-index expression; near-unit measured distance does
+      not turn this into a proven stream.
+  input_scope: workload_intent_and_design_contract_not_a_concrete_operand_list
+  design_interface:
+    software_supplies: Queue identities and lifecycle/binding, virtual pointers for
+      individual fetches, or configured A/B bases plus begin/end bounds for LIMA.
+      Software establishes producer/consumer schedule, stable arrays and memory route.
+    invocation: User-mode MMIO stores issue produces/configuration and MMIO loads
+      consume queue values, using ordinary core load/store instructions. INIT, OPEN/CLOSE,
+      PRODUCE_PTR/CONSUME and LIMA_PRODUCE/LIMA are paper API names, not generated
+      C declarations.
+    outputs: FIFO-delivered fetched values for queue mode, or nonbinding shared-LLC
+      fills for speculative prefetch mode. CPU remains responsible for computation
+      and updates.
+    claim_refs:
+    - maple-api
+    - maple-queue-order
+    - maple-acknowledgement
+    - maple-stable-data
+  supported_type_constraints:
+    payload_types: []
+    index_width_bits: []
+    notes: Empty domains are unknown. Do not infer 64-bit indices from the core ISA
+      or complete int32/uint32 support from a four-byte evaluation element.
+    claim_refs: []
+  datatype_notes: Paper discusses 32-bit evaluation words and a RISCV64 system, but
+    the complete payload/sign, index/bounds and pointer-width API domains are not
+    established.
+  preconditions:
+    design_requirements_ref: candidate.yaml#requirements
+    status: not_discharged
+    mutable_target_review_required: true
+  postconditions:
+    catalog_result:
+      form: nonbinding_LLC_fill_hint
+      old_value: not_applicable
+      validity: CPU demand loads obtain the program result; a prefetched line may
+        be replaced before use.
+      claim_refs:
+      - maple-api
+      - maple-lima
+      - maple-stable-data
+    satisfies_program_result: no_assistance_only
+    program_equivalence_status: not_established
+  ordering:
+    scope: Within a configured queue for queue mode; no program-result order for LLC
+      hints
+    description: LLC hints do not replace demand-load order or CPU update synchronization.
+    claim_refs:
+    - maple-queue-order
+    - maple-stable-data
+  completion:
+    event: Prefetch command/fill has no authoritative program-result completion; demand
+      accesses remain on the core.
+    visibility: Shared-cache assistance only; CPU demand accesses determine program
+      values.
+    claim_refs:
+    - maple-acknowledgement
+    - maple-stable-data
+  limitations:
+  - Concrete API types, queue packing, numeric bounds and memory-route semantics need
+    confirmation.
+  claim_refs:
+  - maple-api
+  - maple-lima
+  missing_capability_evidence:
+  - index_width_bits
+  - payload_types
+  missing_workload_evidence: []
+  concrete_signature: null
+  implementation_ref: null
+- id: maple-pointer-prefetch
+  intent: Configure prefetch assistance for accesses to VertexOffsets, parent; the
+    program still obtains its required values/updates through its original execution
+    path.
+  execution_role: assist
+  operation: read
+  subtype: prefetch
+  support: paper_specified
+  realization:
+    kind: native_primitive
+    description: PREFETCH accepts a host-computed pointer for a speculative LLC fetch.
+    claim_refs:
+    - maple-api
+  logical_inputs:
+  - request_id: access-02-read
+    target_array: VertexOffsets
+    address_pattern: indirect
+    requested_payload_type: int32
+    requested_index_width_bits: 32
+    mutable_target: false
+    index_width_status: requested
+    statement_ids:
+    - bfs-td-row-bounds
+    source_locations:
+    - file: benchmarks/gapbs/src/bfs.cc
+      start_line: 241
+      end_line: 241
+    statement_binding_status: manual_source_proposal
+    mapping_basis: Reported loaded-index expression; near-unit measured distance does
+      not turn this into a proven stream.
+  - request_id: access-04-read
+    target_array: parent
+    address_pattern: indirect
+    requested_payload_type: int32
+    requested_index_width_bits: 32
+    mutable_target: true
+    index_width_status: requested
+    statement_ids:
+    - bfs-td-parent-read
+    source_locations:
+    - file: benchmarks/gapbs/src/bfs.cc
+      start_line: 243
+      end_line: 243
+    statement_binding_status: manual_source_proposal
+    mapping_basis: Reported loaded-index expression; near-unit measured distance does
+      not turn this into a proven stream.
+  input_scope: workload_intent_and_design_contract_not_a_concrete_operand_list
+  design_interface:
+    software_supplies: Queue identities and lifecycle/binding, virtual pointers for
+      individual fetches, or configured A/B bases plus begin/end bounds for LIMA.
+      Software establishes producer/consumer schedule, stable arrays and memory route.
+    invocation: User-mode MMIO stores issue produces/configuration and MMIO loads
+      consume queue values, using ordinary core load/store instructions. INIT, OPEN/CLOSE,
+      PRODUCE_PTR/CONSUME and LIMA_PRODUCE/LIMA are paper API names, not generated
+      C declarations.
+    outputs: FIFO-delivered fetched values for queue mode, or nonbinding shared-LLC
+      fills for speculative prefetch mode. CPU remains responsible for computation
+      and updates.
+    claim_refs:
+    - maple-api
+    - maple-queue-order
+    - maple-acknowledgement
+    - maple-stable-data
+  supported_type_constraints:
+    payload_types: []
+    index_width_bits: []
+    notes: Empty domains are unknown. Do not infer 64-bit indices from the core ISA
+      or complete int32/uint32 support from a four-byte evaluation element.
+    claim_refs: []
+  datatype_notes: Paper discusses 32-bit evaluation words and a RISCV64 system, but
+    the complete payload/sign, index/bounds and pointer-width API domains are not
+    established.
+  preconditions:
+    design_requirements_ref: candidate.yaml#requirements
+    status: not_discharged
+    mutable_target_review_required: true
+  postconditions:
+    catalog_result:
+      form: nonbinding_LLC_fill_hint
+      old_value: not_applicable
+      validity: No returned gather result, atomic result or fetched-data readiness
+        promise.
+      claim_refs:
+      - maple-api
+      - maple-stable-data
+    satisfies_program_result: no_assistance_only
+    program_equivalence_status: not_established
+  ordering:
+    scope: Within a configured queue for queue mode; no program-result order for LLC
+      hints
+    description: LLC hints do not replace demand-load order or CPU update synchronization.
+    claim_refs:
+    - maple-queue-order
+    - maple-stable-data
+  completion:
+    event: Prefetch command/fill has no authoritative program-result completion; demand
+      accesses remain on the core.
+    visibility: Shared-cache assistance only; CPU demand accesses determine program
+      values.
+    claim_refs:
+    - maple-acknowledgement
+    - maple-stable-data
+  limitations:
+  - Concrete API types, queue packing, numeric bounds and memory-route semantics need
+    confirmation.
+  claim_refs:
+  - maple-api
+  missing_capability_evidence:
+  - index_width_bits
+  - payload_types
+  missing_workload_evidence: []
+  concrete_signature: null
+  implementation_ref: null
+request_groups:
+- id: bfs-td-traversal-and-discovery
+  description: Source dependency chain from frontier load through row bounds and neighbor
+    traversal to parent read and conditional CAS. The successful CAS also controls
+    an explicit parent store and queue append. This context group is a manual proposal,
+    not a proved single-accelerator mapping.
+  request_ids:
+  - access-01-read
+  - access-02-read
+  - access-03-read
+  - access-04-read
+  - access-04-update
+  statement_ids:
+  - bfs-td-frontier
+  - bfs-td-row-bounds
+  - bfs-td-neighbor
+  - bfs-td-parent-read
+  - bfs-td-parent-cas
+  - bfs-td-parent-store
+  - bfs-td-queue-append
+  dependencies:
+  - from_statement: bfs-td-frontier
+    to_statement: bfs-td-row-bounds
+  - from_statement: bfs-td-row-bounds
+    to_statement: bfs-td-neighbor
+  - from_statement: bfs-td-neighbor
+    to_statement: bfs-td-parent-read
+  - from_statement: bfs-td-frontier
+    to_statement: bfs-td-parent-cas
+  - from_statement: bfs-td-neighbor
+    to_statement: bfs-td-parent-cas
+  - from_statement: bfs-td-parent-read
+    to_statement: bfs-td-parent-cas
+  - from_statement: bfs-td-parent-cas
+    to_statement: bfs-td-parent-store
+  - from_statement: bfs-td-parent-cas
+    to_statement: bfs-td-queue-append
+  context_statements:
+  - id: bfs-td-frontier
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 240
+      end_line: 240
+    code: NodeID u = queue.shared[i];
+    operation: read
+    access_expression: queue.shared[i]
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids: []
+    interpretation: Sequential frontier read in logical i order; thread interleaving
+      depends on execution.
+  - id: bfs-td-row-bounds
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 241
+      end_line: 241
+    code: for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+    operation: read
+    access_expression: VertexOffsets[u] and VertexOffsets[u + 1]
+    data_type: SGOffset = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-frontier
+    interpretation: Two offset accesses indexed by a loaded vertex ID; the +1 is index
+      arithmetic.
+  - id: bfs-td-neighbor
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 242
+      end_line: 242
+    code: NodeID v = g.out_neighbors_[j];
+    operation: read
+    access_expression: g.out_neighbors_[j]
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-row-bounds
+    interpretation: Sequential within each adjacency segment; transitions between
+      segments are data-dependent.
+  - id: bfs-td-parent-read
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 243
+      end_line: 243
+    code: NodeID curr_val = parent[v];
+    operation: read
+    access_expression: parent[v]
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-neighbor
+    interpretation: Indirect read indexed by the loaded neighbor ID.
+  - id: bfs-td-parent-cas
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 247
+      end_line: 247
+    code: if (compare_and_swap(parent[v], curr_val, u)) {
+    operation: read_modify_write
+    access_expression: compare_and_swap(parent[v], curr_val, u)
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-frontier
+    - bfs-td-neighbor
+    - bfs-td-parent-read
+    interpretation: Subtype is compare-and-swap, guarded by curr_val < 0; successful
+      discovery controls queue insertion.
+  - id: bfs-td-parent-store
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 248
+      end_line: 248
+    code: parent[v] = u;
+    operation: write
+    access_expression: parent[v] = u
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-parent-cas
+    interpretation: Explicit store inside the successful CAS branch; preserve in any
+      analysis of side effects.
+  - id: bfs-td-queue-append
+    location:
+      file: benchmarks/gapbs/src/bfs.cc
+      start_line: 249
+      end_line: 249
+    code: lqueue.push_back(v);
+    operation: call_with_side_effects
+    access_expression: lqueue.push_back(v)
+    data_type: NodeID = int32_t
+    array_element_bits: 32
+    related_statement_ids:
+    - bfs-td-parent-cas
+    interpretation: Thread-local queue buffering followed by lqueue.flush(); not a
+      plain target-array access.
+  basis: explicit_manual_source_group
+  hardware_composition_status: not_established
+  covered_request_ids:
+  - access-01-read
+  - access-02-read
+  - access-03-read
+  - access-04-read
+  uncovered_request_ids:
+  - access-04-update
+  joint_execution_status: requires_mapping_and_composition_review
+workload_semantics:
+  reported_rmw:
+    kind: conditional_compare_and_swap
+    reported_details:
+      subtype: conditional_atomic_compare_and_swap
+      primitive: CAS(addr=&parent[v], expected=curr_val, new_val=u)
+      atomicity_granularity: 4_bytes
+      conflict_frequency: high_to_extreme on hub nodes
+      coherence_effect: cache line bouncing and pipeline stalls (LOCK prefix)
+    must_preserve: true
+    phase_execution: {}
+  source_binding:
+    status: revision_reported_matching
+    reported_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    reference_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  evidence_status: reported_not_reproduced
+requirements:
+- id: maple-stable-target
+  scope: All queue-fetched target arrays and any index data used for address generation
+  description: Establish stable data and ownership from fetch through consumption;
+    a coherent request cannot refresh an already queued value after a CPU write.
+  verification: required
+  claim_refs:
+  - maple-stable-data
+- id: maple-queue-lifecycle
+  scope: Per queue and participating software threads
+  description: Bind/init/open/close queues exclusively as required and establish producer/consumer
+    counts, ordering, storage reuse and a nondeadlocking runahead schedule.
+  verification: required
+  claim_refs:
+  - maple-api
+  - maple-backpressure
+- id: maple-typed-abi
+  scope: Pointers, A/B element formats, bounds, packed queue values and API operands
+  description: Resolve concrete payload/index/pointer types, element scaling, valid
+    ranges, result packing and counts; paper-level operation names are not complete
+    C signatures.
+  verification: required
+  claim_refs:
+  - maple-api
+  - maple-lima
+  - maple-reference-config
+- id: maple-source-binding
+  scope: Per BFS statement and ROI
+  description: Choose pointer-produce or LIMA mode and demonstrate source operand/interval
+    correspondence; supplied bounds do not offload the full queue-to-CSR dependency
+    chain.
+  verification: required
+  claim_refs:
+  - maple-api
+  - maple-lima
+- id: maple-completion
+  scope: Fetch acceptance, queue value readiness, drain and memory observers
+  description: Distinguish pointer-produce acknowledgement from available fetched
+    data, consuming a value, draining a loop and any required observer barrier.
+  verification: required
+  claim_refs:
+  - maple-acknowledgement
+  - maple-queue-order
+- id: maple-platform
+  scope: MMIO resource allocation, virtual address translation and memory path
+  description: Provide compatible NoC/MMIO integration, driver/MMU/shootdown support
+    and chosen coherent LLC or noncoherent memory route.
+  verification: required
+  claim_refs:
+  - maple-translation
+  - maple-stable-data
+- id: maple-cpu-updates
+  scope: Current BFS parent CAS, parent store and queue append
+  description: Retain CPU updates and success-controlled side effects unless separate
+    evidence establishes a supported atomic engine and equivalent mapping.
+  verification: required
+  claim_refs:
+  - maple-future-atomics
+  - maple-stable-data
+requirement_status: not_discharged
+parameter_contract:
+- id: scratchpad_bytes
+  unit: bytes
+  state: fixed_reference
+  value: 1024
+  domain: null
+  claim_refs:
+  - maple-reference-config
+  notes: Reference FPGA/synthesis storage; not the selected BFS allocation.
+- id: reference_queue_count
+  unit: queues
+  state: fixed_reference
+  value: 8
+  domain: null
+  claim_refs:
+  - maple-reference-config
+  notes: Eight circular queues in the synthesis reference, not all allowed configurations.
+- id: reference_queue_entries
+  unit: entries
+  state: fixed_reference
+  value: 32
+  domain: null
+  claim_refs:
+  - maple-reference-config
+  notes: Reported four-byte-word sensitivity point; not a general queue capacity bound.
+- id: tlb_entries
+  unit: entries
+  state: fixed_reference
+  value: 16
+  domain: null
+  claim_refs:
+  - maple-translation
+  notes: Paper MMU reference setting.
+- id: lima_index_chunk_bytes
+  unit: bytes
+  state: fixed_reference
+  value: 64
+  domain: null
+  claim_refs:
+  - maple-lima
+  notes: Index-stream chunk size described for the LIMA path; not target-address coalescing
+    evidence.
+- id: runtime_queue_allocation
+  unit: entries_per_queue
+  state: open
+  value: null
+  domain: null
+  claim_refs:
+  - maple-reference-config
+  notes: Allocation is described as configurable within shared storage; exact legal
+    sizes/counts/packing need the implementation contract.
+- id: prefetch_distance
+  unit: iterations
+  state: open
+  value: null
+  domain: null
+  claim_refs:
+  - maple-lima
+  notes: Software lookahead distance in Fig.4; no safe numeric interval is established
+    for this workload.
+selected_configuration: {}
+mechanism_context:
+  annotations:
+  - id: maple-queues
+    kind: buffering
+    status: described
+    description: Circular FIFOs share scratchpad. Full-queue produces and empty-queue
+      consumes wait in buffered pipelines; configuration remains available.
+    claim_refs:
+    - maple-backpressure
+    - maple-reference-config
+  - id: maple-index-chunks
+    kind: buffering
+    status: described
+    description: LIMA fetches adjacent B-index data in 64-byte chunks and iterates
+      through those words to generate A addresses.
+    claim_refs:
+    - maple-lima
+  - id: maple-response-association
+    kind: reordering
+    status: described
+    description: Reserved queue slot indices are used as transaction IDs. Replies
+      may arrive out of order but are placed into their associated FIFO slots for
+      ordered consumption; this is response association, not a demonstrated DRAM-locality
+      sort.
+    claim_refs:
+    - maple-queue-order
+  - id: maple-pipelined-issue
+    kind: issue_policy
+    status: described
+    description: Separate produce/consume/configuration pipelines permit concurrent
+      operations. LIMA feeds generated requests into the produce path; a blocked queue
+      need not stall other queues. No locality-aware A-address sorting policy is specified.
+    claim_refs:
+    - maple-backpressure
+    - maple-lima
+  - id: maple-host-dependencies
+    kind: dependency_tracking
+    status: described
+    description: Software produces pointers or configures one-level LIMA intervals;
+      queued replies retain slot identity. Dependencies needed to compute pointers/bounds
+      stay in software unless the described LIMA operation covers them.
+    claim_refs:
+    - maple-api
+    - maple-lima
+    - maple-queue-order
+  - id: maple-two-stage-completion
+    kind: completion
+    status: described
+    description: The issue store acknowledgement occurs before the fetched memory
+      data arrives; a consumer receives its data only on the queue-consume load response.
+    claim_refs:
+    - maple-acknowledgement
+  - id: maple-pinned-head-readiness
+    kind: buffering
+    status: described
+    description: In public RTL 742a22d's ordinary non-invalidation consume path, reservation/occupancy
+      and valid payload are separate. The head and any additional piece required by
+      the consume length must be valid before dequeue; ready later values do not bypass
+      an unready head. Paper-evaluation configuration binding remains unknown.
+    claim_refs:
+    - maple-code-head-readiness
+  - id: maple-pinned-credit-transfer
+    kind: completion
+    status: described
+    description: In public RTL 742a22d's ordinary consume path, successful dequeue
+      returns queue storage capacity with payload capture in the consume pipeline,
+      before possible later NoC response delivery and CPU arithmetic. Admission, payload
+      readiness, pipeline custody and CPU final use have distinct resource lifetimes.
+    claim_refs:
+    - maple-code-dequeue-custody
+  - id: maple-target-coalescing
+    kind: coalescing
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: integration-maple-comparison_domain
+    kind: other
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: integration-maple-completion
+    kind: completion
+    status: described
+    description: 'completion: {"CLOSE": "endpoint_disconnect_not_universal_drain",
+      "command_ACK": "not_value_ready", "internal_LIMA_pointer_ACK": "individual_CPU_ACK_suppressed"};
+      basis=source_with_limit; source-scoped, no operation-support widening'
+    claim_refs:
+    - integration-maple-P1
+    - integration-maple-P5
+    - integration-maple-A3
+    - integration-maple-A6
+  - id: integration-maple-credit
+    kind: buffering
+    status: described
+    description: 'credit: {"CPU_final_effect": "separate_obligation", "release": "consume_capture_dequeue",
+      "reserve": "owns_not_ready"}; basis=source_plus_consumer_obligation; source-scoped,
+      no operation-support widening'
+    claim_refs:
+    - integration-maple-P1
+    - integration-maple-A2
+    - integration-maple-A3
+  - id: integration-maple-grouping
+    kind: buffering
+    status: described
+    description: 'grouping: {"final_A_address_sort": "not_established", "final_A_duplicate_merge":
+      "unknown", "index": "B_spatial_chunks"}; basis=source_plus_explicit_unknown;
+      source-scoped, no operation-support widening'
+    claim_refs:
+    - integration-maple-P3
+    - integration-maple-A5
+  - id: integration-maple-interface
+    kind: other
+    status: described
+    description: 'interface: {"consumer": "MMIO_CONSUME", "delivery": "queue_operand",
+      "producer": "bounded_range_submission"}; basis=source; source-scoped, no operation-support
+      widening'
+    claim_refs:
+    - integration-maple-P1
+    - integration-maple-P2
+    - integration-maple-A1b
+  - id: integration-maple-memory_routes
+    kind: other
+    status: described
+    description: 'memory_routes: {"choices": ["coherent_LLC", "direct_DRAM"], "later_queue_value_coherence":
+      "not_guaranteed"}; basis=source_with_limit; source-scoped, no operation-support
+      widening'
+    claim_refs:
+    - integration-maple-P1
+    - integration-maple-P5
+  - id: integration-maple-operation
+    kind: other
+    status: described
+    description: 'operation: {"consumer_arithmetic": "CPU", "expression": "A[B[i]]",
+      "kind": "required_LIMA_PRODUCE"}; basis=source; source-scoped, no operation-support
+      widening'
+    claim_refs:
+    - integration-maple-P2
+    - integration-maple-A1
+    - integration-maple-A1b
+  - id: integration-maple-response
+    kind: reordering
+    status: described
+    description: 'response: {"arrival": "may_be_out_of_order", "association": "reserved_slot_transaction_id",
+      "delivery": "per_queue_valid_head_FIFO", "global_queue_order": "not_claimed"};
+      basis=source; source-scoped, no operation-support widening'
+    claim_refs:
+    - integration-maple-P1
+    - integration-maple-A2
+    - integration-maple-A4
+  - id: integration-maple-scheduling
+    kind: issue_policy
+    status: described
+    description: 'scheduling: {"arbitration": "eligible_queue_round_robin_in_inspected_paths",
+      "global_fairness": "not_proven"}; basis=supplemental_source_with_limit; source-scoped,
+      no operation-support widening'
+    claim_refs:
+    - integration-maple-A3
+    - integration-maple-A5
+  - id: integration-maple-state
+    kind: buffering
+    status: described
+    description: 'state: {"capacity": "configuration_specific_finite", "range_admission":
+      "unlimited_unestablished", "storage": "partitioned_circular_reserved_valid_FIFO"};
+      basis=source; source-scoped, no operation-support widening'
+    claim_refs:
+    - integration-maple-P3
+    - integration-maple-A2
+    - integration-maple-A5
+    - integration-maple-A6
+  - id: integration-maple-translations
+    kind: other
+    status: described
+    description: 'translations: {"fault_shootdown_integration": "deployment_required",
+      "local_TLB_PTW": "described"}; basis=source_with_limit; source-scoped, no operation-support
+      widening'
+    claim_refs:
+    - integration-maple-P4
+  - id: integration-maple-unknowns
+    kind: other
+    status: unknown
+    description: null
+    claim_refs: []
+  - id: integration-maple-width
+    kind: other
+    status: described
+    description: 'width: {"executable_illustration_bytes": 4, "inspected_payload_bytes":
+      [4, 8]}; basis=supplemental_source; source-scoped, no operation-support widening'
+    claim_refs:
+    - integration-maple-A3
+    - integration-maple-A5
+  missing_kinds:
+  - coalescing
+  performance_hypotheses:
+  - id: maple-latency-hiding
+    description: Queue-backed asynchronous fetches may hide long memory latency when
+      useful runahead and concurrent requests exceed producer/consumer communication
+      costs.
+    workload_conditions:
+    - Stable source arrays and a legal producer/consumer split
+    - Enough independent requests and queue space for runahead
+    - Useful lookahead and compatible pointer/index/queue formats
+    limiting_factors:
+    - NoC/MMIO consume round-trip overhead
+    - Queue-full/empty stalls, dependent address computation and translation misses
+    - BFS mutable parent data fails the stable-array requirement without an additional
+      mapping proof
+    claim_refs:
+    - maple-model-conditions
+    - maple-stable-data
+    - maple-backpressure
+  hardware_structure:
+    view_kind: paper_logical_paths_not_port_netlist
+    blocks:
+    - id: host-mmio
+      description: Software queue operations through ordinary MMIO loads/stores
+      claim_refs:
+      - maple-structure
+    - id: request-decoder
+      description: Decodes queue operation requests
+      claim_refs:
+      - maple-structure
+    - id: configuration-pipe
+      description: Queue bindings/sizes, LIMA setup and MMU/debug control
+      claim_refs:
+      - maple-structure
+    - id: lima-logic
+      description: Index-chunk traversal and target pointer generation
+      claim_refs:
+      - maple-structure
+    - id: produce-pipe
+      description: Buffers requests and reserves queue slots
+      claim_refs:
+      - maple-structure
+    - id: mmu
+      description: Virtual pointer translation
+      claim_refs:
+      - maple-structure
+    - id: request-encoder
+      description: Memory-side request protocol
+      claim_refs:
+      - maple-structure
+    - id: memory-system
+      description: LLC or DRAM route selected by operation
+      claim_refs:
+      - maple-structure
+    - id: response-decoder
+      description: Memory reply and transaction association
+      claim_refs:
+      - maple-structure
+    - id: queue-controller
+      description: FIFO allocation/head/slot management
+      claim_refs:
+      - maple-structure
+    - id: scratchpad
+      description: Shared circular FIFO storage
+      claim_refs:
+      - maple-structure
+    - id: consume-pipe
+      description: Waits for and reads queued values
+      claim_refs:
+      - maple-structure
+    - id: response-encoder
+      description: Returns acknowledgement/data to core
+      claim_refs:
+      - maple-structure
+    connections:
+    - from_block: host-mmio
+      to_block: request-decoder
+      label: operation request
+      claim_refs:
+      - maple-structure
+      - maple-queue-order
+      - maple-acknowledgement
+    - from_block: request-decoder
+      to_block: configuration-pipe
+      label: configure
+      claim_refs:
+      - maple-structure
+      - maple-queue-order
+      - maple-acknowledgement
+    - from_block: request-decoder
+      to_block: produce-pipe
+      label: produce
+      claim_refs:
+      - maple-structure
+      - maple-queue-order
+      - maple-acknowledgement
+    - from_block: request-decoder
+      to_block: consume-pipe
+      label: consume
+      claim_refs:
+      - maple-structure
+      - maple-queue-order
+      - maple-acknowledgement
+    - from_block: configuration-pipe
+      to_block: lima-logic
+      label: bases and interval
+      claim_refs:
+      - maple-structure
+      - maple-queue-order
+      - maple-acknowledgement
+    - from_block: configuration-pipe
+      to_block: queue-controller
+      label: bindings and allocation
+      claim_refs:
+      - maple-structure
+      - maple-queue-order
+      - maple-acknowledgement
+    - from_block: lima-logic
+      to_block: produce-pipe
+      label: generated pointer/hint
+      claim_refs:
+      - maple-structure
+      - maple-queue-order
+      - maple-acknowledgement
+    - from_block: produce-pipe
+      to_block: queue-controller
+      label: reserve slot (queue mode)
+      claim_refs:
+      - maple-structure
+      - maple-queue-order
+      - maple-acknowledgement
+    - from_block: produce-pipe
+      to_block: mmu
+      label: virtual target
+      claim_refs:
+      - maple-structure
+      - maple-queue-order
+      - maple-acknowledgement
+    - from_block: mmu
+      to_block: request-encoder
+      label: translated memory request
+      claim_refs:
+      - maple-structure
+      - maple-queue-order
+      - maple-acknowledgement
+    - from_block: request-encoder
+      to_block: memory-system
+      label: fetch
+      claim_refs:
+      - maple-structure
+      - maple-queue-order
+      - maple-acknowledgement
+    - from_block: memory-system
+      to_block: response-decoder
+      label: reply and transaction ID
+      claim_refs:
+      - maple-structure
+      - maple-queue-order
+      - maple-acknowledgement
+    - from_block: response-decoder
+      to_block: scratchpad
+      label: fill reserved slot (queue mode)
+      claim_refs:
+      - maple-structure
+      - maple-queue-order
+      - maple-acknowledgement
+    - from_block: queue-controller
+      to_block: scratchpad
+      label: slot/head management
+      claim_refs:
+      - maple-structure
+      - maple-queue-order
+      - maple-acknowledgement
+    - from_block: scratchpad
+      to_block: consume-pipe
+      label: head data
+      claim_refs:
+      - maple-structure
+      - maple-queue-order
+      - maple-acknowledgement
+    - from_block: consume-pipe
+      to_block: response-encoder
+      label: consumed value
+      claim_refs:
+      - maple-structure
+      - maple-queue-order
+      - maple-acknowledgement
+    - from_block: produce-pipe
+      to_block: response-encoder
+      label: issue acknowledgement
+      claim_refs:
+      - maple-structure
+      - maple-queue-order
+      - maple-acknowledgement
+    - from_block: response-encoder
+      to_block: host-mmio
+      label: core response
+      claim_refs:
+      - maple-structure
+      - maple-queue-order
+      - maple-acknowledgement
+  scope: Curated descriptions and explicit unknowns; no cycle model or inferred physical
+    topology.
+execution_plan:
+  rmw: retain_original_CPU_update
+  source_unchanged: true
+  queue_updates: Retain discovery and append semantics; no rewrite has been generated.
+review_questions:
+- id: placement
+  owner: Peter
+  question: Confirm the matching source statements, region, phase and allowable replacement
+    scope. Manual bindings are proposals; profiling placement is not confirmed.
+- id: abi
+  owner: Peter/Eric
+  question: Specify exact operands, index arithmetic, masks/produced lengths, concrete
+    types, invocation and completion API for each chosen operation or sequence.
+- id: legality
+  owner: Peter/Eric
+  question: Discharge ownership, numeric domains, mutable-load freshness, ordering,
+    repeated-target/concurrency and result validity requirements. Preserve CAS success
+    and queue side effects.
+- id: mechanisms
+  owner: Eric
+  question: Add located internal buffering/coalescing/reordering/issue/dependency/completion
+    details and conditions limiting performance.
+- id: composition
+  owner: Josh/Eric
+  question: Establish whether related requests can share one legal mapping; the workload
+    group and interface view do not prove combined execution.
+- id: implementation
+  owner: Yan-Ru
+  question: After Peter's spec is agreed, choose or synthesize an implementation and
+    verify the rewritten kernel against the frozen correctness oracle.
+readiness:
+  description_generated: true
+  concrete_abi_agreed: false
+  mapping_requirements_discharged: false
+  implementation_generated: false
+  correctness_verified: false
+  performance_evaluated: false

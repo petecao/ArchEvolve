@@ -1,0 +1,240 @@
+{
+  "format": "tmu-proposal-validation-v1",
+  "base_commit": "6868383615c8aa89752923850d1bf0c170b6ba0b",
+  "production_catalog_sha256": "9c4bd9668921afee7fce3a767f737654f2b5dcb925847cc5020cdf4da25afd60",
+  "loader_digest": "9c4bd9668921afee7fce3a767f737654f2b5dcb925847cc5020cdf4da25afd60",
+  "proposal_loader_digest": "f9093c7227c3359ea3ddd51e4ce278fe2a23708b1503eee52e49acbbd6d5c912",
+  "standalone": {
+    "valid": true,
+    "format": "hardware-catalog-v0.1",
+    "designs": 1,
+    "claims": 12,
+    "scope": "Structure and evidence-reference checks only; no hardware correctness, composition legality or performance certification."
+  },
+  "in_memory_addition": {
+    "valid": true,
+    "format": "hardware-catalog-v0.1",
+    "designs": 8,
+    "claims": 96,
+    "scope": "Structure and evidence-reference checks only; no hardware correctness, composition legality or performance certification."
+  },
+  "proposal_queries": [
+    {
+      "name": "exact mapping",
+      "query": {
+        "operation": "read",
+        "subtype": "csr_spmv_two_lane_operand_event_supply",
+        "address_pattern": "indirect",
+        "execution_role": "execute"
+      },
+      "matches": [
+        {
+          "status": "mapping_reference",
+          "missing": []
+        }
+      ],
+      "excluded": []
+    },
+    {
+      "name": "unknown types float32/32",
+      "query": {
+        "operation": "read",
+        "subtype": "csr_spmv_two_lane_operand_event_supply",
+        "payload_type": "float32",
+        "index_width_bits": 32
+      },
+      "matches": [
+        {
+          "status": "needs_evidence",
+          "missing": [
+            "payload_types",
+            "index_width_bits"
+          ]
+        }
+      ],
+      "excluded": []
+    },
+    {
+      "name": "unknown types float64/64",
+      "query": {
+        "operation": "read",
+        "subtype": "csr_spmv_two_lane_operand_event_supply",
+        "payload_type": "float64",
+        "index_width_bits": 64
+      },
+      "matches": [
+        {
+          "status": "needs_evidence",
+          "missing": [
+            "payload_types",
+            "index_width_bits"
+          ]
+        }
+      ],
+      "excluded": []
+    },
+    {
+      "name": "unknown types uint32/64",
+      "query": {
+        "operation": "read",
+        "subtype": "csr_spmv_two_lane_operand_event_supply",
+        "payload_type": "uint32",
+        "index_width_bits": 64
+      },
+      "matches": [
+        {
+          "status": "needs_evidence",
+          "missing": [
+            "payload_types",
+            "index_width_bits"
+          ]
+        }
+      ],
+      "excluded": []
+    },
+    {
+      "name": "unknown types int64/32",
+      "query": {
+        "operation": "read",
+        "subtype": "csr_spmv_two_lane_operand_event_supply",
+        "payload_type": "int64",
+        "index_width_bits": 32
+      },
+      "matches": [
+        {
+          "status": "needs_evidence",
+          "missing": [
+            "payload_types",
+            "index_width_bits"
+          ]
+        }
+      ],
+      "excluded": []
+    },
+    {
+      "name": "unknown payload alone",
+      "query": {
+        "operation": "read",
+        "subtype": "csr_spmv_two_lane_operand_event_supply",
+        "payload_type": "float32"
+      },
+      "matches": [
+        {
+          "status": "needs_evidence",
+          "missing": [
+            "payload_types"
+          ]
+        }
+      ],
+      "excluded": []
+    },
+    {
+      "name": "generic gather gains no match",
+      "query": {
+        "operation": "read",
+        "subtype": "gather"
+      },
+      "matches": [],
+      "excluded": []
+    },
+    {
+      "name": "generic stream gains no match",
+      "query": {
+        "operation": "read",
+        "subtype": "stream_load"
+      },
+      "matches": [],
+      "excluded": []
+    },
+    {
+      "name": "not prefetch assistance",
+      "query": {
+        "operation": "read",
+        "execution_role": "assist"
+      },
+      "matches": [],
+      "excluded": []
+    },
+    {
+      "name": "pointer chase not examined",
+      "query": {
+        "operation": "read",
+        "subtype": "csr_spmv_two_lane_operand_event_supply",
+        "address_pattern": "pointer_chase"
+      },
+      "matches": [],
+      "excluded": [
+        "not_covered"
+      ]
+    },
+    {
+      "name": "old value not supplied",
+      "query": {
+        "operation": "read",
+        "subtype": "csr_spmv_two_lane_operand_event_supply",
+        "require_old_value": true
+      },
+      "matches": [],
+      "excluded": [
+        "excluded"
+      ]
+    },
+    {
+      "name": "excluded write/scatter",
+      "query": {
+        "operation": "write",
+        "subtype": "scatter",
+        "payload_type": "float32",
+        "index_width_bits": 32
+      },
+      "matches": [],
+      "excluded": [
+        "excluded"
+      ]
+    },
+    {
+      "name": "excluded reduce/add",
+      "query": {
+        "operation": "reduce",
+        "subtype": "add",
+        "payload_type": "float32",
+        "index_width_bits": 32
+      },
+      "matches": [],
+      "excluded": [
+        "excluded"
+      ]
+    },
+    {
+      "name": "excluded read_modify_write/add",
+      "query": {
+        "operation": "read_modify_write",
+        "subtype": "add",
+        "payload_type": "float32",
+        "index_width_bits": 32
+      },
+      "matches": [],
+      "excluded": [
+        "excluded"
+      ]
+    },
+    {
+      "name": "excluded read_modify_write/cas",
+      "query": {
+        "operation": "read_modify_write",
+        "subtype": "cas",
+        "payload_type": "float32",
+        "index_width_bits": 32
+      },
+      "matches": [],
+      "excluded": [
+        "excluded"
+      ]
+    }
+  ],
+  "unchanged_existing_designs": 7,
+  "unchanged_existing_query_trials": 78,
+  "production_catalog_unchanged": true,
+  "required_unknowns_preserved": true,
+  "scope": "Catalog structure/reference and retrieval checks only; no hardware execution or mapping legality certification."
+}

@@ -1,0 +1,59 @@
+#include <cassert>
+#include <climits>
+#include <cstdint>
+#include <cstdio>
+#include <cstdlib>
+#include <iostream>
+
+#include "geometry_admission.h"
+
+struct csr {
+    int *row_ptr;
+    int *col_ptr;
+    float *val;
+    int size;
+};
+struct smash {
+    int rows = 0, columns = 0, compression_ratio0 = 4;
+    int bitmap0_bits = 0, nza_blocks = 0;
+    unsigned long *bitmap0 = nullptr;
+    float *nza = nullptr;
+};
+#include "constructor-functions.inc"
+#include "construct_csr_admitted.h"
+
+int main()
+{
+    int rows[] = {0, 0, 0, 0, 1};
+    int invalid_column[] = {4};
+    float values[] = {1};
+    csr matrix = {rows, invalid_column, values, 4};
+    smash original;
+    construct_bitmap0_nza(&original, &matrix);
+    // Original constructor writes bit4 outside its declared4-bit extent.
+    assert(original.bitmap0_bits == 4 && original.bitmap0[0] == 16);
+    std::free(original.bitmap0); std::free(original.nza);
+    smash admitted;
+    admitted.rows = 77; admitted.columns = 88;
+    assert(construct_bitmap0_nza_admitted(&admitted, &matrix, 5, 1, 1, 1) ==
+           SMASH_CSR_INVALID_COLUMN);
+    assert(admitted.rows == 77 && admitted.columns == 88 &&
+           !admitted.bitmap0 && !admitted.nza);
+    int wrong_origin[] = {1, 1, 1, 1, 1};
+    matrix.row_ptr = wrong_origin;
+    assert(construct_bitmap0_nza_admitted(&admitted, &matrix, 5, 1, 1, 1) ==
+           SMASH_CSR_INVALID_ROW_ORIGIN);
+    assert(admitted.rows == 77 && !admitted.bitmap0);
+    matrix.row_ptr = rows;
+    assert(construct_bitmap0_nza_admitted(&admitted, &matrix, 4, 1, 1, 1) ==
+           SMASH_CSR_TRUNCATED_STORAGE);
+    assert(admitted.rows == 77 && !admitted.bitmap0);
+    int valid_column[] = {3};
+    matrix.col_ptr = valid_column;
+    assert(construct_bitmap0_nza_admitted(&admitted, &matrix, 5, 1, 1, 1) ==
+           SMASH_CSR_STRUCTURE_OK);
+    assert(admitted.bitmap0_bits == 4 && admitted.bitmap0[0] == 8 &&
+           admitted.nza_blocks == 1);
+    std::free(admitted.bitmap0); std::free(admitted.nza);
+    std::cout << "new CSR original invalid-column write and admitted pre-write rejection PASS\n";
+}

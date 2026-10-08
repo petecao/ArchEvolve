@@ -1,0 +1,334 @@
+{
+  "format": "cobra-independent-review-validation-v1",
+  "proposal_commit": "62cc6b6a658dcc09dfd42941953149516e75241b",
+  "base_commit": "5608d112667b72e971b3093325edda7454f579c8",
+  "verdict": "APPROVE_SOURCE_SCOPED_MAPPING",
+  "production_admitted": false,
+  "identities": [
+    {
+      "path": "docs/proposals/cobra-hpca2022/README.md",
+      "sha256": "5011936a29ae3d596a54d93d941684fe524489e9d2fd05fe987764b221683924",
+      "bytes": 10212
+    },
+    {
+      "path": "docs/proposals/cobra-hpca2022/admission-decision.md",
+      "sha256": "1bafc2ea86f6f88d39f3e4f7699be14f87034771a6750f3616fa4b57fbae7f4a",
+      "bytes": 2547
+    },
+    {
+      "path": "docs/proposals/cobra-hpca2022/artifact-check.json",
+      "sha256": "b803c8c8817127661a9217eb0b95e70a547204877f0195eff8f89fb1d4133959",
+      "bytes": 1549
+    },
+    {
+      "path": "docs/proposals/cobra-hpca2022/proposed-addition.json",
+      "sha256": "a7252b2c0de6458e12dfdae45d1409b2e5d258fd1d96f36590e0c7cec18e7151",
+      "bytes": 31775
+    },
+    {
+      "path": "docs/proposals/cobra-hpca2022/provenance.json",
+      "sha256": "a50dd9cc025ba08a3d63348d02caac6ab0884a6badaa05896c797fd023448323",
+      "bytes": 6421
+    },
+    {
+      "path": "docs/proposals/cobra-hpca2022/validate_proposal.py",
+      "sha256": "c50f1768da86684c4b421f5ba3fd18241697ec4b19592ffcc413e9f31f88b8ec",
+      "bytes": 8663
+    },
+    {
+      "path": "docs/proposals/cobra-hpca2022/validation.json",
+      "sha256": "e354c99b9583b2d1c1dad43d417a8b61864cd168cca705ef5768c15f9a6af2bd",
+      "bytes": 9133
+    },
+    {
+      "path": "archevolve/hardware_catalog.py",
+      "sha256": "c585bb3cf99a018b44eb4b4d77e2d826da5d6469287afec77b80365f7221a623",
+      "bytes": 24055
+    },
+    {
+      "path": "docs/hardware-catalog-format.md",
+      "sha256": "689de04a5a124d898fdd217ada95562c204776a225b69135df0c4b89551a9291",
+      "bytes": 6780
+    },
+    {
+      "path": "catalog/hardware-v0.1.yaml",
+      "sha256": "c17f7dc4463949035e66333e8e524055ca15a4cc36cc7641fb936f30c8df94d5",
+      "bytes": 224114
+    },
+    {
+      "path": "docs/proposals/drt-asplos2023/admission-decision.md",
+      "sha256": "931ba7fb310d76618513e6459f1323d89dfc130ac75ab7323848ab60843abcc8",
+      "bytes": 1548
+    },
+    {
+      "path": "archevolve/evidence_select.py",
+      "sha256": "5d3442d44de5f0906874d6da62b550908368ae9adc2e46d2c30e3c7fe95f0b8b",
+      "bytes": 19086
+    },
+    {
+      "path": "archevolve/comparison.py",
+      "sha256": "cd22682d18c2f96a75ff69bd5c7790cb1ffe8db80abac39130498e0d7515a1db",
+      "bytes": 7742
+    },
+    {
+      "path": "archevolve/intrinsic_handoff.py",
+      "sha256": "b46b58c082a22ffd74c4bd06fa160bb8792a56f854387d69aef23aaa9cf73adf",
+      "bytes": 17447
+    },
+    {
+      "path": "tools/render_mermaid.py",
+      "sha256": "2e61372bb80017dcb5bf9b91508c305571f74361567cf1e8b2685234dcb3a94e",
+      "bytes": 18318
+    }
+  ],
+  "external_hash_bindings": [
+    {
+      "id": "cobra-pdf",
+      "path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/latency/corpus/cobra.pdf",
+      "bytes": 1083944,
+      "sha256": "4028d0f2742286ae436e15a9536a0181091563b4e0a7d69b41fe197eb85683e5"
+    },
+    {
+      "id": "cobra-text",
+      "path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/latency/corpus/cobra.txt",
+      "bytes": 131282,
+      "sha256": "9febbe08a364bf2c667e2925068b8bfc017245151bf75127c2ec0b293cbb4e2b"
+    },
+    {
+      "id": "cobra-crossref",
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/metadata/cobra-crossref.json",
+      "bytes": 9689,
+      "sha256": "988f9ecee2d53bed3e1b6422d77f35b2e81210e0b7d5cff1df8e2913f9bd2334"
+    },
+    {
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/README.md",
+      "bytes": 18927,
+      "sha256": "d6239cdaa1db1fb54cb57c3fb16358deb56d8ec2adbbfc4fb498d0f7b8b8d9c6"
+    },
+    {
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/sources.json",
+      "bytes": 16475,
+      "sha256": "c11dbe1b1d70d521d278c9a7fbc2e6ee3562f782fc7542c505ce6eccb2247819"
+    },
+    {
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/records.json",
+      "bytes": 10297,
+      "sha256": "8ba3d6b7814cdac629e33fab0c888b220b7650a040cb706481eb94e706a9af00"
+    },
+    {
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/artifacts.json",
+      "bytes": 1791,
+      "sha256": "32d840dcc5c2cb4f439254e95fe71b89d67bf1b961e64a2b284d1799cccbca5e"
+    },
+    {
+      "path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03/validation.json",
+      "bytes": 1038,
+      "sha256": "d2ff06e49c8a37fa27cb7449920ba59786fa8332976f29e0cb4bc634fa34e91e"
+    },
+    {
+      "path": "/data1/nier/worktrees/codex-sessions/cobra-record-proposal-20261003-220453-89c0c478/ArchEvolve/archevolve/hardware_catalog.py",
+      "bytes": 24055,
+      "sha256": "c585bb3cf99a018b44eb4b4d77e2d826da5d6469287afec77b80365f7221a623"
+    },
+    {
+      "path": "/data1/nier/worktrees/codex-sessions/cobra-record-proposal-20261003-220453-89c0c478/ArchEvolve/docs/hardware-catalog-format.md",
+      "bytes": 6780,
+      "sha256": "689de04a5a124d898fdd217ada95562c204776a225b69135df0c4b89551a9291"
+    },
+    {
+      "path": "/data1/nier/worktrees/codex-sessions/cobra-record-proposal-20261003-220453-89c0c478/ArchEvolve/catalog/hardware-v0.1.yaml",
+      "bytes": 224114,
+      "sha256": "c17f7dc4463949035e66333e8e524055ca15a4cc36cc7641fb936f30c8df94d5"
+    },
+    {
+      "path": "/data1/nier/worktrees/codex-sessions/cobra-record-proposal-20261003-220453-89c0c478/ArchEvolve/docs/proposals/drt-asplos2023/admission-decision.md",
+      "bytes": 1548,
+      "sha256": "931ba7fb310d76618513e6459f1323d89dfc130ac75ab7323848ab60843abcc8"
+    }
+  ],
+  "primary_pdf_locators": [
+    {
+      "pdf_page": 1,
+      "checked_markers": [
+        "Improving Locality of Irregular Updates with Hardware Assisted Propagation Blocking",
+        "Vignesh Balaji",
+        "Brandon Lucia"
+      ]
+    },
+    {
+      "pdf_page": 3,
+      "checked_markers": [
+        "Algorithm 2",
+        "AtomicAdd",
+        "Accumulate Phase"
+      ]
+    },
+    {
+      "pdf_page": 4,
+      "checked_markers": [
+        "neighbors can be listed in any order"
+      ]
+    },
+    {
+      "pdf_page": 6,
+      "checked_markers": [
+        "bininit",
+        "four operands",
+        "binupdate"
+      ]
+    },
+    {
+      "pdf_page": 7,
+      "checked_markers": [
+        "not byte addressable",
+        "FIFO",
+        "core-private"
+      ]
+    },
+    {
+      "pdf_page": 8,
+      "checked_markers": [
+        "binflush",
+        "matching virtual and physical addresses",
+        "mlock"
+      ]
+    },
+    {
+      "pdf_page": 9,
+      "checked_markers": [
+        "Sniper",
+        "head of the ROB",
+        "Pin-based",
+        "CACTI"
+      ]
+    },
+    {
+      "pdf_page": 11,
+      "checked_markers": [
+        "Discrete Event Simulation",
+        "single way in the L2"
+      ]
+    },
+    {
+      "pdf_page": 12,
+      "checked_markers": [
+        "COBRA-COMM",
+        "atomic LLC reduction unit"
+      ]
+    }
+  ],
+  "reused_producer_checks": {
+    "query_checks": 20,
+    "existing_query_checks": 88,
+    "existing_designs": 8,
+    "report_sha256": "e354c99b9583b2d1c1dad43d417a8b61864cd168cca705ef5768c15f9a6af2bd"
+  },
+  "adversarial_queries": [
+    {
+      "query": {
+        "operation": "write",
+        "execution_role": "execute"
+      },
+      "expected": "mapping_reference",
+      "observed_rows": 1
+    },
+    {
+      "query": {
+        "operation": "write",
+        "require_old_value": true
+      },
+      "expected": "excluded",
+      "observed_rows": 1
+    },
+    {
+      "query": {
+        "operation": "write",
+        "payload_type": "int32"
+      },
+      "expected": "needs_evidence",
+      "observed_rows": 1
+    },
+    {
+      "query": {
+        "operation": "write",
+        "index_width_bits": 32
+      },
+      "expected": "needs_evidence",
+      "observed_rows": 1
+    },
+    {
+      "query": {
+        "operation": "write",
+        "address_pattern": "indirect",
+        "payload_type": "uint32",
+        "index_width_bits": 32
+      },
+      "expected": "needs_evidence",
+      "observed_rows": 1
+    },
+    {
+      "query": {
+        "operation": "write",
+        "subtype": "tuple_bin",
+        "address_pattern": "indirect",
+        "payload_type": "uint32",
+        "index_width_bits": 32,
+        "require_old_value": true
+      },
+      "expected": "excluded",
+      "observed_rows": 1
+    },
+    {
+      "query": {
+        "operation": "read"
+      },
+      "expected": null,
+      "observed_rows": 0
+    },
+    {
+      "query": {
+        "operation": "read_modify_write"
+      },
+      "expected": null,
+      "observed_rows": 0
+    },
+    {
+      "query": {
+        "operation": "reduce"
+      },
+      "expected": null,
+      "observed_rows": 0
+    }
+  ],
+  "ordinary_candidates_and_trace_unchanged": true,
+  "ordinary_comparison_has_no_COBRA_capability_match": true,
+  "consumer_projections": [
+    {
+      "request_subtype": "tuple_bin",
+      "candidate_scope": "mapping_reference",
+      "status": "needs_evidence",
+      "full_operation_preserved": true,
+      "handoff_contract_preserved": true,
+      "comparison_contract_preserved": true,
+      "CPU_update_retained": true,
+      "synthetic_not_workload_legality": true
+    },
+    {
+      "request_subtype": null,
+      "candidate_scope": "mapping_reference",
+      "status": "needs_evidence",
+      "full_operation_preserved": true,
+      "handoff_contract_preserved": true,
+      "comparison_contract_preserved": true,
+      "CPU_update_retained": true,
+      "synthetic_not_workload_legality": true
+    }
+  ],
+  "broadening_reproducer": null,
+  "new_download_bytes": 0,
+  "free_bytes": {
+    "/data1/nier/worktrees/codex-sessions/cobra-proposal-review-20261003-221535-dbcdacdf/ArchEvolve": 26556219392,
+    "/tmp": 19031764992
+  },
+  "scope": "Evidence/representation/projection only; release ABI, OS support, workload/numeric legality and executable implementation remain unverified."
+}

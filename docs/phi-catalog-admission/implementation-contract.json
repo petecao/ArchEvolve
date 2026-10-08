@@ -1,0 +1,19 @@
+{
+  "scope": "Bulk-phase/visibility legality subset,not arithmetic/cache/RTL/timing simulation",
+  "request_generation": "push_update address and update value computed byCPU;configuration setsoperation andbins",
+  "buffering": "identity-initialized partial lines andbuffered-update tags;private/sharedcache ALUs coalesce perword",
+  "issue_reordering": "LLC density decidesapply-in-place vsindex/value batching;binsreplayed withbatchingdisabled",
+  "dependency": "nointerveningreads to updatedregion;relaxedatomic annotation,nomixedordinaryatomics,explicitphi_sync/privateflush",
+  "mapping": "examinedimplementationcontiguousphysicaldata;LLCphysicalindex/bincomputation;bank-localstripedbin metadata/chunks",
+  "completion": "replayallbins,flushprivatepartials,phi_sync beforeread;sharedread maymerge residualpartial",
+  "source_types": "Table3 scoped8Bdoubleadd known;integer4Bsignedness anduniversalindex ABIunknown",
+  "FP_limit": "No IEEE source-order bitidentity,NaN/signedzero law ororiginalscoretolerance change supplied",
+  "notmodeled": [
+    "ALUidentity/arithmetic",
+    "exactcoherence/inflightAck/flushmicroprotocol",
+    "OSphysicalallocator/reversetranslation",
+    "chunkinterruptrefill",
+    "hardwarecycle/cost/performance"
+  ],
+  "nextimplementation": "bind actualpushopcode+ALUtypes/cachebank/bin allocator/flush andverifiedoriginalnumericalmapping beforeadmittedexperiment"
+}

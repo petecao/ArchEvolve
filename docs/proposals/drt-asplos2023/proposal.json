@@ -1,0 +1,612 @@
+{
+  "format": "drt-typed-research-proposal-v1",
+  "status": "research_proposal_not_production",
+  "base_commit": "c44ca66b5b1a121ed258d0d972172cda2de307b6",
+  "sources": {
+    "tactile-paper": {
+      "title": "Accelerating Sparse Data Orchestration via Dynamic Reflexive Tiling",
+      "authors": [
+        "Toluwanimi O. Odemuyiwa",
+        "Hadi Asghari-Moghaddam",
+        "Michael Pellauer",
+        "Kartik Hegde",
+        "Po-An Tsai",
+        "Neal Crago",
+        "Aamer Jaleel",
+        "John D. Owens",
+        "Edgar Solomonik",
+        "Joel S. Emer",
+        "Christopher W. Fletcher"
+      ],
+      "venue": "ASPLOS2023 Volume 3",
+      "year": 2023,
+      "doi": "10.1145/3582016.3582064",
+      "url": "https://doi.org/10.1145/3582016.3582064",
+      "download_url": "https://www.nealcrago.com/wp-content/uploads/TACTile_ASPLOS2023.pdf",
+      "retrieved_at": "2026-09-30T03:54:51.086721+00:00",
+      "path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/latency/corpus/tactile.pdf",
+      "sha256": "e3df45525aeafcfffd7e8b79696f2b6ff844a9a9480cef1f0723284d3eff1dd8",
+      "bytes": 1657169,
+      "pages": 15,
+      "document_type": "author-hosted publication PDF",
+      "locator_basis": "PDF page 1 = proceedings page 18; PDF pages 4\u20139 = proceedings pages 21\u201326"
+    },
+    "drt-readme": {
+      "repository": "https://github.com/FPSG-UIUC/DRT",
+      "commit": "dc8023a27057b6568cc66ab9e1b506092f79c559",
+      "source_path": "README.md",
+      "url": "https://raw.githubusercontent.com/FPSG-UIUC/DRT/dc8023a27057b6568cc66ab9e1b506092f79c559/README.md",
+      "path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/latency/corpus/drt-artifact-README.md",
+      "sha256": "acdf007740c819784f9e10bb048d26377d51de73884fbf89a251ee95e4f3b517",
+      "bytes": 4998,
+      "retrieved_at": "2026-09-30T04:06:47.637254+00:00",
+      "document_type": "pinned public simulator source",
+      "edition_limit": "Public revision not authenticated as the ASPLOS2023 evaluated revision."
+    },
+    "drt-scheduler": {
+      "repository": "https://github.com/FPSG-UIUC/DRT",
+      "commit": "dc8023a27057b6568cc66ab9e1b506092f79c559",
+      "source_path": "src/scheduler_8.cpp",
+      "url": "https://raw.githubusercontent.com/FPSG-UIUC/DRT/dc8023a27057b6568cc66ab9e1b506092f79c559/src/scheduler_8.cpp",
+      "path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/latency/corpus/drt-artifact-src_scheduler_8.cpp",
+      "sha256": "291e7e9e7623e20d1404792113b5503998893ae48ce381ce11725dec162989e1",
+      "bytes": 81186,
+      "retrieved_at": "2026-09-30T04:06:47.873637+00:00",
+      "document_type": "pinned public simulator source",
+      "edition_limit": "Public revision not authenticated as the ASPLOS2023 evaluated revision."
+    }
+  },
+  "claims": {
+    "task": {
+      "source_refs": [
+        "tactile-paper"
+      ],
+      "locator": "PDF p4 \u00a73, Eq2; p7 \u00a74.3; p8 Fig5",
+      "statement": "One task pairs A(I,K) and B(K,J) over shared parent-relative K bounds. Fig5 declares DRAM\u2192LLB J\u2192K\u2192I (CSC/CSC), LLB\u2192PE K\u2192I\u2192J (CSC/CSR), PE I\u2192J\u2192K (CSR/CSC).",
+      "evidence_kind": "paper_specification",
+      "limitations": []
+    },
+    "layout": {
+      "source_refs": [
+        "tactile-paper"
+      ],
+      "locator": "PDF pp5,7\u20138 \u00a73.2.1/4.1/4.3, Fig5",
+      "statement": "Uniform physical microtiles have compressed segment/coordinate arrays; outer tiled compressed metadata includes microtile footprint bytes and pointers. Macrotiles collect microtiles logically. Fig5 uses illustrative 3\u00d73 microtiles stored as CSR/CSC.",
+      "evidence_kind": "paper_specification",
+      "limitations": []
+    },
+    "aggregate": {
+      "source_refs": [
+        "tactile-paper"
+      ],
+      "locator": "PDF p7 \u00a74.2.1/4.3",
+      "statement": "Static per-operand/output buffer partitions constrain Aggregate. It accumulates represented microtile footprints, follows co-tiling constraints, traverses compressed metadata in raster order, and reverses overflow growth. Evaluated vector width P=32 feeds a P-to-1 adder.",
+      "evidence_kind": "paper_specification",
+      "limitations": []
+    },
+    "fallback": {
+      "source_refs": [
+        "tactile-paper"
+      ],
+      "locator": "PDF pp4\u20135 \u00a73.2, Algorithms1\u20132",
+      "statement": "Stationary tensors grow first; default grows contracted then uncontracted dimensions. Growth failure tries another dimension; initial constrained tile failure subdivides the most recent dimension recursively. Coarsened subdivisions occur at microtile granularity.",
+      "evidence_kind": "paper_specification",
+      "limitations": []
+    },
+    "metadata": {
+      "source_refs": [
+        "tactile-paper"
+      ],
+      "locator": "PDF p7 \u00a74.2.2/4.3; p8 Fig5",
+      "statement": "Metadata Build constructs segment/coordinate arrays bottom-up for next-level T-[uc]+ macrotiles and rebases coordinates to zero, retaining footprints and microtile references.",
+      "evidence_kind": "paper_specification",
+      "limitations": []
+    },
+    "distribution": {
+      "source_refs": [
+        "tactile-paper"
+      ],
+      "locator": "PDF p7 \u00a74.2.3/4.3; p8 Fig5",
+      "statement": "Distribution carries macrotiling metadata and selected microtile pointers/data to lower S-DOPs and schedules microtile pairs for PEs. Added buffer port overlaps distribution i with formation i+1; lower-level formation starts on arriving metadata. Hiding formation depends on processing rates.",
+      "evidence_kind": "paper_specification",
+      "limitations": []
+    },
+    "reference": {
+      "source_refs": [
+        "tactile-paper"
+      ],
+      "locator": "PDF p8 Fig5; p9 \u00a75.2.1/5.2.4",
+      "statement": "Fig5 illustration uses 350B LLB, A/B 175B/150B, 160B PE buffer and A/B 80B/80B. Study1 references 30MB global/32KB local buffers; all studies preprocess 32\u00d732 microtiles and fixed tensor partitions (example A5%,B45%,Z50%).",
+      "evidence_kind": "paper_specification",
+      "limitations": [
+        "Figure illustration, reported evaluation configuration and example ratios are distinct; none establish legal tuning domains or a complete output binding."
+      ]
+    },
+    "evaluation": {
+      "source_refs": [
+        "tactile-paper"
+      ],
+      "locator": "PDF p9 \u00a75.2.1\u20135.2.3; p11 \u00a76.5",
+      "statement": "Study1 cycle-level tile-extractor model uses queuing memory/NoC; correctness check compares output sparsity to MKL. Other accelerator baselines are idealized; SW analysis is oracle best-case. Accelergy estimates area/energy.",
+      "evidence_kind": "paper_specification",
+      "limitations": [
+        "Sparsity comparison is not independently verified numeric-value correctness. No model built or executed here; no RTL or CPU ABI established."
+      ]
+    },
+    "entry": {
+      "source_refs": [
+        "drt-readme"
+      ],
+      "locator": "README setup items1\u20133 and src descriptions",
+      "statement": "MKL-dependent simulator targets include SpMSpM_TACTile_twoInp with dynamic/static tiling, tensor partition, microtile shape and distribution options. scheduler_8.cpp models TACTile.",
+      "evidence_kind": "code_inspection",
+      "limitations": [
+        "Documented setup only; no executed binary or verified option binding. README partition examples/defaults differ from paper examples."
+      ]
+    },
+    "run": {
+      "source_refs": [
+        "drt-scheduler"
+      ],
+      "locator": "src/scheduler_8.cpp:161\u2013267 Scheduler_8::Run",
+      "statement": "Run iterates code K then J then I, calls ExtractBTopTile, PreCalculateARowsSize, EarlyFetchBBasicTiles, ExtractATopTile, EarlyFetchABasicTiles, ScheduleMiddleDOT; evicts A/B/O via LLB calls and counts output/log traffic.",
+      "evidence_kind": "code_inspection",
+      "limitations": [
+        "Eviction/accounting is not an observer-visible dirty-output protocol."
+      ]
+    },
+    "b-policy": {
+      "source_refs": [
+        "drt-scheduler"
+      ],
+      "locator": "src/scheduler_8.cpp:1127\u20131180 Scheduler_8::ExtractBTopTile",
+      "statement": "Dynamic B admits successive code-J rows over a fixed code-K interval using AccumulateSize(CSF), DoesFitInLLB and AddToLLB. Only if starting J=0 and all B rows fit does it extend K one column at a time; writes AReuse and OReuse.",
+      "evidence_kind": "code_inspection",
+      "limitations": [
+        "No recursive paper fallback or zero-admission progress guarantee established in this function. DoesFitInLLB internals not inspected."
+      ]
+    },
+    "a-policy": {
+      "source_refs": [
+        "drt-scheduler"
+      ],
+      "locator": "src/scheduler_8.cpp:1276\u20131305 PreCalculateARowsSize; 1578\u20131595 ExtractATopTile; 1695\u20131740 CalcBLLBHorizontalSum/AccumulateSize_AwrtB",
+      "statement": "Ordinary non-ideal dynamic A admits rows with DoesFitInLLB(A,vecCommittedRows_ASize[i]) and AddToLLB. Precomputation uses full A footprint for serial/parallel tile build, otherwise A footprint filtered by nonempty B rows.",
+      "evidence_kind": "code_inspection",
+      "limitations": [
+        "A admission does not itself check exact future output size or prove all output pressure resolved. Fixed partition setting must be verified at caller/LLB binding; non-ideal alone does not prove global partition immutability."
+      ]
+    },
+    "ideal-excluded": {
+      "source_refs": [
+        "drt-scheduler"
+      ],
+      "locator": "src/scheduler_8.cpp:1404\u20131500 intersectTwoVectors/multiplyOneARowInLogOutput; 1522\u20131577 ExtractATopTile ideal branch",
+      "statement": "The ideal LLB policy explicitly labels itself SoL. It initializes temporary output logs, computes output sizes, tests total capacity, then calls SetRatios/SetSizes for A/O repartitioning.",
+      "evidence_kind": "code_inspection",
+      "limitations": [
+        "Excluded from ordinary online fixed-partition claims; no numeric-value oracle adopted."
+      ]
+    },
+    "scaffold": {
+      "source_refs": [
+        "drt-scheduler"
+      ],
+      "locator": "src/scheduler_8.cpp:298 ScheduleMiddleDOT; 787 ExtractAMiddleTiles; 970 ExtractBMiddleTiles; 1085 updateBWLog; 1183\u20131273 and 1599\u20131692 extraction overhead; 1311\u20131400 EarlyFetchA/BBasicTiles; 1744\u20131808 AccumulateSize",
+      "statement": "Existing simulator scaffolding includes middle-level scheduling, byte-size accumulation, tile-build/extraction overhead models, bandwidth timing and early-fetch flags.",
+      "evidence_kind": "code_inspection",
+      "limitations": [
+        "Function pointers identify existing scaffolding, not a port plan, verified timing, complete Metadata Build implementation or coherent CPU adapter."
+      ]
+    },
+    "binding-gap": {
+      "source_refs": [
+        "tactile-paper"
+      ],
+      "locator": "PDF p7 \u00a74.2.3/4.3, p8 Fig5 (inspected boundary)",
+      "statement": "Coordinates, tensor membership and microtile references provide logical task association; a CPU binding still needs packet response association, ownership and release rules.",
+      "evidence_kind": "research_inference",
+      "limitations": [
+        "Proposed obligations, not claimed paper-defined tags or acknowledgment protocol."
+      ]
+    }
+  },
+  "records": [
+    {
+      "id": "drt-asplos2023-fig5-fixed-partition-spmspm",
+      "record_kind": "research_mapping",
+      "role": "required_hierarchy_local_sparse_tile_orchestration",
+      "scope": "One Fig5 illustrative fixed-partition SpMSpM mapping through Aggregate, Metadata Build and Distribution; containing PE arithmetic excluded.",
+      "source_refs": [
+        "tactile-paper",
+        "drt-readme",
+        "drt-scheduler"
+      ],
+      "claim_refs": [
+        "task",
+        "layout",
+        "aggregate",
+        "fallback",
+        "metadata",
+        "distribution",
+        "reference",
+        "evaluation",
+        "entry",
+        "run",
+        "b-policy",
+        "a-policy",
+        "ideal-excluded",
+        "scaffold",
+        "binding-gap"
+      ],
+      "mapping": {
+        "einsum": "Z[I,J] = sum_K A[I,K]*B[K,J]",
+        "dataflows": {
+          "dram_to_llb": "J,K,I",
+          "llb_to_pe": "K,I,J",
+          "pe_reference_only": "I,J,K"
+        },
+        "layouts": {
+          "dram": "A tiled-CSC K-major; B tiled-CSC J-major, each with footprints and microtile pointers",
+          "llb": "A CSC / B CSR macrotiling metadata",
+          "pe_reference_only": "A CSR / B CSC physical microtiles"
+        },
+        "microtile_shape": {
+          "state": "fixed_reference",
+          "value": [
+            3,
+            3
+          ],
+          "unit": "elements",
+          "domain": null
+        },
+        "claim_refs": [
+          "task",
+          "layout",
+          "reference"
+        ]
+      },
+      "software_supplies": {
+        "id": "supply",
+        "description": "Declare loop order, base points, initial shapes, physical microtile layout and footprint metadata, compatible compressed arrays, pointers and static per-tensor capacity allocations. No host ISA/register encodings established.",
+        "claim_refs": [
+          "task",
+          "layout",
+          "aggregate",
+          "fallback"
+        ]
+      },
+      "stages": [
+        {
+          "id": "aggregate",
+          "description": "Select logical macrotiles from compressed metadata by byte footprint and dimension constraints.",
+          "claim_refs": [
+            "aggregate",
+            "fallback"
+          ],
+          "stage_kind": "capacity_admission",
+          "inputs": [
+            "base_points",
+            "initial_shapes",
+            "loop_order",
+            "tensor_partitions",
+            "compressed_coordinates",
+            "microtile_footprints"
+          ],
+          "outputs": [
+            "coordinate_bounds",
+            "selected_microtiles",
+            "represented_footprint_bytes"
+          ]
+        },
+        {
+          "id": "metadata-build",
+          "description": "Build next-level segment/coordinate metadata bottom-up and rebase coordinates.",
+          "claim_refs": [
+            "metadata"
+          ],
+          "stage_kind": "metadata_construction",
+          "inputs": [
+            "coordinate_bounds",
+            "selected_microtiles"
+          ],
+          "outputs": [
+            "rebased_segments",
+            "rebased_coordinates",
+            "microtile_footprints",
+            "microtile_references"
+          ]
+        },
+        {
+          "id": "distribution",
+          "description": "Supply required metadata and microtile references/data to next S-DOP; lower distributor schedules pairs for PEs.",
+          "claim_refs": [
+            "distribution"
+          ],
+          "stage_kind": "required_tile_supply",
+          "inputs": [
+            "rebased_metadata",
+            "microtile_references",
+            "microtile_data"
+          ],
+          "outputs": [
+            "next_level_macrotiles",
+            "paired_microtile_work"
+          ]
+        }
+      ],
+      "result": {
+        "id": "result",
+        "description": "Logical macrotile and lower-level work with tensor-relative bounds, membership, rebased metadata and microtile references; no CPU fetched-value array or numeric SpMSpM result returned by extractor.",
+        "claim_refs": [
+          "task",
+          "metadata",
+          "distribution"
+        ],
+        "result_kind": "hierarchy_local_tile_work",
+        "payload_types": [],
+        "index_width_bits": []
+      },
+      "identity": {
+        "id": "identity",
+        "description": "Parent coordinate intervals and A/B microtile pairing identify the mathematical work. Metadata rebasing requires preserving parent-base interpretation. A stable task/epoch/response identifier is an adapter obligation, not a source-specified wire format.",
+        "claim_refs": [
+          "task",
+          "metadata",
+          "binding-gap"
+        ],
+        "wire_encoding": null
+      },
+      "consumer_lifetime": {
+        "id": "lifetime",
+        "description": "Formation precedes completed distribution conceptually, with pipelined streaming allowed. Pointer reuse and buffer retirement require downstream ownership and all-response consumption rules; exact acknowledgment/drain events are unestablished.",
+        "claim_refs": [
+          "distribution",
+          "binding-gap"
+        ],
+        "release_event": null,
+        "visibility_event": null
+      },
+      "requirements": [
+        {
+          "id": "layout-validity",
+          "description": "Bind footprint units/accounting to actual stored microtiles, validate segment monotonicity, coordinates, pointer bounds and layout conversions.",
+          "claim_refs": [
+            "layout",
+            "aggregate"
+          ],
+          "verification": "required"
+        },
+        {
+          "id": "cotiling",
+          "description": "A.K and B.K share identical parent-relative intervals; common output I/J ranges and dataflow base advancement must form complete nonduplicated work across tasks.",
+          "claim_refs": [
+            "task",
+            "fallback"
+          ],
+          "verification": "required"
+        },
+        {
+          "id": "partition-admission",
+          "description": "Bind fixed A/B/output capacities at every S-DOP; metadata/data occupancy and output spill accounting must fit the actual representation.",
+          "claim_refs": [
+            "aggregate",
+            "reference",
+            "a-policy"
+          ],
+          "verification": "required"
+        },
+        {
+          "id": "zero-admission-fallback",
+          "description": "Resolve oversize initial constrained tiles, oversize minimum microtile, empty regions and zero-admission progress in pinned B/A code; paper fallback is not a demonstrated code guarantee.",
+          "claim_refs": [
+            "fallback",
+            "b-policy",
+            "a-policy"
+          ],
+          "verification": "unknown"
+        },
+        {
+          "id": "dirty-output-visibility",
+          "description": "Define dirty partial-output ownership, spill/merge visibility and observer completion.",
+          "claim_refs": [
+            "run",
+            "binding-gap"
+          ],
+          "verification": "unknown"
+        },
+        {
+          "id": "tile-pointer-reuse",
+          "description": "Define task epoch, microtile ownership, all consumer release and safe reuse at each hierarchy level.",
+          "claim_refs": [
+            "distribution",
+            "binding-gap"
+          ],
+          "verification": "unknown"
+        },
+        {
+          "id": "response-association",
+          "description": "Bind delayed/reordered responses to exact tensor/tile/metadata slot; resolve backpressure, fault, cancellation and drain.",
+          "claim_refs": [
+            "binding-gap"
+          ],
+          "verification": "unknown"
+        },
+        {
+          "id": "coherent-cpu-binding",
+          "description": "Specify address translation, legal aliases/writers, CPU coherence and completion before connecting to host memory.",
+          "claim_refs": [
+            "binding-gap"
+          ],
+          "verification": "unknown"
+        },
+        {
+          "id": "numeric-correctness",
+          "description": "Verify numeric outputs against a scalar/reference implementation for a future binding; paper sparsity validation is insufficient.",
+          "claim_refs": [
+            "evaluation"
+          ],
+          "verification": "unknown"
+        },
+        {
+          "id": "evaluated-revision",
+          "description": "Authenticate exact evaluated code and inspect caller/LLB policy/layout binding before claiming equivalence to this Fig5 reference.",
+          "claim_refs": [
+            "entry",
+            "b-policy",
+            "a-policy"
+          ],
+          "verification": "unknown"
+        }
+      ],
+      "parameters": [
+        {
+          "id": "aggregate-vector-width",
+          "description": "Evaluated Aggregate parallelism, not Fig5 fixed shape or legal domain.",
+          "claim_refs": [
+            "aggregate"
+          ],
+          "state": "fixed_reference",
+          "value": 32,
+          "unit": "words",
+          "domain": null
+        },
+        {
+          "id": "fig5-llb-capacity",
+          "description": "Illustrative capacity only; output reserve is not fully bound by A/B labels.",
+          "claim_refs": [
+            "reference"
+          ],
+          "state": "fixed_reference",
+          "value": 350,
+          "unit": "bytes",
+          "domain": null
+        },
+        {
+          "id": "fig5-llb-ab",
+          "description": "Illustrative A/B split; remaining bytes do not establish an output protocol.",
+          "claim_refs": [
+            "reference"
+          ],
+          "state": "fixed_reference",
+          "value": {
+            "A": 175,
+            "B": 150
+          },
+          "unit": "bytes",
+          "domain": null
+        },
+        {
+          "id": "fig5-pe-capacity",
+          "description": "Illustrative PE reference outside extractor arithmetic.",
+          "claim_refs": [
+            "reference"
+          ],
+          "state": "fixed_reference",
+          "value": 160,
+          "unit": "bytes",
+          "domain": null
+        },
+        {
+          "id": "fig5-pe-ab",
+          "description": "Illustrative A/B split; no universal output-capacity rule inferred.",
+          "claim_refs": [
+            "reference"
+          ],
+          "state": "fixed_reference",
+          "value": {
+            "A": 80,
+            "B": 80
+          },
+          "unit": "bytes",
+          "domain": null
+        },
+        {
+          "id": "evaluation-microtile-shape",
+          "description": "Study1/all-studies 32\u00d732 preprocessing is separate from Fig5 3\u00d73 illustration.",
+          "claim_refs": [
+            "reference"
+          ],
+          "state": "fixed_reference",
+          "value": [
+            32,
+            32
+          ],
+          "unit": "elements",
+          "domain": null
+        },
+        {
+          "id": "deployment-partitions",
+          "description": "Future actual per-tensor deployment capacities remain unchosen.",
+          "claim_refs": [
+            "aggregate"
+          ],
+          "state": "unknown",
+          "value": null,
+          "unit": "bytes_per_tensor",
+          "domain": null
+        }
+      ],
+      "policy_reconciliation": {
+        "paper": "Stationary-first and contracted-before-uncontracted growth, continue after growth failure, recursive initial-load fallback.",
+        "source_b": "Code-J growth, conditional code-K growth only after all B rows fit from J=0.",
+        "source_a": "Non-ideal branch checks precomputed A-row sizes; output reserve/pressure is a separate requirement.",
+        "symbol_translation": "Paper I=code I, paper K=code J, paper J=code K. This permutation aligns mathematical axes, not every compressed layout or policy.",
+        "claim_refs": [
+          "fallback",
+          "b-policy",
+          "a-policy",
+          "run"
+        ]
+      },
+      "exclusions": [
+        "ideal_LLB_partition_policy",
+        "oracle_static_distributor",
+        "oracle_SW_traffic",
+        "ideal_zero_cycle_extraction_as_online_timing",
+        "universal_CPU_gather",
+        "coherent_memory_ABI",
+        "contained_PE_arithmetic",
+        "verified_numeric_value_oracle"
+      ],
+      "implementation": {
+        "id": "implementation",
+        "description": "Pinned README/scheduler source shows existing C++ simulator scaffolding; not built, executed, ported or authenticated as the 2023 evaluated commit.",
+        "claim_refs": [
+          "entry",
+          "run",
+          "scaffold",
+          "ideal-excluded"
+        ]
+      },
+      "bottleneck": {
+        "id": "bottleneck",
+        "description": "Sparse fixed-coordinate tiles underoccupy partitions; larger capacity-admitted logical tiles can reduce rereads. Simultaneously dense constrained tiles require fallback; metadata/preprocessing and formation that cannot overlap can consume the reuse benefit. No workload speedup claimed.",
+        "claim_refs": [
+          "fallback",
+          "layout",
+          "distribution"
+        ]
+      },
+      "v0_disposition": {
+        "admitted": false,
+        "reason": "Tile-work construction/admission is neither a CPU read result nor optional prefetch assistance. v0 can store prose but cannot query this role/result kind or distinguish co-tiling admission and downstream ownership.",
+        "gap": {
+          "operation_kind": "tile_orchestrate",
+          "execution_role": "required_hierarchy_local_supply",
+          "result_kind": "hierarchy_local_tile_work",
+          "query_constraints": [
+            "microtile_layout",
+            "tensor_coordinate_cotiling",
+            "capacity_accounting",
+            "task_identity",
+            "consumer_release",
+            "visibility_observer"
+          ],
+          "type_domains": "Numeric payload/index widths remain unestablished; 32-word vector width and footprint byte counts are not type domains."
+        },
+        "production_projection": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "format": "tmu-proposal-provenance-v1",
+  "base_commit": "6868383615c8aa89752923850d1bf0c170b6ba0b",
+  "source": {
+    "id": "tmu2023",
+    "download_url": "https://upcommons.upc.edu/server/api/core/bitstreams/35101087-9b5f-4b3e-b20a-77f2aa61da99/content",
+    "retrieved_at": "2026-09-30T03:29:34.756526+00:00",
+    "status": "retrieved_pdf",
+    "pdf_path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/core/corpus/tmu2023.pdf",
+    "pdf_sha256": "d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2",
+    "bytes": 2469719,
+    "text_path": "/data1/nier/research-campaigns/2026-09-29-conference-coverage/core/corpus/tmu2023.txt",
+    "text_sha256": "3284d7319f9ae246900cfb62fdcdb55710eaf001c37b18e2576e00eaab8e6138",
+    "pages": 15,
+    "doi": "10.1145/3613424.3614284",
+    "document_type": "primary_fulltext",
+    "edition": "author/institution-hosted manuscript; title-page identity verified",
+    "title": "A Tensor Marshaling Unit for Sparse Tensor Algebra on General-Purpose Processors",
+    "authors": [
+      "Marco Siracusa",
+      "Víctor Soria-Pardos",
+      "Francesco Sgherzi",
+      "Joshua Randall",
+      "Douglas J. Joseph",
+      "Miquel Moretó Planas",
+      "Adrià Armejach"
+    ],
+    "publication_date_crossref": [
+      [
+        2023,
+        10,
+        28
+      ]
+    ],
+    "metadata_url": "https://api.crossref.org/works/10.1145/3613424.3614284",
+    "metadata_sha256": "91711e24209ede5ed044459c62dd5503d4507f04b608cf9a04f9c76918c78c72",
+    "canonical_url": "https://doi.org/10.1145/3613424.3614284",
+    "year": 2023,
+    "venue": "MICRO",
+    "inspection_status": "selected_architecture_interface_sections_read"
+  },
+  "verified_pdf_bytes": 2469719,
+  "verified_pdf_sha256": "d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2",
+  "verified_text_sha256": "3284d7319f9ae246900cfb62fdcdb55710eaf001c37b18e2576e00eaab8e6138",
+  "verification": "Local SHA256, PDF magic, title-page author/DOI/edition identity, Fig8 rendered page, extracted primary text and exact PDF page boundaries inspected independently. Cached Crossref metadata reused, no new live metadata verification.",
+  "locator_corrections": {
+    "Table1": "PDF p5",
+    "Fig8": "PDF p6",
+    "sections5.2-5.4": "PDF p7",
+    "section5.6": "PDF pp8-9",
+    "Table5": "PDF p9",
+    "reported-RTL": "PDF p9"
+  },
+  "handoff_path": "/data1/nier/worktrees/hardware-knowledge-integration-20260929/docs/research/recent_catalog_priorities_2026-10-03",
+  "original_worker_commit": "d6059cf",
+  "handoff_root_commit": "051d979",
+  "artifact_status": "No public runnable TMU source/RTL located by prior bounded handoff search; this task did not repeat that unchanged search. Paper reports gem5 and SystemVerilog; no public implementation bytes inspected.",
+  "new_retrieval_bytes": 0,
+  "new_retrieval_budget_bytes": 16777216,
+  "reserve_floor_bytes": 17179869184,
+  "pdf_redistributed": false
+}

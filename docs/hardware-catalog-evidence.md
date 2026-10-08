@@ -1,10 +1,20 @@
 # Hardware catalog v0.1: what the evidence permits
 
+## October 3 internal mechanisms
+
+Current revision **0.1.7** adds [COBRA's reviewed tuple-binning reference](cobra-catalog-admission.md): nine records, 45 operation records, 109 claims and 32 source records. Required tuple materialization is separate from CPU Accumulate destination writes. Release/visibility, OS and executable binding remain unresolved. DRT is retained separately as research, not forced into a read/gather entry.
+
+Revision **0.1.6** added the [reviewed TMU mapping reference](tmu-catalog-admission.md): eight records, 44 operation records, 96 claims and 31 source records. The mapping supplies exact CSR-SpMV operands and callback events; CPU arithmetic/stores and five unknown contracts remain separate. Generic gather is not promoted to this mapping. Four added operation records explicitly exclude unsupported directions.
+
+Revision **0.1.5** retained seven design records and 39 operations, with 84 claims and 30 source records. [The internal mechanism handoff](hardware-internals-v015.md) compares their actual admission, issue, result-association and state-lifetime mechanisms. That annotation update did not add operation/type support, physical interfaces or performance validation. The October 1 and September 29 sections below describe their historical revisions.
+
 ## October 1 MAPLE supplement
 
-Current data revision **0.1.3** adds Eric's selected [MAPLE paper](https://jbalkind.github.io/docs/isca2022_maple.pdf), ISCA 2022, as one parameterized `maple-isca2022` design. The catalog now has seven records, 39 operations, 46 claims and 24 source records. Source metadata records conference/year, PDF hash and exact page/section/figure locators. The original six records and claims are unchanged; their September 29 audit below remains historical.
+Data revision **0.1.3** added Eric's selected [MAPLE paper](https://jbalkind.github.io/docs/isca2022_maple.pdf), ISCA 2022, as one parameterized `maple-isca2022` design. Revision **0.1.4** retained seven records and 39 operations, with 48 claims and 26 source records after two supplemental RTL observations. Source metadata records conference/year, PDF hash and exact page/section/figure locators. The original six records and claims were unchanged in that supplement; their September 29 audit below remains historical.
 
 MAPLE queue loads and LLC hints have distinct execution roles. Paper-specified FIFO slot association, pipeline buffering, LIMA index chunks, acknowledgement versus consume completion, and stable-array requirements are recorded. Arbitrary target coalescing, general typed domains and current engine CAS are not established. [The MAPLE handoff](maple-dx100-handoff.md) explains these boundaries, the BFS comparison and the source-backed logical-path diagram. The raw PDF stays outside Git; no RTL/API execution or numerical speedup was performed here.
+
+Eric's supplemental inspection pins `dcp_fifo_ctrl.v` and `maple.sv` to public artifact `742a22d2ed336880f6c15fa6cda72fdcec54a717`. Occupied reservations differ from ready payload, and successful dequeue transfers payload into the consume pipeline while releasing queue capacity. Later NoC delivery and CPU use are distinct events. These observations do not widen operation/type support or authenticate the revision to the paper's evaluated hardware. The earlier committed run snapshots remain revision 0.1.3 historical artifacts.
 
 ## September 29 audit of revision 0.1.2
 

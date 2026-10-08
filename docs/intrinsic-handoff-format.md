@@ -8,6 +8,7 @@ Each `case-NN/handoffs/candidate-NN/` package contains:
 
 - `README.md`: readable high-level intrinsic descriptions, source placement proposals, behavior, legality requirements and review questions.
 - `intrinsic-draft.yaml`: `format: intrinsic-handoff-v0.1`; structured software-facing descriptions.
+- `hardware-behavior.md` and `.yaml`: acceleration mechanism, exact observable operation semantics, conditional benefits and implementation/model obligations. See [the October 6 guide](hardware-behavior-handoff.md).
 - `candidate.yaml`: the full candidate, located claims, source references, parameter contracts and unresolved requirements.
 - `interface.mmd`: catalog operation interfaces with inputs/outputs and optional mechanism annotations.
 - `context.mmd`: explicitly recorded source-statement relations, distinguishing matched requests, uncovered requests and retained side effects. These edges are workload relations, not hardware wiring.
