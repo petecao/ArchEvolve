@@ -1,0 +1,349 @@
+#!/usr/bin/env python3
+"""Explicit DX100 fresh-worktree provisioning, Updated 2026-10-08 ET.
+
+A physical binding receipt is not campaign/cleanup/correctness admission.
+"""
+import hashlib
+import json
+import os
+from pathlib import Path, PurePosixPath
+import re
+import stat
+import subprocess
+import sys
+import time
+from datetime import datetime, timezone
+
+import yaml
+
+FORMAT = "swdb.dx100-source-deployment-request.v1"
+RECORDS = {
+    "candidate": "swdb-project/records/candidates/typed-library-bfs-gem5-20261003-a2.baseline.yaml",
+    "snapshot": "swdb-project/records/source_snapshots/bfs-dx100-compile-20260925-a1.source.yaml",
+    "implementation": "swdb-project/records/implementations/dx100-bfs-scalar.yaml",
+    "application": "swdb-project/records/applications/dx100-gapbs.yaml",
+}
+# The existing consumed-checkout namespace; targets in any of these remain refused.
+CONSUMED = (
+    'ArchEvolve-lanl-allocator-a2-20261006',
+    'ArchEvolve-lanl-bulk-services-20261006-a1',
+    'ArchEvolve-lanl-bulk-total-services-20261006-a1',
+    'ArchEvolve-lanl-clock-a2-20261006',
+    'ArchEvolve-lanl-float-memory-services-20261006-a1',
+    'ArchEvolve-lanl-independent-services-20261006-a1',
+    'ArchEvolve-lanl-memory-a1-20261006',
+    'ArchEvolve-lanl-estimation-role-20261006-a1',
+    'ArchEvolve-lanl-estimation-role-20261006-a2',
+    'ArchEvolve-lanl-openmp-projections-20261006-a1',
+    'ArchEvolve-lanl-native-object-counts-20261006-a1',
+    'ArchEvolve-lanl-count-20261006',
+    'ArchEvolve-lanl-estimates-20261006',
+    'ArchEvolve-lanl-functional-evaluation-20261006-a1',
+    'ArchEvolve-lanl-functional-object-counts-20261006-a2',
+    'ArchEvolve-lanl-functional-strict-20261006',
+    'ArchEvolve-lanl-prospective-inputs-20261006-a2',
+    'ArchEvolve-lanl-root-projection-20261006',
+)
+STAT_FIELDS = ("dev", "ino", "mode", "uid", "gid", "nlink", "size", "mtime_ns", "ctime_ns")
+IDENTITY_FIELDS = ("dev", "ino", "mode", "uid", "gid")
+END = time.monotonic() + 90
+
+
+def require(condition, code):
+    if not condition:
+        raise ValueError(code)
+
+
+def tick():
+    require(time.monotonic() < END, "deployment_deadline")
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
+
+
+def pairs(rows):
+    result = {}
+    for key, value in rows:
+        require(key not in result, "duplicate_key")
+        result[key] = value
+    return result
+
+
+def stat_values(s):
+    return dict(zip(STAT_FIELDS, (s.st_dev, s.st_ino, s.st_mode, s.st_uid, s.st_gid,
+                                 s.st_nlink, s.st_size, s.st_mtime_ns, s.st_ctime_ns)))
+
+
+def stamp(path):
+    return stat_values(path.lstat())
+
+
+def identity(path):
+    return {key: stamp(path)[key] for key in IDENTITY_FIELDS}
+
+
+def absolute(text):
+    require(isinstance(text, str) and text.startswith("/") and "\x00" not in text, "absolute_path_required")
+    p = Path(text)
+    require(str(p) == text and p.resolve(strict=True) == p, "noncanonical_or_redirected_path")
+    return p
+
+
+def read(path, limit, uid=None):
+    tick()
+    before = stamp(path)
+    require(stat.S_ISREG(before["mode"]) and before["nlink"] == 1
+            and 0 <= before["size"] <= limit and not before["mode"] & 0o7000,
+            "regular_singlelink_bounded_file_required")
+    require(uid is None or before["uid"] == uid, "wrong_file_owner")
+    fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+    try:
+        opened = os.fstat(fd)
+        require(stat_values(opened) == before, "file_replaced")
+        with os.fdopen(fd, "rb", closefd=False) as stream:
+            raw = stream.read(limit + 1)
+        require(len(raw) == before["size"] <= limit, "file_read_size_changed")
+        closed = os.fstat(fd)
+        require(stat_values(opened) == stat_values(closed) and stamp(path) == before, "file_changed_during_read")
+    finally:
+        os.close(fd)
+    return raw, before
+
+
+def private_root(pin, uid):
+    p = absolute(pin["path"])
+    s = stamp(p)
+    require(stat.S_ISDIR(s["mode"]) and stat.S_IMODE(s["mode"]) == 0o700
+            and s["uid"] == uid and identity(p) == pin["identity"], "private_root_identity")
+    return p
+
+
+def beneath(path, root):
+    return path == root or root in path.parents
+
+
+def owned_route(path, root, uid):
+    require(beneath(path, root), "outside_private_root")
+    for part in reversed((path, *path.parents)):
+        if not beneath(part, root):
+            continue
+        s = stamp(part)
+        require(s["uid"] == uid and s["gid"] == root.stat().st_gid
+                and s["dev"] == root.stat().st_dev and stat.S_ISDIR(s["mode"])
+                and not s["mode"] & 0o5000, "unsafe_owned_directory_route")
+
+
+def native(pin):
+    p = absolute(pin["path"])
+    raw, s = read(p, 64 * 1024 * 1024)
+    require(s == pin["stat"] and sha(raw) == pin["sha256"] and s["mode"] & 0o111
+            and not s["mode"] & 0o022 and s["uid"] in {0, os.getuid()},
+            "native_pin_mismatch")
+    return p
+
+
+def git(command, source, *args):
+    tick()
+    # Explicit read commands ignore inherited deployment hooks and Git redirection.
+    env = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}
+    result = subprocess.run([str(command), "--no-replace-objects", "-c", "core.hooksPath=/dev/null",
+                             "-C", str(source), *args], capture_output=True, env=env,
+                            timeout=min(10, max(0.1, END - time.monotonic())))
+    require(result.returncode == 0 and len(result.stdout) <= 2 * 1024 * 1024, "git_read_refused")
+    return result.stdout
+
+
+class OriginalLoader(yaml.SafeLoader):
+    pass
+
+
+def original_mapping(loader, node):
+    return pairs(loader.construct_pairs(node, deep=True))
+
+
+OriginalLoader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, original_mapping)
+
+
+def record(pin, command, source, revision, expected_path):
+    require(pin["path"] == expected_path and type(pin["bytes"]) is int
+            and 0 < pin["bytes"] <= 2 * 1024 * 1024, "record_pin_required")
+    object_name = revision + ":" + expected_path
+    require(int(git(command, source, "cat-file", "-s", object_name)) == pin["bytes"], "record_size_mismatch")
+    raw = git(command, source, "show", object_name)
+    require(len(raw) == pin["bytes"] and sha(raw) == pin["sha256"], "record_bytes_mismatch")
+    return yaml.load(raw, Loader=OriginalLoader)
+
+
+def original_manifest(records):
+    candidate, snapshot, implementation, application = (records[name] for name in RECORDS)
+    require(candidate["kind"] == "candidate" and candidate["artifact_role"] == "source_baseline"
+            and candidate["id"] == "typed-library-bfs-gem5-20261003-a2.baseline"
+            and candidate["implementation"] == implementation["id"] == "dx100-bfs-scalar"
+            and candidate["source_snapshot"] == snapshot["id"] == "bfs-dx100-compile-20260925-a1.source"
+            and snapshot["kind"] == "source_snapshot" and snapshot["implementation"] == implementation["id"]
+            and implementation["kind"] == "implementation" and implementation["function"] == "DOBFS"
+            and implementation["application"] == application["id"]
+            and application["kind"] == "application" and application["id"] == "dx100-gapbs"
+            and application["source"]["local_path"] == "apps/dx100", "original_record_linkage")
+    for row in (candidate, snapshot):
+        require(row["context"]["application"] == application["id"]
+                and row["context"]["function"] == "DOBFS"
+                and row["context"]["source"]["commit"] == application["source"]["commit"], "source_context_mismatch")
+    files = candidate["artifact"]["files"]
+    require(len(files) == 53 and files == snapshot["artifact"]["files"]
+            and sha(canonical(files)) == candidate["artifact"]["sha256"] == snapshot["artifact"]["sha256"],
+            "original_53_file_manifest_mismatch")
+    require(files == sorted(files, key=lambda row: row["path"])
+            and len({row["path"] for row in files}) == 53, "manifest_order_or_duplicate")
+    for row in files:
+        p = PurePosixPath(row["path"])
+        require(not p.is_absolute() and str(p) == row["path"] and not set(p.parts) & {"..", ".", ".git"}
+                and "\\" not in row["path"] and type(row["bytes"]) is int
+                and 0 <= row["bytes"] <= 32 * 1024 * 1024 and type(row["executable"]) is bool
+                and re.fullmatch("[0-9a-f]{64}", row["sha256"]), "unsafe_manifest_entry")
+    code = {row["path"]: row["sha256"] for row in implementation["code"] if row["root"] == "application"}
+    require(code.get("benchmarks/gapbs/src/bfs.cc") == next(
+        row["sha256"] for row in files if row["path"] == "benchmarks/gapbs/src/bfs.cc"), "baseline_code_mismatch")
+    return files
+
+
+def target_inventory(target, pins, files, uid, base):
+    observed = {}
+    def fail(error):
+        raise ValueError("incomplete_target_visibility") from error
+    for current, dirs, names in os.walk(target, followlinks=False, onerror=fail):
+        tick()
+        for name in sorted(dirs + names):
+            p = Path(current) / name
+            rel = p.relative_to(target).as_posix()
+            s = stamp(p)
+            require(s["uid"] == uid and s["gid"] == base.stat().st_gid and s["dev"] == base.stat().st_dev
+                    and not stat.S_ISLNK(s["mode"]), "target_owner_or_redirect")
+            require(s == pins.get(rel), "target_stat_mismatch")
+            if stat.S_ISDIR(s["mode"]):
+                require(not s["mode"] & 0o5000, "target_directory_special_mode")
+            else:
+                raw, _ = read(p, 32 * 1024 * 1024, uid)
+                observed[rel] = {"path": rel, "sha256": sha(raw), "bytes": len(raw),
+                                 "executable": bool(s["mode"] & 0o111)}
+    require(set(pins) == {p.relative_to(target).as_posix() for p in target.rglob("*")}
+            and sorted(observed.values(), key=lambda row: row["path"]) == files, "target_full_manifest_mismatch")
+    require(all(stamp(target / rel) == s for rel, s in pins.items()), "target_changed_after_hash")
+
+
+def main():
+    os.umask(0o077)
+    request_path = os.environ.get("SWDB_DX100_BINDING_REQUEST")
+    if request_path is None:
+        return 0
+    p = absolute(request_path)
+    raw, request_stat = read(p, 2 * 1024 * 1024, os.getuid())
+    require(stat.S_IMODE(request_stat["mode"]) == 0o600
+            and sha(raw) == os.environ.get("SWDB_DX100_BINDING_REQUEST_SHA256"), "request_bytes_mismatch")
+    request = json.loads(raw, object_pairs_hook=pairs, parse_constant=lambda _: require(False, "nonfinite_json"))
+    require(request["format"] == FORMAT and type(request["uid"]) is int and request["uid"] == os.getuid(), "request_identity")
+    source = Path(request["source"])
+    if Path.cwd() != source:
+        return 0
+    source = absolute(str(source))
+    uid = request["uid"]
+    base = private_root(request["private_base"], uid)
+    control_base = private_root(request["control_base"], uid)
+    require(source.parent == base, "fresh_source_not_direct_private_child")
+    owned_route(source, base, uid)
+    control = absolute(request["control"]["path"])
+    owned_route(control, control_base, uid)
+    require(identity(control) == request["control"]["identity"] and stat.S_IMODE(control.stat().st_mode) == 0o700
+            and not beneath(control, source) and not beneath(source, control), "control_identity_or_overlap")
+    target = absolute(request["target"]["path"])
+    owned_route(target, base, uid)
+    require(target != base and not any(beneath(target, base / name) for name in CONSUMED)
+            and not any(beneath(a, b) for a, b in ((target, source), (source, target), (target, control), (control, target))),
+            "target_is_consumed_or_overlapping")
+    require(stamp(target) == request["target"]["stat"], "target_root_stat_mismatch")
+    require(Path(__file__).absolute() == absolute(request["hook"]["path"]), "hook_path_mismatch")
+    hook_raw, hook_stat = read(Path(__file__).absolute(), 1024 * 1024, uid)
+    require(sha(hook_raw) == request["hook"]["sha256"] and not hook_stat["mode"] & 0o022,
+            "hook_bytes_or_mode_mismatch")
+    command = native(request["git"])
+    interpreter = native(request["python"])
+    require(Path(sys.executable).resolve() == interpreter, "interpreter_mismatch")
+    revision = request["expected_revision"]
+    require(re.fullmatch("[0-9a-f]{40}", revision) and len(sys.argv) == 4
+            and sys.argv[1] == "0" * 40 and sys.argv[2] == revision and sys.argv[3] == "1", "fresh_checkout_revision_mismatch")
+    require(git(command, source, "rev-parse", "HEAD").strip().decode() == revision
+            and git(command, source, "status", "--porcelain", "--untracked-files=all") == b"", "source_not_clean_at_revision")
+    ignore = git(command, source, "show", revision + ":swdb-project/.gitignore")
+    require(b"/apps/dx100" in ignore.splitlines(), "exact_ignore_rule_required")
+    records = {name: record(request["records"][name], command, source, revision, path) for name, path in RECORDS.items()}
+    files = original_manifest(records)
+    target_inventory(target, request["target_stats"], files, uid, base)
+    source_identity = identity(source)
+    receipt_path = control / "dx100-binding-original.json"
+    require(not os.path.lexists(receipt_path), "receipt_already_exists")
+    apps = source / "swdb-project/apps"
+    if apps.exists():
+        owned_route(apps, base, uid)
+    else:
+        require(not os.path.lexists(apps), "apps_parent_redirect")
+        apps.mkdir(mode=0o700)
+    alias = apps / "dx100"
+    require(not os.path.lexists(alias), "alias_already_exists")
+    receipt = {"format": "swdb.dx100-source-deployment-original.v1", "source": str(source),
+               "source_revision": revision, "request_sha256": sha(raw), "hook_sha256": sha(hook_raw),
+               "target": str(target), "target_stat": request["target"]["stat"], "target_file_count": 53,
+               "artifact_sha256": sha(canonical(files)), "record_pins": request["records"],
+               "started_utc": datetime.now(timezone.utc).isoformat(), "outcome": "binding_started"}
+    # Exclusive receipt reservation precedes the only alias mutation. Preserve partials on failure.
+    fd = os.open(receipt_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
+    try:
+        os.symlink(str(target), alias)
+        alias_created_stat = stamp(alias)
+        receipt["outcome"] = "binding_postflight_pending"
+        target_inventory(target, request["target_stats"], files, uid, base)
+        require(stamp(target) == request["target"]["stat"] and identity(source) == source_identity
+                and git(command, source, "status", "--porcelain", "--untracked-files=all") == b""
+                and git(command, source, "rev-parse", "HEAD").strip().decode() == revision
+                and alias.is_symlink() and alias.readlink() == target
+                and stamp(alias) == alias_created_stat, "binding_postflight_failed")
+        require(read(p, 2 * 1024 * 1024, uid) == (raw, request_stat)
+                and read(Path(__file__).absolute(), 1024 * 1024, uid) == (hook_raw, hook_stat), "source_or_request_changed")
+        private_root(request["private_base"], uid)
+        private_root(request["control_base"], uid)
+        require(identity(control) == request["control"]["identity"], "control_changed")
+        native(request["git"])
+        native(request["python"])
+        receipt["alias_stat"] = stamp(alias)
+        receipt["source_identity"] = source_identity
+        receipt["git_pin"] = request["git"]
+        receipt["python_pin"] = request["python"]
+        receipt["outcome"] = "bound"
+    except BaseException as error:
+        receipt["error_class"] = type(error).__name__
+        receipt["error_sha256"] = sha(str(error).encode())
+        raise
+    finally:
+        receipt["finished_utc"] = datetime.now(timezone.utc).isoformat()
+        with os.fdopen(fd, "wb") as stream:
+            stream.write(canonical(receipt) + b"\n")
+            stream.flush()
+            os.fsync(stream.fileno())
+            require(stat_values(os.fstat(stream.fileno())) == stamp(receipt_path)
+                    and stamp(receipt_path)["uid"] == uid
+                    and stamp(receipt_path)["nlink"] == 1
+                    and stat.S_IMODE(stamp(receipt_path)["mode"]) == 0o600, "receipt_publication_changed")
+    return 0
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except Exception as error:
+        print(json.dumps({"format": "swdb.dx100-source-deployment-refusal.v1", "error_class": type(error).__name__,
+                          "error_sha256": sha(str(error).encode())}, sort_keys=True), file=sys.stderr)
+        sys.exit(1)
