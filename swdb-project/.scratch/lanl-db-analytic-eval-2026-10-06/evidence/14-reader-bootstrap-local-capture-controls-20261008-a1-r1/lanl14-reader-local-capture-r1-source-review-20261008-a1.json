@@ -1,0 +1,51 @@
+{
+  "AST_changes": {
+    "all_other_original_definitions_exact": [
+      "Parser",
+      "Refusal",
+      "original_json",
+      "private_file",
+      "read_exact",
+      "require",
+      "sha",
+      "ssh_file_limit",
+      "stamp",
+      "stream_pin"
+    ],
+    "changed_original_definition": "main only",
+    "import": "signal only",
+    "new_class": "CaptureSignal(BaseException), stores delivered signal number"
+  },
+  "caps_argv_SSH_cleanup_semantics_unchanged": true,
+  "complete_diff": {
+    "bytes": 7469,
+    "path": "/private/tmp/lanl14-reader-local-capture-r1-complete-derivation-20261008-a1.diff",
+    "sha256": "ee827ff338fb186231f186b9ea5416152b48a5e15c6a69075b3dae9ba6f37adb"
+  },
+  "immutable_original": {
+    "bytes": 10092,
+    "path": "/private/tmp/lanl14_capture_reviewed_reader_ssh_20261008_a1.py",
+    "sha256": "31cbb058c354da6dc218603457c2c077afa23b4e26fe89ab928503e3c51e8d8f"
+  },
+  "method": "stdlib ast.parse/byte/hash/difflib inspection only; no target compilation/import/lift/main/tests/SSH/actions",
+  "no_actual_signal_or_execution_evidence": true,
+  "prior_preparation_sources_and_NOTRUN_history_preserved": true,
+  "sealed": false,
+  "selected_local_R1": {
+    "bytes": 10756,
+    "path": "/private/tmp/lanl14_capture_reviewed_reader_ssh_20261008_a1_r1.py",
+    "sha256": "44e9fd31130c986ca2b70b39ce269516470ce25adc6d8d188f1238e522a061a4"
+  },
+  "signal_contract": "handler raises CaptureSignal; existing BaseException capture records class and original delivered signal; inner finally ignores repeated TERM/HUP while existing stop_group and private status publication run; outer finally restores original handlers on every unwind",
+  "signal_scope": [
+    "SIGTERM",
+    "SIGHUP"
+  ],
+  "status": "SOURCE ONLY / NOT RUN",
+  "unchanged_remote": {
+    "bytes": 17929,
+    "path": "/private/tmp/lanl14_reader_remote_stdin_bootstrap_20261008_a1.py",
+    "sha256": "582dda1878722ba56a8fdd44e21e60bc1d077399fbbc47aa1ac9b87cae1ea909"
+  },
+  "unchanged_science_or_remote_sources": true
+}

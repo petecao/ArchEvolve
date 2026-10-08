@@ -1,0 +1,75 @@
+--- /private/tmp/lanl14_capture_reviewed_reader_ssh_20261008_a1.py
++++ /private/tmp/lanl14_capture_reviewed_reader_ssh_20261008_a1_r1.py
+@@ -1,7 +1,7 @@
+ """SOURCE ONLY parent-local private capture for ONE future reviewed reader.
+ This source cannot clear remote export/admission gates or authorize its own run.
+ """
+-import argparse,datetime,hashlib,json,os,re,resource,shlex,stat,subprocess,sys,types
++import argparse,datetime,hashlib,json,os,re,resource,shlex,signal,stat,subprocess,sys,types
+ from pathlib import Path
+ MAX_SOURCE=1024*1024
+ MAX_STREAM=16*1024*1024
+@@ -9,6 +9,8 @@
+ PROCESSES_SHA='bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289'
+ STARTUP=('BASH_ENV','ENV','PYTHONHOME','PYTHONSTARTUP','PYTHONOPTIMIZE','LD_PRELOAD','LD_LIBRARY_PATH','DYLD_INSERT_LIBRARIES')
+ class Refusal(ValueError):pass
++class CaptureSignal(BaseException):
++ def __init__(self,number):self.number=number
+ class Parser(argparse.ArgumentParser):
+  def error(self,message):raise Refusal('argument_contract')
+ def require(ok,code):
+@@ -82,26 +84,36 @@
+  now=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+  started=now()
+  prereg=original_json(root/'preregistration.json',{'format':'swdb.lanl14-original-parent-reader-SSH-capture.v1','sealed':False,'execution_not_yet_started':True,'started_utc':started,'public_argv':argv,'explicit_environment_overrides':{'PYTHONDONTWRITEBYTECODE':'1','GIT_OPTIONAL_LOCKS':'0','GIT_TERMINAL_PROMPT':'0'},'inherited_environment_or_auth_dumped':False,'parent_native':sshpin,'source':ownpin,'remote_bootstrap':bootpin,'owned_SSH_cleanup_source':procspin,'outer_seconds':a.outer_seconds,'metadata_preflight_s':a.metadata_seconds,'metadata_postflight_reserve_s':a.metadata_seconds,'GNU_remote_s':14520,'GNU_KILL_s':60,'unchanged_reader_wait_s':14400,'private_local_stream_max_bytes':MAX_STREAM,'remote_native_initial_startup_pin_is_separate_parent_preflight':True,'admission_assessed':False,'scientific_admission':False,'no_retry':True})
+- child=None;exitcode=None;failure=None;timedout=False
++ watched=(signal.SIGTERM,signal.SIGHUP)
++ previous={number:signal.getsignal(number) for number in watched}
++ def capture_signal(number,frame):raise CaptureSignal(number)
+  try:
+-  require(read_exact(own,a.source_sha256,MAX_SOURCE,os.geteuid())[0]==ownpin and read_exact(a.bootstrap,a.bootstrap_sha256,MAX_SOURCE,os.geteuid())[0]==bootpin and read_exact(ssh,a.ssh_sha256,128*1024*1024,0)[0]==sshpin,'immediate_immutable_sources')
+-  with private_file(root/'stdout') as out,private_file(root/'stderr') as err:
+-   child=subprocess.Popen(argv,stdin=subprocess.PIPE,stdout=out,stderr=err,start_new_session=True,env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1','GIT_OPTIONAL_LOCKS':'0','GIT_TERMINAL_PROMPT':'0'},preexec_fn=ssh_file_limit)
+-   try:child.communicate(input=boot,timeout=a.outer_seconds);exitcode=child.returncode
+-   except subprocess.TimeoutExpired:timedout=True;failure='TimeoutExpired'
+- except BaseException as exc:failure=type(exc).__name__
++  for number in watched:signal.signal(number,capture_signal)
++  child=None;exitcode=None;failure=None;timedout=False;received_signal=None
++  try:
++   require(read_exact(own,a.source_sha256,MAX_SOURCE,os.geteuid())[0]==ownpin and read_exact(a.bootstrap,a.bootstrap_sha256,MAX_SOURCE,os.geteuid())[0]==bootpin and read_exact(ssh,a.ssh_sha256,128*1024*1024,0)[0]==sshpin,'immediate_immutable_sources')
++   with private_file(root/'stdout') as out,private_file(root/'stderr') as err:
++    child=subprocess.Popen(argv,stdin=subprocess.PIPE,stdout=out,stderr=err,start_new_session=True,env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1','GIT_OPTIONAL_LOCKS':'0','GIT_TERMINAL_PROMPT':'0'},preexec_fn=ssh_file_limit)
++    try:child.communicate(input=boot,timeout=a.outer_seconds);exitcode=child.returncode
++    except subprocess.TimeoutExpired:timedout=True;failure='TimeoutExpired'
++  except BaseException as exc:
++   failure=type(exc).__name__
++   if isinstance(exc,CaptureSignal):received_signal=signal.Signals(exc.number).name
++  finally:
++   for number in watched:signal.signal(number,signal.SIG_IGN)
++   # This original primitive terminates only the owned local SSH group; it does
++   # not prove remote descendants ended. Original503f + parent follow-up own that.
++   try:helpers.stop_group(child,grace_seconds=15)
++   except BaseException as exc:failure='OwnedSSHCleanup:'+type(exc).__name__
++  result={'format':'swdb.lanl14-original-parent-reader-SSH-capture-result.v1','sealed':False,'started_utc':started,'ended_utc':now(),'preregistration':prereg,'SSH_exit_code':exitcode,'timed_out':timedout,'signal_received':received_signal,'failure_type':failure,'original_private_streams':{n:stream_pin(root/n) for n in ('stdout','stderr') if (root/n).exists()},'remote_reader_admission_not_assessed':True,'remote_descendant_cleanup_not_inferred_from_SSH_exit':True,'scientific_admission':False,'source_unchanged':False}
++  require(read_exact(own,a.source_sha256,MAX_SOURCE,os.geteuid())[0]==ownpin and read_exact(a.bootstrap,a.bootstrap_sha256,MAX_SOURCE,os.geteuid())[0]==bootpin and read_exact(ssh,a.ssh_sha256,128*1024*1024,0)[0]==sshpin,'postflight_local_source_SSH_pins')
++  result['source_unchanged']=True
++  resultpin=original_json(root/'status.json',result)
++  compact={'status_file':resultpin,'SSH_exit_code':exitcode,'timed_out':timedout,'signal_received':received_signal,'failure_type':failure,'scientific_admission':False,'postflight_remote_original_receipts_required':True}
++  raw=json.dumps(compact,separators=(',',':'),allow_nan=False).encode();require(len(raw)<=MAX_RETURN,'compact_return_bound');sys.stdout.buffer.write(raw+b'\n')
++  return 0 if exitcode==0 and failure is None and not timedout else 2
+  finally:
+-  # This original primitive terminates only the owned local SSH group; it does
+-  # not prove remote descendants ended. Original503f + parent follow-up own that.
+-  try:helpers.stop_group(child,grace_seconds=15)
+-  except BaseException as exc:failure='OwnedSSHCleanup:'+type(exc).__name__
+- result={'format':'swdb.lanl14-original-parent-reader-SSH-capture-result.v1','sealed':False,'started_utc':started,'ended_utc':now(),'preregistration':prereg,'SSH_exit_code':exitcode,'timed_out':timedout,'failure_type':failure,'original_private_streams':{n:stream_pin(root/n) for n in ('stdout','stderr') if (root/n).exists()},'remote_reader_admission_not_assessed':True,'remote_descendant_cleanup_not_inferred_from_SSH_exit':True,'scientific_admission':False,'source_unchanged':False}
+- require(read_exact(own,a.source_sha256,MAX_SOURCE,os.geteuid())[0]==ownpin and read_exact(a.bootstrap,a.bootstrap_sha256,MAX_SOURCE,os.geteuid())[0]==bootpin and read_exact(ssh,a.ssh_sha256,128*1024*1024,0)[0]==sshpin,'postflight_local_source_SSH_pins')
+- result['source_unchanged']=True
+- resultpin=original_json(root/'status.json',result)
+- compact={'status_file':resultpin,'SSH_exit_code':exitcode,'timed_out':timedout,'failure_type':failure,'scientific_admission':False,'postflight_remote_original_receipts_required':True}
+- raw=json.dumps(compact,separators=(',',':'),allow_nan=False).encode();require(len(raw)<=MAX_RETURN,'compact_return_bound');sys.stdout.buffer.write(raw+b'\n')
+- return 0 if exitcode==0 and failure is None and not timedout else 2
++  for number,handler in previous.items():signal.signal(number,handler)
+ if __name__=='__main__':
+  try:raise SystemExit(main())
+  except (ValueError,OSError,TypeError,KeyError,subprocess.SubprocessError) as exc:
