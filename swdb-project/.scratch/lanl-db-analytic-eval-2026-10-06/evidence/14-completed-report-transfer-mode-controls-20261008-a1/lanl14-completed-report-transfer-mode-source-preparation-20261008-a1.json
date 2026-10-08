@@ -1,0 +1,38 @@
+{
+  "format": "swdb.lanl14-report-transfer-mode-source-preparation.v1",
+  "prepared_for": "2026-10-08 UTC",
+  "scope": "Source byte hash, full source review and AST syntax only; no target imports, compilation, lift, main, tests, SSH, inputs or action.",
+  "source": {
+    "path": "/private/tmp/lanl14_correct_completed_report_transfer_modes_20261008_a1.py",
+    "bytes": 29985,
+    "sha256": "ee12a535ea2c3e6976c920f483c72e8367cd36ec311bf26585137023a2d29ec7"
+  },
+  "handoff": {
+    "path": "/private/tmp/lanl14-completed-report-transfer-mode-source-handoff-20261008-a1.md",
+    "bytes": 10448,
+    "sha256": "bf7c1cff09584ebd583fe3ec3cc234b2e1d2ecae0cfc324f3b42b63a6d508c96"
+  },
+  "AST": {
+    "top_level_nodes": 67,
+    "functions": 26,
+    "fchmod_calls": 1,
+    "syntax_parsed": true,
+    "compiled_or_executed": false
+  },
+  "budget_source_expressions": {
+    "MAX_OTHER": "100 * 1024 * 1024",
+    "MAX_REPORT": "1024 * 1024 * 1024",
+    "MAX_PASS": "MAX_REPORT + 20 * MAX_OTHER",
+    "MAX_READ": "2 * MAX_PASS + 128 * 1024 * 1024"
+  },
+  "original_note": {
+    "path": "/private/tmp/lanl14-report-transfer-mode-preflight-source-note-20261008-a1.md",
+    "bytes": 3047,
+    "sha256": "6c9b8e87888576ff40fbee3ae6387a34caf67ea3b64d32191c6f89ffd5da3115"
+  },
+  "sealed": false,
+  "actual_inputs_constructed": false,
+  "permission_actions": 0,
+  "scientific_admission": false,
+  "all9_completion_or_future_host_facts_supplied": false
+}
