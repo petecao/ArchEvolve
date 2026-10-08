@@ -1,0 +1,14 @@
+# Detached R4 R2 — independent narrow source acceptance
+
+2026-10-08, SOURCE ONLY. Full selected source, complete R1 derivation, handoff and original unsealed static comparison read. Exact source/packet hashes, full regenerated unified diff, three-assignment literal reversal and whole-module AST comparison checked with local standard-library source metadata tooling. No target import/compile/lift/call, main/test/synthetic run, SSH/tmux, Git/worktree edit, source copy, actual plan/inspection/removal or scientific action occurred.
+
+- `/private/tmp/lanl17_detach_exact_R4_storage_administration_20261008_a1_r2.py`: 24000 bytes/SHA `deb59a340c92892336282f85697158b7b1181a33a288201fe6e2746c15c9a9be`.
+- `/private/tmp/lanl17-detached-R4-administration-r2-complete-r1-derivation-20261008.diff`: 816 bytes/SHA `e0bd89a2fb0dcd8d575b05ea0b5ebff2d3ee94bcc04ee34b7da95eca60f12aba`.
+- `/private/tmp/lanl17-detached-R4-administration-r2-source-handoff-20261008.md`: 3706 bytes/SHA `68526f64844d0e0b2a71c110e98e5c094fa9a91b93e58814f27d6e5209f11e56`.
+- `/private/tmp/lanl17-detached-R4-administration-r2-source-comparison-20261008.json`: 1334 bytes/SHA `6227828e2e5a47adcc01eb51f89d34ff394034f1168674500f87713c36838707`.
+
+The sole R1 finding is resolved. The worker enters guard_launch_started and explicitly says owned child liveness/descendants are not inferred clear before unchanged Popen. It enters guard_running immediately after Popen succeeds and then records the original PID. Popen failure is an attempted-launch/uncertain state; wait interruption or flush/fsync error after child creation preserves a running/uncertain state and cannot be renamed preflight_refused_no_guard_launch. Stream-opening refusal before Popen retains the original genuine preflight path. The existing GNU timeout, child return and administrative postflight failure branches remain unchanged.
+
+Exactly three assignments are added to worker. Removing those exact lines restores every R1 byte (23849/SHA af93b23d2cbee7caaa8dd0199b3cb6f425fe91a2df840444c6f09641232a87eb). Worker is the only changed top-level AST node; every other function, import, constant, CLI, native/source/guard pin, ordered selection, plan300s, prior-success/default/removal rule, argv and GNU3660/KILL60/worker3735 remains exact. The conservative unknown-liveness flag remains on successful return; it does not negate the separate qualified original guard receipt, nor claim global descendant clearance from exit alone.
+
+No concrete blocker remains in the reviewed narrow source change. This accepts source custody behavior, not an actual plan/subset/default PASS, removal clearance, host capacity, campaign or scientific admission. The prior complete R1 review (7426 bytes/SHA d3b3d619cb37d0405018a29b25f167b5cbf4f14c5794086a6a36b798edd2f368), all draft/R1 sources and policies remain exact/NOTRUN. Active E foundation or its original actual custody was not changed. Parent remains the sole actual administrative owner.

@@ -1,0 +1,11 @@
+--- lanl_read_detached_E_administration_originals_20261008_a1_r1.py
++++ lanl_read_detached_E_administration_originals_20261008_a2.py
+@@ -10,7 +10,7 @@
+  return b,{'path':str(p),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest(),'stat':stamp(s)}
+ a=argparse.ArgumentParser();a.add_argument('--control-directory',required=True);args=a.parse_args()
+ assert os.getuid()==os.geteuid()==UID
+-folder=P(args.control_directory);assert folder.parent==BASE and folder.name in ('lanl14-detached-e-inspection-a1','lanl14-detached-e-removal-a1') and folder.resolve()==folder and not any(q.is_symlink() for q in (folder,*folder.parents))
++folder=P(args.control_directory);assert folder.parent==BASE and folder.name in ('lanl14-detached-e-inspection-a2','lanl14-detached-e-removal-a2') and folder.resolve()==folder and not any(q.is_symlink() for q in (folder,*folder.parents))
+ s=folder.lstat();assert stat.S_ISDIR(s.st_mode) and s.st_uid==UID and stat.S_IMODE(s.st_mode)==0o700
+ status,pin=read(folder/'status.json',16384);d=json.loads(status);assert d['format']=='swdb.lanl14-detached-exact-E-administration-status.v1' and d['sealed'] is False and d['state'] in ('guard_completed','guard_refused_or_failed','preflight_refused_no_guard_launch','administrative_postflight_failed')
+ assert d['state']=='preflight_refused_no_guard_launch' or type(d.get('guard_exit_code')) is int

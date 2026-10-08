@@ -1,0 +1,249 @@
+--- /private/tmp/lanl14_detach_exact_E_cleanup_administration_20261008_a1_r2.py
++++ /private/tmp/lanl17_detach_exact_R4_storage_administration_20261008_a1_r1.py
+@@ -1,4 +1,4 @@
+-"""SOURCE-ONLY preparation: detached exact E2r1 administration, never an SSH exemption."""
++"""SOURCE-ONLY preparation: detached unchanged R4r2 storage administration, never an SSH exemption."""
+ import argparse, datetime, hashlib, json, os, pathlib, re, shlex, socket, stat, subprocess, sys, time
+ P = pathlib.Path
+ UID = 114316761
+@@ -7,7 +7,7 @@
+ E = BASE/'ArchEvolve-lanl-generality-final-export-20261007-a1'
+ R = BASE/'ArchEvolve-lanl-generality-final-20261007-a1'
+ C = BASE/'ArchEvolve-lanl-cpu-model-validation-20261006-a1'
+-GUARD_SHA = '5a227cb9d68f638a5475e054bef6b4b85b1d477e857f18de04b54bf4097d160e'
++GUARD_SHA = '78a0c850e515f6ebb589a28f53a2c99d7a6430dcf5da46aea4869368d2cd3df9'
+ REVIEW = BASE/'lanl-account-pam-service-identification-20261008-a1/parent-review.json'
+ REVIEW_SHA = 'fcf92eee1c4b8bdfaed979dc8bedab004c6c4b7e2b1410c7614bc92d60349f4a'
+ NATIVE = {
+@@ -115,12 +115,31 @@
+  need(own.is_relative_to(BASE) and guard.is_relative_to(BASE)
+       and own!=guard and not any(p.is_relative_to(q) for p in (own,guard) for q in (PRIMARY,E,R,C)),'private_sources_outside_projects')
+  own_raw,own_pin=file_bytes(own,256*1024,UID,own_sha)
+- unused,guard_pin=file_bytes(guard,22209,UID,GUARD_SHA,22209)
++ unused,guard_pin=file_bytes(guard,84381,UID,GUARD_SHA,84381)
+  unused,review_pin=file_bytes(REVIEW,256*1024,UID,REVIEW_SHA,3258)
+  native={}
+  for path,(size,digest) in NATIVE.items():
+   unused,native[path]=file_bytes(P(path),16*1024*1024,0,digest,size,0o755)
+  return {'wrapper':own_pin,'guard':guard_pin,'service_review':review_pin,'native':native}
++def plan_binding(plan, digest, selected, expected_primary):
++ need(plan.is_absolute() and plan.parent==BASE and plan.name.startswith('lanl-consumed-source-parent-plan-'),
++      'original_guard_direct_parent_plan_route')
++ body,pin=file_bytes(plan,2*1024*1024,UID,digest,exact_mode=0o600)
++ document=strict(body)
++ need(type(document) is dict and document.get('format')=='swdb.consumed-detached-source-parent-plan.v1'
++      and document.get('canonical_ensure_ascii') is True,'original_guard_parent_plan_format')
++ encoded=json.dumps({k:v for k,v in document.items() if k!='identity_sha256'},sort_keys=True,
++                    separators=(',',':'),ensure_ascii=True,allow_nan=False).encode()
++ need(document.get('identity_sha256')==sha(encoded) and document.get('guard_source_sha256')==GUARD_SHA
++      and document.get('expected_primary')==expected_primary and document.get('selected_rows')==selected,
++      'original_guard_plan_source_order_revision_and_seal')
++ return {'file':pin,'identity_sha256':document['identity_sha256'],'checked_at':document['checked_at'],
++         'original_300s_plan_freshness_and_all_admission_checks_remain_in_unchanged_guard':True}
++def fresh_guard_output(attempt):
++ need(re.fullmatch('a[1-9][0-9]*',attempt),'original_guard_fresh_attempt_token')
++ path=BASE/('lanl-consumed-detached-source-guard-20261007-'+attempt)
++ need(not os.path.lexists(path),'original_guard_receipt_attempt_already_exists')
++ return str(path)
+ def inspect_prior(args, own_sha):
+  if not args.remove:
+   need(args.inspection_directory is None and args.inspection_status_sha256 is None
+@@ -129,32 +148,58 @@
+  need(args.inspection_directory is not None and re.fullmatch('[a-f0-9]{64}',args.inspection_status_sha256 or '')
+       and re.fullmatch('[a-f0-9]{64}',args.inspection_stdout_sha256 or ''),'parent_reviewed_successful_inspection_pins_required')
+  folder=P(args.inspection_directory); private_dir(folder)
+- need(folder.parent==BASE and folder.name.startswith('lanl14-detached-e-'),'original_inspection_private_route')
++ need(folder.parent==BASE and folder.name.startswith('lanl17-detached-r4-'),'original_inspection_private_route')
+  status_raw,status_pin=file_bytes(folder/'status.json',16384,UID,args.inspection_status_sha256)
+  body,stdout_pin=file_bytes(folder/'guard.stdout',256*1024,UID,args.inspection_stdout_sha256)
+  status=strict(status_raw); result=strict(body)
+- need(status['format']=='swdb.lanl14-detached-exact-E-administration-status.v1' and status['sealed'] is False
++ need(status['format']=='swdb.lanl17-detached-exact-R4-administration-status.v1' and status['sealed'] is False
+       and status['state']=='guard_completed' and status['guard_exit_code']==0 and status['remove_requested'] is False
+-      and status['expected_primary']==args.expected_primary and status['inputs']['wrapper']['sha256']==own_sha
+-      and status['inputs']['guard']['sha256']==GUARD_SHA and status['inputs']['service_review']['sha256']==REVIEW_SHA
++      and status['expected_primary']==args.expected_primary and status['selected_rows']==args.select
++      and status['inputs']['wrapper']['sha256']==own_sha and status['inputs']['guard']['sha256']==GUARD_SHA
++      and status['inputs']['service_review']['sha256']==REVIEW_SHA
+       and status['guard_stdout']==stdout_pin and 'error_class' not in status,'exact_default_inspection_custody')
+- need(result['format']=='swdb.lanl14-consumed-pure-E-checkout-removal.v1' and result['sealed'] is False
+-      and result['removed'] is False and result['expected_primary']==args.expected_primary
+-      and result['path']==str(E) and result['account_service_review']['sha256']==REVIEW_SHA
+-      and result['scientific_admission'] is False and result['capacity_admission'] is False,'successful_original_default_result')
+- return {'status':status_pin,'stdout':stdout_pin,'parent_review_is_inherited_explicit_invocation_authority':True}
++ need(re.fullmatch('a[1-9][0-9]*',status['guard_attempt']) and status['guard_attempt']!=args.attempt,
++      'distinct_default_and_removal_guard_attempts')
++ receipt_path=BASE/('lanl-consumed-detached-source-guard-20261007-'+status['guard_attempt'])/'receipt.json'
++ need(result['format']=='swdb.consumed-source-guard-return.v1' and result['path']==str(receipt_path)
++      and result['admitted'] is True and result['removed_count']==0 and result['failure'] is None,
++      'successful_original_default_return')
++ private_dir(receipt_path.parent)
++ receipt_raw,receipt_pin=file_bytes(receipt_path,256*1024,UID,result['sha256'],result['bytes'],0o600)
++ receipt=strict(receipt_raw)
++ encoded=json.dumps({k:v for k,v in receipt.items() if k!='identity_sha256'},sort_keys=True,
++                    separators=(',',':'),ensure_ascii=True,allow_nan=False).encode()
++ need(receipt['format']=='swdb.consumed-detached-source-guard.v1' and receipt['canonical_ensure_ascii'] is True
++      and receipt['identity_sha256']==result['identity_sha256']==sha(encoded)
++      and receipt['remove_requested'] is False and receipt['admitted'] is True and receipt['removed_rows']==[]
++      and receipt['failure'] is None and receipt['selected_rows']==args.select
++      and receipt['expected_primary']==args.expected_primary and receipt['guard_source_sha256']==GUARD_SHA
++      and receipt['reviewed_plan_file_sha256']==status['reviewed_plan']['file']['sha256']
++      and receipt['reviewed_plan_identity_sha256']==status['reviewed_plan']['identity_sha256']
++      and receipt['scientific_admission'] is False and receipt['capacity_admission'] is False,
++      'successful_original_default_receipt_and_plan_custody')
++ return {'status':status_pin,'stdout':stdout_pin,'original_guard_receipt':receipt_pin,
++         'default_reviewed_plan':status['reviewed_plan'],
++         'same_ordered_rows_source_primary_required':True,
++         'removal_requires_separately_fresh_parent_plan_in_unchanged_guard':True,
++         'parent_review_is_inherited_explicit_invocation_authority':True}
+ def launch(args):
+  own=P(__file__).absolute(); pins=inputs(own,args.source_sha256,P(args.guard_source))
+  transport=bind_transport(); folder=P(args.control_directory)
+- need(folder.parent==BASE and folder.name.startswith('lanl14-detached-e-') and len(folder.name)<=48
++ need(folder.parent==BASE and folder.name.startswith('lanl17-detached-r4-') and len(folder.name)<=48
+       and not os.path.lexists(folder),'fresh_direct_private_control_directory')
+  prior=inspect_prior(args,args.source_sha256)
++ plan=plan_binding(P(args.plan),args.plan_sha256,args.select,args.expected_primary)
++ output=fresh_guard_output(args.attempt)
++ need(not any(p.is_relative_to(BASE/name) for p in (own,P(args.guard_source),P(args.plan),folder) for name in args.select),
++      'administrative_sources_plan_and_control_outside_selection')
+  os.mkdir(folder,0o700); private_dir(folder)
+- config={'format':'swdb.lanl14-detached-exact-E-administration-configuration.v1','sealed':False,
++ config={'format':'swdb.lanl17-detached-exact-R4-administration-configuration.v1','sealed':False,
+          'created_utc':now(),'expected_primary':args.expected_primary,'remove_requested':args.remove,
++         'selected_rows':args.select,'guard_attempt':args.attempt,'reviewed_plan':plan,'guard_output_directory':output,
+          'transport':transport,'inputs':pins,'prior_reviewed_inspection':prior,'control_directory':str(folder),
+-         'environment_overrides':ENV,'transport_wait_seconds':60,'guard_timeout_seconds':660,
+-         'guard_KILL_after_seconds':60,'worker_wait_seconds':735,'scientific_action':False}
++         'environment_overrides':ENV,'transport_wait_seconds':60,'guard_timeout_seconds':3660,
++         'guard_KILL_after_seconds':60,'worker_wait_seconds':3735,'scientific_action':False}
+  cp=emit(folder/'configuration.json',config)
+  config_raw=b'set-option -g default-shell /usr/bin/bash\nset-option -g update-environment ""\nset-option -g exit-empty on\n'
+  tp=write_original(folder/'tmux.conf',config_raw)
+@@ -163,9 +208,11 @@
+          '--configuration-sha256',cp['sha256'],'--source-sha256',args.source_sha256]
+  command='exec '+shlex.join(worker)
+  argv=['/usr/bin/tmux','-S',str(socket_path),'-f',str(folder/'tmux.conf'),'new-session','-d',
+-       '-s','exact-E-administration','-c',str(BASE),command]
++       '-s','exact-R4-administration','-c',str(BASE),command]
+  config_again=file_bytes(folder/'configuration.json',16384,UID,cp['sha256'])[1]
+- need(config_again==cp and inputs(own,args.source_sha256,P(args.guard_source))==pins,'launch_inputs_rechecked')
++ need(config_again==cp and inputs(own,args.source_sha256,P(args.guard_source))==pins
++      and plan_binding(P(args.plan),args.plan_sha256,args.select,args.expected_primary)==plan
++      and fresh_guard_output(args.attempt)==output,'launch_inputs_rechecked')
+  out=os.open(folder/'launch.stdout',os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+  err=os.open(folder/'launch.stderr',os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+  start=now()
+@@ -173,7 +220,7 @@
+   with os.fdopen(out,'wb') as so,os.fdopen(err,'wb') as se:
+    child=subprocess.run(argv,stdin=subprocess.DEVNULL,stdout=so,stderr=se,cwd=BASE,env=ENV,timeout=15)
+    so.flush(); se.flush(); os.fsync(so.fileno()); os.fsync(se.fileno())
+-  receipt={'format':'swdb.lanl14-detached-exact-E-launch.v1','sealed':False,'started_utc':start,'ended_utc':now(),
++  receipt={'format':'swdb.lanl17-detached-exact-R4-launch.v1','sealed':False,'started_utc':start,'ended_utc':now(),
+            'tmux_client_exit_code':child.returncode,'configuration':cp,'tmux_configuration':tp,'worker_argv':worker,
+            'tmux_argv':argv,'transport_termination_or_guard_completion_claimed':False,'scientific_action':False}
+   pin=emit(folder/'launch-status.json',receipt)
+@@ -186,20 +233,30 @@
+ 
+ def worker(args):
+  folder=P(args.control_directory); private_dir(BASE); private_dir(folder)
+- need(folder.parent==BASE and folder.name.startswith('lanl14-detached-e-'),'exact_worker_private_route')
++ need(folder.parent==BASE and folder.name.startswith('lanl17-detached-r4-'),'exact_worker_private_route')
+  raw,configuration_pin=file_bytes(folder/'configuration.json',16384,UID,args.configuration_sha256)
+  cfg=strict(raw); own=P(__file__).absolute(); guard=P(cfg['inputs']['guard']['path'])
+- need(cfg['control_directory']==str(folder) and cfg['sealed'] is False and cfg['format']=='swdb.lanl14-detached-exact-E-administration-configuration.v1'
++ need(cfg['control_directory']==str(folder) and cfg['sealed'] is False and cfg['format']=='swdb.lanl17-detached-exact-R4-administration-configuration.v1'
+       and cfg['inputs']['wrapper']['sha256']==args.source_sha256 and cfg['environment_overrides']==ENV
+-      and cfg['transport_wait_seconds']==60 and cfg['guard_timeout_seconds']==660
+-      and cfg['guard_KILL_after_seconds']==60 and cfg['worker_wait_seconds']==735
+-      and type(cfg['remove_requested']) is bool,'exact_worker_configuration')
+- state={'format':'swdb.lanl14-detached-exact-E-administration-status.v1','sealed':False,'started_utc':now(),
++      and cfg['transport_wait_seconds']==60 and cfg['guard_timeout_seconds']==3660
++      and cfg['guard_KILL_after_seconds']==60 and cfg['worker_wait_seconds']==3735
++      and type(cfg['remove_requested']) is bool and type(cfg['selected_rows']) is list
++      and 1<=len(cfg['selected_rows'])<=18 and len(set(cfg['selected_rows']))==len(cfg['selected_rows'])
++      and all(type(x) is str and re.fullmatch('ArchEvolve-lanl-[A-Za-z0-9-]{1,96}',x) for x in cfg['selected_rows'])
++      and re.fullmatch('[a-f0-9]{40}',cfg['expected_primary'])
++      and re.fullmatch('a[1-9][0-9]*',cfg['guard_attempt']),'exact_worker_configuration')
++ state={'format':'swdb.lanl17-detached-exact-R4-administration-status.v1','sealed':False,'started_utc':now(),
+         'expected_primary':cfg['expected_primary'],'remove_requested':cfg['remove_requested'],'configuration':configuration_pin,
++        'selected_rows':cfg['selected_rows'],'guard_attempt':cfg['guard_attempt'],'reviewed_plan':cfg['reviewed_plan'],
+         'inputs':cfg['inputs'],'state':'preflight','scientific_admission':False,'capacity_admission':False,
+         'SSH_role_exemption':False,'global_consumer_clearance_claimed':False}
+  try:
+   need(inputs(own,args.source_sha256,guard)==cfg['inputs'],'exact_detached_inputs')
++  plan=P(cfg['reviewed_plan']['file']['path']); plan_sha=cfg['reviewed_plan']['file']['sha256']
++  need(plan_binding(plan,plan_sha,cfg['selected_rows'],cfg['expected_primary'])==cfg['reviewed_plan']
++       and fresh_guard_output(cfg['guard_attempt'])==cfg['guard_output_directory'],'exact_detached_plan_and_attempt')
++  need(not any(p.is_relative_to(BASE/name) for p in (own,guard,plan,folder) for name in cfg['selected_rows']),
++       'detached_administration_outside_selection')
+   original=cfg['transport']['account_transport']
+   need(not any(item['pid']==original['pid'] and item['start_ticks']==original['start_ticks'] for item in ancestry()),
+        'worker_not_under_original_transport')
+@@ -212,15 +269,19 @@
+   state['transport_original_termination']=observed
+   if cfg['remove_requested']:
+    original_prior=cfg['prior_reviewed_inspection']; need(type(original_prior) is dict,'original_default_inspection_required')
+-   closed_prior=argparse.Namespace(remove=True,expected_primary=cfg['expected_primary'],
++   closed_prior=argparse.Namespace(remove=True,expected_primary=cfg['expected_primary'],select=cfg['selected_rows'],attempt=cfg['guard_attempt'],
+     inspection_directory=str(P(original_prior['status']['path']).parent),
+     inspection_status_sha256=original_prior['status']['sha256'],inspection_stdout_sha256=original_prior['stdout']['sha256'])
+    need(inspect_prior(closed_prior,args.source_sha256)==original_prior,'detached_original_default_custody_rechecked')
+   else: need(cfg['prior_reviewed_inspection'] is None,'default_has_no_inherited_inspection_request')
+   need(inputs(own,args.source_sha256,guard)==cfg['inputs'] and
+-       file_bytes(folder/'configuration.json',16384,UID,args.configuration_sha256)[0]==raw,'immediate_detached_source_and_request_recheck')
+-  argv=['/usr/bin/timeout','--signal=TERM','--kill-after=60s','660s','/usr/bin/python3.12','-B',str(guard),
+-        '--expected-primary',cfg['expected_primary'],'--account-service-review',str(REVIEW),'--account-service-review-sha256',REVIEW_SHA]
++       file_bytes(folder/'configuration.json',16384,UID,args.configuration_sha256)[0]==raw
++       and plan_binding(plan,plan_sha,cfg['selected_rows'],cfg['expected_primary'])==cfg['reviewed_plan']
++       and fresh_guard_output(cfg['guard_attempt'])==cfg['guard_output_directory'],'immediate_detached_source_and_request_recheck')
++  argv=['/usr/bin/timeout','--signal=TERM','--kill-after=60s','3660s','/usr/bin/python3.12','-B',str(guard),
++        '--expected-primary',cfg['expected_primary'],'--plan',str(plan),'--plan-sha256',plan_sha,
++        '--attempt',cfg['guard_attempt']]
++  for name in cfg['selected_rows']: argv.extend(['--select',name])
+   if cfg['remove_requested']: argv.append('--remove')
+   state['guard_argv']=argv; state['guard_started_utc']=now()
+   so_fd=os.open(folder/'guard.stdout',os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+@@ -228,7 +289,7 @@
+   with os.fdopen(so_fd,'wb') as so,os.fdopen(se_fd,'wb') as se:
+    child=subprocess.Popen(argv,stdin=subprocess.DEVNULL,stdout=so,stderr=se,cwd=BASE,env=ENV,start_new_session=True)
+    state['guard_pid']=child.pid
+-   try: code=child.wait(timeout=735)
++   try: code=child.wait(timeout=3735)
+    except subprocess.TimeoutExpired:
+     state['state']='GNU_supervision_not_returned_within_wrapper_wait'; state['guard_exit_code']=None
+     state['owned_child_liveness_or_descendants_are_NOT_inferred_clear']=True; raise
+@@ -238,7 +299,8 @@
+   state['guard_stdout']=file_bytes(folder/'guard.stdout',256*1024,UID)[1]
+   state['guard_stderr']=file_bytes(folder/'guard.stderr',256*1024,UID)[1]
+   need(inputs(own,args.source_sha256,guard)==cfg['inputs'] and
+-       file_bytes(folder/'configuration.json',16384,UID,args.configuration_sha256)[0]==raw,'post_guard_immutable_inputs')
++       file_bytes(folder/'configuration.json',16384,UID,args.configuration_sha256)[0]==raw
++       and plan_binding(plan,plan_sha,cfg['selected_rows'],cfg['expected_primary'])==cfg['reviewed_plan'],'post_guard_immutable_inputs')
+   return code
+  except BaseException as error:
+   state['error_class']=type(error).__name__; state['error_sha256']=sha(str(error).encode())
+@@ -255,15 +317,21 @@
+  parser.add_argument('--worker',action='store_true'); parser.add_argument('--source-sha256',required=True)
+  parser.add_argument('--control-directory',required=True); parser.add_argument('--configuration-sha256')
+  parser.add_argument('--expected-primary'); parser.add_argument('--guard-source'); parser.add_argument('--remove',action='store_true')
++ parser.add_argument('--select',action='append'); parser.add_argument('--plan'); parser.add_argument('--plan-sha256'); parser.add_argument('--attempt')
+  parser.add_argument('--inspection-directory'); parser.add_argument('--inspection-status-sha256'); parser.add_argument('--inspection-stdout-sha256')
+  args=parser.parse_args(); need(re.fullmatch('[a-f0-9]{64}',args.source_sha256),'own_source_exact_SHA')
+  if args.worker:
+   need(re.fullmatch('[a-f0-9]{64}',args.configuration_sha256 or '') and args.expected_primary is None
+        and args.guard_source is None and args.remove is False and args.inspection_directory is None
+-       and args.inspection_status_sha256 is None and args.inspection_stdout_sha256 is None,'worker_only_closed_arguments')
++       and args.inspection_status_sha256 is None and args.inspection_stdout_sha256 is None
++       and args.select is None and args.plan is None and args.plan_sha256 is None and args.attempt is None,'worker_only_closed_arguments')
+   return worker(args)
+  need(args.configuration_sha256 is None and re.fullmatch('[a-f0-9]{40}',args.expected_primary or '')
+-      and args.guard_source is not None,'launcher_exact_parent_revision_and_source')
++      and args.guard_source is not None and re.fullmatch('[a-f0-9]{64}',args.plan_sha256 or '')
++      and args.plan is not None and re.fullmatch('a[1-9][0-9]*',args.attempt or '')
++      and type(args.select) is list and 1<=len(args.select)<=18 and len(set(args.select))==len(args.select)
++      and all(re.fullmatch('ArchEvolve-lanl-[A-Za-z0-9-]{1,96}',x) for x in args.select),
++      'launcher_exact_parent_revision_source_ordered_rows_and_fresh_plan')
+  return launch(args)
+ if __name__=='__main__':
+  try: sys.exit(main())

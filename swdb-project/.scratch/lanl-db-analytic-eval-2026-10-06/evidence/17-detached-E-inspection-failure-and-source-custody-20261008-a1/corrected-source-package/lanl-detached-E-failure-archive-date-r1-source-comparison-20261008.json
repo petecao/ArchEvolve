@@ -1,0 +1,34 @@
+{
+  "sealed": false,
+  "source_only": true,
+  "target_invocation": "NOT RUN",
+  "original": {
+    "path": "/private/tmp/lanl_archive_failed_detached_E_and_reviewed_source_custody_20261008_a1.py",
+    "bytes": 27573,
+    "sha256": "1240ff7633da19dc680938456b4bad5c8664978d5496ece7b7df4a52366c205f"
+  },
+  "selected": {
+    "path": "/private/tmp/lanl_archive_failed_detached_E_and_reviewed_source_custody_20261008_a1_r1.py",
+    "bytes": 27623,
+    "sha256": "688fce08a5a3e12c86d6b8ab0706b863175ea53e51d422bf781e38d5821dd427"
+  },
+  "complete_derivation": {
+    "path": "/private/tmp/lanl-detached-E-failure-archive-date-r1-complete-a1-derivation-20261008.diff",
+    "bytes": 2535,
+    "sha256": "e646bef12843aeb9e693ff240e076e44d243e7b79dbc2ceed254a290dfdd7480"
+  },
+  "exact_complete_byte_reversal": true,
+  "changed_ast_values": [
+    {
+      "path": "module.body[20].body[33].body[10].value.value",
+      "before": "# Failed detached E inspection and reviewed source custody\n\nThe original detached default inspection ran on 2026-10-08 at 03:11:16\u201317 UTC and returned guard exit 1 with removal not requested. Its stdout was empty; original stderr reports `original raw root`. This archive supplies neither removal nor plan/capacity/scientific admission. Later events remain separate.\n\nThe eight remote originals, exact local decoding custody, original launch/namespace/sidecar observations, and their reader/collector/decoder sources are copied unchanged. The base64 transfer packet is not duplicated; original local-custody retains its exact packet pin. Namespace top-level size/allocation metadata is not recursive RAW volume or source clearance. The sidecar observation is original unsealed metadata, not a rewritten lane receipt.\n\nReviewed passive R2 and detached R4 R1/R2 source/diff/handoff/static-review originals retain their immutable creation-time SOURCE ONLY / NOT RUN statements. Their presence proves byte custody and source review only. The corrected-source-package, if explicitly supplied by the parent after review, is separately listed; its absent extension remains pending. No selected source was imported or invoked by this archiver.\n\nOnly this manifest uses a new explicit canonical True whole-object-minus-identity custody seal. Original unsealed JSON, opaque streams and any explicitly supplied original seal policy are preserved byte for byte. This source archiver does not commit, push, edit an issue, modify an existing file or conduct a remote action. Parent owns archive execution, subsequent issue history, review and delivery.\n",
+      "after": "# Failed detached E inspection and reviewed source custody\n\nThe original detached default inspection ran on 2026-10-07 at 23:11 ET (original machine custody 03:11:16\u201317 UTC on 2026-10-08) and returned guard exit 1 with removal not requested. Its stdout was empty; original stderr reports `original raw root`. This archive supplies neither removal nor plan/capacity/scientific admission. Later events remain separate.\n\nThe eight remote originals, exact local decoding custody, original launch/namespace/sidecar observations, and their reader/collector/decoder sources are copied unchanged. The base64 transfer packet is not duplicated; original local-custody retains its exact packet pin. Namespace top-level size/allocation metadata is not recursive RAW volume or source clearance. The sidecar observation is original unsealed metadata, not a rewritten lane receipt.\n\nReviewed passive R2 and detached R4 R1/R2 source/diff/handoff/static-review originals retain their immutable creation-time SOURCE ONLY / NOT RUN statements. Their presence proves byte custody and source review only. The corrected-source-package, if explicitly supplied by the parent after review, is separately listed; its absent extension remains pending. No selected source was imported or invoked by this archiver.\n\nOnly this manifest uses a new explicit canonical True whole-object-minus-identity custody seal. Original unsealed JSON, opaque streams and any explicitly supplied original seal policy are preserved byte for byte. This source archiver does not commit, push, edit an issue, modify an existing file or conduct a remote action. Parent owns archive execution, subsequent issue history, review and delivery.\n"
+    }
+  ],
+  "changed_definition": [
+    "main"
+  ],
+  "other_definition_asts_exact": 10,
+  "FIXED_and_all_other_top_level_nodes_exact": true,
+  "source_import_compile_main_tests_ssh_git_worktree_actions": false
+}

@@ -1,0 +1,31 @@
+--- /private/tmp/lanl14_detach_exact_E_cleanup_administration_20261008_a1_r2.py
++++ /private/tmp/lanl14_detach_exact_E_cleanup_administration_20261008_a1_r3.py
+@@ -7,7 +7,7 @@
+ E = BASE/'ArchEvolve-lanl-generality-final-export-20261007-a1'
+ R = BASE/'ArchEvolve-lanl-generality-final-20261007-a1'
+ C = BASE/'ArchEvolve-lanl-cpu-model-validation-20261006-a1'
+-GUARD_SHA = '5a227cb9d68f638a5475e054bef6b4b85b1d477e857f18de04b54bf4097d160e'
++GUARD_SHA = '7f92b6f85f4e0c574f3ade7a806c2d6de02108fb8f32579f2e37343e9dc566f9'
+ REVIEW = BASE/'lanl-account-pam-service-identification-20261008-a1/parent-review.json'
+ REVIEW_SHA = 'fcf92eee1c4b8bdfaed979dc8bedab004c6c4b7e2b1410c7614bc92d60349f4a'
+ NATIVE = {
+@@ -115,7 +115,7 @@
+  need(own.is_relative_to(BASE) and guard.is_relative_to(BASE)
+       and own!=guard and not any(p.is_relative_to(q) for p in (own,guard) for q in (PRIMARY,E,R,C)),'private_sources_outside_projects')
+  own_raw,own_pin=file_bytes(own,256*1024,UID,own_sha)
+- unused,guard_pin=file_bytes(guard,22209,UID,GUARD_SHA,22209)
++ unused,guard_pin=file_bytes(guard,26370,UID,GUARD_SHA,26370)
+  unused,review_pin=file_bytes(REVIEW,256*1024,UID,REVIEW_SHA,3258)
+  native={}
+  for path,(size,digest) in NATIVE.items():
+@@ -226,7 +226,10 @@
+   so_fd=os.open(folder/'guard.stdout',os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+   se_fd=os.open(folder/'guard.stderr',os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+   with os.fdopen(so_fd,'wb') as so,os.fdopen(se_fd,'wb') as se:
++   state['state']='guard_launch_started'
++   state['owned_child_liveness_or_descendants_are_NOT_inferred_clear']=True
+    child=subprocess.Popen(argv,stdin=subprocess.DEVNULL,stdout=so,stderr=se,cwd=BASE,env=ENV,start_new_session=True)
++   state['state']='guard_running'
+    state['guard_pid']=child.pid
+    try: code=child.wait(timeout=735)
+    except subprocess.TimeoutExpired:

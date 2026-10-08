@@ -1,0 +1,13 @@
+--- lanl_decode_detached_E_original_custody_20261008_a1.py
++++ lanl_decode_detached_E_original_custody_20261008_a2.py
+@@ -10,8 +10,8 @@
+ a=argparse.ArgumentParser();a.add_argument('--packet',required=True);a.add_argument('--output-directory',required=True);args=a.parse_args();os.umask(0o077)
+ p=P(args.packet);assert p.parent==P('/private/tmp') and not p.is_symlink() and p.stat().st_size<=1024*1024
+ b=p.read_bytes();d=strict(b);assert d['format']=='swdb.detached-E-administration-original-custody-transfer.v1' and d['sealed'] is False and d['no_success_or_admission_inferred'] is True and d['legacy_state_label_is_not_launch_or_liveness_proof'] is True
+-remote=P(d['control_directory']);assert remote.parent==P('/data1/yanruj') and remote.name in ('lanl14-detached-e-inspection-a1','lanl14-detached-e-removal-a1')
+-dest=P(args.output_directory);assert dest.parent==P('/private/tmp') and dest.name in ('lanl-detached-E-default-originals-20261008-a1','lanl-detached-E-removal-originals-20261008-a1') and not os.path.lexists(dest)
++remote=P(d['control_directory']);assert remote.parent==P('/data1/yanruj') and remote.name in ('lanl14-detached-e-inspection-a2','lanl14-detached-e-removal-a2')
++dest=P(args.output_directory);assert dest.parent==P('/private/tmp') and dest.name in ('lanl-detached-E-default-originals-20261008-a2','lanl-detached-E-removal-originals-20261008-a2') and not os.path.lexists(dest)
+ allowed={'status.json':16384,'configuration.json':16384,'tmux.conf':16384,'launch-status.json':16384,'launch.stdout':16384,'launch.stderr':16384,'guard.stdout':262144,'guard.stderr':262144};seen=set();decoded=[]
+ for pin in d['originals']:
+  rp=P(pin['path']);name=rp.name;assert rp.parent==remote and name in allowed and name not in seen;seen.add(name)

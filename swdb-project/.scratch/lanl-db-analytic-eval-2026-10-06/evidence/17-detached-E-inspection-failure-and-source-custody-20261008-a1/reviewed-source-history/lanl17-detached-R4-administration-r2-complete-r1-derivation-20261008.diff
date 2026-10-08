@@ -1,0 +1,13 @@
+--- /private/tmp/lanl17_detach_exact_R4_storage_administration_20261008_a1_r1.py
++++ /private/tmp/lanl17_detach_exact_R4_storage_administration_20261008_a1_r2.py
+@@ -287,7 +287,10 @@
+   so_fd=os.open(folder/'guard.stdout',os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+   se_fd=os.open(folder/'guard.stderr',os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+   with os.fdopen(so_fd,'wb') as so,os.fdopen(se_fd,'wb') as se:
++   state['state']='guard_launch_started'
++   state['owned_child_liveness_or_descendants_are_NOT_inferred_clear']=True
+    child=subprocess.Popen(argv,stdin=subprocess.DEVNULL,stdout=so,stderr=se,cwd=BASE,env=ENV,start_new_session=True)
++   state['state']='guard_running'
+    state['guard_pid']=child.pid
+    try: code=child.wait(timeout=3735)
+    except subprocess.TimeoutExpired:
