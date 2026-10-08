@@ -1,7 +1,7 @@
 # Spec: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-08 12:00 ET (Scott's answer on D34 recorded: approved); 2026-10-06 16:11 ET (ticket number reference updated for the regenerated tickets); 2026-10-06 16:07 ET (rewritten to the full spec template: problem, solution, user stories,
+Updated: 2026-10-08 12:16 ET (D2: no LANL contact; tickets 21–23 wontfix); 2026-10-08 12:00 ET (Scott's answer on D34 recorded: approved); 2026-10-06 16:11 ET (ticket number reference updated for the regenerated tickets); 2026-10-06 16:07 ET (rewritten to the full spec template: problem, solution, user stories,
 implementation and testing decisions; decisions D1–D34 unchanged); 2026-10-06 ET, before the 16:01 ET
 design-session commit `6c691e6` (D8–D15 confirmed; grilling rounds 1–4 added D16–D34; estimator
 workflow approved)
@@ -206,7 +206,7 @@ Decided by Yan-Ru on 2026-10-06 (in conversation):
 | # | Decision |
 |---|---|
 | D1 | LANL's database is the main database; SWDB is the research database; they stay compatible, and they may later merge or SWDB may be dropped (ADR 0014). |
-| D2 | Do not contact LANL now; prepare notes only ([lanl-db-notes.md](lanl-db-notes.md)). |
+| D2 | Do not contact LANL now; prepare notes only ([lanl-db-notes.md](lanl-db-notes.md)). **2026-10-08, Yan-Ru: we will not contact LANL; tickets 21–23 (access, import, export and round-trip) are wontfix.** |
 | D3 | ArchEvolve mode runs no gem5 job and cites no gem5 number, including for validation (ADR 0013). |
 | D4 | ArchEvolve-mode speed comes from the estimator: analytic bounds, with an LLM filling only parameters the model lacks. |
 | D5 | Extensa mode keeps gem5 and the functional model; flow A (paired estimates) first, flow B (screening) only after agreement is measured. |

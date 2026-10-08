@@ -1,7 +1,7 @@
 # Map: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-08 12:00 ET (ticket 15 resolved: Scott approved counting); 2026-10-08 11:20 ET (14 of 15 assigned tickets resolved; 17 resumed)
+Updated: 2026-10-08 12:16 ET (tickets 21–23 wontfix: no LANL contact); 2026-10-08 12:00 ET (ticket 15 resolved: Scott approved counting); 2026-10-08 11:20 ET (14 of 15 assigned tickets resolved; 17 resumed)
 **Type:** ticket map
 **Status:** claimed (unfinished implementation/evaluation)
 **Work state:** active; [resume guide](resume.md)
@@ -53,9 +53,9 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 |---|---|---|---|---|
 | 19 | [Flow B screening](issues/19-flow-b-screening.md) | needs-triage | 18 | 1 day |
 | 20 | [XSBench as the bridge kernel](issues/20-xsbench-bridge-kernel.md) | needs-triage | 14 | 1–2 days |
-| 21 | [Ask LANL for access](issues/21-ask-lanl-for-access.md) | ready-for-human | — | about 10 min, when Yan-Ru decides |
-| 22 | [`swdb import-main`: read the main database](issues/22-import-main.md) | needs-info | 02, 03, 21 | 1 day |
-| 23 | [Export and round-trip test](issues/23-export-and-round-trip.md) | needs-info | 22 | 1 day |
+| 21 | [Ask LANL for access](issues/21-ask-lanl-for-access.md) | wontfix | — | about 10 min, when Yan-Ru decides |
+| 22 | [`swdb import-main`: read the main database](issues/22-import-main.md) | wontfix | 02, 03, 21 | 1 day |
+| 23 | [Export and round-trip test](issues/23-export-and-round-trip.md) | wontfix | 22 | 1 day |
 
 ## Context pointers
 
@@ -183,3 +183,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 - 2026-10-08 ET: [ticket 15](issues/15-show-scott-counting.md#answer) resolved. Scott
   approved the strategies (reported by Yan-Ru). Address-stream counting stays; the
   D34 paper-parameter fallback is not triggered. Recorded in the [spec](spec.md) D34 row.
+- 2026-10-08 ET: tickets [21](issues/21-ask-lanl-for-access.md#answer),
+  [22](issues/22-import-main.md#answer) and [23](issues/23-export-and-round-trip.md#answer)
+  closed as wontfix. We will not contact LANL and do not have their database; we wait
+  passively for their response.
