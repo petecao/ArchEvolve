@@ -1,0 +1,555 @@
+kind: agreement_policy
+schema_version: '0.4'
+id: extensa-gem5-bfs-20261006-p1.agreement.5bae2f42d9078864
+status: draft
+created: '2026-10-08'
+updated: '2026-10-08'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+mode: extensa
+campaign: extensa-gem5-bfs-20261006-p1
+basis: code_reading
+estimator_variant: research
+format: swdb.extensa-agreement-policy.v1
+frozen_at: '2026-10-08T16:05:25.347884+00:00'
+estimator_sha256: f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3
+provider_config_sha256: 38cd42fd1879504a36cba6b52252ff765d863bbe9b784cc545704ebbebe9acc2
+population:
+- campaign: extensa-gem5-bfs-20261006-p1
+  campaign_file_sha256: 9c2e17f3cd1980b808ccb24a73c37e145e9b8468605d18874becf51565431680
+  configuration:
+    format: swdb.extensa-campaign.v1
+    id: extensa-gem5-bfs-20261006-p1
+    created: '2026-10-06'
+    mode: extensa
+    kernel: gapbs-bfs
+    target: dx100_gem5
+    machine: mbit10
+    base_source: fork_scalar_tdstep
+    baselines:
+    - role: fork_scalar_tdstep
+      candidate: typed-library-bfs-gem5-20261003-a2.baseline
+    protocol:
+      roi: bfs.complete_call.v1
+      threads: 4
+      repetitions: 1
+      sources: [0]
+      region_pairs: false
+      differences: 'Prospective LANL17 source-only draft: K/uniform g18 k14, exact registered SG, source0,
+        whole-call ROI. Extensa flow-A timing selection and plateau unchanged. All real forecasts structurally
+        unknown unless a verified frozen bridge is supplied before outcomes.'
+    workload_classes:
+    - class: kronecker
+      workload: lanl17-prospective-20261006-a2-kronecker.g18.k14.061b9007efcdebb7
+    - class: uniform_random
+      workload: lanl17-prospective-20261006-a2-uniform_random.g18.k14.9027c7c5f57e8926
+    label: single graph per class
+    library:
+      allowed_tiers: [shared, experimental]
+      contracts: [contract.bfs_read_offload]
+    regions: query
+    provider:
+      name: codex
+      model: gpt-5.6-sol
+      effort: xhigh
+    budgets:
+      max_iterations: 8
+      plateau_iterations: 4
+      lane_hours: 24
+      provider_calls_per_iteration: 3
+      provider_calls_setup: 1
+      disk_gb: 20
+      lanes: 1
+    runs_root: /data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs
+    approval:
+      by: Yan-Ru Jhou
+      date: '2026-10-06'
+      scope: Standing user approval for mbit10 evaluations. Parent-owned prospective policy freeze and
+        lease dispatch remain required; this is an unexecuted draft.
+    paired_estimates:
+      enabled: true
+  workloads:
+  - class: kronecker
+    id: lanl17-prospective-20261006-a2-kronecker.g18.k14.061b9007efcdebb7
+    identity_sha256: 061b9007efcdebb7839092f23a02de1e55fc9df4b9b4df1d307315fcca58ae3d
+    record_sha256: 66bd953b83cf500c8e64060389cbe23802216b23710e2f73a3c322c434e8b432
+    canonical_sha256: b09810ebb77becb46667314439bd044c892f268fa9692df8b15338930d670f10
+    sources: [0]
+    generation:
+      family: kronecker
+      generator:
+        name: DX100 GAPBS converter
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        command:
+        - /data1/yanruj/EvolveSWDB_builds/lanl17-prospective-inputs-20261006-a2/converter
+        - -g
+        - '18'
+        - -k
+        - '14'
+        - -b
+        - /data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-kronecker.g18.k14/graph-dx100.sg
+        parameters:
+          scale: 18
+          edge_factor: 14
+          seed: 27491095
+          symmetrize: true
+          explicit_symmetrize_flag: false
+          compiler: /usr/bin/g++-13
+          compile_flags: [-std=c++11, -O3, -fopenmp]
+          compiler_version_sha256: b240ade48d7a4743cb2e7940990dd5a8dbc15120543c7eadd9541435edd2efd2
+          environment:
+            OMP_NUM_THREADS: '1'
+            OMP_DYNAMIC: 'FALSE'
+          binary_sha256: a6cd0fd88a8de97decd087e9f1e43117ace95230f710b0bd7745f7bd33b492e6
+          source_sha256: 9b15a2ad58d672d534a14c808320a5d666af62cbe017f14703d955bea2279cc1
+  - class: uniform_random
+    id: lanl17-prospective-20261006-a2-uniform_random.g18.k14.9027c7c5f57e8926
+    identity_sha256: 9027c7c5f57e89268a1aaab2864424bc415a161d1cf8d3175c11a8ac346c078b
+    record_sha256: 0bf4ec97fe3b7bf3c8fd25d887960bda6be23bbede8b8f4b690061bfc53a42f7
+    canonical_sha256: b94b39953e922462ffd10813844e6aada09c9886420586f907380b1d94c5e3cc
+    sources: [0]
+    generation:
+      family: uniform_random
+      generator:
+        name: DX100 GAPBS converter
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        command:
+        - /data1/yanruj/EvolveSWDB_builds/lanl17-prospective-inputs-20261006-a2/converter
+        - -u
+        - '18'
+        - -k
+        - '14'
+        - -b
+        - /data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k14/graph-dx100.sg
+        parameters:
+          scale: 18
+          edge_factor: 14
+          seed: 27491095
+          symmetrize: true
+          explicit_symmetrize_flag: false
+          compiler: /usr/bin/g++-13
+          compile_flags: [-std=c++11, -O3, -fopenmp]
+          compiler_version_sha256: b240ade48d7a4743cb2e7940990dd5a8dbc15120543c7eadd9541435edd2efd2
+          environment:
+            OMP_NUM_THREADS: '1'
+            OMP_DYNAMIC: 'FALSE'
+          binary_sha256: a6cd0fd88a8de97decd087e9f1e43117ace95230f710b0bd7745f7bd33b492e6
+          source_sha256: 9b15a2ad58d672d534a14c808320a5d666af62cbe017f14703d955bea2279cc1
+  baselines:
+  - role: fork_scalar_tdstep
+    candidate: typed-library-bfs-gem5-20261003-a2.baseline
+    record_sha256: fde1e81baa8ead0579982c9cb164d65583fc300fb5cec42a4448c30408a4f1bc
+    artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+- campaign: extensa-gem5-bfs-20261006-p2
+  campaign_file_sha256: 56e8677dd5ded28c1e085b44c6f347901cc4f4e2f77ba2118e1dd437baf85136
+  configuration:
+    format: swdb.extensa-campaign.v1
+    id: extensa-gem5-bfs-20261006-p2
+    created: '2026-10-06'
+    mode: extensa
+    kernel: gapbs-bfs
+    target: dx100_gem5
+    machine: mbit10
+    base_source: fork_scalar_tdstep
+    baselines:
+    - role: fork_scalar_tdstep
+      candidate: typed-library-bfs-gem5-20261003-a2.baseline
+    protocol:
+      roi: bfs.complete_call.v1
+      threads: 4
+      repetitions: 1
+      sources: [0]
+      region_pairs: false
+      differences: 'Prospective LANL17 source-only draft: K/uniform g18 k15, exact registered SG, source0,
+        whole-call ROI. Extensa flow-A timing selection and plateau unchanged. All real forecasts structurally
+        unknown unless a verified frozen bridge is supplied before outcomes.'
+    workload_classes:
+    - class: kronecker
+      workload: lanl17-prospective-20261006-a2-kronecker.g18.k15.15b1ec00b24140f4
+    - class: uniform_random
+      workload: lanl17-prospective-20261006-a2-uniform_random.g18.k15.34444aebb8080315
+    label: single graph per class
+    library:
+      allowed_tiers: [shared, experimental]
+      contracts: [contract.bfs_read_offload]
+    regions: query
+    provider:
+      name: codex
+      model: gpt-5.6-sol
+      effort: xhigh
+    budgets:
+      max_iterations: 8
+      plateau_iterations: 4
+      lane_hours: 24
+      provider_calls_per_iteration: 3
+      provider_calls_setup: 1
+      disk_gb: 20
+      lanes: 1
+    runs_root: /data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs
+    approval:
+      by: Yan-Ru Jhou
+      date: '2026-10-06'
+      scope: Standing user approval for mbit10 evaluations. Parent-owned prospective policy freeze and
+        lease dispatch remain required; this is an unexecuted draft.
+    paired_estimates:
+      enabled: true
+  workloads:
+  - class: kronecker
+    id: lanl17-prospective-20261006-a2-kronecker.g18.k15.15b1ec00b24140f4
+    identity_sha256: 15b1ec00b24140f482a9d77638e89a21ca0c4a670d51782005b8db0d845291c3
+    record_sha256: 0ae57c824211a55ec9de42c1c56f09ee5e85b899069ea5d52815e87ba1db3503
+    canonical_sha256: 91955e7e5528a8c43dcf03f6d3cdafb649e98ed33dd7c83bf8cbf1e09d269f5d
+    sources: [0]
+    generation:
+      family: kronecker
+      generator:
+        name: DX100 GAPBS converter
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        command:
+        - /data1/yanruj/EvolveSWDB_builds/lanl17-prospective-inputs-20261006-a2/converter
+        - -g
+        - '18'
+        - -k
+        - '15'
+        - -b
+        - /data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-kronecker.g18.k15/graph-dx100.sg
+        parameters:
+          scale: 18
+          edge_factor: 15
+          seed: 27491095
+          symmetrize: true
+          explicit_symmetrize_flag: false
+          compiler: /usr/bin/g++-13
+          compile_flags: [-std=c++11, -O3, -fopenmp]
+          compiler_version_sha256: b240ade48d7a4743cb2e7940990dd5a8dbc15120543c7eadd9541435edd2efd2
+          environment:
+            OMP_NUM_THREADS: '1'
+            OMP_DYNAMIC: 'FALSE'
+          binary_sha256: a6cd0fd88a8de97decd087e9f1e43117ace95230f710b0bd7745f7bd33b492e6
+          source_sha256: 9b15a2ad58d672d534a14c808320a5d666af62cbe017f14703d955bea2279cc1
+  - class: uniform_random
+    id: lanl17-prospective-20261006-a2-uniform_random.g18.k15.34444aebb8080315
+    identity_sha256: 34444aebb8080315c86fc46f5895f1bf97ee09703ac01016cbbb9cc82a130a40
+    record_sha256: e3063a5c9f8402822456da31bb7880abceee58472d1b8f436aea9a3c1801eaf2
+    canonical_sha256: 22ab35e7e7cee0b8779c613cc4ae8bae5937c0ebe9ddb20d1be82b4dbce93fb9
+    sources: [0]
+    generation:
+      family: uniform_random
+      generator:
+        name: DX100 GAPBS converter
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        command:
+        - /data1/yanruj/EvolveSWDB_builds/lanl17-prospective-inputs-20261006-a2/converter
+        - -u
+        - '18'
+        - -k
+        - '15'
+        - -b
+        - /data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k15/graph-dx100.sg
+        parameters:
+          scale: 18
+          edge_factor: 15
+          seed: 27491095
+          symmetrize: true
+          explicit_symmetrize_flag: false
+          compiler: /usr/bin/g++-13
+          compile_flags: [-std=c++11, -O3, -fopenmp]
+          compiler_version_sha256: b240ade48d7a4743cb2e7940990dd5a8dbc15120543c7eadd9541435edd2efd2
+          environment:
+            OMP_NUM_THREADS: '1'
+            OMP_DYNAMIC: 'FALSE'
+          binary_sha256: a6cd0fd88a8de97decd087e9f1e43117ace95230f710b0bd7745f7bd33b492e6
+          source_sha256: 9b15a2ad58d672d534a14c808320a5d666af62cbe017f14703d955bea2279cc1
+  baselines:
+  - role: fork_scalar_tdstep
+    candidate: typed-library-bfs-gem5-20261003-a2.baseline
+    record_sha256: fde1e81baa8ead0579982c9cb164d65583fc300fb5cec42a4448c30408a4f1bc
+    artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+- campaign: extensa-gem5-bfs-20261006-p3
+  campaign_file_sha256: ddb21f8165f98297a38e430ded016b4d072d9e29d42ca63ca742085229f5cad1
+  configuration:
+    format: swdb.extensa-campaign.v1
+    id: extensa-gem5-bfs-20261006-p3
+    created: '2026-10-06'
+    mode: extensa
+    kernel: gapbs-bfs
+    target: dx100_gem5
+    machine: mbit10
+    base_source: fork_scalar_tdstep
+    baselines:
+    - role: fork_scalar_tdstep
+      candidate: typed-library-bfs-gem5-20261003-a2.baseline
+    protocol:
+      roi: bfs.complete_call.v1
+      threads: 4
+      repetitions: 1
+      sources: [0]
+      region_pairs: false
+      differences: 'Prospective LANL17 source-only draft: K/uniform g18 k17, exact registered SG, source0,
+        whole-call ROI. Extensa flow-A timing selection and plateau unchanged. All real forecasts structurally
+        unknown unless a verified frozen bridge is supplied before outcomes.'
+    workload_classes:
+    - class: kronecker
+      workload: lanl17-prospective-20261006-a2-kronecker.g18.k17.7c5f5ee1ddda25c4
+    - class: uniform_random
+      workload: lanl17-prospective-20261006-a2-uniform_random.g18.k17.451edf9faac833c0
+    label: single graph per class
+    library:
+      allowed_tiers: [shared, experimental]
+      contracts: [contract.bfs_read_offload]
+    regions: query
+    provider:
+      name: codex
+      model: gpt-5.6-sol
+      effort: xhigh
+    budgets:
+      max_iterations: 8
+      plateau_iterations: 4
+      lane_hours: 24
+      provider_calls_per_iteration: 3
+      provider_calls_setup: 1
+      disk_gb: 20
+      lanes: 1
+    runs_root: /data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs
+    approval:
+      by: Yan-Ru Jhou
+      date: '2026-10-06'
+      scope: Standing user approval for mbit10 evaluations. Parent-owned prospective policy freeze and
+        lease dispatch remain required; this is an unexecuted draft.
+    paired_estimates:
+      enabled: true
+  workloads:
+  - class: kronecker
+    id: lanl17-prospective-20261006-a2-kronecker.g18.k17.7c5f5ee1ddda25c4
+    identity_sha256: 7c5f5ee1ddda25c49a97dcdd52ae8e6e5e19e55fa25b289c1fe92cf917c2bb6d
+    record_sha256: 4da40ef2af7c95e6e0562920f5f544c6acb64a37caf9bc53a29aace070b57500
+    canonical_sha256: 5e5f73be345c10f99bab522935aa4455e656de497301e4734784089f18873db3
+    sources: [0]
+    generation:
+      family: kronecker
+      generator:
+        name: DX100 GAPBS converter
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        command:
+        - /data1/yanruj/EvolveSWDB_builds/lanl17-prospective-inputs-20261006-a2/converter
+        - -g
+        - '18'
+        - -k
+        - '17'
+        - -b
+        - /data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-kronecker.g18.k17/graph-dx100.sg
+        parameters:
+          scale: 18
+          edge_factor: 17
+          seed: 27491095
+          symmetrize: true
+          explicit_symmetrize_flag: false
+          compiler: /usr/bin/g++-13
+          compile_flags: [-std=c++11, -O3, -fopenmp]
+          compiler_version_sha256: b240ade48d7a4743cb2e7940990dd5a8dbc15120543c7eadd9541435edd2efd2
+          environment:
+            OMP_NUM_THREADS: '1'
+            OMP_DYNAMIC: 'FALSE'
+          binary_sha256: a6cd0fd88a8de97decd087e9f1e43117ace95230f710b0bd7745f7bd33b492e6
+          source_sha256: 9b15a2ad58d672d534a14c808320a5d666af62cbe017f14703d955bea2279cc1
+  - class: uniform_random
+    id: lanl17-prospective-20261006-a2-uniform_random.g18.k17.451edf9faac833c0
+    identity_sha256: 451edf9faac833c0e0ceba0f41bd3e94fb55b2281a4cb6e5b5317128036fe998
+    record_sha256: 71d3646ef6452b796ef7f91a083cf2eff483d906d296f68f0e92331be8ba5133
+    canonical_sha256: ba748ecd829b1f8fee9402c6ea9356d9cacbe8472e150ddda97de3a59a851a2a
+    sources: [0]
+    generation:
+      family: uniform_random
+      generator:
+        name: DX100 GAPBS converter
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        command:
+        - /data1/yanruj/EvolveSWDB_builds/lanl17-prospective-inputs-20261006-a2/converter
+        - -u
+        - '18'
+        - -k
+        - '17'
+        - -b
+        - /data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k17/graph-dx100.sg
+        parameters:
+          scale: 18
+          edge_factor: 17
+          seed: 27491095
+          symmetrize: true
+          explicit_symmetrize_flag: false
+          compiler: /usr/bin/g++-13
+          compile_flags: [-std=c++11, -O3, -fopenmp]
+          compiler_version_sha256: b240ade48d7a4743cb2e7940990dd5a8dbc15120543c7eadd9541435edd2efd2
+          environment:
+            OMP_NUM_THREADS: '1'
+            OMP_DYNAMIC: 'FALSE'
+          binary_sha256: a6cd0fd88a8de97decd087e9f1e43117ace95230f710b0bd7745f7bd33b492e6
+          source_sha256: 9b15a2ad58d672d534a14c808320a5d666af62cbe017f14703d955bea2279cc1
+  baselines:
+  - role: fork_scalar_tdstep
+    candidate: typed-library-bfs-gem5-20261003-a2.baseline
+    record_sha256: fde1e81baa8ead0579982c9cb164d65583fc300fb5cec42a4448c30408a4f1bc
+    artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+- campaign: extensa-gem5-bfs-20261006-p4
+  campaign_file_sha256: abb16613fa62012ce05b6396db68119ca3ade05bae4601a71c7b73dbb8f3e2e1
+  configuration:
+    format: swdb.extensa-campaign.v1
+    id: extensa-gem5-bfs-20261006-p4
+    created: '2026-10-06'
+    mode: extensa
+    kernel: gapbs-bfs
+    target: dx100_gem5
+    machine: mbit10
+    base_source: fork_scalar_tdstep
+    baselines:
+    - role: fork_scalar_tdstep
+      candidate: typed-library-bfs-gem5-20261003-a2.baseline
+    protocol:
+      roi: bfs.complete_call.v1
+      threads: 4
+      repetitions: 1
+      sources: [0]
+      region_pairs: false
+      differences: 'Prospective LANL17 source-only draft: K/uniform g18 k18, exact registered SG, source0,
+        whole-call ROI. Extensa flow-A timing selection and plateau unchanged. All real forecasts structurally
+        unknown unless a verified frozen bridge is supplied before outcomes.'
+    workload_classes:
+    - class: kronecker
+      workload: lanl17-prospective-20261006-a2-kronecker.g18.k18.feb23b36a57d4c05
+    - class: uniform_random
+      workload: lanl17-prospective-20261006-a2-uniform_random.g18.k18.c0396050e37ceed6
+    label: single graph per class
+    library:
+      allowed_tiers: [shared, experimental]
+      contracts: [contract.bfs_read_offload]
+    regions: query
+    provider:
+      name: codex
+      model: gpt-5.6-sol
+      effort: xhigh
+    budgets:
+      max_iterations: 8
+      plateau_iterations: 4
+      lane_hours: 24
+      provider_calls_per_iteration: 3
+      provider_calls_setup: 1
+      disk_gb: 20
+      lanes: 1
+    runs_root: /data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs
+    approval:
+      by: Yan-Ru Jhou
+      date: '2026-10-06'
+      scope: Standing user approval for mbit10 evaluations. Parent-owned prospective policy freeze and
+        lease dispatch remain required; this is an unexecuted draft.
+    paired_estimates:
+      enabled: true
+  workloads:
+  - class: kronecker
+    id: lanl17-prospective-20261006-a2-kronecker.g18.k18.feb23b36a57d4c05
+    identity_sha256: feb23b36a57d4c059dc3b1afd8d30808bfb038d3d39f7004dc439f62429f14c3
+    record_sha256: 8aaea47bc07d958a795274ea2b01fe048995af95ca0282310c7c8144262284ea
+    canonical_sha256: a8230c56a80fee0503f51fdad6e8b4dc629bafdacfc9786fa9bc7b7d765c65e6
+    sources: [0]
+    generation:
+      family: kronecker
+      generator:
+        name: DX100 GAPBS converter
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        command:
+        - /data1/yanruj/EvolveSWDB_builds/lanl17-prospective-inputs-20261006-a2/converter
+        - -g
+        - '18'
+        - -k
+        - '18'
+        - -b
+        - /data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-kronecker.g18.k18/graph-dx100.sg
+        parameters:
+          scale: 18
+          edge_factor: 18
+          seed: 27491095
+          symmetrize: true
+          explicit_symmetrize_flag: false
+          compiler: /usr/bin/g++-13
+          compile_flags: [-std=c++11, -O3, -fopenmp]
+          compiler_version_sha256: b240ade48d7a4743cb2e7940990dd5a8dbc15120543c7eadd9541435edd2efd2
+          environment:
+            OMP_NUM_THREADS: '1'
+            OMP_DYNAMIC: 'FALSE'
+          binary_sha256: a6cd0fd88a8de97decd087e9f1e43117ace95230f710b0bd7745f7bd33b492e6
+          source_sha256: 9b15a2ad58d672d534a14c808320a5d666af62cbe017f14703d955bea2279cc1
+  - class: uniform_random
+    id: lanl17-prospective-20261006-a2-uniform_random.g18.k18.c0396050e37ceed6
+    identity_sha256: c0396050e37ceed6a26806a6b5f1b84c6593068f9b08d2cb9f0bc82aba1aa20f
+    record_sha256: ff1c946b6c13b12ac3beb597f8332fa384849e8ed3af6fbc3b45a212e847d79c
+    canonical_sha256: 327b80162cc83609a18e13dcb67f1e66e4468edeb13e43112975fcfb7e524925
+    sources: [0]
+    generation:
+      family: uniform_random
+      generator:
+        name: DX100 GAPBS converter
+        revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        command:
+        - /data1/yanruj/EvolveSWDB_builds/lanl17-prospective-inputs-20261006-a2/converter
+        - -u
+        - '18'
+        - -k
+        - '18'
+        - -b
+        - /data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2/lanl17-prospective-20261006-a2-uniform_random.g18.k18/graph-dx100.sg
+        parameters:
+          scale: 18
+          edge_factor: 18
+          seed: 27491095
+          symmetrize: true
+          explicit_symmetrize_flag: false
+          compiler: /usr/bin/g++-13
+          compile_flags: [-std=c++11, -O3, -fopenmp]
+          compiler_version_sha256: b240ade48d7a4743cb2e7940990dd5a8dbc15120543c7eadd9541435edd2efd2
+          environment:
+            OMP_NUM_THREADS: '1'
+            OMP_DYNAMIC: 'FALSE'
+          binary_sha256: a6cd0fd88a8de97decd087e9f1e43117ace95230f710b0bd7745f7bd33b492e6
+          source_sha256: 9b15a2ad58d672d534a14c808320a5d666af62cbe017f14703d955bea2279cc1
+  baselines:
+  - role: fork_scalar_tdstep
+    candidate: typed-library-bfs-gem5-20261003-a2.baseline
+    record_sha256: fde1e81baa8ead0579982c9cb164d65583fc300fb5cec42a4448c30408a4f1bc
+    artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+statistics:
+  rank_measure: kendall_tau_b
+  ratio: baseline_seconds/candidate_seconds
+  interval: connected_dependency_cluster_percentile_bootstrap
+  bootstrap_samples: 10000
+  bootstrap_seed: 20261006
+  confidence_level: 0.95
+  quantiles: [0.025, 0.975]
+  quantile_interpolation: linear
+  minimum_supported_independent_components: 4
+  minimum_defined_bootstrap_replicates: 9500
+  dependency_links:
+  - shared_generator_seed
+  - candidate_artifact
+  - provider_trajectory_or_parent_lineage
+  - reused_baseline_outcome
+  - campaign_trajectory
+  unresolved_dependency: unsupported_interval
+  top3_scope: every_campaign_and_workload_class
+  top3_order: estimated_speedup_descending_then_artifact_sha256
+  top3_requires_complete_ranking: true
+  interval_assumption: exchangeable_supported_dependency_components_only
+D30:
+  minimum_unique_eligible_dx100_pairs: 20
+  minimum_tau: 0.6
+  minimum_95_interval_lower_bound: 0.3
+  gem5_best_in_estimate_top3_every_campaign: true
+structural_missing:
+- no_verified_canonical_graph_complete_call_mmio_numeric_adapter
+identity_sha256: 5bae2f42d9078864caad73e81a16007edb6458f0b101628ded04a7ef3aedbf7d
