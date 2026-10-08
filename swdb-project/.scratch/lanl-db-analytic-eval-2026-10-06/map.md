@@ -59,6 +59,8 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 
 ## Context pointers
 
+- 2026-10-08 11:42 ET: [Fresh a5 preparation](evidence/17-fresh-a5-preparation-controls-20261008-a1/README.md) entered original guard; tracked53binding passed. Freeze/M2 and four campaigns pending. Test fixture closure repair active; canonical704validation and3math checks passed.
+
 - 2026-10-08 11:29 ET: [Failed PREPARE and tracked-source fix](evidence/17-failed-prepare-and-tracked-manifest-fix-20261008-a1/README.md) preserves actual failure. Hook now admits only an exact tracked original53-file manifest; scientific source/budgets remain frozen. Fresh a5 preparation pending.
 
 - 2026-10-08 11:20 ET: Yan-Ru resumed assigned work and authorized ongoing implementation/evaluation/sync. [Original retirement assessment](evidence/17-resumed-retirement-assessment-20261008-a1/README.md) confirms sixteen successful library-preserving retirements. Fresh host storage permits serial preparation; four campaigns/report remain pending. The 30-minute heartbeat now targets the resumed chat and is ACTIVE.
