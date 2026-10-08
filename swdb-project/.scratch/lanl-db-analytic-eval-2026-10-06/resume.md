@@ -1,6 +1,6 @@
 # Continue the analytic evaluator work
 
-Updated: 2026-10-08 15:21 ET
+Updated: 2026-10-08 15:30 ET
 
 **Active after Yan-Ru explicitly resumed work.** Fourteen of fifteen assigned agent tickets are resolved. Ticket 17 remains claimed; its acceptance boxes remain unchecked. The 30-minute heartbeat is ACTIVE on the resumed chat.
 
@@ -65,3 +65,5 @@ Selected local author is `/private/tmp/lanl17_finalize_p2_normal_release_request
 Before release32 freshly verify actual native512/no lock/noFD9/sourceR and original nativewrapper10510B/00c269 bytes/physical facts. Stage only exact finalized snapshot/request to fresh author-defined p2 routes, call unchanged32, collect original release custody. Keep node0 reserved. Future `/private/tmp/lanl17-p2-after-action-config-draft-20261008-a5.json` needs actual stop/release file SHA; resolve only originals. Fresh native check before B08 AFTER, run unchanged collector, collect original AFTER, fresh native check after it, review all original links/seals/state/summary/substantive ledger/calls; only then p3 admission. Neither32 nor B08 protects later native reuse. Generic private capture rejects0664/0777 originals; use selected reader and preserve permissions.
 
 For p3/p4, source-only generation uses `/private/tmp/lanl17_derive_later_campaign_release_sources_20261008_a5_r2.py`,11301B/SHA2937192c0f08a4d1ffe4d7190567746295f6a3b8e35fae2e5a45393fdaa66f84, with actual CID/dispatch/lane originals and hashes. Original input handoffR1 CLI remains, change only generator basename. Review actual generated diffs before use. No guessed later generation, source/policy/budget/full-catalog change or stopped-state resume. All selected controls and evidence are byte-archived in the latest p2 README/inventory.
+
+2026-10-08 15:30 ET — [P2 public startup checkpoint](evidence/17-actual-p2-dispatch-and-release-readiness-20261008-a5/README.md) preserves exact15:22 and15:28 monitor/process originals. Public campaign PID2274215 advances from480 to34062 user ticks; full public query index951750656B and pairing/records directory exist. No actual state, completed provider call, iteration or terminal metadata yet; matched node0/g512 remains held. p1 retains normal plateau4 stop/release/AFTER custody; p3/p4 queued. No dispatch, scientific source/policy/budget/full-catalog or native mutation repeated. All scoped agents complete/responsive, no stranded worker. Next required table/health check15:45 ET; final evaluation/report/strict audit/Standards+Spec review and fixes remain pending. Ticket17 claimed, acceptance unchecked; remote primary stays R and heartbeat stays ACTIVE.

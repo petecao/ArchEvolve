@@ -1,6 +1,6 @@
 # Actual p2 dispatch and release readiness
 
-Updated: 2026-10-08 15:20 ET.
+Updated: 2026-10-08 15:30 ET.
 
 **p2 attempt1 is active on node0, acquired native generation512. Original dispatch and dispatch-state32 custody succeeded. No p2 terminal stop, normal completion or release is admitted.** p1 normal plateau4 has complete stop/release/AFTER custody; final strict scientific audit remains pending. p3–p4 are queued. Fourteen of fifteen assigned tickets are resolved;17 stays claimed.
 
@@ -29,3 +29,5 @@ Required15:15 ET table and agent-health check completed: p1 normal custody compl
 This unsealed archive preserves exact approved compact metadata/project sources only; original state/provider/log/build output stays remote. It is not final trajectory/pair/D30 admission. Inventory verifies every copied original. Finalize/report/full catalog indices/accepted pins/strict audit and human-owned ticket18 recommendation remain required; human-owned statuses are preserved.
 
 Independent actual dispatch-state32 and future terminal/AFTER draft review passed: original receipt6971B/109b, terminaldraft9088B/02ab22 and AFTERdraft3398B/806b9e. Source correction changes historical provenance only; no future terminal action executed.
+
+At15:22 ET the owned public campaign process started after immutable in-lane checks. Exact15:28 ET originals show publicPID2274215/start598927272 advancing from480 to34062 user ticks, full public query index951750656B and pairing/records directory present. State, provider calls, iterations and terminal metadata remain absent; node0g512 stays matched/held. Monitor5037B/SHA0bfc2a14320cd34dabb56743e53684592e5ead58b427660de35e4aeb39fbef2a and process3904B/SHAf9eaffe0f320ba18be633d2fd82e8caddf07f756252872bd42f2780a05f5af8b are exact decoded originals, not reconstructed JSON. All scoped agents are responsive/completed. Next required table/agent check15:45 ET. No source, budget, catalog, native lease or campaign dispatch changed.

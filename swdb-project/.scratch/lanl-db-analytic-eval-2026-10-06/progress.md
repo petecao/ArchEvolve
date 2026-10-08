@@ -1,11 +1,13 @@
 # Implementation progress
 
-Updated: 2026-10-08 14:47 ET
+Updated: 2026-10-08 15:30 ET
 
 **Current state: ACTIVE after Yan-Ru's explicit resumption; 14/15 assigned tickets resolved.**
 Ticket 17 remains `claimed`, with acceptance pending. Start from [resume.md](resume.md).
 The 30-minute heartbeat `lanl-analytic-evaluator-progress` is ACTIVE on the resumed chat.
 Readiness and evidence-review agents are responsive; completed subtasks are retained.
+
+**Latest checkpoint15:28 ET:** p1 normal plateau4 has complete interim custody; p2 active public process/node0g512 with0 completed iterations; p3/p4 queued. Final strict audit is pending. Historical checkpoints below retain their original observation times.
 
 [Current p1 startup checkpoint](evidence/17-active-p1-startup-and-p2-preparation-20261008-a5/README.md):13:11 ET metadata confirms public query-index completion, pairing/setup entry and advancing owned CPU. State/iterations and protocol/provider/terminal receipts remain absent. Source-only p2 commands are reviewed, with fresh admission still required. The13:11 ET evaluation table and responsive agent check are complete; next required table13:41 ET.
 
@@ -30,7 +32,7 @@ writing-preference rule is committed as `cb6f75ae`. Evaluation state is unchange
 | Ticket 14 generality | Resolved; nine pairs/45 trials, seven unknown totals | Preserve original receipts and qualified unknowns |
 | Corrected storage DEFAULT a3 | Actual original receipt reviewed; guard exit 0 | Limited inspection only; do not repeat |
 | Storage RETIRE a4 / actual a5 | Original successful sixteen-row receipt reviewed and retained | Do not repeat retirement or DEFAULT |
-| Ticket 17 science | PREPARE and FIRST publication succeeded; 0/4 substantive normal campaigns | p1 plateau summary,4 iterations; final stop/release/report pending |
+| Ticket 17 science | PREPARE/FIRST and p1 normal stop/release/AFTER succeeded; p2 active with0 iterations | p2–p4 normal custody, final report and strict audit pending |
 | Final review and completion | Pending after all assigned work completes | Standards + Spec review, fixes, final ticket closure |
 
 The following paragraphs retain pause-era observations; the current active state is above.
@@ -445,3 +447,5 @@ Live host check 04:39:31Z: both socket/legacy leases released; /data1 free 23,56
 2026-10-08 15:03 ET — [Original p1 normal stop/release/AFTER](evidence/17-p1-normal-stop-release-after-20261008-a5/README.md) complete: four iterations/eight candidate rows/nine completed calls, plateau4, all four exits0, source clean/no survivors. Release32 c6ed81b5 and B08 AFTER aed96b7d originals/seals/links passed root and independent interim review. Fresh native checks before32 and before/afterAFTER show released node0g511/no matching kernel lock/no FD9. Native whole-second precision fixed only in extra private readerR2/finalizerR4; originals and frozen controls unchanged. One normal trajectory has complete custody; final strict audit/D30 admission remain pending. p2 BEFORE766efc49 shows absent state/no invocations; refreshed single-lane floors/leases/sourceR/process/load/GPU admission passed, and unchanged p2 attempt1 node0 dispatcher is running once. Serial evaluation preserves unrelated Quicksilver. Ticket17 claimed/all acceptance unchecked, other tickets untouched. Next required table/agent-health15:15 ET; final three campaigns/FINALIZE/report/audit/review/sync pending.
 
 2026-10-08 15:21 ET — [Actual p2 dispatch/readiness](evidence/17-actual-p2-dispatch-and-release-readiness-20261008-a5/README.md): original p2 attempt1 dispatch44111B/c0c35fa2 and dispatch-state32 custody6971B/109b5599 succeeded; native acquired generation512 from actual owned lane1065B/32629519, never inferred. Latest15:17 ET R2 observer held512 with matching FLOCK/daemonFD9, no unknown, missing final stops/exits; release_ready=False. Owned helper active in immutable in-lane checks; public state/iterations initially absent. One normal trajectory (p1 plateau4/4 iterations/8 rows/9 calls) has complete interim stop/release/AFTER custody; final strict audit/report still pending. p3/p4 queued; serial original floors and Quicksilver preserved. Required15:15 table/agent-health completed; agents responsive/completed scoped work, no stranded worker; next required checkpoint15:45 ET. Selected p2 future release draftR2/78b256 + authorR5/8578b270 after historical-provenance-only correction, reader53af/observer3f899 unchanged. Terminal and AFTER drafts peer-reviewed NOTRUN, all final acceptance unchecked. Future p3/p4 generatorR2/2937192c requires actual dispatch/lane/generation; never inherit512. Heartbeat ACTIVE same30-minute schedule/target refreshed with actual p1/p2 paths. Local administrative sync advances separately; remote PRIMARY+origin remain scientific R until original custody/finalize guards finish. Final evaluations/FINALIZE/report/audit/Standards+Spec review/fixes/ticket/Git sync pending.
+
+2026-10-08 15:30 ET — [P2 public startup checkpoint](evidence/17-actual-p2-dispatch-and-release-readiness-20261008-a5/README.md) preserves exact15:22 and15:28 monitor/process originals. Public campaign PID2274215 advances from480 to34062 user ticks; full public query index951750656B and pairing/records directory exist. No actual state, completed provider call, iteration or terminal metadata yet; matched node0/g512 remains held. p1 retains normal plateau4 stop/release/AFTER custody; p3/p4 queued. No dispatch, scientific source/policy/budget/full-catalog or native mutation repeated. All scoped agents complete/responsive, no stranded worker. Next required table/health check15:45 ET; final evaluation/report/strict audit/Standards+Spec review and fixes remain pending. Ticket17 claimed, acceptance unchecked; remote primary stays R and heartbeat stays ACTIVE.
