@@ -43,3 +43,7 @@ outcomes are reused; publication does not rerun numerical or simulation evidence
 NZA payload initialization, CSR/input shape, whole-indexer EOF/progress, actual
 consumer arithmetic and whole-kernel numerical validation remain separate. This
 batch changes no catalog capability and grants no BMU or performance acceptance.
+
+## CSR and consumer follow-through
+
+The [CSR admission and row-boundary package](../../../../examples/mechanism-scaffolds/smash-csr-consumer/README.md) adds an opt-in caller-count check and the exact consumer rollover comparison. These leave parser length retention, value/NZA initialization and full numerical acceptance unresolved.

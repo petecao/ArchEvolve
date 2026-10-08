@@ -1,0 +1,17 @@
+{
+  "required_input": "positive columns, source-bound starting row/column and finite original block width",
+  "new_experiment": "intercept own metadata indices for columns2, start column1, width2; do not read FP payloads",
+  "expected_supported_indices": [
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "old_condition": "j > matrix_smash.columns",
+  "candidate_condition": "j >= matrix_smash.columns",
+  "unproved": "full arithmetic, defined NZA values and public hardware/ISA behavior"
+}
