@@ -1,7 +1,7 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-08 12:54 ET
+Updated: 2026-10-08 13:13 ET
 **Type:** slice
 **Status:** claimed
 **Work state:** active (explicitly resumed 2026-10-08)
@@ -121,3 +121,6 @@ worker is collected and the frozen-primary guard is handled explicitly.
 
 
 2026-10-08 12:54 ET — [Actual p1 dispatch](../evidence/17-actual-p1-dispatch-20261008-a5/README.md) returned0; original preregistration44,229B/7e63d493 and producer32 dispatch-state6,971B/70c88da3 reviewed. Node0 held by matching owned attempt1, nativegeneration511; node1/legacy released. In-lane helper input checks active; zero state/iterations in12:51 monitor.0/4 substantive normal completions. No source/policy/budget/catalog changes; heartbeat ACTIVE with current paths. Future release/after and FINALIZE/index/audit source worksheets retained.
+
+
+2026-10-08 13:13 ET — [Active p1 startup and p2 preparation](../evidence/17-active-p1-startup-and-p2-preparation-20261008-a5/README.md) retain exact13:11 ET metadata. Public p1 query index built, pairing/setup entered, owned CPU advances; no state/iterations/terminal custody yet. P2 commands are reviewed source-only; PRIMARY/origin must freshly equal R and all unchanged admission floors remain required. Agent liveness/status table checked13:11 ET, next13:41 ET. Four substantive campaigns, D30 report and final two-axis review remain pending; acceptance/status stay claimed.

@@ -1,11 +1,13 @@
 # Implementation progress
 
-Updated: 2026-10-08 12:54 ET
+Updated: 2026-10-08 13:13 ET
 
 **Current state: ACTIVE after Yan-Ru's explicit resumption; 14/15 assigned tickets resolved.**
 Ticket 17 remains `claimed`, with acceptance pending. Start from [resume.md](resume.md).
 The 30-minute heartbeat `lanl-analytic-evaluator-progress` is ACTIVE on the resumed chat.
 Readiness and evidence-review agents are responsive; completed subtasks are retained.
+
+[Current p1 startup checkpoint](evidence/17-active-p1-startup-and-p2-preparation-20261008-a5/README.md):13:11 ET metadata confirms public query-index completion, pairing/setup entry and advancing owned CPU. State/iterations and protocol/provider/terminal receipts remain absent. Source-only p2 commands are reviewed, with fresh admission still required. The13:11 ET evaluation table and responsive agent check are complete; next required table13:41 ET.
 
 Approved [local cleanup](local-worktree-cleanup-20261008.md) archived and removed
 17 completed checkouts and their merged local branches. Main, integration and
@@ -18,8 +20,10 @@ writing-preference rule is committed as `cb6f75ae`. Evaluation state is unchange
 | Ticket 14 generality | Resolved; nine pairs/45 trials, seven unknown totals | Preserve original receipts and qualified unknowns |
 | Corrected storage DEFAULT a3 | Actual original receipt reviewed; guard exit 0 | Limited inspection only; do not repeat |
 | Storage RETIRE a4 / actual a5 | Original successful sixteen-row receipt reviewed and retained | Do not repeat retirement or DEFAULT |
-| Ticket 17 science | PREPARE and FIRST publication succeeded; 0/4 substantive normal campaigns | p1 active node0/g511; four normal trajectories and report pending |
+| Ticket 17 science | PREPARE and FIRST publication succeeded; 0/4 substantive normal campaigns | p1 public setup active node0/g511; four normal trajectories and report pending |
 | Final review and completion | Pending after all assigned work completes | Standards + Spec review, fixes, final ticket closure |
+
+The following paragraphs retain pause-era observations; the current active state is above.
 
 [Pause custody](evidence/17-user-pause-custody-20261008-a1/README.md) preserves
 168 exact originals and the newest failed/corrected preparations, successful
@@ -40,7 +44,7 @@ Approved [remote branch cleanup](branch-cleanup-result-20261008.md) deleted 37 m
 ## Earlier checkpoints (historical)
 
 The entries below retain their original observations and work states. Current
-pause/monitor/sync state is the checkpoint above and the resume guide.
+active monitor/sync state is the checkpoint above and the resume guide.
 
 **14 of15 assigned tickets resolved and integrated.** Status: 2:resolved, 3:resolved, 4:resolved, 5:resolved, 6:resolved, 7:resolved, 8:resolved, 9:resolved, 10:resolved, 11:resolved, 12:resolved, 13:resolved, 14:resolved, 16:resolved, 17:claimed. Ticket14 original nine-pair run, export and selected-nine reader are admitted and its Answer/map closure is integrated. Nine pairs/45 trials retain two predicted CPU totals, seven unknown totals, all null ratios/bands and MAPLE estimate-only; no accuracy or measured speedup claim. Ticket17 remains claimed; the fresh, separately byte-pinned parent declaration below records its actual phase and control/campaign state. Frozen population before outcomes, four substantive normal-terminal campaigns and unchanged D30 remain its requirements. Parent owns SSH/dispatch; agents are checked at this checkpoint. Final two-axis review/fixes, final ticket sync, recoverable owned-worktree cleanup and heartbeat pause remain required.
 
