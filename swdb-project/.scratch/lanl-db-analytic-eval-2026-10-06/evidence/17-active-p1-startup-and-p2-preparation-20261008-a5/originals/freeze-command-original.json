@@ -1,0 +1,20 @@
+{
+  "stage": "freeze",
+  "command": [
+    "/usr/bin/python3",
+    "-m",
+    "swdb",
+    "freeze-protocol",
+    "--records",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p1/records",
+    "--format",
+    "json",
+    "--db",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p1/campaign.sqlite",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p1/jobs/freeze.request.json"
+  ],
+  "started": 1791479706.6072152,
+  "timeout_seconds": 600,
+  "returncode": 0,
+  "finished": 1791479709.2286336
+}

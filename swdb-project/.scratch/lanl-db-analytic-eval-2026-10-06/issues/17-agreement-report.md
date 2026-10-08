@@ -1,7 +1,7 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-08 13:13 ET
+Updated: 2026-10-08 13:19 ET
 **Type:** slice
 **Status:** claimed
 **Work state:** active (explicitly resumed 2026-10-08)
@@ -124,3 +124,6 @@ worker is collected and the frozen-primary guard is handled explicitly.
 
 
 2026-10-08 13:13 ET — [Active p1 startup and p2 preparation](../evidence/17-active-p1-startup-and-p2-preparation-20261008-a5/README.md) retain exact13:11 ET metadata. Public p1 query index built, pairing/setup entered, owned CPU advances; no state/iterations/terminal custody yet. P2 commands are reviewed source-only; PRIMARY/origin must freshly equal R and all unchanged admission floors remain required. Agent liveness/status table checked13:11 ET, next13:41 ET. Four substantive campaigns, D30 report and final two-axis review remain pending; acceptance/status stay claimed.
+
+
+2026-10-08 13:19 ET — The13:15 ET [phase addendum](../evidence/17-active-p1-startup-and-p2-preparation-20261008-a5/README.md) confirms public freeze.command return0 and live owned Codex setup call1 on matching held node0/g511. No provider outcome body, iteration or normal trajectory is admitted. Original failed generic-mode collection remains separate from exact native metadata-reader capture; no chmod/scientific repeat. Agents complete/responsive; next heartbeat13:45 ET. Ticket17 stays claimed and all acceptance gates remain pending.
