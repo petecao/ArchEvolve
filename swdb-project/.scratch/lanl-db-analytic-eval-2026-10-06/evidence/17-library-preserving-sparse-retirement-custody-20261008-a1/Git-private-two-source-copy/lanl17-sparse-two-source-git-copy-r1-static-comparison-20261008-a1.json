@@ -1,0 +1,78 @@
+{
+  "format": "swdb.sparse-two-source-copy-r1-source-only-static.v1",
+  "sealed": false,
+  "created_date_et": "2026-10-08",
+  "source_pairs": [
+    {
+      "original": {
+        "path": "/private/tmp/lanl17_copy_sparse_retirement_sources_from_administrative_git_20261008_a1.py",
+        "bytes": 11785,
+        "sha256": "0306692835cc580bf11672f15dc43f50b93051a4e64029d35163b34e7ac5ca59"
+      },
+      "selected_r1": {
+        "path": "/private/tmp/lanl17_copy_sparse_retirement_sources_from_administrative_git_20261008_a1_r1.py",
+        "bytes": 11828,
+        "sha256": "94f5f33bda82c7d64a9c4644c6630aa5fde598fc7d950d94e7ab74e3e60a37a9"
+      },
+      "complete_diff": {
+        "path": "/private/tmp/lanl17-sparse-two-source-copier-r1-complete-original-derivation-20261008.diff",
+        "bytes": 1725,
+        "sha256": "d741e600a6a286b951ea9395261b8de0596107bfe83a76befe47dcad7267c7c4"
+      },
+      "only_changed_definition": "git",
+      "unchanged_definitions": [
+        "Refused",
+        "interrupted",
+        "require",
+        "sha",
+        "stamp",
+        "identity",
+        "canonical",
+        "private_base",
+        "read",
+        "core_state",
+        "stop",
+        "refs",
+        "blob",
+        "main"
+      ],
+      "whole_byte_reversal_exact": true,
+      "selected_ast_sha256": "9b06fece1c879e075a2dee44e4a1a5b862f0ef6982e96e4d196a6b78457ca231",
+      "bootstrap_REL_changed_only_when_applicable": false
+    },
+    {
+      "original": {
+        "path": "/private/tmp/lanl17_sparse_retirement_copy_native_stdin_bootstrap_20261008_a1.py",
+        "bytes": 5546,
+        "sha256": "828ca407b403ba225f4d9227095e2879ac54fe25f4793408fbf311796fb5c07b"
+      },
+      "selected_r1": {
+        "path": "/private/tmp/lanl17_sparse_retirement_copy_native_stdin_bootstrap_20261008_a1_r1.py",
+        "bytes": 5620,
+        "sha256": "fd3c44fdcb7c69e6b6bfbe27221a8508547657b94e7af4b94bec47fc2cd09d8b"
+      },
+      "complete_diff": {
+        "path": "/private/tmp/lanl17-sparse-two-source-bootstrap-r1-complete-original-derivation-20261008.diff",
+        "bytes": 1986,
+        "sha256": "b7ddc3b3d123ee80f88639ed0c72d56c68e8f4543b9b45590ee43b46fea91f3c"
+      },
+      "only_changed_definition": "git",
+      "unchanged_definitions": [
+        "Refused",
+        "interrupted",
+        "require",
+        "sha",
+        "stamp",
+        "native",
+        "main"
+      ],
+      "whole_byte_reversal_exact": true,
+      "selected_ast_sha256": "124024530de8b102d1553c520afa210b35c57279d78d5a4a9491f81e15d7e345",
+      "bootstrap_REL_changed_only_when_applicable": true
+    }
+  ],
+  "scope": "Source text derivation/AST parse only; no target imports/definition compile/tests/main/Git/SSH/project mutation",
+  "status": "NOT RUN",
+  "scientific_control_sources_or_caps_changed": false,
+  "additional_copied_source_rows": 0
+}

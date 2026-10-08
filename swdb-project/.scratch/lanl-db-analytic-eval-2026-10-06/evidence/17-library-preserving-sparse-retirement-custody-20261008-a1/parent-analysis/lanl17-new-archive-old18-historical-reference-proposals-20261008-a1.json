@@ -1,0 +1,980 @@
+{
+  "Git_revision_not_independently_queried": true,
+  "archives": [
+    {
+      "README_pin": {
+        "bytes": 1852,
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/README.md",
+        "sha256": "76615ef51248d74e323a9f7a7b08c3000cd4def22ab52b1bb14d9510598da105"
+      },
+      "archive_directory": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1",
+      "descriptor_pin": {
+        "bytes": 307526,
+        "identity_sha256": "f97713a38a7fa282ad32502addb6a9e12a3d4842ea3ad9849e31867678acfaed",
+        "original_canonical_ensure_ascii": true,
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/manifest.json",
+        "sha256": "41274ef149c7e1a21aba0527afad779dcb88f84b66f539fccad2144a0b68c456"
+      },
+      "file_count": 258,
+      "local_read_root": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1",
+      "original_descriptor_rows": 256
+    },
+    {
+      "README_pin": {
+        "bytes": 801,
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-parent-publication-custody-20261008-a1/README.md",
+        "sha256": "30cdb970a48bb1cef2d0ce4a26517068033a4c940b884c8fdadc4c8e41ebf28f"
+      },
+      "archive_directory": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-parent-publication-custody-20261008-a1",
+      "descriptor_pin": {
+        "bytes": 4073,
+        "identity_sha256": "9b0c270e719b308ab08dbdb46d2e5819688ddcf55b486c9583c99ce4953f6b70",
+        "original_canonical_ensure_ascii": true,
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-parent-publication-custody-20261008-a1/originals.json",
+        "sha256": "32af8a2db9cf9f0b16b0008eda1fc5d3a35095a60df3f4ae2f5a9e8935876b65"
+      },
+      "file_count": 9,
+      "local_read_root": "/Users/yanrujhou/.codex/worktrees/lanl-analytic-eval/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-parent-publication-custody-20261008-a1",
+      "original_descriptor_rows": 7
+    }
+  ],
+  "census": {
+    "all267_local_path_size_SHA_inventory_sha256": "dbcbbda2dd6503b8da2ba95f52c50ad5bcc8ee2e9b0a57275cc836ca82d11bca",
+    "all_local_archive_paths_inspected": 267,
+    "compressed_originals_not_plain_scanned": 5,
+    "hit_counts_by_manifest_scope": {
+      "admin-birth": 2,
+      "checkout-birth": 1,
+      "portal-initial-source-history": 1,
+      "portal-scoped-source": 1,
+      "queued-dependency-query": 1,
+      "reference-queries": 3,
+      "semantic-candidates": 1
+    },
+    "not_a_Git_tree_or_queue_attestation": true,
+    "other_plain_nonmetadata_suffix_files": 81,
+    "plain_metadata_suffix_files_scanned": 181,
+    "plain_metadata_suffix_files_with_literal_hits": 10,
+    "plain_metadata_suffix_files_without_literal_hits": 171
+  },
+  "cleanup_subset_or_capacity_or_scientific_admission": false,
+  "compressed_originals": [
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/checkout-birth/lanl17-exact-checkout-inode-birth-query-original-20261008-a1.json.gz",
+      "decompression_equality_is_original_manifest_fact": true,
+      "decompression_or_plain_literal_scan_performed_here": false,
+      "manifest_original_index": 38,
+      "original_bytes": 14762700,
+      "original_path": "/private/tmp/lanl17-exact-checkout-inode-birth-query-original-20261008-a1.json",
+      "original_policy": {
+        "kind": "original_unsealed_JSON",
+        "original_sealed_field": false
+      },
+      "original_sha256": "e228811f4b119a7e0c97b666b7da249374f3637cef8b17c0b10b54c4ff422fb7",
+      "scope": "checkout-birth",
+      "storage_codec": "gzip_mtime0",
+      "stored_bytes": 1354721,
+      "stored_sha256": "0645a4b9ea24c48bd009142a9e9bbc496b2620690f54c287db819fa9cda3d28c"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/observer-a4/observer.stdout.gz",
+      "decompression_equality_is_original_manifest_fact": true,
+      "decompression_or_plain_literal_scan_performed_here": false,
+      "manifest_original_index": 6,
+      "original_bytes": 22690685,
+      "original_path": "/private/tmp/lanl17-detached-passive-observer-originals-20261008-a4/observer.stdout",
+      "original_policy": {
+        "kind": "opaque_exact_original_bytes"
+      },
+      "original_sha256": "11ea70d17d182b893f8bf353edeedfc08808f5b955b1c603492086b7d97f3cbd",
+      "scope": "observer-a4",
+      "storage_codec": "gzip_mtime0",
+      "stored_bytes": 2879547,
+      "stored_sha256": "e28ea863c8a4b5c25e88c538434d7de6b18d8c1a7a722aa3038dabbeb0b0ccb7"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/reference-queries/lanl17-fixed111-original-RAW-reference-context-query-actual-20261008-a1.json.gz",
+      "decompression_equality_is_original_manifest_fact": true,
+      "decompression_or_plain_literal_scan_performed_here": false,
+      "manifest_original_index": 17,
+      "original_bytes": 33026896,
+      "original_path": "/private/tmp/lanl17-fixed111-original-RAW-reference-context-query-actual-20261008-a1.json",
+      "original_policy": {
+        "kind": "original_unsealed_JSON",
+        "original_sealed_field": false
+      },
+      "original_sha256": "1efb74e79b693a06281066820442b46d4260ff8b726af08496edad55ccf8515d",
+      "scope": "reference-queries",
+      "storage_codec": "gzip_mtime0",
+      "stored_bytes": 422337,
+      "stored_sha256": "9ff7309abbf0cf1ff9768ff429c857e9e38be1fd487ef99b254c1a8a8dc50ea6"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/reference-queries/lanl17-fixed68-original-RAW-reference-context-query-actual-20261008-a1.json.gz",
+      "decompression_equality_is_original_manifest_fact": true,
+      "decompression_or_plain_literal_scan_performed_here": false,
+      "manifest_original_index": 26,
+      "original_bytes": 1265820,
+      "original_path": "/private/tmp/lanl17-fixed68-original-RAW-reference-context-query-actual-20261008-a1.json",
+      "original_policy": {
+        "kind": "original_unsealed_JSON",
+        "original_sealed_field": false
+      },
+      "original_sha256": "8a29d56165b21018c156826e9895cf0fd03eec83727e03f6997e6f9400d50b34",
+      "scope": "reference-queries",
+      "storage_codec": "gzip_mtime0",
+      "stored_bytes": 70664,
+      "stored_sha256": "a0fda40618c0c6e2cdd28bd8fed228f1ce9bdd9bc19e52a604aecadf706862bb"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/semantic-candidates/lanl17-all697-observed-reference-semantic-candidates-20261008-a1.json.gz",
+      "decompression_equality_is_original_manifest_fact": true,
+      "decompression_or_plain_literal_scan_performed_here": false,
+      "manifest_original_index": 28,
+      "original_bytes": 2362572,
+      "original_path": "/private/tmp/lanl17-all697-observed-reference-semantic-candidates-20261008-a1.json",
+      "original_policy": {
+        "kind": "original_unsealed_JSON",
+        "original_sealed_field": false
+      },
+      "original_sha256": "5dcd13743f7e6ea5e4fe7511708e4f5ec21670ab053e631c69de9fe290b81c18",
+      "scope": "semantic-candidates",
+      "storage_codec": "gzip_mtime0",
+      "stored_bytes": 152129,
+      "stored_sha256": "1496c787f49fe38324158d4edb2dffc78fbbf03946d765120f021b91071c8c1f"
+    }
+  ],
+  "delivered_revision_attributed_to_parent": "5e12a9796432654d88def24ecea617d16ca605b2",
+  "delivered_tree_attributed_to_parent": "1ab2c8ab147251391a4af75e637114bdd5b0ff27",
+  "eighteen_row_paths": {
+    "ArchEvolve-lanl-allocator-a2-20261006": "/data1/yanruj/ArchEvolve-lanl-allocator-a2-20261006",
+    "ArchEvolve-lanl-bulk-services-20261006-a1": "/data1/yanruj/ArchEvolve-lanl-bulk-services-20261006-a1",
+    "ArchEvolve-lanl-bulk-total-services-20261006-a1": "/data1/yanruj/ArchEvolve-lanl-bulk-total-services-20261006-a1",
+    "ArchEvolve-lanl-clock-a2-20261006": "/data1/yanruj/ArchEvolve-lanl-clock-a2-20261006",
+    "ArchEvolve-lanl-count-20261006": "/data1/yanruj/ArchEvolve-lanl-count-20261006",
+    "ArchEvolve-lanl-estimates-20261006": "/data1/yanruj/ArchEvolve-lanl-estimates-20261006",
+    "ArchEvolve-lanl-estimation-role-20261006-a1": "/data1/yanruj/ArchEvolve-lanl-estimation-role-20261006-a1",
+    "ArchEvolve-lanl-estimation-role-20261006-a2": "/data1/yanruj/ArchEvolve-lanl-estimation-role-20261006-a2",
+    "ArchEvolve-lanl-float-memory-services-20261006-a1": "/data1/yanruj/ArchEvolve-lanl-float-memory-services-20261006-a1",
+    "ArchEvolve-lanl-functional-evaluation-20261006-a1": "/data1/yanruj/ArchEvolve-lanl-functional-evaluation-20261006-a1",
+    "ArchEvolve-lanl-functional-object-counts-20261006-a2": "/data1/yanruj/ArchEvolve-lanl-functional-object-counts-20261006-a2",
+    "ArchEvolve-lanl-functional-strict-20261006": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006",
+    "ArchEvolve-lanl-independent-services-20261006-a1": "/data1/yanruj/ArchEvolve-lanl-independent-services-20261006-a1",
+    "ArchEvolve-lanl-memory-a1-20261006": "/data1/yanruj/ArchEvolve-lanl-memory-a1-20261006",
+    "ArchEvolve-lanl-native-object-counts-20261006-a1": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1",
+    "ArchEvolve-lanl-openmp-projections-20261006-a1": "/data1/yanruj/ArchEvolve-lanl-openmp-projections-20261006-a1",
+    "ArchEvolve-lanl-prospective-inputs-20261006-a2": "/data1/yanruj/ArchEvolve-lanl-prospective-inputs-20261006-a2",
+    "ArchEvolve-lanl-root-projection-20261006": "/data1/yanruj/ArchEvolve-lanl-root-projection-20261006"
+  },
+  "format": "swdb.local-new-archive-old18-reference-classification-proposals.v1",
+  "historical_only_proposals_accepted": false,
+  "match_rule": "exact UTF8 old ROW path byte strings as literal substrings; matching is not dereference/alias proof",
+  "metadata_suffixes": [
+    ".json",
+    ".md",
+    ".py",
+    ".sh",
+    ".txt",
+    ".yaml",
+    ".yml"
+  ],
+  "prepared_date_ET": "2026-10-08",
+  "proposals": [
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/admin-birth/lanl17-exact-worktree-administration-inode-birth-original-actual-20261008-a1.json",
+      "bytes": 139083,
+      "classification_is_proposal_only": true,
+      "current_physical_alias_and_queue_review_still_required": true,
+      "exact_reference_contexts": [
+        {
+          "JSON_pointer_shape": [
+            "rows",
+            "*index",
+            "fixed_administration_definition",
+            "original_checkout_path"
+          ],
+          "matching_string_leaves": 18
+        },
+        {
+          "JSON_pointer_shape": [
+            "rows",
+            "*index",
+            "g5_definition",
+            "path"
+          ],
+          "matching_string_leaves": 18
+        }
+      ],
+      "manifest_descriptor_pin": {
+        "bytes": 307526,
+        "identity_sha256": "f97713a38a7fa282ad32502addb6a9e12a3d4842ea3ad9849e31867678acfaed",
+        "original_canonical_ensure_ascii": true,
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/manifest.json",
+        "sha256": "41274ef149c7e1a21aba0527afad779dcb88f84b66f539fccad2144a0b68c456"
+      },
+      "manifest_original_index": 47,
+      "matched_candidate_rows": [
+        "ArchEvolve-lanl-allocator-a2-20261006",
+        "ArchEvolve-lanl-bulk-services-20261006-a1",
+        "ArchEvolve-lanl-bulk-total-services-20261006-a1",
+        "ArchEvolve-lanl-clock-a2-20261006",
+        "ArchEvolve-lanl-float-memory-services-20261006-a1",
+        "ArchEvolve-lanl-independent-services-20261006-a1",
+        "ArchEvolve-lanl-memory-a1-20261006",
+        "ArchEvolve-lanl-estimation-role-20261006-a1",
+        "ArchEvolve-lanl-estimation-role-20261006-a2",
+        "ArchEvolve-lanl-openmp-projections-20261006-a1",
+        "ArchEvolve-lanl-native-object-counts-20261006-a1",
+        "ArchEvolve-lanl-count-20261006",
+        "ArchEvolve-lanl-estimates-20261006",
+        "ArchEvolve-lanl-functional-evaluation-20261006-a1",
+        "ArchEvolve-lanl-functional-object-counts-20261006-a2",
+        "ArchEvolve-lanl-functional-strict-20261006",
+        "ArchEvolve-lanl-prospective-inputs-20261006-a2",
+        "ArchEvolve-lanl-root-projection-20261006"
+      ],
+      "new_body_or_policy_rewrite": false,
+      "original_descriptor": {
+        "content_class": "bounded_metadata_original",
+        "decompressed_original_bytes": 139083,
+        "decompressed_original_sha256": "a62b53bd4c9f89c3a212690750905c6cf13203fca8fceee560a9ad9ee25a1dd5",
+        "decompression_equals_original_byte_pin": true,
+        "original_bytes": 139083,
+        "original_path": "/private/tmp/lanl17-exact-worktree-administration-inode-birth-original-actual-20261008-a1.json",
+        "original_policy": {
+          "kind": "original_unsealed_JSON",
+          "original_sealed_field": false
+        },
+        "original_sha256": "a62b53bd4c9f89c3a212690750905c6cf13203fca8fceee560a9ad9ee25a1dd5",
+        "scope": "admin-birth",
+        "storage_codec": "plain",
+        "stored_bytes": 139083,
+        "stored_relative_path": "admin-birth/lanl17-exact-worktree-administration-inode-birth-original-actual-20261008-a1.json",
+        "stored_sha256": "a62b53bd4c9f89c3a212690750905c6cf13203fca8fceee560a9ad9ee25a1dd5",
+        "stored_stat": {
+          "ctime_ns": 1791447173671759138,
+          "dev": 16777229,
+          "gid": 20,
+          "ino": 349979393,
+          "mode": 33152,
+          "mtime_ns": 1791447173671759138,
+          "nlink": 1,
+          "size": 139083,
+          "uid": 501
+        }
+      },
+      "per_file_historical_basis": "The original administration-birth snapshot stores checkout identifiers only at rows[].g5_definition.path and rows[].fixed_administration_definition.original_checkout_path. They identify the prior query comparison universe and original Git pointer mapping. This archive copy is original proof metadata; the separately copied ROLE input is used only for exact inode/role qualification, not to supply a future campaign source. Current administrative use and queue state still require separate parent binding.",
+      "proposed_reference_class": "retained_original_metadata",
+      "sha256": "a62b53bd4c9f89c3a212690750905c6cf13203fca8fceee560a9ad9ee25a1dd5"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/admin-birth/lanl17_exact_worktree_administration_inode_birth_readonly_query_20261008_a1.py",
+      "bytes": 52031,
+      "classification_is_proposal_only": true,
+      "current_physical_alias_and_queue_review_still_required": true,
+      "exact_reference_contexts": [
+        {
+          "AST_ancestor_contexts": [
+            "assignment:ADMIN_ROUTES"
+          ],
+          "line": 26,
+          "matching_string_constants": 18
+        },
+        {
+          "AST_ancestor_contexts": [
+            "assignment:ROWS"
+          ],
+          "line": 36,
+          "matching_string_constants": 18
+        }
+      ],
+      "manifest_descriptor_pin": {
+        "bytes": 307526,
+        "identity_sha256": "f97713a38a7fa282ad32502addb6a9e12a3d4842ea3ad9849e31867678acfaed",
+        "original_canonical_ensure_ascii": true,
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/manifest.json",
+        "sha256": "41274ef149c7e1a21aba0527afad779dcb88f84b66f539fccad2144a0b68c456"
+      },
+      "manifest_original_index": 41,
+      "matched_candidate_rows": [
+        "ArchEvolve-lanl-allocator-a2-20261006",
+        "ArchEvolve-lanl-bulk-services-20261006-a1",
+        "ArchEvolve-lanl-bulk-total-services-20261006-a1",
+        "ArchEvolve-lanl-clock-a2-20261006",
+        "ArchEvolve-lanl-float-memory-services-20261006-a1",
+        "ArchEvolve-lanl-independent-services-20261006-a1",
+        "ArchEvolve-lanl-memory-a1-20261006",
+        "ArchEvolve-lanl-estimation-role-20261006-a1",
+        "ArchEvolve-lanl-estimation-role-20261006-a2",
+        "ArchEvolve-lanl-openmp-projections-20261006-a1",
+        "ArchEvolve-lanl-native-object-counts-20261006-a1",
+        "ArchEvolve-lanl-count-20261006",
+        "ArchEvolve-lanl-estimates-20261006",
+        "ArchEvolve-lanl-functional-evaluation-20261006-a1",
+        "ArchEvolve-lanl-functional-object-counts-20261006-a2",
+        "ArchEvolve-lanl-functional-strict-20261006",
+        "ArchEvolve-lanl-prospective-inputs-20261006-a2",
+        "ArchEvolve-lanl-root-projection-20261006"
+      ],
+      "new_body_or_policy_rewrite": false,
+      "original_descriptor": {
+        "content_class": "plain_source_or_document",
+        "decompressed_original_bytes": 52031,
+        "decompressed_original_sha256": "b2b08374ea997679df9e08894fc14d139cce9f9c90ab3dabd324db36d6f661a3",
+        "decompression_equals_original_byte_pin": true,
+        "original_bytes": 52031,
+        "original_path": "/private/tmp/lanl17_exact_worktree_administration_inode_birth_readonly_query_20261008_a1.py",
+        "original_policy": {
+          "kind": "opaque_exact_original_bytes"
+        },
+        "original_sha256": "b2b08374ea997679df9e08894fc14d139cce9f9c90ab3dabd324db36d6f661a3",
+        "scope": "admin-birth",
+        "storage_codec": "plain",
+        "stored_bytes": 52031,
+        "stored_relative_path": "admin-birth/lanl17_exact_worktree_administration_inode_birth_readonly_query_20261008_a1.py",
+        "stored_sha256": "b2b08374ea997679df9e08894fc14d139cce9f9c90ab3dabd324db36d6f661a3",
+        "stored_stat": {
+          "ctime_ns": 1791447173670125546,
+          "dev": 16777229,
+          "gid": 20,
+          "ino": 349979387,
+          "mode": 33152,
+          "mtime_ns": 1791447173670125546,
+          "nlink": 1,
+          "size": 52031,
+          "uid": 501
+        }
+      },
+      "per_file_historical_basis": "AST literals occur only in ADMIN_ROUTES and ROWS. The producer purpose is statx birth metadata of exact Git-administration objects/anchors, with checkout path labels retained for correlation. Its archived definition is source custody, not an app/model/baseline source alias. Original creation-time NOTRUN and later separate original observation remain distinct.",
+      "proposed_reference_class": "archived_readonly_producer_definition",
+      "sha256": "b2b08374ea997679df9e08894fc14d139cce9f9c90ab3dabd324db36d6f661a3"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/checkout-birth/lanl17_exact_checkout_inode_birth_readonly_query_20261008_a1.py",
+      "bytes": 37716,
+      "classification_is_proposal_only": true,
+      "current_physical_alias_and_queue_review_still_required": true,
+      "exact_reference_contexts": [
+        {
+          "AST_ancestor_contexts": [
+            "assignment:ROWS"
+          ],
+          "line": 31,
+          "matching_string_constants": 18
+        }
+      ],
+      "manifest_descriptor_pin": {
+        "bytes": 307526,
+        "identity_sha256": "f97713a38a7fa282ad32502addb6a9e12a3d4842ea3ad9849e31867678acfaed",
+        "original_canonical_ensure_ascii": true,
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/manifest.json",
+        "sha256": "41274ef149c7e1a21aba0527afad779dcb88f84b66f539fccad2144a0b68c456"
+      },
+      "manifest_original_index": 32,
+      "matched_candidate_rows": [
+        "ArchEvolve-lanl-allocator-a2-20261006",
+        "ArchEvolve-lanl-bulk-services-20261006-a1",
+        "ArchEvolve-lanl-bulk-total-services-20261006-a1",
+        "ArchEvolve-lanl-clock-a2-20261006",
+        "ArchEvolve-lanl-float-memory-services-20261006-a1",
+        "ArchEvolve-lanl-independent-services-20261006-a1",
+        "ArchEvolve-lanl-memory-a1-20261006",
+        "ArchEvolve-lanl-estimation-role-20261006-a1",
+        "ArchEvolve-lanl-estimation-role-20261006-a2",
+        "ArchEvolve-lanl-openmp-projections-20261006-a1",
+        "ArchEvolve-lanl-native-object-counts-20261006-a1",
+        "ArchEvolve-lanl-count-20261006",
+        "ArchEvolve-lanl-estimates-20261006",
+        "ArchEvolve-lanl-functional-evaluation-20261006-a1",
+        "ArchEvolve-lanl-functional-object-counts-20261006-a2",
+        "ArchEvolve-lanl-functional-strict-20261006",
+        "ArchEvolve-lanl-prospective-inputs-20261006-a2",
+        "ArchEvolve-lanl-root-projection-20261006"
+      ],
+      "new_body_or_policy_rewrite": false,
+      "original_descriptor": {
+        "content_class": "plain_source_or_document",
+        "decompressed_original_bytes": 37716,
+        "decompressed_original_sha256": "ca96e027ff1f2dcf8bf903541b44f805048969550b782b41059411c1f023435d",
+        "decompression_equals_original_byte_pin": true,
+        "original_bytes": 37716,
+        "original_path": "/private/tmp/lanl17_exact_checkout_inode_birth_readonly_query_20261008_a1.py",
+        "original_policy": {
+          "kind": "opaque_exact_original_bytes"
+        },
+        "original_sha256": "ca96e027ff1f2dcf8bf903541b44f805048969550b782b41059411c1f023435d",
+        "scope": "checkout-birth",
+        "storage_codec": "plain",
+        "stored_bytes": 37716,
+        "stored_relative_path": "checkout-birth/lanl17_exact_checkout_inode_birth_readonly_query_20261008_a1.py",
+        "stored_sha256": "ca96e027ff1f2dcf8bf903541b44f805048969550b782b41059411c1f023435d",
+        "stored_stat": {
+          "ctime_ns": 1791447173508971422,
+          "dev": 16777229,
+          "gid": 20,
+          "ino": 349979376,
+          "mode": 33152,
+          "mtime_ns": 1791447173508971422,
+          "nlink": 1,
+          "size": 37716,
+          "uid": 501
+        }
+      },
+      "per_file_historical_basis": "All checkout-path AST literals occur in ROWS, the fixed eighteen-object query universe. The producer reads inode birth metadata without selecting removal or invoking a campaign. This retained source is provenance of the separately retained birth original; no current queue absence is inferred.",
+      "proposed_reference_class": "archived_readonly_producer_definition",
+      "sha256": "ca96e027ff1f2dcf8bf903541b44f805048969550b782b41059411c1f023435d"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/portal-initial-source-history/lanl_consumed_detached_source_guard_r6_20261008_a1.py",
+      "bytes": 116443,
+      "classification_is_proposal_only": true,
+      "current_physical_alias_and_queue_review_still_required": true,
+      "exact_reference_contexts": [
+        {
+          "AST_ancestor_contexts": [
+            "assignment:ROWS"
+          ],
+          "line": 37,
+          "matching_string_constants": 18
+        }
+      ],
+      "manifest_descriptor_pin": {
+        "bytes": 307526,
+        "identity_sha256": "f97713a38a7fa282ad32502addb6a9e12a3d4842ea3ad9849e31867678acfaed",
+        "original_canonical_ensure_ascii": true,
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/manifest.json",
+        "sha256": "41274ef149c7e1a21aba0527afad779dcb88f84b66f539fccad2144a0b68c456"
+      },
+      "manifest_original_index": 127,
+      "matched_candidate_rows": [
+        "ArchEvolve-lanl-allocator-a2-20261006",
+        "ArchEvolve-lanl-bulk-services-20261006-a1",
+        "ArchEvolve-lanl-bulk-total-services-20261006-a1",
+        "ArchEvolve-lanl-clock-a2-20261006",
+        "ArchEvolve-lanl-float-memory-services-20261006-a1",
+        "ArchEvolve-lanl-independent-services-20261006-a1",
+        "ArchEvolve-lanl-memory-a1-20261006",
+        "ArchEvolve-lanl-estimation-role-20261006-a1",
+        "ArchEvolve-lanl-estimation-role-20261006-a2",
+        "ArchEvolve-lanl-openmp-projections-20261006-a1",
+        "ArchEvolve-lanl-native-object-counts-20261006-a1",
+        "ArchEvolve-lanl-count-20261006",
+        "ArchEvolve-lanl-estimates-20261006",
+        "ArchEvolve-lanl-functional-evaluation-20261006-a1",
+        "ArchEvolve-lanl-functional-object-counts-20261006-a2",
+        "ArchEvolve-lanl-functional-strict-20261006",
+        "ArchEvolve-lanl-prospective-inputs-20261006-a2",
+        "ArchEvolve-lanl-root-projection-20261006"
+      ],
+      "new_body_or_policy_rewrite": false,
+      "original_descriptor": {
+        "content_class": "plain_source_or_document",
+        "decompressed_original_bytes": 116443,
+        "decompressed_original_sha256": "6118592610fbff77a7da3ea8196c772331066d3188ded29627218486c106b326",
+        "decompression_equals_original_byte_pin": true,
+        "original_bytes": 116443,
+        "original_path": "/private/tmp/lanl_consumed_detached_source_guard_r6_20261008_a1.py",
+        "original_policy": {
+          "kind": "opaque_exact_original_bytes"
+        },
+        "original_sha256": "6118592610fbff77a7da3ea8196c772331066d3188ded29627218486c106b326",
+        "scope": "portal-initial-source-history",
+        "storage_codec": "plain",
+        "stored_bytes": 116443,
+        "stored_relative_path": "portal-initial-source-history/lanl_consumed_detached_source_guard_r6_20261008_a1.py",
+        "stored_sha256": "6118592610fbff77a7da3ea8196c772331066d3188ded29627218486c106b326",
+        "stored_stat": {
+          "ctime_ns": 1791447173691573615,
+          "dev": 16777229,
+          "gid": 20,
+          "ino": 349979479,
+          "mode": 33152,
+          "mtime_ns": 1791447173691573615,
+          "nlink": 1,
+          "size": 116443,
+          "uid": 501
+        }
+      },
+      "per_file_historical_basis": "All path AST literals occur in ROWS, the guard comparison/selection universe. The actual manifest scope is portal-initial-source-history and README preserves source preparation history. No particular root is selected by this literal table. The later fixed source-copy recipe selects G7, not this G6 archive path; current alias/queue attestation remains separate.",
+      "proposed_reference_class": "archived_superseded_administrative_definition",
+      "sha256": "6118592610fbff77a7da3ea8196c772331066d3188ded29627218486c106b326"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/portal-scoped-source/lanl_consumed_detached_source_guard_r7_20261008_a1.py",
+      "bytes": 117232,
+      "classification_is_proposal_only": true,
+      "current_physical_alias_and_queue_review_still_required": true,
+      "exact_reference_contexts": [
+        {
+          "AST_ancestor_contexts": [
+            "assignment:ROWS"
+          ],
+          "line": 37,
+          "matching_string_constants": 18
+        }
+      ],
+      "manifest_descriptor_pin": {
+        "bytes": 307526,
+        "identity_sha256": "f97713a38a7fa282ad32502addb6a9e12a3d4842ea3ad9849e31867678acfaed",
+        "original_canonical_ensure_ascii": true,
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/manifest.json",
+        "sha256": "41274ef149c7e1a21aba0527afad779dcb88f84b66f539fccad2144a0b68c456"
+      },
+      "manifest_original_index": 172,
+      "matched_candidate_rows": [
+        "ArchEvolve-lanl-allocator-a2-20261006",
+        "ArchEvolve-lanl-bulk-services-20261006-a1",
+        "ArchEvolve-lanl-bulk-total-services-20261006-a1",
+        "ArchEvolve-lanl-clock-a2-20261006",
+        "ArchEvolve-lanl-float-memory-services-20261006-a1",
+        "ArchEvolve-lanl-independent-services-20261006-a1",
+        "ArchEvolve-lanl-memory-a1-20261006",
+        "ArchEvolve-lanl-estimation-role-20261006-a1",
+        "ArchEvolve-lanl-estimation-role-20261006-a2",
+        "ArchEvolve-lanl-openmp-projections-20261006-a1",
+        "ArchEvolve-lanl-native-object-counts-20261006-a1",
+        "ArchEvolve-lanl-count-20261006",
+        "ArchEvolve-lanl-estimates-20261006",
+        "ArchEvolve-lanl-functional-evaluation-20261006-a1",
+        "ArchEvolve-lanl-functional-object-counts-20261006-a2",
+        "ArchEvolve-lanl-functional-strict-20261006",
+        "ArchEvolve-lanl-prospective-inputs-20261006-a2",
+        "ArchEvolve-lanl-root-projection-20261006"
+      ],
+      "new_body_or_policy_rewrite": false,
+      "original_descriptor": {
+        "content_class": "plain_source_or_document",
+        "decompressed_original_bytes": 117232,
+        "decompressed_original_sha256": "97219cdb326edf76e6d341aab4a2a8d58a4750e3da8d2e24a5f9e1097f4a69be",
+        "decompression_equals_original_byte_pin": true,
+        "original_bytes": 117232,
+        "original_path": "/private/tmp/lanl_consumed_detached_source_guard_r7_20261008_a1.py",
+        "original_policy": {
+          "kind": "opaque_exact_original_bytes"
+        },
+        "original_sha256": "97219cdb326edf76e6d341aab4a2a8d58a4750e3da8d2e24a5f9e1097f4a69be",
+        "scope": "portal-scoped-source",
+        "storage_codec": "plain",
+        "stored_bytes": 117232,
+        "stored_relative_path": "portal-scoped-source/lanl_consumed_detached_source_guard_r7_20261008_a1.py",
+        "stored_sha256": "97219cdb326edf76e6d341aab4a2a8d58a4750e3da8d2e24a5f9e1097f4a69be",
+        "stored_stat": {
+          "ctime_ns": 1791447173702814673,
+          "dev": 16777229,
+          "gid": 20,
+          "ino": 349979528,
+          "mode": 33152,
+          "mtime_ns": 1791447173702814673,
+          "nlink": 1,
+          "size": 117232,
+          "uid": 501
+        }
+      },
+      "per_file_historical_basis": "All path AST literals occur in ROWS. This immutable archive copy supplies exact G7 source bytes; the selected physical route is the separate private a5 copy consumed by O8 and any separately reviewed guard invocation. References define administrative candidate gates, not future campaign input sources. Do not call the source globally unused: current private counterpart/queued scope must remain explicitly bound.",
+      "proposed_reference_class": "archived_selected_administrative_definition",
+      "sha256": "97219cdb326edf76e6d341aab4a2a8d58a4750e3da8d2e24a5f9e1097f4a69be"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/queued-dependency-query/lanl17-frozen-R-input-model-dependency-routes-20261008-a1.json",
+      "bytes": 96495,
+      "classification_is_proposal_only": true,
+      "current_physical_alias_and_queue_review_still_required": true,
+      "exact_reference_contexts": [
+        {
+          "JSON_pointer_shape": [
+            "cleanup_rows_source",
+            "rows",
+            "*row_name",
+            "path"
+          ],
+          "matching_string_leaves": 18
+        }
+      ],
+      "manifest_descriptor_pin": {
+        "bytes": 307526,
+        "identity_sha256": "f97713a38a7fa282ad32502addb6a9e12a3d4842ea3ad9849e31867678acfaed",
+        "original_canonical_ensure_ascii": true,
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/manifest.json",
+        "sha256": "41274ef149c7e1a21aba0527afad779dcb88f84b66f539fccad2144a0b68c456"
+      },
+      "manifest_original_index": 88,
+      "matched_candidate_rows": [
+        "ArchEvolve-lanl-allocator-a2-20261006",
+        "ArchEvolve-lanl-bulk-services-20261006-a1",
+        "ArchEvolve-lanl-bulk-total-services-20261006-a1",
+        "ArchEvolve-lanl-clock-a2-20261006",
+        "ArchEvolve-lanl-float-memory-services-20261006-a1",
+        "ArchEvolve-lanl-independent-services-20261006-a1",
+        "ArchEvolve-lanl-memory-a1-20261006",
+        "ArchEvolve-lanl-estimation-role-20261006-a1",
+        "ArchEvolve-lanl-estimation-role-20261006-a2",
+        "ArchEvolve-lanl-openmp-projections-20261006-a1",
+        "ArchEvolve-lanl-native-object-counts-20261006-a1",
+        "ArchEvolve-lanl-count-20261006",
+        "ArchEvolve-lanl-estimates-20261006",
+        "ArchEvolve-lanl-functional-evaluation-20261006-a1",
+        "ArchEvolve-lanl-functional-object-counts-20261006-a2",
+        "ArchEvolve-lanl-functional-strict-20261006",
+        "ArchEvolve-lanl-prospective-inputs-20261006-a2",
+        "ArchEvolve-lanl-root-projection-20261006"
+      ],
+      "new_body_or_policy_rewrite": false,
+      "original_descriptor": {
+        "content_class": "bounded_metadata_original",
+        "decompressed_original_bytes": 96495,
+        "decompressed_original_sha256": "2628a596f5683e3f3b0008fb5319ad87df17954849ba1bea8e90ba51a2b0e591",
+        "decompression_equals_original_byte_pin": true,
+        "original_bytes": 96495,
+        "original_path": "/private/tmp/lanl17-frozen-R-input-model-dependency-routes-20261008-a1.json",
+        "original_policy": {
+          "kind": "original_unsealed_JSON",
+          "original_sealed_field": "ABSENT"
+        },
+        "original_sha256": "2628a596f5683e3f3b0008fb5319ad87df17954849ba1bea8e90ba51a2b0e591",
+        "scope": "queued-dependency-query",
+        "storage_codec": "plain",
+        "stored_bytes": 96495,
+        "stored_relative_path": "queued-dependency-query/lanl17-frozen-R-input-model-dependency-routes-20261008-a1.json",
+        "stored_sha256": "2628a596f5683e3f3b0008fb5319ad87df17954849ba1bea8e90ba51a2b0e591",
+        "stored_stat": {
+          "ctime_ns": 1791447173682010107,
+          "dev": 16777229,
+          "gid": 20,
+          "ino": 349979437,
+          "mode": 33152,
+          "mtime_ns": 1791447173682010107,
+          "nlink": 1,
+          "size": 96495,
+          "uid": 501
+        }
+      },
+      "per_file_historical_basis": "All matching JSON string leaves occur in cleanup_rows_source.rows.<name>.path: the audit comparison universe. Its actual literal_dependencies_under_any_18_cleanup_row is empty at frozen 0a2d41ceff5d7a9a6c0732f692ae3c679539289d, but the original boundary explicitly leaves remote availability, symbolic aliases and runtime receipt expansion pending. This is not a current physical dependency/queue clearance.",
+      "proposed_reference_class": "retained_local_dependency_comparison_metadata",
+      "sha256": "2628a596f5683e3f3b0008fb5319ad87df17954849ba1bea8e90ba51a2b0e591"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/reference-queries/lanl17_read_111_unresolved_RAW_reference_contexts_20261008_a1.py",
+      "bytes": 91643,
+      "classification_is_proposal_only": true,
+      "current_physical_alias_and_queue_review_still_required": true,
+      "exact_reference_contexts": [
+        {
+          "AST_ancestor_contexts": [
+            "assignment:ROW_PATHS"
+          ],
+          "line": 33,
+          "matching_string_constants": 18
+        }
+      ],
+      "manifest_descriptor_pin": {
+        "bytes": 307526,
+        "identity_sha256": "f97713a38a7fa282ad32502addb6a9e12a3d4842ea3ad9849e31867678acfaed",
+        "original_canonical_ensure_ascii": true,
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/manifest.json",
+        "sha256": "41274ef149c7e1a21aba0527afad779dcb88f84b66f539fccad2144a0b68c456"
+      },
+      "manifest_original_index": 11,
+      "matched_candidate_rows": [
+        "ArchEvolve-lanl-allocator-a2-20261006",
+        "ArchEvolve-lanl-bulk-services-20261006-a1",
+        "ArchEvolve-lanl-bulk-total-services-20261006-a1",
+        "ArchEvolve-lanl-clock-a2-20261006",
+        "ArchEvolve-lanl-float-memory-services-20261006-a1",
+        "ArchEvolve-lanl-independent-services-20261006-a1",
+        "ArchEvolve-lanl-memory-a1-20261006",
+        "ArchEvolve-lanl-estimation-role-20261006-a1",
+        "ArchEvolve-lanl-estimation-role-20261006-a2",
+        "ArchEvolve-lanl-openmp-projections-20261006-a1",
+        "ArchEvolve-lanl-native-object-counts-20261006-a1",
+        "ArchEvolve-lanl-count-20261006",
+        "ArchEvolve-lanl-estimates-20261006",
+        "ArchEvolve-lanl-functional-evaluation-20261006-a1",
+        "ArchEvolve-lanl-functional-object-counts-20261006-a2",
+        "ArchEvolve-lanl-functional-strict-20261006",
+        "ArchEvolve-lanl-prospective-inputs-20261006-a2",
+        "ArchEvolve-lanl-root-projection-20261006"
+      ],
+      "new_body_or_policy_rewrite": false,
+      "original_descriptor": {
+        "content_class": "plain_source_or_document",
+        "decompressed_original_bytes": 91643,
+        "decompressed_original_sha256": "e8cfdae34838eddfb8d35fe445f335eb57eec81536d34d6355585279454ba6d9",
+        "decompression_equals_original_byte_pin": true,
+        "original_bytes": 91643,
+        "original_path": "/private/tmp/lanl17_read_111_unresolved_RAW_reference_contexts_20261008_a1.py",
+        "original_policy": {
+          "kind": "opaque_exact_original_bytes"
+        },
+        "original_sha256": "e8cfdae34838eddfb8d35fe445f335eb57eec81536d34d6355585279454ba6d9",
+        "scope": "reference-queries",
+        "storage_codec": "plain",
+        "stored_bytes": 91643,
+        "stored_relative_path": "reference-queries/lanl17_read_111_unresolved_RAW_reference_contexts_20261008_a1.py",
+        "stored_sha256": "e8cfdae34838eddfb8d35fe445f335eb57eec81536d34d6355585279454ba6d9",
+        "stored_stat": {
+          "ctime_ns": 1791447173367637067,
+          "dev": 16777229,
+          "gid": 20,
+          "ino": 349979353,
+          "mode": 33152,
+          "mtime_ns": 1791447173367637067,
+          "nlink": 1,
+          "size": 91643,
+          "uid": 501
+        }
+      },
+      "per_file_historical_basis": "All checkout-path AST literals occur in ROW_PATHS, the literal detector universe for bounded original RAW reference inspection. The source projects historical reference metadata without queued-consumer attestation or clearance. This archive copy retains source provenance; current physical aliases/runnable choices must be separately attested.",
+      "proposed_reference_class": "archived_readonly_reference_query_definition",
+      "sha256": "e8cfdae34838eddfb8d35fe445f335eb57eec81536d34d6355585279454ba6d9"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/reference-queries/lanl17_read_111_unresolved_RAW_reference_contexts_20261008_a1_r1.py",
+      "bytes": 92146,
+      "classification_is_proposal_only": true,
+      "current_physical_alias_and_queue_review_still_required": true,
+      "exact_reference_contexts": [
+        {
+          "AST_ancestor_contexts": [
+            "assignment:ROW_PATHS"
+          ],
+          "line": 33,
+          "matching_string_constants": 18
+        }
+      ],
+      "manifest_descriptor_pin": {
+        "bytes": 307526,
+        "identity_sha256": "f97713a38a7fa282ad32502addb6a9e12a3d4842ea3ad9849e31867678acfaed",
+        "original_canonical_ensure_ascii": true,
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/manifest.json",
+        "sha256": "41274ef149c7e1a21aba0527afad779dcb88f84b66f539fccad2144a0b68c456"
+      },
+      "manifest_original_index": 12,
+      "matched_candidate_rows": [
+        "ArchEvolve-lanl-allocator-a2-20261006",
+        "ArchEvolve-lanl-bulk-services-20261006-a1",
+        "ArchEvolve-lanl-bulk-total-services-20261006-a1",
+        "ArchEvolve-lanl-clock-a2-20261006",
+        "ArchEvolve-lanl-float-memory-services-20261006-a1",
+        "ArchEvolve-lanl-independent-services-20261006-a1",
+        "ArchEvolve-lanl-memory-a1-20261006",
+        "ArchEvolve-lanl-estimation-role-20261006-a1",
+        "ArchEvolve-lanl-estimation-role-20261006-a2",
+        "ArchEvolve-lanl-openmp-projections-20261006-a1",
+        "ArchEvolve-lanl-native-object-counts-20261006-a1",
+        "ArchEvolve-lanl-count-20261006",
+        "ArchEvolve-lanl-estimates-20261006",
+        "ArchEvolve-lanl-functional-evaluation-20261006-a1",
+        "ArchEvolve-lanl-functional-object-counts-20261006-a2",
+        "ArchEvolve-lanl-functional-strict-20261006",
+        "ArchEvolve-lanl-prospective-inputs-20261006-a2",
+        "ArchEvolve-lanl-root-projection-20261006"
+      ],
+      "new_body_or_policy_rewrite": false,
+      "original_descriptor": {
+        "content_class": "plain_source_or_document",
+        "decompressed_original_bytes": 92146,
+        "decompressed_original_sha256": "03b8ec3cec0417ba53025f002548a6f01927e0820c5c5604c6941fa4a484afed",
+        "decompression_equals_original_byte_pin": true,
+        "original_bytes": 92146,
+        "original_path": "/private/tmp/lanl17_read_111_unresolved_RAW_reference_contexts_20261008_a1_r1.py",
+        "original_policy": {
+          "kind": "opaque_exact_original_bytes"
+        },
+        "original_sha256": "03b8ec3cec0417ba53025f002548a6f01927e0820c5c5604c6941fa4a484afed",
+        "scope": "reference-queries",
+        "storage_codec": "plain",
+        "stored_bytes": 92146,
+        "stored_relative_path": "reference-queries/lanl17_read_111_unresolved_RAW_reference_contexts_20261008_a1_r1.py",
+        "stored_sha256": "03b8ec3cec0417ba53025f002548a6f01927e0820c5c5604c6941fa4a484afed",
+        "stored_stat": {
+          "ctime_ns": 1791447173367960735,
+          "dev": 16777229,
+          "gid": 20,
+          "ino": 349979354,
+          "mode": 33152,
+          "mtime_ns": 1791447173367960735,
+          "nlink": 1,
+          "size": 92146,
+          "uid": 501
+        }
+      },
+      "per_file_historical_basis": "All checkout-path AST literals occur in ROW_PATHS, the literal detector universe for bounded original RAW reference inspection. The source projects historical reference metadata without queued-consumer attestation or clearance. This archive copy retains source provenance; current physical aliases/runnable choices must be separately attested.",
+      "proposed_reference_class": "archived_readonly_reference_query_definition",
+      "sha256": "03b8ec3cec0417ba53025f002548a6f01927e0820c5c5604c6941fa4a484afed"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/reference-queries/lanl17_read_68_remaining_grouped_RAW_reference_contexts_20261008_a1.py",
+      "bytes": 78700,
+      "classification_is_proposal_only": true,
+      "current_physical_alias_and_queue_review_still_required": true,
+      "exact_reference_contexts": [
+        {
+          "AST_ancestor_contexts": [
+            "assignment:ROW_PATHS"
+          ],
+          "line": 35,
+          "matching_string_constants": 18
+        }
+      ],
+      "manifest_descriptor_pin": {
+        "bytes": 307526,
+        "identity_sha256": "f97713a38a7fa282ad32502addb6a9e12a3d4842ea3ad9849e31867678acfaed",
+        "original_canonical_ensure_ascii": true,
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/manifest.json",
+        "sha256": "41274ef149c7e1a21aba0527afad779dcb88f84b66f539fccad2144a0b68c456"
+      },
+      "manifest_original_index": 19,
+      "matched_candidate_rows": [
+        "ArchEvolve-lanl-allocator-a2-20261006",
+        "ArchEvolve-lanl-bulk-services-20261006-a1",
+        "ArchEvolve-lanl-bulk-total-services-20261006-a1",
+        "ArchEvolve-lanl-clock-a2-20261006",
+        "ArchEvolve-lanl-float-memory-services-20261006-a1",
+        "ArchEvolve-lanl-independent-services-20261006-a1",
+        "ArchEvolve-lanl-memory-a1-20261006",
+        "ArchEvolve-lanl-estimation-role-20261006-a1",
+        "ArchEvolve-lanl-estimation-role-20261006-a2",
+        "ArchEvolve-lanl-openmp-projections-20261006-a1",
+        "ArchEvolve-lanl-native-object-counts-20261006-a1",
+        "ArchEvolve-lanl-count-20261006",
+        "ArchEvolve-lanl-estimates-20261006",
+        "ArchEvolve-lanl-functional-evaluation-20261006-a1",
+        "ArchEvolve-lanl-functional-object-counts-20261006-a2",
+        "ArchEvolve-lanl-functional-strict-20261006",
+        "ArchEvolve-lanl-prospective-inputs-20261006-a2",
+        "ArchEvolve-lanl-root-projection-20261006"
+      ],
+      "new_body_or_policy_rewrite": false,
+      "original_descriptor": {
+        "content_class": "plain_source_or_document",
+        "decompressed_original_bytes": 78700,
+        "decompressed_original_sha256": "27421d13cd10507fe7dbabc67903c79c6e57bd38d9672b9225514a9c17dc1b2e",
+        "decompression_equals_original_byte_pin": true,
+        "original_bytes": 78700,
+        "original_path": "/private/tmp/lanl17_read_68_remaining_grouped_RAW_reference_contexts_20261008_a1.py",
+        "original_policy": {
+          "kind": "opaque_exact_original_bytes"
+        },
+        "original_sha256": "27421d13cd10507fe7dbabc67903c79c6e57bd38d9672b9225514a9c17dc1b2e",
+        "scope": "reference-queries",
+        "storage_codec": "plain",
+        "stored_bytes": 78700,
+        "stored_relative_path": "reference-queries/lanl17_read_68_remaining_grouped_RAW_reference_contexts_20261008_a1.py",
+        "stored_sha256": "27421d13cd10507fe7dbabc67903c79c6e57bd38d9672b9225514a9c17dc1b2e",
+        "stored_stat": {
+          "ctime_ns": 1791447173469967803,
+          "dev": 16777229,
+          "gid": 20,
+          "ino": 349979361,
+          "mode": 33152,
+          "mtime_ns": 1791447173469967803,
+          "nlink": 1,
+          "size": 78700,
+          "uid": 501
+        }
+      },
+      "per_file_historical_basis": "All checkout-path AST literals occur in ROW_PATHS, the literal detector universe for bounded original RAW reference inspection. The source projects historical reference metadata without queued-consumer attestation or clearance. This archive copy retains source provenance; current physical aliases/runnable choices must be separately attested.",
+      "proposed_reference_class": "archived_readonly_reference_query_definition",
+      "sha256": "27421d13cd10507fe7dbabc67903c79c6e57bd38d9672b9225514a9c17dc1b2e"
+    },
+    {
+      "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/semantic-candidates/lanl17-111-RAW-context-local-Python-source-inspection-associations-20261008-a1-r2.json",
+      "bytes": 124897,
+      "classification_is_proposal_only": true,
+      "current_physical_alias_and_queue_review_still_required": true,
+      "exact_reference_contexts": [
+        {
+          "JSON_pointer_shape": [
+            "matches",
+            "*digest",
+            "*index",
+            "replacement_values",
+            "SOURCE"
+          ],
+          "matching_string_leaves": 15
+        },
+        {
+          "JSON_pointer_shape": [
+            "matches",
+            "*digest",
+            "*index",
+            "replacement_values",
+            "SOURCE_TOKEN"
+          ],
+          "matching_string_leaves": 2
+        },
+        {
+          "JSON_pointer_shape": [
+            "matches",
+            "*digest",
+            "*index",
+            "source_text_inspected"
+          ],
+          "matching_string_leaves": 17
+        }
+      ],
+      "manifest_descriptor_pin": {
+        "bytes": 307526,
+        "identity_sha256": "f97713a38a7fa282ad32502addb6a9e12a3d4842ea3ad9849e31867678acfaed",
+        "original_canonical_ensure_ascii": true,
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1/manifest.json",
+        "sha256": "41274ef149c7e1a21aba0527afad779dcb88f84b66f539fccad2144a0b68c456"
+      },
+      "manifest_original_index": 30,
+      "matched_candidate_rows": [
+        "ArchEvolve-lanl-bulk-services-20261006-a1",
+        "ArchEvolve-lanl-bulk-total-services-20261006-a1",
+        "ArchEvolve-lanl-float-memory-services-20261006-a1",
+        "ArchEvolve-lanl-independent-services-20261006-a1",
+        "ArchEvolve-lanl-estimation-role-20261006-a1",
+        "ArchEvolve-lanl-estimation-role-20261006-a2",
+        "ArchEvolve-lanl-openmp-projections-20261006-a1",
+        "ArchEvolve-lanl-functional-evaluation-20261006-a1",
+        "ArchEvolve-lanl-prospective-inputs-20261006-a2"
+      ],
+      "new_body_or_policy_rewrite": false,
+      "original_descriptor": {
+        "content_class": "bounded_metadata_original",
+        "decompressed_original_bytes": 124897,
+        "decompressed_original_sha256": "7c39f8432497a231de748c7eddd05f218faadeb5d32b36015d98ce476dcaf2af",
+        "decompression_equals_original_byte_pin": true,
+        "original_bytes": 124897,
+        "original_path": "/private/tmp/lanl17-111-RAW-context-local-Python-source-inspection-associations-20261008-a1-r2.json",
+        "original_policy": {
+          "kind": "original_unsealed_JSON",
+          "original_sealed_field": false
+        },
+        "original_sha256": "7c39f8432497a231de748c7eddd05f218faadeb5d32b36015d98ce476dcaf2af",
+        "scope": "semantic-candidates",
+        "storage_codec": "plain",
+        "stored_bytes": 124897,
+        "stored_relative_path": "semantic-candidates/lanl17-111-RAW-context-local-Python-source-inspection-associations-20261008-a1-r2.json",
+        "stored_sha256": "7c39f8432497a231de748c7eddd05f218faadeb5d32b36015d98ce476dcaf2af",
+        "stored_stat": {
+          "ctime_ns": 1791447173508393627,
+          "dev": 16777229,
+          "gid": 20,
+          "ino": 349979373,
+          "mode": 33152,
+          "mtime_ns": 1791447173508393627,
+          "nlink": 1,
+          "size": 124897,
+          "uid": 501
+        }
+      },
+      "per_file_historical_basis": "Matching JSON leaves are matches.<original source digest>[].replacement_values.SOURCE and source_text_inspected. They retain source-text inspection associations for original RAW scripts and prior inspection pins; no selected source was executed. Preserve unknown_whole_source_paths and require their separate original-reference proof. Text inside this JSON is not itself a queued executable physical alias.",
+      "proposed_reference_class": "retained_historical_source_inspection_metadata",
+      "sha256": "7c39f8432497a231de748c7eddd05f218faadeb5d32b36015d98ce476dcaf2af"
+    }
+  ],
+  "queue_coverage_attested": false,
+  "sealed": false,
+  "selected_mains_imports_tests_SSH_or_Git_performed": false,
+  "source_only": true,
+  "source_rows_pin": {
+    "ROW_assignment_line": 37,
+    "bytes": 117232,
+    "path": "/private/tmp/lanl_consumed_detached_source_guard_r7_20261008_a1.py",
+    "sha256": "97219cdb326edf76e6d341aab4a2a8d58a4750e3da8d2e24a5f9e1097f4a69be"
+  }
+}

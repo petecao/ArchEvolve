@@ -1,0 +1,20 @@
+--- /private/tmp/lanl17_sparse_retirement_transition_sequence_virtual_regression_source_20261008_a1.py
++++ /private/tmp/lanl17_sparse_retirement_transition_sequence_virtual_regression_source_20261008_a1_r1.py
+@@ -9,6 +9,7 @@
+ import copy
+ import hashlib
+ import json
++import os
+ from pathlib import Path, PurePosixPath
+ import stat
+ from types import SimpleNamespace
+@@ -80,7 +81,8 @@
+         raise AssertionError('no_target_imports')
+     context = {'__name__':'SYNTHETIC_closed_slice','hashlib':hashlib,'json':json,'stat':stat,
+         'P':VirtualPath,'BASE':VirtualPath(BASE_TEXT),'PRIMARY':VirtualPath(PRIMARY_TEXT),
+-        'ROWS':{ROW:{'head':HEAD}},'UID':SYNTHETIC_UID,'now':lambda:'SYNTHETIC_TIME',
++        'ROWS':{ROW:{'head':HEAD}},'UID':SYNTHETIC_UID,'os':SimpleNamespace(fsencode=os.fsencode),
++        'now':lambda:'SYNTHETIC_TIME',
+         '__file__':'/SYNTHETIC/source.py'}
+     ast.fix_missing_locations(closed)
+     # This definition lift happens ONLY in the later explicitly reviewed batch.

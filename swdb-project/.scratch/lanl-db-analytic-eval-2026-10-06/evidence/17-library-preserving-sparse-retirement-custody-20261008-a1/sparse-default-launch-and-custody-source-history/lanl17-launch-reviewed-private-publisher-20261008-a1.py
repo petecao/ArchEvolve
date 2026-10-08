@@ -1,0 +1,8 @@
+"""2026-10-08 ET. Fixed publisher exec; preserve HOME/CODEX_HOME, clear child overrides."""
+import os
+for key in list(os.environ):
+ if key.startswith('GIT_') or key in ('PYTHONPATH','PYTHONHOME','PYTHONSTARTUP','PYTHONINSPECT','LD_PRELOAD','LD_LIBRARY_PATH'):os.environ.pop(key)
+os.environ['PATH']='/usr/bin:/bin:/usr/local/bin'
+os.environ['PYTHONDONTWRITEBYTECODE']='1';os.environ['PYTHONNOUSERSITE']='1';os.environ['PYTHONSAFEPATH']='1'
+argv=['/usr/bin/python3.12','-B','-s','-P','/data1/yanruj/lanl17_publish_checked_dx100_deployment_inputs_20261008_a1_r3.py','--final-source40','5e12a9796432654d88def24ecea617d16ca605b2','--publisher-source-sha256','55558276d912c924df9a6701d1848829f42a758233c20ad6da1e06bc6b176f29','--facts-file','/data1/yanruj/lanl17-reviewed-deployment-inputs-20261008-a1/original-dx100-deployment-facts.json','--facts-parent-review-file','/data1/yanruj/lanl17-reviewed-deployment-inputs-20261008-a1/dx100-parent-review.json','--package-facts-file','/data1/yanruj/lanl17-reviewed-deployment-inputs-20261008-a1/original-pyyaml-facts.json','--package-facts-sha256','bf5f733f184049264ba1ee45a7db09c64c2096a37216f4a153fa64a91b0be6b1','--package-parent-review-file','/data1/yanruj/lanl17-reviewed-deployment-inputs-20261008-a1/pyyaml-parent-review.json','--source','/data1/yanruj/ArchEvolve-lanl17-source-20261007-a4','--raw','/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a4','--original-metadata-control','/data/yanruj/EvolveSWDB_runs/lanl17-metadata-prepare-20261007-a4','--hooks-directory','/data1/yanruj/lanl17-dx100-hooks-20261008-a1','--deployment-control','/data1/yanruj/lanl17-dx100-deployment-20261008-a1','--prepare-path','/usr/bin:/bin:/usr/local/bin']
+os.execv(argv[0],argv)
