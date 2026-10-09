@@ -1,7 +1,7 @@
 # Map: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-09 02:16 ET
+Updated: 2026-10-09 02:50 ET
 **Type:** ticket map
 **Status:** claimed (unfinished implementation/evaluation)
 **Work state:** active; [resume guide](resume.md)
@@ -58,6 +58,8 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | 23 | [Export and round-trip test](issues/23-export-and-round-trip.md) | wontfix | 22 | 1 day |
 
 ## Context pointers
+
+- 2026-10-09 02:50 ET: [Scheduled read-only observations](evidence/17-cleanup-followup-and-inactive-process-proposal-20261009-a5/scheduled-0249-observation-original-inventory.json): process/source/native state unchanged at02:49 ET, `/data1` still543MiB short; guard override pending, no admission or action.21 originals/135157B,14/15 resolved, ticket17 acceptance unchanged.
 
 - 2026-10-09 02:11 ET: [User cleanup and tested source-only observer proposal](evidence/17-cleanup-followup-and-inactive-process-proposal-20261009-a5/README.md): storage/process gates persist;96 isolated cases and both source reviews pass; replacement remains UNSELECTED/NOTRUN pending prior-policy override/fresh admission.14/15 assigned resolved; ticket17 acceptance unchanged; no remote source sync or human-status changes.
 

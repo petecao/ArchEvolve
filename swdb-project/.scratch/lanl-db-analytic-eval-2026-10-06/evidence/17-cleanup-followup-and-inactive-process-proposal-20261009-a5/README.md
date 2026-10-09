@@ -1,6 +1,6 @@
 # Cleanup follow-up and prospective inactive-process proof
 
-Updated: 2026-10-09 02:16 ET
+Updated: 2026-10-09 02:50 ET
 
 **The tested correction is ready for review, but remains UNSELECTED and NOTRUN. Original R5 is unchanged.**
 
@@ -8,6 +8,7 @@ Updated: 2026-10-09 02:16 ET
 |---|---|---|
 | User cleanup, 2026-10-09 01:56 ET | `/data` free99822661632B, up63006875648B; RAM125517373440B passes | `/data1` unchanged21979545600B, short569032704B |
 | Fresh floor, 2026-10-09 02:12 ET | `/data`99822661632B and RAM125496483840B pass | `/data1`21979545600B remains569032704B below unchanged22548578304B floor; dated resource observation only |
+| Fresh process/floor, 2026-10-09 02:49 ET | Process body unchanged except checkedUTC; released514/550/77/sourceR/F6/ER/H/M2 continuity; RAM125522001920B and `/data`99822661632B pass | Same unwaived process unknowns; `/data1`21979545600B remains569032704B short; no full no-use or admission |
 | Same process diagnostic, 2026-10-09 01:56 ET | Same owned PAM S/EACCES, two Z identities/root-owned leaves, absent2332693 unknown | No no-use/readiness exception; source/native controls unchanged |
 | Required entrypoint stat check, 2026-10-09 02:05 ET | All16 exact Store/summary/export/control paths present with expected owner/type; four exports match original nine stat fields | No YAML/body/hash/full-catalog continuity or index clearance; route0206 is a label |
 | Prospective patchR1 verification | 87/88 isolated cases passed; fdopen constructor failure leaked a leaf FD | Failed original retained, never deployed |
@@ -36,6 +37,6 @@ The proof requires an owned numeric `/proc` directory, stable directory inode/al
 
 ## Compact custody
 
-Four inventories retain19 exact originals/111077B: [actual observations](compact-cleanup-observation-original-inventory.json), [failed/corrected patch and isolated proof](prospective-patch-and-isolated-test-original-inventory.json), [separate source reviews](standards-spec-prospective-source-review-original-inventory.json), [fresh02:12 floor](fresh-floor-0212-original-inventory.json). All bodies match private size/SHA; original nine stat fields are retained separately from copied-file identities. Full private capture streams are retained without repeated publication here. No new full source copy, large report, archive or evaluation output was generated.
+Five inventories retain21 exact originals/135157B: [actual observations](compact-cleanup-observation-original-inventory.json), [failed/corrected patch and isolated proof](prospective-patch-and-isolated-test-original-inventory.json), [separate source reviews](standards-spec-prospective-source-review-original-inventory.json), [fresh02:12 floor](fresh-floor-0212-original-inventory.json), [scheduled02:49 observations](scheduled-0249-observation-original-inventory.json). Root and independent in-chat verification passed the fresh transport/decode/pins and unchanged process body; no duplicate peer receipt was created. All bodies match private size/SHA; original nine stat fields are retained separately from copied-file identities. Full private capture streams are retained without repeated publication here. No full source or capture-stream copy was added to this publication. No large report, archive or evaluation output was generated.
 
-Four normal trajectories and original FINALIZE remain complete; actual report unsupported/zero eligible pairs/blind-order unverified/no-switch. Four inventories/indexes, original32 closure, assembly, unchanged6a and final scientific review/acceptance remain pending. Ticket17 stays claimed/all boxes unchecked;14/15 assigned resolved. Heartbeat ACTIVE; formal table/health2026-10-09 02:09 ET, nextby02:39 ET. Remote PRIMARY/originR remains frozen.
+Four normal trajectories and original FINALIZE remain complete; actual report unsupported/zero eligible pairs/blind-order unverified/no-switch. Four inventories/indexes, original32 closure, assembly, unchanged6a and final scientific review/acceptance remain pending. Ticket17 stays claimed/all boxes unchecked;14/15 assigned resolved. Heartbeat ACTIVE; formal table/health2026-10-09 02:49 ET, nextby03:19 ET. Remote PRIMARY/originR remains frozen.

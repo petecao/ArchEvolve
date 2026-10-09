@@ -1,7 +1,7 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-09 02:16 ET
+Updated: 2026-10-09 02:50 ET
 **Type:** slice
 **Status:** claimed
 **Work state:** active (explicitly resumed 2026-10-08)
@@ -240,3 +240,9 @@ Actual01:38 ET floor original295B/1a6282f5 reports RAM125501317120B and `/data`3
 [Compact follow-up](../evidence/17-cleanup-followup-and-inactive-process-proposal-20261009-a5/README.md) retains19 exact originals/111077B, avoiding another full source/capture copy. Actual01:56 ET user cleanup raised `/data` free space to99822661632B, but `/data1` remains569032704B below its floor and the same process blockers persist. Fresh02:12 ET floor original295B/0cb8c6b7 confirms RAM125496483840B and `/data`99822661632B pass, while `/data1`21979545600B is still569032704B short. Actual02:05 ET stat-only check found all16 named entrypoints present, four exports matching original nine stat fields; no full catalog/hash/no-use readiness is inferred. Future readers still need all eligible YAML bodies, export bodies and compact original validation/custody/control files. No deletion or regeneration occurred.
 
 Prospective patchR2 fixes inactive zombie identity proof and descriptor ownership;96/96 isolated cases pass. Standards and Spec source reviews each have0 new findings. Only inactive_owned_identity changes; originalR5/34 other function-class ASTs and all source/native/scientific policies remain unchanged. The observer is UNSELECTED/NOTRUN pending explicit override of the prior immutable-guard prohibition, plus fresh payload-bound/source/native/full-no-use/capacity approval. Capacity remains a separate blocker; no numerical/D30/6a admission, stopped-state resume or repeated custody/science.14/15 assigned resolved, ticket17 claimed/all acceptance unchecked; user cleanup/root rule edit preserved. Table/agent health02:09 ET, all responsive, nextby02:39 ET; heartbeat ACTIVE, remote PRIMARY/originR frozen.
+
+## Read-only heartbeat — 2026-10-09 02:50 ET
+
+[Fresh02:49 ET compact observations](../evidence/17-cleanup-followup-and-inactive-process-proposal-20261009-a5/scheduled-0249-observation-original-inventory.json) passed root and independent transport/decode/pin review. Process23785B/65a2846d matches01:56 except checkedUTC: same unresolved identities and no quiescence, released514/550/77/no matching holder/FD9, R/F6/ER/H/M2 continuity. Floor295B/ab2ea66f has RAM125522001920B and `/data`99822661632B above floors; `/data1`21979545600B remains569032704B short.
+
+Originals are21 unique/135157B across5 compact inventories; earlier19 unchanged. Guard replacement remains UNSELECTED/NOTRUN awaiting the already requested explicit override; no repeated question, new source/capture duplication, cleanup, evaluation or index action.14/15 assigned resolved, ticket17 claimed/all4 acceptance unchecked, human tickets/root edit preserved. All agents completed responsively; table/health02:49 ET, nextby03:19 ET; heartbeat ACTIVE, remotePRIMARY/originR frozen.
