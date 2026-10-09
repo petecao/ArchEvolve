@@ -1,6 +1,6 @@
 # Ticket 17: completed report and remaining scientific requirement
 
-Updated: 2026-10-09 17:59 ET
+Updated: 2026-10-09 18:59 ET
 
 **The original agreement report is complete and negative. Ticket 17 is still
 blocked on scientific acceptance.** Four campaigns ran, but produced zero
@@ -41,3 +41,34 @@ approvals or audit controls for an incompatible version.
 Tickets 01–16 remain resolved; 17 remains claimed with only its blindness item
 unchecked. Human-owned tickets 18–23 and their dependencies remain unchanged.
 This checkpoint changes the work priority, not the scientific threshold.
+
+## Current DX100 prerequisites, 2026-10-09 18:59 ET
+
+Yan-Ru's concurrent commits `13c40568` and `c3de51f4` introduce candidate
+certification 1.7 and lowering certification 1.2 with the gem5 wait and tile
+dispatch rules. Preserve those changes. A read-only check of the existing
+`bfs-functional-read-offload-20261006-a1.proposal.candidate-1` receipt
+`certification.23f81442358b4dcc8688140a394a1f08` through the current
+`functional_evaluation._certified` refused: the certification procedure or kernel
+correctness check changed. This checked the exact candidate, receipt and
+implementation records; it did not run certification or validate the full catalog.
+The [new strict-layer evidence](../formal-verification-2026-10-09/evidence/strict-gem5-wait-rule-redeclaration-20261009.md)
+reports passing finite checks, but no newly persisted candidate receipt is claimed
+here. Its open memory-effect timing and memory-region dispatch gap remains a
+separate prerequisite for claiming functional-to-MMIO equivalence.
+
+The pinned device source also rules out filling the missing whole-call setup
+cost with a constant one-cycle response. A ready-tile read can be parked until
+completion ([CpuSidePort.cc:295–315](https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/mem/MAA/CpuSidePort.cc#L295-L315));
+register writes and instructions depend on dispatch availability
+([MAA.cc:510–583](https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/src/mem/MAA/MAA.cc#L510-L583)).
+Both source bodies were checked in memory against their pinned Git blob identities;
+no full source copy was saved. A local functional duration cannot supply these
+target costs.
+
+Keep the next implementation confined to the DX100 path: exact registered SG,
+explicit source and the existing complete-call evaluator boundary; supported
+MMIO ordering and whole-call cost composition; then current certification and
+one prospectively blind pair. Generated-graph trial-lambda counts are a different
+input/call contract. Missing bindings remain unknown. No new campaign, numerical
+estimate, source synchronization, or old-action rerun occurred in this check.

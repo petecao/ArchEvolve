@@ -1,5 +1,15 @@
 # Continue the analytic evaluator work
 
+2026-10-09 18:59 ET — [Current DX100 prerequisites](ticket17-completion-boundary-20261009.md#current-dx100-prerequisites-2026-10-09-1859-et)
+
+Preserve Yan-Ru's `13c40568`/`c3de51f4` wait/dispatch-rule changes. The current
+strict-functional admission check refuses the old selected candidate receipt;
+new certification alone still does not establish the open memory-effect/MMIO
+bridge or whole-call numerical costs. Pinned device dispatch and parked ready
+reads cannot be replaced by a constant one-cycle setup estimate. No certification
+or science ran; ticket 17 remains claimed, with three report items complete and
+D26 unmet. Continue only the bounded DX100 pair path, not general CPU recovery.
+
 2026-10-09 17:59 ET — [Ticket 17 completion boundary](ticket17-completion-boundary-20261009.md)
 
 Original reporting is complete: zero eligible pairs, unsupported agreement,

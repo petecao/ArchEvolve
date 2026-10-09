@@ -1,5 +1,14 @@
 # Implementation progress
 
+2026-10-09 18:59 ET — [Current DX100 prerequisites](ticket17-completion-boundary-20261009.md#current-dx100-prerequisites-2026-10-09-1859-et)
+
+Reconciled the bounded pair path with Yan-Ru's new wait/dispatch certification
+versions. The old selected receipt fails the current read-only admission check;
+finite certification, MMIO memory ordering and numerical whole-call composition
+remain distinct. Source-backed dispatch/ready behavior supplies no constant setup
+cost. No new certification, campaign, numerical pair or scientific admission.
+Ticket 17 remains claimed, three report items complete, D26 unmet.
+
 2026-10-09 17:59 ET — [Ticket 17 completion boundary](ticket17-completion-boundary-20261009.md)
 
 Original reporting is complete: zero eligible pairs, unsupported agreement,
