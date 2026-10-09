@@ -1,4 +1,4 @@
-"""Public cross-domain composition and required source coverage. 2026-10-06 ET."""
+"""Public cross-domain composition and required source coverage. 2026-10-09 ET."""
 import json
 import copy
 import yaml
@@ -148,3 +148,95 @@ def test_sensitivity_recomposes_each_trial_before_whole_call_median(records,tmp_
     assert integer['whole_call_seconds']=={'half':20.,'base':10.,'double':5.}
     assert integer['component_seconds']['half']['fixture.a.bounds.compute_throughput']==12.
     assert integer['component_seconds']['half']['fixture.b.bounds.compute_throughput']==12.
+
+
+def admit_composed(records, estimate):
+    from swdb.analytic_estimate_binding import admit
+    from swdb.store import Store
+    store=Store(records.path)
+    char=store.get(estimate['characterization'],'workload_characterization')
+    target=store.get(estimate['protocol'],'protocol')['settings']['target_description']['snapshot']
+    return admit(store,estimate,char,target)
+
+
+@pytest.mark.parametrize('fault',[
+    'total','region','bound','model_input','scope','binding','target_snapshot',
+    'orphan_trials','legacy_proof','numeric_type',
+])
+def test_fresh_admission_rejects_saved_derivation_tampering(records,tmp_path,fault):
+    result=estimate_domains(records,tmp_path,overlap='serial')
+    assert result['seconds']==3. and admit_composed(records,result)['id']==result['protocol']
+    forged=copy.deepcopy(result)
+    if fault=='total':
+        forged['seconds']=6.
+        # Synchronize diagnostics so the generic finite/hash checks still pass.
+        for row in forged['parameter_report']['sensitivities']:
+            row['whole_call_seconds']['base']=6.
+    elif fault=='region':forged['regions'][0]['seconds']=6.
+    elif fault=='bound':forged['regions'][0]['bounds'][0]['seconds']=7.
+    elif fault=='model_input':forged['regions'][0]['bounds'][0]['inputs']['integer']['operations']=99
+    elif fault=='scope':forged['scope']['whole_timed_call']=True
+    elif fault=='binding':forged['binding']['threads']=2
+    elif fault=='target_snapshot':
+        forged['target_description_snapshot']['composition_contract']['resource_domain_overlap']='full_overlap'
+        forged['target_description_sha256']=digest(forged['target_description_snapshot'])
+    elif fault=='orphan_trials':forged.update(trials=[],summary='median_whole_call_seconds')
+    elif fault=='legacy_proof':forged['extensions']={'legacy_trial_scope_reconciliations':[{'basis':'inferred'}]}
+    elif fault=='numeric_type':forged['regions'][0]['bounds'][0]['seconds']=True
+    if fault=='total':
+        from swdb.analytic import _payload_problems
+        assert not list(_payload_problems(forged))
+    from swdb.cli import Failure
+    with pytest.raises(Failure,match='count-to-model composition'):
+        admit_composed(records,forged)
+
+
+def test_fresh_admission_uses_median_whole_call_not_sum_of_region_medians(records,tmp_path):
+    result=estimate_domains(records,tmp_path,trial_pairs=[(10,0),(0,10),(6,6)])
+    assert result['seconds']==10. and sum(r['seconds'] for r in result['regions'])==12.
+    assert admit_composed(records,result)['id']==result['protocol']
+    from swdb.cli import Failure
+    for fault in ('total','source_slot','trial_component'):
+        forged=copy.deepcopy(result)
+        if fault=='total':forged['seconds']=12.
+        elif fault=='source_slot':forged['trials'][0]['sources']=[1]
+        else:forged['trials'][0]['regions'][0]['bounds'][0]['seconds']=20.
+        with pytest.raises(Failure,match='count-to-model composition'):
+            admit_composed(records,forged)
+
+
+def test_fresh_admission_keeps_required_unknown_and_refuses_old_model_version(records,tmp_path,monkeypatch):
+    result=estimate_domains(records,tmp_path,overlap='serial',host_rate=None)
+    assert result['seconds'] is None and admit_composed(records,result)['id']==result['protocol']
+    forged=copy.deepcopy(result);forged['seconds']=2.
+    from swdb.cli import Failure
+    with pytest.raises(Failure,match='count-to-model composition'):
+        admit_composed(records,forged)
+    from swdb import estimate_protocol
+    monkeypatch.setattr(estimate_protocol,'estimator_identity',lambda:'0'*64)
+    with pytest.raises(Failure,match='estimator implementation changed after freeze'):
+        admit_composed(records,result)
+
+
+@pytest.mark.parametrize('fault',['scenario','components','omitted_rows','llm_parameters'])
+def test_fresh_admission_binds_halve_double_sensitivity_and_estimated_parameter_list(records,tmp_path,fault):
+    result=estimate_domains(records,tmp_path,overlap='serial',stage_basis='estimated')
+    assert admit_composed(records,result)['id']==result['protocol']
+    stage=next(row for row in result['parameter_report']['sensitivities'] if row['model']=='tile_staging')
+    assert stage['whole_call_seconds']=={'half':5.,'base':3.,'double':2.}
+    assert result['llm_parameters']==[stage]
+    forged=copy.deepcopy(result)
+    if fault=='scenario':
+        row=next(row for row in forged['parameter_report']['sensitivities'] if row['model']=='tile_staging')
+        row['whole_call_seconds'].update(half=99.,double=99.)
+        row.update(impact_magnitude_seconds=96.,impact_rank=1)
+        forged['llm_parameters']=[copy.deepcopy(row)]
+    elif fault=='components':
+        forged['parameter_report']['sensitivities'][0]['component_seconds']['half']={'invented.bounds.compute_throughput':99.}
+    elif fault=='omitted_rows':forged['parameter_report']['sensitivities']=[];forged['llm_parameters']=[]
+    else:forged['llm_parameters']=[]
+    from swdb.analytic import _payload_problems
+    assert not list(_payload_problems(forged))
+    from swdb.cli import Failure
+    with pytest.raises(Failure,match='count-to-model composition'):
+        admit_composed(records,forged)

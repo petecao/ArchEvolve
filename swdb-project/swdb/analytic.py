@@ -1,4 +1,4 @@
-"""LLVM characterization and composable analytic bounds. Updated: 2026-10-06 ET.
+"""LLVM characterization and composable analytic bounds. Updated: 2026-10-09 ET.
 
 Commands are the public interface. Source counts use normalized pre-vectorization IR;
 post-O3 facts are retained separately rather than guessing multiplicities after optimization.
@@ -597,20 +597,12 @@ def _estimate_regions(source_regions, source_calls, target, observation_contract
     return regions, seconds
 
 
-def estimate(args):
-    from swdb import analytic_models
-    store = Store(args.records)
-    characterization = _load(store, args.characterization, 'workload_characterization')
-    target = _load(store, args.target_description, 'target_description')
-    from swdb.offload_observation import binding_problems
-    issues=binding_problems(characterization,store)
-    if issues:raise Failure('functional source binding: '+'; '.join(issues))
-    from swdb.archevolve import require_team_safe
-    from swdb.estimate_protocol import bind
-    require_team_safe(store, characterization, target, args.protocol, command='estimate')
-    protocol = bind(store, args.protocol, characterization, target)
-    if target['threads'] != characterization['binding']['threads']:
-        raise Failure('target thread count differs from the counted workload thread identity')
+def compose_estimate(characterization, target, store, protocol):
+    """Replay count-only mechanism composition without reading an outcome.
+
+    The producer and fresh numerical admission use this same trial/median rule.
+    Archived validation never recomputes an old version with current models.
+    """
     from swdb.analytic_count_reuse import resolve
     count_reuse=resolve(characterization,target)
     characterization_sha256=artifacts.digest(characterization)
@@ -645,30 +637,65 @@ def estimate(args):
                     bound['missing']=sorted({m for b in bs if b for m in b['missing']})
                     bound['notes']=list(bound.get('notes',[]))+['Per-region component summary is the median across independent trial estimates.']
             row['limiting_bound']=None if row['seconds'] is None or not row['bounds'] else max(row['bounds'],key=lambda b:b['seconds'])['model']
-    record = _envelope('estimate', args.id, 'Analytic mechanism bounds from compiler/counting facts and frozen target parameters; no target timing.')
-    record.update({'format': 'swdb.estimate.v1', 'basis': 'estimated', 'estimator_version': VERSION,
+    semantic = {
+        'format': 'swdb.estimate.v1', 'basis': 'estimated',
+        'estimator_version': VERSION,
         'estimator_sha256': protocol['settings']['estimator_sha256'],
-        'protocol_sha256': protocol['identity_sha256'],
-        'estimator_variant': target['estimator_variant'], 'calibration_sources': target['calibration_sources'],
-        'characterization': characterization['id'], 'characterization_sha256': artifacts.digest(characterization),
-        'target_description': target['id'], 'target_description_sha256': artifacts.digest(target),
-        'target_description_snapshot': target, 'target': target['target'], 'threads': target['threads'],
-        'subject': characterization['subject'], 'input': characterization['input'], 'protocol': args.protocol,
-        'regions': regions, 'seconds': seconds, 'ratio': None, 'baseline': None,
-        'verdict': 'within_error', 'error_band': None,
-        'llm_parameters': [], 'evidence_kind': characterization['evidence_kind'],
+        'protocol_sha256': protocol['identity_sha256'], 'protocol': protocol['id'],
+        'characterization': characterization['id'],
+        'characterization_sha256': artifacts.digest(characterization),
+        'target_description': target['id'],
+        'target_description_sha256': artifacts.digest(target),
+        'target_description_snapshot': target,
+        'target': target['target'], 'threads': target['threads'],
+        'estimator_variant': target['estimator_variant'],
+        'calibration_sources': target['calibration_sources'],
+        'subject': characterization['subject'], 'input': characterization['input'],
+        'evidence_kind': characterization['evidence_kind'],
         'binding': characterization['binding'],
-        'scope': characterization.get('coverage', {'scope': 'counted source regions', 'unmapped_loops': characterization['unmapped_loops']}),
+        'scope': characterization.get('coverage', {
+            'scope': 'counted source regions',
+            'unmapped_loops': characterization['unmapped_loops']}),
+    }
+    semantic.update(regions=regions, seconds=seconds)
+    if trial_estimates:
+        semantic.update(trials=trial_estimates, summary='median_whole_call_seconds')
+    if scope_proofs:
+        semantic['extensions']={'legacy_trial_scope_reconciliations':scope_proofs}
+    if count_reuse is not None:
+        semantic['count_reuse']=count_reuse
+    from swdb.analytic_sensitivity import report
+    scenario_characterization={**characterization,'trials':model_trials} if model_trials else characterization
+    semantic['parameter_report']=report(semantic,target,scenario_characterization)
+    semantic['llm_parameters']=[row for row in semantic['parameter_report']['sensitivities'] if row['basis']=='estimated']
+    return semantic
+
+
+def estimate(args):
+    from swdb import analytic_models
+    store = Store(args.records)
+    characterization = _load(store, args.characterization, 'workload_characterization')
+    target = _load(store, args.target_description, 'target_description')
+    from swdb.offload_observation import binding_problems
+    issues=binding_problems(characterization,store)
+    if issues:raise Failure('functional source binding: '+'; '.join(issues))
+    from swdb.archevolve import require_team_safe
+    from swdb.estimate_protocol import bind
+    require_team_safe(store, characterization, target, args.protocol, command='estimate')
+    protocol = bind(store, args.protocol, characterization, target)
+    if target['threads'] != characterization['binding']['threads']:
+        raise Failure('target thread count differs from the counted workload thread identity')
+    composed = compose_estimate(characterization, target, store, protocol)
+    record = _envelope('estimate', args.id, 'Analytic mechanism bounds from compiler/counting facts and frozen target parameters; no target timing.')
+    record.update(composed)
+    record.update({'ratio': None, 'baseline': None, 'verdict': 'within_error', 'error_band': None,
         'notes': ['No validated error band exists in this slice; the verdict remains within_error.',
                   'Total sums exclusive region resource maxima plus declared additive overheads. Any required unknown makes its region and total unknown.']})
-    if trial_estimates:
-        record['trials'] = trial_estimates
-        record['summary'] = 'median_whole_call_seconds'
+    if 'trials' in record:
         record['notes'].append('Estimate each trial by summing exclusive region maxima; the reported total is the median whole-call trial time. Per-region medians are diagnostic and do not generally sum to that median.')
-    if scope_proofs:
-        record.setdefault('extensions',{})['legacy_trial_scope_reconciliations']=scope_proofs
+    if record.get('extensions',{}).get('legacy_trial_scope_reconciliations'):
         record['notes'].append('Legacy source count scopes were inferred in copied trial contexts from sealed registered ROI windows and exact call/bin and memory partitions; the characterization remains immutable.')
-    if count_reuse is not None:record['count_reuse']=count_reuse
+    seconds=record['seconds']
     if args.baseline:
         baseline = _load(store, args.baseline, 'estimate')
         require_team_safe(store, baseline, command='estimate')
@@ -678,10 +705,6 @@ def estimate(args):
         record['baseline'] = {'id': baseline['id'], 'sha256': artifacts.digest(baseline)}
         if seconds is not None and seconds > 0 and baseline['seconds'] is not None:
             record['ratio'] = baseline['seconds'] / seconds
-    from swdb.analytic_sensitivity import report
-    scenario_characterization={**characterization,'trials':model_trials} if model_trials else characterization
-    record['parameter_report']=report(record,target,scenario_characterization)
-    record['llm_parameters']=[row for row in record['parameter_report']['sensitivities'] if row['basis']=='estimated']
     from swdb.analytic_extensions import finalize_estimate
     record = finalize_estimate(record, store=store, protocol=protocol,
         characterization=characterization, target_description=target)

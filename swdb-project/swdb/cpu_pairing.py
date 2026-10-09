@@ -148,7 +148,7 @@ def runtime_admission(char,binary,fixture=False):
 def prepare(store,evaluation,request,context,binary):
     result=paired_estimate(store,evaluation,request)
     if evaluation.get('mode')=='extensa':return result
-    from swdb import analytic_cpu_binding, estimate_protocol
+    from swdb import analytic_cpu_binding, analytic_estimate_binding, estimate_protocol
     from swdb.archevolve import require_team_safe
     from swdb.analytic import _payload_problems
     explicit=request.get('analytic_estimate') is not None or request.get('analytic_estimates') is not None
@@ -201,7 +201,7 @@ def prepare(store,evaluation,request,context,binary):
             if protocol is None:raise Failure('paired frozen estimate protocol is unavailable')
             target=protocol['settings']['target_description']['snapshot']
             if target['target']!=context['machine']:raise Failure('paired target machine differs from the protected evaluator')
-            estimate_protocol.bind(store,protocol['id'],char,target)
+            analytic_estimate_binding.admit(store,estimate,char,target)
             if estimate['protocol_sha256']!=protocol['identity_sha256'] or estimate['target_description_sha256']!=artifacts.digest(target) or estimate['estimator_sha256']!=estimate_protocol.estimator_identity():
                 raise Failure('paired frozen model/protocol identity differs')
             runtime=runtime_admission(char,binary,request.get('fixture') is True)

@@ -1,4 +1,4 @@
-"""Prospective protected-driver CPU count/estimate pairing. 2026-10-07 ET.
+"""Prospective protected-driver CPU count/estimate pairing. 2026-10-09 ET.
 
 Tiny fixture rates never establish native application accuracy.
 """
@@ -25,7 +25,7 @@ def protected_setup(records, tmp_path):
     return build_evaluation_setup(build_proposal_setup(records,tmp_path,copy_all=False),tmp_path)
 
 
-def test_protected_driver_counts_bind_exact_fresh_source_slot_before_evaluation(protected_setup, tmp_path, llvm22):
+def test_protected_driver_counts_bind_exact_fresh_source_slot_before_evaluation(protected_setup, tmp_path, llvm22, monkeypatch):
     records, runs, request, base = protected_setup
     records.write('inputs/tiny-sym.yaml', load_fixture('profile/tiny-input.yaml'))
     prospective = request(id='fixture.prospective.cpu', analytic_input='tiny-sym', budget={'build_seconds':10,'run_seconds':5,'total_seconds':180}, build={'compiler': str(llvm22/'clang++'), 'flags': ['-std=c++11','-O2']})
@@ -82,6 +82,25 @@ def test_protected_driver_counts_bind_exact_fresh_source_slot_before_evaluation(
     assert prediction['seconds'] is not None and prediction['seconds']>0,[(r['id'],r['bounds']) for r in prediction['regions'] if r['seconds'] is None]
     evaluation_request=json.loads(json.dumps(__import__('yaml').safe_load(prospective.read_text())))
     evaluation_request.update(id='fixture.protected.evaluation',analytic_estimate='fixture.protected.estimate')
+    # A coherent saved-number forgery must refuse before even runtime preflight.
+    import copy
+    from swdb import cpu_pairing
+    from swdb.store import Store
+    forged=copy.deepcopy(prediction);forged['seconds']*=2
+    for row in forged['parameter_report']['sensitivities']:
+        row['whole_call_seconds']['base']=forged['seconds']
+    from swdb.analytic import _payload_problems
+    assert not list(_payload_problems(forged))
+    records.write('estimates/fixture.protected.estimate.yaml',forged)
+    def no_runtime_query(*args,**kwargs):
+        pytest.fail('Numerically forged estimate reached runtime preflight.')
+    with monkeypatch.context() as patched:
+        patched.setattr(cpu_pairing,'runtime_admission',no_runtime_query)
+        refusal=cpu_pairing.prepare(Store(records.path),{'evidence_kind':char['evidence_kind']},
+            evaluation_request,identity['evaluation_scope'],tmp_path/'must-not-execute')
+    assert refusal['state']=='excluded' and refusal['seconds'] is None
+    assert 'count-to-model composition differs: seconds' in refusal['reason']
+    records.write('estimates/fixture.protected.estimate.yaml',prediction)
     file=tmp_path/'evaluation.json';file.write_text(json.dumps(evaluation_request))
     evaluated=records.swdb('evaluate',file,'--runs-dir',runs,'--format','json')
     assert evaluated.returncode==0,evaluated.stderr

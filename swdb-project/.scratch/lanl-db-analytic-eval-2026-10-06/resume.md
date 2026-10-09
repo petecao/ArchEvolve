@@ -1,5 +1,29 @@
 # Continue the analytic evaluator work
 
+2026-10-09 17:43 ET — [Prospective count-to-model admission](evidence/17-prospective-count-model-admission-20261009/README.md)
+
+The fresh CPU admission gate now recomputes the complete count-only semantic
+estimate and parameter-sensitivity report from the exact frozen protocol before
+runtime preflight. Producer and admission share the calculation; whole-call trial
+medians, null costs, model/source/target bindings and archived validation retain
+their existing rules. Coherent changed totals, components, scope, trials,
+sensitivity scenarios and omitted parameter rows refuse.
+
+Final local validation passed 30 selected cases: 26 composition cases (34.25s),
+one protected-driver case (404.96s) and three unchanged protocol bodies over an
+isolated five-record fixture (4.63s). All 82 original assertions in the two modified test
+modules remain. The interrupted full-catalog attempt completed no test body;
+its legacy-scope case did not run. Initial regression/refactor failures remain
+recorded in the note. Standards and Spec source reviews closed both findings;
+this is conditional model consistency, not physical cost or timing accuracy.
+
+Ticket17 remains claimed/all four acceptance boxes unchecked; 14/15 assigned
+agent tickets remain resolved. Next bind independently supported target/runtime
+costs and the complete timed-call boundary, and separately close the DX100
+functional-to-MMIO and eligible-evaluator gaps. D26/D30 evidence is still absent.
+No new scientific population, remote source synchronization or old-action rerun
+occurred. The literal original6a refusal and no-switch recommendation remain.
+
 2026-10-09 17:17 ET — [Prospective registered SG count binding](evidence/17-prospective-registered-sg-count-binding-20261009/README.md)
 
 The local protected count adapter now derives exact registered SG32/SG64 scopes
