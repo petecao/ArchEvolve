@@ -1,15 +1,28 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-09 17:43 ET
+Updated: 2026-10-09 17:59 ET
 **Type:** slice
 **Status:** claimed
-**Work state:** active (explicitly resumed 2026-10-08)
+**Work state:** original reporting complete; scientific acceptance blocked on D26
 **Blocked by:** 16
 **Spec:** `../spec.md`
 **Time estimate:** 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs)
 
 **What to build:** After the flow-A campaigns: rank agreement between estimate and timing, whether gem5's best candidate survives a top-3 cut by estimate, and where estimates go wrong. The rule fixed in D30 is applied as written. A research variant of the estimator may be calibrated with these pairs, versioned separately (D10).
+
+2026-10-09 17:59 ET — [Completion boundary and shorter next step](../ticket17-completion-boundary-20261009.md)
+
+The original report is complete with zero eligible pairs and a no-switch
+recommendation. Record three completed report/guard acceptance items; D26
+blindness remains unmet and ticket 17 is not resolved. Original audit and
+completion bytes were rehashed unchanged, and the actual compact report was
+checked. Older all-four-unchecked labels below are preserved history.
+
+Yan-Ru asked to finish faster. Stop expanding general CPU recovery under 17;
+prioritize one genuine DX100 numerical complete-call estimate and eligible
+prospectively blind outcome before selecting another full campaign population.
+Missing numerical premises remain unknown. Human tickets and D30 stay unchanged.
 
 2026-10-09 17:43 ET — [Prospective count-to-model admission](../evidence/17-prospective-count-model-admission-20261009/README.md)
 
@@ -73,10 +86,10 @@ The package retains needed metadata bodies and original failures without duplica
 
 ## Acceptance
 
-- [ ] D30 applied verbatim, with the number of pairs shown.
+- [x] D30 applied verbatim, with the number of pairs shown (0 eligible pairs; unsupported).
 - [ ] Blindness verified for every pair (D26).
-- [ ] Any research variant is refused by team protocols.
-- [ ] A short recommendation for ticket 18.
+- [x] Any research variant is refused by team protocols.
+- [x] A short recommendation for ticket 18 (do not switch to flow B).
 
 Claimed: 2026-10-06 22:22 ET by ticket17 implementer; base `9a5057f45c7a1c3b8756cfccd39f000d72f95253`.
 

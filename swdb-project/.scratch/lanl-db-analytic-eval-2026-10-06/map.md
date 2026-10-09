@@ -1,5 +1,16 @@
 # Map: Analytic speed estimates and main-database compatibility
 
+2026-10-09 17:59 ET — [Ticket 17 completion boundary](ticket17-completion-boundary-20261009.md)
+
+Original reporting is complete: zero eligible pairs, unsupported agreement,
+actual audit refusal and no-switch recommendation. Three report/guard items are
+complete; D26 blindness remains unmet. Ticket 17 stays claimed and scientifically
+blocked; 14/15 assigned tickets remain resolved. Older all-four-unchecked labels
+are historical. Stop expanding general CPU recovery under 17. Prioritize one
+real DX100 numerical complete-call estimate and eligible blind outcome before
+another full study; missing premises remain unknown. Human tickets are unchanged.
+
+
 2026-10-09 17:43 ET — [Prospective count-to-model admission](evidence/17-prospective-count-model-admission-20261009/README.md)
 
 The fresh CPU admission gate now recomputes the complete count-only semantic
