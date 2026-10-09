@@ -1,0 +1,426 @@
+{
+  "actual_facts": {
+    "MemAvailable_bytes": 125529247744,
+    "actual_input_review_expiry_utc": "2026-10-09T04:13:26.346715+00:00",
+    "current_consumer_proof_or_native_readiness_emitted": false,
+    "data1_available_bytes": 21979545600,
+    "data1_deficit_bytes": 569032704,
+    "data_available_bytes": 36817457152,
+    "floor_checked_utc": "2026-10-09T04:11:13.772452+00:00",
+    "historical_floor_substeps_admitted": false,
+    "host_checked_utc": "2026-10-09T04:10:22.842053+00:00",
+    "host_error_class": "ValueError",
+    "host_metadata_ready": false,
+    "host_reason_sha256": "47f29939809e4d8c75d38875688b7080300246395f582f43c87b7f2af24a6617",
+    "host_state": "unknown",
+    "source_mapped_refusal": "unchanged_serial_floors",
+    "unchanged_thresholds_bytes": {
+      "/data": 25769803776,
+      "/data1": 22548578304,
+      "MemAvailable": 85899345920
+    }
+  },
+  "check_count": 94,
+  "checks": [
+    "privatebounded:lanl17_capture_metadata_action_20261008.py",
+    "open9stat:lanl17_capture_metadata_action_20261008.py",
+    "returned9stat:lanl17_capture_metadata_action_20261008.py",
+    "parent64fd exact",
+    "closedprivate capture:lanl17-p1-pre-full-index-host-capture-20261009-0010-a5-a2",
+    "privatebounded:start.json",
+    "open9stat:start.json",
+    "returned9stat:start.json",
+    "privatebounded:transport.json",
+    "open9stat:transport.json",
+    "returned9stat:transport.json",
+    "privatebounded:stdin.py",
+    "open9stat:stdin.py",
+    "returned9stat:stdin.py",
+    "privatebounded:stdout",
+    "open9stat:stdout",
+    "returned9stat:stdout",
+    "privatebounded:stderr",
+    "open9stat:stderr",
+    "returned9stat:stderr",
+    "privatebounded:host-original.json",
+    "open9stat:host-original.json",
+    "returned9stat:host-original.json",
+    "privatebounded:lanl17-p1-pre-full-index-host-action-actual-20261009-a5-a2.json",
+    "open9stat:lanl17-p1-pre-full-index-host-action-actual-20261009-a5-a2.json",
+    "returned9stat:lanl17-p1-pre-full-index-host-action-actual-20261009-a5-a2.json",
+    "exactdecodedoriginal host-original.json",
+    "exact64fdBOOT config/stdin host-original.json",
+    "closedstarttransport host-original.json",
+    "SSH0 emptyerr no completion host-original.json",
+    "closedstream host-original.json stdout",
+    "closedstream host-original.json stderr",
+    "outerclosed0nonscience host-original.json",
+    "exactdirectGNU/native finitecaps host-original.json",
+    "strictbase64exactnotreserialized host-original.json",
+    "emptycollect boundedSSHargv host-original.json",
+    "sourcepacketchronology host-original.json",
+    "privatebounded:lanl17_pre_full_index_host_observation_20261008_a5_r5.py",
+    "open9stat:lanl17_pre_full_index_host_observation_20261008_a5_r5.py",
+    "returned9stat:lanl17_pre_full_index_host_observation_20261008_a5_r5.py",
+    "selectedR5 unchanged native inline exact",
+    "closedfalse refusal no partialfacts",
+    "exactunchanged_serial_floors source mapped refusal",
+    "privatebounded:lanl17-p1-pre-full-index-host-input-actual-20261009-a5-a2.json",
+    "open9stat:lanl17-p1-pre-full-index-host-input-actual-20261009-a5-a2.json",
+    "returned9stat:lanl17-p1-pre-full-index-host-input-actual-20261009-a5-a2.json",
+    "exactone16802actualinput stage",
+    "onlyexactinputbytes staged no controls/index",
+    "actualclosedinput originalER binding",
+    "boundactualparent payloadreview",
+    "historicalqueryinputreview wasfresh notreuse",
+    "privatebounded:lanl17-actual-p1-pre-index-builder-r2-input-a2-independent-review-20261009-a5.json",
+    "open9stat:lanl17-actual-p1-pre-index-builder-r2-input-a2-independent-review-20261009-a5.json",
+    "returned9stat:lanl17-actual-p1-pre-index-builder-r2-input-a2-independent-review-20261009-a5.json",
+    "peeractualinput sourcepin matches",
+    "closedprivate capture:lanl17-pre-index-floor-readonly-capture-20261009-0011-a5",
+    "privatebounded:start.json",
+    "open9stat:start.json",
+    "returned9stat:start.json",
+    "privatebounded:transport.json",
+    "open9stat:transport.json",
+    "returned9stat:transport.json",
+    "privatebounded:stdin.py",
+    "open9stat:stdin.py",
+    "returned9stat:stdin.py",
+    "privatebounded:stdout",
+    "open9stat:stdout",
+    "returned9stat:stdout",
+    "privatebounded:stderr",
+    "open9stat:stderr",
+    "returned9stat:stderr",
+    "privatebounded:floor-original.json",
+    "open9stat:floor-original.json",
+    "returned9stat:floor-original.json",
+    "privatebounded:lanl17-pre-index-floor-readonly-config-20261009-0011-a5.json",
+    "open9stat:lanl17-pre-index-floor-readonly-config-20261009-0011-a5.json",
+    "returned9stat:lanl17-pre-index-floor-readonly-config-20261009-0011-a5.json",
+    "exactdecodedoriginal floor-original.json",
+    "exact64fdBOOT config/stdin floor-original.json",
+    "closedstarttransport floor-original.json",
+    "SSH0 emptyerr no completion floor-original.json",
+    "closedstream floor-original.json stdout",
+    "closedstream floor-original.json stderr",
+    "outerclosed0nonscience floor-original.json",
+    "exactdirectGNU/native finitecaps floor-original.json",
+    "strictbase64exactnotreserialized floor-original.json",
+    "emptycollect boundedSSHargv floor-original.json",
+    "sourcepacketchronology floor-original.json",
+    "boundedoriginalfloor query thresholdsunchanged",
+    "floor no stage no action metadataonlyHpin",
+    "floor nativecapacity metadata source only",
+    "actualboundedoriginalcapacity values",
+    "data1deficit569032704 onlylaterobservedfloorfailure",
+    "separatedatedquery observations notsametime"
+  ],
+  "findings": [],
+  "format": "swdb.lanl17-pre-index-original-floor-refusal-independent-review.v1",
+  "limits": [
+    "Source R5/action/actualinput original preserved; old float-bearinga1 input remains NOTRUN and this actuala2 input is historical only, no automatic retry/reuse.",
+    "Transport0/outer0 only means metadata capture success; originalreader refused readiness and returned no partialnative/source/process facts.",
+    "Reasonhash maps original source floor guard; independentfloorquery was later04:11:13Z, not a manufactured exactvalue at04:10:22Z refusal.",
+    "Laterdata1 free21979545600B is569032704B below unchanged21GiB22548578304B. Memory/data meet original80GiB/24GiB floors at that dated observation.",
+    "No current consumer/quiescence/native/catalog/fullindex/scientificadmission inferred from any reader steps beforefailure.",
+    "No floorrelaxation, cleanup, stage rerun, target/controlimport/runtime, SSH, tests or repo/Gitmutation by reviewer.",
+    "Raw report/YAML/scientific/provider/auth/log bodies unread; parent separately investigates scoped recoverableprojectcaches."
+  ],
+  "original_pins_all9localstat": [
+    {
+      "bytes": 7268,
+      "local_stat": {
+        "ctime_ns": 1791477240600962419,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350293045,
+        "mode": 33152,
+        "mtime_ns": 1791477240600962419,
+        "nlink": 1,
+        "size": 7268,
+        "uid": 501
+      },
+      "path": "/private/tmp/lanl17_capture_metadata_action_20261008.py",
+      "sha256": "64fd8a4358bfbc5c172b50e02ae3782b286f2302f2beb8907d4abd35b3449c2a"
+    },
+    {
+      "bytes": 534,
+      "local_stat": {
+        "ctime_ns": 1791519021988256164,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350654279,
+        "mode": 33152,
+        "mtime_ns": 1791519021988256164,
+        "nlink": 1,
+        "size": 534,
+        "uid": 501
+      },
+      "path": "/private/tmp/lanl17-p1-pre-full-index-host-capture-20261009-0010-a5-a2/start.json",
+      "sha256": "c80137f7f24a40eaa0bf48b7dcf6d46552ec9db2665f65284d5856b0a8bb9e28"
+    },
+    {
+      "bytes": 419,
+      "local_stat": {
+        "ctime_ns": 1791519022914919349,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350654282,
+        "mode": 33152,
+        "mtime_ns": 1791519022914919349,
+        "nlink": 1,
+        "size": 419,
+        "uid": 501
+      },
+      "path": "/private/tmp/lanl17-p1-pre-full-index-host-capture-20261009-0010-a5-a2/transport.json",
+      "sha256": "a0fc9b50f3e83a44d35572f506a3eefcd9d3839fa52a26e403cd152367bc19f9"
+    },
+    {
+      "bytes": 65146,
+      "local_stat": {
+        "ctime_ns": 1791519021987930412,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350654278,
+        "mode": 33152,
+        "mtime_ns": 1791519021987930412,
+        "nlink": 1,
+        "size": 65146,
+        "uid": 501
+      },
+      "path": "/private/tmp/lanl17-p1-pre-full-index-host-capture-20261009-0010-a5-a2/stdin.py",
+      "sha256": "cdcc0b16d024731021d3511f0225cbb5a214e02b7b1f3f35b48ccb2ce4214d15"
+    },
+    {
+      "bytes": 37509,
+      "local_stat": {
+        "ctime_ns": 1791519022882507438,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350654280,
+        "mode": 33152,
+        "mtime_ns": 1791519022882507438,
+        "nlink": 1,
+        "size": 37509,
+        "uid": 501
+      },
+      "path": "/private/tmp/lanl17-p1-pre-full-index-host-capture-20261009-0010-a5-a2/stdout",
+      "sha256": "74717839f92a49551f118cd2f439437bd287e4d05096ab641ebeee64db281ea6"
+    },
+    {
+      "bytes": 0,
+      "local_stat": {
+        "ctime_ns": 1791519021988437831,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350654281,
+        "mode": 33152,
+        "mtime_ns": 1791519021988382498,
+        "nlink": 1,
+        "size": 0,
+        "uid": 501
+      },
+      "path": "/private/tmp/lanl17-p1-pre-full-index-host-capture-20261009-0010-a5-a2/stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 307,
+      "local_stat": {
+        "ctime_ns": 1791519031236237468,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350654289,
+        "mode": 33152,
+        "mtime_ns": 1791519031236237468,
+        "nlink": 1,
+        "size": 307,
+        "uid": 501
+      },
+      "path": "/private/tmp/lanl17-p1-pre-full-index-host-capture-20261009-0010-a5-a2/host-original.json",
+      "sha256": "30be7becd13bbeed9f12a0589d5a1274beda583fc018b93f1497365f16591295"
+    },
+    {
+      "bytes": 59944,
+      "local_stat": {
+        "ctime_ns": 1791518906348062560,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350654018,
+        "mode": 33152,
+        "mtime_ns": 1791518906348062560,
+        "nlink": 1,
+        "size": 59944,
+        "uid": 501
+      },
+      "path": "/private/tmp/lanl17-p1-pre-full-index-host-action-actual-20261009-a5-a2.json",
+      "sha256": "e4a0b77c0c4c289cab834199b567591eb18ff85984a943cd482591f134b8c62a"
+    },
+    {
+      "bytes": 36052,
+      "local_stat": {
+        "ctime_ns": 1791513620426637826,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350629091,
+        "mode": 33152,
+        "mtime_ns": 1791513620426637826,
+        "nlink": 1,
+        "size": 36052,
+        "uid": 501
+      },
+      "path": "/private/tmp/lanl17_pre_full_index_host_observation_20261008_a5_r5.py",
+      "sha256": "be2f68c21a72b4de5deee05f17f48a8cd09342cf3a6e7e17280ff72414dc3fd4"
+    },
+    {
+      "bytes": 16802,
+      "local_stat": {
+        "ctime_ns": 1791518906347337514,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350654017,
+        "mode": 33152,
+        "mtime_ns": 1791518906347337514,
+        "nlink": 1,
+        "size": 16802,
+        "uid": 501
+      },
+      "path": "/private/tmp/lanl17-p1-pre-full-index-host-input-actual-20261009-a5-a2.json",
+      "sha256": "b3f5bd8417683d42c27841c3f9f29aed302c87e9788acdd467ada5d1a5ef7edb"
+    },
+    {
+      "bytes": 7190,
+      "local_stat": {
+        "ctime_ns": 1791519007590418242,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350654227,
+        "mode": 33152,
+        "mtime_ns": 1791519007590418242,
+        "nlink": 1,
+        "size": 7190,
+        "uid": 501
+      },
+      "path": "/private/tmp/lanl17-actual-p1-pre-index-builder-r2-input-a2-independent-review-20261009-a5.json",
+      "sha256": "0ac92bfad159d7c872c73f956c4cd3887d2e1ad287a2af587b2e07e32877efea"
+    },
+    {
+      "bytes": 534,
+      "local_stat": {
+        "ctime_ns": 1791519073199327997,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350655255,
+        "mode": 33152,
+        "mtime_ns": 1791519073199327997,
+        "nlink": 1,
+        "size": 534,
+        "uid": 501
+      },
+      "path": "/private/tmp/lanl17-pre-index-floor-readonly-capture-20261009-0011-a5/start.json",
+      "sha256": "eeab25b181c92df2e87a9a4d2f3df998f0f6dfd2851fe5f636c324dd0468285e"
+    },
+    {
+      "bytes": 418,
+      "local_stat": {
+        "ctime_ns": 1791519073804862296,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350655258,
+        "mode": 33152,
+        "mtime_ns": 1791519073804862296,
+        "nlink": 1,
+        "size": 418,
+        "uid": 501
+      },
+      "path": "/private/tmp/lanl17-pre-index-floor-readonly-capture-20261009-0011-a5/transport.json",
+      "sha256": "4400190eea4fd070e7a3dc5f948aabb6ba6a6042308771f9822d0e4e7d51356b"
+    },
+    {
+      "bytes": 4640,
+      "local_stat": {
+        "ctime_ns": 1791519073198894245,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350655254,
+        "mode": 33152,
+        "mtime_ns": 1791519073198894245,
+        "nlink": 1,
+        "size": 4640,
+        "uid": 501
+      },
+      "path": "/private/tmp/lanl17-pre-index-floor-readonly-capture-20261009-0011-a5/stdin.py",
+      "sha256": "6f54c5c660fdb87648e980c5bab5a05809326bd14cd441771d0032e3f862c4c2"
+    },
+    {
+      "bytes": 1481,
+      "local_stat": {
+        "ctime_ns": 1791519073787393918,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350655256,
+        "mode": 33152,
+        "mtime_ns": 1791519073787393918,
+        "nlink": 1,
+        "size": 1481,
+        "uid": 501
+      },
+      "path": "/private/tmp/lanl17-pre-index-floor-readonly-capture-20261009-0011-a5/stdout",
+      "sha256": "1ddb84407d93251ca4f9024d674c4122dbc895bab3953b3bc9417f4a786de81d"
+    },
+    {
+      "bytes": 0,
+      "local_stat": {
+        "ctime_ns": 1791519073199516873,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350655257,
+        "mode": 33152,
+        "mtime_ns": 1791519073199463040,
+        "nlink": 1,
+        "size": 0,
+        "uid": 501
+      },
+      "path": "/private/tmp/lanl17-pre-index-floor-readonly-capture-20261009-0011-a5/stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 295,
+      "local_stat": {
+        "ctime_ns": 1791519078925026600,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350655272,
+        "mode": 33152,
+        "mtime_ns": 1791519078925026600,
+        "nlink": 1,
+        "size": 295,
+        "uid": 501
+      },
+      "path": "/private/tmp/lanl17-pre-index-floor-readonly-capture-20261009-0011-a5/floor-original.json",
+      "sha256": "65081efd07014cd90da20cc8d551b68df86f6af927cc4c7589dca0dc317ea6a1"
+    },
+    {
+      "bytes": 1047,
+      "local_stat": {
+        "ctime_ns": 1791519073167191046,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350655252,
+        "mode": 33152,
+        "mtime_ns": 1791519073167191046,
+        "nlink": 1,
+        "size": 1047,
+        "uid": 501
+      },
+      "path": "/private/tmp/lanl17-pre-index-floor-readonly-config-20261009-0011-a5.json",
+      "sha256": "507e8a581750288d8aee488bb18d963a8c82ec473fb5dcbfe19d7dd208c9438d"
+    }
+  ],
+  "prepared_ET": "2026-10-09 00:13 ET",
+  "prepared_utc": "2026-10-09T04:13:45.070050+00:00",
+  "runtime_or_cleanup_authorized_by_this_review": false,
+  "scientific_admission": false,
+  "verdict": "PASS_ORIGINAL_REFUSAL_AND_CAPACITY_METADATA_STORAGE_GATE_UNMET"
+}

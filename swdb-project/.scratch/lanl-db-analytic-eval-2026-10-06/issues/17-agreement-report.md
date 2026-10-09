@@ -1,7 +1,7 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-08 22:14 ET
+Updated: 2026-10-09 00:28 ET
 **Type:** slice
 **Status:** claimed
 **Work state:** active (explicitly resumed 2026-10-08)
@@ -185,3 +185,16 @@ Fresh local P1/P2 root re-reviews (160/165 checks) and independent P1 peer re-re
 
 
 2026-10-08 22:14 ET — [FINALIZE progress and source-policy correction](../evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/README.md) retains original readonly observations and source reviews: at22:12ET P1 validation exit0/P1export live under original helper/supervisor; partial process inventory unknown, scientificR clean/all3leases released514/550/77. No completion/report/strictadmission inferred. B08 canonicalTrue follows exactoriginalwriter; historicalFalse labels/finding withdrawn additively, no original control/history rewrite. Original32 authorR2 remainsSOURCEPASS/NOTRUN pending actualfullindexes/FINALIZE/selection. All acceptance unchanged, ticket17 claimed; other human-owned tickets untouched.
+
+
+## Actual FINALIZE completion and full-index storage gate — 2026-10-09 00:28 ET
+
+Original FINALIZE finished once at2026-10-08 23:57 ET. Parent transport, original guard/supervisor/helper and cleanup succeeded; exact originals and root plus independent semantic reviews are retained in [the completion checkpoint](../evidence/17-actual-finalize-completion-and-first-index-readiness-20261009-a5/README.md). All five full validations returned0 with counts106/104/88/100/754. Per-CID exports returned0 with8/8/2/6 named candidate records. Actual ER is `f5014746da61005be2d75cee16f8a834afa19321`, a clean sole-parentR evidence commit. No dispatch or completed custody was repeated.
+
+The actual agreement report is **unsupported**, with **zero eligible pairs**, `blind_order: unverified`, missing preceding estimate receipts in all four campaigns, and **no-switch / unchanged_timing_only** recommendation. Its D30 policy remains20 pairs, tau0.6, lower CI0.3 and top3 coverage in every campaign. Report pairing-ledger row counts do not replace the32 executed candidate rows. This is an actual negative report outcome; strict6a audit, full inventories/indexes, original32 trajectory/selection/body closure and actual accepted-input assembly are still pending. Ticket17 stays claimed with acceptance unchecked.
+
+The selected unchanged R5 pre-index observer ran once at2026-10-09 00:10 ET and refused `unchanged_serial_floors`; it did not dispatch an index. A separate00:11 ET read-only snapshot found available RAM125529247744B and `/data`36817457152B passing, but `/data1`21979545600B below22548578304B by569032704B. These observations are dated. The failed observer supplies no partial readiness or consumer clearance. Its payload approval is expired and cannot be reused. Earlier a1 input/action were never staged or executed; selected R2 fixed the builder's generic peer-PASS check before the a2 execution.
+
+Conditional storage recovery is under source/preflight review: completed detached agent checkout `/data1/yanruj/ArchEvolve-lanl-generality-final-20261007-a1`, tipc4ab2fdb, is merged intoR and the local authorized branch. Current controls require retained commits/originals rather than this physical checkout. Its881299456B could cover the dated shortfall. Historical retirement protected it; that historical action will not be repeated or widened. No removal, relocation, archive or recovery-ref mutation has occurred. Fresh exact no-use/source/native/tree checks and a complete ignored-inclusive remote recovery archive are required before any removal; unchanged floors and fresh guards remain required afterward.
+
+Formal evaluation table and agent health checked at2026-10-09 00:28 ET; all agents responsive, with recovery preflight source authoring/review active and source eligibility complete. Next required table/health by00:58 ET. Heartbeat remains ACTIVE. Remote PRIMARY and origin must remain immutableR through all remaining original input/index/audit guards. No remote source fetch/sync occurred. Raw output stays remote; only project source and compact metadata are archived locally.

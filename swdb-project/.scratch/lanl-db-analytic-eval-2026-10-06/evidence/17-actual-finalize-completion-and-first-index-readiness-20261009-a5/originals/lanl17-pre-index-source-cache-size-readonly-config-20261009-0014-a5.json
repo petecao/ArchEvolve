@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "/usr/bin/python3.12",
+    "-I",
+    "-B",
+    "-c",
+    "import json,os,stat\nfrom pathlib import Path\nrows=[]\nfor r in ['ArchEvolve','ArchEvolve-lanl17-source-20261007-a5','ArchEvolve-lanl17-freeze-evidence-20261007-a5','ArchEvolve-lanl17-actual-report-evidence-20261007-a5']:\n p=Path('/data1/yanruj')/r/'swdb-project/build'\n if not p.exists(): rows.append({'root':r,'build_exists':False});continue\n for x in p.iterdir():\n  s=x.lstat();rows.append({'path':str(x),'regular':stat.S_ISREG(s.st_mode),'size':s.st_size,'uid':s.st_uid,'mode':s.st_mode,'nlink':s.st_nlink})\nprint(json.dumps({'read_only':True,'scientific_admission':False,'rows':rows},sort_keys=True))\n"
+  ],
+  "collect": [],
+  "local_seconds": 180,
+  "remote_seconds": 30,
+  "source_pins": [
+    {
+      "bytes": 38195,
+      "path": "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py",
+      "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+    }
+  ]
+}

@@ -1,13 +1,26 @@
 # Implementation progress
 
-Updated: 2026-10-08 23:40 ET
+Updated: 2026-10-09 00:28 ET
 
 **Current state: ACTIVE after Yan-Ru's explicit resumption; 14/15 assigned tickets resolved; ticket16 review finding addressed.**
 Ticket 17 remains `claimed`, with acceptance pending. Start from [resume.md](resume.md).
 The 30-minute heartbeat `lanl-analytic-evaluator-progress` is ACTIVE on the resumed chat.
 Readiness and evidence-review agents are responsive; completed subtasks are retained.
 
-**Latest evaluation: all four normal custody chains complete and reviewed; FINALIZE running.** P4 original stop/release32/AFTER passed root and independent review: four iterations/eight rows/six materialized IDs/seven completed counted calls, all four exits zero, no survivors, clean sourceR and released514 without a kernel/FD9 holder through AFTER. [P4 originals](evidence/17-p4-normal-stop-release-after-20261008-a5/README.md) and [guarded FINALIZE launch](evidence/17-actual-finalize-admission-and-start-20261008-a5/README.md) are pushed at2e81bec4. FINALIZE launched once21:53:46ET after fresh all-three-lease/source/process/GPU/storage clearance; original preregistration exists, completion/report/cleanup unestablished. Ticket16 re-resolved after73public regressions, corrected legality31 and final frozen gate11 passed, with independent implementation review; original broad402pass/4fixture-failure run preserved. Full report/index/actual strict audit/final evidence review remain pending; frozenP3 empty pairing/order and absent numeric adapter remain scientific gates. At22:59ET P1–P3 validation and export exit0; P4 validation exit0 and export active beneath the original helper/supervisor. Process inventory has6unknowns; scientificR clean and all3nativeleases released. [Observer and source-policy originals](evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/README.md) retain the explicit B08 canonicalTrue correction. Required table/health completed at2026-10-08 23:09 ET; next by23:39 ET.
+**Latest evaluation: original FINALIZE complete and reviewed; full-index storage gate unmet.**
+
+## Actual FINALIZE completion and full-index storage gate — 2026-10-09 00:28 ET
+
+Original FINALIZE finished once at2026-10-08 23:57 ET. Parent transport, original guard/supervisor/helper and cleanup succeeded; exact originals and root plus independent semantic reviews are retained in [the completion checkpoint](evidence/17-actual-finalize-completion-and-first-index-readiness-20261009-a5/README.md). All five full validations returned0 with counts106/104/88/100/754. Per-CID exports returned0 with8/8/2/6 named candidate records. Actual ER is `f5014746da61005be2d75cee16f8a834afa19321`, a clean sole-parentR evidence commit. No dispatch or completed custody was repeated.
+
+The actual agreement report is **unsupported**, with **zero eligible pairs**, `blind_order: unverified`, missing preceding estimate receipts in all four campaigns, and **no-switch / unchanged_timing_only** recommendation. Its D30 policy remains20 pairs, tau0.6, lower CI0.3 and top3 coverage in every campaign. Report pairing-ledger row counts do not replace the32 executed candidate rows. This is an actual negative report outcome; strict6a audit, full inventories/indexes, original32 trajectory/selection/body closure and actual accepted-input assembly are still pending. Ticket17 stays claimed with acceptance unchecked.
+
+The selected unchanged R5 pre-index observer ran once at2026-10-09 00:10 ET and refused `unchanged_serial_floors`; it did not dispatch an index. A separate00:11 ET read-only snapshot found available RAM125529247744B and `/data`36817457152B passing, but `/data1`21979545600B below22548578304B by569032704B. These observations are dated. The failed observer supplies no partial readiness or consumer clearance. Its payload approval is expired and cannot be reused. Earlier a1 input/action were never staged or executed; selected R2 fixed the builder's generic peer-PASS check before the a2 execution.
+
+Conditional storage recovery is under source/preflight review: completed detached agent checkout `/data1/yanruj/ArchEvolve-lanl-generality-final-20261007-a1`, tipc4ab2fdb, is merged intoR and the local authorized branch. Current controls require retained commits/originals rather than this physical checkout. Its881299456B could cover the dated shortfall. Historical retirement protected it; that historical action will not be repeated or widened. No removal, relocation, archive or recovery-ref mutation has occurred. Fresh exact no-use/source/native/tree checks and a complete ignored-inclusive remote recovery archive are required before any removal; unchanged floors and fresh guards remain required afterward.
+
+Formal evaluation table and agent health checked at2026-10-09 00:28 ET; all agents responsive, with recovery preflight source authoring/review active and source eligibility complete. Next required table/health by00:58 ET. Heartbeat remains ACTIVE. Remote PRIMARY and origin must remain immutableR through all remaining original input/index/audit guards. No remote source fetch/sync occurred. Raw output stays remote; only project source and compact metadata are archived locally.
+
 
 [Earlier p1 startup checkpoint](evidence/17-active-p1-startup-and-p2-preparation-20261008-a5/README.md):13:11 ET metadata confirms public query-index completion, pairing/setup entry and advancing owned CPU. State/iterations and protocol/provider/terminal receipts remain absent. Source-only p2 commands are reviewed, with fresh admission still required. The13:11 ET evaluation table and responsive agent check are complete; next required table13:41 ET.
 
@@ -32,7 +45,7 @@ writing-preference rule is committed as `cb6f75ae`. Evaluation state is unchange
 | Ticket 14 generality | Resolved; nine pairs/45 trials, seven unknown totals | Preserve original receipts and qualified unknowns |
 | Corrected storage DEFAULT a3 | Actual original receipt reviewed; guard exit 0 | Limited inspection only; do not repeat |
 | Storage RETIRE a4 / actual a5 | Original successful sixteen-row receipt reviewed and retained | Do not repeat retirement or DEFAULT |
-| Ticket 17 science | PREPARE/FIRST and all four normal custody chains passed | At23:29ET all four validation/export0; agreement report active; original completion/index/audit pending |
+| Ticket 17 science | PREPARE/FIRST and all four normal custody chains passed | Original FINALIZE reviewed; unsupported/zero pairs; full indexes and strict audit pending |
 | Review and completion | First Standards + Spec implementation pass completed | Address findings, verify integration, final evidence review/ticket closure |
 
 The following paragraphs retain pause-era observations; the current active state is above.

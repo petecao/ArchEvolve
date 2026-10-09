@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "/usr/bin/python3.12",
+    "-I",
+    "-B",
+    "-c",
+    "import os,json,shutil,datetime,pwd,socket\nassert os.getuid()==os.geteuid()==114316761 and pwd.getpwuid(os.getuid()).pw_name=='yanruj' and socket.gethostname().split('.')[0]=='mbit10'\nmem={k:int(v.strip().split()[0])*1024 for k,v in (line.split(':',1) for line in open('/proc/meminfo').read().splitlines()) if k=='MemAvailable'}\nprint(json.dumps({'checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'read_only':True,'scientific_admission':False,'MemAvailable_bytes':mem['MemAvailable'],'free_bytes':{p:shutil.disk_usage(p).free for p in ['/data1','/data']},'thresholds_bytes':{'MemAvailable':85899345920,'/data1':22548578304,'/data':25769803776}},sort_keys=True))\n"
+  ],
+  "collect": [],
+  "local_seconds": 180,
+  "remote_seconds": 30,
+  "source_pins": [
+    {
+      "bytes": 38195,
+      "path": "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py",
+      "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+    }
+  ]
+}
