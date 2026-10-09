@@ -1,8 +1,9 @@
 # 16 — Extensa flow A: blind paired estimates
 
 Created: 2026-10-06
+Updated: 2026-10-08 21:05 ET
 **Type:** slice
-**Status:** resolved
+**Status:** claimed
 **Blocked by:** 06, 09
 **Spec:** `../spec.md`
 **Time estimate:** 4–6 h
@@ -11,7 +12,7 @@ Created: 2026-10-06
 
 ## Acceptance
 
-- [x] A fixture-target campaign test shows paired estimates in the summary.
+- [ ] A fixture-target campaign test shows paired estimates in the summary.
 - [x] Each estimate's time precedes its candidate's timing.
 - [x] Selection is identical with and without paired estimates.
 - [x] Paired estimates are tagged with the campaign and Extensa mode, and team protocols refuse them.
@@ -70,3 +71,5 @@ passed in **321.81 s**, and canonical validation passed **625 records**. All
 remain byte-identical. The LLVM observer/runtime sources and every other ticket
 state remain unchanged; the tested bundle is still `884e76a5…`. See the
 [integrated merger proof](../evidence/16-integrated-merger-proof-20261006.json).
+
+2026-10-08 21:05 ET — Reopened by parent after full Spec review found missing every-artifact/baseline coverage on certification-refusal paths (spec user story65 and Extensa loop). Previously accepted timing-boundary tests/Answer remain historical, but they did not cover an all-refused campaign. Prospective fix must record forced-unknown/noneligible artifact-only forecasts after immutable materialization and baseline setup, without executing/counting untrusted candidate code, manufacturing outcome events or altering timing selection. Exact timed forecasts remain separate; artifact-only rows must not enter D30/report matching. New refused/repaired/accepted flow tests and root+peer review are required before re-resolution. Frozen original R/P3 history remains unchanged and strict scientific admission cannot be repaired retrospectively.

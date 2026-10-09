@@ -1,6 +1,6 @@
 # P4 first iteration and reviewed prospective fix
 
-Updated: 2026-10-08 20:52 ET.
+Updated: 2026-10-08 20:48 ET.
 
 The exact20:44 ET monitor observes P4 attempt1/node0/g514 active with one completed iteration and two completed candidate rows, zero interrupted rows and no reported infrastructure error. State now exists; summary, stop and final exits remain absent. Native514 stays held with matching kernel FLOCK and daemonFD9, release_ready=false and no unknown reasons. The owned public PID2300714/start600610784 CPU advanced to198446 ticks. Provider receipt existence is file metadata only, not an admitted completed-call count. P1-P3 normal interim custody remains historical and complete; never repeat dispatch or custody.
 

@@ -1,7 +1,7 @@
 # Map: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-08 20:52 ET
+Updated: 2026-10-08 21:13 ET
 **Type:** ticket map
 **Status:** claimed (unfinished implementation/evaluation)
 **Work state:** active; [resume guide](resume.md)
@@ -43,7 +43,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 |---|---|---|---|---|
 | 14 | [Generality: MAPLE and PageRank](issues/14-generality-maple-pagerank.md) | resolved | 05, 09, 10 | 1 day |
 | 15 | [Show Scott the counting approach](issues/15-show-scott-counting.md) | resolved | 09 | about 15 min |
-| 16 | [Extensa flow A: blind paired estimates](issues/16-extensa-blind-paired-estimates.md) | resolved | 06, 09 | 4–6 h |
+| 16 | [Extensa flow A: blind paired estimates](issues/16-extensa-blind-paired-estimates.md) | claimed | 06, 09 | 4–6 h |
 | 17 | [Agreement report](issues/17-agreement-report.md) | claimed | 16 | 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs) |
 | 18 | [Decide on flow B](issues/18-decide-flow-b.md) | ready-for-human | 17 | about 15 min |
 
@@ -237,4 +237,4 @@ Fresh local P1/P2 root re-reviews (160/165 checks) and independent P1 peer re-re
 
 2026-10-08 20:40 ET — [Future final-closeout reader and template packages](evidence/17-final-closeout-reader-and-template-readiness-20261008-a5/README.md) passed root and independent source review. Selected hostR2 17019B/22990957 checks exact self/GNUparent plus allthree released native kernel/daemon proofs and actual514; completionR2 18085B/c00eec76 fixes source-pin shape/Store name discovery/supervisor process pin while preserving original byte/privacy/phase/seal proofs; remote template authorR1 26682B/ec1fc013 preserves closed SPEC339/de shapes and future refusal. All are NOTRUN; original R/M2/policy/budgets/controls remain unchanged. Earlier rejected drafts/findings are retained. Actual P4 normal custody/current host/FINALIZE success/index/projection/body metadata gates remain required. Full strict6a and final Standards+Spec review/prospective implementation fixes/tests/ticket+Git synchronization still pending; ticket17 claimed, all acceptance unchecked.
 
-2026-10-08 20:52 ET — [P4 first iteration and prospective fix readiness](evidence/17-p4-first-iteration-and-prospective-fix-readiness-20261008-a5/README.md): exact20:44 monitor/native/process originals show P4 active1iteration/2rows, held514 matching FLOCK/FD9/notready; no terminal custody. P1-P3 normal custody stays complete and historical. Selected four-index metadata helperR3 b27ca6f0 and prospective classification patchR3 d8d44eb8 passed root+peer source review; typed future drafts, earlier findings and original bytes preserved. No patch application/tests/control/scientific/native mutation. P3 empty original pairing/events remains a strict admission gate; actual final audit NOTRUN. All agents responsive/completed; next scheduled table/health21:14 ET. Ticket17 claimed/all acceptance unchecked; other human-owned tickets untouched; remote PRIMARY/origin remainR until original guards finish.
+2026-10-08 20:47 ET — [P4 first iteration and prospective fix readiness](evidence/17-p4-first-iteration-and-prospective-fix-readiness-20261008-a5/README.md): exact20:44 monitor/native/process originals show P4 active1iteration/2rows, held514 matching FLOCK/FD9/notready; no terminal custody. P1-P3 normal custody stays complete and historical. Selected four-index metadata helperR3 b27ca6f0 and prospective classification patchR3 d8d44eb8 passed root+peer source review; typed future drafts, earlier findings and original bytes preserved. No patch application/tests/control/scientific/native mutation. P3 empty original pairing/events remains a strict admission gate; actual final audit NOTRUN. All agents responsive/completed; next scheduled table/health21:14 ET. Ticket17 claimed/all acceptance unchecked; other human-owned tickets untouched; remote PRIMARY/origin remainR until original guards finish.
