@@ -147,19 +147,19 @@ def test_scan_ignores_snapshot_lines_and_comments():
 
 # --- adversarial candidates (full certification) ------------------------------------------------------
 
-def _patch(tmp_path, transform):
+def _patch(tmp_path, transform, *, certification_store):
     plugin = types.SimpleNamespace(certification_source=c.BFS, certification_snapshot=c.DEFAULT_SNAPSHOT,
                                    certification_rewrite=lambda scalar: transform(c.peter_source(scalar)))
     output = tmp_path / 'candidate.patch'
-    c.create_peter_patch(Store(ROOT / 'records'), output, plugin=plugin, temporary_root=str(tmp_path))
+    c.create_peter_patch(certification_store, output, plugin=plugin, temporary_root=str(tmp_path))
     return output
 
 
-def _certify(tmp_path, monkeypatch, transform):
+def _certify(tmp_path, monkeypatch, transform, *, certification_store):
     """Certify 1.3 explicitly (ticket 76 made 1.4 the default; 1.3 stays selectable and unchanged)."""
     _gcc()
     monkeypatch.setattr(c.workflow, 'persist', lambda *args, **kwargs: None)
-    return c.certify(Store(ROOT / 'records'), CONTRACT, snapshot=c.DEFAULT_SNAPSHOT, patch=_patch(tmp_path, transform),
+    return c.certify(certification_store, CONTRACT, snapshot=c.DEFAULT_SNAPSHOT, patch=_patch(tmp_path, transform, certification_store=certification_store),
                      runs_dir=tmp_path / 'runs', version='1.3')
 
 
@@ -196,8 +196,8 @@ def _controls(record):
     return [(x['id'], x['tile_size'], x['status']) for x in record['negative_controls']]
 
 
-def test_candidate_that_fakes_rejection_lines_is_refused(tmp_path, monkeypatch):
-    record = _certify(tmp_path, monkeypatch, fake_rejection_on_probe)
+def test_candidate_that_fakes_rejection_lines_is_refused(tmp_path, monkeypatch, *, certification_store):
+    record = _certify(tmp_path, monkeypatch, fake_rejection_on_probe, certification_store=certification_store)
     assert record['verdict'] == 'failed' and record['command']['version'] == '1.3'
     assert all(x['status'] == 'passed' for x in record['matrix'])
     assert {name for name, _, status in _controls(record) if status != 'rejected'} == {'skipped_cas_recheck'}
@@ -208,15 +208,15 @@ def test_candidate_that_fakes_rejection_lines_is_refused(tmp_path, monkeypatch):
         assert 'duplicate_frontier' not in control['observed_checks'] and control['named_checks'] == []
 
 
-def test_candidate_that_tests_a_fault_macro_is_refused_by_the_scan(tmp_path, monkeypatch):
+def test_candidate_that_tests_a_fault_macro_is_refused_by_the_scan(tmp_path, monkeypatch, *, certification_store):
     with pytest.raises(UsageError, match=r"harness scan.*SWDB_DXC_FAULT_SKIPPED_CAS_RECHECK"):
-        _certify(tmp_path, monkeypatch, fault_macro_probe)
+        _certify(tmp_path, monkeypatch, fault_macro_probe, certification_store=certification_store)
 
 
-def test_fault_macro_probe_cannot_change_behavior_under_faults(tmp_path, monkeypatch):
+def test_fault_macro_probe_cannot_change_behavior_under_faults(tmp_path, monkeypatch, *, certification_store):
     """With the scan switched off, the macro is never defined in the candidate's translation unit."""
     monkeypatch.setattr(isolation, 'refuse_scan_findings', lambda original, candidate, **kwargs: None)
-    record = _certify(tmp_path, monkeypatch, fault_macro_probe)
+    record = _certify(tmp_path, monkeypatch, fault_macro_probe, certification_store=certification_store)
     assert record['verdict'] == 'failed'
     assert all(x['status'] == 'passed' for x in record['matrix'])
     assert {name for name, _, status in _controls(record) if status != 'rejected'} == {'skipped_cas_recheck'}

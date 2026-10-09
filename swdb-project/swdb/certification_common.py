@@ -15,8 +15,38 @@ import struct
 from pathlib import Path
 
 from swdb import artifacts
+from swdb.cli import Failure, UsageError
 
 CHANNEL_ENV, PLAN_ENV = 'SWDB_CERT_RECORD_FD', 'SWDB_CERT_PLAN_FD'
+
+
+# 2026-10-08 ET: candidate-invalid checks must not hide certification infrastructure failures.
+class CandidateRefusal(Exception):
+    """An expected candidate validation refusal, carrying its public check name."""
+
+    def __init__(self, message, check='certification_aborted'):
+        super().__init__(message)
+        self.check = check
+
+
+class CandidateFailure(CandidateRefusal, Failure):
+    """Candidate refusal that retains the standalone command's failure exit code."""
+
+
+class CandidateUsageError(CandidateRefusal, UsageError):
+    """Candidate refusal that retains the standalone command's usage exit code."""
+
+
+def candidate_check(check, *args, **kwargs):
+    """Mark a pure authored-source check; never wrap a build, input pin or configuration check."""
+    try:
+        return check(*args, **kwargs)
+    except CandidateRefusal:
+        raise
+    except Failure as exc:
+        raise CandidateFailure(str(exc)) from exc
+    except UsageError as exc:
+        raise CandidateUsageError(str(exc)) from exc
 
 
 # --- builds ------------------------------------------------------------------------------------------------

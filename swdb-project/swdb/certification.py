@@ -744,7 +744,7 @@ def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, th
     matrix, controls = [], []
     for size in tile_sizes:
         build = isolation.CandidateBuild(folder / f'{stem}-{size}.objects', library, tree, source_path, size, threads)
-        instrumented = plugin.certification_instrument(source) + driver
+        instrumented = common.candidate_check(plugin.certification_instrument, source) + driver
         static = legality_of(instrumented, f'{stem}-{size}', size)
         static_failed, static_invalid = _legality_failures(static)
         legality_field = {'legality_checks': static} if legal else {}
@@ -956,7 +956,7 @@ def check_candidate_scope(tree, snapshot, plugin=None):
     current = {item['path']: item for item in artifacts.manifest(tree)}
     changed = {path for path in set(original) | set(current) if original.get(path) != current.get(path)}
     if changed - {rewritten, HEADER} or rewritten not in changed:
-        raise UsageError(f'{plugin.name} contract permits only the {plugin.name} rewrite and canonical lowering header; '
+        raise common.CandidateUsageError(f'{plugin.name} contract permits only the {plugin.name} rewrite and canonical lowering header; '
                          'changed files: ' + ', '.join(sorted(changed)))
     return sorted(changed)
 
@@ -1099,7 +1099,7 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
         profile = native.load_profile(catalog, entry)
         tree, original_snapshot, snapshot_id, snapshot_text = _materialize_candidate(
             store, folder, candidate=candidate, snapshot=snapshot, patch=patch, rewritten=profile['scope']['file'])
-        artifacts.check_protections(tree, original_snapshot['protections'])
+        common.candidate_check(artifacts.check_protections, tree, original_snapshot['protections'])
         changed_files = native.check_scope(profile, tree, original_snapshot, snapshot_text)
         from swdb.certification_isolation import refuse_scan_findings, scan
         candidate_text = (tree / profile['scope']['file']).read_text()
@@ -1126,11 +1126,11 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
     elif family == procedures.CANDIDATE:
         tree, original_snapshot, snapshot_id, snapshot_text = _materialize_candidate(
             store, folder, candidate=candidate, snapshot=snapshot, patch=patch, rewritten=plugin.certification_source)
-        artifacts.check_protections(tree, original_snapshot['protections'])
+        common.candidate_check(artifacts.check_protections, tree, original_snapshot['protections'])
         changed_files = check_candidate_scope(tree, original_snapshot, plugin)
         header = tree / HEADER
         if not header.is_file() or artifacts.file_hash(header) != artifacts.file_hash(library_root / 'dx100/dxc_lowering.hpp'):
-            raise Failure('candidate must ship the byte-identical canonical lowering header')
+            raise common.CandidateFailure('candidate must ship the byte-identical canonical lowering header')
         # Ticket 70 (certify 1.3): candidate-authored text may not name evaluator symbols. Ticket 76:
         # 1.4 also refuses descriptor reads, temporary files and frame introspection.
         from swdb.certification_isolation import refuse_scan_findings

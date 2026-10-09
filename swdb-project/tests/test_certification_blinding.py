@@ -169,9 +169,9 @@ def test_the_1_4_scan_refuses_plan_reads_state_files_and_introspection(added, to
     assert token not in [t for _, t, _ in isolation.scan(original, original + added + '\n', '1.3')]
 
 
-def test_calibration_takes_no_candidate_input(tmp_path):
+def test_calibration_takes_no_candidate_input(tmp_path, *, certification_store):
     with pytest.raises(UsageError, match='calibration certifies only the pinned authors source'):
-        c.certify(Store(ROOT / 'records'), calibrate=True, candidate='candidate.x', runs_dir=tmp_path)
+        c.certify(certification_store, calibrate=True, candidate='candidate.x', runs_dir=tmp_path)
 
 
 def test_provider_feedback_names_no_surviving_control():
@@ -194,21 +194,21 @@ def _replace(text, old, new):
     return text.replace(old, new, 1)
 
 
-def _patch(tmp_path, transform):
+def _patch(tmp_path, transform, *, certification_store):
     plugin = types.SimpleNamespace(certification_source=c.BFS, certification_snapshot=c.DEFAULT_SNAPSHOT,
                                    certification_rewrite=lambda scalar: transform(c.peter_source(scalar)))
     output = tmp_path / 'candidate.patch'
-    c.create_peter_patch(Store(ROOT / 'records'), output, plugin=plugin, temporary_root=str(tmp_path))
+    c.create_peter_patch(certification_store, output, plugin=plugin, temporary_root=str(tmp_path))
     return output
 
 
-def _certify(tmp_path, monkeypatch, transform, version):
+def _certify(tmp_path, monkeypatch, transform, version, *, certification_store):
     _gcc()
     monkeypatch.setattr(c.workflow, 'persist', lambda *args, **kwargs: None)
     folder = tmp_path / version
     folder.mkdir()
-    return c.certify(Store(ROOT / 'records'), CONTRACT, snapshot=c.DEFAULT_SNAPSHOT,
-                     patch=_patch(folder, transform), runs_dir=folder / 'runs', version=version)
+    return c.certify(certification_store, CONTRACT, snapshot=c.DEFAULT_SNAPSHOT,
+                     patch=_patch(folder, transform, certification_store=certification_store), runs_dir=folder / 'runs', version=version)
 
 
 TDSTEP = ('void TDStep(const Graph &g, pvector<SGOffset> &VertexOffsets, pvector<NodeID> &parent, '
@@ -258,10 +258,10 @@ def _not_rejected(record):
 
 
 @pytest.mark.parametrize('attack', [probe_claim, decoy_frontier])
-def test_attacks_that_certify_under_1_3_fail_under_1_4(tmp_path, monkeypatch, attack):
-    old = _certify(tmp_path, monkeypatch, attack, '1.3')
+def test_attacks_that_certify_under_1_3_fail_under_1_4(tmp_path, monkeypatch, attack, *, certification_store):
+    old = _certify(tmp_path, monkeypatch, attack, '1.3', certification_store=certification_store)
     assert old['verdict'] == 'certified' and old['command']['version'] == '1.3'   # the ticket 70 holes
-    new = _certify(tmp_path, monkeypatch, attack, '1.4')
+    new = _certify(tmp_path, monkeypatch, attack, '1.4', certification_store=certification_store)
     assert new['verdict'] == 'failed' and new['command']['version'] == '1.4'
     failed = {x['reason'] for x in new['matrix'] if x['status'] != 'passed'}
     if attack is probe_claim:
@@ -277,8 +277,8 @@ def test_attacks_that_certify_under_1_3_fail_under_1_4(tmp_path, monkeypatch, at
         assert any('duplicate_frontier' in x['named_checks'] for x in new['matrix'])
 
 
-def test_t20_under_1_4_runs_one_blinded_binary_in_random_order(tmp_path, monkeypatch):
-    record = _certify(tmp_path, monkeypatch, lambda source: source, '1.4')
+def test_t20_under_1_4_runs_one_blinded_binary_in_random_order(tmp_path, monkeypatch, *, certification_store):
+    record = _certify(tmp_path, monkeypatch, lambda source: source, '1.4', certification_store=certification_store)
     assert record['verdict'] == 'certified', _not_rejected(record)
     for size in (16384, 1024):
         cells = [x for x in record['matrix'] if x['tile_size'] == size]

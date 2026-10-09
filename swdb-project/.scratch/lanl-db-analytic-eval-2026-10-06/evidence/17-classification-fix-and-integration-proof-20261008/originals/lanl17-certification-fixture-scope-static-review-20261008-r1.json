@@ -1,0 +1,103 @@
+{
+  "format": "swdb.lanl17-source-only-test-fixture-proposal.v1",
+  "status": "UNAPPLIED_NOTRUN",
+  "patch": {
+    "path": "/private/tmp/lanl17-certification-fixture-scope-prospective-r1-20261008.diff",
+    "bytes": 37475,
+    "sha256": "cc936046da6a04346ea733e955af976e45cb50d746368bf24286a36a0ad581a8"
+  },
+  "files": [
+    {
+      "path": "swdb-project/tests/test_certification_process.py",
+      "original_bytes": 7296,
+      "original_sha256": "9b82c504e3643dcbc8a46bfcd6f33770297db1ed2728c06532a2b5a654c7bf37",
+      "prospective_bytes": 7446,
+      "prospective_sha256": "698a49f9105d4a06156aa67870385df6340bd5308579e4441d158632f7be1aa3",
+      "ast_parse": true,
+      "all_original_assertions_unchanged": true
+    },
+    {
+      "path": "swdb-project/tests/test_certification_procedures.py",
+      "original_bytes": 17255,
+      "original_sha256": "714ce2390d1f9f097e9bec2143b0d3c5e70a612882a97e926d94eba5c8b2fee6",
+      "prospective_bytes": 17271,
+      "prospective_sha256": "3bd2bacac32e90e72e5e6b4e978199a3714e9b173aa0d239fd2f32f0275072d7",
+      "ast_parse": true,
+      "all_original_assertions_unchanged": true
+    },
+    {
+      "path": "swdb-project/tests/test_certification_isolation.py",
+      "original_bytes": 13317,
+      "original_sha256": "68c0f691b3f053b4ae6c2f7bd59d41b91946a0a4d1711ed7405c174972ac943a",
+      "prospective_bytes": 13593,
+      "prospective_sha256": "1b4b51ec3c405cc1a6ef42bf6c3dd3307944fcc61aba8ee11c01305dc46b1186",
+      "ast_parse": true,
+      "all_original_assertions_unchanged": true
+    },
+    {
+      "path": "swdb-project/tests/test_certification_native.py",
+      "original_bytes": 17408,
+      "original_sha256": "72f5603d183e0377e9a3b946d31334546665dcc62d86278793e2527f4e898ac7",
+      "prospective_bytes": 18279,
+      "prospective_sha256": "fba6dd97404419897ad140b9d5af904d2201531c6e83a38e76838592a7759edc",
+      "ast_parse": true,
+      "all_original_assertions_unchanged": true
+    },
+    {
+      "path": "swdb-project/tests/test_certification_controls.py",
+      "original_bytes": 19280,
+      "original_sha256": "6206bcef69c8f2e177a6f6ae5d44d0493cb182ad3a38b214b775f3aed3266425",
+      "prospective_bytes": 19700,
+      "prospective_sha256": "ca89c134375dc08a140a53ef6ac5e252d7b5349ee2404ead8f3becef012efc8b",
+      "ast_parse": true,
+      "all_original_assertions_unchanged": true
+    },
+    {
+      "path": "swdb-project/tests/test_certification_blinding.py",
+      "original_bytes": 17112,
+      "original_sha256": "f9d9711bfe033c3d7263c71cba7a6a006e57860e31c82991cf61101daeed5f10",
+      "prospective_bytes": 17384,
+      "prospective_sha256": "b57a5800c2231d38a69cfd4d2763e8046480704cb83b70775ca6f464579c3103",
+      "ast_parse": true,
+      "all_original_assertions_unchanged": true
+    },
+    {
+      "path": "swdb-project/tests/test_typed_certification.py",
+      "original_bytes": 21115,
+      "original_sha256": "98fedf394cd2c69c21084d55ca704c128375bf6c466f6845dc083ad83ecb3ae5",
+      "prospective_bytes": 21251,
+      "prospective_sha256": "e21260cbd772cc22aa18767c4cdedf7c82b4243fa94c247f3c9bd66acf7a3d79",
+      "ast_parse": true,
+      "all_original_assertions_unchanged": true
+    },
+    {
+      "path": "swdb-project/tests/test_bc_certification.py",
+      "original_bytes": 10903,
+      "original_sha256": "67402cc3cfdddb287abcb5cd9e657a885b45f3cbbdc5742a163ed68a3b81cefa",
+      "prospective_bytes": 11149,
+      "prospective_sha256": "990f190b92bce25ead0c8f1d36af30e26d6d1b2ef96c053d24cba9b419d53683",
+      "ast_parse": true,
+      "all_original_assertions_unchanged": true
+    },
+    {
+      "path": "swdb-project/tests/conftest.py",
+      "original_bytes": 6739,
+      "original_sha256": "fdaca3dd49f9bb965aca976b24d876165447f53633dab92a7e937100b9bd355d",
+      "prospective_bytes": 6772,
+      "prospective_sha256": "a349c799a9da1107e9a3fa7520aeca2018d63a45d019220fc068cddcbc3b53a3",
+      "ast_parse": true,
+      "all_original_assertions_unchanged": true
+    },
+    {
+      "path": "swdb-project/tests/testkit/certification_records.py",
+      "original_bytes": 0,
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "prospective_bytes": 1950,
+      "prospective_sha256": "5dce56c6ad7259d4150aa61c32491c214f8a2801f8d7d87f982107bd169151cc",
+      "ast_parse": true,
+      "all_original_assertions_unchanged": false
+    }
+  ],
+  "no_imports_or_tests_or_remote": true,
+  "generation_or_scientific_admission": false
+}

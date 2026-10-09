@@ -507,3 +507,152 @@ def test_gem5_baselines_only_runs_no_provider_call_and_resume_reuses_them(repo_t
                  and c["request"]["protocol_role"] == "baseline"]
     assert len(baselines) == 2 and summary["stop_reason"] == "max_iterations"
     assert summary["iterations"][0]["candidates"][0]["id"].startswith("extensa-gem5-bfs-20261004-f1.it1.")
+
+
+# 2026-10-08 ET: certification infrastructure failures preserve interrupted rows, not plateau.
+@pytest.mark.parametrize("failure", ["compiler", "trusted_build", "configuration", "trusted_io"])
+def test_certification_infrastructure_stops_without_repair_or_plateau(repo_team, base_source, monkeypatch, failure):
+    from swdb import certification, certification_process
+    from swdb.cli import UsageError
+
+    def broken_certificate(store, contract, **kwargs):
+        if failure == "compiler":
+            monkeypatch.setenv("SWDB_CERTIFY_CXX", str(repo_team["root"] / "missing-certification-compiler"))
+            certification.compiler()
+        elif failure == "trusted_build":
+            # Exercise the trusted evaluator helper without compiling anything.
+            build = certification_process.Build.__new__(certification_process.Build)
+            build._evaluator = None
+            build.library = build.folder = Path("/fixture")
+            build.flags = []
+            build.compile = lambda *a, **kw: {"returncode": 1, "log": "/fixture/trusted-build.json"}
+            build.evaluator()
+        elif failure == "trusted_io":
+            raise FileNotFoundError("trusted certification driver is unavailable: fixture")
+        else:
+            raise UsageError("typed library is invalid: fixture")
+        raise AssertionError("infrastructure helper must refuse")
+
+    monkeypatch.setattr("testkit.extensa_targets.fake_certify", broken_certificate)
+    config = provider(repo_team, {"rewriting": [{"patch": inside_patch(base_source), "contracts": [CONTRACT],
+                                             "knobs": [], "unresolved": []}]})
+    runner, host = FakeRunner({"kronecker": 1.4, "uniform_random": 1.4}), FakeHost()
+    loop, summary = run(repo_team, gem5_campaign(repo_team, max_iterations=1), config, runner, host)
+    assert summary["stop_reason"] == "infrastructure_failure"
+    assert summary["iterations"] == []
+    ledger = loop.ledger.to_state()
+    assert ledger["iterations_completed"] == 0 and ledger["plateau"] == 0
+    interrupted = loop.state["interrupted_iteration"]
+    assert interrupted["index"] == 1 and interrupted["provider_calls"]
+    assert all(call["role"] != "repair" for call in ledger["calls"])
+    assert not [call for call in runner.calls if call["command"] == "dx100-execute"]
+
+
+@pytest.mark.parametrize("kind,check", [("scope", "certification_aborted"),
+                                        ("harness", "harness_scan"),
+                                        ("site", "negative_control_site:stale_depth_hint")])
+def test_expected_candidate_certificate_refusals_remain_failed_candidates(tmp_path, kind, check):
+    from swdb import certification_common as common
+    from swdb.cli import Failure, UsageError
+
+    def refused(store, contract, **kwargs):
+        if kind == "site":
+            raise common.CandidateFailure("candidate source lacks a unique negative-control mutation site: "
+                                          "stale_depth_hint", check=check)
+        raise common.CandidateUsageError("fixture authored-source refusal", check=check)
+
+    adapter = campaign_targets.TargetAdapter.__new__(campaign_targets.TargetAdapter)
+    adapter._certify = refused
+    adapter.store_dir = adapter.folder = adapter.library_root = tmp_path
+    outcome = adapter.certify({"id": "candidate.fixture"}, [CONTRACT], 1, "kronecker", 0)
+    assert outcome == {"record": None, "outcome": "failed", "failed_checks": [check]}
+    assert issubclass(common.CandidateFailure, Failure)
+    assert issubclass(common.CandidateUsageError, UsageError)
+
+
+def test_authored_source_refusals_keep_check_names_and_cli_categories():
+    from swdb import certification_common as common, certification_faults, certification_isolation, certification_legality
+    from swdb.cli import Failure, UsageError
+
+    with pytest.raises(common.CandidateFailure) as site:
+        certification_faults.replace_tokens("void f() {}", "missing();", "changed();", "stale_depth_hint")
+    assert site.value.check == "negative_control_site:stale_depth_hint"
+    with pytest.raises(common.CandidateUsageError) as harness:
+        certification_isolation.refuse_scan_findings("", "void f() { swdb_certification_frontier(); }")
+    assert harness.value.check == "harness_scan"
+    with pytest.raises(common.CandidateFailure) as schedule:
+        certification_legality.schedule_control("void f() {}")
+    assert schedule.value.check == "negative_control_site:schedule_out_of_range"
+    # A missing normative knob declaration is configuration, despite its legacy site message.
+    with pytest.raises(Failure) as configuration:
+        certification_legality.knob_control("void f() {}", {})
+    assert not isinstance(configuration.value, common.CandidateRefusal)
+    with pytest.raises(common.CandidateUsageError):
+        common.candidate_check(lambda: (_ for _ in ()).throw(UsageError("authored scope mismatch")))
+    # CLI categories remain unchanged for each candidate refusal subtype.
+    assert isinstance(site.value, Failure) and isinstance(harness.value, UsageError)
+
+
+@pytest.mark.parametrize("version", ["1.4", "1.5"])
+@pytest.mark.parametrize("source", ["bool BFSVerifier() {}", "ANCHOR\nbool BFSVerifier() {}\nANCHOR",
+                                   "ANCHOR", "ANCHOR\nbool BFSVerifier() {}\nbool BFSVerifier() {}"])
+def test_native_authored_frontier_refusals_are_candidate_failures(tmp_path, monkeypatch, version, source):
+    from swdb import certification, certification_common as common, certification_native as native
+    from swdb import certification_procedures as procedures
+
+    # Reach the actual authored-source guard without graph generation or a compiler/build.
+    monkeypatch.setattr(certification, "matrix_graphs", lambda *a: [])
+    monkeypatch.setattr(native, "staging_tail_graph", lambda *a: None)
+    (tmp_path / "bfs.cc").write_text(source)
+    profile = {"data": {"matrix": {"sources": [0], "threads": [1]},
+                        "rewrite_scope": {"file": "bfs.cc"}}, "harness_v14": {},
+               "hook": {"anchor": "ANCHOR", "hook_v14": "HOOK"}}
+    with pytest.raises(common.CandidateFailure) as refused:
+        native.certify_native_v14(tmp_path, tmp_path, tmp_path, profile, None,
+                                  procedure=procedures.procedure(procedures.NATIVE, version))
+    assert refused.value.check == "certification_aborted"
+
+
+@pytest.mark.parametrize("phase", ["positive", "trusted_control"])
+def test_blinded_instrumentation_distinguishes_authored_and_trusted_control_failures(tmp_path, monkeypatch, phase):
+    from types import SimpleNamespace
+    from swdb import certification, certification_blinding as blinding, certification_common as common
+    from swdb import certification_legality as legality
+    from swdb.cli import Failure
+
+    (tmp_path / "candidate.cc").write_text("positive")
+    driver = tmp_path / "driver.cc"
+    driver.write_text("trusted driver")
+    calls = []
+
+    def instrument(text, **kwargs):
+        calls.append(text)
+        if text == "trusted_bad" or phase == "positive":
+            raise Failure("instrumentation lacks protected anchor: fixture")
+        return "instrumented positive"
+
+    class Build:
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def candidate_object(self, *args, **kwargs):
+            return {"returncode": 0}
+
+        def link(self, *args, **kwargs):
+            return {"returncode": 0}
+
+    monkeypatch.setattr(certification, "matrix_graphs", lambda *a: [("tiny", tmp_path / "tiny.sg")])
+    monkeypatch.setattr(certification, "legality_checks", lambda *a, **kw: [])
+    monkeypatch.setattr(legality, "applies", lambda *a: True)
+    monkeypatch.setattr(legality, "CONTROLS", {"trusted_bad_control": set()})
+    monkeypatch.setattr(legality, "control", lambda *a, **kw: {
+        "source": "trusted_bad", "fault": None, "site": "candidate_tokens"})
+    plugin = SimpleNamespace(certification_source="candidate.cc", binary_stem="fixture",
+                             certification_instrument=instrument, certification_controls={},
+                             control_source=lambda sources: sources[0])
+    procedure = SimpleNamespace(legality="v1", driver_path=lambda *a, **kw: driver)
+    with pytest.raises(Failure) as refused:
+        blinding.certify_candidate(tmp_path, tmp_path, tmp_path, [1], 1, [0], plugin=plugin,
+                                   contract={"fixture": True}, procedure=procedure, build_class=Build)
+    assert isinstance(refused.value, common.CandidateRefusal) is (phase == "positive")
+    assert calls == (["positive"] if phase == "positive" else ["positive", "trusted_bad"])

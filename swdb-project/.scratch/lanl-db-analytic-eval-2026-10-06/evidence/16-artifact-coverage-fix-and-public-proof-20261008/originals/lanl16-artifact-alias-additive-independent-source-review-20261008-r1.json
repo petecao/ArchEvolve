@@ -1,0 +1,40 @@
+{
+  "checks": [
+    "R1 entire six-file derivative inventory unchanged; R2 adds exactly one test AST, all original tests/assertions preserved.",
+    "Additive patch reconstructs exact 23,294-byte R2 test derivative; all declared pins match.",
+    "Public fixture campaign all-refused setup supplies real registered baseline/input/protocol metadata, no outcome events.",
+    "Only record catalog copied into fresh metadata folder, no campaign state/jobs/raw result directory or pairing access file; no Campaign resume call.",
+    "Alias is deep copy differing only ID, entire original artifact object/hash preserved; candidate add is allowed by writer.add and existing Extensa mode/campaign creation tags match.",
+    "Candidate schema/reference checks allow alias original proposal/snapshot references; no bidirectional candidate ID equality rule is bypassed.",
+    "Store.path_of and access.read_record_bytes signatures match uses; canonical record bytes captured and compared.",
+    "Fresh PairingLedger configuration equals original fixture campaign policy fields and fixture_model default None; expected receipts reused without rewriting stopped history.",
+    "Alias and original return exact same paired IDs across all registered workload inputs; whole record equality includes estimated_at, original subject alias and full frozen execution context.",
+    "Original paired record bytes unchanged; entire ledger records unchanged; no events/event file/numeric seconds/eligible sample added.",
+    "Identity comparison changes only subject ID and retains original protocol ID/identity; R1 schema/projection checks independently cover full settings hash.",
+    "Fixture identity regression does not certify physical application bytes, runtime success, historical freshness or scientific agreement."
+  ],
+  "created_at_utc": "2026-10-09T01:15:46.039904+00:00",
+  "findings": [],
+  "format": "swdb.private-independent-source-review.v1",
+  "limits": [
+    "No target import, tests, patch application, Store construction or remote actions.",
+    "Root must run genuine public add/validate and test integration after reviewed source application. Scientific history/D30/strict admission remain separate."
+  ],
+  "parent_test": {
+    "bytes": 19333,
+    "path": "/private/tmp/lanl16-prospective-artifact-receipts-source-draft-20261008-r1/swdb-project/tests/test_extensa_pairing.py",
+    "sha256": "7ab41c2f25fc6591765f0ec5fda90c4e893491870e46c0510bf642d988897d3e"
+  },
+  "patch": {
+    "bytes": 4360,
+    "path": "/private/tmp/lanl16-prospective-artifact-receipts-source-draft-20261008-r2/artifact-alias-additive-test-only.patch",
+    "sha256": "d483dce68eaa8f958d9ad978477033be4c2886175327b3bd28c4b0f1d19fe583"
+  },
+  "prospective_test": {
+    "bytes": 23294,
+    "path": "/private/tmp/lanl16-prospective-artifact-receipts-source-draft-20261008-r2/swdb-project/tests/test_extensa_pairing.py",
+    "sha256": "0d02f1ee9819262ee9cce95df1bd786a74e050010989946f48b1b071006cd328"
+  },
+  "scope": "Ticket16 R2 additive artifact alias regression",
+  "verdict": "PASS_SOURCE_ONLY"
+}

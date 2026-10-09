@@ -227,6 +227,7 @@ def _forecasts(ledger, artifact, workload):
     return [row for row in ledger.get('records', [])
         if row['timing_context']['subject']['artifact_sha256'] == artifact
         and row['timing_context']['input']['id'] == workload
+        and not extensa_pairing.artifact_only(row)
         and not row['timing_context']['execution'].get('protocol_companion')
         and row['timing_context']['execution'].get('protocol_role', 'candidate') == 'candidate']
 

@@ -62,6 +62,7 @@ from __future__ import annotations
 import re
 
 from swdb.cli import Failure
+from swdb.certification_common import CandidateFailure
 
 KNOB_RANGE = 'knob_range'
 SCHEDULE_RANGE = 'schedule_range'
@@ -481,7 +482,8 @@ def schedule_control(source, rules='v1'):
     if rules != 'v1':
         mutated = _PRAGMA_OPERATOR.sub(operator, mutated)
     if not count[0]:
-        raise Failure('candidate source lacks a unique negative-control mutation site: schedule_out_of_range')
+        raise CandidateFailure('candidate source lacks a unique negative-control mutation site: schedule_out_of_range',
+                               check='negative_control_site:schedule_out_of_range')
     return mutated
 
 

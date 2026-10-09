@@ -1,0 +1,57 @@
+........................................................................ [ 17%]
+..............................................................FF.......F [ 35%]
+F....................................................................... [ 53%]
+........................................................................ [ 70%]
+........................................................................ [ 88%]
+..............................................                           [100%]
+=================================== FAILURES ===================================
+_ test_knob_interface_candidate_certifies_and_its_static_assert_does_not_hide_the_control _
+
+tmp_path = PosixPath('/private/var/folders/x0/g9dhnccj0jjbxh_gblp35zvr0000gn/T/pytest-of-yanrujhou/pytest-708/test_knob_interface_candidate_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10d016360>
+
+    def test_knob_interface_candidate_certifies_and_its_static_assert_does_not_hide_the_control(tmp_path, monkeypatch):
+>       record = _certify(tmp_path, monkeypatch, knob_interface)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _certify() missing 1 required keyword-only argument: 'certification_store'
+
+tests/test_certification_legality.py:136: TypeError
+___________ test_out_of_range_schedule_is_refused_by_schedule_range ____________
+
+tmp_path = PosixPath('/private/var/folders/x0/g9dhnccj0jjbxh_gblp35zvr0000gn/T/pytest-of-yanrujhou/pytest-708/test_out_of_range_schedule_is_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1095bb4a0>
+
+    def test_out_of_range_schedule_is_refused_by_schedule_range(tmp_path, monkeypatch):
+>       record = _certify(tmp_path, monkeypatch, guided)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _certify() missing 1 required keyword-only argument: 'certification_store'
+
+tests/test_certification_legality.py:151: TypeError
+___________ test_a_zero_threshold_is_refused_by_knob_range_under_1_6 ___________
+
+tmp_path = PosixPath('/private/var/folders/x0/g9dhnccj0jjbxh_gblp35zvr0000gn/T/pytest-of-yanrujhou/pytest-708/test_a_zero_threshold_is_refus0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10ac11df0>
+
+    def test_a_zero_threshold_is_refused_by_knob_range_under_1_6(tmp_path, monkeypatch):
+>       record = _certify(tmp_path, monkeypatch, zero_threshold)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _certify() missing 1 required keyword-only argument: 'certification_store'
+
+tests/test_certification_legality.py:270: TypeError
+_____________ test_a_pragma_operator_candidate_certifies_under_1_6 _____________
+
+tmp_path = PosixPath('/private/var/folders/x0/g9dhnccj0jjbxh_gblp35zvr0000gn/T/pytest-of-yanrujhou/pytest-708/test_a_pragma_operator_candida0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1093ecda0>
+
+    def test_a_pragma_operator_candidate_certifies_under_1_6(tmp_path, monkeypatch):
+>       record = _certify(tmp_path, monkeypatch, pragma_operators)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _certify() missing 1 required keyword-only argument: 'certification_store'
+
+tests/test_certification_legality.py:278: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_certification_legality.py::test_knob_interface_candidate_certifies_and_its_static_assert_does_not_hide_the_control
+FAILED tests/test_certification_legality.py::test_out_of_range_schedule_is_refused_by_schedule_range
+FAILED tests/test_certification_legality.py::test_a_zero_threshold_is_refused_by_knob_range_under_1_6
+FAILED tests/test_certification_legality.py::test_a_pragma_operator_candidate_certifies_under_1_6
+4 failed, 402 passed in 904.58s (0:15:04)

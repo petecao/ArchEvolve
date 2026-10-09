@@ -293,11 +293,10 @@ def directive_findings(original, candidate, contract):
 
 
 def refuse_directives(original, candidate, contract, version='1.5'):
-    from swdb.cli import UsageError
     findings = directive_findings(original, candidate, contract)
     if findings:
         shown = '; '.join(f'line {line} {token!r} ({why})' for line, token, why in findings[:5])
         more = f' and {len(findings) - 5} more' if len(findings) > 5 else ''
-        # "harness scan": the legacy words campaign code classifies aborted certifications by.
-        raise UsageError(f'candidate source refused by the harness scan (certify {version} directives): '
-                         + shown + more)
+        # 2026-10-08 ET: preserve the public check without classifying arbitrary exception text.
+        raise common.CandidateUsageError(f'candidate source refused by the harness scan (certify {version} directives): '
+                                         + shown + more, check='harness_scan')

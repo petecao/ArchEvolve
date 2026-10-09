@@ -470,7 +470,7 @@ def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, th
     matrix, controls, schedule = [], [], []
     for size in tile_sizes:
         build = build_class(folder / f'{stem}-{size}.{build_suffix}', library, tree, source_path, size, threads)
-        instrumented = instrument(source)
+        instrumented = common.candidate_check(instrument, source)
         static = legality_of(instrumented, f'{stem}-{size}', size)
         static_failed, static_invalid = base._legality_failures(static)
         legality_field = {'legality_checks': static} if legal else {}

@@ -23,7 +23,7 @@ FIXTURES = Path(__file__).resolve().parent / "fixtures"
 DB_COMMANDS = {"build", "sql", "find", "implementations", "add", "profile"}
 
 pytest.register_assert_rewrite("testkit")
-pytest_plugins = ["testkit.proposals", "testkit.bfs_native", "testkit.bfs_protocol", "testkit.extensa",
+pytest_plugins = ["testkit.certification_records", "testkit.proposals", "testkit.bfs_native", "testkit.bfs_protocol", "testkit.extensa",
                   "testkit.extensa_targets", "testkit.bfs_native_scalable", "testkit.provider_workspace",
                   "testkit.toolchain", "testkit.native_pilot", "testkit.profile_packages", "testkit.analytic"]
 

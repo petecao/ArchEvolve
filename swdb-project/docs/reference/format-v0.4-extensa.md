@@ -243,3 +243,30 @@ A report retains exclusions and unsupported scope; fixture agreement is not
 measured application agreement. No report silently enables screening or replaces
 the campaign's frozen selection policy. Existing summaries without these fields
 retain their historical interpretation.
+
+
+## Prospective artifact coverage before certification
+
+Updated: 2026-10-08 ET. A fresh campaign records a structural unknown for every
+persisted candidate artifact, including refused and repaired attempts, and each
+baseline across its registered workload classes immediately after protocol
+freeze. These source-metadata receipts run no candidate code and start no build,
+provider or timing job. `execution.observation_scope: artifact_before_certification`
+is closed to campaign metadata and original freeze ID/identity/settings hash;
+the six-field `protocol_context` is a campaign projection, not a compiled binary,
+complete runtime bridge or a new functional correctness claim.
+
+These receipts always have null seconds, unknown state and agreement eligibility
+false, even in a numerical fixture. They remain in the campaign summary. An
+actual evaluator entry keeps its separate exact request/build forecast and
+outcome-access boundary; an artifact-only receipt can never authorize such an
+event or enter agreement/ranking/top3 calculations. Untimed or refused artifacts
+have no fabricated timing event. Timing-only selection, repair and provider
+budgets remain unchanged.
+
+Historical summaries remain valid without this additive coverage. Source/policy
+drift requires a fresh prospective campaign and policy; stopped histories are
+never resumed or backfilled. This change cannot establish blindness or D30
+admission for earlier campaigns with missing actual forecasts/outcomes. The
+complete-call numeric adapter remains unavailable, and unsupported/no-switch
+reports retain that scientific limitation.

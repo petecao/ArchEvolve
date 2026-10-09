@@ -693,6 +693,9 @@ class Campaign:
                                   "settings": frozen["settings"]}
         if frozen.get("by_role"):          # ticket 56: one frozen native protocol per baseline role
             self.state["protocol"]["by_role"] = frozen["by_role"]
+        self.adapter.pairing.freeze_artifacts(
+            [row['candidate'] for row in self.data['baselines']], self.state['protocol'],
+            fixture=self.adapter.evidence_kind == 'contract_fixture')
         self.state["setup_done"] = True
 
     def _pilot(self):
@@ -929,6 +932,8 @@ class Campaign:
         attempt = 0
         candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt, contracts=contracts)
         entry.update(id=candidate["id"], artifact_sha256=candidate["sha256"])
+        self.adapter.pairing.freeze_artifacts([candidate['id']], self.state['protocol'],
+            fixture=self.adapter.evidence_kind == 'contract_fixture')
         self.adapter.admit(candidate, contracts)
         if not contracts:
             entry["level"] = "uncertified"
@@ -979,6 +984,8 @@ class Campaign:
                     return reject("knob_out_of_range", problem)
                 candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt, contracts=contracts)
                 entry.update(id=candidate["id"], artifact_sha256=candidate["sha256"])
+                self.adapter.pairing.freeze_artifacts([candidate['id']], self.state['protocol'],
+                    fixture=self.adapter.evidence_kind == 'contract_fixture')
                 self.adapter.admit(candidate, contracts)
         self._evaluate(iteration, cls, candidate, attempt, entry)
         selection = next((c for c in entry["comparisons"] if c["baseline_role"] == self.data["base_source"]), None)

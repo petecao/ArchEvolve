@@ -46,7 +46,7 @@ import sys
 import time
 from pathlib import Path
 
-from swdb import artifacts, certification_feedback, kernels, paths, workflow
+from swdb import artifacts, certification_common, certification_feedback, kernels, paths, workflow
 from swdb.cli import Failure, UsageError
 from swdb.cpp_lexical import body_spans, code_only, enclosing_function, function_span  # noqa: F401
 from swdb.extensa_boundary import MODE
@@ -561,16 +561,13 @@ class TargetAdapter:
             try:
                 record = certify(Store(self.store_dir), contract, runs_dir=self.folder / "certification",
                                  library=self.library_root, candidate=candidate["id"])
-            except (Failure, UsageError) as exc:   # an aborted certification (e.g. scope, control site)
-                text = str(exc)
-                site = re.search(r"negative-control mutation site: (\w+)", text)
-                # Ticket 70 (2026-10-04 ET): the certification evaluator's scan refuses candidate text naming
-                # its symbols (failed check `harness_scan`, a persisted name).
-                failed_checks.append(f"negative_control_site:{site[1]}" if site
-                                     else "harness_scan" if "refused by the harness scan" in text
-                                     else "certification_aborted")
+            except certification_common.CandidateRefusal as exc:
+                failed_checks.append(exc.check)
                 records.append(None)
                 continue
+            except (Failure, UsageError, OSError) as exc:
+                # 2026-10-08 ET: keep the interrupted iteration; never repair or plateau on infrastructure.
+                raise _stop("infrastructure_failure", f"Certification {type(exc).__name__}: {exc}"[:2000]) from exc
             records.append(record["id"])
             if record["verdict"] != "certified":
                 # Ticket 64: a strict-layer failure names the strict check it hit

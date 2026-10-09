@@ -1,0 +1,36 @@
+{
+  "format": "swdb.lanl17-local-integration-test-observation.v1",
+  "recorded_utc": "2026-10-09T01:21:37.350510+00:00",
+  "scope": "Local real certification integration, not remote scientific campaign evidence",
+  "suite_files": 11,
+  "collected": 406,
+  "passed": 402,
+  "failed": 4,
+  "seconds": 904.58,
+  "exit_code": 1,
+  "failures": "Four imported legality helper calls omitted newly required fixture keyword; no certification verdict asserted by failed tests. Original complete traceback retained.",
+  "originals": [
+    {
+      "path": "/private/tmp/lanl17-certification-classification-broad-tests-20261008-r4.stdout",
+      "bytes": 3795,
+      "sha256": "91d694d7758d9656811acda6fc5fa3eba55f03c7c4ef14952321cdae882641d6"
+    },
+    {
+      "path": "/private/tmp/lanl17-certification-classification-broad-tests-20261008-r4.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/lanl17-certification-classification-broad-tests-20261008-r4.exit-code.txt",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "path": "/private/tmp/lanl17-certification-r4-collected-test-order-20261008.txt",
+      "bytes": 45519,
+      "sha256": "7f70dc386448286eb5eff1ab08aea00ced0f507f0bc2259ffca24a414709fd93"
+    }
+  ],
+  "followup": "Narrow four-caller correction root/peer-reviewed and applied; full legality suite rerun active. Separate six-file ticket16 prospective patch root/peer-reviewed/applied; public regression suite active.",
+  "remote_source_or_history_changed": false
+}

@@ -34,6 +34,7 @@ from __future__ import annotations
 import re
 
 from swdb.cli import Failure
+from swdb.certification_common import CandidateFailure
 
 SEAM_FILE = 'dx100/certification/seams.cc'  # relative to the library root (certify 1.3)
 LIBRARY_FAULTS = {
@@ -91,6 +92,7 @@ def replace_tokens(source, before, after, name):
     width = len(pattern)
     hits = [i for i in range(len(words) - width + 1) if words[i:i + width] == pattern]
     if len(hits) != 1:
-        raise Failure('candidate source lacks a unique negative-control mutation site: ' + name)
+        raise CandidateFailure('candidate source lacks a unique negative-control mutation site: ' + name,
+                               check='negative_control_site:' + name)
     start, end = stream[hits[0]][1], stream[hits[0] + width - 1][2]
     return source[:start] + after + source[end:]

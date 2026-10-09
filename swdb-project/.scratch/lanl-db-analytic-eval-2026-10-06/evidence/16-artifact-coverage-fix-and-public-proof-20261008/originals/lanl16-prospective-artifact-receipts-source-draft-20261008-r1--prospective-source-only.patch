@@ -1,0 +1,524 @@
+--- a/swdb-project/swdb/extensa_pairing.py
++++ b/swdb-project/swdb/extensa_pairing.py
+@@ -18,6 +18,14 @@
+ FORMAT = 'swdb.extensa-paired-estimate.v1'
+ LEDGER = 'swdb.extensa-pairing-ledger.v1'
+ VERSION = 'swdb.extensa-pairing.v1'
++# Prospective metadata coverage only. Never an executable/timed forecast.
++ARTIFACT_SCOPE = 'artifact_before_certification'
++ARTIFACT_SETTINGS = ('target', 'roi', 'threads', 'repetitions', 'sources', 'workloads')
++ARTIFACT_EXECUTION = frozenset({'observation_scope', 'backend', 'protocol',
++    'protocol_identity_sha256', 'protocol_settings_sha256', 'protocol_context',
++    'selected_input', 'target', 'roi', 'threads', 'sources', 'repetitions'})
++ARTIFACT_MISSING = ('artifact_metadata_not_complete_timing_request',
++    'functional_certification_not_admitted_for_artifact_forecast')
+ PAYLOAD = ('format', 'mode', 'campaign', 'basis', 'estimator_variant', 'estimator_version',
+            'estimator_sha256', 'policy_sha256', 'timing_context', 'context_sha256',
+            'estimated_at', 'seconds', 'state', 'structural_missing', 'evidence_kind',
+@@ -48,8 +56,37 @@
+     return artifacts.digest(facts)
+ 
+ 
++def artifact_only(row):
++    return row['timing_context']['execution'].get('observation_scope') == ARTIFACT_SCOPE
++
++
++def artifact_problems(data):
++    """Closed metadata projection; an original request/build is still unresolved."""
++    execution = data['timing_context']['execution']
++    if 'observation_scope' not in execution:
++        return  # Historical complete timing-request receipts remain unchanged.
++    if (execution.get('observation_scope') != ARTIFACT_SCOPE or set(execution) != ARTIFACT_EXECUTION
++            or execution.get('backend') != 'source_metadata_only' or execution.get('selected_input') != {}):
++        yield 'artifact forecast has an invalid closed observation scope'
++        return
++    projection = execution.get('protocol_context')
++    if not isinstance(projection, dict) or set(projection) != set(ARTIFACT_SETTINGS):
++        yield 'artifact forecast has an invalid closed campaign metadata projection'
++        return
++    if any(projection[key] != execution[key] for key in ('target', 'roi', 'threads', 'sources', 'repetitions')):
++        yield 'artifact forecast scope differs from its campaign metadata projection'
++    if data['timing_context']['input']['id'] not in projection['workloads'].values():
++        yield 'artifact forecast input is outside its campaign metadata projection'
++    if (data['state'] != 'unknown' or data['seconds'] is not None
++            or data['eligible_for_agreement'] is not False
++            or not set(ARTIFACT_MISSING) <= set(data['structural_missing'])):
++        yield 'artifact forecast must remain unknown, null and ineligible with its missing proof'
++
++
+ def validate_record(record, ctx):
+     data = record.data
++    for issue in artifact_problems(data):
++        yield Problem(record.rel, 'timing_context', issue)
+     if identity(data) != data['identity_sha256'] or not data['id'].endswith('.' + identity(data)[:16]):
+         yield Problem(record.rel, 'identity_sha256', 'paired estimate immutable payload/hash differs')
+     if artifacts.digest(data['timing_context']) != data['context_sha256']:
+@@ -93,6 +130,8 @@
+         except (ValueError, TypeError):
+             yield 'embedded estimate timestamp is not UTC'
+     for event in ledger['outcome_accesses']:
++        if any(rid in by_id and artifact_only(by_id[rid]) for rid in event['paired_estimates']):
++            yield 'artifact-only forecast cannot authorize an outcome access'
+         contexts = event.get('timing_contexts')
+         if contexts is not None and (len(contexts) != len(event['paired_estimates']) or any(
+                 rid not in by_id or request_identity(context) != request_identity(by_id[rid]['timing_context'])
+@@ -124,6 +163,19 @@
+             from swdb.store import Record
+             yield from validate_record(Record(record.rel, row), ctx)
+     if not malformed:
++        protocol = record.data.get('protocol') or {}
++        for row in ledger['records']:
++            if not artifact_only(row):
++                continue
++            execution = row['timing_context']['execution']
++            settings = protocol.get('settings') or {}
++            projection = {key: settings[key] for key in ARTIFACT_SETTINGS if key in settings}
++            if (execution['protocol'] != protocol.get('id')
++                    or execution['protocol_identity_sha256'] != protocol.get('identity_sha256')
++                    or execution['protocol_settings_sha256'] != artifacts.digest(settings)
++                    or execution['protocol_context'] != projection):
++                yield Problem(record.rel, 'paired_estimates',
++                              'artifact forecast differs from the original frozen campaign metadata')
+         for problem in ledger_problems(ledger, record.data['campaign']):
+             yield Problem(record.rel, 'paired_estimates', problem)
+ 
+@@ -193,6 +245,8 @@
+         selected = {key: copy.deepcopy(value) for key, value in request['workload'].items() if key != 'id'}
+         if isinstance(selected.get('representation'), dict):
+             selected['representation'].pop('path', None)
++        if request.get('observation_scope') == ARTIFACT_SCOPE:
++            execution.pop('fixture', None)
+         execution['selected_input'] = selected
+         execution['target'] = self.campaign['target']
+         execution.setdefault('roi', self.campaign['protocol']['roi'])
+@@ -202,6 +256,31 @@
+         return {'subject': {'id': candidate['id'], 'artifact_sha256': candidate['artifact']['sha256']},
+                 'input': {'id': workload['id'], 'identity_sha256': workload['identity_sha256'], **input_facts},
+                 'execution': execution}
++
++    def freeze_artifacts(self, candidates, protocol, *, fixture=False):
++        """Cover immutable artifacts before admission, without running their code.
++
++        The protocol identity is the original freeze result, and the closed six
++        fields are campaign metadata, not a binary/build/runtime correspondence.
++        Actual before() requests retain their own later exact-context forecasts.
++        """
++        if not self.enabled:
++            return []
++        settings = protocol['settings']
++        projection = {key: copy.deepcopy(settings[key]) for key in ARTIFACT_SETTINGS}
++        from swdb.campaign import protocol_settings
++        expected = protocol_settings(self.campaign)
++        if projection != {key: expected[key] for key in ARTIFACT_SETTINGS}:
++            raise Failure('artifact forecast requires original frozen campaign metadata')
++        requests = [{'candidate': candidate, 'workload': {'id': row['workload']},
++            'fixture': fixture, 'observation_scope': ARTIFACT_SCOPE,
++            'backend': 'source_metadata_only', 'protocol': protocol['id'],
++            'protocol_identity_sha256': protocol['identity_sha256'],
++            'protocol_settings_sha256': artifacts.digest(settings),
++            'protocol_context': copy.deepcopy(projection)}
++            for candidate in candidates for row in self.campaign['workload_classes']]
++        # fixture is record evidence classification, never part of execution scope.
++        return self.freeze(requests)
+ 
+     def freeze(self, requests):
+         if not self.enabled:
+@@ -225,7 +304,10 @@
+                 'complete_required_mechanisms_and_composition',
+                 'prospective_artifact_input_configuration_freshness']
+             evidence = 'contract_fixture' if request.get('fixture') else 'execution'
+-            if evidence == 'contract_fixture' and self.fixture_model is not None:
++            is_artifact = request.get('observation_scope') == ARTIFACT_SCOPE
++            if is_artifact:
++                missing.extend(ARTIFACT_MISSING)
++            if not is_artifact and evidence == 'contract_fixture' and self.fixture_model is not None:
+                 # Explicit synthetic work/rate premise, separate from fixture timings.
+                 role = 'baseline' if request['candidate'] in {b['candidate'] for b in self.campaign['baselines']} else 'candidate'
+                 seconds = self.fixture_model['work_units'][role] / self.fixture_model['units_per_second']
+@@ -290,6 +372,8 @@
+         """Durably retain the boundary before the caller reads or starts timing."""
+         if not self.enabled:
+             return []
++        if any('observation_scope' in request for request in requests):
++            raise Failure('artifact-only forecast cannot authorize an outcome access')
+         refs = self.freeze(requests)
+         store = Store(self.store_dir)
+         event = {'stage': stage, 'paired_estimates': refs,
+--- a/swdb-project/swdb/campaign.py
++++ b/swdb-project/swdb/campaign.py
+@@ -693,6 +693,9 @@
+                                   "settings": frozen["settings"]}
+         if frozen.get("by_role"):          # ticket 56: one frozen native protocol per baseline role
+             self.state["protocol"]["by_role"] = frozen["by_role"]
++        self.adapter.pairing.freeze_artifacts(
++            [row['candidate'] for row in self.data['baselines']], self.state['protocol'],
++            fixture=self.adapter.evidence_kind == 'contract_fixture')
+         self.state["setup_done"] = True
+ 
+     def _pilot(self):
+@@ -929,6 +932,8 @@
+         attempt = 0
+         candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt, contracts=contracts)
+         entry.update(id=candidate["id"], artifact_sha256=candidate["sha256"])
++        self.adapter.pairing.freeze_artifacts([candidate['id']], self.state['protocol'],
++            fixture=self.adapter.evidence_kind == 'contract_fixture')
+         self.adapter.admit(candidate, contracts)
+         if not contracts:
+             entry["level"] = "uncertified"
+@@ -979,6 +984,8 @@
+                     return reject("knob_out_of_range", problem)
+                 candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt, contracts=contracts)
+                 entry.update(id=candidate["id"], artifact_sha256=candidate["sha256"])
++                self.adapter.pairing.freeze_artifacts([candidate['id']], self.state['protocol'],
++                    fixture=self.adapter.evidence_kind == 'contract_fixture')
+                 self.adapter.admit(candidate, contracts)
+         self._evaluate(iteration, cls, candidate, attempt, entry)
+         selection = next((c for c in entry["comparisons"] if c["baseline_role"] == self.data["base_source"]), None)
+--- a/swdb-project/swdb/extensa_agreement.py
++++ b/swdb-project/swdb/extensa_agreement.py
+@@ -227,6 +227,7 @@
+     return [row for row in ledger.get('records', [])
+         if row['timing_context']['subject']['artifact_sha256'] == artifact
+         and row['timing_context']['input']['id'] == workload
++        and not extensa_pairing.artifact_only(row)
+         and not row['timing_context']['execution'].get('protocol_companion')
+         and row['timing_context']['execution'].get('protocol_role', 'candidate') == 'candidate']
+ 
+--- a/swdb-project/schemas/paired_estimate.schema.json
++++ b/swdb-project/schemas/paired_estimate.schema.json
+@@ -95,7 +95,24 @@
+           }
+         },
+         "execution": {
+-          "type": "object"
++          "type": "object",
++          "properties": {
++            "observation_scope": {
++              "const": "artifact_before_certification"
++            }
++          },
++          "allOf": [
++            {
++              "if": {
++                "required": [
++                  "observation_scope"
++                ]
++              },
++              "then": {
++                "$ref": "#/$defs/artifact_execution"
++              }
++            }
++          ]
+         },
+         "prior_outcome_exposure": {
+           "type": "array",
+@@ -157,5 +174,152 @@
+     "structural_missing",
+     "evidence_kind",
+     "eligible_for_agreement"
++  ],
++  "$defs": {
++    "artifact_execution": {
++      "type": "object",
++      "additionalProperties": false,
++      "required": [
++        "observation_scope",
++        "backend",
++        "protocol",
++        "protocol_identity_sha256",
++        "protocol_settings_sha256",
++        "protocol_context",
++        "selected_input",
++        "target",
++        "roi",
++        "threads",
++        "sources",
++        "repetitions"
++      ],
++      "properties": {
++        "observation_scope": {
++          "const": "artifact_before_certification"
++        },
++        "backend": {
++          "const": "source_metadata_only"
++        },
++        "protocol": {
++          "type": "string",
++          "minLength": 1
++        },
++        "protocol_identity_sha256": {
++          "type": "string",
++          "pattern": "^[0-9a-f]{64}$"
++        },
++        "protocol_settings_sha256": {
++          "type": "string",
++          "pattern": "^[0-9a-f]{64}$"
++        },
++        "protocol_context": {
++          "type": "object",
++          "additionalProperties": false,
++          "required": [
++            "target",
++            "roi",
++            "threads",
++            "repetitions",
++            "sources",
++            "workloads"
++          ],
++          "properties": {
++            "target": {
++              "enum": [
++                "native_cpu",
++                "dx100_gem5"
++              ]
++            },
++            "roi": {
++              "type": "string",
++              "minLength": 1
++            },
++            "threads": {
++              "type": "integer",
++              "minimum": 1
++            },
++            "repetitions": {
++              "type": "integer",
++              "minimum": 1
++            },
++            "sources": {
++              "type": "array",
++              "minItems": 1,
++              "items": {
++                "type": "integer",
++                "minimum": 0
++              }
++            },
++            "workloads": {
++              "type": "object",
++              "minProperties": 1,
++              "additionalProperties": {
++                "type": "string",
++                "minLength": 1
++              }
++            }
++          }
++        },
++        "selected_input": {
++          "const": {}
++        },
++        "target": {
++          "enum": [
++            "native_cpu",
++            "dx100_gem5"
++          ]
++        },
++        "roi": {
++          "type": "string",
++          "minLength": 1
++        },
++        "threads": {
++          "type": "integer",
++          "minimum": 1
++        },
++        "repetitions": {
++          "type": "integer",
++          "minimum": 1
++        },
++        "sources": {
++          "type": "array",
++          "minItems": 1,
++          "items": {
++            "type": "integer",
++            "minimum": 0
++          }
++        }
++      }
++    }
++  },
++  "allOf": [
++    {
++      "if": {
++        "properties": {
++          "timing_context": {
++            "properties": {
++              "execution": {
++                "required": [
++                  "observation_scope"
++                ]
++              }
++            }
++          }
++        }
++      },
++      "then": {
++        "properties": {
++          "state": {
++            "const": "unknown"
++          },
++          "seconds": {
++            "const": null
++          },
++          "eligible_for_agreement": {
++            "const": false
++          }
++        }
++      }
++    }
+   ]
+ }
+--- a/swdb-project/tests/test_extensa_pairing.py
++++ b/swdb-project/tests/test_extensa_pairing.py
+@@ -167,7 +167,9 @@
+     disabled = run(campaign_team, campaign_file(campaign_team, cid='extensa-native-bfs-20261004-a2',
+                    paired_estimates={'enabled': False}), fixture, config)
+     rows = enabled['paired_estimates']['records']
+-    assert {r['seconds'] for r in rows} == {0.1, 10}
++    timing_rows = [r for r in rows if not r['timing_context']['execution'].get('observation_scope')]
++    assert {r['seconds'] for r in timing_rows} == {0.1, 10}
++    assert all(r['seconds'] is None for r in rows if r not in timing_rows)
+     assert all(r['evidence_kind'] == 'contract_fixture' and not r['eligible_for_agreement'] for r in rows)
+     assert not disabled['paired_estimates']['records']
+     def selected(summary):
+@@ -206,3 +208,110 @@
+     assert frozen['mode'] == 'extensa' and frozen['campaign'] == summary['campaign']
+     checked = run_swdb('validate', '--records', records)
+     assert checked.returncode == 0, checked.stderr + checked.stdout[:500]
++
++
++# 2026-10-08 ET: prospective artifact coverage; no timing events are invented.
++from testkit.extensa import GEM5, comparison, rewrite, PATCH
++
++
++def _artifact_rows(summary):
++    return [row for row in summary['paired_estimates']['records']
++            if row['timing_context']['execution'].get('observation_scope') == 'artifact_before_certification']
++
++
++def test_all_refused_artifacts_and_untimed_baselines_have_unknown_receipts(campaign_team):
++    classes = ('kronecker', 'uniform_random')
++    row = {cls: {'certification': ['failed']} for cls in classes}
++    file = campaign_file(campaign_team, cid=GEM5, target='dx100_gem5', budgets={'max_repairs': 0})
++    summary = run(campaign_team, file, fixture_file(campaign_team, iterations=[row],
++        estimate_fixture={'work_units': {'baseline': 10, 'candidate': 1000}, 'units_per_second': 100}),
++        provider(campaign_team, {}))
++    assert all(c['level'] == 'rejected' for it in summary['iterations'] for c in it['candidates'])
++    assert summary['paired_estimates']['outcome_accesses'] == []
++    receipts = _artifact_rows(summary)
++    subjects = {r['timing_context']['subject']['id'] for r in receipts}
++    expected = {b['candidate'] for b in summary['baselines']} | {
++        c['id'] for it in summary['iterations'] for c in it['candidates']}
++    assert subjects == expected
++    for subject in subjects:
++        assert {r['timing_context']['input']['id'] for r in receipts
++                if r['timing_context']['subject']['id'] == subject} == {
++                    row['workload'] for row in summary['workload_classes']}
++    assert all(r['state'] == 'unknown' and r['seconds'] is None
++               and r['eligible_for_agreement'] is False for r in receipts)
++    assert summary['paired_estimates']['eligible_application_estimates'] == 0
++    assert all(c.get('comparisons', []) == [] for it in summary['iterations'] for c in it['candidates'])
++    checked = run_swdb('validate', '--records', campaign_store(campaign_team, GEM5))
++    assert checked.returncode == 0, checked.stdout + checked.stderr
++
++
++def test_repaired_materialized_artifacts_keep_pre_certification_unknown_receipts(campaign_team):
++    classes = ('kronecker', 'uniform_random')
++    row = {cls: {'certification': ['failed', 'certified'],
++                'comparisons': {'fork_scalar_tdstep': comparison(1.2)}} for cls in classes}
++    file = campaign_file(campaign_team, cid=GEM5, target='dx100_gem5')
++    config = provider(campaign_team, {'repair': [rewrite(patch=PATCH.replace('alpha = 14', 'alpha = 13'))]})
++    summary = run(campaign_team, file, fixture_file(campaign_team, iterations=[row]), config)
++    catalog = Store(campaign_store(campaign_team, GEM5))
++    candidates = [r.data for r in catalog.of_kind('candidate') if r.data.get('campaign') == GEM5]
++    assert len(candidates) == 4
++    receipts = _artifact_rows(summary)
++    for candidate in candidates:
++        bound = [r for r in receipts if r['timing_context']['subject']['id'] == candidate['id']]
++        assert bound and all(r['timing_context']['subject']['artifact_sha256'] == candidate['artifact']['sha256']
++                             and r['seconds'] is None for r in bound)
++        certifications = [r.data for r in catalog.of_kind('certification')
++                          if r.data.get('candidate', {}).get('id') == candidate['id']]
++        assert certifications
++        assert all(datetime.fromisoformat(r['estimated_at']) < datetime.fromisoformat(c['created_at'])
++                   for r in bound for c in certifications)
++    assert summary['paired_estimates']['outcome_accesses']
++    assert all(c['level'] == 'certified' for it in summary['iterations'] for c in it['candidates'])
++    assert all(r['seconds'] is None for r in receipts)
++    artifact_ids = {r['id'] for r in receipts}
++    assert all(not artifact_ids.intersection(event['paired_estimates'])
++               for event in summary['paired_estimates']['outcome_accesses'])
++
++
++@pytest.mark.parametrize('damage', ['numeric', 'extra', 'scope', 'protocol', 'event'])
++def test_public_summary_rejects_artifact_scope_forgery_after_resigning(campaign_team, damage):
++    from swdb import artifacts
++    from swdb.extensa_pairing import identity
++    file = campaign_file(campaign_team, cid=GEM5, target='dx100_gem5', budgets={'max_repairs': 0})
++    row = {cls: {'certification': ['failed']} for cls in ('kronecker', 'uniform_random')}
++    summary = run(campaign_team, file, fixture_file(campaign_team, iterations=[row]), provider(campaign_team, {}))
++    receipt = _artifact_rows(summary)[0]
++    execution = receipt['timing_context']['execution']
++    if damage == 'numeric':
++        receipt['seconds'] = 1.0
++    elif damage == 'extra':
++        execution['binary'] = {'sha256': '0' * 64}
++    elif damage == 'scope':
++        execution['observation_scope'] = 'unverified_new_scope'
++    elif damage == 'protocol':
++        execution['protocol_settings_sha256'] = '0' * 64
++    else:
++        summary['paired_estimates']['outcome_accesses'].append({
++            'stage': 'forged_no_execution', 'paired_estimates': [receipt['id']],
++            'timing_contexts': [copy.deepcopy(receipt['timing_context'])],
++            'outcome_access_started_at': '2099-01-01T00:00:00+00:00'})
++    if damage != 'event':
++        receipt['context_sha256'] = artifacts.digest(receipt['timing_context'])
++        receipt['identity_sha256'] = identity(receipt)
++        receipt['id'] = receipt['id'].rsplit('.', 1)[0] + '.' + receipt['identity_sha256'][:16]
++    path = campaign_store(campaign_team, GEM5) / 'campaign_summaries' / (summary['id'] + '.yaml')
++    path.write_text(yaml.safe_dump(summary, sort_keys=False))
++    checked = run_swdb('validate', '--records', campaign_store(campaign_team, GEM5))
++    assert checked.returncode == 1
++    assert 'paired_estimates' in checked.stdout + checked.stderr
++    assert 'Traceback' not in checked.stdout + checked.stderr
++
++
++def test_legacy_exact_timing_summary_remains_valid_without_artifact_receipts(campaign_team):
++    summary = run(campaign_team, campaign_file(campaign_team), fixture_file(campaign_team), provider(campaign_team, {}))
++    summary['paired_estimates']['records'] = [r for r in summary['paired_estimates']['records']
++        if not r['timing_context']['execution'].get('observation_scope')]
++    path = campaign_store(campaign_team) / 'campaign_summaries' / (summary['id'] + '.yaml')
++    path.write_text(yaml.safe_dump(summary, sort_keys=False))
++    checked = run_swdb('validate', '--records', campaign_store(campaign_team))
++    assert checked.returncode == 0, checked.stdout + checked.stderr
+--- a/swdb-project/docs/reference/format-v0.4-extensa.md
++++ b/swdb-project/docs/reference/format-v0.4-extensa.md
+@@ -243,3 +243,30 @@
+ measured application agreement. No report silently enables screening or replaces
+ the campaign's frozen selection policy. Existing summaries without these fields
+ retain their historical interpretation.
++
++
++## Prospective artifact coverage before certification
++
++Updated: 2026-10-08 ET. A fresh campaign records a structural unknown for every
++persisted candidate artifact, including refused and repaired attempts, and each
++baseline across its registered workload classes immediately after protocol
++freeze. These source-metadata receipts run no candidate code and start no build,
++provider or timing job. `execution.observation_scope: artifact_before_certification`
++is closed to campaign metadata and original freeze ID/identity/settings hash;
++the six-field `protocol_context` is a campaign projection, not a compiled binary,
++complete runtime bridge or a new functional correctness claim.
++
++These receipts always have null seconds, unknown state and agreement eligibility
++false, even in a numerical fixture. They remain in the campaign summary. An
++actual evaluator entry keeps its separate exact request/build forecast and
++outcome-access boundary; an artifact-only receipt can never authorize such an
++event or enter agreement/ranking/top3 calculations. Untimed or refused artifacts
++have no fabricated timing event. Timing-only selection, repair and provider
++budgets remain unchanged.
++
++Historical summaries remain valid without this additive coverage. Source/policy
++drift requires a fresh prospective campaign and policy; stopped histories are
++never resumed or backfilled. This change cannot establish blindness or D30
++admission for earlier campaigns with missing actual forecasts/outcomes. The
++complete-call numeric adapter remains unavailable, and unsupported/no-switch
++reports retain that scientific limitation.

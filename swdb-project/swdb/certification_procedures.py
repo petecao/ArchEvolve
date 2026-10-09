@@ -106,6 +106,11 @@ class CertifyProcedure:
                 if field.name not in ('summary', 'sources_sha256')}
 
 
+# 2026-10-08 ET: re-declared after typed candidate refusals; standalone checks, messages,
+# CLI categories, evaluator/control decisions and verdicts are unchanged. Campaign infrastructure
+# interruption handling is outside these manifests. Dated before/after evidence:
+# .scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-certification-fingerprint-redeclaration-20261008.md.
+
 # --- the files each version reads ------------------------------------------------------------------------
 
 _CORE = ('swdb/certification.py', 'swdb/certification_common.py', 'swdb/certification_faults.py',
@@ -164,34 +169,34 @@ PROCEDURES = MappingProxyType({
         '1.3': _candidate('1.3', 'ticket 70: evaluator records on a descriptor, faults in a separate seam object per '
                           'control, evaluator scan', 'swdb.certification:certify_candidate', 'evaluator_1_3', None,
                           'v1', (), _DX100_1_3,
-                          '705e697df88b273ef1223e37d95631661b1ba0ca4e98524b4e1dd6729d0122d3'),
+                          '6c75a1b113fbd19957700085e159786d136ebd8f51618a7f1eb07d2d6b7b5eea'),
         '1.4': _candidate('1.4', 'ticket 76: one binary per tile size, blinded run plan, random order, attributed '
                           'rejections, slide-window seam witness', 'swdb.certification_blinding:certify_candidate',
                           'evaluator_1_4', None, 'v1', _BLINDING, _DX100_1_4,
-                          'b8df5f5cc24e2bb54ee33eb9d609dfdea4009741b00c94de0582b4d71f429515'),
+                          '90c7a0bfae71f401e081917821853982610fc4c0202a2f042b5683f9a3247b23'),
         '1.5': _candidate('1.5', 'ticket 78: 1.4 with record-keeping in a separate evaluator process; DX100 '
                           'directive rule', 'swdb.certification_process:certify_candidate', 'evaluator_1_4',
                           'dx100_knob_defaults', 'v1', _BLINDING + _PROCESS, _DX100_1_5,
-                          'a25e817ea05e512c5cc6686623ee5d69c80ae527f606c91e75566c00062f988e'),
+                          '0310109a282af23c03293f7bcb71860b9a542dfa504a9e5d6d18ae5be923bd5e'),
         '1.6': _candidate('1.6', '2026-10-05 review fixes: 1.5 with knob_range reading every declared knob spelling '
                           'the candidate uses (unverified when none is used, never the default) and the '
                           'schedule_out_of_range control also mutating _Pragma forms',
                           'swdb.certification_process:certify_candidate', 'evaluator_1_4', 'dx100_knob_defaults',
                           'v2', _BLINDING + _PROCESS, _DX100_1_5,
-                          '309d9cd5140bbb5bf87408ed5f1a4fba40271275704294003be8444829f61311'),
+                          '3593fa57119c0b58190f9a119ef5294ae9eea6fc995a675a9a2530982b9f3e76'),
     }),
     NATIVE: MappingProxyType({
         '1.3': _native('1.3', 'ticket 75: native-CPU profile under 1.3 isolation (a seam object per fault)',
                        'swdb.certification_native:certify_native', 'evaluator_1_3', 'profile.harness', (), _NATIVE_1_3,
-                       '6c3f478005dc25462f495211e7c5a626803b21f720524b0048e4673e5b0025dd'),
+                       '5fafe53625d2e7b6c4cf1cccba1cb453c2a7f512f7f7050c163b970d95b81cbc'),
         '1.4': _native('1.4', 'ticket 75 after ticket 76: one binary per build, blinded plan, attributed rejections',
                        'swdb.certification_native:certify_native_v14', 'evaluator_1_4', 'profile.harness_v14',
                        _BLINDING, _NATIVE_1_4,
-                       'a5d54c7eb50169bd6a686e265750f7a10804bec311a399b9af1a1c47b133f78b'),
+                       'b8a4932a2e332db6993c153ef5fee2aa259962a61a453507d526f74e40802a26'),
         '1.5': _native('1.5', 'ticket 78: native 1.4 with record-keeping in a separate evaluator process',
                        'swdb.certification_process:certify_native', 'evaluator_1_4',
                        'dx100/certification/v1_5/bfs_driver.inc', _BLINDING + _PROCESS, _NATIVE_1_5,
-                       'fe72f415409327e00a78fe41fece2b2d7c8705c708ffc90928286dee2740d0c2'),
+                       'fc5a7e51fbb1cc6b02e496e2cbfc831884dc8f01e3987757665d7c983bb01b7f'),
     }),
     LIBRARY_OPERATION: MappingProxyType({
         '1.0': _lop('1.0', 'tickets 49-51: the ported two-binary harness; a control abort classified from a '
@@ -201,14 +206,14 @@ PROCEDURES = MappingProxyType({
                     'attributed controls, scan', _LOP_RECORDS, (),
                     ('library_operations/certification/v1_1/record.cc',
                      'library_operations/certification/v1_1/driver.cc'),
-                    'f0a84509f5a3b3a44de86f479a2627ad6f61f9f786e29cb980789f1c6766c60e'),
+                    '4cf8263345419fc5442d5aae5fb7f2a358c08b4d4052f90f7a3b2462fc9710b7'),
         '1.2': _lop('1.2', 'ticket 78: 1.1 with the call in a separate candidate process', _LOP_RECORDS,
                     ('library/dx100/certification/v1_5/arena.hpp',),
                     ('library_operations/certification/v1_1/record.cc',
                      'library_operations/certification/v1_2/evaluator.cc',
                      'library_operations/certification/v1_2/runner.cc',
                      'library_operations/certification/v1_2/call.hpp'),
-                    'f3ca83e70284d9aae97296de7ee6013ceea28e3578fdeecd46869d4521254ef7'),
+                    'a8cb6f19a83cf8ba530f6209b898af7b8985256665633c9e78c8f4ad9821cb91'),
     }),
     LOWERING: MappingProxyType({
         '1.1': CertifyProcedure(LOWERING, '1.1', 'lowerings: pinned differential driver against reference semantics; '
@@ -216,7 +221,7 @@ PROCEDURES = MappingProxyType({
                                 '76); calibration control rule of 2026-10-04 (8040609)',
                                 'swdb.certification:evaluate_trusted', 'simulated', None, None, None, None,
                                 ('swdb/certification.py',), _STRICT,
-                                '4ab5d22c2d46d672ae19a87f4426919ebb509fe45497bfd1b51515aa4eb76974'),
+                                '1d14a816bea8c3b2a644264bc85ebd6be9dfacbcd01a09376b5e0c4f1623c9e5'),
     }),
 })
 

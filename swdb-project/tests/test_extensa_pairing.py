@@ -167,7 +167,9 @@ def test_synthetic_estimates_do_not_change_timing_selection_or_plateau(campaign_
     disabled = run(campaign_team, campaign_file(campaign_team, cid='extensa-native-bfs-20261004-a2',
                    paired_estimates={'enabled': False}), fixture, config)
     rows = enabled['paired_estimates']['records']
-    assert {r['seconds'] for r in rows} == {0.1, 10}
+    timing_rows = [r for r in rows if not r['timing_context']['execution'].get('observation_scope')]
+    assert {r['seconds'] for r in timing_rows} == {0.1, 10}
+    assert all(r['seconds'] is None for r in rows if r not in timing_rows)
     assert all(r['evidence_kind'] == 'contract_fixture' and not r['eligible_for_agreement'] for r in rows)
     assert not disabled['paired_estimates']['records']
     def selected(summary):
@@ -206,3 +208,178 @@ def test_team_protocol_recursively_refuses_paired_receipt_but_extensa_keeps_disp
     assert frozen['mode'] == 'extensa' and frozen['campaign'] == summary['campaign']
     checked = run_swdb('validate', '--records', records)
     assert checked.returncode == 0, checked.stderr + checked.stdout[:500]
+
+
+# 2026-10-08 ET: prospective artifact coverage; no timing events are invented.
+from testkit.extensa import GEM5, comparison, rewrite, PATCH
+
+
+def _artifact_rows(summary):
+    return [row for row in summary['paired_estimates']['records']
+            if row['timing_context']['execution'].get('observation_scope') == 'artifact_before_certification']
+
+
+def test_all_refused_artifacts_and_untimed_baselines_have_unknown_receipts(campaign_team):
+    classes = ('kronecker', 'uniform_random')
+    row = {cls: {'certification': ['failed']} for cls in classes}
+    file = campaign_file(campaign_team, cid=GEM5, target='dx100_gem5', budgets={'max_repairs': 0})
+    summary = run(campaign_team, file, fixture_file(campaign_team, iterations=[row],
+        estimate_fixture={'work_units': {'baseline': 10, 'candidate': 1000}, 'units_per_second': 100}),
+        provider(campaign_team, {}))
+    assert all(c['level'] == 'rejected' for it in summary['iterations'] for c in it['candidates'])
+    assert summary['paired_estimates']['outcome_accesses'] == []
+    receipts = _artifact_rows(summary)
+    subjects = {r['timing_context']['subject']['id'] for r in receipts}
+    expected = {b['candidate'] for b in summary['baselines']} | {
+        c['id'] for it in summary['iterations'] for c in it['candidates']}
+    assert subjects == expected
+    for subject in subjects:
+        assert {r['timing_context']['input']['id'] for r in receipts
+                if r['timing_context']['subject']['id'] == subject} == {
+                    row['workload'] for row in summary['workload_classes']}
+    assert all(r['state'] == 'unknown' and r['seconds'] is None
+               and r['eligible_for_agreement'] is False for r in receipts)
+    assert summary['paired_estimates']['eligible_application_estimates'] == 0
+    assert all(c.get('comparisons', []) == [] for it in summary['iterations'] for c in it['candidates'])
+    checked = run_swdb('validate', '--records', campaign_store(campaign_team, GEM5))
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+
+
+def test_repaired_materialized_artifacts_keep_pre_certification_unknown_receipts(campaign_team):
+    classes = ('kronecker', 'uniform_random')
+    row = {cls: {'certification': ['failed', 'certified'],
+                'comparisons': {'fork_scalar_tdstep': comparison(1.2)}} for cls in classes}
+    file = campaign_file(campaign_team, cid=GEM5, target='dx100_gem5')
+    config = provider(campaign_team, {'repair': [rewrite(patch=PATCH.replace('alpha = 14', 'alpha = 13'))]})
+    summary = run(campaign_team, file, fixture_file(campaign_team, iterations=[row]), config)
+    catalog = Store(campaign_store(campaign_team, GEM5))
+    candidates = [r.data for r in catalog.of_kind('candidate') if r.data.get('campaign') == GEM5]
+    assert len(candidates) == 4
+    receipts = _artifact_rows(summary)
+    for candidate in candidates:
+        bound = [r for r in receipts if r['timing_context']['subject']['id'] == candidate['id']]
+        assert bound and all(r['timing_context']['subject']['artifact_sha256'] == candidate['artifact']['sha256']
+                             and r['seconds'] is None for r in bound)
+        certifications = [r.data for r in catalog.of_kind('certification')
+                          if r.data.get('candidate', {}).get('id') == candidate['id']]
+        assert certifications
+        assert all(datetime.fromisoformat(r['estimated_at']) < datetime.fromisoformat(c['created_at'])
+                   for r in bound for c in certifications)
+    assert summary['paired_estimates']['outcome_accesses']
+    assert all(c['level'] == 'certified' for it in summary['iterations'] for c in it['candidates'])
+    assert all(r['seconds'] is None for r in receipts)
+    artifact_ids = {r['id'] for r in receipts}
+    assert all(not artifact_ids.intersection(event['paired_estimates'])
+               for event in summary['paired_estimates']['outcome_accesses'])
+
+
+@pytest.mark.parametrize('damage', ['numeric', 'extra', 'scope', 'protocol', 'event'])
+def test_public_summary_rejects_artifact_scope_forgery_after_resigning(campaign_team, damage):
+    from swdb import artifacts
+    from swdb.extensa_pairing import identity
+    file = campaign_file(campaign_team, cid=GEM5, target='dx100_gem5', budgets={'max_repairs': 0})
+    row = {cls: {'certification': ['failed']} for cls in ('kronecker', 'uniform_random')}
+    summary = run(campaign_team, file, fixture_file(campaign_team, iterations=[row]), provider(campaign_team, {}))
+    receipt = _artifact_rows(summary)[0]
+    execution = receipt['timing_context']['execution']
+    if damage == 'numeric':
+        receipt['seconds'] = 1.0
+    elif damage == 'extra':
+        execution['binary'] = {'sha256': '0' * 64}
+    elif damage == 'scope':
+        execution['observation_scope'] = 'unverified_new_scope'
+    elif damage == 'protocol':
+        execution['protocol_settings_sha256'] = '0' * 64
+    else:
+        summary['paired_estimates']['outcome_accesses'].append({
+            'stage': 'forged_no_execution', 'paired_estimates': [receipt['id']],
+            'timing_contexts': [copy.deepcopy(receipt['timing_context'])],
+            'outcome_access_started_at': '2099-01-01T00:00:00+00:00'})
+    if damage != 'event':
+        receipt['context_sha256'] = artifacts.digest(receipt['timing_context'])
+        receipt['identity_sha256'] = identity(receipt)
+        receipt['id'] = receipt['id'].rsplit('.', 1)[0] + '.' + receipt['identity_sha256'][:16]
+    path = campaign_store(campaign_team, GEM5) / 'campaign_summaries' / (summary['id'] + '.yaml')
+    path.write_text(yaml.safe_dump(summary, sort_keys=False))
+    checked = run_swdb('validate', '--records', campaign_store(campaign_team, GEM5))
+    assert checked.returncode == 1
+    assert 'paired_estimates' in checked.stdout + checked.stderr
+    assert 'Traceback' not in checked.stdout + checked.stderr
+
+
+def test_legacy_exact_timing_summary_remains_valid_without_artifact_receipts(campaign_team):
+    summary = run(campaign_team, campaign_file(campaign_team), fixture_file(campaign_team), provider(campaign_team, {}))
+    summary['paired_estimates']['records'] = [r for r in summary['paired_estimates']['records']
+        if not r['timing_context']['execution'].get('observation_scope')]
+    path = campaign_store(campaign_team) / 'campaign_summaries' / (summary['id'] + '.yaml')
+    path.write_text(yaml.safe_dump(summary, sort_keys=False))
+    checked = run_swdb('validate', '--records', campaign_store(campaign_team))
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+
+
+def test_identical_artifact_alias_reuses_first_receipt_without_new_outcomes(campaign_team):
+    """Fixture-only immutable content reuse; this never resumes the stopped run.
+
+    Work on a separate copied record catalog without campaign state or raw jobs.
+    The alias retains the entire fixture artifact object and original hash; only
+    the candidate record ID changes through the public validated add command.
+    """
+    import shutil
+    from swdb import access
+    from swdb.extensa_pairing import PairingLedger, request_identity
+
+    file = campaign_file(campaign_team, cid=GEM5, target='dx100_gem5', budgets={'max_repairs': 0})
+    row = {cls: {'certification': ['failed']} for cls in ('kronecker', 'uniform_random')}
+    summary = run(campaign_team, file, fixture_file(campaign_team, iterations=[row]), provider(campaign_team, {}))
+    assert summary['paired_estimates']['outcome_accesses'] == []
+
+    folder = campaign_team['root'] / 'isolated-artifact-alias-metadata'
+    records = folder / 'records'
+    shutil.copytree(campaign_store(campaign_team, GEM5), records)
+    assert not (folder / 'state.json').exists()
+    assert not (folder / 'jobs').exists()
+    original_id = summary['iterations'][0]['candidates'][0]['id']
+    original = Store(records).get(original_id, 'candidate')
+    alias = copy.deepcopy(original)
+    alias['id'] = GEM5 + '.same-content-alias'
+    assert alias['id'] != original_id and alias['artifact'] == original['artifact']
+    assert {key: value for key, value in alias.items() if key != 'id'} == {
+        key: value for key, value in original.items() if key != 'id'}
+    alias_file = folder / 'candidate-alias.yaml'
+    alias_file.write_text(yaml.safe_dump(alias, sort_keys=False))
+    added = run_swdb('add', alias_file, '--records', records, '--mode', 'extensa', '--campaign', GEM5)
+    assert added.returncode == 0, added.stdout + added.stderr
+
+    configuration = yaml.safe_load(file.read_text())
+    ledger = PairingLedger(configuration, records, folder)
+    before = ledger.summary()
+    assert before['outcome_accesses'] == []
+    first = ledger.freeze_artifacts([original_id], summary['protocol'], fixture=True)
+    catalog = Store(records)
+    originals = {rid: copy.deepcopy(catalog.get(rid, 'paired_estimate')) for rid in first}
+    bytes_before = {rid: access.read_record_bytes(records / catalog.path_of(rid)) for rid in first}
+    aliases = ledger.freeze_artifacts([alias['id']], summary['protocol'], fixture=True)
+    assert aliases == first
+    after = ledger.summary()
+    assert after['records'] == before['records']
+    assert after['outcome_accesses'] == [] and after['eligible_application_estimates'] == 0
+    assert not (folder / 'pairing' / 'outcome-accesses.jsonl').exists()
+
+    catalog = Store(records)
+    bound = [catalog.get(rid, 'paired_estimate') for rid in aliases]
+    assert {r['timing_context']['input']['id'] for r in bound} == {
+        row['workload'] for row in summary['workload_classes']}
+    assert all(r == originals[r['id']] and r['timing_context']['subject']['id'] == original_id
+               and r['timing_context']['subject']['artifact_sha256'] == alias['artifact']['sha256']
+               and r['seconds'] is None and r['state'] == 'unknown'
+               and r['eligible_for_agreement'] is False for r in bound)
+    assert all(access.read_record_bytes(records / catalog.path_of(rid)) == bytes_before[rid]
+               for rid in first)
+    for receipt in bound:
+        context = copy.deepcopy(receipt['timing_context'])
+        context['subject']['id'] = alias['id']
+        assert request_identity(context) == request_identity(receipt['timing_context'])
+        assert context['execution']['protocol'] == summary['protocol']['id']
+        assert context['execution']['protocol_identity_sha256'] == summary['protocol']['identity_sha256']
+    checked = run_swdb('validate', '--records', records)
+    assert checked.returncode == 0, checked.stdout + checked.stderr

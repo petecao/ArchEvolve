@@ -86,22 +86,22 @@ def bypassed_claim(source):
     return _replace(source, 'compare_and_swap(parent[v],hint,u)', '__sync_bool_compare_and_swap(&parent[v],hint,u)')
 
 
-def _patch(tmp_path, transform):
+def _patch(tmp_path, transform, *, certification_store):
     plugin = types.SimpleNamespace(certification_source=c.BFS, certification_snapshot=c.DEFAULT_SNAPSHOT,
                                    certification_rewrite=lambda scalar: transform(c.peter_source(scalar)))
     output = tmp_path / 'candidate.patch'
-    c.create_peter_patch(Store(ROOT / 'records'), output, plugin=plugin, temporary_root=str(tmp_path))
+    c.create_peter_patch(certification_store, output, plugin=plugin, temporary_root=str(tmp_path))
     return output
 
 
-def _certify(tmp_path, monkeypatch, transform):
+def _certify(tmp_path, monkeypatch, transform, *, certification_store):
     try:
         c.compiler()
     except Failure:
         pytest.skip('certification requires GCC with OpenMP')
     monkeypatch.setattr(c.workflow, 'persist', lambda *args, **kwargs: None)
-    patch = _patch(tmp_path, transform)
-    return c.certify(Store(ROOT / 'records'), CONTRACT, snapshot=c.DEFAULT_SNAPSHOT, patch=patch,
+    patch = _patch(tmp_path, transform, certification_store=certification_store)
+    return c.certify(certification_store, CONTRACT, snapshot=c.DEFAULT_SNAPSHOT, patch=patch,
                      runs_dir=tmp_path / 'runs')
 
 
@@ -109,8 +109,8 @@ def _controls(record):
     return [(x['id'], x['tile_size'], x['status']) for x in record['negative_controls']]
 
 
-def test_every_bfs_control_is_a_library_fault_that_leaves_the_candidate_text_unchanged():
-    source = c.instrument_source(c.peter_source(Store(ROOT / 'records').get(c.DEFAULT_SNAPSHOT)['regions'][0]['text']))
+def test_every_bfs_control_is_a_library_fault_that_leaves_the_candidate_text_unchanged(*, certification_store):
+    source = c.instrument_source(c.peter_source(certification_store.get(c.DEFAULT_SNAPSHOT)['regions'][0]['text']))
     assert set(kernels.BFS.certification_controls) == set(faults.LIBRARY_FAULTS)
     seams = (ROOT / 'library' / faults.SEAM_FILE).read_text()
     for name, macro in faults.LIBRARY_FAULTS.items():
@@ -144,8 +144,8 @@ def _bc_scalar():
 
 @pytest.mark.parametrize('transform', [lambda s: s, reformatted, restructured],
                          ids=['ticket20', 'reformatted', 'restructured'])
-def test_equal_rewrites_certify_with_every_control_rejected(tmp_path, monkeypatch, transform):
-    record = _certify(tmp_path, monkeypatch, transform)
+def test_equal_rewrites_certify_with_every_control_rejected(tmp_path, monkeypatch, transform, *, certification_store):
+    record = _certify(tmp_path, monkeypatch, transform, certification_store=certification_store)
     assert record['verdict'] == 'certified'
     assert len(record['matrix']) == 10 and all(x['status'] == 'passed' for x in record['matrix'])
     # Ticket 68 (2026-10-04 ET): 8 library faults and 2 legality controls at each tile size.
@@ -164,9 +164,9 @@ def test_equal_rewrites_certify_with_every_control_rejected(tmp_path, monkeypatc
         ('frontier_threshold', 'knob_out_of_range'), ('schedule', 'schedule_out_of_range')}
 
 
-def test_forged_frontier_v2_is_killed_when_chunks_are_counted_after_their_pushes(tmp_path, monkeypatch):
+def test_forged_frontier_v2_is_killed_when_chunks_are_counted_after_their_pushes(tmp_path, monkeypatch, *, certification_store):
     """Ticket 67 (2026-10-04 ET): a negative control must be killable by every correct rewrite."""
-    record = _certify(tmp_path, monkeypatch, chunk_hook_after_pushes)
+    record = _certify(tmp_path, monkeypatch, chunk_hook_after_pushes, certification_store=certification_store)
     assert record['verdict'] == 'certified', _controls(record)
     forged = [x for x in record['negative_controls'] if x['id'] == 'forged_frontier']
     assert [(x['tile_size'], x['status']) for x in forged] == [(16384, 'rejected'), (1024, 'rejected')]
@@ -174,14 +174,14 @@ def test_forged_frontier_v2_is_killed_when_chunks_are_counted_after_their_pushes
     assert record['command']['version'] == c.VERSION
 
 
-def test_semantically_broken_rewrite_is_refused(tmp_path, monkeypatch):
-    record = _certify(tmp_path, monkeypatch, skipped_recheck)
+def test_semantically_broken_rewrite_is_refused(tmp_path, monkeypatch, *, certification_store):
+    record = _certify(tmp_path, monkeypatch, skipped_recheck, certification_store=certification_store)
     assert record['verdict'] == 'failed'
     assert any(x['status'] == 'failed' and x['reason'] == 'frontier_size_equality' for x in record['matrix'])
 
 
-def test_rewrite_that_bypasses_the_claim_seam_is_refused_by_its_surviving_control(tmp_path, monkeypatch):
-    record = _certify(tmp_path, monkeypatch, bypassed_claim)
+def test_rewrite_that_bypasses_the_claim_seam_is_refused_by_its_surviving_control(tmp_path, monkeypatch, *, certification_store):
+    record = _certify(tmp_path, monkeypatch, bypassed_claim, certification_store=certification_store)
     assert record['verdict'] == 'failed'
     survived = {name for name, _, status in _controls(record) if status != 'rejected'}
     assert survived == {'skipped_cas_recheck'}
@@ -301,7 +301,7 @@ def _layered_graph(path, widths):
 
 @pytest.mark.parametrize('widths', [[1, 2, 3, 4, 5, 6, 7, 2], [1, 2, 3, 4, 5, 100, 100]],
                          ids=['eight-levels-scalar', 'seven-levels-accelerated'])
-def test_forged_frontier_is_rejected_on_a_deep_graph(tmp_path, widths):
+def test_forged_frontier_is_rejected_on_a_deep_graph(tmp_path, widths, *, certification_store):
     """Graphs deeper than three levels (code review P3; ticket 67).
 
     forged_frontier v2 duplicates the first queue push of the run, so it fires on both graphs,
@@ -321,8 +321,8 @@ def test_forged_frontier_is_rejected_on_a_deep_graph(tmp_path, widths):
     assert counts == widths and len(counts) > 3
     folder = tmp_path / 'tree'
     folder.mkdir()
-    tree, _ = c.materialize_snapshot(Store(ROOT / 'records'), c.DEFAULT_SNAPSHOT, folder)
-    c.apply_patch(tree, _patch(tmp_path, lambda s: s))
+    tree, _ = c.materialize_snapshot(certification_store, c.DEFAULT_SNAPSHOT, folder)
+    c.apply_patch(tree, _patch(tmp_path, lambda s: s, certification_store=certification_store))
     library = (ROOT / 'library').resolve()
     plugin = kernels.BFS
     instrumented = plugin.certification_instrument((tree / c.BFS).read_text()) + \

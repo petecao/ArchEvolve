@@ -82,16 +82,16 @@ def test_the_client_interface_shadows_only_the_strict_model():
     assert client.index('-I' + str(LIBRARY / process.CLIENT_INCLUDE)) == client.index('-I' + str(LIBRARY / 'dx100/strict')) - 1
 
 
-def _certify(tmp_path, monkeypatch, entry, snapshot, patch, version='1.5'):
+def _certify(tmp_path, monkeypatch, entry, snapshot, patch, version='1.5', *, certification_store):
     _gcc()
     monkeypatch.setattr(c.workflow, 'persist', lambda *args, **kwargs: None)
-    return c.certify(Store(ROOT / 'records'), entry, snapshot=snapshot, patch=patch, runs_dir=tmp_path / 'runs',
+    return c.certify(certification_store, entry, snapshot=snapshot, patch=patch, runs_dir=tmp_path / 'runs',
                      version=version)
 
 
-def test_t20_certifies_under_1_5_with_records_written_by_the_evaluator(tmp_path, monkeypatch):
+def test_t20_certifies_under_1_5_with_records_written_by_the_evaluator(tmp_path, monkeypatch, *, certification_store):
     record = _certify(tmp_path, monkeypatch, 'contract.bfs_read_offload', c.DEFAULT_SNAPSHOT,
-                      LIBRARY / 'dx100/peter-section5.patch')
+                      LIBRARY / 'dx100/peter-section5.patch', certification_store=certification_store)
     assert record['verdict'] == 'certified' and record['command']['version'] == '1.5'
     # 2026-10-05 ET (review fixes F1/F2, C10): the family, the per-version manifest and the commit.
     command = record['command']
@@ -123,9 +123,9 @@ def test_t20_certifies_under_1_5_with_records_written_by_the_evaluator(tmp_path,
     assert alone.returncode == 96 and 'certification evaluator' in alone.stderr
 
 
-def test_the_native_contract_certifies_under_1_5(tmp_path, monkeypatch):
+def test_the_native_contract_certifies_under_1_5(tmp_path, monkeypatch, *, certification_store):
     record = _certify(tmp_path, monkeypatch, 'contract.bfs_tdstep_frontier_staging', c.DEFAULT_SNAPSHOT,
-                      LIBRARY / 'native/bfs-tdstep-frontier-staging.patch')
+                      LIBRARY / 'native/bfs-tdstep-frontier-staging.patch', certification_store=certification_store)
     assert record['verdict'] == 'certified' and record['command']['version'] == '1.5'
     # 2026-10-05 ET (ADR 0008, review fixes): real code on the host CPU is measured, not simulated.
     assert record['evidence_basis'] == 'measured' and record['command']['family'] == 'native'

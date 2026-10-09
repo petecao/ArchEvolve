@@ -190,27 +190,30 @@ def check_scope(profile, tree, snapshot, snapshot_text):
     scope = profile['scope']
     changed = changed_files(tree, snapshot)
     if changed != [scope['file']]:
-        raise UsageError('native contract permits only a rewrite of ' + scope['file'] + '; changed files: '
+        raise common.CandidateUsageError('native contract permits only a rewrite of ' + scope['file'] + '; changed files: '
                          + ', '.join(changed))
     candidate = (Path(tree) / scope['file']).read_text()
 
-    def outside(text):
+    def outside(text, *, authored=False):
         start = text.find(scope['begin'])
         end = text.find(scope['end'], start + 1) if start >= 0 else -1
         if start < 0 or end < 0 or text.count(scope['begin']) != 1:
-            raise UsageError('native rewrite scope markers are missing or ambiguous')
+            error = common.CandidateUsageError if authored else UsageError
+            raise error('native rewrite scope markers are missing or ambiguous')
         return text[:start], text[end:]
 
-    if outside(snapshot_text) != outside(candidate):
-        before, after = outside(snapshot_text), outside(candidate)
+    if outside(snapshot_text) != outside(candidate, authored=True):
+        before, after = outside(snapshot_text), outside(candidate, authored=True)
         lines = list(difflib.unified_diff((before[0] + before[1]).splitlines(), (after[0] + after[1]).splitlines(),
                                           lineterm='', n=0))[2:6]
-        raise UsageError('native candidate changes code outside ' + scope['begin'].strip('( ') + ': '
+        raise common.CandidateUsageError('native candidate changes code outside ' + scope['begin'].strip('( ') + ': '
                          + ' | '.join(lines))
     # Ticket 75 review: the region between the markers must stay exactly one function definition with
     # the snapshot's signature (no added top-level functions, globals or macros after its body).
-    if _definition(snapshot_text, scope)[0] != _definition(candidate, scope)[0]:
-        raise UsageError('native candidate changes the signature of ' + scope['begin'].strip('( '))
+    original_signature = _definition(snapshot_text, scope)[0]
+    authored_signature = common.candidate_check(_definition, candidate, scope)[0]
+    if original_signature != authored_signature:
+        raise common.CandidateUsageError('native candidate changes the signature of ' + scope['begin'].strip('( '))
     return changed
 
 
@@ -320,7 +323,7 @@ def certify_native(tree, library, folder, profile, plugin, *, sources=None, proc
     source_path = Path(tree) / data['rewrite_scope']['file']
     source = source_path.read_text()
     driver = procedure.driver_path(library, profile=profile).read_text()
-    instrumented = instrument(profile, source) + driver
+    instrumented = common.candidate_check(instrument, profile, source) + driver
     adjacency = {}
     evidence = common.evidence
 
@@ -479,7 +482,7 @@ def certify_native_v14(tree, library, folder, profile, plugin, *, rng=None, proc
     source = source_path.read_text()
     hook = profile['hook']
     if source.count(hook['anchor']) != 1 or source.count('bool BFSVerifier(') != 1:
-        raise Failure('BFS frontier logging statement or correctness check differs from the protected text')
+        raise common.CandidateFailure('BFS frontier logging statement or correctness check differs from the protected text')
     instrumented = source.replace(hook['anchor'], hook['hook_v14'] + '\n        ' + hook['anchor'], 1) + \
         procedure.driver_path(library, profile=profile).read_text()
     adjacency = {}

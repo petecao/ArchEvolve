@@ -95,7 +95,24 @@
           }
         },
         "execution": {
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "observation_scope": {
+              "const": "artifact_before_certification"
+            }
+          },
+          "allOf": [
+            {
+              "if": {
+                "required": [
+                  "observation_scope"
+                ]
+              },
+              "then": {
+                "$ref": "#/$defs/artifact_execution"
+              }
+            }
+          ]
         },
         "prior_outcome_exposure": {
           "type": "array",
@@ -157,5 +174,152 @@
     "structural_missing",
     "evidence_kind",
     "eligible_for_agreement"
+  ],
+  "$defs": {
+    "artifact_execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "observation_scope",
+        "backend",
+        "protocol",
+        "protocol_identity_sha256",
+        "protocol_settings_sha256",
+        "protocol_context",
+        "selected_input",
+        "target",
+        "roi",
+        "threads",
+        "sources",
+        "repetitions"
+      ],
+      "properties": {
+        "observation_scope": {
+          "const": "artifact_before_certification"
+        },
+        "backend": {
+          "const": "source_metadata_only"
+        },
+        "protocol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "protocol_identity_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "protocol_settings_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "protocol_context": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "target",
+            "roi",
+            "threads",
+            "repetitions",
+            "sources",
+            "workloads"
+          ],
+          "properties": {
+            "target": {
+              "enum": [
+                "native_cpu",
+                "dx100_gem5"
+              ]
+            },
+            "roi": {
+              "type": "string",
+              "minLength": 1
+            },
+            "threads": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "repetitions": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "sources": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "workloads": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "selected_input": {
+          "const": {}
+        },
+        "target": {
+          "enum": [
+            "native_cpu",
+            "dx100_gem5"
+          ]
+        },
+        "roi": {
+          "type": "string",
+          "minLength": 1
+        },
+        "threads": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "repetitions": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "timing_context": {
+            "properties": {
+              "execution": {
+                "required": [
+                  "observation_scope"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "state": {
+            "const": "unknown"
+          },
+          "seconds": {
+            "const": null
+          },
+          "eligible_for_agreement": {
+            "const": false
+          }
+        }
+      }
+    }
   ]
 }

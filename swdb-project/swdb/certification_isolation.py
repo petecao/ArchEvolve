@@ -306,9 +306,10 @@ def scan(original, candidate, version='1.3', *, directives=False, primitives=Non
 
 
 def refuse_scan_findings(original, candidate, version='1.3', *, directives=False, primitives=None):
-    # The refusal keeps the legacy words "harness scan": campaign code classifies aborts by them.
+    # 2026-10-08 ET: retain the public text and mark this authored-source refusal explicitly.
     findings = scan(original, candidate, version, directives=directives, primitives=primitives)
     if findings:
         shown = '; '.join(f'line {line} {token!r} ({why})' for line, token, why in findings[:5])
         more = f' and {len(findings) - 5} more' if len(findings) > 5 else ''
-        raise UsageError(f'candidate source refused by the harness scan (certify {version}): ' + shown + more)
+        raise common.CandidateUsageError(f'candidate source refused by the harness scan (certify {version}): '
+                                         + shown + more, check='harness_scan')

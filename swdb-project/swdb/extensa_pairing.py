@@ -18,6 +18,14 @@ from swdb.store import Store
 FORMAT = 'swdb.extensa-paired-estimate.v1'
 LEDGER = 'swdb.extensa-pairing-ledger.v1'
 VERSION = 'swdb.extensa-pairing.v1'
+# Prospective metadata coverage only. Never an executable/timed forecast.
+ARTIFACT_SCOPE = 'artifact_before_certification'
+ARTIFACT_SETTINGS = ('target', 'roi', 'threads', 'repetitions', 'sources', 'workloads')
+ARTIFACT_EXECUTION = frozenset({'observation_scope', 'backend', 'protocol',
+    'protocol_identity_sha256', 'protocol_settings_sha256', 'protocol_context',
+    'selected_input', 'target', 'roi', 'threads', 'sources', 'repetitions'})
+ARTIFACT_MISSING = ('artifact_metadata_not_complete_timing_request',
+    'functional_certification_not_admitted_for_artifact_forecast')
 PAYLOAD = ('format', 'mode', 'campaign', 'basis', 'estimator_variant', 'estimator_version',
            'estimator_sha256', 'policy_sha256', 'timing_context', 'context_sha256',
            'estimated_at', 'seconds', 'state', 'structural_missing', 'evidence_kind',
@@ -48,8 +56,37 @@ def request_identity(context):
     return artifacts.digest(facts)
 
 
+def artifact_only(row):
+    return row['timing_context']['execution'].get('observation_scope') == ARTIFACT_SCOPE
+
+
+def artifact_problems(data):
+    """Closed metadata projection; an original request/build is still unresolved."""
+    execution = data['timing_context']['execution']
+    if 'observation_scope' not in execution:
+        return  # Historical complete timing-request receipts remain unchanged.
+    if (execution.get('observation_scope') != ARTIFACT_SCOPE or set(execution) != ARTIFACT_EXECUTION
+            or execution.get('backend') != 'source_metadata_only' or execution.get('selected_input') != {}):
+        yield 'artifact forecast has an invalid closed observation scope'
+        return
+    projection = execution.get('protocol_context')
+    if not isinstance(projection, dict) or set(projection) != set(ARTIFACT_SETTINGS):
+        yield 'artifact forecast has an invalid closed campaign metadata projection'
+        return
+    if any(projection[key] != execution[key] for key in ('target', 'roi', 'threads', 'sources', 'repetitions')):
+        yield 'artifact forecast scope differs from its campaign metadata projection'
+    if data['timing_context']['input']['id'] not in projection['workloads'].values():
+        yield 'artifact forecast input is outside its campaign metadata projection'
+    if (data['state'] != 'unknown' or data['seconds'] is not None
+            or data['eligible_for_agreement'] is not False
+            or not set(ARTIFACT_MISSING) <= set(data['structural_missing'])):
+        yield 'artifact forecast must remain unknown, null and ineligible with its missing proof'
+
+
 def validate_record(record, ctx):
     data = record.data
+    for issue in artifact_problems(data):
+        yield Problem(record.rel, 'timing_context', issue)
     if identity(data) != data['identity_sha256'] or not data['id'].endswith('.' + identity(data)[:16]):
         yield Problem(record.rel, 'identity_sha256', 'paired estimate immutable payload/hash differs')
     if artifacts.digest(data['timing_context']) != data['context_sha256']:
@@ -93,6 +130,8 @@ def ledger_problems(ledger, campaign):
         except (ValueError, TypeError):
             yield 'embedded estimate timestamp is not UTC'
     for event in ledger['outcome_accesses']:
+        if any(rid in by_id and artifact_only(by_id[rid]) for rid in event['paired_estimates']):
+            yield 'artifact-only forecast cannot authorize an outcome access'
         contexts = event.get('timing_contexts')
         if contexts is not None and (len(contexts) != len(event['paired_estimates']) or any(
                 rid not in by_id or request_identity(context) != request_identity(by_id[rid]['timing_context'])
@@ -124,6 +163,19 @@ def validate_summary(record, ctx):
             from swdb.store import Record
             yield from validate_record(Record(record.rel, row), ctx)
     if not malformed:
+        protocol = record.data.get('protocol') or {}
+        for row in ledger['records']:
+            if not artifact_only(row):
+                continue
+            execution = row['timing_context']['execution']
+            settings = protocol.get('settings') or {}
+            projection = {key: settings[key] for key in ARTIFACT_SETTINGS if key in settings}
+            if (execution['protocol'] != protocol.get('id')
+                    or execution['protocol_identity_sha256'] != protocol.get('identity_sha256')
+                    or execution['protocol_settings_sha256'] != artifacts.digest(settings)
+                    or execution['protocol_context'] != projection):
+                yield Problem(record.rel, 'paired_estimates',
+                              'artifact forecast differs from the original frozen campaign metadata')
         for problem in ledger_problems(ledger, record.data['campaign']):
             yield Problem(record.rel, 'paired_estimates', problem)
 
@@ -193,6 +245,8 @@ class PairingLedger:
         selected = {key: copy.deepcopy(value) for key, value in request['workload'].items() if key != 'id'}
         if isinstance(selected.get('representation'), dict):
             selected['representation'].pop('path', None)
+        if request.get('observation_scope') == ARTIFACT_SCOPE:
+            execution.pop('fixture', None)
         execution['selected_input'] = selected
         execution['target'] = self.campaign['target']
         execution.setdefault('roi', self.campaign['protocol']['roi'])
@@ -202,6 +256,31 @@ class PairingLedger:
         return {'subject': {'id': candidate['id'], 'artifact_sha256': candidate['artifact']['sha256']},
                 'input': {'id': workload['id'], 'identity_sha256': workload['identity_sha256'], **input_facts},
                 'execution': execution}
+
+    def freeze_artifacts(self, candidates, protocol, *, fixture=False):
+        """Cover immutable artifacts before admission, without running their code.
+
+        The protocol identity is the original freeze result, and the closed six
+        fields are campaign metadata, not a binary/build/runtime correspondence.
+        Actual before() requests retain their own later exact-context forecasts.
+        """
+        if not self.enabled:
+            return []
+        settings = protocol['settings']
+        projection = {key: copy.deepcopy(settings[key]) for key in ARTIFACT_SETTINGS}
+        from swdb.campaign import protocol_settings
+        expected = protocol_settings(self.campaign)
+        if projection != {key: expected[key] for key in ARTIFACT_SETTINGS}:
+            raise Failure('artifact forecast requires original frozen campaign metadata')
+        requests = [{'candidate': candidate, 'workload': {'id': row['workload']},
+            'fixture': fixture, 'observation_scope': ARTIFACT_SCOPE,
+            'backend': 'source_metadata_only', 'protocol': protocol['id'],
+            'protocol_identity_sha256': protocol['identity_sha256'],
+            'protocol_settings_sha256': artifacts.digest(settings),
+            'protocol_context': copy.deepcopy(projection)}
+            for candidate in candidates for row in self.campaign['workload_classes']]
+        # fixture is record evidence classification, never part of execution scope.
+        return self.freeze(requests)
 
     def freeze(self, requests):
         if not self.enabled:
@@ -225,7 +304,10 @@ class PairingLedger:
                 'complete_required_mechanisms_and_composition',
                 'prospective_artifact_input_configuration_freshness']
             evidence = 'contract_fixture' if request.get('fixture') else 'execution'
-            if evidence == 'contract_fixture' and self.fixture_model is not None:
+            is_artifact = request.get('observation_scope') == ARTIFACT_SCOPE
+            if is_artifact:
+                missing.extend(ARTIFACT_MISSING)
+            if not is_artifact and evidence == 'contract_fixture' and self.fixture_model is not None:
                 # Explicit synthetic work/rate premise, separate from fixture timings.
                 role = 'baseline' if request['candidate'] in {b['candidate'] for b in self.campaign['baselines']} else 'candidate'
                 seconds = self.fixture_model['work_units'][role] / self.fixture_model['units_per_second']
@@ -290,6 +372,8 @@ class PairingLedger:
         """Durably retain the boundary before the caller reads or starts timing."""
         if not self.enabled:
             return []
+        if any('observation_scope' in request for request in requests):
+            raise Failure('artifact-only forecast cannot authorize an outcome access')
         refs = self.freeze(requests)
         store = Store(self.store_dir)
         event = {'stage': stage, 'paired_estimates': refs,

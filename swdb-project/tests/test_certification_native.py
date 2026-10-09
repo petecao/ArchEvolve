@@ -37,10 +37,10 @@ BOUNDS = """                staged_begin[lane] = offsets[u];
 
 
 
-def _variant(tmp_path, transform, name='variant.patch'):
+def _variant(tmp_path, transform, name='variant.patch', *, certification_store):
     """A -p1 patch of the snapshot whose bfs.cc is the a8 rewrite passed through ``transform``."""
     with tempfile.TemporaryDirectory(dir=tmp_path) as temporary:
-        tree, _ = c.materialize_snapshot(Store(ROOT / 'records'), SNAPSHOT, Path(temporary))
+        tree, _ = c.materialize_snapshot(certification_store, SNAPSHOT, Path(temporary))
         original = (tree / BFS).read_text()
         c.apply_patch(tree, PATCH)
         text = transform((tree / BFS).read_text())
@@ -64,10 +64,10 @@ def _candidate_record(tmp_path, sha=A8_ARTIFACT, snapshot=SNAPSHOT):
     return path
 
 
-def _certify(tmp_path, monkeypatch, patch, **options):
+def _certify(tmp_path, monkeypatch, patch, *, certification_store, **options):
     _gcc()
     monkeypatch.setattr(c.workflow, 'persist', lambda *args, **kwargs: None)
-    return c.certify(Store(ROOT / 'records'), CONTRACT, snapshot=SNAPSHOT, patch=patch, runs_dir=tmp_path / 'runs',
+    return c.certify(certification_store, CONTRACT, snapshot=SNAPSHOT, patch=patch, runs_dir=tmp_path / 'runs',
                      **options)
 
 
@@ -114,11 +114,11 @@ def test_native_witness_record_is_parsed_and_judged(tmp_path):
     assert bad['reason'] == 'execution_witness'
 
 
-def test_edit_outside_tdstep_is_refused_before_any_build(tmp_path, monkeypatch):
+def test_edit_outside_tdstep_is_refused_before_any_build(tmp_path, monkeypatch, *, certification_store):
     patch = _variant(tmp_path, lambda text: _replace(text, 'int alpha = 1, int beta = 18) {',
-                                                     'int alpha = 1, int beta = 18) {\n    (void)alpha;'))
+                                                     'int alpha = 1, int beta = 18) {\n    (void)alpha;'), certification_store=certification_store)
     with pytest.raises(UsageError, match='outside void TDStep'):
-        _certify(tmp_path, monkeypatch, patch)
+        _certify(tmp_path, monkeypatch, patch, certification_store=certification_store)
 
 
 QUEUE_PROBE = """#ifndef QueueBuffer
@@ -136,15 +136,15 @@ QUEUE_PROBE = """#ifndef QueueBuffer
                                         'SlidingQueue<NodeID> &queue, int num_nodes, int num_edges, int x = 0) {'),
      'signature'),
 ])
-def test_scope_and_directive_refusals_before_any_build(tmp_path, monkeypatch, name, transform, message):
+def test_scope_and_directive_refusals_before_any_build(tmp_path, monkeypatch, name, transform, message, *, certification_store):
     """Ticket 75 review: a candidate cannot detect the certification build or add code outside TDStep."""
     with pytest.raises(UsageError, match=message):
-        _certify(tmp_path, monkeypatch, _variant(tmp_path, transform))
+        _certify(tmp_path, monkeypatch, _variant(tmp_path, transform, certification_store=certification_store), certification_store=certification_store)
 
 
-def test_native_profile_sources_cannot_be_overridden(tmp_path, monkeypatch):
+def test_native_profile_sources_cannot_be_overridden(tmp_path, monkeypatch, *, certification_store):
     with pytest.raises(UsageError, match='pins its sources'):
-        _certify(tmp_path, monkeypatch, PATCH, sources=(1,))
+        _certify(tmp_path, monkeypatch, PATCH, sources=(1,), certification_store=certification_store)
 
 
 def test_witness_of_another_target_invalidates_the_record(tmp_path):
@@ -156,16 +156,16 @@ def test_witness_of_another_target_invalidates_the_record(tmp_path):
     assert dx100['reason'] == 'record_invalid'
 
 
-def test_candidate_record_must_match_the_patched_tree(tmp_path, monkeypatch):
+def test_candidate_record_must_match_the_patched_tree(tmp_path, monkeypatch, *, certification_store):
     with pytest.raises(UsageError, match='differs from the candidate record artifact'):
-        _certify(tmp_path, monkeypatch, PATCH, candidate_record=_candidate_record(tmp_path, sha='0' * 64))
+        _certify(tmp_path, monkeypatch, PATCH, candidate_record=_candidate_record(tmp_path, sha='0' * 64), certification_store=certification_store)
 
 
 # --- full certifications -------------------------------------------------------------------------------
 
 @pytest.mark.parametrize('version', ['1.3', '1.4'])
-def test_exact_a8_tree_certifies_with_every_control_rejected_by_its_check(tmp_path, monkeypatch, version):
-    record = _certify(tmp_path, monkeypatch, PATCH, candidate_record=_candidate_record(tmp_path), version=version)
+def test_exact_a8_tree_certifies_with_every_control_rejected_by_its_check(tmp_path, monkeypatch, version, *, certification_store):
+    record = _certify(tmp_path, monkeypatch, PATCH, candidate_record=_candidate_record(tmp_path), version=version, certification_store=certification_store)
     assert record['verdict'] == 'certified' and record['command']['version'] == version
     assert json.loads(json.dumps(record)) == record   # persistable: the writer refuses non-JSON records
     assert record['candidate']['tree_sha256'] == A8_ARTIFACT
@@ -199,11 +199,11 @@ def test_exact_a8_tree_certifies_with_every_control_rejected_by_its_check(tmp_pa
 
 
 @pytest.mark.parametrize('version', ['1.3', '1.4'])
-def test_keeping_the_post_claim_store_leaves_claim_without_write_alive(tmp_path, monkeypatch, version):
+def test_keeping_the_post_claim_store_leaves_claim_without_write_alive(tmp_path, monkeypatch, version, *, certification_store):
     """C2's control discriminates: with the store kept, a non-writing claim is masked."""
     patch = _variant(tmp_path, lambda text: _replace(text, CLAIM, CLAIM.replace(
-        'lqueue.push_back(v);', 'parents[v] = u;\n                            lqueue.push_back(v);')))
-    record = _certify(tmp_path, monkeypatch, patch, version=version)
+        'lqueue.push_back(v);', 'parents[v] = u;\n                            lqueue.push_back(v);')), certification_store=certification_store)
+    record = _certify(tmp_path, monkeypatch, patch, version=version, certification_store=certification_store)
     assert all(x['status'] == 'passed' for x in record['matrix'])
     assert {k: v for k, v in _status(record).items() if v != 'rejected'} == {
         ('claim_without_write', 'o3'): 'survived', ('claim_without_write', 'o1g'): 'survived'}
@@ -211,18 +211,18 @@ def test_keeping_the_post_claim_store_leaves_claim_without_write_alive(tmp_path,
     assert [r['clause'] for r in record['clause_controls'] if not r['matched']] == ['C2']
 
 
-def test_a_real_dropped_partial_batch_fails_the_matrix(tmp_path, monkeypatch):
-    patch = _variant(tmp_path, lambda text: _replace(text, TAIL, TAIL.replace('? remaining :', '? 0 :')))
-    record = _certify(tmp_path, monkeypatch, patch)
+def test_a_real_dropped_partial_batch_fails_the_matrix(tmp_path, monkeypatch, *, certification_store):
+    patch = _variant(tmp_path, lambda text: _replace(text, TAIL, TAIL.replace('? remaining :', '? 0 :')), certification_store=certification_store)
+    record = _certify(tmp_path, monkeypatch, patch, certification_store=certification_store)
     assert record['verdict'] == 'failed'
     failed = [x for x in record['matrix'] if x['status'] == 'failed']
     assert failed and all('frontier_size_equality' in x['observed_checks'] for x in failed)
 
 
-def test_a_real_stale_row_offset_fails_the_matrix(tmp_path, monkeypatch):
+def test_a_real_stale_row_offset_fails_the_matrix(tmp_path, monkeypatch, *, certification_store):
     patch = _variant(tmp_path, lambda text: _replace(text, BOUNDS, BOUNDS.replace(
-        'offsets[u];', 'offsets[staged_vertices[lane + 1 < staged_count ? lane + 1 : lane]];')))
-    record = _certify(tmp_path, monkeypatch, patch)
+        'offsets[u];', 'offsets[staged_vertices[lane + 1 < staged_count ? lane + 1 : lane]];')), certification_store=certification_store)
+    record = _certify(tmp_path, monkeypatch, patch, certification_store=certification_store)
     assert record['verdict'] == 'failed'
     failed = [x for x in record['matrix'] if x['status'] == 'failed']
     assert failed and all('verifier' in x['observed_checks'] for x in failed)
@@ -232,10 +232,10 @@ RAW_CLAIM = """                        if (__sync_bool_compare_and_swap(&parents
                             lqueue.push_back(v);"""
 
 
-def test_v14_claim_seam_bypass_fails_every_cell_on_the_seam_witness(tmp_path, monkeypatch):
+def test_v14_claim_seam_bypass_fails_every_cell_on_the_seam_witness(tmp_path, monkeypatch, *, certification_store):
     """1.4 (ticket 76 mechanism): a candidate that claims with a raw builtin fails the positive matrix."""
-    record = _certify(tmp_path, monkeypatch, _variant(tmp_path, lambda text: _replace(text, CLAIM, RAW_CLAIM)),
-                      version='1.4')
+    record = _certify(tmp_path, monkeypatch, _variant(tmp_path, lambda text: _replace(text, CLAIM, RAW_CLAIM), certification_store=certification_store),
+                      version='1.4', certification_store=certification_store)
     assert record['verdict'] == 'failed'
     assert all(x['status'] == 'failed' and 'seam_witness' in x['observed_checks'] for x in record['matrix'])
 

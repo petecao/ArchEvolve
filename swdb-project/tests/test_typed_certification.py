@@ -89,8 +89,8 @@ def test_candidate_prints_cannot_hide_duplicate_enqueue():
     assert rejected == (False, 'frontier_size_equality')
 
 
-def test_exact_patched_tree_preserves_vendored_identity_and_ships_header(tmp_path):
-    store = Store(ROOT / 'records')
+def test_exact_patched_tree_preserves_vendored_identity_and_ships_header(tmp_path, *, certification_store):
+    store = certification_store
     before = c.artifacts.identify(ROOT / 'apps/dx100')
     patch = tmp_path / 'peter.patch'
     c.create_peter_patch(store, patch)
@@ -119,8 +119,8 @@ def test_calibration_witness_threshold_is_from_the_scalar_reference_counts():
     assert c.judge_bfs(result(output), counts, calibrate=True) == (False, 'execution_witness')
 
 
-def test_forged_frontier_control_is_a_pure_library_fault():
-    scalar = c.peter_source(Store(ROOT / 'records').get(c.DEFAULT_SNAPSHOT)['regions'][0]['text'])
+def test_forged_frontier_control_is_a_pure_library_fault(*, certification_store):
+    scalar = c.peter_source(certification_store.get(c.DEFAULT_SNAPSHOT)['regions'][0]['text'])
     instrumented = c.instrument_source(scalar)
     control = c._rewrite_control(instrumented, 'forged_frontier')
     # Ticket 62: the double enqueue is a library fault. Ticket 67: version 2 duplicates the first
@@ -130,14 +130,14 @@ def test_forged_frontier_control_is_a_pure_library_fault():
     assert control['source'] == instrumented and 'swdb_certification_frontier(queue);' in instrumented
 
 
-def test_bfs_counter_reset_precedes_the_once_per_call_runtime_guard():
-    snapshot = Store(ROOT / 'records').get(c.DEFAULT_SNAPSHOT)
+def test_bfs_counter_reset_precedes_the_once_per_call_runtime_guard(*, certification_store):
+    snapshot = certification_store.get(c.DEFAULT_SNAPSHOT)
     source = c.peter_source(snapshot['regions'][0]['text'])
     assert source.index('swdb_dxc::chunks() = 0;') < source.index('swdb_acceleration_enabled = uint64_t')
 
 
-def test_candidate_scope_cannot_certify_uncontracted_header_edits(tmp_path):
-    store = Store(ROOT / 'records')
+def test_candidate_scope_cannot_certify_uncontracted_header_edits(tmp_path, *, certification_store):
+    store = certification_store
     patch = tmp_path / 'peter.patch'
     c.create_peter_patch(store, patch)
     trial = tmp_path / 'candidate'; trial.mkdir()
@@ -321,7 +321,7 @@ def test_lowering_source_pins_must_stay_unchanged_during_build(pinned_lowering, 
 
 @pytest.mark.parametrize('wrong_reference', [False, True], ids=['equivalent_reference', 'changed_semantics'])
 def test_real_lowering_receipt_binds_the_current_intrinsic_reference_identity(
-        pinned_lowering, tmp_path, monkeypatch, wrong_reference):
+        pinned_lowering, tmp_path, monkeypatch, wrong_reference, *, certification_store):
     from swdb.library import Library
     library, entry_id, _, entry = pinned_lowering
     before = Library(library)
@@ -342,7 +342,7 @@ def test_real_lowering_receipt_binds_the_current_intrinsic_reference_identity(
     assert intrinsic_hash != old_intrinsic_hash
     persisted = []
     monkeypatch.setattr(c.workflow, 'persist', lambda records, record, **kwargs: persisted.append(record))
-    receipt = c.certify(Store(ROOT / 'records'), entry_id, library=library, runs_dir=tmp_path / 'runs')
+    receipt = c.certify(certification_store, entry_id, library=library, runs_dir=tmp_path / 'runs')
     assert receipt['verdict'] == ('failed' if wrong_reference else 'certified')
     assert receipt['dependencies'] == [{'id': entry['intrinsic'], 'content_sha256': intrinsic_hash}]
     assert persisted == [receipt]
@@ -352,7 +352,7 @@ def test_real_lowering_receipt_binds_the_current_intrinsic_reference_identity(
         assert all('SWDB_DIFFERENTIAL_MISMATCH:reference_semantics' in cell['run']['stderr'] for cell in receipt['matrix'])
 
 
-def test_intrinsic_dependency_change_during_real_execution_aborts_receipt(pinned_lowering, tmp_path, monkeypatch):
+def test_intrinsic_dependency_change_during_real_execution_aborts_receipt(pinned_lowering, tmp_path, monkeypatch, *, certification_store):
     library, entry_id, _, _ = pinned_lowering
     path = library / 'intrinsics/dxc_gather.yaml'
     original_execute = c.execute
@@ -370,7 +370,7 @@ def test_intrinsic_dependency_change_during_real_execution_aborts_receipt(pinned
     persisted = []
     monkeypatch.setattr(c.workflow, 'persist', lambda records, record, **kwargs: persisted.append(record))
     with pytest.raises(c.Failure, match='dependencies changed during execution'):
-        c.certify(Store(ROOT / 'records'), entry_id, library=library, runs_dir=tmp_path / 'runs')
+        c.certify(certification_store, entry_id, library=library, runs_dir=tmp_path / 'runs')
     assert changed
     assert persisted == []
     assert not list((tmp_path / 'runs').rglob('certification.json'))
@@ -395,10 +395,10 @@ def test_dependency_receipt_schema_preserves_history_and_checks_pins(dependencie
 
 @pytest.mark.parametrize('script', ['../tools/bfs_native/evil.py', 'tests/conftest.py',
                                     'scripts/bfs_native_pilot.py', '/etc/passwd'])
-def test_snapshot_derivation_runs_only_a_checkout_preparation_script(tmp_path, script):
+def test_snapshot_derivation_runs_only_a_checkout_preparation_script(tmp_path, script, *, certification_store):
     """2026-10-04 ET (final code review): a record field names code that is executed."""
     from swdb.store import Record
-    store = Store(ROOT / 'records')
+    store = certification_store
     snapshot = json.loads(json.dumps(store.get(c.DEFAULT_SNAPSHOT, 'source_snapshot')))
     snapshot['context']['source_derivation']['script'] = script
     forged = Store(store.dir, indexed_records=[Record(snapshot['id'] + '.yaml', snapshot)])
