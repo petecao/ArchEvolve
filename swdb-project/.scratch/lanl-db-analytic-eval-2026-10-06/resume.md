@@ -1,5 +1,25 @@
 # Continue the analytic evaluator work
 
+2026-10-09 16:35 ET — [Actual assembly and refused strict audit](evidence/17-actual-input-assembly-and-refused-strict-audit-20261009-a5/README.md)
+
+All four indexes, original32 projections and original ec1fc/SPEC339/de assembly completed once. The assembler actually read and rechecked 219 originals (6,061,356 bytes), including 160 selected records.
+
+**The unchanged original 6a audit refused admission:** exit 3 at 16:30:26–16:30:47 ET, `Actual ordered outcome metadata missing`. Its literal 110-byte output has SHA-256 `55f422a431174bd566d62b41da9eb0915f51d727f8a8fd3b1e8ed65d0cefa0f7`. SSH/wrapper zero confirms capture only; the refusal supplies no partial or final auditor readiness. Missing forecasts and outcome order cannot be reconstructed from completed runs.
+
+| Current work | Status |
+|---|---|
+| Original custody/index/projection/assembly/audit | Complete once; audit is negative evidence |
+| Final Standards review, 2caa5545 through de3105d6 | Zero actionable findings |
+| Final Spec review | No new checkpoint regression; scientific acceptance incomplete |
+| Published package | 47 exact originals, 973,484 bytes; root and independent physical closure passed |
+| Assigned tickets | 14/15 resolved; 17 claimed, all four acceptance boxes unchecked |
+| Human tickets | 18 ready for human after 17; 19–20 triage; 21–23 wontfix |
+
+Recommendation: **do not switch to flow B**. [Prospective recovery](evidence/17-actual-input-assembly-and-refused-strict-audit-20261009-a5/prospective-recovery.md) requires a genuine complete-call numerical adapter and an eligible evaluator path before any fresh separately frozen population. Ticket16's artifact-only unknown receipts cannot supply numerical pairs or missing history. No new campaign or source synchronization is selected here.
+
+The package retains needed metadata bodies and original failures without duplicating full project source, configs, capture streams or catalog YAML. No new peer receipt is claimed. All completed or expired approvals remain nonreusable. Human maps, the dirty root rule and scientific PRIMARY/SOURCE/origin R are preserved. No stopped-state resume, old science/audit repeat, retrospective forecast/order or original-guard relaxation occurred. The heartbeat stays ACTIVE for legitimate remaining recovery, fixes and acceptance; unchanged nonactionable evidence stays quiet.
+
+
 2026-10-09 15:59 ET — [All-four original32 closure](evidence/17-original32-four-campaign-closure-20261009-a5/README.md) completed once: P1 15:46:35/44, P2 15:54:10/18, P3 15:55:53–15:56:04 and P4 15:58:02/05 ET. Root and independent actual reviews passed exact transport/source/request/input/context/seals, original AFTER state/full106/104/88/100 indexes and 8/8/2/6 actual named exports. All32 executed rows remain; all four original ordered-pair/outcome-event histories remain empty. Local R3 exact read-root adapter and R7 read-only stage-route adapter preserve other source/guard AST nodes; no original32/auditor/scientific-policy change. P1 first local author refusal and never-executed first transport configs are retained privately with compact failure history; corrected owned output parent/private source-pin selection used fresh inputs and windows, no chmod.78 exact selected metadata originals/656,784B include future-reader output bodies and source patches; full source/config/streams/YAML are not duplicated. Descriptor closure uniquely maps398 rows to158 public IDs/3,754,023B, no YAML body reads. All four indexes and original32 pairs complete; actual ec1fc/SPEC339/de assembly, unchanged actual6a, final scientific Standards+Spec/fixes and honest acceptance/Git synchronization remain pending.14/15 assigned agent tickets resolved;17 claimed/all4 acceptance unchecked. Human maps/docs/root rule and scientific PRIMARY/source/originR preserved.
 
 

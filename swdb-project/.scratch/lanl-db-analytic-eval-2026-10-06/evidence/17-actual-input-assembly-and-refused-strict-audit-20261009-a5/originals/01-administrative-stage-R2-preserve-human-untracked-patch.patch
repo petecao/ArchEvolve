@@ -1,0 +1,29 @@
+--- lanl17_template_author_git_stage_selected_20261009_a1.py
++++ lanl17_template_author_git_stage_selected_20261009_a2.py
+@@ -24,11 +24,14 @@
+ for path,floor in (('/data',24*1024**3),('/data1',21*1024**3)):
+  s=os.statvfs(path);floors[path]=s.f_bavail*s.f_frsize;assert floors[path]>=floor
+ mem={line.split(':',1)[0]:int(line.split()[1])*1024 for line in Path('/proc/meminfo').read_text().splitlines() if line.startswith('MemAvailable:')};assert mem['MemAvailable']>=80*1024**3
+-scientific=[]
++scientific=[];primary_full_status=None
+ for p in (BASE/'ArchEvolve',BASE/'ArchEvolve-lanl17-source-20261007-a5'):
+  assert p.resolve(strict=True)==p and all(not q.is_symlink() for q in (p,*p.parents))
+  assert run(['/usr/bin/git','-C',str(p),'rev-parse','HEAD']).decode().strip()==R
+- assert not run(['/usr/bin/git','-C',str(p),'status','--porcelain']).strip()
++ full=run(['/usr/bin/git','-C',str(p),'status','--porcelain','-z'])
++ assert not run(['/usr/bin/git','-C',str(p),'status','--porcelain','--untracked-files=no']).strip()
++ if p==BASE/'ArchEvolve':primary_full_status=full
++ else:assert not full
+  scientific.append(str(p))
+ assert run(['/usr/bin/git','-C',scientific[0],'rev-parse','origin/yanrujhou_main']).decode().strip()==R
+ REPO.mkdir(mode=0o700);run(['/usr/bin/git','init','--bare',str(REPO)])
+@@ -48,6 +51,7 @@
+ s=TARGET.lstat();assert stat.S_ISREG(s.st_mode) and s.st_uid==UID and s.st_nlink==1 and stat.S_IMODE(s.st_mode)==0o600 and TARGET.read_bytes()==b and s9(TARGET.lstat())==s9(s)
+ assert DIRECTORY.stat().st_uid==UID and stat.S_IMODE(DIRECTORY.stat().st_mode)==0o700
+ for p in scientific:
+- assert run(['/usr/bin/git','-C',p,'rev-parse','HEAD']).decode().strip()==R and not run(['/usr/bin/git','-C',p,'status','--porcelain']).strip()
++ assert run(['/usr/bin/git','-C',p,'rev-parse','HEAD']).decode().strip()==R and not run(['/usr/bin/git','-C',p,'status','--porcelain','--untracked-files=no']).strip()
++ full=run(['/usr/bin/git','-C',p,'status','--porcelain','-z']);assert full==(primary_full_status if p==scientific[0] else b'')
+ assert run(['/usr/bin/git','-C',scientific[0],'rev-parse','origin/yanrujhou_main']).decode().strip()==R
+-print(json.dumps({'format':'swdb.lanl17-actual-template-author-git-stage.v1','checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source_commit':C,'source_path':SOURCE,'source_blob':G,'isolated_git_directory':str(REPO),'source_pin':{'path':str(TARGET),'bytes':len(b),'sha256':sha(b),'stat':s9(s)},'source_parent_stat':s9(DIRECTORY.stat()),'dated_free_bytes':floors,'dated_mem':mem,'checks':checks,'scientific_PRIMARY_SOURCE_origin_still_R':True,'scientific_source_fetched_or_mutated':False,'metadata_author_executed':False,'scientific_admission':False},sort_keys=True))
++print(json.dumps({'format':'swdb.lanl17-actual-template-author-git-stage.v1','checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source_commit':C,'source_path':SOURCE,'source_blob':G,'isolated_git_directory':str(REPO),'source_pin':{'path':str(TARGET),'bytes':len(b),'sha256':sha(b),'stat':s9(s)},'source_parent_stat':s9(DIRECTORY.stat()),'dated_free_bytes':floors,'dated_mem':mem,'checks':checks,'preserved_primary_status_bytes':len(primary_full_status),'preserved_primary_status_sha256':sha(primary_full_status),'scientific_PRIMARY_SOURCE_origin_still_R':True,'scientific_source_fetched_or_mutated':False,'metadata_author_executed':False,'scientific_admission':False},sort_keys=True))

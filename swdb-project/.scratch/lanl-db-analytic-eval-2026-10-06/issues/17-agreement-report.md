@@ -11,6 +11,25 @@ Updated: 2026-10-09 15:59 ET
 
 **What to build:** After the flow-A campaigns: rank agreement between estimate and timing, whether gem5's best candidate survives a top-3 cut by estimate, and where estimates go wrong. The rule fixed in D30 is applied as written. A research variant of the estimator may be calibrated with these pairs, versioned separately (D10).
 
+2026-10-09 16:35 ET — [Actual assembly and refused strict audit](../evidence/17-actual-input-assembly-and-refused-strict-audit-20261009-a5/README.md)
+
+All four indexes, original32 projections and original ec1fc/SPEC339/de assembly completed once. The assembler actually read and rechecked 219 originals (6,061,356 bytes), including 160 selected records.
+
+**The unchanged original 6a audit refused admission:** exit 3 at 16:30:26–16:30:47 ET, `Actual ordered outcome metadata missing`. Its literal 110-byte output has SHA-256 `55f422a431174bd566d62b41da9eb0915f51d727f8a8fd3b1e8ed65d0cefa0f7`. SSH/wrapper zero confirms capture only; the refusal supplies no partial or final auditor readiness. Missing forecasts and outcome order cannot be reconstructed from completed runs.
+
+| Current work | Status |
+|---|---|
+| Original custody/index/projection/assembly/audit | Complete once; audit is negative evidence |
+| Final Standards review, 2caa5545 through de3105d6 | Zero actionable findings |
+| Final Spec review | No new checkpoint regression; scientific acceptance incomplete |
+| Published package | 47 exact originals, 973,484 bytes; root and independent physical closure passed |
+| Assigned tickets | 14/15 resolved; 17 claimed, all four acceptance boxes unchecked |
+| Human tickets | 18 ready for human after 17; 19–20 triage; 21–23 wontfix |
+
+Recommendation: **do not switch to flow B**. [Prospective recovery](../evidence/17-actual-input-assembly-and-refused-strict-audit-20261009-a5/prospective-recovery.md) requires a genuine complete-call numerical adapter and an eligible evaluator path before any fresh separately frozen population. Ticket16's artifact-only unknown receipts cannot supply numerical pairs or missing history. No new campaign or source synchronization is selected here.
+
+The package retains needed metadata bodies and original failures without duplicating full project source, configs, capture streams or catalog YAML. No new peer receipt is claimed. All completed or expired approvals remain nonreusable. Human maps, the dirty root rule and scientific PRIMARY/SOURCE/origin R are preserved. No stopped-state resume, old science/audit repeat, retrospective forecast/order or original-guard relaxation occurred. The heartbeat stays ACTIVE for legitimate remaining recovery, fixes and acceptance; unchanged nonactionable evidence stays quiet.
+
 ## Acceptance
 
 - [ ] D30 applied verbatim, with the number of pairs shown.
