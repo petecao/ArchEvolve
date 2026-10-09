@@ -1,0 +1,63 @@
+--- /private/tmp/lanl17_project_saved_generality_preflight_metadata_SOURCE_ONLY_20261009_a5_r1.py
++++ /private/tmp/lanl17_project_saved_generality_preflight_metadata_SOURCE_ONLY_20261009_a5_r2.py
+@@ -15,6 +15,11 @@
+ FIELDS=('dev','ino','mode','uid','gid','nlink','size','mtime_ns','ctime_ns')
+ END=time.monotonic()+45
+ ARGS=None
++REVIEWED_RECEIPT_RELATIVE='swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/annotation-a3/provider.json'
++REVIEWED_RECEIPT_STAT={'ctime_ns': 1791381880551391511, 'dev': 2097, 'gid': 114316761, 'ino': 55610029, 'mode': 33204, 'mtime_ns': 1791381880551391511, 'nlink': 1, 'size': 16916, 'uid': 114316761}
++REVIEWED_RECEIPT_SHA='e706199fe28531573974e2e63675a97a550f6b030f7c7b3569de90bd08c0b5d9'
++REVIEWED_RECEIPT_GIT_BLOB='4c83fa85d1e8a6544fe2a757cf83d7168c86cf86'
++REVIEWED_DIAGNOSTIC_SHA='d12c8faa3930a523c3382e38947f6f3a3cb7287d919eb50c47b89a8637572af9'
+ CATEGORIES=('PRIMARY','SOURCE','RAW','ER','EF','C','PREPARE','FINALIZE','HELPER','GUARD','SUPERVISOR','HOOKS','DEPLOYMENT')
+ LEASES=('mbit10-evaluation-node0','mbit10-evaluation-node1','mbit10-evaluation')
+ MANIFEST_PIN={'bytes': 1666030, 'path': '/data/yanruj/EvolveSWDB_runs/lanl17-generality-worktree-recovery-20261009-a2/preflight-inventory.json', 'sha256': 'a8a184736327f1c19d010e24bf44d1f39e52a4ac9988c692688809479274ce36', 'stat': {'ctime_ns': 1791522080336297135, 'dev': 2065, 'gid': 114316761, 'ino': 9872170, 'mode': 33152, 'mtime_ns': 1791522080336297135, 'nlink': 1, 'size': 1666030, 'uid': 114316761}}
+@@ -139,7 +144,10 @@
+         elif kind=='ultimate_symlink_resolution_unknown_or_refused':
+             closed(row,('relative_path','kind','target_sha256'),'ultimate_symlink_reference_shape');hex64(row['target_sha256']);categories=['UNKNOWN_OR_REFUSED_ULTIMATE_SYMLINK']
+         else:raise ValueError('unknown_reference_category')
+-        out.append({'relative_path':path,'kind':kind,'protected_categories':categories,'does_not_itself_prove_current_dependency':kind=='regular_literal_mentions'})
++        projected={'relative_path':path,'kind':kind,'protected_categories':categories,'does_not_itself_prove_current_dependency':kind=='regular_literal_mentions'}
++        if kind=='regular_literal_mentions':projected.update(protected_indices=row['protected_indices'],sha256=row['sha256'],historical_literal_does_not_itself_prove_physical_dependency=True)
++        else:projected['target_sha256']=row['target_sha256']
++        out.append(projected)
+     return out
+ 
+ def project_processes(v):
+@@ -149,7 +157,7 @@
+     fields={'pid','uid','proc_inode','ppid','start_ticks','cmdline_sha256','exe_route_sha256','state','error_class','reason_sha256'}
+     for row in rows:
+         need(type(row) is dict and set(row)<=fields and {'state','error_class','reason_sha256'}<=set(row) and row['state']=='unknown','owned_unknown_closed_shape')
+-        need(row['error_class'] in ('OSError','ValueError','IndexError','UnicodeError','FileNotFoundError','ProcessLookupError','PermissionError'),'owned_unknown_error_class');hex64(row['reason_sha256'])
++        need(type(row['error_class']) is str and re.fullmatch(r'[A-Za-z][A-Za-z0-9_]{0,63}',row['error_class']) is not None,'owned_unknown_error_class');hex64(row['reason_sha256'])
+         projected={}
+         for key,value in row.items():
+             if key.endswith('_sha256'):hex64(value)
+@@ -168,6 +176,15 @@
+         released=n.get('released_at');utc(released)
+         out[name]={'state':'released','generation':n['generation'],'released_at':released,'kernel_matching_rows':0,'daemon_PID':scalar(daemon.get('pid')),'daemon_exists':scalar(daemon.get('exists')),'FD9':daemon['FD9'],'FD9_matches_selected_lease':False,'snapshot_only_not_current_native_clearance':True}
+     return out
++
++def project_reviewed_receipt(entries):
++    rows=[row for row in entries if type(row) is dict and row.get('relative_path')==REVIEWED_RECEIPT_RELATIVE];need(len(rows)==1,'one_exact_reviewed_historical_receipt_metadata')
++    row=closed(rows[0],('relative_path','stat','kind','bytes','sha256','allocated_bytes','reviewed_historical_source_receipt'),'historical_receipt_metadata_shape')
++    need(row['kind']=='regular' and row['stat']==REVIEWED_RECEIPT_STAT and row['bytes']==16916 and row['sha256']==REVIEWED_RECEIPT_SHA and type(row['allocated_bytes']) is int and 0<=row['allocated_bytes']<=2**31,'historical_receipt_original_stat_SHA_size')
++    proof=closed(row['reviewed_historical_source_receipt'],('relative_path','HEAD','Git_blob','Git_mode','native_Git','source_sha256','dated_name_stat_diagnostic_sha256','auth_or_credential_configuration_exception','raw_body_returned'),'historical_receipt_provenance_shape')
++    need(proof['relative_path']==REVIEWED_RECEIPT_RELATIVE and proof['HEAD']==HEAD and proof['Git_blob']==REVIEWED_RECEIPT_GIT_BLOB and proof['Git_mode']=='100644' and proof['source_sha256']==REVIEWED_RECEIPT_SHA and proof['dated_name_stat_diagnostic_sha256']==REVIEWED_DIAGNOSTIC_SHA and proof['auth_or_credential_configuration_exception'] is False and proof['raw_body_returned'] is False,'historical_receipt_exact_provenance')
++    pin=closed(proof['native_Git'],('path','bytes','sha256','stat'),'historical_native_Git_pin');st=closed(pin['stat'],FIELDS,'historical_native_Git_stat');need(pin['path']=='/usr/bin/git' and pin['bytes']==4019024 and pin['sha256']=='06b2aa74919b1993f9fd7e47060ea98d98c27206f16ccc2d35f51ced7e7877eb' and all(type(x) is int and 0<=x<2**63 for x in st.values()) and st['uid']==0 and st['nlink']==1 and stat.S_ISREG(st['mode']) and stat.S_IMODE(st['mode'])==0o755,'historical_native_Git_identity')
++    return row
+ 
+ def project_source(v):
+     closed(v,('sources','primary_origin','retention_lock_original','physical_module_count','physical_F6','actual_ER_commit'),'saved_source_shape');need(v['primary_origin']==R and v['physical_module_count']==185 and v['physical_F6']==F6 and v['actual_ER_commit']==ER_COMMIT,'saved_R_F6_ER_binding')
+@@ -194,9 +211,9 @@
+     need(v['format']=='swdb.lanl17-generality-worktree-recovery-preflight-inventory.v1' and v['checked_utc']=='2026-10-09T05:01:20.306440+00:00' and all(v[k] is False for k in ('backup_eligibility_only','backup_created','removal_admitted','index_clearance','scientific_admission')),'actual_saved_manifest_negative_boundaries');utc(v['checked_utc']);hex64(v['snapshot_sha256'])
+     need(type(v['candidate']) is dict and v['candidate'].get('candidate')==str(CANDIDATE) and v['candidate'].get('head')==HEAD,'saved_candidate_c4');tree=v['tree'];need(type(tree) is dict and tree.get('entry_count')==4094 and type(tree.get('entries')) is list and len(tree['entries'])==4094,'saved_tree_entry_count')
+     references=project_references(tree['protected_reference_observations']);processes=project_processes(v['owned_consumer_inventory']);native_before=project_native(v['native_before']);native_after=project_native(v['native_after']);need(native_before==native_after,'saved_native_snapshot_continuity')
+-    source=project_source(v['source']);resources=project_resources(v['resources'])
++    source=project_source(v['source']);resources=project_resources(v['resources']);reviewed_receipt=project_reviewed_receipt(tree['entries'])
+     _,afterpin=saved_original();need(afterpin==pin and refs()==current_refs and controls()==current_controls and transport_identity()==transport and root_tool_pin('/usr/bin/git',4019024,'06b2aa74919b1993f9fd7e47060ea98d98c27206f16ccc2d35f51ced7e7877eb')==gitpin,'exact_manifest_controls_R_refs_transport_native_Git_continuity')
+-    result={'format':'swdb.lanl17-generality-preflight-saved-metadata-projection.v1','checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'metadata_observation_completed':True,'state':'projected_saved_unknown_snapshot','saved_manifest_checked_utc':v['checked_utc'],'saved_manifest_original':pin,'saved_snapshot_sha256':v['snapshot_sha256'],'reference_count':len(references),'protected_references':references,'owned_processes_snapshot':processes,'native_snapshot':native_after,'source_snapshot':source,'resources_snapshot':resources,'current_R_ER_refs_only':current_refs,'current_H_M2_pins':current_controls,'no_raw_manifest_candidate_record_provider_auth_stream_bodies_returned':True,'native_no_use_physical_source_capacity_freshness_not_rechecked':True,'reference_or_unknown_waiver':False,'backup_eligibility_only':False,'backup_created':False,'removal_admitted':False,'index_clearance':False,'scientific_admission':False}
++    result={'format':'swdb.lanl17-generality-preflight-saved-metadata-projection.v1','checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'metadata_observation_completed':True,'state':'projected_saved_unknown_snapshot','saved_manifest_checked_utc':v['checked_utc'],'saved_manifest_original':pin,'saved_snapshot_sha256':v['snapshot_sha256'],'reference_count':len(references),'protected_references':references,'reviewed_historical_source_receipt_metadata':reviewed_receipt,'owned_processes_snapshot':processes,'native_snapshot':native_after,'source_snapshot':source,'resources_snapshot':resources,'current_R_ER_refs_only':current_refs,'current_H_M2_pins':current_controls,'no_raw_manifest_candidate_record_provider_auth_stream_bodies_returned':True,'native_no_use_physical_source_capacity_freshness_not_rechecked':True,'reference_or_unknown_waiver':False,'backup_eligibility_only':False,'backup_created':False,'removal_admitted':False,'index_clearance':False,'scientific_admission':False}
+     need(len(metadata_bytes(result))<=65536,'projection_return_cap');return result
+ 
+ def main():

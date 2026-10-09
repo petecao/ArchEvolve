@@ -1,0 +1,25 @@
+# Saved metadata projection and current process blockers
+
+Updated: 2026-10-09 01:24 ET
+
+**Recovery and full-index work are blocked by the preserved guards. No archive, removal, index or scientific admission occurred.**
+
+| Original observation | Outcome | Boundary |
+|---|---|---|
+| Saved manifest projection, 2026-10-09 01:08 ET | 107 literal references and three observations of two symlinks; four process unknowns retained | Saved 01:01 ET snapshot; no current no-use clearance |
+| Four-PID diagnostic, 2026-10-09 01:19 ET | Stable owned identities for `(sd-pam)`, zombie `bash` and zombie `qs`; one exact route absent | Permission and owner checks remain unwaived |
+| Capacity, 2026-10-09 01:20 ET | RAM and `/data` pass; `/data1` short569032704B | Dated capacity only; no dispatch approval |
+
+[Inventory](projection-process-and-floor-original-inventory.json) retains60 unique exact originals/1089030B. Every archived body matches its private original size/SHA. The inventory retains the original nine stat fields; archive-copy inode/ctime are separate. Candidate records, archive bodies, auth, later argv arguments, raw process status/maps and symlink-target contents were not transferred.
+
+The projection original53076B/7f426aff57068c13c46d9734fa32807ac33f8c86404739df36b639256f2c4d6f passed root and independent262-check actual review. All107 literal rows match tracked c4 Git blobs/SHA; they are outward references to retained PRIMARY/C/H/G/SUP routes. That classification does not prove incoming dependency absence. Two `node_modules` symlinks can be preserved as link metadata without following targets. A typed administrative R7 plan is SOURCE ONLY, not executable: it retains all110 observations, requires exact per-row classification and fresh outputa3, and leaves unresolved process/no-use/history/native/floor gates mandatory. The original R6 a2 result remains ineligible; no count or source was changed.
+
+Process original23785B/c9397a69c9148052a8bff30fa6ee9a23cdd104e74637ca4a68db3e932df0e331 passed root and independent138-check actual review. Kernel release is6.8.0-136-generic. PID359656/inode37081472/start40749693 reports `(sd-pam)` stateS with UID tuple114316761; cwd/root/exe alias reads return EACCES. Its root-owned stat/status leaves were read for diagnosis only. PID2299635/inode66712273/start600551347 is zombie `bash`, parent359742. PID3570805/inode55298043/start499874091 is zombie `qs`, parent3570800. Both have root-owned stat/status, empty argv0 and missing alias targets. PID2332693's exact route was absent; identity remains unknown rather than retrospectively cleared.
+
+Selected diagnostic R3 corrected two ownership-scope findings before execution: expected directory UID before reads and observational leaf owner(0,UID). Its21 inherited native/source guards remain exact. The unchanged R6 and pre-indexR5 inactive branches require stat owner114316761 and therefore refuse the observed root-owned zombie leaves. R6 also cannot clear the protected `(sd-pam)` aliases. Names, sleeping/Z states and absence observations supply no exception. No unrelated PAM, Quicksilver, parent or other process was killed, reaped, restarted or altered; no sudo/security change occurred. Capacity improvement alone cannot satisfy the pre-index guard while those zombie observations persist.
+
+The fresh floor original295B/be49b23d3248138ce1e9c49bf6a56780700138c0da144447b49dc6c2d124ed67 reports RAM125523619840B, `/data`36815785984B and `/data1`21979545600B versus its22548578304B floor. Capture tag0121 is a route label; actual observation was01:20 ET. At01:19 ET all three native leases were released514/550/77, no matching kernel holder/FD9, sourceR/F6 and PRIMARY/originR unchanged. These are dated checks, not future readiness.
+
+Original four trajectories and FINALIZE remain complete and reviewed. Actual report is unsupported/zero eligible pairs/blind-order unverified/no-switch. Full inventories76/a2/original56/7a, original32 closure, actual accepted-input assembly, unchanged6a audit and final scientific Standards+Spec review are pending. Ticket17 remains claimed, acceptance unchecked;14/15 assigned tickets resolved. Heartbeat ACTIVE, formal table/health01:21 ET, nextby01:51 ET. Remote PRIMARY/origin staysR through every remaining original guard. Recheck actual external state and authorize fresh payloads only after genuine gates pass; do not repeat completed science/custody or reuse expired approvals.
+
+2026-10-09 01:32 ET — [Independent byte and prose closure](independent-byte-prose-review-inventory.json) passed all60 originals/1089030B and43 additional transport, timestamp, guard and prose checks, with0 material findings. Two exact review originals add62708B; this package now retains62 unique originals/1151738B across two inventories. No scientific or index admission follows. Separate interim Standards and Spec checkpoint reviews are pending.

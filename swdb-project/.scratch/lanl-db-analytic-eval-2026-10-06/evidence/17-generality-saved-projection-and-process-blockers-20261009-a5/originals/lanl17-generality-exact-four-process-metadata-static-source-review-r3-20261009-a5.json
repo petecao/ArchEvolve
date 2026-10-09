@@ -1,0 +1,109 @@
+{
+  "checks": {
+    "alias_permission_failure_retains_link_lstat_if_observed": true,
+    "alias_readlink_permissions_hash_metadata_no_target_follow_body": true,
+    "argv0_bytearray_explicit_bytes_for_os_fsdecode_API": true,
+    "argv0_one_byte_reads_stop_at_first_NUL_no_later_arguments": true,
+    "current_R_F6_ER_H_M2_native514_lease_kernel_FD9_before_after": true,
+    "exact_GNU60_K60_parent_own45_local180": true,
+    "exact_proc_inode_nine_stat_and_start_identity_before_after": true,
+    "filtered_public_comm_Name_state_UID_GID_caps_dumpability_only": true,
+    "four_inverse_replacements_restore_exact_R1": true,
+    "four_inverse_replacements_restore_exact_R2": true,
+    "initial_directory_UID_equals_original_selector_UID_account_before_reads": true,
+    "native_kernel_owner_guard_unchanged": true,
+    "no_additional_PID_selection": true,
+    "no_pid_disappearance_or_reuse_clearance": true,
+    "no_waiver_kill_reap_ptrace_auth_env_maps_provider_body": true,
+    "only_root_or_account_owned_selected_observational_leaves_read": true,
+    "root_owned_stat_status_observations_not_native_no_use_guard_fallback": true
+  },
+  "exact_four_selectors": [
+    {
+      "error_class": "PermissionError",
+      "pid": 359656,
+      "proc_inode": 37081472,
+      "reason_sha256": "b41330758d69c64d53b998a307d178a8c3c44316615b96b2bdda499b5cb4fd40",
+      "state": "unknown",
+      "uid": 114316761
+    },
+    {
+      "error_class": "ValueError",
+      "pid": 2299635,
+      "proc_inode": 66712273,
+      "reason_sha256": "681d4d67d6b333a2d7d1cd56f7f040b3484eeabbe3fe14ef9b42f7f4e80b708d",
+      "state": "unknown",
+      "uid": 114316761
+    },
+    {
+      "error_class": "PermissionError",
+      "pid": 2332693,
+      "proc_inode": 66980537,
+      "reason_sha256": "ec30fdb393a0e837624c79a38a0bfaae00cd0928cc50d70ddd20050d10d4dbb3",
+      "state": "unknown",
+      "uid": 114316761
+    },
+    {
+      "error_class": "ValueError",
+      "pid": 3570805,
+      "proc_inode": 55298043,
+      "reason_sha256": "681d4d67d6b333a2d7d1cd56f7f040b3484eeabbe3fe14ef9b42f7f4e80b708d",
+      "state": "unknown",
+      "uid": 114316761
+    }
+  ],
+  "format": "swdb.lanl17-exact-process-metadata-static-source-review.v1",
+  "inherited_exact_AST_functions": [
+    "need",
+    "tick",
+    "digest",
+    "stamp",
+    "strict",
+    "original",
+    "kernel_bytes",
+    "locks",
+    "daemon",
+    "process_identity",
+    "native_projection",
+    "selected_lease_identity",
+    "daemon_ready",
+    "Parser",
+    "hex64",
+    "run",
+    "current_sources",
+    "root_tool_pin",
+    "native_snapshot",
+    "native_continuity",
+    "metadata_bytes"
+  ],
+  "pins": [
+    {
+      "bytes": 25714,
+      "path": "/private/tmp/lanl17_diagnose_exact_generality_unknown_process_metadata_SOURCE_ONLY_20261009_a5_r3.py",
+      "sha256": "68d8500e9cb8cc254b400571a3af4ad4d21bdb0a0848c70bf1f7409e988977ea"
+    },
+    {
+      "bytes": 3426,
+      "path": "/private/tmp/lanl17-generality-exact-four-process-metadata-r3-complete-r2-derivation-20261009-a5.diff",
+      "sha256": "01cb61f5f5d95b10aeeed29d453e071d022801aceb3e41c0a2b1ea647b9e3016"
+    },
+    {
+      "bytes": 27266,
+      "path": "/private/tmp/lanl17-generality-exact-four-process-metadata-action-SOURCE-ONLY-draft-r3-20261009-a5.json",
+      "sha256": "428753730907027678f020157cd940a4982a601fdf650de669503da34704df73"
+    }
+  ],
+  "prepared_ET": "2026-10-09 01:17 ET",
+  "prepared_utc": "2026-10-09T05:17:22.934867+00:00",
+  "selected_process_original_projection": {
+    "bytes": 53076,
+    "path": "/private/tmp/lanl17-generality-saved-preflight-projection-capture-20261009-a5-a1/projection-original.json",
+    "sha256": "7f426aff57068c13c46d9734fa32807ac33f8c86404739df36b639256f2c4d6f"
+  },
+  "selected_source": {
+    "bytes": 25714,
+    "path": "/private/tmp/lanl17_diagnose_exact_generality_unknown_process_metadata_SOURCE_ONLY_20261009_a5_r3.py",
+    "sha256": "68d8500e9cb8cc254b400571a3af4ad4d21bdb0a0848c70bf1f7409e988977ea"
+  },
+  "source_only_not_run": true
+}

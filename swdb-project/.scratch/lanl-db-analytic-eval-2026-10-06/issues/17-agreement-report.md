@@ -1,7 +1,7 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-09 01:04 ET
+Updated: 2026-10-09 01:24 ET
 **Type:** slice
 **Status:** claimed
 **Work state:** active (explicitly resumed 2026-10-08)
@@ -216,3 +216,12 @@ The corrected R6 preflight completed once at 2026-10-09 01:01 ET. Its exact comp
 Archive writer R5 is source-only and NOTRUN. Root and independent122-check source reviews confirm35 inherited R6 safety guards and17 R4 archive/package guards, full AST equality after formatting compaction, exact one-receipt classification and whole-package2GiB accounting. GNU command size63181B leaves2355B under the unchanged65536B cap. Future approvals remain typed and unsupplied; the actual ineligible result cannot authorize the writer.
 
 [Exact checkpoint supplement](../evidence/17-generality-recovery-source-refusal-and-diagnostic-20261009-a5/r6-actual-and-writer-r5-original-inventory.json) retains21 further originals/565914B alongside117 earlier originals/2064754B. All raw data remains remote. Original FINALIZE/report completed and reviewed; report unsupported/zero eligible pairs/no-switch. Four full indexes/original32/accepted-input assembly/unchanged6a audit/final Standards+Spec review and ticket17 acceptance remain pending. Heartbeat ACTIVE; remotePRIMARY/originR retained through all applicable original guards.
+
+
+## Genuine recovery and index blockers — 2026-10-09 01:24 ET
+
+[Saved projection and process checkpoint](../evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/README.md) retains60 exact originals/1089030B. Actual01:08 ET projection passed root/peer262 checks:107 exact trackedc4 literal mentions plus three observations of two symlinks. These outward references are classified in a typed SOURCE-ONLY R7 plan; original110 observations and R6 ineligibility stay intact. No new preflight, archive or removal is authorized by that plan.
+
+Actual01:19 ET diagnostic passed root/peer138 checks. PID359656 `(sd-pam)` is stateS with unreadable cwd/root/exe aliases; two exact owned zombies (`bash`2299635 and `qs`3570805) have root-owned stat/status leaves. PID2332693's route is absent, identity unknown. The original R6/pre-indexR5 stat-owner checks still refuse the zombies; R6 also cannot establish full no-use through the protected PAM aliases. No UID/PID/name/state exceptions, unrelated process actions, sudo or source guard changes occurred. These are genuine external-state blockers; capacity improvement alone is insufficient.
+
+Fresh01:20 ET floor original295B/be49b23d confirms `/data1` remains569032704B below21GiB; RAM/data pass. The01:19 ET source/native checks retainR/F6/PRIMARYoriginR and released514/550/77/no matching holder/FD9. Dated observations do not authorize future dispatch. Four normals and FINALIZE remain complete; actual report unsupported/zero eligible pairs/no-switch. Full indexes/original32/assembly/unchanged6a/final scientific review/acceptance remain pending. Ticket17 claimed,14/15 resolved, heartbeat ACTIVE. Formal table/agent health01:21 ET; all responsive/no stranded worker; nextby01:51 ET. Local checkpoint3bb800909ef7e34e7e0ec78034332134bacfbf0a pushed and GitHub ref verified; no remote PRIMARY fetch/source sync.
