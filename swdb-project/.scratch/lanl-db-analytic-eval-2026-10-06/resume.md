@@ -1,5 +1,22 @@
 # Continue the analytic evaluator work
 
+2026-10-09 17:17 ET — [Prospective registered SG count binding](evidence/17-prospective-registered-sg-count-binding-20261009/README.md)
+
+The local protected count adapter now derives exact registered SG32/SG64 scopes
+from the scalable BFS v3 whole-kernel call, with fixed source/repetition, immutable
+candidate/input selection and the existing independent compiled correctness check.
+All 48 selected local integration/regression cases passed across three batches;
+four unrelated BC catalog/DX100 snapshot cases were explicitly deselected.
+Standards and Spec findings are fixed and reviewed, including unchanged fixture
+assertions. Counts use no outcome timing as an estimator premise.
+
+Ticket17 remains claimed/all four acceptance boxes unchecked; 14/15 assigned
+agent tickets remain resolved. Next bind counts to the numerical
+target/mechanism/build/runtime composition and separate DX100
+functional-to-MMIO whole-call bridge. No new scientific population or source
+synchronization is selected. Original audit refusal, completed actions and
+histories below remain exact; do not repeat them or reconstruct missing order.
+
 2026-10-09 16:35 ET — [Actual assembly and refused strict audit](evidence/17-actual-input-assembly-and-refused-strict-audit-20261009-a5/README.md)
 
 All four indexes, original32 projections and original ec1fc/SPEC339/de assembly completed once. The assembler actually read and rechecked 219 originals (6,061,356 bytes), including 160 selected records.

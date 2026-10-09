@@ -184,12 +184,13 @@ def _sg_dimensions(path, width):
     return n, m, bool(header[0])
 
 
-def resolve_workload(store, supplied, application):
-    """Registered workload facts and its hash-bound SG input, without materializing it."""
-    from swdb.bfs_protocol import _get, verify_immutable
-    _fail(isinstance(supplied, dict) and set(supplied) == {"id"},
-          f"{EVALUATOR_V2} evaluates registered workloads only ({{id: ...}})")
-    data = _get(store, supplied["id"], "workload")
+def registered_graph_input(data, application):
+    """Select an immutable SG descriptor without opening remote files. 2026-10-09 ET.
+
+    Live resolution and archived count validation use the same selection,
+    adjacency, width and bounds rules. A descriptor alone is not a live check.
+    """
+    from swdb.bfs_protocol import verify_immutable
     verify_immutable(data)
     definition = data["definition"]
     reps = [rep for rep in definition["representations"] if rep.get("format") in SG_FORMATS]
@@ -198,12 +199,34 @@ def resolve_workload(store, supplied, application):
     rep = (own or reps)[0]
     _fail(rep.get("adjacency_verified") is True and rep.get("canonical_sha256") == definition["canonical_sha256"],
           "SG representation has no compatible loaded-adjacency verification")
-    path = Path(rep["path"])
+    realized = definition["realized"]
+    n, m, directed = (realized[name] for name in ("num_vertices", "num_directed_edges", "directed"))
+    _fail(type(n) is int and type(m) is int and type(directed) is bool
+          and 0 < n <= MAX_VERTICES and 0 <= m <= MAX_DIRECTED_EDGES,
+          f"registered graph exceeds the {EVALUATOR_V2} limits ({MAX_VERTICES} vertices, {MAX_DIRECTED_EDGES} directed edges)")
+    width = SG_FORMATS[rep["format"]]
+    size = 1 + 2 * width + ((n + 1) * width + m * 4) * (2 if directed else 1)
+    _fail(size <= MAX_SG_BYTES, f"registered SG file exceeds the {EVALUATOR_V2} 3 GiB limit")
+    _fail(Path(rep["path"]).is_absolute(), "registered SG representation path must be absolute")
+    return {"representation": rep["id"], "path": rep["path"], "sha256": rep["sha256"],
+            "format": rep["format"], "offset_bytes": width, "bytes": size}
+
+
+def resolve_workload(store, supplied, application):
+    """Registered workload facts and its hash-bound SG input, without materializing it."""
+    from swdb.bfs_protocol import _get
+    _fail(isinstance(supplied, dict) and set(supplied) == {"id"},
+          f"{EVALUATOR_V2} evaluates registered workloads only ({{id: ...}})")
+    data = _get(store, supplied["id"], "workload")
+    graph_input = registered_graph_input(data, application)
+    definition = data["definition"]
+    rep = next(rep for rep in definition["representations"] if rep["id"] == graph_input["representation"])
+    path = Path(graph_input["path"])
     _fail(path.is_absolute() and path.is_file() and not path.is_symlink(),
           "registered SG representation must be an absolute regular file")
     size = path.stat().st_size
-    _fail(size <= MAX_SG_BYTES, f"registered SG file exceeds the {EVALUATOR_V2} 3 GiB limit")
-    width = SG_FORMATS[rep["format"]]
+    _fail(size == graph_input["bytes"], "registered SG file size differs from realized dimensions")
+    width = graph_input["offset_bytes"]
     n, m, directed = _sg_dimensions(path, width)
     realized = definition["realized"]
     _fail(n == realized["num_vertices"] and m == realized["num_directed_edges"] and directed == realized["directed"],
@@ -211,8 +234,6 @@ def resolve_workload(store, supplied, application):
     _fail(0 < n <= MAX_VERTICES and 0 <= m <= MAX_DIRECTED_EDGES,
           f"registered graph exceeds the {EVALUATOR_V2} limits ({MAX_VERTICES} vertices, {MAX_DIRECTED_EDGES} directed edges)")
     _fail(artifacts.file_hash(path) == rep["sha256"], "registered SG representation changed since registration")
-    graph_input = {"representation": rep["id"], "path": str(path), "sha256": rep["sha256"],
-                   "format": rep["format"], "offset_bytes": width, "bytes": size}
     workload = {"id": data["id"], "family": definition["family"], "generator": definition["generator"],
                 "representation": {key: rep[key] for key in ("id", "path", "sha256", "format", "application") if key in rep},
                 "normalization": "simple graph: remove self loops and duplicates; symmetrize if undirected; sort neighbors",

@@ -22,6 +22,7 @@ import yaml
 from conftest import REPO
 from testkit.bfs_protocol import _workload_request, _payload, _command, _settings, _sg
 from testkit.toolchain import find_cxx, load_script
+from testkit.native_catalog import seed_native_contract_records
 
 BC_PROGRAM = r'''#!/usr/bin/env python3
 import json, math, os, sys
@@ -58,7 +59,7 @@ def _hash(path):
 
 @pytest.fixture
 def bc_setup(records, tmp_path):
-    records.copy_repo()
+    seed_native_contract_records(records, 'bc')
     runs = tmp_path / "runs"
     created = records.swdb("source-snapshot", "gapbs-bc-brandes", "--runs-dir", runs,
                            "--id", "test-bc-source", "--format", "json")

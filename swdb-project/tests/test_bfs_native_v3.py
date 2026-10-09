@@ -20,6 +20,7 @@ import pytest
 
 from conftest import REPO, make_records
 from testkit.proposals import build_proposal_setup
+from testkit.native_catalog import seed_native_contract_records
 from testkit.bfs_native import build_evaluation_setup
 from testkit.bfs_native_scalable import COMPILER, FIXTURE_CANDIDATE, PROGRAM_V2, _bfs, _graphs, _rows
 from testkit.bfs_protocol import _command, _payload, _settings, _sg, _workload_request
@@ -189,7 +190,8 @@ def v3_seed(tmp_path_factory):
     assert PROGRAM_V3 != PROGRAM_V2 and "parents_saturated" in PROGRAM_V3
     tmp = tmp_path_factory.mktemp("v3-seed")
     records = make_records(tmp)
-    setup = build_evaluation_setup(build_proposal_setup(records, tmp), tmp)
+    seed_native_contract_records(records)
+    setup = build_evaluation_setup(build_proposal_setup(records, tmp, copy_all=False), tmp)
     _, runs, _, base = setup
     compiler = Path(base["build"]["compiler"])
     compiler.write_text("#!/usr/bin/env python3\nimport sys\nfrom pathlib import Path\n"

@@ -1,5 +1,15 @@
-"""Existing CPU timing keeps its outcome beside explicit analytic state. Created: 2026-10-06 ET."""
-from testkit.bfs_native import evaluate
+"""CPU outcome beside explicit analytic state; isolated catalog. 2026-10-09 ET."""
+import pytest
+
+from testkit.bfs_native import build_evaluation_setup, evaluate
+from testkit.native_catalog import seed_native_contract_records
+from testkit.proposals import build_proposal_setup
+
+
+@pytest.fixture
+def evaluation_setup(records, tmp_path):
+    seed_native_contract_records(records)
+    return build_evaluation_setup(build_proposal_setup(records, tmp_path, copy_all=False), tmp_path)
 
 
 def test_cpu_evaluation_adds_unavailable_estimate_without_changing_fixture_timing(evaluation_setup):

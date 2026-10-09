@@ -1,7 +1,7 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-09 15:59 ET
+Updated: 2026-10-09 17:17 ET
 **Type:** slice
 **Status:** claimed
 **Work state:** active (explicitly resumed 2026-10-08)
@@ -10,6 +10,23 @@ Updated: 2026-10-09 15:59 ET
 **Time estimate:** 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs)
 
 **What to build:** After the flow-A campaigns: rank agreement between estimate and timing, whether gem5's best candidate survives a top-3 cut by estimate, and where estimates go wrong. The rule fixed in D30 is applied as written. A research variant of the estimator may be calibrated with these pairs, versioned separately (D10).
+
+2026-10-09 17:17 ET — [Prospective registered SG count binding](../evidence/17-prospective-registered-sg-count-binding-20261009/README.md)
+
+The local protected count adapter now derives exact registered SG32/SG64 scopes
+from the scalable BFS v3 whole-kernel call, with fixed source/repetition, immutable
+candidate/input selection and the existing independent compiled correctness check.
+All 48 selected local integration/regression cases passed across three batches;
+four unrelated BC catalog/DX100 snapshot cases were explicitly deselected.
+Standards and Spec findings are fixed and reviewed, including unchanged fixture
+assertions. Counts use no outcome timing as an estimator premise.
+
+Ticket17 remains claimed/all four acceptance boxes unchecked; 14/15 assigned
+agent tickets remain resolved. Next bind counts to the numerical
+target/mechanism/build/runtime composition and separate DX100
+functional-to-MMIO whole-call bridge. No new scientific population or source
+synchronization is selected. Original audit refusal, completed actions and
+histories below remain exact; do not repeat them or reconstruct missing order.
 
 2026-10-09 16:35 ET — [Actual assembly and refused strict audit](../evidence/17-actual-input-assembly-and-refused-strict-audit-20261009-a5/README.md)
 

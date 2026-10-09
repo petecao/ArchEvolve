@@ -1,4 +1,4 @@
-"""Prospective source-slot estimates beside native timing. Updated 2026-10-07 ET.
+"""Prospective source-slot estimates beside native timing. Updated 2026-10-09 ET.
 
 The native timer and correctness selector are unchanged. Admission is completed
 before the first native invocation. Original advancing-driver error bands do not
@@ -59,6 +59,8 @@ def validate_record(record, ctx):
         graph=native['workload']
         if graph['canonical_sha256']!=context['canonical_graph_sha256'] or any(graph[name]!=value for name,value in context['canonical_graph'].items()):
             raise Failure('paired actual evaluator graph differs')
+        if context.get('format')=='swdb.protected-cpu-sg-scope.v1' and (graph.get('graph_input')!=context.get('graph_input') or native.get('evaluator')!=context.get('evaluator')):
+            raise Failure('paired actual evaluator SG representation differs')
         expected={(r,p,s) for r in range(context['repetitions']) for p,s in enumerate(context['sources'])}
         observed=set();values=[];all_missing=set()
         for slot in pair['slots']:
@@ -172,7 +174,7 @@ def prepare(store,evaluation,request,context,binary):
             for rec in store.of_kind('estimate'):
                 estimate=rec.data;char=store.get(estimate['characterization'],'workload_characterization')
                 identity=(char or {}).get('binding',{}).get('subject_source_identity',{})
-                if identity.get('adapter')!=analytic_cpu_binding.ADAPTER or identity.get('evaluation_scope_sha256')!=artifacts.digest(context):continue
+                if identity.get('adapter') not in analytic_cpu_binding.ADAPTERS or identity.get('evaluation_scope_sha256')!=artifacts.digest(context):continue
                 slot=identity.get('slot',{});key=(slot.get('repetition'),slot.get('source_position'))
                 if key in selected:raise Failure('multiple persisted matched estimates require an explicit prospective selection')
                 selected[key]=rec.id

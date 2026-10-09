@@ -1,4 +1,4 @@
-"""Registered source/input/ROI binding for GAPBS. Updated: 2026-10-06 ET.
+"""Registered source/input/ROI binding for GAPBS. Updated: 2026-10-09 ET.
 
 An arbitrary translation unit can still be counted, but never gains this adapter's
 binding by naming an implementation. Source/evaluator files are read, never edited.
@@ -164,7 +164,7 @@ def _verify_binding(record,store,require_available=False):
     New executions also verify the available registered source tree and raw counts.
     """
     problems=[];binding=record.get('binding',{});identity=binding.get('subject_source_identity',{})
-    if identity.get('adapter')=='registered-cpu.v1':
+    if identity.get('adapter') in ('registered-cpu.v1','registered-cpu-sg.v1'):
         from swdb.analytic_cpu_binding import verify
         return verify(record,store,require_available)
     if identity.get('adapter')=='registered-functional.v1':

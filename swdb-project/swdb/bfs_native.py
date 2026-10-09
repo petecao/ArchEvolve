@@ -10,6 +10,8 @@ independent result check come from the candidate kernel's plug-in
 including every v1 protocol and record, keeps this module's v1 behavior.
 2026-10-04 ET (ticket 71): ``swdb.native.evaluator.scalable.v3`` takes the same path with
 the v3 driver (saturating parent narrowing) and one retained copy per distinct parent vector.
+2026-10-09 ET: scalable v3 also binds prospective count-only SG source-slot scopes;
+elapsed-time uncertainty and Extensa numeric admission remain unchanged.
 """
 
 import copy
@@ -756,8 +758,8 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
                                          "binary_sha256": artifacts.file_hash(verifier_binary)}
         session.begin('analytic_pairing')
         from swdb import analytic_cpu_binding, cpu_pairing
-        if not v2:
-            prospective_context=analytic_cpu_binding.scope(store,request,candidate,plugin,compiler,flags,includes,source,workload,env)
+        if not v2 or evaluator == scalable.EVALUATOR_V3:
+            prospective_context=analytic_cpu_binding.scope(store,request,candidate,plugin,compiler,flags,includes,source,workload,env,driver=driver_template)
             data['context']['analytic_evaluator_scope']=prospective_context
             data['paired_estimate']=cpu_pairing.prepare(store,data,request,prospective_context,binary)
         else:
