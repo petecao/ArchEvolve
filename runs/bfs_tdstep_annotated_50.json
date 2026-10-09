@@ -1,0 +1,224 @@
+{
+  "command": "/home/petepc/DX100/benchmarks/gapbs/bfs_func -g 18 -k 16 -n 50 -r 0",
+  "target_symbol": "TDStep",
+  "sample_threshold_pct": 0.1,
+  "pmu_profile": {
+    "raw_counters": {
+      "cycles": 120387619255,
+      "instructions": 22551577247,
+      "branches": 4857209071,
+      "branch-misses": 126502358,
+      "L1-dcache-loads": 4718552256,
+      "L1-dcache-load-misses": 484801187,
+      "LLC-loads": 173402349,
+      "LLC-load-misses": 29504264
+    },
+    "counter_status": {
+      "cycles": "counted",
+      "instructions": "counted",
+      "branches": "counted",
+      "branch-misses": "counted",
+      "L1-dcache-loads": "counted",
+      "L1-dcache-load-misses": "counted",
+      "LLC-loads": "counted",
+      "LLC-load-misses": "counted"
+    },
+    "derived_metrics": {
+      "ipc": 0.1873,
+      "branch_miss_rate_pct": 2.6044,
+      "l1_dcache_miss_rate_pct": 10.2744,
+      "llc_miss_rate_pct": 17.0149
+    }
+  },
+  "annotated_hotspots": [
+    {
+      "sample_pct": 59.85,
+      "address": "0x57b7",
+      "instruction": "mov    (%rdx),%eax",
+      "instruction_form": "MEMORY_LOAD",
+      "bottleneck_type": "INDIRECT_LOAD_MISS",
+      "symbol": null,
+      "source_context": ": 111  NodeID curr_val = parent[v];"
+    },
+    {
+      "sample_pct": 15.88,
+      "address": "0x57bd",
+      "instruction": "lock cmpxchg %r14d,(%rdx)",
+      "instruction_form": "ATOMIC_CAS",
+      "bottleneck_type": "ATOMIC_CAS_CONTENTION",
+      "symbol": null,
+      "source_context": ": 113  if (curr_val < 0) {"
+    },
+    {
+      "sample_pct": 6.87,
+      "address": "0x57a4",
+      "instruction": "movslq (%rax,%rbp,1),%rsi",
+      "instruction_form": "MEMORY_LOAD",
+      "bottleneck_type": "INDIRECT_LOAD_MISS",
+      "symbol": null,
+      "source_context": ": 82   for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {"
+    },
+    {
+      "sample_pct": 5.07,
+      "address": "0x5758",
+      "instruction": "movslq (%r9,%rdx,4),%rbp",
+      "instruction_form": "MEMORY_LOAD",
+      "bottleneck_type": "INDIRECT_LOAD_MISS",
+      "symbol": null,
+      "source_context": ": 82   for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {"
+    },
+    {
+      "sample_pct": 3.96,
+      "address": "0x579c",
+      "instruction": "mov    (%r12),%rax",
+      "instruction_form": "MEMORY_LOAD",
+      "bottleneck_type": "INDIRECT_LOAD_MISS",
+      "symbol": null,
+      "source_context": ": 82   for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {"
+    },
+    {
+      "sample_pct": 1.97,
+      "address": "0x57bb",
+      "instruction": "jns    5790 <TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&, int, int) [clone ._omp_fn.0]+0xe0>",
+      "instruction_form": "CONDITIONAL_BRANCH",
+      "bottleneck_type": "BRANCH_DIVERGENCE",
+      "symbol": null,
+      "source_context": ": 113  if (curr_val < 0) {"
+    },
+    {
+      "sample_pct": 1.76,
+      "address": "0x57ad",
+      "instruction": "mov    (%rax),%rax",
+      "instruction_form": "MEMORY_LOAD",
+      "bottleneck_type": "INDIRECT_LOAD_MISS",
+      "symbol": null,
+      "source_context": ": 82   for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {"
+    },
+    {
+      "sample_pct": 1.18,
+      "address": "0x57c4",
+      "instruction": "mov    0x10(%r12),%rax",
+      "instruction_form": "MEMORY_LOAD",
+      "bottleneck_type": "INDIRECT_LOAD_MISS",
+      "symbol": null,
+      "source_context": ": 125  if (compare_and_swap(parent[v], curr_val, u)) {"
+    },
+    {
+      "sample_pct": 0.56,
+      "address": "0x57a8",
+      "instruction": "mov    0x10(%r12),%rax",
+      "instruction_form": "MEMORY_LOAD",
+      "bottleneck_type": "INDIRECT_LOAD_MISS",
+      "symbol": null,
+      "source_context": ": 82   for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {"
+    },
+    {
+      "sample_pct": 0.29,
+      "address": "0x5764",
+      "instruction": "mov    0x4(%r9,%rax,1),%r10d",
+      "instruction_form": "MEMORY_LOAD",
+      "bottleneck_type": "INDIRECT_LOAD_MISS",
+      "symbol": null,
+      "source_context": ": 82   for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {"
+    },
+    {
+      "sample_pct": 0.29,
+      "address": "0x580c",
+      "instruction": "mov    0x18(%r12),%r13",
+      "instruction_form": "MEMORY_LOAD",
+      "bottleneck_type": "INDIRECT_LOAD_MISS",
+      "symbol": null,
+      "source_context": ": 139  for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {"
+    },
+    {
+      "sample_pct": 0.26,
+      "address": "0x56d8",
+      "instruction": "mov    0x18(%r12),%r13",
+      "instruction_form": "MEMORY_LOAD",
+      "bottleneck_type": "INDIRECT_LOAD_MISS",
+      "symbol": null,
+      "source_context": ": 34   for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {"
+    },
+    {
+      "sample_pct": 0.24,
+      "address": "0x56c5",
+      "instruction": "mov    0x18(%rdi),%rax",
+      "instruction_form": "MEMORY_LOAD",
+      "bottleneck_type": "INDIRECT_LOAD_MISS",
+      "symbol": null,
+      "source_context": ": 10   #endif"
+    },
+    {
+      "sample_pct": 0.21,
+      "address": "0x573d",
+      "instruction": "mov    0x8(%r12),%rax",
+      "instruction_form": "MEMORY_LOAD",
+      "bottleneck_type": "INDIRECT_LOAD_MISS",
+      "symbol": null,
+      "source_context": ": 34   for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {"
+    },
+    {
+      "sample_pct": 0.19,
+      "address": "0x5790",
+      "instruction": "add    $0x1,%ebx",
+      "instruction_form": "COMPUTE",
+      "bottleneck_type": "COMPUTE_OR_PIPELINE",
+      "symbol": null,
+      "source_context": ": 82   for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {"
+    },
+    {
+      "sample_pct": 0.15,
+      "address": "0x57a0",
+      "instruction": "mov    0x20(%rax),%rax",
+      "instruction_form": "MEMORY_LOAD",
+      "bottleneck_type": "INDIRECT_LOAD_MISS",
+      "symbol": null,
+      "source_context": ": 82   for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {"
+    },
+    {
+      "sample_pct": 0.15,
+      "address": "0x57b3",
+      "instruction": "lea    (%rax,%rsi,4),%rdx",
+      "instruction_form": "COMPUTE",
+      "bottleneck_type": "COMPUTE_OR_PIPELINE",
+      "symbol": null,
+      "source_context": ": 82   for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {"
+    },
+    {
+      "sample_pct": 0.14,
+      "address": "0x5754",
+      "instruction": "movslq (%rax,%rcx,4),%rdx",
+      "instruction_form": "MEMORY_LOAD",
+      "bottleneck_type": "INDIRECT_LOAD_MISS",
+      "symbol": null,
+      "source_context": ": 34   for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {"
+    },
+    {
+      "sample_pct": 0.14,
+      "address": "0x5825",
+      "instruction": "lock addq $0x0,0x8(%rax)",
+      "instruction_form": "ATOMIC_RMW",
+      "bottleneck_type": "ATOMIC_BUS_LOCK",
+      "symbol": null,
+      "source_context": ": 139  for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {"
+    },
+    {
+      "sample_pct": 0.1,
+      "address": "0x5797",
+      "instruction": "cmp    %r10d,%ebx",
+      "instruction_form": "COMPUTE",
+      "bottleneck_type": "COMPUTE_OR_PIPELINE",
+      "symbol": null,
+      "source_context": ": 82   for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {"
+    },
+    {
+      "sample_pct": 0.1,
+      "address": "0x57b9",
+      "instruction": "test   %eax,%eax",
+      "instruction_form": "COMPUTE",
+      "bottleneck_type": "COMPUTE_OR_PIPELINE",
+      "symbol": null,
+      "source_context": ": 113  if (curr_val < 0) {"
+    }
+  ]
+}

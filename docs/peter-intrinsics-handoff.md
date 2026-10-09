@@ -1,10 +1,14 @@
 # BFS intrinsic handoff — Eric's hardware evidence catalog
 
-## October 8: next feature handoff
+## October 9: Peter's feature handoff supplement (sparse & dense)
 
-The [feature-interface audit](audits/peter-features-20261008/README.md) identifies what the hybrid/evaluator needs beyond v1.2: scoped baseline cost with source/IR bindings, run-bound per-level work counts, and collection provenance. It reuses the existing statement mapping and separates optional locality/working-set refinements from the minimal request. Helper findings are included; no profiling data or tool code was changed.
+In response to the [feature audit](audits/peter-features-20261008/README.md), Peter provided the complete quantitative accounting handoff in [peter-handoff-supplement-20261009.md](audits/peter-features-20261008/peter-handoff-supplement-20261009.md), supported by:
+- [Sparse Kronecker 18 Supplement](audits/peter-features-20261008/feature-supplement.v1.2.yaml): Discrete cycle share across 7 statement IDs (line 241 split: 5.36% MAPLE bounds vs 0.29% DX100 index control), single-traversal 7-level work table ($F_\ell, E_\ell, \Delta_\ell$), and Xeon Gold 6226R provenance.
+- [Dense Complete Clique $K_{25k}$ Supplement](audits/peter-features-20261008/feature-supplement-dense.v1.2.yaml): 2-level traversal work table ($N=25\text{k}, 624.98\text{M}$ directed edges), 0% CAS overhead, streaming loads (44.80% neighbor + 38.45% parent), and 55.80% hybrid acceleration window.
+- Raw disassembly sampling profile: [`runs/bfs_tdstep_annotated_50.json`](../runs/bfs_tdstep_annotated_50.json).
 
 ## October 8: BFS hybrid thought experiment
+
 
 The [annotated MAPLE/DX100 BFS sketch](designs/bfs-maple-dx100-hybrid/README.md) is the concrete point design requested in the October 8 meeting. Its invented sketch intrinsics partition row-bound fetching, CPU staging, neighbor fetching and CPU discovery, with per-worker ownership, finite queue admission, range continuation and final drain. It is a separate proposal for review, not an executable replacement or a change to existing typed-library pins.
 

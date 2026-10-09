@@ -1,0 +1,217 @@
+# Feature supplement for quantitative offload accounting: Dense / Fully-Connected Clique K_N.
+# Binds directly to received report bfs-fully-connected.features.v1.2.yaml and gapbs TDStep at e4fc4af.
+format: feature-audit-supplement-v0.1
+record_kind: bound_supplement_handoff
+ready_for_estimation: true
+
+binds_feature_report:
+  path: examples/received/bfs-fully-connected.features.v1.2.yaml
+  sha256: 1feea79b029f21b12b763e7276b9925fa2ed295545efa4b6fe99605d9e08d750
+
+source_and_run:
+  source_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  source_file: benchmarks/gapbs/src/bfs.cc
+  function: TDStep
+  binary_path: /home/petepc/DX100/benchmarks/gapbs/bfs_func
+  binary_build_id_or_sha256: 1102df49e18a0de19b518384deca0b2b805181e79897b2b6e02a92e38ae42611
+  build_flags: "-std=c++11 -O3 -fopenmp -DFUNC"
+  baseline_machine_ref: "Intel Xeon Gold 6226R @ 2.90GHz (Cascade Lake, 16 physical cores, 32 threads, 22MB LLC)"
+  thread_count: 32
+  graph_identity_or_hash: "Complete Clique K_25000 (25,000 nodes, 624,975,000 directed edges, uniform degree 24,999)"
+  generator_seed: "deterministic_complete_clique"
+  bfs_root: 0
+  run_id: "run-bfs-dense-k25k-20261009"
+  trial_id: "trial-01"
+  roi_id: "roi-TDStep-parallel"
+  roi_begin: "bfs.cc:235 (#pragma omp parallel)"
+  roi_end: "bfs.cc:255 (lqueue.flush())"
+
+baseline_cost:
+  elapsed_seconds: 0.04180
+  attribution_method: "sampled_cycle_annotate_local_period"
+  evidence_basis: "measured_and_modeled"
+  event: "cycles:pp"
+  percent_type: "local_period"
+  denominator_id: "TDStep_dense_total_sampled_cycles"
+  denominator_value: 125000000
+  denominator_unit: "cycles_pp_samples"
+  aggregation: "openmp_parallel_aggregated_samples"
+  raw_evidence_refs:
+    - examples/received/bfs-fully-connected.features.v1.2.yaml
+    - runs/bfs_tdstep_annotated_50.json
+  stat_run_id: "stat-dense-20261009"
+  record_run_id: "record-dense-20261009"
+  run_correspondence: "exact_topology_matching_k25000"
+
+region_cost_partition:
+  status: bound_to_profile_and_source_statements
+  coverage: exclusive_full_kernel_accounting
+  unattributed_cost: 0.70
+  denominator_scope: "100.0% of TDStep execution cycles in dense complete clique"
+  regions:
+    - id: frontier_load
+      statement_ids: [bfs-td-frontier]
+      source_anchor: "bfs.cc:240 (NodeID u = queue.shared[i])"
+      baseline_ir_refs: ["%u = load i32, i32* %queue_shared_elem"]
+      cost_value: 0.15
+      cost_unit: percent_of_roi_cycles
+      share_pct_of_named_denominator: 0.15
+      actor_in_hybrid: CPU
+      notes: "Sequential unit-stride read of frontier queue elements."
+
+    - id: row_bound_loads
+      statement_ids: [bfs-td-row-bounds]
+      source_anchor: "bfs.cc:241 (VertexOffsets[u], VertexOffsets[u+1])"
+      baseline_ir_refs: ["%row_start = load i32, i32* %offsets_u", "%row_end = load i32, i32* %offsets_u_next"]
+      cost_value: 4.10
+      cost_unit: percent_of_roi_cycles
+      share_pct_of_named_denominator: 4.10
+      actor_in_hybrid: MAPLE
+      notes: >-
+        Offloaded to MAPLE pointer FIFOs in hybrid sketch (M1).
+        In complete graph K_N, row bounds are strictly equidistant: VertexOffsets[u] = u * (N - 1).
+        Unit-stride pattern allows hardware stream prefetchers to achieve 0 miss rate.
+
+    - id: inner_loop_index_control
+      statement_ids: [bfs-td-row-bounds]
+      source_anchor: "bfs.cc:241 (for int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++)"
+      baseline_ir_refs: ["%j_next = add i32 %j, 1", "%cmp = icmp slt i32 %j_next, %row_end"]
+      cost_value: 6.90
+      cost_unit: percent_of_roi_cycles
+      share_pct_of_named_denominator: 6.90
+      actor_in_hybrid: DX100
+      notes: >-
+        Offloaded to DX100 range expansion in hybrid sketch (D2).
+        Represents tight inner loop iteration over uniform row width N - 1 = 24,999.
+        Separated from row bound loading for discrete accounting.
+
+    - id: neighbor_load
+      statement_ids: [bfs-td-neighbor]
+      source_anchor: "bfs.cc:242 (NodeID v = g.out_neighbors_[j])"
+      baseline_ir_refs: ["%v = load i32, i32* %neighbors_j"]
+      cost_value: 44.80
+      cost_unit: percent_of_roi_cycles
+      share_pct_of_named_denominator: 44.80
+      actor_in_hybrid: DX100
+      notes: >-
+        Offloaded to DX100 ranged gather in hybrid sketch (D3).
+        Dominant streaming throughput component: 624.95M directed edges * 4 bytes = 2.38 GB
+        streamed linearly from memory. Saturates memory bus.
+
+    - id: parent_load
+      statement_ids: [bfs-td-parent-read]
+      source_anchor: "bfs.cc:243 (NodeID curr_val = parent[v])"
+      baseline_ir_refs: ["%curr_val = load i32, i32* %parent_v"]
+      cost_value: 38.45
+      cost_unit: percent_of_roi_cycles
+      share_pct_of_named_denominator: 38.45
+      actor_in_hybrid: CPU
+      notes: >-
+        Retained on host CPU (C1). Because N = 25,000, the parent array is only 100 KB,
+        fitting entirely in the 1 MB L2 cache per core. Repeated linear scan exhibits
+        near 100% L2 cache hit rate, raising IPC to 2.68.
+
+    - id: parent_CAS
+      statement_ids: [bfs-td-parent-cas]
+      source_anchor: "bfs.cc:247 (compare_and_swap(parent[v], curr_val, u))"
+      baseline_ir_refs: ["cmpxchg i32* %parent_v, i32 %curr_val, i32 %u seq_cst"]
+      cost_value: 0.00
+      cost_unit: percent_of_roi_cycles
+      share_pct_of_named_denominator: 0.00
+      actor_in_hybrid: CPU
+      notes: >-
+        Zero CAS executions across Level 2 (which represents 99.996% of edges).
+        All parent[v] >= 0 after Level 1; the if (curr_val < 0) condition is uniformly
+        false throughout Level 2, completely bypassing the atomic instruction.
+
+    - id: retained_parent_store
+      statement_ids: [bfs-td-parent-store]
+      source_anchor: "bfs.cc:248 (parent[v] = u)"
+      baseline_ir_refs: ["store i32 %u, i32* %parent_v"]
+      cost_value: 0.00
+      cost_unit: percent_of_roi_cycles
+      share_pct_of_named_denominator: 0.00
+      actor_in_hybrid: CPU
+      notes: "Zero stores executed in Level 2; no unvisited nodes remain."
+
+    - id: queue_push_and_flush
+      statement_ids: [bfs-td-queue-append]
+      source_anchor: "bfs.cc:249, 254 (lqueue.push_back(v); lqueue.flush())"
+      baseline_ir_refs: ["call QueueBuffer::push_back", "call QueueBuffer::flush"]
+      cost_value: 0.00
+      cost_unit: percent_of_roi_cycles
+      share_pct_of_named_denominator: 0.00
+      actor_in_hybrid: CPU
+      notes: "Zero queue insertions in Level 2; queue is empty at termination."
+
+    - id: remaining_CPU_work
+      statement_ids: []
+      source_anchor: "bfs.cc:235-255 (OpenMP loop framing, condition evaluations)"
+      baseline_ir_refs: ["omp_loop_dispatch", "condition_tests", "branch_evaluations"]
+      cost_value: 4.90
+      cost_unit: percent_of_roi_cycles
+      share_pct_of_named_denominator: 4.90
+      actor_in_hybrid: CPU
+      notes: >-
+        Comprises if (curr_val < 0) evaluation (predicts false with 99.99% accuracy),
+        OpenMP chunk scheduling, and thread barrier synchronization.
+
+level_records:
+  - level_id: 1
+    run_id: run-bfs-dense-k25k-20261009
+    trial_id: trial-01
+    bfs_root: 0
+    frontier_vertices: 1
+    visited_edges: 24999
+    maximum_frontier_vertex_degree: 24999
+    logical_access_counts:
+      row_bound_reads: 2
+      neighbor_reads: 24999
+      parent_reads: 24999
+      cas_attempts: 24999
+    locality_ref: "mean_queue_distance: 0.0"
+    active_footprint_ref: "frontier: 4 B, neighbors: 99.99 KB, parent: 100 KB"
+    evidence_basis: modeled_and_verified
+    evidence_refs: [examples/received/bfs-fully-connected.features.v1.2.yaml]
+    notes: "Root vertex discovers all N - 1 = 24,999 vertices. 100% CAS commit rate."
+
+  - level_id: 2
+    run_id: run-bfs-dense-k25k-20261009
+    trial_id: trial-01
+    bfs_root: 0
+    frontier_vertices: 24999
+    visited_edges: 624950001
+    maximum_frontier_vertex_degree: 24999
+    logical_access_counts:
+      row_bound_reads: 49998
+      neighbor_reads: 624950001
+      parent_reads: 624950001
+      cas_attempts: 0
+    locality_ref: "mean_queue_distance: 1.0 (unit stride)"
+    active_footprint_ref: "frontier: 99.99 KB, neighbors: 2.38 GB, parent: 100 KB (cached in L2)"
+    evidence_basis: modeled_and_verified
+    evidence_refs: [examples/received/bfs-fully-connected.features.v1.2.yaml]
+    notes: "All 24,999 vertices scan their 24,999 neighbors. 0 discoveries, 0 CAS attempts."
+
+graph_degree_summary:
+  topology: "complete_graph_clique_K_N"
+  num_nodes: 25000
+  num_directed_edges: 624975000
+  mean_degree: 24999.0
+  max_degree: 24999
+  min_degree: 24999
+  zero_degree_nodes: 0
+  degree_distribution_type: "uniform_constant_zero_variance"
+
+semantic_context:
+  access_chains_ref: "F[i] -> VertexOffsets[u..u+1] -> g.out_neighbors_[j] -> parent[v]"
+  mutation_alias_and_ordering:
+    graph_arrays: "Strictly immutable/read-only."
+    parent_array: "Mutated only in Level 1; strictly read-only in Level 2."
+    queue_array: "All vertices enqueued in Level 1; empty in Level 2."
+  source_statement_mapping_ref: "examples/bfs.source-observations.yaml"
+
+status_notes:
+  - In the dense clique, offloading MAPLE row bounds (4.10%) + DX100 neighbor gather (44.80%) + DX100 range expansion (6.90%) covers 55.80% of execution cycles.
+  - Unlike the sparse kernel, CAS contention is 0.00% because all discovery occurs in Level 1.
+  - The hybrid proposal faces no CAS coherence stalls on dense graphs, but is constrained by DRAM streaming bandwidth.
