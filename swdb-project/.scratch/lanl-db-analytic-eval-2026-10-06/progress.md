@@ -1,6 +1,6 @@
 # Implementation progress
 
-Updated: 2026-10-08 23:09 ET
+Updated: 2026-10-08 23:40 ET
 
 **Current state: ACTIVE after Yan-Ru's explicit resumption; 14/15 assigned tickets resolved; ticket16 review finding addressed.**
 Ticket 17 remains `claimed`, with acceptance pending. Start from [resume.md](resume.md).
@@ -32,7 +32,7 @@ writing-preference rule is committed as `cb6f75ae`. Evaluation state is unchange
 | Ticket 14 generality | Resolved; nine pairs/45 trials, seven unknown totals | Preserve original receipts and qualified unknowns |
 | Corrected storage DEFAULT a3 | Actual original receipt reviewed; guard exit 0 | Limited inspection only; do not repeat |
 | Storage RETIRE a4 / actual a5 | Original successful sixteen-row receipt reviewed and retained | Do not repeat retirement or DEFAULT |
-| Ticket 17 science | PREPARE/FIRST and all four normal custody chains passed | At22:59ET P1–P3 validation/export0; P4 validation0/export active; original terminal/report/index/audit pending |
+| Ticket 17 science | PREPARE/FIRST and all four normal custody chains passed | At23:29ET all four validation/export0; agreement report active; original completion/index/audit pending |
 | Review and completion | First Standards + Spec implementation pass completed | Address findings, verify integration, final evidence review/ticket closure |
 
 The following paragraphs retain pause-era observations; the current active state is above.
@@ -523,3 +523,8 @@ Checkpoint63cce85969b72462865ec51fce185dc3f19b9523 was pushed and independently 
 Selected frozen-source mutation reviewR1 13960B/5a5d8681 and root1185B/676dcf24 bind18 frozenR Gitblobs and exactH28: no intended writes to CID YAML/YML/summary/state/history; export/report mutate the separate base/team store and sibling receipts, with process-local read caches. Source review does not establish actual historical no-write/exclusivity/quiescence. Full eligible-byte/file-set continuity, library/config bindings, actual exclusive ownership and fresh source/native/consumer proofs remain mandatory. Earlier source note retained unchanged; no guard relaxed. [Fresh PRIMARY check](evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/primary-source-2307-inventory.json) retains6originals/8578B: actual23:07:39ET original470B/0a362ced has PRIMARY HEAD/originR, S cleanR and only original retentionlock untracked. Capture folderlabel2309 is not its actual timestamp.
 
 All11inventories now cover192 unique originals/2784617B, every archive/private size/hash rootverified before Git staging. Allthreeagents completed responsive source/evidence reviews, no strandedworker. Evaluation table and health checked at2026-10-08 23:09 ET; next by23:39 ET.14/15assigned resolved;17claimed/allacceptanceunchecked, final report/fullindexes/original projections/actualunchanged6a audit/finalStandards+Spec/fixes/ticket+Git synchronization pending. HeartbeatACTIVE and sourcePRIMARY/originR frozen through every applicable original guard; raw remainsremote. Current negative scientific gates and no numerical/D30admission unchanged.
+
+
+2026-10-08 23:40 ET — [All-four exports and agreement-report checkpoint](evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/live-2329-agreement-report-inventory.json) preserves seven further exact originals/116996B. Actual23:29:00ET R3 original26949B/SHA7e018ff78adc9fb91be14fc38325c75321353e8fbd1708f13eca76281f59cee3 and independent10832B/SHA6f41a1c4abcc982b3a76bdab7a031db8522b53e1b7008f8ab9fb3a000b465764 confirm all four full validation/export exits0. Public agreement-report argv and streams are open, exit absent; owned reportPID2318455/start601766652/inode66914447 is directly projected beneath the unchanged original H28/fa. No CPU comparison across changed exporter/report identities. Report body/statistics remain unread and unadmitted; final base validation, final-export and supervisor completion receipts remain absent. Six process stat unknowns persist; dated sourceS cleanR and nativeleases released514/550/77/no matching kernelholder/FD9 do not establish quiescence or future clearance.
+
+All12 inventories cover199 unique exact originals/2901613B, normalized archive paths count the shared7777B plan once; private/archive bytes and hashes verified. Original parent67593 still running at23:39ET. Formal status table delivered23:39ET; agent-health check confirms all three scoped agents completed responsive reviews, no stranded worker. Next required table/health by2026-10-09 00:09 ET.14/15 assigned tickets resolved; ticket17 claimed/all acceptance unchecked. Genuine original FINALIZE completion/cleanup, four full indexes/original projections/body closure, actual unchanged6a strict audit and final Standards+Spec review/fixes/ticket+Git sync remain required. Heartbeat ACTIVE; remotePRIMARY/origin stayR through every applicable original guard. No repeated dispatch/custody/control/scientific mutation, numerical/D30 admission or history repair.
