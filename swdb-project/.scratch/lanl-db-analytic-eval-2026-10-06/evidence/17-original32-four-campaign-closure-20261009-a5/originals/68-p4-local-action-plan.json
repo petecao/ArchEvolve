@@ -1,0 +1,56 @@
+{
+  "format": "swdb.lanl17-original32-unexecuted-request-plan.v1",
+  "state": "authored_for_exact_parent_review_not_run",
+  "campaign": "extensa-gem5-bfs-20261006-p4",
+  "author_sha256": "3240f0405b8e2c7fd3038c14f0dd699fe82cb4fc82271d252b2658677c0c52ae",
+  "input_sha256": "10d516d1b2908b94f14ce6e2bb89f473a81944ca7d6227e9c1c6730d9455878d",
+  "parent_review_sha256": "28f21052ba392e5e6ad3bfbf62a7fe85f988fadc114f42367136d4e32f9c7a74",
+  "request_pins": {
+    "trajectory": {
+      "path": "/private/tmp/lanl17-original32-local-author-parent-20261009-a5-a1/p4-authored-requests-a1/trajectory-request.json",
+      "bytes": 9475,
+      "sha256": "07fa8ba661c942547be884634b09ff56f4a3f3d78e157bdabf9e84d980f83193",
+      "identity_sha256": "cc84a9605b980e1e3befb924e3e1c3d30431aff3a7654a0030bcbf244447a612",
+      "canonical_ensure_ascii": true,
+      "remote_request_path": "/data1/yanruj/lanl17-p4-original32-trajectory-request-20261009-a5-a1.json"
+    },
+    "candidate_selection": {
+      "path": "/private/tmp/lanl17-original32-local-author-parent-20261009-a5-a1/p4-authored-requests-a1/candidate_selection-request.json",
+      "bytes": 5496,
+      "sha256": "87749dfa943ea823054a8481889d022937cf810f3cd6b143612f489adccf349d",
+      "identity_sha256": "b84a1adf7b575c808331e331913793d36cd22a8d7c0da7eefcd2d5bae00dfa35",
+      "canonical_ensure_ascii": true,
+      "remote_request_path": "/data1/yanruj/lanl17-p4-original32-candidate-selection-request-20261009-a5-a1.json"
+    }
+  },
+  "argv": {
+    "trajectory": [
+      "/usr/bin/python3.12",
+      "-B",
+      "/data1/yanruj/lanl17-custody-source-20261007-a3/capture-producer.py",
+      "--request",
+      "/data1/yanruj/lanl17-p4-original32-trajectory-request-20261009-a5-a1.json",
+      "--request-sha256",
+      "07fa8ba661c942547be884634b09ff56f4a3f3d78e157bdabf9e84d980f83193",
+      "--output",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-p4-original32-trajectory-20261009-a5-a1.json"
+    ],
+    "candidate_selection": [
+      "/usr/bin/python3.12",
+      "-B",
+      "/data1/yanruj/lanl17-custody-source-20261007-a3/capture-producer.py",
+      "--request",
+      "/data1/yanruj/lanl17-p4-original32-candidate-selection-request-20261009-a5-a1.json",
+      "--request-sha256",
+      "87749dfa943ea823054a8481889d022937cf810f3cd6b143612f489adccf349d",
+      "--output",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-p4-original32-candidate-selection-20261009-a5-a1.json"
+    ]
+  },
+  "producer_sha256": "32bead204337aa66d0a732b6f143216946abafc5d2eb752577b0d90f7190b7b6",
+  "remote_timeout_seconds": 300,
+  "local_timeout_seconds": 420,
+  "scientific_admission": false,
+  "descriptor_bodies_read": 0,
+  "source32_or_project_executed": false
+}
