@@ -1,0 +1,113 @@
+{
+  "format": "swdb.lanl17-full-index-author-preparation.v1",
+  "executable": false,
+  "scientific_admission": false,
+  "actual_parent_attestation_inherited": {
+    "HOME_and_public_auth_preserved": true,
+    "actual_inputs_parent_approved": true,
+    "all_campaign_processes_stopped": true,
+    "all_four_normal_custodies_root_and_peer_reviewed": true,
+    "all_native_leases_currently_released_no_kernel_holder_or_FD9": true,
+    "all_outputs_currently_fresh_owned_and_disjoint": true,
+    "campaign": "extensa-gem5-bfs-20261006-p2",
+    "catalog_inventory_sha256": "fd59cc3128f953dd18b3a9e7e7a55d30df57c01fc6093403c8703143aa6fad8a",
+    "catalog_unchanged_since_original_validation": true,
+    "exclusive_snapshot_ownership_confirmed": true,
+    "fixtures_or_replays_allowed": false,
+    "native_Bash_startup_and_1024_byte_ulimit_units_reviewed": true,
+    "native_executable_sha256": {
+      "/usr/bin/bash": "bc5945feb8bd26203ebfafea5ce1878bb2e32cb8fb50ab7ae395cfb1e1aaaef1",
+      "/usr/bin/mkdir": "430c3f949d7d328cd835722f5bbddeac0956fbdfbbb6a197e0abb1def3ed27e2",
+      "/usr/bin/python3.12": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+      "/usr/bin/sha256sum": "4d2db56c867e5324e0084c9e897f6360d37517de77ac96f2bd31494223d69a60",
+      "/usr/bin/timeout": "12690a043dfd555a6c14ccc1564f5649c18f1762c0d6ff66729948130898ec52",
+      "/usr/bin/wc": "9005273a966c875547a4317288bdd92e7b2aa49ad86bc9978121242106405e6b"
+    },
+    "native_tools_current_owned_regular_byte_pins_reviewed": true,
+    "no_catalog_consumers_confirmed": true,
+    "observed_utc": "2026-10-09T18:22:21.499404+00:00",
+    "prior_validation_full_catalogue": true,
+    "records_directory": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p2/records",
+    "reviewed_utc": "2026-10-09T18:23:14.408404+00:00",
+    "source_R_F6_current_and_clean": true,
+    "valid_until_utc": "2026-10-09T18:27:21.499404+00:00",
+    "validation_files_sha256": {
+      "validation_argv": "d38feb98214ed75ff3b41f746f7b99d2209ce3b29e501c4343eb12fc25204178",
+      "validation_exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "validation_stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "validation_stdout": "d11e8b4a53bc8cfd8da582337dcf9810c55a80ddfc4b88aaacfa739f6bf3144c"
+    }
+  },
+  "specification_pin": {
+    "path": "/data1/yanruj/lanl17-p2-full-index-specification-preparation-20261009-a5-a1/index-author-specification.json",
+    "bytes": 49160,
+    "sha256": "3c1ffc4d0b3f90d0f1dc29df9e58891826ad2bac226e14812b2f49e423d5309f"
+  },
+  "author_review_sha256": "d4ceddf22d3223682cee89759fc84f71edbd1a1c686f5b807087bd2f9a9816e6",
+  "writer_parent_review_sha256": "5b8e418ca68efbdaa475463ec56aa366ec79ff9d2ca88f7f482411761b3f4ea8",
+  "routes": {
+    "author_output": "/data1/yanruj/lanl17-p2-full-index-author-20261009-a5-a1",
+    "bootstrap_logs": "/data1/yanruj/lanl17-p2-full-index-bootstrap-logs-20261009-a5-a1",
+    "inner_logs": "/data1/yanruj/lanl17-p2-full-index-inner-logs-20261009-a5-a1",
+    "outer_logs": "/data1/yanruj/lanl17-p2-full-index-outer-logs-20261009-a5-a1",
+    "preparation_output": "/data1/yanruj/lanl17-p2-full-index-specification-preparation-20261009-a5-a1",
+    "writer_output": "/data1/yanruj/lanl17-p2-full-index-writer-20261009-a5-a1"
+  },
+  "expected_unsealed_request_payload_sha256": "cce2dc414d75b419598710e7fdd8cfced7fbb57e9a93969dfd06bf69cae4d16b",
+  "expected_request_is_not_an_original": true,
+  "config_template": {
+    "argv": [
+      "/usr/bin/python3.12",
+      "-B",
+      "/data1/yanruj/lanl17-input-author-source-20261007-a1/index_request_author.py",
+      "--specification",
+      "/data1/yanruj/lanl17-p2-full-index-specification-preparation-20261009-a5-a1/index-author-specification.json",
+      "--specification-sha256",
+      "3c1ffc4d0b3f90d0f1dc29df9e58891826ad2bac226e14812b2f49e423d5309f",
+      "--parent-review-sha256",
+      "d4ceddf22d3223682cee89759fc84f71edbd1a1c686f5b807087bd2f9a9816e6",
+      "--author-sha256",
+      "a2e69aef10deb6186ac49401516ffba9a165b2f3cc94c8001646b6ac9a5b701d",
+      "--metadata-deadline-seconds",
+      "900",
+      "--output-directory",
+      "/data1/yanruj/lanl17-p2-full-index-author-20261009-a5-a1"
+    ],
+    "source_pins": [
+      {
+        "path": "/data1/yanruj/lanl17-input-author-source-20261007-a1/index_request_author.py",
+        "bytes": 38266,
+        "sha256": "a2e69aef10deb6186ac49401516ffba9a165b2f3cc94c8001646b6ac9a5b701d"
+      },
+      {
+        "path": "/data1/yanruj/lanl17-index-source-20261007-a1/writer.py",
+        "bytes": 33445,
+        "sha256": "7a67d46f8ad7d453fe07bd458a21f663bd4dc7ec12e71de83ad8b5caaf28894b"
+      },
+      {
+        "path": "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py",
+        "bytes": 38195,
+        "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+      },
+      {
+        "path": "/data1/yanruj/lanl17-custody-source-20261007-a3/auditor.py",
+        "bytes": 115130,
+        "sha256": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da"
+      },
+      {
+        "path": "/data1/yanruj/lanl17-custody-source-20261007-a2r1/collector.py",
+        "bytes": 24818,
+        "sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c"
+      },
+      {
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+        "bytes": 292401,
+        "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1"
+      }
+    ],
+    "collect": [],
+    "remote_seconds": 1020,
+    "local_seconds": 1150
+  },
+  "next_requirement": "Review actual original a2 request/custody before bootstrap stage; current plans are NOTRUN."
+}

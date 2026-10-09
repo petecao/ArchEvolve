@@ -1,5 +1,8 @@
 # Continue the analytic evaluator work
 
+2026-10-09 14:43 ET — [P2 original full index](evidence/17-second-original-full-index-20261009-a5/README.md) completed once14:34:54–14:35:01 ET. Root and independent full-chain review passed104 rows, exact source/summary/request/inventory/validation/snapshot/argv links, seals and both zero-survivor cleanup receipts. Bare index23194B/a16fc952/canonical29b6cb4f remains unsealed parent-generated metadata, not original28d output/new validation/scientific admission. The29-original package totals372,787B with physical private/archive byte/SHA/local-original nine-stat closure; no full source/config/capture stream/YAML/diagnostics or new peer receipt added. Selected R4 helper was Git-staged once in an isolated store; original b27 and scientific PRIMARY/source/originR remain unchanged. All completed/expired actions are preserved and never reusable. P1/P2 indexes complete (2/4); P3/P4, original32 closure, assembly, unchanged actual6a and final scientific review/fixes remain pending. Ticket17 claimed/all four boxes unchecked,14/15 assigned agent tickets resolved. Current human documentation1dbbd9ea and root/GLOSSARY/formal-verification work preserved; no unrelated ticket mutation.
+
+
 Updated: 2026-10-09 14:06 ET
 
 **Active after Yan-Ru explicitly resumed work.** Fourteen of fifteen assigned agent tickets are resolved. Ticket16's artifact/baseline forecast fix passed 73 public regression tests and independent implementation review; ticket17 remains claimed with its acceptance boxes unchecked. The 30-minute heartbeat is ACTIVE.
