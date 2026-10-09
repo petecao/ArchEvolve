@@ -1,7 +1,7 @@
 # Map: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-09 15:02 ET
+Updated: 2026-10-09 15:25 ET
 **Type:** ticket map
 **Status:** claimed (unfinished implementation/evaluation)
 **Work state:** active; [resume guide](resume.md)
@@ -58,6 +58,8 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | 23 | [Export and round-trip test](issues/23-export-and-round-trip.md) | wontfix | 22 | 1 day |
 
 ## Context pointers
+
+- 2026-10-09 15:25 ET — [P4 original full index](evidence/17-fourth-original-full-index-20261009-a5/README.md) completed once15:22:49–56 ET. Root and independent full actual review passed100 source-hash rows, original request/summary/full-validation/context/limits, seals e15e9257/41d2cc3f/c0d57754 and both zero-survivor cleanup receipts. Bare index22256B/9acb3d76/canonical78417779 remains unsealed parent-generated metadata, not original28d/new validation/scientific admission.28 exact metadata originals/362,598B retain physical byte/SHA/local-original nine-stat closure; no full source/config/capture stream/YAML/diagnostic duplication or new peer receipt. P4 root note initially binds correct config/action7120dcdf before dispatch; P3 original error/correction preserved separately. Selected R6a4 at15:19:49 admitted original entry180.65s later; all completed/expired actions remain nonreusable. All four indexes complete (4/4), with106/104/88/100 records; original32 closure, assembly, unchanged actual6a and final scientific review/fixes remain pending.14/15 assigned agent tickets resolved;17 claimed/all four acceptance boxes unchecked. Human59059e2d/1dbbd9ea and root rule edit preserved; scientific PRIMARY/source/originR frozen.
 
 - 2026-10-09 15:02 ET — [P3 original full index](evidence/17-third-original-full-index-20261009-a5/README.md) completed once14:58:39–46 ET. Root and independent full actual review passed88 source-hash rows, original request/inventory/summary/full-validation/context/limits, seals097290b3/45a385dd/e552851b and both zero-survivor cleanup receipts. Bare index19452B/e187b20e/canonical5172e59f remains unsealed parent-generated metadata, not original28d/new validation/scientific admission.29 exact metadata originals/345,387B retain physical byte/SHA/local-original nine-stat closure; no full source/config/capture stream/YAML/diagnostic duplication or new peer receipt. A copied P2 config field in the local root note is preserved with an additive correction; correct P3 action9621eb43 was reviewed before dispatch and bound by actual start/config/argv. Correction is documentation, not retroactive approval; completed runtime is never reusable. Selected R6a4 at14:55:39 admitted original dispatch180.28s later; all expired actions/history retained. P1–P3 indexes complete (3/4); P4, original32 closure, assembly, unchanged actual6a and final scientific review/fixes remain pending.14/15 assigned agent tickets resolved;17 claimed/all four acceptance boxes unchecked. Human59059e2d/1dbbd9ea and root rule edit preserved; scientific PRIMARY/source/originR frozen.
 
