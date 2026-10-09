@@ -1,0 +1,36 @@
+{
+  "actual_or_cleanup_admission": false,
+  "change": "Single per-row privacy flag name narrowed to diagnostic_direct_entry_contents_read_or_hashed; value false unchanged.",
+  "config_inverse_source_pins_inline_SHA_only": true,
+  "created_utc": "2026-10-09T04:48:18.135871+00:00",
+  "exact_inverse_to_R3": true,
+  "findings": [],
+  "format": "swdb.lanl17-sensitive-name-stat-independent-source-review-supplement.v1",
+  "no_read_guard_cap_or_execution_changes": true,
+  "pins": [
+    {
+      "bytes": 13900,
+      "path": "/private/tmp/lanl17_diagnose_generality_sensitive_entry_names_SOURCE_ONLY_20261009_a5_r4.py",
+      "sha256": "8b970db1d5c332ba038e3b730dbc5499cbcdcdbe12ec64fb7bd63a621a0eaba2"
+    },
+    {
+      "bytes": 14884,
+      "path": "/private/tmp/lanl17-generality-sensitive-entry-name-stat-action-SOURCE-ONLY-draft-r4-20261009-a5.json",
+      "sha256": "7510e40639827fd2dd0057b297e0233bc452ae596c96e6c6c8ea1bf79eb34f47"
+    },
+    {
+      "bytes": 1569,
+      "path": "/private/tmp/lanl17-generality-sensitive-entry-name-stat-r4-complete-r3-derivation-20261009-a5.diff",
+      "sha256": "5bd9a95740a7dfce01415041c24a300132e1979ef1deca55c3b37130030087de"
+    },
+    {
+      "bytes": 1484,
+      "path": "/private/tmp/lanl17-generality-sensitive-entry-name-stat-source-handoff-r4-20261009-a5.md",
+      "sha256": "20292d4fb486a98f64d140454024f6812b8335766862e217afd42508008ea181"
+    }
+  ],
+  "prior_full_review": "/private/tmp/lanl17-generality-sensitive-entry-name-stat-independent-source-review-r3-20261009-a5.json",
+  "selected_source": "R4",
+  "source_AST_parsed_without_execution": true,
+  "verdict": "PASS_SOURCE_ONLY"
+}

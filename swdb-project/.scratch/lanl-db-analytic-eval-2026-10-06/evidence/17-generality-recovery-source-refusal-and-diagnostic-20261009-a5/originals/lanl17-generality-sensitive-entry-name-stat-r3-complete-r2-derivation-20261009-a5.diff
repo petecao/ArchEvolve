@@ -1,0 +1,25 @@
+--- /private/tmp/lanl17_diagnose_generality_sensitive_entry_names_SOURCE_ONLY_20261009_a5_r2.py
++++ /private/tmp/lanl17_diagnose_generality_sensitive_entry_names_SOURCE_ONLY_20261009_a5_r3.py
+@@ -86,12 +86,11 @@
+     need(metadata_git(PRIMARY,'rev-parse','HEAD')==metadata_git(PRIMARY,'rev-parse','origin/yanrujhou_main')==metadata_git(SOURCE,'rev-parse','HEAD')==R,'source_PRIMARY_origin_S_R')
+     need(metadata_git(PRIMARY,'branch','--show-current')=='yanrujhou_main','PRIMARY_branch')
+     need(metadata_git(CANDIDATE,'rev-parse','HEAD')==HEAD and metadata_git(CANDIDATE,'rev-parse','--abbrev-ref','HEAD')=='HEAD','candidate_c4_detached')
+-    need(metadata_git(CANDIDATE,'status','--porcelain','--untracked-files=all')=='','candidate_clean')
+     common=Path(metadata_git(CANDIDATE,'rev-parse','--git-common-dir'));gitdir=Path(metadata_git(CANDIDATE,'rev-parse','--git-dir'))
+     need(common==PRIMARY/'.git' and common.resolve(strict=True)==common and common.stat().st_uid==UID,'candidate_PRIMARY_common')
+     need(gitdir.parent==common/'worktrees' and gitdir.resolve(strict=True)==gitdir and gitdir.is_dir() and gitdir.stat().st_uid==UID and not any(q.is_symlink() for q in (gitdir,*gitdir.parents)),'candidate_registration_canonical_owned')
+     need(not os.path.lexists(gitdir/'locked') and not os.path.lexists(gitdir/'index.lock'),'candidate_registration_unlocked')
+-    return {'candidate':str(CANDIDATE),'head':HEAD,'detached':True,'clean':True,'common_git':str(common),'git_directory':str(gitdir),'PRIMARY_head':R,'PRIMARY_origin':R,'SOURCE_head':R,'root_stat':stamp(CANDIDATE.lstat()),'git_directory_stat':stamp(gitdir.lstat())}
++    return {'candidate':str(CANDIDATE),'head':HEAD,'detached':True,'worktree_cleanliness_observed':False,'common_git':str(common),'git_directory':str(gitdir),'PRIMARY_head':R,'PRIMARY_origin':R,'SOURCE_head':R,'root_stat':stamp(CANDIDATE.lstat()),'git_directory_stat':stamp(gitdir.lstat())}
+ 
+ def name_inventory():
+     rows=[];matches=[];todo=['.'];size=2
+@@ -156,7 +155,7 @@
+     second,after_matches=name_inventory();need(first==second and matches==after_matches,'complete_name_stat_nine_field_closure')
+     for row in details:need(tracked_and_ignored(row)==row['Git_metadata'],'selected_Git_index_ignore_metadata_continuity')
+     need(source_registration()==before and transport_identity()==transport and root_tool_pin('/usr/bin/git',4019024,'06b2aa74919b1993f9fd7e47060ea98d98c27206f16ccc2d35f51ced7e7877eb')==gitpin,'source_registration_native_Git_transport_continuity')
+-    result={'format':'swdb.lanl17-generality-sensitive-entry-name-stat-diagnostic.v1','checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'metadata_observation_completed':True,'state':'observed','candidate':str(CANDIDATE),'head':HEAD,'entry_count_checked':len(first),'matching_entry_count':len(details),'matching_entries':details,'source_registration':before,'native_Git_version':version,'native_Git_pin':gitpin,'no_symlink_directories_followed':True,'selected_file_bodies_or_content_hashes_read':False,'symlink_targets_read':False,'original_preflight_privacy_gate_unchanged':True,'full_preflight_readiness_not_inferred':True,'no_use_proof_not_supplied':True,'backup_eligibility_only':False,'backup_created':False,'removal_admitted':False,'index_clearance':False,'scientific_admission':False}
++    result={'format':'swdb.lanl17-generality-sensitive-entry-name-stat-diagnostic.v1','checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'metadata_observation_completed':True,'state':'observed','candidate':str(CANDIDATE),'head':HEAD,'entry_count_checked':len(first),'matching_entry_count':len(details),'matching_entries':details,'source_registration':before,'native_Git_version':version,'native_Git_pin':gitpin,'no_symlink_directories_followed':True,'selected_entry_direct_body_or_content_hash_reads':False,'selected_entry_direct_readlink_calls':False,'ordinary_Git_index_configuration_ignore_metadata_inputs_used':True,'original_preflight_privacy_gate_unchanged':True,'full_preflight_readiness_not_inferred':True,'no_use_proof_not_supplied':True,'backup_eligibility_only':False,'backup_created':False,'removal_admitted':False,'index_clearance':False,'scientific_admission':False}
+     need(len(metadata_bytes(result))<=METADATA_CAP,'bounded_return_8MiB');return result
+ 
+ def main():

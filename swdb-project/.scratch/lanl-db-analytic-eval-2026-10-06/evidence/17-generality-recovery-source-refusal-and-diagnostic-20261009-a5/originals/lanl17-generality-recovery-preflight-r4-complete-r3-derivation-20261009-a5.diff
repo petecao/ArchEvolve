@@ -1,0 +1,57 @@
+--- /private/tmp/lanl17_generality_recovery_candidate_preflight_20261009_a5_r3.py
++++ /private/tmp/lanl17_generality_recovery_candidate_preflight_20261009_a5_r4.py
+@@ -261,6 +261,39 @@
+ 
+ def protected_reference(p):
+     return any(p==q or p.is_relative_to(q) for q in PROTECTED)
++
++def symlink_resolution(row,entries):
++    # Resolve only the closed inventoried metadata graph; never stat/read an external target.
++    prefix=CANDIDATE.parts;visited=set();links=0;steps=0
++    def target_parts(raw,base):
++        value=os.fsdecode(raw)
++        if value.startswith('/'):
++            components=tuple(x for x in value.split('/') if x)
++            need(components[:len(prefix)-1]==prefix[1:],'symlink_absolute_target_outside_candidate')
++            return [],list(components[len(prefix)-1:])
++        return list(base),value.split('/')
++    base=row['relative_path'].split('/')[:-1]
++    base,pending=target_parts(base64.b64decode(row['target_base64'],validate=True),base)
++    while pending:
++        tick();steps+=1;need(steps<=65536,'symlink_component_resolution_cap')
++        name=pending.pop(0)
++        if name in ('','.'):continue
++        if name=='..':
++            need(bool(base),'symlink_parent_escapes_candidate');base.pop();continue
++        relative='/'.join((*base,name));entry=entries.get(relative)
++        need(entry is not None,'symlink_dangling_or_uninventoried_target')
++        if entry['kind']=='symlink':
++            links+=1;need(links<=40,'symlink_cycle_or_link_cap')
++            key=(relative,tuple(pending));need(key not in visited,'symlink_cycle');visited.add(key)
++            nextbase,nextparts=target_parts(base64.b64decode(entry['target_base64'],validate=True),base)
++            base=nextbase;pending=nextparts+pending
++        else:
++            need(entry['kind']=='directory' or not any(x not in ('','.') for x in pending),'symlink_nondirectory_component')
++            base.append(name)
++    relative='/'.join(base) or '.';entry=entries.get(relative)
++    need(entry is not None and entry['kind'] in ('directory','regular'),'symlink_final_target_not_closed')
++    route=CANDIDATE.joinpath(*base);need(not protected_reference(route),'symlink_final_target_protected')
++    return {'state':'resolved_internal_metadata_only','relative_path':relative,'kind':entry['kind'],'target_stat':entry['stat'],'symlinks_followed_in_metadata':links,'components_checked':steps,'external_target_stat_or_body_read':False}
+ 
+ def inventory_tree():
+     rows=[];total=0;allocated=0;metadata_size=2;references=[];inodes=set()
+@@ -305,6 +338,14 @@
+             if not inside:references.append({'relative_path':relative,'kind':'external_or_protected_symlink','target_sha256':digest(raw)})
+         else:raise ValueError('nonregular_tree_entry_refused')
+         metadata_size+=len(metadata_bytes(row));need(metadata_size<=METADATA_CAP,'tree_metadata_8MiB_cap');rows.append(row)
++    entries={row['relative_path']:row for row in rows}
++    for row in rows:
++        if row['kind']!='symlink':continue
++        try:row['target_metadata_resolution']=symlink_resolution(row,entries)
++        except (ValueError,OSError,KeyError,TypeError,UnicodeError) as exc:
++            row['target_metadata_resolution']={'state':'unknown_or_refused','error_class':type(exc).__name__,'reason_sha256':digest(str(exc).encode()),'external_target_stat_or_body_read':False}
++            references.append({'relative_path':row['relative_path'],'kind':'ultimate_symlink_resolution_unknown_or_refused','target_sha256':row['target_sha256']})
++    need(len(metadata_bytes(rows))<=METADATA_CAP,'resolved_tree_metadata_8MiB_cap')
+     return {'entries':rows,'entry_count':len(rows),'regular_bytes':total,'allocated_regular_bytes':allocated,'all_regular_nlink1':True,'ignored_entries_included':True,'protected_reference_observations':references,'mandatory_root_Git_pointer_is_registration_provenance':True},inodes
+ 
+ def alias_bytes(p,cap):

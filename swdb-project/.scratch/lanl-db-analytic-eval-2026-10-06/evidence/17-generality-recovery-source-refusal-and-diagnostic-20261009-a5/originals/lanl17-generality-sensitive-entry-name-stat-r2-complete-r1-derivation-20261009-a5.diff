@@ -1,0 +1,57 @@
+--- /private/tmp/lanl17_diagnose_generality_sensitive_entry_names_SOURCE_ONLY_20261009_a5_r1.py
++++ /private/tmp/lanl17_diagnose_generality_sensitive_entry_names_SOURCE_ONLY_20261009_a5_r2.py
+@@ -94,17 +94,43 @@
+     return {'candidate':str(CANDIDATE),'head':HEAD,'detached':True,'clean':True,'common_git':str(common),'git_directory':str(gitdir),'PRIMARY_head':R,'PRIMARY_origin':R,'SOURCE_head':R,'root_stat':stamp(CANDIDATE.lstat()),'git_directory_stat':stamp(gitdir.lstat())}
+ 
+ def name_inventory():
+-    rows=[];matches=[];todo=[CANDIDATE];size=2
+-    while todo:
+-        tick();p=todo.pop();s=p.lstat();relative=p.relative_to(CANDIDATE).as_posix()
+-        need(len(rows)<ENTRY_CAP and len(os.fsencode(relative))<=4096 and s.st_uid==UID,'entry_count_path_owner')
+-        kind='directory' if stat.S_ISDIR(s.st_mode) else 'regular' if stat.S_ISREG(s.st_mode) else 'symlink' if stat.S_ISLNK(s.st_mode) else 'other'
+-        row={'relative_path':relative,'kind':kind,'stat':stamp(s)}
+-        if kind=='directory':
+-            children=sorted(p.iterdir(),key=lambda q:os.fsencode(q.name));need(len(children)<=ENTRY_CAP and stamp(p.lstat())==stamp(s),'directory_listing_cap_or_race')
+-            todo.extend(reversed(children))
+-        size+=len(metadata_bytes(row));need(size<=METADATA_CAP,'name_stat_inventory_8MiB_cap');rows.append(row)
+-        if any(x in p.parts for x in ('.codex','.ssh','.aws')) or p.name in ('auth.json','provider.json','prompt.txt','feedback.txt'):matches.append(row)
++    rows=[];matches=[];todo=['.'];size=2
++    flags=os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC
++    rootfd=os.open(CANDIDATE,flags);rootstat=os.fstat(rootfd)
++    need(stamp(rootstat)==stamp(CANDIDATE.lstat()) and rootstat.st_uid==UID,'root_directory_open_identity')
++    def parent_fd(relative):
++        fd=os.dup(rootfd)
++        try:
++            parts=relative.split('/')
++            for part in parts[:-1]:
++                tick();new=os.open(part,flags,dir_fd=fd);os.close(fd);fd=new
++                need(os.fstat(fd).st_uid==UID,'intermediate_directory_owner')
++            return fd,parts[-1]
++        except BaseException:
++            os.close(fd);raise
++    try:
++        while todo:
++            tick();relative=todo.pop();need(len(rows)<ENTRY_CAP and len(os.fsencode(relative))<=4096,'entry_count_path_cap')
++            fd,name=parent_fd(relative)
++            try:
++                s=os.fstat(fd) if relative=='.' else os.stat(name,dir_fd=fd,follow_symlinks=False)
++                need(s.st_uid==UID,'entry_owner');kind='directory' if stat.S_ISDIR(s.st_mode) else 'regular' if stat.S_ISREG(s.st_mode) else 'symlink' if stat.S_ISLNK(s.st_mode) else 'other'
++                row={'relative_path':relative,'kind':kind,'stat':stamp(s)}
++                if kind=='directory':
++                    directory=os.dup(fd) if relative=='.' else os.open(name,flags,dir_fd=fd)
++                    try:
++                        need(stamp(os.fstat(directory))==stamp(s),'directory_nofollow_open_identity')
++                        children=sorted(os.listdir(directory),key=os.fsencode);need(len(children)<=ENTRY_CAP and stamp(os.fstat(directory))==stamp(s),'directory_listing_cap_or_race')
++                        todo.extend(reversed([child if relative=='.' else relative+'/'+child for child in children]))
++                    finally:os.close(directory)
++                after=os.fstat(fd) if relative=='.' else os.stat(name,dir_fd=fd,follow_symlinks=False)
++                need(stamp(after)==stamp(s),'entry_nine_stat_continuity')
++                size+=len(metadata_bytes(row));need(size<=METADATA_CAP,'name_stat_inventory_8MiB_cap');rows.append(row)
++                parts=relative.split('/')
++                if any(x in parts for x in ('.codex','.ssh','.aws')) or parts[-1] in ('auth.json','provider.json','prompt.txt','feedback.txt'):matches.append(row)
++            finally:os.close(fd)
++        need(stamp(os.fstat(rootfd))==stamp(rootstat)==stamp(CANDIDATE.lstat()),'root_directory_closure')
++    finally:os.close(rootfd)
+     return rows,matches
+ 
+ def tracked_and_ignored(row):

@@ -1,0 +1,83 @@
+{
+  "bounded_scope": "Source-only review; actual R5 refused before full tree/no-use closure. Author preparing preserved R3 correction.",
+  "checks": [
+    "All source AST parsed without execution/import",
+    "FD-relative O_DIRECTORY/O_NOFOLLOW root and every parent traversal; leaf follow_symlinks=False; fd cleanup present",
+    "Two complete name/all-nine-stat walks compared exactly; matching predicate equivalent to selected R5 relative path predicate",
+    "Native Git size/SHA/root owner755/nlink1/all-nine-stat before/after and literal version2.48.1",
+    "c4 detached/common PRIMARY/R/origin/S and unlocked registration before/after",
+    "Action exact inline7argv/config schema/environment CODEX_HOME/collectempty/sourcepinsempty/GNU240K60/source180/local360",
+    "No target regular source/body open or target readlink in Python tree walker; no archive/remove/index action",
+    "Actual original refusal SHA equals exact selected R5 literal; no actual selected name/type inferred from digest",
+    "Explicit false backup/index/science admission and no no-use proof"
+  ],
+  "created_utc": "2026-10-09T04:46:50.944507+00:00",
+  "findings": [
+    {
+      "evidence": "Git2.48.1 read-cache.c230\u2013243 ce_compare_data opens tracked files for index_fd hashing;246\u2013264 ce_compare_link reads symlink target; refresh path1444 calls ie_modified.",
+      "finding": "git status can read/hash tracked working file bodies or read tracked symlink targets during index refresh; GIT_OPTIONAL_LOCKS=0 only avoids optional writes. Thus selected-file/no-target-read claims are not guaranteed by whole diagnostic.",
+      "minimal_remedy": "Omit status/candidate_clean from diagnostic only and return worktree_cleanliness_observed:false. Keep preflight original privacy/cleanliness requirements intact; no cleanup eligibility inferred.",
+      "priority": "P1",
+      "scope": "source_registration candidate git status subprocess and returned privacy assertions"
+    }
+  ],
+  "format": "swdb.lanl17-sensitive-name-stat-independent-source-review.v1",
+  "inherited_AST_exact": [
+    "need",
+    "tick",
+    "digest",
+    "stamp",
+    "kernel_bytes",
+    "process_identity",
+    "Parser",
+    "hex64",
+    "run",
+    "root_tool_pin",
+    "metadata_bytes"
+  ],
+  "pins": [
+    {
+      "bytes": 13876,
+      "path": "/private/tmp/lanl17_diagnose_generality_sensitive_entry_names_SOURCE_ONLY_20261009_a5_r2.py",
+      "sha256": "d81f0a7129bd78e2b6416f4feb436d454b291d465610b0bc52a22e3ba048345b"
+    },
+    {
+      "bytes": 14861,
+      "path": "/private/tmp/lanl17-generality-sensitive-entry-name-stat-action-SOURCE-ONLY-draft-r2-20261009-a5.json",
+      "sha256": "03e46f2e69350d48aee845d02deb2135e50f0368b0196de999f1461a12bfd6af"
+    },
+    {
+      "bytes": 1791,
+      "path": "/private/tmp/lanl17-generality-sensitive-entry-name-stat-source-handoff-r2-20261009-a5.md",
+      "sha256": "fabd8709e9cc74c176ad918a3017a04bcb0f9c555c80ae14227f008bd412c54b"
+    },
+    {
+      "bytes": 2049,
+      "path": "/private/tmp/lanl17-generality-sensitive-entry-name-stat-source-static-review-r2-20261009-a5.json",
+      "sha256": "966331df381d6e45d1feacea293aa0204f850275c05e08642d992af1365e5c81"
+    },
+    {
+      "bytes": 4114,
+      "path": "/private/tmp/lanl17-generality-sensitive-entry-name-stat-r2-complete-r1-derivation-20261009-a5.diff",
+      "sha256": "be77e7ee403a1181036e24fcbe5f4c6da6087d42ba63f2cef7f40af0c8d42697"
+    },
+    {
+      "bytes": 41183,
+      "path": "/private/tmp/lanl17_generality_recovery_candidate_preflight_20261009_a5_r5.py",
+      "sha256": "508b61d0ccad42a1fe52d4c82367f4f98d360b9df5edec6f4825acacbbc160fa"
+    },
+    {
+      "bytes": 870,
+      "path": "/private/tmp/lanl17-generality-recovery-preflight-capture-20261009-a5-a1/preflight-original.json",
+      "sha256": "ba419ba153c833564e241ba7a4d0d425822b09b33743d33975d4e391f3fac402"
+    },
+    {
+      "bytes": 112201,
+      "path": "/private/tmp/lanl17-git-v2.48.1-read-cache.c-privacy-source-20261009",
+      "sha256": "3ead1463728cefbe7f5613424400a6143a96acab8e2e04c12bce0c71f3b606f2"
+    }
+  ],
+  "runtime_or_scientific_admission": false,
+  "target_executed": false,
+  "verdict": "CHANGES_REQUIRED_SOURCE_ONLY"
+}

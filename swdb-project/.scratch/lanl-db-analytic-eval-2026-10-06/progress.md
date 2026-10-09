@@ -1,11 +1,28 @@
 # Implementation progress
 
-Updated: 2026-10-09 00:28 ET
+Updated: 2026-10-09 01:04 ET
 
 **Current state: ACTIVE after Yan-Ru's explicit resumption; 14/15 assigned tickets resolved; ticket16 review finding addressed.**
 Ticket 17 remains `claimed`, with acceptance pending. Start from [resume.md](resume.md).
 The 30-minute heartbeat `lanl-analytic-evaluator-progress` is ACTIVE on the resumed chat.
 Readiness and evidence-review agents are responsive; completed subtasks are retained.
+
+
+## Corrected recovery inventory and remaining gates — 2026-10-09 01:04 ET
+
+The corrected R6 preflight completed once at 2026-10-09 01:01 ET. Its exact compact original is 2072B/SHA065a0c9b5cf8793df594ee5fa31e0e4c6151bf17653d0b316793e1709db1e361; root and independent actual reviews passed the metadata assessment. Two complete tree passes cover4094 entries,871628116 regular bytes and880009216 allocated regular bytes. The exact historical receipt's remote stat/Git/SHA guard passed through the source's completed-observation path; no body was transferred. The full1666030B manifest remains remote at `/data/yanruj/EvolveSWDB_runs/lanl17-generality-worktree-recovery-20261009-a2/preflight-inventory.json`, SHAa8a184736327f1c19d010e24bf44d1f39e52a4ac9988c692688809479274ce36.
+
+**Backup remains ineligible.** The observation retains110 protected-path references and four owned process unknowns; zero matching consumers does not establish no-use. Fresh source/native continuity passed for this dated observation, but no removal/index clearance or other-user/history approval is inferred. The unchanged `/data1` floor is still short569032704B. A read-only projection is being prepared to diagnose these retained metadata gates; no original preflight is repeated and no backup/removal/index has occurred.
+
+Archive writer R5 is source-only and NOTRUN. Root and independent122-check source reviews confirm35 inherited R6 safety guards and17 R4 archive/package guards, full AST equality after formatting compaction, exact one-receipt classification and whole-package2GiB accounting. GNU command size63181B leaves2355B under the unchanged65536B cap. Future approvals remain typed and unsupplied; the actual ineligible result cannot authorize the writer.
+
+[Exact checkpoint supplement](evidence/17-generality-recovery-source-refusal-and-diagnostic-20261009-a5/r6-actual-and-writer-r5-original-inventory.json) retains21 further originals/565914B alongside117 earlier originals/2064754B. All raw data remains remote. Original FINALIZE/report completed and reviewed; report unsupported/zero eligible pairs/no-switch. Four full indexes/original32/accepted-input assembly/unchanged6a audit/final Standards+Spec review and ticket17 acceptance remain pending. Heartbeat ACTIVE; remotePRIMARY/originR retained through all applicable original guards.
+
+## Recovery preflight refusal and exact-source diagnostic — 2026-10-09 00:56 ET
+
+[Recovery source/refusal checkpoint](evidence/17-generality-recovery-source-refusal-and-diagnostic-20261009-a5/README.md) preserves the actual00:41 ET R5 refusal and independently reviewed00:49 ET name/stat diagnostic. The candidate has4094 entries and exactly one sensitive-name match: a tracked16916B historical provider CLI receipt, locally source-classified against c4 Gitblob4c83/e706SHA. The diagnostic directly read no selected bodies/hashes/link targets and supplies neither cleanliness nor no-use. Actual remote body equality is pending. Root and peer are reviewing a new exact-path/original-nine-stat/Gitblob/mode/SHA exception, with every other privacy predicate unchanged and fresh outputa2. No backup, removal or index has occurred. Original data1 floor is still short569032704B; no gate is relaxed or failed original repeated blindly.
+
+Source-only archive writer revisions and exact Git2.48.1 removal behavior are retained. Root corrected an entire-package cap edge missed by the earlier peer review; selected derivation must count existing private metadata plus archive/receipt within2GiB, preserve24GiB/data floor and unchanged65536 command-line bounds. Actual successful preflight and separate backup/remove approvals are still required. Existing original FINALIZE/report remain complete/reviewed, unsupported/zero pairs/no-switch. Strict6a and final review remain pending; ticket17 stays claimed. Formal table/agent health00:55 ET, all responsive, nextby01:25 ET; heartbeat ACTIVE and remotePRIMARY/originR retained.
 
 **Latest evaluation: original FINALIZE complete and reviewed; full-index storage gate unmet.**
 

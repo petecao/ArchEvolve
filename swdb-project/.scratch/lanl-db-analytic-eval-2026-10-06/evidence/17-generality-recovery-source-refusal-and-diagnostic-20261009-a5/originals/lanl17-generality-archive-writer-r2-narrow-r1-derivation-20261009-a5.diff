@@ -1,0 +1,54 @@
+--- /private/tmp/lanl17_write_verified_generality_recovery_archive_SOURCE_ONLY_20261009_a5_r1.py
++++ /private/tmp/lanl17_write_verified_generality_recovery_archive_SOURCE_ONLY_20261009_a5_r2.py
+@@ -482,7 +482,7 @@
+         review=strict(pin_read(descriptor,65536));closed(review,('format','role','verdict','checked_utc','approval_sha256','preflight_manifest_sha256','preflight_snapshot_sha256','scientific_admission'),'closed_actual_archive_review')
+         need(review['format']=='swdb.lanl17-generality-archive-actual-parent-review.v1' and review['role']==role and review['verdict']=='PASS_ACTUAL_PREFLIGHT_DEPENDENCY_NO_USE_FOR_ARCHIVE_ONLY' and review['scientific_admission'] is False,'exact_actual_root_peer_review_not_generic_PASS')
+         need(review['approval_sha256']==payload_digest(approval) and review['preflight_manifest_sha256']==v['preflight_manifest']['sha256'] and review['preflight_snapshot_sha256']==manifest['snapshot_sha256'],'actual_root_peer_review_linkage')
+-        need(utc(manifest['checked_utc'])<=utc(review['checked_utc'])<=utc(approval['checked_utc']),'actual_review_chronology')
++        need(utc(manifest['checked_utc'])<=utc(approval['checked_utc'])<=utc(review['checked_utc'])<=datetime.datetime.now(datetime.timezone.utc)<=utc(approval['valid_until_utc']),'actual_review_chronology')
+     return v,pin,b,manifest,manifest_raw
+ 
+ def archive_routes():
+@@ -520,11 +520,11 @@
+     need(type(value) is int and value>=0,'archive_timestamp_nonnegative_ns');return str(value//10**9)+'.'+str(value%10**9).zfill(9)
+ 
+ class BoundedArchive:
+-    def __init__(self,file):self.file=file;self.bytes=0
++    def __init__(self,file):self.file=file;self.bytes=0;self.hasher=hashlib.sha256()
+     def write(self,data):
+         tick();need(self.bytes+len(data)<=ARCHIVE_CAP,'archive_total_with_headers_padding_metadata_2GiB_cap')
+         need(shutil.disk_usage('/data').free-len(data)>=24*1024**3+RECEIPT_CAP,'data_original_24GiB_floor_during_archive')
+-        n=self.file.write(data);need(n==len(data),'full_archive_write');self.bytes+=n;return n
++        n=self.file.write(data);need(n==len(data),'full_archive_write');self.bytes+=n;self.hasher.update(data);return n
+     def tell(self):return self.bytes
+     def flush(self):self.file.flush()
+ 
+@@ -577,6 +577,8 @@
+     directoryfd=os.open(OUTPUT,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC)
+     try:os.fsync(directoryfd)
+     finally:os.close(directoryfd)
++    s=ARCHIVE.lstat();need(s.st_size==wrapped.bytes,'created_archive_exact_streamed_size')
++    return {'path':str(ARCHIVE),'bytes':wrapped.bytes,'sha256':wrapped.hasher.hexdigest(),'stat':stamp(s)}
+ 
+ def archive_pin():
+     s=ARCHIVE.lstat();need(stat.S_ISREG(s.st_mode) and s.st_uid==UID and s.st_nlink==1 and stat.S_IMODE(s.st_mode)==0o600 and 0<s.st_size<=ARCHIVE_CAP,'private_archive_identity_size')
+@@ -590,8 +592,8 @@
+         need(n==s.st_size and stamp(os.fstat(f.fileno()))==stamp(s)==stamp(ARCHIVE.lstat()),'archive_whole_byte_nine_stat_continuity')
+     return {'path':str(ARCHIVE),'bytes':n,'sha256':h.hexdigest(),'stat':stamp(s)}
+ 
+-def verify_archive(expected):
+-    before=archive_pin();fd=os.open(ARCHIVE,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC);seen=set()
++def verify_archive(expected,written):
++    before=archive_pin();need(before==written,'archive_matches_exact_writer_stream_SHA_size_stat');fd=os.open(ARCHIVE,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC);seen=set()
+     with os.fdopen(fd,'rb') as f:
+         need(stamp(os.fstat(f.fileno()))==before['stat'],'archive_verify_open_continuity')
+         with tarfile.open(fileobj=f,mode='r|',encoding='utf-8',errors='surrogateescape') as tar:
+@@ -630,7 +632,7 @@
+     native_continuity(prior['native_after']);first,inodes=inventory_tree();need(first==prior['tree'] and payload_digest(first)==prior['snapshot_sha256'],'actual_original_full_tree_preflight_continuity')
+     no_unpreserved_xattrs(first);processes=consumer_inventory(transport,inodes);need(processes['no_live_owned_candidate_SOURCE_RAW_H_consumers'] is True,'fresh_owned_no_use_before_archive')
+     second,inodes2=inventory_tree();need(first==second and inodes==inodes2,'fresh_complete_tree_before_archive');no_unpreserved_xattrs(second);approval_window(value['approval'])
+-    expected=archive_expected(first,input_pin,input_raw,value['preflight_manifest'],manifest_raw);write_archive(expected);archive=verify_archive(expected)
++    expected=archive_expected(first,input_pin,input_raw,value['preflight_manifest'],manifest_raw);written=write_archive(expected);archive=verify_archive(expected,written)
+     final,inodes3=inventory_tree();need(final==first and inodes3==inodes,'complete_source_tree_nine_stat_SHA_after_archive');no_unpreserved_xattrs(final)
+     after_processes=consumer_inventory(transport,inodes3);need(after_processes['no_live_owned_candidate_SOURCE_RAW_H_consumers'] is True,'fresh_owned_no_use_after_archive')
+     need(candidate_registration()==registration and current_sources()==sources and home_startup()==home and controls_originals()==controls,'protected_sources_registration_HOME_controls_after_archive')
