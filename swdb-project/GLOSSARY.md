@@ -1,6 +1,6 @@
 # EvolveSWDB — ArchEvolve's research database
 
-Updated: 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
+Updated: 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
 
 The Software Database is the ArchEvolve component that knows the applications:
 what their kernels compute, how their code touches memory, what profiling
@@ -259,8 +259,8 @@ its lowerings are, and a rewrite contract when a candidate artifact applying it 
 _Avoid_: verification, validation
 
 **Certification level**:
-How a candidate artifact ranks by certification in Extensa-mode selection: certified, then
-uncertified; a proven level is reserved until formal verification is settled.
+How a candidate artifact ranks by certification in Extensa-mode selection: proven unbounded,
+proven within bounds (its bounds recorded), certified, then uncertified.
 _Avoid_: trust level, proof level
 
 **Certified lowering**:
@@ -452,6 +452,12 @@ _Avoid_: version (alone) when the family is not clear; certify level
 A tool, such as CBMC or Z3, that proves or refutes a formal predicate about code within declared
 bounds.
 _Avoid_: checker, prover (alone), verifier (alone, for this tool)
+
+**Proof hint**:
+A ghost variable, loop invariant, lemma or intermediate assertion added to help a formal verifier
+reach a verdict. Each hint must itself be proven; an assumption, or a change to the code under
+proof or to its rewrite contract, is never a proof hint.
+_Avoid_: partial proof, auxiliary variable, annotation (alone)
 
 **Profiling agent**:
 A coding agent in the profiling role that produces profiling evidence for a region: statement
