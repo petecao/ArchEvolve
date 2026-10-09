@@ -1,7 +1,8 @@
 // Strict DX100 functional interface. Updated: 2026-10-04 ET (ticket 70: record channel hook).
 // 2026-10-09 ET: with -DSWDB_STRICT_WAIT_RULE_GEM5 (candidate certify 1.7, lowering certify 1.2) the
 // wait rule follows the gem5 DX100 device (research 14, .scratch/formal-verification-2026-10-09/
-// research/14-dx100-wait-rule.md, sections 1, 4 and 6). Without the define every line below that the
+// research/14-dx100-wait-rule.md, sections 1, 4 and 6), including the dispatch stall on tiles
+// (IF.cc:193-212). Without the define every line below that the
 // old header had compiles exactly as before (each #ifndef branch is the old text, byte for byte).
 // Out of scope: DX100 loads and stores still touch main memory at the call (no memory timing).
 #pragma once
@@ -59,11 +60,12 @@ inline State &state(){ static State s; return s; }
 // gem5 roles of one operation: the tiles it names as src1/src2/dst1/dst2 (never the condition tile),
 // how many of its dependencies are tile inputs (they come first), and whether it is a range loop
 // that filled its output tile (RangeFuser.cc:166-168, 214-218: it finishes without waiting for the
-// producers of its min, max and condition tiles). pending[t]: operations that name tile t.
+// producers of its min, max and condition tiles). pending[t]: operations that name tile t (rules 1
+// and 3). users[t]: operations that name tile t in any role, the condition included (rule 5 only).
 struct Roles { std::vector<int> named; size_t inputs,tile_dependencies; bool filled;
  Roles():inputs(0),tile_dependencies(0),filled(false){} };
-struct Gem5 { std::vector<Roles> roles; std::vector<std::vector<size_t>> pending;
- Gem5():roles(1),pending(NUM_TILES){} };
+struct Gem5 { std::vector<Roles> roles; std::vector<std::vector<size_t>> pending,users;
+ Gem5():roles(1),pending(NUM_TILES),users(NUM_TILES){} };
 inline Gem5 &gem5(){ static Gem5 g; return g; }
 #endif
 inline int thread(){return omp_in_parallel()?omp_get_thread_num():0;}
@@ -97,31 +99,10 @@ inline void cover(size_t id){State&s=state();if(!id||s.ops[id].covered)return;
  s.ops[id].covered=true;for(int t:s.ops[id].tiles)if(s.tiles[t].writer==id)s.tiles[t].cpu=s.tiles[t].device;
 }
 #else
-// Drop covered operations from pending[t].
-inline void prune(int t){State&s=state();std::vector<size_t>&p=gem5().pending[t];
+// Drop covered operations from a pending or users list.
+inline void prune_list(std::vector<size_t>&p){State&s=state();
  p.erase(std::remove_if(p.begin(),p.end(),[&s](size_t op){return s.ops[op].covered;}),p.end());}
-inline size_t issue(const std::vector<int>&inputs,const std::vector<int>&registers,
-                    const std::vector<int>&outputs,const std::vector<int>&reg_outputs={}){
- State&s=state();Op op;Roles roles;
- for(int id:inputs)op.dependencies.push_back(tile(id).writer);
- roles.tile_dependencies=op.dependencies.size();
- for(int id:registers)op.dependencies.push_back(reg(id).writer);
- op.tiles=outputs;op.registers=reg_outputs;s.ops.push_back(op);const size_t index=s.ops.size()-1;
- roles.named=inputs;roles.inputs=inputs.size();roles.named.insert(roles.named.end(),outputs.begin(),outputs.end());
- gem5().roles.push_back(roles);
- for(int id:roles.named){prune(id);gem5().pending[id].push_back(index);}
- for(int id:registers)reg(id).readers.push_back(index);
- for(int id:outputs){Tile&t=tile(id);t.writer=index;std::fill(t.cpu.begin(),t.cpu.end(),UINT32_C(0xa5a5a5a5));}
- for(int id:reg_outputs)reg(id).writer=index;
- ++s.operations;return index;
-}
-// The last issued operation's condition tile names no counted role. Every call appends it as its last
-// tile input, and calls this under the same lock right after issue, so it sits at named[inputs-1].
-inline void condition(int cond){if(cond<0)return;const size_t index=state().ops.size()-1;Roles&r=gem5().roles.back();
- r.named.erase(r.named.begin()+(r.inputs-1));--r.inputs;
- std::vector<size_t>&p=gem5().pending[cond];
- for(size_t k=p.size();k>0;--k)if(p[k-1]==index){p.erase(p.begin()+(k-1));break;}}
-inline void range_filled(bool filled){gem5().roles.back().filled=filled;}
+inline void prune(int t){prune_list(gem5().pending[t]);}
 // Cover an operation and, transitively, the producers of its inputs (tile and register), except the
 // tile inputs (min, max, condition) of a range loop that filled its output tile.
 inline void cover(size_t id){State&s=state();std::vector<size_t> stack(1,id),order;
@@ -130,6 +111,35 @@ inline void cover(size_t id){State&s=state();std::vector<size_t> stack(1,id),ord
   for(size_t k=r.filled?r.tile_dependencies:0;k<deps.size();++k)stack.push_back(deps[k]);}
  for(size_t op:order)for(int t:s.ops[op].tiles)if(s.tiles[t].writer==op)s.tiles[t].cpu=s.tiles[t].device;
 }
+// Rule 5, the dispatch stall (IF.cc:193-212): the device accepts a command only when no unfinished
+// command names its destination tile as a source, destination or condition, so issuing it covers them.
+inline void stall(int t){tile(t);const std::vector<size_t> users=gem5().users[t];for(size_t op:users)cover(op);
+ prune_list(gem5().users[t]);}
+inline size_t issue(const std::vector<int>&inputs,const std::vector<int>&registers,
+                    const std::vector<int>&outputs,const std::vector<int>&reg_outputs={}){
+ State&s=state();Op op;Roles roles;
+ for(int id:outputs)stall(id);
+ for(int id:inputs)op.dependencies.push_back(tile(id).writer);
+ roles.tile_dependencies=op.dependencies.size();
+ for(int id:registers)op.dependencies.push_back(reg(id).writer);
+ op.tiles=outputs;op.registers=reg_outputs;s.ops.push_back(op);const size_t index=s.ops.size()-1;
+ roles.named=inputs;roles.inputs=inputs.size();roles.named.insert(roles.named.end(),outputs.begin(),outputs.end());
+ gem5().roles.push_back(roles);
+ for(int id:roles.named){prune(id);gem5().pending[id].push_back(index);
+  prune_list(gem5().users[id]);gem5().users[id].push_back(index);}
+ for(int id:registers)reg(id).readers.push_back(index);
+ for(int id:outputs){Tile&t=tile(id);t.writer=index;std::fill(t.cpu.begin(),t.cpu.end(),UINT32_C(0xa5a5a5a5));}
+ for(int id:reg_outputs)reg(id).writer=index;
+ ++s.operations;return index;
+}
+// The last issued operation's condition tile names no counted role (it stays in users[cond] for rule 5).
+// Every call appends it as its last tile input, and calls this under the same lock right after issue,
+// so it sits at named[inputs-1].
+inline void condition(int cond){if(cond<0)return;const size_t index=state().ops.size()-1;Roles&r=gem5().roles.back();
+ r.named.erase(r.named.begin()+(r.inputs-1));--r.inputs;
+ std::vector<size_t>&p=gem5().pending[cond];
+ for(size_t k=p.size();k>0;--k)if(p[k-1]==index){p.erase(p.begin()+(k-1));break;}}
+inline void range_filled(bool filled){gem5().roles.back().filled=filled;}
 // A wait on t covers every uncovered operation that names t (src1/src2/dst1/dst2), and t's writer.
 inline void wait_gem5(int id){Tile&t=tile(id);const std::vector<size_t> named=gem5().pending[id];
  for(size_t op:named)cover(op);

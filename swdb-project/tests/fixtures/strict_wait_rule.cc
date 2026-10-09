@@ -86,6 +86,19 @@ int main(int argc, char **argv) {
     maa_indirect_load<int>(memory.data(), t[0], t[5]);
     wait_ready(t[3]); wait_ready(t[5]);
     show("ready0", get_tile_ready(t[0])); show("ready3", get_tile_ready(t[3])); show("ready5", get_tile_ready(t[5]));
+  } else if (scenario == "stall_source" || scenario == "stall_condition") {  // rule 5 (IF.cc:193-212)
+    for (int k = 0; k < 8; ++k) memory[k] = 100 + k;
+    put(t[0], {1, 2, 3});
+    maa_const<int>(0, r[1]); maa_const<int>(3, r[2]); maa_const<int>(1, r[3]);
+    if (scenario == "stall_source") {
+      maa_indirect_load<int>(memory.data(), t[0], t[1]);                 // reads t0 as its index
+      maa_stream_load<int>(memory.data(), r[1], r[2], r[3], t[0]);       // then overwrites t0
+    } else {
+      put(t[3], {1, 0, 1});
+      maa_stream_load<int>(memory.data(), r[1], r[2], r[3], t[1], t[3]); // reads t3 as its condition
+      maa_alu_scalar<int>(t[0], r[1], t[3], Operation_t::ADD_OP);        // then overwrites t3
+    }
+    show("ready1", get_tile_ready(t[1])); show("first1", first(t[1]));
   } else if (scenario == "constant_hold") {        // (e) a constant write to a register a command reads
     for (int k = 0; k < 8; ++k) memory[k] = 100 + k;
     maa_const<int>(0, r[1]); maa_const<int>(4, r[2]); maa_const<int>(1, r[3]);

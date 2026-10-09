@@ -4,7 +4,8 @@ Created: 2026-10-09 ET (Yan-Ru's request). Research 14
 (.scratch/formal-verification-2026-10-09/research/14-dx100-wait-rule.md) read gem5's DX100 device and
 refuted the strict layer's old wait rule. The gem5 rule is compiled in with -DSWDB_STRICT_WAIT_RULE_GEM5
 (candidate certify 1.7, lowering certify 1.2); without it the old rule runs unchanged (1.6 and earlier,
-lowering 1.1). Every scenario here runs under both rules.
+lowering 1.1). Every scenario here runs under both rules. Updated 2026-10-09 ET: rule 5, the dispatch
+stall on tiles (IF.cc:193-212), is part of the gem5 rule.
 """
 import subprocess
 from pathlib import Path
@@ -95,18 +96,27 @@ def test_an_unfilled_range_loop_covers_its_tile_inputs_under_both_rules(scenario
     assert result.returncode == 0 and values == {'size_b': 0, 'ready_min': 1, 'ready_a': 1}
 
 
-def test_the_read_offload_chunk_reads_tile0_uncovered_under_gem5_after_a_filled_range_loop(scenarios):
-    """Pins the finding of 2026-10-09: Peter's read offload (library/dx100/bfs_read_offload.inc:30-44) fails
-    candidate 1.7 with read_before_wait. The filled range loop leaves the stream load and the row-bound
-    gathers uncovered, and both name tile0, so tile0 is not ready when the CPU reads it. On gem5 the
-    gather that overwrites tile0 cannot dispatch while those commands are unfinished (IF.cc:193-212,
-    research 14 section 4), so this is a strict-layer corner (dispatch stalls are not modeled), not a
-    shown hazard. Kept as a pin until Yan-Ru decides; see the redeclaration evidence note."""
-    rule, executable = scenarios
+def test_the_read_offload_chunk_reads_tile0_covered_after_a_filled_range_loop(scenarios):
+    """Peter's read offload (library/dx100/bfs_read_offload.inc:30-44), one chunk. The filled range loop
+    leaves the stream load and the row-bound gathers uncovered (rule 2), and both name tile0. Rule 5
+    (IF.cc:193-212): the gather that overwrites tile0 is accepted only after they finish, so tile0 is
+    ready when the CPU reads it. Without rule 5 this read failed read_before_wait (2026-10-09 finding)."""
+    _, executable = scenarios
     result, values = run(executable, 'read_offload_chunk')
     assert result.returncode == 0, result.stderr
-    assert values == ({'ready0': 0, 'ready3': 1, 'ready5': 1} if rule == 'gem5' else
-                      {'ready0': 1, 'ready3': 1, 'ready5': 1})
+    assert values == {'ready0': 1, 'ready3': 1, 'ready5': 1}
+
+
+@pytest.mark.parametrize('scenario', ['stall_source', 'stall_condition'])
+def test_issuing_a_command_covers_the_users_of_its_destination_tile_under_gem5(scenarios, scenario):
+    """Rule 5: a command that writes tile t covers every uncovered command naming t as a source,
+    destination or condition (here a gather's index tile, or a stream load's condition tile). A wait on a
+    condition-only tile still covers nothing (rule 1, test above)."""
+    rule, executable = scenarios
+    result, values = run(executable, scenario)
+    assert result.returncode == 0, result.stderr
+    expected = 101 if scenario == 'stall_source' else 100
+    assert values == ({'ready1': 1, 'first1': expected} if rule == 'gem5' else {'ready1': 0, 'first1': SENTINEL})
 
 
 def test_a_constant_write_waits_for_its_readers_under_gem5_and_fails_under_the_old_rule(scenarios):

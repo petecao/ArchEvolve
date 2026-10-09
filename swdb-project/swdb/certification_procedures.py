@@ -197,29 +197,30 @@ PROCEDURES = MappingProxyType({
         '1.3': _candidate('1.3', 'ticket 70: evaluator records on a descriptor, faults in a separate seam object per '
                           'control, evaluator scan', 'swdb.certification:certify_candidate', 'evaluator_1_3', None,
                           'v1', (), _DX100_1_3,
-                          '51e6e839a0ee3ab600de02c713f844d24168df329460ae85d50f7e36c333ac15'),
+                          'f6d59b94a759750d994e7679ddc14e64b1f0846a52d6cae90905cabc37787704'),
         '1.4': _candidate('1.4', 'ticket 76: one binary per tile size, blinded run plan, random order, attributed '
                           'rejections, slide-window seam witness', 'swdb.certification_blinding:certify_candidate',
                           'evaluator_1_4', None, 'v1', _BLINDING, _DX100_1_4,
-                          'f0d79cf5d066962490da77cbbeff41abf6c0d518533baae8956c193a02c2be33'),
+                          'd4a02b7285d3580af267792209e41480dc018769684554af71ef88f31a282e73'),
         '1.5': _candidate('1.5', 'ticket 78: 1.4 with record-keeping in a separate evaluator process; DX100 '
                           'directive rule', 'swdb.certification_process:certify_candidate', 'evaluator_1_4',
                           'dx100_knob_defaults', 'v1', _BLINDING + _PROCESS, _DX100_1_5,
-                          '47d1964dea31e224c1920f37d88b1a0370a17b13cc54ddf577ebe3049020d83e'),
+                          'e2d1413bb5831ad4e0e77cfacbd88813dbc9721d0f66e93fa03248ca810e5373'),
         '1.6': _candidate('1.6', '2026-10-05 review fixes: 1.5 with knob_range reading every declared knob spelling '
                           'the candidate uses (unverified when none is used, never the default) and the '
                           'schedule_out_of_range control also mutating _Pragma forms',
                           'swdb.certification_process:certify_candidate', 'evaluator_1_4', 'dx100_knob_defaults',
                           'v2', _BLINDING + _PROCESS, _DX100_1_5,
-                          '1a520cc2aa4b40e681738dbd96a6ebfe68670f2a7961b5cf17ddd776096ef140'),
+                          '81e4697dcd77d60c5f96d191ddfa7c562e7b562e94d826cb1c51215ad1adc642'),
         # 2026-10-09 ET (Yan-Ru's request): research 14 refuted the old wait rule on gem5's DX100 device.
         '1.7': _candidate('1.7', '2026-10-09: 1.6 with the gem5 DX100 wait rule in the evaluator\'s strict layer '
                           '(a wait covers every uncovered command naming the tile as src1/src2/dst1/dst2, '
                           'transitively except through a filled range loop\'s tile inputs; a constant write '
-                          'waits for the register\'s readers; research 14)',
+                          'waits for the register\'s readers; issuing a command first covers the users of its destination '
+                          'tile, the dispatch stall of IF.cc:193-212; research 14)',
                           'swdb.certification_process:certify_candidate', 'evaluator_1_4', 'dx100_knob_defaults',
                           'v2', _BLINDING + _PROCESS, _DX100_1_5,
-                          '9bf43a94137fae3c1b82a4ac92a01676dc019747a209ad2568cc63e0c65ec1c4', wait_rule='gem5'),
+                          '9dedc2a90485df95875a3dd7bae99ed870ed89cf7841d59b1a1c8e02b213cf04', wait_rule='gem5'),
     }),
     NATIVE: MappingProxyType({
         '1.3': _native('1.3', 'ticket 75: native-CPU profile under 1.3 isolation (a seam object per fault)',
@@ -257,17 +258,18 @@ PROCEDURES = MappingProxyType({
                                 '76); calibration control rule of 2026-10-04 (8040609)',
                                 'swdb.certification:evaluate_trusted', 'simulated', None, None, None, None,
                                 ('swdb/certification.py',), _STRICT,
-                                '92545c60ba22d3a09c9085ef887617a3d7bb99566d5be85434bf65c446d2b519'),
+                                'bd98d8640a24635101802b26be5de970f3ec7be0905ae79bd2f989e873d6c4bf'),
         # 2026-10-09 ET (Yan-Ru's request): 1.1 with the gem5 DX100 wait rule (research 14). Calibration
         # certifies the unmodified authors' TDStepMAA (no tile3 -> tile5 patch); its store-wait control is
         # dropped_store_wait (the wait deleted). Lowering controls the new rule accepts are replaced.
         '1.2': CertifyProcedure(LOWERING, '1.2', 'lowerings and calibration as 1.1 with the gem5 DX100 wait rule '
-                                '(research 14): calibration of the unmodified authors\' source, controls the rule '
+                                '(research 14, with the dispatch stall on tiles): calibration of the unmodified authors\' source, '
+                                'controls the rule '
                                 'accepts replaced (wrong_store_wait -> dropped_store_wait, constant_uncovered '
                                 'dropped or replaced)',
                                 'swdb.certification:evaluate_trusted_gem5_wait', 'simulated', None, None, None, None,
                                 ('swdb/certification.py',), _STRICT,
-                                '7641787314534bc958bbc959ea1a9d59e0ca7c6f8ec43ce2c130f3ad8efbd51b', wait_rule='gem5'),
+                                '0c9bab290e8d46c7bd7a9f7a4a23f751bb910353b5005264e81de1cb61dd41b3', wait_rule='gem5'),
     }),
 })
 

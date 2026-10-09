@@ -268,8 +268,8 @@ def pragma_operators(source):
 
 def test_a_zero_threshold_is_refused_by_knob_range_under_1_6(tmp_path, monkeypatch, *, certification_store):
     record = _certify(tmp_path, monkeypatch, zero_threshold, certification_store=certification_store)
-    # 2026-10-09 ET: _certify stays on 1.6 (see PINNED_VERSION in test_certification_controls.py).
-    assert record['command']['version'] == '1.6' and record['verdict'] == 'failed'
+    # 2026-10-09 ET: the default is 1.7, which keeps 1.6's legality rules v2.
+    assert record['command']['version'] == c.VERSION == '1.7' and record['verdict'] == 'failed'
     assert {x['reason'] for x in record['matrix']} == {'knob_range'}
     knob = {k['name']: k for k in record['matrix'][0]['legality_checks'][0]['knobs']}['frontier_threshold']
     assert (knob['value'], knob['source'], knob['macro']) == (0, 'assignment', 'SWDB_FRONTIER_THRESHOLD')

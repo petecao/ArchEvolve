@@ -39,19 +39,19 @@ ALL = [(family, version) for family, table in procedures.PROCEDURES.items() for 
 # .scratch/formal-verification-2026-10-09/evidence/strict-gem5-wait-rule-redeclaration-20261009.md.
 
 FROZEN = {
-    ('candidate', '1.3'): '51e6e839a0ee3ab600de02c713f844d24168df329460ae85d50f7e36c333ac15',
-    ('candidate', '1.4'): 'f0d79cf5d066962490da77cbbeff41abf6c0d518533baae8956c193a02c2be33',
-    ('candidate', '1.5'): '47d1964dea31e224c1920f37d88b1a0370a17b13cc54ddf577ebe3049020d83e',
-    ('candidate', '1.6'): '1a520cc2aa4b40e681738dbd96a6ebfe68670f2a7961b5cf17ddd776096ef140',
-    ('candidate', '1.7'): '9bf43a94137fae3c1b82a4ac92a01676dc019747a209ad2568cc63e0c65ec1c4',
+    ('candidate', '1.3'): 'f6d59b94a759750d994e7679ddc14e64b1f0846a52d6cae90905cabc37787704',
+    ('candidate', '1.4'): 'd4a02b7285d3580af267792209e41480dc018769684554af71ef88f31a282e73',
+    ('candidate', '1.5'): 'e2d1413bb5831ad4e0e77cfacbd88813dbc9721d0f66e93fa03248ca810e5373',
+    ('candidate', '1.6'): '81e4697dcd77d60c5f96d191ddfa7c562e7b562e94d826cb1c51215ad1adc642',
+    ('candidate', '1.7'): '9dedc2a90485df95875a3dd7bae99ed870ed89cf7841d59b1a1c8e02b213cf04',
     ('native', '1.3'): '4b32c8f9c3b687c290ef33fd1bc8f479fc13523e83f4fa7ca7d759d0531adcff',
     ('native', '1.4'): '98c68dbf244c6c98116473839631643d315d977c51659d90e9bc4a2b24e0249a',
     ('native', '1.5'): '26d3fce0ffd8de603cc624945dae88eaec3d47ab9d34a3b1708c787e862d87af',
     ('library_operation', '1.0'): '7ffd0a8f3ff6e2fa0da4c966010c5a57a0378140a5a6c777c32fbcd4d3fa8dea',
     ('library_operation', '1.1'): '4cf8263345419fc5442d5aae5fb7f2a358c08b4d4052f90f7a3b2462fc9710b7',
     ('library_operation', '1.2'): 'a8cb6f19a83cf8ba530f6209b898af7b8985256665633c9e78c8f4ad9821cb91',
-    ('lowering_calibration', '1.1'): '92545c60ba22d3a09c9085ef887617a3d7bb99566d5be85434bf65c446d2b519',
-    ('lowering_calibration', '1.2'): '7641787314534bc958bbc959ea1a9d59e0ca7c6f8ec43ce2c130f3ad8efbd51b',
+    ('lowering_calibration', '1.1'): 'bd98d8640a24635101802b26be5de970f3ec7be0905ae79bd2f989e873d6c4bf',
+    ('lowering_calibration', '1.2'): '0c9bab290e8d46c7bd7a9f7a4a23f751bb910353b5005264e81de1cb61dd41b3',
 }
 
 # F6 (2026-10-05 ET): the DX100 files certify 1.3 and 1.4 read that no library entry, profile or
@@ -67,7 +67,7 @@ UNPINNED_DX100_1_3_1_4 = {
     'dx100/certification/v1_4/seams.cc': '1a1deb79cff58ccae5ee5d9cc08bdae123c1c821b0a675e62d80c2033ec23eef',
     # 2026-10-09 ET: the gem5 wait-rule switch added #ifdef SWDB_STRICT_WAIT_RULE_GEM5 blocks; without the
     # define the header preprocesses to the same text as e90354b1... (evidence: .scratch/formal-verification-2026-10-09/evidence/strict-gem5-wait-rule-redeclaration-20261009.md).
-    'dx100/strict/MAA_functional.hpp': '388ffc1935e0e4856118682c9da5f8d93918f800ba236042ecccd67b4c12a1ff',
+    'dx100/strict/MAA_functional.hpp': 'a24a81631c9365b114395bab65c73048269765a2862a98f4ccb4609eb80fbfa5',
     'dx100/strict/gem5/m5ops.h': 'b1eb7d074231782a943faa9cc249f6027152b6c727c5f70b71808e122e97867f',
 }
 
