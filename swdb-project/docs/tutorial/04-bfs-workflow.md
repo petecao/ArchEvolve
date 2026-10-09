@@ -1,6 +1,6 @@
 # 4. Follow BFS through rewrites and evidence
 
-Updated: 2026-10-07 (Eastern Time). Reading budget: 9 minutes.
+Updated: 2026-10-09 (Eastern Time). Reading budget: 9 minutes.
 
 [Tutorial](README.md) · [Previous](03-components.md) · [Next](05-contributing.md)
 
@@ -78,8 +78,8 @@ preservation obligations, and tunable knobs.
 
 Normative entries and code pins live in `library/`. Certification/review records
 derive their state. Certification tests exact content and negative controls;
-it does not prove arbitrary inputs correct or establish target performance.
-Formal clauses currently have label `stated`; no formal verifier grants `proven`.
+it establishes neither formal proof nor target performance. Formal clauses remain
+`stated`; no formal verifier grants `proven`.
 
 ArchEvolve proposals that cite a library contract must pin its dependencies and
 use current shared certified entries. Experimental entries belong to Extensa.
@@ -139,10 +139,10 @@ execution certification with a frozen estimate. It retains
 
 ## Timed research evidence has its own gates
 
-Native evaluation retains exact timed results, independent parent-array checks,
+Native evaluation retains timings, independent parent-array checks,
 build/source/input identities, trials, and environment. Paired collection orders
 A/A repeatability or A/B comparisons prospectively. Native `bfs.complete_call.v1`
-and the DX100 author's internal ROI have different boundaries.
+and the DX100 author's internal ROI differ.
 
 Extensa gem5 needs compatible model/binary/checkpoint/input identities and observed
 accelerator/completion evidence. Simulator exit and source-level operation support
@@ -157,9 +157,19 @@ enters the repository record store. Export retains tags. Promotion requires a
 recorded review and fresh evaluation under a derived team protocol; team policy
 still applies to its dependencies.
 
-Current campaign pairing has no verified complete-call application adapter;
-real paired-estimate seconds stay `null`. Fixture agreement tests do not establish
-measured application agreement or enable screening.
+[Campaign pairing](../../swdb/extensa_pairing.py), when enabled, retains unknown
+receipts for baselines after protocol freeze and each materialized candidate
+before admission and certification, including repaired attempts. These receipts cover source
+metadata only: seconds stay `null`, and they cannot authorize timing or enter
+agreement. Timed evaluator requests retain separate forecasts. No verified
+complete-call application adapter exists; fixture agreement cannot enable screening.
+
+[Certification failures](../../swdb/campaign_targets.py) distinguish candidate
+refusals from infrastructure errors. Source-scope, harness-scan, or missing
+candidate control sites remain failed checks eligible for bounded repair.
+Compiler availability, trusted-build, configuration, or trusted-file errors stop
+with `infrastructure_failure`, retaining the interrupted iteration without repair
+or plateau progress.
 
 ## Read a historical handoff without reinterpreting it
 

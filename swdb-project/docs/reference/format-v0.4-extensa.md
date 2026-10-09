@@ -1,6 +1,7 @@
 # Extensa-mode record fields (format 0.4 addition)
 
 Created: 2026-10-03 (Eastern Time)
+Updated: 2026-10-09 (Eastern Time): artifact-receipt fields and certification failure boundary
 Updated: 2026-10-04 (Eastern Time): site-finder fields (ticket 55); campaign isolation and gem5 approval fields
 Updated: 2026-10-04 21:30 (Eastern Time): `protocol.speed_rule` and evaluator v3 (tickets 66 and 67)
 Updated: 2026-10-05 03:15 (Eastern Time): provider capacity and protected regions (ticket 73)
@@ -247,14 +248,25 @@ retain their historical interpretation.
 
 ## Prospective artifact coverage before certification
 
-Updated: 2026-10-08 ET. A fresh campaign records a structural unknown for every
-persisted candidate artifact, including refused and repaired attempts, and each
-baseline across its registered workload classes immediately after protocol
-freeze. These source-metadata receipts run no candidate code and start no build,
-provider or timing job. `execution.observation_scope: artifact_before_certification`
-is closed to campaign metadata and original freeze ID/identity/settings hash;
-the six-field `protocol_context` is a campaign projection, not a compiled binary,
-complete runtime bridge or a new functional correctness claim.
+[Campaign pairing](../../swdb/extensa_pairing.py), when enabled, records a structural
+unknown for each baseline after protocol freeze and every materialized candidate
+artifact before admission/certification, including refused and repaired attempts. Each
+artifact is covered across the registered workload classes. These receipts run
+no candidate code and start no build, provider, or timing job.
+
+The [paired-estimate schema](../../schemas/paired_estimate.schema.json) closes
+`timing_context.execution` to these fields when `observation_scope` is present:
+
+| Fields | Meaning |
+|---|---|
+| `observation_scope`, `backend` | Exactly `artifact_before_certification` and `source_metadata_only` |
+| `protocol`, `protocol_identity_sha256`, `protocol_settings_sha256` | Original freeze ID, identity, and digest of its complete settings |
+| `protocol_context` | Exactly `target`, `roi`, `threads`, `repetitions`, `sources`, and `workloads`, projected from campaign settings |
+| `selected_input` | Empty object; no executable input configuration is claimed |
+| `target`, `roi`, `threads`, `sources`, `repetitions` | Must match the projection; the receipt's input must occur in its workloads |
+
+The projection identifies campaign metadata. It establishes no compiled-binary
+binding, complete runtime bridge, or functional correctness.
 
 These receipts always have null seconds, unknown state and agreement eligibility
 false, even in a numerical fixture. They remain in the campaign summary. An
@@ -270,3 +282,15 @@ never resumed or backfilled. This change cannot establish blindness or D30
 admission for earlier campaigns with missing actual forecasts/outcomes. The
 complete-call numeric adapter remains unavailable, and unsupported/no-switch
 reports retain that scientific limitation.
+
+## Certification infrastructure stops the campaign
+
+[Certification dispatch](../../swdb/campaign_targets.py) distinguishes explicit
+candidate refusals from infrastructure failures. Authored-source scope, harness
+scan, and missing candidate control-site checks remain failed certification
+outcomes eligible for bounded repair. Compiler availability, trusted evaluator
+build, library/configuration, and trusted-file I/O errors instead stop with
+`infrastructure_failure`. The summary retains `interrupted_iteration` and
+`stop_detail`; the failure creates no repair call or completed iteration/plateau
+increment. See the [certification reference](bfs-typed-library.md#handle-a-certification-refusal-at-the-right-boundary)
+for procedure manifests and standalone CLI categories.

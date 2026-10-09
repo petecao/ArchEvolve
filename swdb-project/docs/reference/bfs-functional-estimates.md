@@ -1,6 +1,6 @@
 # Functional correctness with estimated speed
 
-Updated: 2026-10-06 ET.
+Updated: 2026-10-09 ET.
 
 `evaluate-functional` combines an exact current strict-functional certification
 with a frozen analytic estimate. The finite certification matrix includes the
@@ -33,11 +33,17 @@ estimate; its hash is carried with the ratio.
 message_version: '1.0'
 id: bfs.functional.evaluation.example
 candidate: bfs-functional-read-offload-20261006-a1.proposal.candidate-1
-certification: certification.23f81442358b4dcc8688140a394a1f08
+certification: REPLACE_WITH_CURRENT_CERTIFICATION_ID
 characterization: bfs.functional.kron-g16.t4.characterization.objects.a2
 target_description: dx100-e4fc4af-functional-analytic-v1.t4
 protocol: REPLACE_WITH_FRESH_FROZEN_PROTOCOL_ID
 ```
+
+Use a current execution certificate for this exact candidate. The retained
+`certification.23f81442358b4dcc8688140a394a1f08` is historical; its source manifest
+predates the 2026-10-08 procedure re-declaration. A fresh estimate protocol alone
+does not make that certificate reusable. See the
+[procedure rules](bfs-typed-library.md#handle-a-certification-refusal-at-the-right-boundary).
 
 ```sh
 python3 -m swdb evaluate-functional request.yaml --records /path/to/records --library /path/to/library --format json

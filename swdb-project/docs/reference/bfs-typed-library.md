@@ -1,6 +1,7 @@
 # Typed library and content-bound certification
 
 Created: 2026-10-03 ET
+Updated: 2026-10-09 ET (current defaults, procedure fingerprints, and campaign failure handling)
 Updated: 2026-10-05 ET (certification version tables, record identity fields, evidence basis); 2026-10-05 ET (ticket 75 native-CPU certification under command 1.3 and 1.4); 2026-10-04 ET (control observed checks and clause comparison; ticket 70 certification isolation)
 
 The `library/` folder holds normative YAML and buildable C++ outside the record store.
@@ -76,7 +77,7 @@ Added 2026-10-05 ET (ticket 75, command versions 1.3 and 1.4): native-CPU candid
   `main`, records on a harness descriptor, one seam object per fault
   (`library/native/certification/seams.cc`), and an evaluator hook before DOBFS's protected frontier
   print that records each window and may apply one step-input fault.
-- 1.4 (the default) uses ticket 76's mechanism (`library/native/certification/v1_4/`): one binary
+- 1.4 uses ticket 76's mechanism (`library/native/certification/v1_4/`): one binary
   per build holding every fault, a blinded 43-byte run plan on a pipe, a random run order recorded
   in `profile.schedule`, record files named by the run's nonce, windows from the slide-window
   ledger, the seam witness on every positive cell, and a control rejected only when attributed to
@@ -103,8 +104,8 @@ Added 2026-10-05 ET (ticket 75, command versions 1.3 and 1.4): native-CPU candid
 
 Added 2026-10-05 ET (certification code-review fixes): command versions belong to command
 families, each with its own frozen version table (`swdb/certification_procedures.py`): candidate
-artifacts on DX100 (1.3-1.6, default 1.6), native-CPU contracts (1.3-1.5), library operations
-(1.0-1.2) and lowerings with calibration (1.1). An unknown version is refused. New certification
+artifacts on DX100 (1.3-1.6, default 1.6), native-CPU contracts (1.3-1.5, default 1.5), library operations
+(1.0-1.2, default 1.2) and lowerings with calibration (1.1). An unknown version is refused. New certification
 records add to `command`:
 - `family` (`candidate`, `native`, `library_operation` or `lowering_calibration`), and for library
   operations `library_operation_version`, so a library-operation label is never read as a candidate
@@ -119,6 +120,31 @@ and `simulated` for functional-model runs (ADR 0008); earlier records say `simul
 Older records carry none of these fields; `swdb.certification_procedures.classify` names the
 procedure each one ran, including the labels that drifted (the native record above; DX100 1.4
 records before 93a2a94, which named record files by cell).
+
+## Handle a certification refusal at the right boundary
+
+[Candidate checks](../../swdb/certification_common.py) mark authored-source refusals
+explicitly. Scope violations keep `certification_aborted`; evaluator-symbol scans
+keep `harness_scan`; missing candidate mutation sites keep
+`negative_control_site:NAME`. Standalone commands retain their failure or usage
+exit code. [Campaign certification](../../swdb/campaign_targets.py) can pass these
+failed checks to bounded repair.
+
+Compiler availability, trusted evaluator builds, invalid library/configuration,
+and trusted-file I/O failures instead stop the campaign with
+`infrastructure_failure`. The summary keeps `stop_detail` and
+`interrupted_iteration`; no repair call or completed iteration/plateau increment
+is created for that failure. A candidate compilation result remains part of the
+certification matrix; it is distinct from failure to build the trusted evaluator.
+
+The 2026-10-08 source change re-declared the frozen procedure digests in
+[the version table](../../swdb/certification_procedures.py). Version labels alone
+do not identify the executed code: compare `sources_sha256` and `kernel_sources`.
+Historical receipts keep their recorded manifests. Functional evaluation requires
+a certificate matching the current procedure; an older receipt is not refreshed
+by keeping its version label.
+
+## Inspect or promote an entry
 
 `swdb get ENTRY_ID` prints normative content with derived tier and status. Review records
 bind a `target` content hash to a `reviewer`, `reviewed_at` and passing certification

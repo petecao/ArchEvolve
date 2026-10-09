@@ -1,6 +1,6 @@
 # 5. Contribute records and understand profiling
 
-Updated: 2026-10-07 (Eastern Time). Reading budget: 7 minutes.
+Updated: 2026-10-09 (Eastern Time). Reading budget: 7 minutes.
 
 [Tutorial](README.md) · [Previous](04-bfs-workflow.md)
 
@@ -125,6 +125,7 @@ toolchain and host prerequisites. Read the [profiling guide](../mbit10-profiling
 | Missing metrics or incomplete package | Read collection parts, correctness, scope, and explicit incompleteness reasons |
 | Remote artifacts are unverified | Verify on their producing host when needed; metadata alone cannot refresh them |
 | Build passes but comparison is rejected | Inspect exact protocol, source, workload, ROI, target, and repetition bindings |
+| Certification stops a campaign with `infrastructure_failure` | Fix the compiler, trusted files, or configuration named by `stop_detail`; candidate repair does not address these errors |
 
 For code changes, follow the [ArchEvolve rules](../../../AGENTS.md),
 [SWDB rules](../../AGENTS.md), [local ticket workflow](../agents/issue-tracker.md),
