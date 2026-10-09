@@ -1,6 +1,6 @@
 # Continue the analytic evaluator work
 
-Updated: 2026-10-09 02:50 ET
+Updated: 2026-10-09 12:54 ET
 
 **Active after Yan-Ru explicitly resumed work.** Fourteen of fifteen assigned agent tickets are resolved. Ticket16's artifact/baseline forecast fix passed 73 public regression tests and independent implementation review; ticket17 remains claimed with its acceptance boxes unchecked. The 30-minute heartbeat is ACTIVE.
 
@@ -9,11 +9,21 @@ Updated: 2026-10-09 02:50 ET
 | CPU ticket 11 | Resolved; held-out BFS broad-band pass, BC failure | Preserve both outcomes |
 | Generality ticket 14 | Resolved; nine pairs, 45 trials; seven whole-call totals unknown | Preserve qualified results |
 | Storage RETIRE a4 / plan a5 | Existing attempt collected once; successful original receipt, all sixteen rows retired | Do not repeat retirement or DEFAULT |
-| Ticket 17 science | All four normal custody chains passed root and peer review | FINALIZE reviewed; unsupported/zero pairs. Process no-use/owner guards and unchanged storage floor block full indexes |
+| Ticket 17 science | All four normal custody chains passed root and peer review; FINALIZE unsupported/zero pairs | Fresh storage floor now passes after authorized disposable cleanup. Original zombie guard still refuses; reviewed R2 remains unselected |
 | Standards + Spec review | Both implementation axes reviewed; identified fixes tested and pushed at 2caa5545 | Complete final evidence review after report and strict audit |
 
 
 
+
+## Authorized disk reclamation and direct index proposal — 2026-10-09 12:54 ET
+
+[Exact compact cleanup record](evidence/17-authorized-disposable-disk-reclaim-20261009-a5/README.md) records the user's explicit disk-reclaim request and completed removal of two old disposable pytest fixture trees and four rebuildable site-finder caches. All six targets are absent on fresh remote readback. Reclaimed allocated space is2,720,329,728B on `/data1` and3,807,019,008B on `/data`; parent test/audit logs and receipts physically rehash unchanged. Five compact originals total29,779B; the full15,298,786B per-file hash/stat manifest remains remote. Current scientific YAML, summary/export/validation bodies, campaign.sqlite state databases, source worktrees and controls were excluded. No human process, sudo or historical-worktree removal occurred.
+
+Actual12:51:46 ET floor original296B/4acf97f6 reports RAM125302091776B, `/data`103614312448B and `/data1`24699875328B; unchanged floors pass, with2,151,297,024B `/data1` margin. Storage is no longer the observed blocker. This is dated capacity, not future guard readiness. PRIMARY/SOURCE remain R; M2/H and original R5/completion pins match. The human root rule edit and concurrent local016767fe documentation commit are preserved.
+
+Use the direct serial index route after a fresh complete selected guard passes. R6's inaccessible PAM aliases still block the separate old-worktree recovery, but that operation is no longer needed for disk recovery. Original R5's account-owner check still rejects the two owned zombies' root-owned kernel leaves. Reviewed R2 remains SOURCE ONLY/UNSELECTED/NOTRUN pending explicit override; the user's request to propose improvements is not selection. Cleanup's reviewed targeted scan limitations do not waive R5/R6 guards or prove whole-host no-use.
+
+Four full inventories/indexes, original32 closure, assembly, unchanged6a and final scientific Standards/Spec review remain pending. The report stays unsupported/zero eligible pairs; no historical estimates, numerical admission or acceptance are invented.14/15 assigned resolved; ticket17 claimed/all four boxes unchecked. `review_plan` completed current source/actual review; `campaign_readiness` completed the direct-route assessment; the earlier `audit_inputs` interruption remains historical. Heartbeat ACTIVE; do not recreate removed disposable output without a newly selected reader.
 
 ## Read-only heartbeat — 2026-10-09 02:50 ET
 

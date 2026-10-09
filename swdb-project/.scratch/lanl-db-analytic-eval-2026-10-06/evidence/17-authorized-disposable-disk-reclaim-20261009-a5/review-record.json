@@ -1,0 +1,43 @@
+{
+  "format": "swdb.parent-record-of-in-chat-review.v1",
+  "date_et": "2026-10-09",
+  "written_by": "root",
+  "independent_reviewer": "review_plan",
+  "independent_review_delivery": "in-chat only; no independent receipt file was created",
+  "source": {
+    "path": "../../scoped_disposable_cleanup_20261009.py",
+    "bytes": 16465,
+    "sha256": "1a260f03f8d54ee6b757d7d5745b1ce082e2ea868e44162f8c8fd522f600c8d6",
+    "material_findings_after_repairs": 0
+  },
+  "fake_safety_verification": {
+    "initial_passed": 5,
+    "after_repairs_passed": 5,
+    "live_files_used_as_tests": false,
+    "covered": ["external symlink target preservation", "hardlink refusal", "embedded Git refusal", "replaced inode refusal", "changed tree refusal", "ancestor symlink replacement refusal", "hashed bytes equal interpreted bytes"]
+  },
+  "actual_pre_apply_review": {
+    "result": "PASS_FOR_EXACT_DISPOSABLE_SCOPE",
+    "limitations_digest": "7974f521e0cf7fcbe54be290260eaa8783ac3fecd8d10db425942dc927f9bd0d",
+    "known_zombie_and_PAM_limitations_retained": true,
+    "actual_current_SSH_timeout_transport_ancestry_only": true,
+    "whole_host_no_use_proven": false,
+    "immutable_index_or_recovery_guard_exception": false
+  },
+  "independent_post_completion_closure": {
+    "result": "PASS",
+    "unique_exact_originals": 5,
+    "original_bytes": 29779,
+    "private_archive_bytes_sha_original_nine_stat": "PASS",
+    "six_targets_absent": true,
+    "producer_receipts_unchanged": true,
+    "remote_manifest_and_completion_match": true,
+    "capacity_arithmetic": "PASS",
+    "prose_readiness_and_science_boundaries": "PASS"
+  },
+  "scientific_admission": false,
+  "original_R5_modified": false,
+  "R2_replacement_selected": false,
+  "R6_recovery_cleared": false,
+  "index_or_audit_run": false
+}

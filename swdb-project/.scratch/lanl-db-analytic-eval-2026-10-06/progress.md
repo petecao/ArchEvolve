@@ -1,12 +1,26 @@
 # Implementation progress
 
-Updated: 2026-10-09 02:50 ET
+Updated: 2026-10-09 12:54 ET
 
 **Current state: ACTIVE after Yan-Ru's explicit resumption; 14/15 assigned tickets resolved; ticket16 review finding addressed.**
 Ticket 17 remains `claimed`, with acceptance pending. Start from [resume.md](resume.md).
 The 30-minute heartbeat `lanl-analytic-evaluator-progress` is ACTIVE on the resumed chat.
-Readiness and evidence-review agents are responsive; completed subtasks are retained.
+Current readiness and cleanup-review subtasks are completed; the prior interrupted audit subtask is not presented as running or cleared.
 
+
+## Authorized disposable-output cleanup — 2026-10-09 12:54 ET
+
+[Cleanup receipt package](evidence/17-authorized-disposable-disk-reclaim-20261009-a5/README.md) retains five exact compact originals29,779B. The user requested disk reclamation. Two completed old pytest fixture trees and four current rebuildable site-finder caches were removed after physical size/SHA/nine-stat inventory, source/fake-safety review, explicitly classified targeted process limitations and a fresh complete rehash. Remote readback confirms all six absent and producer receipts unchanged. The full15,298,786B hash/stat manifest remains remote; no raw body transfer, source sync, human job action or old-worktree removal occurred. Original R5 and completion originals rehash unchanged.
+
+| Scope | Current result | Remaining action |
+|---|---|---|
+| `/data1` disposable fixtures |2,720,329,728B reclaimed; actual free24,699,875,328B at12:51:46 ET | Unchanged21GiB floor passes now; recheck for any dispatch |
+| `/data` site-finder caches |3,807,019,008 allocated B removed; actual free103,614,312,448B | Do not regenerate unless a new selected reader needs them |
+| Original pre-index R5 | Unchanged36,052B/be2f68c21a72; zombie owner proof still refuses | R2 identity proof remains SOURCE ONLY/UNSELECTED/NOTRUN pending explicit override and fresh full inputs/approval |
+| Old generality worktree recovery R6 | PAM aliases remain permission-limited | Separate blocked recovery, no longer a disk-reclamation prerequisite |
+| Scientific evidence | Four normals/FINALIZE complete once; report unsupported/zero pairs | Serial full indexes/original32/assembly/unchanged6a/final scientific review pending |
+
+Cleanup grants no whole-host no-use, recovery or scientific clearance. Current YAML, summaries, campaign.sqlite state databases, exports, validation/custody/control/source originals and human tickets/root edit are preserved.14/15 assigned tickets resolved;17claimed/all four acceptance unchecked. `review_plan` completed source and actual pre-apply review; `campaign_readiness` completed the practical direct-route assessment. Earlier `audit_inputs` interruption remains historical. Heartbeat ACTIVE; preserved human localHEAD016767fe precedes this new scoped checkpoint.
 
 ## Read-only heartbeat — 2026-10-09 02:50 ET
 
