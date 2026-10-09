@@ -1,7 +1,7 @@
 # Map: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-09 01:32 ET
+Updated: 2026-10-09 02:16 ET
 **Type:** ticket map
 **Status:** claimed (unfinished implementation/evaluation)
 **Work state:** active; [resume guide](resume.md)
@@ -58,6 +58,8 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | 23 | [Export and round-trip test](issues/23-export-and-round-trip.md) | wontfix | 22 | 1 day |
 
 ## Context pointers
+
+- 2026-10-09 02:11 ET: [User cleanup and tested source-only observer proposal](evidence/17-cleanup-followup-and-inactive-process-proposal-20261009-a5/README.md): storage/process gates persist;96 isolated cases and both source reviews pass; replacement remains UNSELECTED/NOTRUN pending prior-policy override/fresh admission.14/15 assigned resolved; ticket17 acceptance unchanged; no remote source sync or human-status changes.
 
 - 2026-10-09 01:32 ET: [Current process and storage blockers](evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/README.md) retain exact01:08 saved projection,01:19 process diagnostic and01:20 capacity originals. All four normal trajectories and original FINALIZE completed once; actual report is unsupported/zero eligible pairs/blind-order unverified/no-switch. Full inventories/indexes, original32 closure, assembly, unchanged6a strict audit and final scientific review remain pending. The original guards refuse root-owned zombie stat leaves; R6 additionally retains protected PAM alias uncertainty. `/data1` remains short569032704B at the dated observation. No guard waiver, unrelated process action, recovery archive/removal/index or remote PRIMARY source sync occurred.14/15 assigned resolved; ticket17 remains claimed with acceptance unchecked, human-owned statuses unchanged; heartbeat ACTIVE.
 

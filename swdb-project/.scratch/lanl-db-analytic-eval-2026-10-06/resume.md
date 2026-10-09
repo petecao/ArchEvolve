@@ -1,6 +1,6 @@
 # Continue the analytic evaluator work
 
-Updated: 2026-10-09 01:41 ET
+Updated: 2026-10-09 02:16 ET
 
 **Active after Yan-Ru explicitly resumed work.** Fourteen of fifteen assigned agent tickets are resolved. Ticket16's artifact/baseline forecast fix passed 73 public regression tests and independent implementation review; ticket17 remains claimed with its acceptance boxes unchecked. The 30-minute heartbeat is ACTIVE.
 
@@ -14,6 +14,12 @@ Updated: 2026-10-09 01:41 ET
 
 
 
+
+## Cleanup follow-up and tested readiness proposal — 2026-10-09 02:16 ET
+
+[Compact follow-up](evidence/17-cleanup-followup-and-inactive-process-proposal-20261009-a5/README.md) retains19 exact originals/111077B, avoiding another full source/capture copy. Actual01:56 ET user cleanup raised `/data` free space to99822661632B, but `/data1` remains569032704B below its floor and the same process blockers persist. Fresh02:12 ET floor original295B/0cb8c6b7 confirms RAM125496483840B and `/data`99822661632B pass, while `/data1`21979545600B is still569032704B short. Actual02:05 ET stat-only check found all16 named entrypoints present, four exports matching original nine stat fields; no full catalog/hash/no-use readiness is inferred. Future readers still need all eligible YAML bodies, export bodies and compact original validation/custody/control files. No deletion or regeneration occurred.
+
+Prospective patchR2 fixes inactive zombie identity proof and descriptor ownership;96/96 isolated cases pass. Standards and Spec source reviews each have0 new findings. Only inactive_owned_identity changes; originalR5/34 other function-class ASTs and all source/native/scientific policies remain unchanged. The observer is UNSELECTED/NOTRUN pending explicit override of the prior immutable-guard prohibition, plus fresh payload-bound/source/native/full-no-use/capacity approval. Capacity remains a separate blocker; no numerical/D30/6a admission, stopped-state resume or repeated custody/science.14/15 assigned resolved, ticket17 claimed/all acceptance unchecked; user cleanup/root rule edit preserved. Table/agent health02:09 ET, all responsive, nextby02:39 ET; heartbeat ACTIVE, remote PRIMARY/originR frozen.
 
 ## Fresh read-only heartbeat — 2026-10-09 01:41 ET
 
