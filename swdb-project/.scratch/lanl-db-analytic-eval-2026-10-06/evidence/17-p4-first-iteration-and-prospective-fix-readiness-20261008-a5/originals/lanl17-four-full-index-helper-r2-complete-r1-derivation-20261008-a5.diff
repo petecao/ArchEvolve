@@ -1,0 +1,61 @@
+--- /private/tmp/lanl17_prepare_four_full_index_metadata_20261008_a5_r1.py
++++ /private/tmp/lanl17_prepare_four_full_index_metadata_20261008_a5_r2.py
+@@ -91,8 +91,8 @@
+  for v,s in list(SEEN.values()):
+   read(v);need(SEEN[v['path']][1]==s,'original_metadata_changed')
+ def unsealed(v):need(type(v) is dict and 'identity_sha256' not in v,'unsealed_original_required');return v
+-def sealed(v):
+- need(type(v) is dict and v.get('canonical_ensure_ascii') is True,'original_true_policy')
++def sealed(v,declared_policy_required=True):
++ need(type(v) is dict and (not declared_policy_required or v.get('canonical_ensure_ascii') is True),'original_true_policy')
+  need(v.get('identity_sha256')==digest({k:x for k,x in v.items() if k!='identity_sha256'}),'original_true_seal');return v
+ def fresh(v,other=()):
+  p=path(v,False);need(not p.exists() and not p.is_symlink(),'fresh_route')
+@@ -100,6 +100,8 @@
+  for r in (S,RAW,*other):
+   q=Path(r);need(not p.is_relative_to(q) and not q.is_relative_to(p),'disjoint_output_route')
+  return p
++def metadata_route(v,basename):
++ pin(v);p=path(v['path']);need(p.name==basename and not p.is_relative_to(Path(S)) and not p.is_relative_to(Path(RAW)),'fixed_external_metadata_original_route')
+ def context(cid):return {'source_C':C,'estimator_sha256':F6,'final_R':{'commit':R,'tree':TREE},'account':ACCOUNT,'campaign':cid,'source_path':S,'project':S+'/swdb-project','records_directory':RAW+'/campaign-runs/extensa/'+cid+'/records','manifest_identity_sha256':M2['identity_sha256']}
+ def request(spec):return {'format':'swdb.lanl17-parent-record-index-request.v1','context':spec['context'],'originals':spec['originals'],'catalog_inventory':spec['catalog_inventory'],'summary_binding':spec['summary_binding'],'limits':spec['limits'],'parent_review':spec['writer_parent_review'],'output_directory':spec['writer_output_directory']}
+ def attestation(v,cid):
+@@ -146,7 +148,7 @@
+ 
+ def specification(data,cid,a):
+  exact(data,('format','stage','campaign','inventory_original','validation_originals','summary_binding','parent_attestation','author_metadata_deadline_seconds','routes'),'specification_input_schema')
+- inv=unsealed(strict(read(data['inventory_original'])));rows,limits=validate_inventory(inv,cid);o,count=originals(cid,data['validation_originals']);need(count==len(rows),'original_validation_and_complete_inventory_count')
++ metadata_route(data['inventory_original'],'catalog-inventory.json');inv=unsealed(strict(read(data['inventory_original'])));rows,limits=validate_inventory(inv,cid);o,count=originals(cid,data['validation_originals']);need(count==len(rows),'original_validation_and_complete_inventory_count')
+  need(a['catalog_inventory_sha256']==digest(rows) and a['validation_files_sha256']=={k:data['validation_originals'][k]['sha256'] for k in VALIDATION},'parent_attested_original_pins')
+  need(utc(inv['current_facts_prepared_utc'])<=utc(a['observed_utc']),'inventory_before_parent_observation')
+  routes=exact(data['routes'],('preparation_output','author_output','writer_output','bootstrap_logs','inner_logs','outer_logs'),'six_fresh_routes');values=list(routes.values())
+@@ -166,6 +168,7 @@
+ def bootstrap(data,cid,a):
+  exact(data,('format','stage','campaign','author_preparation_plan','specification_original','request_original','author_custody_original','actual_author_outputs_parent_reviewed','parent_attestation','bootstrap_parent_remote_seconds','bootstrap_parent_local_seconds','preparation_output'),'bootstrap_input_schema')
+  need(data['actual_author_outputs_parent_reviewed'] is True,'explicit_actual_a2_original_review')
++ for key,name in (('author_preparation_plan','index-author-action-plan.json'),('specification_original','index-author-specification.json'),('request_original','index-request.json'),('author_custody_original','author-custody.json')):metadata_route(data[key],name)
+  plan=unsealed(strict(read(data['author_preparation_plan'])));spec=unsealed(strict(read(data['specification_original'])));req=unsealed(strict(read(data['request_original'])));custody=sealed(strict(read(data['author_custody_original'])))
+  need(plan['format']=='swdb.lanl17-full-index-author-preparation.v1' and plan['executable'] is False and plan['scientific_admission'] is False and plan['specification_pin']==data['specification_original'],'original_preparation_binding')
+  need(spec['context']==context(cid) and req==request(spec) and req['context']==context(cid),'actual_original_a2_request_equality')
+@@ -177,7 +180,7 @@
+  need(custody['inherited_parent_validated_snapshot']==req['parent_review']['validated_snapshot'] and custody['limits']==req['limits'] and custody['original_summary_binding']==req['summary_binding'],'actual_author_snapshot_limits_summary')
+  need(a['catalog_inventory_sha256']==digest(req['catalog_inventory']) and a['validation_files_sha256']=={k:req['originals'][k]['sha256'] for k in VALIDATION} and utc(custody['checked_utc'])<=utc(a['observed_utc']),'fresh_original_author_continuity')
+  routes=plan['routes'];need(req['output_directory']==routes['writer_output'] and spec['output_directory']==routes['author_output'],'actual_author_output_routes')
+- for key in ('writer_output','bootstrap_logs','inner_logs','outer_logs'):fresh(routes[key],list(routes.values())[:0]+[v for k,v in routes.items() if k!=key])
++ for key in ('writer_output','bootstrap_logs','inner_logs','outer_logs'):fresh(routes[key],[v for k,v in routes.items() if k!=key])
+  out=fresh(data['preparation_output'],list(routes.values())+[str(Path(data['request_original']['path']).parent)])
+  w=req['limits']['metadata_deadline_seconds'];need(type(w) is int and 60<=w<=3600,'original_writer_seconds')
+  forwarded=['--request',data['request_original']['path'],'--request-sha256',data['request_original']['sha256'],'--request-author-source',CONTROLS['author']['path'],'--request-author-source-sha256',CONTROLS['author']['sha256'],'--parent-review-sha256',digest(req['parent_review']),'--output-directory',routes['writer_output'],'--log-directory',routes['inner_logs'],'--envelope-sha256',CONTROLS['envelope']['sha256'],'--cleanup-helper-source',CONTROLS['helper']['path'],'--python-executable','/usr/bin/python3.12','--python-executable-sha256',NATIVE['/usr/bin/python3.12'],'--timeout-executable','/usr/bin/timeout','--timeout-executable-sha256',NATIVE['/usr/bin/timeout'],'--timeout-family','GNU']
+@@ -209,10 +212,10 @@
+  args=parser.parse_args();signal.signal(signal.SIGALRM,lambda *_:(_ for _ in ()).throw(Refused('metadata_alarm')));signal.alarm(45)
+  need(sys.platform=='linux' and socket.gethostname().split('.')[0]=='mbit10' and os.getuid()==os.geteuid()==UID and pwd.getpwuid(UID).pw_name=='yanruj','actual_remote_account')
+  own=Path(__file__);read({'path':str(own),'bytes':own.stat().st_size,'sha256':hash64(args.helper_sha256)})
+- inp=path(args.input);data=strict(read({'path':str(inp),'bytes':inp.stat().st_size,'sha256':hash64(args.input_sha256)}))
++ inp=path(args.input);need(re.fullmatch('lanl17-p[1-4]-full-index-parent-input-(specification|bootstrap)-20261008-a5[.]json',inp.name) is not None and not inp.is_relative_to(Path(S)) and not inp.is_relative_to(Path(RAW)),'fixed_external_parent_input_route');data=strict(read({'path':str(inp),'bytes':inp.stat().st_size,'sha256':hash64(args.input_sha256)}))
+  need(data['format']=='swdb.lanl17-full-index-parent-preparation-input.v1' and data['campaign'] in CIDS and data['stage'] in ('specification','bootstrap'),'closed_one_CID_stage')
+  cid=data['campaign'];a=attestation(data['parent_attestation'],cid)
+- m=sealed(strict(read({k:M2[k] for k in ('path','bytes','sha256')})));need(m['identity_sha256']==M2['identity_sha256'] and m['format']=='swdb.lanl17-parent-population.v1' and m['source']==S and m['raw']==RAW and m['source_commit']==R and m['estimator_sha256']==F6 and m['helper_sha256']==CONTROLS['helper']['sha256'] and m['source_clean'] is True,'original_M2_fixed_context')
++ m=sealed(strict(read({k:M2[k] for k in ('path','bytes','sha256')})),False);need(m['identity_sha256']==M2['identity_sha256'] and m['format']=='swdb.lanl17-parent-population.v1' and m['source']==S and m['raw']==RAW and m['source_commit']==R and m['estimator_sha256']==F6 and m['helper_sha256']==CONTROLS['helper']['sha256'] and m['source_clean'] is True,'original_M2_fixed_context')
+  for v in CONTROLS.values():read(v)
+  out,files=specification(data,cid,a) if data['stage']=='specification' else bootstrap(data,cid,a)
+  pins=write_files(out,files,a);signal.alarm(0)

@@ -1,0 +1,169 @@
+{
+  "executable": false,
+  "format": "swdb.lanl17-full-index-preparation-input-source-only-draft.v1",
+  "input_template": {
+    "author_metadata_deadline_seconds": {
+      "future_type": "int:60..3600",
+      "required_actual_parent_input": "Explicit unchanged a2 metadata deadline"
+    },
+    "campaign": "extensa-gem5-bfs-20261006-p4",
+    "format": "swdb.lanl17-full-index-parent-preparation-input.v1",
+    "inventory_original": {
+      "future_type": "exact_original_file_pin:{path:absolute_remote,bytes:int,sha256:hex64}",
+      "required_actual_parent_input": "Original inventory76 catalog-inventory.json external to S/RAW; full metadata remains remote"
+    },
+    "parent_attestation": {
+      "HOME_and_public_auth_preserved": {
+        "future_type": "bool:true",
+        "required_actual_parent_input": "Genuine explicit parent observation/review: HOME_and_public_auth_preserved"
+      },
+      "actual_inputs_parent_approved": {
+        "future_type": "bool:true",
+        "required_actual_parent_input": "Genuine explicit parent observation/review: actual_inputs_parent_approved"
+      },
+      "all_campaign_processes_stopped": {
+        "future_type": "bool:true",
+        "required_actual_parent_input": "Genuine explicit parent observation/review: all_campaign_processes_stopped"
+      },
+      "all_four_normal_custodies_root_and_peer_reviewed": {
+        "future_type": "bool:true",
+        "required_actual_parent_input": "Genuine explicit parent observation/review: all_four_normal_custodies_root_and_peer_reviewed"
+      },
+      "all_native_leases_currently_released_no_kernel_holder_or_FD9": {
+        "future_type": "bool:true",
+        "required_actual_parent_input": "Genuine explicit parent observation/review: all_native_leases_currently_released_no_kernel_holder_or_FD9"
+      },
+      "all_outputs_currently_fresh_owned_and_disjoint": {
+        "future_type": "bool:true",
+        "required_actual_parent_input": "Genuine explicit parent observation/review: all_outputs_currently_fresh_owned_and_disjoint"
+      },
+      "campaign": "extensa-gem5-bfs-20261006-p4",
+      "catalog_inventory_sha256": {
+        "future_type": "hex64",
+        "required_actual_parent_input": "Canonical true digest of complete original inventory76 rows"
+      },
+      "catalog_unchanged_since_original_validation": {
+        "future_type": "bool:true",
+        "required_actual_parent_input": "Genuine explicit parent observation/review: catalog_unchanged_since_original_validation"
+      },
+      "exclusive_snapshot_ownership_confirmed": {
+        "future_type": "bool:true",
+        "required_actual_parent_input": "Genuine explicit parent observation/review: exclusive_snapshot_ownership_confirmed"
+      },
+      "fixtures_or_replays_allowed": {
+        "future_type": "bool:false",
+        "required_actual_parent_input": "Parent explicit exclusion of fixtures/replays"
+      },
+      "native_Bash_startup_and_1024_byte_ulimit_units_reviewed": {
+        "future_type": "bool:true",
+        "required_actual_parent_input": "Genuine explicit parent observation/review: native_Bash_startup_and_1024_byte_ulimit_units_reviewed"
+      },
+      "native_executable_sha256": {
+        "/usr/bin/bash": "bc5945feb8bd26203ebfafea5ce1878bb2e32cb8fb50ab7ae395cfb1e1aaaef1",
+        "/usr/bin/mkdir": "430c3f949d7d328cd835722f5bbddeac0956fbdfbbb6a197e0abb1def3ed27e2",
+        "/usr/bin/python3.12": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+        "/usr/bin/sha256sum": "4d2db56c867e5324e0084c9e897f6360d37517de77ac96f2bd31494223d69a60",
+        "/usr/bin/timeout": "12690a043dfd555a6c14ccc1564f5649c18f1762c0d6ff66729948130898ec52",
+        "/usr/bin/wc": "9005273a966c875547a4317288bdd92e7b2aa49ad86bc9978121242106405e6b"
+      },
+      "native_tools_current_owned_regular_byte_pins_reviewed": {
+        "future_type": "bool:true",
+        "required_actual_parent_input": "Genuine explicit parent observation/review: native_tools_current_owned_regular_byte_pins_reviewed"
+      },
+      "no_catalog_consumers_confirmed": {
+        "future_type": "bool:true",
+        "required_actual_parent_input": "Genuine explicit parent observation/review: no_catalog_consumers_confirmed"
+      },
+      "observed_utc": {
+        "future_type": "UTC string",
+        "required_actual_parent_input": "Genuine observed_utc; observed<=reviewed<=now<expiry, total interval<=300s"
+      },
+      "prior_validation_full_catalogue": {
+        "future_type": "bool:true",
+        "required_actual_parent_input": "Genuine explicit parent observation/review: prior_validation_full_catalogue"
+      },
+      "records_directory": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p4/records",
+      "reviewed_utc": {
+        "future_type": "UTC string",
+        "required_actual_parent_input": "Genuine reviewed_utc; observed<=reviewed<=now<expiry, total interval<=300s"
+      },
+      "source_R_F6_current_and_clean": {
+        "future_type": "bool:true",
+        "required_actual_parent_input": "Genuine explicit parent observation/review: source_R_F6_current_and_clean"
+      },
+      "valid_until_utc": {
+        "future_type": "UTC string",
+        "required_actual_parent_input": "Genuine valid_until_utc; observed<=reviewed<=now<expiry, total interval<=300s"
+      },
+      "validation_files_sha256": {
+        "validation_argv": {
+          "future_type": "hex64",
+          "required_actual_parent_input": "Actual original28 full validation validation_argv SHA"
+        },
+        "validation_exit": {
+          "future_type": "hex64",
+          "required_actual_parent_input": "Actual original28 full validation validation_exit SHA"
+        },
+        "validation_stderr": {
+          "future_type": "hex64",
+          "required_actual_parent_input": "Actual original28 full validation validation_stderr SHA"
+        },
+        "validation_stdout": {
+          "future_type": "hex64",
+          "required_actual_parent_input": "Actual original28 full validation validation_stdout SHA"
+        }
+      }
+    },
+    "routes": {
+      "author_output": {
+        "future_type": "fresh absolute remote route",
+        "required_actual_parent_input": "Distinct owned canonical private author_output outside all S/RAW/campaign boundaries"
+      },
+      "bootstrap_logs": {
+        "future_type": "fresh absolute remote route",
+        "required_actual_parent_input": "Distinct owned canonical private bootstrap_logs outside all S/RAW/campaign boundaries"
+      },
+      "inner_logs": {
+        "future_type": "fresh absolute remote route",
+        "required_actual_parent_input": "Distinct owned canonical private inner_logs outside all S/RAW/campaign boundaries"
+      },
+      "outer_logs": {
+        "future_type": "fresh absolute remote route",
+        "required_actual_parent_input": "Distinct owned canonical private outer_logs outside all S/RAW/campaign boundaries"
+      },
+      "preparation_output": {
+        "future_type": "fresh absolute remote route",
+        "required_actual_parent_input": "Distinct owned canonical private preparation_output outside all S/RAW/campaign boundaries"
+      },
+      "writer_output": {
+        "future_type": "fresh absolute remote route",
+        "required_actual_parent_input": "Distinct owned canonical private writer_output outside all S/RAW/campaign boundaries"
+      }
+    },
+    "stage": "specification",
+    "summary_binding": {
+      "future_type": "original present {state,path,id,record_sha256} or explicit truthful parent absent {state,id,parent_observed_absence:true}",
+      "required_actual_parent_input": "Original inventory summary binding; no absent default"
+    },
+    "validation_originals": {
+      "validation_argv": {
+        "future_type": "exact_original_file_pin:{path:absolute_remote,bytes:int,sha256:hex64}",
+        "required_actual_parent_input": "Exact /data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p4.argv.json"
+      },
+      "validation_exit": {
+        "future_type": "exact_original_file_pin:{path:absolute_remote,bytes:int,sha256:hex64}",
+        "required_actual_parent_input": "Exact /data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p4.exit-code.txt"
+      },
+      "validation_stderr": {
+        "future_type": "exact_original_file_pin:{path:absolute_remote,bytes:int,sha256:hex64}",
+        "required_actual_parent_input": "Exact /data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p4.stderr"
+      },
+      "validation_stdout": {
+        "future_type": "exact_original_file_pin:{path:absolute_remote,bytes:int,sha256:hex64}",
+        "required_actual_parent_input": "Exact /data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p4.stdout"
+      }
+    }
+  },
+  "required_remote_input_basename": "lanl17-p4-full-index-parent-input-specification-20261008-a5.json",
+  "scientific_admission": false
+}
