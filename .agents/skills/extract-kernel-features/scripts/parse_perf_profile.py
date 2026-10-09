@@ -3,8 +3,8 @@
 parse_perf_profile.py
 
 Automates PMU counter collection and disassembly hotspot attribution via Linux perf.
-Extracts instruction-level cycle breakdown, classifies bottleneck types (atomic CAS,
-indirect gather miss, branch misprediction), and outputs structured profiling data.
+Extracts instruction-level cycle breakdown, classifies microarchitectural instruction shapes,
+handles typed PMU counter states, and outputs structured profiling data.
 """
 
 import sys
@@ -15,7 +15,7 @@ import argparse
 import subprocess
 
 def run_perf_stat(cmd, output_prefix="perf_stat"):
-    """Runs perf stat on the command line and extracts key architectural counters."""
+    """Runs perf stat on the command line and extracts architectural counters with typed status."""
     events = [
         "cycles",
         "instructions",
@@ -38,6 +38,7 @@ def run_perf_stat(cmd, output_prefix="perf_stat"):
         print(f"[Profiler] perf stat exited with code {res.returncode}: {res.stderr}", file=sys.stderr)
     
     metrics = {}
+    counter_status = {}
     for line in res.stderr.splitlines():
         parts = line.strip().split(";")
         if len(parts) >= 3:
@@ -45,31 +46,39 @@ def run_perf_stat(cmd, output_prefix="perf_stat"):
             event = parts[2].strip()
             if raw_val.isdigit():
                 metrics[event] = int(raw_val)
+                counter_status[event] = "counted"
             else:
                 try:
                     metrics[event] = float(raw_val)
+                    counter_status[event] = "counted"
                 except ValueError:
-                    metrics[event] = raw_val
+                    metrics[event] = None
+                    if "<not supported>" in raw_val:
+                        counter_status[event] = "unsupported"
+                    elif "<not counted>" in raw_val:
+                        counter_status[event] = "not_counted"
+                    else:
+                        counter_status[event] = "unavailable"
 
-    # Derived rates
-    cycles = metrics.get("cycles", 0)
-    instructions = metrics.get("instructions", 0)
-    branches = metrics.get("branches", 0)
-    branch_misses = metrics.get("branch-misses", 0)
-    l1_loads = metrics.get("L1-dcache-loads", 0)
-    l1_misses = metrics.get("L1-dcache-load-misses", 0)
-    llc_loads = metrics.get("LLC-loads", 0)
-    llc_misses = metrics.get("LLC-load-misses", 0)
+    # Helper for safe division without TypeErrors on None or non-numeric types
+    def safe_div(num, denom, scale=1.0):
+        if isinstance(num, (int, float)) and isinstance(denom, (int, float)) and denom > 0:
+            return round((num / denom) * scale, 4)
+        return None
 
     derived = {
-        "ipc": round(instructions / cycles, 4) if cycles else None,
-        "branch_miss_rate_pct": round((branch_misses / branches) * 100, 2) if branches else None,
-        "l1_dcache_miss_rate_pct": round((l1_misses / l1_loads) * 100, 2) if l1_loads else None,
-        "llc_miss_rate_pct": round((llc_misses / llc_loads) * 100, 2) if llc_loads else None,
+        "ipc": safe_div(metrics.get("instructions"), metrics.get("cycles")),
+        "branch_miss_rate_pct": safe_div(metrics.get("branch-misses"), metrics.get("branches"), 100.0),
+        "l1_dcache_miss_rate_pct": safe_div(metrics.get("L1-dcache-load-misses"), metrics.get("L1-dcache-loads"), 100.0),
+        "llc_miss_rate_pct": safe_div(metrics.get("LLC-load-misses"), metrics.get("LLC-loads"), 100.0),
     }
-    return {"raw_counters": metrics, "derived_metrics": derived}
+    return {
+        "raw_counters": metrics,
+        "counter_status": counter_status,
+        "derived_metrics": derived
+    }
 
-def run_perf_record_annotate(cmd, symbol=None, perf_data_path="perf.data"):
+def run_perf_record_annotate(cmd, symbol=None, threshold_pct=1.0, perf_data_path="perf.data"):
     """Runs perf record followed by perf annotate to attribute samples to asm lines."""
     record_cmd = [
         "perf", "record",
@@ -82,27 +91,30 @@ def run_perf_record_annotate(cmd, symbol=None, perf_data_path="perf.data"):
     subprocess.run(record_cmd, check=True)
 
     annotate_cmd = ["perf", "annotate", "-i", perf_data_path, "--stdio"]
-    # Don't pass strict symbol to annotate command so perf outputs all annotated functions,
-    # then our parser filters by target_symbol substring
-    pass
-
     print(f"[Profiler] Generating disassembly annotation: {' '.join(annotate_cmd)}")
     annotate_res = subprocess.run(annotate_cmd, capture_output=True, text=True, check=True)
-    return parse_annotate_output(annotate_res.stdout)
+    return parse_annotate_output(annotate_res.stdout, target_symbol=symbol, threshold_pct=threshold_pct)
 
-def parse_annotate_output(annotate_text, threshold_pct=1.0):
+def parse_annotate_output(annotate_text, target_symbol=None, threshold_pct=1.0):
     """
-    Parses `perf annotate --stdio` output and classifies instruction-level bottlenecks.
-    Lines typically look like:
-         15.97 :   4021a8:   lock cmpxchg %ecx,(%rdx)
+    Parses `perf annotate --stdio` output, filters by target symbol and threshold,
+    and classifies instruction forms cleanly (distinguishing stores from loads, and unconditional jumps from branches).
     """
     pattern = re.compile(r"^\s*([0-9]+\.[0-9]+)\s*:\s*([0-9a-fA-F]+):\s*(.*)$")
-    source_line_pattern = re.compile(r"^\s*:\s*(?:/\*|//)?\s*(.*\.cc:[0-9]+|\s*for\s*\(|\s*if\s*\(|NodeID|VertexOffsets).*$")
+    fn_header_pattern = re.compile(r"^\s*(?:Disassembly of (?:function|section)\s+([^\s:]+)|.*<([^>]+)>:)")
 
     hotspots = []
+    current_symbol = None
     current_source_context = ""
 
     for line in annotate_text.splitlines():
+        # Track function/symbol boundaries
+        fn_match = fn_header_pattern.match(line)
+        if fn_match:
+            current_symbol = fn_match.group(1) or fn_match.group(2)
+            current_source_context = ""
+            continue
+
         # Track source comments if present
         if ":" in line and not pattern.match(line):
             cleaned = line.strip()
@@ -111,30 +123,65 @@ def parse_annotate_output(annotate_text, threshold_pct=1.0):
 
         m = pattern.match(line)
         if m:
+            # If target_symbol is requested, filter out instructions from other symbols
+            if target_symbol is not None and current_symbol is not None:
+                if target_symbol not in current_symbol:
+                    continue
+
             pct = float(m.group(1))
             addr = m.group(2)
             insn = m.group(3).strip()
 
             if pct >= threshold_pct:
+                # Classify instruction form and candidate bottleneck hypothesis
+                form = "COMPUTE"
                 bottleneck = "COMPUTE_OR_PIPELINE"
-                
-                # Classify Bottleneck
+
+                # AT&T syntax instruction classification
                 if "lock cmpxchg" in insn:
+                    form = "ATOMIC_CAS"
                     bottleneck = "ATOMIC_CAS_CONTENTION"
-                elif "mov" in insn and ("(" in insn):
-                    bottleneck = "INDIRECT_LOAD_MISS"
-                elif "jmp" in insn or insn.startswith("j"):
+                elif "lock " in insn:
+                    form = "ATOMIC_RMW"
+                    bottleneck = "ATOMIC_BUS_LOCK"
+                elif insn.startswith("mov"):
+                    # Check if destination is memory (store) or source is memory (load)
+                    operands = insn[3:].strip()
+                    parts = operands.split(",")
+                    if len(parts) >= 2:
+                        src, dst = parts[0].strip(), parts[1].strip()
+                        if "(" in dst:
+                            form = "MEMORY_STORE"
+                            bottleneck = "MEMORY_STORE"
+                        elif "(" in src:
+                            form = "MEMORY_LOAD"
+                            bottleneck = "INDIRECT_LOAD_MISS"
+                        else:
+                            form = "REGISTER_MOV"
+                            bottleneck = "REGISTER_TRANSFER"
+                    elif "(" in operands:
+                        form = "MEMORY_ACCESS"
+                        bottleneck = "INDIRECT_LOAD_MISS"
+                elif insn.startswith("jmp") or insn == "jmp":
+                    form = "UNCONDITIONAL_JUMP"
+                    bottleneck = "CONTROL_FLOW_JUMP"
+                elif insn.startswith("j"):
+                    form = "CONDITIONAL_BRANCH"
                     bottleneck = "BRANCH_DIVERGENCE"
                 elif "prefetch" in insn:
+                    form = "PREFETCH"
                     bottleneck = "PREFETCH_INSTRUCTION"
-                elif "mfence" in insn or "sfence" in insn:
+                elif any(f in insn for f in ["mfence", "sfence", "lfence"]):
+                    form = "MEMORY_FENCE"
                     bottleneck = "SERIALIZING_FENCE"
 
                 hotspots.append({
                     "sample_pct": pct,
                     "address": f"0x{addr}",
                     "instruction": insn,
+                    "instruction_form": form,
                     "bottleneck_type": bottleneck,
+                    "symbol": current_symbol,
                     "source_context": current_source_context
                 })
 
@@ -162,11 +209,16 @@ def main():
     pmu_data = run_perf_stat(benchmark_cmd)
 
     # 2. Record & Annotate
-    hotspots = run_perf_record_annotate(benchmark_cmd, symbol=args.symbol)
+    hotspots = run_perf_record_annotate(
+        benchmark_cmd,
+        symbol=args.symbol,
+        threshold_pct=args.threshold
+    )
 
     result = {
         "command": " ".join(benchmark_cmd),
         "target_symbol": args.symbol,
+        "sample_threshold_pct": args.threshold,
         "pmu_profile": pmu_data,
         "annotated_hotspots": hotspots
     }
@@ -175,9 +227,10 @@ def main():
         json.dump(result, f, indent=2)
 
     print(f"\n[Profiler] Saved profiling summary to {args.output}")
-    print(f"[Profiler] Found {len(hotspots)} instruction hotspots >= {args.threshold}%:")
+    print(f"[Profiler] Found {len(hotspots)} instruction hotspots >= {args.threshold}% for symbol '{args.symbol}':")
     for h in hotspots[:5]:
-        print(f"  - {h['sample_pct']}% at {h['address']}: {h['instruction']} [{h['bottleneck_type']}]")
+        print(f"  - {h['sample_pct']}% at {h['address']}: {h['instruction']} [{h['instruction_form']} -> {h['bottleneck_type']}]")
 
 if __name__ == "__main__":
     main()
+

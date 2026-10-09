@@ -33,8 +33,8 @@ This skill guides the automated extraction of memory features, loop control stru
      - `BRANCH_DIVERGENCE`: Conditional jumps (`j*`).
      - `SERIALIZING_FENCE`: `mfence`, `sfence`.
 5. **Output Generation**:
-   - Emit `examples/received/<kernel>.features.vX.Y.yaml`.
-   - Validate against `schemas/workload.schema.json`.
+   - Emit `examples/received/<kernel>.features.vX.Y.yaml` according to workload schema 1.1 layout (`kernel`, `memory_streams`, `architectural_metrics`, `working_set`).
+   - Note: Legacy `schemas/workload.schema.json` fixes v0.1 requirements (`benchmark`, `patterns`); ensure the appropriate adapter/schema target is selected.
 
 ## Helper Scripts
 
