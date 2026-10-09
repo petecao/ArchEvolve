@@ -1,0 +1,49 @@
+{
+  "format": "swdb.lanl17-interim-spec-checklist-fix-independent-review.v1",
+  "created_ET_date": "2026-10-08",
+  "state": "PASS_SOURCE_ONLY",
+  "selected_R4": {
+    "path": "/private/tmp/lanl17-finalize-terminal-review-parent-checklist-20261008-a5-r4.md",
+    "bytes": 10871,
+    "sha256": "a2d7d58ee79bff735679f634aa4537492b8b4799c38b1c2507d9e2f97fd2993f"
+  },
+  "preserved_predecessors": [
+    {
+      "path": "/private/tmp/lanl17-finalize-terminal-review-parent-checklist-20261008-a5-r2.md",
+      "bytes": 9750,
+      "sha256": "fc4dc8077d4c2ce25c912e9ea3af15557665a45b6e1e1087866205192f838941"
+    },
+    {
+      "path": "/private/tmp/lanl17-finalize-terminal-review-parent-checklist-20261008-a5-r3.md",
+      "bytes": 10514,
+      "sha256": "4032acb6522938cb716f9d371d2ff674cf0511dac0fbda8dc96edf4ccf5a69ae"
+    }
+  ],
+  "immutable_helper": {
+    "path": "/private/tmp/lanl17_parent_helpers_cleanup60_a4.py",
+    "bytes": 38195,
+    "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+  },
+  "immutable_completion_reader": {
+    "path": "/private/tmp/lanl17_read_finalize_completion_originals_20261008_a5_r2.py",
+    "bytes": 18085,
+    "sha256": "c00eec76805adbad8316143b5fb02f0cc7dbc1851cbd287662af80bbdad2de23"
+  },
+  "checks": {
+    "R3_inverse_restores_exact_R2": true,
+    "R4_timestamp_only_inverse_restores_exact_R3": true,
+    "four_file_completeness_perCID_not_allcampaigns": true,
+    "mixed_presence_across_campaigns_allowed": true,
+    "H28_lines614to621_nonnull_ID_plus_certification_level_filter": true,
+    "candidate_row_status_not_the_original_selection_filter": true,
+    "P1_live_export_does_not_identify_actual_named_IDs": true,
+    "reader_lines141to150_match_corrected_prose": true,
+    "timestamps_ET_and_originalUTC_consistent": true,
+    "controls_source_caps_privacy_and_originals_unchanged": true,
+    "previous_checkpoint_P2_resolved_by_additive_selectedR4": true
+  },
+  "findings": [],
+  "previous_pinned_review_not_rewritten": true,
+  "scientific_admission": false,
+  "runtime_remote_control_import_tests": false
+}

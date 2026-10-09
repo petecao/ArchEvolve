@@ -1,0 +1,58 @@
+--- /private/tmp/lanl17_pre_full_index_host_observation_20261008_a5_r1.py
++++ /private/tmp/lanl17_pre_full_index_host_observation_20261008_a5_r2.py
+@@ -256,6 +256,7 @@
+ def home_startup():
+     need(os.environ.get('HOME')==pwd.getpwuid(UID).pw_dir and os.environ.get('CODEX_HOME')=='/data1/yanruj/.codex','current_public_home_route')
+     need(all(not os.environ.get(k) for k in STARTUP),'unsafe_startup_or_POSIX_environment')
++    need('posix' not in os.environ.get('SHELLOPTS','').split(':') and not any(k.startswith('BASH_FUNC_') for k in os.environ),'unsafe_Bash_posix_or_exported_function_startup')
+     home=BASE/'.codex';need(home.resolve(strict=True)==home and not any(x.is_symlink() for x in (home,*home.parents)) and home.is_dir() and home.stat().st_uid==UID,'owned_public_CODEX_HOME')
+     auth=home/'auth.json';s=auth.lstat();need(stat.S_ISREG(s.st_mode) and s.st_uid==UID and s.st_nlink==1 and not s.st_mode&0o7000,'public_auth_exists_regular_owned')
+     return {'HOME_matches_account':True,'CODEX_HOME_public_route_matches':True,'public_auth_exists':True,'public_auth_stat':stamp(s),'authentication_contents_read':False,'authentication_contents_preservation_not_policed':True,'unsafe_startup_environment_absent':True,'POSIXLY_CORRECT_absent':True,'Bash_1024_byte_ulimit_units_observed':False,'Bash_units_and_startup_invocation_require_separate_parent_review':True,'task_marker_not_restored_or_modified':True}
+@@ -271,6 +272,17 @@
+         p=RAW/'campaign-runs/extensa'/cid/'records';need(p.resolve(strict=True)==p and not any(x.is_symlink() for x in (p,*p.parents)) and p.is_dir() and p.stat().st_uid==UID,'existing_actual_RAW_store_required')
+     return out
+ 
++def owned_cmdline(p,ps):
++    # Preserve ancestor's owned-directory scan scope. Strict kernel UID/start
++    # guards apply to matching consumers, not every unrelated owned stat file.
++    tick();q=p/'cmdline';s=q.lstat();need(stat.S_ISREG(s.st_mode),'owned_cmdline_regular')
++    fd=os.open(q,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC)
++    with os.fdopen(fd,'rb') as f:
++        need(stamp(os.fstat(f.fileno()))==stamp(s),'owned_cmdline_open_race');raw=f.read(65537)
++        need(len(raw)<=65536 and stamp(os.fstat(f.fileno()))==stamp(s)==stamp(q.lstat()),'owned_cmdline_cap_or_race')
++    after=p.stat();need(after.st_uid==UID and after.st_ino==ps.st_ino,'owned_cmdline_directory_race')
++    need(not raw or raw.endswith(b'\0'),'owned_cmdline_terminated');return raw
++
+ def consumers(transport):
+     matches=[];unknowns=[];seen=0;owned=0;needles=[str(SOURCE).encode(),str(RAW).encode(),str(H).encode()]
+     for p in Path('/proc').iterdir():
+@@ -281,16 +293,22 @@
+             ps=p.stat()
+             if ps.st_uid!=UID:continue
+             owned+=1;need(owned<=4096,'owned_process_bound');proof={'pid':pid,'uid':UID,'proc_inode':ps.st_ino}
+-            raw=kernel_bytes(p/'stat',8192,UID);parts=raw.rsplit(b')',1)[1].split();need(len(parts)>=20 and raw.split(b' ',1)[0]==str(pid).encode(),'owned_stat_PID_shape');start=int(parts[19]);need(start>0,'owned_start_positive');proof['start_ticks']=start
+-            if parts[0] in (b'Z',b'X'):
+-                again=kernel_bytes(p/'stat',8192,UID).rsplit(b')',1)[1].split();need(p.stat().st_uid==UID and p.stat().st_ino==ps.st_ino and int(again[19])==start and again[0] in (b'Z',b'X'),'inactive_process_identity_race');continue
+-            identity,argv,exe=process_identity(pid);need(identity['proc_inode']==ps.st_ino and identity['start_ticks']==start,'consumer_initial_identity_race')
+-            if any(needle in arg for needle in needles for arg in argv):
+-                need(len(matches)<128,'matching_consumer_bound');matches.append(identity)
++            command=owned_cmdline(p,ps);argv=command[:-1].split(b'\0') if command else []
++            matched=any(needle in arg for needle in needles for arg in argv)
++            if matched:
++                identity,current_argv,exe=process_identity(pid)
++                need(identity['proc_inode']==ps.st_ino and identity['cmdline_sha256']==digest(command) and current_argv==argv,'matching_consumer_identity_race')
++                proof=identity
++                raw=kernel_bytes(p/'stat',8192,UID);parts=raw.rsplit(b')',1)[1].split()
++                need(len(parts)>=20 and int(parts[19])==identity['start_ticks'] and p.stat().st_uid==UID and p.stat().st_ino==ps.st_ino,'matching_consumer_final_identity_race')
++                if parts[0] not in (b'Z',b'X'):
++                    need(len(matches)<128,'matching_consumer_bound');matches.append(identity)
++            need(owned_cmdline(p,ps)==command,'owned_cmdline_byte_continuity')
+         except (OSError,ValueError,IndexError,UnicodeError) as exc:
+             if isinstance(exc,(FileNotFoundError,ProcessLookupError)) and proof is None:continue
+             need(len(unknowns)<128,'unknown_process_bound');unknowns.append({**(proof or {}),'state':'unknown','error_class':type(exc).__name__,'reason_sha256':digest(str(exc).encode())})
+-    return {'state':'unknown' if unknowns else 'observed','owned_processes_checked':owned,'matching_live_consumers':matches,'unknown_processes':unknowns,'no_live_owned_source_RAW_consumers':not unknowns and not matches,'partial_inventory_cannot_prove_absence':True,'process_argv_or_other_users_bodies_returned':False}
++    return {'state':'unknown' if unknowns else 'observed','owned_processes_checked':owned,'matching_live_consumers':matches,'unknown_processes':unknowns,'no_live_owned_source_RAW_consumers':not unknowns and not matches,'partial_inventory_cannot_prove_absence':True,'strict_kernel_identity_checked_for_matching_consumers_only':True,'process_argv_or_other_users_bodies_returned':False}
++
+ 
+ 
+ def read():

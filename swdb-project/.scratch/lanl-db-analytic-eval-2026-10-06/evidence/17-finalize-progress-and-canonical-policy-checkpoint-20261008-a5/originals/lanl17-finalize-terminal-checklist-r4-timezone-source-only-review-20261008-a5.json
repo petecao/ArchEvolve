@@ -1,0 +1,31 @@
+{
+  "format": "swdb.lanl17-finalize-terminal-checklist-timezone-source-only-review.v1",
+  "checked_utc": "2026-10-09T02:19:38.956285+00:00",
+  "human_reviewed_ET": "2026-10-08 22:19 ET",
+  "verdict": "PASS_SOURCE_ONLY_PRESENTATION_CHANGE",
+  "reviewed_pins": [
+    {
+      "path": "/private/tmp/lanl17-finalize-terminal-review-parent-checklist-20261008-a5-r3.md",
+      "bytes": 10514,
+      "sha256": "4032acb6522938cb716f9d371d2ff674cf0511dac0fbda8dc96edf4ccf5a69ae"
+    },
+    {
+      "path": "/private/tmp/lanl17-finalize-terminal-review-parent-checklist-20261008-a5-r4.md",
+      "bytes": 10871,
+      "sha256": "a2d7d58ee79bff735679f634aa4537492b8b4799c38b1c2507d9e2f97fd2993f"
+    },
+    {
+      "path": "/private/tmp/lanl17-finalize-terminal-review-checklist-r4-complete-r3-derivation-20261008-a5.diff",
+      "bytes": 3489,
+      "sha256": "8c9d3e7465784d388ff98d3d3ead33f05498b9463d69ad02d985b378b36bcdd7"
+    }
+  ],
+  "checks": [
+    "Exact prior R3 bytes/SHA matched before derivation; earlier R1/R2/R3 preserved.",
+    "Only Prepared header converted to 2026-10-08 22:14 ET with exact original machine UTC retained; latest02:12UTC observation annotated as2026-10-08 22:12 ET/2026-10-09 02:12 UTC.",
+    "Added explicit dated R4 supersession line; inverse two replacements plus removal of that line restores exact original R3 bytes.",
+    "Full unified diff reviewed; no source/control/contracts/pins/prose/logic changes beyond requested human timestamps and additive supersession.",
+    "No imports of target code, runtime, tests, SSH, controls, evaluations, repository or Git edits."
+  ],
+  "scientific_admission": false
+}

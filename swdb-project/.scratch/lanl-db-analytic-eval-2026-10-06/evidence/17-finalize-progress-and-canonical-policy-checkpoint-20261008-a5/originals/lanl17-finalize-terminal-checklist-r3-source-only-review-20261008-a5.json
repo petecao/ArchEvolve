@@ -1,0 +1,41 @@
+{
+  "format": "swdb.lanl17-finalize-terminal-checklist-prose-correction-source-review.v1",
+  "checked_utc": "2026-10-09T02:17:31.678264+00:00",
+  "verdict": "PASS_SOURCE_ONLY_PROSE_CORRECTION",
+  "reviewed_pins": [
+    {
+      "path": "/private/tmp/lanl17-finalize-terminal-review-parent-checklist-20261008-a5-r2.md",
+      "bytes": 9750,
+      "sha256": "fc4dc8077d4c2ce25c912e9ea3af15557665a45b6e1e1087866205192f838941"
+    },
+    {
+      "path": "/private/tmp/lanl17-finalize-terminal-review-parent-checklist-20261008-a5-r3.md",
+      "bytes": 10514,
+      "sha256": "4032acb6522938cb716f9d371d2ff674cf0511dac0fbda8dc96edf4ccf5a69ae"
+    },
+    {
+      "path": "/private/tmp/lanl17-finalize-terminal-review-checklist-r3-complete-r2-derivation-20261008-a5.diff",
+      "bytes": 3511,
+      "sha256": "f03273ed9685de0e266d7d6df733e29d03707c2eba234c436a6459f21d7187ca"
+    },
+    {
+      "path": "/private/tmp/lanl17_read_finalize_completion_originals_20261008_a5_r2.py",
+      "bytes": 18085,
+      "sha256": "c00eec76805adbad8316143b5fb02f0cc7dbc1851cbd287662af80bbdad2de23"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+      "bytes": 38195,
+      "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+    }
+  ],
+  "checks": [
+    "Full R2-to-R3 text diff reviewed: only conditional-export bullet replaced and additive correction history paragraph appended. All other instructions/source pins/contracts exact.",
+    "Original selected reader loops each CID and requires all(exists) or not any(exists) for that CID four routes independently; mixed export presence across CIDs allowed.",
+    "Original immutable H28 constructs IDs from nonnull summary candidate IDs and filters by certification_level(Store(folder),rid)[level] != rejected; candidate-row status alone is not this predicate.",
+    "No actual P1/P2/P3/P4 selected IDs inferred from live export activity or negative candidate rows.",
+    "Exact completion reader/H28 source SHA preserved; no derivative controls, runtime, imports, tests, SSH, repo edits or evidence rewrites.",
+    "R1/R2 checklist originals remain byte-preserved; this R3 selected prose supersedes ambiguous earlier conditional-export wording."
+  ],
+  "scientific_admission": false
+}

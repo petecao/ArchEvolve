@@ -1,0 +1,31 @@
+{
+  "checks": {
+    "generic_keys_exact": true,
+    "inline_source_exact": true,
+    "remote_local_seconds": [
+      60,
+      180
+    ]
+  },
+  "complete_diff": {
+    "bytes": 1009,
+    "path": "/private/tmp/lanl17-pre-full-index-host-action-r5-complete-r4-derivation-20261008-a5.diff",
+    "sha256": "2510b9d1636dddaf728df6ad0f387b25fb17143626f6933824b2bc2ac34b896d"
+  },
+  "correction": "Original generic capture contract uses remote_seconds/local_seconds. R4 draft used wrong key names; preserved NOTSELECTED. R5 corrects only those two keys plus explicit source and supersession metadata. No execution occurred.",
+  "executable": false,
+  "format": "swdb.lanl17-source-only-action-contract-correction.v1",
+  "prepared_ET": "2026-10-08 22:37 ET",
+  "prepared_utc": "2026-10-09T02:37:54.869920+00:00",
+  "selected_action": {
+    "bytes": 38388,
+    "path": "/private/tmp/lanl17-pre-full-index-host-action-SOURCE-ONLY-draft-r5-20261008-a5.json",
+    "sha256": "5b84bee411589f261c9fbbe73bae8d2302cca7bfbd977bc26c982384d4d30846"
+  },
+  "selected_source_unchanged": {
+    "bytes": 35909,
+    "path": "/private/tmp/lanl17_pre_full_index_host_observation_20261008_a5_r4.py",
+    "sha256": "fdc5376fc6838081806f1a48b236eaea3dba280f4ac6726bf4fe4f3db58f8c2f"
+  },
+  "source_only_not_run": true
+}

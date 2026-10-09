@@ -1,0 +1,46 @@
+--- /private/tmp/lanl17_pre_full_index_host_observation_20261008_a5_r2.py
++++ /private/tmp/lanl17_pre_full_index_host_observation_20261008_a5_r3.py
+@@ -262,7 +262,7 @@
+     return {'HOME_matches_account':True,'CODEX_HOME_public_route_matches':True,'public_auth_exists':True,'public_auth_stat':stamp(s),'authentication_contents_read':False,'authentication_contents_preservation_not_policed':True,'unsafe_startup_environment_absent':True,'POSIXLY_CORRECT_absent':True,'Bash_1024_byte_ulimit_units_observed':False,'Bash_units_and_startup_invocation_require_separate_parent_review':True,'task_marker_not_restored_or_modified':True}
+ 
+ def fresh_outputs(rows):
+-    closed(rows,ROUTE_ROLES,'exact_upcoming_output_route_roles');paths=[];out={}
++    need(type(rows) is dict and 1<=len(rows)<=len(ROUTE_ROLES) and set(rows)<=set(ROUTE_ROLES),'closed_explicit_next_stage_output_route_subset');paths=[];out={}
+     for role,value in rows.items():
+         p=remote_path(value,False);need(not os.path.lexists(p) and p.parent.is_dir() and p.parent.stat().st_uid==UID,'fresh_owned_output_route')
+         need(not p.is_relative_to(SOURCE) and not SOURCE.is_relative_to(p) and not p.is_relative_to(RAW) and not RAW.is_relative_to(p),'output_external_to_whole_S_RAW')
+@@ -283,6 +283,15 @@
+     after=p.stat();need(after.st_uid==UID and after.st_ino==ps.st_ino,'owned_cmdline_directory_race')
+     need(not raw or raw.endswith(b'\0'),'owned_cmdline_terminated');return raw
+ 
++def inactive_owned_identity(p,ps):
++    # Empty cmdline alone never proves absence. Only exact stable Z/X state can.
++    b=kernel_bytes(p/'stat',8192,UID);v=b.rsplit(b')',1)[1].split()
++    need(len(v)>=20 and b.split(b' ',1)[0]==p.name.encode() and v[0] in (b'Z',b'X'),'empty_owned_cmdline_not_proved_inactive')
++    start=int(v[19]);need(start>0,'inactive_start_positive')
++    b2=kernel_bytes(p/'stat',8192,UID);w=b2.rsplit(b')',1)[1].split()
++    need(len(w)>=20 and b2.split(b' ',1)[0]==p.name.encode() and w[0] in (b'Z',b'X') and int(w[19])==start and p.stat().st_uid==UID and p.stat().st_ino==ps.st_ino,'inactive_process_identity_race')
++    return {'pid':int(p.name),'uid':UID,'proc_inode':ps.st_ino,'start_ticks':start,'state':w[0].decode('ascii')}
++
+ def consumers(transport):
+     matches=[];unknowns=[];seen=0;owned=0;needles=[str(SOURCE).encode(),str(RAW).encode(),str(H).encode()]
+     for p in Path('/proc').iterdir():
+@@ -293,7 +302,10 @@
+             ps=p.stat()
+             if ps.st_uid!=UID:continue
+             owned+=1;need(owned<=4096,'owned_process_bound');proof={'pid':pid,'uid':UID,'proc_inode':ps.st_ino}
+-            command=owned_cmdline(p,ps);argv=command[:-1].split(b'\0') if command else []
++            command=owned_cmdline(p,ps)
++            if not command:
++                proof=inactive_owned_identity(p,ps);need(owned_cmdline(p,ps)==b'','inactive_cmdline_byte_continuity');continue
++            argv=command[:-1].split(b'\0')
+             matched=any(needle in arg for needle in needles for arg in argv)
+             if matched:
+                 identity,current_argv,exe=process_identity(pid)
+@@ -354,5 +366,5 @@
+ for n in (signal.SIGALRM,signal.SIGTERM,signal.SIGINT,signal.SIGHUP):signal.signal(n,interrupted)
+ signal.alarm(45)
+ try:main()
+-except (OSError,ValueError,KeyError,TypeError,IndexError,UnicodeError,subprocess.SubprocessError) as e:
++except (OSError,ValueError,KeyError,TypeError,IndexError,UnicodeError,RecursionError,subprocess.SubprocessError) as e:
+     print(json.dumps({'format':'swdb.lanl17-pre-full-index-host-observation.v1','host_metadata_ready':False,'state':'unknown','scientific_admission':False,'checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'reason_sha256':digest(str(e).encode()),'error_class':type(e).__name__},sort_keys=True))

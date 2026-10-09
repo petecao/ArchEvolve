@@ -1,13 +1,16 @@
 # FINALIZE progress and source-policy correction
 
-Updated: 2026-10-08 22:14 ET.
+Updated: 2026-10-08 22:48 ET.
 
 FINALIZE remains the single original launch at 21:53:46 ET. At 22:12 ET, retained R3 metadata shows P1 full-catalog validation exit 0 and a live owned P1 export process beneath the original helper and supervisor. Export exit, later validations, final report, final-export and supervisor completion receipt were absent. Completion and scientific admission remain unestablished.
+
+
+Current22:45ET observation supersedes the dated22:12ET phase above: P1/P2 validation and export exit0; P3 validation exit0 and export active. P4/report/final-export/supervisorcompletion absent. Six processunknowns persist; sourceR clean, native514/550/77 released/no kernelholder/FD9. Original parent67593 remains running. All four normal custody chains are complete, but numerical/D30/strictscientificadmission remains unestablished.
 
 | Evidence | Actual observation | Limit |
 |---|---|---|
 | P1–P4 trajectories | All four normal custody chains reviewed | No numerical agreement admission |
-| FINALIZE | P1 validation exit 0; P1 export process live | Original terminal and cleanup still required |
+| FINALIZE | P1/P2 validation and export exit0; P3 validation0/export active at22:45ET | Original terminal and cleanup still required |
 | Native leases | Node0/node1/legacy released at generations 514/550/77, no matching kernel holder or FD9 | Dated snapshot; refresh before a new action |
 | Scientific checkout | Clean at frozen R | Remote PRIMARY remains frozen until original guards finish |
 | Process inventory | Three validated FINALIZE tree rows; six owned stat reads unknown | Partial inventory cannot prove quiescence or completion |
@@ -19,3 +22,15 @@ The B08 AFTER policy correction is additive: exact writer source defaults to `en
 [Original inventory](original-inventory.json) retains 67 exact files totaling 535,380 bytes: all observer versions and findings, both actual observations and captures, fresh native/source originals, the source-policy reconciliation, and future request-author sources and drafts. Drafts remain future inputs. Raw record/provider/output bodies remain remote. Ticket 17 stays claimed, all acceptance unchecked; full report, four full indexes, actual strict audit and final evidence review remain required. Heartbeat stays ACTIVE.
 
 The [supplemental review inventory](supplemental-review-inventory.json) retains two further originals totaling 20,601 bytes: independent actual R3 review (strict duplicate/nonfinite parsing and byte continuity passed, unknowns preserved) and the source-only parent terminal checklist. The index recipe prose says ten specification keys, but its listed fields and unchanged helper source define nine; the checklist records the exact nine-key contract. No control or input schema changed.
+
+2026-10-08 22:18 ET — [Checklist correction inventory](checklist-correction-inventory.json) preserves three additional originals/16,435 bytes. Selected parent checklist R3 corrects export completeness to each CID’s four-file group; mixed campaign presence is allowed. H28 filters nonnull IDs by certification level, independently of candidate-row rejection status. R1/R2 checklist bytes remain preserved, and no actual selected IDs or new completion are inferred. Completion-reader and H28 controls remain unchanged.
+
+2026-10-08 22:24 ET — [Interim review and live-progress inventory](interim-review-and-live-progress-inventory.json) preserves14 further originals/170394B, including selected terminal checklist R4, both original review findings, independent Standards correction and exact22:19ET capture. [Resolved findings and index plan](resolved-findings-and-index-plan-inventory.json) preserves three further originals/13007B. The two axes remain separate: Standards had one P2 timezone finding, now resolved additively; Spec had one P2 per-CID export finding, now resolved additively. No other actionable interim finding. This does not replace final evidence review.
+
+At22:19ET, the validated export PID2312923/start601338250/inode66898014 remained running and advanced44112user/195kernel ticks relative to22:12ET. P1 validation exit0 remains the only completed public phase exit; export/supervisor/final-export originals remain absent. Six stat unknowns remain explicit, sourceR clean and nativeleases released514/550/77. Updated heartbeat retains this dated boundary and remains ACTIVE. The pre-index host observation plan is source-only; actual completion pins, full-inventory continuity, freshness and approvals are still future inputs.
+
+2026-10-08 22:48 ET — [Scheduled22:35 observations](scheduled-2235-progress-inventory.json) retain19 exact closed originals/207807B. Actual timestamps are22:29:14ET,22:34:24ET and22:34:41ET, independent of capture-folder labels. P1export0/P2validation0 and later owned P2exportprogress were observed, not completion. Independent22:29review8f66164e preserves6unknowns and no cross-PID CPUcomparison. Current22:45query is another read-only observation; original FINALIZE has not been repeated. Source-only next-index observer R5/actionR7 passed root+peer review but has supplied no actual completion or future readiness.
+
+[Pre-full-index source package](pre-full-index-source-package-inventory.json) preserves46 scoped originals/1225988B, including selected sourceR5/actionR7/root+peer SOURCE-ONLY reviews, four typed FUTURE inputs and all prior variants. The minimal planR2 overlaps the earlier inventory; unique closure across all seven inventories is153originals/2181835B, verified from exact archive and private original bytes. Source construction ran only locally to author these future artifacts; no observer/index/control runtime or actual admission was supplied. The first partial archive pass refused an unlisted arriving root receipt; its45 copies were verified and reused unchanged in the closed46-file inventory.
+
+2026-10-08 22:50 ET — [Live22:45 and archive verification originals](live-2245-and-archive-verification-inventory.json) retain9 additional closed originals/147096B. Independent actual review eff6f3d0 confirms P1/P2 validation/export0, P3 validation0/export active, all six processunknowns and explicit serial-lineage inference. Independent archive reviews c8b539ee and11a1bd27 verify the earlier108-file closure and source46/combined153-file closure; the shared7777B plan is counted once. All eight inventories now cover162 unique archived originals/2328931B; root verified every archived size/hash/private original before Git staging. This remains metadata/source review, not FINALIZE terminal, full-index execution or strictscientific admission.
