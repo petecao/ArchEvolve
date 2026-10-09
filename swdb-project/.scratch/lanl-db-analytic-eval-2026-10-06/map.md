@@ -1,7 +1,7 @@
 # Map: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-08 22:14 ET
+Updated: 2026-10-09 01:32 ET
 **Type:** ticket map
 **Status:** claimed (unfinished implementation/evaluation)
 **Work state:** active; [resume guide](resume.md)
@@ -58,6 +58,8 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | 23 | [Export and round-trip test](issues/23-export-and-round-trip.md) | wontfix | 22 | 1 day |
 
 ## Context pointers
+
+- 2026-10-09 01:32 ET: [Current process and storage blockers](evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/README.md) retain exact01:08 saved projection,01:19 process diagnostic and01:20 capacity originals. All four normal trajectories and original FINALIZE completed once; actual report is unsupported/zero eligible pairs/blind-order unverified/no-switch. Full inventories/indexes, original32 closure, assembly, unchanged6a strict audit and final scientific review remain pending. The original guards refuse root-owned zombie stat leaves; R6 additionally retains protected PAM alias uncertainty. `/data1` remains short569032704B at the dated observation. No guard waiver, unrelated process action, recovery archive/removal/index or remote PRIMARY source sync occurred.14/15 assigned resolved; ticket17 remains claimed with acceptance unchecked, human-owned statuses unchanged; heartbeat ACTIVE.
 
 - 2026-10-08 14:47 ET: The14:45 ET scheduled [native/process/status addendum](evidence/17-normal-terminal-request-readiness-20261008-a5/README.md) confirms4 completed iterations/8 candidate rows and matched publicplateau summary, but original stop/exits remainabsent. Owned public process CPU advances; R2 actualnative511 remainsheld with matching kernel lock/FD9, release_ready=False and no unknown reasons. No source/scientific/native mutation or terminal/control collection occurred. All agents completed responsive scoped reviews; no stranded worker.0/4 normal trajectories admitted; next required table/health check15:15 ET. Public summary precedes final catalog commit/state stop in _finish; keep waiting for true originals.
 

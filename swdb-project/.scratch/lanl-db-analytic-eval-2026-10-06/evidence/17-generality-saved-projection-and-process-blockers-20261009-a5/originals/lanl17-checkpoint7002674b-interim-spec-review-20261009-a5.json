@@ -1,0 +1,569 @@
+{
+  "actual_capture_checks": [
+    {
+      "SSH_exit_code": 0,
+      "archive_directory": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-saved-preflight-projection-capture-20261009-a5-a1/",
+      "checked_utc": "2026-10-09T05:08:34.421793+00:00",
+      "decoded_stdout_equals_original": true,
+      "empty_stderr": true,
+      "inner_exit_code": 0,
+      "original_bytes": 53076,
+      "original_sha256": "7f426aff57068c13c46d9734fa32807ac33f8c86404739df36b639256f2c4d6f",
+      "scientific_admission": false,
+      "state": "projected_saved_unknown_snapshot"
+    },
+    {
+      "SSH_exit_code": 0,
+      "archive_directory": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-capture-20261009-a5-a1/",
+      "checked_utc": "2026-10-09T05:19:20.774876+00:00",
+      "decoded_stdout_equals_original": true,
+      "empty_stderr": true,
+      "inner_exit_code": 0,
+      "original_bytes": 23785,
+      "original_sha256": "c9397a69c9148052a8bff30fa6ee9a23cdd104e74637ca4a68db3e932df0e331",
+      "scientific_admission": false,
+      "state": "bounded_selected_process_diagnostics"
+    },
+    {
+      "SSH_exit_code": 0,
+      "archive_directory": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-pre-index-floor-readonly-capture-20261009-0121-a5/",
+      "checked_utc": "2026-10-09T05:20:28.650804+00:00",
+      "decoded_stdout_equals_original": true,
+      "empty_stderr": true,
+      "inner_exit_code": 0,
+      "original_bytes": 295,
+      "original_sha256": "be49b23d3248138ce1e9c49bf6a56780700138c0da144447b49dc6c2d124ed67",
+      "scientific_admission": false,
+      "state": null
+    }
+  ],
+  "axis": "Spec",
+  "base": "3bb800909ef7e34e7e0ec78034332134bacfbf0a",
+  "commit_log": "7002674b docs(swdb): retain exact projection and process blocker evidence",
+  "created_ET": "2026-10-09T01:33:48.086751-04:00",
+  "diff_bytes": 1270732,
+  "diff_command": "git diff 3bb800909ef7e34e7e0ec78034332134bacfbf0a...7002674b48b8007037fb7432c698748084a7ab19",
+  "diff_sha256": "c1ac2324a100479bc7a49811548954086ff43bec8ecd8b67f29ef9f734a7f141",
+  "format": "swdb.lanl17-interim-Spec-axis-checkpoint-review.v1",
+  "head": "7002674b48b8007037fb7432c698748084a7ab19",
+  "inventories": [
+    {
+      "bytes": 37291,
+      "original_bytes": 1089030,
+      "original_count": 60,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/projection-process-and-floor-original-inventory.json",
+      "sha256": "d0c0b203ad87a9385273c93b8d5cb2bdefeee234c455c1148041bd110a1264b4"
+    },
+    {
+      "bytes": 1454,
+      "original_bytes": 62708,
+      "original_count": 2,
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/independent-byte-prose-review-inventory.json",
+      "sha256": "a7b39541a9d0e361c1bb7e0585971b62d3b6f69d2fad065ec4dba85c9aba81ae"
+    }
+  ],
+  "known_partial_requirements": [
+    {
+      "checkpoint_regression": false,
+      "quote": "Extensa estimates are blind: made before the timing exists, from inputs without timings, with the order recorded.",
+      "spec_line": 243,
+      "state": "blind-order unverified; unchanged6a NOTRUN; ticket acceptance unchecked"
+    },
+    {
+      "checkpoint_regression": false,
+      "quote": "at least 20 DX100 pairs",
+      "spec_line": 247,
+      "state": "unsupported actual report/zero eligible pairs/no-switch; full final admission pipeline pending"
+    }
+  ],
+  "merge_base": "3bb800909ef7e34e7e0ec78034332134bacfbf0a",
+  "new_actionable_findings": [],
+  "no_tests_source_imports_target_execution_SSH_repo_mutation": true,
+  "original_rows": [
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-administrative-preflight-R7-SOURCE-ONLY-adaptation-plan-20261009-a5.json",
+      "bytes": 160351,
+      "original": "/private/tmp/lanl17-generality-administrative-preflight-R7-SOURCE-ONLY-adaptation-plan-20261009-a5.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "9d8b1ab0b0ca11c2c8ba79b7236103f798e61e34faa1f47c14b797d675693a27"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-action-SOURCE-ONLY-draft-r1-20261009-a5.json",
+      "bytes": 26987,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-action-SOURCE-ONLY-draft-r1-20261009-a5.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "f6ad5a3d6e790e832f9330b6f2fa4c2192c8597673dc1faa02c9ca8602287cce"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-action-SOURCE-ONLY-draft-r2-20261009-a5.json",
+      "bytes": 27069,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-action-SOURCE-ONLY-draft-r2-20261009-a5.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "44e960c62d76b37204f205d98416c03b742904253e27442f40132b7509344932"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-action-SOURCE-ONLY-draft-r3-20261009-a5.json",
+      "bytes": 27266,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-action-SOURCE-ONLY-draft-r3-20261009-a5.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "428753730907027678f020157cd940a4982a601fdf650de669503da34704df73"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-action-actual-20261009-a5-a1.json",
+      "bytes": 26754,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-action-actual-20261009-a5-a1.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "c6af6c318482be3ba87c46249e0a02c7f3c76ccaa396877ae8c37b24e1d8df22"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-actual-root-review-20261009-a5-a1.json",
+      "bytes": 1211,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-actual-root-review-20261009-a5-a1.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "96df80efb267b50b2ae81c5cbb5f6fd552248fa5dfc81067cae976d6e122e59f"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-capture-20261009-a5-a1/process-original.json",
+      "bytes": 23785,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-capture-20261009-a5-a1/process-original.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "c9397a69c9148052a8bff30fa6ee9a23cdd104e74637ca4a68db3e932df0e331"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-capture-20261009-a5-a1/start.json",
+      "bytes": 534,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-capture-20261009-a5-a1/start.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "ab91a935d0296e7595df381c8edce396063bd812ae3cd236e7ce162ff5ae075d"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-capture-20261009-a5-a1/stderr",
+      "bytes": 0,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-capture-20261009-a5-a1/stderr",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-capture-20261009-a5-a1/stdin.py",
+      "bytes": 31591,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-capture-20261009-a5-a1/stdin.py",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "d48b69a6c35b61bc000b33c5248613ed7ee6bfc29c3300d4dc839f2e3d76810c"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-capture-20261009-a5-a1/stdout",
+      "bytes": 58220,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-capture-20261009-a5-a1/stdout",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "5c5e2b8967511909e48e7cd3ba085f0f56d0a98fcdf70ac109ce6b09a84164ba"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-capture-20261009-a5-a1/transport.json",
+      "bytes": 419,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-capture-20261009-a5-a1/transport.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "322d3b02bd7feaf92fc0773f2151639165f9eaa23b4e46c97e4ee9afb2bf9388"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-independent-actual-review-r3-20261009-a5-a1.json",
+      "bytes": 22025,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-independent-actual-review-r3-20261009-a5-a1.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "ea85fb28e932401fa3b1239996d838e89eb9be460bc536f6dcd3b9751abd6c71"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-independent-source-review-r2-findings-20261009-a5.json",
+      "bytes": 4022,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-independent-source-review-r2-findings-20261009-a5.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "b43a021e4e7287fd8c146242541fe0c9bfc64ee9b64667a5cd110ccc44c3f0df"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-independent-source-review-r3-20261009-a5.json",
+      "bytes": 8596,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-independent-source-review-r3-20261009-a5.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "c95cd0c7527c2d855e14ff4e042ed4ba5c0462193b5896dd9badd2fcfe60a4e0"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-r2-complete-r1-derivation-20261009-a5.diff",
+      "bytes": 2139,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-r2-complete-r1-derivation-20261009-a5.diff",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "a6c5c40a4a9813043cceb3d7e02af3af3561f384d1c2f7c7d96583d4dd6db987"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-r3-complete-r2-derivation-20261009-a5.diff",
+      "bytes": 3426,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-r3-complete-r2-derivation-20261009-a5.diff",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "01cb61f5f5d95b10aeeed29d453e071d022801aceb3e41c0a2b1ea647b9e3016"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-root-source-execution-review-20261009-a5-a1.json",
+      "bytes": 1475,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-root-source-execution-review-20261009-a5-a1.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "a2250256d23e1ef9d48691443c2c09f803f3b50195e47b89ccf32975e6874cab"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-source-handoff-r1-20261009-a5.md",
+      "bytes": 1828,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-source-handoff-r1-20261009-a5.md",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "3e1d0322e93b802b1db8f6acd7e13f89cb6d5b4c87574bd5f7a1cddfc389332b"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-source-handoff-r2-20261009-a5.md",
+      "bytes": 1758,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-source-handoff-r2-20261009-a5.md",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "3830764b9b1a46608b4a9ca8ae46a583fd0a871fa82cdccfc73a08b883e5d98e"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-source-handoff-r3-20261009-a5.md",
+      "bytes": 1807,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-source-handoff-r3-20261009-a5.md",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "c75ef7aecc62332814a723695006ac0aa123cb5b5f6c6998e0d9775d0d8eeb88"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-static-source-review-r1-20261009-a5.json",
+      "bytes": 3312,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-static-source-review-r1-20261009-a5.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "1006d79a8d521f05c4424e74256ceefdefa1a57ad9ceec723494d93f772eec14"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-static-source-review-r2-20261009-a5.json",
+      "bytes": 3737,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-static-source-review-r2-20261009-a5.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "a5c34f5e0ac6dd3a6c58dc27863e422ee7569d8cdf74b15da2585d4ee49b3c5c"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-exact-four-process-metadata-static-source-review-r3-20261009-a5.json",
+      "bytes": 4002,
+      "original": "/private/tmp/lanl17-generality-exact-four-process-metadata-static-source-review-r3-20261009-a5.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "543d122ccd1696bcb66779bf68c58cba2e192b588c76088eca9ddfc702655335"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-outward-reference-dependency-assessment-20261009-a5.json",
+      "bytes": 4683,
+      "original": "/private/tmp/lanl17-generality-outward-reference-dependency-assessment-20261009-a5.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "3e695950c18e2a7db4fa0126deb8163dde04d3edd10ef718c51b33f913f215ad"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-outward-reference-dependency-assessment-20261009-a5.md",
+      "bytes": 5701,
+      "original": "/private/tmp/lanl17-generality-outward-reference-dependency-assessment-20261009-a5.md",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "ad2ce3092ab1a0f033483d6a7bac89c226d1bbd460b1c9b9b35162e2a00ef1c1"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-saved-preflight-projection-action-SOURCE-ONLY-draft-r1-20261009-a5.json",
+      "bytes": 21250,
+      "original": "/private/tmp/lanl17-generality-saved-preflight-projection-action-SOURCE-ONLY-draft-r1-20261009-a5.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "15c0cdb3ed72d12fa36d516dbe6f9a2e4fb4ddcbc26c6019290f854c1a2e5091"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-saved-preflight-projection-action-SOURCE-ONLY-draft-r2-20261009-a5.json",
+      "bytes": 24071,
+      "original": "/private/tmp/lanl17-generality-saved-preflight-projection-action-SOURCE-ONLY-draft-r2-20261009-a5.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "76f77d920c709de8b1649a578dfa7aabfd46769a4db269adb7977bd2f1ef9d66"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-saved-preflight-projection-action-actual-20261009-a5-a1.json",
+      "bytes": 23559,
+      "original": "/private/tmp/lanl17-generality-saved-preflight-projection-action-actual-20261009-a5-a1.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "f10b66d71e13b7e0bc50a54d763c58217cdbb1f518c493240e6411520791afd3"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-saved-preflight-projection-actual-root-review-20261009-a5-a1.json",
+      "bytes": 2488,
+      "original": "/private/tmp/lanl17-generality-saved-preflight-projection-actual-root-review-20261009-a5-a1.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "f66372d80783cb4d342fc05fb136580cc5282a921edeb83016e0995d75c7ed92"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-saved-preflight-projection-capture-20261009-a5-a1/projection-original.json",
+      "bytes": 53076,
+      "original": "/private/tmp/lanl17-generality-saved-preflight-projection-capture-20261009-a5-a1/projection-original.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "7f426aff57068c13c46d9734fa32807ac33f8c86404739df36b639256f2c4d6f"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-saved-preflight-projection-capture-20261009-a5-a1/start.json",
+      "bytes": 534,
+      "original": "/private/tmp/lanl17-generality-saved-preflight-projection-capture-20261009-a5-a1/start.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "59f501a6230e250ed6b04bbf698eb9dd3547f206e28144f9e10ad5163fca7d39"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-saved-preflight-projection-capture-20261009-a5-a1/stderr",
+      "bytes": 0,
+      "original": "/private/tmp/lanl17-generality-saved-preflight-projection-capture-20261009-a5-a1/stderr",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-saved-preflight-projection-capture-20261009-a5-a1/stdin.py",
+      "bytes": 28184,
+      "original": "/private/tmp/lanl17-generality-saved-preflight-projection-capture-20261009-a5-a1/stdin.py",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "b9cc7c1d88ec3a3e3199bf89c21ea9ae0df43d229304fdf73a8acf4b48a1366c"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-saved-preflight-projection-capture-20261009-a5-a1/stdout",
+      "bytes": 93838,
+      "original": "/private/tmp/lanl17-generality-saved-preflight-projection-capture-20261009-a5-a1/stdout",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "a4d89378dd29c67f42ea688c67a406dd623d6dca833e64c8dd50afd052d9a811"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-saved-preflight-projection-capture-20261009-a5-a1/transport.json",
+      "bytes": 419,
+      "original": "/private/tmp/lanl17-generality-saved-preflight-projection-capture-20261009-a5-a1/transport.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "502fa68284a472943dd9431bc9d20ba7bb93599db669810a899bcf3750d3d4b4"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-saved-preflight-projection-complete-R6-derivation-r1-20261009-a5.diff",
+      "bytes": 55967,
+      "original": "/private/tmp/lanl17-generality-saved-preflight-projection-complete-R6-derivation-r1-20261009-a5.diff",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "8dfe319d8e90a424c026d3eb989bc28cc8de26be969eac0cba93a168036e3f57"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-saved-preflight-projection-independent-actual-review-20261009-a5-a1.json",
+      "bytes": 57232,
+      "original": "/private/tmp/lanl17-generality-saved-preflight-projection-independent-actual-review-20261009-a5-a1.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "85e15705b90c20d250b45ed987a0d9117873e5311472c2c419c5f99c5ec9b69d"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-saved-preflight-projection-independent-source-review-r2-20261009-a5.json",
+      "bytes": 8127,
+      "original": "/private/tmp/lanl17-generality-saved-preflight-projection-independent-source-review-r2-20261009-a5.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "8cb08985f16a26e4d24bc196befc518ea6f35641f92c03d9c4238cf285092d3d"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-saved-preflight-projection-r2-complete-r1-derivation-20261009-a5.diff",
+      "bytes": 9560,
+      "original": "/private/tmp/lanl17-generality-saved-preflight-projection-r2-complete-r1-derivation-20261009-a5.diff",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "72678c356ab34d164d7105b9028ffa47cc541a7d6d2e14e56283b568e2dd129a"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-saved-preflight-projection-root-source-execution-review-20261009-a5-a1.json",
+      "bytes": 1371,
+      "original": "/private/tmp/lanl17-generality-saved-preflight-projection-root-source-execution-review-20261009-a5-a1.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "41f439443f2f98706d6edbd1303250b72c3ac848a2ab369e9593858785a1914a"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-saved-preflight-projection-source-handoff-r1-20261009-a5.md",
+      "bytes": 1980,
+      "original": "/private/tmp/lanl17-generality-saved-preflight-projection-source-handoff-r1-20261009-a5.md",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "0a5057ed67976874c297f3b773fe4d41422099a1065c47bc1a5e9cba00251d40"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-saved-preflight-projection-source-handoff-r2-20261009-a5.md",
+      "bytes": 1863,
+      "original": "/private/tmp/lanl17-generality-saved-preflight-projection-source-handoff-r2-20261009-a5.md",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "41505c927a404651dd6a39866237eef525e625969074a19b0de3ed8dc5a3db1f"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-saved-preflight-projection-static-source-review-r1-20261009-a5.json",
+      "bytes": 2715,
+      "original": "/private/tmp/lanl17-generality-saved-preflight-projection-static-source-review-r1-20261009-a5.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "2f3f80d662eb81ba4591ebedd5bf486263a9181af60d0ad0d8894758d1f56d85"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-generality-saved-preflight-projection-static-source-review-r2-20261009-a5.json",
+      "bytes": 3088,
+      "original": "/private/tmp/lanl17-generality-saved-preflight-projection-static-source-review-r2-20261009-a5.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "c76ebad648021c55f1336d2b694dd61beafa1a7df5368c02ca0026244c0cec8e"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-git-v2.48.1-dir-source-dependency-assessment-20261009.c",
+      "bytes": 113576,
+      "original": "/private/tmp/lanl17-git-v2.48.1-dir-source-dependency-assessment-20261009.c",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "a5dba4ab186855dcef4ee187aa59b930e8f012bb8b242d7bba27bd8b5f67934c"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-pre-index-floor-readonly-capture-20261009-0121-a5/floor-original.json",
+      "bytes": 295,
+      "original": "/private/tmp/lanl17-pre-index-floor-readonly-capture-20261009-0121-a5/floor-original.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "be49b23d3248138ce1e9c49bf6a56780700138c0da144447b49dc6c2d124ed67"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-pre-index-floor-readonly-capture-20261009-0121-a5/start.json",
+      "bytes": 534,
+      "original": "/private/tmp/lanl17-pre-index-floor-readonly-capture-20261009-0121-a5/start.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "f55c47234614954731b76cb432e67ce68e3082e2481f3c47980141dfacc8f141"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-pre-index-floor-readonly-capture-20261009-0121-a5/stderr",
+      "bytes": 0,
+      "original": "/private/tmp/lanl17-pre-index-floor-readonly-capture-20261009-0121-a5/stderr",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-pre-index-floor-readonly-capture-20261009-0121-a5/stdin.py",
+      "bytes": 4640,
+      "original": "/private/tmp/lanl17-pre-index-floor-readonly-capture-20261009-0121-a5/stdin.py",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "6f54c5c660fdb87648e980c5bab5a05809326bd14cd441771d0032e3f862c4c2"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-pre-index-floor-readonly-capture-20261009-0121-a5/stdout",
+      "bytes": 1481,
+      "original": "/private/tmp/lanl17-pre-index-floor-readonly-capture-20261009-0121-a5/stdout",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "a609fc29f4f2b8cd9285c13c90e8abfa21943933f2c42c58ad7634ef29c358ff"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-pre-index-floor-readonly-capture-20261009-0121-a5/transport.json",
+      "bytes": 418,
+      "original": "/private/tmp/lanl17-pre-index-floor-readonly-capture-20261009-0121-a5/transport.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "b3dac21e6e92f110580e79717099a75ea3ddf5524a1f59fdf1442e8cdd8f7ea4"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-proc-ownership-and-inactivity-source-inference-20261009-a5-r1.json",
+      "bytes": 2189,
+      "original": "/private/tmp/lanl17-proc-ownership-and-inactivity-source-inference-20261009-a5-r1.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "1aedb089f8790a45ee8f0a98e92c7ecf9da7fb8b3af77d4afcdeb2fc23cfd35e"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-proc-ownership-and-inactivity-source-inference-20261009-a5-r1.md",
+      "bytes": 4305,
+      "original": "/private/tmp/lanl17-proc-ownership-and-inactivity-source-inference-20261009-a5-r1.md",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "802d8f2ae90cc4e3a168bb96de8897c8ce9991f74737c965ff6e5d02499b12cc"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-proc-ownership-and-inactivity-source-inference-addendum-20261009-a5-r1.md",
+      "bytes": 1016,
+      "original": "/private/tmp/lanl17-proc-ownership-and-inactivity-source-inference-addendum-20261009-a5-r1.md",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "477ff4707c50e7da9f65102129dd22526c1b76e9dffb1d22b62bb5e75bde7dea"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17_diagnose_exact_generality_unknown_process_metadata_SOURCE_ONLY_20261009_a5_r1.py",
+      "bytes": 25435,
+      "original": "/private/tmp/lanl17_diagnose_exact_generality_unknown_process_metadata_SOURCE_ONLY_20261009_a5_r1.py",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "d6dc833dd96393c8e4866b545994a7cd01b1c5bf77c2dee811bda09430cb0d0c"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17_diagnose_exact_generality_unknown_process_metadata_SOURCE_ONLY_20261009_a5_r2.py",
+      "bytes": 25517,
+      "original": "/private/tmp/lanl17_diagnose_exact_generality_unknown_process_metadata_SOURCE_ONLY_20261009_a5_r2.py",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "a188020e9899f31a960e3dfb01c4597214114293fdedc36b57822af8bd526c63"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17_diagnose_exact_generality_unknown_process_metadata_SOURCE_ONLY_20261009_a5_r3.py",
+      "bytes": 25714,
+      "original": "/private/tmp/lanl17_diagnose_exact_generality_unknown_process_metadata_SOURCE_ONLY_20261009_a5_r3.py",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "68d8500e9cb8cc254b400571a3af4ad4d21bdb0a0848c70bf1f7409e988977ea"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17_project_saved_generality_preflight_metadata_SOURCE_ONLY_20261009_a5_r1.py",
+      "bytes": 19543,
+      "original": "/private/tmp/lanl17_project_saved_generality_preflight_metadata_SOURCE_ONLY_20261009_a5_r1.py",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "b6b02d45fd20e8d9cca2429282a16b9f29fb07a79a386f711536be2ad19e7e99"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17_project_saved_generality_preflight_metadata_SOURCE_ONLY_20261009_a5_r2.py",
+      "bytes": 22347,
+      "original": "/private/tmp/lanl17_project_saved_generality_preflight_metadata_SOURCE_ONLY_20261009_a5_r2.py",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "68aa21d532ee0699d191afbcd7f3a7e2efe7aad6c7ba0a7f645d5e5280bdd2b2"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-projection-process-checkpoint-independent-byte-prose-review-20261009-a5.json",
+      "bytes": 61378,
+      "original": "/private/tmp/lanl17-projection-process-checkpoint-independent-byte-prose-review-20261009-a5.json",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "ff0a089a2c2d89d197fc6f753b28d5c0af7be7138371ebd8cebe5885792f830d"
+    },
+    {
+      "archive": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-generality-saved-projection-and-process-blockers-20261009-a5/originals/lanl17-projection-process-checkpoint-independent-byte-prose-review-20261009-a5.md",
+      "bytes": 1330,
+      "original": "/private/tmp/lanl17-projection-process-checkpoint-independent-byte-prose-review-20261009-a5.md",
+      "private_nine_stat_and_bytes_unchanged": true,
+      "sha256": "8d84b344b47bcb4623f72f8969e2179efd6233840bdb74c2e34a4adb578caf43"
+    }
+  ],
+  "preserved_guards": {
+    "R5_zombie_owner_refusal_unchanged": true,
+    "R6_PAM_alias_unknown_unwaived": true,
+    "R6_zombie_owner_refusal_unchanged": true,
+    "R7_SOURCE_ONLY_and_typed_future": true,
+    "diagnostic_root_owned_leaf_observation_not_a_guard_exception": true,
+    "no_scientific_admission": true,
+    "original_R6_result_not_reclassified": true,
+    "remote_scientific_R_not_updated": true,
+    "source_native_observations_dated_only": true
+  },
+  "report": {
+    "bytes": 2341,
+    "path": "/private/tmp/lanl17-checkpoint7002674b-interim-spec-review-20261009-a5.md",
+    "sha256": "90e0ec2f819ff44756aee6845789fe5d568d1fffacfeefab84e84286482bffe1"
+  },
+  "report_word_count": 282,
+  "review_boundary": "interim metadata checkpoint only; no final scientific acceptance",
+  "scope_creep_or_new_incorrect_behavior_found": false,
+  "spec_sources": [
+    {
+      "bytes": 35648,
+      "commit": "7002674b48b8007037fb7432c698748084a7ab19",
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/spec.md",
+      "sha256": "23f377528d53079675caf03bf9b66a060480c38a1727f0fd396afa4affeb09a4"
+    },
+    {
+      "bytes": 41541,
+      "commit": "7002674b48b8007037fb7432c698748084a7ab19",
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/map.md",
+      "sha256": "e4d685e3b70780ffefe621b98b63da1d202f460c0403c0b3cc15cc842dcc1b58"
+    },
+    {
+      "bytes": 61903,
+      "commit": "7002674b48b8007037fb7432c698748084a7ab19",
+      "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/issues/17-agreement-report.md",
+      "sha256": "89c9c76ff3b46d9bbac31ff70f645f9084d0e4f7f9a309bba817d05d1c22df17"
+    }
+  ],
+  "unstaged_map_supplement": {
+    "actual_Updated_context_ET": "2026-10-09 01:32 ET",
+    "diff_bytes": 3389,
+    "diff_sha256": "5d11fb253b5cf3713586adc563330ffc726a87f5b3ef8b451bd7fa802d47f6cd",
+    "findings": [],
+    "separate_from_fixed_commit": true,
+    "ticket_status_rows_identical_to_pinned_head": true,
+    "working_file_bytes": 42466,
+    "working_file_sha256": "761d3b26056afbac682ba5904da66b5ee347c28f7d2101ae9bb3dc3455d4d2eb"
+  },
+  "verified_original_bytes": 1151738,
+  "verified_unique_originals": 62
+}
