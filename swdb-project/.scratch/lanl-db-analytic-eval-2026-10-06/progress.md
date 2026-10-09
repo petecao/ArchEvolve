@@ -1,13 +1,13 @@
 # Implementation progress
 
-Updated: 2026-10-08 20:27 ET
+Updated: 2026-10-08 20:40 ET
 
 **Current state: ACTIVE after Yan-Ru's explicit resumption; 14/15 assigned tickets resolved.**
 Ticket 17 remains `claimed`, with acceptance pending. Start from [resume.md](resume.md).
 The 30-minute heartbeat `lanl-analytic-evaluator-progress` is ACTIVE on the resumed chat.
 Readiness and evidence-review agents are responsive; completed subtasks are retained.
 
-**Latest checkpoint 20:07 ET:** p1–p3 normal interim custody complete; p4 active public startup/node0g514 with dispatch custody reviewed. Actual P3 summary pairing0/events0 leaves strict scientific order admission unmet. Final report/fullindexes/strictaudit pending. Historical snapshots keep original times.
+**Latest checkpoint 20:20 ET:** p1-p3 normal interim custody complete; p4 protocol freeze/setup active on node0/g514 with0completed iteration rows. Actual P3 summary pairing0/events0 leaves strict scientific order admission unmet. Standalone historical custody reviews retained; final report/fullindexes/actualstrictaudit and prospective classification fix pending.
 
 [Current p1 startup checkpoint](evidence/17-active-p1-startup-and-p2-preparation-20261008-a5/README.md):13:11 ET metadata confirms public query-index completion, pairing/setup entry and advancing owned CPU. State/iterations and protocol/provider/terminal receipts remain absent. Source-only p2 commands are reviewed, with fresh admission still required. The13:11 ET evaluation table and responsive agent check are complete; next required table13:41 ET.
 
@@ -480,3 +480,5 @@ Live host check 04:39:31Z: both socket/legacy leases released; /data1 free 23,56
 2026-10-08 20:27 ET — [P4 setup and FINALIZE input readiness](evidence/17-p4-setup-and-finalize-input-readiness-20261008-a5/README.md) preserves actual20:18 monitor/native and20:20 process originals. P1-P3 remain normal with complete interim custody; P4 has0completed iterations, protocol-freeze receipt present and live owned public/Codex setup processes. Two provider receipt file stat observations do not establish completed calls. Native remains held514/matching kernellock/FD9/release_readyfalse/no unknown; node1/legacy report released. Formal table/health checkpoint20:20 ET completed, all three agents responsive/working; next by20:48 ET. No repeated scientific/custody/native action or stopped-state resume.
 
 Fresh local P1/P2 root re-reviews (160/165 checks) and independent P1 peer re-review (1328 checks) inspect historical exact originals only; these are standalone FINALIZE review receipts, not current clearance or scientific admission. Six actual review pins are prebound in future SOURCE-ONLY admission; P4 root/peer/currenthost/time/runtime attestations remain required. Concrete custody/audit checklists are retained. A prospective certification error-classification defect and unapplied patch/test plan are documented: broad catches can turn infrastructure errors into candidate rejection, but compact actual rows omit their causes. Preserve frozenR through original guards, then address the confirmed implementation issue during final review. Ticket17 claimed/all acceptance unchecked; full report/index/actualstrictaudit/Standards+Spec review/fixes/ticket+Git sync pending. Human-owned tickets unchanged; heartbeat ACTIVE; raw staysremote.
+
+2026-10-08 20:40 ET — [Future final-closeout reader and template packages](evidence/17-final-closeout-reader-and-template-readiness-20261008-a5/README.md) passed root and independent source review. Selected hostR2 17019B/22990957 checks exact self/GNUparent plus allthree released native kernel/daemon proofs and actual514; completionR2 18085B/c00eec76 fixes source-pin shape/Store name discovery/supervisor process pin while preserving original byte/privacy/phase/seal proofs; remote template authorR1 26682B/ec1fc013 preserves closed SPEC339/de shapes and future refusal. All are NOTRUN; original R/M2/policy/budgets/controls remain unchanged. Earlier rejected drafts/findings are retained. Actual P4 normal custody/current host/FINALIZE success/index/projection/body metadata gates remain required. Full strict6a and final Standards+Spec review/prospective implementation fixes/tests/ticket+Git synchronization still pending; ticket17 claimed, all acceptance unchecked.

@@ -1,0 +1,111 @@
+{
+  "format": "swdb.lanl17-remote-actual-template-author-independent-source-only-review.v1",
+  "status": "PASS_SOURCE_ONLY_NOT_RUNTIME_ADMISSION",
+  "source_only": true,
+  "target_execution_import_main_tests_remote": false,
+  "scientific_admission": false,
+  "original_body_validity_or_completion_inferred": false,
+  "reviewed": {
+    "lanl17_author_remote_actual_accepted_input_template_20261008_a5_r1.py": {
+      "path": "/private/tmp/lanl17_author_remote_actual_accepted_input_template_20261008_a5_r1.py",
+      "bytes": 26682,
+      "sha256": "ec1fc0133ef0e8f96a9436d897586f0dfd72f19b6e8fba77e930fe6c0688c01a"
+    },
+    "lanl17-remote-actual-template-author-input-FUTURE-draft-20261008-a5-r1.json": {
+      "path": "/private/tmp/lanl17-remote-actual-template-author-input-FUTURE-draft-20261008-a5-r1.json",
+      "bytes": 101806,
+      "sha256": "967084f9b3860c51665627a7033c1355014032e5bc3bcfcb443ae302bb86eaa6"
+    },
+    "lanl17-remote-actual-template-author-command-FUTURE-draft-20261008-a5-r1.json": {
+      "path": "/private/tmp/lanl17-remote-actual-template-author-command-FUTURE-draft-20261008-a5-r1.json",
+      "bytes": 3962,
+      "sha256": "5ab57d5ec05fb0f4a2a1d364ea1ab00813a0de59d4af2ea085d98fe54328a260"
+    },
+    "lanl17-remote-actual-template-author-source-only-handoff-20261008-a5-r1.md": {
+      "path": "/private/tmp/lanl17-remote-actual-template-author-source-only-handoff-20261008-a5-r1.md",
+      "bytes": 11045,
+      "sha256": "8d302a03546b0c3b731aed55301a6bb6f56dbc5c0b675bbed5eb0c5f4b803f8b"
+    },
+    "lanl17_write_parent_input_specification_20261007.py": {
+      "path": "/private/tmp/lanl17_write_parent_input_specification_20261007.py",
+      "bytes": 11868,
+      "sha256": "339ea0dc1abb6778f0f016e9c03f2b29c5f1916154b668f5416747b2768a9231"
+    },
+    "lanl17_assemble_selected_actual_input_pins_r1_20261007.py": {
+      "path": "/private/tmp/lanl17_assemble_selected_actual_input_pins_r1_20261007.py",
+      "bytes": 33584,
+      "sha256": "de669e4c0928876f9d033f6d9c1fc820ab3a1eb915aba20c5b6755b9866d7e6a"
+    }
+  },
+  "AST_syntax_valid": true,
+  "stdlib_imports": [
+    "argparse",
+    "datetime",
+    "hashlib",
+    "json",
+    "math",
+    "os",
+    "pathlib",
+    "re",
+    "signal",
+    "stat",
+    "sys",
+    "time"
+  ],
+  "checks": [
+    "Exact source26682/ec1fc, FUTUREinput101806/967084f9, command3962/5ab57d5e pins match handoff",
+    "AST syntax valid; imports stdlib only; no subprocess/importlib/SWDB/SSH/provider/control import",
+    "Only ownsource and explicit private reviewed input bodies are read; descriptor bodies not opened",
+    "Linux UID=EUID114316761; intended native/usr/bin/python3.12 -B command exact; trusted envelope still separate future artifact",
+    "Exact six authorinput fields; closed namespace S/S/SPEC339/allfourcampaignroots",
+    "Own and input files nonsymlink regular owned0600/nlink1 <=8MiB; wholefile hashes and stable stat/body rereads required",
+    "Strict JSON duplicates/nonfinite refused; depth40/node200000/string bounds; typed $future and required_actual_input refused recursively",
+    "ACTUAL_/FUTURE_/NOTRUN_/REQUIRED_ string prefixes refused; actual FUTURE draft necessarily fails closed before outputs",
+    "Input parentreview distinct from template.parentreview; exact source/template/namespace/review canonicalTrue digests required",
+    "Three explicit actual approval flags true plus future_allowed false are required, never defaulted",
+    "Actual aware nonfuture reviewUTC required; source validity/exclusive custody remain parent observations",
+    "Exact six unsealed SPEC339 template fields and exact16 root fields match selected339/de",
+    "4096 document/32MiB perfile/512MiB declaredtotal/8MiB metadata caps unchanged",
+    "Closedrole set matches de SEALED_ROLES pluscontrol_source/selected_record/original_unsealed_campaign_export",
+    "Closed descriptor fieldsets preserve genuine seals only for sealedroles and semantic SHA/id/kind only for publicYAML",
+    "Originalreference objects exact {$original_document:alias}; no overrides; required roles checked",
+    "Controlwriter source must reference control_source; parent review explicit; family/source/canonicalpolicy exact",
+    "Known H28/fa/9c/b08/cpu-reader/export/delegatedb797 pins and policy booleans match selectedde",
+    "B08 source digest default ensure_asciiTrue is correctly retained; no inference from pretty JSON",
+    "Original32 parent_capture and SPEC339 ownsource fixed hashes; own SPECsource11868/339 plus sole policyalias exact",
+    "Executed final14 lossless6909/actualexport928a delegatedb797 policies preserved; older draft source notselected",
+    "All sealed declared receipts retain genuine identity/expectedformat/canonical policy; author does not compute their seals",
+    "Remote path origins bounded to /data/yanruj or/data1/yanruj; private/auth/state/prompt/provider components refused",
+    "Git origins SWDB-only and explicitapprovedR/EF/ER/E11/E14 references; no guessed commit",
+    "Known R/tree/C/F6/M2wholefile/identity/policy/account frozen exact",
+    "M2 actual parent-population format and original canonicalTrue H28 preserved",
+    "EF/ER receipt origins explicitly committed matchingexport; additive record/config mapping declarations exact",
+    "Export true originalbranch/tree/body/pureaddition facts remain assembler verification, not author claims",
+    "Final11/14 acceptedoriginal descriptors require actual selectedreader/writer/export seams and true parent acceptance",
+    "Final14 source c4ab and actual export43256 retained; reader6909 sourcewriter linkage exact",
+    "Selected publicYAML IDs unique acrossdescriptors/rootreference list; actual rejected/interrupted closure stillparent-owned",
+    "Exactlyfour campaign rows and closedattemptsixrefs; <=256 attempts; optionalinterruptedonlyexistingrole",
+    "Actual publicexport lists must be lists, can legitimately [] afterparent originalselection review",
+    "Forbiddenroot set includes wholeS/RAW/allcampaigns; output externalownednamespace cannotbe within any",
+    "Explicit metadata60..120 deadline with SIGALRM/monotonic publication bounds; no scientific budget/cap changes",
+    "Fresh destination under existing owned0700 parent, nonsymlink route; exclusive new0700 directory preserves partialfailure",
+    "Only parent-template.json UNSEALED and new author-custody.json canonicalTrue metadata receipt written",
+    "O_EXCL0600/fsync/readback outputs; originalinput/source/parent stability rechecked before publication",
+    "Template preserves all supplied values without generating facts; SPEC339 later adds only ownspec seal",
+    "New custody states metadata_template_authored_for_parent_review_not_original_admission/scientificfalse/bodyreads0/actions0",
+    "Stdout compact pins only; refusal stderr closederrorclass/state, no raw exception/input body",
+    "Futurecommand exact sixargs/deadline120/native-B/sourceSHA and subsequentSPEC author-source interface correct",
+    "SubsequentSPEC parent-review digest explicitly template.parent_review, not input.parent_review",
+    "No runtime metadata capture/config/source staging implied by FUTUREcommand; required separate review noted",
+    "Assemblerde actual original hash/format/seal/body/Git/source/policy verification and strict6a scientific gate retained",
+    "Handoff truthfully distinguishes metadata validation from original truth/closure/fullinventory/scientific admission",
+    "No target import/main/test/runtime/source mutation/remote execution during this independent review"
+  ],
+  "check_count": 47,
+  "material_findings": [],
+  "limits": [
+    "Actual completeinput/originalparentreviews/namespace/source staging/private output remain future",
+    "Author intentionally verifies metadata declarations only; sourcecleanliness/originalbodies/seals/pureexports/closure are parent plusunchanged assembler/auditor duties",
+    "Trustednative startup finite capture source/config requires separate review; sourceauthor alone is not runtime admission"
+  ]
+}

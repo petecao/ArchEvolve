@@ -1,0 +1,96 @@
+{
+  "checked_utc": "2026-10-09T00:29:19.680023+00:00",
+  "confirmed_source_checks": [
+    "Reader and action whole-file pins exactly match requested17854/4e785 and20552/6d442; embedded -c source exactlyequals reviewed reader.",
+    "AST parses source only; standard-library imports, no SWDB/control import/provider/native/campaign actions.",
+    "metadata reads canonical nonsymlink ownedUID114316761 regular nlink1 files, all9stat before/fd/after; final byte/stat reread for every ROWS original before returned base64; native permissions neverchanged.",
+    "M2 original true seal/wholefileSHA/R/F6/source/raw/H exact; guard9c andfa false seals; helperER true seal. Original report policy/format match frozenpublic report source.",
+    "FINALIZE cleanup_source_commit=final_source_commit=R, projectS/swdb-project; original wait78000/term78120/parent78300/K60 and released pre-execallthreeleases. PREPAREC not reused.",
+    "Original helper28 final-export closed branch/commit/paths/rawfalse JSON matches helper.stdout; original compactERreceipt manifest/allfourstops/publicreport verified. Originalreport expected unsupported/no-switch/unchanged timing-only/zeroeligible/fourobserved facts arisefrom inspectedoriginals, not invented default scientific admission.",
+    "Allfour originalvalidate paths bind actual RAW/campaign-runs/extensa/CID/records; integerexit0, closed successstdout/emptystderr; finalbasevalidationincluded; no Store/CLI validation rerun.",
+    "Conditional exports only existingcomplete fourfiles accepted, absent staysabsent, prefix/named candidateargs/zeroexit/emptypublicstderr verified; exportsstdout pinned butnotreturned.",
+    "helper.stderr body maycontain successful Git progress; bounded65536 metadataonlypin, never RETURN. Separate reportstdout and YAML/provider/auth/prompt/rawstate bodies notreturned. ExplicitoriginalERreceipt doesinherently include public_report ashelperemitted; separately requestedoriginalreceipt scope retained.",
+    "EF fixedcommit andpure soleR parent/additionpaths/M2/clean proof, ERactualcommit/branch/soleR/additions/clean proof checked by readonlyGit; physical185sourceF6/cleanR checked, no fetch/push/metadata mutation.",
+    "180s monotonic/alarm, selectedconfigremote180/local300; filecount96, peroriginalcaps, returnedpacket<=8MiB; no wider scientific budgets. Failure caught paths returnclosedclass/reasonhash/readinessfalse, no files or exception text.",
+    "Currentnativeclearance, publishedref freshness and historical fullcatalog validationcontinuity explicitly notpoliced; parent owns fresh observations and originalfullindex/readiness. SSH0 alone is not readiness."
+  ],
+  "findings": [
+    {
+      "evidence": "Draft supplies path-keyed dict;64fd BOOT iterates CONFIG[source_pins] expecting list records with path/bytes/sha256. Handoff requires serializing only config_template, without conversion; iterating dict yields str and pin[path] raises TypeError before child reader execution.",
+      "file": "/private/tmp/lanl17-finalize-completion-reader-action-draft-r1-20261008-a5.json",
+      "id": "F1",
+      "location": "config_template.source_pins",
+      "priority": "P1",
+      "required_change": "PreserveR1; derive fresh action config with source_pins list of explicit original {path,bytes,sha256} descriptors, rebuild embedded source/hash and handoff, source-review exact new config. No runtime test needed for this source fix.",
+      "summary": "Action cannot execute using selected64fd contract"
+    },
+    {
+      "evidence": "Reader counts rglob(*.yaml), including hidden relative paths and omitting .yml. Frozen swdb.access.record_files: every file suffix in {.yaml,.yml}, skipping any relative component starting dot. Thus original successful full validation stdoutN can be refused despite valid full catalog; claimed eligible YAML count does not use same discovery. No actual mismatching catalog is asserted.",
+      "file": "/private/tmp/lanl17_read_finalize_completion_originals_20261008_a5_r1.py",
+      "id": "F2",
+      "line": 93,
+      "priority": "P2",
+      "required_change": "Use source-equivalent eligible public record-name discovery (.yaml/.yml, hidden-relative exclusion), preserve16384/stat/UID/nonsymlink checks and do not read bodies or claim continuity. Alternatively explicitly source-attest/refuse a restricted selected catalog rather than label it public Store discovery. No selected writer/catalog/source weakening.",
+      "summary": "Public validation count discovery differs from frozen Store record discovery"
+    },
+    {
+      "evidence": "Originalfa receipt emits processes_py_sha256 and validates physical cleanup implementation after normal child. Reader checks preregistration.processes_sha256 but sup comparison omits sup.processes_py_sha256 while presenting supervisor_source_scope. Requested four-control-source custody should bind this explicit original field too.",
+      "file": "/private/tmp/lanl17_read_finalize_completion_originals_20261008_a5_r1.py",
+      "id": "F3",
+      "line": 124,
+      "priority": "P2",
+      "required_change": "Require original sup.processes_py_sha256 == bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289, preserve all existing originalfa/H28/F6/context/cleanup checks. Do not manufacture additional process/source evidence.",
+      "summary": "Normal cleanup receipt does not explicitly bind original processes source pin"
+    }
+  ],
+  "format": "swdb.lanl17-finalize-completion-reader-independent-source-review.v1",
+  "remote_actions": 0,
+  "runtime_use_approved": false,
+  "scientific_admission": false,
+  "scope": "Independent full AST/text source-only review against selected source controls; no target/control imports/main, tests, remote operations, raw record/provider body reads or source edits. Findings concern currentR1source/config readiness only; no actual FINALIZE/report/scientific result claimed.",
+  "source_pins": {
+    "action_draft": {
+      "bytes": 20552,
+      "path": "/private/tmp/lanl17-finalize-completion-reader-action-draft-r1-20261008-a5.json",
+      "sha256": "6d4422152f18a212a02f153ecb2867e12e3342aea8f53ab5affc0622ad80791a"
+    },
+    "capture64fd": {
+      "bytes": 7268,
+      "path": "/private/tmp/lanl17_capture_metadata_action_20261008.py",
+      "sha256": "64fd8a4358bfbc5c172b50e02ae3782b286f2302f2beb8907d4abd35b3449c2a"
+    },
+    "guard9c": {
+      "bytes": 14577,
+      "path": "/private/tmp/lanl17_metadata_dispatch_guard_cleanup60_a4_20261007.py",
+      "sha256": "9c5d9658b524db94805a6b51453dc9edef7096a27312677896d595d39b94f6c6"
+    },
+    "helper28": {
+      "bytes": 38195,
+      "path": "/private/tmp/lanl17_parent_helpers_cleanup60_a4.py",
+      "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+    },
+    "public_discovery": {
+      "bytes": 3744,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/access.py",
+      "sha256": "b068908472747d7c6c5afc8ee7af8067c667e9bb4ef6d45db5d1e1a860154b40"
+    },
+    "public_report_source": {
+      "bytes": 26057,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/extensa_agreement.py",
+      "sha256": "d078cf8a26fbbd65f0d27d0a64dbde56e4f190e1ec4c07b9e4eb311ad3a5174f"
+    },
+    "reader": {
+      "bytes": 17854,
+      "path": "/private/tmp/lanl17_read_finalize_completion_originals_20261008_a5_r1.py",
+      "sha256": "4e7853533dba3c3c325dc809e44366994e63d567461f951c5253a97293334a98"
+    },
+    "supervisorfa": {
+      "bytes": 8014,
+      "path": "/private/tmp/lanl17_metadata_supervisor_cleanup60_a4.py",
+      "sha256": "fa703bbd4c71bb4bcf56f47d1e224449f627d5921295e00b9cc105f21e95bde0"
+    }
+  },
+  "target_source_executed": false,
+  "tests": 0,
+  "verdict": "FINDINGS"
+}
