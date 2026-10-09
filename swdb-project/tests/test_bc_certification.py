@@ -154,8 +154,11 @@ def test_bc_forward_pass_certifies_with_every_control_rejected(tmp_path, *, cert
     _gcc()
     _, tree = _bc_tree(tmp_path, certification_store=certification_store)
     before = c.artifacts.identify(tree)['sha256']
+    # 2026-10-09 ET: pinned to candidate 1.6. Under the default 1.7 (gem5 wait rule) the BC read offload,
+    # like BFS's, reads tile0 uncovered after a filled range loop (see PINNED_VERSION in
+    # test_certification_controls.py); re-point to the default once that finding is decided.
     matrix, controls = c.certify_bfs(tree, (ROOT / 'library').resolve(), tmp_path, (16384, 1024), 4, (0,),
-                                     plugin=kernels.BC)
+                                     plugin=kernels.BC, version='1.6')
     assert c.artifacts.identify(tree)['sha256'] == before
     assert len(matrix) == 10 and all(x['status'] == 'passed' for x in matrix)
     assert len(controls) == 2 * len(bc.CONTROLS) == 24, [(x['id'], x['status']) for x in controls]

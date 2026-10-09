@@ -1,4 +1,9 @@
 // Strict DX100 functional interface. Updated: 2026-10-04 ET (ticket 70: record channel hook).
+// 2026-10-09 ET: with -DSWDB_STRICT_WAIT_RULE_GEM5 (candidate certify 1.7, lowering certify 1.2) the
+// wait rule follows the gem5 DX100 device (research 14, .scratch/formal-verification-2026-10-09/
+// research/14-dx100-wait-rule.md, sections 1, 4 and 6). Without the define every line below that the
+// old header had compiles exactly as before (each #ifndef branch is the old text, byte for byte).
+// Out of scope: DX100 loads and stores still touch main memory at the call (no memory timing).
 #pragma once
 #include <algorithm>
 #include <atomic>
@@ -50,6 +55,17 @@ struct State { std::mutex lock; std::vector<Tile> tiles; std::vector<Reg> regs; 
  std::vector<Region> regions; int tile_count,reg_count; bool session; uint64_t operations;
  State():tiles(NUM_TILES),regs(NUM_SCALAR_REGS),ops(1),tile_count(0),reg_count(0),session(false),operations(0) {ops[0].covered=true;} };
 inline State &state(){ static State s; return s; }
+#ifdef SWDB_STRICT_WAIT_RULE_GEM5
+// gem5 roles of one operation: the tiles it names as src1/src2/dst1/dst2 (never the condition tile),
+// how many of its dependencies are tile inputs (they come first), and whether it is a range loop
+// that filled its output tile (RangeFuser.cc:166-168, 214-218: it finishes without waiting for the
+// producers of its min, max and condition tiles). pending[t]: operations that name tile t.
+struct Roles { std::vector<int> named; size_t inputs,tile_dependencies; bool filled;
+ Roles():inputs(0),tile_dependencies(0),filled(false){} };
+struct Gem5 { std::vector<Roles> roles; std::vector<std::vector<size_t>> pending;
+ Gem5():roles(1),pending(NUM_TILES){} };
+inline Gem5 &gem5(){ static Gem5 g; return g; }
+#endif
 inline int thread(){return omp_in_parallel()?omp_get_thread_num():0;}
 inline Tile &tile(int id){State&s=state();check(id>=0&&id<int(s.tiles.size()),"tile_handle");
  check(s.tiles[id].owner==thread(),"thread_ownership_tile");return s.tiles[id];}
@@ -64,6 +80,7 @@ inline void address(const void *base,int64_t index,size_t bytes){
  for(const Region&r:state().regions)if(start>=r.start&&end<=r.end){found=true;break;}
  check(found,"memory_region");
 }
+#ifndef SWDB_STRICT_WAIT_RULE_GEM5
 inline size_t issue(const std::vector<int>&inputs,const std::vector<int>&registers,
                     const std::vector<int>&outputs,const std::vector<int>&reg_outputs={}){
  State&s=state();Op op;
@@ -79,13 +96,58 @@ inline void cover(size_t id){State&s=state();if(!id||s.ops[id].covered)return;
  const std::vector<size_t> deps=s.ops[id].dependencies;for(size_t dep:deps)cover(dep);
  s.ops[id].covered=true;for(int t:s.ops[id].tiles)if(s.tiles[t].writer==id)s.tiles[t].cpu=s.tiles[t].device;
 }
+#else
+// Drop covered operations from pending[t].
+inline void prune(int t){State&s=state();std::vector<size_t>&p=gem5().pending[t];
+ p.erase(std::remove_if(p.begin(),p.end(),[&s](size_t op){return s.ops[op].covered;}),p.end());}
+inline size_t issue(const std::vector<int>&inputs,const std::vector<int>&registers,
+                    const std::vector<int>&outputs,const std::vector<int>&reg_outputs={}){
+ State&s=state();Op op;Roles roles;
+ for(int id:inputs)op.dependencies.push_back(tile(id).writer);
+ roles.tile_dependencies=op.dependencies.size();
+ for(int id:registers)op.dependencies.push_back(reg(id).writer);
+ op.tiles=outputs;op.registers=reg_outputs;s.ops.push_back(op);const size_t index=s.ops.size()-1;
+ roles.named=inputs;roles.inputs=inputs.size();roles.named.insert(roles.named.end(),outputs.begin(),outputs.end());
+ gem5().roles.push_back(roles);
+ for(int id:roles.named){prune(id);gem5().pending[id].push_back(index);}
+ for(int id:registers)reg(id).readers.push_back(index);
+ for(int id:outputs){Tile&t=tile(id);t.writer=index;std::fill(t.cpu.begin(),t.cpu.end(),UINT32_C(0xa5a5a5a5));}
+ for(int id:reg_outputs)reg(id).writer=index;
+ ++s.operations;return index;
+}
+// The last issued operation's condition tile names no counted role. Every call appends it as its last
+// tile input, and calls this under the same lock right after issue, so it sits at named[inputs-1].
+inline void condition(int cond){if(cond<0)return;const size_t index=state().ops.size()-1;Roles&r=gem5().roles.back();
+ r.named.erase(r.named.begin()+(r.inputs-1));--r.inputs;
+ std::vector<size_t>&p=gem5().pending[cond];
+ for(size_t k=p.size();k>0;--k)if(p[k-1]==index){p.erase(p.begin()+(k-1));break;}}
+inline void range_filled(bool filled){gem5().roles.back().filled=filled;}
+// Cover an operation and, transitively, the producers of its inputs (tile and register), except the
+// tile inputs (min, max, condition) of a range loop that filled its output tile.
+inline void cover(size_t id){State&s=state();std::vector<size_t> stack(1,id),order;
+ while(!stack.empty()){const size_t op=stack.back();stack.pop_back();if(!op||s.ops[op].covered)continue;
+  s.ops[op].covered=true;order.push_back(op);const Roles&r=gem5().roles[op];const std::vector<size_t>&deps=s.ops[op].dependencies;
+  for(size_t k=r.filled?r.tile_dependencies:0;k<deps.size();++k)stack.push_back(deps[k]);}
+ for(size_t op:order)for(int t:s.ops[op].tiles)if(s.tiles[t].writer==op)s.tiles[t].cpu=s.tiles[t].device;
+}
+// A wait on t covers every uncovered operation that names t (src1/src2/dst1/dst2), and t's writer.
+inline void wait_gem5(int id){Tile&t=tile(id);const std::vector<size_t> named=gem5().pending[id];
+ for(size_t op:named)cover(op);
+ cover(t.writer);prune(id);}
+#endif
 template<class T>inline T read_memory(T*base,int64_t i){address(base,i,sizeof(T));
  static_assert(sizeof(T)==4,"strict layer's current operation corpus uses i32");
  return __atomic_load_n(base+i,__ATOMIC_RELAXED);}
 template<class T>inline T *data(int id){return reinterpret_cast<T*>(tile(id).device.data());}
 inline int32_t rval(int id){return int32_t(reg(id).value);}
+#ifndef SWDB_STRICT_WAIT_RULE_GEM5
 inline void reset(){State&s=state();s.tiles.assign(NUM_TILES,Tile());s.regs.assign(NUM_SCALAR_REGS,Reg());
  s.ops.assign(1,Op());s.ops[0].covered=true;s.regions.clear();s.tile_count=s.reg_count=0;s.session=false;s.operations=0;}
+#else
+inline void reset(){State&s=state();s.tiles.assign(NUM_TILES,Tile());s.regs.assign(NUM_SCALAR_REGS,Reg());
+ s.ops.assign(1,Op());s.ops[0].covered=true;s.regions.clear();s.tile_count=s.reg_count=0;s.session=false;s.operations=0;
+ gem5()=Gem5();}
+#endif
 inline void session_begin(){State&s=state();std::lock_guard<std::mutex>guard(s.lock);check(!s.session,"session_begin_twice");s.session=true;}
 inline uint64_t operation_count(){return state().operations;}
 }
@@ -100,9 +162,17 @@ template<class T>inline int get_new_tile(){static_assert(sizeof(T)==4,"i32 tile"
  swdb_strict::check(s.tile_count<NUM_TILES,"tile_budget");int id=s.tile_count++;s.tiles[id].owner=swdb_strict::thread();return id;}
 template<class T>inline int get_new_reg(){static_assert(sizeof(T)==4,"i32 register");auto&s=swdb_strict::state();
  swdb_strict::check(s.reg_count<NUM_SCALAR_REGS,"register_budget");int id=s.reg_count++;s.regs[id].owner=swdb_strict::thread();return id;}
+#ifndef SWDB_STRICT_WAIT_RULE_GEM5
 template<class T>inline void maa_const(T value,int id){std::lock_guard<std::mutex>guard(swdb_strict::state().lock);auto&r=swdb_strict::reg(id);
  for(size_t reader:r.readers)swdb_strict::check(swdb_strict::state().ops[reader].covered,"constant_uncovered_register");
  r.readers.clear();r.value=uint32_t(value);r.writer=0;}
+#else
+// gem5 holds a CPU register write until no unfinished command names the register (IF.cc:233-249,
+// MAA.cc:510-538, CpuSidePort.cc:145-149): the readers are covered instead of failing.
+template<class T>inline void maa_const(T value,int id){std::lock_guard<std::mutex>guard(swdb_strict::state().lock);auto&r=swdb_strict::reg(id);
+ const std::vector<size_t> readers=r.readers;for(size_t reader:readers)swdb_strict::cover(reader);
+ r.readers.clear();r.value=uint32_t(value);r.writer=0;}
+#endif
 template<class T>inline int get_new_reg(T value){int id=get_new_reg<T>();maa_const(value,id);return id;}
 template<class T>inline void set_reg(int id,T value){maa_const(value,id);}
 template<class T>inline T get_reg(int id){std::lock_guard<std::mutex>guard(swdb_strict::state().lock);auto&r=swdb_strict::reg(id);
@@ -112,10 +182,18 @@ template<class T>inline T*get_cacheable_tile_pointer(int id){std::lock_guard<std
 template<class T>inline volatile T*get_noncacheable_tile_pointer(int id){return get_cacheable_tile_pointer<T>(id);}
 inline uint16_t get_tile_size(int id){std::lock_guard<std::mutex>guard(swdb_strict::state().lock);auto&t=swdb_strict::tile(id);
  return swdb_strict::state().ops[t.writer].covered?t.size:65535;}
+#ifndef SWDB_STRICT_WAIT_RULE_GEM5
 inline uint16_t get_tile_ready(int id){std::lock_guard<std::mutex>guard(swdb_strict::state().lock);auto&t=swdb_strict::tile(id);
  return swdb_strict::state().ops[t.writer].covered?1:0;}
 inline void wait_ready(int id){std::lock_guard<std::mutex>guard(swdb_strict::state().lock);swdb_strict::cover(swdb_strict::tile(id).writer);
  std::atomic_thread_fence(std::memory_order_seq_cst);}
+#else
+// Ready only when no uncovered operation names t and t's writer is covered.
+inline uint16_t get_tile_ready(int id){std::lock_guard<std::mutex>guard(swdb_strict::state().lock);auto&t=swdb_strict::tile(id);
+ swdb_strict::prune(id);return swdb_strict::gem5().pending[id].empty()&&swdb_strict::state().ops[t.writer].covered?1:0;}
+inline void wait_ready(int id){std::lock_guard<std::mutex>guard(swdb_strict::state().lock);swdb_strict::wait_gem5(id);
+ std::atomic_thread_fence(std::memory_order_seq_cst);}
+#endif
 inline void set_tile_size(int id,uint16_t size){std::lock_guard<std::mutex>guard(swdb_strict::state().lock);swdb_strict::capacity(size);
  auto&t=swdb_strict::tile(id);t.size=size;std::copy(t.cpu.begin(),t.cpu.end(),t.device.begin());t.writer=0;}
 inline void set_tile_ready(int id,uint16_t ready){if(ready)wait_ready(id);}
@@ -125,11 +203,17 @@ template<class T>inline void maa_stream_load(T*base,int lo,int hi,int stride,int
  std::vector<int>inputs;if(cond>=0)inputs.push_back(cond);std::vector<T>out(n);
  for(uint64_t k=0;k<n;++k)if(cond<0||swdb_strict::data<uint32_t>(cond)[k])out[k]=swdb_strict::read_memory(base,begin+k*step);
  swdb_strict::issue(inputs,{lo,hi,stride},{dst});std::copy(out.begin(),out.end(),swdb_strict::data<T>(dst));swdb_strict::tile(dst).size=n;
+#ifdef SWDB_STRICT_WAIT_RULE_GEM5
+ swdb_strict::condition(cond);
+#endif
 }
 template<class T>inline void maa_indirect_load(T*base,int index,int dst,int cond=-1){
  std::lock_guard<std::mutex>guard(swdb_strict::state().lock);size_t n=swdb_strict::tile(index).size;swdb_strict::capacity(n);std::vector<T>out(n);
  for(size_t k=0;k<n;++k)if(cond<0||swdb_strict::data<uint32_t>(cond)[k])out[k]=swdb_strict::read_memory(base,swdb_strict::data<int32_t>(index)[k]);
  std::vector<int>inputs={index};if(cond>=0)inputs.push_back(cond);swdb_strict::issue(inputs,{}, {dst});
+#ifdef SWDB_STRICT_WAIT_RULE_GEM5
+ swdb_strict::condition(cond);
+#endif
  std::copy(out.begin(),out.end(),swdb_strict::data<T>(dst));swdb_strict::tile(dst).size=n;
 }
 template<class T>inline void maa_range_loop(int last_i,int last_j,int minimum,int maximum,int stride,int rows,int columns,int cond=-1){
@@ -144,6 +228,9 @@ template<class T>inline void maa_range_loop(int last_i,int last_j,int minimum,in
  }
  std::vector<int>inputs={minimum,maximum};if(cond>=0)inputs.push_back(cond);
  swdb_strict::issue(inputs,{last_i,last_j,stride},{rows,columns},{last_i,last_j});
+#ifdef SWDB_STRICT_WAIT_RULE_GEM5
+ swdb_strict::condition(cond);swdb_strict::range_filled(is.size()==TILE_SIZE);
+#endif
  std::copy(is.begin(),is.end(),swdb_strict::data<int32_t>(rows));std::copy(js.begin(),js.end(),swdb_strict::data<int32_t>(columns));
  swdb_strict::tile(rows).size=is.size();swdb_strict::tile(columns).size=js.size();swdb_strict::reg(last_i).value=i;swdb_strict::reg(last_j).value=j;
 }
@@ -160,6 +247,9 @@ template<class T>inline void maa_alu_scalar(int src,int scalar,int dst,Operation
  std::lock_guard<std::mutex>guard(swdb_strict::state().lock);size_t n=swdb_strict::tile(src).size;std::vector<T>out(n);
  for(size_t k=0;k<n;++k)if(cond<0||swdb_strict::data<uint32_t>(cond)[k])out[k]=swdb_alu(swdb_strict::data<T>(src)[k],T(swdb_strict::rval(scalar)),op);
  std::vector<int>inputs={src};if(cond>=0)inputs.push_back(cond);swdb_strict::issue(inputs,{scalar},{dst});
+#ifdef SWDB_STRICT_WAIT_RULE_GEM5
+ swdb_strict::condition(cond);
+#endif
  std::copy(out.begin(),out.end(),swdb_strict::data<T>(dst));swdb_strict::tile(dst).size=n;
 }
 template<class T>inline void maa_indirect_store_vector(T*base,int index,int src,int cond=-1,int dst=-1){
@@ -171,4 +261,7 @@ template<class T>inline void maa_indirect_store_vector(T*base,int index,int src,
  }
  std::vector<int>inputs={index,src};if(cond>=0)inputs.push_back(cond);std::vector<int>outputs;if(dst>=0)outputs.push_back(dst);
  swdb_strict::issue(inputs,{},outputs);if(dst>=0){std::copy(old.begin(),old.end(),swdb_strict::data<T>(dst));swdb_strict::tile(dst).size=n;}
+#ifdef SWDB_STRICT_WAIT_RULE_GEM5
+ swdb_strict::condition(cond);
+#endif
 }

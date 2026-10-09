@@ -94,6 +94,14 @@ def _patch(tmp_path, transform, *, certification_store):
     return output
 
 
+# 2026-10-09 ET: these Peter-derived candidates test the control and legality machinery, not the wait
+# rule, so they stay on candidate 1.6. Under the default 1.7 (gem5 wait rule) Peter's read offload fails
+# read_before_wait after a filled range loop (pinned in tests/test_strict_wait_rule.py; open for Yan-Ru,
+# .scratch/formal-verification-2026-10-09/evidence/strict-gem5-wait-rule-redeclaration-20261009.md).
+# Re-point to c.VERSION once that is decided.
+PINNED_VERSION = '1.6'
+
+
 def _certify(tmp_path, monkeypatch, transform, *, certification_store):
     try:
         c.compiler()
@@ -102,7 +110,7 @@ def _certify(tmp_path, monkeypatch, transform, *, certification_store):
     monkeypatch.setattr(c.workflow, 'persist', lambda *args, **kwargs: None)
     patch = _patch(tmp_path, transform, certification_store=certification_store)
     return c.certify(certification_store, CONTRACT, snapshot=c.DEFAULT_SNAPSHOT, patch=patch,
-                     runs_dir=tmp_path / 'runs')
+                     runs_dir=tmp_path / 'runs', version=PINNED_VERSION)
 
 
 def _controls(record):
@@ -171,7 +179,7 @@ def test_forged_frontier_v2_is_killed_when_chunks_are_counted_after_their_pushes
     forged = [x for x in record['negative_controls'] if x['id'] == 'forged_frontier']
     assert [(x['tile_size'], x['status']) for x in forged] == [(16384, 'rejected'), (1024, 'rejected')]
     assert all('duplicate_frontier' in x['observed_checks'] and x['fault']['version'] == 2 for x in forged)
-    assert record['command']['version'] == c.VERSION
+    assert record['command']['version'] == PINNED_VERSION
 
 
 def test_semantically_broken_rewrite_is_refused(tmp_path, monkeypatch, *, certification_store):
@@ -187,8 +195,8 @@ def test_rewrite_that_bypasses_the_claim_seam_is_refused_by_its_surviving_contro
     assert survived == {'skipped_cas_recheck'}
     # Ticket 76 (certify 1.4): the bypass also fails every positive cell by the seam witness (L4);
     # under 1.3 only the surviving control refused it.
-    # Ticket 78, then the 2026-10-05 review fixes (1.6): the default keeps 1.4's seam witness, unchanged.
-    assert record['command']['version'] == c.VERSION == '1.6'
+    # Ticket 78, then the 2026-10-05 review fixes (1.6): 1.6 keeps 1.4's seam witness (pinned 2026-10-09 ET, above).
+    assert record['command']['version'] == PINNED_VERSION == '1.6'
     assert {x['reason'] for x in record['matrix']} == {'seam_witness'}
 
 

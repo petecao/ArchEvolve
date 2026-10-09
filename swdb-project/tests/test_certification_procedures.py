@@ -32,19 +32,26 @@ ALL = [(family, version) for family, table in procedures.PROCEDURES.items() for 
 # CLI categories, evaluator/control decisions and verdicts are unchanged. Campaign infrastructure
 # interruption handling is outside these manifests. Dated before/after evidence:
 # .scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-certification-fingerprint-redeclaration-20261008.md.
+# 2026-10-09 ET: re-declared after the gem5 wait-rule switch (candidate 1.7, lowering 1.2): only the bytes of
+# swdb/certification.py, swdb/certification_process.py and library/dx100/strict/MAA_functional.hpp changed;
+# without -DSWDB_STRICT_WAIT_RULE_GEM5 the strict header preprocesses to identical text, every old code
+# path is unchanged and every definition row is unchanged. Evidence:
+# .scratch/formal-verification-2026-10-09/evidence/strict-gem5-wait-rule-redeclaration-20261009.md.
 
 FROZEN = {
-    ('candidate', '1.3'): '6c75a1b113fbd19957700085e159786d136ebd8f51618a7f1eb07d2d6b7b5eea',
-    ('candidate', '1.4'): '90c7a0bfae71f401e081917821853982610fc4c0202a2f042b5683f9a3247b23',
-    ('candidate', '1.5'): '0310109a282af23c03293f7bcb71860b9a542dfa504a9e5d6d18ae5be923bd5e',
-    ('candidate', '1.6'): '3593fa57119c0b58190f9a119ef5294ae9eea6fc995a675a9a2530982b9f3e76',
-    ('native', '1.3'): '5fafe53625d2e7b6c4cf1cccba1cb453c2a7f512f7f7050c163b970d95b81cbc',
-    ('native', '1.4'): 'b8a4932a2e332db6993c153ef5fee2aa259962a61a453507d526f74e40802a26',
-    ('native', '1.5'): 'fc5a7e51fbb1cc6b02e496e2cbfc831884dc8f01e3987757665d7c983bb01b7f',
+    ('candidate', '1.3'): '51e6e839a0ee3ab600de02c713f844d24168df329460ae85d50f7e36c333ac15',
+    ('candidate', '1.4'): 'f0d79cf5d066962490da77cbbeff41abf6c0d518533baae8956c193a02c2be33',
+    ('candidate', '1.5'): '47d1964dea31e224c1920f37d88b1a0370a17b13cc54ddf577ebe3049020d83e',
+    ('candidate', '1.6'): '1a520cc2aa4b40e681738dbd96a6ebfe68670f2a7961b5cf17ddd776096ef140',
+    ('candidate', '1.7'): '9bf43a94137fae3c1b82a4ac92a01676dc019747a209ad2568cc63e0c65ec1c4',
+    ('native', '1.3'): '4b32c8f9c3b687c290ef33fd1bc8f479fc13523e83f4fa7ca7d759d0531adcff',
+    ('native', '1.4'): '98c68dbf244c6c98116473839631643d315d977c51659d90e9bc4a2b24e0249a',
+    ('native', '1.5'): '26d3fce0ffd8de603cc624945dae88eaec3d47ab9d34a3b1708c787e862d87af',
     ('library_operation', '1.0'): '7ffd0a8f3ff6e2fa0da4c966010c5a57a0378140a5a6c777c32fbcd4d3fa8dea',
     ('library_operation', '1.1'): '4cf8263345419fc5442d5aae5fb7f2a358c08b4d4052f90f7a3b2462fc9710b7',
     ('library_operation', '1.2'): 'a8cb6f19a83cf8ba530f6209b898af7b8985256665633c9e78c8f4ad9821cb91',
-    ('lowering_calibration', '1.1'): '1d14a816bea8c3b2a644264bc85ebd6be9dfacbcd01a09376b5e0c4f1623c9e5',
+    ('lowering_calibration', '1.1'): '92545c60ba22d3a09c9085ef887617a3d7bb99566d5be85434bf65c446d2b519',
+    ('lowering_calibration', '1.2'): '7641787314534bc958bbc959ea1a9d59e0ca7c6f8ec43ce2c130f3ad8efbd51b',
 }
 
 # F6 (2026-10-05 ET): the DX100 files certify 1.3 and 1.4 read that no library entry, profile or
@@ -58,7 +65,9 @@ UNPINNED_DX100_1_3_1_4 = {
     'dx100/certification/v1_4/prelude.hpp': 'dd5d2917aa093b91c2abecd0ecb7221289d9e3b8e9469c506f2392ec6db7f079',
     'dx100/certification/v1_4/record.cc': 'c0b0221c2080117761f82566c7801a457aa31d3dedd21ec2600670e61bdd4fa6',
     'dx100/certification/v1_4/seams.cc': '1a1deb79cff58ccae5ee5d9cc08bdae123c1c821b0a675e62d80c2033ec23eef',
-    'dx100/strict/MAA_functional.hpp': 'e90354b14ab25ad232d916a5a1c07753a1bfb061e194170ea64878b36084121a',
+    # 2026-10-09 ET: the gem5 wait-rule switch added #ifdef SWDB_STRICT_WAIT_RULE_GEM5 blocks; without the
+    # define the header preprocesses to the same text as e90354b1... (evidence: .scratch/formal-verification-2026-10-09/evidence/strict-gem5-wait-rule-redeclaration-20261009.md).
+    'dx100/strict/MAA_functional.hpp': '388ffc1935e0e4856118682c9da5f8d93918f800ba236042ecccd67b4c12a1ff',
     'dx100/strict/gem5/m5ops.h': 'b1eb7d074231782a943faa9cc249f6027152b6c727c5f70b71808e122e97867f',
 }
 
@@ -69,7 +78,7 @@ def test_every_family_has_a_table_and_a_runnable_default():
     assert set(procedures.PROCEDURES) == set(procedures.FAMILIES) == set(procedures.DEFAULTS)
     for family, default in procedures.DEFAULTS.items():
         assert procedures.procedure(family) is procedures.PROCEDURES[family][default]
-    assert c.VERSION == '1.6' and c.VERSIONS == ('1.3', '1.4', '1.5', '1.6')
+    assert c.VERSION == '1.7' and c.VERSIONS == ('1.3', '1.4', '1.5', '1.6', '1.7')  # 2026-10-09 ET: 1.7 default
     assert library_operations.VERSION == '1.2' and library_operations.VERSIONS == ('1.0', '1.1', '1.2')
 
 
@@ -92,7 +101,7 @@ def test_certify_refuses_an_unknown_version_before_any_build(tmp_path, *, certif
     from swdb.store import Store
     with pytest.raises(UsageError, match='certify command version'):
         c.certify(certification_store, 'contract.bfs_read_offload', snapshot=c.DEFAULT_SNAPSHOT,
-                  patch=LIBRARY / 'dx100/peter-section5.patch', runs_dir=tmp_path, version='1.7')
+                  patch=LIBRARY / 'dx100/peter-section5.patch', runs_dir=tmp_path, version='1.8')
     with pytest.raises(UsageError, match='lowering calibration'):
         c.certify(certification_store, calibrate=True, runs_dir=tmp_path, version='1.5')
     assert not list(tmp_path.iterdir())
@@ -100,7 +109,7 @@ def test_certify_refuses_an_unknown_version_before_any_build(tmp_path, *, certif
 
 # --- what each version reads comes from the table -------------------------------------------------
 
-@pytest.mark.parametrize('version', ['1.3', '1.4', '1.5', '1.6'])
+@pytest.mark.parametrize('version', ['1.3', '1.4', '1.5', '1.6', '1.7'])
 @pytest.mark.parametrize('plugin', [kernels.BFS, kernels.BC], ids=['bfs', 'bc'])
 def test_drivers_come_from_the_plugin_map_and_the_old_names_alias_it(plugin, version):
     proc = procedures.procedure('candidate', version)
@@ -129,17 +138,17 @@ def test_native_drivers_come_from_the_profile_or_the_command():
 def test_scan_primitives_and_directive_rules_come_from_the_table():
     get = procedures.procedure
     assert get('candidate', '1.3').scan_primitives == frozenset(isolation.PRIMITIVES)
-    for family, version in [('candidate', '1.4'), ('candidate', '1.5'), ('candidate', '1.6'), ('native', '1.4'),
-                            ('native', '1.5'), ('library_operation', '1.1'), ('library_operation', '1.2')]:
+    for family, version in [('candidate', '1.4'), ('candidate', '1.5'), ('candidate', '1.6'), ('candidate', '1.7'),
+                            ('native', '1.4'), ('native', '1.5'), ('library_operation', '1.1'), ('library_operation', '1.2')]:
         assert get(family, version).scan_primitives == frozenset(isolation.PRIMITIVES_1_4)
     assert get('library_operation', '1.0').scan_primitives == frozenset()
     # `read` is refused from 1.4 on: the scan's version argument resolves through the table.
     text = 'int f(int d) { char b; return read(d, &b, 1); }\n'
     assert not isolation.scan('', text, '1.3') and isolation.scan('', text, '1.6')
-    assert [get('candidate', v).directives for v in ('1.3', '1.4', '1.5', '1.6')] == \
-        [None, None, 'dx100_knob_defaults', 'dx100_knob_defaults']
+    assert [get('candidate', v).directives for v in ('1.3', '1.4', '1.5', '1.6', '1.7')] == \
+        [None, None, 'dx100_knob_defaults', 'dx100_knob_defaults', 'dx100_knob_defaults']
     assert {get('native', v).directives for v in ('1.3', '1.4', '1.5')} == {'pragma_omp_only'}
-    assert [get('candidate', v).legality for v in ('1.3', '1.4', '1.5', '1.6')] == ['v1', 'v1', 'v1', 'v2']
+    assert [get('candidate', v).legality for v in ('1.3', '1.4', '1.5', '1.6', '1.7')] == ['v1', 'v1', 'v1', 'v2', 'v2']
 
 
 @pytest.mark.parametrize('family, version', ALL)
@@ -167,7 +176,7 @@ def test_each_manifest_names_only_the_files_its_version_reads():
     assert 'swdb/certification_blinding.py' in v14 and 'swdb/certification_process.py' not in v14
     assert not any('/v1_5/' in p for p in v14) and 'library/dx100/certification/seams.cc' not in v14
     assert 'library/dx100/certification/v1_5/evaluator.cc' in v15 and 'library/dx100/certification/v1_4/seams.cc' in v15
-    for version in ('1.3', '1.4', '1.5', '1.6'):
+    for version in ('1.3', '1.4', '1.5', '1.6', '1.7'):
         paths = _paths('candidate', version)
         assert 'swdb/certification_feedback.py' in paths and 'swdb/certification_legality.py' in paths
         assert not any(p.startswith('library/native/') for p in paths)

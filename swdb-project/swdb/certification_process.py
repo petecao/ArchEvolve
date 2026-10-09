@@ -1,4 +1,4 @@
-"""Candidate certification with the record-keeping in a separate evaluator process (certify 1.5, 1.6).
+"""Candidate certification with the record-keeping in a separate evaluator process (certify 1.5-1.7).
 
 Created: 2026-10-05 ET (ticket 78). Scope decided by Yan-Ru 2026-10-05: an engineering refactor
 that moves certification record-keeping out of the candidate's process, plus an overhead
@@ -25,6 +25,10 @@ the scan are 1.4's, unchanged (``certification_blinding``): only the build and t
 Updated: 2026-10-05 ET (code-review fixes C4, C24, F3, F5): certify 1.6 is this module with the
 version table's legality rules v2 (``swdb.certification_legality``); builds and runs share
 ``swdb.certification_common``. The 1.5 behavior is unchanged.
+
+Updated: 2026-10-09 ET (Yan-Ru's request, research 14): certify 1.7 is 1.6 with the evaluator's strict
+layer built with the gem5 DX100 wait rule (:class:`Gem5WaitBuild`; the procedure's ``strict_defines``).
+The candidate object and client are built exactly as in 1.6. 1.5 and 1.6 builds are unchanged.
 """
 from __future__ import annotations
 
@@ -90,10 +94,14 @@ class Build(common.ObjectBuild):
             self._client = result
         return self._client
 
+    #: Strict-layer flags of the evaluator's three objects (2026-10-09 ET; empty for 1.5 and 1.6).
+    evaluator_defines = ()
+
     def evaluator(self):
         """The evaluator binary: evaluator.cc + 1.4 record.cc + 1.4 seams.cc, strict layer."""
         if self._evaluator is None:
-            extra = ['-I' + str(self.library / FOLDER), '-include', str(self.library / CONTEXT)]
+            extra = ['-I' + str(self.library / FOLDER), '-include', str(self.library / CONTEXT),
+                     *self.evaluator_defines]
             objects = []
             for source in EVALUATOR_SOURCES:
                 result = self.compile(self.library / source, self.folder / (Path(source).stem + '-evaluator-v15.o'),
@@ -122,6 +130,20 @@ class Build(common.ObjectBuild):
         return result
 
 
+class Gem5WaitBuild(Build):
+    """Certify 1.7 (2026-10-09 ET): the evaluator's strict layer uses the gem5 DX100 wait rule."""
+
+    evaluator_defines = ('-DSWDB_STRICT_WAIT_RULE_GEM5',)
+
+
+def _build_class(procedure):
+    """The build of one candidate procedure: its evaluator flags must equal the procedure's strict_defines."""
+    for build in (Build, Gem5WaitBuild):
+        if tuple(build.evaluator_defines) == tuple(procedure.strict_defines):
+            return build
+    raise Failure('no evaluator build for strict flags ' + ' '.join(procedure.strict_defines))
+
+
 def run(link, graph, source, log, threads, fault=None):
     """One run: the evaluator gets the record descriptor and the plan pipe and starts the candidate
     binary as its child (only the shared arena is passed on); stdout and stderr are only logged."""
@@ -139,16 +161,16 @@ def run_one(job, log, threads):
 
 def certify_candidate(tree, library, folder, tile_sizes, threads, sources, *, threshold=64, plugin, contract=None,
                       rng=None, procedure=None):
-    """Certify one candidate tree with certify 1.5 or 1.6: 1.4's procedure and judge, the process split.
+    """Certify one candidate tree with certify 1.5, 1.6 or 1.7: 1.4's procedure and judge, the process split.
 
-    ``procedure`` is the version table's entry (candidate 1.5 when omitted); it names the driver and
-    the legality rules (1.6: legality v2)."""
+    ``procedure`` is the version table's entry (candidate 1.5 when omitted); it names the driver, the
+    legality rules (1.6 and 1.7: legality v2) and the strict wait rule (1.7: gem5)."""
     from swdb import certification_blinding as blinding
     from swdb import certification_procedures as procedures
     procedure = procedure or procedures.procedure(procedures.CANDIDATE, '1.5')
     return blinding.certify_candidate(tree, library, folder, tile_sizes, threads, sources, threshold=threshold,
                                       plugin=plugin, contract=contract, rng=rng, procedure=procedure,
-                                      build_class=Build, runner=run_one, build_suffix='v15')
+                                      build_class=_build_class(procedure), runner=run_one, build_suffix='v15')
 
 
 # --- native-CPU contracts (ticket 75's path) under 1.5 -------------------------------------------------

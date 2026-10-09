@@ -52,6 +52,15 @@ LOWERING = 'lowering_calibration'          # lowerings against reference semanti
 FAMILIES = (CANDIDATE, NATIVE, LIBRARY_OPERATION, LOWERING)
 
 
+def strict_defines(wait_rule):
+    """The strict-layer preprocessor flags of one wait rule (2026-10-09 ET; None: the old rule, no flag)."""
+    if wait_rule is None:
+        return ()
+    if wait_rule == 'gem5':
+        return ('-DSWDB_STRICT_WAIT_RULE_GEM5',)
+    raise ValueError('unknown strict wait rule: ' + str(wait_rule))
+
+
 @dataclasses.dataclass(frozen=True)
 class CertifyProcedure:
     """One runnable version of one certify command family."""
@@ -69,6 +78,11 @@ class CertifyProcedure:
     library_sources: tuple          # files relative to the library root the version reads
     sources_sha256: str             # frozen manifest digest (see the module docstring)
     process_split: bool = False     # the candidate runs as the child of a trusted evaluator process (ticket 78)
+    # 2026-10-09 ET: the strict layer's wait rule. None: a wait covers the tile's last writer and its
+    # dependencies (spec.md:476-485, the rule of every version before candidate 1.7 and lowering 1.2).
+    # 'gem5': the gem5 DX100 device's rule (research 14; strict header built with
+    # -DSWDB_STRICT_WAIT_RULE_GEM5).
+    wait_rule: str | None = None
 
     @property
     def scan_primitives(self):
@@ -100,10 +114,19 @@ class CertifyProcedure:
             return Path(profile[self.driver[len('profile.'):]]['driver'])
         return Path(library) / self.driver
 
+    @property
+    def strict_defines(self):
+        """Preprocessor flags every strict-layer build of this version adds (2026-10-09 ET)."""
+        return strict_defines(self.wait_rule)
+
     def definition(self):
-        """The behavior-defining fields (not the summary or the frozen digest)."""
+        """The behavior-defining fields (not the summary or the frozen digest).
+
+        2026-10-09 ET: ``wait_rule`` is left out while it is None, so the definition row (and digest) of
+        every version frozen before it existed is unchanged."""
         return {field.name: getattr(self, field.name) for field in dataclasses.fields(self)
-                if field.name not in ('summary', 'sources_sha256')}
+                if field.name not in ('summary', 'sources_sha256')
+                and not (field.name == 'wait_rule' and self.wait_rule is None)}
 
 
 # 2026-10-08 ET: re-declared after typed candidate refusals; standalone checks, messages,
@@ -144,10 +167,10 @@ _LOP = ('swdb/library_operations.py',) + _EXTENSA
 _LOP_RECORDS = ('swdb/library_operation_blinding.py', 'swdb/certification_isolation.py', 'swdb/certification_faults.py')
 
 
-def _candidate(version, summary, evaluate, scan, directives, legality, extra_python, library, digest):
+def _candidate(version, summary, evaluate, scan, directives, legality, extra_python, library, digest, wait_rule=None):
     return CertifyProcedure(CANDIDATE, version, summary, evaluate, 'simulated', scan, directives, 'plugin', legality,
                             _CORE + _LEGALITY + extra_python, _STRICT + _LOWERING_HEADER + library, digest,
-                            process_split=_PROCESS[0] in extra_python)
+                            process_split=_PROCESS[0] in extra_python, wait_rule=wait_rule)
 
 
 def _native(version, summary, evaluate, scan, driver, extra_python, library, digest):
@@ -164,39 +187,52 @@ def _lop(version, summary, extra_python, extra_checkout, library, digest):
 # 2026-10-06 ET: re-declared after JSON attribution serialization (bb7673f) and shared
 # record-reader/hash delegation (bb11cb1); procedure decisions and evaluator files are unchanged.
 # Evidence: .scratch/lanl-db-analytic-eval-2026-10-06/evidence/09-certification-fingerprint-redeclaration.md.
+# 2026-10-09 ET: re-declared after the gem5 wait-rule switch (candidate 1.7, lowering 1.2): only the bytes of
+# swdb/certification.py, swdb/certification_process.py and library/dx100/strict/MAA_functional.hpp changed;
+# without -DSWDB_STRICT_WAIT_RULE_GEM5 the strict header preprocesses to identical text, every old code
+# path is unchanged and every definition row is unchanged. Evidence:
+# .scratch/formal-verification-2026-10-09/evidence/strict-gem5-wait-rule-redeclaration-20261009.md.
 PROCEDURES = MappingProxyType({
     CANDIDATE: MappingProxyType({
         '1.3': _candidate('1.3', 'ticket 70: evaluator records on a descriptor, faults in a separate seam object per '
                           'control, evaluator scan', 'swdb.certification:certify_candidate', 'evaluator_1_3', None,
                           'v1', (), _DX100_1_3,
-                          '6c75a1b113fbd19957700085e159786d136ebd8f51618a7f1eb07d2d6b7b5eea'),
+                          '51e6e839a0ee3ab600de02c713f844d24168df329460ae85d50f7e36c333ac15'),
         '1.4': _candidate('1.4', 'ticket 76: one binary per tile size, blinded run plan, random order, attributed '
                           'rejections, slide-window seam witness', 'swdb.certification_blinding:certify_candidate',
                           'evaluator_1_4', None, 'v1', _BLINDING, _DX100_1_4,
-                          '90c7a0bfae71f401e081917821853982610fc4c0202a2f042b5683f9a3247b23'),
+                          'f0d79cf5d066962490da77cbbeff41abf6c0d518533baae8956c193a02c2be33'),
         '1.5': _candidate('1.5', 'ticket 78: 1.4 with record-keeping in a separate evaluator process; DX100 '
                           'directive rule', 'swdb.certification_process:certify_candidate', 'evaluator_1_4',
                           'dx100_knob_defaults', 'v1', _BLINDING + _PROCESS, _DX100_1_5,
-                          '0310109a282af23c03293f7bcb71860b9a542dfa504a9e5d6d18ae5be923bd5e'),
+                          '47d1964dea31e224c1920f37d88b1a0370a17b13cc54ddf577ebe3049020d83e'),
         '1.6': _candidate('1.6', '2026-10-05 review fixes: 1.5 with knob_range reading every declared knob spelling '
                           'the candidate uses (unverified when none is used, never the default) and the '
                           'schedule_out_of_range control also mutating _Pragma forms',
                           'swdb.certification_process:certify_candidate', 'evaluator_1_4', 'dx100_knob_defaults',
                           'v2', _BLINDING + _PROCESS, _DX100_1_5,
-                          '3593fa57119c0b58190f9a119ef5294ae9eea6fc995a675a9a2530982b9f3e76'),
+                          '1a520cc2aa4b40e681738dbd96a6ebfe68670f2a7961b5cf17ddd776096ef140'),
+        # 2026-10-09 ET (Yan-Ru's request): research 14 refuted the old wait rule on gem5's DX100 device.
+        '1.7': _candidate('1.7', '2026-10-09: 1.6 with the gem5 DX100 wait rule in the evaluator\'s strict layer '
+                          '(a wait covers every uncovered command naming the tile as src1/src2/dst1/dst2, '
+                          'transitively except through a filled range loop\'s tile inputs; a constant write '
+                          'waits for the register\'s readers; research 14)',
+                          'swdb.certification_process:certify_candidate', 'evaluator_1_4', 'dx100_knob_defaults',
+                          'v2', _BLINDING + _PROCESS, _DX100_1_5,
+                          '9bf43a94137fae3c1b82a4ac92a01676dc019747a209ad2568cc63e0c65ec1c4', wait_rule='gem5'),
     }),
     NATIVE: MappingProxyType({
         '1.3': _native('1.3', 'ticket 75: native-CPU profile under 1.3 isolation (a seam object per fault)',
                        'swdb.certification_native:certify_native', 'evaluator_1_3', 'profile.harness', (), _NATIVE_1_3,
-                       '5fafe53625d2e7b6c4cf1cccba1cb453c2a7f512f7f7050c163b970d95b81cbc'),
+                       '4b32c8f9c3b687c290ef33fd1bc8f479fc13523e83f4fa7ca7d759d0531adcff'),
         '1.4': _native('1.4', 'ticket 75 after ticket 76: one binary per build, blinded plan, attributed rejections',
                        'swdb.certification_native:certify_native_v14', 'evaluator_1_4', 'profile.harness_v14',
                        _BLINDING, _NATIVE_1_4,
-                       'b8a4932a2e332db6993c153ef5fee2aa259962a61a453507d526f74e40802a26'),
+                       '98c68dbf244c6c98116473839631643d315d977c51659d90e9bc4a2b24e0249a'),
         '1.5': _native('1.5', 'ticket 78: native 1.4 with record-keeping in a separate evaluator process',
                        'swdb.certification_process:certify_native', 'evaluator_1_4',
                        'dx100/certification/v1_5/bfs_driver.inc', _BLINDING + _PROCESS, _NATIVE_1_5,
-                       'fc5a7e51fbb1cc6b02e496e2cbfc831884dc8f01e3987757665d7c983bb01b7f'),
+                       '26d3fce0ffd8de603cc624945dae88eaec3d47ab9d34a3b1708c787e862d87af'),
     }),
     LIBRARY_OPERATION: MappingProxyType({
         '1.0': _lop('1.0', 'tickets 49-51: the ported two-binary harness; a control abort classified from a '
@@ -221,12 +257,23 @@ PROCEDURES = MappingProxyType({
                                 '76); calibration control rule of 2026-10-04 (8040609)',
                                 'swdb.certification:evaluate_trusted', 'simulated', None, None, None, None,
                                 ('swdb/certification.py',), _STRICT,
-                                '1d14a816bea8c3b2a644264bc85ebd6be9dfacbcd01a09376b5e0c4f1623c9e5'),
+                                '92545c60ba22d3a09c9085ef887617a3d7bb99566d5be85434bf65c446d2b519'),
+        # 2026-10-09 ET (Yan-Ru's request): 1.1 with the gem5 DX100 wait rule (research 14). Calibration
+        # certifies the unmodified authors' TDStepMAA (no tile3 -> tile5 patch); its store-wait control is
+        # dropped_store_wait (the wait deleted). Lowering controls the new rule accepts are replaced.
+        '1.2': CertifyProcedure(LOWERING, '1.2', 'lowerings and calibration as 1.1 with the gem5 DX100 wait rule '
+                                '(research 14): calibration of the unmodified authors\' source, controls the rule '
+                                'accepts replaced (wrong_store_wait -> dropped_store_wait, constant_uncovered '
+                                'dropped or replaced)',
+                                'swdb.certification:evaluate_trusted_gem5_wait', 'simulated', None, None, None, None,
+                                ('swdb/certification.py',), _STRICT,
+                                '7641787314534bc958bbc959ea1a9d59e0ca7c6f8ec43ce2c130f3ad8efbd51b', wait_rule='gem5'),
     }),
 })
 
 #: The version each family runs when none is given.
-DEFAULTS = MappingProxyType({CANDIDATE: '1.6', NATIVE: '1.5', LIBRARY_OPERATION: '1.2', LOWERING: '1.1'})
+# 2026-10-09 ET: candidate 1.7 and lowering 1.2 (gem5 wait rule) are the defaults; 1.3-1.6 and 1.1 stay runnable.
+DEFAULTS = MappingProxyType({CANDIDATE: '1.7', NATIVE: '1.5', LIBRARY_OPERATION: '1.2', LOWERING: '1.2'})
 
 #: Labels that appear in records but name no runnable procedure (their code is gone).
 HISTORIC = MappingProxyType({

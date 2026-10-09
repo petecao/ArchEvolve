@@ -1,6 +1,7 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
+Updated: 2026-10-09 15:35 ET (ticket 14 pointer: gem5 wait rule implemented)
 **Type:** wayfinder map
 **Status:** charted; research 02–06 and 14 resolved
 
@@ -60,6 +61,10 @@ concept is the next effort.
   yes. On gem5 the authors' `TDStepMAA` is SAFE; the "wrong-tile bug" exists only under our
   stricter strict-layer rule. The strict layer is looser than gem5 in two corners (range-loop
   early finish; memory effects applied at the call). Invalidates 01 decision 9.1.
+  *2026-10-09 15:35 ET:* now implemented as candidate certify 1.7 and lowering certify 1.2, both
+  defaults. Peter's read offload fails 1.7: probably a dispatch stall the strict layer does not model,
+  open for Yan-Ru. See the
+  [evidence note](evidence/strict-gem5-wait-rule-redeclaration-20261009.md).
 
 ## Tickets
 

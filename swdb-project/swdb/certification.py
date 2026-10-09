@@ -81,6 +81,15 @@ from swdb.store import Store
 # 1.5 with knob_range reading every declared spelling of a knob that the candidate uses (SWDB_KNOB_<NAME>
 # and SWDB_<NAME>; "unverified", never the contract default, when none is used) and the
 # schedule_out_of_range control also mutating _Pragma forms. 1.3-1.5 keep the ticket 68 rules.
+# 1.7 and lowering 1.2 (2026-10-09 ET, Yan-Ru's request): research 14
+# (.scratch/formal-verification-2026-10-09/research/14-dx100-wait-rule.md) read gem5's DX100 device and
+# refuted the strict layer's wait rule (spec.md:476-485). Both versions build the strict layer with
+# -DSWDB_STRICT_WAIT_RULE_GEM5: a wait on a tile covers every uncovered command naming it as
+# src1/src2/dst1/dst2 (not as a condition) and, transitively, its producers except a filled range loop's
+# tile inputs; a constant write waits for the register's readers. Candidate 1.7 is 1.6 with that rule
+# in the evaluator. Lowering 1.2 calibrates the unmodified authors' TDStepMAA (no tile3 -> tile5 patch),
+# replaces wrong_store_wait with dropped_store_wait, and uses CONTROLS_GEM5_WAIT for lowerings. Earlier
+# versions build without the define and keep the old rule.
 # The version table (one per command family, with each version's files and frozen digest) is
 # swdb.certification_procedures; VERSION and VERSIONS name the candidate family's default and versions.
 VERSION = procedures.DEFAULTS[procedures.CANDIDATE]
@@ -108,6 +117,21 @@ CONTROLS = {
     'alu_scalar': {'dropped_wait': 'read_before_wait'},
     'store': {'wrong_store_wait': 'read_before_wait'},
 }
+# Lowering certify 1.2 (2026-10-09 ET, gem5 wait rule): every control the new rule accepts is replaced.
+# constant_uncovered: the device holds a constant write until the register's readers finish, so the
+# strict layer covers them and the run passes; it is dropped (wait, stream_load keep their other
+# controls) and const_i32 gets truncation instead (the constant's value reaches the stream bound).
+# wrong_store_wait: a wait on the store's source tile covers the store on gem5; the store control is
+# dropped_store_wait (the driver's dropped_wait on the store: no wait at all).
+CONTROLS_GEM5_WAIT = {
+    **CONTROLS,
+    'const_i32': {'other_thread_register': 'thread_ownership_register', 'truncation': 'tile_truncation'},
+    'wait': {'dropped_wait': 'read_before_wait', 'read_before_wait': 'reference_semantics'},
+    'stream_load': {'truncation': 'tile_truncation', 'memory_region': 'memory_region'},
+    'store': {'dropped_store_wait': 'read_before_wait'},
+}
+# Store controls of the lowering wait certification: (record id, driver control name) per wait rule.
+STORE_CONTROL = {None: ('wrong_store_wait', 'wrong_store_wait'), 'gem5': ('dropped_store_wait', 'dropped_wait')}
 FRONTIER_TEXT = 'std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;'
 AUTHOR_FRONTIER_TEXT = 'std::cout << "Starting TDStepMAA: " << queue.size() << " elements" << std::endl;'
 TRUSTED_FRONTIER = r'''
@@ -312,8 +336,11 @@ def lowering_build(entry_id, library, tile_sizes, threads):
                                                      {'path': str(reference), 'sha256': intrinsic['reference_semantics']['sha256']}]}
 
 
-def certify_lowering(entry_id, library, folder, tile_sizes, threads):
+def certify_lowering(entry_id, library, folder, tile_sizes, threads, wait_rule=None):
     """Differential certification of one lowering entry against its reference semantics.
+
+    ``wait_rule`` (2026-10-09 ET): None for lowering 1.1 (the old strict rule, :data:`CONTROLS`);
+    'gem5' for 1.2 (the strict layer built with the gem5 wait rule, :data:`CONTROLS_GEM5_WAIT`).
 
     Ticket 76 (2026-10-05 ET): this reads verdict lines (`SWDB_DIFFERENTIAL_PASS`, named checks)
     from the driver's output. That is sound only because every byte it runs is evaluator-trusted:
@@ -322,6 +349,9 @@ def certify_lowering(entry_id, library, folder, tile_sizes, threads):
     provider output reaches this path (`certify` routes candidates to the rewrite-contract path).
     """
     operation, driver, defines, inputs = lowering_build(entry_id, library, tile_sizes, threads)
+    defines = [*defines, *procedures.strict_defines(wait_rule)]
+    table = CONTROLS if wait_rule is None else CONTROLS_GEM5_WAIT
+    store_id, store_control = STORE_CONTROL[wait_rule]
     matrix, controls = [], []
     for size in tile_sizes:
         output = folder / f'{operation}-{size}'
@@ -335,7 +365,7 @@ def certify_lowering(entry_id, library, folder, tile_sizes, threads):
         matrix.append({'operation': operation, 'tile_size': size, 'threads': threads,
                        'status': 'passed' if passed else 'failed', 'run': positive, 'build': build,
                        'certification_inputs': inputs})
-        for name, expected in CONTROLS[operation].items():
+        for name, expected in table[operation].items():
             # Each control gets its own built executable. A build failure can never reject a control.
             control_binary = folder / f'{operation}-{size}-{name}'
             control_build = compile_cpp(driver, control_binary, library, tile_size=size, threads=threads, defines=defines)
@@ -352,15 +382,15 @@ def certify_lowering(entry_id, library, folder, tile_sizes, threads):
             output = folder / f'store-{size}'
             build = compile_cpp(driver, output, library, tile_size=size, threads=threads, defines=defines)
             if build['returncode'] != 0:
-                controls.append({'id': 'wrong_store_wait', 'tile_size': size, 'status': 'invalid', 'reason': 'build failed', 'build': build})
+                controls.append({'id': store_id, 'tile_size': size, 'status': 'invalid', 'reason': 'build failed', 'build': build})
                 continue
             positive = execute([output, 'store'], output.with_suffix('.positive.json'), threads=threads)
             passed = positive['returncode'] == 0 and 'SWDB_DIFFERENTIAL_PASS:store' in positive['stdout']
             matrix.append({'operation': 'store', 'tile_size': size, 'status': 'passed' if passed else 'failed',
                            'run': positive, 'build': build, 'certification_inputs': inputs})
-            run = execute([output, 'store', 'wrong_store_wait'], output.with_suffix('.negative.json'), threads=threads)
-            status, reason = rejection(run, 'read_before_wait')
-            controls.append({'id': 'wrong_store_wait', 'tile_size': size, 'status': status, 'reason': reason, 'run': run, 'build': build})
+            run = execute([output, 'store', store_control], output.with_suffix('.negative.json'), threads=threads)
+            status, reason = rejection(run, table['store'][store_id])
+            controls.append({'id': store_id, 'tile_size': size, 'status': status, 'reason': reason, 'run': run, 'build': build})
     for source in inputs['source_pins']:
         if artifacts.file_hash(Path(source['path'])) != source['sha256']:
             raise Failure('pinned source changed during lowering certification: ' + source['path'])
@@ -589,6 +619,12 @@ def _rewrite_control(source, name, *, calibrate=False):
     if calibrate:
         if name == 'wrong_store_wait':
             return source.replace('wait_ready(tile5);', 'wait_ready(tile3);', 1)
+        if name == 'dropped_store_wait':
+            # Lowering 1.2 (2026-10-09 ET): the authors' store wait deleted, so tile5 is read uncovered.
+            line = re.compile(r'^[ \t]*wait_ready\(tile3\);[ \t]*\n', re.MULTILINE)
+            if len(line.findall(source)) != 1:
+                raise Failure('authors store wait differs from pinned source')
+            return line.sub('', source, count=1)
         if name == 'shared_context':
             return source.replace('int tid = omp_get_thread_num();', 'int tid = 0;', 1)
         if name == 'dropped_continuation':
@@ -603,11 +639,14 @@ def _rewrite_control(source, name, *, calibrate=False):
 
 
 def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrate=False, threshold=64, plugin=None,
-                contract=None, version=None):
+                contract=None, version=None, wait_rule=None):
     """Run the matrix and its controls; the kernel plug-in supplies the instance.
 
     Calibration is the BFS authors' reference and always uses the BFS functions and the 1.2
-    in-process checks (it certifies the authors' code, not a candidate). A candidate artifact is
+    in-process checks (it certifies the authors' code, not a candidate). ``wait_rule`` (2026-10-09 ET):
+    None (lowering 1.1) patches the authors' ``wait_ready(tile3)`` to ``wait_ready(tile5)`` and uses the
+    original as the wrong_store_wait control; 'gem5' (lowering 1.2) certifies the unmodified source with
+    the gem5 wait rule and the dropped_store_wait control. A candidate artifact is
     certified by the evaluator entry point of its version in the candidate version table
     (``swdb.certification_procedures``; the default version when ``version`` is None).
     """
@@ -624,7 +663,10 @@ def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrat
     judge = lambda run, counts: judge_bfs(run, counts, calibrate=True, threshold=threshold)
     graphs = matrix_graphs(folder, library, threads)
     source = (tree / plugin.certification_source).read_text()
-    source = source.replace('wait_ready(tile3);', 'wait_ready(tile5);', 1)
+    gem5_wait = wait_rule is not None
+    strict = list(procedures.strict_defines(wait_rule))
+    if not gem5_wait:
+        source = source.replace('wait_ready(tile3);', 'wait_ready(tile5);', 1)
     source = source.replace('    return parent;\n}\n\nvoid PrintBFSStats', '    std::printf("SWDB strict_operations=%llu\\n",(unsigned long long)swdb_strict::operation_count());\n    return parent;\n}\n\nvoid PrintBFSStats', 1)
     if 'SWDB strict_operations=' not in source:
         # Exact authors code has a separate blank-line count across pinned ranges.
@@ -637,11 +679,13 @@ def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrat
     source_path = tree / plugin.certification_source
     stem = plugin.binary_stem
     expected = {'shared_context': {'thread_ownership_tile', 'thread_ownership_register'}, 'dropped_continuation': set(),
-                'oversized_chunk': {'tile_truncation'}, 'wrong_store_wait': {'read_before_wait'}}
+                'oversized_chunk': {'tile_truncation'}, 'wrong_store_wait': {'read_before_wait'},
+                'dropped_store_wait': {'read_before_wait'}}
+    store_control = 'dropped_store_wait' if gem5_wait else 'wrong_store_wait'
     for size in tile_sizes:
         source_path.write_text(instrument_source(source, calibrate=True))
         output = folder / f'{stem}-{size}'
-        build = compile_cpp(source_path, output, library, tile_size=size, threads=threads, tree=tree, defines=['-DMAA'])
+        build = compile_cpp(source_path, output, library, tile_size=size, threads=threads, tree=tree, defines=['-DMAA', *strict])
         if build['returncode'] != 0:
             matrix.append({'tile_size': size, 'status': 'failed', 'reason': 'build failed', 'build': build})
             continue
@@ -655,14 +699,14 @@ def certify_bfs(tree, library, folder, tile_sizes, threads, sources, *, calibrat
                                'status': 'passed' if passed else 'failed', 'reason': reason, 'build': build, 'run': run})
         graph_name, graph = graphs[-1]
         counts = plugin.certification_oracle(graph, plugin.control_source(sources))
-        for name in ('shared_context', 'dropped_continuation', 'oversized_chunk', 'wrong_store_wait'):
+        for name in ('shared_context', 'dropped_continuation', 'oversized_chunk', store_control):
             # Oversized chunk is specifically a 1,024-element build control.
             if name == 'oversized_chunk' and size != 1024:
                 continue
             source_path.write_text(_rewrite_control(instrument_source(source, calibrate=True), name, calibrate=True))
             output_control = folder / f'{stem}-{size}-{name}'
             control_build = compile_cpp(source_path, output_control, library, tile_size=size, threads=threads, tree=tree,
-                                        defines=['-DMAA'])
+                                        defines=['-DMAA', *strict])
             fault = {'site': 'calibration_source'}
             if control_build['returncode']:
                 controls.append({'id': name, 'tile_size': size, 'status': 'invalid', 'reason': 'build failed',
@@ -840,6 +884,16 @@ def evaluate_trusted(*, calibrate, entry_id, tree, library, folder, tile_sizes, 
         matrix, controls = certify_bfs(tree, library, folder, tile_sizes, threads, sources, calibrate=True)
     else:
         matrix, controls = certify_lowering(entry_id, library, folder, tile_sizes, threads)
+    return matrix, controls, None
+
+
+def evaluate_trusted_gem5_wait(*, calibrate, entry_id, tree, library, folder, tile_sizes, threads, sources):
+    """Lowering-and-calibration 1.2's entry point (2026-10-09 ET): 1.1 with the gem5 wait rule."""
+    if calibrate:
+        matrix, controls = certify_bfs(tree, library, folder, tile_sizes, threads, sources, calibrate=True,
+                                       wait_rule='gem5')
+    else:
+        matrix, controls = certify_lowering(entry_id, library, folder, tile_sizes, threads, wait_rule='gem5')
     return matrix, controls, None
 
 
@@ -1059,7 +1113,13 @@ def certify(store, entry_id=None, *, runs_dir=None, library=None, candidate=None
     plugin = None
     if calibrate:
         entry_id = entry_id or 'calibration.dx100_authors_t17'
-        content_sha256 = artifacts.digest({'source_tree': artifacts.identify(ROOT / 'apps/dx100')['sha256'], 'fix': 'wait_ready(tile3) -> wait_ready(tile5)', 'strict_layer': artifacts.identify(library_root / 'dx100/strict')['sha256']})
+        if procedure.wait_rule is None:
+            content_sha256 = artifacts.digest({'source_tree': artifacts.identify(ROOT / 'apps/dx100')['sha256'], 'fix': 'wait_ready(tile3) -> wait_ready(tile5)', 'strict_layer': artifacts.identify(library_root / 'dx100/strict')['sha256']})
+        else:
+            # Lowering 1.2 (2026-10-09 ET): the unmodified authors' source under the named wait rule.
+            content_sha256 = artifacts.digest({'source_tree': artifacts.identify(ROOT / 'apps/dx100')['sha256'], 'fix': None,
+                                               'wait_rule': procedure.wait_rule,
+                                               'strict_layer': artifacts.identify(library_root / 'dx100/strict')['sha256']})
         dependencies = []
     else:
         entry = catalog.get(entry_id)

@@ -1,7 +1,7 @@
 # Spec: Typed library and DX100 BFS rewrites from intrinsic specifications, in ArchEvolve and Extensa modes
 
 Created: 2026-10-03 00:50 ET
-Updated: 2026-10-06 00:25 ET (Yan-Ru ratified every row of "Awaiting ratification", now "Ratified decisions"); 2026-10-05 22:30 ET (ticket 80, spec review C5–C8, C14–C17, C19: dated notes on campaign budgets, test generation, pruning, base source, REGIONS.json, BC labels, export and per-class candidate records; one "Awaiting ratification" row); 2026-10-05 18:10 ET (code review and spec review: dated notes for the decisions tickets 56–78 changed (speed rule, per-class gate, native graphs and evaluator, pauses, certify versions, named checks, promotion and review attribution); "Awaiting ratification" section; ADR 0012; header merged); 2026-10-05 16:30 ET (ticket 78: certify 1.5 and library-operation command 1.2, record-keeping in a separate evaluator process); 2026-10-05 14:21 ET (ticket 77: library-operation certification 1.1, record verdicts and blinded driver faults); 2026-10-05 12:50 ET (ticket 76: certify 1.4, blinded controls and attributed rejections); 2026-10-04 22:40 ET (ticket 70: certification isolation, certify 1.3); 2026-10-04 21:05 ET (ticket 66: native CI-width speed rule, decided by Yan-Ru); 2026-10-03 02:30 ET (spec reviews, ticket critiques and final audit applied; Q60–Q66); 2026-10-03 ET (ticket 47: Extensa-mode decisions D1–D12, agent-decided under Yan-Ru's 2026-10-03 delegation and revisable; see [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md))
+Updated: 2026-10-09 15:35 ET (dated note after the strict-layer semantics: gem5 wait rule, candidate certify 1.7, lowering certify 1.2); 2026-10-06 00:25 ET (Yan-Ru ratified every row of "Awaiting ratification", now "Ratified decisions"); 2026-10-05 22:30 ET (ticket 80, spec review C5–C8, C14–C17, C19: dated notes on campaign budgets, test generation, pruning, base source, REGIONS.json, BC labels, export and per-class candidate records; one "Awaiting ratification" row); 2026-10-05 18:10 ET (code review and spec review: dated notes for the decisions tickets 56–78 changed (speed rule, per-class gate, native graphs and evaluator, pauses, certify versions, named checks, promotion and review attribution); "Awaiting ratification" section; ADR 0012; header merged); 2026-10-05 16:30 ET (ticket 78: certify 1.5 and library-operation command 1.2, record-keeping in a separate evaluator process); 2026-10-05 14:21 ET (ticket 77: library-operation certification 1.1, record verdicts and blinded driver faults); 2026-10-05 12:50 ET (ticket 76: certify 1.4, blinded controls and attributed rejections); 2026-10-04 22:40 ET (ticket 70: certification isolation, certify 1.3); 2026-10-04 21:05 ET (ticket 66: native CI-width speed rule, decided by Yan-Ru); 2026-10-03 02:30 ET (spec reviews, ticket critiques and final audit applied; Q60–Q66); 2026-10-03 ET (ticket 47: Extensa-mode decisions D1–D12, agent-decided under Yan-Ru's 2026-10-03 delegation and revisable; see [extensa-design-2026-10-03.md](extensa-design-2026-10-03.md))
 **Type:** spec
 **Status:** ready-for-agent
 **Blocked by:** None — can start immediately (ticket 03, ADRs 0007–0011 and the archevolve-handoff
@@ -483,6 +483,18 @@ offload strategy effect's code is its own ticket. Ticket 03 is one commit, after
   - A CPU constant load into a register that an uncovered operation reads is a hazard.
   - These rules are recorded in the wait entry's completion field as assumed, owner Eric, until
     gem5's ready-bit semantics are confirmed (Josh's `dxc-observer` and `dxc-reuse`).
+  - *Note, 2026-10-09 15:35 ET:* gem5's DX100 source refutes the store rule above
+    ([research 14](../formal-verification-2026-10-09/research/14-dx100-wait-rule.md)). The rules
+    above stay as written for candidate certify 1.3-1.6 and lowering certify 1.1. Candidate **1.7**
+    and lowering **1.2** are now the defaults and build the strict layer with
+    `-DSWDB_STRICT_WAIT_RULE_GEM5`:
+    - a wait covers every uncovered command naming the tile as a source or destination (not as a
+      condition), transitively, but not through a filled range loop's tile inputs;
+    - a constant write waits for the register's readers;
+    - calibration certifies the authors' unmodified `wait_ready(tile3)`.
+
+    Peter's read offload fails 1.7. The reason and the open decision are in the
+    [evidence note](../formal-verification-2026-10-09/evidence/strict-gem5-wait-rule-redeclaration-20261009.md).
 - **Assertions.** Each thread uses only its own tiles and registers; every index keeps the 32-bit
   byte offset below 2^32; no tile is silently truncated; every DX100 memory access, from any
   thread, lies inside the memory regions registered for the current TDStep.

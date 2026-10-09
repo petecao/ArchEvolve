@@ -86,7 +86,8 @@ class BFSPlugin(KernelPlugin):
     certification_drivers = {"1.3": "dx100/certification/bfs_driver.inc",          # ticket 70
                              "1.4": "dx100/certification/v1_4/bfs_driver.inc",     # ticket 76
                              "1.5": "dx100/certification/v1_5/bfs_driver.inc",     # ticket 78
-                             "1.6": "dx100/certification/v1_5/bfs_driver.inc"}
+                             "1.6": "dx100/certification/v1_5/bfs_driver.inc",
+                             "1.7": "dx100/certification/v1_5/bfs_driver.inc"}    # 2026-10-09 ET: gem5 wait rule
     certification_driver = certification_drivers["1.3"]
     certification_driver_v14 = certification_drivers["1.4"]
     certification_driver_v15 = certification_drivers["1.5"]
