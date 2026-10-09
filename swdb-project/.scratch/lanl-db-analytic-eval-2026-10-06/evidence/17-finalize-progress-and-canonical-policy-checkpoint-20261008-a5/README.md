@@ -1,6 +1,6 @@
 # FINALIZE progress and source-policy correction
 
-Updated: 2026-10-08 22:56 ET.
+Updated: 2026-10-08 23:09 ET.
 
 FINALIZE remains the single original launch at 21:53:46 ET. At 22:12 ET, retained R3 metadata shows P1 full-catalog validation exit 0 and a live owned P1 export process beneath the original helper and supervisor. Export exit, later validations, final report, final-export and supervisor completion receipt were absent. Completion and scientific admission remain unestablished.
 
@@ -10,7 +10,7 @@ Current22:45ET observation supersedes the dated22:12ET phase above: P1/P2 valida
 | Evidence | Actual observation | Limit |
 |---|---|---|
 | P1–P4 trajectories | All four normal custody chains reviewed | No numerical agreement admission |
-| FINALIZE | P1/P2 validation and export exit0; P3 validation0/export active at22:45ET | Original terminal and cleanup still required |
+| FINALIZE | P1–P3 validation/export0; P4 validation0/export active at22:59ET | Original terminal and cleanup still required |
 | Native leases | Node0/node1/legacy released at generations 514/550/77, no matching kernel holder or FD9 | Dated snapshot; refresh before a new action |
 | Scientific checkout | Clean at frozen R | Remote PRIMARY remains frozen until original guards finish |
 | Process inventory | Three validated FINALIZE tree rows; six owned stat reads unknown | Partial inventory cannot prove quiescence or completion |
@@ -36,3 +36,7 @@ At22:19ET, the validated export PID2312923/start601338250/inode66898014 remained
 2026-10-08 22:50 ET — [Live22:45 and archive verification originals](live-2245-and-archive-verification-inventory.json) retain9 additional closed originals/147096B. Independent actual review eff6f3d0 confirms P1/P2 validation/export0, P3 validation0/export active, all six processunknowns and explicit serial-lineage inference. Independent archive reviews c8b539ee and11a1bd27 verify the earlier108-file closure and source46/combined153-file closure; the shared7777B plan is counted once. All eight inventories now cover162 unique archived originals/2328931B; root verified every archived size/hash/private original before Git staging. This remains metadata/source review, not FINALIZE terminal, full-index execution or strictscientific admission.
 
 2026-10-08 22:56 ET — [Latest live and interim review inventory](live-2253-and-interim-review-inventory.json) retains12 exact originals/294136B. Separate Standards and Spec fixed5d07313e→63cce859 each have0new actionable findings and preserve pending finalscientific acceptance. Current actual22:53:37ET b689fe57 snapshot and independent2d4b0968 supplement show unchanged phases and advancing sameownedexporter51499user/180kernel ticks, sixstatunknowns/no terminal/no admission. All nine inventories cover174unique originals/2623067B, verified rootexactbytes. Formal22:54 table/healthcomplete,nextby23:24ET; agents responsive/completed. PRIMARY/originR retention extends through every remaining applicable original source-bound guard, including pre-full-index observation.
+
+2026-10-08 23:09 ET — [P4 export and source mutation review](live-2259-and-CID-write-scope-inventory.json) retains12 further originals/152972B: actual22:59ET snapshot96e3c7a2 and independent36e5bb66 review confirm P1–P3 validation/export0, P4validation0/exportopen/noexit, sixprocessunknowns/Rclean/all3leasesreleased and no finalterminal. Source-only selected continuity reviewR1 binds18frozenR blobs and originalH28; rootreceipt676dcf24 confirms selected note/functions/pins and scope limits. FINALIZE has no intended CID record/summary/state/history writes; mutable base/team and siblingreceipts are distinct. Historical exclusivity/bytecontinuity is not proved bysource and remainsmandatory. Original priornote and allsourcebytes preserved.
+
+[PRIMARY23:07 observation](primary-source-2307-inventory.json) retains6 exact originals/8578B, actual23:07:39ET source470B/0a362ced: PRIMARYHEAD/originR, ScleanR, originalretentionlock only. Folder2309 label is not actualtime. Total11inventories192unique originals/2784617B rootbyteverified. Allagents responsive/completed/no strandedworker; originalparent67593 remainsactive, heartbeatACTIVE, nexttable/health by23:39 ET. No repeatedscience/custody/control/index/validation or scientificadmission.
