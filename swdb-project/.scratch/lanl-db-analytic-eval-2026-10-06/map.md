@@ -1,7 +1,7 @@
 # Map: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-09 02:50 ET
+Updated: 2026-10-09 13:08 ET
 **Type:** ticket map
 **Status:** claimed (unfinished implementation/evaluation)
 **Work state:** active; [resume guide](resume.md)
@@ -58,6 +58,8 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | 23 | [Export and round-trip test](issues/23-export-and-round-trip.md) | wontfix | 22 | 1 day |
 
 ## Context pointers
+
+- 2026-10-09 13:08 ET: [Post-reclamation original R5 observation](evidence/17-post-reclaim-original-index-readiness-20261009-a5/README.md) has all floors/source/native pins passing and exactly two zombie identity unknowns; storage deficit fixed, direct serial index still not admitted. Two compact originals/42,854B; original R5 unchanged, reviewed R2 unselected. Cleanup checkpoint030e7d8e pushed/ref-verified; ongoing named-destination approval reiterated. Ticket17 remains claimed/all acceptance unchecked; 14/15 assigned resolved.
 
 - 2026-10-09 02:50 ET: [Scheduled read-only observations](evidence/17-cleanup-followup-and-inactive-process-proposal-20261009-a5/scheduled-0249-observation-original-inventory.json): process/source/native state unchanged at02:49 ET, `/data1` still543MiB short; guard override pending, no admission or action.21 originals/135157B,14/15 resolved, ticket17 acceptance unchanged.
 

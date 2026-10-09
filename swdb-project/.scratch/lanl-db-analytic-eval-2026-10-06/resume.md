@@ -1,6 +1,6 @@
 # Continue the analytic evaluator work
 
-Updated: 2026-10-09 12:54 ET
+Updated: 2026-10-09 13:08 ET
 
 **Active after Yan-Ru explicitly resumed work.** Fourteen of fifteen assigned agent tickets are resolved. Ticket16's artifact/baseline forecast fix passed 73 public regression tests and independent implementation review; ticket17 remains claimed with its acceptance boxes unchecked. The 30-minute heartbeat is ACTIVE.
 
@@ -14,6 +14,16 @@ Updated: 2026-10-09 12:54 ET
 
 
 
+
+## Fresh original readiness after disk recovery — 2026-10-09 13:08 ET
+
+[Original R5 a3 result](evidence/17-post-reclaim-original-index-readiness-20261009-a5/README.md) completed once at 13:05:12 ET using a fresh reviewed input. Root and independent actual review passed transport, exact decoding, all 29 original pins, source/native checks and capacity. Two exact compact originals total 42,854B; full source/config/transport streams remain private. The original guard is unchanged.
+
+The current indexing blocker is exactly two owned zombies, PID 2299635 and PID 3570805, whose root-owned kernel leaves fail the original identity predicate. It checked 24 owned processes and found no matching live consumers, but `host_metadata_ready:false` and partial inventory cannot prove absence. PAM and vanished PID 2332693 are not unknowns in this original R5 result. R6's PAM alias issue remains separate from indexing and is no longer a storage-recovery prerequisite.
+
+All floors pass: RAM 125,248,761,856B, `/data` 103,614,312,448B and `/data1` 24,699,854,848B. The completed cleanup recovered about 6.1GiB; do not repeat it or recreate disposable fixtures/caches without a new selected reader. Keep catalog YAML, summaries, exports and original control/validation bodies through their remaining readers. Next use the direct serial index route after genuine selected readiness; the reviewed 96-case R2 identity replacement remains SOURCE ONLY/UNSELECTED/NOTRUN under the earlier specific guard restriction. No index or scientific admission occurred.
+
+Yan-Ru directly reiterated ongoing approval for ArchEvolve/SWDB implementation, fixes, tests, reviews, commits and pushes to petecao/ArchEvolve on yanrujhou_main, plus mbit10 evaluations and transfer of project source/compact metadata. Do not request these generic permissions again. Cleanup checkpoint 030e7d8e was pushed and GitHub-ref verified after explicit push approval; concurrent human documentation and root rule changes are preserved. Four normals/FINALIZE remain complete once, agreement unsupported/zero eligible pairs/blind-order unverified; 14/15 assigned tickets resolved and ticket17 claimed/all four boxes unchecked. Full inventories/indexes/original32/assembly/unchanged6a/final scientific review remain pending. The original a3 approval ends at13:07:53 ET and must not be reused.
 
 ## Authorized disk reclamation and direct index proposal — 2026-10-09 12:54 ET
 
