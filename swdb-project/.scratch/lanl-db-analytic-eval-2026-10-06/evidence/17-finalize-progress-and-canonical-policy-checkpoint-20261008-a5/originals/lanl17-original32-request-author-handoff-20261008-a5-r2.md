@@ -1,0 +1,15 @@
+# Original32 request author R2 — selected source-only derivative
+
+Prepared2026-10-08 21:58 ET / 2026-10-09 01:58 UTC. **SOURCE ONLY / NOTRUN.** Root and independent peer source review required before use. R1 source/drafts/AST/checklist remain unchanged; no inspected source import/main, tests, SSH, original body reads, actual request authoring or repo/doc/Git edits occurred.
+
+Selected `/private/tmp/lanl17_prepare_original32_requests_20261008_a5_r2.py`: **18624 bytes / b2f39f19ddf9bd646e92b2f8b1151928d2cde72acbb0b0f31b132528b5e48c7f**. Narrow full source diff `/private/tmp/lanl17-original32-request-author-r2-derivation-20261008-a5.diff`:1432/7cde91f2d6213dc90f3ea134ee18546e988a8f5cc5289588935c72902dcdc34e. Source-only inventory/AST derivation receipt `/private/tmp/lanl17-original32-request-author-r2-source-only-20261008-a5.json`:1856/460f555869d5247b5a55f14426041fc2dcf800f933fc56be73088393f38570ac.
+
+One guard added: `trajectory_output` and `candidate_selection_output` must start `/data/yanruj/`, matching unchanged original32 main. Request staging routes may start `/data1/yanruj/`. All routes remain outside whole S/RAW; actual fresh/nonlink/owner/runtime checks remain parent/source32 duties. No other source behavior changed. R1 could describe a route that original32 would correctly refuse; R2 refuses that earlier during metadata authoring.
+
+Four FUTURE private drafts `/private/tmp/lanl17-original32-request-author-input-FUTURE-pN-20261008-a5-r2.json`, each13985, differ from corresponding R1 only by required actual author-review sourceSHA=b2f39. Hashes in orderp1–p4: c3c96e2f913cb1cd252064d75f83bfc6127e1fec1b01b9c168ccb7c50b0b32cd / cf7536d0adda4b7f2173a72a9e307de016555b6267676ba194aced91b1155f8d / 648a4bc03d21e5b1ee14c21d054f75f45a44011f8bd1537a12fea7a5ed62454f / d3bf26f05a9d8b46e057fde45e7ca70320a81cf365906647c92a56a6955768dc. No actual metadata/review/event/scientific value supplied.
+
+All field schemas, metadata-only boundary, original7a-index→76inventory matching, full completed candidate population, H28 persisted-file writer lineage, conditional original32 refusal/interruption and subsequent ec1fc→SPEC339→de→6a requirements remain in `/private/tmp/lanl17-original32-request-author-handoff-20261008-a5-r1.md`12172/552f1894d0199aba2c5f0248e34011ce56d5c76c4401f09b00b589755279b213. Substitute ONLY selected author/draft version and authorSHA for eventual command/review:
+
+`python3 -B /private/tmp/lanl17_prepare_original32_requests_20261008_a5_r2.py --input ACTUAL_OWN0600_COMPACT_INPUT --input-sha256 ACTUAL_INPUT_WHOLEFILE_SHA --author-sha256 b2f39f19ddf9bd646e92b2f8b1151928d2cde72acbb0b0f31b132528b5e48c7f`
+
+This remains FUTURE; author has not run. Parent must fill actual originals and review every real input before authoring and review exact generated requests before source32 runtime. Actual bodies stay remote. P3 genuine0pairs/0events and unchanged6a admission gate remain unchanged; no source/policy/budget/attempt/history repair or invented order/forecast is proposed.

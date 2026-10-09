@@ -1,0 +1,10 @@
+--- lanl17_prepare_original32_requests_20261008_a5_r1.py
++++ lanl17_prepare_original32_requests_20261008_a5_r2.py
+@@ -133,6 +133,7 @@
+  require(sum(k.startswith('public_candidate_export:') for k in pins)<=1,'One original28 combined public export perCID required')
+  routes=fields(v['remote_routes'],('trajectory_request','trajectory_output','candidate_selection_request','candidate_selection_output'))
+  ps=[exclusive_remote(x) for x in routes.values()];require(len(set(ps))==4 and all(not (a.is_relative_to(b) or b.is_relative_to(a)) for i,a in enumerate(ps) for b in ps[i+1:]),'Distinct external request/output routes required')
++ require(all(str(Path(routes[k])).startswith('/data/yanruj/') for k in ('trajectory_output','candidate_selection_output')),'Original32 capture outputs must stay under /data/yanruj')
+  require(not any(str(p)==x['path'] for p in ps for x in pins.values()),'Request/output cannot overwrite original input')
+  t=fields(v['trajectory_observations'],('administrative_enforcement','outcome_accesses_without_component','public_export_candidate_ids','infrastructure_iteration_provider_partition'))
+  admin=fields(t['administrative_enforcement'],('basis','accepted','source_commit','campaign_source_sha256','search_source_sha256','state_file_sha256','summary_sha256','terminal','unsaved_provider_or_step_events_independently_replayed','summary_time_disk_usage_independently_reconstructed','terminal_premise'))

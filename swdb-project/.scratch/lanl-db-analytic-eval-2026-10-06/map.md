@@ -1,7 +1,7 @@
 # Map: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-08 21:34 ET
+Updated: 2026-10-08 22:14 ET
 **Type:** ticket map
 **Status:** claimed (unfinished implementation/evaluation)
 **Work state:** active; [resume guide](resume.md)
@@ -240,3 +240,6 @@ Fresh local P1/P2 root re-reviews (160/165 checks) and independent P1 peer re-re
 2026-10-08 20:47 ET — [P4 first iteration and prospective fix readiness](evidence/17-p4-first-iteration-and-prospective-fix-readiness-20261008-a5/README.md): exact20:44 monitor/native/process originals show P4 active1iteration/2rows, held514 matching FLOCK/FD9/notready; no terminal custody. P1-P3 normal custody stays complete and historical. Selected four-index metadata helperR3 b27ca6f0 and prospective classification patchR3 d8d44eb8 passed root+peer source review; typed future drafts, earlier findings and original bytes preserved. No patch application/tests/control/scientific/native mutation. P3 empty original pairing/events remains a strict admission gate; actual final audit NOTRUN. All agents responsive/completed; next scheduled table/health21:14 ET. Ticket17 claimed/all acceptance unchecked; other human-owned tickets untouched; remote PRIMARY/origin remainR until original guards finish.
 
 - 2026-10-08 21:34 ET: ticket16 re-resolved after [actual73-case public artifact-coverage proof](evidence/16-artifact-coverage-fix-and-public-proof-20261008/README.md); every materialized/refused/repaired artifact and baseline retains structural-unknown metadata coverage, original alias freshness and exact timing-only behavior.14/15 assigned resolved. Scientific numeric/order/report/audit gate remains ticket17, with original frozen source/history preserved.
+
+
+2026-10-08 22:14 ET — Ticket17 [FINALIZE progress checkpoint](evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/README.md): all four original normal custody chains reviewed, single FINALIZE launch still active (P1validation0/exportlive at22:12ET). Final report/fullindexes/actualstrictaudit/finalevidencereview pending;14/15 assigned resolved, ticket17 claimed/acceptance unchecked. Source-policy correction preserves original bytes and selects unchanged original32 authorR2. Human-owned statuses unchanged; heartbeatACTIVE/remotePRIMARY frozenR.

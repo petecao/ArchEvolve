@@ -1,0 +1,49 @@
+{
+  "format": "swdb.lanl17-finalize-progress-observer-static-source-review.v1",
+  "source_only_not_run": true,
+  "created_ET_date": "2026-10-08",
+  "source": {
+    "path": "/private/tmp/lanl17_observe_finalize_progress_metadata_20261008_a5_r2.py",
+    "bytes": 17446,
+    "sha256": "6fe336e3939fdcc3d2f5b2d2ddb3f4891d962679fed2e47f0bd1927a1fc4a7c0"
+  },
+  "action_draft": {
+    "path": "/private/tmp/lanl17-finalize-progress-observer-action-draft-r2-20261008-a5.json",
+    "bytes": 19211,
+    "sha256": "8e9852c341b84442559eb41cf6dcbf5295e34198a90cce59c6dc42dd2935657a"
+  },
+  "derivation_diff": {
+    "path": "/private/tmp/lanl17-finalize-progress-observer-r2-native-schema-derivation-20261008-a5.diff",
+    "bytes": 4910,
+    "sha256": "889acd309ef6ef6313bccb460592f63e0224ee3f26ab0a0621aab0097f4e7087"
+  },
+  "superseded_R1_preserved": {
+    "path": "/private/tmp/lanl17_observe_finalize_progress_metadata_20261008_a5_r1.py",
+    "bytes": 15507,
+    "sha256": "0aba03d2a6025b51ae58a18f24593f458494c0cecf014d8b546dd994535cf543"
+  },
+  "native_projection_ancestor": {
+    "path": "/private/tmp/lanl17_finalize_parent_host_readonly_20261008_a5_r2.py",
+    "bytes": 17019,
+    "sha256": "229909573e4952ee2e21f9a64ccbc6bc886ee114e346f6c4304481763666d87f"
+  },
+  "checks": {
+    "all_full_sources_AST_parse": true,
+    "six_reader_ASTs_unchanged": [
+      "need",
+      "tick",
+      "stamp",
+      "canonical",
+      "metadata",
+      "strict"
+    ],
+    "native_projection_AST_exact_host_R2": true,
+    "R1_socket_lane_removed": true,
+    "native_released_exact_schema_node0_generation514_no_reuse": true,
+    "held_or_malformed_native_unknown_no_clear": true,
+    "inline_source_exact": true,
+    "caps_deadlines_process_privacy_scientific_controls_unchanged": true
+  },
+  "root_and_peer_source_review_required_before_use": true,
+  "runtime_facts_inferred": false
+}

@@ -1,0 +1,292 @@
+{
+  "conditional_original_export": "Add public_candidate_export:original28 only if real original export-CID.stdout exists; unsealed JSON writer H28; never fake files or promote rejected IDs",
+  "conditional_refusal": "Add only actual separately captured original32 refusal custody descriptors matching actual original event rows; do not invent events",
+  "executable": false,
+  "input_template": {
+    "campaign": "extensa-gem5-bfs-20261006-p2",
+    "format": "swdb.lanl17-original32-request-author-input.v1",
+    "original_inputs": {
+      "after_custody": {
+        "bytes": {
+          "future_type": "int in [0,33554432]",
+          "required_original_basis": "exact existing original file bytes"
+        },
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          {
+            "bytes": 24818,
+            "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-selected-trajectory-controls-20261007-a2r1s1/lanl17_compact_attempt_custody_a2r1_20261007.py",
+            "sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c"
+          }
+        ],
+        "encoding": "json",
+        "identity_sha256": {
+          "future_type": "64 lowercase hex",
+          "required_original_basis": "genuine original True-seal, not fabricated"
+        },
+        "path": {
+          "future_type": "absolute remote original path",
+          "required_original_basis": "reviewed actual B08 AFTER or full7a index path for extensa-gem5-bfs-20261006-p2"
+        },
+        "sealed": true,
+        "sha256": {
+          "future_type": "64 lowercase hex",
+          "required_original_basis": "exact existing original whole-file SHA"
+        },
+        "writer_source": {
+          "bytes": 24818,
+          "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-selected-trajectory-controls-20261007-a2r1s1/lanl17_compact_attempt_custody_a2r1_20261007.py",
+          "sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c"
+        }
+      },
+      "manifest_M2": {
+        "bytes": 292401,
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          {
+            "bytes": 38195,
+            "path": "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py",
+            "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+          }
+        ],
+        "encoding": "json",
+        "identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7",
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+        "sealed": true,
+        "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1",
+        "writer_source": {
+          "bytes": 38195,
+          "path": "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py",
+          "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+        }
+      },
+      "record_index": {
+        "bytes": {
+          "future_type": "int in [0,33554432]",
+          "required_original_basis": "exact existing original file bytes"
+        },
+        "encoding": "json",
+        "path": {
+          "future_type": "absolute remote original path",
+          "required_original_basis": "reviewed actual B08 AFTER or full7a index path for extensa-gem5-bfs-20261006-p2"
+        },
+        "sealed": false,
+        "sha256": {
+          "future_type": "64 lowercase hex",
+          "required_original_basis": "exact existing original whole-file SHA"
+        },
+        "writer_source": {
+          "bytes": 33445,
+          "path": "/data1/yanruj/lanl17-index-source-20261007-a1/writer.py",
+          "sha256": "7a67d46f8ad7d453fe07bd458a21f663bd4dc7ec12e71de83ad8b5caaf28894b"
+        }
+      },
+      "summary": {
+        "bytes": {
+          "future_type": "int in [0,33554432]",
+          "required_original_basis": "exact existing original file bytes"
+        },
+        "encoding": "yaml",
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p2/records/campaign_summaries/extensa-gem5-bfs-20261006-p2.summary.yaml",
+        "sealed": false,
+        "sha256": {
+          "future_type": "64 lowercase hex",
+          "required_original_basis": "exact existing original whole-file SHA"
+        },
+        "writer_source": {
+          "bytes": 79456,
+          "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/swdb/campaign.py",
+          "sha256": "13e3e66a469c3934dee2f0f372a5c17812f5a680cb451f63766ad889d13c3d1d"
+        }
+      },
+      "validation_exit": {
+        "bytes": {
+          "future_type": "int in [0,33554432]",
+          "required_original_basis": "exact existing original file bytes"
+        },
+        "encoding": "integer_exit",
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p2.exit-code.txt",
+        "sealed": false,
+        "sha256": {
+          "future_type": "64 lowercase hex",
+          "required_original_basis": "exact existing original whole-file SHA"
+        },
+        "writer_source": {
+          "bytes": 38195,
+          "path": "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py",
+          "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+        }
+      },
+      "validation_stderr": {
+        "bytes": {
+          "future_type": "int in [0,33554432]",
+          "required_original_basis": "exact existing original file bytes"
+        },
+        "encoding": "hash_only",
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p2.stderr",
+        "sealed": false,
+        "sha256": {
+          "future_type": "64 lowercase hex",
+          "required_original_basis": "exact existing original whole-file SHA"
+        },
+        "writer_source": {
+          "bytes": 38195,
+          "path": "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py",
+          "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+        }
+      },
+      "validation_stdout": {
+        "bytes": {
+          "future_type": "int in [0,33554432]",
+          "required_original_basis": "exact existing original file bytes"
+        },
+        "encoding": "hash_only",
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/validate-extensa-gem5-bfs-20261006-p2.stdout",
+        "sealed": false,
+        "sha256": {
+          "future_type": "64 lowercase hex",
+          "required_original_basis": "exact existing original whole-file SHA"
+        },
+        "writer_source": {
+          "bytes": 38195,
+          "path": "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py",
+          "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+        }
+      }
+    },
+    "output_directory": {
+      "future_type": "fresh /private/tmp absolute directory",
+      "required_original_basis": "actual local exclusive0700 output allocation"
+    },
+    "parent_review": {
+      "actual_inputs_approved": {
+        "future_type": "actual required review value",
+        "required_original_basis": "explicit parent review of exact metadata payload and original evidence"
+      },
+      "all_four_normal_custody_originals_reviewed": {
+        "future_type": "actual required review value",
+        "required_original_basis": "explicit parent review of exact metadata payload and original evidence"
+      },
+      "author_sha256": "b2f39f19ddf9bd646e92b2f8b1151928d2cde72acbb0b0f31b132528b5e48c7f",
+      "basis": "explicit_parent_review_of_original32_actual_metadata_inputs",
+      "checked_utc": {
+        "future_type": "actual required review value",
+        "required_original_basis": "explicit parent review of exact metadata payload and original evidence"
+      },
+      "conditional_refusal_custody_reviewed": {
+        "future_type": "actual required review value",
+        "required_original_basis": "explicit parent review of exact metadata payload and original evidence"
+      },
+      "finalize_completion_originals_reviewed": {
+        "future_type": "actual required review value",
+        "required_original_basis": "explicit parent review of exact metadata payload and original evidence"
+      },
+      "fixtures": {
+        "future_type": "actual required review value",
+        "required_original_basis": "explicit parent review of exact metadata payload and original evidence"
+      },
+      "full_index_and_validation_continuity_reviewed": {
+        "future_type": "actual required review value",
+        "required_original_basis": "explicit parent review of exact metadata payload and original evidence"
+      },
+      "original_summary_after_and_selection_reviewed": {
+        "future_type": "actual required review value",
+        "required_original_basis": "explicit parent review of exact metadata payload and original evidence"
+      },
+      "payload_sha256": {
+        "future_type": "actual required review value",
+        "required_original_basis": "explicit parent review of exact metadata payload and original evidence"
+      },
+      "remote_routes_scope_and_freshness_reviewed": {
+        "future_type": "actual required review value",
+        "required_original_basis": "explicit parent review of exact metadata payload and original evidence"
+      }
+    },
+    "remote_routes": {
+      "candidate_selection_output": {
+        "future_type": "absolute remote external fresh metadata path",
+        "required_original_basis": "actual parent freshness/namespace review"
+      },
+      "candidate_selection_request": {
+        "future_type": "absolute remote external fresh metadata path",
+        "required_original_basis": "actual parent freshness/namespace review"
+      },
+      "trajectory_output": {
+        "future_type": "absolute remote external fresh metadata path",
+        "required_original_basis": "actual parent freshness/namespace review"
+      },
+      "trajectory_request": {
+        "future_type": "absolute remote external fresh metadata path",
+        "required_original_basis": "actual parent freshness/namespace review"
+      }
+    },
+    "selection_observations": {
+      "accepted": {
+        "future_type": "source32 exact scalar or list",
+        "required_original_basis": "genuine original28 selection and ALL original summary completed iterations; empty named only after review"
+      },
+      "basis": "explicit_parent_check_of_original_28d_non_rejected_completed_selection",
+      "candidate_ids": {
+        "future_type": "source32 exact scalar or list",
+        "required_original_basis": "genuine original28 selection and ALL original summary completed iterations; empty named only after review"
+      },
+      "checked_utc": {
+        "future_type": "source32 exact scalar or list",
+        "required_original_basis": "genuine original28 selection and ALL original summary completed iterations; empty named only after review"
+      },
+      "completed_materialized_candidate_ids": {
+        "future_type": "source32 exact scalar or list",
+        "required_original_basis": "genuine original28 selection and ALL original summary completed iterations; empty named only after review"
+      },
+      "original_named_candidate_ids": {
+        "future_type": "source32 exact scalar or list",
+        "required_original_basis": "genuine original28 selection and ALL original summary completed iterations; empty named only after review"
+      },
+      "selection_completeness_independently_derived_by_auditor": false
+    },
+    "trajectory_observations": {
+      "administrative_enforcement": {
+        "accepted": {
+          "future_type": "bool",
+          "required_original_basis": "actual parent original source-enforcement review"
+        },
+        "basis": "explicit_parent_attestation_of_original_source_enforcement",
+        "campaign_source_sha256": "13e3e66a469c3934dee2f0f372a5c17812f5a680cb451f63766ad889d13c3d1d",
+        "search_source_sha256": "348b07b38a7955a65b5c13629dd8234453609f152a78d27524df6bf840a989e7",
+        "source_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+        "state_file_sha256": {
+          "future_type": "actual scalar",
+          "required_original_basis": "original AFTER state-file SHA, inventory summary semantic SHA or actual terminal"
+        },
+        "summary_sha256": {
+          "future_type": "actual scalar",
+          "required_original_basis": "original AFTER state-file SHA, inventory summary semantic SHA or actual terminal"
+        },
+        "summary_time_disk_usage_independently_reconstructed": false,
+        "terminal": {
+          "future_type": "actual scalar",
+          "required_original_basis": "original AFTER state-file SHA, inventory summary semantic SHA or actual terminal"
+        },
+        "terminal_premise": {
+          "future_type": "null or exact closed original below-limit premise",
+          "required_original_basis": "source32 contract; plateau must be null"
+        },
+        "unsaved_provider_or_step_events_independently_replayed": false
+      },
+      "infrastructure_iteration_provider_partition": {
+        "future_type": "source32 exact value",
+        "required_original_basis": "truthful reviewed original observations; no defaults; normal partition null"
+      },
+      "outcome_accesses_without_component": {
+        "future_type": "source32 exact value",
+        "required_original_basis": "truthful reviewed original observations; no defaults; normal partition null"
+      },
+      "public_export_candidate_ids": {
+        "future_type": "source32 exact value",
+        "required_original_basis": "truthful reviewed original observations; no defaults; normal partition null"
+      }
+    }
+  },
+  "scientific_admission": false,
+  "state": "SOURCE_ONLY_TYPED_FUTURE_NOTRUN"
+}

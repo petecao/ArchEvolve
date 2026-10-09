@@ -1,13 +1,13 @@
 # Implementation progress
 
-Updated: 2026-10-08 21:37 ET
+Updated: 2026-10-08 22:14 ET
 
 **Current state: ACTIVE after Yan-Ru's explicit resumption; 14/15 assigned tickets resolved; ticket16 review finding addressed.**
 Ticket 17 remains `claimed`, with acceptance pending. Start from [resume.md](resume.md).
 The 30-minute heartbeat `lanl-analytic-evaluator-progress` is ACTIVE on the resumed chat.
 Readiness and evidence-review agents are responsive; completed subtasks are retained.
 
-**Latest evaluation checkpoint21:35 ET; local verification21:34 ET:** P1-P3 normal interim custody complete; P4 plateau summary4iterations/8candidate rows, with original stop/final exits absent and node0generation514 still held. Owned process CPU advances; no normal completion/release admission. Ticket16 re-resolved after73public regressions passed; corrected legality31passed/final frozen gate11passed/independent28-source-pin followupPASS. Original broad402pass/4helper-failure run retained unchanged. Final P4custody/report/index/strictaudit/full evidence review pending; P3emptyoriginalpairing/order and absentnumericadapter remain scientific gates. [Original checkpoint](evidence/17-p4-plateau-summary-checkpoint-20261008-a5/README.md); next table/health due22:05ET.
+**Latest evaluation: all four normal custody chains complete and reviewed; FINALIZE running.** P4 original stop/release32/AFTER passed root and independent review: four iterations/eight rows/six materialized IDs/seven completed counted calls, all four exits zero, no survivors, clean sourceR and released514 without a kernel/FD9 holder through AFTER. [P4 originals](evidence/17-p4-normal-stop-release-after-20261008-a5/README.md) and [guarded FINALIZE launch](evidence/17-actual-finalize-admission-and-start-20261008-a5/README.md) are pushed at2e81bec4. FINALIZE launched once21:53:46ET after fresh all-three-lease/source/process/GPU/storage clearance; original preregistration exists, completion/report/cleanup unestablished. Ticket16 re-resolved after73public regressions, corrected legality31 and final frozen gate11 passed, with independent implementation review; original broad402pass/4fixture-failure run preserved. Full report/index/actual strict audit/final evidence review remain pending; frozenP3 empty pairing/order and absent numeric adapter remain scientific gates. At22:12ET P1 validation exit0 and P1 export live; process inventory partial unknown, scientificR clean and all3 native leases released. [Observer and source-policy originals](evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/README.md) retain the explicit B08 canonicalTrue correction. Next table/agent-health due22:35ET.
 
 [Earlier p1 startup checkpoint](evidence/17-active-p1-startup-and-p2-preparation-20261008-a5/README.md):13:11 ET metadata confirms public query-index completion, pairing/setup entry and advancing owned CPU. State/iterations and protocol/provider/terminal receipts remain absent. Source-only p2 commands are reviewed, with fresh admission still required. The13:11 ET evaluation table and responsive agent check are complete; next required table13:41 ET.
 
@@ -32,7 +32,7 @@ writing-preference rule is committed as `cb6f75ae`. Evaluation state is unchange
 | Ticket 14 generality | Resolved; nine pairs/45 trials, seven unknown totals | Preserve original receipts and qualified unknowns |
 | Corrected storage DEFAULT a3 | Actual original receipt reviewed; guard exit 0 | Limited inspection only; do not repeat |
 | Storage RETIRE a4 / actual a5 | Original successful sixteen-row receipt reviewed and retained | Do not repeat retirement or DEFAULT |
-| Ticket 17 science | PREPARE/FIRST and P1-P3 normal custody passed | P4 active2 iterations/4rows/node0g514; P3 pairing/order gate unmet, final report/audit pending |
+| Ticket 17 science | PREPARE/FIRST and all four normal custody chains passed | FINALIZE P1 validation0/export live at22:12ET; original terminal/report/index/audit pending |
 | Review and completion | First Standards + Spec implementation pass completed | Address findings, verify integration, final evidence review/ticket closure |
 
 The following paragraphs retain pause-era observations; the current active state is above.
@@ -500,3 +500,6 @@ Fresh local P1/P2 root re-reviews (160/165 checks) and independent P1 peer re-re
 
 
 2026-10-08 21:56 ET — [P4 full root/peer custody](evidence/17-p4-normal-stop-release-after-20261008-a5/README.md) PASS; selected independentR2 cd224c8e exact. [Guarded FINALIZE](evidence/17-actual-finalize-admission-and-start-20261008-a5/README.md) launched once21:53:46ET after actual eight custody reviews and21:52:59 fullhost/all3released/kernel/FD9/sourceR/floor clearance. Original preregistration metadata exists; completion/report/cleanup not inferred. Parentcapture67593 ongoing, no repeated science/control/native mutation.22 closed originals/661696B archived, active streams excluded. Four full indexes/original32/actualstrictaudit/final evidence review remain required;14/15 assigned resolved and numerical/D30/P3order gate unchanged. Heartbeat ACTIVE updated actualfour custody and FINALIZEroute; nextrequired table/health22:05ET.
+
+
+2026-10-08 22:14 ET — Actual readonly R3 checkpoint and additive canonical-policy correction archived with exact prior sources/results in67files/535380B. P1 validation0/liveexport is positive phase progress; six stat unknowns do not establish idle/completion or scientific failure. Three native leases released at514/550/77 and scientificR clean in that dated observation. Original parent67593 remains running. B08 True follows source defaults/contracts; matching ASCII False digest had not established writer policy. Unchanged original32 request authorR2 root/peerSOURCEPASS remainsNOTRUN. All scoped agents responsive; final report/index/actualaudit/review pending, no scientific numerical/D30admission; nexttable/health22:35ET.

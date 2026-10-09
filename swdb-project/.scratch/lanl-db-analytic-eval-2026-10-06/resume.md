@@ -1,6 +1,6 @@
 # Continue the analytic evaluator work
 
-Updated: 2026-10-08 21:56 ET
+Updated: 2026-10-08 22:14 ET
 
 **Active after Yan-Ru explicitly resumed work.** Fourteen of fifteen assigned agent tickets are resolved. Ticket16's artifact/baseline forecast fix passed 73 public regression tests and independent implementation review; ticket17 remains claimed with its acceptance boxes unchecked. The 30-minute heartbeat is ACTIVE.
 
@@ -9,7 +9,7 @@ Updated: 2026-10-08 21:56 ET
 | CPU ticket 11 | Resolved; held-out BFS broad-band pass, BC failure | Preserve both outcomes |
 | Generality ticket 14 | Resolved; nine pairs, 45 trials; seven whole-call totals unknown | Preserve qualified results |
 | Storage RETIRE a4 / plan a5 | Existing attempt collected once; successful original receipt, all sixteen rows retired | Do not repeat retirement or DEFAULT |
-| Ticket 17 science | All four normal custody chains passed root and peer review | Guarded FINALIZE launched once; report/index/audit remain pending |
+| Ticket 17 science | All four normal custody chains passed root and peer review | FINALIZE P1 validation exit 0 and P1 export live at 22:12 ET; report/index/audit pending |
 | Standards + Spec review | Both implementation axes reviewed; identified fixes tested and pushed at 2caa5545 | Complete final evidence review after report and strict audit |
 
 
@@ -151,3 +151,6 @@ Fresh local P1/P2 root re-reviews (160/165 checks) and independent P1 peer re-re
 
 
 2026-10-08 21:56 ET — [P4 full root/peer custody](evidence/17-p4-normal-stop-release-after-20261008-a5/README.md) PASS; selected independentR2 cd224c8e exact. [Guarded FINALIZE](evidence/17-actual-finalize-admission-and-start-20261008-a5/README.md) launched once21:53:46ET after actual eight custody reviews and21:52:59 fullhost/all3released/kernel/FD9/sourceR/floor clearance. Original preregistration metadata exists; completion/report/cleanup not inferred. Parentcapture67593 ongoing, no repeated science/control/native mutation.22 closed originals/661696B archived, active streams excluded. Four full indexes/original32/actualstrictaudit/final evidence review remain required;14/15 assigned resolved and numerical/D30/P3order gate unchanged. Heartbeat ACTIVE updated actualfour custody and FINALIZEroute; nextrequired table/health22:05ET.
+
+
+2026-10-08 22:14 ET — [FINALIZE progress and canonical-policy checkpoint](evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/README.md) retains 67 exact originals/535380B. Actual R2 observer unknown remains preserved. Actual R3 at22:12ET returns three validated live FINALIZE tree rows (supervisor/helper/P1 export), P1 validation exit0, clean scientificR and all three released native leases514/550/77 with no kernel/FD9 holder. Six owned stat reads remain unknown; no complete inventory/quiescence/completion inferred. Original parent67593 still running, no repeat of FINALIZE or prior custody. Source-backed B08 canonicalTrue correction withdraws historical False-policy interpretation; original receipts/controls unchanged, selected original32 authorR2 root/peerSOURCEPASS and NOTRUN. Report/four full indexes/actual strictaudit/final evidence review pending. All agents responsive/completed; next scheduled table/health22:35ET. RemotePRIMARY/origin staysR;14/15 assigned resolved, ticket17 claimed/acceptance unchecked; heartbeat ACTIVE.

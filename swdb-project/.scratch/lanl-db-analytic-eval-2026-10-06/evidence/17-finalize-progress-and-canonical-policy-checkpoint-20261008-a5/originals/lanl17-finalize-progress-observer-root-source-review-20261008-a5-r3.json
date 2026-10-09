@@ -1,0 +1,30 @@
+{
+  "date_ET": "2026-10-08",
+  "checked_utc": "2026-10-09T02:11:57.318426+00:00",
+  "verdict": "PASS_SOURCE_ONLY",
+  "source_pin": {
+    "path": "/private/tmp/lanl17_observe_finalize_progress_metadata_20261008_a5_r3.py",
+    "bytes": 18212,
+    "sha256": "a59121983fbea8589a020b860c948665909c577929052e95b845a87dca00a90c"
+  },
+  "draft_pin": {
+    "path": "/private/tmp/lanl17-finalize-progress-observer-action-draft-r3-20261008-a5.json",
+    "bytes": 19985,
+    "sha256": "47d3005d4aa5bfc252cc04e3eb51882fc1eaf89f925521fb587c25ff484ea0f8"
+  },
+  "peer_pin": {
+    "path": "/private/tmp/lanl17-finalize-progress-observer-independent-source-review-20261008-a5-r3.json",
+    "bytes": 4329,
+    "sha256": "a43084e12c38cd134e4ed96583f11e352b2fb3628196c3443ff8a68beca1a6d3"
+  },
+  "checks": [
+    "Full source/diff inspected; only process_rows/observe AST changed",
+    "Owned error causes hashed and bounded; no raw messages or command bodies",
+    "Anchors populate only after identity recheck; failed identities preliminary",
+    "Any owned process error sets top/process unknown; independent facts retain their own states",
+    "Original native schema/generation514/readers/caps/privacy unchanged",
+    "Exact inline source; empty collect; no stage;45/60/180 limits unchanged"
+  ],
+  "scientific_admission": false,
+  "actual_progress_not_yet_observed": true
+}

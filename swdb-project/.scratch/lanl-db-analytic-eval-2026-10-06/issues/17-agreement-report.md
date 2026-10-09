@@ -1,7 +1,7 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-08 21:59 ET
+Updated: 2026-10-08 22:14 ET
 **Type:** slice
 **Status:** claimed
 **Work state:** active (explicitly resumed 2026-10-08)
@@ -182,3 +182,6 @@ Fresh local P1/P2 root re-reviews (160/165 checks) and independent P1 peer re-re
 
 
 2026-10-08 21:59 ET — [P4 original normal custody](../evidence/17-p4-normal-stop-release-after-20261008-a5/README.md) passed root and independent review: four completed iterations/eight candidate rows/six materialized IDs/seven completed counted calls, plateau4/all four zero exits/no survivors/cleanR, original stop/release32/AFTER once, native514 released without kernel/FD9 holder through AFTER. All four trajectories now have complete interim custody. [Guarded FINALIZE admission/start](../evidence/17-actual-finalize-admission-and-start-20261008-a5/README.md) binds all eight actual custody reviews and fresh21:52:59ET all-three-lease/source/process/GPU/floor clearance; launched once21:53:46ET with original controls/source/budgets. Completion/report/fullindexes/actual strict audit/final evidence review remain pending. Local implementation review fixes and ticket16 regression73-pass are pushed2caa5545; remotePRIMARY/origin remainsR until original guards finish. All acceptance boxes stay unchecked; frozenP3 empty pairing/order history and missing numeric adapter remain genuine scientific gates, not fixed by source tests. Heartbeat ACTIVE; no repeat or stopped-state resume.
+
+
+2026-10-08 22:14 ET — [FINALIZE progress and source-policy correction](../evidence/17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/README.md) retains original readonly observations and source reviews: at22:12ET P1 validation exit0/P1export live under original helper/supervisor; partial process inventory unknown, scientificR clean/all3leases released514/550/77. No completion/report/strictadmission inferred. B08 canonicalTrue follows exactoriginalwriter; historicalFalse labels/finding withdrawn additively, no original control/history rewrite. Original32 authorR2 remainsSOURCEPASS/NOTRUN pending actualfullindexes/FINALIZE/selection. All acceptance unchanged, ticket17 claimed; other human-owned tickets untouched.

@@ -1,10 +1,12 @@
 # Original P4 normal custody
 
-Updated: 2026-10-08 21:56 ET.
+Updated: 2026-10-08 22:14 ET.
 
 P4 attempt1 completed normally at plateau4 on node0/generation514. Its original ledger records four completed iterations, eight candidate rows, six materialized candidate IDs and seven distinct completed counted provider calls. All candidate rows are rejected; no timing comparisons are retained. This is a substantive negative search trajectory, not numerical agreement evidence.
 
-The original stop, release32 and B08 AFTER succeeded once. Stop file SHA256 is `90d278161d80069cf982fc53c007b7b4535bffe52e8103f648fe964404553e55`; release is9431B/`9596220c8a41b184583921d1e67b0c392c8e1b0902b112ead4fd9d3ae05a17f6`; AFTER is32478B/`92dc2ba791e4c125523e7d67df76dbc5e5cb6cfd830749630bffe1bdbd36b17d`. Their original seal policies are True/True/False respectively. All four original exits are zero, sourceR/F6 stayed clean, process cleanup has no survivors, and account/Codex homes were restored.
+The original stop, release32 and B08 AFTER succeeded once. Stop file SHA256 is `90d278161d80069cf982fc53c007b7b4535bffe52e8103f648fe964404553e55`; release is9431B/`9596220c8a41b184583921d1e67b0c392c8e1b0902b112ead4fd9d3ae05a17f6`; AFTER is32478B/`92dc2ba791e4c125523e7d67df76dbc5e5cb6cfd830749630bffe1bdbd36b17d`. Their original seal policies are True/True/True respectively. All four original exits are zero, sourceR/F6 stayed clean, process cleanup has no survivors, and account/Codex homes were restored.
+
+2026-10-08 22:14 ET correction: the earlier AFTER-False label was an interpretation error. Exact B08 source omits `ensure_ascii`, whose Python default is True; unchanged assembler and template-author contracts also declare True. This ASCII-only AFTER body produces equal True/False canonical digests, so a successful False calculation did not establish the writer policy. Historical review bytes remain preserved. The [source reconciliation](../17-finalize-progress-and-canonical-policy-checkpoint-20261008-a5/README.md) withdraws that finding and selects the unchanged R2 request author.
 
 Fresh native/source/wrapper checks preceded release32; native/source checks immediately before and after AFTER confirmed released514 without a matching kernel lock or daemon FD9. Node0 remained reserved through this custody. Root full review passed29 checks; independent full custody review passed, with selected additive R2 receipt13407B/SHA `cd224c8ee88c411401a48b508fba425fdd55228e7bced2e15b5b1881495dd0af`. Three exact peer receipts/34744B are separately retained in [peer-review-inventory.json](peer-review-inventory.json). The current remote PRIMARY/origin stays at R until original FINALIZE guards finish.
 
