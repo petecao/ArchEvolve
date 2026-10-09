@@ -1,7 +1,7 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-08 21:37 ET
+Updated: 2026-10-08 21:59 ET
 **Type:** slice
 **Status:** claimed
 **Work state:** active (explicitly resumed 2026-10-08)
@@ -179,3 +179,6 @@ Fresh local P1/P2 root re-reviews (160/165 checks) and independent P1 peer re-re
 2026-10-08 20:47 ET — [P4 first iteration and prospective fix readiness](evidence/17-p4-first-iteration-and-prospective-fix-readiness-20261008-a5/README.md): exact20:44 monitor/native/process originals show P4 active1iteration/2rows, held514 matching FLOCK/FD9/notready; no terminal custody. P1-P3 normal custody stays complete and historical. Selected four-index metadata helperR3 b27ca6f0 and prospective classification patchR3 d8d44eb8 passed root+peer source review; typed future drafts, earlier findings and original bytes preserved. No patch application/tests/control/scientific/native mutation. P3 empty original pairing/events remains a strict admission gate; actual final audit NOTRUN. All agents responsive/completed; next scheduled table/health21:14 ET. Ticket17 claimed/all acceptance unchecked; other human-owned tickets untouched; remote PRIMARY/origin remainR until original guards finish.
 
 2026-10-08 21:37 ET — [P4 plateau-summary checkpoint](../evidence/17-p4-plateau-summary-checkpoint-20261008-a5/README.md) retains exact21:35:53–55 ET metadata:4iterations/8rows/0interrupted/no reportedinfraerror/matchingplateausummary. Originalstop/finalexitsabsent, ownedpublicPID2300714 CPUadvancing, nativeheld514/matchingFLOCK/FD9/notready/no unknown. P1-P3normal custody unchanged. Allscopedagentscompleted/responsive/no strandedworker.14/15assignedresolved after ticket16actual73-pass and peerfollowup. FinalP4custody/FINALIZE/report/index/strictaudit/final-evidencereview/syncpending; frozenP3order/numericadapter gates unchanged. Requiredtable/health21:36done; next22:05ET. RemotePRIMARY/sourceR unchanged; no repeatedscience/custody/historyrepair.
+
+
+2026-10-08 21:59 ET — [P4 original normal custody](../evidence/17-p4-normal-stop-release-after-20261008-a5/README.md) passed root and independent review: four completed iterations/eight candidate rows/six materialized IDs/seven completed counted calls, plateau4/all four zero exits/no survivors/cleanR, original stop/release32/AFTER once, native514 released without kernel/FD9 holder through AFTER. All four trajectories now have complete interim custody. [Guarded FINALIZE admission/start](../evidence/17-actual-finalize-admission-and-start-20261008-a5/README.md) binds all eight actual custody reviews and fresh21:52:59ET all-three-lease/source/process/GPU/floor clearance; launched once21:53:46ET with original controls/source/budgets. Completion/report/fullindexes/actual strict audit/final evidence review remain pending. Local implementation review fixes and ticket16 regression73-pass are pushed2caa5545; remotePRIMARY/origin remainsR until original guards finish. All acceptance boxes stay unchecked; frozenP3 empty pairing/order history and missing numeric adapter remain genuine scientific gates, not fixed by source tests. Heartbeat ACTIVE; no repeat or stopped-state resume.

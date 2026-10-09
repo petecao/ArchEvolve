@@ -1,19 +1,21 @@
 # Continue the analytic evaluator work
 
-Updated: 2026-10-08 21:37 ET
+Updated: 2026-10-08 21:56 ET
 
-**Active after Yan-Ru explicitly resumed work.** Thirteen of fifteen assigned agent tickets are resolved. Ticket16 is reopened for missing refusal-path artifact/baseline forecasts; ticket17 remains claimed; its acceptance boxes remain unchecked. The 30-minute heartbeat is ACTIVE on the resumed chat.
+**Active after Yan-Ru explicitly resumed work.** Fourteen of fifteen assigned agent tickets are resolved. Ticket16's artifact/baseline forecast fix passed 73 public regression tests and independent implementation review; ticket17 remains claimed with its acceptance boxes unchecked. The 30-minute heartbeat is ACTIVE.
 
 | Evaluation | Current evidence | Next action |
 |---|---|---|
 | CPU ticket 11 | Resolved; held-out BFS broad-band pass, BC failure | Preserve both outcomes |
 | Generality ticket 14 | Resolved; nine pairs, 45 trials; seven whole-call totals unknown | Preserve qualified results |
 | Storage RETIRE a4 / plan a5 | Existing attempt collected once; successful original receipt, all sixteen rows retired | Do not repeat retirement or DEFAULT |
-| Ticket 17 science | a5 PREPARE/FIRST and p1–p3 normal custody passed; final audit pending | p4 protocol freeze/setup active on node0/g514; strict pairing gate unmet |
-| Standards + Spec review | Full-feature base 7941ccba selected | Run both axes and fix findings after scientific closeout |
+| Ticket 17 science | All four normal custody chains passed root and peer review | Guarded FINALIZE launched once; report/index/audit remain pending |
+| Standards + Spec review | Both implementation axes reviewed; identified fixes tested and pushed at 2caa5545 | Complete final evidence review after report and strict audit |
 
 
 ## Current P4 routes and final gate
+
+Current21:56 ET: P4 stop/release32/AFTER and full root/peer custody PASS. Never repeat any P1-P4 dispatch or completed custody. Guarded FINALIZE launched once21:53:46 ET; actual capture `/private/tmp/lanl17-scientific-finalize-capture-20261008-a5-a1`, sourcec360/direct9c/fa/28/originalR and budgets unchanged. Inspect original retained state before any next action. [Actual FINALIZE admission/start](evidence/17-actual-finalize-admission-and-start-20261008-a5/README.md) and [P4 originals](evidence/17-p4-normal-stop-release-after-20261008-a5/README.md) supersede the dated startup/readiness observations below. Completion/report/full-index/strict-audit outcomes remain unestablished. RemotePRIMARY/origin staysR until original guards finish.
 
 Local prospective implementation update (2026-10-08 20:50 ET): classification patchR3 was applied only in this Mac checkout after root verified that c360/9c/185F6 guards bind remote C/S/PRIMARY/originR and the unchanged local ticket17 cleanup helper, independently of local product files. Eighteen focused regression cases passed in17.88s using existing pyenvPython3.12.6; defaultPython3.14 lacked pytest and ran no tests. Eleven broader target/certification suites are running with retained private stdout/stderr/exit routes. Earlier SOURCE-ONLY/UNAPPLIED archive statements describe their historical preparation; current application does not rewrite them. Remote source synchronization remains deferred until original custody/FINALIZE guards finish. Evaluated sourceR, original histories/policies/full catalogs are unchanged; tests do not repair the P3 pairing gate.
 
@@ -143,3 +145,9 @@ Fresh local P1/P2 root re-reviews (160/165 checks) and independent P1 peer re-re
 2026-10-08 21:34 ET — [Ticket16 artifact coverage fix and actual public proof](evidence/16-artifact-coverage-fix-and-public-proof-20261008/README.md) completed73passed/683.75s/exit0 (20pairing/7agreement/46targets). Finalfrozendigest11passed/40deselect0.15s/exit0. Ticket16 re-resolved;14/15 assigned resolved, human-owned tickets unchanged. Localcode/tests/source-reviews/originalruntime receipts retained; prospective source Git sync authorized, remotePRIMARY/source remainR untiloriginalguardsfinish. Ticket17 P4/report/index/actualstrictaudit/finalreview pending; no numerical/D30admission, frozenP3emptyhistoryunchanged. LatestactualP4evaluation21:09active2/4held514; nextscheduledtable/agenthealth21:39ET.
 
 2026-10-08 21:37 ET — [P4 plateau-summary checkpoint](evidence/17-p4-plateau-summary-checkpoint-20261008-a5/README.md) retains exact21:35:53–55 ET metadata:4iterations/8rows/0interrupted/no reportedinfraerror/matchingplateausummary. Originalstop/finalexitsabsent, ownedpublicPID2300714 CPUadvancing, nativeheld514/matchingFLOCK/FD9/notready/no unknown. P1-P3normal custody unchanged. Allscopedagentscompleted/responsive/no strandedworker.14/15assignedresolved after ticket16actual73-pass and peerfollowup. FinalP4custody/FINALIZE/report/index/strictaudit/final-evidencereview/syncpending; frozenP3order/numericadapter gates unchanged. Requiredtable/health21:36done; next22:05ET. RemotePRIMARY/sourceR unchanged; no repeatedscience/custody/historyrepair.
+
+
+2026-10-08 21:52 ET — [Original P4 normal custody](evidence/17-p4-normal-stop-release-after-20261008-a5/README.md): plateau4/four iterations/eight candidate rows/six materialized IDs/seven completed counted calls; all four exits0/sourceR clean/no survivors. Original release32 9596220c and AFTER92dc2ba7 succeeded once; fresh native514 no kernel/FD9 holder through AFTER. Root29 checks and independent release PASS; full AFTER peer review pending before guarded FINALIZE. Earlier local author expired unexecuted, exact outputs preserved; fresh r2 actual request used once. All three agents responsive/working on local review and final input preparation.14/15 assigned resolved; implementation fixes reviewed/tested/pushed2caa5545; remotePRIMARY/origin remainsR. Numerical/D30/strict scientific admission unestablished; P3 empty original pairing/order gate unchanged. No repeats/history repairs, raw staysremote. Required next table/health22:05ET.
+
+
+2026-10-08 21:56 ET — [P4 full root/peer custody](evidence/17-p4-normal-stop-release-after-20261008-a5/README.md) PASS; selected independentR2 cd224c8e exact. [Guarded FINALIZE](evidence/17-actual-finalize-admission-and-start-20261008-a5/README.md) launched once21:53:46ET after actual eight custody reviews and21:52:59 fullhost/all3released/kernel/FD9/sourceR/floor clearance. Original preregistration metadata exists; completion/report/cleanup not inferred. Parentcapture67593 ongoing, no repeated science/control/native mutation.22 closed originals/661696B archived, active streams excluded. Four full indexes/original32/actualstrictaudit/final evidence review remain required;14/15 assigned resolved and numerical/D30/P3order gate unchanged. Heartbeat ACTIVE updated actualfour custody and FINALIZEroute; nextrequired table/health22:05ET.

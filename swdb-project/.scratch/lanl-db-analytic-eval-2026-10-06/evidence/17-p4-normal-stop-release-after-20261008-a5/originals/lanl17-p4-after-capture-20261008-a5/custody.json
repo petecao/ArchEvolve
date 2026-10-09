@@ -1,0 +1,746 @@
+{
+  "format": "swdb.lanl17-attempt-control-custody.v2",
+  "phase": "after",
+  "checked_utc": "2026-10-09T01:49:42.578467+00:00",
+  "campaign": "extensa-gem5-bfs-20261006-p4",
+  "attempt": 1,
+  "source_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "helper_sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414",
+  "source_clean": true,
+  "actual_project_directory": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project",
+  "actual_git_worktree_root": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5",
+  "source_path_scope": "Exact canonical M2.source/swdb-project; every lexical component symlink-refused",
+  "execution_account": {
+    "platform": "linux",
+    "host": "mbit10",
+    "hostname": "mbit10",
+    "uid": 114316761,
+    "effective_uid": 114316761,
+    "user": "yanruj",
+    "scope": "Actual host/account check; remote-only state remains a separate handling rule"
+  },
+  "projection_contract": "swdb.lanl17-safe-control-projection.v1",
+  "manifest_identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7",
+  "manifest_file_pin": {
+    "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+    "bytes": 292401,
+    "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1",
+    "uid": 114316761,
+    "identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7"
+  },
+  "policy": {
+    "frozen_at": "2026-10-08T16:05:25.347884+00:00",
+    "id": "extensa-gem5-bfs-20261006-p1.agreement.5bae2f42d9078864",
+    "identity_sha256": "5bae2f42d9078864caad73e81a16007edb6458f0b101628ded04a7ef3aedbf7d"
+  },
+  "collector_sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c",
+  "freeze_publication_pin": {
+    "path": "/data/yanruj/EvolveSWDB_runs/lanl17-first-publication-custody-20261008-a5.json",
+    "bytes": 7701,
+    "sha256": "e1fa63af665bea9937375b4be17fe3de7f013a1da0e1106e36817c828fc3d5e1",
+    "uid": 114316761,
+    "identity_sha256": "8ec6987cc6d8c8e9d74df60cfa3e40e5bafbbdfdb0dd87747af645bf82436220"
+  },
+  "resume": false,
+  "baselines_only": false,
+  "state": {
+    "present": true,
+    "file": {
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p4/state.json",
+      "bytes": 35569,
+      "sha256": "a2b689a26cd896cd89f482e9c3904e145d37c32816a05bd7330fab05460e1d02",
+      "uid": 114316761
+    },
+    "original_remote_only": {
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-p4-after-custody-20261008-a5/state.original.remote-only.json",
+      "bytes": 35569,
+      "sha256": "a2b689a26cd896cd89f482e9c3904e145d37c32816a05bd7330fab05460e1d02"
+    },
+    "projection": {
+      "campaign": "extensa-gem5-bfs-20261006-p4",
+      "campaign_sha256": "abb16613fa62012ce05b6396db68119ca3ade05bae4601a71c7b73dbb8f3e2e1",
+      "started": "2026-10-09T00:02:55.379724+00:00",
+      "stopped": true,
+      "stop_reason": "plateau",
+      "setup_done": true,
+      "lane_hours": 0.49160497830870253,
+      "disk_bytes_peak": 965863852,
+      "projection_contract": "swdb.lanl17-safe-control-projection.v1",
+      "ledger": {
+        "iteration": 0,
+        "iterations_completed": 4,
+        "plateau": 4,
+        "calls": [
+          {
+            "index": 1,
+            "iteration": 0,
+            "role": "profiling",
+            "invocation": "extensa-gem5-bfs-20261006-p4.call1",
+            "outcome": "completed",
+            "counted": true
+          },
+          {
+            "index": 2,
+            "iteration": 1,
+            "role": "rewriting",
+            "invocation": "extensa-gem5-bfs-20261006-p4.call2",
+            "outcome": "completed",
+            "counted": true
+          },
+          {
+            "index": 3,
+            "iteration": 2,
+            "role": "rewriting",
+            "invocation": "extensa-gem5-bfs-20261006-p4.call3",
+            "outcome": "completed",
+            "counted": true
+          },
+          {
+            "index": 4,
+            "iteration": 2,
+            "role": "repair",
+            "invocation": "extensa-gem5-bfs-20261006-p4.call4",
+            "outcome": "completed",
+            "counted": true
+          },
+          {
+            "index": 5,
+            "iteration": 2,
+            "role": "repair",
+            "invocation": "extensa-gem5-bfs-20261006-p4.call5",
+            "outcome": "completed",
+            "counted": true
+          },
+          {
+            "index": 6,
+            "iteration": 3,
+            "role": "rewriting",
+            "invocation": "extensa-gem5-bfs-20261006-p4.call6",
+            "outcome": "completed",
+            "counted": true
+          },
+          {
+            "index": 7,
+            "iteration": 4,
+            "role": "rewriting",
+            "invocation": "extensa-gem5-bfs-20261006-p4.call7",
+            "outcome": "completed",
+            "counted": true
+          }
+        ],
+        "iterations": [
+          {
+            "index": 1,
+            "outcome": "not_improved",
+            "advanced_plateau": true,
+            "plateau_counter": 1
+          },
+          {
+            "index": 2,
+            "outcome": "not_improved",
+            "advanced_plateau": true,
+            "plateau_counter": 2
+          },
+          {
+            "index": 3,
+            "outcome": "not_improved",
+            "advanced_plateau": true,
+            "plateau_counter": 3
+          },
+          {
+            "index": 4,
+            "outcome": "not_improved",
+            "advanced_plateau": true,
+            "plateau_counter": 4
+          }
+        ],
+        "terminal": null,
+        "iteration_calls": 1,
+        "setup_calls": 1
+      },
+      "ledger_sha256": "e218276423d123bad27b5eed2b440f47a0aa1bdadffec29a36849e8df4f6331e",
+      "iterations": [
+        {
+          "index": 1,
+          "started": "2026-10-09T00:18:45.924875+00:00",
+          "ended": "2026-10-09T00:33:42.407291+00:00",
+          "improved_classes": [],
+          "provider_calls": [
+            {
+              "role": "rewriting",
+              "invocation": "extensa-gem5-bfs-20261006-p4.call2",
+              "outcome": "completed",
+              "counted": true,
+              "model": "gpt-5.6-sol",
+              "effort": "xhigh",
+              "excluded_metadata": {
+                "classification": {
+                  "json_type": "str",
+                  "semantic_sha256": "050d65e919466aef0ec16ecf2a329c230a2d424b81e1f73abed6007eb2170f7c",
+                  "values_exported": false
+                }
+              }
+            }
+          ],
+          "candidates": [
+            {
+              "id": "extensa-gem5-bfs-20261006-p4.it1.kronecker.a0",
+              "class": "kronecker",
+              "artifact_sha256": "abe62c87df3899264dc391d1ceea3ebc9211670df10e31d9cf70a570ff4800be",
+              "patch_sha256": "b7b35e2d4c7fd18eda5390395d92b2714000a35f23d40609d547fc2e7da8e718",
+              "level": "rejected",
+              "excluded_provider_values": {
+                "knobs": {
+                  "json_type": "dict",
+                  "semantic_sha256": "fa5ba8008d6fb631fc232a7c44e3c3128bc30146df0f14ddaff8be067d395545",
+                  "values_exported": false
+                },
+                "contracts": {
+                  "json_type": "list",
+                  "semantic_sha256": "4af718da55d41cf5cccf323cc438a4e76281e71abedfa312baff3966f2927e88",
+                  "values_exported": false
+                }
+              },
+              "certification": null,
+              "comparisons": [],
+              "selection": null
+            },
+            {
+              "id": "extensa-gem5-bfs-20261006-p4.it1.uniform_random.a0",
+              "class": "uniform_random",
+              "artifact_sha256": "42cf753d866272e614d2bc4d60cb3ef87e5679ea7f9dfed1f056c8ddfa54164a",
+              "patch_sha256": "b7b35e2d4c7fd18eda5390395d92b2714000a35f23d40609d547fc2e7da8e718",
+              "level": "rejected",
+              "excluded_provider_values": {
+                "knobs": {
+                  "json_type": "dict",
+                  "semantic_sha256": "fa5ba8008d6fb631fc232a7c44e3c3128bc30146df0f14ddaff8be067d395545",
+                  "values_exported": false
+                },
+                "contracts": {
+                  "json_type": "list",
+                  "semantic_sha256": "4af718da55d41cf5cccf323cc438a4e76281e71abedfa312baff3966f2927e88",
+                  "values_exported": false
+                }
+              },
+              "certification": null,
+              "comparisons": [],
+              "selection": null
+            }
+          ],
+          "source_row_sha256": "0e78574de627097d022881cc5ec802b608fffb0a4d500a71e22bd407f85ae3dc"
+        },
+        {
+          "index": 2,
+          "started": "2026-10-09T00:33:42.408011+00:00",
+          "ended": "2026-10-09T00:56:25.205308+00:00",
+          "improved_classes": [],
+          "provider_calls": [
+            {
+              "role": "rewriting",
+              "invocation": "extensa-gem5-bfs-20261006-p4.call3",
+              "outcome": "completed",
+              "counted": true,
+              "model": "gpt-5.6-sol",
+              "effort": "xhigh",
+              "excluded_metadata": {
+                "classification": {
+                  "json_type": "str",
+                  "semantic_sha256": "050d65e919466aef0ec16ecf2a329c230a2d424b81e1f73abed6007eb2170f7c",
+                  "values_exported": false
+                }
+              }
+            },
+            {
+              "role": "repair",
+              "invocation": "extensa-gem5-bfs-20261006-p4.call4",
+              "outcome": "completed",
+              "counted": true,
+              "model": "gpt-5.6-sol",
+              "effort": "xhigh",
+              "excluded_metadata": {
+                "classification": {
+                  "json_type": "str",
+                  "semantic_sha256": "050d65e919466aef0ec16ecf2a329c230a2d424b81e1f73abed6007eb2170f7c",
+                  "values_exported": false
+                }
+              }
+            },
+            {
+              "role": "repair",
+              "invocation": "extensa-gem5-bfs-20261006-p4.call5",
+              "outcome": "completed",
+              "counted": true,
+              "model": "gpt-5.6-sol",
+              "effort": "xhigh",
+              "excluded_metadata": {
+                "classification": {
+                  "json_type": "str",
+                  "semantic_sha256": "050d65e919466aef0ec16ecf2a329c230a2d424b81e1f73abed6007eb2170f7c",
+                  "values_exported": false
+                }
+              }
+            }
+          ],
+          "candidates": [
+            {
+              "id": "extensa-gem5-bfs-20261006-p4.it2.kronecker.a2",
+              "class": "kronecker",
+              "artifact_sha256": "507352c0959228ec085197ecfbc00fa08e4cc22ce01ff7e840ae14860a7a4e75",
+              "patch_sha256": "0d573350a5ebbf6dc99cd8a62f0ec49fa8e2229f429772d231ed4381743d3e0f",
+              "level": "rejected",
+              "excluded_provider_values": {
+                "knobs": {
+                  "json_type": "dict",
+                  "semantic_sha256": "fa5ba8008d6fb631fc232a7c44e3c3128bc30146df0f14ddaff8be067d395545",
+                  "values_exported": false
+                },
+                "contracts": {
+                  "json_type": "list",
+                  "semantic_sha256": "4af718da55d41cf5cccf323cc438a4e76281e71abedfa312baff3966f2927e88",
+                  "values_exported": false
+                }
+              },
+              "certification": {
+                "record": null,
+                "outcome": "failed",
+                "level_at_summary": "failed",
+                "excluded_metadata": {
+                  "failed_checks": {
+                    "json_type": "list",
+                    "semantic_sha256": "233992f6ddb2af642dab6e3c97021f88e6d390c9fe603f1b79f8052477a9afe1",
+                    "values_exported": false
+                  }
+                }
+              },
+              "comparisons": [],
+              "selection": null
+            },
+            {
+              "id": "extensa-gem5-bfs-20261006-p4.it2.uniform_random.a0",
+              "class": "uniform_random",
+              "artifact_sha256": "8fac0e8528f49c3228be9a38ecb45a6e214da1d236a28e5d928d572f5987d74e",
+              "patch_sha256": "6d62a83a71724bac408ad3d6d470f5963c853237164cc5367478d645781c0e24",
+              "level": "rejected",
+              "excluded_provider_values": {
+                "knobs": {
+                  "json_type": "dict",
+                  "semantic_sha256": "fa5ba8008d6fb631fc232a7c44e3c3128bc30146df0f14ddaff8be067d395545",
+                  "values_exported": false
+                },
+                "contracts": {
+                  "json_type": "list",
+                  "semantic_sha256": "4af718da55d41cf5cccf323cc438a4e76281e71abedfa312baff3966f2927e88",
+                  "values_exported": false
+                }
+              },
+              "certification": {
+                "record": null,
+                "outcome": "failed",
+                "level_at_summary": "failed",
+                "excluded_metadata": {
+                  "failed_checks": {
+                    "json_type": "list",
+                    "semantic_sha256": "233992f6ddb2af642dab6e3c97021f88e6d390c9fe603f1b79f8052477a9afe1",
+                    "values_exported": false
+                  }
+                }
+              },
+              "comparisons": [],
+              "selection": null
+            }
+          ],
+          "source_row_sha256": "20806c5cb225e3fa5b262d9f8edfce28fb4ae1af427f0b10f872988ac5689e84"
+        },
+        {
+          "index": 3,
+          "started": "2026-10-09T00:56:25.206151+00:00",
+          "ended": "2026-10-09T01:13:16.844565+00:00",
+          "improved_classes": [],
+          "provider_calls": [
+            {
+              "role": "rewriting",
+              "invocation": "extensa-gem5-bfs-20261006-p4.call6",
+              "outcome": "completed",
+              "counted": true,
+              "model": "gpt-5.6-sol",
+              "effort": "xhigh",
+              "excluded_metadata": {
+                "classification": {
+                  "json_type": "str",
+                  "semantic_sha256": "050d65e919466aef0ec16ecf2a329c230a2d424b81e1f73abed6007eb2170f7c",
+                  "values_exported": false
+                }
+              }
+            }
+          ],
+          "candidates": [
+            {
+              "id": null,
+              "class": "kronecker",
+              "patch_sha256": "2b9e60cee3a8832d61e806bd805219be036a1f2d2ba19a6ca71b3efb5de68323",
+              "level": "rejected",
+              "excluded_provider_values": {
+                "knobs": {
+                  "json_type": "dict",
+                  "semantic_sha256": "fa5ba8008d6fb631fc232a7c44e3c3128bc30146df0f14ddaff8be067d395545",
+                  "values_exported": false
+                },
+                "contracts": {
+                  "json_type": "list",
+                  "semantic_sha256": "4af718da55d41cf5cccf323cc438a4e76281e71abedfa312baff3966f2927e88",
+                  "values_exported": false
+                }
+              },
+              "certification": null,
+              "comparisons": [],
+              "selection": null
+            },
+            {
+              "id": null,
+              "class": "uniform_random",
+              "patch_sha256": "2b9e60cee3a8832d61e806bd805219be036a1f2d2ba19a6ca71b3efb5de68323",
+              "level": "rejected",
+              "excluded_provider_values": {
+                "knobs": {
+                  "json_type": "dict",
+                  "semantic_sha256": "fa5ba8008d6fb631fc232a7c44e3c3128bc30146df0f14ddaff8be067d395545",
+                  "values_exported": false
+                },
+                "contracts": {
+                  "json_type": "list",
+                  "semantic_sha256": "4af718da55d41cf5cccf323cc438a4e76281e71abedfa312baff3966f2927e88",
+                  "values_exported": false
+                }
+              },
+              "certification": null,
+              "comparisons": [],
+              "selection": null
+            }
+          ],
+          "source_row_sha256": "f12a260d21753b65927475d161971f2c401c753ca9c62ac3a3a465426baa7798"
+        },
+        {
+          "index": 4,
+          "started": "2026-10-09T01:13:16.845915+00:00",
+          "ended": "2026-10-09T01:27:48.411616+00:00",
+          "improved_classes": [],
+          "provider_calls": [
+            {
+              "role": "rewriting",
+              "invocation": "extensa-gem5-bfs-20261006-p4.call7",
+              "outcome": "completed",
+              "counted": true,
+              "model": "gpt-5.6-sol",
+              "effort": "xhigh",
+              "excluded_metadata": {
+                "classification": {
+                  "json_type": "str",
+                  "semantic_sha256": "050d65e919466aef0ec16ecf2a329c230a2d424b81e1f73abed6007eb2170f7c",
+                  "values_exported": false
+                }
+              }
+            }
+          ],
+          "candidates": [
+            {
+              "id": "extensa-gem5-bfs-20261006-p4.it4.kronecker.a0",
+              "class": "kronecker",
+              "artifact_sha256": "f029b884c70848dc7631494b6e348a743c6ee8ab8315b69070604cd11a956687",
+              "patch_sha256": "4a1276dad9024093af944d753906ed1715e09985861a991bd833c484390aec1e",
+              "level": "rejected",
+              "excluded_provider_values": {
+                "knobs": {
+                  "json_type": "dict",
+                  "semantic_sha256": "fa5ba8008d6fb631fc232a7c44e3c3128bc30146df0f14ddaff8be067d395545",
+                  "values_exported": false
+                },
+                "contracts": {
+                  "json_type": "list",
+                  "semantic_sha256": "4af718da55d41cf5cccf323cc438a4e76281e71abedfa312baff3966f2927e88",
+                  "values_exported": false
+                }
+              },
+              "certification": null,
+              "comparisons": [],
+              "selection": null
+            },
+            {
+              "id": "extensa-gem5-bfs-20261006-p4.it4.uniform_random.a0",
+              "class": "uniform_random",
+              "artifact_sha256": "04305805bb59ef7a7adc77cbc49b699c734433fc654f8eb926a82134da5a5840",
+              "patch_sha256": "4a1276dad9024093af944d753906ed1715e09985861a991bd833c484390aec1e",
+              "level": "rejected",
+              "excluded_provider_values": {
+                "knobs": {
+                  "json_type": "dict",
+                  "semantic_sha256": "fa5ba8008d6fb631fc232a7c44e3c3128bc30146df0f14ddaff8be067d395545",
+                  "values_exported": false
+                },
+                "contracts": {
+                  "json_type": "list",
+                  "semantic_sha256": "4af718da55d41cf5cccf323cc438a4e76281e71abedfa312baff3966f2927e88",
+                  "values_exported": false
+                }
+              },
+              "certification": null,
+              "comparisons": [],
+              "selection": null
+            }
+          ],
+          "source_row_sha256": "4278e31768cb41adc371a5ff09ce280aebd6f200bf10899ca1764ebc58143dce"
+        }
+      ],
+      "setup_calls": [
+        {
+          "role": "profiling",
+          "invocation": "extensa-gem5-bfs-20261006-p4.call1",
+          "outcome": "completed",
+          "counted": true,
+          "model": "gpt-5.6-sol",
+          "effort": "xhigh",
+          "excluded_metadata": {
+            "classification": {
+              "json_type": "str",
+              "semantic_sha256": "050d65e919466aef0ec16ecf2a329c230a2d424b81e1f73abed6007eb2170f7c",
+              "values_exported": false
+            }
+          }
+        }
+      ],
+      "pauses": [],
+      "prepared": [],
+      "preflights": [
+        {
+          "step": "certification",
+          "state": "admitted"
+        },
+        {
+          "step": "certification",
+          "state": "admitted"
+        },
+        {
+          "step": "certification",
+          "state": "admitted"
+        },
+        {
+          "step": "certification",
+          "state": "admitted"
+        }
+      ],
+      "baselines": {},
+      "protocol_id": "extensa-gem5-bfs-20261006-p4.protocol.520342968eb62099",
+      "protocol_identity_sha256": "520342968eb6209930ad8392860ae43b46b391b509e8d129f1a4e642f95bb60a",
+      "stop_detail_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "source_state_semantic_sha256": "29d842591ebba986f43a0bf833c3f6acd45ec968de815cc3441be54ca789f0d5"
+    }
+  },
+  "invocation_inventory": {
+    "provider_directories": [
+      {
+        "invocation": "extensa-gem5-bfs-20261006-p4.call1",
+        "provider_receipt_present": true
+      },
+      {
+        "invocation": "extensa-gem5-bfs-20261006-p4.call2",
+        "provider_receipt_present": true
+      },
+      {
+        "invocation": "extensa-gem5-bfs-20261006-p4.call3",
+        "provider_receipt_present": true
+      },
+      {
+        "invocation": "extensa-gem5-bfs-20261006-p4.call4",
+        "provider_receipt_present": true
+      },
+      {
+        "invocation": "extensa-gem5-bfs-20261006-p4.call5",
+        "provider_receipt_present": true
+      },
+      {
+        "invocation": "extensa-gem5-bfs-20261006-p4.call6",
+        "provider_receipt_present": true
+      },
+      {
+        "invocation": "extensa-gem5-bfs-20261006-p4.call7",
+        "provider_receipt_present": true
+      }
+    ],
+    "names_sha256": "3e23dd3a7c8640e6d725f46e7b7437e8c1b1b5a27537a51fd20c95ac6e766f0f",
+    "synthesis_directory_present": false,
+    "provider_receipts_prompts_commands_inputs_opened": false,
+    "scope": "Existence only; directory presence does not prove a provider launch or outcome"
+  },
+  "raw_state_snapshots_transferred": false,
+  "provider_prompts_auth_logs_argv_read": false,
+  "state_control_scope": "Retained state/ledger only; not independent completeness of unsaved provider calls or step-time/DU events",
+  "dispatch_to_state_time_of_check_gap": "Parent must immediately corroborate unchanged state before unchanged helper dispatch; this collector does not own a lane lock",
+  "before_identity_sha256": "36948e2eb271e29ac11d8f33fc8f3dc55946f8a51504b875932b94e8888e6a42",
+  "dispatch_identity_sha256": "9eb4711c5f3dd3a09f47c38b2f7445dd321121d7267823671fcee0762f8ffcd5",
+  "stopped_identity_sha256": "2c647987a9bd5f029912dcf62c7a641e511a555255eb9e517db860fe78a2b51b",
+  "released": {
+    "format": "swdb.lanl17-attempt-release-custody.v1",
+    "lease_released": true,
+    "lease_generation": 514,
+    "checked_utc": "2026-10-09T01:46:35.834244+00:00",
+    "source_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+    "campaign": "extensa-gem5-bfs-20261006-p4",
+    "attempt": 1,
+    "dispatch_identity": "9eb4711c5f3dd3a09f47c38b2f7445dd321121d7267823671fcee0762f8ffcd5",
+    "stopped_identity": "2c647987a9bd5f029912dcf62c7a641e511a555255eb9e517db860fe78a2b51b",
+    "node": 0,
+    "runner_exit_code": 0,
+    "public_exit_code": 0,
+    "wrapper_exit_code": 0,
+    "lane_record_sha256": "c6325a96cf94e6cc374574cb885991af402d5f6d3efed0da685d3fb627e401fa",
+    "wrapper_exit_file_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "parent_capture_provenance": {
+      "producer_sha256": "32bead204337aa66d0a732b6f143216946abafc5d2eb752577b0d90f7190b7b6",
+      "capture_request_file_sha256": "6a91b07b6598354e24902d7f24685e83d927da2a8670a67dd4a5fff407239df6",
+      "capture_request_identity_sha256": "30c4959429f17c8ea86874f8503dda20567ee38b179bb6fffa1a9f5daaec3a3f",
+      "canonical_ensure_ascii": true,
+      "context_pins": {
+        "source_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+        "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+        "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+        "helper_sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414",
+        "manifest_identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7",
+        "policy": {
+          "frozen_at": "2026-10-08T16:05:25.347884+00:00",
+          "id": "extensa-gem5-bfs-20261006-p1.agreement.5bae2f42d9078864",
+          "identity_sha256": "5bae2f42d9078864caad73e81a16007edb6458f0b101628ded04a7ef3aedbf7d"
+        }
+      },
+      "output_exclusion_roots": [
+        "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5",
+        "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5",
+        "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p1",
+        "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p2",
+        "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p3",
+        "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p4"
+      ],
+      "output_exclusion_basis": "Exact original sealed M2.source/M2.raw plus immutable helper28d and collectorb08 four-campaign routing",
+      "original_inputs": {
+        "manifest_M2": {
+          "bytes": 292401,
+          "canonical_ensure_ascii": true,
+          "canonical_policy_sources": [
+            {
+              "bytes": 38195,
+              "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+              "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+            }
+          ],
+          "encoding": "json",
+          "identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+          "sealed": true,
+          "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1",
+          "writer_source": {
+            "bytes": 38195,
+            "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+            "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+          }
+        },
+        "dispatch": {
+          "bytes": 44098,
+          "canonical_ensure_ascii": true,
+          "canonical_policy_sources": [
+            {
+              "bytes": 38195,
+              "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+              "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+            }
+          ],
+          "encoding": "json",
+          "identity_sha256": "9eb4711c5f3dd3a09f47c38b2f7445dd321121d7267823671fcee0762f8ffcd5",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p4/attempt-1/dispatch-preregistration.json",
+          "sealed": true,
+          "sha256": "863576b41eec3475b3ebe4defff678222307768dd171f7eda1d90c8a77f2075e",
+          "writer_source": {
+            "bytes": 38195,
+            "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+            "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+          }
+        },
+        "stopped": {
+          "bytes": 1355,
+          "canonical_ensure_ascii": true,
+          "canonical_policy_sources": [
+            {
+              "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p4/attempt-1/helper.py",
+              "bytes": 38195,
+              "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+            }
+          ],
+          "encoding": "json",
+          "identity_sha256": "2c647987a9bd5f029912dcf62c7a641e511a555255eb9e517db860fe78a2b51b",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p4/attempt-1/stopped-receipt.json",
+          "sealed": true,
+          "sha256": "90d278161d80069cf982fc53c007b7b4535bffe52e8103f648fe964404553e55",
+          "writer_source": {
+            "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p4/attempt-1/helper.py",
+            "bytes": 38195,
+            "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+          }
+        },
+        "wrapper_exit": {
+          "bytes": 2,
+          "encoding": "integer_exit",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p4/attempt-1/wrapper.exit-code.txt",
+          "sealed": false,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "writer_source": {
+            "bytes": 38195,
+            "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+            "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+          }
+        },
+        "runner_exit": {
+          "bytes": 2,
+          "encoding": "integer_exit",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p4/attempt-1/runner.exit-code.txt",
+          "sealed": false,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "writer_source": {
+            "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p4/attempt-1/helper.py",
+            "bytes": 38195,
+            "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+          }
+        },
+        "lane": {
+          "bytes": 1085,
+          "encoding": "hash_only",
+          "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p4/attempt-1/lane.json",
+          "sealed": false,
+          "sha256": "c6325a96cf94e6cc374574cb885991af402d5f6d3efed0da685d3fb627e401fa",
+          "writer_source": {
+            "path": "/data1/yanruj/Memacc-repro-20260925/AgenticRefiner/scripts/host/socket_lane.sh",
+            "bytes": 10510,
+            "sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8"
+          }
+        },
+        "authoritative_lease_observation": {
+          "bytes": 5403,
+          "encoding": "hash_only",
+          "path": "/data1/yanruj/lanl17-p4-native-release-observation-20261008-a5.json",
+          "sealed": false,
+          "sha256": "94b63c507467f55db65f41a1227752071f3d7d3c99dc0ffc98d28b9806422b9e",
+          "writer_source": {
+            "path": "/data1/yanruj/lanl17-p4-native-release-query-20261008-a5-r2.py",
+            "bytes": 15125,
+            "sha256": "1b7a344611a69d60cc8bfe0201e09822eab6124ed12f35f6342486488db30d20"
+          }
+        }
+      },
+      "source_plan_sha256": "e3420b334ce05f7268699b0079987d1d2afc98fe5cb5503e6069a89038b59170",
+      "auditor_sha256": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da",
+      "collector_sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c",
+      "observations_sha256": "a7a6d7e8bc032ac0b0f8e695ae1d4bd117fbdda789e106613f369740bac8bd68",
+      "scope": "Separate parent capture; original inputs unchanged/unsealed where original. Explicit source enforcement and selection completeness are inherited, never independently manufactured. No normal/substantive trajectory status is inferred."
+    },
+    "identity_sha256": "570a3702fce9f8b0c04a04733dbd91d1ec712097d9f89eec21597d2c7fd70891"
+  },
+  "identity_sha256": "192a90026afaf78f97f420b02c0962ad7129d0f8324c4a658f55613a979a61c2"
+}
