@@ -1,11 +1,29 @@
 # Implementation progress
 
-Updated: 2026-10-09 13:08 ET
+Updated: 2026-10-09 14:06 ET
 
 **Current state: ACTIVE after Yan-Ru's explicit resumption; 14/15 assigned tickets resolved; ticket16 review finding addressed.**
 Ticket 17 remains `claimed`, with acceptance pending. Start from [resume.md](resume.md).
 The 30-minute heartbeat `lanl-analytic-evaluator-progress` is ACTIVE on the resumed chat.
-Current readiness and cleanup-review subtasks are completed; the prior interrupted audit subtask is not presented as running or cleared.
+Serial full-index preparation is active; the prior interrupted audit subtask is not presented as running or cleared.
+
+## First original full index complete — 2026-10-09 14:06 ET
+
+P1 original writer7a completed once at14:01:22–28 ET through unchanged bootstrap0d/outer59/envelope1ee. Root and independent actual review passed the full custody/index chain:106 rows, bare index23,658B/3c86df4a/canonicalb4defeb3, writer custody51,416B/2ba160b7/identityb5ce15ed, sealed outer27a86fc9 and inner160f26c3, exact source/native/request/validation/summary/limits/argv links, cleanup subreaper true/zero survivors/no errors. Fresh selected R6 a10 observed13:59:33 ET with all29 pins/no unknowns/no matching live consumer/all4 fresh routes/floors passing; its300s approval is expired and never reusable. Current [package](evidence/17-approved-identity-and-first-index-inputs-20261009-a5/README.md) has31 exact originals/334,505B, original and archive bytes/SHA/all9stat verified; selected small metadata bodies remain available to the audit/review readers.
+
+Failed original bootstrap attempt1 at13:54 ET is preserved: generated helperb27 supplied `GNU`, but unchanged outer59/inner1ee require `parent_reviewed_GNU_coreutils_timeout`; exact refusal preceded inner/writer dispatch. Earlier packet review missed that literal contract. Independently reviewed corrective attempt2 changed only the fresh bootstrap-log route, required label and bound argv digest. [R4 helper patch](full-index-parent-helper-r4-timeout-family.patch) changes one literal,51 other module AST nodes exact;28692B/2db276ed prospective body was computed in memory only. [Regression](check_bootstrap_timeout_contract.py) ran the real helper bootstrap against retained metadata and exact original consumer AST checks in isolated I/O: baseline reproduces refusal, corrected six consumer cases and digests pass. No original control/author/request/catalog/floor/scientific-policy change occurred.
+
+Next stage the narrow helper correction from Git, then continue original serial P2–P4 inventories/specifications/authors/bootstrap/indexes with fresh truthful parent attestations. P1 is complete and must not be repeated. Original32 closure, assembly, actual unchanged6a audit and final scientific Standards/Spec review/fixes remain mandatory. Agreement is still unsupported/zero eligible pairs/blind-order unverified/no-switch; no numerical/D30 admission. Ticket17 remains claimed/all four acceptance boxes unchecked. Human tickets/root rule edit and sourceR freeze are preserved.
+
+## Approved identity fix and first full inventory — 2026-10-09 13:31 ET
+
+Yan-Ru's direct "i approve. so continue and keep working." selects the exact reviewed R2 zombie identity patch as new pre-index R6. [Selection record](pre-index-selected-r6-20261009.json) binds38694B/SHA3698d1a2 to the immutable36052B/be2f68c2 original and4553B/d12a9db7 patch. Only inactive_owned_identity differs;65 other module AST nodes are exact. The same96 isolated tests and separate Standards/Spec source reviews apply. No process action, PID/name exception, sudo, PAM recovery change or other guard/floor/scientific-policy change occurred. Earlier UNSELECTED labels are dated history.
+
+Fresh actual13:17:18 ET R6 a4 original25666B/891598d8 reports host_metadata_ready:true,24 owned processes checked, zero unknowns or matching live consumers. All29 original descriptors, sourceR/F6/PRIMARYoriginR, native pins, stopped campaigns, released514/550/77 without matching holder/FD9 and capacity pass. Root and independent actual transport/decode/input/source review passed. This dated readiness does not itself prove historical catalog continuity, exclusivity or science; a4 approval is expired and cannot be reused.
+
+Original76 p1 full catalog inventory completed once13:20:40 ET. Compact original691B/c4c69e67 names remote49760B/b99c56b7 catalog-inventory.json,106 records and the present summary. Root and independent actual review passed; no index writer or science executed. Read-only selected fields at13:27 ET bind row digest80415d56 and all106 record mtimes/ctimes preceding original full-validation boundaries. Combined with original full validation, stopped custody, reviewed CID write scope and parent coordination preserving the catalogs, these support the explicit parent continuity basis; no historical file-set/hash snapshot is invented. Full catalog YAML and metadata remain remote for the author/writer's selected readers.
+
+Exact helperb27 was staged from publishedb40190b5 through a separate filtered Git object store at13:29 ET; PRIMARY/SOURCE/origin remainR, without scientific source fetch or sync. Child-only native Bash unit observation13:20 ET confirms1024-byte units without writing a test file. Fresh selected readiness and explicit22-key parent attestation are required for each subsequent specification/author/bootstrap stage. Four serial indexes, original32 closure, assembly, actual unchanged6a audit, final scientific Standards/Spec review and ticket/Git synchronization remain pending. Agreement unsupported/zero eligible pairs/blind-order unverified/no-switch is unchanged; ticket17 remains claimed/all four acceptance boxes unchecked.
 
 
 ## Fresh original readiness after disk recovery — 2026-10-09 13:08 ET

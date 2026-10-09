@@ -1,7 +1,7 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-09 02:50 ET
+Updated: 2026-10-09 14:06 ET
 **Type:** slice
 **Status:** claimed
 **Work state:** active (explicitly resumed 2026-10-08)
@@ -246,3 +246,18 @@ Prospective patchR2 fixes inactive zombie identity proof and descriptor ownershi
 [Fresh02:49 ET compact observations](../evidence/17-cleanup-followup-and-inactive-process-proposal-20261009-a5/scheduled-0249-observation-original-inventory.json) passed root and independent transport/decode/pin review. Process23785B/65a2846d matches01:56 except checkedUTC: same unresolved identities and no quiescence, released514/550/77/no matching holder/FD9, R/F6/ER/H/M2 continuity. Floor295B/ab2ea66f has RAM125522001920B and `/data`99822661632B above floors; `/data1`21979545600B remains569032704B short.
 
 Originals are21 unique/135157B across5 compact inventories; earlier19 unchanged. Guard replacement remains UNSELECTED/NOTRUN awaiting the already requested explicit override; no repeated question, new source/capture duplication, cleanup, evaluation or index action.14/15 assigned resolved, ticket17 claimed/all4 acceptance unchecked, human tickets/root edit preserved. All agents completed responsively; table/health02:49 ET, nextby03:19 ET; heartbeat ACTIVE, remotePRIMARY/originR frozen.
+
+
+## Approved readiness and first full inventory — 2026-10-09 13:40 ET
+
+Yan-Ru explicitly selected the narrow reviewed zombie identity replacement. New pre-index R6 preserves original R5 and all other source/native/scientific guards. Its actual13:17 ET observation passed, with zero process unknowns and all floors passing. Original76 p1 inventory completed once13:20 ET with106 records and present summary. [Compact original package](../evidence/17-approved-identity-and-first-index-inputs-20261009-a5/README.md) retains ten exact metadata originals/110633B, including the actual specification and author plan for the next reviewers. Full catalog YAML stays remote; no diagnostic/source/capture stream duplication was published. Earlier UNSELECTED/blocker labels remain dated history.
+
+Index preparation is active. Four full indexes, original32 closure, evidence assembly, actual unchanged6a audit and final scientific Standards/Spec review remain pending. Four normal campaigns and FINALIZE remain complete once; report unsupported/zero eligible pairs/blind-order unverified/no-switch. No numerical/D30 admission or invented history; all four acceptance boxes remain unchecked and status stays claimed.
+
+## First original full index complete — 2026-10-09 14:06 ET
+
+P1 original writer7a completed once at14:01:22–28 ET through unchanged bootstrap0d/outer59/envelope1ee. Root and independent actual review passed the full custody/index chain:106 rows, bare index23,658B/3c86df4a/canonicalb4defeb3, writer custody51,416B/2ba160b7/identityb5ce15ed, sealed outer27a86fc9 and inner160f26c3, exact source/native/request/validation/summary/limits/argv links, cleanup subreaper true/zero survivors/no errors. Fresh selected R6 a10 observed13:59:33 ET with all29 pins/no unknowns/no matching live consumer/all4 fresh routes/floors passing; its300s approval is expired and never reusable. Current [package](../evidence/17-approved-identity-and-first-index-inputs-20261009-a5/README.md) has31 exact originals/334,505B, original and archive bytes/SHA/all9stat verified; selected small metadata bodies remain available to the audit/review readers.
+
+Failed original bootstrap attempt1 at13:54 ET is preserved: generated helperb27 supplied `GNU`, but unchanged outer59/inner1ee require `parent_reviewed_GNU_coreutils_timeout`; exact refusal preceded inner/writer dispatch. Earlier packet review missed that literal contract. Independently reviewed corrective attempt2 changed only the fresh bootstrap-log route, required label and bound argv digest. [R4 helper patch](../full-index-parent-helper-r4-timeout-family.patch) changes one literal,51 other module AST nodes exact;28692B/2db276ed prospective body was computed in memory only. [Regression](../check_bootstrap_timeout_contract.py) ran the real helper bootstrap against retained metadata and exact original consumer AST checks in isolated I/O: baseline reproduces refusal, corrected six consumer cases and digests pass. No original control/author/request/catalog/floor/scientific-policy change occurred.
+
+Next stage the narrow helper correction from Git, then continue original serial P2–P4 inventories/specifications/authors/bootstrap/indexes with fresh truthful parent attestations. P1 is complete and must not be repeated. Original32 closure, assembly, actual unchanged6a audit and final scientific Standards/Spec review/fixes remain mandatory. Agreement is still unsupported/zero eligible pairs/blind-order unverified/no-switch; no numerical/D30 admission. Ticket17 remains claimed/all four acceptance boxes unchecked. Human tickets/root rule edit and sourceR freeze are preserved.

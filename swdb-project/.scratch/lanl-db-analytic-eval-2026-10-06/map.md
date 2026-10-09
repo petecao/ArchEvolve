@@ -1,7 +1,7 @@
 # Map: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-09 13:08 ET
+Updated: 2026-10-09 14:06 ET
 **Type:** ticket map
 **Status:** claimed (unfinished implementation/evaluation)
 **Work state:** active; [resume guide](resume.md)
@@ -58,6 +58,10 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | 23 | [Export and round-trip test](issues/23-export-and-round-trip.md) | wontfix | 22 | 1 day |
 
 ## Context pointers
+
+- 2026-10-09 14:06 ET: P1 original full index completed once14:01 ET through unchanged controls after a narrow timeout-label correction. Root and independent full actual review passed106 rows/source/custody/cleanup; [31-original package](evidence/17-approved-identity-and-first-index-inputs-20261009-a5/README.md) totals334,505B. Failed attempt1 retained; corrected helper patch/test reviewed, Git staging pending. P2–P4 indexes, original32 closure, assembly, actual unchanged6a and final scientific review remain pending. Ticket17 claimed/all acceptance unchecked; no scientific admission. Tickets01–16 resolved,18 ready-for-human,19–20 needs-triage,21–23 wontfix.
+
+- 2026-10-09 13:31 ET: Yan-Ru explicitly approved the narrow reviewed zombie identity replacement. [Selected pre-index R6](pre-index-selected-r6-20261009.json) preserves original R5 and all other guards; its fresh13:17 ET actual result is ready, with zero process unknowns and all floors passing. Original76 p1 inventory completed once13:20 ET:106 records, summary present, root and independent actual review passed. Current full inventory remains remote. Serial index preparation is active; four indexes, evidence assembly, actual strict audit and final review/acceptance remain pending. Earlier UNSELECTED/process-blocker labels below are historical. Tickets01–16 are resolved,17 claimed,18 ready-for-human,19–20 needs-triage and21–23 wontfix;14/15 assigned agent tickets resolved.
 
 - 2026-10-09 13:08 ET: [Post-reclamation original R5 observation](evidence/17-post-reclaim-original-index-readiness-20261009-a5/README.md) has all floors/source/native pins passing and exactly two zombie identity unknowns; storage deficit fixed, direct serial index still not admitted. Two compact originals/42,854B; original R5 unchanged, reviewed R2 unselected. Cleanup checkpoint030e7d8e pushed/ref-verified; ongoing named-destination approval reiterated. Ticket17 remains claimed/all acceptance unchecked; 14/15 assigned resolved.
 

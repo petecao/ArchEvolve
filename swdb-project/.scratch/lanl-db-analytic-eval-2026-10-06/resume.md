@@ -1,6 +1,6 @@
 # Continue the analytic evaluator work
 
-Updated: 2026-10-09 13:08 ET
+Updated: 2026-10-09 14:06 ET
 
 **Active after Yan-Ru explicitly resumed work.** Fourteen of fifteen assigned agent tickets are resolved. Ticket16's artifact/baseline forecast fix passed 73 public regression tests and independent implementation review; ticket17 remains claimed with its acceptance boxes unchecked. The 30-minute heartbeat is ACTIVE.
 
@@ -9,11 +9,25 @@ Updated: 2026-10-09 13:08 ET
 | CPU ticket 11 | Resolved; held-out BFS broad-band pass, BC failure | Preserve both outcomes |
 | Generality ticket 14 | Resolved; nine pairs, 45 trials; seven whole-call totals unknown | Preserve qualified results |
 | Storage RETIRE a4 / plan a5 | Existing attempt collected once; successful original receipt, all sixteen rows retired | Do not repeat retirement or DEFAULT |
-| Ticket 17 science | All four normal custody chains passed root and peer review; FINALIZE unsupported/zero pairs | Fresh storage floor now passes after authorized disposable cleanup. Original zombie guard still refuses; reviewed R2 remains unselected |
+| Ticket 17 science | Four normal custody chains and FINALIZE complete; report unsupported/zero pairs. Approved pre-index R6 readiness and p1 original full index complete | Continue fresh serial P2–P4 indexes, assembly, actual strict audit and final review |
 | Standards + Spec review | Both implementation axes reviewed; identified fixes tested and pushed at 2caa5545 | Complete final evidence review after report and strict audit |
 
 
 
+
+## First original full index complete — 2026-10-09 14:06 ET
+
+P1 original writer7a completed once at14:01:22–28 ET through unchanged bootstrap0d/outer59/envelope1ee. Root and independent actual review passed the full custody/index chain:106 rows, bare index23,658B/3c86df4a/canonicalb4defeb3, writer custody51,416B/2ba160b7/identityb5ce15ed, sealed outer27a86fc9 and inner160f26c3, exact source/native/request/validation/summary/limits/argv links, cleanup subreaper true/zero survivors/no errors. Fresh selected R6 a10 observed13:59:33 ET with all29 pins/no unknowns/no matching live consumer/all4 fresh routes/floors passing; its300s approval is expired and never reusable. Current [package](evidence/17-approved-identity-and-first-index-inputs-20261009-a5/README.md) has31 exact originals/334,505B, original and archive bytes/SHA/all9stat verified; selected small metadata bodies remain available to the audit/review readers.
+
+Failed original bootstrap attempt1 at13:54 ET is preserved: generated helperb27 supplied `GNU`, but unchanged outer59/inner1ee require `parent_reviewed_GNU_coreutils_timeout`; exact refusal preceded inner/writer dispatch. Earlier packet review missed that literal contract. Independently reviewed corrective attempt2 changed only the fresh bootstrap-log route, required label and bound argv digest. [R4 helper patch](full-index-parent-helper-r4-timeout-family.patch) changes one literal,51 other module AST nodes exact;28692B/2db276ed prospective body was computed in memory only. [Regression](check_bootstrap_timeout_contract.py) ran the real helper bootstrap against retained metadata and exact original consumer AST checks in isolated I/O: baseline reproduces refusal, corrected six consumer cases and digests pass. No original control/author/request/catalog/floor/scientific-policy change occurred.
+
+Next stage the narrow helper correction from Git, then continue original serial P2–P4 inventories/specifications/authors/bootstrap/indexes with fresh truthful parent attestations. P1 is complete and must not be repeated. Original32 closure, assembly, actual unchanged6a audit and final scientific Standards/Spec review/fixes remain mandatory. Agreement is still unsupported/zero eligible pairs/blind-order unverified/no-switch; no numerical/D30 admission. Ticket17 remains claimed/all four acceptance boxes unchecked. Human tickets/root rule edit and sourceR freeze are preserved.
+
+## Current approved serial index route — 2026-10-09 13:31 ET
+
+Yan-Ru explicitly approved the exact reviewed zombie identity replacement. [Selected pre-index R6](pre-index-selected-r6-20261009.json) is38694B/3698d1a2; immutable originalR5 remains36052B/be2f68c2. Its actuala4 result at13:17:18 ET is ready, with24 owned processes checked, no matching live consumer or unknown, all29 original pins/source/native/stops/releases/floors passing. Original76 p1 inventory completed once13:20:40 ET with106 records and present summary; compact original691B/c4c69e67 has root/independent actual PASS. Full49760B/b99c56b7 metadata stays remote at /data1/yanruj/lanl17-p1-full-catalog-inventory-20261009-a5-a4/catalog-inventory.json. Do not repeat either completed action or reuse expireda4 approval.
+
+Continue original76→helperb27 specification→original authora2→helperb27 bootstrap→original56/0d/59/1ee/writer7a serially for all four catalogs. Exact helperb27 is now Git-staged separately at /data1/yanruj/lanl17-full-index-parent-preparer-20261008-a5-r3.py; no scientific source fetch/sync occurred. Refresh selectedR6 using new actual29 pins/nonce/routes and a truthful22-key parent attestation before each stage. Parent coordination, original full validation/custody and reviewed write scope plus current inventory support catalog continuity; host-ready alone does not. Preserve full YAML/summary/export/original bodies through their remaining readers, all original limits and scientific controls, and PRIMARY/originR through the last original guard. No missing pairing history or D30 acceptance may be invented. Earlier pending-override and process-blocker labels below are historical and superseded.
 
 ## Fresh original readiness after disk recovery — 2026-10-09 13:08 ET
 
