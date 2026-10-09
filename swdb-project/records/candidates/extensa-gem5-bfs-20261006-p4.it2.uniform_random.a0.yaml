@@ -1,0 +1,340 @@
+kind: candidate
+schema_version: '0.4'
+id: extensa-gem5-bfs-20261006-p4.it2.uniform_random.a0
+status: draft
+created: '2026-10-08'
+updated: '2026-10-08'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+mode: extensa
+campaign: extensa-gem5-bfs-20261006-p4
+proposal: extensa-gem5-bfs-20261006-p4.it2.uniform_random.a0.proposal
+source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+implementation: dx100-bfs-scalar
+artifact:
+  path: /data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p4/sources/extensa-gem5-bfs-20261006-p4.it2.uniform_random.a0/source
+  sha256: 8fac0e8528f49c3228be9a38ecb45a6e214da1d236a28e5d928d572f5987d74e
+  files:
+  - path: LICENSE
+    sha256: b8c77da160595e378d8fa7635b1c777c7a84c56c79a24efbbbcd9203375231c2
+    bytes: 1208
+    executable: false
+  - path: PROVENANCE.md
+    sha256: 3009aa7f259294b67bfbbee311ead96d66050a86f1a7bfde715556f10174e6c6
+    bytes: 619
+    executable: false
+  - path: benchmarks/API/MAA.hpp
+    sha256: 4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd
+    bytes: 1323
+    executable: false
+  - path: benchmarks/API/MAA_atomics.hpp
+    sha256: 896459489ded4a790a2b52da62b337f00b7310a4bafc6d3ceaa9d8c4f1eb026a
+    bytes: 845
+    executable: false
+  - path: benchmarks/API/MAA_functional.hpp
+    sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+    bytes: 25345
+    executable: false
+  - path: benchmarks/API/MAA_gem5.hpp
+    sha256: 5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174
+    bytes: 27473
+    executable: false
+  - path: benchmarks/API/MAA_gem5_magic.hpp
+    sha256: e3353661cce76167a2f986385e448c2a6aef471fc8424762183bae11ba769c32
+    bytes: 9802
+    executable: false
+  - path: benchmarks/API/MAA_utility.hpp
+    sha256: 3fb818fff3a37e14d77ea009a2246788213c1e938a05515b361aceb010a2b10e
+    bytes: 786
+    executable: false
+  - path: benchmarks/gapbs/LICENSE
+    sha256: bc33e6a6a2571d48fde7fc7d30be3aa11fb0558edd46173861274ac7a1f74fc3
+    bytes: 1499
+    executable: false
+  - path: benchmarks/gapbs/src/benchmark.h
+    sha256: 87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f
+    bytes: 3565
+    executable: false
+  - path: benchmarks/gapbs/src/bfs.cc
+    sha256: 388b5532cefd662b74c116bf3a69d030dc6043b2de99f7b8320c095cf7f66a1b
+    bytes: 13976
+    executable: false
+  - path: benchmarks/gapbs/src/bitmap.h
+    sha256: 6f6e444c82b0e7d797cc9218ba85be7f5f702e95d4c134715c90e6a5b1288465
+    bytes: 1706
+    executable: false
+  - path: benchmarks/gapbs/src/builder.h
+    sha256: 2d3646e12dc2ae9776cfa429aaec699d031b4826c79a356983cf109753f1eb01
+    bytes: 16778
+    executable: false
+  - path: benchmarks/gapbs/src/command_line.h
+    sha256: de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2
+    bytes: 8511
+    executable: false
+  - path: benchmarks/gapbs/src/generator.h
+    sha256: 24bfdab312afdf6e552ef9a23d124332984761cdb94f109bb15009710d1dbafe
+    bytes: 6418
+    executable: false
+  - path: benchmarks/gapbs/src/graph.h
+    sha256: 79a271a3e3b01d6f02750b2b828ad94b3696eff080eb068bc3fcf80bc81139e0
+    bytes: 8276
+    executable: false
+  - path: benchmarks/gapbs/src/platform_atomics.h
+    sha256: 9c8dbe6419b34d850af33ef14ea724c1c64de369d052a8f3c6e20038dcabe9cd
+    bytes: 4198
+    executable: false
+  - path: benchmarks/gapbs/src/pvector.h
+    sha256: b3280b03eb774fdd27bbc1967c4f274e46d42179f149275e1b2c394986ebe03d
+    bytes: 4265
+    executable: false
+  - path: benchmarks/gapbs/src/reader.h
+    sha256: 951fb6e82df079389b953f35363e8a502d79da4f3c56b8ce6eab7faac38800e1
+    bytes: 9268
+    executable: false
+  - path: benchmarks/gapbs/src/sliding_queue.h
+    sha256: 3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c
+    bytes: 2502
+    executable: false
+  - path: benchmarks/gapbs/src/swdb_dxc_lowering.hpp
+    sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+    bytes: 3153
+    executable: false
+  - path: benchmarks/gapbs/src/timer.h
+    sha256: 3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb
+    bytes: 1161
+    executable: false
+  - path: benchmarks/gapbs/src/util.h
+    sha256: a103e6c5767d724adc9b6b421ecade4b2d2c4351e5ea0da5d2c9bf16a9fcecf6
+    bytes: 1953
+    executable: false
+  - path: benchmarks/gapbs/src/writer.h
+    sha256: 3fd16ac75a8c069c7cf09d540ca35b66ec51813406b5fd2f8149253bebd9ebea
+    bytes: 2898
+    executable: false
+  - path: include/gem5/asm/generic/m5ops.h
+    sha256: 28efe83deb0cd19d5d15b73d3544c7f45238c2744531657f5aa881da643e868d
+    bytes: 5479
+    executable: false
+  - path: include/gem5/m5ops.h
+    sha256: bbef6be56e1fb63a820da56fe4306fbce67ee7bedbb43b6e72e0281c947f07e8
+    bytes: 3937
+    executable: false
+diff: "--- a/benchmarks/gapbs/src/bfs.cc\n+++ b/benchmarks/gapbs/src/bfs.cc\n@@ -31,6 +31,12 @@\n #elif\
+  \ defined(GEM5_MAGIC)\n #include \"MAA_gem5_magic.hpp\"\n #endif\n #include <MAA_utility.hpp>\n+#include\
+  \ \"swdb_dxc_lowering.hpp\"\n+\n+#ifndef SWDB_KNOB_FRONTIER_THRESHOLD\n+#define SWDB_KNOB_FRONTIER_THRESHOLD\
+  \ 64\n+#endif\n+static_assert(SWDB_KNOB_FRONTIER_THRESHOLD >= 1 && SWDB_KNOB_FRONTIER_THRESHOLD <= 2147483647,\
+  \ \"DX100 frontier threshold range\");\n \n /*\n GAP Benchmark Suite\n@@ -64,33 +70,112 @@\n-void TDStep(const\
+  \ Graph &g, pvector<SGOffset> &VertexOffsets, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue,\
+  \ int num_nodes, int num_edges) {\n+void TDStep(const Graph &g, pvector<SGOffset> &VertexOffsets,\n\
+  +            pvector<NodeID> &parent, SlidingQueue<NodeID> &queue,\n+            int num_nodes, int\
+  \ num_edges, bool use_dxc) {\n+    static_assert(sizeof(NodeID) == sizeof(int32_t),\n+             \
+  \     \"DX100 requires 32-bit NodeID\");\n+    static_assert(sizeof(SGOffset) == sizeof(int32_t),\n\
+  +                  \"DX100 requires 32-bit SGOffset\");\n #ifdef GEM5\n     clear_mem_region();\n  \
+  \   add_mem_region(queue.beginp(), queue.endp());                   // 6\n     add_mem_region(VertexOffsets.beginp(),\
+  \ VertexOffsets.endp());   // 7\n     add_mem_region(g.out_neighbors_, &g.out_neighbors_[num_edges]);\
+  \ // 8\n     add_mem_region(parent.beginp(), parent.endp());                 // 9\n #endif\n #pragma\
+  \ omp parallel\n     {\n         QueueBuffer<NodeID> lqueue(queue);\n+        if (use_dxc) {\n+    \
+  \        dxc_context dxc = __dxc_thread_context();\n+            __dxc_const_i32(1, dxc.reg[2]);\n+#pragma\
+  \ omp for schedule(dynamic, 1) nowait\n+            for (size_t chunk_begin = queue.shared_out_start;\n\
+  +                 chunk_begin < queue.shared_out_end; chunk_begin += TILE_SIZE) {\n+               \
+  \ size_t chunk_end = chunk_begin + TILE_SIZE;\n+                if (chunk_end > queue.shared_out_end)\n\
+  +                    chunk_end = queue.shared_out_end;\n+\n+                __dxc_const_i32(static_cast<int32_t>(chunk_begin),\
+  \ dxc.reg[0]);\n+                __dxc_const_i32(static_cast<int32_t>(chunk_end), dxc.reg[1]);\n+  \
+  \              __dxc_stream_load(queue.shared, dxc.reg[0], dxc.reg[1],\n+                          \
+  \        dxc.reg[2], dxc.tile[0]);\n+                __dxc_wait(dxc.tile[0]);\n+                __dxc_gather(VertexOffsets.beginp(),\
+  \ dxc.tile[0],\n+                             dxc.tile[1]);\n+                __dxc_gather(VertexOffsets.beginp()\
+  \ + 1, dxc.tile[0],\n+                             dxc.tile[2]);\n+                __dxc_const_i32(0,\
+  \ dxc.reg[3]);\n+                __dxc_const_i32(-1, dxc.reg[4]);\n+\n+                while (true)\
+  \ {\n+                    __dxc_range_loop(dxc.reg[3], dxc.reg[4], dxc.tile[1],\n+                 \
+  \                    dxc.tile[2], dxc.reg[2], dxc.tile[3],\n+                                     dxc.tile[4]);\n\
+  +                    __dxc_wait(dxc.tile[4]);\n+                    uint16_t pair_count = __dxc_tile_size(dxc.tile[4]);\n\
+  +                    if (pair_count == 0)\n+                        break;\n+\n+                   \
+  \ __dxc_gather(g.out_neighbors_, dxc.tile[4],\n+                                 dxc.tile[5]);\n+  \
+  \                  __dxc_gather(parent.beginp(), dxc.tile[5],\n+                                 dxc.tile[6]);\n\
+  +                    __dxc_wait(dxc.tile[6]);\n+\n+                    const NodeID *frontier = __dxc_tile_pointer<NodeID>(dxc.tile[0]);\n\
+  +                    const int *rows = __dxc_tile_pointer<int>(dxc.tile[3]);\n+                    const\
+  \ NodeID *neighbors = __dxc_tile_pointer<NodeID>(dxc.tile[5]);\n+                    const NodeID *hints\
+  \ = __dxc_tile_pointer<NodeID>(dxc.tile[6]);\n+\n+                    for (uint16_t k = 0; k < pair_count;\
+  \ ++k) {\n+                        NodeID u = frontier[rows[k]];\n+                        NodeID v\
+  \ = neighbors[k];\n+                        NodeID curr_val = hints[k];\n+                        bool\
+  \ claimed = false;\n+                        if (curr_val < 0) {\n+                            claimed\
+  \ = compare_and_swap(parent[v], curr_val,\n+                                                       u);\n\
+  +                            if (claimed) {\n+                                parent[v] = u;\n+    \
+  \                            lqueue.push_back(v);\n+                            }\n+               \
+  \         }\n+\n+#ifdef SWDB_DXC_DIAGNOSTIC\n+                        SGOffset out_degree =\n+     \
+  \                       VertexOffsets[v + 1] - VertexOffsets[v];\n+                        NodeID initial\
+  \ = out_degree != 0\n+                            ? -static_cast<NodeID>(out_degree) : -1;\n+      \
+  \                  NodeID fresh = claimed ? u : parent[v];\n+                        __dxc_cas_probe(v,\
+  \ curr_val, claimed, initial, fresh,\n+                                        num_nodes);\n+#else\n\
+  +                        __dxc_cas_probe(v, curr_val, claimed, 0, 0, num_nodes);\n+#endif\n+       \
+  \             }\n+                }\n+                __dxc_accelerated_chunk();\n+            }\n+\
+  \        } else {\n #pragma omp for nowait\n-        for (size_t i = queue.shared_out_start; i < queue.shared_out_end;\
+  \ i++) {\n-            NodeID u = queue.shared[i];\n-            for (int j = VertexOffsets[u]; j <\
+  \ VertexOffsets[u + 1]; j++) {\n-                NodeID v = g.out_neighbors_[j];\n-                NodeID\
+  \ curr_val = parent[v];\n-                if (curr_val < 0) {\n-                    // indirect write\
+  \ (parent, v_tile, u_tile)\n-                    // core fetch v tile\n-                    if (compare_and_swap(parent[v],\
+  \ curr_val, u)) {\n-                        parent[v] = u;\n-                        lqueue.push_back(v);\n\
+  +            for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {\n+           \
+  \     NodeID u = queue.shared[i];\n+                for (int j = VertexOffsets[u]; j < VertexOffsets[u\
+  \ + 1]; j++) {\n+                    NodeID v = g.out_neighbors_[j];\n+                    NodeID curr_val\
+  \ = parent[v];\n+                    if (curr_val < 0) {\n+                        // indirect write\
+  \ (parent, v_tile, u_tile)\n+                        // core fetch v tile\n+                       \
+  \ if (compare_and_swap(parent[v], curr_val, u)) {\n+                            parent[v] = u;\n+  \
+  \                          lqueue.push_back(v);\n+                        }\n                     }\n\
+  \                 }\n             }\n         }\n         lqueue.flush();\n@@ -170,6 +255,10 @@\n  \
+  \   curr.reset();\n     Bitmap front(g.num_nodes());\n     front.reset();\n+    const bool dxc_call_eligible\
+  \ = num_nodes <= 1073741823 &&\n+        num_edges <= 1073741823 &&\n+        omp_get_max_threads()\
+  \ <= NUM_CORES;\n+    bool dxc_session_started = false;\n \n #ifdef GEM5\n     std::cout << \"ROI started:\
+  \ \" << omp_get_num_threads() << \" threads\" << std::endl;\n@@ -180,11 +269,20 @@\n     while (!queue.empty())\
+  \ {\n         std::cout << \"Starting TDStep: \" << queue.size() << \" elements\" << std::endl;\n+ \
+  \       const bool use_dxc = dxc_call_eligible &&\n+            queue.size() >= static_cast<size_t>(SWDB_KNOB_FRONTIER_THRESHOLD);\n\
+  \         t.Start();\n-        TDStep(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);\n+\
+  \        if (use_dxc && !dxc_session_started) {\n+            __dxc_session_begin();\n+            dxc_session_started\
+  \ = true;\n+        }\n+        TDStep(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges,\n+\
+  \               use_dxc);\n         queue.slide_window();\n         t.Stop();\n         if (logging_enabled)\
+  \ {\n             PrintStep(\"td\", t.Seconds());\n         }\n     }\n+    if (dxc_session_started)\n\
+  +        __dxc_report();\n #pragma omp parallel for\n"
+diff_sha256: 6d62a83a71724bac408ad3d6d470f5963c853237164cc5367478d645781c0e24
+state: unverified
+protections:
+- path: benchmarks/gapbs/src/bfs.cc
+  kind: verifier
+  text: |
+    // BFS verifier does a serial BFS from same source and asserts:
+    // - parent[source] = source
+    // - parent[v] = u  =>  depth[v] = depth[u] + 1 (except for source)
+    // - parent[v] = u  => there is edge from u to v
+    // - all vertices reachable from source have a parent
+    bool BFSVerifier(const Graph &g, NodeID source,
+                     const pvector<NodeID> &parent) {
+        pvector<int> depth(g.num_nodes(), -1);
+        depth[source] = 0;
+        vector<NodeID> to_visit;
+        to_visit.reserve(g.num_nodes());
+        to_visit.push_back(source);
+        for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+            NodeID u = *it;
+            for (NodeID v : g.out_neigh(u)) {
+                if (depth[v] == -1) {
+                    depth[v] = depth[u] + 1;
+                    to_visit.push_back(v);
+                }
+            }
+        }
+        for (NodeID u : g.vertices()) {
+            if ((depth[u] != -1) && (parent[u] != -1)) {
+                if (u == source) {
+                    if (!((parent[u] == u) && (depth[u] == 0))) {
+                        cout << "Source wrong" << endl;
+                        return false;
+                    }
+                    continue;
+                }
+                bool parent_found = false;
+                for (NodeID v : g.in_neigh(u)) {
+                    if (v == parent[u]) {
+                        if (depth[v] != depth[u] - 1) {
+                            cout << "Wrong depths for " << u << " & " << v << endl;
+                            return false;
+                        }
+                        parent_found = true;
+                        break;
+                    }
+                }
+                if (!parent_found) {
+                    cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+                    return false;
+                }
+            } else if (depth[u] != parent[u]) {
+                cout << "Reachability mismatch" << endl;
+                return false;
+            }
+        }
+        return true;
+    }
+- path: benchmarks/gapbs/src/benchmark.h
+  kind: file
+  sha256: 87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f
+- path: benchmarks/gapbs/src/bfs.cc
+  kind: roi_calls
+  calls: ['m5_work_begin(0, 0);', 'm5_reset_stats(0, 0);', 'm5_dump_stats(0, 0);', 'm5_work_end(0, 0);',
+    m5_exit(0);]
+- path: benchmarks/gapbs/src/command_line.h
+  kind: file
+  sha256: de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2
+- path: benchmarks/gapbs/src/timer.h
+  kind: file
+  sha256: 3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb
+- path: include/gem5/m5ops.h
+  kind: roi_calls
+  calls:
+  - m5_exit(uint64_t ns_delay);
+  - m5_reset_stats(uint64_t ns_delay, uint64_t ns_period);
+  - m5_dump_stats(uint64_t ns_delay, uint64_t ns_period);
+  - m5_work_begin(uint64_t workid, uint64_t threadid);
+  - m5_work_end(uint64_t workid, uint64_t threadid);
+context:
+  application: dx100-gapbs
+  source:
+    origin: upstream
+    uri: https://github.com/arkhadem/DX100
+    commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    local_path: apps/dx100
+  code:
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  function: DOBFS
+  build:
+    compiler: g++
+    flags: -std=c++11 -O3 -Wall -fopenmp -pthread -DFUNC
+    command: '{cxx} {flags} -I{app}/benchmarks/API -I{app}/benchmarks/gapbs/src {source} -o {binary}'
+  run:
+    command: '{binary} {input_args} -n {trials}'
+    timer: gapbs_trial_time
+    threads_env: OMP_NUM_THREADS
+    kernel_symbols: [DOBFS, TDStep, InitParent]
+    index_stream: null
+  evaluator:
+    backend: native
+    command: '{binary} {input_args} -n 1 -v'
+    pass_regex: Verification:\s+PASS
+    verifier:
+      description: DX100 BFSVerifier structurally checks parent edges, depths and reachability from the
+        same source. Native FUNC binding; GEM5 post-ROI correctness requires its own evaluator.
+      code:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+        lines: [217, 268]
+  source_ancestor: null
+  source_baseline: dx100-bfs-scalar
+  comparison_baseline: null
+  verification:
+    status: passed
+    evidence:
+    - /data1/yanruj/EvolveSWDB_runs/provider-scalar-20260929-a1/bfs-dx100-scalar-only-20260929-a1.source/correctness.json
+    scope: Native correctness smoke on two small synthetic graph families; no performance claim.
+    receipt_sha256: afb88d837f2645f378af6942d9c64116957c1097dcbc156ad6f00ca19082b427
+  context_resolution: explicit
+  source_derivation:
+    date: '2026-09-29'
+    decision: docs/adr/0006-rewrite-providers-work-in-a-guarded-workspace.md
+    upstream_bfs_sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+    removed_functions: [TDStepMAA, DOBFSMAA]
+    removed_pinned_line_ranges:
+    - [63, 225]
+    - [366, 443]
+    removed_main_selection: MAA branch calling DOBFSMAA
+    excluded_material: Other benchmark translation units, API examples/scripts, and old manifests.
+    purpose: From-scratch proposals cannot read the authors' accelerator BFS answer key.
+    full_snapshot: bfs-dx100-compile-20260925-a1.source
+    full_source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d

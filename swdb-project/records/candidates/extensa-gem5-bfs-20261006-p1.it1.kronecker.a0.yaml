@@ -1,0 +1,354 @@
+kind: candidate
+schema_version: '0.4'
+id: extensa-gem5-bfs-20261006-p1.it1.kronecker.a0
+status: draft
+created: '2026-10-08'
+updated: '2026-10-08'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+mode: extensa
+campaign: extensa-gem5-bfs-20261006-p1
+proposal: extensa-gem5-bfs-20261006-p1.it1.kronecker.a0.proposal
+source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+implementation: dx100-bfs-scalar
+artifact:
+  path: /data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p1/sources/extensa-gem5-bfs-20261006-p1.it1.kronecker.a0/source
+  sha256: a6e3a314eb53c821ed8f5935179f4c2c1753b2efe3ac871a630ffcc7f07634c4
+  files:
+  - path: LICENSE
+    sha256: b8c77da160595e378d8fa7635b1c777c7a84c56c79a24efbbbcd9203375231c2
+    bytes: 1208
+    executable: false
+  - path: PROVENANCE.md
+    sha256: 3009aa7f259294b67bfbbee311ead96d66050a86f1a7bfde715556f10174e6c6
+    bytes: 619
+    executable: false
+  - path: benchmarks/API/MAA.hpp
+    sha256: 4b71fc8503392878065000d75264e4612e2102f4f54a15178c0e2ed5e9d32bfd
+    bytes: 1323
+    executable: false
+  - path: benchmarks/API/MAA_atomics.hpp
+    sha256: 896459489ded4a790a2b52da62b337f00b7310a4bafc6d3ceaa9d8c4f1eb026a
+    bytes: 845
+    executable: false
+  - path: benchmarks/API/MAA_functional.hpp
+    sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+    bytes: 25345
+    executable: false
+  - path: benchmarks/API/MAA_gem5.hpp
+    sha256: 5102335292a6ef1c3a7d7638d6d0791eb4bfd8c4cc8befe61afcd267f203c174
+    bytes: 27473
+    executable: false
+  - path: benchmarks/API/MAA_gem5_magic.hpp
+    sha256: e3353661cce76167a2f986385e448c2a6aef471fc8424762183bae11ba769c32
+    bytes: 9802
+    executable: false
+  - path: benchmarks/API/MAA_utility.hpp
+    sha256: 3fb818fff3a37e14d77ea009a2246788213c1e938a05515b361aceb010a2b10e
+    bytes: 786
+    executable: false
+  - path: benchmarks/gapbs/LICENSE
+    sha256: bc33e6a6a2571d48fde7fc7d30be3aa11fb0558edd46173861274ac7a1f74fc3
+    bytes: 1499
+    executable: false
+  - path: benchmarks/gapbs/src/benchmark.h
+    sha256: 87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f
+    bytes: 3565
+    executable: false
+  - path: benchmarks/gapbs/src/bfs.cc
+    sha256: 9102e36d8e7c2d6f20555c439ab4a2b3a69827c515692c7bc976ff5c4eb7c87d
+    bytes: 16106
+    executable: false
+  - path: benchmarks/gapbs/src/bitmap.h
+    sha256: 6f6e444c82b0e7d797cc9218ba85be7f5f702e95d4c134715c90e6a5b1288465
+    bytes: 1706
+    executable: false
+  - path: benchmarks/gapbs/src/builder.h
+    sha256: 2d3646e12dc2ae9776cfa429aaec699d031b4826c79a356983cf109753f1eb01
+    bytes: 16778
+    executable: false
+  - path: benchmarks/gapbs/src/command_line.h
+    sha256: de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2
+    bytes: 8511
+    executable: false
+  - path: benchmarks/gapbs/src/generator.h
+    sha256: 24bfdab312afdf6e552ef9a23d124332984761cdb94f109bb15009710d1dbafe
+    bytes: 6418
+    executable: false
+  - path: benchmarks/gapbs/src/graph.h
+    sha256: 79a271a3e3b01d6f02750b2b828ad94b3696eff080eb068bc3fcf80bc81139e0
+    bytes: 8276
+    executable: false
+  - path: benchmarks/gapbs/src/platform_atomics.h
+    sha256: 9c8dbe6419b34d850af33ef14ea724c1c64de369d052a8f3c6e20038dcabe9cd
+    bytes: 4198
+    executable: false
+  - path: benchmarks/gapbs/src/pvector.h
+    sha256: b3280b03eb774fdd27bbc1967c4f274e46d42179f149275e1b2c394986ebe03d
+    bytes: 4265
+    executable: false
+  - path: benchmarks/gapbs/src/reader.h
+    sha256: 951fb6e82df079389b953f35363e8a502d79da4f3c56b8ce6eab7faac38800e1
+    bytes: 9268
+    executable: false
+  - path: benchmarks/gapbs/src/sliding_queue.h
+    sha256: 3d5a1d3cff924737c2fc7c6b4fcbb859270f1fcc626c25aac4c780b7b6f4c02c
+    bytes: 2502
+    executable: false
+  - path: benchmarks/gapbs/src/swdb_dxc_lowering.hpp
+    sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+    bytes: 3153
+    executable: false
+  - path: benchmarks/gapbs/src/timer.h
+    sha256: 3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb
+    bytes: 1161
+    executable: false
+  - path: benchmarks/gapbs/src/util.h
+    sha256: a103e6c5767d724adc9b6b421ecade4b2d2c4351e5ea0da5d2c9bf16a9fcecf6
+    bytes: 1953
+    executable: false
+  - path: benchmarks/gapbs/src/writer.h
+    sha256: 3fd16ac75a8c069c7cf09d540ca35b66ec51813406b5fd2f8149253bebd9ebea
+    bytes: 2898
+    executable: false
+  - path: include/gem5/asm/generic/m5ops.h
+    sha256: 28efe83deb0cd19d5d15b73d3544c7f45238c2744531657f5aa881da643e868d
+    bytes: 5479
+    executable: false
+  - path: include/gem5/m5ops.h
+    sha256: bbef6be56e1fb63a820da56fe4306fbce67ee7bedbb43b6e72e0281c947f07e8
+    bytes: 3937
+    executable: false
+diff: "--- a/benchmarks/gapbs/src/bfs.cc\n+++ b/benchmarks/gapbs/src/bfs.cc\n@@ -31,6 +31,23 @@\n #elif\
+  \ defined(GEM5_MAGIC)\n #include \"MAA_gem5_magic.hpp\"\n #endif\n #include <MAA_utility.hpp>\n+#include\
+  \ \"swdb_dxc_lowering.hpp\"\n+\n+#ifndef SWDB_KNOB_FRONTIER_THRESHOLD\n+#define SWDB_KNOB_FRONTIER_THRESHOLD\
+  \ 64\n+#endif\n+\n+#ifndef SWDB_KNOB_CHUNK_SIZE\n+#define SWDB_KNOB_CHUNK_SIZE TILE_SIZE\n+#endif\n\
+  +\n+#ifndef SWDB_KNOB_SCHEDULE\n+#define SWDB_KNOB_SCHEDULE dynamic\n+#endif\n+\n+#ifndef SWDB_KNOB_SCHEDULE_GRANULARITY\n\
+  +#define SWDB_KNOB_SCHEDULE_GRANULARITY 1\n+#endif\n \n /*\n@@ -64,33 +81,162 @@\n void TDStep(const\
+  \ Graph &g, pvector<SGOffset> &VertexOffsets, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue,\
+  \ int num_nodes, int num_edges) {\n #ifdef GEM5\n     clear_mem_region();\n     add_mem_region(queue.beginp(),\
+  \ queue.endp());                   // 6\n     add_mem_region(VertexOffsets.beginp(), VertexOffsets.endp());\
+  \   // 7\n     add_mem_region(g.out_neighbors_, &g.out_neighbors_[num_edges]); // 8\n     add_mem_region(parent.beginp(),\
+  \ parent.endp());                 // 9\n #endif\n-#pragma omp parallel\n-    {\n-        QueueBuffer<NodeID>\
+  \ lqueue(queue);\n-#pragma omp for nowait\n-        for (size_t i = queue.shared_out_start; i < queue.shared_out_end;\
+  \ i++) {\n-            NodeID u = queue.shared[i];\n-            for (int j = VertexOffsets[u]; j <\
+  \ VertexOffsets[u + 1]; j++) {\n-                NodeID v = g.out_neighbors_[j];\n-                NodeID\
+  \ curr_val = parent[v];\n-                if (curr_val < 0) {\n-                    // indirect write\
+  \ (parent, v_tile, u_tile)\n-                    // core fetch v tile\n-                    if (compare_and_swap(parent[v],\
+  \ curr_val, u)) {\n-                        parent[v] = u;\n-                        lqueue.push_back(v);\n\
+  +    static_assert(sizeof(NodeID) == sizeof(int32_t),\n+                  \"DX100 BFS requires 32-bit\
+  \ node IDs\");\n+    static_assert(sizeof(SGOffset) == sizeof(int32_t),\n+                  \"DX100\
+  \ BFS requires 32-bit CSR offsets\");\n+    static_assert(SWDB_KNOB_FRONTIER_THRESHOLD >= 1 &&\n+  \
+  \                    SWDB_KNOB_FRONTIER_THRESHOLD <= 2147483647,\n+                  \"frontier threshold\
+  \ is outside the contract range\");\n+    static_assert(SWDB_KNOB_CHUNK_SIZE >= 1 &&\n+            \
+  \          SWDB_KNOB_CHUNK_SIZE <= 65535 &&\n+                      SWDB_KNOB_CHUNK_SIZE <= TILE_SIZE,\n\
+  +                  \"chunk size exceeds the DX100 tile capacity\");\n+    static_assert(SWDB_KNOB_SCHEDULE_GRANULARITY\
+  \ >= 1 &&\n+                      SWDB_KNOB_SCHEDULE_GRANULARITY <= 2147483647,\n+                 \
+  \ \"schedule granularity is outside the contract range\");\n+\n+    const size_t frontier_size =\n+\
+  \        queue.shared_out_end - queue.shared_out_start;\n+    const bool use_dxc =\n+        num_nodes\
+  \ >= 0 && num_nodes <= 1073741823 &&\n+        num_edges >= 0 && num_edges <= 1073741823 &&\n+     \
+  \   omp_get_max_threads() <= NUM_CORES &&\n+        frontier_size >= static_cast<size_t>(SWDB_KNOB_FRONTIER_THRESHOLD);\n\
+  +\n+    if (!use_dxc) {\n+#pragma omp parallel\n+        {\n+            QueueBuffer<NodeID> lqueue(queue);\n\
+  +#pragma omp for nowait\n+            for (size_t i = queue.shared_out_start; i < queue.shared_out_end;\
+  \ i++) {\n+                NodeID u = queue.shared[i];\n+                for (int j = VertexOffsets[u];\
+  \ j < VertexOffsets[u + 1]; j++) {\n+                    NodeID v = g.out_neighbors_[j];\n+        \
+  \            NodeID curr_val = parent[v];\n+                    if (curr_val < 0) {\n+             \
+  \           // indirect write (parent, v_tile, u_tile)\n+                        // core fetch v tile\n\
+  +                        if (compare_and_swap(parent[v], curr_val, u)) {\n+                        \
+  \    parent[v] = u;\n+                            lqueue.push_back(v);\n+                        }\n\
+  \                     }\n                 }\n             }\n+            lqueue.flush();\n+       \
+  \ }\n+    } else {\n+        static bool dxc_session_started = false;\n+        if (!dxc_session_started)\
+  \ {\n+            __dxc_session_begin();\n+            dxc_session_started = true;\n+        }\n+  \
+  \      std::atomic_thread_fence(std::memory_order_seq_cst);\n+#pragma omp parallel\n+        {\n+  \
+  \          static thread_local dxc_context context;\n+            static thread_local bool context_ready\
+  \ = false;\n+            if (!context_ready) {\n+                context = __dxc_thread_context();\n\
+  +                context_ready = true;\n+            }\n+            QueueBuffer<NodeID> lqueue(queue);\n\
+  +#pragma omp for schedule(SWDB_KNOB_SCHEDULE, SWDB_KNOB_SCHEDULE_GRANULARITY) nowait\n+            for\
+  \ (size_t chunk_begin = queue.shared_out_start;\n+                 chunk_begin < queue.shared_out_end;\n\
+  +                 chunk_begin += SWDB_KNOB_CHUNK_SIZE) {\n+                const size_t chunk_end =\n\
+  +                    chunk_begin + SWDB_KNOB_CHUNK_SIZE < queue.shared_out_end\n+                  \
+  \      ? chunk_begin + SWDB_KNOB_CHUNK_SIZE\n+                        : queue.shared_out_end;\n+\n+\
+  \                __dxc_const_i32(static_cast<int32_t>(chunk_begin),\n+                             \
+  \   context.reg[0]);\n+                __dxc_const_i32(static_cast<int32_t>(chunk_end),\n+         \
+  \                       context.reg[1]);\n+                __dxc_const_i32(1, context.reg[2]);\n+  \
+  \              __dxc_stream_load(queue.shared, context.reg[0], context.reg[1],\n+                  \
+  \                context.reg[2], context.tile[0]);\n+                __dxc_gather(VertexOffsets.beginp(),\
+  \ context.tile[0],\n+                             context.tile[1]);\n+                __dxc_gather(VertexOffsets.beginp()\
+  \ + 1, context.tile[0],\n+                             context.tile[2]);\n+                __dxc_const_i32(0,\
+  \ context.reg[3]);\n+                __dxc_const_i32(-1, context.reg[4]);\n+                __dxc_const_i32(1,\
+  \ context.reg[5]);\n+                __dxc_accelerated_chunk();\n+\n+                while (true) {\n\
+  +                    __dxc_range_loop(context.reg[3], context.reg[4],\n+                           \
+  \          context.tile[1], context.tile[2],\n+                                     context.reg[5],\
+  \ context.tile[4],\n+                                     context.tile[5]);\n+                    __dxc_wait(context.tile[5]);\n\
+  +                    const uint16_t produced =\n+                        __dxc_tile_size(context.tile[5]);\n\
+  +                    if (produced == 0)\n+                        break;\n+\n+                    __dxc_gather(g.out_neighbors_,\
+  \ context.tile[5],\n+                                 context.tile[6]);\n+                    __dxc_gather(parent.beginp(),\
+  \ context.tile[6],\n+                                 context.tile[7]);\n+                    __dxc_wait(context.tile[7]);\n\
+  +                    __dxc_wait(context.tile[4]);\n+\n+                    const NodeID *frontier_vertices\
+  \ =\n+                        __dxc_tile_pointer<NodeID>(context.tile[0]);\n+                    const\
+  \ int *rows =\n+                        __dxc_tile_pointer<int>(context.tile[4]);\n+               \
+  \     const NodeID *vertices =\n+                        __dxc_tile_pointer<NodeID>(context.tile[6]);\n\
+  +                    const NodeID *parent_hints =\n+                        __dxc_tile_pointer<NodeID>(context.tile[7]);\n\
+  +                    assert(__dxc_tile_size(context.tile[4]) == produced);\n+                    assert(__dxc_tile_size(context.tile[6])\
+  \ == produced);\n+                    assert(__dxc_tile_size(context.tile[7]) == produced);\n+\n+  \
+  \                  for (uint16_t lane = 0; lane < produced; ++lane) {\n+                        const\
+  \ int row = rows[lane];\n+                        assert(row >= 0 &&\n+                            \
+  \   row < static_cast<int>(chunk_end - chunk_begin));\n+                        const NodeID u = frontier_vertices[row];\n\
+  +                        const NodeID v = vertices[lane];\n+                        const NodeID curr_val\
+  \ = parent_hints[lane];\n+                        bool claimed = false;\n+                        if\
+  \ (curr_val < 0) {\n+                            // indirect write (parent, v_tile, u_tile)\n+     \
+  \                       // core fetch v tile\n+                            claimed = compare_and_swap(parent[v],\
+  \ curr_val, u);\n+                            if (claimed) {\n+                                parent[v]\
+  \ = u;  // Contract L4: retained redundant store.\n+                                lqueue.push_back(v);\n\
+  +                            }\n+                        }\n+#ifdef SWDB_DXC_DIAGNOSTIC\n+         \
+  \               const SGOffset out_degree =\n+                            VertexOffsets[v + 1] - VertexOffsets[v];\n\
+  +                        const NodeID initial_parent =\n+                            out_degree == 0\n\
+  +                                ? -1\n+                                : -static_cast<NodeID>(out_degree);\n\
+  +                        __dxc_cas_probe(v, curr_val, claimed, initial_parent,\n+                  \
+  \                      parent[v], num_nodes);\n+#endif\n+                    }\n+                }\n\
+  +            }\n+            lqueue.flush();\n         }\n-        lqueue.flush();\n+        __dxc_report();\n\
+  \     }\n #ifdef GEM5\n     clear_mem_region();\n #endif\n }\n"
+diff_sha256: dc04c684022d10864c6e1519c7f10bc418e1afc3e2dcb2215bc0172e9141daca
+state: unverified
+protections:
+- path: benchmarks/gapbs/src/bfs.cc
+  kind: verifier
+  text: |
+    // BFS verifier does a serial BFS from same source and asserts:
+    // - parent[source] = source
+    // - parent[v] = u  =>  depth[v] = depth[u] + 1 (except for source)
+    // - parent[v] = u  => there is edge from u to v
+    // - all vertices reachable from source have a parent
+    bool BFSVerifier(const Graph &g, NodeID source,
+                     const pvector<NodeID> &parent) {
+        pvector<int> depth(g.num_nodes(), -1);
+        depth[source] = 0;
+        vector<NodeID> to_visit;
+        to_visit.reserve(g.num_nodes());
+        to_visit.push_back(source);
+        for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+            NodeID u = *it;
+            for (NodeID v : g.out_neigh(u)) {
+                if (depth[v] == -1) {
+                    depth[v] = depth[u] + 1;
+                    to_visit.push_back(v);
+                }
+            }
+        }
+        for (NodeID u : g.vertices()) {
+            if ((depth[u] != -1) && (parent[u] != -1)) {
+                if (u == source) {
+                    if (!((parent[u] == u) && (depth[u] == 0))) {
+                        cout << "Source wrong" << endl;
+                        return false;
+                    }
+                    continue;
+                }
+                bool parent_found = false;
+                for (NodeID v : g.in_neigh(u)) {
+                    if (v == parent[u]) {
+                        if (depth[v] != depth[u] - 1) {
+                            cout << "Wrong depths for " << u << " & " << v << endl;
+                            return false;
+                        }
+                        parent_found = true;
+                        break;
+                    }
+                }
+                if (!parent_found) {
+                    cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+                    return false;
+                }
+            } else if (depth[u] != parent[u]) {
+                cout << "Reachability mismatch" << endl;
+                return false;
+            }
+        }
+        return true;
+    }
+- path: benchmarks/gapbs/src/benchmark.h
+  kind: file
+  sha256: 87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f
+- path: benchmarks/gapbs/src/bfs.cc
+  kind: roi_calls
+  calls: ['m5_work_begin(0, 0);', 'm5_reset_stats(0, 0);', 'm5_dump_stats(0, 0);', 'm5_work_end(0, 0);',
+    m5_exit(0);]
+- path: benchmarks/gapbs/src/command_line.h
+  kind: file
+  sha256: de1415dfe29eb6ba436d57523b2dee8fa3268a0785ae690bde9e94e9444172b2
+- path: benchmarks/gapbs/src/timer.h
+  kind: file
+  sha256: 3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb
+- path: include/gem5/m5ops.h
+  kind: roi_calls
+  calls:
+  - m5_exit(uint64_t ns_delay);
+  - m5_reset_stats(uint64_t ns_delay, uint64_t ns_period);
+  - m5_dump_stats(uint64_t ns_delay, uint64_t ns_period);
+  - m5_work_begin(uint64_t workid, uint64_t threadid);
+  - m5_work_end(uint64_t workid, uint64_t threadid);
+context:
+  application: dx100-gapbs
+  source:
+    origin: upstream
+    uri: https://github.com/arkhadem/DX100
+    commit: e4fc4afdf894f295442cef3604667a469fab8e62
+    local_path: apps/dx100
+  code:
+  - root: application
+    path: benchmarks/gapbs/src/bfs.cc
+    sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+  function: DOBFS
+  build:
+    compiler: g++
+    flags: -std=c++11 -O3 -Wall -fopenmp -pthread -DFUNC
+    command: '{cxx} {flags} -I{app}/benchmarks/API -I{app}/benchmarks/gapbs/src {source} -o {binary}'
+  run:
+    command: '{binary} {input_args} -n {trials}'
+    timer: gapbs_trial_time
+    threads_env: OMP_NUM_THREADS
+    kernel_symbols: [DOBFS, TDStep, InitParent]
+    index_stream: null
+  evaluator:
+    backend: native
+    command: '{binary} {input_args} -n 1 -v'
+    pass_regex: Verification:\s+PASS
+    verifier:
+      description: DX100 BFSVerifier structurally checks parent edges, depths and reachability from the
+        same source. Native FUNC binding; GEM5 post-ROI correctness requires its own evaluator.
+      code:
+        root: application
+        path: benchmarks/gapbs/src/bfs.cc
+        sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+        lines: [217, 268]
+  source_ancestor: null
+  source_baseline: dx100-bfs-scalar
+  comparison_baseline: null
+  verification:
+    status: passed
+    evidence:
+    - /data1/yanruj/EvolveSWDB_runs/provider-scalar-20260929-a1/bfs-dx100-scalar-only-20260929-a1.source/correctness.json
+    scope: Native correctness smoke on two small synthetic graph families; no performance claim.
+    receipt_sha256: afb88d837f2645f378af6942d9c64116957c1097dcbc156ad6f00ca19082b427
+  context_resolution: explicit
+  source_derivation:
+    date: '2026-09-29'
+    decision: docs/adr/0006-rewrite-providers-work-in-a-guarded-workspace.md
+    upstream_bfs_sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+    removed_functions: [TDStepMAA, DOBFSMAA]
+    removed_pinned_line_ranges:
+    - [63, 225]
+    - [366, 443]
+    removed_main_selection: MAA branch calling DOBFSMAA
+    excluded_material: Other benchmark translation units, API examples/scripts, and old manifests.
+    purpose: From-scratch proposals cannot read the authors' accelerator BFS answer key.
+    full_snapshot: bfs-dx100-compile-20260925-a1.source
+    full_source_artifact_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
