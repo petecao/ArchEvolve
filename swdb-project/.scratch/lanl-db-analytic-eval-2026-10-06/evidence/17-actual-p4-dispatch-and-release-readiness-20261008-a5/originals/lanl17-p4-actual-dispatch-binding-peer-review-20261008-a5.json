@@ -1,0 +1,159 @@
+{
+  "actual_acquired_generation": null,
+  "attempt": 1,
+  "campaign": "extensa-gem5-bfs-20261006-p4",
+  "checks": [
+    "exact_pin:custody.json",
+    "canonicalTrue_seal:BEFORE",
+    "exact_pin:host-original.json",
+    "actual_BEFORE_p4_absent_empty_clean_R",
+    "actual_sources_originR_cleanS_retention_preserved",
+    "actual_all3leases_released_both_routes_absent",
+    "actual_original_serial_capacity_floors",
+    "actual_parent_attestation_original_bindings_no_future_generation",
+    "exact_ordered_four_actual_substitutions_boolflag_last",
+    "exact_pin:lanl17_capture_reviewed_normal_campaign_dispatch_20261008_a2r1.py",
+    "exact_pin:manifest.json",
+    "canonicalTrue_seal:--manifest-sha256",
+    "exact_pin:publication-custody.json",
+    "canonicalTrue_seal:--publication-sha256",
+    "exact_pin:processes.py",
+    "fresh_predecessor513_released_normal_known",
+    "fresh_predecessor_no_kernelholder_noFD9:before",
+    "fresh_predecessor_no_kernelholder_noFD9:after",
+    "native_wrapper_exact0777_unchanged",
+    "exact_pin:lanl17-p3-release32-after-peer-review-r1-20261008-a5.json",
+    "actual_predecessor_custody_peer_PASS",
+    "actual_start_direct_helper_attempt1",
+    "actual_start_original_BEFORE_pin_seal",
+    "actual_start_chronology_within_original300s_interval",
+    "truthful_marker_restore_noauthread",
+    "original_capture_transport_inner0:lanl17-p4-before-capture-20261008-a5",
+    "original_capture_exact_decoded:lanl17-p4-before-capture-20261008-a5",
+    "original_capture_transport_inner0:lanl17-p4-parent-pre-dispatch-readonly-capture-20261008-a5-r1",
+    "original_capture_exact_decoded:lanl17-p4-parent-pre-dispatch-readonly-capture-20261008-a5-r1",
+    "original_capture_transport_inner0:lanl17-p3-native-release-query-capture-before-p4-20261008-a5",
+    "original_capture_exact_decoded:lanl17-p3-native-release-query-capture-before-p4-20261008-a5",
+    "original_capture_transport_inner0:lanl17-native-wrapper-physical-metadata-capture-p4-before-dispatch-20261008-a5",
+    "original_capture_exact_decoded:lanl17-native-wrapper-physical-metadata-capture-p4-before-dispatch-20261008-a5"
+  ],
+  "files": [
+    {
+      "bytes": 3148,
+      "path": "/private/tmp/lanl17-p4-before-capture-20261008-a5/custody.json",
+      "sha256": "800e081afd48d92affac16859166b3923e0f519c89bb369f7068a62bfe5c82f4"
+    },
+    {
+      "bytes": 17420,
+      "path": "/private/tmp/lanl17-p4-parent-pre-dispatch-readonly-capture-20261008-a5-r1/host-original.json",
+      "sha256": "e4603dc6a86f985398c4bda41665162117e0ef8ea2f926b83c29fb3581f0fc4a"
+    },
+    {
+      "bytes": 1840,
+      "path": "/private/tmp/lanl17-p4-parent-actual-admission-review-20261008-a5.json",
+      "sha256": "c8873104f146f07c3b12f769bf0ae4dbb4a04fe818f7c16dbbc2eb7962557e96"
+    },
+    {
+      "bytes": 1893,
+      "path": "/private/tmp/lanl17-p4-dispatch-parent-argv-finalized-20261008-a5-a2.json",
+      "sha256": "d8e6c339b7c35f1943a3309f9920183b0b5190da38713de5b6e1a3454df64ec7"
+    },
+    {
+      "bytes": 3938,
+      "path": "/private/tmp/lanl17-p4-dispatch-parent-argv-draft-r1-20261008-a5-a2.json",
+      "sha256": "c6abe1320a5d692579e6c11115f4f98cb97d391301bbd7a3cc287677582b040e"
+    },
+    {
+      "bytes": 29470,
+      "path": "/private/tmp/lanl17_capture_reviewed_normal_campaign_dispatch_20261008_a2r1.py",
+      "sha256": "76de56fc103d0ffa3d1b197fa93e474e4db4aef78698e69abb9197b994d8e8e3"
+    },
+    {
+      "bytes": 292401,
+      "path": "/private/tmp/lanl17-prepare-completion-decoded-originals-20261008-a1/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+      "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1"
+    },
+    {
+      "bytes": 7701,
+      "path": "/private/tmp/lanl17-first-producer-capture-20261008-a5/publication-custody.json",
+      "sha256": "e1fa63af665bea9937375b4be17fe3de7f013a1da0e1106e36817c828fc3d5e1"
+    },
+    {
+      "bytes": 912,
+      "path": "/Users/yanrujhou/.codex/worktrees/lanl-ticket17/ArchEvolve/swdb-project/swdb/processes.py",
+      "sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289"
+    },
+    {
+      "bytes": 5403,
+      "path": "/private/tmp/lanl17-p3-native-release-query-capture-before-p4-20261008-a5/native-observation-original.json",
+      "sha256": "e13fe07847e7d35ec21a5f6ebb359df2e5c1a22e2cf1d5ad28c68077bf462496"
+    },
+    {
+      "bytes": 574,
+      "path": "/private/tmp/lanl17-native-wrapper-physical-metadata-capture-p4-before-dispatch-20261008-a5/wrapper-original.json",
+      "sha256": "a1783db942ae46388e5c81b565d999efede415abf75b1ecd58cd6e0bb2c2012b"
+    },
+    {
+      "bytes": 12191,
+      "path": "/private/tmp/lanl17-p3-release32-after-peer-review-r1-20261008-a5.json",
+      "sha256": "4d8274b7ae25b9beeac0699f314b75049ba483e14e2bdad6988a93e5311e6d48"
+    },
+    {
+      "bytes": 7274,
+      "path": "/private/tmp/lanl17-normal-campaign-dispatch-capture-20261008-a5-p4-a2/start.json",
+      "sha256": "ae246682b36591d6ee29d467557762cda7c8a896930bc2e2f6e70bca9fffccd6"
+    },
+    {
+      "bytes": 418,
+      "path": "/private/tmp/lanl17-p4-before-capture-20261008-a5/transport.json",
+      "sha256": "b230a6466fbb17e39cae3aae3145d7fd3a88f76924da5dae8635a2fca994fe74"
+    },
+    {
+      "bytes": 6312,
+      "path": "/private/tmp/lanl17-p4-before-capture-20261008-a5/stdout",
+      "sha256": "1e73e08fcca18257a1653bfda9c9282c5f4c9e9c4993a9144c6a6f5d02c65419"
+    },
+    {
+      "bytes": 419,
+      "path": "/private/tmp/lanl17-p4-parent-pre-dispatch-readonly-capture-20261008-a5-r1/transport.json",
+      "sha256": "7ea51eafeebc8440c1d669b57751063cc5f6eaff64bdbe85b437ba64fdf7a833"
+    },
+    {
+      "bytes": 26323,
+      "path": "/private/tmp/lanl17-p4-parent-pre-dispatch-readonly-capture-20261008-a5-r1/stdout",
+      "sha256": "4a9dfd173edd44b0b7c753474b8c7111b455efcb0c5d45697cd2403a6dfc9959"
+    },
+    {
+      "bytes": 418,
+      "path": "/private/tmp/lanl17-p3-native-release-query-capture-before-p4-20261008-a5/transport.json",
+      "sha256": "ae194bdb5a33a59e10b7956dcc83df0c89424f839dd373ac4a9ab609b6d56174"
+    },
+    {
+      "bytes": 7659,
+      "path": "/private/tmp/lanl17-p3-native-release-query-capture-before-p4-20261008-a5/stdout",
+      "sha256": "a2ef33c25de002773a2755f99a0dc064c20c935aa64d3b6e30b285e8588cd0a0"
+    },
+    {
+      "bytes": 418,
+      "path": "/private/tmp/lanl17-native-wrapper-physical-metadata-capture-p4-before-dispatch-20261008-a5/transport.json",
+      "sha256": "adf88409178c127b51433f1e812557738c0ce2c70cbad09b3030056f7e487126"
+    },
+    {
+      "bytes": 3573,
+      "path": "/private/tmp/lanl17-native-wrapper-physical-metadata-capture-p4-before-dispatch-20261008-a5/stdout",
+      "sha256": "9da3e2b01a905ea2c11173c71ced46f073142c952a0fd1d29fccf44d2973ac78"
+    }
+  ],
+  "format": "swdb.lanl17-peer-p4-dispatch-binding-review.v1",
+  "limits": [
+    "Actual captured admission and parent-start bindings only; dispatcher was active at review request; acquired generation and successful child launch require their own actual originals.",
+    "Original300s interval admits parent dispatcher start; unchanged helper later rechecks source/config/provider/capacity and native acquisition.",
+    "No final completion, unique-pair or D30 admission.",
+    "Initial local review script missed its own stdlib base64 import; rerun corrected checker only, originals and source bytes untouched."
+  ],
+  "no_remote_actions": true,
+  "no_target_imports_or_tests": true,
+  "result": "PASS",
+  "reviewed_utc": "2026-10-08T23:44:11.271714+00:00",
+  "scientific_admission": false
+}
