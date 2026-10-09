@@ -1,9 +1,12 @@
 # Continue the analytic evaluator work
 
+2026-10-09 15:02 ET — [P3 original full index](evidence/17-third-original-full-index-20261009-a5/README.md) completed once14:58:39–46 ET. Root and independent full actual review passed88 source-hash rows, original request/inventory/summary/full-validation/context/limits, seals097290b3/45a385dd/e552851b and both zero-survivor cleanup receipts. Bare index19452B/e187b20e/canonical5172e59f remains unsealed parent-generated metadata, not original28d/new validation/scientific admission.29 exact metadata originals/345,387B retain physical byte/SHA/local-original nine-stat closure; no full source/config/capture stream/YAML/diagnostic duplication or new peer receipt. A copied P2 config field in the local root note is preserved with an additive correction; correct P3 action9621eb43 was reviewed before dispatch and bound by actual start/config/argv. Correction is documentation, not retroactive approval; completed runtime is never reusable. Selected R6a4 at14:55:39 admitted original dispatch180.28s later; all expired actions/history retained. P1–P3 indexes complete (3/4); P4, original32 closure, assembly, unchanged actual6a and final scientific review/fixes remain pending.14/15 assigned agent tickets resolved;17 claimed/all four acceptance boxes unchecked. Human59059e2d/1dbbd9ea and root rule edit preserved; scientific PRIMARY/source/originR frozen.
+
+
 2026-10-09 14:43 ET — [P2 original full index](evidence/17-second-original-full-index-20261009-a5/README.md) completed once14:34:54–14:35:01 ET. Root and independent full-chain review passed104 rows, exact source/summary/request/inventory/validation/snapshot/argv links, seals and both zero-survivor cleanup receipts. Bare index23194B/a16fc952/canonical29b6cb4f remains unsealed parent-generated metadata, not original28d output/new validation/scientific admission. The29-original package totals372,787B with physical private/archive byte/SHA/local-original nine-stat closure; no full source/config/capture stream/YAML/diagnostics or new peer receipt added. Selected R4 helper was Git-staged once in an isolated store; original b27 and scientific PRIMARY/source/originR remain unchanged. All completed/expired actions are preserved and never reusable. P1/P2 indexes complete (2/4); P3/P4, original32 closure, assembly, unchanged actual6a and final scientific review/fixes remain pending. Ticket17 claimed/all four boxes unchecked,14/15 assigned agent tickets resolved. Current human documentation1dbbd9ea and root/GLOSSARY/formal-verification work preserved; no unrelated ticket mutation.
 
 
-Updated: 2026-10-09 14:06 ET
+Updated: 2026-10-09 15:02 ET
 
 **Active after Yan-Ru explicitly resumed work.** Fourteen of fifteen assigned agent tickets are resolved. Ticket16's artifact/baseline forecast fix passed 73 public regression tests and independent implementation review; ticket17 remains claimed with its acceptance boxes unchecked. The 30-minute heartbeat is ACTIVE.
 
@@ -12,7 +15,7 @@ Updated: 2026-10-09 14:06 ET
 | CPU ticket 11 | Resolved; held-out BFS broad-band pass, BC failure | Preserve both outcomes |
 | Generality ticket 14 | Resolved; nine pairs, 45 trials; seven whole-call totals unknown | Preserve qualified results |
 | Storage RETIRE a4 / plan a5 | Existing attempt collected once; successful original receipt, all sixteen rows retired | Do not repeat retirement or DEFAULT |
-| Ticket 17 science | Four normal custody chains and FINALIZE complete; report unsupported/zero pairs. Approved pre-index R6 readiness and p1 original full index complete | Continue fresh serial P2–P4 indexes, assembly, actual strict audit and final review |
+| Ticket 17 science | Four normal custody chains and FINALIZE complete; report unsupported/zero pairs. Approved pre-index R6 and P1–P3 indexes complete (3/4) | Finish P4, original32/body closure, assembly, actual strict audit and final review |
 | Standards + Spec review | Both implementation axes reviewed; identified fixes tested and pushed at 2caa5545 | Complete final evidence review after report and strict audit |
 
 
