@@ -1,0 +1,727 @@
+{
+  "capacity": {
+    "MemAvailable_bytes": 125501317120,
+    "checked_utc": "2026-10-09T05:38:53.762015+00:00",
+    "free_bytes": {
+      "/data": 36815785984,
+      "/data1": 21979545600
+    },
+    "read_only": true,
+    "scientific_admission": false,
+    "thresholds_bytes": {
+      "/data": 25769803776,
+      "/data1": 22548578304,
+      "MemAvailable": 85899345920
+    }
+  },
+  "check_count": 84,
+  "checks": [
+    {
+      "check": "lanl17_capture_metadata_action_20261008.py stable all9/private/nlink/type",
+      "pass": true
+    },
+    {
+      "check": "lanl17_diagnose_exact_generality_unknown_process_metadata_SOURCE_ONLY_20261009_a5_r3.py stable all9/private/nlink/type",
+      "pass": true
+    },
+    {
+      "check": "lanl17-generality-exact-four-process-metadata-action-actual-20261009-a5-a1.json stable all9/private/nlink/type",
+      "pass": true
+    },
+    {
+      "check": "lanl17-pre-index-floor-readonly-config-20261009-0011-a5.json stable all9/private/nlink/type",
+      "pass": true
+    },
+    {
+      "check": "process-original.json stable all9/private/nlink/type",
+      "pass": true
+    },
+    {
+      "check": "lanl17-generality-exact-four-process-metadata-independent-actual-review-r3-20261009-a5-a1.json stable all9/private/nlink/type",
+      "pass": true
+    },
+    {
+      "check": "lanl17-generality-exact-four-process-metadata-independent-source-review-r3-20261009-a5.json stable all9/private/nlink/type",
+      "pass": true
+    },
+    {
+      "check": "Parent64fd exact",
+      "pass": true
+    },
+    {
+      "check": "Selected process sourceR3 exact",
+      "pass": true
+    },
+    {
+      "check": "Previous actualc9397 exact",
+      "pass": true
+    },
+    {
+      "check": "Prior actual/source reviews exactPASS",
+      "pass": true
+    },
+    {
+      "check": "process exactsix originals",
+      "pass": true
+    },
+    {
+      "check": "process-original.json stable all9/private/nlink/type",
+      "pass": true
+    },
+    {
+      "check": "start.json stable all9/private/nlink/type",
+      "pass": true
+    },
+    {
+      "check": "stderr stable all9/private/nlink/type",
+      "pass": true
+    },
+    {
+      "check": "stdin.py stable all9/private/nlink/type",
+      "pass": true
+    },
+    {
+      "check": "stdout stable all9/private/nlink/type",
+      "pass": true
+    },
+    {
+      "check": "transport.json stable all9/private/nlink/type",
+      "pass": true
+    },
+    {
+      "check": "process expecteddecoded originalpin",
+      "pass": true
+    },
+    {
+      "check": "process exactclosed packet",
+      "pass": true
+    },
+    {
+      "check": "process SSH0/noerror/emptyerr/no retry",
+      "pass": true
+    },
+    {
+      "check": "process packetfalse/inner0/emptyfiles/sciencefalse",
+      "pass": true
+    },
+    {
+      "check": "process strictbase64 byteexact",
+      "pass": true
+    },
+    {
+      "check": "process exact streamtransport sizesSHA",
+      "pass": true
+    },
+    {
+      "check": "process exactsource/config/stdin",
+      "pass": true
+    },
+    {
+      "check": "process exactGNUinnerargv",
+      "pass": true
+    },
+    {
+      "check": "process local180/no stage/collect",
+      "pass": true
+    },
+    {
+      "check": "process exactSSHouterargv",
+      "pass": true
+    },
+    {
+      "check": "process chronology innerUTC/ET",
+      "pass": true
+    },
+    {
+      "check": "floor exactsix originals",
+      "pass": true
+    },
+    {
+      "check": "floor-original.json stable all9/private/nlink/type",
+      "pass": true
+    },
+    {
+      "check": "start.json stable all9/private/nlink/type",
+      "pass": true
+    },
+    {
+      "check": "stderr stable all9/private/nlink/type",
+      "pass": true
+    },
+    {
+      "check": "stdin.py stable all9/private/nlink/type",
+      "pass": true
+    },
+    {
+      "check": "stdout stable all9/private/nlink/type",
+      "pass": true
+    },
+    {
+      "check": "transport.json stable all9/private/nlink/type",
+      "pass": true
+    },
+    {
+      "check": "floor expecteddecoded originalpin",
+      "pass": true
+    },
+    {
+      "check": "floor exactclosed packet",
+      "pass": true
+    },
+    {
+      "check": "floor SSH0/noerror/emptyerr/no retry",
+      "pass": true
+    },
+    {
+      "check": "floor packetfalse/inner0/emptyfiles/sciencefalse",
+      "pass": true
+    },
+    {
+      "check": "floor strictbase64 byteexact",
+      "pass": true
+    },
+    {
+      "check": "floor exact streamtransport sizesSHA",
+      "pass": true
+    },
+    {
+      "check": "floor exactsource/config/stdin",
+      "pass": true
+    },
+    {
+      "check": "floor exactGNUinnerargv",
+      "pass": true
+    },
+    {
+      "check": "floor local180/no stage/collect",
+      "pass": true
+    },
+    {
+      "check": "floor exactSSHouterargv",
+      "pass": true
+    },
+    {
+      "check": "floor chronology innerUTC/ET",
+      "pass": true
+    },
+    {
+      "check": "New diagnostic metadata exactprior except checkedUTC",
+      "pass": true
+    },
+    {
+      "check": "No admission or permission waiver",
+      "pass": true
+    },
+    {
+      "check": "Kernelreleaseunchanged",
+      "pass": true
+    },
+    {
+      "check": "SourceR185F6/ERf501/PRIMARYorigin continuity",
+      "pass": true
+    },
+    {
+      "check": "H/M2 exact priorbeforeafter source guards",
+      "pass": true
+    },
+    {
+      "check": "mbit10-evaluation-node0 native released generation continuity",
+      "pass": true
+    },
+    {
+      "check": "mbit10-evaluation-node0 no matching kernel ordaemonFD9",
+      "pass": true
+    },
+    {
+      "check": "mbit10-evaluation-node0 native originals anddaemon stable",
+      "pass": true
+    },
+    {
+      "check": "mbit10-evaluation-node1 native released generation continuity",
+      "pass": true
+    },
+    {
+      "check": "mbit10-evaluation-node1 no matching kernel ordaemonFD9",
+      "pass": true
+    },
+    {
+      "check": "mbit10-evaluation-node1 native originals anddaemon stable",
+      "pass": true
+    },
+    {
+      "check": "mbit10-evaluation native released generation continuity",
+      "pass": true
+    },
+    {
+      "check": "mbit10-evaluation no matching kernel ordaemonFD9",
+      "pass": true
+    },
+    {
+      "check": "mbit10-evaluation native originals anddaemon stable",
+      "pass": true
+    },
+    {
+      "check": "359656 identicalpriorcloseddiagnostic",
+      "pass": true
+    },
+    {
+      "check": "359656 no waiver/quiescence",
+      "pass": true
+    },
+    {
+      "check": "359656 all9directory UID/inode stable",
+      "pass": true
+    },
+    {
+      "check": "359656 repeatedstat/start/UID tuple/rootowner",
+      "pass": true
+    },
+    {
+      "check": "359656 unknown aliases preserved",
+      "pass": true
+    },
+    {
+      "check": "2299635 identicalpriorcloseddiagnostic",
+      "pass": true
+    },
+    {
+      "check": "2299635 no waiver/quiescence",
+      "pass": true
+    },
+    {
+      "check": "2299635 all9directory UID/inode stable",
+      "pass": true
+    },
+    {
+      "check": "2299635 repeatedstat/start/UID tuple/rootowner",
+      "pass": true
+    },
+    {
+      "check": "2299635 unknown aliases preserved",
+      "pass": true
+    },
+    {
+      "check": "2332693 identicalpriorcloseddiagnostic",
+      "pass": true
+    },
+    {
+      "check": "2332693 no waiver/quiescence",
+      "pass": true
+    },
+    {
+      "check": "2332693 remainsunknown absent exactroute",
+      "pass": true
+    },
+    {
+      "check": "3570805 identicalpriorcloseddiagnostic",
+      "pass": true
+    },
+    {
+      "check": "3570805 no waiver/quiescence",
+      "pass": true
+    },
+    {
+      "check": "3570805 all9directory UID/inode stable",
+      "pass": true
+    },
+    {
+      "check": "3570805 repeatedstat/start/UID tuple/rootowner",
+      "pass": true
+    },
+    {
+      "check": "3570805 unknown aliases preserved",
+      "pass": true
+    },
+    {
+      "check": "Floor closedmetadata schema",
+      "pass": true
+    },
+    {
+      "check": "Original thresholds unchanged",
+      "pass": true
+    },
+    {
+      "check": "ExactcapacityRAM/data/data1",
+      "pass": true
+    },
+    {
+      "check": "Floor read_only/sciencefalse",
+      "pass": true
+    },
+    {
+      "check": "data1short569032704RAMdatapass",
+      "pass": true
+    }
+  ],
+  "data1_shortfall_bytes": 569032704,
+  "findings": [],
+  "floor_observation_utc": "2026-10-09T05:38:53.762015+00:00",
+  "format": "swdb.independent-heartbeat-readonly-actual-review.v1",
+  "limits": [
+    "New process metadata equals prior01:19 diagnostic except observation timestamp; no continuous-gap-state proof",
+    "Native/source scoped fresh observations not global quiescence",
+    "2332693 identity remains unknown; no reuse or whole-scan closure",
+    "Current no-use and unchanged owner guards not cleared by diagnostic",
+    "No UID/PID/state/name/permission exception, backup/removal/index/scientific admission",
+    "Local read-only review, no target imports/tests/SSH/process or repo mutation"
+  ],
+  "pins": {
+    "floor_capture": {
+      "floor-original.json": {
+        "bytes": 295,
+        "path": "/private/tmp/lanl17-pre-index-floor-readonly-capture-20261009-0138-a5/floor-original.json",
+        "sha256": "1a6282f550b0410c9d9e15be5b843e37662623ef7c3e01ed3b1658b546e3978a",
+        "stat": {
+          "ctime_ns": 1791524349928181827,
+          "dev": 16777229,
+          "gid": 0,
+          "ino": 350685496,
+          "mode": 33152,
+          "mtime_ns": 1791524349928181827,
+          "nlink": 1,
+          "size": 295,
+          "uid": 501
+        }
+      },
+      "start.json": {
+        "bytes": 534,
+        "path": "/private/tmp/lanl17-pre-index-floor-readonly-capture-20261009-0138-a5/start.json",
+        "sha256": "e4f548d24720dbbf0bbe5752c982879049e6725332dd5d7db77b29260e43a5b1",
+        "stat": {
+          "ctime_ns": 1791524333259318282,
+          "dev": 16777229,
+          "gid": 0,
+          "ino": 350685471,
+          "mode": 33152,
+          "mtime_ns": 1791524333259318282,
+          "nlink": 1,
+          "size": 534,
+          "uid": 501
+        }
+      },
+      "stderr": {
+        "bytes": 0,
+        "path": "/private/tmp/lanl17-pre-index-floor-readonly-capture-20261009-0138-a5/stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stat": {
+          "ctime_ns": 1791524333259498866,
+          "dev": 16777229,
+          "gid": 0,
+          "ino": 350685473,
+          "mode": 33152,
+          "mtime_ns": 1791524333259451949,
+          "nlink": 1,
+          "size": 0,
+          "uid": 501
+        }
+      },
+      "stdin.py": {
+        "bytes": 4640,
+        "path": "/private/tmp/lanl17-pre-index-floor-readonly-capture-20261009-0138-a5/stdin.py",
+        "sha256": "6f54c5c660fdb87648e980c5bab5a05809326bd14cd441771d0032e3f862c4c2",
+        "stat": {
+          "ctime_ns": 1791524333258930488,
+          "dev": 16777229,
+          "gid": 0,
+          "ino": 350685470,
+          "mode": 33152,
+          "mtime_ns": 1791524333258930488,
+          "nlink": 1,
+          "size": 4640,
+          "uid": 501
+        }
+      },
+      "stdout": {
+        "bytes": 1481,
+        "path": "/private/tmp/lanl17-pre-index-floor-readonly-capture-20261009-0138-a5/stdout",
+        "sha256": "a9682ae233c3e0d1916ab7ebba7febb78274785ea5548a742905cb930fe85deb",
+        "stat": {
+          "ctime_ns": 1791524333776217739,
+          "dev": 16777229,
+          "gid": 0,
+          "ino": 350685472,
+          "mode": 33152,
+          "mtime_ns": 1791524333776217739,
+          "nlink": 1,
+          "size": 1481,
+          "uid": 501
+        }
+      },
+      "transport.json": {
+        "bytes": 418,
+        "path": "/private/tmp/lanl17-pre-index-floor-readonly-capture-20261009-0138-a5/transport.json",
+        "sha256": "af9b779af251e5d77a64a2332110ed3308a6571510d97132647a7b13e054a123",
+        "stat": {
+          "ctime_ns": 1791524333815189934,
+          "dev": 16777229,
+          "gid": 0,
+          "ino": 350685474,
+          "mode": 33152,
+          "mtime_ns": 1791524333815189934,
+          "nlink": 1,
+          "size": 418,
+          "uid": 501
+        }
+      }
+    },
+    "floor_config": {
+      "bytes": 1047,
+      "path": "/private/tmp/lanl17-pre-index-floor-readonly-config-20261009-0011-a5.json",
+      "sha256": "507e8a581750288d8aee488bb18d963a8c82ec473fb5dcbfe19d7dd208c9438d",
+      "stat": {
+        "ctime_ns": 1791519073167191046,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350655252,
+        "mode": 33152,
+        "mtime_ns": 1791519073167191046,
+        "nlink": 1,
+        "size": 1047,
+        "uid": 501
+      }
+    },
+    "parent": {
+      "bytes": 7268,
+      "path": "/private/tmp/lanl17_capture_metadata_action_20261008.py",
+      "sha256": "64fd8a4358bfbc5c172b50e02ae3782b286f2302f2beb8907d4abd35b3449c2a",
+      "stat": {
+        "ctime_ns": 1791477240600962419,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350293045,
+        "mode": 33152,
+        "mtime_ns": 1791477240600962419,
+        "nlink": 1,
+        "size": 7268,
+        "uid": 501
+      }
+    },
+    "previous_actual_review": {
+      "bytes": 22025,
+      "path": "/private/tmp/lanl17-generality-exact-four-process-metadata-independent-actual-review-r3-20261009-a5-a1.json",
+      "sha256": "ea85fb28e932401fa3b1239996d838e89eb9be460bc536f6dcd3b9751abd6c71",
+      "stat": {
+        "ctime_ns": 1791523291620421176,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350683075,
+        "mode": 33152,
+        "mtime_ns": 1791523291620421176,
+        "nlink": 1,
+        "size": 22025,
+        "uid": 501
+      }
+    },
+    "previous_process": {
+      "bytes": 23785,
+      "path": "/private/tmp/lanl17-generality-exact-four-process-metadata-capture-20261009-a5-a1/process-original.json",
+      "sha256": "c9397a69c9148052a8bff30fa6ee9a23cdd104e74637ca4a68db3e932df0e331",
+      "stat": {
+        "ctime_ns": 1791523168733409313,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350682916,
+        "mode": 33152,
+        "mtime_ns": 1791523168733409313,
+        "nlink": 1,
+        "size": 23785,
+        "uid": 501
+      }
+    },
+    "previous_source_review": {
+      "bytes": 8596,
+      "path": "/private/tmp/lanl17-generality-exact-four-process-metadata-independent-source-review-r3-20261009-a5.json",
+      "sha256": "c95cd0c7527c2d855e14ff4e042ed4ba5c0462193b5896dd9badd2fcfe60a4e0",
+      "stat": {
+        "ctime_ns": 1791523122365680876,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350682838,
+        "mode": 33152,
+        "mtime_ns": 1791523122365680876,
+        "nlink": 1,
+        "size": 8596,
+        "uid": 501
+      }
+    },
+    "process_capture": {
+      "process-original.json": {
+        "bytes": 23785,
+        "path": "/private/tmp/lanl17-generality-exact-four-process-metadata-capture-20261009-0138-a5-a2/process-original.json",
+        "sha256": "fa753745664a8c9c07681c4f8ed227e4b548b47d85ce077dbf4222cd7da12dc2",
+        "stat": {
+          "ctime_ns": 1791524349927760950,
+          "dev": 16777229,
+          "gid": 0,
+          "ino": 350685495,
+          "mode": 33152,
+          "mtime_ns": 1791524349927760950,
+          "nlink": 1,
+          "size": 23785,
+          "uid": 501
+        }
+      },
+      "start.json": {
+        "bytes": 534,
+        "path": "/private/tmp/lanl17-generality-exact-four-process-metadata-capture-20261009-0138-a5-a2/start.json",
+        "sha256": "73cef1a86b24314ee332aa87ed3fcbe32f6476dc33629a0183ff76eedd2d7716",
+        "stat": {
+          "ctime_ns": 1791524326305179508,
+          "dev": 16777229,
+          "gid": 0,
+          "ino": 350685460,
+          "mode": 33152,
+          "mtime_ns": 1791524326305179508,
+          "nlink": 1,
+          "size": 534,
+          "uid": 501
+        }
+      },
+      "stderr": {
+        "bytes": 0,
+        "path": "/private/tmp/lanl17-generality-exact-four-process-metadata-capture-20261009-0138-a5-a2/stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stat": {
+          "ctime_ns": 1791524326305344884,
+          "dev": 16777229,
+          "gid": 0,
+          "ino": 350685462,
+          "mode": 33152,
+          "mtime_ns": 1791524326305293634,
+          "nlink": 1,
+          "size": 0,
+          "uid": 501
+        }
+      },
+      "stdin.py": {
+        "bytes": 31591,
+        "path": "/private/tmp/lanl17-generality-exact-four-process-metadata-capture-20261009-0138-a5-a2/stdin.py",
+        "sha256": "d48b69a6c35b61bc000b33c5248613ed7ee6bfc29c3300d4dc839f2e3d76810c",
+        "stat": {
+          "ctime_ns": 1791524326304887423,
+          "dev": 16777229,
+          "gid": 0,
+          "ino": 350685459,
+          "mode": 33152,
+          "mtime_ns": 1791524326304887423,
+          "nlink": 1,
+          "size": 31591,
+          "uid": 501
+        }
+      },
+      "stdout": {
+        "bytes": 58220,
+        "path": "/private/tmp/lanl17-generality-exact-four-process-metadata-capture-20261009-0138-a5-a2/stdout",
+        "sha256": "5b3b4f1a58bc59389ff839e3736a5934faecca153bb0dd2e6ce9fe61688fc0d8",
+        "stat": {
+          "ctime_ns": 1791524327453389326,
+          "dev": 16777229,
+          "gid": 0,
+          "ino": 350685461,
+          "mode": 33152,
+          "mtime_ns": 1791524327453389326,
+          "nlink": 1,
+          "size": 58220,
+          "uid": 501
+        }
+      },
+      "transport.json": {
+        "bytes": 419,
+        "path": "/private/tmp/lanl17-generality-exact-four-process-metadata-capture-20261009-0138-a5-a2/transport.json",
+        "sha256": "dc502b80b37be95553b370a4d8439545fcb12dac34c35e494624d233f28869ef",
+        "stat": {
+          "ctime_ns": 1791524327459193564,
+          "dev": 16777229,
+          "gid": 0,
+          "ino": 350685463,
+          "mode": 33152,
+          "mtime_ns": 1791524327459193564,
+          "nlink": 1,
+          "size": 419,
+          "uid": 501
+        }
+      }
+    },
+    "process_config": {
+      "bytes": 26754,
+      "path": "/private/tmp/lanl17-generality-exact-four-process-metadata-action-actual-20261009-a5-a1.json",
+      "sha256": "c6af6c318482be3ba87c46249e0a02c7f3c76ccaa396877ae8c37b24e1d8df22",
+      "stat": {
+        "ctime_ns": 1791523097800289634,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350682796,
+        "mode": 33152,
+        "mtime_ns": 1791523097800289634,
+        "nlink": 1,
+        "size": 26754,
+        "uid": 501
+      }
+    },
+    "process_source": {
+      "bytes": 25714,
+      "path": "/private/tmp/lanl17_diagnose_exact_generality_unknown_process_metadata_SOURCE_ONLY_20261009_a5_r3.py",
+      "sha256": "68d8500e9cb8cc254b400571a3af4ad4d21bdb0a0848c70bf1f7409e988977ea",
+      "stat": {
+        "ctime_ns": 1791523042675956725,
+        "dev": 16777229,
+        "gid": 0,
+        "ino": 350682722,
+        "mode": 33152,
+        "mtime_ns": 1791523042675956725,
+        "nlink": 1,
+        "size": 25714,
+        "uid": 501
+      }
+    }
+  },
+  "prepared_ET": "2026-10-09T01:40:48.377148-04:00",
+  "prepared_utc": "2026-10-09T05:40:48.377148+00:00",
+  "process_observation_utc": "2026-10-09T05:38:47.393813+00:00",
+  "report": {
+    "bytes": 1414,
+    "path": "/private/tmp/lanl17-0138-heartbeat-process-floor-independent-actual-review-20261009-a5-r1.md",
+    "sha256": "5c785110d10d4be682deddff8eab5054b92e89966667da9cd39d1c3120600271"
+  },
+  "selected_processes": [
+    {
+      "alias_diagnosis": "EACCES",
+      "comm": "(sd-pam)",
+      "no_use_proven": false,
+      "pid": 359656,
+      "ppid": 359655,
+      "proc_inode": 37081472,
+      "start_ticks": 40749693,
+      "stat_status_owner": 0,
+      "state_code": "S"
+    },
+    {
+      "alias_diagnosis": "missing targets",
+      "comm": "bash",
+      "no_use_proven": false,
+      "pid": 2299635,
+      "ppid": 359742,
+      "proc_inode": 66712273,
+      "start_ticks": 600551347,
+      "stat_status_owner": 0,
+      "state_code": "Z"
+    },
+    {
+      "no_use_proven": false,
+      "observation": "exact route absent; identity unknown",
+      "pid": 2332693
+    },
+    {
+      "alias_diagnosis": "missing targets",
+      "comm": "qs",
+      "no_use_proven": false,
+      "pid": 3570805,
+      "ppid": 3570800,
+      "proc_inode": 55298043,
+      "start_ticks": 499874091,
+      "stat_status_owner": 0,
+      "state_code": "Z"
+    }
+  ],
+  "verdict": "PASS_ACTUAL_READONLY_0138_PROCESS_FLOOR_GATES_PRESERVED"
+}

@@ -1,6 +1,6 @@
 # Saved metadata projection and current process blockers
 
-Updated: 2026-10-09 01:34 ET
+Updated: 2026-10-09 01:41 ET
 
 **Recovery and full-index work are blocked by the preserved guards. No archive, removal, index or scientific admission occurred.**
 
@@ -25,3 +25,9 @@ Original four trajectories and FINALIZE remain complete and reviewed. Actual rep
 2026-10-09 01:32 ET — [Independent byte and prose closure](independent-byte-prose-review-inventory.json) passed all60 originals/1089030B and43 additional transport, timestamp, guard and prose checks, with0 material findings. Two exact review originals add62708B; this package now retains62 unique originals/1151738B across two inventories. No scientific or index admission follows. Separate interim Standards and Spec checkpoint reviews are pending.
 
 2026-10-09 01:34 ET — [Separate interim Standards and Spec reviews](interim-standards-spec-review-inventory.json) of fixed3bb8009→7002674b each report0 new actionable findings. Both independently verified62 originals/1151738B; separate current map supplement preserves all ticket statuses. Six exact review originals add200903B; current package retains68 unique originals/1352641B across three inventories, root byte/SHA/private-original equality checked. This is checkpoint review only: full indexes/original32/assembly/unchanged6a and final scientific evidence review remain blocked/pending. Ticket17 stays claimed/all acceptance unchecked,14/15 assigned resolved. Original four normal trajectories and FINALIZE/report remain complete; unsupported/zero eligible pairs/no-switch/blind-order unverified. Process owner/no-use guards and the dated storage shortfall remain unchanged. Heartbeat ACTIVE; remote PRIMARY/originR retained, no source fetch or guard/scientific mutation.
+
+## Fresh read-only heartbeat — 2026-10-09 01:41 ET
+
+[Actual01:38 ET observations](scheduled-0138-observation-original-inventory.json) and [independent84-check review](scheduled-0138-independent-actual-review-inventory.json) passed metadata assessment only. Process original23785B/fa753745 matches the01:19 original except checked_utc: same exact PAM S/EACCES, two zombie identities with root-owned stat/status, absent2332693 unknown. Original R5/R6 guards remain unchanged; full no-use and historical ownership are unproved. Native leases released514/550/77 with no matching kernel holder/FD9, physical185-moduleF6/sourceR/PRIMARYoriginR/ERf501/H/M2 continuity passed for this dated observation.
+
+Actual01:38 ET floor original295B/1a6282f5 reports RAM125501317120B and `/data`36815785984B above unchanged floors; `/data1`21979545600B remains569032704B below22548578304B. No scientific, archive, removal or index action was dispatched. Original four normal trajectories and FINALIZE remain complete; actual report unsupported/zero eligible pairs/blind-order unverified/no-switch. Full inventories/indexes/original32/assembly/unchanged6a/final scientific Standards+Spec review and ticket17 acceptance remain pending.14/15 assigned resolved; ticket17 claimed/all acceptance unchecked; human statuses unchanged. New14 originals/143682B bring this package to82 unique exact originals/1496323B across five inventories. Current reviewed checkpointdad1cdad was pushed and verified; this fresh observation supplement awaits reviewed checkpoint synchronization. Heartbeat ACTIVE, all scoped agents responsive; next required table/health by2026-10-09 02:11 ET. Remote PRIMARY/originR retained; raw output staysremote.
