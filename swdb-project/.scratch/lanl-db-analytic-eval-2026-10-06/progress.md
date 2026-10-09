@@ -1,5 +1,18 @@
 # Implementation progress
 
+2026-10-09 19:32 ET — DX100 call-shadow component
+
+[Preparation and selected verification](evidence/17-dx100-complete-call-shadow-20261009/README.md)
+now bind a derived protected BFS wrapper to registered SG32 bytes, candidate,
+snapshot, explicit source and guarded flags. The marked call excludes graph
+construction and independent checking. Final local batches passed 29 new cases
+and 13 unchanged evaluator cases; the fixture extension failure is retained in
+the note. Actual counters, compiler/runtime receipts, MMIO memory-effect/cost
+correspondence, fresh 1.7 certification and one genuine blind numerical pair
+remain incomplete. No production adapter, remote/source sync or science ran.
+Ticket17 remains claimed with three report items checked and D26 unchecked;
+01–16 resolved, 14/15 assigned resolved, human tickets unchanged.
+
 2026-10-09 18:59 ET — [Current DX100 prerequisites](ticket17-completion-boundary-20261009.md#current-dx100-prerequisites-2026-10-09-1859-et)
 
 Reconciled the bounded pair path with Yan-Ru's new wait/dispatch certification

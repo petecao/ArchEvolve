@@ -1,5 +1,16 @@
 # Continue the analytic evaluator work
 
+2026-10-09 19:32 ET — [DX100 complete-call shadow](evidence/17-dx100-complete-call-shadow-20261009/README.md)
+
+The new preparation helper derives the exact protected BFS call from the existing
+DX100 evaluator, with registered SG32 bytes and explicit source. Final component
+and unchanged evaluator batches passed 29+13 cases. This is a count-only plan and
+compiled fixture verification, not production counters, MMIO correspondence or
+a numerical adapter. Next connect actual protected counter execution and its
+compiler/runtime receipts; then close supported MMIO/cost/composition and current
+certification premises. Extensa estimates remain null/unknown. Ticket17 stays
+claimed, three report/guard items checked and D26 unchecked. No old action reran.
+
 2026-10-09 18:59 ET — [Current DX100 prerequisites](ticket17-completion-boundary-20261009.md#current-dx100-prerequisites-2026-10-09-1859-et)
 
 Preserve Yan-Ru's `13c40568`/`c3de51f4` wait/dispatch-rule changes. The current

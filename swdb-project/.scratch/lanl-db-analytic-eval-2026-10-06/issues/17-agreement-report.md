@@ -1,7 +1,7 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-09 17:59 ET
+Updated: 2026-10-09 19:32 ET
 **Type:** slice
 **Status:** claimed
 **Work state:** original reporting complete; scientific acceptance blocked on D26
@@ -10,6 +10,17 @@ Updated: 2026-10-09 17:59 ET
 **Time estimate:** 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs)
 
 **What to build:** After the flow-A campaigns: rank agreement between estimate and timing, whether gem5's best candidate survives a top-3 cut by estimate, and where estimates go wrong. The rule fixed in D30 is applied as written. A research variant of the estimator may be calibrated with these pairs, versioned separately (D10).
+
+2026-10-09 19:32 ET — [DX100 complete-call counting shadow](../evidence/17-dx100-complete-call-shadow-20261009/README.md)
+
+A preparation helper now derives the existing protected evaluator's BFS call
+with registered SG32 input and explicit source, preserving the independent
+original-graph check. Final local fixture/regression batches passed 29+13 cases;
+review found and corrected compiler-marker and canonical-record substitution
+gaps. Production counter execution, MMIO/cost/composition correspondence and
+fresh current certification remain incomplete. This is not a numerical bridge
+or a blind pair. Ticket17 remains claimed, original reporting complete, three
+report/guard items checked and D26 unchecked. Original science is unchanged.
 
 2026-10-09 17:59 ET — [Completion boundary and shorter next step](../ticket17-completion-boundary-20261009.md)
 

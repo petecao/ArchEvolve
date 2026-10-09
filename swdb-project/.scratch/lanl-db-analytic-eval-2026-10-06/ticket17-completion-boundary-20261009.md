@@ -1,6 +1,17 @@
 # Ticket 17: completed report and remaining scientific requirement
 
-Updated: 2026-10-09 18:59 ET
+2026-10-09 19:32 ET — DX100 call-shadow preparation
+
+[The bounded component](evidence/17-dx100-complete-call-shadow-20261009/README.md)
+derives the counting window from the unchanged protected DX100 BFS evaluator,
+using registered SG32 input and explicit source. Final 29+13 local cases passed;
+they test preparation and compiled fixture behavior, not production counters or
+MMIO timing. Next bind actual LLVM counter/compiler/runtime execution before
+claiming that prerequisite complete. Supported memory-effect correspondence,
+whole-call costs/composition and current certification still precede one genuine
+blind numerical pair. Ticket17 status, D26/D30 and original reporting are unchanged.
+
+Updated: 2026-10-09 19:32 ET
 
 **The original agreement report is complete and negative. Ticket 17 is still
 blocked on scientific acceptance.** Four campaigns ran, but produced zero
