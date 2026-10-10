@@ -1,0 +1,111 @@
+{
+  "format": "swdb.lanl17-peer-local-original-review.v1",
+  "reviewed_utc": "2026-10-08T21:33:56.498401+00:00",
+  "scope": "Actual p2 terminal originals and prospective release32 packet; no scientific pair/auditor admission",
+  "result": "PASS",
+  "read_only_originals": true,
+  "independent_remote_verification": false,
+  "scientific_admission": false,
+  "SSH_control_test_import_or_scientific_execution": false,
+  "checks": [
+    "requestcanonicalTrue",
+    "dispatchcanonicalTrue",
+    "M2canonicalTrue",
+    "exact_p2_release_schema",
+    "R_H_F6_fixed",
+    "shared_policy_retained",
+    "source_R_clean_S_primary_R",
+    "original_nativewrapper_0777_exact",
+    "terminal_reader_normal_marker",
+    "terminaloriginal_lane.json",
+    "terminaloriginal_runner.exit-code.txt",
+    "terminaloriginal_stopped-receipt.json",
+    "terminaloriginal_wrapper.exit-code.txt",
+    "original_stopcanonicalTrue",
+    "actual_stop_dispatch_M2_context",
+    "actual_stop_cleanup_restore_source",
+    "final_lane512",
+    "four_original_exit0",
+    "native_second_precision",
+    "older1730_released512_no_lock_FD9",
+    "older1730_rawnative_release",
+    "older1730_same_originalpins_lane.json",
+    "older1730_same_originalpins_runner.exit-code.txt",
+    "older1730_same_originalpins_stopped-receipt.json",
+    "older1730_same_originalpins_wrapper.exit-code.txt",
+    "freshbefore32_released512_no_lock_FD9",
+    "freshbefore32_rawnative_release",
+    "freshbefore32_same_originalpins_lane.json",
+    "freshbefore32_same_originalpins_runner.exit-code.txt",
+    "freshbefore32_same_originalpins_stopped-receipt.json",
+    "freshbefore32_same_originalpins_wrapper.exit-code.txt",
+    "original_input_M2_dispatch_exact",
+    "actualrequest_descriptor_stopped",
+    "actualrequest_descriptor_runner_exit",
+    "actualrequest_descriptor_wrapper_exit",
+    "actualrequest_descriptor_lane",
+    "stop_original_canonicalwriter",
+    "original1730_authoritative_snapshot_and_writer",
+    "actual_observation_chronology",
+    "actual_action_argv_limits",
+    "native_wrapper_genericpin_omitted",
+    "exact_staged_bytes_/data1/yanruj/lanl17-p2-native-release-observation-20261008-a5.json",
+    "exact_staged_bytes_/data/yanruj/EvolveSWDB_runs/lanl17-p2-release-request-20261008-a5.json",
+    "nativewriter_original_requestpin_retained",
+    "parent_valid_interval_unexpired_at_review"
+  ],
+  "reviewed_originals": [
+    {
+      "path": "/private/tmp/lanl17-p2-release-request-finalized-20261008-a5.json",
+      "bytes": 7836,
+      "sha256": "c5a7abdd1048821579845c2a2e0ff9989fb3d89a8cfb0513c02bdb15c4763bf3"
+    },
+    {
+      "path": "/private/tmp/lanl17-p2-release-action-finalized-20261008-a5.json",
+      "bytes": 19142,
+      "sha256": "79acefd4c56a00074196adc641707adbf18384aedc2880b0a7aea96a7dc447c4"
+    },
+    {
+      "path": "/private/tmp/lanl17-p2-terminal-originals-capture-20261008-a5/terminal-original.json",
+      "bytes": 5349,
+      "sha256": "1cf7a6cc350c95741a262054334a398b7c885c4e5cfa044f56484c73e852c084"
+    },
+    {
+      "path": "/private/tmp/lanl17-p2-native-release-query-capture-20261008-1730-a5/native-observation-original.json",
+      "bytes": 5403,
+      "sha256": "fde2a13b0a9f093c276d9fe73276e37cb55382ba459b8cf637e2655b9547e7fb"
+    },
+    {
+      "path": "/private/tmp/lanl17-p2-native-release-query-capture-before32-20261008-a5/native-observation-original.json",
+      "bytes": 5403,
+      "sha256": "ea70f3b32df4c6c194e85322a2a75d52e5f02105025485b2d4831075cea3cb6d"
+    },
+    {
+      "path": "/private/tmp/lanl17-p2-dispatch-original-collect-capture-20261008-a5/dispatch-preregistration.json",
+      "bytes": 44111,
+      "sha256": "c0c35fa265e2860a77e7ce1c528a21aa6cd18008b8d59d2e4c31ece6ac81dc69"
+    },
+    {
+      "path": "/private/tmp/lanl17-prepare-completion-decoded-originals-20261008-a1/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+      "bytes": 292401,
+      "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1"
+    },
+    {
+      "path": "/private/tmp/lanl17-p2-normal-source-check-capture-20261008-a5/source-original.json",
+      "bytes": 470,
+      "sha256": "00bb917f8c4ce572e5650dbe9b76e77262f08c087f13b80dcd906e3832c06a68"
+    },
+    {
+      "path": "/private/tmp/lanl17-native-wrapper-physical-metadata-capture-p2-before32-20261008-a5/wrapper-original.json",
+      "bytes": 574,
+      "sha256": "5f5a163783cd417d9be3a3f437fbdbd3a5b0a129317172788b5c8643c33c3e90"
+    }
+  ],
+  "request_identity_sha256": "a0e691f48dee2c16b79deb449a6fc72532397063c1fb0070ea566e2dcaf40390",
+  "stop_identity_sha256": "6cbbabf35f56e22d41f4845946464b2a9e0e3b4abd33a7c72d688c607b88a794",
+  "generation": 512,
+  "all_four_exits": 0,
+  "parent_valid_until_utc": "2026-10-08T21:37:23+00:00",
+  "primary_untracked_runtime_lock_preserved": "?? swdb-project/records/.retention.lock\n",
+  "fresh_before_after_b08_and_no_node0_reuse_until_after_still_required": true
+}

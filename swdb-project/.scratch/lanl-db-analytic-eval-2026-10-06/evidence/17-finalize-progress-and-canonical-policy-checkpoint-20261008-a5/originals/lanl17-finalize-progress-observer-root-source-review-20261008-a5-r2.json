@@ -1,0 +1,36 @@
+{
+  "date_ET": "2026-10-08",
+  "checked_utc": "2026-10-09T02:03:50.962908+00:00",
+  "verdict": "PASS_SOURCE_ONLY",
+  "source_pin": {
+    "path": "/private/tmp/lanl17_observe_finalize_progress_metadata_20261008_a5_r2.py",
+    "bytes": 17446,
+    "sha256": "6fe336e3939fdcc3d2f5b2d2ddb3f4891d962679fed2e47f0bd1927a1fc4a7c0"
+  },
+  "draft_pin": {
+    "path": "/private/tmp/lanl17-finalize-progress-observer-action-draft-r2-20261008-a5.json",
+    "bytes": 19211,
+    "sha256": "8e9852c341b84442559eb41cf6dcbf5295e34198a90cce59c6dc42dd2935657a"
+  },
+  "peer_pin": {
+    "path": "/private/tmp/lanl17-finalize-progress-observer-independent-source-review-20261008-a5-r2.json",
+    "bytes": 4041,
+    "sha256": "7662cba144b1c5993f75a6bba5b37f499cf41c464d4e03059e8f8efbf2164046"
+  },
+  "checks": [
+    "exact source and draft",
+    "AST parse only",
+    "released-native projection exact hostR2 AST",
+    "actual lease schema and generation514",
+    "bounded readonly metadata routes",
+    "source/M2/G/H/SUP before after pins",
+    "stat-only diagnostic files no bodies",
+    "owned process PID/start/CPU anchored tree metadata only",
+    "unknown never completion",
+    "unchanged45/60/180 limits",
+    "exact inline config",
+    "empty collect no stage"
+  ],
+  "scientific_admission": false,
+  "actual_progress_not_yet_observed": true
+}

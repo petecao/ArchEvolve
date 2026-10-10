@@ -1,0 +1,353 @@
+{
+  "format": "swdb.prospective-native-model-compact-receipt.v1",
+  "updated": "2026-10-06 ET",
+  "phase": "development",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "source_clean": true,
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3",
+  "raw_transferred": false,
+  "acceptance": {
+    "format": "swdb.prospective-native-model-acceptance.v1",
+    "updated": "2026-10-06 ET",
+    "phase": "development",
+    "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+    "source_clean": true,
+    "raw_transferred": false,
+    "application_performance_timings_collected": true,
+    "frozen_model_acceptance": {
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3/acceptance.json",
+      "identity_sha256": "eccdcfca3b0e5d41fcd95c5e73db63c716bfe9cb79bc319bf2ae51979af3bf1a"
+    },
+    "protocols": {
+      "bfs": {
+        "id": "lanl.cpu.bfs.t1.native-model.v1.c74c7a1046e0e5f1",
+        "sha256": "e5058d50462a65ede57fdbf219273df46d884fa5d507f4ee84edafbe5734b58a"
+      },
+      "bc": {
+        "id": "lanl.cpu.bc.t1.native-model.v1.35eaffdaadffeea0",
+        "sha256": "26462e09eec81c71c63c2ea3d080e9c6ab760b53756c3abcacabc3fe127964ed"
+      }
+    },
+    "bands": {
+      "bfs": {
+        "id": "lanl.cpu.bfs.t1.development-band.v1",
+        "sha256": "c046173b502cbda65df2d7b1f7195a15988b8318dde035dead1c8cd8362fc7f3",
+        "state": "development",
+        "width_log": 4.015855135911417,
+        "admission": {
+          "generalization": "none; no unseen implementation, kernel, workload, thread or target confidence",
+          "validated": false,
+          "unit": "independent workload pair; five original-driver trials are retained within the pair",
+          "missing": [],
+          "large_error_threshold_log": 0.22314355131420976
+        }
+      },
+      "bc": {
+        "id": "lanl.cpu.bc.t1.development-band.v1",
+        "sha256": "5a72091a7e3d5a81340b9d8d06ee766ff87b1a90e02034f97964395fbb0ccefb",
+        "state": "development",
+        "width_log": 3.5172348723064677,
+        "admission": {
+          "generalization": "none; no unseen implementation, kernel, workload, thread or target confidence",
+          "validated": false,
+          "unit": "independent workload pair; five original-driver trials are retained within the pair",
+          "missing": [],
+          "large_error_threshold_log": 0.22314355131420976
+        }
+      }
+    },
+    "ready_for_holdout": true,
+    "validation": "OK: 676 record(s) valid",
+    "prior_record_bytes_preserved": 672,
+    "completed_utc": "2026-10-07T09:10:54.419832+00:00",
+    "identity_sha256": "c4b86c4f3aad1c379d44644886f8d5ba1d22a976ae180c87164deaf71668d606"
+  },
+  "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "no_gapbs_batch_running",
+    "command": [
+      "python3",
+      "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3/runner.py"
+    ],
+    "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+    "ended_utc": "2026-10-07T09:10:56Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "swdb-lanl-cpu-development-20261006-a3",
+    "lease_generation": 506,
+    "lease_name": "mbit10-evaluation-node0",
+    "load1_at_start": 1.09,
+    "load1_max": 32,
+    "node": 0,
+    "numa_memory_policy": "bind:0",
+    "numactl": "--cpunodebind=0 --membind=0",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-07T08:05:05Z"
+  },
+  "preregistration_sha256": "e157914eef8232996f3750bc51b3f0afc3783741aa1082a5ca4eb4c32f93cef7",
+  "new_records": [
+    {
+      "id": "lanl.cpu.bc.t1.development-band.v1",
+      "kind": "cpu_error_band",
+      "path": "cpu_error_bands/lanl.cpu.bc.t1.development-band.v1.yaml",
+      "sha256": "5a72091a7e3d5a81340b9d8d06ee766ff87b1a90e02034f97964395fbb0ccefb",
+      "file_sha256": "90e7a5c52b455007bf2303f06098e7c7a64a4fe57f410f203a6d3061b46b87d0",
+      "bytes": 4284606
+    },
+    {
+      "id": "lanl.cpu.bfs.t1.development-band.v1",
+      "kind": "cpu_error_band",
+      "path": "cpu_error_bands/lanl.cpu.bfs.t1.development-band.v1.yaml",
+      "sha256": "c046173b502cbda65df2d7b1f7195a15988b8318dde035dead1c8cd8362fc7f3",
+      "file_sha256": "b0bed9704f0ba6be1b8b8e12d39a576aa50ca9d7d53de77e9a7860aacee10d2c",
+      "bytes": 3726771
+    },
+    {
+      "id": "lanl.cpu.bc.g16.t1.validation.v1",
+      "kind": "cpu_native_validation",
+      "path": "cpu_native_validations/lanl.cpu.bc.g16.t1.validation.v1.yaml",
+      "sha256": "7bdd0d415fc8ea350054ffdc08359a4eb643d170d93f7d1097549f8a167d2668",
+      "file_sha256": "ef3f845b4d19963ded9625929bc6185342de34664c95e6cec42212f4ab6a3ba3",
+      "bytes": 10916
+    },
+    {
+      "id": "lanl.cpu.bfs.g16.t1.validation.v1",
+      "kind": "cpu_native_validation",
+      "path": "cpu_native_validations/lanl.cpu.bfs.g16.t1.validation.v1.yaml",
+      "sha256": "80a57772038e6cc8123b2607f6f3ac8e76bc6aba0b722bff58cf1c05f54feb6a",
+      "file_sha256": "7cd725342da3d62214c760872fa3197abb7100fa91ab2d6aaccb76d325757b8e",
+      "bytes": 10895
+    }
+  ],
+  "prior_records_preserved": 672,
+  "matched_native_observations": [
+    {
+      "id": "lanl.cpu.bc.g16.t1.validation.v1",
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "input": "kron-g16-k16",
+      "implementation": "gapbs-bc-brandes",
+      "median_whole_call_s": 0.01923,
+      "trials": [
+        {
+          "position": 0,
+          "source": 64863,
+          "printed_duration_s": 0.01462,
+          "printed_text": "0.01462",
+          "interval_s": [
+            0.014615,
+            0.014624999999999999
+          ],
+          "basis": "measured"
+        },
+        {
+          "position": 1,
+          "source": 35711,
+          "printed_duration_s": 0.0201,
+          "printed_text": "0.02010",
+          "interval_s": [
+            0.020095,
+            0.020105
+          ],
+          "basis": "measured"
+        },
+        {
+          "position": 2,
+          "source": 18064,
+          "printed_duration_s": 0.02086,
+          "printed_text": "0.02086",
+          "interval_s": [
+            0.020855,
+            0.020865
+          ],
+          "basis": "measured"
+        },
+        {
+          "position": 3,
+          "source": 30164,
+          "printed_duration_s": 0.01923,
+          "printed_text": "0.01923",
+          "interval_s": [
+            0.019225,
+            0.019235000000000002
+          ],
+          "basis": "measured"
+        },
+        {
+          "position": 4,
+          "source": 1014,
+          "printed_duration_s": 0.0151,
+          "printed_text": "0.01510",
+          "interval_s": [
+            0.015095,
+            0.015105
+          ],
+          "basis": "measured"
+        }
+      ],
+      "correctness": {
+        "state": "passed",
+        "separate_process": true,
+        "arguments": [
+          "-g",
+          "16",
+          "-k",
+          "16",
+          "-n",
+          "5",
+          "-i",
+          "1",
+          "-v"
+        ],
+        "checks": [
+          "PASS",
+          "PASS",
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "stdout_sha256": "aad4a75cd303794a4c29449b61162c6a6d877fb4b47de9e76ef30104c3a12420"
+      },
+      "estimate_protocol": {
+        "id": "lanl.cpu.bc.t1.native-model.v1.35eaffdaadffeea0",
+        "sha256": "26462e09eec81c71c63c2ea3d080e9c6ab760b53756c3abcacabc3fe127964ed",
+        "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+        "target_description_sha256": "9fec46b1ab4c8ac2e8e501e61cf137c075ec40b6eef128a247cf28dd54fca76b"
+      },
+      "development_band": null,
+      "scope": {
+        "roi": "gapbs.trial_lambda.v1",
+        "process_policy": "five original GAPBS calls in one fresh process; no verification between timed calls",
+        "source_policy": "original deterministic SourcePicker, advancing between kernel invocations",
+        "trial_count": 5,
+        "input_sha256": "007414cce3289b38c0107115770d0a3315632092b0264b68b3e16bbdda00c5d9",
+        "source_root_sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056",
+        "translation_unit_sha256": "6df4e8a1947925456983d149918e5c505db959ff42633f5442f6e1a9ec4d8e8c",
+        "timed_wrapper_sha256": "a1a477adfee41eddf8fdc9781d776030ca40492f0e875205c23c85ec633d3c9f",
+        "graph_generation_contract_sha256": "bb0c6ed49610b28446b39a7c2b04a6587b3c138719cb0490e46f46733467d78b",
+        "observed_graph": {
+          "num_nodes": 65536,
+          "reported_edges": 909646,
+          "directed": false
+        },
+        "observed_graph_metadata_sha256": "521bf2a056dbef24965f830e354b6674a455cd03d987ab82661f507c65cf7f58",
+        "graph_content_digest": null,
+        "graph_identity_note": "Deterministic registered source/input/thread generation contract plus observed metadata; no CSR-content checksum is claimed."
+      },
+      "context_sha256": "e9cb40273288ac87fd4f5bbd2e81815aeb283d697211f0a5e1545822593fe235"
+    },
+    {
+      "id": "lanl.cpu.bfs.g16.t1.validation.v1",
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "input": "kron-g16-k16",
+      "implementation": "gapbs-bfs-do",
+      "median_whole_call_s": 0.00153,
+      "trials": [
+        {
+          "position": 0,
+          "source": 64863,
+          "printed_duration_s": 0.00187,
+          "printed_text": "0.00187",
+          "interval_s": [
+            0.001865,
+            0.001875
+          ],
+          "basis": "measured"
+        },
+        {
+          "position": 1,
+          "source": 35711,
+          "printed_duration_s": 0.00164,
+          "printed_text": "0.00164",
+          "interval_s": [
+            0.001635,
+            0.001645
+          ],
+          "basis": "measured"
+        },
+        {
+          "position": 2,
+          "source": 18064,
+          "printed_duration_s": 0.00153,
+          "printed_text": "0.00153",
+          "interval_s": [
+            0.0015249999999999999,
+            0.001535
+          ],
+          "basis": "measured"
+        },
+        {
+          "position": 3,
+          "source": 30164,
+          "printed_duration_s": 0.0012,
+          "printed_text": "0.00120",
+          "interval_s": [
+            0.0011949999999999999,
+            0.001205
+          ],
+          "basis": "measured"
+        },
+        {
+          "position": 4,
+          "source": 1014,
+          "printed_duration_s": 0.00119,
+          "printed_text": "0.00119",
+          "interval_s": [
+            0.001185,
+            0.001195
+          ],
+          "basis": "measured"
+        }
+      ],
+      "correctness": {
+        "state": "passed",
+        "separate_process": true,
+        "arguments": [
+          "-g",
+          "16",
+          "-k",
+          "16",
+          "-n",
+          "5",
+          "-v"
+        ],
+        "checks": [
+          "PASS",
+          "PASS",
+          "PASS",
+          "PASS",
+          "PASS"
+        ],
+        "stdout_sha256": "7013d23ba8192f8317e277f873203fe2f78cfcee1e6df5ea1d7a0c18bc983045"
+      },
+      "estimate_protocol": {
+        "id": "lanl.cpu.bfs.t1.native-model.v1.c74c7a1046e0e5f1",
+        "sha256": "e5058d50462a65ede57fdbf219273df46d884fa5d507f4ee84edafbe5734b58a",
+        "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+        "target_description_sha256": "9fec46b1ab4c8ac2e8e501e61cf137c075ec40b6eef128a247cf28dd54fca76b"
+      },
+      "development_band": null,
+      "scope": {
+        "roi": "gapbs.trial_lambda.v1",
+        "process_policy": "five original GAPBS calls in one fresh process; no verification between timed calls",
+        "source_policy": "original deterministic SourcePicker, advancing between kernel invocations",
+        "trial_count": 5,
+        "input_sha256": "007414cce3289b38c0107115770d0a3315632092b0264b68b3e16bbdda00c5d9",
+        "source_root_sha256": "d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056",
+        "translation_unit_sha256": "7c32c3c8dc43bf7be417fc5c530b4578bfe3697d8eb47a161cdb142487823f73",
+        "timed_wrapper_sha256": "a1a477adfee41eddf8fdc9781d776030ca40492f0e875205c23c85ec633d3c9f",
+        "graph_generation_contract_sha256": "8ca83664de2d5b556b6f77b6d0fd84e5b74049d484d16575a2ed9302c22e5be7",
+        "observed_graph": {
+          "num_nodes": 65536,
+          "reported_edges": 909646,
+          "directed": false
+        },
+        "observed_graph_metadata_sha256": "521bf2a056dbef24965f830e354b6674a455cd03d987ab82661f507c65cf7f58",
+        "graph_content_digest": null,
+        "graph_identity_note": "Deterministic registered source/input/thread generation contract plus observed metadata; no CSR-content checksum is claimed."
+      },
+      "context_sha256": "6a590640aa3ed61956b0309e8db5c2f7ce6b5d632f3c853b7e0d2df6b24d3a42"
+    }
+  ],
+  "scope": "Exact prospective ArchEvolve T1 original-driver whole-call validation; conditional independently constructed model. Five printed times form one scoped workload pair each; no region timing measurement or unseen-target confidence.",
+  "identity_sha256": "38401c86af174cbd8087684e2e8101263c027fb57fae3d598792e8aa8ac5db4f"
+}

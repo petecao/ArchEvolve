@@ -1,0 +1,25 @@
+{
+  "created": "2026-09-27",
+  "runtime": "/data1/yanruj/EvolveSWDB_supervision_recovery_runtime_20260927_a1",
+  "commit": "8cbfee600f23416a8e9578fa8d3ce3f0e19fced8",
+  "python": "/data1/yanruj/venvs/evolveswdb-test/bin/python3",
+  "python_sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+  "pytest_version": "9.1.1",
+  "pytest_sha256": "ee37885c9583f843390684dfb496907f87a0905128e7a3cf4ad227f49ff34c2d",
+  "manifest": "runtime-manifest.json",
+  "manifest_sha256": "447ff528f5015587c702d42007a3607cf0373a800714d8ab59a515cdf9c7afc9",
+  "helper": "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh",
+  "helper_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+  "hostlock": "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/hostlock.sh",
+  "hostlock_sha256": "50745f827bac2a3db4fc56fdedc95f6fb57fb4b39cf9b269796c77c0274dc996",
+  "helper_upstream_comparison": {
+    "reviewed": true,
+    "host_subtree_equal": true,
+    "installed_commit": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+    "upstream_commit": "0356861a610412713ddbe40fba1ac73a4e2751f4",
+    "receipt_sha256": "28047ebb21ea9e664826ec274d13c0b46a9b3f2763ee56e61944cb1178d7d612",
+    "receipt": "helper-comparison.json"
+  },
+  "operator_sha256": "c40875e68a2c28e0c5b47517d63d0b2c40f26e51414c43f4d253154c8d77b992",
+  "node": 1
+}

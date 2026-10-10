@@ -1,0 +1,9 @@
+--- R1 PRESTARTUP decoded
++++ a2 PRESTARTUP decoded
+@@ -1,3 +1,6 @@
++if [[ "${CODEX_HOME-}" != /data1/yanruj/.codex ]]; then exit 2; fi
++if [[ -n "${SWDB_LANL17_ORIGINAL_CODEX_HOME-}" && "${SWDB_LANL17_ORIGINAL_CODEX_HOME-}" != /data1/yanruj/.codex ]]; then exit 2; fi
++export SWDB_LANL17_ORIGINAL_CODEX_HOME=/data1/yanruj/.codex || exit 2
+ for key in "${!GIT_@}"; do unset "$key" || exit 2; done
+ unset PYTHONPATH PYTHONHOME PYTHONSTARTUP PYTHONINSPECT PYTHONOPTIMIZE LD_PRELOAD LD_LIBRARY_PATH BASH_ENV ENV || exit 2
+ export PATH=/usr/bin:/bin:/usr/local/bin PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1 PYTHONSAFEPATH=1

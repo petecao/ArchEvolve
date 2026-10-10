@@ -1,0 +1,81 @@
+{
+  "format": "swdb.cpu-allocator-extra-preregistration.v1",
+  "created": "2026-10-06 ET",
+  "application_timings_observed": false,
+  "source_commit": "1703c987",
+  "input_inventory": {
+    "path": ".scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-object-counts-mbit10-20261006-a1.json",
+    "file_sha256": "b8ad78de127faef908cc74313ee6f6b4fbffe69bd03c3fc34ba00332d4ad39cb",
+    "identity_sha256": "d2170d131ce847772d947f6d06041eaab682c417414603a410ca638e6982db88",
+    "source_commit": "502fea76159cb7b4c692291ee779dd0235b20c8b",
+    "characterizations": [
+      {
+        "id": "bfs.kron-g16.t1.characterization.objects.a1",
+        "file_sha256": "cda2c51423c167249fd760f359ee0ead180bcb2e2d4db2c722c9b724120458ba",
+        "counted_identity_sha256": "4379d1ed06e37b58eacc5bee61b568e47c4e9c03ed363f8240df6c1fea16dd2c"
+      },
+      {
+        "id": "bc.kron-g16.t1.characterization.objects.a1",
+        "file_sha256": "d12b5f57c61007219d367942ee554db1d27ee1d8614e2c1279e1164230f534e8",
+        "counted_identity_sha256": "2cf2bb052911835c28ad092c3257e835e3fb2c72b12ea6604467247579222081"
+      },
+      {
+        "id": "bfs.kron-g17.t1.characterization.objects.a1",
+        "file_sha256": "3acba4d734334e61221ae6dd1856fffc9bbc231616fec805288c1a5d806c1033",
+        "counted_identity_sha256": "d7a7be75479635f93e446ff22ceeb3b54c8880008671ebb5963e86c1d2e5d210"
+      },
+      {
+        "id": "bc.kron-g17.t1.characterization.objects.a1",
+        "file_sha256": "e3e5d69e1d6a5310dad6c693112b7eb7d86dae9d533ee85ef86450d09831daf4",
+        "counted_identity_sha256": "b2a1d317a5a55cea0db19200ad89fe2ec6e1b68169d8858e849f17a4a5410e7a"
+      }
+    ]
+  },
+  "sizes": [
+    16384,
+    466112,
+    524284,
+    1048568
+  ],
+  "elapsed_cells": 16,
+  "event_abis": [
+    "_Znam",
+    "_ZdaPv",
+    "_Znwm",
+    "_ZdlPv"
+  ],
+  "sampling": {
+    "repetitions": 7,
+    "min_both_gross_driver_seconds": 0.05,
+    "max_wall_seconds": 900
+  },
+  "count_scope": {
+    "points": 32,
+    "events": [
+      3,
+      5
+    ],
+    "invoke": [
+      true,
+      false
+    ],
+    "size_endpoints": [
+      16384,
+      1048568
+    ],
+    "convention": "Existing min/max dynamic-size source-coefficient proof; no intermediate-bin count measurement claim. Native timer cells retain exact requested sizes and every ABI/size rate independently; no interpolation."
+  },
+  "caps": {
+    "count_build_bytes": 67108864,
+    "timed_data_bytes": 26214400,
+    "events_per_trial": 134217728
+  },
+  "preservation": "Original20-cell allocator record remains immutable. New exact-bin record and receipt; scalar cells not executed by the selected applications remain unused.",
+  "transfer": "Repeated fresh-process allocator construction, explicitly inferred source/rate transfer; no first-touch, page-residency or physical latency claim.",
+  "helper_sha256": {
+    "CpuAllocatorWork.h": "6a4f4198d6ac45ca0c23ba130f423f3f47cf50b2ca9637376c0a8db77af4fe55",
+    "CpuAllocatorTimer.cpp": "da4bd29ab0ff509742fca87750a173ff5827eedbd429e22cd0c210533b5a8c83",
+    "CpuAllocatorCount.cpp": "6711bec276c97492543a370cc891b365b03948dc1cba3d1f154fdc58f3cbdf8f"
+  },
+  "identity_sha256": "5c525239b33340949bf5e91e276d3d1ba465acabc1f2c7992474a09f3bfbc801"
+}

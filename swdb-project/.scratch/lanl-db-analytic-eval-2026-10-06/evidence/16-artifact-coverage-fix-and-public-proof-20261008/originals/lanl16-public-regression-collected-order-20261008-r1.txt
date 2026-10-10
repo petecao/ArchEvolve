@@ -1,0 +1,75 @@
+tests/test_extensa_pairing.py::test_fixture_freezes_each_artifact_input_before_pilot_and_comparison
+tests/test_extensa_pairing.py::test_real_adapters_persist_estimates_before_every_evaluator_entry[native_cpu]
+tests/test_extensa_pairing.py::test_real_adapters_persist_estimates_before_every_evaluator_entry[dx100_gem5]
+tests/test_extensa_pairing.py::test_resume_refuses_lost_or_changed_prior_baseline_estimate_before_provider[missing_events]
+tests/test_extensa_pairing.py::test_resume_refuses_lost_or_changed_prior_baseline_estimate_before_provider[policy_changed]
+tests/test_extensa_pairing.py::test_team_summary_validates_embedded_pairing_hashes_and_chronology[chronology]
+tests/test_extensa_pairing.py::test_team_summary_validates_embedded_pairing_hashes_and_chronology[artifact]
+tests/test_extensa_pairing.py::test_team_summary_validates_embedded_pairing_hashes_and_chronology[backend]
+tests/test_extensa_pairing.py::test_team_summary_validates_embedded_pairing_hashes_and_chronology[input]
+tests/test_extensa_pairing.py::test_synthetic_estimates_do_not_change_timing_selection_or_plateau
+tests/test_extensa_pairing.py::test_team_protocol_recursively_refuses_paired_receipt_but_extensa_keeps_dispatch
+tests/test_extensa_pairing.py::test_all_refused_artifacts_and_untimed_baselines_have_unknown_receipts
+tests/test_extensa_pairing.py::test_repaired_materialized_artifacts_keep_pre_certification_unknown_receipts
+tests/test_extensa_pairing.py::test_public_summary_rejects_artifact_scope_forgery_after_resigning[numeric]
+tests/test_extensa_pairing.py::test_public_summary_rejects_artifact_scope_forgery_after_resigning[extra]
+tests/test_extensa_pairing.py::test_public_summary_rejects_artifact_scope_forgery_after_resigning[scope]
+tests/test_extensa_pairing.py::test_public_summary_rejects_artifact_scope_forgery_after_resigning[protocol]
+tests/test_extensa_pairing.py::test_public_summary_rejects_artifact_scope_forgery_after_resigning[event]
+tests/test_extensa_pairing.py::test_legacy_exact_timing_summary_remains_valid_without_artifact_receipts
+tests/test_extensa_pairing.py::test_identical_artifact_alias_reuses_first_receipt_without_new_outcomes
+tests/test_extensa_agreement.py::test_public_report_keeps_fixture_forecasts_ineligible_and_d30_unsupported
+tests/test_extensa_agreement.py::test_public_freeze_is_immutable_for_the_same_prospective_campaign_population
+tests/test_extensa_agreement.py::test_public_validate_refuses_malformed_frozen_population_without_crashing
+tests/test_extensa_agreement.py::test_public_report_does_not_claim_pair_blindness_from_baseline_events_alone
+tests/test_extensa_agreement.py::test_public_freeze_pins_baseline_artifact_and_metadata
+tests/test_extensa_agreement.py::test_public_team_recursively_refuses_policy_and_report_but_extensa_accepts
+tests/test_extensa_agreement.py::test_public_validate_refuses_rehashed_relaxed_d30_and_report_result
+tests/test_extensa_targets.py::test_session_begin_inside_timed_call_passes
+tests/test_extensa_targets.py::test_session_begin_outside_timed_call_is_refused[static int swdb_setup = (__dxc_session_begin(), 0);\npvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled = false,\n                      int alpha = 1, int beta = 18) {\n    init_MAA();\n    \n    t.Start();\n    return parent;\n}\n-outside the timed DOBFS call]
+tests/test_extensa_targets.py::test_session_begin_outside_timed_call_is_refused[int main() { __dxc_session_begin(); return 0; }\npvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled = false,\n                      int alpha = 1, int beta = 18) {\n    init_MAA();\n    \n    t.Start();\n    return parent;\n}\n-outside the timed DOBFS call]
+tests/test_extensa_targets.py::test_session_begin_outside_timed_call_is_refused[void setup() { __dxc_session_begin(); }\npvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled = false,\n                      int alpha = 1, int beta = 18) {\n    init_MAA();\n    setup();\n    t.Start();\n    return parent;\n}\n-outside the timed DOBFS call]
+tests/test_extensa_targets.py::test_session_begin_outside_timed_call_is_refused[pvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled = false,\n                      int alpha = 1, int beta = 18) {\n    init_MAA();\n    // __dxc_session_begin();\n    t.Start();\n    return parent;\n}\n-never begins a DX100 session]
+tests/test_extensa_targets.py::test_session_begin_outside_timed_call_is_refused[#define __dxc_session_begin() noop()\npvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled = false,\n                      int alpha = 1, int beta = 18) {\n    init_MAA();\n    __dxc_session_begin();\n    t.Start();\n    return parent;\n}\n-macro redefines]
+tests/test_extensa_targets.py::test_session_begin_outside_timed_call_is_refused[pvector<NodeID> DOBFS(const Graph &g);\nvoid f() { __dxc_session_begin(); }\n-is not defined]
+tests/test_extensa_targets.py::test_gem5_one_baseline_per_class_point_ratios_and_memory_admission
+tests/test_extensa_targets.py::test_gem5_session_begin_outside_is_refused_before_any_job
+tests/test_extensa_targets.py::test_gem5_edit_without_contract_is_refused
+tests/test_extensa_targets.py::test_native_paired_blocks_against_both_baselines_select_on_fork
+tests/test_extensa_targets.py::test_native_pilot_spread_stops_without_provider_call
+tests/test_extensa_targets.py::test_native_pilot_gate_is_per_class
+tests/test_extensa_targets.py::test_native_scale22_exceeds_the_native_evaluator_and_stops
+tests/test_extensa_targets.py::test_native_scale22_runs_under_evaluator_v2_protocols
+tests/test_extensa_targets.py::test_native_ci_width_rule_and_evaluator_v3_are_frozen_into_every_role_protocol
+tests/test_extensa_targets.py::test_native_ci_width_v2_reports_upstream_level_mix_and_gates_on_the_fork_only
+tests/test_extensa_targets.py::test_native_workspace_names_the_protected_verifier_and_region_lines
+tests/test_extensa_targets.py::test_native_blocks_refuse_while_a_gem5_campaign_holds_the_other_socket
+tests/test_extensa_targets.py::test_approved_native_blocks_run_beside_another_campaigns_gem5_and_record_it
+tests/test_extensa_targets.py::test_approved_beside_gem5_the_iteration_blocks_also_run
+tests/test_extensa_targets.py::test_failed_certificate_with_nothing_named_is_not_certified
+tests/test_extensa_targets.py::test_other_socket_leases_include_the_legacy_lease[mbit10-evaluation-node1-others0]
+tests/test_extensa_targets.py::test_other_socket_leases_include_the_legacy_lease[mbit10-evaluation-node0-others1]
+tests/test_extensa_targets.py::test_held_legacy_lease_means_the_other_socket_is_not_free
+tests/test_extensa_targets.py::test_isolated_block_waits_while_only_the_legacy_lease_is_held
+tests/test_extensa_targets.py::test_isolated_native_blocks_wait_for_a_free_other_socket_and_record_it
+tests/test_extensa_targets.py::test_gem5_baselines_only_runs_no_provider_call_and_resume_reuses_them
+tests/test_extensa_targets.py::test_certification_infrastructure_stops_without_repair_or_plateau[compiler]
+tests/test_extensa_targets.py::test_certification_infrastructure_stops_without_repair_or_plateau[trusted_build]
+tests/test_extensa_targets.py::test_certification_infrastructure_stops_without_repair_or_plateau[configuration]
+tests/test_extensa_targets.py::test_certification_infrastructure_stops_without_repair_or_plateau[trusted_io]
+tests/test_extensa_targets.py::test_expected_candidate_certificate_refusals_remain_failed_candidates[scope-certification_aborted]
+tests/test_extensa_targets.py::test_expected_candidate_certificate_refusals_remain_failed_candidates[harness-harness_scan]
+tests/test_extensa_targets.py::test_expected_candidate_certificate_refusals_remain_failed_candidates[site-negative_control_site:stale_depth_hint]
+tests/test_extensa_targets.py::test_authored_source_refusals_keep_check_names_and_cli_categories
+tests/test_extensa_targets.py::test_native_authored_frontier_refusals_are_candidate_failures[bool BFSVerifier() {}-1.4]
+tests/test_extensa_targets.py::test_native_authored_frontier_refusals_are_candidate_failures[bool BFSVerifier() {}-1.5]
+tests/test_extensa_targets.py::test_native_authored_frontier_refusals_are_candidate_failures[ANCHOR\nbool BFSVerifier() {}\nANCHOR-1.4]
+tests/test_extensa_targets.py::test_native_authored_frontier_refusals_are_candidate_failures[ANCHOR\nbool BFSVerifier() {}\nANCHOR-1.5]
+tests/test_extensa_targets.py::test_native_authored_frontier_refusals_are_candidate_failures[ANCHOR-1.4]
+tests/test_extensa_targets.py::test_native_authored_frontier_refusals_are_candidate_failures[ANCHOR-1.5]
+tests/test_extensa_targets.py::test_native_authored_frontier_refusals_are_candidate_failures[ANCHOR\nbool BFSVerifier() {}\nbool BFSVerifier() {}-1.4]
+tests/test_extensa_targets.py::test_native_authored_frontier_refusals_are_candidate_failures[ANCHOR\nbool BFSVerifier() {}\nbool BFSVerifier() {}-1.5]
+tests/test_extensa_targets.py::test_blinded_instrumentation_distinguishes_authored_and_trusted_control_failures[positive]
+tests/test_extensa_targets.py::test_blinded_instrumentation_distinguishes_authored_and_trusted_control_failures[trusted_control]
+
+73 tests collected in 0.13s

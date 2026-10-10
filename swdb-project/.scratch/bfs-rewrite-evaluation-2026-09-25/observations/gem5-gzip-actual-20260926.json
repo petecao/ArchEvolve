@@ -1,0 +1,131 @@
+{
+  "id": "bfs-gem5-gzip-transport-20260926-a1",
+  "state": "complete",
+  "observed_at": "2026-09-26T21:00:20.228003-04:00",
+  "driver": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1/driver.json",
+    "sha256": "913293ee4dcacef41aee597c6f2df534bd96e295d2ba93a17f070a5d02764aa1",
+    "bytes": 36479
+  },
+  "lane": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch/lane.json",
+    "sha256": "f34bc3114a1b9f0359907cb9051b805dceb610005e3632c6fa9ec281e0fe8f46",
+    "bytes": 1497
+  },
+  "outer_exit": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch/outer.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "bytes": 2
+  },
+  "launch": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch/launch.json",
+    "sha256": "389685335177cde710f2cb33855f855d7d5306b0e52f7c8aec98fa828b108b12",
+    "bytes": 1461
+  },
+  "lease_generation": 412,
+  "cleanup_state": "terminal_no_live_owned_processes",
+  "owned_processes": [
+    {
+      "pid": 3121022,
+      "start_ticks": 497265330,
+      "state": "Z",
+      "rss_bytes": 0,
+      "role": "tmux_launcher",
+      "same_identity_present": true
+    },
+    {
+      "pid": 3121025,
+      "start_ticks": 497265334,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3121026,
+      "start_ticks": 497265334,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3121099,
+      "start_ticks": 497265357,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3121134,
+      "start_ticks": 497265627,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    }
+  ],
+  "cleanup_spent_seconds": 0.28570236172527075,
+  "cleanup_events": 5,
+  "transport": {
+    "state": "passed",
+    "gzip": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1/gem5/transport.gz",
+      "sha256": "1fc7bba6418d340c7cf3b61ff61d845d613bf422e236ba04084fa1db3547f24d"
+    },
+    "decoded_bytes": 190,
+    "decoded_sha256": "8a9c1c3ac74044181e780350567bc5b0b6ecf6c4bb9149e9aad87539f669a1e1",
+    "gzip_eof_crc_verified": true,
+    "plain_switched_trace": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1/gem5/post-switch.log",
+      "sha256": "94cf541e5b1b91f97114c893608fec07ba5c42ee1dc93044c86d568880a2c2a4"
+    },
+    "stdout": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1/gem5.stdout",
+      "sha256": "b5a9ff07e06756b99274c7c0c05ab6e5035da97b800ca63921816c699f6777ce"
+    },
+    "stderr": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1/gem5.stderr",
+      "sha256": "3ae2a2db22ec22c06142146a5dbb4ced4fc2e88b864c551c2c433c214b5356c1"
+    },
+    "empty_root": true,
+    "systems": 0,
+    "cpus": 0,
+    "guest_workloads": 0,
+    "simulation_ticks": 2,
+    "gzip_executed_tick": 1,
+    "plain_executed_tick": 2,
+    "runtime_transport_only": true
+  },
+  "resource_validation": {
+    "samples": 4,
+    "peak_sampled_rss_bytes": 66887680,
+    "observed_identities": [
+      {
+        "pid": 3121099,
+        "start_ticks": 497265357
+      }
+    ],
+    "hard_memory_quota": false
+  },
+  "outer_started": "2026-09-26T20:58:40.448469-04:00",
+  "driver_finished": "2026-09-26T20:58:43.761814-04:00",
+  "outer_deadline": "2026-09-26T21:00:10.448469-04:00",
+  "audit_wall_seconds": 0.014485571533441544,
+  "terminal": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1.dispatch/terminal-validation.json",
+    "sha256": "fc478833e8b93b6f373d0dba49192f40e3f7f01d95c6b1538ab3d42dcc0f70b5",
+    "bytes": 12515
+  },
+  "final_allocated_bytes": 200704,
+  "ledger": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-gem5-gzip-transport-20260926-a1/cleanup-ledger.json",
+    "sha256": "ac3c15badf14509667e0d8e182d16e6de7606faebca79de03e0ccb39a4a6604f",
+    "bytes": 1532
+  },
+  "runtime_commit": "8c39ae09406dad0da253b21dbe2c87e263f8c5fb",
+  "supervisor_source_commit": "179afc0d434aa4e1ba2fed94bdac81071a5d762d",
+  "created": "2026-09-26",
+  "sample_scope_note": "Four samples observed the supervisor; the 0.29-second direct gem5 child is retained by actual PID/start and reaped exit, but was not observed in the periodic RSS rows. The sampled peak is not its measured maximum."
+}

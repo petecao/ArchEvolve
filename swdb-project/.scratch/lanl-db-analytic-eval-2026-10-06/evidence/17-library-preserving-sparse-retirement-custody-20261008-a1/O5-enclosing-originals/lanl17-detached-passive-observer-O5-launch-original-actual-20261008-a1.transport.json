@@ -1,0 +1,47 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "mbit10",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=10",
+    "120",
+    "/usr/bin/python3.12",
+    "-B",
+    "-s",
+    "-P",
+    "/data1/yanruj/lanl-storage-admin-selected-source-20261008-a5/lanl17_detach_passive_observer_administration_20261008_a1_r8.py",
+    "--source-sha256",
+    "0dd699118fd456afe3b0b2b6159fc807a3d4bd05940f0f8b304f3e2657179b82",
+    "--control-directory",
+    "/data1/yanruj/lanl17-detached-observer-a5",
+    "--expected-primary",
+    "5e12a9796432654d88def24ecea617d16ca605b2",
+    "--observer-source",
+    "/data1/yanruj/lanl-storage-admin-selected-source-20261008-a5/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r8.py",
+    "--portal-service-review-sha256",
+    "add69481b9eb0c8a5711308b9942479a0ce639797a4e67a816df082b022cb989"
+  ],
+  "elapsed_seconds": 0.7543869590153918,
+  "finished_utc": "2026-10-08T08:21:44.215985+00:00",
+  "format": "swdb.parent-detached-passive-observer-original-launch-transport.v1",
+  "no_SSH_before_utc": "2026-10-08T08:44:59.215985+00:00",
+  "observer_terminal_status_UNOBSERVED": true,
+  "quiet_seconds_after_transport": 1395,
+  "returncode": 0,
+  "sealed": false,
+  "started_utc": "2026-10-08T08:21:43.461555+00:00",
+  "stderr": {
+    "bytes": 0,
+    "path": "/private/tmp/lanl17-detached-passive-observer-O5-launch-original-actual-20261008-a1.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 396,
+    "path": "/private/tmp/lanl17-detached-passive-observer-O5-launch-original-actual-20261008-a1.stdout",
+    "sha256": "2bec546024150cda1efda0f509875fc22c7224dc5da82c463360c11adc18d32b"
+  }
+}

@@ -1,0 +1,26 @@
+kind: intrinsic
+schema_version: '0.4'
+id: dxc_gather
+name: __dxc_gather
+status: draft
+created: '2026-10-03'
+updated: '2026-10-03'
+interface:
+  id: dx100-mmio
+  version: 1.0-e4fc4af
+hardware_operations:
+- dx100.mmio.v1.indirect-load.i32
+memory_kind: gather
+address_shape: single_valued_indirect
+element_bits: 32
+lanes: null
+library_entry:
+  id: intrinsic.dxc_gather
+  path: library/intrinsics/dxc_gather.yaml
+  content_sha256: f1a54734b19e5223a1b2b11b91d177913ecda7296ce45592acb91412b4c6609d
+provenance:
+- id: dx100-source
+  kind: source_code
+  description: Pinned DX100 e4fc4af interface and independent reference semantics;
+    no performance claim.
+  uri: https://github.com/arkhadem/DX100/blob/e4fc4afdf894f295442cef3604667a469fab8e62/benchmarks/API/MAA_gem5.hpp

@@ -1,0 +1,188 @@
+"""Name the check a campaign candidate failed, for the rewrite provider (ticket 64).
+
+Created: 2026-10-04 ET. Agent-decided under Yan-Ru's 2026-10-04 delegation; revisable.
+Updated: 2026-10-04 ET (ticket 70: certify 1.3 cells carry the strict names from the evaluator's
+record channel in `named_checks`; the run's output is read only for older records).
+Updated: 2026-10-05 ET (ticket 76: the provider sees surviving negative controls only as one aggregate
+category, `negative_controls_not_rejected`, never which control or how many; agent-decided under
+Yan-Ru's delegation, revisable).
+
+Campaign a6 (ticket 57) told the provider only "Certification failed a named check": the strict
+layer's `range_bounds` stopped every edit, and the provider never learned which check. This module
+turns a certification record into check names and a short public message per check.
+
+What reaches the provider:
+- the check name, read from the strict layer's own `SWDB_STRICT_ASSERT:<name>` line in a failed
+  matrix run, and the number of matrix runs it stopped;
+- a fixed message per check, stating the interface precondition that check enforces (the same
+  facts as Peter v1.1 section 3 and the library entries and usage notes the workspace already holds).
+
+What never reaches it: run output, graphs, timings, the strict-layer source, ticket 20's patch or
+the authors' accelerated code, and (ticket 76) which negative control survived: naming the surviving
+control tells an adaptive provider which faults exist and which one its rewrite evades. The strict layer prints only the name, not operand values, so the
+message states the precondition, not the observed value.
+"""
+
+import re
+from collections import Counter
+
+STRICT_PREFIX = "strict_layer_assertion"
+_STRICT_LINE = re.compile(r"SWDB_STRICT_ASSERT:([a-z_]+)")
+
+# Public precondition per check. Keep each short, factual and free of advice words
+# (`swdb.extensa.search.Feedback` refuses "try", "should", "instead", "use the", ...).
+STRICT_MESSAGES = {
+    "range_bounds": "__dxc_range_loop needs bound tiles of equal size, stride register > 0 and "
+                    "0 <= last_i register <= bound-tile size; each batch starts with last_i_reg = 0 "
+                    "and last_j_reg = -1, set by __dxc_const_i32",
+    "stream_bounds": "__dxc_stream_load needs register values 0 <= min <= max and stride > 0; min, max "
+                     "and stride are register handles set by __dxc_const_i32",
+    "register_handle": "an operand typed as a register is not a register handle from the thread's "
+                       "dxc_context (a plain value was passed); values reach registers through __dxc_const_i32",
+    "thread_ownership_register": "a register handle was used by a thread other than the one whose "
+                                 "__dxc_thread_context allocated it, or a plain value was passed as a handle",
+    "tile_handle": "a tile operand is not a tile handle from a dxc_context",
+    "thread_ownership_tile": "a tile handle was used by a thread other than the one that allocated it",
+    "tile_truncation": "an operation would produce more elements than one tile holds (TILE_SIZE)",
+    "byte_offset_overflow": "an index times the element size reaches 2^32 bytes, or a row has a "
+                            "negative or decreasing bound",
+    "memory_region": "an access falls outside the arrays registered for the session",
+    "memory_region_registration": "a memory region was registered with an empty or reversed range, or "
+                                  "(certify 1.5) outside heap memory from operator new",
+    "constant_uncovered_register": "__dxc_const_i32 overwrote a register that an operation not yet "
+                                   "covered by __dxc_wait still reads",
+    "read_before_wait": "a tile was read through __dxc_tile_pointer before __dxc_wait covered its producer",
+    "session_required": "__dxc_thread_context ran before __dxc_session_begin",
+    "session_begin_twice": "__dxc_session_begin ran twice in one session",
+    "thread_count": "more OpenMP threads than DX100 cores (NUM_CORES)",
+    "tile_budget": "more tiles allocated than the device has",
+    "register_budget": "more registers allocated than the device has",
+    "alu_division": "__dxc_alu_scalar divided by zero",
+    "alu_opcode": "__dxc_alu_scalar got an unsupported operation",
+    "store_size": "a store's source and index tiles differ in size",
+}
+
+OTHER_MESSAGES = {
+    "frontier_size_equality": "the per-step frontier sizes differ from the trusted scalar reference counts",
+    "verifier": "the kernel's returned result failed the evaluator's correctness check",
+    "execution_witness": "the accelerated path did not run on a frontier at the threshold",
+    "process_failure": "the program exited with an error and no named check",
+    "timeout": "the run exceeded its time limit",
+    "build failed": "the patched source did not compile",
+    "certification_failed": "certification failed without a named check (empty matrix or no negative controls)",
+    # Ticket 68 (2026-10-04 ET): the evaluator's legality checks on the preprocessed source.
+    "knob_range": "a knob assignment SWDB_KNOB_<NAME> is not an integer constant inside the contract's "
+                  "declared range (or not one of its choices)",
+    "schedule_range": "an OpenMP worksharing-loop schedule clause is not static or dynamic with an "
+                      "integer-constant chunk inside the contract's schedule_granularity range",
+    "legality_check_invalid": "the source could not be preprocessed for the knob and schedule checks",
+    # Ticket 70 (2026-10-04 ET, certify 1.3).
+    "harness_scan": "the rewrite names an evaluator-internal symbol, a certification-build macro, or a "
+                    "file-descriptor, environment, loader or process primitive, which candidate code may not use",
+    "record_invalid": "the run's evaluator records were malformed",
+    # Ticket 76 (2026-10-05 ET, certify 1.4).
+    "seam_witness": "a frontier vertex was not claimed by compare_and_swap on its own slot of one array and "
+                    "then pushed through the queue by the same thread, or a frontier window differs from the "
+                    "pushes made into it (contract clause L4)",
+    "negative_controls_not_rejected": "one or more negative controls were not rejected by the check each "
+                                      "names, so the matrix does not show the rewrite exercises those checks",
+    "negative_control_site": "the rewrite lacks a unique site for a token-matched negative control",
+}
+
+# Ticket 76: provider-facing names. Each surviving control (`control:<id>`) and each missing control
+# site (`negative_control_site:<id>`) becomes one aggregate category, named once.
+AGGREGATE = {"control": "negative_controls_not_rejected", "negative_control_site": "negative_control_site"}
+
+
+def public_checks(failed_checks):
+    """The failed-check names an Extensa provider may see (ticket 76), in first-seen order.
+
+    Matrix checks (strict-layer names, verifier, frontier sizes, seam witness, legality checks) keep
+    their names and come first: they describe the candidate's own positive runs. Which negative
+    control survived, and how many, is never named; the aggregate categories come last."""
+    named, aggregate = [], []
+    for check in failed_checks or []:
+        prefix = check.split(":", 1)[0] if ":" in check else None
+        target, name = (aggregate, AGGREGATE[prefix]) if prefix in AGGREGATE else (named, check)
+        if name not in target:
+            target.append(name)
+    return named + aggregate
+
+
+def strict_names(run, named_checks=None):
+    """The strict-layer check names of one run, in order, unique.
+
+    Certify 1.3 (ticket 70) records them as the cell's ``named_checks``, from the evaluator's record
+    channel; older records only have the strict layer's own line in the run's output.
+    """
+    if named_checks is not None:
+        return [name for name in dict.fromkeys(named_checks) if name in STRICT_MESSAGES]
+    if not isinstance(run, dict):
+        return []
+    text = (run.get("stdout") or "") + (run.get("stderr") or "")
+    return list(dict.fromkeys(_STRICT_LINE.findall(text)))
+
+
+def matrix_checks(record):
+    """Failed matrix cells as check names, with the strict layer's own check named.
+
+    Returns (names in first-seen order, Counter of failed cells per name, total cells)."""
+    counts, order = Counter(), []
+    cells = record.get("matrix") or []
+    for cell in cells:
+        if cell.get("status") == "passed":
+            continue
+        reason = cell.get("reason") or "matrix"
+        names = strict_names(cell.get("run"), cell.get("named_checks")) if reason == STRICT_PREFIX else []
+        for name in ([f"{STRICT_PREFIX}:{n}" for n in names] or [reason]):
+            if name not in counts:
+                order.append(name)
+            counts[name] += 1
+    return order, counts, len(cells)
+
+
+def message(check):
+    """The public message for one failed-check name, or None."""
+    if check.startswith(STRICT_PREFIX + ":"):
+        return STRICT_MESSAGES.get(check.split(":", 1)[1])
+    return OTHER_MESSAGES.get(check)
+
+
+def messages(failed_checks):
+    """[{check, message}] for the checks that have one (the repair workspace's CERTIFICATION.json)."""
+    out = []
+    for check in dict.fromkeys(failed_checks or []):
+        text = message(check)
+        if text:
+            out.append({"check": check, "message": text})
+    return out
+
+
+def explanation(failed_checks, limit=400):
+    """Feedback explanation naming the failing checks (at most `limit` characters).
+
+    Matrix checks come first with their messages; surviving negative controls are counted, since
+    with a failing matrix they fail for the same cause."""
+    checks = list(dict.fromkeys(failed_checks or []))
+    controls = [c for c in checks if c.startswith("control:")]
+    primary = [c for c in checks if not c.startswith("control:")]
+    if not checks:
+        return "Certification failed a named check."
+    parts = []
+    for check in primary:
+        name = check.split(":", 1)[1] if check.startswith(STRICT_PREFIX + ":") else check
+        text = message(check)
+        parts.append(f"{name}: {text}" if text else name)
+    head = "Certification failed." + (" " + "; ".join(parts) + "." if parts else "")
+    # a7 (2026-10-04 ET): with a passing matrix the surviving controls are the whole failure,
+    # so they are named (the same names the `failed_checks` field already carries).
+    named = ", ".join(c.split(":", 1)[1] for c in controls)
+    tail = (f" Negative controls not rejected ({len(controls)}): {named}." if controls and len(named) <= 200
+            else f" Negative controls not rejected: {len(controls)}." if controls else "")
+    if len(head) + len(tail) > limit:
+        names = ", ".join(c.split(":", 1)[1] if c.startswith(STRICT_PREFIX + ":") else c for c in primary)
+        first = parts[0] if parts else ""
+        head = f"Certification failed: {names}. {first}"
+        if len(head) + len(tail) > limit:
+            head = head[:limit - len(tail) - 3].rstrip() + "..."
+    return (head + tail).strip()

@@ -1,0 +1,39 @@
+{
+  "observed_utc": "2026-10-03T14:55:33.257094+00:00",
+  "evidence_origin": "Independent root live tool readback; mutable remote driver/phase receipts are not hash-sealed here.",
+  "runtime_commit": "e6dee10dd74dc475eaf783016d1f3ddbf102e7ee",
+  "driver_id": "typed-library-bfs-gem5-20261003-a1",
+  "stage": "companion",
+  "state": "running",
+  "started_utc": "2026-10-03T14:53:59.394206+00:00",
+  "memory_budget_bytes": 38654705664,
+  "literal_node0_memfree_at_admission_bytes": 32251674624,
+  "estimated_node0_capacity_at_admission_bytes": 39638605824,
+  "inactive_file_credit_bytes": 11681898496,
+  "node_reserve_bytes": 4294967296,
+  "zone_reserve_bytes": 978227200,
+  "selected_node": 0,
+  "socket_lease_generation": 440,
+  "lease_states": {
+    "node0": "held",
+    "node1": "released",
+    "legacy": "released"
+  },
+  "active_public_request": "typed-library-bfs-gem5-20261003-a1.companion.timed.evaluation",
+  "entered_phase": "guest_checkpoint",
+  "gem5_pid": 1581276,
+  "gem5_rss_at_readback_kib": 175440,
+  "l3_outcome": "not_yet_observed",
+  "timed_stage_started": false,
+  "load": [
+    1.84,
+    1.32,
+    1.12
+  ],
+  "memory_pressure_avg10": {
+    "some": 0.0,
+    "full": 0.0
+  },
+  "source_sync_during_measurement": false,
+  "raw_driver_path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a1.driver-companion/driver.json"
+}

@@ -1,0 +1,43 @@
+{
+  "format": "swdb.lanl17-metadata-supervisor.v1",
+  "action": "prepare",
+  "started_utc": "2026-10-08T15:22:19.605370+00:00",
+  "ended_utc": "2026-10-08T15:22:26.246878+00:00",
+  "elapsed_control_s": 6.641509676352143,
+  "timeout_s": 18000.0,
+  "timed_out": false,
+  "signal_received": null,
+  "state": "child_failed",
+  "child_exit": 1,
+  "supervisor_exit": 1,
+  "argv_sha256": "469021b4d688212c2eba606ea70d5a535478f314755c6b32e1a7c8ae4cfa9fbd",
+  "helper_sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414",
+  "cleanup_implementation_sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414",
+  "processes_py_sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "supervisor_sha256": "fa703bbd4c71bb4bcf56f47d1e224449f627d5921295e00b9cc105f21e95bde0",
+  "uid": 114316761,
+  "cleanup": {
+    "subreaper": true,
+    "terminated_owned_processes": [
+      {
+        "pid": 2249317,
+        "start_time": "597487313",
+        "signal": "SIGTERM"
+      },
+      {
+        "pid": 2249346,
+        "start_time": "597487397",
+        "signal": "SIGTERM"
+      }
+    ],
+    "survivors": {}
+  },
+  "cleanup_errors": [],
+  "error_type": null,
+  "fixture": false,
+  "application_outcomes": 0,
+  "provider_calls": 0,
+  "scope": "Metadata child exit/owned cleanup only; no model/population/campaign/unique-pair/accuracy admission. Full argv/environment/auth omitted.",
+  "identity_sha256": "76c6dddb9939a82d8e4cf0237d89e755675a581ea740da53296a435ebc5105b1"
+}

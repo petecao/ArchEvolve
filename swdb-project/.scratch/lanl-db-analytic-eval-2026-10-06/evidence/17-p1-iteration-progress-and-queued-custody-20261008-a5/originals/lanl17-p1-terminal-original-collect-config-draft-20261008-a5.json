@@ -1,0 +1,30 @@
+{
+  "config_template": {
+    "argv": [],
+    "collect": [
+      "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/stopped-receipt.json",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/runner.exit-code.txt",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/wrapper.exit-code.txt",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/lane.json"
+    ],
+    "local_seconds": 180,
+    "remote_seconds": 60,
+    "source_pins": [
+      {
+        "bytes": 38195,
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/helper.py",
+        "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+      },
+      {
+        "bytes": 15125,
+        "path": "/data1/yanruj/lanl17-p1-native-release-query-20261008-a5-r2.py",
+        "sha256": "df19c76a0a3c667f5d1b901677c72641a0f367e6971b4ee2e37a62871bbc7626"
+      }
+    ]
+  },
+  "dated_et": "2026-10-08 14:11 ET",
+  "executable": false,
+  "format": "swdb.lanl17-source-only-action-draft.v1",
+  "required_parent_gate": "Fresh reviewed R2 observer reports release_ready=true for original p1 node0/gen511; this does not itself admit normal scientific completion. No node0 reuse until original release32 and AFTER live checks finish.",
+  "scope": "Collect exact original administrative exit/stop/lane bytes only, no state/summary/database/raw logs/provider/prompt/auth body. Parse and independently review originals before constructing real release32 request. Generic private-file constraints apply; never chmod native or public files on refusal."
+}

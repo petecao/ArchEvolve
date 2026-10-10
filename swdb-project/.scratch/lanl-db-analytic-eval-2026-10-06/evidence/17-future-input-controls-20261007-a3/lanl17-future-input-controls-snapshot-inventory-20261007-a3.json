@@ -1,0 +1,219 @@
+{
+  "format": "swdb.lanl17-future-input-controls-snapshot-inventory.v1",
+  "checked_utc": "2026-10-07T14:36:25.646191+00:00",
+  "canonical_ensure_ascii": true,
+  "state": "prepared_uncommitted_pending_independent_review_and_isolated_regression",
+  "scope": "Read-only original file hashing and compact seal recomputation; no selected source import/invocation, Store, actual campaign inputs, SSH, tests, staging, tracked changes or integration mutation.",
+  "snapshots": [
+    {
+      "role": "assembler_original",
+      "source_path": "/private/tmp/lanl17_assemble_selected_actual_input_pins_20261007.py",
+      "archive_filename": "lanl17_assemble_selected_actual_input_pins_20261007.py",
+      "bytes": 32903,
+      "sha256": "8a68973d0bb6830196feba8c1022900d536d2aa19730033bd160f210be86e1c6"
+    },
+    {
+      "role": "assembler_original_handoff",
+      "source_path": "/private/tmp/lanl17-accepted-pins-assembler-source-handoff-20261007.md",
+      "archive_filename": "lanl17-accepted-pins-assembler-source-handoff-20261007.md",
+      "bytes": 14843,
+      "sha256": "26c7e78de52c9bbbaf2c80237d8520534710fc3a836eae01d2159c248042ee99"
+    },
+    {
+      "role": "assembler_original_preparation",
+      "source_path": "/private/tmp/lanl17-accepted-pins-assembler-source-preparation-20261007.json",
+      "archive_filename": "lanl17-accepted-pins-assembler-source-preparation-20261007.json",
+      "bytes": 2533,
+      "sha256": "c033325978b0bd78264784d4e5685c7b1cb7c549c45f4c85b89937d00e85bd3d",
+      "original_format": "swdb.lanl17-accepted-pins-assembler-source-preparation.v1",
+      "original_identity_sha256": "4080fc6f9305e9b08b3ab2f58cd8d3001ae121303b1324bb7a1745578d9e180a",
+      "original_canonical_ensure_ascii": true,
+      "original_seal_recomputed": true
+    },
+    {
+      "role": "assembler_selected_r1",
+      "source_path": "/private/tmp/lanl17_assemble_selected_actual_input_pins_r1_20261007.py",
+      "archive_filename": "lanl17_assemble_selected_actual_input_pins_r1_20261007.py",
+      "bytes": 33584,
+      "sha256": "de669e4c0928876f9d033f6d9c1fc820ab3a1eb915aba20c5b6755b9866d7e6a"
+    },
+    {
+      "role": "assembler_r1_exact_diff",
+      "source_path": "/private/tmp/lanl17-accepted-pins-assembler-r1-20261007.diff",
+      "archive_filename": "lanl17-accepted-pins-assembler-r1-20261007.diff",
+      "bytes": 1925,
+      "sha256": "977c6680287904eb8cc53507697bfb859f249df34e277b411530a8dd3a2a4340"
+    },
+    {
+      "role": "assembler_r1_source_review",
+      "source_path": "/private/tmp/lanl17-accepted-pins-assembler-r1-source-review-20261007.md",
+      "archive_filename": "lanl17-accepted-pins-assembler-r1-source-review-20261007.md",
+      "bytes": 3221,
+      "sha256": "9db988b8002a6de7576460a6f1fd258e898f3b98f9164cbd4cb05273d210d573"
+    },
+    {
+      "role": "spec_writer_selected",
+      "source_path": "/private/tmp/lanl17_write_parent_input_specification_20261007.py",
+      "archive_filename": "lanl17_write_parent_input_specification_20261007.py",
+      "bytes": 11868,
+      "sha256": "339ea0dc1abb6778f0f016e9c03f2b29c5f1916154b668f5416747b2768a9231"
+    },
+    {
+      "role": "spec_writer_handoff",
+      "source_path": "/private/tmp/lanl17-parent-input-specification-writer-source-handoff-20261007.md",
+      "archive_filename": "lanl17-parent-input-specification-writer-source-handoff-20261007.md",
+      "bytes": 5487,
+      "sha256": "423ecb8f4defa3b36c4b31a2a873e455a6513265b69a395c552b0cd69c552c38"
+    },
+    {
+      "role": "assembler_r1_spec_preparation",
+      "source_path": "/private/tmp/lanl17-accepted-pins-and-spec-writer-source-preparation-20261007-r1.json",
+      "archive_filename": "lanl17-accepted-pins-and-spec-writer-source-preparation-20261007-r1.json",
+      "bytes": 4051,
+      "sha256": "a2e29ff5e7c3adfccd80d8546eb6614b7a23a92d9373b5e36cb2e9f018f3ebd8",
+      "original_format": "swdb.lanl17-accepted-pins-and-spec-writer-source-preparation.v1",
+      "original_identity_sha256": "5575c718cb6f2daed42e34f60bd171f15008ce4142e63d06924d6e9f46f2ea6a",
+      "original_canonical_ensure_ascii": true,
+      "original_seal_recomputed": true
+    },
+    {
+      "role": "producer_original_a1",
+      "source_path": "/private/tmp/lanl17_parent_capture_projection_producer_20261007.py",
+      "archive_filename": "lanl17_parent_capture_projection_producer_20261007.py",
+      "bytes": 37646,
+      "sha256": "3bf559a3a47b138f0c662d21628503fad8d6b57076293ae867cc64b1c1883a9f"
+    },
+    {
+      "role": "producer_original_a1_preparation",
+      "source_path": "/private/tmp/lanl17-parent-capture-producer-source-proof-20261007.json",
+      "archive_filename": "lanl17-parent-capture-producer-source-proof-20261007.json",
+      "bytes": 2073,
+      "sha256": "19231e67d66f9ff056beb1d2fada56d9499e454caab57a0675eb40cca454c80f",
+      "original_format": "swdb.lanl17-parent-capture-producer-source-preparation.v1",
+      "original_identity_sha256": "b00291db64339e7c8564c8efd1937e82ca37fc4a5bfcfed51ff5c17d96fda081",
+      "original_canonical_ensure_ascii": true,
+      "original_seal_recomputed": true
+    },
+    {
+      "role": "producer_original_a2",
+      "source_path": "/private/tmp/lanl17_parent_capture_projection_producer_a2_20261007.py",
+      "archive_filename": "lanl17_parent_capture_projection_producer_a2_20261007.py",
+      "bytes": 42560,
+      "sha256": "2bb2a3a78ad590cbf640959b2d0b51eb6c839b485bed9605a91e7a24d974a7fb"
+    },
+    {
+      "role": "producer_original_a2_handoff",
+      "source_path": "/private/tmp/lanl17-parent-capture-producer-source-handoff-20261007-a2.md",
+      "archive_filename": "lanl17-parent-capture-producer-source-handoff-20261007-a2.md",
+      "bytes": 12870,
+      "sha256": "388a8c370f533f05e62d54988bcd31a90f8f46500fa39a3e47eac3ef3d286e71"
+    },
+    {
+      "role": "producer_original_a2_preparation",
+      "source_path": "/private/tmp/lanl17-parent-capture-producer-source-proof-20261007-a2.json",
+      "archive_filename": "lanl17-parent-capture-producer-source-proof-20261007-a2.json",
+      "bytes": 4164,
+      "sha256": "952142f724b649c8cbc691be624744107c101215435eb16c7a918ad2d956639b",
+      "original_format": "swdb.lanl17-parent-capture-producer-source-preparation.v1",
+      "original_identity_sha256": "c4ce07ad8c2a0233ec970e9ecd36a503aa923909ac96dc51fbb8c60c38958ee1",
+      "original_canonical_ensure_ascii": true,
+      "original_seal_recomputed": true
+    },
+    {
+      "role": "producer_selected_a3",
+      "source_path": "/private/tmp/lanl17_parent_capture_projection_producer_a3_20261007.py",
+      "archive_filename": "lanl17_parent_capture_projection_producer_a3_20261007.py",
+      "bytes": 46165,
+      "sha256": "32bead204337aa66d0a732b6f143216946abafc5d2eb752577b0d90f7190b7b6"
+    },
+    {
+      "role": "producer_a3_handoff",
+      "source_path": "/private/tmp/lanl17-parent-capture-producer-source-handoff-20261007-a3.md",
+      "archive_filename": "lanl17-parent-capture-producer-source-handoff-20261007-a3.md",
+      "bytes": 5086,
+      "sha256": "fe9c82915cf75de1d250b3c4f464d276de6ecaca3ae748385487b917169a3396"
+    },
+    {
+      "role": "producer_a3_exact_diff",
+      "source_path": "/private/tmp/lanl17-parent-capture-producer-custody-corrections-20261007-a3.patch",
+      "archive_filename": "lanl17-parent-capture-producer-custody-corrections-20261007-a3.patch",
+      "bytes": 10239,
+      "sha256": "95ac7b0c3af4f43e79b40c7aa97d7f842987c1cb67a00e05765b80303392c4aa"
+    },
+    {
+      "role": "producer_a3_preparation",
+      "source_path": "/private/tmp/lanl17-parent-capture-producer-source-proof-20261007-a3.json",
+      "archive_filename": "lanl17-parent-capture-producer-source-proof-20261007-a3.json",
+      "bytes": 4636,
+      "sha256": "8c61d3822483b13dd8902d370b264acaca5a6aa8a030a0ab3a793be3e4a23d64",
+      "original_format": "swdb.lanl17-parent-capture-producer-source-preparation.v1",
+      "original_identity_sha256": "64fa86ec7bda1032360e6b2500649d7b0e89069e3956d7f6bf302ce5891d1880",
+      "original_canonical_ensure_ascii": true,
+      "original_seal_recomputed": true
+    },
+    {
+      "role": "parent_source_review_script",
+      "source_path": "/private/tmp/lanl17-parent-source-preparation-review-20261007-a3.py",
+      "archive_filename": "lanl17-parent-source-preparation-review-20261007-a3.py",
+      "bytes": 7170,
+      "sha256": "071e319feb74a1aaad2fc1c5760d2ef280db7a4dc68ff14322ec7db11a581625"
+    },
+    {
+      "role": "parent_source_review_receipt",
+      "source_path": "/private/tmp/lanl17-parent-source-preparation-review-20261007-a3.json",
+      "archive_filename": "lanl17-parent-source-preparation-review-20261007-a3.json",
+      "bytes": 2607,
+      "sha256": "3cd7b458c037e3f974e44cf8625c7aed9172ca708c455f724d49e9e384d00989",
+      "original_format": "swdb.lanl17-parent-source-preparation-review.v1",
+      "original_identity_sha256": "be67a38960c5086d8a8b5534b3a571bbed0f56772e4d64d4fb27a58bc3ab6ccc",
+      "original_canonical_ensure_ascii": true,
+      "original_seal_recomputed": true
+    },
+    {
+      "role": "collector_actual_source_staging_driver",
+      "source_path": "/private/tmp/lanl-stage-approved17-collector-20261007-a2r1.py",
+      "archive_filename": "lanl-stage-approved17-collector-20261007-a2r1.py",
+      "bytes": 3628,
+      "sha256": "e2af8abe7747f8cf8d1a95b381ca8cf6ff32239aea5441b3393525a1611cd00c"
+    },
+    {
+      "role": "collector_original_actual_source_staging_receipt",
+      "source_path": "/private/tmp/lanl17-approved-collector-staging-actual-20261007-a2r1.json",
+      "archive_filename": "lanl17-approved-collector-staging-actual-20261007-a2r1.json",
+      "bytes": 1051,
+      "sha256": "bdbeb76523adc9abacaedd0caea17340f042347eadcc6b448a5e2248101094e0",
+      "original_format": "swdb.lanl17-approved-collector-source-staging.v1",
+      "original_identity_sha256": "48d76dec7a88db824f54149a4486df00d2962f160edf49c000f3a6d20d3b2761",
+      "original_canonical_ensure_ascii": true,
+      "original_seal_recomputed": true
+    }
+  ],
+  "snapshot_count": 22,
+  "snapshot_bytes": 290310,
+  "preserved_prior_durable_references": [
+    {
+      "role": "unchanged_auditor",
+      "path": "/private/tmp/lanl17_selected_record_trajectory_auditor_a2r1s1_20261007.py",
+      "sha256": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da"
+    },
+    {
+      "role": "unchanged_collector",
+      "path": "/private/tmp/lanl17_compact_attempt_custody_a2r1_20261007.py",
+      "sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c"
+    },
+    {
+      "role": "unchanged_future_input_plan",
+      "path": "/private/tmp/lanl17-r1s1-future-actual-input-construction-plan-20261007.md",
+      "sha256": "e3420b334ce05f7268699b0079987d1d2afc98fe5cb5503e6069a89038b59170"
+    }
+  ],
+  "pending": [
+    "Ticket03 independent producer A3 review",
+    "Ticket02 parent-reviewed isolated synthetic regression source/result",
+    "Parent archive approval and current integration base"
+  ],
+  "original_chronology": "All A1/A2/source-only NOTRUN proofs retain their original bytes and labels. The collector staging receipt proves only its original source copy; it does not prove collector execution or campaign inputs.",
+  "producer_a1_handoff": "No separate A1 handoff found in explicit matching inventory; confirmation requested from producer owner.",
+  "frozen_estimator_bundle_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "identity_sha256": "32b2c4b22d29327170876227cbcc5bd76677f502f6ec57d473bbf38856f308a4"
+}

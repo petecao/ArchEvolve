@@ -1,0 +1,36 @@
+# Full feature Standards review — 2026-10-08 ET
+
+Completed source review of the pinned feature comparison and separately retained classification supplement. This is the Standards axis; the parent runs the Spec axis independently. Read-only repository inspection, with private receipt/manifest-diff writes only. No target-module imports, tests, SSH, providers, controls or science execution.
+
+## Exact scope
+
+Base7941ccbabd3f14a7da57ea36ac34d39036ac2a58, HEAD34094e33798bab06ea382ff0fe5af16ba6513d75. Full3791-path comparison was inventoried; active boundaries include92 product sources,88 test/fixture/testkit paths,151 catalog additions,20 schema paths,20 library additions,29 public docs and deployment/tool scripts. The3375 scratch/evidence paths are retained historical custody; obsolete/refused/NOTRUN generations are not current source. Four outside-project changes are context-only and were preserved.
+
+The accompanying JSON pins current active files, the original26030-byte classification supplement, the exact follow-up two-file manifest diff, and source inventory. Earlier preparation10f3bf27/inventory22097f15 supply the complete component and verification map. Current source was read via changed hunks, public interfaces, normative contracts, cross-module guard/call-site traces and targeted full module sections. This is not a claim to have line-reviewed every historical archived byte. All63 productPython,71 testPython and5 scriptPython documents were source-AST parsed without importing them; all20 schemas were JSON-read and relative referenced source paths checked. These source inspections are not tests.
+
+## Rules applied
+
+Read root/SWDB AGENTS, SWDB CLAUDE, all three .claude/rules documents, GLOSSARY, relevantADR0001–0014, tracker/domain/triage workflow, contribution guide, pyproject and changed public interfaces. GAPBS CONTRIBUTING is vendor-scoped; no GAPBS application source changed. No undocumented lint/type-check requirement was imposed. US spelling/dates apply to new human prose, not sealed historical/machine keys. Fowler smells were considered as heuristics subordinate to repository rules.
+
+## Concrete documented breach and narrow repair
+
+certification_procedures.py26–30 requires: “Any behavior change gets a new version; a refactor that keeps behavior re-declares the digest here and says why in its ticket.” tests/test_certification_procedures.py24–27 repeats the requirement. SupplementalR3 changed common certification source bytes but left10 frozen declarations stale. The parent reported10 failed/1 passed in the pure frozen-digest regression.
+
+The narrow repair is a documented behavior-preserving redeclaration, not a new acceptance-procedure version: CandidateFailure/UsageError retain their old superclass, check predicate, public message and CLI exit1/2 (cli.py279–285); library-operation callers still catch those same superclasses. Evaluator procedures, C++/library/control/build decisions, matrices and verdict rules remain unchanged. New campaign infrastructure-stop semantics live in nonmanifest campaign_targets. Source-reviewed parent follow-up changes only10 table/test digests plus dated rationale/comments; library_operation1.0 stays exact. Parent reports the resulting11-pass/40-deselected frozen-digest run. Historical records/pins and frozen remoteR/F6 are preserved. The follow-up is separately pinned, not silently folded into the original supplement.
+
+No additional documented-standard breach or actionable Fowler smell was found within the reviewed source scope.
+
+## Boundary coverage
+
+- Access/store/query/writer/crosswalk: oneSQLite connection boundary, generated index only, YAML authority, safe URI read-only querying, unchanged compatibility delegates. Source/library/catalog comparison is additive and preserves earlier identities.
+- Characterization/LLVM/runtime: source-specific adapters separate from generic mechanism models, normalized source/optimized diagnostics separated, exact registered source/input/ROI/thread/compiler/runtime/count seals, logical object/address facts distinguished from physical residency/traffic, bounded observation and named unknowns, observer reentrancy/shutdown/unwind guards. Runtime/model sources do not branch on BFS/BC/PageRank/MAPLE/DX100 target names.
+- Analytic models/composition/reuse/sensitivity: null unknowns, complete observation-policy hash, only declared rates reuse counts, each full trial composed before median, diagnostic regional medians not totaled as whole-call evidence, required opaque-call cost coverage exact. Optional modules are documented extension seams, not speculative hooks to remove.
+- CPU calibration/service/resource/error/pairing: realLinux/x86 source/lane/compiler/library controls, separate counted and uninstrumented timing work, fixture/native separation, independently scoped constructed service recipes, inferred transfer/maximum policies, frozen development and prospective held-out scopes, failed/development/fixture bands never confer native gain confidence.
+- Providers/team/research/functional handoff: closed sanitized wire schemas; explicit guarded files exclude evaluator/prompts/timing/PMU outcomes; only missing numeric premises may be filled; team refuses research/gem5 execution evidence; source-reading carve-out remains documented; functional certification never asserts hardware timing/correctness.
+- Extensa ledger/agreement/export: timing-only selection preserved; forecasts/order/contexts retained separately; unknown/fixture/non-admitted numeric adapters cannot satisfyD30; unsupported intervals/rank/top3 produce truthful no-switch. ActualP3 zero histories remain a strict gate. Export preserves exact YAML bytes and tags, not a silent team promotion.
+- Deployment/control/custody: hook tracked53-file physical manifest, owner/mode/hash/revision/receipt postflight guards, bounded private metadata query/admission/publication sources, explicit future facts and current-generation release/holder/FD continuity. Selected actual control source/argv/seal reviews from this task remain valid; no current-generation guessing or native chmod. Historical failures/NOTRUN derivatives remain archived.
+- Schemas/tests/docs/library: additive optional/historical compatibility, closed new shapes and typed basis/identity references; external command seams retained, fixture subset fails closed and preserves original filenames/body bytes; new normative variants pin functional source/macros; dates and glossary claims distinguish reported/estimated/native/simulated/fixture evidence.
+
+## Evidence limits and next obligation
+
+The parent preserves a real integration failure (61pass/1failed, interruptedexit2 after587.35s): all10 positive/20 control executions failed95/shm_open while23 build/link commands succeeded. Standards source review does not waive a meaningful rerun. Local18 classification cases and11 frozen-manifest cases are parent-reported, not independently executed here. The new fixture-efficiency proposal is a separate prospective source review, not included in this receipt. FINALIZE/report/index/auditor originals and truthful ticket closeout still require their actual prerequisites; no source/test review upgrades original research outcomes or supplies human final judgment.

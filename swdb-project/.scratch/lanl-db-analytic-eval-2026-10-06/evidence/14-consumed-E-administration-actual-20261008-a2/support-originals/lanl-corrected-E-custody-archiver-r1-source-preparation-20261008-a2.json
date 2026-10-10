@@ -1,0 +1,61 @@
+{
+  "format": "swdb.local-source-only-custody-archiver-r1-preparation.v1",
+  "sealed": false,
+  "sources": {
+    "original_R0": {
+      "path": "/private/tmp/lanl_archive_corrected_E_default_and_removal_custody_20261008_a2.py",
+      "bytes": 28120,
+      "sha256": "c3c2d77e12ff558c46df96f63acb0950cdd293b537613a601fe8346a628c5b91"
+    },
+    "selected_R1": {
+      "path": "/private/tmp/lanl_archive_corrected_E_default_and_removal_custody_20261008_a2_r1.py",
+      "bytes": 28110,
+      "sha256": "e47c2c9546cacd75bd9da3a0c2a39ea7f5e02a9d4210ec585672527f1d2f9cdc"
+    },
+    "complete_two_hunk_diff": {
+      "path": "/private/tmp/lanl-corrected-E-custody-archiver-r1-complete-r0-derivation-20261008-a2.diff",
+      "bytes": 2763,
+      "sha256": "2f747373cb5fc25b108e0f3f08d6a5ff72e4ff5fa36f32e3d3b83d5cdf7ff81b"
+    },
+    "handoff": {
+      "path": "/private/tmp/lanl-corrected-E-custody-archiver-r1-source-handoff-20261008-a2.md",
+      "bytes": 2652,
+      "sha256": "246de0e5b1df288de75071e9d36638506b85b3190556ef9d74129200e916d0c7"
+    }
+  },
+  "source_only_checks": {
+    "exact_two_substitution_reversal": true,
+    "changed_definitions": [
+      "observation",
+      "main"
+    ],
+    "unchanged_definitions": [
+      "require",
+      "sha",
+      "canonical",
+      "strict",
+      "stamp",
+      "route",
+      "read",
+      "validate_pin",
+      "git",
+      "write_original",
+      "utc",
+      "receipt_pin",
+      "reconcile_pair"
+    ],
+    "all_nonfunction_top_level_AST_exact": true,
+    "original_R0_bytes_preserved": true,
+    "scope": "README Date literal and removal net-delta sign predicate only",
+    "known_default0_and_all_default_pin_constants_exact": true,
+    "bounds_and_prior_source_receipt_links_exact": true
+  },
+  "actual_execution": {
+    "original_R0_main": false,
+    "selected_R1_main": false,
+    "tests": false,
+    "selected_import_or_function_call": false,
+    "SSH_or_worktree_or_Git_action": false,
+    "unknown_removal_actual_pins_supplied": false
+  }
+}

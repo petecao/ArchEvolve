@@ -1,0 +1,104 @@
+{
+  "checks": [
+    "All six current original and derivative inventory pins match.",
+    "Unified patch reconstructs all six derivatives byte-exactly without applying it.",
+    "Four derivative Python files AST-parse; schema JSON parses.",
+    "swdb-project/swdb/campaign.py: pre-existing function AST changes only _certified_and_evaluated,_setup.",
+    "swdb-project/swdb/extensa_agreement.py: pre-existing function AST changes only _forecasts.",
+    "swdb-project/swdb/extensa_pairing.py: pre-existing function AST changes only _context,before,freeze,ledger_problems,validate_record,validate_summary.",
+    "Setup baseline receipts occur after real protocol freeze and before setup_done/pilot; original adapters prepare baseline dependency closure.",
+    "Both successful candidate materialization paths write artifact-only receipts before admission/certification; pre-materialization failures receive no invented artifact.",
+    "Actual before-timing request freezing, durable outcome events and evaluator ordering stay distinct; marker-bearing requests/events cannot authorize outcomes.",
+    "Selection, repair/provider budgets, plateau and evaluator call sites are unchanged.",
+    "Artifact branch requires exact 12-field execution, six-field campaign projection, original protocol ID/identity/settings hash and registered workload membership.",
+    "Creation uses actual candidate artifact hash and registered input identities/representations; public summary validates frozen campaign metadata correspondence. No complete binary/runtime bridge is claimed.",
+    "Artifact state is unknown with null seconds and false agreement eligibility, including numeric fixture-model input; required missing proof is enforced by custom validation.",
+    "Agreement forecast matching excludes artifact-only receipts; no rank/top3/D30/strict-audit gate is relaxed.",
+    "Legacy marker-free receipt validation, request_identity alias semantics, paired policy/resume refusal and existing exact timing contexts remain unchanged.",
+    "Changed estimator bundle requires a fresh campaign; no historical receipt/control/policy/records are patched.",
+    "Documents are dated and use US terminology; changes stay within six assigned SWDB paths."
+  ],
+  "created_at_utc": "2026-10-09T01:12:41.156432+00:00",
+  "derivatives": {
+    "swdb-project/docs/reference/format-v0.4-extensa.md": {
+      "bytes": 18686,
+      "sha256": "9ac28ab2b437b2e7cf357f830f7dd1a554eadca66b2b9a2f9941b0aa23e8fd43"
+    },
+    "swdb-project/schemas/paired_estimate.schema.json": {
+      "bytes": 7033,
+      "sha256": "8e2edbbd05eb7ea9974a083e3958df4a72ef60977cdbbe1bcd98db8a86f6cf0d"
+    },
+    "swdb-project/swdb/campaign.py": {
+      "bytes": 79997,
+      "sha256": "8deed63fb26fccac37835a3f92aecd97908f6f4f9362b928901fdd1f5d58b013"
+    },
+    "swdb-project/swdb/extensa_agreement.py": {
+      "bytes": 26108,
+      "sha256": "311a632e2ce0173317578ab8582ac48d0b6d036ceef88386cb51ecb7d3dde020"
+    },
+    "swdb-project/swdb/extensa_pairing.py": {
+      "bytes": 22788,
+      "sha256": "705e698886779ce8f2be9acbe208405d9a0746b5c9ed04fab1bccd13701391a4"
+    },
+    "swdb-project/tests/test_extensa_pairing.py": {
+      "bytes": 19333,
+      "sha256": "7ab41c2f25fc6591765f0ec5fda90c4e893491870e46c0510bf642d988897d3e"
+    }
+  },
+  "findings": [],
+  "followup": [
+    {
+      "detail": "Current per-subject assertions are valid for the chosen FixtureAdapter, which incorporates class in its synthetic artifact hash, and the repair test changes patch content. They do not exercise real adapters identical-tree aliases across class IDs. Add a byte-identical artifact/different-record-ID regression checking unique artifact-content\u00d7registered-input/protocol coverage, retained original alias/time, no fresh receipt on name-only reuse, and no artifact-only outcome authorization. Do not change immutable request_identity merely to make per-ID assertions true.",
+      "file": "swdb-project/tests/test_extensa_pairing.py",
+      "kind": "regression_coverage",
+      "lines": [
+        221,
+        257
+      ],
+      "severity": "P2 follow-up before claiming integration complete"
+    }
+  ],
+  "format": "swdb.private-independent-source-review.v1",
+  "limits": [
+    "Source text/AST/JSON only. No target imports, Store construction, tests, patch application, scientific/control execution or SSH.",
+    "Source review does not establish runtime test success, current remote readiness, eligible predictions or repair frozen campaign history."
+  ],
+  "original_spec_review": {
+    "findings": "SPEC-ARTIFACT-COVERAGE reviewed; SPEC-REAL-AGREEMENT-CAPABILITY remains separate incomplete scientific capability",
+    "full_coverage_path": "/private/tmp/lanl17-final-spec-axis-full-coverage-20261008-r1.md"
+  },
+  "originals": {
+    "swdb-project/docs/reference/format-v0.4-extensa.md": {
+      "bytes": 17081,
+      "sha256": "aa21c11c9de2ddef0c3b6133fadc3f8220004eb6bbe96113b1d60d6254bc110a"
+    },
+    "swdb-project/schemas/paired_estimate.schema.json": {
+      "bytes": 3309,
+      "sha256": "a48e04d2e73a88bdc4a0c803091a035a3878bdc6a671382c4dacbd2bac974463"
+    },
+    "swdb-project/swdb/campaign.py": {
+      "bytes": 79456,
+      "sha256": "13e3e66a469c3934dee2f0f372a5c17812f5a680cb451f63766ad889d13c3d1d"
+    },
+    "swdb-project/swdb/extensa_agreement.py": {
+      "bytes": 26057,
+      "sha256": "d078cf8a26fbbd65f0d27d0a64dbde56e4f190e1ec4c07b9e4eb311ad3a5174f"
+    },
+    "swdb-project/swdb/extensa_pairing.py": {
+      "bytes": 17550,
+      "sha256": "30a62539769c21f5d0ecbc3fb2800bd60c935332f13a6c6c1eba638558a1896a"
+    },
+    "swdb-project/tests/test_extensa_pairing.py": {
+      "bytes": 12592,
+      "sha256": "d2ace7cdf8ac22fce08729031599afda10f4ef80c65e42301f33f1c95575cc1f"
+    }
+  },
+  "patch": {
+    "bytes": 25106,
+    "path": "/private/tmp/lanl16-prospective-artifact-receipts-source-draft-20261008-r1/prospective-source-only.patch",
+    "sha256": "182a99f0485e295a20a515ac9173f33fef44ee30c02086fe8a5dc7eb56e36375"
+  },
+  "reviewer": "review_plan",
+  "scope": "ticket16 prospective six-file artifact receipt patch; Standards/source safety",
+  "verdict": "PASS_SOURCE_ONLY_WITH_ALIAS_REGRESSION_FOLLOWUP"
+}

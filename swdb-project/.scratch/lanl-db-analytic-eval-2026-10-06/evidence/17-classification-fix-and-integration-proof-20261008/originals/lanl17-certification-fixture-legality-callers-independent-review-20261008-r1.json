@@ -1,0 +1,52 @@
+{
+  "changed_functions": [
+    "test_knob_interface_candidate_certifies_and_its_static_assert_does_not_hide_the_control",
+    "test_out_of_range_schedule_is_refused_by_schedule_range",
+    "test_a_zero_threshold_is_refused_by_knob_range_under_1_6",
+    "test_a_pragma_operator_candidate_certifies_under_1_6"
+  ],
+  "checks": [
+    "Byte-exact patch reconstruction of one test file.",
+    "Every original assertion AST unchanged.",
+    "Removing exactly four fixture signature additions and four keyword forwarding additions restores every changed function AST.",
+    "Imported controls._certify requires keyword-only certification_store and threads it through real _patch/materialization/certification without bypassing compiler/evaluator/controls.",
+    "certification_store is registered through conftest plugin; fresh per-test original-record closure stays outside tmp_path.",
+    "Static AST scan of all test files finds only this cross-module import of transformed certification helpers; all four affected _certify calls accounted for.",
+    "Pure legality tests/transforms/expected versions/verdicts/control assertions and all production/scientific sources unchanged."
+  ],
+  "created_at_utc": "2026-10-09T01:14:42.850154+00:00",
+  "cross_module_couplings": [
+    {
+      "file": "swdb-project/tests/test_certification_legality.py",
+      "line": 17,
+      "module": "test_certification_controls",
+      "names": [
+        "_certify",
+        "_controls",
+        "_replace"
+      ]
+    }
+  ],
+  "findings": [],
+  "format": "swdb.private-independent-source-review.v1",
+  "limits": [
+    "No target imports, fixture construction, tests, patch application or remote actions.",
+    "Actual R4 failure attribution and four genuine integration reruns remain parent-owned; this source review does not establish runtime success."
+  ],
+  "original": {
+    "bytes": 16319,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_certification_legality.py",
+    "sha256": "c841a3cde1ce851c946ced45fa4b3c44a877564bce39c92c23e36871e98901ec"
+  },
+  "patch": {
+    "bytes": 2996,
+    "path": "/private/tmp/lanl17-certification-fixture-legality-callers-prospective-r1-20261008.diff",
+    "sha256": "c4006577b25b91e0940d5098619e694372522a51674ff9b3b5adb9a126b6cfaf"
+  },
+  "prospective": {
+    "bytes": 16579,
+    "sha256": "b52c1e1b100ada5d1dc80badc9b40f0d8e3a31513f1a9bfb0b4926e2538fb283"
+  },
+  "scope": "Four imported legality helper callers; fixture forwarding only",
+  "verdict": "PASS_SOURCE_ONLY"
+}

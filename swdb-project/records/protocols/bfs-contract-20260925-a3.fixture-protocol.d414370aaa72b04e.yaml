@@ -1,0 +1,81 @@
+kind: protocol
+schema_version: '0.4'
+id: bfs-contract-20260925-a3.fixture-protocol.d414370aaa72b04e
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+requested_id: bfs-contract-20260925-a3.fixture-protocol
+version: 1
+supersedes: null
+invalidated_comparisons: []
+settings:
+  mode: native
+  kernel: gapbs-bfs
+  workloads:
+  - bfs-contract-20260925-a3.workload.584a833b37d4d8a1
+  threads: 1
+  roi: bfs.complete_call.v1
+  targets:
+    baseline:
+      id: bfs-contract-20260925-a3.local-host
+      configuration: {}
+      machine_sha256: b8e9059c7989f1bac8a02f7a1301d4760b080a36eb646a4f06993cc75593e0f3
+    candidate:
+      id: bfs-contract-20260925-a3.local-host
+      configuration: {}
+      machine_sha256: b8e9059c7989f1bac8a02f7a1301d4760b080a36eb646a4f06993cc75593e0f3
+  builds:
+    baseline:
+      compiler: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/explicit-fixture-compiler
+      flags: [-std=c++11, -O2]
+      adapter: gapbs_native
+      compiler_version:
+      - SWDB explicit contract fixture compiler v1
+    candidate:
+      compiler: /private/tmp/bfs-contract-20260925-a3-j1u4qvpb/explicit-fixture-compiler
+      flags: [-std=c++11, -O2]
+      adapter: gapbs_native
+      compiler_version:
+      - SWDB explicit contract fixture compiler v1
+  instrumentation:
+    baseline:
+      template_sha256: 99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95
+      treatment: included
+    candidate:
+      template_sha256: 99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95
+      treatment: included
+  correctness:
+    coverage: every_timed_trial
+    verifier: swdb.bfs.structural.v1
+    required_cases: []
+  sampling:
+    repetitions: 5
+    warmups: 0
+    aggregation: geomean_source_median_ratio
+  profitability:
+    minimum_speedup: 1.05
+    maximum_relative_spread: 0.1
+    confidence: 0.95
+    bootstrap_resamples: 2000
+    bootstrap_seed: 20260925
+  differences:
+    software:
+    - Explicit fixture source identity differs; artificial durations establish no performance.
+    accelerator: []
+    configuration: []
+  region_pairs: []
+workload_identities:
+  bfs-contract-20260925-a3.workload.584a833b37d4d8a1: 584a833b37d4d8a12dc6d52e5a91e17e8f7edce7e1936d2e0871a27a16de462a
+frozen_at: '2026-09-26T02:01:58.655746+00:00'
+state: frozen
+identity_sha256: d414370aaa72b04e762587ba0120a7b7ee2a567284287164478d654f105922d5

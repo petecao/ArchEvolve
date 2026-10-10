@@ -1,0 +1,1930 @@
+kind: certification
+schema_version: '0.4'
+id: certification.1e389a959ffb4ff9bfdcf4cea9eace06
+status: draft
+created: '2026-10-03'
+updated: '2026-10-03'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+entry:
+  id: contract.bc_read_offload
+  content_sha256: 969276431d9169701a5ff5862fc422e7578e54bf27419fb1d1d1ece63f90dc9a
+dependencies:
+- id: contract.bfs_read_offload
+  content_sha256: 867fac18c28938268242e7d4b60049f3c3e97113512a761cc8a763735a77db51
+- id: intrinsic.dxc_const_i32
+  content_sha256: d321f3c5d234afa7a41121f923a6e0a0edef51015c4f7ebe3cbe463c0a92950f
+- id: intrinsic.dxc_gather
+  content_sha256: f1a54734b19e5223a1b2b11b91d177913ecda7296ce45592acb91412b4c6609d
+- id: intrinsic.dxc_range_loop
+  content_sha256: dd2abc9caac3f39254ffa28d254b8308b95f73b496b1fb9a40bb8f570da54f57
+- id: intrinsic.dxc_session_begin
+  content_sha256: 69f444bf9d4800ebb4b1b29d45496b3cc2f0f49ea404bba4a65ec5343439de91
+- id: intrinsic.dxc_stream_load
+  content_sha256: 2deb4038416c9950ab524497a10071c69b5b295f87659d43d0ec24a8313fe79c
+- id: intrinsic.dxc_thread_context
+  content_sha256: 9a25951c2ee114ff9e1c5265c2da5452bf3f8c5f850c36afeb157b00be0e8e88
+- id: intrinsic.dxc_tile_pointer
+  content_sha256: c276531e321c1fdfd12f6730d91e1351e5a864a0214931452e29bae78b10d20e
+- id: intrinsic.dxc_tile_size
+  content_sha256: 8072dc02828ab0b865a11bd063b96b7412de71f435a450c1cb156e793f957c06
+- id: intrinsic.dxc_wait
+  content_sha256: e349a9c69489091c35d5cb3654cae16b0b5361f8706fd4c4f21052756cc815de
+- id: lowering.dxc_const_i32.dx100-mmio.1.0-e4fc4af
+  content_sha256: e4916a2ec1bbb672ce27b6c4ef52a10a38e19458c914d09bb9e0c0969eea5bcf
+- id: lowering.dxc_gather.dx100-mmio.1.0-e4fc4af
+  content_sha256: 3ad324abd6d51613450786e617deafad181831cb82be867ae479968374a2a8f9
+- id: lowering.dxc_range_loop.dx100-mmio.1.0-e4fc4af
+  content_sha256: 683c4ecb61a61ea24de68930b11b40bc8a987465d3ec39cf6e1330af6b2a3831
+- id: lowering.dxc_session_begin.dx100-mmio.1.0-e4fc4af
+  content_sha256: 8584f0c4b2358692e6f76be3d653ee461baa8addaab8a9fd15788a3382984569
+- id: lowering.dxc_stream_load.dx100-mmio.1.0-e4fc4af
+  content_sha256: bfd124d6ce44b13ab96c3f4bb1d8b640aca4ade018ef007138004abc9b5f5f53
+- id: lowering.dxc_thread_context.dx100-mmio.1.0-e4fc4af
+  content_sha256: 3dd51312fd5d6bc55939b475163bb881ccfc0b68335b060d24a16d12b48dff3e
+- id: lowering.dxc_tile_pointer.dx100-mmio.1.0-e4fc4af
+  content_sha256: 842531eb06ab38e5c79eecceaf36b536d690d2c2be580f94949b727429c8b7dc
+- id: lowering.dxc_tile_size.dx100-mmio.1.0-e4fc4af
+  content_sha256: 91a183168d5adb02cf9ee7eefbbeb396615dec36d4b8ec0ebce88c0c42c5b323
+- id: lowering.dxc_wait.dx100-mmio.1.0-e4fc4af
+  content_sha256: d0cda6d52b5a86f3d53f8c4af12be8a8eac3c64fdcd37244ed35d70735acaae2
+command:
+  version: '1.0'
+  sources_sha256: b75a6f74f6bb4068d5f85c1d5c9ebba83afbdfaa2de82148a23af9c4428d8ad6
+host:
+  hostname: YanRus-Mac-Studio.local
+  system: Darwin
+  architecture: arm64
+  compiler: /opt/homebrew/bin/g++-16
+matrix:
+- graph: kronecker-10
+  graph_sha256: c60f4d2efc4f70de4d54955cb0609a09197d17af0ef60c70e477747d5ba18e4b
+  source: 0
+  oracle_frontier_counts: [1, 3, 207, 661, 24]
+  tile_size: 16384
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/kronecker-10.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00014
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 1024 nodes and 10496 undirected edges for degree: 10
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=3
+      Starting PBFS: 3 elements
+      SWDB trusted_frontier=207
+      Starting PBFS: 207 elements
+      SWDB trusted_frontier=661
+      Starting PBFS: 661 elements
+      SWDB trusted_frontier=24
+      Starting PBFS: 24 elements
+      Starting Brandes: 5/7: 132-0 elements
+      Starting Brandes: 4/7: 122-132 elements
+      Starting Brandes: 3/7: 4-122 elements
+      Starting Brandes: 2/7: 164-4 elements
+      Starting Brandes: 1/7: 0-164 elements
+      Starting Brandes: 0/7: 0-0 elements
+      ROI End!!!
+      SWDB accelerated_chunks=2
+      Trial Time:          0.00280
+      Verification:           PASS
+      Verification Time:   0.00021
+      Average Time:        0.00280
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/kronecker-10-16384-0.json
+- graph: kronecker-14
+  graph_sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+  source: 0
+  oracle_frontier_counts: [1, 6, 2269, 9757, 509, 1]
+  tile_size: 16384
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/kronecker-14.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00031
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 16381 nodes and 212930 undirected edges for degree: 12
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=6
+      Starting PBFS: 6 elements
+      SWDB trusted_frontier=2269
+      Starting PBFS: 2269 elements
+      SWDB trusted_frontier=9757
+      Starting PBFS: 9757 elements
+      SWDB trusted_frontier=509
+      Starting PBFS: 509 elements
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      Starting Brandes: 6/8: 14965-0 elements
+      Starting Brandes: 5/8: 10337-14965 elements
+      Starting Brandes: 4/8: 2016-10337 elements
+      Starting Brandes: 3/8: 45-2016 elements
+      Starting Brandes: 2/8: 4064-45 elements
+      Starting Brandes: 1/8: 0-4064 elements
+      Starting Brandes: 0/8: 0-0 elements
+      ROI End!!!
+      SWDB accelerated_chunks=3
+      Trial Time:          0.02499
+      Verification:           PASS
+      Verification Time:   0.00229
+      Average Time:        0.02499
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/kronecker-14-16384-0.json
+- graph: kronecker-16
+  graph_sha256: 9f813f1c549f4affbd7e8108265c27d4d0c4c1fad73140dae97a5b99271e05f9
+  source: 0
+  oracle_frontier_counts: [1, 28, 10673, 34666, 1314, 6]
+  tile_size: 16384
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/kronecker-16.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00085
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 65536 nodes and 909646 undirected edges for degree: 13
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=28
+      Starting PBFS: 28 elements
+      SWDB trusted_frontier=10673
+      Starting PBFS: 10673 elements
+      SWDB trusted_frontier=34666
+      Starting PBFS: 34666 elements
+      SWDB trusted_frontier=1314
+      Starting PBFS: 1314 elements
+      SWDB trusted_frontier=6
+      Starting PBFS: 6 elements
+      Starting Brandes: 6/8: 9033-0 elements
+      Starting Brandes: 5/8: 59516-9033 elements
+      Starting Brandes: 4/8: 29845-59516 elements
+      Starting Brandes: 3/8: 13-29845 elements
+      Starting Brandes: 2/8: 1623-13 elements
+      Starting Brandes: 1/8: 0-1623 elements
+      Starting Brandes: 0/8: 0-0 elements
+      ROI End!!!
+      SWDB accelerated_chunks=5
+      Trial Time:          0.12226
+      Verification:           PASS
+      Verification Time:   0.01356
+      Average Time:        0.12226
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/kronecker-16-16384-0.json
+- graph: uniform-14
+  graph_sha256: f7021efd75859ee97a7b26275fd0fd90b3dcd0cc270c8cf81b8cdb6f2cb4d06d
+  source: 0
+  oracle_frontier_counts: [1, 30, 930, 12971, 2452]
+  tile_size: 16384
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/uniform-14.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00033
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 16384 nodes and 261860 undirected edges for degree: 15
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=30
+      Starting PBFS: 30 elements
+      SWDB trusted_frontier=930
+      Starting PBFS: 930 elements
+      SWDB trusted_frontier=12971
+      Starting PBFS: 12971 elements
+      SWDB trusted_frontier=2452
+      Starting PBFS: 2452 elements
+      Starting Brandes: 5/7: 3820-0 elements
+      Starting Brandes: 4/7: 1176-3820 elements
+      Starting Brandes: 3/7: 177-1176 elements
+      Starting Brandes: 2/7: 333-177 elements
+      Starting Brandes: 1/7: 0-333 elements
+      Starting Brandes: 0/7: 0-0 elements
+      ROI End!!!
+      SWDB accelerated_chunks=3
+      Trial Time:          0.03076
+      Verification:           PASS
+      Verification Time:   0.00347
+      Average Time:        0.03076
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/uniform-14-16384-0.json
+- graph: two-level-degree-17000
+  graph_sha256: f2f7776e63cc336ea5f85dda785b669a47fb6944fb34a9d1db089537e21b7b0c
+  source: 0
+  oracle_frontier_counts: [1, 4200, 17000]
+  tile_size: 16384
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00022
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=4200
+      Starting PBFS: 4200 elements
+      SWDB trusted_frontier=17000
+      Starting PBFS: 17000 elements
+      Starting Brandes: 3/5: 4201-0 elements
+      Starting Brandes: 2/5: 1-4201 elements
+      Starting Brandes: 1/5: 0-1 elements
+      Starting Brandes: 0/5: 0-0 elements
+      ROI End!!!
+      SWDB accelerated_chunks=3
+      Trial Time:          0.00433
+      Verification:           PASS
+      Verification Time:   0.00039
+      Average Time:        0.00433
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000-16384-0.json
+- graph: kronecker-10
+  graph_sha256: c60f4d2efc4f70de4d54955cb0609a09197d17af0ef60c70e477747d5ba18e4b
+  source: 0
+  oracle_frontier_counts: [1, 3, 207, 661, 24]
+  tile_size: 1024
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/kronecker-10.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00010
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 1024 nodes and 10496 undirected edges for degree: 10
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=3
+      Starting PBFS: 3 elements
+      SWDB trusted_frontier=207
+      Starting PBFS: 207 elements
+      SWDB trusted_frontier=661
+      Starting PBFS: 661 elements
+      SWDB trusted_frontier=24
+      Starting PBFS: 24 elements
+      Starting Brandes: 5/7: 132-0 elements
+      Starting Brandes: 4/7: 122-132 elements
+      Starting Brandes: 3/7: 4-122 elements
+      Starting Brandes: 2/7: 164-4 elements
+      Starting Brandes: 1/7: 0-164 elements
+      Starting Brandes: 0/7: 0-0 elements
+      ROI End!!!
+      SWDB accelerated_chunks=2
+      Trial Time:          0.00242
+      Verification:           PASS
+      Verification Time:   0.00093
+      Average Time:        0.00242
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/kronecker-10-1024-0.json
+- graph: kronecker-14
+  graph_sha256: 2ab1fb21b853f601d4e294adf186b5ef36a4df8a415d70eff150bb7e2d607160
+  source: 0
+  oracle_frontier_counts: [1, 6, 2269, 9757, 509, 1]
+  tile_size: 1024
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/kronecker-14.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00027
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 16381 nodes and 212930 undirected edges for degree: 12
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=6
+      Starting PBFS: 6 elements
+      SWDB trusted_frontier=2269
+      Starting PBFS: 2269 elements
+      SWDB trusted_frontier=9757
+      Starting PBFS: 9757 elements
+      SWDB trusted_frontier=509
+      Starting PBFS: 509 elements
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      Starting Brandes: 6/8: 14965-0 elements
+      Starting Brandes: 5/8: 13585-14965 elements
+      Starting Brandes: 4/8: 317-13585 elements
+      Starting Brandes: 3/8: 45-317 elements
+      Starting Brandes: 2/8: 4064-45 elements
+      Starting Brandes: 1/8: 0-4064 elements
+      Starting Brandes: 0/8: 0-0 elements
+      ROI End!!!
+      SWDB accelerated_chunks=14
+      Trial Time:          0.02755
+      Verification:           PASS
+      Verification Time:   0.00252
+      Average Time:        0.02755
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/kronecker-14-1024-0.json
+- graph: kronecker-16
+  graph_sha256: 9f813f1c549f4affbd7e8108265c27d4d0c4c1fad73140dae97a5b99271e05f9
+  source: 0
+  oracle_frontier_counts: [1, 28, 10673, 34666, 1314, 6]
+  tile_size: 1024
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/kronecker-16.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00086
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 65536 nodes and 909646 undirected edges for degree: 13
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=28
+      Starting PBFS: 28 elements
+      SWDB trusted_frontier=10673
+      Starting PBFS: 10673 elements
+      SWDB trusted_frontier=34666
+      Starting PBFS: 34666 elements
+      SWDB trusted_frontier=1314
+      Starting PBFS: 1314 elements
+      SWDB trusted_frontier=6
+      Starting PBFS: 6 elements
+      Starting Brandes: 6/8: 9033-0 elements
+      Starting Brandes: 5/8: 65036-9033 elements
+      Starting Brandes: 4/8: 814-65036 elements
+      Starting Brandes: 3/8: 13-814 elements
+      Starting Brandes: 2/8: 1623-13 elements
+      Starting Brandes: 1/8: 0-1623 elements
+      Starting Brandes: 0/8: 0-0 elements
+      ROI End!!!
+      SWDB accelerated_chunks=47
+      Trial Time:          0.12661
+      Verification:           PASS
+      Verification Time:   0.00868
+      Average Time:        0.12661
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/kronecker-16-1024-0.json
+- graph: uniform-14
+  graph_sha256: f7021efd75859ee97a7b26275fd0fd90b3dcd0cc270c8cf81b8cdb6f2cb4d06d
+  source: 0
+  oracle_frontier_counts: [1, 30, 930, 12971, 2452]
+  tile_size: 1024
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/uniform-14.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00029
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 16384 nodes and 261860 undirected edges for degree: 15
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=30
+      Starting PBFS: 30 elements
+      SWDB trusted_frontier=930
+      Starting PBFS: 930 elements
+      SWDB trusted_frontier=12971
+      Starting PBFS: 12971 elements
+      SWDB trusted_frontier=2452
+      Starting PBFS: 2452 elements
+      Starting Brandes: 5/7: 3820-0 elements
+      Starting Brandes: 4/7: 1176-3820 elements
+      Starting Brandes: 3/7: 177-1176 elements
+      Starting Brandes: 2/7: 333-177 elements
+      Starting Brandes: 1/7: 0-333 elements
+      Starting Brandes: 0/7: 0-0 elements
+      ROI End!!!
+      SWDB accelerated_chunks=17
+      Trial Time:          0.03808
+      Verification:           PASS
+      Verification Time:   0.00231
+      Average Time:        0.03808
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/uniform-14-1024-0.json
+- graph: two-level-degree-17000
+  graph_sha256: f2f7776e63cc336ea5f85dda785b669a47fb6944fb34a9d1db089537e21b7b0c
+  source: 0
+  oracle_frontier_counts: [1, 4200, 17000]
+  tile_size: 1024
+  threads: 4
+  status: passed
+  reason: all_checks_passed
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00016
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=4200
+      Starting PBFS: 4200 elements
+      SWDB trusted_frontier=17000
+      Starting PBFS: 17000 elements
+      Starting Brandes: 3/5: 4201-0 elements
+      Starting Brandes: 2/5: 1-4201 elements
+      Starting Brandes: 1/5: 0-1 elements
+      Starting Brandes: 0/5: 0-0 elements
+      ROI End!!!
+      SWDB accelerated_chunks=22
+      Trial Time:          0.00369
+      Verification:           PASS
+      Verification Time:   0.00030
+      Average Time:        0.00369
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000-1024-0.json
+negative_controls:
+- id: shared_context
+  tile_size: 16384
+  status: rejected
+  reason: strict_layer_assertion
+  named_checks: [thread_ownership_register]
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-shared_context
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-shared_context.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-shared_context
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 86
+    stdout: |
+      Read Time:           0.00023
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=4200
+      Starting PBFS: 4200 elements
+    stderr: |
+      SWDB_STRICT_ASSERT:thread_ownership_register
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/control-16384-shared_context.json
+- id: skipped_cas_recheck
+  tile_size: 16384
+  status: rejected
+  reason: frontier_size_equality
+  named_checks: [duplicate_frontier]
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-skipped_cas_recheck
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-skipped_cas_recheck.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-skipped_cas_recheck
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 88
+    stdout: |
+      Read Time:           0.00028
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=4200
+      Starting PBFS: 4200 elements
+    stderr: |
+      SWDB_PRESERVATION_FAIL:duplicate_frontier
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/control-16384-skipped_cas_recheck.json
+- id: dropped_continuation
+  tile_size: 16384
+  status: rejected
+  reason: verifier
+  named_checks: []
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-dropped_continuation
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-dropped_continuation.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-dropped_continuation
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00024
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=4200
+      Starting PBFS: 4200 elements
+      SWDB trusted_frontier=16384
+      Starting PBFS: 16384 elements
+      Starting Brandes: 3/5: 4201-0 elements
+      Starting Brandes: 2/5: 1-4201 elements
+      Starting Brandes: 1/5: 0-1 elements
+      Starting Brandes: 0/5: 0-0 elements
+      ROI End!!!
+      SWDB accelerated_chunks=2
+      Trial Time:          0.00369
+      1: 0.789811 != 0.795958(0.00614673)
+      2: 0.0120755 != 0(0.0120755)
+      Verification:           FAIL
+      Verification Time:   0.00044
+      Average Time:        0.00369
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/control-16384-dropped_continuation.json
+- id: chunk_off_by_one
+  tile_size: 16384
+  status: rejected
+  reason: strict_layer_assertion
+  named_checks: [tile_truncation]
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-chunk_off_by_one
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-chunk_off_by_one.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-chunk_off_by_one
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 86
+    stdout: |
+      Read Time:           0.00023
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=4200
+      Starting PBFS: 4200 elements
+      SWDB trusted_frontier=17000
+      Starting PBFS: 17000 elements
+    stderr: |
+      SWDB_STRICT_ASSERT:tile_truncation
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/control-16384-chunk_off_by_one.json
+- id: dropped_wait
+  tile_size: 16384
+  status: rejected
+  reason: strict_layer_assertion
+  named_checks: [read_before_wait]
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-dropped_wait
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-dropped_wait.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-dropped_wait
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 86
+    stdout: |
+      Read Time:           0.00025
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=4200
+      Starting PBFS: 4200 elements
+    stderr: |
+      SWDB_STRICT_ASSERT:read_before_wait
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/control-16384-dropped_wait.json
+- id: read_before_wait
+  tile_size: 16384
+  status: rejected
+  reason: strict_layer_assertion
+  named_checks: [read_before_wait]
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-read_before_wait
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-read_before_wait.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-read_before_wait
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 86
+    stdout: |
+      Read Time:           0.00021
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=4200
+      Starting PBFS: 4200 elements
+    stderr: |
+      SWDB_STRICT_ASSERT:read_before_wait
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/control-16384-read_before_wait.json
+- id: index_wrap
+  tile_size: 16384
+  status: rejected
+  reason: strict_layer_assertion
+  named_checks: [stream_bounds]
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-index_wrap
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-index_wrap.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-index_wrap
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 86
+    stdout: |
+      Read Time:           0.00020
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=4200
+      Starting PBFS: 4200 elements
+    stderr: |
+      SWDB_STRICT_ASSERT:stream_bounds
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/control-16384-index_wrap.json
+- id: forged_frontier
+  tile_size: 16384
+  status: rejected
+  reason: frontier_size_equality
+  named_checks: [duplicate_frontier]
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-forged_frontier
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:213:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        213 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-forged_frontier.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-forged_frontier
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 88
+    stdout: |
+      Read Time:           0.00018
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=4200
+      Starting PBFS: 4200 elements
+    stderr: |
+      SWDB_PRESERVATION_FAIL:duplicate_frontier
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/control-16384-forged_frontier.json
+- id: stale_depth_hint
+  tile_size: 16384
+  status: rejected
+  reason: verifier
+  named_checks: []
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-stale_depth_hint
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-stale_depth_hint.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-16384-stale_depth_hint
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00018
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=4200
+      Starting PBFS: 4200 elements
+      SWDB trusted_frontier=17000
+      Starting PBFS: 17000 elements
+      Starting Brandes: 3/5: 4201-0 elements
+      Starting Brandes: 2/5: 1-4201 elements
+      Starting Brandes: 1/5: 0-1 elements
+      Starting Brandes: 0/5: 0-0 elements
+      ROI End!!!
+      SWDB accelerated_chunks=3
+      Trial Time:          0.00360
+      1: 0.789811 != 0.801887(0.0120755)
+      2: 0.0120755 != 0(0.0120755)
+      Verification:           FAIL
+      Verification Time:   0.00025
+      Average Time:        0.00360
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/control-16384-stale_depth_hint.json
+- id: shared_context
+  tile_size: 1024
+  status: rejected
+  reason: strict_layer_assertion
+  named_checks: [thread_ownership_register]
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-shared_context
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-shared_context.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-shared_context
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 86
+    stdout: |
+      Read Time:           0.00018
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=4200
+      Starting PBFS: 4200 elements
+    stderr: |
+      SWDB_STRICT_ASSERT:thread_ownership_register
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/control-1024-shared_context.json
+- id: skipped_cas_recheck
+  tile_size: 1024
+  status: rejected
+  reason: frontier_size_equality
+  named_checks: [duplicate_frontier]
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-skipped_cas_recheck
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-skipped_cas_recheck.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-skipped_cas_recheck
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 88
+    stdout: |
+      Read Time:           0.00020
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=4200
+      Starting PBFS: 4200 elements
+    stderr: |
+      SWDB_PRESERVATION_FAIL:duplicate_frontier
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/control-1024-skipped_cas_recheck.json
+- id: dropped_continuation
+  tile_size: 1024
+  status: rejected
+  reason: verifier
+  named_checks: []
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-dropped_continuation
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-dropped_continuation.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-dropped_continuation
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00015
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=4200
+      Starting PBFS: 4200 elements
+      SWDB trusted_frontier=1024
+      Starting PBFS: 1024 elements
+      Starting Brandes: 3/5: 4201-0 elements
+      Starting Brandes: 2/5: 1-4201 elements
+      Starting Brandes: 1/5: 0-1 elements
+      Starting Brandes: 0/5: 0-0 elements
+      ROI End!!!
+      SWDB accelerated_chunks=6
+      Trial Time:          0.00138
+      1: 0.789811 != 0.196018(0.593793)
+      2: 0.0120755 != 0(0.0120755)
+      Verification:           FAIL
+      Verification Time:   0.00031
+      Average Time:        0.00138
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/control-1024-dropped_continuation.json
+- id: chunk_off_by_one
+  tile_size: 1024
+  status: rejected
+  reason: strict_layer_assertion
+  named_checks: [tile_truncation]
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-chunk_off_by_one
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-chunk_off_by_one.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-chunk_off_by_one
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 86
+    stdout: |
+      Read Time:           0.00023
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=4200
+      Starting PBFS: 4200 elements
+    stderr: |
+      SWDB_STRICT_ASSERT:tile_truncation
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/control-1024-chunk_off_by_one.json
+- id: dropped_wait
+  tile_size: 1024
+  status: rejected
+  reason: strict_layer_assertion
+  named_checks: [read_before_wait]
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-dropped_wait
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-dropped_wait.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-dropped_wait
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 86
+    stdout: |
+      Read Time:           0.00017
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=4200
+      Starting PBFS: 4200 elements
+    stderr: |
+      SWDB_STRICT_ASSERT:read_before_wait
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/control-1024-dropped_wait.json
+- id: read_before_wait
+  tile_size: 1024
+  status: rejected
+  reason: strict_layer_assertion
+  named_checks: [read_before_wait]
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-read_before_wait
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-read_before_wait.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-read_before_wait
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 86
+    stdout: |
+      Read Time:           0.00016
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=4200
+      Starting PBFS: 4200 elements
+    stderr: |
+      SWDB_STRICT_ASSERT:read_before_wait
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/control-1024-read_before_wait.json
+- id: index_wrap
+  tile_size: 1024
+  status: rejected
+  reason: strict_layer_assertion
+  named_checks: [stream_bounds]
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-index_wrap
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-index_wrap.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-index_wrap
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 86
+    stdout: |
+      Read Time:           0.00019
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=4200
+      Starting PBFS: 4200 elements
+    stderr: |
+      SWDB_STRICT_ASSERT:stream_bounds
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/control-1024-index_wrap.json
+- id: forged_frontier
+  tile_size: 1024
+  status: rejected
+  reason: frontier_size_equality
+  named_checks: [duplicate_frontier]
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-forged_frontier
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:213:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        213 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-forged_frontier.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-forged_frontier
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 88
+    stdout: |
+      Read Time:           0.00018
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=4200
+      Starting PBFS: 4200 elements
+    stderr: |
+      SWDB_PRESERVATION_FAIL:duplicate_frontier
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/control-1024-forged_frontier.json
+- id: stale_depth_hint
+  tile_size: 1024
+  status: rejected
+  reason: verifier
+  named_checks: []
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/library/dx100
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/API
+    - -I/private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/include
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc
+    - -o
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-stale_depth_hint
+    returncode: 0
+    stdout: ''
+    stderr: |
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc: In function 'pvector<float> Brandes(const Graph&, SourcePicker<CSRGraph<int> >&, NodeID, bool)':
+      /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/source/benchmarks/gapbs/src/bc.cc:212:19: warning: 'master' construct deprecated since OpenMP 5.1, use 'masked' [-Wdeprecated-openmp]
+        212 | #pragma omp master
+            |                   ^
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-stale_depth_hint.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/bc-1024-stale_depth_hint
+    - -f
+    - /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/two-level-degree-17000.sg
+    - -r
+    - '0'
+    - -n
+    - '1'
+    - -v
+    returncode: 0
+    stdout: |
+      Read Time:           0.00020
+      Fake Checkpoint started
+      Fake Checkpoint ended
+      Graph has 21217 nodes and 21712 directed edges for degree: 1
+      ROI started: 4 threads
+      SWDB trusted_frontier=1
+      Starting PBFS: 1 elements
+      SWDB trusted_frontier=4200
+      Starting PBFS: 4200 elements
+      SWDB trusted_frontier=17000
+      Starting PBFS: 17000 elements
+      Starting Brandes: 3/5: 4201-0 elements
+      Starting Brandes: 2/5: 1-4201 elements
+      Starting Brandes: 1/5: 0-1 elements
+      Starting Brandes: 0/5: 0-0 elements
+      ROI End!!!
+      SWDB accelerated_chunks=22
+      Trial Time:          0.00369
+      1: 0.789811 != 0.799434(0.00962263)
+      2: 0.0120755 != 0.00245283(0.00962264)
+      Verification:           FAIL
+      Verification Time:   0.00034
+      Average Time:        0.00369
+    stderr: ''
+    timeout: false
+    log: /private/tmp/claude-501/cert42/w1/runs/certify-ab7dcc32d74546469b2e53f4331bc3d8/control-1024-stale_depth_hint.json
+verdict: certified
+evidence_basis: simulated
+evidence_kind: execution
+created_at: '2026-10-04T01:31:36.669819+00:00'
+candidate:
+  contract: contract.bc_read_offload
+  contract_sha256: 969276431d9169701a5ff5862fc422e7578e54bf27419fb1d1d1ece63f90dc9a
+  tree_sha256: d6f86eb6f33798ca43afa1b6cfdc462ebc6a5ffdebd3b2a7601082257dceb3b9
+  snapshot: bc-dx100-scalar-only-20261003-a1.source
+  changed_files:
+  - benchmarks/gapbs/src/bc.cc
+  - benchmarks/gapbs/src/swdb_dxc_lowering.hpp

@@ -1,0 +1,116 @@
+{
+  "created": "2026-09-26T21:18:47.470922-04:00",
+  "kind": "independent_scoped_standards_review",
+  "state": "clean_after_repair",
+  "scope": "T15 correction fixed preparation reservation and exact prior charges; source review plus focused synthetic receipt probes. Concurrent allocated_bytes delegate/helper changes excluded.",
+  "finding_closed": {
+    "priority": "P2",
+    "summary": "A published fixture proof could pass reservation validation despite later auditor failure or exceeding the closed600s interval.",
+    "original_probe": "/private/tmp/test_reservation_auditor_boundary_standards_20260926.py",
+    "original_log": "/private/tmp/bfs-reservation-auditor-red-20260926.log",
+    "original_result": "2 failed in0.32s (DID NOT RAISE)",
+    "repair": "Reopen exact per-kind external audit receipt with zero integer exit, exact proof/terminal hashes, existing60s cap, full interval; reopen exact group per-kind post-wrapper readback with zero integer wrapper exit and rehashed refs through the final envelope.",
+    "recheck_adaptation": "V2 updates the new actual.audits[kind] and dependent readback hash after same mutation, so rejection reaches semantic external-audit check rather than stale hash. Original probe/log are unchanged."
+  },
+  "validation": {
+    "command": "PYTHONPATH=\"$PWD/tests:$PWD\" /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest /private/tmp/test_reservation_auditor_boundary_standards_v2_20260926.py tests/test_bfs_simulator_correction.py -q --basetemp=/private/tmp/bfs-reservation-standards-fixed-20260926",
+    "result": "47 passed in0.32s",
+    "tests": "44 author cases plus independent resealed nonzero/late auditor and real allocated-output excess probes"
+  },
+  "plan": {
+    "canonical_sha256": "4bc526b7aa86ff09499a6478f7068319357789ca27fedb58a011d5b75937b7ea",
+    "changes": [
+      "fresh attempt and child IDs",
+      "explicit lossless gzip transport",
+      "retained prior failure1124s/11014971392B",
+      "smoke full closure472s/200704B",
+      "nonrefundable future proof reservation600s/2147483648B"
+    ],
+    "remaining_seconds": 41004,
+    "remaining_bytes": 29787017216,
+    "scientific_settings_and_grid_unchanged": true,
+    "old_t15_and_t16_hashes_unchanged": true,
+    "fixture_routes": "only standard simulator owned/interruption advance to a3; native and A2 selections unchanged"
+  },
+  "functions": {
+    "failed_batch_charge": {
+      "first_line": 100,
+      "last_line": 142,
+      "sha256": "21cb3abe46916367b85f0f5d442d5dc73999ff902f71a324bad060802c16bc72",
+      "captured": "/private/tmp/failed_batch_charge-standards-fixed-20260926.py"
+    },
+    "preparation_charges": {
+      "first_line": 145,
+      "last_line": 189,
+      "sha256": "d9395635a2c1d96d13e0ec3f3b20d3eae3781bb9dd30ee074d0c13b8fd1583e8",
+      "captured": "/private/tmp/preparation_charges-standards-fixed-20260926.py"
+    },
+    "validate_preparation_reservation": {
+      "first_line": 192,
+      "last_line": 271,
+      "sha256": "de1a989fff8985b70bf590b843f97a586d104c7cd7d9bd32013217734fb51945",
+      "captured": "/private/tmp/validate_preparation_reservation-standards-fixed-20260926.py"
+    },
+    "validate_series_result": {
+      "first_line": 564,
+      "last_line": 676,
+      "sha256": "e80e55b928ee3da0a7f0ab8e175f925a932b7a45b9c5f1bffeb97407b305f069",
+      "captured": "/private/tmp/validate_series_result-standards-fixed-20260926.py"
+    }
+  },
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_correction.py",
+      "bytes": 15749,
+      "sha256": "7a4e480f9e49dcf739960f5a864e1906bdf69bfd4cb1a10fa2d13db4cadaa62b"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-t15-gzip-correction-20260926.md",
+      "bytes": 4536,
+      "sha256": "34285b9fd14626aca1d79ec633476aa87f66bcf42739e8098895e31080081140"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t15-correction-simulator-batch-20260926-a1.json",
+      "bytes": 9414,
+      "sha256": "d93e8c02574e1b2fcf90f8c8b1f79c2c83bd63b81d377e627ede71b7755f7f62"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_linux_fixture.py",
+      "bytes": 13247,
+      "sha256": "544971e14f229dffa0945277db7a97e5dcb0ef14c1c78ef319e7e6555b1f5441"
+    },
+    {
+      "path": "/private/tmp/test_reservation_auditor_boundary_standards_20260926.py",
+      "bytes": 1490,
+      "sha256": "d644f8bbbdffcc4645ee5cada7488c6d0b28e0a372f6a9e30ed016a361e5ab62"
+    },
+    {
+      "path": "/private/tmp/test_reservation_auditor_boundary_standards_v2_20260926.py",
+      "bytes": 1928,
+      "sha256": "e4a2b1d8cc3533a4c8c52f512b5ee769355dd14613c64f82982feec44595959f"
+    },
+    {
+      "path": "/private/tmp/bfs-reservation-auditor-red-20260926.log",
+      "bytes": 4126,
+      "sha256": "c26c5f8b67a91c1166722886716d402d77a53cd014d598fb1392af5ff8dc46c0"
+    },
+    {
+      "path": "/private/tmp/bfs-reservation-standards-fixed-20260926.log",
+      "bytes": 99,
+      "sha256": "925ce7acf67ef0d87fabb5c266f29be441c6a7c67ca431b48e95483072e59685"
+    }
+  ],
+  "limitations": [
+    "No empirical fixture/admission/run performed or approved by this review.",
+    "No host or production file changes.",
+    "Complete final batch runtime review awaits separate concurrent allocation helper freeze.",
+    "No assurance both21600-second series finish within41004seconds; normal full-next-series gate remains mandatory."
+  ],
+  "parent_binding_delta": {
+    "state": "clean",
+    "scope": "Only explicit gzip plans require both primary and diagnostic request.verification.trace_transport and context.trace_transport; legacy route unchanged",
+    "result": "4 passed,44 deselected in0.07s",
+    "log": "/private/tmp/bfs-correction-parent-binding-standards-20260926.log",
+    "semantics": "Tests reject missing child/primary/diagnostic marker; fixed-plan regression checks unchanged science and budgets."
+  }
+}

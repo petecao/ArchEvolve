@@ -1,0 +1,44 @@
+{
+  "format": "swdb.lanl14-public-report-prerequisite-merger.v1",
+  "base": "d44b9c8cb2eb8d832985cbf1d0c61e62671f9235",
+  "tested_incoming_tip": "44e600062a823a8d2c492c9d79bc1594ebb09541",
+  "merge_tip": "3acbbdcfff09bf536067bce3fc1b587ede3cfe38",
+  "conflicts": false,
+  "protected_prior_blob_count": 1077,
+  "protected_bytes_preserved": true,
+  "canonical_yaml_count": 633,
+  "changed_paths": [
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-public-report-projection-20261007.md",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-public-report-source-proof-20261007.json",
+    "swdb-project/scripts/generality_report.py",
+    "swdb-project/tests/test_generality_report.py"
+  ],
+  "report_script_and_test_hashes": {
+    "scripts/generality_report.py": "26f6d803d17381a70241e77bed5a28a3340f03549135100e475f550c4e252303",
+    "tests/test_generality_report.py": "2c370ed78c937cc819dada943dad1d38a77f1f28aaaddb3b790a588d4546a0cd"
+  },
+  "estimator_sha256": "b062619b14901a42d23349802a5f5b1eb35e5a12e1a5e954214675c6b51936f3",
+  "python_bundle_unchanged": true,
+  "parent_progress_ticket_states_single_linux_receipt_and_scope_custody_preserved": true,
+  "worker_postmerge_public_gates_reused": {
+    "source_tip": "44e600062a823a8d2c492c9d79bc1594ebb09541",
+    "tests": [
+      "tests/test_generality_report.py",
+      "tests/test_maple_generality.py"
+    ],
+    "passed": 5,
+    "seconds": 3.0,
+    "scope": "Independent pinned fixtures and units/target boundary; no application execution"
+  },
+  "historical_standalone_proof": {
+    "path": "14-public-report-source-proof-20261007.json",
+    "identity_sha256": "6d5d97b36d428927263b19b3db7b7c7b3790cbc55286cfd28951cc550f9ec6e4",
+    "historical_bundle": "fec496c6dec0930aada7bc760991c125907fffe739ea2e9d4d3e03e3748faa52",
+    "scope": "Preintegration preparation history; current merged bundle is recorded separately above."
+  },
+  "actual_nine_reports_complete": false,
+  "ticket14_state": "claimed",
+  "ticket17_state": "claimed; four actual campaigns/report required",
+  "no_remote_or_main_push": true,
+  "identity_sha256": "164bf9f02896166a29ba8a6dc5ed6c48ee158a95b3fb54d6e85c1ae4af2093f7"
+}

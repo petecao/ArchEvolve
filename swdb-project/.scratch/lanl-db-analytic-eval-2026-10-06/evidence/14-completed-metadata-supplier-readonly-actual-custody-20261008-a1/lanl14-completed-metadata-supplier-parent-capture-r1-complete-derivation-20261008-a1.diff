@@ -1,0 +1,12 @@
+--- /private/tmp/lanl14-capture-completed-metadata-supplier-once-20261008-a1.py
++++ /private/tmp/lanl14-capture-completed-metadata-supplier-once-20261008-a1-r1.py
+@@ -30,7 +30,8 @@
+ start = {'format': 'swdb.lanl14-completed-readonly-supplier-parent-start.v1', 'sealed': False,
+          'started_utc': now(), 'bootstrap': {'path': str(BOOT), 'bytes': len(body), 'sha256': digest(body)},
+          'actual_transport_argv': argv, 'actual_remote_outer_argv': remote,
+-         'actual_supplier_public_argv': ['/usr/bin/python3.12', '-B', '/data1/yanruj/lanl14-completed-source-controls-20261008-a1/completed_metadata_supplier_r1.py', '--deadline-s', '600', '--expected-primary', args.expected_primary],
++         'selected_supplier_sys_argv': ['/data1/yanruj/lanl14-completed-source-controls-20261008-a1/completed_metadata_supplier_r1.py', '--deadline-s', '600', '--expected-primary', args.expected_primary],
++         'supplier_execution_route': 'Returned hash-verified bytes compiled in the same native Python-B bootstrap process; no separate target OS exec.',
+          'local_wait_s': 1020, 'requested_readonly': True, 'scientific_admission': False}
+ save('start.json', (json.dumps(start, sort_keys=True) + '\n').encode())
+ code, out, err, failure = None, b'', b'', None

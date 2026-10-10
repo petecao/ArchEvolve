@@ -1,0 +1,150 @@
+{
+  "actual_request_seal_base64_and_original_file_hashes_remain_future": true,
+  "drafts": [
+    {
+      "action_draft": {
+        "bytes": 1950,
+        "mode": "0600",
+        "path": "/private/tmp/lanl17-p2-dispatch-state-action-config-draft-r1-20261008-a5.json",
+        "sha256": "a09db9f481f389841700e284bf34222f5b4d16a615a2af39cb75179a4a0b2b1c"
+      },
+      "campaign": "extensa-gem5-bfs-20261006-p2",
+      "exact_changed_request_paths": [
+        "/context/campaign",
+        "/identity_sha256",
+        "/inputs/before_custody/bytes",
+        "/inputs/before_custody/identity_sha256",
+        "/inputs/before_custody/path",
+        "/inputs/before_custody/sha256",
+        "/inputs/dispatch/bytes",
+        "/inputs/dispatch/identity_sha256",
+        "/inputs/dispatch/path",
+        "/inputs/dispatch/sha256",
+        "/observations/checked_utc",
+        "/observations/parent_checked_pre_dispatch_state_sha256",
+        "/observations/state_unchanged_under_parent_exclusive_campaign_ownership",
+        "/read_roots/2"
+      ],
+      "manifest_context_controls_writer_and_canonical_policy_exactly_preserved": true,
+      "node_or_future_generation_not_assumed": true,
+      "p1_before_dispatch_or_request_identity_pins_invalidated": true,
+      "p1_request_base64_and_file_pins_not_carried": true,
+      "parent_current_observations_invalidated": true,
+      "request_draft": {
+        "bytes": 8285,
+        "mode": "0600",
+        "path": "/private/tmp/lanl17-p2-dispatch-state-request-draft-r1-20261008-a5.json",
+        "sha256": "40009de8c712a89aba389b9f6f8858436f05263dbb06d7132e31df9a1744047f"
+      }
+    },
+    {
+      "action_draft": {
+        "bytes": 1950,
+        "mode": "0600",
+        "path": "/private/tmp/lanl17-p3-dispatch-state-action-config-draft-r1-20261008-a5.json",
+        "sha256": "e52dee8aaf472b8cd6dfd09ea7d2f16e6a75c9ee92140b0ce6fc73b334556b8f"
+      },
+      "campaign": "extensa-gem5-bfs-20261006-p3",
+      "exact_changed_request_paths": [
+        "/context/campaign",
+        "/identity_sha256",
+        "/inputs/before_custody/bytes",
+        "/inputs/before_custody/identity_sha256",
+        "/inputs/before_custody/path",
+        "/inputs/before_custody/sha256",
+        "/inputs/dispatch/bytes",
+        "/inputs/dispatch/identity_sha256",
+        "/inputs/dispatch/path",
+        "/inputs/dispatch/sha256",
+        "/observations/checked_utc",
+        "/observations/parent_checked_pre_dispatch_state_sha256",
+        "/observations/state_unchanged_under_parent_exclusive_campaign_ownership",
+        "/read_roots/2"
+      ],
+      "manifest_context_controls_writer_and_canonical_policy_exactly_preserved": true,
+      "node_or_future_generation_not_assumed": true,
+      "p1_before_dispatch_or_request_identity_pins_invalidated": true,
+      "p1_request_base64_and_file_pins_not_carried": true,
+      "parent_current_observations_invalidated": true,
+      "request_draft": {
+        "bytes": 8285,
+        "mode": "0600",
+        "path": "/private/tmp/lanl17-p3-dispatch-state-request-draft-r1-20261008-a5.json",
+        "sha256": "26ec0692f2ab3f0e8c1ab9cd4c60e882a071d380b5f0c2efc37625b645452913"
+      }
+    },
+    {
+      "action_draft": {
+        "bytes": 1950,
+        "mode": "0600",
+        "path": "/private/tmp/lanl17-p4-dispatch-state-action-config-draft-r1-20261008-a5.json",
+        "sha256": "13516ac0104b312065a180d8f2df5f432b267b3a2eb28f040a32e1392b3b79a1"
+      },
+      "campaign": "extensa-gem5-bfs-20261006-p4",
+      "exact_changed_request_paths": [
+        "/context/campaign",
+        "/identity_sha256",
+        "/inputs/before_custody/bytes",
+        "/inputs/before_custody/identity_sha256",
+        "/inputs/before_custody/path",
+        "/inputs/before_custody/sha256",
+        "/inputs/dispatch/bytes",
+        "/inputs/dispatch/identity_sha256",
+        "/inputs/dispatch/path",
+        "/inputs/dispatch/sha256",
+        "/observations/checked_utc",
+        "/observations/parent_checked_pre_dispatch_state_sha256",
+        "/observations/state_unchanged_under_parent_exclusive_campaign_ownership",
+        "/read_roots/2"
+      ],
+      "manifest_context_controls_writer_and_canonical_policy_exactly_preserved": true,
+      "node_or_future_generation_not_assumed": true,
+      "p1_before_dispatch_or_request_identity_pins_invalidated": true,
+      "p1_request_base64_and_file_pins_not_carried": true,
+      "parent_current_observations_invalidated": true,
+      "request_draft": {
+        "bytes": 8285,
+        "mode": "0600",
+        "path": "/private/tmp/lanl17-p4-dispatch-state-request-draft-r1-20261008-a5.json",
+        "sha256": "8041c28c9cc1871bfd116165dadc7351c64702c8acf5b958aa949a71d82eaecb"
+      }
+    }
+  ],
+  "drafts_executable": false,
+  "exact_three_input_names_and_original_descriptor_key_sets_preserved": true,
+  "format": "swdb.lanl17-remaining-dispatch-state-source-derivation-review.v1",
+  "full_catalogs_policy_budgets_source_and_limits_changed": false,
+  "initial_local_derivation_failure": {
+    "cause": "Wrong positional action argv index; corrected to flag-based value lookup",
+    "exception": "IndexError",
+    "partial_request_draft": "/private/tmp/lanl17-p2-dispatch-state-request-draft-20261008-a5.json",
+    "remote_or_scientific_action_executed": false,
+    "source": "/private/tmp/lanl17_prepare_remaining_dispatch_state_drafts_20261008_a5.py",
+    "state": "preserved_unsealed_local_draft_only"
+  },
+  "original_action": {
+    "bytes": 8377,
+    "path": "/private/tmp/lanl17-p1-dispatch-state-config-20261008-a5.json",
+    "sha256": "e0d57c3782643ff9b9fb4e4566103d737fbfe05aec9a6ef046f66c6275e76b10"
+  },
+  "original_request": {
+    "bytes": 5584,
+    "path": "/private/tmp/lanl17-p1-dispatch-state-request-20261008-a5.json",
+    "sha256": "b5198085b8da79dbdf311cdaffcf2bc733904bb85799c5d8ed8b950310cc3eb2"
+  },
+  "prepared_ET": "2026-10-08T14:11:07.330577-04:00",
+  "producer_source_reviewed": {
+    "bytes": 46165,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-future-input-controls-20261007-a3/lanl17_parent_capture_projection_producer_a3_20261007.py",
+    "sha256": "32bead204337aa66d0a732b6f143216946abafc5d2eb752577b0d90f7190b7b6"
+  },
+  "request_exact_original_top_keys_and_dispatch_state_observation_keys_preserved": true,
+  "resume_read": {
+    "bytes": 8812,
+    "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/resume.md",
+    "sha256": "643d52cfefd5dea8678b1105e5acbe94505f54f69d128fb6ed2b3ecf0187339e"
+  },
+  "scientific_admission": false,
+  "scientific_or_remote_or_control_execution_tests_imports": false,
+  "source_only": true
+}

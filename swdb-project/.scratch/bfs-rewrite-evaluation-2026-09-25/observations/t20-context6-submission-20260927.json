@@ -1,0 +1,69 @@
+{
+  "date": "2026-09-27 13:55 ET",
+  "ticket": 20,
+  "stream": "C3",
+  "context5_outcome": {
+    "proposal": "bfs-campaign-preparation-20260925-a1.upstream-annotated-context5",
+    "record_commit": "1937365 (written on mbit10 at 39d8902, committed on codex/bfs-streamc-records-20260927-c3)",
+    "state": "failed at rewriting: patch application failed: error: corrupt patch at line 174",
+    "provider": {"state": "completed", "host_wall_s": 505.39098315499723, "total_cost_usd": 1.152259, "output_tokens": 64212, "unresolved": []},
+    "diagnosis": "The provider hand-wrote unified-diff hunks with wrong header counts and context lines absent from the source (hunk 2 context '  }\\n}\\n\\n' where bfs.cc has '  return scout_count;\\n}\\n\\n\\n'), so git apply --recount and patch --fuzz=3 also fail. Retained as failed; no repair (the repair loop needs an evaluated candidate), no retry."
+  },
+  "rewrite_worker_change": {
+    "commit": "1e8548b7584ee5e517402f3a52ee5db8fbcc0acd",
+    "branch": "codex/bfs-dx100-candidates-20260927-c3",
+    "files": ["swdb/rewrite.py", "swdb/workflow.py", "tests/test_rewrite_full_files.py"],
+    "summary": "Opt-in provider field edit_format=full_files. The JSON schema asks for {interpretation, files: {path: complete new content}, unresolved}. SWDB rejects non-canonical, unsafe, out-of-scope and whole-file protected paths, writes originals and returned files under <run>/full-files/{a,b}, computes the diff with git diff --no-index --no-prefix (global/system git config ignored), retains computed.diff, and passes the diff through the unchanged apply_patch protection checks and require_code_change. Submit and repair both use it. The proposal record keeps file sizes and SHA-256 digests; raw bodies stay in the provider output. The default patch mode and its prompt are byte-unchanged (context5 prompt bytes still match).",
+    "not_done": "Making a default-mode patch-application failure repair-eligible was not implemented: repair() is keyed to an evaluated candidate, and a failed application has none, so it would need a new pre-candidate repair path rather than a small change.",
+    "tests": "tests/test_rewrite_full_files.py (12). Regression set test_rewrite_full_files, test_rewrite_stream, test_bfs_rewrite, test_bfs_prompt_projection, test_proposals and operator-recipes test_stream_c: 62 passed in 787 s on the Mac.",
+    "reference_roundtrip": "Returning producer-check/reference-bfs.cc as the full file for apps/gapbs src/bfs.cc yields a 7,769-byte diff that applies under the snapshot protections and reproduces the reference byte-for-byte (author check only)."
+  },
+  "context6_packet": {
+    "proposal": "bfs-campaign-preparation-20260925-a1.upstream-annotated-context6",
+    "prepared": ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/stream-c-20260927/prepared/context6.*",
+    "proposal_sha256": "f409553a1750ef2dde8cb02e11510178de730b8753c9d75cc174d073221da26f",
+    "provider_sha256": "5ee4c5dda4bf95e7d5ee8b6d561d1c62c0d1ecc09e9cd72c4754b3d318dfe374",
+    "prompt_bytes": 116366,
+    "prompt_sha256": "41115f1ca9f4fb0af20795ab50939a525c8f1064f1df45f5ddc3b96c16f4d977",
+    "unchanged_from_context5": ["strategy", "intent", "payload (annotation byte-identical)", "regions", "required_operations", "constraints", "source_snapshot", "profile_package", "source_sha256", "implementation", "hardware_target", "producer", "prompt_projection", "read_only_context", "annotation_revision", "output_format stream-json"],
+    "changed": ["provider edit_format full_files", "predecessor_proposal context5", "provider_allocation (root fresh allocation: 1800 s pool, 900 s/call, USD 10/call, <=2 repairs)", "edit_format_revision (new parameter documenting the change)"],
+    "assumption": "The annotation still asks for a unified diff. The full_files prompt states that its output format overrides any such request, so the annotation could stay byte-identical."
+  },
+  "context6_submission": {
+    "job": "t20-context6-submit",
+    "dispatch": "mbit10:/data/yanruj/EvolveSWDB_runs/stream-c-20260927/t20-context6-submit",
+    "checkout": "/data1/yanruj/EvolveSWDB_streamc_20260927_b1 at 1e8548b (detached, clean)",
+    "tmux": "swdb-t20-context6-submit-c3",
+    "lane": "none (provider only)",
+    "started": "2026-09-27 13:37:41 ET",
+    "finished": "2026-09-27 13:41:00 ET",
+    "outer_exit": 0,
+    "steps": {"pre-predecessor": 0, "submit": 0, "post-proposal": 0},
+    "provider": {"version": "2.1.278 (Claude Code)", "model": "claude-sonnet-5", "state": "completed", "host_wall_s": 167.36080428492278, "total_cost_usd": 0.46744, "output_tokens": 22962, "estimated_thinking_tokens": 14750, "num_turns": 2, "events": 1302, "unparsed_lines": 0, "prompt_sha256": "41115f1ca9f4fb0af20795ab50939a525c8f1064f1df45f5ddc3b96c16f4d977"},
+    "outcome": {"state": "candidate_created", "stage": "rewriting"},
+    "repair_budget": {"max_repairs": 2, "total_seconds": 1800, "used_seconds": 167.36080428492278, "repairs": 0},
+    "returned_files": {"src/bfs.cc": {"bytes": 14550, "sha256": "6c225fc229052d6cc43fcadd0c1f9548553ac487d7a25532950ade5c7132a18e"}},
+    "candidate": {
+      "id": "bfs-campaign-preparation-20260925-a1.upstream-annotated-context6.candidate-1",
+      "state": "unverified",
+      "artifact_path": "mbit10:/data1/yanruj/EvolveSWDB_sources/bfs-campaign-preparation-20260925-a1.upstream-annotated-context6/source",
+      "artifact_sha256": "7465dde4313d8e8a4f5fc81ac07383504c38bc43781f4d099495926a1c15f115",
+      "diff": "mbit10:/data/yanruj/EvolveSWDB_runs/stream-c-20260927/raw/bfs-campaign-preparation-20260925-a1.upstream-annotated-context6/candidate.diff",
+      "diff_sha256": "ebec00c2d5dc18b7c4fc61031c5b6ce09bb441e45169d17053bdc7cd04b5f0c9",
+      "diff_lines": {"total": 200, "added": 169, "removed": 0}
+    },
+    "comparison_with_producer_reference": "diff of producer-check/reference-bfs.cc against the candidate src/bfs.cc: only three blank lines absent in the candidate (reference lines 16, 98, 248). Test-client coherence note, not candidate evidence.",
+    "records_commit": "bb42d2650a3dbc08527002cf23cafefbe8b0da08 (written on mbit10 at 1e8548b, pushed to codex/bfs-streamc-records-20260927-c3)",
+    "storage": {"raw": "716K", "dispatch": "12M", "candidate_source": "292K"},
+    "host": "load average about 2.6; /data1 16G free (raw output on /data, 127G free)"
+  },
+  "builds": {
+    "job": "t20-context6-builds",
+    "requests": ["bfs-t20-context6-primary-build-20260927-c3", "bfs-t20-context6-diagnostic-build-20260927-c3"],
+    "state": "pending a socket lane",
+    "lanes_at_13:41_ET": {"node0": "held (generation 379, T15 pilot)", "node1": "held (generation 457 since 12:07 ET)", "legacy": "released"},
+    "root_instruction": "Do not preempt either lane or build unconfined; poll node1 about every 15 min and launch there (outer 900 s) when released.",
+    "launch_command": "cd /data1/yanruj/EvolveSWDB_streamc_20260927_b1/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/stream-c-20260927 && CODE_COMMIT=bb42d2650a3dbc08527002cf23cafefbe8b0da08 bash launch.sh t20-context6-builds 1 900"
+  },
+  "claims": "One candidate exists. It is unverified: no build, correctness, DX100 execution or gain evidence. No acceptance box changes."
+}

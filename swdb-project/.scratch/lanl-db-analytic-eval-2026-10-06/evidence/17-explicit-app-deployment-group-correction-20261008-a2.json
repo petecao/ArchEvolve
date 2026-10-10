@@ -1,0 +1,104 @@
+{
+  "actual_remote_hook_or_query_R3": "NOT RUN",
+  "application_runs": 0,
+  "base_commit": "c2d9bb33115dc8f3a95c19afcb268c80f1388e40",
+  "correction": "Explicit creator_gid must equal actual real/effective primary GID. Only pinned base or creator GID for ordinary owned same-device directories/target files; SGID directories base-GID only; all SUID/sticky/foreign owner/device/group/symlink/stat/content refusals remain. No remote permission mutation.",
+  "format": "swdb.lanl17-explicit-app-deployment-group-correction.v1",
+  "observed_original_route_diagnostic": {
+    "bytes": 3214,
+    "path": "/private/tmp/lanl17-original-dx100-fixed-source-route-stat-diagnostic-original-20261008-a1.json",
+    "sha256": "131d4cc21ba61a6c3a34ce5113f48b613abcd1e3950f9c7b3699f013806054c9"
+  },
+  "observed_scope": "BASE owns GID0; C owns ordinary creator GID114316761; inherited PRIMARY/target ancestor SGID uses BASE GID0. Full target file inventory remains pending query.",
+  "only_hook_changed_definitions": [
+    "owned_route",
+    "target_inventory",
+    "main"
+  ],
+  "original_failed_query_R2": {
+    "bytes": 184,
+    "path": "/private/tmp/lanl17-original-dx100-deployment-prerequisites-query-actual-20261008-a1-r2.json",
+    "sha256": "1a3ae9fce6848085d8d337b816bffb40506f044e8bc5364c1c84739d1bcd9f83"
+  },
+  "prior_a1_evidence_retained_byte_exact": true,
+  "provider_calls": 0,
+  "public_tests": {
+    "affected_module_green": {
+      "passed": 18,
+      "pytest_seconds": 4.6,
+      "skipped": 0
+    },
+    "command": [
+      "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_dx100_deployment_hook.py"
+    ],
+    "cwd": "swdb-project",
+    "first_green": {
+      "passed": 1,
+      "pytest_seconds": 0.82
+    },
+    "red": {
+      "failed": 1,
+      "observed_error_sha256": "a92e9ba3b69ca63d28f2b8508d05329a17d9d52b252b7460b01e370db0c41f36",
+      "pytest_seconds": 0.38,
+      "test": "test_creator_group_paths_beneath_a_different_private_base_group_are_bound"
+    },
+    "scope": "Actual public git worktree add in local temporary synthetic repositories and real owned supplementary-group metadata; no remote native/target/campaign admission. Tool outputs are observed; no standalone pytest stream originals claimed."
+  },
+  "query_R3_source_preparation": {
+    "bytes": 15906,
+    "path": "/private/tmp/lanl17_read_original_dx100_deployment_prerequisites_20261008_a1_r3.py",
+    "sha256": "6d40fa3a6091abf01e88ee85c04636fed1ef051cc17729255a6485855596a4c1"
+  },
+  "scope": "Narrow implementation prerequisite only; no ticket resolution, final review, source deployment, capacity, cleanup or scientific admission.",
+  "sealed": false,
+  "source_module_count": 185,
+  "source_pins": {
+    "swdb-project/scripts/deployment/dx100-binding/README.md": {
+      "bytes": 7821,
+      "sha256": "3c4087242045bc6c4d28627f73e8d0b6c3c5c11774e865770dd87f538356586e"
+    },
+    "swdb-project/scripts/deployment/dx100-binding/post-checkout": {
+      "bytes": 17300,
+      "sha256": "d340f59f529d146ce4070843fc3314b0ab0b98cb1bacd79b2e9d61b726d07527"
+    },
+    "swdb-project/tests/test_dx100_deployment_hook.py": {
+      "bytes": 14747,
+      "sha256": "ccaed959b260baa2089e626d9887abd3772be13d79fd347a5e424c2d21bd12b1"
+    }
+  },
+  "ticket17_status": "claimed",
+  "unchanged_F6": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "unchanged_core_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "unchanged_core_git_tree_sha256": "43864cde40d28f83331ebafdb247e2bf688e62a351e6b5619cd68bd098413c77",
+  "unchanged_hook_definitions": [
+    "require",
+    "tick",
+    "sha",
+    "canonical",
+    "pairs",
+    "stat_values",
+    "stamp",
+    "identity",
+    "absolute",
+    "read",
+    "private_root",
+    "beneath",
+    "native",
+    "git",
+    "OriginalLoader",
+    "original_mapping",
+    "record",
+    "original_manifest"
+  ],
+  "unchanged_original_control_sha256": {
+    "auditor": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da",
+    "guard": "9c5d9658b524db94805a6b51453dc9edef7096a27312677896d595d39b94f6c6",
+    "helper": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414",
+    "supervisor": "fa703bbd4c71bb4bcf56f47d1e224449f627d5921295e00b9cc105f21e95bde0"
+  },
+  "updated_et": "2026-10-08"
+}

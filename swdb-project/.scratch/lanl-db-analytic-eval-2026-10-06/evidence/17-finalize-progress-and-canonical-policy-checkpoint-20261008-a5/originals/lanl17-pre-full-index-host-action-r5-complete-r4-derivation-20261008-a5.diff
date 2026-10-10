@@ -1,0 +1,26 @@
+--- /private/tmp/lanl17-pre-full-index-host-action-SOURCE-ONLY-draft-r4-20261008-a5.json
++++ /private/tmp/lanl17-pre-full-index-host-action-SOURCE-ONLY-draft-r5-20261008-a5.json
+@@ -23,8 +23,8 @@
+       "fdc5376fc6838081806f1a48b236eaea3dba280f4ac6726bf4fe4f3db58f8c2f"
+     ],
+     "collect": [],
+-    "local_timeout_seconds": 180,
+-    "remote_timeout_seconds": 60,
++    "local_seconds": 180,
++    "remote_seconds": 60,
+     "source_pins": [
+       {
+         "bytes": 38195,
+@@ -51,5 +51,11 @@
+   "executable": false,
+   "format": "swdb.source-only-action-draft.v1",
+   "scientific_admission": false,
+-  "source_only_not_run": true
++  "source": {
++    "bytes": 35909,
++    "path": "/private/tmp/lanl17_pre_full_index_host_observation_20261008_a5_r4.py",
++    "sha256": "fdc5376fc6838081806f1a48b236eaea3dba280f4ac6726bf4fe4f3db58f8c2f"
++  },
++  "source_only_not_run": true,
++  "supersedes_source_only_action_draft": "/private/tmp/lanl17-pre-full-index-host-action-SOURCE-ONLY-draft-r4-20261008-a5.json"
+ }

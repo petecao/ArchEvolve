@@ -1,0 +1,2733 @@
+{
+  "format": "swdb.cpu-bulk-count-only.v2",
+  "evidence_kind": "native_count_only",
+  "timings_collected": false,
+  "machine": "mbit10",
+  "threads": 1,
+  "context": {
+    "compiler_version": "clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin",
+    "flags": [
+      "-O3",
+      "-std=c++11",
+      "--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13"
+    ],
+    "host": "mbit10",
+    "architecture": "x86_64",
+    "source_sha256": {
+      "CpuBulkWork.h": "a8926f80c4aaa74f247b915f52b63396b518990646bafe2690e679891a3c10be",
+      "CpuBulkTimer.cpp": "5f2c71773bdb29e65501440500f3b4da695f1f9b3e026a6c177f1c17b7fcc536",
+      "CpuBulkCount.cpp": "1051a1ad01b55368257a5de825cf31864bf49f3a0088f0ee8425a6dd2d18ca24"
+    },
+    "binary_sha256": "76a2de6e0d03da11e296455ec33425acc3d0495e261ada9f45b22b492b96307b",
+    "compiler_sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113",
+    "instrumented_timer": false,
+    "collection_recipe": "gross_loop_window_with_retained_driver_v2",
+    "control_environment": {
+      "GLIBC_TUNABLES": null,
+      "LD_PRELOAD": null,
+      "LD_AUDIT": null,
+      "LD_LIBRARY_PATH": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu",
+      "DYLD_LIBRARY_PATH": null,
+      "DYLD_INSERT_LIBRARIES": null
+    },
+    "control_environment_scope": {
+      "format": "swdb.service-control-environment.v1",
+      "prefixes": [
+        "MALLOC_"
+      ],
+      "exact_variables": [
+        "GLIBC_TUNABLES",
+        "LD_PRELOAD",
+        "LD_AUDIT",
+        "LD_LIBRARY_PATH",
+        "DYLD_LIBRARY_PATH",
+        "DYLD_INSERT_LIBRARIES"
+      ],
+      "absence_semantics": "null_or_absent_is_unset_under_declared_scope"
+    },
+    "optimized_work": {
+      "ir_sha256": "35ce2c0bcea42daa150cf39f63f67bc6d6be93e9cf988ddc2594c2111eea37a8",
+      "retained": {
+        "bulk_copy8": "constant8_word_load_store",
+        "bulk_move_disjoint": "dynamic_length_memmove",
+        "bulk_move_forward": "dynamic_length_memmove",
+        "bulk_move_backward": "dynamic_length_memmove"
+      }
+    },
+    "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 489)",
+    "cpus": [
+      0
+    ],
+    "machine_sha256": "fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79",
+    "system": "Linux",
+    "start_state": {
+      "load": [
+        2.0,
+        1.8212890625,
+        1.9306640625
+      ],
+      "time_ns": 1791337501312308926,
+      "available_memory": "MemTotal:       131426264 kB\nMemFree:        19326416 kB\nMemAvailable:   122170744 kB\nBuffers:        12207704 kB\nCached:         62013688 kB\nSwapCached:            0 kB\nActive:          5036752 kB\nInactive:       70929484 kB\nActive(anon):    1718880 kB\nInactive(anon):    55680 kB\nActive(file):    3317872 kB\nInactive(file): 70873804 kB\nUnevictable:       39252 kB\nMlocked:           36180 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:                 4 kB\nWriteback:             0 kB\nAnonPages:       1784584 kB\nMapped:          1128208 kB\nShmem:             14900 kB\nKReclaimable:   29975348 kB\nSlab:           32508584 kB\nSReclaimable:   29891516 kB\nSUnreclaim:      2617068 kB\nKernelStack:       25760 kB\nPageTables:        31832 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    65713132 kB\nCommitted_AS:    5798944 kB\nVmallocTotal:   13743895347199 kB\nVmallocUsed:      432660 kB\nVmallocChunk:          0 kB\nPercpu:           372992 kB\nHardwareCorrupted:     8 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nUnaccepted:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:    40398820 kB\nDirectMap2M:    91160576 kB\nDirectMap1G:     4194304 kB",
+      "governor": null,
+      "no_turbo": null
+    },
+    "free_disk_bytes": 57573859328,
+    "commit": "1703c98717ff303fdaa83b8044ac9b4060fedb78",
+    "dirty": false,
+    "loaded_libraries": {
+      "libstdc++.so.6.0.33": {
+        "path": "/usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33",
+        "sha256": "1fd75fe70354a416d75aef22bcae68c47bd25d20e2d0568c30b1a9838cf62f11"
+      },
+      "libm.so.6": {
+        "path": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+        "sha256": "fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0"
+      },
+      "libgcc_s.so.1": {
+        "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1",
+        "sha256": "d93224d2b0dab4247598be683adca02f5cf00586f99c187579cd7e92058fb7cb"
+      },
+      "libc.so.6": {
+        "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+        "sha256": "3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf"
+      },
+      "ld-linux-x86-64.so.2": {
+        "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+        "sha256": "c20a2dc8917c755f02b94049356320fe1f62ac7d9f8994731f807d9df39302da"
+      }
+    },
+    "end_state": {
+      "load": [
+        2.12353515625,
+        1.87109375,
+        1.9443359375
+      ],
+      "time_ns": 1791337533804749194,
+      "available_memory": "MemTotal:       131426264 kB\nMemFree:        18767568 kB\nMemAvailable:   121621868 kB\nBuffers:        12207828 kB\nCached:         62023116 kB\nSwapCached:            0 kB\nActive:          5037228 kB\nInactive:       70939048 kB\nActive(anon):    1719356 kB\nInactive(anon):    55680 kB\nActive(file):    3317872 kB\nInactive(file): 70883368 kB\nUnevictable:       39252 kB\nMlocked:           36180 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:              2280 kB\nWriteback:             0 kB\nAnonPages:       1784416 kB\nMapped:          1128208 kB\nShmem:             14900 kB\nKReclaimable:   29975756 kB\nSlab:           32509116 kB\nSReclaimable:   29891924 kB\nSUnreclaim:      2617192 kB\nKernelStack:       25904 kB\nPageTables:        31880 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    65713132 kB\nCommitted_AS:    5804064 kB\nVmallocTotal:   13743895347199 kB\nVmallocUsed:      433060 kB\nVmallocChunk:          0 kB\nPercpu:           372992 kB\nHardwareCorrupted:     8 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nUnaccepted:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:    40398820 kB\nDirectMap2M:    91160576 kB\nDirectMap1G:     4194304 kB",
+      "governor": null,
+      "no_turbo": null
+    }
+  },
+  "count_proof": {
+    "format": "swdb.cpu-bulk-count-proof.v1",
+    "pipeline": {
+      "version": "source-normalized-v2",
+      "passes": [
+        "function(sroa,mem2reg),cgscc(inline),function(loop-simplify)"
+      ]
+    },
+    "points": [
+      {
+        "events": 3,
+        "invoke": true,
+        "cells": [
+          {
+            "event_abi": "memcpy",
+            "helper_function": "bulk_copy8",
+            "size_bytes": 8,
+            "executions": 3,
+            "source_sites": [
+              0
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 12,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 60,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 116,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 136,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 428,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 1512,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 1524,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 1576,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 1580,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 4304,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 4324,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 7452,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 10992,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 11896,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 12384,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 16316,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 18212,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 19128,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 21000,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 23052,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 36712,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 38848,
+            "executions": 3,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 12,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 60,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 116,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 136,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 428,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 1512,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 1524,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 1576,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 1580,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 4304,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 4324,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 7452,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 10992,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 11896,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 12384,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 16316,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 18212,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 19128,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 21000,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 23052,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 36712,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 38848,
+            "executions": 3,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 12,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 60,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 116,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 136,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 428,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 1512,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 1524,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 1576,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 1580,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 4304,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 4324,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 7452,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 10992,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 11896,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 12384,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 16316,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 18212,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 19128,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 21000,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 23052,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 36712,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 38848,
+            "executions": 3,
+            "source_sites": [
+              6
+            ]
+          }
+        ],
+        "characterization_sha256": "6b306bce485ff08c6b6bc3e96bce36cd5f56ed8bbc76b156ba6625a36eb71c90",
+        "source_sites": [
+          {
+            "site": 0,
+            "line": 17,
+            "helper_function": "bulk_copy8",
+            "normalized_name": "llvm.memcpy.p0.p0.i64"
+          },
+          {
+            "site": 2,
+            "line": 27,
+            "helper_function": "bulk_move_disjoint",
+            "normalized_name": "llvm.memmove.p0.p0.i64"
+          },
+          {
+            "site": 4,
+            "line": 28,
+            "helper_function": "bulk_move_forward",
+            "normalized_name": "llvm.memmove.p0.p0.i64"
+          },
+          {
+            "site": 6,
+            "line": 29,
+            "helper_function": "bulk_move_backward",
+            "normalized_name": "llvm.memmove.p0.p0.i64"
+          }
+        ],
+        "normalized_ir_sha256": "59eaedcbdd22310f1f779adb1f519f1f2e87f1efd9f6b002e588439985482531",
+        "source_map_sha256": "4cbca4be537ddf02759828e8bd5028f101963d83f8c1eab270f2ccd7edffb26b",
+        "operation_counts": {
+          "integer": 960,
+          "floating_point": 0,
+          "branch": 1007,
+          "atomic": 0
+        }
+      },
+      {
+        "events": 5,
+        "invoke": true,
+        "cells": [
+          {
+            "event_abi": "memcpy",
+            "helper_function": "bulk_copy8",
+            "size_bytes": 8,
+            "executions": 5,
+            "source_sites": [
+              0
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 12,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 60,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 116,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 136,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 428,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 1512,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 1524,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 1576,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 1580,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 4304,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 4324,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 7452,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 10992,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 11896,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 12384,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 16316,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 18212,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 19128,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 21000,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 23052,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 36712,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 38848,
+            "executions": 5,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 12,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 60,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 116,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 136,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 428,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 1512,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 1524,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 1576,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 1580,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 4304,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 4324,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 7452,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 10992,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 11896,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 12384,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 16316,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 18212,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 19128,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 21000,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 23052,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 36712,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 38848,
+            "executions": 5,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 12,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 60,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 116,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 136,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 428,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 1512,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 1524,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 1576,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 1580,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 4304,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 4324,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 7452,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 10992,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 11896,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 12384,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 16316,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 18212,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 19128,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 21000,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 23052,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 36712,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 38848,
+            "executions": 5,
+            "source_sites": [
+              6
+            ]
+          }
+        ],
+        "characterization_sha256": "0735baebefd49c036e6e6746ae8ab158f5dcc60aa973ae790e8ab6a6443f3f3c",
+        "source_sites": [
+          {
+            "site": 0,
+            "line": 17,
+            "helper_function": "bulk_copy8",
+            "normalized_name": "llvm.memcpy.p0.p0.i64"
+          },
+          {
+            "site": 2,
+            "line": 27,
+            "helper_function": "bulk_move_disjoint",
+            "normalized_name": "llvm.memmove.p0.p0.i64"
+          },
+          {
+            "site": 4,
+            "line": 28,
+            "helper_function": "bulk_move_forward",
+            "normalized_name": "llvm.memmove.p0.p0.i64"
+          },
+          {
+            "site": 6,
+            "line": 29,
+            "helper_function": "bulk_move_backward",
+            "normalized_name": "llvm.memmove.p0.p0.i64"
+          }
+        ],
+        "normalized_ir_sha256": "59eaedcbdd22310f1f779adb1f519f1f2e87f1efd9f6b002e588439985482531",
+        "source_map_sha256": "4cbca4be537ddf02759828e8bd5028f101963d83f8c1eab270f2ccd7edffb26b",
+        "operation_counts": {
+          "integer": 1496,
+          "floating_point": 0,
+          "branch": 1543,
+          "atomic": 0
+        }
+      },
+      {
+        "events": 3,
+        "invoke": false,
+        "cells": [
+          {
+            "event_abi": "memcpy",
+            "helper_function": "bulk_copy8",
+            "size_bytes": 8,
+            "executions": 0,
+            "source_sites": [
+              0
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 12,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 60,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 116,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 136,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 428,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 1512,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 1524,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 1576,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 1580,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 4304,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 4324,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 7452,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 10992,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 11896,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 12384,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 16316,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 18212,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 19128,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 21000,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 23052,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 36712,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 38848,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 12,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 60,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 116,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 136,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 428,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 1512,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 1524,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 1576,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 1580,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 4304,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 4324,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 7452,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 10992,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 11896,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 12384,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 16316,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 18212,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 19128,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 21000,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 23052,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 36712,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 38848,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 12,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 60,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 116,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 136,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 428,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 1512,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 1524,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 1576,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 1580,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 4304,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 4324,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 7452,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 10992,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 11896,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 12384,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 16316,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 18212,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 19128,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 21000,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 23052,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 36712,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 38848,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          }
+        ],
+        "characterization_sha256": "0e19fa6b0f331c2b4f3b6e450dcd5c97b42a10783d3f5f018cc5db4055a4c4d7",
+        "source_sites": [
+          {
+            "site": 0,
+            "line": 17,
+            "helper_function": "bulk_copy8",
+            "normalized_name": "llvm.memcpy.p0.p0.i64"
+          },
+          {
+            "site": 2,
+            "line": 27,
+            "helper_function": "bulk_move_disjoint",
+            "normalized_name": "llvm.memmove.p0.p0.i64"
+          },
+          {
+            "site": 4,
+            "line": 28,
+            "helper_function": "bulk_move_forward",
+            "normalized_name": "llvm.memmove.p0.p0.i64"
+          },
+          {
+            "site": 6,
+            "line": 29,
+            "helper_function": "bulk_move_backward",
+            "normalized_name": "llvm.memmove.p0.p0.i64"
+          }
+        ],
+        "normalized_ir_sha256": "59eaedcbdd22310f1f779adb1f519f1f2e87f1efd9f6b002e588439985482531",
+        "source_map_sha256": "4cbca4be537ddf02759828e8bd5028f101963d83f8c1eab270f2ccd7edffb26b",
+        "operation_counts": {
+          "integer": 960,
+          "floating_point": 0,
+          "branch": 806,
+          "atomic": 0
+        }
+      },
+      {
+        "events": 5,
+        "invoke": false,
+        "cells": [
+          {
+            "event_abi": "memcpy",
+            "helper_function": "bulk_copy8",
+            "size_bytes": 8,
+            "executions": 0,
+            "source_sites": [
+              0
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 12,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 60,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 116,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 136,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 428,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 1512,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 1524,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 1576,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 1580,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 4304,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 4324,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 7452,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 10992,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 11896,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 12384,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 16316,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 18212,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 19128,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 21000,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 23052,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 36712,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_disjoint",
+            "size_bytes": 38848,
+            "executions": 0,
+            "source_sites": [
+              2
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 12,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 60,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 116,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 136,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 428,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 1512,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 1524,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 1576,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 1580,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 4304,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 4324,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 7452,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 10992,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 11896,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 12384,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 16316,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 18212,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 19128,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 21000,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 23052,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 36712,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_forward",
+            "size_bytes": 38848,
+            "executions": 0,
+            "source_sites": [
+              4
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 12,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 60,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 116,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 136,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 428,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 1512,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 1524,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 1576,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 1580,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 4304,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 4324,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 7452,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 10992,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 11896,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 12384,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 16316,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 18212,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 19128,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 21000,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 23052,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 36712,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          },
+          {
+            "event_abi": "memmove",
+            "helper_function": "bulk_move_backward",
+            "size_bytes": 38848,
+            "executions": 0,
+            "source_sites": [
+              6
+            ]
+          }
+        ],
+        "characterization_sha256": "2693a7664e27442f7a69cb2c0d92555b588b9642abf2270f9c785d6814d5b35a",
+        "source_sites": [
+          {
+            "site": 0,
+            "line": 17,
+            "helper_function": "bulk_copy8",
+            "normalized_name": "llvm.memcpy.p0.p0.i64"
+          },
+          {
+            "site": 2,
+            "line": 27,
+            "helper_function": "bulk_move_disjoint",
+            "normalized_name": "llvm.memmove.p0.p0.i64"
+          },
+          {
+            "site": 4,
+            "line": 28,
+            "helper_function": "bulk_move_forward",
+            "normalized_name": "llvm.memmove.p0.p0.i64"
+          },
+          {
+            "site": 6,
+            "line": 29,
+            "helper_function": "bulk_move_backward",
+            "normalized_name": "llvm.memmove.p0.p0.i64"
+          }
+        ],
+        "normalized_ir_sha256": "59eaedcbdd22310f1f779adb1f519f1f2e87f1efd9f6b002e588439985482531",
+        "source_map_sha256": "4cbca4be537ddf02759828e8bd5028f101963d83f8c1eab270f2ccd7edffb26b",
+        "operation_counts": {
+          "integer": 1496,
+          "floating_point": 0,
+          "branch": 1208,
+          "atomic": 0
+        }
+      }
+    ],
+    "sizes": [
+      12,
+      60,
+      116,
+      136,
+      428,
+      1512,
+      1524,
+      1576,
+      1580,
+      4304,
+      4324,
+      7452,
+      10992,
+      11896,
+      12384,
+      16316,
+      18212,
+      19128,
+      21000,
+      23052,
+      36712,
+      38848
+    ],
+    "visibility": "Count-only always-inline exposes the identical shared loop; native elapsed wrappers remain noinline.",
+    "retention": "Empty inline asm retains source memory work; counted indirect-call diagnostics are not ABI events.",
+    "source_sha256": "a8926f80c4aaa74f247b915f52b63396b518990646bafe2690e679891a3c10be",
+    "count_driver_sha256": "1051a1ad01b55368257a5de825cf31864bf49f3a0088f0ee8425a6dd2d18ca24",
+    "plugin_source_sha256": "b461fd7025cfa675d5c191d7d73fee8bd04525c0344cd315dffedb61575b65a0",
+    "runtime_source_sha256": "43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e"
+  },
+  "budgets": {
+    "count_build_cap_bytes": 67108864,
+    "timed_data_cap_bytes": 26214400
+  },
+  "identity_sha256": "469edfbd61d30306f599cd1a16dbc4d4763069301ab3cc88b889aba7541afca3"
+}

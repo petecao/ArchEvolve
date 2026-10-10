@@ -1,0 +1,282 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "const": "review"
+    },
+    "target_kind": {
+      "enum": [
+        "library_entry",
+        "candidate",
+        "review"
+      ],
+      "description": "Absent means library_entry. candidate reviews promote an Extensa candidate artifact (ticket 48, 2026-10-03 ET). review: an attribution correction of an earlier review, whose target pins that review's canonical JSON (spec review C1, 2026-10-05 ET)."
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "content_sha256"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "reviewer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reviewed_at": {
+      "type": "string"
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "origin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "campaign"
+      ],
+      "properties": {
+        "mode": {
+          "const": "extensa"
+        },
+        "campaign": {
+          "$ref": "#/$defs/extensa_campaign_id"
+        }
+      }
+    },
+    "reevaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "team_protocol",
+        "protocol",
+        "workload_class",
+        "workloads",
+        "requests"
+      ],
+      "properties": {
+        "team_protocol": {
+          "type": "string",
+          "x-ref": "protocol"
+        },
+        "protocol": {
+          "type": "string",
+          "x-ref": "protocol"
+        },
+        "workload_class": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workloads": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "x-ref": "workload"
+          }
+        },
+        "requests": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "sha256"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "performed_by": {
+      "enum": [
+        "human",
+        "agent"
+      ],
+      "description": "Who did the reviewing. Absent means human (records before 2026-10-05). reviewer names the maintainer on whose authority the review counts (ADR 0007)."
+    },
+    "delegated_by": {
+      "type": "string",
+      "minLength": 1,
+      "description": "An agent review: the maintainer who delegated it."
+    },
+    "delegation": {
+      "type": "string",
+      "minLength": 1,
+      "description": "An agent review: what was delegated and when (a dated instruction and ticket)."
+    },
+    "review_document": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Repository path of the review's written findings."
+    },
+    "attribution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "performed_by"
+      ],
+      "properties": {
+        "performed_by": {
+          "enum": [
+            "human",
+            "agent"
+          ],
+          "description": "Who did the reviewing. Absent means human (records before 2026-10-05). reviewer names the maintainer on whose authority the review counts (ADR 0007)."
+        },
+        "delegated_by": {
+          "type": "string",
+          "minLength": 1,
+          "description": "An agent review: the maintainer who delegated it."
+        },
+        "delegation": {
+          "type": "string",
+          "minLength": 1,
+          "description": "An agent review: what was delegated and when (a dated instruction and ticket)."
+        },
+        "review_document": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Repository path of the review's written findings."
+        }
+      },
+      "description": "An attribution correction: who actually performed the target review."
+    }
+  },
+  "required": [
+    "target",
+    "reviewer",
+    "reviewed_at",
+    "evidence"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "target_kind"
+        ],
+        "properties": {
+          "target_kind": {
+            "const": "candidate"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "origin",
+          "reevaluation"
+        ]
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "target_kind"
+        ],
+        "properties": {
+          "target_kind": {
+            "const": "review"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "attribution"
+        ],
+        "properties": {
+          "evidence": {
+            "maxItems": 1,
+            "items": {
+              "x-ref": "review"
+            }
+          }
+        }
+      },
+      "else": {
+        "not": {
+          "required": [
+            "attribution"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "anyOf": [
+          {
+            "not": {
+              "required": [
+                "target_kind"
+              ]
+            }
+          },
+          {
+            "required": [
+              "target_kind"
+            ],
+            "properties": {
+              "target_kind": {
+                "const": "library_entry"
+              }
+            }
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "items": {
+              "x-ref": "certification"
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "performed_by"
+        ],
+        "properties": {
+          "performed_by": {
+            "const": "agent"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "delegated_by",
+          "delegation",
+          "review_document"
+        ]
+      }
+    }
+  ]
+}

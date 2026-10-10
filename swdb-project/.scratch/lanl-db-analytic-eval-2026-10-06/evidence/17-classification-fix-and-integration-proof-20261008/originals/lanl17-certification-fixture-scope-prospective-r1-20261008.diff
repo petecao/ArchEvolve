@@ -1,0 +1,642 @@
+--- a/swdb-project/tests/test_certification_process.py
++++ b/swdb-project/tests/test_certification_process.py
+@@ -82,16 +82,16 @@
+     assert client.index('-I' + str(LIBRARY / process.CLIENT_INCLUDE)) == client.index('-I' + str(LIBRARY / 'dx100/strict')) - 1
+ 
+ 
+-def _certify(tmp_path, monkeypatch, entry, snapshot, patch, version='1.5'):
++def _certify(tmp_path, monkeypatch, entry, snapshot, patch, version='1.5', *, certification_store):
+     _gcc()
+     monkeypatch.setattr(c.workflow, 'persist', lambda *args, **kwargs: None)
+-    return c.certify(Store(ROOT / 'records'), entry, snapshot=snapshot, patch=patch, runs_dir=tmp_path / 'runs',
++    return c.certify(certification_store, entry, snapshot=snapshot, patch=patch, runs_dir=tmp_path / 'runs',
+                      version=version)
+ 
+ 
+-def test_t20_certifies_under_1_5_with_records_written_by_the_evaluator(tmp_path, monkeypatch):
++def test_t20_certifies_under_1_5_with_records_written_by_the_evaluator(tmp_path, monkeypatch, *, certification_store):
+     record = _certify(tmp_path, monkeypatch, 'contract.bfs_read_offload', c.DEFAULT_SNAPSHOT,
+-                      LIBRARY / 'dx100/peter-section5.patch')
++                      LIBRARY / 'dx100/peter-section5.patch', certification_store=certification_store)
+     assert record['verdict'] == 'certified' and record['command']['version'] == '1.5'
+     # 2026-10-05 ET (review fixes F1/F2, C10): the family, the per-version manifest and the commit.
+     command = record['command']
+@@ -123,9 +123,9 @@
+     assert alone.returncode == 96 and 'certification evaluator' in alone.stderr
+ 
+ 
+-def test_the_native_contract_certifies_under_1_5(tmp_path, monkeypatch):
++def test_the_native_contract_certifies_under_1_5(tmp_path, monkeypatch, *, certification_store):
+     record = _certify(tmp_path, monkeypatch, 'contract.bfs_tdstep_frontier_staging', c.DEFAULT_SNAPSHOT,
+-                      LIBRARY / 'native/bfs-tdstep-frontier-staging.patch')
++                      LIBRARY / 'native/bfs-tdstep-frontier-staging.patch', certification_store=certification_store)
+     assert record['verdict'] == 'certified' and record['command']['version'] == '1.5'
+     # 2026-10-05 ET (ADR 0008, review fixes): real code on the host CPU is measured, not simulated.
+     assert record['evidence_basis'] == 'measured' and record['command']['family'] == 'native'
+--- a/swdb-project/tests/test_certification_procedures.py
++++ b/swdb-project/tests/test_certification_procedures.py
+@@ -88,13 +88,13 @@
+         procedures.procedure('candidate', '1.5').version = '1.6'
+ 
+ 
+-def test_certify_refuses_an_unknown_version_before_any_build(tmp_path):
++def test_certify_refuses_an_unknown_version_before_any_build(tmp_path, *, certification_store):
+     from swdb.store import Store
+     with pytest.raises(UsageError, match='certify command version'):
+-        c.certify(Store(ROOT / 'records'), 'contract.bfs_read_offload', snapshot=c.DEFAULT_SNAPSHOT,
++        c.certify(certification_store, 'contract.bfs_read_offload', snapshot=c.DEFAULT_SNAPSHOT,
+                   patch=LIBRARY / 'dx100/peter-section5.patch', runs_dir=tmp_path, version='1.7')
+     with pytest.raises(UsageError, match='lowering calibration'):
+-        c.certify(Store(ROOT / 'records'), calibrate=True, runs_dir=tmp_path, version='1.5')
++        c.certify(certification_store, calibrate=True, runs_dir=tmp_path, version='1.5')
+     assert not list(tmp_path.iterdir())
+ 
+ 
+--- a/swdb-project/tests/test_certification_isolation.py
++++ b/swdb-project/tests/test_certification_isolation.py
+@@ -147,19 +147,19 @@
+ 
+ # --- adversarial candidates (full certification) ------------------------------------------------------
+ 
+-def _patch(tmp_path, transform):
++def _patch(tmp_path, transform, *, certification_store):
+     plugin = types.SimpleNamespace(certification_source=c.BFS, certification_snapshot=c.DEFAULT_SNAPSHOT,
+                                    certification_rewrite=lambda scalar: transform(c.peter_source(scalar)))
+     output = tmp_path / 'candidate.patch'
+-    c.create_peter_patch(Store(ROOT / 'records'), output, plugin=plugin, temporary_root=str(tmp_path))
++    c.create_peter_patch(certification_store, output, plugin=plugin, temporary_root=str(tmp_path))
+     return output
+ 
+ 
+-def _certify(tmp_path, monkeypatch, transform):
++def _certify(tmp_path, monkeypatch, transform, *, certification_store):
+     """Certify 1.3 explicitly (ticket 76 made 1.4 the default; 1.3 stays selectable and unchanged)."""
+     _gcc()
+     monkeypatch.setattr(c.workflow, 'persist', lambda *args, **kwargs: None)
+-    return c.certify(Store(ROOT / 'records'), CONTRACT, snapshot=c.DEFAULT_SNAPSHOT, patch=_patch(tmp_path, transform),
++    return c.certify(certification_store, CONTRACT, snapshot=c.DEFAULT_SNAPSHOT, patch=_patch(tmp_path, transform, certification_store=certification_store),
+                      runs_dir=tmp_path / 'runs', version='1.3')
+ 
+ 
+@@ -196,8 +196,8 @@
+     return [(x['id'], x['tile_size'], x['status']) for x in record['negative_controls']]
+ 
+ 
+-def test_candidate_that_fakes_rejection_lines_is_refused(tmp_path, monkeypatch):
+-    record = _certify(tmp_path, monkeypatch, fake_rejection_on_probe)
++def test_candidate_that_fakes_rejection_lines_is_refused(tmp_path, monkeypatch, *, certification_store):
++    record = _certify(tmp_path, monkeypatch, fake_rejection_on_probe, certification_store=certification_store)
+     assert record['verdict'] == 'failed' and record['command']['version'] == '1.3'
+     assert all(x['status'] == 'passed' for x in record['matrix'])
+     assert {name for name, _, status in _controls(record) if status != 'rejected'} == {'skipped_cas_recheck'}
+@@ -208,15 +208,15 @@
+         assert 'duplicate_frontier' not in control['observed_checks'] and control['named_checks'] == []
+ 
+ 
+-def test_candidate_that_tests_a_fault_macro_is_refused_by_the_scan(tmp_path, monkeypatch):
++def test_candidate_that_tests_a_fault_macro_is_refused_by_the_scan(tmp_path, monkeypatch, *, certification_store):
+     with pytest.raises(UsageError, match=r"harness scan.*SWDB_DXC_FAULT_SKIPPED_CAS_RECHECK"):
+-        _certify(tmp_path, monkeypatch, fault_macro_probe)
+-
+-
+-def test_fault_macro_probe_cannot_change_behavior_under_faults(tmp_path, monkeypatch):
++        _certify(tmp_path, monkeypatch, fault_macro_probe, certification_store=certification_store)
++
++
++def test_fault_macro_probe_cannot_change_behavior_under_faults(tmp_path, monkeypatch, *, certification_store):
+     """With the scan switched off, the macro is never defined in the candidate's translation unit."""
+     monkeypatch.setattr(isolation, 'refuse_scan_findings', lambda original, candidate, **kwargs: None)
+-    record = _certify(tmp_path, monkeypatch, fault_macro_probe)
++    record = _certify(tmp_path, monkeypatch, fault_macro_probe, certification_store=certification_store)
+     assert record['verdict'] == 'failed'
+     assert all(x['status'] == 'passed' for x in record['matrix'])
+     assert {name for name, _, status in _controls(record) if status != 'rejected'} == {'skipped_cas_recheck'}
+--- a/swdb-project/tests/test_certification_native.py
++++ b/swdb-project/tests/test_certification_native.py
+@@ -37,10 +37,10 @@
+ 
+ 
+ 
+-def _variant(tmp_path, transform, name='variant.patch'):
++def _variant(tmp_path, transform, name='variant.patch', *, certification_store):
+     """A -p1 patch of the snapshot whose bfs.cc is the a8 rewrite passed through ``transform``."""
+     with tempfile.TemporaryDirectory(dir=tmp_path) as temporary:
+-        tree, _ = c.materialize_snapshot(Store(ROOT / 'records'), SNAPSHOT, Path(temporary))
++        tree, _ = c.materialize_snapshot(certification_store, SNAPSHOT, Path(temporary))
+         original = (tree / BFS).read_text()
+         c.apply_patch(tree, PATCH)
+         text = transform((tree / BFS).read_text())
+@@ -64,10 +64,10 @@
+     return path
+ 
+ 
+-def _certify(tmp_path, monkeypatch, patch, **options):
++def _certify(tmp_path, monkeypatch, patch, *, certification_store, **options):
+     _gcc()
+     monkeypatch.setattr(c.workflow, 'persist', lambda *args, **kwargs: None)
+-    return c.certify(Store(ROOT / 'records'), CONTRACT, snapshot=SNAPSHOT, patch=patch, runs_dir=tmp_path / 'runs',
++    return c.certify(certification_store, CONTRACT, snapshot=SNAPSHOT, patch=patch, runs_dir=tmp_path / 'runs',
+                      **options)
+ 
+ 
+@@ -114,11 +114,11 @@
+     assert bad['reason'] == 'execution_witness'
+ 
+ 
+-def test_edit_outside_tdstep_is_refused_before_any_build(tmp_path, monkeypatch):
++def test_edit_outside_tdstep_is_refused_before_any_build(tmp_path, monkeypatch, *, certification_store):
+     patch = _variant(tmp_path, lambda text: _replace(text, 'int alpha = 1, int beta = 18) {',
+-                                                     'int alpha = 1, int beta = 18) {\n    (void)alpha;'))
++                                                     'int alpha = 1, int beta = 18) {\n    (void)alpha;'), certification_store=certification_store)
+     with pytest.raises(UsageError, match='outside void TDStep'):
+-        _certify(tmp_path, monkeypatch, patch)
++        _certify(tmp_path, monkeypatch, patch, certification_store=certification_store)
+ 
+ 
+ QUEUE_PROBE = """#ifndef QueueBuffer
+@@ -136,15 +136,15 @@
+                                         'SlidingQueue<NodeID> &queue, int num_nodes, int num_edges, int x = 0) {'),
+      'signature'),
+ ])
+-def test_scope_and_directive_refusals_before_any_build(tmp_path, monkeypatch, name, transform, message):
++def test_scope_and_directive_refusals_before_any_build(tmp_path, monkeypatch, name, transform, message, *, certification_store):
+     """Ticket 75 review: a candidate cannot detect the certification build or add code outside TDStep."""
+     with pytest.raises(UsageError, match=message):
+-        _certify(tmp_path, monkeypatch, _variant(tmp_path, transform))
+-
+-
+-def test_native_profile_sources_cannot_be_overridden(tmp_path, monkeypatch):
++        _certify(tmp_path, monkeypatch, _variant(tmp_path, transform, certification_store=certification_store), certification_store=certification_store)
++
++
++def test_native_profile_sources_cannot_be_overridden(tmp_path, monkeypatch, *, certification_store):
+     with pytest.raises(UsageError, match='pins its sources'):
+-        _certify(tmp_path, monkeypatch, PATCH, sources=(1,))
++        _certify(tmp_path, monkeypatch, PATCH, sources=(1,), certification_store=certification_store)
+ 
+ 
+ def test_witness_of_another_target_invalidates_the_record(tmp_path):
+@@ -156,16 +156,16 @@
+     assert dx100['reason'] == 'record_invalid'
+ 
+ 
+-def test_candidate_record_must_match_the_patched_tree(tmp_path, monkeypatch):
++def test_candidate_record_must_match_the_patched_tree(tmp_path, monkeypatch, *, certification_store):
+     with pytest.raises(UsageError, match='differs from the candidate record artifact'):
+-        _certify(tmp_path, monkeypatch, PATCH, candidate_record=_candidate_record(tmp_path, sha='0' * 64))
++        _certify(tmp_path, monkeypatch, PATCH, candidate_record=_candidate_record(tmp_path, sha='0' * 64), certification_store=certification_store)
+ 
+ 
+ # --- full certifications -------------------------------------------------------------------------------
+ 
+ @pytest.mark.parametrize('version', ['1.3', '1.4'])
+-def test_exact_a8_tree_certifies_with_every_control_rejected_by_its_check(tmp_path, monkeypatch, version):
+-    record = _certify(tmp_path, monkeypatch, PATCH, candidate_record=_candidate_record(tmp_path), version=version)
++def test_exact_a8_tree_certifies_with_every_control_rejected_by_its_check(tmp_path, monkeypatch, version, *, certification_store):
++    record = _certify(tmp_path, monkeypatch, PATCH, candidate_record=_candidate_record(tmp_path), version=version, certification_store=certification_store)
+     assert record['verdict'] == 'certified' and record['command']['version'] == version
+     assert json.loads(json.dumps(record)) == record   # persistable: the writer refuses non-JSON records
+     assert record['candidate']['tree_sha256'] == A8_ARTIFACT
+@@ -199,11 +199,11 @@
+ 
+ 
+ @pytest.mark.parametrize('version', ['1.3', '1.4'])
+-def test_keeping_the_post_claim_store_leaves_claim_without_write_alive(tmp_path, monkeypatch, version):
++def test_keeping_the_post_claim_store_leaves_claim_without_write_alive(tmp_path, monkeypatch, version, *, certification_store):
+     """C2's control discriminates: with the store kept, a non-writing claim is masked."""
+     patch = _variant(tmp_path, lambda text: _replace(text, CLAIM, CLAIM.replace(
+-        'lqueue.push_back(v);', 'parents[v] = u;\n                            lqueue.push_back(v);')))
+-    record = _certify(tmp_path, monkeypatch, patch, version=version)
++        'lqueue.push_back(v);', 'parents[v] = u;\n                            lqueue.push_back(v);')), certification_store=certification_store)
++    record = _certify(tmp_path, monkeypatch, patch, version=version, certification_store=certification_store)
+     assert all(x['status'] == 'passed' for x in record['matrix'])
+     assert {k: v for k, v in _status(record).items() if v != 'rejected'} == {
+         ('claim_without_write', 'o3'): 'survived', ('claim_without_write', 'o1g'): 'survived'}
+@@ -211,18 +211,18 @@
+     assert [r['clause'] for r in record['clause_controls'] if not r['matched']] == ['C2']
+ 
+ 
+-def test_a_real_dropped_partial_batch_fails_the_matrix(tmp_path, monkeypatch):
+-    patch = _variant(tmp_path, lambda text: _replace(text, TAIL, TAIL.replace('? remaining :', '? 0 :')))
+-    record = _certify(tmp_path, monkeypatch, patch)
++def test_a_real_dropped_partial_batch_fails_the_matrix(tmp_path, monkeypatch, *, certification_store):
++    patch = _variant(tmp_path, lambda text: _replace(text, TAIL, TAIL.replace('? remaining :', '? 0 :')), certification_store=certification_store)
++    record = _certify(tmp_path, monkeypatch, patch, certification_store=certification_store)
+     assert record['verdict'] == 'failed'
+     failed = [x for x in record['matrix'] if x['status'] == 'failed']
+     assert failed and all('frontier_size_equality' in x['observed_checks'] for x in failed)
+ 
+ 
+-def test_a_real_stale_row_offset_fails_the_matrix(tmp_path, monkeypatch):
++def test_a_real_stale_row_offset_fails_the_matrix(tmp_path, monkeypatch, *, certification_store):
+     patch = _variant(tmp_path, lambda text: _replace(text, BOUNDS, BOUNDS.replace(
+-        'offsets[u];', 'offsets[staged_vertices[lane + 1 < staged_count ? lane + 1 : lane]];')))
+-    record = _certify(tmp_path, monkeypatch, patch)
++        'offsets[u];', 'offsets[staged_vertices[lane + 1 < staged_count ? lane + 1 : lane]];')), certification_store=certification_store)
++    record = _certify(tmp_path, monkeypatch, patch, certification_store=certification_store)
+     assert record['verdict'] == 'failed'
+     failed = [x for x in record['matrix'] if x['status'] == 'failed']
+     assert failed and all('verifier' in x['observed_checks'] for x in failed)
+@@ -232,10 +232,10 @@
+                             lqueue.push_back(v);"""
+ 
+ 
+-def test_v14_claim_seam_bypass_fails_every_cell_on_the_seam_witness(tmp_path, monkeypatch):
++def test_v14_claim_seam_bypass_fails_every_cell_on_the_seam_witness(tmp_path, monkeypatch, *, certification_store):
+     """1.4 (ticket 76 mechanism): a candidate that claims with a raw builtin fails the positive matrix."""
+-    record = _certify(tmp_path, monkeypatch, _variant(tmp_path, lambda text: _replace(text, CLAIM, RAW_CLAIM)),
+-                      version='1.4')
++    record = _certify(tmp_path, monkeypatch, _variant(tmp_path, lambda text: _replace(text, CLAIM, RAW_CLAIM), certification_store=certification_store),
++                      version='1.4', certification_store=certification_store)
+     assert record['verdict'] == 'failed'
+     assert all(x['status'] == 'failed' and 'seam_witness' in x['observed_checks'] for x in record['matrix'])
+ 
+--- a/swdb-project/tests/test_certification_controls.py
++++ b/swdb-project/tests/test_certification_controls.py
+@@ -86,22 +86,22 @@
+     return _replace(source, 'compare_and_swap(parent[v],hint,u)', '__sync_bool_compare_and_swap(&parent[v],hint,u)')
+ 
+ 
+-def _patch(tmp_path, transform):
++def _patch(tmp_path, transform, *, certification_store):
+     plugin = types.SimpleNamespace(certification_source=c.BFS, certification_snapshot=c.DEFAULT_SNAPSHOT,
+                                    certification_rewrite=lambda scalar: transform(c.peter_source(scalar)))
+     output = tmp_path / 'candidate.patch'
+-    c.create_peter_patch(Store(ROOT / 'records'), output, plugin=plugin, temporary_root=str(tmp_path))
++    c.create_peter_patch(certification_store, output, plugin=plugin, temporary_root=str(tmp_path))
+     return output
+ 
+ 
+-def _certify(tmp_path, monkeypatch, transform):
++def _certify(tmp_path, monkeypatch, transform, *, certification_store):
+     try:
+         c.compiler()
+     except Failure:
+         pytest.skip('certification requires GCC with OpenMP')
+     monkeypatch.setattr(c.workflow, 'persist', lambda *args, **kwargs: None)
+-    patch = _patch(tmp_path, transform)
+-    return c.certify(Store(ROOT / 'records'), CONTRACT, snapshot=c.DEFAULT_SNAPSHOT, patch=patch,
++    patch = _patch(tmp_path, transform, certification_store=certification_store)
++    return c.certify(certification_store, CONTRACT, snapshot=c.DEFAULT_SNAPSHOT, patch=patch,
+                      runs_dir=tmp_path / 'runs')
+ 
+ 
+@@ -109,8 +109,8 @@
+     return [(x['id'], x['tile_size'], x['status']) for x in record['negative_controls']]
+ 
+ 
+-def test_every_bfs_control_is_a_library_fault_that_leaves_the_candidate_text_unchanged():
+-    source = c.instrument_source(c.peter_source(Store(ROOT / 'records').get(c.DEFAULT_SNAPSHOT)['regions'][0]['text']))
++def test_every_bfs_control_is_a_library_fault_that_leaves_the_candidate_text_unchanged(*, certification_store):
++    source = c.instrument_source(c.peter_source(certification_store.get(c.DEFAULT_SNAPSHOT)['regions'][0]['text']))
+     assert set(kernels.BFS.certification_controls) == set(faults.LIBRARY_FAULTS)
+     seams = (ROOT / 'library' / faults.SEAM_FILE).read_text()
+     for name, macro in faults.LIBRARY_FAULTS.items():
+@@ -144,8 +144,8 @@
+ 
+ @pytest.mark.parametrize('transform', [lambda s: s, reformatted, restructured],
+                          ids=['ticket20', 'reformatted', 'restructured'])
+-def test_equal_rewrites_certify_with_every_control_rejected(tmp_path, monkeypatch, transform):
+-    record = _certify(tmp_path, monkeypatch, transform)
++def test_equal_rewrites_certify_with_every_control_rejected(tmp_path, monkeypatch, transform, *, certification_store):
++    record = _certify(tmp_path, monkeypatch, transform, certification_store=certification_store)
+     assert record['verdict'] == 'certified'
+     assert len(record['matrix']) == 10 and all(x['status'] == 'passed' for x in record['matrix'])
+     # Ticket 68 (2026-10-04 ET): 8 library faults and 2 legality controls at each tile size.
+@@ -164,9 +164,9 @@
+         ('frontier_threshold', 'knob_out_of_range'), ('schedule', 'schedule_out_of_range')}
+ 
+ 
+-def test_forged_frontier_v2_is_killed_when_chunks_are_counted_after_their_pushes(tmp_path, monkeypatch):
++def test_forged_frontier_v2_is_killed_when_chunks_are_counted_after_their_pushes(tmp_path, monkeypatch, *, certification_store):
+     """Ticket 67 (2026-10-04 ET): a negative control must be killable by every correct rewrite."""
+-    record = _certify(tmp_path, monkeypatch, chunk_hook_after_pushes)
++    record = _certify(tmp_path, monkeypatch, chunk_hook_after_pushes, certification_store=certification_store)
+     assert record['verdict'] == 'certified', _controls(record)
+     forged = [x for x in record['negative_controls'] if x['id'] == 'forged_frontier']
+     assert [(x['tile_size'], x['status']) for x in forged] == [(16384, 'rejected'), (1024, 'rejected')]
+@@ -174,14 +174,14 @@
+     assert record['command']['version'] == c.VERSION
+ 
+ 
+-def test_semantically_broken_rewrite_is_refused(tmp_path, monkeypatch):
+-    record = _certify(tmp_path, monkeypatch, skipped_recheck)
++def test_semantically_broken_rewrite_is_refused(tmp_path, monkeypatch, *, certification_store):
++    record = _certify(tmp_path, monkeypatch, skipped_recheck, certification_store=certification_store)
+     assert record['verdict'] == 'failed'
+     assert any(x['status'] == 'failed' and x['reason'] == 'frontier_size_equality' for x in record['matrix'])
+ 
+ 
+-def test_rewrite_that_bypasses_the_claim_seam_is_refused_by_its_surviving_control(tmp_path, monkeypatch):
+-    record = _certify(tmp_path, monkeypatch, bypassed_claim)
++def test_rewrite_that_bypasses_the_claim_seam_is_refused_by_its_surviving_control(tmp_path, monkeypatch, *, certification_store):
++    record = _certify(tmp_path, monkeypatch, bypassed_claim, certification_store=certification_store)
+     assert record['verdict'] == 'failed'
+     survived = {name for name, _, status in _controls(record) if status != 'rejected'}
+     assert survived == {'skipped_cas_recheck'}
+@@ -301,7 +301,7 @@
+ 
+ @pytest.mark.parametrize('widths', [[1, 2, 3, 4, 5, 6, 7, 2], [1, 2, 3, 4, 5, 100, 100]],
+                          ids=['eight-levels-scalar', 'seven-levels-accelerated'])
+-def test_forged_frontier_is_rejected_on_a_deep_graph(tmp_path, widths):
++def test_forged_frontier_is_rejected_on_a_deep_graph(tmp_path, widths, *, certification_store):
+     """Graphs deeper than three levels (code review P3; ticket 67).
+ 
+     forged_frontier v2 duplicates the first queue push of the run, so it fires on both graphs,
+@@ -321,8 +321,8 @@
+     assert counts == widths and len(counts) > 3
+     folder = tmp_path / 'tree'
+     folder.mkdir()
+-    tree, _ = c.materialize_snapshot(Store(ROOT / 'records'), c.DEFAULT_SNAPSHOT, folder)
+-    c.apply_patch(tree, _patch(tmp_path, lambda s: s))
++    tree, _ = c.materialize_snapshot(certification_store, c.DEFAULT_SNAPSHOT, folder)
++    c.apply_patch(tree, _patch(tmp_path, lambda s: s, certification_store=certification_store))
+     library = (ROOT / 'library').resolve()
+     plugin = kernels.BFS
+     instrumented = plugin.certification_instrument((tree / c.BFS).read_text()) + \
+--- a/swdb-project/tests/test_certification_blinding.py
++++ b/swdb-project/tests/test_certification_blinding.py
+@@ -169,9 +169,9 @@
+     assert token not in [t for _, t, _ in isolation.scan(original, original + added + '\n', '1.3')]
+ 
+ 
+-def test_calibration_takes_no_candidate_input(tmp_path):
++def test_calibration_takes_no_candidate_input(tmp_path, *, certification_store):
+     with pytest.raises(UsageError, match='calibration certifies only the pinned authors source'):
+-        c.certify(Store(ROOT / 'records'), calibrate=True, candidate='candidate.x', runs_dir=tmp_path)
++        c.certify(certification_store, calibrate=True, candidate='candidate.x', runs_dir=tmp_path)
+ 
+ 
+ def test_provider_feedback_names_no_surviving_control():
+@@ -194,21 +194,21 @@
+     return text.replace(old, new, 1)
+ 
+ 
+-def _patch(tmp_path, transform):
++def _patch(tmp_path, transform, *, certification_store):
+     plugin = types.SimpleNamespace(certification_source=c.BFS, certification_snapshot=c.DEFAULT_SNAPSHOT,
+                                    certification_rewrite=lambda scalar: transform(c.peter_source(scalar)))
+     output = tmp_path / 'candidate.patch'
+-    c.create_peter_patch(Store(ROOT / 'records'), output, plugin=plugin, temporary_root=str(tmp_path))
++    c.create_peter_patch(certification_store, output, plugin=plugin, temporary_root=str(tmp_path))
+     return output
+ 
+ 
+-def _certify(tmp_path, monkeypatch, transform, version):
++def _certify(tmp_path, monkeypatch, transform, version, *, certification_store):
+     _gcc()
+     monkeypatch.setattr(c.workflow, 'persist', lambda *args, **kwargs: None)
+     folder = tmp_path / version
+     folder.mkdir()
+-    return c.certify(Store(ROOT / 'records'), CONTRACT, snapshot=c.DEFAULT_SNAPSHOT,
+-                     patch=_patch(folder, transform), runs_dir=folder / 'runs', version=version)
++    return c.certify(certification_store, CONTRACT, snapshot=c.DEFAULT_SNAPSHOT,
++                     patch=_patch(folder, transform, certification_store=certification_store), runs_dir=folder / 'runs', version=version)
+ 
+ 
+ TDSTEP = ('void TDStep(const Graph &g, pvector<SGOffset> &VertexOffsets, pvector<NodeID> &parent, '
+@@ -258,10 +258,10 @@
+ 
+ 
+ @pytest.mark.parametrize('attack', [probe_claim, decoy_frontier])
+-def test_attacks_that_certify_under_1_3_fail_under_1_4(tmp_path, monkeypatch, attack):
+-    old = _certify(tmp_path, monkeypatch, attack, '1.3')
++def test_attacks_that_certify_under_1_3_fail_under_1_4(tmp_path, monkeypatch, attack, *, certification_store):
++    old = _certify(tmp_path, monkeypatch, attack, '1.3', certification_store=certification_store)
+     assert old['verdict'] == 'certified' and old['command']['version'] == '1.3'   # the ticket 70 holes
+-    new = _certify(tmp_path, monkeypatch, attack, '1.4')
++    new = _certify(tmp_path, monkeypatch, attack, '1.4', certification_store=certification_store)
+     assert new['verdict'] == 'failed' and new['command']['version'] == '1.4'
+     failed = {x['reason'] for x in new['matrix'] if x['status'] != 'passed'}
+     if attack is probe_claim:
+@@ -277,8 +277,8 @@
+         assert any('duplicate_frontier' in x['named_checks'] for x in new['matrix'])
+ 
+ 
+-def test_t20_under_1_4_runs_one_blinded_binary_in_random_order(tmp_path, monkeypatch):
+-    record = _certify(tmp_path, monkeypatch, lambda source: source, '1.4')
++def test_t20_under_1_4_runs_one_blinded_binary_in_random_order(tmp_path, monkeypatch, *, certification_store):
++    record = _certify(tmp_path, monkeypatch, lambda source: source, '1.4', certification_store=certification_store)
+     assert record['verdict'] == 'certified', _not_rejected(record)
+     for size in (16384, 1024):
+         cells = [x for x in record['matrix'] if x['tile_size'] == size]
+--- a/swdb-project/tests/test_typed_certification.py
++++ b/swdb-project/tests/test_typed_certification.py
+@@ -89,8 +89,8 @@
+     assert rejected == (False, 'frontier_size_equality')
+ 
+ 
+-def test_exact_patched_tree_preserves_vendored_identity_and_ships_header(tmp_path):
+-    store = Store(ROOT / 'records')
++def test_exact_patched_tree_preserves_vendored_identity_and_ships_header(tmp_path, *, certification_store):
++    store = certification_store
+     before = c.artifacts.identify(ROOT / 'apps/dx100')
+     patch = tmp_path / 'peter.patch'
+     c.create_peter_patch(store, patch)
+@@ -119,8 +119,8 @@
+     assert c.judge_bfs(result(output), counts, calibrate=True) == (False, 'execution_witness')
+ 
+ 
+-def test_forged_frontier_control_is_a_pure_library_fault():
+-    scalar = c.peter_source(Store(ROOT / 'records').get(c.DEFAULT_SNAPSHOT)['regions'][0]['text'])
++def test_forged_frontier_control_is_a_pure_library_fault(*, certification_store):
++    scalar = c.peter_source(certification_store.get(c.DEFAULT_SNAPSHOT)['regions'][0]['text'])
+     instrumented = c.instrument_source(scalar)
+     control = c._rewrite_control(instrumented, 'forged_frontier')
+     # Ticket 62: the double enqueue is a library fault. Ticket 67: version 2 duplicates the first
+@@ -130,14 +130,14 @@
+     assert control['source'] == instrumented and 'swdb_certification_frontier(queue);' in instrumented
+ 
+ 
+-def test_bfs_counter_reset_precedes_the_once_per_call_runtime_guard():
+-    snapshot = Store(ROOT / 'records').get(c.DEFAULT_SNAPSHOT)
++def test_bfs_counter_reset_precedes_the_once_per_call_runtime_guard(*, certification_store):
++    snapshot = certification_store.get(c.DEFAULT_SNAPSHOT)
+     source = c.peter_source(snapshot['regions'][0]['text'])
+     assert source.index('swdb_dxc::chunks() = 0;') < source.index('swdb_acceleration_enabled = uint64_t')
+ 
+ 
+-def test_candidate_scope_cannot_certify_uncontracted_header_edits(tmp_path):
+-    store = Store(ROOT / 'records')
++def test_candidate_scope_cannot_certify_uncontracted_header_edits(tmp_path, *, certification_store):
++    store = certification_store
+     patch = tmp_path / 'peter.patch'
+     c.create_peter_patch(store, patch)
+     trial = tmp_path / 'candidate'; trial.mkdir()
+@@ -321,7 +321,7 @@
+ 
+ @pytest.mark.parametrize('wrong_reference', [False, True], ids=['equivalent_reference', 'changed_semantics'])
+ def test_real_lowering_receipt_binds_the_current_intrinsic_reference_identity(
+-        pinned_lowering, tmp_path, monkeypatch, wrong_reference):
++        pinned_lowering, tmp_path, monkeypatch, wrong_reference, *, certification_store):
+     from swdb.library import Library
+     library, entry_id, _, entry = pinned_lowering
+     before = Library(library)
+@@ -342,7 +342,7 @@
+     assert intrinsic_hash != old_intrinsic_hash
+     persisted = []
+     monkeypatch.setattr(c.workflow, 'persist', lambda records, record, **kwargs: persisted.append(record))
+-    receipt = c.certify(Store(ROOT / 'records'), entry_id, library=library, runs_dir=tmp_path / 'runs')
++    receipt = c.certify(certification_store, entry_id, library=library, runs_dir=tmp_path / 'runs')
+     assert receipt['verdict'] == ('failed' if wrong_reference else 'certified')
+     assert receipt['dependencies'] == [{'id': entry['intrinsic'], 'content_sha256': intrinsic_hash}]
+     assert persisted == [receipt]
+@@ -352,7 +352,7 @@
+         assert all('SWDB_DIFFERENTIAL_MISMATCH:reference_semantics' in cell['run']['stderr'] for cell in receipt['matrix'])
+ 
+ 
+-def test_intrinsic_dependency_change_during_real_execution_aborts_receipt(pinned_lowering, tmp_path, monkeypatch):
++def test_intrinsic_dependency_change_during_real_execution_aborts_receipt(pinned_lowering, tmp_path, monkeypatch, *, certification_store):
+     library, entry_id, _, _ = pinned_lowering
+     path = library / 'intrinsics/dxc_gather.yaml'
+     original_execute = c.execute
+@@ -370,7 +370,7 @@
+     persisted = []
+     monkeypatch.setattr(c.workflow, 'persist', lambda records, record, **kwargs: persisted.append(record))
+     with pytest.raises(c.Failure, match='dependencies changed during execution'):
+-        c.certify(Store(ROOT / 'records'), entry_id, library=library, runs_dir=tmp_path / 'runs')
++        c.certify(certification_store, entry_id, library=library, runs_dir=tmp_path / 'runs')
+     assert changed
+     assert persisted == []
+     assert not list((tmp_path / 'runs').rglob('certification.json'))
+@@ -395,10 +395,10 @@
+ 
+ @pytest.mark.parametrize('script', ['../tools/bfs_native/evil.py', 'tests/conftest.py',
+                                     'scripts/bfs_native_pilot.py', '/etc/passwd'])
+-def test_snapshot_derivation_runs_only_a_checkout_preparation_script(tmp_path, script):
++def test_snapshot_derivation_runs_only_a_checkout_preparation_script(tmp_path, script, *, certification_store):
+     """2026-10-04 ET (final code review): a record field names code that is executed."""
+     from swdb.store import Record
+-    store = Store(ROOT / 'records')
++    store = certification_store
+     snapshot = json.loads(json.dumps(store.get(c.DEFAULT_SNAPSHOT, 'source_snapshot')))
+     snapshot['context']['source_derivation']['script'] = script
+     forged = Store(store.dir, indexed_records=[Record(snapshot['id'] + '.yaml', snapshot)])
+--- a/swdb-project/tests/test_bc_certification.py
++++ b/swdb-project/tests/test_bc_certification.py
+@@ -100,7 +100,7 @@
+     (lambda bfs, bc_text: (bfs, bc_text.replace('id: contract.bfs_read_offload', 'id: contract.missing')), 'cites another existing'),
+     (lambda bfs, bc_text: (bfs, bc_text.replace('- id: L5\n', '- id: L5-renamed\n')), 'keeps every cited clause'),
+ ])
+-def test_derived_contract_citation_is_checked(tmp_path, change, message):
++def test_derived_contract_citation_is_checked(tmp_path, change, message, *, certification_store):
+     library_root = tmp_path / 'library'
+     shutil.copytree(ROOT / 'library', library_root)
+     bfs_path = library_root / 'rewrite_contracts/bfs_read_offload.yaml'
+@@ -108,7 +108,7 @@
+     bfs_text, bc_text = change(bfs_path.read_text(), bc_path.read_text())
+     bfs_path.write_text(bfs_text)
+     bc_path.write_text(bc_text)
+-    problems = Library(library_root, Store(ROOT / 'records')).validate()
++    problems = Library(library_root, certification_store).validate()
+     assert any(message in str(problem) and 'bc_read_offload' in str(problem) for problem in problems), problems
+ 
+ 
+@@ -120,16 +120,16 @@
+         bc.frontier_oracle(graph, 21216)
+ 
+ 
+-def _bc_tree(tmp_path):
+-    data = _snapshot_module().materialize(tmp_path / 'snapshot', ROOT / 'records')
++def _bc_tree(tmp_path, *, certification_store):
++    data = _snapshot_module().materialize(tmp_path / 'snapshot', certification_store.dir)
+     tree = Path(data['artifact']['path'])
+     (tree / bc.BC_SOURCE).write_text(bc.forward_pass_source((tree / bc.BC_SOURCE).read_text()))
+     shutil.copy(ROOT / 'library/dx100/dxc_lowering.hpp', tree / c.HEADER)
+     return data, tree
+ 
+ 
+-def test_bc_candidate_scope_allows_only_bc_cc_and_the_lowering_header(tmp_path):
+-    data, tree = _bc_tree(tmp_path)
++def test_bc_candidate_scope_allows_only_bc_cc_and_the_lowering_header(tmp_path, *, certification_store):
++    data, tree = _bc_tree(tmp_path, certification_store=certification_store)
+     assert c.check_candidate_scope(tree, data, kernels.BC) == sorted([bc.BC_SOURCE, c.HEADER])
+     with pytest.raises(UsageError, match='BFS contract permits only the BFS rewrite'):
+         c.check_candidate_scope(tree, data)  # the default BFS scope refuses a BC rewrite
+@@ -149,10 +149,10 @@
+ 
+ 
+ 
+-def test_bc_forward_pass_certifies_with_every_control_rejected(tmp_path):
++def test_bc_forward_pass_certifies_with_every_control_rejected(tmp_path, *, certification_store):
+     """Ticket 62 (2026-10-04 ET): BC keeps certifying after controls moved to the library seam."""
+     _gcc()
+-    _, tree = _bc_tree(tmp_path)
++    _, tree = _bc_tree(tmp_path, certification_store=certification_store)
+     before = c.artifacts.identify(tree)['sha256']
+     matrix, controls = c.certify_bfs(tree, (ROOT / 'library').resolve(), tmp_path, (16384, 1024), 4, (0,),
+                                      plugin=kernels.BC)
+@@ -167,11 +167,11 @@
+     assert all(x['observed_checks'] for x in controls)
+ 
+ 
+-def test_strict_bc_candidate_passes_and_the_bc_l1_control_is_rejected(tmp_path):
++def test_strict_bc_candidate_passes_and_the_bc_l1_control_is_rejected(tmp_path, *, certification_store):
+     """Ticket 70 (certify 1.3): built with the evaluator prelude and driver, judged from records."""
+     from swdb import certification_isolation as isolation
+     _gcc()
+-    _, tree = _bc_tree(tmp_path)
++    _, tree = _bc_tree(tmp_path, certification_store=certification_store)
+     graph = tmp_path / 'two-level.sg'
+     c.two_level_graph(graph)
+     counts = bc.frontier_oracle(graph, 0)
+--- a/swdb-project/tests/conftest.py
++++ b/swdb-project/tests/conftest.py
+@@ -23,7 +23,7 @@
+ DB_COMMANDS = {"build", "sql", "find", "implementations", "add", "profile"}
+ 
+ pytest.register_assert_rewrite("testkit")
+-pytest_plugins = ["testkit.proposals", "testkit.bfs_native", "testkit.bfs_protocol", "testkit.extensa",
++pytest_plugins = ["testkit.certification_records", "testkit.proposals", "testkit.bfs_native", "testkit.bfs_protocol", "testkit.extensa",
+                   "testkit.extensa_targets", "testkit.bfs_native_scalable", "testkit.provider_workspace",
+                   "testkit.toolchain", "testkit.native_pilot", "testkit.profile_packages", "testkit.analytic"]
+ 
+--- /dev/null
++++ b/swdb-project/tests/testkit/certification_records.py
+@@ -0,0 +1,46 @@
++"""Real certification record closure; unrelated bulk estimates are not fixture inputs.
++
++The normal library validator, source materializer, compilers, evaluators and
++negative controls run unchanged. Full-catalog state/history tests opt out.
++"""
++
++import shutil
++from pathlib import Path
++
++import pytest
++
++from swdb import certification, kernels
++from swdb.library import Library
++from swdb.store import Store
++from testkit.record_subset import copy_record_subset
++
++ROOT = Path(__file__).resolve().parents[2]
++
++
++@pytest.fixture(scope="session")
++def certification_record_template(tmp_path_factory):
++    records = tmp_path_factory.mktemp("certification-record-template") / "records"
++    roots = {certification.DEFAULT_SNAPSHOT, kernels.BC.certification_snapshot}
++    # certify validates every normative entry, not just the selected contract.
++    # Use the current original record references; absent roots fail closed.
++    catalog = Library(ROOT / "library")
++    for entry_id in ("contract.bfs_read_offload", "contract.bfs_tdstep_frontier_staging",
++                     "contract.bc_read_offload"):
++        if catalog.get(entry_id) is None:
++            raise ValueError(f"missing certification fixture contract: {entry_id}")
++    for entry in catalog.entries.values():
++        if entry.get("intrinsic_record"):
++            roots.add(entry["intrinsic_record"])
++        roots.update(entry.get("hardware_operations", []))
++        roots.update(entry.get("strategies", []))
++    copy_record_subset(ROOT / "records", records, sorted(roots))
++    return records
++
++
++@pytest.fixture
++def certification_store(certification_record_template, tmp_path_factory):
++    # A fresh Store and directory isolate any in-memory or writer mutations.
++    # Keep them outside a test's tmp_path so no-build assertions stay meaningful.
++    records = tmp_path_factory.mktemp("certification-records") / "records"
++    shutil.copytree(certification_record_template, records)
++    return Store(records)

@@ -1,0 +1,478 @@
+{
+  "format": "swdb.typed-library-periodic-checkpoint.v1",
+  "observed_at": "2026-10-03T21:11:01.016000+00:00",
+  "reported_at_et": "2026-10-03 17:11 ET",
+  "author": "root independent public metadata and live-state readback",
+  "remote": {
+    "format": "swdb.typed-library-periodic-readback.v1",
+    "observed_at": "2026-10-03T21:11:01.016000+00:00",
+    "source": "6cfcd245ba34c8df5947307aad2cf2353400b281",
+    "branch": "yanrujhou_main",
+    "tracked_changes": "",
+    "leases": [
+      {
+        "name": "mbit10-evaluation-node0",
+        "kernel_held": true,
+        "metadata_state": "held",
+        "generation": 445
+      },
+      {
+        "name": "mbit10-evaluation-node1",
+        "kernel_held": false,
+        "metadata_state": "released",
+        "generation": 506
+      },
+      {
+        "name": "mbit10-evaluation",
+        "kernel_held": false,
+        "metadata_state": "released",
+        "generation": 77
+      }
+    ],
+    "driver": {
+      "id": "typed-library-bfs-gem5-20261003-a2",
+      "state": "running",
+      "started": "2026-10-03T19:04:26.697413+00:00",
+      "finished": null,
+      "runtime_commit": "6cfcd245ba34c8df5947307aad2cf2353400b281",
+      "reason": null
+    },
+    "progress": {
+      "stage": "recovery.r1.timed.w1.candidate-aggregate",
+      "command": "aggregate-evaluations",
+      "started": "2026-10-03T21:10:28.130841+00:00",
+      "state": "running",
+      "request_id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.candidate.aggregate",
+      "timeout_seconds": 3600,
+      "lane": "mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 445)"
+    },
+    "records": [
+      {
+        "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.w0.comparison",
+        "sha256": "ce26c3453508a6a2b86b5676127477706a31878d6aec516447e77ab546f178c5",
+        "file_sha256": "2fb8fedd339ec08ee6a45cd66b9ff9196f061a3d858a5cca2991edefe35723aa",
+        "kind": "comparison_result",
+        "outcome": null,
+        "correctness_state": null,
+        "evidence_kind": "execution",
+        "decision": {
+          "state": "gain",
+          "reasons": []
+        },
+        "ratios": {},
+        "timing": null,
+        "finished_at": "2026-10-03T19:40:39.185348+00:00",
+        "point_ratio": 1.6000498932475729
+      },
+      {
+        "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.baseline.evaluation",
+        "sha256": "327f32429b4df884dcf58bab2a0d31000b88f78b88a297742d0cb19044110f17",
+        "file_sha256": "4e739b5b708a4a751ffa221963e953758ccefc8c04c3dc8a2e8d2281c15e4411",
+        "kind": "evaluation",
+        "outcome": {
+          "state": "complete",
+          "stage": "execution",
+          "reason": "The exact timed guest passed its post-ROI structural verifier; complete profiling remains required."
+        },
+        "correctness_state": "passed",
+        "evidence_kind": "execution",
+        "decision": null,
+        "ratios": {},
+        "timing": null,
+        "finished_at": null
+      },
+      {
+        "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.baseline.aggregate",
+        "sha256": "b010bd6fe018a42099cf62b3481fa6f8bcc2edc1a5a0ed89fd39aa0b376470a3",
+        "file_sha256": "fa09c5e8be52720e0b40ed204b841c918e663a54257e67137c015398948f4a97",
+        "kind": "evaluation",
+        "outcome": {
+          "state": "complete",
+          "stage": "aggregation",
+          "reason": "Exact completed simulator executions; no synthetic repetitions."
+        },
+        "correctness_state": "passed",
+        "evidence_kind": "execution",
+        "decision": null,
+        "ratios": {},
+        "timing": null,
+        "finished_at": null
+      },
+      {
+        "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.candidate.evaluation",
+        "sha256": "ad0ef15a35137836149c44c4ac65d9e6750d92eeef81cb94482b01e0ba506c87",
+        "file_sha256": "3ff31c8768b8005be2ff98167de2cc2aaa18c8f9a360df85bd06e1ffb375008f",
+        "kind": "evaluation",
+        "outcome": {
+          "state": "complete",
+          "stage": "execution",
+          "reason": "The exact timed guest passed its post-ROI structural verifier; complete profiling remains required."
+        },
+        "correctness_state": "passed",
+        "evidence_kind": "execution",
+        "decision": null,
+        "ratios": {},
+        "timing": null,
+        "finished_at": null
+      },
+      {
+        "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.candidate.aggregate",
+        "state": "absent"
+      },
+      {
+        "id": "typed-library-bfs-gem5-20261003-a2.recovery.r1.w1.comparison",
+        "state": "absent"
+      }
+    ],
+    "commands": {
+      "recovery.r1.timed.w1.candidate.command.json": {
+        "stage": "recovery.r1.timed.w1.candidate",
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "swdb",
+          "dx100-execute",
+          "--records",
+          "/data1/yanruj/ArchEvolve/swdb-project/records",
+          "--format",
+          "json",
+          "--db",
+          "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.sqlite",
+          "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed-r1/recovery.r1.timed.w1.candidate.request.json",
+          "--runs-dir",
+          "/data1/yanruj/EvolveSWDB_runs",
+          "--lane",
+          "0"
+        ],
+        "started": "2026-10-03T20:15:30.109898+00:00",
+        "timeout_seconds": 9060,
+        "finished": "2026-10-03T21:10:28.115968+00:00",
+        "returncode": 0,
+        "state": "complete",
+        "output": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed-r1/recovery.r1.timed.w1.candidate.json",
+          "sha256": "09620ac990e20d3487a825176537c63ace037906d95dcda4aac520b4d13657d9"
+        },
+        "stderr": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed-r1/recovery.r1.timed.w1.candidate.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "recovery.r1.timed.w1.baseline-aggregate.command.json": {
+        "stage": "recovery.r1.timed.w1.baseline-aggregate",
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "swdb",
+          "aggregate-evaluations",
+          "--records",
+          "/data1/yanruj/ArchEvolve/swdb-project/records",
+          "--format",
+          "json",
+          "--db",
+          "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.sqlite",
+          "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed-r1/recovery.r1.timed.w1.baseline-aggregate.request.json"
+        ],
+        "started": "2026-10-03T20:15:17.410317+00:00",
+        "timeout_seconds": 3600,
+        "finished": "2026-10-03T20:15:30.059132+00:00",
+        "returncode": 0,
+        "state": "complete",
+        "output": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed-r1/recovery.r1.timed.w1.baseline-aggregate.json",
+          "sha256": "3997891f27406863e0f49ab2b9f557e5c8d82f8aaa79bab5c06943fb02bd1e0a"
+        },
+        "stderr": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed-r1/recovery.r1.timed.w1.baseline-aggregate.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "recovery.r1.timed.w1.baseline.command.json": {
+        "stage": "recovery.r1.timed.w1.baseline",
+        "command": [
+          "/usr/bin/python3",
+          "-m",
+          "swdb",
+          "dx100-execute",
+          "--records",
+          "/data1/yanruj/ArchEvolve/swdb-project/records",
+          "--format",
+          "json",
+          "--db",
+          "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.sqlite",
+          "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed-r1/recovery.r1.timed.w1.baseline.request.json",
+          "--runs-dir",
+          "/data1/yanruj/EvolveSWDB_runs",
+          "--lane",
+          "0"
+        ],
+        "started": "2026-10-03T19:40:44.403080+00:00",
+        "timeout_seconds": 9060,
+        "finished": "2026-10-03T20:15:17.393970+00:00",
+        "returncode": 0,
+        "state": "complete",
+        "output": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed-r1/recovery.r1.timed.w1.baseline.json",
+          "sha256": "b2b01db5158fd4a2c9f14005df10603ee1c6026ce52f0212c7f88a134297440a"
+        },
+        "stderr": {
+          "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed-r1/recovery.r1.timed.w1.baseline.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "candidate_resource": [
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.candidate.evaluation/001-checkpoint.memory.jsonl",
+        "last_observation": {
+          "elapsed_s": 191.21982477325946,
+          "evidence_kind": "execution",
+          "host_cost_is_bfs_performance": false,
+          "host_time_ns": 1791058743671929300,
+          "last_simulator_phase": null,
+          "log_bytes": 3775,
+          "process_group": 1611435,
+          "processes": [
+            {
+              "pid": 1611435,
+              "rss_kib": 252100
+            }
+          ],
+          "rss_kib": 252100
+        }
+      },
+      {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.candidate.evaluation/002-simulation.memory.jsonl",
+        "last_observation": {
+          "elapsed_s": 2118.432374187745,
+          "evidence_kind": "execution",
+          "host_cost_is_bfs_performance": false,
+          "host_time_ns": 1791060875154866700,
+          "last_simulator_phase": "statistics_dump_end",
+          "log_bytes": 67356,
+          "process_group": 1611728,
+          "processes": [
+            {
+              "pid": 1611728,
+              "rss_kib": 0
+            }
+          ],
+          "rss_kib": 0
+        }
+      }
+    ],
+    "candidate_phase_last": {
+      "allocator_numeric_properties": {
+        "generic.current_allocated_bytes": 34360694120,
+        "generic.heap_size": 34758279168,
+        "tcmalloc.central_cache_free_bytes": 346993848,
+        "tcmalloc.pageheap_free_bytes": 34086912,
+        "tcmalloc.pageheap_unmapped_bytes": 7536640,
+        "tcmalloc.thread_cache_free_bytes": 7237344
+      },
+      "elapsed_s": 2117.6677851490676,
+      "host_cost_is_bfs_performance": false,
+      "host_time_ns": 1791060874632561000,
+      "observation_seconds": 0.0002376008778810501,
+      "phase": "statistics_dump_end",
+      "pid": 1611728,
+      "process_status": {
+        "RssAnon": "34178648 kB",
+        "RssFile": "51752 kB",
+        "VmHWM": "34230400 kB",
+        "VmRSS": "34230400 kB",
+        "VmSize": "51037312 kB"
+      }
+    },
+    "session_metadata_files": [
+      {
+        "name": "checkpoint-manifest.json",
+        "bytes": 6168
+      },
+      {
+        "name": "host-observation.json",
+        "bytes": 10831
+      }
+    ],
+    "owned_processes": [
+      "1605658  359742 Ss+     02:06:34 00:00:00 12748 /usr/bin/python3 /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.dispatch-timed-r1/operator-wrapper.py",
+      "1605660 1605658 Ss      02:06:34 00:00:00  2092 timeout --signal=TERM --kill-after=90s 39000s bash /data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh 0 typed-library-bfs-gem5-20261003-a2-timed-r1 --record /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.dispatch-timed-r1/lane.json --no-align --load1-max 8 --lease-timeout-s 30 -- /usr/bin/python3 tools/typed_library_gem5_driver.py --stage timed --id typed-library-bfs-gem5-20261003-a2 --recovery-id r1 --recovery-manifest /data1/yanruj/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/a2-aggregation-failure-summary.json --recovery-sha256 c61cb65b657f4cc343de2662e2cfdc48433675ea83b5662efd1c816a276200a0 --runs-dir /data1/yanruj/EvolveSWDB_runs --memory-gib 36 --storage-gib 8 --authoring-session codex-typed-library-dx100-bfs-20261003 --approval-reference typed-library-related-approval-20261003",
+      "1605661 1605660 S       02:06:34 00:00:00  3852 bash /data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh 0 typed-library-bfs-gem5-20261003-a2-timed-r1 --record /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.dispatch-timed-r1/lane.json --no-align --max-cell-age-s 900 --load1-max 8 --lease-timeout-s 30 -- /usr/bin/python3 tools/typed_library_gem5_driver.py --stage timed --id typed-library-bfs-gem5-20261003-a2 --recovery-id r1 --recovery-manifest /data1/yanruj/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/a2-aggregation-failure-summary.json --recovery-sha256 c61cb65b657f4cc343de2662e2cfdc48433675ea83b5662efd1c816a276200a0 --runs-dir /data1/yanruj/EvolveSWDB_runs --memory-gib 36 --storage-gib 8 --authoring-session codex-typed-library-dx100-bfs-20261003 --approval-reference typed-library-related-approval-20261003",
+      "1605727 1605661 S       02:06:34 00:00:49 212908 /usr/bin/python3 tools/typed_library_gem5_driver.py --stage timed --id typed-library-bfs-gem5-20261003-a2 --recovery-id r1 --recovery-manifest /data1/yanruj/ArchEvolve/swdb-project/.scratch/typed-library-dx100-bfs-2026-10-03/evaluation/a2-aggregation-failure-summary.json --recovery-sha256 c61cb65b657f4cc343de2662e2cfdc48433675ea83b5662efd1c816a276200a0 --runs-dir /data1/yanruj/EvolveSWDB_runs --memory-gib 36 --storage-gib 8 --authoring-session codex-typed-library-dx100-bfs-20261003 --approval-reference typed-library-related-approval-20261003",
+      "1616873 1605727 Rs         00:32 00:00:32 213400 /usr/bin/python3 -m swdb aggregate-evaluations --records /data1/yanruj/ArchEvolve/swdb-project/records --format json --db /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.sqlite /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed-r1/recovery.r1.timed.w1.candidate-aggregate.request.json"
+    ],
+    "uptime": "17:11:01 up 64 days,  9:29, 11 users,  load average: 2.21, 2.11, 2.08",
+    "disk": "Filesystem         1B-blocks          Used   Available Use% Mounted on\n/dev/sdd1      1967300780032 1823546372096 43745529856  98% /data1\n/dev/sdb1      1967300780032 1788454330368 78837571584  96% /data",
+    "pressure": {
+      "memory": "some avg10=0.00 avg60=0.01 avg300=0.00 total=1174183816\nfull avg10=0.00 avg60=0.01 avg300=0.00 total=1146991602",
+      "io": "some avg10=0.00 avg60=0.01 avg300=0.00 total=1875322236\nfull avg10=0.00 avg60=0.01 avg300=0.00 total=1837478458"
+    },
+    "candidate_completed_command": {
+      "stage": "recovery.r1.timed.w1.candidate",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "swdb",
+        "dx100-execute",
+        "--records",
+        "/data1/yanruj/ArchEvolve/swdb-project/records",
+        "--format",
+        "json",
+        "--db",
+        "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.sqlite",
+        "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed-r1/recovery.r1.timed.w1.candidate.request.json",
+        "--runs-dir",
+        "/data1/yanruj/EvolveSWDB_runs",
+        "--lane",
+        "0"
+      ],
+      "started": "2026-10-03T20:15:30.109898+00:00",
+      "timeout_seconds": 9060,
+      "finished": "2026-10-03T21:10:28.115968+00:00",
+      "returncode": 0,
+      "state": "complete",
+      "output": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed-r1/recovery.r1.timed.w1.candidate.json",
+        "sha256": "09620ac990e20d3487a825176537c63ace037906d95dcda4aac520b4d13657d9"
+      },
+      "stderr": {
+        "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.driver-timed-r1/recovery.r1.timed.w1.candidate.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  "supplemental_lease_metadata": {
+    "mbit10-evaluation-node0": {
+      "active_session": null,
+      "heartbeat_at": "2026-10-03T19:04:26Z",
+      "lease": {
+        "acquired_at": "2026-10-03T19:04:26Z",
+        "daemon_pid": 1605661,
+        "daemon_start_token": "sh1605661-1791054266",
+        "generation": 445,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": null,
+      "session_note": null,
+      "session_state": "none",
+      "state": "held",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation-node1": {
+      "active_session": null,
+      "heartbeat_at": "2026-10-03T12:51:22Z",
+      "lease": {
+        "acquired_at": "2026-10-03T12:48:39Z",
+        "daemon_pid": 1568990,
+        "daemon_start_token": "sh1568990-1791031719",
+        "generation": 506,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-10-03T12:51:22Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    },
+    "mbit10-evaluation": {
+      "active_session": null,
+      "heartbeat_at": "2026-09-12T04:49:11Z",
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": "2026-09-12T04:49:11Z",
+      "session_note": null,
+      "session_state": "none",
+      "state": "released",
+      "writer": "hostlock.sh"
+    }
+  },
+  "verification": {
+    "receipts_verified": 35,
+    "cases": 3781,
+    "passed": 3745,
+    "skipped": 36,
+    "fresh_affected": 826,
+    "unresolved": [],
+    "ticket_states": {
+      "resolved": 32,
+      "ready-for-human": 3,
+      "wontfix": 1,
+      "claimed": 1
+    },
+    "reviews": {
+      "postprocess_recovery_fix": {
+        "standards_review": "passed; JSON scalar type binding finding closed",
+        "spec_review": "passed; repeat-run and JSON scalar type binding findings closed"
+      }
+    }
+  },
+  "workers": {
+    "dx100_library_cpp": "running and healthy; active bounded aggregation monitor",
+    "review_spec": "completed normally; final source PASS",
+    "review_standards": "completed normally; final source PASS"
+  },
+  "worker_candidate_metadata_report": {
+    "origin": "dx100_library_cpp message; independent root raw/artifact audit remains deferred",
+    "binary_sha256": "ba6a857f1f22790f0d9ec546374b25f6f3e3b9b91c740c893c89baaf6aacf77e",
+    "roi_ticks": 13135989634,
+    "simulated_roi_seconds": 0.013135989634,
+    "read_only": {
+      "S": 14,
+      "I": 1441,
+      "R": 485,
+      "A": 0,
+      "stores": 0
+    },
+    "tile_coverage": {
+      "full": 457,
+      "tail": 14
+    },
+    "frontier": [
+      1,
+      3,
+      204,
+      68519,
+      103284,
+      1883,
+      6
+    ],
+    "post_roi_ticks": 59000000000,
+    "stop_reason": "exit_witness",
+    "trace": {
+      "compressed_bytes": 982476656,
+      "decoded_bytes": 15252688697,
+      "lines": 153257907
+    }
+  },
+  "limitations": [
+    "All four physical samples have complete/passed public evaluation records; the Kronecker candidate aggregate and comparison are still absent.",
+    "Root reopened completed public canonical/file hashes and actual command ordering; final independent raw/artifact audit waits until all owned pipeline processes stop.",
+    "Uniform18's official simulated point ratio 1.6000498932475729 covers one frozen graph/source0/deterministic replay with joint hardware/software attribution.",
+    "No Kronecker ratio or complete two-workload result is asserted before authoritative public comparison qualification.",
+    "No new dispatch, physical rerun, test rerun, source change, Git synchronization, external send or historical deletion occurred."
+  ],
+  "next_action": "Continue the already-authorized authoritative candidate aggregate -> comparison; preserve frozen source and keep node1 available. Stop/release owned processes and leases before independent raw audit, compact Git export, final reviews, ticket closure and delivery."
+}

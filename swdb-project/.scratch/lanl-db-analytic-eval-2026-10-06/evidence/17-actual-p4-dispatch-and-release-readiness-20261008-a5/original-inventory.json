@@ -1,0 +1,782 @@
+{
+  "format": "swdb.lanl17-original-byte-inventory.v1",
+  "dated_et": "2026-10-08 20:06 ET",
+  "sealed": false,
+  "scientific_admission": false,
+  "files": [
+    {
+      "source": "/private/tmp/lanl17-campaign-status-capture-20261008-2000-a5/monitor-original.json",
+      "archive": "originals/lanl17-campaign-status-capture-20261008-2000-a5/monitor-original.json",
+      "bytes": 5837,
+      "sha256": "71ee48fd025fe139f63aa7d7ce7575542cf36909de9186af3e096d5d1761b90c"
+    },
+    {
+      "source": "/private/tmp/lanl17-native-wrapper-physical-metadata-capture-p4-before-dispatch-20261008-a5/start.json",
+      "archive": "originals/lanl17-native-wrapper-physical-metadata-capture-p4-before-dispatch-20261008-a5/start.json",
+      "bytes": 534,
+      "sha256": "88502f09e83b197ca739b096c7ba316daa3cf588a3aeaafc1560727cce7ff95b"
+    },
+    {
+      "source": "/private/tmp/lanl17-native-wrapper-physical-metadata-capture-p4-before-dispatch-20261008-a5/stderr",
+      "archive": "originals/lanl17-native-wrapper-physical-metadata-capture-p4-before-dispatch-20261008-a5/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/lanl17-native-wrapper-physical-metadata-capture-p4-before-dispatch-20261008-a5/stdin.py",
+      "archive": "originals/lanl17-native-wrapper-physical-metadata-capture-p4-before-dispatch-20261008-a5/stdin.py",
+      "bytes": 6369,
+      "sha256": "15fc2eea2b040cbdbc76ea75a7e0c48eb703cbbae50795ea8aae00782577cc63"
+    },
+    {
+      "source": "/private/tmp/lanl17-native-wrapper-physical-metadata-capture-p4-before-dispatch-20261008-a5/stdout",
+      "archive": "originals/lanl17-native-wrapper-physical-metadata-capture-p4-before-dispatch-20261008-a5/stdout",
+      "bytes": 3573,
+      "sha256": "9da3e2b01a905ea2c11173c71ced46f073142c952a0fd1d29fccf44d2973ac78"
+    },
+    {
+      "source": "/private/tmp/lanl17-native-wrapper-physical-metadata-capture-p4-before-dispatch-20261008-a5/transport.json",
+      "archive": "originals/lanl17-native-wrapper-physical-metadata-capture-p4-before-dispatch-20261008-a5/transport.json",
+      "bytes": 418,
+      "sha256": "adf88409178c127b51433f1e812557738c0ce2c70cbad09b3030056f7e487126"
+    },
+    {
+      "source": "/private/tmp/lanl17-native-wrapper-physical-metadata-capture-p4-before-dispatch-20261008-a5/wrapper-original.json",
+      "archive": "originals/lanl17-native-wrapper-physical-metadata-capture-p4-before-dispatch-20261008-a5/wrapper-original.json",
+      "bytes": 574,
+      "sha256": "a1783db942ae46388e5c81b565d999efede415abf75b1ecd58cd6e0bb2c2012b"
+    },
+    {
+      "source": "/private/tmp/lanl17-normal-campaign-dispatch-capture-20261008-a5-p4-a2/start.json",
+      "archive": "originals/lanl17-normal-campaign-dispatch-capture-20261008-a5-p4-a2/start.json",
+      "bytes": 7274,
+      "sha256": "ae246682b36591d6ee29d467557762cda7c8a896930bc2e2f6e70bca9fffccd6"
+    },
+    {
+      "source": "/private/tmp/lanl17-normal-campaign-dispatch-capture-20261008-a5-p4-a2/stderr",
+      "archive": "originals/lanl17-normal-campaign-dispatch-capture-20261008-a5-p4-a2/stderr",
+      "bytes": 86,
+      "sha256": "fac3615652c5037fae27af12562be1c0d35ce3aeb8f772f59c9aa2000bcc4ad1"
+    },
+    {
+      "source": "/private/tmp/lanl17-normal-campaign-dispatch-capture-20261008-a5-p4-a2/stdin.py",
+      "archive": "originals/lanl17-normal-campaign-dispatch-capture-20261008-a5-p4-a2/stdin.py",
+      "bytes": 14559,
+      "sha256": "87683deb4e719e02b502d333628a43ed0ed842f5b5e5de1bf1012dbbb86a3875"
+    },
+    {
+      "source": "/private/tmp/lanl17-normal-campaign-dispatch-capture-20261008-a5-p4-a2/stdout",
+      "archive": "originals/lanl17-normal-campaign-dispatch-capture-20261008-a5-p4-a2/stdout",
+      "bytes": 506,
+      "sha256": "7b9a8d35640ef0050e1eaba10212385f931f1a132548bd0bb8419f3ed00c98f7"
+    },
+    {
+      "source": "/private/tmp/lanl17-normal-campaign-dispatch-capture-20261008-a5-p4-a2/transport.json",
+      "archive": "originals/lanl17-normal-campaign-dispatch-capture-20261008-a5-p4-a2/transport.json",
+      "bytes": 1438,
+      "sha256": "f3ca714f08c681e7ded8437ae7ed2c5291fecdd74545ad623be0740d014443ee"
+    },
+    {
+      "source": "/private/tmp/lanl17-p3-native-release-query-capture-before-p4-20261008-a5/native-observation-original.json",
+      "archive": "originals/lanl17-p3-native-release-query-capture-before-p4-20261008-a5/native-observation-original.json",
+      "bytes": 5403,
+      "sha256": "e13fe07847e7d35ec21a5f6ebb359df2e5c1a22e2cf1d5ad28c68077bf462496"
+    },
+    {
+      "source": "/private/tmp/lanl17-p3-native-release-query-capture-before-p4-20261008-a5/start.json",
+      "archive": "originals/lanl17-p3-native-release-query-capture-before-p4-20261008-a5/start.json",
+      "bytes": 534,
+      "sha256": "b693783094295b6cbbf22c26f9feb83f9cecb4a7960d779ef1fd438e573c1aaf"
+    },
+    {
+      "source": "/private/tmp/lanl17-p3-native-release-query-capture-before-p4-20261008-a5/stderr",
+      "archive": "originals/lanl17-p3-native-release-query-capture-before-p4-20261008-a5/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/lanl17-p3-native-release-query-capture-before-p4-20261008-a5/stdin.py",
+      "archive": "originals/lanl17-p3-native-release-query-capture-before-p4-20261008-a5/stdin.py",
+      "bytes": 4019,
+      "sha256": "dd6020cda4378551b2ec6824711f62364a0825fd63395e3c32e7906daff5cf92"
+    },
+    {
+      "source": "/private/tmp/lanl17-p3-native-release-query-capture-before-p4-20261008-a5/stdout",
+      "archive": "originals/lanl17-p3-native-release-query-capture-before-p4-20261008-a5/stdout",
+      "bytes": 7659,
+      "sha256": "a2ef33c25de002773a2755f99a0dc064c20c935aa64d3b6e30b285e8588cd0a0"
+    },
+    {
+      "source": "/private/tmp/lanl17-p3-native-release-query-capture-before-p4-20261008-a5/transport.json",
+      "archive": "originals/lanl17-p3-native-release-query-capture-before-p4-20261008-a5/transport.json",
+      "bytes": 418,
+      "sha256": "ae194bdb5a33a59e10b7956dcc83df0c89424f839dd373ac4a9ab609b6d56174"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-acquired-generation-originals-action-config-r1-20261008-a5.json",
+      "archive": "originals/lanl17-p4-acquired-generation-originals-action-config-r1-20261008-a5.json",
+      "bytes": 3842,
+      "sha256": "d485f1d2a6d0a68a51679735d85fb1b58a0ed7d463b137541ec2533d6f23daeb"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/acquired-generation-original.json",
+      "archive": "originals/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/acquired-generation-original.json",
+      "bytes": 3278,
+      "sha256": "8b493736010e7e1c3b26a5f21e7f37f85454055ff31a08001311f14f2676690b"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/decoded-originals/lane.json",
+      "archive": "originals/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/decoded-originals/lane.json",
+      "bytes": 1066,
+      "sha256": "baf99cc0145f3b9e910f727e575c613d35e42642c4fcd763bf603e409af9855d"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/decoded-originals/mbit10-evaluation-node0.meta.json",
+      "archive": "originals/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/decoded-originals/mbit10-evaluation-node0.meta.json",
+      "bytes": 460,
+      "sha256": "847909b3b15f4cf7e2dd34676daa441266ca0f9594023704106649bd177be19c"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/start.json",
+      "archive": "originals/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/start.json",
+      "bytes": 534,
+      "sha256": "51f07435171335f0ce1c68639902641c981493cf127ddadf9c9e14ad51a0870b"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/stderr",
+      "archive": "originals/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/stdin.py",
+      "archive": "originals/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/stdin.py",
+      "bytes": 7503,
+      "sha256": "c0862ab952149ac83f39b6cc2e6332481cd8d8ead72e0ba4f49dc4e42f110798"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/stdout",
+      "archive": "originals/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/stdout",
+      "bytes": 8320,
+      "sha256": "afc574bbe489dea927f4040f63aa452a62759c905b2f40139c43cb1c985ab10a"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/transport.json",
+      "archive": "originals/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/transport.json",
+      "bytes": 418,
+      "sha256": "96817755417d9b12b12651a56d47ccdc5665360246a1c34ee429a681bf05d314"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-actual-dispatch-binding-peer-review-20261008-a5.json",
+      "archive": "originals/lanl17-p4-actual-dispatch-binding-peer-review-20261008-a5.json",
+      "bytes": 7570,
+      "sha256": "438d2032c8bce4a8da88c58ed9b5479bac8685714a2a1855668aa7fcba88c969"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-after-action-config-draft-20261008-a5.json",
+      "archive": "originals/lanl17-p4-after-action-config-draft-20261008-a5.json",
+      "bytes": 2914,
+      "sha256": "6feaa27081bb7266d63a3a3ae22ddb049a0edaaa7b6082baa818ed39c009958c"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-before-action-config-20261008-a5.json",
+      "archive": "originals/lanl17-p4-before-action-config-20261008-a5.json",
+      "bytes": 1917,
+      "sha256": "a6d13b0846550c4b3699d70c71d7d926b35ca2068e4965c22e388d2ef6943e23"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-before-capture-20261008-a5/custody.json",
+      "archive": "originals/lanl17-p4-before-capture-20261008-a5/custody.json",
+      "bytes": 3148,
+      "sha256": "800e081afd48d92affac16859166b3923e0f519c89bb369f7068a62bfe5c82f4"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-before-capture-20261008-a5/start.json",
+      "archive": "originals/lanl17-p4-before-capture-20261008-a5/start.json",
+      "bytes": 534,
+      "sha256": "94e95089a7c488793f35bb4432468a2135071d321b4ec254152847dfe4658c52"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-before-capture-20261008-a5/stderr",
+      "archive": "originals/lanl17-p4-before-capture-20261008-a5/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-before-capture-20261008-a5/stdin.py",
+      "archive": "originals/lanl17-p4-before-capture-20261008-a5/stdin.py",
+      "bytes": 5382,
+      "sha256": "bac962370a3ab72121ca85ae769cd10700f60800812676be0487c67df6536c4b"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-before-capture-20261008-a5/stdout",
+      "archive": "originals/lanl17-p4-before-capture-20261008-a5/stdout",
+      "bytes": 6312,
+      "sha256": "1e73e08fcca18257a1653bfda9c9282c5f4c9e9c4993a9144c6a6f5d02c65419"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-before-capture-20261008-a5/transport.json",
+      "archive": "originals/lanl17-p4-before-capture-20261008-a5/transport.json",
+      "bytes": 418,
+      "sha256": "b230a6466fbb17e39cae3aae3145d7fd3a88f76924da5dae8635a2fca994fe74"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-dispatch-original-collect-capture-20261008-a5/dispatch-preregistration.json",
+      "archive": "originals/lanl17-p4-dispatch-original-collect-capture-20261008-a5/dispatch-preregistration.json",
+      "bytes": 44098,
+      "sha256": "863576b41eec3475b3ebe4defff678222307768dd171f7eda1d90c8a77f2075e"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-dispatch-original-collect-capture-20261008-a5/start.json",
+      "archive": "originals/lanl17-p4-dispatch-original-collect-capture-20261008-a5/start.json",
+      "bytes": 534,
+      "sha256": "dab230ae45d176ced18aa23923ec2191b3243042b01ec484809d4b717d9aa11a"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-dispatch-original-collect-capture-20261008-a5/stderr",
+      "archive": "originals/lanl17-p4-dispatch-original-collect-capture-20261008-a5/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-dispatch-original-collect-capture-20261008-a5/stdin.py",
+      "archive": "originals/lanl17-p4-dispatch-original-collect-capture-20261008-a5/stdin.py",
+      "bytes": 4185,
+      "sha256": "918601861d83a430e8dff891db3d167d7794c6bdaf42f4a910f176dbe6dfda51"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-dispatch-original-collect-capture-20261008-a5/stdout",
+      "archive": "originals/lanl17-p4-dispatch-original-collect-capture-20261008-a5/stdout",
+      "bytes": 59500,
+      "sha256": "7536739a8b3b2c88a35b271d5913ae3c45597072c7833f9afb1eb04f88b83959"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-dispatch-original-collect-capture-20261008-a5/transport.json",
+      "archive": "originals/lanl17-p4-dispatch-original-collect-capture-20261008-a5/transport.json",
+      "bytes": 419,
+      "sha256": "5c62c6a7d9893233e4399a04b96437da47c1509bd899841adadbb19058a11935"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-dispatch-original-collect-config-20261008-a5.json",
+      "archive": "originals/lanl17-p4-dispatch-original-collect-config-20261008-a5.json",
+      "bytes": 524,
+      "sha256": "b9f6961e77d2ef2e6cd277b99159661fe109aa23e33bcbd9824bcc46514032eb"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-dispatch-parent-argv-draft-r1-20261008-a5-a2.json",
+      "archive": "originals/lanl17-p4-dispatch-parent-argv-draft-r1-20261008-a5-a2.json",
+      "bytes": 3938,
+      "sha256": "c6abe1320a5d692579e6c11115f4f98cb97d391301bbd7a3cc287677582b040e"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-dispatch-parent-argv-finalized-20261008-a5-a2.json",
+      "archive": "originals/lanl17-p4-dispatch-parent-argv-finalized-20261008-a5-a2.json",
+      "bytes": 1893,
+      "sha256": "d8e6c339b7c35f1943a3309f9920183b0b5190da38713de5b6e1a3454df64ec7"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-dispatch-state-action-config-finalized-20261008-a5.json",
+      "archive": "originals/lanl17-p4-dispatch-state-action-config-finalized-20261008-a5.json",
+      "bytes": 8510,
+      "sha256": "44335018ac8e672a3555a34123d8377362ff7f33a7fcfd912dafb49530a29303"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-dispatch-state-request-finalized-20261008-a5.json",
+      "archive": "originals/lanl17-p4-dispatch-state-request-finalized-20261008-a5.json",
+      "bytes": 5584,
+      "sha256": "05840c6cc5a3cffe4eb8f3ceb72bc6461c5f24d769271d1768d2c346ae4f6f36"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-dispatch-state32-capture-20261008-a5/lanl17-p4-dispatch-state-custody-20261008-a5.json",
+      "archive": "originals/lanl17-p4-dispatch-state32-capture-20261008-a5/lanl17-p4-dispatch-state-custody-20261008-a5.json",
+      "bytes": 6971,
+      "sha256": "8e2ecfb7f0f03ebca68d610df63cc0dafcdbd0838a923e0d27163c94aaa1a19f"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-dispatch-state32-capture-20261008-a5/start.json",
+      "archive": "originals/lanl17-p4-dispatch-state32-capture-20261008-a5/start.json",
+      "bytes": 534,
+      "sha256": "687336a59340be0633ef83c49dca5ab06e9a2f3ef8cf3e2e91dd953833c84441"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-dispatch-state32-capture-20261008-a5/stderr",
+      "archive": "originals/lanl17-p4-dispatch-state32-capture-20261008-a5/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-dispatch-state32-capture-20261008-a5/stdin.py",
+      "archive": "originals/lanl17-p4-dispatch-state32-capture-20261008-a5/stdin.py",
+      "bytes": 12039,
+      "sha256": "940a4902e98bd7a5719d19eb324741d27205336c8835107145549d6640d44b78"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-dispatch-state32-capture-20261008-a5/stdout",
+      "archive": "originals/lanl17-p4-dispatch-state32-capture-20261008-a5/stdout",
+      "bytes": 11059,
+      "sha256": "fb70d4e150e9c5bf4061f17655560e8756993a49c81be40a6e3ea3882b695a95"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-dispatch-state32-capture-20261008-a5/transport.json",
+      "archive": "originals/lanl17-p4-dispatch-state32-capture-20261008-a5/transport.json",
+      "bytes": 419,
+      "sha256": "7e74af385415991893fd58de1384488035ca6d0cfc40fd1695359e75c388d461"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-dispatch-state32-output-peer-review-20261008-a5.json",
+      "archive": "originals/lanl17-p4-dispatch-state32-output-peer-review-20261008-a5.json",
+      "bytes": 3068,
+      "sha256": "73eeabbfff853e5f52218b3faa5159b179494f1546d6ae7213ce66d7a2ec24f7"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-dispatch-state32-request-peer-review-20261008-a5.json",
+      "archive": "originals/lanl17-p4-dispatch-state32-request-peer-review-20261008-a5.json",
+      "bytes": 7301,
+      "sha256": "c21ec6af502f92db041b465699e6fb84d39b4176ea837d7c6ad589ae5cfb9aae"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-final-dispatch-source-only-checklist-20261008-a5.md",
+      "archive": "originals/lanl17-p4-final-dispatch-source-only-checklist-20261008-a5.md",
+      "bytes": 6339,
+      "sha256": "59ee30bd58911096daa32f3f77180c2d5629ffe51b1bd27b0fdf47f6d725be4a"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-native-release-query-action-config-r2-20261008-a5.json",
+      "archive": "originals/lanl17-p4-native-release-query-action-config-r2-20261008-a5.json",
+      "bytes": 358,
+      "sha256": "64c67b8264831df064f9c399cc4f1f40544877bcb258878f84c0659da4cc5824"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-native-release-query-capture-20261008-2004-a5/native-observation-original.json",
+      "archive": "originals/lanl17-p4-native-release-query-capture-20261008-2004-a5/native-observation-original.json",
+      "bytes": 5081,
+      "sha256": "3c99501477ef2b5f78d890454b19f629e85aeb4bd7ca8dfb1593fe91e6515057"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-native-release-query-capture-20261008-2004-a5/start.json",
+      "archive": "originals/lanl17-p4-native-release-query-capture-20261008-2004-a5/start.json",
+      "bytes": 534,
+      "sha256": "1acb6ef52206007e2d469abed7299a50252c70161144e8db086b4366863af294"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-native-release-query-capture-20261008-2004-a5/stderr",
+      "archive": "originals/lanl17-p4-native-release-query-capture-20261008-2004-a5/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-native-release-query-capture-20261008-2004-a5/stdin.py",
+      "archive": "originals/lanl17-p4-native-release-query-capture-20261008-2004-a5/stdin.py",
+      "bytes": 4019,
+      "sha256": "c74c6891c660ab8933d1cfd930306f04be582e73f99b6294cbbabdef7ce4e364"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-native-release-query-capture-20261008-2004-a5/stdout",
+      "archive": "originals/lanl17-p4-native-release-query-capture-20261008-2004-a5/stdout",
+      "bytes": 7231,
+      "sha256": "6b2842da6bde710efa88bfbf7bacb4936c515d1a83d0ac6fec51e2ec9932983b"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-native-release-query-capture-20261008-2004-a5/transport.json",
+      "archive": "originals/lanl17-p4-native-release-query-capture-20261008-2004-a5/transport.json",
+      "bytes": 418,
+      "sha256": "5b3516b63d716b4c246b4b02914028899f2df799f2c179dea4d71c5100d81724"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-native-release-query-stage-capture-r2-20261008-a5/start.json",
+      "archive": "originals/lanl17-p4-native-release-query-stage-capture-r2-20261008-a5/start.json",
+      "bytes": 534,
+      "sha256": "873d7cfb7a25b24dc3912139d54efc0642018641769b35bfcaaa352e1718022a"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-native-release-query-stage-capture-r2-20261008-a5/stderr",
+      "archive": "originals/lanl17-p4-native-release-query-stage-capture-r2-20261008-a5/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-native-release-query-stage-capture-r2-20261008-a5/stdin.py",
+      "archive": "originals/lanl17-p4-native-release-query-stage-capture-r2-20261008-a5/stdin.py",
+      "bytes": 24343,
+      "sha256": "f0d33e3b4bb3471973a983e87014d3f33b10bd4f72d567208a801d415201b378"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-native-release-query-stage-capture-r2-20261008-a5/stdout",
+      "archive": "originals/lanl17-p4-native-release-query-stage-capture-r2-20261008-a5/stdout",
+      "bytes": 292,
+      "sha256": "e4a5e0d0e27a8f14db8308073b32895232f8faed9163e462035a566bad2ce4a7"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-native-release-query-stage-capture-r2-20261008-a5/transport.json",
+      "archive": "originals/lanl17-p4-native-release-query-stage-capture-r2-20261008-a5/transport.json",
+      "bytes": 417,
+      "sha256": "53292c0e45688305259772444b86a4e7c5fe06324ae2e2edee512a5ae25c1953"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-native-release-query-stage-config-r2-20261008-a5.json",
+      "archive": "originals/lanl17-p4-native-release-query-stage-config-r2-20261008-a5.json",
+      "bytes": 20682,
+      "sha256": "978f9d0577f99e46b1974718b1de2af8cfde8614e3a8de768293de20438a7d46"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-native-terminal-after-configs-derivation-20261008-a5.diff",
+      "archive": "originals/lanl17-p4-native-terminal-after-configs-derivation-20261008-a5.diff",
+      "bytes": 66462,
+      "sha256": "314a12ba1957b18ba250bfdb76fce12cfe608be3363d45e529b9eb7fb6806ab0"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-native-terminal-after-source-handoff-20261008-a5.md",
+      "archive": "originals/lanl17-p4-native-terminal-after-source-handoff-20261008-a5.md",
+      "bytes": 6030,
+      "sha256": "ad79e6a9473bf095b4edb1d6ba0ef4ff8e9096589198748a7730c4b6e6923657"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-parent-actual-admission-review-20261008-a5.json",
+      "archive": "originals/lanl17-p4-parent-actual-admission-review-20261008-a5.json",
+      "bytes": 1840,
+      "sha256": "c8873104f146f07c3b12f769bf0ae4dbb4a04fe818f7c16dbbc2eb7962557e96"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-parent-pre-dispatch-readonly-20261008-a5-r1.py",
+      "archive": "originals/lanl17-p4-parent-pre-dispatch-readonly-20261008-a5-r1.py",
+      "bytes": 2516,
+      "sha256": "e23ac7d5af2d3f7b996b0b30ea51b96df09689edeb4fb1297afacf6296d743ca"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-parent-pre-dispatch-readonly-capture-20261008-a5-r1/host-original.json",
+      "archive": "originals/lanl17-p4-parent-pre-dispatch-readonly-capture-20261008-a5-r1/host-original.json",
+      "bytes": 17420,
+      "sha256": "e4603dc6a86f985398c4bda41665162117e0ef8ea2f926b83c29fb3581f0fc4a"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-parent-pre-dispatch-readonly-capture-20261008-a5-r1/start.json",
+      "archive": "originals/lanl17-p4-parent-pre-dispatch-readonly-capture-20261008-a5-r1/start.json",
+      "bytes": 534,
+      "sha256": "3d8bdeededacfcafef4a375302247134f9075b3c05e2591d050deb0d62563054"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-parent-pre-dispatch-readonly-capture-20261008-a5-r1/stderr",
+      "archive": "originals/lanl17-p4-parent-pre-dispatch-readonly-capture-20261008-a5-r1/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-parent-pre-dispatch-readonly-capture-20261008-a5-r1/stdin.py",
+      "archive": "originals/lanl17-p4-parent-pre-dispatch-readonly-capture-20261008-a5-r1/stdin.py",
+      "bytes": 6329,
+      "sha256": "e1abe220ca9f258d778d6dd8b1d6563212a00371a991d418aeebaa477747927b"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-parent-pre-dispatch-readonly-capture-20261008-a5-r1/stdout",
+      "archive": "originals/lanl17-p4-parent-pre-dispatch-readonly-capture-20261008-a5-r1/stdout",
+      "bytes": 26323,
+      "sha256": "4a9dfd173edd44b0b7c753474b8c7111b455efcb0c5d45697cd2403a6dfc9959"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-parent-pre-dispatch-readonly-capture-20261008-a5-r1/transport.json",
+      "archive": "originals/lanl17-p4-parent-pre-dispatch-readonly-capture-20261008-a5-r1/transport.json",
+      "bytes": 419,
+      "sha256": "7ea51eafeebc8440c1d669b57751063cc5f6eaff64bdbe85b437ba64fdf7a833"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-parent-pre-dispatch-readonly-config-20261008-a5-r1.json",
+      "archive": "originals/lanl17-p4-parent-pre-dispatch-readonly-config-20261008-a5-r1.json",
+      "bytes": 2830,
+      "sha256": "f673f4771f2d6695770c23c0a4e5dfe4daf0054f613b56317192d31bd90f7bd2"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-pre-dispatch-helper-health-query-config-20261008-a5.json",
+      "archive": "originals/lanl17-p4-pre-dispatch-helper-health-query-config-20261008-a5.json",
+      "bytes": 8257,
+      "sha256": "022e12c4738da12ee1599ab900131245697c5229308fb42adfff4554a749c08b"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-release-request-draft-r1-20261008-a5.json",
+      "archive": "originals/lanl17-p4-release-request-draft-r1-20261008-a5.json",
+      "bytes": 12469,
+      "sha256": "642f69d4c4c7b12a72e1ffa7141ef634f2974ba57d7e24f6bf75543592c569fb"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-release-source-config-parent-review-20261008-a5.json",
+      "archive": "originals/lanl17-p4-release-source-config-parent-review-20261008-a5.json",
+      "bytes": 4316,
+      "sha256": "b340539e742cd2f083e5f4264f37551155ce1d048f498395a322c120615383ed"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-release-source-derivation-20261008-a5.diff",
+      "archive": "originals/lanl17-p4-release-source-derivation-20261008-a5.diff",
+      "bytes": 32027,
+      "sha256": "3952685d9826b8636fa279d5b68509fdfdb1cfecebbb12843e3ddbacb1ca1a99"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-release-source-derivation-20261008-a5.json",
+      "archive": "originals/lanl17-p4-release-source-derivation-20261008-a5.json",
+      "bytes": 6415,
+      "sha256": "233607c03d7225809691fa6064fc0eec5a892a6f6672d27dbebc7b0eb937dee5"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-release-source-root-review-20261008-a5.json",
+      "archive": "originals/lanl17-p4-release-source-root-review-20261008-a5.json",
+      "bytes": 1201,
+      "sha256": "75e73f8446fc08622df3d63e67080c042e507a53b19b4f4a73eedfe669da826a"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-release-sources-configs-peer-review-20261008-a5.json",
+      "archive": "originals/lanl17-p4-release-sources-configs-peer-review-20261008-a5.json",
+      "bytes": 9683,
+      "sha256": "ea785e8654eac4e371f5bd4e67ae042e7b07418419e4593b080ae316333ca463"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1945-a5/process-original.json",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1945-a5/process-original.json",
+      "bytes": 1956,
+      "sha256": "8794ec545a15f242a57b1e8e4537f840bd53bd9e5003a9d97badd11366feef1c"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1945-a5/start.json",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1945-a5/start.json",
+      "bytes": 534,
+      "sha256": "1f1dd99a752f2219ccb27b9cce8437dde87ec2c8629a758180f15e9b0dc69b13"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1945-a5/stderr",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1945-a5/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1945-a5/stdin.py",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1945-a5/stdin.py",
+      "bytes": 12362,
+      "sha256": "f3aac5e3e984ed766a16b7be36a25367ad538c9c6835ed13e04d63fdcf83ccb5"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1945-a5/stdout",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1945-a5/stdout",
+      "bytes": 10971,
+      "sha256": "d450c3fba3f0a1f830373c564cd4b5a5e0fd75cec92413c3f93f9c734aec9251"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1945-a5/transport.json",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1945-a5/transport.json",
+      "bytes": 419,
+      "sha256": "ac320761de01cfe1b731b5df4021be13407fbe467184493aee05587814a4cf3e"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1948-a5/process-original.json",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1948-a5/process-original.json",
+      "bytes": 1957,
+      "sha256": "734b7b344368db9b450ebf612ed90d99ab0e118498222fadb81112a1bdb6fbb2"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1948-a5/start.json",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1948-a5/start.json",
+      "bytes": 534,
+      "sha256": "fbb7c85961743285cf8be09e41c678e77d4f0dafd3662d0fef574099af84f31b"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1948-a5/stderr",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1948-a5/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1948-a5/stdin.py",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1948-a5/stdin.py",
+      "bytes": 12362,
+      "sha256": "f3aac5e3e984ed766a16b7be36a25367ad538c9c6835ed13e04d63fdcf83ccb5"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1948-a5/stdout",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1948-a5/stdout",
+      "bytes": 10975,
+      "sha256": "cc3d46e22f301d12e9abc49c2eacc9b34c4c8ae34037092f5104fbd02c1012a8"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1948-a5/transport.json",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1948-a5/transport.json",
+      "bytes": 419,
+      "sha256": "7413e00d4343bf42abec1f57aef02cdc386c6c40f1cee9b50034f0074f0a1beb"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1953-a5/process-original.json",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1953-a5/process-original.json",
+      "bytes": 1958,
+      "sha256": "fdf8a6c4f79b9976b70fd8d8f0ca7e78130c6750b5dfdc828f80e6f559962c58"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1953-a5/start.json",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1953-a5/start.json",
+      "bytes": 534,
+      "sha256": "f5b092f34ec3cf61c56a2eb138be01dd45e133cf9262b3babbba960fcdcbca31"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1953-a5/stderr",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1953-a5/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1953-a5/stdin.py",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1953-a5/stdin.py",
+      "bytes": 12362,
+      "sha256": "f3aac5e3e984ed766a16b7be36a25367ad538c9c6835ed13e04d63fdcf83ccb5"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1953-a5/stdout",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1953-a5/stdout",
+      "bytes": 10975,
+      "sha256": "43185f8da44b74c98391b7fb93309e534577bf8ea49c39a0c8a9093456d2b5e9"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1953-a5/transport.json",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1953-a5/transport.json",
+      "bytes": 419,
+      "sha256": "52b520f8beaf153502d280fa48aa02f2cabde25cc544fb590427b48fff32ae5e"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1955-a5/process-original.json",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1955-a5/process-original.json",
+      "bytes": 2872,
+      "sha256": "a2fd702eb9c0f380d48b330d0ce97a31a58af93a69a0a0e1516614cd03ceba32"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1955-a5/start.json",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1955-a5/start.json",
+      "bytes": 534,
+      "sha256": "3fd44ba058f1058217f86916bc3cb0fc2bab67e3828b65d037bf360865d59153"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1955-a5/stderr",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1955-a5/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1955-a5/stdin.py",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1955-a5/stdin.py",
+      "bytes": 12592,
+      "sha256": "f9385feca7fca6e23136a5db705ad11ab9580c45498ba1b63c2573c205c79f71"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1955-a5/stdout",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1955-a5/stdout",
+      "bytes": 12195,
+      "sha256": "d3198a75ece870167b0a2241768a8b484572ffe4db7b396e88aec4f778c72105"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1955-a5/transport.json",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-1955-a5/transport.json",
+      "bytes": 419,
+      "sha256": "f8f055fceee00be752daa7d9a2aae10ba2af9f2e1d00bfdfed82dca8691b7e7d"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-2007-a5/process-original.json",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-2007-a5/process-original.json",
+      "bytes": 3573,
+      "sha256": "8ff9cdc94cfe643d70f7dfb8689e5e6bb80229ba0353025647f59098786f174a"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-2007-a5/start.json",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-2007-a5/start.json",
+      "bytes": 534,
+      "sha256": "a8ab2dd674c7bfc53ac464e00d892062115230ab9a48367ce33ebbe79b3202d6"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-2007-a5/stderr",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-2007-a5/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-2007-a5/stdin.py",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-2007-a5/stdin.py",
+      "bytes": 12592,
+      "sha256": "f9385feca7fca6e23136a5db705ad11ab9580c45498ba1b63c2573c205c79f71"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-2007-a5/stdout",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-2007-a5/stdout",
+      "bytes": 13127,
+      "sha256": "a8b1107fe5e94a212c4c18f16e1c8ea8fccae4aff6cea3d93dd01f65498e06c1"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-2007-a5/transport.json",
+      "archive": "originals/lanl17-p4-startup-metadata-capture-20261008-2007-a5/transport.json",
+      "bytes": 419,
+      "sha256": "087956bc9c5fe3259d239694bc9a0ffbc8e564c3ab80afa163c9522352e28718"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-startup-metadata-query-config-20261008-a5.json",
+      "archive": "originals/lanl17-p4-startup-metadata-query-config-20261008-a5.json",
+      "bytes": 8487,
+      "sha256": "d535878e25b44ff05339c7efaad38967a5d5b2548219b738152943190447ea08"
+    },
+    {
+      "source": "/private/tmp/lanl17-p4-terminal-metadata-reader-action-draft-20261008-a5.json",
+      "archive": "originals/lanl17-p4-terminal-metadata-reader-action-draft-20261008-a5.json",
+      "bytes": 8934,
+      "sha256": "2745815b9d74670d098e2ad7bd62acf23dfb86614d6f3245e6aad81be89a01ab"
+    },
+    {
+      "source": "/private/tmp/lanl17_capture_reviewed_normal_campaign_dispatch_20261008_a2r1.py",
+      "archive": "originals/lanl17_capture_reviewed_normal_campaign_dispatch_20261008_a2r1.py",
+      "bytes": 29470,
+      "sha256": "76de56fc103d0ffa3d1b197fa93e474e4db4aef78698e69abb9197b994d8e8e3"
+    },
+    {
+      "source": "/private/tmp/lanl17_derive_later_campaign_release_sources_20261008_a5_r2.py",
+      "archive": "originals/lanl17_derive_later_campaign_release_sources_20261008_a5_r2.py",
+      "bytes": 11301,
+      "sha256": "2937192c0f08a4d1ffe4d7190567746295f6a3b8e35fae2e5a45393fdaa66f84"
+    },
+    {
+      "source": "/private/tmp/lanl17_finalize_p4_normal_release_request_20261008_a5_r4.py",
+      "archive": "originals/lanl17_finalize_p4_normal_release_request_20261008_a5_r4.py",
+      "bytes": 18684,
+      "sha256": "adcd53fc2b54fe295c34ab30dd1e0ad0db30e173b805490abf6c94840c140e5c"
+    },
+    {
+      "source": "/private/tmp/lanl17_p4_startup_metadata_query_20261008_a5.py",
+      "archive": "originals/lanl17_p4_startup_metadata_query_20261008_a5.py",
+      "bytes": 7793,
+      "sha256": "e518663c5e4d6370b1969409e1f1b4107d613bcc3f3af844636a71203bb5c7e1"
+    },
+    {
+      "source": "/private/tmp/lanl17_parent_capture_projection_producer_a3_20261007.py",
+      "archive": "originals/lanl17_parent_capture_projection_producer_a3_20261007.py",
+      "bytes": 46165,
+      "sha256": "32bead204337aa66d0a732b6f143216946abafc5d2eb752577b0d90f7190b7b6"
+    },
+    {
+      "source": "/private/tmp/lanl17_parent_helpers_cleanup60_a4.py",
+      "archive": "originals/lanl17_parent_helpers_cleanup60_a4.py",
+      "bytes": 38195,
+      "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+    },
+    {
+      "source": "/private/tmp/lanl17_read_p4_acquired_generation_originals_20261008_a5_r1.py",
+      "archive": "originals/lanl17_read_p4_acquired_generation_originals_20261008_a5_r1.py",
+      "bytes": 3502,
+      "sha256": "8de60e7ca8a0492cbab89450c08246d42345a3baa0cf3110f51408a24dfdce22"
+    },
+    {
+      "source": "/private/tmp/lanl17_read_p4_native_release_observation_20261008_a5_r2.py",
+      "archive": "originals/lanl17_read_p4_native_release_observation_20261008_a5_r2.py",
+      "bytes": 15125,
+      "sha256": "1b7a344611a69d60cc8bfe0201e09822eab6124ed12f35f6342486488db30d20"
+    },
+    {
+      "source": "/private/tmp/lanl17_read_p4_normal_terminal_originals_20261008_a5_r2.py",
+      "archive": "originals/lanl17_read_p4_normal_terminal_originals_20261008_a5_r2.py",
+      "bytes": 7926,
+      "sha256": "5b8076e4351d893e2cadf76e75d893119771d3ca892688f8cfa99968c8a1bb94"
+    },
+    {
+      "source": "/Users/yanrujhou/.codex/worktrees/lanl-ticket17/ArchEvolve/swdb-project/swdb/processes.py",
+      "archive": "originals/processes.py",
+      "bytes": 912,
+      "sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289"
+    }
+  ]
+}

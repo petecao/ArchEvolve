@@ -1,0 +1,104 @@
+# Library operation seeded from Extensa (ticket 51). Created 2026-10-03 ET.
+# Updated 2026-10-04 ET (ticket 55): pattern key in chain form, one role and address shape per step.
+id: operation.update_binning_executor
+kind: library_operation
+provenance:
+  origin:
+    kind: extensa_source
+    repository: MaizeHPC/MemAcc
+    commit: af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+    paths:
+    - DataLayoutAPI/update_binning.hh
+    - AgenticRefiner/transformations/binned/binned_update_executor.yaml
+  license: Apache-2.0 WITH LLVM-exception (Q66 assumption, pending Peter)
+  semantics:
+    source: AgenticRefiner/transformations/binned/binned_update_executor.yaml
+    output_equivalence: bitwise_identical
+signature: template <typename ValueT, typename IndexT> class UpdateBinningExecutor { void initialize(const BinPlan<IndexT>&);
+  void scatter_add(size_t n_iters, const IndexT* dest_idx, const ValueT* values, ValueT* target); }
+intent: 'Binned scatter-add: records (dest_idx[i], values[i]) are appended to per-thread destination bins and drained
+  bin by bin, so target[dest] += value is applied in record order for every destination.'
+location:
+  root: library
+  path: library_operations/binning.hh
+  symbol: UpdateBinningExecutor
+code_sha256: 8e2cd52e6cfcbf35ec49416c2f590e36f07e5f67b6df6d40facb554734e1dde7
+reference_semantics:
+  root: library
+  path: library_operations/reference/movement_reference.hh
+  sha256: 465470e4b50f4446801f005fc0bb787f4e4b064d8585044ca710c91d28cbcc8c
+  symbol: bin_drain
+uses_intrinsics: []
+uses_library_operations: []
+pattern_key:
+- roles:
+  - target
+  address_shapes:
+  - stream
+  update_kind: read
+- roles:
+  - index
+  - target
+  address_shapes:
+  - stream
+  - single_valued_indirect
+  update_kind: add_update
+differential_test:
+  root: library
+  path: library_operations/drivers/bin_drain_run.cpp.tmpl
+  sha256: d33e7b13c59d1b24abd03f6cf58ed29e2ff493b9187f18bf41f4d31d1459e2c0
+  family: bin_drain
+  files:
+    reference_template:
+      root: library
+      path: library_operations/drivers/bin_drain_ref.cpp.tmpl
+      sha256: d6152a8651121fd45e15fc25becfe5323a2e9327b4b74427a5a400e763b4e836
+    candidate_template:
+      root: library
+      path: library_operations/drivers/update_binning_executor_cand.cpp.tmpl
+      sha256: 7e64e5c70bbe89877a0a32a03c9ddffc7a3334790fa99902b0acf7c7fdc4ebfd
+  input_set:
+    seeds: post_hoc
+    sizes:
+      n: 1021
+      n_target: 127
+clauses:
+- id: records_applied_in_order
+  role: postcondition
+  statement: For every destination, target[dest] += value is applied once per record, in record order.
+  natural_language_only: checked by bitwise equality with the plain C++ reference and the input frame check
+  discharge_mode: differential_test
+  negative_control:
+    id: dropped_last_record
+    kind: dropped_operand
+    check: differential_mismatch
+    mutation:
+      root: library
+      path: library_operations/controls/update_binning_executor.dropped_last_record.hh
+      sha256: a29043003d184809125db68855facfbeea4548a48a34cb8c613ee4215916116b
+- id: each_record_drained_once
+  role: postcondition
+  statement: Each buffered record is drained exactly once.
+  natural_language_only: checked by bitwise equality with the plain C++ reference and the input frame check
+  discharge_mode: differential_test
+  negative_control:
+    id: double_drain
+    kind: double_claim
+    check: differential_mismatch
+    mutation:
+      root: library
+      path: library_operations/controls/update_binning_executor.double_drain.hh
+      sha256: 8c92ed2a8d4adcf9364578267515d51c50528f70d1807e9f0e49bd995232a797
+- id: inputs_read_only
+  role: frame
+  statement: dest_idx and values are not written.
+  natural_language_only: checked by bitwise equality with the plain C++ reference and the input frame check
+  discharge_mode: differential_test
+  negative_control:
+    id: aliasing_write
+    kind: aliasing
+    check: frame_violation
+    mutation:
+      root: library
+      path: library_operations/controls/update_binning_executor.aliasing_write.hh
+      sha256: 77b8e5837e4f051feab0b9068e8d5a2c26d49783d77f0c1f6388d44c8bac58b6

@@ -1,0 +1,165 @@
+{
+  "actual_role_review_plan_test_staging_or_cleanup_generated": false,
+  "all_old_packet_originals_preserved": true,
+  "changed_existing_definition_only": [
+    "Observer.owned_processes"
+  ],
+  "concrete_finding": "Copied O7 shared helper refers to strict_json, absent from O7 globals. Exact G6 already supplies its verified parser.",
+  "format": "swdb.exact-portal-O7-global-parser-call-source-correction.v1",
+  "sealed": false,
+  "selected_fix": "One call-site qualifier self.m invokes the same byte-exact helper in verified G6 globals.",
+  "shared_helper": {
+    "bytes": 26331,
+    "path": "/private/tmp/lanl17_exact_portal_inode_role_helper_source_20261008_a1.txt",
+    "sha256": "36fc3b3fdede68b15fca931c199b649303cda4db559f1226ea13474ab5c0e44c"
+  },
+  "source_only_no_target_definitions_import_compile_lift_main_test_Git_SSH_or_mutation": true,
+  "sources": [
+    {
+      "complete_narrow_diff": {
+        "bytes": 891,
+        "path": "/private/tmp/lanl17-exact-portal-observer-o7r1-complete-o7-derivation-20261008-a1.diff",
+        "sha256": "b4b32252481a8332cc9cb00cae220cd523e468590f9d45962d2f3a6f940f8f71"
+      },
+      "foundation": {
+        "bytes": 58750,
+        "path": "/private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r6.py",
+        "sha256": "488fb42df44d338204b5cff58b10e7f0ff9c7feaee6490b33ba94201ba4f7665"
+      },
+      "full_byte_reverse_equal": true,
+      "full_foundation_diff": {
+        "bytes": 32876,
+        "path": "/private/tmp/lanl17-exact-portal-observer-o7r1-complete-o6-derivation-20261008-a1.diff",
+        "sha256": "a83255a6aafed27d334104214a770bb93b021073d8a8488442f87dbf522529bb"
+      },
+      "literal_changes": [
+        {
+          "count": 1,
+          "new": "audit=self.m.exact_portal_autounmount_identification(portal_pin,self.m.ROWS",
+          "old": "audit=exact_portal_autounmount_identification(portal_pin,self.m.ROWS"
+        }
+      ],
+      "original": {
+        "bytes": 87826,
+        "path": "/private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r7.py",
+        "sha256": "f5ab095a9734e2a0251d1dabbf3c61b4ae9001d1848c756194cd443e7acbad14"
+      },
+      "selected": {
+        "bytes": 87833,
+        "path": "/private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r7_r1.py",
+        "sha256": "83e3d4dbac5d2215d591e09c8dd01aa441c1b6b0151ff18ee8a494ed9826c524"
+      }
+    },
+    {
+      "complete_narrow_diff": {
+        "bytes": 1445,
+        "path": "/private/tmp/lanl17-exact-portal-passive-wrapper-r7-complete-r6-derivation-20261008-a1.diff",
+        "sha256": "4d19d1376d792a2c056a971fc9b51526174c1f3dfa01cb2e1ed6d07869645504"
+      },
+      "full_byte_reverse_equal": true,
+      "literal_changes": [
+        {
+          "count": 1,
+          "new": "83e3d4dbac5d2215d591e09c8dd01aa441c1b6b0151ff18ee8a494ed9826c524",
+          "old": "f5ab095a9734e2a0251d1dabbf3c61b4ae9001d1848c756194cd443e7acbad14"
+        },
+        {
+          "count": 2,
+          "new": "87833",
+          "old": "87826"
+        }
+      ],
+      "original": {
+        "bytes": 16091,
+        "path": "/private/tmp/lanl17_detach_passive_observer_administration_20261008_a1_r6.py",
+        "sha256": "7d38ff4063666f7918de9fac19f8c366d2d9bf20c7fbd0a09e48a07e8ccc4ed4"
+      },
+      "selected": {
+        "bytes": 16091,
+        "path": "/private/tmp/lanl17_detach_passive_observer_administration_20261008_a1_r7.py",
+        "sha256": "ee885d56e99c591b2f1298153a97f43ab78687bdc7fecbc2e830349abae26669"
+      }
+    },
+    {
+      "complete_narrow_diff": {
+        "bytes": 2228,
+        "path": "/private/tmp/lanl17-exact-portal-passive-collector-a5r1-complete-a5-derivation-20261008.diff",
+        "sha256": "26acde9b08f93458ea94b97e84a9fba01d0d5240cb8d75ee7567fe36bb957d72"
+      },
+      "full_byte_reverse_equal": true,
+      "literal_changes": [
+        {
+          "count": 1,
+          "new": "83e3d4dbac5d2215d591e09c8dd01aa441c1b6b0151ff18ee8a494ed9826c524",
+          "old": "f5ab095a9734e2a0251d1dabbf3c61b4ae9001d1848c756194cd443e7acbad14"
+        },
+        {
+          "count": 1,
+          "new": "ee885d56e99c591b2f1298153a97f43ab78687bdc7fecbc2e830349abae26669",
+          "old": "7d38ff4063666f7918de9fac19f8c366d2d9bf20c7fbd0a09e48a07e8ccc4ed4"
+        },
+        {
+          "count": 1,
+          "new": "87833",
+          "old": "87826"
+        }
+      ],
+      "original": {
+        "bytes": 4820,
+        "path": "/private/tmp/lanl_read_detached_passive_observer_administration_originals_20261008_a5.py",
+        "sha256": "62fbe84211260fcc21304767d71e8e598b1020b56bb7c598c4758a3a370a587c"
+      },
+      "selected": {
+        "bytes": 4820,
+        "path": "/private/tmp/lanl_read_detached_passive_observer_administration_originals_20261008_a5_r1.py",
+        "sha256": "d602cb25fd749eab4c62ed6d4acbd90346f3b653f2327a8e5640a81b6ca3e2c7"
+      }
+    },
+    {
+      "complete_narrow_diff": {
+        "bytes": 2337,
+        "path": "/private/tmp/lanl17-exact-portal-passive-decoder-a5r1-complete-a5-derivation-20261008.diff",
+        "sha256": "f152fcadea3a86665515038cfbbfbf5cc8d23f45255dab2a9528b6b2b2702a6e"
+      },
+      "full_byte_reverse_equal": true,
+      "literal_changes": [
+        {
+          "count": 1,
+          "new": "83e3d4dbac5d2215d591e09c8dd01aa441c1b6b0151ff18ee8a494ed9826c524",
+          "old": "f5ab095a9734e2a0251d1dabbf3c61b4ae9001d1848c756194cd443e7acbad14"
+        },
+        {
+          "count": 1,
+          "new": "ee885d56e99c591b2f1298153a97f43ab78687bdc7fecbc2e830349abae26669",
+          "old": "7d38ff4063666f7918de9fac19f8c366d2d9bf20c7fbd0a09e48a07e8ccc4ed4"
+        },
+        {
+          "count": 1,
+          "new": "87833",
+          "old": "87826"
+        }
+      ],
+      "original": {
+        "bytes": 6361,
+        "path": "/private/tmp/lanl_decode_detached_passive_observer_original_custody_20261008_a5.py",
+        "sha256": "590737ee84ac10cf81cb445473e431c04b4b17360e869134d938b96b4510f21c"
+      },
+      "selected": {
+        "bytes": 6361,
+        "path": "/private/tmp/lanl_decode_detached_passive_observer_original_custody_20261008_a5_r1.py",
+        "sha256": "3dccd5384a2cb2b73cb10f5c1d0213eb282ddf4703da4808c8052ea9392c26e2"
+      }
+    }
+  ],
+  "unchanged_G6": {
+    "bytes": 116443,
+    "path": "/private/tmp/lanl_consumed_detached_source_guard_r6_20261008_a1.py",
+    "sha256": "6118592610fbff77a7da3ea8196c772331066d3188ded29627218486c106b326"
+  },
+  "unchanged_existing_definition_count": 34,
+  "unchanged_test_source": {
+    "bytes": 15288,
+    "path": "/private/tmp/lanl17_exact_portal_role_isolated_test_source_20261008_a1.py",
+    "sha256": "159cf3e14d06d6f8e3bb391cb3a6dfba3d998ea7eb4b07e19289ddebcfbd80ed"
+  }
+}

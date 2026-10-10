@@ -1,0 +1,58 @@
+{
+  "format": "swdb.lanl17-finalize-progress-source-diagnosis.v1",
+  "created_ET_date": "2026-10-08",
+  "read_only_local_original_and_AST_only": true,
+  "original": {
+    "path": "/private/tmp/lanl17-finalize-progress-capture-r3-20261008-2213-a5/progress-original.json",
+    "bytes": 19202,
+    "sha256": "7597378c3c1c937fb6834633f17e6b1838192ba3b6c57e41719de39100a09588"
+  },
+  "selected_source": {
+    "path": "/private/tmp/lanl17_observe_finalize_progress_metadata_20261008_a5_r3.py",
+    "bytes": 18212,
+    "sha256": "a59121983fbea8589a020b860c948665909c577929052e95b845a87dca00a90c"
+  },
+  "actual_observer_checked_utc": "2026-10-09T02:12:00.965410+00:00",
+  "actual_unknown_rows_count": 6,
+  "exact_refusal_literal": "kernel_field_identity",
+  "source_line": 58,
+  "refusal_predicate": "stat.S_ISREG(s.st_mode) and s.st_uid==owner",
+  "literal_sha256": "fb9189ab536f484af7c636076944f2128bd86eabfecf05026e85fef1419f4738",
+  "fail_operation": "stat",
+  "actual_rejected_file_mode_or_uid_observed": false,
+  "actual_failure_is_shape_or_PID_reuse": false,
+  "exact_refusal_predicate_branch_unknown": true,
+  "linux_semantic_reference": {
+    "title": "Linux man-pages proc_pid(5)",
+    "url": "https://www.man7.org/linux/man-pages/man5/proc_pid.5.html",
+    "fact": "proc PID file ownership may be root:root when dumpable differs from1",
+    "six_actual_rows_root_owned": "unproved"
+  },
+  "actual_validated_tree_rows": [
+    {
+      "pid": 2312151,
+      "start_ticks": 601276111,
+      "role": "supervisorfa_finalize",
+      "state": "S"
+    },
+    {
+      "pid": 2312152,
+      "start_ticks": 601276120,
+      "role": "helper28_finalize",
+      "state": "S"
+    },
+    {
+      "pid": 2312923,
+      "start_ticks": 601338250,
+      "role": "public_campaign-export",
+      "state": "R"
+    }
+  ],
+  "actual_source_R_matches": true,
+  "actual_source_clean": true,
+  "actual_all3_native_clear": true,
+  "recommendation": "Use unchanged R3 positive validated tree evidence with partial inventory unknown. No guard relaxation. If parent requires further diagnosis, source-only R4 may retain lstat9fields of refused stat route after owned PID-directory validation without reading refused content. No R4 authored yet.",
+  "completion_inferred": false,
+  "scientific_admission": false,
+  "runtime_or_remote_execution_by_reviewer": false
+}

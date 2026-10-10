@@ -1,0 +1,51 @@
+{
+  "date": "2026-09-27 ET",
+  "protocols": {
+    "artifact": {
+      "old_request": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-reference-freeze-v1.yaml",
+      "new_request": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-reference-seal-runtime-freeze-20260927-a1.yaml",
+      "old_id": "bfs-author-reference-20260925",
+      "new_id": "author-reference-seal-runtime-20260927-a1",
+      "both_roles_match_exact_923_runtime": true,
+      "all_other_fields_identical": true,
+      "old_request_unchanged_from_HEAD": true
+    },
+    "control": {
+      "old_request": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-matched-control-freeze-v1.yaml",
+      "new_request": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-matched-control-seal-runtime-freeze-20260927-a1.yaml",
+      "old_id": "bfs-author-matched-control-20260925",
+      "new_id": "author-matched-control-seal-runtime-20260927-a1",
+      "both_roles_match_exact_923_runtime": true,
+      "all_other_fields_identical": true,
+      "old_request_unchanged_from_HEAD": true
+    }
+  },
+  "exact_runtime_hashes": {
+    "driver_sha256": "476874619644d1256dcc5ca1e853c47b7be2e1dc56f538aaa2dd783842e7ad10",
+    "parser_sha256": "c9d3e14b70a3689799314556fab2922b1723c00960902109af2922a958cd3498",
+    "observer_sha256": "655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd"
+  },
+  "plan_top_level_differences": [
+    "accounting",
+    "budget_authority",
+    "id",
+    "protocol_requests",
+    "series"
+  ],
+  "series_difference": "IDs only; all scientific fields identical",
+  "prior_closed_charge": {
+    "seconds": 15013,
+    "bytes": 8243990528
+  },
+  "new_proof_reservation": {
+    "seconds": 600,
+    "bytes": 2147483648
+  },
+  "cumulative": {
+    "seconds": 15613,
+    "bytes": 10391474176
+  },
+  "hard_end": "2026-09-27T20:16:17.225985-04:00",
+  "latest_full_series_start": "2026-09-27T14:15:47.225985-04:00",
+  "canonical_plan_sha256": "eb0d62b55afc0c3632ef264ee0ed916d14792ac27836debcb2718048e8b226a8"
+}

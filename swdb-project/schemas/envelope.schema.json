@@ -1,0 +1,460 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "envelope",
+  "title": "Envelope: the fields every record starts with",
+  "description": "Merged into every kind schema by swdb. `x-vocab` names a file in vocab/; `x-ref` names the record kind an ID must resolve to; `x-reason` is the message shown when the rule fails. Kind schemas may use the shared `$defs` below as `#/$defs/<name>`.",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "type": "string",
+      "x-vocab": "record_kinds"
+    },
+    "schema_version": {
+      "type": "string",
+      "enum": [
+        "0.2",
+        "0.3",
+        "0.4"
+      ]
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]*$"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "reviewed",
+        "deprecated"
+      ]
+    },
+    "deprecated_by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-z0-9][a-z0-9._-]*$"
+    },
+    "created": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "updated": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "provenance": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "kind",
+          "description"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._-]*$"
+          },
+          "kind": {
+            "type": "string",
+            "x-vocab": "provenance_kinds"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uri": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "extensa"
+      ],
+      "description": "Extensa-mode tag set when the record is created (2026-10-03 ET); absent means ArchEvolve mode.",
+      "x-reason": "mode is extensa or absent (ArchEvolve mode)"
+    },
+    "campaign": {
+      "$ref": "#/$defs/extensa_campaign_id",
+      "description": "Extensa campaign ID tag set when the record is created; absent means ArchEvolve mode."
+    }
+  },
+  "required": [
+    "kind",
+    "schema_version",
+    "id",
+    "status",
+    "created",
+    "updated",
+    "provenance"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "deprecated"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "x-reason": "a deprecated record must name its replacement in deprecated_by",
+        "required": [
+          "deprecated_by"
+        ],
+        "properties": {
+          "deprecated_by": {
+            "type": "string",
+            "x-reason": "a deprecated record must name its replacement in deprecated_by"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "mode"
+        ]
+      },
+      "then": {
+        "required": [
+          "campaign"
+        ],
+        "x-required-reasons": {
+          "campaign": "an Extensa-mode record names its campaign"
+        }
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "campaign"
+        ]
+      },
+      "then": {
+        "required": [
+          "mode"
+        ],
+        "x-required-reasons": {
+          "mode": "an Extensa campaign tag is allowed only on mode: extensa records"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9][a-z0-9._-]*$"
+      },
+      "description": "IDs of this record's provenance entries that support the fact."
+    },
+    "fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A fact with its basis. basis unknown requires value null; any other basis requires a value.",
+      "required": [
+        "value",
+        "basis"
+      ],
+      "x-required-reasons": {
+        "basis": "every fact states its basis (measured, simulated, code_reading, reported, inferred, estimated, unknown)"
+      },
+      "properties": {
+        "value": {},
+        "basis": {
+          "type": "string",
+          "x-vocab": "basis"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/evidence_refs"
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/basis_rule"
+        }
+      ]
+    },
+    "bool_fact": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/fact"
+        },
+        {
+          "properties": {
+            "value": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "int_fact": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/fact"
+        },
+        {
+          "properties": {
+            "value": {
+              "type": [
+                "integer",
+                "null"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "count": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A count with its scope and basis. It carries a value, or a formula over input properties, or (basis unknown) neither.",
+      "required": [
+        "scope",
+        "basis"
+      ],
+      "x-required-reasons": {
+        "scope": "every count needs a scope (per_sweep, per_call, per_run, per_trial); an unscoped count must not be multiplied or compared",
+        "basis": "every count states its basis"
+      },
+      "properties": {
+        "value": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "formula": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "scope": {
+          "type": "string",
+          "x-vocab": "count_scopes"
+        },
+        "basis": {
+          "type": "string",
+          "x-vocab": "basis"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/evidence_refs"
+        },
+        "note": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "basis": {
+                "const": "unknown"
+              }
+            },
+            "required": [
+              "basis"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "null",
+                "x-reason": "basis unknown requires value: null"
+              },
+              "formula": {
+                "type": "null",
+                "x-reason": "basis unknown requires formula: null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "basis": {
+                "not": {
+                  "const": "unknown"
+                }
+              }
+            },
+            "required": [
+              "basis"
+            ]
+          },
+          "then": {
+            "x-reason": "a count with a known basis needs a value or a formula",
+            "anyOf": [
+              {
+                "required": [
+                  "value"
+                ],
+                "properties": {
+                  "value": {
+                    "type": "number"
+                  }
+                }
+              },
+              {
+                "required": [
+                  "formula"
+                ],
+                "properties": {
+                  "formula": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "code_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A source file (and optionally a line range and its copied text). root application: path is inside the application's local copy; root records: path is inside the records folder.",
+      "required": [
+        "root",
+        "path"
+      ],
+      "properties": {
+        "root": {
+          "type": "string",
+          "enum": [
+            "application",
+            "records"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lines": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "excerpt": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]*$"
+    },
+    "basis_rule": {
+      "description": "basis unknown requires value null; any other basis requires a value.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "basis": {
+                "const": "unknown"
+              }
+            },
+            "required": [
+              "basis"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "null",
+                "x-reason": "basis unknown requires value: null; unknown is never quietly turned into a guess"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "basis": {
+                "not": {
+                  "const": "unknown"
+                }
+              }
+            },
+            "required": [
+              "basis"
+            ]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "not": {
+                  "type": "null"
+                },
+                "x-reason": "a fact with a known basis needs a value; say basis: unknown when the value is missing"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "extensa_campaign_id": {
+      "type": "string",
+      "pattern": "^extensa-(native|gem5)-bfs-[0-9]{8}-[a-z][0-9]+$",
+      "x-reason": "campaign must be an Extensa campaign ID extensa-(native|gem5)-bfs-YYYYMMDD-<letter><n>",
+      "description": "The one Extensa campaign-ID pattern (2026-10-05 ET): record tags, review origins, campaign files (`swdb.campaign`) and the child-process tag (`swdb.workflow`) all use it."
+    }
+  }
+}

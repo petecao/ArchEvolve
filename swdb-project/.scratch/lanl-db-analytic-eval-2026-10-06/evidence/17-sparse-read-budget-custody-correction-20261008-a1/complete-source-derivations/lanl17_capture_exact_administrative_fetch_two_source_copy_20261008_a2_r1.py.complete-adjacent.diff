@@ -1,0 +1,11 @@
+--- lanl17_capture_exact_administrative_fetch_two_source_copy_20261008_a2.py
++++ lanl17_capture_exact_administrative_fetch_two_source_copy_20261008_a2_r1.py
+@@ -70,7 +70,7 @@
+  dest=Path(a.destination);require(dest.parent==Path('/data1/yanruj') and re.fullmatch('lanl17-sparse-retirement-source-[a-z0-9-]{1,80}',dest.name),'exact_fresh_destination_route')
+  own=Path(__file__).absolute();ownpin,_=read_exact(own,a.source_sha256,MAX_SOURCE,os.geteuid())
+  ssh=Path('/usr/bin/ssh');sshpin,_=read_exact(ssh,a.ssh_sha256,128*1024*1024,0);require(sshpin['bytes']==a.ssh_bytes and os.access(ssh,os.X_OK),'actual_local_nativeSSH')
+- bootpin,boot=read_exact(a.bootstrap,BOOTSTRAP_SHA,MAX_SOURCE,os.geteuid());require(bootpin['bytes']==5620,'selected_bootstrap_bytes')
++ bootpin,boot=read_exact(a.bootstrap,BOOTSTRAP_SHA,MAX_SOURCE,os.geteuid());require(bootpin['bytes']==5610,'selected_bootstrap_bytes')
+  procspin,procsraw=read_exact(a.local_processes,PROCESSES_SHA,MAX_SOURCE,os.geteuid());require(procspin['bytes']==912,'reviewed_owned_SSH_source')
+  helpers=types.ModuleType('lanl17_admin_local_pinned_processes');helpers.__file__=str(a.local_processes)
+  exec(compile(procsraw,str(a.local_processes),'exec'),helpers.__dict__) # Future exact original owned-local-SSH primitive only.

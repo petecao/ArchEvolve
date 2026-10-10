@@ -1,0 +1,162 @@
+{
+  "format": "swdb.lanl17-first-publication-request-author-custody.v1",
+  "checked_utc": "2026-10-08T16:34:51.810789+00:00",
+  "author_source_pin": {
+    "path": "/data1/yanruj/lanl17-input-author-source-20261007-a1/publication_author.py",
+    "bytes": 28419,
+    "sha256": "791f95b5f53c23740ce8b2bdd72fc8dcd625494a60f5399f30b5ed704347fb1a"
+  },
+  "specification_file_pin": {
+    "path": "/data/yanruj/EvolveSWDB_runs/lanl17-first-publication-spec-20261008-a5.json",
+    "bytes": 9370,
+    "sha256": "200480fc5ee9de5a618e1eadee18cd399ba13ebba7de7a442ec8bf8356a9320f"
+  },
+  "parent_review_sha256": "6ea4a2b29af3fbf6ceec929499958997c894fe4f4911174a5f2906a0053443ff",
+  "original_source_identity": {
+    "commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+    "tree": "1ab2c8ab147251391a4af75e637114bdd5b0ff27",
+    "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+    "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "modules": 185,
+    "source_clean": true
+  },
+  "original_control_sources": {
+    "producer": {
+      "bytes": 46165,
+      "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-future-input-controls-20261007-a3/lanl17_parent_capture_projection_producer_a3_20261007.py",
+      "sha256": "32bead204337aa66d0a732b6f143216946abafc5d2eb752577b0d90f7190b7b6"
+    },
+    "helper": {
+      "bytes": 38195,
+      "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+      "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+    },
+    "supervisor": {
+      "bytes": 8014,
+      "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_metadata_supervisor_cleanup60_a4.py",
+      "sha256": "fa703bbd4c71bb4bcf56f47d1e224449f627d5921295e00b9cc105f21e95bde0"
+    },
+    "auditor": {
+      "bytes": 115130,
+      "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-selected-trajectory-controls-20261007-a2r1s1/lanl17_selected_record_trajectory_auditor_a2r1s1_20261007.py",
+      "sha256": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da"
+    },
+    "collector": {
+      "bytes": 24818,
+      "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-selected-trajectory-controls-20261007-a2r1s1/lanl17_compact_attempt_custody_a2r1_20261007.py",
+      "sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c"
+    },
+    "source_plan": {
+      "bytes": 11817,
+      "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-selected-trajectory-controls-20261007-a2r1s1/lanl17-r1s1-future-actual-input-construction-plan-20261007.md",
+      "sha256": "e3420b334ce05f7268699b0079987d1d2afc98fe5cb5503e6069a89038b59170"
+    },
+    "field_checklist": {
+      "bytes": 13484,
+      "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-actual-input-readiness-notes-20261007/lanl17-actual-parent-template-capture-field-checklist-20261007.md",
+      "sha256": "45313085d7d010be749f9b9aec7c9aadf0b5b8d1e7c385bfb9f79fd384cc6fe0"
+    },
+    "accepted_input_contract": {
+      "bytes": 5288,
+      "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-selected-trajectory-controls-20261007-a2r1s1/lanl17-auditor-a2r1s1-accepted-input-contract-20261007.md",
+      "sha256": "192eb5d1c2b461f9d42b3532a934c8dc107bb193f29fabbb5ba2dec94acd2978"
+    }
+  },
+  "original_publication_inputs": {
+    "freeze_receipt": {
+      "bytes": 327764,
+      "canonical_ensure_ascii": true,
+      "canonical_policy_sources": [
+        {
+          "bytes": 38195,
+          "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+          "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+        }
+      ],
+      "encoding": "json",
+      "identity_sha256": "c858d34f2deb77762961eb7f3245a5bf6efad446738a45c78b5bb2b724f1bf0c",
+      "path": "/data1/yanruj/ArchEvolve-lanl17-freeze-evidence-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-freeze-mbit10-20261007-a5.json",
+      "sealed": true,
+      "sha256": "c981cd4f23cd43625bf241c8aee7df17f01fc87c6ccdf944d53d4464caf3257a",
+      "writer_source": {
+        "bytes": 38195,
+        "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+        "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+      }
+    },
+    "manifest_M2": {
+      "bytes": 292401,
+      "canonical_ensure_ascii": true,
+      "canonical_policy_sources": [
+        {
+          "bytes": 38195,
+          "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+          "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+        }
+      ],
+      "encoding": "json",
+      "identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+      "sealed": true,
+      "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1",
+      "writer_source": {
+        "bytes": 38195,
+        "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+        "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+      }
+    },
+    "policy": {
+      "bytes": 22443,
+      "encoding": "yaml",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/base/records/agreement_policies/extensa-gem5-bfs-20261006-p1.agreement.5bae2f42d9078864.yaml",
+      "sealed": false,
+      "sha256": "5a7d151b44588c2033bd3ff78a1e2a80489e855e8352b91d3c29c325d3a1506c",
+      "writer_source": {
+        "bytes": 26057,
+        "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/swdb/extensa_agreement.py",
+        "sha256": "d078cf8a26fbbd65f0d27d0a64dbde56e4f190e1ec4c07b9e4eb311ad3a5174f"
+      }
+    },
+    "prepare_supervisor": {
+      "bytes": 1712,
+      "canonical_ensure_ascii": false,
+      "canonical_policy_sources": [
+        {
+          "bytes": 8014,
+          "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_metadata_supervisor_cleanup60_a4.py",
+          "sha256": "fa703bbd4c71bb4bcf56f47d1e224449f627d5921295e00b9cc105f21e95bde0"
+        }
+      ],
+      "encoding": "json",
+      "identity_sha256": "78133e4b3eccbf1e078b063397c4e7cec3e3051903a58f61bd914fe7782cbfa5",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-metadata-prepare-20261007-a5/supervisor-receipt.json",
+      "sealed": true,
+      "sha256": "76fac693e5e7f8d97701681eb21acbc2e50410d312a6b8fb5cacb7b83864e456",
+      "writer_source": {
+        "bytes": 8014,
+        "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_metadata_supervisor_cleanup60_a4.py",
+        "sha256": "fa703bbd4c71bb4bcf56f47d1e224449f627d5921295e00b9cc105f21e95bde0"
+      }
+    }
+  },
+  "original_observations_sha256": "7ce627eab3a924a261320eb86502eed3493a81f4535fc48fd0810faa9028a23b",
+  "request_file_pin": {
+    "path": "/data/yanruj/EvolveSWDB_runs/lanl17-first-publication-author-20261008-a5/publication-request.json",
+    "bytes": 6164,
+    "sha256": "f8aab6e615ca10cabe827d8efedfc9a3c4664f5f73e1ee0a20fcb34490352ede",
+    "identity_sha256": "845de1fb8b73d15bba2190c49cad6ad8b9042f3e1ea8e17c2d48cbd99c8cf1a0",
+    "canonical_ensure_ascii": true
+  },
+  "canonical_ensure_ascii": true,
+  "output_exclusion_roots": [
+    "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p1",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p2",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p3",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p4"
+  ],
+  "producer_or_collector_or_auditor_or_public_scientific_command_executed": false,
+  "scope": "Publication request author only. Original successful prepare and explicit publication observations are reviewed inputs. Export publication, live-file verification and zero opened outcomes are parent attestations; no trajectory, D30, final dependency or study admission.",
+  "identity_sha256": "5b8161112e1646927e89787d9794790aba99932a38f7177bd5556a2efa8a556f"
+}

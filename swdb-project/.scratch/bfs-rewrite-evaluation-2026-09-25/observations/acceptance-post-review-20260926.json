@@ -1,0 +1,36 @@
+{
+  "created": "2026-09-26",
+  "observed_at_et": "2026-09-26T16:20:52.442373-04:00",
+  "code_commit": "c9853e1bbc991eac4e52090262357b4f569957a9",
+  "kind": "read_only_public_coverage_recheck_after_two_evidence_integrity_repairs",
+  "request": {
+    "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/acceptance-checkpoint-20260926-a2.json",
+    "bytes": 191,
+    "sha256": "d0f2353b2cc3dc41f4be0a95ec63b1060bc39f9f00947af2587a2a107cb35e2a"
+  },
+  "output": {
+    "path": "/private/tmp/bfs-acceptance-post-review-20260926.json",
+    "bytes": 943272,
+    "sha256": "97d42a9da929f84a9b072b2e4679d72c38fa8ab3d11a7338647f6f49732d2aaf"
+  },
+  "stderr": {
+    "path": "/private/tmp/bfs-acceptance-post-review-20260926.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "fresh_index": "/private/tmp/bfs-acceptance-post-review-20260926.sqlite",
+  "report_identity": "7c7ed9d48a4ee4a26e1253cf27a8474910831c338c7abe3723aa8512433e3b8e",
+  "same_bytes_as_prior_checkpoint": true,
+  "prior_checkpoint": "observations/acceptance-checkpoint-20260926-a2.json",
+  "acceptance": "incomplete",
+  "gain_claim": false,
+  "matrix_summary": {
+    "complete": 0,
+    "required": 8
+  },
+  "limitations": [
+    "No new protocol is selected because empirical freeze remains pending.",
+    "The running native pilot and held provider packet are not imported canonical evidence.",
+    "Actual external host artifact verification remains unproven by this local query."
+  ]
+}

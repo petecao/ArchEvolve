@@ -1,0 +1,38 @@
+{
+  "SSH_exit_code": 1,
+  "ended_utc": "2026-10-08T15:22:26.341793+00:00",
+  "failure_type": null,
+  "format": "swdb.lanl17-scientific-prepare-parent-SSH-transport.v1",
+  "local_source_native_admission_input_before_after_pins_equal": true,
+  "original_private_streams": {
+    "stderr": {
+      "bytes": 0,
+      "mode": "0600",
+      "path": "/private/tmp/lanl17-scientific-prepare-capture-20261008-a1/stderr",
+      "sealed": false,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 677,
+      "mode": "0600",
+      "path": "/private/tmp/lanl17-scientific-prepare-capture-20261008-a1/stdout",
+      "sealed": false,
+      "sha256": "3ac38fc313e852d4d2754827126ae06d7b02b3d35c7fb6712267b5d52d78a49a"
+    }
+  },
+  "owned_SSH_cleanup_error": null,
+  "remote_artifacts_not_removed_or_retried": true,
+  "remote_prepare_completion_not_assessed": true,
+  "remote_termination_or_cleanup_not_inferred_from_SSH_exit": true,
+  "scientific_or_campaign_admission": false,
+  "sealed": false,
+  "signal_received": null,
+  "start_original": {
+    "bytes": 6615,
+    "path": "/private/tmp/lanl17-scientific-prepare-capture-20261008-a1/start.json",
+    "sealed": false,
+    "sha256": "4a7d43b7749e558e44b8d3352ee168de36e148e7ea78e1b61a3b007858efd63e"
+  },
+  "started_utc": "2026-10-08T15:22:18.527227+00:00",
+  "timed_out": false
+}

@@ -1,0 +1,151 @@
+{
+  "format": "swdb.lanl17-fresh-a5-source-derivatives.v1",
+  "dated_et": "2026-10-08",
+  "source_only": true,
+  "derivatives": [
+    {
+      "label": "capture",
+      "source": {
+        "path": "/private/tmp/lanl17_capture_reviewed_scientific_prepare_20261008_a4.py",
+        "bytes": 29451,
+        "sha256": "bd75569d45a6442c2edef72a721f51b5093faf9ab7c8a34347df30a624b2691d",
+        "mode": "0600"
+      },
+      "base": {
+        "path": "/private/tmp/lanl17_capture_reviewed_scientific_prepare_20261008_a3.py",
+        "bytes": 29451,
+        "sha256": "af41955121ea6db8d5064ee543130b5e5b38a0c057011a2b748be7b6f6b4c93c"
+      },
+      "diff": {
+        "path": "/private/tmp/lanl17-fresh-a5-capture-complete-derivation-20261008.diff",
+        "bytes": 29529,
+        "sha256": "3f4a6088deb4c56dd494bf61e098035101b72f1193ccb2d084e982a41dd7d3e2"
+      },
+      "substitution_counts": {
+        "ArchEvolve-lanl17-source-20261007-a4": {
+          "replacement": "ArchEvolve-lanl17-source-20261007-a5",
+          "occurrences": 2
+        },
+        "lanl17-actual-campaigns-20261007-a4": {
+          "replacement": "lanl17-actual-campaigns-20261007-a5",
+          "occurrences": 2
+        },
+        "lanl17-metadata-prepare-20261007-a4": {
+          "replacement": "lanl17-metadata-prepare-20261007-a5",
+          "occurrences": 2
+        },
+        "ArchEvolve-lanl17-freeze-evidence-20261007-a4": {
+          "replacement": "ArchEvolve-lanl17-freeze-evidence-20261007-a5",
+          "occurrences": 1
+        },
+        "codex/lanl17-freeze-evidence-20261007-a4": {
+          "replacement": "codex/lanl17-freeze-evidence-20261007-a5",
+          "occurrences": 1
+        },
+        "'20261007-a4'": {
+          "replacement": "'20261007-a5'",
+          "occurrences": 2
+        },
+        "lanl17-dx100-hooks-20261008-a1": {
+          "replacement": "lanl17-dx100-hooks-20261008-a2",
+          "occurrences": 3
+        },
+        "lanl17-dx100-deployment-20261008-a1": {
+          "replacement": "lanl17-dx100-deployment-20261008-a2",
+          "occurrences": 3
+        },
+        "d340f59f529d146ce4070843fc3314b0ab0b98cb1bacd79b2e9d61b726d07527": {
+          "replacement": "f5e02c61ec3a227613cbba3a779d5667c8e1207bad3e145574183d4421a6c41a",
+          "occurrences": 2
+        },
+        "afaac0bf5e02b742318fcd1709546622f212ea73117d17e9e6e1c7ff13278822": {
+          "replacement": "a7f34492e2db1b21849da0e467bd546dc5bb6bc53b4ac443da5f43922f34bd8c",
+          "occurrences": 5
+        },
+        "17300": {
+          "replacement": "20078",
+          "occurrences": 2
+        },
+        "13676": {
+          "replacement": "19596",
+          "occurrences": 2
+        }
+      },
+      "deterministic_reverse_restores_original_bytes": true,
+      "ast_parse_only": true,
+      "selected_import_execution_shell_tests_remote": false
+    },
+    {
+      "label": "hostquery",
+      "source": {
+        "path": "/private/tmp/lanl17_read_post_retirement_prepare_host_observation_20261008_a2.py",
+        "bytes": 13955,
+        "sha256": "4f60a393c1747dd4c1ff60c1c780647dfa979a6990f50906c9e9ced5c11700ff",
+        "mode": "0600"
+      },
+      "base": {
+        "path": "/private/tmp/lanl17_read_post_retirement_prepare_host_observation_20261008_a1.py",
+        "bytes": 13955,
+        "sha256": "c90694d232532fd4aab6b34effb98cd0a7098df982c5a7184075015e586411b0"
+      },
+      "diff": {
+        "path": "/private/tmp/lanl17-fresh-a5-hostquery-complete-derivation-20261008.diff",
+        "bytes": 2555,
+        "sha256": "2cff8900c0953a5914b037880143217fc0f961dd1dcede3ba3e98451db0f80b2"
+      },
+      "substitution_counts": {
+        "ArchEvolve-lanl17-source-20261007-a4": {
+          "replacement": "ArchEvolve-lanl17-source-20261007-a5",
+          "occurrences": 1
+        },
+        "lanl17-actual-campaigns-20261007-a4": {
+          "replacement": "lanl17-actual-campaigns-20261007-a5",
+          "occurrences": 1
+        },
+        "lanl17-metadata-prepare-20261007-a4": {
+          "replacement": "lanl17-metadata-prepare-20261007-a5",
+          "occurrences": 1
+        },
+        "ArchEvolve-lanl17-freeze-evidence-20261007-a4": {
+          "replacement": "ArchEvolve-lanl17-freeze-evidence-20261007-a5",
+          "occurrences": 1
+        },
+        "ArchEvolve-lanl17-actual-report-evidence-20261007-a4": {
+          "replacement": "ArchEvolve-lanl17-actual-report-evidence-20261007-a5",
+          "occurrences": 1
+        },
+        "lanl17-metadata-finalize-20261007-a4": {
+          "replacement": "lanl17-metadata-finalize-20261007-a5",
+          "occurrences": 1
+        },
+        "lanl17-dx100-hooks-20261008-a1": {
+          "replacement": "lanl17-dx100-hooks-20261008-a2",
+          "occurrences": 1
+        },
+        "lanl17-dx100-deployment-20261008-a1": {
+          "replacement": "lanl17-dx100-deployment-20261008-a2",
+          "occurrences": 1
+        },
+        "d340f59f529d146ce4070843fc3314b0ab0b98cb1bacd79b2e9d61b726d07527": {
+          "replacement": "f5e02c61ec3a227613cbba3a779d5667c8e1207bad3e145574183d4421a6c41a",
+          "occurrences": 1
+        },
+        "afaac0bf5e02b742318fcd1709546622f212ea73117d17e9e6e1c7ff13278822": {
+          "replacement": "a7f34492e2db1b21849da0e467bd546dc5bb6bc53b4ac443da5f43922f34bd8c",
+          "occurrences": 1
+        },
+        "17300": {
+          "replacement": "20078",
+          "occurrences": 1
+        },
+        "13676": {
+          "replacement": "19596",
+          "occurrences": 1
+        }
+      },
+      "deterministic_reverse_restores_original_bytes": true,
+      "ast_parse_only": true,
+      "selected_import_execution_shell_tests_remote": false
+    }
+  ]
+}

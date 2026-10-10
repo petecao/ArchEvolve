@@ -1,0 +1,29 @@
+{
+  "format": "swdb.lanl14-local-model-custody-controls.v1",
+  "updated": "2026-10-07 ET",
+  "scope": "Independent metadata/file fixture only; no actual target/model acceptance, provider/native/compiler/remote execution.",
+  "runner_sha256": "0f4bf77738f3df5e39c28308b94dac6fac0f894955f1c7348c1a5f32c42227df",
+  "controls": [
+    "positive independent metadata fixture",
+    "outer receipt seal",
+    "nested acceptance seal",
+    "source C identity",
+    "nonmodel phase",
+    "application timings",
+    "readiness false",
+    "missing exported record",
+    "changed exported file pin",
+    "escaping source path",
+    "nonpositive estimate",
+    "nonexecution estimate",
+    "changed F6 bundle",
+    "different real target",
+    "changed semantic source pin",
+    "duplicated estimate admission",
+    "failed lane",
+    "actual exported file tamper"
+  ],
+  "passed": 18,
+  "actual_execution": false,
+  "identity_sha256": "a837f57133f25534ed86b3dd0451bc7fd87725cd09f9909c6abbcdd3e90ecca6"
+}

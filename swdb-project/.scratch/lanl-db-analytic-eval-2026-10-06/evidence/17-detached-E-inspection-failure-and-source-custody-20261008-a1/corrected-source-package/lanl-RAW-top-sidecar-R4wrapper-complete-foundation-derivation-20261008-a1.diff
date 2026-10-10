@@ -1,0 +1,20 @@
+--- /private/tmp/lanl17_detach_exact_R4_storage_administration_20261008_a1_r2.py
++++ /private/tmp/lanl17_detach_exact_R4_storage_administration_20261008_a1_r3.py
+@@ -7,7 +7,7 @@
+ E = BASE/'ArchEvolve-lanl-generality-final-export-20261007-a1'
+ R = BASE/'ArchEvolve-lanl-generality-final-20261007-a1'
+ C = BASE/'ArchEvolve-lanl-cpu-model-validation-20261006-a1'
+-GUARD_SHA = '78a0c850e515f6ebb589a28f53a2c99d7a6430dcf5da46aea4869368d2cd3df9'
++GUARD_SHA = '96e033426d492fab3be2a07757ab1e89665a7a67d0f06d3941f274b1214dd294'
+ REVIEW = BASE/'lanl-account-pam-service-identification-20261008-a1/parent-review.json'
+ REVIEW_SHA = 'fcf92eee1c4b8bdfaed979dc8bedab004c6c4b7e2b1410c7614bc92d60349f4a'
+ NATIVE = {
+@@ -115,7 +115,7 @@
+  need(own.is_relative_to(BASE) and guard.is_relative_to(BASE)
+       and own!=guard and not any(p.is_relative_to(q) for p in (own,guard) for q in (PRIMARY,E,R,C)),'private_sources_outside_projects')
+  own_raw,own_pin=file_bytes(own,256*1024,UID,own_sha)
+- unused,guard_pin=file_bytes(guard,84381,UID,GUARD_SHA,84381)
++ unused,guard_pin=file_bytes(guard,88521,UID,GUARD_SHA,88521)
+  unused,review_pin=file_bytes(REVIEW,256*1024,UID,REVIEW_SHA,3258)
+  native={}
+  for path,(size,digest) in NATIVE.items():

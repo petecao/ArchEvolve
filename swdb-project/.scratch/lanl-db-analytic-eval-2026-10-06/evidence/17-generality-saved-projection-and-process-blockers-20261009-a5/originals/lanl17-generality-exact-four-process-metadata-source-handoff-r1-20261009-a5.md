@@ -1,0 +1,9 @@
+Prepared 2026-10-09 01:13 ET (2026-10-09T05:13:30.994880+00:00). SOURCE ONLY R1, NOT RUN.
+
+Diagnoses only four actual original PID/inode pairs. Reports public kernelcomm/statusName/state/start/parent/UID-GIDtuple/capabilities/dumpability metadata, kernel file all9stat/owner/mode and bounded argv0 hash/publicclassification. argv0 reader consumes one byte through firstNUL and no arguments after it. cwd/root/exe links are permission-tested without targetstat/body following; returns only errno/class/pathSHA/reasonSHA and targetSHA/publicexeclassification. Root-owned kernelstat/status are observational selected-process reads only, never replacements for native/no-use strict owner guards. Disappearance/reuse/identity/race remainunknown; no quiescence/readiness/waiver. No rawstat/status/cmdline/maps/environment/auth/provider or linktarget bodies returned.
+
+21 inherited R6 functions/classes exact; currentR/S185F6/ERf501/H/M2/three released leases514/kernel/FD9/nativeGit/current transport beforeafter unchanged. Own45/GNU60K60/local180; all outputs65536 cap. No query/input stage/collect/mutation/kill/reap/attach. Root+peer fullsource/actualscope review required before use; source construction AST/text only, no target imports/main/tests/SSH or repository mutation.
+
+- /private/tmp/lanl17_diagnose_exact_generality_unknown_process_metadata_SOURCE_ONLY_20261009_a5_r1.py: 25435 B SHA256 d6dc833dd96393c8e4866b545994a7cd01b1c5bf77c2dee811bda09430cb0d0c
+- /private/tmp/lanl17-generality-exact-four-process-metadata-action-SOURCE-ONLY-draft-r1-20261009-a5.json: 26987 B SHA256 f6ad5a3d6e790e832f9330b6f2fa4c2192c8597673dc1faa02c9ca8602287cce
+- /private/tmp/lanl17-generality-exact-four-process-metadata-static-source-review-r1-20261009-a5.json: 3312 B SHA256 1006d79a8d521f05c4424e74256ceefdefa1a57ad9ceec723494d93f772eec14

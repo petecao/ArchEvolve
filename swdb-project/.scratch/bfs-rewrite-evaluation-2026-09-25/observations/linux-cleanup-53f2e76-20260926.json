@@ -1,0 +1,42 @@
+{
+  "created": "2026-09-26",
+  "tested_commit": "53f2e7686a41d3472c9e0824a0a9b09117884e0b",
+  "code_parent": "c5f70d77396af0e7562310375333f34791aac3a1",
+  "code_bytes_unchanged": true,
+  "metadata_import": {
+    "commit": "aa6da989cb83200b7a6aaf024986e56d8381ebdd",
+    "files": 1,
+    "path": "records/evaluations/bfs-dx100-witness-20260926-a3.yaml",
+    "sha256": "cc5abf12f324a47b998c9aa516b57ceecd5a6f0c30b2064d612a74468c1aac11"
+  },
+  "host": "mbit10",
+  "lane": 0,
+  "lease_generation": 320,
+  "released_at_et": "2026-09-26 13:44:56 ET",
+  "passed": 2,
+  "deselected": 47,
+  "elapsed_seconds": 1.51,
+  "outer_exit": 0,
+  "python_version": "3.12.3",
+  "pytest_version": "9.1.1",
+  "python_executable": "/data1/yanruj/venvs/evolveswdb-test/bin/python3",
+  "python_sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+  "terminal_audit": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-cleanup-20260926-a1/terminal-validation.json",
+    "bytes": 2603,
+    "sha256": "54a2a6a16d06f42f0975522d291fb3c47c4cd7065ef52d17681a42c31f28af2e"
+  },
+  "results": [
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-cleanup-20260926-a1/pytest/test_linux_subreaper_reaps_det0/linux-cleanup-result.json",
+      "sha256": "defc85bd4987e30b7253745fb3a5194d8eefeae92788fbc95d284b92f60ec7ce"
+    },
+    {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-cleanup-20260926-a1/pytest/test_linux_subreaper_reaps_det1/linux-cleanup-result.json",
+      "sha256": "22486fbf77c04e7c373116b9aa5c4392e8081c5f107f6a4f74408961e713d4c5"
+    }
+  ],
+  "cleanup": "Both observed supervisors and detached grandchildren absent; released lease and independent terminal audit retained.",
+  "admission_reader": "batch.validate_cleanup_tests passed with exact commit/runtime pins",
+  "scope": "Actual Linux process-cleanup fixtures, not model execution, BFS correctness, or gain."
+}

@@ -1,0 +1,40 @@
+{
+  "format": "swdb.cpu-report-startup-regression.v1",
+  "dispatcher": "/private/tmp/lanl-dispatch-cpu-band-report-a4-metadata2400-cleanup60-hashlib.py",
+  "dispatcher_sha256": "543b79ea40a54537ee23b37ec1f44afbc8b135cad3fff25fb82d35db7b5130c7",
+  "fixture_sha256": {
+    "cleanup": "cb228126759976d7625c5b6bcafca7adbae4178bdb2c0f0279fe504a695cc551",
+    "processes": "49a5a5a58a13a805d9e589b02fcaca65f46c7aa1295b07462fac5fc6b46a9b7c"
+  },
+  "cases": {
+    "startup": {
+      "returncode": 0,
+      "error": null,
+      "actual_sha_assertions": 2,
+      "isolated_fresh_namespace": true,
+      "executed_Store_cleanup_native_provider": false
+    },
+    "original_missing_import": {
+      "returncode": 1,
+      "error": "NameError: name 'hashlib' is not defined",
+      "actual_sha_assertions": 2,
+      "isolated_fresh_namespace": true,
+      "executed_Store_cleanup_native_provider": false
+    },
+    "cleanup_hash_tamper": {
+      "returncode": 1,
+      "error": "AssertionError",
+      "actual_sha_assertions": 2,
+      "isolated_fresh_namespace": true,
+      "executed_Store_cleanup_native_provider": false
+    },
+    "processes_hash_tamper": {
+      "returncode": 1,
+      "error": "AssertionError",
+      "actual_sha_assertions": 2,
+      "isolated_fresh_namespace": true,
+      "executed_Store_cleanup_native_provider": false
+    }
+  },
+  "passed": true
+}

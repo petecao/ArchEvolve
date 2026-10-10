@@ -1,0 +1,63 @@
+--- a/benchmarks/gapbs/src/bfs.cc
++++ b/benchmarks/gapbs/src/bfs.cc
+@@ -69,21 +69,48 @@
+     add_mem_region(g.out_neighbors_, &g.out_neighbors_[num_edges]); // 8
+     add_mem_region(parent.beginp(), parent.endp());                 // 9
+ #endif
++    const NodeID *const frontier = queue.shared;
++    const SGOffset *const offsets = VertexOffsets.beginp();
++    const NodeID *const neighbors = g.out_neighbors_;
++    NodeID *const parents = parent.beginp();
++    const size_t frontier_begin = queue.shared_out_start;
++    const size_t frontier_end = queue.shared_out_end;
++
++    static constexpr size_t kFrontierBatch = 16;
+ #pragma omp parallel
+     {
+         QueueBuffer<NodeID> lqueue(queue);
+-#pragma omp for nowait
+-        for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {
+-            NodeID u = queue.shared[i];
+-            for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+-                NodeID v = g.out_neighbors_[j];
+-                NodeID curr_val = parent[v];
+-                if (curr_val < 0) {
+-                    // indirect write (parent, v_tile, u_tile)
+-                    // core fetch v tile
+-                    if (compare_and_swap(parent[v], curr_val, u)) {
+-                        parent[v] = u;
+-                        lqueue.push_back(v);
++#pragma omp for schedule(static) nowait
++        for (size_t base = frontier_begin; base < frontier_end; base += kFrontierBatch) {
++            alignas(64) NodeID staged_vertices[kFrontierBatch];
++            alignas(64) SGOffset staged_begin[kFrontierBatch];
++            alignas(64) SGOffset staged_end[kFrontierBatch];
++            const size_t remaining = frontier_end - base;
++            const size_t staged_count = remaining < kFrontierBatch ? remaining : kFrontierBatch;
++
++#pragma omp simd
++            for (size_t lane = 0; lane < staged_count; ++lane) {
++                staged_vertices[lane] = frontier[base + lane];
++            }
++
++#pragma omp simd
++            for (size_t lane = 0; lane < staged_count; ++lane) {
++                const NodeID u = staged_vertices[lane];
++                staged_begin[lane] = offsets[u];
++                staged_end[lane] = offsets[u + 1];
++            }
++
++            for (size_t lane = 0; lane < staged_count; ++lane) {
++                const NodeID u = staged_vertices[lane];
++                for (SGOffset j = staged_begin[lane]; j < staged_end[lane]; ++j) {
++                    const NodeID v = neighbors[j];
++                    const NodeID curr_val = parents[v];
++                    if (curr_val < 0) {
++                        // indirect write (parent, v_tile, u_tile)
++                        // core fetch v tile
++                        if (compare_and_swap(parents[v], curr_val, u)) {
++                            lqueue.push_back(v);
++                        }
+                     }
+                 }
+             }

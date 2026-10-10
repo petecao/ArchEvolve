@@ -1,0 +1,79 @@
+test_exact_marked_sequence_checks_before_each_native_and_final (__main__.SparseRetirementContracts.test_exact_marked_sequence_checks_before_each_native_and_final) ... ERROR
+test_library_actual_bytes_and_extra_admin_entry_refuse (__main__.SparseRetirementContracts.test_library_actual_bytes_and_extra_admin_entry_refuse) ... ok
+test_native_Git_uses_original_objects_at_both_entry_points (__main__.SparseRetirementContracts.test_native_Git_uses_original_objects_at_both_entry_points) ... ok
+test_native_and_postproof_failure_keep_uncertain_marker_without_completion (__main__.SparseRetirementContracts.test_native_and_postproof_failure_keep_uncertain_marker_without_completion) ... 
+  test_native_and_postproof_failure_keep_uncertain_marker_without_completion (__main__.SparseRetirementContracts.test_native_and_postproof_failure_keep_uncertain_marker_without_completion) (stage='native') ... FAIL
+  test_native_and_postproof_failure_keep_uncertain_marker_without_completion (__main__.SparseRetirementContracts.test_native_and_postproof_failure_keep_uncertain_marker_without_completion) (stage='poststate') ... FAIL
+test_same_byte_pattern_swap_original_negative_corrected_refusal (__main__.SparseRetirementContracts.test_same_byte_pattern_swap_original_negative_corrected_refusal) ... ok
+test_same_name_info_swap_original_negative_corrected_refusal (__main__.SparseRetirementContracts.test_same_name_info_swap_original_negative_corrected_refusal) ... ok
+test_second_row_failure_keeps_completed_first_and_uncertain_second (__main__.SparseRetirementContracts.test_second_row_failure_keeps_completed_first_and_uncertain_second) ... 
+  test_second_row_failure_keeps_completed_first_and_uncertain_second (__main__.SparseRetirementContracts.test_second_row_failure_keeps_completed_first_and_uncertain_second) (stage='native') ... FAIL
+  test_second_row_failure_keeps_completed_first_and_uncertain_second (__main__.SparseRetirementContracts.test_second_row_failure_keeps_completed_first_and_uncertain_second) (stage='poststate') ... FAIL
+test_transition_permissions_refuse_even_with_same_bytes (__main__.SparseRetirementContracts.test_transition_permissions_refuse_even_with_same_bytes) ... ok
+test_unchanged_transition_and_replaced_index_accept (__main__.SparseRetirementContracts.test_unchanged_transition_and_replaced_index_accept) ... ok
+
+======================================================================
+ERROR: test_exact_marked_sequence_checks_before_each_native_and_final (__main__.SparseRetirementContracts.test_exact_marked_sequence_checks_before_each_native_and_final)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/lanl17_sparse_retirement_transition_sequence_virtual_regression_source_20261008_a1_r3.py", line 311, in test_exact_marked_sequence_checks_before_each_native_and_final
+    context['ExactMethods'].exact_operation_slice(model)
+  File "<SYNTHETIC sparse exact slices>", line 1760, in exact_operation_slice
+AttributeError: 'VirtualPath' object has no attribute 'absolute'. Did you mean: 'is_absolute'?
+
+======================================================================
+FAIL: test_native_and_postproof_failure_keep_uncertain_marker_without_completion (__main__.SparseRetirementContracts.test_native_and_postproof_failure_keep_uncertain_marker_without_completion) (stage='native')
+----------------------------------------------------------------------
+AttributeError: 'VirtualPath' object has no attribute 'absolute'. Did you mean: 'is_absolute'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/tmp/lanl17_sparse_retirement_transition_sequence_virtual_regression_source_20261008_a1_r3.py", line 336, in test_native_and_postproof_failure_keep_uncertain_marker_without_completion
+    with self.assertRaisesRegex(Exception,'SYNTHETIC_'+stage+'_failure'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "SYNTHETIC_native_failure" does not match "'VirtualPath' object has no attribute 'absolute'"
+
+======================================================================
+FAIL: test_native_and_postproof_failure_keep_uncertain_marker_without_completion (__main__.SparseRetirementContracts.test_native_and_postproof_failure_keep_uncertain_marker_without_completion) (stage='poststate')
+----------------------------------------------------------------------
+AttributeError: 'VirtualPath' object has no attribute 'absolute'. Did you mean: 'is_absolute'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/tmp/lanl17_sparse_retirement_transition_sequence_virtual_regression_source_20261008_a1_r3.py", line 336, in test_native_and_postproof_failure_keep_uncertain_marker_without_completion
+    with self.assertRaisesRegex(Exception,'SYNTHETIC_'+stage+'_failure'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "SYNTHETIC_poststate_failure" does not match "'VirtualPath' object has no attribute 'absolute'"
+
+======================================================================
+FAIL: test_second_row_failure_keeps_completed_first_and_uncertain_second (__main__.SparseRetirementContracts.test_second_row_failure_keeps_completed_first_and_uncertain_second) (stage='native')
+----------------------------------------------------------------------
+AttributeError: 'VirtualPath' object has no attribute 'absolute'. Did you mean: 'is_absolute'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/tmp/lanl17_sparse_retirement_transition_sequence_virtual_regression_source_20261008_a1_r3.py", line 348, in test_second_row_failure_keeps_completed_first_and_uncertain_second
+    with self.assertRaisesRegex(Exception,'SYNTHETIC_'+stage+'_failure'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "SYNTHETIC_native_failure" does not match "'VirtualPath' object has no attribute 'absolute'"
+
+======================================================================
+FAIL: test_second_row_failure_keeps_completed_first_and_uncertain_second (__main__.SparseRetirementContracts.test_second_row_failure_keeps_completed_first_and_uncertain_second) (stage='poststate')
+----------------------------------------------------------------------
+AttributeError: 'VirtualPath' object has no attribute 'absolute'. Did you mean: 'is_absolute'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/tmp/lanl17_sparse_retirement_transition_sequence_virtual_regression_source_20261008_a1_r3.py", line 348, in test_second_row_failure_keeps_completed_first_and_uncertain_second
+    with self.assertRaisesRegex(Exception,'SYNTHETIC_'+stage+'_failure'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "SYNTHETIC_poststate_failure" does not match "'VirtualPath' object has no attribute 'absolute'"
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.566s
+
+FAILED (failures=4, errors=1)

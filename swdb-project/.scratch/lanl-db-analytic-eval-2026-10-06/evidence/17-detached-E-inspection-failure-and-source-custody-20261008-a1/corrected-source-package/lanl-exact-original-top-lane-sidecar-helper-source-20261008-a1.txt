@@ -1,0 +1,55 @@
+RAW_TOP_LANE_SIDECAR_PIN={'path': '/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261006-a1.lane.json', 'bytes': 988, 'sha256': '83ba263a56756047716a2e550c3acc7a9d73eadefbbc9e245cdb697092369c1c', 'stat': {'ctime_ns': 1791344103814358923, 'dev': 2065, 'gid': 114316761, 'ino': 9345428, 'mode': 33204, 'mtime_ns': 1791344103814358923, 'nlink': 1, 'size': 988, 'uid': 114316761}}
+
+def exact_original_raw_lane_sidecar(check_deadline, selected_paths):
+    """One exact original regular RAW sibling; no generic regular-file waiver."""
+    check_deadline()
+    pin=RAW_TOP_LANE_SIDECAR_PIN;path=P(pin['path'])
+    require(path.parent==RAW and path.name=='lanl17-cleanup-smoke-20261006-a1.lane.json'
+            and path.resolve(strict=True)==path
+            and not any(p.is_symlink() for p in (path,*path.parents)),
+            'exact_original_top_sidecar_route')
+    before=path.lstat()
+    require(stat.S_ISREG(before.st_mode) and before.st_uid==UID and before.st_nlink==1
+            and stamp(before)==pin['stat'] and before.st_size==988,
+            'exact_original_top_sidecar_stat')
+    fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC)
+    try:
+        require(stamp(os.fstat(fd))==stamp(before),'exact_original_top_sidecar_open')
+        parts=[];count=0
+        while True:
+            check_deadline()
+            part=os.read(fd,min(988-count+1,988))
+            if not part:break
+            count+=len(part);require(count<=988,'exact_original_top_sidecar_read_bound');parts.append(part)
+        raw=b''.join(parts)
+        require(count==988 and sha(raw)==pin['sha256']
+                and stamp(os.fstat(fd))==stamp(before)==stamp(path.lstat()),
+                'exact_original_top_sidecar_returned_bytes')
+    finally:os.close(fd)
+    def unique(pairs):
+        result={}
+        for key,value in pairs:
+            require(key not in result,'original_top_sidecar_duplicate_key');result[key]=value
+        return result
+    def bad(value):raise ValueError('original_top_sidecar_nonfinite_JSON')
+    value=json.loads(raw,object_pairs_hook=unique,parse_constant=bad)
+    require(type(value) is dict and set(value)=={'socket_lane'},'original_top_sidecar_JSON_shape')
+    refs=[]
+    def visit(item,location):
+        if type(item) is dict:
+            for key,child in item.items():visit(child,location+[key])
+        elif type(item) is list:
+            for index,child in enumerate(item):visit(child,location+[index])
+        elif type(item) is str and item.startswith('/'):
+            require(not any(item==str(p) or item.startswith(str(p)+'/') for p in selected_paths),
+                    'original_top_sidecar_JSON_selected_reference')
+            refs.append({'JSON_location':location,'path':item})
+    visit(value,[])
+    require(not any(str(p).encode() in raw for p in selected_paths),
+            'original_top_sidecar_literal_selected_reference')
+    return {'path':str(path),'bytes':988,'sha256':pin['sha256'],'stat':stamp(before),
+            'original_policy':'original_UNSEALED_socket_lane_metadata_no_reseal',
+            'original_absolute_JSON_references':refs,
+            'literal_and_original_JSON_selected_reference_checks':True,
+            'unchanged_historical_mode0664_beneath_existing_private_RAW_ancestor':True}
+

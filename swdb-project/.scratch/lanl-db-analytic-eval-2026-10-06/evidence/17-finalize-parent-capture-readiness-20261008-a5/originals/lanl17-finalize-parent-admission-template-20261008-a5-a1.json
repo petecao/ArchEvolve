@@ -1,0 +1,223 @@
+{
+  "accepted_for_finalize": {
+    "future_required_type": "bool_true_after_actual_review",
+    "parent_actual_input_required": "all four original root and peer custody PASS plus fresh host admission"
+  },
+  "all_four_normal_terminal_custody_root_and_peer_reviewed": {
+    "future_required_type": "bool_true_after_actual_review",
+    "parent_actual_input_required": "all_four_normal_terminal_custody_root_and_peer_reviewed"
+  },
+  "checked_utc": {
+    "future_required_type": "aware_UTC_ISO8601",
+    "parent_actual_input_required": "fresh live actual parent review"
+  },
+  "current_all_three_leases_released_reviewed": {
+    "future_required_type": "bool_true_after_actual_review",
+    "parent_actual_input_required": "current_all_three_leases_released_reviewed"
+  },
+  "direct_finalize_argv": [
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=60s",
+    "78300s",
+    "/usr/bin/python3.12",
+    "/data1/yanruj/lanl17-metadata-dispatch-guard-cleanup60-20261007-a4.py",
+    "--action",
+    "finalize",
+    "--final-source-sha",
+    "5e12a9796432654d88def24ecea617d16ca605b2",
+    "--project",
+    "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project",
+    "--control",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-metadata-finalize-20261007-a5",
+    "--guard-sha256",
+    "9c5d9658b524db94805a6b51453dc9edef7096a27312677896d595d39b94f6c6",
+    "--cleanup-proof",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261007-a4/receipt.json",
+    "--cleanup-proof-identity",
+    "18e58a44476709cc7520f9760ac94161cd67248e39ff662fbfb16378855d7ca1",
+    "--supervisor-proof",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-metadata-supervisor-fixture-20261007-a4/receipt.json",
+    "--supervisor-proof-identity",
+    "ea9751eef12bc519be0c4159813e29fa5aa378693c6a31caea137599c5db744b",
+    "--",
+    "--manifest",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json"
+  ],
+  "expected_primary": "5e12a9796432654d88def24ecea617d16ca605b2",
+  "final_source_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+  "format": "swdb.lanl17-parent-finalize-preflight-admission.v1",
+  "fresh_host_observation_UTC_JSON_path": {
+    "future_required_type": "nonempty_list_of_string_keys",
+    "parent_actual_input_required": "exact fresh host original UTC field route"
+  },
+  "fresh_host_observation_reviewed": {
+    "future_required_type": "bool_true_after_actual_review",
+    "parent_actual_input_required": "fresh_host_observation_reviewed"
+  },
+  "fresh_host_observation_utc": {
+    "future_required_type": "aware_UTC_ISO8601",
+    "parent_actual_input_required": "exact original host observation UTC no later than checked"
+  },
+  "no_lease_reuse_or_campaign_writes_until_finalize_complete": {
+    "future_required_type": "bool_true_after_actual_review",
+    "parent_actual_input_required": "no_lease_reuse_or_campaign_writes_until_finalize_complete"
+  },
+  "original_input_pins": {
+    "fresh_host_observation_pin": {
+      "bytes": {
+        "future_required_type": "positive_integer",
+        "parent_actual_input_required": "fresh complete source/account/lease/process/storage/GPU host observation original"
+      },
+      "path": {
+        "future_required_type": "absolute_private_tmp_original_path",
+        "parent_actual_input_required": "fresh complete source/account/lease/process/storage/GPU host observation original"
+      },
+      "sha256": {
+        "future_required_type": "sha256_hex64",
+        "parent_actual_input_required": "fresh complete source/account/lease/process/storage/GPU host observation original"
+      }
+    },
+    "manifest_M2_pin": {
+      "bytes": 292401,
+      "path": "/private/tmp/lanl17-prepare-completion-decoded-originals-20261008-a1/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+      "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1"
+    },
+    "p1_peer_review_pin": {
+      "bytes": {
+        "future_required_type": "positive_integer",
+        "parent_actual_input_required": "actual selected p1 peer normal terminal custody review original"
+      },
+      "path": {
+        "future_required_type": "absolute_private_tmp_original_path",
+        "parent_actual_input_required": "actual selected p1 peer normal terminal custody review original"
+      },
+      "sha256": {
+        "future_required_type": "sha256_hex64",
+        "parent_actual_input_required": "actual selected p1 peer normal terminal custody review original"
+      }
+    },
+    "p1_root_review_pin": {
+      "bytes": {
+        "future_required_type": "positive_integer",
+        "parent_actual_input_required": "actual selected p1 root normal terminal custody review original"
+      },
+      "path": {
+        "future_required_type": "absolute_private_tmp_original_path",
+        "parent_actual_input_required": "actual selected p1 root normal terminal custody review original"
+      },
+      "sha256": {
+        "future_required_type": "sha256_hex64",
+        "parent_actual_input_required": "actual selected p1 root normal terminal custody review original"
+      }
+    },
+    "p2_peer_review_pin": {
+      "bytes": {
+        "future_required_type": "positive_integer",
+        "parent_actual_input_required": "actual selected p2 peer normal terminal custody review original"
+      },
+      "path": {
+        "future_required_type": "absolute_private_tmp_original_path",
+        "parent_actual_input_required": "actual selected p2 peer normal terminal custody review original"
+      },
+      "sha256": {
+        "future_required_type": "sha256_hex64",
+        "parent_actual_input_required": "actual selected p2 peer normal terminal custody review original"
+      }
+    },
+    "p2_root_review_pin": {
+      "bytes": {
+        "future_required_type": "positive_integer",
+        "parent_actual_input_required": "actual selected p2 root normal terminal custody review original"
+      },
+      "path": {
+        "future_required_type": "absolute_private_tmp_original_path",
+        "parent_actual_input_required": "actual selected p2 root normal terminal custody review original"
+      },
+      "sha256": {
+        "future_required_type": "sha256_hex64",
+        "parent_actual_input_required": "actual selected p2 root normal terminal custody review original"
+      }
+    },
+    "p3_peer_review_pin": {
+      "bytes": {
+        "future_required_type": "positive_integer",
+        "parent_actual_input_required": "actual selected p3 peer normal terminal custody review original"
+      },
+      "path": {
+        "future_required_type": "absolute_private_tmp_original_path",
+        "parent_actual_input_required": "actual selected p3 peer normal terminal custody review original"
+      },
+      "sha256": {
+        "future_required_type": "sha256_hex64",
+        "parent_actual_input_required": "actual selected p3 peer normal terminal custody review original"
+      }
+    },
+    "p3_root_review_pin": {
+      "bytes": {
+        "future_required_type": "positive_integer",
+        "parent_actual_input_required": "actual selected p3 root normal terminal custody review original"
+      },
+      "path": {
+        "future_required_type": "absolute_private_tmp_original_path",
+        "parent_actual_input_required": "actual selected p3 root normal terminal custody review original"
+      },
+      "sha256": {
+        "future_required_type": "sha256_hex64",
+        "parent_actual_input_required": "actual selected p3 root normal terminal custody review original"
+      }
+    },
+    "p4_peer_review_pin": {
+      "bytes": {
+        "future_required_type": "positive_integer",
+        "parent_actual_input_required": "actual selected p4 peer normal terminal custody review original"
+      },
+      "path": {
+        "future_required_type": "absolute_private_tmp_original_path",
+        "parent_actual_input_required": "actual selected p4 peer normal terminal custody review original"
+      },
+      "sha256": {
+        "future_required_type": "sha256_hex64",
+        "parent_actual_input_required": "actual selected p4 peer normal terminal custody review original"
+      }
+    },
+    "p4_root_review_pin": {
+      "bytes": {
+        "future_required_type": "positive_integer",
+        "parent_actual_input_required": "actual selected p4 root normal terminal custody review original"
+      },
+      "path": {
+        "future_required_type": "absolute_private_tmp_original_path",
+        "parent_actual_input_required": "actual selected p4 root normal terminal custody review original"
+      },
+      "sha256": {
+        "future_required_type": "sha256_hex64",
+        "parent_actual_input_required": "actual selected p4 root normal terminal custody review original"
+      }
+    }
+  },
+  "post_campaign_storage_headroom_reviewed": {
+    "future_required_type": "bool_true_after_actual_review",
+    "parent_actual_input_required": "post_campaign_storage_headroom_reviewed"
+  },
+  "published_environment_overrides": {
+    "GIT_CONFIG_COUNT": "1",
+    "GIT_CONFIG_KEY_0": "core.hooksPath",
+    "GIT_CONFIG_VALUE_0": "/data1/yanruj/lanl17-dx100-hooks-20261008-a2",
+    "PATH": "/usr/bin:/bin:/usr/local/bin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1",
+    "PYTHONSAFEPATH": "1",
+    "SWDB_DX100_BINDING_REQUEST": "/data1/yanruj/lanl17-dx100-deployment-20261008-a2/request.json",
+    "SWDB_DX100_BINDING_REQUEST_SHA256": "a7f34492e2db1b21849da0e467bd546dc5bb6bc53b4ac443da5f43922f34bd8c"
+  },
+  "required_data1_available_bytes": {
+    "future_required_type": "integer_at_least_22548578304",
+    "parent_actual_input_required": "fresh live capacity and existing reviewed 21GiB floor"
+  },
+  "scientific_outcome_admission": false,
+  "valid_until_utc": {
+    "future_required_type": "aware_UTC_ISO8601",
+    "parent_actual_input_required": "strictly later than checked, at most 300s, actual now within"
+  }
+}

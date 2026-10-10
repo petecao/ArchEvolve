@@ -1,0 +1,51 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "mbit10",
+    "/usr/bin/env",
+    "-u",
+    "PYTHONPATH",
+    "-u",
+    "PYTHONHOME",
+    "-u",
+    "PYTHONSTARTUP",
+    "-u",
+    "PYTHONINSPECT",
+    "-u",
+    "LD_PRELOAD",
+    "-u",
+    "LD_LIBRARY_PATH",
+    "PATH=/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "PYTHONNOUSERSITE=1",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=10",
+    "45",
+    "/usr/bin/python3.12",
+    "-B",
+    "-s",
+    "/data1/yanruj/lanl17-read-native-pyyaml-package-facts-20261008-a1.py",
+    "--query-source-sha256",
+    "b9ac7235b76496925d7bca8609dfb03b94fc0f13f9015525816d6633ff33ef75"
+  ],
+  "elapsed_seconds": 0.7458341249730438,
+  "finished_utc": "2026-10-08T07:33:05.084963+00:00",
+  "format": "swdb.parent-native-pyyaml-package-original-transport.v1",
+  "returncode": 0,
+  "sealed": false,
+  "started_utc": "2026-10-08T07:33:04.339073+00:00",
+  "stderr": {
+    "bytes": 0,
+    "path": "/private/tmp/lanl17-native-pyyaml-package-facts-original-actual-20261008-a1.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 14870,
+    "path": "/private/tmp/lanl17-native-pyyaml-package-facts-original-actual-20261008-a1.json",
+    "sha256": "bf5f733f184049264ba1ee45a7db09c64c2096a37216f4a153fa64a91b0be6b1"
+  }
+}

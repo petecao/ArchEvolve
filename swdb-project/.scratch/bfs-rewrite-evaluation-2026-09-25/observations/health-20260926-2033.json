@@ -1,0 +1,625 @@
+{
+  "created": "2026-09-26",
+  "observed_at": "2026-09-26T20:33:25.912271-04:00",
+  "evidence_kind": "read_only_operational_health",
+  "host_receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-dx100-coverage-20260926.dispatch/health-20260926-2033.json",
+    "bytes": 245229,
+    "sha256": "7267a3d17d6de0b944433e803e380bcb5cf653276bac8f5ed8f946c8ebdd05a9"
+  },
+  "code_commit": "8c39ae09406dad0da253b21dbe2c87e263f8c5fb",
+  "leases": {
+    "mbit10-evaluation-node0": {
+      "state": "held",
+      "generation": 332,
+      "kernel": [
+        "9: FLOCK  ADVISORY  WRITE 3089781 08:31:55201761 0 EOF"
+      ],
+      "owner": {
+        "pid": 3089727,
+        "parent_pid": 3089726,
+        "start_ticks": 497036314,
+        "state": "S",
+        "rss_bytes": 3670016
+      }
+    },
+    "mbit10-evaluation-node1": {
+      "state": "held",
+      "generation": 411,
+      "kernel": [
+        "8: FLOCK  ADVISORY  WRITE 3090076 08:31:55201758 0 EOF"
+      ],
+      "owner": {
+        "pid": 3090022,
+        "parent_pid": 3090021,
+        "start_ticks": 497040831,
+        "state": "S",
+        "rss_bytes": 3145728
+      }
+    },
+    "mbit10-evaluation": {
+      "state": "released",
+      "generation": 77,
+      "kernel": [],
+      "owner": null
+    }
+  },
+  "disk": {
+    "/data1": {
+      "free_bytes": 17414569984
+    },
+    "/data": {
+      "free_bytes": 186178379776
+    }
+  },
+  "load": "2.24 2.08 1.31 4/1536 3103368",
+  "capacity": [
+    {
+      "node": 0,
+      "estimated_available_kib": 30102488,
+      "global_available_kib": 62802624,
+      "eligible": false
+    },
+    {
+      "node": 1,
+      "estimated_available_kib": 30167068,
+      "global_available_kib": 62802624,
+      "eligible": false
+    }
+  ],
+  "capacity_interpretation": "Fresh-admission estimates while both authorized jobs hold their lanes; not a retroactive change to admitted jobs.",
+  "helper": {
+    "path": "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh",
+    "bytes": 10510,
+    "sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8"
+  },
+  "helper_upstream": {
+    "observed_at": "2026-09-26T20:33:26.820319-04:00",
+    "value": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65\trefs/heads/yanrujhou_main",
+    "method": "git ls-remote only; no fetch or checkout update"
+  },
+  "heads": {
+    "active_acceptance": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_acceptance_20260926_a1",
+      "head": "53f2e7686a41d3472c9e0824a0a9b09117884e0b",
+      "branch": "HEAD"
+    },
+    "native_paired": {
+      "path": "/data1/yanruj/EvolveSWDB_native_paired_20260926_a1",
+      "head": "98b5f50e93f531ce0395fe7e161f812a406d6d9d",
+      "branch": "HEAD"
+    },
+    "a3": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_continuation_20260926_a3",
+      "head": "1018432fdb3800522d723afb874f3bffa41dd0e5",
+      "branch": "HEAD"
+    },
+    "historical_dx": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_20260925_a1",
+      "head": "5802a5a76599de952f58a57d00c193ea9f1341d7",
+      "branch": "HEAD"
+    },
+    "historical_native": {
+      "path": "/data1/yanruj/EvolveSWDB_graph_bfs_20260925_uniform18",
+      "head": "41303ed7fb02f9a5c515e2e951d27e20869c73e9",
+      "branch": "codex/bfs-native-repeatability-evidence-20260926-a1"
+    },
+    "historical_witness": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_witness_20260926_a1",
+      "head": "51df06120982e23e4f3f0590ec3132ebf23f9af3",
+      "branch": "codex/bfs-dx100-witness-evidence-20260926-a1"
+    },
+    "helper": {
+      "path": "/data1/yanruj/Memacc-evolveswdb-lane",
+      "head": "42ce8dce1ecfb949d6e5d4ee3c98c078bc7ddc65",
+      "branch": "yanrujhou_main"
+    },
+    "orchestration": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_orchestration_20260926_a1",
+      "head": "a53e619de11278e2763c7a22576308d1a23f19bf",
+      "branch": "HEAD"
+    },
+    "native_one_thread": {
+      "path": "/data1/yanruj/EvolveSWDB_native_one_thread_20260926_a1",
+      "head": "319645eab0a25c815fa03fe1c372d32b4ba45d10",
+      "branch": "HEAD"
+    },
+    "a2_tested": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926",
+      "head": "67313d9b2a45d9f0fb23d935b56e755a3a19fa7f",
+      "branch": "HEAD"
+    },
+    "supervision": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_supervision_20260926_a1",
+      "head": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07",
+      "branch": "HEAD"
+    },
+    "reader_a2": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_reader_20260926_a2",
+      "head": "5e8b750b14679d5962d1e4b40cd5fa0f1b6981b0",
+      "branch": "HEAD"
+    },
+    "a2_tested_v2": {
+      "path": "/data1/yanruj/EvolveSWDB_dx100_coverage_a2_20260926_v2",
+      "head": "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+      "branch": "HEAD"
+    },
+    "supervision_v2": {
+      "path": "/data1/yanruj/EvolveSWDB_bfs_supervision_20260926_a2",
+      "head": "4c109430d4c7b80df220c4064e4e2c9ddbc66005",
+      "branch": "HEAD"
+    },
+    "t16_freeze": {
+      "path": "/data1/yanruj/EvolveSWDB_t16_freeze_20260926_a1",
+      "head": "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07"
+    },
+    "campaign_preflight": {
+      "path": "/data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a1",
+      "head": "d11dc04449997734a93b982646977b04008afeff"
+    }
+  },
+  "historical_hashes_unchanged": true,
+  "terminal_same_identities": [],
+  "batches": {
+    "t16": {
+      "state": "running",
+      "reason": null,
+      "outer_exit": null,
+      "sample": {
+        "observed_at": "2026-09-26T20:33:28.446384-04:00",
+        "raw_bytes": 542384128,
+        "charged_raw_bytes": 1673371648,
+        "elapsed_seconds": 778.220436106436,
+        "charged_elapsed_seconds": 1031.2204379616305,
+        "sampled_tree_rss_bytes": 30740553728
+      },
+      "series": [
+        {
+          "id": "bfs-t16-simulator-batch-20260926-a1.artifact.scalar",
+          "state": "running",
+          "reason": null,
+          "completed_samples": 0,
+          "stages_complete": 7,
+          "current_stage": {
+            "state": "running",
+            "command": [
+              "/usr/bin/python3.12",
+              "-m",
+              "swdb",
+              "dx100-execute",
+              "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.artifact.scalar/bfs-t16-simulator-batch-20260926-a1.artifact.scalar.driver/bfs-t16-simulator-batch-20260926-a1.artifact.scalar.s0.r0.primary.evaluation.request.json",
+              "--runs-dir",
+              "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.artifact.scalar",
+              "--lane",
+              "0",
+              "--records",
+              "/data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a2/records",
+              "--db",
+              "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.artifact.scalar/bfs-t16-simulator-batch-20260926-a1.artifact.scalar.driver/swdb.sqlite",
+              "--format",
+              "json"
+            ],
+            "started": "2026-09-26T20:21:44.208193-04:00",
+            "finished": null,
+            "returncode": null,
+            "identity": {
+              "pid": 3090376,
+              "parent_pid": 3089858,
+              "start_ticks": 497043709,
+              "state": "R",
+              "rss_bytes": 0
+            },
+            "reason": null
+          }
+        }
+      ],
+      "live_processes": [
+        {
+          "pid": 3093548,
+          "parent_pid": 3090376,
+          "start_ticks": 497060228,
+          "state": "R",
+          "rss_bytes": 30460084224,
+          "argv_prefix": "/data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt --debug-flags=MAATrace --outdir=/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.artifact.scalar/bfs-t16-simulator-batch-20260926-a1.artifact.scalar.s0.r0.primary.evaluation/simulation /data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.artifact.sc"
+        },
+        {
+          "pid": 3090376,
+          "parent_pid": 3089858,
+          "start_ticks": 497043709,
+          "state": "S",
+          "rss_bytes": 103317504,
+          "argv_prefix": "/usr/bin/python3.12 -m swdb dx100-execute /data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.artifact.scalar/bfs-t16-simulator-batch-20260926-a1.artifact.scalar.driver/bfs-t16-simulator-batch-20260926-a1.artifact.scalar.s0.r0.primary.evaluation.request.json --runs-dir /data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulato"
+        },
+        {
+          "pid": 3089858,
+          "parent_pid": 3089797,
+          "start_ticks": 497039930,
+          "state": "S",
+          "rss_bytes": 97198080,
+          "argv_prefix": "/usr/bin/python3.12 /data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a2/scripts/bfs_simulator_series.py --id bfs-t16-simulator-batch-20260926-a1.artifact.scalar --candidate bfs-author-scalar-compile-20260925-a1.candidate --workload bfs-20260925-uniform22.f23b09bb0c0601b5 --build-evaluation bfs-dx100-build-20260925-a2 --diagnostic-build bfs-author-scalar-compile-20260925-a1.diagnostic.build --c"
+        },
+        {
+          "pid": 3089797,
+          "parent_pid": 3089727,
+          "start_ticks": 497036338,
+          "state": "R",
+          "rss_bytes": 79953920,
+          "argv_prefix": "/usr/bin/python3.12 -s /data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a2/scripts/bfs_simulator_batch.py t16 --admission /data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1.dispatch/admission-a2.json --admission-sha256 94f2e768e2bfb304dcffe9602133584f605fd68b366749a7b4b3d3f9431ffcca --runs-dir /data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1 --lane 0 --outer-start"
+        }
+      ],
+      "outer_started": "2026-09-26T20:20:30.225985-04:00",
+      "outer_deadline": "2026-09-27T20:16:17.225985-04:00",
+      "admission": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1.dispatch/admission-a2.json",
+        "bytes": 17937,
+        "sha256": "94f2e768e2bfb304dcffe9602133584f605fd68b366749a7b4b3d3f9431ffcca"
+      },
+      "simulation_outputs": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.artifact.scalar/bfs-t16-simulator-batch-20260926-a1.artifact.scalar.s0.r0.primary.evaluation/checkpoint/stats.txt",
+          "bytes": 125462,
+          "mtime": "2026-09-27T00:24:13.441397+00:00"
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.artifact.scalar/bfs-t16-simulator-batch-20260926-a1.artifact.scalar.s0.r0.primary.evaluation/simulation/stats.txt",
+          "bytes": 0,
+          "mtime": "2026-09-27T00:24:29.587554+00:00"
+        }
+      ],
+      "outer_stderr_tail": "socket_lane: node 0, cpus 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62, policy bind:0, lease generation 332, aligned to no_gapbs_batch_running, load1 0.14, starting at 2026-09-27T00:20:30Z\n{\"aligned_cell_age_s\": \"\", \"aligned_to\": \"no_gapbs_batch_running\", \"command\": [\"env\", \"-u\", \"PYTHONPATH\", \"-u\", \"PYTHONHOME\", \"-u\", \"PYTHONSTARTUP\", \"-u\", \"PYTHONUSERBASE\", \"-u\", \"PYTHONOPTIMIZE\", \"-u\", \"PYTEST_ADDOPTS\", \"-u\", \"PYTEST_PLUGINS\", \"-u\", \"LD_PRELOAD\", \"-u\", \"LD_LIBRARY_PATH\", \"PYTHONNOUSERSITE=1\", \"PYTHONDONTWRITEBYTECODE=1\", \"PYTEST_DISABLE_PLUGIN_AUTOLOAD=1\", \"/usr/bin/python3.12\", \"-s\", \"/data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a2/scripts/bfs_simulator_batch.py\", \"t16\", \"--admission\", \"/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1.dispatch/admission-a2.json\", \"--admission-sha256\", \"94f2e768e2bfb304dcffe9602133584f605fd68b366749a7b4b3d3f9431ffcca\", \"--runs-dir\", \"/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1\", \"--lane\", \"0\", \"--outer-started\", \"2026-09-26T20:20:30.225985-04:00\", \"--outer-deadline\", \"2026-09-27T20:16:17.225985-04:00\", \"--pane-pid\", \"3089722\", \"--pane-start-ticks\", \"497036306\"], \"cpus_allowed_list\": \"0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62\", \"ended_utc\": \"\", \"exit_code\": -1, \"host\": \"mbit10\", \"job\": \"bfs-t16-simulator-batch-20260926-a1\", \"lease_generation\": 332, \"lease_name\": \"mbit10-evaluation-node0\", \"load1_at_start\": 0.14, \"load1_max\": 32, \"node\": 0, \"numa_memory_policy\": \"bind:0\", \"numactl\": \"--cpunodebind=0 --membind=0\", \"preregistration_sha256\": null, \"started_utc\": \"2026-09-27T00:20:30Z\"}\n"
+    },
+    "t15": {
+      "state": "running",
+      "reason": null,
+      "outer_exit": null,
+      "sample": {
+        "observed_at": "2026-09-26T20:33:28.647329-04:00",
+        "raw_bytes": 7513198592,
+        "charged_raw_bytes": 7513198592,
+        "elapsed_seconds": 733.2385427970439,
+        "charged_elapsed_seconds": 733.2385447733104,
+        "sampled_tree_rss_bytes": 31415169024
+      },
+      "series": [
+        {
+          "id": "bfs-t15-simulator-batch-20260926-a1.uniform18",
+          "state": "running",
+          "reason": null,
+          "completed_samples": 0,
+          "stages_complete": 6,
+          "current_stage": {
+            "state": "running",
+            "command": [
+              "/usr/bin/python3.12",
+              "-m",
+              "swdb",
+              "dx100-execute",
+              "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.driver/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation.request.json",
+              "--runs-dir",
+              "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18",
+              "--lane",
+              "1",
+              "--records",
+              "/data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a2/records",
+              "--db",
+              "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.driver/swdb.sqlite",
+              "--format",
+              "json"
+            ],
+            "started": "2026-09-26T20:22:26.020329-04:00",
+            "finished": null,
+            "returncode": null,
+            "identity": {
+              "pid": 3091197,
+              "parent_pid": 3090428,
+              "start_ticks": 497047891,
+              "state": "R",
+              "rss_bytes": 0
+            },
+            "reason": null
+          }
+        }
+      ],
+      "live_processes": [
+        {
+          "pid": 3093268,
+          "parent_pid": 3091197,
+          "start_ticks": 497058957,
+          "state": "R",
+          "rss_bytes": 31132745728,
+          "argv_prefix": "/data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt --debug-flags=MAATrace,MAARangeFuser,MAAIndirect --outdir=/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/simulation /data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-"
+        },
+        {
+          "pid": 3091197,
+          "parent_pid": 3090428,
+          "start_ticks": 497047891,
+          "state": "S",
+          "rss_bytes": 103936000,
+          "argv_prefix": "/usr/bin/python3.12 -m swdb dx100-execute /data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.driver/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation.request.json --runs-dir /data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a"
+        },
+        {
+          "pid": 3090428,
+          "parent_pid": 3090096,
+          "start_ticks": 497044266,
+          "state": "S",
+          "rss_bytes": 96571392,
+          "argv_prefix": "/usr/bin/python3.12 /data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a2/scripts/bfs_simulator_series.py --id bfs-t15-simulator-batch-20260926-a1.uniform18 --candidate bfs-author-maa-compile-20260925-a1.candidate --workload bfs-20260925-uniform18.cd2169a5c421baf7 --build-evaluation bfs-dx100-build-20260925-a2 --diagnostic-build bfs-author-maa-compile-20260925-a1.diagnostic.build --configuration"
+        },
+        {
+          "pid": 3090096,
+          "parent_pid": 3090022,
+          "start_ticks": 497040853,
+          "state": "S",
+          "rss_bytes": 81915904,
+          "argv_prefix": "/usr/bin/python3.12 -s /data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a2/scripts/bfs_simulator_batch.py t15 --admission /data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/admission-a2.json --admission-sha256 6f51d6376d4660fbeeae816784da8ff0f637e2ba8ee4b534a6864442a7a0e88d --runs-dir /data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1 --lane 1 --outer-start"
+        }
+      ],
+      "outer_started": "2026-09-26T20:21:15.408826-04:00",
+      "outer_deadline": "2026-09-27T08:21:15.408826-04:00",
+      "admission": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/admission-a2.json",
+        "bytes": 17236,
+        "sha256": "6f51d6376d4660fbeeae816784da8ff0f637e2ba8ee4b534a6864442a7a0e88d"
+      },
+      "simulation_outputs": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/checkpoint/stats.txt",
+          "bytes": 125456,
+          "mtime": "2026-09-27T00:24:02.029286+00:00"
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/simulation/stats.txt",
+          "bytes": 0,
+          "mtime": "2026-09-27T00:24:16.911431+00:00"
+        }
+      ],
+      "outer_stderr_tail": "socket_lane: node 1, cpus 1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63, policy bind:1, lease generation 411, aligned to no_gapbs_batch_running, load1 0.60, starting at 2026-09-27T00:21:15Z\n{\"aligned_cell_age_s\": \"\", \"aligned_to\": \"no_gapbs_batch_running\", \"command\": [\"env\", \"-u\", \"PYTHONPATH\", \"-u\", \"PYTHONHOME\", \"-u\", \"PYTHONSTARTUP\", \"-u\", \"PYTHONUSERBASE\", \"-u\", \"PYTHONOPTIMIZE\", \"-u\", \"PYTEST_ADDOPTS\", \"-u\", \"PYTEST_PLUGINS\", \"-u\", \"LD_PRELOAD\", \"-u\", \"LD_LIBRARY_PATH\", \"PYTHONNOUSERSITE=1\", \"PYTHONDONTWRITEBYTECODE=1\", \"PYTEST_DISABLE_PLUGIN_AUTOLOAD=1\", \"/usr/bin/python3.12\", \"-s\", \"/data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a2/scripts/bfs_simulator_batch.py\", \"t15\", \"--admission\", \"/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/admission-a2.json\", \"--admission-sha256\", \"6f51d6376d4660fbeeae816784da8ff0f637e2ba8ee4b534a6864442a7a0e88d\", \"--runs-dir\", \"/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1\", \"--lane\", \"1\", \"--outer-started\", \"2026-09-26T20:21:15.408826-04:00\", \"--outer-deadline\", \"2026-09-27T08:21:15.408826-04:00\", \"--pane-pid\", \"3090015\", \"--pane-start-ticks\", \"497040825\"], \"cpus_allowed_list\": \"1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63\", \"ended_utc\": \"\", \"exit_code\": -1, \"host\": \"mbit10\", \"job\": \"bfs-t15-simulator-batch-20260926-a1\", \"lease_generation\": 411, \"lease_name\": \"mbit10-evaluation-node1\", \"load1_at_start\": 0.6, \"load1_max\": 32, \"node\": 1, \"numa_memory_policy\": \"bind:1\", \"numactl\": \"--cpunodebind=1 --membind=1\", \"preregistration_sha256\": null, \"started_utc\": \"2026-09-27T00:21:15Z\"}\n"
+    }
+  },
+  "t15_storage_breakdown": {
+    "method": "read-only du -ak, allocated KiB; concurrent snapshot",
+    "roots": [
+      {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1",
+        "returncode": 0,
+        "stderr": "",
+        "entries": 80,
+        "largest_paths": [
+          {
+            "allocated_kib": 7338296,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1"
+          },
+          {
+            "allocated_kib": 7330276,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18"
+          },
+          {
+            "allocated_kib": 7285688,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation"
+          },
+          {
+            "allocated_kib": 7240040,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/002-simulation.log"
+          },
+          {
+            "allocated_kib": 44896,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/checkpoint"
+          },
+          {
+            "allocated_kib": 44624,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/checkpoint/cpt.2545429500"
+          },
+          {
+            "allocated_kib": 41880,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/checkpoint/cpt.2545429500/system.physmem.store0.pmem"
+          },
+          {
+            "allocated_kib": 33800,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/dx100-loader-inputs"
+          },
+          {
+            "allocated_kib": 33796,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/dx100-loader-inputs/dx100-gapbs-c6a430be5cf64a1b144d01f9bcbaeab2fcb45e0fac2359da36de8087b1b4790d.sg"
+          },
+          {
+            "allocated_kib": 10784,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.driver"
+          },
+          {
+            "allocated_kib": 10424,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.driver/swdb.sqlite"
+          },
+          {
+            "allocated_kib": 8016,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.driver"
+          },
+          {
+            "allocated_kib": 7904,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.driver/ledger.jsonl"
+          },
+          {
+            "allocated_kib": 2740,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/checkpoint/cpt.2545429500/m5.cpt"
+          },
+          {
+            "allocated_kib": 608,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/simulation"
+          },
+          {
+            "allocated_kib": 404,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/simulation/config.json"
+          },
+          {
+            "allocated_kib": 144,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/simulation/config.ini"
+          },
+          {
+            "allocated_kib": 124,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/checkpoint/stats.txt"
+          },
+          {
+            "allocated_kib": 100,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.driver/005-get.json"
+          },
+          {
+            "allocated_kib": 100,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.driver/driver.json"
+          },
+          {
+            "allocated_kib": 80,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.driver/owned-resources.jsonl"
+          },
+          {
+            "allocated_kib": 64,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/checkpoint/config.json"
+          },
+          {
+            "allocated_kib": 64,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/verification-runtime"
+          },
+          {
+            "allocated_kib": 60,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.driver/driver.json"
+          },
+          {
+            "allocated_kib": 52,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.driver/001-get.json"
+          },
+          {
+            "allocated_kib": 44,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/checkpoint/fs"
+          },
+          {
+            "allocated_kib": 44,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/simulation/fs"
+          },
+          {
+            "allocated_kib": 40,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/verification-runtime/swdb"
+          },
+          {
+            "allocated_kib": 40,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/002-simulation.memory.jsonl"
+          },
+          {
+            "allocated_kib": 36,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/verification-runtime/swdb/dx100_witness.py"
+          },
+          {
+            "allocated_kib": 32,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.driver/000-get.json"
+          },
+          {
+            "allocated_kib": 24,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/checkpoint/fs/sys"
+          },
+          {
+            "allocated_kib": 24,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/checkpoint/config.ini"
+          },
+          {
+            "allocated_kib": 24,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/simulation/fs/sys"
+          },
+          {
+            "allocated_kib": 20,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/checkpoint/fs/sys/devices"
+          },
+          {
+            "allocated_kib": 20,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/verification-runtime/scripts"
+          },
+          {
+            "allocated_kib": 20,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/simulation/fs/sys/devices"
+          },
+          {
+            "allocated_kib": 16,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/checkpoint/fs/sys/devices/system"
+          },
+          {
+            "allocated_kib": 16,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/simulation/fs/sys/devices/system"
+          },
+          {
+            "allocated_kib": 16,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.driver/004-get.json"
+          },
+          {
+            "allocated_kib": 12,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/checkpoint/fs/sys/devices/system/cpu"
+          },
+          {
+            "allocated_kib": 12,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/checkpoint/fs/proc"
+          },
+          {
+            "allocated_kib": 12,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/host-observation.json"
+          },
+          {
+            "allocated_kib": 12,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/verification-runtime/scripts/dx100_verify.py"
+          },
+          {
+            "allocated_kib": 12,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18/bfs-t15-simulator-batch-20260926-a1.uniform18.s0.r0.primary.evaluation/simulation/fs/sys/devices/system/cpu"
+          }
+        ]
+      },
+      {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch",
+        "returncode": 0,
+        "stderr": "",
+        "entries": 11,
+        "largest_paths": [
+          {
+            "allocated_kib": 88,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch"
+          },
+          {
+            "allocated_kib": 20,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/admission-a2.json"
+          },
+          {
+            "allocated_kib": 20,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/admission.json"
+          },
+          {
+            "allocated_kib": 8,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/prelaunch-a2.json"
+          },
+          {
+            "allocated_kib": 8,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/launch-a2.sh"
+          },
+          {
+            "allocated_kib": 8,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/launch.json"
+          },
+          {
+            "allocated_kib": 4,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/command.sh"
+          },
+          {
+            "allocated_kib": 4,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/outer.stdout"
+          },
+          {
+            "allocated_kib": 4,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/lane.json"
+          },
+          {
+            "allocated_kib": 4,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/outer.stderr"
+          },
+          {
+            "allocated_kib": 4,
+            "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/input-preflight.json"
+          }
+        ]
+      }
+    ]
+  },
+  "next_full_check": "2026-09-26T21:03:00-04:00"
+}

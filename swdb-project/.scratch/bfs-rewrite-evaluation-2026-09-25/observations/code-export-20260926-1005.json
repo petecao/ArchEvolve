@@ -1,0 +1,211 @@
+{
+  "created": "2026-09-26",
+  "prepared_at_et": "2026-09-26 10:05 ET",
+  "state": "exported_remote_tip_verified",
+  "supersedes_code_inventory": "code-export-20260926-0925.json",
+  "destination": {
+    "repository": "git@github.com:ruchou/EvolveSWDB.git",
+    "branch": "codex/bfs-rewrite-evaluation"
+  },
+  "base_already_pushed": "0236631b717d529852664d147d3c4200448c449c",
+  "tip": "6346189b55132f195b02544b729f34100d10ba92",
+  "commits": [
+    "1cc95578ebc84fa6a7bc8ad4add7099b422bb9f6",
+    "b3a2cbe43db143ed03be4d66ead219ed59f6c04b",
+    "721fa725fd23a3e9be767e821c9164dfb575bc23",
+    "6346189b55132f195b02544b729f34100d10ba92"
+  ],
+  "scope": "Four local commits containing evaluator/parser/pilot source code, tests, schemas, plans, documentation, and two failed-a1 metadata records with host paths and hashes. No raw traces, graphs, binaries, or credentials. Uncommitted tracker changes and the separately held 14-file packet are excluded.",
+  "measurement_evidence": "Only retained failed a1 metadata; paired implementation tests are local contract and subprocess checks, not mbit10 calibration.",
+  "changed_tip_file_count": 35,
+  "changed_tip_file_bytes": 592945,
+  "files": [
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-matched-control-freeze-v1.yaml",
+      "bytes": 10652,
+      "sha256": "0208354fccf9e7c2b13eb340b1fcfa121f8a443ccac98ba72f8e558b1a339705"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/author-reference-freeze-v1.yaml",
+      "bytes": 10582,
+      "sha256": "ade4b75e4a59181f3582645b808675eaa5e88519689255749a56070e7f0eba96"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/dx100-witness-a2.yaml",
+      "bytes": 1424,
+      "sha256": "7972e091eaa5038ca54b8be71957398a129fec57f1290663f875cb2e9f91335c"
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/native-paired-pilot-20260926-a1.json",
+      "bytes": 6648,
+      "sha256": "f0be176dc9ad29843aadc17afac07439ebc79d89b2c2a6b204843d615d47cc00"
+    },
+    {
+      "path": "docs/bfs-dx100-witness-correction-20260926.md",
+      "bytes": 3131,
+      "sha256": "9f062aad0d76353097e36da5753b617227ee17abb6fee9c5698e60c9995c640b"
+    },
+    {
+      "path": "docs/bfs-dx100-witness-v2.md",
+      "bytes": 7232,
+      "sha256": "814fb6ecd27b13e3357c4a82488cefddeef17d2f2b244914934358b75da503a2"
+    },
+    {
+      "path": "docs/bfs-interim-review-20260926.md",
+      "bytes": 14412,
+      "sha256": "26a1d32585354eb16a5d902cbfa9b73fbd282f70e2e76f0d1283ab1916587d07"
+    },
+    {
+      "path": "docs/bfs-native-paired-pilot-20260926.md",
+      "bytes": 16164,
+      "sha256": "c1b74fdb1f2c210c06275c778aa8e8267f684dddba3fc68dec2c8a978254e438"
+    },
+    {
+      "path": "docs/bfs-native-paired.md",
+      "bytes": 4502,
+      "sha256": "3a7e6ffbbfb059f91e67e04212576947930e0e70d70b1ba15ae339fc5ad6b50d"
+    },
+    {
+      "path": "docs/bfs-pilot-freeze.md",
+      "bytes": 9376,
+      "sha256": "7b5dfaa57e12438f23981c58cf8065abbc31c5f44686340f3d60d44b24b52390"
+    },
+    {
+      "path": "docs/evidence/bfs-dx100-witness-20260926-a1.yaml",
+      "bytes": 6524,
+      "sha256": "09558d518a3ace977192af83b4bf05142b2fd252c4ced8aee5a1ae6b17fb671d"
+    },
+    {
+      "path": "records/evaluations/bfs-dx100-witness-20260926-a1.yaml",
+      "bytes": 34448,
+      "sha256": "9a941cdff315e283b13563bf81ef2f45ba0712bbcf6d31b92f6232488efa3b42"
+    },
+    {
+      "path": "schemas/evaluation_pair.schema.json",
+      "bytes": 1915,
+      "sha256": "13927d3dde1892d86627e5966364f36c12861f2effb9516b2d9321496c5a5184"
+    },
+    {
+      "path": "scripts/bfs_freeze_pilot.py",
+      "bytes": 48944,
+      "sha256": "8ec86227d4781595fa9e96fe2a2f912dff9691bfead87169e70c7f3feda93059"
+    },
+    {
+      "path": "scripts/bfs_native_campaign.py",
+      "bytes": 24114,
+      "sha256": "8835de4d8b69713fb8ab031654d3d6c1857851e2b11019fb51fd1502b64d8495"
+    },
+    {
+      "path": "scripts/bfs_native_paired_pilot.py",
+      "bytes": 42414,
+      "sha256": "8d442aa43e7e1ab2f0deb847252b28eff7da294200eb910423daba72105da329"
+    },
+    {
+      "path": "scripts/bfs_paired_calibration.py",
+      "bytes": 9825,
+      "sha256": "8d62f50639c1b97cd77c2b17d6b2ccc4b917ec2bae6a363c27013a6a2ee3fe06"
+    },
+    {
+      "path": "scripts/dx100_witness_corrected_probe.py",
+      "bytes": 1208,
+      "sha256": "7331a0405738d99b718daaf1b176619e8ac0a9be59b539ecf6609c7944a9bde1"
+    },
+    {
+      "path": "scripts/dx100_witness_probe.py",
+      "bytes": 1342,
+      "sha256": "9b9db8d25ed8f3b1921908be9b85feff9a8cfc8cc50d468c27fcad721b2413c6"
+    },
+    {
+      "path": "swdb/bfs_native.py",
+      "bytes": 39435,
+      "sha256": "7c6d4f742e95cea4e1ff924690e9c24c0df4383fe4ddcf397daf14c1faaf8665"
+    },
+    {
+      "path": "swdb/bfs_native_pair.py",
+      "bytes": 16118,
+      "sha256": "83c2d68000da99e252603b22f90bd0c43f1ddea5899306476016ddfd3c4325d9"
+    },
+    {
+      "path": "swdb/bfs_protocol.py",
+      "bytes": 77986,
+      "sha256": "b4b7ef872516dfa1ff54520c50deaeae085c03071327588e63cb7692f8cc8205"
+    },
+    {
+      "path": "swdb/cli.py",
+      "bytes": 22114,
+      "sha256": "d613805c26fb22edb3f8b3eb8553d7cb39ec9669443f2319538e025391d9e738"
+    },
+    {
+      "path": "swdb/dx100_witness.py",
+      "bytes": 34287,
+      "sha256": "2d589162b6595fee0abf4f1db54aa5b1a0964dab3f51aa408ac06505b6014091"
+    },
+    {
+      "path": "swdb/store.py",
+      "bytes": 6223,
+      "sha256": "f02a48c55c76517c9de656c270de9b85e440bc59f12dbe38bab4e1c01cd4b920"
+    },
+    {
+      "path": "swdb/workflow.py",
+      "bytes": 27977,
+      "sha256": "37aa80bb4adc947fdfe0ff4556d3205f000fd1ef98774c84317d79098441607f"
+    },
+    {
+      "path": "tests/test_bfs_native_pair.py",
+      "bytes": 15640,
+      "sha256": "65f827d7097849f8371f98f3ead1827cdb94be07a8fb9c9aa99d1a578c604e69"
+    },
+    {
+      "path": "tests/test_bfs_native_paired_pilot.py",
+      "bytes": 23909,
+      "sha256": "21f410c443de19c19e541a086db88cab42b19ff81d785f097145d30d19f1603f"
+    },
+    {
+      "path": "tests/test_bfs_native_region_comparison.py",
+      "bytes": 19533,
+      "sha256": "5bf84d394624da62c0945a7510ae5735c28294b208847d48a059a2811d8a38b4"
+    },
+    {
+      "path": "tests/test_bfs_paired_admission.py",
+      "bytes": 5358,
+      "sha256": "7f00e09228ebae4543b8aec0b3bc02aa2ff93db39355691aa6f561a02925fd40"
+    },
+    {
+      "path": "tests/test_bfs_paired_calibration.py",
+      "bytes": 2431,
+      "sha256": "f26f5d4eea4ad30e9d83b0f0eeaa5c246541c2592170eec18a8d739c074b06b0"
+    },
+    {
+      "path": "tests/test_bfs_paired_freeze.py",
+      "bytes": 17033,
+      "sha256": "f04909bf6b47960a6fb33b67095fc287ec473532189a5d5e62b89753d02ca0f2"
+    },
+    {
+      "path": "tests/test_dx100_witness.py",
+      "bytes": 25145,
+      "sha256": "3535f5b9bd95954a32d502fa201615021b7c09bb761fa9cd63a71a1da484127c"
+    },
+    {
+      "path": "tests/test_dx100_witness_probe.py",
+      "bytes": 2503,
+      "sha256": "466e14a8abf1b845a14578d416ec6e185e108549c30597de04af2684a01888d3"
+    },
+    {
+      "path": "vocab/record_kinds.yaml",
+      "bytes": 2396,
+      "sha256": "8eac4386f39a4d586d13d36a3e06ed53945fd31e94a4459cf652c2d246ac9317"
+    }
+  ],
+  "updated": "2026-09-26",
+  "explicit_transfer_approval": {
+    "date_et": "2026-09-26",
+    "scope": "User explicitly named this exact prepared transfer, destination repository and branch.",
+    "supersedes": "Earlier automatic-review rejection for this transfer only; history retained.",
+    "prior_state": "prepared_not_exported"
+  },
+  "transfer_result": {
+    "state": "success",
+    "verified_remote_tip": "6346189b55132f195b02544b729f34100d10ba92",
+    "verified_date_et": "2026-09-26"
+  }
+}

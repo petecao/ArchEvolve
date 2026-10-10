@@ -1,0 +1,119 @@
+{
+  "AST_parsed_only": true,
+  "actual_births_visibility_predicate_plan_cleanup_capacity_or_scientific_admission_supplied": false,
+  "actual_runtime_file_or_body_inputs_created": false,
+  "bounds_exact_source_text": "{'seconds': 600, 'work_seconds': 570, 'file_bytes_total': 8*1024*1024,\n          'proc_file': 1024*1024, 'status': 32768, 'proc_stat': 16384,\n          'cmdline': 4096, 'git_pointer': 4096, 'entries_total': 400000,\n          'names_per_directory': 20000, 'directory_name_bytes': 64*1024*1024,\n          'depth': 64, 'path_bytes': 4096,\n          'failure_witnesses_total': 100000, 'object_metadata_bytes': 28*1024*1024,\n          'failure_metadata_bytes': 2*1024*1024, 'output_bytes': 32*1024*1024}",
+  "complete_diff_old_new_reconstruction_exact": true,
+  "format": "swdb.fixed-checkout-inode-birth-query-source-preparation.v1",
+  "g5_all18_ROWS_literal_and_AST_exact": true,
+  "initial_metadata_writer_failure": "ast.literal_eval rejected LIMITS integer-multiplication AST before any preparation JSON write; no target or test execution; corrected proof records exact source text",
+  "object_encoding": {
+    "absolute_path_rule": "row.path + slash + relative_path; dot denotes row.path",
+    "atime_excluded_because_read_only_queries_can_change_it": true,
+    "birth_class_rule": "classify_birth uses the exact retained mask/sec/nsec and clock",
+    "concern_codes": {
+      "birth_nonpositive": 1,
+      "birth_not_after_reported_helper_start": 2,
+      "birth_not_supported": 0,
+      "birth_within_boot_epoch_and_tick_resolution_margin": 3,
+      "inode_on_portal_mount_device": 7,
+      "other_not_opened_for_body": 5,
+      "regular_hardlink_aliases_not_enumerated": 6,
+      "symlink_not_followed": 4
+    },
+    "failure_originals_rule": "index references the full retained row.original_objects array; the exact path/stat/statx birth are present there, not a digest-only witness",
+    "first_pass_failure_fields": [
+      "original_objects_index",
+      "concern_codes"
+    ],
+    "format": "ordered-array.v1",
+    "metadata_digest": "sha256 of each canonical encoded object, prefixed by 8-byte big-endian byte length, in byte-sorted depth-first order",
+    "object_fields": [
+      "relative_path",
+      "original_stat",
+      "original_statx",
+      "directory_names_count_or_null",
+      "directory_names_digest_or_null",
+      "type_code"
+    ],
+    "original_stat_fields": [
+      "dev",
+      "ino",
+      "mode",
+      "uid",
+      "gid",
+      "nlink",
+      "size",
+      "blocks",
+      "mtime_ns",
+      "ctime_ns"
+    ],
+    "original_statx_fields": [
+      "returned_mask",
+      "requested_mask",
+      "attributes",
+      "attributes_mask",
+      "mount_id_or_null",
+      "birth_supported",
+      "birth_seconds",
+      "birth_nanoseconds"
+    ],
+    "type_codes": {
+      "directory": 0,
+      "other_not_opened_for_body": 3,
+      "regular": 1,
+      "symlink_not_followed": 2
+    }
+  },
+  "originals": [
+    {
+      "bytes": 37716,
+      "path": "/private/tmp/lanl17_exact_checkout_inode_birth_readonly_query_20261008_a1.py",
+      "sha256": "ca96e027ff1f2dcf8bf903541b44f805048969550b782b41059411c1f023435d"
+    },
+    {
+      "bytes": 44080,
+      "path": "/private/tmp/lanl17-checkout-inode-birth-query-complete-public-query-derivation-20261008-a1.diff",
+      "sha256": "bf8c8b7feb6b833f76b6b38ef4f4467fbb453b0253a88eff518e4e00df8a429b"
+    },
+    {
+      "bytes": 12423,
+      "path": "/private/tmp/lanl17-checkout-inode-birth-query-source-handoff-20261008-a1.md",
+      "sha256": "db8a8dce9cc0506717c1d5f08a43e00b696785b390b069b247171fc38315e285"
+    },
+    {
+      "bytes": 88872,
+      "path": "/private/tmp/lanl_consumed_detached_source_guard_r5_20261008_a1.py",
+      "sha256": "a84dc9ca7ccd20e6485cc8e9a2007b3b982fad9c5ae19dacbb1f164d664748cb"
+    },
+    {
+      "bytes": 5517,
+      "path": "/private/tmp/lanl17_fuse_service_identity_readonly_query_20261008_a1.py",
+      "sha256": "82fe2edc875654e42b440020b3e8d637b670589520cd1d17b1c5f5b5bc1e4614"
+    },
+    {
+      "bytes": 7047,
+      "path": "/private/tmp/lanl-linux-v6.8-statx-uapi-query-research-20261008.h",
+      "sha256": "414e677df2ff8661ee573729b8d75d01d6a5ca41cd6a89122e394f8c73be9f63"
+    },
+    {
+      "bytes": 1043,
+      "path": "/private/tmp/lanl-glibc-2.39-statx-query-research-20261008.c",
+      "sha256": "5b5ffc4c81ff73367834108ba97f61db1f129bdce75020b03d2f5bbc4c6c2c57"
+    },
+    {
+      "bytes": 5897,
+      "path": "/private/tmp/lanl-linux-v6.8-proc-stat-query-research-20261008.c",
+      "sha256": "d4692d68f90f318cc6d09d182baffffb36f7d0a3367da2c77b1e654d08cd0382"
+    },
+    {
+      "bytes": 23234,
+      "path": "/private/tmp/lanl-linux-v6.8-proc-array-query-research-20261008.c",
+      "sha256": "23fa35a9e22158c2bee2bf183c748b82438e4919571eac9c04a4028d24764549"
+    }
+  ],
+  "row_count": 18,
+  "sealed": false,
+  "source_import_query_native_statx_main_test_SSH_Git_or_project_action": false,
+  "source_preparation_only": true
+}

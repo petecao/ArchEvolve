@@ -1,0 +1,354 @@
+diff --git a/swdb-project/schemas/workload_characterization.schema.json b/swdb-project/schemas/workload_characterization.schema.json
+index 8af28df..06c1112 100644
+--- a/swdb-project/schemas/workload_characterization.schema.json
++++ b/swdb-project/schemas/workload_characterization.schema.json
+@@ -630,6 +630,50 @@
+               }
+             }
+           }
++        },
++        "object_scope_contract": {
++          "type": "object",
++          "additionalProperties": false,
++          "properties": {
++            "format": {
++              "const": "swdb.object-scopes.v1"
++            },
++            "abi": {
++              "const": "swdb.object-scope.v1"
++            },
++            "full_objects": {
++              "type": "array",
++              "items": {
++                "type": "string"
++              }
++            },
++            "bounded_views": {
++              "type": "array",
++              "items": {
++                "type": "string"
++              }
++            },
++            "retirement": {
++              "type": "string"
++            },
++            "observer_sha256": {
++              "type": "string",
++              "pattern": "^[a-f0-9]{64}$"
++            },
++            "runtime_sha256": {
++              "type": "string",
++              "pattern": "^[a-f0-9]{64}$"
++            }
++          },
++          "required": [
++            "format",
++            "abi",
++            "full_objects",
++            "bounded_views",
++            "retirement",
++            "observer_sha256",
++            "runtime_sha256"
++          ]
+         }
+       },
+       "required": [
+@@ -1106,6 +1150,30 @@
+             "assumption_sha256": {
+               "type": "string",
+               "pattern": "^[a-f0-9]{64}$"
++            },
++            "object_scope_counts": {
++              "type": "object",
++              "additionalProperties": false,
++              "properties": {
++                "full_allocation_requests": {
++                  "$ref": "#/$defs/fact"
++                },
++                "bounded_view_requests": {
++                  "$ref": "#/$defs/fact"
++                },
++                "unresolved_requests": {
++                  "$ref": "#/$defs/fact"
++                },
++                "bounded_view_line_union": {
++                  "$ref": "#/$defs/fact"
++                }
++              },
++              "required": [
++                "full_allocation_requests",
++                "bounded_view_requests",
++                "unresolved_requests",
++                "bounded_view_line_union"
++              ]
+             }
+           },
+           "required": [
+diff --git a/swdb-project/swdb/analytic.py b/swdb-project/swdb/analytic.py
+index e8e4627..8242541 100644
+--- a/swdb-project/swdb/analytic.py
++++ b/swdb-project/swdb/analytic.py
+@@ -54,6 +54,7 @@ def register_cli(commands):
+     sub.add_argument('--output', type=Path, help='new folder for compiled pass, IR, counts and run output (default a temporary folder)')
+     sub.add_argument('--timeout-s', type=float, default=600)
+     sub.add_argument('--fixture', action='store_true', help='label a hand-counted contract fixture, never application evidence')
++    sub.add_argument('--object-scopes', action='store_true', help='observe bounded source objects and function-scoped ABI referent views; no residency claim')
+     sub.add_argument('--state-budget', type=int, default=524288, help='maximum transient logical observation entries; overflow preserves named unknowns')
+     sub.add_argument('--target-description', help='frozen description for generic functional-command and allocation-relative logical window counts')
+     sub.add_argument('--format', choices=['yaml', 'json'], default='yaml')
+@@ -172,7 +173,7 @@ def _counted_regions(static, counts, count_scope="per_run", observation_contract
+             requests={kind:[] for kind in updates}
+             for item in observed.get('requests',[]):
+                 requests[updates[item['update']]].append({'element_bytes':item['element_bytes'],
+-                    'requests':{'value':item['requests'],'basis':'measured','scope':count_scope}})
++                    'requests':{'value':item['requests'],'basis':'unknown' if item['requests'] is None else 'measured','scope':count_scope}})
+             missing=observed.get('missing',[])
+             region['memory_service_counts']={'format':'swdb.memory-service-counts.v1',
+                 'scope':count_scope,'observation_method':'source_normalized_ir_allocation_relative',
+@@ -183,6 +184,11 @@ def _counted_regions(static, counts, count_scope="per_run", observation_contract
+                      'pre_roi_allocation_pages','in_roi_allocation_pages','unknown_object_requests')},
+                 'missing':missing,'assumption_sha256':artifacts.digest({'line_bytes':64,'page_bytes':4096,
+                     'placement':'allocation_relative','first_touch':'first_source_observer_access'})}
++    if any('object_scope_counts' in row for row in counts.get('memory_service_counts',{}).values()):
++        for original,region in zip(static['regions'],regions):
++            observed=counts['memory_service_counts'].get(str(original['index']),{}).get('object_scope_counts',{})
++            region['memory_service_counts']['object_scope_counts']={name:_fact(observed.get(name,0),'measured')
++                for name in ('full_allocation_requests','bounded_view_requests','unresolved_requests','bounded_view_line_union')}
+     # Several source loops may map to one existing region; aggregate their counters,
+     # while static_analysis.loops retains each loop's identity and source location.
+     combined = {}
+@@ -359,6 +365,8 @@ def characterize(args):
+     env['SWDB_REGION_MAP'] = str(args.region_map.resolve()) if args.region_map else ''
+     env['SWDB_ANALYSIS_OUTPUT'] = str(output / 'optimized.json')
+     env['SWDB_INSTRUMENT'] = '0'
++    env.pop('SWDB_OBJECT_SCOPES',None)
++    if args.object_scopes:env['SWDB_OBJECT_SCOPES']='1'
+     _run([llvm / 'opt', '-load-pass-plugin=' + str(plugin), '-passes=swdb-characterize', optimized, '-disable-output'], env=env, timeout=args.timeout_s)
+     env['SWDB_ANALYSIS_OUTPUT'] = str(output / 'source.json')
+     env['SWDB_INSTRUMENT'] = '1'
+@@ -468,6 +476,13 @@ def characterize(args):
+             'observer_isolation':'thread_local_reentrancy_guard',
+             'runtime_bundle_sha256':artifacts.digest({name:_sha(llvm_src/name)
+                 for name in ('CountingRuntime.cpp','LiveObjects.hpp','LogicalCommands.hpp')})}
++    if args.object_scopes:
++        record['observation_contract']['object_scope_contract']={
++            'format':'swdb.object-scopes.v1','abi':'swdb.object-scope.v1',
++            'full_objects':['heap','source_alloca','defined_global_non_tls'],'bounded_views':['openmp_microtask_int32_referent'],
++            'retirement':'frame_exit_lifetime_end_stackrestore',
++            'observer_sha256':_sha(llvm_src/'ObjectScopes.hpp'),
++            'runtime_sha256':_sha(llvm_src/'ObjectScopeRuntime.hpp')}
+     if live_contract:
+         command_specs=live_contract['functional_observation']['commands']
+         observed_descriptors={site['descriptor'] for site in static.get('semantic_sites',[])}
+@@ -650,6 +665,27 @@ def _payload_problems(data):
+                 counts += [memory[name] for name in ('useful_bytes','lifetime_line_union',
+                     'logical_first_read_pages','logical_first_write_pages','pre_roi_allocation_pages',
+                     'in_roi_allocation_pages','unknown_object_requests')]
++                scope_facts=memory.get('object_scope_counts')
++                if scope_facts is not None:
++                    field=f'{group}[{i}].memory_service_counts.object_scope_counts'
++                    if not data.get('observation_contract',{}).get('object_scope_contract'):
++                        yield field,'object scope facts require their sealed optional observation contract'
++                    values={name:fact.get('value') for name,fact in scope_facts.items()}
++                    if any(value is not None and (not isinstance(value,int) or isinstance(value,bool) or value<0) for value in values.values()):
++                        yield field,'object scope counts must be nonnegative integers or null'
++                    partition=[values.get(name) for name in ('full_allocation_requests','bounded_view_requests','unresolved_requests')]
++                    requests=[item['requests'].get('value') for items in memory['requests_by_update_kind'].values() for item in items]
++                    if all(isinstance(value,int) and not isinstance(value,bool) for value in partition+requests):
++                        if sum(partition)!=sum(requests):yield field,'scope coverage partition must match executed requests'
++                    if values.get('unresolved_requests')!=memory['unknown_object_requests'].get('value'):
++                        yield field,'unresolved scope requests must match unknown object requests'
++                    if isinstance(values.get('bounded_view_requests'),int) and values['bounded_view_requests']>0:
++                        if 'bounded_view_not_full_allocation' not in memory['missing']:
++                            yield field,'bounded views must state that full allocation facts remain unknown'
++                        if any(memory[name].get('value') is not None for name in ('lifetime_line_union','logical_first_read_pages',
++                            'logical_first_write_pages','pre_roi_allocation_pages','in_roi_allocation_pages')):
++                            yield field,'bounded views cannot establish full allocation lifetime or page facts'
++                counts += list(memory.get('object_scope_counts',{}).values())
+                 counts += [item['requests'] for items in memory['requests_by_update_kind'].values() for item in items]
+             for call in region.get('call_shape_counts',{}).get('calls',[]):
+                 counts += [call[name] for name in ('execution_count','unknown_lengths','unknown_free_lifetimes')]
+diff --git a/swdb-project/swdb/llvm/Characterize.cpp b/swdb-project/swdb/llvm/Characterize.cpp
+index aaa9452..389a742 100644
+--- a/swdb-project/swdb/llvm/Characterize.cpp
++++ b/swdb-project/swdb/llvm/Characterize.cpp
+@@ -148,6 +148,7 @@ struct Op { Instruction *inst; unsigned region, category, amount; };
+ struct Call { Instruction *inst; unsigned site; Value *size=nullptr; bool known=false; unsigned region=0; Value *factor=nullptr,*pointer=nullptr; unsigned action=0; bool semantic_body=false; };
+ 
+ #include "SemanticCommands.hpp"
++#include "ObjectScopes.hpp"
+ 
+ class BindROI : public PassInfoMixin<BindROI> {
+ public:
+@@ -368,6 +369,7 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
+   auto opFn=semantic?M.getOrInsertFunction("__swdb_domain_op",Type::getVoidTy(C),u32,u32,u64,u32):M.getOrInsertFunction("__swdb_op",Type::getVoidTy(C),u32,u32,u64);
+   auto callFn=semantic?M.getOrInsertFunction("__swdb_domain_call",Type::getVoidTy(C),u32,u64,u32,u32,u64,u32,u32,u32,u64,u64):M.getOrInsertFunction("__swdb_call_v2",Type::getVoidTy(C),u32,u64,u32,u32,u64,u32);
+   auto accessFn=semantic?M.getOrInsertFunction("__swdb_domain_access",Type::getVoidTy(C),u32,u32,u64,u64,u64,u32,u32,u64,u64):M.getOrInsertFunction("__swdb_access_v2",Type::getVoidTy(C),u32,u32,u64,u64,u64,u32);
++  instrumentObjectScopes(M);
+   for (unsigned i=0;i<regions.size();++i) if (auto *L=regions[i].loop) {
+     auto *term=L->getHeader()->getTerminator(); IRBuilder<> B(term); Value *n=B.getInt64(1);
+     if (auto *br=dyn_cast<BranchInst>(term); br && br->isConditional()) {
+diff --git a/swdb-project/swdb/llvm/CountingRuntime.cpp b/swdb-project/swdb/llvm/CountingRuntime.cpp
+index ab69773..f3a38d5 100644
+--- a/swdb-project/swdb/llvm/CountingRuntime.cpp
++++ b/swdb-project/swdb/llvm/CountingRuntime.cpp
+@@ -137,6 +137,7 @@ struct Counts {
+   }
+ };
+ Counts &counts(){static Counts value;return value;}
++#include "ObjectScopeRuntime.hpp"
+ extern "C" void __swdb_begin(){if(observerEntered)return;ObserverScope isolation;auto &c=counts();std::lock_guard<std::mutex> lock(c.mutex);c.clear();c.active=true;}
+ extern "C" void __swdb_end(){if(observerEntered)return;ObserverScope isolation;auto &c=counts();c.active=false;std::lock_guard<std::mutex> lock(c.mutex);if(c.command_depth)c.semantic_missing.insert("command_crosses_roi");c.trials.push_back(c.snapshot());}
+ extern "C" void __swdb_source(uint64_t source){if(observerEntered)return;ObserverScope isolation;auto &c=counts();if(!c.active)return;std::lock_guard<std::mutex> lock(c.mutex);c.sources.push_back(source);}
+diff --git a/swdb-project/swdb/llvm/LiveObjects.hpp b/swdb-project/swdb/llvm/LiveObjects.hpp
+index b82c528..1c4cb94 100644
+--- a/swdb-project/swdb/llvm/LiveObjects.hpp
++++ b/swdb-project/swdb/llvm/LiveObjects.hpp
+@@ -10,32 +10,41 @@
+ namespace swdb_live {
+ inline uint64_t budget(){const char *v=std::getenv("SWDB_STATE_BUDGET");return v?std::strtoull(v,nullptr,10):524288;}
+ struct Object {
+-  uint64_t base,size,id,born;std::set<uint64_t> touched_pages;bool touches_complete;
++  uint64_t base,size,id,born;std::set<uint64_t> touched_pages;bool touches_complete;unsigned origin=0;bool ambiguous=false;
+   Object(uint64_t b,uint64_t s,uint64_t i,uint64_t e):base(b),size(s),id(i),born(e),touches_complete(true){}
+ };
++struct View {uint64_t base,size,id;std::set<uint64_t> owners;};
+ struct Service {
+   std::map<std::pair<uint32_t,uint64_t>,uint64_t> requests;
+   uint64_t useful_bytes=0,unknown_requests=0,first_read=0,first_write=0;
+   std::set<std::pair<uint64_t,uint64_t>> lines,pre_pages,in_pages;
+   bool lines_complete=true,pages_complete=true,first_complete=true,bytes_complete=true;
++  uint64_t full_requests=0,view_requests=0;
++  std::set<std::pair<uint64_t,uint64_t>> view_lines;bool views_complete=true,requests_complete=true;
+ };
+ struct Registry {
+   std::map<uint64_t,Object> objects;
+   std::map<uint32_t,Service> services;
+   uint64_t next_id=1,epoch=0,touch_entries=0,service_entries=0;
+-  bool object_budget_exhausted=false;
++  bool object_budget_exhausted=false,scope_enabled=false;uint64_t view_owner_entries=0;
++  std::map<std::pair<uint64_t,uint64_t>,View> views;
++  std::set<std::string> scope_missing;
+   void begin(){++epoch;services.clear();service_entries=0;}
+   Object *resolve(uint64_t address,uint64_t size){
+     auto it=objects.upper_bound(address);if(it==objects.begin())return nullptr;--it;
+     auto &o=it->second;
+-    return address>=o.base && address-o.base<=o.size && size<=o.size-(address-o.base)?&o:nullptr;
++    return (!scope_enabled || !o.ambiguous) && address>=o.base && address-o.base<=o.size && size<=o.size-(address-o.base)?&o:nullptr;
+   }
+-  void allocate(uint64_t base,uint64_t size,bool known){
++  void allocate(uint64_t base,uint64_t size,bool known,unsigned origin=0){
+     if(!base)return;
+     release(base);
+-    if(!known || !size || size>UINT64_MAX-base)return;
+-    if(objects.size()>=budget()){object_budget_exhausted=true;return;}
+-    objects.emplace(base,Object(base,size,next_id++,epoch));
++    if(!known || !size || size>UINT64_MAX-base){if(scope_enabled)scope_missing.insert("source_object_extent_unknown");return;}
++    if(objects.size()+views.size()>=budget()){object_budget_exhausted=true;return;}
++    auto inserted=objects.emplace(base,Object(base,size,next_id++,epoch)).first;
++    inserted->second.origin=origin;
++    if(scope_enabled)for(auto &entry:objects)if(entry.first!=base && entry.first<base+size && base<entry.first+entry.second.size){
++      entry.second.ambiguous=true;inserted->second.ambiguous=true;scope_missing.insert("overlapping_full_object_extents");
++    }
+   }
+   void release(uint64_t base){auto it=objects.find(base);if(it!=objects.end()){touch_entries-=it->second.touched_pages.size();objects.erase(it);}}
+   void reallocate(uint64_t old,uint64_t result,uint64_t size,bool known){
+@@ -43,6 +52,38 @@ struct Registry {
+     release(old); // zero-size semantics cannot retain a provably live old object
+     allocate(result,size,known);
+   }
++  void global(uint64_t base,uint64_t size,bool known){
++    scope_enabled=true;auto existing=objects.find(base);
++    if(existing!=objects.end() && existing->second.origin==2 && existing->second.size==size)return;
++    if(existing!=objects.end()){existing->second.ambiguous=true;scope_missing.insert("overlapping_full_object_extents");return;}
++    allocate(base,size,known,2);auto created=objects.find(base);if(created!=objects.end())created->second.born=0;
++  }
++  void view(uint64_t owner,uint64_t base,uint64_t size){
++    scope_enabled=true;
++    if(!owner || !base || !size || size>UINT64_MAX-base){scope_missing.insert("abi_referent_extent_unknown");return;}
++    if(resolve(base,size))return;
++    auto key=std::make_pair(base,size);auto existing=views.find(key);
++    if(existing!=views.end() && existing->second.owners.count(owner))return;
++    if(existing==views.end() && objects.size()+views.size()>=budget()){object_budget_exhausted=true;return;}
++    if(view_owner_entries>=budget()){scope_missing.insert("state_budget.view_owners");return;}
++    if(existing==views.end()){
++      existing=views.emplace(key,View{base,size,next_id++,{}}).first;
++    }
++    existing->second.owners.insert(owner);++view_owner_entries;
++  }
++  void retire_views(uint64_t owner){
++    for(auto it=views.begin();it!=views.end();){view_owner_entries-=it->second.owners.erase(owner);if(it->second.owners.empty())it=views.erase(it);else ++it;}
++  }
++  View *resolve_view(uint64_t address,uint64_t size){
++    View *found=nullptr;
++    for(auto &entry:views){auto &v=entry.second;
++      if(address>=v.base && address-v.base<=v.size && size<=v.size-(address-v.base)){if(found)return nullptr;found=&v;}
++    }
++    if(!found)return nullptr;
++    for(auto &entry:objects)if(entry.first<found->base+found->size && found->base<entry.first+entry.second.size)return nullptr;
++    for(auto &entry:views)if(&entry.second!=found && entry.first.first<found->base+found->size && found->base<entry.first.first+entry.first.second)return nullptr;
++    return found;
++  }
+   bool add(std::set<std::pair<uint64_t,uint64_t>> &set,uint64_t id,uint64_t key){
+     if(set.count({id,key}))return true;
+     if(service_entries>=budget())return false;
+@@ -52,11 +93,19 @@ struct Registry {
+     bool range_known=width && n<=UINT64_MAX/width;
+     uint64_t bytes=range_known?n*width:0;
+     auto *object=range_known?resolve(address,bytes):nullptr;
++    auto *bounded=scope_enabled && range_known && !object?resolve_view(address,bytes):nullptr;
+     Service *s=active?&services[region]:nullptr;
+-    if(s){s->requests[{update,width}]+=n;
++    if(s){auto increment=[&](uint64_t &counter){
++      if(scope_enabled && counter>UINT64_MAX-n){s->requests_complete=false;counter=UINT64_MAX;}else counter+=n;
++    };increment(s->requests[{update,width}]);
+       if(!range_known || s->useful_bytes>UINT64_MAX-bytes)s->bytes_complete=false;
+       else s->useful_bytes+=bytes;
+-      if(!object)s->unknown_requests+=n;
++      if(!object && !bounded)increment(s->unknown_requests);
++      if(scope_enabled){if(object)increment(s->full_requests);else if(bounded)increment(s->view_requests);}
++    }
++    if(bounded && s && bytes && s->views_complete){
++      uint64_t offset=address-bounded->base,hi=offset+bytes-1;
++      for(uint64_t line=offset/64;line<=hi/64;++line)if(!add(s->view_lines,bounded->id,line)){s->views_complete=false;s->view_lines.clear();break;}
+     }
+     if(!object || !bytes)return;
+     uint64_t offset=address-object->base,hi=offset+bytes-1;
+@@ -80,22 +129,29 @@ struct Registry {
+     std::ostringstream out;out<<'{';bool sep=false;
+     for(auto &p:services){if(sep)out<<',';sep=true;auto &s=p.second;
+       out<<'"'<<p.first<<"\":{\"requests\":[";bool entry=false;
+-      for(auto &r:s.requests){if(entry)out<<',';entry=true;out<<"{\"update\":"<<r.first.first<<",\"element_bytes\":"<<r.first.second<<",\"requests\":"<<r.second<<'}';}
++      for(auto &r:s.requests){if(entry)out<<',';entry=true;out<<"{\"update\":"<<r.first.first<<",\"element_bytes\":"<<r.first.second<<",\"requests\":"<<(s.requests_complete?std::to_string(r.second):"null")<<'}';}
+       out<<"],\"useful_bytes\":"<<(s.bytes_complete?std::to_string(s.useful_bytes):"null")
+-        <<",\"lifetime_line_union\":"<<(s.lines_complete && !s.unknown_requests?std::to_string(s.lines.size()):"null")
+-        <<",\"logical_first_read_pages\":"<<(s.first_complete && !s.unknown_requests?std::to_string(s.first_read):"null")
+-        <<",\"logical_first_write_pages\":"<<(s.first_complete && !s.unknown_requests?std::to_string(s.first_write):"null")
+-        <<",\"pre_roi_allocation_pages\":"<<(s.pages_complete && !s.unknown_requests?std::to_string(s.pre_pages.size()):"null")
+-        <<",\"in_roi_allocation_pages\":"<<(s.pages_complete && !s.unknown_requests?std::to_string(s.in_pages.size()):"null")
+-        <<",\"unknown_object_requests\":"<<s.unknown_requests<<",\"missing\":[";
++        <<",\"lifetime_line_union\":"<<(s.requests_complete && s.lines_complete && !s.unknown_requests && !s.view_requests?std::to_string(s.lines.size()):"null")
++        <<",\"logical_first_read_pages\":"<<(s.requests_complete && s.first_complete && !s.unknown_requests && !s.view_requests?std::to_string(s.first_read):"null")
++        <<",\"logical_first_write_pages\":"<<(s.requests_complete && s.first_complete && !s.unknown_requests && !s.view_requests?std::to_string(s.first_write):"null")
++        <<",\"pre_roi_allocation_pages\":"<<(s.requests_complete && s.pages_complete && !s.unknown_requests && !s.view_requests?std::to_string(s.pre_pages.size()):"null")
++        <<",\"in_roi_allocation_pages\":"<<(s.requests_complete && s.pages_complete && !s.unknown_requests && !s.view_requests?std::to_string(s.in_pages.size()):"null")
++        <<",\"unknown_object_requests\":"<<(s.requests_complete?std::to_string(s.unknown_requests):"null")<<",\"missing\":[";
+       bool missing=false;auto emit=[&](const char *name){if(missing)out<<',';missing=true;out<<'"'<<name<<'"';};
++      if(!s.requests_complete)emit("request_count_overflow");
+       if(s.unknown_requests)emit("object_identity_or_extent");
++      if(s.view_requests)emit("bounded_view_not_full_allocation");
++      if(scope_enabled){if(!s.views_complete)emit("state_budget.bounded_view_line_union");for(auto &reason:scope_missing)emit(reason.c_str());}
+       if(!s.lines_complete)emit("state_budget.lifetime_line_union");
+       if(!s.pages_complete)emit("state_budget.allocation_pages");
+       if(!s.first_complete)emit("first_access_scope_or_state_budget");
+       if(!s.bytes_complete)emit("byte_range_overflow");
+       if(object_budget_exhausted)emit("state_budget.object_registry");
+-      out<<"]}";
++      out<<']';
++      if(scope_enabled)out<<",\"object_scope_counts\":{\"full_allocation_requests\":"<<(s.requests_complete?std::to_string(s.full_requests):"null")
++        <<",\"bounded_view_requests\":"<<(s.requests_complete?std::to_string(s.view_requests):"null")<<",\"unresolved_requests\":"<<(s.requests_complete?std::to_string(s.unknown_requests):"null")
++        <<",\"bounded_view_line_union\":"<<(s.requests_complete && s.views_complete && !s.unknown_requests?std::to_string(s.view_lines.size()):"null")<<'}';
++      out<<'}';
+     }out<<'}';return out.str();
+   }
+ };

@@ -1,0 +1,68 @@
+{
+  "format": "swdb.lanl17-metadata-source-cost-audit.v1",
+  "updated": "2026-10-07 ET",
+  "integration": "945e4892026df578e0b734c6e70f97339adc9303",
+  "helper_sha256": "09136ee553984b2c0cf929a6746f037aa4e1874f863aa2e83e0e0842a8b65ed9",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "source_pins": {
+    "store.py": "8c4a750318215a90e26ba6f07c1f007fa3297f337da638c52a0319bfd947ea86",
+    "access.py": "b068908472747d7c6c5afc8ee7af8067c667e9bb4ef6d45db5d1e1a860154b40",
+    "validate.py": "cd26143cb2627951de6ea32ad33a38812d09b81116adf664c989149cd830a85b",
+    "cli.py": "50023a90f3e25d089483d1ebaa98335c7768de9bf8af43c0fd57280242ecd0c1",
+    "writer.py": "9ded1641c3c5909d8b99addf69f41af8980faa6940ccc338e740befeb1a0cbe3",
+    "workflow.py": "ea89348f41e1af4def9c1cbdbd1dd304200cb0a9a9bb03525b1cff4f3bfc8a34",
+    "db.py": "435eec9df8eab5ef06b5ab806ec8cf084e13ee95956046742ac682ad6a7f82cf",
+    "extensa_agreement.py": "d078cf8a26fbbd65f0d27d0a64dbde56e4f190e1ec4c07b9e4eb311ad3a5174f",
+    "campaign_export.py": "9f48b090186bc7679d5c9b3f4e937be0fdc2bcce7cc8988fcd38167a5d039953",
+    "extensa_boundary.py": "dd1fac537f90a555850a74a232053580d4464188c6a03d14c0280ffa8065d890",
+    "bfs_protocol.py": "fdf5d38c29e321dbb300a3eb681f0c9a5619a0bd05733aabb410991de3589596",
+    "processes.py": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289"
+  },
+  "prepare": {
+    "full_stores": 5,
+    "full_validation_passes": 3,
+    "index_rebuilds": 1,
+    "child_caps_s": [
+      1400,
+      1400
+    ],
+    "child_cap_sum_s": 2800,
+    "prepared_outer_s": 4500,
+    "cap_only_remainder_s": 1700
+  },
+  "load_manifest": {
+    "full_stores": 2,
+    "full_validation_passes": 0,
+    "live_external_file_pins_rechecked": true
+  },
+  "finalize": {
+    "variable_definitions": {
+      "M": "sum distinct candidate IDs inspected across four summaries; not unique artifact content",
+      "k": "campaigns with nonempty named non-rejected export;0..4",
+      "q": "exports with nonempty extra record delta;0..k"
+    },
+    "full_stores": "22+M+3*k",
+    "full_validation_passes": "11+k+q",
+    "index_rebuilds": 1,
+    "four_export_case": {
+      "full_stores": "34+M",
+      "full_validation_passes_if_all_add_records": 19,
+      "declared_child_cap_sum_s": 11800,
+      "prepared_outer_s": 12000,
+      "cap_only_remainder_s": 200
+    }
+  },
+  "warnings": [
+    "No shared remaining deadline in prepare/finalize/run_cli; caps are per child",
+    "Direct Store/file hash/copy/certification/Git work lies outside child caps",
+    "Same-process256MiB parse cache is conditional and still returns a fresh decoded copy; no cross-CLI reuse",
+    "Each candidate certification filter constructs a full Store and can instantiate its own Library",
+    "Default outer TERM does not unwind Python finally; prepare/finalize have no installed signal handler or subreaper",
+    "Pinned cleanup smoke proves primitives, not metadata-action outer-TERM wiring",
+    "Durable writer publication may precede failed SQLite rebuild or Git export; preserve chronology/no scientific replay"
+  ],
+  "no_duration_scaling_or_upper_bound_claim": true,
+  "actual_catalogue_or_stage_execution": false,
+  "helper_source_modified": false,
+  "identity_sha256": "f3913116a27a989446845010791ba4eac4e26f410b9ced1e059dda9a33e72e57"
+}

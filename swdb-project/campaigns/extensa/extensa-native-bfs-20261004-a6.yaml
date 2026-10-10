@@ -1,0 +1,58 @@
+# Ticket 56 acceptance campaign, sixth attempt. Created 2026-10-04 21:05 ET.
+# a1-a5: see extensa-native-bfs-20261004-a5.yaml and ticket 56. a5 (isolated, range gate 0.1 at 10
+# repetitions) closed Kronecker baseline_unstable. Ticket 66, decided by Yan-Ru 2026-10-04 ("go with the
+# recommendation"), pre-registered before this run: speed rule swdb.speed_rule.ci_width.v1 (relative 95%
+# CI width at most 0.05 from a circular block bootstrap over 20 repetitions, blocks of 4; A/A interval
+# inside (1/1.05, 1.05); a gain needs the same interval's lower bound strictly above 1.05). Evaluator v3
+# (ticket 67) closes the review's parent-narrowing P3. Isolation as a5. One run; no rerun chosen by outcome.
+format: swdb.extensa-campaign.v1
+id: extensa-native-bfs-20261004-a6
+created: 2026-10-04 21:05 ET
+mode: extensa
+kernel: gapbs-bfs
+target: native_cpu
+machine: mbit10
+base_source: fork_scalar_tdstep
+baselines:
+  - role: fork_scalar_tdstep
+    candidate: bfs-native-pilot-20260925-dx10018-a1.baseline
+  - role: upstream_do_bfs
+    candidate: bfs-native-pilot-20260925-upstream18-a2.baseline
+protocol:
+  roi: bfs.complete_call.v1
+  threads: 1
+  repetitions: 20
+  sources: [0, 1234, 7777]
+  region_pairs: false
+  evaluator: swdb.native.evaluator.scalable.v3
+  speed_rule: swdb.speed_rule.ci_width.v1
+  isolation: other_socket_free
+  differences: >-
+    Extensa campaign extensa-native-bfs-20261004-a6: provider rewrites of the fork's scalar
+    TDStep (scalar-only snapshot plus patch) versus the unchanged full-source dx100-bfs-scalar
+    DOBFS, and separately versus upstream direction-optimizing GAPBS BFS. Native evaluator v3
+    (mmap SG driver, saturating parent narrowing, compiled structural verifier); CI-width speed rule.
+workload_classes:
+  - class: kronecker
+    workload: bfs-20261004-kronecker22.0b2b1e1555d0a1e8
+  - class: uniform_random
+    workload: bfs-20261004-uniform22.2f83a134a6bef789
+label: single graph per class
+library:
+  allowed_tiers: [shared, experimental]
+  contracts: []
+regions: query
+provider: {name: codex, model: gpt-5.6-sol, effort: xhigh}
+budgets:
+  max_iterations: 8
+  plateau_iterations: 4
+  lane_hours: 24
+  provider_calls_per_iteration: 3
+  provider_calls_setup: 1
+  disk_gb: 20
+  lanes: 1
+runs_root: /data/yanruj/EvolveSWDB_runs   # 2026-10-04 20:46 ET: /data1 had 40 GB free, /data 60 GB; a 20 GB campaign would push /data1 to the 20 GB floor
+approval:
+  by: Yan-Ru Jhou
+  date: 2026-10-03
+  scope: standing mbit10 dispatch approval; Q62 go-ahead for tickets 56 and 57 (one campaign within its budgets is one dispatch); ticket 66 decided by Yan-Ru 2026-10-04 (CI-width gate, pre-registered 2026-10-04 20:55 ET; one A/A pilot then the campaign, no reruns); ticket 67 evaluator v3

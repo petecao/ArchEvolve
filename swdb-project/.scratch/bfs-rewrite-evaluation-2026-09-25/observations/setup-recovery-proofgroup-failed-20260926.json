@@ -1,0 +1,187 @@
+{
+  "receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-setup-recovery-linux-20260926-a1.dispatch/failed-group-observation.json",
+    "sha256": "50a12cb2568a07713a3bd5e6ff6553f81d0a0d9d470e0904a99d25aadd304c08",
+    "bytes": 30687
+  },
+  "state": "failed",
+  "original_started": "2026-09-26T23:17:12.749940-04:00",
+  "finished": "2026-09-26T23:22:10.665645-04:00",
+  "elapsed_seconds": 297.915705,
+  "raw_bytes": 1548288,
+  "reservation_seconds": 600,
+  "reservation_bytes": 2147483648,
+  "no_further_charged_root_writes": true,
+  "fixtures": {
+    "owned_cleanup": {
+      "refs": {
+        "driver": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a4/driver.json",
+          "sha256": "9932447d66db3bc6ee12b6237a6cfc475598723aaed6c86398191d0e8b7e981b",
+          "bytes": 38033
+        },
+        "pending": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a4/proof.pending.json",
+          "sha256": "59875a86f80ba536e64f0bf3472aae908b732faf6afd975cc13d4563845baef0",
+          "bytes": 2967
+        },
+        "lane": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a4.dispatch/lane.json",
+          "sha256": "e40079a4894e93ca41199dde1512982faf80af91a191cbab89f99c6f8fcd385c",
+          "bytes": 1684
+        },
+        "outer_exit": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a4.dispatch/outer.exit",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "bytes": 2
+        },
+        "audit": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a4.dispatch/audit-receipt.json",
+          "sha256": "e31345c8ec548a7d801cc36816d762eaa4e746d3866a3261916cdd738a5bedbb",
+          "bytes": 1847
+        },
+        "ledger": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a4/cleanup-ledger.json",
+          "sha256": "ec6cf4460f25b11f156505e01fef8853a9f671d4c434624b556db5b6c9cec066",
+          "bytes": 1531
+        },
+        "resources": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a4/resources.jsonl",
+          "sha256": "664ab986c63af4d64369f7f193b79f1f552bd649457a5783061c54fc033e71ae",
+          "bytes": 10208
+        },
+        "junit": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a4/junit.xml",
+          "sha256": "a46aca1b8e305c154cab199e8868fb7b293c22b632b5075e30e172b5877def51",
+          "bytes": 900
+        },
+        "proof": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a4/proof.json",
+          "sha256": "823bd543ad5fe33553d3644f9591ee6d9a69dda66c8464be0dc68514c3360686",
+          "bytes": 3405
+        },
+        "terminal_audit": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260926-a4/terminal-audit.json",
+          "sha256": "106d6e7e33b00d24fb6913e999c28cff35ba26be399402a1c76adf698428ddb3",
+          "bytes": 12414
+        }
+      },
+      "started": "2026-09-26T23:17:30.613247-04:00",
+      "finished": "2026-09-26T23:17:40.526170-04:00",
+      "outer_deadline": "2026-09-26T23:19:00.613247-04:00",
+      "audit_started": "2026-09-26T23:18:47.664407-04:00",
+      "audit_finished": "2026-09-26T23:18:48.510209-04:00",
+      "audit_returncode": 0,
+      "audit_wrapper_returncode": 0,
+      "testcases": [
+        "test_linux_owned_stage_reaps_detached_child[False]",
+        "test_linux_owned_stage_reaps_detached_child[True]",
+        "test_linux_nested_interruption_uses_one_cleanup_budget",
+        "test_linux_term_resistant_nested_cleanup_keeps_final_kill_reserve",
+        "test_linux_storage_observation_handles_sqlite_journal_unlink"
+      ],
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "owned_union_count": 8,
+      "current_owned_processes_closed": true,
+      "cleanup_ledger": {
+        "binding": "7b7d832d3ea3af99886744b9dabf5d026cf4ffa56d9963749fa0776e70697141",
+        "spent_seconds": 0.269615950062871,
+        "events": 5,
+        "reservations": {},
+        "exceeded_grants": 0
+      },
+      "peak_sampled_rss_bytes": 160808960,
+      "peak_sampled_output_bytes": 184320
+    },
+    "dx100_interruption": {
+      "refs": {
+        "driver": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260926-a4/driver.json",
+          "sha256": "65d9726b32f2eaf35706c61a8c23460616bee3def66a1fec2e6cd0b51fb7ea08",
+          "bytes": 37476
+        },
+        "pending": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260926-a4/proof.pending.json",
+          "sha256": "920bc03ea2585c536682b39fd7779a96789e50c87a354c85c72a64d9725c4888",
+          "bytes": 3038
+        },
+        "lane": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260926-a4.dispatch/lane.json",
+          "sha256": "0727e8d67c7bd8c88a8072524649078c9a00306a785e0b4327782159925514fe",
+          "bytes": 1696
+        },
+        "outer_exit": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260926-a4.dispatch/outer.exit",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "bytes": 2
+        },
+        "audit": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260926-a4.dispatch/audit-receipt.json",
+          "sha256": "22f135880141e163e6bc36030a0fa9d4209d09e381dd8f725b4f513c87703dc3",
+          "bytes": 1490
+        },
+        "ledger": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260926-a4/cleanup-ledger.json",
+          "sha256": "c6f0e2c781ee2ca5d0cdc4f2fa40f2f64fdc08ebd69f5e70caed58ee47e19e05",
+          "bytes": 1533
+        },
+        "resources": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260926-a4/resources.jsonl",
+          "sha256": "3800c8288fd063916893f86898d44c7841d2d58a02e4218a62d5c9b8ab3a035e",
+          "bytes": 9966
+        },
+        "junit": {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260926-a4/junit.xml",
+          "sha256": "ce159a10505927ef70be48eff6a5fc44a134e3b0d9de6275d5e326d58c35bd91",
+          "bytes": 514
+        },
+        "proof": null,
+        "terminal_audit": null
+      },
+      "started": "2026-09-26T23:19:11.971596-04:00",
+      "finished": "2026-09-26T23:19:19.611958-04:00",
+      "outer_deadline": "2026-09-26T23:20:41.971596-04:00",
+      "audit_started": "2026-09-26T23:20:03.940519-04:00",
+      "audit_finished": "2026-09-26T23:20:04.799436-04:00",
+      "audit_returncode": 1,
+      "audit_wrapper_returncode": 1,
+      "testcases": [
+        "test_public_interruption_is_durable_before_postmortem[raises]",
+        "test_public_interruption_is_durable_before_postmortem[stalls]"
+      ],
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "owned_union_count": 6,
+      "current_owned_processes_closed": true,
+      "cleanup_ledger": {
+        "binding": "772ad508e4b59519a42e6d312542f67ef96adca9d964b4fbe5300b9793983112",
+        "spent_seconds": 0.271361798979342,
+        "events": 5,
+        "reservations": {},
+        "exceeded_grants": 0
+      },
+      "peak_sampled_rss_bytes": 151961600,
+      "peak_sampled_output_bytes": 1060864
+    }
+  },
+  "current_lease_summary": {
+    "mbit10-evaluation-node0": {
+      "state": "released",
+      "generation": 332,
+      "kernel_rows": []
+    },
+    "mbit10-evaluation-node1": {
+      "state": "released",
+      "generation": 429,
+      "kernel_rows": []
+    },
+    "mbit10-evaluation": {
+      "state": "released",
+      "generation": 77,
+      "kernel_rows": []
+    }
+  }
+}

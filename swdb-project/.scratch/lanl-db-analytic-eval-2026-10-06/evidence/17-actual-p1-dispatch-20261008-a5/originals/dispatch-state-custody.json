@@ -1,0 +1,110 @@
+{
+  "format": "swdb.lanl17-dispatch-state-corroboration.v1",
+  "basis": "explicit_parent_attestation_no_other_campaign_writer_between_capture_and_dispatch",
+  "state_unchanged_under_parent_exclusive_campaign_ownership": true,
+  "parent_checked_pre_dispatch_state_sha256": null,
+  "checked_utc": "2026-10-08T16:51:07.759222+00:00",
+  "source_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+  "campaign": "extensa-gem5-bfs-20261006-p1",
+  "attempt": 1,
+  "before_identity_sha256": "98125bfca17206e16cb24d828e01036f43b8dc87a0cb8eea8fe1501885fc8765",
+  "dispatch_identity_sha256": "ee2d7bebe5a8003403a136b3fd8f62b1d72b743b6b47c1f8f97c4abb31ac53dd",
+  "parent_capture_provenance": {
+    "producer_sha256": "32bead204337aa66d0a732b6f143216946abafc5d2eb752577b0d90f7190b7b6",
+    "capture_request_file_sha256": "b5198085b8da79dbdf311cdaffcf2bc733904bb85799c5d8ed8b950310cc3eb2",
+    "capture_request_identity_sha256": "58c4c94805a437b4d88cef08c8d7ce72d90d530d12abc7c4c55775d66e6ba071",
+    "canonical_ensure_ascii": true,
+    "context_pins": {
+      "source_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+      "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+      "helper_sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414",
+      "manifest_identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7",
+      "policy": {
+        "frozen_at": "2026-10-08T16:05:25.347884+00:00",
+        "id": "extensa-gem5-bfs-20261006-p1.agreement.5bae2f42d9078864",
+        "identity_sha256": "5bae2f42d9078864caad73e81a16007edb6458f0b101628ded04a7ef3aedbf7d"
+      }
+    },
+    "output_exclusion_roots": [
+      "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p1",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p2",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p3",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/campaign-runs/extensa/extensa-gem5-bfs-20261006-p4"
+    ],
+    "output_exclusion_basis": "Exact original sealed M2.source/M2.raw plus immutable helper28d and collectorb08 four-campaign routing",
+    "original_inputs": {
+      "manifest_M2": {
+        "bytes": 292401,
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          {
+            "bytes": 38195,
+            "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+            "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+          }
+        ],
+        "encoding": "json",
+        "identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7",
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+        "sealed": true,
+        "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1",
+        "writer_source": {
+          "bytes": 38195,
+          "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+          "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+        }
+      },
+      "before_custody": {
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-p1-before-custody-20261008-a5/custody.json",
+        "bytes": 3148,
+        "sha256": "e9beba6d829d41c1df9076c7b916eed0772c095de84a44c266ca88eee8a9b821",
+        "encoding": "json",
+        "sealed": true,
+        "writer_source": {
+          "bytes": 24818,
+          "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-selected-trajectory-controls-20261007-a2r1s1/lanl17_compact_attempt_custody_a2r1_20261007.py",
+          "sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c"
+        },
+        "identity_sha256": "98125bfca17206e16cb24d828e01036f43b8dc87a0cb8eea8fe1501885fc8765",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          {
+            "bytes": 24818,
+            "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-selected-trajectory-controls-20261007-a2r1s1/lanl17_compact_attempt_custody_a2r1_20261007.py",
+            "sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c"
+          }
+        ]
+      },
+      "dispatch": {
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p1/attempt-1/dispatch-preregistration.json",
+        "bytes": 44229,
+        "sha256": "7e63d49398eb8f8e2f0d9332b84c1350276acd5b50b9287b2d0b694ec565a6b4",
+        "encoding": "json",
+        "sealed": true,
+        "writer_source": {
+          "bytes": 38195,
+          "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+          "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+        },
+        "identity_sha256": "ee2d7bebe5a8003403a136b3fd8f62b1d72b743b6b47c1f8f97c4abb31ac53dd",
+        "canonical_ensure_ascii": true,
+        "canonical_policy_sources": [
+          {
+            "bytes": 38195,
+            "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+            "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+          }
+        ]
+      }
+    },
+    "source_plan_sha256": "e3420b334ce05f7268699b0079987d1d2afc98fe5cb5503e6069a89038b59170",
+    "auditor_sha256": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da",
+    "collector_sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c",
+    "observations_sha256": "05bfadd7ebb350b40948f0c9253eb40619582ee923c05b0c7fc90327c1d03f1f",
+    "scope": "Separate parent capture; original inputs unchanged/unsealed where original. Explicit source enforcement and selection completeness are inherited, never independently manufactured. No normal/substantive trajectory status is inferred."
+  },
+  "identity_sha256": "f411703a5c44f6e9887ea511388fe35374c8d4b86256c8ffe8ad446bb29cf4fc"
+}

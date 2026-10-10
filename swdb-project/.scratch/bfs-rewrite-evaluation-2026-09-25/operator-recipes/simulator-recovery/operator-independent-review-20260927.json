@@ -1,0 +1,32 @@
+{
+  "observed_at": "2026-09-27T00:55:43.686077-04:00",
+  "state": "scoped_operator_pass",
+  "operator_commit": "cd970388aa157601e2e6cbda17d956978f8015ff",
+  "runtime_commit": "6a493a0d489d8d1c76eba8c3431538d6412fd45a",
+  "files": {
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/t15-config.json": "7f0260775627a0652d38b406fbab8aa601873a79141127c0c57f18bdb6db2910",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/launch.sh": "6e495ceba7431f6b37d958dbd707bc985a35e7ef7f332c77acc26508a5bd9bed",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/helper-comparison-20260927.json": "f6176742dac1e2bc2553c2ba5c8e11c69692eec896ee2c093ee16c6bf28bd85e",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/test_operator.py": "287313954bd2ca44bef5b9e70969b6d563d5afd462f1ad6b1d4aface2c714fa1",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/operator.py": "58be86993f09a70b330bb214eb75e02a8af43584de66a48e53fb87396655797c",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/t16-config.json": "c55ff2e24e130d8734f97950293ef9e9e4558abea768f9956a2000817b758493",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/README.md": "b96b16905ee7497ffe28fdf9bda736fc05d00583c055e05e016c480fc4b6e56e",
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/simulator-recovery/runtime-manifest.json": "01bc110d7600489d51e3c2488e1defaabe88654eaf904b0ef29a096f453856ed"
+  },
+  "tests": "6 passed in 0.27s",
+  "log": "/private/tmp/bfs-batch-operator-independent-20260927.log",
+  "independent_probe": "/private/tmp/test_bfs_batch_operator_independent_20260927.py",
+  "checks": [
+    "All802manifestbytes exact6aGit",
+    "Alloperatorpacketfiles exactcd970Git; configurations bindcorrectoperator/manifest",
+    "Dry actual launchconstructsoriginalhardendclampedargv with39603remaining and30cleanup",
+    "Busy lane rejects before anylaunchwrite/exec",
+    "Existing batchsupervisor only; originalconsumecharge/no refund; canonicalPython/proofprovenance",
+    "Actual6a readers independently consumedretained8cbgroup earlier00:54:07"
+  ],
+  "remaining": [
+    "Freshfullinput/source/rawavailability validation duringprepare may independentlyfail",
+    "Preparationandmeasurement notperformedbyreviewer",
+    "Launch requiresfreshfreeprospectivelane/capacity; node0currentlyexternaloccupied"
+  ]
+}

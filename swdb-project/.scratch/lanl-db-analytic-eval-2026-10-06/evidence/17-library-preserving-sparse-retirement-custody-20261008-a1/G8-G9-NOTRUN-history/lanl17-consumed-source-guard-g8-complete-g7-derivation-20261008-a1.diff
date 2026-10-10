@@ -1,0 +1,18 @@
+--- /private/tmp/lanl_consumed_detached_source_guard_r7_20261008_a1.py
++++ /private/tmp/lanl_consumed_detached_source_guard_r8_20261008_a1.py
+@@ -1516,7 +1516,6 @@
+         self.retain_git(); self.protect(); self.stable_inventory()
+         current = self.tree(BASE/name,ROWS[name]['head'])
+         require(current == self.baseline[name], 'pre_remove_checkout_changed')
+-        self.process_references([name])
+         later = self.leases()
+         require({k:v['sha256'] for k,v in later.items()}=={k:v['sha256'] for k,v in leases.items()},
+                 'released_lease_generation_changed_during_check')
+@@ -1663,7 +1662,6 @@
+             self.current_removal = None
+             self.retain_git()
+             self.protect()
+-            self.stable_inventory()
+         self.leases()
+         self.retain_git()
+         self.protect()

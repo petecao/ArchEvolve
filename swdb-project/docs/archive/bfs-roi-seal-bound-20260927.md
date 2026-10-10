@@ -1,0 +1,15 @@
+# DX100 ROI seal size consistency
+
+Navigation updated: 2026-09-28 (Eastern Time).
+
+Date: 2026-09-27 ET. State: local repair; no retrospective acceptance or deployed runtime change.
+
+The T15 terminal diagnosis identifies a 72432-byte `roi-seal.json` rejected by the witness reader's 65536-byte limit. A second consumer, diagnostic profile collection, had the same limit. The producer embeds the complete parsed `progress_records` list in the exit witness and had no serialized seal bound. Thus valid observations could produce a seal that neither consumer would accept. The previous message referred ambiguously to a “32 MiB or smaller” evidence bound even when the actual limit was 64 KiB.
+
+The repair introduces a distinct `MAX_SEAL_BYTES = 33554432` ceiling shared by the producer and both readers. This is an explicit metadata policy using the existing finite evidence size ceiling; it is not a claim that all possible 32 MiB raw traces serialize into 32 MiB metadata. If metadata expansion exceeds the ceiling, the producer rejects it before opening or replacing a pending seal. The raw syscall trace remains limited to 32 MiB, support source artifacts remain limited to 8 MiB, and existing total retained-storage, RSS and time limits remain unchanged. Errors identify the artifact and exact byte limit.
+
+The standalone producer serializer emits exactly the previous `json.dumps(data, indent=2, sort_keys=True) + "\n"` representation, encoded as UTF-8. Existing valid seal bytes do not change. The producer writes those bytes before its existing fsync/atomic-replace/directory-fsync sequence. The diagnostic reader now consumes and hashes the same bounded descriptor bytes, reusing the witness reader's regular-file, symlink and before/after identity checks, rather than hashing and later reopening separately. JSON and retained-object equality checks remain mandatory.
+
+The implementation changes the pinned verification driver and parser hashes. A future execution must declare its actual new runtime and verification provenance and satisfy fresh required proof/admission. The failed T15 attempt, its elapsed costs and unverified verdict remain preserved; this change does not retrospectively qualify it or permit an old runtime to claim the repaired behavior.
+
+Local tests construct a valid producer-shaped seal above 64 KiB with 300 retained progress observations and reopen it through the full witness validator and diagnostic reader. Both reject oversized, symlinked, stale-hash, read-race, malformed-JSON and valid-but-different-JSON evidence. The actual producer save function is exercised for prepublication oversize rejection. These fixtures are reader contracts, not simulator execution or BFS acceptance evidence.

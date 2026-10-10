@@ -1,0 +1,329 @@
+--- /private/tmp/lanl17_generality_recovery_candidate_preflight_20261009_a5_r5.py
++++ /private/tmp/lanl17_write_verified_generality_recovery_archive_SOURCE_ONLY_20261009_a5_r4.py
+@@ -1,8 +1,8 @@
+-"""Created 2026-10-09 ET: SOURCE ONLY recovery preflight, NOT RUN.
+-Read-only candidate/source/native/consumer inspection; only fresh private metadata
+-may be written after separate parent execution approval. No backup/removal/index.
++"""Created 2026-10-09 ET: SOURCE ONLY recovery archive writer, NOT RUN.
++Writes only a new private bounded archive/metadata after actual reviewed preflight.
++No removal/index, extraction, external source action, or scientific admission.
+ """
+-import argparse,base64,datetime,hashlib,json,os,pwd,re,shutil,signal,socket,stat,subprocess,sys,time
++import argparse,base64,datetime,hashlib,json,os,pwd,re,shutil,signal,socket,stat,subprocess,sys,time,tarfile
+ from pathlib import Path
+ UID=114316761
+ R='5e12a9796432654d88def24ecea617d16ca605b2'
+@@ -226,8 +226,8 @@
+ 
+ def transport_identity():
+     own,argv,exe=process_identity(os.getpid())
+-    need(exe=='/usr/bin/python3.12' and len(argv)==9 and argv[:4]==[b'/usr/bin/python3.12',b'-I',b'-B',b'-c'],'exact_native_inline_argv')
+-    need(argv[5:]==[b'--source-sha256',ARGS.source_sha256.encode(),b'--output-directory',os.fsencode(ARGS.output_directory)] and digest(argv[4])==ARGS.source_sha256 and own['ppid']==os.getppid(),'exact_self_source_and_arguments')
++    need(exe=='/usr/bin/python3.12' and len(argv)==13 and argv[:4]==[b'/usr/bin/python3.12',b'-I',b'-B',b'-c'],'exact_native_inline_argv')
++    need(argv[5:]==[b'--source-sha256',ARGS.source_sha256.encode(),b'--output-directory',os.fsencode(ARGS.output_directory),b'--input',os.fsencode(ARGS.input),b'--input-sha256',ARGS.input_sha256.encode()] and digest(argv[4])==ARGS.source_sha256 and own['ppid']==os.getppid(),'exact_self_source_and_arguments')
+     parent,pargv,pexe=process_identity(own['ppid'])
+     need(pexe=='/usr/bin/timeout' and pargv==[b'/usr/bin/timeout',b'--signal=TERM',b'--kill-after=60s',b'240s',*argv],'exact_immediate_GNU240_K60_parent')
+     return {'self':own,'parent':parent,'source_sha256':ARGS.source_sha256,'only_exact_immediate_timeout_parent_excluded':True}
+@@ -425,37 +425,278 @@
+     free={p:shutil.disk_usage(p).free for p in ('/data1','/data')}
+     return {'MemAvailable':available,'free_bytes':free,'memory_80GiB_floor_met':available>=80*1024**3,'original_data1_21GiB_floor_met':free['/data1']>=21*1024**3,'data_after_2GiB_archive_reserve_24GiB_floor_met':free['/data']-TREE_CAP>=24*1024**3,'backup_reserve_bytes':TREE_CAP,'original_index_floors_unchanged':True,'data1_shortfall_does_not_itself_block_backup_preflight':True}
+ 
++
++PREFLIGHT_SOURCE_SHA='508b61d0ccad42a1fe52d4c82367f4f98d360b9df5edec6f4825acacbbc160fa'
++ARCHIVE=OUTPUT/'checkout.tar'
++RECEIPT=OUTPUT/'archive-receipt.json'
++RECEIPT_CAP=65536
++ARCHIVE_CAP=TREE_CAP-RECEIPT_CAP
++PIN_KEYS=('path','bytes','sha256','stat')
++APPROVAL_KEYS=('format','candidate','head','R','ER','preflight_manifest_sha256','preflight_snapshot_sha256','checked_utc','valid_until_utc','source_dependency_reviewed','exclusive_parent_ownership_reviewed','other_users_no_use_reviewed','complete_ignored_inventory_reviewed','current_control_source_protection_reviewed','archive_only_approved','removal_approved','index_approved','scientific_admission')
++RESTORE_NOTE=b'''Archive-only recovery snapshot. Original .git pointer is provenance, not a valid
++new registration after removal. Preserve shared PRIMARY Git objects and immutable
++R and original c4/E ancestry. Restore only under separately reviewed authorization:
++recreate detached exact c4ab2fdbb0b0c57ee9f515522835897f24466d6b at the original
++absolute path through Git, restore archive content/metadata without replacing the
++new .git registration pointer, then verify complete original path/type/content,
++mode/UID/GID/mtime evidence. Original dev/inode/ctime are archived evidence and
++cannot be recreated. No restore/extraction/removal or index admission by this
++archive writer. Original RAW/native/control paths and all sealed bytes unchanged.
++'''
++
++def pin_read(value,cap):
++    closed(value,PIN_KEYS,'exact_original_pin_keys');hex64(value['sha256'])
++    need(type(value['bytes']) is int and 0<=value['bytes']<=cap,'actual_original_bytes')
++    closed(value['stat'],FIELDS,'exact_original_nine_stat_keys')
++    need(all(type(v) is int for v in value['stat'].values()),'integer_original_stat')
++    need(type(value['path']) is str,'actual_original_path')
++    b,pin=original(Path(value['path']),cap);need(pin==value,'original_pin_bytes_SHA_stat_match');return b
++
++def approval_window(approval):
++    start=utc(approval['checked_utc']);end=utc(approval['valid_until_utc']);now=datetime.datetime.now(datetime.timezone.utc)
++    need(0<(end-start).total_seconds()<=300 and start<=now<=end,'finite_actual_archive_approval_current')
++
++def actual_input():
++    need(Path(ARGS.input).parent==OUTPUT and Path(ARGS.input).name=='archive-input.json','exact_private_actual_input_route')
++    b,pin=original(Path(ARGS.input),METADATA_CAP);need(digest(b)==ARGS.input_sha256,'actual_input_SHA')
++    v=strict(b);closed(v,('format','writer_source_sha256','preflight_source','preflight_result','preflight_manifest','native_git','approval','reviews'),'closed_archive_author_input')
++    need(v['format']=='swdb.lanl17-generality-archive-actual-input.v1' and v['writer_source_sha256']==ARGS.source_sha256,'actual_archive_format_and_writer_source')
++    source=pin_read(v['preflight_source'],65536);need(len(source)==41183 and digest(source)==PREFLIGHT_SOURCE_SHA,'exact_selected_preflight_R5_source')
++    manifest_raw=pin_read(v['preflight_manifest'],METADATA_CAP);manifest=strict(manifest_raw)
++    need(v['preflight_manifest']['path']==str(OUTPUT/'preflight-inventory.json'),'exact_preflight_manifest_route')
++    result=strict(pin_read(v['preflight_result'],65536))
++    need(type(result) is dict and result.get('format')=='swdb.lanl17-generality-worktree-recovery-preflight.v1' and result.get('metadata_observation_completed') is True and result.get('state')=='eligible_for_separate_backup_review' and result.get('backup_eligibility_only') is True,'actual_successful_preflight_result')
++    need(result.get('remote_metadata_original')==v['preflight_manifest'] and result.get('head')==CANDIDATE_HEAD and result.get('candidate')==str(CANDIDATE),'original_preflight_result_manifest_link')
++    need(all(result.get(k)==0 for k in ('protected_reference_count','owned_consumers_count','owned_process_unknown_count')) and all(result.get(k) is False for k in ('backup_created','deletion_or_removal_admitted','index_clearance','scientific_admission')),'preflight_scope_clear_no_admission')
++    need(type(manifest) is dict and manifest.get('format')=='swdb.lanl17-generality-worktree-recovery-preflight-inventory.v1' and manifest.get('backup_eligibility_only') is True,'actual_preflight_manifest_format_eligibility')
++    need(manifest.get('snapshot_sha256')==result.get('snapshot_sha256')==payload_digest(manifest['tree']) and manifest['tree']['protected_reference_observations']==[],'complete_preflight_snapshot_link_no_refs')
++    need(manifest['transport']['source_sha256']==PREFLIGHT_SOURCE_SHA and result['checked_utc']==manifest['checked_utc'],'original_preflight_selected_source_and_time')
++    need(all(manifest.get(k) is False for k in ('backup_created','removal_admitted','index_clearance','scientific_admission')),'original_preflight_manifest_scope_not_admission')
++    need(manifest['owned_consumer_inventory']['no_live_owned_candidate_SOURCE_RAW_H_consumers'] is True and manifest['owned_consumer_inventory']['matching_live_consumers']==manifest['owned_consumer_inventory']['unknowns']==[],'preflight_owned_no_use_not_partial')
++    approval=closed(v['approval'],APPROVAL_KEYS,'closed_actual_parent_archive_approval')
++    need(approval['format']=='swdb.lanl17-generality-archive-parent-approval.v1' and approval['candidate']==str(CANDIDATE) and approval['head']==CANDIDATE_HEAD and approval['R']==R and approval['ER']==EXPECTED_ER,'exact_parent_approval_source_scope')
++    need(approval['preflight_manifest_sha256']==v['preflight_manifest']['sha256'] and approval['preflight_snapshot_sha256']==manifest['snapshot_sha256'],'actual_approval_preflight_bindings')
++    for k in ('source_dependency_reviewed','exclusive_parent_ownership_reviewed','other_users_no_use_reviewed','complete_ignored_inventory_reviewed','current_control_source_protection_reviewed','archive_only_approved'):need(approval[k] is True,'explicit_reviewed_actual_parent_'+k)
++    for k in ('removal_approved','index_approved','scientific_admission'):need(approval[k] is False,'archive_only_no_other_approval')
++    approval_window(approval);need(utc(manifest['checked_utc'])<=utc(approval['checked_utc']),'parent_review_not_before_original_preflight')
++    reviews=closed(v['reviews'],('root','peer'),'both_actual_parent_reviews_required')
++    for role,descriptor in reviews.items():
++        review=strict(pin_read(descriptor,65536));closed(review,('format','role','verdict','checked_utc','approval_sha256','preflight_manifest_sha256','preflight_snapshot_sha256','scientific_admission'),'closed_actual_archive_review')
++        need(review['format']=='swdb.lanl17-generality-archive-actual-parent-review.v1' and review['role']==role and review['verdict']=='PASS_ACTUAL_PREFLIGHT_DEPENDENCY_NO_USE_FOR_ARCHIVE_ONLY' and review['scientific_admission'] is False,'exact_actual_root_peer_review_not_generic_PASS')
++        need(review['approval_sha256']==payload_digest(approval) and review['preflight_manifest_sha256']==v['preflight_manifest']['sha256'] and review['preflight_snapshot_sha256']==manifest['snapshot_sha256'],'actual_root_peer_review_linkage')
++        need(utc(manifest['checked_utc'])<=utc(approval['checked_utc'])<=utc(review['checked_utc'])<=datetime.datetime.now(datetime.timezone.utc)<=utc(approval['valid_until_utc']),'actual_review_chronology')
++    return v,pin,b,manifest,manifest_raw
++
++def archive_routes():
++    need(ARGS.output_directory==str(OUTPUT) and OUTPUT.resolve(strict=True)==OUTPUT and not any(p.is_symlink() for p in (OUTPUT,*OUTPUT.parents)),'exact_owned_existing_preflight_output_route')
++    s=OUTPUT.lstat();need(stat.S_ISDIR(s.st_mode) and s.st_uid==UID and stat.S_IMODE(s.st_mode)==0o700,'private_preflight_output_parent')
++    need(all(not os.path.lexists(p) for p in (ARCHIVE,RECEIPT)),'fresh_archive_and_receipt_no_overwrite')
++    for p in (*PROTECTED,CANDIDATE):need(not OUTPUT.is_relative_to(p) and not p.is_relative_to(OUTPUT),'archive_output_disjoint_protected_sources')
++    return {'path':str(OUTPUT),'dev':s.st_dev,'ino':s.st_ino,'uid':s.st_uid,'gid':s.st_gid,'mode':s.st_mode}
++
++def archive_parent_continuity(route):
++    s=OUTPUT.lstat();need({'path':str(OUTPUT),'dev':s.st_dev,'ino':s.st_ino,'uid':s.st_uid,'gid':s.st_gid,'mode':s.st_mode}==route,'archive_parent_identity_continuity')
++
++def package_existing_metadata(value,input_pin):
++    # Only explicit actual input-pinned direct siblings may exist in this package.
++    existing={Path(input_pin['path']).name:input_pin}
++    descriptors=[value['preflight_manifest'],value['preflight_result'],value['preflight_source'],*value['reviews'].values()]
++    for pin in descriptors:
++        p=Path(pin['path'])
++        if not p.is_relative_to(OUTPUT):continue
++        need(p.parent==OUTPUT and p.name not in existing and p not in (ARCHIVE,RECEIPT),'closed_unique_direct_package_metadata_route')
++        existing[p.name]=pin
++    need('preflight-inventory.json' in existing and 'archive-input.json' in existing and len(existing)<=6,'bounded_explicit_existing_package_metadata_roles')
++    return existing
++
++def package_snapshot(existing,added):
++    need(not set(existing).intersection(added) and len(existing)+len(added)<=8,'closed_package_role_count')
++    expected={**existing,**added};fd=os.open(OUTPUT,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC)
++    try:
++        before=os.fstat(fd);need(stamp(before)==stamp(OUTPUT.lstat()) and stat.S_ISDIR(before.st_mode) and before.st_uid==UID and stat.S_IMODE(before.st_mode)==0o700,'package_directory_identity_before')
++        names=os.listdir(fd);need(set(names)==set(expected) and len(names)==len(expected),'exact_whole_package_names_no_unknown_or_nested_entries')
++        total=0;observed={}
++        for name,pin in expected.items():
++            tick();p=OUTPUT/name;need(pin['path']==str(p),'exact_package_pin_route')
++            st=os.stat(name,dir_fd=fd,follow_symlinks=False)
++            need(stat.S_ISREG(st.st_mode) and st.st_uid==UID and st.st_nlink==1 and stat.S_IMODE(st.st_mode)==0o600 and stamp(st)==pin['stat'],'package_private_regular_pin_no_symlink')
++            if p==ARCHIVE:got=archive_pin()
++            else:
++                need(0<=pin['bytes']<=METADATA_CAP,'bounded_existing_package_metadata_file')
++                _,got=original(p,METADATA_CAP)
++            need(got==pin and stamp(os.stat(name,dir_fd=fd,follow_symlinks=False))==stamp(st),'whole_package_exact_bytes_SHA_nine_stat_continuity')
++            total+=got['bytes'];need(total<=TREE_CAP,'entire_recovery_package_2GiB_cap');observed[name]=got
++        need(set(os.listdir(fd))==set(expected) and stamp(os.fstat(fd))==stamp(before)==stamp(OUTPUT.lstat()),'complete_package_directory_name_nine_stat_closure')
++    finally:os.close(fd)
++    return {'files':observed,'bytes':total}
++
++def git_recovery_facts(value):
++    closed(value,('path','bytes','sha256','stat','version'),'exact_observed_native_Git_descriptor')
++    need(value['path']=='/usr/bin/git' and type(value['version']) is str and re.fullmatch(r'git version [0-9]+\.[0-9]+\.[0-9]+(?:[.A-Za-z0-9_-]*)',value['version']) is not None,'actual_native_Git_version')
++    tool=root_tool_pin(value['path'],value['bytes'],hex64(value['sha256']));need(tool['stat']==value['stat'],'actual_Git_binary_nine_stat')
++    need(run(['/usr/bin/git','--version']).strip()==value['version'],'native_Git_version_matches_actual_review')
++    def command(*args):return run(['/usr/bin/git','--no-replace-objects','-c','core.fsmonitor=false','-C',str(PRIMARY),*args]).strip()
++    out={}
++    for commit in (CANDIDATE_HEAD,GENERALITY_EXPORT):
++        need(command('rev-parse',commit+'^{commit}')==commit,'retained_recovery_commit_exact')
++        command('merge-base','--is-ancestor',commit,R)
++        tree=command('rev-parse',commit+'^{tree}');need(re.fullmatch('[0-9a-f]{40}',tree) is not None,'actual_recovery_tree')
++        out[commit]={'commit':commit,'tree':tree,'ancestor_of_R':True}
++    need(command('rev-list','--parents','-n','1',GENERALITY_EXPORT).split()==[GENERALITY_EXPORT,CANDIDATE_HEAD],'retained_original_E_sole_c4_parent')
++    return {'binary':tool,'version':value['version'],'retained_commits':out,'shared_Git_ref_mutated':False}
++
++def no_unpreserved_xattrs(tree):
++    for row in tree['entries']:
++        tick();p=CANDIDATE/row['relative_path'];need(stamp(p.lstat())==row['stat'],'xattr_entry_before_continuity')
++        need(os.listxattr(p,follow_symlinks=False)==[],'ACL_or_xattr_population_refused_no_silent_omission')
++        need(stamp(p.lstat())==row['stat'],'xattr_entry_after_continuity')
++
++def nanoseconds(value):
++    need(type(value) is int and value>=0,'archive_timestamp_nonnegative_ns');return str(value//10**9)+'.'+str(value%10**9).zfill(9)
++
++class BoundedArchive:
++    def __init__(self,file,cap):self.file=file;self.cap=cap;self.bytes=0;self.hasher=hashlib.sha256()
++    def write(self,data):
++        tick();need(self.bytes+len(data)<=self.cap,'entire_package_archive_dynamic_cap_includes_existing_metadata_and_receipt')
++        need(shutil.disk_usage('/data').free-len(data)>=24*1024**3+RECEIPT_CAP,'data_original_24GiB_floor_during_archive')
++        n=self.file.write(data);need(n==len(data),'full_archive_write');self.bytes+=n;self.hasher.update(data);return n
++    def tell(self):return self.bytes
++    def flush(self):self.file.flush()
++
++class HashedSource:
++    def __init__(self,file,row):self.file=file;self.row=row;self.hasher=hashlib.sha256();self.bytes=0
++    def read(self,n):
++        tick();need(type(n) is int and 0<=n<=1024**2,'source_archive_chunk_bound');b=self.file.read(n);self.bytes+=len(b);need(self.bytes<=self.row['bytes'],'source_archive_size_continuity');self.hasher.update(b);return b
++
++def member_info(name,row):
++    info=tarfile.TarInfo(name);s=row['stat'];info.mode=stat.S_IMODE(s['mode']);info.uid=s['uid'];info.gid=s['gid'];info.uname=info.gname='';info.mtime=s['mtime_ns']//10**9
++    info.pax_headers={'mtime':nanoseconds(s['mtime_ns']),'SWDB.original_stat':json.dumps(s,sort_keys=True,separators=(',',':'))}
++    if row['kind']=='directory':info.type=tarfile.DIRTYPE
++    elif row['kind']=='symlink':info.type=tarfile.SYMTYPE;info.linkname=os.fsdecode(base64.b64decode(row['target_base64'],validate=True))
++    else:need(row['kind']=='regular','closed_archive_member_kind');info.type=tarfile.REGTYPE;info.size=row['bytes']
++    return info
++
++def archive_expected(tree,input_pin,input_raw,manifest_pin,manifest_raw):
++    expected={}
++    for row in tree['entries']:
++        relative=row['relative_path'];need(relative=='.' or (not relative.startswith('/') and '..' not in relative.split('/')),'safe_closed_source_relative_path')
++        name='checkout' if relative=='.' else 'checkout/'+relative;need(name not in expected,'unique_source_archive_member')
++        expected[name]=(row,None)
++    for name,pin,raw in (('recovery/preflight-inventory.json',manifest_pin,manifest_raw),('recovery/archive-input.json',input_pin,input_raw)):
++        expected[name]=({'kind':'regular','bytes':len(raw),'sha256':digest(raw),'stat':pin['stat']},raw)
++    zero={'dev':0,'ino':0,'mode':stat.S_IFREG|0o600,'uid':UID,'gid':os.getgid(),'nlink':1,'size':len(RESTORE_NOTE),'mtime_ns':0,'ctime_ns':0}
++    expected['recovery/restore.md']=({'kind':'regular','bytes':len(RESTORE_NOTE),'sha256':digest(RESTORE_NOTE),'stat':zero},RESTORE_NOTE)
++    need(len(expected)<=ENTRY_CAP+3,'archive_member_count_bound');return expected
++
++def write_archive(expected,cap):
++    fd=os.open(ARCHIVE,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW|os.O_CLOEXEC,0o600)
++    with os.fdopen(fd,'wb',buffering=0) as f:
++        wrapped=BoundedArchive(f,cap)
++        with tarfile.open(fileobj=wrapped,mode='w|',format=tarfile.PAX_FORMAT,encoding='utf-8',errors='surrogateescape') as tar:
++            for name,(row,provided) in expected.items():
++                tick();info=member_info(name,row)
++                if provided is not None:
++                    import io
++                    tar.addfile(info,io.BytesIO(provided));continue
++                p=CANDIDATE/row['relative_path'];need(stamp(p.lstat())==row['stat'],'archive_source_entry_continuity')
++                if row['kind']=='regular':
++                    sourcefd=os.open(p,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC)
++                    with os.fdopen(sourcefd,'rb') as source:
++                        need(stamp(os.fstat(source.fileno()))==row['stat'],'archive_source_open_continuity')
++                        observed=HashedSource(source,row);tar.addfile(info,observed)
++                        need(observed.bytes==row['bytes'] and observed.hasher.hexdigest()==row['sha256'] and stamp(os.fstat(source.fileno()))==row['stat']==stamp(p.lstat()),'archive_source_hash_nine_stat_continuity')
++                else:
++                    if row['kind']=='symlink':need(os.fsencode(os.readlink(p))==base64.b64decode(row['target_base64'],validate=True),'archive_symlink_target_byte_continuity')
++                    tar.addfile(info);need(stamp(p.lstat())==row['stat'],'archive_nonregular_stat_continuity')
++        wrapped.flush();os.fsync(f.fileno());need(wrapped.bytes<=cap,'archive_dynamic_package_output_bound')
++    directoryfd=os.open(OUTPUT,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC)
++    try:os.fsync(directoryfd)
++    finally:os.close(directoryfd)
++    s=ARCHIVE.lstat();need(s.st_size==wrapped.bytes,'created_archive_exact_streamed_size')
++    return {'path':str(ARCHIVE),'bytes':wrapped.bytes,'sha256':wrapped.hasher.hexdigest(),'stat':stamp(s)}
++
++def archive_pin():
++    s=ARCHIVE.lstat();need(stat.S_ISREG(s.st_mode) and s.st_uid==UID and s.st_nlink==1 and stat.S_IMODE(s.st_mode)==0o600 and 0<s.st_size<=ARCHIVE_CAP,'private_archive_identity_size')
++    fd=os.open(ARCHIVE,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC);h=hashlib.sha256();n=0
++    with os.fdopen(fd,'rb') as f:
++        need(stamp(os.fstat(f.fileno()))==stamp(s),'archive_read_open_continuity')
++        while True:
++            tick();b=f.read(1024**2)
++            if not b:break
++            n+=len(b);need(n<=s.st_size,'archive_read_size');h.update(b)
++        need(n==s.st_size and stamp(os.fstat(f.fileno()))==stamp(s)==stamp(ARCHIVE.lstat()),'archive_whole_byte_nine_stat_continuity')
++    return {'path':str(ARCHIVE),'bytes':n,'sha256':h.hexdigest(),'stat':stamp(s)}
++
++def verify_archive(expected,written):
++    before=archive_pin();need(before==written,'archive_matches_exact_writer_stream_SHA_size_stat');fd=os.open(ARCHIVE,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC);seen=set()
++    with os.fdopen(fd,'rb') as f:
++        need(stamp(os.fstat(f.fileno()))==before['stat'],'archive_verify_open_continuity')
++        with tarfile.open(fileobj=f,mode='r|',encoding='utf-8',errors='surrogateescape') as tar:
++            for member in tar:
++                tick();name=member.name;need(name in expected and name not in seen and len(seen)<ENTRY_CAP+3,'archive_exact_member_set_no_extra_or_duplicate');seen.add(name);row,_=expected[name];s=row['stat']
++                need(member.mode==stat.S_IMODE(s['mode']) and member.uid==s['uid'] and member.gid==s['gid'] and member.uname==member.gname=='','archive_member_mode_numeric_owner')
++                need(member.pax_headers.get('mtime')==nanoseconds(s['mtime_ns']) and member.pax_headers.get('SWDB.original_stat')==json.dumps(s,sort_keys=True,separators=(',',':')),'archive_exact_mtime_and_original_nine_stat_metadata')
++                if row['kind']=='regular':
++                    need(member.type==tarfile.REGTYPE and member.size==row['bytes'] and member.linkname=='','archive_regular_type_size')
++                    body=tar.extractfile(member);need(body is not None,'archive_regular_stream_present');h=hashlib.sha256();n=0
++                    with body:
++                        while True:
++                            tick();b=body.read(1024**2)
++                            if not b:break
++                            n+=len(b);need(n<=row['bytes']<=METADATA_CAP if name.startswith('recovery/') else n<=row['bytes']<=FILE_CAP,'archive_member_byte_bound');h.update(b)
++                    need(n==row['bytes'] and h.hexdigest()==row['sha256'],'archive_member_content_SHA')
++                elif row['kind']=='directory':need(member.type==tarfile.DIRTYPE and member.size==0 and member.linkname=='','archive_directory_type')
++                else:need(member.type==tarfile.SYMTYPE and member.size==0 and os.fsencode(member.linkname)==base64.b64decode(row['target_base64'],validate=True),'archive_symlink_type_target_bytes')
++        need(stamp(os.fstat(f.fileno()))==before['stat'],'archive_verification_stat_continuity')
++    need(seen==set(expected),'archive_complete_member_closure');after=archive_pin();need(after==before,'archive_original_readback_SHA_stat_continuity');return before
++
++def controls_originals():
++    out={}
++    for p,n,h in ((H,38195,'28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414'),(G,14577,'9c5d9658b524db94805a6b51453dc9edef7096a27312677896d595d39b94f6c6'),(SUP,8014,'fa703bbd4c71bb4bcf56f47d1e224449f627d5921295e00b9cc105f21e95bde0'),(RAW/'manifest.json',292401,'b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1')):
++        b,pin=original(p,n);need(len(b)==n and digest(b)==h,'unchanged_current_control_M2');out[str(p)]=pin
++    return out
++
+ def observe():
+     need(sys.platform=='linux' and os.getuid()==os.geteuid()==UID and pwd.getpwuid(UID).pw_name=='yanruj' and socket.gethostname().split('.')[0]=='mbit10','native_owned_account_host')
+     need(Path('/proc/self/exe').resolve(strict=True)==Path('/usr/bin/python3.12') and sys.flags.isolated and sys.flags.dont_write_bytecode and not sys.flags.optimize,'native_isolated_unoptimized_python')
+-    transport=transport_identity();route=output_route();OBSERVED['resources_before']=resources()
+-    sources=current_sources();tools={p:root_tool_pin(p,n,h) for p,(n,h) in NATIVE.items()};home=home_startup();native=native_snapshot();registration=candidate_registration()
+-    controls={}
+-    for p,n,h in ((H,38195,'28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414'),(G,14577,'9c5d9658b524db94805a6b51453dc9edef7096a27312677896d595d39b94f6c6'),(SUP,8014,'fa703bbd4c71bb4bcf56f47d1e224449f627d5921295e00b9cc105f21e95bde0'),(RAW/'manifest.json',292401,'b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1')):
+-        b,pin=original(p,n);need(len(b)==n and digest(b)==h,'unchanged_current_control_M2');controls[str(p)]=pin
+-    first,inodes=inventory_tree();processes=consumer_inventory(transport,inodes);second,afterinodes=inventory_tree();need(first==second and inodes==afterinodes,'full_candidate_SHA_nine_stat_path_closure')
+-    need(candidate_registration()==registration and current_sources()==sources and home_startup()==home,'candidate_primary_source_ER_HOME_continuity');after_native=native_continuity(native)
+-    for p,(n,h) in NATIVE.items():need(root_tool_pin(p,n,h)==tools[p],'native_tools_continuity')
+-    for p,pin in controls.items():_,after=original(Path(p),pin['bytes']);need(after==pin,'current_control_M2_continuity')
+-    need(transport_identity()==transport,'self_immediate_parent_identity_continuity');need(output_route()==route,'fresh_metadata_output_route_continuity')
+-    after_resources=resources();OBSERVED['resources_after']=after_resources
+-    references=first['protected_reference_observations'];eligible=processes['no_live_owned_candidate_SOURCE_RAW_H_consumers'] and not references and after_resources['memory_80GiB_floor_met'] and after_resources['data_after_2GiB_archive_reserve_24GiB_floor_met']
+-    # Only metadata creation here. The entire candidate and Git sources remain untouched.
+-    manifest={'format':'swdb.lanl17-generality-worktree-recovery-preflight-inventory.v1','checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'candidate':registration,'tree':first,'snapshot_sha256':payload_digest(first),'source':sources,'native_tools':tools,'startup_HOME':home,'native_before':native,'native_after':after_native,'controls_M2':controls,'owned_consumer_inventory':processes,'resources':OBSERVED,'transport':transport,'backup_eligibility_only':eligible,'backup_created':False,'removal_admitted':False,'index_clearance':False,'scientific_admission':False,'parent_dependency_and_ownership_history_approval_not_inferred':True}
+-    blob=metadata_bytes(manifest);need(len(blob)<=METADATA_CAP,'full_metadata_8MiB_cap');os.mkdir(OUTPUT,0o700)
+-    path=OUTPUT/'preflight-inventory.json';fd=os.open(path,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW|os.O_CLOEXEC,0o600)
++    route=archive_routes();value,input_pin,input_raw,prior,manifest_raw=actual_input();transport=transport_identity()
++    existing=package_existing_metadata(value,input_pin);package_before=package_snapshot(existing,{})
++    dynamic_archive_cap=TREE_CAP-RECEIPT_CAP-package_before['bytes'];need(0<dynamic_archive_cap<=ARCHIVE_CAP,'existing_metadata_and_receipt_reserved_in_package_cap')
++    resources_before=resources();OBSERVED['resources_before']=resources_before
++    need(resources_before['memory_80GiB_floor_met'] and resources_before['data_after_2GiB_archive_reserve_24GiB_floor_met'],'unchanged_archive_resource_floors')
++    sources=current_sources();home=home_startup();native=native_snapshot();registration=candidate_registration();controls=controls_originals();tools={p:root_tool_pin(p,n,h) for p,(n,h) in NATIVE.items()};gitfacts=git_recovery_facts(value['native_git'])
++    need(sources==prior['source'] and home==prior['startup_HOME'] and registration==prior['candidate'] and controls==prior['controls_M2'] and tools==prior['native_tools'],'original_preflight_source_HOME_candidate_control_tool_continuity')
++    native_continuity(prior['native_after']);first,inodes=inventory_tree();need(first==prior['tree'] and payload_digest(first)==prior['snapshot_sha256'],'actual_original_full_tree_preflight_continuity')
++    no_unpreserved_xattrs(first);processes=consumer_inventory(transport,inodes);need(processes['no_live_owned_candidate_SOURCE_RAW_H_consumers'] is True,'fresh_owned_no_use_before_archive')
++    second,inodes2=inventory_tree();need(first==second and inodes==inodes2,'fresh_complete_tree_before_archive');no_unpreserved_xattrs(second);approval_window(value['approval'])
++    expected=archive_expected(first,input_pin,input_raw,value['preflight_manifest'],manifest_raw);written=write_archive(expected,dynamic_archive_cap);archive=verify_archive(expected,written)
++    final,inodes3=inventory_tree();need(final==first and inodes3==inodes,'complete_source_tree_nine_stat_SHA_after_archive');no_unpreserved_xattrs(final)
++    after_processes=consumer_inventory(transport,inodes3);need(after_processes['no_live_owned_candidate_SOURCE_RAW_H_consumers'] is True,'fresh_owned_no_use_after_archive')
++    need(candidate_registration()==registration and current_sources()==sources and home_startup()==home and controls_originals()==controls,'protected_sources_registration_HOME_controls_after_archive')
++    native_continuity(native);need(git_recovery_facts(value['native_git'])==gitfacts,'recovery_Git_version_binary_E_c4_R_after_archive')
++    for p,(n,h) in NATIVE.items():need(root_tool_pin(p,n,h)==tools[p],'native_tool_after_archive_continuity')
++    need(actual_input()[1]==input_pin and transport_identity()==transport,'approval_input_source_transport_after_archive');archive_parent_continuity(route);need(archive_pin()==archive,'archive_final_original_SHA_stat')
++    after_resources=resources();OBSERVED['resources_after']=after_resources;need(after_resources['memory_80GiB_floor_met'] and after_resources['free_bytes']['/data']-RECEIPT_CAP>=24*1024**3,'unchanged_actual_after_archive_24GiB_floor');approval_window(value['approval'])
++    package_with_archive=package_snapshot(existing,{ARCHIVE.name:archive});need(package_with_archive['bytes']==package_before['bytes']+archive['bytes'],'whole_existing_metadata_archive_byte_sum')
++    receipt={'format':'swdb.lanl17-generality-verified-private-archive.v1','checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'archive_verified':True,'archive_original':archive,'actual_input_original':input_pin,'actual_preflight_manifest_original':value['preflight_manifest'],'selected_preflight_source_SHA':PREFLIGHT_SOURCE_SHA,'writer_source_SHA':ARGS.source_sha256,'source_candidate':str(CANDIDATE),'head':CANDIDATE_HEAD,'tree_snapshot_sha256':prior['snapshot_sha256'],'member_count':len(expected),'source_entry_count':first['entry_count'],'regular_source_bytes':first['regular_bytes'],'all_members_stream_verified_no_extraction':True,'existing_package_metadata_originals':existing,'existing_package_metadata_bytes':package_before['bytes'],'entire_recovery_package_cap_bytes':TREE_CAP,'package_unknown_or_nonprivate_entries_refused':True,'complete_source_nine_stat_SHA_continuity_before_after':True,'ACL_xattr_populations_refused':True,'original_dev_inode_ctime_are_metadata_not_restore_physics':True,'root_peer_review_pins':value['reviews'],'approval_sha256':payload_digest(value['approval']),'native_Git_recovery_facts':gitfacts,'resources':OBSERVED,'fresh_owned_no_use_observed_before_after':True,'other_user_and_exclusive_parent_history_are_reviewed_attestations':True,'raw_archive_record_auth_provider_bodies_returned':False,'removal_performed':False,'removal_admitted':False,'index_admitted':False,'scientific_admission':False,'point_in_time_only_final_fresh_no_use_required_before_separate_removal':True}
++    blob=metadata_bytes(receipt);need(len(blob)<=RECEIPT_CAP and package_before['bytes']+archive['bytes']+len(blob)<=TREE_CAP,'entire_recovery_metadata_archive_receipt_2GiB_cap')
++    fd=os.open(RECEIPT,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW|os.O_CLOEXEC,0o600)
+     with os.fdopen(fd,'wb') as f:f.write(blob);f.flush();os.fsync(f.fileno())
+-    reread,pin=original(path,METADATA_CAP);need(reread==blob,'metadata_original_readback')
+-    return {'format':'swdb.lanl17-generality-worktree-recovery-preflight.v1','checked_utc':manifest['checked_utc'],'metadata_observation_completed':True,'state':'eligible_for_separate_backup_review' if eligible else 'unknown' if processes['unknowns'] else 'not_eligible','backup_eligibility_only':eligible,'backup_created':False,'deletion_or_removal_admitted':False,'index_clearance':False,'scientific_admission':False,'candidate':str(CANDIDATE),'head':CANDIDATE_HEAD,'entry_count':first['entry_count'],'regular_bytes':first['regular_bytes'],'allocated_regular_bytes':first['allocated_regular_bytes'],'snapshot_sha256':manifest['snapshot_sha256'],'remote_metadata_original':pin,'protected_reference_count':len(references),'owned_consumers_count':len(processes['matching_live_consumers']),'owned_process_unknown_count':len(processes['unknowns']),'resources':OBSERVED,'metadata_manifest_body_not_returned':True,'raw_auth_provider_source_record_bodies_not_returned':True,'other_users_and_parent_dependency_approval_not_inferred':True,'point_in_time_only_requires_fresh_backup_and_final_no_use_review':True}
++    reread,pin=original(RECEIPT,RECEIPT_CAP);need(reread==blob,'compact_receipt_exact_readback');need(shutil.disk_usage('/data').free>=24*1024**3,'final_original_data_floor')
++    package_final=package_snapshot(existing,{ARCHIVE.name:archive,RECEIPT.name:pin});need(package_final['bytes']==package_before['bytes']+archive['bytes']+len(blob)<=TREE_CAP,'complete_final_recovery_package_original_byte_sum')
++    directoryfd=os.open(OUTPUT,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC)
++    try:os.fsync(directoryfd)
++    finally:os.close(directoryfd)
++    return {'format':receipt['format'],'checked_utc':receipt['checked_utc'],'state':'verified_archive_only','archive_verified':True,'archive_original':archive,'remote_receipt_original':pin,'source_snapshot_sha256':prior['snapshot_sha256'],'member_count':len(expected),'entire_recovery_package_bytes':package_final['bytes'],'entire_recovery_package_cap_bytes':TREE_CAP,'removal_performed':False,'removal_admitted':False,'index_admitted':False,'scientific_admission':False,'raw_bodies_returned':False,'future_removal_requires_separate_fresh_review':True}
+ 
+ def main():
+     global ARGS
+-    p=Parser(add_help=False);p.add_argument('--source-sha256',required=True);p.add_argument('--output-directory',required=True);ARGS=p.parse_args();hex64(ARGS.source_sha256)
+-    result=observe();b=metadata_bytes(result);need(len(b)<=65536,'compact_return_cap');sys.stdout.buffer.write(b)
+-
+-def interrupted(number,frame):raise ValueError('recovery_preflight_signal_or_deadline')
++    p=Parser(add_help=False);p.add_argument('--source-sha256',required=True);p.add_argument('--output-directory',required=True);p.add_argument('--input',required=True);p.add_argument('--input-sha256',required=True);ARGS=p.parse_args();hex64(ARGS.source_sha256);hex64(ARGS.input_sha256)
++    result=observe();blob=metadata_bytes(result);need(len(blob)<=65536,'compact_archive_return_cap');sys.stdout.buffer.write(blob)
++
++def interrupted(number,frame):raise ValueError('archive_writer_signal_or_deadline_partial_private_output_preserved')
+ for number in (signal.SIGALRM,signal.SIGTERM,signal.SIGINT,signal.SIGHUP):signal.signal(number,interrupted)
+ signal.alarm(180)
+ try:main()
+-except (OSError,ValueError,KeyError,TypeError,IndexError,UnicodeError,RecursionError,StopIteration,subprocess.SubprocessError) as exc:
+-    print(json.dumps({'format':'swdb.lanl17-generality-worktree-recovery-preflight.v1','checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'metadata_observation_completed':False,'state':'unknown','backup_eligibility_only':False,'backup_created':False,'deletion_or_removal_admitted':False,'index_clearance':False,'scientific_admission':False,'resources_observed_before_error':OBSERVED,'error_class':type(exc).__name__,'reason_sha256':digest(str(exc).encode())},sort_keys=True,allow_nan=False))
++except (OSError,ValueError,KeyError,TypeError,IndexError,UnicodeError,RecursionError,StopIteration,OverflowError,tarfile.TarError,subprocess.SubprocessError) as exc:
++    print(json.dumps({'format':'swdb.lanl17-generality-verified-private-archive.v1','checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'state':'unknown','archive_verified':False,'removal_performed':False,'removal_admitted':False,'index_admitted':False,'scientific_admission':False,'partial_private_archive_preserved_if_created':True,'resources_observed_before_error':OBSERVED,'error_class':type(exc).__name__,'reason_sha256':digest(str(exc).encode()),'raw_bodies_returned':False},sort_keys=True,allow_nan=False))

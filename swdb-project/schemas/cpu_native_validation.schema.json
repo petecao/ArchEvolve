@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cpu_native_validation",
+  "description": "Created: 2026-10-06 ET. Exact separate original-driver native validation scope; not existing evaluator selection.",
+  "properties": {
+    "kind": {
+      "const": "cpu_native_validation"
+    },
+    "schema_version": {
+      "const": "0.4"
+    },
+    "format": {
+      "const": "swdb.cpu-native-validation.v1"
+    },
+    "backend": {
+      "const": "native"
+    },
+    "evidence_kind": {
+      "enum": [
+        "fixture",
+        "native"
+      ]
+    },
+    "identity_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "characterization": {
+      "type": "string",
+      "x-ref": "workload_characterization"
+    },
+    "characterization_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "implementation": {
+      "type": "string",
+      "x-ref": "implementation"
+    },
+    "input": {
+      "type": "string",
+      "x-ref": "input"
+    },
+    "target": {
+      "type": "string"
+    },
+    "threads": {
+      "const": 1
+    },
+    "timing_arguments": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "development_band": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "scope": {
+      "type": "object"
+    },
+    "context": {
+      "type": "object"
+    },
+    "correctness": {
+      "type": "object"
+    },
+    "trials": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object"
+      }
+    },
+    "summary": {
+      "type": "object"
+    },
+    "raw_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "estimate_protocol": {
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "kind",
+    "schema_version",
+    "format",
+    "backend",
+    "evidence_kind",
+    "identity_sha256",
+    "characterization",
+    "characterization_sha256",
+    "implementation",
+    "input",
+    "target",
+    "threads",
+    "timing_arguments",
+    "development_band",
+    "scope",
+    "context",
+    "correctness",
+    "trials",
+    "summary",
+    "raw_artifacts",
+    "estimate_protocol"
+  ]
+}

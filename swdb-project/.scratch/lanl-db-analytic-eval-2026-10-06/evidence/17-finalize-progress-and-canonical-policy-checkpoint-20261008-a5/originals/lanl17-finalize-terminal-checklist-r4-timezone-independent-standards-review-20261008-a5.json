@@ -1,0 +1,131 @@
+{
+  "checked_utc": "2026-10-09T02:21:52.444339+00:00",
+  "checks": [
+    "selected R4 exact pin",
+    "R1 preserved exact original",
+    "R2 preserved exact original reviewed checkpoint",
+    "only targeted old human timestamp occurrences",
+    "full R3\u2192R4 equality only two timestamp translations and additive dated selection footer",
+    "exact America/New_York date/minute translation 2026-10-08 22:14",
+    "exact America/New_York date/minute translation 2026-10-08 22:12",
+    "exact America/New_York date/minute translation 2026-10-08 22:19",
+    "R4 dated actual current ET calendar day; prepared time nonfuture",
+    "selected complete diff pin",
+    "retained diff exact full original R3/R4 derivative",
+    "selected control/preparation bytes unchanged lanl17_read_finalize_completion_originals_20261008_a5_r2.py",
+    "selected control/preparation bytes unchanged lanl17-finalize-completion-reader-action-draft-r2-20261008-a5.json",
+    "selected control/preparation bytes unchanged lanl17-finalize-completion-four-index-parent-recipe-20261008-a5-r2.md",
+    "selected control/preparation bytes unchanged lanl17-finalize-completion-reader-peer-source-review-r2-20261008-a5.json",
+    "selected control/preparation bytes unchanged lanl17_capture_reviewed_scientific_finalize_20261008_a5_a1.py",
+    "selected control/preparation bytes unchanged lanl17-finalize-parent-capture-peer-source-review-20261008-a5-a1.json",
+    "selected control/preparation bytes unchanged lanl17-finalize-parent-capture-root-source-review-20261008-a5-a1.json",
+    "selected control/preparation bytes unchanged lanl17_prepare_four_full_index_metadata_20261008_a5_r3.py",
+    "selected control/preparation bytes unchanged lanl17-four-full-index-parent-helper-peer-source-review-20261008-a5-r3.json",
+    "all nine stated preparation/control pin rows verified",
+    "actual original interim Standards finding retained unchanged",
+    "original author R4 source-only review pin"
+  ],
+  "date_ET": "2026-10-08",
+  "finding_resolution": {
+    "fixed_checkpoint": "5d07313e2fdd9bf5bcdf84e51f028c381a97f0e6",
+    "original_control_source_or_semantics_changed": false,
+    "original_finding": "P2 human-prose UTC-only timestamps at R2 lines3/9",
+    "other_spec_axis_prose_change_reviewed_here": false,
+    "prior_review": "/private/tmp/lanl17-interim-standards-checkpoint-5d07313e-20261008-r1.json",
+    "prior_review_sha256": "0087f65774398559e0a65ee453ddf3b4451e2169f9f0b48ccb809e4d81e41125",
+    "resolution": "Resolved additively by expressly selected R4 ET human guide; original R1/R2/R3 and captured machine timestamps preserved, not rewritten."
+  },
+  "findings": [],
+  "format": "swdb.lanl17-standards-timezone-correction-independent-source-review.v1",
+  "limits": [
+    "Read-only local source/document/metadata comparison only; no target import/main/tests/SSH/control/Git or repository edits.",
+    "Control source byte pins checked only; no runtime admission, current native/process clearance, final completion or scientific/order/numerical admission.",
+    "Spec mixed-export prose correction inherited exact from R3; this follow-up reviews only Standards timezone correction."
+  ],
+  "reviewed_original_pins": [
+    {
+      "bytes": 9108,
+      "path": "/private/tmp/lanl17-finalize-terminal-review-parent-checklist-20261008-a5-r1.md",
+      "sha256": "5ed6e740650647399230d0545b302efb8ce0a57033a6d21ce489a70fe59285f3"
+    },
+    {
+      "bytes": 9750,
+      "path": "/private/tmp/lanl17-finalize-terminal-review-parent-checklist-20261008-a5-r2.md",
+      "sha256": "fc4dc8077d4c2ce25c912e9ea3af15557665a45b6e1e1087866205192f838941"
+    },
+    {
+      "bytes": 10514,
+      "path": "/private/tmp/lanl17-finalize-terminal-review-parent-checklist-20261008-a5-r3.md",
+      "sha256": "4032acb6522938cb716f9d371d2ff674cf0511dac0fbda8dc96edf4ccf5a69ae"
+    },
+    {
+      "bytes": 10871,
+      "path": "/private/tmp/lanl17-finalize-terminal-review-parent-checklist-20261008-a5-r4.md",
+      "sha256": "a2d7d58ee79bff735679f634aa4537492b8b4799c38b1c2507d9e2f97fd2993f"
+    },
+    {
+      "bytes": 3489,
+      "path": "/private/tmp/lanl17-finalize-terminal-review-checklist-r4-complete-r3-derivation-20261008-a5.diff",
+      "sha256": "8c9d3e7465784d388ff98d3d3ead33f05498b9463d69ad02d985b378b36bcdd7"
+    },
+    {
+      "bytes": 1637,
+      "path": "/private/tmp/lanl17-finalize-terminal-checklist-r4-timezone-source-only-review-20261008-a5.json",
+      "sha256": "c17a781fe55d9aa8dc6918681bcd2b96ac1c28621b036c536446379b123774ed"
+    }
+  ],
+  "scientific_admission": false,
+  "selected_r4_pin": {
+    "bytes": 10871,
+    "path": "/private/tmp/lanl17-finalize-terminal-review-parent-checklist-20261008-a5-r4.md",
+    "sha256": "a2d7d58ee79bff735679f634aa4537492b8b4799c38b1c2507d9e2f97fd2993f"
+  },
+  "verdict": "PASS_R4_ADDITIVE_STANDARDS_CORRECTION",
+  "verified_unchanged_preparation_control_pins": [
+    {
+      "bytes": 18085,
+      "path": "/private/tmp/lanl17_read_finalize_completion_originals_20261008_a5_r2.py",
+      "sha256": "c00eec76805adbad8316143b5fb02f0cc7dbc1851cbd287662af80bbdad2de23"
+    },
+    {
+      "bytes": 20817,
+      "path": "/private/tmp/lanl17-finalize-completion-reader-action-draft-r2-20261008-a5.json",
+      "sha256": "a41403bc73e64e49816a107c5ff99658b6bd824662ac3fcb4e2b31ac4d29062c"
+    },
+    {
+      "bytes": 9577,
+      "path": "/private/tmp/lanl17-finalize-completion-four-index-parent-recipe-20261008-a5-r2.md",
+      "sha256": "2a68855afe649e4064ffad8a16a551b5d3e36392dfc1e30edee9dd2c09b89dbd"
+    },
+    {
+      "bytes": 7380,
+      "path": "/private/tmp/lanl17-finalize-completion-reader-peer-source-review-r2-20261008-a5.json",
+      "sha256": "39edf60f3e3b2165d4faad100646c0cd5666fcb89ea69d2c94a3da62a578a960"
+    },
+    {
+      "bytes": 31175,
+      "path": "/private/tmp/lanl17_capture_reviewed_scientific_finalize_20261008_a5_a1.py",
+      "sha256": "c360036bc5ae5fc3b1cb3ebac09199d2817306dcb8c60247d88dc70337ef51e2"
+    },
+    {
+      "bytes": 8359,
+      "path": "/private/tmp/lanl17-finalize-parent-capture-peer-source-review-20261008-a5-a1.json",
+      "sha256": "3bdc7c033a738e08967e9e00947eb37945f5898e7b42ef7c5153f149be7816ac"
+    },
+    {
+      "bytes": 1514,
+      "path": "/private/tmp/lanl17-finalize-parent-capture-root-source-review-20261008-a5-a1.json",
+      "sha256": "2231c42caff503cc8239bd7920fa6cbd64f7059e458c6e178b41e1b726dbadaa"
+    },
+    {
+      "bytes": 28658,
+      "path": "/private/tmp/lanl17_prepare_four_full_index_metadata_20261008_a5_r3.py",
+      "sha256": "b27ca6f053fbad92347cd045fe6144168ae011a045a96a37343c81716bc92ca8"
+    },
+    {
+      "bytes": 18782,
+      "path": "/private/tmp/lanl17-four-full-index-parent-helper-peer-source-review-20261008-a5-r3.json",
+      "sha256": "c1b6c5b8f5436137bdc352eec5129833940c33547ab86ac536397adb53a34238"
+    }
+  ]
+}

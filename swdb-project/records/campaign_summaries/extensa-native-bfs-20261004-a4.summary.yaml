@@ -1,0 +1,168 @@
+kind: campaign_summary
+schema_version: '0.4'
+id: extensa-native-bfs-20261004-a4.summary
+status: draft
+created: '2026-10-04'
+updated: '2026-10-04'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+mode: extensa
+campaign: extensa-native-bfs-20261004-a4
+campaign_file:
+  path: campaigns/extensa/extensa-native-bfs-20261004-a4.yaml
+  sha256: cd04f623dae4a3801a95bd63f32598bf726fac44f3a7f4df94a94c75a956877f
+swdb_commit: 67c671c042a2d141dbe7ff3c8bde0936494e3374
+extensa_source:
+  repository: MaizeHPC/MemAcc
+  commit: af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+target: native_cpu
+evidence_basis: measured
+evidence_kind: execution
+protocol:
+  id: extensa-native-bfs-20261004-a4.protocol.fork_scalar_tdstep.5cafee106dc70225
+  identity_sha256: 5cafee106dc702259cd892aaec0cd8db705d90555172d1a90066881b5cb1a0ea
+  settings:
+    target: native_cpu
+    roi: bfs.complete_call.v1
+    threads: 1
+    repetitions: 10
+    sources: [0, 1234, 7777]
+    region_pairs: []
+    differences: 'Extensa campaign extensa-native-bfs-20261004-a4: provider rewrites of the fork''s scalar
+      TDStep (scalar-only snapshot plus patch) versus the unchanged full-source dx100-bfs-scalar DOBFS,
+      and separately versus upstream direction-optimizing GAPBS BFS. Native evaluator v2 (mmap SG driver,
+      compiled structural verifier).'
+    evidence_basis: measured
+    profitability:
+      minimum_speedup: 1.05
+      maximum_relative_spread: 0.1
+      rule: lower bound strictly above the minimum; every spread at most the maximum
+    workloads:
+      kronecker: bfs-20261004-kronecker22.0b2b1e1555d0a1e8
+      uniform_random: bfs-20261004-uniform22.2f83a134a6bef789
+  by_role:
+    fork_scalar_tdstep:
+      id: extensa-native-bfs-20261004-a4.protocol.fork_scalar_tdstep.5cafee106dc70225
+      identity_sha256: 5cafee106dc702259cd892aaec0cd8db705d90555172d1a90066881b5cb1a0ea
+    upstream_do_bfs:
+      id: extensa-native-bfs-20261004-a4.protocol.upstream_do_bfs.fda02e04b3f71afc
+      identity_sha256: fda02e04b3f71afc24eea5daffa1c6c3d1327a0db5522bdf8b09c4524bba04ad
+      aa: extensa-native-bfs-20261004-a4.protocol.upstream_do_bfs.aa.d50c3b82442a317b
+baselines:
+- role: fork_scalar_tdstep
+  candidate: bfs-native-pilot-20260925-dx10018-a1.baseline
+  evaluation_ids_by_class: {}
+- role: upstream_do_bfs
+  candidate: bfs-native-pilot-20260925-upstream18-a2.baseline
+  evaluation_ids_by_class: {}
+workload_classes:
+- class: kronecker
+  workload: bfs-20261004-kronecker22.0b2b1e1555d0a1e8
+  sources: [0, 1234, 7778]
+  source_policy:
+    policy: swdb.sources.next_positive_out_degree.v1
+    requested_sources: [0, 1234, 7777]
+    replacements:
+    - requested: 7777
+      requested_out_degree: 0
+      selected: 7778
+      selected_out_degree: 16
+    rule: GAPBS SourcePicker skips out-degree 0; the next vertex (ascending, wrapping) with positive out-degree
+      that is not already a source replaces it
+- class: uniform_random
+  workload: bfs-20261004-uniform22.2f83a134a6bef789
+  sources: [0, 1234, 7777]
+  source_policy:
+    policy: swdb.sources.next_positive_out_degree.v1
+    requested_sources: [0, 1234, 7777]
+    replacements: []
+    rule: GAPBS SourcePicker skips out-degree 0; the next vertex (ascending, wrapping) with positive out-degree
+      that is not already a source replaces it
+label: single graph per class
+provider:
+  name: codex
+  model: gpt-5.6-sol
+  effort: xhigh
+pilot:
+  spreads_by_class_and_role:
+    kronecker:
+      fork_scalar_tdstep: 0.22499952442342008
+      upstream_do_bfs: 0.15315767004640474
+    uniform_random:
+      fork_scalar_tdstep: 0.1473232659660249
+      upstream_do_bfs: 0.014278729674201207
+  passed: false
+  unstable_classes: [kronecker, uniform_random]
+  other_socket_by_class_and_role:
+    kronecker:
+      fork_scalar_tdstep:
+        lease: mbit10-evaluation-node0
+        mode: extensa
+        target: dx100_gem5
+        campaign: extensa-gem5-bfs-20261004-a7
+      upstream_do_bfs:
+        lease: mbit10-evaluation-node0
+        mode: extensa
+        target: dx100_gem5
+        campaign: extensa-gem5-bfs-20261004-a7
+    uniform_random:
+      fork_scalar_tdstep:
+        lease: mbit10-evaluation-node0
+        mode: extensa
+        target: dx100_gem5
+        campaign: extensa-gem5-bfs-20261004-a7
+      upstream_do_bfs:
+        lease: mbit10-evaluation-node0
+        mode: extensa
+        target: dx100_gem5
+        campaign: extensa-gem5-bfs-20261004-a7
+setup:
+  provider_calls: []
+iterations: []
+per_class:
+- class: kronecker
+  verdict: baseline_unstable
+  best: null
+  best_level: null
+  best_selection_baseline: null
+  best_other_baseline: null
+  faster_uncertified: []
+  label: single graph per class
+- class: uniform_random
+  verdict: baseline_unstable
+  best: null
+  best_level: null
+  best_selection_baseline: null
+  best_other_baseline: null
+  faster_uncertified: []
+  label: single graph per class
+budgets:
+  limits:
+    max_iterations: 8
+    plateau_iterations: 4
+    lane_hours: 24
+    provider_calls_per_iteration: 3
+    provider_calls_setup: 1
+    disk_gb: 20
+    lanes: 1
+  used:
+    iterations: 0
+    lane_hours: 1.037645
+    provider_calls_counted: 0
+    provider_calls_uncounted: 0
+    disk_gb_peak: 2.683526
+pauses: []
+stop_reason: baseline_unstable
+stop_detail: baseline A/A spread exceeds 0.1 in every class
+artifacts: []
+retentions: []
+library_entries: []
+site_finder: null

@@ -1,0 +1,127 @@
+{
+ "created": "2026-09-28",
+ "id": "bfs-t17-t20-routes-simulator-batch-20260928-a2",
+ "stop": {
+  "signal": "SIGTERM once to each of the four batch drivers",
+  "sent_at": "2026-09-28T19:46:51-04:00",
+  "authority": "stream A stop after t20.kronecker18 self-terminated on a procfs reparent race in lane-tree telemetry; relaunched as a3 with race_tolerant"
+ },
+ "groups": {
+  "t17.uniform18": {
+   "driver_state": "failed",
+   "reason": "InterruptedError: driver interrupted by signal 15",
+   "cleanup_ledger": {
+    "state": "settled_within_budget",
+    "spent_seconds": 20.41639085486536,
+    "settled_events": 130,
+    "dead_owner_charges": {
+     "dead_owner_reservations": 1,
+     "dead_owner_seconds": 5.0,
+     "settled_seconds": 20.41639085486536,
+     "conservative_spent_seconds": 25.41639085486536
+    }
+   },
+   "series": [
+    {
+     "id": "bfs-t17-routes-20260928-a2.baseline.uniform18",
+     "state": "failed",
+     "reason": "InterruptedError: driver interrupted by signal 15",
+     "complete_pairs": []
+    }
+   ],
+   "exit": "1"
+  },
+  "t17.kronecker18": {
+   "driver_state": "failed",
+   "reason": "InterruptedError: driver interrupted by signal 15",
+   "cleanup_ledger": {
+    "state": "settled_within_budget",
+    "spent_seconds": 1.690518493019045,
+    "settled_events": 26,
+    "dead_owner_charges": null
+   },
+   "series": [
+    {
+     "id": "bfs-t17-routes-20260928-a2.baseline.kronecker18",
+     "state": "failed",
+     "reason": "InterruptedError: driver interrupted by signal 15",
+     "complete_pairs": []
+    }
+   ],
+   "exit": "1"
+  },
+  "t20.uniform18": {
+   "driver_state": "failed",
+   "reason": "InterruptedError: driver interrupted by signal 15",
+   "cleanup_ledger": {
+    "state": "settled_within_budget",
+    "spent_seconds": 1.9242892095819124,
+    "settled_events": 29,
+    "dead_owner_charges": null
+   },
+   "series": [
+    {
+     "id": "bfs-t20-routes-20260928-a2.baseline.uniform18",
+     "state": "failed",
+     "reason": "InterruptedError: driver interrupted by signal 15",
+     "complete_pairs": []
+    }
+   ],
+   "exit": "1"
+  },
+  "t20.kronecker18": {
+   "driver_state": "failed",
+   "reason": "InterruptedError: driver interrupted by signal 15",
+   "cleanup_ledger": {
+    "state": "settled_within_budget",
+    "spent_seconds": 20.107071802020116,
+    "settled_events": 125,
+    "dead_owner_charges": {
+     "dead_owner_reservations": 1,
+     "dead_owner_seconds": 0.25575379449868585,
+     "settled_seconds": 20.107071802020116,
+     "conservative_spent_seconds": 20.362825596518803
+    }
+   },
+   "series": [
+    {
+     "id": "bfs-t20-routes-20260928-a2.baseline.kronecker18",
+     "state": "failed",
+     "reason": null,
+     "complete_pairs": []
+    }
+   ],
+   "exit": "1"
+  }
+ },
+ "identity_checks": [
+  {
+   "at": "2026-09-28T19:48:36.023811-04:00",
+   "identities": 73,
+   "live": [],
+   "allocated_bytes": 436379648
+  },
+  {
+   "at": "2026-09-28T19:48:41.033672-04:00",
+   "identities": 73,
+   "live": [],
+   "allocated_bytes": 436379648
+  }
+ ],
+ "lease": {
+  "state": "held",
+  "generation": 389
+ },
+ "lane": {
+  "lease_generation": 479,
+  "started_utc": "2026-09-28T22:54:42Z",
+  "ended_utc": "2026-09-28T23:47:08Z",
+  "exit_code": 1
+ },
+ "outer_exit": "1",
+ "closed_at": "2026-09-28T19:48:46.045956-04:00",
+ "elapsed_seconds_since_admission": 3268,
+ "retained_bytes": 436379648,
+ "storage_stable": true,
+ "outcome": "t20.kronecker18 monitor self-SIGTERM (reparent race); remaining drivers stopped for the fixed relaunch a3; retained, never resumed"
+}

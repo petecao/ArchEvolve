@@ -1,0 +1,293 @@
+{
+  "JSON_writing_static_review": {
+    "actual_UTC_clocks_only_at_future_execution": true,
+    "capture_new_original_metadata_cap": 16384,
+    "guard_stream_and_receipt_per_file_cap": 262144,
+    "inherited_body_transfer_packet_cap": 67108864,
+    "inherited_local_derived_custody_receipt_cap": 65536,
+    "original_True_guard_receipt_whole_minus_identity_policy_preserved": true,
+    "partial_and_invalid_originals_not_repaired_or_resealed": true,
+    "strict_original_duplicate_and_nonfinite_refusal_inherited": true,
+    "wrapper_original_metadata_per_file_cap": 16384
+  },
+  "closed_lexical_AST_unbound_names": {
+    "capture": [],
+    "capture_embedded_native_bootstrap": [],
+    "collector": [],
+    "decoder": []
+  },
+  "collector_decoder_identical_constant_ASTs": [
+    "PACKET_CAP",
+    "WRAPPER_SHA",
+    "GUARD_SHA",
+    "CONTROL_PREFIX",
+    "TERMINAL_STATES",
+    "FILES",
+    "RECEIPT_CAP"
+  ],
+  "collector_decoder_identical_definition_ASTs": [
+    "strict",
+    "parsed_original",
+    "wrapper_custody",
+    "receipt_custody",
+    "stamp"
+  ],
+  "disposition": "NOT RUN",
+  "format": "swdb.lanl17-sparse-original-custody-source-static-review.v1",
+  "foundation_comparisons": {
+    "capture_from_capture_foundation": {
+      "changed_definition_ASTs": [
+        "original_json",
+        "main"
+      ],
+      "complete_byte_forward_and_reverse": true,
+      "complete_unified_diff_exact": true,
+      "definition_names_same": true,
+      "unchanged_definition_ASTs": [
+        "Refusal",
+        "CaptureSignal",
+        "Parser",
+        "require",
+        "sha",
+        "stamp",
+        "read_exact",
+        "private_file",
+        "stream_pin",
+        "ssh_file_limit"
+      ]
+    },
+    "capture_from_capture_initial": {
+      "changed_definition_ASTs": [
+        "main"
+      ],
+      "complete_byte_forward_and_reverse": true,
+      "complete_unified_diff_exact": true,
+      "definition_names_same": true,
+      "unchanged_definition_ASTs": [
+        "Refusal",
+        "CaptureSignal",
+        "Parser",
+        "require",
+        "sha",
+        "stamp",
+        "read_exact",
+        "private_file",
+        "original_json",
+        "stream_pin",
+        "ssh_file_limit"
+      ]
+    },
+    "capture_initial_from_capture_foundation": {
+      "changed_definition_ASTs": [
+        "original_json",
+        "main"
+      ],
+      "complete_byte_forward_and_reverse": true,
+      "complete_unified_diff_exact": true,
+      "definition_names_same": true,
+      "unchanged_definition_ASTs": [
+        "Refusal",
+        "CaptureSignal",
+        "Parser",
+        "require",
+        "sha",
+        "stamp",
+        "read_exact",
+        "private_file",
+        "stream_pin",
+        "ssh_file_limit"
+      ]
+    },
+    "collector_from_collector_foundation": {
+      "changed_definition_ASTs": [
+        "wrapper_custody",
+        "receipt_custody"
+      ],
+      "complete_byte_forward_and_reverse": true,
+      "complete_unified_diff_exact": true,
+      "definition_names_same": true,
+      "unchanged_definition_ASTs": [
+        "stamp",
+        "read",
+        "strict",
+        "parsed_original"
+      ]
+    },
+    "decoder_from_decoder_foundation": {
+      "changed_definition_ASTs": [
+        "wrapper_custody",
+        "receipt_custody"
+      ],
+      "complete_byte_forward_and_reverse": true,
+      "complete_unified_diff_exact": true,
+      "definition_names_same": true,
+      "unchanged_definition_ASTs": [
+        "sha",
+        "strict",
+        "stamp",
+        "local_read",
+        "parsed_original"
+      ]
+    }
+  },
+  "launch_R1": {
+    "BOOT_adds_only_exact_native_Bash_pin": true,
+    "BOOT_bytes": 2865,
+    "BOOT_sha256": "e11b1b07443ca7757c3ef621f4afb786b15f05d53738ebee9e2c551689f8a4bc",
+    "GNU_KILL_s": 60,
+    "GNU_remote_s": 90,
+    "local_wait_s": 180,
+    "new_PRESTARTUP_literal_bytes": 290,
+    "new_PRESTARTUP_literal_sha256": "e96d7962e501e78391587b7e5767df32a01672eb41d55b2ffbb1e34629b4012d",
+    "only_inherited_changed_definition": "main",
+    "owned_SSH_cleanup_finally_AST_exact": true,
+    "prestartup_native_Bash_timeout_Python_parent_byte_review_still_required": true,
+    "sanitizer_is_shell_translation_not_AST_copy_of_1723_Python_launcher": true,
+    "source_stream_return_wait_caps_exact": true,
+    "worker_wait_s": 3735
+  },
+  "newline_finding_correction": {
+    "existing_source_writes_genuine_newline": [
+      {
+        "codepoint_or_byte": 10,
+        "decoded_length": 1,
+        "line": 135,
+        "source": "decoder_foundation",
+        "source_token": "'\\n'"
+      },
+      {
+        "codepoint_or_byte": 10,
+        "decoded_length": 1,
+        "line": 134,
+        "source": "decoder",
+        "source_token": "'\\n'"
+      },
+      {
+        "codepoint_or_byte": 10,
+        "decoded_length": 1,
+        "line": 41,
+        "source": "capture_initial",
+        "source_token": "'\\n'"
+      },
+      {
+        "codepoint_or_byte": 10,
+        "decoded_length": 1,
+        "line": 110,
+        "source": "capture_initial",
+        "source_token": "b'\\n'"
+      },
+      {
+        "codepoint_or_byte": 10,
+        "decoded_length": 1,
+        "line": 41,
+        "source": "capture",
+        "source_token": "'\\n'"
+      },
+      {
+        "codepoint_or_byte": 10,
+        "decoded_length": 1,
+        "line": 112,
+        "source": "capture",
+        "source_token": "b'\\n'"
+      }
+    ],
+    "failed_source_generator_stopped_at_precondition_before_writes": true,
+    "initial_report_was_mistaken": true,
+    "no_decoder_correction_source_or_diff_created": true
+  },
+  "no_launch_liveness_default_capacity_retirement_or_scientific_admission": true,
+  "sealed": false,
+  "source_pins": {
+    "capture": {
+      "bytes": 14003,
+      "path": "/private/tmp/lanl17_capture_reviewed_sparse_default_launch_20261008_a1_r1.py",
+      "sha256": "7c5f9500bbb364a0caf87b31e7bc5b99cf569ffa4ab0b98f4094a10eaa97461a"
+    },
+    "capture_diff": {
+      "bytes": 9820,
+      "path": "/private/tmp/lanl17-sparse-default-launch-capture-r1-complete-original-derivation-20261008-a1.diff",
+      "sha256": "84de0a8da8034a54bd2c2cf139712dceb5451da2339e0a6c80d4ed2f5f1c5c0c"
+    },
+    "capture_foundation": {
+      "bytes": 10756,
+      "path": "/private/tmp/lanl14_capture_reviewed_reader_ssh_20261008_a1_r1.py",
+      "sha256": "44e9fd31130c986ca2b70b39ce269516470ce25adc6d8d188f1238e522a061a4"
+    },
+    "capture_full_diff": {
+      "bytes": 18124,
+      "path": "/private/tmp/lanl17-sparse-default-launch-capture-r1-full-readerR1-derivation-20261008-a1.diff",
+      "sha256": "98f4285a2a972d2cb22f346a51d4dbda2097e8d3f4c6d2f0f8b4a1c645d806e1"
+    },
+    "capture_initial": {
+      "bytes": 13347,
+      "path": "/private/tmp/lanl17_capture_reviewed_sparse_default_launch_20261008_a1.py",
+      "sha256": "8560593f6e096721226750e46a78aa0d6f036402f12866f818aed22dac51dc38"
+    },
+    "capture_initial_diff": {
+      "bytes": 17489,
+      "path": "/private/tmp/lanl17-sparse-default-launch-capture-complete-readerR1-derivation-20261008-a1.diff",
+      "sha256": "a211484f96132a7e3223577a08cd7b2346df79d8f67fe1b09cd20e83b6456933"
+    },
+    "capture_source_builder": {
+      "bytes": 11615,
+      "path": "/private/tmp/lanl17_prepare_sparse_launch_capture_source_20261008_a1.py",
+      "sha256": "2de13ce0f375e6928c8cc0a7e218b23f2fbf6dc2a22a56250eea076c6c1ec9b1"
+    },
+    "collector": {
+      "bytes": 11504,
+      "path": "/private/tmp/lanl_read_detached_sparse_administration_originals_20261008_a1.py",
+      "sha256": "af667835394c5b2adced9c66313382de4a948347fc99594692f45253b29fe957"
+    },
+    "collector_diff": {
+      "bytes": 8233,
+      "path": "/private/tmp/lanl17-sparse-original-collector-complete-R4r4-derivation-20261008-a1.diff",
+      "sha256": "6114290671b8c12842f51c1f0d42ce4b49b16cd3aac21e01b586bfc6b95e4aa3"
+    },
+    "collector_foundation": {
+      "bytes": 11462,
+      "path": "/private/tmp/lanl_read_detached_R4_administration_originals_20261008_a1_r4.py",
+      "sha256": "97bb8f6464b1248a5a47cb676812452dc0c3ee717a24d98cbc8b85fc6d4c137e"
+    },
+    "custody_source_builder": {
+      "bytes": 4325,
+      "path": "/private/tmp/lanl17_prepare_sparse_original_custody_sources_20261008_a1.py",
+      "sha256": "2676129e74190abc2b6a4b11541f8c8ce1b9b67489328d08cc7a7e1843ab81f5"
+    },
+    "decoder": {
+      "bytes": 13428,
+      "path": "/private/tmp/lanl_decode_detached_sparse_original_custody_20261008_a1.py",
+      "sha256": "03cbe508a449f3a2a713bb2f1f5cd8bb59e4031a6f46643155bca4718d05bd1c"
+    },
+    "decoder_diff": {
+      "bytes": 8373,
+      "path": "/private/tmp/lanl17-sparse-original-decoder-complete-R4r4-derivation-20261008-a1.diff",
+      "sha256": "a7f518f41777a8367678a38b85383011b5b7457ccd85e55310bdebbf8f678e08"
+    },
+    "decoder_foundation": {
+      "bytes": 13442,
+      "path": "/private/tmp/lanl_decode_detached_R4_original_custody_20261008_a1_r4.py",
+      "sha256": "ed051de51aa4c2d1a473bd77561c8149a25b6b6314174e24e396a571c9e26008"
+    },
+    "guard": {
+      "bytes": 166145,
+      "path": "/private/tmp/lanl_sparse_retire_consumed_source_guard_20261008_a1_r2.py",
+      "sha256": "4956a7453ae569d7ccf6e1a9ed98a1a933bee2e35cca1774932afbfba819bd26"
+    },
+    "launcher_semantic_foundation": {
+      "bytes": 1723,
+      "path": "/private/tmp/lanl17-launch-reviewed-private-publisher-20261008-a1.py",
+      "sha256": "b4c750adb773ca1ab5f394854886aa5e9c5a6452a51079305e66a1ef848d53a9"
+    },
+    "wrapper": {
+      "bytes": 24115,
+      "path": "/private/tmp/lanl17_detach_library_preserving_sparse_administration_20261008_a1_r1.py",
+      "sha256": "1127d1fba8e004153cf086cace7d19ccd901e85902f9ad91924407922c85c6ca"
+    },
+    "wrapper_handoff": {
+      "bytes": 5882,
+      "path": "/private/tmp/lanl17-library-preserving-sparse-retirement-r2-source-handoff-20261008-a1.md",
+      "sha256": "bffa952b64c7a5434f164fe6032a7e6a2b8fc272648a27eabacc0a2f36f91222"
+    }
+  },
+  "source_scope": "private source generation and text/AST/hash comparison only; no selected source import/compile/lift/call/main/test/SSH/Git/project mutation or actual input reads"
+}

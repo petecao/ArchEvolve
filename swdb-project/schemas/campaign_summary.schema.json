@@ -1,0 +1,435 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "campaign_summary",
+  "title": "Extensa campaign summary",
+  "description": "Created 2026-10-03 ET (ticket 52, decision D6). Written once when an Extensa campaign stops; the only Extensa campaign record always copied to the team store.",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "const": "campaign_summary"
+    },
+    "message_version": {
+      "type": "string"
+    },
+    "producer": {
+      "type": "object"
+    },
+    "campaign_file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "swdb_commit": {
+      "type": "string"
+    },
+    "extensa_source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "commit"
+      ],
+      "properties": {
+        "repository": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "string"
+        }
+      }
+    },
+    "target": {
+      "enum": [
+        "native_cpu",
+        "dx100_gem5"
+      ]
+    },
+    "evidence_basis": {
+      "enum": [
+        "measured",
+        "simulated"
+      ]
+    },
+    "evidence_kind": {
+      "enum": [
+        "execution",
+        "contract_fixture"
+      ]
+    },
+    "protocol": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "baselines": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "workload_classes": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "label": {
+      "const": "single graph per class"
+    },
+    "provider": {
+      "type": "object"
+    },
+    "pilot": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "iterations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "index",
+          "started",
+          "ended",
+          "regions",
+          "provider_calls",
+          "candidates",
+          "feedback_reasons",
+          "improved_classes"
+        ]
+      }
+    },
+    "per_class": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "class",
+          "verdict",
+          "best",
+          "best_level"
+        ],
+        "properties": {
+          "class": {
+            "type": "string"
+          },
+          "verdict": {
+            "enum": [
+              "gain",
+              "no_gain",
+              "inconclusive",
+              "baseline_unstable"
+            ],
+            "description": "baseline_unstable (2026-10-04 ET, ticket 64): the class failed the native A/A pilot and was not timed."
+          },
+          "best": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "best_level": {
+            "enum": [
+              "certified",
+              "uncertified",
+              null
+            ]
+          },
+          "best_selection_baseline": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "best_other_baseline": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "faster_uncertified": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "label": {
+            "const": "single graph per class"
+          }
+        }
+      }
+    },
+    "budgets": {
+      "type": "object",
+      "required": [
+        "limits",
+        "used"
+      ],
+      "properties": {
+        "limits": {
+          "type": "object"
+        },
+        "used": {
+          "type": "object"
+        }
+      }
+    },
+    "pauses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "at",
+          "reason"
+        ],
+        "properties": {
+          "at": {
+            "type": "string"
+          },
+          "reason": {
+            "enum": [
+              "usage_limit",
+              "login",
+              "provider_capacity",
+              "guard_infrastructure"
+            ],
+            "description": "Ticket 74 (2026-10-05 ET): a synthesis call at capacity (ticket 73) or stopped by the guard's own runtime limit also pauses."
+          },
+          "resumed_at": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "stop_reason": {
+      "enum": [
+        "max_iterations",
+        "plateau",
+        "lane_hours",
+        "provider_calls",
+        "disk",
+        "baseline_unstable",
+        "infrastructure_failure",
+        "stopped_by_yanru"
+      ]
+    },
+    "interrupted_iteration": {
+      "type": "object",
+      "description": "Ticket 73 (2026-10-05 ET): the iteration a stop interrupted, with its provider calls; not a completed iteration."
+    },
+    "stop_detail": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "retentions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "library_entries": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "setup": {
+      "type": "object",
+      "description": "The setup allowance's provider calls (the profiling agent), before iteration 1."
+    },
+    "site_finder": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "Ticket 55 (2026-10-04 ET): the query site finder's format, query sha256 and parameters; null for a fixed region list.",
+      "required": [
+        "format",
+        "query_sha256",
+        "parameters"
+      ],
+      "properties": {
+        "format": {
+          "const": "swdb.site-finder.v1"
+        },
+        "query_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "parameters": {
+          "type": "object"
+        }
+      }
+    },
+    "paired_estimates": {
+      "$ref": "#/$defs/pairing_ledger"
+    }
+  },
+  "required": [
+    "mode",
+    "campaign",
+    "campaign_file",
+    "swdb_commit",
+    "extensa_source",
+    "target",
+    "evidence_basis",
+    "evidence_kind",
+    "protocol",
+    "baselines",
+    "workload_classes",
+    "label",
+    "provider",
+    "iterations",
+    "per_class",
+    "budgets",
+    "pauses",
+    "stop_reason",
+    "artifacts",
+    "retentions"
+  ],
+  "$defs": {
+    "pairing_ledger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "format",
+        "enabled",
+        "records",
+        "outcome_accesses",
+        "eligible_application_estimates",
+        "selection_policy"
+      ],
+      "properties": {
+        "format": {
+          "const": "swdb.extensa-pairing-ledger.v1"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "outcome_accesses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "stage",
+              "paired_estimates",
+              "outcome_access_started_at"
+            ],
+            "properties": {
+              "stage": {
+                "type": "string",
+                "minLength": 1
+              },
+              "paired_estimates": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/id"
+                }
+              },
+              "outcome_access_started_at": {
+                "type": "string"
+              },
+              "timing_contexts": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "subject",
+                    "input",
+                    "execution"
+                  ],
+                  "properties": {
+                    "subject": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "artifact_sha256"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "artifact_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        }
+                      }
+                    },
+                    "input": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "identity_sha256"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "identity_sha256": {
+                          "type": "string",
+                          "pattern": "^[0-9a-f]{64}$"
+                        }
+                      }
+                    },
+                    "execution": {
+                      "type": "object"
+                    },
+                    "prior_outcome_exposure": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "eligible_application_estimates": {
+          "const": 0
+        },
+        "selection_policy": {
+          "const": "unchanged_timing_only"
+        }
+      }
+    }
+  }
+}

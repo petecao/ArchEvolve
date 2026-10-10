@@ -1,0 +1,188 @@
+{
+  "format": "swdb.cpu-floating-memory-admission.v1",
+  "updated": "2026-10-06 ET",
+  "count_wrapper_identity_sha256": "209bf197adfc29ee19e9a080e22d01d231c09c7e320579c44bb63ef8cce133f4",
+  "count_proof_identity_sha256": "4faef721c93f856885118154e90525caba75e8defa5a48360ad285370baef8e3",
+  "elapsed_wrapper_identity_sha256": "2f805fcd02f16c8c5accf62e6596217fa5ac0a1fec94fd3a1c8df02a9eafb5f2",
+  "receipt_identity_sha256": "a403142340ca0c6f7a454b859e3eebdb326d43c556af36ac2053dc2175683efb",
+  "records": [
+    {
+      "id": "mbit10.cpu.lanl20261006.resource.float-memory.a1",
+      "kind": "cpu_memory_resource_calibration",
+      "path": "cpu_memory_resource_calibrations/mbit10.cpu.lanl20261006.resource.float-memory.a1.yaml",
+      "sha256": "653941c3b97418e9bf7253f46c2616ec31a7a269f67027bf613961a95667e93a",
+      "identity_sha256": "c6ef995368ca6eb13a505f264f23b520b34914ff4b42997868d557d634e57e30",
+      "file_sha256": "c51013dba09ec5aada4c522ac07e8a71b99e1ae200333bb8bc87417966d3f8b9",
+      "bytes": 22032,
+      "service_cells": 2,
+      "evidence_kind": "native"
+    },
+    {
+      "id": "mbit10.cpu.lanl20261006.service.float-memory.a1",
+      "kind": "cpu_service_calibration",
+      "path": "cpu_service_calibrations/mbit10.cpu.lanl20261006.service.float-memory.a1.yaml",
+      "sha256": "eca80cffb766770b9480e0576f3976ee69b8a4a7624ee21300078e6ac3147fd5",
+      "identity_sha256": "ff5def50262dc74260d5a6990bb5435786a64de0a49a34796cc8f8b0bbb3b3e8",
+      "file_sha256": "f41d562d6839d83bb035e2d2f50bcd882ecd88fa1d2afebad0b1f2c90127ab49",
+      "bytes": 18147,
+      "service_cells": 2,
+      "evidence_kind": "native"
+    }
+  ],
+  "native_count_and_elapsed_admission_replayed": true,
+  "exact_primitive": {
+    "opcode": "atomicrmw",
+    "value_kind": "floating",
+    "element_bits": 64,
+    "update_opcode": "fadd",
+    "atomic_ordering": "monotonic"
+  },
+  "count_proof_points": 4,
+  "native_source_files_match_frozen_collector": true,
+  "gross_window_min_s": 0.05,
+  "selected_resource_recipe": {
+    "id": "gross_constructed_resource_v1",
+    "denominator": "source_normalized_logical_requests",
+    "elapsed": "gross_uninstrumented_native_cell",
+    "includes_driver_work": true,
+    "composition": "max_with_compute",
+    "transfer_basis": "inferred",
+    "physical_instruction_latency": false,
+    "proven_application_upper_bound": false
+  },
+  "cells": [
+    {
+      "id": "memory.floating-add-update.8.32768",
+      "primitive": {
+        "opcode": "atomicrmw",
+        "value_kind": "floating",
+        "element_bits": 64,
+        "update_opcode": "fadd",
+        "atomic_ordering": "monotonic"
+      },
+      "footprint_bytes": 32768,
+      "gross_ns_per_request": 7.554071664810179,
+      "gross_spread_s_per_request": {
+        "values": [
+          7.559201955795294e-09,
+          7.551167607307449e-09,
+          7.554524064064038e-09,
+          7.554938554763786e-09,
+          7.550247192382824e-09,
+          7.554071664810179e-09,
+          7.552392840385454e-09
+        ],
+        "median": 7.554071664810179e-09,
+        "min": 7.550247192382824e-09,
+        "max": 7.559201955795294e-09,
+        "spread": 8.954763412470506e-12,
+        "repetitions": 7
+      },
+      "paired_parameter_retained": {
+        "value": 6.85392832756043e-09,
+        "basis": "measured",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.float-memory.a1; memory.floating-add-update.8.32768; paired elapsed/work trials.",
+        "unit": "seconds/request"
+      },
+      "minimum_gross_s": 0.0633360640000001,
+      "minimum_driver_s": 0.005847676000000118
+    },
+    {
+      "id": "memory.floating-add-update.8.8388608",
+      "primitive": {
+        "opcode": "atomicrmw",
+        "value_kind": "floating",
+        "element_bits": 64,
+        "update_opcode": "fadd",
+        "atomic_ordering": "monotonic"
+      },
+      "footprint_bytes": 8388608,
+      "gross_ns_per_request": 7.5680246353149405,
+      "gross_spread_s_per_request": {
+        "values": [
+          7.562755227088929e-09,
+          7.569842100143432e-09,
+          7.56961464881897e-09,
+          7.560859203338622e-09,
+          7.568024635314941e-09,
+          7.569621443748475e-09,
+          7.561354517936706e-09
+        ],
+        "median": 7.568024635314941e-09,
+        "min": 7.560859203338622e-09,
+        "max": 7.569842100143432e-09,
+        "spread": 8.982896804809534e-12,
+        "repetitions": 7
+      },
+      "paired_parameter_retained": {
+        "value": 6.874722838401794e-09,
+        "basis": "measured",
+        "source": "Service calibration mbit10.cpu.lanl20261006.service.float-memory.a1; memory.floating-add-update.8.8388608; paired elapsed/work trials.",
+        "unit": "seconds/request"
+      },
+      "minimum_gross_s": 0.06342508399999999,
+      "minimum_driver_s": 0.005815836999999999
+    }
+  ],
+  "scope_compatibility": [
+    {
+      "id": "bfs.kron-g16.t1.characterization.objects.a1",
+      "sha256": "535d43719d2e9269dc557e900886c625b80c5aa686e7682861a4f6d045e143bc",
+      "missing": []
+    },
+    {
+      "id": "bc.kron-g16.t1.characterization.objects.a1",
+      "sha256": "8561948088366aa18409da1db1f204ac2579cdb8ee90f1a2c76079a96e2eb4fd",
+      "missing": []
+    },
+    {
+      "id": "bfs.kron-g17.t1.characterization.objects.a1",
+      "sha256": "49b5c58f3551b065c91c49c1fb09f54de2d2d71f08b6a4e1eedf3aad5ec415c5",
+      "missing": []
+    },
+    {
+      "id": "bc.kron-g17.t1.characterization.objects.a1",
+      "sha256": "6b8d515b3f38a13bfd302993f8ac5e88bd77615da171c710b4ecd81d058c67db",
+      "missing": []
+    }
+  ],
+  "selected_footprint_bytes": 8388608,
+  "aggregate_memory_coverage": [
+    {
+      "characterization": "bfs.kron-g16.t1.characterization.objects.a1",
+      "all_aggregate_memory_regions_known": true,
+      "exact_floating_site_partition": []
+    },
+    {
+      "characterization": "bc.kron-g16.t1.characterization.objects.a1",
+      "all_aggregate_memory_regions_known": true,
+      "exact_floating_site_partition": [
+        {
+          "region": "gapbs-bc-brandes/pbfs-edge",
+          "floating_requests": 351982,
+          "gross_resource_seconds": 0.0026638084471874235
+        }
+      ]
+    },
+    {
+      "characterization": "bfs.kron-g17.t1.characterization.objects.a1",
+      "all_aggregate_memory_regions_known": true,
+      "exact_floating_site_partition": []
+    },
+    {
+      "characterization": "bc.kron-g17.t1.characterization.objects.a1",
+      "all_aggregate_memory_regions_known": true,
+      "exact_floating_site_partition": [
+        {
+          "region": "gapbs-bc-brandes/pbfs-edge",
+          "floating_requests": 449271,
+          "gross_resource_seconds": 0.003400093995932579
+        }
+      ]
+    }
+  ],
+  "native_application_timings_collected": false,
+  "legacy_trial_scope_reconciliation_pending": true,
+  "interpretation": "Separate independently counted floating64 monotonic atomic fadd gross resource. No integer-cost substitution or pooling; exact typed source-site partition and measured trial spread retained. Logical constructed transfer/locality and compute maximum remain inferred; no physical instruction latency, full application agreement, page residency or proven upper bound.",
+  "identity_sha256": "c7b8f5c68ce12c51547e57a6508adb1a51e485ec9a77f5ba79b0894ed3cc47ee"
+}

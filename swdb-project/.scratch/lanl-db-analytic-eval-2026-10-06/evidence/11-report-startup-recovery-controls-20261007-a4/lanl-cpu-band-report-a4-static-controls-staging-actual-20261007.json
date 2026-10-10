@@ -1,0 +1,28 @@
+{
+  "format": "swdb.cpu-band-report-a4-static-control-staging.v1",
+  "checked_utc": "2026-10-07T11:02:43.125714+00:00",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "source_clean": true,
+  "controls": [
+    {
+      "path": "/data1/yanruj/lanl-cpu-controls-20261007-a1/lanl-dispatch-cpu-band-report-a4-metadata2400-cleanup60-hashlib.py",
+      "sha256": "543b79ea40a54537ee23b37ec1f44afbc8b135cad3fff25fb82d35db7b5130c7",
+      "bytes": 17772
+    },
+    {
+      "path": "/data1/yanruj/lanl-cpu-controls-20261007-a1/lanl-export-cpu-band-report-a4.py",
+      "sha256": "1d1251baeba12c65c40a7a616060e5ff236197ce73f77335534d4a4d83fe32a6",
+      "bytes": 12921
+    }
+  ],
+  "original_failed_raw_preserved": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261006-a3",
+  "original_failure_custody_identity": "7b67aec7b399c9da63923d66dd5678bcaf5cf516a751c3da94981da4b8b06455",
+  "leases": {
+    "mbit10-evaluation-node0": "released",
+    "mbit10-evaluation-node1": "released",
+    "mbit10-evaluation": "released"
+  },
+  "control_execution": false,
+  "native_provider_Store_or_scientific_execution": false,
+  "identity_sha256": "e7d7d5e542b00db5c9147d222d9167e250a48095c96a79d0c81ab909fe8aa48c"
+}

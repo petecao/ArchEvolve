@@ -1,0 +1,11 @@
+name: input_formats
+description: File formats an input record may point to.
+values:
+  - value: gapbs_el
+    meaning: gapbs edge list (.el), one "u v" pair per line.
+  - value: gapbs_wel
+    meaning: gapbs weighted edge list (.wel), one "u v w" triple per line.
+  - value: gapbs_sg
+    meaning: gapbs serialized graph (.sg).
+  - value: matrix_market
+    meaning: Matrix Market coordinate format (.mtx).

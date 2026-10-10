@@ -1,0 +1,39 @@
+{
+  "argv": [
+    "ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "mbit10",
+    "/usr/bin/env",
+    "GIT_OPTIONAL_LOCKS=0",
+    "/usr/bin/timeout",
+    "--signal=TERM",
+    "--kill-after=60",
+    "180",
+    "/usr/bin/python3.12",
+    "-B",
+    "-"
+  ],
+  "elapsed_seconds": 0.7337477090768516,
+  "finished_utc": "2026-10-08T09:37:57.682063+00:00",
+  "format": "swdb.parent-readonly-status-original-transport.v1",
+  "returncode": 0,
+  "sealed": false,
+  "source": {
+    "bytes": 2052,
+    "path": "/private/tmp/lanl14-read-owned-final-runtime-custody-descendants-20261007-a1.py",
+    "sha256": "4e1db51eebc1c2756baee4780561e4fb5cea8caafbca0717f944a6588ddffba4"
+  },
+  "started_utc": "2026-10-08T09:37:56.948263+00:00",
+  "stderr": {
+    "bytes": 0,
+    "path": "/private/tmp/lanl14-owned-final-runtime-tree-observed-20261008-a9.stderr",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 282,
+    "path": "/private/tmp/lanl14-owned-final-runtime-tree-observed-20261008-a9.json",
+    "sha256": "3812968e2f50fb9c9dda10fdbe598b2d66a1f7c8b6b3f72cd812d2aafe737f32"
+  }
+}

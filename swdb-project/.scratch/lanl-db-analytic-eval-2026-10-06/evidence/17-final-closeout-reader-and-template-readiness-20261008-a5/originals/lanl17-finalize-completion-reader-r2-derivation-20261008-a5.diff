@@ -1,0 +1,29 @@
+--- /private/tmp/lanl17_read_finalize_completion_originals_20261008_a5_r1.py
++++ /private/tmp/lanl17_read_finalize_completion_originals_20261008_a5_r2.py
+@@ -90,11 +90,13 @@
+     need(m is not None and err==b'','closed_public_validation_output')
+     # Counts only; full original inventory and historical validation continuity are later contracts.
+     canonical(records);names=[]
+-    for p in records.rglob('*.yaml'):
+-        tick();canonical(p);s=p.lstat();need(stat.S_ISREG(s.st_mode) and s.st_uid==UID and s.st_nlink==1,'catalogue_file_identity')
+-        names.append(p.relative_to(records).as_posix());need(len(names)<=16384,'catalogue_count_bound')
++    for p in records.rglob('*'):
++        tick();rel=p.relative_to(records)
++        if not (p.is_file() and p.suffix in {'.yaml','.yml'} and not any(part.startswith('.') for part in rel.parts)):continue
++        canonical(p);s=p.lstat();need(stat.S_ISREG(s.st_mode) and s.st_uid==UID and s.st_nlink==1,'catalog_file_identity')
++        names.append(rel.as_posix());need(len(names)<=16384,'catalog_count_bound')
+     need(int(m[1])==len(names),'full_validation_record_count')
+-    return {'name':name,'records':str(records),'validated_count':int(m[1]),'observed_yaml_count':len(names),'original_public_exit_code':0,'stderr_empty':True,'catalogue_continuity_not_policed':True}
++    return {'name':name,'records':str(records),'validated_count':int(m[1]),'observed_yaml_count':len(names),'original_public_exit_code':0,'stderr_empty':True,'catalog_continuity_not_policed':True}
+ 
+ def command_metadata(name,expected,stdout_cap):
+     argv=value(take(RAW/(name+'.argv.json'),32768,True));need(argv==expected,'exact_public_argv')
+@@ -121,7 +123,7 @@
+     need(type(sup['cleanup']) is dict and set(sup['cleanup'])=={'subreaper','terminated_owned_processes','survivors'} and type(sup['cleanup']['terminated_owned_processes']) is list and len(sup['cleanup']['terminated_owned_processes'])<=1024,'closed_supervisor_cleanup')
+     for row in sup['cleanup']['terminated_owned_processes']:
+         need(type(row) is dict and set(row)=={'pid','start_time','signal'} and type(row['pid']) is int and row['pid']>0 and type(row['start_time']) is str and re.fullmatch('[0-9]{1,32}',row['start_time']) is not None and row['signal'] in ('SIGTERM','SIGKILL'),'closed_owned_process_metadata')
+-    need(sup['uid']==UID and sup['helper_sha256']==sup['cleanup_implementation_sha256']==PINS[0][2] and sup['supervisor_sha256']==PINS[2][2] and sup['estimator_sha256']==F6 and sup['provider_calls']==sup['application_outcomes']==0,'supervisor_source_scope')
++    need(sup['uid']==UID and sup['helper_sha256']==sup['cleanup_implementation_sha256']==PINS[0][2] and sup['supervisor_sha256']==PINS[2][2] and sup['processes_py_sha256']=='bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289' and sup['estimator_sha256']==F6 and sup['provider_calls']==sup['application_outcomes']==0,'supervisor_source_scope')
+     take(FINALIZE/'helper.stderr',65536,False)  # Original git worktree/push diagnostics may be nonempty; never return body.
+     result=strict(take(RAW/'final-export.json',65536,True));helper=strict(take(FINALIZE/'helper.stdout',65536,True))
+     need(helper==result and set(result)=={'branch','commit','paths','raw_transferred'} and result['branch']=='codex/lanl17-actual-report-evidence-20261007-a5' and result['raw_transferred'] is False and type(result['commit']) is str and re.fullmatch('[0-9a-f]{40}',result['commit']) is not None,'closed_final_export')

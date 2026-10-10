@@ -1,0 +1,140 @@
+{
+  "format": "swdb.lanl14-lossless-codec-isolated-tests-actual.v1",
+  "started_utc": "2026-10-07T21:10:27.063279+00:00",
+  "ended_utc": "2026-10-07T21:10:27.328134+00:00",
+  "canonical_ensure_ascii": true,
+  "checkpoint_commit": "88eeea60d372708a208652400de6da990ebb5690",
+  "actual_subprocess_returncode": 0,
+  "actual_timed_out": false,
+  "actual_reported_test_count": 13,
+  "actual_reported_OK": true,
+  "actual_successful_test_method_names": [
+    "test_concatenated_second_gzip_member_is_refused",
+    "test_conditional_gzip_is_deterministic_and_preserves_every_original_byte",
+    "test_crc_corruption_is_refused_with_explicit_matching_transfer_pin",
+    "test_decoded_size_overflow_is_refused_before_accepting_output",
+    "test_incompressible_git_overflow_retains_original_and_bounded_partial",
+    "test_malformed_header_is_refused",
+    "test_original_administrative_overflow_refuses_before_open_or_gzip_creation",
+    "test_same_size_inode_swap_during_read_is_refused",
+    "test_small_report_keeps_exact_original_bytes_and_no_gzip_output",
+    "test_symlink_input_and_existing_partial_output_are_not_replayed",
+    "test_trailing_bytes_are_refused",
+    "test_truncated_footer_is_refused",
+    "test_wrong_original_hash_is_refused_after_lossless_decode"
+  ],
+  "elapsed_parent_seconds": 0.26598808297421783,
+  "original_source_review_identity_sha256": "9d91cd4a52b78d104755e4ea21835ce97bda2fc5f7f317faaa52ec5494864c87",
+  "original_preparation_identity_sha256": "febc849346ccd751dea9aeecf49c6605864f748725946c82a67d8f6736df47ef",
+  "source_pins": {
+    "selected_exporter": {
+      "path": "/private/tmp/lanl14_final_export_lossless_gzip_20261007_a1.py",
+      "bytes": 22967,
+      "sha256": "928af82facd9f36dfdbca6595d2c2e9d1091dd0064c9fe53fc41c163879e026e"
+    },
+    "selected_reader": {
+      "path": "/private/tmp/lanl14_readonly_nine_export_admission_lossless_gzip_20261007_a1.py",
+      "bytes": 37647,
+      "sha256": "6909c422990a071b1a8d08c634c1c086f0218c5851d38996b6f4798759499570"
+    },
+    "selected_R1_harness": {
+      "path": "/private/tmp/lanl14_lossless_report_codec_isolated_test_source_20261007_a1_r1.py",
+      "bytes": 9710,
+      "sha256": "3725c07a7b2ad96edfe187a3516a5904f0d12c92c68783885407d304e69acc27"
+    },
+    "exporter_complete_unsealed_diff": {
+      "path": "/private/tmp/lanl14-lossless-gzip-exporter-complete-derivation-20261007-a1.diff",
+      "bytes": 21755,
+      "sha256": "0386b6ef3fec0d24959a168bfb6b35e90de22f48de0be64d1fc2d166cefecb83"
+    },
+    "reader_complete_unsealed_diff": {
+      "path": "/private/tmp/lanl14-lossless-gzip-reader-complete-derivation-20261007-a1.diff",
+      "bytes": 19738,
+      "sha256": "76aaff7d80b9adca39f7606e074fc44f4e6a71ae3371e54646fa3f8e4c7a2310"
+    },
+    "harness_complete_unsealed_R1_diff": {
+      "path": "/private/tmp/lanl14-lossless-gzip-codec-harness-r1-complete-derivation-20261007-a1.diff",
+      "bytes": 1196,
+      "sha256": "e45261df3634374748c2831fb301a1c62e70a82c87680a2aea9a421bafd9861f"
+    },
+    "actual_fixed_embedded_codec_source": {
+      "path": "/private/tmp/lanl14-lossless-report-codec-fixed-source-20261007-a1.txt",
+      "bytes": 10938,
+      "sha256": "c5bf37148079ece83402e6c72c42258c8f31c6a1e7d10e8df3789ea9515b4bb5"
+    },
+    "selected_unsealed_static_comparison": {
+      "path": "/private/tmp/lanl14-lossless-gzip-source-static-comparison-r1-20261007-a1.json",
+      "bytes": 8468,
+      "sha256": "7cfffa847fa52a59f0adab33bf9edb41f5fdcc9ce75f2eb9a536102f48a93fc2"
+    },
+    "full_handoff": {
+      "path": "/private/tmp/lanl14-lossless-gzip-source-handoff-20261007-a1.md",
+      "bytes": 8361,
+      "sha256": "7405baf30fc85976654b7b1e867ecfd9a3792b5f212a076712b21861f756f6b5"
+    },
+    "original_bf5_exporter": {
+      "path": "/private/tmp/lanl14_final_export_catalog_caps_a4.py",
+      "bytes": 9036,
+      "sha256": "bf5add9eb35daa5402a0359f6ace5c542a289f9b60b14cbd00aa763097a9645d"
+    },
+    "original_3a_reader": {
+      "path": "/private/tmp/lanl14-readonly-nine-export-admission-20261007-a1.py",
+      "bytes": 25308,
+      "sha256": "3a0f1c59e63b8ff96ef42b84d0c4ce8e36e8059b49bc9c0bd17f2d95fa3e1101"
+    },
+    "initial0488_harness_NOT_RUN": {
+      "path": "/private/tmp/lanl14_lossless_report_codec_isolated_test_source_20261007_a1.py",
+      "bytes": 9421,
+      "sha256": "0488a233b41c2a78c835f46aaa5e9189851696c56b7a031a7a6a85a9a8b8a48a"
+    },
+    "initial_unselected_codec_source_NOT_RUN": {
+      "path": "/private/tmp/lanl14-lossless-report-codec-source-20261007-a1.txt",
+      "bytes": 10889,
+      "sha256": "84620b70976a1726af3a0b9b72704438dc2a6ba3ed590790d68643ba4075c2cf"
+    },
+    "initial_unsealed_static_comparison": {
+      "path": "/private/tmp/lanl14-lossless-gzip-source-static-comparison-20261007-a1.json",
+      "bytes": 6721,
+      "sha256": "eda48c14becb78d510ac6c91c79f0c3966e23e61cf5e75987305c5178a50ef46"
+    }
+  },
+  "native_interpreter_pin": {
+    "path": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3.12",
+    "bytes": 33816,
+    "sha256": "08fa4dbadc420090dfee2acf433b827ae05541f728d1478d96879122f53b4328"
+  },
+  "runner": {
+    "path": "/private/tmp/lanl14-run-reviewed-lossless-codec-isolated-tests-20261007-a1.py",
+    "sha256": "284ba33fafb6f8c31013e5c5d49dda1c25331308f668c32e75bdc0d11814c126"
+  },
+  "outputs": {
+    "start.json": {
+      "path": "/private/tmp/lanl14-lossless-codec-isolated-tests-actual-20261007-a1.start.json",
+      "bytes": 559,
+      "sha256": "0d0d7d8c2cd545e3a34be300ee48b61d0400071fad0da0e6ae0f45633f3f7e20",
+      "original_sealed": false
+    },
+    "stdout": {
+      "path": "/private/tmp/lanl14-lossless-codec-isolated-tests-actual-20261007-a1.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_sealed": false
+    },
+    "stderr": {
+      "path": "/private/tmp/lanl14-lossless-codec-isolated-tests-actual-20261007-a1.stderr",
+      "bytes": 1932,
+      "sha256": "a5e99fd87c436e6798b374b88d975665018eb605adf0b41c182c7551cbd887b4",
+      "original_sealed": false
+    }
+  },
+  "batch_invocations": 1,
+  "source_preparation_review_preserved": true,
+  "native_interpreter_preserved": true,
+  "runner_source_preserved": true,
+  "scientific_admission": false,
+  "actual_report_or_E_R_receipt_inputs_constructed": false,
+  "target_main_Store_validate_provider_native_compiler_campaign_remote_actions": 0,
+  "TDD_claim": "One isolated regression batch; no invented RED/GREEN claim.",
+  "scope": "Only the reviewed12 codec definitions+5 closed assignments are lifted; synthetic256/4096 byte caps and independent stdlib gzip oracle. No exporter/reader main, original report, public scientific records, Store, SSH or other control/test repeat. Original preparations/harness drafts remain NOTRUN history.",
+  "identity_sha256": "e6125ec2789df19834872f8a3078ab638959cea16b7f9fb0b9cf79b28561b516"
+}

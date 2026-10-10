@@ -1,0 +1,34 @@
+{
+  "checks": {
+    "all10_files_reconstructed_against_current_originals": true,
+    "all359_existing_assert_ASTs_unchanged": true,
+    "fixture_missing_contract_and_root_duplicate_symlink_refusals_preserved": true,
+    "fixture_uses_tmp_path_factory_not_no_build_test_tmp_path": true,
+    "forged_snapshot_store_isolated": true,
+    "fresh_store_and_directory_per_test": true,
+    "full_catalog_state_history_tests_opt_out_unchanged": true,
+    "helper_options_propagation_preserved": true,
+    "library_all_normative_record_reference_fields_rooted": true,
+    "new_helper_keyword_only_store_threading_complete": true,
+    "original_source_snapshot_identity_and_body_bytes_preserved": true,
+    "product_manifest_runtime_library_records_unchanged": true,
+    "real_compilation_evaluation_negative_controls_assertions_retained": true,
+    "record_subset_known_reference_closure_fail_closed": true
+  },
+  "diff": {
+    "bytes": 37475,
+    "path": "/private/tmp/lanl17-certification-fixture-scope-prospective-r1-20261008.diff",
+    "sha256": "cc936046da6a04346ea733e955af976e45cb50d746368bf24286a36a0ad581a8"
+  },
+  "format": "swdb.lanl17-certification-fixture-scope-independent-source-review.v1",
+  "human_date": "2026-10-08 ET",
+  "limitations": [
+    "No patch application, target imports, tests, SSH, providers or scientific controls by reviewer.",
+    "Closure selected from actual checked-in normative reference fields; execution and validation remain root-owned.",
+    "Runtime assertions still require the real integration rerun; parent POSIX shared-memory diagnostic outside sandbox does not itself pass certification."
+  ],
+  "parent_followup_before_apply": "Add Created:2026-10-08ET to new testkit docstring; root already accepted. Preserve original prospective diff.",
+  "reviewed_at_utc": "2026-10-09T01:04:28.243005+00:00",
+  "reviewer": "review_plan",
+  "verdict": "PASS_SOURCE_ONLY"
+}

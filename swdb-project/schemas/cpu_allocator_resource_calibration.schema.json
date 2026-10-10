@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cpu_allocator_resource_calibration",
+  "description": "Created2026-10-06 ET. Gross exact allocator-loop construction, frozen after service collection and before application timing; original paired rates retained and excluded.",
+  "properties": {
+    "kind": {
+      "const": "cpu_allocator_resource_calibration"
+    },
+    "schema_version": {
+      "const": "0.4"
+    },
+    "format": {
+      "const": "swdb.cpu-allocator-resource-calibration.v1"
+    },
+    "backend": {
+      "const": "native"
+    },
+    "evidence_kind": {
+      "enum": [
+        "fixture",
+        "native"
+      ]
+    },
+    "identity_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "target": {
+      "$ref": "#/$defs/id"
+    },
+    "threads": {
+      "enum": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ]
+    },
+    "context": {
+      "type": "object"
+    },
+    "settings": {
+      "type": "object"
+    },
+    "services": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1
+          },
+          "event_definition": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "type": "object"
+          },
+          "denominator": {
+            "type": "object"
+          },
+          "trials": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 11,
+            "items": {
+              "type": "object",
+              "properties": {
+                "events": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "gross_seconds": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "driver_seconds": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "order": {
+                  "enum": [
+                    "service_first",
+                    "driver_first"
+                  ]
+                }
+              },
+              "required": [
+                "events",
+                "gross_seconds",
+                "driver_seconds",
+                "order"
+              ]
+            }
+          },
+          "parameter": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "value": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "basis": {
+                "type": "string",
+                "x-vocab": "basis"
+              },
+              "source": {
+                "type": "string"
+              },
+              "unit": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "value",
+              "basis",
+              "source",
+              "unit"
+            ]
+          },
+          "seconds_per_event": {
+            "type": "object"
+          },
+          "cost_basis": {
+            "const": "gross_allocator_loop_resource_v1"
+          },
+          "gross_seconds_per_event": {
+            "type": "object"
+          },
+          "driver_seconds_per_event": {
+            "type": "object"
+          },
+          "paired_residual": {
+            "type": "object"
+          },
+          "paired_admission": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "unit",
+          "event_definition",
+          "scope",
+          "denominator",
+          "trials",
+          "parameter",
+          "seconds_per_event",
+          "cost_basis",
+          "gross_seconds_per_event",
+          "driver_seconds_per_event",
+          "paired_residual",
+          "paired_admission"
+        ]
+      }
+    },
+    "source_calibration_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_receipt_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_calibration": {
+      "$ref": "#/$defs/id",
+      "x-ref": "cpu_service_calibration"
+    },
+    "calibration_sources": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "$ref": "#/$defs/id",
+        "x-ref": "cpu_service_calibration"
+      }
+    },
+    "recipe": {
+      "type": "object"
+    },
+    "frozen_ns": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "required": [
+    "kind",
+    "schema_version",
+    "format",
+    "backend",
+    "evidence_kind",
+    "identity_sha256",
+    "target",
+    "threads",
+    "context",
+    "settings",
+    "services",
+    "source_calibration",
+    "source_calibration_sha256",
+    "source_receipt_sha256",
+    "calibration_sources",
+    "recipe",
+    "frozen_ns"
+  ]
+}

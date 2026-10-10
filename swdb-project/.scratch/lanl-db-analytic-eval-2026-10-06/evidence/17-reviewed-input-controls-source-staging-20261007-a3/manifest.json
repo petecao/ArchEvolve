@@ -1,0 +1,45 @@
+{
+  "format": "swdb.lanl17-reviewed-input-controls-source-staging-archival-custody.v1",
+  "archived_utc": "2026-10-07T14:55:18.493267+00:00",
+  "canonical_ensure_ascii": true,
+  "base": "5485322bf1867f31c20714666be6eec763778f6a",
+  "base_tree": "c7b7000828ca0ef68cc62f87c550f8bad1582a06",
+  "archive_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reviewed-input-controls-source-staging-20261007-a3/",
+  "entries": [
+    {
+      "role": "parent_source_staging_driver",
+      "origin": "/private/tmp/lanl-stage-reviewed17-input-controls-from-git-20261007-a3.py",
+      "snapshot": "lanl-stage-reviewed17-input-controls-from-git-20261007-a3.py",
+      "bytes": 5517,
+      "sha256": "95dc3ca5d4e4b79894451d0fb0d8d638177c9c45648c671be6fb56994ccc678f",
+      "original_bytes_preserved": true
+    },
+    {
+      "role": "original_actual_source_staging_receipt",
+      "origin": "/private/tmp/lanl17-reviewed-input-controls-staging-actual-20261007-a3.json",
+      "snapshot": "lanl17-reviewed-input-controls-staging-actual-20261007-a3.json",
+      "bytes": 3135,
+      "sha256": "35de54892ad2bc03a37117078bb3550ef3a58c6882fd532a3923625619f0d090",
+      "original_bytes_preserved": true,
+      "identity_sha256": "ac1f025b3e855b552d664448dc81fffda13aaaa72ffab825cc2ef997150269c4",
+      "original_canonical_ensure_ascii": true,
+      "original_seal_recomputed": true
+    }
+  ],
+  "exact_external_snapshot_count": 2,
+  "exact_external_snapshot_bytes": 8652,
+  "readme": {
+    "snapshot": "README.md",
+    "bytes": 1359,
+    "sha256": "ba1c633425bf097ea2d7966b88945b292ebe2a66033156c2ab17780351b623a9"
+  },
+  "original_staging_receipt_identity": "ac1f025b3e855b552d664448dc81fffda13aaaa72ffab825cc2ef997150269c4",
+  "original_four_source_Git_blobs_matched": true,
+  "source_staging_only": true,
+  "selected_controls_imported_or_executed": false,
+  "actual_inputs_Store_provider_native_campaign_scientific_admission": false,
+  "issue_status": "claimed",
+  "prior_blobs_modes_controls_source_records_maps_progress_docs_preserved_except_own_issue_append": true,
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "identity_sha256": "7d0b83627669e8dcb0a7ecafacb7837550f39ce789d630066f756bb833fda2b8"
+}

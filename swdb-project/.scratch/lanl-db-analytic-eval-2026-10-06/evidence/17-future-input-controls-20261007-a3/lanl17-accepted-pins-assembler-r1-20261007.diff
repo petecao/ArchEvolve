@@ -1,0 +1,30 @@
+--- /private/tmp/lanl17_assemble_selected_actual_input_pins_20261007.py
++++ /private/tmp/lanl17_assemble_selected_actual_input_pins_r1_20261007.py
+@@ -60,6 +60,10 @@
+     'attempt_before': 'collectorb08', 'attempt_after': 'collectorb08',
+     'ticket11_admission': 'cpu_reader8b', 'ticket11_export_receipt': 'cpu_export1d1251',
+     'ticket14_admission': 'generality_reader', 'ticket14_export_receipt': 'generality_export',
++    'freeze_publication': 'parent_capture', 'dispatch_state_corroboration': 'parent_capture',
++    'attempt_release': 'parent_capture', 'unclean_resume': 'parent_capture',
++    'trajectory_projection': 'parent_capture', 'outcome_refusal': 'parent_capture',
++    'interrupted_selected_bodies': 'parent_capture', 'public_candidate_selection': 'parent_capture',
+ }
+ ROOT_FIELDS = {
+     'freeze_export', 'report_export', 'manifest_M2', 'policy_id', 'report_id',
+@@ -127,6 +131,8 @@
+ 
+ class OriginalLoader(getattr(yaml, 'CSafeLoader', yaml.SafeLoader)):
+     pass
++
++OriginalLoader.yaml_implicit_resolvers={first:[(tag,regexp) for tag,regexp in rows if tag!='tag:yaml.org,2002:timestamp'] for first,rows in OriginalLoader.yaml_implicit_resolvers.items()}
+ 
+ def unique_yaml(loader, node, deep=False):
+     out = {}
+@@ -437,6 +443,7 @@
+     originals.remaining()
+     require(spec_path.read_bytes() == spec_raw, 'original_parent_spec_changed')
+     for snap in source_snapshots.values(): require(hash_bytes(local_path(snap['path']).read_bytes()) == snap['sha256'], 'approved_source_changed')
++    require(hash_bytes(local_path(__file__).read_bytes()) == review['assembler_sha256'], 'assembler_source_changed_before_publication')
+     root.update(format='swdb.lanl17-selected-admission-pins.v2', source_C=C, estimator_sha256=F6,
+                 final_R={'commit': args.final_r, 'tree': args.final_r_tree}, auditor_sha256=AUDITOR,
+                 collector_sha256=COLLECTOR, canonical_ensure_ascii=True,

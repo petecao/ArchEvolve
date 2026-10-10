@@ -1,0 +1,293 @@
+{
+  "created": "2026-09-26T19:41:13.618958-04:00",
+  "state": "verified",
+  "export": "d11dc04449997734a93b982646977b04008afeff",
+  "source": "9cd2f82a2347851066bb771a7822ad0000014489",
+  "branch": "refs/heads/codex/bfs-simulator-campaign-20260926-a1",
+  "sole_parent_chain": [
+    "d11dc04449997734a93b982646977b04008afeff",
+    "5db2bec9735524b92d6ffd40dd10e76854584141",
+    "21d58c4812a368d1707e7d1f5eae9758c0be7a75",
+    "3f38a2bf9cde4fb23edebd787a9d4d8ab9549e07"
+  ],
+  "source_file_count": 21,
+  "total_changed_files": 22,
+  "source_bytes": 451621,
+  "manifest": {
+    "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/observations/simulator-campaign-export-20260926-a1.json",
+    "bytes": 6347,
+    "sha256": "c02a7ae9fb674fe507ad5a1c0a2b919ff780f63c8c9a9613c5b688cbc3523558"
+  },
+  "total_child_bytes_including_manifest": 457968,
+  "files": [
+    {
+      "path": "scripts/bfs_a2_linux_fixture.py",
+      "bytes": 15972,
+      "sha256": "0642c530d3b620691692e95708b99fc8204eb90ba0501f6c07abd94df73cfae6",
+      "blob": "2a9d7b10a71a6c24149c632af9a22002272ca0e6",
+      "mode": "100644",
+      "matches_source": true
+    },
+    {
+      "path": "scripts/bfs_dx100_coverage_a2.py",
+      "bytes": 46202,
+      "sha256": "e9bbbf81733c3b24afa03a516b4c81b18b8e192f214d7f0471ec2424013767f0",
+      "blob": "01e90a0c4bd1c8d73128217f1e8c096442064a02",
+      "mode": "100644",
+      "matches_source": true
+    },
+    {
+      "path": "scripts/bfs_freeze_pilot.py",
+      "bytes": 54812,
+      "sha256": "5b7722c46afdd19f483516963ddd11764bb2e54aaa8ff3d1a061f598eb6b3552",
+      "blob": "d8c663f3e70053f24ddff193e4c19748cae6edd2",
+      "mode": "100644",
+      "matches_source": true
+    },
+    {
+      "path": "scripts/bfs_native_campaign.py",
+      "bytes": 72667,
+      "sha256": "92a2e17d0cb8813da75e03d6ade2c0ff9d1792c5df34f26831d7b9a585c51a3b",
+      "blob": "2fa861001fbc61ac46131827f04a060f341feb2b",
+      "mode": "100644",
+      "matches_source": true
+    },
+    {
+      "path": "scripts/bfs_one_thread_calibration.py",
+      "bytes": 23642,
+      "sha256": "77fc98b00e745122668b35e7b1f3bbe383a80009315a5a24865f992b08da201a",
+      "blob": "f147802f58ed96d66b9ea6c2235c0484774cf0af",
+      "mode": "100644",
+      "matches_source": true
+    },
+    {
+      "path": "scripts/bfs_simulator_series.py",
+      "bytes": 30014,
+      "sha256": "cc8f514127ab509c4ea16fdd4a06c6c45d704e4fdb718c53ad9fcd9dfaf6edb6",
+      "blob": "8be4e39b95c4e95f2183405cdb9b6a70bc52c1b6",
+      "mode": "100644",
+      "matches_source": true
+    },
+    {
+      "path": "tests/test_bfs_a2_linux_fixture.py",
+      "bytes": 14372,
+      "sha256": "d2e82e00fcfcccf4681870d0360265c221c6eaf0da0673bf2dcba0e88be21804",
+      "blob": "f5ed3095c871750a876c4f1c66d13f4880e1009a",
+      "mode": "100644",
+      "matches_source": true
+    },
+    {
+      "path": "tests/test_bfs_client_databases.py",
+      "bytes": 7326,
+      "sha256": "8e7ada1c355f667da171037c8a7caab33dfb7484c630d0d608acb00f32e88fa0",
+      "blob": "c932150757f482b7454f904090af825ca2e157c5",
+      "mode": "100644",
+      "matches_source": true
+    },
+    {
+      "path": "tests/test_bfs_freeze_pilot.py",
+      "bytes": 33294,
+      "sha256": "23f09c0239549ed5b8ad328a6e8ecf5fe0a1ccf9a2a8249ba781ce0ac89667ae",
+      "blob": "9764c39681d5d92d5d0f55956f514eae1d348c10",
+      "mode": "100644",
+      "matches_source": true
+    },
+    {
+      "path": "tests/test_bfs_native_execution.py",
+      "bytes": 24844,
+      "sha256": "079ac071c5f6c8309be3eb0a0973f363abf14c554ad0bb6f9a45ee79b0806b13",
+      "blob": "f0c2d41459efc06f67b32e33408cb8ce7ad1836e",
+      "mode": "100644",
+      "matches_source": true
+    },
+    {
+      "path": "tests/test_bfs_one_thread_freeze.py",
+      "bytes": 32353,
+      "sha256": "75c5910d9c237c6dccf0a2178f871089e4a7bc95d9d3d48ad53097f38aee3d08",
+      "blob": "9952df1ab996d35253d4057ed351c194f69f49cc",
+      "mode": "100644",
+      "matches_source": true
+    },
+    {
+      "path": "tests/test_bfs_t17_build_only.py",
+      "bytes": 23083,
+      "sha256": "cffc863b8f32dce38611c7d2596ccf1491deae5afbbf820851d2d3fb9e11ff32",
+      "blob": "1088ad0e15bfa9f79e2f88712851a2d90bc9db7d",
+      "mode": "100644",
+      "matches_source": true
+    },
+    {
+      "path": "tests/test_dx100_interruption.py",
+      "bytes": 7467,
+      "sha256": "abfec3c0aa58f3c52506df4f463d1573cef118e8e14547a4298e064d4941aa46",
+      "blob": "93b0998a087ecffbcb5622e895c0f8fb7bdd1470",
+      "mode": "100644",
+      "matches_source": true
+    },
+    {
+      "path": ".scratch/bfs-rewrite-evaluation-2026-09-25/requests/dx100-coverage-a2-20260926.json",
+      "bytes": 5778,
+      "sha256": "ffede85845f651322d1149fc04fb1d4d3cd604224d7b10e560b342ff23c4e08d",
+      "blob": "9a0d47f0c505889ea14394c454f89a7e9eb0104d",
+      "mode": "100644",
+      "matches_source": true
+    },
+    {
+      "path": "docs/bfs-a2-linux-fixture-20260926.md",
+      "bytes": 6471,
+      "sha256": "0d11bb8ac12c6b722d24892c9d74aaef9905d892f0f9527303fec09fce8ec1f7",
+      "blob": "b4bf13b8fa822578ec2b7cf61ae22e5b226161b4",
+      "mode": "100644",
+      "matches_source": true
+    },
+    {
+      "path": "docs/bfs-dx100-coverage-a2-plan-20260926.md",
+      "bytes": 16755,
+      "sha256": "d5cc5172770d25c7671247de81b986ce1bdfd49227d92044e1ce75b393a9974d",
+      "blob": "19439eebe0c89320a868b27fc659a02f0a11e541",
+      "mode": "100644",
+      "matches_source": true
+    },
+    {
+      "path": "docs/bfs-one-thread-freeze-20260926.md",
+      "bytes": 8437,
+      "sha256": "0216b06cc93a141939b7e64d5268948a59dc0df7bca12fa010ce2e1b6d565054",
+      "blob": "bdbfa4cd798b7dcbee5313cc3187026533aaf128",
+      "mode": "100644",
+      "matches_source": true
+    },
+    {
+      "path": "docs/bfs-pilot-freeze.md",
+      "bytes": 10245,
+      "sha256": "96e632220d7f49d413371e23deb28592a32f9487a86788c037cff4aa538a0a24",
+      "blob": "4881f12d0e031268aef7f3afad677bace64aef92",
+      "mode": "100644",
+      "matches_source": true
+    },
+    {
+      "path": "docs/bfs-post-a2-batch-sequence-20260926.md",
+      "bytes": 7680,
+      "sha256": "b1a9186aa4b23e7ef6603c86133fe62a47eac3b16d3252aa8c5e6335c3d79953",
+      "blob": "cd289add9832a3c56b1333a61fbc3679aaf24e9e",
+      "mode": "100644",
+      "matches_source": true
+    },
+    {
+      "path": "docs/bfs-native-qualification-continuation-20260926.md",
+      "bytes": 3599,
+      "sha256": "b4bc27d859eb2a65d7c246f9700b6f360eab1981696b71ef29ec767181f4ffbc",
+      "blob": "f2b142f1b4fdee96775869cf5e4100fd2bd4f607",
+      "mode": "100644",
+      "matches_source": true
+    },
+    {
+      "path": "docs/bfs-t16-freeze-preflight-20260926.md",
+      "bytes": 6608,
+      "sha256": "5e66d38087e7f60fbb509348e41a5038a0234f2720e67003895291a3e9ad2496",
+      "blob": "c7c1777d402957a3701fe84064d0f30535d82593",
+      "mode": "100644",
+      "matches_source": true
+    }
+  ],
+  "metadata_additions": [
+    {
+      "path": "records/evaluations/bfs-dx100-coverage-20260926-a2.compile.yaml",
+      "bytes": 17424,
+      "sha256": "cad6474eae6ed7cd588a3a82f57fc0489a9cd5bf515edd791830cba0c1b6fffa",
+      "canonical_sha256": "95e0598b484ab6794f6a2a77d6e5f250cd2ed787c8ada3a70d71f55af65ec8c9",
+      "maximum_string_length": 174,
+      "multiline_strings": 0,
+      "inline_source_or_rawlog_fields": 0
+    },
+    {
+      "path": "records/evaluations/bfs-dx100-coverage-20260926-a2.execute.yaml",
+      "bytes": 44835,
+      "sha256": "06c14337c23210cf86c848f803956deddf1afce94fe3d71f1482f8597526eb4c",
+      "canonical_sha256": "c213c93028e8bfcb85aaad4772cc1034953e0cd9e757c4d77c02c2b9f3f90bc6",
+      "maximum_string_length": 179,
+      "multiline_strings": 0,
+      "inline_source_or_rawlog_fields": 0
+    },
+    {
+      "path": "records/workloads/bfs-dx100-coverage-20260926-a2.workload.6b1e2f2dc16f6a0e.yaml",
+      "bytes": 1851,
+      "sha256": "00c99c6804b4353472a1d6604b620d1374e6b5f05ba250789a0ec8419a971662",
+      "canonical_sha256": "1e6d910df66c8b9393fd6b33bcd18afe3b6d398afa39532f2867d1a884e8232e",
+      "maximum_string_length": 108,
+      "multiline_strings": 0,
+      "inline_source_or_rawlog_fields": 0
+    },
+    {
+      "path": "records/protocols/bfs-author-reference-20260925.b4cbd3924b40e7df.yaml",
+      "bytes": 10990,
+      "sha256": "a1e80b7b7d8e0e8ecc75934420a18266d136184ca41127da0c565eb0786c8c97",
+      "canonical_sha256": "2794aa124bcef6d923a43d5842872e5e5a6c6b338292634a4d860e4e16cc5524",
+      "maximum_string_length": 82,
+      "multiline_strings": 0,
+      "inline_source_or_rawlog_fields": 0
+    },
+    {
+      "path": "records/protocols/bfs-author-matched-control-20260925.d02e719e2d375764.yaml",
+      "bytes": 11066,
+      "sha256": "603c82f4ae48da45be93a6a1da1b6bb03609b5c3cebead8881812bf26c22edd7",
+      "canonical_sha256": "453fc651d8bdcc2e670eb7a086ea65eb3cbe222cbb2020aa4944cb8be7d80778",
+      "maximum_string_length": 115,
+      "multiline_strings": 0,
+      "inline_source_or_rawlog_fields": 0
+    }
+  ],
+  "metadata_bytes": 86166,
+  "existing_anchor_count": 17,
+  "all_anchors_exact": true,
+  "all_runtime_and_test_objects_equal_source": true,
+  "full_runtime_file_count": 261,
+  "held_paths_absent": [
+    "records/proposals/bfs-campaign-preparation-20260925-a1.dx100-instructions.yaml",
+    "records/candidates/bfs-campaign-preparation-20260925-a1.dx100-instructions.candidate-1.yaml",
+    "records/proposals/bfs-campaign-preparation-20260925-a1.upstream-instructions.yaml",
+    "records/candidates/bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1.yaml",
+    "records/proposals/bfs-campaign-preparation-20260925-a1.upstream-annotated.yaml",
+    "docs/evidence/bfs-provider-initial-20260926-a1.yaml",
+    "records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.pair.yaml",
+    "records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.pair.yaml",
+    "records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.pair.yaml",
+    "records/evaluation_pairs/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.pair.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.candidate.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.candidate.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.candidate.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.yaml",
+    "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.candidate.yaml",
+    "records/profile_packages/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.package.v1.122d39652ae0c326.yaml",
+    "records/profile_packages/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.package.v1.b8f33855cc6c657e.yaml",
+    "records/profile_packages/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.package.v1.f613a3b01a24e380.yaml",
+    "records/profile_packages/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.package.v1.ffd9925db46a63a9.yaml",
+    "records/region_profiles/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.profile.yaml",
+    "records/region_profiles/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.profile.yaml",
+    "records/region_profiles/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.profile.yaml",
+    "records/region_profiles/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.profile.yaml",
+    "records/source_snapshots/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.package.v1.source.yaml",
+    "records/source_snapshots/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.package.v1.source.yaml",
+    "records/source_snapshots/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.package.v1.source.yaml",
+    "records/source_snapshots/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.package.v1.source.yaml"
+  ],
+  "held_5f_ancestry_absent": true,
+  "unrelated_new_paths": [],
+  "a2_binding": {
+    "measured_commit": "5a0b15fe666b2d094a2b2b9847ff5a30ef16fb4f",
+    "plan_canonical_sha256": "d78c09751d9b56abddcce0a7217983fc1652ef6dc83c09fc55ecf8a9a4d4be5a",
+    "required_runtime_matches_measured": true,
+    "corrected_test_matches": true
+  },
+  "standard_proof_requirements": [
+    "Final export HEAD is fixed before fresh standard owned_cleanup four-case and dx100_interruption two-case Linux proofs; previous A2/manual proofs do not qualify.",
+    "Runtime identity includes all tracked scripts/tests plus core schema/vocab/native tools/pyproject; database caches and outputs must remain outside code root.",
+    "Actual A2 completed reader reopens the retained measured5a0 runtime_root. New campaign pin does not replace that checkout."
+  ],
+  "limits": [
+    "Read-only Git object and typed source-free metadata verification only; no worktree mutation, host access, test suite, fresh proof, dispatch or empirical acceptance.",
+    "Metadata content safety is bounded by exact five-file allowlist, matching sealed inventories, decoded field review and no multiline/inline source/raw fields; existing approved3f38 tree inherited unchanged except21 listed technical/doc/plan paths."
+  ]
+}

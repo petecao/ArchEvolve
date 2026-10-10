@@ -1,0 +1,65 @@
+kind: evaluation
+schema_version: '0.4'
+id: bfs-dx100-smoke-20260925-a2
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-dx100-smoke-20260925-a2
+  machine: mbit10
+  hardware_target: dx100-e4fc4af-4c
+  model_root: /data1/yanruj/DX100-bfs-e4fc4af
+  build_evaluation: bfs-dx100-build-20260925-a2
+  simulator:
+    path: /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+    sha256: f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b
+  binary:
+    path: /data1/yanruj/DX100-bfs-e4fc4af/benchmarks/gapbs/bfs_maa
+    sha256: 6abd8190e4e1daf7c670c214dd0323393e3d29a9a26a3487c21f66e5ef194a5d
+  workload:
+    id: bfs-dx100-smoke-20260925-a2.uniform64-diagnostic
+    source: 0
+    representation:
+      path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a2.driver/uniform64.sg
+      sha256: 00d156b95baa9806c8e7623400e0347770942aee64dbed227309886ee605f78b
+  configuration:
+    mode: MAA
+    l3_size_mb: 8
+    l3_assoc: 16
+    tile_elements: 16384
+  verification:
+    checker: dx100.bfs.verifier.v1
+    max_ticks: 1000000000000
+  budget:
+    total_seconds: 1100
+    memory_gib: 16
+    storage_gib: 2
+    checkpoint_seconds: 120
+    run_seconds: 900
+outcome:
+  state: failed
+  stage: validation
+  reason: model source is not the clean pinned DX100 revision
+stages: []
+timing: []
+correctness:
+  state: unverified
+  checks: []
+profiling:
+  state: incomplete
+  reasons:
+  - BFS ROI, regions, and memory metrics require the profile collector.
+raw_artifacts: []
+gain_claim: false
+evidence_kind: execution

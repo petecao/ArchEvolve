@@ -1,0 +1,205 @@
+--- lanl-stage-reviewed17-input-author-sources-from-git-20261007-a1-r1.py
++++ lanl-stage-reviewed17-index-privacy-envelope-source-from-git-20261007-a1.py
+@@ -1,6 +1,6 @@
+ """NOT RUN: reviewed source-copy staging, requiring a parent supplied deliveredRevision.
+ 
+-Future invocation copies three exact Git source blobs only. It does not import or
++Future invocation copies one exact Git envelope source blob only. It does not import or
+ execute those sources, read a research catalog, construct inputs, or run tests.
+ All earlier source stages stay unopened. Parent review and SSH ownership remain
+ required. Failures retain partial output and expose only exception class/hash.
+@@ -17,49 +17,21 @@
+ 
+ SOURCE_C = 'f893fed400347ed23d92e917d8bde21b75e5375d'
+ ESTIMATOR_F6 = 'f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3'
+-OUTPUT = Path('/private/tmp/lanl17-reviewed-input-author-sources-staging-actual-20261007-a1.json')
+-CONFIG = [{'target': 'publication_author.py',
+-  'source': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-first-publication-request-author-controls-20261007-r1/lanl17_author_first_publication_request_r1_20261007.py',
+-             'bytes': 28419,
+-             'sha256': '791f95b5f53c23740ce8b2bdd72fc8dcd625494a60f5399f30b5ed704347fb1a'},
+-  'review': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-first-publication-request-author-controls-20261007-r1/lanl17-first-publication-request-author-parent-review-20261007.json',
+-             'bytes': 5706,
+-             'sha256': 'a6f4574017f8b3879448319630691fb61b7a7476c09bf4d216c4bd9c187d9a4b',
+-             'format': 'swdb.lanl17-first-publication-request-author-parent-source-review.v1',
+-             'identity_sha256': '55d73e22fe4eb42a68a8582bc2bfb7e5630ef0168c89c57ff81c428377f64e28'},
+-  'manifest': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-first-publication-request-author-controls-20261007-r1/manifest.json',
+-               'bytes': 6332,
+-               'sha256': '1f6548fae8020b98ed64d0ba05c630e381ab1f432cbfc8137d857ade3d2d5915',
+-               'format': 'swdb.lanl17-first-publication-request-author-controls-archival-custody.v1',
+-               'identity_sha256': 'fde1fa2af039149728ffb593395c3792096fc7ad56d095e90ec8409a714c4b65'}},
+- {'target': 'index_request_author.py',
+-  'source': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-parent-index-request-author-controls-20261007-r1/lanl17_author_parent_full_record_index_request_r1_20261007.py',
+-             'bytes': 38266,
+-             'sha256': 'a2e69aef10deb6186ac49401516ffba9a165b2f3cc94c8001646b6ac9a5b701d'},
+-  'review': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-parent-index-request-author-controls-20261007-r1/lanl17-index-request-author-r1-parent-review-20261007.json',
+-             'bytes': 4493,
+-             'sha256': 'dfeb44d5380b39ccb429f2069482ef9b11ff1f48614d590439781d2133cfc22e',
+-             'format': 'swdb.lanl17-index-request-author-r1-parent-source-review.v1',
+-             'identity_sha256': '8ee0b630581889aacca633bd0f067cad03410095fac88978c9c4a5e81fca2cf3'},
+-  'manifest': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-parent-index-request-author-controls-20261007-r1/manifest.json',
+-               'bytes': 10452,
+-               'sha256': '0e2bb2ddbb94be542bf172ba03230649f25bb6c405ceaf0be02273541e8cc52d',
+-               'format': 'swdb.lanl17-parent-index-request-author-controls-retention.v1',
+-               'identity_sha256': '8043407506aa0d65107f37e2a9d95a3c9abcc077a0738c3efeccc076f8140f84'}},
+- {'target': 'passive_inventory.py',
+-  'source': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-passive-one-catalog-inventory-controls-20261007/lanl17_read_passive_one_catalog_inventory_20261007.py',
+-             'bytes': 29653,
+-             'sha256': '76b86959ceca7a162a34b7a2d1e633ee9523d0b9cc7f629e9fbeeb4e101aa176'},
+-  'review': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-passive-one-catalog-inventory-controls-20261007/lanl17-passive-inventory-parent-review-20261007.json',
+-             'bytes': 5062,
+-             'sha256': '44bc9076f5cc1451112c5b01dccd467fcdfde0d2dfe01525c04e56f25d97058f',
+-             'format': 'swdb.lanl17-passive-inventory-parent-source-review.v1',
+-             'identity_sha256': '2845ba8c4d085c6d03b41bb5332fd144eb930b25f6bfd08801c16301de80dc21'},
+-  'manifest': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-passive-one-catalog-inventory-controls-20261007/manifest.json',
+-               'bytes': 8931,
+-               'sha256': '58602bce973ef6b7c9162128e4d288a5f36b257454bfae84ab683f4d30745e47',
+-               'format': 'swdb.lanl17-passive-one-catalog-inventory-archive.v1',
+-               'identity_sha256': '3494b0fa965fc6bfc1f0425f5b3630f76f1723d72e7a979a4e90ac83824f143e'}}]
++OUTPUT = Path('/private/tmp/lanl17-reviewed-index-privacy-envelope-source-staging-actual-20261007-a1.json')
++CONFIG = [{'target': 'envelope.py',
++  'source': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-privacy-envelope-controls-20261007/lanl17_remote_original_index_writer_privacy_envelope_20261007.py',
++             'bytes': 38790,
++             'sha256': '1ee5ffbdf1ef322cfd5bfec4b6e402c29d23c776e855f01d25208ebbece0fcfc'},
++  'review': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-privacy-envelope-controls-20261007/lanl17-original-index-writer-privacy-envelope-parent-review-20261007.json',
++             'bytes': 7051,
++             'sha256': '70beddcfeb95e3b612476b358021581b288b031321be01b2e95c6dfd4f3c383a',
++             'format': 'swdb.lanl17-original-index-writer-privacy-envelope-parent-source-review.v1',
++             'identity_sha256': '4a1023632f0db9da20860d1ade13efac5503bea6eabd0854a1432208cfb4a443'},
++  'manifest': {'path': 'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-privacy-envelope-controls-20261007/manifest.json',
++               'bytes': 8784,
++               'sha256': '69e9ee241ad19e45dd89cfd974c311633926a6c10b41ffb8242a4e5b2febf03a',
++               'format': 'swdb.lanl17-original-index-writer-privacy-envelope-archival-custody.v1',
++               'identity_sha256': '0e916296aea2b8c0ba930c5bf11f15e0b4b2b7de05192594a2786fa496e4de1d'}}]
+ 
+ REMOTE = r'''
+ import datetime,hashlib,json,os,pathlib,pwd,signal,socket,stat,subprocess,sys,time
+@@ -69,7 +41,7 @@
+ DRIVER_SHA='__LOCAL_DRIVER_SHA__'
+ SOURCE_C='f893fed400347ed23d92e917d8bde21b75e5375d'
+ F6='f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3'
+-RECEIPT_FORMAT='swdb.lanl17-reviewed-input-author-sources-staging.v1'
++RECEIPT_FORMAT='swdb.lanl17-reviewed-index-privacy-envelope-source-staging.v1'
+ KEYS=('st_dev','st_ino','st_uid','st_mode','st_size','st_mtime_ns','st_ctime_ns')
+ 
+ def sha(raw):return hashlib.sha256(raw).hexdigest()
+@@ -151,59 +123,36 @@
+   return row
+  def custody(config,source,review_raw,manifest_raw):
+   review=sealed(review_raw,config['review']);manifest=sealed(manifest_raw,config['manifest'])
+-  assert manifest['source_C']==SOURCE_C and manifest['estimator_sha256']==F6
+-  assert review['scientific_admission'] is False
+-  target=config['target'];pin=config['source']
+-  if target=='publication_author.py':
+-   assert review['selected_author_sha256']==pin['sha256']
+-   assert review['parent_full_original_source_and_complete_R1_patch_review'] is True
+-   assert review['independent_agent02_full_source_and_R1_recheck'] is True and review['remaining_concrete_source_blockers']==0
+-   assert review['actual_author_main_executed'] is False
+-   assert review['actual_specification_request_capture_or_observations_constructed'] is False
+-   assert review['actual_metadata_campaign_or_scientific_execution'] is False
+-   assert review['source_C']==SOURCE_C and review['estimator_sha256']==F6
+-   rows=[v for v in review['source_pins_verified'] if v['sha256']==pin['sha256']]
+-   assert len(rows)==1;exact_pin(rows[0],pin)
+-   row=entry(manifest,'selected_R1_source_only_author',pin);assert row['original_bytes_preserved'] is True
+-   row=entry(manifest,'parent_complete_source_review_proof',config['review'],seal_key='identity_sha256')
+-   assert row['original_bytes_preserved'] is True and manifest['Python_modules_exact_C']==185
+-  elif target=='index_request_author.py':
+-   assert review['selected_author_sha256']==pin['sha256']
+-   assert review['full_parent_and_independent_source_reviews_completed'] is True and review['exact_original_byte_reversal_verified'] is True
+-   assert review['actual_synthetic_test_bodies_passed']==5 and review['batch_invocations']==1
+-   assert review['actual_author_main_executed'] is False and review['actual_inputs_constructed'] is False
+-   assert review['remote_staging_or_campaign_executed'] is False
+-   assert review['future_use_requires_separate_explicit_real_input_parent_review'] is True
+-   assert review['original7a_actual_execution_requires_private_remote_stderr_envelope'] is True
+-   exact_pin(review['pins']['r1_author'],pin)
+-   entry(manifest,'r1_author',pin,'path')
+-   entry(manifest,'parent_complete_review_receipt',config['review'],'path','original_identity_sha256')
+-   assert manifest['unchanged7a_requires_reviewed_outer_private_remote_stderr_envelope'] is True
+-  elif target=='passive_inventory.py':
+-   assert review['selected_reader_sha256']==pin['sha256']
+-   assert review['full_parent_and_independent_source_and_harness_reviews_completed'] is True
+-   assert review['actual_synthetic_test_bodies_passed']==4 and review['batch_invocations']==1
+-   assert review['actual_reader_main_executed'] is False and review['actual_inventory_or_summary_constructed'] is False
+-   assert review['remote_staging_or_campaign_executed'] is False
+-   assert review['future_use_requires_separate_real_input_parent_review'] is True
+-   exact_pin(review['pins']['reviewed_reader_source_pin'],pin)
+-   for role,p in (('reviewed_reader_source_pin',pin),('parent_review_json',config['review'])):
+-    row=manifest['snapshots'][P(p['path']).name]
+-    assert row['role']==role and row['size_bytes']==p['bytes'] and row['sha256']==p['sha256']
+-   rows=[v for v in manifest['sealed_snapshot_objects'] if v['path']==P(config['review']['path']).name]
+-   assert len(rows)==1 and rows[0]['identity_sha256']==config['review']['identity_sha256'] and rows[0]['canonical_ensure_ascii'] is True
+-   assert manifest['python_modules']==185
+-  else:raise ValueError('Unexpected staging target')
+-  assert len(source)==pin['bytes'] and sha(source)==pin['sha256']
++  assert manifest['source_C']==SOURCE_C and manifest['estimator_F6']==F6
++  assert manifest['scientific_admission_or_ticket_resolution'] is False
++  assert config['target']=='envelope.py'
++  assert review['complete_parent_source_read'] is True and review['complete_independent_ticket04_source_read'] is True
++  assert review['concrete_blockers_found']==[] and review['actual_envelope_invocation_reviewed'] is False
++  assert review['no_new_execution_or_scientific_evidence'] is True
++  assert all(value==0 for value in review['not_performed'].values())
++  exact_pin(review['prepared_packet_pins']['envelope'],config['source'])
++  assert len(review['independently_verified_function_class_AST_matches'])==23
++  assert all(row['AST_equal'] is True for row in review['independently_verified_function_class_AST_matches'])
++  assert len(review['independently_verified_original_constant_Assign_names'])==12
++  assert len(review['actual_input_argv_outer_capture_review_required'])==8
++  row=entry(manifest,'source_only_NOTRUN_envelope',config['source']);assert row['original_bytes_preserved'] is True
++  row=entry(manifest,'parent_complete_True_source_review',config['review'],seal_key='original_identity_sha256')
++  assert row['original_bytes_preserved'] is True
++  assert manifest['Python_modules_Git_equal_C']==185
++  assert manifest['source_review']['identity_sha256']==config['review']['identity_sha256']
++  assert manifest['source_review']['full_parent_and_independent04'] is True
++  assert manifest['source_review']['actual_envelope_invocation_reviewed'] is False
++  assert manifest['source_review']['actual_argv_inputs_outer_private_capture_review_still_required'] is True
++  assert len(source)==config['source']['bytes'] and sha(source)==config['source']['sha256']
+   return review,manifest
+  source_gate();assert python_tree(SOURCE_C)==python_tree(REVISION)
+- assert {v['target'] for v in CONFIG}=={'publication_author.py','index_request_author.py','passive_inventory.py'} and len(CONFIG)==3
++ assert {v['target'] for v in CONFIG}=={'envelope.py'} and len(CONFIG)==1
+  originals={}
+  for config in CONFIG:
+   raws={role:original_blob(config[role]) for role in ('source','review','manifest')}
+   custody(config,raws['source'],raws['review'],raws['manifest'])
+   originals[config['target']]=raws
+- destination=base/'lanl17-input-author-source-20261007-a1'
++ destination=base/'lanl17-index-privacy-source-20261007-a1'
+  assert not destination.exists() and not destination.is_symlink()
+  source_gate();remaining();destination.mkdir(mode=0o700)
+  assert checked(destination,True)==destination and destination.stat().st_mode&0o777==0o700
+@@ -247,13 +196,13 @@
+       'sources':[{'target':str(destination/v['target']),'mode':'0600','source_git_pin':v['source'],
+                   'original_review_git_pin':dict(v['review'],canonical_ensure_ascii=True),
+                   'original_manifest_git_pin':dict(v['manifest'],canonical_ensure_ascii=True)} for v in CONFIG],
+-      'receipt_written_on_remote':False,'remote_destination_contains_only_three_source_files':True,
++      'receipt_written_on_remote':False,'remote_destination_contains_only_one_source_file':True,
+       'source_imports_or_selected_mains_executed':False,'actual_inputs_or_catalog_read_or_constructed':False,
+       'Store_validate_campaign_native_provider_collector_auditor_tests_executed':False,
+       'scientific_admission':False,'environment_or_authentication_contents_read':False,
+       'earlier_stages_including_original7a_opened_or_modified':False,
+       'untracked_files_cleaned_or_modified':False,'remote_seconds_limit':60,'SSH_seconds_limit':120,
+-      'scope':'Fresh source copies only; exact original reviews and NOTRUN/later synthetic chronology retained. Actual input review and executions require separate parent approval; original7a execution still requires its reviewed private remote stderr envelope.'}
++      'scope':'One exact envelope source copy only; original source preparation/review chronology retained. No envelope/original7a main or actual inputs. Real argv/input and separate private remote startup/outer-capture review remain required before execution.'}
+  row['identity_sha256']=digest(row)
+  encoded=(json.dumps(row,indent=2,ensure_ascii=True,allow_nan=False)+'\n').encode();assert len(encoded)<=16384
+  source_gate();remaining();sys.stdout.buffer.write(encoded);sys.stdout.buffer.flush()
+@@ -335,7 +284,7 @@
+                            ';stderr_sha256=' + sha(result.stderr))
+     assert len(result.stdout) <= 16384 and result.stderr == b''
+     row = strict_json(result.stdout)
+-    assert row['format'] == 'swdb.lanl17-reviewed-input-author-sources-staging.v1'
++    assert row['format'] == 'swdb.lanl17-reviewed-index-privacy-envelope-source-staging.v1'
+     assert row['canonical_ensure_ascii'] is True
+     assert row['identity_sha256'] == digest({k: v for k, v in row.items() if k != 'identity_sha256'})
+     assert row['source_git_revision'] == revision and row['source_git_branch'] == 'yanrujhou_main'
+@@ -344,9 +293,9 @@
+     assert row['scientific_source_C'] == SOURCE_C
+     assert row['scientific_python_modules_Git_blob_equal_C'] == 185
+     assert row['estimator_F6_from_exact_original_reviewed_custody'] == ESTIMATOR_F6
+-    assert row['destination'] == '/data1/yanruj/lanl17-input-author-source-20261007-a1'
+-    assert row['directory_mode'] == '0700' and row['remote_destination_contains_only_three_source_files'] is True
+-    assert row['receipt_written_on_remote'] is False and len(row['sources']) == 3
++    assert row['destination'] == '/data1/yanruj/lanl17-index-privacy-source-20261007-a1'
++    assert row['directory_mode'] == '0700' and row['remote_destination_contains_only_one_source_file'] is True
++    assert row['receipt_written_on_remote'] is False and len(row['sources']) == 1
+     for config, saved in zip(CONFIG, row['sources']):
+         assert saved['target'] == row['destination'] + '/' + config['target'] and saved['mode'] == '0600'
+         assert saved['source_git_pin'] == config['source']

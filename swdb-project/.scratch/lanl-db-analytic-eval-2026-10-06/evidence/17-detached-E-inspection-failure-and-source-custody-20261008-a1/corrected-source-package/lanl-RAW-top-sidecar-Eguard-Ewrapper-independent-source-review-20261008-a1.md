@@ -1,0 +1,29 @@
+# E guard / detached wrapper: exact original top lane sidecar review
+
+Independent SOURCE-ONLY review by ticket04. Both complete selected sources, complete foundation diffs, handoff, selected original UNSEALED static comparison and the original sidecar/namespace custody were read. The first combined source display was truncated; the omitted guard tail and wrapper header were then read explicitly. No target import, compilation, definition invocation, lift, main, test, SSH, Git/worktree mutation, source copy, default inspection, removal or scientific action occurred.
+
+Outcome: no concrete blocker found in this correction. This is source acceptance only. Neither new main has been executed, and no removal, capacity, global-consumer or scientific admission is supplied.
+
+## Exact reviewed packet
+
+- Guard `/private/tmp/lanl14_remove_consumed_export_checkout_20261008_a1_r3.py`: 26370 B; SHA256 `7f92b6f85f4e0c574f3ade7a806c2d6de02108fb8f32579f2e37343e9dc566f9`.
+- Wrapper `/private/tmp/lanl14_detach_exact_E_cleanup_administration_20261008_a1_r3.py`: 18369 B; SHA256 `a04486d04c8f3a5f0ceee1d6ff58aeeacdb5aa2f4a9dec9e6befa8f40056cfaf`.
+- Guard complete diff `/private/tmp/lanl-RAW-top-sidecar-Eguard-complete-foundation-derivation-20261008-a1.diff`: 8657 B; SHA256 `f2784023cac87bff0f9b57eec3aef4bd9986eb53ba3e9e8f3a84a5d40fa13e17`.
+- Wrapper complete diff `/private/tmp/lanl-RAW-top-sidecar-Ewrapper-complete-foundation-derivation-20261008-a1.diff`: 1877 B; SHA256 `3391a4ebdb0ef65a5dc96bc33d28e4a5adb549eb2ee45a98af3bb5666da06103`.
+- Handoff `/private/tmp/lanl-RAW-top-sidecar-Eguard-Ewrapper-source-handoff-20261008-a1.md`: 4693 B; SHA256 `78238dd831e67422cb1fe886b84bf4ac7691e48eecf248ec6ae214121e46a825`.
+- Selected original UNSEALED static `/private/tmp/lanl-RAW-top-sidecar-Eguard-Ewrapper-source-comparison-20261008-a1-r1.json`: 3050 B; SHA256 `baf32664d1b4c37861d2e7f0f634d1674d4880ca0eb927f948c3df0d124e3345`.
+- Explicit helper source block `/private/tmp/lanl-exact-original-top-lane-sidecar-helper-source-20261008-a1.txt`: 3261 B; SHA256 `ee59736d54f9ccfbd7eb779689c641fd54e5793f7ee19507101d6072824bba55`.
+
+The original guard is 22209 B / `5a227cb9d68f638a5475e054bef6b4b85b1d477e857f18de04b54bf4097d160e`; the original wrapper is 18218 B / `0783d6a26275abcc185608303c442ca3b17d0dfbca52a484746923ba089c2401`. Both complete diffs equal a fresh stdlib difflib comparison of the original and selected bytes. AST comparison confirms guard changes only `main` plus one new helper/pin; wrapper changes only `inputs`, `worker` and its exact target SHA. All other original definitions/imports remain identical. The wrapper's two pin substitutions and three launch-state assignments reverse byte-exactly to its original. The shared account-service helper remains 11151 B / `f6c4076013eaa487c0e810ba4329512657bef9b1b74a0c074a7231bcc0466883`.
+
+## Original custody and constrained allowance
+
+Original UNSEALED sidecar custody `/private/tmp/lanl-original-top-lane-sidecar-readonly-custody-20261008-a1.json`: 1506 B / `1697dc07d42fb8239aaea2ddd6de9d2048d4a0e4891606ea48d129d039e2515a`. Original UNSEALED namespace `/private/tmp/lanl-RAW-top-LANL-namespace-original-20261008-a1.json`: 29403 B / `48c02d1a1332e213077d19f7268ffd59f63334fe6657a1931c2dff26638c9b28`.
+
+The selected pin matches every original file/stat field: the sole regular file is `/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261006-a1.lane.json`, 988 B / `83ba263a56756047716a2e550c3acc7a9d73eadefbbc9e245cdb697092369c1c`, dev2065/ino9345428, UID=GID114316761, nlink1, mode33204 (regular0664), size988, mtime=ctime1791344103814358923. Its original node1/bind1 generation539 lane ended with exit0; no selected E path appears in its original metadata. These are original metadata observations, not a new run or clearance.
+
+The helper requires the fixed absolute route and every ancestor nonsymlink, exact original whole stat, owned regular single link, O_NOFOLLOW FD identity, bounded returned read of at most 989 bytes, exact 988 bytes/SHA and FD/path identity after reading. Its parser rejects duplicate keys/nonfinite values and requires the original one-key socket_lane shape. It checks decoded absolute JSON strings and literal original bytes against the selected E route. It emits only file/stat pins and original absolute reference locations/paths. The unchanged mode is preserved rather than repaired or resealed.
+
+Main captures the full existing lanl-prefix namespace, recognizes only this exact file and rechecks its stat at the branch. All other prefix entries still require real nonsymlink directories; the original recursive walk, onerror refusal, finite400000-entry inventory and dereferenced E symlink checks remain. Before possible action and afterward, full namespace names and exact sidecar custody must match. ERAW's original real-directory requirement remains. Arbitrary additional regular, symlink or special prefix entries receive no allowance. The retained names do not independently establish full byte immutability of all historical raw contents; the original raw retention and consumer guards remain their original scoped checks.
+
+Wrapper still enforces exact current primary, native/source/private-folder pins, original SSH PID/start disappearance before one guard, GNU660/KILL60 and worker735. Default custody and any later explicit remove require the same selected wrapper/guard and original successful default pins. The three launch-state assignments now record attempted/running launch and leave descendant liveness unproved if a failure interrupts Popen/wait/flush/postflight. A legacy no-launch string from the failed old source is not evidence of no launch: original argv/PID/start/status determine that historical boundary. All old failures and original True/False/UNSEALED policies remain unchanged.

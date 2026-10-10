@@ -1,0 +1,9 @@
+# Source-only actual-input readiness notes
+
+Retained 2026-10-07 ET. Two immutable notes preserve the reviewed future template/capture fields and the distinction between full-catalog indexing and selected-body admission. They assign no actual R, request, input, alias, outcome or acceptance fact and authorize no execution. Existing preparation chronology remains unchanged.
+
+The field checklist maps original writer policies, exact public/source outputs and the parent observations still required. The size note reports bounded Git size metadata for existing C and selected ticket 14 source c4: seven c4 estimate files exceed 32MiB, maximum 70,599,862B. Their presence in a catalog does not establish membership in ticket 17's required closure. Final 11/14 compact dependency checks do not themselves require those forecast YAML bodies. No existing required 17 body over 32MiB has been demonstrated, and no future-size clearance is claimed.
+
+Retain the selected consumers’ 32MiB limit. The new index writer’s 128MiB/body bound applies solely to its distinct catalog-source reads and supplies no substitute body. Before actual assembly/capture, require exact actual direct-root/full-closure and policy/report/summary/projection/receipt size pins. An oversized required original must refuse pending separate narrow review; it must not be truncated, omitted or silently admitted.
+
+Only these two byte-exact notes, this README and a new True-canonical archival manifest are added. No standalone validation/execution proof, repeated scientific check, Store/import/test/SSH/staging/control main, actual input construction or campaign action occurred for this retention. Existing C/F6, bounds, controls, canonical records and scientific budgets remain exact. Ticket17 remains claimed; actual 14 closure/final R and four genuine campaigns/D30 report remain pending.

@@ -1,0 +1,47 @@
+# Ticket 57 acceptance campaign, attempt a6 (rerun of a5 with the ticket 62 certifier; see ticket 57). Created 2026-10-04 ET.
+format: swdb.extensa-campaign.v1
+id: extensa-gem5-bfs-20261004-a6
+created: 2026-10-04 06:30 ET
+mode: extensa
+kernel: gapbs-bfs
+target: dx100_gem5
+machine: mbit10
+base_source: fork_scalar_tdstep
+baselines:
+  - role: fork_scalar_tdstep
+    candidate: typed-library-bfs-gem5-20261003-a2.baseline
+protocol:
+  roi: bfs.complete_call.v1
+  threads: 4
+  repetitions: 1
+  sources: [0]
+  region_pairs: false
+  differences: >-
+    Extensa campaign extensa-gem5-bfs-20261004-a6: provider rewrites of the fork's scalar
+    TDStep under contract.bfs_read_offload (scalar-only snapshot plus patch, canonical
+    lowering header) versus the unchanged full-source dx100-bfs-scalar DOBFS; MAA enabled
+    only for the candidate role.
+workload_classes:
+  - class: kronecker
+    workload: bfs-20260928-kronecker18-s0.cf4283236c5cb50c
+  - class: uniform_random
+    workload: bfs-20260928-uniform18-s0.8c7e69dfa516e53c
+label: single graph per class
+library:
+  allowed_tiers: [shared, experimental]
+  contracts: [contract.bfs_read_offload]
+regions: query
+provider: {name: codex, model: gpt-5.6-sol, effort: xhigh}
+budgets:
+  max_iterations: 8
+  plateau_iterations: 4
+  lane_hours: 24
+  provider_calls_per_iteration: 3
+  provider_calls_setup: 1
+  disk_gb: 20
+  lanes: 1
+runs_root: /data/yanruj/EvolveSWDB_runs
+approval:
+  by: Yan-Ru Jhou
+  date: 2026-10-03
+  scope: standing mbit10 dispatch approval; Q62 go-ahead for tickets 56 and 57 (one campaign within its budgets is one dispatch)

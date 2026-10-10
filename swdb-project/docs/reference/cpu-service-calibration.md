@@ -1,0 +1,602 @@
+# Independent native service calibration
+
+Created: 2026-10-06 ET. Ticket11; implementation in progress.
+
+`import-cpu-service-calibration` retains service/driver elapsed trials and their
+explicit event counts in a typed `cpu_service_calibration` record. It does not read
+application timings. The cost is paired elapsed difference divided by the counted
+work; raw subtraction values and spread remain visible. Any nonpositive residual
+keeps the parameter unknown instead of clamping it to zero.
+
+The portable runner times an independent clock-call loop and a matched driver. It
+uses a pilot to select bounded work, alternates measurement order, retains every
+trial, and consumes returned checksums outside timing. Compilation, pilot and
+trials share the wall budget. Raw output stays outside the project; repetitions
+are capped at11, wall time at900s and output at25MiB. Portable contract runs require `--fixture`; actual native admission is checked separately.
+
+An explicitly labeled fixture requires `--fixture` and keeps parameter basis `reported`. Native clock import requires actual Linux/x86_64 LLVM22 timing on the registered
+machine, a verified socket lane, clean committed source, a physical core, hash-bound
+loaded C/C++ libraries, at least 7 repetitions and 0.05s paired pilot durations.
+Counts and timed work use the identical shared header. Governor/turbo paths are
+recorded as null when unavailable; no settings are changed. Adding
+`--llvm-bin` runs six separate LLVM22 source-normalized-v2 count points against
+the same shared service body:32/64/96 service iterations and matched drivers. The
+clock numerator must be exactly one opaque ABI call per service iteration and
+zero in the driver. The receipt retains the actual ABI name, pipeline, shared
+header and count-driver hashes, observer hashes and all six characterization
+hashes. These instrumented runs never supply elapsed calibration values.
+The receipt format is `swdb.cpu-service-calibration.v1`, with `machine`, `threads`,
+`context`, `settings.repetitions`, `services[]` and canonical `identity_sha256`.
+Each service names its unit, event definition, execution scope and denominator,
+and retains paired `events`, `gross_seconds`, `driver_seconds` and order per trial.
+
+```sh
+python3 -m swdb cpu-service-calibrate --records "$COPIED_RECORDS" \
+  --output "$EXTERNAL_SERVICE_OUTPUT" --fixture --repetitions 3 \
+  --min-trial-s 0.002 --max-wall-s 60 --format json
+python3 -m swdb import-cpu-service-calibration --records "$COPIED_RECORDS" \
+  --receipt "$FIXTURE_RECEIPT" --id fixture.service.cost --fixture --format json
+python3 -m swdb validate --records "$COPIED_RECORDS"
+```
+
+The CPU band will use fresh LLVM22/libomp T1 development timings and a separate
+held-out input after implementation, independent calibration and development width
+freeze. Historical GCC/libgomp baselines and candidate artifacts stay in honest
+estimate/exclusion reports. Missing cost, memory-state or observation scope remains
+unknown. Native CPU timing continues to decide CPU evaluations.
+
+`native_service_costs` consumes exact region-filtered call site counts through the
+shared composition API. Descriptions select ABI names and seconds/call parameters
+under host/serial-T1 scope; supported opaque service costs are additive. Full
+site/count coverage clears that call only after a known service result. Zero
+executions need no rate, counted callee bodies receive no second charge, and
+unsupported length/lifecycle selectors or missing rates remain unknown.
+
+`--count-only --llvm-bin ...` creates `count-proof.json` in the external raw folder
+with `timings_collected: false`; it emits no elapsed trials or service rates. The
+importer refuses this distinct `swdb.cpu-service-count-only.v1` format. Native
+count-only execution retains the same verified lane, clean source and loaded ABI
+identities, and is independent of application development/holdout timings.
+
+Native count-only command inside the parent-owned node0 socket lane:
+
+```sh
+python3 -m swdb cpu-service-calibrate --records records --machine mbit10 \
+  --lane mbit10-evaluation-node0 --count-only --max-wall-s 600 \
+  --llvm-bin /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin \
+  --toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 \
+  --output "$NEW_EXTERNAL_COUNT_FOLDER" --format json
+```
+
+`--lane` is the exact lease-name claim, not a NUMA index. The numeric `0` claim
+stopped the first remote attempt before any proof; that attempt supplies no
+count/timing evidence. The corrected named lease still requires the real ancestor,
+CPU affinity, memory bind policy and held lease checks; a matching string alone
+does not authorize native execution. Use outer timeout900s and raw data mounts.
+
+## Exact allocator cells (2026-10-06 ET)
+
+`cpu-service-calibrate --service-group allocator` separately times array/scalar
+allocation and deletion. The default matrix has20 cells: array sizes8192,65536,
+227416,262144,524288B and scalar sizes8,16,32,64,128B, each with allocation and
+free cost. These are the complete observed T1 BFS/BC allocation/lifetime bins in
+`evidence/registered-counts-t1-mbit10-20261006-a1.json`. Different allocation/free
+262144B totals reflect the ROI lifetime boundary. Explicit `--size` values test
+all four operations at each selected bin.
+
+One batch has at most65536 events and64MiB of live requested payload. A timed
+pair has at most16777216 events, seven alternating-order repetitions,900s wall
+budget,64MiB counted-build budget and a separate25MiB timed-data budget. Timed payload is untouched; the cap describes
+requested live payload, not measured RSS. The gross pilot selects a batch count
+with25% duration margin; native admission requires every gross repetition to
+reach50ms. Each paired driver duration is retained even when shorter than50ms.
+Unresolved subtraction remains null without clamping negative residuals.
+
+The shared noinline C++11 body must retain all four ABI calls under actualO3
+optimization. A separate source-normalized-v2 proof executes each operation at
+3/5 events, service/driver, smallest/largest byte bins. It retains observed
+allocation and free-lifetime size bins, exact ABI, count hashes and the shared
+source identity. Count-only mode never runs the native timer or emits elapsed
+receipts. Preparations and cleanup are outside both the counted service ROI and
+timed segments.
+
+The construction is `fresh_process_repeated_allocate_free_batches`. It measures
+that construction's effective costs; transfer to the application's retained heap
+state is **inferred** and requires an explicit model assumption. No physical
+residency, page-fault rate or instruction-issue latency is claimed. Calibration
+records preserve GLIBC_TUNABLES, actual MALLOC_* variables, preload/audit and
+library-search controls. Their absence is meaningful only under the declared
+scope. Legacy counted receipts lack this allocator-control declaration and cannot
+prove equality. The glibc allocator [tunables](https://sourceware.org/glibc/manual/latest/html_node/Memory-Allocation-Tunables.html)
+include cache and mapping thresholds, so matching requested sizes alone does not
+establish allocator-state equivalence.
+
+Parent-dispatched commands, in a clean immutable Linux checkout and a real named
+node0 lease (raw folder must be new; use a different folder for each phase):
+
+```sh
+python3 -m swdb cpu-service-calibrate --records "$SWDB_RAW_RECORDS" \
+  --service-group allocator --count-only --machine mbit10 \
+  --lane mbit10-evaluation-node0 --llvm-bin "$SWDB_CPU_LLVM" \
+  --toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 \
+  --output "$SWDB_ALLOCATOR_COUNT_RAW" --max-wall-s 600 --format json
+```
+
+After count proof and release of any other socket timing job:
+
+```sh
+python3 -m swdb cpu-service-calibrate --records "$SWDB_RAW_RECORDS" \
+  --service-group allocator --machine mbit10 \
+  --lane mbit10-evaluation-node0 --llvm-bin "$SWDB_CPU_LLVM" \
+  --toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 \
+  --output "$SWDB_ALLOCATOR_ELAPSED_RAW" --repetitions 7 \
+  --min-trial-s .05 --max-wall-s 900 --format json
+python3 -m swdb import-cpu-service-calibration --records "$SWDB_RAW_RECORDS" \
+  --receipt "$SWDB_ALLOCATOR_ELAPSED_RAW/receipt.json" \
+  --id mbit10.cpu.lanl20261006.service.allocator.a1 --format json
+python3 -m swdb validate --records "$SWDB_RAW_RECORDS"
+```
+
+Use600s inner/900s outer for count-only and900s inner/1200s outer for elapsed.
+Keep node1 idle during elapsed calibration. Raw binaries, IR and logs stay remote;
+only the typed service record and compact receipt metadata enter Git. Application
+accuracy remains unsupported until every executed memory/runtime service and the
+matched original-driver timing scope are admitted independently.
+
+### Allocator count-build budget preregistration (2026-10-06 ET)
+
+The first native count-only attempt at source00c03f3 stopped safely after
+26,312,382B of build evidence crossed the original25MiB guard. Linux produces
+about1,064,400B per point, dominated by894,368B `Characterize.so` files; all32
+points therefore require about34.1MB before compact proof metadata. The failed
+a1 folder remains preserved and supplies no numerator or elapsed receipt.
+
+The a2 contract assigns **64MiB to counted build artifacts** and preserves the
+separate **25MiB timed-data cap**. All32 points, exact ABIs, observed byte/lifetime
+bins, source identities, timing criteria and20-cell matrix stay unchanged.
+`--count-build-cap-mib` can lower the build limit to exercise a fail-closed check;
+it cannot exceed64. Every file is budgeted: top-level pilot/partial-trial/receipt
+data uses the timed budget; every other file uses the build budget. A failure
+retains partial sealed point records and emits no admitted proof/timing receipt.
+Final JSON receipt sizes are checked before publication too. This change neither pools a1
+with a2 nor removes duplicate sealed compiler artifacts.
+
+### Exact allocator bins in a target description
+
+The `native_service_costs` selector may select exact `known_length_bins` for
+`_Znam`/`_Znwm` and exact `allocation_lifetime_size_bins` for `_ZdaPv`/`_ZdlPv`.
+Each selection declares `unit: seconds/call`, `bins: [{bytes, parameter}]`, and
+`scope_assumption: {regime: fresh_process_repeated_allocate_free_batches,
+transfer_basis: inferred}`. Every executed byte bin at that exact source site
+must have a known independently measured parameter; its scoped counts must sum
+to the full opaque-site count. Unknown lengths, lifetimes, rates, or partial
+coverage retain the opaque call and null its cost. The allocator regime cannot
+cover bulk copies or other ABIs. This explicitly inferred state transfer does
+not establish physical cache state, page faults, or payload initialization cost.
+
+### Bind services without modifying a running calibration source
+
+The separate public module command derives a fresh description and pins the
+complete counted characterization plus typed service records:
+
+```sh
+python3 -m swdb.cpu_service_binding --records "$SWDB_RECORDS" \
+  --target-description mbit10.cpu.lanl20261006a2.v2.t1 \
+  --characterization bfs.kron-g16.t1.characterization.a1 \
+  --calibration mbit10.cpu.lanl20261006.service.clock.a1 \
+  --id mbit10.cpu.lanl20261006.services.bfs.t1.a1 --format json
+```
+
+Repeat `--calibration` for additional independently measured groups. Fixture
+inputs require `--fixture`. Existing descriptions and measurements remain
+byte-identical. Compiler/C/C++ library mismatches and unproven allocator-control
+absence produce null parameters with explicit reasons; the original measured
+trials remain in their dependency records. Consumption requires the pinned
+characterization hash in the model context, so another workload cannot silently
+inherit the original context admission. This binding contributes no application
+timing or error-band evidence.
+
+### Conditional logical memory service
+
+`memory_service_scenario` selects `scenario: resident_serial_constructed_requests`,
+`transfer_basis: inferred`, `object_scope: logical_requests_and_bounded_referent_views`,
+`domain: host`, `worker_scope: serial_T1`, and the exact `characterization_sha256`.
+Its `requests` list maps each executed `{update_kind, element_bytes}` to a
+`seconds/request` parameter. All known scoped logical requests must sum to the
+retained useful-byte count; every executed cell needs its own supported cost.
+Missing costs preserve the known compute bound and null the total. Partial
+allocation-relative unions do not become cache-residency or page-fault evidence:
+the model retains unknown object and bounded-view facts and supplies a conditional
+resident scenario only. It covers no opaque callee or separate first-touch cost.
+The model composes as a mechanism bound with compute, avoiding a second additive
+charge for the same constructed instructions. Native rates are pending independent
+counted service/driver and elapsed receipts; the public hand fixtures are reported
+contracts only.
+
+### Preregistered clock a2 control refresh
+
+The historical `e71ed828` clock record retains its original bytes and measured
+trials. It declares no allocator/interposer environment scope, so the fresh
+binding path leaves its interposer compatibility unknown. Clock a2 repeats the
+same `CpuServiceWork.h`/timer/count helper, six 32/64/96 service/driver proof
+points, seven alternating paired trials, 134217728-event cap, and 0.05s minimum
+for both gross and driver durations. It adds only an explicit actual MALLOC_/
+GLIBC/LD_PRELOAD/LD_AUDIT/library-search snapshot with null absence semantics.
+The newly captured controls are not backfilled into the earlier record. Nonnull
+interposers remain unsupported for transfer until their execution scope is proven.
+The library-search paths are retained, while binding compares actual critical
+C/C++ library hashes; differing unused search paths do not establish a mismatch.
+
+Both sockets must be idle for this native elapsed refresh. Use a clean immutable
+Git checkout and a new external raw directory; all earlier raw directories stay
+preserved. The named socket lease is still verified from live OS/lease state.
+
+```sh
+python3 -m swdb cpu-service-calibrate --records "$SWDB_RAW_RECORDS" \
+  --machine mbit10 --lane mbit10-evaluation-node0 \
+  --llvm-bin "$SWDB_CPU_LLVM" \
+  --toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 \
+  --output "$SWDB_SERVICE_CLOCK_A2_RAW" \
+  --repetitions 7 --min-trial-s .05 --max-wall-s 600 --format json
+python3 -m swdb import-cpu-service-calibration --records "$SWDB_RAW_RECORDS" \
+  --receipt "$SWDB_SERVICE_CLOCK_A2_RAW/receipt.json" \
+  --id mbit10.cpu.lanl20261006.service.clock.a2 --format json
+python3 -m swdb validate --records "$SWDB_RAW_RECORDS"
+```
+
+Use a 900s outer containment timeout and retain the runner's process-group signal
+cleanup. Export only the typed compact record and receipt metadata through Git;
+this refresh remains independent service calibration, not application accuracy.
+
+### Preregistered independent memory request cells
+
+The separate `python3 -m swdb.cpu_memory_calibration` runner constructs twenty
+cells: dependent permuted-ring reads, sequential volatile writes, uncontended
+sequentially consistent add, and deterministic compare-and-swap success/failure,
+each at 4B/8B and 32KiB/8MiB data footprints. A stable `service_memory32` or
+`service_memory64` wrapper encloses the same typed body in the count and timing
+programs. Forty separate public count points cover both widths and every primitive
+at n=3/5 with service/driver invocation; the driver has zero source requests, and
+every service has exactly n requests of its declared update kind and width. Both
+source-normalized operation inventories are retained. O3 IR is retained and its
+volatile-load/store, add and compare-and-swap lowering must be checked independently.
+
+The timing process prepares/touches buffers and performs an untimed warm-up.
+Each measured batch visits the complete requested data footprint; CAS success
+uses each prepared zero slot once and checks its observed success count, while
+failure checks zero successes. No concurrent worker modifies the constructed
+objects. The conditional-loop/index driver is separately timed and subtracted;
+negative or unresolved residuals remain unknown. The subtraction is effective
+constructed work, not an isolated physical instruction latency. Shape/dependence,
+residency, and outcome transfer to an application remain explicitly inferred;
+this runner provides no first-touch/page-fault or full-allocation evidence.
+
+Budgets are seven alternating pairs with gross duration >=0.05s, at most 900s
+inner wall time, 134217728 requests per trial, <=8MiB data plus <=8MiB permutation
+arrays, 64MiB counted-build artifacts, and separate 25MiB timed data. All partial
+sealed artifacts remain after failure. The named native socket lease, immutable
+Git source, LLVM22 compiler, actual C/C++ libraries, and explicit interposer controls
+are required. Keep the other socket idle for elapsed collection. Count-only proof
+may be dispatched separately with a new raw ID; it supplies no elapsed evidence.
+
+```sh
+python3 -m swdb.cpu_memory_calibration --records "$SWDB_RAW_RECORDS" \
+  --machine mbit10 --lane mbit10-evaluation-node0 --llvm-bin "$SWDB_CPU_LLVM" \
+  --toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 \
+  --output "$SWDB_MEMORY_RAW" --repetitions 7 --min-trial-s .05 --max-wall-s 900
+```
+
+Use 1200s outer containment. Add `--count-only --max-wall-s 600` for a separate
+forty-point proof. Native dispatch remains gated on the tested full-width proof,
+complete native receipt/import validation, and a clean source tip. No native rates
+or application accuracy are established by the local reported hand fixtures.
+
+
+The separate byte-read follow-up is preregistered because the actual g16/T1
+inventory contains executed 1B read requests. Use only `--operation read
+--element-bytes 1 --footprint-bytes 256`; the runner rejects larger byte rings or
+other byte primitives. An 8-bit index follows one complete 256-element permuted
+cycle, verified before timing; every timed batch retains its verified cycle extent.
+Four independent n=3/5 service/driver count points establish 1B logical reads,
+without widening to 4B or claiming a 32KiB/8MiB working set. Its scope is
+`fixed_small_byte_read_constructed_requests`; application locality transfer is
+inferred and the physical cache level remains unverified. O3 retention checks the
+separate `service_memory8` volatile i8 read. No byte-write/RMW/CAS rate is supplied.
+
+The twenty-cell primary and one-cell byte follow-up use separate raw receipts and
+are never pooled. Native import validates the complete selected typed count
+matrix, source/observer/compiler/runtime hashes, optimized primitive retention,
+full-footprint workloads, alternating orders and deterministic CAS outcomes.
+Every native gross duration must resolve >=0.05s; paired driver values and all
+negative residuals are preserved, with unresolved service parameters null.
+The forty-point primary public proof and four-point byte proof pass on the local
+LLVM22 toolchain; these are reported portable proofs, not native elapsed evidence.
+
+```sh
+python3 -m swdb import-cpu-service-calibration --records "$SWDB_RAW_RECORDS" \
+  --receipt "$SWDB_MEMORY_RAW/receipt.json" \
+  --id mbit10.cpu.lanl20261006.service.memory.a1 --format json
+python3 -m swdb.cpu_memory_calibration --records "$SWDB_RAW_RECORDS" \
+  --machine mbit10 --lane mbit10-evaluation-node0 --llvm-bin "$SWDB_CPU_LLVM" \
+  --toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13 \
+  --output "$SWDB_BYTE_READ_RAW" --operation read --element-bytes 1 \
+  --footprint-bytes 256 --repetitions 7 --min-trial-s .05 --max-wall-s 600
+python3 -m swdb import-cpu-service-calibration --records "$SWDB_RAW_RECORDS" \
+  --receipt "$SWDB_BYTE_READ_RAW/receipt.json" \
+  --id mbit10.cpu.lanl20261006.service.byte-read.a1 --format json
+python3 -m swdb validate --records "$SWDB_RAW_RECORDS"
+```
+
+Keep the other socket idle throughout both elapsed commands. Use separate 1200s
+and 900s outer containment timeouts, preserve process-group signal cleanup, and
+retain raw count/build/timing artifacts remotely. Export typed calibration records
+and compact receipt/context/trial metadata through Git; do not export raw IR,
+binaries or addresses. Neither native cell establishes application accuracy.
+
+
+### Immutable conditional memory binding
+
+The separate `swdb.cpu_service_binding` command requires an explicit
+`--memory-footprint-bytes 8388608` and
+`--memory-cas-policy max_constructed_success_failure_median` when memory service
+records are supplied. Each chosen scalar cost retains its exact typed calibration
+record and service ID. The byte-read cell keeps its own256B extent. The CAS
+parameter is inferred as the larger of separately retained success/failure
+medians; it does not establish the application's outcome mix or a physical upper
+bound, and either unresolved input keeps the derived parameter unknown.
+
+A fresh conditional description supersedes the base's streaming/cache/latency
+memory mechanisms with this explicit memory-service scenario. Its extension
+records exactly which mechanisms were superseded and pins the immutable base.
+The earlier measured descriptions remain unchanged; stream rates are never copied
+into dependent-memory or allocator service parameters. Compute rates and typed
+calibration lineage remain available in the fresh description. Context mismatch
+makes service costs unknown. Exact source primitive/type/order evidence is
+required before consuming ordinary store, integer-add or integer-CAS costs;
+collapsed update kinds do not prove that evidence.
+
+Before any application timing, additional outcome-free counts may be frozen with
+`--scope-characterization <id>` (repeat for g16/g17 BFS/BC). The resulting target
+pins every exact ID/hash as a typed dependency and accepts only that allowlist.
+Every service's compiler/runtime/thread compatibility is checked against every
+member; a mismatch keeps the shared parameter unknown. Source rates, footprint
+and CAS policy remain fixed across development and holdout. This permits one
+unchanged target hash while retaining exact counted-source admission. New or
+unmatched allocator length/lifetime bins stay unknown; any needed independent
+exact-bin measurements must precede the common model freeze and application
+outcomes. No silent interpolation or post-timing recalibration is allowed.
+
+The model also requires exact per-site source request totals to equal the logical
+service container. Executed sites must carry scalar primitive evidence: ordinary
+non-atomic loads/stores, integer sequentially consistent atomic add, or strong
+sequentially consistent compare/exchange. Floating RMW, atomic exchange, weak CAS,
+vector lanes and absent primitive facts remain unsupported. A zero-count site
+does not require a service rate. These guards apply independently in every trial.
+
+### Prospective total-cell resource recipe
+
+The two native8B-write paired differences in memory a1 are unresolved and stay
+null. A separate typed `cpu_memory_resource_calibration` applies the frozen recipe
+`gross_constructed_resource_v1`: each trial's uninstrumented gross elapsed divided
+by its exactly proved logical request denominator, with the median as the cost.
+All driver elapsed, full trials, source/observer/compiler/runtime proof, compute
+count diagnostics and original paired residual statistics/parameters remain
+retained. The typed source record, receipt and complete source hash are pinned;
+the source record is never rewritten. Native parameters have basis `inferred`
+and fixture parameters remain `reported`.
+
+This resource includes the constructed loop/index/driver work. It composes as a
+maximum with counted compute, instead of adding that compute again. Transferring
+constructed locality and dependency behavior to an application is explicitly
+inferred; the recipe supplies neither physical instruction latency nor a proven
+application upper bound. Exact primitive, width, context and frozen characterization
+allowlist guards still apply. The recipe/source/calibration identities must freeze
+before any application timing. It cannot resolve opaque calls or separate first
+touch costs. This prospective recipe uses no new elapsed run and no application
+outcome to adjust its rates.
+
+```bash
+python3 -m swdb.cpu_memory_resource --records "$SWDB_RAW_RECORDS" \
+  --source-calibration mbit10.cpu.lanl20261006.service.memory.a1 \
+  --id mbit10.cpu.lanl20261006.resource.memory.a1 --format json
+```
+
+Pass the new typed resource ID to `swdb.cpu_service_binding --calibration` with
+the already explicit footprint/CAS policy. Every construction records
+`cost_basis: gross_constructed_resource_v1`; mixed subtraction/total-cell CAS
+inputs are rejected. The frozen protocol recursively pins both the resource and
+original calibration. Previous descriptions and unresolved residuals stay intact.
+
+### Prospective empirical held-out check
+
+`freeze-cpu-error-band` rejects pooled model/calibration/bundle/thread/target
+identities and retains the independent workload pairs and five-trial rounding.
+Every matched native validation must pin the same prior frozen estimate protocol.
+A development width cannot reuse held-out timings.
+
+`validate-cpu-error-band --development-band <id> --estimate <id> --validation <id>
+--id <new-id>` checks each pair against the unchanged width. Exact source/ROI,
+advancing-source and process policy, compiler/runtime/environment, flags and graph
+generation shape must match development. Native held-out timing also requires
+its exact outcome-free characterization in the common target's prospective
+allowlist, a new input, prior band binding and timing after the width freeze.
+An out-of-band pair or unsupported scope creates an explicit failed receipt
+with the original width and measured diagnostics; it never widens the envelope.
+Reported fixture pass/failure verifies this API but grants no native confidence.
+
+A validated empirical envelope applies only to exact held-out characterization
+identities. It does not generalize to unseen candidates, kernels, threads or
+targets. For an admitted estimate and baseline, the ratio's log interval uses
+plus/minus twice the single-estimate width; `estimated_gain` requires the lower
+ratio above1.05, `estimated_no_gain` requires the upper below1.05, and other cases
+remain `within_error`. CPU native timing continues to decide established
+ArchEvolve evaluations; this separate analytic verdict never replaces selection.
+
+
+## Prospective exact bulk service matrix (2026-10-06 ET)
+
+The preregistration is
+`.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-bulk-service-preregistration.json`.
+It binds the unchanged final four g16/g17 BF/BC count records and the compact
+inventory receipt. There are **48** executed memmove sizes, split into26 g16
+union bins and22 additional g17 bins. No uninstrumented application timing has
+been observed. Each batch independently retains a constant8B memcpy cell plus
+three separate memmove constructions for every exact size: disjoint buffers,
+forward4B overlap and backward4B overlap, with minimum4B pointer alignment.
+The constant8B construction uses disjoint8B-aligned subranges and retains its
+actual optimized word load/store. Dynamic memmove must retain its callee under
+O3. These are effective constructed-work costs, not physical latency or a proven
+application upper bound. Application MayAlias remains unknown overlap; it cannot
+be relabeled disjoint. A future maximum-profile transfer must be explicitly
+inferred and cannot manufacture a measured overlap fact.
+
+`python3 -m swdb.cpu_bulk_calibration` runs four source-normalized-v2 matrix
+points (3/5 events, service/driver), covering **every** exact profile/size bin.
+The count wrapper forces visibility of the identical shared loop with
+always-inline; native elapsed wrappers remain noinline. The proof binds the
+header, count driver, observer, normalized IR/source map and exact intrinsic
+sites to each profile. Empty inline assembly keeps memory work observable and
+appears as an indirect-call diagnostic in the count inventory; it is not a bulk
+ABI event. Instrumented runs supply only numerators, never elapsed values.
+
+The uninstrumented timer checks one copy against the source snapshot before
+timing, prepares buffers and16 warm copies, then retains7 alternating-order
+pairs. Each trial records exact size, source/destination separation, overlap
+bytes and minimum alignments. Both gross and driver durations must reach50ms.
+A nonpositive paired residual remains null. The runner permits at most32 size
+bins per batch,1MiB per copy,134217728 events per trial,900s inner wall time,
+64MiB counted-build evidence,25MiB timed data and3MiB+320B live requested buffer
+payload (storage plus the untimed correctness snapshot). Reused prepared buffers
+do not establish an application cache level, page state or first-touch cost.
+
+Parent dispatches count-only first in a clean committed Linux checkout and a
+real named node0 lease. Use new raw roots for each phase; the following script
+reads the committed fixed matrix and never application performance output:
+
+```sh
+SWDB_BULK_PHASE=count SWDB_BULK_RAW="$NEW_EXTERNAL_BULK_COUNT_ROOT" python3 - <<'PY_RUN'
+import json, os, subprocess, sys
+from pathlib import Path
+spec=json.loads(Path('.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-bulk-service-preregistration.json').read_text())
+for batch in spec['batches']:
+    command=[sys.executable,'-m','swdb.cpu_bulk_calibration','--records',os.environ['SWDB_RAW_RECORDS'],
+        '--machine','mbit10','--lane','mbit10-evaluation-node0','--llvm-bin',os.environ['SWDB_CPU_LLVM'],
+        '--toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13',
+        '--output',str(Path(os.environ['SWDB_BULK_RAW'])/batch['id']),
+        '--max-wall-s','600' if os.environ['SWDB_BULK_PHASE']=='count' else '900']
+    command += [item for size in batch['memmove_sizes'] for item in ('--size',str(size))]
+    if os.environ['SWDB_BULK_PHASE']=='count':command+=['--count-only']
+    subprocess.run(command,check=True)
+PY_RUN
+```
+
+After both proofs pass and the other socket is idle, repeat the exact script with
+`SWDB_BULK_PHASE=elapsed` and a distinct `$NEW_EXTERNAL_BULK_ELAPSED_ROOT`.
+Elapsed collection regenerates its own sealed four-point numerator proof before
+timing. Use900s outer per count batch/1200s outer per elapsed batch; a sequential
+phase wrapper needs2100s/2700s respectively. Preserve failed/partial artifacts.
+Import each native elapsed receipt separately:
+
+```sh
+python3 -m swdb import-cpu-service-calibration --records "$SWDB_RAW_RECORDS"   --receipt "$SWDB_BULK_RAW/bulk.a1/receipt.json"   --id mbit10.cpu.lanl20261006.service.bulk.a1 --format json
+python3 -m swdb import-cpu-service-calibration --records "$SWDB_RAW_RECORDS"   --receipt "$SWDB_BULK_RAW/bulk.a2/receipt.json"   --id mbit10.cpu.lanl20261006.service.bulk.a2 --format json
+```
+
+The duplicate memcpy8 cell is retained separately and must not be pooled; a
+frozen model selects one exact receipt. New g17 array bins16384,466112,524284,
+1048568B likewise need prospective independent allocation/deletion cells. Run
+the existing allocator command with these four repeated `--size` arguments,
+new count/elapsed raw roots and the same native controls/admission; it measures
+all four allocator ABIs per bin. Extra unused scalar cells cannot substitute
+for application bins or change the existing20-cell record. All original records
+and failed residuals stay byte-identical. View-only page/lifetime and bounded
+state unions remain unknown even though every final logical object request is
+now assigned to a full allocation or explicit bounded referent view.
+
+
+## Frozen bulk transfer recipe (2026-10-06 ET)
+
+The binder requires `--bulk-profile-policy max_constructed_profiles_median`
+when consuming these typed bulk receipts. For each exact memmove length it
+retains the disjoint, forward4 and backward4 parameters and creates an inferred
+maximum of their medians. Every source profile must have a known positive cost
+and compatible context. An unresolved profile keeps the envelope unknown. The
+model verifies the retained maximum again during estimation and sensitivity;
+changing a raw parameter alone cannot silently invalidate the frozen recipe.
+
+Both elapsed batches retain their own memcpy8 measurement. Select one exact
+record with `--bulk-copy-calibration mbit10.cpu.lanl20261006.service.bulk.a1`;
+the duplicate is retained in the dependency closure and is never averaged.
+Duplicate memmove length/profile cells are rejected even when the copy selection
+is explicit. The constant copy construction admits only its proved8B bin.
+
+The selector declares `prepared_reused_bulk_buffers`, inferred transfer,
+unverified application overlap/alignment and `physical_upper_bound:false`.
+This is a conditional effective constructed scenario. It does not establish
+application disjointness, a physical instruction latency or a proven upper
+bound. Public estimation clears an opaque site only when all of its exact
+scoped length counts have known selected rates. Missing bins, incomplete
+profiles and unsupported physical claims leave the whole site unknown.
+
+### Distinct gross bulk resource
+
+The separate `swdb.cpu_bulk_total_calibration` collector keeps the shared bulk
+helper unchanged and preregisters a gross-window pilot. Each gross work-loop window
+must reach50ms natively; short driver values remain retained diagnostics. The
+source calibration explicitly keeps paired costs null unless both windows meet
+that declared threshold and every subtraction is positive. It never relaxes the
+older `bulk_v1` paired-window recipe or rewrites its bounded attempts.
+
+`swdb.cpu_bulk_resource` derives a new typed immutable
+`cpu_bulk_resource_calibration` with recipe `gross_bulk_loop_resource_v1`, exact
+source dependency/hash, all paired trials/spread, and original null residuals.
+Its inferred gross/event cost includes measured constructed loop control and is
+conditional additive opaque overhead. It is not physical latency or a proven
+application bound. The prospective matrix, caps and dispatch commands are in
+[11-bulk-total-runbook.md](../../.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-bulk-total-runbook.md).
+
+### Independent legal OpenMP probes
+
+The separate `swdb.cpu_openmp_calibration` command proves22 selected ABI classes
+at four N3/5×service/driver points with the public static projection seam. Each
+actual target event is prepared and cleaned up legally outside its measurement
+window; the driver measures an empty clock window and executes the target outside
+it. Return, team/level and event counts remain in every alternating-order trial.
+Native import and Store replay require exact libomp/compiler/control identity,
+source/IR/projection hashes, the fixed matrix and declared budgets. Unsupported
+states or nonpositive residuals remain null. The prospective legal-state scope
+and dispatch commands are in [11-openmp-service-runbook.md](../../.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-service-runbook.md).
+
+### Exact OpenMP site binding
+
+Supply one `--openmp-projection` per frozen outcome-free characterization and the
+explicit `--openmp-next-policy max_constructed_success_failure_median` when adding
+the typed22-class OpenMP record. The binder verifies each complete record hash,
+normalized source IR, native projection compiler, and exact all-trial executed
+site union. The target retains those complete sealed projection snapshots.
+Compiler, libomp, interposer and actual declared OMP/KMP/GOMP environment mismatch
+keeps every affected parameter unknown.
+
+Each executed call selects its exact ABI/argument-count/literal/ident class and
+source outlined/caller context. Dynamic bounds, pointer state and internal runtime
+state remain unverified inferred transfer from legal warmed serializedT1 probes.
+A dispatch-next call requires both independently retained success and terminal
+costs; their prospective maximum is inferred, and either unknown keeps it null.
+Exact full-site counts are covered once. A callee body already counted receives
+no service charge; an ABI name alone does not waive an unsupported call.
+
+
+### Structural calibration admission
+
+`bind-cpu-services` retains missing compiler/runtime/control transfer premises in both `extensions.cpu_services_binding.compatibility[]` and the applicable model selector's `calibration_admission` map. The map keys are exact parameter names; values are nonempty lists of structural reason codes. Native call, exact shape-bin, memory and OpenMP return-class models refuse those parameter costs even if a later numeric estimate supplies a positive value. Zero execution and already-counted callee bodies need no service cost. A null numeric rate with an empty compatibility list remains distinct from an unsupported transfer context; no missing context is established by a numeric guess.
+
+The optional map is validated independently of rate basis. Malformed premises remain unknown. Supported selectors omit the map or retain an empty map. Both the immutable target snapshot and protocol hash pin this admission policy alongside the explanation and typed calibration closure.
+
+
+### Floating64 monotonic atomic cells and exact site partitions
+
+BC PBFS executes a floating64 monotonic `atomicrmw fadd` alongside integer seq_cst adds. The coarse `add-update`/8B bucket cannot select one shared cost. `cpu_float_memory_calibration` supplies a separate four-point source proof and bounded sequential uncontended prepared-buffer cells; native admission verifies exact primitive/order, zero driver requests, retained optimized work, runtime/source/control identities, gross resolution and per-element update checks. Original integer helpers and records remain immutable.
+
+`memory_service_scenario` partitions the unchanged bucket using the existing sealed source-site counts and exact primitive semantics. Each executed site must match exactly one construction; their sum must equal the bucket and useful-byte totals. The floating construction is `floating_monotonic_add`, restricted to scalar64 floating fadd/monotonic/nonvolatile. Different floating operations/orders and absent semantics remain unknown. No new application observation is synthesized or required.
+
+The prospectively frozen `gross_constructed_resource_v1` may derive the separate floating resource from its typed calibration, retaining full paired residual/spread and driver diagnostics. Gross includes constructed loop work, composes by maximum with compute, and establishes no physical latency, application residency/operand-state correspondence or proven upper bound. See `11-float-memory-preregistration.json` and `11-float-memory-runbook.md` for exact native caps/commands. Native rates remain unknown until actual mbit10 evidence passes.

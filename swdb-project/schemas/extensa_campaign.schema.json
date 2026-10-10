@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "extensa_campaign",
+  "title": "Extensa campaign file (swdb.extensa-campaign.v1)",
+  "description": "Created 2026-10-03 ET (ticket 52, decision D5). An input file under campaigns/extensa/, not a record; checked by swdb validate and swdb campaign. Updated 2026-10-05 ET: the ID pattern is the envelope's $defs.extensa_campaign_id, added when swdb.campaign loads this schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "id", "created", "mode", "kernel", "target", "machine", "base_source", "baselines",
+               "protocol", "workload_classes", "label", "library", "regions", "provider", "budgets", "runs_root"],
+  "properties": {
+    "format": {"const": "swdb.extensa-campaign.v1"},
+    "id": {"$ref": "#/$defs/extensa_campaign_id"},
+    "created": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}( [0-9]{2}:[0-9]{2} ET)?$"},
+    "mode": {"const": "extensa"},
+    "kernel": {"const": "gapbs-bfs"},
+    "target": {"enum": ["native_cpu", "dx100_gem5"]},
+    "machine": {"type": "string", "minLength": 1},
+    "base_source": {"enum": ["fork_scalar_tdstep", "upstream_do_bfs"]},
+    "baselines": {
+      "type": "array", "minItems": 1,
+      "items": {"type": "object", "additionalProperties": false, "required": ["role", "candidate"],
+                "properties": {"role": {"enum": ["fork_scalar_tdstep", "upstream_do_bfs"]},
+                               "candidate": {"type": "string", "minLength": 1}}}
+    },
+    "protocol": {
+      "type": "object", "additionalProperties": false,
+      "required": ["roi", "threads", "repetitions", "sources", "region_pairs", "differences"],
+      "properties": {
+        "roi": {"const": "bfs.complete_call.v1"},
+        "threads": {"type": "integer", "minimum": 1},
+        "repetitions": {"type": "integer", "minimum": 1},
+        "sources": {"type": "array", "minItems": 1, "items": {"type": "integer", "minimum": 0}},
+        "region_pairs": {"type": "boolean"},
+        "differences": {"type": "string", "minLength": 1},
+        "isolation": {"enum": ["other_socket_free"],
+                      "description": "Native blocks start only while the other socket's lease and the legacy lease are released; recorded per block (ticket 56 isolation test, 2026-10-04 ET; legacy lease since 2026-10-05 ET)."},
+        "evaluator": {"enum": ["swdb.native.evaluator.v1", "swdb.native.evaluator.scalable.v2", "swdb.native.evaluator.scalable.v3"],
+                      "description": "Native evaluator version the Extensa campaign's protocols pin (ticket 63, 2026-10-04 ET; v3 ticket 67); absent means v1."},
+        "speed_rule": {"enum": ["swdb.speed_rule.range.v1", "swdb.speed_rule.ci_width.v1", "swdb.speed_rule.ci_width.v2"],
+                       "description": "Native speed-rule version (ticket 66, 2026-10-04 ET, decided by Yan-Ru; v2 ticket 72: the A/A pilot gates on base_source only); absent means swdb.speed_rule.range.v1."}
+      }
+    },
+    "workload_classes": {
+      "type": "array", "minItems": 1,
+      "items": {"type": "object", "additionalProperties": false, "required": ["class", "workload"],
+                "properties": {"class": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+                               "workload": {"type": "string", "minLength": 1}}}
+    },
+    "label": {"type": "string"},
+    "library": {
+      "type": "object", "additionalProperties": false, "required": ["allowed_tiers", "contracts"],
+      "properties": {
+        "allowed_tiers": {"type": "array", "minItems": 1, "items": {"enum": ["shared", "experimental"]}},
+        "contracts": {"type": "array", "items": {"type": "string"}},
+        "synthesize": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "regions": {"oneOf": [{"const": "query"},
+                          {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}]},
+    "provider": {
+      "type": "object", "additionalProperties": false, "required": ["name", "model", "effort"],
+      "properties": {"name": {"enum": ["codex", "claude"]}, "model": {"type": "string"}, "effort": {"type": "string"}}
+    },
+    "budgets": {
+      "type": "object", "additionalProperties": false,
+      "required": ["max_iterations", "plateau_iterations", "lane_hours", "provider_calls_per_iteration",
+                   "provider_calls_setup", "disk_gb", "lanes"],
+      "properties": {
+        "max_iterations": {"type": "integer", "minimum": 1},
+        "plateau_iterations": {"type": "integer", "minimum": 1},
+        "lane_hours": {"type": "number", "exclusiveMinimum": 0},
+        "provider_calls_per_iteration": {"type": "integer", "minimum": 1},
+        "provider_calls_setup": {"type": "integer", "minimum": 0},
+        "disk_gb": {"type": "number", "exclusiveMinimum": 0},
+        "lanes": {"enum": [1, 2]},
+        "max_repairs": {"type": "integer", "minimum": 0, "maximum": 5}
+      }
+    },
+    "paired_estimates": {
+      "type": "object", "additionalProperties": false,
+      "properties": {"enabled": {"type": "boolean"}},
+      "description": "Default enabled; explicit legacy opt-out never produces eligible paired evidence."
+    },
+    "runs_root": {"type": "string", "minLength": 1},
+    "approval": {
+      "type": "object", "additionalProperties": false, "required": ["by", "date", "scope"],
+      "properties": {
+        "by": {"type": "string", "minLength": 1},
+        "date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+        "scope": {"type": "string", "minLength": 1},
+        "raised_budgets": {"type": "array", "items": {"type": "string"}},
+        "two_lanes": {"type": "boolean"},
+        "gem5_other_socket": {"type": "boolean",
+                              "description": "Native blocks may run while another Extensa campaign's gem5 job holds the other socket; recorded per block (ticket 64, 2026-10-04 ET)."}
+      }
+    }
+  }
+}

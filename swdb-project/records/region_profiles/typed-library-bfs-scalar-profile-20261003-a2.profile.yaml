@@ -1,0 +1,3408 @@
+kind: region_profile
+schema_version: '0.4'
+id: typed-library-bfs-scalar-profile-20261003-a2.profile
+status: draft
+created: '2026-10-03'
+updated: '2026-10-03'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: typed-library-bfs-scalar-profile-20261003-a2.profile
+  evaluation: typed-library-bfs-scalar-profile-20261003-a2.native
+  repetitions: 1
+  fixture: false
+  memory: true
+  per_line: true
+  discovery:
+    library: /data1/yanruj/llvm18/lib/libclang.so
+  budget:
+    discovery_seconds: 120
+    build_seconds: 120
+    run_seconds: 900
+    total_seconds: 3000
+outcome:
+  state: partial
+  stage: profiling
+  reason: bounded source attribution; see explicit coverage and metric limits
+stages:
+- stage: compiler_identity
+  state: complete
+  started: '2026-10-03T12:45:31.498669+00:00'
+  command: [/usr/bin/g++, --version]
+  timeout_s: 30
+  log: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/000-compiler_identity.log
+  finished: '2026-10-03T12:45:34.266885+00:00'
+  returncode: 0
+  host_wall_s: 0.004237611778080463
+  log_sha256: 59d1cbef41d4ae78d5063d525b7aa13d18dc0493ea00537efc19b2ee398cb5a8
+- stage: preprocessor_identity
+  state: complete
+  started: '2026-10-03T12:45:36.889677+00:00'
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -pthread
+  - -DFUNC
+  - -dM
+  - -E
+  - -v
+  - -x
+  - c++
+  - /dev/null
+  timeout_s: 30
+  log: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/001-preprocessor_identity.log
+  finished: '2026-10-03T12:45:39.854573+00:00'
+  returncode: 0
+  host_wall_s: 0.03263213112950325
+  log_sha256: d58a7a01aae5e14f33d6a229c942108f4dbe465380c45e785f418d13981a2433
+- stage: source_discovery
+  state: complete
+  started: '2026-10-03T12:45:42.594567+00:00'
+  command:
+  - /usr/bin/python3
+  - /data1/yanruj/ArchEvolve/swdb-project/swdb/bfs_discovery.py
+  - /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/discovery-request.json
+  - /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/discovery.json
+  timeout_s: 120.0
+  log: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/002-source_discovery.log
+  finished: '2026-10-03T12:45:46.013187+00:00'
+  returncode: 0
+  host_wall_s: 0.6665312461555004
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: region_build
+  state: complete
+  started: '2026-10-03T12:45:48.800452+00:00'
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -pthread
+  - -DFUNC
+  - -I/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src
+  - -I/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/API
+  - /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a2.profile/regions_driver.cc
+  - -o
+  - /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a2.profile/bfs-regions
+  timeout_s: 120.0
+  log: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/003-region_build.log
+  finished: '2026-10-03T12:45:54.150537+00:00'
+  returncode: 0
+  host_wall_s: 2.5714721800759435
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: region_execution
+  state: complete
+  started: '2026-10-03T12:45:57.172203+00:00'
+  command:
+  - /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a2.profile/bfs-regions
+  - /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.native/graph.swdb
+  - '0'
+  - /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/regions-0-0.json
+  timeout_s: 900.0
+  log: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/004-region_execution.log
+  finished: '2026-10-03T12:46:01.225292+00:00'
+  returncode: 0
+  host_wall_s: 1.418531863950193
+  log_sha256: 2e6713ea99e462b9cb6ee1941c1ea80685ab72762fa5c93285c4360f10df351d
+- stage: memory_collector_identity
+  state: complete
+  started: '2026-10-03T12:46:07.397904+00:00'
+  command: [/usr/bin/valgrind, --version]
+  timeout_s: 30
+  log: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/005-memory_collector_identity.log
+  finished: '2026-10-03T12:46:10.170045+00:00'
+  returncode: 0
+  host_wall_s: 0.008323666639626026
+  log_sha256: 06bd4b41e0b515a43bbb6fa5d24e6596c4604fbc070ea04aa1dd8d2ad3035a53
+- stage: memory_build
+  state: complete
+  started: '2026-10-03T12:46:12.978327+00:00'
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -pthread
+  - -DFUNC
+  - -g
+  - -I/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src
+  - -I/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/API
+  - /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a2.profile/memory_driver.cc
+  - -o
+  - /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a2.profile/bfs-memory
+  timeout_s: 120.0
+  log: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/006-memory_build.log
+  finished: '2026-10-03T12:46:18.673252+00:00'
+  returncode: 0
+  host_wall_s: 3.0228374395519495
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: memory_execution
+  state: complete
+  started: '2026-10-03T12:46:21.461611+00:00'
+  command:
+  - /usr/bin/valgrind
+  - --tool=callgrind
+  - --cache-sim=yes
+  - --collect-atstart=yes
+  - --instr-atstart=no
+  - --separate-threads=no
+  - --I1=32768,8,64
+  - --D1=49152,12,64
+  - --LL=25165824,12,64
+  - --callgrind-out-file=/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/callgrind-0-0.out
+  - /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a2.profile/bfs-memory
+  - /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.native/graph.swdb
+  - '0'
+  - /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/memory-0-0.json
+  timeout_s: 900.0
+  log: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/007-memory_execution.log
+  repetition: 0
+  source_position: 0
+  source: 0
+  finished: '2026-10-03T12:46:33.204618+00:00'
+  returncode: 0
+  host_wall_s: 8.987722993828356
+  log_sha256: e6d6a7bc3bf7dea2b0357455b3835559a96166ed450f5bcc245c4002cbe2e87b
+- stage: statement_memory_build
+  state: complete
+  started: '2026-10-03T12:46:39.594492+00:00'
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -pthread
+  - -DFUNC
+  - -g
+  - -I/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src
+  - -I/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/API
+  - /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a2.profile/statement_driver.cc
+  - -o
+  - /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a2.profile/bfs-statements
+  timeout_s: 120.0
+  log: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/008-statement_memory_build.log
+  finished: '2026-10-03T12:46:45.346862+00:00'
+  returncode: 0
+  host_wall_s: 3.073094214312732
+  log_sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+- stage: statement_memory_execution
+  state: complete
+  started: '2026-10-03T12:46:48.147122+00:00'
+  command:
+  - /usr/bin/valgrind
+  - --tool=callgrind
+  - --cache-sim=yes
+  - --collect-atstart=yes
+  - --instr-atstart=no
+  - --separate-threads=no
+  - --demangle=yes
+  - --I1=32768,8,64
+  - --D1=49152,12,64
+  - --LL=25165824,12,64
+  - --callgrind-out-file=/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out
+  - /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a2.profile/bfs-statements
+  - /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.native/graph.swdb
+  - '0'
+  - /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-memory-0-0.json
+  timeout_s: 900.0
+  log: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/009-statement_memory_execution.log
+  repetition: 0
+  source_position: 0
+  source: 0
+  finished: '2026-10-03T12:46:59.676537+00:00'
+  returncode: 0
+  host_wall_s: 8.736913692206144
+  log_sha256: e399b347ee7cd832a69952fd928d02f8fa2a4352e94c51761d480e57eca0a3ed
+regions:
+- id: function:bfs.cc:1841:92351720b886b03a
+  kind: function
+  name: TDStep
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [64, 96]
+  byte_range: [1841, 3137]
+  insertion_range: [1988, 3137]
+  source_sha256: 92351720b886b03a3170e3ce91ef579321c5cdaa516f5c6e38a7ba4c9b706aca
+  text: |-
+    void TDStep(const Graph &g, pvector<SGOffset> &VertexOffsets, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue, int num_nodes, int num_edges) {
+    #ifdef GEM5
+        clear_mem_region();
+        add_mem_region(queue.beginp(), queue.endp());                   // 6
+        add_mem_region(VertexOffsets.beginp(), VertexOffsets.endp());   // 7
+        add_mem_region(g.out_neighbors_, &g.out_neighbors_[num_edges]); // 8
+        add_mem_region(parent.beginp(), parent.endp());                 // 9
+    #endif
+    #pragma omp parallel
+        {
+            QueueBuffer<NodeID> lqueue(queue);
+    #pragma omp for nowait
+            for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {
+                NodeID u = queue.shared[i];
+                for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                    NodeID v = g.out_neighbors_[j];
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        // indirect write (parent, v_tile, u_tile)
+                        // core fetch v tile
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            parent[v] = u;
+                            lqueue.push_back(v);
+                        }
+                    }
+                }
+            }
+            lqueue.flush();
+        }
+    #ifdef GEM5
+        clear_mem_region();
+    #endif
+    }
+  function: TDStep
+  usr: c:@F@TDStep#&1$@S@CSRGraph>#I#I#Vb1#&$@S@pvector>#I#S2_#&$@S@SlidingQueue>#I#I#I#
+  helpers: [QueueBuffer, 'operator[]', compare_and_swap, push_back, flush]
+  callers: [DOBFS]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - size_t
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.066095512
+    exclusive_thread_cpu_seconds: 0.013774622
+    invocations: 7
+    exclusive_function_thread_cpu_seconds: 0.198838717
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:1841:92351720b886b03a
+- id: loop:bfs.cc:2425:784979f83d8fbb08
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [76, 90]
+  byte_range: [2425, 3062]
+  insertion_range: [2496, 3062]
+  source_sha256: 784979f83d8fbb081a978ab6f74bad01b784baf4380ab6818607f1ac77a4794d
+  text: |-
+    for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {
+                NodeID u = queue.shared[i];
+                for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                    NodeID v = g.out_neighbors_[j];
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        // indirect write (parent, v_tile, u_tile)
+                        // core fetch v tile
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            parent[v] = u;
+                            lqueue.push_back(v);
+                        }
+                    }
+                }
+            }
+  function: TDStep
+  usr: null
+  helpers: []
+  callers: [DOBFS]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - size_t
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.185064095
+    exclusive_thread_cpu_seconds: 0.1031745
+    invocations: 173900
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:1841:92351720b886b03a
+- id: loop:bfs.cc:2550:4abc496fc9c3ddd0
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [78, 89]
+  byte_range: [2550, 3052]
+  insertion_range: [2550, 3052]
+  source_sha256: 4abc496fc9c3ddd0d8780135931ee02616204e21a8656a076cd73f747d04dc1c
+  text: |-
+    for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+                    NodeID v = g.out_neighbors_[j];
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        // indirect write (parent, v_tile, u_tile)
+                        // core fetch v tile
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            parent[v] = u;
+                            lqueue.push_back(v);
+                        }
+                    }
+                }
+  function: TDStep
+  usr: null
+  helpers: []
+  callers: [DOBFS]
+  referenced_types:
+  - Graph
+  - pvector
+  - SGOffset
+  - NodeID
+  - SlidingQueue
+  - QueueBuffer
+  - size_t
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.081889595
+    exclusive_thread_cpu_seconds: 0.081889595
+    invocations: 173900
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:1841:92351720b886b03a
+- id: function:bfs.cc:3139:cd1ef9d28c8c62ca
+  kind: function
+  name: TDStep2
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [98, 119]
+  byte_range: [3139, 3893]
+  insertion_range: [3226, 3893]
+  source_sha256: cd1ef9d28c8c62ca8a2c340177951a7dbaa740ce3e9302ea3b9ce763851a50a1
+  text: |-
+    int64_t TDStep2(const Graph &g, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue) {
+        int64_t scout_count = 0;
+    #pragma omp parallel
+        {
+            QueueBuffer<NodeID> lqueue(queue);
+    #pragma omp for reduction(+ : scout_count) nowait
+            for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+                NodeID u = *q_iter;
+                for (NodeID v : g.out_neigh(u)) {
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            lqueue.push_back(v);
+                            scout_count += -curr_val;
+                        }
+                    }
+                }
+            }
+            lqueue.flush();
+        }
+        return scout_count;
+    }
+  function: TDStep2
+  usr: c:@F@TDStep2#&1$@S@CSRGraph>#I#I#Vb1#&$@S@pvector>#I#&$@S@SlidingQueue>#I#
+  helpers:
+  - QueueBuffer
+  - begin
+  - end
+  - out_neigh
+  - operator[]
+  - compare_and_swap
+  - push_back
+  - flush
+  callers: []
+  referenced_types: [int64_t, Graph, pvector, NodeID, SlidingQueue, QueueBuffer]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:3139:cd1ef9d28c8c62ca
+- id: loop:bfs.cc:3384:ee8a2407c2e768df
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [104, 115]
+  byte_range: [3384, 3837]
+  insertion_range: [3450, 3837]
+  source_sha256: ee8a2407c2e768dff49d6ca1d8d0f638495c6952159f63bc01e4c62e9e94565a
+  text: |-
+    for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+                NodeID u = *q_iter;
+                for (NodeID v : g.out_neigh(u)) {
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            lqueue.push_back(v);
+                            scout_count += -curr_val;
+                        }
+                    }
+                }
+            }
+  function: TDStep2
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [int64_t, Graph, pvector, NodeID, SlidingQueue, QueueBuffer]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:3139:cd1ef9d28c8c62ca
+- id: loop:bfs.cc:3496:d3f90fae3543181f
+  kind: loop
+  name: range_for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [106, 114]
+  byte_range: [3496, 3827]
+  insertion_range: [3496, 3827]
+  source_sha256: d3f90fae3543181f3ce5df866bea21d3b3bb2ecd044103944273db1e4c30ff71
+  text: |-
+    for (NodeID v : g.out_neigh(u)) {
+                    NodeID curr_val = parent[v];
+                    if (curr_val < 0) {
+                        if (compare_and_swap(parent[v], curr_val, u)) {
+                            lqueue.push_back(v);
+                            scout_count += -curr_val;
+                        }
+                    }
+                }
+  function: TDStep2
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [int64_t, Graph, pvector, NodeID, SlidingQueue, QueueBuffer]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:3139:cd1ef9d28c8c62ca
+- id: function:bfs.cc:3895:3e560c996879193b
+  kind: function
+  name: QueueToBitmap
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [121, 127]
+  byte_range: [3895, 4125]
+  insertion_range: [3962, 4125]
+  source_sha256: 3e560c996879193bc6c4b1bda8a34996b8b542c9231ad8fc5af16b7977999f4b
+  text: |-
+    void QueueToBitmap(const SlidingQueue<NodeID> &queue, Bitmap &bm) {
+    #pragma omp parallel for
+        for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+            NodeID u = *q_iter;
+            bm.set_bit_atomic(u);
+        }
+    }
+  function: QueueToBitmap
+  usr: c:@F@QueueToBitmap#&1$@S@SlidingQueue>#I#&$@S@Bitmap#
+  helpers: [begin, end, set_bit_atomic]
+  callers: []
+  referenced_types: [SlidingQueue, NodeID, Bitmap]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:3895:3e560c996879193b
+- id: loop:bfs.cc:3992:6fce0a8bf1585475
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [123, 126]
+  byte_range: [3992, 4123]
+  insertion_range: [4058, 4123]
+  source_sha256: 6fce0a8bf158547509cbb72c209724fe846ba3ee42c4c6f59f2c2bcb42bab441
+  text: |-
+    for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+            NodeID u = *q_iter;
+            bm.set_bit_atomic(u);
+        }
+  function: QueueToBitmap
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [SlidingQueue, NodeID, Bitmap]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:3895:3e560c996879193b
+- id: function:bfs.cc:4127:9ca128eb96d3fcc8
+  kind: function
+  name: BitmapToQueue
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [129, 141]
+  byte_range: [4127, 4499]
+  insertion_range: [4229, 4499]
+  source_sha256: 9ca128eb96d3fcc8f69d73fee58e9fcd06cf8627e0d3b1dee4b8c9ee5226697a
+  text: |-
+    void BitmapToQueue(const Graph &g, const Bitmap &bm,
+                       SlidingQueue<NodeID> &queue) {
+    #pragma omp parallel
+        {
+            QueueBuffer<NodeID> lqueue(queue);
+    #pragma omp for nowait
+            for (NodeID n = 0; n < g.num_nodes(); n++)
+                if (bm.get_bit(n))
+                    lqueue.push_back(n);
+            lqueue.flush();
+        }
+        queue.slide_window();
+    }
+  function: BitmapToQueue
+  usr: c:@F@BitmapToQueue#&1$@S@CSRGraph>#I#I#Vb1#&1$@S@Bitmap#&$@S@SlidingQueue>#I#
+  helpers: [QueueBuffer, num_nodes, get_bit, push_back, flush, slide_window]
+  callers: []
+  referenced_types: [Graph, Bitmap, SlidingQueue, NodeID, QueueBuffer]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:4127:9ca128eb96d3fcc8
+- id: loop:bfs.cc:4331:ec35536f223b52f4
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [135, 137]
+  byte_range: [4331, 4441]
+  insertion_range: [4386, 4441]
+  source_sha256: ec35536f223b52f4377c50e849b0d1edb09134486bb9fc5a82f3ea97301015e9
+  text: |-
+    for (NodeID n = 0; n < g.num_nodes(); n++)
+                if (bm.get_bit(n))
+                    lqueue.push_back(n);
+  function: BitmapToQueue
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [Graph, Bitmap, SlidingQueue, NodeID, QueueBuffer]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:4127:9ca128eb96d3fcc8
+- id: function:bfs.cc:4501:a64d92c2d52fcfe5
+  kind: function
+  name: InitParent
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [143, 149]
+  byte_range: [4501, 4747]
+  insertion_range: [4545, 4747]
+  source_sha256: a64d92c2d52fcfe583c71a23b2ca992cac0cdd0549e8a92b0fb5cf331a91ee1a
+  text: |-
+    pvector<NodeID> InitParent(const Graph &g) {
+        pvector<NodeID> parent(g.num_nodes());
+    #pragma omp parallel for
+        for (NodeID n = 0; n < g.num_nodes(); n++)
+            parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+        return parent;
+    }
+  function: InitParent
+  usr: c:@F@InitParent#&1$@S@CSRGraph>#I#I#Vb1#
+  helpers: [pvector, num_nodes, 'operator[]', out_degree]
+  callers: [DOBFS]
+  referenced_types: [pvector, NodeID, Graph]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.038687582
+    exclusive_thread_cpu_seconds: 0.022408002
+    invocations: 1
+    exclusive_function_thread_cpu_seconds: 0.098602766
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:4501:a64d92c2d52fcfe5
+- id: loop:bfs.cc:4618:7429be52f28ee4f6
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [146, 147]
+  byte_range: [4618, 4726]
+  insertion_range: [4669, 4726]
+  source_sha256: 7429be52f28ee4f605b59b8f8f8963bc23d10594fb262ed1fa032c095231adca
+  text: |-
+    for (NodeID n = 0; n < g.num_nodes(); n++)
+            parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+  function: InitParent
+  usr: null
+  helpers: []
+  callers: [DOBFS]
+  referenced_types: [pvector, NodeID, Graph]
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.076194764
+    exclusive_thread_cpu_seconds: 0.076194764
+    invocations: 262143
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:4501:a64d92c2d52fcfe5
+- id: function:bfs.cc:4749:76a956649bfe9705
+  kind: function
+  name: DOBFS
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [151, 201]
+  byte_range: [4749, 6300]
+  insertion_range: [4885, 6300]
+  source_sha256: 76a956649bfe97051a02af951fec5f4bc552440d0fb952c642fa4a5968d9cae5
+  text: |-
+    pvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled = false,
+                          int alpha = 1, int beta = 18) {
+        int num_nodes = g.num_nodes();
+        int num_edges = g.num_edges_directed();
+        if (logging_enabled)
+            PrintStep("Source", static_cast<int64_t>(source));
+        pvector<SGOffset> VertexOffsetsOut = g.VertexOffsets();
+        Timer t;
+        alloc_MAA();
+        init_MAA();
+        t.Start();
+        pvector<NodeID> parent = InitParent(g);
+        t.Stop();
+        if (logging_enabled)
+            PrintStep("i", t.Seconds());
+        parent[source] = source;
+        SlidingQueue<NodeID> queue(g.num_nodes());
+        queue.push_back(source);
+        queue.slide_window();
+        Bitmap curr(g.num_nodes());
+        curr.reset();
+        Bitmap front(g.num_nodes());
+        front.reset();
+
+    #ifdef GEM5
+        std::cout << "ROI started: " << omp_get_num_threads() << " threads" << std::endl;
+        m5_work_begin(0, 0);
+        m5_reset_stats(0, 0);
+    #endif
+        while (!queue.empty()) {
+            std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;
+            t.Start();
+            TDStep(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+            queue.slide_window();
+            t.Stop();
+            if (logging_enabled) {
+                PrintStep("td", t.Seconds());
+            }
+        }
+    #pragma omp parallel for
+        for (NodeID n = 0; n < g.num_nodes(); n++)
+            if (parent[n] < -1)
+                parent[n] = -1;
+    #ifdef GEM5
+        m5_dump_stats(0, 0);
+        m5_work_end(0, 0);
+        std::cout << "ROI End!!!" << std::endl;
+        m5_exit(0);
+    #endif
+        return parent;
+    }
+  function: DOBFS
+  usr: c:@F@DOBFS#&1$@S@CSRGraph>#I#I#Vb1#I#b#I#I#
+  helpers:
+  - num_nodes
+  - num_edges_directed
+  - PrintStep
+  - basic_string
+  - VertexOffsets
+  - Timer
+  - alloc_MAA
+  - init_MAA
+  - Start
+  - InitParent
+  - Stop
+  - Seconds
+  - operator[]
+  - SlidingQueue
+  - push_back
+  - slide_window
+  - Bitmap
+  - reset
+  - empty
+  - operator<<
+  - size
+  - TDStep
+  - pvector
+  callers: [main]
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - SGOffset
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.14269003
+    exclusive_thread_cpu_seconds: 0.021784619
+    invocations: 1
+    exclusive_function_thread_cpu_seconds: 0.085662264
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:4749:76a956649bfe9705
+- id: loop:bfs.cc:5684:db5227d6bf4ba808
+  kind: loop
+  name: while
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [180, 189]
+  byte_range: [5684, 6024]
+  insertion_range: [5684, 6024]
+  source_sha256: db5227d6bf4ba80839e6e815da4a5de5020fd6be3e1147e55f92927b50c3b430
+  text: |-
+    while (!queue.empty()) {
+            std::cout << "Starting TDStep: " << queue.size() << " elements" << std::endl;
+            t.Start();
+            TDStep(g, VertexOffsetsOut, parent, queue, num_nodes, num_edges);
+            queue.slide_window();
+            t.Stop();
+            if (logging_enabled) {
+                PrintStep("td", t.Seconds());
+            }
+        }
+  function: DOBFS
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - SGOffset
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0662245
+    exclusive_thread_cpu_seconds: 0.000128988
+    invocations: 1
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:4749:76a956649bfe9705
+- id: loop:bfs.cc:6054:01da7bd21c1235d7
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [191, 193]
+  byte_range: [6054, 6152]
+  insertion_range: [6105, 6152]
+  source_sha256: 01da7bd21c1235d7332ac2bf4123b457ff5757c5477c545eca47d07fb8f67c63
+  text: |-
+    for (NodeID n = 0; n < g.num_nodes(); n++)
+            if (parent[n] < -1)
+                parent[n] = -1;
+  function: DOBFS
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types:
+  - pvector
+  - NodeID
+  - Graph
+  - int64_t
+  - SGOffset
+  - Timer
+  - SlidingQueue
+  - Bitmap
+  invocation_unit: OpenMP loop iteration on the executing worker thread
+  metrics:
+    inclusive_thread_cpu_seconds: 0.063748657
+    exclusive_thread_cpu_seconds: 0.063748657
+    invocations: 262143
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:4749:76a956649bfe9705
+- id: function:bfs.cc:6303:660ca89daefffcee
+  kind: function
+  name: PrintBFSStats
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [204, 215]
+  byte_range: [6303, 6675]
+  insertion_range: [6372, 6675]
+  source_sha256: 660ca89daefffcee213996f21b5338c0cd52f823457bf58e3a994bee95d05a04
+  text: |-
+    void PrintBFSStats(const Graph &g, const pvector<NodeID> &bfs_tree) {
+        int64_t tree_size = 0;
+        int64_t n_edges = 0;
+        for (NodeID n : g.vertices()) {
+            if (bfs_tree[n] >= 0) {
+                n_edges += g.out_degree(n);
+                tree_size++;
+            }
+        }
+        cout << "BFS Tree has " << tree_size << " nodes and ";
+        cout << n_edges << " edges" << endl;
+    }
+  function: PrintBFSStats
+  usr: c:@F@PrintBFSStats#&1$@S@CSRGraph>#I#I#Vb1#&1$@S@pvector>#I#
+  helpers: [operator*, vertices, 'operator[]', out_degree, operator<<]
+  callers: []
+  referenced_types: [Graph, pvector, NodeID, int64_t]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:6303:660ca89daefffcee
+- id: loop:bfs.cc:6429:a8105cce278141c3
+  kind: loop
+  name: range_for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [207, 212]
+  byte_range: [6429, 6573]
+  insertion_range: [6429, 6573]
+  source_sha256: a8105cce278141c3759b9973c40c12789eb0f32462d9e43ba7ce4242d825b6ce
+  text: |-
+    for (NodeID n : g.vertices()) {
+            if (bfs_tree[n] >= 0) {
+                n_edges += g.out_degree(n);
+                tree_size++;
+            }
+        }
+  function: PrintBFSStats
+  usr: null
+  helpers: []
+  callers: []
+  referenced_types: [Graph, pvector, NodeID, int64_t]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:6303:660ca89daefffcee
+- id: function:bfs.cc:6941:546ec83dfdeaf3fe
+  kind: function
+  name: BFSVerifier
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [222, 268]
+  byte_range: [6941, 8542]
+  insertion_range: [7038, 8542]
+  source_sha256: 546ec83dfdeaf3fec444ebfcc1c70b72588f13dd21194e0d19146a5d6f5f5d96
+  text: |-
+    bool BFSVerifier(const Graph &g, NodeID source,
+                     const pvector<NodeID> &parent) {
+        pvector<int> depth(g.num_nodes(), -1);
+        depth[source] = 0;
+        vector<NodeID> to_visit;
+        to_visit.reserve(g.num_nodes());
+        to_visit.push_back(source);
+        for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+            NodeID u = *it;
+            for (NodeID v : g.out_neigh(u)) {
+                if (depth[v] == -1) {
+                    depth[v] = depth[u] + 1;
+                    to_visit.push_back(v);
+                }
+            }
+        }
+        for (NodeID u : g.vertices()) {
+            if ((depth[u] != -1) && (parent[u] != -1)) {
+                if (u == source) {
+                    if (!((parent[u] == u) && (depth[u] == 0))) {
+                        cout << "Source wrong" << endl;
+                        return false;
+                    }
+                    continue;
+                }
+                bool parent_found = false;
+                for (NodeID v : g.in_neigh(u)) {
+                    if (v == parent[u]) {
+                        if (depth[v] != depth[u] - 1) {
+                            cout << "Wrong depths for " << u << " & " << v << endl;
+                            return false;
+                        }
+                        parent_found = true;
+                        break;
+                    }
+                }
+                if (!parent_found) {
+                    cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+                    return false;
+                }
+            } else if (depth[u] != parent[u]) {
+                cout << "Reachability mismatch" << endl;
+                return false;
+            }
+        }
+        return true;
+    }
+  function: BFSVerifier
+  usr: c:@F@BFSVerifier#&1$@S@CSRGraph>#I#I#Vb1#I#&1$@S@pvector>#I#
+  helpers:
+  - pvector
+  - num_nodes
+  - operator[]
+  - vector
+  - reserve
+  - push_back
+  - begin
+  - operator!=
+  - end
+  - operator++
+  - operator*
+  - out_neigh
+  - vertices
+  - operator<<
+  - in_neigh
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:6941:546ec83dfdeaf3fe
+- id: loop:bfs.cc:7207:859f5c781239d2af
+  kind: loop
+  name: for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [229, 237]
+  byte_range: [7207, 7479]
+  insertion_range: [7207, 7479]
+  source_sha256: 859f5c781239d2afa384246228ba88c634694e7be3bfb36835a19fd12fa81a8a
+  text: |-
+    for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+            NodeID u = *it;
+            for (NodeID v : g.out_neigh(u)) {
+                if (depth[v] == -1) {
+                    depth[v] = depth[u] + 1;
+                    to_visit.push_back(v);
+                }
+            }
+        }
+  function: BFSVerifier
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:6941:546ec83dfdeaf3fe
+- id: loop:bfs.cc:7302:696dcb82ce1ee80d
+  kind: loop
+  name: range_for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [231, 236]
+  byte_range: [7302, 7473]
+  insertion_range: [7302, 7473]
+  source_sha256: 696dcb82ce1ee80df7e1500bbf764349585ad5968d8f45e5aac89c3ce28c0175
+  text: |-
+    for (NodeID v : g.out_neigh(u)) {
+                if (depth[v] == -1) {
+                    depth[v] = depth[u] + 1;
+                    to_visit.push_back(v);
+                }
+            }
+  function: BFSVerifier
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:6941:546ec83dfdeaf3fe
+- id: loop:bfs.cc:7484:5688108067948590
+  kind: loop
+  name: range_for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [238, 266]
+  byte_range: [7484, 8523]
+  insertion_range: [7484, 8523]
+  source_sha256: 568810806794859013d79d3866031532944edd5e06bf0ef002028cde36deb171
+  text: |-
+    for (NodeID u : g.vertices()) {
+            if ((depth[u] != -1) && (parent[u] != -1)) {
+                if (u == source) {
+                    if (!((parent[u] == u) && (depth[u] == 0))) {
+                        cout << "Source wrong" << endl;
+                        return false;
+                    }
+                    continue;
+                }
+                bool parent_found = false;
+                for (NodeID v : g.in_neigh(u)) {
+                    if (v == parent[u]) {
+                        if (depth[v] != depth[u] - 1) {
+                            cout << "Wrong depths for " << u << " & " << v << endl;
+                            return false;
+                        }
+                        parent_found = true;
+                        break;
+                    }
+                }
+                if (!parent_found) {
+                    cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+                    return false;
+                }
+            } else if (depth[u] != parent[u]) {
+                cout << "Reachability mismatch" << endl;
+                return false;
+            }
+        }
+  function: BFSVerifier
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:6941:546ec83dfdeaf3fe
+- id: loop:bfs.cc:7857:61928faa9fc30778
+  kind: loop
+  name: range_for
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [248, 257]
+  byte_range: [7857, 8219]
+  insertion_range: [7857, 8219]
+  source_sha256: 61928faa9fc30778009b87fb9807969ac3532e62625421b22b79cd25b03ac08c
+  text: |-
+    for (NodeID v : g.in_neigh(u)) {
+                    if (v == parent[u]) {
+                        if (depth[v] != depth[u] - 1) {
+                            cout << "Wrong depths for " << u << " & " << v << endl;
+                            return false;
+                        }
+                        parent_found = true;
+                        break;
+                    }
+                }
+  function: BFSVerifier
+  usr: null
+  helpers: []
+  callers: [main]
+  referenced_types: [Graph, NodeID, pvector, vector]
+  invocation_unit: loop entry
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:6941:546ec83dfdeaf3fe
+- id: function:bfs.cc:8544:b8910255bbc0a83f
+  kind: function
+  name: main
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [270, 291]
+  byte_range: [8544, 9325]
+  insertion_range: [8578, 9325]
+  source_sha256: b8910255bbc0a83f712aeea1d7fe3a01bbade5870c570405697a878360c5dad6
+  text: |-
+    int main(int argc, char *argv[]) {
+        CLApp cli(argc, argv, "breadth-first search");
+        if (!cli.ParseArgs())
+            return -1;
+        Builder b(cli);
+        Graph g = b.MakeGraph();
+        SourcePicker<Graph> sp(g, cli.start_vertex());
+    #ifdef GEM5
+        std::cout << "Fake Checkpoint started" << std::endl;
+        m5_checkpoint(0, 0);
+        std::cout << "Fake Checkpoint ended" << std::endl;
+    #endif
+        auto BFSBound = [&sp, &cli](const Graph &g) {
+            return DOBFS(g, sp.PickNext(), cli.logging_en());
+        };
+        SourcePicker<Graph> vsp(g, cli.start_vertex());
+        auto VerifierBound = [&vsp](const Graph &g, const pvector<NodeID> &parent) {
+            return BFSVerifier(g, vsp.PickNext(), parent);
+        };
+        BenchmarkKernel(cli, g, BFSBound, PrintBFSStats, VerifierBound);
+        return 0;
+    }
+  function: main
+  usr: c:@F@main#I#**C#
+  helpers:
+  - CLApp
+  - basic_string
+  - ParseArgs
+  - BuilderBase
+  - MakeGraph
+  - SourcePicker
+  - start_vertex
+  - DOBFS
+  - PickNext
+  - logging_en
+  - BFSVerifier
+  - BenchmarkKernel
+  - (lambda at /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/bfs.cc:282:21)
+  - (lambda at /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/bfs.cc:286:26)
+  callers: []
+  referenced_types: [CLApp, Builder, Graph, SourcePicker, pvector, NodeID]
+  invocation_unit: function call
+  metrics:
+    inclusive_thread_cpu_seconds: 0.0
+    exclusive_thread_cpu_seconds: 0.0
+    invocations: 0
+    exclusive_function_thread_cpu_seconds: 0.0
+  basis: measured
+  scope: accumulated within diagnostic complete-call ROI
+  artifact_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function_region: function:bfs.cc:8544:b8910255bbc0a83f
+dynamic_memory:
+- metric: Dr
+  available: true
+  value: 49157849
+  unit: references
+  definition: executed data read references
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a5ac9943272d33d67d5cdb01bb9b313d1a564fc044ef2d15ed120dffbf8f9d7f
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/callgrind-0-0.out.1
+  raw_sha256: 9c681a12a1ba31a2da2f189980762afb45f23f9d9e093e0c143ad47aa59d1f8a
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: Dw
+  available: true
+  value: 1807822
+  unit: references
+  definition: executed data write references
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a5ac9943272d33d67d5cdb01bb9b313d1a564fc044ef2d15ed120dffbf8f9d7f
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/callgrind-0-0.out.1
+  raw_sha256: 9c681a12a1ba31a2da2f189980762afb45f23f9d9e093e0c143ad47aa59d1f8a
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: D1mr
+  available: true
+  value: 7471960
+  unit: misses
+  definition: simulated first-level data cache read misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a5ac9943272d33d67d5cdb01bb9b313d1a564fc044ef2d15ed120dffbf8f9d7f
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/callgrind-0-0.out.1
+  raw_sha256: 9c681a12a1ba31a2da2f189980762afb45f23f9d9e093e0c143ad47aa59d1f8a
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: D1mw
+  available: true
+  value: 57239
+  unit: misses
+  definition: simulated first-level data cache write misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a5ac9943272d33d67d5cdb01bb9b313d1a564fc044ef2d15ed120dffbf8f9d7f
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/callgrind-0-0.out.1
+  raw_sha256: 9c681a12a1ba31a2da2f189980762afb45f23f9d9e093e0c143ad47aa59d1f8a
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: DLmr
+  available: true
+  value: 525626
+  unit: misses
+  definition: simulated last-level data cache read misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a5ac9943272d33d67d5cdb01bb9b313d1a564fc044ef2d15ed120dffbf8f9d7f
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/callgrind-0-0.out.1
+  raw_sha256: 9c681a12a1ba31a2da2f189980762afb45f23f9d9e093e0c143ad47aa59d1f8a
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+- metric: DLmw
+  available: true
+  value: 48992
+  unit: misses
+  definition: simulated last-level data cache write misses
+  basis: simulated
+  scope: ROI
+  attribution_granularity: whole BFS call
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  artifact_sha256: a5ac9943272d33d67d5cdb01bb9b313d1a564fc044ef2d15ed120dffbf8f9d7f
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/callgrind-0-0.out.1
+  raw_sha256: 9c681a12a1ba31a2da2f189980762afb45f23f9d9e093e0c143ad47aa59d1f8a
+  limitations: instrumented dynamic references and modeled cache misses; not native hardware counters,
+    address traces, per-region metrics, or causal bottleneck proof
+executions:
+- kind: regions
+  source: 0
+  source_position: 0
+  repetition: 0
+  binary_sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+  output: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/regions-0-0.json
+  region_output: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/regions-0-0.json.regions.json
+  region_output_sha256: e01d7ddc5089658e5b4bfe9375d5f5b4a4f6e7e1b0843efd91db54c2e26acbc4
+  correctness:
+    passed: true
+    reason: null
+    reachable_vertices: 173900
+  output_sha256: d71428b3af70b00bd471342e710ef12a965c1e8788eb6eb689944440f90fe420
+  diagnostic_wall_seconds: 0.15130927
+- kind: memory
+  source: 0
+  source_position: 0
+  repetition: 0
+  binary_sha256: a5ac9943272d33d67d5cdb01bb9b313d1a564fc044ef2d15ed120dffbf8f9d7f
+  output: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/memory-0-0.json
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/callgrind-0-0.out.1
+  raw_sha256: 9c681a12a1ba31a2da2f189980762afb45f23f9d9e093e0c143ad47aa59d1f8a
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: instrumentation starts at ROI; caches initially empty
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses
+  correctness:
+    passed: true
+    reason: null
+    reachable_vertices: 173900
+  output_sha256: 92a261478bf872a722d2ba686f83ba9fe282a3ec3326f52a6a02ff37d9271ff2
+  diagnostic_wall_seconds: 1.719565878
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.roi.v1
+    checks: bounded nonnegative counters; summary >= self-cost totals; cache miss hierarchy; explicit
+      client ROI dump
+- kind: statement_memory
+  source: 0
+  source_position: 0
+  repetition: 0
+  dump_position: 0
+  binary_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  output: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-memory-0-0.json
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  correctness:
+    passed: true
+    reason: null
+    reachable_vertices: 173900
+  output_sha256: 504c6e634a426e2f4efa62c36b4c5d641d48ac1ae8517121abb13a31cd7d35b0
+  diagnostic_wall_seconds: 1.742186032
+raw_artifacts:
+- host: mbit10
+  path: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile
+  kind: diagnostic_profile
+- host: mbit10
+  path: /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a2.profile
+  kind: diagnostic_build
+- host: mbit10
+  kind: host_observation
+  path: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/host-observation.json
+  sha256: 63ec8c87e0a6a95d1f68ec611cf6f70174dfc9bf123e0dd34e9438edcaee27ad
+  host_wall_s: 0.07625390775501728
+  evidence_kind: execution
+  unavailable_commands: 2
+reasons:
+- 'source coverage: header-defined, library, virtual/member and compiler-outlined code is not independently
+  attributed'
+- 'source coverage: free function template timing combines instantiations sharing one source extent'
+- 'source coverage: inlined source scopes remain source scopes, not machine-code symbols'
+- 'source coverage: OpenMP-disabled metadata inventory preserves _OPENMP; actual diagnostic execution
+  retains original OpenMP flags'
+- 'source coverage: metadata parser substitutes Clang builtin/OpenMP declarations in the compiler-private
+  header slot while preserving actual system-library search order; execution uses original compiler headers'
+- 'source coverage: metadata uses Clang predefined compiler macros; compiler-identity/feature tokens in
+  the source file are rejected, while header-defined macro conditions and indirect expansions remain outside
+  branch-equivalence guarantees'
+- 'source coverage: transformation-specific OpenMP pragmas and macro-generated loop extents may remain
+  unresolved'
+- 'source coverage: GNU __restrict__ erased for source inventory only; alias semantics are not inferred;
+  actual builds retain original source and qualifiers'
+gain_claim: false
+candidate: typed-library-bfs-scalar-profile-20261003-a2.baseline
+source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+implementation: dx100-bfs-scalar
+machine: mbit10
+evaluation: typed-library-bfs-scalar-profile-20261003-a2.native
+context:
+  candidate_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  function: DOBFS
+  source_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  application: dx100-gapbs
+  adapter: dx100_scalar_func
+  target: mbit10
+  machine_sha256: fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79
+  threads: 4
+  sources: [0]
+  repetitions: 1
+  roi: bfs.complete_call.v1
+  protocol: null
+  basis: measured
+  process_policy: one fresh process per source and repetition; graph construction before ROI
+  verifier: swdb.bfs.structural.v1
+  verifier_sha256: 4f5e4557045e07103ada68b177bb1cc21d303108cb0b7be648df4bfd2fe20510
+  backend_configuration: {}
+  instrumentation:
+    template_sha256: 99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95
+    treatment: included
+  host: mbit10
+  architecture: x86_64
+  lane: 'mbit10-evaluation-node0 (verified: affinity, bind:0, lease held, generation 436)'
+  load_average: [1.869140625, 1.42529296875, 1.3515625]
+  budget:
+    discovery_seconds: 120.0
+    build_seconds: 120.0
+    run_seconds: 900.0
+    total_seconds: 3000.0
+  dispatch_preflight:
+    disk: /data1
+    runs_folder: /data1/yanruj/EvolveSWDB_runs
+    free_bytes: 46319087616
+    memory_node: 0
+    free_memory_bytes: 31789735936
+    secondary_free_bytes: 78837571584
+    format: swdb.dispatch-preflight.v1
+    observed_at: '2026-10-03T12:45:17.752141+00:00'
+    planned_raw_bytes: 2147483648
+    reserve_bytes: 21474836480
+    memory_budget_bytes: 4294967296
+    state: admitted
+  host_observation:
+    path: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/host-observation.json
+    sha256: 63ec8c87e0a6a95d1f68ec611cf6f70174dfc9bf123e0dd34e9438edcaee27ad
+    host_wall_s: 0.07625390775501728
+    evidence_kind: execution
+    unavailable_commands: 2
+  workload:
+    id: bfs-20260928-kronecker18-s0.cf4283236c5cb50c
+    family: kronecker
+    generator:
+      name: DX100 GAPBS converter
+      revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      parameters:
+        scale: 18
+        edge_factor: 16
+        seed: 27491095
+        symmetrize: true
+        binary_sha256: a6cd0fd88a8de97decd087e9f1e43117ace95230f710b0bd7745f7bd33b492e6
+        source_sha256: 9b15a2ad58d672d534a14c808320a5d666af62cbe017f14703d955bea2279cc1
+        explicit_symmetrize_flag: false
+      command:
+      - /data1/yanruj/EvolveSWDB_builds/bfs-workloads-20260925/bfs-20260925-kronecker18/converter
+      - -g
+      - '18'
+      - -k
+      - '16'
+      - -b
+      - /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18/graph.sg32
+    representation:
+      id: bfs-20260925-kronecker18.dx100
+      path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18/graph.sg32
+      sha256: 9cec454bd8d3f175181a7e3906404ad8a812330c5e5bf1de62d63fad5e0f1143
+      format: gapbs_sg32le
+      application: dx100-gapbs
+      canonical_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+      bytes: 31492177
+      loader: swdb.gapbs-representation.v1
+      adjacency_verified: true
+    normalization: 'simple graph: remove self loops and duplicates; symmetrize if undirected; sort neighbors'
+    canonical_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    adjacency_order_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    num_vertices: 262143
+    num_directed_edges: 7610898
+    directed: false
+    sources: [0]
+    canonical_path: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.native/graph.swdb
+    canonical_file_sha256: 167cde96d3528a030f842d63b4cf3c142040ea56dbfb1ee2e94552c39ccd9c0e
+  primary_binary_sha256: cacd4512eac1b1ea8c5ac202547d99b0dbf78415866b3c08bfb43fbc16c9c210
+  primary_evaluation: typed-library-bfs-scalar-profile-20261003-a2.native
+  primary_load_average: [1.5732421875, 1.27001953125, 1.296875]
+  timing_basis: diagnostic accumulated thread CPU seconds; primary ROI wall timing remains in evaluation
+  overhead_treatment: scope instrumentation overhead is included; no synthetic subtraction or gain claim
+discovery:
+  backend: libclang-cindex
+  version: clang version 18.1.8
+  library: /data1/yanruj/llvm18/lib/libclang.so
+  arguments:
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -pthread
+  - -DFUNC
+  - -I/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src
+  - -I/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/API
+  - -isystem
+  - /usr/include/c++/13
+  - -isystem
+  - /usr/include/x86_64-linux-gnu/c++/13
+  - -isystem
+  - /usr/include/c++/13/backward
+  - -isystem
+  - /data1/yanruj/llvm18/lib/clang/18/include
+  - -isystem
+  - /usr/local/include
+  - -isystem
+  - /usr/include/x86_64-linux-gnu
+  - -isystem
+  - /usr/include
+  - -D_OPENMP=201511
+  - -D__restrict__=
+  - -fno-openmp
+  - -Wno-unknown-pragmas
+  - -resource-dir
+  - /data1/yanruj/llvm18/lib/clang/18
+  diagnostics: []
+  parser_adaptations:
+  - GNU __restrict__ erased for source inventory only; alias semantics are not inferred; actual builds
+    retain original source and qualifiers
+  unresolved: []
+  scope: free functions and ordinary loops defined in the BFS translation-unit source file
+  limitations:
+  - header-defined, library, virtual/member and compiler-outlined code is not independently attributed
+  - free function template timing combines instantiations sharing one source extent
+  - inlined source scopes remain source scopes, not machine-code symbols
+  - OpenMP-disabled metadata inventory preserves _OPENMP; actual diagnostic execution retains original
+    OpenMP flags
+  - metadata parser substitutes Clang builtin/OpenMP declarations in the compiler-private header slot
+    while preserving actual system-library search order; execution uses original compiler headers
+  - metadata uses Clang predefined compiler macros; compiler-identity/feature tokens in the source file
+    are rejected, while header-defined macro conditions and indirect expansions remain outside branch-equivalence
+    guarantees
+  - transformation-specific OpenMP pragmas and macro-generated loop extents may remain unresolved
+  - GNU __restrict__ erased for source inventory only; alias semantics are not inferred; actual builds
+    retain original source and qualifiers
+  library_sha256: 27b38bfdb37d164878767c40c8ce9538c96e801a37d2a67234bee043945de139
+  pass_sha256: 6f5414eb9844688dfe5f651cb030d5885f6b70ad6c7e10b4ddf1d7cd04e60021
+  collector_sha256: 698fe551af0e3a06dba6176aeb5ae70534a3264ee9e607e63814ac509095f8e8
+build:
+  directory: /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a2.profile
+  compiler: /usr/bin/g++
+  compiler_version:
+  - g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+  - Copyright (C) 2023 Free Software Foundation, Inc.
+  flags: [-std=c++11, -O3, -Wall, -fopenmp, -pthread, -DFUNC]
+  command:
+  - /usr/bin/g++
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -fopenmp
+  - -pthread
+  - -DFUNC
+  - -I/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src
+  - -I/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/API
+  - /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a2.profile/regions_driver.cc
+  - -o
+  - /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a2.profile/bfs-regions
+  wrapper_sha256: 3b4cf601d504e892eee69133fd77587b1b44767d357723c56cfef842887873e2
+  runtime_sha256: 7f74da428f5c5ef984c156ebb89d987d3f6cd08de830ce7131564238c54b3c11
+  instrumented_source_sha256: 13ec48f11eed91782529ab36760a5fc621a6cf37a5a38b66212880ef749731b1
+  native_runtime:
+    version: 1
+    environment:
+      OMP_NUM_THREADS: '4'
+      OMP_DYNAMIC: 'FALSE'
+      OMP_PROC_BIND: close
+      OMP_PLACES: cores
+      OMP_THREAD_LIMIT: '16'
+      OMP_WAIT_POLICY: PASSIVE
+      GOMP_SPINCOUNT: '0'
+      GOMP_CPU_AFFINITY: null
+artifacts:
+  primary_binary_sha256: cacd4512eac1b1ea8c5ac202547d99b0dbf78415866b3c08bfb43fbc16c9c210
+  region_binary:
+    path: /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a2.profile/bfs-regions
+    sha256: 501a1ca7f2784c51566425a4995c006b2f35a3aba24bf45824db58a0cdb80882
+    difference: automatic source scope guards; original build flags retained
+  memory_binary:
+    path: /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a2.profile/bfs-memory
+    sha256: a5ac9943272d33d67d5cdb01bb9b313d1a564fc044ef2d15ed120dffbf8f9d7f
+    flags:
+    - -std=c++11
+    - -O3
+    - -Wall
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -g
+    wrapper_sha256: ff9768afb3d7f181745ed9250a7c174910e281437f8804e34a77c8074ff8654b
+    difference: original candidate source; client ROI guards and debug info, no region guards
+  statement_binary:
+    path: /data1/yanruj/EvolveSWDB_builds/typed-library-bfs-scalar-profile-20261003-a2.profile/bfs-statements
+    sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+    flags:
+    - -std=c++11
+    - -O3
+    - -Wall
+    - -fopenmp
+    - -pthread
+    - -DFUNC
+    - -g
+    wrapper_sha256: 407146d79218b2edf599417cc905bbfb2f14357f84875af8dac7728ab4e0db81
+    instrumented_source_sha256: 695e18f436037ea1f2d97b3bde4d5e1cc333a9b700707b5504a3b5334363f891
+    difference: debug info; original debug line map; TDStep noinline; one complete-call instrumentation
+      interval
+per_line_memory:
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/bfs.cc
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 72
+  events:
+    Ir: 448
+    Dr: 168
+    Dw: 168
+    I1mr: 2
+    D1mr: 18
+    D1mw: 0
+    ILmr: 1
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+  source_path: benchmarks/gapbs/src/bfs.cc
+  source_file_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/bfs.cc
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 74
+  events:
+    Ir: 56
+    Dr: 28
+    Dw: 28
+    I1mr: 1
+    D1mr: 3
+    D1mw: 18
+    ILmr: 1
+    DLmr: 0
+    DLmw: 2
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+  source_path: benchmarks/gapbs/src/bfs.cc
+  source_file_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/bfs.cc
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 76
+  events:
+    Ir: 596
+    Dr: 84
+    Dw: 56
+    I1mr: 1
+    D1mr: 5
+    D1mw: 0
+    ILmr: 1
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+  source_path: benchmarks/gapbs/src/bfs.cc
+  source_file_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/bfs.cc
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 77
+  events:
+    Ir: 695559
+    Dr: 521676
+    Dw: 7
+    I1mr: 0
+    D1mr: 12415
+    D1mw: 7
+    ILmr: 0
+    DLmr: 6731
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+  source_path: benchmarks/gapbs/src/bfs.cc
+  source_file_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/bfs.cc
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 78
+  events:
+    Ir: 33051755
+    Dr: 521699
+    Dw: 0
+    I1mr: 0
+    D1mr: 179568
+    D1mw: 0
+    ILmr: 0
+    DLmr: 6809
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+  source_path: benchmarks/gapbs/src/bfs.cc
+  source_file_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/bfs.cc
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 79
+  events:
+    Ir: 30443256
+    Dr: 22832442
+    Dw: 0
+    I1mr: 1
+    D1mr: 637085
+    D1mw: 0
+    ILmr: 1
+    DLmr: 479207
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+  source_path: benchmarks/gapbs/src/bfs.cc
+  source_file_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/bfs.cc
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 80
+  events:
+    Ir: 7610814
+    Dr: 7610814
+    Dw: 0
+    I1mr: 0
+    D1mr: 6544814
+    D1mw: 0
+    ILmr: 0
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+  source_path: benchmarks/gapbs/src/bfs.cc
+  source_file_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/bfs.cc
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 81
+  events:
+    Ir: 15221628
+    Dr: 0
+    Dw: 0
+    I1mr: 0
+    D1mr: 0
+    D1mw: 0
+    ILmr: 0
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+  source_path: benchmarks/gapbs/src/bfs.cc
+  source_file_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/bfs.cc
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 84
+  events:
+    Ir: 173899
+    Dr: 0
+    Dw: 0
+    I1mr: 0
+    D1mr: 0
+    D1mw: 0
+    ILmr: 0
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+  source_path: benchmarks/gapbs/src/bfs.cc
+  source_file_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/bfs.cc
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 85
+  events:
+    Ir: 347798
+    Dr: 173899
+    Dw: 173899
+    I1mr: 0
+    D1mr: 0
+    D1mw: 0
+    ILmr: 0
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+  source_path: benchmarks/gapbs/src/bfs.cc
+  source_file_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/bfs.cc
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone .constprop.0]
+  line: 64
+  events:
+    Ir: 28
+    Dr: 7
+    Dw: 7
+    I1mr: 1
+    D1mr: 0
+    D1mw: 0
+    ILmr: 1
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+  source_path: benchmarks/gapbs/src/bfs.cc
+  source_file_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/bfs.cc
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone .constprop.0]
+  line: 72
+  events:
+    Ir: 63
+    Dr: 0
+    Dw: 35
+    I1mr: 0
+    D1mr: 0
+    D1mw: 0
+    ILmr: 0
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+  source_path: benchmarks/gapbs/src/bfs.cc
+  source_file_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/bfs.cc
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone .constprop.0]
+  line: 96
+  events:
+    Ir: 35
+    Dr: 21
+    Dw: 0
+    I1mr: 1
+    D1mr: 7
+    D1mw: 0
+    ILmr: 1
+    DLmr: 1
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+  source_path: benchmarks/gapbs/src/bfs.cc
+  source_file_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/platform_atomics.h
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 26
+  events:
+    Ir: 77
+    Dr: 39
+    Dw: 42
+    I1mr: 1
+    D1mr: 0
+    D1mw: 0
+    ILmr: 1
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/platform_atomics.h
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 31
+  events:
+    Ir: 173899
+    Dr: 0
+    Dw: 173899
+    I1mr: 0
+    D1mr: 0
+    D1mw: 0
+    ILmr: 0
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/pvector.h
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 113
+  events:
+    Ir: 173900
+    Dr: 0
+    Dw: 0
+    I1mr: 0
+    D1mr: 0
+    D1mw: 0
+    ILmr: 0
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/pvector.h
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 114
+  events:
+    Ir: 23702011
+    Dr: 15743373
+    Dw: 0
+    I1mr: 1
+    D1mr: 40
+    D1mw: 0
+    ILmr: 1
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/sliding_queue.h
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 100
+  events:
+    Ir: 96
+    Dr: 0
+    Dw: 0
+    I1mr: 0
+    D1mr: 0
+    D1mw: 0
+    ILmr: 0
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/sliding_queue.h
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 101
+  events:
+    Ir: 84
+    Dr: 0
+    Dw: 28
+    I1mr: 0
+    D1mr: 0
+    D1mw: 2
+    ILmr: 0
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/sliding_queue.h
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 104
+  events:
+    Ir: 1
+    Dr: 0
+    Dw: 0
+    I1mr: 0
+    D1mr: 0
+    D1mw: 0
+    ILmr: 0
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/sliding_queue.h
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 105
+  events:
+    Ir: 68
+    Dr: 0
+    Dw: 0
+    I1mr: 2
+    D1mr: 0
+    D1mw: 0
+    ILmr: 0
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/sliding_queue.h
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 109
+  events:
+    Ir: 347798
+    Dr: 0
+    Dw: 0
+    I1mr: 0
+    D1mr: 0
+    D1mw: 0
+    ILmr: 0
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/sliding_queue.h
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 111
+  events:
+    Ir: 521683
+    Dr: 0
+    Dw: 173899
+    I1mr: 1
+    D1mr: 0
+    D1mw: 11676
+    ILmr: 1
+    DLmr: 0
+    DLmw: 3588
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/sliding_queue.h
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 115
+  events:
+    Ir: 86
+    Dr: 62
+    Dw: 0
+    I1mr: 4
+    D1mr: 16
+    D1mw: 0
+    ILmr: 2
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/sliding_queue.h
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 117
+  events:
+    Ir: 55
+    Dr: 0
+    Dw: 0
+    I1mr: 0
+    D1mr: 0
+    D1mw: 0
+    ILmr: 0
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+- path: /data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a2.baseline/source/benchmarks/gapbs/src/sliding_queue.h
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 119
+  events:
+    Ir: 42
+    Dr: 21
+    Dw: 0
+    I1mr: 2
+    D1mr: 6
+    D1mw: 0
+    ILmr: 0
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+- path: /usr/include/c++/13/bits/stl_algobase.h
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 398
+  events:
+    Ir: 2
+    Dr: 1
+    Dw: 1
+    I1mr: 1
+    D1mr: 0
+    D1mw: 1
+    ILmr: 1
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+- path: /usr/include/c++/13/bits/stl_algobase.h
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 433
+  events:
+    Ir: 4
+    Dr: 0
+    Dw: 0
+    I1mr: 0
+    D1mr: 0
+    D1mw: 0
+    ILmr: 0
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+- path: /usr/include/c++/13/bits/stl_algobase.h
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 436
+  events:
+    Ir: 48
+    Dr: 0
+    Dw: 0
+    I1mr: 0
+    D1mr: 0
+    D1mw: 0
+    ILmr: 0
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+- path: /usr/include/c++/13/bits/stl_algobase.h
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 437
+  events:
+    Ir: 82
+    Dr: 0
+    Dw: 32
+    I1mr: 0
+    D1mr: 0
+    D1mw: 9
+    ILmr: 0
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+- path: /usr/include/c++/13/bits/stl_algobase.h
+  function: TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&,
+    int, int) [clone ._omp_fn.0]
+  line: 438
+  events:
+    Ir: 6
+    Dr: 0
+    Dw: 0
+    I1mr: 0
+    D1mr: 0
+    D1mw: 0
+    ILmr: 0
+    DLmr: 0
+    DLmw: 0
+  basis: simulated
+  execution:
+    source: 0
+    source_position: 0
+    repetition: 0
+    dump_position: 0
+  collector:
+    name: Callgrind
+    version: valgrind-3.22.0
+    cache_model:
+      I1: 32768,8,64
+      D1: 49152,12,64
+      LL: 25165824,12,64
+    initial_state: empty model caches at the complete BFS call boundary
+    hardware_counters: false
+    thread_policy: collection enabled for all threads; instrumentation globally bounded to ROI; combined
+      thread dump
+    model_limits: Valgrind schedules threads differently from native execution; cache model excludes kernel/other-process
+      effects and uses virtual addresses; diagnostic TDStep is not inlined; whole-call cache history includes
+      intervening BFS work; no per-invocation isolation
+    scope: raw collection covers the complete BFS call on every thread; retained self costs cover all
+      TDStep invocations and outlined workers
+  scope: TDStep
+  artifact_sha256: 9add5d9f98d28742774c0dd74a734ecb88e82f295189a7b0737a3c852cd65b88
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  raw_artifact: /data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.profile/statement-callgrind-0-0.out.1
+  raw_sha256: fd392d593013d15c9d8b47340b53df7a3708030e1b14ce927b42c3a6c7581030
+  counter_validation:
+    state: valid
+    method: swdb.callgrind.lines.v1
+statement_memory:
+- statement: bfs-td-frontier
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [77, 77]
+  metric: last_level_misses
+  value: 6731
+  basis: simulated
+  unit: misses
+  profile: typed-library-bfs-scalar-profile-20261003-a2.profile
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  source_mapping:
+    id: bfs-td-frontier
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [77, 77]
+    source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+    source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+    source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+    original_source:
+      root: application
+      path: benchmarks/gapbs/src/bfs.cc
+      revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      lines: [240, 240]
+    source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+    mapping_method: removed_pinned_line_ranges
+    projected_removed_ranges_lines: [77, 77]
+    code: NodeID u = queue.shared[i];
+    access_pattern_steps:
+    - pattern: td-frontier-read
+      step: 0
+    depends_on: []
+  attributed_rows: 1
+  limitations: debug-line self costs; optimized/coalesced or header-inlined work may have no costs on
+    the statement line
+- statement: bfs-td-row-bounds
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [78, 78]
+  metric: last_level_misses
+  value: 6809
+  basis: simulated
+  unit: misses
+  profile: typed-library-bfs-scalar-profile-20261003-a2.profile
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  source_mapping:
+    id: bfs-td-row-bounds
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [78, 78]
+    source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+    source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+    source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+    original_source:
+      root: application
+      path: benchmarks/gapbs/src/bfs.cc
+      revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      lines: [241, 241]
+    source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+    mapping_method: removed_pinned_line_ranges
+    projected_removed_ranges_lines: [78, 78]
+    code: for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+    access_pattern_steps:
+    - pattern: td-row-bounds-read
+      step: 1
+    - pattern: td-row-end-read
+      step: 1
+    depends_on: [bfs-td-frontier]
+  attributed_rows: 1
+  limitations: debug-line self costs; optimized/coalesced or header-inlined work may have no costs on
+    the statement line
+- statement: bfs-td-neighbor
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [79, 79]
+  metric: last_level_misses
+  value: 479207
+  basis: simulated
+  unit: misses
+  profile: typed-library-bfs-scalar-profile-20261003-a2.profile
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  source_mapping:
+    id: bfs-td-neighbor
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [79, 79]
+    source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+    source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+    source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+    original_source:
+      root: application
+      path: benchmarks/gapbs/src/bfs.cc
+      revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      lines: [242, 242]
+    source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+    mapping_method: removed_pinned_line_ranges
+    projected_removed_ranges_lines: [79, 79]
+    code: NodeID v = g.out_neighbors_[j];
+    access_pattern_steps:
+    - pattern: td-neighbor-read
+      step: 2
+    depends_on: [bfs-td-row-bounds]
+  attributed_rows: 1
+  limitations: debug-line self costs; optimized/coalesced or header-inlined work may have no costs on
+    the statement line
+- statement: bfs-td-parent-read
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [80, 80]
+  metric: last_level_misses
+  value: 0
+  basis: simulated
+  unit: misses
+  profile: typed-library-bfs-scalar-profile-20261003-a2.profile
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  source_mapping:
+    id: bfs-td-parent-read
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [80, 80]
+    source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+    source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+    source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+    original_source:
+      root: application
+      path: benchmarks/gapbs/src/bfs.cc
+      revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      lines: [243, 243]
+    source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+    mapping_method: removed_pinned_line_ranges
+    projected_removed_ranges_lines: [80, 80]
+    code: NodeID curr_val = parent[v];
+    access_pattern_steps:
+    - pattern: td-parent-read
+      step: 3
+    depends_on: [bfs-td-neighbor]
+  attributed_rows: 1
+  limitations: debug-line self costs; optimized/coalesced or header-inlined work may have no costs on
+    the statement line
+- statement: bfs-td-parent-cas
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [84, 84]
+  metric: last_level_misses
+  value: 0
+  basis: simulated
+  unit: misses
+  profile: typed-library-bfs-scalar-profile-20261003-a2.profile
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  source_mapping:
+    id: bfs-td-parent-cas
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [84, 84]
+    source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+    source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+    source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+    original_source:
+      root: application
+      path: benchmarks/gapbs/src/bfs.cc
+      revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      lines: [247, 247]
+    source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+    mapping_method: removed_pinned_line_ranges
+    projected_removed_ranges_lines: [84, 84]
+    code: if (compare_and_swap(parent[v], curr_val, u)) {
+    access_pattern_steps:
+    - pattern: td-parent-cas
+      step: 3
+    depends_on: [bfs-td-frontier, bfs-td-neighbor, bfs-td-parent-read]
+  attributed_rows: 1
+  limitations: debug-line self costs; optimized/coalesced or header-inlined work may have no costs on
+    the statement line
+- statement: bfs-td-parent-store
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [85, 85]
+  metric: last_level_misses
+  value: 0
+  basis: simulated
+  unit: misses
+  profile: typed-library-bfs-scalar-profile-20261003-a2.profile
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  source_mapping:
+    id: bfs-td-parent-store
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [85, 85]
+    source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+    source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+    source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+    original_source:
+      root: application
+      path: benchmarks/gapbs/src/bfs.cc
+      revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      lines: [248, 248]
+    source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+    mapping_method: removed_pinned_line_ranges
+    projected_removed_ranges_lines: [85, 85]
+    code: parent[v] = u;
+    access_pattern_steps:
+    - pattern: td-parent-store
+      step: 3
+    depends_on: [bfs-td-parent-cas]
+  attributed_rows: 1
+  limitations: debug-line self costs; optimized/coalesced or header-inlined work may have no costs on
+    the statement line
+- statement: bfs-td-queue-append
+  path: benchmarks/gapbs/src/bfs.cc
+  lines: [86, 86]
+  metric: last_level_misses
+  value: 0
+  basis: simulated
+  unit: misses
+  profile: typed-library-bfs-scalar-profile-20261003-a2.profile
+  source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+  source_mapping:
+    id: bfs-td-queue-append
+    path: benchmarks/gapbs/src/bfs.cc
+    lines: [86, 86]
+    source_sha256: e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3
+    source_snapshot: bfs-dx100-scalar-only-20260929-a1.source
+    source_artifact_sha256: 2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af
+    original_source:
+      root: application
+      path: benchmarks/gapbs/src/bfs.cc
+      revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      lines: [249, 249]
+    source_derivation_sha256: 08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991
+    mapping_method: removed_pinned_line_ranges
+    projected_removed_ranges_lines: [86, 86]
+    code: lqueue.push_back(v);
+    access_pattern_steps:
+    - pattern: td-queue-append
+      step: 0
+    depends_on: [bfs-td-parent-cas]
+  attributed_rows: 0
+  limitations: debug-line self costs; optimized/coalesced or header-inlined work may have no costs on
+    the statement line

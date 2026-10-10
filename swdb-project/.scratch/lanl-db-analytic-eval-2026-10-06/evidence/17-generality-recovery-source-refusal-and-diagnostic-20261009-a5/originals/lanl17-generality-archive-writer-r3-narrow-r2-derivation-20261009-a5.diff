@@ -1,0 +1,11 @@
+--- /private/tmp/lanl17_write_verified_generality_recovery_archive_SOURCE_ONLY_20261009_a5_r2.py
++++ /private/tmp/lanl17_write_verified_generality_recovery_archive_SOURCE_ONLY_20261009_a5_r3.py
+@@ -470,6 +470,8 @@
+     need(all(result.get(k)==0 for k in ('protected_reference_count','owned_consumers_count','owned_process_unknown_count')) and all(result.get(k) is False for k in ('backup_created','deletion_or_removal_admitted','index_clearance','scientific_admission')),'preflight_scope_clear_no_admission')
+     need(type(manifest) is dict and manifest.get('format')=='swdb.lanl17-generality-worktree-recovery-preflight-inventory.v1' and manifest.get('backup_eligibility_only') is True,'actual_preflight_manifest_format_eligibility')
+     need(manifest.get('snapshot_sha256')==result.get('snapshot_sha256')==payload_digest(manifest['tree']) and manifest['tree']['protected_reference_observations']==[],'complete_preflight_snapshot_link_no_refs')
++    need(manifest['transport']['source_sha256']==PREFLIGHT_SOURCE_SHA and result['checked_utc']==manifest['checked_utc'],'original_preflight_selected_source_and_time')
++    need(all(manifest.get(k) is False for k in ('backup_created','removal_admitted','index_clearance','scientific_admission')),'original_preflight_manifest_scope_not_admission')
+     need(manifest['owned_consumer_inventory']['no_live_owned_candidate_SOURCE_RAW_H_consumers'] is True and manifest['owned_consumer_inventory']['matching_live_consumers']==manifest['owned_consumer_inventory']['unknowns']==[],'preflight_owned_no_use_not_partial')
+     approval=closed(v['approval'],APPROVAL_KEYS,'closed_actual_parent_archive_approval')
+     need(approval['format']=='swdb.lanl17-generality-archive-parent-approval.v1' and approval['candidate']==str(CANDIDATE) and approval['head']==CANDIDATE_HEAD and approval['R']==R and approval['ER']==EXPECTED_ER,'exact_parent_approval_source_scope')

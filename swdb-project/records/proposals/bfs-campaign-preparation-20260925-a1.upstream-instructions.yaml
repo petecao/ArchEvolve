@@ -1,0 +1,148 @@
+kind: proposal
+schema_version: '0.4'
+id: bfs-campaign-preparation-20260925-a1.upstream-instructions
+status: draft
+created: '2026-09-26'
+updated: '2026-09-26'
+message_version: '1.0'
+producer:
+  name: swdb-representative-upstream-instructions
+  role: sw
+  test_client: true
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-campaign-preparation-20260925-a1.upstream-instructions
+  producer:
+    name: swdb-representative-upstream-instructions
+    role: sw
+    test_client: true
+  profile_package: bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.ac70410e93d0c3a6
+  source_snapshot: bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.source
+  implementation: gapbs-bfs-do
+  source_sha256: d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056
+  regions:
+  - function:bfs.cc:3477:2152911a89faaaf1
+  constraints:
+    editable_files: [src/bfs.cc]
+    preserve_correctness: true
+    preserve_roi: true
+  parameters:
+    supporting_profile_packages:
+    - bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.ac70410e93d0c3a6
+    - bfs-native-pilot-20260925-upstream18-a2.kronecker.package.v1.6a34b061dcca355b
+    selection: operator_selected_before_candidate_assessment
+  required_operations: []
+  strategy: remove-dead-initial-bitmap-clear
+  intent: 'Eliminate only the initial curr.reset() in DOBFS: BUStep resets its next destination before
+    every read/use. Preserve front.reset(), every BUStep reset, direction switching, and structural BFS
+    semantics.'
+  payload:
+    kind: structured_instructions
+    content:
+      operation: remove_dead_initialization
+      function: DOBFS
+      statement: curr.reset();
+      preconditions:
+      - BUStep executes next.reset() before destination bitmap writes
+      - curr is not read before serving as the BUStep destination
+      preserve:
+      - front.reset()
+      - BUStep next.reset()
+      - all traversal and direction-switch logic
+      - BFSVerifier
+      - complete-call ROI
+      on_unsatisfied_precondition: return unresolved; do not choose another strategy
+payload_sha256: 8a7f129aa2d8a23327af782294d51989d23a5d77e6ad73e50ddba89f4ce48530
+outcome:
+  state: candidate_created
+  stage: rewriting
+  reason: null
+attempts:
+- number: 1
+  stage: rewriting
+  state: completed
+  provider:
+    provider:
+      kind: claude
+      command:
+      - /data1/yanruj/.npm-global/bin/claude
+      timeout_s: 300
+      max_repairs: 1
+      total_seconds: 600
+      budget_usd: 5
+    command:
+    - /data1/yanruj/.npm-global/bin/claude
+    - -p
+    - --safe-mode
+    - --tools
+    - ''
+    - --strict-mcp-config
+    - --mcp-config
+    - '{"mcpServers":{}}'
+    - --no-session-persistence
+    - --output-format
+    - json
+    - --json-schema
+    - '{"type": "object", "additionalProperties": false, "required": ["interpretation", "patch", "unresolved"],
+      "properties": {"interpretation": {"type": "string"}, "patch": {"type": "string"}, "unresolved":
+      {"type": "array", "items": {"type": "string"}}}}'
+    - --max-budget-usd
+    - '5'
+    timeout_s: 300
+    classification: rewrite_provider
+    prompt_sha256: 22f9ab6ed269ae6e72fae12eb94fc8f18c30b628a8af382cd56c8487fdbc3a04
+    state: completed
+    executable_sha256: 5c4735937844e84f8a93306e841a5b0e12252909b07870f789b190468da147ab
+    version: 2.1.278 (Claude Code)
+    returncode: 0
+    host_wall_s: 41.246362588368356
+  candidate: bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1
+raw_artifacts:
+- path: /data1/yanruj/EvolveSWDB_runs/bfs-provider-initial-20260926-a1/bfs-campaign-preparation-20260925-a1.upstream-instructions
+  stage: rewriting
+source_snapshot: bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.source
+profile_package: bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.ac70410e93d0c3a6
+provider:
+  kind: claude
+  command:
+  - /data1/yanruj/.npm-global/bin/claude
+  timeout_s: 300
+  max_repairs: 1
+  total_seconds: 600
+  budget_usd: 5
+repair_budget:
+  max_repairs: 1
+  total_seconds: 600
+  used_seconds: 41.246362588368356
+  repairs: 0
+interpretation:
+  interpretation: 'Applied the submitted strategy "remove-dead-initial-bitmap-clear" exactly as specified:
+    removed the single dead statement `curr.reset();` immediately following `Bitmap curr(g.num_nodes());`
+    in DOBFS (src/bfs.cc). Verified both stated preconditions against the provided source: (1) BUStep
+    unconditionally calls `next.reset()` as its very first statement, before any bit is set on the destination
+    bitmap; (2) `curr` is never read for its bit content before it is first passed to BUStep as the destination
+    argument — between its construction and that first call it is untouched, and its only other use is
+    via `front.swap(curr)`, which exchanges bitmap contents without depending on the swapped-in bitmap''s
+    prior value. Since BUStep always resets its destination bitmap before any read/write of its bits,
+    the initial `curr.reset()` in DOBFS has no observable effect and is dead code. No other statements
+    (front.reset(), every BUStep-internal next.reset(), direction-switch logic, BFSVerifier) were touched,
+    and the ROI/ timed ->complete-call region was preserved unchanged in scope.'
+  patch: |
+    --- a/src/bfs.cc
+    +++ b/src/bfs.cc
+    @@ -134,8 +134,7 @@
+       queue.push_back(source);
+       queue.slide_window();
+       Bitmap curr(g.num_nodes());
+    -  curr.reset();
+       Bitmap front(g.num_nodes());
+       front.reset();
+       int64_t edges_to_check = g.num_edges_directed();
+       int64_t scout_count = g.out_degree(source);
+  unresolved: []
+candidate: bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1

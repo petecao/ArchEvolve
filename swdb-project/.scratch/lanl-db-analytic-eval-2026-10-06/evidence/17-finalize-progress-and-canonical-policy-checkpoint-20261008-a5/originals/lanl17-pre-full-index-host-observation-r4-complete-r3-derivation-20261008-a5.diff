@@ -1,0 +1,52 @@
+--- /private/tmp/lanl17_pre_full_index_host_observation_20261008_a5_r3.py
++++ /private/tmp/lanl17_pre_full_index_host_observation_20261008_a5_r4.py
+@@ -217,7 +217,8 @@
+         folder=RAW/'base/records' if name=='validate-final-export' else RAW/'campaign-runs/extensa'/name.removeprefix('validate-')/'records'
+         argv=strict(b'{"argv":'+bodies[name+':argv']+b'}')['argv']
+         need(argv==['python3','-m','swdb','validate','--records',str(folder)] and bodies[name+':exit']==b'0\n' and re.fullmatch(rb'OK: [0-9]{1,8} record\(s\) valid\n',bodies[name+':stdout']) is not None and bodies[name+':stderr']==b'','original_validation_quartet_success')
+-    return pins
++    reviewed_stops=receipt['stopped_attempts'];need(type(reviewed_stops) is list and len(reviewed_stops)==4 and all(type(v) is dict and v.get('campaign')==cid for cid,v in zip(CIDS,reviewed_stops)),'reviewed_ER_four_original_stops')
++    return pins,reviewed_stops
+ 
+ def current_sources():
+     def git(p,*tail):return run(['/usr/bin/git','--no-replace-objects','-c','core.fsmonitor=false','-C',str(p),*tail]).strip()
+@@ -303,9 +304,9 @@
+             if ps.st_uid!=UID:continue
+             owned+=1;need(owned<=4096,'owned_process_bound');proof={'pid':pid,'uid':UID,'proc_inode':ps.st_ino}
+             command=owned_cmdline(p,ps)
+-            if not command:
+-                proof=inactive_owned_identity(p,ps);need(owned_cmdline(p,ps)==b'','inactive_cmdline_byte_continuity');continue
+-            argv=command[:-1].split(b'\0')
++            argv=command[:-1].split(b'\0') if command else []
++            if not argv or not argv[0]:
++                proof=inactive_owned_identity(p,ps);need(owned_cmdline(p,ps)==command,'inactive_cmdline_byte_continuity');continue
+             matched=any(needle in arg for needle in needles for arg in argv)
+             if matched:
+                 identity,current_argv,exe=process_identity(pid)
+@@ -326,14 +327,14 @@
+ def read():
+     need(sys.platform=='linux' and os.getuid()==os.geteuid()==UID and pwd.getpwuid(UID).pw_name=='yanruj' and socket.gethostname().split('.')[0]=='mbit10','native_account_host')
+     need(Path('/proc/self/exe').resolve(strict=True)==Path('/usr/bin/python3.12') and sys.flags.dont_write_bytecode and not sys.flags.optimize,'native_isolated_python')
+-    transport=transport_identity();completion=completion_originals(INPUT['completion_originals']);sources=current_sources();tools={p:root_tool_pin(p,n,h) for p,(n,h) in NATIVE.items()};home=home_startup();routes=fresh_outputs(INPUT['fresh_routes'])
++    transport=transport_identity();completion,reviewed_stops=completion_originals(INPUT['completion_originals']);sources=current_sources();tools={p:root_tool_pin(p,n,h) for p,(n,h) in NATIVE.items()};home=home_startup();routes=fresh_outputs(INPUT['fresh_routes'])
+     leases={};lpins={};lproofs={};ds={};ids={}
+     for name in ('mbit10-evaluation-node0','mbit10-evaluation-node1','mbit10-evaluation'):
+         b,pin=original(BASE/'lact-host-lease'/(name+'.meta.json'),32768);leases[name]=native_projection(strict(b),name);lpins[name]=pin
+         _,pin=original(BASE/'lact-host-lease'/(name+'.lease'),4096);ids[name]=selected_lease_identity(pin);proof=locks(ids[name]);need(not proof['matching_rows'],'no_matching_kernel_holder_or_waiter');ds[name]=daemon_ready(leases[name]['daemon_pid'],ids[name]);lproofs[name]={'lease_original':pin,'proof_before':proof}
+     stops={}
+-    for cid in CIDS:
+-        p=RAW/'attempts'/cid/'attempt-1/stopped-receipt.json';b,pin=original(p,65536);v=strict(b);need(v['identity_sha256']==payload_digest({k:x for k,x in v.items() if k!='identity_sha256'}),'original_stop_True_seal')
++    for cid,reviewed_stop in zip(CIDS,reviewed_stops):
++        p=RAW/'attempts'/cid/'attempt-1/stopped-receipt.json';b,pin=original(p,65536);v=strict(b);need(v==reviewed_stop,'original_stop_matches_reviewed_ER_chain');utc(v['ended_utc']);need(v['identity_sha256']==payload_digest({k:x for k,x in v.items() if k!='identity_sha256'}),'original_stop_True_seal')
+         need(v['campaign']==cid and v['source_commit']==R and v['source_clean_after'] is True and v['manifest_sha256']==M2_ID and v['estimator_sha256_after']==F6 and type(v['public_exit_code']) is int and type(v['runner_exit_code']) is int and v['public_exit_code']==v['runner_exit_code']==0 and v.get('infrastructure_error') is None and v['process_cleanup']['subreaper'] is True and v['process_cleanup']['survivors']=={},'all_four_original_normal_stops')
+         stops[cid]={'original':pin,'identity_sha256':v['identity_sha256'],'ended_utc':v['ended_utc']}
+     processes=consumers(transport)
+@@ -342,7 +343,7 @@
+     for name,d in leases.items():
+         b,pin=original(BASE/'lact-host-lease'/(name+'.meta.json'),32768);need(native_projection(strict(b),name)==d and pin==lpins[name],'lease_continuity')
+         _,pin=original(Path(lproofs[name]['lease_original']['path']),4096);need(pin==lproofs[name]['lease_original'],'lease_inode_continuity');proof=locks(ids[name]);need(not proof['matching_rows'],'after_no_kernel_holder_or_waiter');lproofs[name]['proof_after']=proof;need(daemon_ready(d['daemon_pid'],ids[name])==ds[name],'daemon_FD9_continuity')
+-    need(completion_originals(INPUT['completion_originals'])==completion and current_sources()==sources and home_startup()==home and fresh_outputs(INPUT['fresh_routes'])==routes,'completion_source_home_route_continuity')
++    need(completion_originals(INPUT['completion_originals'])==(completion,reviewed_stops) and current_sources()==sources and home_startup()==home and fresh_outputs(INPUT['fresh_routes'])==routes,'completion_source_home_route_continuity')
+     for p,(n,h) in NATIVE.items():need(root_tool_pin(p,n,h)==tools[p],'native_tool_continuity')
+     for d in stops.values():_,pin=original(Path(d['original']['path']),65536);need(pin==d['original'],'original_stop_continuity')
+     need(transport_identity()==transport,'self_parent_transport_continuity');_,pin=input_original(Path(ARGS.input),ARGS.input_sha256);need(pin==INPUT_PIN,'input_original_continuity')

@@ -1,0 +1,49 @@
+{
+  "date": "2026-09-27 ET",
+  "verdict": "pass_for_root_authorized_fresh_proof_dispatch_only",
+  "runtime": "2a64a188f08811baf09ab9c61e69633c3d45a7f2",
+  "tracked_git_files": 817,
+  "all_manifest_entries_match_exact_git_blobs": true,
+  "operator_test_result": "13 passed in 0.04s",
+  "baseline_delta": "Prior reviewed seal group: only newgroup/a8IDs, --protocol-recovery flag and newplan path; shell wrapper unchanged",
+  "files": {
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/protocol-recovery/operator.py": {
+      "bytes": 16954,
+      "sha256": "06014f494f2e2fe6e5bfa1b6807fe3d97f94b709e8872a0cd7f59ccf9353a046"
+    },
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/protocol-recovery/launch.sh": {
+      "bytes": 1457,
+      "sha256": "46c0da7a2f679b2e5e35ee1d1322bbd9c813aafc68e605192e796d1807ae1ffc"
+    },
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/protocol-recovery/runtime-manifest.json": {
+      "bytes": 139118,
+      "sha256": "277afa007f5c0810eae52e227635c715c35008940e60fa51c60c538507ab5b66"
+    },
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/protocol-recovery/sealed-config.json": {
+      "bytes": 2037,
+      "sha256": "f94df9860770074ce7381fbadb8119ed7c175778b087cbb26d6b00774a32d110"
+    }
+  },
+  "limits": [
+    "Fresh dispatch must still use exact reviewed wrapper/helper and its immediate guard; no scientific launch authorization"
+  ],
+  "lane_only_revision": {
+    "from": 0,
+    "to": 1,
+    "all_other_config_values_identical": true,
+    "config_sha256": "28b654e1f5e5b1a940948e7a763bd653408baf021ff5e00cc6c1b23bd5cd9711",
+    "reason": "node0 external lease became held; prospective node1 remains subject to fresh guard"
+  },
+  "host_readiness": {
+    "path": "/private/tmp/bfs-protocol-proof-host-readiness-node1-20260927.json",
+    "sha256": "ffc8559b9e4b2f19f2fe3284949eb8be003b6f28e20e7f342cfe391105364f51",
+    "observed_at": "2026-09-27T06:55:22.020316-04:00",
+    "operator_commit": "7703dacae8f49718dbacb55378e6c2d6f37a76da",
+    "all_seven_git_packet_files_match": true,
+    "runtime_clean_full_guard": true,
+    "fresh_roots": true,
+    "node": 1,
+    "prospective_lane_and_legacy_unlocked": true,
+    "capacity_passed": true
+  }
+}

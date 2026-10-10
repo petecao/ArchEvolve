@@ -1,0 +1,104 @@
+{
+  "created": "2026-09-26",
+  "status": "local_repairs_reviewed_broad_recheck_pending",
+  "scope": "Three exact c2f987b full-regression failures and independently reproduced initial-receipt clock issue",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_process.py",
+      "bytes": 6321,
+      "sha256": "d231b5d46adde2304227d14c59efe21e21bd2567d4b72b093df251476afd1ff7"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/dx100_smoke.py",
+      "bytes": 5770,
+      "sha256": "b877d3cf3c7312bc0eee040da4783e8ba00dbbf4a7058804728d118a965e20a6"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/dx100_candidate_smoke.py",
+      "bytes": 8362,
+      "sha256": "3f4239e4142ac87ae076e0e97a3930a9695d24467f2c8a21c0adba24a16944b1"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_native_execution.py",
+      "bytes": 22111,
+      "sha256": "26e51b0ec65820220521b6cd74ea325e5a94f498db3840c9f46827b68153047f"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_dx100_witness_continuation.py",
+      "bytes": 19922,
+      "sha256": "0216b05c8f118b30d5768208fcf7ca2638e0b6d84df4e192785b3b62e1b251a7"
+    }
+  ],
+  "full_regression": {
+    "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/observations/full-regression-c2f987b-20260926.json",
+    "bytes": 1500,
+    "sha256": "0f2fdebe9097c55d9890e0e1f4395bb6d15166bd0815f62dc06f2b2e2120913f"
+  },
+  "reproductions": {
+    "original_three_failures": {
+      "path": "/private/tmp/bfs-c2-regression-repro-20260926.log",
+      "bytes": 13605,
+      "sha256": "17c0cb0074b28cad3a8f0ad5dde95c67efd5ee73d6f4e007e27f9a01516f4d90"
+    },
+    "additional_clock": {
+      "path": "/private/tmp/bfs-smoke-work-clock-spec-red-20260926.log",
+      "bytes": 2038,
+      "sha256": "57e60cf11f33a0ffe69ef482dff65508be3e0b1d608c3c6d2c6efddeb526164c"
+    },
+    "durable_clock_cases": {
+      "path": "/private/tmp/bfs-stage-initial-persistence-red-20260926.log",
+      "bytes": 3559,
+      "sha256": "5f13585b075ccc6c1c58d00bd1b43955eca8dabe5ec02c9588eb18c3e467de4c"
+    }
+  },
+  "corrections": [
+    "Smoke drivers keep original outer deadline for cleanup and separately clamp child work before the cleanup reserve.",
+    "Generic run_stage starts its work clock before initial persistence and rejects exhausted work before spawning. Original errors and hard cleanup deadline remain intact.",
+    "Witness failure orchestration uses an isolated temporary prelaunch catalog/runtime; durable real a3 metadata and historical pins are unchanged."
+  ],
+  "verification": {
+    "initial_focused_repair": {
+      "result": "47 passed in10.36s",
+      "log": {
+        "path": "/private/tmp/bfs-c2-regression-fixed-20260926.log",
+        "bytes": 100,
+        "sha256": "b0b9846dc63eed3a564d23c837d6e8b8a947b92b17e3428fb9dd904b86af6a94"
+      }
+    },
+    "final_clock_and_cleanup": {
+      "result": "66 passed,2 Linux-only skipped in80.91s",
+      "receipt": {
+        "path": "/private/tmp/bfs-stage-initial-persistence-preparation-20260926.json",
+        "bytes": 3988,
+        "sha256": "152f7b13fcbe75b3efd5c3cc1a4fe9cad86b270c83a3d8d489c67a000b91f131"
+      }
+    },
+    "independent_standards": {
+      "result": "4 probes passed in0.38s; clean",
+      "receipt": {
+        "path": "/private/tmp/bfs-run-stage-clock-standards-review-20260926.json",
+        "bytes": 2568,
+        "sha256": "6da5c1cb6347b1431a1d38e08e16df54729f7fc88ba7169782df8e0ca9bd625f"
+      }
+    },
+    "smoke_and_witness_reviews": {
+      "Standards": {
+        "path": "/private/tmp/bfs-shared-root-a2-smoke-standards-review-20260926.json",
+        "bytes": 3922,
+        "sha256": "b1f1b7b7677120ded324d5200a5edf4bf3f49927bfcba3c83b1e462a045d2ad5"
+      },
+      "Spec": {
+        "path": "/private/tmp/bfs-a2-root-smoke-independent-spec-20260926.json",
+        "bytes": 3883,
+        "sha256": "42c552d4ef9cca052e89d8b7f5493c37fa9a8a0adf31a43e0744de03d7b13bf1"
+      }
+    },
+    "root_readback": "Reviewed exact five-file final diff; work/cleanup boundaries and isolated records agree with intended correction."
+  },
+  "limits": [
+    "These are local contract checks, not actual Linux acceptance or empirical measurements.",
+    "The prior exact full suite remains failed; a corrected isolated broad run is separate.",
+    "Historical checkouts and real catalog bytes remain unchanged.",
+    "Final all-ticket Standards and Spec review remains required."
+  ]
+}

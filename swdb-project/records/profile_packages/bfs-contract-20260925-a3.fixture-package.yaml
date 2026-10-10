@@ -1,0 +1,257 @@
+kind: profile_package
+schema_version: '0.4'
+id: bfs-contract-20260925-a3.fixture-package
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb-contract-fixture
+  role: operator
+  test_client: true
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+implementation: gapbs-bfs-do
+source_snapshot: bfs-contract-20260925-a3.source
+context:
+  fixture: true
+  source_sha256: d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056
+completeness: fixture
+regions:
+- id: src/bfs.cc:122-179:437882a50dcae474
+  path: src/bfs.cc
+  lines: [122, 179]
+  source_sha256: 437882a50dcae474f7a602c8042acf9272eb0272128d04db8d117a44d69cee71
+  text: |
+    pvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled = false,
+                          int alpha = 15, int beta = 18) {
+      if (logging_enabled)
+        PrintStep("Source", static_cast<int64_t>(source));
+      Timer t;
+      t.Start();
+      pvector<NodeID> parent = InitParent(g);
+      t.Stop();
+      if (logging_enabled)
+        PrintStep("i", t.Seconds());
+      parent[source] = source;
+      SlidingQueue<NodeID> queue(g.num_nodes());
+      queue.push_back(source);
+      queue.slide_window();
+      Bitmap curr(g.num_nodes());
+      curr.reset();
+      Bitmap front(g.num_nodes());
+      front.reset();
+      int64_t edges_to_check = g.num_edges_directed();
+      int64_t scout_count = g.out_degree(source);
+      while (!queue.empty()) {
+        if (scout_count > edges_to_check / alpha) {
+          int64_t awake_count, old_awake_count;
+          TIME_OP(t, QueueToBitmap(queue, front));
+          if (logging_enabled)
+            PrintStep("e", t.Seconds());
+          awake_count = queue.size();
+          queue.slide_window();
+          do {
+            t.Start();
+            old_awake_count = awake_count;
+            awake_count = BUStep(g, parent, front, curr);
+            front.swap(curr);
+            t.Stop();
+            if (logging_enabled)
+              PrintStep("bu", t.Seconds(), awake_count);
+          } while ((awake_count >= old_awake_count) ||
+                   (awake_count > g.num_nodes() / beta));
+          TIME_OP(t, BitmapToQueue(g, front, queue));
+          if (logging_enabled)
+            PrintStep("c", t.Seconds());
+          scout_count = 1;
+        } else {
+          t.Start();
+          edges_to_check -= scout_count;
+          scout_count = TDStep(g, parent, queue);
+          queue.slide_window();
+          t.Stop();
+          if (logging_enabled)
+            PrintStep("td", t.Seconds(), queue.size());
+        }
+      }
+      #pragma omp parallel for
+      for (NodeID n = 0; n < g.num_nodes(); n++)
+        if (parent[n] < -1)
+          parent[n] = -1;
+      return parent;
+    }
+  association: declared_source_region
+- id: src/bfs.cc:67-89:7a1d3944e43bdd6d
+  path: src/bfs.cc
+  lines: [67, 89]
+  source_sha256: 7a1d3944e43bdd6d736c5e71da4c51362401ee7dba455bddb61c6efa97ae9dc1
+  text: |
+    int64_t TDStep(const Graph &g, pvector<NodeID> &parent,
+                   SlidingQueue<NodeID> &queue) {
+      int64_t scout_count = 0;
+      #pragma omp parallel
+      {
+        QueueBuffer<NodeID> lqueue(queue);
+        #pragma omp for reduction(+ : scout_count) nowait
+        for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+          NodeID u = *q_iter;
+          for (NodeID v : g.out_neigh(u)) {
+            NodeID curr_val = parent[v];
+            if (curr_val < 0) {
+              if (compare_and_swap(parent[v], curr_val, u)) {
+                lqueue.push_back(v);
+                scout_count += -curr_val;
+              }
+            }
+          }
+        }
+        lqueue.flush();
+      }
+      return scout_count;
+    }
+  association: declared_source_region
+- id: src/bfs.cc:46-64:29b8637691f58e1c
+  path: src/bfs.cc
+  lines: [46, 64]
+  source_sha256: 29b8637691f58e1c1ed01dd1f20203feab7f66945891794357e0e44a87d06967
+  text: |
+    int64_t BUStep(const Graph &g, pvector<NodeID> &parent, Bitmap &front,
+                   Bitmap &next) {
+      int64_t awake_count = 0;
+      next.reset();
+      #pragma omp parallel for reduction(+ : awake_count) schedule(dynamic, 1024)
+      for (NodeID u=0; u < g.num_nodes(); u++) {
+        if (parent[u] < 0) {
+          for (NodeID v : g.in_neigh(u)) {
+            if (front.get_bit(v)) {
+              parent[u] = v;
+              awake_count++;
+              next.set_bit(u);
+              break;
+            }
+          }
+        }
+      }
+      return awake_count;
+    }
+  association: declared_source_region
+- id: src/bfs.cc:92-98:ecf6e1693c797afe
+  path: src/bfs.cc
+  lines: [92, 98]
+  source_sha256: ecf6e1693c797afe40375bcfdb7316a26d367c15dec1c727ab745c2e90fc2e97
+  text: |
+    void QueueToBitmap(const SlidingQueue<NodeID> &queue, Bitmap &bm) {
+      #pragma omp parallel for
+      for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+        NodeID u = *q_iter;
+        bm.set_bit_atomic(u);
+      }
+    }
+  association: declared_source_region
+- id: src/bfs.cc:100-112:a80c4416a9fcc609
+  path: src/bfs.cc
+  lines: [100, 112]
+  source_sha256: a80c4416a9fcc609928b7cae81e955d07ade1cd8dabe9badb725f92b40254322
+  text: |
+    void BitmapToQueue(const Graph &g, const Bitmap &bm,
+                       SlidingQueue<NodeID> &queue) {
+      #pragma omp parallel
+      {
+        QueueBuffer<NodeID> lqueue(queue);
+        #pragma omp for nowait
+        for (NodeID n=0; n < g.num_nodes(); n++)
+          if (bm.get_bit(n))
+            lqueue.push_back(n);
+        lqueue.flush();
+      }
+      queue.slide_window();
+    }
+  association: declared_source_region
+- id: src/bfs.cc:114-120:8258dcb0ac11957d
+  path: src/bfs.cc
+  lines: [114, 120]
+  source_sha256: 8258dcb0ac11957d10a298f7e430707d75817fa608d9939b7eb170701a57f00f
+  text: |
+    pvector<NodeID> InitParent(const Graph &g) {
+      pvector<NodeID> parent(g.num_nodes());
+      #pragma omp parallel for
+      for (NodeID n=0; n < g.num_nodes(); n++)
+        parent[n] = g.out_degree(n) != 0 ? -g.out_degree(n) : -1;
+      return parent;
+    }
+  association: declared_source_region
+dynamic_memory: []
+constraints:
+  protections:
+  - path: src/bfs.cc
+    kind: verifier
+    text: |
+      // BFS verifier does a serial BFS from same source and asserts:
+      // - parent[source] = source
+      // - parent[v] = u  =>  depth[v] = depth[u] + 1 (except for source)
+      // - parent[v] = u  => there is edge from u to v
+      // - all vertices reachable from source have a parent
+      bool BFSVerifier(const Graph &g, NodeID source,
+                       const pvector<NodeID> &parent) {
+        pvector<int> depth(g.num_nodes(), -1);
+        depth[source] = 0;
+        vector<NodeID> to_visit;
+        to_visit.reserve(g.num_nodes());
+        to_visit.push_back(source);
+        for (auto it = to_visit.begin(); it != to_visit.end(); it++) {
+          NodeID u = *it;
+          for (NodeID v : g.out_neigh(u)) {
+            if (depth[v] == -1) {
+              depth[v] = depth[u] + 1;
+              to_visit.push_back(v);
+            }
+          }
+        }
+        for (NodeID u : g.vertices()) {
+          if ((depth[u] != -1) && (parent[u] != -1)) {
+            if (u == source) {
+              if (!((parent[u] == u) && (depth[u] == 0))) {
+                cout << "Source wrong" << endl;
+                return false;
+              }
+              continue;
+            }
+            bool parent_found = false;
+            for (NodeID v : g.in_neigh(u)) {
+              if (v == parent[u]) {
+                if (depth[v] != depth[u] - 1) {
+                  cout << "Wrong depths for " << u << " & " << v << endl;
+                  return false;
+                }
+                parent_found = true;
+                break;
+              }
+            }
+            if (!parent_found) {
+              cout << "Couldn't find edge from " << parent[u] << " to " << u << endl;
+              return false;
+            }
+          } else if (depth[u] != parent[u]) {
+            cout << "Reachability mismatch" << endl;
+            return false;
+          }
+        }
+        return true;
+      }
+  - path: src/benchmark.h
+    kind: file
+    sha256: a1a477adfee41eddf8fdc9781d776030ca40492f0e875205c23c85ec633d3c9f
+  - path: src/command_line.h
+    kind: file
+    sha256: 4df78a89d4e4435500623bea2ab4a4cbd034586d85617ca1408041daebeb51a6
+  - path: src/timer.h
+    kind: file
+    sha256: 3337a59a57341585d296ed01b3eb64ca7f5e02d8c0871f4920ab9d1cd7e63bcb
+evidence:
+  classification: contract_fixture
+reasons:
+- 'Explicit contract fixture: no execution, correctness, profiling, or gain evidence.'

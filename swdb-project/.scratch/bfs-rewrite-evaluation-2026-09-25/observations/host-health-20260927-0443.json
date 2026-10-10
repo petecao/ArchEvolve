@@ -1,0 +1,56 @@
+{
+  "observed_at": "2026-09-27T04:43:27.287106-04:00",
+  "leases": {
+    "mbit10-evaluation": {
+      "state": "released",
+      "generation": 77,
+      "kernel_held": false,
+      "lease": {
+        "acquired_at": "2026-09-12T01:35:42Z",
+        "daemon_pid": 209457,
+        "daemon_start_token": "sh209457-1789176942",
+        "generation": 77,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation",
+        "mode": "measure",
+        "session_id": null
+      }
+    },
+    "mbit10-evaluation-node0": {
+      "state": "released",
+      "generation": 352,
+      "kernel_held": false,
+      "lease": {
+        "acquired_at": "2026-09-27T08:15:37Z",
+        "daemon_pid": 3572561,
+        "daemon_start_token": "sh3572561-1790496937",
+        "generation": 352,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node0",
+        "mode": "measure",
+        "session_id": null
+      }
+    },
+    "mbit10-evaluation-node1": {
+      "state": "held",
+      "generation": 446,
+      "kernel_held": true,
+      "lease": {
+        "acquired_at": "2026-09-27T08:14:49Z",
+        "daemon_pid": 3571657,
+        "daemon_start_token": "sh3571657-1790496889",
+        "generation": 446,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      }
+    }
+  },
+  "relevant_processes": [],
+  "disk_available_bytes": {
+    "/data": 157721575424,
+    "/data1": 16952979456
+  },
+  "mutations": false
+}

@@ -1,0 +1,66 @@
+{
+  "assessment": {
+    "packages": [
+      {
+        "id": null,
+        "sha256": null
+      },
+      {
+        "id": null,
+        "sha256": null
+      }
+    ],
+    "protocol": {
+      "id": null,
+      "sha256": null
+    }
+  },
+  "kind": "native_candidate_reassessment",
+  "origin": {
+    "baseline_packages": [
+      {
+        "id": "bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.ac70410e93d0c3a6",
+        "sha256": "96145ba710974bbcbafcaf18557db0e5a9307dbba205db07e4c659b9accff0ec"
+      },
+      {
+        "id": "bfs-native-pilot-20260925-upstream18-a2.kronecker.package.v1.6a34b061dcca355b",
+        "sha256": "26e427b0723aa7099c3318753a48872b1044a01fbcabf2c6fcbf9e908c2baba3"
+      }
+    ],
+    "candidate": {
+      "id": "bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1",
+      "sha256": "b1da8316bfbcaef80d24a69bd4defb75ed59c7438cc90eefaa646d00967cb4f3"
+    },
+    "profile_package": {
+      "id": "bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.ac70410e93d0c3a6",
+      "sha256": "96145ba710974bbcbafcaf18557db0e5a9307dbba205db07e4c659b9accff0ec"
+    },
+    "proposal": {
+      "id": "bfs-campaign-preparation-20260925-a1.upstream-instructions",
+      "sha256": "36fe65fa454de66346ac2b94af490818b503bb0905fce39fa72461a0ab5546c5"
+    },
+    "request_sha256": "a6cb5ae70e475046a14b66ba26f003e433476724c131f6ae1420e1c24b48978f",
+    "source_snapshot": {
+      "id": "bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.source",
+      "sha256": "65868ec15d51117f6fb2c2d760c0cd88f4f8e098ee5694d912b11a287dd47f2c"
+    }
+  },
+  "transition": {
+    "from_threads": 4,
+    "native_runtime": {
+      "environment": {
+        "GOMP_CPU_AFFINITY": null,
+        "GOMP_SPINCOUNT": null,
+        "OMP_DYNAMIC": "FALSE",
+        "OMP_NUM_THREADS": "1",
+        "OMP_PLACES": "cores",
+        "OMP_PROC_BIND": "close",
+        "OMP_THREAD_LIMIT": null,
+        "OMP_WAIT_POLICY": null
+      },
+      "version": 1
+    },
+    "to_threads": 1
+  },
+  "version": 1
+}

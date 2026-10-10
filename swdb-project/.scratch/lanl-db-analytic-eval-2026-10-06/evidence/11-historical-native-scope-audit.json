@@ -1,0 +1,3151 @@
+{
+  "format": "swdb.cpu-historical-scope-audit.v1",
+  "created": "2026-10-06 ET",
+  "metadata_source_commit": "34d2977edcdad41a9f6ea825cda9d701ec4545d2",
+  "read_scope": "Canonical YAML metadata only, through shared access layer. No raw timing logs, simulated outputs, remote artifacts or fresh application outcome loaded.",
+  "band_scope": "Fresh independently counted/validated uninstrumented registered LLVM22/libomp g16/g17 T1 five-call original-driver scope; historical numeric transfer refused.",
+  "entries": [
+    {
+      "id": "gapbs-bc-brandes.kron-g16-k16.mbit10.20260922t221138z",
+      "kind": "profile",
+      "record": "records/profiles/gapbs-bc-brandes.kron-g16-k16.mbit10.20260922t221138z.yaml",
+      "record_sha256": "3c20dcfae042fa9a7d68aaf795a8f0b18a3645914bfdcb0021121f2fcc4d27d0",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 5,
+      "scope": {
+        "implementation": "gapbs-bc-brandes",
+        "input": "kron-g16-k16",
+        "machine": "mbit10",
+        "compiler": "g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": "-std=c++11 -O3 -Wall -fopenmp",
+        "application_commit": "2972aeb2703165bafd921222f4ed7196f542d3a8",
+        "swdb_commit": "c55aaeed140704d2f323f57e1cf5e8243599d7e2",
+        "timing_threads": [
+          1,
+          2,
+          4,
+          8,
+          16
+        ]
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "exact_historical_source_and_count_binding_unavailable"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "gapbs-bc-brandes.kron-g22-k16.mbit10.20260922t222157z",
+      "kind": "profile",
+      "record": "records/profiles/gapbs-bc-brandes.kron-g22-k16.mbit10.20260922t222157z.yaml",
+      "record_sha256": "3cc61ab963861d70e33469281cc18a024af591171b8dd3d199532b1125fe4766",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 5,
+      "scope": {
+        "implementation": "gapbs-bc-brandes",
+        "input": "kron-g22-k16",
+        "machine": "mbit10",
+        "compiler": "g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": "-std=c++11 -O3 -Wall -fopenmp",
+        "application_commit": "2972aeb2703165bafd921222f4ed7196f542d3a8",
+        "swdb_commit": "c55aaeed140704d2f323f57e1cf5e8243599d7e2",
+        "timing_threads": [
+          1,
+          2,
+          4,
+          8,
+          16
+        ]
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "exact_historical_source_and_count_binding_unavailable"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "gapbs-bc-brandes.urand-u16-k16.mbit10.20260922t221155z",
+      "kind": "profile",
+      "record": "records/profiles/gapbs-bc-brandes.urand-u16-k16.mbit10.20260922t221155z.yaml",
+      "record_sha256": "d069088221cafd44d0a58ae3367fd99092a9df7f1369e0025247791ed31017ea",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 5,
+      "scope": {
+        "implementation": "gapbs-bc-brandes",
+        "input": "urand-u16-k16",
+        "machine": "mbit10",
+        "compiler": "g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": "-std=c++11 -O3 -Wall -fopenmp",
+        "application_commit": "2972aeb2703165bafd921222f4ed7196f542d3a8",
+        "swdb_commit": "c55aaeed140704d2f323f57e1cf5e8243599d7e2",
+        "timing_threads": [
+          1,
+          2,
+          4,
+          8,
+          16
+        ]
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "exact_historical_source_and_count_binding_unavailable"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "gapbs-bc-brandes.urand-u22-k16.mbit10.20260922t222705z",
+      "kind": "profile",
+      "record": "records/profiles/gapbs-bc-brandes.urand-u22-k16.mbit10.20260922t222705z.yaml",
+      "record_sha256": "32961f079dda636669bd78ab158fb2a7f97adb2f40b3e4ccc6d0cf4d7f8c2570",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 5,
+      "scope": {
+        "implementation": "gapbs-bc-brandes",
+        "input": "urand-u22-k16",
+        "machine": "mbit10",
+        "compiler": "g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": "-std=c++11 -O3 -Wall -fopenmp",
+        "application_commit": "2972aeb2703165bafd921222f4ed7196f542d3a8",
+        "swdb_commit": "c55aaeed140704d2f323f57e1cf5e8243599d7e2",
+        "timing_threads": [
+          1,
+          2,
+          4,
+          8,
+          16
+        ]
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "exact_historical_source_and_count_binding_unavailable"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "gapbs-bfs-do.kron-g16-k16.mbit10.20260922t221109z",
+      "kind": "profile",
+      "record": "records/profiles/gapbs-bfs-do.kron-g16-k16.mbit10.20260922t221109z.yaml",
+      "record_sha256": "82e258400eab2e87846bdc23f4dcc99919b224cfb156ea59d9c2ca7b1a5140ba",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 5,
+      "scope": {
+        "implementation": "gapbs-bfs-do",
+        "input": "kron-g16-k16",
+        "machine": "mbit10",
+        "compiler": "g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": "-std=c++11 -O3 -Wall -fopenmp",
+        "application_commit": "2972aeb2703165bafd921222f4ed7196f542d3a8",
+        "swdb_commit": "c55aaeed140704d2f323f57e1cf5e8243599d7e2",
+        "timing_threads": [
+          1,
+          2,
+          4,
+          8,
+          16
+        ]
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "exact_historical_source_and_count_binding_unavailable"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "gapbs-bfs-do.kron-g22-k16.mbit10.20260922t221513z",
+      "kind": "profile",
+      "record": "records/profiles/gapbs-bfs-do.kron-g22-k16.mbit10.20260922t221513z.yaml",
+      "record_sha256": "48cee643663eb2feaa1fc328d7209c9be2166e30328b713f820dc13ef34b15a5",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 5,
+      "scope": {
+        "implementation": "gapbs-bfs-do",
+        "input": "kron-g22-k16",
+        "machine": "mbit10",
+        "compiler": "g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": "-std=c++11 -O3 -Wall -fopenmp",
+        "application_commit": "2972aeb2703165bafd921222f4ed7196f542d3a8",
+        "swdb_commit": "c55aaeed140704d2f323f57e1cf5e8243599d7e2",
+        "timing_threads": [
+          1,
+          2,
+          4,
+          8,
+          16
+        ]
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "exact_historical_source_and_count_binding_unavailable"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "gapbs-bfs-do.urand-u16-k16.mbit10.20260922t221125z",
+      "kind": "profile",
+      "record": "records/profiles/gapbs-bfs-do.urand-u16-k16.mbit10.20260922t221125z.yaml",
+      "record_sha256": "b05db089c5a3bf62eb9e74debcfe329a2018794d9c81fb8f2c8055c26fa36ce9",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 5,
+      "scope": {
+        "implementation": "gapbs-bfs-do",
+        "input": "urand-u16-k16",
+        "machine": "mbit10",
+        "compiler": "g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": "-std=c++11 -O3 -Wall -fopenmp",
+        "application_commit": "2972aeb2703165bafd921222f4ed7196f542d3a8",
+        "swdb_commit": "c55aaeed140704d2f323f57e1cf5e8243599d7e2",
+        "timing_threads": [
+          1,
+          2,
+          4,
+          8,
+          16
+        ]
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "exact_historical_source_and_count_binding_unavailable"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "gapbs-bfs-do.urand-u22-k16.mbit10.20260922t221934z",
+      "kind": "profile",
+      "record": "records/profiles/gapbs-bfs-do.urand-u22-k16.mbit10.20260922t221934z.yaml",
+      "record_sha256": "9c9087d0db1d091d8eb31c273ed6cbcf2e3e467337434d5cc2a0fe95dfff453b",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 5,
+      "scope": {
+        "implementation": "gapbs-bfs-do",
+        "input": "urand-u22-k16",
+        "machine": "mbit10",
+        "compiler": "g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": "-std=c++11 -O3 -Wall -fopenmp",
+        "application_commit": "2972aeb2703165bafd921222f4ed7196f542d3a8",
+        "swdb_commit": "c55aaeed140704d2f323f57e1cf5e8243599d7e2",
+        "timing_threads": [
+          1,
+          2,
+          4,
+          8,
+          16
+        ]
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "exact_historical_source_and_count_binding_unavailable"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bc-native-20261003-a1.kronecker18.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bc-native-20261003-a1.kronecker18.evaluation.yaml",
+      "record_sha256": "e1a73d06d74962c4c90e2c22c39b375d60af52406f555e4d692e4adabb585a60",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 9,
+      "scope": {
+        "candidate": "bc-native-20261003-a1.baseline",
+        "implementation": "dx100-bc-scalar",
+        "source_snapshot": "bc-dx100-scalar-only-20261003-a1.source",
+        "workload": {
+          "id": "bc-20261003-kronecker18.f820ca0b525e1b48"
+        },
+        "roi": "bc.complete_call.v1",
+        "threads": 4,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 3,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "4148295acb2decdfef39b707c4b190e572512649a80f43f2a225c5d3dc302afa",
+        "template_sha256": "67d83396e22abd7c0bf153a6c0e838306bc923b200e5aafc3508e9a073e776bc"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "outside_serial_T1_band_scope"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-contract-20260925-a3.baseline.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-contract-20260925-a3.baseline.evaluation.yaml",
+      "record_sha256": "b5476bb0a5d2ba0fe24616cc0135d56b419d723277553c128d49abd8a2de6187",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 10,
+      "scope": {
+        "candidate": "bfs-contract-20260925-a3.reference-candidate",
+        "implementation": "bfs-contract-20260925-a3.independent-reference",
+        "source_snapshot": "bfs-contract-20260925-a3.reference-source",
+        "workload": {
+          "id": "bfs-contract-20260925-a3.workload.584a833b37d4d8a1"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          4
+        ],
+        "repetitions": 5,
+        "compiler": "/private/tmp/bfs-contract-20260925-a3-j1u4qvpb/explicit-fixture-compiler",
+        "compiler_version": "SWDB explicit contract fixture compiler v1",
+        "flags": [
+          "-std=c++11",
+          "-O2"
+        ],
+        "wrapper_sha256": "b99b9ac283b4d77ab5d47f0ad9d7a8322ba2e434cd64feaef06c4ad564047eea",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-contract-20260925-a3.candidate.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-contract-20260925-a3.candidate.evaluation.yaml",
+      "record_sha256": "f5b934ab35203cb59c6f1066a419cb1f6fe59c649a233cb5245d4e66ba6ab00f",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 10,
+      "scope": {
+        "candidate": "bfs-contract-20260925-a3.candidate-proposal.candidate-1",
+        "implementation": "gapbs-bfs-do",
+        "source_snapshot": "bfs-contract-20260925-a3.source",
+        "workload": {
+          "id": "bfs-contract-20260925-a3.workload.584a833b37d4d8a1"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          4
+        ],
+        "repetitions": 5,
+        "compiler": "/private/tmp/bfs-contract-20260925-a3-j1u4qvpb/explicit-fixture-compiler",
+        "compiler_version": "SWDB explicit contract fixture compiler v1",
+        "flags": [
+          "-std=c++11",
+          "-O2"
+        ],
+        "wrapper_sha256": "bb454ea348e43f997e9c145fb6014d30bfed431699ee19802d632a0800b26aff",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-contract-20260925-a3.incorrect",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-contract-20260925-a3.incorrect.yaml",
+      "record_sha256": "74d699bf158c2839f03bdc2c64a3f014465414b772a931e3e8b3a32d000bc9de",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 1,
+      "scope": {
+        "candidate": "bfs-contract-20260925-a3.candidate-proposal.candidate-1",
+        "implementation": "gapbs-bfs-do",
+        "source_snapshot": "bfs-contract-20260925-a3.source",
+        "workload": {
+          "id": "bfs-contract-20260925-a3.workload.584a833b37d4d8a1"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0
+        ],
+        "repetitions": 1,
+        "compiler": "/private/tmp/bfs-contract-20260925-a3-j1u4qvpb/explicit-fixture-compiler",
+        "compiler_version": "SWDB explicit contract fixture compiler v1",
+        "flags": [
+          "-std=c++11",
+          "-O2"
+        ],
+        "wrapper_sha256": "bb454ea348e43f997e9c145fb6014d30bfed431699ee19802d632a0800b26aff",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-instruction-smoke-20260925-a1.natural-language.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-instruction-smoke-20260925-a1.natural-language.evaluation.yaml",
+      "record_sha256": "ed7455b6e95e0ab220ca3b3243760b1c2cbe515fd65fc8ad7473777abe53003c",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 3,
+      "scope": {
+        "candidate": "bfs-instruction-smoke-20260925-a1.natural-language.proposal.candidate-1",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-instruction-smoke-20260925-a1.natural-language.source",
+        "workload": {
+          "family": "diagnostic",
+          "graph": {
+            "num_vertices": 10,
+            "directed": true,
+            "edges": [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                3,
+                4
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                5,
+                3
+              ],
+              [
+                6,
+                7
+              ]
+            ]
+          }
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          3,
+          8
+        ],
+        "repetitions": 1,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "03be10b1f8c5373a4bdccb3eae7666eab10a9915c79065a1f71d263b5a03174b",
+        "template_sha256": "2b7e9884ef98ddca2779c518211eb67da697c8565d86ec6dfb54fbecf38724c3"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-instruction-smoke-20260925-a2.annotated-source.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-instruction-smoke-20260925-a2.annotated-source.evaluation.yaml",
+      "record_sha256": "0304ddd3071e5025b64cd56753c89d997e249178461029d8cdb1a33c862a2034",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 3,
+      "scope": {
+        "candidate": "bfs-instruction-smoke-20260925-a2.annotated-source.proposal.candidate-1",
+        "implementation": "gapbs-bfs-do",
+        "source_snapshot": "bfs-instruction-smoke-20260925-a2.annotated-source.source",
+        "workload": {
+          "family": "diagnostic",
+          "graph": {
+            "num_vertices": 10,
+            "directed": true,
+            "edges": [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                3,
+                4
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                5,
+                3
+              ],
+              [
+                6,
+                7
+              ]
+            ]
+          }
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          3,
+          8
+        ],
+        "repetitions": 1,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp"
+        ],
+        "wrapper_sha256": "92e400f6b1a081955d883d79eac92a0ca2a059043358604fcdf8f98aca2c92de",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-instruction-smoke-20260925-a2.evaluator-fixed",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-instruction-smoke-20260925-a2.evaluator-fixed.yaml",
+      "record_sha256": "5ceb360c904652c31d4c83108420a0b122ae13fa22cf7faae8342f70048d67ce",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 3,
+      "scope": {
+        "candidate": "bfs-instruction-smoke-20260925-a1.structured-instructions.proposal.candidate-1",
+        "implementation": "gapbs-bfs-do",
+        "source_snapshot": "bfs-instruction-smoke-20260925-a1.structured-instructions.source",
+        "workload": {
+          "family": "diagnostic",
+          "graph": {
+            "num_vertices": 10,
+            "directed": true,
+            "edges": [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                3,
+                4
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                5,
+                3
+              ],
+              [
+                6,
+                7
+              ]
+            ]
+          }
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          3,
+          8
+        ],
+        "repetitions": 1,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp"
+        ],
+        "wrapper_sha256": "4add96aa98d60460517f45b2997176db17191f945028b8a5090aa53d7681bd0d",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-acceptance-20260927-dx100-patch-b1.uniform-random.candidate-1.baseline.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-acceptance-20260927-dx100-patch-b1.uniform-random.candidate-1.baseline.evaluation.yaml",
+      "record_sha256": "7ce67d2bfaec94fe3f6468fc5638f4f947257e2fdced93cea6c4236f4402aba0",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 3,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.source",
+        "workload": {
+          "id": "bfs-20260925-uniform18.cd2169a5c421baf7"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "0a094cc6183c17c71c5eb6f39fbf043442bd4b88899b6ca5be27ac702fa5b2c1",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-acceptance-20260927-dx100-patch-b1.uniform-random.candidate-1.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-acceptance-20260927-dx100-patch-b1.uniform-random.candidate-1.evaluation.yaml",
+      "record_sha256": "0039878f15cb606f2a54d4c5663e7db7b20e4c2b5996c23ed8bd18db5613302f",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 4,
+      "scope": {
+        "candidate": "bfs-campaign-preparation-20260925-a1.dx100-patch.candidate-1",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.source",
+        "workload": {
+          "id": "bfs-20260925-uniform18.cd2169a5c421baf7"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "937f037c57377ca55a7c20bc9e8804043a49617ef53b4ff6a050069f27f5b962",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.baseline.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.baseline.evaluation.yaml",
+      "record_sha256": "aec93f5764ea7a86dfdc4ffdcd7de5d9e58e2a0b2563843992afe75323255b51",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.source",
+        "workload": {
+          "id": "bfs-20260925-kronecker18.48de8267ac2098d5"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "0a094cc6183c17c71c5eb6f39fbf043442bd4b88899b6ca5be27ac702fa5b2c1",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.evaluation.yaml",
+      "record_sha256": "d4463fd030ccca9d15af8d8ab1ec84ce41e06176746ef10deb44105585c20062",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-campaign-preparation-20260925-a1.dx100-patch.candidate-1",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.source",
+        "workload": {
+          "id": "bfs-20260925-kronecker18.48de8267ac2098d5"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "937f037c57377ca55a7c20bc9e8804043a49617ef53b4ff6a050069f27f5b962",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-acceptance-20260927-dx100-patch-b2.uniform-random.candidate-1.baseline.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-acceptance-20260927-dx100-patch-b2.uniform-random.candidate-1.baseline.evaluation.yaml",
+      "record_sha256": "e850e380df99b7a8e8d02a33954478105ea0d7258ef11bd7536c2f2940f59db0",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.source",
+        "workload": {
+          "id": "bfs-20260925-uniform18.cd2169a5c421baf7"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "0a094cc6183c17c71c5eb6f39fbf043442bd4b88899b6ca5be27ac702fa5b2c1",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-acceptance-20260927-dx100-patch-b2.uniform-random.candidate-1.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-acceptance-20260927-dx100-patch-b2.uniform-random.candidate-1.evaluation.yaml",
+      "record_sha256": "c88552fa66d103a832c607a5f979a25e7897c300a82fcce63d54373ba9a5e747",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-campaign-preparation-20260925-a1.dx100-patch.candidate-1",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.uniform-random.package.v1.source",
+        "workload": {
+          "id": "bfs-20260925-uniform18.cd2169a5c421baf7"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "937f037c57377ca55a7c20bc9e8804043a49617ef53b4ff6a050069f27f5b962",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-acceptance-20260927-upstream-instructions-b2.kronecker.candidate-1.baseline.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-acceptance-20260927-upstream-instructions-b2.kronecker.candidate-1.baseline.evaluation.yaml",
+      "record_sha256": "e4e09247563a90c2cb560a7b05b3f5f229304be7ceaded781d17ee065b3e5e58",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-upstream18-a2.baseline",
+        "implementation": "gapbs-bfs-do",
+        "source_snapshot": "bfs-native-pilot-20260925-upstream18-a2.source",
+        "workload": {
+          "id": "bfs-20260925-kronecker18.48de8267ac2098d5"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp"
+        ],
+        "wrapper_sha256": "e97a562a78297ae35e3dc78af34f9f60f34a24b097188f64003bf118b5b7e78c",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-acceptance-20260927-upstream-instructions-b2.kronecker.candidate-1.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-acceptance-20260927-upstream-instructions-b2.kronecker.candidate-1.evaluation.yaml",
+      "record_sha256": "0e13a404e150d946e61e15258fb535fd5356bf60d356a4dc3ec66c55b50dd4f5",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1",
+        "implementation": "gapbs-bfs-do",
+        "source_snapshot": "bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.source",
+        "workload": {
+          "id": "bfs-20260925-kronecker18.48de8267ac2098d5"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp"
+        ],
+        "wrapper_sha256": "e8b9efe097d6904f6ba5f99f7579f67dc58019c85c5528d54228236a52500b5a",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.baseline.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.baseline.evaluation.yaml",
+      "record_sha256": "4dbac80a4bf1105978c4053a0554439cf9c73968aa89e0c3f5808153076bb296",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-upstream18-a2.baseline",
+        "implementation": "gapbs-bfs-do",
+        "source_snapshot": "bfs-native-pilot-20260925-upstream18-a2.source",
+        "workload": {
+          "id": "bfs-20260925-uniform18.cd2169a5c421baf7"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp"
+        ],
+        "wrapper_sha256": "e97a562a78297ae35e3dc78af34f9f60f34a24b097188f64003bf118b5b7e78c",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.evaluation.yaml",
+      "record_sha256": "e27a06820ae02a27ec644b70bd622de3ea9c73222237c27f63047978999fdb63",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-campaign-preparation-20260925-a1.upstream-instructions.candidate-1",
+        "implementation": "gapbs-bfs-do",
+        "source_snapshot": "bfs-native-pilot-20260925-upstream18-a2.uniform-random.package.v1.source",
+        "workload": {
+          "id": "bfs-20260925-uniform18.cd2169a5c421baf7"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp"
+        ],
+        "wrapper_sha256": "e8b9efe097d6904f6ba5f99f7579f67dc58019c85c5528d54228236a52500b5a",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.baseline.yaml",
+      "record_sha256": "fa453cb602161401a295c1b8292e694c7aaa8cf2984617cf7d47591daedcfa88",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.source",
+        "workload": {
+          "id": "bfs-20260925-kronecker18.48de8267ac2098d5"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "0a094cc6183c17c71c5eb6f39fbf043442bd4b88899b6ca5be27ac702fa5b2c1",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.candidate",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.kronecker.candidate.yaml",
+      "record_sha256": "88532c25eb19e325cef847e9d9afe52bcd4f42219dfbd5e25b178ee41a75d0f8",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.source",
+        "workload": {
+          "id": "bfs-20260925-kronecker18.48de8267ac2098d5"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "0a094cc6183c17c71c5eb6f39fbf043442bd4b88899b6ca5be27ac702fa5b2c1",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.baseline.yaml",
+      "record_sha256": "8f5c9d45921444466c77d4cc6673c268fb24c11a5b60d0c36748b50602dfa80b",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.source",
+        "workload": {
+          "id": "bfs-20260925-uniform18.cd2169a5c421baf7"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "0a094cc6183c17c71c5eb6f39fbf043442bd4b88899b6ca5be27ac702fa5b2c1",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.candidate",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.dx100.uniform-random.candidate.yaml",
+      "record_sha256": "e4a0d2c383456523cee5a255a18dff39a0454a4bcc9385b3007f8868db4fcd6c",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.source",
+        "workload": {
+          "id": "bfs-20260925-uniform18.cd2169a5c421baf7"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "0a094cc6183c17c71c5eb6f39fbf043442bd4b88899b6ca5be27ac702fa5b2c1",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.baseline.yaml",
+      "record_sha256": "8caaadc91fba8b488270dc9ab98a3570feea1d66d4ce2c401b22eb57e7b32b25",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-upstream18-a2.baseline",
+        "implementation": "gapbs-bfs-do",
+        "source_snapshot": "bfs-native-pilot-20260925-upstream18-a2.source",
+        "workload": {
+          "id": "bfs-20260925-kronecker18.48de8267ac2098d5"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp"
+        ],
+        "wrapper_sha256": "e97a562a78297ae35e3dc78af34f9f60f34a24b097188f64003bf118b5b7e78c",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.candidate",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.kronecker.candidate.yaml",
+      "record_sha256": "3764f82050714d7882565c9dd3301f733ed5e4eb389aeb4b634f662254665e0b",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-upstream18-a2.baseline",
+        "implementation": "gapbs-bfs-do",
+        "source_snapshot": "bfs-native-pilot-20260925-upstream18-a2.source",
+        "workload": {
+          "id": "bfs-20260925-kronecker18.48de8267ac2098d5"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp"
+        ],
+        "wrapper_sha256": "e97a562a78297ae35e3dc78af34f9f60f34a24b097188f64003bf118b5b7e78c",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.baseline.yaml",
+      "record_sha256": "63d10ec6f4d2b7610d67d9f2c41e5ebe9042fdfbea78c3b0502eab781f5b0d29",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-upstream18-a2.baseline",
+        "implementation": "gapbs-bfs-do",
+        "source_snapshot": "bfs-native-pilot-20260925-upstream18-a2.source",
+        "workload": {
+          "id": "bfs-20260925-uniform18.cd2169a5c421baf7"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp"
+        ],
+        "wrapper_sha256": "e97a562a78297ae35e3dc78af34f9f60f34a24b097188f64003bf118b5b7e78c",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.candidate",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-one-thread-pilot-20260926-a1.upstream.uniform-random.candidate.yaml",
+      "record_sha256": "c8f0b2e5183b7bac14a2b264fce42c0413fddf906e658786871eb0b532237544",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-upstream18-a2.baseline",
+        "implementation": "gapbs-bfs-do",
+        "source_snapshot": "bfs-native-pilot-20260925-upstream18-a2.source",
+        "workload": {
+          "id": "bfs-20260925-uniform18.cd2169a5c421baf7"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp"
+        ],
+        "wrapper_sha256": "e97a562a78297ae35e3dc78af34f9f60f34a24b097188f64003bf118b5b7e78c",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-paired-pilot-20260926-a1.dx100.kronecker.baseline",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-paired-pilot-20260926-a1.dx100.kronecker.baseline.yaml",
+      "record_sha256": "9c5a9d3c07d4900d3ad1cee4628ebc972ed6abe97ad802498cfc23aaffb26078",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.source",
+        "workload": {
+          "id": "bfs-20260925-kronecker18.48de8267ac2098d5"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 4,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "0a094cc6183c17c71c5eb6f39fbf043442bd4b88899b6ca5be27ac702fa5b2c1",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "outside_serial_T1_band_scope"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-paired-pilot-20260926-a1.dx100.kronecker.candidate",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-paired-pilot-20260926-a1.dx100.kronecker.candidate.yaml",
+      "record_sha256": "4208efaf9ed1e286d6f630f5f68f99dedd5caa78337c6de189980781ab4f4c6b",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.source",
+        "workload": {
+          "id": "bfs-20260925-kronecker18.48de8267ac2098d5"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 4,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "0a094cc6183c17c71c5eb6f39fbf043442bd4b88899b6ca5be27ac702fa5b2c1",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "outside_serial_T1_band_scope"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-paired-pilot-20260926-a1.dx100.uniform-random.baseline",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-paired-pilot-20260926-a1.dx100.uniform-random.baseline.yaml",
+      "record_sha256": "7dac5677d642a4676e6c94bcb10005fb1ea103fe8306efede5419e2dd8eb7d34",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.source",
+        "workload": {
+          "id": "bfs-20260925-uniform18.cd2169a5c421baf7"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 4,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "0a094cc6183c17c71c5eb6f39fbf043442bd4b88899b6ca5be27ac702fa5b2c1",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "outside_serial_T1_band_scope"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-paired-pilot-20260926-a1.dx100.uniform-random.candidate",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-paired-pilot-20260926-a1.dx100.uniform-random.candidate.yaml",
+      "record_sha256": "d3795b43b851c0d4f0e845867be7674b874466cb1f1020040682fdee7f652dca",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.source",
+        "workload": {
+          "id": "bfs-20260925-uniform18.cd2169a5c421baf7"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 4,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "0a094cc6183c17c71c5eb6f39fbf043442bd4b88899b6ca5be27ac702fa5b2c1",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "outside_serial_T1_band_scope"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-paired-pilot-20260926-a1.upstream.kronecker.baseline",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-paired-pilot-20260926-a1.upstream.kronecker.baseline.yaml",
+      "record_sha256": "ae16b7ee3efdeffd499c065c412edd3065290c34aad327d1a181513086ff6c7f",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-upstream18-a2.baseline",
+        "implementation": "gapbs-bfs-do",
+        "source_snapshot": "bfs-native-pilot-20260925-upstream18-a2.source",
+        "workload": {
+          "id": "bfs-20260925-kronecker18.48de8267ac2098d5"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 4,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp"
+        ],
+        "wrapper_sha256": "e97a562a78297ae35e3dc78af34f9f60f34a24b097188f64003bf118b5b7e78c",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "outside_serial_T1_band_scope"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-paired-pilot-20260926-a1.upstream.kronecker.candidate",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-paired-pilot-20260926-a1.upstream.kronecker.candidate.yaml",
+      "record_sha256": "a41d019bd3252f45d0b51358266767d52a7921d22e774057e15d0198ff28ddab",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-upstream18-a2.baseline",
+        "implementation": "gapbs-bfs-do",
+        "source_snapshot": "bfs-native-pilot-20260925-upstream18-a2.source",
+        "workload": {
+          "id": "bfs-20260925-kronecker18.48de8267ac2098d5"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 4,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp"
+        ],
+        "wrapper_sha256": "e97a562a78297ae35e3dc78af34f9f60f34a24b097188f64003bf118b5b7e78c",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "outside_serial_T1_band_scope"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-paired-pilot-20260926-a1.upstream.uniform-random.baseline",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-paired-pilot-20260926-a1.upstream.uniform-random.baseline.yaml",
+      "record_sha256": "4f12aa03e69125f21ea67786608965b1456d4f549b80eb2c2aecfbec82aae30d",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-upstream18-a2.baseline",
+        "implementation": "gapbs-bfs-do",
+        "source_snapshot": "bfs-native-pilot-20260925-upstream18-a2.source",
+        "workload": {
+          "id": "bfs-20260925-uniform18.cd2169a5c421baf7"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 4,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp"
+        ],
+        "wrapper_sha256": "e97a562a78297ae35e3dc78af34f9f60f34a24b097188f64003bf118b5b7e78c",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "outside_serial_T1_band_scope"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-paired-pilot-20260926-a1.upstream.uniform-random.candidate",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-paired-pilot-20260926-a1.upstream.uniform-random.candidate.yaml",
+      "record_sha256": "2bfba9e7c673a1714240a637c9884fdbe73235fad63d9743a071ac161d15176d",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 30,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-upstream18-a2.baseline",
+        "implementation": "gapbs-bfs-do",
+        "source_snapshot": "bfs-native-pilot-20260925-upstream18-a2.source",
+        "workload": {
+          "id": "bfs-20260925-uniform18.cd2169a5c421baf7"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 4,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 10,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp"
+        ],
+        "wrapper_sha256": "e97a562a78297ae35e3dc78af34f9f60f34a24b097188f64003bf118b5b7e78c",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "outside_serial_T1_band_scope"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation.yaml",
+      "record_sha256": "8566de7181de7c8fa042c683392f959d788a7f02cfbe2d0d166f5d2f8182149c",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 15,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.source",
+        "workload": {
+          "id": "bfs-20260925-kronecker18.48de8267ac2098d5"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 4,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 5,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "0a094cc6183c17c71c5eb6f39fbf043442bd4b88899b6ca5be27ac702fa5b2c1",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "outside_serial_T1_band_scope"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-pilot-20260925-dx10018-a1.uniform-random.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-pilot-20260925-dx10018-a1.uniform-random.evaluation.yaml",
+      "record_sha256": "fb1887b0117c875eb483065cb5ad6f1faa106d0026fb32aca292295e3e03522e",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 15,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.source",
+        "workload": {
+          "id": "bfs-20260925-uniform18.cd2169a5c421baf7"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 4,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 5,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "0a094cc6183c17c71c5eb6f39fbf043442bd4b88899b6ca5be27ac702fa5b2c1",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "outside_serial_T1_band_scope"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-pilot-20260925-upstream18-a2.kronecker.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-pilot-20260925-upstream18-a2.kronecker.evaluation.yaml",
+      "record_sha256": "923b409064c9665d882eb5673faee9fcc594b23b3f36d3dfad0bfee8022fc9ff",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 15,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-upstream18-a2.baseline",
+        "implementation": "gapbs-bfs-do",
+        "source_snapshot": "bfs-native-pilot-20260925-upstream18-a2.source",
+        "workload": {
+          "id": "bfs-20260925-kronecker18.48de8267ac2098d5"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 4,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 5,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp"
+        ],
+        "wrapper_sha256": "e97a562a78297ae35e3dc78af34f9f60f34a24b097188f64003bf118b5b7e78c",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "outside_serial_T1_band_scope"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-pilot-20260925-upstream18-a2.uniform-random.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-pilot-20260925-upstream18-a2.uniform-random.evaluation.yaml",
+      "record_sha256": "a9f8516c6a38ecf743b338e6351c6bf73cd4adccc5bb8c1483b717adc4d770f1",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 15,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-upstream18-a2.baseline",
+        "implementation": "gapbs-bfs-do",
+        "source_snapshot": "bfs-native-pilot-20260925-upstream18-a2.source",
+        "workload": {
+          "id": "bfs-20260925-uniform18.cd2169a5c421baf7"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 4,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 5,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp"
+        ],
+        "wrapper_sha256": "e97a562a78297ae35e3dc78af34f9f60f34a24b097188f64003bf118b5b7e78c",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "outside_serial_T1_band_scope"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-repeatability-20260926-a1.dx100.kronecker.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-repeatability-20260926-a1.dx100.kronecker.evaluation.yaml",
+      "record_sha256": "008fe50de58158f40a581247accd7cf7bf4739eaabc485e8302728cddd68e79d",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 15,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.source",
+        "workload": {
+          "id": "bfs-20260925-kronecker18.48de8267ac2098d5"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 4,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 5,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "0a094cc6183c17c71c5eb6f39fbf043442bd4b88899b6ca5be27ac702fa5b2c1",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "outside_serial_T1_band_scope"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-repeatability-20260926-a1.dx100.uniform-random.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-repeatability-20260926-a1.dx100.uniform-random.evaluation.yaml",
+      "record_sha256": "e13ea20f1378b2f01241ca2832271c174e2fdf38205390e708f6c68289af2780",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 15,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.source",
+        "workload": {
+          "id": "bfs-20260925-uniform18.cd2169a5c421baf7"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 4,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 5,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "0a094cc6183c17c71c5eb6f39fbf043442bd4b88899b6ca5be27ac702fa5b2c1",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "outside_serial_T1_band_scope"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-repeatability-20260926-a1.upstream.kronecker.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-repeatability-20260926-a1.upstream.kronecker.evaluation.yaml",
+      "record_sha256": "b31989ef4e7491d60739f051a63e4c916137762d0d3163840a5c1285f69ae8aa",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 15,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-upstream18-a2.baseline",
+        "implementation": "gapbs-bfs-do",
+        "source_snapshot": "bfs-native-pilot-20260925-upstream18-a2.source",
+        "workload": {
+          "id": "bfs-20260925-kronecker18.48de8267ac2098d5"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 4,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 5,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp"
+        ],
+        "wrapper_sha256": "e97a562a78297ae35e3dc78af34f9f60f34a24b097188f64003bf118b5b7e78c",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "outside_serial_T1_band_scope"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-repeatability-20260926-a1.upstream.uniform-random.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-repeatability-20260926-a1.upstream.uniform-random.evaluation.yaml",
+      "record_sha256": "99ec18c005542126b179cbe8ee7cb9e58bac12fe68a0e7f97d9df09d7df74a38",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 15,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-upstream18-a2.baseline",
+        "implementation": "gapbs-bfs-do",
+        "source_snapshot": "bfs-native-pilot-20260925-upstream18-a2.source",
+        "workload": {
+          "id": "bfs-20260925-uniform18.cd2169a5c421baf7"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 4,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 5,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp"
+        ],
+        "wrapper_sha256": "e97a562a78297ae35e3dc78af34f9f60f34a24b097188f64003bf118b5b7e78c",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "outside_serial_T1_band_scope"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-native-smoke-20260925-a1.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-native-smoke-20260925-a1.evaluation.yaml",
+      "record_sha256": "f27ec04c5bb89bd8b525918e3ba31845fb315b77690e72d612f8a99c4ba42af9",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 3,
+      "scope": {
+        "candidate": "bfs-native-smoke-20260925-a1.proposal.candidate-1",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-smoke-20260925-a1.source",
+        "workload": {
+          "id": "bfs-native-smoke-20260925-a1.graph",
+          "family": "diagnostic",
+          "generator": {
+            "name": "explicit-small-correctness-case",
+            "version": "1.0"
+          },
+          "graph": {
+            "num_vertices": 10,
+            "directed": true,
+            "edges": [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                3,
+                4
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                5,
+                3
+              ],
+              [
+                6,
+                7
+              ]
+            ]
+          }
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          3,
+          8
+        ],
+        "repetitions": 1,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "8d11a3e3ac619066b94b094cd62f1492a9bdbec49d35fd05cc02525ba814c49b",
+        "template_sha256": "2b7e9884ef98ddca2779c518211eb67da697c8565d86ec6dfb54fbecf38724c3"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "bfs-profile-smoke-20260925-a3.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/bfs-profile-smoke-20260925-a3.evaluation.yaml",
+      "record_sha256": "d560389c6e5f9ace29de038fcb92a8c67b40a8f9b11d83773d7a8fe095eb2da8",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 3,
+      "scope": {
+        "candidate": "bfs-profile-smoke-20260925-a3.proposal.candidate-1",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-smoke-20260925-a1.source",
+        "workload": {
+          "id": "bfs-native-smoke-20260925-a1.graph",
+          "family": "diagnostic",
+          "generator": {
+            "name": "explicit-small-correctness-case",
+            "version": "1.0"
+          },
+          "graph": {
+            "num_vertices": 10,
+            "directed": true,
+            "edges": [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                3,
+                4
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                5,
+                3
+              ],
+              [
+                6,
+                7
+              ]
+            ]
+          }
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          3,
+          8
+        ],
+        "repetitions": 1,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "bf6d3af41c461aad8e2c1a54e6c6ff092c11a6a207468b230eb98de23b995efa",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "provider-dx100-codex-20260929-a1.natural-language.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/provider-dx100-codex-20260929-a1.natural-language.evaluation.yaml",
+      "record_sha256": "22312fb2de69a0ac2cdb7dda96e0f49f9a5fe606030d2b8ae060b70ab1a9e463",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 3,
+      "scope": {
+        "candidate": "provider-dx100-codex-20260929-a1.natural-language.proposal.candidate-1",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-dx100-scalar-only-20260929-a1.source",
+        "workload": {
+          "family": "diagnostic",
+          "graph": {
+            "num_vertices": 10,
+            "directed": true,
+            "edges": [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                3,
+                4
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                5,
+                3
+              ],
+              [
+                6,
+                7
+              ]
+            ]
+          }
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          3,
+          8
+        ],
+        "repetitions": 1,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "0b4e3e292a228da513fe770adab2b7120eb782b09c3db72fb6470a8e2025be8f",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "provider-dx100-codex-20260929-a2.natural-language.evaluation",
+      "kind": "evaluation",
+      "record": "records/evaluations/provider-dx100-codex-20260929-a2.natural-language.evaluation.yaml",
+      "record_sha256": "30565879f9b1da82650706fd98324f27e8b842627fc7e2f0e0f8ed5de9172752",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 3,
+      "scope": {
+        "candidate": "provider-dx100-codex-20260929-a2.natural-language.proposal.candidate-1",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-dx100-scalar-only-20260929-a1.source",
+        "workload": {
+          "family": "diagnostic",
+          "graph": {
+            "num_vertices": 10,
+            "directed": true,
+            "edges": [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                2
+              ],
+              [
+                1,
+                3
+              ],
+              [
+                2,
+                3
+              ],
+              [
+                3,
+                4
+              ],
+              [
+                4,
+                5
+              ],
+              [
+                5,
+                3
+              ],
+              [
+                6,
+                7
+              ]
+            ]
+          }
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          3,
+          8
+        ],
+        "repetitions": 1,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "da0d6260a8bfd66744f8b5e693955dae6ee4eb4aa8b5acf406c1267bfd1c7900",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "reeval-9534c5107d8c-c1e45d3b",
+      "kind": "evaluation",
+      "record": "records/evaluations/reeval-9534c5107d8c-c1e45d3b.yaml",
+      "record_sha256": "5872548f733111dd3aeb69cdf6415a629d113e678505d78018f83eadda058de9",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 60,
+      "scope": {
+        "candidate": "extensa-native-bfs-20261005-a8.it1.kronecker.a0",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-dx100-scalar-only-20260929-a1.source",
+        "workload": {
+          "id": "bfs-20261004-uniform22.2f83a134a6bef789"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 20,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "c8ff614c1614e278da712caed0a566f833bf93628119ca4a86c58416c4505b45",
+        "template_sha256": "78b665777d2896de3990eebc7e83fd2a9da8c79bcb3106d72f5e7d6fabed75bb"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "t75-reeval-20261005.aa.uniform_random.baseline-eval",
+      "kind": "evaluation",
+      "record": "records/evaluations/t75-reeval-20261005.aa.uniform_random.baseline-eval.yaml",
+      "record_sha256": "d3c4bae93b9104d3a743e811245443751950c31e2e03bce1dc4dba130c7664fb",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 60,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.source",
+        "workload": {
+          "id": "bfs-20261004-uniform22.2f83a134a6bef789"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 20,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "56c2d31db08b8f195852b213ae30f89a55a261c26c0b62de895edaa720624cad",
+        "template_sha256": "78b665777d2896de3990eebc7e83fd2a9da8c79bcb3106d72f5e7d6fabed75bb"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "t75-reeval-20261005.aa.uniform_random.candidate-eval",
+      "kind": "evaluation",
+      "record": "records/evaluations/t75-reeval-20261005.aa.uniform_random.candidate-eval.yaml",
+      "record_sha256": "cebd0f1d489e865a1513e31674e8d71b445c07c215b357d0620e7a219afd4ec7",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 60,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.source",
+        "workload": {
+          "id": "bfs-20261004-uniform22.2f83a134a6bef789"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 20,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "56c2d31db08b8f195852b213ae30f89a55a261c26c0b62de895edaa720624cad",
+        "template_sha256": "78b665777d2896de3990eebc7e83fd2a9da8c79bcb3106d72f5e7d6fabed75bb"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "t75-reeval-20261005.candidate.uniform_random.baseline-eval",
+      "kind": "evaluation",
+      "record": "records/evaluations/t75-reeval-20261005.candidate.uniform_random.baseline-eval.yaml",
+      "record_sha256": "51cce1f2958d3ecc46f83bba520501c97e109660568f37f06dd72eec2142e307",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 60,
+      "scope": {
+        "candidate": "bfs-native-pilot-20260925-dx10018-a1.baseline",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-native-pilot-20260925-dx10018-a1.source",
+        "workload": {
+          "id": "bfs-20261004-uniform22.2f83a134a6bef789"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 1,
+        "sources": [
+          0,
+          1234,
+          7777
+        ],
+        "repetitions": 20,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "56c2d31db08b8f195852b213ae30f89a55a261c26c0b62de895edaa720624cad",
+        "template_sha256": "78b665777d2896de3990eebc7e83fd2a9da8c79bcb3106d72f5e7d6fabed75bb"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "typed-library-bfs-scalar-profile-20261003-a1.native",
+      "kind": "evaluation",
+      "record": "records/evaluations/typed-library-bfs-scalar-profile-20261003-a1.native.yaml",
+      "record_sha256": "00e9f3e41bab8843686389af6a88bdfe70db1d2addbd75e8e030f666d30fdb9f",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 1,
+      "scope": {
+        "candidate": "typed-library-bfs-scalar-profile-20261003-a1.baseline",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-dx100-scalar-only-20260929-a1.source",
+        "workload": {
+          "id": "bfs-20260928-kronecker18-s0.cf4283236c5cb50c"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 4,
+        "sources": [
+          0
+        ],
+        "repetitions": 1,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "9e1fa6bd9905ede588a7c5a67980005a3fcf968f13582e3d809109c96d270df9",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "outside_serial_T1_band_scope"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    },
+    {
+      "id": "typed-library-bfs-scalar-profile-20261003-a2.native",
+      "kind": "evaluation",
+      "record": "records/evaluations/typed-library-bfs-scalar-profile-20261003-a2.native.yaml",
+      "record_sha256": "d758645ac2a9ece09e284a7cc738b6ee43fa49d86aed35d34bb09b1636596373",
+      "mode": null,
+      "mode_scope": "legacy untagged team record",
+      "native_timing_points": 1,
+      "scope": {
+        "candidate": "typed-library-bfs-scalar-profile-20261003-a2.baseline",
+        "implementation": "dx100-bfs-scalar",
+        "source_snapshot": "bfs-dx100-scalar-only-20260929-a1.source",
+        "workload": {
+          "id": "bfs-20260928-kronecker18-s0.cf4283236c5cb50c"
+        },
+        "roi": "bfs.complete_call.v1",
+        "threads": 4,
+        "sources": [
+          0
+        ],
+        "repetitions": 1,
+        "compiler": "/usr/bin/g++",
+        "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+        "flags": [
+          "-std=c++11",
+          "-O3",
+          "-Wall",
+          "-fopenmp",
+          "-pthread",
+          "-DFUNC"
+        ],
+        "wrapper_sha256": "58b981e95bcc74fbec904d5c50de17959b2c8d949e4a947a0297cd538b07f9f6",
+        "template_sha256": "99c7b97b0e8045b3d030367dc32e6b79f76023884c2a8695920d2b183581ad95"
+      },
+      "estimate": {
+        "state": "excluded",
+        "seconds": null,
+        "error_band": null,
+        "regions": null,
+        "missing": [
+          "protected_evaluator_scope_not_counted",
+          "compiler_context_does_not_match_LLVM22_calibration",
+          "loaded_runtime_identity_not_proven_for_frozen_libomp_services",
+          "outside_serial_T1_band_scope"
+        ]
+      },
+      "admission": "Historical evidence retained unchanged; no numeric comparison or error-width pooling with the separately frozen registered LLVM22/libomp T1 collector."
+    }
+  ],
+  "omitted": {
+    "explicit_extensa": {
+      "count": 0,
+      "ids": []
+    },
+    "non_native_or_no_timing": {
+      "count": 9,
+      "ids": [
+        "bfs-contract-20260925-a3.budget",
+        "bfs-contract-20260925-a3.build-failure",
+        "bfs-contract-20260925-a3.missing",
+        "bfs-contract-20260925-a3.timeout",
+        "bfs-dx100-build-20260925-a1",
+        "bfs-dx100-build-20260925-a2",
+        "bfs-dx100-smoke-20260925-a2",
+        "bfs-instruction-smoke-20260925-a1.structured-instructions.evaluation",
+        "bfs-native-pilot-20260925-upstream18-a1.uniform-random.evaluation"
+      ]
+    },
+    "simulator_records_skipped_before_timing": {
+      "count": 68,
+      "ids": [
+        "bc-gem5-20261003-a1.baseline.primary.build",
+        "bc-gem5-20261003-a1.candidate.primary.build",
+        "bc-gem5-20261003-a1.timed-r1.baseline.aggregate",
+        "bc-gem5-20261003-a1.timed-r1.baseline.evaluation",
+        "bc-gem5-20261003-a1.timed-r1.candidate.aggregate",
+        "bc-gem5-20261003-a1.timed-r1.candidate.evaluation",
+        "bc-gem5-20261003-a1.timed.baseline.evaluation",
+        "bfs-author-maa-compile-20260925-a1.diagnostic.build",
+        "bfs-author-scalar-compile-20260925-a1.diagnostic.build",
+        "bfs-campaign-preparation-20260925-a1.dx100-patch.diagnostic.build",
+        "bfs-campaign-preparation-20260925-a1.dx100-patch.primary.build",
+        "bfs-dx100-compile-20260925-a1.diagnostic.build",
+        "bfs-dx100-compile-20260925-a1.primary.build",
+        "bfs-dx100-coverage-20260926-a1.compile",
+        "bfs-dx100-coverage-20260926-a1.execute",
+        "bfs-dx100-coverage-20260926-a2.compile",
+        "bfs-dx100-coverage-20260926-a2.execute",
+        "bfs-dx100-exit-probe-20260926-a1",
+        "bfs-dx100-profile-20260926-a1.diagnostic",
+        "bfs-dx100-profile-20260926-a1.primary",
+        "bfs-dx100-smoke-20260925-a3",
+        "bfs-dx100-smoke-20260925-a4",
+        "bfs-dx100-smoke-20260925-a5",
+        "bfs-dx100-smoke-20260925-a6",
+        "bfs-dx100-witness-20260926-a1",
+        "bfs-dx100-witness-20260926-a3",
+        "bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build",
+        "bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build",
+        "bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build",
+        "bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build",
+        "bfs-t17-ac10-companion-20260928-a3.execute",
+        "bfs-t17-build-only-20260926-a1",
+        "bfs-t17-diagnostic-build-only-20260927-a2",
+        "bfs-t17-routes-20260928-a3.baseline.kronecker18.aggregate",
+        "bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation",
+        "bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.primary.evaluation",
+        "bfs-t17-routes-20260928-a3.baseline.uniform18.aggregate",
+        "bfs-t17-routes-20260928-a3.baseline.uniform18.s0.r0.diagnostic.evaluation",
+        "bfs-t17-routes-20260928-a3.baseline.uniform18.s0.r0.primary.evaluation",
+        "bfs-t17-routes-20260928-a3.candidate.kronecker18.aggregate",
+        "bfs-t17-routes-20260928-a3.candidate.kronecker18.s0.r0.diagnostic.evaluation",
+        "bfs-t17-routes-20260928-a3.candidate.kronecker18.s0.r0.primary.evaluation",
+        "bfs-t17-routes-20260928-a3.candidate.uniform18.aggregate",
+        "bfs-t17-routes-20260928-a3.candidate.uniform18.s0.r0.diagnostic.evaluation",
+        "bfs-t17-routes-20260928-a3.candidate.uniform18.s0.r0.primary.evaluation",
+        "bfs-t20-context6-diagnostic-build-20260927-c3",
+        "bfs-t20-context6-primary-build-20260927-c3",
+        "bfs-upstream-compile-20260925-a1.diagnostic.build",
+        "bfs-upstream-compile-20260925-a1.primary.build",
+        "typed-library-bfs-gem5-20261003-a1.baseline.primary.build",
+        "typed-library-bfs-gem5-20261003-a1.candidate.diagnostic.build",
+        "typed-library-bfs-gem5-20261003-a1.candidate.primary.build",
+        "typed-library-bfs-gem5-20261003-a1.companion.diagnostic.evaluation",
+        "typed-library-bfs-gem5-20261003-a1.companion.timed.evaluation",
+        "typed-library-bfs-gem5-20261003-a1.timed.w0.baseline.evaluation",
+        "typed-library-bfs-gem5-20261003-a2.baseline.primary.build",
+        "typed-library-bfs-gem5-20261003-a2.candidate.diagnostic.build",
+        "typed-library-bfs-gem5-20261003-a2.candidate.primary.build",
+        "typed-library-bfs-gem5-20261003-a2.companion.diagnostic.evaluation",
+        "typed-library-bfs-gem5-20261003-a2.companion.timed.evaluation",
+        "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w0.candidate.aggregate",
+        "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.baseline.aggregate",
+        "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.baseline.evaluation",
+        "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.candidate.aggregate",
+        "typed-library-bfs-gem5-20261003-a2.recovery.r1.timed.w1.candidate.evaluation",
+        "typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.aggregate",
+        "typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.evaluation",
+        "typed-library-bfs-gem5-20261003-a2.timed.w0.candidate.evaluation"
+      ]
+    }
+  },
+  "summary": {
+    "profiles": 8,
+    "native_evaluations": 51,
+    "numeric_pairs_admitted": 0
+  },
+  "per_region_limitation": "The historical protected-evaluator source/ROI/runtime does not have a matched counted adapter. Region costs/errors remain null; present registered-driver region facts cannot be relabeled as those historical evaluator observations.",
+  "identity_sha256": "6e16e2ec521a8936ed30a15eaa2ddcb7cffd9924fa31310bf7828cfc7dce088d"
+}

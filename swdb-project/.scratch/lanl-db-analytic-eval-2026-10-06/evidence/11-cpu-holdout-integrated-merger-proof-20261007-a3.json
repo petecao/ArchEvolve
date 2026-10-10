@@ -1,0 +1,87 @@
+{
+  "format": "swdb.lanl11-holdout-integrated-merger.v1",
+  "updated_utc": "2026-10-07T10:47:54.385022+00:00",
+  "base_commit": "13d3ce8159ec1bc457b0d08a464458f05df2f2d6",
+  "incoming_commit": "8ef759fc126074c38e013df9bee5fbde1cbeb709",
+  "ordinary_merge_commit": "380ec1057dd5d8215fc20dbadf6e3362e50189d9",
+  "ordinary_merge_tree": "bd86cdff63a215ab41311b83712099f971bf348d",
+  "merge_parents": [
+    "13d3ce8159ec1bc457b0d08a464458f05df2f2d6",
+    "8ef759fc126074c38e013df9bee5fbde1cbeb709"
+  ],
+  "precheck_identity_sha256": "c7f3fd334a5077d1c7277a84f96de0839dd8f54ac3a856ee2c13cccdfbe12b59",
+  "prior_tracked_blobs_preserved": 3698,
+  "no_prior_blob_modification_or_deletion": true,
+  "exact_incoming_additions": [
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-cpu-holdout-mbit10-20261006-a3.json",
+    "swdb-project/records/cpu_error_bands/lanl.cpu.bc.t1.heldout-band.v1.yaml",
+    "swdb-project/records/cpu_error_bands/lanl.cpu.bfs.t1.heldout-band.v1.yaml",
+    "swdb-project/records/cpu_native_validations/lanl.cpu.bc.g17.t1.validation.v1.yaml",
+    "swdb-project/records/cpu_native_validations/lanl.cpu.bfs.g17.t1.validation.v1.yaml"
+  ],
+  "new_canonical_yaml": 4,
+  "prior_canonical_yaml_preserved": 678,
+  "result_canonical_yaml": 682,
+  "eleven_previously_integrated_model_development_records_identical": true,
+  "incoming_exact16_sourceC_additions_verified": true,
+  "library_blobs_preserved": 147,
+  "root_blobs_preserved": 450,
+  "checkpoint_progress_blob_preserved": "100644 blob e1d2fdd02f6147f88ae8fb553f15f61ede5bc6a9",
+  "receipt": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-cpu-holdout-mbit10-20261006-a3.json",
+    "identity_sha256": "c618db963defdcf3e807c5d1649fbed014098e929f5f83d8903531386b5e86db",
+    "file_sha256": "c41ba0316d707b6e5760dc573ea1ce8f4bd9906f68dad88d18b34f9e7746afc7",
+    "acceptance_identity_sha256": "deee39df4bb708ca5f633f9a1b0e419c9b977c48e1532e4d13832bf86d5e0bc5"
+  },
+  "new_record_pins": [
+    {
+      "id": "lanl.cpu.bc.t1.heldout-band.v1",
+      "kind": "cpu_error_band",
+      "path": "cpu_error_bands/lanl.cpu.bc.t1.heldout-band.v1.yaml",
+      "sha256": "c4f407624f44ca369fba193f47fbadedbd4c14e341ac21917659fd5f979869f5",
+      "file_sha256": "1104a909cc97af87ff3c3f37ddf7d8af949da289ac2de4b93cec5bd6babb0513",
+      "bytes": 4286349
+    },
+    {
+      "id": "lanl.cpu.bfs.t1.heldout-band.v1",
+      "kind": "cpu_error_band",
+      "path": "cpu_error_bands/lanl.cpu.bfs.t1.heldout-band.v1.yaml",
+      "sha256": "5505c8bef9acd1993752a5d05c91f53754680fcda26f234e8027166e97c8c911",
+      "file_sha256": "5bf5401b77ad37ce4d9e4410908b195bcb0d193375a1653aa3e3bd762b6b664b",
+      "bytes": 3726513
+    },
+    {
+      "id": "lanl.cpu.bc.g17.t1.validation.v1",
+      "kind": "cpu_native_validation",
+      "path": "cpu_native_validations/lanl.cpu.bc.g17.t1.validation.v1.yaml",
+      "sha256": "c58914ec9826ace40ed295a20f7f853c4aa58986167791d7aeb891d3b7f5b9bb",
+      "file_sha256": "d88c19b755f11f2f284359e7fb64bf67b7acdacce1b76351ff22f5ba49c9e930",
+      "bytes": 10949
+    },
+    {
+      "id": "lanl.cpu.bfs.g17.t1.validation.v1",
+      "kind": "cpu_native_validation",
+      "path": "cpu_native_validations/lanl.cpu.bfs.g17.t1.validation.v1.yaml",
+      "sha256": "dc2e837a97a3e32b16813c5ba33459f71cceed66c90996aeae1258578709ec61",
+      "file_sha256": "b0a1d56330403ba67127daa6574359a4d4ffa64a6d8dd2587908220077cf480d",
+      "bytes": 10934
+    }
+  ],
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "python_modules": 185,
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "actual_holdout_custody": {
+    "generation": 507,
+    "node": 0,
+    "ended_utc": "2026-10-07T10:43:50Z",
+    "lane_receipt_exit": 0,
+    "selected_store_remote_validation": "OK: 680 record(s) valid",
+    "runner_outer0_cleanup_empty_all_three_leases_free": "parent verified before approval"
+  },
+  "local_numerical_admission": "pending separate selected-record reader",
+  "PR_records_17_archives_maps_checkpoint_other_trackers_preserved": true,
+  "ticket11_and17_resolution_unchanged": true,
+  "no_Store_test_model_native_provider_compiler_or_ssh_repeat": true,
+  "scope": "Ordinary immutable actual holdout export custody only. Numerical band/model admission remains separate; no scientific success is inferred from administrative completion.",
+  "identity_sha256": "cf7105cd62f7e91485e31d1f932f0dc6f7506a9155ca21ddad4b117c84bfcb85"
+}

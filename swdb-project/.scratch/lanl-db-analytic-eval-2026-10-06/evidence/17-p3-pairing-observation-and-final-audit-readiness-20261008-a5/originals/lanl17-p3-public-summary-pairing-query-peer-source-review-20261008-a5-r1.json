@@ -1,0 +1,47 @@
+{
+  "checks": [
+    "exact_pin:lanl17_read_p3_public_summary_pairing_metadata_20261008_a5_r1.py",
+    "private_owned0600:lanl17_read_p3_public_summary_pairing_metadata_20261008_a5_r1.py",
+    "exact_pin:lanl17-p3-public-summary-pairing-metadata-action-draft-20261008-a5-r1.json",
+    "private_owned0600:lanl17-p3-public-summary-pairing-metadata-action-draft-20261008-a5-r1.json",
+    "exact_native_public_env_inline_cwd_Honly_caps",
+    "fixed_two_original_routes",
+    "owned_regular_nonsymlink_all9stat",
+    "bounded_bytes_deadline_output",
+    "guarded_yaml_structure",
+    "actual_stop_byte_true_seal_context",
+    "public_summary_frozen_bindings",
+    "closed_pairing_bounded_flags",
+    "counts_digests_only_not_admission",
+    "failure_unknown_no_raw_context",
+    "actual_fixed_stop_pin_identity",
+    "no_SWDB_Store_or_subprocess_imports",
+    "public_source_pairing_summary_schema_matches",
+    "AST inspected 161 calls: no mutation/control/Store invocation"
+  ],
+  "files": [
+    {
+      "bytes": 10270,
+      "path": "/private/tmp/lanl17_read_p3_public_summary_pairing_metadata_20261008_a5_r1.py",
+      "sha256": "84131cb2c0a8deef84248b36b8922821322bc26b5ccd84d6e79f3b95e2a97082"
+    },
+    {
+      "bytes": 10967,
+      "path": "/private/tmp/lanl17-p3-public-summary-pairing-metadata-action-draft-20261008-a5-r1.json",
+      "sha256": "c8701a51a234c6621d8605c1ffcb1569e6a2140aacbbd1dd3d2b8eeda9df7252"
+    }
+  ],
+  "format": "swdb.lanl17-peer-p3-public-summary-query-source-review.v1",
+  "limits": [
+    "Native PyYAML dependency matches public monitor environment; no local parser import or target source execution occurred.",
+    "Safe summary counts/digests/pins are metadata observations, not validated pairing, strict blind-order/trajectory or D30 admission.",
+    "Actual query requires inner query_ready:true and matching original pins; transport0 is insufficient. Failure stays unknown with preserved originals.",
+    "Initial checker broadly searched swdb. text and matched legitimate format literals; corrected AST import/call checks, with no source/config change."
+  ],
+  "no_remote_actions_or_tests": true,
+  "result": "PASS",
+  "reviewed_utc": "2026-10-08T23:53:00.449644+00:00",
+  "scientific_admission": false,
+  "source_not_executed_or_imported": true,
+  "source_only": true
+}

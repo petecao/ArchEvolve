@@ -1,0 +1,59 @@
+{
+  "config_template": {
+    "argv": [
+      "/usr/bin/python3.12",
+      "-B",
+      "/data1/yanruj/lanl17-custody-source-20261007-a3/capture-producer.py",
+      "--request",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-p4-dispatch-state-request-20261008-a5.json",
+      "--request-sha256",
+      {
+        "required_future_input": "finalized_p4_dispatch_state_request.file_sha256",
+        "type": "sha256"
+      },
+      "--output",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-p4-dispatch-state-custody-20261008-a5.json"
+    ],
+    "collect": [
+      "/data/yanruj/EvolveSWDB_runs/lanl17-p4-dispatch-state-custody-20261008-a5.json"
+    ],
+    "local_seconds": 420,
+    "remote_seconds": 300,
+    "source_pins": [
+      {
+        "bytes": 46165,
+        "path": "/data1/yanruj/lanl17-custody-source-20261007-a3/capture-producer.py",
+        "sha256": "32bead204337aa66d0a732b6f143216946abafc5d2eb752577b0d90f7190b7b6"
+      }
+    ],
+    "stage": [
+      {
+        "base64": {
+          "required_future_input": "finalized_p4_dispatch_state_request.exact_base64",
+          "type": "base64"
+        },
+        "bytes": {
+          "max": 33554432,
+          "min": 1,
+          "required_future_input": "finalized_p4_dispatch_state_request.bytes",
+          "type": "integer"
+        },
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-p4-dispatch-state-request-20261008-a5.json",
+        "sha256": {
+          "required_future_input": "finalized_p4_dispatch_state_request.file_sha256",
+          "type": "sha256"
+        }
+      }
+    ]
+  },
+  "derived_from": {
+    "bytes": 8377,
+    "path": "/private/tmp/lanl17-p1-dispatch-state-config-20261008-a5.json",
+    "sha256": "e0d57c3782643ff9b9fb4e4566103d737fbfe05aec9a6ef046f66c6275e76b10"
+  },
+  "executable": false,
+  "format": "swdb.lanl17-dispatch-state-action-source-only-draft.v1",
+  "prepared_ET": "2026-10-08T14:11:07.330577-04:00",
+  "scientific_admission": false,
+  "source_only": true
+}

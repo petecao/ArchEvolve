@@ -1,0 +1,95 @@
+{
+  "format": "swdb.bfs.t15-setup-recovery-preparation.v1",
+  "date": "2026-09-26",
+  "state": "locally_tested_pending_review_and_actual_linux_proofs",
+  "head_at_validation": "f85204ff08ae1d5cf9f1dd23a32ff1c18ab23eb9",
+  "python": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_batch.py",
+      "bytes": 66837,
+      "sha256": "cdb9fefb2925846f7890aac9d4d53734391f969c9adf657753f878854688022b"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_linux_fixture.py",
+      "bytes": 13323,
+      "sha256": "81b4dd01692be4e27685abbe7561b9b40b33d39262589557e0a715fb6db72ee9"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_owned_execution.py",
+      "bytes": 17237,
+      "sha256": "94d962417a38790b38fe4279ae33ea1d761511851b21358ec44bfc049a6de10f"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_linux_fixture.py",
+      "bytes": 10156,
+      "sha256": "69a0be09e3b90b7bf3ff45d32dc67d88d646de8109dab2f1d62032b50ac1252c"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_storage.py",
+      "bytes": 9194,
+      "sha256": "230ee542835c361ec11b2610bd23568ef8f35ba5c5ec74729a89b0de7139dcec"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_setup_recovery.py",
+      "bytes": 15620,
+      "sha256": "b420903cd0423af44908f44575a306c701b17f6733e238930c68769435e21d37"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-t15-setup-recovery-20260926.md",
+      "bytes": 6053,
+      "sha256": "0b1df4cbc337e4b8d8cccc5bab673e56e7fd758eaf1bcc07e4c583156ae2c6b0"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/bfs-t15-setup-recovery-simulator-batch-20260926-a1.json",
+      "bytes": 12215,
+      "sha256": "edf0d8e908247b1f8e3a66c471c463c5b7a442237336d37d20c52accf6d987b0"
+    }
+  ],
+  "plan_canonical_sha256": "8efb0d32c076280a936ec4da0945c9b0653e3128e41389a3fc3965e86522725e",
+  "validation": {
+    "command": "python3 -m pytest tests/test_bfs_simulator_setup_recovery.py tests/test_bfs_simulator_correction.py tests/test_bfs_simulator_batch.py tests/test_bfs_simulator_storage.py tests/test_bfs_linux_fixture.py tests/test_bfs_linux_fixture_audit.py tests/test_bfs_owned_execution.py -q",
+    "result": "266 passed, 8 skipped in 17.77s",
+    "logs": [
+      {
+        "path": "/private/tmp/bfs-t15-setup-recovery-initial-20260926.log",
+        "bytes": 99,
+        "sha256": "0cb2b71c78fa29981ab742d99cf2b0ea651c7fe24ee6c657cbdbcce1d289848f"
+      },
+      {
+        "path": "/private/tmp/bfs-t15-setup-recovery-focused-20260926.log",
+        "bytes": 1804,
+        "sha256": "98be262c2ad0cf5627841e35619d2ff6cb58401501d32d3398fdef25b74f2c65"
+      },
+      {
+        "path": "/private/tmp/bfs-t15-setup-recovery-final-20260926.log",
+        "bytes": 352,
+        "sha256": "dfcd2b30293703ee77a25692d8c0e340fd875b8c8e64d5a5b767676a3ca3576b"
+      }
+    ],
+    "initial_affected_failure": "One stale fixed selection-count assertion expected4 rather than explicitly required5; no production gate was weakened. 265 other cases passed; old log retained.",
+    "diff_check": "passed after removing one trailing blank line; no executable delta after final pytest run"
+  },
+  "limits": {
+    "aggregate_seconds": 43200,
+    "aggregate_bytes": 42949672960,
+    "charged_seconds": 2997,
+    "charged_bytes": 15322025984,
+    "remaining_seconds": 40203,
+    "remaining_bytes": 27627646976,
+    "fixed_actual_hard_end": "2026-09-27T09:14:09.851819-04:00",
+    "maximum_latest_start": "2026-09-27T03:13:39.851819-04:00",
+    "series_seconds": 21600,
+    "shared_cleanup_seconds": 30,
+    "fresh_proof_seconds": 600,
+    "fresh_proof_bytes": 2147483648
+  },
+  "evidence_boundary": {
+    "actual_linux_fifth_case": "not yet run; Linux-only local skip is not execution evidence",
+    "new_host_dispatch": false,
+    "new_export": false,
+    "old_attempts": "failed/consumed/immutable",
+    "scientific_settings": "unchanged",
+    "test_fixtures": "new reader uses real temp JSON/YAML hashes and leaf inventory; existing terminal/proof readers are isolated seams in setup fixture, separately exercised by affected suites"
+  }
+}

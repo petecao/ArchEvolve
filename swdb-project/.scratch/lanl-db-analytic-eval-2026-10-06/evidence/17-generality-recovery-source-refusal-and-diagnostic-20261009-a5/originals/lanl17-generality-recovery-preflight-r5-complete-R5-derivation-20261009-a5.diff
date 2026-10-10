@@ -1,0 +1,488 @@
+--- /private/tmp/lanl17_pre_full_index_host_observation_20261008_a5_r5.py
++++ /private/tmp/lanl17_generality_recovery_candidate_preflight_20261009_a5_r5.py
+@@ -1,31 +1,35 @@
+-"""Created 2026-10-08 ET: SOURCE ONLY pre-full-index observation, NOT RUN.
+-Closed actual metadata input; no approval or scientific admission inferred.
+-No provider/log/report stdout/YAML/auth bodies, target imports or index execution.
++"""Created 2026-10-09 ET: SOURCE ONLY recovery preflight, NOT RUN.
++Read-only candidate/source/native/consumer inspection; only fresh private metadata
++may be written after separate parent execution approval. No backup/removal/index.
+ """
+-import argparse,datetime,hashlib,json,os,pwd,re,shutil,signal,socket,stat,subprocess,sys,time
++import argparse,base64,datetime,hashlib,json,os,pwd,re,shutil,signal,socket,stat,subprocess,sys,time
+ from pathlib import Path
+ UID=114316761
+ R='5e12a9796432654d88def24ecea617d16ca605b2'
+ F6='f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3'
+ BASE=Path('/data1/yanruj')
++PRIMARY=BASE/'ArchEvolve'
++SOURCE=BASE/'ArchEvolve-lanl17-source-20261007-a5'
+ RAW=Path('/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5')
+-SOURCE=BASE/'ArchEvolve-lanl17-source-20261007-a5'
+-PRIMARY=BASE/'ArchEvolve'
+-FINALIZE=Path('/data/yanruj/EvolveSWDB_runs/lanl17-metadata-finalize-20261007-a5')
+ ER=BASE/'ArchEvolve-lanl17-actual-report-evidence-20261007-a5'
+-ER_REL=Path('swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-actual-report-mbit10-20261007-a5.json')
+-M2_SHA='b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1'
+-M2_ID='66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7'
+-FIELDS=('dev','ino','mode','uid','gid','nlink','size','mtime_ns','ctime_ns')
+-END=time.monotonic()+45
+-CIDS=tuple('extensa-gem5-bfs-20261006-p'+str(i) for i in range(1,5))
+ H=BASE/'lanl17-control-cleanup60-20261007-a4.py'
+ G=BASE/'lanl17-metadata-dispatch-guard-cleanup60-20261007-a4.py'
+ SUP=BASE/'lanl17-metadata-supervisor-cleanup60-20261007-a4.py'
+-FIXED_SOURCE={
+- 'helper_source':(str(H),38195,'28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414'),
+- 'guard_source':(str(G),14577,'9c5d9658b524db94805a6b51453dc9edef7096a27312677896d595d39b94f6c6'),
+- 'supervisor_source':(str(SUP),8014,'fa703bbd4c71bb4bcf56f47d1e224449f627d5921295e00b9cc105f21e95bde0')}
++CANDIDATE=BASE/'ArchEvolve-lanl-generality-final-20261007-a1'
++CANDIDATE_HEAD='c4ab2fdbb0b0c57ee9f515522835897f24466d6b'
++GENERALITY_EXPORT='43256ee0300a59a03919833075fbb13fb3ba9ab3'
++EXPECTED_ER='f5014746da61005be2d75cee16f8a834afa19321'
++INPUT={'expected_ER_commit':EXPECTED_ER}
++OUTPUT=Path('/data/yanruj/EvolveSWDB_runs/lanl17-generality-worktree-recovery-20261009-a1')
++FIELDS=('dev','ino','mode','uid','gid','nlink','size','mtime_ns','ctime_ns')
++END=time.monotonic()+180
++FILE_CAP=1024**3
++TREE_CAP=2*1024**3
++ENTRY_CAP=65536
++METADATA_CAP=8*1024**2
++PROTECTED=(PRIMARY,SOURCE,RAW,ER,BASE/'ArchEvolve-lanl17-freeze-evidence-20261007-a5',BASE/'ArchEvolve-lanl-cpu-model-validation-20261006-a1',Path('/data/yanruj/EvolveSWDB_runs/lanl17-metadata-prepare-20261007-a5'),Path('/data/yanruj/EvolveSWDB_runs/lanl17-metadata-finalize-20261007-a5'),H,G,SUP,BASE/'lanl17-dx100-hooks-20261008-a2',BASE/'lanl17-dx100-deployment-20261008-a2')
++OBSERVED={}
++ARGS=None
+ NATIVE={
+  '/usr/bin/bash':(1446024,'bc5945feb8bd26203ebfafea5ce1878bb2e32cb8fb50ab7ae395cfb1e1aaaef1'),
+  '/usr/bin/python3.12':(8020928,'e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f'),
+@@ -33,11 +37,7 @@
+  '/usr/bin/sha256sum':(39336,'4d2db56c867e5324e0084c9e897f6360d37517de77ac96f2bd31494223d69a60'),
+  '/usr/bin/wc':(55824,'9005273a966c875547a4317288bdd92e7b2aa49ad86bc9978121242106405e6b'),
+  '/usr/bin/mkdir':(76296,'430c3f949d7d328cd835722f5bbddeac0956fbdfbbb6a197e0abb1def3ed27e2')}
+-ROUTE_ROLES=('inventory_output','spec_preparation_output','author_output','writer_output','bootstrap_logs','inner_logs','outer_logs','bootstrap_preparation_output')
+ STARTUP=('BASH_ENV','ENV','PYTHONHOME','PYTHONSTARTUP','PYTHONOPTIMIZE','LD_PRELOAD','LD_LIBRARY_PATH','DYLD_INSERT_LIBRARIES','POSIXLY_CORRECT')
+-INPUT_PIN=None
+-INPUT=None
+-ARGS=None
+ def need(ok,reason):
+     if not ok: raise ValueError(reason)
+ 
+@@ -147,78 +147,20 @@
+ 
+ class Parser(argparse.ArgumentParser):
+     def error(self,message):raise ValueError('argument_contract')
++
+ def closed(v,keys,why):need(type(v) is dict and set(v)==set(keys),why);return v
++
+ def hex64(v):need(type(v) is str and re.fullmatch('[0-9a-f]{64}',v) is not None,'actual_SHA');return v
++
+ def utc(v):
+     need(type(v) is str and len(v)<=40,'actual_UTC');d=datetime.datetime.fromisoformat(v)
+     need(d.tzinfo is not None and d.utcoffset()==datetime.timedelta(0),'UTC_offset');return d
++
+ def payload_digest(v):return digest(json.dumps(v,sort_keys=True,separators=(',',':'),ensure_ascii=True,allow_nan=False).encode())
+-def remote_path(v,existing=True):
+-    need(type(v) is str and len(v)<=1024 and re.fullmatch('/[A-Za-z0-9_./-]+',v) is not None,'closed_remote_route')
+-    p=Path(v);need(str(p)==v and '..' not in p.parts and '.' not in p.parts,'canonical_route_spelling')
+-    need(p.is_relative_to(Path('/data/yanruj')) or p.is_relative_to(BASE),'owned_remote_namespace')
+-    need(not any(x in p.parts for x in ('.codex','.ssh','.aws')) and p.name not in ('auth.json','provider.json','prompt.txt','feedback.txt'),'sensitive_route_refused')
+-    need(not any(x.is_symlink() for x in (p,*p.parents)) and p.resolve(strict=existing)==p,'canonical_nonsymlink_route');return p
+-def bounded_input(raw):
+-    v=strict(raw);count=[0]
+-    def walk(x,depth=0):
+-        count[0]+=1;need(depth<=32 and count[0]<=10000,'input_structure_bound')
+-        if type(x) is dict:
+-            for k,y in x.items():need(type(k) is str and len(k)<=128,'input_key_bound');walk(y,depth+1)
+-        elif type(x) is list:
+-            for y in x:walk(y,depth+1)
+-        elif type(x) is str:need(len(x)<=1024 and 'FUTURE' not in x and 'ACTUAL_' not in x,'unfilled_or_unbounded_input')
+-        else:need(x is None or type(x) in (bool,int),'closed_input_scalar')
+-    walk(v);return v
+-def input_original(p,expected):
+-    remote_path(str(p));need(not p.is_relative_to(SOURCE) and not p.is_relative_to(RAW),'external_input_route')
+-    b,pin=original(p,131072);need(stat.S_IMODE(pin['stat']['mode'])==0o600 and digest(b)==hex64(expected),'own0600_exact_input');return b,pin
+-
+-def transport_identity():
+-    own,argv,exe=process_identity(os.getpid())
+-    expected=[b'/usr/bin/python3.12',b'-I',b'-B',b'-c']
+-    tail=[b'--input',os.fsencode(ARGS.input),b'--input-sha256',ARGS.input_sha256.encode(),b'--source-sha256',ARGS.source_sha256.encode()]
+-    need(exe=='/usr/bin/python3.12' and len(argv)==11 and argv[:4]==expected and argv[5:]==tail,'native_inline_exact_input_argv')
+-    need(digest(argv[4])==ARGS.source_sha256 and own['ppid']==os.getppid(),'self_source_SHA_actual_parent')
+-    parent,pargv,pexe=process_identity(own['ppid'])
+-    need(pexe=='/usr/bin/timeout' and pargv==[b'/usr/bin/timeout',b'--signal=TERM',b'--kill-after=60s',b'60s',*argv],'exact_immediate_owned_GNU_timeout_parent')
+-    return {'self':own,'parent':parent,'inline_source_sha256':ARGS.source_sha256,'input_sha256':ARGS.input_sha256,'only_exact_immediate_timeout_parent_excluded':True}
+-
+-def expected_original_routes():
+-    rows={'guard_preregistration':(FINALIZE/'preregistration.json',131072),'supervisor_receipt':(FINALIZE/'supervisor-receipt.json',131072),'helper_stdout':(FINALIZE/'helper.stdout',65536),'final_export':(RAW/'final-export.json',65536),'agreement_receipt':(ER/ER_REL,2*1024*1024),'manifest_M2':(RAW/'manifest.json',400000)}
+-    for role,(route,n,_) in FIXED_SOURCE.items():rows[role]=(Path(route),n)
+-    for name in [*('validate-'+cid for cid in CIDS),'validate-final-export']:
+-        for role,suffix,cap in (('argv','argv.json',32768),('exit','exit-code.txt',64),('stdout','stdout',4096),('stderr','stderr',65536)):rows[name+':'+role]=(RAW/(name+'.'+suffix),cap)
+-    return rows
+-
+-def completion_originals(v):
+-    expected=expected_original_routes();closed(v,expected,'exact_completion_role_map');pins={};bodies={}
+-    for role,(p,cap) in expected.items():
+-        x=closed(v[role],('path','bytes','sha256','stat'),'exact_completion_pin')
+-        need(x['path']==str(p) and type(x['bytes']) is int and 0<=x['bytes']<=cap,'fixed_role_route_or_cap');hex64(x['sha256']);closed(x['stat'],FIELDS,'original_nine_stat_fields')
+-        need(all(type(x['stat'][k]) is int and x['stat'][k]>=0 for k in FIELDS),'original_stat_integer')
+-        raw,pin=original(p,cap);need(pin==x,'reviewed_original_bytes_or_stat_changed');pins[role]=pin;bodies[role]=raw
+-    for role,(route,n,h) in FIXED_SOURCE.items():need(pins[role]['bytes']==n and pins[role]['sha256']==h,'fixed_control_source_pin')
+-    need(pins['manifest_M2']['bytes']==292401 and pins['manifest_M2']['sha256']==M2_SHA,'exact_original_M2')
+-    def seal(role,fmt,ascii):
+-        d=strict(bodies[role]);need(type(d) is dict,'original_control_JSON_object');need(d.get('format')==fmt and d.get('identity_sha256')==digest(json.dumps({k:x for k,x in d.items() if k!='identity_sha256'},sort_keys=True,separators=(',',':'),ensure_ascii=ascii,allow_nan=False).encode()),'original_source_policy_seal');return d
+-    m=seal('manifest_M2','swdb.lanl17-parent-population.v1',True)
+-    need(m['identity_sha256']==M2_ID and m['source']==str(SOURCE) and m['raw']==str(RAW) and m['source_commit']==R and m['estimator_sha256']==F6 and m['helper_sha256']==FIXED_SOURCE['helper_source'][2],'original_M2_context')
+-    pre=seal('guard_preregistration','swdb.lanl17-metadata-dispatch-preregistration.v1',False)
+-    need(pre['action']=='finalize' and pre['final_source_commit']==pre['cleanup_source_commit']==R and pre['project']==str(SOURCE/'swdb-project') and pre['source_code_equivalent_F6'] is True,'original_FINALIZE_guard_context')
+-    sup=seal('supervisor_receipt','swdb.lanl17-metadata-supervisor.v1',False)
+-    need(sup['action']=='finalize' and sup['state']=='child_returned' and type(sup['child_exit']) is int and type(sup['supervisor_exit']) is int and sup['child_exit']==sup['supervisor_exit']==0 and sup['timed_out'] is False and sup['signal_received'] is None and sup['error_type'] is None and sup['cleanup_errors']==[] and sup['fixture'] is False and sup['cleanup']['subreaper'] is True and sup['cleanup']['survivors']=={},'original_normal_FINALIZE_cleanup')
+-    need(sup['helper_sha256']==sup['cleanup_implementation_sha256']==FIXED_SOURCE['helper_source'][2] and sup['supervisor_sha256']==FIXED_SOURCE['supervisor_source'][2] and sup['processes_py_sha256']=='bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289' and sup['estimator_sha256']==F6 and sup['uid']==UID,'original_FINALIZE_source_lineage')
+-    result=strict(bodies['final_export']);helper=strict(bodies['helper_stdout']);need(type(result) is dict and type(helper) is dict,'original_export_helper_JSON_objects')
+-    need(result==helper and set(result)=={'branch','commit','paths','raw_transferred'} and result['branch']=='codex/lanl17-actual-report-evidence-20261007-a5' and result['commit']==INPUT['expected_ER_commit'] and result['raw_transferred'] is False,'actual_original_ER_commit_binding')
+-    receipt=seal('agreement_receipt','swdb.lanl17-actual-agreement-compact.v1',True)
+-    need(receipt['manifest']==m and receipt['source_clean'] is True and receipt['raw_transferred'] is False,'actual_original_ER_receipt_binding')
+-    for name in [*('validate-'+cid for cid in CIDS),'validate-final-export']:
+-        folder=RAW/'base/records' if name=='validate-final-export' else RAW/'campaign-runs/extensa'/name.removeprefix('validate-')/'records'
+-        argv=strict(b'{"argv":'+bodies[name+':argv']+b'}')['argv']
+-        need(argv==['python3','-m','swdb','validate','--records',str(folder)] and bodies[name+':exit']==b'0\n' and re.fullmatch(rb'OK: [0-9]{1,8} record\(s\) valid\n',bodies[name+':stdout']) is not None and bodies[name+':stderr']==b'','original_validation_quartet_success')
+-    reviewed_stops=receipt['stopped_attempts'];need(type(reviewed_stops) is list and len(reviewed_stops)==4 and all(type(v) is dict and v.get('campaign')==cid for cid,v in zip(CIDS,reviewed_stops)),'reviewed_ER_four_original_stops')
+-    return pins,reviewed_stops
++
++def run(argv):
++    tick();p=subprocess.run(argv,capture_output=True,timeout=min(15,max(.1,END-time.monotonic())),env={'PATH':'/usr/bin:/bin','LC_ALL':'C','GIT_OPTIONAL_LOCKS':'0','GIT_NO_LAZY_FETCH':'1','GIT_TERMINAL_PROMPT':'0'},stdin=subprocess.DEVNULL)
++    need(p.returncode==0 and len(p.stdout)<=65536 and len(p.stderr)<=65536,'metadata_command_exit_or_cap');return p.stdout.decode()
+ 
+ def current_sources():
+     def git(p,*tail):return run(['/usr/bin/git','--no-replace-objects','-c','core.fsmonitor=false','-C',str(p),*tail]).strip()
+@@ -237,10 +179,6 @@
+     need(git(ER,'rev-parse','HEAD')==INPUT['expected_ER_commit'] and git(ER,'rev-list','--parents','-n','1','HEAD').split()[1:]==[R] and git(ER,'branch','--show-current')=='codex/lanl17-actual-report-evidence-20261007-a5' and git(ER,'status','--porcelain')=='','actual_ER_revision_clean_parent')
+     return {'sources':out,'primary_origin':R,'retention_lock_original':rpin,'physical_module_count':185,'physical_F6':F6,'actual_ER_commit':INPUT['expected_ER_commit']}
+ 
+-def run(argv):
+-    tick();p=subprocess.run(argv,capture_output=True,timeout=min(15,max(.1,END-time.monotonic())),env={'PATH':'/usr/bin:/bin','LC_ALL':'C','GIT_OPTIONAL_LOCKS':'0','GIT_NO_LAZY_FETCH':'1','GIT_TERMINAL_PROMPT':'0'},stdin=subprocess.DEVNULL)
+-    need(p.returncode==0 and len(p.stdout)<=65536 and len(p.stderr)<=65536,'metadata_command_exit_or_cap');return p.stdout.decode()
+-
+ def root_tool_pin(route,n,h):
+     p=Path(route);need(p.resolve(strict=True)==p and not any(x.is_symlink() for x in (p,*p.parents)),'native_tool_canonical')
+     s=p.lstat();need(stat.S_ISREG(s.st_mode) and s.st_uid==0 and s.st_nlink==1 and stat.S_IMODE(s.st_mode)==0o755 and s.st_size==n<=16*1024*1024,'native_tool_root_regular_size_mode')
+@@ -262,17 +200,6 @@
+     auth=home/'auth.json';s=auth.lstat();need(stat.S_ISREG(s.st_mode) and s.st_uid==UID and s.st_nlink==1 and not s.st_mode&0o7000,'public_auth_exists_regular_owned')
+     return {'HOME_matches_account':True,'CODEX_HOME_public_route_matches':True,'public_auth_exists':True,'public_auth_stat':stamp(s),'authentication_contents_read':False,'authentication_contents_preservation_not_policed':True,'unsafe_startup_environment_absent':True,'POSIXLY_CORRECT_absent':True,'Bash_1024_byte_ulimit_units_observed':False,'Bash_units_and_startup_invocation_require_separate_parent_review':True,'task_marker_not_restored_or_modified':True}
+ 
+-def fresh_outputs(rows):
+-    need(type(rows) is dict and 1<=len(rows)<=len(ROUTE_ROLES) and set(rows)<=set(ROUTE_ROLES),'closed_explicit_next_stage_output_route_subset');paths=[];out={}
+-    for role,value in rows.items():
+-        p=remote_path(value,False);need(not os.path.lexists(p) and p.parent.is_dir() and p.parent.stat().st_uid==UID,'fresh_owned_output_route')
+-        need(not p.is_relative_to(SOURCE) and not SOURCE.is_relative_to(p) and not p.is_relative_to(RAW) and not RAW.is_relative_to(p),'output_external_to_whole_S_RAW')
+-        paths.append(p);out[role]={'path':str(p),'absent':True,'owned_existing_parent_stat':stamp(p.parent.stat())}
+-    need(len(set(paths))==len(paths) and all(not a.is_relative_to(b) and not b.is_relative_to(a) for i,a in enumerate(paths) for b in paths[i+1:]),'output_routes_pairwise_disjoint')
+-    for cid in CIDS:
+-        p=RAW/'campaign-runs/extensa'/cid/'records';need(p.resolve(strict=True)==p and not any(x.is_symlink() for x in (p,*p.parents)) and p.is_dir() and p.stat().st_uid==UID,'existing_actual_RAW_store_required')
+-    return out
+-
+ def owned_cmdline(p,ps):
+     # Preserve ancestor's owned-directory scan scope. Strict kernel UID/start
+     # guards apply to matching consumers, not every unrelated owned stat file.
+@@ -293,79 +220,242 @@
+     need(len(w)>=20 and b2.split(b' ',1)[0]==p.name.encode() and w[0] in (b'Z',b'X') and int(w[19])==start and p.stat().st_uid==UID and p.stat().st_ino==ps.st_ino,'inactive_process_identity_race')
+     return {'pid':int(p.name),'uid':UID,'proc_inode':ps.st_ino,'start_ticks':start,'state':w[0].decode('ascii')}
+ 
+-def consumers(transport):
+-    matches=[];unknowns=[];seen=0;owned=0;needles=[str(SOURCE).encode(),str(RAW).encode(),str(H).encode()]
++
++def metadata_bytes(v):
++    return (json.dumps(v,sort_keys=True,separators=(',',':'),ensure_ascii=True,allow_nan=False)+'\n').encode()
++
++def transport_identity():
++    own,argv,exe=process_identity(os.getpid())
++    need(exe=='/usr/bin/python3.12' and len(argv)==9 and argv[:4]==[b'/usr/bin/python3.12',b'-I',b'-B',b'-c'],'exact_native_inline_argv')
++    need(argv[5:]==[b'--source-sha256',ARGS.source_sha256.encode(),b'--output-directory',os.fsencode(ARGS.output_directory)] and digest(argv[4])==ARGS.source_sha256 and own['ppid']==os.getppid(),'exact_self_source_and_arguments')
++    parent,pargv,pexe=process_identity(own['ppid'])
++    need(pexe=='/usr/bin/timeout' and pargv==[b'/usr/bin/timeout',b'--signal=TERM',b'--kill-after=60s',b'240s',*argv],'exact_immediate_GNU240_K60_parent')
++    return {'self':own,'parent':parent,'source_sha256':ARGS.source_sha256,'only_exact_immediate_timeout_parent_excluded':True}
++
++def output_route():
++    need(ARGS.output_directory==str(OUTPUT),'exact_recovery_metadata_output_route')
++    need(not os.path.lexists(OUTPUT) and OUTPUT.parent.resolve(strict=True)==OUTPUT.parent and not any(p.is_symlink() for p in OUTPUT.parents) and OUTPUT.parent.stat().st_uid==UID,'fresh_owned_metadata_output')
++    for p in (*PROTECTED,CANDIDATE):need(not OUTPUT.is_relative_to(p) and not p.is_relative_to(OUTPUT),'metadata_output_disjoint_protected_and_candidate')
++    return {'path':str(OUTPUT),'initially_absent':True,'parent_stat':stamp(OUTPUT.parent.stat())}
++
++def candidate_registration():
++    need(CANDIDATE.resolve(strict=True)==CANDIDATE and not any(p.is_symlink() for p in (CANDIDATE,*CANDIDATE.parents)) and CANDIDATE.is_dir() and CANDIDATE.stat().st_uid==UID,'candidate_root_canonical_owned')
++    for p in PROTECTED:need(not CANDIDATE.is_relative_to(p) and not p.is_relative_to(CANDIDATE),'candidate_disjoint_all_protected_roots')
++    def git(*tail):return run(['/usr/bin/git','--no-replace-objects','-c','core.fsmonitor=false','-C',str(CANDIDATE),*tail]).strip()
++    need(git('rev-parse','HEAD')==CANDIDATE_HEAD and git('rev-parse','--abbrev-ref','HEAD')=='HEAD' and git('status','--porcelain','--untracked-files=all')=='','candidate_exact_detached_clean')
++    common=Path(git('rev-parse','--git-common-dir'));gitdir=Path(git('rev-parse','--git-dir'))
++    need(common==PRIMARY/'.git' and common.resolve(strict=True)==common and common.stat().st_uid==UID,'candidate_exact_PRIMARY_git_common')
++    need(gitdir.parent==common/'worktrees' and gitdir.resolve(strict=True)==gitdir and gitdir.stat().st_uid==UID and not any(p.is_symlink() for p in (gitdir,*gitdir.parents)),'owned_canonical_worktree_registration')
++    need(not os.path.lexists(gitdir/'locked') and not os.path.lexists(gitdir/'index.lock'),'candidate_registration_not_locked')
++    pointer,pin=original(CANDIDATE/'.git',4096);need(pointer==('gitdir: '+str(gitdir)+'\n').encode(),'exact_root_git_pointer')
++    backlink,bpin=original(gitdir/'gitdir',4096);need(backlink==(str(CANDIDATE/'.git')+'\n').encode(),'exact_registration_backlink')
++    head,hpin=original(gitdir/'HEAD',128);need(head==(CANDIDATE_HEAD+'\n').encode(),'detached_registration_HEAD')
++    rows=run(['/usr/bin/git','--no-replace-objects','-c','core.fsmonitor=false','-C',str(PRIMARY),'worktree','list','--porcelain']).split('\n\n')
++    matches=[r.splitlines() for r in rows if r.splitlines() and r.splitlines()[0]=='worktree '+str(CANDIDATE)]
++    need(len(matches)==1 and 'HEAD '+CANDIDATE_HEAD in matches[0] and 'detached' in matches[0] and not any(x.startswith(('locked','prunable')) for x in matches[0]),'exact_unlocked_registered_candidate')
++    # Git metadata only; c4 and its parent export must remain in protected common Git.
++    git('merge-base','--is-ancestor',CANDIDATE_HEAD,R)
++    need(git('rev-parse',GENERALITY_EXPORT+'^{commit}')==GENERALITY_EXPORT and git('rev-list','--parents','-n','1',GENERALITY_EXPORT).split()==[GENERALITY_EXPORT,CANDIDATE_HEAD],'original_generality_export_object_sole_c4_parent')
++    modes=git('ls-files','--format=%(objectmode)','-z');need(all(x in ('100644','100755','120000') for x in modes.split('\0') if x),'submodule_or_unknown_tracked_mode_refused')
++    return {'candidate':str(CANDIDATE),'head':CANDIDATE_HEAD,'detached':True,'clean_including_untracked':True,'common_git':str(common),'git_directory':str(gitdir),'pointer':pin,'backlink':bpin,'registration_HEAD':hpin,'merged_into_R':True,'original_export_commit':GENERALITY_EXPORT,'original_export_sole_c4_parent':True,'registration_metadata_not_restore_instruction':True}
++
++def protected_reference(p):
++    return any(p==q or p.is_relative_to(q) for q in PROTECTED)
++
++def symlink_resolution(row,entries):
++    # Resolve only the closed inventoried metadata graph; never stat/read an external target.
++    prefix=CANDIDATE.parts;visited=set();links=0;steps=0
++    def target_parts(raw,base):
++        value=os.fsdecode(raw)
++        if value.startswith('/'):
++            components=tuple(value.lstrip('/').split('/'))
++            need(components[:len(prefix)-1]==prefix[1:],'symlink_absolute_target_outside_candidate')
++            return [],list(components[len(prefix)-1:])
++        return list(base),value.split('/')
++    base=row['relative_path'].split('/')[:-1]
++    base,pending=target_parts(base64.b64decode(row['target_base64'],validate=True),base)
++    while pending:
++        tick();steps+=1;need(steps<=65536,'symlink_component_resolution_cap')
++        name=pending.pop(0)
++        if name in ('','.'):continue
++        if name=='..':
++            need(bool(base),'symlink_parent_escapes_candidate');base.pop();continue
++        relative='/'.join((*base,name));entry=entries.get(relative)
++        need(entry is not None,'symlink_dangling_or_uninventoried_target')
++        if entry['kind']=='symlink':
++            links+=1;need(links<=40,'symlink_cycle_or_link_cap')
++            key=(relative,tuple(pending));need(key not in visited,'symlink_cycle');visited.add(key)
++            nextbase,nextparts=target_parts(base64.b64decode(entry['target_base64'],validate=True),base)
++            base=nextbase;pending=nextparts+pending
++        else:
++            need(entry['kind']=='directory' or not pending,'symlink_nondirectory_component')
++            base.append(name)
++    relative='/'.join(base) or '.';entry=entries.get(relative)
++    need(entry is not None and entry['kind'] in ('directory','regular'),'symlink_final_target_not_closed')
++    route=CANDIDATE.joinpath(*base);need(not protected_reference(route),'symlink_final_target_protected')
++    return {'state':'resolved_internal_metadata_only','relative_path':relative,'kind':entry['kind'],'target_stat':entry['stat'],'symlinks_followed_in_metadata':links,'components_checked':steps,'external_target_stat_or_body_read':False}
++
++def inventory_tree():
++    rows=[];total=0;allocated=0;metadata_size=2;references=[];inodes=set()
++    todo=[CANDIDATE]
++    needles=[os.fsencode(p) for p in PROTECTED];overlap=max(map(len,needles))+1
++    patterns=[re.compile(re.escape(x)+rb'(?=[^A-Za-z0-9_.-])') for x in needles]
++    while todo:
++        tick();p=todo.pop();s=p.lstat();relative=p.relative_to(CANDIDATE).as_posix()
++        need(len(rows)<ENTRY_CAP and len(os.fsencode(relative))<=4096 and s.st_uid==UID and not s.st_mode&0o7000,'tree_entry_bounds_owner_or_special_bits')
++        need(not any(x in p.parts for x in ('.codex','.ssh','.aws')) and p.name not in ('auth.json','provider.json','prompt.txt','feedback.txt'),'sensitive_candidate_entry_refused')
++        row={'relative_path':relative,'stat':stamp(s)};inodes.add((s.st_dev,s.st_ino))
++        if stat.S_ISDIR(s.st_mode):
++            need(p.resolve(strict=True)==p and not any(q.is_symlink() for q in (p,*p.parents)),'canonical_tree_directory')
++            need(p==CANDIDATE or p.name!='.git','embedded_Git_directory_refused')
++            children=sorted(p.iterdir(),key=lambda q:os.fsencode(q.name));need(len(children)<=ENTRY_CAP,'directory_child_bound')
++            row['kind']='directory';row['entries_sha256']=digest(b'\0'.join(os.fsencode(q.name) for q in children));todo.extend(reversed(children));need(stamp(p.lstat())==stamp(s),'directory_listing_race')
++        elif stat.S_ISREG(s.st_mode):
++            need(p==CANDIDATE/'.git' or p.name!='.git','embedded_Git_pointer_refused')
++            need(s.st_nlink==1 and 0<=s.st_size<=FILE_CAP,'regular_hardlink_or_file_cap_refused');total+=s.st_size;need(total<=TREE_CAP,'full_tree_byte_cap');allocated+=s.st_blocks*512
++            fd=os.open(p,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC);h=hashlib.sha256();n=0;tail=b'';refs=set()
++            with os.fdopen(fd,'rb') as f:
++                need(stamp(os.fstat(f.fileno()))==stamp(s),'tree_file_open_race')
++                while True:
++                    tick();b=f.read(1024*1024)
++                    if not b:
++                        if p!=CANDIDATE/'.git':refs.update(i for i,x in enumerate(patterns) if x.search(tail+b'\0'))
++                        break
++                    n+=len(b);need(n<=s.st_size,'tree_file_read_cap');h.update(b)
++                    window=tail+b
++                    if p!=CANDIDATE/'.git':
++                        refs.update(i for i,x in enumerate(patterns) if x.search(window))
++                    tail=window[-overlap:]
++                need(n==s.st_size and stamp(os.fstat(f.fileno()))==stamp(s)==stamp(p.lstat()),'tree_file_nine_stat_or_size_race')
++            row.update(kind='regular',bytes=n,sha256=h.hexdigest(),allocated_bytes=s.st_blocks*512)
++            if refs:references.append({'relative_path':relative,'kind':'regular_literal_mentions','protected_indices':sorted(refs),'sha256':h.hexdigest(),'historical_literal_does_not_itself_prove_physical_dependency':True})
++        elif stat.S_ISLNK(s.st_mode):
++            target=os.readlink(p);raw=os.fsencode(target);need(len(raw)<=4096 and stamp(p.lstat())==stamp(s),'symlink_metadata_cap_or_race')
++            route=Path(os.path.normpath(str(p.parent/target)));need(route.is_absolute(),'symlink_target_absolute_resolution')
++            # Never follow or copy a link target. Explicitly refuse external/protected links.
++            inside=route.is_relative_to(CANDIDATE) and not protected_reference(route)
++            row.update(kind='symlink',target_base64=base64.b64encode(raw).decode(),target_bytes=len(raw),target_sha256=digest(raw),lexically_inside_candidate=inside)
++            if not inside:references.append({'relative_path':relative,'kind':'external_or_protected_symlink','target_sha256':digest(raw)})
++        else:raise ValueError('nonregular_tree_entry_refused')
++        metadata_size+=len(metadata_bytes(row));need(metadata_size<=METADATA_CAP,'tree_metadata_8MiB_cap');rows.append(row)
++    entries={row['relative_path']:row for row in rows}
++    for row in rows:
++        if row['kind']!='symlink':continue
++        try:row['target_metadata_resolution']=symlink_resolution(row,entries)
++        except (ValueError,OSError,KeyError,TypeError,UnicodeError) as exc:
++            row['target_metadata_resolution']={'state':'unknown_or_refused','error_class':type(exc).__name__,'reason_sha256':digest(str(exc).encode()),'external_target_stat_or_body_read':False}
++            references.append({'relative_path':row['relative_path'],'kind':'ultimate_symlink_resolution_unknown_or_refused','target_sha256':row['target_sha256']})
++    need(len(metadata_bytes(rows))<=METADATA_CAP,'resolved_tree_metadata_8MiB_cap')
++    return {'entries':rows,'entry_count':len(rows),'regular_bytes':total,'allocated_regular_bytes':allocated,'all_regular_nlink1':True,'ignored_entries_included':True,'protected_reference_observations':references,'mandatory_root_Git_pointer_is_registration_provenance':True},inodes
++
++def alias_bytes(p,cap):
++    tick();s=p.lstat();need(stat.S_ISREG(s.st_mode),'owned_alias_file_regular')
++    fd=os.open(p,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC)
++    with os.fdopen(fd,'rb') as f:
++        need(stamp(os.fstat(f.fileno()))==stamp(s),'owned_alias_open_race');b=f.read(cap+1)
++        need(len(b)<=cap and stamp(os.fstat(f.fileno()))==stamp(s)==stamp(p.lstat()),'owned_alias_read_cap_or_race')
++    return b
++
++def consumer_inventory(transport,inodes):
++    matches=[];unknowns=[];owned=0;seen=0;fdcount=0;bytes_read=0
++    needles=[os.fsencode(p) for p in (CANDIDATE,SOURCE,RAW,H)]
++    def target_match(target,s):
++        route=target.removesuffix(' (deleted)')
++        return any(x in os.fsencode(route) for x in needles) or (s.st_dev,s.st_ino) in inodes
+     for p in Path('/proc').iterdir():
+-        tick();seen+=1;need(seen<=32768,'process_inventory_bound')
++        tick();seen+=1;need(seen<=32768,'process_count_cap')
+         if not p.name.isdecimal() or int(p.name) in (transport['self']['pid'],transport['parent']['pid']):continue
+-        pid=int(p.name);proof=None
++        proof=None
+         try:
+             ps=p.stat()
+             if ps.st_uid!=UID:continue
+-            owned+=1;need(owned<=4096,'owned_process_bound');proof={'pid':pid,'uid':UID,'proc_inode':ps.st_ino}
+-            command=owned_cmdline(p,ps)
++            owned+=1;need(owned<=4096,'owned_process_count_cap');proof={'pid':int(p.name),'uid':UID,'proc_inode':ps.st_ino}
++            command=owned_cmdline(p,ps);bytes_read+=len(command);need(bytes_read<=32*1024**2,'process_metadata_read_cap')
+             argv=command[:-1].split(b'\0') if command else []
+             if not argv or not argv[0]:
+-                proof=inactive_owned_identity(p,ps);need(owned_cmdline(p,ps)==command,'inactive_cmdline_byte_continuity');continue
+-            matched=any(needle in arg for needle in needles for arg in argv)
+-            if matched:
+-                identity,current_argv,exe=process_identity(pid)
+-                need(identity['proc_inode']==ps.st_ino and identity['cmdline_sha256']==digest(command) and current_argv==argv,'matching_consumer_identity_race')
+-                proof=identity
+-                raw=kernel_bytes(p/'stat',8192,UID);parts=raw.rsplit(b')',1)[1].split()
+-                need(len(parts)>=20 and int(parts[19])==identity['start_ticks'] and p.stat().st_uid==UID and p.stat().st_ino==ps.st_ino,'matching_consumer_final_identity_race')
++                proof=inactive_owned_identity(p,ps);need(owned_cmdline(p,ps)==command,'inactive_command_continuity');continue
++            found=any(x in arg for x in needles for arg in argv);routes=[]
++            for name in ('cwd','root','exe'):
++                q=p/name;target=os.readlink(q);s=q.stat();routes.append((name,digest(os.fsencode(target)),s.st_dev,s.st_ino));found=found or target_match(target,s)
++            fds=[]
++            for q in sorted((p/'fd').iterdir(),key=lambda q:q.name):
++                tick();fdcount+=1;need(fdcount<=65536 and q.name.isdecimal(),'FD_inventory_cap_or_name');target=os.readlink(q);s=q.stat();fds.append((q.name,digest(os.fsencode(target)),s.st_dev,s.st_ino));found=found or target_match(target,s)
++            maps=alias_bytes(p/'maps',4*1024**2);bytes_read+=len(maps);need(bytes_read<=32*1024**2,'process_metadata_read_cap')
++            for line in maps.splitlines():
++                parts=line.split(None,5);need(len(parts) in (5,6),'maps_field_count');device=parts[3].split(b':');need(len(device)==2 and parts[4].isdigit(),'maps_device_inode')
++                if int(parts[4]):
++                    device_id=os.makedev(int(device[0],16),int(device[1],16));found=found or (device_id,int(parts[4])) in inodes
++                if len(parts)==6:found=found or any(x in parts[5] for x in needles)
++            # Hash-only routing metadata; no argv/maps/FD target text is returned.
++            signature=digest(metadata_bytes({'routes':routes,'fds':fds,'maps_sha256':digest(maps)}))
++            if found:
++                identity,current_argv,exe=process_identity(int(p.name));need(identity['proc_inode']==ps.st_ino and identity['cmdline_sha256']==digest(command) and current_argv==argv,'matching_consumer_identity_continuity');proof=identity
++                raw=kernel_bytes(p/'stat',8192,UID);parts=raw.rsplit(b')',1)[1].split();need(len(parts)>=20 and int(parts[19])==identity['start_ticks'],'matching_consumer_start_race')
+                 if parts[0] not in (b'Z',b'X'):
+-                    need(len(matches)<128,'matching_consumer_bound');matches.append(identity)
+-            need(owned_cmdline(p,ps)==command,'owned_cmdline_byte_continuity')
++                    need(len(matches)<128,'matching_consumers_cap');matches.append({**identity,'alias_metadata_sha256':signature})
++            need(owned_cmdline(p,ps)==command and p.stat().st_uid==UID and p.stat().st_ino==ps.st_ino,'owned_consumer_command_directory_continuity')
++            # Detect routing changes before claiming non-use, without a UID fallback.
++            for name,h,dev,ino in routes:
++                q=p/name;s=q.stat();need(digest(os.fsencode(os.readlink(q)))==h and (s.st_dev,s.st_ino)==(dev,ino),'process_route_race')
++            nowfds=[]
++            for q in sorted((p/'fd').iterdir(),key=lambda q:q.name):
++                tick();need(len(nowfds)<65536 and q.name.isdecimal(),'FD_continuity_count_cap');target=os.readlink(q);s=q.stat();nowfds.append((q.name,digest(os.fsencode(target)),s.st_dev,s.st_ino))
++            need(nowfds==fds and alias_bytes(p/'maps',4*1024**2)==maps,'FD_maps_continuity')
+         except (OSError,ValueError,IndexError,UnicodeError) as exc:
+             if isinstance(exc,(FileNotFoundError,ProcessLookupError)) and proof is None:continue
+-            need(len(unknowns)<128,'unknown_process_bound');unknowns.append({**(proof or {}),'state':'unknown','error_class':type(exc).__name__,'reason_sha256':digest(str(exc).encode())})
+-    return {'state':'unknown' if unknowns else 'observed','owned_processes_checked':owned,'matching_live_consumers':matches,'unknown_processes':unknowns,'no_live_owned_source_RAW_consumers':not unknowns and not matches,'partial_inventory_cannot_prove_absence':True,'strict_kernel_identity_checked_for_matching_consumers_only':True,'process_argv_or_other_users_bodies_returned':False}
+-
+-
+-
+-def read():
+-    need(sys.platform=='linux' and os.getuid()==os.geteuid()==UID and pwd.getpwuid(UID).pw_name=='yanruj' and socket.gethostname().split('.')[0]=='mbit10','native_account_host')
+-    need(Path('/proc/self/exe').resolve(strict=True)==Path('/usr/bin/python3.12') and sys.flags.dont_write_bytecode and not sys.flags.optimize,'native_isolated_python')
+-    transport=transport_identity();completion,reviewed_stops=completion_originals(INPUT['completion_originals']);sources=current_sources();tools={p:root_tool_pin(p,n,h) for p,(n,h) in NATIVE.items()};home=home_startup();routes=fresh_outputs(INPUT['fresh_routes'])
+-    leases={};lpins={};lproofs={};ds={};ids={}
++            need(len(unknowns)<128,'process_unknown_cap');unknowns.append({**(proof or {}),'state':'unknown','error_class':type(exc).__name__,'reason_sha256':digest(str(exc).encode())})
++    return {'state':'unknown' if unknowns else 'observed','owned_checked':owned,'matching_live_consumers':matches,'unknowns':unknowns,'no_live_owned_candidate_SOURCE_RAW_H_consumers':not matches and not unknowns,'cwd_root_exe_FD_maps_checked':True,'other_users_not_inspected':True,'partial_or_other_user_inventory_not_deletion_clearance':True,'raw_process_bodies_returned':False}
++
++def native_snapshot():
++    out={}
+     for name in ('mbit10-evaluation-node0','mbit10-evaluation-node1','mbit10-evaluation'):
+-        b,pin=original(BASE/'lact-host-lease'/(name+'.meta.json'),32768);leases[name]=native_projection(strict(b),name);lpins[name]=pin
+-        _,pin=original(BASE/'lact-host-lease'/(name+'.lease'),4096);ids[name]=selected_lease_identity(pin);proof=locks(ids[name]);need(not proof['matching_rows'],'no_matching_kernel_holder_or_waiter');ds[name]=daemon_ready(leases[name]['daemon_pid'],ids[name]);lproofs[name]={'lease_original':pin,'proof_before':proof}
+-    stops={}
+-    for cid,reviewed_stop in zip(CIDS,reviewed_stops):
+-        p=RAW/'attempts'/cid/'attempt-1/stopped-receipt.json';b,pin=original(p,65536);v=strict(b);need(v==reviewed_stop,'original_stop_matches_reviewed_ER_chain');utc(v['ended_utc']);need(v['identity_sha256']==payload_digest({k:x for k,x in v.items() if k!='identity_sha256'}),'original_stop_True_seal')
+-        need(v['campaign']==cid and v['source_commit']==R and v['source_clean_after'] is True and v['manifest_sha256']==M2_ID and v['estimator_sha256_after']==F6 and type(v['public_exit_code']) is int and type(v['runner_exit_code']) is int and v['public_exit_code']==v['runner_exit_code']==0 and v.get('infrastructure_error') is None and v['process_cleanup']['subreaper'] is True and v['process_cleanup']['survivors']=={},'all_four_original_normal_stops')
+-        stops[cid]={'original':pin,'identity_sha256':v['identity_sha256'],'ended_utc':v['ended_utc']}
+-    processes=consumers(transport)
+-    mem={k:int(v.strip().split()[0])*1024 for k,v in (line.split(':',1) for line in Path('/proc/meminfo').read_text().splitlines()) if k=='MemAvailable'};free={p:shutil.disk_usage(p).free for p in ('/data1','/data')}
+-    need(mem['MemAvailable']>=85899345920 and free['/data1']>=22548578304 and free['/data']>=25769803776,'unchanged_serial_floors')
+-    for name,d in leases.items():
+-        b,pin=original(BASE/'lact-host-lease'/(name+'.meta.json'),32768);need(native_projection(strict(b),name)==d and pin==lpins[name],'lease_continuity')
+-        _,pin=original(Path(lproofs[name]['lease_original']['path']),4096);need(pin==lproofs[name]['lease_original'],'lease_inode_continuity');proof=locks(ids[name]);need(not proof['matching_rows'],'after_no_kernel_holder_or_waiter');lproofs[name]['proof_after']=proof;need(daemon_ready(d['daemon_pid'],ids[name])==ds[name],'daemon_FD9_continuity')
+-    need(completion_originals(INPUT['completion_originals'])==(completion,reviewed_stops) and current_sources()==sources and home_startup()==home and fresh_outputs(INPUT['fresh_routes'])==routes,'completion_source_home_route_continuity')
+-    for p,(n,h) in NATIVE.items():need(root_tool_pin(p,n,h)==tools[p],'native_tool_continuity')
+-    for d in stops.values():_,pin=original(Path(d['original']['path']),65536);need(pin==d['original'],'original_stop_continuity')
+-    need(transport_identity()==transport,'self_parent_transport_continuity');_,pin=input_original(Path(ARGS.input),ARGS.input_sha256);need(pin==INPUT_PIN,'input_original_continuity')
+-    need(datetime.datetime.now(datetime.timezone.utc)<utc(INPUT['parent_review']['valid_until_utc']),'actual_parent_review_expired')
+-    ready=processes['no_live_owned_source_RAW_consumers']
+-    return {'format':'swdb.lanl17-pre-full-index-host-observation.v1','checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'host_metadata_ready':ready,'state':'observed' if ready else 'unknown' if processes['unknown_processes'] else 'consumers_present','scientific_admission':False,'sealed':False,'read_only':True,'campaign':INPUT['campaign'],'nonce':INPUT['nonce'],'actual_input_pin':INPUT_PIN,'parent_review_payload_sha256':INPUT['parent_review']['payload_sha256'],'actual_reviewed_completion_originals':completion,'source':sources,'native_tools':tools,'startup_HOME':home,'native_leases':leases,'native_lease_originals':lpins,'kernel_locks':lproofs,'daemon_FD9':ds,'four_original_stops':stops,'processes':processes,'fresh_upcoming_output_routes':routes,'mem':mem,'free_bytes':free,'transport_identity':transport,'point_in_time_only':True,'catalog_inventory_or_YAML_read':False,'raw_log_report_stdout_provider_auth_bodies_read':False,'parent_historical_catalog_validation_continuity_not_observed':True,'parent_exclusive_ownership_and_all_four_custody_approval_not_inferred':True,'native_Bash_1024_byte_units_not_observed':True,'fresh_native_and_catalog_continuity_required_through_index':True}
++        b,pin=original(BASE/'lact-host-lease'/(name+'.meta.json'),32768);d=native_projection(strict(b),name)
++        _,lease=original(BASE/'lact-host-lease'/(name+'.lease'),4096);identity=selected_lease_identity(lease);proof=locks(identity);need(not proof['matching_rows'],'native_kernel_holder_or_waiter');daemonproof=daemon_ready(d['daemon_pid'],identity)
++        out[name]={'native':d,'metadata_original':pin,'lease_original':lease,'kernel':proof,'daemon':daemonproof}
++    return out
++
++def native_continuity(before):
++    after=native_snapshot()
++    for name,v in before.items():
++        a=after[name];need(all(a[k]==v[k] for k in ('native','metadata_original','lease_original','daemon')) and not a['kernel']['matching_rows'],'native_release_generation_inode_FD9_continuity')
++    return after
++
++def resources():
++    mem=kernel_bytes(Path('/proc/meminfo'),65536,0).decode();available=next(int(x.split()[1])*1024 for x in mem.splitlines() if x.startswith('MemAvailable:'))
++    free={p:shutil.disk_usage(p).free for p in ('/data1','/data')}
++    return {'MemAvailable':available,'free_bytes':free,'memory_80GiB_floor_met':available>=80*1024**3,'original_data1_21GiB_floor_met':free['/data1']>=21*1024**3,'data_after_2GiB_archive_reserve_24GiB_floor_met':free['/data']-TREE_CAP>=24*1024**3,'backup_reserve_bytes':TREE_CAP,'original_index_floors_unchanged':True,'data1_shortfall_does_not_itself_block_backup_preflight':True}
++
++def observe():
++    need(sys.platform=='linux' and os.getuid()==os.geteuid()==UID and pwd.getpwuid(UID).pw_name=='yanruj' and socket.gethostname().split('.')[0]=='mbit10','native_owned_account_host')
++    need(Path('/proc/self/exe').resolve(strict=True)==Path('/usr/bin/python3.12') and sys.flags.isolated and sys.flags.dont_write_bytecode and not sys.flags.optimize,'native_isolated_unoptimized_python')
++    transport=transport_identity();route=output_route();OBSERVED['resources_before']=resources()
++    sources=current_sources();tools={p:root_tool_pin(p,n,h) for p,(n,h) in NATIVE.items()};home=home_startup();native=native_snapshot();registration=candidate_registration()
++    controls={}
++    for p,n,h in ((H,38195,'28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414'),(G,14577,'9c5d9658b524db94805a6b51453dc9edef7096a27312677896d595d39b94f6c6'),(SUP,8014,'fa703bbd4c71bb4bcf56f47d1e224449f627d5921295e00b9cc105f21e95bde0'),(RAW/'manifest.json',292401,'b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1')):
++        b,pin=original(p,n);need(len(b)==n and digest(b)==h,'unchanged_current_control_M2');controls[str(p)]=pin
++    first,inodes=inventory_tree();processes=consumer_inventory(transport,inodes);second,afterinodes=inventory_tree();need(first==second and inodes==afterinodes,'full_candidate_SHA_nine_stat_path_closure')
++    need(candidate_registration()==registration and current_sources()==sources and home_startup()==home,'candidate_primary_source_ER_HOME_continuity');after_native=native_continuity(native)
++    for p,(n,h) in NATIVE.items():need(root_tool_pin(p,n,h)==tools[p],'native_tools_continuity')
++    for p,pin in controls.items():_,after=original(Path(p),pin['bytes']);need(after==pin,'current_control_M2_continuity')
++    need(transport_identity()==transport,'self_immediate_parent_identity_continuity');need(output_route()==route,'fresh_metadata_output_route_continuity')
++    after_resources=resources();OBSERVED['resources_after']=after_resources
++    references=first['protected_reference_observations'];eligible=processes['no_live_owned_candidate_SOURCE_RAW_H_consumers'] and not references and after_resources['memory_80GiB_floor_met'] and after_resources['data_after_2GiB_archive_reserve_24GiB_floor_met']
++    # Only metadata creation here. The entire candidate and Git sources remain untouched.
++    manifest={'format':'swdb.lanl17-generality-worktree-recovery-preflight-inventory.v1','checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'candidate':registration,'tree':first,'snapshot_sha256':payload_digest(first),'source':sources,'native_tools':tools,'startup_HOME':home,'native_before':native,'native_after':after_native,'controls_M2':controls,'owned_consumer_inventory':processes,'resources':OBSERVED,'transport':transport,'backup_eligibility_only':eligible,'backup_created':False,'removal_admitted':False,'index_clearance':False,'scientific_admission':False,'parent_dependency_and_ownership_history_approval_not_inferred':True}
++    blob=metadata_bytes(manifest);need(len(blob)<=METADATA_CAP,'full_metadata_8MiB_cap');os.mkdir(OUTPUT,0o700)
++    path=OUTPUT/'preflight-inventory.json';fd=os.open(path,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW|os.O_CLOEXEC,0o600)
++    with os.fdopen(fd,'wb') as f:f.write(blob);f.flush();os.fsync(f.fileno())
++    reread,pin=original(path,METADATA_CAP);need(reread==blob,'metadata_original_readback')
++    return {'format':'swdb.lanl17-generality-worktree-recovery-preflight.v1','checked_utc':manifest['checked_utc'],'metadata_observation_completed':True,'state':'eligible_for_separate_backup_review' if eligible else 'unknown' if processes['unknowns'] else 'not_eligible','backup_eligibility_only':eligible,'backup_created':False,'deletion_or_removal_admitted':False,'index_clearance':False,'scientific_admission':False,'candidate':str(CANDIDATE),'head':CANDIDATE_HEAD,'entry_count':first['entry_count'],'regular_bytes':first['regular_bytes'],'allocated_regular_bytes':first['allocated_regular_bytes'],'snapshot_sha256':manifest['snapshot_sha256'],'remote_metadata_original':pin,'protected_reference_count':len(references),'owned_consumers_count':len(processes['matching_live_consumers']),'owned_process_unknown_count':len(processes['unknowns']),'resources':OBSERVED,'metadata_manifest_body_not_returned':True,'raw_auth_provider_source_record_bodies_not_returned':True,'other_users_and_parent_dependency_approval_not_inferred':True,'point_in_time_only_requires_fresh_backup_and_final_no_use_review':True}
+ 
+ def main():
+-    global ARGS,INPUT,INPUT_PIN
+-    p=Parser(add_help=False);p.add_argument('--input',required=True);p.add_argument('--input-sha256',required=True);p.add_argument('--source-sha256',required=True);ARGS=p.parse_args();hex64(ARGS.source_sha256)
+-    raw,INPUT_PIN=input_original(Path(ARGS.input),ARGS.input_sha256);INPUT=bounded_input(raw)
+-    closed(INPUT,('format','campaign','nonce','completion_originals','expected_ER_commit','fresh_routes','parent_review'),'closed_actual_input_fields')
+-    need(INPUT['format']=='swdb.lanl17-pre-full-index-host-observation-input.v1' and INPUT['campaign'] in CIDS,'actual_input_format_CID')
+-    need(type(INPUT['nonce']) is str and re.fullmatch('[0-9a-f]{32,64}',INPUT['nonce']) is not None,'actual_parent_nonce');need(type(INPUT['expected_ER_commit']) is str and re.fullmatch('[0-9a-f]{40}',INPUT['expected_ER_commit']) is not None,'actual_ER_commit_no_default')
+-    review=closed(INPUT['parent_review'],('basis','source_sha256','payload_sha256','completion_packet_sha256','completion_root_review_sha256','completion_peer_review_sha256','actual_completion_originals_reviewed','fixtures','checked_utc','valid_until_utc'),'closed_actual_parent_review')
+-    need(review['basis']=='explicit_parent_review_of_genuine_completed_FINALIZE_and_next_full_index_metadata_routes' and review['source_sha256']==ARGS.source_sha256 and review['payload_sha256']==payload_digest({k:v for k,v in INPUT.items() if k!='parent_review'}) and review['actual_completion_originals_reviewed'] is True and review['fixtures'] is False,'genuine_bound_parent_review')
+-    for k in ('completion_packet_sha256','completion_root_review_sha256','completion_peer_review_sha256'):hex64(review[k])
+-    checked,end=utc(review['checked_utc']),utc(review['valid_until_utc']);need(checked<=datetime.datetime.now(datetime.timezone.utc)<end and 0<(end-checked).total_seconds()<=300,'actual_parent_review_interval')
+-    d=read();b=(json.dumps(d,sort_keys=True,allow_nan=False)+'\n').encode();need(len(b)<=65536,'observation_return_cap');sys.stdout.buffer.write(b)
+-def interrupted(n,f):raise ValueError('host_metadata_signal_or_deadline')
+-for n in (signal.SIGALRM,signal.SIGTERM,signal.SIGINT,signal.SIGHUP):signal.signal(n,interrupted)
+-signal.alarm(45)
++    global ARGS
++    p=Parser(add_help=False);p.add_argument('--source-sha256',required=True);p.add_argument('--output-directory',required=True);ARGS=p.parse_args();hex64(ARGS.source_sha256)
++    result=observe();b=metadata_bytes(result);need(len(b)<=65536,'compact_return_cap');sys.stdout.buffer.write(b)
++
++def interrupted(number,frame):raise ValueError('recovery_preflight_signal_or_deadline')
++for number in (signal.SIGALRM,signal.SIGTERM,signal.SIGINT,signal.SIGHUP):signal.signal(number,interrupted)
++signal.alarm(180)
+ try:main()
+-except (OSError,ValueError,KeyError,TypeError,IndexError,UnicodeError,RecursionError,subprocess.SubprocessError) as e:
+-    print(json.dumps({'format':'swdb.lanl17-pre-full-index-host-observation.v1','host_metadata_ready':False,'state':'unknown','scientific_admission':False,'checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'reason_sha256':digest(str(e).encode()),'error_class':type(e).__name__},sort_keys=True))
++except (OSError,ValueError,KeyError,TypeError,IndexError,UnicodeError,RecursionError,StopIteration,subprocess.SubprocessError) as exc:
++    print(json.dumps({'format':'swdb.lanl17-generality-worktree-recovery-preflight.v1','checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'metadata_observation_completed':False,'state':'unknown','backup_eligibility_only':False,'backup_created':False,'deletion_or_removal_admitted':False,'index_clearance':False,'scientific_admission':False,'resources_observed_before_error':OBSERVED,'error_class':type(exc).__name__,'reason_sha256':digest(str(exc).encode())},sort_keys=True,allow_nan=False))

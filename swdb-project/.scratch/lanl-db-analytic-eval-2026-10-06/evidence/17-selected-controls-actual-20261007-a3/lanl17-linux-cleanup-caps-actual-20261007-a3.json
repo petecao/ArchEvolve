@@ -1,0 +1,179 @@
+{
+  "format": "swdb.lanl17-selected-helper-linux-actual-compact.v1",
+  "verified_utc": "2026-10-07T08:02:38.471276+00:00",
+  "receipt": {
+    "passed": true,
+    "owned_before": {
+      "same_group": {
+        "pid": 2096415,
+        "start_time": "586199255",
+        "state": "S"
+      },
+      "escaped_session": {
+        "pid": 2096416,
+        "start_time": "586199255",
+        "state": "S"
+      }
+    },
+    "cleanup": {
+      "subreaper": true,
+      "terminated_owned_processes": [
+        {
+          "pid": 2096415,
+          "start_time": "586199255",
+          "signal": "SIGTERM"
+        },
+        {
+          "pid": 2096416,
+          "start_time": "586199255",
+          "signal": "SIGTERM"
+        },
+        {
+          "pid": 2096416,
+          "start_time": "586199255",
+          "signal": "SIGKILL"
+        }
+      ],
+      "survivors": {}
+    },
+    "processes_py_sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289",
+    "same_group_after_returned_leader": "terminated",
+    "detached_session": "terminated_and_reaped",
+    "format": "swdb.lanl17-linux-cleanup-smoke.v1",
+    "helper_sha256": "69dcfe546d3042228ccca4fb29e8409da88443ba15680f30bfdc929ea12ae2b9",
+    "unrelated_sibling_survived": true,
+    "provider_calls": 0,
+    "application_outcomes": 0,
+    "platform": "linux",
+    "host": "mbit10",
+    "smoke_script_sha256": "4d0bdf1d4c8d2ce96d948085a785cde15c389a4c50413962bc7db14df57cf9d6",
+    "scope": "Actual Linux descendant cleanup only, not campaign/performance evidence.",
+    "identity_sha256": "27024d06c22cb37995033a8db3010541a933b8e400e0ea2a06aba8a1449589b3"
+  },
+  "receipt_file_sha256": "77d41200fb5a88970ba6cf25413ef1b50856b21cb0547205efb5b91469beab2b",
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261007-a3",
+  "actual_cleanup_proof_path": "/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261007-a3/receipt.json",
+  "lane": {
+    "aligned_cell_age_s": "",
+    "aligned_to": "none",
+    "command": [
+      "python3",
+      "/data1/yanruj/lanl17-control-linux-smoke-20261006.py",
+      "--helper",
+      "/data1/yanruj/lanl17-control-caps-20261007-a3.py",
+      "--helper-sha",
+      "69dcfe546d3042228ccca4fb29e8409da88443ba15680f30bfdc929ea12ae2b9",
+      "--project",
+      "/data1/yanruj/ArchEvolve-lanl-cpu-model-validation-20261006-a1/swdb-project",
+      "--output",
+      "/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261007-a3"
+    ],
+    "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+    "ended_utc": "2026-10-07T08:01:15Z",
+    "exit_code": 0,
+    "host": "mbit10",
+    "job": "swdb-lanl17-cleanup-smoke-20261007-a3",
+    "lease_generation": 545,
+    "lease_name": "mbit10-evaluation-node1",
+    "load1_at_start": 1.09,
+    "load1_max": 32,
+    "node": 1,
+    "numa_memory_policy": "bind:1",
+    "numactl": "--cpunodebind=1 --membind=1",
+    "preregistration_sha256": null,
+    "started_utc": "2026-10-07T08:00:59Z"
+  },
+  "dispatch_preregistration": {
+    "format": "swdb.lanl17-selected-helper-smoke-dispatch.v1",
+    "checked_utc": "2026-10-07T08:00:59.326707+00:00",
+    "helper_sha256": "69dcfe546d3042228ccca4fb29e8409da88443ba15680f30bfdc929ea12ae2b9",
+    "smoke_sha256": "4d0bdf1d4c8d2ce96d948085a785cde15c389a4c50413962bc7db14df57cf9d6",
+    "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+    "source_clean": true,
+    "wrapper_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+    "leases": {
+      "mbit10-evaluation-node0": {
+        "active_session": null,
+        "heartbeat_at": "2026-10-07T07:41:15Z",
+        "lease": {
+          "acquired_at": "2026-10-07T05:58:58Z",
+          "daemon_pid": 2084191,
+          "daemon_start_token": "sh2084191-1791352738",
+          "generation": 505,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node0",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-10-07T07:41:15Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "mbit10-evaluation-node1": {
+        "active_session": null,
+        "heartbeat_at": "2026-10-07T07:31:08Z",
+        "lease": {
+          "acquired_at": "2026-10-07T07:30:16Z",
+          "daemon_pid": 2092830,
+          "daemon_start_token": "sh2092830-1791358216",
+          "generation": 544,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node1",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-10-07T07:31:08Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "mbit10-evaluation": {
+        "active_session": null,
+        "heartbeat_at": "2026-09-12T04:49:11Z",
+        "lease": {
+          "acquired_at": "2026-09-12T01:35:42Z",
+          "daemon_pid": 209457,
+          "daemon_start_token": "sh209457-1789176942",
+          "generation": 77,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-09-12T04:49:11Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      }
+    },
+    "capacity_bytes": {
+      "/data1": 24263827456,
+      "/data": 51775631360
+    },
+    "memory_available_bytes": 126078500864,
+    "node": 1,
+    "outer_s": 180,
+    "outer_kill_after_s": 60,
+    "application_outcomes_collected": 0,
+    "provider_calls": 0,
+    "scope": "Actual process cleanup only; no scientific/campaign metadata action.",
+    "identity_sha256": "4211ccb087923ab1d2ebe84c09d176ecb9f6a118a9fede2e91589bb73454a8ad"
+  },
+  "raw_transferred": false,
+  "source_C_preserved": true,
+  "scope": "Actual selected-helper process cleanup only; no scientific/metadata action, provider or application outcome.",
+  "identity_sha256": "9b9367d8169b02c63d4ef8b9f89d233a743c6fd034c61aedeab2d2534b925106"
+}

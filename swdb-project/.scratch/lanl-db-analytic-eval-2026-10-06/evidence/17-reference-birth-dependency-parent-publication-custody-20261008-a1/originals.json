@@ -1,0 +1,89 @@
+{
+  "README_sha256": "30cdb970a48bb1cef2d0ce4a26517068033a4c940b884c8fdadc4c8e41ebf28f",
+  "archive_manifest_identity_sha256": "f97713a38a7fa282ad32502addb6a9e12a3d4842ea3ad9849e31867678acfaed",
+  "archive_manifest_sha256": "41274ef149c7e1a21aba0527afad779dcb88f84b66f539fccad2144a0b68c456",
+  "byte_custody_only": true,
+  "canonical_ensure_ascii": true,
+  "created_utc": "2026-10-08T08:14:09.680664+00:00",
+  "format": "swdb.parent-byte-custody-archive-publication-originals.v1",
+  "identity_sha256": "9b0c270e719b308ab08dbdb46d2e5819688ddcf55b486c9583c99ce4953f6b70",
+  "new_cleanup_capacity_or_scientific_admission": false,
+  "originals": [
+    {
+      "bytes": 9412,
+      "exact_original_bytes_preserved": true,
+      "original_path": "/private/tmp/lanl17-finalize-exact256-byte-custody-inputs-20261008-a1.py",
+      "original_policy": {
+        "kind": "opaque_exact_original_bytes"
+      },
+      "sha256": "7060000869d96c5f539626b073498488c476d1fbe53ad82147801bb20ac6c842",
+      "stored_file": "lanl17-finalize-exact256-byte-custody-inputs-20261008-a1.py"
+    },
+    {
+      "bytes": 156745,
+      "exact_original_bytes_preserved": true,
+      "original_path": "/private/tmp/lanl17-observation-source-custody-final256-explicit-inventory-20261008-a1.json",
+      "original_policy": {
+        "kind": "original_unsealed_JSON",
+        "original_sealed_field": "ABSENT"
+      },
+      "sha256": "720acdf0dd7c1ffc84a97de3990b034b6ed2d8e5951bd45bcfe1315f6687a1a3",
+      "stored_file": "lanl17-observation-source-custody-final256-explicit-inventory-20261008-a1.json"
+    },
+    {
+      "bytes": 2645,
+      "exact_original_bytes_preserved": true,
+      "original_path": "/private/tmp/lanl17-observation-byte-custody-final256-parent-execution-review-20261008-a1.json",
+      "original_policy": {
+        "canonical_ensure_ascii": true,
+        "flag_originally_present": true,
+        "identity_sha256": "eac7c08fcc15a3438f67b53447333da26b98bca2b2bfab506aeb1318c4a6d0af",
+        "kind": "original_sealed_JSON"
+      },
+      "sha256": "e0820ee3ae2eae4b4fc038ad88cc4c3fb96d7d365f409285712d9fb611ba8685",
+      "stored_file": "lanl17-observation-byte-custody-final256-parent-execution-review-20261008-a1.json"
+    },
+    {
+      "bytes": 900,
+      "exact_original_bytes_preserved": true,
+      "original_path": "/private/tmp/lanl17-observation-byte-custody-archive-actual-20261008-a1.start.json",
+      "original_policy": {
+        "kind": "original_unsealed_JSON",
+        "original_sealed_field": false
+      },
+      "sha256": "dd2826816f0016dd485f048550e5d8d33bcfb5293ddf36009df698ca0d8478fe",
+      "stored_file": "lanl17-observation-byte-custody-archive-actual-20261008-a1.start.json"
+    },
+    {
+      "bytes": 496,
+      "exact_original_bytes_preserved": true,
+      "original_path": "/private/tmp/lanl17-observation-byte-custody-archive-actual-20261008-a1.stdout",
+      "original_policy": {
+        "kind": "opaque_exact_original_bytes"
+      },
+      "sha256": "24503588aa17d554cbd827bd2e04cbdb382da5ffcd33c0e1c9ed694621e2b6a4",
+      "stored_file": "lanl17-observation-byte-custody-archive-actual-20261008-a1.stdout"
+    },
+    {
+      "bytes": 0,
+      "exact_original_bytes_preserved": true,
+      "original_path": "/private/tmp/lanl17-observation-byte-custody-archive-actual-20261008-a1.stderr",
+      "original_policy": {
+        "kind": "opaque_exact_original_bytes"
+      },
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_file": "lanl17-observation-byte-custody-archive-actual-20261008-a1.stderr"
+    },
+    {
+      "bytes": 1477,
+      "exact_original_bytes_preserved": true,
+      "original_path": "/private/tmp/lanl17-observation-byte-custody-archive-actual-20261008-a1.transport.json",
+      "original_policy": {
+        "kind": "original_unsealed_JSON",
+        "original_sealed_field": false
+      },
+      "sha256": "0f22cca0c28b35a452c65dfc6888307cad153fdf26223667826648a964fb2f5a",
+      "stored_file": "lanl17-observation-byte-custody-archive-actual-20261008-a1.transport.json"
+    }
+  ]
+}

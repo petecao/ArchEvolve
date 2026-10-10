@@ -1,0 +1,77 @@
+{
+  "format": "swdb.cpu-heldout-admission-archive.v1",
+  "base_integration_commit": "4fc2fea964f8f13dfd90f44aefbf2ccff67a63ef",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "actual_holdout_export_commit": "8ef759fc126074c38e013df9bee5fbde1cbeb709",
+  "actual_compact_receipt_identity": "c618db963defdcf3e807c5d1649fbed014098e929f5f83d8903531386b5e86db",
+  "actual_local_admission_identity": "5268ae186a7a0662205b6223d87d88f00a45f82609461f09625d4113a8edfae0",
+  "diagnostic_identity": "ffcfbe43b62f9e4c4fead4fb24fad88eb04ca733233563cd91c4ceb559afe331",
+  "entries": [
+    {
+      "path": "lanl-cpu-holdout-a3-local-admission-20261007.json",
+      "source_path": "/private/tmp/lanl-cpu-holdout-a3-local-admission-20261007.json",
+      "bytes": 6599,
+      "sha256": "60221fd9eb9ae6419a7446ceeb434e098e1d5ba000ca0be739ac1aa060881694",
+      "custody": "exact_bytes",
+      "identity_sha256": "5268ae186a7a0662205b6223d87d88f00a45f82609461f09625d4113a8edfae0"
+    },
+    {
+      "path": "lanl-readonly-cpu-future-phase-admission-20261007.py",
+      "source_path": "/private/tmp/lanl-readonly-cpu-future-phase-admission-20261007.py",
+      "bytes": 24241,
+      "sha256": "8b85e34287a4dc67e5ff0c9a535aefd46a6c2ecf6051a934607f853074f90016",
+      "custody": "exact_bytes"
+    },
+    {
+      "path": "lanl-holdout-region-error-preparation-20261007.json",
+      "source_path": "/private/tmp/lanl-holdout-region-error-preparation-20261007.json",
+      "bytes": 2074,
+      "sha256": "05e5a367786b0a8798c2892d58ccf01c4680d949058d4378e74d64995ef5651b",
+      "custody": "exact_bytes",
+      "identity_sha256": "b2bf302c8494fc39851fa4ff9e69854e8c6de0f80d6b55bfecb39bfc5e880544"
+    },
+    {
+      "path": "lanl-holdout-region-error-audit-20261007.py",
+      "source_path": "/private/tmp/lanl-holdout-region-error-audit-20261007.py",
+      "bytes": 5149,
+      "sha256": "1d997bbc59c3b591adb6897386c3f20111325ef793f8c5047cc01594460f3b38",
+      "custody": "exact_bytes"
+    },
+    {
+      "path": "lanl-cpu-holdout-region-error-diagnostic-20261007.json",
+      "source_path": "/private/tmp/lanl-cpu-holdout-region-error-diagnostic-20261007.json",
+      "bytes": 36610,
+      "sha256": "876549515d778fe1da6edaada9a1bc4345c26ab8f4e8a02c587b9c62d10ed5c7",
+      "custody": "exact_bytes",
+      "identity_sha256": "ffcfbe43b62f9e4c4fead4fb24fad88eb04ca733233563cd91c4ceb559afe331"
+    },
+    {
+      "path": "lanl-holdout-a3-export-cleanup-preflight-20261007.json",
+      "source_path": "/private/tmp/lanl-holdout-a3-export-cleanup-preflight-20261007.json",
+      "bytes": 496,
+      "sha256": "3217606e01533e62f65d7c8676b585422e0683ab23fcd838e7d9bbd3a6a2c03b",
+      "custody": "exact_bytes",
+      "original_seal": "absent",
+      "canonical_document_sha256": "8a1d1d142a86a816cb8c412b24deaf2eaabd1ab1b8b62480a803c043a98cb498"
+    },
+    {
+      "path": "lanl-holdout-a3-export-cleanup-actual-20261007.json",
+      "source_path": "/private/tmp/lanl-holdout-a3-export-cleanup-actual-20261007.json",
+      "bytes": 503,
+      "sha256": "3e9927679f661e974232513ee7b9c0356b10dce64ee392eeb4180b208fff5080",
+      "custody": "exact_bytes",
+      "original_seal": "absent",
+      "canonical_document_sha256": "8ace72c86a30fb33afc333c762daf8124c363e6cb9c49cdd73fe8772338ed708"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5969,
+      "sha256": "58a800782675d4b0b06e5c9c4c2189e82b56276e7c07a2a4b7178cecad461669",
+      "custody": "dated_context"
+    }
+  ],
+  "evidence_scope": "Faithful admitted held-out evidence: broad BFS validated, BC failed with original width; report admission pending, no retuning.",
+  "manifest_identity_semantics": "Canonical JSON digest excluding identity_sha256; manifest does not recursively hash itself.",
+  "identity_sha256": "b6b627ddadd3bb7cd31d5171c658ab56b2b3b832b9c0fc17c65ab2216fca7725"
+}

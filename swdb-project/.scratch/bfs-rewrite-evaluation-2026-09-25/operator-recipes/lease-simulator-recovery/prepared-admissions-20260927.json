@@ -1,0 +1,163 @@
+{
+  "observed_at": "2026-09-27T02:38:28.040130-04:00",
+  "state": "both_admissions_prepared",
+  "rows": [
+    {
+      "kind": "t15",
+      "admission": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-lease-recovery-simulator-batch-20260927-a1.dispatch/admission.json",
+        "sha256": "60552ea7faabd4145873b17817d986bb3eec675b369d80163da28ef5c6ec6871",
+        "bytes": 20798
+      },
+      "prepared_at": "2026-09-27T02:36:51.689801-04:00",
+      "clock": {
+        "not_before": "2026-09-27T02:36:51.689801-04:00",
+        "latest_start": "2026-09-27T03:13:39.851819-04:00",
+        "absolute_end": "2026-09-27T09:14:09.851819-04:00"
+      },
+      "code_commit": "07baead5fe5cf3718e18e1d2313db6899f2638c8",
+      "runtime_files": 158,
+      "linux_proof_runtime_present": false,
+      "preparation_charges": [
+        {
+          "id": "bfs-gem5-gzip-transport-20260926-a1",
+          "elapsed_seconds": 472,
+          "raw_bytes": 200704
+        },
+        {
+          "id": "bfs-t15-simulator-batch-20260926-a1",
+          "elapsed_seconds": 1124,
+          "raw_bytes": 11014971392
+        },
+        {
+          "id": "bfs-t15-correction-linux-20260926-a1",
+          "elapsed_seconds": 600,
+          "raw_bytes": 2147483648
+        },
+        {
+          "id": "bfs-t15-correction-simulator-batch-20260926-a1",
+          "elapsed_seconds": 201,
+          "raw_bytes": 11886592
+        },
+        {
+          "id": "bfs-t15-setup-recovery-linux-20260926-a1",
+          "elapsed_seconds": 600,
+          "raw_bytes": 2147483648
+        },
+        {
+          "id": "bfs-supervision-recovery-linux-20260926-a1",
+          "elapsed_seconds": 600,
+          "raw_bytes": 2147483648
+        },
+        {
+          "id": "bfs-t15-supervision-recovery-simulator-batch-20260926-a1",
+          "elapsed_seconds": 4551,
+          "raw_bytes": 1433210880
+        },
+        {
+          "id": "bfs-supervision-lease-recovery-linux-20260927-a1",
+          "elapsed_seconds": 600,
+          "raw_bytes": 2147483648
+        }
+      ],
+      "proofs": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260927-a6/proof.json",
+          "sha256": "cfd2cd63330d6ea3e9c6aec63e76f8b22478d853d59eec591c46854a20043484"
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260927-a6/proof.json",
+          "sha256": "406b32cf8e8f68d762f2561acc0f54cc85d862d75d9b1f61ca63e5a1d8bb9f8e"
+        }
+      ]
+    },
+    {
+      "kind": "t16",
+      "admission": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-lease-recovery-simulator-batch-20260927-a1.dispatch/admission.json",
+        "sha256": "49ec34c0579da8205d2a5755d244518a463f4f666692bd8e19a8b80fcfe41fb7",
+        "bytes": 20843
+      },
+      "prepared_at": "2026-09-27T02:36:53.249592-04:00",
+      "clock": {
+        "not_before": "2026-09-27T02:36:53.249592-04:00",
+        "latest_start": "2026-09-27T14:15:47.225985-04:00",
+        "absolute_end": "2026-09-27T20:16:17.225985-04:00"
+      },
+      "code_commit": "07baead5fe5cf3718e18e1d2313db6899f2638c8",
+      "runtime_files": 158,
+      "linux_proof_runtime_present": false,
+      "preparation_charges": [
+        {
+          "id": "bfs-20260925-uniform22",
+          "elapsed_seconds": 111,
+          "raw_bytes": 1124384768
+        },
+        {
+          "id": "bfs-author-scalar-compile-20260925-a1",
+          "elapsed_seconds": 72,
+          "raw_bytes": 3301376
+        },
+        {
+          "id": "bfs-author-maa-compile-20260925-a1",
+          "elapsed_seconds": 70,
+          "raw_bytes": 3301376
+        },
+        {
+          "id": "bfs-t16-simulator-batch-20260926-a1",
+          "elapsed_seconds": 11121,
+          "raw_bytes": 658644992
+        },
+        {
+          "id": "bfs-supervision-recovery-linux-20260926-a1",
+          "elapsed_seconds": 600,
+          "raw_bytes": 2147483648
+        },
+        {
+          "id": "bfs-supervision-lease-recovery-linux-20260927-a1",
+          "elapsed_seconds": 600,
+          "raw_bytes": 2147483648
+        }
+      ],
+      "proofs": [
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-owned-linux-20260927-a6/proof.json",
+          "sha256": "cfd2cd63330d6ea3e9c6aec63e76f8b22478d853d59eec591c46854a20043484"
+        },
+        {
+          "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-interruption-linux-20260927-a6/proof.json",
+          "sha256": "406b32cf8e8f68d762f2561acc0f54cc85d862d75d9b1f61ca63e5a1d8bb9f8e"
+        }
+      ]
+    }
+  ],
+  "scientific_launch_by_preparer": false,
+  "superseded_export": {
+    "commit": "c817a9e88874a702285099ba177b2791c8d897d8",
+    "branch": "codex/bfs-lease-simulator-operator-20260927-a1",
+    "classification": "preparation export mistake: filesystem enumeration included two ignored local bytecode files; never cloned or used on host; retained without force push"
+  },
+  "used_export": {
+    "created": "2026-09-27",
+    "commit": "a8e0ae312b7ae8352b637faa040e2e7463a79b78",
+    "parent": "07baead5fe5cf3718e18e1d2313db6899f2638c8",
+    "branch": "codex/bfs-lease-simulator-operator-20260927-a2",
+    "files": [
+      ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/lease-simulator-recovery/README.md",
+      ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/lease-simulator-recovery/helper-comparison-20260927.json",
+      ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/lease-simulator-recovery/host-checkouts-20260927.json",
+      ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/lease-simulator-recovery/launch.sh",
+      ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/lease-simulator-recovery/operator.py",
+      ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/lease-simulator-recovery/runtime-manifest.json",
+      ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/lease-simulator-recovery/t15-config.json",
+      ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/lease-simulator-recovery/t16-config.json",
+      ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/lease-simulator-recovery/test_operator.py",
+      ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/supervision-recovery/operator.py"
+    ],
+    "bytes": 178026,
+    "original_head": "a13fa39a672902684c9ea9707ad4e1f8a856597f",
+    "original_index_sha256": "722e1e3535c75bfc533768051e659bb5b61817a92974cae6b63ae963dcf84019",
+    "head_index_preserved": true,
+    "private_remote_verified": true
+  }
+}

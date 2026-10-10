@@ -1,0 +1,75 @@
+{
+  "updated_et": "2026-10-03 19:01 ET",
+  "state": "pre_final_source_sync_verified",
+  "actual_readback": {
+    "observed_at": "2026-10-03T22:59:13.196343+00:00",
+    "source": "3e9061b2aa9e6ea81c95cd1e9a5145b3c3e7e5d6",
+    "tracked_changes": "",
+    "leases": [
+      {
+        "name": "mbit10-evaluation-node0",
+        "kernel_held": false,
+        "metadata_state": "released",
+        "generation": 447
+      },
+      {
+        "name": "mbit10-evaluation-node1",
+        "kernel_held": false,
+        "metadata_state": "released",
+        "generation": 506
+      },
+      {
+        "name": "mbit10-evaluation",
+        "kernel_held": false,
+        "metadata_state": "released",
+        "generation": 77
+      }
+    ],
+    "audit_state": "complete",
+    "audit_returncode": null,
+    "audit_file_sha256": "49a345080a92b04cbc2396f7bf0ccb58319676f458859e7e276c5f5a6314bcaa",
+    "wrapper_file_sha256": "ef81ba297c9f3569e0764668c8b7bbe00355c0e9e355509a62652421750cce5a",
+    "witnesses_verified": 6,
+    "comparisons_requalified": 2,
+    "progress": null,
+    "wrapper": {
+      "started": "2026-10-03T22:33:35.440148+00:00",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=90s",
+        "900s",
+        "bash",
+        "/data1/yanruj/Memacc-evolveswdb-lane/AgenticRefiner/scripts/host/socket_lane.sh",
+        "0",
+        "typed-library-bfs-gem5-20261003-a2-final-audit-custody-r2",
+        "--record",
+        "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.final-audit-custody-r2/lane.json",
+        "--no-align",
+        "--load1-max",
+        "8",
+        "--lease-timeout-s",
+        "30",
+        "--",
+        "/usr/bin/python3",
+        "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-gem5-20261003-a2.final-audit-custody-r2/operator-audit.py"
+      ],
+      "state": "complete",
+      "finished": "2026-10-03T22:33:54.460802+00:00",
+      "returncode": 0
+    },
+    "owned_processes": [],
+    "branch": "yanrujhou_main",
+    "node_meminfo": {
+      "0": "Node 0 MemTotal:       65381852 kB\nNode 0 MemFree:        34231576 kB\nNode 0 MemUsed:        31150276 kB\nNode 0 SwapCached:            0 kB\nNode 0 Active:          1715044 kB\nNode 0 Inactive:       21570168 kB\nNode 0 Active(anon):     364788 kB\nNode 0 Inactive(anon):    46200 kB\nNode 0 Active(file):    1350256 kB\nNode 0 Inactive(file): 21523968 kB\nNode 0 Unevictable:       39068 kB\nNode 0 Mlocked:           35996 kB\nNode 0 Dirty:               244 kB\nNode 0 Writeback:             0 kB\nNode 0 FilePages:      22895408 kB\nNode 0 Mapped:           950156 kB\nNode 0 AnonPages:        429228 kB\nNode 0 Shmem:              6444 kB\nNode 0 KernelStack:       12504 kB\nNode 0 PageTables:        12220 kB\nNode 0 SecPageTables:         0 kB\nNode 0 NFS_Unstable:          0 kB\nNode 0 Bounce:                0 kB\nNode 0 WritebackTmp:          0 kB\nNode 0 KReclaimable:    5043144 kB\nNode 0 Slab:            6016784 kB\nNode 0 SReclaimable:    5019324 kB\nNode 0 SUnreclaim:       997460 kB\nNode 0 AnonHugePages:         0 kB\nNode 0 ShmemHugePages:        0 kB\nNode 0 ShmemPmdMapped:        0 kB\nNode 0 FileHugePages:         0 kB\nNode 0 FilePmdMapped:         0 kB\nNode 0 Unaccepted:            0 kB\nNode 0 HugePages_Total:     0\nNode 0 HugePages_Free:      0\nNode 0 HugePages_Surp:      0\n",
+      "1": "Node 1 MemTotal:       66044412 kB\nNode 1 MemFree:        24074396 kB\nNode 1 MemUsed:        41970016 kB\nNode 1 SwapCached:            0 kB\nNode 1 Active:          1305056 kB\nNode 1 Inactive:       13994500 kB\nNode 1 Active(anon):     109404 kB\nNode 1 Inactive(anon):    11516 kB\nNode 1 Active(file):    1195652 kB\nNode 1 Inactive(file): 13982984 kB\nNode 1 Unevictable:         184 kB\nNode 1 Mlocked:             184 kB\nNode 1 Dirty:                92 kB\nNode 1 Writeback:             0 kB\nNode 1 FilePages:      15186916 kB\nNode 1 Mapped:            78280 kB\nNode 1 AnonPages:        112924 kB\nNode 1 Shmem:              8144 kB\nNode 1 KernelStack:        9768 kB\nNode 1 PageTables:         5384 kB\nNode 1 SecPageTables:         0 kB\nNode 1 NFS_Unstable:          0 kB\nNode 1 Bounce:                0 kB\nNode 1 WritebackTmp:          0 kB\nNode 1 KReclaimable:   23827584 kB\nNode 1 Slab:           25299668 kB\nNode 1 SReclaimable:   23764500 kB\nNode 1 SUnreclaim:      1535168 kB\nNode 1 AnonHugePages:         0 kB\nNode 1 ShmemHugePages:        0 kB\nNode 1 ShmemPmdMapped:        0 kB\nNode 1 FileHugePages:         0 kB\nNode 1 FilePmdMapped:         0 kB\nNode 1 Unaccepted:            0 kB\nNode 1 HugePages_Total:     0\nNode 1 HugePages_Free:      0\nNode 1 HugePages_Surp:      0\n"
+    },
+    "uptime": "18:59:13 up 64 days, 11:18, 10 users,  load average: 1.00, 1.00, 1.09",
+    "disk": "Filesystem         1B-blocks          Used   Available Use% Mounted on\n/dev/sdd1      1967300780032 1823548243968 43743657984  98% /data1\n/dev/sdb1      1967300780032 1788454330368 78837571584  96% /data",
+    "pressure": {
+      "memory": "some avg10=0.00 avg60=0.00 avg300=0.00 total=1174183816\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=1146991602",
+      "io": "some avg10=0.00 avg60=0.00 avg300=0.00 total=1875697040\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=1837853181"
+    }
+  },
+  "scope": "No mail delivered or team claim recorded. All physical/fullraw/public tasks completed; exact ticket30 payload independently reviewed but send rejected by automatic approval review. Source/compact metadata only; no raw copied or new evaluation."
+}

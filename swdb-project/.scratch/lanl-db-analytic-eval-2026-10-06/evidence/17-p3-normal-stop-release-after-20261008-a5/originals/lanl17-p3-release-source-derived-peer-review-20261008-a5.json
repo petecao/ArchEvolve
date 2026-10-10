@@ -1,0 +1,48 @@
+{
+  "format": "swdb.lanl17-source-only-peer-review.v1",
+  "result": "PASS",
+  "reviewer": "campaign_readiness",
+  "campaign": "extensa-gem5-bfs-20261006-p3",
+  "attempt": 1,
+  "node": 0,
+  "actual_generation": 513,
+  "scientific_admission": false,
+  "remote_or_controls_executed": false,
+  "checks": {
+    "observer_exact_inverse": true,
+    "reader_exact_inverse": true,
+    "author_exact_inverse": true,
+    "full_selected_input_output_hashes": true,
+    "actual_dispatch_True_seal": true,
+    "actual_lane_513_job_node_binding": true,
+    "global_p1_M2_policy_unchanged": true,
+    "historical_supersedes_actual_original_verified": true,
+    "nine_stat_stable_metadata_helpers_exact_AST": true,
+    "source_guard_precision_native_FD9_kernel_lock_privacy_caps_budgets_inherited": true,
+    "request_schema_and_writers_unchanged_except_actual_p3_descriptors": true,
+    "no_guessed_generation": true
+  },
+  "selected_source_pins": [
+    {
+      "path": "/private/tmp/lanl17_read_p3_native_release_observation_20261008_a5_r2.py",
+      "bytes": 15125,
+      "sha256": "de22479b6cc5eb0eca8ed02d4a808dfcd7d167fc1f6268709ecfc099f3e1226b"
+    },
+    {
+      "path": "/private/tmp/lanl17_read_p3_normal_terminal_originals_20261008_a5_r2.py",
+      "bytes": 7926,
+      "sha256": "2058c0119f7a06d140e15471be8a0d2abe4b31b28314b5db7f928e20eca92cd1"
+    },
+    {
+      "path": "/private/tmp/lanl17_finalize_p3_normal_release_request_20261008_a5_r4.py",
+      "bytes": 18684,
+      "sha256": "3eb0a1cff54c25e384a858abad8e1cc0d914399cbe95f8f66bf9836c3f9aa90e"
+    },
+    {
+      "path": "/private/tmp/lanl17-p3-release-request-draft-r1-20261008-a5.json",
+      "bytes": 12469,
+      "sha256": "9ba6c8a5ce9c0c4ead20214781dcaaeead268ef6d6da84d374b2da96f4401763"
+    }
+  ],
+  "scope": "Read-only originals and source AST/inverse/hash review. Native daemon PID remains dynamically read from actual metadata; no PID guessed. Point-in-time release/no-reuse and normal terminal parent checks remain required."
+}

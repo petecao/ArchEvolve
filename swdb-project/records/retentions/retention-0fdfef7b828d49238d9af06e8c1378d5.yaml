@@ -1,0 +1,30 @@
+kind: retention
+schema_version: '0.4'
+id: retention-0fdfef7b828d49238d9af06e8c1378d5
+status: draft
+created: '2026-10-03'
+updated: '2026-10-03'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+event: prune
+evaluation: bfs-dx100-smoke-20260925-a3
+deleted:
+- path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a3/checkpoint/cpt.2117142500/m5.cpt
+  sha256: f335ddd7b5db4f4d741fefb3b415f8491f96eee55e567eee3e3b59c1c607ce20
+  bytes: 361986
+- path: /data/yanruj/EvolveSWDB_runs/bfs-dx100-bringup-20260925/bfs-dx100-smoke-20260925-a3/checkpoint/cpt.2117142500/system.physmem.store0.pmem
+  sha256: 903f6e87be7f977433c34a1ac1104c6332300d4fe1994495ad92de51e963c7f1
+  bytes: 17677212
+reason: Approved cleanup listing
+occurred_at: '2026-10-03T12:35:43.360757+00:00'
+host: mbit10
+approval: prune-approval-5482d06e021343978cc76026faebc70f
+intent: prune-intent-528e33cdab12488181709aac274e9094

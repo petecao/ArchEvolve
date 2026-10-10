@@ -1,0 +1,909 @@
+--- /private/tmp/lanl_consumed_detached_source_guard_r9_20261008_a1.py
++++ /private/tmp/lanl_sparse_retire_consumed_source_guard_20261008_a1_r2.py
+@@ -1,10 +1,12 @@
+-"""Prospective exact-owner detached-source guard. NOT RUN; read-only without --remove.
+-
+-No default removal set. The future parent must supply and review a sealed plan,
+-explicit row names, native Git pin, complete raw inventories and pending-alias
+-custody. This preparation does not clear any path or alter capacity/science.
++"""Prospective exact-owner library-preserving sparse retirement. NOT RUN.
++
++Default is a full read-only storage assessment with fresh administrative custody.
++Only --retire selects ONE fixed private-pattern/native read-tree operation per
++explicit reviewed row. No worktree deletion, common configuration migration,
++force/reset/GC, automatic rehydration, capacity or scientific admission.
+ """
+ import argparse
++import ctypes
+ import datetime
+ import hashlib
+ import json
+@@ -725,6 +727,33 @@
+             'literal_and_original_JSON_selected_reference_checks':True,
+             'unchanged_historical_mode0664_beneath_existing_private_RAW_ancestor':True}
+ 
++
++RETIREMENT_STAT_FIELDS = ['dev','ino','mode','uid','gid','nlink','size','blocks','mtime_ns','ctime_ns']
++RETIREMENT_PATTERN = b'/swdb-project/library/\n'
++RETIREMENT_OPERATION = {'private_pattern': '/swdb-project/library/\n', 'native_subcommand': ['read-tree','-m','-u','HEAD'], 'selected_command_config': ['core.sparseCheckout=true','core.sparseCheckoutCone=false','index.sparse=false'], 'common_config_mutation_permitted': False, 'automatic_restoration': False}
++RETIREMENT_RAW_LIBRARY_PINS = [{'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-counts-20261006-a2/library', 'stat': {'ctime_ns': 1791329488324587800, 'dev': 2065, 'gid': 114316761, 'ino': 14163401, 'mode': 41471, 'mtime_ns': 1791329488324587800, 'nlink': 1, 'size': 72, 'uid': 114316761}, 'link_sha256': '15ce497ced9d1c5d835ff61e360e5e16d26f62fafb7fc224a220556c192a720a', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-allocator-a2-20261006/swdb-project/library', 'row': 'ArchEvolve-lanl-allocator-a2-20261006'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-elapsed-20261006-a1/library', 'stat': {'ctime_ns': 1791330039658207956, 'dev': 2065, 'gid': 114316761, 'ino': 14164503, 'mode': 41471, 'mtime_ns': 1791330039658207956, 'nlink': 1, 'size': 72, 'uid': 114316761}, 'link_sha256': '15ce497ced9d1c5d835ff61e360e5e16d26f62fafb7fc224a220556c192a720a', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-allocator-a2-20261006/swdb-project/library', 'row': 'ArchEvolve-lanl-allocator-a2-20261006'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-count-20261006-a1/library', 'stat': {'ctime_ns': 1791342093878105880, 'dev': 2065, 'gid': 114316761, 'ino': 14181709, 'mode': 41471, 'mtime_ns': 1791342093878105880, 'nlink': 1, 'size': 83, 'uid': 114316761}, 'link_sha256': '0c0f9a9a15344427fd095087770877007298bd35aa4d50cf4813fa4319746c30', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-independent-services-20261006-a1/swdb-project/library', 'row': 'ArchEvolve-lanl-independent-services-20261006-a1'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-elapsed-20261006-a1/library', 'stat': {'ctime_ns': 1791342708698571043, 'dev': 2065, 'gid': 114316761, 'ino': 14182870, 'mode': 41471, 'mtime_ns': 1791342708698571043, 'nlink': 1, 'size': 83, 'uid': 114316761}, 'link_sha256': '0c0f9a9a15344427fd095087770877007298bd35aa4d50cf4813fa4319746c30', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-independent-services-20261006-a1/swdb-project/library', 'row': 'ArchEvolve-lanl-independent-services-20261006-a1'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-count-20261006-a1/library', 'stat': {'ctime_ns': 1791335070234489305, 'dev': 2065, 'gid': 114316761, 'ino': 14171861, 'mode': 41471, 'mtime_ns': 1791335070234489305, 'nlink': 1, 'size': 76, 'uid': 114316761}, 'link_sha256': 'e00086372f085df538fce23a1c1fb3cf085f18bdc95238e78c0313574d82a9b1', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-bulk-services-20261006-a1/swdb-project/library', 'row': 'ArchEvolve-lanl-bulk-services-20261006-a1'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-count-20261006-a2/library', 'stat': {'ctime_ns': 1791335274262624496, 'dev': 2065, 'gid': 114316761, 'ino': 14173227, 'mode': 41471, 'mtime_ns': 1791335274262624496, 'nlink': 1, 'size': 76, 'uid': 114316761}, 'link_sha256': 'e00086372f085df538fce23a1c1fb3cf085f18bdc95238e78c0313574d82a9b1', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-bulk-services-20261006-a1/swdb-project/library', 'row': 'ArchEvolve-lanl-bulk-services-20261006-a1'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-elapsed-20261006-a2/library', 'stat': {'ctime_ns': 1791336020341414483, 'dev': 2065, 'gid': 114316761, 'ino': 14174148, 'mode': 41471, 'mtime_ns': 1791336020341414483, 'nlink': 1, 'size': 76, 'uid': 114316761}, 'link_sha256': 'e00086372f085df538fce23a1c1fb3cf085f18bdc95238e78c0313574d82a9b1', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-bulk-services-20261006-a1/swdb-project/library', 'row': 'ArchEvolve-lanl-bulk-services-20261006-a1'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-count-20261006-a1/library', 'stat': {'ctime_ns': 1791337261415431612, 'dev': 2065, 'gid': 114316761, 'ino': 14174949, 'mode': 41471, 'mtime_ns': 1791337261415431612, 'nlink': 1, 'size': 82, 'uid': 114316761}, 'link_sha256': 'e07705ef537ff9df751bdeddabb07cac52c3f45c114fa94dab194a343d347eff', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-bulk-total-services-20261006-a1/swdb-project/library', 'row': 'ArchEvolve-lanl-bulk-total-services-20261006-a1'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-elapsed-20261006-a1/library', 'stat': {'ctime_ns': 1791337825794371170, 'dev': 2065, 'gid': 114316761, 'ino': 14175809, 'mode': 41471, 'mtime_ns': 1791337825794371170, 'nlink': 1, 'size': 82, 'uid': 114316761}, 'link_sha256': 'e07705ef537ff9df751bdeddabb07cac52c3f45c114fa94dab194a343d347eff', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-bulk-total-services-20261006-a1/swdb-project/library', 'row': 'ArchEvolve-lanl-bulk-total-services-20261006-a1'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-20261006-a1/library', 'stat': {'ctime_ns': 1791333249658412715, 'dev': 2065, 'gid': 114316761, 'ino': 14169032, 'mode': 41471, 'mtime_ns': 1791333249658412715, 'nlink': 1, 'size': 83, 'uid': 114316761}, 'link_sha256': '9b12fc81e617940e3a1026f27324861f4801a14b9c45a472eecf632ef495c18c', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/library', 'row': 'ArchEvolve-lanl-native-object-counts-20261006-a1'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-g17-20261006-a1/library', 'stat': {'ctime_ns': 1791333249767413862, 'dev': 2065, 'gid': 114316761, 'ino': 14169680, 'mode': 41471, 'mtime_ns': 1791333249767413862, 'nlink': 1, 'size': 83, 'uid': 114316761}, 'link_sha256': '9b12fc81e617940e3a1026f27324861f4801a14b9c45a472eecf632ef495c18c', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/library', 'row': 'ArchEvolve-lanl-native-object-counts-20261006-a1'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-float-memory-count-20261006-a1/library', 'stat': {'ctime_ns': 1791343638332402228, 'dev': 2065, 'gid': 114316761, 'ino': 14184052, 'mode': 41471, 'mtime_ns': 1791343638332402228, 'nlink': 1, 'size': 84, 'uid': 114316761}, 'link_sha256': 'fbcd27c905011c8c00b33cf1205079fbadb5c5798927469f1146b6c76c5c5575', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-float-memory-services-20261006-a1/swdb-project/library', 'row': 'ArchEvolve-lanl-float-memory-services-20261006-a1'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-float-memory-elapsed-20261006-a1/library', 'stat': {'ctime_ns': 1791344109055414673, 'dev': 2065, 'gid': 114316761, 'ino': 9345443, 'mode': 41471, 'mtime_ns': 1791344109055414673, 'nlink': 1, 'size': 84, 'uid': 114316761}, 'link_sha256': 'fbcd27c905011c8c00b33cf1205079fbadb5c5798927469f1146b6c76c5c5575', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-float-memory-services-20261006-a1/swdb-project/library', 'row': 'ArchEvolve-lanl-float-memory-services-20261006-a1'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-count-20261006-a1/library', 'stat': {'ctime_ns': 1791340354426888763, 'dev': 2065, 'gid': 114316761, 'ino': 14179270, 'mode': 41471, 'mtime_ns': 1791340354426888763, 'nlink': 1, 'size': 83, 'uid': 114316761}, 'link_sha256': '0c0f9a9a15344427fd095087770877007298bd35aa4d50cf4813fa4319746c30', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-independent-services-20261006-a1/swdb-project/library', 'row': 'ArchEvolve-lanl-independent-services-20261006-a1'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-elapsed-20261006-a1/library', 'stat': {'ctime_ns': 1791340709129604456, 'dev': 2065, 'gid': 114316761, 'ino': 14180042, 'mode': 41471, 'mtime_ns': 1791340709129604456, 'nlink': 1, 'size': 83, 'uid': 114316761}, 'link_sha256': '0c0f9a9a15344427fd095087770877007298bd35aa4d50cf4813fa4319746c30', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-independent-services-20261006-a1/swdb-project/library', 'row': 'ArchEvolve-lanl-independent-services-20261006-a1'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-byte-read-20261006-a1/library', 'stat': {'ctime_ns': 1791332852678255237, 'dev': 2065, 'gid': 114316761, 'ino': 14167614, 'mode': 41471, 'mtime_ns': 1791332852678255237, 'nlink': 1, 'size': 69, 'uid': 114316761}, 'link_sha256': 'ad1b52df62726ccfd6ddb84698c35b80be17af06eaadc8024b8f45e2f759dac5', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-memory-a1-20261006/swdb-project/library', 'row': 'ArchEvolve-lanl-memory-a1-20261006'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-clock-20261006-a2/library', 'stat': {'ctime_ns': 1791330913045201009, 'dev': 2065, 'gid': 114316761, 'ino': 14165631, 'mode': 41471, 'mtime_ns': 1791330913045201009, 'nlink': 1, 'size': 68, 'uid': 114316761}, 'link_sha256': '324cbc6787922a634c7189c9f66ee977c76889b41f816719d9dfe92c0183afa4', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-clock-a2-20261006/swdb-project/library', 'row': 'ArchEvolve-lanl-clock-a2-20261006'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-memory-20261006-a1/library', 'stat': {'ctime_ns': 1791332238900921122, 'dev': 2065, 'gid': 114316761, 'ino': 14166392, 'mode': 41471, 'mtime_ns': 1791332238900921122, 'nlink': 1, 'size': 69, 'uid': 114316761}, 'link_sha256': 'ad1b52df62726ccfd6ddb84698c35b80be17af06eaadc8024b8f45e2f759dac5', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-memory-a1-20261006/swdb-project/library', 'row': 'ArchEvolve-lanl-memory-a1-20261006'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-functional-bfs-strict-20261006-a2/library', 'stat': {'ctime_ns': 1791328898832589833, 'dev': 2065, 'gid': 114316761, 'ino': 14161566, 'mode': 41471, 'mtime_ns': 1791328898832589833, 'nlink': 1, 'size': 77, 'uid': 114316761}, 'link_sha256': '6ae79fc48c9e76cb7dbed29a3b998cfe51724e5b1bd5f052a84f36a9d5731a66', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/library', 'row': 'ArchEvolve-lanl-functional-strict-20261006'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-functional-dx-object-counts-20261006-a1/library', 'stat': {'ctime_ns': 1791333249654412673, 'dev': 2065, 'gid': 114316761, 'ino': 14168998, 'mode': 41471, 'mtime_ns': 1791333249654412673, 'nlink': 1, 'size': 83, 'uid': 114316761}, 'link_sha256': '9b12fc81e617940e3a1026f27324861f4801a14b9c45a472eecf632ef495c18c', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/library', 'row': 'ArchEvolve-lanl-native-object-counts-20261006-a1'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-functional-dx-object-counts-20261006-a2/library', 'stat': {'ctime_ns': 1791334277335187014, 'dev': 2065, 'gid': 114316761, 'ino': 14170432, 'mode': 41471, 'mtime_ns': 1791334277335187014, 'nlink': 1, 'size': 87, 'uid': 114316761}, 'link_sha256': '8646c3613451ac3c7d664ffe369b7de25a3608f80e6509ae73ef2bafb0505979', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-functional-object-counts-20261006-a2/swdb-project/library', 'row': 'ArchEvolve-lanl-functional-object-counts-20261006-a2'}, {'path': '/data/yanruj/EvolveSWDB_runs/lanl-functional-evaluation-20261006-a1/library', 'stat': {'ctime_ns': 1791339155723322158, 'dev': 2065, 'gid': 114316761, 'ino': 14176814, 'mode': 41471, 'mtime_ns': 1791339155723322158, 'nlink': 1, 'size': 84, 'uid': 114316761}, 'link_sha256': '106c6a8f9f862974931b3ceb90ab81ca6709acc999fb807e023d60b5b0326a4c', 'resolved_scoped_path': '/data1/yanruj/ArchEvolve-lanl-functional-evaluation-20261006-a1/swdb-project/library', 'row': 'ArchEvolve-lanl-functional-evaluation-20261006-a1'}]
++
++class StatxTimestamp(ctypes.Structure):
++    _fields_ = [('tv_sec', ctypes.c_int64), ('tv_nsec', ctypes.c_uint32),
++                ('reserved', ctypes.c_int32)]
++
++class Statx(ctypes.Structure):
++    # Linux v6.8 UAPI include/uapi/linux/stat.h, exact 0x100-byte ABI.
++    _fields_ = [('mask', ctypes.c_uint32), ('blksize', ctypes.c_uint32),
++                ('attributes', ctypes.c_uint64), ('nlink', ctypes.c_uint32),
++                ('uid', ctypes.c_uint32), ('gid', ctypes.c_uint32),
++                ('mode', ctypes.c_uint16), ('spare0', ctypes.c_uint16),
++                ('ino', ctypes.c_uint64), ('size', ctypes.c_uint64),
++                ('blocks', ctypes.c_uint64), ('attributes_mask', ctypes.c_uint64),
++                ('atime', StatxTimestamp), ('btime', StatxTimestamp),
++                ('ctime', StatxTimestamp), ('mtime', StatxTimestamp),
++                ('rdev_major', ctypes.c_uint32), ('rdev_minor', ctypes.c_uint32),
++                ('dev_major', ctypes.c_uint32), ('dev_minor', ctypes.c_uint32),
++                ('mnt_id', ctypes.c_uint64), ('dio_mem_align', ctypes.c_uint32),
++                ('dio_offset_align', ctypes.c_uint32),
++                ('spare3', ctypes.c_uint64*12)]
++
++
+ class Guard:
+     def __init__(self, args):
+         self.args = args
+@@ -738,7 +767,9 @@
+         self.protected_refs = None
+         self.baseline = {}
+         self.raw_before = {}
+-        self.current_removal = None
++        self.current_retirement = None
++        self.completed_dropped_paths = {}
++        self.retirement_transition_witnesses = {}
+         self.output = None
+         self.native_git_stat = None
+         self.passive_stats = {}
+@@ -751,17 +782,18 @@
+         self.raw_namespace = None
+         self.stat_checks = 0
+         self.private_root_stats = {}
+-        self.facts = {'format': 'swdb.consumed-detached-source-guard.v1',
++        self.facts = {'format': 'swdb.library-preserving-sparse-retirement-guard.v1',
+                       'canonical_ensure_ascii': True, 'started_at': now(),
+-                      'remove_requested': args.remove, 'selected_rows': args.select,
+-                      'removed_rows': [], 'pre_remove_full_byte_checks': {},
++                      'retire_requested': args.retire, 'selected_rows': args.select,
++                      'retired_rows': [], 'completed_retirements': [], 'pre_retire_full_byte_checks': {},
+                       'failure': None, 'admitted': False,
+                       'historical_references_retain_original_bytes': True,
+                       'capacity_gates_scientific_caps_provider_auth_raw_refs_objects_unchanged': True,
+                       'inspection_limits': LIMITS, 'external_processes_killed': False,
+                       'actual_recovery_not_guaranteed': True,
+-                      'admission_scope': 'selected storage inspection/removal only',
++                      'admission_scope': 'selected library-preserving sparse inspection/retirement only',
+                       'scientific_admission': False}
++
+ 
+     def left(self):
+         n = self.deadline-time.monotonic()
+@@ -939,8 +971,13 @@
+         env = {'PATH': '/usr/bin:/bin', 'LANG': 'C', 'GIT_NO_LAZY_FETCH': '1',
+                'GIT_TERMINAL_PROMPT': '0', 'GIT_OPTIONAL_LOCKS': '0', 'GIT_PAGER': 'cat',
+                'GIT_CONFIG_NOSYSTEM': '1', 'GIT_CONFIG_GLOBAL': '/dev/null'}
+-        command = ['/usr/bin/git', '-c', 'protocol.allow=never', '-c', 'core.fsmonitor=false',
+-                   '-c', 'core.hooksPath=/dev/null', '-C', str(path), *args]
++        command = ['/usr/bin/git', '--no-replace-objects', '-c', 'protocol.allow=never', '-c', 'core.fsmonitor=false',
++                   '-c', 'core.hooksPath=/dev/null']
++        if P(path) in self.selected and (P(path).name in self.completed_names()
++                or (self.current_retirement is not None and self.current_retirement['row']==P(path).name
++                    and self.current_retirement['stage']!='before_private_pattern')):
++            command += ['-c','core.sparseCheckout=true','-c','core.sparseCheckoutCone=false','-c','index.sparse=false']
++        command += ['-C',str(path),*args]
+         r = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                            env=env, timeout=min(LIMITS['git_seconds'], self.left()), check=False)
+         require(len(r.stdout)+len(r.stderr) <= LIMITS['git_output'], 'git_output_limit')
+@@ -948,6 +985,7 @@
+         require(r.returncode == 0 and not r.stderr, 'git_refused')
+         self.privacy_gate()
+         return r.stdout
++
+ 
+     def text_git(self, path, *args):
+         return self.git(path, *args).decode().strip()
+@@ -1079,7 +1117,7 @@
+         ids = [x.split(b' ', 1)[0] for x in objects]
+         # cat-file --batch-check checks presence without serializing source/record bodies.
+         self.native_git()
+-        r = subprocess.run(['/usr/bin/git', '-c', 'protocol.allow=never', '-C', str(PRIMARY),
++        r = subprocess.run(['/usr/bin/git', '--no-replace-objects', '-c', 'protocol.allow=never', '-C', str(PRIMARY),
+                             'cat-file', '--batch-check=%(objectname) %(objecttype)'],
+                            input=b'\n'.join(ids)+b'\n', stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE, timeout=min(120, self.left()),
+@@ -1143,7 +1181,7 @@
+                     resolved = str(p.resolve(strict=True))
+                 except (OSError, RuntimeError):
+                     raise Refused('raw_link_unresolved')
+-                require(not any_inside(resolved, self.selected), 'raw_link_live_source_dependency')
++                self.raw_library_dependency(p,s,item['link'],resolved)
+             elif stat.S_ISDIR(s.st_mode):
+                 item['type'] = 'directory'
+             elif stat.S_ISREG(s.st_mode):
+@@ -1155,6 +1193,7 @@
+                 raise Refused('unsupported_raw_entry')
+             result[rel] = item
+         return result
++
+ 
+     def receipts_and_raw(self):
+         for key, row in RECEIPTS.items():
+@@ -1207,8 +1246,9 @@
+                         target = str(p.resolve(strict=True))
+                     except (OSError, RuntimeError):
+                         raise Refused('raw_link_unresolved')
+-                    require(not any_inside(target, self.selected), 'raw_link_live_source_dependency')
++                    self.raw_library_dependency(p,s,os.readlink(p),target)
+         return results
++
+ 
+     def proc_read(self, path, cap):
+         try:
+@@ -1304,8 +1344,8 @@
+                     require(self.walk_entries <= LIMITS['walk_entries']
+                             and self.stat_checks <= LIMITS['stat_checks'], 'portal_metadata_limit')
+                     self.left()
+-                audit = exact_portal_autounmount_identification(portal_pin, ROWS, list(self.args.select),
+-                    list(self.facts['removed_rows']), self.plan['parent_review_pin']['identity_sha256'],
++                audit = exact_portal_autounmount_identification(portal_pin, ROWS, [name for name in self.args.select if name not in self.completed_names()],
++                    [], self.plan['parent_review_pin']['identity_sha256'],
+                     PORTAL_HELPER_SHA, self.left, charge_service_bytes, charge_portal_metadata,
+                     continuity_rows=continuity_rows)
+                 require(int(start) == audit['start_ticks'], 'portal_snapshot_PID_changed')
+@@ -1405,6 +1445,7 @@
+                 'global_privileged_security_clearance_claimed':False,
+                 'raw_process_args_maps_auth_environment_not_serialized':True}
+ 
++
+     def aliases_and_sources(self):
+         require(self.plan['pending_alias_coverage_review']['complete'] is True and
+                 self.plan['pending_alias_coverage_review']['no_queued_source_consumers'] is True,
+@@ -1463,7 +1504,7 @@
+             require(not rel.is_absolute() and '..' not in rel.parts, 'source_proof_path_escape')
+             body = self.git(PRIMARY, 'cat-file', 'blob', proof['commit']+':'+str(rel))
+             require(sha(body) == proof['sha256'], 'retained_receipt_source_blob_changed')
+-            if proof['row'] not in self.facts['removed_rows']:
++            if proof['row'] not in self.completed_names() or str(rel).startswith('swdb-project/library/'):
+                 actual, _ = self.read(BASE/proof['row']/rel)
+                 require(body == actual, 'receipt_source_byte_proof_changed')
+             doc = strict_json(self.read(PRIMARY/EVIDENCE/RECEIPTS[proof['receipt_key']]['file'],
+@@ -1475,7 +1516,10 @@
+                 'receipt_source_proof_coverage_missing')
+         return {'historical_files': len(history), 'historical_classification_inherited_parent_review': True,
+                 'pending_alias_coverage_inherited_parent_review': True,
+-                'future_control_sources_byte_pinned': len(FUTURE_SOURCE_HASHES)}
++                'future_control_sources_byte_pinned': len(FUTURE_SOURCE_HASHES),
++                'retired_nonlibrary_source_fields_bind_retained_Git_and_original_receipt_only': True,
++                'retired_nonlibrary_physical_source_availability_claimed': False}
++
+ 
+     def protect(self):
+         paths = [PRIMARY, C_PATH, COUNT_PATH, R14_PATH, RAW]
+@@ -1506,7 +1550,7 @@
+     def stable_inventory(self):
+         self.privacy_gate()
+         def removed(path):
+-            return any(inside(path,BASE/name) for name in self.facts['removed_rows'])
++            return any(path in self.completed_dropped_paths[name] for name in self.completed_names())
+         for path,expected in self.initial_tracked_metadata_stats.items():
+             if removed(path):
+                 continue
+@@ -1537,8 +1581,10 @@
+             require(stamp(p.lstat()) == expected['stat'] and os.readlink(p) == expected['link'],
+                     'baseline_symlink_inventory_changed')
+             if inside(path,RAW):
+-                require(not any_inside(str(p.resolve(strict=True)),self.selected),
+-                        'raw_link_live_source_dependency')
++                self.raw_library_dependency(p,p.lstat(),os.readlink(p),str(p.resolve(strict=True)))
++        for name in self.completed_names():
++            self.poststate_stable(name)
++        self.shared_administration()
+         names = sorted(p.name for p in RAW.iterdir() if p.name.startswith(('lanl-','lanl17-')))
+         require(names == self.raw_namespace, 'raw_namespace_changed')
+         self.privacy_gate()
+@@ -1546,22 +1592,29 @@
+                 'unchanged_directories':len(self.directory_stats),
+                 'unchanged_symlinks':len(self.symlink_stats)}
+ 
+-    def pre_remove_gate(self, name):
++
++    def pre_retire_gate(self, name):
+         self.privacy_gate()
+         leases = self.leases()
+         self.retain_git(); self.protect(); self.stable_inventory()
+         current = self.tree(BASE/name,ROWS[name]['head'],hash_regular_bytes=True)
+         baseline = self.baseline[name]
+-        require(self.args.remove is True and baseline['regular_bytes_verified'] is False
++        require(self.args.retire is True and baseline['regular_bytes_verified'] is False
+                 and baseline['tracked_mode_blob_source_inventory_sha256'] is None
+                 and current['regular_bytes_verified'] is True
+                 and re.fullmatch('[0-9a-f]{64}',current['tracked_mode_blob_source_inventory_sha256']),
+-                'full_pre_remove_regular_byte_check_required')
++                'full_pre_retire_regular_byte_check_required')
+         byte_result_fields = ('regular_bytes_verified', 'tracked_mode_blob_source_inventory_sha256')
+         require({k:v for k,v in current.items() if k not in byte_result_fields}
+                 == {k:v for k,v in baseline.items() if k not in byte_result_fields},
+-                'pre_remove_checkout_changed')
+-        self.facts['pre_remove_full_byte_checks'][name] = current
++                'pre_retire_checkout_changed')
++        self.facts['pre_retire_full_byte_checks'][name] = current
++        self.library_snapshot(name,full_bytes=True)
++        for proof in self.plan['receipt_source_file_proofs']:
++            if proof['row']==name:
++                body=self.git(PRIMARY,'cat-file','blob',proof['commit']+':'+proof['relative_path'])
++                actual,unused=self.read(BASE/name/P(proof['relative_path']))
++                require(body==actual and sha(actual)==proof['sha256'],'retirement_all_original_receipt_source_bytes_before_action')
+         later = self.leases()
+         require({k:v['sha256'] for k,v in later.items()}=={k:v['sha256'] for k,v in leases.items()},
+                 'released_lease_generation_changed_during_check')
+@@ -1569,14 +1622,15 @@
+         self.privacy_gate()
+         return current
+ 
++
+     def gate(self, compare=False):
+         self.left()
+         self.privacy_gate()
+         leases = self.leases()
+         sources = self.retain_git()
+         self.protect()
+-        trees = {p.name: self.tree(p, ROWS[p.name]['head'],hash_regular_bytes=not self.args.remove)
+-                 for p in self.selected if p.name not in self.facts['removed_rows']}
++        trees = {p.name: self.tree(p, ROWS[p.name]['head'],hash_regular_bytes=not self.args.retire)
++                 for p in self.selected if p.name not in self.completed_names()}
+         if compare:
+             for k, v in trees.items():
+                 require(v == self.baseline[k], 'pre_remove_checkout_changed')
+@@ -1586,7 +1640,9 @@
+         else:
+             self.raw_before = raw
+         aliases = self.aliases_and_sources()
+-        processes = self.process_references()
++        processes = {'performed':False,'initial_reference_clearance_claimed':False,
++                     'qualification_deferred_to':'each_marked_operation' if self.args.retire else 'assessment_completion'}
++        self.shared_administration()
+         later = self.leases()
+         require({k:v['sha256'] for k,v in later.items()} == {k:v['sha256'] for k,v in leases.items()},
+                 'released_lease_generation_changed_during_check')
+@@ -1597,10 +1653,12 @@
+                 'raw_tree_count': len(raw), 'raw_tree_inventory_sha256': sha(canonical(raw)),
+                 'aliases': aliases, 'processes': processes}
+ 
++
+     def perform(self):
+         require(sys.platform == 'linux' and socket.gethostname().split('.')[0] == 'mbit10'
+                 and os.getuid() == os.geteuid() == UID
+                 and pwd.getpwuid(UID).pw_name == ACCOUNT, 'wrong_host_account')
++        require('ArchEvolve-lanl-count-20261006' not in self.args.select,'protected_O1_not_retirable')
+         self.privacy_gate()
+         base, s = self.path(BASE, True)
+         require(stat.S_IMODE(s.st_mode) == 0o700, 'private_source_parent_required')
+@@ -1609,13 +1667,13 @@
+         require(re.fullmatch('[0-9a-f]{40}', self.args.expected_primary), 'primary_revision_required')
+         require(len(set(self.args.select)) == len(self.args.select) and self.args.select,
+                 'explicit_unique_subset_required')
+-        require(P(self.args.plan).parent == BASE and P(self.args.plan).name.startswith('lanl-consumed-source-parent-plan-'),
++        require(P(self.args.plan).parent == BASE and P(self.args.plan).name.startswith('lanl-sparse-retirement-parent-plan-'),
+                 'parent_plan_route_required')
+         raw, st = self.read(self.args.plan, LIMITS['plan_bytes'])
+         require(stat.S_IMODE(st['mode']) == 0o600, 'private_parent_plan_required')
+         require(sha(raw) == self.args.plan_sha256, 'reviewed_plan_file_changed')
+         d = strict_json(raw)
+-        require(d.get('format') == 'swdb.consumed-detached-source-parent-plan.v1'
++        require(d.get('format') == 'swdb.library-preserving-sparse-retirement-parent-plan.v1'
+                 and d.get('canonical_ensure_ascii') is True, 'reviewed_plan_format')
+         require(d.get('identity_sha256') == sha(canonical({k:v for k,v in d.items() if k != 'identity_sha256'})),
+                 'reviewed_plan_seal')
+@@ -1664,8 +1722,9 @@
+             review_links.append(consumer.pop('parent_review_identity_sha256'))
+             consumers.append(consumer)
+         config['relevant_privileged_consumers'] = consumers
+-        require(review['format'] == 'swdb.consumed-detached-source-parent-review.v1'
++        require(review['format'] == 'swdb.library-preserving-sparse-retirement-parent-review.v1'
+                 and review['accepted_for_exact_subset'] is True
++                and review['accepted_library_preserving_sparse_scope'] is True
+                 and review['reviewed_configuration_sha256'] == sha(canonical(config))
+                 and review['final14_completed_and_released'] is True,
+                 'concrete_parent_configuration_or_final14_review_missing')
+@@ -1674,7 +1733,7 @@
+         native = d['native_git_pin']
+         require(native['path'] == '/usr/bin/git', 'fixed_native_git_path_required')
+         self.native_git()
+-        output = BASE/('lanl-consumed-detached-source-guard-20261007-'+self.args.attempt)
++        output = BASE/('lanl-library-preserving-sparse-retirement-20261008-'+self.args.attempt)
+         require(not os.path.lexists(output), 'receipt_attempt_already_exists')
+         os.mkdir(output, 0o700)
+         self.output = output
+@@ -1690,52 +1749,494 @@
+         self.facts['final14_completed_and_released_is_parent_semantic_attestation'] = True
+         self.facts['no_concurrent_dispatch_or_queued_writer_is_parent_attestation'] = True
+         self.facts['free_before_bytes'] = {p: os.statvfs(p).f_bavail*os.statvfs(p).f_frsize for p in ('/data1','/data')}
++        self.load_retirement_inputs()
+         first = self.gate()
+         self.baseline = first['trees']
+         self.facts['initial_checks'] = first
+-        for name in self.args.select if self.args.remove else []:
+-            require(self.left() > LIMITS['git_seconds']+30, 'insufficient_remaining_remove_budget')
+-            self.pre_remove_gate(name)
+-            require(sha(self.read(self.args.plan, LIMITS['plan_bytes'])[0]) == self.args.plan_sha256
+-                    and sha(self.read(P(__file__).absolute(), LIMITS['plan_bytes'])[0]) == self.own_sha,
++        for name in self.args.select if self.args.retire else []:
++            require(self.left()>LIMITS['git_seconds']+30,'insufficient_remaining_retirement_budget')
++            self.pre_retire_gate(name)
++            require(sha(self.read(self.args.plan,LIMITS['plan_bytes'])[0])==self.args.plan_sha256
++                    and sha(self.read(P(__file__).absolute(),LIMITS['plan_bytes'])[0])==self.own_sha,
+                     'final_plan_or_own_source_changed')
+-            self.leases()
++            self.leases(); self.shared_administration()
+             self.process_references([name])
+-            # Sole destructive operation; exact audited enum path, no force/prune/GC/branch deletion.
+-            self.current_removal = {'row': name, 'started_at': now()}
+-            self.git(PRIMARY, 'worktree', 'remove', str(BASE/name))
+-            require(not os.path.lexists(BASE/name), 'worktree_remove_incomplete')
+-            self.facts['removed_rows'].append(name)
+-            self.current_removal = None
+-            self.retain_git()
+-            self.protect()
+-        self.leases()
+-        self.retain_git()
+-        self.protect()
+-        self.stable_inventory()
+-        # One final exact byte pass over preserved originals, not N rehashes.
+-        require(self.receipts_and_raw()==self.raw_before, 'final_preserved_raw_bytes_changed')
++            # ONE marked private-pattern/native operation; no force, reset,
++            # checkout-source Python deletion, common config migration or retry.
++            self.current_retirement={'row':name,'started_at':now(),'stage':'before_private_pattern'}
++            pattern=self.create_private_sparse_pattern(name)
++            self.current_retirement['stage']='private_pattern_created'
++            transition=self.private_pattern_transition(name,pattern)
++            require(name not in self.retirement_transition_witnesses,'retirement_transition_already_recorded')
++            self.retirement_transition_witnesses[name]=transition
++            self.current_retirement['transition']=transition
++            self.current_retirement['stage']='native_read_tree_started'
++            self.git(BASE/name,'read-tree','-m','-u','HEAD')
++            self.current_retirement['stage']='native_returned_poststate_pending'
++            completed=self.close_retirement(name)
++            self.facts['completed_retirements'].append(completed)
++            # A signal at any boundary retains either completed journal or marker.
++            self.current_retirement=None
++            self.retain_git(); self.protect()
++        self.leases(); self.retain_git(); self.protect(); self.stable_inventory()
++        require(self.receipts_and_raw()==self.raw_before,'final_preserved_RAW_bytes_changed')
+         self.aliases_and_sources()
+-        for pin in self.plan['protected_file_pins']:
+-            self.pinned(pin)
++        for pin in self.plan['protected_file_pins']:self.pinned(pin)
++        for name in self.library_baselines:self.library_snapshot(name,full_bytes=True)
++        for name in self.completed_names():
++            require(self.retained_poststate(name,full_bytes=True)==self.retirement_poststates[name],
++                    'final_full_retained_poststate_changed')
++        for completed in self.facts['completed_retirements']:
++            self.pinned(completed['private_original_poststate_pin'],LIMITS['inventory_bytes'])
++        self.shared_administration(full_bytes=True)
+         self.process_references()
+-        require(sha(self.read(self.args.plan, LIMITS['plan_bytes'])[0]) == self.args.plan_sha256
+-                and sha(self.read(P(__file__).absolute(), LIMITS['plan_bytes'])[0]) == self.own_sha,
++        require(sha(self.read(self.args.plan,LIMITS['plan_bytes'])[0])==self.args.plan_sha256
++                and sha(self.read(P(__file__).absolute(),LIMITS['plan_bytes'])[0])==self.own_sha,
+                 'end_plan_or_source_changed')
+-        self.facts['admitted'] = True
+-        self.facts['free_after_bytes'] = {p: os.statvfs(p).f_bavail*os.statvfs(p).f_frsize for p in ('/data1','/data')}
+-        self.facts['actual_data1_available_delta_bytes'] = self.facts['free_after_bytes']['/data1']-self.facts['free_before_bytes']['/data1']
+-        self.facts['capacity_admission'] = False
++        self.facts['retired_rows']=self.completed_names()
++        self.facts['admitted']=True
++        self.facts['free_after_bytes']={p:os.statvfs(p).f_bavail*os.statvfs(p).f_frsize for p in ('/data1','/data')}
++        self.facts['actual_data1_available_delta_bytes']=self.facts['free_after_bytes']['/data1']-self.facts['free_before_bytes']['/data1']
++        self.facts['capacity_admission']=False
++        self.facts['retirement_rehydrates_Git_bytes_but_not_original_dropped_inode_identity']=True
++
++
++    def debit_metadata(self, entries=0, checks=0, bytes_read=0):
++        self.left()
++        self.walk_entries += entries; self.stat_checks += checks; self.read_bytes += bytes_read
++        require(self.walk_entries <= LIMITS['walk_entries']
++                and self.stat_checks <= LIMITS['stat_checks']
++                and self.read_bytes <= LIMITS['total_file_bytes'], 'retirement_metadata_budget')
++
++    def administration_read(self, path, cap=None):
++        # Intentional Git-admin changes never overwrite immutable byte-cache witnesses.
++        p = P(path)
++        allowed = [PRIMARY/'.git/worktrees'/name for name in self.args.select]
++        require(p == PRIMARY/'.git/config' or p == PRIMARY/'.git/index'
++                or any(inside(str(p), root) for root in allowed), 'retirement_admin_read_scope')
++        cap = LIMITS['inventory_bytes'] if cap is None else cap
++        self.debit_metadata(checks=3*len(p.parts)+12)
++        unused, before = self.path(p)
++        require(before.st_nlink == 1 and before.st_size <= cap, 'retirement_admin_file_limit')
++        fd = os.open(p, os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC)
++        try:
++            self.debit_metadata(checks=1)
++            require(stamp(os.fstat(fd)) == stamp(before), 'retirement_admin_open_changed')
++            parts=[]; count=0
++            while True:
++                self.left(); part=os.read(fd,min(1024*1024,cap-count+1))
++                if not part: break
++                count += len(part); self.debit_metadata(bytes_read=len(part))
++                require(count <= cap, 'retirement_admin_read_cap'); parts.append(part)
++            self.debit_metadata(checks=2)
++            require(count == before.st_size and stamp(os.fstat(fd)) == stamp(before)
++                    == stamp(p.lstat()), 'retirement_admin_read_changed')
++            return b''.join(parts), stamp(before)
++        finally: os.close(fd)
++
++    def install_retirement_statx(self):
++        require(ctypes.sizeof(StatxTimestamp)==16 and ctypes.sizeof(Statx)==256, 'retirement_statx_ABI')
++        for field,offset in (('nlink',0x10),('ino',0x20),('atime',0x40),('btime',0x50),
++                             ('rdev_major',0x80),('mnt_id',0x90),('spare3',0xa0)):
++            require(getattr(Statx,field).offset==offset, 'retirement_statx_offset')
++        self.statx_libc=ctypes.CDLL(None,use_errno=True)
++        self.statx_fn=self.statx_libc.statx
++        self.statx_fn.argtypes=[ctypes.c_int,ctypes.c_char_p,ctypes.c_int,ctypes.c_uint,ctypes.POINTER(Statx)]
++        self.statx_fn.restype=ctypes.c_int
++
++    def inode_witness(self, path):
++        # Positive genuine birth, never mtime/ctime substituted for birth.
++        self.debit_metadata(checks=1)
++        before=path.lstat()
++        require(before.st_uid==UID and before.st_dev==2097
++                and (stat.S_ISDIR(before.st_mode) or stat.S_ISREG(before.st_mode))
++                and (stat.S_ISDIR(before.st_mode) or before.st_nlink==1), 'retirement_inode_kind_owner_links')
++        self.debit_metadata(checks=3*len(path.parts)+12)
++        self.path(path,stat.S_ISDIR(before.st_mode))
++        fd=os.open(path,os.O_PATH|os.O_NOFOLLOW|os.O_CLOEXEC)
++        try:
++            self.debit_metadata(checks=1)
++            full=lambda s:[getattr(s,'st_'+k) for k in RETIREMENT_STAT_FIELDS]
++            require(full(os.fstat(fd))==full(before), 'retirement_inode_open_changed')
++            x=Statx(); self.debit_metadata(checks=1)
++            rc=self.statx_fn(fd,b'',0x1100,0x1fff,ctypes.byref(x))
++            require(rc==0, 'retirement_statx_failed')
++            self.debit_metadata(checks=2)
++            require(full(os.fstat(fd))==full(before)==full(path.lstat()), 'retirement_statx_interval_changed')
++            require(x.mask==8191 and x.mnt_id==136 and x.btime.tv_sec>0
++                    and 0<=x.btime.tv_nsec<1000000000
++                    and (x.btime.tv_sec*1000000000+x.btime.tv_nsec)*100>179108888346*1000000000,
++                    'retirement_birth_not_supported_or_before_helper')
++            require((x.dev_major,x.dev_minor)==(os.major(before.st_dev),os.minor(before.st_dev))
++                    and (x.ino,x.mode,x.uid,x.gid,x.nlink,x.size,x.blocks)==tuple(full(before)[i] for i in (1,2,3,4,5,6,7))
++                    and x.mtime.tv_sec*1000000000+x.mtime.tv_nsec==before.st_mtime_ns
++                    and x.ctime.tv_sec*1000000000+x.ctime.tv_nsec==before.st_ctime_ns,
++                    'retirement_statx_fstat_disagrees')
++            return [full(before),[x.mask,8191,x.attributes,x.attributes_mask,x.mnt_id,True,x.btime.tv_sec,x.btime.tv_nsec]]
++        finally: os.close(fd)
++
++    def directory_names(self, path, expected_stat):
++        fd=os.open(path,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC)
++        try:
++            self.debit_metadata(checks=1)
++            require(stamp(os.fstat(fd))==expected_stat, 'retirement_names_open_changed')
++            names=[]
++            with os.scandir(fd) as entries:
++                for item in entries:
++                    self.left()
++                    require(item.name not in ('.','..') and '/' not in item.name
++                            and len(names)<LIMITS['tracked_entries'], 'retirement_directory_names_limit')
++                    self.debit_metadata(bytes_read=len(os.fsencode(item.name))+1); names.append(item.name)
++            self.debit_metadata(checks=2)
++            require(stamp(os.fstat(fd))==expected_stat==stamp(path.lstat()), 'retirement_names_interval_changed')
++            return sorted(names,key=os.fsencode)
++        finally: os.close(fd)
++
++    def load_retirement_inputs(self):
++        pin=self.plan['portal_service_review_pin']; role=self.sealed(pin,LIMITS['receipt_bytes'])
++        require(role['shared_helper_sha256']==PORTAL_HELPER_SHA, 'retirement_role_helper_changed')
++        self.original_checkout=portal_inode_birth_rows(strict_json(self.pinned(role['original_pins']['checkout_birth'],LIMITS['inventory_bytes'])),ROWS,check_deadline=self.left)
++        self.original_admin=portal_inode_birth_rows(strict_json(self.pinned(role['original_pins']['git_admin_birth'],LIMITS['inventory_bytes'])),ROWS,True,self.left)
++        require(self.plan['retained_raw_library_aliases']==RETIREMENT_RAW_LIBRARY_PINS,
++                'retirement_exact_original_library_alias_set_required')
++        require(self.plan['retirement_operation']==RETIREMENT_OPERATION
++                and self.plan['shared_config_and_main_index_must_remain_exact'] is True,
++                'retirement_exact_private_pattern_native_operation_required')
++        self.install_retirement_statx()
++        self.library_baselines={}; self.admin_baselines={}; self.retirement_poststates={}
++        self.shared_admin_baseline=None
++        self.shared_administration()
++        for name in sorted({x['row'] for x in RETIREMENT_RAW_LIBRARY_PINS}|set(self.args.select)):
++            self.library_baselines[name]=self.library_snapshot(name,full_bytes=True)
++        for name in self.args.select:
++            admin=self.original_admin[name]; before={}
++            for rel,obj in admin['objects'].items():
++                path=P(admin['root'])/rel
++                if obj[5]==1:
++                    raw,got=self.administration_read(path)
++                    require([got[k] for k in RETIREMENT_STAT_FIELDS if k!='blocks']
++                            ==[obj[1][i] for i,k in enumerate(RETIREMENT_STAT_FIELDS) if k!='blocks'],
++                            'retirement_original_admin_file_stat_changed')
++                    before[rel]={'bytes':len(raw),'sha256':sha(raw),'stat':got}
++            require(not os.path.lexists(P(admin['root'])/'info')
++                    and not os.path.lexists(P(admin['root'])/'config.worktree'), 'retirement_original_sparse_admin_already_exists')
++            self.admin_baselines[name]=before
++
++    def shared_administration(self, full_bytes=False):
++        # Legacy command-local sparse options do not enable worktreeConfig.
++        paths=[PRIMARY/'.git/config',PRIMARY/'.git/index']
++        current={}
++        for p in paths:
++            self.debit_metadata(checks=1); self.path(p)
++            if self.shared_admin_baseline is None or full_bytes:
++                raw,s=self.administration_read(p)
++                current[str(p)]={'stat':s,'bytes':len(raw),'sha256':sha(raw)}
++            else:
++                s=stamp(p.lstat()); fixed=self.shared_admin_baseline[str(p)]
++                require(s==fixed['stat'],'retirement_shared_admin_stat_changed'); current[str(p)]=fixed
++        registrations=PRIMARY/'.git/worktrees'
++        self.path(registrations,True); names=sorted(p.name for p in registrations.iterdir())
++        self.debit_metadata(checks=len(names)+2)
++        require(len(names)<=LIMITS['tracked_entries'] and not os.path.lexists(PRIMARY/'.git/config.worktree'),
++                'retirement_main_worktree_config_or_registration_limit')
++        for name in names:
++            p=registrations/name; self.path(p,True)
++            require(not os.path.lexists(p/'config.worktree'), 'retirement_any_worktree_config_created')
++        registration_fact={'names':names,'identity':{k:stamp(registrations.lstat())[k] for k in ('dev','ino','uid','gid','mode')}}
++        current['registered_worktrees']=registration_fact
++        if self.shared_admin_baseline is None:
++            require(self.plan['common_configuration_pin']['path']==str(PRIMARY/'.git/config')
++                    and current[str(PRIMARY/'.git/config')]['sha256']==self.plan['common_configuration_pin']['sha256']
++                    and current[str(PRIMARY/'.git/config')]['bytes']==self.plan['common_configuration_pin']['bytes'],
++                    'retirement_original_common_configuration_pin_changed')
++            if 'stat' in self.plan['common_configuration_pin']:
++                require(current[str(PRIMARY/'.git/config')]['stat']==self.plan['common_configuration_pin']['stat'],
++                        'retirement_original_common_configuration_stat_changed')
++            listing=self.git(PRIMARY,'config','--local','--null','--list','--no-includes')
++            keys={}
++            for item in listing.split(b'\0'):
++                if not item:continue
++                key,sep,value=item.partition(b'\n'); require(sep,'retirement_configuration_encoding')
++                k=key.decode().lower(); keys.setdefault(k,[]).append(value)
++            require(keys.get('core.bare')==[b'false'] and 'core.worktree' not in keys
++                    and not any(k.startswith(('include.','includeif.','extensions.','core.sparse','index.sparse')) for k in keys),
++                    'retirement_current_configuration_not_reviewed_absent_sparse_shape')
++            self.shared_admin_baseline=current
++        require(current==self.shared_admin_baseline,'retirement_common_main_or_registration_changed')
++        return {'common_and_main_bytes_sha256':sha(canonical(current)),
++                'common_config_and_main_index_preserved':True,'config_worktree_absent_every_registered_row':True}
++
++    def library_snapshot(self, name, full_bytes=False):
++        root=BASE/name/'swdb-project/library'; source=self.original_checkout[name]['objects']
++        expected={r:o for r,o in source.items() if r=='swdb-project/library' or r.startswith('swdb-project/library/')}
++        require(expected and expected['swdb-project/library'][5]==0,'retirement_original_library_missing')
++        tracked={}
++        for item in self.git(PRIMARY,'ls-tree','-r','-z',ROWS[name]['head'],'--','swdb-project/library').split(b'\0'):
++            if not item:continue
++            meta,rel=item.split(b'\t',1); mode,kind,oid=meta.split()
++            require(kind==b'blob' and mode in (b'100644',b'100755'),'retirement_library_tracked_kind')
++            tracked[rel.decode()]=(mode.decode(),oid.decode())
++        require(set(tracked)=={r for r,o in expected.items() if o[5]==1},'retirement_complete_tracked_library_scope')
++        seen={}; stack=[root]
++        while stack:
++            p=stack.pop(); self.debit_metadata(entries=1,checks=1); before=p.lstat()
++            rel=str(p.relative_to(BASE/name)); require(rel in expected,'retirement_library_unexpected_object')
++            obj=expected[rel]
++            require([getattr(before,'st_'+k) for k in RETIREMENT_STAT_FIELDS]==obj[1]
++                    and obj[5] in (0,1),'retirement_library_original_inode_or_type_changed')
++            item={'stat':stamp(before),'allocated_bytes':before.st_blocks*512,'kind':obj[5]}
++            if obj[5]==0:
++                names=self.directory_names(p,stamp(before))
++                require(len(names)==obj[3] and sha(b'\0'.join(os.fsencode(v) for v in names))==obj[4],
++                        'retirement_library_original_children_changed')
++                item['names']=names; stack.extend(p/x for x in reversed(names))
++            else:
++                if full_bytes:
++                    raw,got=self.read(p); require(got==stamp(before),'retirement_library_byte_interval_changed')
++                    require(hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()==tracked[rel][1]
++                            and tracked_mode_equivalent(stat.S_IMODE(before.st_mode),tracked[rel][0],self.private_ancestor(p)),
++                            'retirement_library_Git_blob_or_mode_changed')
++                    item['bytes_sha256']=sha(raw)
++                else:
++                    require(name in self.library_baselines and rel in self.library_baselines[name],
++                            'retirement_library_byte_baseline_missing')
++                    item['bytes_sha256']=self.library_baselines[name][rel]['bytes_sha256']
++                self.debit_metadata(checks=1); require(stamp(p.lstat())==stamp(before),'retirement_library_stat_interval_changed')
++            seen[rel]=item
++        require(set(seen)==set(expected),'retirement_library_full_closure_incomplete')
++        if name in self.library_baselines:
++            require(seen==self.library_baselines[name],'retirement_library_baseline_changed')
++        return seen
++
++    def raw_library_dependency(self, path, link_stat, link_text, resolved):
++        pin=next((p for p in RETIREMENT_RAW_LIBRARY_PINS if p['path']==str(path)),None)
++        if pin is None:
++            require(not any_inside(resolved,self.selected),'retirement_unreviewed_selected_RAW_alias')
++            return True
++        require(stamp(link_stat)==pin['stat']
++                and len(os.fsencode(link_text))==pin['stat']['size']
++                and sha(os.fsencode(link_text))==pin['link_sha256']
++                and resolved==pin['resolved_scoped_path']
++                and resolved==str(BASE/pin['row']/'swdb-project/library')
++                and pin['row'] in self.library_baselines, 'retirement_unreviewed_selected_RAW_alias')
++        # A source-enforced full baseline closure plus stable inode witnesses protects
++        # the link's entire target. Final pass hashes the target bytes again.
++        self.library_stable(pin['row'])
++        return True
++
++    def library_stable(self, name):
++        for rel,item in self.library_baselines[name].items():
++            p=BASE/name/rel; self.debit_metadata(checks=1); s=p.lstat()
++            require(stamp(s)==item['stat'] and s.st_blocks*512==item['allocated_bytes'],
++                    'retirement_retained_library_stat_changed')
++
++    def sparse_index(self, name):
++        path=BASE/name; head=ROWS[name]['head']
++        original=[r for r in self.git(PRIMARY,'ls-tree','-r','-z',head).split(b'\0') if r]
++        expect={}
++        for row in original:
++            meta,rel=row.split(b'\t',1); mode,kind,oid=meta.split()
++            require(kind==b'blob' and mode!=b'040000','retirement_expanded_index_required')
++            expect[rel]=(mode,oid)
++        actual={}; flags={}
++        for row in self.git(path,'ls-files','-t','--stage','-z').split(b'\0'):
++            if not row:continue
++            meta,rel=row.split(b'\t',1); tag,mode,oid,stage=meta.split()
++            require(rel not in actual and stage==b'0' and mode in (b'100644',b'100755',b'120000'),
++                    'retirement_expanded_index_entry_changed')
++            required=b'H' if rel.startswith(b'swdb-project/library/') else b'S'
++            require(tag==required,'retirement_skip_worktree_scope_changed'); actual[rel]=(mode,oid); flags[rel.decode()]=tag.decode()
++        require(actual==expect and not self.git(path,'diff','--cached','--name-only')
++                and not self.git(path,'status','--porcelain','--untracked-files=all')
++                and not self.git(path,'ls-files','--others','--ignored','--exclude-standard','-z')
++                and self.text_git(path,'rev-parse','HEAD')==head
++                and not self.text_git(path,'branch','--show-current'), 'retirement_sparse_index_HEAD_or_clean_changed')
++        return {'full_mode_oid_path_inventory_sha256':sha(canonical([[k.decode(),v[0].decode(),v[1].decode()] for k,v in sorted(actual.items())])),
++                'skip_worktree_flags_sha256':sha(canonical(flags)),'tracked_entries':len(actual),
++                'library_H_nonlibrary_S_expanded_stage0':True,'HEAD':head,
++                'tree':self.text_git(path,'rev-parse','HEAD^{tree}')}
++
++    def retained_poststate(self, name, full_bytes=False):
++        checkout=self.original_checkout[name]; admin=self.original_admin[name]
++        retained={r:o for r,o in checkout['objects'].items() if r in ('.','.git','swdb-project')
++                  or r=='swdb-project/library' or r.startswith('swdb-project/library/')}
++        live_library=self.library_snapshot(name,full_bytes)
++        objects={}; stack=[BASE/name]
++        while stack:
++            path=stack.pop(); rel=str(path.relative_to(BASE/name)); rel='.' if rel=='.' else rel
++            self.debit_metadata(entries=1)
++            require(rel in retained,'retirement_unexpected_physical_checkout_residue')
++            obj=retained[rel]; witness=self.inode_witness(path); s,x=witness
++            if rel not in ('.','swdb-project'):
++                require(s==obj[1] and x==obj[2],'retirement_retained_checkout_birth_or_stat_changed')
++            else:
++                require(s[:5]==obj[1][:5] and x==obj[2],'retirement_checkout_ancestor_identity_or_birth_changed')
++            current={'stat':s,'statx':x,'kind':obj[5]}
++            if obj[5]==0:
++                names=self.directory_names(path,stamp(path.lstat()))
++                if rel=='.': require(names==['.git','swdb-project'],'retirement_root_child_scope')
++                elif rel=='swdb-project':require(names==['library'],'retirement_swdb_child_scope')
++                else: require(names==live_library[rel]['names'],'retirement_library_child_scope')
++                current['names']=names; stack.extend(path/v for v in reversed(names))
++            elif rel=='.git':
++                raw,got=self.read(path,4096)
++                require(raw==('gitdir: '+admin['root']+'\n').encode()
++                        and sha(raw)==checkout['git_pointer']['sha256'],'retirement_gitfile_pointer_changed')
++                current['bytes_sha256']=sha(raw)
++            else:current['bytes_sha256']=live_library[rel]['bytes_sha256']
++            objects[rel]=current
++        require(set(objects)==set(retained),'retirement_retained_checkout_scope_incomplete')
++        # The only newly created administration objects are info and its exact pattern.
++        allowed=set(admin['objects'])|{'info','info/sparse-checkout'}
++        post_admin={}; stack=[P(admin['root'])]
++        while stack:
++            path=stack.pop(); rel=str(path.relative_to(P(admin['root']))); rel='.' if rel=='.' else rel
++            self.debit_metadata(entries=1); require(rel in allowed,'retirement_unexpected_admin_or_lock')
++            s,x=self.inode_witness(path); current={'stat':s,'statx':x}
++            old=admin['objects'].get(rel)
++            if old is not None and rel not in ('.','index'):
++                require(s==old[1] and x==old[2],'retirement_unpermitted_admin_identity_changed')
++            elif rel=='.':require(s[:5]==old[1][:5] and x==old[2],'retirement_admin_root_identity_or_birth_changed')
++            elif rel in ('info','info/sparse-checkout'):
++                transition=self.retirement_transition_witnesses[name]
++                key='new_info_inode' if rel=='info' else 'new_pattern_inode'
++                require([s,x]==transition[key]
++                        and (stat.S_IMODE(s[2]) in (0o700,0o2700) if rel=='info'
++                             else stat.S_IMODE(s[2])==0o600),
++                        'retirement_private_pattern_transition_inode_or_mode_changed')
++            if stat.S_ISDIR(s[2]):
++                names=self.directory_names(path,stamp(path.lstat())); current['names']=names
++                if rel=='.': require(names==sorted([r for r in admin['objects'] if '/' not in r and r!='.']+['info'],key=os.fsencode),
++                                     'retirement_admin_root_children')
++                elif rel=='info':require(names==['sparse-checkout'],'retirement_info_children')
++                else: require(len(names)==old[3] and sha(b'\0'.join(os.fsencode(v) for v in names))==old[4],
++                              'retirement_unchanged_admin_children')
++                stack.extend(path/v for v in reversed(names))
++            else:
++                raw,got=self.administration_read(path)
++                if rel=='info/sparse-checkout':require(raw==RETIREMENT_PATTERN,'retirement_exact_pattern_changed')
++                elif rel=='index':require(stat.S_IMODE(s[2]) in (0o600,0o644,0o664,0o666),
++                                           'retirement_index_regular_permission_shape')
++                elif rel!='index':require(sha(raw)==self.admin_baselines[name][rel]['sha256']
++                                          and got==self.admin_baselines[name][rel]['stat'],'retirement_unchanged_admin_bytes')
++                current['bytes_sha256']=sha(raw)
++            post_admin[rel]=current
++        require(set(post_admin)==allowed,'retirement_post_admin_scope_incomplete')
++        return {'row':name,'checkout':objects,'git_admin':post_admin,'sparse_index':self.sparse_index(name),
++                'library_closure_sha256':sha(canonical(live_library)),
++                'shared_administration':self.shared_administration(),
++                'original_full_checkout_continuity_claimed':False,
++                'symlink_targets_not_followed_or_removed':True,'protected_child_fields':'UNOBSERVED'}
++
++    def poststate_stable(self, name):
++        witness=self.retirement_poststates[name]
++        for root,section in ((BASE/name,'checkout'),(P(self.original_admin[name]['root']),'git_admin')):
++            for rel,item in witness[section].items():
++                path=root/rel; self.debit_metadata(checks=1); s=path.lstat()
++                require([getattr(s,'st_'+k) for k in RETIREMENT_STAT_FIELDS]==item['stat'],
++                        'retirement_completed_poststate_changed')
++        self.library_stable(name)
++        completed=next((r for r in self.facts['completed_retirements'] if r['row']==name),None)
++        if completed is not None:
++            pin=completed['private_original_poststate_pin']; self.debit_metadata(checks=1)
++            require(stamp(P(pin['path']).lstat())==pin['stat'],'retirement_private_original_witness_stat_changed')
++
++    def close_retirement(self, name):
++        first=self.retained_poststate(name,full_bytes=True)
++        second=self.retained_poststate(name,full_bytes=False)
++        require(first==second,'retirement_poststate_two_pass_changed')
++        self.retirement_poststates[name]=second
++        dropped=sorted(set(self.original_checkout[name]['objects'])-set(second['checkout']))
++        self.completed_dropped_paths[name]={str(BASE/name/P(rel)) for rel in dropped}
++        witness={'format':'swdb.sparse-retirement-private-poststate.v1','sealed':False,
++                 'recorded_at':now(),'guard_source_sha256':self.own_sha,'expected_primary':self.args.expected_primary,
++                 'row':name,'dropped_original_relative_paths':dropped,'poststate':second,
++                 'private_pattern_transition':self.retirement_transition_witnesses[name],
++                 'two_fresh_passes_equal':True,'cleanup_capacity_or_scientific_admission':False}
++        raw=json.dumps(witness,sort_keys=True,separators=(',',':'),ensure_ascii=True,allow_nan=False).encode()+b'\n'
++        require(len(raw)<=LIMITS['inventory_bytes'],'retirement_private_poststate_size_limit')
++        path=self.output/('poststate-'+name+'.json')
++        fd=os.open(path,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
++        with os.fdopen(fd,'wb') as f:f.write(raw);f.flush();os.fsync(f.fileno())
++        self.debit_metadata(checks=1); s=path.lstat()
++        require(stat.S_ISREG(s.st_mode) and stat.S_IMODE(s.st_mode)==0o600 and s.st_uid==UID and s.st_nlink==1,
++                'retirement_poststate_publication_identity')
++        return {'row':name,'completed_at':now(),'private_original_poststate_pin':{'path':str(path),'bytes':len(raw),'sha256':sha(raw),'stat':stamp(s)},
++                'retained_checkout_objects':len(second['checkout']),'retained_git_admin_objects':len(second['git_admin']),
++                'retained_library_closure_sha256':second['library_closure_sha256'],
++                'dropped_paths_count':len(dropped),'dropped_paths_sha256':sha(canonical(dropped)),
++                'poststate_sha256':sha(canonical(second)),'two_fresh_passes_equal':True,
++                'old_full_checkout_continuity_claimed':False,'capacity_or_scientific_admission':False}
++
++    def create_private_sparse_pattern(self, name):
++        admin=P(self.original_admin[name]['root']); info=admin/'info'; pattern=info/'sparse-checkout'
++        require(not os.path.lexists(info) and not os.path.lexists(pattern),'retirement_sparse_pattern_not_fresh')
++        self.path(admin,True); os.mkdir(info,0o700); self.path(info,True)
++        fd=os.open(pattern,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
++        with os.fdopen(fd,'wb') as f:f.write(RETIREMENT_PATTERN);f.flush();os.fsync(f.fileno())
++        raw,s=self.administration_read(pattern,256)
++        require(raw==RETIREMENT_PATTERN and stat.S_IMODE(s['mode'])==0o600,'retirement_pattern_byte_mode_changed')
++        return {'path':str(pattern),'bytes':len(raw),'sha256':sha(raw),'stat':s,'parent_stat':stamp(info.lstat())}
++
++    def private_pattern_transition(self, name, pattern_pin):
++        # No second checkout walk: the just-completed full precheck and fresh role
++        # check precede this one marked administration/native operation.
++        admin=self.original_admin[name]; root=P(admin['root']); observed={}
++        for rel,obj in admin['objects'].items():
++            path=root/rel; self.debit_metadata(checks=1); s=path.lstat()
++            full=[getattr(s,'st_'+k) for k in RETIREMENT_STAT_FIELDS]
++            if rel=='.':
++                require(full[:5]==obj[1][:5],'retirement_transition_admin_root_identity')
++                names=self.directory_names(path,stamp(s))
++                require(names==sorted([r for r in admin['objects'] if '/' not in r and r!='.']+['info'],key=os.fsencode),
++                        'retirement_transition_only_info_added')
++            else:
++                require(full==obj[1],'retirement_transition_existing_admin_changed')
++                if obj[5]==0:
++                    names=self.directory_names(path,stamp(s))
++                    require(len(names)==obj[3] and sha(b'\0'.join(os.fsencode(v) for v in names))==obj[4],
++                            'retirement_transition_existing_admin_children')
++                else:
++                    raw,got=self.administration_read(path)
++                    require(got==self.admin_baselines[name][rel]['stat']
++                            and sha(raw)==self.admin_baselines[name][rel]['sha256'],
++                            'retirement_transition_existing_admin_bytes')
++            observed[rel]=full
++        info=root/'info'; pattern=info/'sparse-checkout'
++        info_witness=self.inode_witness(info); pattern_witness=self.inode_witness(pattern)
++        require(stat.S_IMODE(info_witness[0][2]) in (0o700,0o2700)
++                and self.directory_names(info,stamp(info.lstat()))==['sparse-checkout']
++                and stat.S_IMODE(pattern_witness[0][2])==0o600,'retirement_transition_private_new_admin')
++        raw,s=self.administration_read(pattern,256)
++        require(raw==RETIREMENT_PATTERN and pattern_pin=={'path':str(pattern),'bytes':len(raw),'sha256':sha(raw),
++                'stat':s,'parent_stat':stamp(info.lstat())},'retirement_transition_pattern_exact')
++        gitfile,_=self.read(BASE/name/'.git',4096)
++        require(gitfile==('gitdir: '+admin['root']+'\n').encode()
++                and self.text_git(BASE/name,'rev-parse','HEAD')==ROWS[name]['head'],
++                'retirement_transition_git_registration_HEAD')
++        self.shared_administration()
++        return {'pattern':pattern_pin,'new_info_inode':info_witness,'new_pattern_inode':pattern_witness,
++                'unchanged_original_admin_leaf_inventory_sha256':sha(canonical(observed)),
++                'original_index_HEAD_gitdir_commondir_logs_preserved':True,
++                'old_full_admin_continuity_claimed_after_pattern_creation':False,
++                'no_second_full_checkout_walk':True}
++
++    def completed_names(self):
++        names=[r['row'] for r in self.facts['completed_retirements']]
++        require(len(set(names))==len(names) and set(names)<=set(self.args.select),
++                'retirement_completed_journal_scope')
++        return names
+ 
+     def publish(self):
+         self.facts['effective_private_ancestor_roots'] = self.privacy_gate()
+         self.facts['privacy_after_receipt_write_check'] = 'Source-enforced fixed root identity/mode check; receipt carries its pre-seal snapshots.'
++        self.facts['retired_rows']=self.completed_names()
+         self.facts['finished_at'] = now()
+         self.facts['bytes_read'] = self.read_bytes
+         self.facts['walk_entries_checked'] = self.walk_entries
+         self.facts['stable_stat_checks'] = self.stat_checks
+         self.facts['full_raw_byte_passes'] = 2 if self.facts['admitted'] else 'incomplete'
+-        self.facts['per_remove_full_remaining_catalog_rehash'] = False
++        self.facts['per_retirement_full_remaining_catalog_rehash'] = False
+         self.facts['identity_sha256'] = sha(canonical(self.facts))
+         body = json.dumps(self.facts, sort_keys=True, indent=2, ensure_ascii=True, allow_nan=False).encode()+b'\n'
+         require(len(body) <= LIMITS['receipt_bytes'], 'compact_receipt_limit')
+@@ -1745,7 +2246,7 @@
+         self.path(BASE, True)
+         out = self.output
+         if out is None:
+-            out = BASE/('lanl-consumed-detached-source-guard-20261007-'+self.args.attempt)
++            out = BASE/('lanl-library-preserving-sparse-retirement-20261008-'+self.args.attempt)
+             require(not os.path.lexists(out), 'receipt_attempt_already_exists')
+             os.mkdir(out, 0o700)
+         self.path(out, True)
+@@ -1757,12 +2258,13 @@
+         except BaseException:
+             raise Refused('receipt_publication_failed')
+         self.privacy_gate()
+-        print(json.dumps({'format':'swdb.consumed-source-guard-return.v1',
++        print(json.dumps({'format':'swdb.library-preserving-sparse-retirement-return.v1',
+                           'path':str(out/'receipt.json'), 'bytes':len(body), 'sha256':sha(body),
+                           'identity_sha256':self.facts['identity_sha256'],
+                           'admitted':self.facts['admitted'],
+-                          'removed_count':len(self.facts['removed_rows']),
++                          'retired_count':len(self.completed_names()),
+                           'failure':self.facts['failure']},sort_keys=True))
++
+ 
+ def main():
+     p = argparse.ArgumentParser(description=__doc__)
+@@ -1771,7 +2273,7 @@
+     p.add_argument('--plan', required=True)
+     p.add_argument('--plan-sha256', required=True)
+     p.add_argument('--attempt', required=True)
+-    p.add_argument('--remove', action='store_true')
++    p.add_argument('--retire', action='store_true')
+     a = p.parse_args()
+     require(re.fullmatch('a[1-9][0-9]*', a.attempt), 'fixed_receipt_attempt_token')
+     require(re.fullmatch('[0-9a-f]{64}', a.plan_sha256), 'plan_pin_required')
+@@ -1788,19 +2290,20 @@
+         code = 1
+         # No exception text, full argv, raw logs, prompts, environment or credentials.
+         g.facts['failure'] = str(e) if isinstance(e, Refused) else type(e).__name__
+-        g.facts['partial_failure_rows_already_removed'] = list(g.facts['removed_rows'])
+-        if g.current_removal is not None:
+-            g.facts['incomplete_removal_attempt'] = {**g.current_removal,
+-                'directory_present_after_failure': os.path.lexists(BASE/g.current_removal['row']),
++        g.facts['partial_failure_rows_already_retired'] = list(g.completed_names())
++        if g.current_retirement is not None:
++            g.facts['incomplete_retirement_attempt'] = {**g.current_retirement,
++                'retained_checkout_root_present_after_failure': os.path.lexists(BASE/g.current_retirement['row']),
+                 'disposition': 'unknown_until_parent_inspection_no_retry_or_rollback'}
+     try:
+         g.publish()
+     except BaseException:
+-        print(json.dumps({'format':'swdb.consumed-source-guard-return.v1',
++        print(json.dumps({'format':'swdb.library-preserving-sparse-retirement-return.v1',
+                           'admitted':False, 'receipt_publication_failed':True,
+-                          'removed_count':len(g.facts['removed_rows'])},sort_keys=True))
++                          'retired_count':len(g.completed_names())},sort_keys=True))
+         code = 1
+     return code
+ 
++
+ if __name__ == '__main__':
+     raise SystemExit(main())

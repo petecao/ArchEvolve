@@ -1,0 +1,5091 @@
+{
+  "CPUt1_qualifier": "O5 all-regular logical total181013530 is recorded, but serialized hashes are metadata-only; two IR body pins have separate fresh originals. This note does not treat all CPUt1 bodies as independently serialized hashes.",
+  "RAW_30_one_pass_bytes": 5287678097,
+  "RAW_30_two_pass_bytes": 10575356194,
+  "RAW_integrity_constraint": "Both complete freshly hashed30-root original RAW inventories and exact initial/final equality remain; alias suffix walks and pin_fact cache hits already avoid rereading those bodies. Same SHA at different paths/inodes cannot replace a required physical byte check.",
+  "RAW_roots": [
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791329160510250717,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14161766,
+        "mode": 16893,
+        "mtime_ns": 1791329160510250717,
+        "nlink": 5,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": true,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-counts-20261006-a1",
+      "regular_logical_bytes_O5": 143832414,
+      "serialized_body_hash_files": 908,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": []
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791329750157255766,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14162773,
+        "mode": 16893,
+        "mtime_ns": 1791329750157255766,
+        "nlink": 5,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-counts-20261006-a2",
+      "regular_logical_bytes_O5": 160797449,
+      "serialized_body_hash_files": 1006,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "R1"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791330561319564540,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14163855,
+        "mode": 16893,
+        "mtime_ns": 1791330561319564540,
+        "nlink": 5,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-elapsed-20261006-a1",
+      "regular_logical_bytes_O5": 162099006,
+      "serialized_body_hash_files": 1032,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "R2"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791343455137453780,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14182197,
+        "mode": 16893,
+        "mtime_ns": 1791343455137453780,
+        "nlink": 5,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-elapsed-20261006-a1",
+      "regular_logical_bytes_O5": 256434649,
+      "serialized_body_hash_files": 1105,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "R9"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791324084900892861,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14157768,
+        "mode": 16893,
+        "mtime_ns": 1791324084900892861,
+        "nlink": 7,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bound-estimates-20261006-a1",
+      "regular_logical_bytes_O5": 205478031,
+      "serialized_body_hash_files": 865,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "O2"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791335163701467752,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14171191,
+        "mode": 16893,
+        "mtime_ns": 1791335163701467752,
+        "nlink": 4,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": true,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-count-20261006-a1",
+      "regular_logical_bytes_O5": 182828448,
+      "serialized_body_hash_files": 643,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": []
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791335670357763381,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14172557,
+        "mode": 16893,
+        "mtime_ns": 1791335670357763381,
+        "nlink": 6,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-count-20261006-a2",
+      "regular_logical_bytes_O5": 202090838,
+      "serialized_body_hash_files": 795,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "R3"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791337011502795039,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14173478,
+        "mode": 16893,
+        "mtime_ns": 1791337011502795039,
+        "nlink": 5,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-elapsed-20261006-a2",
+      "regular_logical_bytes_O5": 194496610,
+      "serialized_body_hash_files": 739,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "R4"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791339119317940239,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14175136,
+        "mode": 16893,
+        "mtime_ns": 1791339119317940239,
+        "nlink": 6,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-elapsed-20261006-a1",
+      "regular_logical_bytes_O5": 293584560,
+      "serialized_body_hash_files": 959,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "R5"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791323188371646621,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14157296,
+        "mode": 16893,
+        "mtime_ns": 1791323188371646621,
+        "nlink": 5,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-count-equivalence-20261006-a2",
+      "regular_logical_bytes_O5": 21296320,
+      "serialized_body_hash_files": 397,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "O1"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791334415812633713,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14167713,
+        "mode": 16893,
+        "mtime_ns": 1791334415812633713,
+        "nlink": 6,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-20261006-a1",
+      "regular_logical_bytes_O5": 206110568,
+      "serialized_body_hash_files": 666,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "R15"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791334327538711617,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14167716,
+        "mode": 16893,
+        "mtime_ns": 1791334327538711617,
+        "nlink": 6,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-object-counts-g17-20261006-a1",
+      "regular_logical_bytes_O5": 206422699,
+      "serialized_body_hash_files": 656,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "R15"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791327915764644331,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14159571,
+        "mode": 16893,
+        "mtime_ns": 1791327915764644331,
+        "nlink": 6,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": true,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-t1-counts-20261006-a1",
+      "regular_logical_bytes_O5": 181013530,
+      "serialized_body_hash_files": 617,
+      "serialized_hash_scope": "metadata_suffixes_only",
+      "source_receipt_keys": []
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791344735196066116,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 9345435,
+        "mode": 16893,
+        "mtime_ns": 1791344735196066116,
+        "nlink": 5,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-float-memory-elapsed-20261006-a1",
+      "regular_logical_bytes_O5": 209421250,
+      "serialized_body_hash_files": 730,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "R7"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791334986299610193,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14171153,
+        "mode": 16893,
+        "mtime_ns": 1791334986299610193,
+        "nlink": 6,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-call-projections-20261006-a1",
+      "regular_logical_bytes_O5": 91664608,
+      "serialized_body_hash_files": 26,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "R14"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791334998859741773,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14171142,
+        "mode": 16893,
+        "mtime_ns": 1791334998859741773,
+        "nlink": 3,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": true,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-call-projections-20261006-a1-control",
+      "regular_logical_bytes_O5": 50077,
+      "serialized_body_hash_files": 12,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": []
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791341313875939200,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14179370,
+        "mode": 16893,
+        "mtime_ns": 1791341313875939200,
+        "nlink": 5,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-elapsed-20261006-a1",
+      "regular_logical_bytes_O5": 225139301,
+      "serialized_body_hash_files": 751,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "R8"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791331187757049215,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14164993,
+        "mode": 16893,
+        "mtime_ns": 1791331187757049215,
+        "nlink": 5,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-clock-20261006-a2",
+      "regular_logical_bytes_O5": 126373607,
+      "serialized_body_hash_files": 712,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "R6"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791332750764204048,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14165755,
+        "mode": 16893,
+        "mtime_ns": 1791332750764204048,
+        "nlink": 5,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-memory-20261006-a1",
+      "regular_logical_bytes_O5": 175765075,
+      "serialized_body_hash_files": 1138,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "R10"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791339438357286605,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14176826,
+        "mode": 16893,
+        "mtime_ns": 1791339438357286605,
+        "nlink": 7,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-estimation-role-20261006-a1",
+      "regular_logical_bytes_O5": 114151704,
+      "serialized_body_hash_files": 796,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "R11"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791339999589170413,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14177706,
+        "mode": 16893,
+        "mtime_ns": 1791339999589170413,
+        "nlink": 7,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-estimation-role-20261006-a2",
+      "regular_logical_bytes_O5": 115123680,
+      "serialized_body_hash_files": 819,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "R12"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791341717398164710,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14180173,
+        "mode": 16893,
+        "mtime_ns": 1791341717398164710,
+        "nlink": 6,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-estimation-role-20261006-a2-postfill-a1",
+      "regular_logical_bytes_O5": 248150813,
+      "serialized_body_hash_files": 798,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "R13"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791328384887372860,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14160244,
+        "mode": 16893,
+        "mtime_ns": 1791328384887372860,
+        "nlink": 5,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": true,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-functional-bfs-source-20261006-a1",
+      "regular_logical_bytes_O5": 182342869,
+      "serialized_body_hash_files": 644,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": []
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791329031259936076,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14160934,
+        "mode": 16893,
+        "mtime_ns": 1791329031259936076,
+        "nlink": 6,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-functional-bfs-strict-20261006-a2",
+      "regular_logical_bytes_O5": 241344406,
+      "serialized_body_hash_files": 786,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "O5"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791334602585585330,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14169776,
+        "mode": 16893,
+        "mtime_ns": 1791334602585585330,
+        "nlink": 5,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-functional-dx-object-counts-20261006-a2",
+      "regular_logical_bytes_O5": 149860977,
+      "serialized_body_hash_files": 649,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "O4"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791339564808612583,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14176158,
+        "mode": 16893,
+        "mtime_ns": 1791339564808612583,
+        "nlink": 5,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-functional-evaluation-20261006-a1",
+      "regular_logical_bytes_O5": 229275923,
+      "serialized_body_hash_files": 644,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "O3"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791329412276813313,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14162757,
+        "mode": 16893,
+        "mtime_ns": 1791329412276813313,
+        "nlink": 3,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-native-root-projection-20261006-a1",
+      "regular_logical_bytes_O5": 42598325,
+      "serialized_body_hash_files": 14,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "O7"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791334831415986805,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14170467,
+        "mode": 16893,
+        "mtime_ns": 1791334831415986805,
+        "nlink": 3,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": true,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a1-control",
+      "regular_logical_bytes_O5": 53465,
+      "serialized_body_hash_files": 13,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": []
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791335880988961335,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14171881,
+        "mode": 16893,
+        "mtime_ns": 1791335880988961335,
+        "nlink": 12,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": false,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2",
+      "regular_logical_bytes_O5": 719761160,
+      "serialized_body_hash_files": 696,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": [
+        "O6"
+      ]
+    },
+    {
+      "O5_root_stat": {
+        "ctime_ns": 1791337082662546228,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14171870,
+        "mode": 16893,
+        "mtime_ns": 1791337082662546228,
+        "nlink": 3,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "additional_control_sibling": true,
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a2-control",
+      "regular_logical_bytes_O5": 115735,
+      "serialized_body_hash_files": 22,
+      "serialized_hash_scope": "all_regular_files",
+      "source_receipt_keys": []
+    }
+  ],
+  "RETIRE_additional_known_size_illustration": {
+    "allocation_observation_whole_body_once": 22858530,
+    "five_library_byte_passes": 40666880,
+    "future_13_both_alias_passes": 913358,
+    "old_admin_five_body_pass_size_illustration_not_replacement_index_bound": 36804680,
+    "parent_review_once": 1882,
+    "pending_controls_both_alias_passes": 61952,
+    "plan_and_own_source_34_passes_using_old_actual_sizes_illustration": 30641446,
+    "protected_35_first_unique_union_and_final_full_body_upper_illustration": 31966536,
+    "seventeen_portal_original_and_native_fixed_body_passes": 257469403
+  },
+  "RETIRE_plus_both_reuses_illustrative_known_subtotal": 15123930664,
+  "actual_failed_DEFAULT": {
+    "bytes_read": 17180239456,
+    "completed_retirements": [],
+    "failure": "cumulative_read_limit",
+    "initial_checks_present": true,
+    "overshoot": 370272,
+    "specific_failing_file_or_call_not_serialized": true,
+    "stat_checks": 98615,
+    "unchanged_read_cap": 17179869184,
+    "walk_entries": 112451
+  },
+  "date_ET": "2026-10-08",
+  "disjoint_core_terms": {
+    "153_outside_RAW_scope_historical_first_reads": 2620021753,
+    "184_receipt_leaf_whole_body_reads_both_alias_passes": 639798302,
+    "184_source_leaf_whole_body_reads_both_alias_passes": 4133226,
+    "PRIMARY_suffix_first_reads_including_first_22_receipts": 1137168460,
+    "second_22_original_receipts": 14876616,
+    "two_fresh_full_RAW_regular_passes": 10575356194
+  },
+  "format": "swdb.local-sparse-R2-corrected-read-budget-source-metadata-analysis.v1",
+  "metadata_DEFAULT_additional_known_size_illustration": {
+    "allocation_observation_whole_body_once": 22858530,
+    "future_13_both_alias_passes": 913358,
+    "old_admin_initial_body_pass": 7360936,
+    "one_portal_original_and_native_fixed_body_pass": 15145259,
+    "parent_review_once": 1882,
+    "pending_controls_both_alias_passes": 61952,
+    "plan_and_own_source_four_passes_using_old_actual_sizes_illustration": 1802438,
+    "protected_35_first_unique_union_and_final_full_body_upper_illustration": 31966536,
+    "two_library_byte_passes": 16266752
+  },
+  "metadata_DEFAULT_plus_cache_illustrative_known_subtotal": 14477501668,
+  "original_symlink_text_bytes_not_charged_by_read": 2032,
+  "outside_30_RAW_historical_files": [
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-count-20261006-a1",
+      "bytes": 252065,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-count-20261006-a1/records/certifications/certification.23f81442358b4dcc8688140a394a1f08.yaml",
+      "sha256": "9bf2cbc3d35aef0fddd01c2aa699456f6f298d4e2ee0a27d3d436d9f028c87b6",
+      "stat": {
+        "ctime_ns": 1791342093597102939,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14181282,
+        "mode": 33204,
+        "mtime_ns": 1791340352720870888,
+        "nlink": 1,
+        "size": 252065,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-count-20261006-a1",
+      "bytes": 17282501,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-count-20261006-a1/records/workload_characterizations/bc.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "d12b5f57c61007219d367942ee554db1d27ee1d8614e2c1279e1164230f534e8",
+      "stat": {
+        "ctime_ns": 1791342093761104655,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14181500,
+        "mode": 33204,
+        "mtime_ns": 1791340352925873036,
+        "nlink": 1,
+        "size": 17282501,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-count-20261006-a1",
+      "bytes": 17343787,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-count-20261006-a1/records/workload_characterizations/bc.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "e3e5d69e1d6a5310dad6c693112b7eb7d86dae9d533ee85ef86450d09831daf4",
+      "stat": {
+        "ctime_ns": 1791342093666103661,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14181491,
+        "mode": 33204,
+        "mtime_ns": 1791340352998873801,
+        "nlink": 1,
+        "size": 17343787,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-count-20261006-a1",
+      "bytes": 14485038,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-count-20261006-a1/records/workload_characterizations/bfs.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "cda2c51423c167249fd760f359ee0ead180bcb2e2d4db2c722c9b724120458ba",
+      "stat": {
+        "ctime_ns": 1791342093675103755,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14181493,
+        "mode": 33204,
+        "mtime_ns": 1791340353073874587,
+        "nlink": 1,
+        "size": 14485038,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-count-20261006-a1",
+      "bytes": 14548815,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-count-20261006-a1/records/workload_characterizations/bfs.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "3acba4d734334e61221ae6dd1856fffc9bbc231616fec805288c1a5d806c1033",
+      "stat": {
+        "ctime_ns": 1791342093714104163,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14181497,
+        "mode": 33204,
+        "mtime_ns": 1791340353133875215,
+        "nlink": 1,
+        "size": 14548815,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-count-20261006-a1",
+      "bytes": 4765,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-count-20261006-a1/runner.py",
+      "sha256": "9dae599f2fee708f33fdb78b062cb82e742f0b933368ce4dfe60cb65e6997586",
+      "stat": {
+        "ctime_ns": 1791342093235099150,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14181040,
+        "mode": 33204,
+        "mtime_ns": 1791342093235099150,
+        "nlink": 1,
+        "size": 4765,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-count-20261006-a1",
+      "bytes": 252065,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-count-20261006-a1/records/certifications/certification.23f81442358b4dcc8688140a394a1f08.yaml",
+      "sha256": "9bf2cbc3d35aef0fddd01c2aa699456f6f298d4e2ee0a27d3d436d9f028c87b6",
+      "stat": {
+        "ctime_ns": 1791337261274430125,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14174522,
+        "mode": 33204,
+        "mtime_ns": 1791337259385410213,
+        "nlink": 1,
+        "size": 252065,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-count-20261006-a1",
+      "bytes": 17282501,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-count-20261006-a1/records/workload_characterizations/bc.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "d12b5f57c61007219d367942ee554db1d27ee1d8614e2c1279e1164230f534e8",
+      "stat": {
+        "ctime_ns": 1791337261369431127,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14174740,
+        "mode": 33204,
+        "mtime_ns": 1791337259590412373,
+        "nlink": 1,
+        "size": 17282501,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-count-20261006-a1",
+      "bytes": 17343787,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-count-20261006-a1/records/workload_characterizations/bc.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "e3e5d69e1d6a5310dad6c693112b7eb7d86dae9d533ee85ef86450d09831daf4",
+      "stat": {
+        "ctime_ns": 1791337261311430516,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14174731,
+        "mode": 33204,
+        "mtime_ns": 1791337259663413143,
+        "nlink": 1,
+        "size": 17343787,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-count-20261006-a1",
+      "bytes": 14485038,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-count-20261006-a1/records/workload_characterizations/bfs.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "cda2c51423c167249fd760f359ee0ead180bcb2e2d4db2c722c9b724120458ba",
+      "stat": {
+        "ctime_ns": 1791337261319430600,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14174733,
+        "mode": 33204,
+        "mtime_ns": 1791337259738413934,
+        "nlink": 1,
+        "size": 14485038,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-count-20261006-a1",
+      "bytes": 14548815,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-count-20261006-a1/records/workload_characterizations/bfs.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "3acba4d734334e61221ae6dd1856fffc9bbc231616fec805288c1a5d806c1033",
+      "stat": {
+        "ctime_ns": 1791337261345430874,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14174737,
+        "mode": 33204,
+        "mtime_ns": 1791337259798414566,
+        "nlink": 1,
+        "size": 14548815,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-count-20261006-a1",
+      "bytes": 4777,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-count-20261006-a1/runner.py",
+      "sha256": "8789833badce21aa846419cf6f575b5b298d7c7db5d7395b199917ea600b9c46",
+      "stat": {
+        "ctime_ns": 1791337260898426162,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14174279,
+        "mode": 33204,
+        "mtime_ns": 1791337260898426162,
+        "nlink": 1,
+        "size": 4777,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 252065,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/certifications/certification.23f81442358b4dcc8688140a394a1f08.yaml",
+      "sha256": "9bf2cbc3d35aef0fddd01c2aa699456f6f298d4e2ee0a27d3d436d9f028c87b6",
+      "stat": {
+        "ctime_ns": 1791370997292484857,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191936,
+        "mode": 33204,
+        "mtime_ns": 1791349305477226721,
+        "nlink": 1,
+        "size": 252065,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 4284606,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/cpu_error_bands/lanl.cpu.bc.t1.development-band.v1.yaml",
+      "sha256": "90e7a5c52b455007bf2303f06098e7c7a64a4fe57f410f203a6d3061b46b87d0",
+      "stat": {
+        "ctime_ns": 1791370997249484410,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191672,
+        "mode": 33204,
+        "mtime_ns": 1791363634898993430,
+        "nlink": 1,
+        "size": 4284606,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 4286349,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/cpu_error_bands/lanl.cpu.bc.t1.heldout-band.v1.yaml",
+      "sha256": "1104a909cc97af87ff3c3f37ddf7d8af949da289ac2de4b93cec5bd6babb0513",
+      "stat": {
+        "ctime_ns": 1791370997247484389,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191671,
+        "mode": 33204,
+        "mtime_ns": 1791369074429484300,
+        "nlink": 1,
+        "size": 4286349,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 3726771,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/cpu_error_bands/lanl.cpu.bfs.t1.development-band.v1.yaml",
+      "sha256": "b0bed9704f0ba6be1b8b8e12d39a576aa50ca9d7d53de77e9a7860aacee10d2c",
+      "stat": {
+        "ctime_ns": 1791370997244484357,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191670,
+        "mode": 33204,
+        "mtime_ns": 1791362769442040990,
+        "nlink": 1,
+        "size": 3726771,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 3726513,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/cpu_error_bands/lanl.cpu.bfs.t1.heldout-band.v1.yaml",
+      "sha256": "5bf5401b77ad37ce4d9e4410908b195bcb0d193375a1653aa3e3bd762b6b664b",
+      "stat": {
+        "ctime_ns": 1791370997241484326,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191669,
+        "mode": 33204,
+        "mtime_ns": 1791368032224649442,
+        "nlink": 1,
+        "size": 3726513,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 1409442,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/cpu_service_calibrations/mbit10.cpu.lanl20261006.service.openmp.a1.yaml",
+      "sha256": "5a42507a23ef57642a4864f06f79dbafcf8def6fafa0a5aebe56fd5312ff1a32",
+      "stat": {
+        "ctime_ns": 1791370997495486968,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192304,
+        "mode": 33204,
+        "mtime_ns": 1791349305513227107,
+        "nlink": 1,
+        "size": 1409442,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 70540153,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/estimates/lanl.cpu.bc.g16.t1.estimate.v1.yaml",
+      "sha256": "896b4edeb91917cec165401419192ab3851b32818f567cbb438fc231a8de1bb8",
+      "stat": {
+        "ctime_ns": 1791370997362485585,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191957,
+        "mode": 33204,
+        "mtime_ns": 1791356125337120659,
+        "nlink": 1,
+        "size": 70540153,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 70599282,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/estimates/lanl.cpu.bc.g17.t1.estimate.v1.yaml",
+      "sha256": "8881f27316ab856e15c7ce099a32855021f897283158d016aff7dfb42a39da76",
+      "stat": {
+        "ctime_ns": 1791370997436486354,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191962,
+        "mode": 33204,
+        "mtime_ns": 1791358264457265181,
+        "nlink": 1,
+        "size": 70599282,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 70599862,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/estimates/lanl.cpu.bc.g17.t1.report.v1.yaml",
+      "sha256": "6bf293d9654b415b20abe6b332ed2c52dc3aaf1fa5d63c7d7eb73993ff5e6045",
+      "stat": {
+        "ctime_ns": 1791378671850926898,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192406,
+        "mode": 33204,
+        "mtime_ns": 1791378671815926525,
+        "nlink": 1,
+        "size": 70599862,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 53583441,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/estimates/lanl.cpu.bfs.g16.t1.estimate.v1.yaml",
+      "sha256": "dc4035f1a48302f13ae0e22ad29865b2ade2aa43ba42f924e9252c1cb0ae9269",
+      "stat": {
+        "ctime_ns": 1791370997394485917,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191959,
+        "mode": 33204,
+        "mtime_ns": 1791355123891714828,
+        "nlink": 1,
+        "size": 53583441,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 53717401,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/estimates/lanl.cpu.bfs.g17.t1.estimate.v1.yaml",
+      "sha256": "ee39a6d578cf38cb0cd1d86caaa9e9d6135ba3b0179e3060a40732bf318a159e",
+      "stat": {
+        "ctime_ns": 1791370997324485189,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191955,
+        "mode": 33204,
+        "mtime_ns": 1791357166183902595,
+        "nlink": 1,
+        "size": 53717401,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 53717875,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/estimates/lanl.cpu.bfs.g17.t1.report.v1.yaml",
+      "sha256": "d12423e64b4684b0f101642d2a6840ddb0bd518de252f6a9de25f0092fa591d0",
+      "stat": {
+        "ctime_ns": 1791374728412340065,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192397,
+        "mode": 33204,
+        "mtime_ns": 1791374728386339793,
+        "nlink": 1,
+        "size": 53717875,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 692249,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/protocols/lanl.cpu.bc.t1.native-model.v1.35eaffdaadffeea0.yaml",
+      "sha256": "4140edcbc930859ea7f05f78772c29e3cc752632c9d44aaeae57ed8201da3f33",
+      "stat": {
+        "ctime_ns": 1791370997277484701,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191820,
+        "mode": 33204,
+        "mtime_ns": 1791353976884728507,
+        "nlink": 1,
+        "size": 692249,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 5560287,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/protocols/lanl.cpu.bc.t1.report-model.v1.4122574ca4db5098.yaml",
+      "sha256": "67b41accce7f5acf46cbcd6cba3e7260998ace9ddc155b2f6dbff6024540682b",
+      "stat": {
+        "ctime_ns": 1791376999466186510,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192402,
+        "mode": 33204,
+        "mtime_ns": 1791376999463186479,
+        "nlink": 1,
+        "size": 5560287,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 692147,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/protocols/lanl.cpu.bfs.t1.native-model.v1.c74c7a1046e0e5f1.yaml",
+      "sha256": "ff538076ca2048c03672e7dcd1a7046895bed05b41be05979ec3e7493f8f4d5b",
+      "stat": {
+        "ctime_ns": 1791370997278484711,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191823,
+        "mode": 33204,
+        "mtime_ns": 1791352173036730721,
+        "nlink": 1,
+        "size": 692147,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 4923667,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/protocols/lanl.cpu.bfs.t1.report-model.v1.57192fc6d5fbdc07.yaml",
+      "sha256": "f8e91ff6e6defe255cc80a298c8b36d42a908ec6c22dc9d233dab7b3c97eaf42",
+      "stat": {
+        "ctime_ns": 1791373200293412367,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192391,
+        "mode": 33204,
+        "mtime_ns": 1791373200291412346,
+        "nlink": 1,
+        "size": 4923667,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 597632,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/target_descriptions/mbit10.cpu.lanl20261006.t1.services.v1.yaml",
+      "sha256": "cee03869aa2ab624d0eb1ef54b8807603d2a222d749113c7d65d847549c45c6d",
+      "stat": {
+        "ctime_ns": 1791370997632488392,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192369,
+        "mode": 33204,
+        "mtime_ns": 1791349982431459499,
+        "nlink": 1,
+        "size": 597632,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 17282501,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/workload_characterizations/bc.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "d12b5f57c61007219d367942ee554db1d27ee1d8614e2c1279e1164230f534e8",
+      "stat": {
+        "ctime_ns": 1791370997543487467,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192317,
+        "mode": 33204,
+        "mtime_ns": 1791349305807230262,
+        "nlink": 1,
+        "size": 17282501,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 17343787,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/workload_characterizations/bc.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "e3e5d69e1d6a5310dad6c693112b7eb7d86dae9d533ee85ef86450d09831daf4",
+      "stat": {
+        "ctime_ns": 1791370997577487820,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192321,
+        "mode": 33204,
+        "mtime_ns": 1791349305869230927,
+        "nlink": 1,
+        "size": 17343787,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 14485038,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/workload_characterizations/bfs.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "cda2c51423c167249fd760f359ee0ead180bcb2e2d4db2c722c9b724120458ba",
+      "stat": {
+        "ctime_ns": 1791370997520487228,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192313,
+        "mode": 33204,
+        "mtime_ns": 1791349305971232022,
+        "nlink": 1,
+        "size": 14485038,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4",
+      "bytes": 14548815,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4/records/workload_characterizations/bfs.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "3acba4d734334e61221ae6dd1856fffc9bbc231616fec805288c1a5d806c1033",
+      "stat": {
+        "ctime_ns": 1791370997528487311,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192314,
+        "mode": 33204,
+        "mtime_ns": 1791349306015232494,
+        "nlink": 1,
+        "size": 14548815,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3",
+      "bytes": 252065,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3/records/certifications/certification.23f81442358b4dcc8688140a394a1f08.yaml",
+      "sha256": "9bf2cbc3d35aef0fddd01c2aa699456f6f298d4e2ee0a27d3d436d9f028c87b6",
+      "stat": {
+        "ctime_ns": 1791360305366491760,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14190352,
+        "mode": 33204,
+        "mtime_ns": 1791349305477226721,
+        "nlink": 1,
+        "size": 252065,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3",
+      "bytes": 4284606,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3/records/cpu_error_bands/lanl.cpu.bc.t1.development-band.v1.yaml",
+      "sha256": "90e7a5c52b455007bf2303f06098e7c7a64a4fe57f410f203a6d3061b46b87d0",
+      "stat": {
+        "ctime_ns": 1791363634900993451,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14190833,
+        "mode": 33204,
+        "mtime_ns": 1791363634898993430,
+        "nlink": 1,
+        "size": 4284606,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3",
+      "bytes": 3726771,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3/records/cpu_error_bands/lanl.cpu.bfs.t1.development-band.v1.yaml",
+      "sha256": "b0bed9704f0ba6be1b8b8e12d39a576aa50ca9d7d53de77e9a7860aacee10d2c",
+      "stat": {
+        "ctime_ns": 1791362769444041010,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14190829,
+        "mode": 33204,
+        "mtime_ns": 1791362769442040990,
+        "nlink": 1,
+        "size": 3726771,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3",
+      "bytes": 1409442,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3/records/cpu_service_calibrations/mbit10.cpu.lanl20261006.service.openmp.a1.yaml",
+      "sha256": "5a42507a23ef57642a4864f06f79dbafcf8def6fafa0a5aebe56fd5312ff1a32",
+      "stat": {
+        "ctime_ns": 1791360305573493915,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14190720,
+        "mode": 33204,
+        "mtime_ns": 1791349305513227107,
+        "nlink": 1,
+        "size": 1409442,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3",
+      "bytes": 70540153,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3/records/estimates/lanl.cpu.bc.g16.t1.estimate.v1.yaml",
+      "sha256": "896b4edeb91917cec165401419192ab3851b32818f567cbb438fc231a8de1bb8",
+      "stat": {
+        "ctime_ns": 1791360305439492520,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14190373,
+        "mode": 33204,
+        "mtime_ns": 1791356125337120659,
+        "nlink": 1,
+        "size": 70540153,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3",
+      "bytes": 70599282,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3/records/estimates/lanl.cpu.bc.g17.t1.estimate.v1.yaml",
+      "sha256": "8881f27316ab856e15c7ce099a32855021f897283158d016aff7dfb42a39da76",
+      "stat": {
+        "ctime_ns": 1791360305516493322,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14190378,
+        "mode": 33204,
+        "mtime_ns": 1791358264457265181,
+        "nlink": 1,
+        "size": 70599282,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3",
+      "bytes": 53583441,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3/records/estimates/lanl.cpu.bfs.g16.t1.estimate.v1.yaml",
+      "sha256": "dc4035f1a48302f13ae0e22ad29865b2ade2aa43ba42f924e9252c1cb0ae9269",
+      "stat": {
+        "ctime_ns": 1791360305472492864,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14190375,
+        "mode": 33204,
+        "mtime_ns": 1791355123891714828,
+        "nlink": 1,
+        "size": 53583441,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3",
+      "bytes": 53717401,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3/records/estimates/lanl.cpu.bfs.g17.t1.estimate.v1.yaml",
+      "sha256": "ee39a6d578cf38cb0cd1d86caaa9e9d6135ba3b0179e3060a40732bf318a159e",
+      "stat": {
+        "ctime_ns": 1791360305399492104,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14190371,
+        "mode": 33204,
+        "mtime_ns": 1791357166183902595,
+        "nlink": 1,
+        "size": 53717401,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3",
+      "bytes": 692249,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3/records/protocols/lanl.cpu.bc.t1.native-model.v1.35eaffdaadffeea0.yaml",
+      "sha256": "4140edcbc930859ea7f05f78772c29e3cc752632c9d44aaeae57ed8201da3f33",
+      "stat": {
+        "ctime_ns": 1791360305352491615,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14190236,
+        "mode": 33204,
+        "mtime_ns": 1791353976884728507,
+        "nlink": 1,
+        "size": 692249,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3",
+      "bytes": 692147,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3/records/protocols/lanl.cpu.bfs.t1.native-model.v1.c74c7a1046e0e5f1.yaml",
+      "sha256": "ff538076ca2048c03672e7dcd1a7046895bed05b41be05979ec3e7493f8f4d5b",
+      "stat": {
+        "ctime_ns": 1791360305353491625,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14190239,
+        "mode": 33204,
+        "mtime_ns": 1791352173036730721,
+        "nlink": 1,
+        "size": 692147,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3",
+      "bytes": 597632,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3/records/target_descriptions/mbit10.cpu.lanl20261006.t1.services.v1.yaml",
+      "sha256": "cee03869aa2ab624d0eb1ef54b8807603d2a222d749113c7d65d847549c45c6d",
+      "stat": {
+        "ctime_ns": 1791360305712495362,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14190780,
+        "mode": 33204,
+        "mtime_ns": 1791349982431459499,
+        "nlink": 1,
+        "size": 597632,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3",
+      "bytes": 17282501,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3/records/workload_characterizations/bc.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "d12b5f57c61007219d367942ee554db1d27ee1d8614e2c1279e1164230f534e8",
+      "stat": {
+        "ctime_ns": 1791360305623494436,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14190733,
+        "mode": 33204,
+        "mtime_ns": 1791349305807230262,
+        "nlink": 1,
+        "size": 17282501,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3",
+      "bytes": 17343787,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3/records/workload_characterizations/bc.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "e3e5d69e1d6a5310dad6c693112b7eb7d86dae9d533ee85ef86450d09831daf4",
+      "stat": {
+        "ctime_ns": 1791360305657494790,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14190737,
+        "mode": 33204,
+        "mtime_ns": 1791349305869230927,
+        "nlink": 1,
+        "size": 17343787,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3",
+      "bytes": 14485038,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3/records/workload_characterizations/bfs.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "cda2c51423c167249fd760f359ee0ead180bcb2e2d4db2c722c9b724120458ba",
+      "stat": {
+        "ctime_ns": 1791360305599494186,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14190729,
+        "mode": 33204,
+        "mtime_ns": 1791349305971232022,
+        "nlink": 1,
+        "size": 14485038,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3",
+      "bytes": 14548815,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3/records/workload_characterizations/bfs.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "3acba4d734334e61221ae6dd1856fffc9bbc231616fec805288c1a5d806c1033",
+      "stat": {
+        "ctime_ns": 1791360305607494269,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14190730,
+        "mode": 33204,
+        "mtime_ns": 1791349306015232494,
+        "nlink": 1,
+        "size": 14548815,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3",
+      "bytes": 252065,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/records/certifications/certification.23f81442358b4dcc8688140a394a1f08.yaml",
+      "sha256": "9bf2cbc3d35aef0fddd01c2aa699456f6f298d4e2ee0a27d3d436d9f028c87b6",
+      "stat": {
+        "ctime_ns": 1791365345127743662,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191159,
+        "mode": 33204,
+        "mtime_ns": 1791349305477226721,
+        "nlink": 1,
+        "size": 252065,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3",
+      "bytes": 4284606,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/records/cpu_error_bands/lanl.cpu.bc.t1.development-band.v1.yaml",
+      "sha256": "90e7a5c52b455007bf2303f06098e7c7a64a4fe57f410f203a6d3061b46b87d0",
+      "stat": {
+        "ctime_ns": 1791365345087743247,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14190895,
+        "mode": 33204,
+        "mtime_ns": 1791363634898993430,
+        "nlink": 1,
+        "size": 4284606,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3",
+      "bytes": 4286349,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/records/cpu_error_bands/lanl.cpu.bc.t1.heldout-band.v1.yaml",
+      "sha256": "1104a909cc97af87ff3c3f37ddf7d8af949da289ac2de4b93cec5bd6babb0513",
+      "stat": {
+        "ctime_ns": 1791369074431484321,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191641,
+        "mode": 33204,
+        "mtime_ns": 1791369074429484300,
+        "nlink": 1,
+        "size": 4286349,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3",
+      "bytes": 3726771,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/records/cpu_error_bands/lanl.cpu.bfs.t1.development-band.v1.yaml",
+      "sha256": "b0bed9704f0ba6be1b8b8e12d39a576aa50ca9d7d53de77e9a7860aacee10d2c",
+      "stat": {
+        "ctime_ns": 1791365345083743205,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14190894,
+        "mode": 33204,
+        "mtime_ns": 1791362769442040990,
+        "nlink": 1,
+        "size": 3726771,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3",
+      "bytes": 3726513,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/records/cpu_error_bands/lanl.cpu.bfs.t1.heldout-band.v1.yaml",
+      "sha256": "5bf5401b77ad37ce4d9e4410908b195bcb0d193375a1653aa3e3bd762b6b664b",
+      "stat": {
+        "ctime_ns": 1791368032225649453,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191637,
+        "mode": 33204,
+        "mtime_ns": 1791368032224649442,
+        "nlink": 1,
+        "size": 3726513,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3",
+      "bytes": 1409442,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/records/cpu_service_calibrations/mbit10.cpu.lanl20261006.service.openmp.a1.yaml",
+      "sha256": "5a42507a23ef57642a4864f06f79dbafcf8def6fafa0a5aebe56fd5312ff1a32",
+      "stat": {
+        "ctime_ns": 1791365345328745750,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191527,
+        "mode": 33204,
+        "mtime_ns": 1791349305513227107,
+        "nlink": 1,
+        "size": 1409442,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3",
+      "bytes": 70540153,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/records/estimates/lanl.cpu.bc.g16.t1.estimate.v1.yaml",
+      "sha256": "896b4edeb91917cec165401419192ab3851b32818f567cbb438fc231a8de1bb8",
+      "stat": {
+        "ctime_ns": 1791365345199744410,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191180,
+        "mode": 33204,
+        "mtime_ns": 1791356125337120659,
+        "nlink": 1,
+        "size": 70540153,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3",
+      "bytes": 70599282,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/records/estimates/lanl.cpu.bc.g17.t1.estimate.v1.yaml",
+      "sha256": "8881f27316ab856e15c7ce099a32855021f897283158d016aff7dfb42a39da76",
+      "stat": {
+        "ctime_ns": 1791365345274745190,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191185,
+        "mode": 33204,
+        "mtime_ns": 1791358264457265181,
+        "nlink": 1,
+        "size": 70599282,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3",
+      "bytes": 53583441,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/records/estimates/lanl.cpu.bfs.g16.t1.estimate.v1.yaml",
+      "sha256": "dc4035f1a48302f13ae0e22ad29865b2ade2aa43ba42f924e9252c1cb0ae9269",
+      "stat": {
+        "ctime_ns": 1791365345232744753,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191182,
+        "mode": 33204,
+        "mtime_ns": 1791355123891714828,
+        "nlink": 1,
+        "size": 53583441,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3",
+      "bytes": 53717401,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/records/estimates/lanl.cpu.bfs.g17.t1.estimate.v1.yaml",
+      "sha256": "ee39a6d578cf38cb0cd1d86caaa9e9d6135ba3b0179e3060a40732bf318a159e",
+      "stat": {
+        "ctime_ns": 1791365345160744005,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191178,
+        "mode": 33204,
+        "mtime_ns": 1791357166183902595,
+        "nlink": 1,
+        "size": 53717401,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3",
+      "bytes": 692249,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/records/protocols/lanl.cpu.bc.t1.native-model.v1.35eaffdaadffeea0.yaml",
+      "sha256": "4140edcbc930859ea7f05f78772c29e3cc752632c9d44aaeae57ed8201da3f33",
+      "stat": {
+        "ctime_ns": 1791365345114743527,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191043,
+        "mode": 33204,
+        "mtime_ns": 1791353976884728507,
+        "nlink": 1,
+        "size": 692249,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3",
+      "bytes": 692147,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/records/protocols/lanl.cpu.bfs.t1.native-model.v1.c74c7a1046e0e5f1.yaml",
+      "sha256": "ff538076ca2048c03672e7dcd1a7046895bed05b41be05979ec3e7493f8f4d5b",
+      "stat": {
+        "ctime_ns": 1791365345114743527,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191046,
+        "mode": 33204,
+        "mtime_ns": 1791352173036730721,
+        "nlink": 1,
+        "size": 692147,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3",
+      "bytes": 597632,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/records/target_descriptions/mbit10.cpu.lanl20261006.t1.services.v1.yaml",
+      "sha256": "cee03869aa2ab624d0eb1ef54b8807603d2a222d749113c7d65d847549c45c6d",
+      "stat": {
+        "ctime_ns": 1791365345464747163,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191590,
+        "mode": 33204,
+        "mtime_ns": 1791349982431459499,
+        "nlink": 1,
+        "size": 597632,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3",
+      "bytes": 17282501,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/records/workload_characterizations/bc.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "d12b5f57c61007219d367942ee554db1d27ee1d8614e2c1279e1164230f534e8",
+      "stat": {
+        "ctime_ns": 1791365345376746249,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191540,
+        "mode": 33204,
+        "mtime_ns": 1791349305807230262,
+        "nlink": 1,
+        "size": 17282501,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3",
+      "bytes": 17343787,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/records/workload_characterizations/bc.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "e3e5d69e1d6a5310dad6c693112b7eb7d86dae9d533ee85ef86450d09831daf4",
+      "stat": {
+        "ctime_ns": 1791365345409746592,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191544,
+        "mode": 33204,
+        "mtime_ns": 1791349305869230927,
+        "nlink": 1,
+        "size": 17343787,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3",
+      "bytes": 14485038,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/records/workload_characterizations/bfs.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "cda2c51423c167249fd760f359ee0ead180bcb2e2d4db2c722c9b724120458ba",
+      "stat": {
+        "ctime_ns": 1791365345352746000,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191536,
+        "mode": 33204,
+        "mtime_ns": 1791349305971232022,
+        "nlink": 1,
+        "size": 14485038,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3",
+      "bytes": 14548815,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3/records/workload_characterizations/bfs.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "3acba4d734334e61221ae6dd1856fffc9bbc231616fec805288c1a5d806c1033",
+      "stat": {
+        "ctime_ns": 1791365345360746083,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14191537,
+        "mode": 33204,
+        "mtime_ns": 1791349306015232494,
+        "nlink": 1,
+        "size": 14548815,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1",
+      "bytes": 252065,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1/records/certifications/certification.23f81442358b4dcc8688140a394a1f08.yaml",
+      "sha256": "9bf2cbc3d35aef0fddd01c2aa699456f6f298d4e2ee0a27d3d436d9f028c87b6",
+      "stat": {
+        "ctime_ns": 1791349307071243824,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14188060,
+        "mode": 33204,
+        "mtime_ns": 1791349305477226721,
+        "nlink": 1,
+        "size": 252065,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1",
+      "bytes": 1409442,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1/records/cpu_service_calibrations/mbit10.cpu.lanl20261006.service.openmp.a1.yaml",
+      "sha256": "5a42507a23ef57642a4864f06f79dbafcf8def6fafa0a5aebe56fd5312ff1a32",
+      "stat": {
+        "ctime_ns": 1791349307097244103,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14188239,
+        "mode": 33204,
+        "mtime_ns": 1791349305513227107,
+        "nlink": 1,
+        "size": 1409442,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1",
+      "bytes": 597632,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1/records/target_descriptions/mbit10.cpu.lanl20261006.t1.services.v1.yaml",
+      "sha256": "cee03869aa2ab624d0eb1ef54b8807603d2a222d749113c7d65d847549c45c6d",
+      "stat": {
+        "ctime_ns": 1791349982431459499,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14188524,
+        "mode": 33204,
+        "mtime_ns": 1791349982431459499,
+        "nlink": 1,
+        "size": 597632,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1",
+      "bytes": 17282501,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1/records/workload_characterizations/bc.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "d12b5f57c61007219d367942ee554db1d27ee1d8614e2c1279e1164230f534e8",
+      "stat": {
+        "ctime_ns": 1791349307238245616,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14188303,
+        "mode": 33204,
+        "mtime_ns": 1791349305807230262,
+        "nlink": 1,
+        "size": 17282501,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1",
+      "bytes": 17343787,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1/records/workload_characterizations/bc.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "e3e5d69e1d6a5310dad6c693112b7eb7d86dae9d533ee85ef86450d09831daf4",
+      "stat": {
+        "ctime_ns": 1791349307123244382,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14188288,
+        "mode": 33204,
+        "mtime_ns": 1791349305869230927,
+        "nlink": 1,
+        "size": 17343787,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1",
+      "bytes": 14485038,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1/records/workload_characterizations/bfs.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "cda2c51423c167249fd760f359ee0ead180bcb2e2d4db2c722c9b724120458ba",
+      "stat": {
+        "ctime_ns": 1791349307138244543,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14188291,
+        "mode": 33204,
+        "mtime_ns": 1791349305971232022,
+        "nlink": 1,
+        "size": 14485038,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1",
+      "bytes": 14548815,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1/records/workload_characterizations/bfs.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "3acba4d734334e61221ae6dd1856fffc9bbc231616fec805288c1a5d806c1033",
+      "stat": {
+        "ctime_ns": 1791349307212245337,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14188300,
+        "mode": 33204,
+        "mtime_ns": 1791349306015232494,
+        "nlink": 1,
+        "size": 14548815,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2",
+      "bytes": 252065,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2/records/certifications/certification.23f81442358b4dcc8688140a394a1f08.yaml",
+      "sha256": "9bf2cbc3d35aef0fddd01c2aa699456f6f298d4e2ee0a27d3d436d9f028c87b6",
+      "stat": {
+        "ctime_ns": 1791350942501674615,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14188796,
+        "mode": 33204,
+        "mtime_ns": 1791349305477226721,
+        "nlink": 1,
+        "size": 252065,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2",
+      "bytes": 1409442,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2/records/cpu_service_calibrations/mbit10.cpu.lanl20261006.service.openmp.a1.yaml",
+      "sha256": "5a42507a23ef57642a4864f06f79dbafcf8def6fafa0a5aebe56fd5312ff1a32",
+      "stat": {
+        "ctime_ns": 1791350942562675262,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14189160,
+        "mode": 33204,
+        "mtime_ns": 1791349305513227107,
+        "nlink": 1,
+        "size": 1409442,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2",
+      "bytes": 692147,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2/records/protocols/lanl.cpu.bfs.t1.native-model.v1.c74c7a1046e0e5f1.yaml",
+      "sha256": "ff538076ca2048c03672e7dcd1a7046895bed05b41be05979ec3e7493f8f4d5b",
+      "stat": {
+        "ctime_ns": 1791352173037730732,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14189242,
+        "mode": 33204,
+        "mtime_ns": 1791352173036730721,
+        "nlink": 1,
+        "size": 692147,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2",
+      "bytes": 597632,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2/records/target_descriptions/mbit10.cpu.lanl20261006.t1.services.v1.yaml",
+      "sha256": "cee03869aa2ab624d0eb1ef54b8807603d2a222d749113c7d65d847549c45c6d",
+      "stat": {
+        "ctime_ns": 1791350942691676631,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14189220,
+        "mode": 33204,
+        "mtime_ns": 1791349982431459499,
+        "nlink": 1,
+        "size": 597632,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2",
+      "bytes": 17282501,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2/records/workload_characterizations/bc.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "d12b5f57c61007219d367942ee554db1d27ee1d8614e2c1279e1164230f534e8",
+      "stat": {
+        "ctime_ns": 1791350942608675751,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14189173,
+        "mode": 33204,
+        "mtime_ns": 1791349305807230262,
+        "nlink": 1,
+        "size": 17282501,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2",
+      "bytes": 17343787,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2/records/workload_characterizations/bc.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "e3e5d69e1d6a5310dad6c693112b7eb7d86dae9d533ee85ef86450d09831daf4",
+      "stat": {
+        "ctime_ns": 1791350942640676090,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14189177,
+        "mode": 33204,
+        "mtime_ns": 1791349305869230927,
+        "nlink": 1,
+        "size": 17343787,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2",
+      "bytes": 14485038,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2/records/workload_characterizations/bfs.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "cda2c51423c167249fd760f359ee0ead180bcb2e2d4db2c722c9b724120458ba",
+      "stat": {
+        "ctime_ns": 1791350942586675517,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14189169,
+        "mode": 33204,
+        "mtime_ns": 1791349305971232022,
+        "nlink": 1,
+        "size": 14485038,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2",
+      "bytes": 14548815,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2/records/workload_characterizations/bfs.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "3acba4d734334e61221ae6dd1856fffc9bbc231616fec805288c1a5d806c1033",
+      "stat": {
+        "ctime_ns": 1791350942593675591,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14189170,
+        "mode": 33204,
+        "mtime_ns": 1791349306015232494,
+        "nlink": 1,
+        "size": 14548815,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3",
+      "bytes": 252065,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3/records/certifications/certification.23f81442358b4dcc8688140a394a1f08.yaml",
+      "sha256": "9bf2cbc3d35aef0fddd01c2aa699456f6f298d4e2ee0a27d3d436d9f028c87b6",
+      "stat": {
+        "ctime_ns": 1791352739996718294,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14189534,
+        "mode": 33204,
+        "mtime_ns": 1791349305477226721,
+        "nlink": 1,
+        "size": 252065,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3",
+      "bytes": 1409442,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3/records/cpu_service_calibrations/mbit10.cpu.lanl20261006.service.openmp.a1.yaml",
+      "sha256": "5a42507a23ef57642a4864f06f79dbafcf8def6fafa0a5aebe56fd5312ff1a32",
+      "stat": {
+        "ctime_ns": 1791352740061718977,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14189898,
+        "mode": 33204,
+        "mtime_ns": 1791349305513227107,
+        "nlink": 1,
+        "size": 1409442,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3",
+      "bytes": 70540153,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3/records/estimates/lanl.cpu.bc.g16.t1.estimate.v1.yaml",
+      "sha256": "896b4edeb91917cec165401419192ab3851b32818f567cbb438fc231a8de1bb8",
+      "stat": {
+        "ctime_ns": 1791356125371121012,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14189992,
+        "mode": 33204,
+        "mtime_ns": 1791356125337120659,
+        "nlink": 1,
+        "size": 70540153,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3",
+      "bytes": 70599282,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3/records/estimates/lanl.cpu.bc.g17.t1.estimate.v1.yaml",
+      "sha256": "8881f27316ab856e15c7ce099a32855021f897283158d016aff7dfb42a39da76",
+      "stat": {
+        "ctime_ns": 1791358264488265503,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14190026,
+        "mode": 33204,
+        "mtime_ns": 1791358264457265181,
+        "nlink": 1,
+        "size": 70599282,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3",
+      "bytes": 53583441,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3/records/estimates/lanl.cpu.bfs.g16.t1.estimate.v1.yaml",
+      "sha256": "dc4035f1a48302f13ae0e22ad29865b2ade2aa43ba42f924e9252c1cb0ae9269",
+      "stat": {
+        "ctime_ns": 1791355123914715067,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14189988,
+        "mode": 33204,
+        "mtime_ns": 1791355123891714828,
+        "nlink": 1,
+        "size": 53583441,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3",
+      "bytes": 53717401,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3/records/estimates/lanl.cpu.bfs.g17.t1.estimate.v1.yaml",
+      "sha256": "ee39a6d578cf38cb0cd1d86caaa9e9d6135ba3b0179e3060a40732bf318a159e",
+      "stat": {
+        "ctime_ns": 1791357166209902863,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14189996,
+        "mode": 33204,
+        "mtime_ns": 1791357166183902595,
+        "nlink": 1,
+        "size": 53717401,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3",
+      "bytes": 692249,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3/records/protocols/lanl.cpu.bc.t1.native-model.v1.35eaffdaadffeea0.yaml",
+      "sha256": "4140edcbc930859ea7f05f78772c29e3cc752632c9d44aaeae57ed8201da3f33",
+      "stat": {
+        "ctime_ns": 1791353976884728507,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14189981,
+        "mode": 33204,
+        "mtime_ns": 1791353976884728507,
+        "nlink": 1,
+        "size": 692249,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3",
+      "bytes": 692147,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3/records/protocols/lanl.cpu.bfs.t1.native-model.v1.c74c7a1046e0e5f1.yaml",
+      "sha256": "ff538076ca2048c03672e7dcd1a7046895bed05b41be05979ec3e7493f8f4d5b",
+      "stat": {
+        "ctime_ns": 1791352739983718157,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14189421,
+        "mode": 33204,
+        "mtime_ns": 1791352173036730721,
+        "nlink": 1,
+        "size": 692147,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3",
+      "bytes": 597632,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3/records/target_descriptions/mbit10.cpu.lanl20261006.t1.services.v1.yaml",
+      "sha256": "cee03869aa2ab624d0eb1ef54b8807603d2a222d749113c7d65d847549c45c6d",
+      "stat": {
+        "ctime_ns": 1791352740188720311,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14189958,
+        "mode": 33204,
+        "mtime_ns": 1791349982431459499,
+        "nlink": 1,
+        "size": 597632,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3",
+      "bytes": 17282501,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3/records/workload_characterizations/bc.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "d12b5f57c61007219d367942ee554db1d27ee1d8614e2c1279e1164230f534e8",
+      "stat": {
+        "ctime_ns": 1791352740106719449,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14189911,
+        "mode": 33204,
+        "mtime_ns": 1791349305807230262,
+        "nlink": 1,
+        "size": 17282501,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3",
+      "bytes": 17343787,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3/records/workload_characterizations/bc.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "e3e5d69e1d6a5310dad6c693112b7eb7d86dae9d533ee85ef86450d09831daf4",
+      "stat": {
+        "ctime_ns": 1791352740137719775,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14189915,
+        "mode": 33204,
+        "mtime_ns": 1791349305869230927,
+        "nlink": 1,
+        "size": 17343787,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3",
+      "bytes": 14485038,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3/records/workload_characterizations/bfs.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "cda2c51423c167249fd760f359ee0ead180bcb2e2d4db2c722c9b724120458ba",
+      "stat": {
+        "ctime_ns": 1791352740084719218,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14189907,
+        "mode": 33204,
+        "mtime_ns": 1791349305971232022,
+        "nlink": 1,
+        "size": 14485038,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3",
+      "bytes": 14548815,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3/records/workload_characterizations/bfs.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "3acba4d734334e61221ae6dd1856fffc9bbc231616fec805288c1a5d806c1033",
+      "stat": {
+        "ctime_ns": 1791352740091719292,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14189908,
+        "mode": 33204,
+        "mtime_ns": 1791349306015232494,
+        "nlink": 1,
+        "size": 14548815,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-float-memory-count-20261006-a1",
+      "bytes": 252065,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-float-memory-count-20261006-a1/records/certifications/certification.23f81442358b4dcc8688140a394a1f08.yaml",
+      "sha256": "9bf2cbc3d35aef0fddd01c2aa699456f6f298d4e2ee0a27d3d436d9f028c87b6",
+      "stat": {
+        "ctime_ns": 1791343638196400779,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14183625,
+        "mode": 33204,
+        "mtime_ns": 1791343636446382123,
+        "nlink": 1,
+        "size": 252065,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-float-memory-count-20261006-a1",
+      "bytes": 17282501,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-float-memory-count-20261006-a1/records/workload_characterizations/bc.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "d12b5f57c61007219d367942ee554db1d27ee1d8614e2c1279e1164230f534e8",
+      "stat": {
+        "ctime_ns": 1791343638287401749,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14183843,
+        "mode": 33204,
+        "mtime_ns": 1791343636652384319,
+        "nlink": 1,
+        "size": 17282501,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-float-memory-count-20261006-a1",
+      "bytes": 17343787,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-float-memory-count-20261006-a1/records/workload_characterizations/bc.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "e3e5d69e1d6a5310dad6c693112b7eb7d86dae9d533ee85ef86450d09831daf4",
+      "stat": {
+        "ctime_ns": 1791343638232401162,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14183834,
+        "mode": 33204,
+        "mtime_ns": 1791343636725385097,
+        "nlink": 1,
+        "size": 17343787,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-float-memory-count-20261006-a1",
+      "bytes": 14485038,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-float-memory-count-20261006-a1/records/workload_characterizations/bfs.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "cda2c51423c167249fd760f359ee0ead180bcb2e2d4db2c722c9b724120458ba",
+      "stat": {
+        "ctime_ns": 1791343638239401237,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14183836,
+        "mode": 33204,
+        "mtime_ns": 1791343636800385897,
+        "nlink": 1,
+        "size": 14485038,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-float-memory-count-20261006-a1",
+      "bytes": 14548815,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-float-memory-count-20261006-a1/records/workload_characterizations/bfs.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "3acba4d734334e61221ae6dd1856fffc9bbc231616fec805288c1a5d806c1033",
+      "stat": {
+        "ctime_ns": 1791343638264401504,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14183840,
+        "mode": 33204,
+        "mtime_ns": 1791343636861386547,
+        "nlink": 1,
+        "size": 14548815,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-float-memory-count-20261006-a1",
+      "bytes": 4760,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-float-memory-count-20261006-a1/runner.py",
+      "sha256": "0ff2731f0e3d0b1063e952caf782332d92edadceb995716547061a3f4e15700a",
+      "stat": {
+        "ctime_ns": 1791343637860397197,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14183383,
+        "mode": 33204,
+        "mtime_ns": 1791343637860397197,
+        "nlink": 1,
+        "size": 4760,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-count-20261006-a1",
+      "bytes": 42417,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-count-20261006-a1/count/count-1.3/abi-projection/projection.json",
+      "sha256": "c7766e640c264891666c5d27982762ec836c1b721fc1c82f603cb27f162506a4",
+      "stat": {
+        "ctime_ns": 1791340470735107283,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14179321,
+        "mode": 33204,
+        "mtime_ns": 1791340470735107283,
+        "nlink": 1,
+        "size": 42417,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-count-20261006-a1",
+      "bytes": 87365,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-count-20261006-a1/count/count-proof.json",
+      "sha256": "10d6cff36764279663df7c9c88ad7449e8b48abe50d4e9619c66e83057d06bfc",
+      "stat": {
+        "ctime_ns": 1791340492849338951,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14179364,
+        "mode": 33204,
+        "mtime_ns": 1791340492849338951,
+        "nlink": 1,
+        "size": 87365,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-count-20261006-a1",
+      "bytes": 252065,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-count-20261006-a1/records/certifications/certification.23f81442358b4dcc8688140a394a1f08.yaml",
+      "sha256": "9bf2cbc3d35aef0fddd01c2aa699456f6f298d4e2ee0a27d3d436d9f028c87b6",
+      "stat": {
+        "ctime_ns": 1791340354284887275,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14178843,
+        "mode": 33204,
+        "mtime_ns": 1791340352720870888,
+        "nlink": 1,
+        "size": 252065,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-count-20261006-a1",
+      "bytes": 17282501,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-count-20261006-a1/records/workload_characterizations/bc.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "d12b5f57c61007219d367942ee554db1d27ee1d8614e2c1279e1164230f534e8",
+      "stat": {
+        "ctime_ns": 1791340354379888270,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14179061,
+        "mode": 33204,
+        "mtime_ns": 1791340352925873036,
+        "nlink": 1,
+        "size": 17282501,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-count-20261006-a1",
+      "bytes": 17343787,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-count-20261006-a1/records/workload_characterizations/bc.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "e3e5d69e1d6a5310dad6c693112b7eb7d86dae9d533ee85ef86450d09831daf4",
+      "stat": {
+        "ctime_ns": 1791340354322887673,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14179052,
+        "mode": 33204,
+        "mtime_ns": 1791340352998873801,
+        "nlink": 1,
+        "size": 17343787,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-count-20261006-a1",
+      "bytes": 14485038,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-count-20261006-a1/records/workload_characterizations/bfs.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "cda2c51423c167249fd760f359ee0ead180bcb2e2d4db2c722c9b724120458ba",
+      "stat": {
+        "ctime_ns": 1791340354330887757,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14179054,
+        "mode": 33204,
+        "mtime_ns": 1791340353073874587,
+        "nlink": 1,
+        "size": 14485038,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-count-20261006-a1",
+      "bytes": 14548815,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-count-20261006-a1/records/workload_characterizations/bfs.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "3acba4d734334e61221ae6dd1856fffc9bbc231616fec805288c1a5d806c1033",
+      "stat": {
+        "ctime_ns": 1791340354355888019,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14179058,
+        "mode": 33204,
+        "mtime_ns": 1791340353133875215,
+        "nlink": 1,
+        "size": 14548815,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-count-20261006-a1",
+      "bytes": 4747,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-count-20261006-a1/runner.py",
+      "sha256": "47680823270c07f2040ff70408989fd790bd5463ead8f78023a78dbafe2b0433",
+      "stat": {
+        "ctime_ns": 1791340353638880506,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14178601,
+        "mode": 33204,
+        "mtime_ns": 1791340353638880506,
+        "nlink": 1,
+        "size": 4747,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-byte-read-20261006-a1",
+      "bytes": 252065,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-byte-read-20261006-a1/records/certifications/certification.23f81442358b4dcc8688140a394a1f08.yaml",
+      "sha256": "9bf2cbc3d35aef0fddd01c2aa699456f6f298d4e2ee0a27d3d436d9f028c87b6",
+      "stat": {
+        "ctime_ns": 1791332852580254226,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14167223,
+        "mode": 33204,
+        "mtime_ns": 1791332237452906169,
+        "nlink": 1,
+        "size": 252065,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-byte-read-20261006-a1",
+      "bytes": 3963,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-byte-read-20261006-a1/runner.py",
+      "sha256": "9f77a504326c9b8647b29a1159328b161a57fcd17c184766e2d2b241da60a1c4",
+      "stat": {
+        "ctime_ns": 1791332852247250792,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14166979,
+        "mode": 33204,
+        "mtime_ns": 1791332852247250792,
+        "nlink": 1,
+        "size": 3963,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-estimation-role-20261006-a1-control",
+      "bytes": 25314,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-estimation-role-20261006-a1-control/dispatcher.py",
+      "sha256": "7b15ea08da682de892525aeaed3320b302d925e8546866469aa13a05b339ffab",
+      "stat": {
+        "ctime_ns": 1791339280764633798,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14176821,
+        "mode": 33204,
+        "mtime_ns": 1791339280764633798,
+        "nlink": 1,
+        "size": 25314,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-estimation-role-20261006-a2-control",
+      "bytes": 27934,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-estimation-role-20261006-a2-control/dispatcher.py",
+      "sha256": "76cc6d6f375e7c110f7630e689d45ae238ba4d0ced0d347c9f7c435d2b24aa86",
+      "stat": {
+        "ctime_ns": 1791339675479772931,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14177705,
+        "mode": 33204,
+        "mtime_ns": 1791339675479772931,
+        "nlink": 1,
+        "size": 27934,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-estimation-role-20261006-a2-postfill-a1-control",
+      "bytes": 25997,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-estimation-role-20261006-a2-postfill-a1-control/dispatcher.py",
+      "sha256": "a9ef1c4e6040367596cc3b79b57ef7d3c119da730540ef0492095e377c99a9af",
+      "stat": {
+        "ctime_ns": 1791340831024881109,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14180109,
+        "mode": 33204,
+        "mtime_ns": 1791340831024881109,
+        "nlink": 1,
+        "size": 25997,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-estimation-role-20261006-a2-postfill-a1-control",
+      "bytes": 23691,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-estimation-role-20261006-a2-postfill-a1-control/exporter-counters-a2.py",
+      "sha256": "b98637cd495cebcc5c2da0a806efe1a21f0141a8a2a47a551ea6cec67668c812",
+      "stat": {
+        "ctime_ns": 1791341979357907141,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14181035,
+        "mode": 33188,
+        "mtime_ns": 1791341979357907141,
+        "nlink": 1,
+        "size": 23691,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-estimation-role-20261006-a2-postfill-a1-control",
+      "bytes": 23528,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-estimation-role-20261006-a2-postfill-a1-control/exporter.py",
+      "sha256": "7f38c1e58c770fbd586ea3454fd36d89da2798c59ab12b883820bcddc8887a40",
+      "stat": {
+        "ctime_ns": 1791341711091098676,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14181029,
+        "mode": 33204,
+        "mtime_ns": 1791341711091098676,
+        "nlink": 1,
+        "size": 23528,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-functional-dx-object-counts-20261006-a1",
+      "bytes": 252065,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-functional-dx-object-counts-20261006-a1/records/certifications/certification.23f81442358b4dcc8688140a394a1f08.yaml",
+      "sha256": "9bf2cbc3d35aef0fddd01c2aa699456f6f298d4e2ee0a27d3d436d9f028c87b6",
+      "stat": {
+        "ctime_ns": 1791333249574411831,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14168212,
+        "mode": 33204,
+        "mtime_ns": 1791333248730402949,
+        "nlink": 1,
+        "size": 252065,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-functional-dx-object-counts-20261006-a1",
+      "bytes": 4155,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-functional-dx-object-counts-20261006-a1/runner.py",
+      "sha256": "ee64b13c24e47e2afe73e15f5c5767afd4e48c6626d5479ef594673d4d386a6a",
+      "stat": {
+        "ctime_ns": 1791333249125407106,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14167723,
+        "mode": 33204,
+        "mtime_ns": 1791333249125407106,
+        "nlink": 1,
+        "size": 4155,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-counts-20261006-a1",
+      "bytes": 252065,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-counts-20261006-a1/cases/bc-dx100/records/certifications/certification.23f81442358b4dcc8688140a394a1f08.yaml",
+      "sha256": "9bf2cbc3d35aef0fddd01c2aa699456f6f298d4e2ee0a27d3d436d9f028c87b6",
+      "stat": {
+        "ctime_ns": 1791346819178441407,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14187165,
+        "mode": 33204,
+        "mtime_ns": 1791346819178441407,
+        "nlink": 1,
+        "size": 252065,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-counts-20261006-a1",
+      "bytes": 252065,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-counts-20261006-a1/cases/bc-maple/records/certifications/certification.23f81442358b4dcc8688140a394a1f08.yaml",
+      "sha256": "9bf2cbc3d35aef0fddd01c2aa699456f6f298d4e2ee0a27d3d436d9f028c87b6",
+      "stat": {
+        "ctime_ns": 1791346814214387649,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14186486,
+        "mode": 33204,
+        "mtime_ns": 1791346814214387649,
+        "nlink": 1,
+        "size": 252065,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-counts-20261006-a1",
+      "bytes": 252065,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-counts-20261006-a1/cases/bfs-maple/records/certifications/certification.23f81442358b4dcc8688140a394a1f08.yaml",
+      "sha256": "9bf2cbc3d35aef0fddd01c2aa699456f6f298d4e2ee0a27d3d436d9f028c87b6",
+      "stat": {
+        "ctime_ns": 1791345379753896687,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14184357,
+        "mode": 33204,
+        "mtime_ns": 1791345379753896687,
+        "nlink": 1,
+        "size": 252065,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-counts-20261006-a1",
+      "bytes": 252065,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-counts-20261006-a1/cases/pr-cpu/records/certifications/certification.23f81442358b4dcc8688140a394a1f08.yaml",
+      "sha256": "9bf2cbc3d35aef0fddd01c2aa699456f6f298d4e2ee0a27d3d436d9f028c87b6",
+      "stat": {
+        "ctime_ns": 1791345370435798048,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 12624645,
+        "mode": 33204,
+        "mtime_ns": 1791345370435798048,
+        "nlink": 1,
+        "size": 252065,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-counts-20261006-a1",
+      "bytes": 252065,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-counts-20261006-a1/cases/pr-dx100/records/certifications/certification.23f81442358b4dcc8688140a394a1f08.yaml",
+      "sha256": "9bf2cbc3d35aef0fddd01c2aa699456f6f298d4e2ee0a27d3d436d9f028c87b6",
+      "stat": {
+        "ctime_ns": 1791345793134331020,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14185075,
+        "mode": 33204,
+        "mtime_ns": 1791345793134331020,
+        "nlink": 1,
+        "size": 252065,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-counts-20261006-a1",
+      "bytes": 252065,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-counts-20261006-a1/cases/pr-maple/records/certifications/certification.23f81442358b4dcc8688140a394a1f08.yaml",
+      "sha256": "9bf2cbc3d35aef0fddd01c2aa699456f6f298d4e2ee0a27d3d436d9f028c87b6",
+      "stat": {
+        "ctime_ns": 1791346005916638992,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14185771,
+        "mode": 33204,
+        "mtime_ns": 1791346005916638992,
+        "nlink": 1,
+        "size": 252065,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 252065,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/certifications/certification.23f81442358b4dcc8688140a394a1f08.yaml",
+      "sha256": "9bf2cbc3d35aef0fddd01c2aa699456f6f298d4e2ee0a27d3d436d9f028c87b6",
+      "stat": {
+        "ctime_ns": 1791382169561573654,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192656,
+        "mode": 33204,
+        "mtime_ns": 1791381880615392216,
+        "nlink": 1,
+        "size": 252065,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 4284606,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/cpu_error_bands/lanl.cpu.bc.t1.development-band.v1.yaml",
+      "sha256": "90e7a5c52b455007bf2303f06098e7c7a64a4fe57f410f203a6d3061b46b87d0",
+      "stat": {
+        "ctime_ns": 1791382169584573907,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192821,
+        "mode": 33204,
+        "mtime_ns": 1791381880646392558,
+        "nlink": 1,
+        "size": 4284606,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 4286349,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/cpu_error_bands/lanl.cpu.bc.t1.heldout-band.v1.yaml",
+      "sha256": "1104a909cc97af87ff3c3f37ddf7d8af949da289ac2de4b93cec5bd6babb0513",
+      "stat": {
+        "ctime_ns": 1791382169579573852,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192819,
+        "mode": 33204,
+        "mtime_ns": 1791381880654392646,
+        "nlink": 1,
+        "size": 4286349,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 3726771,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/cpu_error_bands/lanl.cpu.bfs.t1.development-band.v1.yaml",
+      "sha256": "b0bed9704f0ba6be1b8b8e12d39a576aa50ca9d7d53de77e9a7860aacee10d2c",
+      "stat": {
+        "ctime_ns": 1791382169586573929,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192822,
+        "mode": 33204,
+        "mtime_ns": 1791381880662392734,
+        "nlink": 1,
+        "size": 3726771,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 3726513,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/cpu_error_bands/lanl.cpu.bfs.t1.heldout-band.v1.yaml",
+      "sha256": "5bf5401b77ad37ce4d9e4410908b195bcb0d193375a1653aa3e3bd762b6b664b",
+      "stat": {
+        "ctime_ns": 1791382169581573874,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192820,
+        "mode": 33204,
+        "mtime_ns": 1791381880669392811,
+        "nlink": 1,
+        "size": 3726513,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 1409442,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/cpu_service_calibrations/mbit10.cpu.lanl20261006.service.openmp.a1.yaml",
+      "sha256": "5a42507a23ef57642a4864f06f79dbafcf8def6fafa0a5aebe56fd5312ff1a32",
+      "stat": {
+        "ctime_ns": 1791382169593574006,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192840,
+        "mode": 33204,
+        "mtime_ns": 1791381880684392977,
+        "nlink": 1,
+        "size": 1409442,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 70540205,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/estimates/generality.bc.cpu.kron-g16.t1.estimate.final-20261007-a1.yaml",
+      "sha256": "a93f431beae805949cb423e4f8497229dd0813134eb95bbd9e29f3f7fb23e3d8",
+      "stat": {
+        "ctime_ns": 1791422027210007458,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14193366,
+        "mode": 33188,
+        "mtime_ns": 1791395160291911161,
+        "nlink": 1,
+        "size": 70540205,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 53583493,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/estimates/generality.bfs.cpu.kron-g16.t1.estimate.final-20261007-a1.yaml",
+      "sha256": "41b68583d97570372776da3037db2cc895fee7107b271a2a35976508e31027f0",
+      "stat": {
+        "ctime_ns": 1791422027148006796,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14193357,
+        "mode": 33188,
+        "mtime_ns": 1791391111211300803,
+        "nlink": 1,
+        "size": 53583493,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 64833237,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/estimates/generality.pagerank.cpu.kron-g16.t1.estimate.final-20261007-a1.yaml",
+      "sha256": "f67e0d27cf96650e06844fb299924e40cf7d2f378c7fb953519b2ea59c499ec4",
+      "stat": {
+        "ctime_ns": 1791422027290008313,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14193375,
+        "mode": 33188,
+        "mtime_ns": 1791399376518234431,
+        "nlink": 1,
+        "size": 64833237,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 64833239,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/estimates/generality.pagerank.cpu.kron-g16.t1.estimate.final-admission.a1.yaml",
+      "sha256": "3b4aabe99cc3731e4a332288bcc2a85020038bed0dde122ecb9b2c2ade2adfa6",
+      "stat": {
+        "ctime_ns": 1791382169851576844,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192990,
+        "mode": 33204,
+        "mtime_ns": 1791381880847394774,
+        "nlink": 1,
+        "size": 64833239,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 70540153,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/estimates/lanl.cpu.bc.g16.t1.estimate.v1.yaml",
+      "sha256": "896b4edeb91917cec165401419192ab3851b32818f567cbb438fc231a8de1bb8",
+      "stat": {
+        "ctime_ns": 1791382169777576030,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192988,
+        "mode": 33204,
+        "mtime_ns": 1791381880999396449,
+        "nlink": 1,
+        "size": 70540153,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 70599282,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/estimates/lanl.cpu.bc.g17.t1.estimate.v1.yaml",
+      "sha256": "8881f27316ab856e15c7ce099a32855021f897283158d016aff7dfb42a39da76",
+      "stat": {
+        "ctime_ns": 1791382169817576470,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192989,
+        "mode": 33204,
+        "mtime_ns": 1791381881124397827,
+        "nlink": 1,
+        "size": 70599282,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 70599862,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/estimates/lanl.cpu.bc.g17.t1.report.v1.yaml",
+      "sha256": "6bf293d9654b415b20abe6b332ed2c52dc3aaf1fa5d63c7d7eb73993ff5e6045",
+      "stat": {
+        "ctime_ns": 1791382169920577602,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192994,
+        "mode": 33204,
+        "mtime_ns": 1791381881248399194,
+        "nlink": 1,
+        "size": 70599862,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 53583441,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/estimates/lanl.cpu.bfs.g16.t1.estimate.v1.yaml",
+      "sha256": "dc4035f1a48302f13ae0e22ad29865b2ade2aa43ba42f924e9252c1cb0ae9269",
+      "stat": {
+        "ctime_ns": 1791382169946577888,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192995,
+        "mode": 33204,
+        "mtime_ns": 1791381881346400274,
+        "nlink": 1,
+        "size": 53583441,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 53717401,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/estimates/lanl.cpu.bfs.g17.t1.estimate.v1.yaml",
+      "sha256": "ee39a6d578cf38cb0cd1d86caaa9e9d6135ba3b0179e3060a40732bf318a159e",
+      "stat": {
+        "ctime_ns": 1791382169979578251,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14193000,
+        "mode": 33204,
+        "mtime_ns": 1791381881444401355,
+        "nlink": 1,
+        "size": 53717401,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 53717875,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/estimates/lanl.cpu.bfs.g17.t1.report.v1.yaml",
+      "sha256": "d12423e64b4684b0f101642d2a6840ddb0bd518de252f6a9de25f0092fa591d0",
+      "stat": {
+        "ctime_ns": 1791382169878577140,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192991,
+        "mode": 33204,
+        "mtime_ns": 1791381881543402446,
+        "nlink": 1,
+        "size": 53717875,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 692110,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/protocols/generality.bc.cpu.kron-g16.t1.protocol.final-20261007-a1.d69a3f63a21ec882.yaml",
+      "sha256": "b53765ee55c739a922358f94d88e006237bad295ab3a502430f75f7994c2d343",
+      "stat": {
+        "ctime_ns": 1791422027207007426,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14193362,
+        "mode": 33188,
+        "mtime_ns": 1791393509190127068,
+        "nlink": 1,
+        "size": 692110,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 692056,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/protocols/generality.bfs.cpu.kron-g16.t1.protocol.final-20261007-a1.6bafb63ffddb2984.yaml",
+      "sha256": "3de2c55caff706a138de66219f67a3df5844b2b852ba6900970102e14cbff8fd",
+      "stat": {
+        "ctime_ns": 1791422027145006764,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14193353,
+        "mode": 33188,
+        "mtime_ns": 1791389508320114830,
+        "nlink": 1,
+        "size": 692056,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 692265,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/protocols/generality.pagerank.cpu.kron-g16.t1.protocol.final-20261007-a1.0e004982f7de2cb1.yaml",
+      "sha256": "41672cf77a91e831e0e0880d2f3064bde35f233efd44718cf0f5e4890585ba75",
+      "stat": {
+        "ctime_ns": 1791422027287008281,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14193371,
+        "mode": 33188,
+        "mtime_ns": 1791397653230785486,
+        "nlink": 1,
+        "size": 692265,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 692267,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/protocols/generality.pagerank.cpu.kron-g16.t1.protocol.final-admission.a1.2fba4a33689c3b71.yaml",
+      "sha256": "5f2e9537398b2c4ae67121a816f1bfd514e34d73b86130680f72b786c7f93844",
+      "stat": {
+        "ctime_ns": 1791382169989578361,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14193072,
+        "mode": 33204,
+        "mtime_ns": 1791381881623403328,
+        "nlink": 1,
+        "size": 692267,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 692249,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/protocols/lanl.cpu.bc.t1.native-model.v1.35eaffdaadffeea0.yaml",
+      "sha256": "4140edcbc930859ea7f05f78772c29e3cc752632c9d44aaeae57ed8201da3f33",
+      "stat": {
+        "ctime_ns": 1791382169991578383,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14193082,
+        "mode": 33204,
+        "mtime_ns": 1791381881625403350,
+        "nlink": 1,
+        "size": 692249,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 5560287,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/protocols/lanl.cpu.bc.t1.report-model.v1.4122574ca4db5098.yaml",
+      "sha256": "67b41accce7f5acf46cbcd6cba3e7260998ace9ddc155b2f6dbff6024540682b",
+      "stat": {
+        "ctime_ns": 1791382169998578460,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14193096,
+        "mode": 33204,
+        "mtime_ns": 1791381881634403449,
+        "nlink": 1,
+        "size": 5560287,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 692147,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/protocols/lanl.cpu.bfs.t1.native-model.v1.c74c7a1046e0e5f1.yaml",
+      "sha256": "ff538076ca2048c03672e7dcd1a7046895bed05b41be05979ec3e7493f8f4d5b",
+      "stat": {
+        "ctime_ns": 1791382169999578471,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14193097,
+        "mode": 33204,
+        "mtime_ns": 1791381881636403471,
+        "nlink": 1,
+        "size": 692147,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 4923667,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/protocols/lanl.cpu.bfs.t1.report-model.v1.57192fc6d5fbdc07.yaml",
+      "sha256": "f8e91ff6e6defe255cc80a298c8b36d42a908ec6c22dc9d233dab7b3c97eaf42",
+      "stat": {
+        "ctime_ns": 1791382169989578361,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14193068,
+        "mode": 33204,
+        "mtime_ns": 1791381881644403559,
+        "nlink": 1,
+        "size": 4923667,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 597632,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/target_descriptions/mbit10.cpu.lanl20261006.t1.services.v1.yaml",
+      "sha256": "cee03869aa2ab624d0eb1ef54b8807603d2a222d749113c7d65d847549c45c6d",
+      "stat": {
+        "ctime_ns": 1791382169981578273,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14193012,
+        "mode": 33204,
+        "mtime_ns": 1791381881664403780,
+        "nlink": 1,
+        "size": 597632,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 17282501,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/workload_characterizations/bc.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "d12b5f57c61007219d367942ee554db1d27ee1d8614e2c1279e1164230f534e8",
+      "stat": {
+        "ctime_ns": 1791382169716575359,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192909,
+        "mode": 33204,
+        "mtime_ns": 1791381881777405026,
+        "nlink": 1,
+        "size": 17282501,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 17343787,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/workload_characterizations/bc.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "e3e5d69e1d6a5310dad6c693112b7eb7d86dae9d533ee85ef86450d09831daf4",
+      "stat": {
+        "ctime_ns": 1791382169616574259,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192894,
+        "mode": 33204,
+        "mtime_ns": 1791381881829405599,
+        "nlink": 1,
+        "size": 17343787,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 14485038,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/workload_characterizations/bfs.kron-g16.t1.characterization.objects.a1.yaml",
+      "sha256": "cda2c51423c167249fd760f359ee0ead180bcb2e2d4db2c722c9b724120458ba",
+      "stat": {
+        "ctime_ns": 1791382169629574402,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192897,
+        "mode": 33204,
+        "mtime_ns": 1791381881916406558,
+        "nlink": 1,
+        "size": 14485038,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 14548815,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/records/workload_characterizations/bfs.kron-g17.t1.characterization.objects.a1.yaml",
+      "sha256": "3acba4d734334e61221ae6dd1856fffc9bbc231616fec805288c1a5d806c1033",
+      "stat": {
+        "ctime_ns": 1791382169691575084,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14192906,
+        "mode": 33204,
+        "mtime_ns": 1791381881955406988,
+        "nlink": 1,
+        "size": 14548815,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1",
+      "bytes": 68324111,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1/report/report.json",
+      "sha256": "c340d66bce2d968aa5ef70b2bc0b4042484af2a7fc711a639e9d4af9b32f04e2",
+      "stat": {
+        "ctime_ns": 1791422027412009618,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14193462,
+        "mode": 33188,
+        "mtime_ns": 1791420625196052576,
+        "nlink": 1,
+        "size": 68324111,
+        "uid": 114316761
+      }
+    },
+    {
+      "RAW_root": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a1",
+      "bytes": 252065,
+      "initial_G_read_site": "aliases_and_sources:pin_fact history loop",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a1/records/certifications/certification.23f81442358b4dcc8688140a394a1f08.yaml",
+      "sha256": "9bf2cbc3d35aef0fddd01c2aa699456f6f298d4e2ee0a27d3d436d9f028c87b6",
+      "stat": {
+        "ctime_ns": 1791334826586936164,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 14170541,
+        "mode": 33204,
+        "mtime_ns": 1791334825360923307,
+        "nlink": 1,
+        "size": 252065,
+        "uid": 114316761
+      }
+    }
+  ],
+  "outside_30_group_totals": [
+    {
+      "bytes": 63916971,
+      "files": 6,
+      "root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-allocator-extra-count-20261006-a1"
+    },
+    {
+      "bytes": 63916983,
+      "files": 6,
+      "root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-bulk-total-count-20261006-a1"
+    },
+    {
+      "bytes": 466569883,
+      "files": 21,
+      "root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261007-a4"
+    },
+    {
+      "bytes": 323755330,
+      "files": 15,
+      "root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-development-20261006-a3"
+    },
+    {
+      "bytes": 331768192,
+      "files": 17,
+      "root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-holdout-20261006-a3"
+    },
+    {
+      "bytes": 65919280,
+      "files": 7,
+      "root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a1"
+    },
+    {
+      "bytes": 66611427,
+      "files": 8,
+      "root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a2"
+    },
+    {
+      "bytes": 315743953,
+      "files": 13,
+      "root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-model-20261006-a3"
+    },
+    {
+      "bytes": 63916966,
+      "files": 6,
+      "root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-float-memory-count-20261006-a1"
+    },
+    {
+      "bytes": 64046735,
+      "files": 8,
+      "root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-openmp-count-20261006-a1"
+    },
+    {
+      "bytes": 256028,
+      "files": 2,
+      "root": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-service-byte-read-20261006-a1"
+    },
+    {
+      "bytes": 25314,
+      "files": 1,
+      "root": "/data/yanruj/EvolveSWDB_runs/lanl-estimation-role-20261006-a1-control"
+    },
+    {
+      "bytes": 27934,
+      "files": 1,
+      "root": "/data/yanruj/EvolveSWDB_runs/lanl-estimation-role-20261006-a2-control"
+    },
+    {
+      "bytes": 73216,
+      "files": 3,
+      "root": "/data/yanruj/EvolveSWDB_runs/lanl-estimation-role-20261006-a2-postfill-a1-control"
+    },
+    {
+      "bytes": 256220,
+      "files": 2,
+      "root": "/data/yanruj/EvolveSWDB_runs/lanl-functional-dx-object-counts-20261006-a1"
+    },
+    {
+      "bytes": 1512390,
+      "files": 6,
+      "root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-counts-20261006-a1"
+    },
+    {
+      "bytes": 791452866,
+      "files": 30,
+      "root": "/data/yanruj/EvolveSWDB_runs/lanl-generality-final-20261007-a1"
+    },
+    {
+      "bytes": 252065,
+      "files": 1,
+      "root": "/data/yanruj/EvolveSWDB_runs/lanl17-prospective-inputs-20261006-a1"
+    }
+  ],
+  "per_alias_receipt_cache_saving": 610230526,
+  "proof_receipt_reparse_duplicates": [
+    {
+      "R2_read_bytes_both_alias_passes": 300696296,
+      "R2_read_multiplicity_both_alias_passes": 164,
+      "per_alias_parsed_cache_read_bytes_both_passes": 3667028,
+      "proof_leaf_associations": 82,
+      "receipt_key": "O4",
+      "whole_file_pin": {
+        "bytes": 1833514,
+        "path": "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/09-functional-counts-mbit10-20261006-a2.json",
+        "sha256": "6e7aecd48fe04183da2b162fce5ef64fd26de1dcccaa66117262235755a71c84",
+        "stat": {
+          "ctime_ns": 1791336670974194759,
+          "dev": 2097,
+          "gid": 0,
+          "ino": 55613906,
+          "mode": 33206,
+          "mtime_ns": 1791336670974194759,
+          "nlink": 1,
+          "size": 1833514,
+          "uid": 114316761
+        }
+      }
+    },
+    {
+      "R2_read_bytes_both_alias_passes": 1066464,
+      "R2_read_multiplicity_both_alias_passes": 56,
+      "per_alias_parsed_cache_read_bytes_both_passes": 38088,
+      "proof_leaf_associations": 28,
+      "receipt_key": "O5",
+      "whole_file_pin": {
+        "bytes": 19044,
+        "path": "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/functional-bfs-certification-mbit10-20261006-a2.json",
+        "sha256": "f449316d9482169e5708271f3dee930f6077f60564dbf38c727f5a2f4d311c78",
+        "stat": {
+          "ctime_ns": 1791336670975194769,
+          "dev": 2097,
+          "gid": 0,
+          "ino": 55613921,
+          "mode": 33206,
+          "mtime_ns": 1791336670975194769,
+          "nlink": 1,
+          "size": 19044,
+          "uid": 114316761
+        }
+      }
+    },
+    {
+      "R2_read_bytes_both_alias_passes": 8608,
+      "R2_read_multiplicity_both_alias_passes": 2,
+      "per_alias_parsed_cache_read_bytes_both_passes": 8608,
+      "proof_leaf_associations": 1,
+      "receipt_key": "O7",
+      "whole_file_pin": {
+        "bytes": 4304,
+        "path": "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-normalized-root-projection-mbit10-20261006-a1.json",
+        "sha256": "dc8c3a6751b65bcd39f9af41e9d70ed3a61ded4b6305a4e68ba12fab3d9145d6",
+        "stat": {
+          "ctime_ns": 1791349444273715667,
+          "dev": 2097,
+          "gid": 0,
+          "ino": 55614030,
+          "mode": 33206,
+          "mtime_ns": 1791349444273715667,
+          "nlink": 1,
+          "size": 4304,
+          "uid": 114316761
+        }
+      }
+    },
+    {
+      "R2_read_bytes_both_alias_passes": 1628242,
+      "R2_read_multiplicity_both_alias_passes": 14,
+      "per_alias_parsed_cache_read_bytes_both_passes": 232606,
+      "proof_leaf_associations": 7,
+      "receipt_key": "R10",
+      "whole_file_pin": {
+        "bytes": 116303,
+        "path": "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-memory-service-mbit10-20261006-a1.json",
+        "sha256": "abc9ed15d2630d5796a86b72cc75cba8532ebe70076747d61acf52bacc8eceb3",
+        "stat": {
+          "ctime_ns": 1791349444272715656,
+          "dev": 2097,
+          "gid": 0,
+          "ino": 55614021,
+          "mode": 33206,
+          "mtime_ns": 1791349444272715656,
+          "nlink": 1,
+          "size": 116303,
+          "uid": 114316761
+        }
+      }
+    },
+    {
+      "R2_read_bytes_both_alias_passes": 31651020,
+      "R2_read_multiplicity_both_alias_passes": 4,
+      "per_alias_parsed_cache_read_bytes_both_passes": 15825510,
+      "proof_leaf_associations": 2,
+      "receipt_key": "R13",
+      "whole_file_pin": {
+        "bytes": 7912755,
+        "path": "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/10-estimation-role-mbit10-20261006-a2-postfill-a1.json",
+        "sha256": "15f6286ad05962435fd7c4e0a59fb53fc630b1e646aa5b780d0c02de8a6abcac",
+        "stat": {
+          "ctime_ns": 1791342898050572249,
+          "dev": 2097,
+          "gid": 0,
+          "ino": 55613942,
+          "mode": 33206,
+          "mtime_ns": 1791342898050572249,
+          "nlink": 1,
+          "size": 7912755,
+          "uid": 114316761
+        }
+      }
+    },
+    {
+      "R2_read_bytes_both_alias_passes": 348128,
+      "R2_read_multiplicity_both_alias_passes": 16,
+      "per_alias_parsed_cache_read_bytes_both_passes": 43516,
+      "proof_leaf_associations": 8,
+      "receipt_key": "R14",
+      "whole_file_pin": {
+        "bytes": 21758,
+        "path": "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-openmp-call-projections-mbit10-20261006-a1.json",
+        "sha256": "10a97b290c98862ab0be45c48371f2a0d66060f5a19db819bcd63472bf912e68",
+        "stat": {
+          "ctime_ns": 1791349444283715774,
+          "dev": 2097,
+          "gid": 0,
+          "ino": 55614040,
+          "mode": 33206,
+          "mtime_ns": 1791349444283715774,
+          "nlink": 1,
+          "size": 21758,
+          "uid": 114316761
+        }
+      }
+    },
+    {
+      "R2_read_bytes_both_alias_passes": 298709888,
+      "R2_read_multiplicity_both_alias_passes": 64,
+      "per_alias_parsed_cache_read_bytes_both_passes": 9334684,
+      "proof_leaf_associations": 32,
+      "receipt_key": "R15",
+      "whole_file_pin": {
+        "bytes": 4667342,
+        "path": "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-object-counts-mbit10-20261006-a1.json",
+        "sha256": "b8ad78de127faef908cc74313ee6f6b4fbffe69bd03c3fc34ba00332d4ad39cb",
+        "stat": {
+          "ctime_ns": 1791349444282715764,
+          "dev": 2097,
+          "gid": 0,
+          "ino": 55614033,
+          "mode": 33206,
+          "mtime_ns": 1791349444282715764,
+          "nlink": 1,
+          "size": 4667342,
+          "uid": 114316761
+        }
+      }
+    },
+    {
+      "R2_read_bytes_both_alias_passes": 5293036,
+      "R2_read_multiplicity_both_alias_passes": 28,
+      "per_alias_parsed_cache_read_bytes_both_passes": 378074,
+      "proof_leaf_associations": 14,
+      "receipt_key": "R3",
+      "whole_file_pin": {
+        "bytes": 189037,
+        "path": "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-bulk-counts-mbit10-20261006-a2.json",
+        "sha256": "0442d9565ee7bd05490146b20b09155eff668e4c3cb21bdbe86258bb8508067a",
+        "stat": {
+          "ctime_ns": 1791349444269715624,
+          "dev": 2097,
+          "gid": 0,
+          "ino": 55613996,
+          "mode": 33206,
+          "mtime_ns": 1791349444269715624,
+          "nlink": 1,
+          "size": 189037,
+          "uid": 114316761
+        }
+      }
+    },
+    {
+      "R2_read_bytes_both_alias_passes": 396620,
+      "R2_read_multiplicity_both_alias_passes": 20,
+      "per_alias_parsed_cache_read_bytes_both_passes": 39662,
+      "proof_leaf_associations": 10,
+      "receipt_key": "R6",
+      "whole_file_pin": {
+        "bytes": 19831,
+        "path": "/data1/yanruj/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-clock-service-mbit10-20261006-a2.json",
+        "sha256": "2b52c7e7bc737bd7188ba6a38d587bda828760bf77652b06cf4cf2d46e0eaf4f",
+        "stat": {
+          "ctime_ns": 1791349444271715646,
+          "dev": 2097,
+          "gid": 0,
+          "ino": 55614008,
+          "mode": 33206,
+          "mtime_ns": 1791349444271715646,
+          "nlink": 1,
+          "size": 19831,
+          "uid": 114316761
+        }
+      }
+    }
+  ],
+  "proof_source_duplicate_paths": [
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 4,
+      "bytes_from_original_birth_metadata": 31147,
+      "full_file_sha256": "b461fd7025cfa675d5c191d7d73fee8bd04525c0344cd315dffedb61575b65a0",
+      "original_birth_stat": {
+        "blocks": 64,
+        "ctime_ns": 1791335069121477650,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 68562091,
+        "mode": 33204,
+        "mtime_ns": 1791335069121477650,
+        "nlink": 1,
+        "size": 31147,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-bulk-services-20261006-a1/swdb-project/swdb/llvm/Characterize.cpp",
+      "proof_leaf_associations": 2,
+      "relative_path": "swdb-project/swdb/llvm/Characterize.cpp",
+      "row": "ArchEvolve-lanl-bulk-services-20261006-a1"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 4,
+      "bytes_from_original_birth_metadata": 16243,
+      "full_file_sha256": "43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e",
+      "original_birth_stat": {
+        "blocks": 32,
+        "ctime_ns": 1791335069121477650,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 68562092,
+        "mode": 33204,
+        "mtime_ns": 1791335069121477650,
+        "nlink": 1,
+        "size": 16243,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-bulk-services-20261006-a1/swdb-project/swdb/llvm/CountingRuntime.cpp",
+      "proof_leaf_associations": 2,
+      "relative_path": "swdb-project/swdb/llvm/CountingRuntime.cpp",
+      "row": "ArchEvolve-lanl-bulk-services-20261006-a1"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 8,
+      "bytes_from_original_birth_metadata": 1236,
+      "full_file_sha256": "1051a1ad01b55368257a5de825cf31864bf49f3a0088f0ee8425a6dd2d18ca24",
+      "original_birth_stat": {
+        "blocks": 8,
+        "ctime_ns": 1791335069122477661,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 68562105,
+        "mode": 33204,
+        "mtime_ns": 1791335069122477661,
+        "nlink": 1,
+        "size": 1236,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-bulk-services-20261006-a1/swdb-project/swdb/native/CpuBulkCount.cpp",
+      "proof_leaf_associations": 4,
+      "relative_path": "swdb-project/swdb/native/CpuBulkCount.cpp",
+      "row": "ArchEvolve-lanl-bulk-services-20261006-a1"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 4,
+      "bytes_from_original_birth_metadata": 2399,
+      "full_file_sha256": "5f2c71773bdb29e65501440500f3b4da695f1f9b3e026a6c177f1c17b7fcc536",
+      "original_birth_stat": {
+        "blocks": 8,
+        "ctime_ns": 1791335069122477661,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 68562106,
+        "mode": 33204,
+        "mtime_ns": 1791335069122477661,
+        "nlink": 1,
+        "size": 2399,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-bulk-services-20261006-a1/swdb-project/swdb/native/CpuBulkTimer.cpp",
+      "proof_leaf_associations": 2,
+      "relative_path": "swdb-project/swdb/native/CpuBulkTimer.cpp",
+      "row": "ArchEvolve-lanl-bulk-services-20261006-a1"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 8,
+      "bytes_from_original_birth_metadata": 1503,
+      "full_file_sha256": "a8926f80c4aaa74f247b915f52b63396b518990646bafe2690e679891a3c10be",
+      "original_birth_stat": {
+        "blocks": 8,
+        "ctime_ns": 1791335069122477661,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 68562107,
+        "mode": 33204,
+        "mtime_ns": 1791335069122477661,
+        "nlink": 1,
+        "size": 1503,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-bulk-services-20261006-a1/swdb-project/swdb/native/CpuBulkWork.h",
+      "proof_leaf_associations": 4,
+      "relative_path": "swdb-project/swdb/native/CpuBulkWork.h",
+      "row": "ArchEvolve-lanl-bulk-services-20261006-a1"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 29111,
+      "full_file_sha256": "079105affe9a8c01b5766dab26da5f96ab309abccb8dd8c15d2982fe902b90ef",
+      "original_birth_stat": {
+        "blocks": 64,
+        "ctime_ns": 1791330872227777513,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 66332385,
+        "mode": 33204,
+        "mtime_ns": 1791330872227777513,
+        "nlink": 1,
+        "size": 29111,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-clock-a2-20261006/swdb-project/swdb/llvm/Characterize.cpp",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/llvm/Characterize.cpp",
+      "row": "ArchEvolve-lanl-clock-a2-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 16209,
+      "full_file_sha256": "aad5d7667e3359bddac47cb0b73a1693fd1ae321fbf1bc34347c7a5f69ec89af",
+      "original_birth_stat": {
+        "blocks": 32,
+        "ctime_ns": 1791330872227777513,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 66332386,
+        "mode": 33204,
+        "mtime_ns": 1791330872227777513,
+        "nlink": 1,
+        "size": 16209,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-clock-a2-20261006/swdb-project/swdb/llvm/CountingRuntime.cpp",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/llvm/CountingRuntime.cpp",
+      "row": "ArchEvolve-lanl-clock-a2-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 6,
+      "bytes_from_original_birth_metadata": 351,
+      "full_file_sha256": "9745a510ad04ae9b9aa2250d5cd49577f09a5d73e1fc2a2e8b666e274409f2d9",
+      "original_birth_stat": {
+        "blocks": 8,
+        "ctime_ns": 1791330872228777523,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 66332397,
+        "mode": 33204,
+        "mtime_ns": 1791330872228777523,
+        "nlink": 1,
+        "size": 351,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-clock-a2-20261006/swdb-project/swdb/native/CpuServiceCount.cpp",
+      "proof_leaf_associations": 3,
+      "relative_path": "swdb-project/swdb/native/CpuServiceCount.cpp",
+      "row": "ArchEvolve-lanl-clock-a2-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 4,
+      "bytes_from_original_birth_metadata": 1172,
+      "full_file_sha256": "14332e159810563b8d49a03569099f8a336d495cd5a8b0bd76663f8283d0e669",
+      "original_birth_stat": {
+        "blocks": 8,
+        "ctime_ns": 1791330872228777523,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 66332398,
+        "mode": 33204,
+        "mtime_ns": 1791330872228777523,
+        "nlink": 1,
+        "size": 1172,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-clock-a2-20261006/swdb-project/swdb/native/CpuServiceTimer.cpp",
+      "proof_leaf_associations": 2,
+      "relative_path": "swdb-project/swdb/native/CpuServiceTimer.cpp",
+      "row": "ArchEvolve-lanl-clock-a2-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 6,
+      "bytes_from_original_birth_metadata": 555,
+      "full_file_sha256": "07d7bf48b5d9afb1b0725f2abf7a57f301c17d355b72676d214186ba1d7150cf",
+      "original_birth_stat": {
+        "blocks": 8,
+        "ctime_ns": 1791330872228777523,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 66332399,
+        "mode": 33204,
+        "mtime_ns": 1791330872228777523,
+        "nlink": 1,
+        "size": 555,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-clock-a2-20261006/swdb-project/swdb/native/CpuServiceWork.h",
+      "proof_leaf_associations": 3,
+      "relative_path": "swdb-project/swdb/native/CpuServiceWork.h",
+      "row": "ArchEvolve-lanl-clock-a2-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 2607,
+      "full_file_sha256": "6dfd028eb52fae2c0a3c0072011a512debf4f01c433fcab580b41d656053391f",
+      "original_birth_stat": {
+        "blocks": 8,
+        "ctime_ns": 1791339677244791436,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 69082191,
+        "mode": 33204,
+        "mtime_ns": 1791339677244791436,
+        "nlink": 1,
+        "size": 2607,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-estimation-role-20261006-a2/swdb-project/swdb/estimation_contract.py",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/estimation_contract.py",
+      "row": "ArchEvolve-lanl-estimation-role-20261006-a2"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 25670,
+      "full_file_sha256": "1603428b67b7cc899d2e2ce6d42fbd2c178e93e51513800a76aee0dabca54ffc",
+      "original_birth_stat": {
+        "blocks": 56,
+        "ctime_ns": 1791339677244791436,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 69082192,
+        "mode": 33204,
+        "mtime_ns": 1791339677244791436,
+        "nlink": 1,
+        "size": 25670,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-estimation-role-20261006-a2/swdb-project/swdb/estimation_parameters.py",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/estimation_parameters.py",
+      "row": "ArchEvolve-lanl-estimation-role-20261006-a2"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 64,
+      "bytes_from_original_birth_metadata": 25345,
+      "full_file_sha256": "ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc",
+      "original_birth_stat": {
+        "blocks": 56,
+        "ctime_ns": 1791334275893171944,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 67016630,
+        "mode": 33204,
+        "mtime_ns": 1791334275893171944,
+        "nlink": 1,
+        "size": 25345,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-object-counts-20261006-a2/swdb-project/apps/dx100/benchmarks/API/MAA_functional.hpp",
+      "proof_leaf_associations": 32,
+      "relative_path": "swdb-project/apps/dx100/benchmarks/API/MAA_functional.hpp",
+      "row": "ArchEvolve-lanl-functional-object-counts-20261006-a2"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 3565,
+      "full_file_sha256": "87c20752c8437dd5152d00e7c995bedfab15b8929219f85846f47e0f9a4b339f",
+      "original_birth_stat": {
+        "blocks": 8,
+        "ctime_ns": 1791334275895171965,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 67016653,
+        "mode": 33204,
+        "mtime_ns": 1791334275895171965,
+        "nlink": 1,
+        "size": 3565,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-object-counts-20261006-a2/swdb-project/apps/dx100/benchmarks/gapbs/src/benchmark.h",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/apps/dx100/benchmarks/gapbs/src/benchmark.h",
+      "row": "ArchEvolve-lanl-functional-object-counts-20261006-a2"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 90,
+      "bytes_from_original_birth_metadata": 3153,
+      "full_file_sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c",
+      "original_birth_stat": {
+        "blocks": 8,
+        "ctime_ns": 1791334275922172247,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 67016943,
+        "mode": 33204,
+        "mtime_ns": 1791334275922172247,
+        "nlink": 1,
+        "size": 3153,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-object-counts-20261006-a2/swdb-project/library/dx100/dxc_lowering.hpp",
+      "proof_leaf_associations": 45,
+      "relative_path": "swdb-project/library/dx100/dxc_lowering.hpp",
+      "row": "ArchEvolve-lanl-functional-object-counts-20261006-a2"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 31147,
+      "full_file_sha256": "b461fd7025cfa675d5c191d7d73fee8bd04525c0344cd315dffedb61575b65a0",
+      "original_birth_stat": {
+        "blocks": 64,
+        "ctime_ns": 1791334276181174954,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 67148045,
+        "mode": 33204,
+        "mtime_ns": 1791334276181174954,
+        "nlink": 1,
+        "size": 31147,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-object-counts-20261006-a2/swdb-project/swdb/llvm/Characterize.cpp",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/llvm/Characterize.cpp",
+      "row": "ArchEvolve-lanl-functional-object-counts-20261006-a2"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 16243,
+      "full_file_sha256": "43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e",
+      "original_birth_stat": {
+        "blocks": 32,
+        "ctime_ns": 1791334276181174954,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 67148046,
+        "mode": 33204,
+        "mtime_ns": 1791334276181174954,
+        "nlink": 1,
+        "size": 16243,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-object-counts-20261006-a2/swdb-project/swdb/llvm/CountingRuntime.cpp",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/llvm/CountingRuntime.cpp",
+      "row": "ArchEvolve-lanl-functional-object-counts-20261006-a2"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 7949,
+      "full_file_sha256": "39d52fea4be446d80c1c9adbdfcc4b06d2c7ab69ce69d1f667454ec9b5651373",
+      "original_birth_stat": {
+        "blocks": 16,
+        "ctime_ns": 1791334276181174954,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 67148049,
+        "mode": 33204,
+        "mtime_ns": 1791334276181174954,
+        "nlink": 1,
+        "size": 7949,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-object-counts-20261006-a2/swdb-project/swdb/llvm/ObjectScopeRuntime.hpp",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/llvm/ObjectScopeRuntime.hpp",
+      "row": "ArchEvolve-lanl-functional-object-counts-20261006-a2"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 7485,
+      "full_file_sha256": "5c81304e2ef3714b7da07c947cbec750342d1886e92d50defa920d9a9e9ab794",
+      "original_birth_stat": {
+        "blocks": 16,
+        "ctime_ns": 1791334276182174964,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 67148050,
+        "mode": 33204,
+        "mtime_ns": 1791334276182174964,
+        "nlink": 1,
+        "size": 7485,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-object-counts-20261006-a2/swdb-project/swdb/llvm/ObjectScopes.hpp",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/llvm/ObjectScopes.hpp",
+      "row": "ArchEvolve-lanl-functional-object-counts-20261006-a2"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 6496,
+      "full_file_sha256": "dd5d2917aa093b91c2abecd0ecb7221289d9e3b8e9469c506f2392ec6db7f079",
+      "original_birth_stat": {
+        "blocks": 16,
+        "ctime_ns": 1791328845225045079,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57839131,
+        "mode": 33204,
+        "mtime_ns": 1791328845225045079,
+        "nlink": 1,
+        "size": 6496,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/library/dx100/certification/v1_4/prelude.hpp",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/library/dx100/certification/v1_4/prelude.hpp",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 6239,
+      "full_file_sha256": "c0b0221c2080117761f82566c7801a457aa31d3dedd21ec2600670e61bdd4fa6",
+      "original_birth_stat": {
+        "blocks": 16,
+        "ctime_ns": 1791328845225045079,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57839132,
+        "mode": 33204,
+        "mtime_ns": 1791328845225045079,
+        "nlink": 1,
+        "size": 6239,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/library/dx100/certification/v1_4/record.cc",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/library/dx100/certification/v1_4/record.cc",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 12876,
+      "full_file_sha256": "1a1deb79cff58ccae5ee5d9cc08bdae123c1c821b0a675e62d80c2033ec23eef",
+      "original_birth_stat": {
+        "blocks": 32,
+        "ctime_ns": 1791328845225045079,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57839133,
+        "mode": 33204,
+        "mtime_ns": 1791328845225045079,
+        "nlink": 1,
+        "size": 12876,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/library/dx100/certification/v1_4/seams.cc",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/library/dx100/certification/v1_4/seams.cc",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 4479,
+      "full_file_sha256": "0a85a60e9f514b755ee05e0daba683c32682c97b67a31f22c911c2591f33ce42",
+      "original_birth_stat": {
+        "blocks": 16,
+        "ctime_ns": 1791328845225045079,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57839135,
+        "mode": 33204,
+        "mtime_ns": 1791328845225045079,
+        "nlink": 1,
+        "size": 4479,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/library/dx100/certification/v1_5/arena.hpp",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/library/dx100/certification/v1_5/arena.hpp",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 1614,
+      "full_file_sha256": "b8dd9d52400551247a8daf2818e86ad49022bac30f51ac2b39cf30a42a36ef4b",
+      "original_birth_stat": {
+        "blocks": 8,
+        "ctime_ns": 1791328845225045079,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57839136,
+        "mode": 33204,
+        "mtime_ns": 1791328845225045079,
+        "nlink": 1,
+        "size": 1614,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/library/dx100/certification/v1_5/bc_driver.inc",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/library/dx100/certification/v1_5/bc_driver.inc",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 1563,
+      "full_file_sha256": "8bb2ba0ab100fda0b73e39e667635f747378ce1b2a527228365a42a8d164eb3e",
+      "original_birth_stat": {
+        "blocks": 8,
+        "ctime_ns": 1791328845225045079,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57839137,
+        "mode": 33204,
+        "mtime_ns": 1791328845225045079,
+        "nlink": 1,
+        "size": 1563,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/library/dx100/certification/v1_5/bfs_driver.inc",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/library/dx100/certification/v1_5/bfs_driver.inc",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 5261,
+      "full_file_sha256": "f7917a984afd6b547c696f23300e1609400f4c045aefdb463a3987e8ae7a378c",
+      "original_birth_stat": {
+        "blocks": 16,
+        "ctime_ns": 1791328845225045079,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57839138,
+        "mode": 33204,
+        "mtime_ns": 1791328845225045079,
+        "nlink": 1,
+        "size": 5261,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/library/dx100/certification/v1_5/client.cc",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/library/dx100/certification/v1_5/client.cc",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 5797,
+      "full_file_sha256": "cce4deff6692bbc1175ac61eca1b03a532f620915e999fc0c5e0f08e6d624ec0",
+      "original_birth_stat": {
+        "blocks": 16,
+        "ctime_ns": 1791328845225045079,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57839140,
+        "mode": 33204,
+        "mtime_ns": 1791328845225045079,
+        "nlink": 1,
+        "size": 5797,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/library/dx100/certification/v1_5/client/MAA_functional.hpp",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/library/dx100/certification/v1_5/client/MAA_functional.hpp",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 7569,
+      "full_file_sha256": "b21188bb1067f3018ea2a0fa0bc2153b2177511800dbb211993c512369a352e8",
+      "original_birth_stat": {
+        "blocks": 16,
+        "ctime_ns": 1791328845225045079,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57839141,
+        "mode": 33204,
+        "mtime_ns": 1791328845225045079,
+        "nlink": 1,
+        "size": 7569,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/library/dx100/certification/v1_5/client_core.inc",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/library/dx100/certification/v1_5/client_core.inc",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 9296,
+      "full_file_sha256": "89a025c0869bbebd155d7c207bed62dca669b35eb793a95d6c29950e482b695e",
+      "original_birth_stat": {
+        "blocks": 24,
+        "ctime_ns": 1791328845226045089,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57839142,
+        "mode": 33204,
+        "mtime_ns": 1791328845226045089,
+        "nlink": 1,
+        "size": 9296,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/library/dx100/certification/v1_5/evaluator.cc",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/library/dx100/certification/v1_5/evaluator.cc",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 1658,
+      "full_file_sha256": "3ff8432841d29f80aeec22df7be4a9330d7c6f2ab1f3578f3870e95516564fe0",
+      "original_birth_stat": {
+        "blocks": 8,
+        "ctime_ns": 1791328845226045089,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57839143,
+        "mode": 33204,
+        "mtime_ns": 1791328845226045089,
+        "nlink": 1,
+        "size": 1658,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/library/dx100/certification/v1_5/evaluator_context.hpp",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/library/dx100/certification/v1_5/evaluator_context.hpp",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 7717,
+      "full_file_sha256": "d8a77bdb2b309e04c3acb27de7b8cb3547c45f53a09b2411d9997ee9eadd7ece",
+      "original_birth_stat": {
+        "blocks": 16,
+        "ctime_ns": 1791328845226045089,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57839144,
+        "mode": 33204,
+        "mtime_ns": 1791328845226045089,
+        "nlink": 1,
+        "size": 7717,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/library/dx100/certification/v1_5/evaluator_core.inc",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/library/dx100/certification/v1_5/evaluator_core.inc",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 1050,
+      "full_file_sha256": "d77698926a5fb528e666def15b5220749ac4c11e9b421ba654d3294d334dc1cf",
+      "original_birth_stat": {
+        "blocks": 8,
+        "ctime_ns": 1791328845226045089,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57839145,
+        "mode": 33204,
+        "mtime_ns": 1791328845226045089,
+        "nlink": 1,
+        "size": 1050,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/library/dx100/certification/v1_5/prelude.hpp",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/library/dx100/certification/v1_5/prelude.hpp",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 4,
+      "bytes_from_original_birth_metadata": 3153,
+      "full_file_sha256": "7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c",
+      "original_birth_stat": {
+        "blocks": 8,
+        "ctime_ns": 1791328845226045089,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57839148,
+        "mode": 33204,
+        "mtime_ns": 1791328845226045089,
+        "nlink": 1,
+        "size": 3153,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/library/dx100/dxc_lowering.hpp",
+      "proof_leaf_associations": 2,
+      "relative_path": "swdb-project/library/dx100/dxc_lowering.hpp",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 13070,
+      "full_file_sha256": "e90354b14ab25ad232d916a5a1c07753a1bfb061e194170ea64878b36084121a",
+      "original_birth_stat": {
+        "blocks": 32,
+        "ctime_ns": 1791328845226045089,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57839787,
+        "mode": 33204,
+        "mtime_ns": 1791328845226045089,
+        "nlink": 1,
+        "size": 13070,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/library/dx100/strict/MAA_functional.hpp",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/library/dx100/strict/MAA_functional.hpp",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 356,
+      "full_file_sha256": "b1eb7d074231782a943faa9cc249f6027152b6c727c5f70b71808e122e97867f",
+      "original_birth_stat": {
+        "blocks": 8,
+        "ctime_ns": 1791328845226045089,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57839789,
+        "mode": 33204,
+        "mtime_ns": 1791328845226045089,
+        "nlink": 1,
+        "size": 356,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/library/dx100/strict/gem5/m5ops.h",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/library/dx100/strict/gem5/m5ops.h",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 48788,
+      "full_file_sha256": "a4795008c733278f1baf898e295d081b0428da573c2634b1b7194af2f3479132",
+      "original_birth_stat": {
+        "blocks": 96,
+        "ctime_ns": 1791328845469047558,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57934224,
+        "mode": 33204,
+        "mtime_ns": 1791328845469047558,
+        "nlink": 1,
+        "size": 48788,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/swdb/bfs_native.py",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/bfs_native.py",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 77561,
+      "full_file_sha256": "b7de18069b2bfc0d0e008c0c0e898a613cfcf9297e388d724f271eb9fa5299e7",
+      "original_birth_stat": {
+        "blocks": 152,
+        "ctime_ns": 1791328845473047598,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57934236,
+        "mode": 33204,
+        "mtime_ns": 1791328845473047598,
+        "nlink": 1,
+        "size": 77561,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/swdb/certification.py",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/certification.py",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 34388,
+      "full_file_sha256": "cfd1e2db6656b4ca8428050b606e550a2abfd48af1d302e6d606b48d3cc622f9",
+      "original_birth_stat": {
+        "blocks": 72,
+        "ctime_ns": 1791328845473047598,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57934237,
+        "mode": 33204,
+        "mtime_ns": 1791328845473047598,
+        "nlink": 1,
+        "size": 34388,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/swdb/certification_blinding.py",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/certification_blinding.py",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 8940,
+      "full_file_sha256": "bcda49503338fba874abb8612778b29a1a3bc0b19f2b128e85976a05e1d60c22",
+      "original_birth_stat": {
+        "blocks": 24,
+        "ctime_ns": 1791328845473047598,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57934238,
+        "mode": 33204,
+        "mtime_ns": 1791328845473047598,
+        "nlink": 1,
+        "size": 8940,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/swdb/certification_common.py",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/certification_common.py",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 4820,
+      "full_file_sha256": "e88b52e15589e20dd859a0d36d067047aae4d9f56d5928d024ee32e5766f9974",
+      "original_birth_stat": {
+        "blocks": 16,
+        "ctime_ns": 1791328845473047598,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57934239,
+        "mode": 33204,
+        "mtime_ns": 1791328845473047598,
+        "nlink": 1,
+        "size": 4820,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/swdb/certification_faults.py",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/certification_faults.py",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 11162,
+      "full_file_sha256": "3c0082229e6621e8312ce32d19b86a564377504daed8e47c1589f82f6849a0c0",
+      "original_birth_stat": {
+        "blocks": 24,
+        "ctime_ns": 1791328845473047598,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57934240,
+        "mode": 33204,
+        "mtime_ns": 1791328845473047598,
+        "nlink": 1,
+        "size": 11162,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/swdb/certification_feedback.py",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/certification_feedback.py",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 17943,
+      "full_file_sha256": "9097e28085fdab03e70078c10907eb6061fd1a91ad9f82e005a37f18f6a052eb",
+      "original_birth_stat": {
+        "blocks": 40,
+        "ctime_ns": 1791328845473047598,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57934241,
+        "mode": 33204,
+        "mtime_ns": 1791328845473047598,
+        "nlink": 1,
+        "size": 17943,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/swdb/certification_isolation.py",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/certification_isolation.py",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 23969,
+      "full_file_sha256": "7f1769d570d2ad5d20513fe1270d3328653888ef52b0e51abff06eb6d411de72",
+      "original_birth_stat": {
+        "blocks": 48,
+        "ctime_ns": 1791328845473047598,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57934242,
+        "mode": 33204,
+        "mtime_ns": 1791328845473047598,
+        "nlink": 1,
+        "size": 23969,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/swdb/certification_legality.py",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/certification_legality.py",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 17206,
+      "full_file_sha256": "d2a24ea28403c92dd00d1ef22848fd67e610a6db7e92905a331acaaaacf7f8ce",
+      "original_birth_stat": {
+        "blocks": 40,
+        "ctime_ns": 1791328845474047609,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57934245,
+        "mode": 33204,
+        "mtime_ns": 1791328845474047609,
+        "nlink": 1,
+        "size": 17206,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/swdb/certification_process.py",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/certification_process.py",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 11677,
+      "full_file_sha256": "22b25e833489227e52a04d60243ff05161dca791ec81e956435a3136f2ba6d87",
+      "original_birth_stat": {
+        "blocks": 24,
+        "ctime_ns": 1791328845479047660,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57934293,
+        "mode": 33204,
+        "mtime_ns": 1791328845479047660,
+        "nlink": 1,
+        "size": 11677,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/swdb/kernels/__init__.py",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/kernels/__init__.py",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 6532,
+      "full_file_sha256": "1c17cb82f14d87cf3e98607a374f3a99135c7768e7650e003584261c8a189893",
+      "original_birth_stat": {
+        "blocks": 16,
+        "ctime_ns": 1791328845480047670,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 57934295,
+        "mode": 33204,
+        "mtime_ns": 1791328845480047670,
+        "nlink": 1,
+        "size": 6532,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-functional-strict-20261006/swdb-project/swdb/kernels/bfs.py",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/kernels/bfs.py",
+      "row": "ArchEvolve-lanl-functional-strict-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 29111,
+      "full_file_sha256": "079105affe9a8c01b5766dab26da5f96ab309abccb8dd8c15d2982fe902b90ef",
+      "original_birth_stat": {
+        "blocks": 64,
+        "ctime_ns": 1791332237751909257,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 66622802,
+        "mode": 33204,
+        "mtime_ns": 1791332237751909257,
+        "nlink": 1,
+        "size": 29111,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-memory-a1-20261006/swdb-project/swdb/llvm/Characterize.cpp",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/llvm/Characterize.cpp",
+      "row": "ArchEvolve-lanl-memory-a1-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 16209,
+      "full_file_sha256": "aad5d7667e3359bddac47cb0b73a1693fd1ae321fbf1bc34347c7a5f69ec89af",
+      "original_birth_stat": {
+        "blocks": 32,
+        "ctime_ns": 1791332237751909257,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 66622803,
+        "mode": 33204,
+        "mtime_ns": 1791332237751909257,
+        "nlink": 1,
+        "size": 16209,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-memory-a1-20261006/swdb-project/swdb/llvm/CountingRuntime.cpp",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/llvm/CountingRuntime.cpp",
+      "row": "ArchEvolve-lanl-memory-a1-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 4,
+      "bytes_from_original_birth_metadata": 983,
+      "full_file_sha256": "80e341dc62c3ce4600dd92bbf6ee52c1e535a3b1b93d0f230b4b3cdc43f01e04",
+      "original_birth_stat": {
+        "blocks": 8,
+        "ctime_ns": 1791332237752909267,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 66622813,
+        "mode": 33204,
+        "mtime_ns": 1791332237752909267,
+        "nlink": 1,
+        "size": 983,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-memory-a1-20261006/swdb-project/swdb/native/CpuMemoryCount.cpp",
+      "proof_leaf_associations": 2,
+      "relative_path": "swdb-project/swdb/native/CpuMemoryCount.cpp",
+      "row": "ArchEvolve-lanl-memory-a1-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 3266,
+      "full_file_sha256": "081d90708aa61daab04f70a5986d6b196ca40a70ef904a1dd37359ddf0d76cc4",
+      "original_birth_stat": {
+        "blocks": 8,
+        "ctime_ns": 1791332237752909267,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 66622814,
+        "mode": 33204,
+        "mtime_ns": 1791332237752909267,
+        "nlink": 1,
+        "size": 3266,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-memory-a1-20261006/swdb-project/swdb/native/CpuMemoryTimer.cpp",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/swdb/native/CpuMemoryTimer.cpp",
+      "row": "ArchEvolve-lanl-memory-a1-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 4,
+      "bytes_from_original_birth_metadata": 2324,
+      "full_file_sha256": "ea8d348c417067f4d0bdb2c86ac7718e5def5ed1662b5f06bc3545ee5c55de7a",
+      "original_birth_stat": {
+        "blocks": 8,
+        "ctime_ns": 1791332237752909267,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 66622815,
+        "mode": 33204,
+        "mtime_ns": 1791332237752909267,
+        "nlink": 1,
+        "size": 2324,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-memory-a1-20261006/swdb-project/swdb/native/CpuMemoryWork.h",
+      "proof_leaf_associations": 2,
+      "relative_path": "swdb-project/swdb/native/CpuMemoryWork.h",
+      "row": "ArchEvolve-lanl-memory-a1-20261006"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 12,
+      "bytes_from_original_birth_metadata": 8357,
+      "full_file_sha256": "6df4e8a1947925456983d149918e5c505db959ff42633f5442f6e1a9ec4d8e8c",
+      "original_birth_stat": {
+        "blocks": 24,
+        "ctime_ns": 1791333248691402539,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 66730799,
+        "mode": 33204,
+        "mtime_ns": 1791333248691402539,
+        "nlink": 1,
+        "size": 8357,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bc.cc",
+      "proof_leaf_associations": 6,
+      "relative_path": "swdb-project/apps/gapbs/src/bc.cc",
+      "row": "ArchEvolve-lanl-native-object-counts-20261006-a1"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 8,
+      "bytes_from_original_birth_metadata": 3380,
+      "full_file_sha256": "a1a477adfee41eddf8fdc9781d776030ca40492f0e875205c23c85ec633d3c9f",
+      "original_birth_stat": {
+        "blocks": 8,
+        "ctime_ns": 1791333248691402539,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 66730800,
+        "mode": 33204,
+        "mtime_ns": 1791333248691402539,
+        "nlink": 1,
+        "size": 3380,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/benchmark.h",
+      "proof_leaf_associations": 4,
+      "relative_path": "swdb-project/apps/gapbs/src/benchmark.h",
+      "row": "ArchEvolve-lanl-native-object-counts-20261006-a1"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 12,
+      "bytes_from_original_birth_metadata": 7845,
+      "full_file_sha256": "7c32c3c8dc43bf7be417fc5c530b4578bfe3697d8eb47a161cdb142487823f73",
+      "original_birth_stat": {
+        "blocks": 16,
+        "ctime_ns": 1791333248691402539,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 66730801,
+        "mode": 33204,
+        "mtime_ns": 1791333248691402539,
+        "nlink": 1,
+        "size": 7845,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/apps/gapbs/src/bfs.cc",
+      "proof_leaf_associations": 6,
+      "relative_path": "swdb-project/apps/gapbs/src/bfs.cc",
+      "row": "ArchEvolve-lanl-native-object-counts-20261006-a1"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 8,
+      "bytes_from_original_birth_metadata": 31147,
+      "full_file_sha256": "b461fd7025cfa675d5c191d7d73fee8bd04525c0344cd315dffedb61575b65a0",
+      "original_birth_stat": {
+        "blocks": 64,
+        "ctime_ns": 1791333248980405580,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 66754346,
+        "mode": 33204,
+        "mtime_ns": 1791333248980405580,
+        "nlink": 1,
+        "size": 31147,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/swdb/llvm/Characterize.cpp",
+      "proof_leaf_associations": 4,
+      "relative_path": "swdb-project/swdb/llvm/Characterize.cpp",
+      "row": "ArchEvolve-lanl-native-object-counts-20261006-a1"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 8,
+      "bytes_from_original_birth_metadata": 16243,
+      "full_file_sha256": "43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e",
+      "original_birth_stat": {
+        "blocks": 32,
+        "ctime_ns": 1791333248980405580,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 66754347,
+        "mode": 33204,
+        "mtime_ns": 1791333248980405580,
+        "nlink": 1,
+        "size": 16243,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/swdb/llvm/CountingRuntime.cpp",
+      "proof_leaf_associations": 4,
+      "relative_path": "swdb-project/swdb/llvm/CountingRuntime.cpp",
+      "row": "ArchEvolve-lanl-native-object-counts-20261006-a1"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 8,
+      "bytes_from_original_birth_metadata": 7949,
+      "full_file_sha256": "39d52fea4be446d80c1c9adbdfcc4b06d2c7ab69ce69d1f667454ec9b5651373",
+      "original_birth_stat": {
+        "blocks": 16,
+        "ctime_ns": 1791333248980405580,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 66754350,
+        "mode": 33204,
+        "mtime_ns": 1791333248980405580,
+        "nlink": 1,
+        "size": 7949,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/swdb/llvm/ObjectScopeRuntime.hpp",
+      "proof_leaf_associations": 4,
+      "relative_path": "swdb-project/swdb/llvm/ObjectScopeRuntime.hpp",
+      "row": "ArchEvolve-lanl-native-object-counts-20261006-a1"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 8,
+      "bytes_from_original_birth_metadata": 7485,
+      "full_file_sha256": "5c81304e2ef3714b7da07c947cbec750342d1886e92d50defa920d9a9e9ab794",
+      "original_birth_stat": {
+        "blocks": 16,
+        "ctime_ns": 1791333248980405580,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 66754351,
+        "mode": 33204,
+        "mtime_ns": 1791333248980405580,
+        "nlink": 1,
+        "size": 7485,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-native-object-counts-20261006-a1/swdb-project/swdb/llvm/ObjectScopes.hpp",
+      "proof_leaf_associations": 4,
+      "relative_path": "swdb-project/swdb/llvm/ObjectScopes.hpp",
+      "row": "ArchEvolve-lanl-native-object-counts-20261006-a1"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 8,
+      "bytes_from_original_birth_metadata": 7969,
+      "full_file_sha256": "cf924b0b9a4c63554f622b407dc94ab127a71830b8ed4c252209b5e149f418d8",
+      "original_birth_stat": {
+        "blocks": 16,
+        "ctime_ns": 1791334951101241404,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 68180973,
+        "mode": 33204,
+        "mtime_ns": 1791334951101241404,
+        "nlink": 1,
+        "size": 7969,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-openmp-projections-20261006-a1/swdb-project/scripts/openmp_call_projection.py",
+      "proof_leaf_associations": 4,
+      "relative_path": "swdb-project/scripts/openmp_call_projection.py",
+      "row": "ArchEvolve-lanl-openmp-projections-20261006-a1"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 8,
+      "bytes_from_original_birth_metadata": 9604,
+      "full_file_sha256": "70ddc2fb597aa60a784a3fed50faae6e090e54cde5a8586085ccdfee45311066",
+      "original_birth_stat": {
+        "blocks": 24,
+        "ctime_ns": 1791334951123241635,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 68310385,
+        "mode": 33204,
+        "mtime_ns": 1791334951123241635,
+        "nlink": 1,
+        "size": 9604,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-openmp-projections-20261006-a1/swdb-project/swdb/llvm/OpenMPCallProjection.cpp",
+      "proof_leaf_associations": 4,
+      "relative_path": "swdb-project/swdb/llvm/OpenMPCallProjection.cpp",
+      "row": "ArchEvolve-lanl-openmp-projections-20261006-a1"
+    },
+    {
+      "R2_DEFAULT_read_multiplicity_additional_to_full_tree": 2,
+      "bytes_from_original_birth_metadata": 16253,
+      "full_file_sha256": "8a8d1d13a9ae21623e8473c235e060a2137c307e15e0abb878f0af714bc30e48",
+      "original_birth_stat": {
+        "blocks": 32,
+        "ctime_ns": 1791329404237731453,
+        "dev": 2097,
+        "gid": 114316761,
+        "ino": 59283797,
+        "mode": 33204,
+        "mtime_ns": 1791329404237731453,
+        "nlink": 1,
+        "size": 16253,
+        "uid": 114316761
+      },
+      "path": "/data1/yanruj/ArchEvolve-lanl-root-projection-20261006/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-normalized-root-projector.cpp",
+      "proof_leaf_associations": 1,
+      "relative_path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-normalized-root-projector.cpp",
+      "row": "ArchEvolve-lanl-root-projection-20261006"
+    }
+  ],
+  "proposed_corrections_not_implemented": [
+    "DEFAULT initial tree metadata only with regular_bytes_verified false; full action pre-row Git-byte equality stays mandatory.",
+    "Fresh pass-local parsed receipt cache per9 currently used keys plus full stat checks; every184 JSON leaf remains checked, fresh initial and final phases remain separate.",
+    "ONLY153 exact outside30RAW/PRIMARY historical-file witnesses may be carried from a NEW successful metadata-first DEFAULT original complete sealed receipt; exact per-file path/bytes/SHA/fullstat, prior source/plan/review, fresh-plan equality, current pre/post stat continuity and actual witness provenance required. Failed R2 DEFAULT does not authorize reuse."
+  ],
+  "scenarios": [
+    {
+      "cap_minus_core_before_other_costs": -752929092,
+      "conditional_disjoint_core_bytes": 17932798276,
+      "name": "R2_DEFAULT_disjoint_core"
+    },
+    {
+      "cap_minus_core_before_other_costs": 2188514633,
+      "conditional_disjoint_core_bytes": 14991354551,
+      "name": "metadata_first_DEFAULT_disjoint_core"
+    },
+    {
+      "cap_minus_core_before_other_costs": 2798745159,
+      "conditional_disjoint_core_bytes": 14381124025,
+      "name": "metadata_first_DEFAULT_with_per_alias_parsed_receipt_cache_core"
+    },
+    {
+      "cap_minus_core_before_other_costs": -752929092,
+      "conditional_disjoint_core_bytes": 17932798276,
+      "name": "RETIRE_full_pre_row_bytes_disjoint_core_no_witness_reuse"
+    },
+    {
+      "cap_minus_core_before_other_costs": 1867092661,
+      "conditional_disjoint_core_bytes": 15312776523,
+      "name": "RETIRE_full_pre_row_bytes_with_153_successful_DEFAULT_witness_reuse_core"
+    },
+    {
+      "cap_minus_core_before_other_costs": 2477323187,
+      "conditional_disjoint_core_bytes": 14702545997,
+      "name": "RETIRE_full_pre_row_bytes_with_153_witness_reuse_and_per_alias_receipt_cache_core"
+    }
+  ],
+  "scope": "Local source and original metadata arithmetic only; no actual controller execution, new current remote facts, plan selection, capacity or scientific admission. Core totals are disjoint conditional lower/scenario terms, not complete upper bounds.",
+  "sealed": false,
+  "selected_actual_tracked_logical_bytes_including_symlink_text": 2941445757,
+  "selected_full_regular_body_bytes": 2941443725,
+  "source_and_original_pins": {
+    "O5": {
+      "bytes": 22858530,
+      "path": "/private/tmp/lanl17-detached-passive-observer-originals-20261008-a5/observer.stdout",
+      "sha256": "098f874bbfe5469090f4320911288fcdee5bee268631f96a40a45a55279b08ad"
+    },
+    "actual_failure": {
+      "bytes": 27392,
+      "path": "/private/tmp/lanl17-detached-sparse-default-a1-originals-20261008/guard-receipt/receipt.json",
+      "sha256": "3ac1a3ed99d22862db3f3c8ad894127ab58035273d057bfe7e56b7cb7645da22"
+    },
+    "actual_plan": {
+      "bytes": 735074,
+      "path": "/private/tmp/lanl17-actual-sparse-default-parent-plan-20261008-a2.json",
+      "sha256": "cbd6d8a7b86329fdd6aa518db3254bef9532883cda055ff49882148d7fe01a2d"
+    },
+    "admin_birth": {
+      "bytes": 139083,
+      "path": "/private/tmp/lanl17-exact-worktree-administration-inode-birth-original-actual-20261008-a1.json",
+      "sha256": "a62b53bd4c9f89c3a212690750905c6cf13203fca8fceee560a9ad9ee25a1dd5"
+    },
+    "checkout_birth": {
+      "bytes": 14762700,
+      "path": "/private/tmp/lanl17-exact-checkout-inode-birth-query-original-20261008-a1.json",
+      "sha256": "e228811f4b119a7e0c97b666b7da249374f3637cef8b17c0b10b54c4ff422fb7"
+    },
+    "guard": {
+      "bytes": 166145,
+      "path": "/private/tmp/lanl_sparse_retire_consumed_source_guard_20261008_a1_r2.py",
+      "sha256": "4956a7453ae569d7ccf6e1a9ed98a1a933bee2e35cca1774932afbfba819bd26"
+    }
+  },
+  "unmodeled_actual_counter_costs": [
+    "New full witness receipt and prior plan/review/source hashes/body sizes; actual new plan/guard may differ from old sizes.",
+    "Current lease/status/proc/FD/maps bytes, PAM originals+native files, portal proc/stat/mountinfo, pointer and directory-name byte debits.",
+    "Current common configuration/main index and replacement per-row index body sizes; old admin size illustration is not an upper bound.",
+    "Serialized16 private poststates and final re-read; all final witness/journal/role audit publication must fit unchanged256KiB receipt independently.",
+    "Expanded actual stat/walk counters and Git command runtime; cumulative body arithmetic cannot establish their remaining headroom."
+  ]
+}

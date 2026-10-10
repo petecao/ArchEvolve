@@ -1,0 +1,589 @@
+{
+  "id": "bfs-scalar-v2-preparation-20260926-a1",
+  "state": "failed",
+  "observed_at": "2026-09-26T21:10:37.709351-04:00",
+  "driver": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/bfs-scalar-v2-preparation-20260926-a1.driver/driver.json",
+    "sha256": "3fa6dd435ba13fcc00630b90d17266b23aead96e3001cd392a8f66b49fee94f7",
+    "bytes": 114734
+  },
+  "lane": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1.dispatch/lane.json",
+    "sha256": "27e8e12f85a130ed0a6654fbaad90436a9d7c22a3bc931d94e5eb7024271ca37",
+    "bytes": 1632
+  },
+  "outer_exit": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1.dispatch/outer.exit",
+    "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "bytes": 2
+  },
+  "launch": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1.dispatch/launch.json",
+    "sha256": "8b9e0d6bd2944806829c88e6be7be4122602d91a1abbaca73fe9d2930cc04301",
+    "bytes": 1595
+  },
+  "lease_generation": 413,
+  "cleanup_state": "terminal_no_live_owned_processes",
+  "owned_processes": [
+    {
+      "pid": 3124933,
+      "start_ticks": 497301499,
+      "state": "Z",
+      "rss_bytes": 0,
+      "role": "tmux_launcher",
+      "same_identity_present": true
+    },
+    {
+      "pid": 3124936,
+      "start_ticks": 497301503,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3124937,
+      "start_ticks": 497301503,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3125011,
+      "start_ticks": 497301525,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3125038,
+      "start_ticks": 497301765,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3125083,
+      "start_ticks": 497302191,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3125108,
+      "start_ticks": 497302439,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3125135,
+      "start_ticks": 497302708,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3125158,
+      "start_ticks": 497302956,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3125185,
+      "start_ticks": 497303204,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3125212,
+      "start_ticks": 497303452,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3125243,
+      "start_ticks": 497303720,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3125266,
+      "start_ticks": 497303968,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3125415,
+      "start_ticks": 497305033,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3125620,
+      "start_ticks": 497306463,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3125622,
+      "start_ticks": 497306464,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3125778,
+      "start_ticks": 497307872,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3125825,
+      "start_ticks": 497308280,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3126214,
+      "start_ticks": 497311424,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3126434,
+      "start_ticks": 497312889,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3126436,
+      "start_ticks": 497312890,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3126607,
+      "start_ticks": 497314324,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3126650,
+      "start_ticks": 497314719,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3127010,
+      "start_ticks": 497317268,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3127174,
+      "start_ticks": 497318693,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3127215,
+      "start_ticks": 497319087,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3127439,
+      "start_ticks": 497320166,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3127621,
+      "start_ticks": 497321199,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3128957,
+      "start_ticks": 497325193,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3129043,
+      "start_ticks": 497325775,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    },
+    {
+      "pid": 3129050,
+      "start_ticks": 497325777,
+      "state": "absent",
+      "rss_bytes": 0,
+      "role": "owned",
+      "same_identity_present": false
+    }
+  ],
+  "cleanup_spent_seconds": 2.08454860970378,
+  "cleanup_events": 37,
+  "builds": [
+    {
+      "id": "bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build",
+      "request": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/requests/scalar-v2-20260926-a1.dx100.primary.json",
+        "sha256": "59f2195fff3677662d1c7f862ba7fd28f2ee5bcfc7fadee023dd56bcaff40159"
+      },
+      "canonical_sha256": "aad128ed1a276e66cee6b9ab1bd7d8035a20f477068fb9cd0db168c202a184aa",
+      "binary": {
+        "path": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build/bfs",
+        "sha256": "643f9d68d95157e402772b0aec59b1bc970f54e94d844e380c718ba725cffe2e"
+      }
+    },
+    {
+      "id": "bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build",
+      "request": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/requests/scalar-v2-20260926-a1.dx100.diagnostic.json",
+        "sha256": "869d4dc70ac41fa6996554cb1666ff497dcafa6dc869719e07e725ad04ea880a"
+      },
+      "canonical_sha256": "d5f619274d39e4b519c722e2dc81326c931928e354ad61165016e55c746155a6",
+      "binary": {
+        "path": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build/bfs",
+        "sha256": "a673e39cb190dc578a53e8e6f34f64f7df287e49c60331de377f8644330c0b3f"
+      }
+    },
+    {
+      "id": "bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build",
+      "request": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/requests/scalar-v2-20260926-a1.upstream.primary.json",
+        "sha256": "b6f7eba34891f18a41f75617f41644b41ee28df8546e7db3a534e59319cdc493"
+      },
+      "canonical_sha256": "9f96e78f271a373c1c81a06d05096a4e9477bc839a82fa437a4a8e4cefcb7a00",
+      "binary": {
+        "path": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build/bfs",
+        "sha256": "0a7017e44ae99de873a451010019c3bc517f43241d76821bf34a86f24d83984b"
+      }
+    },
+    {
+      "id": "bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build",
+      "request": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/requests/scalar-v2-20260926-a1.upstream.diagnostic.json",
+        "sha256": "ccce3d3936e36eac4f8aae98774f0ad54fa1dd8566ca87920dc4c9d950899bc5"
+      },
+      "canonical_sha256": "23ee7e212f40fa1d60ebf5bb23430b26e3bffb1491da55d4504c99e7d8d88799",
+      "binary": {
+        "path": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build/bfs",
+        "sha256": "1eafdfc761cc06bdf262b47f04562ffea7face952b4b8f57a4c3d3acca75a093"
+      }
+    }
+  ],
+  "resource_validation": {
+    "samples": 48,
+    "peak_sampled_rss_bytes": 405729280,
+    "observed_identities": [
+      {
+        "pid": 3125011,
+        "start_ticks": 497301525
+      },
+      {
+        "pid": 3125038,
+        "start_ticks": 497301765
+      },
+      {
+        "pid": 3125108,
+        "start_ticks": 497302439
+      },
+      {
+        "pid": 3125158,
+        "start_ticks": 497302956
+      },
+      {
+        "pid": 3125212,
+        "start_ticks": 497303452
+      },
+      {
+        "pid": 3125266,
+        "start_ticks": 497303968
+      },
+      {
+        "pid": 3125415,
+        "start_ticks": 497305033
+      },
+      {
+        "pid": 3125620,
+        "start_ticks": 497306463
+      },
+      {
+        "pid": 3125622,
+        "start_ticks": 497306464
+      },
+      {
+        "pid": 3125778,
+        "start_ticks": 497307872
+      },
+      {
+        "pid": 3125825,
+        "start_ticks": 497308280
+      },
+      {
+        "pid": 3126214,
+        "start_ticks": 497311424
+      },
+      {
+        "pid": 3126434,
+        "start_ticks": 497312889
+      },
+      {
+        "pid": 3126436,
+        "start_ticks": 497312890
+      },
+      {
+        "pid": 3126607,
+        "start_ticks": 497314324
+      },
+      {
+        "pid": 3126650,
+        "start_ticks": 497314719
+      },
+      {
+        "pid": 3127010,
+        "start_ticks": 497317268
+      },
+      {
+        "pid": 3127215,
+        "start_ticks": 497319087
+      },
+      {
+        "pid": 3127439,
+        "start_ticks": 497320166
+      },
+      {
+        "pid": 3127621,
+        "start_ticks": 497321199
+      },
+      {
+        "pid": 3128957,
+        "start_ticks": 497325193
+      }
+    ],
+    "hard_memory_quota": false
+  },
+  "finalization_error": "CalledProcessError: Command '['du', '-sk', '/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/records/evaluations/bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build.yaml']' died with <Signals.SIGKILL: 9>.",
+  "helper_returncode": 1,
+  "outer_returncode": 1,
+  "driver_finalization_succeeded": false,
+  "outer_started": "2026-09-26T21:04:42.140521-04:00",
+  "driver_finished": null,
+  "outer_deadline": "2026-09-26T21:24:42.140521-04:00",
+  "audit_wall_seconds": 0.02636017184704542,
+  "terminal": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1.dispatch/terminal-validation.json",
+    "sha256": "a60fe6c7cdabf91b8c3d368e045f225a9464102602349c55c1ee574aa9a288b1",
+    "bytes": 31512
+  },
+  "final_allocated_bytes": 17801216,
+  "final_build_allocated_bytes": 4337664,
+  "storage_paths": [
+    "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1",
+    "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1.dispatch",
+    "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.tmp",
+    "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build",
+    "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build",
+    "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build",
+    "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build",
+    "/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/records/evaluations/bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build.yaml",
+    "/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/records/evaluations/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build.yaml",
+    "/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/records/evaluations/bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build.yaml",
+    "/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/records/evaluations/bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build.yaml"
+  ],
+  "final_readonly_recount_at": "2026-09-26T21:10:39.410943-04:00",
+  "ledger": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/bfs-scalar-v2-preparation-20260926-a1.driver/cleanup-ledger.json",
+    "sha256": "efd2b6471830799ec4b2d6015dc7b8eca1c6cab9dd958e2f87243f413d47ebba",
+    "bytes": 8898
+  },
+  "runtime_commit": "6732d5327c4f9e22d97367ee3eeb3c09118867d3",
+  "record_inventory": [
+    {
+      "id": "bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build",
+      "kind": "evaluation",
+      "record": {
+        "path": "/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/records/evaluations/bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build.yaml",
+        "sha256": "09e0abd048169282ce5b8511294c6d7a34e6c0ecea32734aa17c45f13145df29",
+        "bytes": 17520
+      },
+      "canonical_sha256": "aad128ed1a276e66cee6b9ab1bd7d8035a20f477068fb9cd0db168c202a184aa",
+      "binary": {
+        "path": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build/bfs",
+        "sha256": "643f9d68d95157e402772b0aec59b1bc970f54e94d844e380c718ba725cffe2e"
+      },
+      "correctness": "unverified",
+      "timing_rows": 0,
+      "gain_claim": false
+    },
+    {
+      "id": "bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build",
+      "kind": "evaluation",
+      "record": {
+        "path": "/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/records/evaluations/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build.yaml",
+        "sha256": "132a0c310c337f1d035713fe3de74f077cf5d9ac37b112077f5ff6733ad3de39",
+        "bytes": 89174
+      },
+      "canonical_sha256": "d5f619274d39e4b519c722e2dc81326c931928e354ad61165016e55c746155a6",
+      "binary": {
+        "path": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build/bfs",
+        "sha256": "a673e39cb190dc578a53e8e6f34f64f7df287e49c60331de377f8644330c0b3f"
+      },
+      "correctness": "unverified",
+      "timing_rows": 0,
+      "gain_claim": false
+    },
+    {
+      "id": "bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build",
+      "kind": "evaluation",
+      "record": {
+        "path": "/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/records/evaluations/bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build.yaml",
+        "sha256": "93b38f6c9b814423997da178f49b07e6848d9e45098640fe80ddf8ceccaff922",
+        "bytes": 15797
+      },
+      "canonical_sha256": "9f96e78f271a373c1c81a06d05096a4e9477bc839a82fa437a4a8e4cefcb7a00",
+      "binary": {
+        "path": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.upstream.primary.build/bfs",
+        "sha256": "0a7017e44ae99de873a451010019c3bc517f43241d76821bf34a86f24d83984b"
+      },
+      "correctness": "unverified",
+      "timing_rows": 0,
+      "gain_claim": false
+    },
+    {
+      "id": "bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build",
+      "kind": "evaluation",
+      "record": {
+        "path": "/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/records/evaluations/bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build.yaml",
+        "sha256": "51d5fdcc7369720517120318860b3861de900e783cc2adc5047b94f6a4f081b1",
+        "bytes": 53300
+      },
+      "canonical_sha256": "23ee7e212f40fa1d60ebf5bb23430b26e3bffb1491da55d4504c99e7d8d88799",
+      "binary": {
+        "path": "/data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.upstream.diagnostic.build/bfs",
+        "sha256": "1eafdfc761cc06bdf262b47f04562ffea7face952b4b8f57a4c3d3acca75a093"
+      },
+      "correctness": "unverified",
+      "timing_rows": 0,
+      "gain_claim": false
+    }
+  ],
+  "ancillary_seconds": null,
+  "compile_call_seconds": null,
+  "host_wall_s": null,
+  "helper_ended_utc": "2026-09-27T01:08:44Z",
+  "created": "2026-09-26",
+  "failure_detail": {
+    "driver_top_level_keys": [
+      "admission",
+      "automatic_retry_allowed",
+      "bounds",
+      "builds",
+      "capacity",
+      "cleanup",
+      "cleanup_budget",
+      "cleanup_verified",
+      "controlled_environment",
+      "created",
+      "database",
+      "finalization_error",
+      "format",
+      "gain_claim",
+      "guest_executions",
+      "id",
+      "leases",
+      "linux_ownership_proof",
+      "manifest",
+      "outer_deadline",
+      "outer_started",
+      "process_observations",
+      "provider_calls",
+      "runtime",
+      "stages",
+      "started",
+      "state"
+    ],
+    "finalization_error": "CalledProcessError: Command '['du', '-sk', '/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/records/evaluations/bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build.yaml']' died with <Signals.SIGKILL: 9>.",
+    "cleanup": {
+      "state": "all_owned_descendants_absent",
+      "subreaper": true,
+      "observed": [
+        {
+          "pid": 3129050,
+          "parent_pid": 3125011,
+          "start_ticks": 497325777,
+          "state": "R",
+          "rss_pages": 23752,
+          "rss_bytes": 97288192
+        }
+      ],
+      "checked_at": "2026-09-26T21:08:44.919535-04:00",
+      "direct_reaped": true,
+      "shared_budget": "/data/yanruj/EvolveSWDB_runs/bfs-scalar-v2-preparation-20260926-a1/bfs-scalar-v2-preparation-20260926-a1.driver/cleanup-ledger.json",
+      "errors": []
+    },
+    "traceback": "\n  File \"/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/scripts/bfs_scalar_v2_builds.py\", line 401, in <module>\n    with interruption_signals():main()\n                                ^^^^^^\n  File \"/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/scripts/bfs_scalar_v2_builds.py\", line 394, in main\n    driver.finalize(error)\n  File \"/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/scripts/bfs_scalar_v2_builds.py\", line 379, in finalize\n    if failure:raise failure\n               ^^^^^^^^^^^^^\n  File \"/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/scripts/bfs_scalar_v2_builds.py\", line 359, in finalize\n    if self.guard:self.guard.stop(until)\n                  ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/scripts/bfs_owned_execution.py\", line 336, in stop\n    self.check()\n  File \"/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/scripts/bfs_owned_execution.py\", line 316, in check\n    if self.error is not None: raise self.error\n                               ^^^^^^^^^^^^^^^^\n  File \"/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/scripts/bfs_owned_execution.py\", line 322, in _run\n    try: self.observe()\n         ^^^^^^^^^^^^^^\n  File \"/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/scripts/bfs_owned_execution.py\", line 306, in observe\n    result = self.callback()\n             ^^^^^^^^^^^^^^^\n  File \"/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/scripts/bfs_scalar_v2_builds.py\", line 271, in observe\n    sample=self.owner.sample(); sample['accounting']=self.account()\n                                                     ^^^^^^^^^^^^^^\n  File \"/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/scripts/bfs_scalar_v2_builds.py\", line 260, in account\n    build_bytes=allocated_bytes(builds); total=allocated_bytes(paths+records)+build_bytes\n                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/scripts/bfs_simulator_batch.py\", line 89, in allocated_bytes\n    used, warnings = disk_usage_kib(path)\n                     ^^^^^^^^^^^^^^^^^^^^\n  File \"/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/scripts/dx100_build.py\", line 51, in disk_usage_kib\n    raise subprocess.CalledProcessError(result.returncode, result.args, result.stdout, result.stderr)\nsubprocess.CalledProcessError: Command '['du', '-sk', '/data1/yanruj/EvolveSWDB_scalar_v2_preparation_20260926_a1/records/evaluations/bfs-scalar-v2-preparation-20260926-a1.dx100.primary.build.yaml']' died with <Signals.SIGKILL: 9>.",
+    "diagnosis_status": "source-backed hypothesis: owner cleanup and background accounting du overlapped; peer reproduction pending"
+  },
+  "claims": {
+    "four_completed_builds": true,
+    "whole_preparation_passed": false,
+    "guest_executions": 0,
+    "performance_claim": false,
+    "automatic_retry": false
+  }
+}

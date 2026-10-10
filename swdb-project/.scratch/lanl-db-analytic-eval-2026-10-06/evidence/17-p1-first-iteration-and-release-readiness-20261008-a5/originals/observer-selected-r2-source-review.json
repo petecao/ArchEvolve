@@ -1,0 +1,53 @@
+{
+  "AST_exact_reader_reuse": {
+    "canonical": true,
+    "metadata": true,
+    "need": true,
+    "stamp": true,
+    "strict": true,
+    "tick": true
+  },
+  "deadline_remote_local_seconds": [
+    45,
+    60,
+    180
+  ],
+  "native_metadata_modes_preserved": true,
+  "outputs": [
+    {
+      "bytes": 20506,
+      "path": "/private/tmp/lanl17-p1-native-release-query-source-stage-config-r2-20261008-a5.json",
+      "sha256": "c93e96bbbf7d6a3edd2bf5313803e4b397ab783dbf5a080188cf19d3abe0af19"
+    },
+    {
+      "bytes": 422,
+      "path": "/private/tmp/lanl17-p1-native-release-query-action-config-r2-20261008-a5.json",
+      "sha256": "0fc7e795bc32017f8e8bb3d4c017bd2bffc3979a545afa47ea2b6dd98eaef646"
+    }
+  ],
+  "prior_source_preserved": {
+    "bytes": 14819,
+    "path": "/private/tmp/lanl17_read_p1_native_release_observation_20261008_a5_r1.py",
+    "sha256": "99e70748d3f771bc114240457c395460df98eda3f58a1b22d36c409a14513bde"
+  },
+  "read_only_no_lock_mutations": true,
+  "remote_executed": false,
+  "remote_writer_pin": {
+    "bytes": 15125,
+    "path": "/data1/yanruj/lanl17-p1-native-release-query-20261008-a5-r2.py",
+    "sha256": "df19c76a0a3c667f5d1b901677c72641a0f367e6971b4ee2e37a62871bbc7626"
+  },
+  "runtime_executed": false,
+  "source_only": true,
+  "source_only_review_repairs": [
+    "raw stopped.infrastructure_error omitted; presence/hash only",
+    "cleanup arbitrary dictionaries omitted; bounded booleans/counts only",
+    "lane/stopped closed scalar types validated before projection",
+    "unexpected/deleted recorded daemon FD9 route is unknown; route hash retained, no raw route or foreign target stat/read"
+  ],
+  "source_pin_local": {
+    "bytes": 15125,
+    "path": "/private/tmp/lanl17_read_p1_native_release_observation_20261008_a5_r2.py",
+    "sha256": "df19c76a0a3c667f5d1b901677c72641a0f367e6971b4ee2e37a62871bbc7626"
+  }
+}

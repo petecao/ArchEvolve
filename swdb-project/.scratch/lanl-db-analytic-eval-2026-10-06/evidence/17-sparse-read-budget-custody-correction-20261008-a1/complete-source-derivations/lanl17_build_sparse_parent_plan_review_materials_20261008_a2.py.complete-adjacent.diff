@@ -1,0 +1,20 @@
+--- lanl17_build_sparse_parent_plan_review_materials_20261008_a1.py
++++ lanl17_build_sparse_parent_plan_review_materials_20261008_a2.py
+@@ -20,7 +20,7 @@
+ RAW = Path('/data/yanruj/EvolveSWDB_runs')
+ PRIMARY = BASE/'ArchEvolve'
+ O1 = 'ArchEvolve-lanl-count-20261006'
+-GUARD_SHA = '4956a7453ae569d7ccf6e1a9ed98a1a933bee2e35cca1774932afbfba819bd26'
++GUARD_SHA = 'd75baaf9dbe7192b02812cab525ccd6c50c81fd312d67cbfae7b9c8fdf955301'
+ O5_SHA = '098f874bbfe5469090f4320911288fcdee5bee268631f96a40a45a55279b08ad'
+ FIXED = {
+     'O5': (22858530, O5_SHA),
+@@ -421,7 +421,7 @@
+         require(pin['bytes'] == size and pin['sha256'] == digest, 'immutable_original_input_pin')
+         docs[name] = strict(io.read(pin))
+     guard = Path(a.guard_source)
+-    guard_pin = {'path':str(guard),'bytes':166145,'sha256':GUARD_SHA}
++    guard_pin = {'path':str(guard),'bytes':180887,'sha256':GUARD_SHA}
+     constants = guard_constants(io.read(guard_pin, OUTPUT))
+     materials = assemble(request, docs, constants)
+     materials['original_local_input_pins'] = copy.deepcopy(request['original_local_inputs'])

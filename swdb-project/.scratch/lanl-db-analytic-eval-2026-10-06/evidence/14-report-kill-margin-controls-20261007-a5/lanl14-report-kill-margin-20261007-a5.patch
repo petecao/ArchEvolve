@@ -1,0 +1,11 @@
+--- lanl14_final_reports_catalog_caps_a4.py
++++ lanl14_final_reports_catalog_caps_a5.py
+@@ -156,7 +156,7 @@
+  h,m=checked_manifest(args.manifest);h.free_all();h.capacity();raw=Path(m['raw']);control=raw/'control';assert not control.exists();control.mkdir();shutil.copyfile(__file__,control/'helper.py')
+  job='swdb-lanl14-reports-'+m['tag'];child=['python3',str(control/'helper.py'),'run','--manifest',str(raw/'manifest.json')]
+  h.dump(control/'dispatch.json',h.seal({'manifest_sha256':m['identity_sha256'],'node':args.node,'job':job,'command':child}))
+- argv=['timeout','--signal=TERM','--kill-after=40s','108000s','bash',m['wrapper']['path'],str(args.node),job,'--record',str(control/'lane.json'),'--lease-timeout-s','30','--no-align','--',*child]
++ argv=['timeout','--signal=TERM','--kill-after=60s','108000s','bash',m['wrapper']['path'],str(args.node),job,'--record',str(control/'lane.json'),'--lease-timeout-s','30','--no-align','--',*child]
+  h.free_all();shell=' '.join(shlex.quote(x) for x in argv)+' > '+shlex.quote(str(control/'wrapper.stdout'))+' 2> '+shlex.quote(str(control/'wrapper.stderr'))
+  shell+='; lanl14_report_exit=$?; printf "%s\\n" "$lanl14_report_exit" > '+shlex.quote(str(control/'wrapper-exit-code.txt'))
+  h.command(['tmux','new-session','-d','-s',job,shell]);print(json.dumps({'job':job,'node':args.node,'control':str(control),'manifest_sha256':m['identity_sha256']}))

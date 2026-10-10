@@ -1,0 +1,90 @@
+name: record_kinds
+description: The kinds of record the database holds; each has its own schema.
+# Updated: 2026-10-06 ET: characterization, target description and estimate formats.
+values:
+  - value: application
+    meaning: A program that contains kernels, from one source at one version.
+  - value: kernel
+    meaning: A computation defined by what it computes and by its correctness check.
+  - value: implementation
+    meaning: Code that realizes a kernel and passes its correctness check on the hardware target it is written for.
+  - value: input
+    meaning: The data fed to a kernel, generated or from a file, with its properties.
+  - value: machine
+    meaning: A host that runs profiles, as captured from the host itself.
+  - value: profile
+    meaning: Measurements of one implementation on one input, machine, build, and thread count.
+  - value: strategy
+    meaning: An optimization strategy, a reusable technique identified by its target and effect; it holds no code.
+  - value: intrinsic
+    meaning: A callable ISA instruction or accelerator command, with its interface and memory effects.
+  - value: source_snapshot
+    meaning: An identified buildable source copy with evaluator-owned protections.
+  - value: profile_package
+    meaning: A versioned source and workload-specific handoff with explicit completeness.
+  - value: proposal
+    meaning: A retained rewrite request and stage outcomes, including rejection.
+  - value: candidate
+    meaning: Unverified code materialized from an identified rewrite proposal.
+  - value: evaluation
+    meaning: Durable stage outcomes and evidence for an exact candidate execution.
+  - value: evaluation_pair
+    meaning: Prospective native trial order and exact paired execution receipt for two evaluations.
+  - value: operation
+    meaning: Source-backed accelerator operation semantics and resource requirements.
+  - value: hardware_target
+    meaning: A versioned hardware model, software interface, and evaluator backend configuration.
+  - value: workload
+    meaning: A graph with verified equivalent representations and an ordered traversal-source list.
+  - value: protocol
+    meaning: An immutable versioned set of workload and comparison settings.
+  - value: comparison_result
+    meaning: A retained compatibility and profitability decision for explicit evaluation evidence.
+  - value: region_profile
+    meaning: Execution-linked automatic function, loop, and dynamic memory observations.
+  - value: retention
+    meaning: Immutable per-event approval or raw-output deletion receipt with retained sha256.
+  - value: team_claim
+    meaning: Approved evidence citation to a teammate, or explicit evaluation release from future claims.
+
+  - value: certification
+    meaning: Content-bound differential and candidate pre-check evidence with named negative controls.
+
+  - value: review
+    meaning: A named reviewer admits one certified library entry content hash to the shared tier, promotes one Extensa candidate artifact to its team re-evaluation, or (an attribution correction) states who performed an earlier review.
+
+  - value: campaign_summary
+    meaning: One Extensa campaign's inputs, candidate artifacts, verdicts, budgets used and stop reason, written once at stop.
+
+  - value: workload_characterization
+    meaning: Source-normalized static and native dynamic workload counts for one source snapshot and input.
+  - value: target_description
+    meaning: Versioned hardware mechanism parameters with their basis and source.
+  - value: estimate
+    meaning: Analytic bounds in seconds, kept separately from execution evaluations.
+
+  - value: cpu_calibration
+    meaning: Hash-bound compact native CPU calibration context, constructed-work trials, count numerators and provenance lineage.
+
+  - value: cpu_service_calibration
+    meaning: Independently timed native service and paired driver trials with scoped event denominators and provenance.
+
+  - value: cpu_error_band
+    meaning: Frozen empirical CPU error evidence or explicit missing-cost failure.
+  - value: cpu_native_validation
+    meaning: Separate matched original-driver ArchEvolve CPU validation with independently checked five-call timing; never CPU selection.
+  - value: cpu_memory_resource_calibration
+    meaning: Prospective inferred total-cell memory resource recipe over independently counted native cells, retaining original paired subtraction and typed lineage.
+
+  - value: cpu_bulk_resource_calibration
+    meaning: Distinct inferred gross bulk-loop resource retaining exact typed event proof, native service and short-driver diagnostics.
+
+  - value: paired_estimate
+    meaning: Immutable Extensa campaign estimate for one exact artifact/input/timing context, frozen before outcome access.
+
+  - value: cpu_allocator_resource_calibration
+    meaning: Distinct inferred gross allocator-loop resource preserving exact typed ABI/size proof and all paired driver diagnostics.
+  - value: agreement_policy
+    meaning: Immutable prospective Extensa population, dependency and D30 statistical policy frozen before campaign outcomes.
+  - value: agreement_report
+    meaning: Research-only blind agreement report with exclusions and unchanged D30 decision.

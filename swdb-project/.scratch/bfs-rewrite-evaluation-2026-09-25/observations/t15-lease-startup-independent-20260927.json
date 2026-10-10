@@ -1,0 +1,77 @@
+{
+  "observed_at": "2026-09-27T02:40:29.341733-04:00",
+  "id": "bfs-t15-lease-recovery-simulator-batch-20260927-a1",
+  "driver_state": "running",
+  "driver_reason": null,
+  "outer_started": "2026-09-27T02:39:53.162109-04:00",
+  "outer_deadline": "2026-09-27T09:14:09.851819-04:00",
+  "processes": [
+    {
+      "pid": 3339785,
+      "start_ticks": 499312600,
+      "state": "S",
+      "parent_pid": 3339775,
+      "rss_pages": 384,
+      "role": "outer timeout"
+    },
+    {
+      "pid": 3339820,
+      "start_ticks": 499312653,
+      "state": "S",
+      "parent_pid": 3339785,
+      "rss_pages": 768,
+      "role": "socket lane helper"
+    },
+    {
+      "pid": 3339889,
+      "start_ticks": 499312675,
+      "state": "S",
+      "parent_pid": 3339820,
+      "rss_pages": 20175,
+      "role": "batch driver"
+    },
+    {
+      "pid": 3340067,
+      "start_ticks": 499316134,
+      "state": "R",
+      "parent_pid": 3339889,
+      "rss_pages": 12800,
+      "role": "series driver"
+    }
+  ],
+  "leases": {
+    "mbit10-evaluation": {
+      "state": "released",
+      "generation": 77,
+      "kernel_held": false,
+      "job": null
+    },
+    "mbit10-evaluation-node0": {
+      "state": "held",
+      "generation": 347,
+      "kernel_held": true,
+      "job": null
+    },
+    "mbit10-evaluation-node1": {
+      "state": "held",
+      "generation": 444,
+      "kernel_held": true,
+      "job": null
+    }
+  },
+  "dispatch_logs": {
+    "outer.stdout": {
+      "bytes": 167,
+      "mtime_ns": 1790491193816848360
+    },
+    "outer.stderr": {
+      "bytes": 1456,
+      "mtime_ns": 1790491193860848822
+    }
+  },
+  "disk_available_bytes": {
+    "/data": 170580783104,
+    "/data1": 16999010304
+  },
+  "mutation": false
+}

@@ -1,0 +1,28 @@
+# Certification profile (ticket 51). Created 2026-10-03 ET.
+format: swdb.certification-profile.v1
+id: profile.regroup_executor
+entry: operation.regroup_executor
+date: '2026-10-03'
+matrix:
+  builds:
+  - sanitized
+  - openmp
+  threads: 4
+  n_cases: 8
+  sizes:
+    n: 509
+    k: 3
+controls:
+- id: transposed_layout
+  category: ordering
+  expected_check: differential_mismatch
+- id: dropped_last_array
+  category: dropped_operand
+  expected_check: differential_mismatch
+- id: aliasing_write
+  category: aliasing
+  expected_check: frame_violation
+required_categories:
+- aliasing
+- dropped_operand
+- ordering

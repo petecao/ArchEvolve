@@ -1,0 +1,62 @@
+--- /private/tmp/lanl17_read_original_dx100_deployment_prerequisites_20261008_a1_r2.py
++++ /private/tmp/lanl17_read_original_dx100_deployment_prerequisites_20261008_a1_r3.py
+@@ -23,6 +23,9 @@
+ C = BASE / 'ArchEvolve-lanl-cpu-model-validation-20261006-a1'
+ CORE = 'f893fed400347ed23d92e917d8bde21b75e5375d'
+ UID = 114316761
++CREATOR_GID = 114316761
++BASE_IDENTITY = {'dev': 2097, 'ino': 54132737, 'mode': stat.S_IFDIR | 0o700, 'uid': UID, 'gid': 0}
++C_IDENTITY = {'dev': 2097, 'ino': 57973211, 'mode': stat.S_IFDIR | 0o775, 'uid': UID, 'gid': CREATOR_GID}
+ PRIMARY_IDENTITY = {'dev': 2097, 'ino': 54935911, 'mode': stat.S_IFDIR | 0o2777, 'uid': UID, 'gid': 0}
+ GIT = Path('/usr/bin/git')
+ PYTHON = Path('/usr/bin/python3.12')
+@@ -83,7 +86,7 @@
+     canonical_path(BASE)
+     s = stamp(BASE)
+     require(stat.S_ISDIR(s['mode']) and stat.S_IMODE(s['mode']) == 0o700
+-            and s['uid'] == UID, 'private_base_identity')
++            and s['uid'] == UID and identity(BASE) == BASE_IDENTITY, 'private_base_identity')
+     return s
+ 
+ 
+@@ -93,14 +96,17 @@
+     base = private_base()
+     if p.is_relative_to(PRIMARY):
+         require(identity(PRIMARY) == PRIMARY_IDENTITY, 'original_primary_private_route_identity')
++    if p.is_relative_to(C):
++        require(identity(C) == C_IDENTITY, 'original_C_private_route_identity')
+     for part in reversed((p, *p.parents)):
+         if not part.is_relative_to(BASE):
+             continue
+         s = stamp(part)
+-        # Only this exact owned PRIMARY route inherits the observed GID0/SGID setup.
+-        expected_gid = PRIMARY_IDENTITY['gid'] if part.is_relative_to(PRIMARY) else base['gid']
+-        require(stat.S_ISDIR(s['mode']) and s['uid'] == UID and s['gid'] == expected_gid
+-                and s['dev'] == base['dev'] and not s['mode'] & 0o5000, 'directory_owner_or_special_mode')
++        # Ordinary owned routes may use the pinned BASE or actual creator group only.
++        # Inherited directory SGID remains restricted to the private BASE group.
++        require(stat.S_ISDIR(s['mode']) and s['uid'] == UID and s['gid'] in {base['gid'], CREATOR_GID}
++                and s['dev'] == base['dev'] and not s['mode'] & 0o5000
++                and (not s['mode'] & 0o2000 or s['gid'] == base['gid']), 'directory_owner_or_special_mode')
+     return stamp(p)
+ 
+ 
+@@ -184,7 +190,7 @@
+                 directory(file)
+             else:
+                 require(rel in expected, 'target_extra_file')
+-                require(s['gid'] == BASE.stat().st_gid and s['dev'] == BASE.stat().st_dev, 'target_group_device')
++                require(s['gid'] in {BASE_IDENTITY['gid'], CREATOR_GID} and s['dev'] == BASE_IDENTITY['dev'], 'target_group_device')
+                 raw, opened = read(file, expected[rel]['bytes'], UID)
+                 row = {'path': rel, 'bytes': len(raw), 'sha256': sha(raw), 'executable': bool(opened['mode'] & 0o111)}
+                 require(row == expected[rel], 'target_original_file_mismatch')
+@@ -235,7 +241,8 @@
+     require(re.fullmatch('[0-9a-f]{40}', args.expected_primary40)
+             and re.fullmatch('[0-9a-f]{64}', args.query_source_sha256), 'explicit_pins_required')
+     require(sys.platform == 'linux' and socket.gethostname().split('.')[0] == 'mbit10'
+-            and os.getuid() == os.geteuid() == UID and pwd.getpwuid(UID).pw_name == 'yanruj'
++            and os.getuid() == os.geteuid() == UID and os.getgid() == os.getegid() == CREATOR_GID
++            and pwd.getpwuid(UID).pw_name == 'yanruj'
+             and Path(sys.executable) == PYTHON, 'exact_native_host_account')
+     require(not any(os.environ.get(key) for key in ('GIT_DIR', 'GIT_WORK_TREE', 'GIT_COMMON_DIR', 'GIT_NAMESPACE',
+                 'GIT_INDEX_FILE', 'GIT_OBJECT_DIRECTORY', 'GIT_ALTERNATE_OBJECT_DIRECTORIES')), 'git_startup_redirection')

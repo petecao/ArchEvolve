@@ -1,0 +1,401 @@
+{
+  "native_id": "typed-library-bfs-scalar-profile-20261003-a2.native",
+  "native_outcome": "complete",
+  "native_correctness": "passed",
+  "profile_id": "typed-library-bfs-scalar-profile-20261003-a2.profile",
+  "profile_outcome": {
+    "state": "partial",
+    "stage": "profiling",
+    "reason": "bounded source attribution; see explicit coverage and metric limits"
+  },
+  "package_id": "typed-library-bfs-scalar-profile-20261003-a2.package.v1.619546ae9c6f60fe",
+  "completeness": "complete",
+  "regions": 23,
+  "line_rows": 31,
+  "statement_costs": 7,
+  "retained_functions": [
+    "TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&, int, int) [clone ._omp_fn.0]",
+    "TDStep(CSRGraph<int, int, true> const&, pvector<int>&, pvector<int>&, SlidingQueue<int>&, int, int) [clone .constprop.0]"
+  ],
+  "basis": [
+    "simulated"
+  ],
+  "statement_memory": [
+    {
+      "statement": "bfs-td-frontier",
+      "path": "benchmarks/gapbs/src/bfs.cc",
+      "lines": [
+        77,
+        77
+      ],
+      "metric": "last_level_misses",
+      "value": 6731,
+      "basis": "simulated",
+      "unit": "misses",
+      "profile": "typed-library-bfs-scalar-profile-20261003-a2.profile",
+      "source_artifact_sha256": "2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af",
+      "source_mapping": {
+        "id": "bfs-td-frontier",
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "lines": [
+          77,
+          77
+        ],
+        "source_sha256": "e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3",
+        "source_snapshot": "bfs-dx100-scalar-only-20260929-a1.source",
+        "source_artifact_sha256": "2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af",
+        "original_source": {
+          "root": "application",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "lines": [
+            240,
+            240
+          ]
+        },
+        "source_derivation_sha256": "08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991",
+        "mapping_method": "removed_pinned_line_ranges",
+        "projected_removed_ranges_lines": [
+          77,
+          77
+        ],
+        "code": "NodeID u = queue.shared[i];",
+        "access_pattern_steps": [
+          {
+            "pattern": "td-frontier-read",
+            "step": 0
+          }
+        ],
+        "depends_on": []
+      },
+      "attributed_rows": 1,
+      "limitations": "debug-line self costs; optimized/coalesced or header-inlined work may have no costs on the statement line"
+    },
+    {
+      "statement": "bfs-td-row-bounds",
+      "path": "benchmarks/gapbs/src/bfs.cc",
+      "lines": [
+        78,
+        78
+      ],
+      "metric": "last_level_misses",
+      "value": 6809,
+      "basis": "simulated",
+      "unit": "misses",
+      "profile": "typed-library-bfs-scalar-profile-20261003-a2.profile",
+      "source_artifact_sha256": "2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af",
+      "source_mapping": {
+        "id": "bfs-td-row-bounds",
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "lines": [
+          78,
+          78
+        ],
+        "source_sha256": "e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3",
+        "source_snapshot": "bfs-dx100-scalar-only-20260929-a1.source",
+        "source_artifact_sha256": "2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af",
+        "original_source": {
+          "root": "application",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "lines": [
+            241,
+            241
+          ]
+        },
+        "source_derivation_sha256": "08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991",
+        "mapping_method": "removed_pinned_line_ranges",
+        "projected_removed_ranges_lines": [
+          78,
+          78
+        ],
+        "code": "for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {",
+        "access_pattern_steps": [
+          {
+            "pattern": "td-row-bounds-read",
+            "step": 1
+          },
+          {
+            "pattern": "td-row-end-read",
+            "step": 1
+          }
+        ],
+        "depends_on": [
+          "bfs-td-frontier"
+        ]
+      },
+      "attributed_rows": 1,
+      "limitations": "debug-line self costs; optimized/coalesced or header-inlined work may have no costs on the statement line"
+    },
+    {
+      "statement": "bfs-td-neighbor",
+      "path": "benchmarks/gapbs/src/bfs.cc",
+      "lines": [
+        79,
+        79
+      ],
+      "metric": "last_level_misses",
+      "value": 479207,
+      "basis": "simulated",
+      "unit": "misses",
+      "profile": "typed-library-bfs-scalar-profile-20261003-a2.profile",
+      "source_artifact_sha256": "2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af",
+      "source_mapping": {
+        "id": "bfs-td-neighbor",
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "lines": [
+          79,
+          79
+        ],
+        "source_sha256": "e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3",
+        "source_snapshot": "bfs-dx100-scalar-only-20260929-a1.source",
+        "source_artifact_sha256": "2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af",
+        "original_source": {
+          "root": "application",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "lines": [
+            242,
+            242
+          ]
+        },
+        "source_derivation_sha256": "08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991",
+        "mapping_method": "removed_pinned_line_ranges",
+        "projected_removed_ranges_lines": [
+          79,
+          79
+        ],
+        "code": "NodeID v = g.out_neighbors_[j];",
+        "access_pattern_steps": [
+          {
+            "pattern": "td-neighbor-read",
+            "step": 2
+          }
+        ],
+        "depends_on": [
+          "bfs-td-row-bounds"
+        ]
+      },
+      "attributed_rows": 1,
+      "limitations": "debug-line self costs; optimized/coalesced or header-inlined work may have no costs on the statement line"
+    },
+    {
+      "statement": "bfs-td-parent-read",
+      "path": "benchmarks/gapbs/src/bfs.cc",
+      "lines": [
+        80,
+        80
+      ],
+      "metric": "last_level_misses",
+      "value": 0,
+      "basis": "simulated",
+      "unit": "misses",
+      "profile": "typed-library-bfs-scalar-profile-20261003-a2.profile",
+      "source_artifact_sha256": "2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af",
+      "source_mapping": {
+        "id": "bfs-td-parent-read",
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "lines": [
+          80,
+          80
+        ],
+        "source_sha256": "e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3",
+        "source_snapshot": "bfs-dx100-scalar-only-20260929-a1.source",
+        "source_artifact_sha256": "2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af",
+        "original_source": {
+          "root": "application",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "lines": [
+            243,
+            243
+          ]
+        },
+        "source_derivation_sha256": "08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991",
+        "mapping_method": "removed_pinned_line_ranges",
+        "projected_removed_ranges_lines": [
+          80,
+          80
+        ],
+        "code": "NodeID curr_val = parent[v];",
+        "access_pattern_steps": [
+          {
+            "pattern": "td-parent-read",
+            "step": 3
+          }
+        ],
+        "depends_on": [
+          "bfs-td-neighbor"
+        ]
+      },
+      "attributed_rows": 1,
+      "limitations": "debug-line self costs; optimized/coalesced or header-inlined work may have no costs on the statement line"
+    },
+    {
+      "statement": "bfs-td-parent-cas",
+      "path": "benchmarks/gapbs/src/bfs.cc",
+      "lines": [
+        84,
+        84
+      ],
+      "metric": "last_level_misses",
+      "value": 0,
+      "basis": "simulated",
+      "unit": "misses",
+      "profile": "typed-library-bfs-scalar-profile-20261003-a2.profile",
+      "source_artifact_sha256": "2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af",
+      "source_mapping": {
+        "id": "bfs-td-parent-cas",
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "lines": [
+          84,
+          84
+        ],
+        "source_sha256": "e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3",
+        "source_snapshot": "bfs-dx100-scalar-only-20260929-a1.source",
+        "source_artifact_sha256": "2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af",
+        "original_source": {
+          "root": "application",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "lines": [
+            247,
+            247
+          ]
+        },
+        "source_derivation_sha256": "08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991",
+        "mapping_method": "removed_pinned_line_ranges",
+        "projected_removed_ranges_lines": [
+          84,
+          84
+        ],
+        "code": "if (compare_and_swap(parent[v], curr_val, u)) {",
+        "access_pattern_steps": [
+          {
+            "pattern": "td-parent-cas",
+            "step": 3
+          }
+        ],
+        "depends_on": [
+          "bfs-td-frontier",
+          "bfs-td-neighbor",
+          "bfs-td-parent-read"
+        ]
+      },
+      "attributed_rows": 1,
+      "limitations": "debug-line self costs; optimized/coalesced or header-inlined work may have no costs on the statement line"
+    },
+    {
+      "statement": "bfs-td-parent-store",
+      "path": "benchmarks/gapbs/src/bfs.cc",
+      "lines": [
+        85,
+        85
+      ],
+      "metric": "last_level_misses",
+      "value": 0,
+      "basis": "simulated",
+      "unit": "misses",
+      "profile": "typed-library-bfs-scalar-profile-20261003-a2.profile",
+      "source_artifact_sha256": "2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af",
+      "source_mapping": {
+        "id": "bfs-td-parent-store",
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "lines": [
+          85,
+          85
+        ],
+        "source_sha256": "e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3",
+        "source_snapshot": "bfs-dx100-scalar-only-20260929-a1.source",
+        "source_artifact_sha256": "2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af",
+        "original_source": {
+          "root": "application",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "lines": [
+            248,
+            248
+          ]
+        },
+        "source_derivation_sha256": "08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991",
+        "mapping_method": "removed_pinned_line_ranges",
+        "projected_removed_ranges_lines": [
+          85,
+          85
+        ],
+        "code": "parent[v] = u;",
+        "access_pattern_steps": [
+          {
+            "pattern": "td-parent-store",
+            "step": 3
+          }
+        ],
+        "depends_on": [
+          "bfs-td-parent-cas"
+        ]
+      },
+      "attributed_rows": 1,
+      "limitations": "debug-line self costs; optimized/coalesced or header-inlined work may have no costs on the statement line"
+    },
+    {
+      "statement": "bfs-td-queue-append",
+      "path": "benchmarks/gapbs/src/bfs.cc",
+      "lines": [
+        86,
+        86
+      ],
+      "metric": "last_level_misses",
+      "value": 0,
+      "basis": "simulated",
+      "unit": "misses",
+      "profile": "typed-library-bfs-scalar-profile-20261003-a2.profile",
+      "source_artifact_sha256": "2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af",
+      "source_mapping": {
+        "id": "bfs-td-queue-append",
+        "path": "benchmarks/gapbs/src/bfs.cc",
+        "lines": [
+          86,
+          86
+        ],
+        "source_sha256": "e2fd2653fd1adcfd9452d891d4ce2062659b4383c47b089b8dcf9489047278c3",
+        "source_snapshot": "bfs-dx100-scalar-only-20260929-a1.source",
+        "source_artifact_sha256": "2bf9b1b85bf3be392e2986d1879aeabea5a23479fd7e8060a31d76e5b3a5c6af",
+        "original_source": {
+          "root": "application",
+          "path": "benchmarks/gapbs/src/bfs.cc",
+          "revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+          "lines": [
+            249,
+            249
+          ]
+        },
+        "source_derivation_sha256": "08bb846f40cad690801e5e0ad8966271d15d11411eb13b3d7787b6a1cdc40991",
+        "mapping_method": "removed_pinned_line_ranges",
+        "projected_removed_ranges_lines": [
+          86,
+          86
+        ],
+        "code": "lqueue.push_back(v);",
+        "access_pattern_steps": [
+          {
+            "pattern": "td-queue-append",
+            "step": 0
+          }
+        ],
+        "depends_on": [
+          "bfs-td-parent-cas"
+        ]
+      },
+      "attributed_rows": 0,
+      "limitations": "debug-line self costs; optimized/coalesced or header-inlined work may have no costs on the statement line"
+    }
+  ],
+  "driver_state": "complete",
+  "runtime_commit": "f6972ebbf9c842c1a7091716505577d06c637231",
+  "finished": "2026-10-03T12:47:24.092712+00:00",
+  "driver_receipt": {
+    "path": "/data1/yanruj/EvolveSWDB_runs/typed-library-bfs-scalar-profile-20261003-a2.driver-profile/driver.json",
+    "sha256": "57e3443a297a649e8ec42d2270e3fb8a6a64698395e3ded8874ca9cde1239e4f"
+  },
+  "gain_claim": false
+}

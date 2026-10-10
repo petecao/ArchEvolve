@@ -1,0 +1,17 @@
+--- /private/tmp/lanl17-read-exact-prepare-command-route-facts-20261008-a1.py
++++ /private/tmp/lanl17-read-exact-prepare-command-route-facts-20261008-a1-r1.py
+@@ -42,6 +42,14 @@
+         need(r.returncode==0 and len(r.stdout)<=16384 and not r.stderr,'source_state_query_refused')
+         results[' '.join(args)]=r.stdout.decode().strip()
+     need(results['rev-parse HEAD']==results['rev-parse origin/yanrujhou_main']==EXPECTED and results['branch --show-current']=='yanrujhou_main' and results['status --porcelain']=='?? swdb-project/records/.retention.lock','source_context_not_expected')
++    lock=PRIMARY/'swdb-project/records/.retention.lock'
++    expected={'dev':2097,'ino':54947305,'mode':33206,'uid':UID,'gid':0,'nlink':1,'size':0,'mtime_ns':1791030933805697274,'ctime_ns':1791030933805697274}
++    need(lock.resolve(strict=True)==lock and not any(q.is_symlink() for q in (lock,*lock.parents)) and stamp(lock)==expected,'original_empty_retention_identity')
++    fd=os.open(lock,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC)
++    try:
++        need(os.read(fd,1)==b'' and {k:getattr(os.fstat(fd),'st_'+k) for k in FIELDS}==expected==stamp(lock),'original_empty_retention_bytes_changed')
++    finally:os.close(fd)
++    results['original_empty_retention_byte_pin']={'path':str(lock),'bytes':0,'sha256':hashlib.sha256(b'').hexdigest(),'stat':expected}
+     return results
+ def main():
+     need(sys.platform=='linux' and socket.gethostname().split('.')[0]=='mbit10' and os.getuid()==os.geteuid()==UID and pwd.getpwuid(UID).pw_name=='yanruj' and sys.flags.dont_write_bytecode and sys.flags.no_user_site,'native_host_startup')

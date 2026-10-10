@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-27",
+  "commit": "8e050d4046d4b1670fd29a8fb1ad64ff2045d30a",
+  "parent": "ec4d8da5c31903e92d2d49b784371d1edd3667f7",
+  "branch": "codex/bfs-provider-context2-node0-operator-20260927-a1",
+  "changes": {
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context2/bfs-provider-context2-20260927.py": {
+      "sha256": "8f92bc1d0d81e2aded280e87644740a326cae441a947f2747f5d6bc01db68092",
+      "bytes": 26939
+    },
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context2/bfs-provider-context2-launch-20260927.sh": {
+      "sha256": "a103a5db80ce231e97c0a14aed5c042cf7a691cc1dbedeada99d3175a9c861fa",
+      "bytes": 2740
+    },
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context2/test_context2.py": {
+      "sha256": "7a5eb67f1845e3bba282cb975ad22644660616e5b3251c47992162880a66f084",
+      "bytes": 4858
+    }
+  },
+  "tests": "11 passed in0.09s including actual verifier wrong-lane rejection",
+  "preserved": "same request, prompt, strategy, budget, runtime manifest and raw attempt ID; no attempt dispatched",
+  "source_stage": "/private/tmp/bfs-context2-node0-review",
+  "remote_transfer": "Private Git push succeeded; idle host operator checkout verified clean before and after detached checkout",
+  "remote_checkout": "/data1/yanruj/EvolveSWDB_provider_context2_operator_20260927_a1",
+  "remote_commit_verified": "8e050d4046d4b1670fd29a8fb1ad64ff2045d30a",
+  "remote_shell_syntax": "passed",
+  "remote_recipe_wrapper_hashes": "match exact exported bytes",
+  "provider_calls": 0,
+  "lane_claims": 0,
+  "host_availability_receipt": "/private/tmp/bfs-context2-host-readonly-20260927.json"
+}

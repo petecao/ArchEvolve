@@ -1,0 +1,351 @@
+{
+  "created_at_utc": "2026-10-09T01:35:12.043419+00:00",
+  "failure_history": "R4 remains402passed/4failed/exit1; all four original tracebacks identify omitted fixture keyword. R5 full legality31passed/exit0 resolves those four. R3 interrupted shm_open history remains preserved separately; never reclassified as all-pass.",
+  "findings": [],
+  "format": "swdb.private-final-implementation-followup-review.v1",
+  "limits": [
+    "Reviewer performed source/hash/AST and local file/process metadata reads only, no target imports/tests/application/remote actions.",
+    "73 public regressions verify prospective artifact coverage and unchanged timing selection; they do not establish numeric application agreement.",
+    "Original full Standards/Spec axis scope and receipts remain separate. Frozen scientificR/F6/history, empty actualP3 pairing and ticket17 final report/index/strict admission gates remain unchanged and incomplete.",
+    "Commands/environment are parent-owned; stdout/exit originals establish completed outcomes, not an independently rerun test result."
+  ],
+  "original_stream_continuity": {
+    "all_file_stats_stable_across_read_and_final_recheck": true,
+    "completed_exit_files_exact_integer_newline": true,
+    "exact_scoped_lsof_exit": 1,
+    "no_visible_open_fds_for_these12_owned_capture_files": true,
+    "stderr_all_empty": true
+  },
+  "scope": "Reviewed prospective classification/manifest/fixture/legality and ticket16 artifact coverage source application plus original completed local regression evidence",
+  "source_checks": [
+    "Ticket16 five product/schema/docs files exactly match reviewed R1 and test file exactly matches reviewed R2 alias derivative.",
+    "All ten classification R3 file pins match; current procedure declarations match independently reviewed dated fingerprint follow-up.",
+    "Ten fixture files match reviewed R1, with only accepted Created: 2026-10-08 ET. addition to new helper docstring.",
+    "Legality exactly matches reviewed four signature/four keyword derivative, all original48assertions preserved."
+  ],
+  "source_pins": {
+    "swdb-project/docs/reference/format-v0.4-extensa.md": {
+      "bytes": 18686,
+      "sha256": "9ac28ab2b437b2e7cf357f830f7dd1a554eadca66b2b9a2f9941b0aa23e8fd43"
+    },
+    "swdb-project/schemas/paired_estimate.schema.json": {
+      "bytes": 7033,
+      "sha256": "8e2edbbd05eb7ea9974a083e3958df4a72ef60977cdbbe1bcd98db8a86f6cf0d"
+    },
+    "swdb-project/swdb/campaign.py": {
+      "bytes": 79997,
+      "sha256": "8deed63fb26fccac37835a3f92aecd97908f6f4f9362b928901fdd1f5d58b013"
+    },
+    "swdb-project/swdb/campaign_targets.py": {
+      "bytes": 71108,
+      "sha256": "e65c03ebd9741ad2853915314602e664271ae7236aa7453c1ea3731effbae377"
+    },
+    "swdb-project/swdb/certification.py": {
+      "bytes": 77665,
+      "sha256": "578c403408e8a16ceb7952e6a74f25e4ea242f4f2af43cfea42695b212f313fb"
+    },
+    "swdb-project/swdb/certification_blinding.py": {
+      "bytes": 34412,
+      "sha256": "9826cceb849230810a6108f0afec1324195a10abf26ac1fbd9db9764be3e787c"
+    },
+    "swdb-project/swdb/certification_common.py": {
+      "bytes": 9999,
+      "sha256": "4474004a85541c1c1d69e51b0537aac95403ce5b53983b02ef5e5d3976768543"
+    },
+    "swdb-project/swdb/certification_faults.py": {
+      "bytes": 4954,
+      "sha256": "f73fd8644f81bbdd641eb2d3f109f89d7ecfef0178dd57c2e0bb821491228e68"
+    },
+    "swdb-project/swdb/certification_isolation.py": {
+      "bytes": 18018,
+      "sha256": "0d8e823b38ca9ae5492e026b274fd88d9157bc9812d40087307d47f54e84f4af"
+    },
+    "swdb-project/swdb/certification_legality.py": {
+      "bytes": 24117,
+      "sha256": "9e34b60fcbebe85ca96ea8f9ae1a7f039c37c01ffd43f83250d0fb282de7b768"
+    },
+    "swdb-project/swdb/certification_native.py": {
+      "bytes": 33780,
+      "sha256": "9b05d4e3df575009604949b9a277885551e05f6339d15f29100baf7e4e9f8fac"
+    },
+    "swdb-project/swdb/certification_procedures.py": {
+      "bytes": 24800,
+      "sha256": "21409a3b7b267fd680b51e55257b2779ca21ecf3285c7b1b7ccfc1a9065fccb8"
+    },
+    "swdb-project/swdb/certification_process.py": {
+      "bytes": 17226,
+      "sha256": "3b67fe836bb0766c8339ae545921fc6355cf7c14db08ee0bd2f2c32e57205fbd"
+    },
+    "swdb-project/swdb/extensa_agreement.py": {
+      "bytes": 26108,
+      "sha256": "311a632e2ce0173317578ab8582ac48d0b6d036ceef88386cb51ecb7d3dde020"
+    },
+    "swdb-project/swdb/extensa_pairing.py": {
+      "bytes": 22788,
+      "sha256": "705e698886779ce8f2be9acbe208405d9a0746b5c9ed04fab1bccd13701391a4"
+    },
+    "swdb-project/tests/conftest.py": {
+      "bytes": 6772,
+      "sha256": "a349c799a9da1107e9a3fa7520aeca2018d63a45d019220fc068cddcbc3b53a3"
+    },
+    "swdb-project/tests/test_bc_certification.py": {
+      "bytes": 11149,
+      "sha256": "990f190b92bce25ead0c8f1d36af30e26d6d1b2ef96c053d24cba9b419d53683"
+    },
+    "swdb-project/tests/test_certification_blinding.py": {
+      "bytes": 17384,
+      "sha256": "b57a5800c2231d38a69cfd4d2763e8046480704cb83b70775ca6f464579c3103"
+    },
+    "swdb-project/tests/test_certification_controls.py": {
+      "bytes": 19700,
+      "sha256": "ca89c134375dc08a140a53ef6ac5e252d7b5349ee2404ead8f3becef012efc8b"
+    },
+    "swdb-project/tests/test_certification_isolation.py": {
+      "bytes": 13593,
+      "sha256": "1b4b51ec3c405cc1a6ef42bf6c3dd3307944fcc61aba8ee11c01305dc46b1186"
+    },
+    "swdb-project/tests/test_certification_legality.py": {
+      "bytes": 16579,
+      "sha256": "b52c1e1b100ada5d1dc80badc9b40f0d8e3a31513f1a9bfb0b4926e2538fb283"
+    },
+    "swdb-project/tests/test_certification_native.py": {
+      "bytes": 18279,
+      "sha256": "fba6dd97404419897ad140b9d5af904d2201531c6e83a38e76838592a7759edc"
+    },
+    "swdb-project/tests/test_certification_procedures.py": {
+      "bytes": 17271,
+      "sha256": "3bd2bacac32e90e72e5e6b4e978199a3714e9b173aa0d239fd2f32f0275072d7"
+    },
+    "swdb-project/tests/test_certification_process.py": {
+      "bytes": 7446,
+      "sha256": "698a49f9105d4a06156aa67870385df6340bd5308579e4441d158632f7be1aa3"
+    },
+    "swdb-project/tests/test_extensa_pairing.py": {
+      "bytes": 23294,
+      "sha256": "0d02f1ee9819262ee9cce95df1bd786a74e050010989946f48b1b071006cd328"
+    },
+    "swdb-project/tests/test_extensa_targets.py": {
+      "bytes": 39448,
+      "sha256": "5f1aa67a7b6f38b2ccc912e776520ebbdd24aea631a8b35b5d4c83ab46f296c9"
+    },
+    "swdb-project/tests/test_typed_certification.py": {
+      "bytes": 21251,
+      "sha256": "e21260cbd772cc22aa18767c4cdedf7c82b4243fa94c247f3c9bd66acf7a3d79"
+    },
+    "swdb-project/tests/testkit/certification_records.py": {
+      "bytes": 1974,
+      "sha256": "2cf1380e0ffe3d330f8ee2ce98750a953459d7804ee66cc272260f5a7c833106"
+    }
+  },
+  "tests": [
+    {
+      "exit_code": 1,
+      "originals": [
+        {
+          "bytes": 3795,
+          "path": "/private/tmp/lanl17-certification-classification-broad-tests-20261008-r4.stdout",
+          "sha256": "91d694d7758d9656811acda6fc5fa3eba55f03c7c4ef14952321cdae882641d6",
+          "stat": {
+            "bytes": 3795,
+            "ctime_ns": 1791508797293579589,
+            "device": 16777229,
+            "inode": 350510755,
+            "mode": 33152,
+            "mtime_ns": 1791508797293579589,
+            "nlink": 1,
+            "uid": 501
+          }
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/lanl17-certification-classification-broad-tests-20261008-r4.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stat": {
+            "bytes": 0,
+            "ctime_ns": 1791507892375037049,
+            "device": 16777229,
+            "inode": 350510756,
+            "mode": 33152,
+            "mtime_ns": 1791507892375019008,
+            "nlink": 1,
+            "uid": 501
+          }
+        },
+        {
+          "bytes": 2,
+          "path": "/private/tmp/lanl17-certification-classification-broad-tests-20261008-r4.exit-code.txt",
+          "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+          "stat": {
+            "bytes": 2,
+            "ctime_ns": 1791508797342618923,
+            "device": 16777229,
+            "inode": 350558177,
+            "mode": 33152,
+            "mtime_ns": 1791508797342618923,
+            "nlink": 1,
+            "uid": 501
+          }
+        }
+      ],
+      "prefix": "lanl17-certification-classification-broad-tests-20261008-r4",
+      "summary": "4 failed, 402 passed in 904.58s"
+    },
+    {
+      "exit_code": 0,
+      "originals": [
+        {
+          "bytes": 110,
+          "path": "/private/tmp/lanl17-certification-legality-correction-tests-20261008-r5.stdout",
+          "sha256": "3b8186c827e015998de2e9144daa9926f8767dbb7f0c4f6421e3c393ec062d3a",
+          "stat": {
+            "bytes": 110,
+            "ctime_ns": 1791508925585468106,
+            "device": 16777229,
+            "inode": 350558268,
+            "mode": 33152,
+            "mtime_ns": 1791508925585468106,
+            "nlink": 1,
+            "uid": 501
+          }
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/lanl17-certification-legality-correction-tests-20261008-r5.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stat": {
+            "bytes": 0,
+            "ctime_ns": 1791508853936482532,
+            "device": 16777229,
+            "inode": 350558269,
+            "mode": 33152,
+            "mtime_ns": 1791508853936464490,
+            "nlink": 1,
+            "uid": 501
+          }
+        },
+        {
+          "bytes": 2,
+          "path": "/private/tmp/lanl17-certification-legality-correction-tests-20261008-r5.exit-code.txt",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "stat": {
+            "bytes": 2,
+            "ctime_ns": 1791508926230954864,
+            "device": 16777229,
+            "inode": 350566097,
+            "mode": 33152,
+            "mtime_ns": 1791508926230954864,
+            "nlink": 1,
+            "uid": 501
+          }
+        }
+      ],
+      "prefix": "lanl17-certification-legality-correction-tests-20261008-r5",
+      "summary": "31 passed in 71.31s"
+    },
+    {
+      "exit_code": 0,
+      "originals": [
+        {
+          "bytes": 191,
+          "path": "/private/tmp/lanl16-artifact-coverage-public-regression-tests-20261008-r1.stdout",
+          "sha256": "25f2dc94d80bc07e7cfd2526e7b4f8c97e7c3e8e50c6fb4318a4be24a2d46b3b",
+          "stat": {
+            "bytes": 191,
+            "ctime_ns": 1791509541245645766,
+            "device": 16777229,
+            "inode": 350558547,
+            "mode": 33152,
+            "mtime_ns": 1791509541245645766,
+            "nlink": 1,
+            "uid": 501
+          }
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/lanl16-artifact-coverage-public-regression-tests-20261008-r1.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stat": {
+            "bytes": 0,
+            "ctime_ns": 1791508857266073595,
+            "device": 16777229,
+            "inode": 350558548,
+            "mode": 33152,
+            "mtime_ns": 1791508857266054595,
+            "nlink": 1,
+            "uid": 501
+          }
+        },
+        {
+          "bytes": 2,
+          "path": "/private/tmp/lanl16-artifact-coverage-public-regression-tests-20261008-r1.exit-code.txt",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "stat": {
+            "bytes": 2,
+            "ctime_ns": 1791509541271886945,
+            "device": 16777229,
+            "inode": 350607221,
+            "mode": 33152,
+            "mtime_ns": 1791509541271886945,
+            "nlink": 1,
+            "uid": 501
+          }
+        }
+      ],
+      "prefix": "lanl16-artifact-coverage-public-regression-tests-20261008-r1",
+      "summary": "73 passed in 683.75s"
+    },
+    {
+      "exit_code": 0,
+      "originals": [
+        {
+          "bytes": 114,
+          "path": "/private/tmp/lanl17-final-local-frozen-digest-tests-20261008-r6.stdout",
+          "sha256": "7d66ae25c080a6217b25a23acee155b1f487069a002306b529682c5ccaf44c29",
+          "stat": {
+            "bytes": 114,
+            "ctime_ns": 1791509616524019977,
+            "device": 16777229,
+            "inode": 350607325,
+            "mode": 33152,
+            "mtime_ns": 1791509616524019977,
+            "nlink": 1,
+            "uid": 501
+          }
+        },
+        {
+          "bytes": 0,
+          "path": "/private/tmp/lanl17-final-local-frozen-digest-tests-20261008-r6.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stat": {
+            "bytes": 0,
+            "ctime_ns": 1791509616086303463,
+            "device": 16777229,
+            "inode": 350607326,
+            "mode": 33152,
+            "mtime_ns": 1791509616086278588,
+            "nlink": 1,
+            "uid": 501
+          }
+        },
+        {
+          "bytes": 2,
+          "path": "/private/tmp/lanl17-final-local-frozen-digest-tests-20261008-r6.exit-code.txt",
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+          "stat": {
+            "bytes": 2,
+            "ctime_ns": 1791509616541080318,
+            "device": 16777229,
+            "inode": 350607330,
+            "mode": 33152,
+            "mtime_ns": 1791509616541080318,
+            "nlink": 1,
+            "uid": 501
+          }
+        }
+      ],
+      "prefix": "lanl17-final-local-frozen-digest-tests-20261008-r6",
+      "summary": "11 passed, 40 deselected in 0.15s"
+    }
+  ],
+  "verdict": "PASS_LOCAL_IMPLEMENTATION_FOLLOWUP"
+}

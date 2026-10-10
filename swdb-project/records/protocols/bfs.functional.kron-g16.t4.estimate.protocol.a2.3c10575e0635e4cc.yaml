@@ -1,0 +1,404 @@
+kind: protocol
+schema_version: '0.4'
+id: bfs.functional.kron-g16.t4.estimate.protocol.a2.3c10575e0635e4cc
+status: draft
+created: '2026-10-06'
+updated: '2026-10-06'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+requested_id: bfs.functional.kron-g16.t4.estimate.protocol.a2
+version: 1
+supersedes: null
+invalidated_comparisons: []
+settings:
+  mode: estimated
+  estimator_version: swdb.analytic.v1
+  target_description:
+    id: dx100-e4fc4af-functional-analytic-v1.t4
+    sha256: 6351828a0ba1536f6862d428a2522ae36ea5a39753879abdb5b637b26d8ce211
+    snapshot:
+      kind: target_description
+      schema_version: '0.4'
+      id: dx100-e4fc4af-functional-analytic-v1.t4
+      status: draft
+      created: '2026-10-06'
+      updated: '2026-10-06'
+      provenance:
+      - id: functional-source
+        kind: source_code
+        description: Fresh functional-source/configuration identity; no output, calibration, build-readiness
+          or performance evidence imported.
+        uri: https://github.com/arkhadem/DX100/tree/e4fc4afdf894f295442cef3604667a469fab8e62
+      format: swdb.target-description.v1
+      version: '1'
+      target: dx100-e4fc4af-functional-analytic-v1
+      threads: 4
+      estimator_variant: team
+      calibration_sources: []
+      dram_address_layout:
+        channel:
+        - lsb: 6
+          bits: 1
+        rank: []
+        bank_group:
+        - lsb: 14
+          bits: 2
+        bank:
+        - lsb: 16
+          bits: 2
+        row:
+        - lsb: 18
+          bits: 16
+      functional_observation:
+        format: swdb.functional-observation.v1
+        commands:
+        - event: dx100.functional.session_begin
+          intrinsic: dxc_session_begin.functional-v1
+          hardware_operations:
+          - dx100.functional.v1.session_begin
+          aliases:
+          - debug_name: __dxc_session_begin
+            source:
+              root: library
+              path: dx100/dxc_lowering.hpp
+              sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+            source_sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+            memory_base_argument: null
+            role: command
+          target_access_sources: []
+          bookkeeping_access_sources: []
+          memory_effect: none
+          active_elements_policy: not_applicable
+        - event: dx100.functional.thread_context
+          intrinsic: dxc_thread_context.functional-v1
+          hardware_operations:
+          - dx100.functional.v1.thread_context
+          aliases:
+          - debug_name: __dxc_thread_context
+            source:
+              root: library
+              path: dx100/dxc_lowering.hpp
+              sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+            source_sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+            memory_base_argument: null
+            role: command
+          target_access_sources: []
+          bookkeeping_access_sources: []
+          memory_effect: none
+          active_elements_policy: not_applicable
+        - event: dx100.functional.const_i32
+          intrinsic: dxc_const_i32.functional-v1
+          hardware_operations: [dx100.functional.v1.const_i32]
+          aliases:
+          - debug_name: __dxc_const_i32
+            source:
+              root: library
+              path: dx100/dxc_lowering.hpp
+              sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+            source_sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+            memory_base_argument: null
+            role: command
+          target_access_sources: []
+          bookkeeping_access_sources: []
+          memory_effect: none
+          active_elements_policy: not_applicable
+        - event: dx100.functional.wait
+          intrinsic: dxc_wait.functional-v1
+          hardware_operations: [dx100.functional.v1.wait]
+          aliases:
+          - debug_name: __dxc_wait
+            source:
+              root: library
+              path: dx100/dxc_lowering.hpp
+              sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+            source_sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+            memory_base_argument: null
+            role: command
+          target_access_sources: []
+          bookkeeping_access_sources: []
+          memory_effect: none
+          active_elements_policy: not_applicable
+        - event: dx100.functional.gather
+          intrinsic: dxc_gather.functional-v1
+          hardware_operations: [dx100.functional.v1.gather]
+          aliases:
+          - debug_name: __dxc_gather<int>
+            source:
+              root: library
+              path: dx100/dxc_lowering.hpp
+              sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+            source_sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+            memory_base_argument: 0
+            role: command
+          - debug_name: maa_indirect_load<int>
+            source:
+              root: project
+              path: apps/dx100/benchmarks/API/MAA_functional.hpp
+              sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+            source_sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+            memory_base_argument: 0
+            role: backend_alias
+          target_access_sources:
+          - debug_name: maa_indirect_load<int>
+            source:
+              root: project
+              path: apps/dx100/benchmarks/API/MAA_functional.hpp
+              sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+            source_sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+          bookkeeping_access_sources:
+          - debug_name: get_region
+            source:
+              root: project
+              path: apps/dx100/benchmarks/API/MAA_functional.hpp
+              sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+            source_sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+          - debug_name: check_region
+            source:
+              root: project
+              path: apps/dx100/benchmarks/API/MAA_functional.hpp
+              sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+            source_sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+          memory_effect: read
+          active_elements_policy: observed_target_reads
+          target_reads_per_active_element: 1
+        - event: dx100.functional.stream_load
+          intrinsic: dxc_stream_load.functional-v1
+          hardware_operations:
+          - dx100.functional.v1.stream_load
+          aliases:
+          - debug_name: __dxc_stream_load<int>
+            source:
+              root: library
+              path: dx100/dxc_lowering.hpp
+              sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+            source_sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+            memory_base_argument: 0
+            role: command
+          - debug_name: maa_stream_load<int>
+            source:
+              root: project
+              path: apps/dx100/benchmarks/API/MAA_functional.hpp
+              sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+            source_sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+            memory_base_argument: 0
+            role: backend_alias
+          target_access_sources:
+          - debug_name: maa_stream_load<int>
+            source:
+              root: project
+              path: apps/dx100/benchmarks/API/MAA_functional.hpp
+              sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+            source_sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+          bookkeeping_access_sources:
+          - debug_name: get_region
+            source:
+              root: project
+              path: apps/dx100/benchmarks/API/MAA_functional.hpp
+              sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+            source_sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+          - debug_name: check_region
+            source:
+              root: project
+              path: apps/dx100/benchmarks/API/MAA_functional.hpp
+              sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+            source_sha256: ff8b2c9ccbb8b61ec28845f4b4c279db4c2dc40d73a74c5e8f4fa0bf9b92eedc
+          memory_effect: read
+          active_elements_policy: observed_target_reads
+          target_reads_per_active_element: 1
+        - event: dx100.functional.range_loop
+          intrinsic: dxc_range_loop.functional-v1
+          hardware_operations:
+          - dx100.functional.v1.range_loop
+          aliases:
+          - debug_name: __dxc_range_loop
+            source:
+              root: library
+              path: dx100/dxc_lowering.hpp
+              sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+            source_sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+            memory_base_argument: null
+            role: command
+          target_access_sources: []
+          bookkeeping_access_sources: []
+          memory_effect: none
+          active_elements_policy: not_applicable
+        - event: dx100.functional.tile_size
+          intrinsic: dxc_tile_size.functional-v1
+          hardware_operations: [dx100.functional.v1.tile_size]
+          aliases:
+          - debug_name: __dxc_tile_size
+            source:
+              root: library
+              path: dx100/dxc_lowering.hpp
+              sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+            source_sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+            memory_base_argument: null
+            role: command
+          target_access_sources: []
+          bookkeeping_access_sources: []
+          memory_effect: none
+          active_elements_policy: not_applicable
+        - event: dx100.functional.tile_pointer
+          intrinsic: dxc_tile_pointer.functional-v1
+          hardware_operations:
+          - dx100.functional.v1.tile_pointer
+          aliases:
+          - debug_name: __dxc_tile_pointer<int>
+            source:
+              root: library
+              path: dx100/dxc_lowering.hpp
+              sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+            source_sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+            memory_base_argument: null
+            role: command
+          target_access_sources: []
+          bookkeeping_access_sources: []
+          memory_effect: none
+          active_elements_policy: not_applicable
+        request_policy:
+          transaction_bytes: 64
+          read_coalescing: window_unique_lines
+        placement:
+          policy: isolated_row_aligned_allocations
+          basis: inferred
+          physical_placement_known: false
+        window:
+          policy: logical_fixed_requests_per_command_worker
+          requests: 16384
+          basis: inferred
+          source: Pinned scripts/sim.py tile capacity16384 motivates a declared logical request-window
+            scenario; it is not a hardware queue, physical placement, or row-hit observation.
+      mechanisms:
+      - model: compute_throughput
+        parameters:
+          integer_ops_per_s:
+            value: null
+            basis: unknown
+            source: Required target service premise is not established by source configuration.
+            unit: operations/s
+          floating_point_ops_per_s:
+            value: null
+            basis: unknown
+            source: Required target service premise is not established by source configuration.
+            unit: operations/s
+          branch_ops_per_s:
+            value: null
+            basis: unknown
+            source: Required target service premise is not established by source configuration.
+            unit: operations/s
+          atomic_ops_per_s:
+            value: null
+            basis: unknown
+            source: Required target service premise is not established by source configuration.
+            unit: operations/s
+      - model: reorder_window_rows
+        selector:
+          domain: offload
+        parameters:
+          row_miss_service_s:
+            value: 3.75e-08
+            basis: inferred
+            source: DDR4_3200W nRP+nRCD+nCL at625ps; serialized closed-row service scenario.
+            unit: seconds/request
+          row_hit_service_s:
+            value: 1.25e-08
+            basis: inferred
+            source: DDR4_3200W nCL20 at625ps; declared latency scenario, not physical row-hit measurement.
+            unit: seconds/request
+          effective_memory_parallelism:
+            value: null
+            basis: unknown
+            source: Required target service premise is not established by source configuration.
+            unit: requests
+      - model: fetch_queue
+        selector:
+          domain: offload
+        parameters:
+          queue_entries:
+            value: 32
+            basis: code_reading
+            source: Pinned example controller queue_size32; an ideal capacity bound only.
+            unit: entries
+          fetch_latency_s:
+            value: null
+            basis: unknown
+            source: Required target service premise is not established by source configuration.
+            unit: seconds/request
+          admission_requests_per_s:
+            value: null
+            basis: unknown
+            source: Required target service premise is not established by source configuration.
+            unit: requests/s
+      - model: tile_staging
+        selector:
+          domain: offload
+        parameters:
+          staging_bytes_per_s:
+            value: null
+            basis: unknown
+            source: Required target service premise is not established by source configuration.
+            unit: bytes/s
+      - model: offload_setup
+        accounting: additive_overhead
+        selector:
+          event_ids:
+          - dx100.functional.session_begin
+          - dx100.functional.thread_context
+          - dx100.functional.const_i32
+          - dx100.functional.wait
+          - dx100.functional.gather
+          - dx100.functional.stream_load
+          - dx100.functional.range_loop
+          - dx100.functional.tile_size
+          - dx100.functional.tile_pointer
+        parameters:
+          seconds_per_event:
+            value: null
+            basis: unknown
+            source: Required target service premise is not established by source configuration.
+            unit: seconds/event
+  threads: 4
+  roi: gapbs.functional_trial_lambda.v1
+  sources:
+  - bfs-functional-read-offload-20261006-a1.proposal.candidate-1
+  inputs: [dx100-functional-kron-g16-k16]
+  input_run_arguments:
+    dx100-functional-kron-g16-k16: [-g, '16', -k, '16', -n, '5']
+  estimator_sha256: 3ad3ce75dc7ed90f7093c3a867ff187cf2884723adf7a98264b005c207018475
+  dependency_identities:
+    dx100-e4fc4af-functional-analytic-v1: 67451736d931b1958848525ca37e9a174006c6cdf92638947ed4bfc38682a520
+    dx100.functional.v1.alu_scalar: 383bee3bba63fa1f4c02a26f7957aceab5613ac53ddf19a560cc131454491f46
+    dx100.functional.v1.const_i32: f731c4088ba4153c03d0fa34a63c1870f6f2e0d5beba8e839624fac1a3e4c3f0
+    dx100.functional.v1.gather: e9ce8f9c5607fc1ccfd3f1353f38d020efbe0f6cc3f722f6b60275d86db4a10c
+    dx100.functional.v1.range_loop: 20d32a586306af9e9800b86cac8be6ea0b2f51d0e0c2b70b5fa6ed639fa8fbf0
+    dx100.functional.v1.session_begin: ec0fcb95ccc828ee9b08588a254d7c581cff428ea61e1f2de5804e849c832708
+    dx100.functional.v1.stream_load: 13b7d71262133d1e71a250425e1ed69845aa6bea6610754d0b2053154505d044
+    dx100.functional.v1.thread_context: a789a6096e9d999249cb4d25ff6b2ebc440071dea04b89cdfee7f500df35789a
+    dx100.functional.v1.tile_pointer: 40cbf6796c73a28bbbb8a3fedf0e6e7b540bf64aab0e9228f28c64dc7c35be00
+    dx100.functional.v1.tile_size: c5b341fc59a367b75e32a20055d66bbbe88c3f7f3d6f8fee4288f9a14ff6a010
+    dx100.functional.v1.wait: 9beebb85e761bad0296345d1dcd8ee2e07a51ddf4afcc58fb26c551a802be549
+    dxc_const_i32.functional-v1: 4889627278bd251e6753cfe53dfd20a918df576667535b9f4731a7fe6d90e4c7
+    dxc_gather.functional-v1: e7c4205517ca1dc5d734e7b1914c38985db9e132b4331b55bc5268c5d5dd6ddc
+    dxc_range_loop.functional-v1: 6c7c2891f089a3d3628ac1186e269710b420bf2c0cb14925d32cb0d0419e80a2
+    dxc_session_begin.functional-v1: 3aa36f3c0a65e03714205f6897405f309170c9db077d3743e2bd0b9accb9f76d
+    dxc_stream_load.functional-v1: 6a30d1278ad4c6eb7fd7abbddea6619211c6d9003008e408239dcf762229169b
+    dxc_thread_context.functional-v1: e653a989e9d28fab194cb7be0de91aaf5ea064e8cc50f8bfc18966447fe4a4a3
+    dxc_tile_pointer.functional-v1: 90c1fd9a9a2823d06fe40a8e08bdf8e43e9590f336efce8517cd8fa4cac9d99c
+    dxc_tile_size.functional-v1: 62b165834d4b8342f82b5ed984dd829599fa79ac95de55bb9a372e288a578111
+    dxc_wait.functional-v1: 7d606c9e4997af11149864643505d57e453709bfd1ff667d77b6fdbff8c4eedb
+workload_identities: {}
+input_identities:
+  dx100-functional-kron-g16-k16: edd437c02c1abb9669dbf2f3c9892e3aba90409e49b8b7dca951dec52c80eaae
+source_identities:
+  bfs-functional-read-offload-20261006-a1.proposal.candidate-1: a363372725572862c236f95bb208ba531926952748b991d9a4c4df7026a18840
+frozen_at: '2026-10-07T01:06:06.356975+00:00'
+state: frozen
+identity_sha256: 3c10575e0635e4cc2301244b1f59d6c29a0a7046f6c0569328bed60196a6ddec

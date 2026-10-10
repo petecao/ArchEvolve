@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "certification",
+  "type": "object",
+  "properties": {
+    "kind": {
+      "const": "certification"
+    },
+    "message_version": {
+      "type": "string"
+    },
+    "producer": {
+      "type": "object"
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "content_sha256"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "content_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "content_sha256"],
+        "properties": {
+          "id": {"type": "string"},
+          "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "candidate": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "command": {
+      "description": "2026-10-05 ET (code-review fixes F1-F3, C10): the certify command that made the record. Records before 2026-10-05 carry only version and sources_sha256 (plus kind, profile, seed and isolation for library operations); swdb.certification_procedures.classify maps them to their procedure.",
+      "type": "object",
+      "properties": {
+        "version": {"type": "string", "description": "The command version label within its family (candidate 1.3-1.6, native 1.3-1.5, library operation 1.0-1.2, lowering and calibration 1.1)."},
+        "family": {"enum": ["candidate", "native", "library_operation", "lowering_calibration"], "description": "The command family whose version table the label belongs to (new records)."},
+        "library_operation_version": {"type": "string", "description": "Library-operation records only: the library-operation command version, so it is never read as a candidate version."},
+        "sources_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$", "description": "Digest of the files the command reads. From 2026-10-05: of the per-version manifest in sources; before: of every certification module and library certification folder."},
+        "sources": {
+          "type": "array",
+          "description": "The per-version source manifest: each file the version reads, plus its procedure definition row.",
+          "items": {"type": "object", "required": ["path", "sha256"],
+                    "properties": {"path": {"type": "string"}, "sha256": {"type": ["string", "null"]}}}
+        },
+        "kernel_sources": {
+          "type": "array",
+          "description": "The kernel plug-in and its result check (recorded, not part of the version's identity).",
+          "items": {"type": "object", "required": ["path", "sha256"],
+                    "properties": {"path": {"type": "string"}, "sha256": {"type": ["string", "null"]}}}
+        },
+        "sources_match_version": {"type": "boolean", "description": "True when sources_sha256 equals the digest the version table froze for this version."},
+        "code": {
+          "type": "object",
+          "description": "The git commit of the checkout that ran, and whether the version's files differ from it.",
+          "properties": {"git_commit": {"type": ["string", "null"]},
+                         "sources_differ_from_commit": {"type": ["boolean", "null"]}}
+        }
+      }
+    },
+    "host": {
+      "type": "object"
+    },
+    "matrix": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "negative_controls": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "verdict": {
+      "enum": [
+        "certified",
+        "failed",
+        "inconclusive"
+      ]
+    },
+    "evidence_basis": {
+      "description": "ADR 0008 (2026-10-05 ET): simulated for runs on the DX100 functional model (candidate artifacts of DX100 contracts, lowerings, calibration); measured for runs of real code on the host CPU (native-CPU contracts, library operations). Records before 2026-10-05 say simulated on every path.",
+      "enum": ["simulated", "measured"]
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "raw_artifacts": {
+      "type": "array"
+    },
+    "outcome": {
+      "type": "object"
+    },
+    "clause_controls": {
+      "description": "2026-10-04 ET: per contract clause, its negative control compared with the check the clause names.",
+      "type": ["array", "null"],
+      "items": {
+        "type": "object",
+        "required": ["clause", "control", "check", "matched", "enforceable"],
+        "properties": {
+          "clause": {"type": "string"},
+          "control": {"type": "string"},
+          "check": {"type": "string"},
+          "source": {"enum": ["contract", "plugin", "certifier"], "description": "2026-10-04 ET (ticket 68): certifier rows enforce knob_range and schedule_range through the certifier's own controls."},
+          "reason": {"enum": ["no_run_reports_check", "control_cannot_exercise_check"], "description": "Why a row is not enforceable (ticket 68)."},
+          "observed_checks": {"type": "array", "items": {"type": "string"}},
+          "matched": {"type": "boolean"},
+          "enforceable": {"type": "boolean"}
+        }
+      }
+    },
+    "profile": {
+      "description": "2026-10-05 ET (ticket 75): the native candidate profile a native-CPU contract pins (id, path, sha256, target, target_scope; under certify 1.4 and 1.5 also the random run schedule), for native command versions 1.3, 1.4 and 1.5.",
+      "type": "object",
+      "required": ["id", "path", "sha256", "target"],
+      "properties": {
+        "id": {"type": "string"},
+        "path": {"type": "string"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "target": {"const": "native_cpu"},
+        "target_scope": {"type": "string"},
+        "schedule": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "evidence_kind": {
+      "enum": [
+        "execution",
+        "contract_fixture"
+      ]
+    }
+  },
+  "required": [
+    "entry",
+    "command",
+    "host",
+    "matrix",
+    "negative_controls",
+    "verdict",
+    "evidence_basis"
+  ]
+}

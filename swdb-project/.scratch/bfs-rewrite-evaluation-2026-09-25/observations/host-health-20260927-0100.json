@@ -1,0 +1,221 @@
+{
+  "created": "2026-09-27",
+  "observed_at": "2026-09-27T01:00:19.256712-04:00",
+  "host": "mbit10",
+  "kind": "readonly_host_health",
+  "leases": {
+    "mbit10-evaluation": {
+      "metadata": {
+        "active_session": null,
+        "heartbeat_at": "2026-09-12T04:49:11Z",
+        "lease": {
+          "acquired_at": "2026-09-12T01:35:42Z",
+          "daemon_pid": 209457,
+          "daemon_start_token": "sh209457-1789176942",
+          "generation": 77,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": "2026-09-12T04:49:11Z",
+        "session_note": null,
+        "session_state": "none",
+        "state": "released",
+        "writer": "hostlock.sh"
+      },
+      "metadata_stable": true,
+      "kernel_held": false,
+      "owner": null
+    },
+    "mbit10-evaluation-node0": {
+      "metadata": {
+        "active_session": null,
+        "heartbeat_at": "2026-09-27T04:56:04Z",
+        "lease": {
+          "acquired_at": "2026-09-27T04:56:04Z",
+          "daemon_pid": 3282410,
+          "daemon_start_token": "sh3282410-1790484964",
+          "generation": 339,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node0",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": null,
+        "session_note": null,
+        "session_state": "none",
+        "state": "held",
+        "writer": "hostlock.sh"
+      },
+      "metadata_stable": true,
+      "kernel_held": true,
+      "owner": {
+        "pid": 3282410,
+        "start_ticks": 498689692,
+        "state": "S",
+        "rss_bytes": 3670016
+      }
+    },
+    "mbit10-evaluation-node1": {
+      "metadata": {
+        "active_session": null,
+        "heartbeat_at": "2026-09-27T04:58:52Z",
+        "lease": {
+          "acquired_at": "2026-09-27T04:58:52Z",
+          "daemon_pid": 3284699,
+          "daemon_start_token": "sh3284699-1790485131",
+          "generation": 439,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node1",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": null,
+        "session_note": null,
+        "session_state": "none",
+        "state": "held",
+        "writer": "hostlock.sh"
+      },
+      "metadata_stable": true,
+      "kernel_held": true,
+      "owner": {
+        "pid": 3284699,
+        "start_ticks": 498706473,
+        "state": "S",
+        "rss_bytes": 3670016
+      }
+    }
+  },
+  "disk": {
+    "/data1": {
+      "free_bytes": 17092366336
+    },
+    "/data": {
+      "free_bytes": 173850083328
+    }
+  },
+  "memory": {
+    "global_meminfo": {
+      "MemFree": "44250080 kB",
+      "MemAvailable": "122125052 kB"
+    },
+    "0": {
+      "MemFree": [
+        "29866648",
+        "kB"
+      ],
+      "FilePages": [
+        "27585208",
+        "kB"
+      ],
+      "Shmem": [
+        "5764",
+        "kB"
+      ],
+      "SReclaimable": [
+        "3970388",
+        "kB"
+      ]
+    },
+    "1": {
+      "MemFree": [
+        "14383432",
+        "kB"
+      ],
+      "FilePages": [
+        "23649972",
+        "kB"
+      ],
+      "Shmem": [
+        "1416",
+        "kB"
+      ],
+      "SReclaimable": [
+        "24375788",
+        "kB"
+      ]
+    }
+  },
+  "load": [
+    1.3115234375,
+    1.306640625,
+    1.12939453125
+  ],
+  "t16": {
+    "terminal_sha256": "e049e2957c15994b8a34125e5113d96f7e2da7b4ecb69094da55523c3cfd0baf",
+    "retained_identity_count": 944,
+    "present_exact_identities": [],
+    "unknown": []
+  },
+  "matching_processes": [
+    {
+      "identity": {
+        "pid": 3284695,
+        "start_ticks": 498706421,
+        "state": "S",
+        "rss_bytes": 1572864
+      },
+      "executable": "timeout"
+    },
+    {
+      "identity": {
+        "pid": 3284699,
+        "start_ticks": 498706473,
+        "state": "S",
+        "rss_bytes": 3670016
+      },
+      "executable": "bash"
+    },
+    {
+      "identity": {
+        "pid": 3284770,
+        "start_ticks": 498706496,
+        "state": "S",
+        "rss_bytes": 82878464
+      },
+      "executable": "/usr/bin/python3.12"
+    },
+    {
+      "identity": {
+        "pid": 3285060,
+        "start_ticks": 498709944,
+        "state": "S",
+        "rss_bytes": 98205696
+      },
+      "executable": "/usr/bin/python3.12"
+    },
+    {
+      "identity": {
+        "pid": 3285265,
+        "start_ticks": 498715133,
+        "state": "R",
+        "rss_bytes": 108003328
+      },
+      "executable": "/data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt"
+    }
+  ],
+  "t15_active": {
+    "state": "running",
+    "started": "2026-09-27T00:58:52.403726-04:00",
+    "outer_deadline": "2026-09-27T09:14:09.851819-04:00",
+    "series": [
+      {
+        "id": "bfs-t15-supervision-recovery-simulator-batch-20260926-a1.uniform18",
+        "state": "running"
+      }
+    ],
+    "driver_bytes": 110189,
+    "driver_mtime": 1790485166.556964
+  },
+  "log_files": []
+}

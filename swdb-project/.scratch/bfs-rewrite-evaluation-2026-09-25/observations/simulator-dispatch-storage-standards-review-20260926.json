@@ -1,0 +1,45 @@
+{
+  "created": "2026-09-26 ET",
+  "scope": "Independent narrow Standards/correctness readback of sibling .dispatch storage correction; no host execution or empirical acceptance",
+  "result": "clean",
+  "files": {
+    "scripts/bfs_simulator_batch.py": {
+      "sha256": "43a82a80a4be40ab0aec85b76241ea94d332f89e0a0a7a10b385f0750a78d9f4",
+      "bytes": 44666
+    },
+    "scripts/bfs_simulator_batch_terminal.py": {
+      "sha256": "f21e7bcd7cc4ebeef86c66265c3405237fa206c81d92b6c2248b3cbccc7b291b",
+      "bytes": 11995
+    },
+    "scripts/bfs_linux_fixture.py": {
+      "sha256": "8db5b5955e05271cebc0ae3dc7c50515f75e901e91edcc5b62b4b40beb784fe4",
+      "bytes": 13247
+    },
+    "tests/test_bfs_simulator_storage.py": {
+      "sha256": "81867ad769ed24e9d6e1b2d305d34c0a42b29571b38e46f2bf04c5fe1e8c0220",
+      "bytes": 9194
+    },
+    "tests/test_bfs_simulator_batch.py": {
+      "sha256": "72fc34819f71895028be234c3db415efad6c24abeda229554816650813d03f10",
+      "bytes": 39628
+    },
+    "docs/bfs-simulator-batches-20260926.md": {
+      "sha256": "2ac984f3871defbf153cc728f64b304a38f3cac87c4d7d565931241607cde716",
+      "bytes": 18231
+    }
+  },
+  "validation": {
+    "command": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest tests/test_bfs_simulator_storage.py -q -p no:cacheprovider --basetemp=/private/tmp/bfs-storage-standards-20260926",
+    "result": "15 passed in 0.17s",
+    "log": "/private/tmp/bfs-storage-standards-20260926.log",
+    "sha256": "bc31b3d529d6284e5e02088cbdc38fb9a86b8f452dcf99dffc3344c140c5f55b"
+  },
+  "checks": [
+    "Live monitor and finalizer use same canonical exact raw/.dispatch pair under unchanged cap",
+    "Terminal readback reopens fixed plan and historical charges; driver snapshot remains nonfinal",
+    "Already-persisted helper/outer/audit output counted and last-write recheck required",
+    "Old consumed simulator proof IDs preserved by separate historical pin; new routes use a2 and exact fresh runtime proof required",
+    "Corrected first start20:20 only if preparation predates it; original latest20:30, absolute ends and budgets unchanged"
+  ],
+  "operational_requirement": "Host must wire validate_storage_accounting after full terminal process/lease closure and after final charged-root writes; persist preliminary result then recheck without another write into charged roots. This is budget consistency, not process closure or qualification."
+}

@@ -1,0 +1,78 @@
+kind: comparison_result
+schema_version: '0.4'
+id: t75-reeval-20261005.candidate.uniform_random.comparison
+status: draft
+created: '2026-10-05'
+updated: '2026-10-05'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: t75-reeval-20261005.candidate.uniform_random.comparison
+  protocol: bfs-native-scale22-ci-team-20261005-reeval-uniform-random-bb0f642780c4.2e33442a1cf31c02
+  comparison_baseline: dx100-bfs-scalar
+  baseline_evaluation: t75-reeval-20261005.candidate.uniform_random.baseline-eval
+  candidate_evaluation: reeval-9534c5107d8c-c1e45d3b
+decision:
+  state: gain
+  reasons: []
+gain_claim: true
+evidence_kind: execution
+metrics:
+  roi_speedup: 1.4543843322070038
+  per_source_position_speedup:
+    '0': 1.4389722731267656
+    '1': 1.4591454588158141
+    '2': 1.4651650428297152
+  confidence_interval:
+    confidence: 0.95
+    lower: 1.4421624264180435
+    upper: 1.4641359745985474
+    method: paired_repetition_circular_block_bootstrap.v1
+    resamples: 2000
+    block_length: 4
+    relative_width: 0.015108487965598067
+  relative_spread:
+    baseline:
+      '0': 0.0552854214604648
+      '1': 0.08782119205345448
+      '2': 0.07488108540726715
+    candidate:
+      '0': 0.06505985592437594
+      '1': 0.061047498185770224
+      '2': 0.07747846921320149
+  paired_collection:
+    id: t75-reeval-20261005.candidate.uniform_random.pair
+    receipt_sha256: c7cc5b4b132ac66911343ba6bc77b45ea15b79011bf0f81dee96a0d8f2de0fe2
+    schedule_sha256: 0870142a986cee3a0bee663c5625b423c97af0d91b7274f32d537f7bc3ae4ab1
+  workload: bfs-20261004-uniform22.2f83a134a6bef789
+  attribution: software_on_fixed_target
+  disclosed_differences:
+    software:
+    - 'Team protocol (ArchEvolve mode, ticket 75, 2026-10-05 ET): native BFS at scale 22 under the CI-width
+      rule, with exactly the settings of Extensa campaign a8''s frozen fork_scalar_tdstep protocol (identity
+      bd9a7dd22ba1b90d), untagged. Candidate side: an explicit source rewrite evaluated after this freeze.'
+    - 'Baseline role fork_scalar_tdstep: dx100-bfs-scalar unchanged source.'
+    - Team re-evaluation of Extensa candidate artifact extensa-native-bfs-20261005-a8.it1.kronecker.a0
+      (campaign extensa-native-bfs-20261005-a8), workload class uniform_random only.
+    accelerator: []
+    configuration: []
+region_comparisons: []
+finished_at: '2026-10-05T18:51:32.509054+00:00'
+protocol: bfs-native-scale22-ci-team-20261005-reeval-uniform-random-bb0f642780c4.2e33442a1cf31c02
+protocol_sha256: 2e33442a1cf31c0231e14ed9d2a664d4ab6b4ab2a20c518a54f6be5dec3466a9
+baseline_evaluation: t75-reeval-20261005.candidate.uniform_random.baseline-eval
+candidate_evaluation: reeval-9534c5107d8c-c1e45d3b
+comparison_baseline: dx100-bfs-scalar
+source_ancestor: dx100-bfs-scalar
+evaluation_identities:
+  t75-reeval-20261005.candidate.uniform_random.baseline-eval: 51cce1f2958d3ecc46f83bba520501c97e109660568f37f06dd72eec2142e307
+  reeval-9534c5107d8c-c1e45d3b: 5872548f733111dd3aeb69cdf6415a629d113e678505d78018f83eadda058de9

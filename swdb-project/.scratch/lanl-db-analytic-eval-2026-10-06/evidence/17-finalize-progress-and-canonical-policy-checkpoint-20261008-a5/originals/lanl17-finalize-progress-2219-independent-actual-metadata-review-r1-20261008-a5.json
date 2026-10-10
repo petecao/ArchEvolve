@@ -1,0 +1,76 @@
+{
+  "format": "swdb.lanl17-finalize-progress-independent-actual-metadata-review.v1",
+  "created_ET_date": "2026-10-08",
+  "state": "PASS_PARTIAL_METADATA_REVIEW_NOT_COMPLETION",
+  "previous_original": {
+    "path": "/private/tmp/lanl17-finalize-progress-capture-r3-20261008-2213-a5/progress-original.json",
+    "bytes": 19202,
+    "sha256": "7597378c3c1c937fb6834633f17e6b1838192ba3b6c57e41719de39100a09588"
+  },
+  "selected_original": {
+    "path": "/private/tmp/lanl17-finalize-progress-capture-r3-20261008-2219-a5/progress-original.json",
+    "bytes": 19203,
+    "sha256": "dc965d49e6e5a0fd046065fd05c2fe0abdbdbc671d5d289d9d42f3c6b5fcca5c"
+  },
+  "parent_packet": {
+    "path": "/private/tmp/lanl17-finalize-progress-capture-r3-20261008-2219-a5/stdout",
+    "bytes": 44457,
+    "sha256": "b7c043bebba491b31195f0c3bea6260b738d7c9afa39835f48b0233d12d03ebb"
+  },
+  "transport": {
+    "path": "/private/tmp/lanl17-finalize-progress-capture-r3-20261008-2219-a5/transport.json",
+    "bytes": 419,
+    "sha256": "dd9beddf47dec673943e81d2d6b6b170b3287c7e52d13db204d884c8986d698e"
+  },
+  "checked_utc": "2026-10-09T02:19:24.085911+00:00",
+  "previous_checked_utc": "2026-10-09T02:12:00.965410+00:00",
+  "checks": {
+    "strict_duplicate_nonfinite_parser": true,
+    "SSH_and_inner_integer_exit0_not_readiness": true,
+    "empty_transport_and_inner_stderr": true,
+    "transport_stream_hashes_exact": true,
+    "decoded_original_byte_exact": true,
+    "same_public_PID_start_proc_inode_uid_parent_role_argvhash_exe": true,
+    "both_public_state_R": true,
+    "positive_CPU_progress_for_same_identity": true,
+    "all3_native_original_projections_and_pins_unchanged": true,
+    "sourceR_clean_matches": true,
+    "six_stat_unknowns_preserved_no_actualUID_or_cause_inferred": true,
+    "P1validation0_exportexit_and_supervisorreceipt_absent": true,
+    "no_completion_or_scientific_admission": true,
+    "exact_selected_R3_inline_argv_GNU60_K60_native_I_B": true
+  },
+  "public_identity": {
+    "pid": 2312923,
+    "start_ticks": 601338250,
+    "proc_inode": 66898014,
+    "uid": 114316761,
+    "parent_pid": 2312152,
+    "role": "public_campaign-export",
+    "argv_sha256": "e5c972046068cb4ec4de65207d033bb65f10cc1042633d65d933116185123204",
+    "exe_is_native_python": true
+  },
+  "user_cpu_tick_delta": 44112,
+  "kernel_cpu_tick_delta": 195,
+  "CPU_tick_frequency": 100,
+  "native_generations": {
+    "mbit10-evaluation-node0": 514,
+    "mbit10-evaluation-node1": 550,
+    "mbit10-evaluation": 77
+  },
+  "top_and_process_inventory_state": "unknown",
+  "scientific_admission": false,
+  "completion_inferred": false,
+  "runtime_remote_control_import_tests": false,
+  "findings": [],
+  "selected_observer_source": {
+    "path": "/private/tmp/lanl17_observe_finalize_progress_metadata_20261008_a5_r3.py",
+    "bytes": 18212,
+    "sha256": "a59121983fbea8589a020b860c948665909c577929052e95b845a87dca00a90c"
+  },
+  "preserved_previous_review": {
+    "path": "/private/tmp/lanl17-finalize-progress-2219-independent-actual-metadata-review-20261008-a5.json",
+    "bytes": 2613,
+    "sha256": "52c2bf7eae669eaa72ceabab203ccf8c05dd694313e4750ad2204110f8a5d95e"
+  }
+}

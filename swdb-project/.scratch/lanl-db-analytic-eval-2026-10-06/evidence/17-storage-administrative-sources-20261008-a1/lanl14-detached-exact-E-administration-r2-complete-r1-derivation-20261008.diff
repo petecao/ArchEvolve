@@ -1,0 +1,23 @@
+--- /private/tmp/lanl14_detach_exact_E_cleanup_administration_20261008_a1_r1.py
++++ /private/tmp/lanl14_detach_exact_E_cleanup_administration_20261008_a1_r2.py
+@@ -75,14 +75,17 @@
+  return write_original(path,(json.dumps(value,sort_keys=True,ensure_ascii=True,allow_nan=False)+'\n').encode())
+ def process(pid):
+  path=P('/proc')/str(pid)
+- raw=(path/'stat').read_bytes(); need(len(raw)<=16384,'proc_stat_bound')
++ with (path/'stat').open('rb') as source: raw=source.read(16384+1)
++ need(len(raw)<=16384,'proc_stat_bound')
+  tail=raw[raw.rfind(b')')+2:].split(); start=int(tail[19]); parent=int(tail[1])
+- body=(path/'status').read_bytes(); need(len(body)<=32768,'proc_status_bound')
++ with (path/'status').open('rb') as source: body=source.read(32768+1)
++ need(len(body)<=32768,'proc_status_bound')
+  fields={}
+  for row in body.decode().splitlines():
+   if ':' in row:
+    key,value=row.split(':',1); need(key not in fields,'duplicate_proc_status'); fields[key]=value.strip()
+- end=(path/'stat').read_bytes(); need(len(end)<=16384,'proc_stat_bound')
++ with (path/'stat').open('rb') as source: end=source.read(16384+1)
++ need(len(end)<=16384,'proc_stat_bound')
+  last=end[end.rfind(b')')+2:].split()
+  need(int(last[19])==start and int(last[1])==parent and int(fields['PPid'])==parent,'stable_public_process_identity')
+  return {'pid':pid,'start_ticks':start,'parent_pid':parent,'name':fields['Name'],

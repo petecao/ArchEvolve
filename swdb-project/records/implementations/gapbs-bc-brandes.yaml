@@ -1,0 +1,1799 @@
+kind: implementation
+schema_version: '0.2'
+id: gapbs-bc-brandes
+status: draft
+deprecated_by: null
+created: '2026-09-22'
+updated: '2026-09-22'
+provenance:
+- id: src-gapbs-bc-brandes
+  kind: source_code
+  description: gapbs src/bc.cc lines 51-150 (PBFS, Brandes), src/pvector.h (fill), src/sliding_queue.h
+    (SlidingQueue, QueueBuffer), src/bitmap.h (Bitmap), src/platform_atomics.h (compare_and_swap), src/graph.h
+    (CSRGraph), src/benchmark.h (NodeID), src/util.h (PrintStep) at commit 2972aeb2703165bafd921222f4ed7196f542d3a8,
+    read 2026-09-22.
+  uri: https://github.com/sbeamer/gapbs/blob/2972aeb2703165bafd921222f4ed7196f542d3a8/src/bc.cc#L51-L150
+name: gapbs BC, Brandes with a parallel level-synchronous BFS and successor bitmap (Brandes, PBFS)
+kernel: gapbs-bc
+function: Brandes
+origin:
+  kind: application_source
+  description: The BC implementation gapbs builds as its bc binary.
+  derived_from: null
+code:
+- root: application
+  path: src/bc.cc
+  lines: [95, 150]
+  excerpt: |-
+    pvector<ScoreT> Brandes(const Graph &g, SourcePicker<Graph> &sp,
+                            NodeID num_iters, bool logging_enabled = false) {
+      Timer t;
+      t.Start();
+      pvector<ScoreT> scores(g.num_nodes(), 0);
+      pvector<CountT> path_counts(g.num_nodes());
+      Bitmap succ(g.num_edges_directed());
+      vector<SlidingQueue<NodeID>::iterator> depth_index;
+      SlidingQueue<NodeID> queue(g.num_nodes());
+      t.Stop();
+      if (logging_enabled)
+        PrintStep("a", t.Seconds());
+      const NodeID* g_out_start = g.out_neigh(0).begin();
+      for (NodeID iter=0; iter < num_iters; iter++) {
+        NodeID source = sp.PickNext();
+        if (logging_enabled)
+          PrintStep("Source", static_cast<int64_t>(source));
+        t.Start();
+        path_counts.fill(0);
+        depth_index.resize(0);
+        queue.reset();
+        succ.reset();
+        PBFS(g, source, path_counts, succ, depth_index, queue);
+        t.Stop();
+        if (logging_enabled)
+          PrintStep("b", t.Seconds());
+        pvector<ScoreT> deltas(g.num_nodes(), 0);
+        t.Start();
+        for (int d=depth_index.size()-2; d >= 0; d--) {
+          #pragma omp parallel for schedule(dynamic, 64)
+          for (auto it = depth_index[d]; it < depth_index[d+1]; it++) {
+            NodeID u = *it;
+            ScoreT delta_u = 0;
+            for (NodeID &v : g.out_neigh(u)) {
+              if (succ.get_bit(&v - g_out_start)) {
+                delta_u += (path_counts[u] / path_counts[v]) * (1 + deltas[v]);
+              }
+            }
+            deltas[u] = delta_u;
+            scores[u] += delta_u;
+          }
+        }
+        t.Stop();
+        if (logging_enabled)
+          PrintStep("p", t.Seconds());
+      }
+      // normalize scores
+      ScoreT biggest_score = 0;
+      #pragma omp parallel for reduction(max : biggest_score)
+      for (NodeID n=0; n < g.num_nodes(); n++)
+        biggest_score = max(biggest_score, scores[n]);
+      #pragma omp parallel for
+      for (NodeID n=0; n < g.num_nodes(); n++)
+        scores[n] = scores[n] / biggest_score;
+      return scores;
+    }
+  sha256: null
+- root: application
+  path: src/bc.cc
+  lines: [51, 92]
+  excerpt: |-
+    void PBFS(const Graph &g, NodeID source, pvector<CountT> &path_counts,
+        Bitmap &succ, vector<SlidingQueue<NodeID>::iterator> &depth_index,
+        SlidingQueue<NodeID> &queue) {
+      pvector<NodeID> depths(g.num_nodes(), -1);
+      depths[source] = 0;
+      path_counts[source] = 1;
+      queue.push_back(source);
+      depth_index.push_back(queue.begin());
+      queue.slide_window();
+      const NodeID* g_out_start = g.out_neigh(0).begin();
+      #pragma omp parallel
+      {
+        NodeID depth = 0;
+        QueueBuffer<NodeID> lqueue(queue);
+        while (!queue.empty()) {
+          depth++;
+          #pragma omp for schedule(dynamic, 64) nowait
+          for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+            NodeID u = *q_iter;
+            for (NodeID &v : g.out_neigh(u)) {
+              if ((depths[v] == -1) &&
+                  (compare_and_swap(depths[v], static_cast<NodeID>(-1), depth))) {
+                lqueue.push_back(v);
+              }
+              if (depths[v] == depth) {
+                succ.set_bit_atomic(&v - g_out_start);
+                #pragma omp atomic
+                path_counts[v] += path_counts[u];
+              }
+            }
+          }
+          lqueue.flush();
+          #pragma omp barrier
+          #pragma omp single
+          {
+            depth_index.push_back(queue.begin());
+            queue.slide_window();
+          }
+        }
+      }
+      depth_index.push_back(queue.begin());
+    }
+  sha256: null
+build:
+  compiler: g++
+  flags: -std=c++11 -O3 -Wall -fopenmp
+  command: '{cxx} {flags} {source} -o {binary}'
+run:
+  command: '{binary} {input_args} -n {trials}'
+  timer: gapbs_trial_time
+  threads_env: OMP_NUM_THREADS
+  sweep_log_flag: null
+  kernel_symbols: [Brandes, PBFS]
+  index_stream: null
+loops:
+- id: scores-fill
+  description: 'pvector<ScoreT> scores(g.num_nodes(), 0) (bc.cc line 99): pvector::fill'
+  parent: null
+  trip_count:
+    value: null
+    formula: num_nodes
+    scope: per_call
+    basis: code_reading
+    evidence_refs: [src-gapbs-bc-brandes]
+  parallel:
+    construct: omp_parallel_for
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/pvector.h
+    lines: [133, 135]
+    excerpt: |2-
+          #pragma omp parallel for
+          for (T_* ptr=start_; ptr < end_size_; ptr++)
+            *ptr = init_val;
+    sha256: null
+- id: source
+  description: 'Brandes: one iteration per source (-i)'
+  parent: null
+  trip_count:
+    value: 1
+    formula: null
+    scope: per_call
+    basis: code_reading
+    evidence_refs: [src-gapbs-bc-brandes]
+    note: num_iters is -i, default 1 (bc.cc line 234); the run command passes no -i. One sweep in this
+      record is one iteration of this loop (one source).
+  parallel:
+    construct: serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/bc.cc
+    lines: [108, 140]
+    excerpt: |2-
+        for (NodeID iter=0; iter < num_iters; iter++) {
+          NodeID source = sp.PickNext();
+          if (logging_enabled)
+            PrintStep("Source", static_cast<int64_t>(source));
+          t.Start();
+          path_counts.fill(0);
+          depth_index.resize(0);
+          queue.reset();
+          succ.reset();
+          PBFS(g, source, path_counts, succ, depth_index, queue);
+          t.Stop();
+          if (logging_enabled)
+            PrintStep("b", t.Seconds());
+          pvector<ScoreT> deltas(g.num_nodes(), 0);
+          t.Start();
+          for (int d=depth_index.size()-2; d >= 0; d--) {
+            #pragma omp parallel for schedule(dynamic, 64)
+            for (auto it = depth_index[d]; it < depth_index[d+1]; it++) {
+              NodeID u = *it;
+              ScoreT delta_u = 0;
+              for (NodeID &v : g.out_neigh(u)) {
+                if (succ.get_bit(&v - g_out_start)) {
+                  delta_u += (path_counts[u] / path_counts[v]) * (1 + deltas[v]);
+                }
+              }
+              deltas[u] = delta_u;
+              scores[u] += delta_u;
+            }
+          }
+          t.Stop();
+          if (logging_enabled)
+            PrintStep("p", t.Seconds());
+        }
+    sha256: null
+- id: path-counts-fill
+  description: 'path_counts.fill(0) (bc.cc line 113): pvector::fill'
+  parent: source
+  trip_count:
+    value: null
+    formula: num_nodes
+    scope: per_sweep
+    basis: code_reading
+    evidence_refs: [src-gapbs-bc-brandes]
+  parallel:
+    construct: omp_parallel_for
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/pvector.h
+    lines: [133, 135]
+    excerpt: |2-
+          #pragma omp parallel for
+          for (T_* ptr=start_; ptr < end_size_; ptr++)
+            *ptr = init_val;
+    sha256: null
+- id: succ-reset
+  description: 'succ.reset() (bc.cc line 116): std::fill of the successor bitmap, serial'
+  parent: source
+  trip_count:
+    value: null
+    formula: (num_edges_directed + 63) // 64
+    scope: per_sweep
+    basis: code_reading
+    evidence_refs: [src-gapbs-bc-brandes]
+  parallel:
+    construct: serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/bitmap.h
+    lines: [35, 37]
+    excerpt: |2-
+        void reset() {
+          std::fill(start_, end_, 0);
+        }
+    sha256: null
+- id: depths-fill
+  description: 'pvector<NodeID> depths(g.num_nodes(), -1) (bc.cc line 54, in PBFS): pvector::fill'
+  parent: source
+  trip_count:
+    value: null
+    formula: num_nodes
+    scope: per_sweep
+    basis: code_reading
+    evidence_refs: [src-gapbs-bc-brandes]
+  parallel:
+    construct: omp_parallel_for
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/pvector.h
+    lines: [133, 135]
+    excerpt: |2-
+          #pragma omp parallel for
+          for (T_* ptr=start_; ptr < end_size_; ptr++)
+            *ptr = init_val;
+    sha256: null
+- id: pbfs-level
+  description: 'PBFS: one BFS level per iteration; every thread of the parallel region (line 61) runs
+    this loop in step, with a barrier per level (line 83)'
+  parent: source
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-gapbs-bc-brandes]
+    note: The number of BFS levels from the source (its eccentricity + 1).
+  parallel:
+    construct: serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/bc.cc
+    lines: [65, 89]
+    excerpt: |2-
+          while (!queue.empty()) {
+            depth++;
+            #pragma omp for schedule(dynamic, 64) nowait
+            for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+              NodeID u = *q_iter;
+              for (NodeID &v : g.out_neigh(u)) {
+                if ((depths[v] == -1) &&
+                    (compare_and_swap(depths[v], static_cast<NodeID>(-1), depth))) {
+                  lqueue.push_back(v);
+                }
+                if (depths[v] == depth) {
+                  succ.set_bit_atomic(&v - g_out_start);
+                  #pragma omp atomic
+                  path_counts[v] += path_counts[u];
+                }
+              }
+            }
+            lqueue.flush();
+            #pragma omp barrier
+            #pragma omp single
+            {
+              depth_index.push_back(queue.begin());
+              queue.slide_window();
+            }
+          }
+    sha256: null
+- id: pbfs-frontier
+  description: 'PBFS: for u in the current level (queue window)'
+  parent: pbfs-level
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-gapbs-bc-brandes]
+    note: 'Summed over the levels of one source: the number of vertices reached (each is in the queue
+      once).'
+  parallel:
+    construct: omp_for_in_parallel_region
+    schedule: dynamic, 64
+    reduction: null
+  code:
+    root: application
+    path: src/bc.cc
+    lines: [67, 81]
+    excerpt: |2-
+            #pragma omp for schedule(dynamic, 64) nowait
+            for (auto q_iter = queue.begin(); q_iter < queue.end(); q_iter++) {
+              NodeID u = *q_iter;
+              for (NodeID &v : g.out_neigh(u)) {
+                if ((depths[v] == -1) &&
+                    (compare_and_swap(depths[v], static_cast<NodeID>(-1), depth))) {
+                  lqueue.push_back(v);
+                }
+                if (depths[v] == depth) {
+                  succ.set_bit_atomic(&v - g_out_start);
+                  #pragma omp atomic
+                  path_counts[v] += path_counts[u];
+                }
+              }
+            }
+    sha256: null
+- id: pbfs-edge
+  description: 'PBFS: for v in g.out_neigh(u): claim depth, record successor edge, add path counts'
+  parent: pbfs-frontier
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-gapbs-bc-brandes]
+    note: 'Summed over one source: the sum of the out-degrees of the reached vertices (at most num_edges_directed).'
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/bc.cc
+    lines: [70, 80]
+    excerpt: |2-
+              for (NodeID &v : g.out_neigh(u)) {
+                if ((depths[v] == -1) &&
+                    (compare_and_swap(depths[v], static_cast<NodeID>(-1), depth))) {
+                  lqueue.push_back(v);
+                }
+                if (depths[v] == depth) {
+                  succ.set_bit_atomic(&v - g_out_start);
+                  #pragma omp atomic
+                  path_counts[v] += path_counts[u];
+                }
+              }
+    sha256: null
+- id: deltas-fill
+  description: 'pvector<ScoreT> deltas(g.num_nodes(), 0) (bc.cc line 121): pvector::fill'
+  parent: source
+  trip_count:
+    value: null
+    formula: num_nodes
+    scope: per_sweep
+    basis: code_reading
+    evidence_refs: [src-gapbs-bc-brandes]
+  parallel:
+    construct: omp_parallel_for
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/pvector.h
+    lines: [133, 135]
+    excerpt: |2-
+          #pragma omp parallel for
+          for (T_* ptr=start_; ptr < end_size_; ptr++)
+            *ptr = init_val;
+    sha256: null
+- id: back-level
+  description: 'Brandes back-propagation: for each level d from the farthest to the source'
+  parent: source
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-gapbs-bc-brandes]
+    note: 'depth_index.size() - 1 iterations: one per level plus one empty range (depth_index starts with
+      two entries for the source''s position).'
+  parallel:
+    construct: serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/bc.cc
+    lines: [123, 136]
+    excerpt: |2-
+          for (int d=depth_index.size()-2; d >= 0; d--) {
+            #pragma omp parallel for schedule(dynamic, 64)
+            for (auto it = depth_index[d]; it < depth_index[d+1]; it++) {
+              NodeID u = *it;
+              ScoreT delta_u = 0;
+              for (NodeID &v : g.out_neigh(u)) {
+                if (succ.get_bit(&v - g_out_start)) {
+                  delta_u += (path_counts[u] / path_counts[v]) * (1 + deltas[v]);
+                }
+              }
+              deltas[u] = delta_u;
+              scores[u] += delta_u;
+            }
+          }
+    sha256: null
+- id: back-vertex
+  description: 'Back-propagation: for u in level d: sum its successors'' dependencies'
+  parent: back-level
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-gapbs-bc-brandes]
+    note: 'Summed over the levels of one source: the number of vertices reached.'
+  parallel:
+    construct: omp_parallel_for
+    schedule: dynamic, 64
+    reduction: null
+  code:
+    root: application
+    path: src/bc.cc
+    lines: [124, 135]
+    excerpt: |2-
+            #pragma omp parallel for schedule(dynamic, 64)
+            for (auto it = depth_index[d]; it < depth_index[d+1]; it++) {
+              NodeID u = *it;
+              ScoreT delta_u = 0;
+              for (NodeID &v : g.out_neigh(u)) {
+                if (succ.get_bit(&v - g_out_start)) {
+                  delta_u += (path_counts[u] / path_counts[v]) * (1 + deltas[v]);
+                }
+              }
+              deltas[u] = delta_u;
+              scores[u] += delta_u;
+            }
+    sha256: null
+- id: back-edge
+  description: 'Back-propagation: for v in g.out_neigh(u) whose edge bit is set in succ'
+  parent: back-vertex
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-gapbs-bc-brandes]
+    note: 'Summed over one source: the sum of the out-degrees of the reached vertices.'
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/bc.cc
+    lines: [128, 132]
+    excerpt: |2-
+              for (NodeID &v : g.out_neigh(u)) {
+                if (succ.get_bit(&v - g_out_start)) {
+                  delta_u += (path_counts[u] / path_counts[v]) * (1 + deltas[v]);
+                }
+              }
+    sha256: null
+- id: normalize-max
+  description: Largest score (max reduction)
+  parent: null
+  trip_count:
+    value: null
+    formula: num_nodes
+    scope: per_call
+    basis: code_reading
+    evidence_refs: [src-gapbs-bc-brandes]
+  parallel:
+    construct: omp_parallel_for
+    schedule: null
+    reduction: 'max : biggest_score'
+  code:
+    root: application
+    path: src/bc.cc
+    lines: [143, 145]
+    excerpt: |2-
+        #pragma omp parallel for reduction(max : biggest_score)
+        for (NodeID n=0; n < g.num_nodes(); n++)
+          biggest_score = max(biggest_score, scores[n]);
+    sha256: null
+- id: normalize-div
+  description: scores[n] /= biggest_score
+  parent: null
+  trip_count:
+    value: null
+    formula: num_nodes
+    scope: per_call
+    basis: code_reading
+    evidence_refs: [src-gapbs-bc-brandes]
+  parallel:
+    construct: omp_parallel_for
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/bc.cc
+    lines: [146, 148]
+    excerpt: |2-
+        #pragma omp parallel for
+        for (NodeID n=0; n < g.num_nodes(); n++)
+          scores[n] = scores[n] / biggest_score;
+    sha256: null
+access_patterns:
+- id: pbfs-frontier-read
+  expression: u = *q_iter for q_iter in [queue.begin(), queue.end())
+  loop: pbfs-frontier
+  steps:
+  - array:
+      name: queue.shared
+      role: target
+      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: reads the current level's window of the SlidingQueue
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: QueueBuffer flushes append past queue.end(); the window is not written until slide_window
+        (line 87).
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: All threads read disjoint parts of one queue array (omp for).
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: One window per level; the barrier (line 83) and slide_window end the level.
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+  evidence_refs: [src-gapbs-bc-brandes]
+- id: pbfs-depth-claim
+  expression: compare_and_swap(depths[v], -1, depth) for v in g.out_neigh(u)
+  loop: pbfs-edge
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: u = *q_iter walks the current BFS level of the queue
+  - array:
+      name: g.out_index_
+      role: offsets
+      element_type: NodeID* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: reads out_index_[u] and out_index_[u+1], the bounds of u's out-neighbor range
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: walks out_neighbors_[out_index_[u] .. out_index_[u+1])
+  - array:
+      name: depths
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: reads depths[v]; if -1, claims it with a CAS; reads it again at line 75
+  update_kind: compare_and_swap
+  update:
+    pseudocode: 'if depths[v] == -1 and CAS(depths[v], -1, depth): lqueue.push_back(v); if depths[v] ==
+      depth: (succ, path_counts)'
+    side_effects: appends v to the thread's QueueBuffer
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Many u in a level can share an out-neighbor v and try to claim depths[v] (lines 71-72).
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: The graph is passed as const; its index and neighbor arrays are never written by the kernel.
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: 'Level-synchronous: within a level iterations only race to claim; every claimer writes the
+        same value (depth), so the winner does not matter.'
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Any thread can claim any v.
+    atomic_updates_required:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: compare_and_swap(depths[v], -1, depth) (line 72) is __sync_bool_compare_and_swap on int32_t
+        (platform_atomics.h lines 29-32); it also decides which thread pushes v.
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Levels must complete in order; order within a level is free.
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Depths are integers and every claimer writes the same level number.
+  evidence_refs: [src-gapbs-bc-brandes]
+- id: pbfs-succ-set
+  expression: succ.set_bit_atomic(&v - g_out_start) when depths[v] == depth
+  loop: pbfs-edge
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: u = *q_iter walks the current BFS level of the queue
+  - array:
+      name: g.out_index_
+      role: offsets
+      element_type: NodeID* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: reads out_index_[u] and out_index_[u+1]
+  - array:
+      name: succ.start_
+      role: target
+      element_type: uint64_t (Bitmap word, one bit per CSR edge)
+      element_bytes: 8
+      element_count: (num_edges_directed + 63) // 64
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: bit (&v - g_out_start) is the position of edge (u, v) in out_neighbors_, so the bits walked
+      are out_index_[u] - g_out_start .. out_index_[u+1] - g_out_start, i.e. words of 64 edges
+  update_kind: compare_and_swap
+  update:
+    pseudocode: do { old = word; new = old | bit } while (!CAS(word, old, new))
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: 64 edges share one word; each edge's bit is set at most once per source.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: The graph is passed as const; its index and neighbor arrays are never written by the kernel.
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Words at the boundary of two vertices' edge ranges can be set by two threads.
+    atomic_updates_required:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: set_bit_atomic is an atomic OR implemented as a compare_and_swap retry loop on the 64-bit
+        word (bitmap.h lines 43-49).
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Setting bits commutes; the bits are read only after PBFS returns.
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+  evidence_refs: [src-gapbs-bc-brandes]
+  note: Marks edge (u, v) as a shortest-path DAG edge; the bitmap is indexed by edge position, not by
+    vertex.
+- id: pbfs-path-count-add
+  expression: '#pragma omp atomic path_counts[v] += path_counts[u]'
+  loop: pbfs-edge
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: u = *q_iter walks the current BFS level of the queue
+  - array:
+      name: g.out_index_
+      role: offsets
+      element_type: NodeID* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: reads out_index_[u] and out_index_[u+1], the bounds of u's out-neighbor range
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: walks out_neighbors_[out_index_[u] .. out_index_[u+1])
+  - array:
+      name: path_counts
+      role: target
+      element_type: CountT (double)
+      element_bytes: 8
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: path_counts[v] for each out-neighbor v one level further
+  update_kind: add_update
+  update:
+    pseudocode: path_counts[v] += path_counts[u]  (atomic)
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: v receives one add from every predecessor u in the previous level.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: The graph is passed as const; its index and neighbor arrays are never written by the kernel.
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Within a level the adds go to vertices of the next level and the reads (path_counts[u]) come
+        from the current level, completed before the barrier (line 83), so iterations of one level do
+        not depend on each other.
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Predecessors of one v can be handled by different threads.
+    atomic_updates_required:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: '#pragma omp atomic on a double add (lines 77-78).'
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: path_counts[u] must be final (its level complete) before level depth adds it; adds within
+        a level commute.
+    numerical_requirement:
+      value: fp_reassociation_allowed
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: 'Path counts are integers held in doubles: the adds are exact while counts stay below 2^53;
+        beyond that the schedule-order sums can round differently, and only the verifier''s tolerance
+        on the final scores bounds it.'
+  evidence_refs: [src-gapbs-bc-brandes]
+- id: pbfs-path-count-u
+  expression: path_counts[u] (read for every successor edge)
+  loop: pbfs-edge
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: u = *q_iter walks the current BFS level
+  - array:
+      name: path_counts
+      role: target
+      element_type: CountT (double)
+      element_bytes: 8
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: path_counts[u] of the frontier vertex
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Each u is in the queue once per source (read once per successor edge of that u).
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Written in the previous level, read-only in this one.
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Other threads add to path_counts of next-level vertices in the same array.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+  evidence_refs: [src-gapbs-bc-brandes]
+- id: pbfs-queue-push
+  expression: lqueue.push_back(v); lqueue.flush() into queue.shared
+  loop: pbfs-edge
+  steps:
+  - array:
+      name: queue.shared
+      role: target
+      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: QueueBuffer flush copies one contiguous block per flush (sliding_queue.h lines 97-108)
+  update_kind: write
+  update:
+    pseudocode: null
+    side_effects: advances queue.shared_in atomically
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: All threads append into one queue array, in disjoint ranges reserved by fetch_and_add.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Element stores are plain; only the scalar tail shared_in uses fetch_and_add (sliding_queue.h
+        line 105).
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: The set of IDs written must be exactly the newly claimed vertices; their order is free.
+  evidence_refs: [src-gapbs-bc-brandes]
+- id: depths-init
+  expression: depths[n] = -1 (pvector fill)
+  loop: depths-fill
+  steps:
+  - array:
+      name: depths
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  update_kind: write
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+  evidence_refs: [src-gapbs-bc-brandes]
+- id: path-counts-init
+  expression: path_counts[n] = 0 (pvector fill)
+  loop: path-counts-fill
+  steps:
+  - array:
+      name: path_counts
+      role: target
+      element_type: CountT (double)
+      element_bytes: 8
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  update_kind: write
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+  evidence_refs: [src-gapbs-bc-brandes]
+- id: succ-reset
+  expression: 'succ.reset(): every word = 0'
+  loop: succ-reset
+  steps:
+  - array:
+      name: succ.start_
+      role: target
+      element_type: uint64_t (Bitmap word, one bit per CSR edge)
+      element_bytes: 8
+      element_count: (num_edges_directed + 63) // 64
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  update_kind: write
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+  evidence_refs: [src-gapbs-bc-brandes]
+- id: deltas-init
+  expression: deltas[n] = 0 (pvector fill)
+  loop: deltas-fill
+  steps:
+  - array:
+      name: deltas
+      role: target
+      element_type: ScoreT (float)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  update_kind: write
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+  evidence_refs: [src-gapbs-bc-brandes]
+- id: scores-init
+  expression: scores[n] = 0 (pvector fill)
+  loop: scores-fill
+  steps:
+  - array:
+      name: scores
+      role: target
+      element_type: ScoreT (float)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  update_kind: write
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+  evidence_refs: [src-gapbs-bc-brandes]
+- id: back-frontier-read
+  expression: u = *it for it in [depth_index[d], depth_index[d+1])
+  loop: back-vertex
+  steps:
+  - array:
+      name: queue.shared
+      role: target
+      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: the queue still holds every reached vertex in level order; depth_index marks the levels
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: All threads read disjoint parts of one level (omp parallel for).
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Levels are processed farthest first; the end of each parallel for is a barrier.
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+  evidence_refs: [src-gapbs-bc-brandes]
+- id: back-succ-test
+  expression: succ.get_bit(&v - g_out_start) for v in g.out_neigh(u)
+  loop: back-edge
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: u = *it walks one BFS level of the queue, farthest level first
+  - array:
+      name: g.out_index_
+      role: offsets
+      element_type: NodeID* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: reads out_index_[u] and out_index_[u+1]
+  - array:
+      name: succ.start_
+      role: target
+      element_type: uint64_t (Bitmap word, one bit per CSR edge)
+      element_bytes: 8
+      element_count: (num_edges_directed + 63) // 64
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: bit (&v - g_out_start) is the position of edge (u, v) in out_neighbors_, so the bits walked
+      are out_index_[u] - g_out_start .. out_index_[u+1] - g_out_start, i.e. words of 64 edges
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: 64 edges share one word; each edge bit is tested once per source.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: The graph is passed as const; its index and neighbor arrays are never written by the kernel.
+        succ is only read after PBFS.
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Read-only; boundary words are read by two threads.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+  evidence_refs: [src-gapbs-bc-brandes]
+- id: back-path-count-v
+  expression: path_counts[v] for successor v
+  loop: back-edge
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: u = *it walks one BFS level of the queue, farthest level first
+  - array:
+      name: g.out_index_
+      role: offsets
+      element_type: NodeID* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: reads out_index_[u] and out_index_[u+1], the bounds of u's out-neighbor range
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: walks out_neighbors_[out_index_[u] .. out_index_[u+1])
+  - array:
+      name: path_counts
+      role: target
+      element_type: CountT (double)
+      element_bytes: 8
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: path_counts[v] for each successor v
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: A vertex is a successor of every predecessor in the level before it.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: The graph is passed as const; its index and neighbor arrays are never written by the kernel.
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Read-only in back-propagation; many threads read it.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+  evidence_refs: [src-gapbs-bc-brandes]
+- id: back-deltas-v
+  expression: deltas[v] for successor v
+  loop: back-edge
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: u = *it walks one BFS level of the queue, farthest level first
+  - array:
+      name: g.out_index_
+      role: offsets
+      element_type: NodeID* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: reads out_index_[u] and out_index_[u+1], the bounds of u's out-neighbor range
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: ranged_indirect
+    note: walks out_neighbors_[out_index_[u] .. out_index_[u+1])
+  - array:
+      name: deltas
+      role: target
+      element_type: ScoreT (float)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: deltas[v] for each successor v, computed in the previous (farther) level
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: A vertex is a successor of every predecessor in the level before it.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: The graph is passed as const; its index and neighbor arrays are never written by the kernel.
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Successors are one level farther; their deltas were written in the previous back-level iteration,
+        not in this parallel loop.
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Many threads read it; it was written by some thread in the previous level.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Level d+1 must be complete before level d reads it (end-of-loop barrier).
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+  evidence_refs: [src-gapbs-bc-brandes]
+- id: back-path-count-u
+  expression: path_counts[u] (read for every successor edge)
+  loop: back-edge
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: u = *it walks one BFS level of the queue, farthest level first
+  - array:
+      name: path_counts
+      role: target
+      element_type: CountT (double)
+      element_bytes: 8
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: path_counts[u] of the level vertex
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Each u is visited once per source (read once per successor edge of that u).
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+  evidence_refs: [src-gapbs-bc-brandes]
+- id: back-deltas-write
+  expression: deltas[u] = delta_u
+  loop: back-vertex
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: u = *it walks one BFS level of the queue, farthest level first
+  - array:
+      name: deltas
+      role: target
+      element_type: ScoreT (float)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: deltas[u] of the level vertex
+  update_kind: write
+  update:
+    pseudocode: delta_u = sum over successors v of (path_counts[u] / path_counts[v]) * (1 + deltas[v]);
+      deltas[u] = delta_u
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Each reached vertex is in the queue once.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Written for level d and read (as deltas[v]) only when level d-1 is processed.
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Within the loop each u is written by one thread and not read by others.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    ordering:
+      value: level_synchronous
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Levels farthest first; the next (closer) level reads these values.
+    numerical_requirement:
+      value: fp_reassociation_allowed
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: delta_u sums (path_counts[u] / path_counts[v]) * (1 + deltas[v]) in CSR neighbor order (line
+        130); another order changes rounding, which the verifier's float-epsilon tolerance on normalized
+        scores must absorb.
+  evidence_refs: [src-gapbs-bc-brandes]
+- id: back-scores-add
+  expression: scores[u] += delta_u
+  loop: back-vertex
+  steps:
+  - array:
+      name: queue.shared
+      role: index
+      element_type: NodeID (int32_t), SlidingQueue<NodeID> storage
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: u = *it walks one BFS level of the queue, farthest level first
+  - array:
+      name: scores
+      role: target
+      element_type: ScoreT (float)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: scores[u] of the level vertex
+  update_kind: add_update
+  update:
+    pseudocode: scores[u] += delta_u
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Once per source for each reached vertex.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Only iteration u of this source touches scores[u].
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Each u is handled by one thread in a level; sources run one after another.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: 'Plain float add (line 134): no two threads add to the same u at once.'
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Adds from different sources commute up to rounding.
+    numerical_requirement:
+      value: fp_reassociation_allowed
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: Float sums over sources; any order within the verifier's tolerance is acceptable.
+  evidence_refs: [src-gapbs-bc-brandes]
+- id: normalize-max-read
+  expression: biggest_score = max(biggest_score, scores[n])
+  loop: normalize-max
+  steps:
+  - array:
+      name: scores
+      role: target
+      element_type: ScoreT (float)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: max reduction into biggest_score
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+      note: max is exact in any order.
+  evidence_refs: [src-gapbs-bc-brandes]
+- id: normalize-div
+  expression: scores[n] = scores[n] / biggest_score
+  loop: normalize-div
+  steps:
+  - array:
+      name: scores
+      role: target
+      element_type: ScoreT (float)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  update_kind: arbitrary
+  update:
+    pseudocode: scores[n] = scores[n] / biggest_score
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-bc-brandes]
+  evidence_refs: [src-gapbs-bc-brandes]
+  note: 'Update kind arbitrary: a read-modify-write that scales the element (no vocabulary value for scaling).'
+notes:
+- NodeID is int32_t, ScoreT is float, CountT is double (src/benchmark.h line 31; bc.cc lines 47-48).
+- gapbs CSR index arrays hold pointers (DestID_**), 8 bytes per element on 64-bit hosts.
+- Only out_index_/out_neighbors_ are read (out_neigh), so no array needs undirected_alias; the successor
+  bitmap succ has one bit per CSR edge, (num_edges_directed + 63) / 64 uint64_t words (bc.cc line 101,
+  bitmap.h lines 25-29).
+- SlidingQueue<NodeID> queue(g.num_nodes()) (line 103) keeps every reached vertex in level order for the
+  back-propagation; each QueueBuffer adds a thread-local buffer of 16384 NodeIDs (not graph-sized, not
+  recorded). depth_index holds one iterator per level (not graph-sized).
+- The per-source arrays depths and deltas are allocated and filled inside the source loop (lines 54, 121);
+  the fills are pvector::fill (pvector.h lines 132-136).
+- 'sweep_log_flag is null: with -l Brandes prints labeled lines through PrintStep ("a", "Source", "b",
+  "p"; lines 106, 111, 120, 139), which do not have the <integer> <number> form the profiler counts.'
+- 'index_stream is null: the traversal visits neighbor lists in frontier order, which depends on the source
+  and (for the parallel steps) on the thread schedule, so the extractor''s CSR order (in_neighbors_by_vertex
+  / out_neighbors_by_vertex) is not the kernel''s order.'
+- kernel_symbols are Brandes and PBFS. pvector::fill runs as its own OpenMP outlined function (pvector<T>::fill._omp_fn.N),
+  which the symbol match does not include, so the fills' simulated misses are not counted as the kernel;
+  Bitmap and QueueBuffer helpers are expected to be inlined at -O3 (not checked).
+extensions: {}

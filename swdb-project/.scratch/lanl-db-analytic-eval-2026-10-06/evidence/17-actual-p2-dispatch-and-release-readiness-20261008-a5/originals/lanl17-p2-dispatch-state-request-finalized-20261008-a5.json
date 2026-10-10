@@ -1,0 +1,106 @@
+{
+  "auditor_sha256": "6a91ed1015bcc1caa771348e8bd1f591254ba130e55570ed18bc8121d67a06da",
+  "capture": "dispatch_state",
+  "collector_sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c",
+  "context": {
+    "account": {
+      "host": "mbit10",
+      "platform": "linux",
+      "uid": 114316761,
+      "user": "yanruj"
+    },
+    "attempt": 1,
+    "campaign": "extensa-gem5-bfs-20261006-p2",
+    "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+    "helper_sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414",
+    "manifest_identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7",
+    "policy": {
+      "frozen_at": "2026-10-08T16:05:25.347884+00:00",
+      "id": "extensa-gem5-bfs-20261006-p1.agreement.5bae2f42d9078864",
+      "identity_sha256": "5bae2f42d9078864caad73e81a16007edb6458f0b101628ded04a7ef3aedbf7d"
+    },
+    "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+    "source_commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+    "source_path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5"
+  },
+  "format": "swdb.lanl17-parent-capture-request.v1",
+  "identity_sha256": "2eee0ad9b119d2b2be69eed7e5f36ec663b4ba0671e3aad163e3a0d9391cbbd3",
+  "inputs": {
+    "before_custody": {
+      "bytes": 3148,
+      "canonical_ensure_ascii": true,
+      "canonical_policy_sources": [
+        {
+          "bytes": 24818,
+          "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-selected-trajectory-controls-20261007-a2r1s1/lanl17_compact_attempt_custody_a2r1_20261007.py",
+          "sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c"
+        }
+      ],
+      "encoding": "json",
+      "identity_sha256": "c85f935c786063a5827a034a8f292966ea56436858219cff380c611fff883db0",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-p2-before-custody-20261008-a5/custody.json",
+      "sealed": true,
+      "sha256": "766efc494edb201820d503b58c4666a16d88e96d525256698cc6d21da9bdb4f7",
+      "writer_source": {
+        "bytes": 24818,
+        "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-selected-trajectory-controls-20261007-a2r1s1/lanl17_compact_attempt_custody_a2r1_20261007.py",
+        "sha256": "b08db809b80cbebc6ce98dd8df8fdd4f327b170cdd7a545af0876ad68a832a5c"
+      }
+    },
+    "dispatch": {
+      "bytes": 44111,
+      "canonical_ensure_ascii": true,
+      "canonical_policy_sources": [
+        {
+          "bytes": 38195,
+          "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+          "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+        }
+      ],
+      "encoding": "json",
+      "identity_sha256": "eb3979dd9836ab99ecdf5340bfa6bb72decac86a7a01abce663ccf0cd7b1a9f2",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/attempts/extensa-gem5-bfs-20261006-p2/attempt-1/dispatch-preregistration.json",
+      "sealed": true,
+      "sha256": "c0c35fa265e2860a77e7ce1c528a21aa6cd18008b8d59d2e4c31ece6ac81dc69",
+      "writer_source": {
+        "bytes": 38195,
+        "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+        "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+      }
+    },
+    "manifest_M2": {
+      "bytes": 292401,
+      "canonical_ensure_ascii": true,
+      "canonical_policy_sources": [
+        {
+          "bytes": 38195,
+          "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+          "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+        }
+      ],
+      "encoding": "json",
+      "identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7",
+      "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+      "sealed": true,
+      "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1",
+      "writer_source": {
+        "bytes": 38195,
+        "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-cleanup60-metadata-controls-20261007-a4/lanl17_parent_helpers_cleanup60_a4.py",
+        "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+      }
+    }
+  },
+  "observations": {
+    "basis": "explicit_parent_attestation_no_other_campaign_writer_between_capture_and_dispatch",
+    "state_unchanged_under_parent_exclusive_campaign_ownership": true,
+    "parent_checked_pre_dispatch_state_sha256": null,
+    "checked_utc": "2026-10-08T19:13:37.165569+00:00"
+  },
+  "producer_sha256": "32bead204337aa66d0a732b6f143216946abafc5d2eb752577b0d90f7190b7b6",
+  "read_roots": [
+    "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5",
+    "/data/yanruj/EvolveSWDB_runs/lanl17-p2-before-custody-20261008-a5"
+  ],
+  "source_plan_sha256": "e3420b334ce05f7268699b0079987d1d2afc98fe5cb5503e6069a89038b59170"
+}

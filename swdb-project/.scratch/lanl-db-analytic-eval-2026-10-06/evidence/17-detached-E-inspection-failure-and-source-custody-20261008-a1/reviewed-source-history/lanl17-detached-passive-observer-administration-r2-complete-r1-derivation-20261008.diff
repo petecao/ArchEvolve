@@ -1,0 +1,13 @@
+--- /private/tmp/lanl17_detach_passive_observer_administration_20261008_a1.py
++++ /private/tmp/lanl17_detach_passive_observer_administration_20261008_a1_r2.py
+@@ -194,7 +194,10 @@
+   so_fd=os.open(folder/'observer.stdout',os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+   se_fd=os.open(folder/'observer.stderr',os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+   with os.fdopen(so_fd,'wb') as so,os.fdopen(se_fd,'wb') as se:
++   state['state']='observer_launch_started'
++   state['owned_child_liveness_or_descendants_are_NOT_inferred_clear']=True
+    child=subprocess.Popen(argv,stdin=subprocess.DEVNULL,stdout=so,stderr=se,cwd=BASE,env=ENV,start_new_session=True)
++   state['state']='observer_running'
+    state['observer_pid']=child.pid
+    try: code=child.wait(timeout=1275)
+    except subprocess.TimeoutExpired:

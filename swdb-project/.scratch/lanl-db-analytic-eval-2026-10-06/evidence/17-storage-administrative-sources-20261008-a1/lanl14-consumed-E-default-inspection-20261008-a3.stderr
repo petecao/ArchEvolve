@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "<stdin>", line 278, in main
+  File "/usr/lib/python3.12/pathlib.py", line 1058, in iterdir
+    for name in os.listdir(self):
+                ^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/proc/2190021/fd'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<stdin>", line 303, in <module>
+  File "<stdin>", line 289, in main
+ValueError: inaccessible relevant owned consumer

@@ -1,0 +1,634 @@
+kind: profile
+schema_version: '0.2'
+id: gapbs-cc-afforest.kron-g16-k16.mbit10.20260922t221241z
+status: draft
+deprecated_by: null
+created: '2026-09-22'
+updated: '2026-09-22'
+provenance:
+- id: run
+  kind: measurement
+  description: swdb profile run gapbs-cc-afforest.kron-g16-k16.mbit10.20260922t221241z on mbit10, started
+    2026-09-22T22:12:41Z (UTC).
+  uri: null
+implementation: gapbs-cc-afforest
+input: kron-g16-k16
+machine: mbit10
+complete: true
+build:
+  compiler: g++
+  compiler_version: g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+  flags: -std=c++11 -O3 -Wall -fopenmp
+  command: g++ -std=c++11 -O3 -Wall -fopenmp /data1/yanruj/EvolveSWDB/apps/gapbs/src/cc.cc -o /data/yanruj/EvolveSWDB_runs/gapbs-cc-afforest.kron-g16-k16.mbit10.20260922t221241z/bin/gapbs-cc-afforest
+  application_commit: 2972aeb2703165bafd921222f4ed7196f542d3a8
+  swdb_commit: c55aaeed140704d2f323f57e1cf5e8243599d7e2
+  swdb_dirty: true
+environment:
+  host: mbit10
+  binding: OMP_PLACES=cores OMP_PROC_BIND=close; cpus 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31 33 35
+    37 39 41 43 45 47 49 51 53 55 57 59 61 63; memory nodes 1
+  omp_places: cores
+  omp_proc_bind: close
+  numactl_show: "policy: bind\npreferred node: 1\nphyscpubind: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29\
+    \ 31 33 35 37 39 41 43 45 47 49 51 53 55 57 59 61 63 \ncpubind: 1 \nnodebind: 1 \nmembind: 1 \npreferred:\
+    \ 1"
+  lane: mbit10-evaluation-node1
+  load_1min: 1.28
+  users: [yanruj]
+  governor: null
+  no_turbo: null
+  started: '2026-09-22T22:12:41Z'
+  finished: '2026-09-22T22:12:51Z'
+runs_folder:
+  host: mbit10
+  path: /data/yanruj/EvolveSWDB_runs/gapbs-cc-afforest.kron-g16-k16.mbit10.20260922t221241z
+  note: 'raw output on /data: agreed 2026-09-22 with the GPU campaign holding node 0 (/data1 near its
+    20 GB floor)'
+parts:
+- part: build
+  outcome: complete
+  command: g++ -std=c++11 -O3 -Wall -fopenmp /data1/yanruj/EvolveSWDB/apps/gapbs/src/cc.cc -o /data/yanruj/EvolveSWDB_runs/gapbs-cc-afforest.kron-g16-k16.mbit10.20260922t221241z/bin/gapbs-cc-afforest
+  started: '2026-09-22T22:12:41Z'
+  finished: '2026-09-22T22:12:44Z'
+  timeout_s: 600
+  exit_code: 0
+  raw_files: [build.log]
+  note: null
+- part: correctness
+  outcome: complete
+  command: /data/yanruj/EvolveSWDB_runs/gapbs-cc-afforest.kron-g16-k16.mbit10.20260922t221241z/bin/gapbs-cc-afforest
+    -g 16 -k 16 -n 1 -v
+  started: '2026-09-22T22:12:44Z'
+  finished: '2026-09-22T22:12:44Z'
+  timeout_s: 1800
+  exit_code: 0
+  raw_files: [correctness.log]
+  note: pass_regex 'Verification:\\s+PASS' matched.
+- part: timing
+  outcome: complete
+  command: /data/yanruj/EvolveSWDB_runs/gapbs-cc-afforest.kron-g16-k16.mbit10.20260922t221241z/bin/gapbs-cc-afforest
+    -g 16 -k 16 -n 5
+  started: '2026-09-22T22:12:44Z'
+  finished: '2026-09-22T22:12:44Z'
+  timeout_s: 1800
+  exit_code: 0
+  raw_files: [timing-t1.log]
+  note: threads=1
+- part: timing
+  outcome: complete
+  command: /data/yanruj/EvolveSWDB_runs/gapbs-cc-afforest.kron-g16-k16.mbit10.20260922t221241z/bin/gapbs-cc-afforest
+    -g 16 -k 16 -n 5
+  started: '2026-09-22T22:12:44Z'
+  finished: '2026-09-22T22:12:45Z'
+  timeout_s: 1800
+  exit_code: 0
+  raw_files: [timing-t2.log]
+  note: threads=2
+- part: timing
+  outcome: complete
+  command: /data/yanruj/EvolveSWDB_runs/gapbs-cc-afforest.kron-g16-k16.mbit10.20260922t221241z/bin/gapbs-cc-afforest
+    -g 16 -k 16 -n 5
+  started: '2026-09-22T22:12:45Z'
+  finished: '2026-09-22T22:12:45Z'
+  timeout_s: 1800
+  exit_code: 0
+  raw_files: [timing-t4.log]
+  note: threads=4
+- part: timing
+  outcome: complete
+  command: /data/yanruj/EvolveSWDB_runs/gapbs-cc-afforest.kron-g16-k16.mbit10.20260922t221241z/bin/gapbs-cc-afforest
+    -g 16 -k 16 -n 5
+  started: '2026-09-22T22:12:45Z'
+  finished: '2026-09-22T22:12:45Z'
+  timeout_s: 1800
+  exit_code: 0
+  raw_files: [timing-t8.log]
+  note: threads=8
+- part: timing
+  outcome: complete
+  command: /data/yanruj/EvolveSWDB_runs/gapbs-cc-afforest.kron-g16-k16.mbit10.20260922t221241z/bin/gapbs-cc-afforest
+    -g 16 -k 16 -n 5
+  started: '2026-09-22T22:12:45Z'
+  finished: '2026-09-22T22:12:45Z'
+  timeout_s: 1800
+  exit_code: 0
+  raw_files: [timing-t16.log]
+  note: threads=16
+- part: cachegrind
+  outcome: complete
+  command: valgrind --tool=cachegrind --cache-sim=yes --cachegrind-out-file=/data/yanruj/EvolveSWDB_runs/gapbs-cc-afforest.kron-g16-k16.mbit10.20260922t221241z/cachegrind.out
+    /data/yanruj/EvolveSWDB_runs/gapbs-cc-afforest.kron-g16-k16.mbit10.20260922t221241z/bin/gapbs-cc-afforest-g
+    -g 16 -k 16 -n 1
+  started: '2026-09-22T22:12:48Z'
+  finished: '2026-09-22T22:12:51Z'
+  timeout_s: 3600
+  exit_code: 0
+  raw_files: [cachegrind-build.log, cachegrind.log, cachegrind.out]
+  note: 'simulated caches: I1 cache:         32768 B, 64 B, 8-way associative; D1 cache:         49152
+    B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative; kernel functions:
+    Afforest(CSRGraph<int, int, true> const&, bool, int) [clone ._omp_fn.0], Afforest(CSRGraph<int, int,
+    true> const&, bool, int) [clone ._omp_fn.1], Afforest(CSRGraph<int, int, true> const&, bool, int)
+    [clone ._omp_fn.2], Compress(CSRGraph<int, int, true> const&, pvector<int>&) [clone ._omp_fn.0], Link(int,
+    int, pvector<int>&), SampleFrequentElement(pvector<int> const&, bool, long) [clone .constprop.0]'
+timing:
+- threads: 1
+  trials: 5
+  times_s: [0.00327, 0.00319, 0.00319, 0.00318, 0.00318]
+  median_s: 0.00319
+  min_s: 0.00318
+  max_s: 0.00327
+  spread: 0.028213166144200563
+  command: /data/yanruj/EvolveSWDB_runs/gapbs-cc-afforest.kron-g16-k16.mbit10.20260922t221241z/bin/gapbs-cc-afforest
+    -g 16 -k 16 -n 5
+- threads: 2
+  trials: 5
+  times_s: [0.00231, 0.00223, 0.00224, 0.00222, 0.00222]
+  median_s: 0.00223
+  min_s: 0.00222
+  max_s: 0.00231
+  spread: 0.04035874439461874
+  command: /data/yanruj/EvolveSWDB_runs/gapbs-cc-afforest.kron-g16-k16.mbit10.20260922t221241z/bin/gapbs-cc-afforest
+    -g 16 -k 16 -n 5
+- threads: 4
+  trials: 5
+  times_s: [0.0014, 0.00143, 0.00131, 0.00129, 0.0013]
+  median_s: 0.00131
+  min_s: 0.00129
+  max_s: 0.00143
+  spread: 0.10687022900763371
+  command: /data/yanruj/EvolveSWDB_runs/gapbs-cc-afforest.kron-g16-k16.mbit10.20260922t221241z/bin/gapbs-cc-afforest
+    -g 16 -k 16 -n 5
+- threads: 8
+  trials: 5
+  times_s: [0.00142, 0.00137, 0.00127, 0.0013, 0.00127]
+  median_s: 0.0013
+  min_s: 0.00127
+  max_s: 0.00142
+  spread: 0.11538461538461536
+  command: /data/yanruj/EvolveSWDB_runs/gapbs-cc-afforest.kron-g16-k16.mbit10.20260922t221241z/bin/gapbs-cc-afforest
+    -g 16 -k 16 -n 5
+- threads: 16
+  trials: 5
+  times_s: [0.00126, 0.00126, 0.00116, 0.00119, 0.00117]
+  median_s: 0.00119
+  min_s: 0.00116
+  max_s: 0.00126
+  spread: 0.08403361344537819
+  command: /data/yanruj/EvolveSWDB_runs/gapbs-cc-afforest.kron-g16-k16.mbit10.20260922t221241z/bin/gapbs-cc-afforest
+    -g 16 -k 16 -n 5
+counts:
+  repetitions:
+    value: 5
+    formula: null
+    scope: per_run
+    basis: measured
+    evidence_refs: [run]
+    note: timed trials per process (-n), one kernel call each; Trial Time lines parsed
+  trips_init:
+    value: 65536
+    formula: null
+    scope: per_call
+    basis: inferred
+    evidence_refs: [run]
+    note: trip count of loop init (num_nodes) evaluated on the input
+  trips_sample-vertex:
+    value: 65536
+    formula: null
+    scope: per_sweep
+    basis: inferred
+    evidence_refs: [run]
+    note: trip count of loop sample-vertex (num_nodes) evaluated on the input
+  trips_final-vertex:
+    value: 65536
+    formula: null
+    scope: per_call
+    basis: inferred
+    evidence_refs: [run]
+    note: trip count of loop final-vertex (num_nodes) evaluated on the input
+  trips_compress-vertex:
+    value: 196608
+    formula: null
+    scope: per_call
+    basis: inferred
+    evidence_refs: [run]
+    note: trip count of loop compress-vertex (3 * num_nodes) evaluated on the input
+metrics:
+- name: host_load_1min
+  value: 1.28
+  unit: load
+  basis: measured
+  note: os.getloadavg() at start
+  evidence_refs: [run]
+- name: time_per_trial_median
+  value: 0.00319
+  unit: s
+  basis: measured
+  threads: 1
+  scope: per_trial
+  tool: benchmark timer
+  note: over 5 trials
+  evidence_refs: [run]
+- name: time_per_trial_min
+  value: 0.00318
+  unit: s
+  basis: measured
+  threads: 1
+  scope: per_trial
+  tool: benchmark timer
+  note: over 5 trials
+  evidence_refs: [run]
+- name: time_per_trial_max
+  value: 0.00327
+  unit: s
+  basis: measured
+  threads: 1
+  scope: per_trial
+  tool: benchmark timer
+  note: over 5 trials
+  evidence_refs: [run]
+- name: time_per_trial_spread
+  value: 0.028213
+  unit: ratio
+  basis: measured
+  threads: 1
+  scope: per_trial
+  evidence_refs: [run]
+- name: speedup
+  value: 1.0
+  unit: ratio
+  basis: measured
+  threads: 1
+  evidence_refs: [run]
+- name: parallel_efficiency
+  value: 1.0
+  unit: ratio
+  basis: measured
+  threads: 1
+  evidence_refs: [run]
+- name: time_per_trial_median
+  value: 0.00223
+  unit: s
+  basis: measured
+  threads: 2
+  scope: per_trial
+  tool: benchmark timer
+  note: over 5 trials
+  evidence_refs: [run]
+- name: time_per_trial_min
+  value: 0.00222
+  unit: s
+  basis: measured
+  threads: 2
+  scope: per_trial
+  tool: benchmark timer
+  note: over 5 trials
+  evidence_refs: [run]
+- name: time_per_trial_max
+  value: 0.00231
+  unit: s
+  basis: measured
+  threads: 2
+  scope: per_trial
+  tool: benchmark timer
+  note: over 5 trials
+  evidence_refs: [run]
+- name: time_per_trial_spread
+  value: 0.040359
+  unit: ratio
+  basis: measured
+  threads: 2
+  scope: per_trial
+  evidence_refs: [run]
+- name: speedup
+  value: 1.430493
+  unit: ratio
+  basis: measured
+  threads: 2
+  evidence_refs: [run]
+- name: parallel_efficiency
+  value: 0.715247
+  unit: ratio
+  basis: measured
+  threads: 2
+  evidence_refs: [run]
+- name: time_per_trial_median
+  value: 0.00131
+  unit: s
+  basis: measured
+  threads: 4
+  scope: per_trial
+  tool: benchmark timer
+  note: over 5 trials
+  evidence_refs: [run]
+- name: time_per_trial_min
+  value: 0.00129
+  unit: s
+  basis: measured
+  threads: 4
+  scope: per_trial
+  tool: benchmark timer
+  note: over 5 trials
+  evidence_refs: [run]
+- name: time_per_trial_max
+  value: 0.00143
+  unit: s
+  basis: measured
+  threads: 4
+  scope: per_trial
+  tool: benchmark timer
+  note: over 5 trials
+  evidence_refs: [run]
+- name: time_per_trial_spread
+  value: 0.10687
+  unit: ratio
+  basis: measured
+  threads: 4
+  scope: per_trial
+  evidence_refs: [run]
+- name: speedup
+  value: 2.435115
+  unit: ratio
+  basis: measured
+  threads: 4
+  evidence_refs: [run]
+- name: parallel_efficiency
+  value: 0.608779
+  unit: ratio
+  basis: measured
+  threads: 4
+  evidence_refs: [run]
+- name: time_per_trial_median
+  value: 0.0013
+  unit: s
+  basis: measured
+  threads: 8
+  scope: per_trial
+  tool: benchmark timer
+  note: over 5 trials
+  evidence_refs: [run]
+- name: time_per_trial_min
+  value: 0.00127
+  unit: s
+  basis: measured
+  threads: 8
+  scope: per_trial
+  tool: benchmark timer
+  note: over 5 trials
+  evidence_refs: [run]
+- name: time_per_trial_max
+  value: 0.00142
+  unit: s
+  basis: measured
+  threads: 8
+  scope: per_trial
+  tool: benchmark timer
+  note: over 5 trials
+  evidence_refs: [run]
+- name: time_per_trial_spread
+  value: 0.115385
+  unit: ratio
+  basis: measured
+  threads: 8
+  scope: per_trial
+  evidence_refs: [run]
+- name: speedup
+  value: 2.453846
+  unit: ratio
+  basis: measured
+  threads: 8
+  evidence_refs: [run]
+- name: parallel_efficiency
+  value: 0.306731
+  unit: ratio
+  basis: measured
+  threads: 8
+  evidence_refs: [run]
+- name: time_per_trial_median
+  value: 0.00119
+  unit: s
+  basis: measured
+  threads: 16
+  scope: per_trial
+  tool: benchmark timer
+  note: over 5 trials
+  evidence_refs: [run]
+- name: time_per_trial_min
+  value: 0.00116
+  unit: s
+  basis: measured
+  threads: 16
+  scope: per_trial
+  tool: benchmark timer
+  note: over 5 trials
+  evidence_refs: [run]
+- name: time_per_trial_max
+  value: 0.00126
+  unit: s
+  basis: measured
+  threads: 16
+  scope: per_trial
+  tool: benchmark timer
+  note: over 5 trials
+  evidence_refs: [run]
+- name: time_per_trial_spread
+  value: 0.084034
+  unit: ratio
+  basis: measured
+  threads: 16
+  scope: per_trial
+  evidence_refs: [run]
+- name: speedup
+  value: 2.680672
+  unit: ratio
+  basis: measured
+  threads: 16
+  evidence_refs: [run]
+- name: parallel_efficiency
+  value: 0.167542
+  unit: ratio
+  basis: measured
+  threads: 16
+  evidence_refs: [run]
+- name: footprint_bytes
+  value: 262144
+  unit: B
+  basis: inferred
+  array: comp
+  note: 4 B x (num_nodes = 65536); used only by a conditional access pattern
+  evidence_refs: [run]
+- name: footprint_bytes
+  value: 524296
+  unit: B
+  basis: inferred
+  array: g.out_index_
+  note: 8 B x (num_nodes + 1 = 65537)
+  evidence_refs: [run]
+- name: footprint_bytes
+  value: 7277168
+  unit: B
+  basis: inferred
+  array: g.out_neighbors_
+  note: 4 B x (num_edges_directed = 1819292)
+  evidence_refs: [run]
+- name: footprint_bytes
+  value: 524296
+  unit: B
+  basis: inferred
+  array: g.in_index_
+  note: 8 B x (num_nodes + 1 = 65537); the same memory as g.out_index_ on this undirected input, counted
+    once; used only by a conditional access pattern
+  evidence_refs: [run]
+- name: footprint_bytes
+  value: 7277168
+  unit: B
+  basis: inferred
+  array: g.in_neighbors_
+  note: 4 B x (num_edges_directed = 1819292); the same memory as g.out_neighbors_ on this undirected input,
+    counted once; used only by a conditional access pattern
+  evidence_refs: [run]
+- name: total_footprint_bytes
+  value: 8063608
+  unit: B
+  basis: inferred
+  note: sum over distinct arrays of the implementation's access patterns; includes arrays used only conditionally
+    (comp, g.in_index_, g.in_neighbors_)
+  evidence_refs: [run]
+- name: footprint_llc_ratio
+  value: 0.320419
+  unit: ratio
+  basis: inferred
+  note: 'last-level cache of one socket: 25165824 B'
+  evidence_refs: [run]
+- name: sim_instructions
+  value: 8418756
+  unit: count
+  basis: simulated
+  threads: 1
+  scope: per_call
+  tool: cachegrind --cache-sim=yes
+  note: 'kernel functions only (one call); I1 cache:         32768 B, 64 B, 8-way associative; D1 cache:         49152
+    B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative'
+  evidence_refs: [run]
+- name: sim_data_refs
+  value: 2244576
+  unit: count
+  basis: simulated
+  threads: 1
+  scope: per_call
+  tool: cachegrind --cache-sim=yes
+  note: 'kernel functions only (one call); I1 cache:         32768 B, 64 B, 8-way associative; D1 cache:         49152
+    B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative'
+  evidence_refs: [run]
+- name: sim_d1_misses
+  value: 152495
+  unit: count
+  basis: simulated
+  threads: 1
+  scope: per_call
+  tool: cachegrind --cache-sim=yes
+  note: 'kernel functions only (one call); I1 cache:         32768 B, 64 B, 8-way associative; D1 cache:         49152
+    B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative'
+  evidence_refs: [run]
+- name: sim_ll_misses
+  value: 1
+  unit: count
+  basis: simulated
+  threads: 1
+  scope: per_call
+  tool: cachegrind --cache-sim=yes
+  note: 'kernel functions only (one call); I1 cache:         32768 B, 64 B, 8-way associative; D1 cache:         49152
+    B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative'
+  evidence_refs: [run]
+- name: sim_d1_miss_rate
+  value: 0.067939
+  unit: ratio
+  basis: simulated
+  threads: 1
+  scope: per_call
+  tool: cachegrind --cache-sim=yes
+  note: 'kernel functions only (one call); I1 cache:         32768 B, 64 B, 8-way associative; D1 cache:         49152
+    B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative'
+  evidence_refs: [run]
+- name: sim_ll_miss_rate
+  value: 0.0
+  unit: ratio
+  basis: simulated
+  threads: 1
+  scope: per_call
+  tool: cachegrind --cache-sim=yes
+  note: 'kernel functions only (one call); I1 cache:         32768 B, 64 B, 8-way associative; D1 cache:         49152
+    B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative'
+  evidence_refs: [run]
+- name: sim_instructions
+  value: 925142798
+  unit: count
+  basis: simulated
+  threads: 1
+  scope: per_run
+  tool: cachegrind --cache-sim=yes
+  note: 'whole run, including graph generation and building; I1 cache:         32768 B, 64 B, 8-way associative;
+    D1 cache:         49152 B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative'
+  evidence_refs: [run]
+- name: sim_data_refs
+  value: 165755493
+  unit: count
+  basis: simulated
+  threads: 1
+  scope: per_run
+  tool: cachegrind --cache-sim=yes
+  note: 'whole run, including graph generation and building; I1 cache:         32768 B, 64 B, 8-way associative;
+    D1 cache:         49152 B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative'
+  evidence_refs: [run]
+- name: sim_d1_misses
+  value: 7124338
+  unit: count
+  basis: simulated
+  threads: 1
+  scope: per_run
+  tool: cachegrind --cache-sim=yes
+  note: 'whole run, including graph generation and building; I1 cache:         32768 B, 64 B, 8-way associative;
+    D1 cache:         49152 B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative'
+  evidence_refs: [run]
+- name: sim_ll_misses
+  value: 413382
+  unit: count
+  basis: simulated
+  threads: 1
+  scope: per_run
+  tool: cachegrind --cache-sim=yes
+  note: 'whole run, including graph generation and building; I1 cache:         32768 B, 64 B, 8-way associative;
+    D1 cache:         49152 B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative'
+  evidence_refs: [run]
+- name: sim_d1_miss_rate
+  value: 0.042981
+  unit: ratio
+  basis: simulated
+  threads: 1
+  scope: per_run
+  tool: cachegrind --cache-sim=yes
+  note: 'whole run, including graph generation and building; I1 cache:         32768 B, 64 B, 8-way associative;
+    D1 cache:         49152 B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative'
+  evidence_refs: [run]
+- name: sim_ll_miss_rate
+  value: 0.002494
+  unit: ratio
+  basis: simulated
+  threads: 1
+  scope: per_run
+  tool: cachegrind --cache-sim=yes
+  note: 'whole run, including graph generation and building; I1 cache:         32768 B, 64 B, 8-way associative;
+    D1 cache:         49152 B, 64 B, 12-way associative; LL cache:         25165824 B, 64 B, 12-way associative'
+  evidence_refs: [run]
+bottleneck:
+  value: parallelism_bound
+  basis: inferred
+  memory_limit: null
+  rests_on: [total_footprint_bytes, footprint_llc_ratio, parallel_efficiency, sim_ll_miss_rate]
+  evidence_refs: [run]
+  note: 'Counter-free rule (swdb/profile.py _bottleneck, thresholds efficiency 0.5, LL miss rate 0.01):
+    footprint 8063608 B vs LLC 25165824 B (0.32x); parallel efficiency at 16 threads 0.17; simulated kernel
+    LL miss rate 0.0000. Not a counter-based verdict.'
+notes:
+- Raw output is in /data/yanruj/EvolveSWDB_runs/gapbs-cc-afforest.kron-g16-k16.mbit10.20260922t221241z
+  on mbit10; it is not in git.
+extensions: {}

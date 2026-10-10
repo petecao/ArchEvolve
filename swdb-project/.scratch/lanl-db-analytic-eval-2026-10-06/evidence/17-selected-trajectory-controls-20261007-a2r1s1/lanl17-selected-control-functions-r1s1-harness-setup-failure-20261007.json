@@ -1,0 +1,26 @@
+{
+  "format": "swdb.lanl17-synthetic-harness-setup-failure.v1",
+  "scope": "Unsealed local harness-failure custody, not a campaign/scientific/control admission receipt.",
+  "original_failed_source": {
+    "path": "/private/tmp/lanl17-test-selected-control-functions-r1s1-setup-failed-20261007.py",
+    "sha256": "fb0623e3925f7084ac20cf61202a87124d00fa77202a80f7570246ac3df429e2"
+  },
+  "tool_process_exit_code": 1,
+  "failure_stage": "isolated_namespace constant extraction before any synthetic regression case",
+  "sanitized_error": "ast.literal_eval rejected the MAX_BYTES=32*1024*1024 BinOp on source line 14",
+  "error_text_scope": "Normalized description of the returned tool traceback; no raw-log or original traceback-file claim.",
+  "synthetic_cases_executed": 0,
+  "published_regression_output": false,
+  "prepared_module_or_main_imports": 0,
+  "actual_campaign_or_dependency_inputs_read": 0,
+  "prepared_sources_changed": false,
+  "repair": "AST-extract the exact constants after rejecting call/name/attribute/subscript RHS nodes; execute the single meaningful synthetic batch once.",
+  "successful_source_sha256": "040c15fb60a449358b27c4ef7ac055e2bb06bd8c3dad738d2101484fffab59f3",
+  "successful_output": {
+    "path": "/private/tmp/lanl17-selected-control-functions-r1s1-synthetic-regression-20261007.json",
+    "sha256": "f507e1c05f7333aed8968e9f4cd9ebd8e32ccdd29fb47f706049b09fdddced54",
+    "identity_sha256": "331ae34ec1510378c791d23648087729518ba68a2dd25b5be34676610b5ba62f",
+    "cases": 18,
+    "actual_admission": false
+  }
+}

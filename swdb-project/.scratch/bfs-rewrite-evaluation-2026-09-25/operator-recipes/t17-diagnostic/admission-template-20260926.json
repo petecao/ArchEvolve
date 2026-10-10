@@ -1,0 +1,25 @@
+{
+  "format": "swdb.bfs.t17-diagnostic-build-admission-template.v1",
+  "created": "2026-09-26",
+  "state": "UNRESOLVED_TEMPLATE_NOT_AN_ADMISSION",
+  "write_final_only_to": "/data/yanruj/EvolveSWDB_runs/bfs-t17-diagnostic-build-only-20260926-a1.dispatch/admission.json",
+  "admission": {
+    "format": "swdb.bfs.t17-diagnostic-build-admission.v1",
+    "id": "bfs-t17-diagnostic-build-only-20260926-a1",
+    "request_sha256": "272def5a75dd974d8fa46b3ccdd56016ea1ddf0f2af545990fc02cc25405e5c1",
+    "code_commit": null,
+    "runtime": null,
+    "node": null,
+    "prepared_at": null,
+    "record_view": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-diagnostic-build-only-20260926-a1.dispatch/record-view-manifest.json",
+      "sha256": null
+    },
+    "linux_proof": {
+      "path": null,
+      "sha256": null
+    }
+  },
+  "note": "Resolve actual references and write only the inner admission after checks; do not pass this template to the driver.",
+  "updated": "2026-09-27"
+}

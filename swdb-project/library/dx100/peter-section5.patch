@@ -1,0 +1,205 @@
+--- a/benchmarks/gapbs/src/bfs.cc
++++ b/benchmarks/gapbs/src/bfs.cc
+@@ -32,6 +32,7 @@
+ #include "MAA_gem5_magic.hpp"
+ #endif
+ #include <MAA_utility.hpp>
++#include "swdb_dxc_lowering.hpp"
+ 
+ /*
+ GAP Benchmark Suite
+@@ -61,37 +62,76 @@
+ using namespace std;
+ 
+ 
++// Peter section 5 read offload, fixes E1-E5. Updated: 2026-10-03 ET.
++static dxc_context swdb_contexts[NUM_CORES];
++static bool swdb_acceleration_enabled = false;
++#ifndef SWDB_FRONTIER_THRESHOLD
++#define SWDB_FRONTIER_THRESHOLD 64
++#endif
++#ifndef SWDB_CHUNK_SIZE
++#define SWDB_CHUNK_SIZE TILE_SIZE
++#endif
++static_assert(SWDB_CHUNK_SIZE > 0 && SWDB_CHUNK_SIZE <= TILE_SIZE, "chunk capacity");
+ void TDStep(const Graph &g, pvector<SGOffset> &VertexOffsets, pvector<NodeID> &parent, SlidingQueue<NodeID> &queue, int num_nodes, int num_edges) {
+ #ifdef GEM5
+-    clear_mem_region();
+-    add_mem_region(queue.beginp(), queue.endp());                   // 6
+-    add_mem_region(VertexOffsets.beginp(), VertexOffsets.endp());   // 7
+-    add_mem_region(g.out_neighbors_, &g.out_neighbors_[num_edges]); // 8
+-    add_mem_region(parent.beginp(), parent.endp());                 // 9
++ clear_mem_region();
++ add_mem_region(queue.beginp(), queue.endp());
++ add_mem_region(VertexOffsets.beginp(), VertexOffsets.endp());
++ add_mem_region(g.out_neighbors_, &g.out_neighbors_[num_edges]);
++ add_mem_region(parent.beginp(), parent.endp());
+ #endif
+ #pragma omp parallel
+-    {
+-        QueueBuffer<NodeID> lqueue(queue);
++ {
++  QueueBuffer<NodeID> lqueue(queue);
++  const bool accelerate=swdb_acceleration_enabled&&queue.size()>=SWDB_FRONTIER_THRESHOLD;
++  if(accelerate){
++   dxc_context c=swdb_contexts[omp_get_thread_num()];
++   __dxc_const_i32(1,c.reg[2]);__dxc_const_i32(0,c.reg[3]);
++#pragma omp for schedule(dynamic,1)
++   for(size_t begin=queue.shared_out_start;begin<queue.shared_out_end;begin+=SWDB_CHUNK_SIZE){
++    const size_t end=std::min(begin+size_t(SWDB_CHUNK_SIZE),size_t(queue.shared_out_end));
++    __dxc_const_i32(begin,c.reg[0]);__dxc_const_i32(end,c.reg[1]);
++    __dxc_stream_load(queue.shared,c.reg[0],c.reg[1],c.reg[2],c.tile[0]);
++    __dxc_gather(VertexOffsets.data(),c.tile[0],c.tile[1]);
++    __dxc_gather(VertexOffsets.data()+1,c.tile[0],c.tile[2]);
++    __dxc_const_i32(0,c.reg[4]);__dxc_const_i32(-1,c.reg[5]);
++    __dxc_accelerated_chunk();
++    for(;;){
++     __dxc_range_loop(c.reg[4],c.reg[5],c.tile[1],c.tile[2],c.reg[2],c.tile[6],c.tile[7]);
++     __dxc_wait(c.tile[7]);
++     const unsigned count=__dxc_tile_size(c.tile[7]);if(count==0)break;
++     __dxc_gather(g.out_neighbors_,c.tile[7],c.tile[0]);
++     __dxc_gather(queue.shared+begin,c.tile[6],c.tile[3]);
++     __dxc_gather(parent.data(),c.tile[0],c.tile[5]);
++     __dxc_wait(c.tile[3]);__dxc_wait(c.tile[5]);
++     int*vertices=__dxc_tile_pointer<int>(c.tile[0]);int*frontier=__dxc_tile_pointer<int>(c.tile[3]);
++     int*hints=__dxc_tile_pointer<int>(c.tile[5]);
++     for(unsigned k=0;k<count;++k){
++      const NodeID v=vertices[k],u=frontier[k];const NodeID hint=hints[k];
++      const bool claimed=hint<0&&compare_and_swap(parent[v],hint,u);
++#ifdef SWDB_DXC_DIAGNOSTIC
++       const int fresh=__atomic_load_n(&parent[v],__ATOMIC_RELAXED);
++       const int degree=g.out_degree(v);
++       __dxc_cas_probe(v,hint,claimed,degree?-degree:-1,fresh,num_nodes);
++#endif
++      if(claimed){parent[v]=u;lqueue.push_back(v);}
++     }
++    }
++   }
++  }else{
+ #pragma omp for nowait
+-        for (size_t i = queue.shared_out_start; i < queue.shared_out_end; i++) {
+-            NodeID u = queue.shared[i];
+-            for (int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++) {
+-                NodeID v = g.out_neighbors_[j];
+-                NodeID curr_val = parent[v];
+-                if (curr_val < 0) {
+-                    // indirect write (parent, v_tile, u_tile)
+-                    // core fetch v tile
+-                    if (compare_and_swap(parent[v], curr_val, u)) {
+-                        parent[v] = u;
+-                        lqueue.push_back(v);
+-                    }
+-                }
+-            }
+-        }
+-        lqueue.flush();
+-    }
+-#ifdef GEM5
+-    clear_mem_region();
++   for(size_t i=queue.shared_out_start;i<queue.shared_out_end;++i){
++    const NodeID u=queue.shared[i];
++    for(int j=VertexOffsets[u];j<VertexOffsets[u+1];++j){
++     const NodeID v=g.out_neighbors_[j],value=__atomic_load_n(&parent[v],__ATOMIC_RELAXED);
++     if(value<0&&compare_and_swap(parent[v],value,u)){parent[v]=u;lqueue.push_back(v);}
++    }
++   }
++  }
++  lqueue.flush();
++ }
++#ifdef GEM5
++ clear_mem_region();
+ #endif
+ }
+ 
+@@ -158,6 +198,15 @@
+     Timer t;
+     alloc_MAA();
+     init_MAA();
++    // E3: guards and setup run once per BFS call after the existing allocation.
++    swdb_dxc::chunks() = 0; swdb_dxc::races() = 0; swdb_dxc::violations() = 0;
++    swdb_acceleration_enabled = uint64_t(g.num_nodes()) <= UINT64_C(1073741823) &&
++        uint64_t(g.num_edges_directed()) <= UINT64_C(1073741823) && omp_get_max_threads() <= NUM_CORES;
++    if (swdb_acceleration_enabled) {
++        __dxc_session_begin();
++#pragma omp parallel
++        { swdb_contexts[omp_get_thread_num()] = __dxc_thread_context(); }
++    }
+     t.Start();
+     pvector<NodeID> parent = InitParent(g);
+     t.Stop();
+@@ -197,6 +246,7 @@
+     std::cout << "ROI End!!!" << std::endl;
+     m5_exit(0);
+ #endif
++    __dxc_report();
+     return parent;
+ }
+ 
+--- /dev/null
++++ b/benchmarks/gapbs/src/swdb_dxc_lowering.hpp
+@@ -0,0 +1,65 @@
++// DX100 intrinsic lowerings, hardware interface 1.0-e4fc4af. Updated: 2026-10-03 ET.
++#pragma once
++#include <atomic>
++#include <cassert>
++#include <cstdint>
++#include <cstdio>
++#include <omp.h>
++#if defined(FUNC)
++#include <MAA_functional.hpp>
++#else
++#include <MAA_gem5.hpp>
++#endif
++static_assert(TILE_SIZE > 0 && TILE_SIZE <= 65535, "DX100 uint16 tile-size field");
++struct dxc_context { int tile[8], reg[8]; };
++namespace swdb_dxc {
++inline bool &session(){static bool value=false;return value;}
++inline std::atomic<uint64_t>&chunks(){static std::atomic<uint64_t>v(0);return v;}
++inline std::atomic<uint64_t>&races(){static std::atomic<uint64_t>v(0);return v;}
++inline std::atomic<uint64_t>&violations(){static std::atomic<uint64_t>v(0);return v;}
++}
++inline void __dxc_session_begin(){
++#ifdef SWDB_STRICT
++ swdb_strict::session_begin();
++#endif
++ swdb_dxc::session()=true;swdb_dxc::chunks()=0;swdb_dxc::races()=0;swdb_dxc::violations()=0;
++}
++inline dxc_context __dxc_thread_context(){
++#ifdef SWDB_STRICT
++ swdb_strict::check(swdb_dxc::session(),"session_required");
++ swdb_strict::check(omp_get_num_threads()<=NUM_CORES,"thread_count");
++#else
++ assert(swdb_dxc::session()&&omp_get_num_threads()<=NUM_CORES);
++#endif
++ dxc_context c;
++#pragma omp critical(swdb_dxc_allocate)
++ {for(int i=0;i<8;++i)c.tile[i]=get_new_tile<int>();for(int i=0;i<8;++i)c.reg[i]=get_new_reg<int>();}
++ return c;
++}
++inline void __dxc_const_i32(int32_t value,int reg){maa_const<int>(value,reg);}
++inline void __dxc_wait(int tile){wait_ready(tile);std::atomic_thread_fence(std::memory_order_seq_cst);asm volatile("" ::: "memory");}
++template<class T>inline void __dxc_gather(T*base,int index,int dst){maa_indirect_load<T>(base,index,dst);}
++template<class T>inline void __dxc_stream_load(T*base,int minimum,int maximum,int stride,int dst){maa_stream_load<T>(base,minimum,maximum,stride,dst);}
++inline void __dxc_range_loop(int last_i,int last_j,int lower,int upper,int stride,int rows,int columns){maa_range_loop<int>(last_i,last_j,lower,upper,stride,rows,columns);}
++inline uint16_t __dxc_tile_size(int tile){return get_tile_size(tile);}
++template<class T>inline T*__dxc_tile_pointer(int tile){
++#ifdef SWDB_STRICT
++ swdb_strict::check(get_tile_ready(tile)!=0,"read_before_wait");
++#endif
++ return get_cacheable_tile_pointer<T>(tile);
++}
++inline void __dxc_alu_scalar(int src,int reg,int dst,Operation_t op){maa_alu_scalar<int>(src,reg,dst,op);}
++inline void __dxc_accelerated_chunk(){++swdb_dxc::chunks();}
++inline void __dxc_cas_probe(int vertex,int hint,bool success,int initial,int fresh,int vertex_count=INT32_MAX){
++#ifdef SWDB_DXC_DIAGNOSTIC
++ if(!success&&hint<0)++swdb_dxc::races();
++ if((hint<0&&hint!=initial&&hint!=-1)||(hint>=0&&(hint>=vertex_count||fresh<0)))++swdb_dxc::violations();
++#else
++ (void)vertex;(void)hint;(void)success;(void)initial;(void)fresh;(void)vertex_count;
++#endif
++}
++inline void __dxc_report(){std::printf("SWDB accelerated_chunks=%llu\n",(unsigned long long)swdb_dxc::chunks().load());
++#ifdef SWDB_DXC_DIAGNOSTIC
++ std::printf("SWDB cas_fail_negative_hint=%llu l3_violations=%llu\n",(unsigned long long)swdb_dxc::races().load(),(unsigned long long)swdb_dxc::violations().load());
++#endif
++}

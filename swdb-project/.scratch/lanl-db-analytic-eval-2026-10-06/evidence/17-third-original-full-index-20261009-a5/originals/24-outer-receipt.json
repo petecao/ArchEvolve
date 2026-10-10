@@ -1,0 +1,143 @@
+{
+  "format": "swdb.lanl17-original-index-writer-private-outer-capture.v1",
+  "canonical_ensure_ascii": true,
+  "started_utc": "2026-10-09T18:58:39.832438+00:00",
+  "ended_utc": "2026-10-09T18:58:46.311739+00:00",
+  "elapsed_metadata_s": 6.479300739243627,
+  "state": "envelope_returned",
+  "capture_exit": 0,
+  "captured_GNU_envelope_exit": 0,
+  "received_signal": null,
+  "failure_class": null,
+  "failure_message_sha256": null,
+  "capture_source_pin": {
+    "path": "/data1/yanruj/lanl17-index-private-outer-source-20261007-a1/outer_capture.py",
+    "bytes": 34658,
+    "sha256": "59c06dd5ea606414827a85d6e27f4aff1bc381827624590b2449415198399544"
+  },
+  "envelope_source_pin": {
+    "path": "/data1/yanruj/lanl17-index-privacy-source-20261007-a1/envelope.py",
+    "bytes": 38790,
+    "sha256": "1ee5ffbdf1ef322cfd5bfec4b6e402c29d23c776e855f01d25208ebbece0fcfc"
+  },
+  "writer_source_pin": {
+    "path": "/data1/yanruj/lanl17-index-source-20261007-a1/writer.py",
+    "bytes": 33445,
+    "sha256": "7a67d46f8ad7d453fe07bd458a21f663bd4dc7ec12e71de83ad8b5caaf28894b"
+  },
+  "author_source_pin": {
+    "path": "/data1/yanruj/lanl17-input-author-source-20261007-a1/index_request_author.py",
+    "bytes": 38266,
+    "sha256": "a2e69aef10deb6186ac49401516ffba9a165b2f3cc94c8001646b6ac9a5b701d"
+  },
+  "request_pin": {
+    "path": "/data1/yanruj/lanl17-p3-full-index-author-20261009-a5-a1/index-request.json",
+    "bytes": 41431,
+    "sha256": "5285050feeabe98027fccbaf502ab99331dee0b82c8d7df0903d7ea4b927410c"
+  },
+  "parent_review_sha256": "97d951d65b0e987e33f0a3401fc47f79ca30695d829284256ed423d3eeb28b09",
+  "M2_pin": {
+    "path": "/data/yanruj/EvolveSWDB_runs/lanl17-actual-campaigns-20261007-a5/manifest.json",
+    "bytes": 292401,
+    "sha256": "b86d78bac1d0a09e176114d1c23491ede098c4fcf5af5ab96f318ceabc29b8d1",
+    "identity_sha256": "66194a7e99716f5b59ddf081dfec752c34b51f1805470a4514171c53323b06c7"
+  },
+  "cleanup_source_pin": {
+    "path": "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py",
+    "bytes": 38195,
+    "sha256": "28d116bede7ab1232a42d24a24565a8ff1db36fca0ce36a2835012db77e2c414"
+  },
+  "processes_source_pin": {
+    "path": "/data1/yanruj/ArchEvolve-lanl17-source-20261007-a5/swdb-project/swdb/processes.py",
+    "bytes": 912,
+    "sha256": "bcc9ccdc9979a8da416c2c723e80278e17ce8e43e47ebcab29d684da16895289"
+  },
+  "python_executable_pin": {
+    "path": "/usr/bin/python3.12",
+    "bytes": 8020928,
+    "sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+    "stat": {
+      "dev": 2050,
+      "ino": 4194446,
+      "mode": 33261,
+      "uid": 0,
+      "size": 8020928,
+      "mtime_ns": 1788171506000000000,
+      "ctime_ns": 1789207399944696918
+    }
+  },
+  "GNU_timeout_executable_pin": {
+    "path": "/usr/bin/timeout",
+    "bytes": 39880,
+    "sha256": "12690a043dfd555a6c14ccc1564f5649c18f1762c0d6ff66729948130898ec52",
+    "stat": {
+      "dev": 2050,
+      "ino": 4204127,
+      "mode": 33261,
+      "uid": 0,
+      "size": 39880,
+      "mtime_ns": 1787670543000000000,
+      "ctime_ns": 1788257214047248448
+    }
+  },
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "F6": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "module_count": 185,
+  "final_R": {
+    "commit": "5e12a9796432654d88def24ecea617d16ca605b2",
+    "tree": "1ab2c8ab147251391a4af75e637114bdd5b0ff27"
+  },
+  "original_writer_limits": {
+    "catalog_record_count": 88,
+    "catalog_total_bytes": 3041603,
+    "max_catalog_file_bytes": 134217728,
+    "max_catalog_total_bytes": 2147483648,
+    "max_output_metadata_bytes": 8388608,
+    "metadata_deadline_seconds": 900
+  },
+  "envelope_argv_sha256": "84e81d3c274035121288070b883286fc4fa5788025bbc563bcda77a6cc305433",
+  "parent_reviewed_outer_argv_sha256": "d52bd2d7e3680029605b7c0b3e686a8d27ff76e0bf87cb0dceb14c39a9cb6cdd",
+  "outer_GNU_timeout_seconds": 1320,
+  "outer_GNU_kill_after_seconds": 60,
+  "outer_Popen_wait_seconds": 1385,
+  "private_log_file_cap_bytes": 16777216,
+  "outer_log_directory": "/data1/yanruj/lanl17-p3-full-index-outer-logs-20261009-a5-a1",
+  "log_pins": {
+    "start.json": {
+      "path": "/data1/yanruj/lanl17-p3-full-index-outer-logs-20261009-a5-a1/start.json",
+      "bytes": 588,
+      "sha256": "768ed2e82c8a788361f8865fff63c08848fa9972eb3e3b3fcbf17a6e9d22e63c",
+      "original_sealed": false
+    },
+    "stdout": {
+      "path": "/data1/yanruj/lanl17-p3-full-index-outer-logs-20261009-a5-a1/stdout",
+      "bytes": 496,
+      "sha256": "0b96489bbbf2ebcd01f5a6dc1adc6f8764ce0f0db9467894868e2d0210b8b28a",
+      "original_sealed": false
+    },
+    "stderr": {
+      "path": "/data1/yanruj/lanl17-p3-full-index-outer-logs-20261009-a5-a1/stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_sealed": false
+    }
+  },
+  "inner_success_receipt_pin": {
+    "path": "/data1/yanruj/lanl17-p3-full-index-inner-logs-20261009-a5-a1/receipt.json",
+    "bytes": 5350,
+    "sha256": "e7670e7fbe84acbe71e366d797e89a394c3779e285a23f7fa24fa135728e356b"
+  },
+  "inner_success_receipt_identity_sha256": "45a385dd2e3cd2d438216b0b20e910f7a4b21cbc5d1c1601538d030b2949980f",
+  "cleanup": {
+    "subreaper": true,
+    "terminated_owned_process_count": 0,
+    "survivor_count": 0,
+    "error_classes": []
+  },
+  "raw_startup_GNU_envelope_or_writer_diagnostics_transferred": false,
+  "original_captures_unsealed": true,
+  "failed_partial_files_retained": true,
+  "independent_validation_or_campaign_admission": false,
+  "scope": "Private original-envelope startup/GNU/child diagnostic capture and metadata custody only; explicit parent input facts are not independently observed. Unmeasured finite outer administration leaves inner argv/source/science limits unchanged.",
+  "identity_sha256": "097290b3d14adcfceffb2d1e495030b6ab8b8bf9efd5c7e4002ccc9fc057d2c1"
+}

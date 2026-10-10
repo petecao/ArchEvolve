@@ -1,0 +1,116 @@
+{
+  "action": {
+    "bytes": 27069,
+    "path": "/private/tmp/lanl17-generality-exact-four-process-metadata-action-SOURCE-ONLY-draft-r2-20261009-a5.json",
+    "sha256": "44e960c62d76b37204f205d98416c03b742904253e27442f40132b7509344932",
+    "stat": {
+      "ctime_ns": 1791522892401605097,
+      "dev": 16777229,
+      "gid": 0,
+      "ino": 350682525,
+      "mode": 33152,
+      "mtime_ns": 1791522892401605097,
+      "nlink": 1,
+      "size": 27069,
+      "uid": 501
+    }
+  },
+  "bounds": {
+    "SSH_or_network": false,
+    "actual_process_cause_observed": false,
+    "repository_edits": false,
+    "source_only": true,
+    "target_import_or_execution": false,
+    "tests": false
+  },
+  "checks": [
+    "Exact source/action SHA and bytes",
+    "Strict duplicate/nonfinite JSON parse",
+    "Action source inline/argv digest exact",
+    "No stage or collect mutation",
+    "Own45/GNU60K60/local180 bounds",
+    "All 21 inherited functions/classes AST-exact R6",
+    "Selected process selector exact four PID/inodes from saved projection",
+    "Argv0 byte-at-a-time first NUL, no arguments afterward",
+    "Stat/status bounded field projection and no raw bodies returned",
+    "Alias readlink only, no target body/stat following",
+    "PID/inode/start and UID/GID tuples repeated",
+    "SourceR185/F6/ER/H/M2/native continuity beforeafter",
+    "No readiness, quiescence, backup, removal, index or scientific admission granted"
+  ],
+  "findings": [
+    {
+      "finding": "Initial selected directory guard checks PID/inode/type but omits selector UID/account UID before diagnostic reads. A changed-owner task with the same inode could be labelled observed identity.",
+      "line": 249,
+      "path": "/private/tmp/lanl17_diagnose_exact_generality_unknown_process_metadata_SOURCE_ONLY_20261009_a5_r2.py",
+      "required_change": "Require s.st_uid==selector['uid']==UID before any selected file/argv0/alias read; preserve native/no-use guards.",
+      "severity": "material"
+    },
+    {
+      "finding": "Observational stat/status reader accepts every regular-file owner. Parent selected scope is root or account UID only.",
+      "line": 190,
+      "path": "/private/tmp/lanl17_diagnose_exact_generality_unknown_process_metadata_SOURCE_ONLY_20261009_a5_r2.py",
+      "required_change": "Require leaf UID in (0, UID) before bounded stat/status body read; this is an observational allowlist, never a native/no-use waiver.",
+      "severity": "scope_requirement"
+    }
+  ],
+  "format": "swdb.independent-source-review.v1",
+  "inherited_exact_names": [
+    "need",
+    "tick",
+    "digest",
+    "stamp",
+    "strict",
+    "original",
+    "kernel_bytes",
+    "locks",
+    "daemon",
+    "process_identity",
+    "native_projection",
+    "selected_lease_identity",
+    "daemon_ready",
+    "Parser",
+    "hex64",
+    "run",
+    "current_sources",
+    "root_tool_pin",
+    "native_snapshot",
+    "native_continuity",
+    "metadata_bytes"
+  ],
+  "parent_source": {
+    "bytes": 43567,
+    "path": "/private/tmp/lanl17_generality_recovery_candidate_preflight_20261009_a5_r6.py",
+    "sha256": "65bd9a90f477381ba99e9b1894496162da59166b157bf77b084dfce74dcaad6c",
+    "stat": {
+      "ctime_ns": 1791521566370898600,
+      "dev": 16777229,
+      "gid": 0,
+      "ino": 350678148,
+      "mode": 33152,
+      "mtime_ns": 1791521566370898600,
+      "nlink": 1,
+      "size": 43567,
+      "uid": 501
+    }
+  },
+  "prepared_ET": "2026-10-09T01:16:31.738125-04:00",
+  "prepared_utc": "2026-10-09T05:16:31.738125+00:00",
+  "source": {
+    "bytes": 25517,
+    "path": "/private/tmp/lanl17_diagnose_exact_generality_unknown_process_metadata_SOURCE_ONLY_20261009_a5_r2.py",
+    "sha256": "a188020e9899f31a960e3dfb01c4597214114293fdedc36b57822af8bd526c63",
+    "stat": {
+      "ctime_ns": 1791522892401047719,
+      "dev": 16777229,
+      "gid": 0,
+      "ino": 350682523,
+      "mode": 33152,
+      "mtime_ns": 1791522892401047719,
+      "nlink": 1,
+      "size": 25517,
+      "uid": 501
+    }
+  },
+  "verdict": "FINDINGS_R2_NOTRUN_PRESERVED"
+}

@@ -1,0 +1,85 @@
+{
+  "format": "swdb.actual-pr-a5-integrated-merger.v1",
+  "updated_utc": "2026-10-07T08:33:06.652519+00:00",
+  "base_commit": "6018df67711e2894677f0d98baec7b2220fcbc2c",
+  "incoming_commit": "bbe37a95e8c9f7f7c791e406095f1f19f58f249f",
+  "ordinary_merge_commit": "1d2de991d284bfb375b8cf7aae3140723a69f44d",
+  "ordinary_merge_tree": "2926d3388c1d1061c407a136c164ce86a8eac98c",
+  "merge_parents": [
+    "6018df67711e2894677f0d98baec7b2220fcbc2c",
+    "bbe37a95e8c9f7f7c791e406095f1f19f58f249f"
+  ],
+  "precheck_identity_sha256": "1919919c6c8c2e7fe33a047cd21385147336d163b5333d5527ca6daae20d791f",
+  "prior_tracked_blobs": 3641,
+  "prior_unchanged_blobs": 3640,
+  "only_allowed_prior_change": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/issues/14-generality-maple-pagerank.md",
+    "operation": "append_only",
+    "status": "claimed"
+  },
+  "exact_additions": [
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-actual-pr-final-services-acceptance-20261007-a1.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-actual-pr-final-services-custody-20261007-a1.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-actual-pr-replay-additive-custody-20261007-a1.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-report-kill-margin-controls-20261007-a5/lanl14-report-kill-margin-20261007-a5.patch",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-report-kill-margin-controls-20261007-a5/lanl14-report-kill-margin-proof-20261007-a5.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-report-kill-margin-controls-20261007-a5/lanl14_final_reports_catalog_caps_a5.py",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/14-report-kill-margin-controls-20261007-a5/manifest.json",
+    "swdb-project/records/estimates/generality.pagerank.cpu.kron-g16.t1.estimate.final-admission.a1.yaml",
+    "swdb-project/records/protocols/generality.pagerank.cpu.kron-g16.t1.protocol.final-admission.a1.2fba4a33689c3b71.yaml"
+  ],
+  "new_canonical_records": 2,
+  "prior_canonical_yaml_preserved": 672,
+  "result_canonical_yaml": 674,
+  "custody_prior_record_files": 674,
+  "custody_record_files_basis": "672 prior YAML + two registered implementation .cc files",
+  "actual_acceptance_identity_sha256": "988f8c9e476711296835839fabc188461bcc510ea10ce6001e70efffba159989",
+  "actual_custody_identity_sha256": "7b72b1b0e42f095610ca25b26739e2ec9f636683c484ac4252cea86b7ce1133f",
+  "actual_additive_proof_identity_sha256": "76ad540c946a73c2083e706b5391085df92d9eb51d071b34030ece1f78009243",
+  "a5_manifest_identity_sha256": "d10e32ae2fdd64df614547b5958381d0c14f681f5411a49068d5e66819027686",
+  "actual_three_metadata_stages": [
+    "freeze",
+    "estimate",
+    "checker"
+  ],
+  "actual_three_metadata_stages_zero_exit_no_timeout_no_process_group_survivor": true,
+  "actual_PR_result_unchanged": {
+    "trials": 5,
+    "seconds": null,
+    "ratio": null,
+    "error_band": null,
+    "missing": [
+      "memory_scenario.characterization_allowlist",
+      "service_scope.characterization_allowlist"
+    ],
+    "four_scope_allowlist": [
+      {
+        "id": "bfs.kron-g16.t1.characterization.objects.a1",
+        "sha256": "535d43719d2e9269dc557e900886c625b80c5aa686e7682861a4f6d045e143bc"
+      },
+      {
+        "id": "bc.kron-g16.t1.characterization.objects.a1",
+        "sha256": "8561948088366aa18409da1db1f204ac2579cdb8ee90f1a2c76079a96e2eb4fd"
+      },
+      {
+        "id": "bfs.kron-g17.t1.characterization.objects.a1",
+        "sha256": "49b5c58f3551b065c91c49c1fb09f54de2d2d71f08b6a4e1eedf3aad5ec415c5"
+      },
+      {
+        "id": "bc.kron-g17.t1.characterization.objects.a1",
+        "sha256": "6b8d515b3f38a13bfd302993f8ac5e88bd77615da171c710b4ecd81d058c67db"
+      }
+    ]
+  },
+  "new_record_bytes_and_raw_pins_verified": true,
+  "library_blobs_preserved": 147,
+  "root_blobs_preserved": 450,
+  "checkpoint_progress_blob_preserved": "100644 blob b27c105947837a68b86f56f2b427542506236007",
+  "python_modules": 185,
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "all_other_source_archives_selected17_map_tracker_progress_bytes_preserved": true,
+  "no_Store_test_actual_control_host_ssh_or_command_replay": true,
+  "scope": "Ordinary custody integration of actual PR metadata replay (whole-call prediction/ratio/error-band null with two exact allowlist gaps) and reviewed a5 report cleanup controls; no fabricated numerical admission or real timing claim.",
+  "identity_sha256": "d1d7696c52a0e3b982167ac51cc073048c810f7a892babd1d951383fda5a0816"
+}

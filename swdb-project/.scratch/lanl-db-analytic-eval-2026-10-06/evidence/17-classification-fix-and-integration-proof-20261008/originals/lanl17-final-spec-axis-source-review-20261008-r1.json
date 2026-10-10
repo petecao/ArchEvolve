@@ -1,0 +1,588 @@
+{
+  "assigned_agent_tickets": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    16,
+    17
+  ],
+  "axis": "Spec",
+  "base": "7941ccbabd3f14a7da57ea36ac34d39036ac2a58",
+  "execution": {
+    "external_messages": false,
+    "raw_scientific_body_reads": false,
+    "remote": false,
+    "repository_edits": false,
+    "source_or_control_main": false,
+    "store_reads": false,
+    "target_imports": false,
+    "tests": false
+  },
+  "findings": [
+    {
+      "id": "SPEC-ARTIFACT-COVERAGE",
+      "lines": [
+        931,
+        942,
+        958,
+        981,
+        983
+      ],
+      "path": "swdb-project/swdb/campaign.py",
+      "priority": 2,
+      "spec_lines": [
+        170,
+        324,
+        325
+      ],
+      "state": "requires_prospective_source_fix",
+      "summary": "Rejected materialized artifacts and lazily unexecuted baselines have no paired receipt; force-unknown outcome-free artifact-only receipts before admission/certification and at setup are needed without timing events."
+    },
+    {
+      "id": "SPEC-REAL-AGREEMENT-CAPABILITY",
+      "lines": [
+        222,
+        245
+      ],
+      "path": "swdb-project/swdb/extensa_pairing.py",
+      "spec_lines": [
+        174,
+        175,
+        247
+      ],
+      "state": "partial_capability_and_frozen_research_gate",
+      "summary": "Real complete-call numeric adapter and eligible application pairs absent; honest unsupported/no-switch report cannot establish application tau/top3 or strict actual-history admission."
+    }
+  ],
+  "fingerprint_followup_pins": [
+    {
+      "bytes": 24800,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/certification_procedures.py",
+      "sha256": "21409a3b7b267fd680b51e55257b2779ca21ecf3285c7b1b7ccfc1a9065fccb8"
+    },
+    {
+      "bytes": 17255,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/tests/test_certification_procedures.py",
+      "sha256": "714ce2390d1f9f097e9bec2143b0d3c5e70a612882a97e926d94eba5c8b2fee6"
+    },
+    {
+      "bytes": 3707,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-certification-fingerprint-redeclaration-20261008.md",
+      "sha256": "633482d3f9fa76e3f62edeb5fcf3b3bd53db72843f548c29407f2420e86554af"
+    }
+  ],
+  "format": "swdb.private-source-review.v1",
+  "input_pins": [
+    {
+      "bytes": 42695,
+      "path": "/private/tmp/lanl17-final-review-commit-list-20261008-r1.txt",
+      "sha256": "682e719b4e26383d8f0f2bd2d989a7455847d11f9f4c8b4476249c4b9f5d5091"
+    },
+    {
+      "bytes": 26030,
+      "path": "/private/tmp/lanl17-final-review-classification-working-diff-20261008-r1.diff",
+      "sha256": "2984d5c8bef48cd0beb0040701de03cd47cfe5c2d4d2f132600cd5f5457aae44"
+    },
+    {
+      "bytes": 11746,
+      "path": "/private/tmp/lanl17-final-two-axis-review-preparation-20261008.md",
+      "sha256": "10f3bf27683ec62b1344fd4dbe44f6a73214fe90a98c32ff1f9169009624cbcf"
+    },
+    {
+      "bytes": 31035,
+      "path": "/private/tmp/lanl17-final-two-axis-review-non-evidence-path-inventory-20261008.json",
+      "sha256": "22097f1536c96248b680fef007ba2eed2e729215fbd2cfc1a1dada1d8d0c892a"
+    },
+    {
+      "bytes": 15211,
+      "path": "/private/tmp/lanl17-final-spec-axis-full-coverage-20261008-r1.md",
+      "sha256": "a02f3c6c85b7cd663f3da3d7ac17ce5393e58e5463b9015622d0221f89103c4d"
+    }
+  ],
+  "limits": "Source findings and supplied compact-original history only. No full-catalog or strict-auditor scientific admission. Future local fix and final report/audit require follow-up.",
+  "no_scope_creep_found": true,
+  "pinned_head": "34094e33798bab06ea382ff0fe5af16ba6513d75",
+  "resolved_source_findings": [
+    {
+      "historical_rewrite": false,
+      "id": "SPEC-CURRENT-CERTIFICATION-MANIFEST",
+      "integration_verification": "parent_owned_pending_appropriate_rerun",
+      "source_review": "PASS"
+    }
+  ],
+  "result": "ACTIONABLE_PROSPECTIVE_COVERAGE_FINDING_AND_SEPARATE_RESEARCH_GATE",
+  "reviewed_at_utc": "2026-10-09T01:03:55.596708+00:00",
+  "reviewer": "audit_inputs",
+  "source_pins": [
+    {
+      "bytes": 3744,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/access.py",
+      "sha256": "b068908472747d7c6c5afc8ee7af8067c667e9bb4ef6d45db5d1e1a860154b40"
+    },
+    {
+      "bytes": 59482,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/analytic.py",
+      "sha256": "3061fe9a8b3f22872cfc3081595e4449a8ed0975b9da5a299673250503c50ac4"
+    },
+    {
+      "bytes": 16176,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/analytic_binding.py",
+      "sha256": "94716649980d9d208744d17de0f1ce851eb2f6ac17c862e8cea450ddd901f7d0"
+    },
+    {
+      "bytes": 2836,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/analytic_composition.py",
+      "sha256": "de3cf93d0fa7b27a7014387291e5ad1f45b3d06fe2fe7478a370baf1fe5e1433"
+    },
+    {
+      "bytes": 6371,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/analytic_count_reuse.py",
+      "sha256": "0e04887886bf19c990efbded07ff9e1ce18a705545d8accacb22554486aef7df"
+    },
+    {
+      "bytes": 20267,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/analytic_cpu_binding.py",
+      "sha256": "5b864ea47a76551229ee6a638b3169a9a436ca37e90679b58f222e4a82f92ab3"
+    },
+    {
+      "bytes": 4116,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/analytic_cpu_openmp.py",
+      "sha256": "22ac1e3e1c7134686e53ba1181a438c60c340239e181ad0f1953b7fbefcfc010"
+    },
+    {
+      "bytes": 25548,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/analytic_cpu_service.py",
+      "sha256": "ed88a77451d05e804f8e9c7208278658f13dba9120e43cc8d18f85f4672a95aa"
+    },
+    {
+      "bytes": 544,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/analytic_extensions.py",
+      "sha256": "cf2e22f8ee6e3e4b7f4eed9d08657d765244a79f9594b735c9c7f3dec99a5984"
+    },
+    {
+      "bytes": 12946,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/analytic_functional_binding.py",
+      "sha256": "284abe9c59bc198d94b8f7025beeb766c9572ca0e851c8e1d700f989c926898f"
+    },
+    {
+      "bytes": 2615,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/analytic_llvm_support.py",
+      "sha256": "262b13c9fb55c82b877c7ef979e2e3aa77f97fcf342f9e746781e3cb9429a227"
+    },
+    {
+      "bytes": 12875,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/analytic_models.py",
+      "sha256": "6143cc8dcc1e639a5b79f7c79b05c52daa1e96aad09ff8d84ca4c06f48a116ae"
+    },
+    {
+      "bytes": 5152,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/analytic_offload_models.py",
+      "sha256": "3861b04acad511aed43ed1236a8e64f385f22bfa59394768181b1976d3c84bbf"
+    },
+    {
+      "bytes": 10018,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/analytic_sensitivity.py",
+      "sha256": "deb4f1d6101df89a4e6072919748c101fb1f201fdd8487b12aef8b7c0a8f74f1"
+    },
+    {
+      "bytes": 6512,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/analytic_trial_scope.py",
+      "sha256": "8debe8a29753e850dd7c0a8b6755e7e6a1d71bfb775156e79a5177b661045438"
+    },
+    {
+      "bytes": 7057,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/archevolve.py",
+      "sha256": "6548f3f5fbd3a312692bce4ee9dd72f590838bc505f2d357f41a1259093473cc"
+    },
+    {
+      "bytes": 50624,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/bfs_native.py",
+      "sha256": "fa5b121aea9ad80aa90f35d470d5ad475b76931f39c30d1dbf4087c3cf47476d"
+    },
+    {
+      "bytes": 97563,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/bfs_protocol.py",
+      "sha256": "fdf5d38c29e321dbb300a3eb681f0c9a5619a0bd05733aabb410991de3589596"
+    },
+    {
+      "bytes": 79456,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/campaign.py",
+      "sha256": "13e3e66a469c3934dee2f0f372a5c17812f5a680cb451f63766ad889d13c3d1d"
+    },
+    {
+      "bytes": 11441,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/campaign_export.py",
+      "sha256": "9f48b090186bc7679d5c9b3f4e937be0fdc2bcce7cc8988fcd38167a5d039953"
+    },
+    {
+      "bytes": 14245,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/campaign_fixture.py",
+      "sha256": "50ec7fdce6dd73cccdccd303ea7024e5335368d1bb5dfac418fcb95d47441c4b"
+    },
+    {
+      "bytes": 71108,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/campaign_targets.py",
+      "sha256": "e65c03ebd9741ad2853915314602e664271ae7236aa7453c1ea3731effbae377"
+    },
+    {
+      "bytes": 77665,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/certification.py",
+      "sha256": "578c403408e8a16ceb7952e6a74f25e4ea242f4f2af43cfea42695b212f313fb"
+    },
+    {
+      "bytes": 24800,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/certification_procedures.py",
+      "sha256": "21409a3b7b267fd680b51e55257b2779ca21ecf3285c7b1b7ccfc1a9065fccb8"
+    },
+    {
+      "bytes": 28526,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cli.py",
+      "sha256": "50023a90f3e25d089483d1ebaa98335c7768de9bf8af43c0fd57280242ecd0c1"
+    },
+    {
+      "bytes": 18658,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_allocator_calibration.py",
+      "sha256": "2be8c6621dc0d800b1f09b34aee4629e3404d216ac72f021e212a99bd5fc18d5"
+    },
+    {
+      "bytes": 9166,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_allocator_resource.py",
+      "sha256": "6a3a11d1a240a8c4a55a56c37715c89a28a31efe71b61e87aec8b9f7d8ccaf41"
+    },
+    {
+      "bytes": 22206,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_bulk_calibration.py",
+      "sha256": "cc426f5b0ffc01d417c476eaeeae28266640415bedfd0f1a03e8c39794d2a6e2"
+    },
+    {
+      "bytes": 6761,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_bulk_resource.py",
+      "sha256": "55ff6eb1ecb13c44c9baa9631169b531c4a20fe8cf2112fc68453097e02a37a8"
+    },
+    {
+      "bytes": 15852,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_bulk_total_calibration.py",
+      "sha256": "cf6b90bb3fc6a8c357acad162a8e5d61649129ff6dc8d4a71cbd1ec08743b2ea"
+    },
+    {
+      "bytes": 32329,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_calibration.py",
+      "sha256": "e9eff21f62c12c82d083328c070b494b385c0a308e705ff4d19995a2cd048846"
+    },
+    {
+      "bytes": 12985,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_calibration_records.py",
+      "sha256": "f25b3ac52c42383aa2499e987536046716e8db35a3a01ebae0df21655802614c"
+    },
+    {
+      "bytes": 21844,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_error_band.py",
+      "sha256": "648c91df7ff4c94c0b02e4371bef4f23de1ae4945b301881f8023d17752c9f8e"
+    },
+    {
+      "bytes": 16672,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_float_memory_calibration.py",
+      "sha256": "51e392248c830e81e15c8900abbb7d5be95ee8e8a7a5d73a27e359788c761e67"
+    },
+    {
+      "bytes": 22442,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_memory_calibration.py",
+      "sha256": "41f68ad24a160bb27408d947956fa6a32407c41bb838ada6819382d217a70e62"
+    },
+    {
+      "bytes": 6750,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_memory_resource.py",
+      "sha256": "67d641ee5335be0ad88cd08bdbc56bd6aa1aa253d564efdeae4c8fe70f6d5146"
+    },
+    {
+      "bytes": 20068,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_native_validation.py",
+      "sha256": "86e6aef4b04142fe87fd4fb68144b2395916b0ea611454153733ddfbe6eb5d2e"
+    },
+    {
+      "bytes": 5312,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_openmp_binding.py",
+      "sha256": "8955bbc1bd1231f357d325ea9b518730deed0ebb3c4d440e60e84d9b84c53167"
+    },
+    {
+      "bytes": 21567,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_openmp_calibration.py",
+      "sha256": "8b1cb8d8eb6fb06e6c1011bb471e196b4cbc4f46e13b92f11ce02b3ff9cf6b0e"
+    },
+    {
+      "bytes": 1580,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_openmp_profiles.py",
+      "sha256": "74a2f2d04fa80bdb7aef85633b4c8fd1ed122edb9a9d4d8c6d87c164ea66fb97"
+    },
+    {
+      "bytes": 17757,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_pairing.py",
+      "sha256": "1cafc5c74d822cb4a569949a37960a78a45b81529988b592695b3f313a62d696"
+    },
+    {
+      "bytes": 28818,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_service_binding.py",
+      "sha256": "d52ba4de58059f2149c3a74fbd8b6ce915ef2839da13b8ecb8df90cfd5d4453e"
+    },
+    {
+      "bytes": 16089,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_service_calibration.py",
+      "sha256": "648da3f6cd60517a4fe4720d83ad943404801978f2359a45cae702f6d7c2acd6"
+    },
+    {
+      "bytes": 1028,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_service_controls.py",
+      "sha256": "260ce9711edc3eb286ed4ad4d95d1d4daffcc0b584409ed9b4b9290a04c5cf54"
+    },
+    {
+      "bytes": 3571,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_service_counts.py",
+      "sha256": "ac541f5df1cdaed12a60fb6a05d459100586eaca13a6d531e1753967b265d766"
+    },
+    {
+      "bytes": 7979,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/cpu_service_native.py",
+      "sha256": "cbe287cf00c6503d708b4d0041f26b57461a9f9d2e3641f622a7b1bb4ff9feb6"
+    },
+    {
+      "bytes": 1035,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/crosswalk.py",
+      "sha256": "eb9dd243fdfb7fddceae461e8563734a8fba71bc829b76a085ce110009447486"
+    },
+    {
+      "bytes": 33540,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/db.py",
+      "sha256": "435eec9df8eab5ef06b5ab806ec8cf084e13ee95956046742ac682ad6a7f82cf"
+    },
+    {
+      "bytes": 10127,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/estimate_protocol.py",
+      "sha256": "5d97eb914ddf8302a6034a043a9114c9df1f39415f67b4ce3519bea97f7e4e30"
+    },
+    {
+      "bytes": 2607,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/estimation_contract.py",
+      "sha256": "6dfd028eb52fae2c0a3c0072011a512debf4f01c433fcab580b41d656053391f"
+    },
+    {
+      "bytes": 25670,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/estimation_parameters.py",
+      "sha256": "1603428b67b7cc899d2e2ce6d42fbd2c178e93e51513800a76aee0dabca54ffc"
+    },
+    {
+      "bytes": 26057,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/extensa_agreement.py",
+      "sha256": "d078cf8a26fbbd65f0d27d0a64dbde56e4f190e1ec4c07b9e4eb311ad3a5174f"
+    },
+    {
+      "bytes": 17550,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/extensa_pairing.py",
+      "sha256": "30a62539769c21f5d0ecbc3fb2800bd60c935332f13a6c6c1eba638558a1896a"
+    },
+    {
+      "bytes": 22204,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/feature_reports.py",
+      "sha256": "a9353c3946604f86d477977a6fe7628b0ffd3b0ab60ca731cf5677f7d9f1056c"
+    },
+    {
+      "bytes": 14587,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/functional_evaluation.py",
+      "sha256": "b4cc95ccd75178cc919f2c09fd54aea631abc8a7190c01b38c6fc3d0799582f4"
+    },
+    {
+      "bytes": 18145,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/handoff.py",
+      "sha256": "3c95ec96e345187f097fa2ef33620328971da435ee09280cd2ce7d25dcd28867"
+    },
+    {
+      "bytes": 3169,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/intrinsic_source_views.py",
+      "sha256": "f679650a0f03c4c6b99aaafa807a16f612d59814f91a044460a45ecbbd7db835"
+    },
+    {
+      "bytes": 31147,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/llvm/Characterize.cpp",
+      "sha256": "b461fd7025cfa675d5c191d7d73fee8bd04525c0344cd315dffedb61575b65a0"
+    },
+    {
+      "bytes": 16243,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/llvm/CountingRuntime.cpp",
+      "sha256": "43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e"
+    },
+    {
+      "bytes": 10233,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/llvm/LiveObjects.hpp",
+      "sha256": "5f634c904a2659b75bec4f6fb1bfe5d85917999908ff5916798114b57bcf4e41"
+    },
+    {
+      "bytes": 7232,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/llvm/LogicalCommands.hpp",
+      "sha256": "d84117bf200571b1314992673f7f903043f484fa5df3c24632cf4e5c490a6ab9"
+    },
+    {
+      "bytes": 7949,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/llvm/ObjectScopeRuntime.hpp",
+      "sha256": "39d52fea4be446d80c1c9adbdfcc4b06d2c7ab69ce69d1f667454ec9b5651373"
+    },
+    {
+      "bytes": 7485,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/llvm/ObjectScopes.hpp",
+      "sha256": "5c81304e2ef3714b7da07c947cbec750342d1886e92d50defa920d9a9e9ab794"
+    },
+    {
+      "bytes": 10165,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/llvm/OpenMPCallProjection.cpp",
+      "sha256": "8b93e0a7419d51779e3fc010eddfa2853034f5e54b54010e134bf93bc3818330"
+    },
+    {
+      "bytes": 9159,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/llvm/SemanticCommands.hpp",
+      "sha256": "9ad207ea369f24f1ffe02ebdfbd328b0262f38d1b4b42fd0ef5bc7fe392c7912"
+    },
+    {
+      "bytes": 1101,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuAllocatorCount.cpp",
+      "sha256": "6711bec276c97492543a370cc891b365b03948dc1cba3d1f154fdc58f3cbdf8f"
+    },
+    {
+      "bytes": 2294,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuAllocatorTimer.cpp",
+      "sha256": "da4bd29ab0ff509742fca87750a173ff5827eedbd429e22cd0c210533b5a8c83"
+    },
+    {
+      "bytes": 967,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuAllocatorWork.h",
+      "sha256": "6a4f4198d6ac45ca0c23ba130f423f3f47cf50b2ca9637376c0a8db77af4fe55"
+    },
+    {
+      "bytes": 1236,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuBulkCount.cpp",
+      "sha256": "1051a1ad01b55368257a5de825cf31864bf49f3a0088f0ee8425a6dd2d18ca24"
+    },
+    {
+      "bytes": 2399,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuBulkTimer.cpp",
+      "sha256": "5f2c71773bdb29e65501440500f3b4da695f1f9b3e026a6c177f1c17b7fcc536"
+    },
+    {
+      "bytes": 1503,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuBulkWork.h",
+      "sha256": "a8926f80c4aaa74f247b915f52b63396b518990646bafe2690e679891a3c10be"
+    },
+    {
+      "bytes": 8215,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuCalibration.cpp",
+      "sha256": "3368e0a9afb761ce0564a2959977ae7a2aaf7483a475843099268ddd475c6f47"
+    },
+    {
+      "bytes": 627,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuCount.cpp",
+      "sha256": "9d739f2f19f19d0c91d6ad50d5439e2a3c6c073be41d1d14fe111b368ddfd3f3"
+    },
+    {
+      "bytes": 503,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuFloatMemoryCount.cpp",
+      "sha256": "2515a5ddd0d184004eb7ac1588781d11ed24daea75afe54e1b875870076bc297"
+    },
+    {
+      "bytes": 1790,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuFloatMemoryTimer.cpp",
+      "sha256": "647db310646980a1a76d64e6b82080a03f8195cc44e58d5121c936b62c09bd33"
+    },
+    {
+      "bytes": 496,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuFloatMemoryWork.h",
+      "sha256": "577f9d772da4de811b6f779d862ca5735c83cfda8d4c58f5041bb8f7c7f6a6a0"
+    },
+    {
+      "bytes": 983,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuMemoryCount.cpp",
+      "sha256": "80e341dc62c3ce4600dd92bbf6ee52c1e535a3b1b93d0f230b4b3cdc43f01e04"
+    },
+    {
+      "bytes": 3266,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuMemoryTimer.cpp",
+      "sha256": "081d90708aa61daab04f70a5986d6b196ca40a70ef904a1dd37359ddf0d76cc4"
+    },
+    {
+      "bytes": 2324,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuMemoryWork.h",
+      "sha256": "ea8d348c417067f4d0bdb2c86ac7718e5def5ed1662b5f06bc3545ee5c55de7a"
+    },
+    {
+      "bytes": 999,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuOpenmpCount.cpp",
+      "sha256": "2001b7c8ddaea2c92d81385766069d6e3f274a600d53be55dba5e9868dbe65e1"
+    },
+    {
+      "bytes": 2259,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuOpenmpTimer.cpp",
+      "sha256": "f7f9212f5038ecc3488550be44059506761fd7cbdb4eec56797cd26fca955669"
+    },
+    {
+      "bytes": 6589,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuOpenmpWork.h",
+      "sha256": "3443bb36fd4a771faf8b77bc798685825b79d00529f8d7e241d6e6e7604d1ac7"
+    },
+    {
+      "bytes": 351,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuServiceCount.cpp",
+      "sha256": "9745a510ad04ae9b9aa2250d5cd49577f09a5d73e1fc2a2e8b666e274409f2d9"
+    },
+    {
+      "bytes": 1172,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuServiceTimer.cpp",
+      "sha256": "14332e159810563b8d49a03569099f8a336d495cd5a8b0bd76663f8283d0e669"
+    },
+    {
+      "bytes": 555,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuServiceWork.h",
+      "sha256": "07d7bf48b5d9afb1b0725f2abf7a57f301c17d355b72676d214186ba1d7150cf"
+    },
+    {
+      "bytes": 1485,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/native/CpuWork.h",
+      "sha256": "18505bf0e53496132ac3c4bf03881d804d6e0fd9dee51c5887fbda2190fd8393"
+    },
+    {
+      "bytes": 16979,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/offload_observation.py",
+      "sha256": "275bf62dbb8892a6981226defff29cd5fe13dde88c1f0db460a2b0dbba2fe962"
+    },
+    {
+      "bytes": 15013,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/provider_roles.py",
+      "sha256": "fc870562690da9832f809b18d2f237150d39e16ac5981aeb7a17311d6d523522"
+    },
+    {
+      "bytes": 25104,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/rules.py",
+      "sha256": "8785a1d6ffdb528c4a09e87b284cbdbb2039589117b063f8ea56a8ca43a82f49"
+    },
+    {
+      "bytes": 16644,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/site_finder.py",
+      "sha256": "846542bd089c8395eee09dc2c58022cb0ee96d4e90e8174ce79b7fa5cc034acf"
+    },
+    {
+      "bytes": 7364,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/store.py",
+      "sha256": "8c4a750318215a90e26ba6f07c1f007fa3297f337da638c52a0319bfd947ea86"
+    },
+    {
+      "bytes": 6199,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/swdb/writer.py",
+      "sha256": "9ded1641c3c5909d8b99addf69f41af8980faa6940ccc338e740befeb1a0cbe3"
+    }
+  ]
+}

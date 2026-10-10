@@ -1,0 +1,211 @@
+kind: proposal
+schema_version: '0.4'
+id: bfs-instruction-smoke-20260925-a1.structured-instructions.proposal
+status: draft
+created: '2026-09-25'
+updated: '2026-09-25'
+message_version: '1.0'
+producer:
+  name: swdb-bounded-instruction-diagnostic-client
+  role: sw
+  test_client: true
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-instruction-smoke-20260925-a1.structured-instructions.proposal
+  producer:
+    name: swdb-bounded-instruction-diagnostic-client
+    role: sw
+    test_client: true
+  implementation: gapbs-bfs-do
+  source_snapshot: bfs-instruction-smoke-20260925-a1.structured-instructions.source
+  profile_package: bfs-instruction-smoke-20260925-a1.structured-instructions.package
+  source_sha256: d54ea036150bb311c5785305fc2d059199d1d394e5bb9fedb985652b33988056
+  regions:
+  - src/bfs.cc:122-179:437882a50dcae474
+  - src/bfs.cc:67-89:7a1d3944e43bdd6d
+  - src/bfs.cc:46-64:29b8637691f58e1c
+  - src/bfs.cc:92-98:ecf6e1693c797afe
+  - src/bfs.cc:100-112:a80c4416a9fcc609
+  - src/bfs.cc:114-120:8258dcb0ac11957d
+  intent: Change only the DOBFS default alpha direction-switch parameter from 15 to 14.
+  parameters:
+    old_alpha: 15
+    new_alpha: 14
+  constraints:
+    editable_files: [src/bfs.cc]
+    preserve_correctness: true
+    preserve_roi: true
+  payload:
+    kind: structured_instructions
+    content:
+      function: DOBFS
+      operation: replace_default_parameter
+      parameter: alpha
+      old_value: 15
+      new_value: 14
+      preserve:
+      - beta parameter
+      - all traversal and verification code
+      - ROI boundaries
+  required_operations: []
+payload_sha256: 0bfdc479191954b25b6021fbc137052000c5062154223df321eeff160e3481b5
+outcome:
+  state: failed
+  stage: repair
+  reason: 'unresolved repair requirements: Build failure is in native_driver.cc (undeclared omp_set_dynamic/omp_get_max_threads
+    at lines 68-69), not in src/bfs.cc.; native_driver.cc is outside editable_files (only src/bfs.cc is
+    editable) and is not provided in source_files, so it cannot be repaired within this rewrite''s authorized
+    edit scope.; The requested strategy (alpha 15->14 in DOBFS) is already present verbatim in the supplied
+    src/bfs.cc source, so no further in-scope change exists to make; the retained failure is unrelated
+    to this file and cannot be manufactured or worked around here.'
+attempts:
+- number: 1
+  stage: rewriting
+  state: completed
+  provider:
+    provider:
+      kind: claude
+      command:
+      - /data1/yanruj/.npm-global/bin/claude
+      timeout_s: 300
+      max_repairs: 1
+      total_seconds: 600
+      budget_usd: 5
+    command:
+    - /data1/yanruj/.npm-global/bin/claude
+    - -p
+    - --safe-mode
+    - --tools
+    - ''
+    - --strict-mcp-config
+    - --mcp-config
+    - '{"mcpServers":{}}'
+    - --no-session-persistence
+    - --output-format
+    - json
+    - --json-schema
+    - '{"type": "object", "additionalProperties": false, "required": ["interpretation", "patch", "unresolved"],
+      "properties": {"interpretation": {"type": "string"}, "patch": {"type": "string"}, "unresolved":
+      {"type": "array", "items": {"type": "string"}}}}'
+    - --max-budget-usd
+    - '5'
+    timeout_s: 300
+    classification: rewrite_provider
+    prompt_sha256: bf69c460d1202bed1fc1875a94e375da4c2550260058ee19e5a3645e176d59d2
+    state: completed
+    executable_sha256: 5c4735937844e84f8a93306e841a5b0e12252909b07870f789b190468da147ab
+    version: 2.1.278 (Claude Code)
+    returncode: 0
+    host_wall_s: 24.901217045262456
+  candidate: bfs-instruction-smoke-20260925-a1.structured-instructions.proposal.candidate-1
+- number: 2
+  stage: repair
+  state: failed
+  trigger_evaluation: bfs-instruction-smoke-20260925-a1.structured-instructions.evaluation
+  parent_candidate: bfs-instruction-smoke-20260925-a1.structured-instructions.proposal.candidate-1
+  limits:
+    provider_seconds: 300
+    max_repairs: 1
+  interpretation:
+    interpretation: 'This is a repair pass for a prior proposal that already applied the requested strategy:
+      `src/bfs.cc`''s `DOBFS` default `alpha` parameter has been changed from 15 to 14 (confirmed present
+      in the supplied `source_files` content), with all other DOBFS logic, the beta parameter, ROI boundaries,
+      and the BFSVerifier untouched. The retained failure is a build-stage error, but it does not originate
+      in `src/bfs.cc`: the compiler log points to `native_driver.cc:68-69` failing because `omp_set_dynamic`
+      and `omp_get_max_threads` are undeclared (missing an OpenMP runtime include/declaration) in that
+      driver file. `native_driver.cc` is not part of `source_files`, is not one of the `editable_files`
+      (`["src/bfs.cc"]`), and is not owned by this rewrite''s strategy or edit scope. Per the repair constraint
+      to "preserve original strategy and edit scope and address only the retained build/correctness failure,"
+      I cannot touch `native_driver.cc`, and there is no defect in the alpha-parameter region of `src/bfs.cc`
+      to fix — the change is already correctly and exclusively applied there. No in-scope edit to `src/bfs.cc`
+      can resolve a missing-declaration error in a harness file outside the editable set.'
+    patch: ''
+    unresolved:
+    - Build failure is in native_driver.cc (undeclared omp_set_dynamic/omp_get_max_threads at lines 68-69),
+      not in src/bfs.cc.
+    - native_driver.cc is outside editable_files (only src/bfs.cc is editable) and is not provided in
+      source_files, so it cannot be repaired within this rewrite's authorized edit scope.
+    - The requested strategy (alpha 15->14 in DOBFS) is already present verbatim in the supplied src/bfs.cc
+      source, so no further in-scope change exists to make; the retained failure is unrelated to this
+      file and cannot be manufactured or worked around here.
+  provider:
+    provider:
+      kind: claude
+      command:
+      - /data1/yanruj/.npm-global/bin/claude
+      timeout_s: 300
+      max_repairs: 1
+      total_seconds: 600
+      budget_usd: 5
+    command:
+    - /data1/yanruj/.npm-global/bin/claude
+    - -p
+    - --safe-mode
+    - --tools
+    - ''
+    - --strict-mcp-config
+    - --mcp-config
+    - '{"mcpServers":{}}'
+    - --no-session-persistence
+    - --output-format
+    - json
+    - --json-schema
+    - '{"type": "object", "additionalProperties": false, "required": ["interpretation", "patch", "unresolved"],
+      "properties": {"interpretation": {"type": "string"}, "patch": {"type": "string"}, "unresolved":
+      {"type": "array", "items": {"type": "string"}}}}'
+    - --max-budget-usd
+    - '5'
+    timeout_s: 300
+    classification: rewrite_provider
+    prompt_sha256: 2030b4cf11b1ea8e2bf82e0a0e2704d00aa9885f165aca9923f0bb602d4cd8b8
+    state: completed
+    executable_sha256: 5c4735937844e84f8a93306e841a5b0e12252909b07870f789b190468da147ab
+    version: 2.1.278 (Claude Code)
+    returncode: 0
+    host_wall_s: 23.4939659871161
+  reason: 'unresolved repair requirements: Build failure is in native_driver.cc (undeclared omp_set_dynamic/omp_get_max_threads
+    at lines 68-69), not in src/bfs.cc.; native_driver.cc is outside editable_files (only src/bfs.cc is
+    editable) and is not provided in source_files, so it cannot be repaired within this rewrite''s authorized
+    edit scope.; The requested strategy (alpha 15->14 in DOBFS) is already present verbatim in the supplied
+    src/bfs.cc source, so no further in-scope change exists to make; the retained failure is unrelated
+    to this file and cannot be manufactured or worked around here.'
+raw_artifacts:
+- path: /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a1.structured-instructions.proposal
+  stage: rewriting
+- stage: repair
+  path: /data/yanruj/EvolveSWDB_runs/bfs-instruction-smoke-20260925/bfs-instruction-smoke-20260925-a1.structured-instructions.proposal.repair-1
+source_snapshot: bfs-instruction-smoke-20260925-a1.structured-instructions.source
+profile_package: bfs-instruction-smoke-20260925-a1.structured-instructions.package
+provider:
+  kind: claude
+  command:
+  - /data1/yanruj/.npm-global/bin/claude
+  timeout_s: 300
+  max_repairs: 1
+  total_seconds: 600
+  budget_usd: 5
+repair_budget:
+  max_repairs: 1
+  total_seconds: 600
+  used_seconds: 48.395183032378554
+  repairs: 1
+interpretation:
+  interpretation: 'Applied the submitted structured-instructions intent exactly as specified: in src/bfs.cc,
+    change the DOBFS function''s default `alpha` parameter from 15 to 14. This is a single-token default-argument
+    edit on the function signature at src/bfs.cc:123 (within the declared ROI region src/bfs.cc:122-179).
+    No other code was touched — `beta`, all traversal logic (BUStep, TDStep, QueueToBitmap, BitmapToQueue,
+    InitParent), and the BFSVerifier/protected verifier code are all preserved unchanged. No ROI boundary,
+    timing region, or hardware capability was altered; this is a pure algorithmic-parameter tweak affecting
+    when the direction-optimizing switch to bottom-up BFS triggers (scout_count > edges_to_check / alpha).'
+  patch: "--- a/src/bfs.cc\n+++ b/src/bfs.cc\n@@ -119,8 +119,8 @@ pvector<NodeID> InitParent(const Graph\
+    \ &g) {\n   return parent;\n }\n \n pvector<NodeID> DOBFS(const Graph &g, NodeID source, bool logging_enabled\
+    \ = false,\n-                      int alpha = 15, int beta = 18) {\n+                      int alpha\
+    \ = 14, int beta = 18) {\n   if (logging_enabled)\n     PrintStep(\"Source\", static_cast<int64_t>(source));\n\
+    \   Timer t;\n"
+  unresolved: []
+candidate: bfs-instruction-smoke-20260925-a1.structured-instructions.proposal.candidate-1

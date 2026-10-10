@@ -1,0 +1,122 @@
+{
+  "format": "swdb.bfs.t17-diagnostic-operator-preparation.v1",
+  "created": "2026-09-26",
+  "state": "actual_data_view_and_admission_prepared_no_diagnostic_dispatch",
+  "scope": "Existing reviewed driver and fixed request only; no code fork, compile, provider, new scientific plan or budget. Exact primary metadata Git transfer completed separately.",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/README-20260926.md",
+      "bytes": 8693,
+      "sha256": "64f1bce03f9d86e66bf9dd8c02c1aca40b16b3707d5489c5744c3737124c7ab5"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/admission-template-20260926.json",
+      "bytes": 983,
+      "sha256": "5de0d8b737ac72bd223bfa98d64a10a5607ac415fd778e7565b70ea00bd83018"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/final-preparation-readback-20260927.json",
+      "bytes": 1330,
+      "sha256": "0c1dc468e3728c4131564e63788388379ce6c7f2307bbe2e65231b38dcb61bb8"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/launch-20260927.sh",
+      "bytes": 4090,
+      "sha256": "bcedea6c540e64452a7115532677d18e10d8d62c875d88298c046596aa48eee7"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/launch-template-20260926.sh",
+      "bytes": 3477,
+      "sha256": "5f9bb4aba9d3553ce11ec71585b2dc89ed0c114a498599f6b483bc348dc93952"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/operator-review-20260927.json",
+      "bytes": 2106,
+      "sha256": "6b7a3ca89f253e138b77be7f0df6bbb6a151e0a0e01f8c6658a3a0c8c3b01a0d"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/prepare.py",
+      "bytes": 8956,
+      "sha256": "2230bc6ffab3be2796bb57993f8e30e965e77b9d7ee7d8b4e1aaf2c1d716e93b"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/primary-evidence-transfer-20260927.json",
+      "bytes": 1080,
+      "sha256": "fcef911a9d99df1ab27c65ec5fbdda538d832bf61f61ed5521c383fb88d032d7"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/projection-review-20260927.json",
+      "bytes": 1180,
+      "sha256": "a675f4891f5bce2d89958dc49ba9e725c094ad6db00c3f50db2aa5c4cf4b5992"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/retained-inputs-20260926.json",
+      "bytes": 11244,
+      "sha256": "aa36282c55089fbc23cd8e96cf5f5d689553e923dc5f6e4da7694706d69f69c7"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/runtime-manifest.json",
+      "bytes": 136114,
+      "sha256": "447ff528f5015587c702d42007a3607cf0373a800714d8ab59a515cdf9c7afc9"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/test_prepare.py",
+      "bytes": 5424,
+      "sha256": "4ecb9ca96a98d1e5e6629983d01349c10e6697ef8c5f1f00fe55d1f89287f63a"
+    }
+  ],
+  "validation": {
+    "command": "python3 -m pytest /private/tmp/test_t17_operator_preparation_20260926.py -q",
+    "result": "4 passed in 0.22s",
+    "log": {
+      "path": "/private/tmp/bfs-t17-operator-preparation-final-20260927.log",
+      "bytes": 98,
+      "sha256": "44178be163015033384cffd8b0f0ec02d28cb6648af3d8dbe3121b41f45ca4aa"
+    },
+    "test": {
+      "path": "/private/tmp/test_t17_operator_preparation_20260926.py",
+      "bytes": 3284,
+      "sha256": "532b388ac109318009b1c4a1e274c4526a6d64d94b5c3079f48f206a9cd6498f"
+    },
+    "bash_syntax": "passed",
+    "scope": "Historical template validation before the metadata provenance update; unchanged launch/admission templates."
+  },
+  "retained_initial_failure": {
+    "log": {
+      "path": "/private/tmp/bfs-t17-operator-preparation-20260926.log",
+      "bytes": 2316,
+      "sha256": "f708444bae1342185c76999c75f435768f9ec09f459d755ea7b749b249988038"
+    },
+    "explanation": "Mac Bash3 did not apply errexit to a failed [[ ]] guard. Added explicit || exit64 on template preconditions; unresolved template now exits before clock/host-path commands."
+  },
+  "unresolved": [
+    "fresh lane/capacity/helper check",
+    "diagnostic build and independent closure"
+  ],
+  "provider_operator_files_unchanged": true,
+  "updated": "2026-09-27",
+  "operator_commit": "cd7544f0acf2113dc6a97c4510c2ef2e0ec3fa96",
+  "new_preparation_validation": {
+    "tests": "10 passed in 0.21s",
+    "independent_tests": "38 passed in 0.54s",
+    "admission": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-diagnostic-build-only-20260926-a1.dispatch/admission.json",
+      "sha256": "716b27f0a765e43c69ed1140798aede85e0adc836b7184d417df87b29a47d34a"
+    },
+    "record_view": {
+      "path": "/data/yanruj/EvolveSWDB_runs/bfs-t17-diagnostic-build-only-20260926-a1.dispatch/record-view-manifest.json",
+      "sha256": "d8af973c393a6b4e94c23ff19fc4c26369e210b8f3c5430b78f46b590665c4da"
+    },
+    "prepared_at": "2026-09-27T00:44:23.905516-04:00",
+    "readback": {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t17-diagnostic/final-preparation-readback-20260927.json",
+      "bytes": 1330,
+      "sha256": "0c1dc468e3728c4131564e63788388379ce6c7f2307bbe2e65231b38dcb61bb8"
+    }
+  },
+  "retained_data_preparation_failure": {
+    "path": "/private/tmp/bfs-t17-data-preparation-20260927.stderr",
+    "bytes": 1098,
+    "sha256": "1dae16bf8242ffbcccae51757715d7010de0fe8891a7f0bb5a4718c951743f88"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "actual_backup_or_removal_readiness_inferred": false,
+  "created_utc": "2026-10-09T04:35:00.701228+00:00",
+  "format": "swdb.lanl17-generality-exact-recovery-removal-source-plan.v1",
+  "key_findings": [
+    "No-force worktree removal can delete ignored files; complete archive required.",
+    "Recursive deletion failure can still remove Git registration; no blind retry or force.",
+    "Original inode/dev/ctime retained as evidence, not physically restorable metadata.",
+    "Archive and optional bundle overhead must fit actual reserve without floor relaxation."
+  ],
+  "local_Git_help_only": {
+    "remote_version_unobserved": true,
+    "version": "2.55.0",
+    "worktree_remove_help_exit": 129
+  },
+  "not_run": true,
+  "official_source": {
+    "bytes": 42566,
+    "clean_check_lines": [
+      1325,
+      1362
+    ],
+    "partial_failure_registration_deletion_lines": [
+      1422,
+      1427
+    ],
+    "recursive_delete_lines": [
+      1364,
+      1375
+    ],
+    "sha256": "2c8e8a8ee6a6ee346e226116fb5cc08cb76785dcb1ced76a824ba2a1d46ce884",
+    "url": "https://raw.githubusercontent.com/git/git/v2.55.0/builtin/worktree.c"
+  },
+  "plan": {
+    "bytes": 8771,
+    "path": "/private/tmp/lanl17-generality-final-exact-recovery-removal-SOURCE-ONLY-plan-20261009-a5.md",
+    "sha256": "97e2890c9d779def7356eb317d7d285007654e9319839c22db6342bccd34e839"
+  },
+  "scientific_admission": false,
+  "source_only": true,
+  "source_pins": [
+    {
+      "bytes": 5366,
+      "path": "/private/tmp/lanl17-generality-final-recoverable-cleanup-source-eligibility-20261009-a5.json",
+      "sha256": "d5827320713b6859c99d9522f13b608f50cd1eed95eb89ee645f0586878deeb5"
+    },
+    {
+      "bytes": 38094,
+      "path": "/private/tmp/lanl17_generality_recovery_candidate_preflight_20261009_a5_r2.py",
+      "sha256": "d888106acfe66d298529df450a7f02b37ad0d4d9e569c1f6356323713c3971f1"
+    },
+    {
+      "bytes": 879,
+      "path": "/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/rules/miscellaneous.md",
+      "sha256": "dced09a31edf6808ecf7de853dea2fb50602751eacbb39430afef65adb367e84"
+    }
+  ],
+  "target_actions_performed": false
+}

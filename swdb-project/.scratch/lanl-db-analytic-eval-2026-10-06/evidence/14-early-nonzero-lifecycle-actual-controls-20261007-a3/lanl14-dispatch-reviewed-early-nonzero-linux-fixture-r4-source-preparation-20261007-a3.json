@@ -1,0 +1,74 @@
+{
+  "R4_main_executed": false,
+  "SSH_executed": false,
+  "canonical_ensure_ascii": false,
+  "complete_r3_derivation": {
+    "bytes": 1142,
+    "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-r4-complete-r3-derivation-20261007-a3.diff",
+    "sha256": "97eb63c2d069e0081b4cd42773ab53a8d06ddc6d46513c2ccabb8789d7b055bc"
+  },
+  "decoded_remote_program": {
+    "bytes": 22601,
+    "sha256": "ef04df3b30ca04c48956b678155e41a0b5975427b1a188c6ab732de907cded60"
+  },
+  "format": "swdb.lanl14-one-fixture-dispatch-r4-source-preparation.v1",
+  "handoff": {
+    "bytes": 3472,
+    "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-r4-source-handoff-20261007-a3.md",
+    "sha256": "5083d704629b81c1f1b0a3511aeddae037b04f4d28a07d9ca16c8f01de8e4cd7"
+  },
+  "identity_sha256": "358ed744577ba2fa2ccbb2676e4ef80ae3ca72d6baffaec8594afc4346fa3e9f",
+  "parent_reported_prior_actual_boundary": {
+    "R3a2_wrapper_exit": 1,
+    "fixture_OUTPUT_absent": true,
+    "fixture_case_bodies_executed": 0,
+    "frozen_processes_permission_refusal_diagnosed": true,
+    "lane1_generation": 549,
+    "original_failed_partials_preserved": true,
+    "worker_or_sibling_launched": false
+  },
+  "prepared_utc": "2026-10-07T23:42:57.191862+00:00",
+  "r3_originals_preserved": [
+    {
+      "bytes": 28967,
+      "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-20261007-a2-r3.py",
+      "sha256": "b2f92ea9a119dd5a0ce16d79a5ba36559df255fea55e5631830dacdceef95dd9"
+    },
+    {
+      "bytes": 1142,
+      "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-r3-complete-r2-derivation-20261007-a2.diff",
+      "sha256": "a192393745cfdfccef1c2ad028b70ac64ccadfe27dd7f827032f20c1958eea2a"
+    },
+    {
+      "bytes": 3497,
+      "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-r3-source-handoff-20261007-a2.md",
+      "sha256": "fa3248ec12a09c660df87895bfb5befd6b8d515923b24581ee63ddc8edaa3209"
+    },
+    {
+      "bytes": 2936,
+      "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-r3-source-preparation-20261007-a2.json",
+      "sha256": "3d4d4b4b4210e54ae0d9171e1595d4b6a64ab1a39cf662701f275a46e8639620"
+    }
+  ],
+  "scientific_admission": false,
+  "scope": "Two route literals only; R4 unexecuted, original R3a2 context-startup failure kept distinct from zero case bodies.",
+  "source": {
+    "bytes": 28967,
+    "path": "/private/tmp/lanl14-dispatch-reviewed-early-nonzero-linux-fixture-20261007-a3-r4.py",
+    "sha256": "3885b3d0a335d3ba0afb0197bb39ea2107ee8375e5954231456ac2776268c9b5"
+  },
+  "source_chmod_performed_by_this_preparation": false,
+  "source_program_imported": false,
+  "source_staged": false,
+  "static_scope": {
+    "OUTPUT_basename_unchanged": true,
+    "all_other_AST_exact": true,
+    "changed_assignments": [
+      "ROOT",
+      "JOB"
+    ],
+    "full_r3_byte_reversal": true,
+    "functions_fields_caps_env_pins_flags_unchanged": true
+  },
+  "tests_executed": false
+}

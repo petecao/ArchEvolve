@@ -1,0 +1,59 @@
+--- /private/tmp/lanl_sparse_retire_consumed_source_guard_20261008_a1_r1.py
++++ /private/tmp/lanl_sparse_retire_consumed_source_guard_20261008_a1_r2.py
+@@ -769,6 +769,7 @@
+         self.raw_before = {}
+         self.current_retirement = None
+         self.completed_dropped_paths = {}
++        self.retirement_transition_witnesses = {}
+         self.output = None
+         self.native_git_stat = None
+         self.passive_stats = {}
+@@ -970,7 +971,7 @@
+         env = {'PATH': '/usr/bin:/bin', 'LANG': 'C', 'GIT_NO_LAZY_FETCH': '1',
+                'GIT_TERMINAL_PROMPT': '0', 'GIT_OPTIONAL_LOCKS': '0', 'GIT_PAGER': 'cat',
+                'GIT_CONFIG_NOSYSTEM': '1', 'GIT_CONFIG_GLOBAL': '/dev/null'}
+-        command = ['/usr/bin/git', '-c', 'protocol.allow=never', '-c', 'core.fsmonitor=false',
++        command = ['/usr/bin/git', '--no-replace-objects', '-c', 'protocol.allow=never', '-c', 'core.fsmonitor=false',
+                    '-c', 'core.hooksPath=/dev/null']
+         if P(path) in self.selected and (P(path).name in self.completed_names()
+                 or (self.current_retirement is not None and self.current_retirement['row']==P(path).name
+@@ -1116,7 +1117,7 @@
+         ids = [x.split(b' ', 1)[0] for x in objects]
+         # cat-file --batch-check checks presence without serializing source/record bodies.
+         self.native_git()
+-        r = subprocess.run(['/usr/bin/git', '-c', 'protocol.allow=never', '-C', str(PRIMARY),
++        r = subprocess.run(['/usr/bin/git', '--no-replace-objects', '-c', 'protocol.allow=never', '-C', str(PRIMARY),
+                             'cat-file', '--batch-check=%(objectname) %(objecttype)'],
+                            input=b'\n'.join(ids)+b'\n', stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE, timeout=min(120, self.left()),
+@@ -1766,6 +1767,8 @@
+             pattern=self.create_private_sparse_pattern(name)
+             self.current_retirement['stage']='private_pattern_created'
+             transition=self.private_pattern_transition(name,pattern)
++            require(name not in self.retirement_transition_witnesses,'retirement_transition_already_recorded')
++            self.retirement_transition_witnesses[name]=transition
+             self.current_retirement['transition']=transition
+             self.current_retirement['stage']='native_read_tree_started'
+             self.git(BASE/name,'read-tree','-m','-u','HEAD')
+@@ -2094,6 +2097,13 @@
+             if old is not None and rel not in ('.','index'):
+                 require(s==old[1] and x==old[2],'retirement_unpermitted_admin_identity_changed')
+             elif rel=='.':require(s[:5]==old[1][:5] and x==old[2],'retirement_admin_root_identity_or_birth_changed')
++            elif rel in ('info','info/sparse-checkout'):
++                transition=self.retirement_transition_witnesses[name]
++                key='new_info_inode' if rel=='info' else 'new_pattern_inode'
++                require([s,x]==transition[key]
++                        and (stat.S_IMODE(s[2]) in (0o700,0o2700) if rel=='info'
++                             else stat.S_IMODE(s[2])==0o600),
++                        'retirement_private_pattern_transition_inode_or_mode_changed')
+             if stat.S_ISDIR(s[2]):
+                 names=self.directory_names(path,stamp(path.lstat())); current['names']=names
+                 if rel=='.': require(names==sorted([r for r in admin['objects'] if '/' not in r and r!='.']+['info'],key=os.fsencode),
+@@ -2141,6 +2151,7 @@
+         witness={'format':'swdb.sparse-retirement-private-poststate.v1','sealed':False,
+                  'recorded_at':now(),'guard_source_sha256':self.own_sha,'expected_primary':self.args.expected_primary,
+                  'row':name,'dropped_original_relative_paths':dropped,'poststate':second,
++                 'private_pattern_transition':self.retirement_transition_witnesses[name],
+                  'two_fresh_passes_equal':True,'cleanup_capacity_or_scientific_admission':False}
+         raw=json.dumps(witness,sort_keys=True,separators=(',',':'),ensure_ascii=True,allow_nan=False).encode()+b'\n'
+         require(len(raw)<=LIMITS['inventory_bytes'],'retirement_private_poststate_size_limit')

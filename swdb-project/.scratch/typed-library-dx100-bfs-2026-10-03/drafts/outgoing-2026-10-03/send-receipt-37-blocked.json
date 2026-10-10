@@ -1,0 +1,39 @@
+{
+  "approval_review": {
+    "outcome": "rejected",
+    "reason": "This sends detailed internal evaluation results, source pins, audit metadata, and repository links to an external email recipient; the user's broad project authorization does not specifically authorize this sensitive payload to this destination.",
+    "required_action": "Specific human approval for the exact reviewed draft and recipient; no transport workaround or retry performed."
+  },
+  "body_path": ".scratch/typed-library-dx100-bfs-2026-10-03/drafts/outgoing-2026-10-03/37-josh-statement-table.md",
+  "channel": "Gmail",
+  "confirmed_message_ids": [],
+  "confirmed_thread_ids": [],
+  "delivery": "not_sent",
+  "email_account_link_id": "link_687e6912067c819194e1a1b7fb0955ac",
+  "from": "yanruj@umich.edu",
+  "linked_evidence_commit": "6c65bdfdcca83381ad09554fa1aabcb127768282",
+  "message_id": null,
+  "observed_at_utc": "2026-10-03T13:27:37.221922+00:00",
+  "observed_delivery": "No matching Sent message found after the rejected call; no delivery is confirmed.",
+  "prepared_html_body_sha256": "414e0fa0bf9d7608d1330a05ef40963cd61cf2ce8894d14e910c5f03687ab8c6",
+  "prepared_plain_body_sha256": "f456f33644b4b74164c8ef6f67439251c1a3c1c482140111815ef617fcc53c63",
+  "retry_attempts": 0,
+  "reviewed_publication_commit": "5943c9a3aa3a74fc55d1693b1e59bc4fe8a06f9a",
+  "rfc2822_message_id": null,
+  "send_attempts": 1,
+  "sent_at_et": null,
+  "sent_at_utc": null,
+  "sent_search_after_rejection": {
+    "matching_messages": 0,
+    "next_page_token": null,
+    "query": "in:sent to:jvgrewal@umich.edu subject:\"ArchEvolve BFS: audited TDStep statement table and Callgrind rank score\" after:2026/10/02 before:2026/10/05"
+  },
+  "status": "blocked_auto_review",
+  "subject": "ArchEvolve BFS: audited TDStep statement table and Callgrind rank score",
+  "thread_id": null,
+  "ticket": "37",
+  "to": [
+    "jvgrewal@umich.edu"
+  ],
+  "verified_sent": false
+}

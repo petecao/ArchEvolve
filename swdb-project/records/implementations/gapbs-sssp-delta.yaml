@@ -1,0 +1,892 @@
+kind: implementation
+schema_version: '0.2'
+id: gapbs-sssp-delta
+status: draft
+deprecated_by: null
+created: '2026-09-22'
+updated: '2026-09-22'
+provenance:
+- id: src-gapbs-sssp-delta
+  kind: source_code
+  description: gapbs src/sssp.cc lines 64-153 (RelaxEdges, DeltaStep), src/graph.h (NodeWeight, CSRGraph),
+    src/benchmark.h (WeightT, WNode, WGraph), src/pvector.h (fill), src/platform_atomics.h (compare_and_swap,
+    fetch_and_add), src/util.h (PrintStep) at commit 2972aeb2703165bafd921222f4ed7196f542d3a8, read 2026-09-22.
+  uri: https://github.com/sbeamer/gapbs/blob/2972aeb2703165bafd921222f4ed7196f542d3a8/src/sssp.cc#L64-L153
+name: gapbs SSSP, delta-stepping with bucket fusion (DeltaStep, RelaxEdges)
+kernel: gapbs-sssp
+function: DeltaStep
+origin:
+  kind: application_source
+  description: The SSSP implementation gapbs builds as its sssp binary.
+  derived_from: null
+code:
+- root: application
+  path: src/sssp.cc
+  lines: [87, 153]
+  excerpt: |-
+    pvector<WeightT> DeltaStep(const WGraph &g, NodeID source, WeightT delta,
+                               bool logging_enabled = false) {
+      Timer t;
+      pvector<WeightT> dist(g.num_nodes(), kDistInf);
+      dist[source] = 0;
+      pvector<NodeID> frontier(g.num_edges_directed());
+      // two element arrays for double buffering curr=iter&1, next=(iter+1)&1
+      size_t shared_indexes[2] = {0, kMaxBin};
+      size_t frontier_tails[2] = {1, 0};
+      frontier[0] = source;
+      t.Start();
+      #pragma omp parallel
+      {
+        vector<vector<NodeID> > local_bins(0);
+        size_t iter = 0;
+        while (shared_indexes[iter&1] != kMaxBin) {
+          size_t &curr_bin_index = shared_indexes[iter&1];
+          size_t &next_bin_index = shared_indexes[(iter+1)&1];
+          size_t &curr_frontier_tail = frontier_tails[iter&1];
+          size_t &next_frontier_tail = frontier_tails[(iter+1)&1];
+          #pragma omp for nowait schedule(dynamic, 64)
+          for (size_t i=0; i < curr_frontier_tail; i++) {
+            NodeID u = frontier[i];
+            if (dist[u] >= delta * static_cast<WeightT>(curr_bin_index))
+              RelaxEdges(g, u, delta, dist, local_bins);
+          }
+          while (curr_bin_index < local_bins.size() &&
+                 !local_bins[curr_bin_index].empty() &&
+                 local_bins[curr_bin_index].size() < kBinSizeThreshold) {
+            vector<NodeID> curr_bin_copy = local_bins[curr_bin_index];
+            local_bins[curr_bin_index].resize(0);
+            for (NodeID u : curr_bin_copy)
+              RelaxEdges(g, u, delta, dist, local_bins);
+          }
+          for (size_t i=curr_bin_index; i < local_bins.size(); i++) {
+            if (!local_bins[i].empty()) {
+              #pragma omp critical
+              next_bin_index = min(next_bin_index, i);
+              break;
+            }
+          }
+          #pragma omp barrier
+          #pragma omp single nowait
+          {
+            t.Stop();
+            if (logging_enabled)
+              PrintStep(curr_bin_index, t.Millisecs(), curr_frontier_tail);
+            t.Start();
+            curr_bin_index = kMaxBin;
+            curr_frontier_tail = 0;
+          }
+          if (next_bin_index < local_bins.size()) {
+            size_t copy_start = fetch_and_add(next_frontier_tail,
+                                              local_bins[next_bin_index].size());
+            copy(local_bins[next_bin_index].begin(),
+                 local_bins[next_bin_index].end(), frontier.data() + copy_start);
+            local_bins[next_bin_index].resize(0);
+          }
+          iter++;
+          #pragma omp barrier
+        }
+        #pragma omp single
+        if (logging_enabled)
+          cout << "took " << iter << " iterations" << endl;
+      }
+      return dist;
+    }
+  sha256: null
+- root: application
+  path: src/sssp.cc
+  lines: [68, 85]
+  excerpt: |-
+    inline
+    void RelaxEdges(const WGraph &g, NodeID u, WeightT delta,
+                    pvector<WeightT> &dist, vector <vector<NodeID>> &local_bins) {
+      for (WNode wn : g.out_neigh(u)) {
+        WeightT old_dist = dist[wn.v];
+        WeightT new_dist = dist[u] + wn.w;
+        while (new_dist < old_dist) {
+          if (compare_and_swap(dist[wn.v], old_dist, new_dist)) {
+            size_t dest_bin = new_dist/delta;
+            if (dest_bin >= local_bins.size())
+              local_bins.resize(dest_bin+1);
+            local_bins[dest_bin].push_back(wn.v);
+            break;
+          }
+          old_dist = dist[wn.v];      // swap failed, recheck dist update & retry
+        }
+      }
+    }
+  sha256: null
+build:
+  compiler: g++
+  flags: -std=c++11 -O3 -Wall -fopenmp
+  command: '{cxx} {flags} {source} -o {binary}'
+run:
+  command: '{binary} {input_args} -n {trials}'
+  timer: gapbs_trial_time
+  threads_env: OMP_NUM_THREADS
+  sweep_log_flag: null
+  kernel_symbols: [DeltaStep, RelaxEdges]
+  index_stream: null
+loops:
+- id: dist-fill
+  description: 'pvector<WeightT> dist(g.num_nodes(), kDistInf) (sssp.cc line 90): pvector::fill'
+  parent: null
+  trip_count:
+    value: null
+    formula: num_nodes
+    scope: per_call
+    basis: code_reading
+    evidence_refs: [src-gapbs-sssp-delta]
+  parallel:
+    construct: omp_parallel_for
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/pvector.h
+    lines: [133, 135]
+    excerpt: |2-
+          #pragma omp parallel for
+          for (T_* ptr=start_; ptr < end_size_; ptr++)
+            *ptr = init_val;
+    sha256: null
+- id: bucket
+  description: 'DeltaStep: one iteration per processed bucket; every thread of the parallel region (line
+    98) runs it in step, with two barriers per iteration (lines 128, 146)'
+  parent: null
+  trip_count:
+    value: null
+    formula: null
+    scope: per_call
+    basis: unknown
+    evidence_refs: [src-gapbs-sssp-delta]
+    note: Depends on the input, the source, the weights and delta (-d, default 1); bucket fusion (lines
+      113-120) lowers it. With -l gapbs prints "took <n> iterations" (line 150), which the profiler does
+      not read.
+  parallel:
+    construct: serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/sssp.cc
+    lines: [102, 147]
+    excerpt: |2-
+          while (shared_indexes[iter&1] != kMaxBin) {
+            size_t &curr_bin_index = shared_indexes[iter&1];
+            size_t &next_bin_index = shared_indexes[(iter+1)&1];
+            size_t &curr_frontier_tail = frontier_tails[iter&1];
+            size_t &next_frontier_tail = frontier_tails[(iter+1)&1];
+            #pragma omp for nowait schedule(dynamic, 64)
+            for (size_t i=0; i < curr_frontier_tail; i++) {
+              NodeID u = frontier[i];
+              if (dist[u] >= delta * static_cast<WeightT>(curr_bin_index))
+                RelaxEdges(g, u, delta, dist, local_bins);
+            }
+            while (curr_bin_index < local_bins.size() &&
+                   !local_bins[curr_bin_index].empty() &&
+                   local_bins[curr_bin_index].size() < kBinSizeThreshold) {
+              vector<NodeID> curr_bin_copy = local_bins[curr_bin_index];
+              local_bins[curr_bin_index].resize(0);
+              for (NodeID u : curr_bin_copy)
+                RelaxEdges(g, u, delta, dist, local_bins);
+            }
+            for (size_t i=curr_bin_index; i < local_bins.size(); i++) {
+              if (!local_bins[i].empty()) {
+                #pragma omp critical
+                next_bin_index = min(next_bin_index, i);
+                break;
+              }
+            }
+            #pragma omp barrier
+            #pragma omp single nowait
+            {
+              t.Stop();
+              if (logging_enabled)
+                PrintStep(curr_bin_index, t.Millisecs(), curr_frontier_tail);
+              t.Start();
+              curr_bin_index = kMaxBin;
+              curr_frontier_tail = 0;
+            }
+            if (next_bin_index < local_bins.size()) {
+              size_t copy_start = fetch_and_add(next_frontier_tail,
+                                                local_bins[next_bin_index].size());
+              copy(local_bins[next_bin_index].begin(),
+                   local_bins[next_bin_index].end(), frontier.data() + copy_start);
+              local_bins[next_bin_index].resize(0);
+            }
+            iter++;
+            #pragma omp barrier
+          }
+    sha256: null
+- id: frontier
+  description: 'DeltaStep: for u in the shared frontier of the current bucket; relax u if it still belongs
+    to this bucket or a later one'
+  parent: bucket
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-gapbs-sssp-delta]
+    note: 'One sweep = one bucket iteration: curr_frontier_tail, which may include stale duplicates of
+      a vertex.'
+  parallel:
+    construct: omp_for_in_parallel_region
+    schedule: dynamic, 64
+    reduction: null
+  code:
+    root: application
+    path: src/sssp.cc
+    lines: [107, 112]
+    excerpt: |2-
+            #pragma omp for nowait schedule(dynamic, 64)
+            for (size_t i=0; i < curr_frontier_tail; i++) {
+              NodeID u = frontier[i];
+              if (dist[u] >= delta * static_cast<WeightT>(curr_bin_index))
+                RelaxEdges(g, u, delta, dist, local_bins);
+            }
+    sha256: null
+- id: relax-edge
+  description: 'RelaxEdges: for wn in g.out_neigh(u): try to lower dist[wn.v]'
+  parent: frontier
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-gapbs-sssp-delta]
+    note: Sum of the out-degrees of the vertices relaxed in one bucket iteration, including the fused
+      ones.
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/sssp.cc
+    lines: [71, 84]
+    excerpt: |2-
+        for (WNode wn : g.out_neigh(u)) {
+          WeightT old_dist = dist[wn.v];
+          WeightT new_dist = dist[u] + wn.w;
+          while (new_dist < old_dist) {
+            if (compare_and_swap(dist[wn.v], old_dist, new_dist)) {
+              size_t dest_bin = new_dist/delta;
+              if (dest_bin >= local_bins.size())
+                local_bins.resize(dest_bin+1);
+              local_bins[dest_bin].push_back(wn.v);
+              break;
+            }
+            old_dist = dist[wn.v];      // swap failed, recheck dist update & retry
+          }
+        }
+    sha256: null
+- id: cas-retry
+  description: 'RelaxEdges: retry the CAS while the new distance is still smaller'
+  parent: relax-edge
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-gapbs-sssp-delta]
+    note: One pass per improving edge plus one per failed CAS; failures depend on contention.
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/sssp.cc
+    lines: [74, 83]
+    excerpt: |2-
+          while (new_dist < old_dist) {
+            if (compare_and_swap(dist[wn.v], old_dist, new_dist)) {
+              size_t dest_bin = new_dist/delta;
+              if (dest_bin >= local_bins.size())
+                local_bins.resize(dest_bin+1);
+              local_bins[dest_bin].push_back(wn.v);
+              break;
+            }
+            old_dist = dist[wn.v];      // swap failed, recheck dist update & retry
+          }
+    sha256: null
+- id: fusion
+  description: 'Bucket fusion: each thread keeps relaxing its own current-bucket bin while it is non-empty
+    and smaller than 1000'
+  parent: bucket
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-gapbs-sssp-delta]
+    note: Per thread; runs on the thread-local bin, not on a worksharing loop.
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/sssp.cc
+    lines: [113, 120]
+    excerpt: |2-
+            while (curr_bin_index < local_bins.size() &&
+                   !local_bins[curr_bin_index].empty() &&
+                   local_bins[curr_bin_index].size() < kBinSizeThreshold) {
+              vector<NodeID> curr_bin_copy = local_bins[curr_bin_index];
+              local_bins[curr_bin_index].resize(0);
+              for (NodeID u : curr_bin_copy)
+                RelaxEdges(g, u, delta, dist, local_bins);
+            }
+    sha256: null
+- id: fusion-vertex
+  description: 'Bucket fusion: for u in the copied thread-local bin: RelaxEdges'
+  parent: fusion
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-gapbs-sssp-delta]
+    note: Fewer than kBinSizeThreshold = 1000 vertices per fused bin.
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/sssp.cc
+    lines: [118, 119]
+    excerpt: |2-
+              for (NodeID u : curr_bin_copy)
+                RelaxEdges(g, u, delta, dist, local_bins);
+    sha256: null
+- id: bin-copy
+  description: Each thread copies its bin for the next bucket into the shared frontier at a fetch_and_add
+    offset
+  parent: bucket
+  trip_count:
+    value: null
+    formula: null
+    scope: per_sweep
+    basis: unknown
+    evidence_refs: [src-gapbs-sssp-delta]
+    note: The size of the thread's next bin.
+  parallel:
+    construct: nested_serial
+    schedule: null
+    reduction: null
+  code:
+    root: application
+    path: src/sssp.cc
+    lines: [138, 144]
+    excerpt: |2-
+            if (next_bin_index < local_bins.size()) {
+              size_t copy_start = fetch_and_add(next_frontier_tail,
+                                                local_bins[next_bin_index].size());
+              copy(local_bins[next_bin_index].begin(),
+                   local_bins[next_bin_index].end(), frontier.data() + copy_start);
+              local_bins[next_bin_index].resize(0);
+            }
+    sha256: null
+access_patterns:
+- id: frontier-read
+  expression: u = frontier[i] for i < curr_frontier_tail
+  loop: frontier
+  steps:
+  - array:
+      name: frontier
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: The next frontier is written only after the barrier at line 128, once every thread has finished
+        reading the current one.
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: All threads read disjoint chunks of one frontier array (omp for).
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+  evidence_refs: [src-gapbs-sssp-delta]
+- id: frontier-dist-check
+  expression: dist[u] >= delta * curr_bin_index
+  loop: frontier
+  steps:
+  - array:
+      name: frontier
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: u = frontier[i]
+  - array:
+      name: dist
+      role: target
+      element_type: WeightT (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: dist[u]
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: A vertex stays in every bin it was added to (sssp.cc lines 41-44), so the frontier can hold
+        it more than once.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: Other iterations' relaxations can lower dist[u] before this read.
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: Any thread can lower dist[u] concurrently.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: A plain read; a stale value only causes redundant or skipped-then-requeued work.
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: Whether a stale entry is skipped depends on the timing of other relaxations; the final distances
+        do not.
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+  evidence_refs: [src-gapbs-sssp-delta]
+- id: relax-dist-u
+  expression: dist[u] + wn.w
+  loop: relax-edge
+  steps:
+  - array:
+      name: frontier
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: u = frontier[i] walks the shared frontier (in the fused path, u comes from the thread-local
+      curr_bin_copy instead)
+  - array:
+      name: dist
+      role: target
+      element_type: WeightT (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: dist[u], read again for every out-edge
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: Read once per out-edge of u, and u can be processed more than once.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: Other relaxations (any thread) can lower dist[u] between edges.
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: Any thread can lower dist[u] concurrently.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: A plain read; with a stale (larger) value the relaxation is only weaker, and u is requeued
+        when lowered.
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: Intermediate values depend on the schedule; the final distances do not.
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+  evidence_refs: [src-gapbs-sssp-delta]
+- id: relax-dist-v
+  expression: compare_and_swap(dist[wn.v], old_dist, new_dist) while new_dist < old_dist
+  loop: relax-edge
+  steps:
+  - array:
+      name: frontier
+      role: index
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: u = frontier[i] walks the shared frontier (in the fused path, u comes from the thread-local
+      curr_bin_copy instead)
+  - array:
+      name: g.out_index_
+      role: offsets
+      element_type: WNode* (pointer into out_neighbors_)
+      element_bytes: 8
+      element_count: num_nodes + 1
+      layout: array_of_pointers
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: reads out_index_[u] and out_index_[u+1], the bounds of u's out-edge range
+  - array:
+      name: g.out_neighbors_
+      role: index
+      element_type: WNode = NodeWeight<int32_t, int32_t> {v, w}
+      element_bytes: 8
+      element_count: num_edges_directed
+      layout: array_of_structs
+    address_shape: ranged_indirect
+    note: 'walks out_neighbors_[out_index_[u] .. out_index_[u+1]); each WNode (8 B: v then w) is copied
+      whole, .v indexes dist and .w is the weight added'
+  - array:
+      name: dist
+      role: target
+      element_type: WeightT (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: single_valued_indirect
+    index_transform: identity
+    note: 'dist[wn.v]: read, then CAS to new_dist while it is smaller, re-read on failure (lines 72-83)'
+  update_kind: compare_and_swap
+  update:
+    pseudocode: 'old = dist[v]; new = dist[u] + w; while new < old: if CAS(dist[v], old, new): local_bins[new
+      / delta].push_back(v); break; else old = dist[v]'
+    side_effects: pushes v into the thread-local bin new_dist / delta
+  semantics:
+    duplicate_target_indices:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: Many u can share an out-neighbor v, and the same edge can be relaxed again when u is requeued.
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: The graph is passed as const; its index and neighbor arrays are never written by the kernel.
+    loop_carried_dependencies:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: A lowered dist[v] is read by later relaxations in the same bucket (through the frontier check
+        and relax-dist-u, and the fused bins), so an iteration can depend on an earlier one; the fixpoint
+        is the same.
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: Any thread can relax any v.
+    atomic_updates_required:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: An atomic min implemented with compare_and_swap (__sync_bool_compare_and_swap on int32_t,
+        platform_atomics.h lines 29-32) in a retry loop (lines 74-83); a plain store could overwrite a
+        smaller distance.
+    ordering:
+      value: schedule_dependent
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: The number of relaxations depends on the schedule; the final distances are the unique shortest
+        distances.
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: Integer distances; SSSPVerifier requires exact equality.
+  evidence_refs: [src-gapbs-sssp-delta]
+  note: A min-update (dist[v] = min(dist[v], dist[u] + w)) implemented with a CAS loop.
+- id: local-bin-push
+  expression: local_bins[dest_bin].push_back(wn.v)
+  loop: relax-edge
+  steps:
+  - array:
+      name: local_bins
+      role: target
+      element_type: NodeID (int32_t) in std::vector<NodeID>, one vector per bin per thread
+      element_bytes: 4
+      element_count: null
+      layout: unknown
+    address_shape: stream
+    stride: 1
+    note: appends to the end of the thread's std::vector for bin new_dist / delta; the outer vector grows
+      with resize (lines 76-79) The bins' total size depends on the data at run time, so element_count
+      is null (unknown), not a guess.
+  update_kind: write
+  update:
+    pseudocode: local_bins[new_dist / delta].push_back(v)
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: 'local_bins is declared inside the parallel region (line 100): one per thread.'
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: The order within a bin does not change the result.
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: Vertex IDs are copied exactly.
+  evidence_refs: [src-gapbs-sssp-delta]
+  note: 'element_count is a placeholder, not a bound: the bins'' total size is data-dependent (a vertex
+    is pushed once per successful CAS); num_edges_directed is the size gapbs assumes for one bucket''s
+    frontier (line 92).'
+- id: bin-copy-read
+  expression: copy(local_bins[next_bin_index]...)
+  loop: bin-copy
+  steps:
+  - array:
+      name: local_bins
+      role: target
+      element_type: NodeID (int32_t) in std::vector<NodeID>, one vector per bin per thread
+      element_bytes: 4
+      element_count: null
+      layout: unknown
+    address_shape: stream
+    stride: 1
+    note: The bins' total size depends on the data at run time, so element_count is null (unknown), not
+      a guess.
+  update_kind: read
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: Each thread reads only its own bins.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+  evidence_refs: [src-gapbs-sssp-delta]
+- id: bin-copy-write
+  expression: copy(...) into frontier.data() + fetch_and_add(next_frontier_tail, size)
+  loop: bin-copy
+  steps:
+  - array:
+      name: frontier
+      role: target
+      element_type: NodeID (int32_t)
+      element_bytes: 4
+      element_count: num_edges_directed
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+    note: one contiguous block per thread, at an offset reserved by fetch_and_add (line 139)
+  update_kind: write
+  update:
+    pseudocode: null
+    side_effects: advances next_frontier_tail atomically
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: The frontier is read in the next iteration, after the barrier at line 146.
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    shared_target_between_threads:
+      value: true
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: All threads write one frontier array, in disjoint reserved ranges.
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: Element stores are plain; only the scalar next_frontier_tail uses fetch_and_add.
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+      note: Vertex IDs are copied exactly; their order is free.
+  evidence_refs: [src-gapbs-sssp-delta]
+- id: dist-init
+  expression: dist[n] = kDistInf (pvector fill)
+  loop: dist-fill
+  steps:
+  - array:
+      name: dist
+      role: target
+      element_type: WeightT (int32_t)
+      element_bytes: 4
+      element_count: num_nodes
+      layout: contiguous
+    address_shape: stream
+    stride: 1
+  update_kind: write
+  update:
+    pseudocode: null
+    side_effects: null
+  semantics:
+    duplicate_target_indices:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    index_modified_during_loop:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    loop_carried_dependencies:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    shared_target_between_threads:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    atomic_updates_required:
+      value: false
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    ordering:
+      value: any_order
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+    numerical_requirement:
+      value: exact
+      basis: code_reading
+      evidence_refs: [src-gapbs-sssp-delta]
+  evidence_refs: [src-gapbs-sssp-delta]
+notes:
+- NodeID and WeightT are int32_t; WNode = NodeWeight<int32_t, int32_t> is {v, w}, 8 bytes (src/benchmark.h
+  lines 31-33, src/graph.h lines 30-36); CSR index arrays hold WNode* pointers, 8 bytes per element.
+- frontier is pvector<NodeID>(g.num_edges_directed()) (line 92), allocated but not filled; local_bins
+  are thread-local std::vector<std::vector<NodeID>> (line 100).
+- The fused path copies a thread-local bin of fewer than 1000 IDs (curr_bin_copy, line 116) and the bin
+  vote (lines 121-127) scans thread-local bin headers; neither is graph-sized, so neither has an access
+  pattern.
+- 'sweep_log_flag is null: with -l DeltaStep prints PrintStep(curr_bin_index, t.Millisecs(), curr_frontier_tail)
+  (line 133), a line of three fields (bin index, frontier size, milliseconds) through util.h lines 37-46,
+  not the <integer> <number> form, and its first field is a bucket index, not an iteration count.'
+- 'index_stream is null: the traversal visits neighbor lists in frontier order, which depends on the source
+  and (for the parallel steps) on the thread schedule, so the extractor''s CSR order (in_neighbors_by_vertex
+  / out_neighbors_by_vertex) is not the kernel''s order.'
+- Only out_index_/out_neighbors_ are read, so no array needs undirected_alias.
+- kernel_symbols are DeltaStep and RelaxEdges (declared inline, likely inlined at -O3 into DeltaStep's
+  outlined body, which DeltaStep matches). The dist fill runs in pvector<int>::fill's own outlined function
+  and is not counted as the kernel.
+- 'local_bins has element_count null: its size depends on the data at run time, so footprints of this
+  implementation are lower bounds.'
+extensions: {}

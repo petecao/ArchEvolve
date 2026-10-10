@@ -1,0 +1,11 @@
+name: loop_restructures
+description: Ways a loop strategy restructures a loop nest.
+values:
+  - value: tile
+    meaning: Splits the iteration space into blocks (tiles) executed one after another, so data is reused while it is still in a cache.
+  - value: interchange
+    meaning: Swaps the nesting order of two loops.
+  - value: split
+    meaning: Splits one loop into two over parts of its iteration space or its body (also called fission or distribution).
+  - value: fuse
+    meaning: Merges two loops over the same iteration space into one.

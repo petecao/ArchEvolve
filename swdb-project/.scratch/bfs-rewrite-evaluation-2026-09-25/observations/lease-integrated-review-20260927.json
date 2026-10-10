@@ -1,0 +1,57 @@
+{
+  "created": "2026-09-27",
+  "state": "scoped_pass",
+  "scope": [
+    "lease_observation bounded coherent snapshots",
+    "historical6a proof adapter exact commit and two Git-verified file hashes",
+    "fresh lease plans reject historical alias",
+    "fresh51case supplement/a6standard fixture integration",
+    "fixed600second2GiB five-root group operator"
+  ],
+  "files": {
+    "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_batch.py": "ea7a120e0cb055694ee5fab6651ecbaa881cfb7f8cabe10cd54231220f7e2b12",
+    "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_linux_fixture.py": "392aa8256042e5780d5c0c219f2251ee3c739b8f5a48071d4633efa3f904b836",
+    "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_supervision_supplement.py": "81490a89b1af2fa4c7b6d89da261f028da8bdcd73f80935df446011f8e3a300d",
+    "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_recovery.py": "74d35a1418c78fd44b9719224cf8d3470ad726460cb8f8b9239cb0608495b029",
+    "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_batch.py": "f12aca2a4eb15cbb565cd8a961f4ae249ca91a858e58cdd096366187b03b2ab7",
+    "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_linux_fixture.py": "ff4d43276acf59512cf6688de353ffb4bb67d700c40d91e01f941ecb21bbfff9",
+    "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_recovery.py": "44c0470a090076186a844947c719bbd73df64dff53b91688337b762f30080b65",
+    "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/lease-recovery/README.md": "f63d0568a8bbedc14c6f013d5a4b15013827c9ea5e49d6612470cf1ccab3d912",
+    "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/lease-recovery/config-template.json": "d1d04d75fea0f41c0bc473f44531169ed7e09ac1df08ca30b41cfe8398568af5",
+    "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/lease-recovery/launch.sh": "46c0da7a2f679b2e5e35ee1d1322bbd9c813aafc68e605192e796d1807ae1ffc",
+    "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/lease-recovery/operator.py": "e8eebe45c5525cfe6b385653c4139cb0230769c9786bfdc344256b31a291915d",
+    "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/lease-recovery/test_operator.py": "dd73143cc5a9e799e6f4b576e20160f5fa1a6af0429275ede30165472fa0a40d"
+  },
+  "tests": {
+    "passed": 215,
+    "skipped": 2,
+    "seconds": 19.48,
+    "log": "/private/tmp/bfs-lease-integrated-independent-20260927.log",
+    "skips": "existing Linux-only cleanup tests on macOS"
+  },
+  "independent_checks": [
+    "shellsyntax",
+    "exact6a consumer hashes independently match Git blobs",
+    "exacthistorical6a admission accepted",
+    "currentbatch primitive rejected",
+    "currentrecovery reader rejected",
+    "changedcommit rejected"
+  ],
+  "prior_blocker": "closed: exact historical adapter whitelist plus new-plan alias rejection",
+  "remaining_dispatch_prerequisites": [
+    "sealed runtime Git export and fullmanifest",
+    "prospective config/node/helpercomparison",
+    "actual fresh Linux proof and independent closure"
+  ],
+  "remote_execution": false,
+  "source_edits": false,
+  "acceptance_claim": false,
+  "root_verification": {
+    "date_et": "2026-09-27",
+    "command": "python3 -m pytest tests/test_bfs_simulator_recovery.py tests/test_bfs_simulator_batch.py tests/test_bfs_linux_fixture.py -q -p no:cacheprovider",
+    "passed": 202,
+    "skipped": 2,
+    "seconds": 19.45,
+    "git_diff_check": "passed"
+  }
+}

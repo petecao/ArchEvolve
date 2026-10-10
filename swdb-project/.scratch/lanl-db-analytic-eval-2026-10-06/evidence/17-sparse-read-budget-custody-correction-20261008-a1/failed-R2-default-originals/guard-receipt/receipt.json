@@ -1,0 +1,713 @@
+{
+  "actual_recovery_not_guaranteed": true,
+  "admission_scope": "selected library-preserving sparse inspection/retirement only",
+  "admitted": false,
+  "bytes_read": 17180239456,
+  "canonical_ensure_ascii": true,
+  "capacity_gates_scientific_caps_provider_auth_raw_refs_objects_unchanged": true,
+  "completed_retirements": [],
+  "effective_private_ancestor_roots": {
+    "/data/yanruj": {
+      "checks": 78668,
+      "fixed_privacy_identity": {
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 9175041,
+        "mode": 16832,
+        "uid": 114316761
+      },
+      "initial_stat": {
+        "ctime_ns": 1790736763217442832,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 9175041,
+        "mode": 16832,
+        "mtime_ns": 1790736763217442832,
+        "nlink": 59,
+        "size": 4096,
+        "uid": 114316761
+      },
+      "latest_stat": {
+        "ctime_ns": 1790736763217442832,
+        "dev": 2065,
+        "gid": 114316761,
+        "ino": 9175041,
+        "mode": 16832,
+        "mtime_ns": 1790736763217442832,
+        "nlink": 59,
+        "size": 4096,
+        "uid": 114316761
+      }
+    },
+    "/data1/yanruj": {
+      "checks": 164262,
+      "fixed_privacy_identity": {
+        "dev": 2097,
+        "gid": 0,
+        "ino": 54132737,
+        "mode": 16832,
+        "uid": 114316761
+      },
+      "initial_stat": {
+        "ctime_ns": 1791455650019064393,
+        "dev": 2097,
+        "gid": 0,
+        "ino": 54132737,
+        "mode": 16832,
+        "mtime_ns": 1791455650019064393,
+        "nlink": 388,
+        "size": 36864,
+        "uid": 114316761
+      },
+      "latest_stat": {
+        "ctime_ns": 1791455650683071259,
+        "dev": 2097,
+        "gid": 0,
+        "ino": 54132737,
+        "mode": 16832,
+        "mtime_ns": 1791455650683071259,
+        "nlink": 389,
+        "size": 36864,
+        "uid": 114316761
+      }
+    }
+  },
+  "expected_primary": "5e12a9796432654d88def24ecea617d16ca605b2",
+  "external_processes_killed": false,
+  "failure": "cumulative_read_limit",
+  "final14_completed_and_released_is_parent_semantic_attestation": true,
+  "finished_at": "2026-10-08T10:36:18.459503+00:00",
+  "format": "swdb.library-preserving-sparse-retirement-guard.v1",
+  "free_before_bytes": {
+    "/data": 46785994752,
+    "/data1": 22632398848
+  },
+  "full_raw_byte_passes": "incomplete",
+  "guard_source_sha256": "4956a7453ae569d7ccf6e1a9ed98a1a933bee2e35cca1774932afbfba819bd26",
+  "historical_references_retain_original_bytes": true,
+  "identity_sha256": "9ce65f3405fddc2d750ca559fe3f08a2bc8b7a379bd8f848ae39808cf3fe68ce",
+  "initial_checks": {
+    "aliases": {
+      "future_control_sources_byte_pinned": 13,
+      "historical_classification_inherited_parent_review": true,
+      "historical_files": 345,
+      "pending_alias_coverage_inherited_parent_review": true,
+      "retired_nonlibrary_physical_source_availability_claimed": false,
+      "retired_nonlibrary_source_fields_bind_retained_Git_and_original_receipt_only": true
+    },
+    "effective_private_ancestor_roots": {
+      "/data/yanruj": {
+        "checks": 40620,
+        "fixed_privacy_identity": {
+          "dev": 2065,
+          "gid": 114316761,
+          "ino": 9175041,
+          "mode": 16832,
+          "uid": 114316761
+        },
+        "initial_stat": {
+          "ctime_ns": 1790736763217442832,
+          "dev": 2065,
+          "gid": 114316761,
+          "ino": 9175041,
+          "mode": 16832,
+          "mtime_ns": 1790736763217442832,
+          "nlink": 59,
+          "size": 4096,
+          "uid": 114316761
+        },
+        "latest_stat": {
+          "ctime_ns": 1790736763217442832,
+          "dev": 2065,
+          "gid": 114316761,
+          "ino": 9175041,
+          "mode": 16832,
+          "mtime_ns": 1790736763217442832,
+          "nlink": 59,
+          "size": 4096,
+          "uid": 114316761
+        }
+      },
+      "/data1/yanruj": {
+        "checks": 164069,
+        "fixed_privacy_identity": {
+          "dev": 2097,
+          "gid": 0,
+          "ino": 54132737,
+          "mode": 16832,
+          "uid": 114316761
+        },
+        "initial_stat": {
+          "ctime_ns": 1791455650019064393,
+          "dev": 2097,
+          "gid": 0,
+          "ino": 54132737,
+          "mode": 16832,
+          "mtime_ns": 1791455650019064393,
+          "nlink": 388,
+          "size": 36864,
+          "uid": 114316761
+        },
+        "latest_stat": {
+          "ctime_ns": 1791455650683071259,
+          "dev": 2097,
+          "gid": 0,
+          "ino": 54132737,
+          "mode": 16832,
+          "mtime_ns": 1791455650683071259,
+          "nlink": 389,
+          "size": 36864,
+          "uid": 114316761
+        }
+      }
+    },
+    "leases": {
+      "mbit10-evaluation": {
+        "sha256": "7c553f8a9743bad52659e93651d454ea9758d8b9c8f0268f8b3d260c8b3f72a0",
+        "stat": {
+          "ctime_ns": 1789188551508179403,
+          "dev": 2097,
+          "gid": 0,
+          "ino": 55199381,
+          "mode": 33206,
+          "mtime_ns": 1789188551505179372,
+          "nlink": 1,
+          "size": 473,
+          "uid": 114316761
+        },
+        "state": "released"
+      },
+      "mbit10-evaluation-node0": {
+        "sha256": "6d3843763718de02df41c461f67d199f18a028ecfd5240bd6946e0997e2772dc",
+        "stat": {
+          "ctime_ns": 1791421367061957728,
+          "dev": 2097,
+          "gid": 0,
+          "ino": 55218333,
+          "mode": 33206,
+          "mtime_ns": 1791421367057957686,
+          "nlink": 1,
+          "size": 482,
+          "uid": 114316761
+        },
+        "state": "released"
+      },
+      "mbit10-evaluation-node1": {
+        "sha256": "43a6732256d53c78e39842157839ab8b8635eabcf39cd0e5e5e44ac95991914e",
+        "stat": {
+          "ctime_ns": 1791416635843148460,
+          "dev": 2097,
+          "gid": 0,
+          "ino": 55217990,
+          "mode": 33206,
+          "mtime_ns": 1791416635842148449,
+          "nlink": 1,
+          "size": 482,
+          "uid": 114316761
+        },
+        "state": "released"
+      }
+    },
+    "processes": {
+      "initial_reference_clearance_claimed": false,
+      "performed": false,
+      "qualification_deferred_to": "assessment_completion"
+    },
+    "raw_tree_count": 30,
+    "raw_tree_inventory_sha256": "ecd98b0bd856e3aba8c59a99e0f8abc7023f6b660cb4fca2ad4960d8bd244093",
+    "sources": {
+      "C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+      "F6": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+      "Python_blob_entries_exact_C": 185,
+      "expected_primary": "5e12a9796432654d88def24ecea617d16ca605b2",
+      "retained_refs_sha256": "42f9c8640dc83ba7f10bb4a4b45c3d09655c3df0c9a9e66a1fadf313f73f4d9f"
+    },
+    "trees": {
+      "ArchEvolve-lanl-allocator-a2-20261006": {
+        "detached_clean_ignored0_untracked0": true,
+        "directory_stat": {
+          "ctime_ns": 1791329486669570943,
+          "dev": 2097,
+          "gid": 114316761,
+          "ino": 60329741,
+          "mode": 16893,
+          "mtime_ns": 1791329486669570943,
+          "nlink": 15,
+          "size": 4096,
+          "uid": 114316761
+        },
+        "gitfile_sha256": "9626ee8cf9d39610c1c866ab9ffe4406b3eb0913c72d700d282b8d628826abe6",
+        "head": "b9dabf361b429f0c07717f1891573f5d5f31b1ab",
+        "regular_bytes_verified": true,
+        "retained_objects": 12183,
+        "tracked_allocated_bytes_observed": 176562176,
+        "tracked_entries": 3086,
+        "tracked_logical_bytes": 169687210,
+        "tracked_mode_blob_source_inventory_sha256": "c42fe51de34943e5096ec1a793e85f075f84da0d0f296d8fe4913659dd97ef60",
+        "tracked_stat_inventory_sha256": "99d442fc01b91ee90f540a88257b386d762da66cfb9bf52280110a8202e95afa",
+        "tree": "dc9e0e8de5044b7ec4c0b5a54bba39872d4d5c6a"
+      },
+      "ArchEvolve-lanl-bulk-services-20261006-a1": {
+        "detached_clean_ignored0_untracked0": true,
+        "directory_stat": {
+          "ctime_ns": 1791335069206478540,
+          "dev": 2097,
+          "gid": 114316761,
+          "ino": 68310815,
+          "mode": 16893,
+          "mtime_ns": 1791335069206478540,
+          "nlink": 15,
+          "size": 4096,
+          "uid": 114316761
+        },
+        "gitfile_sha256": "dce4cfb852f67d543b28b923cd081fa6b934e845d11d7a3eb9688b789d60978f",
+        "head": "aaf9a9d24a3b2f18af9a7ad8c445025fea366162",
+        "regular_bytes_verified": true,
+        "retained_objects": 13134,
+        "tracked_allocated_bytes_observed": 248090624,
+        "tracked_entries": 3228,
+        "tracked_logical_bytes": 240918826,
+        "tracked_mode_blob_source_inventory_sha256": "19d8f4ba0d624bc6aef624ff3ff62a8d339d2ca6227e9b386cdd4a3c48b2a230",
+        "tracked_stat_inventory_sha256": "a164d0e7611240f672efd74740aa9c3cf3a34939be77fdb39657bf3e01795a29",
+        "tree": "3cf1180174209405917f9c5b0c45d5d24be2e5bb"
+      },
+      "ArchEvolve-lanl-bulk-total-services-20261006-a1": {
+        "detached_clean_ignored0_untracked0": true,
+        "directory_stat": {
+          "ctime_ns": 1791337259917415821,
+          "dev": 2097,
+          "gid": 114316761,
+          "ino": 68963138,
+          "mode": 16893,
+          "mtime_ns": 1791337259917415821,
+          "nlink": 15,
+          "size": 4096,
+          "uid": 114316761
+        },
+        "gitfile_sha256": "0a7fdbf05859ab09efe4d84c7b7a860632a73ea1d4c8524661b84f6f8eda555a",
+        "head": "1703c98717ff303fdaa83b8044ac9b4060fedb78",
+        "regular_bytes_verified": true,
+        "retained_objects": 13377,
+        "tracked_allocated_bytes_observed": 274186240,
+        "tracked_entries": 3270,
+        "tracked_logical_bytes": 266935622,
+        "tracked_mode_blob_source_inventory_sha256": "fdd0cdde962094e3abf780293a614e09acea34cfb4170c5ee94a1ff92341c147",
+        "tracked_stat_inventory_sha256": "8c070696bf905d745645957543ed5306758617e7ad21762aad668bdfb23c96c1",
+        "tree": "c3f64d4dc87ca56cdbfc8707fecdc08621580da4"
+      },
+      "ArchEvolve-lanl-clock-a2-20261006": {
+        "detached_clean_ignored0_untracked0": true,
+        "directory_stat": {
+          "ctime_ns": 1791330872311778385,
+          "dev": 2097,
+          "gid": 114316761,
+          "ino": 65051031,
+          "mode": 16893,
+          "mtime_ns": 1791330872311778385,
+          "nlink": 15,
+          "size": 4096,
+          "uid": 114316761
+        },
+        "gitfile_sha256": "042d137a70a2f9f48013c51e9bd9c767306b144033ccb389f23fd0e357183e1a",
+        "head": "05e1b7b05220c06fa1bea39af8881fdda38f818f",
+        "regular_bytes_verified": true,
+        "retained_objects": 12541,
+        "tracked_allocated_bytes_observed": 177840128,
+        "tracked_entries": 3123,
+        "tracked_logical_bytes": 170891079,
+        "tracked_mode_blob_source_inventory_sha256": "e6f2010d196dd576e8bc00769987dae2c4d57d2e559bbce90cf8bd20bb6aa6a1",
+        "tracked_stat_inventory_sha256": "d57d72bb375779254e9e0cc09ad5a734875c4df19b3c44405c1fa40e618fda9e",
+        "tree": "7b537cd0d744824e52db3a03b9fd7d1b1322bb03"
+      },
+      "ArchEvolve-lanl-estimation-role-20261006-a1": {
+        "detached_clean_ignored0_untracked0": true,
+        "directory_stat": {
+          "ctime_ns": 1791339282959656822,
+          "dev": 2097,
+          "gid": 114316761,
+          "ino": 68977244,
+          "mode": 16893,
+          "mtime_ns": 1791339282959656822,
+          "nlink": 15,
+          "size": 4096,
+          "uid": 114316761
+        },
+        "gitfile_sha256": "036c9397b3e41305271e30b6176d771ce4cc415a8a4f4fb7ac5721959ab6c9f1",
+        "head": "a7a9b9e8b9d52245490b7dfd372f3be05f67ce27",
+        "regular_bytes_verified": true,
+        "retained_objects": 12691,
+        "tracked_allocated_bytes_observed": 178737152,
+        "tracked_entries": 3172,
+        "tracked_logical_bytes": 171682824,
+        "tracked_mode_blob_source_inventory_sha256": "aab70c8e72f4952b75970ef980da216cbb4c6e80c32badef97b3069b54109622",
+        "tracked_stat_inventory_sha256": "f4915a95b9b45c11002c9d3cb361819f3a094472607deabd700d52a40c425e4e",
+        "tree": "e57fa928bf3359af8a37ea8152a32511402cd04c"
+      },
+      "ArchEvolve-lanl-estimation-role-20261006-a2": {
+        "detached_clean_ignored0_untracked0": true,
+        "directory_stat": {
+          "ctime_ns": 1791339677332792358,
+          "dev": 2097,
+          "gid": 114316761,
+          "ino": 69079264,
+          "mode": 16893,
+          "mtime_ns": 1791339677332792358,
+          "nlink": 15,
+          "size": 4096,
+          "uid": 114316761
+        },
+        "gitfile_sha256": "b96bd590a8fed55182c127ae9ac197430ccde176f6e1faf2d16a72313e22cabf",
+        "head": "a7a9b9e8b9d52245490b7dfd372f3be05f67ce27",
+        "regular_bytes_verified": true,
+        "retained_objects": 12691,
+        "tracked_allocated_bytes_observed": 178737152,
+        "tracked_entries": 3172,
+        "tracked_logical_bytes": 171682824,
+        "tracked_mode_blob_source_inventory_sha256": "aab70c8e72f4952b75970ef980da216cbb4c6e80c32badef97b3069b54109622",
+        "tracked_stat_inventory_sha256": "c700b308773fa03f4147b2f21a8172dfac0e52dcfada64a5ce40b15e969ee44c",
+        "tree": "e57fa928bf3359af8a37ea8152a32511402cd04c"
+      },
+      "ArchEvolve-lanl-float-memory-services-20261006-a1": {
+        "detached_clean_ignored0_untracked0": true,
+        "directory_stat": {
+          "ctime_ns": 1791343636980387815,
+          "dev": 2097,
+          "gid": 114316761,
+          "ino": 69086368,
+          "mode": 16893,
+          "mtime_ns": 1791343636980387815,
+          "nlink": 15,
+          "size": 4096,
+          "uid": 114316761
+        },
+        "gitfile_sha256": "f698a65ae32d74240698fd4f25d8e3fda1c327dae593b28bf886f73fbc8e39a8",
+        "head": "3006d91e2d076db0104f3b7734131dec5f26caad",
+        "regular_bytes_verified": true,
+        "retained_objects": 13552,
+        "tracked_allocated_bytes_observed": 275185664,
+        "tracked_entries": 3298,
+        "tracked_logical_bytes": 267875515,
+        "tracked_mode_blob_source_inventory_sha256": "786fb55463e96fd97157bf4b5ff9e0b68160be9e167de508b1aca4947d7733ce",
+        "tracked_stat_inventory_sha256": "75f9847ed976d53528604f619fc3c1c93b87e086de7195a0b91b302494cba51d",
+        "tree": "d962dd4b9f90a1bef3cb7cb42a10411f958779b5"
+      },
+      "ArchEvolve-lanl-functional-evaluation-20261006-a1": {
+        "detached_clean_ignored0_untracked0": true,
+        "directory_stat": {
+          "ctime_ns": 1791339154608310461,
+          "dev": 2097,
+          "gid": 114316761,
+          "ino": 68970242,
+          "mode": 16893,
+          "mtime_ns": 1791339154608310461,
+          "nlink": 15,
+          "size": 4096,
+          "uid": 114316761
+        },
+        "gitfile_sha256": "11f978a737741abbcbb274dab110675de0cd9cccd5acf547fa6b786a42ad558a",
+        "head": "bef54f9661d099dcf381538522bd4d9573d6fe0c",
+        "regular_bytes_verified": true,
+        "retained_objects": 12681,
+        "tracked_allocated_bytes_observed": 178532352,
+        "tracked_entries": 3167,
+        "tracked_logical_bytes": 171506151,
+        "tracked_mode_blob_source_inventory_sha256": "8851b2a56ded956e17cc95ba7cb83e454b36d09b3281c9bc0486a6d16cbd5ccc",
+        "tracked_stat_inventory_sha256": "5f5999e847092cd9f8ac1c9e8ba6018f3697c9255354f1d210948d7689f7507f",
+        "tree": "8b0b2d31a0feda6b6bc52343d53a1ede44dc5c26"
+      },
+      "ArchEvolve-lanl-functional-object-counts-20261006-a2": {
+        "detached_clean_ignored0_untracked0": true,
+        "directory_stat": {
+          "ctime_ns": 1791334276265175832,
+          "dev": 2097,
+          "gid": 114316761,
+          "ino": 66230688,
+          "mode": 16893,
+          "mtime_ns": 1791334276265175832,
+          "nlink": 15,
+          "size": 4096,
+          "uid": 114316761
+        },
+        "gitfile_sha256": "4860a184553942d28d82cc1cb26976aea1f5f7a1efb786da189b535ed5d7ee8a",
+        "head": "9ba9277b2b7cfed25569b4fa73aa683679a588e0",
+        "regular_bytes_verified": true,
+        "retained_objects": 12526,
+        "tracked_allocated_bytes_observed": 152842240,
+        "tracked_entries": 3150,
+        "tracked_logical_bytes": 145830636,
+        "tracked_mode_blob_source_inventory_sha256": "31b6c1abdce8b16c3acc5d2eeed59953fc1972fa188ed4e63b80a64bed0f9006",
+        "tracked_stat_inventory_sha256": "6499ff705ff2c672e5f5042163d067b1e99908d202c9eb0da3592ac65d5404fe",
+        "tree": "a10d0075dad16905ff88ed738808f1ebd36f63ba"
+      },
+      "ArchEvolve-lanl-functional-strict-20261006": {
+        "detached_clean_ignored0_untracked0": true,
+        "directory_stat": {
+          "ctime_ns": 1791328845562048503,
+          "dev": 2097,
+          "gid": 114316761,
+          "ino": 57315652,
+          "mode": 16893,
+          "mtime_ns": 1791328845562048503,
+          "nlink": 15,
+          "size": 4096,
+          "uid": 114316761
+        },
+        "gitfile_sha256": "c38a6c034aaddbb0cd92daa53a703cadb5fa04d50500e00d78dcf2bfd0069c86",
+        "head": "dcb66fc4b9564dc742b310e036e6ee5495330df8",
+        "regular_bytes_verified": true,
+        "retained_objects": 11945,
+        "tracked_allocated_bytes_observed": 151740416,
+        "tracked_entries": 3051,
+        "tracked_logical_bytes": 144949441,
+        "tracked_mode_blob_source_inventory_sha256": "7af8cb58c07edd67b479fb288798683c415dd962f2e51d84b8f72bedcc78e05f",
+        "tracked_stat_inventory_sha256": "78e1f5566ad4740cf95580e97862d31191985e5c044128f2ae9e4b7d77210979",
+        "tree": "f85025251074c7b12b20c787fb7c8d4c5f57dfe8"
+      },
+      "ArchEvolve-lanl-independent-services-20261006-a1": {
+        "detached_clean_ignored0_untracked0": true,
+        "directory_stat": {
+          "ctime_ns": 1791340353253876473,
+          "dev": 2097,
+          "gid": 114316761,
+          "ino": 69082716,
+          "mode": 16893,
+          "mtime_ns": 1791340353253876473,
+          "nlink": 15,
+          "size": 4096,
+          "uid": 114316761
+        },
+        "gitfile_sha256": "86a38a2283ec5fb83538b7924302caa07389480379e911a64a47e3708f85723c",
+        "head": "1703c98717ff303fdaa83b8044ac9b4060fedb78",
+        "regular_bytes_verified": true,
+        "retained_objects": 13377,
+        "tracked_allocated_bytes_observed": 274186240,
+        "tracked_entries": 3270,
+        "tracked_logical_bytes": 266935622,
+        "tracked_mode_blob_source_inventory_sha256": "fdd0cdde962094e3abf780293a614e09acea34cfb4170c5ee94a1ff92341c147",
+        "tracked_stat_inventory_sha256": "7c371c97476a1b59f808225e01f3e5a48a9b3c37eeec979fc44bab73c654dd97",
+        "tree": "c3f64d4dc87ca56cdbfc8707fecdc08621580da4"
+      },
+      "ArchEvolve-lanl-memory-a1-20261006": {
+        "detached_clean_ignored0_untracked0": true,
+        "directory_stat": {
+          "ctime_ns": 1791332237838910155,
+          "dev": 2097,
+          "gid": 114316761,
+          "ino": 65575323,
+          "mode": 16893,
+          "mtime_ns": 1791332237838910155,
+          "nlink": 15,
+          "size": 4096,
+          "uid": 114316761
+        },
+        "gitfile_sha256": "ee2ab21ffe5fa99c179c9e108761e74e854d17b998bf1fcd24b99dac5988f530",
+        "head": "8e54d74e64c08a29b20eec183b070f3e77a77e43",
+        "regular_bytes_verified": true,
+        "retained_objects": 12566,
+        "tracked_allocated_bytes_observed": 177926144,
+        "tracked_entries": 3130,
+        "tracked_logical_bytes": 170968188,
+        "tracked_mode_blob_source_inventory_sha256": "b6f16b2a4abbc2109aac85db9843f93ef7326eaf979617d0dfbe8f0ebd61e371",
+        "tracked_stat_inventory_sha256": "a78cda467f3eaf91c029ded9296768fa291433e20d50c52e25134f42731132e6",
+        "tree": "28956f5ad82965733462511702b5d08d53ad4ace"
+      },
+      "ArchEvolve-lanl-native-object-counts-20261006-a1": {
+        "detached_clean_ignored0_untracked0": true,
+        "directory_stat": {
+          "ctime_ns": 1791333249066406485,
+          "dev": 2097,
+          "gid": 114316761,
+          "ino": 65837471,
+          "mode": 16893,
+          "mtime_ns": 1791333249066406485,
+          "nlink": 15,
+          "size": 4096,
+          "uid": 114316761
+        },
+        "gitfile_sha256": "fd7f7e497d68715834857a0fabbd0eb66b3915fd0508b435c3bce633edb0f9ae",
+        "head": "502fea76159cb7b4c692291ee779dd0235b20c8b",
+        "regular_bytes_verified": true,
+        "retained_objects": 12488,
+        "tracked_allocated_bytes_observed": 152756224,
+        "tracked_entries": 3143,
+        "tracked_logical_bytes": 145760393,
+        "tracked_mode_blob_source_inventory_sha256": "72b987f2d40d151ca4d00b8199179808828c9f9162395d2af47e7fc16e0727e6",
+        "tracked_stat_inventory_sha256": "5dfe93db161e89afe0d0df8961f67f71566358d8d63c170deb2dc7270210ef02",
+        "tree": "417a83a433d8ad64030257a82b321a0a507e81ff"
+      },
+      "ArchEvolve-lanl-openmp-projections-20261006-a1": {
+        "detached_clean_ignored0_untracked0": true,
+        "directory_stat": {
+          "ctime_ns": 1791334951204242483,
+          "dev": 2097,
+          "gid": 114316761,
+          "ino": 68050303,
+          "mode": 16893,
+          "mtime_ns": 1791334951204242483,
+          "nlink": 15,
+          "size": 4096,
+          "uid": 114316761
+        },
+        "gitfile_sha256": "4b8b5299e3594358c7c881a163923b2dcbf9dcb504b9c83b8f53ee0e33d721b8",
+        "head": "8949e10fc228bc1009de19fa9df6c9e1a61808ef",
+        "regular_bytes_verified": true,
+        "retained_objects": 12010,
+        "tracked_allocated_bytes_observed": 151810048,
+        "tracked_entries": 3057,
+        "tracked_logical_bytes": 145013428,
+        "tracked_mode_blob_source_inventory_sha256": "8b310fb8c8e001beaf2ab64f45cd38ca14640c49cfc1fb250ce73f77d38aa8d0",
+        "tracked_stat_inventory_sha256": "b390f2e985373805cef0ce5d0f250fb18ae432e79132cfa3255c3496ec10bcbc",
+        "tree": "720c6a6137f3eb74552d21530c608859b17d7e18"
+      },
+      "ArchEvolve-lanl-prospective-inputs-20261006-a2": {
+        "detached_clean_ignored0_untracked0": true,
+        "directory_stat": {
+          "ctime_ns": 1791335164960480928,
+          "dev": 2097,
+          "gid": 114316761,
+          "ino": 68562735,
+          "mode": 16893,
+          "mtime_ns": 1791335164960480928,
+          "nlink": 15,
+          "size": 4096,
+          "uid": 114316761
+        },
+        "gitfile_sha256": "ce8de2e398c4fc1d92fac357a05402aa4bd1df2a6cd076d537d70aa5386b16ab",
+        "head": "c9be522053dffcd8e3308a7c723e2468b942e2a1",
+        "regular_bytes_verified": true,
+        "retained_objects": 12485,
+        "tracked_allocated_bytes_observed": 152772608,
+        "tracked_entries": 3144,
+        "tracked_logical_bytes": 145776415,
+        "tracked_mode_blob_source_inventory_sha256": "7c8bf9811532ff7dbada6c30701c796ed9ab4c9f3e2fe5635a2ec259b3d4ebdf",
+        "tracked_stat_inventory_sha256": "a0b09fa5b3005f7b838bbd31384b5cba184f78cd716fb24a1ba7448c215a6001",
+        "tree": "9e4720040650e18ccce69fe298ec485e9e7f915f"
+      },
+      "ArchEvolve-lanl-root-projection-20261006": {
+        "detached_clean_ignored0_untracked0": true,
+        "directory_stat": {
+          "ctime_ns": 1791329404641735567,
+          "dev": 2097,
+          "gid": 114316761,
+          "ino": 59019137,
+          "mode": 16893,
+          "mtime_ns": 1791329404641735567,
+          "nlink": 15,
+          "size": 4096,
+          "uid": 114316761
+        },
+        "gitfile_sha256": "f0dc8a10be2e4327bfdd928921e6b24245f8691f60086e35a61b240428c2e482",
+        "head": "30f425b5275765c7ccdb5115ab8bb00f8b5f5e98",
+        "regular_bytes_verified": true,
+        "retained_objects": 11931,
+        "tracked_allocated_bytes_observed": 151834624,
+        "tracked_entries": 3057,
+        "tracked_logical_bytes": 145031583,
+        "tracked_mode_blob_source_inventory_sha256": "af4572cf916dbb256cbe2183164d1ff672f16acb29015dafd7dcc39c29b45386",
+        "tracked_stat_inventory_sha256": "a7ec06cd5f820acb2e3f18eb856cd01b402e3499320f984fe08b6e8ed3954851",
+        "tree": "f50dedf938d5fc8d2b1ec4f3acb125e125315a70"
+      }
+    }
+  },
+  "inspection_limits": {
+    "git_output": 33554432,
+    "git_seconds": 120,
+    "inventory_bytes": 33554432,
+    "one_file": 536870912,
+    "one_proc_bytes": 16777216,
+    "plan_bytes": 2097152,
+    "process_fds": 200000,
+    "processes": 10000,
+    "receipt_bytes": 262144,
+    "seconds": 3600,
+    "stat_checks": 2000000,
+    "total_file_bytes": 17179869184,
+    "tracked_entries": 20000,
+    "walk_entries": 400000
+  },
+  "no_concurrent_dispatch_or_queued_writer_is_parent_attestation": true,
+  "original_top_regular_sidecar": {
+    "bytes": 988,
+    "literal_and_original_JSON_selected_reference_checks": true,
+    "original_absolute_JSON_references": [
+      {
+        "JSON_location": [
+          "socket_lane",
+          "command",
+          1
+        ],
+        "path": "/data1/yanruj/lanl17-control-linux-smoke-20261006.py"
+      },
+      {
+        "JSON_location": [
+          "socket_lane",
+          "command",
+          3
+        ],
+        "path": "/data1/yanruj/lanl17-control-20261006.py"
+      },
+      {
+        "JSON_location": [
+          "socket_lane",
+          "command",
+          7
+        ],
+        "path": "/data1/yanruj/ArchEvolve/swdb-project"
+      },
+      {
+        "JSON_location": [
+          "socket_lane",
+          "command",
+          9
+        ],
+        "path": "/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261006-a1"
+      }
+    ],
+    "original_policy": "original_UNSEALED_socket_lane_metadata_no_reseal",
+    "path": "/data/yanruj/EvolveSWDB_runs/lanl17-cleanup-smoke-20261006-a1.lane.json",
+    "sha256": "83ba263a56756047716a2e550c3acc7a9d73eadefbbc9e245cdb697092369c1c",
+    "stat": {
+      "ctime_ns": 1791344103814358923,
+      "dev": 2065,
+      "gid": 114316761,
+      "ino": 9345428,
+      "mode": 33204,
+      "mtime_ns": 1791344103814358923,
+      "nlink": 1,
+      "size": 988,
+      "uid": 114316761
+    },
+    "unchanged_historical_mode0664_beneath_existing_private_RAW_ancestor": true
+  },
+  "parent_review_identity_sha256": "2ba7392e179529cd930fa91cdbbd5630a36327ab3d3f6a23d575d7f0a11c8b36",
+  "partial_failure_rows_already_retired": [],
+  "per_retirement_full_remaining_catalog_rehash": false,
+  "pre_retire_full_byte_checks": {},
+  "privacy_after_receipt_write_check": "Source-enforced fixed root identity/mode check; receipt carries its pre-seal snapshots.",
+  "retire_requested": false,
+  "retired_rows": [],
+  "reviewed_plan_file_sha256": "cbd6d8a7b86329fdd6aa518db3254bef9532883cda055ff49882148d7fe01a2d",
+  "reviewed_plan_identity_sha256": "9db99519d2ce573be4e430bbe34c9aef8d2a8c8eeecdd21df59f58f0c5eaf69f",
+  "scientific_admission": false,
+  "selected_rows": [
+    "ArchEvolve-lanl-allocator-a2-20261006",
+    "ArchEvolve-lanl-bulk-services-20261006-a1",
+    "ArchEvolve-lanl-bulk-total-services-20261006-a1",
+    "ArchEvolve-lanl-clock-a2-20261006",
+    "ArchEvolve-lanl-estimation-role-20261006-a1",
+    "ArchEvolve-lanl-estimation-role-20261006-a2",
+    "ArchEvolve-lanl-float-memory-services-20261006-a1",
+    "ArchEvolve-lanl-functional-evaluation-20261006-a1",
+    "ArchEvolve-lanl-functional-object-counts-20261006-a2",
+    "ArchEvolve-lanl-functional-strict-20261006",
+    "ArchEvolve-lanl-independent-services-20261006-a1",
+    "ArchEvolve-lanl-memory-a1-20261006",
+    "ArchEvolve-lanl-native-object-counts-20261006-a1",
+    "ArchEvolve-lanl-openmp-projections-20261006-a1",
+    "ArchEvolve-lanl-prospective-inputs-20261006-a2",
+    "ArchEvolve-lanl-root-projection-20261006"
+  ],
+  "stable_stat_checks": 98615,
+  "started_at": "2026-10-08T10:34:10.336365+00:00",
+  "walk_entries_checked": 112451
+}

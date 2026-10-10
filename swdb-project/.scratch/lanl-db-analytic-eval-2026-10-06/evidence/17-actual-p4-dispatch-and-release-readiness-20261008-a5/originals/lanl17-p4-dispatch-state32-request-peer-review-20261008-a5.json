@@ -1,0 +1,150 @@
+{
+  "actual_acquired_generation": 514,
+  "attempt": 1,
+  "campaign": "extensa-gem5-bfs-20261006-p4",
+  "checks": [
+    "pin:custody.json",
+    "pin:dispatch-preregistration.json",
+    "pin:lanl17-p4-dispatch-state-request-finalized-20261008-a5.json",
+    "pin:lanl17-p4-dispatch-state-action-config-finalized-20261008-a5.json",
+    "canonicalTrue_seal:BEFORE",
+    "canonicalTrue_seal:dispatch",
+    "canonicalTrue_seal:request",
+    "actual_BEFORE_absent_sourceclean_no_invocations",
+    "exact_prior_request_narrow_actualCID_BEFORE_dispatch_obs_seal_only",
+    "fixed_closed32_schema_context",
+    "actual_dispatch_R_M2_policy_CID_attempt_node",
+    "originalTrue_policies_frozen_manifest_descriptor",
+    "actual_null_prestate_parent_exclusive_attestation",
+    "actual_acquired514_held_no_holder_or_release_inference",
+    "pin:lane.json",
+    "acquired_two_owned_full9stat_exact_base64:lane.json",
+    "pin:mbit10-evaluation-node0.meta.json",
+    "acquired_two_owned_full9stat_exact_base64:mbit10-evaluation-node0.meta.json",
+    "pin:lane.json",
+    "pin:mbit10-evaluation-node0.meta.json",
+    "initial_lane_native_actual514_bindings_not_terminal",
+    "current_owned_H_running_state_absent_no_stop_provider_metadata",
+    "actual_BEFORE_dispatch_acquired_startup_observation_chronology",
+    "exact_original_producer_argv_sources_collect_caps",
+    "exact_request_stage_bytes_SHA_route",
+    "actual_dispatch_transport0_pins_not_campaign_completion",
+    "original_metadata_capture_transport0:lanl17-p4-dispatch-original-collect-capture-20261008-a5",
+    "original_metadata_capture_exact_decoded:lanl17-p4-dispatch-original-collect-capture-20261008-a5",
+    "original_metadata_capture_transport0:lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5",
+    "original_metadata_capture_exact_decoded:lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5",
+    "original_metadata_capture_transport0:lanl17-p4-startup-metadata-capture-20261008-1955-a5",
+    "original_metadata_capture_exact_decoded:lanl17-p4-startup-metadata-capture-20261008-1955-a5",
+    "pin:lanl17-p4-actual-dispatch-binding-peer-review-20261008-a5.json",
+    "prior_parentstart_review_preserved_without_retroactive_generation"
+  ],
+  "files": [
+    {
+      "bytes": 3148,
+      "path": "/private/tmp/lanl17-p4-before-capture-20261008-a5/custody.json",
+      "sha256": "800e081afd48d92affac16859166b3923e0f519c89bb369f7068a62bfe5c82f4"
+    },
+    {
+      "bytes": 44098,
+      "path": "/private/tmp/lanl17-p4-dispatch-original-collect-capture-20261008-a5/dispatch-preregistration.json",
+      "sha256": "863576b41eec3475b3ebe4defff678222307768dd171f7eda1d90c8a77f2075e"
+    },
+    {
+      "bytes": 5584,
+      "path": "/private/tmp/lanl17-p4-dispatch-state-request-finalized-20261008-a5.json",
+      "sha256": "05840c6cc5a3cffe4eb8f3ceb72bc6461c5f24d769271d1768d2c346ae4f6f36"
+    },
+    {
+      "bytes": 8510,
+      "path": "/private/tmp/lanl17-p4-dispatch-state-action-config-finalized-20261008-a5.json",
+      "sha256": "44335018ac8e672a3555a34123d8377362ff7f33a7fcfd912dafb49530a29303"
+    },
+    {
+      "bytes": 5584,
+      "path": "/private/tmp/lanl17-p3-dispatch-state-request-finalized-20261008-a5.json",
+      "sha256": "f380bc4069f71c5e2ababdc98c4774253baf1e9653a69bf48d17125bd2421305"
+    },
+    {
+      "bytes": 3278,
+      "path": "/private/tmp/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/acquired-generation-original.json",
+      "sha256": "8b493736010e7e1c3b26a5f21e7f37f85454055ff31a08001311f14f2676690b"
+    },
+    {
+      "bytes": 1066,
+      "path": "/private/tmp/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/decoded-originals/lane.json",
+      "sha256": "baf99cc0145f3b9e910f727e575c613d35e42642c4fcd763bf603e409af9855d"
+    },
+    {
+      "bytes": 460,
+      "path": "/private/tmp/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/decoded-originals/mbit10-evaluation-node0.meta.json",
+      "sha256": "847909b3b15f4cf7e2dd34676daa441266ca0f9594023704106649bd177be19c"
+    },
+    {
+      "bytes": 1066,
+      "path": "/private/tmp/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/decoded-originals/lane.json",
+      "sha256": "baf99cc0145f3b9e910f727e575c613d35e42642c4fcd763bf603e409af9855d"
+    },
+    {
+      "bytes": 460,
+      "path": "/private/tmp/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/decoded-originals/mbit10-evaluation-node0.meta.json",
+      "sha256": "847909b3b15f4cf7e2dd34676daa441266ca0f9594023704106649bd177be19c"
+    },
+    {
+      "bytes": 2872,
+      "path": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1955-a5/process-original.json",
+      "sha256": "a2fd702eb9c0f380d48b330d0ce97a31a58af93a69a0a0e1516614cd03ceba32"
+    },
+    {
+      "bytes": 1438,
+      "path": "/private/tmp/lanl17-normal-campaign-dispatch-capture-20261008-a5-p4-a2/transport.json",
+      "sha256": "f3ca714f08c681e7ded8437ae7ed2c5291fecdd74545ad623be0740d014443ee"
+    },
+    {
+      "bytes": 419,
+      "path": "/private/tmp/lanl17-p4-dispatch-original-collect-capture-20261008-a5/transport.json",
+      "sha256": "5c62c6a7d9893233e4399a04b96437da47c1509bd899841adadbb19058a11935"
+    },
+    {
+      "bytes": 59500,
+      "path": "/private/tmp/lanl17-p4-dispatch-original-collect-capture-20261008-a5/stdout",
+      "sha256": "7536739a8b3b2c88a35b271d5913ae3c45597072c7833f9afb1eb04f88b83959"
+    },
+    {
+      "bytes": 418,
+      "path": "/private/tmp/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/transport.json",
+      "sha256": "96817755417d9b12b12651a56d47ccdc5665360246a1c34ee429a681bf05d314"
+    },
+    {
+      "bytes": 8320,
+      "path": "/private/tmp/lanl17-p4-acquired-generation-originals-capture-r1-20261008-a5/stdout",
+      "sha256": "afc574bbe489dea927f4040f63aa452a62759c905b2f40139c43cb1c985ab10a"
+    },
+    {
+      "bytes": 419,
+      "path": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1955-a5/transport.json",
+      "sha256": "f8f055fceee00be752daa7d9a2aae10ba2af9f2e1d00bfdfed82dca8691b7e7d"
+    },
+    {
+      "bytes": 12195,
+      "path": "/private/tmp/lanl17-p4-startup-metadata-capture-20261008-1955-a5/stdout",
+      "sha256": "d3198a75ece870167b0a2241768a8b484572ffe4db7b396e88aec4f778c72105"
+    },
+    {
+      "bytes": 7570,
+      "path": "/private/tmp/lanl17-p4-actual-dispatch-binding-peer-review-20261008-a5.json",
+      "sha256": "438d2032c8bce4a8da88c58ed9b5479bac8685714a2a1855668aa7fcba88c969"
+    }
+  ],
+  "format": "swdb.lanl17-peer-p4-actual-dispatch-request-review.v1",
+  "limits": [
+    "Active running attempt custody only; native holder/release, normal trajectory/completion and scientific admission are not inferred.",
+    "Original dispatch-state32 execution/output requires independent original capture review; this receipt reviews request/action bindings before that execution.",
+    "Startup state absence is a captured point-in-time corroboration under parent exclusive writer attestation; no blind-order facts manufactured."
+  ],
+  "native_state": "held",
+  "no_remote_actions_or_imports_or_tests": true,
+  "request_identity_sha256": "f64fd30475deac17b3fc5b27dc668fd1bf6735eb86e640ea3e63a864d495ce08",
+  "result": "PASS",
+  "reviewed_utc": "2026-10-08T23:56:34.820768+00:00",
+  "scientific_admission": false
+}

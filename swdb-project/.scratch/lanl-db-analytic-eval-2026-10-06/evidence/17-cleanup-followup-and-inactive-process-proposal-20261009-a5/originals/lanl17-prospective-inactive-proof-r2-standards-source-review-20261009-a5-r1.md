@@ -1,0 +1,9 @@
+Prepared 2026-10-09 02:09:44 ET (2026-10-09T06:09:44.210800+00:00). Standards axis; prospective R2 proposal only.
+
+PASS — no documented-standard violations or actionable smell findings in the pinned R2 patch, rationale and isolated mock-test evidence. The original R5 body remains 36,052 B/SHA be2f68c21a72b4de5deee05f17f48a8cd09342cf3a6e7e17280ff72414dc3fd4. In-memory reconstruction changes only inactive_owned_identity; 34 other functions/classes are AST-identical.
+
+The leaf reader gathers repeated bounded file and nine-field identity checks behind one helper. Its explicit descriptor ownership (`closefd=False` with finally-close) addresses the preserved R1 construction-failure leak; directory closure stays in the outer finally. The added mock failure cases test refusal and resource closure instead of merely copying implementation output. Retained results report 96/96 isolated passes; this reviewer did not run them or import the full observer.
+
+ET dates, preserved immutable originals, separate prospective authority and unknown/refusal boundaries follow repository conventions. The user’s new uncommitted large-output rule is included as a standard and left untouched; this proposal creates no live run output. GAPBS C++ guidance is outside this Python control-proposal scope. Raw integer/stat tuples serve the closed kernel metadata contract; no actionable Primitive Obsession/Data Clumps finding follows. No duplicated active implementation or unnecessary abstraction was added.
+
+The observer remains UNSELECTED/NOTRUN. The original R5 prohibition and required explicit user override before any replacement selection remain in force; source review and mock success do not authorize a UID/state exception, current no-use, index clearance or scientific admission. No repo/remote/source/action mutation occurred.

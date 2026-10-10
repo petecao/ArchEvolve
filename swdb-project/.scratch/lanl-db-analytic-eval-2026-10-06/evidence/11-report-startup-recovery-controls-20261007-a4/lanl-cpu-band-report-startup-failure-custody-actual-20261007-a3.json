@@ -1,0 +1,51 @@
+{
+  "format": "swdb.cpu-band-report-startup-failure-custody.v1",
+  "checked_utc": "2026-10-07T10:58:58.158210+00:00",
+  "source_commit": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "source_clean": true,
+  "raw_directory": "/data/yanruj/EvolveSWDB_runs/lanl-analytic-cpu-band-report-20261006-a3",
+  "selected_helper_sha256": "dd74dbbe238c1d0c8222d894acd94ef1d344049da257d2a0d744afefb3d2b120",
+  "generated_runner_sha256": "226783708a80758f585cf327631433168134d9dc967ebf3a96385dd40aa5678d",
+  "generated_runner_exact_selected_template": true,
+  "preregistration_sha256": "faaa4b87737227db4312212f81988bf9e96a734fe52d05dbaa3475b5b80756fd",
+  "error_log_sha256": "20a0627891cf3576a0621b13c328811fb78015b115843990e6ac01fd9d8a53b3",
+  "error_signal": "NameError: name 'hashlib' is not defined. Did you forget to import 'hashlib'?",
+  "error_line": 105,
+  "standalone_runner_standard_imports": [
+    "sys",
+    "copy",
+    "datetime",
+    "json",
+    "math",
+    "os",
+    "shutil",
+    "signal",
+    "subprocess",
+    "time",
+    "ctypes",
+    "importlib.util"
+  ],
+  "missing_binding": "hashlib",
+  "outer_exit": 1,
+  "lane": {
+    "node": 0,
+    "lease_generation": 508,
+    "started_utc": "2026-10-07T10:52:31Z",
+    "ended_utc": "2026-10-07T10:52:31Z",
+    "exit_code": 1,
+    "numa_memory_policy": "bind:0"
+  },
+  "leases": {
+    "mbit10-evaluation-node0": "released",
+    "mbit10-evaluation-node1": "released",
+    "mbit10-evaluation": "released"
+  },
+  "started_record_absent": true,
+  "acceptance_absent": true,
+  "published_canonical_records": 0,
+  "scientific_stage_output_files": 0,
+  "startup_stopped_before_cleanup_bootstrap": true,
+  "raw_transferred": false,
+  "scope": "Compact failure signal and content hashes only; raw logs/output remain remote. This failed administrative startup does not alter admitted native/model/band evidence. Preserve this attempt and use a fresh retry directory.",
+  "identity_sha256": "7b67aec7b399c9da63923d66dd5678bcaf5cf516a751c3da94981da4b8b06455"
+}

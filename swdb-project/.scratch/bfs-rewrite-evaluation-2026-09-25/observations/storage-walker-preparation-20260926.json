@@ -1,0 +1,112 @@
+{
+  "format": "swdb.bfs.storage-walker-preparation.v1",
+  "created": "2026-09-26",
+  "observed_at": "2026-09-26T21:24:30.896671-04:00",
+  "state": "local_contract_tests_passed",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_storage.py",
+      "bytes": 2586,
+      "sha256": "485914c80e272b1ab4d05d7866d2ba0d981d0c3ba41cb510c509e4acdb8f4eac"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_storage.py",
+      "bytes": 7847,
+      "sha256": "25e1b4b53e555646a3b6bce38486b0c398d68d66def616b5a900f24dd582cb24"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_series.py",
+      "bytes": 30265,
+      "sha256": "a568e4e6da573ccc281df7deff214abb59d9d87799e274b9abaff1a90ca87b43"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_series.py",
+      "bytes": 33248,
+      "sha256": "78c219a8bf92d8c38a6400d9d8fdee9f715c8d3fd0c05d843257c8394201a3fc"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-scalar-v2-builds-20260926.md",
+      "bytes": 10465,
+      "sha256": "f312e62edd0b76273eca36778a6dc64de98c6ec99018ad67b9b80e422ff085fe"
+    }
+  ],
+  "shared_batch_observation": {
+    "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_batch.py",
+    "bytes": 56532,
+    "sha256": "46b171a570b606892c54bf63701f70fde74fa3cfe0a438ab2bd73634fb7047b0"
+  },
+  "batch_owned_delta": "Only disk_usage_kib import removal and allocated_bytes delegate. Root owns other batch changes, including CLEANUP_RUNTIME inclusion.",
+  "actual_failure": {
+    "path": "/private/tmp/bfs-scalar-v2-failed-terminal-20260926.json",
+    "bytes": 21495,
+    "sha256": "e75d7995a5b5a516c41fa7ff1a69978f4ce9f734f895990809cae19cad56c7d7"
+  },
+  "preserved_scalar_source": {
+    "path": "/private/tmp/bfs-scalar-monitor-before-20260926.py",
+    "bytes": 25240,
+    "sha256": "4d2af07f5cf161f3a18e266532216ec725492207f7ac7a1fa077b8893e2a43c7"
+  },
+  "tests": [
+    {
+      "command": "python3 -m pytest tests/test_bfs_storage.py -q --basetemp /private/tmp/bfs-storage-monitor-red-v2-20260926",
+      "result": "1 failed: real accounting du child killed by production Owned.finish with portable identity adapter",
+      "log": {
+        "path": "/private/tmp/bfs-storage-monitor-red-v2-20260926.log",
+        "bytes": 5605,
+        "sha256": "6cceddfffd2ee5e9d5b2a6059bcdff635253d3956984a26f5044a80001580750"
+      }
+    },
+    {
+      "command": "python3 -m pytest tests/test_bfs_storage.py -q --basetemp /private/tmp/bfs-storage-monitor-green-20260926",
+      "result": "1 passed: same monitor/finalization overlap, no storage subprocess",
+      "log": {
+        "path": "/private/tmp/bfs-storage-monitor-green-20260926.log",
+        "bytes": 98,
+        "sha256": "59907462a8d5fd93406cdf4c7d1eb2f7b7a96664ae85c4ec202693d419cd019e"
+      }
+    },
+    {
+      "command": "python3 -m pytest tests/test_bfs_storage.py tests/test_bfs_scalar_v2_builds.py tests/test_bfs_simulator_series.py tests/test_bfs_simulator_storage.py -q --basetemp /private/tmp/bfs-storage-integration-20260926",
+      "result": "116 passed in 11.10s",
+      "log": {
+        "path": "/private/tmp/bfs-storage-integration-20260926.log",
+        "bytes": 181,
+        "sha256": "39a5d12b065f5b48af8790a462304158b67b951c8085fac0f8369a1c88669014"
+      }
+    }
+  ],
+  "intermediate_results": [
+    {
+      "log": {
+        "path": "/private/tmp/bfs-storage-monitor-red-20260926.log",
+        "bytes": 3790,
+        "sha256": "e0793f39c50851256593aacafb2eb813273c32529cf857105dbff9c8676110f7"
+      },
+      "meaning": "Fixture initially inherited monkeypatched owner, so this failure was not yet the matching du-kill reproduction."
+    },
+    {
+      "log": {
+        "path": "/private/tmp/bfs-storage-contract-20260926.log",
+        "bytes": 1964,
+        "sha256": "0256f4b8e956485449f3cd1672b8026082fca41e9b75bca99fe02e79d72e04ff"
+      },
+      "meaning": "10 passed, 1 unsupported macOS sparse-allocation assertion failed; actual du parity passed. Removed only apparent-size assumption."
+    }
+  ],
+  "semantics": {
+    "allocated_blocks": "st_blocks * 512; directories and symlinks included",
+    "rounding": "ceil to 1024 per root, as prior separate du -sk calls",
+    "hardlinks": "deduplicated by device/inode within each root; separately supplied roots charged separately",
+    "links": "no follow; directory-relative descriptors/O_NOFOLLOW and identity recheck",
+    "failure": "missing/unreadable/replaced metadata rejected",
+    "walk_bound_seconds": 30,
+    "bound_limit": "Checks between filesystem operations; original enclosing clocks unchanged; no hard-blocking-syscall guarantee"
+  },
+  "evidence_kind": "contract_fixture",
+  "actual_linux_ownership_proof": false,
+  "empirical_preparation_promotion": false,
+  "budgets_changed": false,
+  "old_records_changed": false,
+  "host_actions": false,
+  "commit": null
+}

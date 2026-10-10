@@ -1,0 +1,57 @@
+{
+  "format": "swdb.lanl11-development-admission-integrated-merger.v1",
+  "updated_utc": "2026-10-07T09:34:05.974098+00:00",
+  "base_commit": "8a8d40b801fb122bfb11de472fa459a30c350b7c",
+  "incoming_commit": "fe424ff5c3f849ac8ed4e76b2256f9175eef7729",
+  "ordinary_merge_commit": "6ec871f6e62cb9ab8c346ec1af1993b098736cc3",
+  "ordinary_merge_tree": "c6e59eeb9feb592e27660de11aff3977712ec905",
+  "merge_parents": [
+    "8a8d40b801fb122bfb11de472fa459a30c350b7c",
+    "fe424ff5c3f849ac8ed4e76b2256f9175eef7729"
+  ],
+  "precheck_identity_sha256": "0d53f1ab95d97a5333f907ae6abc875f9b9f4c085b5f2c941a983bdc2218b54e",
+  "prior_tracked_blobs": 3688,
+  "prior_unchanged_blobs": 3687,
+  "only_allowed_prior_change": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/issues/11-cpu-error-check-and-paired-estimates.md",
+    "operation": "append_only",
+    "status": "claimed"
+  },
+  "exact_incoming_additions": [
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-development-admission-20261007-a3/README.md",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-development-admission-20261007-a3/lanl-cpu-development-a3-local-admission-20261007.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-development-admission-20261007-a3/lanl-cpu-development-region-error-diagnostic-20261007.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-development-admission-20261007-a3/lanl-cpu-future-phase-reader-preparation-20261007.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-development-admission-20261007-a3/lanl-development-a3-export-cleanup-actual-20261007.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-development-admission-20261007-a3/lanl-development-a3-export-cleanup-preflight-20261007.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-development-admission-20261007-a3/lanl-development-region-error-audit-20261007.py",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-development-admission-20261007-a3/lanl-readonly-cpu-future-phase-admission-20261007.py",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-development-admission-20261007-a3/manifest.json"
+  ],
+  "exact_external_snapshots": 7,
+  "sealed_snapshots_verified": 3,
+  "sealed_manifest_verified": true,
+  "unsealed_originals_preserved_without_new_seal": 2,
+  "manifest": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-development-admission-20261007-a3/manifest.json",
+    "identity_sha256": "b6ad00e76c5d62a656b19f817fc8e17d55ac6eca82e9b36cf4b04b99725de57d",
+    "file_sha256": "db72edc7fd9d20a7ae8512cb4d95e81f637b3ed227fc3a76ebdb81a3d02c6486"
+  },
+  "actual_development_export_commit": "791824ff8b9332da51eb97bdaaa74b4537ed4751",
+  "actual_development_receipt_identity_sha256": "38401c86af174cbd8087684e2e8101263c027fb57fae3d598792e8aa8ac5db4f",
+  "actual_local_admission_identity_sha256": "6cd637d4903cb8595ce31efad000e1492fd6af7b0b0f9879231d6a757d983fb6",
+  "diagnostic_parent_review_custody_reused": true,
+  "canonical_yaml_preserved": 678,
+  "library_blobs_preserved": 147,
+  "root_blobs_preserved": 450,
+  "checkpoint_progress_blob_preserved": "100644 blob 4115f70075b1cf50f32f5341480e28b46dedbb7a",
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "python_modules": 185,
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "newly_integrated17_archive_proof_append_and_all_prior_controls_preserved": true,
+  "source_canonical_maps_progress_other_trackers_unchanged": true,
+  "no_Store_test_native_compiler_provider_numerical_replay_or_ssh_repeat": true,
+  "ticket11_resolution": "unchanged claimed",
+  "scope": "Ordinary custody merge of parent-reviewed actual development local admission/diagnostic and external reader preparation only. Original unsealed files retained; no new analysis, model change or ticket resolution.",
+  "identity_sha256": "1a0f9d586a46efa159535fecdb2a3106b3409d9a5b54a762c3f72f0fffa4633d"
+}

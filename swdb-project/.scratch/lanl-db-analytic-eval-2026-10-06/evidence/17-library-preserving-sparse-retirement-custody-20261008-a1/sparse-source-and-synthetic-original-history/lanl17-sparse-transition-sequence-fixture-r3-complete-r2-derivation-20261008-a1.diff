@@ -1,0 +1,15 @@
+--- /private/tmp/lanl17_sparse_retirement_transition_sequence_virtual_regression_source_20261008_a1_r2.py
++++ /private/tmp/lanl17_sparse_retirement_transition_sequence_virtual_regression_source_20261008_a1_r3.py
+@@ -324,8 +324,10 @@
+                 ('native_read_tree',name),('poststate_proof_and_private_original',name)])
+         final=model.events.index(('full_RAW',2))
+         self.assertIn(('stable',('row-a','row-b')),model.events[:final])
+-        self.assertEqual([r for r in model.events if r[0]=='fresh_references'][-1],
+-            ('fresh_references',None,('row-a','row-b')))
++        self.assertEqual([r for r in model.events if r[0]=='fresh_references'],[
++            ('fresh_references',('row-a',),()),
++            ('fresh_references',('row-b',),('row-a',)),
++            ('fresh_references',None,('row-a','row-b'))])
+ 
+     def test_native_and_postproof_failure_keep_uncertain_marker_without_completion(self):
+         for stage in ('native','poststate'):

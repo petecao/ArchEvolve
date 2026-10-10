@@ -1,0 +1,38 @@
+--- /private/tmp/lanl17_diagnose_exact_generality_unknown_process_metadata_SOURCE_ONLY_20261009_a5_r2.py
++++ /private/tmp/lanl17_diagnose_exact_generality_unknown_process_metadata_SOURCE_ONLY_20261009_a5_r3.py
+@@ -187,7 +187,7 @@
+ 
+ def selected_file(p,name,cap):
+     # This observational reader is never used by native_snapshot or no-use proofs.
+-    need(name in ('stat','status'),'selected_kernel_file_name');q=p/name;tick();s=q.lstat();need(stat.S_ISREG(s.st_mode),'selected_kernel_file_regular')
++    need(name in ('stat','status'),'selected_kernel_file_name');q=p/name;tick();s=q.lstat();need(stat.S_ISREG(s.st_mode) and s.st_uid in (0,UID),'selected_kernel_file_regular_allowed_observational_owner')
+     fd=os.open(q,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC)
+     with os.fdopen(fd,'rb') as f:
+         need(stamp(os.fstat(f.fileno()))==stamp(s),'selected_kernel_file_open_race');raw=f.read(cap+1)
+@@ -218,7 +218,7 @@
+ 
+ def argv0_metadata(p):
+     # Read exactly through first NUL one byte at a time; never read argv1 or later.
+-    q=p/'cmdline';tick();s=q.lstat();need(stat.S_ISREG(s.st_mode),'selected_cmdline_regular');fd=os.open(q,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC);raw=bytearray();terminated=False
++    q=p/'cmdline';tick();s=q.lstat();need(stat.S_ISREG(s.st_mode) and s.st_uid in (0,UID),'selected_cmdline_regular_allowed_observational_owner');fd=os.open(q,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC);raw=bytearray();terminated=False
+     with os.fdopen(fd,'rb',buffering=0) as f:
+         need(stamp(os.fstat(f.fileno()))==stamp(s),'selected_argv0_open_race')
+         for unused in range(4097):
+@@ -232,7 +232,7 @@
+ def alias_metadata(p,name):
+     need(name in ('cwd','root','exe'),'selected_alias_name');q=p/name;tick();link_stat=None
+     try:
+-        s=q.lstat();link_stat=stamp(s);need(stat.S_ISLNK(s.st_mode),'selected_kernel_alias_symlink');target=os.readlink(q);need(len(os.fsencode(target))<=4096 and stamp(q.lstat())==stamp(s),'selected_alias_cap_stat_race')
++        s=q.lstat();link_stat=stamp(s);need(stat.S_ISLNK(s.st_mode) and s.st_uid in (0,UID),'selected_kernel_alias_symlink_allowed_observational_owner');target=os.readlink(q);need(len(os.fsencode(target))<=4096 and stamp(q.lstat())==stamp(s),'selected_alias_cap_stat_race')
+         out={'state':'observed','alias':name,'link_stat':stamp(s),'target_path_sha256':digest(os.fsencode(target)),'target_body_or_stat_followed':False}
+         if name=='exe':out['exe_public_classification']=public_class(os.fsencode(target))
+         return out
+@@ -246,7 +246,7 @@
+ def diagnose(selector):
+     pid=selector['pid'];p=Path('/proc')/str(pid);out={'selector_original':selector,'pid':pid,'state':'unknown','guard_waiver':False,'quiescence_proven':False}
+     try:
+-        tick();s=p.lstat();need(stat.S_ISDIR(s.st_mode) and s.st_ino==selector['proc_inode'],'exact_selected_PID_inode_current');out['proc_directory_stat_before']=stamp(s)
++        tick();s=p.lstat();need(stat.S_ISDIR(s.st_mode) and s.st_ino==selector['proc_inode'] and s.st_uid==selector['uid']==UID,'exact_selected_owned_PID_inode_current');out['proc_directory_stat_before']=stamp(s)
+         first=operation(p,'stat',stat_projection,pid);status=operation(p,'status',status_projection,pid);out['kernel_stat_before']=first;out['status_before']=status
+         try:argv=argv0_metadata(p)
+         except (OSError,ValueError,UnicodeError) as exc:argv=error_metadata(exc,p/'cmdline')

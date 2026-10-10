@@ -1,0 +1,57 @@
+{
+  "format": "swdb.lanl11-holdout-admission-integrated-merger.v1",
+  "updated_utc": "2026-10-07T11:02:47.928156+00:00",
+  "base_commit": "4fc2fea964f8f13dfd90f44aefbf2ccff67a63ef",
+  "incoming_commit": "34fb69c5c4d8e18215dcd095a3643a283db16270",
+  "ordinary_merge_commit": "6bfbb33ae8531248cc6dd8974c3e8eea0cfd280c",
+  "ordinary_merge_tree": "42766ab6ff1462f7d337766f30fcc5cf81e608d2",
+  "merge_parents": [
+    "4fc2fea964f8f13dfd90f44aefbf2ccff67a63ef",
+    "34fb69c5c4d8e18215dcd095a3643a283db16270"
+  ],
+  "precheck_identity_sha256": "4271043ad959a598fd326da733721363ebc6b6a9906fd697b7944ce2b872dbc1",
+  "prior_tracked_blobs": 3704,
+  "prior_unchanged_blobs": 3703,
+  "only_allowed_prior_change": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/issues/11-cpu-error-check-and-paired-estimates.md",
+    "operation": "append_only",
+    "status": "claimed"
+  },
+  "exact_incoming_additions": [
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-holdout-admission-20261007-a3/README.md",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-holdout-admission-20261007-a3/lanl-cpu-holdout-a3-local-admission-20261007.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-holdout-admission-20261007-a3/lanl-cpu-holdout-region-error-diagnostic-20261007.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-holdout-admission-20261007-a3/lanl-holdout-a3-export-cleanup-actual-20261007.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-holdout-admission-20261007-a3/lanl-holdout-a3-export-cleanup-preflight-20261007.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-holdout-admission-20261007-a3/lanl-holdout-region-error-audit-20261007.py",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-holdout-admission-20261007-a3/lanl-holdout-region-error-preparation-20261007.json",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-holdout-admission-20261007-a3/lanl-readonly-cpu-future-phase-admission-20261007.py",
+    "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-holdout-admission-20261007-a3/manifest.json"
+  ],
+  "exact_external_snapshots": 7,
+  "sealed_snapshots_verified": 3,
+  "sealed_manifest_verified": true,
+  "unsealed_originals_preserved_without_new_seal": 2,
+  "manifest": {
+    "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/11-holdout-admission-20261007-a3/manifest.json",
+    "identity_sha256": "b6b627ddadd3bb7cd31d5171c658ab56b2b3b832b9c0fc17c65ab2216fca7725",
+    "file_sha256": "e4263a04475dafc2244ee8b675327912387fd1b248203ad53f37987ef8f3e182"
+  },
+  "actual_holdout_export_commit": "8ef759fc126074c38e013df9bee5fbde1cbeb709",
+  "actual_holdout_receipt_identity_sha256": "c618db963defdcf3e807c5d1649fbed014098e929f5f83d8903531386b5e86db",
+  "actual_local_admission_identity_sha256": "5268ae186a7a0662205b6223d87d88f00a45f82609461f09625d4113a8edfae0",
+  "diagnostic_parent_review_custody_reused": true,
+  "canonical_yaml_preserved": 682,
+  "library_blobs_preserved": 147,
+  "root_blobs_preserved": 450,
+  "checkpoint_progress_blob_preserved": "100644 blob e1d2fdd02f6147f88ae8fb553f15f61ede5bc6a9",
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "python_modules": 185,
+  "estimator_sha256": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "newly_integrated17_archive_proof_append_and_all_prior_controls_preserved": true,
+  "source_canonical_maps_progress_other_trackers_unchanged": true,
+  "no_Store_test_native_compiler_provider_numerical_replay_or_ssh_repeat": true,
+  "ticket11_resolution": "unchanged claimed",
+  "scope": "Ordinary custody merge of parent-reviewed actual holdout local admission/diagnostic and external reader preparation only. Original unsealed files retained; no new analysis, model change or ticket resolution.",
+  "identity_sha256": "9179a2c694a63d34d0af4da8a9bec2b52a0ead444919fb63fbe048d7ffa51452"
+}

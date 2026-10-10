@@ -1,0 +1,136 @@
+--- /private/tmp/lanl17_selected_record_trajectory_auditor_a2r1_20261007.py
++++ /private/tmp/lanl17_selected_record_trajectory_auditor_a2r1s1_20261007.py
+@@ -822,6 +822,12 @@
+         value=strict_json(self.raw(pin))
+         if 'identity_sha256' in pin: receipt_seal(value,pin['identity_sha256'],ensure_ascii=need(pin,'canonical_ensure_ascii'))
+         return value
++    def sealed_json(self,pin):
++        require(re.fullmatch('[0-9a-f]{64}',need(pin,'identity_sha256')) is not None,'Explicit claimed receipt identity pin required')
++        require(type(need(pin,'canonical_ensure_ascii')) is bool,'Explicit boolean receipt canonical_ensure_ascii required')
++        # json() recomputes the compact seal from exact SHA-pinned original bytes.
++        # Only receipt sites use this gate; original unsealed public output stays.
++        return self.json(pin)
+     def yaml(self,pin): return yaml.load(self.raw(pin),Loader=RecordLoader)
+     def inventory(self,ref,folder):
+         return {p[len(folder):]:sha(self.blob(ref,p)) for p in self.tree(ref) if p.startswith(folder)}
+@@ -873,7 +879,7 @@
+             found.add(rid);pending.extend(references({k:v for k,v in data.items() if k not in {'id','kind'}})-found)
+         return found
+     def supervisor(self,pin,action):
+-        row=self.json(pin);require(row['format']=='swdb.lanl17-metadata-supervisor.v1' and row['action']==action,'Actual metadata action receipt differs')
++        row=self.sealed_json(pin);require(row['format']=='swdb.lanl17-metadata-supervisor.v1' and row['action']==action,'Actual metadata action receipt differs')
+         require(row['state']=='child_returned' and row['child_exit']==row['supervisor_exit']==0 and row['fixture'] is False,'Actual metadata action did not succeed')
+         require(row['timed_out'] is False and row['signal_received'] is None and not row['cleanup_errors'] and row['error_type'] is None,'Metadata action interrupted or failed')
+         require(row['cleanup']['subreaper'] is True and row['cleanup']['survivors']=={},'Metadata owned cleanup incomplete')
+@@ -881,7 +887,7 @@
+         require(row['provider_calls']==row['application_outcomes']==0,'Metadata action scope differs')
+         require(utc(row['started_utc'])<utc(row['ended_utc']),'Metadata time order differs');return row
+     def freeze(self):
+-        m2=self.json(need(self.pins,'manifest_M2'));fr=self.json(self.EF['receipt']);ar=self.json(self.ER['receipt'])
++        m2=self.sealed_json(need(self.pins,'manifest_M2'));fr=self.sealed_json(self.EF['receipt']);ar=self.sealed_json(self.ER['receipt'])
+         require(fr['format']=='swdb.lanl17-freeze-receipt.v1' and fr['population_frozen'] is True and fr['application_outcomes_opened']==0,'Prospective freeze custody differs')
+         require(ar['format']=='swdb.lanl17-actual-agreement-compact.v1' and ar['source_clean'] is True and ar['raw_transferred'] is False,'Actual final compact receipt differs')
+         m1=fr['manifest'];receipt_seal(m1,m1['identity_sha256'])
+@@ -923,13 +929,13 @@
+                 require(digest(source)==workload['record_sha256'] and source['identity_sha256']==workload['identity_sha256'] and definition['canonical_sha256']==workload['canonical_sha256'] and definition['sources']==workload['sources'] and {'family':definition['family'],'generator':definition.get('generator')}==workload['generation'],'Exact input representation/generator source pin differs')
+         prepare=self.supervisor(need(self.pins,'prepare_supervisor'),'prepare');finalize=self.supervisor(need(self.pins,'finalize_supervisor'),'finalize')
+         for action in ('prepare','finalize'):
+-            prereg=self.json(need(self.pins,action+'_preregistration'))
++            prereg=self.sealed_json(need(self.pins,action+'_preregistration'))
+             require(prereg['format']=='swdb.lanl17-metadata-dispatch-preregistration.v1' and prereg['action']==action and prereg['final_source_commit']==self.R['commit'] and prereg['source_code_equivalent_F6'] is True and prereg['estimator_sha256']==F6,'Original metadata guard admission/source binding differs')
+             require(prereg['guard_sha256']==GUARD and prereg['helper_sha256']==HELPER and prereg['supervisor_sha256']==SUPERVISOR and prereg['processes_sha256']==PROCESSES,'Metadata guard selected controls differ')
+             require(prereg['actual_cleanup_proof']['identity_sha256']==proof['identity_sha256'] and prereg['actual_supervisor_proof']['identity_sha256']=='ea9751eef12bc519be0c4159813e29fa5aa378693c6a31caea137599c5db744b','Original selected actual Linux proof pins differ')
+             require(prereg['account_HOME_unchanged'] is True and prereg['CODEX_HOME_original_verified'] is True and prereg['authentication_contents_read'] is False,'Metadata guard provider HOME/privacy scope differs')
+         require(utc(policy['frozen_at'])<=utc(fr['checked_utc'])<utc(prepare['ended_utc'])<utc(report['reported_at'])<=utc(ar['checked_utc'])<=utc(finalize['ended_utc']),'Prepare/freeze/report chronology differs')
+-        publication=self.json(need(self.pins,'freeze_publication_custody'))
++        publication=self.sealed_json(need(self.pins,'freeze_publication_custody'))
+         require(publication['format']=='swdb.lanl17-freeze-publication-custody.v1' and publication['source_commit']==self.R['commit'] and publication['freeze_export_commit']==self.EF['commit'] and publication['manifest_sha256']==m2['identity_sha256'] and publication['policy_sha256']==policy['identity_sha256'],'Parent-accepted export-publication projection differs')
+         require(publication['prepare_supervisor_identity']==prepare['identity_sha256'] and publication['application_outcomes_opened']==0 and publication['completed_export_exit_code']==0,'Actual freeze publication success missing')
+         require(publication['input_model_baseline_pins_sha256']==digest(m2['input_model_baseline_pins']) and publication['frozen_live_files_verified'] is True,'Parent-accepted original live metadata pin check missing')
+@@ -939,12 +945,12 @@
+     def dependencies(self):
+         result={}
+         for ticket,key in ((11,'final_ticket11_acceptance'),(14,'final_ticket14_acceptance')):
+-            admission=need(self.pins,key);selected=self.json(need(admission,'receipt_pin'))
++            admission=need(self.pins,key);selected=self.sealed_json(need(admission,'receipt_pin'))
+             require(admission['accepted'] is True and selected['identity_sha256']==admission['receipt_identity'],'Explicit accepted dependency pin differs')
+             export=need(admission,'actual_export_commit');require(re.fullmatch('[0-9a-f]{40}',export),'Full dependency export commit required')
+             self.git('merge-base','--is-ancestor',export,self.R['commit'])
+             require(selected['export_commit']==export and selected['estimator_sha256']==F6,'Dependency export/F6 differs')
+-            inherited=self.json(need(admission,'actual_export_receipt_pin'))
++            inherited=self.sealed_json(need(admission,'actual_export_receipt_pin'))
+             require(inherited['identity_sha256']==admission['actual_export_receipt_identity'],'Dependency actual export receipt differs')
+             sole_source=C if ticket==11 else need(admission,'final_source_commit')
+             require(self.text('rev-list','--parents','-n','1',export).split()==[export,sole_source],'Dependency export does not have its declared actual source as sole parent')
+@@ -1055,7 +1061,7 @@
+         collector_pin=need(self.pins,'collector_source_pin');require(sha(self.raw(collector_pin))==need(self.pins,'collector_sha256'),'Reviewed collector bytes differ')
+         for number,(attempt,triplet) in enumerate(zip(attempts,stopped),1):
+             dispatch,stop,release=triplet
+-            before=self.json(need(attempt,'before_custody'));after=self.json(need(attempt,'after_custody'))
++            before=self.sealed_json(need(attempt,'before_custody'));after=self.sealed_json(need(attempt,'after_custody'))
+             for value,phase in ((before,'before'),(after,'after')):
+                 require(value['format']=='swdb.lanl17-attempt-control-custody.v2' and value['phase']==phase and value['campaign']==cid and value['attempt']==number,'Original state custody identity differs')
+                 require(value['source_commit']==self.R['commit'] and value['estimator_sha256']==F6 and value['helper_sha256']==HELPER and value['collector_sha256']==self.pins['collector_sha256'] and value['manifest_identity_sha256']==self.m2['identity_sha256'] and value['policy']==self.m2['policy'],'State custody changes R/M2/policy/control')
+@@ -1074,7 +1080,7 @@
+                     if not {r['invocation'] for r in inventory['provider_directories']}<=known:raise Pending('Unpersisted invocation directory requires concrete actual-call/budget admission; no free retry is inferred')
+                 cfg=next(p['configuration'] for p in self.policy['population'] if p['campaign']==cid)
+                 if cfg['library'].get('synthesize') or inventory['synthesis_directory_present']:raise Pending('Synthesis invocation metadata needs its separate exact source mapping; selected campaigns declare none')
+-            corroboration=self.json(need(attempt,'dispatch_state_corroboration'))
++            corroboration=self.sealed_json(need(attempt,'dispatch_state_corroboration'))
+             require(corroboration['format']=='swdb.lanl17-dispatch-state-corroboration.v1' and corroboration['before_identity_sha256']==before['identity_sha256'] and corroboration['dispatch_identity_sha256']==dispatch['identity_sha256'] and corroboration['state_unchanged_under_parent_exclusive_campaign_ownership'] is True and corroboration['basis']=='explicit_parent_attestation_no_other_campaign_writer_between_capture_and_dispatch' and corroboration['parent_checked_pre_dispatch_state_sha256']==(pre['file']['sha256'] if pre['present'] else None),'State guard time-of-check gap lacks explicit parent capture')
+             if number==1:require(pre['present'] is False and dispatch['resume'] is False,'Initial campaign state must be absent')
+             else:
+@@ -1084,7 +1090,7 @@
+                 require(before['prior_after_identity_sha256']==facts[-1]['after_identity_sha256'],'Resume custody does not bind prior attempt')
+                 previous_release=stopped[number-2][2]
+                 if any(previous_release[k]!=0 for k in ('runner_exit_code','public_exit_code','wrapper_exit_code')):
+-                    unclean=self.json(need(before,'unclean_resume_admission_pin'))
++                    unclean=self.sealed_json(need(before,'unclean_resume_admission_pin'))
+                     require(unclean['format']=='swdb.lanl17-unclean-resume-admission.v1' and unclean['basis']=='explicit_parent_attestation_from_concrete_attempt_custody' and unclean['accepted'] is True and unclean['source_commit']==self.R['commit'] and unclean['prior_after_identity_sha256']==before['prior_after_identity_sha256'] and unclean['prior_state_sha256']==pre['file']['sha256'],'Unclean resume lacks concrete prior custody admission')
+                     require(unclean['unaccounted_opened_calls']==0 and unclean['scientific_source_or_state_changed'] is False,'Lost/unknown provider calls cannot be treated as free retries or patched into frozen state')
+             facts.append({'attempt':number,'before_identity_sha256':before['identity_sha256'],'after_identity_sha256':after['identity_sha256'],'before_present':pre['present'],'after_present':post['present'],'prior_stopped_refused':number>1,'resume_scope':'Exact captured nonterminal state only; no terminal infrastructure resumption'})
+@@ -1107,7 +1113,7 @@
+                 require(raw['component_id']==component_id and raw['basis']=='explicit_parent_attestation_of_preflight_or_evaluator_refusal' and raw['accepted'] is True and raw['source_commit']==self.R['commit'],'Absent execution body cannot be treated as completed evidence')
+                 boundaries={'host_preflight_refused':'after_forecast_before_evaluator','evaluator_failed_without_record':'evaluator_invoked_no_record'}
+                 require(raw['refusal_class'] in boundaries and raw['refusal_stage']==event['stage'] and raw['refusal_boundary']==boundaries[raw['refusal_class']],'Missing execution requires closed concrete refusal class/stage/boundary')
+-                custody=self.json(need(raw,'refusal_custody_pin'))
++                custody=self.sealed_json(need(raw,'refusal_custody_pin'))
+                 require(custody['format']=='swdb.lanl17-outcome-refusal-custody.v1' and custody['basis']=='explicit_parent_attestation_from_original_refusal_source' and custody['source_commit']==self.R['commit'] and custody['event_sha256']==digest(event) and custody['component_id']==component_id,'Original parent refusal custody does not bind the exact outcome boundary')
+                 require(all(custody[k]==raw[k] for k in ('refusal_class','refusal_stage','refusal_boundary')) and custody['execution_source_sha256']==PINNED_SOURCE_FILES['swdb/campaign_targets.py'],'Original refusal class/stage/source differs')
+                 require(re.fullmatch('[0-9a-f]{64}',custody['original_refusal_source_sha256']) and custody['original_refusal_source_sha256']==raw['original_refusal_source_sha256'],'Exact original sanitized refusal-source pin missing')
+@@ -1170,7 +1176,7 @@
+         return {'linked_execution_components':len(linked_components),'class_baselines':len(baseline_map),'nonvacuous_baseline_forecast_checks':True,'absent_component_attestations':attested,'interrupted_roots_included':bool(summary.get('interrupted_iteration'))}
+ 
+     def trajectory(self,row):
+-        cid=need(row,'campaign');projection=self.json(need(row,'projection'))
++        cid=need(row,'campaign');projection=self.sealed_json(need(row,'projection'))
+         require(projection['format']=='swdb.lanl17-trajectory-audit-projection.v2' and projection['campaign']==cid and projection['source_commit']==self.R['commit'] and projection['estimator_sha256']==F6 and projection['manifest_sha256']==self.m2['identity_sha256'],'Actual trajectory projection binding differs')
+         summary=self.record(cid+'.summary','campaign_summary');_summary_checked(summary)
+         require(projection['summary_sha256']==digest(summary),'Original supplied summary identity differs')
+@@ -1194,7 +1200,7 @@
+             require(iteration['improved_classes'] or next(r for r in completed if r['index']==iteration['index'])['outcome']=='not_improved','Ledger/selection improvement differs')
+         attempts=need(row,'attempts');require(attempts,'Actual attempt records missing');stopped=[]
+         for number,attempt in enumerate(attempts,1):
+-            dispatch=self.json(need(attempt,'dispatch'));stop=self.json(need(attempt,'stopped'));release=self.json(need(attempt,'release_custody'))
++            dispatch=self.sealed_json(need(attempt,'dispatch'));stop=self.sealed_json(need(attempt,'stopped'));release=self.sealed_json(need(attempt,'release_custody'))
+             require(dispatch['format']=='swdb.lanl17-campaign-dispatch.v1' and stop['format']=='swdb.lanl17-stopped-attempt.v1','Actual original attempt formats differ')
+             require(dispatch['campaign']==stop['campaign']==cid and dispatch['attempt']==number and dispatch['node'] in (0,1),'Actual attempt identity/order differs')
+             for value in (dispatch,stop):require(value['source_commit']==self.R['commit'] and value['manifest_sha256']==self.m2['identity_sha256'] and value['policy']==self.m2['policy'],'Attempt changes R/M2/policy')
+@@ -1252,7 +1258,7 @@
+                 comparison=self.record(c['comparison'],'comparison_result');interrupted_roots.update((c['comparison'],comparison['baseline_evaluation'],comparison['candidate_evaluation']))
+         omitted={r['id'] for r in summary.get('interrupted_iteration',{}).get('candidates',[]) if r.get('id')}
+         if omitted:
+-            extra=self.json(need(row,'interrupted_selected_body_custody'))
++            extra=self.sealed_json(need(row,'interrupted_selected_body_custody'))
+             require(extra['format']=='swdb.lanl17-interrupted-selected-bodies.v1' and extra['campaign']==cid and set(extra['candidate_ids'])==omitted and extra['record_index_sha256']==digest(index) and extra['public_full_validation_returncode']==0 and extra['public_finalize_exported_these_candidates'] is False,'Interrupted selected bodies must be separately pinned/validated; final helper does not export them')
+             require(set(extra['root_ids'])==interrupted_roots and set(extra['record_ids'])==self.closure(interrupted_roots,index),'Interrupted selected closure incomplete')
+         exported_candidates=set()
+@@ -1263,7 +1269,7 @@
+             for record in exported['records']:
+                 value=self.record(record['id'],record['kind']);require(self.record_pins[record['id']]['sha256']==record['sha256'],'Public exported closure bytes differ')
+         require(exported_candidates==set(need(projection,'public_export_candidate_ids')),'Original public selected-candidate export inventory is missing/different')
+-        selected=self.json(need(row,'public_candidate_export_selection_custody'))
++        selected=self.sealed_json(need(row,'public_candidate_export_selection_custody'))
+         require(selected['format']=='swdb.lanl17-original-public-candidate-selection-custody.v1' and selected['basis']=='explicit_parent_check_of_original_28d_non_rejected_completed_selection' and selected['source_commit']==self.R['commit'] and selected['helper_sha256']==HELPER and selected['campaign']==cid and selected['summary_sha256']==digest(summary) and selected['accepted'] is True,'Original public selected-candidate choice requires concrete parent selection custody')
+         require(set(selected['candidate_ids'])==exported_candidates and selected['selection_completeness_independently_derived_by_auditor'] is False,'Public export selection completeness is explicitly inherited; do not infer it from supplied IDs')
+         completed_materialized={r['id'] for it in summary['iterations'] for r in it['candidates'] if r.get('id')}

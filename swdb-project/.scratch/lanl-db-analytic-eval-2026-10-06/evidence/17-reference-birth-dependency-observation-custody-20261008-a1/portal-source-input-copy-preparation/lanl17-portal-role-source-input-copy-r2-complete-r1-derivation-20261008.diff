@@ -1,0 +1,52 @@
+--- /private/tmp/lanl_copy_reviewed_portal_role_sources_and_inputs_from_git_20261008_a1_r1.py
++++ /private/tmp/lanl_copy_reviewed_portal_role_sources_and_inputs_from_git_20261008_a1_r2.py
+@@ -1,5 +1,5 @@
+ """SOURCE ONLY / NOT RUN. Fixed private byte copies; no selected main or admission."""
+-import argparse,datetime,hashlib,json,os,pathlib,pwd,re,socket,stat,subprocess,sys,time,zlib
++import argparse,datetime,hashlib,json,os,pathlib,pwd,re,socket,stat,subprocess,sys,time,zlib,selectors,signal
+ P=pathlib.Path;BASE=P('/data1/yanruj');PRIMARY=BASE/'ArchEvolve';C=BASE/'ArchEvolve-lanl-cpu-model-validation-20261006-a1';UID=114316761
+ CORE='f893fed400347ed23d92e917d8bde21b75e5375d'
+ PREFIX=P('swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-reference-birth-dependency-observation-custody-20261008-a1')
+@@ -75,11 +75,38 @@
+  need(repo in (PRIMARY,C),'Git_fixed_checkout');bound();tick()
+  env={'PATH':'/usr/bin:/bin','LC_ALL':'C','GIT_OPTIONAL_LOCKS':'0','GIT_TERMINAL_PROMPT':'0','GIT_CONFIG_NOSYSTEM':'1','GIT_CONFIG_GLOBAL':'/dev/null'}
+  command=['/usr/bin/git','--no-replace-objects','-c','core.hooksPath=/dev/null','-c','core.fsmonitor=false','-C',str(repo),*argv]
++ child=None;selector=selectors.DefaultSelector();parts={'stdout':[],'stderr':[]};counts={'stdout':0,'stderr':0}
++ deadline=min(END,time.monotonic()+LIMITS['Git_seconds'])
+  try:
+-  r=subprocess.run(command,stdin=subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=env,timeout=min(LIMITS['Git_seconds'],max(.1,END-time.monotonic())))
+-  charge(len(r.stdout)+len(r.stderr));need(len(r.stdout)<=cap and len(r.stderr)<=LIMITS['Git_stderr_bytes'],'Git_output_bound');need(r.returncode==0,'Git_nonzero')
+-  return r.stdout
+- finally:bound()
++  child=subprocess.Popen(command,stdin=subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.PIPE,env=env,start_new_session=True)
++  for key,stream in (('stdout',child.stdout),('stderr',child.stderr)):
++   os.set_blocking(stream.fileno(),False);selector.register(stream,selectors.EVENT_READ,key)
++  while selector.get_map():
++   tick();need(time.monotonic()<deadline,'Git_timeout')
++   for selected,event in selector.select(min(.1,max(0,deadline-time.monotonic()))):
++    key=selected.data;limit=cap if key=='stdout' else LIMITS['Git_stderr_bytes']
++    block=os.read(selected.fileobj.fileno(),min(65536,limit-counts[key]+1))
++    if not block:selector.unregister(selected.fileobj);continue
++    charge(len(block));counts[key]+=len(block);need(counts[key]<=limit,'Git_output_bound');parts[key].append(block)
++  code=child.wait(timeout=max(.1,deadline-time.monotonic()));need(code==0,'Git_nonzero')
++  return b''.join(parts['stdout'])
++ finally:
++  selector.close()
++  if child is not None:
++   # Only this new-session native Git group; never another source, daemon or lane.
++   try:os.killpg(child.pid,signal.SIGTERM)
++   except ProcessLookupError:pass
++   stop=time.monotonic()+15
++   while time.monotonic()<stop:
++    try:os.killpg(child.pid,0)
++    except ProcessLookupError:break
++    time.sleep(.05)
++   else:
++    try:os.killpg(child.pid,signal.SIGKILL)
++    except ProcessLookupError:pass
++   child.wait(timeout=5)
++   child.stdout.close();child.stderr.close()
++  bound()
+ def source_state(head):
+  need(git(PRIMARY,'rev-parse','HEAD').decode().strip()==git(PRIMARY,'rev-parse','origin/yanrujhou_main').decode().strip()==head,'fully_delivered_primary_HEAD')
+  need(git(PRIMARY,'branch','--show-current').decode().strip()=='yanrujhou_main','primary_branch')

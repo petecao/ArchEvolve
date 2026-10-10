@@ -1,0 +1,11 @@
+# Parent source review: early-exit7 dispatcher R1
+
+Reviewed 2026-10-07 19:35 ET. SOURCE ONLY; NOT RUN.
+
+Parent read the complete 2,041-byte original-to-R1 diff, 2,670-byte handoff and 2,423-byte original False preparation. Exact R1 source is 28,246 bytes/4eee5b64037081ef844c6f9efbb0d7d6ac923b5b533dec531f621fe9d228d86f; decoded remote is 21,880 bytes/f943be466d92b9afa5bdd1c06e6c98859c3100e6e2fce538ea60f57a582586e6. Independent metadata checks verified original pins, generated diff, local AST scope limited to REMOTE_SOURCE, remote AST scope limited to source_state, and original False seal44bbeac25f3820ce7f25265f8cbcba704daf909b5e3fa9c929c625a8345f52a9. First checker used an incorrect positional AST index and stopped before execution; a corrected structural comparison passed. No source or test main was invoked by either check. Mac native Python33816/08fa4db was independently reverified.
+
+The retained empty primary lock is now allowed precisely, with tracked/staged cleanliness, exact one-path untracked status and owned nonsymlink empty/E3 bytes. Device/inode/mode/UID projection is reused by existing pre-launch and post-run equality checks. The original source/handoff/preparation remain exact. Native pins, full public argv, explicit environment, selected503f/388b/928, all limits and cleanup primitives are unchanged.
+
+One further concrete source blocker remains. Original read_json requires entire stat_result equality after reading. stat_result includes atime, so reading fresh metadata can itself change the compared field under relatime. This can falsely refuse freshly released node1 lease metadata after a successful fixture. R1's lock stable-read predicate has the same problem. Requested narrow R2 compares only device/inode/mode/link-count/UID/GID/size/mtime_ns/ctime_ns in these two predicates, excluding atime. This keeps content and identity stability while allowing read-induced access-time updates; it changes no scientific or administrative limit.
+
+All other source findings remain accepted as in the draft review, subject to the separate R2 scope check and actual live gates. No dispatcher/fixture/supervisor main, source staging, SSH, test, Store, native application, provider or scientific action occurred. The single actual test remains pending; no result or production reader/export admission is inferred.

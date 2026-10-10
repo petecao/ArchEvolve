@@ -1,0 +1,51 @@
+{
+  "format": "swdb.ticket16-prospective-root-source-review.v1",
+  "recorded_et": "2026-10-08 21:16 ET",
+  "reviewed_originals": 6,
+  "source_pins": [
+    {
+      "path": "/private/tmp/lanl16-prospective-artifact-receipts-source-draft-20261008-r1/prospective-source-only.patch",
+      "bytes": 25106,
+      "sha256": "182a99f0485e295a20a515ac9173f33fef44ee30c02086fe8a5dc7eb56e36375"
+    },
+    {
+      "path": "/private/tmp/lanl16-prospective-artifact-receipts-source-draft-20261008-r1/HANDOFF.md",
+      "bytes": 6699,
+      "sha256": "63eff11c047bbd1f018134653775f0583a325f09499bf09a1523a56708505bb2"
+    },
+    {
+      "path": "/private/tmp/lanl16-prospective-artifact-receipts-source-draft-20261008-r1/inventory.json",
+      "bytes": 2313,
+      "sha256": "c25463aaf5750b7c8f65d3c217f3e75a6f5fb649521bfe1fa2588ebb4e453629"
+    },
+    {
+      "path": "/private/tmp/lanl16-artifact-receipts-independent-source-review-20261008-r1.json",
+      "bytes": 6189,
+      "sha256": "9226ee389c67f378d7cc69649e1e2a2d87b28a66f4e4558354f9dc1f532ab350"
+    },
+    {
+      "path": "/private/tmp/lanl16-prospective-artifact-receipts-source-draft-20261008-r2/artifact-alias-additive-test-only.patch",
+      "bytes": 4360,
+      "sha256": "d483dce68eaa8f958d9ad978477033be4c2886175327b3bd28c4b0f1d19fe583"
+    },
+    {
+      "path": "/private/tmp/lanl16-artifact-alias-additive-independent-source-review-20261008-r1.json",
+      "bytes": 3071,
+      "sha256": "5b00a8bccc726c398011fc7b8de2f5969d209e74cd09c3516f265380e3536626"
+    }
+  ],
+  "checks": {
+    "every_materialized_artifact_before_certification": true,
+    "baseline_at_original_protocol_freeze": true,
+    "closed_campaign_metadata_projection": true,
+    "artifact_unknown_null_ineligible_even_fixture": true,
+    "actual_before_timing_contexts_unchanged": true,
+    "artifact_cannot_authorize_timing_event": true,
+    "agreement_filter_excludes_artifact_only": true,
+    "alias_keeps_first_original_timestamp_receipt": true,
+    "legacy_without_artifact_rows_valid": true,
+    "remote_R_frozen_histories_unchanged": true
+  },
+  "state": "ROOT_PEER_SOURCE_PASS_NOT_APPLIED_NOT_TESTED",
+  "runtime_outcome": null
+}

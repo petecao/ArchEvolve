@@ -1,0 +1,72 @@
+kind: comparison_result
+schema_version: '0.4'
+id: bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.comparison
+status: draft
+created: '2026-09-27'
+updated: '2026-09-27'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.comparison
+  protocol: bfs-native-one-thread-upstream-do-20260927.9d4b53fd41e79297
+  baseline_evaluation: bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.baseline.evaluation
+  candidate_evaluation: bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.evaluation
+  comparison_baseline: gapbs-bfs-do
+decision:
+  state: inconclusive
+  reasons:
+  - Timing spread exceeds the frozen threshold.
+gain_claim: false
+evidence_kind: execution
+metrics:
+  roi_speedup: 1.0018788949939867
+  per_source_position_speedup:
+    '0': 1.0047025057756511
+    '1': 1.0015431383631173
+    '2': 0.9993981449382544
+  confidence_interval:
+    confidence: 0.95
+    lower: 0.9993904120868462
+    upper: 1.0048379030326307
+    method: paired_repetition_block_bootstrap.v1
+    resamples: 2000
+  relative_spread:
+    baseline:
+      '0': 0.008613537922271819
+      '1': 0.15576854694835596
+      '2': 0.0117434662612057
+    candidate:
+      '0': 0.015436908430563813
+      '1': 0.011494022084435285
+      '2': 0.00950128524142267
+  paired_collection:
+    id: bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.pair
+    receipt_sha256: 51fdcc9b0270625145c9c274b944c7123bf96eec3e8b07667a2bd35d0750786b
+    schedule_sha256: d86e7631fe22327762de7b21145fd968d40661a3c53a3051c36f7b981f25001c
+  workload: bfs-20260925-uniform18.cd2169a5c421baf7
+  attribution: software_on_fixed_target
+  disclosed_differences:
+    software:
+    - Explicit source rewrite evaluated after this freeze
+    accelerator: []
+    configuration: []
+region_comparisons: []
+finished_at: '2026-09-27T15:53:49.311950+00:00'
+protocol: bfs-native-one-thread-upstream-do-20260927.9d4b53fd41e79297
+protocol_sha256: 9d4b53fd41e7929722d21c9eb8103a313d1ef0e6d149110ddc54cd1d4c59ba0c
+baseline_evaluation: bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.baseline.evaluation
+candidate_evaluation: bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.evaluation
+comparison_baseline: gapbs-bfs-do
+source_ancestor: gapbs-bfs-do
+evaluation_identities:
+  bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.baseline.evaluation: 4dbac80a4bf1105978c4053a0554439cf9c73968aa89e0c3f5808153076bb296
+  bfs-native-acceptance-20260927-upstream-instructions-b2.uniform-random.candidate-1.evaluation: e27a06820ae02a27ec644b70bd622de3ea9c73222237c27f63047978999fdb63

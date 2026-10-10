@@ -1,0 +1,95 @@
+{
+  "date_ET": "2026-10-08",
+  "format": "swdb.sparse-read-budget-correction-archive-builder-source-preparation.v1",
+  "pins": {
+    "adjacent": {
+      "bytes": 1063,
+      "path": "/private/tmp/lanl17-sparse-read-budget-correction-archive-builder-r1-complete-draft-derivation-20261008-a1.diff",
+      "sha256": "e7b2292932eebf569786a3c4ffb6c2e08fb16a42aa99dc7474b5b0022fa33ea6"
+    },
+    "draft": {
+      "bytes": 22060,
+      "path": "/private/tmp/lanl17_build_sparse_read_budget_correction_custody_archive_20261008_a1.py",
+      "sha256": "6ae91878ee09ee2360c0bd45f32ec7cb931e05527cbc3696abca7b11e42f5eaf"
+    },
+    "draft_foundation_diff": {
+      "bytes": 14608,
+      "path": "/private/tmp/lanl17-sparse-read-budget-correction-archive-builder-complete-original-derivation-20261008-a1.diff",
+      "sha256": "181990cbf72cc014252c315e9fddd05bfabc874bb193b2d304501963d220fcf0"
+    },
+    "foundation": {
+      "bytes": 17329,
+      "path": "/private/tmp/lanl17_build_sparse_administration_custody_archive_20261008_a1.py",
+      "sha256": "7c1e8a15494f47a51102468e9f9d681c8938fe8ae2c650a931b9719b84b9bb33"
+    },
+    "full": {
+      "bytes": 14757,
+      "path": "/private/tmp/lanl17-sparse-read-budget-correction-archive-builder-r1-complete-foundation-derivation-20261008-a1.diff",
+      "sha256": "422123b3b842bfbf13470f457f5e587c6da2487d1903f54c8628432f6a3f3f5f"
+    },
+    "pending_ledger": {
+      "bytes": 101176,
+      "path": "/private/tmp/lanl17-sparse-read-budget-correction-archive-input-materials-PENDING-20261008-a1-r2.json",
+      "sha256": "2fadacbc81ac97991f6ac13321fdf32850c3a5853f0b033e24b3a008be7c3af9"
+    },
+    "selected": {
+      "bytes": 22060,
+      "path": "/private/tmp/lanl17_build_sparse_read_budget_correction_custody_archive_20261008_a1_r1.py",
+      "sha256": "ffdb5f8a45596b245ac63e0abf959e711144e766bda953dbe3df6cc59a8f26d3"
+    }
+  },
+  "publication_boundary": "Only a new explicit root-finalized ledger with all originals pinned and pending=false/reviewed=true can be passed to selected archiver; this preparation produces no archive/success/capacity/retirement/science.",
+  "sealed": false,
+  "source_only_NOT_RUN": true,
+  "static_observations": {
+    "README_constant_actual_newline_count": 13,
+    "README_constant_literal_backslash_n_count": 0,
+    "all_three_complete_diffs_exact_regeneration": true,
+    "compression_or_archive_or_project_Git_SSH_tests_performed": false,
+    "draft_route_constants_swapped_then_corrected_before_any_execution": true,
+    "draft_to_R1_all_definitions_AST_identical": true,
+    "known_original_byte_pins_current_local_read_only": {
+      "bytes": 4319305,
+      "rows": 92
+    },
+    "only_changed_foundation_definitions": [
+      "repository_state",
+      "main"
+    ],
+    "pending_final_parent_review_and_input_flags_remain_true": true,
+    "selected_constants_AST": {
+      "BASE40": "Constant(value='28446e8682b0a55ef4bb2050de9c46e072c39ce6')",
+      "CHUNK": "BinOp(left=Constant(value=1024), op=Mult(), right=Constant(value=1024))",
+      "MAX_FILE": "BinOp(left=BinOp(left=Constant(value=64), op=Mult(), right=Constant(value=1024)), op=Mult(), right=Constant(value=1024))",
+      "MAX_LEDGER": "BinOp(left=BinOp(left=Constant(value=2), op=Mult(), right=Constant(value=1024)), op=Mult(), right=Constant(value=1024))",
+      "MAX_TOTAL": "BinOp(left=BinOp(left=Constant(value=128), op=Mult(), right=Constant(value=1024)), op=Mult(), right=Constant(value=1024))",
+      "OLD_REL": "Call(func=Name(id='PurePosixPath', ctx=Load()), args=[Constant(value='swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-library-preserving-sparse-retirement-custody-20261008-a1')], keywords=[])",
+      "REL": "Call(func=Name(id='PurePosixPath', ctx=Load()), args=[Constant(value='swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-sparse-read-budget-custody-correction-20261008-a1')], keywords=[])",
+      "REQUIRED_PLAIN_SOURCES": "Dict(keys=[Constant(value='selected-sparse-control-source/lanl_sparse_retire_consumed_source_guard_20261008_a1_r5.py'), Constant(value='selected-sparse-control-source/lanl17_detach_library_preserving_sparse_administration_20261008_a1_r2.py'), Constant(value='Git-private-two-source-copy/lanl17_copy_sparse_retirement_sources_from_administrative_git_20261008_a2.py'), Constant(value='Git-private-two-source-copy/lanl17_sparse_retirement_copy_native_stdin_bootstrap_20261008_a2.py'), Constant(value='Git-private-two-source-copy/lanl17_capture_exact_administrative_fetch_two_source_copy_20261008_a2_r1.py')], values=[Tuple(elts=[Constant(value=180887), Constant(value='d75baaf9dbe7192b02812cab525ccd6c50c81fd312d67cbfae7b9c8fdf955301')], ctx=Load()), Tuple(elts=[Constant(value=24114), Constant(value='e16f1afa5a427d452504e7a759a7562dcc05a98014e2b4ece1663db6755d39ec')], ctx=Load()), Tuple(elts=[Constant(value=12028), Constant(value='9f8e43a01b4be0567ce7c637509222c0903481bea8dd9d6b82dfaf6de79af9de')], ctx=Load()), Tuple(elts=[Constant(value=5610), Constant(value='345159afa21734985a9c465602b193d357e9a0a2b8b47ef02b2e8e9fbd4f4932')], ctx=Load()), Tuple(elts=[Constant(value=20701), Constant(value='8fd38ee31710bbfa3e5ba9d65d7e082b7cfbbae102a23336e7e6f7324094ed48')], ctx=Load())])",
+      "SCIENTIFIC_BASE40": "Constant(value='5e12a9796432654d88def24ecea617d16ca605b2')",
+      "THRESHOLD": "BinOp(left=Constant(value=256), op=Mult(), right=Constant(value=1024))"
+    },
+    "selected_mains_or_helpers_imported_compiled_or_executed": false,
+    "unchanged_foundation_definitions": [
+      "Refused",
+      "require",
+      "sha",
+      "stamp",
+      "tick",
+      "canonical",
+      "file_stat",
+      "opened",
+      "final_read_check",
+      "hash_file",
+      "read_small",
+      "strict_json",
+      "git",
+      "safe_relative",
+      "mkdir_parents",
+      "exclusive",
+      "copy_original",
+      "decode_pin",
+      "write_metadata"
+    ]
+  }
+}

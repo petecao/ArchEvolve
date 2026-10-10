@@ -1,0 +1,154 @@
+{
+  "created": "2026-09-26T21:05:51.429195-04:00",
+  "scope": "Independent interim gzip transport implementation and auxiliary smoke source-provenance review; not final task acceptance",
+  "state": "clean_after_narrow_repairs",
+  "source_files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/dx100.py",
+      "bytes": 57955,
+      "sha256": "2fc67143bacd480189003bbf6b471b8d9b1d36239bbb7a2d6aac40e0f1bc771f"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/dx100_coverage.py",
+      "bytes": 12197,
+      "sha256": "9881c5460d73af490a1b530424e6ea579330d8b7a9e239815a63d1b60a427e95"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/dx100_profile.py",
+      "bytes": 25334,
+      "sha256": "c361893384b96511e0de05d2b7ab01b895b638c3ab364cf6212b2776fd064595"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/bfs_protocol.py",
+      "bytes": 79485,
+      "sha256": "db9001407504e31d41a33b12c2730ccb43005c2c50ab43724e47540b126ffeac"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/swdb/profile_package.py",
+      "bytes": 35157,
+      "sha256": "8eae9ba6ae289c332d4dd113b364dcff381969d8c5806db9a6aede7d374a5665"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_freeze_pilot.py",
+      "bytes": 54917,
+      "sha256": "04c0ad1de4c7d67cb3b58ed37cd177cb6542952d7dd4419f6ba30f4b56b3989f"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_dx100_coverage_execution.py",
+      "bytes": 44653,
+      "sha256": "baf1d58946c218b870df0bc6c8e25f6d5284ccf465f57f8725263b10c61364aa"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_simulator_series.py",
+      "bytes": 30323,
+      "sha256": "ae99115e407e4a14c1a840ac40e2ff7b26a15ea3e47039692523f8b628348654"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_dx100_gzip_trace.py",
+      "bytes": 18848,
+      "sha256": "414525f9039e702ab56b4a3c977e5eb83c56ec13744b3c1e64d1de20539f1e6e"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_simulator_series.py",
+      "bytes": 33053,
+      "sha256": "79aa10cc84674e9478c36e4ae24b46cf9a477546da52196172043a2edbc7386e"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-dx100-gzip-trace-20260926.md",
+      "bytes": 3959,
+      "sha256": "4928d0ec826131cc6b672cddb0cdcb552e2184abf71524b8a552380049ff6060"
+    }
+  ],
+  "validation": {
+    "command": "PYTHONPATH=\"$PWD/tests:$PWD\" /Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest /private/tmp/test_gzip_deflate_standards_20260926.py /private/tmp/test_gzip_empty_standards_20260926.py /private/tmp/test_gzip_stage_binding_standards_20260926.py tests/test_dx100_gzip_trace.py::test_public_profile_package_and_query_reopen_full_debug_stream tests/test_dx100_gzip_trace.py::test_freeze_replays_diagnostic_gzip_identity_without_changing_primary -q --basetemp=/private/tmp/bfs-gzip-standards-final-20260926",
+    "result": "7 passed in 15.51s",
+    "log": {
+      "path": "/private/tmp/bfs-gzip-standards-final-20260926.log",
+      "bytes": 99,
+      "sha256": "e76e9e2c806cfea3a4782ddda0b8cd92753c3c6c8a667946a3a7dd5cfebec65a"
+    }
+  },
+  "retained_findings": [
+    {
+      "issue": "malformed DEFLATE raised uncaught zlib.error",
+      "before": "Actual direct trace_lines tool invocation raised invalid block type; no pre-fix full-source snapshot was captured. The public probe raced the repair and passed, despite its red-named log.",
+      "after": "normalized Failure; actual public result retained and independently reopened"
+    },
+    {
+      "issue": "retained simulation command lacked declared gzip sink but replay accepted",
+      "red": {
+        "path": "/private/tmp/bfs-gzip-stage-binding-red-20260926.log",
+        "bytes": 1435,
+        "sha256": "cc629d11d2c472e2648e9dd6dab39460219e619c64306b7df85c0b0f718b334a"
+      },
+      "after": "exact command/debug flags checked"
+    },
+    {
+      "issue": "all codec metadata stripped while retained command still selected gzip bypassed replay",
+      "red": {
+        "path": "/private/tmp/bfs-gzip-downgrade-red-20260926.log",
+        "bytes": 1457,
+        "sha256": "f0a01bd3ae7747b77f7f1835d5b77481ce93d1ad4829562998fbb08c2da528d0"
+      },
+      "after": "legacy branch rejects retained debug-file command"
+    },
+    {
+      "issue": "zero-byte file accepted by direct gzip reader",
+      "before": "Actual direct reader returned empty decoded identity; public probe ran after header guard and passed.",
+      "after": "header/minimum stream check rejects empty file"
+    }
+  ],
+  "probes": [
+    {
+      "path": "/private/tmp/test_gzip_deflate_standards_20260926.py",
+      "bytes": 1119,
+      "sha256": "b7c7c91be73fafa5f8463300a74a65214cfa51acac264e950e7c061f418262dc"
+    },
+    {
+      "path": "/private/tmp/test_gzip_empty_standards_20260926.py",
+      "bytes": 975,
+      "sha256": "a7cc61f8b66d486e4b7176b2e103561f192c0af0b8102b067e24c2bc3b2267e9"
+    },
+    {
+      "path": "/private/tmp/test_gzip_stage_binding_standards_20260926.py",
+      "bytes": 1382,
+      "sha256": "6f54660339e6135cf4fce145865d8d8c305cb0aca623e5e0b8c1ebd22f01df09"
+    }
+  ],
+  "conclusions": [
+    "Codec is explicit request/artifact/collector provenance outside unchanged frozen semantic instrumentation.",
+    "Full decoded stream, compressed/decoded identities, EOF/CRC, exact execution command/path, stdout marker authority and replay/profile/package/freeze bindings checked.",
+    "Legacy default and existing protocol equality remain unchanged; no old record relabeling.",
+    "Full decoded rescans still consume original caller/wrapper allowances; neither storage ratio nor BFS completion feasibility is established."
+  ],
+  "auxiliary_smoke": {
+    "supervisor": {
+      "path": "/private/tmp/bfs-gem5-gzip-supervisor-20260926.py",
+      "bytes": 10640,
+      "sha256": "42b47b5534843e17cfc84dcc3db170ffc9b8ae59af8019cdb63fe90b9667a607"
+    },
+    "config": {
+      "path": "/private/tmp/bfs-gem5-gzip-empty-root-20260926.py",
+      "bytes": 458,
+      "sha256": "b87cc7f19f19511443a7e12a7d708c5281b360bd056cb3cc07ee394de95f7178"
+    },
+    "launcher": {
+      "path": "/private/tmp/bfs-gem5-gzip-launch-prepared-20260926.py",
+      "bytes": 6527,
+      "sha256": "413d83a5f01f640a433d6bbb228447c04272254040365dadd83cac3b1f327715"
+    },
+    "dry_render": "Actual generated clock with synthetic proc identity: two LF constants ord10; launch JSON parses; shell argv equals JSON, lane exact1, full40hex source commit separate from borrowed8c runtime. No host action by reviewer.",
+    "actual_typed_receipt": {
+      "path": "/private/tmp/bfs-gem5-gzip-actual-20260926.json",
+      "bytes": 4612,
+      "sha256": "abc0bf86f2893a2ddd2d9f42dd5639ab69c1d15a93168ca3093a85178ba818aa"
+    },
+    "actual_limit": "Reviewed typed no-guest transport outcome/closure only; no independent host rerun or raw copy, no BFS correctness/timing/feasibility claim."
+  },
+  "excluded": [
+    "Root forthcoming correction accounting/plan requires separate review",
+    "No empirical continuation dispatched by reviewer",
+    "No active T16 changes",
+    "No production edits by reviewer"
+  ]
+}

@@ -1,0 +1,13 @@
+# T16 seal-recovery Linux proof group
+
+Date: 2026-09-27 ET. State: prepared locally; runtime/config pins unresolved; no dispatch.
+
+This fresh group is `bfs-seal-recovery-linux-20260927-a1`. It qualifies only the prospective T16 seal-recovery runtime. It consumes a full, nonrefundable 600 seconds and 2 GiB from T16's existing preparation pool, preserving all previous charges and the original T16 deadline. It creates no T15 allocation, scientific sample, retry or acceptance claim.
+
+The group uses exactly five charged roots: its `.dispatch` directory and the raw/dispatch roots for `bfs-simulator-owned-linux-20260927-a7` and `bfs-simulator-interruption-linux-20260927-a7`. Its one original 600-second clock contains supplement run/audit (90/60), owned run/audit (90/60), interruption run/audit (90/60), and final closure within the remaining time. Every 90-second run retains its existing shared 30-second cleanup reserve; no extra clock or cleanup allowance is introduced. All three stages use the same exact new runtime; old proof aliases are rejected.
+
+The supplement retains the prior 51 supervision and actual external-lease cases and adds 15 seal cases through five fixed selectors. The added cases exercise valid producer-shaped seals above 64 KiB through both readers, eight oversize/symlink/hash/read-race rejections, producer serialization and prepublication oversize rejection, and four malformed/different-JSON rejections. Standard proofs still contain exactly five owned-cleanup cases and two interruption cases. Actual Linux execution must pass all 66 supplement cases without skips; local collection is not proof.
+
+Local preparation checks: exact supplement ran under an explicit 60-second subprocess timeout, with 65 passed and one Linux-only skip in 0.46 seconds on macOS. Fixture/operator tests passed 44 cases in 1.64 seconds, including actual collection matching all 66 planned IDs. This supports the bounded stage choice but does not substitute for the fresh unskipped Linux result.
+
+`config-template.json` intentionally rejects before host access until root seals the exact exported runtime commit, complete Git-derived manifest hash, operator hash, fresh helper comparison and available node. Preserve old operator packets. Root must Git-deliver the final packet and independently review it before any dispatch. The reviewed `launch.sh` preserves the original group clock; `operator.py` retains the existing ownership, helper lease, storage and terminal auditing implementation. The copied orchestration changes only group/fixture IDs, the private `--seal-recovery` selector, and the exact T16 plan path.

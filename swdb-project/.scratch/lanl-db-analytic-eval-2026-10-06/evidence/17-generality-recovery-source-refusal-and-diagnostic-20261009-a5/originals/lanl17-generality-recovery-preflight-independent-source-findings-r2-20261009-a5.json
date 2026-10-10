@@ -1,0 +1,127 @@
+{
+  "author_acknowledged_separate_R2_overgates": [
+    "Protected literal raw substring scan treats PRIMARY prefix as candidate/sibling paths; author deriving exact component-boundary scan.",
+    "git ls-files --stage -z uses inherited65536-byte stdoutcap; author deriving bounded submodule-only query rather than widening run()."
+  ],
+  "check_count": 55,
+  "checks": [
+    "private600 exactartifact:lanl17_generality_recovery_candidate_preflight_20261009_a5_r2.py",
+    "artifact pin/stable9stat:lanl17_generality_recovery_candidate_preflight_20261009_a5_r2.py",
+    "private600 exactartifact:lanl17-generality-recovery-preflight-source-handoff-r2-20261009-a5.md",
+    "artifact pin/stable9stat:lanl17-generality-recovery-preflight-source-handoff-r2-20261009-a5.md",
+    "private600 exactartifact:lanl17-generality-recovery-preflight-action-SOURCE-ONLY-draft-r2-20261009-a5.json",
+    "artifact pin/stable9stat:lanl17-generality-recovery-preflight-action-SOURCE-ONLY-draft-r2-20261009-a5.json",
+    "private600 exactartifact:lanl17-generality-recovery-preflight-r2-complete-R5-derivation-20261009-a5.diff",
+    "artifact pin/stable9stat:lanl17-generality-recovery-preflight-r2-complete-R5-derivation-20261009-a5.diff",
+    "private600 exactartifact:lanl17-generality-recovery-preflight-r2-complete-r1-derivation-20261009-a5.diff",
+    "artifact pin/stable9stat:lanl17-generality-recovery-preflight-r2-complete-r1-derivation-20261009-a5.diff",
+    "private600 exactartifact:lanl17-generality-recovery-preflight-source-static-review-r2-20261009-a5.json",
+    "artifact pin/stable9stat:lanl17-generality-recovery-preflight-source-static-review-r2-20261009-a5.json",
+    "R5 exactancestor",
+    "inherited safety AST exact:need",
+    "inherited safety AST exact:tick",
+    "inherited safety AST exact:digest",
+    "inherited safety AST exact:stamp",
+    "inherited safety AST exact:strict",
+    "inherited safety AST exact:original",
+    "inherited safety AST exact:kernel_bytes",
+    "inherited safety AST exact:locks",
+    "inherited safety AST exact:daemon",
+    "inherited safety AST exact:process_identity",
+    "inherited safety AST exact:native_projection",
+    "inherited safety AST exact:selected_lease_identity",
+    "inherited safety AST exact:daemon_ready",
+    "inherited safety AST exact:Parser",
+    "inherited safety AST exact:closed",
+    "inherited safety AST exact:hex64",
+    "inherited safety AST exact:utc",
+    "inherited safety AST exact:payload_digest",
+    "inherited safety AST exact:run",
+    "inherited safety AST exact:current_sources",
+    "inherited safety AST exact:root_tool_pin",
+    "inherited safety AST exact:home_startup",
+    "inherited safety AST exact:owned_cmdline",
+    "inherited safety AST exact:inactive_owned_identity",
+    "draftNOTRUN nonexecutable nonscience",
+    "action exactinline source/flags/caps no collect",
+    "inspectedguard:source180 deadline",
+    "inspectedguard:ignoredinclusive full traversal",
+    "inspectedguard:regularhardlinkrefusal",
+    "inspectedguard:twoSHA9statclosures",
+    "inspectedguard:specialandembeddedrepo refusal",
+    "inspectedguard:candidatec4detached",
+    "inspectedguard:exportsolec4parent",
+    "inspectedguard:nativeallthree continuity",
+    "inspectedguard:unknownblocksbackupelegibility",
+    "inspectedguard:FDmapscontinuity",
+    "inspectedguard:ownedonlyscope",
+    "inspectedguard:privateOEXCL metadata",
+    "inspectedguard:unchangedindexfloors",
+    "inspectedguard:pointtime nofutureapproval",
+    "finding exact298/300source",
+    "finding downstreameligibility398source"
+  ],
+  "format": "swdb.lanl17-generality-recovery-preflight-independent-source-review.v1",
+  "material_findings": [
+    {
+      "action": "Resolve ultimate targets with bounded component/symlink semantics using metadata only, without reading/copying target bodies. Refuse/block external/protected/dangling/cyclic/unknown chains; retain original link target bytes/stat pins, ultimate-target metadata and two-pass continuity.",
+      "evidence": "route=Path(os.path.normpath(str(p.parent/target))) collapses .. before expanding component symlinks; inside then only tests lexical candidate containment. Inventory records no protected observation when all individual normalized links look internal. Eligibility uses absence of references.",
+      "file": "/private/tmp/lanl17_generality_recovery_candidate_preflight_20261009_a5_r2.py",
+      "impact": "backup_eligibility_only can be true without the claimed physical alias/dependency closure. This is not deletion authorization, but is a material precursor safety gap.",
+      "lines": [
+        298,
+        300,
+        398
+      ],
+      "priority": "P2",
+      "static_counterexample": "Within candidate, a -> candidate root (or .); x -> a/../ArchEvolve. normpath x target is candidate/ArchEvolve, but kernel component resolution expands a to candidate root before .., reaching /data1/yanruj/ArchEvolve. Neither individual lexical target must appear external. No fixture or filesystem links created or executed.",
+      "title": "Lexical symlink normalization can miss an actual protected external alias"
+    }
+  ],
+  "pins": [
+    {
+      "bytes": 38094,
+      "path": "/private/tmp/lanl17_generality_recovery_candidate_preflight_20261009_a5_r2.py",
+      "sha256": "d888106acfe66d298529df450a7f02b37ad0d4d9e569c1f6356323713c3971f1"
+    },
+    {
+      "bytes": 2603,
+      "path": "/private/tmp/lanl17-generality-recovery-preflight-source-handoff-r2-20261009-a5.md",
+      "sha256": "7612f73299992a2ea32f676183cb131c3f899e4e03b1ca772692f0fe1afd14ea"
+    },
+    {
+      "bytes": 39956,
+      "path": "/private/tmp/lanl17-generality-recovery-preflight-action-SOURCE-ONLY-draft-r2-20261009-a5.json",
+      "sha256": "f8a6fdfc1f27150142c8f2a1553436106509cf779c8291bd7e6c4dda944857fe"
+    },
+    {
+      "bytes": 47130,
+      "path": "/private/tmp/lanl17-generality-recovery-preflight-r2-complete-R5-derivation-20261009-a5.diff",
+      "sha256": "c534c52b6197ac53d3ce933f0786555862ed101c85c41c9fa1b8d6d865543709"
+    },
+    {
+      "bytes": 5117,
+      "path": "/private/tmp/lanl17-generality-recovery-preflight-r2-complete-r1-derivation-20261009-a5.diff",
+      "sha256": "f282f2b3be770fdcadbae19417b2f1165e25bdf27bb07d8af4e0be215e0918ee"
+    },
+    {
+      "bytes": 3966,
+      "path": "/private/tmp/lanl17-generality-recovery-preflight-source-static-review-r2-20261009-a5.json",
+      "sha256": "bdabdaf15225d1e92417fb6e0caf24911a2d6586dc8eb9056dd63055254aa297"
+    }
+  ],
+  "prepared_ET": "2026-10-09 00:35 ET",
+  "prepared_utc": "2026-10-09T04:35:42.420974+00:00",
+  "scientific_admission": false,
+  "scope_limits": [
+    "No current candidate contents, bytecount, consumers, recoverability, capacity or readiness facts supplied.",
+    "Protected EF/C/metadata roots are disjointness/dependency guards; current_sources proves R/PRIMARY/S185F6/ER and currentcontrol/M2/native observations, not complete EF/C historical byteinvariance.",
+    "No other-user global no-use proof supplied; parent ownership/dependency history and finalno-use review remain mandatory.",
+    "Only regular-file nlink1 is asserted; symlink ownership/stat/linkchain closure must be made explicit in the derivative.",
+    "Fullremote metadata remains future; source180/GNU240/local360,1GiBfile/2GiBtree/65536entries/8MiBmetadata/65536compact limits are finite and unchanged.",
+    "Originaldata121GiB index floor remains merely observed, never relaxed; eligibility for separatebackupreview requires80GiBmemory and data24GiB after2GiBreserve.",
+    "R1/R2originals preserved NOTRUN; root/peer selectedderivative review required before any preflight."
+  ],
+  "source_only_no_import_execution_SSH_backups_removal_tests_repoedits": true,
+  "verdict": "FINDINGS_R2_SOURCE_ONLY_DO_NOT_USE_UNTIL_DERIVATIVE_REVIEW"
+}

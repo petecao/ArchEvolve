@@ -1,0 +1,27 @@
+From github.com:MaizeHPC/MemAcc
+ * branch                yanrujhou_main -> FETCH_HEAD
+From github.com:petecao/ArchEvolve
+ * branch            codex/lanl-analytic-eval -> FETCH_HEAD
+   5e12a97..682f037  codex/lanl-analytic-eval -> origin/codex/lanl-analytic-eval
+Preparing worktree (detached HEAD 5e12a97)
+Updating files:  72% (3482/4834)Updating files:  72% (3495/4834)Updating files:  73% (3529/4834)Updating files:  74% (3578/4834)Updating files:  75% (3626/4834)Updating files:  76% (3674/4834)Updating files:  77% (3723/4834)Updating files:  78% (3771/4834)Updating files:  79% (3819/4834)Updating files:  80% (3868/4834)Updating files:  81% (3916/4834)Updating files:  82% (3964/4834)Updating files:  83% (4013/4834)Updating files:  84% (4061/4834)Updating files:  85% (4109/4834)Updating files:  86% (4158/4834)Updating files:  87% (4206/4834)Updating files:  88% (4254/4834)Updating files:  89% (4303/4834)Updating files:  90% (4351/4834)Updating files:  91% (4399/4834)Updating files:  92% (4448/4834)Updating files:  93% (4496/4834)Updating files:  94% (4544/4834)Updating files:  95% (4593/4834)Updating files:  96% (4641/4834)Updating files:  97% (4689/4834)Updating files:  98% (4738/4834)Updating files:  99% (4786/4834)Updating files: 100% (4834/4834)Updating files: 100% (4834/4834), done.
+{"error_class": "ValueError", "error_sha256": "b53cc0928158a1b16ee9533064579f2213aaadccc8244c9672bbb128d187fc0d", "format": "swdb.dx100-source-deployment-refusal.v1"}
+Traceback (most recent call last):
+  File "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py", line 669, in <module>
+    main()
+  File "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py", line 665, in main
+    {'prepare': prepare, 'dispatch': dispatch, 'finalize': finalize}[args.action](args)
+  File "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py", line 297, in prepare
+    git(PRIMARY, 'worktree', 'add', '--detach', source, args.source_sha)
+  File "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py", line 79, in git
+    return command(['git', '-C', root, *args])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data1/yanruj/lanl17-control-cleanup60-20261007-a4.py", line 75, in command
+    return subprocess.check_output(list(map(str, args)), cwd=cwd, env=env, text=True, timeout=cap).strip()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', '-C', '/data1/yanruj/ArchEvolve', 'worktree', 'add', '--detach', '/data1/yanruj/ArchEvolve-lanl17-source-20261007-a4', '5e12a9796432654d88def24ecea617d16ca605b2']' returned non-zero exit status 1.

@@ -1,0 +1,267 @@
+{
+  "receipt": {
+    "path": "/data/yanruj/EvolveSWDB_runs/bfs-simulator-campaign-preparation-20260926-a2/launch-observation.json",
+    "sha256": "faa4865081df8173b731257ccc1790590263923a42e8a79cea5fb24b5017818a",
+    "bytes": 9220
+  },
+  "created": "2026-09-26",
+  "observed_at": "2026-09-26T20:22:45.361568-04:00",
+  "code_commit": "8c39ae09406dad0da253b21dbe2c87e263f8c5fb",
+  "batches": {
+    "t16": {
+      "outer_started": "2026-09-26T20:20:30.225985-04:00",
+      "outer_deadline": "2026-09-27T20:16:17.225985-04:00",
+      "launch_ref": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1.dispatch/launch.json",
+        "sha256": "c3b4afc701039be399f1e8279f6c35bd1b13da20179db54ef4f16124bfdc6b8c",
+        "bytes": 6969
+      },
+      "prelaunch": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1.dispatch/prelaunch-a2.json",
+        "sha256": "be1396e48b7a213366d98ea023479b9dd2d1f2d95b78da58c95c5c289dc42db1",
+        "bytes": 6292
+      },
+      "lease": {
+        "active_session": null,
+        "heartbeat_at": "2026-09-27T00:20:30Z",
+        "lease": {
+          "acquired_at": "2026-09-27T00:20:30Z",
+          "daemon_pid": 3089727,
+          "daemon_start_token": "sh3089727-1790468430",
+          "generation": 332,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node0",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": null,
+        "session_note": null,
+        "session_state": "none",
+        "state": "held",
+        "writer": "hostlock.sh"
+      },
+      "state": "running",
+      "reason": null,
+      "driver_identity": {
+        "pid": 3089797,
+        "parent_pid": 3089727,
+        "start_ticks": 497036338,
+        "state": "R",
+        "rss_bytes": 37679104
+      },
+      "driver_current": {
+        "pid": 3089797,
+        "parent_pid": 3089727,
+        "start_ticks": 497036338,
+        "state": "S",
+        "rss_bytes": 79953920
+      },
+      "series": [
+        {
+          "id": "bfs-t16-simulator-batch-20260926-a1.artifact.scalar",
+          "state": "running",
+          "command": [
+            "/usr/bin/python3.12",
+            "/data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a2/scripts/bfs_simulator_series.py",
+            "--id",
+            "bfs-t16-simulator-batch-20260926-a1.artifact.scalar",
+            "--candidate",
+            "bfs-author-scalar-compile-20260925-a1.candidate",
+            "--workload",
+            "bfs-20260925-uniform22.f23b09bb0c0601b5",
+            "--build-evaluation",
+            "bfs-dx100-build-20260925-a2",
+            "--diagnostic-build",
+            "bfs-author-scalar-compile-20260925-a1.diagnostic.build",
+            "--configuration",
+            "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.driver/bfs-t16-simulator-batch-20260926-a1.artifact.scalar.configuration.json",
+            "--runs-dir",
+            "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.artifact.scalar",
+            "--records",
+            "/data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a2/records",
+            "--lane",
+            "0",
+            "--author-binary",
+            "--verifier",
+            "dx100.bfs.verifier.v2",
+            "--require-capacity",
+            "--total-seconds",
+            "21600",
+            "--checkpoint-seconds",
+            "3600",
+            "--run-seconds",
+            "14400",
+            "--diagnostic-seconds",
+            "600",
+            "--memory-gib",
+            "48",
+            "--storage-gib",
+            "15",
+            "--batch-storage-gib",
+            "58",
+            "--verification-ticks",
+            "100000000000000",
+            "--owned-cleanup-ledger",
+            "/data/yanruj/EvolveSWDB_runs/bfs-t16-simulator-batch-20260926-a1/bfs-t16-simulator-batch-20260926-a1.driver/cleanup-ledger.json",
+            "--owned-cleanup-binding",
+            "7e97cd5bca2c9dfe8d21d6ddf7945f87690006ead8066ee3539d9b4dc13f4ff3",
+            "--protocol",
+            "bfs-author-reference-20260925.b4cbd3924b40e7df",
+            "--protocol-role",
+            "baseline"
+          ],
+          "started": "2026-09-26T20:21:06.415735-04:00",
+          "series_seconds": 21600,
+          "remaining_storage_gib": 58
+        }
+      ],
+      "stages": [
+        {
+          "name": null,
+          "state": "running",
+          "started": "2026-09-26T20:21:06.417174-04:00",
+          "finished": null,
+          "returncode": null,
+          "identity": {
+            "pid": 3089858,
+            "parent_pid": 3089797,
+            "start_ticks": 497039930,
+            "state": "R",
+            "rss_bytes": 0
+          },
+          "reason": null
+        }
+      ],
+      "outer_exit": null
+    },
+    "t15": {
+      "outer_started": "2026-09-26T20:21:15.408826-04:00",
+      "outer_deadline": "2026-09-27T08:21:15.408826-04:00",
+      "launch_ref": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/launch.json",
+        "sha256": "aa27e8759781d29e9acc7a5c91bf738299795b132dfcb548d9f8009973192310",
+        "bytes": 6897
+      },
+      "prelaunch": {
+        "path": "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1.dispatch/prelaunch-a2.json",
+        "sha256": "cb69e11d2f72a61a62b1acc08ef1ed9120f99b9db8fa84762c2e232408686156",
+        "bytes": 6220
+      },
+      "lease": {
+        "active_session": null,
+        "heartbeat_at": "2026-09-27T00:21:15Z",
+        "lease": {
+          "acquired_at": "2026-09-27T00:21:15Z",
+          "daemon_pid": 3090022,
+          "daemon_start_token": "sh3090022-1790468475",
+          "generation": 411,
+          "host": "mbit10",
+          "lease_name": "mbit10-evaluation-node1",
+          "mode": "measure",
+          "session_id": null
+        },
+        "attempt_pid": null,
+        "attempt_start_token": null,
+        "recovered_from_generation": null,
+        "released_at": null,
+        "session_note": null,
+        "session_state": "none",
+        "state": "held",
+        "writer": "hostlock.sh"
+      },
+      "state": "running",
+      "reason": null,
+      "driver_identity": {
+        "pid": 3090096,
+        "parent_pid": 3090022,
+        "start_ticks": 497040853,
+        "state": "R",
+        "rss_bytes": 38211584
+      },
+      "driver_current": {
+        "pid": 3090096,
+        "parent_pid": 3090022,
+        "start_ticks": 497040853,
+        "state": "S",
+        "rss_bytes": 81915904
+      },
+      "series": [
+        {
+          "id": "bfs-t15-simulator-batch-20260926-a1.uniform18",
+          "state": "running",
+          "command": [
+            "/usr/bin/python3.12",
+            "/data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a2/scripts/bfs_simulator_series.py",
+            "--id",
+            "bfs-t15-simulator-batch-20260926-a1.uniform18",
+            "--candidate",
+            "bfs-author-maa-compile-20260925-a1.candidate",
+            "--workload",
+            "bfs-20260925-uniform18.cd2169a5c421baf7",
+            "--build-evaluation",
+            "bfs-dx100-build-20260925-a2",
+            "--diagnostic-build",
+            "bfs-author-maa-compile-20260925-a1.diagnostic.build",
+            "--configuration",
+            "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.driver/bfs-t15-simulator-batch-20260926-a1.uniform18.configuration.json",
+            "--runs-dir",
+            "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.uniform18",
+            "--records",
+            "/data1/yanruj/EvolveSWDB_simulator_campaign_20260926_a2/records",
+            "--lane",
+            "1",
+            "--author-binary",
+            "--verifier",
+            "dx100.bfs.verifier.v2",
+            "--require-capacity",
+            "--total-seconds",
+            "21600",
+            "--checkpoint-seconds",
+            "3600",
+            "--run-seconds",
+            "3600",
+            "--diagnostic-seconds",
+            "600",
+            "--memory-gib",
+            "48",
+            "--storage-gib",
+            "10",
+            "--batch-storage-gib",
+            "39",
+            "--verification-ticks",
+            "100000000000000",
+            "--owned-cleanup-ledger",
+            "/data/yanruj/EvolveSWDB_runs/bfs-t15-simulator-batch-20260926-a1/bfs-t15-simulator-batch-20260926-a1.driver/cleanup-ledger.json",
+            "--owned-cleanup-binding",
+            "9d4b9f65b6053c6bc9c81839a9ed846bb8d8268178591389f135b59cce80ffac",
+            "--accelerated"
+          ],
+          "started": "2026-09-26T20:21:49.778110-04:00",
+          "series_seconds": 21600,
+          "remaining_storage_gib": 39
+        }
+      ],
+      "stages": [
+        {
+          "name": null,
+          "state": "running",
+          "started": "2026-09-26T20:21:49.779471-04:00",
+          "finished": null,
+          "returncode": null,
+          "identity": {
+            "pid": 3090428,
+            "parent_pid": 3090096,
+            "start_ticks": 497044266,
+            "state": "R",
+            "rss_bytes": 0
+          },
+          "reason": null
+        }
+      ],
+      "outer_exit": null
+    }
+  }
+}

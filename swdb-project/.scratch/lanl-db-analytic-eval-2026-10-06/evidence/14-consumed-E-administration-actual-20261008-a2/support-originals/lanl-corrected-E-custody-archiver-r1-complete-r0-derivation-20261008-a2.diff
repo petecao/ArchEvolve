@@ -1,0 +1,20 @@
+--- /private/tmp/lanl_archive_corrected_E_default_and_removal_custody_20261008_a2.py
++++ /private/tmp/lanl_archive_corrected_E_default_and_removal_custody_20261008_a2_r1.py
+@@ -245,7 +245,7 @@
+             and result['raw_and_original_controls_and_execution_sources_and_Git_refs_retained'] is True
+             and result['account_service_review']['sha256'] == REVIEW_SHA,
+             'original_result_scope_and_preservation_flag')
+-    require(type(result['recovered_bytes']) is int and result['recovered_bytes'] >= 0
++    require(type(result['recovered_bytes']) is int
+             and (is_remove or result['recovered_bytes'] == 0), 'original_recovered_bytes')
+     require(launch['format'] == 'swdb.lanl14-detached-exact-E-launch.v1'
+             and launch['tmux_client_exit_code'] == 0 and launch['scientific_action'] is False
+@@ -410,7 +410,7 @@
+         manifest['identity_sha256'] = sha(canonical(manifest))
+         manifest_raw = (json.dumps(manifest, sort_keys=True, indent=2, ensure_ascii=True, allow_nan=False) + '\n').encode()
+         write_original(dest / 'manifest.json', manifest_raw)
+-        readme = ('# Corrected consumed E default and removal original custody\n\n'
++        readme = ('# Corrected consumed E default and removal original custody\n\nDate: 2026-10-08 (ET)\n\n'
+                   'This archive retains two separately observed administrative steps: the successful default inspection with removed=false, followed by a separately captured successful explicit removal with removed=true. The exact original times, status/stdout pins, original recovered-byte report, and the removal configuration prior-inspection links are recorded in the manifest. Archival reconciles original metadata locally and does not reacquire host visibility or perform cleanup.\n\n'
+                   'All nine originals per observation are copied byte for byte, including their original UNSEALED status/configuration/result/launch/local-decoding custody and opaque streams. Explicit support originals, if supplied by the parent, retain their declared original policies and creation-time source-only/NOTRUN labels. The old failed inspection and earlier 66-original archive are untouched. No base64 transport envelope is manufactured or original seal field invented.\n\n'
+                   'The manifest alone has a new explicit canonical True whole-object-minus-identity BYTE-CUSTODY seal. It is not a source of fresh capacity, parent completeness, plan, cleanup eligibility or scientific admission. Original retention/reference claims remain inherited from the exact original administrative receipts; they are not independent archival observations. The selected guard, wrapper, observers and scientific sources are never imported or called here.\n\n'

@@ -1,0 +1,15 @@
+--- /private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r5.py
++++ /private/tmp/lanl17_acquire_passive_consumed_source_metadata_20261008_a1_r6.py
+@@ -27,9 +27,9 @@
+ PRIMARY = BASE/'ArchEvolve'
+ RAW = P('/data/yanruj/EvolveSWDB_runs')
+ EV = PRIMARY/'swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence'
+-R3 = EV/'17-consumed-detached-source-guard-correction-20261008-r3/lanl_consumed_detached_source_guard_r3_20261008.py'
+-R3_BYTES = 69303
+-R3_SHA = '552cd7424138adcf025db119e0a132e0bc70d733d61aaaddda0effe2932c5371'
++R3 = BASE/'lanl-storage-admin-selected-source-20261008-a4/lanl_consumed_detached_source_guard_r5_20261008_a1.py'
++R3_BYTES = 88872
++R3_SHA = 'a84dc9ca7ccd20e6485cc8e9a2007b3b982fad9c5ae19dacbb1f164d664748cb'
+ GIT = P('/usr/bin/git')
+ GIT_BYTES = 4019024
+ GIT_SHA = '06b2aa74919b1993f9fd7e47060ea98d98c27206f16ccc2d35f51ced7e7877eb'

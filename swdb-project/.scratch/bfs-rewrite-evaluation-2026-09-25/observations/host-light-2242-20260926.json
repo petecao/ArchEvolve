@@ -1,0 +1,138 @@
+{
+  "format": "swdb.bfs.host-light-observation.v1",
+  "observed_at": "2026-09-26T22:41:45.232059-04:00",
+  "helper_comparison": {
+    "path": "/private/tmp/bfs-helper-upstream-comparison-20260926.json",
+    "sha256": "415c2a118f8fbff001824335eeaa5cd479c584c6119f0c192306a00c323dfd47"
+  },
+  "t16": {
+    "state": "running",
+    "completed_samples": 0,
+    "metadata_stages_complete": 7,
+    "gem5_identity": {
+      "pid": 3093548,
+      "start_ticks": 497060228
+    },
+    "sampled_tree_rss_bytes": 30953414656,
+    "raw_bytes": 631029760,
+    "charged_raw_bytes": 1762017280,
+    "progress": {
+      "last_tick_in_tail": 239936615500,
+      "log_bytes": 130249,
+      "log_mtime": "2026-09-27T02:41:13.276375+00:00",
+      "roi_seal_exists": false,
+      "roi_stats_exists": false,
+      "completed_roi_claim": false
+    },
+    "simulation_started": "2026-09-26T20:24:25.226146-04:00",
+    "run_timeout_seconds": 14400,
+    "recorded_start_plus_timeout": "2026-09-27T00:24:25.226146-04:00",
+    "outer_deadline": "2026-09-27T20:16:17.225985-04:00"
+  },
+  "leases": {
+    "node0": {
+      "state": "held",
+      "generation": 332,
+      "owner_pid": 3089727,
+      "kernel_pid": 3089781
+    },
+    "node1": {
+      "state": "held",
+      "generation": 418,
+      "owner_pid": 3187216,
+      "kernel_pid": 3187270,
+      "acquired_at": "2026-09-27T02:40:03Z",
+      "is_this_bfs_campaign": false
+    },
+    "legacy": {
+      "state": "released",
+      "generation": 77
+    }
+  },
+  "disk_free_bytes": {
+    "data1": 17366462464,
+    "data": 182491680768
+  },
+  "load": [
+    2.03271484375,
+    1.779296875,
+    1.47216796875
+  ],
+  "other_lane_owner_observation": {
+    "observed_at": "2026-09-26T22:42:30.511277-04:00",
+    "lease": {
+      "active_session": null,
+      "heartbeat_at": "2026-09-27T02:40:03Z",
+      "lease": {
+        "acquired_at": "2026-09-27T02:40:03Z",
+        "daemon_pid": 3187216,
+        "daemon_start_token": "sh3187216-1790476802",
+        "generation": 418,
+        "host": "mbit10",
+        "lease_name": "mbit10-evaluation-node1",
+        "mode": "measure",
+        "session_id": null
+      },
+      "attempt_pid": null,
+      "attempt_start_token": null,
+      "recovered_from_generation": null,
+      "released_at": null,
+      "session_note": null,
+      "session_state": "none",
+      "state": "held",
+      "writer": "hostlock.sh"
+    },
+    "kernel_rows": [
+      "20: FLOCK  ADVISORY  WRITE 3187270 08:31:55201758 0 EOF"
+    ],
+    "processes": [
+      {
+        "pid": 3187216,
+        "parent_pid": 3187215,
+        "start_ticks": 497873580,
+        "state": "S",
+        "rss_bytes": 3670016,
+        "argv_prefix": "bash scripts/host/socket_lane.sh 1 t16_upstream_ref_measure --record /data/yanruj/upstream_reference_t16_20260927T023701Z/lane_measure.json --no-align --max-cell-age-s 900 --load1-max 32 --lease-timeout-s 600 -- bash /data/yanruj/upstream_reference_t16_20260927T023701Z/recipe/job.sh /data/yanruj/upstream_reference_t16_20260927T023701Z measure ",
+        "cwd": "/data1/yanruj/Memacc-retarget/AgenticRefiner"
+      },
+      {
+        "pid": 3187286,
+        "parent_pid": 3187216,
+        "start_ticks": 497873599,
+        "state": "S",
+        "rss_bytes": 3145728,
+        "argv_prefix": "bash /data/yanruj/upstream_reference_t16_20260927T023701Z/recipe/job.sh /data/yanruj/upstream_reference_t16_20260927T023701Z measure ",
+        "cwd": "/data/yanruj/upstream_reference_t16_20260927T023701Z"
+      },
+      {
+        "pid": 3187304,
+        "parent_pid": 3187286,
+        "start_ticks": 497873655,
+        "state": "S",
+        "rss_bytes": 16252928,
+        "argv_prefix": "python3 recipe/driver.py /data/yanruj/upstream_reference_t16_20260927T023701Z measure ",
+        "cwd": "/data/yanruj/upstream_reference_t16_20260927T023701Z"
+      },
+      {
+        "pid": 3190143,
+        "parent_pid": 3187304,
+        "start_ticks": 497888150,
+        "state": "R",
+        "rss_bytes": 133844992,
+        "argv_prefix": "./rsbench -m event -s large -k 0 ",
+        "cwd": "/data/yanruj/upstream_reference_t16_20260927T023701Z/src/DataLayoutAPI/benchmarks_vanilla/RSBench-master/cuda"
+      }
+    ],
+    "uninspected_pending_pids": [],
+    "classification": "Separate MemAcc upstream-reference measurement; not this BFS campaign. Exact owner and descendants were inspected read-only; no signal, claim, or interference.",
+    "warning": "--no-align appears in the other job's observed argv; this campaign did not choose or authorize that setting."
+  },
+  "actions": {
+    "read_only_remote": true,
+    "fetch": false,
+    "dispatch": false,
+    "lease_change": false,
+    "signal": false
+  },
+  "next_full_audit": "2026-09-26T23:03:00-04:00"
+}

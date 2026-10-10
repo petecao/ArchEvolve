@@ -1,0 +1,98 @@
+"""Spelling-independent rewrite negative controls (2026-10-04 ET, ticket 62).
+
+Updated: 2026-10-04 ET (ticket 67: ``forged_frontier`` version 2 fires on the first CPU
+queue push of the run, independent of tile size, threshold and chunk timing).
+Updated: 2026-10-04 ET (ticket 70, certify 1.3: faults moved to a separately compiled object;
+``forged_frontier`` no longer forges the protected frontier print).
+
+Agent-decided under Yan-Ru's 2026-10-04 delegation; revisable.
+
+Before ticket 62 every rewrite control was an exact-text mutation of ticket 20's
+spelling, so a semantically equal rewrite written differently could not be certified.
+Controls now attach to the library side:
+
+* Library faults. Each shared control is one fault in
+  ``library/dx100/certification/seams.cc``, a trusted object compiled apart from the candidate
+  with one ``-DSWDB_DXC_FAULT_<ID>`` macro (certify 1.3). The candidate's translation unit is
+  identical in every build and calls the seams through the evaluator prelude, so it cannot
+  observe which fault, if any, is linked. The fault acts where the candidate calls the DX100
+  intrinsics, the CPU claim primitive or the queue push, so the candidate's text is never searched.
+  (Certify 1.1-1.2 appended the fault block of ``library/dx100/faults/dxc_lowering_faults.hpp``
+  to a build copy of the candidate's header and defined the macro in the candidate's own
+  translation unit.)
+* Token-matched sites. A kernel control with no library seam (BC-L1 ``stale_depth_hint``)
+  matches a C++ token sequence, insensitive to whitespace, line breaks and comments.
+
+Until certify 1.2, ``forged_frontier`` also forged the protected frontier print to the reference
+counts, so that only the trusted queue inspection could reject it. From 1.3 no verdict is read
+from printed output, so the print is left alone and the fault is a pure library fault.
+
+The pass rule and the control set are unchanged; only how a control reaches its site is.
+"""
+from __future__ import annotations
+
+import re
+
+from swdb.cli import Failure
+from swdb.certification_common import CandidateFailure
+
+SEAM_FILE = 'dx100/certification/seams.cc'  # relative to the library root (certify 1.3)
+LIBRARY_FAULTS = {
+    'shared_context': 'SWDB_DXC_FAULT_SHARED_CONTEXT',
+    'skipped_cas_recheck': 'SWDB_DXC_FAULT_SKIPPED_CAS_RECHECK',
+    'dropped_continuation': 'SWDB_DXC_FAULT_DROPPED_CONTINUATION',
+    'chunk_off_by_one': 'SWDB_DXC_FAULT_CHUNK_OFF_BY_ONE',
+    'dropped_wait': 'SWDB_DXC_FAULT_DROPPED_WAIT',
+    'read_before_wait': 'SWDB_DXC_FAULT_READ_BEFORE_WAIT',
+    'index_wrap': 'SWDB_DXC_FAULT_INDEX_WRAP',
+    'forged_frontier': 'SWDB_DXC_FAULT_FORGED_FRONTIER_V2',
+}
+# Control versions (ticket 67, 2026-10-04 ET). A control record without `fault.version` was
+# written with version 1. forged_frontier v1 fired only after an accelerated chunk finished, so
+# a correct candidate whose chunks never finished before a push could not kill it; v2 duplicates
+# the first queue push of the run. Old certificates keep their v1 meaning. Ticket 70 moved the
+# faults' delivery (`fault.delivery: separate_object`), not their behavior, so versions stay.
+FAULT_VERSIONS = {name: 1 for name in LIBRARY_FAULTS}
+FAULT_VERSIONS['forged_frontier'] = 2
+
+
+def library_control(source, name):
+    """A control that acts at the library seam: the unchanged source and its fault macro.
+
+    The macro is passed only to the seam object's compiler command (certify 1.3).
+    """
+    if name not in LIBRARY_FAULTS:
+        raise Failure('unknown rewrite control')
+    return {'source': source, 'fault': LIBRARY_FAULTS[name], 'site': 'library_fault',
+            'version': FAULT_VERSIONS[name]}
+
+
+# --- token-level site matching ------------------------------------------------
+_TOKEN = re.compile(r'''
+    (?P<skip>\s+|//[^\n]*|/\*.*?\*/)
+  | (?P<token>[A-Za-z_]\w*|\d[\w.]*|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'
+       |::|->|\+\+|--|<<=|>>=|<<|>>|<=|>=|==|!=|&&|\|\||[-+*/%&|^]=|.)
+''', re.VERBOSE | re.DOTALL)
+
+
+def tokens(text):
+    """[(token, start, end)] of C++ text; whitespace and comments separate tokens only."""
+    found = []
+    for match in _TOKEN.finditer(text):
+        if match.lastgroup == 'token':
+            found.append((match.group(), match.start(), match.end()))
+    return found
+
+
+def replace_tokens(source, before, after, name):
+    """Replace the unique token-sequence occurrence of ``before`` with ``after``."""
+    pattern = [t for t, _, _ in tokens(before)]
+    stream = tokens(source)
+    words = [t for t, _, _ in stream]
+    width = len(pattern)
+    hits = [i for i in range(len(words) - width + 1) if words[i:i + width] == pattern]
+    if len(hits) != 1:
+        raise CandidateFailure('candidate source lacks a unique negative-control mutation site: ' + name,
+                               check='negative_control_site:' + name)
+    start, end = stream[hits[0]][1], stream[hits[0] + width - 1][2]
+    return source[:start] + after + source[end:]

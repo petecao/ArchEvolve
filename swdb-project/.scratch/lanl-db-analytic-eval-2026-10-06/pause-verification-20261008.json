@@ -1,0 +1,40 @@
+{
+  "administrative_commits_leave_original_runtime_test_and_canonical_paths_unchanged": true,
+  "all_168_encoded_and_decoded_hash_size_pins_and_original_bytes_match": true,
+  "all_pause_document_links_exist": true,
+  "archive_manifest_sha256": "e835cc8add7f6656f926d76088052293f49cb52095fb28346a1ecfbffe76bc79",
+  "archive_original_count": 168,
+  "checked_utc": "2026-10-08T14:30:59.882242+00:00",
+  "created_date_ET": "2026-10-08",
+  "decoded_original_bytes": 11691846,
+  "format": "swdb.lanl-user-pause-local-verification.v1",
+  "heartbeat": "PAUSED",
+  "local_check_corrections": "FIRST worksheet link corrected to its existing deduplicated custody archive; a malformed read-only exclusion pathspec was replaced by direct inspection of every changed path. Corrected archive, links, statuses and scope checks passed.",
+  "manifest_canonical_identity_verified": true,
+  "new_source_control_tests_or_SSH_invoked": false,
+  "root_human_rule_sha256_unchanged": "1487ca3164420584b08b8217e0a4ab2c9fd9ec8fe72d22578ddde9ef72987045",
+  "scope": "archive, tracker and pause handoff checks only; final implementation Standards/Spec review remains pending",
+  "sealed": false,
+  "ticket_statuses": {
+    "10": "resolved",
+    "11": "resolved",
+    "12": "resolved",
+    "13": "resolved",
+    "14": "resolved",
+    "16": "resolved",
+    "17": "claimed",
+    "2": "resolved",
+    "3": "resolved",
+    "4": "resolved",
+    "5": "resolved",
+    "6": "resolved",
+    "7": "resolved",
+    "8": "resolved",
+    "9": "resolved"
+  },
+  "whitespace_check": {
+    "disposition": "All warnings are in manifest-pinned original facts/diff bodies; exact original byte custody takes precedence over formatting. No original modified.",
+    "new_authored_docs_and_manifest": "passed",
+    "preserved_originals_warning_count": 11
+  }
+}

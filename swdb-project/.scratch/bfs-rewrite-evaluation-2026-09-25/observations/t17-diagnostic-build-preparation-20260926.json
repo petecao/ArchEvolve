@@ -1,0 +1,92 @@
+{
+  "format": "swdb.bfs.t17-diagnostic-build-preparation.v1",
+  "created": "2026-09-26",
+  "observed_at": "2026-09-26T21:38:05.260285-04:00",
+  "state": "local_preparation_only",
+  "id": "bfs-t17-diagnostic-build-only-20260926-a1",
+  "files": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/scripts/bfs_t17_diagnostic_build.py",
+      "bytes": 19618,
+      "sha256": "ad2a5a6cee55c0267b2e147f7cddd435e668d748abdffbf00c239101ef0f02ea"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/tests/test_bfs_t17_diagnostic_build.py",
+      "bytes": 13774,
+      "sha256": "5e0a99d8a88cc143902f07428698b1bba3503b5ee3e8d12b79b71481f783c877"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/docs/bfs-t17-diagnostic-build-20260926.md",
+      "bytes": 4653,
+      "sha256": "8fb1dd938ccc289a191a02b149636b85de1e2b932311db9a8a75684c42f1f218"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/requests/t17-diagnostic-build-only-20260926-a1.json",
+      "bytes": 561,
+      "sha256": "272def5a75dd974d8fa46b3ccdd56016ea1ddf0f2af545990fc02cc25405e5c1"
+    }
+  ],
+  "origin_readiness": {
+    "path": "/private/tmp/bfs-t17-diagnostic-build-readiness-20260926.md",
+    "bytes": 5381,
+    "sha256": "941f430176d8fa4cdcdc8e740a2501e7a258eceaf654515382735a52b76dca44"
+  },
+  "unchanged_inputs": [
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/observations/t17-build-only-preflight-20260926.json",
+      "bytes": 5237,
+      "sha256": "3085c06203e386862eb7b534afd8d0ff75e0129c20bc9f705f849b6b89d2f649"
+    },
+    {
+      "path": "/Users/yanrujhou/CLionProjects/EvolveSWDB/.scratch/bfs-rewrite-evaluation-2026-09-25/observations/t17-build-only-terminal-20260926.json",
+      "bytes": 1930,
+      "sha256": "a124548a4d1e71003faeb895d9e09d1e060933ba41a99f1d9ae282689c886536"
+    }
+  ],
+  "tests": [
+    {
+      "command": "python3 -m pytest tests/test_bfs_t17_diagnostic_build.py -q --basetemp /private/tmp/bfs-t17-diagnostic-contract-20260926",
+      "result": "23 passed in 0.32s",
+      "log": {
+        "path": "/private/tmp/bfs-t17-diagnostic-contract-20260926.log",
+        "bytes": 99,
+        "sha256": "f8277ad17f8a5df588003f513c081462c3a20441d226c0005072a00410299fea"
+      }
+    },
+    {
+      "command": "python3 -m pytest tests/test_bfs_t17_diagnostic_build.py -q --basetemp /private/tmp/bfs-t17-diagnostic-entry-20260926",
+      "result": "24 passed in 0.44s",
+      "log": {
+        "path": "/private/tmp/bfs-t17-diagnostic-entry-20260926.log",
+        "bytes": 99,
+        "sha256": "bea58273b34a608a620a9da05b997e9074b9031503f1b458b88c81d948a38623"
+      }
+    }
+  ],
+  "test_scope": "Actual public get/SQLite and real short-lived failed/timeout subprocesses; synthetic host/kernel/compiler outputs with real sealed-input/proof/view/primary/diagnostic checks. No empirical compilation or Linux ownership claim.",
+  "bounds": {
+    "outer_seconds": 600,
+    "work_seconds": 570,
+    "shared_cleanup_seconds": 30,
+    "public_api_seconds": 240,
+    "compile_seconds": 180,
+    "sampled_rss_bytes": 17179869184,
+    "total_artifact_bytes": 2147483648,
+    "build_subset_bytes": 1073741824,
+    "public_storage_gib": 1
+  },
+  "reuse": "Reviewed scalar monitor/check/finalizer and coherent timing snapshots; no modification to their source. Same ownership/Python-byte proof may have distinct actual proof commit, retained explicitly.",
+  "future_prerequisites": [
+    "reviewed final code pin",
+    "same-host Git record view with exact original provider/candidate/primary metadata and full manifest",
+    "fresh valid ownership/Python proof for reused primitives",
+    "unused exact outputs and fresh lane/legacy/kernel/capacity/reserve admission",
+    "expanded original600-second wrapper clock and pane identities"
+  ],
+  "provider_calls": 0,
+  "guest_executions": 0,
+  "primary_rebuilds": 0,
+  "host_actions": false,
+  "code_export": false,
+  "whole_failed_scalar_promotion": false
+}

@@ -1,0 +1,49 @@
+{
+  "date": "2026-09-27 ET",
+  "axis": "Spec",
+  "scope": "interim; not final empirical acceptance",
+  "base": "1bdb7d4037916dea782c40239a6415b61a47f3c1",
+  "head": "dfa9e56f46a31def975c127ecb98d590a9042692",
+  "diff": "git diff 1bdb7d4037916dea782c40239a6415b61a47f3c1...dfa9e56f46a31def975c127ecb98d590a9042692",
+  "hard_findings": [],
+  "verdict": "No additional reproduced implementation defect in this interim review.",
+  "reviewed": [
+    "Supplied commit list, all21 ticket acceptance lists and map",
+    "Workflow, package, capability, protocol, comparison, witness, and recovery interactions"
+  ],
+  "outstanding_requirements": [
+    {
+      "spec_lines": [
+        262,
+        264
+      ],
+      "requirement": "Freeze before candidate assessment; calibration does not waive coverage cells.",
+      "status": "T15 partial evidence cannot complete the gate.",
+      "code": "scripts/bfs_freeze_pilot.py:665-686,720"
+    },
+    {
+      "spec_lines": [
+        313,
+        318,
+        322
+      ],
+      "requirement": "Both routes/families, accelerated candidates from both implementations, actual artifact/control comparisons.",
+      "status": "T16-T20 remain incomplete, correctly retained as claimed."
+    },
+    {
+      "spec_lines": [
+        324,
+        327
+      ],
+      "requirement": "Correct candidate gain under frozen policy and representative SW/HW actual workflow.",
+      "status": "T21 unresolved; fixtures/builds/supervision proofs do not substitute."
+    }
+  ],
+  "boundaries": [
+    "No edits or remote execution during review.",
+    "14resolved/7claimed is explicit outstanding work, not false completion.",
+    "Recovery machinery supports bounded resources and evidence retention (spec118,268), preserving original T16 deadline and charges with no new T15 allowance.",
+    "Seal repair preserves full hashes and exact-object checks (swdb/dx100_witness.py:93-122,340-348; swdb/dx100_profile.py:43-72).",
+    "Final independent review remains required after completion."
+  ]
+}

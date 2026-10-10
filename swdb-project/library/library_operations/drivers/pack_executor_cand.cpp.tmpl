@@ -1,0 +1,21 @@
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+// Ported 2026-10-03 from MaizeHPC/MemAcc af3d6d7f7a69a72facdc3b95b42e78c952f44a76
+// Source: AgenticRefiner/refiner/synthesis/drivers/pack_cand.cpp.tmpl
+// SWDB changes: the candidate TU drives the library body's PackExecutor (initialize_packed_array,
+// load_to_pack, get_packed_value) instead of a SynthBackend hook (2026-10-03 ET).
+#include "{{BACKEND_HEADER}}"
+#include <cstddef>
+#include <cstdint>
+#include <vector>
+extern "C" void swdb_cand_pack(double* packed, const double* src, const std::int32_t* chain0,
+                               const std::int32_t* chain1, std::size_t depth, std::size_t n,
+                               std::int64_t coeff, std::int64_t offset, std::size_t n_src) {
+  (void)n_src;
+  std::vector<std::int32_t*> chain;
+  chain.push_back(const_cast<std::int32_t*>(chain0));
+  if (depth > 1) chain.push_back(const_cast<std::int32_t*>(chain1));
+  PackExecutor<double, std::int32_t> pe;
+  pe.initialize_packed_array(n);
+  pe.load_to_pack(src, chain, coeff, offset);  // SWDB probe site
+  for (std::size_t i = 0; i < n; ++i) packed[i] = pe.get_packed_value(i);
+}

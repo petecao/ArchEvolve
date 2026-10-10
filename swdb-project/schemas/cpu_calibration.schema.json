@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cpu_calibration",
+  "description": "Created 2026-10-06 ET. Compact calibration provenance; native elapsed/work trials and exact compiler/source/lane context, never application accuracy evidence.",
+  "properties": {
+    "kind": {
+      "const": "cpu_calibration"
+    },
+    "schema_version": {
+      "const": "0.4"
+    },
+    "format": {
+      "const": "swdb.cpu-calibration-record.v1"
+    },
+    "backend": {
+      "const": "native"
+    },
+    "evidence_kind": {
+      "enum": [
+        "native",
+        "fixture"
+      ]
+    },
+    "receipt_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "identity_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "target": {
+      "$ref": "#/$defs/id"
+    },
+    "threads": {
+      "enum": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ]
+    },
+    "context": {
+      "type": "object"
+    },
+    "settings": {
+      "type": "object"
+    },
+    "compute_counts": {
+      "type": "object"
+    },
+    "series": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "shape",
+          "chains",
+          "seconds",
+          "useful_bytes_per_s",
+          "helper_bytes_per_s",
+          "trials"
+        ]
+      }
+    },
+    "concurrency_curve": {
+      "type": "array"
+    },
+    "plateau": {
+      "type": "object"
+    },
+    "dependent_latency_s": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "lineage": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "source_count_equivalence": {
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "kind",
+    "schema_version",
+    "format",
+    "backend",
+    "evidence_kind",
+    "receipt_sha256",
+    "identity_sha256",
+    "target",
+    "threads",
+    "context",
+    "settings",
+    "compute_counts",
+    "series",
+    "concurrency_curve",
+    "plateau",
+    "dependent_latency_s",
+    "lineage",
+    "source_count_equivalence"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "evidence_kind": {
+            "const": "native"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "target": {
+            "x-ref": "machine"
+          },
+          "context": {
+            "required": [
+              "compiler_version",
+              "flags",
+              "host",
+              "architecture",
+              "runtime",
+              "lane",
+              "cpus",
+              "commit",
+              "dirty",
+              "source_sha256",
+              "binary_sha256",
+              "start_state",
+              "end_state",
+              "free_disk_bytes"
+            ],
+            "properties": {
+              "dirty": {
+                "const": false
+              },
+              "architecture": {
+                "const": "x86_64"
+              },
+              "commit": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{40}$"
+              },
+              "binary_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "source_sha256": {
+                "type": "object",
+                "required": [
+                  "CpuWork.h"
+                ],
+                "additionalProperties": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

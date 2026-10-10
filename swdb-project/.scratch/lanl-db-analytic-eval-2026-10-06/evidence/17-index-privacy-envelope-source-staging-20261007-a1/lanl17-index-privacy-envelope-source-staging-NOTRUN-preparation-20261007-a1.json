@@ -1,0 +1,98 @@
+{
+  "format": "swdb.lanl17-index-privacy-envelope-source-staging-NOTRUN-preparation.v1",
+  "created_utc": "2026-10-07T19:02:23.031486+00:00",
+  "canonical_ensure_ascii": true,
+  "state": "SOURCE_ONLY_NOTRUN_PARENT_FULL_REVIEW_REQUIRED",
+  "prepared_file_pins": {
+    "driver": {
+      "path": "/private/tmp/lanl-stage-reviewed17-index-privacy-envelope-source-from-git-20261007-a1.py",
+      "bytes": 19246,
+      "sha256": "103b7557c5428b04626db360922907b1873440d089cb093dd7da0e122364551b"
+    },
+    "handoff": {
+      "path": "/private/tmp/lanl17-index-privacy-envelope-source-staging-source-handoff-20261007-a1.md",
+      "bytes": 5226,
+      "sha256": "6735104d947bac29c20ad76dc1d3a926c2dc504c69bcd6c606b8016609de307a"
+    },
+    "full_derivation_diff": {
+      "path": "/private/tmp/lanl17-index-privacy-envelope-source-staging-derivation-20261007-a1.diff",
+      "bytes": 16814,
+      "sha256": "dcdb2f9be846715f6f2c57520cdb6d9fd6bb042b0f04a76b9b8b8e993ffe09f5"
+    },
+    "unsealed_static_derivation": {
+      "path": "/private/tmp/lanl17-index-privacy-envelope-source-staging-static-derivation-20261007-a1.json",
+      "bytes": 5446,
+      "sha256": "75ebc4376f6bc0c0acc896177c74b057c533142a7ad09bae37b55ca2928d9cdf"
+    }
+  },
+  "original_reviewed_shape_driver": {
+    "path": "/private/tmp/lanl-stage-reviewed17-input-author-sources-from-git-20261007-a1-r1.py",
+    "bytes": 23612,
+    "sha256": "d5780992722de678ea22e4f92fb5b6c1316cc12f038ae9c2a239780cb6c1f09f"
+  },
+  "construction_archive_incoming": "bb6b0a082d825ec09505b668354934b079b4e12c",
+  "future_parent_delivered_revision": null,
+  "future_revision_rule": "one exact lowercase40hex argument required; no future tip supplied or defaulted",
+  "CONFIG": [
+    {
+      "target": "envelope.py",
+      "source": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-privacy-envelope-controls-20261007/lanl17_remote_original_index_writer_privacy_envelope_20261007.py",
+        "bytes": 38790,
+        "sha256": "1ee5ffbdf1ef322cfd5bfec4b6e402c29d23c776e855f01d25208ebbece0fcfc"
+      },
+      "review": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-privacy-envelope-controls-20261007/lanl17-original-index-writer-privacy-envelope-parent-review-20261007.json",
+        "bytes": 7051,
+        "sha256": "70beddcfeb95e3b612476b358021581b288b031321be01b2e95c6dfd4f3c383a",
+        "format": "swdb.lanl17-original-index-writer-privacy-envelope-parent-source-review.v1",
+        "identity_sha256": "4a1023632f0db9da20860d1ade13efac5503bea6eabd0854a1432208cfb4a443"
+      },
+      "manifest": {
+        "path": "swdb-project/.scratch/lanl-db-analytic-eval-2026-10-06/evidence/17-original-index-writer-privacy-envelope-controls-20261007/manifest.json",
+        "bytes": 8784,
+        "sha256": "69e9ee241ad19e45dd89cfd974c311633926a6c10b41ffb8242a4e5b2febf03a",
+        "format": "swdb.lanl17-original-index-writer-privacy-envelope-archival-custody.v1",
+        "identity_sha256": "0e916296aea2b8c0ba930c5bf11f15e0b4b2b7de05192594a2786fa496e4de1d"
+      }
+    }
+  ],
+  "source_C": "f893fed400347ed23d92e917d8bde21b75e5375d",
+  "estimator_F6_archival_custody": "f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3",
+  "source_only_checks": {
+    "local_and_decoded_remote_syntax_AST": true,
+    "entire_original_driver_exact_byte_reversal": true,
+    "remote_body_exact_closed_reversal": true,
+    "four_local_four_remote_top_ten_remote_nested_helper_ASTs_exact": true,
+    "original_primary_mode_exception_literal_exact": true,
+    "original_C185_F6_timeouts_Git_environment_FD_custody_exact": true,
+    "no_runtime_or_synthetic_test": true
+  },
+  "future_copy_only": {
+    "destination": "/data1/yanruj/lanl17-index-privacy-source-20261007-a1/",
+    "only_remote_file": "envelope.py",
+    "directory_mode": "0700",
+    "source_file_mode": "0600",
+    "envelope_bytes": 38790,
+    "envelope_sha256": "1ee5ffbdf1ef322cfd5bfec4b6e402c29d23c776e855f01d25208ebbece0fcfc",
+    "remote_receipt_file": false,
+    "local_receipt": "/private/tmp/lanl17-reviewed-index-privacy-envelope-source-staging-actual-20261007-a1.json",
+    "remote_seconds_limit": 60,
+    "SSH_seconds_limit": 120,
+    "receipt_bytes_limit": 16384
+  },
+  "original_extra_blank_EOF_preserved": true,
+  "comparison_original_policy": "new static derivation metadata is unsealed; no actual execution/admission assigned",
+  "not_performed": {
+    "SSH_or_staging": 0,
+    "selected_source_import_callable_or_main": 0,
+    "tests_or_synthetic_batch": 0,
+    "actual_inputs_catalog_index_Store_public_validation": 0,
+    "native_provider_campaign_science": 0,
+    "Git_mutation_or_worktree_edit_or_push": 0,
+    "earlier_stage_or_original7a_open_or_change": 0
+  },
+  "future_actual_argv_inputs_and_private_remote_startup_outer_capture_review_still_required_for_envelope_execution": true,
+  "approval_boundary": "Preparation only. Parent full source/revision review precedes any copy; copy does not execute envelope or original writer.",
+  "identity_sha256": "87503b37b4bac29f7074aa92c26babd8c18b3df6dc4f639563ad37825fac7ad0"
+}

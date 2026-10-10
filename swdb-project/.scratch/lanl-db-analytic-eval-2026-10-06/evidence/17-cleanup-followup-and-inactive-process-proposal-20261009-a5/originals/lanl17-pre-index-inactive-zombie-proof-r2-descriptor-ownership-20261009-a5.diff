@@ -1,0 +1,23 @@
+--- PROSPECTIVE-R1-memory-only
++++ PROSPECTIVE-R2-memory-only
+@@ -302,12 +302,14 @@
+             need(stat.S_ISREG(q.st_mode) and q.st_uid in (0,UID),
+                  'inactive_kernel_leaf_regular_root_or_account')
+             fd=os.open(name,os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC,dir_fd=dfd)
+-            with os.fdopen(fd,'rb') as f:
+-                need(stamp(os.fstat(f.fileno()))==stamp(q),'inactive_leaf_open_race')
+-                b=f.read(cap+1)
+-                need(len(b)<=cap and stamp(os.fstat(f.fileno()))==stamp(q)==
+-                     stamp(os.stat(name,dir_fd=dfd,follow_symlinks=False)),
+-                     'inactive_leaf_cap_or_nine_stat_race')
++            try:
++                with os.fdopen(fd,'rb',closefd=False) as f:
++                    need(stamp(os.fstat(f.fileno()))==stamp(q),'inactive_leaf_open_race')
++                    b=f.read(cap+1)
++                    need(len(b)<=cap and stamp(os.fstat(f.fileno()))==stamp(q)==
++                         stamp(os.stat(name,dir_fd=dfd,follow_symlinks=False)),
++                         'inactive_leaf_cap_or_nine_stat_race')
++            finally:os.close(fd)
+             directory_unchanged();return b,stamp(q)
+         empty=leaf('cmdline',0)
+         first=leaf('stat',8192);status=leaf('status',65536)

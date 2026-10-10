@@ -1,0 +1,48 @@
+{
+  "created": "2026-09-26",
+  "reviewer": "independent Spec review",
+  "scope": "Narrow external per-campaign SQLite placement; source readback and actual local public CLI only",
+  "result": "clean",
+  "source_test_refs": {
+    "scripts/bfs_native_campaign.py": {
+      "bytes": 72667,
+      "sha256": "92a2e17d0cb8813da75e03d6ade2c0ff9d1792c5df34f26831d7b9a585c51a3b"
+    },
+    "tests/test_bfs_native_execution.py": {
+      "bytes": 24844,
+      "sha256": "079ac071c5f6c8309be3eb0a0973f363abf14c554ad0bb6f9a45ee79b0806b13"
+    }
+  },
+  "source_hashes_unchanged_during_review": true,
+  "command": "/Users/yanrujhou/.pyenv/versions/3.12.6/bin/python3 -m pytest tests/test_bfs_native_execution.py::test_public_get_uses_raw_database_and_preserves_runtime /private/tmp/test_bfs_campaign_database_standards_20260926.py -q --basetemp /private/tmp/bfs-campaign-db-spec-cross-20260926",
+  "exit_code": 0,
+  "log": {
+    "path": "/private/tmp/bfs-campaign-db-spec-cross-20260926.log",
+    "bytes": 98,
+    "sha256": "ec7adf3e0637795acc788538b14d59301a7fda99307b9f5ab4e1a8b054528598"
+  },
+  "original_evidence_preserved": [
+    {
+      "path": "/private/tmp/test_bfs_campaign_database_standards_20260926.py",
+      "bytes": 2515,
+      "sha256": "01d4ae46586d61b3eb81bc0b8bd9ed0eca12fea8545049dcb91bf457e2dd30f8"
+    },
+    {
+      "path": "/private/tmp/bfs-campaign-db-standards-red-20260926.log",
+      "bytes": 4188,
+      "sha256": "2cefd71fd1d101584744f9972ee9bd1d0eb590e6421e8414a43027450dd8f517"
+    }
+  ],
+  "observations": [
+    "All public Driver.call routes append explicit --db self.folder/swdb.sqlite, so get/request/submission/evaluation/profile/compare/repair share the same generated database.",
+    "The database location is retained in the original driver receipt; self.folder is under runs_dir and existing NativeSupervision.account recursively accounts its database and sidecar bytes.",
+    "The real public CLI regression performs two fresh get processes, verifies actual SQLite creation externally, no checkout/build, unchanged production campaign_runtime result and storage increase.",
+    "Original unchanged real public get failure probe now passes.",
+    "Production root-entry guard, canonical records, provider/repair rules, runtime pin and time/resource bounds are unchanged."
+  ],
+  "limits": [
+    "Host admission is synthetic in these local Mac contract tests.",
+    "No actual native campaign, Linux proof, provider, host invocation or empirical gain is claimed.",
+    "This source delta must be included before future runtime/HEAD and Linux proof sealing."
+  ]
+}

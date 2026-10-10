@@ -1,0 +1,4368 @@
+kind: evaluation
+schema_version: '0.4'
+id: bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation
+status: draft
+created: '2026-09-29'
+updated: '2026-09-29'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+request:
+  message_version: '1.0'
+  id: bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation
+  machine: mbit10
+  hardware_target: dx100-e4fc4af-4c
+  model_root: /data1/yanruj/DX100-bfs-e4fc4af
+  build_evaluation: bfs-dx100-build-20260925-a2
+  candidate: bfs-dx100-compile-20260925-a1.candidate
+  binary:
+    path: /data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build/bfs
+    sha256: a673e39cb190dc578a53e8e6f34f64f7df287e49c60331de377f8644330c0b3f
+  simulator:
+    path: /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+    sha256: f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b
+  workload:
+    id: bfs-20260928-kronecker18-s0.cf4283236c5cb50c
+    source: 0
+    representation:
+      path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18/graph.sg32
+      sha256: 9cec454bd8d3f175181a7e3906404ad8a812330c5e5bf1de62d63fad5e0f1143
+  protocol_trial:
+    source_position: 0
+    repetition: 0
+  configuration:
+    mode: BASE
+    l3_size_mb: 8
+    l3_assoc: 16
+    tile_elements: 16384
+  verification:
+    checker: dx100.bfs.verifier.v2
+    max_ticks: 100000000000000
+    coverage: false
+    post_roi_trace: SyscallBase
+    trace_transport: gem5-gzip.v1
+  budget:
+    total_seconds: 10800
+    checkpoint_seconds: 5400
+    run_seconds: 5370
+    memory_gib: 48
+    storage_gib: 10
+  candidate_build: bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build
+outcome:
+  state: complete
+  stage: execution
+  reason: The exact timed guest passed its post-ROI structural verifier; complete profiling remains required.
+stages:
+- stage: execution_identity
+  state: complete
+  started: '2026-09-29T08:58:54.674308+00:00'
+  finished: '2026-09-29T08:58:57.567863+00:00'
+- stage: checkpoint
+  state: complete
+  started: '2026-09-29T08:58:59.679303+00:00'
+  command:
+  - /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+  - --outdir=/data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/checkpoint
+  - /data1/yanruj/DX100-bfs-e4fc4af/configs/deprecated/example/se.py
+  - --cpu-type
+  - AtomicSimpleCPU
+  - -n
+  - '4'
+  - --mem-size
+  - 16GB
+  - --max-checkpoints
+  - '1'
+  - --cmd
+  - /data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build/bfs
+  - --options
+  - -f /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/dx100-loader-inputs/dx100-gapbs-9cec454bd8d3f175181a7e3906404ad8a812330c5e5bf1de62d63fad5e0f1143.sg
+    -l -n 1 -v -r 0
+  timeout_s: 5400
+  log: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/001-checkpoint.log
+  finished: '2026-09-29T09:02:17.115553+00:00'
+  host_wall_s: 195.31336031109095
+  returncode: 0
+  log_sha256: d1d582603ab04c62ab4001d2900baa6c2e43263bebaa8b8d263a7b134eafd8b8
+  reason: null
+  sampled_peak_process_group_rss_kib: 249432
+- stage: simulation
+  state: complete
+  started: '2026-09-29T09:02:22.850613+00:00'
+  command:
+  - /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+  - --debug-flags=MAATrace
+  - --debug-file=/data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/simulation/roi-debug.trace.gz
+  - --outdir=/data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/simulation
+  - /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/verification-runtime/scripts/dx100_verify.py
+  - --cpu-type
+  - X86O3CPU
+  - -n
+  - '4'
+  - --mem-size
+  - 16GB
+  - --sys-clock
+  - 3.2GHz
+  - --cpu-clock
+  - 3.2GHz
+  - --caches
+  - --l1d_size=32kB
+  - --l1d_assoc=8
+  - --l1d-hwp-type=StridePrefetcher
+  - --l1d_mshrs=16
+  - --l1d_write_buffers=8
+  - --l1i_size=32kB
+  - --l1i_assoc=8
+  - --l1i-hwp-type=StridePrefetcher
+  - --l1i_mshrs=16
+  - --l1i_write_buffers=8
+  - --l2cache
+  - --l2_size=256kB
+  - --l2_assoc=4
+  - --l2-hwp-type=StridePrefetcher
+  - --l2_mshrs=32
+  - --l2_write_buffers=16
+  - --l3cache
+  - --l3_size=8MB
+  - --l3_assoc=16
+  - --l3_mshrs=256
+  - --l3_write_buffers=128
+  - --l3_ports
+  - '4'
+  - --cacheline_size=64
+  - --mem-type
+  - Ramulator2
+  - --ramulator-config
+  - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+  - --mem-channels
+  - '2'
+  - --maa_ncbus_width
+  - '32'
+  - --prog-interval=1000
+  - --cmd
+  - /data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build/bfs
+  - --options
+  - -f /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/dx100-loader-inputs/dx100-gapbs-9cec454bd8d3f175181a7e3906404ad8a812330c5e5bf1de62d63fad5e0f1143.sg
+    -l -n 1 -v -r 0
+  - --checkpoint-dir
+  - /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/checkpoint
+  - -r
+  - '1'
+  timeout_s: 5370
+  log: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/002-simulation.log
+  finished: '2026-09-29T09:52:38.939346+00:00'
+  host_wall_s: 3013.8225243175402
+  returncode: 0
+  log_sha256: 7b0483627b0d205529098ca48fd20e6880d6d1f7bd44644796942f7bbc62aaec
+  reason: null
+  sampled_peak_process_group_rss_kib: 32104804
+- stage: execution_observations
+  state: complete
+  started: '2026-09-29T09:52:44.508957+00:00'
+  finished: '2026-09-29T09:52:46.912170+00:00'
+timing:
+- source: 0
+  source_position: 0
+  repetition: 0
+  duration_s: 0.044956623818
+  roi: bfs.complete_call.v1
+  basis: simulated
+  quantity: simulated_roi_seconds
+  binary_sha256: a673e39cb190dc578a53e8e6f34f64f7df287e49c60331de377f8644330c0b3f
+  output: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/002-simulation.log
+  output_sha256: 7b0483627b0d205529098ca48fd20e6880d6d1f7bd44644796942f7bbc62aaec
+  statistics_sha256: 8e1f3ba4f7f5e1e1403e00851ca3bba0e9dd6cc900318d8acfca9afffd34030b
+  verified: true
+  evidence_kind: execution
+correctness:
+  state: passed
+  checks:
+  - state: passed
+    checker: dx100.bfs.verifier.v2
+    execution: bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation
+    binding:
+      model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      simulator:
+        path: /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+        sha256: f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b
+      binary:
+        path: /data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build/bfs
+        sha256: a673e39cb190dc578a53e8e6f34f64f7df287e49c60331de377f8644330c0b3f
+      workload:
+        id: bfs-20260928-kronecker18-s0.cf4283236c5cb50c
+        source: 0
+        representation:
+          path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18/graph.sg32
+          sha256: 9cec454bd8d3f175181a7e3906404ad8a812330c5e5bf1de62d63fad5e0f1143
+      guest_cores: 4
+      guest_memory: 16GB
+      options: -f /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/dx100-loader-inputs/dx100-gapbs-9cec454bd8d3f175181a7e3906404ad8a812330c5e5bf1de62d63fad5e0f1143.sg
+        -l -n 1 -v -r 0
+      entry_script_sha256: aacc6e624b7ab0e7b032d5cb913974fa790efdca84598bf468c11f14b9575d0f
+      roi: bfs.complete_call.v1
+      candidate_build: bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build
+      modeled_configuration:
+        mode: BASE
+        l3_size_mb: 8
+        l3_assoc: 16
+        tile_elements: 16384
+        guest_cores: 4
+        guest_memory: 16GB
+        cpu: X86O3CPU
+        clock_hz: 3200000000
+        model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        cache:
+          l1d_kib: 32
+          l1i_kib: 32
+          l1_assoc: 8
+          l2_kib: 256
+          l2_assoc: 4
+          l3_mib: 8
+          l3_assoc: 16
+          cacheline_bytes: 64
+          prefetcher: StridePrefetcher
+        memory:
+          model: Ramulator2
+          channels: 2
+          size: 16GB
+          configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+        cpu_clock: 3.2GHz
+        ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+        command_arguments:
+        - --cpu-type
+        - X86O3CPU
+        - -n
+        - '4'
+        - --mem-size
+        - 16GB
+        - --sys-clock
+        - 3.2GHz
+        - --cpu-clock
+        - 3.2GHz
+        - --caches
+        - --l1d_size=32kB
+        - --l1d_assoc=8
+        - --l1d-hwp-type=StridePrefetcher
+        - --l1d_mshrs=16
+        - --l1d_write_buffers=8
+        - --l1i_size=32kB
+        - --l1i_assoc=8
+        - --l1i-hwp-type=StridePrefetcher
+        - --l1i_mshrs=16
+        - --l1i_write_buffers=8
+        - --l2cache
+        - --l2_size=256kB
+        - --l2_assoc=4
+        - --l2-hwp-type=StridePrefetcher
+        - --l2_mshrs=32
+        - --l2_write_buffers=16
+        - --l3cache
+        - --l3_size=8MB
+        - --l3_assoc=16
+        - --l3_mshrs=256
+        - --l3_write_buffers=128
+        - --l3_ports
+        - '4'
+        - --cacheline_size=64
+        - --mem-type
+        - Ramulator2
+        - --ramulator-config
+        - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+        - --mem-channels
+        - '2'
+        - --maa_ncbus_width
+        - '32'
+        - --prog-interval=1000
+      hardware_target: dx100-e4fc4af-4c
+      loader_representation:
+        path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/dx100-loader-inputs/dx100-gapbs-9cec454bd8d3f175181a7e3906404ad8a812330c5e5bf1de62d63fad5e0f1143.sg
+        sha256: 9cec454bd8d3f175181a7e3906404ad8a812330c5e5bf1de62d63fad5e0f1143
+    target: dx100-e4fc4af-4c
+    configuration:
+      mode: BASE
+      l3_size_mb: 8
+      l3_assoc: 16
+      tile_elements: 16384
+      guest_cores: 4
+      guest_memory: 16GB
+      cpu: X86O3CPU
+      clock_hz: 3200000000
+      model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      cache:
+        l1d_kib: 32
+        l1i_kib: 32
+        l1_assoc: 8
+        l2_kib: 256
+        l2_assoc: 4
+        l3_mib: 8
+        l3_assoc: 16
+        cacheline_bytes: 64
+        prefetcher: StridePrefetcher
+      memory:
+        model: Ramulator2
+        channels: 2
+        size: 16GB
+        configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+      cpu_clock: 3.2GHz
+      ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+      command_arguments:
+      - --cpu-type
+      - X86O3CPU
+      - -n
+      - '4'
+      - --mem-size
+      - 16GB
+      - --sys-clock
+      - 3.2GHz
+      - --cpu-clock
+      - 3.2GHz
+      - --caches
+      - --l1d_size=32kB
+      - --l1d_assoc=8
+      - --l1d-hwp-type=StridePrefetcher
+      - --l1d_mshrs=16
+      - --l1d_write_buffers=8
+      - --l1i_size=32kB
+      - --l1i_assoc=8
+      - --l1i-hwp-type=StridePrefetcher
+      - --l1i_mshrs=16
+      - --l1i_write_buffers=8
+      - --l2cache
+      - --l2_size=256kB
+      - --l2_assoc=4
+      - --l2-hwp-type=StridePrefetcher
+      - --l2_mshrs=32
+      - --l2_write_buffers=16
+      - --l3cache
+      - --l3_size=8MB
+      - --l3_assoc=16
+      - --l3_mshrs=256
+      - --l3_write_buffers=128
+      - --l3_ports
+      - '4'
+      - --cacheline_size=64
+      - --mem-type
+      - Ramulator2
+      - --ramulator-config
+      - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+      - --mem-channels
+      - '2'
+      - --maa_ncbus_width
+      - '32'
+      - --prog-interval=1000
+    timed_source:
+      path: /data1/yanruj/EvolveSWDB_sources/bfs-dx100-compile-20260925-a1.candidate/source/benchmarks/gapbs/src/bfs.cc
+      sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+    verifier_source:
+      path: /data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build/complete_call.cc
+      sha256: 4330beaf01bc92cd44a459bc48a9fd2be145d51bc9e0bf2328bad229fd515862
+      symbol: swdb_original::Graph::verify
+      bounds_check: trusted original-CSR oracle checks exact parent length and range before traversal
+        validation
+    sealed_roi:
+      path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/simulation/roi-seal.json
+      sha256: 012c1682bb1b8c5af0e62d7244fb1d073dca73b2dfe11dde9c34d83aa2058117
+    output:
+      path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/002-simulation.log
+      sha256: 7b0483627b0d205529098ca48fd20e6880d6d1f7bd44644796942f7bbc62aaec
+    requested_checks: 1
+    observed_verdicts:
+    - verdict: PASS
+      line: 314
+      after_seal: true
+    continuation:
+      checker: dx100.bfs.verifier.v2
+      chunk_ticks: 1000000000
+      exit_cause: simulate() limit reached
+      exit_code: 0
+      exit_tick: 251821838300
+      exit_witness:
+        allowed_cpus: [system.switch_cpus0, system.switch_cpus1, system.switch_cpus2, system.switch_cpus3]
+        caller:
+          cpu: system.switch_cpus0
+          thread: 0
+        completed: true
+        enabled_tick: 193821838300
+        end_tick: 251821838300
+        events_after_exit: 0
+        exit_request:
+          call_line: 259
+          return_line: 260
+          return_value: 0
+          status: 0
+          tick: 250922073671
+        format: swdb.dx100.exit-witness.v1
+        initial_partial_calls: []
+        line_count: 260
+        pending_calls: []
+        progress_records:
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 1497946
+          ipc: '0.468857'
+          line: 3
+          tick: 193846113000
+          total_committed: 62721368
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 1495500
+          ipc: '0.468092'
+          line: 4
+          tick: 193846113000
+          total_committed: 92400509
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 1495874
+          ipc: '0.468209'
+          line: 5
+          tick: 193846113000
+          total_committed: 85791612
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 1306138
+          ipc: '0.408821'
+          line: 6
+          tick: 193846113000
+          total_committed: 115862202
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 6123549
+          ipc: '01.91667'
+          line: 13
+          tick: 194846113000
+          total_committed: 121985751
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 3194225
+          ipc: '0.999792'
+          line: 14
+          tick: 194846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 3194556
+          ipc: '0.999896'
+          line: 15
+          tick: 194846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 3194393
+          ipc: '0.999845'
+          line: 16
+          tick: 194846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 17
+          tick: 195846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 18
+          tick: 195846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 19
+          tick: 195846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 6384889
+          ipc: '01.99847'
+          line: 20
+          tick: 195846113000
+          total_committed: 128370640
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5470732
+          ipc: '01.71234'
+          line: 21
+          tick: 196846113000
+          total_committed: 133841372
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 22
+          tick: 196846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 23
+          tick: 196846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 24
+          tick: 196846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 25
+          tick: 197846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 26
+          tick: 197846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 27
+          tick: 197846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 3437279
+          ipc: '01.07587'
+          line: 28
+          tick: 197846113000
+          total_committed: 137278651
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 4624034
+          ipc: '01.44732'
+          line: 29
+          tick: 198846113000
+          total_committed: 141902685
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 30
+          tick: 198846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 31
+          tick: 198846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 32
+          tick: 198846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 33
+          tick: 199846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 34
+          tick: 199846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 35
+          tick: 199846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5116063
+          ipc: '01.60133'
+          line: 36
+          tick: 199846113000
+          total_committed: 147018748
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5339080
+          ipc: '01.67113'
+          line: 37
+          tick: 200846113000
+          total_committed: 152357828
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 38
+          tick: 200846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 39
+          tick: 200846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 40
+          tick: 200846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 41
+          tick: 201846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 42
+          tick: 201846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 43
+          tick: 201846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5543378
+          ipc: '01.73508'
+          line: 44
+          tick: 201846113000
+          total_committed: 157901206
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5549829
+          ipc: '001.7371'
+          line: 45
+          tick: 202846113000
+          total_committed: 163451035
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 46
+          tick: 202846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 47
+          tick: 202846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 48
+          tick: 202846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 49
+          tick: 203846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 50
+          tick: 203846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 51
+          tick: 203846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5633681
+          ipc: '01.76334'
+          line: 52
+          tick: 203846113000
+          total_committed: 169084716
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5711218
+          ipc: '01.78761'
+          line: 53
+          tick: 204846113000
+          total_committed: 174795934
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 54
+          tick: 204846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 55
+          tick: 204846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 56
+          tick: 204846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 57
+          tick: 205846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 58
+          tick: 205846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 59
+          tick: 205846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5750378
+          ipc: '01.79987'
+          line: 60
+          tick: 205846113000
+          total_committed: 180546312
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5602532
+          ipc: '01.75359'
+          line: 61
+          tick: 206846113000
+          total_committed: 186148844
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 62
+          tick: 206846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 63
+          tick: 206846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 64
+          tick: 206846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 65
+          tick: 207846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 66
+          tick: 207846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 67
+          tick: 207846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5461349
+          ipc: '001.7094'
+          line: 68
+          tick: 207846113000
+          total_committed: 191610193
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5261071
+          ipc: '01.64672'
+          line: 69
+          tick: 208846113000
+          total_committed: 196871264
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 70
+          tick: 208846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 71
+          tick: 208846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 72
+          tick: 208846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 73
+          tick: 209846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 74
+          tick: 209846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 75
+          tick: 209846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5244639
+          ipc: '01.64157'
+          line: 76
+          tick: 209846113000
+          total_committed: 202115903
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5124831
+          ipc: '01.60407'
+          line: 77
+          tick: 210846113000
+          total_committed: 207240734
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 78
+          tick: 210846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 79
+          tick: 210846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 80
+          tick: 210846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 81
+          tick: 211846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 82
+          tick: 211846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 83
+          tick: 211846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 4841497
+          ipc: '01.51539'
+          line: 84
+          tick: 211846113000
+          total_committed: 212082231
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 4649952
+          ipc: '01.45544'
+          line: 85
+          tick: 212846113000
+          total_committed: 216732183
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 86
+          tick: 212846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 87
+          tick: 212846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 88
+          tick: 212846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 89
+          tick: 213846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 90
+          tick: 213846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 91
+          tick: 213846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 4368416
+          ipc: '01.36731'
+          line: 92
+          tick: 213846113000
+          total_committed: 221100599
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 4156649
+          ipc: '01.30103'
+          line: 93
+          tick: 214846113000
+          total_committed: 225257248
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 94
+          tick: 214846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 95
+          tick: 214846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 96
+          tick: 214846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 97
+          tick: 215846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 98
+          tick: 215846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 99
+          tick: 215846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 3914361
+          ipc: '001.2252'
+          line: 100
+          tick: 215846113000
+          total_committed: 229171609
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 3817329
+          ipc: '01.19482'
+          line: 101
+          tick: 216846113000
+          total_committed: 232988938
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 102
+          tick: 216846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 103
+          tick: 216846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 104
+          tick: 216846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 105
+          tick: 217846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 106
+          tick: 217846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 107
+          tick: 217846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 3802136
+          ipc: '01.19007'
+          line: 108
+          tick: 217846113000
+          total_committed: 236791074
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 3292739
+          ipc: '01.03063'
+          line: 109
+          tick: 218846113000
+          total_committed: 240083813
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 110
+          tick: 218846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 111
+          tick: 218846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 112
+          tick: 218846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 113
+          tick: 219846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 114
+          tick: 219846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 115
+          tick: 219846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 2786649
+          ipc: '0.872221'
+          line: 116
+          tick: 219846113000
+          total_committed: 242870462
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 2516107
+          ipc: '0.787542'
+          line: 117
+          tick: 220846113000
+          total_committed: 245386569
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 118
+          tick: 220846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 119
+          tick: 220846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 120
+          tick: 220846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 121
+          tick: 221846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 122
+          tick: 221846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 123
+          tick: 221846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 2246408
+          ipc: '0.703126'
+          line: 124
+          tick: 221846113000
+          total_committed: 247632977
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 2051571
+          ipc: '0.642142'
+          line: 125
+          tick: 222846113000
+          total_committed: 249684548
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 126
+          tick: 222846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 127
+          tick: 222846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 128
+          tick: 222846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 129
+          tick: 223846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 130
+          tick: 223846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 131
+          tick: 223846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 1763978
+          ipc: '0.552125'
+          line: 132
+          tick: 223846113000
+          total_committed: 251448526
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 1566945
+          ipc: '0.490454'
+          line: 133
+          tick: 224846113000
+          total_committed: 253015471
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 134
+          tick: 224846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 135
+          tick: 224846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 136
+          tick: 224846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 137
+          tick: 225846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 138
+          tick: 225846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 139
+          tick: 225846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 1435730
+          ipc: '0.449384'
+          line: 140
+          tick: 225846113000
+          total_committed: 254451201
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 1289167
+          ipc: '0.403509'
+          line: 141
+          tick: 226846113000
+          total_committed: 255740368
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 142
+          tick: 226846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 143
+          tick: 226846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 144
+          tick: 226846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 145
+          tick: 227846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 146
+          tick: 227846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 147
+          tick: 227846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 1204464
+          ipc: '0.376997'
+          line: 148
+          tick: 227846113000
+          total_committed: 256944832
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 1212807
+          ipc: '0.379609'
+          line: 149
+          tick: 228846113000
+          total_committed: 258157639
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 150
+          tick: 228846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 151
+          tick: 228846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 152
+          tick: 228846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 153
+          tick: 229846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 154
+          tick: 229846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 155
+          tick: 229846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 2412902
+          ipc: '0.755238'
+          line: 156
+          tick: 229846113000
+          total_committed: 260570541
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5340195
+          ipc: '01.67148'
+          line: 157
+          tick: 230846113000
+          total_committed: 265910736
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 158
+          tick: 230846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 159
+          tick: 230846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 160
+          tick: 230846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 161
+          tick: 231846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 162
+          tick: 231846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 163
+          tick: 231846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5905866
+          ipc: '01.84854'
+          line: 164
+          tick: 231846113000
+          total_committed: 271816602
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5868000
+          ipc: '01.83668'
+          line: 165
+          tick: 232846113000
+          total_committed: 277684602
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 166
+          tick: 232846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 167
+          tick: 232846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 168
+          tick: 232846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 169
+          tick: 233846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 170
+          tick: 233846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 171
+          tick: 233846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5707669
+          ipc: '001.7865'
+          line: 172
+          tick: 233846113000
+          total_committed: 283392271
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5768477
+          ipc: '01.80553'
+          line: 173
+          tick: 234846113000
+          total_committed: 289160748
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 174
+          tick: 234846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 175
+          tick: 234846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 176
+          tick: 234846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 177
+          tick: 235846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 178
+          tick: 235846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 179
+          tick: 235846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5762894
+          ipc: '01.80379'
+          line: 180
+          tick: 235846113000
+          total_committed: 294923642
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5766650
+          ipc: '01.80496'
+          line: 181
+          tick: 236846113000
+          total_committed: 300690292
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 182
+          tick: 236846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 183
+          tick: 236846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 184
+          tick: 236846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 185
+          tick: 237846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 186
+          tick: 237846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 187
+          tick: 237846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5804172
+          ipc: '01.81671'
+          line: 188
+          tick: 237846113000
+          total_committed: 306494464
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5810414
+          ipc: '01.81866'
+          line: 189
+          tick: 238846113000
+          total_committed: 312304878
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 190
+          tick: 238846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 191
+          tick: 238846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 192
+          tick: 238846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 193
+          tick: 239846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 194
+          tick: 239846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 195
+          tick: 239846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5696088
+          ipc: '01.78288'
+          line: 196
+          tick: 239846113000
+          total_committed: 318000966
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5843728
+          ipc: '01.82909'
+          line: 197
+          tick: 240846113000
+          total_committed: 323844694
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 198
+          tick: 240846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 199
+          tick: 240846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 200
+          tick: 240846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 201
+          tick: 241846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 202
+          tick: 241846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 203
+          tick: 241846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5640127
+          ipc: '01.76536'
+          line: 204
+          tick: 241846113000
+          total_committed: 329484821
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5769221
+          ipc: '01.80577'
+          line: 205
+          tick: 242846113000
+          total_committed: 335254042
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 206
+          tick: 242846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 207
+          tick: 242846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 208
+          tick: 242846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 209
+          tick: 243846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 210
+          tick: 243846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 211
+          tick: 243846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5676301
+          ipc: '01.77668'
+          line: 212
+          tick: 243846113000
+          total_committed: 340930343
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5844927
+          ipc: '01.82946'
+          line: 213
+          tick: 244846113000
+          total_committed: 346775270
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 214
+          tick: 244846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 215
+          tick: 244846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 216
+          tick: 244846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 217
+          tick: 245846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 218
+          tick: 245846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 219
+          tick: 245846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5557914
+          ipc: '01.73963'
+          line: 220
+          tick: 245846113000
+          total_committed: 352333184
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5780883
+          ipc: '01.80942'
+          line: 221
+          tick: 246846113000
+          total_committed: 358114067
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 222
+          tick: 246846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 223
+          tick: 246846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 224
+          tick: 246846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 225
+          tick: 247846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 226
+          tick: 247846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 227
+          tick: 247846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5159857
+          ipc: '01.61504'
+          line: 228
+          tick: 247846113000
+          total_committed: 363273924
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5860710
+          ipc: '001.8344'
+          line: 229
+          tick: 248846113000
+          total_committed: 369134634
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 230
+          tick: 248846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 231
+          tick: 248846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 232
+          tick: 248846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 233
+          tick: 249846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 234
+          tick: 249846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 235
+          tick: 249846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 3863185
+          ipc: '01.20918'
+          line: 236
+          tick: 249846113000
+          total_committed: 372997819
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5212452
+          ipc: '001.6315'
+          line: 237
+          tick: 250846113000
+          total_committed: 378210271
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 238
+          tick: 250846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 239
+          tick: 250846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 240
+          tick: 250846113000
+          total_committed: 65915761
+        trace:
+          bytes: 33050
+          path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/simulation/post-roi-syscalls.log
+          sha256: 75f56673ba822a48c7b9b7cc321e829f3ee689c12b80a4233c4c54396c5cbd38
+      max_ticks: 100000000000000
+      normal_exit_observed: false
+      parser_sha256: 0eed08d570ed6ce2a5728e7d51c1e86268096eaa21aa3acfeeb38b9dcf7e5a26
+      post_roi_trace:
+        bytes: 33050
+        disabled_format_flags: [FmtTicksOff, FmtStackTrace]
+        disabled_roi_flags: [MAATrace, MAARangeFuser, MAAIndirect]
+        enabled_tick: 193821838300
+        flag: SyscallBase
+        format_flags: [FmtFlag]
+        output: separate_simulator_trace
+        path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/simulation/post-roi-syscalls.log
+        scope: post-seal verifier continuation only
+        sha256: 75f56673ba822a48c7b9b7cc321e829f3ee689c12b80a4233c4c54396c5cbd38
+      simulated_ticks: 58000000000
+      state: finished
+      stop_reason: exit_witness
+    parent_results:
+    - source: 0
+      vertices: 262143
+      parent_count: 262143
+      parent_fnv1a64: b8f6051fc47ea512
+      line: 313
+      after_seal: true
+      fingerprint_kind: noncryptographic FNV-1a over little-endian signed32 parent values
+    coverage:
+      state: observed
+      tick_interval: [148862262579, 193818886397]
+      completed_trace_units: {}
+      address_space_contract:
+        model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+        instruction_baseAddr: guest virtual; compared only with returned parent.data()
+        recvData_addr: translated physical cache line; compared only with other physical words
+        source_evidence:
+        - path: src/mem/MAA/IF.cc
+          sha256: fd7dd67f35f63ff6ed9ef0b8ce36cb60cc6d63b20fe9c0796e648bff82da6561
+          lines: [38, 63]
+        - path: src/mem/MAA/IndirectAccess.cc
+          sha256: 7e238a370f25ff5a7a1211548630a291d6358c32d8a199fc58bfacd37d1d35db
+          lines: [494, 505]
+      range_output_tile_sizes: {}
+      full_tiles:
+        state: unobserved
+        count: 0
+        capacity: 16384
+      tail_tiles:
+        state: unobserved
+        count: 0
+        capacity: 16384
+      competing_parent_updates:
+        state: unobserved
+        count: 0
+        samples: []
+        parent_storage:
+          virtual_address: 1253536
+          count: 262143
+          line: 249
+          stream: stdout
+        target_tracking_truncated: false
+        definition: Different signed32 vector-store values observed at the same physical word, from instructions
+          whose virtual base is the returned parent array.
+      limits: Positive counts prove these finite observed cases only. Graph topology is not substituted
+        for executed updates; traces outside the selected ROI are excluded.
+      debug_trace:
+        format: swdb.dx100.debug-trace.v1
+        transport: gem5-gzip.v1
+        path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/simulation/roi-debug.trace.gz
+        sha256: 71a0fc813b131bb2b03e7409cb01c3f45d3e7532bcdb9c0ade00d3f4d4b82391
+        bytes: 3054
+        uncompressed_sha256: a93e0bb5071f94c60d9171be26e25bb9ce9f96cbc4356fa2ac43bb4e5b500a70
+        uncompressed_bytes: 23827
+        lines: 176
+      accelerator_executed: false
+      instruction_counters: {}
+    scope: This execution only; finite graph/source checking is not a proof for all inputs.
+    completion_sequence:
+      kind: protected_candidate
+      times: []
+      observed: true
+    passed: true
+    source: 0
+    source_position: 0
+    repetition: 0
+    binary_sha256: a673e39cb190dc578a53e8e6f34f64f7df287e49c60331de377f8644330c0b3f
+    graph_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    output_sha256: 7b0483627b0d205529098ca48fd20e6880d6d1f7bd44644796942f7bbc62aaec
+profiling:
+  state: incomplete
+  reasons:
+  - BFS ROI, regions, and memory metrics require the profile collector.
+raw_artifacts:
+- host: mbit10
+  path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation
+  kind: dx100_execute
+- host: mbit10
+  kind: host_observation
+  path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/host-observation.json
+  sha256: 3a6b0e6f8b0c060431b85f2eedb0368e229ae10bb70bea7df1fe8c4a084d9adc
+  host_wall_s: 0.08070699591189623
+  evidence_kind: execution
+  unavailable_commands: 2
+- host: mbit10
+  kind: process_group_memory
+  path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/001-checkpoint.memory.jsonl
+  sha256: 92606f3ef517bea9878cb66ab63df3ada2a4c847059db69d11a645f0e8facdbc
+- host: mbit10
+  kind: process_group_memory
+  path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/002-simulation.memory.jsonl
+  sha256: f9a21a57432a02033a47aeaf214c04745924e413fd9999474b89fe61117bc904
+- host: mbit10
+  kind: simulator_host_memory_phases
+  path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/simulation/host-memory-phases.jsonl
+  sha256: 16874813b04cae553f3d87a15d7cd289ff09df8c18b7d426d5de3861ef1fcb24
+- kind: simulation
+  artifact:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/simulation
+    sha256: 92392ab14bd62824f753ff259137ea95e0b0bb79d8cb6d9641061aae63ad7734
+    files:
+    - path: citations.bib
+      sha256: fdc8f17efa3fbc1401cc7e2abef63bcc3b99c38297ee69e4a39ed578be1bc8c0
+      bytes: 3951
+      executable: false
+    - path: config.ini
+      sha256: 8ddc558fa51754c18f04af7b535433e4c0bbb2e818e268cf803b11a93ea0580f
+      bytes: 140001
+      executable: false
+    - path: config.json
+      sha256: 4d92664f6ba56cfaa422c8b0b5f443ce82c7c40f3a1da2eaf5338ef4f2b4c312
+      bytes: 396494
+      executable: false
+    - path: fs/proc/cpuinfo
+      sha256: 6a3bb84922536b0d0c374a7e29f19497ff167cb62b315ace0c4757a28237686f
+      bytes: 1576
+      executable: false
+    - path: fs/proc/stat
+      sha256: 77f984b7e5466538244ea688c0225d6ce4be8c9571c181dd59f63990e028ea51
+      bytes: 94
+      executable: false
+    - path: fs/sys/devices/system/cpu/online
+      sha256: f0e7dd3ebbfd0bb1bfeca50048635775fe0cc4eae4280a9a924de9450351064b
+      bytes: 3
+      executable: false
+    - path: fs/sys/devices/system/cpu/possible
+      sha256: f0e7dd3ebbfd0bb1bfeca50048635775fe0cc4eae4280a9a924de9450351064b
+      bytes: 3
+      executable: false
+    - path: host-memory-phases.jsonl
+      sha256: 16874813b04cae553f3d87a15d7cd289ff09df8c18b7d426d5de3861ef1fcb24
+      bytes: 10205
+      executable: false
+    - path: post-roi-syscalls.log
+      sha256: 75f56673ba822a48c7b9b7cc321e829f3ee689c12b80a4233c4c54396c5cbd38
+      bytes: 33050
+      executable: false
+    - path: roi-debug.trace.gz
+      sha256: 71a0fc813b131bb2b03e7409cb01c3f45d3e7532bcdb9c0ade00d3f4d4b82391
+      bytes: 3054
+      executable: false
+    - path: roi-seal.json
+      sha256: 012c1682bb1b8c5af0e62d7244fb1d073dca73b2dfe11dde9c34d83aa2058117
+      bytes: 60227
+      executable: false
+    - path: roi-stats.txt
+      sha256: 8e1f3ba4f7f5e1e1403e00851ca3bba0e9dd6cc900318d8acfca9afffd34030b
+      bytes: 1179103
+      executable: false
+    - path: stats.txt
+      sha256: 20cc4e586b05e3ff45ef60aba0d7088e8896a9c243536ea547bdcffbca6dbcb9
+      bytes: 2356050
+      executable: false
+gain_claim: false
+evidence_kind: execution
+machine: mbit10
+context:
+  backend: dx100-gem5-se
+  target: dx100-e4fc4af-4c
+  target_sha256: 94cf9373c255c1c36d4b6f622124aec90e8bd485d66fa2af996d6e46c91e04e1
+  model:
+    id: dx100-gem5
+    revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  interface:
+    id: dx100-mmio
+    version: 1.0-e4fc4af
+  model_root: /data1/yanruj/DX100-bfs-e4fc4af
+  host: mbit10
+  lane: 'mbit10-evaluation-node1 (verified: affinity, bind:1, lease held, generation 482)'
+  budget:
+    total_seconds: 10800
+    checkpoint_seconds: 5400
+    run_seconds: 5370
+    memory_gib: 48
+    storage_gib: 10
+  load_average: [4.42431640625, 4.21728515625, 4.11474609375]
+  roi: bfs.complete_call.v1
+  basis: simulated
+  host_observation:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/host-observation.json
+    sha256: 3a6b0e6f8b0c060431b85f2eedb0368e229ae10bb70bea7df1fe8c4a084d9adc
+    host_wall_s: 0.08070699591189623
+    evidence_kind: execution
+    unavailable_commands: 2
+  application: dx100-gapbs
+  workload:
+    id: bfs-20260928-kronecker18-s0.cf4283236c5cb50c
+    workload_sha256: cf4283236c5cb50c245b7e5c883ce2f9a0f548287eb072707b49bbf3376deea2
+    canonical_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+    sources: [0]
+    realized:
+      num_vertices: 262143
+      num_directed_edges: 7610898
+      directed: false
+      isolated_vertices: 88159
+      minimum_out_degree: 0
+      maximum_out_degree: 25251
+    representation:
+      id: bfs-20260925-kronecker18.dx100
+      path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18/graph.sg32
+      sha256: 9cec454bd8d3f175181a7e3906404ad8a812330c5e5bf1de62d63fad5e0f1143
+      format: gapbs_sg32le
+      application: dx100-gapbs
+      canonical_sha256: cc1a3e19cbed2fb7622595a4eb3f4b76774dc076dbb1f1c8e41d23edcb432eb7
+      bytes: 31492177
+      loader: swdb.gapbs-representation.v1
+      adjacency_verified: true
+      verification:
+        method: exact_mmap_csr_transpose_membership
+        parser_sha256: ade4fb06fbef7f1947b0c1687ccebb99797773c3ea578611e57a10be36cfc893
+        compiler: /usr/bin/x86_64-linux-gnu-g++-13
+        budgets:
+          compile_timeout_s: 60
+          timeout_s: 900
+  graph_verification:
+    contract: swdb.bfs.original-adjacency.v1
+    input_format: gapbs.sg32
+    byte_order: little
+    adjacency: outgoing CSR from exact registered serialized input
+    maximum_extra_bytes: 2147483648
+    preload: before checkpoint and ROI
+    verification: after ROI on exact returned parent buffer
+    allocation: all oracle adjacency and checker work arrays allocated before ROI
+  protected_bfs_verifier:
+    path: /data1/yanruj/EvolveSWDB_sources/bfs-dx100-compile-20260925-a1.candidate/source/benchmarks/gapbs/src/bfs.cc
+    sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+    symbol: BFSVerifier
+    protected_text_sha256: f55852f16a74a11542ccca387a2ddf61d1f538b006e9e35935b50c48662bf721
+    bounds_check: trusted driver validates parent length and values before BFSVerifier
+  protocol_trial:
+    source_position: 0
+    repetition: 0
+  timed_source:
+    path: /data1/yanruj/EvolveSWDB_sources/bfs-dx100-compile-20260925-a1.candidate/source/benchmarks/gapbs/src/bfs.cc
+    sha256: 6835fc42dfadcb60c1c3fae543f736903977f135fd7c55cd495c0e481b572465
+  verifier_source:
+    path: /data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build/complete_call.cc
+    sha256: 4330beaf01bc92cd44a459bc48a9fd2be145d51bc9e0bf2328bad229fd515862
+    symbol: swdb_original::Graph::verify
+    bounds_check: trusted original-CSR oracle checks exact parent length and range before traversal validation
+  candidate_build: bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build
+  candidate_driver:
+    path: /data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build/complete_call.cc
+    sha256: 4330beaf01bc92cd44a459bc48a9fd2be145d51bc9e0bf2328bad229fd515862
+  suppressed_internal_events: [m5_reset_stats, m5_dump_stats, m5_work_begin, m5_work_end, m5_exit]
+  candidate_sha256: d5ac642dfe1a2ba5ef548f86c5c269ef54164b55985badc55872288f41504e9d
+  loader_input:
+    format: swdb.dx100.loader-input.v1
+    application: dx100-gapbs
+    serialization: gapbs_sg32le
+    original:
+      path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18/graph.sg32
+      sha256: 9cec454bd8d3f175181a7e3906404ad8a812330c5e5bf1de62d63fad5e0f1143
+    alias:
+      path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/dx100-loader-inputs/dx100-gapbs-9cec454bd8d3f175181a7e3906404ad8a812330c5e5bf1de62d63fad5e0f1143.sg
+      sha256: 9cec454bd8d3f175181a7e3906404ad8a812330c5e5bf1de62d63fad5e0f1143
+    provenance:
+      method: existing_verified_alias
+      storage_charge_bytes: 0
+  configuration:
+    mode: BASE
+    l3_size_mb: 8
+    l3_assoc: 16
+    tile_elements: 16384
+    guest_cores: 4
+    guest_memory: 16GB
+    cpu: X86O3CPU
+    clock_hz: 3200000000
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    cache:
+      l1d_kib: 32
+      l1i_kib: 32
+      l1_assoc: 8
+      l2_kib: 256
+      l2_assoc: 4
+      l3_mib: 8
+      l3_assoc: 16
+      cacheline_bytes: 64
+      prefetcher: StridePrefetcher
+    memory:
+      model: Ramulator2
+      channels: 2
+      size: 16GB
+      configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+    cpu_clock: 3.2GHz
+    ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+    command_arguments:
+    - --cpu-type
+    - X86O3CPU
+    - -n
+    - '4'
+    - --mem-size
+    - 16GB
+    - --sys-clock
+    - 3.2GHz
+    - --cpu-clock
+    - 3.2GHz
+    - --caches
+    - --l1d_size=32kB
+    - --l1d_assoc=8
+    - --l1d-hwp-type=StridePrefetcher
+    - --l1d_mshrs=16
+    - --l1d_write_buffers=8
+    - --l1i_size=32kB
+    - --l1i_assoc=8
+    - --l1i-hwp-type=StridePrefetcher
+    - --l1i_mshrs=16
+    - --l1i_write_buffers=8
+    - --l2cache
+    - --l2_size=256kB
+    - --l2_assoc=4
+    - --l2-hwp-type=StridePrefetcher
+    - --l2_mshrs=32
+    - --l2_write_buffers=16
+    - --l3cache
+    - --l3_size=8MB
+    - --l3_assoc=16
+    - --l3_mshrs=256
+    - --l3_write_buffers=128
+    - --l3_ports
+    - '4'
+    - --cacheline_size=64
+    - --mem-type
+    - Ramulator2
+    - --ramulator-config
+    - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+    - --mem-channels
+    - '2'
+    - --maa_ncbus_width
+    - '32'
+    - --prog-interval=1000
+  backend_configuration:
+    mode: BASE
+    l3_size_mb: 8
+    l3_assoc: 16
+    tile_elements: 16384
+    guest_cores: 4
+    guest_memory: 16GB
+    cpu: X86O3CPU
+    clock_hz: 3200000000
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    cache:
+      l1d_kib: 32
+      l1i_kib: 32
+      l1_assoc: 8
+      l2_kib: 256
+      l2_assoc: 4
+      l3_mib: 8
+      l3_assoc: 16
+      cacheline_bytes: 64
+      prefetcher: StridePrefetcher
+    memory:
+      model: Ramulator2
+      channels: 2
+      size: 16GB
+      configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+    cpu_clock: 3.2GHz
+    ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+    command_arguments:
+    - --cpu-type
+    - X86O3CPU
+    - -n
+    - '4'
+    - --mem-size
+    - 16GB
+    - --sys-clock
+    - 3.2GHz
+    - --cpu-clock
+    - 3.2GHz
+    - --caches
+    - --l1d_size=32kB
+    - --l1d_assoc=8
+    - --l1d-hwp-type=StridePrefetcher
+    - --l1d_mshrs=16
+    - --l1d_write_buffers=8
+    - --l1i_size=32kB
+    - --l1i_assoc=8
+    - --l1i-hwp-type=StridePrefetcher
+    - --l1i_mshrs=16
+    - --l1i_write_buffers=8
+    - --l2cache
+    - --l2_size=256kB
+    - --l2_assoc=4
+    - --l2-hwp-type=StridePrefetcher
+    - --l2_mshrs=32
+    - --l2_write_buffers=16
+    - --l3cache
+    - --l3_size=8MB
+    - --l3_assoc=16
+    - --l3_mshrs=256
+    - --l3_write_buffers=128
+    - --l3_ports
+    - '4'
+    - --cacheline_size=64
+    - --mem-type
+    - Ramulator2
+    - --ramulator-config
+    - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+    - --mem-channels
+    - '2'
+    - --maa_ncbus_width
+    - '32'
+    - --prog-interval=1000
+  execution_binding:
+    model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+    simulator:
+      path: /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+      sha256: f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b
+    binary:
+      path: /data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build/bfs
+      sha256: a673e39cb190dc578a53e8e6f34f64f7df287e49c60331de377f8644330c0b3f
+    workload:
+      id: bfs-20260928-kronecker18-s0.cf4283236c5cb50c
+      source: 0
+      representation:
+        path: /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-kronecker18/graph.sg32
+        sha256: 9cec454bd8d3f175181a7e3906404ad8a812330c5e5bf1de62d63fad5e0f1143
+    guest_cores: 4
+    guest_memory: 16GB
+    options: -f /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/dx100-loader-inputs/dx100-gapbs-9cec454bd8d3f175181a7e3906404ad8a812330c5e5bf1de62d63fad5e0f1143.sg
+      -l -n 1 -v -r 0
+    entry_script_sha256: aacc6e624b7ab0e7b032d5cb913974fa790efdca84598bf468c11f14b9575d0f
+    roi: bfs.complete_call.v1
+    candidate_build: bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build
+    modeled_configuration:
+      mode: BASE
+      l3_size_mb: 8
+      l3_assoc: 16
+      tile_elements: 16384
+      guest_cores: 4
+      guest_memory: 16GB
+      cpu: X86O3CPU
+      clock_hz: 3200000000
+      model_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+      cache:
+        l1d_kib: 32
+        l1i_kib: 32
+        l1_assoc: 8
+        l2_kib: 256
+        l2_assoc: 4
+        l3_mib: 8
+        l3_assoc: 16
+        cacheline_bytes: 64
+        prefetcher: StridePrefetcher
+      memory:
+        model: Ramulator2
+        channels: 2
+        size: 16GB
+        configuration_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+      cpu_clock: 3.2GHz
+      ramulator_config_sha256: aca6e27b58afdfbfd80b7ec41c3f0e7e574a1fc7355a3512981ead823f68731b
+      command_arguments:
+      - --cpu-type
+      - X86O3CPU
+      - -n
+      - '4'
+      - --mem-size
+      - 16GB
+      - --sys-clock
+      - 3.2GHz
+      - --cpu-clock
+      - 3.2GHz
+      - --caches
+      - --l1d_size=32kB
+      - --l1d_assoc=8
+      - --l1d-hwp-type=StridePrefetcher
+      - --l1d_mshrs=16
+      - --l1d_write_buffers=8
+      - --l1i_size=32kB
+      - --l1i_assoc=8
+      - --l1i-hwp-type=StridePrefetcher
+      - --l1i_mshrs=16
+      - --l1i_write_buffers=8
+      - --l2cache
+      - --l2_size=256kB
+      - --l2_assoc=4
+      - --l2-hwp-type=StridePrefetcher
+      - --l2_mshrs=32
+      - --l2_write_buffers=16
+      - --l3cache
+      - --l3_size=8MB
+      - --l3_assoc=16
+      - --l3_mshrs=256
+      - --l3_write_buffers=128
+      - --l3_ports
+      - '4'
+      - --cacheline_size=64
+      - --mem-type
+      - Ramulator2
+      - --ramulator-config
+      - /data1/yanruj/DX100-bfs-e4fc4af/ext/ramulator2/ramulator2/example_gem5_config.yaml
+      - --mem-channels
+      - '2'
+      - --maa_ncbus_width
+      - '32'
+      - --prog-interval=1000
+    hardware_target: dx100-e4fc4af-4c
+    loader_representation:
+      path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/dx100-loader-inputs/dx100-gapbs-9cec454bd8d3f175181a7e3906404ad8a812330c5e5bf1de62d63fad5e0f1143.sg
+      sha256: 9cec454bd8d3f175181a7e3906404ad8a812330c5e5bf1de62d63fad5e0f1143
+  execution_binding_sha256: d14365eda0d3121656b7b8e362ac7f705db16352ff43d48b27fd95d4b10ed6ec
+  source: 0
+  sources: [0]
+  threads: 4
+  verification_runtime:
+    format: swdb.dx100.verification-runtime.v1
+    files:
+    - source:
+        code_root: /data1/yanruj/EvolveSWDB_t17_t20_routes_runtime_20260928_a3
+        repository_relative_path: scripts/dx100_verify.py
+        copied_sha256: 1e8c048dc2155708429f86e58761032b22d73dd2dcdb6da089063a768693484b
+      snapshot:
+        path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/verification-runtime/scripts/dx100_verify.py
+        sha256: 1e8c048dc2155708429f86e58761032b22d73dd2dcdb6da089063a768693484b
+    - source:
+        code_root: /data1/yanruj/EvolveSWDB_t17_t20_routes_runtime_20260928_a3
+        repository_relative_path: scripts/dx100_host_memory.py
+        copied_sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+      snapshot:
+        path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/verification-runtime/scripts/dx100_host_memory.py
+        sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+    - source:
+        code_root: /data1/yanruj/EvolveSWDB_t17_t20_routes_runtime_20260928_a3
+        repository_relative_path: swdb/dx100_witness.py
+        copied_sha256: 0eed08d570ed6ce2a5728e7d51c1e86268096eaa21aa3acfeeb38b9dcf7e5a26
+      snapshot:
+        path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/verification-runtime/swdb/dx100_witness.py
+        sha256: 0eed08d570ed6ce2a5728e7d51c1e86268096eaa21aa3acfeeb38b9dcf7e5a26
+    source_paths_are_provenance_only: true
+  verification_parser:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/verification-runtime/swdb/dx100_witness.py
+    sha256: 0eed08d570ed6ce2a5728e7d51c1e86268096eaa21aa3acfeeb38b9dcf7e5a26
+  verification_driver:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/verification-runtime/scripts/dx100_verify.py
+    sha256: 1e8c048dc2155708429f86e58761032b22d73dd2dcdb6da089063a768693484b
+  host_memory_observer:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/verification-runtime/scripts/dx100_host_memory.py
+    sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+    sample_interval_seconds: 5
+    scope: host process group and bounded phase observations; no modeled changes
+  trace_transport: gem5-gzip.v1
+  instrumentation:
+    treatment: source_scope_diagnostic
+    roi: bfs.complete_call.v1
+    suppressed_internal_events: [m5_reset_stats, m5_dump_stats, m5_work_begin, m5_work_end, m5_exit]
+    verification: same_guest_post_roi
+    debug_flags: MAATrace
+    graph_verification:
+      contract: swdb.bfs.original-adjacency.v1
+      input_format: gapbs.sg32
+      byte_order: little
+      adjacency: outgoing CSR from exact registered serialized input
+      maximum_extra_bytes: 2147483648
+      preload: before checkpoint and ROI
+      verification: after ROI on exact returned parent buffer
+      allocation: all oracle adjacency and checker work arrays allocated before ROI
+    verifier_runtime:
+      driver_sha256: 1e8c048dc2155708429f86e58761032b22d73dd2dcdb6da089063a768693484b
+      parser_sha256: 0eed08d570ed6ce2a5728e7d51c1e86268096eaa21aa3acfeeb38b9dcf7e5a26
+      observer_sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+    post_roi_trace:
+      flag: SyscallBase
+      scope: post-seal verifier continuation only
+      output: separate_simulator_trace
+      format_flags: [FmtFlag]
+      disabled_format_flags: [FmtTicksOff, FmtStackTrace]
+      disabled_roi_flags: [MAATrace, MAARangeFuser, MAAIndirect]
+      chunk_ticks: 1000000000
+  verifier: dx100.bfs.verifier.v2
+  repetitions: 1
+  checkpoint_manifest:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/checkpoint-manifest.json
+    sha256: 078a6db5d0c5e26a38d5c85adcf35ce504a64d3d449edaed243bd112aa1b667a
+  debug_flags: MAATrace
+  sealed_roi:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/simulation/roi-seal.json
+    sha256: 012c1682bb1b8c5af0e62d7244fb1d073dca73b2dfe11dde9c34d83aa2058117
+    driver_sha256: 1e8c048dc2155708429f86e58761032b22d73dd2dcdb6da089063a768693484b
+    execution_binding_sha256: d14365eda0d3121656b7b8e362ac7f705db16352ff43d48b27fd95d4b10ed6ec
+    format: swdb.dx100.roi-seal.v1
+    host_memory_observer_sha256: 655c5804e26a0d1f8f7738f23ae62268cafe84562dbf8392af6c0169568146fd
+    roi_exit_cause: m5_exit instruction encountered
+    roi_exit_tick: 193821838300
+    statistics:
+      path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/simulation/roi-stats.txt
+      sha256: 8e1f3ba4f7f5e1e1403e00851ca3bba0e9dd6cc900318d8acfca9afffd34030b
+    verification:
+      checker: dx100.bfs.verifier.v2
+      chunk_ticks: 1000000000
+      exit_cause: simulate() limit reached
+      exit_code: 0
+      exit_tick: 251821838300
+      exit_witness:
+        allowed_cpus: [system.switch_cpus0, system.switch_cpus1, system.switch_cpus2, system.switch_cpus3]
+        caller:
+          cpu: system.switch_cpus0
+          thread: 0
+        completed: true
+        enabled_tick: 193821838300
+        end_tick: 251821838300
+        events_after_exit: 0
+        exit_request:
+          call_line: 259
+          return_line: 260
+          return_value: 0
+          status: 0
+          tick: 250922073671
+        format: swdb.dx100.exit-witness.v1
+        initial_partial_calls: []
+        line_count: 260
+        pending_calls: []
+        progress_records:
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 1497946
+          ipc: '0.468857'
+          line: 3
+          tick: 193846113000
+          total_committed: 62721368
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 1495500
+          ipc: '0.468092'
+          line: 4
+          tick: 193846113000
+          total_committed: 92400509
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 1495874
+          ipc: '0.468209'
+          line: 5
+          tick: 193846113000
+          total_committed: 85791612
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 1306138
+          ipc: '0.408821'
+          line: 6
+          tick: 193846113000
+          total_committed: 115862202
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 6123549
+          ipc: '01.91667'
+          line: 13
+          tick: 194846113000
+          total_committed: 121985751
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 3194225
+          ipc: '0.999792'
+          line: 14
+          tick: 194846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 3194556
+          ipc: '0.999896'
+          line: 15
+          tick: 194846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 3194393
+          ipc: '0.999845'
+          line: 16
+          tick: 194846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 17
+          tick: 195846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 18
+          tick: 195846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 19
+          tick: 195846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 6384889
+          ipc: '01.99847'
+          line: 20
+          tick: 195846113000
+          total_committed: 128370640
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5470732
+          ipc: '01.71234'
+          line: 21
+          tick: 196846113000
+          total_committed: 133841372
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 22
+          tick: 196846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 23
+          tick: 196846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 24
+          tick: 196846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 25
+          tick: 197846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 26
+          tick: 197846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 27
+          tick: 197846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 3437279
+          ipc: '01.07587'
+          line: 28
+          tick: 197846113000
+          total_committed: 137278651
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 4624034
+          ipc: '01.44732'
+          line: 29
+          tick: 198846113000
+          total_committed: 141902685
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 30
+          tick: 198846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 31
+          tick: 198846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 32
+          tick: 198846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 33
+          tick: 199846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 34
+          tick: 199846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 35
+          tick: 199846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5116063
+          ipc: '01.60133'
+          line: 36
+          tick: 199846113000
+          total_committed: 147018748
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5339080
+          ipc: '01.67113'
+          line: 37
+          tick: 200846113000
+          total_committed: 152357828
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 38
+          tick: 200846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 39
+          tick: 200846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 40
+          tick: 200846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 41
+          tick: 201846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 42
+          tick: 201846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 43
+          tick: 201846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5543378
+          ipc: '01.73508'
+          line: 44
+          tick: 201846113000
+          total_committed: 157901206
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5549829
+          ipc: '001.7371'
+          line: 45
+          tick: 202846113000
+          total_committed: 163451035
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 46
+          tick: 202846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 47
+          tick: 202846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 48
+          tick: 202846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 49
+          tick: 203846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 50
+          tick: 203846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 51
+          tick: 203846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5633681
+          ipc: '01.76334'
+          line: 52
+          tick: 203846113000
+          total_committed: 169084716
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5711218
+          ipc: '01.78761'
+          line: 53
+          tick: 204846113000
+          total_committed: 174795934
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 54
+          tick: 204846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 55
+          tick: 204846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 56
+          tick: 204846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 57
+          tick: 205846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 58
+          tick: 205846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 59
+          tick: 205846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5750378
+          ipc: '01.79987'
+          line: 60
+          tick: 205846113000
+          total_committed: 180546312
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5602532
+          ipc: '01.75359'
+          line: 61
+          tick: 206846113000
+          total_committed: 186148844
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 62
+          tick: 206846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 63
+          tick: 206846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 64
+          tick: 206846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 65
+          tick: 207846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 66
+          tick: 207846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 67
+          tick: 207846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5461349
+          ipc: '001.7094'
+          line: 68
+          tick: 207846113000
+          total_committed: 191610193
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5261071
+          ipc: '01.64672'
+          line: 69
+          tick: 208846113000
+          total_committed: 196871264
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 70
+          tick: 208846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 71
+          tick: 208846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 72
+          tick: 208846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 73
+          tick: 209846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 74
+          tick: 209846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 75
+          tick: 209846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5244639
+          ipc: '01.64157'
+          line: 76
+          tick: 209846113000
+          total_committed: 202115903
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5124831
+          ipc: '01.60407'
+          line: 77
+          tick: 210846113000
+          total_committed: 207240734
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 78
+          tick: 210846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 79
+          tick: 210846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 80
+          tick: 210846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 81
+          tick: 211846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 82
+          tick: 211846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 83
+          tick: 211846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 4841497
+          ipc: '01.51539'
+          line: 84
+          tick: 211846113000
+          total_committed: 212082231
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 4649952
+          ipc: '01.45544'
+          line: 85
+          tick: 212846113000
+          total_committed: 216732183
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 86
+          tick: 212846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 87
+          tick: 212846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 88
+          tick: 212846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 89
+          tick: 213846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 90
+          tick: 213846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 91
+          tick: 213846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 4368416
+          ipc: '01.36731'
+          line: 92
+          tick: 213846113000
+          total_committed: 221100599
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 4156649
+          ipc: '01.30103'
+          line: 93
+          tick: 214846113000
+          total_committed: 225257248
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 94
+          tick: 214846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 95
+          tick: 214846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 96
+          tick: 214846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 97
+          tick: 215846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 98
+          tick: 215846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 99
+          tick: 215846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 3914361
+          ipc: '001.2252'
+          line: 100
+          tick: 215846113000
+          total_committed: 229171609
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 3817329
+          ipc: '01.19482'
+          line: 101
+          tick: 216846113000
+          total_committed: 232988938
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 102
+          tick: 216846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 103
+          tick: 216846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 104
+          tick: 216846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 105
+          tick: 217846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 106
+          tick: 217846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 107
+          tick: 217846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 3802136
+          ipc: '01.19007'
+          line: 108
+          tick: 217846113000
+          total_committed: 236791074
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 3292739
+          ipc: '01.03063'
+          line: 109
+          tick: 218846113000
+          total_committed: 240083813
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 110
+          tick: 218846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 111
+          tick: 218846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 112
+          tick: 218846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 113
+          tick: 219846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 114
+          tick: 219846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 115
+          tick: 219846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 2786649
+          ipc: '0.872221'
+          line: 116
+          tick: 219846113000
+          total_committed: 242870462
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 2516107
+          ipc: '0.787542'
+          line: 117
+          tick: 220846113000
+          total_committed: 245386569
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 118
+          tick: 220846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 119
+          tick: 220846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 120
+          tick: 220846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 121
+          tick: 221846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 122
+          tick: 221846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 123
+          tick: 221846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 2246408
+          ipc: '0.703126'
+          line: 124
+          tick: 221846113000
+          total_committed: 247632977
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 2051571
+          ipc: '0.642142'
+          line: 125
+          tick: 222846113000
+          total_committed: 249684548
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 126
+          tick: 222846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 127
+          tick: 222846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 128
+          tick: 222846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 129
+          tick: 223846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 130
+          tick: 223846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 131
+          tick: 223846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 1763978
+          ipc: '0.552125'
+          line: 132
+          tick: 223846113000
+          total_committed: 251448526
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 1566945
+          ipc: '0.490454'
+          line: 133
+          tick: 224846113000
+          total_committed: 253015471
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 134
+          tick: 224846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 135
+          tick: 224846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 136
+          tick: 224846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 137
+          tick: 225846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 138
+          tick: 225846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 139
+          tick: 225846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 1435730
+          ipc: '0.449384'
+          line: 140
+          tick: 225846113000
+          total_committed: 254451201
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 1289167
+          ipc: '0.403509'
+          line: 141
+          tick: 226846113000
+          total_committed: 255740368
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 142
+          tick: 226846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 143
+          tick: 226846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 144
+          tick: 226846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 145
+          tick: 227846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 146
+          tick: 227846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 147
+          tick: 227846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 1204464
+          ipc: '0.376997'
+          line: 148
+          tick: 227846113000
+          total_committed: 256944832
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 1212807
+          ipc: '0.379609'
+          line: 149
+          tick: 228846113000
+          total_committed: 258157639
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 150
+          tick: 228846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 151
+          tick: 228846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 152
+          tick: 228846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 153
+          tick: 229846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 154
+          tick: 229846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 155
+          tick: 229846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 2412902
+          ipc: '0.755238'
+          line: 156
+          tick: 229846113000
+          total_committed: 260570541
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5340195
+          ipc: '01.67148'
+          line: 157
+          tick: 230846113000
+          total_committed: 265910736
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 158
+          tick: 230846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 159
+          tick: 230846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 160
+          tick: 230846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 161
+          tick: 231846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 162
+          tick: 231846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 163
+          tick: 231846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5905866
+          ipc: '01.84854'
+          line: 164
+          tick: 231846113000
+          total_committed: 271816602
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5868000
+          ipc: '01.83668'
+          line: 165
+          tick: 232846113000
+          total_committed: 277684602
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 166
+          tick: 232846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 167
+          tick: 232846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 168
+          tick: 232846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 169
+          tick: 233846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 170
+          tick: 233846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 171
+          tick: 233846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5707669
+          ipc: '001.7865'
+          line: 172
+          tick: 233846113000
+          total_committed: 283392271
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5768477
+          ipc: '01.80553'
+          line: 173
+          tick: 234846113000
+          total_committed: 289160748
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 174
+          tick: 234846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 175
+          tick: 234846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 176
+          tick: 234846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 177
+          tick: 235846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 178
+          tick: 235846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 179
+          tick: 235846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5762894
+          ipc: '01.80379'
+          line: 180
+          tick: 235846113000
+          total_committed: 294923642
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5766650
+          ipc: '01.80496'
+          line: 181
+          tick: 236846113000
+          total_committed: 300690292
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 182
+          tick: 236846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 183
+          tick: 236846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 184
+          tick: 236846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 185
+          tick: 237846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 186
+          tick: 237846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 187
+          tick: 237846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5804172
+          ipc: '01.81671'
+          line: 188
+          tick: 237846113000
+          total_committed: 306494464
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5810414
+          ipc: '01.81866'
+          line: 189
+          tick: 238846113000
+          total_committed: 312304878
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 190
+          tick: 238846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 191
+          tick: 238846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 192
+          tick: 238846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 193
+          tick: 239846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 194
+          tick: 239846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 195
+          tick: 239846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5696088
+          ipc: '01.78288'
+          line: 196
+          tick: 239846113000
+          total_committed: 318000966
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5843728
+          ipc: '01.82909'
+          line: 197
+          tick: 240846113000
+          total_committed: 323844694
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 198
+          tick: 240846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 199
+          tick: 240846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 200
+          tick: 240846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 201
+          tick: 241846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 202
+          tick: 241846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 203
+          tick: 241846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5640127
+          ipc: '01.76536'
+          line: 204
+          tick: 241846113000
+          total_committed: 329484821
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5769221
+          ipc: '01.80577'
+          line: 205
+          tick: 242846113000
+          total_committed: 335254042
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 206
+          tick: 242846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 207
+          tick: 242846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 208
+          tick: 242846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 209
+          tick: 243846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 210
+          tick: 243846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 211
+          tick: 243846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5676301
+          ipc: '01.77668'
+          line: 212
+          tick: 243846113000
+          total_committed: 340930343
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5844927
+          ipc: '01.82946'
+          line: 213
+          tick: 244846113000
+          total_committed: 346775270
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 214
+          tick: 244846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 215
+          tick: 244846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 216
+          tick: 244846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 217
+          tick: 245846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 218
+          tick: 245846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 219
+          tick: 245846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5557914
+          ipc: '01.73963'
+          line: 220
+          tick: 245846113000
+          total_committed: 352333184
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5780883
+          ipc: '01.80942'
+          line: 221
+          tick: 246846113000
+          total_committed: 358114067
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 222
+          tick: 246846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 223
+          tick: 246846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 224
+          tick: 246846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 225
+          tick: 247846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 226
+          tick: 247846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 227
+          tick: 247846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5159857
+          ipc: '01.61504'
+          line: 228
+          tick: 247846113000
+          total_committed: 363273924
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5860710
+          ipc: '001.8344'
+          line: 229
+          tick: 248846113000
+          total_committed: 369134634
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 230
+          tick: 248846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 231
+          tick: 248846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 232
+          tick: 248846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 233
+          tick: 249846113000
+          total_committed: 65915761
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 234
+          tick: 249846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 235
+          tick: 249846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 3863185
+          ipc: '01.20918'
+          line: 236
+          tick: 249846113000
+          total_committed: 372997819
+        - cpu: system.switch_cpus0
+          event: 289
+          interval_committed: 5212452
+          ipc: '001.6315'
+          line: 237
+          tick: 250846113000
+          total_committed: 378210271
+        - cpu: system.switch_cpus1
+          event: 290
+          interval_committed: 0
+          ipc: '00000000'
+          line: 238
+          tick: 250846113000
+          total_committed: 88985837
+        - cpu: system.switch_cpus2
+          event: 291
+          interval_committed: 0
+          ipc: '00000000'
+          line: 239
+          tick: 250846113000
+          total_committed: 95595065
+        - cpu: system.switch_cpus3
+          event: 292
+          interval_committed: 0
+          ipc: '00000000'
+          line: 240
+          tick: 250846113000
+          total_committed: 65915761
+        trace:
+          bytes: 33050
+          path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/simulation/post-roi-syscalls.log
+          sha256: 75f56673ba822a48c7b9b7cc321e829f3ee689c12b80a4233c4c54396c5cbd38
+      max_ticks: 100000000000000
+      normal_exit_observed: false
+      parser_sha256: 0eed08d570ed6ce2a5728e7d51c1e86268096eaa21aa3acfeeb38b9dcf7e5a26
+      post_roi_trace:
+        bytes: 33050
+        disabled_format_flags: [FmtTicksOff, FmtStackTrace]
+        disabled_roi_flags: [MAATrace, MAARangeFuser, MAAIndirect]
+        enabled_tick: 193821838300
+        flag: SyscallBase
+        format_flags: [FmtFlag]
+        output: separate_simulator_trace
+        path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/simulation/post-roi-syscalls.log
+        scope: post-seal verifier continuation only
+        sha256: 75f56673ba822a48c7b9b7cc321e829f3ee689c12b80a4233c4c54396c5cbd38
+      simulated_ticks: 58000000000
+      state: finished
+      stop_reason: exit_witness
+    verification_parser:
+      path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/verification-runtime/swdb/dx100_witness.py
+      sha256: 0eed08d570ed6ce2a5728e7d51c1e86268096eaa21aa3acfeeb38b9dcf7e5a26
+  statistics:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/simulation/roi-stats.txt
+    sha256: 8e1f3ba4f7f5e1e1403e00851ca3bba0e9dd6cc900318d8acfca9afffd34030b
+  post_roi_trace:
+    bytes: 33050
+    disabled_format_flags: [FmtTicksOff, FmtStackTrace]
+    disabled_roi_flags: [MAATrace, MAARangeFuser, MAAIndirect]
+    enabled_tick: 193821838300
+    flag: SyscallBase
+    format_flags: [FmtFlag]
+    output: separate_simulator_trace
+    path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/simulation/post-roi-syscalls.log
+    scope: post-seal verifier continuation only
+    sha256: 75f56673ba822a48c7b9b7cc321e829f3ee689c12b80a4233c4c54396c5cbd38
+  actual_configuration:
+    path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/simulation/config.ini
+    sha256: 8ddc558fa51754c18f04af7b535433e4c0bbb2e818e268cf803b11a93ea0580f
+  debug_trace:
+    format: swdb.dx100.debug-trace.v1
+    transport: gem5-gzip.v1
+    path: /data/yanruj/EvolveSWDB_runs/bfs-t17-t20-routes-simulator-batch-20260928-a3/bfs-t17-t20-routes-simulator-batch-20260928-a3.t17.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18/bfs-t17-routes-20260928-a3.baseline.kronecker18.s0.r0.diagnostic.evaluation/simulation/roi-debug.trace.gz
+    sha256: 71a0fc813b131bb2b03e7409cb01c3f45d3e7532bcdb9c0ade00d3f4d4b82391
+    bytes: 3054
+    uncompressed_sha256: a93e0bb5071f94c60d9171be26e25bb9ce9f96cbc4356fa2ac43bb4e5b500a70
+    uncompressed_bytes: 23827
+    lines: 176
+  exit_tick: 193821838300
+  exit_cause: m5_exit instruction encountered
+  roi_ticks:
+    sim_ticks: 44956623818
+    tick_frequency_hz: 1000000000000
+    duration_s: 0.044956623818
+    unit: seconds
+    conversion: simTicks / simFreq; no fixed clock-period divisor
+candidate: bfs-dx100-compile-20260925-a1.candidate
+source_snapshot: bfs-dx100-compile-20260925-a1.source
+implementation: dx100-bfs-scalar
+build:
+  binary: /data1/yanruj/EvolveSWDB_builds/bfs-scalar-v2-preparation-20260926-a1.dx100.diagnostic.build/bfs
+  binary_sha256: a673e39cb190dc578a53e8e6f34f64f7df287e49c60331de377f8644330c0b3f
+  simulator: /data1/yanruj/DX100-bfs-e4fc4af/build/X86/gem5.opt
+  simulator_sha256: f4038c88318ee09085b6c07f163094a07a31a256f21b652d4f3cfa046feb1f6b
+  model_build:
+    evaluation: bfs-dx100-build-20260925-a2
+    sha256: 13d277a961e44fe0ee254b4685126572fb06394fea455e3e1d450626cc535cea
+  compiler: /usr/bin/g++-13
+  compiler_version:
+  - g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+  - Copyright (C) 2023 Free Software Foundation, Inc.
+  flags:
+  - -std=c++11
+  - -O3
+  - -Wall
+  - -g
+  - -fopenmp
+  - -DGEM5
+  - -DNUM_CORES=4
+  - -DTILE_SIZE=16384
+  adapter: dx100.complete_call.v2

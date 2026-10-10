@@ -1,0 +1,76 @@
+{
+  "state": "actual_host_context_render_verified_no_admission",
+  "observed_at": "2026-09-27T07:16:22.312492+00:00",
+  "files": {
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context3/bfs-provider-context3-runtime-20260927.json": {
+      "bytes": 57422,
+      "sha256": "6a1b4b49f3431761c9cd65cd77039528cf435a136bceb7bf0fe96ed5dabcd749"
+    },
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context3/prepare.py": {
+      "bytes": 9683,
+      "sha256": "49c74de93637d524990204abe8cd86f2ba98e260d064df203d019b5acb82f2c3"
+    },
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context3/bfs-provider-context3-20260927.py": {
+      "bytes": 28315,
+      "sha256": "6d8feaf629dcd816730ad459d994c1d3aeed0164ce4713eb907a15ae6601aa0b"
+    },
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context3/test_context3.py": {
+      "bytes": 4667,
+      "sha256": "d0a49ab15ecb32353e96339445ec5ee4007799233cf55d0e026c65b865b343af"
+    },
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context3/bfs-provider-context3-launch-20260927.sh": {
+      "bytes": 2740,
+      "sha256": "3158f8eb8c3c99c63003db84f39bad796e12037817b9f7539457aa1949c9b1ba"
+    },
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context3/README.md": {
+      "bytes": 3775,
+      "sha256": "22479bc02ea6c191f0a55f3e5149f627bb65f5e4748da245fd80494575d46e27"
+    },
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context3/prepared/lineage-and-budget.json": {
+      "bytes": 31863,
+      "sha256": "a94708b90f0504d82aab9467a555028d91332aa2c5a7b2a8960a1485fd76e4bc"
+    },
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context3/prepared/budget.json": {
+      "bytes": 974,
+      "sha256": "109cabaad6191fc598da2aff2943b17c084d7dfd62c0804a1d143ae7ef58c310"
+    },
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context3/prepared/upstream-annotated-context3.prompt.txt": {
+      "bytes": 275533,
+      "sha256": "d3649b124305743ae82ed62532d9d4e1e1a369037ecbab8f812d80c58a71c7d4"
+    },
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context3/prepared/upstream-annotated-context3.proposal.json": {
+      "bytes": 123465,
+      "sha256": "a8f7be433faa26e255d22331972e313884dd3e126eb7799d43a4906a980120a8"
+    },
+    ".scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/provider-context3/prepared/upstream-annotated-context3.provider.json": {
+      "bytes": 171,
+      "sha256": "ceee20fbfbd913171ad12a659b09b38e26130c6500805cbc539237d5482e9722"
+    }
+  },
+  "provider_calls": 0,
+  "lane_claims": 0,
+  "output_roots_created": false,
+  "guard_before_and_after": "passed",
+  "runtime_commit": "5750522705dd1f76d56382779427d2dbb48252b9",
+  "operator_commit": "4f57306caaa582555866c2dd7c266c2e0d69b80c",
+  "prompt_sha256": "d3649b124305743ae82ed62532d9d4e1e1a369037ecbab8f812d80c58a71c7d4",
+  "records": "retained actual context2 record-view, not synthetic fixture",
+  "omitted_preflight": "Only _verified_lane call, because no lane is claimed. Dispatch must execute complete original preflight.",
+  "exact_author_inventory_verified": true,
+  "preflight_readonly_output": {
+    "state": "exact_context_verified",
+    "request_sha256": "405a394d6761ac85ad07d73a6377119bd4da19892dfe81aaca256d7ba57bd90f",
+    "prompt_sha256": "d3649b124305743ae82ed62532d9d4e1e1a369037ecbab8f812d80c58a71c7d4",
+    "prompt_bytes": 275533,
+    "source_sha256": "65868ec15d51117f6fb2c2d760c0cd88f4f8e098ee5694d912b11a287dd47f2c",
+    "package_sha256": "96145ba710974bbcbafcaf18557db0e5a9307dbba205db07e4c659b9accff0ec",
+    "predecessor_sha256": "ad0092c80854d10f42ec769c6261671f7b435229fd42ca0c5891993321e05217",
+    "provider_calls": 0,
+    "lane": {
+      "state": "not_admitted_readonly_inspection_both_lanes_occupied"
+    }
+  },
+  "records_git_object_available": "5ab428ad62f0b55816e185a37c4196cfecc56020",
+  "origin_checkout_unchanged": "5f1b8028619976b36df5fa24b8aacb91bf488168",
+  "origin_existing_untracked_build_evidence": "records/evaluations/bfs-t17-build-only-20260926-a1.yaml"
+}

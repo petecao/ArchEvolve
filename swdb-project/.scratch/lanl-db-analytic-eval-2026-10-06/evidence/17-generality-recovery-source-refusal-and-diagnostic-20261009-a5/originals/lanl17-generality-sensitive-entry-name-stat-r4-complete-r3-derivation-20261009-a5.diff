@@ -1,0 +1,11 @@
+--- /private/tmp/lanl17_diagnose_generality_sensitive_entry_names_SOURCE_ONLY_20261009_a5_r3.py
++++ /private/tmp/lanl17_diagnose_generality_sensitive_entry_names_SOURCE_ONLY_20261009_a5_r4.py
+@@ -144,7 +144,7 @@
+     tick();p=subprocess.run(['/usr/bin/git','--no-replace-objects','-c','core.fsmonitor=false','-C',str(CANDIDATE),'check-ignore','--no-index','-q','--',relative],capture_output=True,timeout=min(15,max(.1,END-time.monotonic())),env={'PATH':'/usr/bin:/bin','LC_ALL':'C','GIT_OPTIONAL_LOCKS':'0','GIT_NO_LAZY_FETCH':'1','GIT_TERMINAL_PROMPT':'0'},stdin=subprocess.DEVNULL)
+     need(p.returncode in (0,1) and not p.stdout and not p.stderr,'Git_ignore_metadata_exit')
+     direct=[mode for mode,name in records if name==relative];need(len(direct)<=1,'duplicate_exact_tracked_entry')
+-    return {'exact_entry_tracked':bool(direct),'exact_entry_git_mode':direct[0] if direct else None,'tracked_descendant_count':sum(name.startswith(relative+'/') for mode,name in records),'ignored_by_rules_even_if_tracked':p.returncode==0,'credential_contents_read_or_hashed':False}
++    return {'exact_entry_tracked':bool(direct),'exact_entry_git_mode':direct[0] if direct else None,'tracked_descendant_count':sum(name.startswith(relative+'/') for mode,name in records),'ignored_by_rules_even_if_tracked':p.returncode==0,'diagnostic_direct_entry_contents_read_or_hashed':False}
+ 
+ def observe():
+     need(sys.platform=='linux' and os.getuid()==os.geteuid()==UID and pwd.getpwuid(UID).pw_name=='yanruj' and socket.gethostname().split('.')[0]=='mbit10','native_account_host')

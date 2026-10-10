@@ -1,0 +1,10 @@
+Prepared 2026-10-09 00:52 ET (2026-10-09T04:52:46.854073+00:00). Selected SOURCE R6/action R7, SOURCE ONLY and NOT RUN.
+
+The dated actual diagnostic found exactly one sensitive-name match: this fixed tracked16916-byte historical CLI/profiling source receipt, not credential/auth configuration. Parent explicitly reviewed immutable c4 Gitblob and approved source hashing only for this record. R6 requires exact relativepath and all nine original stat fields before opening/hash, c4 tree/index100644+exactblob and nativeGit2.48.1 pinned binary before/after, and exact sourceSHA plus nine-stat equality after hashing. No other provider.json/name/directory is whitelisted; all other sensitive/auth predicates still refuse. Raw receipt body remains remote and is not returned.
+
+All24 inherited functions/classes remain exact; current sourceR/native514/no-use/fulltree/symlink/caps/resource guards unchanged. The a1 refused original/source/action remains immutable; only futurefresh metadataOUTPUTa2 is selected. Original data1 floor stays separate and does not grant index clearance. Five exact inverse substitutions restoreR5. Root+peer fullsource review precedes any query. Backupwriter must bind actual selected R6 source/action and future genuine preflight originals, not staleR5 source pins. No new actual readiness, backup, removal or scientific admission exists. Source construction used AST/text only; no target import/main/test/SSH/repository mutation occurred.
+
+- /private/tmp/lanl17_generality_recovery_candidate_preflight_20261009_a5_r6.py: 43567 B SHA256 65bd9a90f477381ba99e9b1894496162da59166b157bf77b084dfce74dcaad6c
+- /private/tmp/lanl17-generality-recovery-preflight-r6-complete-r5-derivation-20261009-a5.diff: 5775 B SHA256 a9f0b40fc721bb30f00acf4ed3466b1ce3998108b2dbe8dac4d7eb4c46a65bef
+- /private/tmp/lanl17-generality-recovery-preflight-action-SOURCE-ONLY-draft-r7-20261009-a5.json: 45573 B SHA256 998fbb863d3e3b823a8b100b552080ad3101b2a0cb7f42c1ace74c91de1b1643
+- /private/tmp/lanl17-generality-recovery-preflight-source-static-review-r6-action-r7-20261009-a5.json: 3860 B SHA256 4efc7c38ea122cae25bd2fdeeb094004c223fb68fc7d4f267efb392d8a0b91eb

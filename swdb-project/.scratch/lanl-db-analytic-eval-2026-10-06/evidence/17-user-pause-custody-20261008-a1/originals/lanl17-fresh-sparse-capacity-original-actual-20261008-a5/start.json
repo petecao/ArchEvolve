@@ -1,0 +1,37 @@
+{
+  "argv": [
+    "/usr/bin/ssh",
+    "-T",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=30",
+    "mbit10",
+    "exec /usr/bin/bash --noprofile --norc -p -c 'for key in \"${!GIT_@}\"; do unset \"$key\" || exit 2; done\nunset PYTHONPATH PYTHONHOME PYTHONSTARTUP PYTHONINSPECT PYTHONOPTIMIZE LD_PRELOAD LD_LIBRARY_PATH BASH_ENV ENV || exit 2\nexport PATH=/usr/bin:/bin:/usr/local/bin PYTHONDONTWRITEBYTECODE=1 PYTHONNOUSERSITE=1 PYTHONSAFEPATH=1\nexec \"$@\"\n' reviewed-four-copy-capacity-prestartup /usr/bin/timeout --signal=TERM --kill-after=60s 90s /usr/bin/python3.12 -B -s -"
+  ],
+  "execution_not_yet_started": true,
+  "local_wait_seconds": 180,
+  "retirement_capacity_or_scientific_admission": false,
+  "sealed": false,
+  "source": {
+    "bytes": 5629,
+    "path": "/private/tmp/lanl17-fresh-sparse-capacity-query-20261008-a4.py",
+    "sha256": "6fdef6305ae33ca5ab290eda2947e055920985252830a7e909a77a20316fdd78",
+    "stat": {
+      "ctime_ns": 1791461404952813181,
+      "dev": 16777229,
+      "gid": 0,
+      "ino": 350028173,
+      "mode": 33152,
+      "mtime_ns": 1791461404952813181,
+      "nlink": 1,
+      "size": 5629,
+      "uid": 501
+    }
+  },
+  "started_utc": "2026-10-08T13:32:12.257248+00:00",
+  "stdin_pin": {
+    "bytes": 5629,
+    "sha256": "6fdef6305ae33ca5ab290eda2947e055920985252830a7e909a77a20316fdd78"
+  }
+}

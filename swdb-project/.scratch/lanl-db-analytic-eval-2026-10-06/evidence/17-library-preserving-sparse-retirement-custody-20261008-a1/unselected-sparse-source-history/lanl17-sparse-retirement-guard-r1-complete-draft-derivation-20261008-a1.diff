@@ -1,0 +1,60 @@
+--- /private/tmp/lanl_sparse_retire_consumed_source_guard_20261008_a1.py
++++ /private/tmp/lanl_sparse_retire_consumed_source_guard_20261008_a1_r1.py
+@@ -972,7 +972,9 @@
+                'GIT_CONFIG_NOSYSTEM': '1', 'GIT_CONFIG_GLOBAL': '/dev/null'}
+         command = ['/usr/bin/git', '-c', 'protocol.allow=never', '-c', 'core.fsmonitor=false',
+                    '-c', 'core.hooksPath=/dev/null']
+-        if P(path) in self.selected:
++        if P(path) in self.selected and (P(path).name in self.completed_names()
++                or (self.current_retirement is not None and self.current_retirement['row']==P(path).name
++                    and self.current_retirement['stage']!='before_private_pattern')):
+             command += ['-c','core.sparseCheckout=true','-c','core.sparseCheckoutCone=false','-c','index.sparse=false']
+         command += ['-C',str(path),*args]
+         r = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+@@ -1637,7 +1639,8 @@
+         else:
+             self.raw_before = raw
+         aliases = self.aliases_and_sources()
+-        processes = self.process_references()
++        processes = {'performed':False,'initial_reference_clearance_claimed':False,
++                     'qualification_deferred_to':'each_marked_operation' if self.args.retire else 'assessment_completion'}
+         self.shared_administration()
+         later = self.leases()
+         require({k:v['sha256'] for k,v in later.items()} == {k:v['sha256'] for k,v in leases.items()},
+@@ -1780,9 +1783,10 @@
+         for name in self.completed_names():
+             require(self.retained_poststate(name,full_bytes=True)==self.retirement_poststates[name],
+                     'final_full_retained_poststate_changed')
++        for completed in self.facts['completed_retirements']:
++            self.pinned(completed['private_original_poststate_pin'],LIMITS['inventory_bytes'])
+         self.shared_administration(full_bytes=True)
+         self.process_references()
+-        self.stable_inventory()
+         require(sha(self.read(self.args.plan,LIMITS['plan_bytes'])[0])==self.args.plan_sha256
+                 and sha(self.read(P(__file__).absolute(),LIMITS['plan_bytes'])[0])==self.own_sha,
+                 'end_plan_or_source_changed')
+@@ -2002,9 +2006,11 @@
+         return seen
+ 
+     def raw_library_dependency(self, path, link_stat, link_text, resolved):
+-        if not any_inside(resolved,self.selected): return True
+         pin=next((p for p in RETIREMENT_RAW_LIBRARY_PINS if p['path']==str(path)),None)
+-        require(pin is not None and stamp(link_stat)==pin['stat']
++        if pin is None:
++            require(not any_inside(resolved,self.selected),'retirement_unreviewed_selected_RAW_alias')
++            return True
++        require(stamp(link_stat)==pin['stat']
+                 and len(os.fsencode(link_text))==pin['stat']['size']
+                 and sha(os.fsencode(link_text))==pin['link_sha256']
+                 and resolved==pin['resolved_scoped_path']
+@@ -2120,6 +2126,10 @@
+                 require([getattr(s,'st_'+k) for k in RETIREMENT_STAT_FIELDS]==item['stat'],
+                         'retirement_completed_poststate_changed')
+         self.library_stable(name)
++        completed=next((r for r in self.facts['completed_retirements'] if r['row']==name),None)
++        if completed is not None:
++            pin=completed['private_original_poststate_pin']; self.debit_metadata(checks=1)
++            require(stamp(P(pin['path']).lstat())==pin['stat'],'retirement_private_original_witness_stat_changed')
+ 
+     def close_retirement(self, name):
+         first=self.retained_poststate(name,full_bytes=True)

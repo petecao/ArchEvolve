@@ -1,0 +1,22 @@
+--- /private/tmp/lanl_decode_detached_passive_observer_original_custody_20261008_a5_r1.py
++++ /private/tmp/lanl_decode_detached_passive_observer_original_custody_20261008_a5_r2.py
+@@ -1,8 +1,8 @@
+ import argparse,pathlib,os,stat,json,hashlib,base64
+ P=pathlib.Path
+ PACKET_CAP=64*1024*1024
+-WRAPPER_SHA='ee885d56e99c591b2f1298153a97f43ab78687bdc7fecbc2e830349abae26669'
+-OBSERVER_SHA='83e3d4dbac5d2215d591e09c8dd01aa441c1b6b0151ff18ee8a494ed9826c524'
++WRAPPER_SHA='0dd699118fd456afe3b0b2b6159fc807a3d4bd05940f0f8b304f3e2657179b82'
++OBSERVER_SHA='1188ea21138260a11c1b016b5080f509ece225338d98af1689e053306305ce1c'
+ TERMINAL_STATES=('observer_completed','observer_refused_or_failed','preflight_refused_no_observer_launch','administrative_postflight_failed','observer_launch_started','observer_running','GNU_supervision_not_returned_within_wrapper_wait')
+ FILES=[('status.json',16384),('configuration.json',16384),('tmux.conf',16384),('launch-status.json',16384),('launch.stdout',16384),('launch.stderr',16384),('observer.stdout',32*1024*1024),('observer.stderr',256*1024)]
+ def sha(b):return hashlib.sha256(b).hexdigest()
+@@ -36,7 +36,7 @@
+ assert {'status.json','configuration.json','tmux.conf','launch-status.json','launch.stdout','launch.stderr'}<=seen
+ byname={name:(raw,pin) for name,raw,pin in decoded};status,status_pin=byname['status.json'];s=strict(status)
+ assert s['format']=='swdb.lanl17-detached-passive-observer-administration-status.v1' and s['sealed'] is False and s['state'] in TERMINAL_STATES and type(s['ended_utc']) is str
+-assert s['inputs']['wrapper']['sha256']==WRAPPER_SHA and s['inputs']['wrapper']['bytes']==16091 and s['inputs']['observer']['sha256']==OBSERVER_SHA and s['inputs']['observer']['bytes']==87833
++assert s['inputs']['wrapper']['sha256']==WRAPPER_SHA and s['inputs']['wrapper']['bytes']==16091 and s['inputs']['observer']['sha256']==OBSERVER_SHA and s['inputs']['observer']['bytes']==88535
+ assert s['scientific_admission'] is False and s['capacity_admission'] is False
+ if s['state'] in ('observer_completed','observer_refused_or_failed','administrative_postflight_failed'):assert type(s.get('observer_exit_code')) is int
+ missing=[name for name,cap in FILES if name not in seen];assert missing==d['missing_original_stream_names'] and (not missing or s['state']=='preflight_refused_no_observer_launch')

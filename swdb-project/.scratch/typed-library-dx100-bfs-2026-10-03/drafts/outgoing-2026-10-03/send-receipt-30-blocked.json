@@ -1,0 +1,47 @@
+{
+  "ticket": "30",
+  "state": "blocked_by_automatic_approval_review",
+  "attempted_at_utc": "2026-10-03 22:57:29 UTC",
+  "from": "yanruj@umich.edu",
+  "to": [
+    "petepc@umich.edu"
+  ],
+  "subject": "ArchEvolve: first gem5 results for the BFS read offload (uniform18 and Kronecker18)",
+  "publication_commit": "0a495f4a972fe4a1eaa60fb5a1c148663ada9224",
+  "payload_file": "30-first-gem5-result-payload.json",
+  "prepared_hashes": {
+    "plain_sha256": "fc44da3d68962be6ab29a6cafb4198d174027c0179097d6602006cdff5fd37b2",
+    "html_sha256": "718f5fddd16c196f8f4c3789ff1f386f264e4f31e14e2ba05ad9d53e73002eb4",
+    "payload_file_sha256": "f5410466317f1f9f08fbeedd7590786d78ad61bd41b6677138f8ef485fd59718"
+  },
+  "actual_rejection": {
+    "content": [
+      {
+        "type": "text",
+        "text": "This action was rejected due to unacceptable risk.\nReason: This sends non-public evaluation results and repository evidence to an external recipient; although the project/ticket work is authorized, trusted user content does not specifically authorize this sensitive payload to Peter’s address.\nDo not bypass this rejection through a workaround or indirect execution. Continue with a safer alternative, or carry out checks to prove that the action is authorized or low risk before trying again. Complete unaffected work without asking for confirmation. Report anything that remains blocked, clarify why it was blocked by auto-review, inform the user of the risk and ask for approval."
+      }
+    ],
+    "isError": true
+  },
+  "pre_send_search": {
+    "queried_at": "2026-10-03 22:57:29 UTC",
+    "query": "in:sent from:yanruj@umich.edu to:petepc@umich.edu subject:\"ArchEvolve: first gem5 results for the BFS read offload (uniform18 and Kronecker18)\"",
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Action completed."
+        }
+      ],
+      "structuredContent": {
+        "message_ids": [],
+        "next_page_token": null
+      },
+      "isError": false
+    }
+  },
+  "verified_sent": false,
+  "message_id": null,
+  "team_claim_record": null,
+  "policy": "No retry or alternate transport; await direct trusted approval of this exact prepared payload and destination. Ticket37 remains human-owned and excluded."
+}

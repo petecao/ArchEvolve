@@ -1,0 +1,27 @@
+--- lanl17_read_original_dx100_deployment_prerequisites_20261008_a1.py
++++ lanl17_read_original_dx100_deployment_prerequisites_20261008_a1_r2.py
+@@ -23,6 +23,7 @@
+ C = BASE / 'ArchEvolve-lanl-cpu-model-validation-20261006-a1'
+ CORE = 'f893fed400347ed23d92e917d8bde21b75e5375d'
+ UID = 114316761
++PRIMARY_IDENTITY = {'dev': 2097, 'ino': 54935911, 'mode': stat.S_IFDIR | 0o2777, 'uid': UID, 'gid': 0}
+ GIT = Path('/usr/bin/git')
+ PYTHON = Path('/usr/bin/python3.12')
+ NATIVES = {str(GIT): (4019024, '06b2aa74919b1993f9fd7e47060ea98d98c27206f16ccc2d35f51ced7e7877eb'),
+@@ -90,11 +91,15 @@
+     canonical_path(p)
+     require(p.is_relative_to(BASE), 'directory_outside_private_base')
+     base = private_base()
++    if p.is_relative_to(PRIMARY):
++        require(identity(PRIMARY) == PRIMARY_IDENTITY, 'original_primary_private_route_identity')
+     for part in reversed((p, *p.parents)):
+         if not part.is_relative_to(BASE):
+             continue
+         s = stamp(part)
+-        require(stat.S_ISDIR(s['mode']) and s['uid'] == UID and s['gid'] == base['gid']
++        # Only this exact owned PRIMARY route inherits the observed GID0/SGID setup.
++        expected_gid = PRIMARY_IDENTITY['gid'] if part.is_relative_to(PRIMARY) else base['gid']
++        require(stat.S_ISDIR(s['mode']) and s['uid'] == UID and s['gid'] == expected_gid
+                 and s['dev'] == base['dev'] and not s['mode'] & 0o5000, 'directory_owner_or_special_mode')
+     return stamp(p)
+ 

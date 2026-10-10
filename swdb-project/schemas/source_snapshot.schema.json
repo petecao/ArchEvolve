@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "source_snapshot",
+  "title": "Source Snapshot",
+  "description": "Workflow format introduced 2026-09-25. Metadata is authoritative YAML; external artifacts carry content identity.",
+  "properties": {
+    "kind": {
+      "const": "source_snapshot"
+    },
+    "schema_version": {
+      "const": "0.4"
+    },
+    "message_version": {
+      "const": "1.0"
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "enum": [
+            "sw",
+            "hw",
+            "operator",
+            "worker"
+          ]
+        },
+        "test_client": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "role",
+        "test_client"
+      ]
+    },
+    "implementation": {
+      "$ref": "#/$defs/id",
+      "x-ref": "implementation"
+    },
+    "application": {
+      "$ref": "#/$defs/id",
+      "x-ref": "application"
+    },
+    "revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "executable": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "path",
+              "sha256",
+              "bytes",
+              "executable"
+            ]
+          }
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "files"
+      ]
+    },
+    "context": {
+      "type": "object"
+    },
+    "protections": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "regions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "required": [
+    "message_version",
+    "producer",
+    "implementation",
+    "application",
+    "revision",
+    "artifact",
+    "context",
+    "protections",
+    "regions"
+  ]
+}
