@@ -64,3 +64,11 @@ HEAD both public tests in `tests/test_functional_evaluation.py` failed:
 one needs a real local certification (`swdb certify contract.bfs_read_offload --candidate
 bfs-functional-read-offload-20261006-a1.proposal.candidate-1`; GCC 16 is installed on the Mac).
 That step was not run in this fix. It creates a canonical record, so it needs Yan-Ru's go-ahead.
+
+**2026-10-10 11:32 ET (Yan-Ru authorized):** the candidate was certified under procedure 1.7
+on mbit10 (`certification.df1986d8f0d64a28b19fd23ae672055c`, node 0, lease generation 515,
+10:51–11:26 ET; 10 matrix cells, 20 negative controls; raw output in
+`/data/yanruj/EvolveSWDB_runs/lanl-functional-bfs-cert17-20261010-a1`). This needed the
+library catalog re-pin (`87e8646e`). The positive path now runs: `tests/test_functional_evaluation.py`
+3 passed, with a complete evaluation and a 1.1 handoff carrying ratio 2.0 as `within_error`.
+The test's closure now includes a second target description for the legacy-request tamper case.

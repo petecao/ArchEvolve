@@ -1,5 +1,7 @@
 # Implementation progress
 
+2026-10-10 11:32 ET — Library re-pinned to the merged hardware catalog (`87e8646e`; all 704 records valid). Functional BFS candidate certified under 1.7 on mbit10 (`certification.df1986d8…`); ticket 12's positive-path test now passes. Everything from the code review is done.
+
 2026-10-10 01:30 ET — **Code review of every ticket against its acceptance criteria.** Seven reviewers covered tickets 02–17; findings were fixed in code, tests and docs. Each affected ticket has a dated "Code review 2026-10-09" note. All tickets keep their status.
 
 | Tickets | Main fixes |

@@ -72,7 +72,8 @@ def characterization(records,rid,subject_kind,subject_id,flops):
 def prepared(records,tmp_path,*,certification=CERTIFICATION,flops=0):
     # 2026-10-10 ET: only the records this fixture references (tests/conftest.py copy_closure);
     # the copied ~1 GB catalog lost dependencies when historical counts were removed from it.
-    records.copy_closure(CANDIDATE,certification,'kron-g16-k16')
+    # The legacy-request tamper case needs a second registered target description to swap in.
+    records.copy_closure(CANDIDATE,certification,'kron-g16-k16','mbit10.cpu.lanl20261006a2.v2.t1')
     characterization(records,'fixture.counts','candidate',CANDIDATE,flops)
     rates={name+'_ops_per_s':{'value':16.0 if name=='floating_point' else 1e9,'basis':'reported',
         'source':'Hand-computed contract fixture; no hardware performance claim.','unit':'operations/s'}
@@ -230,7 +231,9 @@ def test_stale_certification_is_unverified_and_team_refuses_gem5_before_writes(r
     data=json.loads(done.stdout)
     assert data['outcome']['state']=='incompatible'
     assert data['correctness']['state']=='unverified'
-    assert 'certify again' in data['outcome']['reason'],data['outcome']['reason']
+    # 2026-10-10 ET: after the library re-pin the historical receipt's dependency pins also
+    # differ, which refuses first; both reasons mean the certificate is not reusable.
+    assert any(reason in data['outcome']['reason'] for reason in ('certify again', 'normative contract or dependency changed')),data['outcome']['reason']
     assert not (records.path/'estimates'/(data['id']+'.estimate.yaml')).exists()
     rendered=run_swdb('handoff-message','evaluation_result',data['id'],
         '--records',records.path,'--format','json',env=env)
@@ -240,8 +243,12 @@ def test_stale_certification_is_unverified_and_team_refuses_gem5_before_writes(r
     assert message['format_version']=='1.1' and message['content']['estimate'] is None
     assert message['content']['correctness']['scope']=='functional-target'
     assert message['content']['correctness']['hardware_correctness_claim'] is False
-    # The same request with a version label alone changed is equally stale.
-    stale=records.read('certifications/'+CERTIFICATION+'.yaml')
+    # The same request with a version label alone changed is equally stale. Start from the
+    # current certificate when one exists, so only the label differs (2026-10-10 ET).
+    current=current_certification()
+    if current is not None:
+        records.copy_closure(current)
+    stale=records.read('certifications/'+(current or CERTIFICATION)+'.yaml')
     stale['id']='fixture.functional.stale-certification'
     stale['command']['version']='obsolete'
     records.write('certifications/'+stale['id']+'.yaml',stale)

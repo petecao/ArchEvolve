@@ -51,8 +51,9 @@ See the [procedure rules](bfs-typed-library.md#handle-a-certification-refusal-at
 closure. It checks the stale-certificate refusal and handoff under a no-child sentinel (the
 sentinel proves it loaded and blocks `subprocess` and `os` spawn/exec/fork routes), the gem5
 refusal before writes, and a known ratio (2.0) staying `within_error` on the DX100 functional
-target. The positive path (complete evaluation, 1.1 handoff with that ratio) **skips until a
-1.7 execution certificate of this candidate exists in `records/`**; none does yet.
+target. The positive path (complete evaluation, 1.1 handoff with that ratio) uses the 1.7
+execution certificate `certification.df1986d8f0d64a28b19fd23ae672055c` (mbit10,
+2026-10-10 ET); it skips only if no current-procedure certificate exists.
 
 ```sh
 python3 -m swdb evaluate-functional request.yaml --records /path/to/records --library /path/to/library --format json
