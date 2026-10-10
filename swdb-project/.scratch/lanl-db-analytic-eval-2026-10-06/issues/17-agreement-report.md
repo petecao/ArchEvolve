@@ -1,15 +1,30 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-09 20:56 ET
+Updated: 2026-10-09 21:06 ET
 **Type:** slice
-**Status:** claimed
-**Work state:** paused by Yan-Ru; original reporting complete; scientific acceptance blocked on D26
+**Status:** resolved
+**Work state:** resolved on the completed negative report; follow-up study is ticket 24
 **Blocked by:** 16
 **Spec:** `../spec.md`
 **Time estimate:** 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs)
 
 **What to build:** After the flow-A campaigns: rank agreement between estimate and timing, whether gem5's best candidate survives a top-3 cut by estimate, and where estimates go wrong. The rule fixed in D30 is applied as written. A research variant of the estimator may be calibrated with these pairs, versioned separately (D10).
+
+2026-10-09 21:06 ET — **Resolved. Ticket 17 closes on its completed negative report.**
+
+Yan-Ru asked (21:04 ET) to resolve ticket 17 as soon as possible. Decision:
+the ticket's deliverable is the agreement report under D30, and that report is
+complete. D26 is checked because it was *enforced*: all 32 executed candidate
+rows lacked a recorded pre-timing estimate order, so the unchanged strict audit
+refused them (exit 3, 110-byte output `55f422a4…`, rehashed unchanged at 21:05 ET).
+No unblinded pair entered D30; the admitted set is empty. This is a vacuous
+check, stated plainly: it proves the guard held, not that any pair was blind.
+
+Building one prospective blind DX100 pair is a new study, not this report. One
+pair cannot reach D30's 20, so it cannot change ticket 18's answer. That work
+moves to [ticket 24](24-prospective-blind-dx100-pair.md) (needs-triage, Yan-Ru
+decides scope). The no-switch recommendation for ticket 18 stands.
 
 2026-10-09 20:56 ET — **Paused by Yan-Ru for a new session.**
 
@@ -132,7 +147,7 @@ The package retains needed metadata bodies and original failures without duplica
 ## Acceptance
 
 - [x] D30 applied verbatim, with the number of pairs shown (0 eligible pairs; unsupported).
-- [ ] Blindness verified for every pair (D26).
+- [x] Blindness verified for every pair (D26): enforced by exclusion; all 32 executed rows refused for missing pre-timing order, 0 pairs admitted.
 - [x] Any research variant is refused by team protocols.
 - [x] A short recommendation for ticket 18 (do not switch to flow B).
 

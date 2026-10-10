@@ -1,5 +1,20 @@
 # Map: Analytic speed estimates and main-database compatibility
 
+2026-10-09 21:06 ET — [Issue 17](issues/17-agreement-report.md) **resolved. Ticket 17 closes on its completed negative report.**
+
+Yan-Ru asked (21:04 ET) to resolve ticket 17 as soon as possible. Decision:
+the ticket's deliverable is the agreement report under D30, and that report is
+complete. D26 is checked because it was *enforced*: all 32 executed candidate
+rows lacked a recorded pre-timing estimate order, so the unchanged strict audit
+refused them (exit 3, 110-byte output `55f422a4…`, rehashed unchanged at 21:05 ET).
+No unblinded pair entered D30; the admitted set is empty. This is a vacuous
+check, stated plainly: it proves the guard held, not that any pair was blind.
+
+Building one prospective blind DX100 pair is a new study, not this report. One
+pair cannot reach D30's 20, so it cannot change ticket 18's answer. That work
+moves to [ticket 24](issues/24-prospective-blind-dx100-pair.md) (needs-triage, Yan-Ru
+decides scope). The no-switch recommendation for ticket 18 stands.
+
 2026-10-09 20:56 ET — **Paused by Yan-Ru for a new session.**
 
 [Paused handoff](handoff-paused-20261009.md) records the current ticket table,
@@ -82,10 +97,10 @@ The package retains needed metadata bodies and original failures without duplica
 
 
 Created: 2026-10-06 ET
-Updated: 2026-10-09 20:56 ET
+Updated: 2026-10-09 21:06 ET
 **Type:** ticket map
-**Status:** claimed (unfinished implementation/evaluation)
-**Work state:** paused by Yan-Ru; [paused handoff](handoff-paused-20261009.md)
+**Status:** assigned tickets complete (15/15 resolved)
+**Work state:** active; ticket 17 resolved 2026-10-09 21:06 ET
 **Spec:** [spec.md](spec.md)
 
 Each ticket is a vertical slice: it delivers something runnable and checkable on its own, from format to command to tests. Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (Yan-Ru decides first); needs-info (waits on LANL access). Ticket 07 runs on mbit10 under the standing approval of 2026-10-05.
@@ -125,7 +140,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | 14 | [Generality: MAPLE and PageRank](issues/14-generality-maple-pagerank.md) | resolved | 05, 09, 10 | 1 day |
 | 15 | [Show Scott the counting approach](issues/15-show-scott-counting.md) | resolved | 09 | about 15 min |
 | 16 | [Extensa flow A: blind paired estimates](issues/16-extensa-blind-paired-estimates.md) | resolved | 06, 09 | 4–6 h |
-| 17 | [Agreement report](issues/17-agreement-report.md) | claimed | 16 | 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs) |
+| 17 | [Agreement report](issues/17-agreement-report.md) | resolved | 16 | 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs) |
 | 18 | [Decide on flow B](issues/18-decide-flow-b.md) | ready-for-human | 17 | about 15 min |
 
 ## E. Later or blocked
@@ -137,6 +152,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | 21 | [Ask LANL for access](issues/21-ask-lanl-for-access.md) | wontfix | — | about 10 min, when Yan-Ru decides |
 | 22 | [`swdb import-main`: read the main database](issues/22-import-main.md) | wontfix | 02, 03, 21 | 1 day |
 | 23 | [Export and round-trip test](issues/23-export-and-round-trip.md) | wontfix | 22 | 1 day |
+| 24 | [Prospective blind DX100 pair](issues/24-prospective-blind-dx100-pair.md) | needs-triage | 17 | 1–3 days plus lane time |
 
 ## Context pointers
 

@@ -2,8 +2,8 @@
 
 Updated: 2026-10-09 20:56 ET
 
-**Yan-Ru asked to stop this session and continue in a new session. Work and the
-30-minute automation are paused. Resume only on a direct human instruction.**
+**Superseded 2026-10-09 21:06 ET:** Yan-Ru resumed work at 21:04 ET and ticket 17
+was resolved; see [progress](progress.md). The text below is history.
 No new correctness certification, test, campaign or SSH was started after the
 20:38 ET checkpoint. The latest heartbeat inspected prerequisites only; the
 proposed fresh certification remains NOTRUN and no runner was created.

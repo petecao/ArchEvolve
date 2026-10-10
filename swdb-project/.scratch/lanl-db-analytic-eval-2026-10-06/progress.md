@@ -1,5 +1,20 @@
 # Implementation progress
 
+2026-10-09 21:06 ET — [Issue 17](issues/17-agreement-report.md) **resolved. Ticket 17 closes on its completed negative report.**
+
+Yan-Ru asked (21:04 ET) to resolve ticket 17 as soon as possible. Decision:
+the ticket's deliverable is the agreement report under D30, and that report is
+complete. D26 is checked because it was *enforced*: all 32 executed candidate
+rows lacked a recorded pre-timing estimate order, so the unchanged strict audit
+refused them (exit 3, 110-byte output `55f422a4…`, rehashed unchanged at 21:05 ET).
+No unblinded pair entered D30; the admitted set is empty. This is a vacuous
+check, stated plainly: it proves the guard held, not that any pair was blind.
+
+Building one prospective blind DX100 pair is a new study, not this report. One
+pair cannot reach D30's 20, so it cannot change ticket 18's answer. That work
+moves to [ticket 24](issues/24-prospective-blind-dx100-pair.md) (needs-triage, Yan-Ru
+decides scope). The no-switch recommendation for ticket 18 stands.
+
 2026-10-09 20:56 ET — **Paused by Yan-Ru for a new session.**
 
 [Paused handoff](handoff-paused-20261009.md) records the current ticket table,
