@@ -1,0 +1,21 @@
+{
+  "scope": "Abstract specification subset only;notpaperRTL ormeasuredperformance",
+  "operand": "producer/consumer register mappings carry opaque64-bit integer-register words and control tag;exact RA payload/index ABI unknown",
+  "request_generation": "RA indirect A[i] orscan[start,end) withconfiguredbase/size;actualsourcecode responseorder/bounds/permission binding required",
+  "scheduling": "existing SMT ICOUNT and spareRA rename/LSU bandwidth;no extraFU availability assumptions",
+  "metadata_capacity": "148aggregateQRM entries,16queues,defaultdepth24;RAcompletion32,evaluatedreference",
+  "association": "point-to-point producer/consumer ownership and QueueRegisterMaphead/tail/register index;fault reports toproducer",
+  "completion": "consumer onlycommitted producer entries;dequeuecommit releasesregister;specrollbacklocal",
+  "control_unmodeled": [
+    "skip_to_ctrl cancellation progress",
+    "peek-control consumption/restart microstate",
+    "crosscoreconnector teardown"
+  ],
+  "abstract_prototype_choice": "cap1..32 usespaperillustrative32;not universalarchitecturalmax",
+  "not_claimed": [
+    "newFPorder/commutativity guarantees",
+    "genericgather/oldvalueRMW",
+    "publicRTLidentity orspeedup"
+  ],
+  "next_implementation": "bind actual simulator/RTLrevision,RAcompletion ticket/return order,OSmap privilege/control handlers andsharedPRF/LSU legality"
+}

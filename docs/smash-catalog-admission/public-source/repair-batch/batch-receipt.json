@@ -1,0 +1,35 @@
+{
+  "publication_base": "1e12a4eb9364c3d30de756f632d19e45ec63bccb",
+  "catalog_mutations": 0,
+  "stages": [
+    {
+      "parent_sha256": "a08109ea94b515b9c7dbded5b5c07a4fefd4993debb312741bed08556f1c85a7",
+      "files": {
+        "bitmap.h": "b2fa27121a11e7b784dd36c725bd792cf8374ac87720cfe75f9be06db1d21063",
+        "geometry_admission.h": "3d57d1b93c5625ec385916d25bc7799fb82b72f5f331b14718eeb4b5328fd41e"
+      },
+      "scope": "geometry admission only; no ceil, padding, CSR value population or public indexer fix inferred",
+      "exit_on_unsupported": 98
+    },
+    {
+      "parent_sha256": "b2fa27121a11e7b784dd36c725bd792cf8374ac87720cfe75f9be06db1d21063",
+      "files": {
+        "bitmap.h": "56d6a6925f1c614eb951ded0e3769681dd8d19d12088dd547064192feae93c39",
+        "geometry_admission.h": "3d57d1b93c5625ec385916d25bc7799fb82b72f5f331b14718eeb4b5328fd41e"
+      },
+      "changed_sites": 2,
+      "preserved": "constructor admission, zero CTZ, indexer typed mask, public setter addressing",
+      "not_granted": "index bounds, bitmap hierarchy, NZA values or fullkernel"
+    },
+    {
+      "parent_sha256": "56d6a6925f1c614eb951ded0e3769681dd8d19d12088dd547064192feae93c39",
+      "files": {
+        "bitmap.h": "ab6acdac30e7a4b747f1cbf84c96356ac70dd35a7a9e6e93c6555c750e710de4",
+        "geometry_admission.h": "3d57d1b93c5625ec385916d25bc7799fb82b72f5f331b14718eeb4b5328fd41e"
+      },
+      "scope": "source software fixes only: earlier constructor, setter, typed indexer; new reader width and upper metadata capacity/init. Complete same-ratio geometry only. NZA values remain undefined. No fullkernel/numerical grant."
+    }
+  ],
+  "next_input_scope": "complete same-ratio unsigned-long64 bitmap metadata only",
+  "remaining": "CSR shape proof, defined NZA values, complete indexer EOF/consumer/wholekernel numerical correctness remain separate"
+}

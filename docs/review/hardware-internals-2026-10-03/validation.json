@@ -1,0 +1,31 @@
+{
+  "reviewed_commit": "c570772253a10298c3891bdf6f3594db6d4e8a65",
+  "boundary_queries": 180,
+  "rejected_mutations": [
+    "public model evidence promoted into paper",
+    "prefetch promoted to required gather",
+    "reference capacity promoted to legal range",
+    "CPU-deferred CAS promoted to engine execution",
+    "Push destination assistance promoted to execution",
+    "PHI evidence promoted into Push",
+    "same-kind evidence from another paper"
+  ],
+  "rendered_designs_with_exact_evidence": 6,
+  "status": "PASS",
+  "focused_tests": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -p 'test_*mechanism*.py' -v",
+    "passed": 7,
+    "failed": 0
+  },
+  "source_hashes_verified": 17,
+  "integrated_overlay_matches_proposal_excluding_phi": true,
+  "catalog_counts": {
+    "records": 7,
+    "operations": 39,
+    "claims": 84,
+    "sources": 30
+  },
+  "acceptance_scope": "catalog source/evidence boundaries, annotation rendering, invariant operation support",
+  "blocking_findings": [],
+  "external_research_advisory": "SpZip PDF p6 specifies 16 contexts/queues; external proposal unknown list is too broad but is not imported."
+}

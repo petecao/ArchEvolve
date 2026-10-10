@@ -1,0 +1,36 @@
+#include <cassert>
+#include <climits>
+#include <cstdint>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <iostream>
+struct smash {
+ unsigned long *bitmap0=nullptr,*bitmap1=nullptr,*bitmap2=nullptr;
+ int bitmap0_bits=0,bitmap1_bits=0,bitmap2_bits=0;
+ int compression_ratio0=4,compression_ratio1=4,compression_ratio2=4;
+ int bitmap0_blocks=0,bitmap1_blocks=0;
+};
+#include "functions-fixed.inc"
+void test(unsigned level,unsigned groups){
+ smash f;const unsigned bits=groups*4;
+ auto*input=(unsigned long*)calloc((bits+63)/64,sizeof(unsigned long));assert(input);
+ for(unsigned i=0;i<groups;++i)set_bit(input,i*4);
+ if(level==1){f.bitmap0=input;f.bitmap0_bits=bits;construct_bitmap1(&f);}
+ else{f.bitmap1=input;f.bitmap1_bits=bits;construct_bitmap2(&f);}
+ auto*packed=level==1?f.bitmap0:f.bitmap1;
+ auto*upper=level==1?f.bitmap1:f.bitmap2;
+ assert((level==1?f.bitmap0_bits:f.bitmap1_bits)==(int)bits);
+ assert((level==1?f.bitmap1_bits:f.bitmap2_bits)==(int)groups);
+ for(unsigned i=0;i<bits;++i)assert(read_bit(i,packed)==(i%4==0));
+ for(unsigned i=0;i<groups;++i)assert(read_bit(i,upper)==1);
+ // Last partially used word remains zero outside the declared bit extent.
+ if(bits%64)assert((packed[(bits-1)/64]>>(bits%64))==0);
+ if(groups%64)assert((upper[(groups-1)/64]>>(groups%64))==0);
+ free(input);free(packed);free(upper);
+}
+int main(int argc,char**argv){
+ if(argc==2){smash f;f.bitmap0_bits=8;f.compression_ratio1=2;construct_bitmap1(&f);return 1;}
+ for(unsigned level:{1u,2u})for(unsigned groups:{1u,16u,17u,64u,65u})test(level,groups);
+ std::cout<<"both upper levels capacity, last word, metadata zero and declared extents PASS\n";
+}

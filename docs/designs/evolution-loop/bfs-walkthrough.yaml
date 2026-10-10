@@ -1,0 +1,74 @@
+format: evolution-walkthrough-v0.1
+record_kind: hand_authored_unscored_example
+llm_calls: 0
+hardware_runs: 0
+performance_claim: null
+purpose: Explain the intended decisions; these are not real evaluator or teammate receipts.
+seed_descriptions:
+  cpu_control: Original scalar TDStep with the shared correctness contract.
+  dx_reads: DX100 row-bound/neighbor supply with CPU parent effects; executable mapping still required.
+  maple_reads: MAPLE required operands with CPU parent effects; bounded queue mapping still required.
+  guided_hybrid:
+    reference: docs/designs/bfs-maple-dx100-hybrid/partition.yaml
+    note: Human example available in the guided development track, not hidden as a discovery result.
+design_attempts:
+  - id: illustrative-proposal-01
+    parent: dx_reads
+    strategy: illustrative-strategy-v0
+    mutation_kind: composition
+    proposed_delta: MAPLE fetches next-batch row bounds; CPU stages them; DX100 fetches current neighbors.
+    protected_effects: CPU parent read, CAS, retained parent store and next-frontier push.
+    expected_review:
+      feedback_id: illustrative-feedback-01
+      status: needs_mapping_review
+      questions:
+        - Bind two finite owned MAPLE queues, typed pointer/result packing and exact counts.
+        - Establish CPU-to-DX source tile publication, consumer coverage and final drain.
+        - Account for CPU submissions/staging, overlap and possible DX tile underfill.
+      performance_score: null
+      cost_score: null
+      eligible_for_performance_frontier: false
+  - id: illustrative-proposal-02
+    parent: illustrative-proposal-01
+    strategy: illustrative-strategy-v0
+    mutation_kind: admitted_parameter
+    proposed_delta: Double symbolic metadata batch B to improve DX utilization.
+    expected_review:
+      feedback_id: illustrative-feedback-02
+      status: needs_information
+      reason: No verified queue packing/capacity/tail domain or cost-model coverage establishes the proposed B.
+      classification: Missing evidence, not proof that every larger batch is impossible.
+      requested_input_owner: Eric with software/evaluator integration
+      performance_score: null
+      eligible_for_performance_frontier: false
+  - id: illustrative-proposal-03
+    parent: illustrative-proposal-01
+    strategy: illustrative-strategy-v0
+    mutation_kind: composition
+    proposed_delta: Move CPU parent CAS into DX100 to offload more work.
+    expected_review:
+      feedback_id: illustrative-feedback-03
+      status: refuted_for_this_task
+      reason: Violates the fixed CPU-effect scope and lacks a supported DX100 CAS operation.
+      performance_score: null
+      eligible_for_performance_frontier: false
+prompt_revision_example:
+  parent: illustrative-strategy-v0
+  child: illustrative-strategy-v1
+  based_on_feedback: [illustrative-feedback-01, illustrative-feedback-02]
+  changed_section: reasoning_guidance
+  proposed_addition: >-
+    Before proposing more batching or overlap, show a producer/consumer identity and
+    capacity-lifetime table. Cite established parameter/packing domains, leave unknown
+    values unresolved, and name the measurement needed to test the claimed benefit.
+  immutable_core_changed: false
+  rationale: Repeated missing capacity/adapter reasoning motivates testing more explicit guidance.
+  disposition: Proposed only; requires semantic review and a paired strategy trial.
+  effectiveness_measured: false
+  promoted: false
+next_round:
+  actions:
+    - Request the specifically missing domains and transfer/model inputs.
+    - Consider simplifying or serializing a stage within the same protected task contract.
+    - Compare fixed and revised strategies on matched frozen tasks if a live pilot is authorized.
+  forbidden_inference: Do not rank the hybrid from assumed zero accelerator time or unknown area.

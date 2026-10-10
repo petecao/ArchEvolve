@@ -1,0 +1,33 @@
+sequenceDiagram
+  autonumber
+  participant C as CPU worker<br/>two host buffers
+  participant M as MAPLE<br/>two owned queues
+  participant D as DX100<br/>owned tiles and registers
+  C->>M: Produce pointers for batch 0 bounds (bounded count)
+  M-->>C: Submission acknowledgements (values may still be pending)
+  C->>M: Consume exact counts for batch 0
+  M-->>C: Begin/end values associated with batch 0 vertices
+  loop Each admitted current batch n
+    opt A following batch exists
+      C->>M: Submit batch n+1 into now-empty queues
+      M-->>C: Submission acknowledgements
+    end
+    Note over M,D: MAPLE may fetch n+1<br/>while DX100 and CPU work on n
+    C->>D: Stage n's row bounds<br/>publish counts and visibility<br/>initialize register values
+    loop All neighbor chunks, including long-row continuation
+      C->>D: Expand ranges and gather neighbors
+      C->>D: Wait for usable associated outputs
+      D-->>C: Row ordinals and neighbor IDs
+      Note right of C: CPU parent read / CAS<br/>retained store / queue push
+      C->>D: Cover consumers before chunk tile reuse
+    end
+    C->>D: Confirm exhaustion and finish batch consumers
+    opt A following batch exists
+      C->>M: Consume n+1's exact result counts
+      M-->>C: Bounds for next current batch
+      Note right of C: Exchange metadata buffers
+    end
+  end
+  C->>M: Establish known-count completion and deployment quiescence
+  C->>D: Establish final consumer completion and safe release
+  Note right of C: Flush and join workers<br/>publish next frontier

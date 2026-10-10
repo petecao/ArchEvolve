@@ -1,5 +1,23 @@
 # BFS intrinsic handoff — Eric's hardware evidence catalog
 
+## October 9: Peter's feature handoff supplement (sparse & dense)
+
+In response to the [feature audit](audits/peter-features-20261008/README.md), Peter provided the complete quantitative accounting handoff in [peter-handoff-supplement-20261009.md](audits/peter-features-20261008/peter-handoff-supplement-20261009.md), supported by:
+- [Sparse Kronecker 18 Supplement](audits/peter-features-20261008/feature-supplement.v1.2.yaml): Discrete cycle share across 7 statement IDs (line 241 split: 5.36% MAPLE bounds vs 0.29% DX100 index control), single-traversal 7-level work table ($F_\ell, E_\ell, \Delta_\ell$), and Xeon Gold 6226R provenance.
+- [Dense Complete Clique $K_{25k}$ Supplement](audits/peter-features-20261008/feature-supplement-dense.v1.2.yaml): 2-level traversal work table ($N=25\text{k}, 624.98\text{M}$ directed edges), 0% CAS overhead, streaming loads (44.80% neighbor + 38.45% parent), and 55.80% hybrid acceleration window.
+- Raw disassembly sampling profile: [`runs/bfs_tdstep_annotated_50.json`](../runs/bfs_tdstep_annotated_50.json).
+
+## October 8: BFS hybrid thought experiment
+
+
+The [annotated MAPLE/DX100 BFS sketch](designs/bfs-maple-dx100-hybrid/README.md) is the concrete point design requested in the October 8 meeting. Its invented sketch intrinsics partition row-bound fetching, CPU staging, neighbor fetching and CPU discovery, with per-worker ownership, finite queue admission, range continuation and final drain. It is a separate proposal for review, not an executable replacement or a change to existing typed-library pins.
+
+## October 6: how the hardware accelerates
+
+Peter's requested mechanism/semantics layer is available in the [hardware behavior guide](hardware-behavior-handoff.md) and [compact DX100/MAPLE sheets](../handoffs/hardware-behavior-20261006/README.md). Future generated packages include `hardware-behavior.md` and `.yaml`: observable operation semantics, internal request/response handling, conditional payoff hypotheses, implementation obligations and source evidence.
+
+These separate sheets use a pinned snapshot of Eric's 0.1.10 catalog, now merged to main in PR #3. The October 1 handoff files used by Yan-Ru's library are unchanged; any future executable proposal needs deliberate catalog/content re-binding. No implementation, source-scope widening or performance certification is implied.
+
 ## Latest: MAPLE is the second fetcher
 
 Eric's selected [MAPLE ISCA 2022 paper](https://jbalkind.github.io/docs/isca2022_maple.pdf) is now cataloged as `maple-isca2022` (data revision 0.1.3). The latest [DX100/MAPLE handoff guide](maple-dx100-handoff.md) links both BFS comparisons, intrinsic drafts, operation diagrams, workload context and paper logical block paths.

@@ -1,0 +1,36 @@
+{
+  "format": "evolution-design-package-v0.1",
+  "date": "2026-10-08",
+  "base_commit": "d8511fa5c0b40b2856ad8c5c9dd4617a026b92bf",
+  "scope": "Design, prompt drafts, hand-authored walkthrough and standalone reference-policy checks; no live search integration.",
+  "files": {
+    "archevolve/evolution_policy.py": "853c02a2d7d22637d0f3f9acbb95e499fe22f934e9bb7208b1e757e158553212",
+    "docs/designs/evolution-loop/README.md": "0cad0cdf911c941e74fb39ab5f6eae673203dd3d16834f1b5c7d32ee6be95ed2",
+    "docs/designs/evolution-loop/bfs-walkthrough.yaml": "1ba0b1a2777c0c19c3c24611ae7638048aa6b688690f2d6fec6b9328ca0b7188",
+    "docs/designs/evolution-loop/experiment-plan.md": "2b79094031e66b357cdc3a64edd7540da47a64f0ef8e458ea44d50e97f3630be",
+    "docs/designs/evolution-loop/loop.mmd": "f16a4f2cbcf56bc17f67eee78fe96ba20d08c9a08077d602030ce360e5ab82a3",
+    "docs/designs/evolution-loop/loop.png": "e94801d385088125d605df4631edc2a655610a4bf0bb2231a775978cebaad9f3",
+    "docs/designs/evolution-loop/loop.svg": "c0b63668611476124f841a40bc7e100657348025353adcee308e4a8efda55022",
+    "docs/designs/evolution-loop/prior-art.md": "342b462ba3cfe34304ff7be9598eafc1a4beb38898a198bc653c8413c522789a",
+    "docs/designs/evolution-loop/records.template.yaml": "1300bda4a7219c16026af878492ed472cfdfccaaa5c2121af88742782f1ff2e0",
+    "docs/designs/evolution-loop/sources.json": "ebd92fb65707137e0a261c1890e91e305793f2ccdbc1f4d0354ba99202b69a9d",
+    "prompts/evolution/core.md": "1dad01c1ba6cdf1c8c60e5ee6a42ce784cba3fdce5689123f10ebde962c1c7fc",
+    "prompts/evolution/propose.md": "0535cef31c3adfd12172d041859e36f45aa0c722363b994a695262acf9b342e2",
+    "prompts/evolution/reflect.md": "46a54be79cfd700e410cb4864fb92ea4578c0a7d332d7633cbc85627a96f60ac",
+    "prompts/evolution/strategy.seed.yaml": "a497f52c18dc5531cc310772a8525b92c6027bd3009e5929ed0d335b7c9bdea3",
+    "tests/test_evolution_policy.py": "4d8f6d738f917f134f33a1dbc550aa026b53297372e292ce29ad166a5285d367"
+  },
+  "validation": {
+    "new_reference_policy_tests_passed": 13,
+    "yaml_and_walkthrough_status_checks": "passed",
+    "local_links": "passed",
+    "primary_source_hashes": "matched locally inspected files",
+    "mermaid": "rendered and visually inspected",
+    "llm_calls": 0,
+    "hardware_runs": 0,
+    "prompt_improvement_measured": false,
+    "architecture_improvement_measured": false,
+    "novelty_claim": "not_established"
+  },
+  "existing_artifacts": "Existing candidate/library pins and catalog data were not modified."
+}

@@ -1,6 +1,6 @@
 # Integrating Eric's operation evidence
 
-Eric's PR #2 is merged. `catalog/hardware-v0.1.yaml` (data revision `0.1.2`) is now the CLI default. The earlier `catalog/seed.yaml` remains supported explicitly for historical comparisons. No LLM/API or evaluator calls are made.
+Eric's PR #2 is merged. `catalog/hardware-v0.1.yaml` is the CLI default. Data revision `0.1.7` retains MAPLE, the [reviewed internal mechanisms](hardware-internals-v015.md) and the [TMU CSR-SpMV operand/event reference](tmu-catalog-admission.md), and adds [COBRA's required tuple-binning reference](cobra-catalog-admission.md). Generic gather cannot substitute TMU callbacks; generic destination writes cannot substitute COBRA bin materialization. DRT remains out-of-v0 research. The earlier `catalog/seed.yaml` remains supported explicitly for historical comparisons. No LLM/API or evaluator calls are made.
 
 ## Run the new path
 

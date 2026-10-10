@@ -1,0 +1,13 @@
+int main()
+{
+    // A2x2 matrix with ratio4 has one complete block starting at flat0.
+    auto before=original(0,0,4);
+    assert(before.rejected);
+    assert(before.vector_accesses==std::vector<int>({0,1,2}));
+    auto after=fixed(0,0,4);
+    assert(!after.rejected);
+    assert(after.vector_accesses==std::vector<int>({0,1,0,1}));
+    assert(after.output_accesses==std::vector<int>({0,0,1,1}));
+    assert(after.row==2 && after.column==0 && after.nza_cursor==4);
+    std::cout<<"aligned complete2x2/ratio4 block: old boundary rejected, repaired accesses in-domain PASS\n";
+}

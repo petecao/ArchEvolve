@@ -1,0 +1,31 @@
+{
+  "source": {
+    "contract_version": "draft-0.2",
+    "record_kind": "illustrative",
+    "kernel_id": "gapbs_bfs_top_down_step",
+    "input_ref": "examples/received/bfs-sparse.features.v1.2.yaml",
+    "input_revision": "e4fc4afdf894f295442cef3604667a469fab8e62",
+    "catalog_ref": "catalog/hardware-v0.1.yaml",
+    "catalog_revision": "0.1.9",
+    "source_file": "hardware-request.yaml",
+    "source_sha256": "5a383aa67a853ea1518a67828ec6684cb0ae234bef3df2c7a3ce677ab104f198"
+  },
+  "diagrams": [
+    {
+      "candidate_id": "gapbs_bfs_top_down_step--cpu-baseline",
+      "file": "candidate-01.mmd"
+    },
+    {
+      "candidate_id": "gapbs_bfs_top_down_step--dx100-artifact-e4fc4af--read_execute",
+      "file": "candidate-02.mmd"
+    },
+    {
+      "candidate_id": "gapbs_bfs_top_down_step--maple-isca2022--read_assist",
+      "file": "candidate-03.mmd"
+    },
+    {
+      "candidate_id": "gapbs_bfs_top_down_step--maple-isca2022--read_execute",
+      "file": "candidate-04.mmd"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "status": "BOUND_PUBLIC_SOFTWARE_SOURCE_AND_TESTED_PRIMITIVE_GUARD",
+  "commit": "70af92c09e6e36ee4fef80c926c9e56b79784bb9",
+  "repository": "https://github.com/CMU-SAFARI/SMASH",
+  "tree_complete_entries": 35,
+  "realization": "Software CTZ/index kernels with external SIM handler stubs; BMU handler/RTL binding unavailable in inspected snapshot",
+  "primitive_boundary": "Zero passed to CTZ before source ternary check; UBSan reproduces",
+  "correction": "Exact-parent zero guard before CTZ; tested integer-only fixture",
+  "license": null,
+  "third_party_source_redistributed": false,
+  "actual_kernel_runs": 0,
+  "next_action": "Root minimal guard review; new public source consumer/indexer boundary fixtures and deterministic correctness harness required before full software acceptance",
+  "minimal_guard_review": "Zero guard precedes CTZ; return0 matches existing zero convention, nonzero expression unchanged. It does not establish bitmap zero as bit0 or whole-indexer reachability.",
+  "receipt_commit": "5cdeb6a4",
+  "source_identity_review": "11 selected Git blob/SHA256 receipts and complete35entry tree digest rechecked without source execution"
+}

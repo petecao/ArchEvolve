@@ -15,6 +15,8 @@ Each case also has a DX100 read package at `candidate-02`. MAPLE's queue mode is
 
 ## The useful contrast
 
+Revision 0.1.4 adds two scoped public-RTL annotations to the same selectable MAPLE entry: reserved slots need valid data at the head, and dequeue credit release is separate from downstream response delivery/CPU use. These clarify resource lifetimes without resolving the general typed ABI or changing the selection policy. The committed comparison artifacts below preserve their original 0.1.3 snapshots.
+
 | Boundary | DX100 artifact | MAPLE paper |
 |---|---|---|
 | Software submission | Instruction/tile/mask operands | Pointer produces or configured LIMA array bases and interval; MMIO queue lifecycle |
@@ -68,4 +70,6 @@ The source-backed `structure.mmd` follows the paper's logical produce/consume pa
 
 Peter/Eric should confirm source-to-mode choice and concrete operand domains, queues/packing/counts, MMIO/driver requirements, memory route, stable-array conditions and completion/drain behavior before Yan-Ru implements a replacement. Full-model scheduling/coalescing and BFS performance remain open; the second-fetcher selection and paper mechanism evidence are now available.
 
-Validation: 86 software tests pass. All candidate interface/context/mechanism/logical-path Mermaid sources were rendered, and representative views were visually inspected. PDF and generated-text hashes, local links, and preservation of the earlier catalog records/claims/sources were checked. These checks validate the software handoff and source tracing, not an executed MAPLE accelerator.
+Historical revision 0.1.3 validation: 86 software tests passed. All candidate interface/context/mechanism/logical-path Mermaid sources were rendered, and representative views were visually inspected. PDF and generated-text hashes, local links, and preservation of the earlier catalog records/claims/sources were checked.
+
+Revision 0.1.4 follow-up: 87 tests passed in the full suite; all 12 focused MAPLE tests passed after the final source-scope qualifications. Both received BFS cases were regenerated offline and retain required queue fetching separately from prefetch assistance, with the new code claims/sources included. The two pinned public RTL bytes were independently downloaded and matched their recorded SHA-256 hashes. The prior rendered snapshots remain historical; no new RTL/simulator execution, ABI certification or performance result is claimed.

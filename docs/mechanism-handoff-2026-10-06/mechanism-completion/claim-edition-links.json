@@ -1,0 +1,487 @@
+[
+  {
+    "design_id": "tmu-micro2023-fig8-spmv",
+    "mechanism_id": "tu-circular-stream-storage",
+    "kind": "buffering",
+    "status": "described",
+    "claims": [
+      {
+        "claim_id": "tmu-tu",
+        "locator": "PDF pp6\u20137, \u00a75.1",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "tmu-micro2023-primary",
+            "edition": "MICRO2023 author version (title-page notice), institution-hosted; exact cached PDF",
+            "url": "https://doi.org/10.1145/3613424.3614284",
+            "sha256": "d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "design_id": "tmu-micro2023-fig8-spmv",
+    "mechanism_id": "lane-shared-queue-allocation",
+    "kind": "buffering",
+    "status": "described",
+    "claims": [
+      {
+        "claim_id": "tmu-sizing",
+        "locator": "PDF pp7\u20138, \u00a75.5",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "tmu-micro2023-primary",
+            "edition": "MICRO2023 author version (title-page notice), institution-hosted; exact cached PDF",
+            "url": "https://doi.org/10.1145/3613424.3614284",
+            "sha256": "d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "design_id": "tmu-micro2023-fig8-spmv",
+    "mechanism_id": "operand-event-double-buffer",
+    "kind": "buffering",
+    "status": "described",
+    "claims": [
+      {
+        "claim_id": "tmu-outq",
+        "locator": "PDF p6 \u00a74.3; PDF p7 \u00a75.3",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "tmu-micro2023-primary",
+            "edition": "MICRO2023 author version (title-page notice), institution-hosted; exact cached PDF",
+            "url": "https://doi.org/10.1145/3613424.3614284",
+            "sha256": "d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "design_id": "tmu-micro2023-fig8-spmv",
+    "mechanism_id": "physical-request-coalescing",
+    "kind": "coalescing",
+    "status": "unknown",
+    "claims": []
+  },
+  {
+    "design_id": "tmu-micro2023-fig8-spmv",
+    "mechanism_id": "serialized-callback-construction",
+    "kind": "reordering",
+    "status": "described",
+    "claims": [
+      {
+        "claim_id": "tmu-outq",
+        "locator": "PDF p6 \u00a74.3; PDF p7 \u00a75.3",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "tmu-micro2023-primary",
+            "edition": "MICRO2023 author version (title-page notice), institution-hosted; exact cached PDF",
+            "url": "https://doi.org/10.1145/3613424.3614284",
+            "sha256": "d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "design_id": "tmu-micro2023-fig8-spmv",
+    "mechanism_id": "hierarchical-cacheline-arbiter",
+    "kind": "issue_policy",
+    "status": "described",
+    "claims": [
+      {
+        "claim_id": "tmu-arbiter",
+        "locator": "PDF p7, \u00a75.4",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "tmu-micro2023-primary",
+            "edition": "MICRO2023 author version (title-page notice), institution-hosted; exact cached PDF",
+            "url": "https://doi.org/10.1145/3613424.3614284",
+            "sha256": "d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "design_id": "tmu-micro2023-fig8-spmv",
+    "mechanism_id": "parent-valid-stream-dependencies",
+    "kind": "dependency_tracking",
+    "status": "described",
+    "claims": [
+      {
+        "claim_id": "tmu-tu",
+        "locator": "PDF pp6\u20137, \u00a75.1",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "tmu-micro2023-primary",
+            "edition": "MICRO2023 author version (title-page notice), institution-hosted; exact cached PDF",
+            "url": "https://doi.org/10.1145/3613424.3614284",
+            "sha256": "d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2"
+          }
+        ]
+      },
+      {
+        "claim_id": "tmu-fig8",
+        "locator": "PDF p6, Fig. 8 lines 2\u201321; \u00a74.4; PDF p5 \u00a74.2",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "tmu-micro2023-primary",
+            "edition": "MICRO2023 author version (title-page notice), institution-hosted; exact cached PDF",
+            "url": "https://doi.org/10.1145/3613424.3614284",
+            "sha256": "d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2"
+          }
+        ]
+      },
+      {
+        "claim_id": "tmu-traversal",
+        "locator": "PDF p5, \u00a74.1, Tables 1\u20132",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "tmu-micro2023-primary",
+            "edition": "MICRO2023 author version (title-page notice), institution-hosted; exact cached PDF",
+            "url": "https://doi.org/10.1145/3613424.3614284",
+            "sha256": "d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "design_id": "tmu-micro2023-fig8-spmv",
+    "mechanism_id": "active-lane-head-and-lockstep",
+    "kind": "dependency_tracking",
+    "status": "described",
+    "claims": [
+      {
+        "claim_id": "tmu-merges",
+        "locator": "PDF p7, \u00a75.2",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "tmu-micro2023-primary",
+            "edition": "MICRO2023 author version (title-page notice), institution-hosted; exact cached PDF",
+            "url": "https://doi.org/10.1145/3613424.3614284",
+            "sha256": "d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2"
+          }
+        ]
+      },
+      {
+        "claim_id": "tmu-fig8",
+        "locator": "PDF p6, Fig. 8 lines 2\u201321; \u00a74.4; PDF p5 \u00a74.2",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "tmu-micro2023-primary",
+            "edition": "MICRO2023 author version (title-page notice), institution-hosted; exact cached PDF",
+            "url": "https://doi.org/10.1145/3613424.3614284",
+            "sha256": "d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "design_id": "tmu-micro2023-fig8-spmv",
+    "mechanism_id": "cpu-owned-spmv-callback-pipeline",
+    "kind": "other",
+    "status": "described",
+    "claims": [
+      {
+        "claim_id": "tmu-cpu",
+        "locator": "PDF p5 Fig. 4; PDF p6 Fig. 6 and \u00a74.3",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "tmu-micro2023-primary",
+            "edition": "MICRO2023 author version (title-page notice), institution-hosted; exact cached PDF",
+            "url": "https://doi.org/10.1145/3613424.3614284",
+            "sha256": "d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2"
+          }
+        ]
+      },
+      {
+        "claim_id": "tmu-fig8",
+        "locator": "PDF p6, Fig. 8 lines 2\u201321; \u00a74.4; PDF p5 \u00a74.2",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "tmu-micro2023-primary",
+            "edition": "MICRO2023 author version (title-page notice), institution-hosted; exact cached PDF",
+            "url": "https://doi.org/10.1145/3613424.3614284",
+            "sha256": "d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "design_id": "tmu-micro2023-fig8-spmv",
+    "mechanism_id": "row-event-and-full-chunk-delivery",
+    "kind": "completion",
+    "status": "described",
+    "claims": [
+      {
+        "claim_id": "tmu-outq",
+        "locator": "PDF p6 \u00a74.3; PDF p7 \u00a75.3",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "tmu-micro2023-primary",
+            "edition": "MICRO2023 author version (title-page notice), institution-hosted; exact cached PDF",
+            "url": "https://doi.org/10.1145/3613424.3614284",
+            "sha256": "d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2"
+          }
+        ]
+      },
+      {
+        "claim_id": "tmu-fig8",
+        "locator": "PDF p6, Fig. 8 lines 2\u201321; \u00a74.4; PDF p5 \u00a74.2",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "tmu-micro2023-primary",
+            "edition": "MICRO2023 author version (title-page notice), institution-hosted; exact cached PDF",
+            "url": "https://doi.org/10.1145/3613424.3614284",
+            "sha256": "d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "design_id": "tmu-micro2023-fig8-spmv",
+    "mechanism_id": "private-cache-translation-route",
+    "kind": "other",
+    "status": "described",
+    "claims": [
+      {
+        "claim_id": "tmu-integration",
+        "locator": "PDF pp8\u20139, \u00a75.6",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "tmu-micro2023-primary",
+            "edition": "MICRO2023 author version (title-page notice), institution-hosted; exact cached PDF",
+            "url": "https://doi.org/10.1145/3613424.3614284",
+            "sha256": "d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "design_id": "tmu-micro2023-fig8-spmv",
+    "mechanism_id": "quiesce-context-state",
+    "kind": "completion",
+    "status": "described",
+    "claims": [
+      {
+        "claim_id": "tmu-integration",
+        "locator": "PDF pp8\u20139, \u00a75.6",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "tmu-micro2023-primary",
+            "edition": "MICRO2023 author version (title-page notice), institution-hosted; exact cached PDF",
+            "url": "https://doi.org/10.1145/3613424.3614284",
+            "sha256": "d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "design_id": "tmu-micro2023-fig8-spmv",
+    "mechanism_id": "evaluated-resource-reference-only",
+    "kind": "buffering",
+    "status": "described",
+    "claims": [
+      {
+        "claim_id": "tmu-reference",
+        "locator": "PDF p9, Table 5 and \u00a76; PDF p9, \u00a76 RTL implementation and area analysis",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "tmu-micro2023-primary",
+            "edition": "MICRO2023 author version (title-page notice), institution-hosted; exact cached PDF",
+            "url": "https://doi.org/10.1145/3613424.3614284",
+            "sha256": "d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2"
+          }
+        ]
+      },
+      {
+        "claim_id": "tmu-fig8",
+        "locator": "PDF p6, Fig. 8 lines 2\u201321; \u00a74.4; PDF p5 \u00a74.2",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "tmu-micro2023-primary",
+            "edition": "MICRO2023 author version (title-page notice), institution-hosted; exact cached PDF",
+            "url": "https://doi.org/10.1145/3613424.3614284",
+            "sha256": "d8ba773f792f0950abbb6cbd19a31f68619a3546813345b5c0a1d672dafc95e2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "design_id": "tmu-micro2023-fig8-spmv",
+    "mechanism_id": "physical-response-tag-association",
+    "kind": "dependency_tracking",
+    "status": "unknown",
+    "claims": []
+  },
+  {
+    "design_id": "tmu-micro2023-fig8-spmv",
+    "mechanism_id": "host-chunk-ready-consumed-finalpartial-abi",
+    "kind": "completion",
+    "status": "unknown",
+    "claims": []
+  },
+  {
+    "design_id": "tmu-micro2023-fig8-spmv",
+    "mechanism_id": "concrete-operand-width-and-register-encoding",
+    "kind": "other",
+    "status": "unknown",
+    "claims": []
+  },
+  {
+    "design_id": "cobra-hpca2022-tuple-binning",
+    "mechanism_id": "bin-phase-initialization-dependencies",
+    "kind": "dependency_tracking",
+    "status": "described",
+    "claims": [
+      {
+        "claim_id": "cobra-init",
+        "locator": "PDF p. 6, \u00a7V.A, Fig. 7",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "cobra-hpca2022-paper",
+            "edition": "HPCA 2022 author-hosted 15-page paper; publisher-byte identity not established",
+            "url": "https://bvignesh.github.io/papers/COBRA-HPCA22.pdf",
+            "sha256": "4028d0f2742286ae436e15a9536a0181091563b4e0a7d69b41fe197eb85683e5"
+          }
+        ]
+      },
+      {
+        "claim_id": "cobra-insert",
+        "locator": "PDF pp. 6\u20137, \u00a7V.B\u2013C, Fig. 7",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "cobra-hpca2022-paper",
+            "edition": "HPCA 2022 author-hosted 15-page paper; publisher-byte identity not established",
+            "url": "https://bvignesh.github.io/papers/COBRA-HPCA22.pdf",
+            "sha256": "4028d0f2742286ae436e15a9536a0181091563b4e0a7d69b41fe197eb85683e5"
+          }
+        ]
+      },
+      {
+        "claim_id": "cobra-memory-bins",
+        "locator": "PDF pp. 7\u20138, \u00a7V.E, Fig. 9",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "cobra-hpca2022-paper",
+            "edition": "HPCA 2022 author-hosted 15-page paper; publisher-byte identity not established",
+            "url": "https://bvignesh.github.io/papers/COBRA-HPCA22.pdf",
+            "sha256": "4028d0f2742286ae436e15a9536a0181091563b4e0a7d69b41fe197eb85683e5"
+          }
+        ]
+      },
+      {
+        "claim_id": "cobra-flush",
+        "locator": "PDF p. 8, \u00a7V.E, Flushing the Cache After Binning",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "cobra-hpca2022-paper",
+            "edition": "HPCA 2022 author-hosted 15-page paper; publisher-byte identity not established",
+            "url": "https://bvignesh.github.io/papers/COBRA-HPCA22.pdf",
+            "sha256": "4028d0f2742286ae436e15a9536a0181091563b4e0a7d69b41fe197eb85683e5"
+          }
+        ]
+      },
+      {
+        "claim_id": "cobra-phase-boundary",
+        "locator": "PDF pp. 3\u20134, \u00a7III.A\u2013B, Fig. 3, Algorithms 1\u20132",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "cobra-hpca2022-paper",
+            "edition": "HPCA 2022 author-hosted 15-page paper; publisher-byte identity not established",
+            "url": "https://bvignesh.github.io/papers/COBRA-HPCA22.pdf",
+            "sha256": "4028d0f2742286ae436e15a9536a0181091563b4e0a7d69b41fe197eb85683e5"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "design_id": "cobra-hpca2022-tuple-binning",
+    "mechanism_id": "memory-request-duplicate-coalescing",
+    "kind": "coalescing",
+    "status": "unknown",
+    "claims": []
+  },
+  {
+    "design_id": "axi-pack-date2024-sell-required-l2-gather",
+    "mechanism_id": "single-cshr-wide-request-issue",
+    "kind": "issue_policy",
+    "status": "described",
+    "claims": [
+      {
+        "claim_id": "axi24-issue-decision",
+        "locator": "PDF p2, \u00a7II-B, Fig2b, request watcher/CSHR issue and metadata paragraphs",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "axi-pack-coalescer",
+            "edition": "Official DATE2024 conference archive PDF",
+            "url": "https://past.date-conference.com/proceedings-archive/2024/DATA/381_pdf_upload.pdf",
+            "sha256": "dea5a1a457aeeb7a45ea839de475c7da8d6c7896f456c9b37a3ba19483b97c9a"
+          }
+        ]
+      },
+      {
+        "claim_id": "axi24-window",
+        "locator": "PDF p.2 \u00a7II-B Fig.2b",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "axi-pack-coalescer",
+            "edition": "Official DATE2024 conference archive PDF",
+            "url": "https://past.date-conference.com/proceedings-archive/2024/DATA/381_pdf_upload.pdf",
+            "sha256": "dea5a1a457aeeb7a45ea839de475c7da8d6c7896f456c9b37a3ba19483b97c9a"
+          }
+        ]
+      },
+      {
+        "claim_id": "axi24-progress",
+        "locator": "PDF p.2 \u00a7II-B",
+        "evidence_kind": "paper_specification",
+        "sources": [
+          {
+            "source_id": "axi-pack-coalescer",
+            "edition": "Official DATE2024 conference archive PDF",
+            "url": "https://past.date-conference.com/proceedings-archive/2024/DATA/381_pdf_upload.pdf",
+            "sha256": "dea5a1a457aeeb7a45ea839de475c7da8d6c7896f456c9b37a3ba19483b97c9a"
+          }
+        ]
+      }
+    ]
+  }
+]

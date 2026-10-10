@@ -1,0 +1,119 @@
+# Ordinary YAML design sketches, not an agreed LANL schema or populated evidence.
+format: evolution-records-draft-0.1
+record_kind: unfilled_template
+runtime_connected: false
+campaign:
+  id: null
+  phase: architecture_discovery # parameter_tuning is a separate declared phase
+  task_sha256: null
+  core_sha256: null
+  policy_sha256: null
+  catalog_sha256: null
+  workload_bundle_sha256: null
+  seed_refs: []
+  allowed_mutation_kinds: [placement, composition, scheduling, organization, admitted_parameter, simplification]
+  proposed_control_budget:
+    proposals_per_epoch: 4
+    epochs: 3
+    prompt_revision_attempts_between_epochs: 1
+    note: Proposed experiment defaults, not an authorization to run models or benchmarks.
+  live_model: null
+  live_execution_limits:
+    max_total_llm_calls: null
+    max_total_llm_tokens: null
+    max_evaluator_calls: null
+    wall_time_limit_seconds: null
+    note: Required before a live pilot; include reflection, validation, failures and retries.
+proposal:
+  id: null
+  content_sha256: null
+  parent_id: null
+  parent_sha256: null
+  strategy_id: null
+  rendered_prompt_sha256: null
+  catalog_sha256: null
+  workload_sha256: null
+  mutation_kind: null
+  target_region_ids: []
+  before: null
+  after: null
+  preserved_semantics: []
+  new_obligations: []
+  evidence_refs: []
+  expected_benefit_hypothesis: null
+  cost_changes: null
+  novelty_relative_to_parent: null # structural delta, not literature novelty
+  status: proposed
+  next_check: null
+feedback:
+  id: null
+  proposal_id: null
+  proposal_sha256: null
+  origin_stage: null # mapping_review, software_rewrite, functional_check, target_evaluation
+  attempt_id: null
+  outcome: unknown
+  reason_category: null # missing_input, legality, interface, lowering, tool, correctness, performance
+  affected_region_ids: []
+  requirement_ids: []
+  evidence_refs: []
+  required_followup: null
+  inferred_hardware_failure: false
+evaluation_record:
+  candidate_id: null # one aggregated record per candidate version/cohort
+  candidate_sha256: null # architecture + software/lowering + hardware configuration manifest
+  evaluated_candidate_sha256: null
+  design_role: null # cpu_control or accelerator_candidate
+  status: not_run
+  evidence_kind: null # analytical_model / target_measurement; placeholders are not eligible
+  target_refuted: null
+  legality: unknown # discharged / conditional_reviewed / unknown / refuted
+  correctness: unknown # functional_model_pass / target_pass / fail / unknown
+  execution_witness: unknown
+  model_applicability: unknown # includes any cost model used by a measured run
+  metrics_complete: false
+  placeholder_fields: null # explicit [] only when none are used
+  latency_ms: null
+  area_mm2: null
+  evidence_refs: []
+  cohort:
+    task_sha256: null # fixed task semantics, constraints and policy binding
+    catalog_sha256: null
+    workload_bundle_sha256: null # includes input/root identity
+    roi_sha256: null
+    baseline_sha256: null
+    environment_sha256: null # includes thread policy and relevant machine configuration
+    evaluator_sha256: null
+    cost_model_sha256: null # includes process/area basis and legal model domain
+    assumption_set_sha256: null
+    aggregation_sha256: null # trial aggregation and uncertainty method
+    evidence_tier: null # analytical_planning or target_measured; never merge them
+    target_kind: null # analytical_model / simulator / hardware; preserve this distinction
+    latency_unit: ms
+    area_unit: mm2
+    area_convention: null # incremental_accelerator or total_system
+strategy_envelope:
+  strategy_id: null
+  parent_strategy_id: null
+  core_sha256: null
+  task_sha256: null
+  policy_sha256: null
+  editable:
+    search_focus: null
+    mutation_preferences: []
+    reasoning_guidance: []
+    example_refs: []
+  feedback_refs: []
+prompt_trial:
+  id: null
+  parent_strategy_sha256: null
+  child_strategy_sha256: null
+  fixed_parent_task_snapshot_sha256: null
+  fixed_model_settings_sha256: null
+  budget_definition_sha256: null
+  dataset_split_sha256: null
+  outcome_metrics: null
+  mandatory_regressions: unknown
+  uncertainty_ref: null
+  reviewer: null
+  decision: pending
+  promoted: false

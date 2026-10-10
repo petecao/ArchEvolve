@@ -1,0 +1,26 @@
+int OffsetTable::insert(int itr, int wid, int last_entry, int pass) {
+    panic_if(summary_mode,
+             "Offset Table reorder insert attempted during summary phase\n");
+    panic_if(free_entries.empty(),
+             "Offset Table is full while inserting logical iteration %d\n",
+             itr);
+    const int entry_id = free_entries.back();
+    free_entries.pop_back();
+    panic_if(entries_valid[entry_id],
+             "Offset Table free entry %d is still valid\n", entry_id);
+    entries[entry_id].itr = itr;
+    entries[entry_id].wid = wid;
+    entries[entry_id].next_itr = -1;
+    entries[entry_id].pass = pass;
+    entries_valid[entry_id] = true;
+    if (last_entry != -1) {
+        panic_if(last_entry < 0 || last_entry >= num_entries ||
+                     !entries_valid[last_entry],
+                 "Offset Table tail %d is invalid\n", last_entry);
+        entries[last_entry].next_itr = entry_id;
+    }
+    if (is_stream) {
+        (*maa->stats.STR_NumWordsInserted[my_unit_id])++;
+    } else {
+        (*maa->stats.IND_NumWordsInserted[my_unit_id])++;
+    }

@@ -1,0 +1,68 @@
+{
+  "format": "feature-interface-audit-v0.1",
+  "date": "2026-10-08",
+  "base_commit": "d6c0d58b45466af24bc6f0b115dbd98fd515b794",
+  "scope": "Received Peter-to-Josh reports and helper implementation on main; not every private/in-progress profiling record.",
+  "inputs": {
+    "examples/received/bfs-sparse.features.v1.2.yaml": "379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3",
+    "examples/received/bfs-fully-connected.features.v1.2.yaml": "1feea79b029f21b12b763e7276b9925fa2ed295545efa4b6fe99605d9e08d750",
+    "examples/received/peter-measurement-methodology.v1.2.txt": "0f8d421aed3aa68e85e258c8f7eb844a6d8f5c5f98d4a1d6f39f9e4e1e3ba385",
+    "examples/received/peter-measurement-methods.v1.2.yaml": "c1dc5b86c68c5bd0c16eab522b57690ba3131af70d3f5ed78c6f909fe0ac2d9a",
+    "examples/bfs.source-observations.yaml": "4abf18a26cb638f5243887cefcdf54fac45492ea9eeb4db5e2cbc5695560abac",
+    ".agents/skills/extract-kernel-features/SKILL.md": "026d0a1634c578a0c6c5412ed0d5a119945702df08c8c95cb0fa11e7480267e5",
+    ".agents/skills/extract-kernel-features/scripts/parse_perf_profile.py": "d49816b15bb08c3abc7aca120bef3d100acf5ceb15babfc8901fdba3fa2b1463",
+    ".agents/skills/extract-kernel-features/scripts/calc_stride_locality.py": "47bc54cedf3f31a188cae9284f62f30887b3d5acaa44ee96f1a4e4f40fabe23e",
+    "schemas/workload.schema.json": "3c3e8835bd15e54f801843c2caba9629facebe8f85b3b1ef7c67d60607eda79b",
+    "archevolve/normalize.py": "06557820ebb9cfc4c86a31e5ade37d663a611e0e6a2f36f0eb8f636a7677b778",
+    "archevolve/measurement_methods.py": "64e0f460c963ae58d1b50a580b81f8a9e6f46bf643b3d582a8d4eca33665e325",
+    "docs/designs/bfs-maple-dx100-hybrid/partition.yaml": "df912d9378f9d897c76514de83e6e7dc114551228239bff83fb21d0c5dca4d6c"
+  },
+  "schema_compatibility_observations": [
+    {
+      "path": "examples/received/bfs-sparse.features.v1.2.yaml",
+      "report_revision": "v1.2",
+      "declared_schema_version": "1.1",
+      "old_validator_schema_version": "0.1",
+      "old_schema_version_matches": false,
+      "old_schema_missing_required_top_level_fields": [
+        "benchmark",
+        "function",
+        "patterns",
+        "provenance",
+        "workload_id"
+      ],
+      "scope": "Structural compatibility check only, not a claim of complete schema validation."
+    },
+    {
+      "path": "examples/received/bfs-fully-connected.features.v1.2.yaml",
+      "report_revision": "v1.2",
+      "declared_schema_version": "1.1",
+      "old_validator_schema_version": "0.1",
+      "old_schema_version_matches": false,
+      "old_schema_missing_required_top_level_fields": [
+        "benchmark",
+        "function",
+        "patterns",
+        "provenance",
+        "workload_id"
+      ],
+      "scope": "Structural compatibility check only, not a claim of complete schema validation."
+    }
+  ],
+  "artifacts": {
+    "README.md": "b78c39a7aae58ff28ec51299969dc6767ffa55c34e6e6cb830e491556b043a62",
+    "check_helpers.py": "baa10fc4cc81d482bd0d6d72d6c5b56b941d4a703ea7099597906d6ae4420d05",
+    "feature-supplement.template.yaml": "3cbbe99e6e9e901e5c153554a1a19f6f77a0662d155ea3a0578287ae4efd23c0",
+    "helper-checks.json": "1f5a4755463d03047c21fceb1e05c570b38f52fc796a1646442daa53dfb54e34",
+    "helper-findings.md": "bd813686c0295283587578b755b2b9b53c25fcd2128ddf3926c0086f1d664b4c"
+  },
+  "validation": {
+    "existing_sources_unmodified": true,
+    "template_nulls_and_statement_ids_checked": true,
+    "local_links_checked": true,
+    "helper_checks": "synthetic inputs with subprocess mocks; no perf or benchmark execution",
+    "template_is_agreed_schema": false,
+    "template_consumed_by_pipeline": false,
+    "messages_sent": false
+  }
+}

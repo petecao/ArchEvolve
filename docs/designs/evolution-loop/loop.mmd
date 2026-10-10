@@ -1,0 +1,30 @@
+---
+title: "ArchEvolve — one design iteration and its prompt feedback"
+config: {"theme": "neutral", "layout": "elk", "flowchart": {"htmlLabels": true, "wrappingWidth": 230, "rankSpacing": 55}}
+---
+flowchart TB
+  inputs["Frozen task + workload/catalog versions<br/>Human-reviewed seed descriptions"]:::fixed
+  parents["Select parent and mutation scope<br/>Seed/unscored pool + eligible frontiers"]:::design
+  prompt["Assemble fixed core + versioned strategy<br/>Parent, evidence and feedback context"]:::design
+  propose["Propose architectural delta<br/>Future LLM boundary"]:::design
+  check{"Representation, semantics,<br/>domains and mapping review"}:::review
+  software["Peter specification → Yan-Ru implementation<br/>Bounded correctness and path checks"]:::design
+  evaluate["External evaluator + cost model<br/>Scope, pins, assumptions and outcome"]:::review
+  archive["Archive all attempts and evidence<br/>Failures and unknowns remain visible"]:::store
+  rank["Eligible same-cohort results only<br/>Separate planning / measured Pareto fronts"]:::review
+  reflect["Batch reflection proposes strategy edit<br/>Fixed core/task/policy stay pinned"]:::meta
+  trial["Matched prompt trial + review<br/>Count reflection cost in search budget"]:::meta
+  version["Accept new strategy version or retain parent<br/>Keep lineage and rollback"]:::meta
+  inputs --> parents --> prompt --> propose --> check
+  check -->|"ready for back path"| software --> evaluate --> archive
+  check -->|"missing information or refuted delta"| archive
+  archive --> rank
+  archive -->|"periodic feedback batch"| reflect --> trial --> version
+  next["Next iteration<br/>Choose from updated history and strategy versions<br/>Unscored exploration can continue without a performance winner"]:::fixed
+  rank --> next
+  version --> next
+  classDef fixed fill:#fef3c7,stroke:#d97706,color:#78350f
+  classDef design fill:#dbeafe,stroke:#2563eb,color:#172554
+  classDef review fill:#f3e8ff,stroke:#9333ea,color:#581c87
+  classDef store fill:#f1f5f9,stroke:#64748b,color:#0f172a
+  classDef meta fill:#dcfce7,stroke:#16a34a,color:#14532d

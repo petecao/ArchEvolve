@@ -89,7 +89,10 @@ class IntrinsicHandoffTests(unittest.TestCase):
         self.assertTrue(all(g["basis"] == "singleton_no_context_group" for g in request["request_groups"]))
 
     def test_unknown_internal_mechanisms_are_not_inferred_from_operation_support(self):
-        dx = self.choose()["candidates"][1]
+        catalog = deepcopy(self.catalog)
+        for design in catalog["designs"]:
+            design.pop("internal_mechanisms", None)
+        dx = self.choose(catalog=catalog)["candidates"][1]
         self.assertIn("reordering", dx["mechanism_context"]["missing_kinds"])
         self.assertTrue(all(m["description"] is None for m in dx["mechanism_context"]["annotations"]))
         self.assertEqual(dx["status"], "conditional")
@@ -125,7 +128,8 @@ class IntrinsicHandoffTests(unittest.TestCase):
     def test_mechanism_schema_rejects_unlocated_or_inferred_facts(self):
         for mutation in ("missing-ref", "inference", "unknown-description"):
             catalog = self.annotated_catalog()
-            mechanism = next(d for d in catalog["designs"] if "internal_mechanisms" in d)["internal_mechanisms"][0]
+            mechanism = next(d for d in catalog["designs"]
+                             if d["id"] == "dx100-artifact-e4fc4af")["internal_mechanisms"][0]
             if mutation == "missing-ref":
                 mechanism["claim_refs"] = ["missing"]
             elif mutation == "inference":

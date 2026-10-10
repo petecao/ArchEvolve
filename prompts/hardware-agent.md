@@ -1,5 +1,7 @@
 # Hardware reasoning agent — draft 0.2
 
+October 8 mode clarification: this is the existing retrieval-oriented prompt. Future architecture mutation uses the separate [evolution core](evolution/core.md), [proposal request](evolution/propose.md) and [reflection request](evolution/reflect.md), following [the loop design](../docs/designs/evolution-loop/README.md). Novel behavior remains a proposal with explicit obligations; it is not promoted into existing catalog capabilities. No live prompt execution is connected.
+
 Updated for the September 24, 2026 meeting. These are proposed system instructions for the future hardware agent; no agent runtime is wired to them yet.
 
 October 1 handoff update: provide natural-language intrinsic descriptions with the diagrams. Use the proposed fields in `docs/intrinsic-handoff-format.md`; concrete signatures remain Peter/Eric's review task. Accept located internal scheduling/mechanism annotations, retain absent details as unknown, and distinguish applicability from performance. Group related statements only from explicit context/dependencies, preserving unmatched updates and other side effects. A group is not evidence of legal hardware composition. Compare requested designs against the same workload independently of shortlist budget. The offline implementation projects contracts into drafts without executing this prompt.

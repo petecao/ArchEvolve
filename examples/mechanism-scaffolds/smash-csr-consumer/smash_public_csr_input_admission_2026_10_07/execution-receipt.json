@@ -1,0 +1,39 @@
+{
+  "new_structural_fixture": {
+    "compile_rc": 0,
+    "run_rc": 0,
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "checks": [
+      "row/column/value-prefix truncation",
+      "missing/origin/order/tail/count malformed metadata",
+      "negative/out-of-range columns",
+      "unsupported duplicates and unsorted columns",
+      "valid and empty structural input"
+    ]
+  },
+  "new_constructor_fixture": {
+    "compile_rc": 0,
+    "run_rc": 0,
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "before": "actual completed constructor writes bit4 outside declared four-bit extent for column4 in size4 matrix",
+    "after": "admitted entry rejects invalid column, wrong row origin and truncated row prefix before fields/allocation mutate; valid column3 invokes unchanged constructor"
+  },
+  "old_geometry_or_source_suites_replayed": 0,
+  "actual_payload_model_science_applications": 0,
+  "scope": "Values never read; initialized prefix capacities remain caller obligation",
+  "new_C11_storage_fixture": {
+    "compile_rc": 0,
+    "run_rc": 0,
+    "checks": "null format/matrix/rows/columns/values and invalid size all reject without invoking constructor stub; actual C header ABI compilation",
+    "sanitizers": [
+      "address",
+      "undefined"
+    ]
+  }
+}

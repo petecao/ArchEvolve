@@ -1,0 +1,81 @@
+#include <cassert>
+#include <iostream>
+#include <stdexcept>
+#include <string>
+#include <vector>
+
+// No float or numeric payload: operator* only returns a symbolic token.
+struct MetadataToken {};
+MetadataToken operator*(const MetadataToken &, const MetadataToken &)
+{
+    return {};
+}
+struct CheckedMetadata
+{
+    std::vector<MetadataToken> slots;
+    std::vector<int> attempts;
+    explicit CheckedMetadata(unsigned count) : slots(count) {}
+    MetadataToken &operator[](int index)
+    {
+        attempts.push_back(index);
+        if (index < 0 || static_cast<unsigned>(index) >= slots.size())
+            throw std::out_of_range("checked metadata index");
+        return slots[index];
+    }
+};
+struct Shape
+{
+    int compression_ratio0;
+    int columns;
+    CheckedMetadata nza;
+    Shape(int width, int cols) : compression_ratio0(width), columns(cols),
+                                nza(width) {}
+};
+struct Result
+{
+    bool rejected;
+    int row, column, nza_cursor;
+    std::vector<int> vector_accesses, output_accesses;
+};
+Result original(int start_row, int start_column, int width)
+{
+    int i=start_row,j=start_column,cur_element=0;
+    Shape matrix_smash(width,2);CheckedMetadata b(2),x(2);
+    bool rejected=false;
+    try {
+#include "original-loop.inc"
+    } catch(const std::out_of_range &) { rejected=true; }
+    return {rejected,i,j,cur_element,x.attempts,b.attempts};
+}
+Result fixed(int start_row, int start_column, int width)
+{
+    int i=start_row,j=start_column,cur_element=0;
+    Shape matrix_smash(width,2);CheckedMetadata b(2),x(2);
+    bool rejected=false;
+    try {
+#include "fixed-loop.inc"
+    } catch(const std::out_of_range &) { rejected=true; }
+    return {rejected,i,j,cur_element,x.attempts,b.attempts};
+}
+int main()
+{
+    auto before=original(0,1,2);
+    assert(before.rejected && before.vector_accesses==std::vector<int>({1,2}));
+    auto after=fixed(0,1,2);
+    assert(!after.rejected && after.vector_accesses==std::vector<int>({1,0}));
+    assert(after.output_accesses==std::vector<int>({0,1}));
+    assert(after.row==1 && after.column==1 && after.nza_cursor==2);
+    auto exact_before=original(0,0,2),exact_after=fixed(0,0,2);
+    assert(!exact_before.rejected && exact_before.column==2);
+    assert(!exact_after.rejected && exact_after.row==1 && exact_after.column==0);
+    auto full=fixed(0,0,4);
+    assert(!full.rejected && full.vector_accesses==std::vector<int>({0,1,0,1}));
+    assert(full.output_accesses==std::vector<int>({0,0,1,1}));
+    assert(full.row==2 && full.column==0);
+    auto inside_before=original(0,0,1),inside_after=fixed(0,0,1);
+    assert(!inside_before.rejected && !inside_after.rejected);
+    assert(inside_before.vector_accesses==inside_after.vector_accesses);
+    assert(inside_before.output_accesses==inside_after.output_accesses);
+    assert(inside_before.row==inside_after.row && inside_before.column==inside_after.column);
+    std::cout<<"exact loop metadata: original index2 rejected; fixed rollover and unchanged interior PASS\n";
+}

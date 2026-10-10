@@ -1,0 +1,106 @@
+{
+  "record_kind": "synthetic_helper_diagnostic",
+  "benchmark_executed": false,
+  "perf_executed": false,
+  "usable_as_performance_evidence": false,
+  "source_sha256": {
+    ".agents/skills/extract-kernel-features/scripts/parse_perf_profile.py": "d49816b15bb08c3abc7aca120bef3d100acf5ceb15babfc8901fdba3fa2b1463",
+    ".agents/skills/extract-kernel-features/scripts/calc_stride_locality.py": "47bc54cedf3f31a188cae9284f62f30887b3d5acaa44ee96f1a4e4f40fabe23e"
+  },
+  "symbol_and_threshold": {
+    "requested_symbol": "TDStep",
+    "requested_threshold_pct": 30,
+    "emitted_hotspots": [
+      {
+        "sample_pct": 25.0,
+        "address": "0x2000",
+        "instruction": "mov %eax,(%rdx)",
+        "bottleneck_type": "INDIRECT_LOAD_MISS",
+        "source_context": ": fixture.cc:20"
+      },
+      {
+        "sample_pct": 22.0,
+        "address": "0x2008",
+        "instruction": "lock cmpxchg %ecx,(%rdx)",
+        "bottleneck_type": "ATOMIC_CAS_CONTENTION",
+        "source_context": ": fixture.cc:20"
+      },
+      {
+        "sample_pct": 18.0,
+        "address": "0x2004",
+        "instruction": "jmp 2010",
+        "bottleneck_type": "BRANCH_DIVERGENCE",
+        "source_context": ": fixture.cc:20"
+      },
+      {
+        "sample_pct": 12.0,
+        "address": "0x1000",
+        "instruction": "mov (%rax),%eax",
+        "bottleneck_type": "INDIRECT_LOAD_MISS",
+        "source_context": ": fixture.cc:10"
+      }
+    ],
+    "non_target_addresses_in_output": [
+      "0x2000",
+      "0x2004",
+      "0x2008"
+    ],
+    "below_requested_threshold_in_output": [
+      "0x2000",
+      "0x2008",
+      "0x2004",
+      "0x1000"
+    ],
+    "mocked_perf_subcommands": [
+      "stat",
+      "record",
+      "annotate"
+    ]
+  },
+  "unsupported_counter": {
+    "outcome": "exception",
+    "type": "TypeError",
+    "message": "unsupported operand type(s) for /: 'int' and 'str'"
+  },
+  "locality_counterexamples": [
+    {
+      "indices": [
+        15,
+        16
+      ],
+      "element_bytes": 4,
+      "base_address": 0,
+      "byte_addresses": [
+        60,
+        64
+      ],
+      "block_bytes": 64,
+      "helper_label": "within_same_64B_cacheline_pct",
+      "helper_reported_pct": 100.0,
+      "actual_same_block": false,
+      "interpretation": "A distance threshold tests proximity, not block membership or cache hits."
+    },
+    {
+      "indices": [
+        1023,
+        1024
+      ],
+      "element_bytes": 4,
+      "base_address": 0,
+      "byte_addresses": [
+        4092,
+        4096
+      ],
+      "block_bytes": 4096,
+      "helper_label": "within_same_4KB_page_pct",
+      "helper_reported_pct": 100.0,
+      "actual_same_block": false,
+      "interpretation": "A distance threshold tests proximity, not block membership or cache hits."
+    }
+  ],
+  "short_trace_function_results": {
+    "zero_values": null,
+    "one_value": null
+  },
+  "scope": "Demonstrates current helper output on controlled synthetic inputs only; does not establish how the historical v1.2 reports were collected."
+}

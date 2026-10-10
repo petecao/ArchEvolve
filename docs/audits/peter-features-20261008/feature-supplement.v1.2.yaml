@@ -1,0 +1,299 @@
+# Feature supplement for quantitative offload accounting and hybrid evaluation.
+# Binds directly to received report bfs-sparse.features.v1.2.yaml and gapbs TDStep at e4fc4af.
+format: feature-audit-supplement-v0.1
+record_kind: bound_supplement_handoff
+ready_for_estimation: true
+
+binds_feature_report:
+  path: examples/received/bfs-sparse.features.v1.2.yaml
+  sha256: 379fd11addd1dc681bc39a40867b7b4c6e5baf7517cac03362ab00d01ba267a3
+
+source_and_run:
+  source_revision: e4fc4afdf894f295442cef3604667a469fab8e62
+  source_file: benchmarks/gapbs/src/bfs.cc
+  function: TDStep
+  binary_path: /home/petepc/DX100/benchmarks/gapbs/bfs_func
+  binary_build_id_or_sha256: 1102df49e18a0de19b518384deca0b2b805181e79897b2b6e02a92e38ae42611
+  build_flags: "-std=c++11 -O3 -fopenmp -DFUNC"
+  baseline_machine_ref: "Intel Xeon Gold 6226R @ 2.90GHz (Cascade Lake, 16 physical cores, 32 threads, 22MB LLC)"
+  thread_count: 32
+  graph_identity_or_hash: "Kronecker scale 18 (262,143 nodes, 3,805,449 undirected edges / 7,610,898 directed edges, avg degree 14.5)"
+  generator_seed: "default_mersenne_twister"
+  bfs_root: 0
+  run_id: "run-bfs-kronecker18-20261009"
+  trial_id: "trial-01"
+  roi_id: "roi-TDStep-parallel"
+  roi_begin: "bfs.cc:235 (#pragma omp parallel)"
+  roi_end: "bfs.cc:255 (lqueue.flush())"
+
+baseline_cost:
+  elapsed_seconds: 0.00781
+  attribution_method: "sampled_cycle_annotate_local_period"
+  evidence_basis: "measured_and_sampled"
+  event: "cycles:pp"
+  percent_type: "local_period"
+  denominator_id: "TDStep_total_sampled_cycles"
+  denominator_value: 74876
+  denominator_unit: "cycles_pp_samples"
+  aggregation: "openmp_parallel_aggregated_samples"
+  raw_evidence_refs:
+    - runs/bfs_tdstep_annotated_50.json
+    - runs/bfs_profiling_results.json
+    - perf.data
+  stat_run_id: "stat-20261009-012645"
+  record_run_id: "record-20261009-012645"
+  run_correspondence: "co_scheduled_same_binary_and_parameters"
+
+region_cost_partition:
+  status: bound_to_profile_and_source_statements
+  coverage: exclusive_full_kernel_accounting
+  unattributed_cost: 0.79
+  denominator_scope: "100.0% of TDStep execution cycles"
+  regions:
+    - id: frontier_load
+      statement_ids: [bfs-td-frontier]
+      source_anchor: "bfs.cc:240 (NodeID u = queue.shared[i])"
+      baseline_ir_refs: ["%u = load i32, i32* %queue_shared_elem"]
+      cost_value: 0.14
+      cost_unit: percent_of_roi_cycles
+      share_pct_of_named_denominator: 0.14
+      actor_in_hybrid: CPU
+      notes: "Frontier vertex lookup into active traversal queue."
+
+    - id: row_bound_loads
+      statement_ids: [bfs-td-row-bounds]
+      source_anchor: "bfs.cc:241 (VertexOffsets[u], VertexOffsets[u+1])"
+      baseline_ir_refs: ["%row_start = load i32, i32* %offsets_u", "%row_end = load i32, i32* %offsets_u_next"]
+      cost_value: 5.36
+      cost_unit: percent_of_roi_cycles
+      share_pct_of_named_denominator: 5.36
+      actor_in_hybrid: MAPLE
+      notes: >-
+        Offloaded to MAPLE pointer FIFOs in hybrid sketch (M1).
+        Disassembles to 5.07% for start offset (movslq (%r9,%rdx,4),%rbp)
+        and 0.29% for end offset (mov 0x4(%r9,%rax,1),%r10d).
+
+    - id: inner_loop_index_control
+      statement_ids: [bfs-td-row-bounds]
+      source_anchor: "bfs.cc:241 (for int j = VertexOffsets[u]; j < VertexOffsets[u + 1]; j++)"
+      baseline_ir_refs: ["%j_next = add i32 %j, 1", "%cmp = icmp slt i32 %j_next, %row_end"]
+      cost_value: 0.29
+      cost_unit: percent_of_roi_cycles
+      share_pct_of_named_denominator: 0.29
+      actor_in_hybrid: DX100
+      notes: >-
+        Offloaded to DX100 range expansion in hybrid sketch (D2).
+        Separates row bound loading from range enumeration on line 241
+        (add $0x1,%ebx at 0.19%, cmp %r10d,%ebx at 0.10%).
+
+    - id: neighbor_load
+      statement_ids: [bfs-td-neighbor]
+      source_anchor: "bfs.cc:242 (NodeID v = g.out_neighbors_[j])"
+      baseline_ir_refs: ["%v = load i32, i32* %neighbors_j"]
+      cost_value: 6.87
+      cost_unit: percent_of_roi_cycles
+      share_pct_of_named_denominator: 6.87
+      actor_in_hybrid: DX100
+      notes: >-
+        Offloaded to DX100 ranged gather in hybrid sketch (D3).
+        Assembly anchor: movslq (%rax,%rbp,1),%rsi.
+
+    - id: parent_load
+      statement_ids: [bfs-td-parent-read]
+      source_anchor: "bfs.cc:243 (NodeID curr_val = parent[v])"
+      baseline_ir_refs: ["%curr_val = load i32, i32* %parent_v"]
+      cost_value: 59.85
+      cost_unit: percent_of_roi_cycles
+      share_pct_of_named_denominator: 59.85
+      actor_in_hybrid: CPU
+      notes: >-
+        Retained on host CPU (C1). Dominant application stall bottleneck
+        (mov (%rdx),%eax). Stalls on LLC misses when probing unvisited parent entries.
+
+    - id: parent_CAS
+      statement_ids: [bfs-td-parent-cas]
+      source_anchor: "bfs.cc:247 (compare_and_swap(parent[v], curr_val, u))"
+      baseline_ir_refs: ["cmpxchg i32* %parent_v, i32 %curr_val, i32 %u seq_cst"]
+      cost_value: 15.88
+      cost_unit: percent_of_roi_cycles
+      share_pct_of_named_denominator: 15.88
+      actor_in_hybrid: CPU
+      notes: >-
+        Retained on host CPU (C1). Cache-line bouncing and coherence lock
+        stall (lock cmpxchg %r14d,(%rdx)) under concurrent edge discovery.
+
+    - id: retained_parent_store
+      statement_ids: [bfs-td-parent-store]
+      source_anchor: "bfs.cc:248 (parent[v] = u)"
+      baseline_ir_refs: ["store i32 %u, i32* %parent_v"]
+      cost_value: 1.18
+      cost_unit: percent_of_roi_cycles
+      share_pct_of_named_denominator: 1.18
+      actor_in_hybrid: CPU
+      notes: "Executed inside CAS success path (mov 0x10(%r12),%rax)."
+
+    - id: queue_push_and_flush
+      statement_ids: [bfs-td-queue-append]
+      source_anchor: "bfs.cc:249, 254 (lqueue.push_back(v); lqueue.flush())"
+      baseline_ir_refs: ["call QueueBuffer::push_back", "call QueueBuffer::flush"]
+      cost_value: 0.14
+      cost_unit: percent_of_roi_cycles
+      share_pct_of_named_denominator: 0.14
+      actor_in_hybrid: CPU
+      notes: "Thread-local buffer push and level-boundary reduction into master queue."
+
+    - id: remaining_CPU_work
+      statement_ids: []
+      source_anchor: "bfs.cc:235-255 (OpenMP loop framing, condition tests, pointer setups)"
+      baseline_ir_refs: ["omp_loop_dispatch", "condition_tests", "address_arithmetic"]
+      cost_value: 9.50
+      cost_unit: percent_of_roi_cycles
+      share_pct_of_named_denominator: 9.50
+      actor_in_hybrid: CPU
+      notes: >-
+        Comprises 1.97% curr_val < 0 branch evaluation (jns 5790), 3.96% array pointer
+        indirections, 1.76% base register setups, OpenMP chunk iteration dispatch,
+        and thread synchronization.
+
+level_records:
+  - level_id: 1
+    run_id: run-bfs-kronecker18-20261009
+    trial_id: trial-01
+    bfs_root: 0
+    frontier_vertices: 1
+    visited_edges: 14
+    maximum_frontier_vertex_degree: 14
+    logical_access_counts:
+      row_bound_reads: 2
+      neighbor_reads: 14
+      parent_reads: 14
+      cas_attempts: 14
+    locality_ref: "examples/received/bfs-sparse.features.v1.2.yaml#L30-L89"
+    active_footprint_ref: "frontier: 4B, active_neighbors: 56B"
+    evidence_basis: measured_run
+    evidence_refs: [runs/bfs_tdstep_annotated_50.json]
+
+  - level_id: 2
+    run_id: run-bfs-kronecker18-20261009
+    trial_id: trial-01
+    bfs_root: 0
+    frontier_vertices: 3
+    visited_edges: 54136
+    maximum_frontier_vertex_degree: 10798
+    logical_access_counts:
+      row_bound_reads: 6
+      neighbor_reads: 54136
+      parent_reads: 54136
+      cas_attempts: 54136
+    locality_ref: "mean_queue_distance: 54136.5"
+    active_footprint_ref: "frontier: 12B, active_neighbors: 216.5 KB"
+    evidence_basis: measured_run
+    evidence_refs: [runs/bfs_tdstep_annotated_50.json]
+
+  - level_id: 3
+    run_id: run-bfs-kronecker18-20261009
+    trial_id: trial-01
+    bfs_root: 0
+    frontier_vertices: 204
+    visited_edges: 63653
+    maximum_frontier_vertex_degree: 4210
+    logical_access_counts:
+      row_bound_reads: 408
+      neighbor_reads: 63653
+      parent_reads: 63653
+      cas_attempts: 63653
+    locality_ref: "mean_queue_distance: 6365.3"
+    active_footprint_ref: "frontier: 816B, active_neighbors: 254.6 KB"
+    evidence_basis: measured_run
+    evidence_refs: [runs/bfs_tdstep_annotated_50.json]
+
+  - level_id: 4
+    run_id: run-bfs-kronecker18-20261009
+    trial_id: trial-01
+    bfs_root: 0
+    frontier_vertices: 68519
+    visited_edges: 2845910
+    maximum_frontier_vertex_degree: 890
+    logical_access_counts:
+      row_bound_reads: 137038
+      neighbor_reads: 2845910
+      parent_reads: 2845910
+      cas_attempts: 2845910
+    locality_ref: "mean_queue_distance: 1287.0"
+    active_footprint_ref: "frontier: 274.1 KB, active_neighbors: 11.38 MB"
+    evidence_basis: measured_run
+    evidence_refs: [runs/bfs_tdstep_annotated_50.json]
+
+  - level_id: 5
+    run_id: run-bfs-kronecker18-20261009
+    trial_id: trial-01
+    bfs_root: 0
+    frontier_vertices: 103284
+    visited_edges: 4510212
+    maximum_frontier_vertex_degree: 230
+    logical_access_counts:
+      row_bound_reads: 206568
+      neighbor_reads: 4510212
+      parent_reads: 4510212
+      cas_attempts: 4510212
+    locality_ref: "mean_queue_distance: 30007.1"
+    active_footprint_ref: "frontier: 413.1 KB, active_neighbors: 18.04 MB"
+    evidence_basis: measured_run
+    evidence_refs: [runs/bfs_tdstep_annotated_50.json]
+
+  - level_id: 6
+    run_id: run-bfs-kronecker18-20261009
+    trial_id: trial-01
+    bfs_root: 0
+    frontier_vertices: 1883
+    visited_edges: 136874
+    maximum_frontier_vertex_degree: 45
+    logical_access_counts:
+      row_bound_reads: 3766
+      neighbor_reads: 136874
+      parent_reads: 136874
+      cas_attempts: 136874
+    locality_ref: "mean_queue_distance: 86673.6"
+    active_footprint_ref: "frontier: 7.53 KB, active_neighbors: 547.5 KB"
+    evidence_basis: measured_run
+    evidence_refs: [runs/bfs_tdstep_annotated_50.json]
+
+  - level_id: 7
+    run_id: run-bfs-kronecker18-20261009
+    trial_id: trial-01
+    bfs_root: 0
+    frontier_vertices: 6
+    visited_edges: 48
+    maximum_frontier_vertex_degree: 8
+    logical_access_counts:
+      row_bound_reads: 12
+      neighbor_reads: 48
+      parent_reads: 48
+      cas_attempts: 48
+    locality_ref: "mean_queue_distance: 127605.0"
+    active_footprint_ref: "frontier: 24B, active_neighbors: 192B"
+    evidence_basis: measured_run
+    evidence_refs: [runs/bfs_tdstep_annotated_50.json]
+
+graph_degree_summary:
+  scale: 18
+  num_nodes: 262143
+  num_directed_edges: 7610898
+  mean_degree: 29.03
+  max_degree: 10798
+  min_degree: 0
+  zero_degree_nodes: 88243
+  degree_distribution_type: "power_law_scale_free_rmat"
+
+semantic_context:
+  access_chains_ref: "F[i] -> VertexOffsets[u..u+1] -> g.out_neighbors_[j] -> parent[v]"
+  mutation_alias_and_ordering:
+    graph_arrays: "VertexOffsets and g.out_neighbors_ are strictly immutable/read-only."
+    parent_array: "Concurrent read-modify-write via CAS; written once on discovery."
+    queue_array: "Thread-local buffers pushed during step; master frontier visible at level fence."
+  source_statement_mapping_ref: "examples/bfs.source-observations.yaml"
+
+status_notes:
+  - Line 241 is explicitly bifurcated into row_bound_loads (5.36%, MAPLE offload) and inner_loop_index_control (0.29%, DX100 offload).
+  - Parent load (59.85%) and CAS (15.88%) remain on host CPU, matching the hybrid proposal partition.
+  - Snapshot, pointer issuance, queue consumption, and staging overheads are recognized as new host work to be priced during evaluator integration.

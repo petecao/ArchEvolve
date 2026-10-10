@@ -1,0 +1,46 @@
+{
+  "format": "hardware-behavior-v0.1",
+  "catalog_sha256": "1b3b6f823e4dc7930d13c7fec53d93a9e0b250fde885e0baf6c93770372390b8",
+  "input_catalog": "examples/received/eric-hardware-catalog.20261006.yaml",
+  "source_commit": "1825dfd9fdbf3ad86a0c261b0e86319475fa15f9",
+  "packages": [
+    {
+      "case": 1,
+      "candidate": "dx100-artifact-e4fc4af:read_execute",
+      "folder": "case-01/candidate-02",
+      "candidate_id": "gapbs_bfs_top_down_step--dx100-artifact-e4fc4af--read_execute"
+    },
+    {
+      "case": 1,
+      "candidate": "maple-isca2022:read_assist",
+      "folder": "case-01/candidate-03",
+      "candidate_id": "gapbs_bfs_top_down_step--maple-isca2022--read_assist"
+    },
+    {
+      "case": 1,
+      "candidate": "maple-isca2022:read_execute",
+      "folder": "case-01/candidate-04",
+      "candidate_id": "gapbs_bfs_top_down_step--maple-isca2022--read_execute"
+    },
+    {
+      "case": 2,
+      "candidate": "dx100-artifact-e4fc4af:read_execute",
+      "folder": "case-02/candidate-02",
+      "candidate_id": "gapbs_bfs_top_down_step_fully_connected--dx100-artifact-e4fc4af--read_execute"
+    },
+    {
+      "case": 2,
+      "candidate": "maple-isca2022:read_assist",
+      "folder": "case-02/candidate-03",
+      "candidate_id": "gapbs_bfs_top_down_step_fully_connected--maple-isca2022--read_assist"
+    },
+    {
+      "case": 2,
+      "candidate": "maple-isca2022:read_execute",
+      "folder": "case-02/candidate-04",
+      "candidate_id": "gapbs_bfs_top_down_step_fully_connected--maple-isca2022--read_execute"
+    }
+  ],
+  "generator_code_sha256": "b613d3d5be607e227fa5cf5de7fa795af0cad75c4c4bca1c602c801489a43f83",
+  "validation": "115 software tests passed after integration with main catalog 0.1.10; no hardware execution."
+}

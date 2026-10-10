@@ -1,0 +1,12 @@
+{
+  "csr_header_sha256": "fe0b42f88f7204adb3798878810b8087f14186aef556820e46644b72f77940bd",
+  "public_commit": "70af92c09e6e36ee4fef80c926c9e56b79784bb9",
+  "constructor_parent_sha256": "ab6acdac30e7a4b747f1cbf84c96356ac70dd35a7a9e6e93c6555c750e710de4",
+  "facts": [
+    "csr stores pointers and size only, not nnz or allocation lengths",
+    "read_csr reads rows and nnz then allocates rows+1, nnz columns and nnz float values",
+    "read_csr discards nnz and ignores fscanf return values",
+    "constructor starts current_col=0, uses row_ptr differences and directly indexes col_ptr"
+  ],
+  "new_scope": "Explicit trusted defined-prefix lengths and original declared nnz; no length inferred from untrusted row tail. Preserve unknown value initialization."
+}

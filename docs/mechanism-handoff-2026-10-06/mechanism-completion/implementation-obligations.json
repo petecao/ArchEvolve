@@ -1,0 +1,151 @@
+{
+  "scope": "SOURCE_GROUNDED_ADAPTER_AND_MODEL_OBLIGATIONS_NOT_PAPER_RTL_OR_RUNTIME",
+  "requirements": [
+    {
+      "id": "tmu-parent-child-stream-hooks",
+      "design_id": "tmu-micro2023-fig8-spmv",
+      "claim_refs": [
+        "tmu-tu",
+        "tmu-fig8"
+      ],
+      "implementation_obligation": "Represent parent ordinal, valid queue heads, TU bound/ite/fiber-end state and simultaneous stream push/pull. Reject operand association borrowed from another row/lane. Observe full backpressure before modifying a TU.",
+      "paper_condition": "Valid parent bounds; fixed equal stream size within TU; Fig8 offsets0/1 stride2",
+      "missing": [
+        "physical read tag/slot encoding",
+        "duplicate cacheline fanout and response arbitration"
+      ],
+      "existing_requirement_refs": [
+        "csr-layout",
+        "response-association",
+        "sizing"
+      ]
+    },
+    {
+      "id": "tmu-tg-event-and-mask-hooks",
+      "design_id": "tmu-micro2023-fig8-spmv",
+      "claim_refs": [
+        "tmu-merges",
+        "tmu-outq",
+        "tmu-cpu"
+      ],
+      "implementation_obligation": "Expose active-lane validity/LockStep progress and ordered GITE ri/GEND re construction. Keep row IDs, vector operands and masks aligned. Dispatch CPU callback IDs and let CPU perform reduction/store/reset.",
+      "paper_condition": "Only parent-active lanes participate; odd/exhausted lanes require padding or masks; empty rows still have proper row end",
+      "missing": [
+        "concrete callback ABI/register/width encodings",
+        "outQ item representation and callback splitting"
+      ],
+      "existing_requirement_refs": [
+        "cpu-callbacks",
+        "boundaries",
+        "representation-types"
+      ]
+    },
+    {
+      "id": "tmu-resource-admission-hooks",
+      "design_id": "tmu-micro2023-fig8-spmv",
+      "claim_refs": [
+        "tmu-sizing",
+        "tmu-reference",
+        "tmu-arbiter"
+      ],
+      "implementation_obligation": "Charge per-lane shared stream storage and per-layer configuration, enforce queue fullness and request capacity, and implement exact layer/TU/stream/queue arbitration before independent progress checks.",
+      "paper_reference_only": {
+        "Fig8_lanes": 2,
+        "Table5_lanes": 8,
+        "Table5_TGs": 4,
+        "Table5_storage_per_lane": "2KB as printed",
+        "Table5_outstanding_requests": 128
+      },
+      "not_a_legal_parameter_range": true,
+      "missing": [
+        "complete queue capacity allocation model/domain",
+        "bounded fairness guarantee"
+      ],
+      "existing_requirement_refs": [
+        "sizing"
+      ]
+    },
+    {
+      "id": "tmu-chunk-translation-and-quiesce-hooks",
+      "design_id": "tmu-micro2023-fig8-spmv",
+      "claim_refs": [
+        "tmu-outq",
+        "tmu-integration"
+      ],
+      "implementation_obligation": "Provide ready/owned/consumed/reuse/finalpartial protocol before executable adapter acceptance, with fault retry and quiesce/context restore state for all queued and outstanding work. Bind thread-private outQ and source lifetime explicitly.",
+      "paper_condition": "LLC readonly traversal, private L2 outQ, host L2 TLB/MMU and core-private/thread-private output regime",
+      "missing": [
+        "consumed ACK and safe reuse",
+        "finalpartial chunk completion",
+        "physical outstanding drain/cancel/replay sequencing",
+        "arbitrary mutable/shared source visibility"
+      ],
+      "existing_requirement_refs": [
+        "private-source-lifetime",
+        "chunk-lifetime",
+        "fault-drain",
+        "visibility"
+      ]
+    },
+    {
+      "id": "cobra-bin-offset-and-phase-hooks",
+      "design_id": "cobra-hpca2022-tuple-binning",
+      "claim_refs": [
+        "cobra-init",
+        "cobra-insert",
+        "cobra-memory-bins",
+        "cobra-flush",
+        "cobra-phase-boundary"
+      ],
+      "implementation_obligation": "Bind bininit configuration and tuple layout before binupdate; expose actual counter/eviction occupancy, per-thread starting offsets and full/residual tuple custody. Verify every tuple reaches its bin before Accumulate begins.",
+      "paper_condition": "Partitioned tuple collection, progressively narrower ranges, CPU Accumulate owns destination updates",
+      "missing": [
+        "unnamed offset-initialization instruction encoding",
+        "byte scaling/complete legal way/range domain",
+        "runtime private-bin visibility/reuse API"
+      ],
+      "existing_contract_unchanged": true
+    },
+    {
+      "id": "axi-single-cshr-metadata-credit-hooks",
+      "design_id": "axi-pack-date2024-sell-required-l2-gather",
+      "claim_refs": [
+        "axi24-issue-decision",
+        "axi24-association",
+        "axi24-progress"
+      ],
+      "implementation_obligation": "Trace accepted hits, invalidated window positions, CSHR wide issue, paired hitmap/offset metadata enqueue, and response routing to original consumer positions. Account queue occupancy/backpressure and both partial-window timeout and pending-block watchdog.",
+      "necessary_constraints_only": [
+        "N,W powers of2",
+        "W>=N"
+      ],
+      "reference_limits_only": {
+        "wide_block_bits": 512,
+        "W": 256,
+        "hitmap_depth": 128,
+        "L2_size": "384KB as printed"
+      },
+      "missing": [
+        "authenticated DATE2024 public RTL/evaluated commit",
+        "actual N/legal coupled domain",
+        "transaction ID lifetime/backpressure/retry protocol"
+      ],
+      "not_a_legal_parameter_range": true,
+      "additional_coupled_capacity_note": "Existing catalogue notes offsets reference depth2048/W; preserve this relation as an unresolved legality constraint rather than a complete tuning domain."
+    },
+    {
+      "id": "axi-sell-refresh-and-host-completion-hooks",
+      "design_id": "axi-pack-date2024-sell-required-l2-gather",
+      "claim_refs": [
+        "axi24-tiles"
+      ],
+      "implementation_obligation": "Bind six L2 arrays and refill/interrupt handoff for depleted pointer/full result resources; provide host drain/ready/ACK/immutability contract before selecting a runnable adapter.",
+      "paper_condition": "SELL mapped adapter with staged index/vector/nonzero/result arrays; not arbitrary Ara baseline gather support",
+      "missing": [
+        "host consumption/dependency/reuse ABI",
+        "exact end-to-end final completion visibility"
+      ],
+      "existing_contract_unchanged": true
+    }
+  ]
+}
