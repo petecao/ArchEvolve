@@ -16,10 +16,32 @@ from swdb import artifacts
 from swdb.cli import Failure
 
 FORMAT = 'swdb.dx100-functional-call-shadow.v1'
+FUNCTIONAL_GUARD = '#if !defined(FUNC) || defined(GEM5) || defined(GEM5_MAGIC)\n' \
+                   '#error "counting shadow requires the functional backend only"\n#endif\n'
 MARKERS = '''extern "C" void __swdb_begin();
 extern "C" void __swdb_end();
 extern "C" void __swdb_source(unsigned long long);
 '''
+
+
+def _protect_functional_backend(candidate, root):
+    """Keep command-line FUNC fixed across candidate inclusion.
+
+    The original API/source fallbacks are inert because FUNC is already defined.
+    Every other backend-changing directive refuses, including dead branches.
+    """
+    from swdb.bfs_native import _preprocessor_directive_text
+    fallback = '#if !defined(FUNC) && !defined(GEM5) && !defined(GEM5_MAGIC)\n#define FUNC\n#endif'
+    for item in candidate['artifact']['files']:
+        try:
+            text = (root / item['path']).read_text()
+        except UnicodeDecodeError:
+            continue
+        text = _preprocessor_directive_text(text)
+        for backend in ('FUNC', 'GEM5'):
+            text = text.replace(fallback.replace('#define FUNC', '#define ' + backend), '')
+        if re.search(r'^\s*(?:#|%:)\s*(?:define|undef)\s+(?:FUNC|GEM5|GEM5_MAGIC)\b', text, re.M):
+            raise Failure('functional call shadow candidate changes the selected backend: ' + item['path'])
 
 
 def _registered(store, value, kind):
@@ -46,8 +68,7 @@ def driver(source, function, *, sg_offset_bytes):
     text = evaluator_driver(Path(source), model, function, sg_offset_bytes=sg_offset_bytes)
     header = '#include ' + json.dumps(str(model / 'include/gem5/m5ops.h'))
     replacements = {
-        header: '#if !defined(FUNC) || defined(GEM5) || defined(GEM5_MAGIC)\n'
-                '#error "counting shadow requires the functional backend only"\n#endif\n' + MARKERS,
+        header: FUNCTIONAL_GUARD + MARKERS,
         '  m5_checkpoint(0, 0);': '',
         '  m5_work_begin(0, 0);': '',
         '  m5_reset_stats(0, 0);': '  __swdb_begin();\n  __swdb_source(static_cast<unsigned long long>(source));',
@@ -97,7 +118,11 @@ def prepare(store, candidate, workload, source, selected_source):
     artifacts.check_protections(root, protections)
     graph = observed['graph_input']
     text = driver(source, context['function'], sg_offset_bytes=graph['offset_bytes'])
-    _protect_driver_macros(candidate, root, extra_text=text)
+    # This fixed configuration guard is evaluated before candidate inclusion.
+    # Protect the call/oracle suffix and observer names; the original API's
+    # harmless FUNC default must not be mistaken for rewriting that suffix.
+    _protect_driver_macros(candidate, root, extra_text=text.replace(FUNCTIONAL_GUARD, '', 1))
+    _protect_functional_backend(candidate, root)
     flags = build_flags(context, root)
     allowed = {'-std=c++11', '-O3', '-Wall', '-fopenmp', '-pthread', '-DFUNC',
         '-I' + str((root / 'benchmarks/API').resolve()),
@@ -123,7 +148,18 @@ def prepare(store, candidate, workload, source, selected_source):
             'scope': scope, 'scope_sha256': artifacts.digest(scope)}
 
 
-def _counted_result(observed, scope):
+def _functional_contract(store, target, plan):
+    """Use the existing normative functional observer, with no fixture bypass."""
+    from swdb.archevolve import require_team_safe
+    from swdb.offload_observation import prepare as observation
+    target = _registered(store, target, 'target_description')
+    require_team_safe(store, target, command='DX100 complete-call counting')
+    if type(target.get('threads')) is not int or target['threads'] != plan['scope']['threads']:
+        raise Failure('functional call shadow target threads differ from the exact call')
+    return observation(store, target, plan['source'], compile_flags=plan['flags'])
+
+
+def _counted_result(observed, scope, contract=None):
     """Admit one observed source window and the evaluator-owned result check."""
     from swdb.analytic import _counted_regions
     counts, static = observed['counts'], observed['static']
@@ -139,13 +175,33 @@ def _counted_result(observed, scope):
         raise Failure('functional call shadow independent original-graph check failed')
     if not static.get('regions'):
         raise Failure('functional call shadow has no counted source regions')
-    regions, calls = _counted_regions(static, trials[0], count_scope='per_trial')
-    return {'sources': trials[0]['sources'], 'regions': regions, 'unmodeled_calls': calls,
-            'parent_fnv1a64': results[0][3]}
+    regions, calls = _counted_regions(static, trials[0], count_scope='per_trial',
+                                     observation_contract=contract)
+    payload = {'sources': trials[0]['sources'], 'regions': regions, 'unmodeled_calls': calls,
+               'parent_fnv1a64': results[0][3]}
+    if contract:
+        specs = contract['functional_observation']['commands']
+        missing = list(counts.get('semantic_missing', [])) + list(trials[0].get('semantic_missing', []))
+        for command in trials[0].get('semantic_commands', {}).values():
+            missing.extend(command.get('missing', []))
+            if command.get('unknown_target'):
+                missing.append('semantic_target_object_identity')
+        for region in regions:
+            for call in region['accelerator_calls']:
+                missing.extend(call['missing'])
+                if call['active_elements']['value'] is None:
+                    missing.append('semantic_active_extent')
+            for logical in region['address_stream_counts'].values():
+                missing.extend(logical['missing'])
+        if {site['descriptor'] for site in static.get('semantic_sites', [])} != set(range(len(specs))):
+            missing.append('semantic_command_binding')
+        payload['semantic_commands'] = {'complete': not missing, 'missing': sorted(set(missing)),
+            'event_ids': [command['event'] for command in specs]}
+    return payload
 
 
 def execute(store, candidate, workload, source, selected_source, output, *, llvm_bin=None,
-            timeout_s=120, state_budget=524288):
+            timeout_s=120, state_budget=524288, target_description=None):
     """Run the existing protected LLVM pipeline; return count-only observations.
 
     This internal path writes external raw artifacts and a compact receipt. It
@@ -154,10 +210,13 @@ def execute(store, candidate, workload, source, selected_source, output, *, llvm
     """
     from swdb import analytic
     from swdb.analytic_cpu_binding import controls
+    from swdb.estimate_protocol import estimator_identity
     if (type(timeout_s) not in (int, float) or not 0 < timeout_s <= 600
             or type(state_budget) is not int or not 0 < state_budget <= 524288):
         raise Failure('functional call shadow requires bounded timeout and state budget')
+    implementation = estimator_identity()
     plan = prepare(store, candidate, workload, source, selected_source)
+    contract = _functional_contract(store, target_description, plan) if target_description is not None else None
     injection = ('CPATH', 'CPLUS_INCLUDE_PATH', 'C_INCLUDE_PATH', 'OBJC_INCLUDE_PATH',
                  'COMPILER_PATH', 'GCC_EXEC_PREFIX', 'LIBRARY_PATH', 'CCC_OVERRIDE_OPTIONS',
                  'LD_PRELOAD', 'LD_AUDIT', 'DYLD_INSERT_LIBRARIES', 'LD_LIBRARY_PATH', 'DYLD_LIBRARY_PATH')
@@ -178,13 +237,15 @@ def execute(store, candidate, workload, source, selected_source, output, *, llvm
     pinned = {str(path.resolve()): artifacts.file_hash(path) for path in inputs}
     artifacts.external_directory(output)
     wrapper = output / 'counting_driver.cc'; wrapper.write_text(plan['driver'])
+    if contract:
+        (output / 'functional-observation.json').write_text(json.dumps(contract, sort_keys=True) + '\n')
     # Runtime control comes only from this exact plan. Stale observer controls
     # never enter a fresh execution; shared stages retain their original recipe.
     env = {key: os.environ[key] for key in ('PATH', 'HOME', 'TMPDIR', 'TEMP', 'TMP') if key in os.environ}
     env.update(plan['scope']['environment'])
     env['LD_LIBRARY_PATH' if platform.system() != 'Darwin' else 'DYLD_LIBRARY_PATH'] = str(llvm.parent / 'lib')
     args = SimpleNamespace(run_library_path=[llvm.parent / 'lib'], timeout_s=timeout_s,
-        function=None, region_map=None, object_scopes=False, counting_pipeline='source-normalized-v2',
+        function=None, region_map=None, object_scopes=contract is not None, counting_pipeline='source-normalized-v2',
         threads=4, state_budget=state_budget, run_arg=plan['run'])
     build_env = {'PATH': '/usr/bin:/bin', 'TMPDIR': str(output)}
     toolchain_flags = ['--no-default-config']
@@ -197,9 +258,9 @@ def execute(store, candidate, workload, source, selected_source, output, *, llvm
         pinned[str(sdk / 'SDKSettings.json')] = artifacts.file_hash(sdk / 'SDKSettings.json')
     observed = analytic._execute_counts(args, adapter={'explicit_roi': True, 'environment': env,
         'build_environment': build_env},
-        output=output, live_contract=None, llvm=llvm, source=wrapper, flags=plan['flags'],
+        output=output, live_contract=contract, llvm=llvm, source=wrapper, flags=plan['flags'],
         toolchain_flags=toolchain_flags, subject=candidate['id'])
-    payload = _counted_result(observed, plan['scope'])
+    payload = _counted_result(observed, plan['scope'], contract)
     # Paths are observed by the child, but these hashes are from after exit.
     # They cannot prove loaded byte continuity, even when all files still exist.
     libraries, missing = {}, ['runtime_library_byte_continuity']
@@ -211,12 +272,16 @@ def execute(store, candidate, workload, source, selected_source, output, *, llvm
             missing.append('loaded_library_hash:' + str(library))
     if not libraries:
         missing.append('process_loaded_images')
-    files = {name: {'sha256': artifacts.file_hash(output / name), 'bytes': (output / name).stat().st_size}
-        for name in ('counting_driver.cc', 'Characterize.so', 'optimized.bc', 'source.bc',
+    names = ['counting_driver.cc', 'Characterize.so', 'optimized.bc', 'source.bc',
                      'normalized.bc', 'instrumented.bc', 'counted', 'source.json', 'optimized.json',
-                     'counts.json', 'stdout.txt', 'stderr.txt')}
+                     'counts.json', 'stdout.txt', 'stderr.txt']
+    if contract:
+        names.extend(['functional-observation.json', 'commands.bc'])
+    files = {name: {'sha256': artifacts.file_hash(output / name), 'bytes': (output / name).stat().st_size}
+             for name in names}
     receipt = {'format': 'swdb.dx100-functional-count-execution.v1', 'scope': plan['scope'],
         'scope_sha256': plan['scope_sha256'], 'execution_observed': True, 'numeric_admission': False,
+        'swdb_implementation_sha256': implementation,
         'mmio_correspondence': 'unknown', 'timer_values_used': False,
         'host': {'architecture': platform.machine(), 'system': platform.platform()},
         'llvm_version': version, 'compiler_version': analytic._run([llvm / 'clang++', '--no-default-config', '--version'], env=build_env).stdout.strip(),
@@ -231,8 +296,15 @@ def execute(store, candidate, workload, source, selected_source, output, *, llvm
         'artifacts': files, 'counted_payload_sha256': artifacts.digest(payload),
         'coverage': 'selected normalized source functions; opaque callees remain unmodeled',
         'correctness': 'evaluator-owned independent original-CSR check passed; not certification'}
+    if contract:
+        receipt.update(functional_observation_contract=contract,
+            functional_observation_contract_sha256=artifacts.digest(contract),
+            logical_observation_environment=contract['environment'],
+            object_scopes=True, semantic_commands=payload['semantic_commands'])
     fresh = prepare(store, candidate, workload, source, selected_source)
-    if (fresh['scope_sha256'] != plan['scope_sha256']
+    if (estimator_identity() != implementation
+            or fresh['scope_sha256'] != plan['scope_sha256']
+            or (contract is not None and artifacts.digest(_functional_contract(store, target_description, fresh)) != artifacts.digest(contract))
             or any(artifacts.file_hash(Path(path)) != digest for path, digest in pinned.items())
             or artifacts.file_hash(wrapper) != plan['scope']['counting_driver_sha256']
             or any(artifacts.file_hash(output / name) != descriptor['sha256']

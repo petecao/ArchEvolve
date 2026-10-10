@@ -1,5 +1,17 @@
 # Implementation progress
 
+2026-10-09 20:35 ET — [DX100 complete-call command observations](evidence/17-dx100-complete-call-functional-observation-20261009/README.md)
+
+The exact registered candidate now executes with real protected LLVM counters
+and the existing normative target-command contract on a 256-vertex SG32 fixture;
+the independent original-CSR check passes. Final selected checks: 67 component
+and three unchanged observer cases. Backend replacement refuses; incomplete semantic
+coverage remains unknown; intermediate failures and interrupted catalog setup are retained
+in the note. This internal count path supplies no MMIO timing/cost proof, current
+certification or numerical pair. Ticket17 stays claimed, three report items
+checked and D26 unchecked; original science/D30 and human work unchanged. Next
+close only the supported MMIO/cost/certification prerequisites for one blind pair.
+
 2026-10-09 20:06 ET — [DX100 protected LLVM count execution](evidence/17-dx100-protected-llvm-count-execution-20261009/README.md)
 
 The exact registered SG32/explicit-source call now runs through the existing LLVM

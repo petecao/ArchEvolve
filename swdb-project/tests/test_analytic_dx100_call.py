@@ -255,3 +255,153 @@ def test_python_equal_type_confusion_does_not_change_the_bound_record(tmp_path, 
     if converted is float or subject=='workload': assert original == changed
     with pytest.raises(Failure, match='differs from its registered record'):
         shadow.prepare(store, candidate, workload, source, 0)
+
+
+def _exact_candidate_and_target(tmp_path):
+    """Narrow original record reads; only a selected counter reader needs this tree."""
+    import shutil
+    import yaml
+    from conftest import REPO
+    from swdb import certification
+    from swdb.store import PLURAL
+    records = tmp_path / 'records'
+    rows = {}
+    def load(kind, rid, *, copy_file=False):
+        path = REPO / 'records' / PLURAL[kind] / (rid + '.yaml')
+        data = yaml.safe_load(path.read_text())
+        assert data['id'] == rid and data['kind'] == kind
+        rows[rid] = Record(str(path), data)
+        if copy_file:
+            target = records / PLURAL[kind] / path.name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(path, target)
+        return data
+    candidate = load('candidate', 'bfs-functional-read-offload-20261006-a1.proposal.candidate-1')
+    load('source_snapshot', candidate['source_snapshot'])
+    implementation = load('implementation', candidate['implementation'], copy_file=True)
+    load('kernel', implementation['kernel'], copy_file=True)
+    load('application', implementation['application'], copy_file=True)
+    target = load('target_description', 'dx100-e4fc4af-functional-analytic-v1.t4')
+    load('hardware_target', target['target'])
+    for command in target['functional_observation']['commands']:
+        load('intrinsic', command['intrinsic'])
+        for rid in command['hardware_operations']:
+            load('operation', rid)
+    store = Store(records, indexed_records=list(rows.values()))
+    tree, _ = certification.materialize_snapshot(store, candidate['source_snapshot'], tmp_path / 'selected-tree')
+    source = tree / 'benchmarks/gapbs/src/bfs.cc'
+    source.write_text(certification.peter_source(source.read_text()))
+    shutil.copy2(REPO / 'library/dx100/dxc_lowering.hpp', source.parent / 'swdb_dxc_lowering.hpp')
+    assert artifacts.identify(tree)['sha256'] == candidate['artifact']['sha256']
+    # Small registered fixture input, never a LANL application timing/pair.
+    # Retain candidate threshold/alpha unchanged: a 64-node frontier activates
+    # read offload; an unreachable component keeps DOBFS in its push phase.
+    edges = [[0, 1]] + [[1, i] for i in range(2, 66)]
+    edges += [[i, j] for i in range(128, 256) for j in range(i+1, 256)]
+    graph = {'num_vertices': 256, 'directed': False, 'edges': edges}
+    path = tmp_path / 'path.sg'; path.write_bytes(_sg(graph, 4))
+    from swdb.bfs_native import canonical_graph
+    canonical, _ = canonical_graph({'graph': graph, 'family': 'contract_fixture', 'generator': {'name': 'fixture'}})
+    digest = artifacts.digest(canonical)
+    payload = {'requested_id': 'fixture.dx100.command.workload', 'version': 1, 'supersedes': None,
+        'invalidated_comparisons': [], 'definition': {'family': 'contract_fixture', 'generator': {'name': 'fixture'},
+            'canonical_sha256': digest, 'realized': {'num_vertices': 256, 'num_directed_edges': 2*len(edges), 'directed': False},
+            'representations': [{'id': 'fixture.sg', 'format': 'gapbs_sg32le', 'application': 'dx100-gapbs',
+                'path': str(path), 'sha256': artifacts.file_hash(path), 'canonical_sha256': digest, 'adjacency_verified': True}]}}
+    identity = artifacts.digest(payload)
+    workload = {**payload, 'kind': 'workload', 'id': payload['requested_id']+'.'+identity[:16], 'identity_sha256': identity}
+    store.add(Record(workload['id']+'.yaml', workload))
+    return store, candidate, workload, source, target
+
+
+def test_exact_registered_candidate_observes_functional_commands_in_complete_call(tmp_path, llvm22):
+    store, candidate, workload, source, target = _exact_candidate_and_target(tmp_path)
+    result = shadow.execute(store, candidate, workload, source, 0, tmp_path / 'observed',
+        llvm_bin=llvm22, timeout_s=120, target_description=target)
+    receipt, payload = result['receipt'], result['payload']
+    from swdb.estimate_protocol import estimator_identity
+    assert receipt['swdb_implementation_sha256'] == estimator_identity()
+    assert receipt['scope']['candidate_record_sha256'] == artifacts.digest(candidate)
+    assert receipt['functional_observation_contract']['target_description_sha256'] == artifacts.digest(target)
+    assert receipt['functional_observation_contract']['normative_bindings']['records']
+    assert payload['semantic_commands']['complete'] is True
+    calls = [call for row in payload['regions'] for call in row['accelerator_calls']
+             if call['execution_count']['value']]
+    assert {'dx100.functional.gather', 'dx100.functional.stream_load'} <= {call['event'] for call in calls}
+    reads = [call for call in calls if call['event'] in {'dx100.functional.gather', 'dx100.functional.stream_load'}]
+    assert reads and all(call['active_elements']['value'] == call['useful_accesses']['value'] > 0 for call in reads)
+    assert sum(call['functional_bookkeeping']['accesses']['value'] for call in calls) > 0
+    assert receipt['object_scopes'] is True
+    assert receipt['execution_observed'] is True and receipt['numeric_admission'] is False
+    assert receipt['mmio_correspondence'] == 'unknown'
+    assert 'runtime_library_byte_continuity' in receipt['runtime_missing']
+    assert {'functional-observation.json', 'commands.bc'} <= receipt['artifacts'].keys()
+    assert candidate['state'] == 'unverified'
+
+
+@pytest.mark.parametrize('fault', ['canonical-type', 'threads', 'normative-source'])
+def test_target_binding_refuses_before_build(tmp_path, fault):
+    store, candidate, workload, source, target = _exact_candidate_and_target(tmp_path)
+    changed = copy.deepcopy(target)
+    if fault == 'canonical-type': changed['threads'] = 4.0
+    if fault == 'threads':
+        changed['threads'] = 1
+        store.by_id[changed['id']].data = changed
+    if fault == 'normative-source':
+        changed['functional_observation']['commands'][0]['aliases'][0]['source_sha256'] = '0'*64
+        store.by_id[changed['id']].data = changed
+    with pytest.raises(Failure, match='registered record|threads differ|source hash differs'):
+        shadow.execute(store, candidate, workload, source, 0, tmp_path / 'refused', target_description=changed)
+    assert not (tmp_path / 'refused').exists()
+
+
+@pytest.mark.parametrize('directive', ['#undef FUNC', '#define GEM5', '#define GEM5_MAGIC',
+    '#define FUNC 0', '#de\\\nfine GEM5', '# /* comment */ define GEM5', '%:undef FUNC', '%:define GEM5',
+    '??=undef FUNC', '??=define GEM5', '??=de??/\nfine GEM5', '#undef FU\\ \nNC',
+    '??=undef FU??/\t\nNC'])
+def test_canonical_candidate_cannot_change_backend_after_initial_guard(tmp_path, directive):
+    store, candidate, workload, source, _ = registered(tmp_path, directive=directive+'\n')
+    # The builder recomputes artifact/record bytes: this is not an old-SHA refusal.
+    with pytest.raises(Failure, match='changes the selected backend'):
+        shadow.prepare(store, candidate, workload, source, 0)
+
+
+@pytest.mark.parametrize('prefix', ['%:', '??='])
+@pytest.mark.parametrize('name', ['__swdb_begin', '__swdb_end', '__swdb_source'])
+def test_alternative_directive_cannot_replace_the_protected_counter(name, prefix, tmp_path):
+    store, candidate, workload, source, _ = registered(tmp_path, directive=prefix+'define '+name+'(...) ((void)0)\n')
+    with pytest.raises(Failure, match='protected driver identifier'):
+        shadow.prepare(store, candidate, workload, source, 0)
+
+
+@pytest.mark.parametrize('fault', ['site-missing', 'target-unknown', 'active-unknown'])
+def test_command_summary_preserves_per_site_unknowns(monkeypatch, fault):
+    from swdb import analytic
+    from types import SimpleNamespace
+    command = {'missing': ['functional_callee_count_coverage'] if fault=='site-missing' else [],
+        'unknown_target': fault=='target-unknown'}
+    region = {'accelerator_calls': [{'missing': command['missing'], 'active_elements':
+        {'value': None if fault=='active-unknown' else 1}}], 'address_stream_counts': {}}
+    monkeypatch.setattr(analytic, '_counted_regions', lambda *a, **k: ([region], []))
+    observed = {'counts': {'trials': [{'sources': [0], 'semantic_commands': {'0:0': command}}]},
+        'static': {'regions': [{}], 'semantic_sites': [{'descriptor': 0}]},
+        'executed': SimpleNamespace(stdout='SWDB_BFS_RESULT source=0 vertices=4 parent_count=4 parent_fnv1a64=0123456789abcdef\nVerification: PASS\n')}
+    result = shadow._counted_result(observed, {'source': 0, 'num_vertices': 4},
+        {'functional_observation': {'commands': [{'event': 'fixture.read'}]}})
+    assert result['semantic_commands']['complete'] is False
+    assert result['semantic_commands']['missing'] == [{'site-missing': 'functional_callee_count_coverage',
+        'target-unknown': 'semantic_target_object_identity', 'active-unknown': 'semantic_active_extent'}[fault]]
+
+
+def test_changed_shared_implementation_refuses_final_count_receipt(tmp_path, llvm22, monkeypatch):
+    from swdb import estimate_protocol
+    original = estimate_protocol.estimator_identity()
+    identities = iter([original, '0'*64])
+    monkeypatch.setattr(estimate_protocol, 'estimator_identity', lambda: next(identities))
+    store, candidate, workload, source, _ = registered(tmp_path)
+    output = tmp_path / 'changed-bundle'
+    with pytest.raises(Failure, match='changed during counting'):
+        shadow.execute(store, candidate, workload, source, 0, output,
+                       llvm_bin=llvm22, timeout_s=120)
+    assert (output / 'counts.json').exists()
+    assert not (output / 'receipt.json').exists()

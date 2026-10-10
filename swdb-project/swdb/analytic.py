@@ -306,7 +306,8 @@ def _execute_counts(args, *, adapter, output, live_contract, llvm, source, flags
     analysis_input=bound_ir if adapter and not adapter.get('explicit_roi') else raw
     if live_contract:
         command_ir=output/'commands.bc'
-        command_env=dict(os.environ,SWDB_FUNCTIONAL_OBSERVATION=str(command_contract))
+        command_env=dict(os.environ if build_env is None else build_env,
+                         SWDB_FUNCTIONAL_OBSERVATION=str(command_contract))
         run([llvm/'opt','-load-pass-plugin='+str(plugin),'-passes=swdb-bind-commands',analysis_input,'-o',command_ir],env=command_env,timeout=args.timeout_s)
         analysis_input=command_ir
     pipeline_version = args.counting_pipeline or ('source-normalized-v2' if adapter else 'source-normalized-v1')

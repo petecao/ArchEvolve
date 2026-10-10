@@ -438,6 +438,18 @@ def _compile_settings(request, candidate, root, plugin=None):
     return executable, flags, includes, source, "dx100_scalar_func" if dx100 else "gapbs_native"
 
 
+def _preprocessor_directive_text(text):
+    """Directive scan phases, including C++11 trigraphs. 2026-10-09 ET."""
+    trigraphs = {'=': '#', '/': '\\', "'": '^', '(': '[', ')': ']',
+                '!': '|', '<': '{', '>': '}', '-': '~'}
+    text = re.sub(r'\?\?([=/\'()!<>-])', lambda match: trigraphs[match[1]], text)
+    # Clang also accepts horizontal whitespace before the escaped newline.
+    text = re.sub(r"\\[ \t\v\f]*\r?\n", "", text)
+    lexical = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|//[^\n]*|/\*[\s\S]*?\*/')
+    return lexical.sub(lambda match: re.sub(r"[^\n]", " ", match.group())
+                       if match.group().startswith(("//", "/*")) else match.group(), text)
+
+
 def _protect_driver_macros(candidate, root, *, extra_text="", driver=None):
     """Reject preprocessor substitution of the trusted driver after source inclusion.
 
@@ -449,12 +461,6 @@ def _protect_driver_macros(candidate, root, *, extra_text="", driver=None):
     suffix = template.split("#undef main", 1)[1] + "\n" + extra_text
     identifiers = set(re.findall(r"\b[A-Za-z_]\w*\b", suffix)) | {"main", "_OPENMP"}
     trusted_headers = {Path(name).name for name in re.findall(r"#include <([^>]+)>", template + "\n" + extra_text)} | {"omp.h"}
-    lexical = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|//[^\n]*|/\*[\s\S]*?\*/')
-
-    def strip_comment(match):
-        text = match.group()
-        return re.sub(r"[^\n]", " ", text) if text.startswith(("//", "/*")) else text
-
     for item in candidate["artifact"]["files"]:
         path = root / item["path"]
         if path.name in trusted_headers:
@@ -463,9 +469,8 @@ def _protect_driver_macros(candidate, root, *, extra_text="", driver=None):
             text = path.read_text()
         except UnicodeDecodeError:
             continue
-        text = re.sub(r"\\\r?\n", "", text)
-        text = lexical.sub(strip_comment, text)
-        for name in re.findall(r"^\s*#\s*(?:define|undef)\s+([A-Za-z_]\w*)", text, re.M):
+        text = _preprocessor_directive_text(text)
+        for name in re.findall(r"^\s*(?:#|%:)\s*(?:define|undef)\s+([A-Za-z_]\w*)", text, re.M):
             if name in identifiers:
                 raise Failure(f"candidate preprocessor directive can alter protected driver identifier {name}: {item['path']}")
 
