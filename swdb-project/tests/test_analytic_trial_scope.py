@@ -1,4 +1,4 @@
-"""Public trial-window scope correction. Updated: 2026-10-06 ET."""
+"""Public trial-window scope correction. Updated: 2026-10-09 ET (isolated record closure)."""
 import json
 from conftest import REPO, run_swdb
 
@@ -34,7 +34,7 @@ def test_public_estimate_reconciles_sealed_legacy_trial_scope_only_in_context(re
     import hashlib
     import yaml
     from testkit.analytic import freeze_protocol
-    records.copy_repo()
+    records.copy_closure('bfs.functional.kron-g16.t4.characterization.objects.a2')
     path=records.path/'workload_characterizations/bfs.functional.kron-g16.t4.characterization.objects.a2.yaml'
     original=hashlib.sha256(path.read_bytes()).hexdigest()
     counted=records.read(path.relative_to(records.path))

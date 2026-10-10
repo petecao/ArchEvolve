@@ -92,6 +92,55 @@ def make_records(tmp_path):
                     shutil.copytree(source / folder, self.path / folder, dirs_exist_ok=True)
             return self
 
+        def copy_closure(self, *roots):
+            """Copy only the repo records that `roots` reach through exact ID references.
+
+            2026-10-09 ET: copying the whole ~1 GB catalog made every swdb command reparse
+            and revalidate unrelated estimates for minutes. Small catalog kinds are kept
+            whole, as in the native-acceptance `minimal_view`; other records are kept only
+            when a kept record mentions their ID. Non-YAML record-root files are copied.
+            The copied store is still fully validated by the command under test."""
+            import re
+            from swdb.access import read_record, record_files
+            source = REPO / "records"
+            pattern = re.compile(rb"^id:[ \t]*(.+?)[ \t]*$", re.M)
+            where = {}
+            for path, rel in record_files(source):
+                ids = pattern.findall(path.read_bytes())
+                assert len(ids) == 1, f"{rel}: expected one top-level id, found {ids[:3]}"
+                where[ids[0].decode()] = Path(rel)
+            assert all(root in where for root in roots), roots
+
+            def strings(value):
+                if isinstance(value, str):
+                    yield value
+                elif isinstance(value, dict):
+                    for key, item in value.items():
+                        yield key
+                        yield from strings(item)
+                elif isinstance(value, list):
+                    for item in value:
+                        yield from strings(item)
+
+            whole = {"applications", "kernels", "implementations", "operations", "intrinsics",
+                     "hardware_targets", "machines", "workloads", "inputs", "strategies"}
+            keep, queue = set(), [*roots, *(rid for rid, rel in where.items() if rel.parts[0] in whole)]
+            while queue:
+                rid = queue.pop()
+                if rid in keep:
+                    continue
+                keep.add(rid)
+                queue.extend(text for text in strings(read_record(source / where[rid])) if text in where and text not in keep)
+            for rid in keep:
+                (self.path / where[rid]).parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(source / where[rid], self.path / where[rid])
+            for path in source.rglob("*"):
+                rel = path.relative_to(source)
+                if path.is_file() and path.suffix not in {".yaml", ".yml"} and not any(p.startswith(".") for p in rel.parts):
+                    (self.path / rel).parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copyfile(path, self.path / rel)
+            return self
+
         def add_stub(self):
             """The stub kernel, implementation, tiny input, and a machine record for this host."""
             self.copy_repo("applications")
