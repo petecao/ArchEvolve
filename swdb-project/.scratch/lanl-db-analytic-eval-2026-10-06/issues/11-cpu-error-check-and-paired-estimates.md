@@ -161,3 +161,5 @@ are the historical GCC/libgomp profiles. The guard ignores them today; counting 
 would require re-checking the existing bands.
 
 Details: [cpu-native-error.md, code-review section](../../../docs/reference/cpu-native-error.md).
+
+**Decided 2026-10-10 09:12 ET (Yan-Ru, accepting the review's recommendation):** only earlier `cpu_native_validation` records make a held-out input "seen". Older profiles used other toolchains and scopes, and counting them would require re-checking the existing bands.

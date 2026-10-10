@@ -16,7 +16,7 @@
 
 **Re-counts needed before new numbers:** the pass, the logical-command runtime and the estimator bundle changed. Existing counts and estimates stay as history; new estimates need fresh counts and newly frozen protocols.
 
-**Open for Yan-Ru:** D20 field names (ticket 08); the D30 interpretations and D35 audit binding (spec, ticket 17); prior-observation scope for held-out inputs (ticket 11); the outside-operand default, per-event row counts and estimator-identity scope (ticket 09); stride-0 charging and pattern-match strength (ticket 05); whether to certify the functional candidate under 1.7 (ticket 12).
+**Decided 2026-10-10 09:12 ET (Yan-Ru accepted the recommendations; recorded in the spec and each ticket):** all items below except the 1.7 certification are settled as implemented or deferred to tickets 24/25. **Were open for Yan-Ru:** D20 field names (ticket 08); the D30 interpretations and D35 audit binding (spec, ticket 17); prior-observation scope for held-out inputs (ticket 11); the outside-operand default, per-event row counts and estimator-identity scope (ticket 09); stride-0 charging and pattern-match strength (ticket 05); whether to certify the functional candidate under 1.7 (ticket 12).
 
 2026-10-09 22:33 ET — Tickets 18 resolved (no flow B), 19 and 24 wontfix, 20 deferred; spec D30 decision and D35 recorded. See [map](map.md).
 

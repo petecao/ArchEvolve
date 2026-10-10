@@ -46,3 +46,5 @@ before its gem5 timing exists (D26), for the registered BFS candidate.
 Reopen only if the paper needs estimate/timing agreement; spec rule D35 then applies (no
 Extensa campaign before an audited pre-timing numeric estimate). The work already done
 under ticket 17 stays linked above.
+
+2026-10-10 09:12 ET: if this ticket reopens, first re-decide the D30 interpretations listed in the spec, and bind the D35 numeric pairing check to the strict audit's admission receipt.

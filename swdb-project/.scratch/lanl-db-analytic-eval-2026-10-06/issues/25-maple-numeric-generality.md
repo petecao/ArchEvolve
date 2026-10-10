@@ -34,3 +34,5 @@ Created: 2026-10-09 23:10 ET (ticket 14 code review, finding F4)
 - Whether this is worth doing before ticket 20 (XSBench), which needs a numeric estimator path.
 - Who writes MAPLE operation records. The catalog leaves payload and index types, queue binding and memory route unknown.
 - Whether the LLM may fill MAPLE rates that its FPGA reference (60 MHz, 2 cores) bounds only loosely.
+
+2026-10-10 09:12 ET: also in scope — per-event fields in `logical_address_counts`, so row and queue mechanisms can be keyed to a design's events (ticket 09 review, F4).

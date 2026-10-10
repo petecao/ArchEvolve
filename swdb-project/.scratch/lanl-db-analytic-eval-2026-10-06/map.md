@@ -1,5 +1,7 @@
 # Map: Analytic speed estimates and main-database compatibility
 
+2026-10-10 09:12 ET — Yan-Ru accepted the review's recommendations: D20 amended (mapped by table, no rename); D30 interpretations kept as frozen v1 and D35 audit link deferred to ticket 24; held-out scope, ticket 09 and ticket 05 choices kept as implemented (recorded in each ticket). See [progress](progress.md).
+
 2026-10-10 01:32 ET — **Code review of tickets 02–17 against their tickets: findings fixed.** Summary, re-count needs and open questions for Yan-Ru: [progress](progress.md). New ticket [25](issues/25-maple-numeric-generality.md) (needs-triage).
 
 2026-10-09 23:10 ET — Code review of tickets [07](issues/07-measured-mbit10-parameters.md) and [11](issues/11-cpu-error-check-and-paired-estimates.md). Both stay resolved; dated notes are appended to each Answer.

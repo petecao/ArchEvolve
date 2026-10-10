@@ -234,7 +234,7 @@ Decided in the grilling (Yan-Ru, 2026-10-06):
 | D17 | Accelerator memory behavior is estimated by counting over the real address stream, with paper-reported parameters as the fallback. The approach must be general, not DX100-specific. Scott sees the counting approach once. |
 | D18 | ArchEvolve mode may read a target's configuration from its pinned source (basis `code_reading`); gem5 outputs are never read. |
 | D19 | The LLM fills unknown parameters once per target-description version; the values are frozen into that version; dependent estimates list them with a halve/double sensitivity. |
-| D20 | The characterization reuses Peter's feature-report field names where they overlap, with a reader that imports his reports as one input source. |
+| D20 | The characterization reuses Peter's feature-report field names where they overlap, with a reader that imports his reports as one input source. **Amended 2026-10-10 09:12 ET (Yan-Ru, code review):** his literal names stay under `reported_inputs[].features`; overlaps with native fields are mapped by the table in `docs/reference/feature-report-inputs.md`, and native names are not renamed. No mechanism model reads reported facts yet (story 18 is later work). |
 | D21 | The estimator is built from mechanism models (one hardware behavior each), combined per target description; mechanisms are keyed to a design's operations and parameters. |
 | D22 | Generality is shown on the mbit10 CPU, DX100 and MAPLE, and on BFS, BC and PageRank, with no estimator code change; gem5 agreement is measured on DX100 only; XSBench follows after Phase 2. |
 | D23 | SWDB writes the first target descriptions from Eric's catalog, citing his claims, and offers the format to the HW team. |
@@ -253,7 +253,7 @@ Decided in the grilling (Yan-Ru, 2026-10-06):
 
 ### Open question for Yan-Ru: implementation interpretations of D30
 
-Added 2026-10-09 23:45 ET (code review F4). **Pending Yan-Ru's review; not approved.**
+Added 2026-10-09 23:45 ET (code review F4). **Decided 2026-10-10 09:12 ET (Yan-Ru): keep v1 as frozen; no change now.** Flow B is not chosen and D35 blocks new campaigns, so these choices affect nothing today. If ticket 24 reopens, each row is re-decided before a v2 policy is frozen. The D35 check's link to the strict audit's admission receipt is decided at the same time.
 
 The frozen agreement policy v1 (`STATISTICS` in `swdb/extensa_agreement.py`) and
 report v2 add choices that D30's text does not state. Existing policy records pin

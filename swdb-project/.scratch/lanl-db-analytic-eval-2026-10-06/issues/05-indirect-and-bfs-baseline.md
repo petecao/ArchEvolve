@@ -141,3 +141,5 @@ matches**; the history above stays as written.
 - **Still true:** the a2 receipts, counts and estimates above are immutable history and
   keep the old classifications. Fresh mbit10 counts and frozen protocols are needed before
   any application estimate uses the fix.
+
+**Decided 2026-10-10 09:12 ET (Yan-Ru, accepting the review's recommendation):** a stride-0 stream pays only its first-touch bytes (invariant rereads are cache- or register-resident); a pattern step matches on element width plus address shape, which does not prove the exact array, and that limit stays documented; a CSR-style loop in a helper with no enclosing loop classifies as `stream`.

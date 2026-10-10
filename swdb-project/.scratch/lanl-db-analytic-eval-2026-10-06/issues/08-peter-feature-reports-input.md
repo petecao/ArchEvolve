@@ -102,3 +102,5 @@ names where they overlap. The implementation keeps his names only under
 estimator") is also unmet: no mechanism model reads reported facts. Either amend D20 to
 "literal names under `reported_inputs`, mapped by table" or schedule a characterization
 schema version with his names.
+
+**Decided 2026-10-10 09:12 ET (Yan-Ru):** D20 is amended in the spec to match the implementation: literal names under `reported_inputs`, mapped by table; no rename. Story 18 (reported facts feeding the estimator) is later work.

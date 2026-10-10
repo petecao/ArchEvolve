@@ -141,3 +141,5 @@ history above is unchanged. Fixes are in the working tree, not yet committed.
   - mechanisms that share a model keep their own bounds;
   - a declared layout needs a `row` field, and its provenance can be recorded;
   - new tests cover coalesced, multi-field and row-splitting windows.
+
+**Decided 2026-10-10 09:12 ET (Yan-Ru, accepting the review's recommendation):** outside-operand accesses stay backend scratch by default, with the strict per-event opt-in; per-event fields in `logical_address_counts` move to [ticket 25](25-maple-numeric-generality.md), which needs them first; `estimator_identity()` keeps hashing every module (freezing more is the safe side); new DX100 description versions add `dram_address_layout_provenance` when they are next made.
