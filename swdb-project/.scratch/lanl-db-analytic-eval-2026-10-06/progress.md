@@ -1,5 +1,20 @@
 # Implementation progress
 
+2026-10-09 22:06 ET — Code review of `751f19b3^..5b0f51ed` (high effort, 5 findings), all fixed:
+
+| Finding | Fix |
+|---|---|
+| Raw string literal `R"(" /*)"` hid `#undef FUNC` from the backend and driver-macro guards (reproduced) | `_preprocessor_directive_text` refuses raw string literals before and after splicing; 3 regression cases |
+| ROI-bind stage ignored `build_environment` | Uses it like every other stage |
+| Ticket 17 lacked `## Answer` | Added |
+| 14-key unpack after `_execute_counts` | One `_COUNT_FIELDS` tuple |
+| Candidate root hardcoded as `parents[3]` | `prepare` returns `root` |
+
+Tests: 101 + 15 passed in the affected suites. Two full-catalog fixture tests time out at 600 s
+(`test_public_estimate_reconciles_sealed_legacy_trial_scope_only_in_context`,
+`test_original_gapbs_trial_driver_keeps_five_count_snapshots_with_observer_isolation`);
+both fail identically on unmodified HEAD `5b0f51ed`, so they are pre-existing.
+
 2026-10-09 21:06 ET — [Issue 17](issues/17-agreement-report.md) **resolved. Ticket 17 closes on its completed negative report.**
 
 Yan-Ru asked (21:04 ET) to resolve ticket 17 as soon as possible. Decision:

@@ -144,7 +144,7 @@ def prepare(store, candidate, workload, source, selected_source):
         'counting_driver_sha256': hashlib.sha256(text.encode()).hexdigest(),
         'timer_values_used': False, 'mmio_correspondence': 'unknown',
         'numeric_admission': False, 'execution_observed': False}
-    return {'source': source, 'driver': text, 'flags': flags, 'run': arguments,
+    return {'source': source, 'root': root, 'driver': text, 'flags': flags, 'run': arguments,
             'scope': scope, 'scope_sha256': artifacts.digest(scope)}
 
 
@@ -226,7 +226,7 @@ def execute(store, candidate, workload, source, selected_source, output, *, llvm
     llvm, version = analytic._llvm_bin(llvm_bin)
     llvm = llvm.resolve()
     output = Path(output).resolve()
-    root = plan['source'].parents[3]
+    root = plan['root']
     if output.exists() or output.is_relative_to(root) or Path(plan['scope']['graph_input']['path']).is_relative_to(output):
         raise Failure('functional call shadow requires a new output outside candidate and graph input')
     observer = Path(analytic.__file__).with_name('llvm')

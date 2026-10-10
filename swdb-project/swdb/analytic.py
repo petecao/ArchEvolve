@@ -258,6 +258,11 @@ def _counted_regions(static, counts, count_scope="per_run", observation_contract
 
 
 
+_COUNT_FIELDS = ('static', 'optimized_facts', 'counts', 'executed', 'env', 'llvm_src',
+    'plugin_support_objects', 'plugin_linkage', 'run_library_paths', 'pipeline_version',
+    'pipeline', 'binary', 'normalized', 'optimized')
+
+
 def _execute_counts(args, *, adapter, output, live_contract, llvm, source, flags, toolchain_flags, subject):
     """Shared existing LLVM build/run pipeline; callers own binding and admission."""
     command_contract = output / 'functional-observation.json'
@@ -301,7 +306,7 @@ def _execute_counts(args, *, adapter, output, live_contract, llvm, source, flags
     # Adapter boundary hooks are inserted before helper inlining, preserving the exact source call.
     bound_ir = output / 'bound.bc'
     if adapter and not adapter.get('explicit_roi'):
-        gate_env = dict(os.environ, SWDB_ROI_PATH=adapter['roi_path'], SWDB_ROI_LINE=str(adapter['roi_line']))
+        gate_env = dict(os.environ if build_env is None else build_env, SWDB_ROI_PATH=adapter['roi_path'], SWDB_ROI_LINE=str(adapter['roi_line']))
         run([llvm / 'opt', '-load-pass-plugin=' + str(plugin), '-passes=swdb-bind-roi', raw, '-o', bound_ir], env=gate_env, timeout=args.timeout_s)
     analysis_input=bound_ir if adapter and not adapter.get('explicit_roi') else raw
     if live_contract:
@@ -349,22 +354,8 @@ def _execute_counts(args, *, adapter, output, live_contract, llvm, source, flags
         counts = json.loads((output / 'counts.json').read_text())
     except (OSError, ValueError) as exc:
         raise Failure(f'counted native run did not produce valid counts: {exc}') from None
-    return {
-        'static': static,
-        'optimized_facts': optimized_facts,
-        'counts': counts,
-        'executed': executed,
-        'env': env,
-        'llvm_src': llvm_src,
-        'plugin_support_objects': plugin_support_objects,
-        'plugin_linkage': plugin_linkage,
-        'run_library_paths': run_library_paths,
-        'pipeline_version': pipeline_version,
-        'pipeline': pipeline,
-        'binary': binary,
-        'normalized': normalized,
-        'optimized': optimized,
-    }
+    observed = locals()
+    return {key: observed[key] for key in _COUNT_FIELDS}
 
 
 def characterize(args):
@@ -442,20 +433,9 @@ def characterize(args):
     if live_contract:command_contract.write_text(json.dumps(live_contract))
     observed = _execute_counts(args, adapter=adapter, output=output, live_contract=live_contract,
         llvm=llvm, source=source, flags=flags, toolchain_flags=toolchain_flags, subject=subject)
-    static = observed['static']
-    optimized_facts = observed['optimized_facts']
-    counts = observed['counts']
-    executed = observed['executed']
-    env = observed['env']
-    llvm_src = observed['llvm_src']
-    plugin_support_objects = observed['plugin_support_objects']
-    plugin_linkage = observed['plugin_linkage']
-    run_library_paths = observed['run_library_paths']
-    pipeline_version = observed['pipeline_version']
-    pipeline = observed['pipeline']
-    binary = observed['binary']
-    normalized = observed['normalized']
-    optimized = observed['optimized']
+    (static, optimized_facts, counts, executed, env, llvm_src, plugin_support_objects,
+     plugin_linkage, run_library_paths, pipeline_version, pipeline, binary, normalized,
+     optimized) = (observed[key] for key in _COUNT_FIELDS)
     if not static['regions']:
         raise Failure('no source regions matched the requested function/debug information')
     regions, calls = _counted_regions(static, counts,observation_contract=live_contract)

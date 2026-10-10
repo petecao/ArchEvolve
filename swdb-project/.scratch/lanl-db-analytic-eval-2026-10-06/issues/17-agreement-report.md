@@ -144,6 +144,21 @@ Recommendation: **do not switch to flow B**. [Prospective recovery](../evidence/
 
 The package retains needed metadata bodies and original failures without duplicating full project source, configs, capture streams or catalog YAML. No new peer receipt is claimed. All completed or expired approvals remain nonreusable. Human maps, the dirty root rule and scientific PRIMARY/SOURCE/origin R are preserved. No stopped-state resume, old science/audit repeat, retrospective forecast/order or original-guard relaxation occurred. The heartbeat stays ACTIVE for legitimate remaining recovery, fixes and acceptance; unchanged nonactionable evidence stays quiet.
 
+## Answer
+
+2026-10-09 21:06 ET. The agreement report is complete and negative.
+
+| Question | Answer |
+|---|---|
+| Eligible DX100 pairs | 0 (D30 needs at least 20) |
+| Kendall's tau, 95% interval, top-3 coverage | Unsupported: no pairs |
+| D26 blindness | Enforced: all 32 executed rows lacked a pre-timing estimate, so the strict audit refused them |
+| Research variants in team protocols | Refused |
+| Recommendation for ticket 18 | Do not switch to flow B; keep timing-only selection |
+
+Evidence: [actual assembly and refused strict audit](../evidence/17-actual-input-assembly-and-refused-strict-audit-20261009-a5/README.md),
+[completion boundary](../ticket17-completion-boundary-20261009.md). Follow-up blind-pair work: [ticket 24](24-prospective-blind-dx100-pair.md).
+
 ## Acceptance
 
 - [x] D30 applied verbatim, with the number of pairs shown (0 eligible pairs; unsupported).

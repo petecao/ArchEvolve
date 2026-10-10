@@ -439,12 +439,21 @@ def _compile_settings(request, candidate, root, plugin=None):
 
 
 def _preprocessor_directive_text(text):
-    """Directive scan phases, including C++11 trigraphs. 2026-10-09 ET."""
+    """Directive scan phases, including C++11 trigraphs. 2026-10-09 ET.
+
+    Raw string literals refuse: their bodies revert splices/trigraphs and can
+    hide comment openers from this regex lexer (2026-10-09 ET review finding).
+    """
     trigraphs = {'=': '#', '/': '\\', "'": '^', '(': '[', ')': ']',
                 '!': '|', '<': '{', '>': '}', '-': '~'}
+    raw_string = re.compile(r'(?<![A-Za-z0-9_])(?:u8|u|U|L)?R"[^\s()\\]{0,16}\(')
+    if raw_string.search(text):
+        raise Failure("candidate raw string literals are not supported by the protected directive scan")
     text = re.sub(r'\?\?([=/\'()!<>-])', lambda match: trigraphs[match[1]], text)
     # Clang also accepts horizontal whitespace before the escaped newline.
     text = re.sub(r"\\[ \t\v\f]*\r?\n", "", text)
+    if raw_string.search(text):
+        raise Failure("candidate raw string literals are not supported by the protected directive scan")
     lexical = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|//[^\n]*|/\*[\s\S]*?\*/')
     return lexical.sub(lambda match: re.sub(r"[^\n]", " ", match.group())
                        if match.group().startswith(("//", "/*")) else match.group(), text)

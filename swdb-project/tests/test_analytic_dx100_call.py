@@ -366,6 +366,15 @@ def test_canonical_candidate_cannot_change_backend_after_initial_guard(tmp_path,
         shadow.prepare(store, candidate, workload, source, 0)
 
 
+@pytest.mark.parametrize('literal', ['R"(" /*)";\n#undef FUNC\n// */', 'u8R"x(" /*)x";\n#define GEM5\n// */',
+    'R\\\n"(" /*)";\n#undef FUNC\n// */'])
+def test_raw_string_literal_cannot_hide_backend_directive(tmp_path, literal):
+    # 2026-10-09 ET review finding: a raw string body can open a fake comment.
+    store, candidate, workload, source, _ = registered(tmp_path, directive='const char *s = '+literal+'\n')
+    with pytest.raises(Failure, match='raw string literals'):
+        shadow.prepare(store, candidate, workload, source, 0)
+
+
 @pytest.mark.parametrize('prefix', ['%:', '??='])
 @pytest.mark.parametrize('name', ['__swdb_begin', '__swdb_end', '__swdb_source'])
 def test_alternative_directive_cannot_replace_the_protected_counter(name, prefix, tmp_path):
