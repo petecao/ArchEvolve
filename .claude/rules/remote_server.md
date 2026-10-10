@@ -43,6 +43,8 @@ The two hosts are separate machines with separate disks; nothing crosses except 
 - **Run `df -h /data1 /data` before any large run.** Identify disks by mount point,
   never by `sdX` letter (letters change across reboots).
 - Raw run output never goes into the git repo and is never copied to the Mac.
+- Keep a large run output only while a step still needs it: once its record holds the
+  hash, delete it.
 
 ## Constraints
 
