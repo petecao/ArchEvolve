@@ -1,9 +1,10 @@
-"""Public trial-window scope correction. Updated: 2026-10-09 ET (isolated record closure)."""
+"""Public trial-window scope correction. Updated: 2026-10-09 ET (isolated record closure;
+code review F4: a multi-window root is labeled per_trial)."""
 import json
 from conftest import REPO, run_swdb
 
 
-def test_public_count_labels_each_trial_window_without_changing_root_scope(records,tmp_path,llvm22):
+def test_public_count_labels_each_trial_window_and_its_trial_zero_root(records,tmp_path,llvm22):
     records.add_stub()
     result=run_swdb('characterize','--records',records.path,
         '--source',REPO/'tests/fixtures/analytic/trial_scopes.cpp',
@@ -25,7 +26,9 @@ def test_public_count_labels_each_trial_window_without_changing_root_scope(recor
                 assert row['scope']==scope and row['execution_count']['scope']==scope
         assert calls
         assert all(c['execution_count']['scope']==scope and c['size_bytes']['scope']==scope for c in calls)
-    check(value['regions'],value['unmodeled_calls'],'per_run')
+    # 2026-10-09 ET (code review F4): with two windows the root repeats trial 0, so it is per_trial.
+    check(value['regions'],value['unmodeled_calls'],'per_trial')
+    assert value['counting']['top_level_counts']['trial_position']==0
     for trial in value['trials']:check(trial['regions'],trial['unmodeled_calls'],'per_trial')
     assert sum(a['element_count']['value'] for r in value['trials'][1]['regions'] for a in r['access_patterns']) > sum(a['element_count']['value'] for r in value['trials'][0]['regions'] for a in r['access_patterns'])
 

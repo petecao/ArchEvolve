@@ -1,6 +1,6 @@
 # Weak paper sanity check
 
-Created: 2026-10-06 ET.
+Created: 2026-10-06 ET. Updated: 2026-10-09 ET (code review: subject kernel, required differences, baseline system).
 
 Run the read-only reporter with a sealed paper request and content-pinned canonical estimates:
 
@@ -10,7 +10,14 @@ python3 scripts/paper_sanity_check.py --records records \
   --output /absolute/fresh/report-directory
 ```
 
-The command writes `report.json` and `report.md` into a new directory. It refuses changed request seals, changed estimate pins, uncited or duplicate comparison kernels, unqualified numbers, and existing output. Record reads use the shared access boundary. It performs no estimate, parameter filling, provider call, or canonical write.
+The command writes `report.json` and `report.md` into a new directory. It refuses changed request seals, changed estimate pins, uncited or duplicate comparison kernels, unqualified numbers, and existing output. It also refuses:
+
+- an estimate whose subject (a candidate, through its implementation, or an implementation) does not resolve to the cited kernel;
+- a fixture estimate;
+- a comparison without `input` and `configuration` difference rows;
+- a non-null estimated ratio without a `baseline_system` difference row. An estimator ratio compares two codes on one target description, not the paper's baseline system.
+
+Each row records the estimate's subject, input, target, description and baseline (`estimate_scope`), read from the record itself. Record reads use the shared access boundary. It performs no estimate, parameter filling, provider call, or canonical write.
 
 The request format is `swdb.paper-sanity-request.v1`. `source` pins the cited PDF URI and exact SHA-256. Each observation has a kernel, label, positive ratio, ratio unit, `reported` basis, page/figure/table locator, `approximate: true`, finite nonnegative `reading_uncertainty`, and input/core/algorithm/configuration scope. `comparisons` optionally joins a kernel to an estimate ID and semantic SHA-256 plus explicit scope differences. Seal the complete request except `identity_sha256` with `swdb.artifacts.digest`. The output has its own content seal.
 

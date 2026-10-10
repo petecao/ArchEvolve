@@ -1,4 +1,4 @@
-"""Reusable region-to-seconds mechanism models. Updated: 2026-10-06 ET.
+"""Reusable region-to-seconds mechanism models. Updated: 2026-10-09 ET (code review F2: stride-0 streams).
 
 No kernel/target IDs enter these formulas. Parameters are aggregate rates for the
 frozen target and thread configuration. A required unknown is never replaced by zero.
@@ -42,32 +42,58 @@ def compute_throughput(region, mechanism):
                  ['Arithmetic counts include source loop control; address/cast instructions are excluded.'])
 
 
+def address_shape(access):
+    """Vocabulary shape of one access (2026-10-09 ET, code review F2).
+
+    Legacy characterizations label a proved loop-invariant address `constant`; the
+    address-shape vocabulary calls that a `stream` with stride 0 (the same element reused).
+    """
+    shape = access['address_shape']['value']
+    return 'stream' if shape == 'constant' else shape
+
+
+def reused_element(access):
+    """A stride-0 stream rereads one location; only its first touch moves new bytes."""
+    return access['address_shape']['value'] == 'constant' or (
+        access['address_shape']['value'] == 'stream' and access.get('stride_bytes', {}).get('value') == 0)
+
+
 def streaming_bandwidth(region, mechanism, covered_nonstream=False):
     moved = 0
     missing = []
     access_inputs = []
     for access in region['access_patterns']:
         n = access['bytes_accessed']['value']
-        shape = access['address_shape']['value']
-        access_inputs.append({'access': access['id'], 'bytes': n, 'address_shape': shape})
+        shape = address_shape(access)
+        item = {'access': access['id'], 'bytes': n, 'address_shape': shape}
+        access_inputs.append(item)
         if n is None:
             missing.append(access['id'] + '.bytes_accessed')
         elif n == 0:
             continue
         elif shape != 'stream' and not covered_nonstream:
             missing.append(access['id'] + '.streaming_classification')
+        elif shape == 'stream' and reused_element(access):
+            unique = access.get('observed_unique_bytes', {}).get('value')
+            item['charged_bytes'] = None if unique is None else min(n, unique)
+            if unique is None:
+                missing.append(access['id'] + '.observed_unique_bytes')
+            else:
+                moved += min(n, unique)
         elif shape == 'stream':
             moved += n
     rate = parameter(mechanism, 'bytes_per_s', 'bytes/s')
     if moved and rate is None:
         missing.append('bytes_per_s')
     seconds = None if missing else (moved / rate if moved else 0.0)
-    return bound('streaming_bandwidth', seconds, 'sum(streaming useful bytes) / effective_bytes_per_second',
+    return bound('streaming_bandwidth', seconds, 'sum(streaming useful bytes; stride-0 streams charge first-touch bytes) / effective_bytes_per_second',
                  {'accesses': access_inputs, 'bytes': moved, 'bytes_per_s': mechanism['parameters'].get('bytes_per_s')}, missing,
-                 ['Useful source element bytes; bandwidth must use this same convention, not bus bytes or a theoretical peak.'])
+                 ['Useful source element bytes; bandwidth must use this same convention, not bus bytes or a theoretical peak.',
+                  'A stride-0 stream (one reused element, including legacy `constant` labels) charges only its observed unique bytes.'])
 
 
-INDIRECT = {'single_valued_indirect','ranged_indirect','pointer_chase','data_dependent_merge','constant'}
+# Invariant addresses are stride-0 streams, never dependent requests (2026-10-09 ET, code review F2).
+INDIRECT = {'single_valued_indirect','ranged_indirect','pointer_chase','data_dependent_merge'}
 
 
 def requests_in_flight_latency(region, mechanism):
@@ -76,7 +102,7 @@ def requests_in_flight_latency(region, mechanism):
     workers=region.get('active_workers',{}).get('value')
     missing=[];seconds=0.;inputs=[]
     for access in region['access_patterns']:
-        shape=access['address_shape']['value'];count=access['element_count']['value']
+        shape=address_shape(access);count=access['element_count']['value']
         if shape=='stream':continue
         item={'access':access['id'],'requests':count,'shape':shape};inputs.append(item)
         if count is None:missing.append(access['id']+'.element_count')
@@ -131,6 +157,9 @@ def cache_fit(region,mechanism):
          'Outside the modeled cache capacity this mechanism has no supported bound, so its required result remains unknown.'])
 
 
+EXECUTION_GAPS = {'command_nesting_state_budget', 'unmatched_command_leave', 'command_crosses_roi', 'semantic_command_binding'}
+
+
 def offload_setup(region, mechanism, *, context=None):
     selector = mechanism.get('selector', {})
     unsupported = set(selector) - {'event_ids'}
@@ -142,6 +171,12 @@ def offload_setup(region, mechanism, *, context=None):
         missing.append('accounting.additive_overhead')
     selected = [call for call in region.get('accelerator_calls', []) if call.get('event') in (events or [])]
     executions = 0
+    # 2026-10-09 ET: a trial's own command gap (suppressed, unmatched or ROI-crossing
+    # frames) can undercount executions; its logical row retains that trial scope.
+    target = (context or {}).get('logical_count_target_description_sha256') or (context or {}).get('target_description_sha256')
+    logical = region.get('address_stream_counts', {}).get(target) if target else None
+    if isinstance(logical, dict) and set(logical.get('missing', [])) & EXECUTION_GAPS:
+        missing.append('accelerator_calls.execution_coverage')
     if not selected:
         observed = (context or {}).get('observation_contract') or {}
         commands = observed.get('semantic_commands', {})

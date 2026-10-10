@@ -1,7 +1,7 @@
 # 14 — Generality: MAPLE and PageRank
 
 Created: 2026-10-06
-Updated: 2026-10-07 ET
+Updated: 2026-10-09 23:10 ET (code review note appended to the Answer); 2026-10-07 ET
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 05, 09, 10
@@ -118,3 +118,27 @@ The two numeric totals are estimated medians of complete trial totals. Aggregate
 **Actual evidence boundary.** Original reader output is `swdb.lanl14-selected-nine-export-admission.v1`, identity `720bdb6655036b6226947656ee6440bb9ce6c972f9f045ec3cedec86a5a1ab3e`, without an `admitted` field. Parent acceptance `97c8bff5a9133b255e474d4b6f99f544e0677d05fe8dfee41e5a3156f63e53f9` separately accepts the exact original result, three zero exits, no timeout and empty cleanup survivors. Full-catalogue public admission is inherited from the pinned export receipt, not replaced by selected-record reading. Runner/wrapper zeros retain that explicit inherited boundary. The 68,324,111-byte report transfers as original plaintext with identical file SHA `c340d66bce2d968aa5ef70b2bc0b4042484af2a7fc711a639e9d4af9b32f04e2`; conditional gzip was not needed. Original remote bytes and semantic seal remain unchanged.
 
 This metadata workflow makes predicted estimates, not measured speedup or accuracy claims. It launches no new application timing, compiler/native evaluation or provider call. Final code-review and ticket 17's four actual campaigns/agreement report remain pending.
+
+### Code review 2026-10-09
+
+Added 2026-10-09 23:10 ET. The three acceptance boxes stay checked. What they show is narrower than story 59:
+
+- **Story 59 is shown structurally only.** The estimator ran unchanged on all nine pairs and named every missing fact. No PageRank or MAPLE estimate has a number.
+- **Why PageRank has no number:**
+  - Its counts map no loops to existing region IDs. The `registered-functional` adapter passes no region map, and `registered-gapbs` accepts only DOBFS and Brandes.
+  - The LLVM pass counts `llvm.fabs.f32` (line 53 of `pr_spmv.cc`) as an opaque call, which no target can cost.
+  - On CPU, no service scope covers PageRank (the BF/BC allowlists).
+- **Why MAPLE cannot have a number yet, whatever values are filled:**
+  - `fetch_queue` needs MAPLE logical request counts. No count route can make them: the description has no `functional_observation`, and there are no MAPLE operation or intrinsic records.
+  - `composition_contract.resource_domain_overlap` is null, so host and offload bounds cannot combine.
+  - `queue_entries` is not a fillable parameter.
+  - The estimation role was never run on MAPLE.
+  - The offload mechanism is chosen by catalog family, not keyed to MAPLE's catalog operations (story 32).
+- **Code equality** is the shared bundle hash `f6f07110…`. The report's former `estimator_and_mechanism_diff: []` was a constant, not a computed diff; report v2 drops it. The comparison is against a fresh same-bundle DX100 BFS reference. The estimator diff since the last earlier DX100 BFS estimate (bundle `b238c6…`) came from tickets 09, 11 and 17 and is not attributed here.
+- **Fixed in this review:**
+  - the CPU counting adapter reads the timed-call line from the kernel plug-in;
+  - report v2 labels every target without native timing as estimate-only (D27);
+  - new guard tests cover these changes.
+- **Still open:**
+  - region mapping and pure-intrinsic counting (fixed separately);
+  - MAPLE numeric generality: [ticket 25](25-maple-numeric-generality.md).

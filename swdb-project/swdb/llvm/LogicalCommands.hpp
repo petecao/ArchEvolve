@@ -1,12 +1,15 @@
 // Bounded in-memory logical windows; never serialize pointers/rows/sequences.
 // Created: 2026-10-06 ET. Allocation placement is a declared inferred scenario.
+// Updated: 2026-10-09 ET (code review): target-role accesses outside the declared
+// operand are counted; a description may name events whose such accesses are unknown.
 #pragma once
 namespace swdb_logical {
 inline uint64_t setting(const char *name){const char *v=std::getenv(name);return v?std::strtoull(v,nullptr,10):0;}
 struct Config {
-  uint64_t transaction,window;bool coalesce,layout,placement;
+  uint64_t transaction,window,outside_unknown;bool coalesce,layout,placement;
   std::array<std::vector<std::pair<unsigned,unsigned>>,5> fields;
   Config():transaction(setting("SWDB_LOGICAL_TRANSACTION_BYTES")),window(setting("SWDB_LOGICAL_WINDOW_REQUESTS")),
+    outside_unknown(setting("SWDB_LOGICAL_OUTSIDE_UNKNOWN_MASK")),
     coalesce(std::getenv("SWDB_LOGICAL_COALESCING") && std::string(std::getenv("SWDB_LOGICAL_COALESCING"))=="window_unique_lines"),
     layout(setting("SWDB_LOGICAL_LAYOUT_KNOWN")),placement(setting("SWDB_LOGICAL_PLACEMENT_KNOWN")){
     unsigned i=0;for(auto name:{"CHANNEL","RANK","BANK_GROUP","BANK","ROW"}){
@@ -27,7 +30,7 @@ struct Config {
 };
 struct Totals {
   uint32_t descriptor=0,region=0;uint64_t executions=0,active_elements=0,active_unknown=0,useful_accesses=0,useful_bytes=0;
-  uint64_t line_requests=0,row_groups=0,windows=0,bookkeeping_accesses=0;
+  uint64_t line_requests=0,row_groups=0,windows=0,bookkeeping_accesses=0,outside_operand_accesses=0;
   std::array<uint64_t,4> bookkeeping_ops{{0,0,0,0}};
   bool requests_complete=true,rows_complete=true,unknown_target=false;
   std::set<std::string> missing;
@@ -38,7 +41,7 @@ struct Totals {
       <<",\"useful_bytes\":"<<useful_bytes<<",\"unknown_target\":"<<(unknown_target?"true":"false")
       <<",\"line_requests\":"<<(requests_complete?std::to_string(line_requests):"null")
       <<",\"row_groups\":"<<(rows_complete && requests_complete?std::to_string(row_groups):"null")<<",\"windows\":"<<windows
-      <<",\"bookkeeping_accesses\":"<<bookkeeping_accesses<<",\"bookkeeping_ops\":[";
+      <<",\"bookkeeping_accesses\":"<<bookkeeping_accesses<<",\"outside_operand_accesses\":"<<outside_operand_accesses<<",\"bookkeeping_ops\":[";
     for(unsigned i=0;i<4;++i){if(i)out<<',';out<<bookkeeping_ops[i];}out<<"],\"opaque_calls\":{";bool sep=false;
     for(auto &call:opaque_calls){if(sep)out<<',';sep=true;out<<'"'<<call.first<<"\":"<<call.second;}out<<"},\"missing\":[";sep=false;
     for(auto &name:missing){if(sep)out<<',';sep=true;out<<'"'<<name<<'"';}out<<"]}";return out.str();
@@ -69,7 +72,15 @@ inline void observe(Frame &frame,Totals &total,uint64_t address,uint64_t n,uint6
   }
   if(!frame.object){total.unknown_target=true;total.requests_complete=false;total.rows_complete=false;total.missing.insert("semantic_target_object_identity");return;}
   bool within=address>=frame.base && address-frame.base<frame.extent;
-  if(!within){total.bookkeeping_accesses+=n;return;}
+  if(!within){
+    // A registered heap/global object other than the declared operand may be a second
+    // memory operand. Stack temporaries (scope origin 1) stay backend-local.
+    auto *other=width && n<=UINT64_MAX/width?registry.resolve(address,n*width):nullptr;
+    if(other && other->origin!=1 && (config.outside_unknown&bit)){
+      total.unknown_target=true;total.requests_complete=false;total.rows_complete=false;total.missing.insert("target_access_outside_declared_operand");return;
+    }
+    total.bookkeeping_accesses+=n;if(other && other->origin!=1)add(total.outside_operand_accesses,n,total);return;
+  }
   if(update!=0){total.unknown_target=true;total.requests_complete=false;total.rows_complete=false;total.missing.insert("unsupported_target_update_policy");return;}
   if(!width || n>UINT64_MAX/width || n*width>frame.extent-(address-frame.base)){
     total.unknown_target=true;total.requests_complete=false;total.rows_complete=false;total.missing.insert("semantic_target_byte_extent");return;

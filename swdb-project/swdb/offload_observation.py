@@ -1,5 +1,8 @@
 """Frozen description -> generic source/count observation contract.
 Created: 2026-10-06 ET. No hardware names, execution results or address traces.
+Updated: 2026-10-09 ET (code review): a nonempty row field is required when a layout
+is declared, and a description may name events whose outside-operand target
+accesses are unknown rather than backend scratch.
 """
 import re
 from pathlib import Path
@@ -7,6 +10,9 @@ from swdb import artifacts,paths
 from swdb.cli import Failure
 
 FIELDS=('channel','rank','bank_group','bank','row')
+# A target-role access to another registered heap/global object than the declared
+# operand is backend scratch by v1 default. Events named by the description's
+# `outside_operand_policy.unknown_events` withhold their counts instead.
 
 
 def payload_problems(target):
@@ -26,8 +32,14 @@ def payload_problems(target):
             problems.append('read command requires target access source and memory operand')
         if command.get('active_elements_policy')=='observed_target_reads' and not command.get('target_reads_per_active_element'):
             problems.append('observed-target active elements require explicit reads-per-element relation')
+    unknown_events=(target.get('outside_operand_policy') or {}).get('unknown_events',[])
+    if not set(unknown_events)<={command['event'] for command in observation['commands']}:
+        problems.append('outside_operand_policy names an undeclared command event')
     layout=target.get('dram_address_layout')
+    if layout is None and target.get('dram_address_layout_provenance') is not None:
+        problems.append('dram_address_layout_provenance requires a declared layout')
     if layout is not None:
+        if not layout.get('row'):problems.append('dram_address_layout row requires at least one bit field')
         occupied=set()
         for name in FIELDS:
             if name not in layout:problems.append('dram_address_layout missing '+name);continue
@@ -101,6 +113,9 @@ def prepare(store,target,source,*,fixture=False,compile_flags=()):
     env['SWDB_LOGICAL_COALESCING']=request['read_coalescing']
     env['SWDB_LOGICAL_WINDOW_REQUESTS']=str(observation['window']['requests'] or 0)
     env['SWDB_LOGICAL_PLACEMENT_KNOWN']='1' if observation['placement']['policy']=='isolated_row_aligned_allocations' else '0'
+    unknown_events=set((target.get('outside_operand_policy') or {}).get('unknown_events',[]))
+    outside=sum(1<<i for i,command in enumerate(observation['commands']) if command['event'] in unknown_events)
+    if outside:env['SWDB_LOGICAL_OUTSIDE_UNKNOWN_MASK']=str(outside)  # absent for v1 default descriptions
     layout=target.get('dram_address_layout')
     env['SWDB_LOGICAL_LAYOUT_KNOWN']='1' if layout is not None else '0'
     for name in FIELDS:
@@ -163,6 +178,11 @@ def merge(regions,static,counts,contract,scope):
             'grouped_row_hit_fraction':fact((request_count-groups)/request_count if request_count and groups is not None else None,'inferred'),
             'windows':fact(total('windows'),'inferred'),'staged_bytes':fact(staged),
             'missing':missing,'notes':['Allocation-lifetime-relative isolated placement and fixed logical windows are inferred; no physical DRAM placement, hardware request, row state or schedule is observed.']}
+        outside=sum(site.get('outside_operand_accesses',0) for site in sites)
+        if outside:
+            region['address_stream_counts'][target_hash]['notes'].append(f'{outside} target-role accesses '
+                'reached another registered heap/global object than the declared operand and were excluded as '
+                'backend scratch (default outside-operand policy); name the event in outside_operand_policy.unknown_events when they may be memory operands.')
 
 
 def count_problems(data):

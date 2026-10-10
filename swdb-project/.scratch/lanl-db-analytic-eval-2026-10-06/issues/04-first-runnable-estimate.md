@@ -1,6 +1,7 @@
 # 04 — First runnable version: estimate a streaming loop on the mbit10 CPU
 
 Created: 2026-10-06
+Updated: 2026-10-10 01:32 ET (code review note)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 01
@@ -48,3 +49,15 @@ Validation through confirmed public seams:
 Remote measurements, the full BFS adapter and frozen estimate protocols belong to the unblocked tickets 05–07. No SSH, push or mbit10 measurement was performed by this implementer.
 
 2026-10-06 16:48 ET: parent verified the merged source on mbit10 with official LinuxLLVM22.1.8/static-opt exported-symbol loading. Native hand counts17iterations/34FP/17reads/17writes and artificial bounds2.125scompute/4.25sstream matched;555copied-store records validate. Node0g466,exit0,lease released. [Compact receipt](../evidence/llvm22-mbit10-smoke-20261006-a2.json); raw stays remote. This is contract-fixture plumbing evidence; the artificial rates are not CPU measurements. The priora1 preflight-only failure (missing governor control file) is retained separately.
+
+## Code review 2026-10-09
+
+2026-10-10 01:32 ET. Three findings on this ticket's code were fixed with ticket 05's
+(see its [code review note](05-indirect-and-bfs-baseline.md)):
+
+- A region with counted operations and no host `compute_throughput` mechanism got a
+  known time, as if compute were free. It is now unknown (`host_compute_coverage`).
+- Top-level counts from a multi-trial run are trial 0's but were labeled `per_run`.
+  They are now `per_trial` with `counting.top_level_counts.trial_position: 0`.
+- The format reference contradicted the code on footprint unions, count scopes and the
+  cache model's cold start; corrected in `docs/reference/format-v0.4-analytic.md`.

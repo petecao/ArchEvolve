@@ -1,5 +1,14 @@
 # Map: Analytic speed estimates and main-database compatibility
 
+2026-10-10 01:32 ET — **Code review of tickets 02–17 against their tickets: findings fixed.** Summary, re-count needs and open questions for Yan-Ru: [progress](progress.md). New ticket [25](issues/25-maple-numeric-generality.md) (needs-triage).
+
+2026-10-09 23:10 ET — Code review of tickets [07](issues/07-measured-mbit10-parameters.md) and [11](issues/11-cpu-error-check-and-paired-estimates.md). Both stay resolved; dated notes are appended to each Answer.
+
+- **Ticket 11 wording corrected.** A CPU evaluation carries a numeric paired estimate only **when a matched estimate was saved beforehand** for every source slot. Otherwise it records `unavailable`, and timing decides.
+- **What the CPU bands measure.** They are for the services description, whose inferred memory scenario replaced ticket 07's measured bandwidth and concurrency. The measured ticket 07 values have never been checked against native timing.
+- **Code fixes.** Held-out inputs must be unseen. D25 is tested through `fixture_verdict`. New v2 bands carry `large_errors`. `cpu-calibrate` records this checkout's commit and its machine record. Extensa evaluations skip the pairing stage. Unpaired archived states carry no prediction.
+- **One open question for Yan-Ru** is in ticket 11.
+
 2026-10-09 22:33 ET — Yan-Ru decided the open tickets, following the recommendation:
 
 | # | Decision |
@@ -108,9 +117,9 @@ The package retains needed metadata bodies and original failures without duplica
 
 
 Created: 2026-10-06 ET
-Updated: 2026-10-09 21:06 ET
+Updated: 2026-10-09 23:10 ET (ticket 14 code review: correction and ticket 25 added; tickets 07/11 code review notes); 2026-10-09 21:06 ET
 **Type:** ticket map
-**Status:** complete: 18 tickets resolved, 5 wontfix; 20 deferred (needs-triage)
+**Status:** complete: 18 tickets resolved, 5 wontfix; 20 deferred (needs-triage); 25 new from the ticket 14 review (needs-triage)
 **Work state:** active; ticket 17 resolved 2026-10-09 21:06 ET
 **Spec:** [spec.md](spec.md)
 
@@ -164,6 +173,7 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | 22 | [`swdb import-main`: read the main database](issues/22-import-main.md) | wontfix | 02, 03, 21 | 1 day |
 | 23 | [Export and round-trip test](issues/23-export-and-round-trip.md) | wontfix | 22 | 1 day |
 | 24 | [Prospective blind DX100 pair](issues/24-prospective-blind-dx100-pair.md) | wontfix | 17 | 1–3 days plus lane time |
+| 25 | [MAPLE and PageRank numeric generality](issues/25-maple-numeric-generality.md) | needs-triage | 14 | 1–2 days plus lane time |
 
 ## Context pointers
 
@@ -236,6 +246,11 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
   at estimate execution, and recursive ADR 0013 refusals. Source `c3633cf`, merged
   integration tip `9ccf710`; final 41-pass focused batch plus the public claim refusal,
   553 historical records valid, and Extensa/LLVM broad regression evidence in the ticket.
+  **Correction (code review 2026-10-09, noted 2026-10-10 00:37 ET):** the DX100 gem5-adapter
+  tests had failed since `c3633cf` (no Extensa mode). The guard also admitted Extensa campaign
+  summaries, nested `{id: ...}` pins and simulator markers outside three keys. Both are fixed in
+  the working tree. One question is open for Yan-Ru: whether to follow a promotion review's
+  evidence. See [ticket 06 code review](issues/06-estimate-protocols-and-gem5-refusal.md#code-review-2026-10-09).
 
 
 - 2026-10-06 ET: [ticket 05](issues/05-indirect-and-bfs-baseline.md#answer) resolved.
@@ -246,6 +261,10 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
   claimed. Sources `cda8f2d` (counts) / `b5acc909` (estimates), actual metadata
   `68df1dd`, final 584-record validation and 7-test combined compatibility evidence
   are linked from the Answer and [runbook](evidence/05-registered-counting-runbook.md).
+  **Correction (2026-10-09 23:49 ET, code review):** the 0/13 and 0/20 came from
+  classifier defects (reloaded invariant bases, OpenMP chunk bounds, invariant
+  addresses charged as DRAM requests), not from lowered chains. Fixed in source,
+  not re-counted; see [the review note](issues/05-indirect-and-bfs-baseline.md#code-review-2026-10-09).
 
 - 2026-10-06 ET: [ticket 07](issues/07-measured-mbit10-parameters.md#answer) resolved:
   real socket-lane a1/a2 measurements, independently rebound v2 compute numerators,
@@ -278,6 +297,11 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
   10/12/16, with 16 prioritized for fresh blind campaign preparation.
 
 - 2026-10-06 22:35 ET: [ticket 12](issues/12-archevolve-dx100-evaluation.md#answer) resolved. Retained strict functional certification, immutable estimated evaluation and handoff 1.1 passed exact-artifact mbit10 no-child acceptance; unknown totals/ratio/band remain null with `within_error`. Three final coexistence cases passed; 628 canonical records valid and all 888 prior protected blobs preserved. [Final proof](evidence/12-final-public-coexistence-proof-20261006.json).
+  **Correction (code review 2026-10-09, noted 2026-10-10 00:37 ET):** both public tests had failed
+  since 2026-10-08/09. The copied-catalog fixture was broken, and the retained certificate is
+  procedure 1.6 while the default is now 1.7. The tests are rebuilt: the stale path runs under a
+  no-child sentinel, and a known ratio stays `within_error`. The positive path skips until a 1.7
+  certificate of the candidate exists. See [ticket 12 code review](issues/12-archevolve-dx100-evaluation.md#code-review-2026-10-09).
 
 - 2026-10-06 ET: [ticket 10](issues/10-estimation-role.md#answer) resolved. Closed
   three-file numerical fill uses existing guarded provider pins/audit and freezes
@@ -319,6 +343,16 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
   null. MAPLE is estimate-only; PR inherits no BF/BC service or error-band admission.
   Ticket 11's broad/failed CPU envelopes remain separately qualified. No measured
   speedup or new accuracy claim. Final code-review and ticket 17 remain pending.
+  - **Correction (code review 2026-10-09 23:10 ET):** story 59 was shown structurally
+    only; no PageRank or MAPLE estimate has a number. Blockers:
+    - PageRank loops are not mapped to existing region IDs.
+    - `llvm.fabs` is counted as an opaque call.
+    - MAPLE has no count route for `fetch_queue`, no declared domain overlap and no
+      parameter fill.
+    - "Identical estimator code" means one shared bundle hash, not a computed diff.
+
+    See the [ticket 14 review note](issues/14-generality-maple-pagerank.md#code-review-2026-10-09);
+    follow-up is [ticket 25](issues/25-maple-numeric-generality.md).
 
 - 2026-10-08 ET: [ticket 15](issues/15-show-scott-counting.md#answer) resolved. Scott
   approved the strategies (reported by Yan-Ru). Address-stream counting stays; the

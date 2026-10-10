@@ -1,5 +1,5 @@
 """Public estimator and validation seams. Fixture numbers are not research evidence.
-Updated: 2026-10-06 ET.
+Updated: 2026-10-09 ET (code review F5: compute coverage; fixture stores copy only their closure).
 """
 import json
 import shutil
@@ -12,13 +12,20 @@ from conftest import REPO, run_swdb
 
 
 @pytest.fixture
-def copied_records(tmp_path):
-    target = tmp_path / 'records'
+def whole_records(tmp_path):
+    target = tmp_path / 'whole-records'
     shutil.copytree(REPO / 'records', target)
     return target
 
 
-def test_estimated_fact_validates_without_changing_existing_records(copied_records):
+@pytest.fixture
+def copied_records(records):
+    """Placeholder subject/input closure; contract fixtures never need the whole catalog."""
+    return records.copy_closure('gapbs-bfs-do', 'kron-g16-k16').path
+
+
+def test_estimated_fact_validates_without_changing_existing_records(whole_records):
+    copied_records = whole_records
     path = copied_records / 'inputs' / 'kron-g16-k16.yaml'
     original = path.read_bytes()
     data = yaml.safe_load(original)
@@ -197,3 +204,24 @@ def test_static_llvm_distribution_loads_pass_via_host_symbols(copied_records, tm
     assert result['toolchain']['plugin_linkage'] == 'host_symbols'
     region = next(r for r in result['regions'] if r['id'] == 'fixture.stream')
     assert region['operation_counts']['floating_point']['value'] == 16
+
+
+def test_missing_compute_mechanism_keeps_counted_operations_unknown(copied_records, tmp_path, llvm22):
+    """Code review F5 (2026-10-09 ET): counted work never becomes free because a mechanism is absent."""
+    characterization(copied_records, tmp_path, llvm22)
+    path = target_description(tmp_path)
+    target = yaml.safe_load(path.read_text())
+    target['mechanisms'] = [m for m in target['mechanisms'] if m['model'] != 'compute_throughput']
+    path.write_text(yaml.safe_dump(target, sort_keys=False))
+    result = run_swdb('estimate', '--records', copied_records,
+        '--characterization', 'fixture.characterization', '--target-description', path,
+        '--protocol', freeze_protocol(copied_records, tmp_path), '--id', 'fixture.no-compute', '--format', 'json')
+    assert result.returncode == 0, result.stderr + result.stdout
+    estimate = json.loads(result.stdout)
+    region = next(r for r in estimate['regions'] if r['id'] == 'fixture.stream')
+    bounds = {b['model']: b for b in region['bounds']}
+    assert bounds['streaming_bandwidth']['seconds'] == 2.0
+    assert bounds['host_compute_coverage']['seconds'] is None
+    assert bounds['host_compute_coverage']['missing'] == ['host_compute_mechanism']
+    assert 'floating_point' in bounds['host_compute_coverage']['inputs']['uncovered_operation_classes']
+    assert region['seconds'] is None and estimate['seconds'] is None

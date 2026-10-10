@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""Pinned nine-pair per-region analytic reports. Created: 2026-10-06 ET."""
+"""Pinned nine-pair per-region analytic reports. Created: 2026-10-06 ET.
+
+Updated: 2026-10-09 23:10 ET (code review F5/F7, format v2). Code equality is the
+estimator bundle hash: every estimate and protocol must carry the reference pair's
+estimator_sha256, which must equal the digest of the current module hashes. No
+module diff is computed, so the v1 constant `estimator_and_mechanism_diff: []` is
+gone. Every target without native timing in ArchEvolve mode (D27) is estimate-only.
+"""
 import argparse
 import copy
 import json
@@ -15,6 +22,9 @@ MATRIX={(kernel,target) for kernel in ('bfs','bc','pagerank') for target in ('cp
 THREADS={'cpu':1,'dx100':4,'maple':2}
 TARGETS={'cpu':'mbit10','dx100':'dx100-e4fc4af-functional-analytic-v1','maple':'maple-isca2022'}
 JACOBI_SHA='ea1e58b6957b0bcc1e76f4fde54131aa52bdefd2014dae604a9b7d9d1a5dae70'
+# D27: only a CPU target has native timing in ArchEvolve mode; every other target's
+# estimate stands alone (no paired timing, no gem5 number under D3).
+NATIVE_TIMING={'cpu'}
 
 
 def pinned(records,reference,kind):
@@ -44,7 +54,13 @@ def create_report(records,request):
         raise ValueError('requires exactly nine unique kernel-target pairs')
     if request['reference']!={'kernel':'bfs','target':'dx100'}:
         raise ValueError('requires a fresh DX BFS reference')
+    # The reference pair anchors code equality: its bundle must be the current source,
+    # and every other estimate and protocol must carry exactly that bundle hash.
+    anchor=next(row for row in pairs if (row['kernel'],row['target'])==(request['reference']['kernel'],request['reference']['target']))
+    reference_estimate=pinned(records,anchor['estimate'],'estimate')
     bundle=estimator_identity();output=[]
+    if reference_estimate['estimator_sha256']!=bundle:
+        raise ValueError('reference estimate bundle differs from the current complete estimator source')
     for pair in pairs:
         kernel=pair['kernel'];target=pair['target'];threads=THREADS[target]
         estimate=pinned(records,pair['estimate'],'estimate')
@@ -52,8 +68,8 @@ def create_report(records,request):
         protocol=pinned(records,pair['protocol'],'protocol')
         subject=pinned(records,pair['subject'],char['subject']['kind'])
         implementation=pinned(records,pair['implementation'],'implementation')
-        if estimate.get('basis')!='estimated' or estimate['estimator_sha256']!=bundle or protocol['settings']['estimator_sha256']!=bundle:
-            raise ValueError('all estimates and protocols must share the current complete estimator bundle')
+        if estimate.get('basis')!='estimated' or estimate['estimator_sha256']!=reference_estimate['estimator_sha256'] or protocol['settings']['estimator_sha256']!=reference_estimate['estimator_sha256']:
+            raise ValueError('estimate or protocol estimator bundle differs from the reference pair')
         if estimate['characterization']!=char['id'] or estimate['characterization_sha256']!=pair['characterization']['sha256'] or estimate['protocol']!=protocol['id'] or estimate['protocol_sha256']!=protocol['identity_sha256']:
             raise ValueError('estimate characterization or protocol binding changed')
         if char.get('evidence_kind')!='execution' or char['binding']['state']!='verified' or char['coverage']['whole_timed_call'] is not True:
@@ -83,15 +99,19 @@ def create_report(records,request):
             raise ValueError('Jacobi has no BF/BC CPU error-band admission')
         output.append({'kernel':kernel,'target':target,'threads':threads,'roi':settings['roi'],'input':char['input'],
             'references':{key:pair[key] for key in ('subject','implementation','characterization','protocol','estimate')},
-            'source_sha256':char['source']['sha256'],'estimate_only':target=='maple','accuracy_validation':False,
+            'source_sha256':char['source']['sha256'],
+            'estimate_only':target not in NATIVE_TIMING or ext.get('estimate_only') is True,'accuracy_validation':False,
             'paired_timing':None,'seconds':estimate['seconds'],'ratio':estimate['ratio'],'error_band':estimate['error_band'],
             'regions':regions(estimate['regions'],aggregate=True),
             'trials':[{**trial,'regions':regions(trial['regions'])} for trial in estimate['trials']],
             'unmapped_loops':char['unmapped_loops'],'notes':estimate.get('notes',[])})
     modules={p.relative_to(ROOT/'swdb').as_posix():artifacts.file_hash(p) for p in sorted((ROOT/'swdb').rglob('*.py'))}
-    report={'format':'swdb.generality-report.v1','updated':request['updated'],'scope':request['scope'],
+    report={'format':'swdb.generality-report.v2','updated':request['updated'],'scope':request['scope'],
         'request_sha256':request['identity_sha256'],'reference':request['reference'],
-        'code_equality':{'estimator_sha256':bundle,'module_hashes':modules,'estimator_and_mechanism_diff':[]},
+        'code_equality':{'estimator_sha256':bundle,'module_hashes':modules,
+            'reference_estimate':anchor['estimate'],
+            'basis':'Every estimate and protocol carries the reference estimate estimator_sha256, '
+                'which equals the digest of module_hashes; no module diff is computed.'},
         'whole_call_scope':'Median of complete trial totals; aggregate region diagnostics are never summed.',
         'pairs':output}
     report['identity_sha256']=artifacts.digest(report)
@@ -104,9 +124,10 @@ def markdown(report):
     for row in report['pairs']:
         seconds='unknown' if row['seconds'] is None else str(row['seconds'])
         ratio='unknown' if row['ratio'] is None else str(row['ratio'])
-        lines.append(f"| {row['kernel']} | {'MAPLE' if row['target']=='maple' else row['target']} | {row['threads']} | {seconds} | {ratio} | {'estimate-only; no paired timing' if row['estimate_only'] else 'counted scope; see exact missing facts'} |")
+        lines.append(f"| {row['kernel']} | {'MAPLE' if row['target']=='maple' else row['target']} | {row['threads']} | {seconds} | {ratio} | {'estimate-only; no paired timing' if row['estimate_only'] else 'native timing decides; estimate recorded beside it'} |")
     lines+=['','All per-region bounds, overheads, unknowns and exact trial inputs are in report.json. Aggregate regions are diagnostic medians.',
-            '',f"Complete estimator bundle: `{report['code_equality']['estimator_sha256']}`; estimator/mechanism diff is empty.",
+            '',f"Complete estimator bundle: `{report['code_equality']['estimator_sha256']}`, carried by all nine estimates and protocols "
+               "(equal bundle hashes, not a computed module diff).",
             '', 'Jacobi has no CPU error-envelope transfer from the four admitted BF/BC characterizations. MAPLE has no accuracy-validation or paired-timing claim.']
     return '\n'.join(lines)+'\n'
 

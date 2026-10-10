@@ -1,7 +1,7 @@
 # 02 — Prefactor: one access layer for record reads
 
 Created: 2026-10-06
-Updated: 2026-10-06 ET (ticket resolved)
+Updated: 2026-10-09 23:10 ET (code review note); 2026-10-06 ET (ticket resolved)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 01
@@ -71,3 +71,19 @@ The broader command was:
 
 The fresh-process rerun was
 `pytest -q tests/test_library_index.py::test_library_changes_make_the_index_stale_and_queries_rebuild`.
+
+## Code review 2026-10-09
+
+2026-10-09 23:10 ET. Review of the implementation against this ticket: the SQLite and
+query paths hold (40 query/site-finder/parse-cache/crosswalk tests passed). Fixed:
+
+- `access.read_record` parsed `.json` with plain `json.loads`, so a repeated key silently
+  kept the last value (YAML input refused it). It now refuses repeated JSON keys
+  (`DuplicateKeyError`, a `ValueError`); `swdb add` reports bad JSON instead of a traceback.
+  Contract updated in `docs/reference/database.md`.
+- Two campaign record copies (`campaign_targets.py`, `campaign_fixture.py`) bypassed the
+  boundary with `shutil.copy`; they now use the new `access.copy_record`.
+- `lanl-db-notes.md` §5 rule 1 still described the pre-ticket state; it now points to
+  `swdb/access.py`.
+
+Tests: `tests/test_feature_reports.py` (duplicate-key and malformed-JSON cases added).

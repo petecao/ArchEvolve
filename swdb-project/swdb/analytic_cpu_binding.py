@@ -92,6 +92,21 @@ def scope(store,request,candidate,plugin,compiler,flags,includes,source,workload
     return result
 
 
+def invocation_site(wrapper,plugin):
+    """The one timed-call line the kernel plug-in declares (2026-10-09 ET code review).
+
+    The anchor and entry point come from the plug-in, so this adapter holds no
+    kernel names. The line pattern is unchanged, keeping derived wrappers identical.
+    """
+    anchor=getattr(plugin,'driver_call_anchor',None);function=getattr(plugin,'native_function',None)
+    if not isinstance(anchor,str) or not anchor.strip() or not isinstance(function,str) or not re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*',function):
+        raise Failure('protected CPU kernel plug-in lacks its declared driver call anchor and entry point')
+    pattern=r'^        '+re.escape(anchor)+' '+re.escape(function)+r'\([^\n]+;\s*$'
+    matches=list(re.finditer(pattern,wrapper,re.M))
+    if len(matches)!=1:raise Failure('protected CPU kernel invocation is not exactly one declared driver site')
+    return matches[0]
+
+
 def prepare(store,args,subject,input_record):
     from swdb import bfs_native as native
     from swdb import bfs_native_scalable as scalable
@@ -161,9 +176,7 @@ def prepare(store,args,subject,input_record):
                 for v in row:out.write(f'{u} {v}\n')
     template=Path(driver).read_text()
     wrapper=template.replace('#include SWDB_SOURCE_INCLUDE','#include '+json.dumps(str(source)))
-    matches=list(re.finditer(r'^        auto (parent|scores) = (DOBFS|Brandes)\([^\n]+;\s*$',wrapper,re.M))
-    if len(matches)!=1:raise Failure('protected CPU kernel invocation is not exactly one declared driver site')
-    match=matches[0]
+    match=invocation_site(wrapper,plugin)
     instrumented=wrapper[:match.start()]+'        __swdb_begin();\n        __swdb_source(static_cast<unsigned long long>(source));\n'+match.group()+'\n        __swdb_end();'+wrapper[match.end():]
     instrumented=instrumented.replace('#undef main','#undef main'+MARKER_DECLARATIONS,1)
     derived=work/'counting_driver.cc';derived.write_text(instrumented)

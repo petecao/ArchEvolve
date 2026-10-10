@@ -1,7 +1,7 @@
-"""Generic resource-domain composition. Updated: 2026-10-06 ET.
+"""Generic resource-domain composition. Updated: 2026-10-09 ET (code review F2, F5).
 Description premises control overlap; no target/kernel identity or schedule inference.
 """
-from swdb.analytic_models import bound
+from swdb.analytic_models import address_shape, bound
 
 
 def domain(mechanism):
@@ -34,7 +34,7 @@ def host_memory_coverage(region,target):
     uncovered=[]
     for access in region['access_patterns']:
         if access['element_count']['value']==0:continue
-        shape=access['address_shape']['value']
+        shape=address_shape(access)
         applicable=(whole or shape=='stream' and 'streaming_bandwidth' in models
                     or shape!='stream' and 'requests_in_flight_latency' in models)
         if not applicable:uncovered.append(access['id'])
@@ -44,3 +44,18 @@ def host_memory_coverage(region,target):
         ['Executed or unresolved source accesses require an applicable host memory mechanism.',
          'Offload transaction/row/staging models do not cover caller or scalar fallback source memory.',
          'Missing mechanisms are structural policy gaps; numerical rate filling cannot repair them.'])]
+
+
+def host_compute_coverage(region,target):
+    """Executed or unknown operation counts need a host compute mechanism (2026-10-09 ET, F5).
+
+    Without one, the region's maximum would silently treat counted work as free.
+    Proven zero operations need no mechanism.
+    """
+    if any(m['model']=='compute_throughput' and domain(m)=='host' for m in target['mechanisms']):return []
+    classes=[name for name,fact in sorted(region['operation_counts'].items()) if fact.get('value') is None or fact.get('value')!=0]
+    if not classes:return []
+    return [bound('host_compute_coverage',None,'required source operation coverage',
+        {'uncovered_operation_classes':classes,'composition_domain':'host'},['host_compute_mechanism'],
+        ['Executed or unknown source operations require an applicable host compute mechanism.',
+         'A missing mechanism is a structural gap; numerical rate filling cannot repair it.'])]

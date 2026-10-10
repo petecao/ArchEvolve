@@ -46,7 +46,7 @@ import sys
 import time
 from pathlib import Path
 
-from swdb import artifacts, certification_common, certification_feedback, kernels, paths, workflow
+from swdb import access, artifacts, certification_common, certification_feedback, kernels, paths, workflow
 from swdb.cli import Failure, UsageError
 from swdb.cpp_lexical import body_spans, code_only, enclosing_function, function_span  # noqa: F401
 from swdb.extensa_boundary import MODE
@@ -390,7 +390,7 @@ class TargetAdapter:
             target = self.store_dir / record.rel
             if not target.exists():
                 target.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy(self.team / record.rel, target)
+                access.copy_record(self.team / record.rel, target)
 
     def _base_tree(self):
         """The scalar-only snapshot (fork scalar TDStep without the authors' accelerated code)."""

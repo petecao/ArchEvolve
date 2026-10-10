@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Read-only, reported-paper comparison. Created: 2026-10-06 ET."""
+"""Read-only, reported-paper comparison. Created: 2026-10-06 ET.
+Updated: 2026-10-09 ET (code review): the estimate's subject must resolve to the
+cited kernel; input/configuration differences are required; a non-null ratio needs
+a declared baseline-system difference, because estimator ratios compare two codes
+on one target description, not the paper's baseline system.
+"""
 import argparse
 import json
 import math
@@ -10,6 +15,41 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from swdb import access, artifacts
+
+SUBJECT_FOLDERS = {'implementation': 'implementations', 'candidate': 'candidates'}
+REQUIRED_DIFFERENCES = ('input', 'configuration')
+
+
+def _subject_record(records, kind, rid):
+    folder = SUBJECT_FOLDERS.get(kind)
+    if folder is None or not isinstance(rid, str) or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]*', rid):
+        raise ValueError('estimate subject must be a registered implementation or candidate')
+    path = records / folder / (rid + '.yaml')
+    data = access.read_record(path) if path.is_file() else None
+    if not isinstance(data, dict) or data.get('kind') != kind or data.get('id') != rid:
+        raise ValueError('estimate subject record is unavailable: ' + kind + '/' + rid)
+    return data
+
+
+def subject_kernel(records, subject):
+    """The kernel ID of an estimate's subject, through its implementation record."""
+    data = _subject_record(records, subject.get('kind'), subject.get('id'))
+    if data['kind'] == 'candidate':
+        data = _subject_record(records, 'implementation', data.get('implementation'))
+    return data.get('kernel')
+
+
+def _differences(comparison, ratio):
+    rows = comparison['differences']
+    if not isinstance(rows, list) or any(not isinstance(row, dict) or any(
+            not isinstance(row.get(field), str) or not row[field].strip() for field in ('dimension', 'paper', 'estimate'))
+            for row in rows):
+        raise ValueError('scope differences require dimension, paper and estimate text')
+    required = REQUIRED_DIFFERENCES + (('baseline_system',) if ratio is not None else ())
+    absent = [name for name in required if name not in {row['dimension'] for row in rows}]
+    if absent:
+        raise ValueError('comparison must list scope differences: ' + ', '.join(absent))
+    return rows
 
 
 def create_report(records, request):
@@ -54,16 +94,26 @@ def create_report(records, request):
             estimate = matches[0]
             if estimate.get('kind') != 'estimate' or estimate.get('basis') != 'estimated':
                 raise ValueError('comparison requires a canonical estimated record')
+            if estimate.get('evidence_kind') != 'execution':
+                raise ValueError('comparison requires an execution estimate, not fixture evidence')
+            if subject_kernel(records, estimate['subject']) != observation['kernel']:
+                raise ValueError('estimate subject kernel differs from the cited paper kernel')
         ratio = estimate.get('ratio') if estimate else None
+        differences = _differences(comparison, ratio) if comparison else []
         rows.append({**observation, 'reported_ratio': observation['ratio'],
                      'paper_basis': observation['basis'], 'estimated_ratio': ratio,
                      'estimated_threads': estimate['target_description_snapshot']['threads'] if estimate else None,
                      'estimate': comparison['estimate'] if comparison else None,
+                     'estimate_scope': {'subject': estimate['subject'], 'kernel': observation['kernel'],
+                         'input': estimate['input'], 'target': estimate['target'],
+                         'target_description': estimate['target_description'],
+                         'baseline': estimate.get('baseline'),
+                         'baseline_scope': None if ratio is None else 'same_target_description'} if estimate else None,
                      'comparison_state': 'incomparable' if ratio is None else 'weak_comparison',
-                     'differences': comparison['differences'] if comparison else [],
+                     'differences': differences,
                      'reason': 'Estimated ratio is unknown.' if estimate and ratio is None else
                                'No estimate supplied.' if estimate is None else
-                               'Scopes differ; this is a weak comparison only.'})
+                               'Scopes differ, and the estimated ratio compares two codes on one target description; this is a weak comparison only.'})
     report = {'format': 'swdb.paper-sanity-report.v1', 'updated': request['updated'],
               'mode': 'weak_sanity_check', 'accuracy_validation': False,
               'request_sha256': request['identity_sha256'], 'source': request['source'], 'rows': rows}
@@ -83,6 +133,13 @@ def markdown(report):
         lines += ['', '## ' + row['label'], '', row['reason'], '',
                   'Paper scope: ' + json.dumps(row['scope'], ensure_ascii=False) + '.',
                   'Estimated software threads: ' + ('unknown' if row['estimated_threads'] is None else str(row['estimated_threads'])) + '.']
+        scope = row.get('estimate_scope')
+        if scope:
+            lines.append(f"Estimate scope: subject {scope['subject']['kind']}/{scope['subject']['id']} (kernel {scope['kernel']}), "
+                         f"input {scope['input']}, target {scope['target']}, description {scope['target_description']}.")
+            if scope['baseline_scope']:
+                lines.append('Estimated ratio baseline: ' + json.dumps(scope['baseline'], ensure_ascii=False)
+                             + ' on the same target description, not the paper\'s baseline system.')
         for difference in row['differences']:
             lines.append(f"- {difference['dimension']}: paper {difference['paper']}; estimate {difference['estimate']}.")
     lines += ['', f"Source: [{report['source']['uri']}]({report['source']['uri']}); PDF SHA-256 `{report['source']['sha256']}`.",

@@ -1,4 +1,6 @@
 """Separate original-driver CPU validation collector. Created: 2026-10-06 ET.
+Updated: 2026-10-09 23:10 ET (code review F1: held-out collection refuses an input
+of the same implementation/threads that was already timed).
 
 Existing native evaluators and timing selection retain their established scope.
 """
@@ -83,7 +85,9 @@ def collect(args):
         raise Failure('counting and native timing machine/architecture differ')
     if args.development_band:
         from swdb.cpu_error_band import require_holdout
-        require_holdout(store, args.development_band, char, protocol=protocol)
+        # Code review 2026-10-09 ET (F1): an already timed input is not a held-out outcome.
+        require_holdout(store, args.development_band, char, protocol=protocol,
+                        evidence_kind='fixture' if args.fixture else 'native')
     output.mkdir(parents=True)
     deadline = time.monotonic() + args.max_wall_s
     def command(argv):

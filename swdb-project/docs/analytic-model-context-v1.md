@@ -1,7 +1,8 @@
 # Analytic model context and composition
 
-Updated: 2026-10-06 ET. The optional counting facts follow in ticket09; this first
-foundation commit establishes the model and composition interface for ticket11.
+Updated: 2026-10-09 ET (code review fixes for tickets 09, 10 and 13; see the last
+section). First written 2026-10-06 ET. The optional counting facts follow in ticket09;
+this first foundation commit establishes the model and composition interface for ticket11.
 
 `analytic_models.evaluate(region, mechanism, models=(), target_threads=1,
 *, context=None)` retains the existing positional API. Context contains the frozen
@@ -169,3 +170,53 @@ executed site in each claimed kind/width cell and refuse unsupported or absent
 primitive facts. The optional facts are source semantics, never native instruction
 counts, physical requests, or CPU timing evidence. Historical absent fields remain
 unknown; registered receipts seal new facts with their counted payload.
+
+## Code review fixes (2026-10-09 ET)
+
+These rules apply to new counts and estimates. Existing records keep their saved
+payloads and still validate.
+
+**Unknown work ranks.** Each unknown row in the parameter report now has
+`work_multiplier` and `work_rank`.
+- `work_multiplier` is the counted work the parameter scales in its own bounds:
+  operations for a compute rate, bytes for a bandwidth or staging rate, requests for
+  a row, queue or latency parameter, events for setup.
+- Each trial sums its region rows. The value is the trial median, or the run sum
+  when there are no trials. Unknown work stays null.
+- `work_rank` is a dense rank by descending work among unknowns with the **same
+  unit**. At any common value, a bound of that unit grows linearly with its work.
+- Unknowns with different units are never ranked against each other. Without values
+  they share no scale. `impact_rank` stays null for every unknown.
+- Validation replays both fields from the saved bounds.
+
+**Mechanisms that share a model.** The report matches each parameter to its own
+mechanism by order: the k-th row of a model in one field is the k-th mechanism with
+that model and accounting. Labels after the first carry `#2`, `#3` and so on. The
+per-region trial summary now keeps every same-model row instead of merging them.
+
+**Outside-operand accesses.** A target-role access can reach a registered heap or
+global object that is not the command's declared operand.
+- By default it is backend scratch, as before: for example DX100 tiles. It is
+  counted in raw `outside_operand_accesses` and noted on the region's logical counts.
+- A description can list events in
+  `outside_operand_policy.unknown_events` (with `basis` and `source`). For those
+  events, such an access marks the command's counts unknown, with missing reason
+  `target_access_outside_declared_operand`.
+- Stack temporaries never trigger it.
+
+**Event-selected staging.** `tile_staging` accepts `selector.event_ids`. It sums
+the selected commands' exact useful bytes, and only when the region's logical
+`staged_bytes` is known. An event the counted contract does not declare is unknown,
+never zero. Row and queue counts are recorded per region only. For them, an event
+selector stays unknown until per-event logical counts exist.
+
+**Execution gaps.** `offload_setup` is unknown when the region's logical counts list
+a command execution gap: `command_nesting_state_budget`, `unmatched_command_leave`,
+`command_crosses_roi` or `semantic_command_binding`. Before this fix, a suppressed
+or unmatched frame could undercount events while the result still looked known. The
+characterization's `semantic_commands.complete` now merges every trial's gaps, not
+only the first trial's.
+
+**Layout.** A declared DRAM layout needs at least one `row` bit field. The optional
+`dram_address_layout_provenance` (`basis`, `source`) records where the bit positions
+come from. It needs a declared layout.

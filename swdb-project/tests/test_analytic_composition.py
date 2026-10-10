@@ -240,3 +240,71 @@ def test_fresh_admission_binds_halve_double_sensitivity_and_estimated_parameter_
     from swdb.cli import Failure
     with pytest.raises(Failure,match='count-to-model composition'):
         admit_composed(records,forged)
+
+
+def ranked_unknowns(records,tmp_path,*,mechanisms,operations,trials=False):
+    """2026-10-09 ET (code review): one-region fixture for unknown work ranks."""
+    records.add_stub()
+    path=target_description(tmp_path)
+    target=yaml.safe_load(path.read_text());target['target']='testhost';target['mechanisms']=mechanisms
+    path.write_text(yaml.safe_dump(target,sort_keys=False));pin=digest(target)
+    data=fixture_characterization(records.path,subject_id='stub-impl',input_id='tiny-sym')
+    region={'id':'fixture.region','source_location':{'function':'fixture','line':1},'mapped':True,
+        'kind':'serial_remainder','operation_counts':{k:fact(operations.get(k,0)) for k in ('integer','floating_point','branch','atomic')},
+        'dynamic_counts':{'loop_iterations':fact(0)},'footprint_bytes':{'value':0,'basis':'reported'},
+        'access_patterns':[],'accelerator_calls':[],'address_stream_counts':{pin:{
+            'format':'swdb.logical-address-counts.v1','target_description_sha256':pin,'level':'derived_logical_transactions',
+            'state':'complete','scope':'per_call','missing':[],
+            **{name:'0'*64 for name in ('layout_sha256','request_policy_sha256','placement_assumption_sha256','window_policy_sha256')},
+            'line_requests':fact(6),'row_groups':fact(3),'grouped_row_hits':fact(3),'grouped_row_hit_fraction':fact(.5),
+            'windows':fact(2),'staged_bytes':fact(24),'notes':['Logical hand-counted fixture; no hardware evidence.']}}}
+    data['regions']=[region]
+    if trials:data['trials']=[{'position':0,'sources':[],'regions':[copy.deepcopy(region)],'unmodeled_calls':[]}]
+    data.pop('identity_sha256');data['identity_sha256']=digest(data)
+    records.write('workload_characterizations/fixture.counts.yaml',data)
+    protocol=freeze_protocol(records.path,tmp_path,path,roi='fixture.stream.v1',input_id='tiny-sym')
+    result=run_swdb('estimate','--records',records.path,'--characterization','fixture.counts',
+        '--target-description',path,'--protocol',protocol,'--id','fixture.ranked','--format','json')
+    assert result.returncode==0,result.stdout+result.stderr
+    return json.loads(result.stdout)
+
+
+def compute(unknown):
+    return {'model':'compute_throughput','parameters':{kind+'_ops_per_s':rate(None if kind in unknown else 1,'operations/s')
+        for kind in ('integer','floating_point','branch','atomic')}}
+
+
+@pytest.mark.parametrize('trials',[False,True])
+def test_unknown_work_ranks_order_same_unit_unknowns_by_counted_work(records,tmp_path,trials):
+    # Integer rate divides 10 counted operations, branch rate 3: at any common
+    # rate the integer bound is larger. Staging (bytes/s) has no common scale.
+    result=ranked_unknowns(records,tmp_path,trials=trials,operations={'integer':10,'branch':3},mechanisms=[compute({'integer','branch'}),
+        {'model':'tile_staging','selector':{'domain':'offload'},'parameters':{'staging_bytes_per_s':rate(None,'bytes/s')}}])
+    rows={row['parameter'].split('.')[-1]:row for row in result['parameter_report']['unknowns']}
+    assert rows['integer_ops_per_s']['work_multiplier']=={'quantity':'operation_counts.integer','unit':'operations',
+        'value':10,'scope':'median_trial_sum' if trials else 'run_sum'}
+    assert (rows['integer_ops_per_s']['work_rank'],rows['branch_ops_per_s']['work_rank'])==(1,2)
+    assert rows['staging_bytes_per_s']['work_multiplier']['value']==24 and rows['staging_bytes_per_s']['work_rank']==1
+    assert all(row['impact_rank'] is None for row in rows.values())
+    checked=records.validate();assert checked.returncode==0,checked.stdout+checked.stderr
+
+
+def test_public_validation_refuses_a_work_rank_detached_from_saved_bounds(records,tmp_path):
+    result=ranked_unknowns(records,tmp_path,operations={'integer':10,'branch':3},mechanisms=[compute({'integer','branch'})])
+    branch=next(row for row in result['parameter_report']['unknowns'] if row['parameter'].endswith('.branch_ops_per_s'))
+    branch['work_rank']=1
+    records.write('estimates/fixture.ranked.yaml',result)
+    refused=records.validate()
+    assert refused.returncode==1 and 'work rank differs' in refused.stdout+refused.stderr
+
+
+@pytest.mark.parametrize('trials',[False,True])
+def test_same_model_mechanisms_keep_their_own_bounds_and_dependencies(records,tmp_path,trials):
+    result=ranked_unknowns(records,tmp_path,trials=trials,operations={'integer':10},mechanisms=[compute(set()),compute({'integer'})])
+    bounds=[b for b in result['regions'][0]['bounds'] if b['model']=='compute_throughput']
+    assert [b['seconds'] for b in bounds]==[10.,None]
+    report=result['parameter_report']
+    known=next(row for row in report['sensitivities'] if row['parameter']=='mechanisms[0].parameters.integer_ops_per_s')
+    unknown=next(row for row in report['unknowns'] if row['parameter']=='mechanisms[1].parameters.integer_ops_per_s')
+    assert known['dependent_bounds']==['fixture.region.bounds.compute_throughput'] and known['required_for_total'] is False
+    assert unknown['dependent_bounds']==['fixture.region.bounds.compute_throughput#2'] and unknown['required_for_total'] is True

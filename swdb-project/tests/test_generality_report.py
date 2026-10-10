@@ -1,4 +1,9 @@
-"""Public generality report projections from independent pinned fixtures. 2026-10-06 ET."""
+"""Public generality report projections from independent pinned fixtures. 2026-10-06 ET.
+
+Updated: 2026-10-09 23:10 ET (code review F5/F7): report v2 states code equality as the
+shared estimator bundle hash and refuses any estimate or protocol off the reference
+bundle; every target without native timing is estimate-only.
+"""
 import json
 import subprocess
 import sys
@@ -72,7 +77,14 @@ def test_all_nine_reports_preserve_exact_trial_inputs_unknowns_and_source_scope(
     output=tmp_path/'report';done=run_report(records,request,output,tmp_path)
     assert done.returncode==0,done.stdout+done.stderr
     report=json.loads((output/'report.json').read_text())
-    assert len(report['pairs'])==9 and report['code_equality']['estimator_and_mechanism_diff']==[]
+    assert len(report['pairs'])==9 and report['format']=='swdb.generality-report.v2'
+    equality=report['code_equality']
+    assert 'estimator_and_mechanism_diff' not in equality and equality['estimator_sha256']==estimator_identity()
+    assert artifacts.digest(equality['module_hashes'])==equality['estimator_sha256']
+    reference=json.loads(request.read_text())['pairs'][1]
+    assert (reference['kernel'],reference['target'])==('bfs','dx100') and equality['reference_estimate']==reference['estimate']
+    # D27: only the CPU target has native timing; DX100 and MAPLE rows stand alone.
+    assert {(r['target'],r['estimate_only']) for r in report['pairs']}=={('cpu',False),('dx100',True),('maple',True)}
     row=next(row for row in report['pairs'] if row['kernel']=='pagerank' and row['target']=='maple')
     assert row['estimate_only'] is True and row['accuracy_validation'] is False and row['paired_timing'] is None
     assert row['seconds'] is None and row['ratio'] is None and row['error_band'] is None
@@ -103,3 +115,30 @@ def test_trial_source_identity_disagreement_is_refused_after_repinning(tmp_path)
     data['identity_sha256']=artifacts.digest({k:v for k,v in data.items() if k!='identity_sha256'});request.write_text(json.dumps(data))
     output=tmp_path/'report';done=run_report(records,request,output,tmp_path)
     assert done.returncode==2 and 'trial identities' in done.stderr and not output.exists()
+
+
+def repin_bundle(records,request,index,field,value):
+    data=json.loads(request.read_text());pair=data['pairs'][index]
+    kind='estimate' if field=='estimate' else 'protocol'
+    path=records/pair[kind]['path'];record=json.loads(path.read_text())
+    if kind=='estimate':record['estimator_sha256']=value
+    else:record['settings']['estimator_sha256']=value
+    path.write_text(json.dumps(record));pair[kind]['sha256']=artifacts.digest(record)
+    if kind=='protocol':
+        estimate_path=records/pair['estimate']['path'];estimate=json.loads(estimate_path.read_text())
+        record['identity_sha256']=artifacts.digest({'fixture_frozen_settings':record['settings']});path.write_text(json.dumps(record))
+        pair['protocol']['sha256']=artifacts.digest(record);estimate['protocol_sha256']=record['identity_sha256']
+        estimate_path.write_text(json.dumps(estimate));pair['estimate']['sha256']=artifacts.digest(estimate)
+    data['identity_sha256']=artifacts.digest({k:v for k,v in data.items() if k!='identity_sha256'});request.write_text(json.dumps(data))
+
+
+def test_estimate_or_protocol_off_the_reference_bundle_is_refused(tmp_path):
+    # Code review F5 (2026-10-09 ET): code equality is the shared bundle hash, so one
+    # estimate or protocol frozen with another estimator must stop the whole report.
+    for index,field,message in [(5,'estimate','differs from the reference pair'),(8,'protocol','differs from the reference pair'),
+                                (1,'estimate','reference estimate bundle differs')]:
+        case=tmp_path/f'{field}-{index}';case.mkdir()
+        records,request=fixture_request(case)
+        repin_bundle(records,request,index,field,'0'*64)
+        output=case/'report';done=run_report(records,request,output,case)
+        assert done.returncode==2 and message in done.stderr and not output.exists(),(index,field,done.stderr)

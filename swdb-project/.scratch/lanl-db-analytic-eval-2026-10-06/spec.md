@@ -1,7 +1,7 @@
 # Spec: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-09 22:33 ET (ticket 18: flow B not chosen; D35 added); 2026-10-08 12:16 ET (D2: no LANL contact; tickets 21–23 wontfix); 2026-10-08 12:00 ET (Scott's answer on D34 recorded: approved); 2026-10-06 16:11 ET (ticket number reference updated for the regenerated tickets); 2026-10-06 16:07 ET (rewritten to the full spec template: problem, solution, user stories,
+Updated: 2026-10-09 23:45 ET (code review: D35 rationale corrected; open question on D30 interpretations added); 2026-10-09 22:33 ET (ticket 18: flow B not chosen; D35 added); 2026-10-08 12:16 ET (D2: no LANL contact; tickets 21–23 wontfix); 2026-10-08 12:00 ET (Scott's answer on D34 recorded: approved); 2026-10-06 16:11 ET (ticket number reference updated for the regenerated tickets); 2026-10-06 16:07 ET (rewritten to the full spec template: problem, solution, user stories,
 implementation and testing decisions; decisions D1–D34 unchanged); 2026-10-06 ET, before the 16:01 ET
 design-session commit `6c691e6` (D8–D15 confirmed; grilling rounds 1–4 added D16–D34; estimator
 workflow approved)
@@ -249,7 +249,28 @@ Decided in the grilling (Yan-Ru, 2026-10-06):
 | D32 | Version 1 estimates time only; energy later, as an extension of the mechanism models. |
 | D33 | Regions are the existing profile-package and site-finder regions, with the same IDs; unmapped loops are listed. |
 | D34 | Scott sees the counting approach after the estimator works; accepted risk: if he calls it simulation, counting falls back to paper-reported parameters. **Answer (2026-10-08, reported by Yan-Ru): Scott approved the strategies. Counting over the address stream stays; the paper-parameter fallback is not triggered.** |
-| D35 | (2026-10-09 22:33 ET) No Extensa campaign starts until a smoke test passes: one real numeric estimate, recorded before its timing, that the strict audit admits. Ticket 17's four campaigns ran with unknown estimates and produced 0 usable pairs. |
+| D35 | (2026-10-09 22:33 ET) No Extensa campaign starts until a smoke test passes: one real numeric estimate, recorded before its timing, that the strict audit admits. ~~Ticket 17's four campaigns ran with unknown estimates and produced 0 usable pairs.~~ **Rationale corrected 2026-10-09 23:45 ET (code review F5; the decision is unchanged and stays Yan-Ru's):** ticket 17's four campaigns recorded no estimates at all (empty pairing ledgers) and timed no candidate or baseline, so they produced 0 pairs. The glossary calls the check a *numeric pairing check*. `swdb campaign` now refuses a new real-target campaign without one; under the current paired-estimate schema none can pass yet. |
+
+### Open question for Yan-Ru: implementation interpretations of D30
+
+Added 2026-10-09 23:45 ET (code review F4). **Pending Yan-Ru's review; not approved.**
+
+The frozen agreement policy v1 (`STATISTICS` in `swdb/extensa_agreement.py`) and
+report v2 add choices that D30's text does not state. Existing policy records pin
+them, so they are unchanged. Each one makes D30 harder to meet:
+
+| Choice in the code | D30 text | Effect |
+|---|---|---|
+| The 95% interval needs at least 4 independent dependency components. | Not stated. | With fewer, the interval is unsupported and D30 cannot be met. |
+| Pairs that share a generator seed, a candidate artifact, a provider trajectory, a reused baseline outcome or a campaign are one component. | Not stated. | The repository's gem5 campaigns share the `kronecker18-s0` and `uniform18-s0` graphs and one baseline per class, so all their pairs collapse into fewer than 4 components: the interval is never supported, whatever the data. |
+| Top 3 is checked per campaign **and** per workload class. | "in every campaign" | A two-class campaign must pass twice. gem5's best is recorded per class, which is why the code reads it this way. |
+| Ties at the top-3 cut are broken by artifact SHA-256. | Not stated. | A hash decides whether a tied gem5 best counts; the report flags `tied_at_cut`. |
+| A stratum with 3 or fewer ranked candidates passes trivially. | Not stated. | The report flags `trivial_cut`. |
+| A stratum without a selected gem5 best is unsupported. | Not stated. | A campaign with no gain candidate cannot pass. |
+| A forecast with prior outcome exposure is excluded on either side, baseline included. | D26 ("before the timing exists") | Baselines timed before (all current gem5 baselines) can never be paired. |
+
+Yan-Ru decides whether to keep, change or drop each choice. Changing one needs a
+new policy version (v2) frozen before any new campaign; v1 records stay as they are.
 
 ### Estimator workflow and tools
 

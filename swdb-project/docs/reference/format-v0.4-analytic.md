@@ -1,6 +1,7 @@
 # Analytic estimator: portable inputs and source counts
 
-Updated: 2026-10-07 (Eastern Time).
+Updated: 2026-10-09 (Eastern Time): code review of tickets 04, 05 and 14. See
+[Code review corrections](#code-review-corrections-2026-10-09-et) for what changed.
 
 `swdb characterize` compiles a buildable C/C++ translation unit, analyzes its LLVM IR,
 and runs a separately instrumented binary once. `swdb estimate` combines those recorded
@@ -66,14 +67,20 @@ The authoritative schema is `schemas/workload_characterization.schema.json` (mer
 
 Each region contains `access_patterns`, `operation_counts`, `dynamic_counts`,
 `footprint_bytes`, `accelerator_calls` and `address_stream_counts`. The last two are
-extension points for later mechanisms; the streaming slice leaves them empty. A footprint
-union is unknown because per-access address spans do not establish overlap or aliasing.
+extension points for later mechanisms; the streaming slice leaves them empty.
+`footprint_bytes` is the live union of virtual byte ranges touched in the region; it is
+null when the union exceeds the state budget.
 
 Each access pattern identifies one IR load/store. It carries source function/line/column,
 `update_kind`, `address_shape` and `stride_bytes` facts, `element_bytes`, `element_count`
 and `bytes_accessed` counts, the ScalarEvolution expression and original fixed-vector
-lane count. Facts have `value` and `basis`; counts also have `scope: per_run` and
-`formula` (null when no symbolic formula is established). Unknown values stay null.
+lane count. `address_shape` takes only values from `vocab/address_shapes.yaml`, or null.
+Facts have `value` and `basis`; counts also have a `scope` and a `formula` (null when no
+symbolic formula is established). Unknown values stay null. A run without trial windows
+labels its counts `per_run`. Trial windows are `per_trial`. With several windows, the
+top-level regions repeat trial 0, so they are also `per_trial`, and
+`counting.top_level_counts` says so (`scope: per_trial`, `trial_position: 0`). Records
+made before 2026-10-09 ET labeled those same trial-0 counts `per_run`.
 The measured address span is a compact live min/max summary, not a saved address stream.
 
 The JSON region mapping is deliberately small:
@@ -105,6 +112,10 @@ scalable-vector accesses are refused pending a multiplicity model.
 Operation classes are integer, floating point, branch and atomic. Arithmetic and
 comparisons count normalized IR operations; induction increments and comparisons count;
 address calculations and casts do not. An FMA counts two floating-point operations.
+Side-effect-free arithmetic intrinsics count one operation per lane and add no call row:
+`fabs`, `sqrt`, `copysign`, min/max and rounding count as floating point; `smax`/`smin`/
+`umax`/`umin`, `abs`, bit counts, byte swaps and funnel shifts count as integer. Library
+intrinsics such as `pow`, `exp` or `sin` lower to calls of unknown cost and stay unmodeled.
 Branch counts are executed IR terminators, including structural branches introduced by
 the frontend. These counts are source-normalized work, not final machine instruction
 counts or cycles. A loop's `loop_iterations` counts body entries when its header chooses
@@ -142,10 +153,12 @@ thread count a second time. The first mechanisms are:
 | `model` | Parameters and units | Bound |
 |---|---|---|
 | `compute_throughput` | `integer_ops_per_s`, `floating_point_ops_per_s`, `branch_ops_per_s`, `atomic_ops_per_s`; each `operations/s` | Maximum of each nonzero class's count divided by its aggregate rate. |
-| `streaming_bandwidth` | `bytes_per_s`; `bytes/s` | Sum of useful source element bytes divided by measured effective bandwidth using the same byte convention. |
+| `streaming_bandwidth` | `bytes_per_s`; `bytes/s` | Sum of useful source element bytes divided by measured effective bandwidth using the same byte convention. A stride-0 stream (one reused element) charges only its observed unique bytes. |
 
 A zero-work class needs no rate. A nonzero class with an unknown/missing/nonpositive
-rate yields an unknown bound. A non-stream access stays unknown in the streaming model;
+rate yields an unknown bound. A target with no host `compute_throughput` mechanism makes
+any region with executed or unknown operations unknown (`host_compute_coverage`), so
+counted work is never free. A non-stream access stays unknown in the streaming model;
 a latency/cache mechanism must cover it before the overall time can be claimed. The
 first slice models useful element bytes, not cache-line bus traffic, write allocation,
 reordering, cache residency or accelerator timing. Those need additional mechanism models.
@@ -227,16 +240,30 @@ checks frozen record integrity without requiring old source bundles to be instal
 New ArchEvolve operations default to the team policy from
 [ADR 0013](../adr/0013-archevolve-mode-estimates-speed.md): they recursively refuse gem5
 backend targets, gem5 execution/calibration dependencies, research estimator variants,
-and Extensa estimate/protocol records. Refusals name ADR 0013 and the offending record
-or dependency chain, before dispatch or persistence. Calibration dependencies must
+and Extensa campaign records. Refusals name ADR 0013 and every offending record with its
+dependency chain, before dispatch or persistence. Calibration dependencies must
 resolve to records. A `code_reading` parameter may cite a pinned simulator source
 configuration (D18); that allowance never admits an execution record as code reading.
 Existing simulator records remain valid history.
 
+Guard details (code review, 2026-10-10 ET):
+
+- **Extensa records:** any record tagged `mode: extensa` is refused, including campaign
+  summaries (gem5 or native). The exception is the promotable lineage (candidate, proposal,
+  source snapshot), which `swdb.extensa_boundary` still admits only after promotion and
+  team re-evaluation. A promotion review's `evidence` list is not followed.
+- **References:** a nested `{id: ...}` pin is followed like a bare record ID.
+- **Generic markers, never accelerator names:** `gem5` (any case) in an identity field
+  (`backend`, `simulator`, `model`, `target`, `hardware_target`, as a string or a dict's
+  string values) that is not itself a record ID; and any `basis: simulated` fact in a
+  target description.
+
 An Extensa campaign keeps its inherited creation tags and existing gem5/timing path.
 Explicit public use supplies `--mode extensa --campaign <valid-campaign-id>`; both tags
 are attached at creation. `--mode archevolve` applies team policy even under an inherited
-campaign environment. This boundary changes no simulator adapter or timing-selection rule.
+campaign environment. This boundary changes no simulator adapter or timing-selection rule,
+but every direct `dx100-*` command now needs Extensa mode: the adapter test fixtures pass
+`--mode extensa --campaign extensa-gem5-bfs-20261004-f1` (`tests/test_dx100.py` `EXTENSA`).
 
 ## Remaining record fields
 
@@ -256,12 +283,19 @@ Compiler distributions with a shared LLVM library link the pass against it; stat
 
 ## Registered GAPBS trials and indirect memory bounds
 
-Updated: 2026-10-06 ET (ticket 05).
+Updated: 2026-10-06 ET (ticket 05); 2026-10-09 ET (code review: any registered GAPBS
+harness implementation, run template, per-step pattern comparison).
 
-Use `--adapter registered-gapbs` for the registered `gapbs-bfs-do` or
-`gapbs-bc-brandes` baseline. The adapter resolves the registered translation unit,
+Use `--adapter registered-gapbs` for a registered baseline implementation whose
+`run.timer` is `gapbs_trial_time`, such as `gapbs-bfs-do` or `gapbs-bc-brandes`. No
+kernel list exists. The adapter resolves the registered translation unit,
 checks its authoritative source excerpts, derives compiler flags and graph arguments,
 and inserts LLVM counter gates around the original `BenchmarkKernel` `kernel(g)` call.
+Those harness symbols (the `BenchmarkKernel` wrapper, its one `auto result = kernel(g);`
+statement and `SourcePicker::PickNext`) are GAPBS-adapter facts in
+`swdb/analytic_binding.py` (`HARNESSES`, keyed by `run.timer`). The adapter passes them to
+the LLVM pass, which holds no harness or kernel names. The record format has no field for
+them yet.
 The source and evaluator files stay unchanged. This ROI is `gapbs.trial_lambda.v1`:
 it includes BFS's source picker and the complete kernel call. It differs from a
 protected native driver that times only `DOBFS` or `Brandes`.
@@ -275,8 +309,12 @@ python -m swdb characterize --records /path/to/copied/records \
   --output /path/to/new/bfs-counting --id bfs.kron-g16.t4.characterization --format json
 ```
 
-The same command with `--implementation gapbs-bc-brandes` counts BC. Its adapter
-also fixes `-i 1`, matching the registered baseline's default source iteration count.
+The same command with `--implementation gapbs-bc-brandes` counts BC. Run arguments come
+from the implementation's `run.command` template (`{binary} {input_args} -n {trials}`)
+with the input record's generator arguments; adapter `registered-gapbs.v2` adds nothing
+else. Records made before 2026-10-09 ET carry adapter `registered-gapbs.v1`. That version
+also passed BC's default `-i 1`, and validation still checks v1 records against that rule.
+A timed kernel without a source picker (`source_selection: none`) is allowed in v2.
 The generator arguments come from the input record; source, run, function and build
 flag overrides are refused. Compiler selection flags can select installed headers and
 libraries, but cannot replace source macros or the driver.
@@ -286,7 +324,8 @@ The registered counting pipeline is frozen as `source-normalized-v2`:
 observations are inserted before helper inlining. Counting still precedes vectorization
 and unrolling. The original deterministic source picker advances between trials.
 `trials` retains each invocation's position, selected source, executed exclusive regions
-and calls. The top-level inventory uses trial zero's counters and retains every static
+and calls. The top-level inventory uses trial zero's counters, labeled `per_trial` with
+`counting.top_level_counts` when there are several trials, and retains every static
 unmapped loop, including unexecuted loops. Sparse trial observations omit only proved
 zero-work regions; they do not drop those loops from the inventory.
 
@@ -302,21 +341,37 @@ match the current registered source. The catalog loop identity remains in the bi
 map. The registered BFS/BC records currently have no site-finder statement annotations;
 a loop without an existing profile region uses its qualified catalog identity.
 Generated IDs include the subject and an LLVM function
-qualifier, preventing collisions between functions or implementations. A shared header
+qualifier, preventing collisions between functions or implementations. A loop's owner
+function comes from the implementation's code excerpts; a loop outside every excerpt (a
+header helper) binds by its exact source path and lines. A loop whose excerpt no longer
+matches the source is not bound. A shared header
 helper, such as BC's several `pvector::fill` call sites, remains unmapped when its logical
-instance cannot be proved. Multiple lowered loops that share one source region keep
+instance cannot be proved. `--adapter registered-functional` binds a registered
+implementation's catalog loops the same way (a candidate's rewritten source stays
+unmapped). Multiple lowered loops that share one source region keep
 exclusive access/operation counts and a byte union; their source-loop iteration count
-stays unknown rather than summing compiler scheduling loops. `pattern_comparison`
-reports every handwritten access pattern, observed shape/update kinds and an explicit
-reason for each mismatch. A matching individual address site does not prove a complete
-multi-step chain or the handwritten update's legality.
+stays unknown rather than summing compiler scheduling loops.
+
+`pattern_comparison` reports every handwritten access pattern step by step. A step
+matches when the bound region has an access of the step's element width with the step's
+address shape; the final step also needs the pattern's update kind. Each row lists its
+`steps` with the shapes observed at that width, and a mismatch reason names every failed
+step. Width and shape agreement does not prove the exact array binding or the
+handwritten update's legality.
 
 The pass recognizes `single_valued_indirect`, `ranged_indirect`, `pointer_chase` and
-`data_dependent_merge` from SSA dependencies and ScalarEvolution. A varying loaded index,
-a loaded range boundary, a load feeding its address recurrence, and a data-selected
-pointer merge provide distinct evidence. Opaque calls or unresolved dependencies stay
-unknown. `constant` describes a proved invariant address and is supplementary to the
-formal access-pattern vocabulary.
+`data_dependent_merge` from SSA dependencies and ScalarEvolution; everything else with a
+fixed step is a `stream`. The counting IR keeps every source load, so a loop body can
+reload a loop-invariant base pointer (a C++ container member, or an OpenMP captured
+variable). Such a load counts as invariant when its own address is invariant and alias
+analysis proves nothing in the loop may write it. A varying loaded index, a range
+boundary loaded from an address that varies with the enclosing loop, a load feeding its
+address recurrence, and a pointer merge decided by a loaded value provide distinct
+evidence. An OpenMP chunk bound or a scalar field read before the loop is not an index
+array. An invariant address is a `stream` with `stride_bytes: 0`. Opaque calls or
+unresolved dependencies stay unknown. Records made before 2026-10-09 ET use `constant`
+for an invariant address; estimates read it as a stride-0 stream. Those older records
+also classify many streams through reloaded bases as indirect or unknown.
 
 `observed_unique_bytes` is the live union of virtual byte ranges for one address site;
 `footprint_bytes` is the union for an exclusive region. Repeated addresses and overlapping
@@ -328,7 +383,7 @@ establish cache-line or bus traffic.
 
 | Mechanism | Parameters | Convention |
 |---|---|---|
-| `requests_in_flight_latency` | `dependent_latency_s` (`seconds/load`), `effective_requests_per_thread` (`requests/thread`) | Non-stream requests × latency / (observed active workers × effective requests per worker). A pointer-chase recurrence caps overlap at one request per executing worker. |
+| `requests_in_flight_latency` | `dependent_latency_s` (`seconds/load`), `effective_requests_per_thread` (`requests/thread`) | Non-stream requests × latency / (observed active workers × effective requests per worker). Stride-0 streams (legacy `constant`) are never dependent requests. A pointer-chase recurrence caps overlap at one request per executing worker. |
 | `cache_fit` | `capacity_bytes` (`bytes`), `bytes_per_s` (`bytes/s`), `cold_bytes_per_s` (`bytes/s`) | If the virtual byte footprint fits, charge distinct first-touch useful bytes at the cold rate and remaining useful bytes at the cache rate. |
 
 Requested threads do not multiply a serial region's concurrency: `active_workers` is
@@ -340,8 +395,9 @@ context are observed.
 A serial or partially active region needs an independently measured rate; its bound
 remains unknown rather than dividing an aggregate rate by the requested thread count.
 Requests in flight are an effective inferred
-parameter, not measured physical MSHR occupancy. The cache model assumes a cold start
-per trial and ideal capacity; fit does not prove residency, conflicts or first-touch
+parameter, not measured physical MSHR occupancy. The cache model charges each region's
+own footprint as cold within each trial (no reuse carried between regions) and assumes
+ideal capacity; fit does not prove residency, conflicts or first-touch
 misses. Unknown rates/counts/footprints, or a footprint outside its supported cache
 capacity, keep the required bound unknown. Zero work needs no rate. Streaming bandwidth
 covers stream sites; a declared latency/cache model covers other sites, avoiding a
@@ -408,6 +464,10 @@ dependent bounds and `required_for_total`. Required unknowns share dependency
 priority 1; unused references have priority 2. A null reference has no defensible
 half/double magnitude, so `impact_magnitude_seconds` and `impact_rank` stay null.
 This dependency ordering does not claim a numerical ranking of unsupported guesses.
+Since 2026-10-09 ET, new reports also give each unknown `work_multiplier` and
+`work_rank`. These rank unknowns of one unit by the counted work each scales (see
+[model context](../analytic-model-context-v1.md#code-review-fixes-2026-10-09-et)).
+They are optional for historical reports.
 
 `sensitivities` vary one positive frozen value by half and double, recompose every
 whole trial and then its median, and report diagnostic component medians separately.
@@ -595,3 +655,24 @@ For static LLVM distributions, `plugin_support_objects` records
 [isolated stateless support](../../swdb/analytic_llvm_support.py): `archive`,
 `archive_sha256`, `member`, and `object_sha256`. Only the native `SHA256.cpp.o`
 member is admitted after symbol checks; whole LLVM registries are not duplicated.
+
+## Code review corrections (2026-10-09 ET)
+
+These changes apply to characterizations and estimates made from 2026-10-09 ET on. Older
+records stay valid and keep their original values; nothing was re-counted.
+
+| Area | Before | Now |
+|---|---|---|
+| Address shapes | `constant` for an invariant address; streams through a reloaded base pointer (C++ member, OpenMP capture) came out `unknown` or indirect; an OpenMP chunk bound or scalar field start made a loop `ranged_indirect` or `single_valued_indirect` | Vocabulary values only; invariant address = `stream` with stride 0; reloaded invariant bases are seen through; range starts must vary with the enclosing loop |
+| Latency model | `constant` accesses charged full dependent latency | Stride-0 streams are never dependent requests; streaming charges only their first-touch bytes |
+| Pattern comparison | Multi-step patterns could never match | Every step judged by element width and shape; mismatch reasons name the failed steps |
+| Count scope | Several-trial runs labeled the trial-0 top level `per_run` | `per_trial`, with `counting.top_level_counts` |
+| Missing compute mechanism | Counted operations silently free | `host_compute_coverage` keeps the region unknown |
+| Pure intrinsics | `fabs`, min/max, `abs`, bit counts were opaque calls (unknown cost) | One operation per lane, no call row |
+| Registered GAPBS adapter | DOBFS/Brandes only; BC's `-i 1` built in; harness names in the pass | Any `gapbs_trial_time` implementation; run template; adapter supplies harness symbols (`registered-gapbs.v2`) |
+| `registered-functional` | No catalog loop mapping, empty `pattern_comparison` | Implementation catalog loops bound to region IDs; patterns compared |
+
+Re-counting is needed before these corrections reach any application estimate: the BFS,
+BC and PageRank characterizations on mbit10 and the estimates built from them use the old
+pass. The pass hash (and so the observer bundle) and the estimator bundle hash changed;
+the counting runtime did not. New counts need fresh frozen protocols.

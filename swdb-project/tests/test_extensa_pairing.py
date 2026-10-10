@@ -1,4 +1,5 @@
-"""Blind campaign pairing through public fixture campaigns; all fixture numbers are synthetic."""
+"""Blind campaign pairing through public fixture campaigns; all fixture numbers are synthetic.
+Updated: 2026-10-09 ET (review F9: competing candidates keep bests and plateau)."""
 import copy
 from datetime import datetime, timezone
 import json
@@ -179,6 +180,46 @@ def test_synthetic_estimates_do_not_change_timing_selection_or_plateau(campaign_
     assert enabled['stop_reason'] == disabled['stop_reason'] == 'max_iterations'
     assert enabled['budgets']['used']['iterations'] == disabled['budgets']['used']['iterations']
     assert all(c['selection']['verdict'] == 'gain' for it in enabled['iterations'] for c in it['candidates'])
+
+
+@pytest.mark.parametrize('target', ['native_cpu', 'dx100_gem5'])
+def test_competing_candidates_keep_the_same_bests_and_plateau_with_and_without_estimates(campaign_team, target):
+    """2026-10-09 ET (review F9): several iterations with competing candidates per class.
+
+    The synthetic forecast calls every candidate 100x slower than its baseline, the
+    opposite of the fixture timings. The per-class best, its level and the plateau stop
+    must still match a pairing-disabled run exactly. Fixture numbers, not evidence."""
+    from testkit.extensa import rewrite
+    def row(kronecker, uniform):
+        return {cls: {'comparisons': {'fork_scalar_tdstep': comparison(ratio), 'upstream_do_bfs': comparison(0.9)}}
+                for cls, ratio in (('kronecker', kronecker), ('uniform_random', uniform))}
+    # Iterations 1-2 improve (kronecker best moves to iteration 2); 3-4 do not, so plateau 2 stops.
+    fixture = fixture_file(campaign_team, iterations=[row(1.2, 1.1), row(1.5, 1.08), row(1.3, 1.02), row(1.25, 1.0)],
+                           estimate_fixture={'work_units': {'baseline': 10, 'candidate': 1000}, 'units_per_second': 100})
+    config = provider(campaign_team, {'rewriting': [rewrite(patch=PATCH.replace('alpha = 14', f'alpha = {n}'))
+                                                     for n in (14, 13, 12, 11)]})
+    budgets = {'max_iterations': 5, 'plateau_iterations': 2}
+    kind = 'gem5' if target == 'dx100_gem5' else 'native'
+    enabled = run(campaign_team, campaign_file(campaign_team, cid=f'extensa-{kind}-bfs-20261004-a1', target=target,
+                                               budgets=budgets), fixture, config)
+    (campaign_team['root'] / 'provider-state.json').unlink()
+    disabled = run(campaign_team, campaign_file(campaign_team, cid=f'extensa-{kind}-bfs-20261004-a2', target=target,
+                                                budgets=budgets, paired_estimates={'enabled': False}), fixture, config)
+    assert enabled['paired_estimates']['records'] and not disabled['paired_estimates']['records']
+    def bests(summary):
+        sha = {c['id']: c['artifact_sha256'] for it in summary['iterations'] for c in it['candidates']}
+        return [(row['class'], sha.get(row['best']), row['best_level'], row['verdict']) for row in summary['per_class']]
+    def trajectory(summary):
+        return [(c['class'], c['level'], c['selection'], c['artifact_sha256'])
+                for it in summary['iterations'] for c in it['candidates']]
+    assert bests(enabled) == bests(disabled)
+    assert trajectory(enabled) == trajectory(disabled)
+    assert [it['improved_classes'] for it in enabled['iterations']] == [
+        it['improved_classes'] for it in disabled['iterations']]
+    assert enabled['stop_reason'] == disabled['stop_reason'] == 'plateau'
+    assert enabled['budgets']['used']['iterations'] == disabled['budgets']['used']['iterations'] == 4
+    kronecker = [c for it in enabled['iterations'] for c in it['candidates'] if c['class'] == 'kronecker']
+    assert next(r['best'] for r in enabled['per_class'] if r['class'] == 'kronecker') == kronecker[1]['id']
 
 
 def test_team_protocol_recursively_refuses_paired_receipt_but_extensa_keeps_dispatch(campaign_team):

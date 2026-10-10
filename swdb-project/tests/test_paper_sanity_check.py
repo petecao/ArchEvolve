@@ -1,4 +1,6 @@
-"""Public weak-paper report behavior. Created: 2026-10-06 ET."""
+"""Public weak-paper report behavior. Created: 2026-10-06 ET.
+Updated: 2026-10-09 ET (code review: subject kernel, required differences, fixture
+evidence and baseline-system refusals)."""
 import json
 import shutil
 import subprocess
@@ -17,6 +19,10 @@ def request_fixture(tmp_path):
     ref=next(row for row in wrapper['new_records'] if row['kind']=='estimate')
     records=tmp_path/'records';(records/'estimates').mkdir(parents=True)
     source=REPO/'records'/ref['path'];copied=records/ref['path'];shutil.copyfile(source,copied)
+    # The report resolves the estimate subject to its kernel; copy that chain only.
+    for rel in ('candidates/bfs-functional-read-offload-20261006-a1.proposal.candidate-1.yaml',
+                'implementations/dx100-bfs-scalar.yaml','implementations/dx100-bc-scalar.yaml'):
+        (records/rel).parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(REPO/'records'/rel,records/rel)
     request={'format':'swdb.paper-sanity-request.v1','updated':'2026-10-06 ET',
         'source':{'uri':'https://arxiv.org/pdf/2505.23073v2',
             'sha256':'ec18bdc585f32e3da5c0fd467e686dd2137b3db88d4c327d510509213e7c44a3'},
@@ -94,3 +100,60 @@ def test_changed_estimate_and_existing_output_are_refused(tmp_path):
     estimate.write_bytes(original);output.mkdir();marker=output/'report.json';marker.write_text('preserved')
     done=run_report(records,request,output,tmp_path)
     assert done.returncode==2 and marker.read_text()=='preserved'
+
+
+def reseal(request,data):
+    data['identity_sha256']=artifacts.digest({k:v for k,v in data.items() if k!='identity_sha256'})
+    request.write_text(json.dumps(data))
+
+
+def edited_estimate(estimate,request,change):
+    from swdb import access
+    data=access.read_record(estimate);change(data);estimate.write_text(json.dumps(data))
+    # Pin what the reporter reads back from the rewritten copy.
+    pinned=json.loads(request.read_text());pinned['comparisons'][0]['estimate']['sha256']=artifacts.digest(access.read_record(estimate))
+    reseal(request,pinned)
+
+
+def test_estimate_for_another_kernel_is_refused(tmp_path):
+    records,request,estimate=request_fixture(tmp_path)
+    edited_estimate(estimate,request,lambda data:data.update(subject={'kind':'implementation','id':'dx100-bc-scalar'}))
+    output=tmp_path/'report';done=run_report(records,request,output,tmp_path)
+    assert done.returncode==2 and 'subject kernel differs' in done.stderr and not output.exists()
+
+
+def test_fixture_estimate_is_refused(tmp_path):
+    records,request,estimate=request_fixture(tmp_path)
+    edited_estimate(estimate,request,lambda data:data.update(evidence_kind='contract_fixture'))
+    done=run_report(records,request,tmp_path/'report',tmp_path)
+    assert done.returncode==2 and 'execution estimate' in done.stderr
+
+
+@pytest.mark.parametrize('dimension',['input','configuration'])
+def test_comparison_without_input_or_configuration_difference_is_refused(tmp_path,dimension):
+    records,request,_=request_fixture(tmp_path)
+    data=json.loads(request.read_text())
+    data['comparisons'][0]['differences']=[row for row in data['comparisons'][0]['differences'] if row['dimension']!=dimension]
+    reseal(request,data)
+    done=run_report(records,request,tmp_path/'report',tmp_path)
+    assert done.returncode==2 and 'must list scope differences: '+dimension in done.stderr
+
+
+@pytest.mark.parametrize('declared',[False,True])
+def test_known_ratio_requires_a_declared_baseline_system_difference(tmp_path,declared):
+    records,request,estimate=request_fixture(tmp_path)
+    baseline={'id':'fixture.baseline.estimate','sha256':'0'*64}
+    edited_estimate(estimate,request,lambda data:data.update(ratio=2.0,baseline=baseline))
+    if declared:
+        data=json.loads(request.read_text())
+        data['comparisons'][0]['differences'].append({'dimension':'baseline_system',
+            'paper':'Baseline multicore without DX100, 10 MB LLC','estimate':'Baseline code on the same DX100 target description'})
+        reseal(request,data)
+    output=tmp_path/'report';done=run_report(records,request,output,tmp_path)
+    if not declared:
+        assert done.returncode==2 and 'baseline_system' in done.stderr and not output.exists();return
+    assert done.returncode==0,done.stdout+done.stderr
+    row=json.loads((output/'report.json').read_text())['rows'][0]
+    assert row['comparison_state']=='weak_comparison' and row['estimated_ratio']==2.0
+    assert row['estimate_scope']['baseline']==baseline and row['estimate_scope']['baseline_scope']=='same_target_description'
+    assert 'not the paper' in (output/'report.md').read_text()

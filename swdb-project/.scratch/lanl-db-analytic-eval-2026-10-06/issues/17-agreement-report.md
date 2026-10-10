@@ -1,7 +1,7 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-09 21:06 ET
+Updated: 2026-10-09 23:40 ET (review corrections F1; report v2 follow-up); 2026-10-09 21:06 ET
 **Type:** slice
 **Status:** resolved
 **Work state:** resolved on the completed negative report; follow-up study is ticket 24
@@ -10,6 +10,33 @@ Updated: 2026-10-09 21:06 ET
 **Time estimate:** 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs)
 
 **What to build:** After the flow-A campaigns: rank agreement between estimate and timing, whether gem5's best candidate survives a top-3 cut by estimate, and where estimates go wrong. The rule fixed in D30 is applied as written. A research variant of the estimator may be calibrated with these pairs, versioned separately (D10).
+
+2026-10-09 23:40 ET — **Correction after code review (F1). The status stays resolved.**
+
+The 21:06 ET entry below says D26 was *enforced* because 32 executed rows
+"lacked a pre-timing estimate" and the audit "refused them". The evidence says
+something narrower:
+
+- **No candidate and no baseline was ever timed** in the four campaigns. All 32
+  candidate rows were rejected before timing; P1–P3 kept zero comparisons and no
+  baseline evaluation, and P4 kept no timing comparisons.
+- **The pairing ledgers are empty** (no estimates, no outcome accesses).
+- **The strict audit refused the whole input** (exit 3, `Actual ordered outcome
+  metadata missing`), not 32 rows.
+- **The report itself says `blind_order: unverified`.**
+
+So D26 was not verified, and could not be: nothing was timed. The D26 box below
+now says exactly that. The ticket stays resolved on Yan-Ru's 21:04 ET instruction
+to resolve it as soon as possible; no waiver of D26 is claimed.
+
+2026-10-09 23:40 ET — **Report code follow-up (review F2/F3/F6/F8).** New reports use
+format v2 (`swdb/extensa_agreement.py`): baseline and candidate forecasts are matched,
+the estimated speedup is derived, eligible pairs reach the rank statistics, top 3 is
+checked per campaign stratum, and D30 is applied with `>=` on every threshold. A met
+rule reads `d30_met_human_decides`, never an automatic switch. `beyond_paired_range`
+forecasts (D29) are excluded, and zero timed comparisons leave blind order
+unverified. Version 1 reports keep their original analysis. The four campaigns'
+outcome is unchanged: 0 eligible pairs.
 
 2026-10-09 21:06 ET — **Resolved. Ticket 17 closes on its completed negative report.**
 
@@ -152,7 +179,7 @@ The package retains needed metadata bodies and original failures without duplica
 |---|---|
 | Eligible DX100 pairs | 0 (D30 needs at least 20) |
 | Kendall's tau, 95% interval, top-3 coverage | Unsupported: no pairs |
-| D26 blindness | Enforced: all 32 executed rows lacked a pre-timing estimate, so the strict audit refused them |
+| D26 blindness | Not verified (corrected 2026-10-09 23:40 ET): no candidate or baseline was timed in any campaign, the pairing ledgers are empty, the strict audit refused the whole input, and the report says `blind_order: unverified` |
 | Research variants in team protocols | Refused |
 | Recommendation for ticket 18 | Do not switch to flow B; keep timing-only selection |
 
@@ -162,7 +189,7 @@ Evidence: [actual assembly and refused strict audit](../evidence/17-actual-input
 ## Acceptance
 
 - [x] D30 applied verbatim, with the number of pairs shown (0 eligible pairs; unsupported).
-- [x] Blindness verified for every pair (D26): enforced by exclusion; all 32 executed rows refused for missing pre-timing order, 0 pairs admitted.
+- [x] D26 blindness status recorded exactly (reworded 2026-10-09 23:40 ET): **not verified, and not verifiable** — 0 pairs, no candidate or baseline timed, report `blind_order: unverified`. Checked only because the ticket was resolved on Yan-Ru's 2026-10-09 21:04 ET instruction; this is not a verification and no D26 waiver is claimed.
 - [x] Any research variant is refused by team protocols.
 - [x] A short recommendation for ticket 18 (do not switch to flow B).
 

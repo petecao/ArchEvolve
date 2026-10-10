@@ -1,6 +1,6 @@
 # EvolveSWDB — ArchEvolve's research database
 
-Updated: 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
+Updated: 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
 
 The Software Database is the ArchEvolve component that knows the applications:
 what their kernels compute, how their code touches memory, what profiling
@@ -340,9 +340,17 @@ to the estimator.
 _Avoid_: parameter sheet, hardware config
 
 **Paired estimate**:
-An estimate made for a candidate artifact that is also timed, kept to measure how well estimates
-agree with timing.
+An estimate made for a candidate artifact or baseline in an Extensa campaign before its timing,
+kept to measure how well estimates agree with timing. Only one that is followed by its timing
+can enter an agreement report; an artifact that is refused or never timed keeps its estimate,
+recorded as unknown.
 _Avoid_: shadow estimate, ride-along estimate
+
+**Numeric pairing check**:
+The check D35 requires before any Extensa campaign starts: one real numeric paired estimate,
+recorded before its timing, that the strict audit admits. The campaign file names it in
+`paired_estimates.numeric_pairing_check`.
+_Avoid_: smoke test (a companion case is not this check)
 
 **Screening**:
 Using estimates to choose which candidate artifacts of an Extensa iteration are timed; the others

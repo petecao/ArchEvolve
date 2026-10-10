@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Unverified LANL main-database crosswalk v0 (2026-10-06 ET)",
+  "title": "Unverified LANL main-database crosswalk v0 (2026-10-06 ET; record kinds synced with swdb.store 2026-10-09 ET)",
   "description": "Slide labels are distinct from SQL identifiers. Null means unseen. Compatibility metadata stays outside records/.",
   "type": "object",
   "additionalProperties": false,
@@ -33,7 +33,7 @@
       "additionalProperties": false,
       "required": ["record_kind", "field"],
       "properties": {
-        "record_kind": {"type": "string", "enum": ["application", "kernel", "implementation", "input", "machine", "profile", "strategy", "intrinsic", "source_snapshot", "profile_package", "proposal", "candidate", "evaluation", "evaluation_pair", "operation", "hardware_target", "workload", "protocol", "comparison_result", "region_profile", "retention", "team_claim", "certification", "review", "campaign_summary"]},
+        "record_kind": {"type": "string", "enum": ["application", "kernel", "implementation", "input", "machine", "profile", "strategy", "intrinsic", "source_snapshot", "profile_package", "proposal", "candidate", "evaluation", "evaluation_pair", "operation", "hardware_target", "workload", "protocol", "comparison_result", "region_profile", "retention", "team_claim", "certification", "review", "campaign_summary", "workload_characterization", "target_description", "estimate", "cpu_calibration", "cpu_service_calibration", "cpu_memory_resource_calibration", "cpu_bulk_resource_calibration", "cpu_allocator_resource_calibration", "cpu_native_validation", "cpu_error_band", "paired_estimate", "agreement_policy", "agreement_report"]},
         "field": {"$ref": "#/$defs/nullable_text"}
       }
     },

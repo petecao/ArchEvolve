@@ -1,8 +1,10 @@
-"""Create-only collector admission after a stale precheck. Updated: 2026-09-25."""
+"""Create-only collector admission after a stale precheck. Updated: 2026-10-09 ET (code review of
+ticket 06: the collector runs in explicit Extensa fixture mode); 2026-09-25."""
 import json
 
 from swdb import cli, dx100_profile, workflow
 from swdb.store import Store
+from test_dx100 import EXTENSA
 
 
 def test_public_profile_rejects_an_id_created_after_its_initial_catalog_read(records, tmp_path, monkeypatch, capsys):
@@ -21,7 +23,8 @@ def test_public_profile_rejects_an_id_created_after_its_initial_catalog_read(rec
     path = tmp_path / 'request.json'
     path.write_text(json.dumps(request))
     result = cli.main(['dx100-profile', str(path), '--records', str(records.path),
-                       '--db', str(tmp_path / 'index.sqlite'), '--runs-dir', str(tmp_path / 'runs'), '--format', 'json'])
+                       '--db', str(tmp_path / 'index.sqlite'), '--runs-dir', str(tmp_path / 'runs'), '--format', 'json',
+                       *EXTENSA])
     output = capsys.readouterr()
     assert result == 1 and 'already used' in output.err
     assert record.read_bytes() == before

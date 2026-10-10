@@ -1,6 +1,8 @@
 # Native CPU calibration
 
-Created: 2026-10-06 ET. Ticket 07; raw results are not accuracy validation.
+Created: 2026-10-06 ET. Updated: 2026-10-09 23:10 ET (code review: checkout commit,
+machine record, raw-output roots, measured rates the estimator does not use). Ticket 07;
+raw results are not accuracy validation.
 
 `cpu-calibrate` builds a native C++17 timer and counts its shared compute functions
 separately with the LLVM 22 source-normalized characterizer. The timer has no LLVM
@@ -25,6 +27,17 @@ NUMA affinity and bind policy; workers pin to separate physical cores and first-
 their partition. It requires a clean commit, at least 20 GiB free, a large footprint
 at least 8 times the live kernel-reported LLC, and a smaller cache footprint.
 Unavailable governor/turbo files are recorded as null. No system settings change.
+
+Since 2026-10-09 23:10 ET (code review):
+- The receipt's `commit` and `dirty` come from `git -C <ArchEvolve checkout>`, whatever
+  directory the command starts in. Before this fix they came from the caller's working
+  directory, so a lane started from another checkout (such as Memacc's
+  `socket_lane.sh` folder) recorded that checkout's commit.
+- The context pins `machine_sha256`, the digest of the machine record it ran under.
+- Raw output must be outside the Git checkout in every mode. Native output must be
+  under `/data1/yanruj/EvolveSWDB_runs` or `/data/yanruj/EvolveSWDB_runs`.
+- The other socket's lease and the legacy lease are still checked by the operator through
+  `socket_lane.sh`. The runner verifies only its own lease.
 
 The default matrix includes stream read/write, single-valued and offset-defined
 fixed-fanout-16 ranged indirect reads, data-dependent merge, warm cache stream,
@@ -68,6 +81,14 @@ under this constructed work does not establish physical MSHR capacity. Model tra
 this reference latency is an assumption. Every parameter retains its basis and
 source. Per-trial elapsed/rate spread stays in `extensions.cpu_calibration`.
 Shape-specific bandwidth rates stay there until a model explicitly consumes them.
+
+Known gap (code review, 2026-10-09 23:10 ET): the spec asks for bandwidth per access type
+in the description with basis `measured`. Only the stream rate is a mechanism parameter.
+The measured single-valued indirect, ranged indirect and merge rates are kept only in
+`extensions.cpu_calibration.series`, with no basis field, and no estimator model reads
+them. Non-stream accesses are priced from the pointer-chase latency and the inferred
+requests per thread. The merge cell's inputs also alternate strictly (`2i` against `2i+1`),
+so it is a best case for branch prediction, not a general data-dependent merge.
 
 Caps: T≤16; C≤128 (default sweep ends at32); 3–11 repetitions; active large footprint≤512 MiB;
 cache footprint≤16 MiB; constructed resident storage≤1.5 GiB; raw output≤50 MiB;

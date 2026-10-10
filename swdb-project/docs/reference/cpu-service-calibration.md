@@ -1,6 +1,7 @@
 # Independent native service calibration
 
-Created: 2026-10-06 ET. Ticket11; implementation in progress.
+Created: 2026-10-06 ET. Updated: 2026-10-09 23:10 ET (code review notes on held-out
+inputs, the D25 helper and the superseded memory models). Ticket 11 is resolved.
 
 `import-cpu-service-calibration` retains service/driver elapsed trials and their
 explicit event counts in a typed `cpu_service_calibration` record. It does not read
@@ -346,7 +347,10 @@ medians; it does not establish the application's outcome mix or a physical upper
 bound, and either unresolved input keeps the derived parameter unknown.
 
 A fresh conditional description supersedes the base's streaming/cache/latency
-memory mechanisms with this explicit memory-service scenario. Its extension
+memory mechanisms with this explicit memory-service scenario. (Code review,
+2026-10-09 23:10 ET: so a CPU error band frozen on such a description checks the
+scenario, not the measured ticket 07 bandwidth and concurrency. See
+`cpu-native-error.md`.) Its extension
 records exactly which mechanisms were superseded and pins the immutable base.
 The earlier measured descriptions remain unchanged; stream rates are never copied
 into dependent-memory or allocator service parameters. Compute rates and typed
@@ -423,6 +427,10 @@ allowlist, a new input, prior band binding and timing after the width freeze.
 An out-of-band pair or unsupported scope creates an explicit failed receipt
 with the original width and measured diagnostics; it never widens the envelope.
 Reported fixture pass/failure verifies this API but grants no native confidence.
+Since 2026-10-09 23:10 ET (code review), the held-out input must also be unseen: the
+collector refuses an input already timed for the same implementation and thread count,
+and `validate-cpu-error-band` marks `unobserved_heldout_input` when an earlier timing
+exists in any phase or band (see `cpu-native-error.md`).
 
 A validated empirical envelope applies only to exact held-out characterization
 identities. It does not generalize to unseen candidates, kernels, threads or
@@ -431,6 +439,9 @@ plus/minus twice the single-estimate width; `estimated_gain` requires the lower
 ratio above1.05, `estimated_no_gain` requires the upper below1.05, and other cases
 remain `within_error`. CPU native timing continues to decide established
 ArchEvolve evaluations; this separate analytic verdict never replaces selection.
+The rule is `three_state` in `swdb/cpu_error_band.py` (2026-10-09 23:10 ET). For a
+reported fixture band that passed held-out, the same rule fills
+`error_band.fixture_verdict` for testing; the public `verdict` stays `within_error`.
 
 
 ## Prospective exact bulk service matrix (2026-10-06 ET)

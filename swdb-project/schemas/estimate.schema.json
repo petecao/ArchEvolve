@@ -468,6 +468,47 @@
               },
               "sensitivity_state": {
                 "const": "unknown_reference"
+              },
+              "work_multiplier": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "quantity": {
+                    "type": "string"
+                  },
+                  "unit": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "minimum": 0
+                  },
+                  "scope": {
+                    "enum": [
+                      "median_trial_sum",
+                      "run_sum"
+                    ]
+                  }
+                },
+                "required": [
+                  "quantity",
+                  "unit",
+                  "value",
+                  "scope"
+                ]
+              },
+              "work_rank": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 1
               }
             },
             "required": [

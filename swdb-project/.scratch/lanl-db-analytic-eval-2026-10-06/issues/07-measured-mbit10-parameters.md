@@ -70,3 +70,28 @@ work, not physical issue throughput. Cache stream rates retain footprint/sharing
 scope and do not establish cached dependent-load latency or page-fault service.
 The frozen T4 BFS/BC reports retain unknown whole-call totals; independent service
 costs and the CPU error band remain ticket 11.
+
+## Code review 2026-10-09
+
+2026-10-09 23:10 ET. The resolution stands; the four acceptance items hold. The
+review found two code gaps and two limits worth stating.
+
+- **Commit recorded from the wrong place (fixed).** `cpu-calibrate` read `commit` and
+  `dirty` from the caller's working directory (`swdb/cpu_calibration.py`, the context
+  block in `calibrate`). A lane started from another checkout would have recorded that
+  checkout's commit. It now uses `git -C <ArchEvolve checkout>`, pins `machine_sha256`,
+  refuses raw output inside the checkout, and requires native output under
+  `/data1|/data/yanruj/EvolveSWDB_runs`. The 2026-10-06 receipts are unaffected. The
+  commits recorded in the a1 and a2 descriptions (`97f5f19`, `40435a9`) are ArchEvolve
+  commits and match the `source_commit` in their compact evidence.
+- **Test copies (fixed).** Four binding tests in `tests/test_cpu_calibration.py` copied
+  the whole ~1 GB catalog. They now copy only the record closure.
+- **Bandwidth per access type (known gap, not changed).** Only the stream rate is a
+  mechanism parameter. The measured indirect and merge rates are kept only in
+  `extensions.cpu_calibration.series`, and no estimator model reads them. The merge
+  cell's inputs alternate strictly, so it is a best case for branch prediction. See
+  [cpu-calibration.md](../../../docs/reference/cpu-calibration.md).
+- **Never validated against timing.** The CPU error band of ticket 11 was frozen on a
+  services description that replaces this ticket's measured stream, latency and cache
+  mechanisms. So these measured values have never been compared with native timing.
+  See ticket 11's code-review note.

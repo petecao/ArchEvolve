@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "cpu_error_band",
-  "description": "Created: 2026-10-06 ET. Immutable empirical development error or explicit failure; no unvalidated confidence.",
+  "description": "Created: 2026-10-06 ET. Updated: 2026-10-09 23:10 ET (code review: v2 adds forecast-only large_errors). Immutable empirical development error or explicit failure; no unvalidated confidence.",
   "properties": {
     "kind": {
       "const": "cpu_error_band"
@@ -10,7 +10,47 @@
       "const": "0.4"
     },
     "format": {
-      "const": "swdb.cpu-error-band.v1"
+      "enum": [
+        "swdb.cpu-error-band.v1",
+        "swdb.cpu-error-band.v2"
+      ]
+    },
+    "large_errors": {
+      "type": "array",
+      "description": "v2 only: each known error above admission.large_error_threshold_log with its largest predicted regions; forecast-only, never an observed per-region error.",
+      "items": {
+        "type": "object",
+        "required": [
+          "estimate",
+          "input",
+          "log_error",
+          "rounding_aware_absolute_log_error",
+          "direction",
+          "dominant_regions",
+          "attribution"
+        ],
+        "properties": {
+          "direction": {
+            "enum": [
+              "over_prediction",
+              "under_prediction"
+            ]
+          },
+          "dominant_regions": {
+            "type": "array",
+            "maxItems": 5,
+            "items": {
+              "type": "object",
+              "required": [
+                "region",
+                "seconds",
+                "limiting_bound",
+                "share_of_predicted_seconds"
+              ]
+            }
+          }
+        }
+      }
     },
     "backend": {
       "const": "native"

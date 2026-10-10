@@ -1,6 +1,7 @@
 # Functional correctness with estimated speed
 
-Updated: 2026-10-09 ET.
+Updated: 2026-10-10 ET (code review of tickets 06/12: current-procedure certificate,
+tests and team lineage); 2026-10-09 ET.
 
 `evaluate-functional` combines an exact current strict-functional certification
 with a frozen analytic estimate. The finite certification matrix includes the
@@ -40,10 +41,18 @@ protocol: REPLACE_WITH_FRESH_FROZEN_PROTOCOL_ID
 ```
 
 Use a current execution certificate for this exact candidate. The retained
-`certification.23f81442358b4dcc8688140a394a1f08` is historical; its source manifest
-predates the 2026-10-08 procedure re-declaration. A fresh estimate protocol alone
-does not make that certificate reusable. See the
-[procedure rules](bfs-typed-library.md#handle-a-certification-refusal-at-the-right-boundary).
+`certification.23f81442358b4dcc8688140a394a1f08` is historical: candidate procedure 1.6,
+whose source manifest predates the 2026-10-08 re-declaration. Since 2026-10-09 the default
+candidate procedure is 1.7, so `evaluate-functional` refuses it (`incompatible`,
+"certify again"). A fresh estimate protocol alone does not make that certificate reusable.
+See the [procedure rules](bfs-typed-library.md#handle-a-certification-refusal-at-the-right-boundary).
+
+**Tests (2026-10-10 ET):** `tests/test_functional_evaluation.py` runs on a copied record
+closure. It checks the stale-certificate refusal and handoff under a no-child sentinel (the
+sentinel proves it loaded and blocks `subprocess` and `os` spawn/exec/fork routes), the gem5
+refusal before writes, and a known ratio (2.0) staying `within_error` on the DX100 functional
+target. The positive path (complete evaluation, 1.1 handoff with that ratio) **skips until a
+1.7 execution certificate of this candidate exists in `records/`**; none does yet.
 
 ```sh
 python3 -m swdb evaluate-functional request.yaml --records /path/to/records --library /path/to/library --format json
@@ -55,7 +64,8 @@ python3 -m swdb validate --records /path/to/records
 records are copied to an external run directory. An absent or changed contract
 never falls back to an empty catalog. Requests are bounded to 10 MiB; unknown
 fields and reused IDs are refused. Team lineage recursively refuses gem5 and
-Extensa research dependencies before writes. This command requires ArchEvolve
+Extensa campaign dependencies (including campaign summaries and nested `{id: ...}`
+pins) before writes, naming every offending record. This command requires ArchEvolve
 mode.
 
 ## Evaluation-result format 1.1

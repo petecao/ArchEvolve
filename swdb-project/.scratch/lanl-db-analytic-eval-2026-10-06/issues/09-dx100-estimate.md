@@ -109,3 +109,35 @@ counts 3/5 and eight frees. Two related lifetime/histogram checks also passed:
 unique serial symbols with no overlap, so no count/model correction or replay is
 needed. Final canonical validation is **617 records valid**, and the source
 bundle still equals the frozen `3ad3ce75…`; all existing receipts remain immutable.
+
+
+## Code review 2026-10-09
+
+2026-10-09 23:43 ET. A read-only review found gaps behind four checked items. The
+history above is unchanged. Fixes are in the working tree, not yet committed.
+
+- **"Unknown parameters … ranked by how much each moves the estimate" was not met.**
+  Every unknown had only dependency priority 1 or 2. Unknowns now carry
+  `work_multiplier` and `work_rank`: a rank among unknowns of the same unit, by the
+  counted work each scales (`swdb/analytic_sensitivity.py`). Different units are
+  still not ranked against each other, and `impact_rank` stays null. The frozen DX100
+  reports predate this and keep their saved payloads.
+- **Silent undercount.** A target-role access to a second heap or global object
+  became bookkeeping with no missing reason. It is now counted and noted. A
+  description can make it unknown with `outside_operand_policy.unknown_events`
+  (`swdb/llvm/LogicalCommands.hpp`, `swdb/offload_observation.py`). The v1 default
+  stays backend scratch, so existing DX100 counts are unchanged.
+- **Keyed to operations (story 32).** `tile_staging` now accepts `selector.event_ids`.
+  Row and queue counts are still recorded per region only. Keying those to events
+  needs per-event fields in the characterization schema.
+- **"Nothing DX100-specific outside the target description."** This holds for the
+  generic mechanism and observer modules, and a new test guards it. The
+  `swdb/analytic_dx100_call.py` harness, added 2026-10-09 for ticket 17, is
+  target-specific. It is documented as a counting harness and is not part of the
+  mechanism layer.
+- **Smaller fixes:**
+  - setup is unknown when a trial has a command gap;
+  - the contract's completeness merges every trial's gaps;
+  - mechanisms that share a model keep their own bounds;
+  - a declared layout needs a `row` field, and its provenance can be recorded;
+  - new tests cover coalesced, multi-field and row-splitting windows.

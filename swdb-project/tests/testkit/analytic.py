@@ -1,4 +1,5 @@
-"""Shared LLVM and hand-target fixtures. Updated: 2026-10-06 ET."""
+"""Shared LLVM and hand-target fixtures. Updated: 2026-10-09 ET (coalescing, layout,
+source and outside-operand parameters for the command fixture; defaults unchanged)."""
 from pathlib import Path
 import pytest
 import yaml
@@ -84,15 +85,17 @@ def fixture_characterization(team, subject_id='gapbs-bfs-do', input_id='kron-g16
     return data
 
 
-def characterize_command(records,tmp_path,llvm22,*,window=4,transaction=64,producer='fixture_backend',setup=False,extra=(),mechanisms=None):
+def characterize_command(records,tmp_path,llvm22,*,window=4,transaction=64,producer='fixture_backend',setup=False,extra=(),mechanisms=None,
+                         coalescing='none',layout=None,source=None,outside=None):
     import json
     import hashlib
     from conftest import REPO,run_swdb
     records.add_stub()
-    source=REPO/'tests/fixtures/analytic/commands.cpp'
+    source=REPO/'tests/fixtures/analytic/'/(source or 'commands.cpp')
     path=target_description(tmp_path);target=yaml.safe_load(path.read_text());target['target']='testhost'
     target['dram_address_layout']={name:[] for name in ('channel','rank','bank_group','bank')}
     target['dram_address_layout']['row']=[{'lsb':7,'bits':10}]
+    if layout is not None:target['dram_address_layout'].update(layout)
     target['functional_observation']={'format':'swdb.functional-observation.v1','commands':[{
         'event':'fixture.read','intrinsic':'fixture.intrinsic.read','hardware_operations':['fixture.operation.read'],
         'target_access_sources':[{'debug_name':producer,'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest()}],
@@ -100,7 +103,7 @@ def characterize_command(records,tmp_path,llvm22,*,window=4,transaction=64,produ
         'aliases':[{'symbol':symbol,'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
             'memory_base_argument':0,'active_elements_argument':1,'active_elements_signed':True,'role':role}
             for symbol,role in [('fixture_read','command'),('fixture_backend','backend_alias'),('fixture_nested','backend_alias')]]}],
-        'request_policy':{'transaction_bytes':transaction,'read_coalescing':'none'},
+        'request_policy':{'transaction_bytes':transaction,'read_coalescing':coalescing},
         'placement':{'policy':'isolated_row_aligned_allocations','basis':'inferred','physical_placement_known':False},
         'window':{'policy':'logical_fixed_requests_per_command_worker','requests':window,'basis':'inferred',
             'source':'Hand-worked fixture convention, not physical queue capacity.'}}
@@ -111,6 +114,8 @@ def characterize_command(records,tmp_path,llvm22,*,window=4,transaction=64,produ
             'target_access_sources':[],'bookkeeping_access_sources':[],
             'aliases':[{'symbol':'fixture_setup','source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
                 'memory_base_argument':None,'role':'command'}]})
+    if outside=='unknown':target['outside_operand_policy']={'unknown_events':['fixture.read'],'basis':'inferred',
+        'source':'Hand-written fixture premise: the backend may read a second memory operand.'}
     if mechanisms is not None:target['mechanisms']=mechanisms
     path.write_text(yaml.safe_dump(target,sort_keys=False))
     result=run_swdb('characterize','--records',records.path,'--source',source,

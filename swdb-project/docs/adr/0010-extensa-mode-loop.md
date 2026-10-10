@@ -1,7 +1,7 @@
 # Extensa-mode loop
 
 Date: 2026-10-03 ET
-Updated: 2026-10-05 ET (scope line, supersession note)
+Updated: 2026-10-09 23:50 ET (D35 start gate note); 2026-10-05 ET (scope line, supersession note)
 Status: proposed
 
 Narrows ADR 0002 for non-promoted Extensa records, and relaxes ADR 0006’s no-performance-tuning rule only in Extensa mode.
@@ -18,6 +18,18 @@ Superseded in part by [ADR 0012](0012-native-speed-rule-ci-width.md):
 - The A/A gate and the `baseline_unstable` verdict are per workload class (ticket 64).
 - "Non-promoted records stay in campaign run folders" has one exception: the `campaign_summary` record is always
   copied to the team store (decision D6).
+
+## Start gate note (2026-10-09 ET)
+
+Yan-Ru's decision D35 ([spec](../../.scratch/lanl-db-analytic-eval-2026-10-06/spec.md), 2026-10-09 22:33 ET)
+adds a precondition: no Extensa campaign starts until a *numeric pairing check* passes. That is one real numeric
+paired estimate, recorded before its timing, that the strict audit admits.
+
+- `swdb campaign` refuses a new campaign on a real target unless its file names the check's `paired_estimate`
+  record in `paired_estimates.numeric_pairing_check`.
+- **No check can pass yet.** The current paired-estimate schema keeps every application estimate unknown and
+  ineligible, so every new real-target start is refused until that schema changes.
+- The contract-fixture adapter and resumed campaigns are not affected.
 
 ## Scope and authority
 

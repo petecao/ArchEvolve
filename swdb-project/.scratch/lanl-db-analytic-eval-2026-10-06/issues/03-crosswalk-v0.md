@@ -1,7 +1,7 @@
 # 03 — Crosswalk v0 from the slides
 
 Created: 2026-10-06
-Updated: 2026-10-06 ET (implemented, source-audited and validated)
+Updated: 2026-10-09 23:10 ET (code review note); 2026-10-06 ET (implemented, source-audited and validated)
 **Type:** task
 **Status:** resolved
 **Blocked by:** 01
@@ -34,3 +34,13 @@ import, verified compatibility or verified absence of extension concepts is clai
 [Verification evidence](../crosswalk-v0-verification.md): 553 records and the
 crosswalk validate; seven focused public CLI tests passed; the selected validation
 and query regression run reported 139 passed and one data-dependent skip.
+
+## Code review 2026-10-09
+
+2026-10-09 23:10 ET. The crosswalk rows still validate and stay `unverified`. Fixed: the
+schema's `record_kind` enum was a 2026-10-06 snapshot and could not name the 13 record
+kinds added since (estimates, characterizations, CPU calibrations, agreement records).
+It now lists every `swdb.store` kind, and `tests/test_crosswalk.py` checks that it stays in
+sync and that every dotted field in the crosswalk exists in its record schema. The crosswalk
+rows and extension list are unchanged (v0 is frozen from the slides); the new research-only
+kinds are not classified in v0.

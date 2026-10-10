@@ -1,4 +1,5 @@
-"""Public frozen parameter-fill behavior. Created: 2026-10-06 ET."""
+"""Public frozen parameter-fill behavior. Created: 2026-10-06 ET.
+Updated: 2026-10-09 ET (code review: provider pin/guard refusals on resealed receipts)."""
 import json
 import sys
 import yaml
@@ -357,3 +358,26 @@ def test_public_service_compatibility_keeps_scoped_premises(records,tmp_path,mis
         assert new['mechanisms'][1]['parameters']['bytes_per_s']['value']==32.0
         assert new['extensions']==data['extensions']
         assert records.validate().returncode==0
+
+
+@pytest.mark.parametrize('fault',['wrong-model','guard-not-enforced','fixture-as-actual'])
+def test_public_validation_holds_actual_estimation_receipts_to_shared_provider_pins(records,tmp_path,fault):
+    # 2026-10-09 ET (code review): the role must use the same pins and guard as
+    # the other agent roles; a resealed receipt cannot relax them.
+    _,target,profile,config=setup_role(records,tmp_path)
+    result=fill(records,tmp_path,target,profile,config)
+    assert result.returncode==0,result.stdout+result.stderr
+    new=json.loads(result.stdout);receipt=new['parameter_estimation'];provider=receipt['provider']
+    from swdb.provider_adapters import PINS
+    from testkit.analytic import digest
+    if fault=='fixture-as-actual':
+        provider['classification']='rewrite_provider'
+        expected='fixture provider cannot establish actual evidence'
+    else:
+        provider.update(kind='codex',classification='rewrite_provider',guard_enforced=True,guard_passed=True,**PINS['codex'])
+        if fault=='wrong-model':provider['model']='unpinned-model';expected='actual provider pins or classification differ'
+        else:provider['guard_enforced']=False;expected='actual estimation requires a passing enforced provider guard'
+    receipt['identity_sha256']=digest({k:v for k,v in receipt.items() if k!='identity_sha256'})
+    records.write('target_descriptions/fixture.filled.yaml',new)
+    validation=records.validate()
+    assert validation.returncode!=0 and expected in validation.stdout+validation.stderr

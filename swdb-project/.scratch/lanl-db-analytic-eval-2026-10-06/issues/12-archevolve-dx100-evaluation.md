@@ -36,3 +36,31 @@ The final coexistence gate after integrating ticket 16 passed three distinct pub
 ### Request integrity followup
 
 Updated: 2026-10-06 23:09 ET. A public RED reproduced an archived caller-target change being handed off (49.23s). New evaluations now pin the entire literal request, and legacy registered target references are checked against the retained target snapshot. The two public functional cases pass (119.42s), including changed-target refusal, legacy-target refusal and removal of the original file-sourced target without losing archived handoff portability. Canonical validation remains 628; all 876 protected prior blobs and 628 prior YAML records are byte-identical, with no new canonical records. [Followup proof](../evidence/12-request-integrity-public-proof-20261006.json). Historical remote acceptance and counts are unchanged; a fresh bundle is required for subsequent estimates.
+
+## Code review 2026-10-09
+
+Updated: 2026-10-10 00:37 ET. Fixes are in the working tree, not yet committed. History
+above is kept.
+
+**Correction to the box "A test shows that no gem5 job starts anywhere in the path".** At
+HEAD both public tests in `tests/test_functional_evaluation.py` failed:
+
+1. The copied catalog lost dependencies when the fixture removed historical counts
+   (2026-10-08 onward).
+2. The retained `certification.23f81442358b4dcc8688140a394a1f08` is candidate procedure 1.6.
+   Since 2026-10-09 the default is 1.7, so `evaluate-functional` refuses it as stale.
+
+**What changed in the tests:**
+
+- The fixture copies a record closure.
+- The stale-certificate path runs evaluation and handoff under a no-child sentinel. The
+  sentinel proves it loaded and blocks `subprocess` plus `os` spawn/exec/fork.
+- The gem5 refusal asserts ADR 0013 and the offending record.
+- A new test shows a known ratio (2.0) staying `within_error` with no band on the DX100
+  functional target.
+
+**Still open:** the positive path (complete evaluation and 1.1 handoff carrying that ratio)
+**skips until a 1.7 execution certificate of this candidate exists in `records/`**. Making
+one needs a real local certification (`swdb certify contract.bfs_read_offload --candidate
+bfs-functional-read-offload-20261006-a1.proposal.candidate-1`; GCC 16 is installed on the Mac).
+That step was not run in this fix. It creates a canonical record, so it needs Yan-Ru's go-ahead.

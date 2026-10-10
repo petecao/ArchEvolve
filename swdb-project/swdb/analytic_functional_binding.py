@@ -1,4 +1,5 @@
 """Immutable source-artifact adapter for protected GAPBS timed-call drivers. 2026-10-06 ET.
+Updated: 2026-10-09 ET (code review 14-F2: catalog loop mapping; harness symbols from analytic_binding).
 
 Fixture packaging remains fixture packaging. This adapter proves a new count
 execution's source/input/ROI identity; it does not promote its source or candidate.
@@ -27,6 +28,11 @@ def selected(store,subject,snapshot_id=None):
     primary=[c['path'] for c in context['code'] if Path(c['path']).suffix in ('.c','.cc','.cpp')]
     if len(primary)!=1:raise Failure('registered source translation unit is ambiguous')
     return snapshot,context,artifact,protections,artifacts.relative_path(primary[0])
+
+
+def selection_policy(source,facts):
+    """Whether the timed kernel calls the harness's source picker."""
+    return 'source_picker' if re.search(r'\.'+re.escape(facts['source_pick_function'])+r'\s*\(',Path(source).read_text()) else 'none'
 
 
 def run_arguments(context,input_record,trials):
@@ -82,13 +88,16 @@ def prepare(store,args,subject,input_record):
         if actual['sha256']!=artifact['sha256'] or actual['files']!=artifact['files']:raise Failure('relocated source artifact differs from immutable registered identity')
     else:root=artifacts.verify(artifact);source=root/relative
     artifacts.check_protections(root,protections)
-    benchmark=source.parent/'benchmark.h'
-    lines=benchmark.read_text().splitlines()
-    sites=[i+1 for i,line in enumerate(lines) if line.strip()=='auto result = kernel(g);']
-    if len(sites)!=1:raise Failure('registered timed kernel lambda is unresolved')
-    source_policy='source_picker' if re.search(r'\.PickNext\s*\(',source.read_text()) else 'none'
+    from swdb.analytic_binding import catalog_mapping,harness,timed_call
+    facts=harness(context)
+    benchmark,line=timed_call(source,facts)
+    source_policy=selection_policy(source,facts)
+    # Catalog loops bind to region IDs for a registered implementation (D33, code review 14-F2,
+    # 2026-10-09 ET). A candidate's rewritten source has no catalog of its own, so it stays unmapped.
+    unique,ambiguous=catalog_mapping(store,subject,root) if subject['kind']=='implementation' else ([],[])
     return {'source':source,'artifact_root':root,'flags':build_flags(context,root),'run':run_arguments(context,input_record,args.trials),
-        'roi':ROI,'roi_path':str(benchmark),'roi_line':sites[0],'mapping':{'regions':[]},'ambiguous_helper_loops':[],
+        'roi':ROI,'roi_path':str(benchmark),'roi_line':line,'mapping':{'regions':unique},'ambiguous_helper_loops':ambiguous,
+        'roi_function_prefix':facts['roi_function_prefix'],'source_pick_function':facts['source_pick_function'],
         'identity':{'adapter':ADAPTER,'application':context['application'],'source_snapshot':snapshot['id'],
             'source_snapshot_record_sha256':artifacts.digest(snapshot),'source_context_sha256':artifacts.digest(context),
             'source_commit':context['source']['commit'],'source_root_sha256':artifact['sha256'],
@@ -97,7 +106,7 @@ def prepare(store,args,subject,input_record):
             'trial_count':args.trials,'source_selection':source_policy,
             'source_policy':'Original registered source selection; '+source_policy,
             'summary':'per-trial exclusive counts, median whole-call estimate',
-            'region_bindings':[], 'packaging_evidence':'Source/candidate/profile states are retained; count binding is independent execution evidence.'}}
+            'region_bindings':unique, 'packaging_evidence':'Source/candidate/profile states are retained; count binding is independent execution evidence.'}}
 
 
 def verify(record,store,require_available=False):
@@ -155,7 +164,8 @@ def verify(record,store,require_available=False):
         if actual['sha256']!=artifact['sha256'] or actual['files']!=artifact['files']:issues.append('registered functional source tree changed')
         artifacts.check_protections(root,protections)
         if record['source']['build_flags']!=build_flags(context,root):issues.append('registered functional build flags differ')
-        selected_policy='source_picker' if re.search(r'\.PickNext\s*\(',path.read_text()) else 'none'
+        from swdb.analytic_binding import harness
+        selected_policy=selection_policy(path,harness(context))
         if selected_policy!=selection:issues.append('registered functional source-selection policy differs')
     if require_available:
         folder=Path(record['counting']['output_directory'])

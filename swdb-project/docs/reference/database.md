@@ -56,7 +56,7 @@ also use this boundary.
 | Function | Contract |
 |---|---|
 | `record_files(records_dir)` | Sorted `(absolute or caller-relative path, relative record path)` pairs for visible YAML files; hidden files and directories are skipped. |
-| `read_record(path)` | Safe YAML data as a fresh object; unchanged files may use the process cache. YAML and I/O errors propagate to the caller's existing diagnostics. |
+| `read_record(path)` | Safe YAML data, or JSON data for a `.json` file, as a fresh object; unchanged files may use the process cache. A key repeated in one mapping refuses in both formats. YAML, JSON (`ValueError`) and I/O errors propagate to the caller's existing diagnostics. |
 | `read_record_bytes(path)`, `record_hash(path)` | Exact source bytes and their SHA-256 for byte-preserving export; no YAML normalization. |
 | `open_index(db_path)` | Read-only query session with dictionary-addressable rows; the caller closes it after the snapshot. A missing file is not created. Filenames are URI-encoded before opening. |
 | `query(db_path, statement, parameters=())` | One SQL result as dictionaries, with positional or named bound parameters; the session always closes. |

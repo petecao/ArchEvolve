@@ -1,4 +1,10 @@
-"""CPU outcome beside explicit analytic state; isolated catalog. 2026-10-09 ET."""
+"""CPU outcome beside explicit analytic state; isolated catalog. 2026-10-09 ET.
+
+Updated 2026-10-09 23:10 ET (code review F8/F9): Extensa evaluations add no pairing stage
+or evaluator scope; archived unpaired states carry no prediction.
+"""
+import copy
+
 import pytest
 
 from testkit.bfs_native import build_evaluation_setup, evaluate
@@ -22,8 +28,20 @@ def test_cpu_evaluation_adds_unavailable_estimate_without_changing_fixture_timin
     assert pair['state']=='unavailable' and pair['seconds'] is None
     assert pair['native_timing_decides'] is True
     assert 'matched_counted_evaluator_scope' in pair['missing']
+    assert 'analytic_pairing' in [row['stage'] for row in data['stages']]
     checked=evaluation_setup[0].validate()
     assert checked.returncode==0,checked.stdout+checked.stderr
+    # F9: an archived unpaired slot may not smuggle in a prediction or the removed state.
+    archive=evaluation_setup[0]
+    path='evaluations/'+data['id']+'.yaml'
+    original=archive.read(path)
+    for change in ({'seconds':.01},{'kernel_seconds':.01},{'state':'known'}):
+        altered=copy.deepcopy(original);altered['paired_estimate'].update(change)
+        archive.write(path,altered)
+        rejected=archive.validate()
+        assert rejected.returncode!=0 and 'paired_estimate' in rejected.stdout+rejected.stderr,change
+    archive.write(path,original)
+    assert archive.validate().returncode==0
 
     missing_result, missing=evaluate(evaluation_setup, id='eval-explicit-missing-estimate', analytic_estimate='missing.estimate')
     assert missing_result.returncode==0,missing_result.stderr
@@ -39,3 +57,6 @@ def test_cpu_evaluation_adds_unavailable_estimate_without_changing_fixture_timin
     assert excluded['mode']=='extensa' and excluded['timing'][0]['duration_s']==.025
     assert excluded['paired_estimate']['state']=='excluded'
     assert excluded['paired_estimate']['missing']==['ArchEvolve_mode']
+    # F8: the Extensa record gains only the explicit exclusion, no pairing stage or scope.
+    assert 'analytic_pairing' not in [row['stage'] for row in excluded['stages']]
+    assert 'analytic_evaluator_scope' not in excluded['context']

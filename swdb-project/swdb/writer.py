@@ -4,7 +4,7 @@ Every write validates the whole records folder as it would be afterwards and wri
 nothing unless that passes. New records go to their canonical place, derived from kind
 and ID (`<kind plural>/<id>.yaml`). Records from agents are marked draft and carry an
 `agent_run` provenance entry until a person reviews them.
-Updated: 2026-10-06 ET (record reads use the shared access layer).
+Updated: 2026-10-09 ET (bad JSON input is a reported failure); 2026-10-06 ET (record reads use the shared access layer).
 """
 
 import contextlib
@@ -55,7 +55,7 @@ def mark_agent(data, agent_name):
 def add(records_dir, file, agent=False, agent_name="agent", *, creation_tags=None):
     try:
         data = access.read_record(Path(file))
-    except (OSError, yaml.YAMLError) as exc:
+    except (OSError, ValueError, yaml.YAMLError) as exc:
         raise Failure(f"cannot read {file}: {' '.join(str(exc).split())}") from None
     if not isinstance(data, dict) or not isinstance(data.get("kind"), str) or not isinstance(data.get("id"), str):
         raise Failure(f"{file}: a record must be a mapping with text fields kind and id")

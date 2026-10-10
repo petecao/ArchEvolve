@@ -1,4 +1,6 @@
-"""Public DX100 adapter fixtures; never simulator acceptance. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-26."""
+"""Public DX100 adapter fixtures; never simulator acceptance. Updated: 2026-10-09 ET (code review
+of ticket 06: the gem5 adapter runs only in explicit Extensa mode, so these fixtures pass EXTENSA); 2026-10-05 ET
+(shared tests/testkit); 2026-09-26."""
 
 import hashlib
 import json
@@ -8,6 +10,16 @@ import sys
 
 import pytest
 import yaml
+
+#: ADR 0013: ArchEvolve mode (the default) refuses every dx100-* command; the adapter Extensa keeps is
+#: exercised under an explicit fixture campaign. tests/test_analytic_protocol.py keeps the default refusal.
+EXTENSA = ("--mode", "extensa", "--campaign", "extensa-gem5-bfs-20261004-f1")
+
+
+def extensa_args(command):
+    """EXTENSA for the evidence commands that take a mode; other commands keep their own options."""
+    from swdb.archevolve import EVIDENCE_COMMANDS
+    return EXTENSA if command in EVIDENCE_COMMANDS else ()
 
 
 def reference(path):
@@ -35,7 +47,7 @@ def case(records, tmp_path):
     def invoke(command, data):
         path = tmp_path / f"{data['id']}.yaml"
         path.write_text(yaml.safe_dump(data))
-        result = records.swdb(command, path, "--runs-dir", runs, "--lane", "0", "--format", "json")
+        result = records.swdb(command, path, "--runs-dir", runs, "--lane", "0", "--format", "json", *EXTENSA)
         assert result.returncode in {0, 1}, result.stderr
         assert result.stdout, result.stderr
         observed = json.loads(result.stdout)

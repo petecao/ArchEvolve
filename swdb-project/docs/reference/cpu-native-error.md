@@ -1,6 +1,7 @@
 # Scoped native CPU error evidence
 
-Created: 2026-10-06 ET. Ticket11 is in progress.
+Created: 2026-10-06 ET. Updated: 2026-10-09 23:10 ET (code review of tickets 07/11).
+Ticket 11 is resolved (2026-10-07 09:56 ET); the code-review changes are listed at the end.
 
 The validation collector is a separate original GAPBS driver scope. It preserves
 five advancing deterministic SourcePicker calls in one process, including their
@@ -84,3 +85,50 @@ or null width prohibits held-out timing. When supported, g17 requires
 `--development-band ID` frozen before timing; it cannot widen that width after
 observing the held-out outcome. Bands apply only to their expressly validated
 source/kernel/workload/thread/target scope.
+
+## Code-review changes (2026-10-09 23:10 ET)
+
+**A held-out input must be unseen.** `collect-cpu-native-validation --development-band`
+refuses an input that already has a `cpu_native_validation` record for the same
+implementation, thread count and evidence kind, in any phase and under any band.
+`validate-cpu-error-band` adds the missing reason `unobserved_heldout_input` when an
+earlier timing of that input exists. This blocks two shortcuts: timing the same held-out
+input again until it passes, and reusing an input whose outcome is already known
+(for example BC g17) as "held-out" for a retuned model. Only `cpu_native_validation`
+records are checked; other native timings of the same workload (profiles,
+evaluations) are not.
+
+**D25 arithmetic.** `three_state(ratio, width)` in `swdb/cpu_error_band.py` holds the rule:
+the ratio interval is `log(ratio) ± 2 × width`; `estimated_gain` if the lower end is above
+`log 1.05`, `estimated_no_gain` if the upper end is below it, otherwise `within_error`.
+The public `verdict` uses it only for a validated native band. A reported fixture band
+that passed held-out shows `error_band.fixture_verdict` (with the interval) so the rule
+is tested through the public `estimate` command; `verdict` stays `within_error`.
+
+**Large errors.** New bands use format `swdb.cpu-error-band.v2`. Each known error above
+`log 1.25` gets a `large_errors` row: direction, the five largest predicted regions,
+their limiting bounds and their share of the predicted seconds. This is forecast-only.
+It never assigns observed error to regions, and per-region medians need not add up to the
+whole-call median. `validate` recomputes the rows. The four v1 band records from
+2026-10-07 are unchanged and carry no `large_errors`; their explanations are in the
+ticket 11 evidence READMEs.
+
+**Which description the band measures.** All four bands (BFS and BC, development and
+held-out) pin `mbit10.cpu.lanl20261006.t1.services.v1`. When that description was bound,
+its `memory_service_scenario` replaced the measured `streaming_bandwidth`,
+`requests_in_flight_latency` and `cache_fit` mechanisms from ticket 07
+(`swdb/cpu_service_binding.py`, the memory branch of `bind`). That scenario charges every
+logical read the cost of a serial dependent random load over an 8 MiB footprint, and
+its basis is `inferred`. It is more than 99.98% of each forecast. So the validated BFS
+envelope (about 55×) says nothing about the measured ticket 07 bandwidth and concurrency
+values. Those have never been checked against native timing.
+
+**Paired estimates in CPU evaluations.** An ArchEvolve-mode CPU evaluation gets a numeric
+paired estimate only when a matched estimate was saved beforehand for every source slot.
+That means running `characterize --adapter registered-cpu --evaluation-request` and then
+`estimate`, both before `evaluate`. Otherwise `paired_estimate.state` is `unavailable`,
+with null seconds. Neither `evaluate` nor a campaign produces the estimate by itself.
+Extensa-mode evaluations record only the `excluded` state, with no `analytic_pairing` stage
+and no `context.analytic_evaluator_scope`. In an archived `unavailable` or `excluded`
+state, `validate` refuses any seconds, kernel seconds, estimate or slots. The unused
+`known` state was removed from the evaluation schema; no record used it.

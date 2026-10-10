@@ -1,6 +1,7 @@
 # Extensa-mode record fields (format 0.4 addition)
 
 Created: 2026-10-03 (Eastern Time)
+Updated: 2026-10-09 23:50 (Eastern Time): agreement report v2, `paired_range` (D29), ledger coverage, D35 start gate, open D30 interpretations
 Updated: 2026-10-09 (Eastern Time): artifact-receipt fields and certification failure boundary
 Updated: 2026-10-04 (Eastern Time): site-finder fields (ticket 55); campaign isolation and gem5 approval fields
 Updated: 2026-10-04 21:30 (Eastern Time): `protocol.speed_rule` and evaluator v3 (tickets 66 and 67)
@@ -232,18 +233,76 @@ A summary's `paired_estimates` ledger retains `enabled`, records,
 `unchanged_timing_only`. Validation checks exact context and estimate-before-access
 ordering. A ledger does not establish a functional-to-native or MMIO bridge.
 
+Since 2026-10-09, validation of an enabled ledger also needs **coverage**: every timed
+candidate comparison and every per-class baseline evaluation in the summary must have a
+recorded outcome access preceded by its paired estimate. Deleting an access event makes
+the summary invalid.
+
+`paired_range` (optional, D29): `beyond_paired_range` marks an estimate for a graph
+beyond gem5's sizes, and agreement reports never count it. It is hashed into
+`identity_sha256` only when present, so earlier receipts keep their identity. The
+campaign loop never sets it, because a paired estimate's input is the graph its own
+campaign times; the label exists for estimates made outside that loop.
+
 [Agreement commands](../../swdb/extensa_agreement.py) use two record kinds:
 
 | Record | Fields and meaning |
 |---|---|
 | `agreement_policy` | `population` pins selected campaign configurations and `campaign_file_sha256`; workload pins retain `canonical_sha256` and `generation`. `provider_config_sha256`, `statistics`, and `D30` freeze the provider/analysis/admission policy prospectively. |
-| `agreement_report` | `policy`, `policy_sha256`, and `policy_snapshot` bind the freeze; `summaries` and `summary_identities` bind inspected campaign results. `reported_at`, `blind_order`, `rank`, `top3`, and `recommendation` retain reporting time, ordering, agreement statistics, and whether the unchanged gate was met. |
+| `agreement_report` | `policy`, `policy_sha256`, and `policy_snapshot` bind the freeze; `summaries` and `summary_identities` bind inspected campaign results. `reported_at`, `blind_order`, `rank`, `top3`, `gate`, and `recommendation` retain reporting time, ordering, agreement statistics, and whether the unchanged gate was met. |
 
 Run `agreement-freeze --help` and `agreement-report --help` for exact inputs.
 A report retains exclusions and unsupported scope; fixture agreement is not
 measured application agreement. No report silently enables screening or replaces
 the campaign's frozen selection policy. Existing summaries without these fields
 retain their historical interpretation.
+
+### Report v2 (2026-10-09)
+
+`agreement-report` now writes `format: swdb.extensa-agreement-report.v2`. Each v1
+report is still validated by the v1 analysis, unchanged.
+
+| What v2 does | Fields |
+|---|---|
+| Matches the candidate's and the baseline's timed forecasts for each base-source comparison | `forecast_ids`, `baseline_forecast_ids`, `estimated_candidate_seconds`, `estimated_baseline_seconds` |
+| Derives the estimated speedup (baseline seconds / candidate seconds) and its error against timing | `estimated_speedup`, `relative_error` |
+| Counts each artifact pair on one graph once, across campaigns | `pair_identity_sha256`; a repeat gets `repeated_pair_content` |
+| Lists every reason a pair is not eligible | `exclusions`: for example `contract_fixture`, `unknown_forecast`, `missing_matching_outcome_request`, `prior_outcome_exposure`, `beyond_paired_range`, `no_verified_complete_call_numeric_adapter` (any forecast with `eligible_for_agreement` false) |
+| Sends only eligible pairs to the rank statistics | `rank` (Kendall's tau-b and the frozen dependency-cluster bootstrap) |
+| Checks gem5's best against the estimate's top 3 per campaign and workload class | `top3.strata[]`: `best_rank`, `in_top3`, `trivial_cut`, `tied_at_cut` |
+| Applies D30 with `>=` on every threshold | `gate.state` (`met`, `not_met`, `unsupported`), `gate.checks`, `gate.failed` |
+| Never switches by itself | `recommendation`: `do_not_switch_to_flow_b`, or `d30_met_human_decides` when every check passes |
+
+`blind_order` is `unverified` when a campaign has no timed candidate comparison:
+zero checked pairs are no evidence of order.
+
+Today no pair can be eligible: every application forecast is unknown and
+`eligible_for_agreement` is `false` by schema.
+
+**Open, pending Yan-Ru's review (not approved):** the frozen v1 statistics and v2 add
+choices that D30's text does not state. Among them: at least 4 independent dependency
+components; dependency links that make the repository's gem5 campaigns one component;
+top 3 per workload class; SHA tie-break at the cut; trivial passes with 3 or fewer
+candidates; prior-exposure exclusion of baselines. The full list is in the
+[spec](../../.scratch/lanl-db-analytic-eval-2026-10-06/spec.md) under "Open question for
+Yan-Ru: implementation interpretations of D30".
+
+### Start gate (D35, 2026-10-09)
+
+No Extensa campaign starts until a *numeric pairing check* passes. That is one real
+numeric paired estimate, recorded before its timing, that the strict audit admits.
+
+| Field | Meaning |
+|---|---|
+| `paired_estimates.numeric_pairing_check` (campaign file) | ID of that `paired_estimate` record in the team store |
+
+`swdb campaign` refuses a new campaign on a real target unless the named record has
+numeric seconds, `evidence_kind: execution` and `eligible_for_agreement: true`. The
+code does not yet bind the strict audit's admission receipt.
+
+**No check can pass yet.** The current paired-estimate schema keeps every application
+estimate unknown and ineligible, so every new real-target start is refused. The
+`--fixture` adapter and resumed campaigns are not affected.
 
 
 ## Prospective artifact coverage before certification

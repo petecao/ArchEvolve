@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "paired_estimate",
-  "description": "Created 2026-10-06 ET. A frozen Extensa estimate; unknowns and contract fixtures never establish application agreement.",
+  "description": "Created 2026-10-06 ET. A frozen Extensa estimate; unknowns and contract fixtures never establish application agreement. Updated 2026-10-09 ET: optional paired_range (D29).",
   "properties": {
     "message_version": {
       "type": "string"
@@ -150,6 +150,13 @@
     },
     "eligible_for_agreement": {
       "const": false
+    },
+    "paired_range": {
+      "description": "Added 2026-10-09 ET (D29, review F6). Optional; hashed into identity_sha256 only when present. beyond_paired_range marks a graph beyond gem5's sizes and is never counted in agreement statistics. The campaign loop never sets it, because its input is the graph that campaign times.",
+      "enum": [
+        "within_paired_range",
+        "beyond_paired_range"
+      ]
     }
   },
   "required": [

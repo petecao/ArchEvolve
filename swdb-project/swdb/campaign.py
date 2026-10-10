@@ -28,6 +28,10 @@ verdict, A/A gate); a real target's verdict is the evaluator's `decision.state` 
 answer every per-target question (pilot, shared baseline, evidence basis, campaign-file rules), so
 the loop has no target-string switches; the contract-fixture adapter is a `TargetAdapter` in
 `swdb.campaign_fixture` (F13). Knob ranges are checked by `swdb.library.knob_problem`.
+
+Updated 2026-10-09 23:25 ET (D35, decided by Yan-Ru 2026-10-09 22:33 ET): `swdb campaign` refuses
+to start a new campaign on a real target unless its file names a passing numeric pairing check
+(`require_numeric_pairing_check`). The contract-fixture adapter and resumed campaigns are unaffected.
 """
 from __future__ import annotations
 
@@ -1357,8 +1361,36 @@ def _du(folder):
     return total
 
 
+def require_numeric_pairing_check(data, records):
+    """D35: no Extensa campaign starts until a numeric pairing check passes.
+
+    The check is one real numeric paired estimate, recorded before its timing, that the
+    strict audit admits. The campaign file names its `paired_estimate` record in
+    `paired_estimates.numeric_pairing_check`; the record must be in the team store with
+    numeric seconds, execution evidence and `eligible_for_agreement: true`. The current
+    paired_estimate schema allows none of these together, so today every real-target
+    start is refused. Binding the strict audit's admission receipt is still open.
+    """
+    check = (data.get("paired_estimates") or {}).get("numeric_pairing_check")
+    if not check:
+        raise Failure("D35: no Extensa campaign starts until a numeric pairing check passes (one real numeric "
+                      "paired estimate, recorded before its timing, admitted by the strict audit); name it in "
+                      "paired_estimates.numeric_pairing_check. No paired_estimate can pass yet: the current "
+                      "schema keeps every application estimate unknown and ineligible")
+    from swdb.store import Store
+    record = Store(Path(records)).get(check, "paired_estimate")
+    if (record is None or record.get("seconds") is None or record.get("evidence_kind") != "execution"
+            or record.get("eligible_for_agreement") is not True):
+        raise Failure(f"D35: {check} is not a recorded numeric, eligible pre-timing paired estimate in the team "
+                      "store; no Extensa campaign starts until a numeric pairing check passes")
+
+
 def run_cli(args):
-    return Campaign(args).run()
+    loop = Campaign(args)
+    if not args.fixture and loop._load_state() is None:
+        # D35 guards a new start only; the contract-fixture adapter never times anything real.
+        require_numeric_pairing_check(loop.data, args.records)
+    return loop.run()
 
 
 def register_cli(commands, paths_module):

@@ -1,12 +1,72 @@
 """Description-driven live command observations through public characterize.
 Created: 2026-10-06 ET. Values prove logical fixture conventions only.
+Updated: 2026-10-09 ET (code review): coalescing, multi-field layout, row-splitting
+window, outside-operand policy and per-trial execution-gap cases.
 """
 import json
 import hashlib
 import yaml
 import pytest
 from conftest import REPO,run_swdb
-from testkit.analytic import digest,target_description,characterize_command
+from testkit.analytic import digest,target_description,characterize_command,freeze_protocol
+
+
+def logical_rows(data,target_hash):
+    return [r['address_stream_counts'][target_hash] for r in data['regions']
+        if r['address_stream_counts'][target_hash]['line_requests']['value']]
+
+
+# Straddle reads 4 bytes at 62+64i, i<6: lines (i,i+1). Window 4 holds two reads.
+# Row is offset>>7; channel bit 6 alternates by line. Hand-computed per window:
+# unique lines {0,1,2},{2,3,4},{4,5,6}; rows/window 2 (row only) or 3 (channel+row).
+@pytest.mark.parametrize('coalescing,layout,expected',[
+    ('window_unique_lines',None,(9,6,3)),
+    ('window_unique_lines',{'channel':[{'lsb':6,'bits':1}]},(9,9,3)),
+    ('none',{'channel':[{'lsb':6,'bits':1}]},(12,9,3)),
+])
+def test_coalesced_and_multi_field_layout_counts_match_hand_computation(records,tmp_path,llvm22,coalescing,layout,expected):
+    data,target_hash=characterize_command(records,tmp_path,llvm22,coalescing=coalescing,layout=layout,extra=('--run-arg','straddle'))
+    observed=logical_rows(data,target_hash)
+    assert [(o['line_requests']['value'],o['row_groups']['value'],o['windows']['value']) for o in observed]==[expected]
+    checked=records.validate();assert checked.returncode==0,checked.stdout+checked.stderr
+
+
+def test_window_boundary_inside_one_row_counts_the_row_in_each_window(records,tmp_path,llvm22):
+    # Lines 0..5 have rows 0,0,1,1,2,2. Windows {0,1,2},{3,4,5} hold rows {0,1},{1,2}.
+    data,target_hash=characterize_command(records,tmp_path,llvm22,window=3)
+    observed=logical_rows(data,target_hash)
+    assert [(o['line_requests']['value'],o['row_groups']['value'],o['windows']['value']) for o in observed]==[(6,4,2)]
+
+
+def test_second_heap_operand_is_counted_and_noted_under_default_scratch_policy(records,tmp_path,llvm22):
+    data,target_hash=characterize_command(records,tmp_path,llvm22,source='commands_two_operands.cpp')
+    observed=logical_rows(data,target_hash)
+    assert [o['line_requests']['value'] for o in observed]==[6]
+    assert any('6 target-role accesses' in note for note in observed[0]['notes'])
+    raw=json.loads((tmp_path/'counted/counts.json').read_text())
+    assert sum(c['outside_operand_accesses'] for c in raw['semantic_commands'].values())==6
+
+
+def test_second_heap_operand_is_unknown_when_declared_unknown(records,tmp_path,llvm22):
+    data,target_hash=characterize_command(records,tmp_path,llvm22,source='commands_two_operands.cpp',outside='unknown')
+    rows=[r['address_stream_counts'][target_hash] for r in data['regions']
+        if 'target_access_outside_declared_operand' in r['address_stream_counts'][target_hash]['missing']]
+    assert rows and all(o['line_requests']['value'] is None and o['staged_bytes']['value'] is None for o in rows)
+    assert all(not o['line_requests']['value'] for r in data['regions'] for o in [r['address_stream_counts'][target_hash]])
+
+
+def test_trial_command_gap_withholds_known_setup_executions(records,tmp_path,llvm22):
+    setup={'model':'offload_setup','accounting':'additive_overhead','selector':{'event_ids':['fixture.read']},
+        'parameters':{'seconds_per_event':{'value':1.0,'basis':'reported','source':'Hand-computed fixture only.','unit':'seconds/event'}}}
+    data,_=characterize_command(records,tmp_path,llvm22,extra=('--run-arg','deep'),mechanisms=[setup])
+    assert 'command_nesting_state_budget' in data['observation_contract']['semantic_commands']['missing']
+    protocol=freeze_protocol(records.path,tmp_path,tmp_path/'target.yaml',roi='fixture.command.v1',input_id='tiny-sym')
+    result=run_swdb('estimate','--records',records.path,'--characterization','fixture.command',
+        '--target-description',tmp_path/'target.yaml','--protocol',protocol,'--id','fixture.deep.setup','--format','json')
+    assert result.returncode==0,result.stdout+result.stderr
+    report=json.loads(result.stdout)
+    executed=[b for r in report['regions'] for b in r['overheads'] if b['model']=='offload_setup' and b['inputs']['executions']]
+    assert executed and all(b['seconds'] is None and 'accelerator_calls.execution_coverage' in b['missing'] for b in executed)
 
 
 

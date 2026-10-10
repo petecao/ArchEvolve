@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "agreement_report",
-  "description": "Created: 2026-10-06 ET: immutable research-only prospective D30 evidence.",
+  "description": "Created: 2026-10-06 ET: immutable research-only prospective D30 evidence. Updated 2026-10-09 23:15 ET (review F2): format v2 applies D30 to numeric pairs; a met rule is reported as d30_met_human_decides, never an automatic switch (story 71).",
   "type": "object",
   "properties": {
     "policy": {
@@ -48,7 +48,10 @@
       "type": "object"
     },
     "recommendation": {
-      "const": "do_not_switch_to_flow_b"
+      "enum": [
+        "do_not_switch_to_flow_b",
+        "d30_met_human_decides"
+      ]
     },
     "selection_policy": {
       "const": "unchanged_timing_only"
@@ -57,7 +60,10 @@
       "const": "agreement_report"
     },
     "format": {
-      "const": "swdb.extensa-agreement-report.v1"
+      "enum": [
+        "swdb.extensa-agreement-report.v1",
+        "swdb.extensa-agreement-report.v2"
+      ]
     },
     "identity_sha256": {
       "$ref": "#/$defs/hash"

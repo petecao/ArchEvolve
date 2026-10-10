@@ -1,6 +1,9 @@
 """Bounded native CPU calibration and immutable target-description import.
 
 Created: 2026-10-06 ET. Effective source-work rates are not hardware issue rates.
+Updated: 2026-10-09 23:10 ET (code review F5): commit/dirty come from the checkout,
+not the caller's directory; the receipt pins the machine record; raw output stays
+outside the checkout and, for native runs, under a registered run root.
 """
 import json
 import math
@@ -438,14 +441,20 @@ def calibrate(args):
     output = args.output.resolve()
     if output.exists():
         raise Failure('output already exists; choose a new raw folder')
+    # Code review 2026-10-09 ET (F5): raw output never enters the Git checkout, and
+    # native output uses the registered run roots (/data1 or /data EvolveSWDB_runs).
+    if output.is_relative_to(paths.HOME.parent.resolve()):
+        raise Failure('calibration raw output must stay outside the Git checkout')
+    if not args.fixture and not any(output.is_relative_to(root) for root in paths.RUN_ROOTS):
+        raise Failure('native calibration raw output must use a registered run root: ' + ', '.join(map(str, paths.RUN_ROOTS)))
     ancestor = next(p for p in (output, *output.parents) if p.exists())
     free = shutil.disk_usage(ancestor).free
     if not args.fixture and free < 20 * 1024**3:
         raise Failure('raw output mount needs at least 20 GiB free')
     store = Store(args.records)
     lane = None
+    machine = store.get(args.machine, 'machine')
     if not args.fixture:
-        machine = store.get(args.machine, 'machine')
         if not machine or socket.gethostname().split('.')[0] != machine['hostname']:
             raise Failure('native calibration must run on its registered machine')
         from swdb.profile import _verified_lane
@@ -474,8 +483,10 @@ def calibrate(args):
     _command([compiler, native / 'CpuCalibration.cpp', '-o', binary, *flags], remaining())
     context = {'compiler': compiler, 'compiler_version': version, 'flags': flags,
         'host': socket.gethostname(), 'architecture': platform.machine(), 'runtime': 'std::thread; physical-core pinning on Linux',
-        'lane': lane, 'cpus': cpus[:max(threads)], 'commit': _command(['git', 'rev-parse', 'HEAD'], remaining()).stdout.strip(),
-        'dirty': bool(_command(['git', 'status', '--porcelain'], remaining()).stdout),
+        'lane': lane, 'cpus': cpus[:max(threads)], 'machine_sha256': artifacts.digest(machine) if machine else None,
+        # The checkout's own commit, whatever the caller's working directory (F5).
+        'commit': _command(['git', '-C', paths.HOME.parent, 'rev-parse', 'HEAD'], remaining()).stdout.strip(),
+        'dirty': bool(_command(['git', '-C', paths.HOME.parent, 'status', '--porcelain'], remaining()).stdout),
         'source_sha256': {p.name: artifacts.file_hash(p) for p in native.iterdir() if p.is_file()},
         'binary_sha256': artifacts.file_hash(binary), 'start_state': _host_state(), 'free_disk_bytes': free}
     if not args.fixture and context['dirty']:

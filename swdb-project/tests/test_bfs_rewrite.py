@@ -1,4 +1,5 @@
-"""Public bounded rewrite and repair contracts. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-29."""
+"""Public bounded rewrite and repair contracts. Updated: 2026-10-10 ET (code review of ticket 06: the DX100
+compile repair runs in explicit Extensa fixture mode); 2026-10-05 ET (shared tests/testkit); 2026-09-29."""
 
 import difflib
 import json
@@ -181,7 +182,7 @@ def test_out_of_scope_repair_remains_explicitly_unresolved(evaluation_setup,prov
 
 
 def test_public_dx100_compiler_failure_keeps_proposal_and_allows_one_repair(evaluation_setup, case, provider):
-    from test_dx100 import reference
+    from test_dx100 import EXTENSA, reference
     records, runs, _, base = evaluation_setup
     request, invoke, folder = case
     model = request('repair-model-build')
@@ -206,7 +207,7 @@ def test_public_dx100_compiler_failure_keeps_proposal_and_allows_one_repair(eval
     config = provider(patch_between(original,original.replace('int alpha = 14','int alpha = 13')))
     before = records.path/'evaluations'/f"{failed['id']}.yaml"
     retained = before.read_bytes()
-    result = records.swdb('repair',failed['id'],'--provider-config',config,'--runs-dir',runs,'--format','json')
+    result = records.swdb('repair',failed['id'],'--provider-config',config,'--runs-dir',runs,'--format','json',*EXTENSA)
     assert result.returncode==0,result.stderr
     repaired = json.loads(result.stdout)
     assert repaired['repair_budget']['repairs']==1

@@ -1,5 +1,23 @@
 # Implementation progress
 
+2026-10-10 01:30 ET — **Code review of every ticket against its acceptance criteria.** Seven reviewers covered tickets 02–17; findings were fixed in code, tests and docs. Each affected ticket has a dated "Code review 2026-10-09" note. All tickets keep their status.
+
+| Tickets | Main fixes |
+|---|---|
+| 02, 03, 08 | Repeated JSON keys refuse; campaign copies go through `swdb.access`; crosswalk kinds track the store; the feature-report tests (red on HEAD) pass; sanitizer v2; internal conflicts listed |
+| 04, 05 | The LLVM pass now classifies OpenMP, member-pointer and struct-bound streams as `stream`; invariant addresses are stride-0 streams, not DRAM latency; per-step pattern comparison; compute coverage; `per_trial` labels; pure intrinsics counted; GAPBS whitelist and harness names moved out of the pass |
+| 06, 12 | The ADR 0013 guard refuses Extensa campaign summaries, nested `{id:}` pins and generic gem5 markers; the DX100 gem5-adapter tests run in Extensa mode again (they failed since ticket 06) |
+| 07, 11 | Held-out inputs must be unseen; D25 tested; band v2 `large_errors`; commit from this checkout; ticket 11 wording narrowed |
+| 09, 10, 13 | Impact rank by work; sanity check refuses another kernel's estimate; trial-wide command gaps; per-mechanism sensitivity |
+| 14 | CPU invocation from the plug-in; generality report v2; static no-target-names guard; new [ticket 25](issues/25-maple-numeric-generality.md) |
+| 16, 17 | D30 gate implemented (report v2); D35 start gate; D29 label; ledger coverage; ticket 17's D26 line reworded honestly |
+
+**Existing records:** `swdb validate` checks 704 records. The only errors are 22 library `provenance.catalog` pins, which broke when the root `catalog/hardware-v0.1.yaml` changed in `4849bcdc` (2026-10-07, outside `swdb-project/`). They are not from this review.
+
+**Re-counts needed before new numbers:** the pass, the logical-command runtime and the estimator bundle changed. Existing counts and estimates stay as history; new estimates need fresh counts and newly frozen protocols.
+
+**Open for Yan-Ru:** D20 field names (ticket 08); the D30 interpretations and D35 audit binding (spec, ticket 17); prior-observation scope for held-out inputs (ticket 11); the outside-operand default, per-event row counts and estimator-identity scope (ticket 09); stride-0 charging and pattern-match strength (ticket 05); whether to certify the functional candidate under 1.7 (ticket 12).
+
 2026-10-09 22:33 ET — Tickets 18 resolved (no flow B), 19 and 24 wontfix, 20 deferred; spec D30 decision and D35 recorded. See [map](map.md).
 
 2026-10-09 22:06 ET — Code review of `751f19b3^..5b0f51ed` (high effort, 5 findings), all fixed:

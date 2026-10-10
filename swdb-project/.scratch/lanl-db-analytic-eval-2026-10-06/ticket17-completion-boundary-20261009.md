@@ -1,5 +1,13 @@
 # Ticket 17: completed report and remaining scientific requirement
 
+2026-10-09 23:40 ET — **Correction after code review (F1).** The 21:06 ET entry
+below overstates D26. No candidate or baseline was timed in any of the four
+campaigns, the pairing ledgers are empty, the strict audit refused the whole input,
+and the report says `blind_order: unverified`. D26 was not verified and could not
+be. [Issue 17](issues/17-agreement-report.md) now records exactly that; it stays
+resolved on Yan-Ru's 21:04 ET instruction, with no D26 waiver claimed. Everything
+from "Updated: 2026-10-09 20:56 ET" down is history, kept unchanged.
+
 2026-10-09 21:06 ET — [Issue 17](issues/17-agreement-report.md) **resolved. Ticket 17 closes on its completed negative report.**
 
 Yan-Ru asked (21:04 ET) to resolve ticket 17 as soon as possible. Decision:
@@ -62,6 +70,10 @@ whole-call costs/composition and current certification still precede one genuine
 blind numerical pair. Ticket17 status, D26/D30 and original reporting are unchanged.
 
 Updated: 2026-10-09 20:56 ET
+
+> **Superseded 2026-10-09 23:40 ET.** This section and its table are the 20:56 ET
+> state, kept as history. Ticket 17 was resolved at 21:06 ET; see the correction at
+> the top of this file for the current D26 wording.
 
 **The original agreement report is complete and negative. Ticket 17 is still
 blocked on scientific acceptance.** Four campaigns ran, but produced zero

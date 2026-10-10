@@ -116,3 +116,48 @@ The prospective protected CPU adapter binds the canonical graph, source slot, fr
 Implementation/reference: [CPU native errors and pairing](../../../docs/reference/cpu-native-error.md), [independent service calibration](../../../docs/reference/cpu-service-calibration.md), [model/band runbook](../evidence/11-native-model-band-runbook.md). Frozen source C `f893fed400347ed23d92e917d8bde21b75e5375d`, estimator F6 `f6f07110941ecdeeba12212897f3ecfc8a7a74749264c1d3371e73db22c8e1c3` and all prior source/count/calibration records remain intact.
 
 Actual evidence: [model receipt](../evidence/11-cpu-model-mbit10-20261006-a3.json), [development receipt](../evidence/11-cpu-development-mbit10-20261006-a3.json), [held-out receipt](../evidence/11-cpu-holdout-mbit10-20261006-a3.json), [report receipt](../evidence/11-cpu-band-report-mbit10-20261006-a3.json) and [accepted report admission/custody](../evidence/11-report-admission-closeout-20261007-a4/README.md). The actual report retry/raw is a4 while immutable logical IDs remain a3. Original startup failures, processing-cap custody, controls and unexecuted preparation labels stay unchanged. The actual report public validation passed 684 records; delivered integration has 686 including separate PR records. Parent independently accepted local admission `ab5c80d246fe8c7419a48b82eafb395c37e850c11c10fbd509de545fa62ae578`; report export `8969d567599cb9f0d071f77936ab283fcb97c137`. Cleanup removed only its consumed export checkout and retained raw/source/Git. No Store/full validation, tests, native/provider runs or SSH were repeated for this closeout.
+
+## Code review 2026-10-09
+
+2026-10-09 23:10 ET. The resolution and the recorded results (BFS validated at about
+55×, BC failed) stand. The four band records and all evidence are unchanged. The
+review corrected the code and the wording below.
+
+- **Wording correction: "every ArchEvolve-mode CPU evaluation records a paired
+  estimate".** This holds only when a matched estimate was saved beforehand for every
+  source slot (`characterize --adapter registered-cpu --evaluation-request`, then
+  `estimate`, both before `evaluate`). Neither `evaluate` nor a campaign produces the
+  estimate. Without one, the evaluation records `paired_estimate.state: unavailable`
+  with null seconds, and native timing decides as before. Wiring characterize and
+  estimate into the evaluator was not done: it would add an instrumented run per slot
+  to every evaluation's budget.
+- **Which description the bands measure.** All four bands pin
+  `mbit10.cpu.lanl20261006.t1.services.v1`. Its `memory_service_scenario` replaced
+  ticket 07's measured stream, latency and cache mechanisms, and its basis is
+  `inferred`. That scenario charges every logical read the cost of a serial dependent
+  load over 8 MiB, which makes up more than 99.98% of each forecast. The BFS envelope
+  therefore does not validate the measured ticket 07 values.
+- **Held-out inputs must be unseen (fixed).** The collector and
+  `validate-cpu-error-band` now refuse an input already timed for the same
+  implementation and thread count (missing reason `unobserved_heldout_input`).
+  Before this, BC g17 could have been reused as "held-out" for a retuned model, or a
+  held-out input timed again until it passed. Only `cpu_native_validation` records are
+  checked.
+- **D25 is now tested (fixed).** The gain/no-gain branches could not run on any fixture.
+  The rule is now `three_state`; reported held-out fixture bands show
+  `error_band.fixture_verdict` on both sides of the band, and the public verdict stays
+  `within_error`.
+- **Large errors (fixed for new bands).** Format v2 bands add `large_errors`, which
+  ranks the predicted regions for each error above `log 1.25`. It is forecast-only and
+  `validate` recomputes it. The existing v1 bands keep their README explanations.
+- **Smaller fixes.** Extensa-mode evaluations no longer add the `analytic_pairing` stage
+  or evaluator scope. Archived `unavailable`/`excluded` paired estimates must carry no
+  prediction. The unused `known` state was removed from the evaluation schema. There
+  are now tests for the ArchEvolve-only refusals.
+
+Open question for Yan-Ru: should a held-out input also count as "seen" when an older
+native profile or evaluation of the same implementation and graph exists? Examples
+are the historical GCC/libgomp profiles. The guard ignores them today; counting them
+would require re-checking the existing bands.
+
+Details: [cpu-native-error.md, code-review section](../../../docs/reference/cpu-native-error.md).

@@ -3,6 +3,13 @@
 This closes the invocation/input scope only. It does not register a numerical
 adapter or equate software functional execution with MMIO execution. Production
 Extensa estimates remain unknown until those separate premises are supported.
+
+Scope (code review 2026-10-09 ET): this is a target- and kernel-specific counting
+harness, like the GAPBS source adapters. It binds one registered candidate's
+protected driver to the generic observer. It contributes no mechanism model,
+formula or parameter: those stay generic and description-driven (ticket 09), as
+`tests/test_analytic_offload_models.py` checks for the generic modules. The frozen
+estimator identity still hashes every `swdb/` module, this one included.
 """
 import hashlib
 import json

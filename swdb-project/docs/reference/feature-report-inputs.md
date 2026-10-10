@@ -1,6 +1,6 @@
 # Import reported feature inputs
 
-Updated: 2026-10-06 ET.
+Updated: 2026-10-09 ET (sanitizer v2, internal and scope conflicts); 2026-10-06 ET.
 
 `import-feature-report` creates a new workload characterization. It appends
 `reported_inputs[]` and preserves every native count, source/input binding,
@@ -71,11 +71,19 @@ alone does not establish physical same-line or DRAM-row locality.
 
 `conflicts[]` records reasons and both compared values. The reader lists:
 
-- filename/content version differences and unbound source/input/host scopes;
+- filename/content version differences; `source_scope_mismatch` when the reported and
+  counted function or source revision differ, otherwise `source_scope_unbound`;
 - missing or unresolved aliases, and differing reported/catalog element widths;
+- `reported_internal_conflict` when one report lists an array twice or its sections give
+  different widths (every width is compared with the catalog; none is selected);
 - stale manifest handling notes that contradict the selected updated report;
 - structured methodology versus its text table's 4-byte/8-byte offset statements;
-- KB/MB ambiguity, retaining the raw value and unit label without conversion.
+- KB/MB/GB ambiguity for every `*_kb`/`*_mb`/`*_gb` working-set field, retaining the raw
+  value and unit label without conversion. Expected logical capacity is computed only for
+  the BFS v1.2 per-array footprints (`parent`, `offsets`, `neighbors`, `queue`).
+
+The stale-manifest-note and methodology-text checks match the BFS v1.2 wording and the
+`VertexOffsets` table rows; other reports get no such conflict and need their own rule.
 
 The sparse report's 262,143 parent elements at 4 bytes imply a logical capacity
 of 1,048,572 bytes; its field says `1.05 MB`, while the methodology claims binary
@@ -92,9 +100,12 @@ actual address-block membership.
 
 ## Inputs for estimation
 
-Sanitizer `swdb.feature-report-sanitizer.v1` withholds complete PMU/performance
-sections, recursively named timing/runtime/cycle/IPC/CPI/throughput fields, and free-text
-performance outcomes. It keeps index statistics and descriptive operation
+Sanitizer `swdb.feature-report-sanitizer.v2` (2026-10-09 ET) withholds complete PMU/performance
+sections, recursively named timing/runtime/cycle/IPC/CPI/throughput fields, unit-suffixed
+durations (`trial_sec`, `kernel_ms`, `latency_ns`), latencies, cache hit/miss rates, MPKI,
+bandwidth/FLOP rates, and free-text performance outcomes. Boolean methodology flags such as
+`measures_cache_hit_rate` stay. Redaction entries hold only `path` and `reason`. Version v1
+(2026-10-06) matched a narrower name list; no stored record used it. It keeps index statistics and descriptive operation
 frequencies. Original values stay in the evaluator-owned source files; redaction
 metadata contains paths and reasons, not the removed values. Structured
 methodology/manifest inputs also have original and sanitized hashes. Manifest

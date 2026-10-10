@@ -306,7 +306,9 @@ def _execute_counts(args, *, adapter, output, live_contract, llvm, source, flags
     # Adapter boundary hooks are inserted before helper inlining, preserving the exact source call.
     bound_ir = output / 'bound.bc'
     if adapter and not adapter.get('explicit_roi'):
-        gate_env = dict(os.environ if build_env is None else build_env, SWDB_ROI_PATH=adapter['roi_path'], SWDB_ROI_LINE=str(adapter['roi_line']))
+        # Harness symbols come from the adapter (2026-10-09 ET); the pass holds no harness names.
+        gate_env = dict(os.environ if build_env is None else build_env, SWDB_ROI_PATH=adapter['roi_path'], SWDB_ROI_LINE=str(adapter['roi_line']),
+                        SWDB_ROI_FUNCTION_PREFIX=adapter['roi_function_prefix'], SWDB_SOURCE_PICK_FUNCTION=adapter.get('source_pick_function') or '')
         run([llvm / 'opt', '-load-pass-plugin=' + str(plugin), '-passes=swdb-bind-roi', raw, '-o', bound_ir], env=gate_env, timeout=args.timeout_s)
     analysis_input=bound_ir if adapter and not adapter.get('explicit_roi') else raw
     if live_contract:
@@ -438,7 +440,11 @@ def characterize(args):
      optimized) = (observed[key] for key in _COUNT_FIELDS)
     if not static['regions']:
         raise Failure('no source regions matched the requested function/debug information')
-    regions, calls = _counted_regions(static, counts,observation_contract=live_contract)
+    # A gated run's root counters are its first trial window (CountingRuntime writes trials.front()).
+    # With several windows they are per_trial, not per_run; one window is the whole counted run
+    # (2026-10-09 ET, code review F4).
+    top_scope = 'per_trial' if len(counts.get('trials') or []) > 1 else 'per_run'
+    regions, calls = _counted_regions(static, counts, count_scope=top_scope, observation_contract=live_contract)
     trials = []
     if counts.get('trials') or adapter:
         if adapter and len(counts.get('trials', [])) != args.trials:
@@ -468,7 +474,7 @@ def characterize(args):
             'pipeline_version': pipeline_version,
             'summary': 'per_trial_then_median_time' if trials else 'single_run',
             'native_runs': 1, 'basis': 'measured', 'vector_multiplicity': 'instrumented before vectorization and unrolling; existing fixed vectors counted by lane',
-            'operation_definition': 'Normalized IR arithmetic/comparison operations; FMA counts two floating-point operations; checked integer arithmetic counts the result and overflow predicate (two per lane); branches count terminator executions; optimizer hints, address and cast instructions excluded.',
+            'operation_definition': 'Normalized IR arithmetic/comparison operations; FMA counts two floating-point operations; side-effect-free arithmetic intrinsics (fabs, sqrt, min/max, abs, bit counts) count one operation per lane; checked integer arithmetic counts the result and overflow predicate (two per lane); branches count terminator executions; optimizer hints, address and cast instructions excluded.',
             'loop_definition': 'Body entries when the header condition chooses inside/outside; header entries for other loop shapes.',
             'binary_sha256': _sha(binary), 'counts_sha256': _sha(output / 'counts.json'), 'output_directory': str(output)},
         'static_analysis': {'basis': 'code_reading', 'source_ir_sha256': _sha(normalized), 'optimized_ir_sha256': _sha(optimized),
@@ -481,6 +487,9 @@ def characterize(args):
             'missing_counts': ['callee bodies outside selected debug functions and other translation units'] if any(c['execution_count']['value'] and _uncovered_call(c) for c in calls + [c for t in trials for c in t['unmodeled_calls']]) else []},
         'regions': regions, 'unmapped_loops': [r['id'] for r in regions if r['kind'] == 'loop' and not r['mapped']],
         'unmodeled_calls': calls, 'evidence_kind': 'contract_fixture' if args.fixture else 'execution'})
+    if top_scope == 'per_trial':
+        record['counting']['top_level_counts'] = {'scope': 'per_trial', 'trial_position': 0,
+            'note': 'Top-level regions and calls repeat the first registered trial window; trials holds every window.'}
     if plugin_support_objects:
         record['toolchain']['plugin_support_objects'] = plugin_support_objects
     native_libraries = {}
@@ -536,7 +545,11 @@ def characterize(args):
         from swdb.analytic_count_reuse import policy_sha256,POLICY_FORMAT
         command_specs=live_contract['functional_observation']['commands']
         observed_descriptors={site['descriptor'] for site in static.get('semantic_sites',[])}
-        semantic_missing=counts.get('semantic_missing',[])
+        semantic_missing=list(counts.get('semantic_missing',[]))
+        # 2026-10-09 ET: the counts root is the first trial snapshot; a later trial's
+        # command gap must also withhold the contract's completeness claim.
+        for trial_counts in counts.get('trials',[]):
+            semantic_missing+=[name for name in trial_counts.get('semantic_missing',[]) if name not in semantic_missing]
         if observed_descriptors!=set(range(len(command_specs))):semantic_missing=semantic_missing+['semantic_command_binding']
         if live_contract.get('normative_bindings') is not None:
             record['observation_contract']['normative_bindings']=live_contract['normative_bindings']
@@ -555,7 +568,8 @@ def characterize(args):
     if adapter:
         record['binding']['note'] = 'Registered source excerpts, input generator and original timed kernel lambda verified; each trial and SourcePicker selection retained.'
         record['coverage']['ambiguous_helper_loops'] = adapter['ambiguous_helper_loops']
-        record['pattern_comparison'] = [] if args.adapter in ('registered-functional','registered-cpu') else analytic_binding.compare_patterns(subject_record, regions, adapter['ambiguous_helper_loops'], adapter['mapping']['regions'])
+        # registered-functional now binds catalog loops too (2026-10-09 ET, code review 14-F2).
+        record['pattern_comparison'] = [] if args.adapter == 'registered-cpu' else analytic_binding.compare_patterns(subject_record, regions, adapter['ambiguous_helper_loops'], adapter['mapping']['regions'])
         if args.adapter == 'registered-cpu':
             from swdb.analytic_cpu_binding import finish
             finish(adapter, record, store)
@@ -611,6 +625,7 @@ def _estimate_regions(source_regions, source_calls, target, observation_contract
                 'sum(call execution count * call cost)', {'calls': uncovered},
                 ['call_cost.' + c['name'] for c in uncovered]))
         bounds.extend(analytic_composition.host_memory_coverage(region,target))
+        bounds.extend(analytic_composition.host_compute_coverage(region,target))
         bounds.extend(analytic_composition.resource_composition(bounds,target))
         unknown = any(b['seconds'] is None for b in bounds + overheads)
         seconds = None if unknown else max((b['seconds'] for b in bounds), default=0.) + sum(b['seconds'] for b in overheads)
@@ -648,14 +663,21 @@ def compose_estimate(characterization, target, store, protocol):
             values=[r['seconds'] if r else 0. for r in sequence]
             row['seconds']=None if any(v is None for v in values) else statistics.median(values)
             row['state']='unknown' if row['seconds'] is None else 'known'
+            def occurrences(items):
+                # 2026-10-09 ET: two mechanisms may share a model; key the k-th row.
+                seen={};keyed={}
+                for item in items:
+                    seen[item['model']]=seen.get(item['model'],0)+1;keyed[(item['model'],seen[item['model']])]=item
+                return keyed
             for field in ('bounds', 'overheads'):
-                templates={b['model']:b for b in row[field]}
+                templates=occurrences(row[field])
                 for r in sequence:
                     if r:
-                        for b in r[field]:templates.setdefault(b['model'],copy.deepcopy(b))
+                        for key,b in occurrences(r[field]).items():templates.setdefault(key,copy.deepcopy(b))
                 row[field]=list(templates.values())
-                for bound in row[field]:
-                    bs=[next((b for b in r[field] if b['model']==bound['model']),None) if r else None for r in sequence]
+                trial_rows=[occurrences(r[field]) if r else None for r in sequence]
+                for key,bound in templates.items():
+                    bs=[rows.get(key) if rows is not None else None for rows in trial_rows]
                     values=[b['seconds'] if b else 0. for b in bs]
                     bound['seconds']=None if any(v is None for v in values) else statistics.median(values)
                     bound['state']='unknown' if bound['seconds'] is None else 'known'

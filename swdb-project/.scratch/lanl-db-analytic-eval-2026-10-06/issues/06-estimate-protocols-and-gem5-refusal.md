@@ -69,3 +69,39 @@ No SSH, push, simulator execution or mbit10 measurement was performed by this
 implementer. Real application counts/estimates require ticket05's registered-source
 adapter; measured target parameters belong to ticket07. Parent owns final integrated
 code review and remote evaluation.
+
+## Code review 2026-10-09
+
+Updated: 2026-10-10 00:37 ET. Fixes are in the working tree, not yet committed. The Answer
+above is kept as history.
+
+**Correction to the box "Extensa gem5 campaign tests still pass".** The campaign path
+worked, but every direct DX100 gem5-adapter test failed from `c3633cf` on: the guard
+refuses `dx100-*` in the default ArchEvolve mode, and the fixtures passed no mode. On
+2026-10-09, before the fix, at least 144 tests failed this way (`tests/test_dx100*.py`,
+`tests/test_typed_dispatch_retention.py`, `tests/test_request_messages.py`). The fixtures
+now pass explicit Extensa mode (`tests/test_dx100.py`: `EXTENSA`, `extensa_args`; also the
+direct calls in `test_request_messages.py` and the DX100 repair in `test_bfs_rewrite.py`).
+`tests/test_analytic_protocol.py` keeps the default-mode refusal.
+
+**Guard gaps fixed in `swdb/archevolve.py`:**
+
+- An Extensa campaign summary (gem5 or native) could calibrate a team target
+  description. Now every `mode: extensa` record is refused, except the candidate,
+  proposal and source snapshot, which `extensa_boundary` admits only after promotion.
+- A nested `{id: ...}` pin was not followed, although the frozen dependency closure
+  followed it. It is now followed like a bare ID.
+- Detection used three keys. It now uses generic markers: `gem5` in an identity field
+  (`backend`, `simulator`, `model`, `target`, `hardware_target`; string or dict values;
+  never inside a record ID), and any `basis: simulated` fact in a target description.
+- A refusal now names every offending record and its chain, so a refused relay record
+  still names the paired estimate or policy it pins.
+
+**Tests:** new parametrized cases and a positive control in
+`tests/test_analytic_protocol.py`, which now copies a record closure instead of the ~1 GB
+catalog. In the canonical store, the old and new guards differ only on the 15 Extensa
+campaign summaries, which are now refused. `validate` still never calls the guard.
+
+**Open question for Yan-Ru:** the evidence list of a promotion review (`origin.mode:
+extensa`) is not followed, so a team re-evaluation can sit under a review that cites
+gem5 campaign evidence (unchanged from before). Should that lineage be refused?

@@ -99,3 +99,47 @@ def test_crosswalk_refuses_an_invented_research_record_kind(records, tmp_path):
     result = validate_crosswalk(records, tmp_path, document)
     assert result.returncode == 1, result.stdout + result.stderr
     assert "record_kind" in result.stderr
+
+
+def test_crosswalk_record_kinds_match_the_store():
+    # 2026-10-09 ET: the kind enum was a 2026-10-06 snapshot; record kinds added later
+    # could not be named. It must track the store's kinds.
+    from conftest import REPO
+    from swdb.store import PLURAL
+    schema = json.loads((REPO / "schemas/compatibility/main_crosswalk.schema.json").read_text())
+    assert set(schema["$defs"]["target"]["properties"]["record_kind"]["enum"]) == set(PLURAL)
+
+
+def _schema_has_field(schema, root, parts):
+    """Whether a dotted record field path exists in a JSON schema (through $ref, combinators, items)."""
+    if not parts:
+        return True
+    if "$ref" in schema:
+        target = root
+        for key in schema["$ref"].removeprefix("#/").split("/"):
+            target = target[key]
+        return _schema_has_field(target, root, parts)
+    child = schema.get("properties", {}).get(parts[0])
+    if isinstance(child, dict) and _schema_has_field(child, root, parts[1:]):
+        return True
+    options = [option for key in ("allOf", "anyOf", "oneOf") for option in schema.get(key, [])]
+    if isinstance(schema.get("items"), dict):
+        options.append(schema["items"])
+    return any(_schema_has_field(option, root, parts) for option in options)
+
+
+def test_every_crosswalk_field_exists_in_its_record_schema():
+    from conftest import REPO
+    from swdb import yamlio
+    crosswalk = yamlio.load(REPO / "docs/compatibility/lanl-crosswalk-v0.yaml")
+    targets = [target for row in crosswalk["rows"] + crosswalk["separable_extension"] for target in row["research"]]
+    missing = []
+    for target in targets:
+        if target["field"] is None:
+            continue
+        schema = json.loads((REPO / "schemas" / f"{target['record_kind']}.schema.json").read_text())
+        if not _schema_has_field(schema, schema, target["field"].split(".")):
+            missing.append(f"{target['record_kind']}.{target['field']}")
+    assert not missing, missing
+    kernel = json.loads((REPO / "schemas/kernel.schema.json").read_text())
+    assert not _schema_has_field(kernel, kernel, ["no_such_field"])

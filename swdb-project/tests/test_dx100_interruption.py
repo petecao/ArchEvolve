@@ -1,4 +1,5 @@
-"""Durable interrupted execution precedes optional postmortem work. Date: 2026-09-26 ET."""
+"""Durable interrupted execution precedes optional postmortem work. Date: 2026-09-26 ET.
+Updated: 2026-10-09 ET (code review of ticket 06: the adapter runs in explicit Extensa fixture mode)."""
 import json
 from pathlib import Path
 import signal
@@ -11,7 +12,7 @@ from types import SimpleNamespace
 import pytest
 import yaml
 
-from test_dx100 import case, execution_request
+from test_dx100 import EXTENSA, case, execution_request
 from swdb import artifacts, dx100, profile
 from swdb.processes import stop_group
 from swdb.store import Store
@@ -95,7 +96,7 @@ raise SystemExit(main())
     command = [sys.executable, '-c', driver, str(marker), str(release), postmortem,
         'dx100-execute', str(request_path), '--records', str(records.path),
         '--runs-dir', str(folder / 'runs'), '--lane',
-        interruption_lane(records.read('machines/fixturehost.yaml')), '--format', 'json']
+        interruption_lane(records.read('machines/fixturehost.yaml')), '--format', 'json', *EXTENSA]
     child = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                              text=True, start_new_session=True)
     canonical = records.path / 'evaluations' / (request['id'] + '.yaml')

@@ -1,10 +1,13 @@
 """Public generic logical request models. Fixture numbers are not hardware evidence.
-Created: 2026-10-06 ET.
+Created: 2026-10-06 ET. Updated: 2026-10-09 ET (code review: event-selected tile
+staging; generic mechanism and observer sources name no target or kernel).
 """
 import json
+import re
 import yaml
-from conftest import run_swdb
-from testkit.analytic import digest,fixture_characterization,target_description,freeze_protocol
+import pytest
+from conftest import REPO,run_swdb
+from testkit.analytic import digest,fixture_characterization,target_description,freeze_protocol,characterize_command
 
 
 def fact(value):return {'value':value,'basis':'unknown' if value is None else 'reported','scope':'per_call'}
@@ -87,3 +90,36 @@ def test_unknown_requests_keep_total_null_with_known_parameters(records,tmp_path
         'admission_requests_per_s':parameter(10,'requests/s')},requests=None)
     assert result['seconds'] is None
     assert 'address_stream_counts.line_requests' in result['regions'][0]['bounds'][0]['missing']
+
+
+@pytest.mark.parametrize('events,expected',[(['fixture.read'],24),(['fixture.setup'],0),(['fixture.absent'],None)])
+def test_tile_staging_event_selector_charges_only_selected_command_bytes(records,tmp_path,llvm22,events,expected):
+    # The counted read command stages 6 x 4 useful bytes; the declared setup
+    # command never executes in this run, so it stages none.
+    stage={'model':'tile_staging','selector':{'domain':'offload','event_ids':events},
+        'parameters':{'staging_bytes_per_s':parameter(12,'bytes/s')}}
+    characterize_command(records,tmp_path,llvm22,setup=True,mechanisms=[stage])
+    protocol=freeze_protocol(records.path,tmp_path,tmp_path/'target.yaml',roi='fixture.command.v1',input_id='tiny-sym')
+    result=run_swdb('estimate','--records',records.path,'--characterization','fixture.command',
+        '--target-description',tmp_path/'target.yaml','--protocol',protocol,'--id','fixture.staging','--format','json')
+    assert result.returncode==0,result.stdout+result.stderr
+    report=json.loads(result.stdout)
+    # Trial rows hold every region the trial executed; the per-region summary
+    # charges zero to regions absent from a trial.
+    bounds=[b for t in report['trials'] for r in t['regions'] for b in r['bounds'] if b['model']=='tile_staging']
+    if expected is None:
+        assert bounds and all(b['seconds'] is None and 'accelerator_calls.event_coverage' in b['missing'] for b in bounds)
+    else:
+        assert sum(b['inputs']['staged_bytes'] for b in bounds)==expected
+        assert sum(b['seconds'] for b in bounds)==expected/12
+
+
+def test_generic_mechanism_and_observer_sources_name_no_target_or_kernel():
+    # Ticket 09 acceptance: target- and kernel-specific facts live in records and
+    # descriptions. Adapter/harness modules (for example analytic_dx100_call.py)
+    # bind registered sources and are outside this generic layer.
+    generic=['swdb/analytic_models.py','swdb/analytic_offload_models.py','swdb/analytic_composition.py',
+        'swdb/analytic_sensitivity.py','swdb/offload_observation.py','swdb/llvm/LogicalCommands.hpp',
+        'swdb/llvm/LiveObjects.hpp','swdb/llvm/SemanticCommands.hpp']
+    names=re.compile(r'dx100|\bmaa|dxc_|maple|gapbs|\bbfs\b|pagerank|brandes|dobfs',re.I)
+    assert {path:names.findall((REPO/path).read_text()) for path in generic if names.search((REPO/path).read_text())}=={}

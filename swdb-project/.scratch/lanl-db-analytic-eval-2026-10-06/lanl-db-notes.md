@@ -1,7 +1,7 @@
 # LANL main database: preparation notes
 
 Date: 2026-10-06 (Eastern Time)
-Updated: 2026-10-06 ET (ticket 03: versioned crosswalk v0 and validation command)
+Updated: 2026-10-09 ET (§5 rule 1 points to the access layer); 2026-10-06 ET (ticket 03: versioned crosswalk v0 and validation command)
 Status: notes only. Nobody has contacted LANL, and we have no access to their database or repository.
 Source: the LANL slides in the ArchEvolve overview deck dated 10/6/2026 (slides 7–12), and the
 team meeting notes in `docs/meeting-2026-09-24.md` at the ArchEvolve root (branch `yanrujhou_main`).
@@ -88,8 +88,9 @@ unknown is never false).
 ## 5. Design rules that keep a merge or a replacement cheap
 
 1. **One access layer.** Tools read records through one interface, so a different database means a
-   new adapter, not edits across tools. `swdb/store.py` is already the only module that reads record
-   files; `swdb/db.py` and `swdb/site_finder.py` still open SQLite directly.
+   new adapter, not edits across tools. Done in ticket 02: [`swdb/access.py`](../../swdb/access.py)
+   owns record reads, record copies and generated-index SQLite access; see the access-interface
+   section of [`docs/reference/database.md`](../../docs/reference/database.md).
 2. **Both IDs on every record.** An imported record keeps its LANL ID; an exported row keeps its
    SWDB ID.
 3. **SWDB-only concepts are a separable extension.** Strategies, intrinsics, certifications and the

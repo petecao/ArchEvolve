@@ -1,7 +1,7 @@
 # 05 — Indirect accesses and the BFS baseline on the CPU
 
 Created: 2026-10-06
-Updated: 2026-10-06 ET
+Updated: 2026-10-09 23:49 ET (code review note appended)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 04
@@ -116,3 +116,28 @@ scope labels, preserving scientific values, null totals and known partial call
 sizes. Final `python3 -m swdb validate` passed **584 records** locally, matching the
 remote receipt. Exact commands and evidence boundaries are in the
 [runbook](../evidence/05-registered-counting-runbook.md).
+
+## Code review 2026-10-09
+
+Added 2026-10-09 23:49 ET. Corrects the cause given above for **0/13 and 0/20 direct
+matches**; the history above stays as written.
+
+- **Real cause: a classifier defect, not lowered multi-step chains.** The pass could not
+  see through loop-invariant base pointers that the counting IR reloads every iteration
+  (C++ container members, OpenMP captured variables). It also read an OpenMP chunk bound
+  as an index array. In the a2 BFS record, OpenMP worker code had 0 `stream` accesses out
+  of 5.1M executed (BC: 0 of 31M), and 3.5M BFS accesses were labeled `constant`.
+- **Second defect: invariant addresses charged as DRAM requests.** `constant` accesses
+  counted as dependent requests in `requests_in_flight_latency`. They made up most of the
+  latency bound that limits the a2 BFS/BC per-region reports, for example 19.6 of 25.3 µs in
+  `loop:bfs.cc:2357` (td-edge).
+- **Third defect: the comparison could not match multi-step patterns.** The test asserting
+  it could never fail.
+- **Fixed in source** (not yet re-counted): `swdb/llvm/Characterize.cpp`,
+  `swdb/analytic_models.py`, `swdb/analytic_binding.py`, plus tests. On the g4 test graph the
+  per-step comparison now matches **8/13 BFS** and **8/20 BC** patterns; the remaining
+  mismatches name the failing step. The format doc lists all changes:
+  `docs/reference/format-v0.4-analytic.md#code-review-corrections-2026-10-09-et`.
+- **Still true:** the a2 receipts, counts and estimates above are immutable history and
+  keep the old classifications. Fresh mbit10 counts and frozen protocols are needed before
+  any application estimate uses the fix.

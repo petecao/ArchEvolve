@@ -1,7 +1,7 @@
 # 16 — Extensa flow A: blind paired estimates
 
 Created: 2026-10-06
-Updated: 2026-10-08 21:34 ET
+Updated: 2026-10-09 23:55 ET (code review follow-up F7/F9/F10); 2026-10-08 21:34 ET
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 06, 09
@@ -75,5 +75,19 @@ state remain unchanged; the tested bundle is still `884e76a5…`. See the
 2026-10-08 21:05 ET — Reopened by parent after full Spec review found missing every-artifact/baseline coverage on certification-refusal paths (spec user story65 and Extensa loop). Previously accepted timing-boundary tests/Answer remain historical, but they did not cover an all-refused campaign. Prospective fix must record forced-unknown/noneligible artifact-only forecasts after immutable materialization and baseline setup, without executing/counting untrusted candidate code, manufacturing outcome events or altering timing selection. Exact timed forecasts remain separate; artifact-only rows must not enter D30/report matching. New refused/repaired/accepted flow tests and root+peer review are required before re-resolution. Frozen original R/P3 history remains unchanged and strict scientific admission cannot be repaired retrospectively.
 
 ## Answer — review finding addressed
+
+2026-10-09 23:55 ET — **Code review follow-up; the status stays resolved.**
+
+- **F7, coverage:** a copied summary used to validate after its timing events were
+  deleted. `extensa_pairing.coverage_problems` now requires, for an enabled ledger, a
+  recorded outcome access preceded by its estimate for every timed candidate comparison
+  and every per-class baseline evaluation.
+- **F9, selection test:** a new multi-iteration test, for both native and gem5 fixtures,
+  has competing candidates and estimates that contradict the timings. It shows the same
+  per-class bests, the same levels and the same plateau stop with and without pairing.
+- **F10, glossary:** *paired estimate* now covers baselines and untimed artifacts.
+
+The acceptance items above were already true for the tested flows; these changes
+close gaps the tests did not cover.
 
 Re-resolved: 2026-10-08 21:34 ET. [Prospective artifact coverage and public proof](../evidence/16-artifact-coverage-fix-and-public-proof-20261008/README.md) records every baseline and materialized/refused/repaired artifact×registered input before admission/certification as a closed structural unknown. Original protocol metadata is bound; no guessed binary/runtime proof, numeric premise or outcome event is introduced. Actual evaluator contexts retain separate exact forecasts, timing-only selection/plateau and budgets. Same content aliases retain first receipt/time/bytes; prior stopped histories remain unchanged. All73public pairing/agreement/target regression cases passed683.75s, and final11frozen-digest cases passed0.15s. Source and runtime-original reviews are retained separately. This fixture orchestration acceptance neither implements the missing complete-call numeric adapter nor repairs frozen P3 science or establishes D30/strict-audit admission; ticket17 stays claimed.

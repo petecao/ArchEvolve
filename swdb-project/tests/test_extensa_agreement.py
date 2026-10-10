@@ -1,8 +1,12 @@
 """Prospective agreement through public freeze/report commands. Created: 2026-10-06 ET.
 
 Contract fixture numbers never become application agreement evidence.
+Updated: 2026-10-09 ET (review F2/F6/F7/F8: report v2 matching, D29 exclusion, ledger
+coverage, no vacuous blind order).
 """
 import json
+
+import pytest
 
 from conftest import run_swdb
 from testkit.extensa import GEM5, campaign_file, campaign_store, fixture_file, provider, run
@@ -26,13 +30,21 @@ def test_public_report_keeps_fixture_forecasts_ineligible_and_d30_unsupported(ca
                      '--mode', 'extensa', '--campaign', GEM5, '--format', 'json')
     assert result.returncode == 0, result.stderr
     report = json.loads(result.stdout)
-    assert report['basis'] == 'simulated'
+    assert report['basis'] == 'simulated' and report['format'] == 'swdb.extensa-agreement-report.v2'
     assert report['evidence_kind'] == 'contract_fixture'
     assert all(row['timing_basis'] == 'simulated' and row['structural_missing'] for row in report['pairs'])
     assert report['counts']['observed_candidate_rows'] > 0
     assert report['counts']['unique_eligible_dx100_pairs'] == 0
-    assert report['counts']['unique_observed_pair_contents'] is None
-    assert all(row['pair_identity_sha256'] is None and row['request_digest_sha256'] for row in report['pairs'])
+    # 2026-10-09 ET (review F2): baseline and candidate forecasts are matched and their ratio
+    # derived (fixture: 0.1 s baseline / 10 s candidate), but fixture pairs stay excluded.
+    assert report['counts']['unique_observed_pair_contents'] == len(report['pairs'])
+    assert all(row['pair_identity_sha256'] and row['request_digest_sha256'] for row in report['pairs'])
+    assert all(row['estimated_baseline_seconds'] == 0.1 and row['estimated_candidate_seconds'] == 10
+               and row['estimated_speedup'] == pytest.approx(0.01) and not row['eligible']
+               and {'contract_fixture', 'no_verified_complete_call_numeric_adapter'} <= set(row['exclusions'])
+               for row in report['pairs'])
+    assert all(row['relative_error'] == pytest.approx(row['estimated_speedup'] / row['timing_speedup'] - 1)
+               for row in report['pairs'])
     assert report['gate']['state'] == 'unsupported'
     assert report['rank']['tau_b'] is None and report['rank']['interval_95'] is None
     assert report['top3']['state'] == 'unsupported'
@@ -44,6 +56,20 @@ def test_public_report_keeps_fixture_forecasts_ineligible_and_d30_unsupported(ca
                for row in report['top3']['strata'])
     checked = run_swdb('validate', '--records', campaign_team['records'])
     assert checked.returncode == 0, checked.stderr
+    # Wiring only: the same rows, as if eligible, reach the rank statistics, the top-3 strata
+    # and the gate. Two pairs from one campaign cannot meet D30.
+    from swdb.extensa_agreement import evaluate_d30
+    forced = [{**row, 'eligible': True, 'exclusions': []} for row in report['pairs']]
+    bests = {(row['campaign'], row['class']): row['best'] for row in report['top3']['strata']}
+    result = evaluate_d30(forced, bests, [GEM5])
+    assert result['unique_eligible_dx100_pairs'] == len(forced)
+    assert result['rank']['state'] == 'unsupported'
+    assert result['rank']['reason'] == 'too_few_supported_dependency_components'
+    assert result['top3']['state'] == 'supported'
+    assert all(row['in_top3'] and row['trivial_cut'] for row in result['top3']['strata'])
+    assert result['gate']['state'] == 'unsupported'
+    assert 'minimum_unique_eligible_dx100_pairs' in result['gate']['failed']
+    assert result['recommendation'] == 'do_not_switch_to_flow_b'
 
 from testkit.extensa_targets import gem5_campaign
 
@@ -109,13 +135,74 @@ def test_public_report_does_not_claim_pair_blindness_from_baseline_events_alone(
     assert summary['paired_estimates']['outcome_accesses']
     path = source / 'campaign_summaries' / (summary['id'] + '.yaml')
     path.write_text(yaml.safe_dump(summary, sort_keys=False))
+    # 2026-10-09 ET (review F7): a copied summary whose timed candidates lost their outcome
+    # accesses no longer validates, so no report can be built from it.
+    checked = run_swdb('validate', '--records', source)
+    assert checked.returncode == 1
+    assert 'has no recorded outcome access preceded by its paired estimate' in checked.stdout + checked.stderr
+    result = run_swdb('agreement-report', '--policy', policy['id'], '--campaign-records', source,
+                     '--records', campaign_team['records'], '--mode', 'extensa', '--campaign', GEM5, '--format', 'json')
+    assert result.returncode == 1 and 'Traceback' not in result.stderr
+
+
+def test_public_report_does_not_verify_blind_order_without_timed_candidates(campaign_team):
+    """2026-10-09 ET (review F8): baseline accesses alone, with every candidate rejected,
+    leave the order unverified instead of vacuously verified."""
+    file = campaign_file(campaign_team, cid=GEM5, target='dx100_gem5', budgets={'max_repairs': 0})
+    config = provider(campaign_team, {})
+    frozen = run_swdb('agreement-freeze', '--campaign-file', file, '--provider-config', config,
+                     '--records', campaign_team['records'], '--mode', 'extensa', '--campaign', GEM5, '--format', 'json')
+    assert frozen.returncode == 0, frozen.stderr
+    policy = json.loads(frozen.stdout)
+    refused = {cls: {'certification': ['failed']} for cls in ('kronecker', 'uniform_random')}
+    fixture = fixture_file(campaign_team, iterations=[refused])
+    prepared = run(campaign_team, file, fixture, config, '--baselines-only')
+    assert prepared['baselines'] and prepared['paired_estimates']['outcome_accesses']
+    summary = run(campaign_team, file, fixture, config, '--resume')
+    assert all(not c.get('comparisons') for it in summary['iterations'] for c in it['candidates'])
+    result = run_swdb('agreement-report', '--policy', policy['id'], '--campaign-records',
+                     campaign_store(campaign_team, GEM5), '--records', campaign_team['records'],
+                     '--mode', 'extensa', '--campaign', GEM5, '--format', 'json')
+    assert result.returncode == 0, result.stderr
+    report = json.loads(result.stdout)
+    assert report['pairs'] == [] and report['blind_order']['state'] == 'unverified'
+    assert {'campaign': GEM5, 'reason': 'no_timed_candidate_comparisons'} in report['blind_order']['problems']
+    assert report['gate']['state'] == 'unsupported' and report['recommendation'] == 'do_not_switch_to_flow_b'
+
+
+def test_public_report_never_counts_a_beyond_paired_range_forecast(campaign_team):
+    """2026-10-09 ET (review F6, D29): the explicit label excludes the pair; re-signed fixture."""
+    import yaml
+    from swdb.extensa_pairing import identity
+    file = campaign_file(campaign_team, cid=GEM5, target='dx100_gem5')
+    config = provider(campaign_team, {})
+    frozen = run_swdb('agreement-freeze', '--campaign-file', file, '--provider-config', config,
+                     '--records', campaign_team['records'], '--mode', 'extensa', '--campaign', GEM5, '--format', 'json')
+    assert frozen.returncode == 0, frozen.stderr
+    policy = json.loads(frozen.stdout)
+    summary = run(campaign_team, file, fixture_file(campaign_team), config)
+    baselines = {b['candidate'] for b in summary['baselines']}
+    renamed = {}
+    for row in summary['paired_estimates']['records']:
+        execution = row['timing_context']['execution']
+        if row['timing_context']['subject']['id'] in baselines or execution.get('observation_scope'):
+            continue
+        row['paired_range'] = 'beyond_paired_range'
+        row['identity_sha256'] = identity(row)
+        old, row['id'] = row['id'], row['id'].rsplit('.', 1)[0] + '.' + row['identity_sha256'][:16]
+        renamed[old] = row['id']
+    assert renamed
+    for event in summary['paired_estimates']['outcome_accesses']:
+        event['paired_estimates'] = [renamed.get(rid, rid) for rid in event['paired_estimates']]
+    source = campaign_store(campaign_team, GEM5)
+    (source / 'campaign_summaries' / (summary['id'] + '.yaml')).write_text(yaml.safe_dump(summary, sort_keys=False))
     result = run_swdb('agreement-report', '--policy', policy['id'], '--campaign-records', source,
                      '--records', campaign_team['records'], '--mode', 'extensa', '--campaign', GEM5, '--format', 'json')
     assert result.returncode == 0, result.stderr
     report = json.loads(result.stdout)
-    assert report['blind_order']['state'] == 'unverified'
-    assert all('missing_matching_outcome_request' in row['exclusions'] for row in report['pairs'])
-    assert report['gate']['state'] == 'unsupported' and report['counts']['unique_eligible_dx100_pairs'] == 0
+    assert report['pairs'] and all('beyond_paired_range' in row['exclusions'] and not row['eligible']
+                                   for row in report['pairs'])
+    assert report['counts']['unique_eligible_dx100_pairs'] == 0
 
 
 def test_public_freeze_pins_baseline_artifact_and_metadata(repo_team):

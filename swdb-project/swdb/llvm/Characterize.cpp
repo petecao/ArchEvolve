@@ -1,5 +1,9 @@
-// Source-normalized characterization and instrumentation. Updated: 2026-10-06 ET.
+// Source-normalized characterization and instrumentation. Updated: 2026-10-09 ET
+// (code review: invariant-base streams, OpenMP chunk bounds, pure intrinsics, adapter-supplied ROI symbols).
 // LLVM 22 new-PM plugin; no timing model and no source-text parsing.
+#include "llvm/Analysis/AliasAnalysis.h"
+#include "llvm/Analysis/MemoryLocation.h"
+#include "llvm/IR/Dominators.h"
 #include "llvm/Analysis/LoopInfo.h"
 #include "llvm/Analysis/ScalarEvolution.h"
 #include "llvm/Analysis/ScalarEvolutionExpressions.h"
@@ -62,6 +66,26 @@ json::Object memoryPrimitive(Instruction &I, Type *T, const DataLayout &DL) {
     {"volatile",vol},{"weak",std::move(weak)},{"update_opcode",std::move(update)}};
 }
 
+// Side-effect-free arithmetic intrinsics (2026-10-09 ET, code review 14-F3): one source-normalized
+// operation per lane in the integer (0) or floating-point (1) class, never an opaque callee. Library
+// intrinsics such as pow/exp/sin lower to calls of unknown cost and stay unmodeled; -1 means not pure.
+int pureOperation(Intrinsic::ID id) {
+  switch(id) {
+    case Intrinsic::fabs:case Intrinsic::sqrt:case Intrinsic::copysign:
+    case Intrinsic::minnum:case Intrinsic::maxnum:case Intrinsic::minimum:case Intrinsic::maximum:
+    case Intrinsic::minimumnum:case Intrinsic::maximumnum:
+    case Intrinsic::floor:case Intrinsic::ceil:case Intrinsic::trunc:case Intrinsic::rint:
+    case Intrinsic::nearbyint:case Intrinsic::round:case Intrinsic::roundeven:
+      return 1;
+    case Intrinsic::smax:case Intrinsic::smin:case Intrinsic::umax:case Intrinsic::umin:case Intrinsic::abs:
+    case Intrinsic::ctpop:case Intrinsic::ctlz:case Intrinsic::cttz:case Intrinsic::bswap:case Intrinsic::bitreverse:
+    case Intrinsic::fshl:case Intrinsic::fshr:
+      return 0;
+    default:
+      return -1;
+  }
+}
+
 // Follow SSA dependencies, never source spelling. Cycles terminate at the visited set.
 bool depends(Value *v, Value *wanted, SmallPtrSetImpl<Value *> &seen) {
   if(v==wanted)return true;
@@ -69,13 +93,6 @@ bool depends(Value *v, Value *wanted, SmallPtrSetImpl<Value *> &seen) {
   if(auto *I=dyn_cast<Instruction>(v))for(Value *op:I->operands())if(depends(op,wanted,seen))return true;
   return false;
 }
-bool hasLoad(Value *v, SmallPtrSetImpl<Value *> &seen) {
-  if(!seen.insert(v).second)return false;
-  if(isa<LoadInst>(v))return true;
-  if(auto *I=dyn_cast<Instruction>(v))for(Value *op:I->operands())if(hasLoad(op,seen))return true;
-  return false;
-}
-bool hasLoad(Value *v) { SmallPtrSet<Value *,32> seen;return hasLoad(v,seen); }
 bool recurrenceLoad(Value *v,Value *phi,SmallPtrSetImpl<Value *> &seen) {
   if(v==phi || !seen.insert(v).second)return false;
   if(auto *load=dyn_cast<LoadInst>(v)) { SmallPtrSet<Value *,32> path;if(depends(load->getPointerOperand(),phi,path))return true; }
@@ -93,57 +110,128 @@ bool chase(Value *v, Loop *L, SmallPtrSetImpl<Value *> &seen) {
   if(auto *I=dyn_cast<Instruction>(v))for(Value *op:I->operands())if(chase(op,L,seen))return true;
   return false;
 }
-bool merged(Value *v, Loop *L, SmallPtrSetImpl<Value *> &seen) {
-  if(!seen.insert(v).second)return false;
-  if(auto *S=dyn_cast<SelectInst>(v);S && S->getType()->isPointerTy() && hasLoad(S->getCondition()))return true;
-  if(auto *P=dyn_cast<PHINode>(v);P && P->getType()->isPointerTy() && P->getParent()!=L->getHeader()
-      && P->getNumIncomingValues()>1 && P->getIncomingValue(0)!=P->getIncomingValue(1))return true;
-  if(auto *I=dyn_cast<Instruction>(v))for(Value *op:I->operands())if(merged(op,L,seen))return true;
-  return false;
-}
-bool loadedOuterBoundary(Value *v,Loop *outer,ScalarEvolution &SE,SmallPtrSetImpl<Value *> &seen) {
-  if(!seen.insert(v).second)return false;
-  if(auto *load=dyn_cast<LoadInst>(v);load && outer && !SE.isLoopInvariant(SE.getSCEV(load->getPointerOperand()),outer))return true;
-  if(auto *I=dyn_cast<Instruction>(v))for(Value *op:I->operands())if(loadedOuterBoundary(op,outer,SE,seen))return true;
-  return false;
-}
-bool loadedIndex(Value *v,Loop *L,ScalarEvolution &SE,SmallPtrSetImpl<Value *> &seen) {
-  if(!seen.insert(v).second)return false;
-  if(auto *gep=dyn_cast<GetElementPtrInst>(v))for(Value *index:gep->indices())
-    if(hasLoad(index) && !SE.isLoopInvariant(SE.getSCEV(index),L))return true;
-  if(auto *load=dyn_cast<LoadInst>(v);load && load->getType()->isPointerTy()
-      && !SE.isLoopInvariant(SE.getSCEV(load->getPointerOperand()),L))return true;
-  if(auto *I=dyn_cast<Instruction>(v))for(Value *op:I->operands())if(loadedIndex(op,L,SE,seen))return true;
-  return false;
-}
-bool rangedStart(Value *v, Loop *L, ScalarEvolution &SE, SmallPtrSetImpl<Value *> &seen) {
-  if(!seen.insert(v).second)return false;
-  if(auto *P=dyn_cast<PHINode>(v);P && P->getParent()==L->getHeader()) {
-    for(unsigned i=0;i<P->getNumIncomingValues();++i)if(!L->contains(P->getIncomingBlock(i))) {
-      Value *start=P->getIncomingValue(i);SmallPtrSet<Value *,32> path;
-      if(P->getType()->isIntegerTy()?hasLoad(start):loadedOuterBoundary(start,L->getParentLoop(),SE,path))return true;
+// Address shapes use vocab/address_shapes.yaml only. Updated 2026-10-09 ET (code review F1/F2).
+// Counting IR keeps every source load (no LICM), so a loop body can reload a loop-invariant base
+// pointer: a C++ container member (begin pointer, size) or an OpenMP captured variable. Such a load counts
+// as invariant only when its own address is invariant and alias analysis proves that nothing in the
+// loop may write that location. An invariant address is `stream` with stride 0 (no `constant`
+// shape). Indirect evidence needs a load inside the loop whose value varies there; an OpenMP chunk
+// bound or a scalar field read before the loop is not an index array. A loaded range boundary must
+// vary with the enclosing loop (CSR offsets[u]). A pointer merge needs a loaded value to decide it.
+class Classifier {
+  ScalarEvolution &SE; AAResults &AA; DominatorTree &DT;
+  std::map<std::pair<LoadInst *,Loop *>,bool> loads;
+public:
+  Classifier(ScalarEvolution &SE,AAResults &AA,DominatorTree &DT):SE(SE),AA(AA),DT(DT){}
+  bool invariantLoad(LoadInst *load,Loop *L,unsigned depth) {
+    auto key=std::make_pair(load,L);auto known=loads.find(key);if(known!=loads.end())return known->second;
+    loads[key]=false; // recursion cycles and exhausted depth stay varying
+    bool result=!load->isAtomic() && !load->isVolatile() && depth<6
+        && invariant(SE.getSCEV(load->getPointerOperand()),L,depth+1);
+    if(result) {
+      MemoryLocation location=MemoryLocation::get(load);
+      for(BasicBlock *block:L->blocks()) {
+        for(Instruction &I:*block)if(I.mayWriteToMemory() && isModSet(AA.getModRefInfo(&I,location))){result=false;break;}
+        if(!result)break;
+      }
     }
+    return loads[key]=result;
   }
-  if(auto *I=dyn_cast<Instruction>(v))for(Value *op:I->operands())if(rangedStart(op,L,SE,seen))return true;
-  return false;
-}
-std::string classify(Value *ptr, Loop *L, ScalarEvolution &SE, json::Value &stride) {
-  if(!L)return "unknown";
-  SmallPtrSet<Value *,32> seen;
-  if(chase(ptr,L,seen))return "pointer_chase";
-  seen.clear();if(merged(ptr,L,seen))return "data_dependent_merge";
-  const SCEV *S=SE.getSCEV(ptr);
-  if(auto *AR=dyn_cast<SCEVAddRecExpr>(S);AR && AR->getLoop()==L && AR->isAffine()) {
-    if(auto *step=dyn_cast<SCEVConstant>(AR->getStepRecurrence(SE))) {
-      stride=step->getAPInt().getSExtValue();
-      seen.clear();return rangedStart(ptr,L,SE,seen)?"ranged_indirect":"stream";
+  bool invariant(const SCEV *S,Loop *L,unsigned depth=0) {
+    if(SE.isLoopInvariant(S,L))return true;
+    if(auto *U=dyn_cast<SCEVUnknown>(S)) {
+      auto *I=dyn_cast<Instruction>(U->getValue());
+      if(!I || !L->contains(I))return true;
+      auto *load=dyn_cast<LoadInst>(I);return load && invariantLoad(load,L,depth);
     }
+    if(auto *AR=dyn_cast<SCEVAddRecExpr>(S);AR && L->contains(AR->getLoop()))return false;
+    for(const SCEV *operand:S->operands())if(!invariant(operand,L,depth))return false;
+    return true;
   }
-  if(SE.isLoopInvariant(S,L)){stride=0;return "constant";}
-  // A varying loaded index is evidence for an indirect address; an opaque call is not.
-  seen.clear();if(loadedIndex(ptr,L,SE,seen))return "single_valued_indirect";
-  return "unknown";
-}
+  // A load inside L whose value can change between iterations of L.
+  bool varyingLoad(Value *v,Loop *L,SmallPtrSetImpl<Value *> &seen) {
+    if(!seen.insert(v).second)return false;
+    auto *I=dyn_cast<Instruction>(v);if(!I || !L->contains(I))return false;
+    if(isa<LoadInst>(I) && !invariant(SE.getSCEV(I),L))return true;
+    for(Value *op:I->operands())if(varyingLoad(op,L,seen))return true;
+    return false;
+  }
+  bool merged(Value *v,Loop *L,SmallPtrSetImpl<Value *> &seen) {
+    if(!seen.insert(v).second)return false;
+    auto *I=dyn_cast<Instruction>(v);if(!I || !L->contains(I))return false;
+    if(auto *S=dyn_cast<SelectInst>(I);S && S->getType()->isPointerTy()) {
+      SmallPtrSet<Value *,32> path;if(varyingLoad(S->getCondition(),L,path))return true;
+    }
+    if(auto *P=dyn_cast<PHINode>(I);P && P->getType()->isPointerTy() && P->getParent()!=L->getHeader() && P->getNumIncomingValues()>1) {
+      bool distinct=false;BasicBlock *decision=P->getIncomingBlock(0);
+      for(unsigned i=1;i<P->getNumIncomingValues() && decision;++i) {
+        distinct|=P->getIncomingValue(i)!=P->getIncomingValue(0);
+        decision=DT.findNearestCommonDominator(decision,P->getIncomingBlock(i));
+      }
+      if(distinct && decision)if(auto *br=dyn_cast<BranchInst>(decision->getTerminator());br && br->isConditional()) {
+        SmallPtrSet<Value *,32> path;if(varyingLoad(br->getCondition(),L,path))return true;
+      }
+    }
+    for(Value *op:I->operands())if(merged(op,L,seen))return true;
+    return false;
+  }
+  bool outerBoundary(Value *v,Loop *outer,SmallPtrSetImpl<Value *> &seen) {
+    if(!outer || !seen.insert(v).second)return false;
+    if(auto *load=dyn_cast<LoadInst>(v);load && !invariant(SE.getSCEV(load->getPointerOperand()),outer))return true;
+    if(auto *I=dyn_cast<Instruction>(v))for(Value *op:I->operands())if(outerBoundary(op,outer,seen))return true;
+    return false;
+  }
+  bool rangedStart(Value *v,Loop *L,SmallPtrSetImpl<Value *> &seen) {
+    if(!seen.insert(v).second)return false;
+    if(auto *P=dyn_cast<PHINode>(v);P && P->getParent()==L->getHeader()) {
+      for(unsigned i=0;i<P->getNumIncomingValues();++i)if(!L->contains(P->getIncomingBlock(i))) {
+        SmallPtrSet<Value *,32> path;if(outerBoundary(P->getIncomingValue(i),L->getParentLoop(),path))return true;
+      }
+    }
+    if(auto *I=dyn_cast<Instruction>(v))for(Value *op:I->operands())if(rangedStart(op,L,seen))return true;
+    return false;
+  }
+  bool loadedIndex(Value *v,Loop *L,SmallPtrSetImpl<Value *> &seen) {
+    if(!seen.insert(v).second)return false;
+    auto *I=dyn_cast<Instruction>(v);if(!I || !L->contains(I))return false;
+    if(auto *gep=dyn_cast<GetElementPtrInst>(I))for(Value *index:gep->indices()) {
+      SmallPtrSet<Value *,32> path;if(!invariant(SE.getSCEV(index),L) && varyingLoad(index,L,path))return true;
+    }
+    if(isa<LoadInst>(I) && I->getType()->isPointerTy() && !invariant(SE.getSCEV(I),L))return true;
+    for(Value *op:I->operands())if(loadedIndex(op,L,seen))return true;
+    return false;
+  }
+  // {start,+,step}<L> plus terms invariant in L, including reloaded invariant bases.
+  const SCEVAddRecExpr *affine(const SCEV *S,Loop *L) {
+    auto direct=[&](const SCEV *X)->const SCEVAddRecExpr * {
+      auto *AR=dyn_cast<SCEVAddRecExpr>(X);return AR && AR->getLoop()==L && AR->isAffine()?AR:nullptr;
+    };
+    if(auto *AR=direct(S))return AR;
+    auto *sum=dyn_cast<SCEVAddExpr>(S);if(!sum)return nullptr;
+    const SCEVAddRecExpr *found=nullptr;
+    for(const SCEV *operand:sum->operands()) {
+      if(auto *AR=direct(operand)){if(found)return nullptr;found=AR;}
+      else if(!invariant(operand,L))return nullptr;
+    }
+    return found;
+  }
+  std::string classify(Value *ptr,Loop *L,json::Value &stride) {
+    if(!L)return "unknown";
+    SmallPtrSet<Value *,32> seen;
+    if(chase(ptr,L,seen))return "pointer_chase";
+    seen.clear();if(merged(ptr,L,seen))return "data_dependent_merge";
+    const SCEV *S=SE.getSCEV(ptr);
+    if(auto *AR=affine(S,L)) {
+      const SCEV *step=AR->getStepRecurrence(SE);
+      if(auto *constant=dyn_cast<SCEVConstant>(step))stride=constant->getAPInt().getSExtValue();
+      if(isa<SCEVConstant>(step) || invariant(step,L)){seen.clear();return rangedStart(ptr,L,seen)?"ranged_indirect":"stream";}
+    }
+    if(invariant(S,L)){stride=0;return "stream";}
+    // A varying loaded index is evidence for an indirect address; an opaque call is not.
+    seen.clear();if(loadedIndex(ptr,L,seen))return "single_valued_indirect";
+    return "unknown";
+  }
+};
 std::string path(const DIFile *file) {
   if(!file)return "";SmallString<256> p(file->getFilename());
   if(!sys::path::is_absolute(p)){SmallString<256> base(file->getDirectory());sys::path::append(base,p);p=base;}
@@ -191,13 +279,17 @@ PreservedAnalyses run(Module &M,ModuleAnalysisManager &) {
   auto begin=M.getOrInsertFunction("__swdb_begin",Type::getVoidTy(C));
   auto end=M.getOrInsertFunction("__swdb_end",Type::getVoidTy(C));
   auto source=M.getOrInsertFunction("__swdb_source",Type::getVoidTy(C),u64);
+  // The registered adapter supplies the harness's timed-wrapper function prefix and optional
+  // source-selection function (2026-10-09 ET); this pass holds no harness or kernel names.
+  std::string wrapper=env("SWDB_ROI_FUNCTION_PREFIX"),picker=env("SWDB_SOURCE_PICK_FUNCTION");
+  if(wrapper.empty())report_fatal_error("registered ROI binding requires SWDB_ROI_FUNCTION_PREFIX");
   unsigned matched=0;std::vector<CallBase *> sites;std::vector<ReturnInst *> picks;
   for(Function &F:M)if(auto *SP=F.getSubprogram()) {
     for(Instruction &I:instructions(F)) {
-      if(SP->getName().starts_with("BenchmarkKernel"))if(auto *CB=dyn_cast<CallBase>(&I))
+      if(SP->getName().starts_with(wrapper))if(auto *CB=dyn_cast<CallBase>(&I))
         if(CB->getCalledFunction() && !CB->getCalledFunction()->isIntrinsic() && I.getDebugLoc() && path(I.getDebugLoc()->getScope()->getFile())==env("SWDB_ROI_PATH")
           && I.getDebugLoc().getLine()==unsigned(std::stoul(env("SWDB_ROI_LINE"))))sites.push_back(CB);
-      if(SP->getName()=="PickNext")if(auto *R=dyn_cast<ReturnInst>(&I);R && R->getReturnValue())picks.push_back(R);
+      if(!picker.empty() && SP->getName()==picker)if(auto *R=dyn_cast<ReturnInst>(&I);R && R->getReturnValue())picks.push_back(R);
     }
   }
   for(auto *CB:sites) {
@@ -249,6 +341,7 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
     regions.back().host_selected=hostSelected;
     auto &LI=FAM.getResult<LoopAnalysis>(F);
     auto &SE=FAM.getResult<ScalarEvolutionAnalysis>(F);
+    Classifier shapes(SE,FAM.getResult<AAManager>(F),FAM.getResult<DominatorTreeAnalysis>(F));
     std::vector<Loop *> loops;
     for (Loop *L:LI) { loops.push_back(L); }
     for (size_t i=0;i<loops.size();++i) {
@@ -263,7 +356,9 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
         auto fn=r->getString("function"); auto lo=r->getInteger("line_start"), hi=r->getInteger("line_end");
         auto mappedPath=r->getString("path");
         std::string locationName=L->getStartLoc()?L->getStartLoc()->getScope()->getSubprogram()->getName().str():name;
-        if (fn && (*fn==name || *fn==F.getName() || *fn==locationName) && (!mappedPath || *mappedPath==loopPath) && lo && hi && line>=*lo && line<=*hi) {
+        // A row without a function (a header helper loop) binds by its exact source path and lines.
+        bool functionMatch=fn ? (*fn==name || *fn==F.getName() || *fn==locationName) : bool(mappedPath);
+        if (functionMatch && (!mappedPath || *mappedPath==loopPath) && lo && hi && line>=*lo && line<=*hi) {
           auto width=*hi-*lo;
           if(width>bestWidth)continue;
           if(mapped && width==bestWidth)report_fatal_error("loop maps to ambiguous source regions");
@@ -307,7 +402,7 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
         unsigned bytes=size.getFixedValue()/lanes;
         const SCEV *S=SE.getSCEV(ptr); std::string shape="unknown"; json::Value stride=nullptr;
         Loop *L=LI.getLoopFor(I.getParent());
-        shape=classify(ptr,L,SE,stride);
+        shape=shapes.classify(ptr,L,stride);
         unsigned line=I.getDebugLoc() ? I.getDebugLoc().getLine() : 0;
         unsigned col=I.getDebugLoc() ? I.getDebugLoc().getCol() : 0;
         json::Object row{{"site",int64_t(site)},{"region",regions[rid].id},{"region_index",int64_t(rid)},
@@ -329,6 +424,7 @@ PreservedAnalyses run(Module &M, ModuleAnalysisManager &MAM) {
           auto called=callee->getName();
           if(called=="__swdb_command_enter")semanticSites.emplace_back(CB,rid);
           if (called.starts_with("llvm.fmuladd") || called.starts_with("llvm.fma")) { category=1; amount=2; }
+          else if (int pure=pureOperation(callee->getIntrinsicID());pure>=0) { category=unsigned(pure); amount=1; }
           else if (!called.starts_with("__swdb_") && !called.starts_with("llvm.lifetime.") && !called.starts_with("llvm.dbg.") && called!="llvm.assume") {
             bool hint=false,checked=false;std::string reference;
             switch(callee->getIntrinsicID()) {

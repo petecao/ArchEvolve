@@ -23,3 +23,22 @@ Updated: 2026-10-06 ET. Added the public read-only `scripts/paper_sanity_check.p
 The actual ticket 10 BFS ratio remains null/incomparable. BC and PR have no DX estimate supplied at this point; the report says so explicitly and supports a new sealed comparison after ticket 14. Uniform versus Kronecker inputs, bottom-up versus complete DOBFS ROI, simulated hardware cores versus requested software threads, and LLC/configuration differences appear beside the numbers. No accuracy validation or error-band claim is made.
 
 Nine public tests passed (3.86 s), including stale request, estimate content pin, malformed basis/unit/locator/number, wrong kernel and output preservation refusals. `evidence/13-paper-sanity-closeout-20261006.json` seals the proof. All prior canonical/library/application and `swdb/` bytes remain unchanged; no estimator/mechanism code change, provider call or remote execution.
+
+
+## Code review 2026-10-09
+
+2026-10-09 23:43 ET. Correction: the Answer's "wrong kernel … refusals" overstated
+the tests. They refused only a comparison kernel with no cited observation. An
+estimate for a different kernel was accepted under that label: a BC estimate passed
+as BFS. Its differences could also be empty.
+
+`scripts/paper_sanity_check.py` now refuses:
+- an estimate whose subject does not resolve to the cited kernel;
+- a fixture estimate;
+- a comparison without `input` and `configuration` differences;
+- a non-null ratio without a declared `baseline_system` difference.
+
+Estimator ratios compare two codes on one target description, not the paper's
+baseline system. Each row records the estimate's own subject, input, target and
+baseline. The sealed a1 request still replays: BFS stays incomparable, and BC and
+PR stay unsupplied. The historical report is unchanged.

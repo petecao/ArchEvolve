@@ -1,6 +1,6 @@
 # 4. Follow BFS through rewrites and evidence
 
-Updated: 2026-10-09 (Eastern Time). Reading budget: 9 minutes.
+Updated: 2026-10-09 23:50 (Eastern Time): D35 start gate. Reading budget: 9 minutes.
 
 [Tutorial](README.md) · [Previous](03-components.md) · [Next](05-contributing.md)
 
@@ -163,6 +163,14 @@ before admission and certification, including repaired attempts. These receipts 
 metadata only: seconds stay `null`, and they cannot authorize timing or enter
 agreement. Timed evaluator requests retain separate forecasts. No verified
 complete-call application adapter exists; fixture agreement cannot enable screening.
+
+**Before a real campaign (D35, 2026-10-09):** `swdb campaign` refuses to start a new
+campaign on a real target until its file names a passing *numeric pairing check*
+(`paired_estimates.numeric_pairing_check`): one real numeric paired estimate, recorded
+before its timing, that the strict audit admits. No such check can pass yet, because the
+paired-estimate schema keeps every application estimate unknown. `--fixture` runs and
+resumed campaigns are unaffected. See the
+[format reference](../reference/format-v0.4-extensa.md#start-gate-d35-2026-10-09).
 
 [Certification failures](../../swdb/campaign_targets.py) distinguish candidate
 refusals from infrastructure errors. Source-scope, harness-scan, or missing

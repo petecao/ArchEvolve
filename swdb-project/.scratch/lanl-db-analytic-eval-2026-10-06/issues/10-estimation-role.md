@@ -67,3 +67,17 @@ are preserved.
 
 
 2026-10-07 ET retention note: [Three original ignored generated inputs](../evidence/10-ignored-generated-input-retention-20261007/README.md) are retained byte for byte with the original unsealed five-file inventory. Their three plan input hashes and 101,164-byte total match the earlier archived preparation; no preparation/provider/native/test execution or scientific acceptance was repeated. Existing resolved status and actual evaluation history remain unchanged.
+
+
+## Code review 2026-10-09
+
+2026-10-09 23:43 ET. A read-only review confirmed all four acceptance items.
+- The fourth item ("provider pins and audit are the same") had no negative test. A
+  new test reseals a receipt with a wrong pin, an unenforced guard, or a fixture
+  claiming actual classification. Validation refuses each one
+  (`tests/test_estimation_role.py`).
+- Sensitivity now matches each parameter to its own mechanism when two mechanisms
+  share a model.
+- Unknown rows gain a work rank among unknowns of the same unit.
+
+The history above is unchanged.

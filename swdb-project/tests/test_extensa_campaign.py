@@ -45,14 +45,39 @@ def test_validate_accepts_named_approvals(campaign_team):
 
 def test_campaign_without_fixture_uses_the_real_target_adapter(campaign_team):
     """Updated 2026-10-04 ET (tickets 56/57): without --fixture the target's real adapter runs;
-    off mbit10 it stops before any provider call (its inputs or socket lane are unavailable)."""
+    off mbit10 it stops before any provider call (its inputs or socket lane are unavailable).
+    Updated 2026-10-09 ET (D35): the command refuses that start before any setup, so the real
+    adapter's own stop is checked through the loop object, as the target tests do."""
+    from argparse import Namespace
+    from swdb import campaign, campaign_targets
     path = campaign_file(campaign_team)
-    result = run_swdb("campaign", path, "--records", campaign_team["records"], "--provider-config", provider(campaign_team, {}),
+    config = provider(campaign_team, {})
+    result = run_swdb("campaign", path, "--records", campaign_team["records"], "--provider-config", config,
                       "--format", "json")
-    summary = json.loads(result.stdout)
+    assert result.returncode == 1 and "D35" in result.stderr and "numeric_pairing_check" in result.stderr
+    assert not (campaign_team["root"] / "runs" / "extensa" / CID / "state.json").exists()
+    assert not (campaign_team["root"] / "provider-log.jsonl").exists()
+    args = Namespace(file=path, records=campaign_team["records"], library=None, provider_config=config,
+                     runs_root=None, fixture=None, resume=False)
+    loop = campaign.Campaign(args)
+    assert isinstance(loop.adapter, campaign_targets.NativeAdapter)
+    summary = loop.run()
     assert summary["stop_reason"] == "infrastructure_failure" and summary["evidence_kind"] == "execution"
     assert summary["budgets"]["used"]["provider_calls_counted"] == 0
     assert not (campaign_team["root"] / "provider-log.jsonl").exists()
+
+
+def test_d35_refuses_a_named_check_that_is_not_a_passing_numeric_estimate(campaign_team):
+    """2026-10-09 ET (D35): a named record that is missing, unknown or ineligible never passes;
+    the contract-fixture adapter still runs the same file."""
+    path = campaign_file(campaign_team, paired_estimates={"numeric_pairing_check": "fixture.no-such-paired-estimate"})
+    config = provider(campaign_team, {})
+    result = run_swdb("campaign", path, "--records", campaign_team["records"], "--provider-config", config,
+                      "--format", "json")
+    assert result.returncode == 1 and "D35" in result.stderr and "fixture.no-such-paired-estimate" in result.stderr
+    assert not (campaign_team["root"] / "provider-log.jsonl").exists()
+    summary = run(campaign_team, path, fixture_file(campaign_team), config)
+    assert summary["stop_reason"] == "max_iterations" and summary["evidence_kind"] == "contract_fixture"
 
 
 def test_one_fixture_iteration_end_to_end(campaign_team):

@@ -1,4 +1,5 @@
-"""Public registered-source counting preserves fixture packaging provenance. 2026-10-06 ET."""
+"""Public registered-source counting preserves fixture packaging provenance. 2026-10-06 ET.
+Updated: 2026-10-10 ET (copy only the record closure; the full catalog exceeded the timeouts)."""
 import json
 import shutil
 from conftest import REPO,run_swdb
@@ -10,7 +11,8 @@ CANDIDATE='bfs-functional-read-offload-20261006-a1.proposal.candidate-1'
 
 
 def registered_tree(records,tmp_path):
-    records.copy_repo()
+    records.copy_closure(CANDIDATE,'bfs-functional-read-offload-20261006-a1.fixture-profile',
+                         'dx100-e4fc4af-functional-analytic-v1.t1')
     store=Store(records.path)
     root,_=certification.materialize_snapshot(store,SOURCE,tmp_path/'materialized')
     primary=root/'benchmarks/gapbs/src/bfs.cc'

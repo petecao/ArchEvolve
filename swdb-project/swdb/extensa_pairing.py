@@ -3,6 +3,9 @@
 Created 2026-10-06 ET (ticket16). A structural unknown is a recorded estimate,
 never an agreement sample. Functional trial-lambda observations do not prove a
 complete-call MMIO or native-driver bridge. Timing remains the selection input.
+Updated: 2026-10-09 23:20 ET (review F6/F7): optional `paired_range` label (D29);
+an enabled ledger must show a preceding outcome access for every timed candidate
+comparison and every per-class baseline evaluation in its summary.
 """
 import copy
 from datetime import datetime
@@ -30,10 +33,16 @@ PAYLOAD = ('format', 'mode', 'campaign', 'basis', 'estimator_variant', 'estimato
            'estimator_sha256', 'policy_sha256', 'timing_context', 'context_sha256',
            'estimated_at', 'seconds', 'state', 'structural_missing', 'evidence_kind',
            'eligible_for_agreement')
+# 2026-10-09 ET (review F6, D29): optional and hashed only when present, so earlier
+# receipts keep their identity. The campaign loop never sets it: a paired estimate's
+# input is the graph its own campaign times. `beyond_paired_range` marks an estimate
+# for a graph beyond gem5's sizes; agreement reports never count it.
+OPTIONAL_PAYLOAD = ('paired_range',)
 
 
 def identity(data):
-    return artifacts.digest({key: data[key] for key in PAYLOAD})
+    return artifacts.digest({key: data[key] for key in PAYLOAD + OPTIONAL_PAYLOAD
+                             if key in PAYLOAD or key in data})
 
 
 def request_identity(context):
@@ -178,6 +187,40 @@ def validate_summary(record, ctx):
                               'artifact forecast differs from the original frozen campaign metadata')
         for problem in ledger_problems(ledger, record.data['campaign']):
             yield Problem(record.rel, 'paired_estimates', problem)
+        for problem in coverage_problems(record.data):
+            yield Problem(record.rel, 'paired_estimates', problem)
+
+
+def coverage_problems(summary):
+    """Every timing in an enabled ledger's summary needs a recorded preceding access.
+
+    Review F7 (2026-10-09 ET): ledger_problems checks only the events that exist,
+    so deleting an event used to leave a valid summary with an unestimated timing.
+    An access names its timing contexts and the preceding estimates; either binds
+    the subject and input. Disabled legacy ledgers carry no paired evidence.
+    """
+    ledger = summary['paired_estimates']
+    if not ledger.get('enabled', True):
+        return
+    rows = {row['id']: row for row in ledger.get('records', [])}
+    contexts = [context for event in ledger.get('outcome_accesses', [])
+                for context in (event.get('timing_contexts') or [])]
+    contexts += [rows[rid]['timing_context'] for event in ledger.get('outcome_accesses', [])
+                 for rid in event.get('paired_estimates', []) if rid in rows]
+    artifacts_seen = {(c['subject']['artifact_sha256'], c['input']['id']) for c in contexts}
+    subjects_seen = {(c['subject']['id'], c['input']['id']) for c in contexts}
+    workloads = {row['class']: row['workload'] for row in summary.get('workload_classes', [])}
+    for iteration in summary.get('iterations', []):
+        for candidate in iteration.get('candidates', []):
+            if candidate.get('comparisons') and (candidate.get('artifact_sha256'),
+                                                 workloads.get(candidate.get('class'))) not in artifacts_seen:
+                yield (f"timed candidate {candidate.get('id')} has no recorded outcome access preceded "
+                       "by its paired estimate")
+    for baseline in summary.get('baselines', []):
+        for cls, evaluation in (baseline.get('evaluation_ids_by_class') or {}).items():
+            if evaluation and (baseline.get('candidate'), workloads.get(cls)) not in subjects_seen:
+                yield (f"baseline {baseline.get('candidate')} evaluation {evaluation} has no recorded "
+                       "outcome access preceded by its paired estimate")
 
 
 class PairingLedger:

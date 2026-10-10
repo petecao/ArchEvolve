@@ -12,6 +12,8 @@ including every v1 protocol and record, keeps this module's v1 behavior.
 the v3 driver (saturating parent narrowing) and one retained copy per distinct parent vector.
 2026-10-09 ET: scalable v3 also binds prospective count-only SG source-slot scopes;
 elapsed-time uncertainty and Extensa numeric admission remain unchanged.
+2026-10-09 23:10 ET (code review F8): Extensa-mode evaluations skip the analytic pairing
+stage and evaluator scope; they record only the explicit paired-estimate exclusion.
 """
 
 import copy
@@ -770,15 +772,21 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
             data["build"]["verifier"] = {**identity, "compiler": verifier_command[0], "command": verifier_command,
                                          "binary": str(verifier_binary),
                                          "binary_sha256": artifacts.file_hash(verifier_binary)}
-        session.begin('analytic_pairing')
         from swdb import analytic_cpu_binding, cpu_pairing
-        if not v2 or evaluator == scalable.EVALUATOR_V3:
-            prospective_context=analytic_cpu_binding.scope(store,request,candidate,plugin,compiler,flags,includes,source,workload,env,driver=driver_template)
-            data['context']['analytic_evaluator_scope']=prospective_context
-            data['paired_estimate']=cpu_pairing.prepare(store,data,request,prospective_context,binary)
-        else:
+        if data.get('mode') == 'extensa':
+            # Code review 2026-10-09 ET (F8): Extensa timing never enters the team CPU
+            # error check, so no pairing stage or evaluator scope is added; only the
+            # explicit exclusion is recorded.
             data['paired_estimate']=cpu_pairing.paired_estimate(store,data,request)
-        session.finish()
+        else:
+            session.begin('analytic_pairing')
+            if not v2 or evaluator == scalable.EVALUATOR_V3:
+                prospective_context=analytic_cpu_binding.scope(store,request,candidate,plugin,compiler,flags,includes,source,workload,env,driver=driver_template)
+                data['context']['analytic_evaluator_scope']=prospective_context
+                data['paired_estimate']=cpu_pairing.prepare(store,data,request,prospective_context,binary)
+            else:
+                data['paired_estimate']=cpu_pairing.paired_estimate(store,data,request)
+            session.finish()
         session.save()
         slot = yield data
         for repetition in range(repetitions):

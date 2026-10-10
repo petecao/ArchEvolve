@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "extensa_campaign",
   "title": "Extensa campaign file (swdb.extensa-campaign.v1)",
-  "description": "Created 2026-10-03 ET (ticket 52, decision D5). An input file under campaigns/extensa/, not a record; checked by swdb validate and swdb campaign. Updated 2026-10-05 ET: the ID pattern is the envelope's $defs.extensa_campaign_id, added when swdb.campaign loads this schema.",
+  "description": "Created 2026-10-03 ET (ticket 52, decision D5). An input file under campaigns/extensa/, not a record; checked by swdb validate and swdb campaign. Updated 2026-10-05 ET: the ID pattern is the envelope's $defs.extensa_campaign_id, added when swdb.campaign loads this schema. Updated 2026-10-09 ET: paired_estimates.numeric_pairing_check (D35).",
   "type": "object",
   "additionalProperties": false,
   "required": ["format", "id", "created", "mode", "kernel", "target", "machine", "base_source", "baselines",
@@ -78,7 +78,9 @@
     },
     "paired_estimates": {
       "type": "object", "additionalProperties": false,
-      "properties": {"enabled": {"type": "boolean"}},
+      "properties": {"enabled": {"type": "boolean"},
+                     "numeric_pairing_check": {"type": "string", "minLength": 1,
+                       "description": "Added 2026-10-09 ET (D35): the paired_estimate record ID of a passing numeric pairing check in the team store. swdb campaign refuses a new campaign on a real target without it; under the current paired_estimate schema no record can pass yet."}},
       "description": "Default enabled; explicit legacy opt-out never produces eligible paired evidence."
     },
     "runs_root": {"type": "string", "minLength": 1},

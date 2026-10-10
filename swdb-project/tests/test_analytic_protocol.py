@@ -1,5 +1,6 @@
 """Public frozen-estimate protocol and ADR 0013 boundary regressions.
-Updated: 2026-10-06 ET. Artificial rates/counts are explicit contract fixtures.
+Updated: 2026-10-10 ET (code review of ticket 06: Extensa campaign summaries, nested reference
+pins and generic simulator markers); 2026-10-06 ET. Artificial rates/counts are explicit contract fixtures.
 """
 import json
 import shutil
@@ -10,11 +11,16 @@ import yaml
 from conftest import REPO, run_swdb
 
 
+ROOTS = ('kron-g16-k16', 'bfs-dx100-smoke-20260925-a6',
+         'extensa-gem5-bfs-20261004-a7.summary', 'extensa-native-bfs-20261004-a4.summary')
+
+
 @pytest.fixture
-def team(tmp_path):
-    records = tmp_path / 'records'
-    shutil.copytree(REPO / 'records', records)
-    return records
+def team(records):
+    # 2026-10-10 ET: the referenced records only (tests/conftest.py copy_closure); every
+    # command still validates the copied store. The ~1 GB catalog made each case take minutes.
+    records.copy_closure(*ROOTS)
+    return records.path
 
 
 def target(tmp_path, **changes):
@@ -41,6 +47,9 @@ def request(tmp_path, **changes):
 
 
 def test_freeze_estimate_protocol_pins_version_target_and_input(team, tmp_path):
+    # The copied closure keeps gem5 history (bfs-dx100-smoke-20260925-a6 and the DX100 targets),
+    # which validates; the whole catalog is checked by the canonical `swdb validate`, which never
+    # calls the ADR 0013 guard. (A full-catalog copy here exceeded run_swdb's 600 s, 2026-10-10 ET.)
     result = run_swdb('freeze-protocol', request(tmp_path), '--records', team, '--format', 'json')
     assert result.returncode == 0, result.stderr + result.stdout
     protocol = json.loads(result.stdout)
@@ -65,6 +74,36 @@ def test_team_freeze_refuses_gem5_or_research_dependencies(team, tmp_path, chang
                       '--records', team, '--format', 'json')
     assert result.returncode == 1 and 'ADR 0013' in result.stderr and offending in result.stderr, result.stderr
     assert not list((team / 'protocols').glob('fixture.protocol.*'))
+
+
+SIMULATED = [{'model': 'streaming_bandwidth', 'parameters': {'bytes_per_s': {
+    'value': 32, 'basis': 'simulated', 'source': 'Contract fixture simulator run.', 'unit': 'bytes/s'}}}]
+
+
+@pytest.mark.parametrize('changes, offending', [
+    # Extensa campaign results (gem5 or native) never calibrate a team estimator (D10, D28).
+    ({'calibration_sources': ['extensa-gem5-bfs-20261004-a7.summary']}, 'extensa-gem5-bfs-20261004-a7.summary'),
+    ({'calibration_sources': ['extensa-native-bfs-20261004-a4.summary']}, 'extensa-native-bfs-20261004-a4.summary'),
+    # A nested `{id: ...}` pin is a dependency like a bare ID.
+    ({'dram_address_layout': {'derived_from': {'id': 'bfs-dx100-smoke-20260925-a6', 'sha256': '0' * 64}}},
+     'bfs-dx100-smoke-20260925-a6'),
+    ({'dram_address_layout': {'rows': [{'id': 'bfs-dx100-smoke-20260925-a6'}]}}, 'bfs-dx100-smoke-20260925-a6'),
+    # Generic markers: identity text (any case), simulator dicts, simulated facts.
+    ({'target': 'fixture-gem5-se-target'}, 'fixture-gem5-se-target'),
+    ({'dram_address_layout': {'simulator': {'path': '/opt/fixture/build/X86/GEM5.opt'}}}, 'GEM5.opt'),
+    ({'mechanisms': SIMULATED}, 'simulated target-description fact mechanisms[0].parameters.bytes_per_s'),
+])
+def test_team_freeze_refuses_campaign_results_nested_pins_and_simulator_markers(team, tmp_path, changes, offending):
+    path = target(tmp_path, **changes)
+    result = run_swdb('freeze-protocol', request(tmp_path, target_description=str(path)), '--records', team)
+    assert result.returncode == 1 and 'ADR 0013' in result.stderr and offending in result.stderr, result.stderr
+    assert not list((team / 'protocols').glob('fixture.protocol.*'))
+
+
+def test_closure_store_freezes_the_unchanged_team_target(team, tmp_path):
+    # Positive control for the refusals above: the same store and request freeze without the change.
+    result = run_swdb('freeze-protocol', request(tmp_path), '--records', team, '--format', 'json')
+    assert result.returncode == 0, result.stderr + result.stdout[:500]
 
 
 def test_default_dx100_dispatch_refuses_before_submission_and_explicit_extensa_routes(team, tmp_path):

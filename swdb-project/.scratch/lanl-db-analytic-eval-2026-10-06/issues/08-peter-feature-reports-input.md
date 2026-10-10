@@ -1,6 +1,7 @@
 # 08 — Peter's feature reports as an input
 
 Created: 2026-10-06
+Updated: 2026-10-09 23:10 ET (code review note)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 05
@@ -71,3 +72,33 @@ Malformed/nonfinite/duplicate-key inputs refuse without partial records or parse
 tracebacks. Historical bundle validation remains supported while execution after
 a bundle change requires a new freeze. The final batch command is recorded in
 the acceptance receipt.
+
+## Code review 2026-10-09
+
+2026-10-09 23:10 ET. Review against this ticket found the test file red on HEAD and five
+code gaps. Fixed:
+
+- **Tests red on HEAD:** `counted_store` omitted whole record folders that later records
+  reference, so every import refused validation (9 of 12 failed). It now copies the base
+  characterization's record closure. All 26 cases pass.
+- **Duplicate JSON keys:** a `.json` report or manifest with a repeated key silently kept
+  the last value. It now refuses (see ticket 02's note).
+- **Timing names missed by the sanitizer:** `trial_sec`, `kernel_ms`, `latency_ns`,
+  `wall_clock_s`, cache miss rates, MPKI and bandwidth rates were kept. Sanitizer v2
+  withholds them; boolean methodology flags (`measures_cache_hit_rate`) stay. Redaction
+  entries are restricted to `{path, reason}`.
+- **Disagreements inside one report:** a repeated `data_structures` row or different widths
+  across sections were silently resolved by keeping one. They are now listed as
+  `reported_internal_conflict`, and every width is compared with the catalog.
+- **Units:** every `*_kb|mb|gb` working-set field (for example `total_working_set_mb`) now
+  carries `unit_ambiguity`; the BFS-v1.2-specific note/table checks are documented as such.
+- **Scope label:** `source_scope_mismatch` is now emitted only when the reported and counted
+  function or source revision differ; otherwise `source_scope_unbound`.
+
+**Open for Yan-Ru (not changed):** D20 says the characterization reuses Peter's field
+names where they overlap. The implementation keeps his names only under
+`reported_inputs[].features` and maps overlaps by table (`element_size_bytes` ↔
+`element_bytes`); native field names were not renamed. User story 18 ("his facts feed the
+estimator") is also unmet: no mechanism model reads reported facts. Either amend D20 to
+"literal names under `reported_inputs`, mapped by table" or schedule a characterization
+schema version with his names.

@@ -1,4 +1,5 @@
-"""Candidate compilation and trusted driver contracts. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-26."""
+"""Candidate compilation and trusted driver contracts. Updated: 2026-10-09 ET (code review of ticket 06:
+the simulator protocol freezes in explicit Extensa fixture mode); 2026-10-05 ET (shared tests/testkit); 2026-09-26."""
 
 import json
 from pathlib import Path
@@ -10,7 +11,7 @@ import yaml
 
 from swdb import artifacts, workflow
 from swdb.dx100_candidate import driver, _protect_model_headers
-from test_dx100 import case, reference, execution_request
+from test_dx100 import EXTENSA, case, reference, execution_request
 from testkit.toolchain import find_cxx
 
 
@@ -166,7 +167,7 @@ def _reject_frozen_configuration_mismatch(case, records, compiled):
         'simulator': request['simulator']}
     path = folder / 'freeze.yaml'
     path.write_text(yaml.safe_dump({'message_version': '1.0', 'id': 'wrong-clock-policy', 'settings': settings}))
-    frozen = records.swdb('freeze-protocol', path, '--format', 'json')
+    frozen = records.swdb('freeze-protocol', path, '--format', 'json', *EXTENSA)
     assert frozen.returncode == 0, frozen.stderr
     request['protocol'] = json.loads(frozen.stdout)['id']
     rejected = invoke('dx100-execute', request)

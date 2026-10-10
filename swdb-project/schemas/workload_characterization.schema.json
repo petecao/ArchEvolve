@@ -225,6 +225,27 @@
         },
         "observation_format": {
           "const": "swdb.live-count-context.v1"
+        },
+        "top_level_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "2026-10-09 ET: a gated run's top-level regions repeat one trial window. Older records without this field labeled those same trial-zero counts per_run.",
+          "properties": {
+            "scope": {
+              "const": "per_trial"
+            },
+            "trial_position": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "note": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "scope",
+            "trial_position"
+          ]
         }
       },
       "required": [
@@ -742,6 +763,29 @@
     "binding"
   ],
   "$defs": {
+    "address_shape_fact": {
+      "description": "2026-10-09 ET: vocab/address_shapes.yaml values, or null when unknown. Legacy `constant` (records before 2026-10-09) means a proved loop-invariant address: a stream with stride 0. New characterizations never emit it.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/fact"
+        },
+        {
+          "properties": {
+            "value": {
+              "enum": [
+                "stream",
+                "single_valued_indirect",
+                "ranged_indirect",
+                "pointer_chase",
+                "data_dependent_merge",
+                "constant",
+                null
+              ]
+            }
+          }
+        }
+      ]
+    },
     "observed_region": {
       "type": "object",
       "additionalProperties": false,
@@ -824,7 +868,7 @@
                 ]
               },
               "address_shape": {
-                "$ref": "#/$defs/fact"
+                "$ref": "#/$defs/address_shape_fact"
               },
               "stride_bytes": {
                 "$ref": "#/$defs/fact"
@@ -1685,7 +1729,10 @@
           "pattern": "^[a-f0-9]{64}$"
         },
         "sanitizer_version": {
-          "const": "swdb.feature-report-sanitizer.v1"
+          "enum": [
+            "swdb.feature-report-sanitizer.v1",
+            "swdb.feature-report-sanitizer.v2"
+          ]
         },
         "features": {
           "type": "object"
@@ -1693,7 +1740,20 @@
         "redactions": {
           "type": "array",
           "items": {
-            "type": "object"
+            "type": "object",
+            "required": [
+              "path",
+              "reason"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
           }
         },
         "basis": {
@@ -1750,7 +1810,10 @@
               "pattern": "^[a-f0-9]{64}$"
             },
             "sanitizer_version": {
-              "const": "swdb.feature-report-sanitizer.v1"
+              "enum": [
+                "swdb.feature-report-sanitizer.v1",
+                "swdb.feature-report-sanitizer.v2"
+              ]
             }
           },
           "additionalProperties": false
@@ -1784,7 +1847,20 @@
         "redactions": {
           "type": "array",
           "items": {
-            "type": "object"
+            "type": "object",
+            "required": [
+              "path",
+              "reason"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
           }
         },
         "scope": {

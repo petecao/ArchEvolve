@@ -1,6 +1,6 @@
 """Record and generated-index access boundary (ADR 0014).
 
-Created: 2026-10-06 ET. Store and query modules use this interface instead of
+Created: 2026-10-06 ET. Updated: 2026-10-09 ET (JSON refuses repeated keys). Store and query modules use this interface instead of
 opening record files or SQLite themselves. This research-database implementation
 keeps YAML authoritative; a future main-database adapter belongs at this boundary.
 Index creation writes only SWDB's generated index, never a main-database file.
@@ -18,6 +18,11 @@ from swdb import yamlio
 def read_record_bytes(path):
     """Read the exact source bytes used for record export and content hashes."""
     return Path(path).read_bytes()
+
+
+def copy_record(source, target):
+    """Copy one record's exact source bytes to a new file, through this boundary."""
+    Path(target).write_bytes(read_record_bytes(source))
 
 
 def record_hash(path):
@@ -66,8 +71,24 @@ def _stamp(path):
     return st.st_ino, st.st_size, st.st_mtime_ns, st.st_ctime_ns
 
 
+class DuplicateKeyError(ValueError):
+    """A JSON object repeats a key; like YAML records, the last value never silently wins."""
+
+
+def _object_without_duplicates(pairs):
+    data = {}
+    for key, value in pairs:
+        if key in data:
+            raise DuplicateKeyError(f"duplicate key {key!r}")
+        data[key] = value
+    return data
+
+
 def read_record(path):
-    """Parse one record, returning fresh data even when its unchanged bytes are cached."""
+    """Parse one record, returning fresh data even when its unchanged bytes are cached.
+
+    2026-10-09 ET: JSON input refuses a repeated key, as YAML input already does.
+    Bad JSON raises ValueError (json.JSONDecodeError or DuplicateKeyError)."""
     global _parsed_bytes
     name = os.path.abspath(path)
     before = _stamp(path)
@@ -76,7 +97,8 @@ def read_record(path):
         return json.loads(cached[1])
     # JSON's exponent-only numbers (1e-6) are not YAML 1.1 numeric scalars.
     # Preserve their numeric meaning for canonical receipt hashes.
-    data = json.loads(read_record_bytes(path)) if Path(path).suffix.lower() == '.json' else yamlio.load(path)
+    data = (json.loads(read_record_bytes(path), object_pairs_hook=_object_without_duplicates)
+            if Path(path).suffix.lower() == '.json' else yamlio.load(path))
     try:
         text = json.dumps(data, allow_nan=False)
         cacheable = json.loads(text) == data and _stamp(path) == before

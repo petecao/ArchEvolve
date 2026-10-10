@@ -1,4 +1,5 @@
-"""Public simulated collector fixtures, not hardware acceptance. Updated: 2026-09-26."""
+"""Public simulated collector fixtures, not hardware acceptance. Updated: 2026-10-09 ET (code review of
+ticket 06: the collector runs in explicit Extensa fixture mode); 2026-09-26."""
 
 import hashlib
 import copy
@@ -9,7 +10,7 @@ import pytest
 import yaml
 
 from swdb import artifacts, workflow
-from test_dx100 import case, execution_request, reference
+from test_dx100 import EXTENSA, case, execution_request, reference
 
 
 @pytest.mark.parametrize("mode", ["normal", "missing-memory", "truncated", "changed-stats", "multiple-intervals", "wrong-clock", "stale-region",
@@ -159,7 +160,7 @@ def test_public_simulated_collector_retains_identity_and_incomplete_attribution(
         request['diagnostic_evaluation'] = 'diagnostic'
     request_file = folder / "profile.yaml"
     request_file.write_text(yaml.safe_dump(request))
-    run = records.swdb("dx100-profile", request_file, "--runs-dir", folder / "runs", "--format", "json")
+    run = records.swdb("dx100-profile", request_file, "--runs-dir", folder / "runs", "--format", "json", *EXTENSA)
     assert run.returncode in {0,1}, run.stderr
     assert run.stdout, run.stderr
     profile = json.loads(run.stdout)
@@ -206,7 +207,7 @@ def test_public_simulated_collector_retains_identity_and_incomplete_attribution(
         assert profile["executions"][0]["evidence_kind"] == "contract_fixture"
         if mode in {'normal', 'diagnostic', 'diagnostic-outside-roi'}:
             for kind in ('function', 'loop'):
-                queried = records.swdb('bfs-hotspots', profile['id'], '--kind', kind, '--format', 'json')
+                queried = records.swdb('bfs-hotspots', profile['id'], '--kind', kind, '--format', 'json', *EXTENSA)
                 assert queried.returncode == 0, queried.stderr
                 ranked = json.loads(queried.stdout)
                 metric = 'inclusive_simulated_seconds' if mode == 'normal' else 'exclusive_simulated_seconds'

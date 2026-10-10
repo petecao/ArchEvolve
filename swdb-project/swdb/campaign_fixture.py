@@ -3,16 +3,16 @@
 Created 2026-10-03 ET in `swdb/campaign.py`; moved here 2026-10-05 ET (code review F13) and made a
 `TargetAdapter`, so the Extensa campaign loop calls every adapter the same way. Fixture records are
 labeled `contract_fixture` and are never performance evidence.
+Updated 2026-10-09 ET: record copies go through `swdb.access`.
 """
 from __future__ import annotations
 
 import copy
 import json
-import shutil
 from argparse import Namespace
 from pathlib import Path
 
-from swdb import artifacts, workflow, yamlio
+from swdb import access, artifacts, workflow, yamlio
 from swdb.campaign import Stop, _now, apply_speed_rule
 from swdb.campaign_targets import ADAPTERS, TargetAdapter
 from swdb.cli import Failure, UsageError
@@ -64,7 +64,7 @@ class FixtureAdapter(TargetAdapter):
             target = self.store_dir / record.rel
             if not target.exists():
                 target.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy(self.team / record.rel, target)
+                access.copy_record(self.team / record.rel, target)
 
     def source_files(self):
         return dict(self.fx["source_files"])

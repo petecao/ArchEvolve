@@ -1,5 +1,7 @@
 """Description-driven logical offload mechanisms; no target/kernel constants.
 Created: 2026-10-06 ET. Logical grouping is never physical row-buffer evidence.
+Updated: 2026-10-09 ET (code review): tile staging may select semantic events. Row
+and queue counts are recorded per region only, so their event selectors stay unknown.
 """
 from swdb.analytic_models import bound,parameter
 
@@ -69,14 +71,38 @@ def fetch_queue(region,mechanism,*,context=None):
         ['A capacity/latency lower bound over declared logical requests; queue occupancy and physical scheduling are not observed.'])
 
 
+def selected_events(region,mechanism,context,staged,missing):
+    """Staged bytes of the description's selected semantic events only.
+
+    Per-command useful bytes are exact when the region's logical row is known;
+    an event outside the counted contract never becomes zero work.
+    """
+    events=mechanism.get('selector',{}).get('event_ids')
+    if not isinstance(events,list) or not events or any(not isinstance(event,str) for event in events):
+        missing.append('selector.event_ids');return None
+    declared={command.get('event') for command in ((context or {}).get('observation_contract') or {})
+        .get('functional_observation',{}).get('commands',[])}
+    if not set(events)<=declared:
+        missing.append('accelerator_calls.event_coverage');return None
+    if staged is None:return None
+    values=[call.get('useful_bytes',{}).get('value') for call in region.get('accelerator_calls',[]) if call.get('event') in events]
+    if any(type(value) is not int or value<0 for value in values):
+        missing.append('accelerator_calls.useful_bytes');return None
+    return sum(values)
+
+
 def tile_staging(region,mechanism,*,context=None):
-    observed,missing=counts(region,mechanism,context)
+    # 2026-10-09 ET: `selector.event_ids` keys staging to a design's operations.
+    selector=mechanism.get('selector',{})
+    observed,missing=counts(region,{**mechanism,'selector':{k:v for k,v in selector.items() if k!='event_ids'}},context)
     staged=integer_fact(observed,'staged_bytes',missing)
+    if 'event_ids' in selector:staged=selected_events(region,mechanism,context,staged,missing)
     rate=parameter(mechanism,'staging_bytes_per_s','bytes/s')
     if staged and rate is None:missing.append('staging_bytes_per_s')
     return bound('tile_staging',None if missing else staged/rate if staged else 0.,
-        'dynamic staged bytes / staging_bytes_per_s',
+        'dynamic staged bytes of selected events / staging_bytes_per_s' if 'event_ids' in selector else 'dynamic staged bytes / staging_bytes_per_s',
         {'staged_bytes':staged,'staging_bytes_per_s':mechanism['parameters'].get('staging_bytes_per_s'),
          'target_description_sha256':(context or {}).get('target_description_sha256'),
-         'counted_target_description_sha256':(context or {}).get('logical_count_target_description_sha256') or (context or {}).get('target_description_sha256')},missing,
+         'counted_target_description_sha256':(context or {}).get('logical_count_target_description_sha256') or (context or {}).get('target_description_sha256'),
+         **({'selected_event_ids':selector['event_ids']} if 'event_ids' in selector else {})},missing,
         ['Dynamic semantic useful stage bytes; tile capacity and physical transfer multiplicity are not inferred.'])

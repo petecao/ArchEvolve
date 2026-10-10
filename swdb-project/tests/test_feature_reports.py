@@ -1,6 +1,5 @@
-"""Reported feature inputs through the public CLI. Created: 2026-10-06 ET."""
+"""Reported feature inputs through the public CLI. Created: 2026-10-06 ET. Updated: 2026-10-09 ET."""
 import json
-import shutil
 
 import pytest
 
@@ -11,13 +10,10 @@ BASE = 'fixture.lanl.measured-v2.stream.t1'
 
 
 def counted_store(records):
-    # Copy canonical records, omitting unrelated large application counts/estimates.
-    records.copy_repo(*(folder.name for folder in (REPO / 'records').iterdir()
-                        if folder.is_dir() and folder.name not in {'workload_characterizations', 'estimates'}))
-    target = records.path / 'workload_characterizations' / (BASE + '.yaml')
-    target.parent.mkdir()
-    shutil.copyfile(REPO / 'records' / 'workload_characterizations' / target.name, target)
-    return target
+    # 2026-10-09 ET: copy only the base characterization's record closure. Omitting whole
+    # folders broke later records that reference the omitted characterizations.
+    records.copy_closure(BASE)
+    return records.path / 'workload_characterizations' / (BASE + '.yaml')
 
 
 @pytest.mark.parametrize('filename, expected_stride', [
@@ -72,7 +68,7 @@ def test_report_import_withholds_nested_timing_and_pmu_outcomes(records, tmp_pat
     removed = {item['path'] for item in data['redactions']}
     assert '/operations/analysis/candidate_timings' in removed
     assert '/operations/analysis/detail/elapsed_ms' in removed
-    assert data['source_report']['sanitizer_version'] == 'swdb.feature-report-sanitizer.v1'
+    assert data['source_report']['sanitizer_version'] == 'swdb.feature-report-sanitizer.v2'
     assert all(secret not in imported.stdout for secret in ('987.654', '321.123', '456.789', '654.321', '9.87x'))
 
 
@@ -105,7 +101,8 @@ def test_report_import_lists_source_array_methodology_and_unit_conflicts(records
     assert all(c['reason'] for c in data['conflicts'])
 
 
-@pytest.mark.parametrize('field', ['timing_seconds', 'runtime_ms', 'cpi'])
+@pytest.mark.parametrize('field', ['timing_seconds', 'runtime_ms', 'cpi', 'trial_sec', 'kernel_ms',
+    'latency_ns', 'wall_clock_s', 'llc_miss_rate', 'mpki', 'bandwidth_gbps'])
 def test_validate_refuses_reported_timing_reintroduced_with_recomputed_hashes(records, field):
     import hashlib
     import yaml
@@ -210,3 +207,84 @@ def test_duplicate_report_key_is_refused_without_partial_records_or_traceback(re
     assert 'duplicate key' in imported.stderr
     assert 'Traceback' not in imported.stderr
     assert not (records.path / 'workload_characterizations/fixture.duplicate-report.yaml').exists()
+
+
+def test_unit_suffixed_timing_rates_and_bandwidth_are_withheld_but_methodology_flags_stay(records, tmp_path):
+    import yaml
+    counted_store(records)
+    report = yaml.safe_load((REPORTS / 'bfs-sparse.features.v1.2.yaml').read_text())
+    report['operations']['analysis'] = {'trial_sec': 1.5, 'kernel_ms': 2.5, 'latency_ns': 3.5,
+        'wall_clock_s': 4.5, 'l1_dcache_load_miss_rate': 0.125, 'mpki': 6.5, 'bandwidth_gbps': 7.5,
+        'measures_cache_hit_rate': False, 'mean_index_distance': 7.25}
+    supplied = tmp_path / 'suffixed.v1.2.yaml'
+    supplied.write_text(yaml.safe_dump(report, sort_keys=False))
+    imported = run_swdb('import-feature-report', '--records', records.path,
+        '--report', supplied, '--characterization', BASE,
+        '--id', 'fixture.suffixed', '--format', 'json')
+    assert imported.returncode == 0, imported.stderr + imported.stdout
+    data = json.loads(imported.stdout)['reported_inputs'][0]
+    assert data['features']['operations']['analysis'] == {'measures_cache_hit_rate': False, 'mean_index_distance': 7.25}
+    assert all(set(item) == {'path', 'reason'} for item in data['redactions'])
+
+
+def test_internal_width_disagreement_and_repeated_rows_are_listed_not_resolved(records, tmp_path):
+    import yaml
+    counted_store(records)
+    report = yaml.safe_load((REPORTS / 'bfs-sparse.features.v1.2.yaml').read_text())
+    offsets = next(row for row in report['data_structures'] if row['name'] == 'VertexOffsets')
+    offsets['element_size_bytes'] = 8
+    report['data_structures'].append(dict(offsets))
+    report['indirect_access_distances'].append({'array_name': 'VertexOffsets', 'element_size_bytes': 4})
+    supplied = tmp_path / 'internal.v1.2.yaml'
+    supplied.write_text(yaml.safe_dump(report, sort_keys=False))
+    imported = run_swdb('import-feature-report', '--records', records.path,
+        '--report', supplied, '--characterization', BASE, '--array-alias', 'VertexOffsets=g.out_index_',
+        '--id', 'fixture.internal', '--format', 'json')
+    assert imported.returncode == 0, imported.stderr + imported.stdout
+    conflicts = json.loads(imported.stdout)['reported_inputs'][0]['conflicts']
+    internal = [c for c in conflicts if c['kind'] == 'reported_internal_conflict']
+    assert {c['path'] for c in internal} == {'/data_structures/VertexOffsets', '/data_structures/VertexOffsets/element_size_bytes'}
+    widths = next(c for c in internal if c['path'].endswith('element_size_bytes'))
+    assert {row['element_size_bytes'] for row in widths['reported']} == {4, 8}
+    mismatches = [c for c in conflicts if c['kind'] == 'element_size_mismatch']
+    assert [c['reported']['value'] for c in mismatches] == [4]
+
+
+def test_total_working_set_sizes_carry_unit_ambiguity(records):
+    counted_store(records)
+    imported = run_swdb('import-feature-report', '--records', records.path,
+        '--report', REPORTS / 'bfs-sparse.features.v1.2.yaml', '--characterization', BASE,
+        '--id', 'fixture.total-units', '--format', 'json')
+    assert imported.returncode == 0, imported.stderr + imported.stdout
+    conflicts = json.loads(imported.stdout)['reported_inputs'][0]['conflicts']
+    totals = [c for c in conflicts if c['kind'] == 'unit_ambiguity' and c['path'].endswith('total_working_set_mb')]
+    assert totals and all(c['expected_logical_capacity_bytes'] is None and c['resolved_unit'] is None for c in totals)
+
+
+@pytest.mark.parametrize('name', ['duplicate.json', 'manifest.json'])
+def test_duplicate_json_key_is_refused_in_reports_and_manifests(records, tmp_path, name):
+    counted_store(records)
+    supplied = tmp_path / name
+    supplied.write_text('{"schema_version": "1.1", "schema_version": "1.2", "kernel": {}, "records": []}')
+    report = supplied if name == 'duplicate.json' else REPORTS / 'bfs-sparse.features.v1.2.yaml'
+    extra = [] if name == 'duplicate.json' else ['--manifest', supplied]
+    imported = run_swdb('import-feature-report', '--records', records.path,
+        '--report', report, *extra, '--characterization', BASE,
+        '--id', 'fixture.duplicate-json', '--format', 'json')
+    assert imported.returncode == 1
+    assert 'duplicate key' in imported.stderr
+    assert 'Traceback' not in imported.stderr
+    assert not (records.path / 'workload_characterizations/fixture.duplicate-json.yaml').exists()
+
+
+@pytest.mark.parametrize('text, message', [
+    ('{"kind": "machine", "kind": "kernel", "id": "fixture.dup"}', 'duplicate key'),
+    ('{"kind": "machine", "id": ', 'cannot read'),
+])
+def test_add_refuses_duplicate_or_malformed_json_without_traceback(records, tmp_path, text, message):
+    supplied = tmp_path / 'record.json'
+    supplied.write_text(text)
+    added = records.swdb('add', supplied)
+    assert added.returncode != 0
+    assert message in added.stderr
+    assert 'Traceback' not in added.stderr

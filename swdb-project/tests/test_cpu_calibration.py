@@ -1,8 +1,21 @@
-"""CPU calibration through runner/import commands. Created 2026-10-06 ET."""
+"""CPU calibration through runner/import commands. Created 2026-10-06 ET.
+
+Updated 2026-10-09 23:10 ET (code review of tickets 07/11): binding tests copy only the
+record closure (F10); the runner records the checkout commit and machine record from any
+working directory and keeps raw output outside the checkout (F5).
+"""
 import hashlib
 import json
 
 from conftest import run_swdb
+
+MEASURED_T4 = 'mbit10.cpu.lanl20261006a2.t4'
+
+
+def closure_records(tmp_path, *roots):
+    """The exact reachable records instead of the ~1 GB catalog (F10)."""
+    from conftest import make_records
+    return make_records(tmp_path).copy_closure(*roots).path
 
 
 def receipt():
@@ -260,11 +273,8 @@ def test_import_bad_receipt_is_readable_failure_without_writes(records, tmp_path
 
 
 def test_bind_measured_description_pins_typed_calibration_without_rewriting_source(tmp_path):
-    import shutil
     import yaml
-    from conftest import REPO
-    records = tmp_path / 'records'
-    shutil.copytree(REPO / 'records', records)
+    records = closure_records(tmp_path, MEASURED_T4)
     old = records / 'target_descriptions/mbit10.cpu.lanl20261006a2.t4.yaml'
     before = old.read_bytes()
     result = run_swdb('bind-cpu-calibration', '--records', records,
@@ -294,6 +304,8 @@ def test_bind_measured_description_pins_typed_calibration_without_rewriting_sour
     protocol = json.loads(frozen.stdout)
     assert protocol['settings']['target_description']['snapshot'] == target
     assert calibration_id in protocol['settings']['dependency_identities']
+    clean = run_swdb('validate', '--records', records)
+    assert clean.returncode == 0, clean.stdout + clean.stderr
     evidence['series'][0]['trials'][0]['seconds'] *= 2
     (records / 'cpu_calibrations' / (calibration_id + '.yaml')).write_text(yaml.safe_dump(evidence, sort_keys=False))
     invalid = run_swdb('validate', '--records', records)
@@ -301,11 +313,9 @@ def test_bind_measured_description_pins_typed_calibration_without_rewriting_sour
 
 
 def test_bind_count_equivalence_preserves_measured_trials_and_versions_numerators(tmp_path):
-    import shutil
     import yaml
     from conftest import REPO
-    records = tmp_path / 'records'
-    shutil.copytree(REPO / 'records', records)
+    records = closure_records(tmp_path, MEASURED_T4)
     source = records / 'target_descriptions/mbit10.cpu.lanl20261006a2.t4.yaml'
     original_bytes = source.read_bytes()
     original = yaml.safe_load(original_bytes)
@@ -345,10 +355,7 @@ def test_bind_count_equivalence_preserves_measured_trials_and_versions_numerator
 
 
 def test_bind_rejects_empty_or_malformed_count_proof_before_writing(tmp_path):
-    import shutil
-    from conftest import REPO
-    records = tmp_path / 'records'
-    shutil.copytree(REPO / 'records', records)
+    records = closure_records(tmp_path, MEASURED_T4)
     for n, text in enumerate(('{}', '[]', 'null', '{')):
         proof = tmp_path / f'bad-{n}.json'
         proof.write_text(text)
@@ -360,11 +367,8 @@ def test_bind_rejects_empty_or_malformed_count_proof_before_writing(tmp_path):
 
 
 def test_bind_cannot_discard_a_resolved_gem5_calibration_dependency(tmp_path):
-    import shutil
     import yaml
-    from conftest import REPO
-    records = tmp_path / 'records'
-    shutil.copytree(REPO / 'records', records)
+    records = closure_records(tmp_path, MEASURED_T4, 'bfs-dx100-smoke-20260925-a6')
     path = records / 'target_descriptions/mbit10.cpu.lanl20261006a2.t4.yaml'
     target = yaml.safe_load(path.read_text())
     target['calibration_sources'] = ['bfs-dx100-smoke-20260925-a6']
@@ -374,3 +378,40 @@ def test_bind_cannot_discard_a_resolved_gem5_calibration_dependency(tmp_path):
     assert result.returncode != 0 and 'ADR 0013' in result.stderr
     assert 'bfs-dx100-smoke-20260925-a6' in result.stderr
     assert not list((records / 'cpu_calibrations').glob('fixture.bad.gem5*'))
+
+
+def test_runner_records_checkout_commit_and_machine_from_any_working_directory(records, tmp_path):
+    """F5: a lane launched from another checkout (for example Memacc's socket_lane.sh
+    folder) still records this checkout's commit and the machine record it ran under."""
+    import os
+    import subprocess
+    import sys
+    from conftest import REPO
+    from swdb import artifacts
+    from swdb.store import Store
+    records.add_stub()
+    elsewhere = tmp_path / 'other-working-directory'
+    elsewhere.mkdir()
+    output = tmp_path / 'run'
+    result = subprocess.run([sys.executable, '-m', 'swdb', 'cpu-calibrate', '--records', str(records.path),
+        '--output', str(output), '--fixture', '--machine', 'testhost', '--threads', '1', '--chains', '1',
+        '--working-set-bytes', '1024', '--cache-bytes', '1024', '--repetitions', '3', '--min-trial-s', '0.000000001'],
+        cwd=elsewhere, env={**os.environ, 'PYTHONPATH': str(REPO)}, capture_output=True, text=True, timeout=600)
+    assert result.returncode == 0, result.stdout + result.stderr
+    context = json.loads((output / 'receipt.json').read_text())['context']
+    head = subprocess.run(['git', '-C', str(REPO.parent), 'rev-parse', 'HEAD'], capture_output=True,
+                          text=True, check=True).stdout.strip()
+    assert context['commit'] == head
+    assert context['machine_sha256'] == artifacts.digest(Store(records.path).get('testhost', 'machine'))
+
+
+def test_runner_keeps_raw_output_outside_the_checkout_and_native_output_in_run_roots(records, tmp_path):
+    from conftest import REPO
+    inside = REPO.parent / '.swdb-calibration-test-must-not-exist' / 'run'
+    refused = run_swdb('cpu-calibrate', '--records', records.path, '--output', inside, '--fixture')
+    assert refused.returncode != 0 and 'outside the Git checkout' in refused.stderr, refused.stderr
+    assert not inside.parent.exists()
+    native = run_swdb('cpu-calibrate', '--records', records.path, '--output', tmp_path / 'native-run',
+                      '--llvm-bin', tmp_path)
+    assert native.returncode != 0 and 'registered run root' in native.stderr, native.stderr
+    assert not (tmp_path / 'native-run').exists()

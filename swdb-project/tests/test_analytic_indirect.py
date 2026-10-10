@@ -1,10 +1,24 @@
-"""Independent shape/count fixtures through the public CLI. Updated: 2026-10-06 ET."""
+"""Independent shape/count fixtures through the public CLI. Updated: 2026-10-09 ET
+(code review: stream negatives, per-step pattern comparison, closure-copied stores)."""
 import json
-import shutil
 from pathlib import Path
 
 import pytest
 from conftest import REPO,run_swdb
+
+
+def fixture_store(records):
+    """Placeholder subject/input closure; fixtures never need the whole ~1 GB catalog."""
+    return records.copy_closure('gapbs-bfs-do','kron-g16-k16').path
+
+
+def registered_store(records,implementation):
+    """Registered subject plus the profile packages whose region IDs it reuses (D33)."""
+    import re
+    packages=[re.search(r'^id: (.+)$',p.read_text(),re.M).group(1) for p in (REPO/'records/profile_packages').glob('*.yaml')
+        if re.search(r'^implementation: '+re.escape(implementation)+r'$',p.read_text(),re.M)]
+    return records.copy_closure(implementation,'kron-g16-k16',*packages).path
+
 
 @pytest.mark.parametrize("function,shape,elements,unique_bytes",[
     ("gather","single_valued_indirect",4,12),
@@ -12,10 +26,9 @@ from conftest import REPO,run_swdb
     ("chase","pointer_chase",3,24),
     ("merge","data_dependent_merge",4,16),
 ])
-def test_independent_indirect_shapes_and_useful_counts(tmp_path,llvm22,function,shape,elements,unique_bytes):
-    records=tmp_path/'records'
-    shutil.copytree(REPO/'records',records)
-    result=run_swdb('characterize','--records',records,'--source',REPO/'tests/fixtures/analytic/indirect.cpp',
+def test_independent_indirect_shapes_and_useful_counts(records,tmp_path,llvm22,function,shape,elements,unique_bytes):
+    store=fixture_store(records)
+    result=run_swdb('characterize','--records',store,'--source',REPO/'tests/fixtures/analytic/indirect.cpp',
         '--implementation','gapbs-bfs-do','--input','kron-g16-k16','--function',function,
         '--run-arg',function,'--fixture','--id','fixture.'+function,'--llvm-bin',llvm22,
         '--output',tmp_path/'counted','--format','json')
@@ -26,14 +39,39 @@ def test_independent_indirect_shapes_and_useful_counts(tmp_path,llvm22,function,
     if function=='chase': accesses=[a for a in accesses if a['element_bytes']==8]
     assert sum(a['element_count']['value'] for a in accesses)==elements
     assert sum(a['observed_unique_bytes']['value'] for a in accesses)==unique_bytes
+    # Negative check (code review F1): the index, offset and selector reads are plain streams.
+    executed=[a for r in data['regions'] if r['kind']=='loop' for a in r['access_patterns'] if a['element_count']['value']]
+    assert {a['address_shape']['value'] for a in executed}<={shape,'stream'}
     assert data['unmapped_loops']
-    checked=run_swdb('validate','--records',records)
+    checked=run_swdb('validate','--records',store)
     assert checked.returncode==0,checked.stdout+checked.stderr
 
 
-def test_registered_gapbs_rejects_arbitrary_translation_unit(tmp_path):
-    records=tmp_path/'records'
-    shutil.copytree(REPO/'records',records)
+@pytest.mark.parametrize("function,argument,unit_elements,reused_elements",[
+    ("omp_stream","omp",16,None),       # x[i] reads and y[i] writes, 8 each across the team
+    ("member_stream","member",8,None),  # v->data[i]; v->data and v->n are reloaded each iteration
+    ("field_bounds","bounds",6,None),   # a[1..6]; the bounds are scalar fields, not an index array
+    ("accumulate","accumulate",8,16),   # a[i], plus 8 reads and 8 writes of the same *out
+])
+def test_streams_through_reloaded_bases_are_never_indirect(records,tmp_path,llvm22,function,argument,unit_elements,reused_elements):
+    store=fixture_store(records)
+    extra=('--build-flag=-fopenmp','--threads','2','--run-library-path',llvm22.parent/'lib') if function=='omp_stream' else ()
+    result=run_swdb('characterize','--records',store,'--source',REPO/'tests/fixtures/analytic/streams.cpp',
+        '--implementation','gapbs-bfs-do','--input','kron-g16-k16','--function',function,'--run-arg',argument,
+        '--fixture','--id','fixture.'+function,'--llvm-bin',llvm22,*extra,'--output',tmp_path/'counted','--format','json')
+    assert result.returncode==0,result.stderr+result.stdout
+    data=json.loads(result.stdout)
+    executed=[a for r in data['regions'] if r['kind']=='loop' for a in r['access_patterns'] if a['element_count']['value']]
+    assert executed and {a['address_shape']['value'] for a in executed}=={'stream'}
+    assert sum(a['element_count']['value'] for a in executed if a['stride_bytes']['value']==4)==unit_elements
+    if reused_elements:
+        reused=[a for a in executed if a['stride_bytes']['value']==0 and a['element_bytes']==8]
+        assert sum(a['element_count']['value'] for a in reused)==reused_elements
+        assert all(a['observed_unique_bytes']['value']==8 for a in reused)
+
+
+def test_registered_gapbs_rejects_arbitrary_translation_unit(records,tmp_path):
+    records=fixture_store(records)
     result=run_swdb('characterize','--records',records,'--adapter','registered-gapbs',
         '--source',REPO/'tests/fixtures/analytic/indirect.cpp','--implementation','gapbs-bfs-do',
         '--input','kron-g16-k16','--id','invalid.registered')
@@ -42,10 +80,9 @@ def test_registered_gapbs_rejects_arbitrary_translation_unit(tmp_path):
 
 
 @pytest.mark.parametrize("implementation,patterns",[("gapbs-bfs-do",13),("gapbs-bc-brandes",20)])
-def test_registered_gapbs_counts_trial_lambda_and_workers(tmp_path,llvm22,implementation,patterns):
+def test_registered_gapbs_counts_trial_lambda_and_workers(records,tmp_path,llvm22,implementation,patterns):
     import yaml
-    records=tmp_path/'records'
-    shutil.copytree(REPO/'records',records)
+    records=registered_store(records,implementation)
     input_path=records/'inputs/kron-g16-k16.yaml'
     data=yaml.safe_load(input_path.read_text())
     data.update(id='fixture.kron.g4',name='Independent small generated graph')
@@ -74,15 +111,28 @@ def test_registered_gapbs_counts_trial_lambda_and_workers(tmp_path,llvm22,implem
         assert bindings['td-edge']=='loop:bfs.cc:2357:401922b5b521a378'
         assert any(r['id']=='loop:bfs.cc:2357:401922b5b521a378' and '.omp_outlined' in r['source_location']['llvm_function'] for r in data['regions'])
     assert len(data['pattern_comparison'])==patterns
-    assert all(row['matched'] or row['reason'] for row in data['pattern_comparison'])
+    # Per-step comparison (code review F3): every step is judged, and a mismatch names the failed steps.
+    for row in data['pattern_comparison']:
+        assert len(row['steps'])==len(row['expected_shapes'])
+        assert row['matched']==(row['region'] is not None and all(step['matched'] for step in row['steps']))
+        if row['region'] and not row['matched']:
+            assert all(f"step {s['position']} " in row['reason'] for s in row['steps'] if not s['matched'])
+    if implementation=='gapbs-bfs-do':
+        # pvector writes/reads through a reloaded member base are plain streams (code review F1).
+        matched={row['pattern'] for row in data['pattern_comparison'] if row['matched']}
+        assert {'init-parent-write','init-degree-read'}<=matched
+    # A gated run's top-level counts repeat trial 0, so they are labeled per_trial (code review F4).
+    assert data['counting']['top_level_counts']=={'scope':'per_trial','trial_position':0,
+        'note':'Top-level regions and calls repeat the first registered trial window; trials holds every window.'}
+    assert {c['scope'] for r in data['regions'] for c in r['operation_counts'].values()}=={'per_trial'}
+    assert data['binding']['subject_source_identity']['adapter']=='registered-gapbs.v2'
     assert data['coverage']['missing_costs']
     checked=run_swdb('validate','--records',records)
     assert checked.returncode==0,checked.stdout+checked.stderr
 
 
-def test_atomic_rmw_retains_memory_operand_and_footprint(tmp_path,llvm22):
-    records=tmp_path/'records'
-    shutil.copytree(REPO/'records',records)
+def test_atomic_rmw_retains_memory_operand_and_footprint(records,tmp_path,llvm22):
+    records=fixture_store(records)
     result=run_swdb('characterize','--records',records,'--source',REPO/'tests/fixtures/analytic/indirect.cpp',
         '--implementation','gapbs-bfs-do','--input','kron-g16-k16','--function','atomic_update',
         '--run-arg','atomic','--fixture','--id','fixture.atomic','--llvm-bin',llvm22,
@@ -99,9 +149,8 @@ def test_atomic_rmw_retains_memory_operand_and_footprint(tmp_path,llvm22):
     assert sum(r['operation_counts']['atomic']['value'] for r in data['regions'])==3
 
 
-def test_worker_measurement_distinguishes_sparse_execution_from_team_size(tmp_path,llvm22):
-    records=tmp_path/'records'
-    shutil.copytree(REPO/'records',records)
+def test_worker_measurement_distinguishes_sparse_execution_from_team_size(records,tmp_path,llvm22):
+    records=fixture_store(records)
     result=run_swdb('characterize','--records',records,'--source',REPO/'tests/fixtures/analytic/indirect.cpp',
         '--implementation','gapbs-bfs-do','--input','kron-g16-k16','--function','sparse_workers',
         '--run-arg','sparse','--fixture','--id','fixture.sparse','--llvm-bin',llvm22,'--threads','4',
@@ -115,9 +164,8 @@ def test_worker_measurement_distinguishes_sparse_execution_from_team_size(tmp_pa
     assert sum(a['element_count']['value'] for a in loop['access_patterns'] if a['update_kind']=='write')==3
 
 
-def test_fixture_v2_pipeline_preserves_independent_stream_counts(tmp_path,llvm22):
-    records=tmp_path/'records'
-    shutil.copytree(REPO/'records',records)
+def test_fixture_v2_pipeline_preserves_independent_stream_counts(records,tmp_path,llvm22):
+    records=fixture_store(records)
     fixture=REPO/'tests/fixtures/analytic'
     result=run_swdb('characterize','--records',records,'--source',fixture/'stream.cpp',
         '--implementation','gapbs-bfs-do','--input','kron-g16-k16','--function','stream',
@@ -135,9 +183,8 @@ def test_fixture_v2_pipeline_preserves_independent_stream_counts(tmp_path,llvm22
     assert sorted(a['bytes_accessed']['value'] for a in region['access_patterns'])==[68,68]
 
 
-def test_registered_adapter_refuses_v1_pipeline(tmp_path):
-    records=tmp_path/'records'
-    shutil.copytree(REPO/'records',records)
+def test_registered_adapter_refuses_v1_pipeline(records,tmp_path):
+    records=fixture_store(records)
     result=run_swdb('characterize','--records',records,'--adapter','registered-gapbs',
         '--implementation','gapbs-bfs-do','--input','kron-g16-k16',
         '--counting-pipeline','source-normalized-v1','--id','invalid.pipeline')
@@ -145,9 +192,8 @@ def test_registered_adapter_refuses_v1_pipeline(tmp_path):
     assert 'requires source-normalized-v2' in result.stderr
 
 
-def test_intrinsic_semantics_cover_hints_and_checked_arithmetic_only(tmp_path,llvm22):
-    records=tmp_path/'records'
-    shutil.copytree(REPO/'records',records)
+def test_intrinsic_semantics_cover_hints_and_checked_arithmetic_only(records,tmp_path,llvm22):
+    records=fixture_store(records)
     result=run_swdb('characterize','--records',records,'--source',REPO/'tests/fixtures/analytic/intrinsics.cpp',
         '--implementation','gapbs-bfs-do','--input','kron-g16-k16','--function','intrinsic_math',
         '--counting-pipeline','source-normalized-v2','--fixture','--id','fixture.intrinsics','--llvm-bin',llvm22,
@@ -168,9 +214,8 @@ def test_intrinsic_semantics_cover_hints_and_checked_arithmetic_only(tmp_path,ll
     assert 'puts' in data['coverage']['missing_costs']
 
 
-def test_noalias_declaration_is_retained_as_a_cost_free_annotation(tmp_path,llvm22):
-    records=tmp_path/'records'
-    shutil.copytree(REPO/'records',records)
+def test_noalias_declaration_is_retained_as_a_cost_free_annotation(records,tmp_path,llvm22):
+    records=fixture_store(records)
     result=run_swdb('characterize','--records',records,'--source',REPO/'tests/fixtures/analytic/noalias.ll',
         '--implementation','gapbs-bfs-do','--input','kron-g16-k16','--function','metadata_hint',
         '--counting-pipeline','source-normalized-v2','--fixture','--id','fixture.noalias','--llvm-bin',llvm22,
@@ -183,3 +228,19 @@ def test_noalias_declaration_is_retained_as_a_cost_free_annotation(tmp_path,llvm
     assert called['operations_per_execution']==0
     assert sum(r['operation_counts']['integer']['value'] for r in data['regions'])==0
     assert data['coverage']['missing_costs']==[] and data['coverage']['missing_counts']==[]
+
+
+def test_pure_arithmetic_intrinsics_are_counted_operations_not_calls(records,tmp_path,llvm22):
+    """Code review 14-F3 (2026-10-09 ET): fabs/maxnum/abs/ctpop are operations, not opaque calls."""
+    store=fixture_store(records)
+    result=run_swdb('characterize','--records',store,'--source',REPO/'tests/fixtures/analytic/pure_intrinsics.cpp',
+        '--implementation','gapbs-bfs-do','--input','kron-g16-k16','--function','pure_math',
+        '--counting-pipeline','source-normalized-v2','--fixture','--id','fixture.pure','--llvm-bin',llvm22,
+        '--output',tmp_path/'counted','--format','json')
+    assert result.returncode==0,result.stderr+result.stdout
+    data=json.loads(result.stdout)
+    totals={k:sum(r['operation_counts'][k]['value'] for r in data['regions']) for k in ('integer','floating_point','branch')}
+    # One call: fabs + maxnum + the final fadd; icmp (std::max) + sub + abs + ctpop + two adds;
+    # std::max's two-way branch and the taken arm's jump to the merge.
+    assert totals=={'integer':6,'floating_point':3,'branch':2}
+    assert data['unmodeled_calls']==[] and data['coverage']['missing_costs']==[]

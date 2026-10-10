@@ -1,4 +1,5 @@
-"""Additional reported workload inputs; preserve counted facts. Created: 2026-10-06 ET."""
+"""Additional reported workload inputs; preserve counted facts. Created: 2026-10-06 ET.
+Updated: 2026-10-09 ET (wider timing/PMU names; internal width conflicts; generic footprint units)."""
 import copy
 import hashlib
 import re
@@ -43,8 +44,12 @@ def _read(path):
     return data, after
 
 
-SANITIZER_VERSION = 'swdb.feature-report-sanitizer.v1'
-_OUTCOME_KEY = re.compile(r'(?:^|_)(?:times?|timings?|runtime|elapsed|duration|seconds?|milliseconds?|microseconds?|nanoseconds?|cycles?|ipc|cpi|pmu|speedup|throughput|performance)(?:_|$)|instructions_per_cycle|frequency_ghz', re.I)
+SANITIZER_VERSION = 'swdb.feature-report-sanitizer.v2'
+# Unit-suffixed durations (trial_sec, kernel_ms, wall_clock_s), latencies, cache
+# hit/miss rates, MPKI and bandwidth/FLOP rates are outcomes too.
+_OUTCOME_KEY = re.compile(r'(?:^|_)(?:times?|timings?|runtime|elapsed|duration|latency|latencies|seconds?|secs?|milliseconds?|microseconds?|nanoseconds?|ms|us|ns|s|cycles?|ipc|cpi|mpki|pmu|speedup|throughput|bandwidth|gbps|mbps|gflops|flops|performance|(?:hit|miss)_(?:rates?|ratios?))(?:_|$)|instructions_per_cycle|frequency_ghz', re.I)
+# Methodology flags (measures_cache_hit_rate: false) say what was measured, not a value.
+_FLAG_KEY = re.compile(r'measures_[a-z0-9_]+|runtime_thread_interleaving_observed')
 
 
 def _sanitize(value, redactions, path=''):
@@ -60,7 +65,7 @@ def _sanitize(value, redactions, path=''):
         for key, item in value.items():
             child = path + '/' + str(key).replace('~', '~0').replace('/', '~1')
             normalized = re.sub(r'([a-z])([A-Z])', r'\1_\2', str(key)).lower()
-            if _OUTCOME_KEY.search(normalized) and not (normalized == 'runtime_thread_interleaving_observed' and isinstance(item, bool)):
+            if _OUTCOME_KEY.search(normalized) and not (_FLAG_KEY.fullmatch(normalized) and isinstance(item, bool)):
                 redactions.append({'path': child, 'reason': 'Timing/PMU/performance outcomes are withheld from estimation inputs'})
             else:
                 sanitized, allowed = _sanitize(item, redactions, child)
@@ -128,7 +133,10 @@ def _source_scope(original, report, conflicts):
         'source_revision': identity.get('source_commit', identity.get('registered_source', {}).get('commit')),
         'input': original['input'], 'roi': original['binding']['roi'], 'threads': original['binding']['threads'],
         'source_sha256': original['source']['sha256'], 'host': original['host']}
-    conflicts.append(_conflict('source_scope_mismatch', '/kernel',
+    # A mismatch needs a fact known on both sides that differs; otherwise the scope is only unbound.
+    differs = any(reported_scope[key] is not None and counted_scope[key] is not None and reported_scope[key] != counted_scope[key]
+                  for key in ('function', 'source_revision'))
+    conflicts.append(_conflict('source_scope_mismatch' if differs else 'source_scope_unbound', '/kernel',
         'Reported function/source/input/host scope is not bound to these native counts. A TDStep report is not automatically the complete counted call.',
         reported=reported_scope, swdb=counted_scope, comparison_scope='unresolved_source_and_access_binding'))
     return reported_scope
@@ -140,15 +148,32 @@ def _array_conflicts(report, subject, aliases, conflicts):
         for step in pattern['steps']:
             array = step['array']
             catalog.setdefault(array['name'], set()).add(array['element_bytes'])
-    arrays = {row['name']: row for row in report.get('data_structures', [])}
+    # Every reported width for an array, from every section. A repeated row or a
+    # disagreement between sections is listed, never resolved by keeping one.
+    reported = {}
+    for index, row in enumerate(report.get('data_structures', [])):
+        reported.setdefault(row['name'], []).append(('/data_structures/' + str(index), row.get('element_size_bytes')))
     for index, row in enumerate(report.get('indirect_access_distances', [])):
-        arrays.setdefault(row['array_name'], {'element_size_bytes': row.get('element_size_bytes')})
-    for name, row in arrays.items():
+        reported.setdefault(row['array_name'], []).append(('/indirect_access_distances/' + str(index), row.get('element_size_bytes')))
+    for name, rows in reported.items():
         path = '/data_structures/' + name
-        width = row.get('element_size_bytes')
-        if type(width) is not int:
-            conflicts.append(_conflict('non_numeric_reported_value', path + '/element_size_bytes',
-                'Element width is not an explicit integer byte value; no conversion is guessed.', reported=width, swdb=None))
+        repeated = [(where, width) for where, width in rows if where.startswith('/data_structures/')]
+        if len(repeated) > 1:
+            conflicts.append(_conflict('reported_internal_conflict', path,
+                'The report lists this array more than once; every row is retained and none is selected.',
+                reported=[{'path': where, 'element_size_bytes': width} for where, width in repeated]))
+        values = []
+        for _, width in rows:
+            if width not in values:
+                values.append(width)
+        if len([value for value in values if value is not None]) > 1:
+            conflicts.append(_conflict('reported_internal_conflict', path + '/element_size_bytes',
+                'Report sections give different element widths for this array; every width is retained and none is selected.',
+                reported=[{'path': where, 'element_size_bytes': width} for where, width in rows]))
+        for value in values:
+            if type(value) is not int:
+                conflicts.append(_conflict('non_numeric_reported_value', path + '/element_size_bytes',
+                    'Element width is not an explicit integer byte value; no conversion is guessed.', reported=value, swdb=None))
         if name not in aliases:
             conflicts.append(_conflict('array_unmapped', path,
                 'No explicit array alias was supplied; names and numeric statistics are retained without matching a native access site.', reported=name, swdb=None))
@@ -158,13 +183,14 @@ def _array_conflicts(report, subject, aliases, conflicts):
             conflicts.append(_conflict('array_alias_unresolved', path,
                 'The explicit destination array has no registered access-pattern definition.', reported=name, swdb=aliases[name]))
             continue
-        if type(width) is int and (len(widths) != 1 or width not in widths):
-            conflicts.append(_conflict('element_size_mismatch', path + '/element_size_bytes',
-                'Explicitly aliased reported/catalog widths differ. Source revisions and concrete access bindings remain unresolved; neither width is repaired.',
-                reported={'value': width, 'unit': 'bytes', 'basis': 'reported'},
-                swdb={'value': next(iter(widths)) if len(widths) == 1 else sorted(widths), 'unit': 'bytes', 'basis': 'code_reading'},
-                comparison_scope='unresolved_source_and_access_binding'))
-    for name in set(aliases) - set(arrays):
+        for value in values:
+            if type(value) is int and (len(widths) != 1 or value not in widths):
+                conflicts.append(_conflict('element_size_mismatch', path + '/element_size_bytes',
+                    'Explicitly aliased reported/catalog widths differ. Source revisions and concrete access bindings remain unresolved; neither width is repaired.',
+                    reported={'value': value, 'unit': 'bytes', 'basis': 'reported'},
+                    swdb={'value': next(iter(widths)) if len(widths) == 1 else sorted(widths), 'unit': 'bytes', 'basis': 'code_reading'},
+                    comparison_scope='unresolved_source_and_access_binding'))
+    for name in set(aliases) - set(reported):
         conflicts.append(_conflict('array_alias_unresolved', '/array_aliases/' + name,
             'Explicit source name is absent from the report.', reported=name, swdb=aliases[name]))
 
@@ -190,6 +216,15 @@ def _unit_conflicts(report, methodology, conflicts):
                     'KB/MB labels do not establish decimal versus binary units. Logical capacity is not active working set; no unit is selected or value converted.',
                     reported={'value': number, 'unit': unit.upper(), 'basis': 'reported'},
                     expected_logical_capacity_bytes=capacity * width if known else None,
+                    reported_unit_claim=(methodology or {}).get('features', {}).get('footprints', {}).get('reported_unit_claim'),
+                    resolved_unit=None))
+            elif not isinstance(number, dict) and re.fullmatch(r'.+_(kb|mb|gb)', field):
+                # Other size fields (total_working_set_mb) carry the same unit ambiguity;
+                # no array/capacity binding is known for them.
+                conflicts.append(_conflict('unit_ambiguity', path + '/' + field,
+                    'KB/MB/GB labels do not establish decimal versus binary units. No unit is selected or value converted.',
+                    reported={'value': number, 'unit': field.rsplit('_', 1)[1].upper(), 'basis': 'reported'},
+                    expected_logical_capacity_bytes=None,
                     reported_unit_claim=(methodology or {}).get('features', {}).get('footprints', {}).get('reported_unit_claim'),
                     resolved_unit=None))
             else:

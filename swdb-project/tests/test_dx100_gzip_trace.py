@@ -1,4 +1,6 @@
-"""Lossless public adapter and replay contracts, never gem5 evidence. 2026-09-26 ET."""
+"""Lossless public adapter and replay contracts, never gem5 evidence. 2026-09-26 ET.
+Updated: 2026-10-09 ET (code review of ticket 06: evidence commands on adapter output run in
+explicit Extensa fixture mode)."""
 import copy
 import gzip
 import hashlib
@@ -8,7 +10,7 @@ import time
 
 import pytest
 
-from test_dx100 import case, reference
+from test_dx100 import EXTENSA, case, extensa_args, reference
 from test_dx100_v2 import v2_request
 from swdb import artifacts, bfs_protocol, dx100_coverage as coverage
 from swdb.cli import Failure
@@ -182,7 +184,7 @@ def test_public_profile_package_and_query_reopen_full_debug_stream(case, records
     def public(command, payload, succeeds=True):
         path=folder/(payload['id']+'.json');path.write_text(json.dumps(payload))
         extra=['--runs-dir',folder/'profile-runs'] if command=='dx100-profile' else []
-        result=records.swdb(command,path,*extra,'--format','json')
+        result=records.swdb(command,path,*extra,'--format','json',*extensa_args(command))
         assert result.returncode==(0 if succeeds else 1),result.stdout+result.stderr
         return json.loads(result.stdout) if result.stdout else None
     workload=public('register-workload',_workload_request(records,folder,
@@ -224,7 +226,7 @@ def test_public_profile_package_and_query_reopen_full_debug_stream(case, records
         'evaluation':evaluation['id'],'region_profile':profile['id'],'context':profile_package._context(refreshed)}
     package=public('profile-package',package_request)
     assert package['evidence']['classification']=='contract_fixture' and package['gain_claim'] is False
-    query=records.swdb('profile-strategies',package['id'],'--format','json')
+    query=records.swdb('profile-strategies',package['id'],'--format','json',*EXTENSA)
     assert query.returncode==0,query.stderr
     assert json.loads(query.stdout)['evidence_validation']['state']=='valid'
     # New trace provenance cannot survive a missing exact diagnostic execution.
@@ -233,7 +235,7 @@ def test_public_profile_package_and_query_reopen_full_debug_stream(case, records
     # Use a fresh package ID so version checks do not mask execution provenance.
     missing_request={**package_request,'id':'gzip-package-missing-execution'}
     path=folder/'missing-package.json';path.write_text(json.dumps(missing_request))
-    rejected=records.swdb('profile-package',path,'--format','json')
+    rejected=records.swdb('profile-package',path,'--format','json',*EXTENSA)
     assert rejected.returncode==1 and 'lacks its actual DX100 execution' in rejected.stderr
     records.write('region_profiles/'+profile['id']+'.yaml',profile)
     # The package record remains sealed and unchanged; only retained raw bytes corrupt.
@@ -241,7 +243,7 @@ def test_public_profile_package_and_query_reopen_full_debug_stream(case, records
     failed=public('dx100-profile',{**profile_request,'id':'gzip-profile-corrupt'},False)
     assert failed['outcome']['state']=='failed' and 'debug trace' in failed['outcome']['reason']
     public('profile-package',{**package_request,'id':'gzip-package-corrupt'},False)
-    query=records.swdb('profile-strategies',package['id'],'--format','json')
+    query=records.swdb('profile-strategies',package['id'],'--format','json',*EXTENSA)
     assert query.returncode==0,query.stderr
     assert json.loads(query.stdout)['evidence_validation']['state']=='invalid'
 

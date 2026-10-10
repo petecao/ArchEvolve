@@ -1,4 +1,5 @@
-"""Public actual Jacobi source counting. Created: 2026-10-06 ET."""
+"""Public actual Jacobi source counting. Created: 2026-10-06 ET.
+Updated: 2026-10-09 ET (code review 14-F2: catalog loops bind to regions; closure-copied store)."""
 import json
 from conftest import REPO,run_swdb
 from swdb import artifacts
@@ -7,7 +8,7 @@ IMPLEMENTATION='gapbs-pr-jacobi-analytic-v1'
 
 
 def test_registered_jacobi_counts_original_source_free_roi(records,tmp_path,llvm22):
-    records.copy_repo()
+    records.copy_closure(IMPLEMENTATION,'gapbs-pr-jacobi','kron-g16-k16')
     (records.path/'implementations'/f'{IMPLEMENTATION}.yaml').unlink(missing_ok=True)
     added=run_swdb('add',REPO/'records/implementations'/f'{IMPLEMENTATION}.yaml',
         '--records',records.path,'--db',tmp_path/'index.sqlite')
@@ -45,3 +46,14 @@ def test_registered_jacobi_counts_original_source_free_roi(records,tmp_path,llvm
     assert (REPO/'apps/gapbs/src/pr_spmv.cc').read_bytes()==original
     assert (REPO/'records/implementations/gapbs-pr-jacobi.yaml').read_bytes()==legacy
     assert records.read('implementations/'+IMPLEMENTATION+'.yaml')['verification']['status']=='unchecked'
+    # Code review 14-F2: the registered-functional route binds the declared catalog loops to
+    # region IDs and compares every handwritten access pattern step by step.
+    implementation=records.read('implementations/'+IMPLEMENTATION+'.yaml')
+    bindings={r['catalog_loop']:r['id'] for r in result['binding']['subject_source_identity']['region_bindings']}
+    assert set(bindings)=={loop['id'] for loop in implementation['loops']}
+    mapped={r['id'] for r in result['regions'] if r['mapped']}
+    assert set(bindings.values())<=mapped
+    assert not set(bindings.values())&set(result['unmapped_loops'])
+    rows=result['pattern_comparison']
+    assert [row['pattern'] for row in rows]==[p['id'] for p in implementation['access_patterns']]
+    assert all(row['region'] and len(row['steps'])==len(row['expected_shapes']) for row in rows)

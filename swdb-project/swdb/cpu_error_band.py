@@ -1,4 +1,10 @@
-"""Immutable CPU error evidence; missing whole-call costs stay failed. Created: 2026-10-06 ET."""
+"""Immutable CPU error evidence; missing whole-call costs stay failed. Created: 2026-10-06 ET.
+
+Updated: 2026-10-09 23:10 ET (code review of tickets 07/11): a held-out input must be
+unobserved (F1); the D25 arithmetic is one helper, also shown for reported fixtures
+without changing their verdict (F2); new v2 bands rank forecast-only dominant regions
+for each large error (F6).
+"""
 import copy
 import math
 import time
@@ -38,6 +44,68 @@ def _load(store, rid, kind):
 
 def _positive(value):
     return type(value) in (int, float) and math.isfinite(value) and value > 0
+
+
+FORMAT_V1 = 'swdb.cpu-error-band.v1'
+FORMAT = 'swdb.cpu-error-band.v2'
+LARGE_ERROR_LOG = math.log(1.25)
+GAIN_THRESHOLD = 1.05
+
+
+def three_state(ratio, width_log, threshold=GAIN_THRESHOLD):
+    """D25 on the log scale: the ratio interval is log(ratio) plus/minus twice the
+    single-estimate width, because both the candidate and the baseline carry it."""
+    if not _positive(ratio) or type(width_log) not in (int, float) or not math.isfinite(width_log) or width_log < 0:
+        return 'within_error', None
+    log_ratio = math.log(ratio)
+    radius = 2 * width_log
+    gate = math.log(threshold)
+    interval = [log_ratio - radius, log_ratio + radius]
+    if interval[0] > gate:
+        return 'estimated_gain', interval
+    if interval[1] < gate:
+        return 'estimated_no_gain', interval
+    return 'within_error', interval
+
+
+def large_errors(pairs, threshold=LARGE_ERROR_LOG):
+    """Forecast-only explanation of each known error above the threshold.
+
+    Ranks the largest predicted region costs with their limiting bounds. Per-region
+    medians need not sum to the whole-call median, and observed error is never
+    assigned to regions."""
+    rows = []
+    for pair in pairs:
+        error = pair['rounding_aware_absolute_log_error']
+        if error is None or error <= threshold:
+            continue
+        total = pair['predicted_seconds']
+        regions = sorted((r for r in pair['regions'] if type(r.get('seconds')) in (int, float) and r['seconds'] > 0),
+                         key=lambda r: (-r['seconds'], r['id']))
+        rows.append({'estimate': pair['estimate'], 'input': pair['input'], 'log_error': pair['log_error'],
+            'rounding_aware_absolute_log_error': error,
+            'direction': 'over_prediction' if pair['log_error'] > 0 else 'under_prediction',
+            'dominant_regions': [{'region': r['id'], 'seconds': r['seconds'], 'limiting_bound': r.get('limiting_bound'),
+                'share_of_predicted_seconds': r['seconds'] / total} for r in regions[:5]],
+            'attribution': 'Forecast-only: largest predicted region costs and their limiting bounds; observed error is not assigned to regions.'})
+    return rows
+
+
+def _prior_observations(store, validation):
+    """Native validations of the same implementation/input/threads timed no later
+    than `validation` (any phase). A held-out input must still be unobserved."""
+    key = (validation['implementation'], validation['input'], validation['threads'], validation['evidence_kind'])
+    started = validation['context']['timing_started_ns']
+    found = []
+    for rec in store.of_kind('cpu_native_validation'):
+        other = rec.data
+        if other.get('id') == validation['id'] or (other.get('implementation'), other.get('input'),
+                other.get('threads'), other.get('evidence_kind')) != key:
+            continue
+        when = (other.get('context') or {}).get('timing_started_ns')
+        if type(when) is not int or when <= started:
+            found.append(other['id'])
+    return sorted(found)
 
 
 class _Context:
@@ -148,14 +216,15 @@ def freeze(args):
         'status': 'draft', 'created': writer.today(), 'updated': writer.today(),
         'provenance': [{'id': 'error-band', 'kind': 'source_code' if args.fixture else 'measurement',
             'description': 'Empirical whole-call development envelope with printed-time rounding; held-out validation is separate. No missing cost or timing is filled.', 'uri': None}],
-        'format': 'swdb.cpu-error-band.v1', 'backend': 'native', 'evidence_kind': 'fixture' if args.fixture else 'native',
+        'format': FORMAT, 'backend': 'native', 'evidence_kind': 'fixture' if args.fixture else 'native',
         'state': state, 'width_log': max(values) if known else None, 'frozen_ns': time.time_ns(),
         'target_description_sha256': first['target_description_sha256'], 'estimator_sha256': first['estimator_sha256'],
         'threads': first['threads'], 'pairs': pairs, 'development_band': None,
         'admission': {'generalization': 'none; no unseen implementation, kernel, workload, thread or target confidence',
             'validated': False, 'unit': 'independent workload pair; five original-driver trials are retained within the pair',
             'missing': sorted({m for p in pairs for m in p['missing']}),
-            'large_error_threshold_log': math.log(1.25)},
+            'large_error_threshold_log': LARGE_ERROR_LOG},
+        'large_errors': large_errors(pairs),
         'notes': ['A failed or development-only band never enables a gain verdict.',
             'Region bounds and missing costs are diagnostic estimates, not measured region timings.']}
     record['identity_sha256'] = identity(record)
@@ -174,6 +243,9 @@ def _holdout_pairs(store,band,estimates,validations,fixture):
         if pair['scope'] not in [p.get('scope') for p in band['pairs']]:pair['missing'].append('exact_development_source_runtime_scope')
         if validation.get('development_band')!=band['id']:pair['missing'].append('prior_development_band_binding')
         if validation['context']['timing_started_ns']<=band['frozen_ns']:pair['missing'].append('holdout_timing_after_frozen_development_width')
+        # Code review 2026-10-09 ET (F1): an input timed before (any phase, any band, or a
+        # repeated held-out attempt) is no longer an unseen held-out outcome.
+        if _prior_observations(store,validation):pair['missing'].append('unobserved_heldout_input')
         if not fixture:
             try:require_holdout(store,band['id'],_load(store,estimate['characterization'],'workload_characterization'),protocol=_load(store,estimate['protocol'],'protocol'))
             except Failure as exc:pair['missing'].append('prospective_holdout_admission: '+str(exc))
@@ -199,7 +271,8 @@ def holdout(args):
     record=copy.deepcopy(band)
     record.update(id=args.id,created=writer.today(),updated=writer.today(),frozen_ns=time.time_ns(),pairs=pairs,
         development_band=band['id'],state=('fixture' if args.fixture else 'validated') if passed else 'failed',
-        evidence_kind='fixture' if args.fixture else 'native')
+        evidence_kind='fixture' if args.fixture else 'native',format=FORMAT,large_errors=large_errors(pairs))
+    record['admission']['large_error_threshold_log']=LARGE_ERROR_LOG
     record['admission'].update(validated=passed and not args.fixture,holdout_passed=passed,missing=missing,
         generalization='Only the exact held-out characterization identities; no unseen implementation, kernel, workload, thread or target confidence.')
     record['notes']=['Unchanged frozen development width tested against prospective held-out whole-call observations.',
@@ -209,7 +282,9 @@ def holdout(args):
     return record
 
 
-def require_holdout(store, rid, characterization, *, protocol):
+def require_holdout(store, rid, characterization, *, protocol, evidence_kind=None):
+    """Admit a held-out timing before it starts. With `evidence_kind` (the collector),
+    refuse an input of this implementation/threads that was already timed."""
     band = _checked_band(store,rid)
     if band['state'] != 'development' or band['evidence_kind'] != 'native' or band['width_log'] is None:
         raise Failure('held-out timing requires a known frozen native development width')
@@ -222,6 +297,12 @@ def require_holdout(store, rid, characterization, *, protocol):
     allowlist=protocol['settings']['target_description']['snapshot'].get('extensions',{}).get('cpu_services_binding',{}).get('characterization_allowlist',[])
     if {'id':characterization['id'],'sha256':artifacts.digest(characterization)} not in allowlist:
         raise Failure('held-out characterization was not frozen prospectively in the common model allowlist')
+    if evidence_kind is not None:
+        prior=sorted(rec.id for rec in store.of_kind('cpu_native_validation')
+            if (rec.data.get('implementation'),rec.data.get('input'),rec.data.get('threads'),rec.data.get('evidence_kind'))
+            ==(characterization['subject']['id'],characterization['input'],characterization['binding']['threads'],evidence_kind))
+        if prior:
+            raise Failure('held-out input was already timed; its outcome is no longer unseen: '+', '.join(prior))
     return band
 
 
@@ -258,12 +339,23 @@ def validate_pin(settings, store):
     return band
 
 
+def _matched_pair(band,result):
+    return any(p['estimate']==result['id'] or
+        (p.get('scope',{}).get('implementation')==result['subject']['id'] and p['input']==result['input']
+         and not p['missing'] and p['estimate_sha256'] and p.get('characterization')==result['characterization']
+         and p.get('characterization_sha256')==result['characterization_sha256']) for p in band['pairs'])
+
+
 def _admitted_estimate(band,result):
     return (band['state']=='validated' and band['evidence_kind']=='native' and band['admission']['validated'] is True
-        and any(p['estimate']==result['id'] or
-            (p.get('scope',{}).get('implementation')==result['subject']['id'] and p['input']==result['input']
-             and not p['missing'] and p['estimate_sha256'] and p.get('characterization')==result['characterization']
-             and p.get('characterization_sha256')==result['characterization_sha256']) for p in band['pairs']))
+        and _matched_pair(band,result))
+
+
+def _fixture_holdout_estimate(band,result):
+    """Reported held-out fixture scope: exercises D25 arithmetic, grants no confidence."""
+    return (band['state']=='fixture' and band['evidence_kind']=='fixture' and band['development_band'] is not None
+        and band['admission'].get('holdout_passed') is True and band['admission']['validated'] is False
+        and _matched_pair(band,result))
 
 
 def finalize_estimate(result, *, store, protocol, characterization, target_description):
@@ -278,11 +370,15 @@ def finalize_estimate(result, *, store, protocol, characterization, target_descr
     result['verdict']='within_error'
     baseline=None if result.get('baseline') is None else store.get(result['baseline']['id'],'estimate')
     if admitted and baseline is not None and _admitted_estimate(band,baseline) and _positive(result.get('ratio')):
-        log_ratio=math.log(result['ratio']);radius=2*band['width_log'];threshold=math.log(1.05)
-        if log_ratio-radius>threshold:result['verdict']='estimated_gain'
-        elif log_ratio+radius<threshold:result['verdict']='estimated_no_gain'
-        result['error_band']['ratio_log_interval']=[log_ratio-radius,log_ratio+radius]
-        result['error_band']['gain_threshold']=1.05
+        result['verdict'],result['error_band']['ratio_log_interval']=three_state(result['ratio'],band['width_log'])
+        result['error_band']['gain_threshold']=GAIN_THRESHOLD
+    elif (baseline is not None and _positive(result.get('ratio')) and _fixture_holdout_estimate(band,result)
+            and _fixture_holdout_estimate(band,baseline)):
+        # Code review 2026-10-09 ET (F2): the reported token is shown separately; the
+        # public verdict stays within_error because fixture evidence is never validated.
+        fixture_verdict,interval=three_state(result['ratio'],band['width_log'])
+        result['error_band'].update(fixture_verdict=fixture_verdict,ratio_log_interval=interval,gain_threshold=GAIN_THRESHOLD)
+        result['notes'].append('Reported fixture held-out scope: fixture_verdict checks the D25 arithmetic only and grants no confidence.')
     result['notes'].append(reason+' Unseen implementations, kernels, inputs, threads or targets receive no envelope transfer; native CPU timing selection remains separate.')
     return result
 
@@ -319,6 +415,11 @@ def validate_record(record, ctx):
             raise Failure('CPU band admission explanations differ from retained evidence')
         if expected != data['pairs']:
             raise Failure('CPU error-band inputs or per-region explanations changed')
+        if data['format'] == FORMAT:
+            if data['admission'].get('large_error_threshold_log') != LARGE_ERROR_LOG or data.get('large_errors') != large_errors(expected):
+                raise Failure('CPU error-band large-error explanations differ from retained pairs')
+        elif data['format'] != FORMAT_V1 or 'large_errors' in data:
+            raise Failure('CPU error-band v1 records carry no derived large-error explanation')
         values = [p['rounding_aware_absolute_log_error'] for p in expected]
         width = max(values) if all(v is not None for v in values) else None
         state = ('fixture' if data['evidence_kind'] == 'fixture' else 'development') if width is not None else 'failed'

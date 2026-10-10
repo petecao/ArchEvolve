@@ -15,3 +15,9 @@ Updated: 2026-10-09 22:33 ET (wontfix: ticket 18 chose not to switch to flow B)
 - [ ] gem5 hours per iteration are unchanged for the same k; candidates explored per iteration are reported.
 - [ ] Spot-check results are recorded, so the rate of keeping the winner stays measured.
 - [ ] Untimed variants are kept with their estimates and never ranked as timed.
+
+## Answer
+
+2026-10-09 22:33 ET, Yan-Ru: **wontfix.** [Ticket 18](18-decide-flow-b.md) chose not to
+switch to flow B: the agreement report had 0 eligible pairs, so D30 is not met. Selection
+stays timing-only. Open a new ticket if a later agreement report meets D30.

@@ -39,3 +39,10 @@ before its gem5 timing exists (D26), for the registered BFS candidate.
 
 - [ ] Yan-Ru sets scope and priority.
 - [ ] One DX100 pair whose estimate receipt precedes its timing, passing the strict audit.
+
+## Answer
+
+2026-10-09 22:33 ET, Yan-Ru: **wontfix (parked).** Timing-only selection is enough for now.
+Reopen only if the paper needs estimate/timing agreement; spec rule D35 then applies (no
+Extensa campaign before an audited pre-timing numeric estimate). The work already done
+under ticket 17 stays linked above.

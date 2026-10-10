@@ -1,7 +1,10 @@
-"""Malformed public messages stay retrievable. Updated: 2026-09-26 ET."""
+"""Malformed public messages stay retrievable. Updated: 2026-10-10 ET (code review of ticket 06: dx100-*
+commands run in explicit Extensa fixture mode, since ArchEvolve mode refuses them first); 2026-09-26 ET."""
 import json
 
 import pytest
+
+from test_dx100 import EXTENSA
 
 
 @pytest.mark.parametrize('command', ['submit', 'evaluate', 'bfs-profile', 'dx100-build',
@@ -12,7 +15,7 @@ def test_yaml_only_message_values_cannot_poison_durable_results(records, tmp_pat
     request = tmp_path / 'request.yaml'
     raw = 'message_version: "1.0"\nid: invalid-message\nextra: ' + value + '\n'
     request.write_text(raw)
-    options = ['--lane', '0'] if command.startswith('dx100-') else []
+    options = ['--lane', '0', *EXTENSA] if command.startswith('dx100-') else []
     response = records.swdb(command, request, '--runs-dir', tmp_path / 'runs', '--format', 'json', *options)
     assert response.returncode == 1 and not response.stderr, response.stderr
     result = json.loads(response.stdout)
@@ -32,7 +35,7 @@ def test_yaml_only_message_values_cannot_poison_durable_results(records, tmp_pat
 def test_shared_protocol_reader_rejects_yaml_only_values_before_publication(records, tmp_path, command):
     request = tmp_path / 'request.yaml'
     request.write_text('message_version: "1.0"\nid: bad-request\nextra: !!binary aGVsbG8=\n')
-    options = ['--runs-dir', tmp_path / 'runs'] if command == 'dx100-profile' else []
+    options = ['--runs-dir', tmp_path / 'runs', *EXTENSA] if command == 'dx100-profile' else []
     response = records.swdb(command, request, '--format', 'json', *options)
     assert response.returncode == 1 and 'JSON-compatible' in response.stderr
     assert 'Traceback' not in response.stderr

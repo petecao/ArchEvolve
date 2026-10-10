@@ -1,5 +1,7 @@
 """Prospective source-slot estimates beside native timing. Updated 2026-10-09 ET.
 
+Updated 2026-10-09 23:10 ET (code review F9): unpaired states are validated too.
+
 The native timer and correctness selector are unchanged. Admission is completed
 before the first native invocation. Original advancing-driver error bands do not
 transfer to the protected fresh-process driver.
@@ -40,7 +42,13 @@ def validate_record(record, ctx):
     """
     from swdb.problems import Problem
     data=record.data;pair=data.get('paired_estimate',{})
-    if pair.get('state')!='paired':return
+    if not pair:return
+    if pair.get('state')!='paired':
+        # Code review 2026-10-09 ET (F9): an unpaired slot carries no prediction.
+        if (pair.get('state') not in ('unavailable','excluded') or pair.get('seconds') is not None
+                or pair.get('kernel_seconds') is not None or pair.get('estimate') is not None or 'slots' in pair):
+            yield Problem(record.rel,'paired_estimate','an unavailable or excluded CPU paired estimate must carry no prediction')
+        return
     try:
         context=data['context']['analytic_evaluator_scope']
         if pair['evaluation_scope_sha256']!=artifacts.digest(context):

@@ -1,6 +1,6 @@
 # Freeze unknown analytic parameters
 
-Updated: 2026-10-06 ET.
+Updated: 2026-10-09 ET (code review: unknown work ranks; provider-pin refusal test). First written 2026-10-06 ET.
 
 `fill-target-parameters` writes one new target-description version from a registered
 characterization, its profile and the base target's declared numerical unknowns.
@@ -36,7 +36,14 @@ one of those gaps or change the observation policy.
 Freeze a fresh estimate protocol using the new target, then run `estimate`. Its
 `llm_parameters` lists the estimated facts and recomposes half/base/double
 scenarios for each complete trial before taking the median. Unknown whole-call
-totals remain null, with null impacts and ranks. Historical receipts remain
+totals remain null, with null impacts and ranks. Before a fill, each unknown row
+carries `work_multiplier` and a `work_rank` among unknowns of the same unit. This
+shows which unknown scales the most counted work. Different units are not ranked
+against each other ([model context](../analytic-model-context-v1.md)).
+
+Validation holds an actual receipt to the shared provider pins. It also requires
+an enforced, passing guard. A fixture receipt cannot claim the actual
+classification. Historical receipts remain
 validatable after implementation changes; new execution requires a current
 frozen protocol.
 
