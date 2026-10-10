@@ -1,7 +1,7 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-09 19:32 ET
+Updated: 2026-10-09 20:06 ET
 **Type:** slice
 **Status:** claimed
 **Work state:** original reporting complete; scientific acceptance blocked on D26
@@ -10,6 +10,19 @@ Updated: 2026-10-09 19:32 ET
 **Time estimate:** 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs)
 
 **What to build:** After the flow-A campaigns: rank agreement between estimate and timing, whether gem5's best candidate survives a top-3 cut by estimate, and where estimates go wrong. The rule fixed in D30 is applied as written. A research variant of the estimator may be calibrated with these pairs, versioned separately (D10).
+
+2026-10-09 20:06 ET — [DX100 protected LLVM count execution](../evidence/17-dx100-protected-llvm-count-execution-20261009/README.md)
+
+The exact registered SG32/explicit-source call now runs through the existing LLVM
+counter stages with a compact execution receipt and independent original-CSR
+check. Final component verification passed 40 cases, including real counter
+execution on a four-vertex fixture. Build controls are isolated; loaded-image
+paths/post-run hashes retain explicit byte-continuity unknowns. This is an
+internal count-only path, not a production characterization/numerical adapter,
+MMIO proof, fresh certification or blind pair. Ticket17 remains claimed with
+three report items checked and D26 unchecked; original science and D30 unchanged.
+Next bind actual candidate functional command observations and supported complete
+MMIO/cost/composition/runtime prerequisites. Stop general CPU recovery.
 
 2026-10-09 19:32 ET — [DX100 complete-call counting shadow](../evidence/17-dx100-complete-call-shadow-20261009/README.md)
 

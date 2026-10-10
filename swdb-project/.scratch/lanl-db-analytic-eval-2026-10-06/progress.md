@@ -1,5 +1,19 @@
 # Implementation progress
 
+2026-10-09 20:06 ET — [DX100 protected LLVM count execution](evidence/17-dx100-protected-llvm-count-execution-20261009/README.md)
+
+The exact registered SG32/explicit-source call now runs through the existing LLVM
+counter stages with a compact execution receipt and independent original-CSR
+check. Final component verification passed 40 cases, including real counter
+execution on a four-vertex fixture. Build controls are isolated; loaded-image
+paths/post-run hashes retain explicit byte-continuity unknowns. This is an
+internal count-only path, not a production characterization/numerical adapter,
+MMIO proof, fresh certification or blind pair. Ticket17 remains claimed with
+three report items checked and D26 unchecked; original science and D30 unchanged.
+Next bind actual candidate functional command observations and supported complete
+MMIO/cost/composition/runtime prerequisites. Stop general CPU recovery.
+
+
 2026-10-09 19:32 ET — DX100 call-shadow component
 
 [Preparation and selected verification](evidence/17-dx100-complete-call-shadow-20261009/README.md)

@@ -1,5 +1,19 @@
 # Ticket 17: completed report and remaining scientific requirement
 
+2026-10-09 20:06 ET — [DX100 protected LLVM count execution](evidence/17-dx100-protected-llvm-count-execution-20261009/README.md)
+
+The exact registered SG32/explicit-source call now runs through the existing LLVM
+counter stages with a compact execution receipt and independent original-CSR
+check. Final component verification passed 40 cases, including real counter
+execution on a four-vertex fixture. Build controls are isolated; loaded-image
+paths/post-run hashes retain explicit byte-continuity unknowns. This is an
+internal count-only path, not a production characterization/numerical adapter,
+MMIO proof, fresh certification or blind pair. Ticket17 remains claimed with
+three report items checked and D26 unchecked; original science and D30 unchanged.
+Next bind actual candidate functional command observations and supported complete
+MMIO/cost/composition/runtime prerequisites. Stop general CPU recovery.
+
+
 2026-10-09 19:32 ET — DX100 call-shadow preparation
 
 [The bounded component](evidence/17-dx100-complete-call-shadow-20261009/README.md)
@@ -11,7 +25,7 @@ claiming that prerequisite complete. Supported memory-effect correspondence,
 whole-call costs/composition and current certification still precede one genuine
 blind numerical pair. Ticket17 status, D26/D30 and original reporting are unchanged.
 
-Updated: 2026-10-09 19:32 ET
+Updated: 2026-10-09 20:06 ET
 
 **The original agreement report is complete and negative. Ticket 17 is still
 blocked on scientific acceptance.** Four campaigns ran, but produced zero

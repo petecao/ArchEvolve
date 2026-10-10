@@ -7,7 +7,7 @@ from swdb import artifacts
 from swdb.cli import Failure
 
 
-def source_sha256_object(llvm,output,run,timeout):
+def source_sha256_object(llvm,output,run,timeout,*,env=None):
     archive=Path(run([llvm/'llvm-config','--libdir']).stdout.strip())/'libLLVMSupport.a'
     if not archive.is_file():raise Failure('static LLVM source hashing requires native libLLVMSupport.a')
     for tool in ('llvm-ar','llvm-nm'):
@@ -16,7 +16,7 @@ def source_sha256_object(llvm,output,run,timeout):
     members=run([llvm/'llvm-ar','t',archive],timeout=timeout).stdout.splitlines()
     if members.count(member)!=1:raise Failure('native LLVM archive needs exactly one stateless SHA256.cpp.o member')
     archive_sha=artifacts.file_hash(archive)
-    try:extracted=subprocess.run([str(llvm/'llvm-ar'),'p',str(archive),member],capture_output=True,timeout=timeout)
+    try:extracted=subprocess.run([str(llvm/'llvm-ar'),'p',str(archive),member],capture_output=True,timeout=timeout,env=env)
     except (OSError,subprocess.TimeoutExpired) as exc:raise Failure('native SHA256 extraction failed: '+str(exc)) from None
     if extracted.returncode or not extracted.stdout:raise Failure('native SHA256 extraction failed: '+extracted.stderr.decode(errors='replace')[-4000:])
     if artifacts.file_hash(archive)!=archive_sha:raise Failure('native LLVM support archive changed during extraction')

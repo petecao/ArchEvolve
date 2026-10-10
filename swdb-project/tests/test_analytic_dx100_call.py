@@ -134,6 +134,73 @@ def test_plan_binds_actual_sg_bytes_without_claiming_execution_or_mmio(tmp_path)
         shadow.prepare(store, candidate, workload, source, 3)
 
 
+def test_real_llvm_count_window_and_receipt_bind_exact_dx100_call(tmp_path, llvm22):
+    store, candidate, workload, source, graph = registered(tmp_path)
+    output = tmp_path / 'actual-counts'
+    result = shadow.execute(store, candidate, workload, source, 0, output,
+                            llvm_bin=llvm22, timeout_s=120)
+    receipt, payload = result['receipt'], result['payload']
+    assert receipt['execution_observed'] is True
+    assert receipt['numeric_admission'] is receipt['timer_values_used'] is False
+    assert receipt['mmio_correspondence'] == 'unknown'
+    assert payload['sources'] == [0]
+    assert receipt['counted_payload_sha256'] == artifacts.digest(payload)
+    assert receipt['environment']['OMP_NUM_THREADS'] == '4'
+    assert receipt['environment']['OMP_DYNAMIC'] == 'FALSE'
+    assert receipt['llvm_version'].startswith('22.')
+    assert receipt['toolchain_flags'][0] == '--no-default-config'
+    if receipt['macos_sdk']:
+        assert receipt['toolchain_flags'][1:] == ['-isysroot', receipt['macos_sdk']]
+    assert receipt['build_environment'] == {'PATH': '/usr/bin:/bin', 'TMPDIR': str(output)}
+    assert 'runtime_library_byte_continuity' in receipt['runtime_missing']
+    assert receipt['pinned_inputs'][str(source)] == artifacts.file_hash(source)
+    assert receipt['pinned_inputs'][str(graph)] == artifacts.file_hash(graph)
+    for name, descriptor in receipt['artifacts'].items():
+        assert descriptor['sha256'] == artifacts.file_hash(output / name)
+        assert descriptor['bytes'] == (output / name).stat().st_size
+    # Real counter events, rather than the print-only observer of earlier tests.
+    import json
+    raw = json.loads((output / 'counts.json').read_text())
+    assert len(raw['trials']) == 1 and raw['trials'][0]['sources'] == [0]
+    assert any(value > 0 for values in raw['trials'][0]['operations'].values() for value in values)
+    # Inlining can attribute DOBFS instructions to main. The window, rather
+    # than a debug-function label, determines which counters are active.
+    assert any(row['operation_counts']['integer']['value'] > 0 for row in payload['regions'])
+    assert 'fixture graph constructed' in (output / 'stdout.txt').read_text()
+    assert 'WINDOW begin' not in (output / 'stdout.txt').read_text()
+    saved = json.loads((output / 'receipt.json').read_text())
+    assert saved == receipt
+    identity = dict(receipt); identity.pop('identity_sha256')
+    assert artifacts.digest(identity) == receipt['identity_sha256']
+
+
+@pytest.mark.parametrize('change', ['none', 'extra', 'source', 'source-type', 'failed', 'vertices'])
+def test_count_result_refuses_missing_changed_or_failed_window(change):
+    from types import SimpleNamespace
+    trials = [{'sources': [0]}]
+    stdout = 'SWDB_BFS_RESULT source=0 vertices=4 parent_count=4 parent_fnv1a64=0123456789abcdef\nVerification: PASS\n'
+    if change == 'none': trials = []
+    if change == 'extra': trials *= 2
+    if change == 'source': trials[0]['sources'] = [1]
+    if change == 'source-type': trials[0]['sources'] = [False]
+    if change == 'failed': stdout = stdout.replace('PASS', 'FAIL')
+    if change == 'vertices': stdout = stdout.replace('vertices=4', 'vertices=5')
+    observed = {'counts': {'trials': trials}, 'static': {'regions': []},
+                'executed': SimpleNamespace(stdout=stdout)}
+    with pytest.raises(Failure, match='counted source window|original-graph check failed'):
+        shadow._counted_result(observed, {'source': 0, 'num_vertices': 4})
+
+
+@pytest.mark.parametrize('variable,value', [('CPATH', '/tmp/headers'), ('LD_PRELOAD', '/tmp/observer'),
+                                          ('SWDB_ROI_GATED', '0'), ('CCC_OVERRIDE_OPTIONS', '+-include /tmp/observer.h')])
+def test_execute_refuses_ambient_substitution_before_build(tmp_path, monkeypatch, variable, value):
+    store, candidate, workload, source, _ = registered(tmp_path)
+    monkeypatch.setenv(variable, value)
+    with pytest.raises(Failure, match='ambient'):
+        shadow.execute(store, candidate, workload, source, 0, tmp_path / 'counted')
+    assert not (tmp_path / 'counted').exists()
+
+
 @pytest.mark.parametrize('selected', [-1, 4, True, '0'])
 def test_source_is_exact_bounded_integer(tmp_path, selected):
     store, candidate, workload, source, _ = registered(tmp_path)

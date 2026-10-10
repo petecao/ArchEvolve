@@ -258,6 +258,114 @@ def _counted_regions(static, counts, count_scope="per_run", observation_contract
 
 
 
+def _execute_counts(args, *, adapter, output, live_contract, llvm, source, flags, toolchain_flags, subject):
+    """Shared existing LLVM build/run pipeline; callers own binding and admission."""
+    command_contract = output / 'functional-observation.json'
+    build_env = adapter.get('build_environment') if adapter else None
+
+    def run(command, **options):
+        if build_env is not None and 'env' not in options:
+            options['env'] = build_env
+        return _run(command, **options)
+
+    plugin = output / 'Characterize.so'
+    llvm_flags = shlex.split(run([llvm / 'llvm-config', '--cxxflags', '--ldflags']).stdout)
+    shared_probe = run([llvm / 'llvm-config', '--link-shared', '--libs', 'core', 'passes', 'analysis', 'support', '--system-libs'], check=False)
+    plugin_linkage = 'shared_llvm' if shared_probe.returncode == 0 else 'host_symbols'
+    if plugin_linkage == 'shared_llvm':
+        llvm_flags.extend(shlex.split(shared_probe.stdout))
+    elif platform.system() == 'Darwin':
+        # Linux shared objects resolve the host's exported LLVM symbols at opt load;
+        # Mach-O requires explicit dynamic lookup for this same plugin convention.
+        llvm_flags.extend(['-Wl,-undefined,dynamic_lookup'])
+    # Never link a static libLLVM into the plugin: duplicate registries/LLVM globals
+    # would conflict with opt. A static opt distribution must export its host symbols.
+    plugin_support_objects = []
+    if plugin_linkage == 'host_symbols':
+        from swdb.analytic_llvm_support import source_sha256_object
+        support_object, support_identity = source_sha256_object(llvm, output, run, args.timeout_s, env=build_env)
+        llvm_flags.append(str(support_object))
+        plugin_support_objects.append(support_identity)
+    run_library_paths = [str(p.resolve()) for p in args.run_library_path]
+    llvm_src = Path(__file__).with_name('llvm')
+    build = [llvm / 'clang++', '-shared', '-fPIC', llvm_src / 'Characterize.cpp', '-o', plugin,
+             *llvm_flags, *toolchain_flags, '-Wl,-rpath,' + str(llvm.parent / 'lib')]
+    run(build, timeout=args.timeout_s)
+    base = [llvm / 'clang++', '-O3', '-g', '-emit-llvm', '-c', source, *flags, *toolchain_flags]
+    optimized = output / 'optimized.bc'
+    raw = output / 'source.bc'
+    normalized = output / 'normalized.bc'
+    instrumented = output / 'instrumented.bc'
+    run([*base, '-o', optimized], timeout=args.timeout_s)
+    run([*base, '-Xclang', '-disable-llvm-passes', '-o', raw], timeout=args.timeout_s)
+    # Adapter boundary hooks are inserted before helper inlining, preserving the exact source call.
+    bound_ir = output / 'bound.bc'
+    if adapter and not adapter.get('explicit_roi'):
+        gate_env = dict(os.environ, SWDB_ROI_PATH=adapter['roi_path'], SWDB_ROI_LINE=str(adapter['roi_line']))
+        run([llvm / 'opt', '-load-pass-plugin=' + str(plugin), '-passes=swdb-bind-roi', raw, '-o', bound_ir], env=gate_env, timeout=args.timeout_s)
+    analysis_input=bound_ir if adapter and not adapter.get('explicit_roi') else raw
+    if live_contract:
+        command_ir=output/'commands.bc'
+        command_env=dict(os.environ,SWDB_FUNCTIONAL_OBSERVATION=str(command_contract))
+        run([llvm/'opt','-load-pass-plugin='+str(plugin),'-passes=swdb-bind-commands',analysis_input,'-o',command_ir],env=command_env,timeout=args.timeout_s)
+        analysis_input=command_ir
+    pipeline_version = args.counting_pipeline or ('source-normalized-v2' if adapter else 'source-normalized-v1')
+    pipeline = PIPELINES[pipeline_version]
+    run([llvm / 'opt', '-passes=' + pipeline, analysis_input, '-o', normalized], timeout=args.timeout_s)
+    env = dict(os.environ if build_env is None else build_env)
+    if live_contract:env['SWDB_FUNCTIONAL_OBSERVATION']=str(command_contract)
+    env['SWDB_SUBJECT'] = subject
+    env['SWDB_COUNT_FUNCTION'] = args.function or ''
+    env['SWDB_REGION_MAP'] = str(args.region_map.resolve()) if args.region_map else ''
+    env['SWDB_ANALYSIS_OUTPUT'] = str(output / 'optimized.json')
+    env['SWDB_INSTRUMENT'] = '0'
+    env.pop('SWDB_OBJECT_SCOPES',None)
+    if args.object_scopes:env['SWDB_OBJECT_SCOPES']='1'
+    run([llvm / 'opt', '-load-pass-plugin=' + str(plugin), '-passes=swdb-characterize', optimized, '-disable-output'], env=env, timeout=args.timeout_s)
+    env['SWDB_ANALYSIS_OUTPUT'] = str(output / 'source.json')
+    env['SWDB_INSTRUMENT'] = '1'
+    run([llvm / 'opt', '-load-pass-plugin=' + str(plugin), '-passes=swdb-characterize', normalized, '-o', instrumented], env=env, timeout=args.timeout_s)
+    binary = output / 'counted'
+    native_library_flags = [flag for folder in run_library_paths for flag in ('-L' + folder, '-Wl,-rpath,' + folder)]
+    run([llvm / 'clang++', '-O3', instrumented, llvm_src / 'CountingRuntime.cpp', '-o', binary, *flags, *toolchain_flags, *native_library_flags], timeout=args.timeout_s)
+    if adapter and adapter.get('environment') is not None:
+        env={**adapter['environment'],**{key:value for key,value in env.items() if key.startswith('SWDB_')}}
+    else:
+        for name in ('LD_LIBRARY_PATH', 'DYLD_LIBRARY_PATH'):
+            env[name] = os.pathsep.join(run_library_paths + ([env[name]] if env.get(name) else []))
+    env['OMP_NUM_THREADS'] = str(args.threads)
+    env['OMP_DYNAMIC'] = 'FALSE'
+    env['SWDB_ROI_GATED'] = '1' if adapter else '0'
+    env['SWDB_STATE_BUDGET'] = str(args.state_budget)
+    env['SWDB_COUNTS_OUTPUT'] = str(output / 'counts.json')
+    if live_contract:env.update(live_contract['environment'])
+    executed = run([binary, *args.run_arg], env=env, timeout=args.timeout_s)
+    (output / 'stdout.txt').write_text(executed.stdout)
+    (output / 'stderr.txt').write_text(executed.stderr)
+    try:
+        static = json.loads((output / 'source.json').read_text())
+        optimized_facts = json.loads((output / 'optimized.json').read_text())
+        counts = json.loads((output / 'counts.json').read_text())
+    except (OSError, ValueError) as exc:
+        raise Failure(f'counted native run did not produce valid counts: {exc}') from None
+    return {
+        'static': static,
+        'optimized_facts': optimized_facts,
+        'counts': counts,
+        'executed': executed,
+        'env': env,
+        'llvm_src': llvm_src,
+        'plugin_support_objects': plugin_support_objects,
+        'plugin_linkage': plugin_linkage,
+        'run_library_paths': run_library_paths,
+        'pipeline_version': pipeline_version,
+        'pipeline': pipeline,
+        'binary': binary,
+        'normalized': normalized,
+        'optimized': optimized,
+    }
+
+
 def characterize(args):
     store = Store(args.records)
     subject = args.candidate or args.implementation
@@ -331,86 +439,22 @@ def characterize(args):
         source_identity.update(adapter['identity'])
     command_contract=output/'functional-observation.json'
     if live_contract:command_contract.write_text(json.dumps(live_contract))
-    plugin = output / 'Characterize.so'
-    llvm_flags = shlex.split(_run([llvm / 'llvm-config', '--cxxflags', '--ldflags']).stdout)
-    shared_probe = _run([llvm / 'llvm-config', '--link-shared', '--libs', 'core', 'passes', 'analysis', 'support', '--system-libs'], check=False)
-    plugin_linkage = 'shared_llvm' if shared_probe.returncode == 0 else 'host_symbols'
-    if plugin_linkage == 'shared_llvm':
-        llvm_flags.extend(shlex.split(shared_probe.stdout))
-    elif platform.system() == 'Darwin':
-        # Linux shared objects resolve the host's exported LLVM symbols at opt load;
-        # Mach-O requires explicit dynamic lookup for this same plugin convention.
-        llvm_flags.extend(['-Wl,-undefined,dynamic_lookup'])
-    # Never link a static libLLVM into the plugin: duplicate registries/LLVM globals
-    # would conflict with opt. A static opt distribution must export its host symbols.
-    plugin_support_objects = []
-    if plugin_linkage == 'host_symbols':
-        from swdb.analytic_llvm_support import source_sha256_object
-        support_object, support_identity = source_sha256_object(llvm, output, _run, args.timeout_s)
-        llvm_flags.append(str(support_object))
-        plugin_support_objects.append(support_identity)
-    run_library_paths = [str(p.resolve()) for p in args.run_library_path]
-    llvm_src = Path(__file__).with_name('llvm')
-    build = [llvm / 'clang++', '-shared', '-fPIC', llvm_src / 'Characterize.cpp', '-o', plugin,
-             *llvm_flags, *toolchain_flags, '-Wl,-rpath,' + str(llvm.parent / 'lib')]
-    _run(build, timeout=args.timeout_s)
-    base = [llvm / 'clang++', '-O3', '-g', '-emit-llvm', '-c', source, *flags, *toolchain_flags]
-    optimized = output / 'optimized.bc'
-    raw = output / 'source.bc'
-    normalized = output / 'normalized.bc'
-    instrumented = output / 'instrumented.bc'
-    _run([*base, '-o', optimized], timeout=args.timeout_s)
-    _run([*base, '-Xclang', '-disable-llvm-passes', '-o', raw], timeout=args.timeout_s)
-    # Adapter boundary hooks are inserted before helper inlining, preserving the exact source call.
-    bound_ir = output / 'bound.bc'
-    if adapter and not adapter.get('explicit_roi'):
-        gate_env = dict(os.environ, SWDB_ROI_PATH=adapter['roi_path'], SWDB_ROI_LINE=str(adapter['roi_line']))
-        _run([llvm / 'opt', '-load-pass-plugin=' + str(plugin), '-passes=swdb-bind-roi', raw, '-o', bound_ir], env=gate_env, timeout=args.timeout_s)
-    analysis_input=bound_ir if adapter and not adapter.get('explicit_roi') else raw
-    if live_contract:
-        command_ir=output/'commands.bc'
-        command_env=dict(os.environ,SWDB_FUNCTIONAL_OBSERVATION=str(command_contract))
-        _run([llvm/'opt','-load-pass-plugin='+str(plugin),'-passes=swdb-bind-commands',analysis_input,'-o',command_ir],env=command_env,timeout=args.timeout_s)
-        analysis_input=command_ir
-    pipeline_version = args.counting_pipeline or ('source-normalized-v2' if adapter else 'source-normalized-v1')
-    pipeline = PIPELINES[pipeline_version]
-    _run([llvm / 'opt', '-passes=' + pipeline, analysis_input, '-o', normalized], timeout=args.timeout_s)
-    env = dict(os.environ)
-    if live_contract:env['SWDB_FUNCTIONAL_OBSERVATION']=str(command_contract)
-    env['SWDB_SUBJECT'] = subject
-    env['SWDB_COUNT_FUNCTION'] = args.function or ''
-    env['SWDB_REGION_MAP'] = str(args.region_map.resolve()) if args.region_map else ''
-    env['SWDB_ANALYSIS_OUTPUT'] = str(output / 'optimized.json')
-    env['SWDB_INSTRUMENT'] = '0'
-    env.pop('SWDB_OBJECT_SCOPES',None)
-    if args.object_scopes:env['SWDB_OBJECT_SCOPES']='1'
-    _run([llvm / 'opt', '-load-pass-plugin=' + str(plugin), '-passes=swdb-characterize', optimized, '-disable-output'], env=env, timeout=args.timeout_s)
-    env['SWDB_ANALYSIS_OUTPUT'] = str(output / 'source.json')
-    env['SWDB_INSTRUMENT'] = '1'
-    _run([llvm / 'opt', '-load-pass-plugin=' + str(plugin), '-passes=swdb-characterize', normalized, '-o', instrumented], env=env, timeout=args.timeout_s)
-    binary = output / 'counted'
-    native_library_flags = [flag for folder in run_library_paths for flag in ('-L' + folder, '-Wl,-rpath,' + folder)]
-    _run([llvm / 'clang++', '-O3', instrumented, llvm_src / 'CountingRuntime.cpp', '-o', binary, *flags, *toolchain_flags, *native_library_flags], timeout=args.timeout_s)
-    if adapter and adapter.get('environment') is not None:
-        env={**adapter['environment'],**{key:value for key,value in env.items() if key.startswith('SWDB_')}}
-    else:
-        for name in ('LD_LIBRARY_PATH', 'DYLD_LIBRARY_PATH'):
-            env[name] = os.pathsep.join(run_library_paths + ([env[name]] if env.get(name) else []))
-    env['OMP_NUM_THREADS'] = str(args.threads)
-    env['OMP_DYNAMIC'] = 'FALSE'
-    env['SWDB_ROI_GATED'] = '1' if adapter else '0'
-    env['SWDB_STATE_BUDGET'] = str(args.state_budget)
-    env['SWDB_COUNTS_OUTPUT'] = str(output / 'counts.json')
-    if live_contract:env.update(live_contract['environment'])
-    executed = _run([binary, *args.run_arg], env=env, timeout=args.timeout_s)
-    (output / 'stdout.txt').write_text(executed.stdout)
-    (output / 'stderr.txt').write_text(executed.stderr)
-    try:
-        static = json.loads((output / 'source.json').read_text())
-        optimized_facts = json.loads((output / 'optimized.json').read_text())
-        counts = json.loads((output / 'counts.json').read_text())
-    except (OSError, ValueError) as exc:
-        raise Failure(f'counted native run did not produce valid counts: {exc}') from None
+    observed = _execute_counts(args, adapter=adapter, output=output, live_contract=live_contract,
+        llvm=llvm, source=source, flags=flags, toolchain_flags=toolchain_flags, subject=subject)
+    static = observed['static']
+    optimized_facts = observed['optimized_facts']
+    counts = observed['counts']
+    executed = observed['executed']
+    env = observed['env']
+    llvm_src = observed['llvm_src']
+    plugin_support_objects = observed['plugin_support_objects']
+    plugin_linkage = observed['plugin_linkage']
+    run_library_paths = observed['run_library_paths']
+    pipeline_version = observed['pipeline_version']
+    pipeline = observed['pipeline']
+    binary = observed['binary']
+    normalized = observed['normalized']
+    optimized = observed['optimized']
     if not static['regions']:
         raise Failure('no source regions matched the requested function/debug information')
     regions, calls = _counted_regions(static, counts,observation_contract=live_contract)
