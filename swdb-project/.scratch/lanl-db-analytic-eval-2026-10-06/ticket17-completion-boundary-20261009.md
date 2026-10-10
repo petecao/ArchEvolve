@@ -1,5 +1,14 @@
 # Ticket 17: completed report and remaining scientific requirement
 
+2026-10-09 20:56 ET — **Paused by Yan-Ru for a new session.**
+
+[Paused handoff](handoff-paused-20261009.md) records the current ticket table,
+completed implementation `a4438ad0`, remaining scientific prerequisites and exact
+preservation rules. The heartbeat is PAUSED. No new certification, campaign,
+test or SSH was started; both review agents are completed. Ticket17 stays
+claimed, with three report items checked and D26 unchecked. Original audit and
+completion receipts rehash unchanged. Continue only after direct human resumption.
+
 2026-10-09 20:35 ET — [DX100 complete-call command observations](evidence/17-dx100-complete-call-functional-observation-20261009/README.md)
 
 The exact registered candidate now executes with real protected LLVM counters
@@ -37,7 +46,7 @@ claiming that prerequisite complete. Supported memory-effect correspondence,
 whole-call costs/composition and current certification still precede one genuine
 blind numerical pair. Ticket17 status, D26/D30 and original reporting are unchanged.
 
-Updated: 2026-10-09 20:35 ET
+Updated: 2026-10-09 20:56 ET
 
 **The original agreement report is complete and negative. Ticket 17 is still
 blocked on scientific acceptance.** Four campaigns ran, but produced zero

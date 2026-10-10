@@ -1,5 +1,14 @@
 # Map: Analytic speed estimates and main-database compatibility
 
+2026-10-09 20:56 ET — **Paused by Yan-Ru for a new session.**
+
+[Paused handoff](handoff-paused-20261009.md) records the current ticket table,
+completed implementation `a4438ad0`, remaining scientific prerequisites and exact
+preservation rules. The heartbeat is PAUSED. No new certification, campaign,
+test or SSH was started; both review agents are completed. Ticket17 stays
+claimed, with three report items checked and D26 unchecked. Original audit and
+completion receipts rehash unchanged. Continue only after direct human resumption.
+
 2026-10-09 17:59 ET — [Ticket 17 completion boundary](ticket17-completion-boundary-20261009.md)
 
 Original reporting is complete: zero eligible pairs, unsupported agreement,
@@ -73,10 +82,10 @@ The package retains needed metadata bodies and original failures without duplica
 
 
 Created: 2026-10-06 ET
-Updated: 2026-10-09 17:43 ET
+Updated: 2026-10-09 20:56 ET
 **Type:** ticket map
 **Status:** claimed (unfinished implementation/evaluation)
-**Work state:** active; [resume guide](resume.md)
+**Work state:** paused by Yan-Ru; [paused handoff](handoff-paused-20261009.md)
 **Spec:** [spec.md](spec.md)
 
 Each ticket is a vertical slice: it delivers something runnable and checkable on its own, from format to command to tests. Statuses: ready-for-agent; ready-for-human (Yan-Ru acts); needs-triage (Yan-Ru decides first); needs-info (waits on LANL access). Ticket 07 runs on mbit10 under the standing approval of 2026-10-05.

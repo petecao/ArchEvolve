@@ -1,15 +1,24 @@
 # 17 — Agreement report
 
 Created: 2026-10-06
-Updated: 2026-10-09 20:35 ET
+Updated: 2026-10-09 20:56 ET
 **Type:** slice
 **Status:** claimed
-**Work state:** original reporting complete; scientific acceptance blocked on D26
+**Work state:** paused by Yan-Ru; original reporting complete; scientific acceptance blocked on D26
 **Blocked by:** 16
 **Spec:** `../spec.md`
 **Time estimate:** 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs)
 
 **What to build:** After the flow-A campaigns: rank agreement between estimate and timing, whether gem5's best candidate survives a top-3 cut by estimate, and where estimates go wrong. The rule fixed in D30 is applied as written. A research variant of the estimator may be calibrated with these pairs, versioned separately (D10).
+
+2026-10-09 20:56 ET — **Paused by Yan-Ru for a new session.**
+
+[Paused handoff](../handoff-paused-20261009.md) records the current ticket table,
+completed implementation `a4438ad0`, remaining scientific prerequisites and exact
+preservation rules. The heartbeat is PAUSED. No new certification, campaign,
+test or SSH was started; both review agents are completed. Ticket17 stays
+claimed, with three report items checked and D26 unchecked. Original audit and
+completion receipts rehash unchanged. Continue only after direct human resumption.
 
 2026-10-09 20:35 ET — [DX100 complete-call command observations](../evidence/17-dx100-complete-call-functional-observation-20261009/README.md)
 
