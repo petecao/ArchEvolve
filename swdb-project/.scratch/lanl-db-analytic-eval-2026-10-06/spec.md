@@ -1,7 +1,7 @@
 # Spec: Analytic speed estimates and main-database compatibility
 
 Created: 2026-10-06 ET
-Updated: 2026-10-08 12:16 ET (D2: no LANL contact; tickets 21–23 wontfix); 2026-10-08 12:00 ET (Scott's answer on D34 recorded: approved); 2026-10-06 16:11 ET (ticket number reference updated for the regenerated tickets); 2026-10-06 16:07 ET (rewritten to the full spec template: problem, solution, user stories,
+Updated: 2026-10-09 22:33 ET (ticket 18: flow B not chosen; D35 added); 2026-10-08 12:16 ET (D2: no LANL contact; tickets 21–23 wontfix); 2026-10-08 12:00 ET (Scott's answer on D34 recorded: approved); 2026-10-06 16:11 ET (ticket number reference updated for the regenerated tickets); 2026-10-06 16:07 ET (rewritten to the full spec template: problem, solution, user stories,
 implementation and testing decisions; decisions D1–D34 unchanged); 2026-10-06 ET, before the 16:01 ET
 design-session commit `6c691e6` (D8–D15 confirmed; grilling rounds 1–4 added D16–D34; estimator
 workflow approved)
@@ -244,11 +244,12 @@ Decided in the grilling (Yan-Ru, 2026-10-06):
 | D27 | In ArchEvolve mode, a CPU target's verdict comes from native timing, with a paired estimate beside it; targets without hardware get estimate-only verdicts. |
 | D28 | The team estimator's CPU error check uses ArchEvolve-mode timings only. |
 | D29 | Estimates may go beyond gem5's graph sizes, labeled `beyond_paired_range`, never counted in agreement statistics. |
-| D30 | The switching rule for flow B is fixed now: at least 20 DX100 pairs; Kendall's tau at least 0.6 with its 95% interval's lower bound at least 0.3; gem5's best inside the estimate's top 3 in every campaign. Yan-Ru makes the final call but does not change the rule after seeing data. |
+| D30 | The switching rule for flow B is fixed now: at least 20 DX100 pairs; Kendall's tau at least 0.6 with its 95% interval's lower bound at least 0.3; gem5's best inside the estimate's top 3 in every campaign. Yan-Ru makes the final call but does not change the rule after seeing data. **Decision (2026-10-09 22:33 ET, Yan-Ru, ticket 18): do not switch to flow B.** The agreement report had 0 eligible pairs, so the rule is not met; selection stays timing-only. Rule unchanged. |
 | D31 | Ticket 30 of the typed-library map (sending the first gem5 result as a team claim) is closed as wontfix under ADR 0013. |
 | D32 | Version 1 estimates time only; energy later, as an extension of the mechanism models. |
 | D33 | Regions are the existing profile-package and site-finder regions, with the same IDs; unmapped loops are listed. |
 | D34 | Scott sees the counting approach after the estimator works; accepted risk: if he calls it simulation, counting falls back to paper-reported parameters. **Answer (2026-10-08, reported by Yan-Ru): Scott approved the strategies. Counting over the address stream stays; the paper-parameter fallback is not triggered.** |
+| D35 | (2026-10-09 22:33 ET) No Extensa campaign starts until a smoke test passes: one real numeric estimate, recorded before its timing, that the strict audit admits. Ticket 17's four campaigns ran with unknown estimates and produced 0 usable pairs. |
 
 ### Estimator workflow and tools
 

@@ -1,6 +1,7 @@
 # 20 — XSBench as the bridge kernel
 
 Created: 2026-10-06
+Updated: 2026-10-09 22:33 ET (deferred until a numeric estimator path exists, i.e. ticket 24 is reopened and done)
 **Type:** task
 **Status:** needs-triage
 **Blocked by:** 14

@@ -1,5 +1,7 @@
 # Implementation progress
 
+2026-10-09 22:33 ET — Tickets 18 resolved (no flow B), 19 and 24 wontfix, 20 deferred; spec D30 decision and D35 recorded. See [map](map.md).
+
 2026-10-09 22:06 ET — Code review of `751f19b3^..5b0f51ed` (high effort, 5 findings), all fixed:
 
 | Finding | Fix |

@@ -1,5 +1,16 @@
 # Map: Analytic speed estimates and main-database compatibility
 
+2026-10-09 22:33 ET — Yan-Ru decided the open tickets, following the recommendation:
+
+| # | Decision |
+|---|---|
+| [18](issues/18-decide-flow-b.md) | Resolved: do not switch to flow B (0 eligible pairs; D30 not met) |
+| [19](issues/19-flow-b-screening.md) | Wontfix: flow B not chosen |
+| [24](issues/24-prospective-blind-dx100-pair.md) | Wontfix (parked): reopen only if the paper needs estimate/timing agreement |
+| [20](issues/20-xsbench-bridge-kernel.md) | Deferred: needs a numeric estimator path first |
+
+New spec rule D35: no Extensa campaign starts until a numeric estimate passes the strict audit before timing.
+
 2026-10-09 21:06 ET — [Issue 17](issues/17-agreement-report.md) **resolved. Ticket 17 closes on its completed negative report.**
 
 Yan-Ru asked (21:04 ET) to resolve ticket 17 as soon as possible. Decision:
@@ -99,7 +110,7 @@ The package retains needed metadata bodies and original failures without duplica
 Created: 2026-10-06 ET
 Updated: 2026-10-09 21:06 ET
 **Type:** ticket map
-**Status:** assigned tickets complete (15/15 resolved)
+**Status:** complete: 18 tickets resolved, 5 wontfix; 20 deferred (needs-triage)
 **Work state:** active; ticket 17 resolved 2026-10-09 21:06 ET
 **Spec:** [spec.md](spec.md)
 
@@ -141,18 +152,18 @@ Each ticket is a vertical slice: it delivers something runnable and checkable on
 | 15 | [Show Scott the counting approach](issues/15-show-scott-counting.md) | resolved | 09 | about 15 min |
 | 16 | [Extensa flow A: blind paired estimates](issues/16-extensa-blind-paired-estimates.md) | resolved | 06, 09 | 4–6 h |
 | 17 | [Agreement report](issues/17-agreement-report.md) | resolved | 16 | 3–4 h plus campaign lane time (about 13 h of gem5 for 20 pairs) |
-| 18 | [Decide on flow B](issues/18-decide-flow-b.md) | ready-for-human | 17 | about 15 min |
+| 18 | [Decide on flow B](issues/18-decide-flow-b.md) | resolved | 17 | about 15 min |
 
 ## E. Later or blocked
 
 | # | Ticket | Status | Blocked by | Time |
 |---|---|---|---|---|
-| 19 | [Flow B screening](issues/19-flow-b-screening.md) | needs-triage | 18 | 1 day |
+| 19 | [Flow B screening](issues/19-flow-b-screening.md) | wontfix | 18 | 1 day |
 | 20 | [XSBench as the bridge kernel](issues/20-xsbench-bridge-kernel.md) | needs-triage | 14 | 1–2 days |
 | 21 | [Ask LANL for access](issues/21-ask-lanl-for-access.md) | wontfix | — | about 10 min, when Yan-Ru decides |
 | 22 | [`swdb import-main`: read the main database](issues/22-import-main.md) | wontfix | 02, 03, 21 | 1 day |
 | 23 | [Export and round-trip test](issues/23-export-and-round-trip.md) | wontfix | 22 | 1 day |
-| 24 | [Prospective blind DX100 pair](issues/24-prospective-blind-dx100-pair.md) | needs-triage | 17 | 1–3 days plus lane time |
+| 24 | [Prospective blind DX100 pair](issues/24-prospective-blind-dx100-pair.md) | wontfix | 17 | 1–3 days plus lane time |
 
 ## Context pointers
 

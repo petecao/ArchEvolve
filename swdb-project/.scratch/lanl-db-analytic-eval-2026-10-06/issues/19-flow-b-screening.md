@@ -1,8 +1,9 @@
 # 19 — Flow B screening
 
 Created: 2026-10-06
+Updated: 2026-10-09 22:33 ET (wontfix: ticket 18 chose not to switch to flow B)
 **Type:** slice
-**Status:** needs-triage
+**Status:** wontfix
 **Blocked by:** 18
 **Spec:** `../spec.md`
 **Time estimate:** 1 day

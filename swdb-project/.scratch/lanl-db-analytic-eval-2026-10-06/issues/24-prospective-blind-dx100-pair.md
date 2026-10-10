@@ -1,8 +1,9 @@
 # 24 — Prospective blind DX100 pair
 
 Created: 2026-10-09 21:06 ET
+Updated: 2026-10-09 22:33 ET (parked as wontfix: timing-only selection is enough for now; reopen if the paper needs estimate/timing agreement)
 **Type:** slice
-**Status:** needs-triage
+**Status:** wontfix
 **Blocked by:** 17
 **Spec:** `../spec.md`
 **Time estimate:** 1–3 days plus lane time
