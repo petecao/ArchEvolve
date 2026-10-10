@@ -1,4 +1,4 @@
-"""Public live-object characterization seam. Updated: 2026-10-06 ET.
+"""Public live-object characterization seam. Updated: 2026-10-09 ET (isolated record closure).
 Logical source observations never establish physical cache/DRAM requests.
 """
 import json
@@ -175,7 +175,8 @@ def test_observer_shared_cpp_helpers_do_not_reenter_or_charge_the_observer(recor
 
 
 def test_original_gapbs_trial_driver_keeps_five_count_snapshots_with_observer_isolation(records,tmp_path,llvm22):
-    records.copy_repo()
+    # 2026-10-09 ET: the full ~1 GB catalog made characterize exceed its 600 s timeout.
+    records.copy_closure('gapbs-bfs-do')
     graph=records.read('inputs/kron-g16-k16.yaml')
     graph.update(id='fixture.observer.kron.g4',name='Small observer regression input')
     graph['generator']['arguments']='-g 4 -k 2';graph['properties']={}
