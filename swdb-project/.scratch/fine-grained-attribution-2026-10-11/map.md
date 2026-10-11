@@ -19,7 +19,7 @@ approved by Yan-Ru); 2026-10-11 15:17 ET (ticket 01 resolved; design committed).
 | [04](issues/04-rewrite-site-edge-cases.md) | Rewrite-site edge cases | ready-for-agent | 02 |
 | [05](issues/05-library-intrinsic-offload-labels.md) | Library, intrinsic and offload labels | ready-for-agent | 02 |
 | [06](issues/06-iteration-two-baselines.md) | Iteration 2: two baselines | ready-for-agent | 02 |
-| [07](issues/07-resource-floor.md) | Resource floor headroom | ready-for-agent | 02 |
+| [07](issues/07-resource-floor.md) | Resource floor headroom | resolved ([answer](issues/07-resource-floor.md#answer)) | 02 |
 | [08](issues/08-catalog-bound-ranking.md) | Catalog bound and full ranking | ready-for-agent | 07 |
 | [09](issues/09-split-check.md) | Split check on the real pair | ready-for-agent | 03 |
 | [10](issues/10-site-finder-ordering.md) | Site finder uses the ranking | ready-for-agent | 08, 09 |
