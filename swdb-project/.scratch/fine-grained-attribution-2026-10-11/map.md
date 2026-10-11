@@ -16,7 +16,7 @@ approved by Yan-Ru); 2026-10-11 15:17 ET (ticket 01 resolved; design committed).
 | [01](issues/01-review-and-commit-design.md) | Review and commit design | resolved ([answer](issues/01-review-and-commit-design.md#answer)) | — |
 | [02](issues/02-tracer-worked-example.md) | First working version: the worked example end to end | resolved ([answer](issues/02-tracer-worked-example.md#answer)) | 01 |
 | [03](issues/03-first-real-pair.md) | First real pair: t75 BFS attribution report | ready-for-agent | 02 |
-| [04](issues/04-rewrite-site-edge-cases.md) | Rewrite-site edge cases | ready-for-agent | 02 |
+| [04](issues/04-rewrite-site-edge-cases.md) | Rewrite-site edge cases | resolved ([answer](issues/04-rewrite-site-edge-cases.md#answer)) | 02 |
 | [05](issues/05-library-intrinsic-offload-labels.md) | Library, intrinsic and offload labels | resolved ([answer](issues/05-library-intrinsic-offload-labels.md#answer)) | 02 |
 | [06](issues/06-iteration-two-baselines.md) | Iteration 2: two baselines | resolved ([answer](issues/06-iteration-two-baselines.md#answer)) | 02 |
 | [07](issues/07-resource-floor.md) | Resource floor headroom | resolved ([answer](issues/07-resource-floor.md#answer)) | 02 |

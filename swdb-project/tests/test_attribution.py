@@ -303,6 +303,273 @@ def test_validate_rejects_an_edited_report_or_a_changed_pinned_estimate(case):
     assert changed.returncode == 1 and 'candidate_estimate' in changed.stdout + changed.stderr
 
 
+# Ticket 04 (2026-10-11 ET): rewrite-site edge cases. Each fixture's labels are hand-checked
+# against the line numbers written in its comments.
+
+
+def test_unattributed_time_above_ten_percent_is_flagged_and_the_report_is_still_written(case):
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    # Baseline 100 s with 15 s unattributed (15%); candidate 85 s with 15 s (about 17.6%): flagged.
+    case.estimate('fixture.baseline', [region('base.untouched', b, 3, 40), region('base.rewritten', b, 7, 45),
+                                       region('stub-impl/serial.base', None, 0, 15)])
+    case.estimate('fixture.candidate', [region('cand.untouched', c, 3, 40), region('cand.rewritten', c, 7, 30),
+                                        region('stub-impl/serial.cand', None, 0, 15)])
+    # Exactly 10% on both sides (10 of 100 s) is not above the threshold.
+    case.estimate('fixture.baseline.even', [region('base.untouched', b, 3, 40), region('base.rewritten', b, 7, 50),
+                                            region('stub-impl/serial.base', None, 0, 10)])
+    case.estimate('fixture.candidate.even', [region('cand.untouched', c, 3, 40), region('cand.rewritten', c, 7, 50),
+                                             region('stub-impl/serial.cand', None, 0, 10)])
+    flagged = attributed(case)
+    assert flagged['whole_program']['unattributed_threshold'] == 0.1
+    assert flagged['whole_program']['unattributed_flagged'] is True
+    assert groups(flagged)['unattributed']['baseline_share'] == pytest.approx(0.15)
+    assert groups(flagged)['agent_rewritten']['realized_speedup'] == pytest.approx(1.5)
+    assert (case.records.path / 'attributions' / 'fixture.attribution.yaml').exists()
+    even = attributed(case, rid='fixture.attribution.even', baseline='fixture.baseline.even', candidate='fixture.candidate.even')
+    assert even['whole_program']['unattributed_flagged'] is False
+    checked = case.records.validate()
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+    db = case.tmp_path / 'index.sqlite'
+    rows = run_swdb('sql', 'SELECT id, unattributed_flagged FROM swdb_attributions ORDER BY id',
+                    '--records', case.records.path, '--db', db, '--format', 'json')
+    assert json.loads(rows.stdout) == [{'id': 'fixture.attribution', 'unattributed_flagged': 1},
+                                       {'id': 'fixture.attribution.even', 'unattributed_flagged': 0}]
+
+
+def sources(case, baseline, candidate):
+    """Replace both fixture trees with `{relative path: text}` files and re-record their snapshots."""
+    for root, files, rid in ((case.base_root, baseline, 'fixture.baseline.source'),
+                             (case.cand_root, candidate, 'fixture.candidate.source')):
+        for old in [p for p in root.rglob('*') if p.is_file()]:
+            old.unlink()
+        for rel, text in files.items():
+            (root / rel).parent.mkdir(parents=True, exist_ok=True)
+            (root / rel).write_text(text)
+        snapshot(case.records, rid, root)
+
+
+def accessed(row, *places):
+    """`row` with one read access per `(path, line)` place instead of its default access."""
+    template = row['access_patterns'][0]
+    row['access_patterns'] = [{**template, 'id': f'{template["id"]}.{i}',
+                               'source_location': {**template['source_location'], 'path': str(path), 'line': line}}
+                              for i, (path, line) in enumerate(places)]
+    return row
+
+
+def sites(report):
+    return [(s['id'], s['path'], s['baseline_lines'], s['candidate_lines']) for s in report['rewrite_sites']]
+
+
+def region_rows(report):
+    return {(r['side'], r['region']): r for r in report['regions']}
+
+
+# Two changed runs (lines 8 and 10) inside one loop (lines 7-11), plus an unrelated comment change.
+MERGE_BASELINE = """// merge fixture
+void untouched(float *a, int n) {
+  for (int i = 0; i < n; ++i)
+    a[i] = a[i] * 2.0f;
+}
+void rewritten(float *a, float *b, int n) {
+  for (int i = 0; i < n; ++i) {
+    a[i] = a[i] + 1.0f;
+    b[i] = b[i] * 3.0f;
+    a[i] = a[i] - b[i];
+  }
+}
+"""
+MERGE_CANDIDATE = (MERGE_BASELINE.replace('// merge fixture', '// merge fixture, rewritten')
+                   .replace('    a[i] = a[i] + 1.0f;', '    a[i] += 1.0f;')
+                   .replace('    a[i] = a[i] - b[i];', '    a[i] -= b[i];'))
+
+
+def test_two_sites_sharing_a_region_merge_into_one_and_no_region_is_counted_twice(case):
+    sources(case, {'kernel.cpp': MERGE_BASELINE}, {'kernel.cpp': MERGE_CANDIDATE})
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    case.estimate('fixture.baseline', [region('base.untouched', b, 3, 40),
+                                       accessed(region('base.loop', b, 7, 60), (b, 8), (b, 9), (b, 10))])
+    case.estimate('fixture.candidate', [region('cand.untouched', c, 3, 40),
+                                        accessed(region('cand.loop', c, 7, 30), (c, 8), (c, 9), (c, 10))])
+    report = attributed(case)
+    # Raw changed runs: line 1, line 8, line 10. The loop (span 7-10) overlaps lines 8 and 10, so
+    # those two runs become one site; line 1 overlaps no region and stays its own site.
+    assert sites(report) == [('site.1', 'kernel.cpp', [1, 1], [1, 1]), ('site.2', 'kernel.cpp', [8, 10], [8, 10])]
+    assert report['rewrite_sites'][1]['spans'] == [
+        {'path': 'kernel.cpp', 'baseline_lines': [8, 8], 'candidate_lines': [8, 8]},
+        {'path': 'kernel.cpp', 'baseline_lines': [10, 10], 'candidate_lines': [10, 10]}]
+    assert report['rewrite_sites'][0]['baseline_regions'] == [] and report['rewrite_sites'][0]['candidate_regions'] == []
+    assert report['rewrite_sites'][1]['baseline_regions'] == ['base.loop']
+    assert report['rewrite_sites'][1]['candidate_regions'] == ['cand.loop']
+    labels = region_rows(report)
+    assert labels[('baseline', 'base.loop')]['sites'] == ['site.2']
+    assert labels[('candidate', 'cand.loop')]['sites'] == ['site.2']
+    assert labels[('baseline', 'base.untouched')]['origin'] == 'untouched'
+    # No region's time is in two sites, and the rewritten group holds the loop's time once.
+    assert all(len(r['sites']) <= 1 for r in report['regions'])
+    for side in ('baseline', 'candidate'):
+        listed = [rid for s in report['rewrite_sites'] for rid in s[side + '_regions']]
+        assert len(listed) == len(set(listed))
+    split = groups(report)
+    assert (split['agent_rewritten']['baseline_seconds'], split['agent_rewritten']['candidate_seconds']) == (60, 30)
+    checked = case.records.validate()
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+
+
+def test_a_region_only_partly_inside_a_site_counts_as_rewritten_and_is_flagged_mixed(case):
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    # Site: lines 7-8 on both sides. The loop spans 7-8 (all changed); the serial region of
+    # `rewritten` starts at its line 6 (unchanged) and reaches line 8 (changed): partly inside.
+    case.estimate('fixture.baseline', [region('base.untouched', b, 3, 40), region('base.loop', b, 7, 50),
+                                       accessed(region('base.serial', b, 6, 10), (b, 8))])
+    case.estimate('fixture.candidate', [region('cand.untouched', c, 3, 40), region('cand.loop', c, 7, 25),
+                                        accessed(region('cand.serial', c, 6, 5), (c, 8))])
+    report = attributed(case)
+    labels = region_rows(report)
+    for side, prefix in (('baseline', 'base'), ('candidate', 'cand')):
+        assert (labels[(side, prefix + '.serial')]['origin'], labels[(side, prefix + '.serial')]['mixed']) == ('agent_rewritten', True)
+        assert (labels[(side, prefix + '.loop')]['origin'], labels[(side, prefix + '.loop')]['mixed']) == ('agent_rewritten', False)
+        assert (labels[(side, prefix + '.untouched')]['origin'], labels[(side, prefix + '.untouched')]['mixed']) == ('untouched', False)
+        assert labels[(side, prefix + '.serial')]['lines'] == [6, 8]
+    # The mixed region's whole time is in the rewritten group (F14: no split by operation share).
+    split = groups(report)
+    assert (split['agent_rewritten']['baseline_seconds'], split['agent_rewritten']['candidate_seconds']) == (60, 30)
+    checked = case.records.validate()
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+    db = case.tmp_path / 'index.sqlite'
+    mixed = run_swdb('sql', 'SELECT side, region FROM swdb_attribution_regions WHERE mixed = 1 ORDER BY side',
+                     '--records', case.records.path, '--db', db, '--format', 'json')
+    assert json.loads(mixed.stdout) == [{'side': 'baseline', 'region': 'base.serial'}, {'side': 'candidate', 'region': 'cand.serial'}]
+
+
+# The candidate inserts `added` (lines 2-5) above `untouched` and deletes baseline line 6, so
+# `untouched` moves from lines 2-5 to 6-9 and `kept` from 7-10 to 10-13 without a changed line.
+SHIFT_BASELINE = """// shift fixture
+void untouched(float *a, int n) {
+  for (int i = 0; i < n; ++i)
+    a[i] = a[i] * 2.0f;
+}
+// a comment the candidate deletes
+void kept(float *a, int n) {
+  for (int i = 0; i < n; ++i)
+    a[i] = a[i] + 1.0f;
+}
+"""
+SHIFT_CANDIDATE = """// shift fixture
+void added(float *a, int n) {
+  for (int i = 0; i < n; ++i)
+    a[i] = a[i] - 1.0f;
+}
+void untouched(float *a, int n) {
+  for (int i = 0; i < n; ++i)
+    a[i] = a[i] * 2.0f;
+}
+void kept(float *a, int n) {
+  for (int i = 0; i < n; ++i)
+    a[i] = a[i] + 1.0f;
+}
+"""
+
+
+def test_untouched_functions_shifted_by_inserted_or_deleted_lines_stay_untouched_and_are_matched(case):
+    sources(case, {'kernel.cpp': SHIFT_BASELINE}, {'kernel.cpp': SHIFT_CANDIDATE})
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    case.estimate('fixture.baseline', [accessed(region('base.serial', b, 2, 10), (b, 4)), region('base.untouched', b, 3, 30),
+                                       region('base.kept', b, 8, 60)])
+    case.estimate('fixture.candidate', [region('cand.added', c, 3, 5), accessed(region('cand.serial', c, 6, 10), (c, 8)),
+                                        region('cand.untouched', c, 7, 30), region('cand.kept', c, 11, 60)])
+    report = attributed(case)
+    # Insertion before baseline line 2 (candidate 2-5); deletion of baseline line 6 (before candidate line 10).
+    assert sites(report) == [('site.1', 'kernel.cpp', [2, 1], [2, 5]), ('site.2', 'kernel.cpp', [6, 6], [10, 9])]
+    labels = {key: (r['origin'], r['lines'], r['matched_region']) for key, r in region_rows(report).items()}
+    assert labels == {
+        ('baseline', 'base.serial'): ('untouched', [2, 4], 'cand.serial'),
+        ('baseline', 'base.untouched'): ('untouched', [3, 4], 'cand.untouched'),
+        ('baseline', 'base.kept'): ('untouched', [8, 9], 'cand.kept'),
+        ('candidate', 'cand.added'): ('agent_rewritten', [3, 4], None),
+        ('candidate', 'cand.serial'): ('untouched', [6, 8], 'base.serial'),
+        ('candidate', 'cand.untouched'): ('untouched', [7, 8], 'base.untouched'),
+        ('candidate', 'cand.kept'): ('untouched', [11, 12], 'base.kept')}
+    split = groups(report)
+    assert (split['untouched']['baseline_seconds'], split['untouched']['candidate_seconds']) == (100, 100)
+    assert split['untouched']['drift'] == pytest.approx(1.0)
+    assert (split['agent_rewritten']['baseline_seconds'], split['agent_rewritten']['candidate_seconds']) == (0, 5)
+    checked = case.records.validate()
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+    db = case.tmp_path / 'index.sqlite'
+    pairs = run_swdb('sql', "SELECT region, matched_region FROM swdb_attribution_regions WHERE side = 'baseline' ORDER BY region",
+                     '--records', case.records.path, '--db', db, '--format', 'json')
+    assert json.loads(pairs.stdout) == [{'region': 'base.kept', 'matched_region': 'cand.kept'},
+                                        {'region': 'base.serial', 'matched_region': 'cand.serial'},
+                                        {'region': 'base.untouched', 'matched_region': 'cand.untouched'}]
+
+
+# `twice` (lines 3-5) is untouched and inlined into `caller`; `load` (helper.h line 2) is rewritten
+# and inlined into the untouched `user`; `rewritten` (lines 7-8) changes as in BASELINE.
+INLINE_BASELINE = """// inline fixture
+#include "helper.h"
+static inline float twice(const float *a, int i) {
+  return a[i] * 2.0f;
+}
+void rewritten(float *a, int n) {
+  for (int i = 0; i < n; ++i)
+    a[i] = a[i] + 1.0f;
+}
+void caller(float *a, int n) {
+  for (int i = 0; i < n; ++i)
+    a[i] = twice(a, i);
+}
+void user(float *a, int n) {
+  for (int i = 0; i < n; ++i)
+    a[i] = load(a, i);
+}
+"""
+INLINE_CANDIDATE = INLINE_BASELINE.replace("""  for (int i = 0; i < n; ++i)
+    a[i] = a[i] + 1.0f;""", """  for (int i = 0; i < n; i += 2)
+    a[i] += 1.0f, a[i + 1] += 1.0f;""")
+HELPER_BASELINE = """static inline float load(const float *a, int i) {
+  return a[i] * 3.0f;
+}
+"""
+HELPER_CANDIDATE = HELPER_BASELINE.replace('a[i] * 3.0f', 'a[i] + a[i] + a[i]')
+
+
+def test_inlined_code_is_labeled_by_its_own_file_and_line(case):
+    sources(case, {'kernel.cpp': INLINE_BASELINE, 'helper.h': HELPER_BASELINE},
+            {'kernel.cpp': INLINE_CANDIDATE, 'helper.h': HELPER_CANDIDATE})
+    for side, prefix, root, rewritten_s, user_s in (('baseline', 'base', case.base_root, 50, 30),
+                                                     ('candidate', 'cand', case.cand_root, 25, 10)):
+        k, h = root / 'kernel.cpp', root / 'helper.h'
+        # The LLVM pass gives an inlined access its own file and line, but the caller's region.
+        case.estimate('fixture.' + side, [region(prefix + '.rewritten', k, 7, rewritten_s),
+                                          accessed(region(prefix + '.caller', k, 11, 20), (k, 4), (k, 12)),
+                                          accessed(region(prefix + '.user', k, 15, user_s), (h, 2), (k, 16))])
+    report = attributed(case)
+    assert sites(report) == [('site.1', 'helper.h', [2, 2], [2, 2]), ('site.2', 'kernel.cpp', [7, 8], [7, 8])]
+    labels = {key: (r['origin'], r['mixed'], r['lines'], r['inlined'], r['sites']) for key, r in region_rows(report).items()}
+    for side, prefix in (('baseline', 'base'), ('candidate', 'cand')):
+        assert labels[(side, prefix + '.rewritten')] == ('agent_rewritten', False, [7, 8], [], ['site.2'])
+        # The untouched helper at line 4 no longer stretches `caller` across `rewritten` (lines 4-12).
+        assert labels[(side, prefix + '.caller')] == ('untouched', False, [11, 12], [{'path': 'kernel.cpp', 'lines': [4, 4]}], [])
+        # The rewritten helper makes its untouched caller rewritten, flagged mixed.
+        assert labels[(side, prefix + '.user')] == ('agent_rewritten', True, [15, 16], [{'path': 'helper.h', 'lines': [2, 2]}], ['site.1'])
+    assert region_rows(report)[('baseline', 'base.caller')]['matched_region'] == 'cand.caller'
+    split = groups(report)
+    assert (split['agent_rewritten']['baseline_seconds'], split['agent_rewritten']['candidate_seconds']) == (80, 35)
+    assert (split['untouched']['baseline_seconds'], split['untouched']['candidate_seconds']) == (20, 20)
+    # One region reaching changed runs in two files merges them into one site with no single path.
+    for side, prefix, root in (('baseline', 'base', case.base_root), ('candidate', 'cand', case.cand_root)):
+        k, h = root / 'kernel.cpp', root / 'helper.h'
+        case.estimate(f'fixture.{side}.both', [accessed(region(prefix + '.both', k, 7, 10), (k, 8), (h, 2))])
+    both = attributed(case, rid='fixture.attribution.both', baseline='fixture.baseline.both', candidate='fixture.candidate.both')
+    assert sites(both) == [('site.1', None, None, None)]
+    assert both['rewrite_sites'][0]['spans'] == [{'path': 'helper.h', 'baseline_lines': [2, 2], 'candidate_lines': [2, 2]},
+                                                 {'path': 'kernel.cpp', 'baseline_lines': [7, 8], 'candidate_lines': [7, 8]}]
+    assert region_rows(both)[('baseline', 'base.both')]['sites'] == ['site.1']
+    checked = case.records.validate()
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+
+
 # --- Ticket 05: library, intrinsic and offload labels (2026-10-11 ET) ---------------------------
 
 def call(site, region_id, name, executions, line=7):

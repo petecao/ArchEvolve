@@ -8,30 +8,35 @@ and the two source trees (a `source_snapshot` or `candidate` record's `artifact`
 counted. It never re-estimates and never binds a protocol, so it runs on old estimates
 after the estimator code changed.
 
-Rules used by this version (ticket 04 widens the matching rules):
+Rules used by this version (ticket 04 added the rewrite-site edge cases):
 
 1. Diff (F17). SWDB diffs the two verified artifact trees itself, file by file, line by line
    (`difflib`, no junk heuristic). A stored candidate diff is never read. Each changed run of
-   lines (one non-equal opcode) is one rewrite site. A site's `baseline_lines` and
-   `candidate_lines` are `[first, last]`; an empty side (pure insertion or deletion) is
-   written `[p, p - 1]`, the insertion point before line `p`.
+   lines (one non-equal opcode) is one span, `[first, last]` per side; an empty side (pure
+   insertion or deletion) is written `[p, p - 1]`, the insertion point before line `p`.
 2. Paths. A region's `source_location.path` is made relative to its side's tree: strip the
    artifact root, else take the one manifest file the path ends with. A path in neither tree
-   (for example a system header) cannot have changed, so its region is untouched.
-3. Span. A region covers `[min, max]` of its own start line and the lines of its access
-   patterns in the same file. Region IDs are never matched across sides.
-4. Label. A region with no path or no line is `unattributed`. A region whose span overlaps a
-   site on its own side is `agent_rewritten`; an insertion point overlaps a span only when it
-   lies strictly inside it. Every other region is `untouched`. Ticket 05: a region inside a
-   site becomes `offload_command`, `intrinsic` or `library_call` when it executes one (see
+   (for example a system header) cannot have changed.
+3. Pieces. A region's home span is `[min, max]` of its start line and its accesses inside its
+   own lexical function in the same file. Accesses elsewhere (another file or function) are
+   inlined code, kept as `inlined` pieces by their own file and line (story 15).
+4. Label. A region with no path or no line is `unattributed`. A region with a piece that
+   overlaps a span on its own side is `agent_rewritten`; an insertion point overlaps a piece
+   only when it lies strictly inside it. It is `mixed` when some line of its pieces is
+   unchanged (F14). Every other region is `untouched`. Ticket 05: a region inside a site
+   becomes `offload_command`, `intrinsic` or `library_call` when it executes one (see
    `_Catalog`); its group stays `agent_rewritten`, which lists per-origin seconds.
-5. Groups (F4). Each side's group seconds are summed per estimate trial (a region absent from
+5. Sites (F1). Spans that one region overlaps, on either side, merge into one rewrite site,
+   so no region's time is in two sites. Untouched regions are paired across sides through the
+   line diff (`matched_region`, story 14); region IDs are never compared.
+6. Groups (F4). Each side's group seconds are summed per estimate trial (a region absent from
    a trial counts 0 s), then the median is taken per group; a single-run estimate is one
    trial. Group medians are never rescaled to the estimate's total. Whole-program totals are
    the estimates' own `seconds`.
-6. Unknowns (F8). An unknown region makes its group's seconds unknown and lists the region
+7. Unknowns (F8). An unknown region makes its group's seconds unknown and lists the region
    with its bounds' `missing` reasons; every ratio that depends on an unknown is null.
-7. Identity (F43, F44). The record pins both estimates, both source records and the target
+   Unattributed time above 10% of either total sets `unattributed_flagged` (F24).
+8. Identity (F43, F44). The record pins both estimates, both source records and the target
    description by content hash. Its dates are the latest `updated` date of those inputs and
    dicts are built in a fixed order, so the same inputs give a byte-identical record.
 8. Iterations (F13, ticket 06). Given the previous accepted candidate (`--previous-estimate`,
@@ -55,7 +60,7 @@ import difflib
 import statistics
 from pathlib import Path, PurePosixPath
 
-from swdb import artifacts, paths, writer
+from swdb import artifacts, cpp_lexical, paths, writer
 from swdb.cli import Failure
 from swdb.store import Store
 
@@ -68,6 +73,7 @@ REWRITE_REASONS = {'offload_command': 'offload_command_in_site', 'intrinsic': 'i
                    'library_call': 'library_operation_in_site', 'agent_rewritten': 'overlaps_rewrite_site'}
 SOURCE_KINDS = ('source_snapshot', 'candidate')
 SAME = ('input', 'target_description_sha256', 'threads', 'evidence_kind')
+UNATTRIBUTED_THRESHOLD = 0.1   # F24: share of an estimate's total above which the split is flagged weak
 
 
 def register_cli(commands):
@@ -119,6 +125,7 @@ class _Side:
                  f'{name} characterization differs from the hash its estimate pins')
         self.root = artifacts.verify(self.source['artifact'])
         self.files = {f['path'] for f in self.source['artifact']['files']}
+        self._functions = {}
         self.locations = {}
         for row in self.characterization['regions'] + [r for t in self.characterization.get('trials', []) for r in t['regions']]:
             self.locations.setdefault(row['id'], row)
@@ -150,9 +157,50 @@ class _Side:
         if not where.get('path') or not isinstance(line, int) or line < 1:
             return None, None, False
         rel = self.relative(where['path'])
-        lines = [line] + [a['source_location']['line'] for a in row.get('access_patterns', [])
-                          if a['source_location'].get('path') == where['path'] and a['source_location'].get('line', 0) >= 1]
+        lines = [line] + [a['source_location']['line'] for a in self._accesses(row) if self._at_home(where, a)]
         return rel, [min(lines), max(lines)], True
+
+    def inlined(self, region_id):
+        """Ticket 04: `[{path, lines}]` pieces of code inlined into the region from elsewhere.
+
+        An access outside the region's own function (another file, or a line outside the
+        enclosing function's lexical span) is inlined code: the LLVM pass keeps its own file and
+        line but gives it the caller's region. Accesses are grouped by file and enclosing
+        function, each group spanning `[min, max]` of its lines. A file outside the source tree
+        cannot change, so its accesses add no piece."""
+        row = self.locations.get(region_id) or {}
+        where = row.get('source_location', {})
+        groups = {}
+        for access in self._accesses(row):
+            if self._at_home(where, access):
+                continue
+            rel = self.relative(access['source_location']['path'])
+            if rel is None:
+                continue
+            line = access['source_location']['line']
+            groups.setdefault((rel, self._function(rel, line) or (line, line)), []).append(line)
+        return [{'path': rel, 'lines': [min(lines), max(lines)]} for (rel, _), lines in sorted(groups.items())]
+
+    @staticmethod
+    def _accesses(row):
+        return [a for a in (row or {}).get('access_patterns', [])
+                if a['source_location'].get('path') and a['source_location'].get('line', 0) >= 1]
+
+    def _at_home(self, where, access):
+        """True when the access is in the region's own file and inside its own function's lines.
+        Without a recognizable enclosing function, every access in the same file counts as home."""
+        place = access['source_location']
+        if place['path'] != where.get('path'):
+            return False
+        rel = self.relative(where['path'])
+        home = self._function(rel, where['line']) if rel is not None else None
+        return home is None or home[0] <= place['line'] <= home[1]
+
+    def _function(self, rel, line):
+        """1-based `(first, last)` lines of the top-level function lexically enclosing `line`, or None."""
+        if rel not in self._functions:
+            self._functions[rel] = cpp_lexical.function_spans('\n'.join(self.text(rel)))
+        return next((span for span in self._functions[rel] if span[0] <= line <= span[1]), None)
 
     def trials(self):
         if self.estimate.get('trials'):
@@ -175,6 +223,102 @@ def _sites(baseline, candidate):
     return sites
 
 
+def _line_maps(baseline, candidate):
+    """{relative path: {baseline line: candidate line}} over the unchanged lines of files in both trees."""
+    maps = {}
+    for rel in sorted(baseline.files & candidate.files):
+        matcher = difflib.SequenceMatcher(None, baseline.text(rel), candidate.text(rel), autojunk=False)
+        maps[rel] = {i + 1 + k: j + 1 + k for i, j, size in matcher.get_matching_blocks() for k in range(size)}
+    return maps
+
+
+def _match_untouched(baseline, candidate, labels):
+    """Story 14 (ticket 04): pair each untouched region with the other side's region at the same code.
+
+    A baseline region's lines and inlined pieces are carried through the line diff (so inserted
+    or deleted lines above them do not matter) and must equal a candidate region's, file by
+    file, with the same region kind. A region outside both trees keeps its own path and lines. Only a one-to-one
+    pairing is recorded; otherwise `matched_region` is null. Region IDs are never compared."""
+    maps = _line_maps(baseline, candidate)
+
+    def carried(side, path, lines):
+        if side.name == 'baseline':
+            lines = [maps.get(path, {}).get(line) for line in lines]
+        return None if None in lines else (path, tuple(lines))
+
+    def key(side, row):
+        where = side.locations[row['region']]
+        pieces = [carried(side, p['path'], p['lines']) for p in row['inlined']]
+        if row['reason'] == 'outside_source_tree':
+            home = ('outside', where['source_location']['path'], tuple(row['lines']))
+        else:
+            home = carried(side, row['path'], row['lines'])
+        return None if home is None or None in pieces else (home, tuple(pieces), where.get('kind'))
+
+    keyed = {}
+    for side in (baseline, candidate):
+        found = keyed.setdefault(side.name, {})
+        for row in labels[side.name].values():
+            row['matched_region'] = None
+            if row['origin'] == 'untouched' and (k := key(side, row)) is not None:
+                found.setdefault(k, []).append(row)
+    for k, rows in keyed['baseline'].items():
+        others = keyed['candidate'].get(k, [])
+        if len(rows) == 1 and len(others) == 1:
+            rows[0]['matched_region'], others[0]['matched_region'] = others[0]['region'], rows[0]['region']
+
+
+def _merge_sites(raw, labels):
+    """F1 (ticket 04): changed runs that one region overlaps, on either side, become one site.
+
+    `raw` are the one-run sites of `_sites`; each label row lists the raw sites it overlaps.
+    Merging is transitive, keeps the runs as `spans`, and numbers sites by their first run, so a
+    region ends in at most one site and no region's time is counted in two. A site's `path` and
+    line envelopes are null when its runs lie in several files (an inlined helper elsewhere)."""
+    order = {s['id']: i for i, s in enumerate(raw)}
+    root = {s['id']: s['id'] for s in raw}
+
+    def find(sid):
+        while root[sid] != sid:
+            sid = root[sid]
+        return sid
+
+    for rows in labels.values():
+        for row in rows.values():
+            for sid in row['sites'][1:]:
+                a, b = find(row['sites'][0]), find(sid)
+                if a != b:
+                    keep, drop = (a, b) if order[a] < order[b] else (b, a)
+                    root[drop] = keep
+    members = {}
+    for site in raw:
+        members.setdefault(find(site['id']), []).append(site)
+    renamed, sites = {}, []
+    for group in members.values():
+        paths = list(dict.fromkeys(s['path'] for s in group))
+        one_file = len(paths) == 1
+        site = {'id': f'site.{len(sites) + 1}', 'path': paths[0] if one_file else None,
+                'baseline_lines': _envelope(group, 'baseline_lines') if one_file else None,
+                'candidate_lines': _envelope(group, 'candidate_lines') if one_file else None,
+                'spans': [{'path': s['path'], 'baseline_lines': s['baseline_lines'], 'candidate_lines': s['candidate_lines']}
+                          for s in group],
+                'baseline_regions': [], 'candidate_regions': []}
+        for member in group:
+            renamed[member['id']] = site
+        sites.append(site)
+    for side, rows in labels.items():
+        for row in rows.values():
+            merged = renamed[row['sites'][0]] if row['sites'] else None
+            row['sites'] = [merged['id']] if merged else []
+            if merged:
+                merged[side + '_regions'].append(row['region'])
+    return sites
+
+
+def _envelope(spans, key):
+    return [min(s[key][0] for s in spans), max(s[key][1] for s in spans)]
+
+
 def _overlaps(span, lines):
     first, last = lines
     if first <= last:
@@ -186,26 +330,46 @@ def _label(side, sites, catalog=None):
     rows = {}
     for region in side.estimate['regions']:
         rel, span, located = side.place(region['id'])
-        touched = [s for s in sites if located and rel is not None and s['path'] == rel
-                   and _overlaps(span, s[side.name + '_lines'])]
+        inlined = side.inlined(region['id']) if located else []
+        pieces = ([(rel, span)] if located and rel is not None else []) + [(p['path'], p['lines']) for p in inlined]
+        touched = [s for s in sites if any(s['path'] == path and _overlaps(lines, s[side.name + '_lines'])
+                                           for path, lines in pieces)]
         if not located:
             origin, reason = 'unattributed', 'no_source_location'
-        elif rel is None:
-            origin, reason = 'untouched', 'outside_source_tree'
         elif touched:
             origin, reason = 'agent_rewritten', 'overlaps_rewrite_site'
+        elif rel is None:
+            origin, reason = 'untouched', 'outside_source_tree'
         else:
             origin, reason = 'untouched', 'no_changed_line'
         evidence = catalog.evidence(side, region['id']) if touched and catalog is not None else []
         if evidence:
             origin = evidence[0]['origin']
             reason = REWRITE_REASONS[origin]
-        for site in touched:
-            site[side.name + '_regions'].append(region['id'])
+        mixed = bool(touched) and (rel is None or any(_partly_changed(path, lines, side.name, sites) for path, lines in pieces))
         rows[region['id']] = {'side': side.name, 'region': region['id'], 'origin': origin, 'reason': reason,
-                              'path': rel, 'lines': span, 'sites': [s['id'] for s in touched],
-                              'seconds': region['seconds'], 'evidence': evidence}
+                              'mixed': mixed, 'path': rel, 'lines': span, 'inlined': inlined,
+                              'sites': [s['id'] for s in touched], 'seconds': region['seconds'], 'evidence': evidence}
     return rows
+
+
+def _partly_changed(rel, lines, side_name, sites):
+    """F14 (ticket 04): True when some line of `lines` in file `rel` is not a changed line on this side."""
+    changed = set()
+    for site in sites:
+        first, last = site[side_name + '_lines']
+        if site['path'] == rel:
+            changed.update(range(first, last + 1))
+    return any(line not in changed for line in range(lines[0], lines[1] + 1))
+
+
+def _split(before, after, catalog=None):
+    """Ticket 04: (merged rewrite sites, labels) for one diff, `before` as baseline, `after` as candidate."""
+    raw = _sites(before, after)
+    labels = {'baseline': _label(before, raw, catalog), 'candidate': _label(after, raw, catalog)}
+    sites = _merge_sites(raw, labels)
+    _match_untouched(before, after, labels)
+    return sites, labels
 
 
 # --- Ticket 05: library, intrinsic and offload labels (F2) -------------------------------------
@@ -369,6 +533,8 @@ def _whole(baseline, candidate, groups):
     return {'baseline_seconds': base_total, 'candidate_seconds': cand_total,
             'total_speedup': _ratio(base_total, cand_total),
             'amdahl_ceiling': _ratio(base_total, untouched['candidate_seconds']),
+            'unattributed_threshold': UNATTRIBUTED_THRESHOLD,
+            'unattributed_flagged': _unattributed_flagged(groups),
             'unknown': [reason for g in groups for reason in g['unknown']]}
 
 
@@ -461,6 +627,16 @@ def _ranking(labels):
     return [{'position': i, 'side': row['side'], 'region': row['region'], 'tier': tier, 'limit': 'resource_floor',
              'value': floor(row)['value'], 'reason': floor(row)['reason']}
             for i, (tier, row) in enumerate(entries, start=1)]
+
+
+def _unattributed_flagged(groups):
+    """F24: True when either side's unattributed share is above the threshold; null when no known
+    share is above it but one is unknown; otherwise False. A flag never stops the report."""
+    unattributed = next(g for g in groups if g['origin'] == 'unattributed')
+    shares = [unattributed['baseline_share'], unattributed['candidate_share']]
+    if any(share is not None and share > UNATTRIBUTED_THRESHOLD for share in shares):
+        return True
+    return None if None in shares else False
 
 
 def _pin(data):
@@ -583,8 +759,7 @@ def _iteration(store, args, baseline, candidate, labels, catalog=None):
     earlier = [_Tree(store, rid) for rid in args.earlier_source]
     chain = [baseline, *earlier, previous]
     before = _as(previous, 'baseline')
-    sites = _sites(before, candidate)
-    rows = {'baseline': _label(before, sites, catalog), 'candidate': _label(candidate, sites, catalog)}
+    sites, rows = _split(before, candidate, catalog)
     changed = {'previous': _last_changed(previous, chain[:-1], catalog),
                'candidate': _last_changed(candidate, chain, catalog)}
     for row in labels['baseline'].values():
@@ -611,10 +786,9 @@ def attribute(args):
     candidate = _Side(store, 'candidate', args.candidate_estimate, args.candidate_source)
     differ = [key for key in SAME if baseline.estimate[key] != candidate.estimate[key]]
     _require(not differ, 'baseline and candidate estimates differ in ' + ', '.join(differ) + '; refusing to compare')
-    sites = _sites(baseline, candidate)
     from swdb.library import default_root
     catalog = _Catalog(store, Path(args.library) if args.library else default_root(args.records))
-    labels = {'baseline': _label(baseline, sites, catalog), 'candidate': _label(candidate, sites, catalog)}
+    sites, labels = _split(baseline, candidate, catalog)
     _add_floors(baseline, labels['baseline'], store)
     _add_floors(candidate, labels['candidate'], store)
     groups = _groups(baseline, candidate, labels)

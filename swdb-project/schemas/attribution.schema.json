@@ -34,12 +34,23 @@
       "type": "array",
       "items": {
         "type": "object", "additionalProperties": false,
-        "required": ["id", "path", "baseline_lines", "candidate_lines", "baseline_regions", "candidate_regions"],
+        "required": ["id", "path", "baseline_lines", "candidate_lines", "spans", "baseline_regions", "candidate_regions"],
         "properties": {
           "id": {"type": "string", "pattern": "^site\\.[1-9][0-9]*$"},
-          "path": {"type": "string", "minLength": 1},
-          "baseline_lines": {"$ref": "#/$defs/lines"},
-          "candidate_lines": {"$ref": "#/$defs/lines"},
+          "path": {"type": ["string", "null"], "minLength": 1},
+          "baseline_lines": {"oneOf": [{"$ref": "#/$defs/lines"}, {"type": "null"}]},
+          "candidate_lines": {"oneOf": [{"$ref": "#/$defs/lines"}, {"type": "null"}]},
+          "spans": {
+            "type": "array", "minItems": 1,
+            "items": {
+              "type": "object", "additionalProperties": false, "required": ["path", "baseline_lines", "candidate_lines"],
+              "properties": {
+                "path": {"type": "string", "minLength": 1},
+                "baseline_lines": {"$ref": "#/$defs/lines"},
+                "candidate_lines": {"$ref": "#/$defs/lines"}
+              }
+            }
+          },
           "baseline_regions": {"type": "array", "items": {"type": "string"}},
           "candidate_regions": {"type": "array", "items": {"type": "string"}}
         }
@@ -49,18 +60,27 @@
       "type": "array",
       "items": {
         "type": "object", "additionalProperties": false,
-        "required": ["side", "region", "origin", "reason", "path", "lines", "sites", "seconds", "evidence",
-                     "resource_floor", "headroom"],
+        "required": ["side", "region", "origin", "reason", "mixed", "path", "lines", "inlined", "sites", "seconds",
+                     "evidence", "matched_region", "resource_floor", "headroom"],
         "properties": {
           "side": {"$ref": "#/$defs/side"},
           "region": {"type": "string", "minLength": 1},
           "origin": {"$ref": "#/$defs/origin"},
           "reason": {"enum": ["overlaps_rewrite_site", "no_changed_line", "outside_source_tree", "no_source_location",
                                "offload_command_in_site", "intrinsic_in_site", "library_operation_in_site"]},
+          "mixed": {"type": "boolean"},
           "path": {"type": ["string", "null"]},
           "lines": {"oneOf": [{"$ref": "#/$defs/lines"}, {"type": "null"}]},
+          "inlined": {
+            "type": "array",
+            "items": {
+              "type": "object", "additionalProperties": false, "required": ["path", "lines"],
+              "properties": {"path": {"type": "string", "minLength": 1}, "lines": {"$ref": "#/$defs/lines"}}
+            }
+          },
           "sites": {"type": "array", "items": {"type": "string"}},
           "seconds": {"$ref": "#/$defs/seconds"},
+          "matched_region": {"type": ["string", "null"]},
           "evidence": {
             "type": "array",
             "description": "Ticket 05: every library, intrinsic or offload signal of a region inside a rewrite site, highest precedence first; empty outside sites.",
@@ -110,12 +130,15 @@
     },
     "whole_program": {
       "type": "object", "additionalProperties": false,
-      "required": ["baseline_seconds", "candidate_seconds", "total_speedup", "amdahl_ceiling", "unknown"],
+      "required": ["baseline_seconds", "candidate_seconds", "total_speedup", "amdahl_ceiling",
+                   "unattributed_threshold", "unattributed_flagged", "unknown"],
       "properties": {
         "baseline_seconds": {"$ref": "#/$defs/seconds"},
         "candidate_seconds": {"$ref": "#/$defs/seconds"},
         "total_speedup": {"$ref": "#/$defs/ratio"},
         "amdahl_ceiling": {"$ref": "#/$defs/ratio"},
+        "unattributed_threshold": {"const": 0.1},
+        "unattributed_flagged": {"type": ["boolean", "null"]},
         "unknown": {"$ref": "#/$defs/unknown"}
       }
     },
