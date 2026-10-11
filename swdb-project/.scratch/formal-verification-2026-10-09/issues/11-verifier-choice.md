@@ -17,3 +17,8 @@ tier, and what is the fallback when the primary tool cannot read the code?
   support is "certainly spotty". Candidate tiers: bounded = ESBMC (then crux-llvm); unbounded =
   Frama-C/WP + RPP on a C port (then ESBMC k-induction). No single-thread tool models OpenMP:
   the concurrency phase needs VerCors, CIVL or a pthreads rewrite.
+- 2026-10-11: input from 08: ESBMC 8.5 timed out on DX100 code: the strict layer as written
+  (its `std::vector` model) and the array port (300–600 s, every size). crux-llvm 0.12 proved
+  and refuted at one lane on the port, but cannot run libc++ 22 code, and no safe 2-lane run
+  finished in 15 minutes. CBMC cannot parse libc++ 22 headers. Running 6 crux jobs at once
+  exhausted the Mac's 36 GB of RAM: run one at a time, or on mbit10 under `ulimit -v`.
