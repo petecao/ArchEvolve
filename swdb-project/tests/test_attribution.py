@@ -301,3 +301,152 @@ def test_validate_rejects_an_edited_report_or_a_changed_pinned_estimate(case):
     estimate.write_text(estimate.read_text().replace('status: draft', 'status: accepted', 1))
     changed = case.records.validate()
     assert changed.returncode == 1 and 'candidate_estimate' in changed.stdout + changed.stderr
+
+
+# --- Ticket 05: library, intrinsic and offload labels (2026-10-11 ET) ---------------------------
+
+def call(site, region_id, name, executions, line=7):
+    """One executed call whose body is counted, so the estimate stays known."""
+    return {'site': site, 'region': region_id, 'name': name, 'line': line, 'event': 'external_call',
+            'cost_accounting': 'opaque_callee', 'body_counted': True, 'operation_class': None,
+            'operations_per_execution': 0, 'execution_count': count(executions)}
+
+
+def offload(row, event='fixture.gather', executions=4):
+    """Mark a counted region as issuing one functional-observation command."""
+    row['accelerator_calls'].append({'site': 0, 'event': event, 'intrinsic': '__dxc_gather',
+        'hardware_operations': ['dx100.mmio.v1.indirect-load.i32'], 'execution_count': count(executions),
+        'active_elements': count(0), 'useful_accesses': count(0), 'useful_bytes': count(0),
+        'accounting_domain': 'offload', 'functional_bookkeeping': {}, 'missing': []})
+    return row
+
+
+def catalog(case):
+    """A typed library with one library operation, and the store's AVX-512 gather intrinsic."""
+    from conftest import REPO
+    root = case.tmp_path / 'catalog'
+    (root / 'library_operations').mkdir(parents=True)
+    (root / 'library_operations' / 'fixture_stage.yaml').write_text(yaml.safe_dump({
+        'id': 'operation.fixture_stage', 'kind': 'library_operation',
+        'location': {'root': 'library', 'path': 'library_operations/fixture_stage.hh', 'symbol': 'FixtureStage'}}))
+    case.records.write('intrinsics/mm512_i32gather_ps.yaml',
+                       yaml.safe_load((REPO / 'records/intrinsics/mm512_i32gather_ps.yaml').read_text()))
+    return root
+
+
+def estimate_with_calls(case, rid, regions, calls):
+    """`Case.estimate` with executed calls recorded in the characterization."""
+    characterization(case.records, rid + '.counts', regions)
+    path = case.records.path / 'workload_characterizations' / (rid + '.counts.yaml')
+    data = yaml.safe_load(path.read_text())
+    data['unmodeled_calls'] = calls
+    data.pop('identity_sha256')
+    data['identity_sha256'] = digest(data)
+    path.write_text(yaml.safe_dump(data, sort_keys=False))
+    result = run_swdb('estimate', '--records', case.records.path, '--characterization', rid + '.counts',
+        '--target-description', case.target, '--protocol', case.protocol, '--id', rid, '--format', 'json')
+    assert result.returncode == 0, result.stdout + result.stderr
+    return json.loads(result.stdout)
+
+
+def attributed_with(case, library):
+    result = run_swdb('attribute', '--records', case.records.path, '--baseline-estimate', 'fixture.baseline',
+        '--candidate-estimate', 'fixture.candidate', '--baseline-source', 'fixture.baseline.source',
+        '--candidate-source', 'fixture.candidate.source', '--library', library, '--id', 'fixture.attribution',
+        '--format', 'json')
+    assert result.returncode == 0, result.stdout + result.stderr
+    return json.loads(result.stdout)
+
+
+def test_offload_command_beats_intrinsic_beats_library_call_inside_one_site(case):
+    library = catalog(case)
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    case.estimate('fixture.baseline', [region('base.untouched', b, 3, 40), region('base.rewritten', b, 7, 60)])
+    # Inside the one site (candidate lines 7-8): an offload loop that also calls the library
+    # operation, a loop calling the intrinsic and the library operation, a library-only loop
+    # (mangled member call) and a plain rewritten loop.
+    estimate_with_calls(case, 'fixture.candidate', [region('cand.untouched', c, 3, 40),
+        offload(region('cand.offload', c, 7, 5)), region('cand.intrinsic', c, 7, 4),
+        region('cand.library', c, 8, 3), region('cand.plain', c, 8, 2)],
+        [call(0, 'cand.offload', '_ZN12FixtureStage5stageEPf', 4),
+         call(1, 'cand.intrinsic', '_mm512_i32gather_ps', 2), call(2, 'cand.intrinsic', '_ZN12FixtureStage5stageEPf', 2),
+         call(3, 'cand.library', '_ZN12FixtureStage5stageEPf', 1)])
+    report = attributed_with(case, library)
+    labels = {r['region']: r['origin'] for r in report['regions']}
+    assert labels == {'base.untouched': 'untouched', 'base.rewritten': 'agent_rewritten',
+                      'cand.untouched': 'untouched', 'cand.offload': 'offload_command', 'cand.intrinsic': 'intrinsic',
+                      'cand.library': 'library_call', 'cand.plain': 'agent_rewritten'}
+    evidence = {r['region']: r['evidence'] for r in report['regions'] if r['side'] == 'candidate'}
+    assert evidence['cand.offload'] == [{'origin': 'offload_command', 'name': 'fixture.gather'},
+                                        {'origin': 'library_call', 'name': 'operation.fixture_stage'}]
+    assert evidence['cand.intrinsic'] == [{'origin': 'intrinsic', 'name': 'mm512_i32gather_ps'},
+                                          {'origin': 'library_call', 'name': 'operation.fixture_stage'}]
+    assert evidence['cand.plain'] == [] and evidence['cand.untouched'] == []
+
+
+def test_rewritten_group_splits_seconds_by_origin_and_baseline_std_calls_stay_untouched(case):
+    library = catalog(case)
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    header = case.tmp_path / 'catalog' / 'library_operations' / 'fixture_stage.hh'
+    std = '/usr/include/c++/13/bits/stl_algo.h'
+
+    def std_calls(prefix):
+        return [call(10, prefix + '.untouched', '_ZSt4sortIPfEvT_S1_', 3, line=3),
+                call(11, prefix + '.untouched', 'strlen', 3, line=3)]
+    # Baseline: an untouched loop calling std::sort and strlen, a loop inside a C++ header, and
+    # the 60 s loop the agent rewrites.
+    estimate_with_calls(case, 'fixture.baseline', [region('base.untouched', b, 3, 30), region('base.std', std, 120, 10),
+        region('base.rewritten', b, 7, 60)], std_calls('base'))
+    # Candidate: the same untouched code; the site holds a 5 s offload loop, a 10 s loop whose
+    # accesses are inlined from the library operation's header, and 15 s of plain rewritten code.
+    inlined = region('cand.library', c, 7, 10)
+    inlined['access_patterns'][0]['source_location']['path'] = str(header)
+    estimate_with_calls(case, 'fixture.candidate', [region('cand.untouched', c, 3, 30), region('cand.std', std, 120, 10),
+        offload(region('cand.offload', c, 7, 5)), inlined, region('cand.plain', c, 8, 15)], std_calls('cand'))
+    report = attributed_with(case, library)
+    labels = {r['region']: (r['origin'], r['reason']) for r in report['regions']}
+    assert labels['base.untouched'] == ('untouched', 'no_changed_line')
+    assert labels['cand.untouched'] == ('untouched', 'no_changed_line')
+    assert labels['cand.std'] == ('untouched', 'outside_source_tree')
+    assert labels['cand.library'] == ('library_call', 'library_operation_in_site')
+    assert labels['cand.offload'] == ('offload_command', 'offload_command_in_site')
+    split = groups(report)
+    assert split['untouched']['baseline_seconds'] == pytest.approx(40) and split['untouched']['drift'] == pytest.approx(1.0)
+    rewritten = split['agent_rewritten']
+    assert (rewritten['baseline_seconds'], rewritten['candidate_seconds']) == (pytest.approx(60), pytest.approx(30))
+    assert rewritten['realized_speedup'] == pytest.approx(2.0)
+    assert [o['origin'] for o in rewritten['origins']] == ['offload_command', 'intrinsic', 'library_call', 'agent_rewritten']
+    by_origin = {o['origin']: o for o in rewritten['origins']}
+    assert {k: (o['baseline_seconds'], o['candidate_seconds']) for k, o in by_origin.items()} == {
+        'offload_command': (0, 5), 'intrinsic': (0, 0), 'library_call': (0, 10), 'agent_rewritten': (60, 15)}
+    assert by_origin['offload_command']['candidate_share'] == pytest.approx(5 / 70)  # candidate total 30 + 10 + 5 + 10 + 15
+    assert by_origin['agent_rewritten']['baseline_share'] == pytest.approx(0.6)
+    assert report['catalog'] == [{'kind': 'library_operation', 'id': 'operation.fixture_stage',
+        'sha256': digest(yaml.safe_load((library / 'library_operations' / 'fixture_stage.yaml').read_text()))}]
+    checked = case.records.validate()
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+    rows = run_swdb('sql', 'SELECT origin, baseline_seconds, candidate_seconds FROM swdb_attribution_origins '
+                    "WHERE attribution = 'fixture.attribution' ORDER BY origin", '--records', case.records.path,
+                    '--db', case.tmp_path / 'index.sqlite', '--format', 'json')
+    assert rows.returncode == 0, rows.stdout + rows.stderr
+    assert json.loads(rows.stdout) == [
+        {'origin': 'agent_rewritten', 'baseline_seconds': 60.0, 'candidate_seconds': 15.0},
+        {'origin': 'intrinsic', 'baseline_seconds': 0.0, 'candidate_seconds': 0.0},
+        {'origin': 'library_call', 'baseline_seconds': 0.0, 'candidate_seconds': 10.0},
+        {'origin': 'offload_command', 'baseline_seconds': 0.0, 'candidate_seconds': 5.0}]
+
+
+def test_validate_rejects_a_changed_intrinsic_that_labeled_a_region(case):
+    library = catalog(case)
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    case.estimate('fixture.baseline', [region('base.rewritten', b, 7, 60)])
+    estimate_with_calls(case, 'fixture.candidate', [region('cand.intrinsic', c, 7, 4)],
+                        [call(0, 'cand.intrinsic', '_mm512_i32gather_ps', 2)])
+    report = attributed_with(case, library)
+    path = case.records.path / 'intrinsics' / 'mm512_i32gather_ps.yaml'
+    assert report['catalog'] == [{'kind': 'intrinsic', 'id': 'mm512_i32gather_ps',
+                                  'sha256': digest(yaml.safe_load(path.read_text()))}]
+    assert case.records.validate().returncode == 0
+    path.write_text(path.read_text().replace('updated: \'2026-09-23\'', 'updated: \'2026-10-11\''))
+    changed = case.records.validate()
+    assert changed.returncode == 1 and 'catalog' in changed.stdout + changed.stderr
