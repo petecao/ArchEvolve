@@ -557,3 +557,56 @@ agent_rewritten). Same per-trial-sum-then-median rule as the groups.
 | `baseline_share` | origin ÷ baseline total |
 | `candidate_share` | origin ÷ candidate total |
 | `unknown_regions` | how many unknown regions make this origin's numbers unknown |
+
+### `swdb_attribution_iterations`
+
+Added 2026-10-11 ET (ticket 06). One row per report given a previous accepted candidate
+(`this_iteration` in the record); none otherwise.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `iteration` | the candidate's iteration number (2 or more) |
+| `previous_estimate` | previous accepted candidate's estimate ID |
+| `previous_source` | source record the previous candidate counted |
+| `earlier_sources` | JSON list of earlier accepted candidates' source IDs, oldest first |
+| `previous_seconds` | previous candidate's estimate total (NULL if unknown) |
+| `candidate_seconds` | candidate estimate total (NULL if unknown) |
+| `total_speedup` | previous total ÷ candidate total (gain this iteration) |
+| `amdahl_ceiling` | previous total ÷ candidate seconds untouched this iteration |
+
+### `swdb_attribution_iteration_groups`
+
+Same columns as `swdb_attribution_groups`, for the this-iteration comparison: `baseline_*`
+means the previous accepted candidate. `swdb_attribution_groups` stays cumulative.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `origin` | code origin of the group (this iteration) |
+| `baseline_seconds` | group seconds in the previous candidate |
+| `candidate_seconds` | group seconds in the candidate |
+| `baseline_share` | group ÷ previous total |
+| `candidate_share` | group ÷ candidate total |
+| `realized_speedup` | previous ÷ candidate group seconds |
+| `drift` | untouched group only: candidate ÷ previous seconds |
+| `unknown_regions` | how many unknown regions make this group's numbers unknown |
+
+### `swdb_attribution_iteration_regions`
+
+Same columns as `swdb_attribution_regions` for the this-iteration comparison (`side`
+`baseline` = the previous candidate), plus the last-changed iteration.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `side` | `baseline` (previous candidate) or `candidate` |
+| `region` | the estimate's region ID |
+| `origin` | its code origin this iteration |
+| `reason` | why it got that origin |
+| `path` | file path relative to its source tree |
+| `first_line` | first line of its span |
+| `last_line` | last line of its span |
+| `seconds` | the estimate's per-region seconds (diagnostic) |
+| `sites` | JSON list of this iteration's rewrite-site IDs it overlaps |
+| `last_changed_iteration` | iteration that last changed the region (0 = never; NULL = no source location) |

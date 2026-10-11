@@ -34,7 +34,15 @@ Rules used by this version (ticket 04 widens the matching rules):
 7. Identity (F43, F44). The record pins both estimates, both source records and the target
    description by content hash. Its dates are the latest `updated` date of those inputs and
    dicts are built in a fixed order, so the same inputs give a byte-identical record.
+8. Iterations (F13, ticket 06). Given the previous accepted candidate (`--previous-estimate`,
+   `--previous-source`), the top-level comparison stays cumulative (original baseline ->
+   candidate) and a `this_iteration` block repeats it against the previous candidate. The
+   candidate is iteration 2 + the number of `--earlier-source` trees (accepted candidates
+   before the previous one, oldest first). Each region row records `last_changed_iteration`:
+   the newest iteration whose diff into that region's version labels it rewritten (0 = never,
+   null = no source location). Without a previous candidate the record is the ticket 02 one.
 """
+import copy
 import difflib
 import statistics
 from pathlib import Path, PurePosixPath
@@ -64,6 +72,10 @@ def register_cli(commands):
     sub.add_argument('--id', required=True)
     sub.add_argument('--library', type=Path, default=None,
                      help='typed library whose operations label library calls (default: beside the records folder)')
+    sub.add_argument('--previous-estimate', help='iteration 2 on: saved estimate of the previous accepted candidate')
+    sub.add_argument('--previous-source', help='iteration 2 on: source record the previous accepted candidate counted')
+    sub.add_argument('--earlier-source', action='append', default=[],
+                     help='source record of an accepted candidate before the previous one, oldest first (repeatable)')
     sub.add_argument('--format', choices=['yaml', 'json'], default='yaml')
     sub.set_defaults(analytic_handler=attribute)
 
@@ -387,6 +399,93 @@ def validate_record(record, ctx):
         current = ctx.store.get(data[field]['id'], 'estimate')
         if current is not None and current['target_description_sha256'] != data['target_description']['sha256']:
             yield Problem(record.rel, 'target_description', 'pinned estimate used a different target description')
+    yield from _validate_iteration(record, ctx)
+
+
+def _validate_iteration(record, ctx):
+    """Ticket 06: the previous accepted candidate's estimate and every source it pins are unchanged."""
+    from swdb.problems import Problem
+    this = record.data.get('this_iteration')
+    if this is None:
+        return
+    pins = [('this_iteration.previous_estimate', this['previous_estimate']),
+            ('this_iteration.previous_source', this['previous_source'])]
+    pins += [(f'this_iteration.earlier_sources[{i}]', pin) for i, pin in enumerate(this['earlier_sources'])]
+    for field, pin in pins:
+        current = ctx.store.get(pin['id'])
+        if current is None or artifacts.digest(current) != pin['sha256']:
+            yield Problem(record.rel, field, f'pinned record {pin["id"]!r} is missing or changed')
+    current = ctx.store.get(this['previous_estimate']['id'], 'estimate')
+    if current is not None and current['target_description_sha256'] != record.data['target_description']['sha256']:
+        yield Problem(record.rel, 'this_iteration.previous_estimate', 'pinned estimate used a different target description')
+
+
+class _Tree:
+    """A verified source tree with no estimate: an accepted candidate before the previous one."""
+
+    def __init__(self, store, source_id):
+        self.source = _record(store, source_id, SOURCE_KINDS)
+        self.root = artifacts.verify(self.source['artifact'])
+        self.files = {f['path'] for f in self.source['artifact']['files']}
+
+    text = _Side.text
+
+
+def _as(side, name):
+    """The same side under another role name (the role picks the site line field)."""
+    renamed = copy.copy(side)
+    renamed.name = name
+    return renamed
+
+
+def _last_changed(side, chain, catalog=None):
+    """{region ID: iteration that last changed it}. `chain[k]` is iteration k's tree; `side` is
+    iteration len(chain). A region last changed in iteration k + 1 overlaps a site of the diff
+    from chain[k] but none from chain[k + 1]; one that overlaps none is 0, one without a source
+    location is None. Uses the labeling rules of `_label`, so it follows whatever they are."""
+    current = _as(side, 'candidate')
+    found, pending = {}, [r['id'] for r in side.estimate['regions']]
+    for k in reversed(range(len(chain))):
+        labels = _label(current, _sites(chain[k], current), catalog)
+        for rid in list(pending):
+            origin = labels[rid]['origin']
+            if origin != 'untouched':
+                found[rid] = None if origin == 'unattributed' else k + 1
+                pending.remove(rid)
+    return {**found, **{rid: 0 for rid in pending}}
+
+
+def _iteration(store, args, baseline, candidate, labels, catalog=None):
+    """F13: the `this_iteration` block (previous accepted candidate -> candidate), and every
+    region row's `last_changed_iteration`. None without a previous candidate."""
+    if args.previous_estimate is None and args.previous_source is None:
+        _require(not args.earlier_source, '--earlier-source needs --previous-estimate and --previous-source')
+        return None, []
+    _require(args.previous_estimate is not None and args.previous_source is not None,
+             '--previous-estimate and --previous-source go together')
+    previous = _Side(store, 'previous', args.previous_estimate, args.previous_source)
+    differ = [key for key in SAME if previous.estimate[key] != candidate.estimate[key]]
+    _require(not differ, 'previous and candidate estimates differ in ' + ', '.join(differ) + '; refusing to compare')
+    earlier = [_Tree(store, rid) for rid in args.earlier_source]
+    chain = [baseline, *earlier, previous]
+    before = _as(previous, 'baseline')
+    sites = _sites(before, candidate)
+    rows = {'baseline': _label(before, sites, catalog), 'candidate': _label(candidate, sites, catalog)}
+    changed = {'previous': _last_changed(previous, chain[:-1], catalog),
+               'candidate': _last_changed(candidate, chain, catalog)}
+    for row in labels['baseline'].values():
+        row['last_changed_iteration'] = 0
+    for row in list(labels['candidate'].values()) + list(rows['candidate'].values()):
+        row['last_changed_iteration'] = changed['candidate'][row['region']]
+    for row in rows['baseline'].values():
+        row['last_changed_iteration'] = changed['previous'][row['region']]
+    groups = _groups(before, candidate, rows)
+    block = {'iteration': len(chain), 'previous_estimate': _pin(previous.estimate),
+             'previous_source': _source_pin(previous.source),
+             'earlier_sources': [_source_pin(tree.source) for tree in earlier],
+             'rewrite_sites': sites, 'regions': list(rows['baseline'].values()) + list(rows['candidate'].values()),
+             'groups': groups, 'whole_program': _whole(before, candidate, groups)}
+    return block, [previous.estimate, previous.source] + [tree.source for tree in earlier]
 
 
 def attribute(args):
@@ -401,7 +500,8 @@ def attribute(args):
     catalog = _Catalog(store, Path(args.library) if args.library else default_root(args.records))
     labels = {'baseline': _label(baseline, sites, catalog), 'candidate': _label(candidate, sites, catalog)}
     groups = _groups(baseline, candidate, labels)
-    inputs = [baseline.estimate, candidate.estimate, baseline.source, candidate.source]
+    this_iteration, previous_inputs = _iteration(store, args, baseline, candidate, labels, catalog)
+    inputs = [baseline.estimate, candidate.estimate, baseline.source, candidate.source] + previous_inputs
     date = max(str(data['updated']) for data in inputs)
     record = {'kind': 'attribution', 'schema_version': '0.4', 'id': args.id, 'status': 'draft',
               'created': date, 'updated': date, **workflow.CREATION_TAGS,
@@ -418,6 +518,8 @@ def attribute(args):
               'rewrite_sites': sites,
               'regions': list(labels['baseline'].values()) + list(labels['candidate'].values()),
               'groups': groups, 'whole_program': _whole(baseline, candidate, groups)}
+    if this_iteration is not None:
+        record['this_iteration'] = this_iteration
     record['identity_sha256'] = artifacts.digest(record)
     writer.commit(args.records, new=[record])
     return record
