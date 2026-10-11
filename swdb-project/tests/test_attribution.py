@@ -568,3 +568,326 @@ def test_inlined_code_is_labeled_by_its_own_file_and_line(case):
     assert rows(both)[('baseline', 'base.both')]['sites'] == ['site.1']
     checked = case.records.validate()
     assert checked.returncode == 0, checked.stdout + checked.stderr
+
+
+# --- Ticket 05: library, intrinsic and offload labels (2026-10-11 ET) ---------------------------
+
+def call(site, region_id, name, executions, line=7):
+    """One executed call whose body is counted, so the estimate stays known."""
+    return {'site': site, 'region': region_id, 'name': name, 'line': line, 'event': 'external_call',
+            'cost_accounting': 'opaque_callee', 'body_counted': True, 'operation_class': None,
+            'operations_per_execution': 0, 'execution_count': count(executions)}
+
+
+def offload(row, event='fixture.gather', executions=4):
+    """Mark a counted region as issuing one functional-observation command."""
+    row['accelerator_calls'].append({'site': 0, 'event': event, 'intrinsic': '__dxc_gather',
+        'hardware_operations': ['dx100.mmio.v1.indirect-load.i32'], 'execution_count': count(executions),
+        'active_elements': count(0), 'useful_accesses': count(0), 'useful_bytes': count(0),
+        'accounting_domain': 'offload', 'functional_bookkeeping': {}, 'missing': []})
+    return row
+
+
+def catalog(case):
+    """A typed library with one library operation, and the store's AVX-512 gather intrinsic."""
+    from conftest import REPO
+    root = case.tmp_path / 'catalog'
+    (root / 'library_operations').mkdir(parents=True)
+    (root / 'library_operations' / 'fixture_stage.yaml').write_text(yaml.safe_dump({
+        'id': 'operation.fixture_stage', 'kind': 'library_operation',
+        'location': {'root': 'library', 'path': 'library_operations/fixture_stage.hh', 'symbol': 'FixtureStage'}}))
+    case.records.write('intrinsics/mm512_i32gather_ps.yaml',
+                       yaml.safe_load((REPO / 'records/intrinsics/mm512_i32gather_ps.yaml').read_text()))
+    return root
+
+
+def estimate_with_calls(case, rid, regions, calls):
+    """`Case.estimate` with executed calls recorded in the characterization."""
+    characterization(case.records, rid + '.counts', regions)
+    path = case.records.path / 'workload_characterizations' / (rid + '.counts.yaml')
+    data = yaml.safe_load(path.read_text())
+    data['unmodeled_calls'] = calls
+    data.pop('identity_sha256')
+    data['identity_sha256'] = digest(data)
+    path.write_text(yaml.safe_dump(data, sort_keys=False))
+    result = run_swdb('estimate', '--records', case.records.path, '--characterization', rid + '.counts',
+        '--target-description', case.target, '--protocol', case.protocol, '--id', rid, '--format', 'json')
+    assert result.returncode == 0, result.stdout + result.stderr
+    return json.loads(result.stdout)
+
+
+def attributed_with(case, library):
+    result = run_swdb('attribute', '--records', case.records.path, '--baseline-estimate', 'fixture.baseline',
+        '--candidate-estimate', 'fixture.candidate', '--baseline-source', 'fixture.baseline.source',
+        '--candidate-source', 'fixture.candidate.source', '--library', library, '--id', 'fixture.attribution',
+        '--format', 'json')
+    assert result.returncode == 0, result.stdout + result.stderr
+    return json.loads(result.stdout)
+
+
+def test_offload_command_beats_intrinsic_beats_library_call_inside_one_site(case):
+    library = catalog(case)
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    case.estimate('fixture.baseline', [region('base.untouched', b, 3, 40), region('base.rewritten', b, 7, 60)])
+    # Inside the one site (candidate lines 7-8): an offload loop that also calls the library
+    # operation, a loop calling the intrinsic and the library operation, a library-only loop
+    # (mangled member call) and a plain rewritten loop.
+    estimate_with_calls(case, 'fixture.candidate', [region('cand.untouched', c, 3, 40),
+        offload(region('cand.offload', c, 7, 5)), region('cand.intrinsic', c, 7, 4),
+        region('cand.library', c, 8, 3), region('cand.plain', c, 8, 2)],
+        [call(0, 'cand.offload', '_ZN12FixtureStage5stageEPf', 4),
+         call(1, 'cand.intrinsic', '_mm512_i32gather_ps', 2), call(2, 'cand.intrinsic', '_ZN12FixtureStage5stageEPf', 2),
+         call(3, 'cand.library', '_ZN12FixtureStage5stageEPf', 1)])
+    report = attributed_with(case, library)
+    labels = {r['region']: r['origin'] for r in report['regions']}
+    assert labels == {'base.untouched': 'untouched', 'base.rewritten': 'agent_rewritten',
+                      'cand.untouched': 'untouched', 'cand.offload': 'offload_command', 'cand.intrinsic': 'intrinsic',
+                      'cand.library': 'library_call', 'cand.plain': 'agent_rewritten'}
+    evidence = {r['region']: r['evidence'] for r in report['regions'] if r['side'] == 'candidate'}
+    assert evidence['cand.offload'] == [{'origin': 'offload_command', 'name': 'fixture.gather'},
+                                        {'origin': 'library_call', 'name': 'operation.fixture_stage'}]
+    assert evidence['cand.intrinsic'] == [{'origin': 'intrinsic', 'name': 'mm512_i32gather_ps'},
+                                          {'origin': 'library_call', 'name': 'operation.fixture_stage'}]
+    assert evidence['cand.plain'] == [] and evidence['cand.untouched'] == []
+
+
+def test_rewritten_group_splits_seconds_by_origin_and_baseline_std_calls_stay_untouched(case):
+    library = catalog(case)
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    header = case.tmp_path / 'catalog' / 'library_operations' / 'fixture_stage.hh'
+    std = '/usr/include/c++/13/bits/stl_algo.h'
+
+    def std_calls(prefix):
+        return [call(10, prefix + '.untouched', '_ZSt4sortIPfEvT_S1_', 3, line=3),
+                call(11, prefix + '.untouched', 'strlen', 3, line=3)]
+    # Baseline: an untouched loop calling std::sort and strlen, a loop inside a C++ header, and
+    # the 60 s loop the agent rewrites.
+    estimate_with_calls(case, 'fixture.baseline', [region('base.untouched', b, 3, 30), region('base.std', std, 120, 10),
+        region('base.rewritten', b, 7, 60)], std_calls('base'))
+    # Candidate: the same untouched code; the site holds a 5 s offload loop, a 10 s loop whose
+    # accesses are inlined from the library operation's header, and 15 s of plain rewritten code.
+    inlined = region('cand.library', c, 7, 10)
+    inlined['access_patterns'][0]['source_location']['path'] = str(header)
+    estimate_with_calls(case, 'fixture.candidate', [region('cand.untouched', c, 3, 30), region('cand.std', std, 120, 10),
+        offload(region('cand.offload', c, 7, 5)), inlined, region('cand.plain', c, 8, 15)], std_calls('cand'))
+    report = attributed_with(case, library)
+    labels = {r['region']: (r['origin'], r['reason']) for r in report['regions']}
+    assert labels['base.untouched'] == ('untouched', 'no_changed_line')
+    assert labels['cand.untouched'] == ('untouched', 'no_changed_line')
+    assert labels['cand.std'] == ('untouched', 'outside_source_tree')
+    assert labels['cand.library'] == ('library_call', 'library_operation_in_site')
+    assert labels['cand.offload'] == ('offload_command', 'offload_command_in_site')
+    split = groups(report)
+    assert split['untouched']['baseline_seconds'] == pytest.approx(40) and split['untouched']['drift'] == pytest.approx(1.0)
+    rewritten = split['agent_rewritten']
+    assert (rewritten['baseline_seconds'], rewritten['candidate_seconds']) == (pytest.approx(60), pytest.approx(30))
+    assert rewritten['realized_speedup'] == pytest.approx(2.0)
+    assert [o['origin'] for o in rewritten['origins']] == ['offload_command', 'intrinsic', 'library_call', 'agent_rewritten']
+    by_origin = {o['origin']: o for o in rewritten['origins']}
+    assert {k: (o['baseline_seconds'], o['candidate_seconds']) for k, o in by_origin.items()} == {
+        'offload_command': (0, 5), 'intrinsic': (0, 0), 'library_call': (0, 10), 'agent_rewritten': (60, 15)}
+    assert by_origin['offload_command']['candidate_share'] == pytest.approx(5 / 70)  # candidate total 30 + 10 + 5 + 10 + 15
+    assert by_origin['agent_rewritten']['baseline_share'] == pytest.approx(0.6)
+    assert report['catalog'] == [{'kind': 'library_operation', 'id': 'operation.fixture_stage',
+        'sha256': digest(yaml.safe_load((library / 'library_operations' / 'fixture_stage.yaml').read_text()))}]
+    checked = case.records.validate()
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+    rows = run_swdb('sql', 'SELECT origin, baseline_seconds, candidate_seconds FROM swdb_attribution_origins '
+                    "WHERE attribution = 'fixture.attribution' ORDER BY origin", '--records', case.records.path,
+                    '--db', case.tmp_path / 'index.sqlite', '--format', 'json')
+    assert rows.returncode == 0, rows.stdout + rows.stderr
+    assert json.loads(rows.stdout) == [
+        {'origin': 'agent_rewritten', 'baseline_seconds': 60.0, 'candidate_seconds': 15.0},
+        {'origin': 'intrinsic', 'baseline_seconds': 0.0, 'candidate_seconds': 0.0},
+        {'origin': 'library_call', 'baseline_seconds': 0.0, 'candidate_seconds': 10.0},
+        {'origin': 'offload_command', 'baseline_seconds': 0.0, 'candidate_seconds': 5.0}]
+
+
+def test_validate_rejects_a_changed_intrinsic_that_labeled_a_region(case):
+    library = catalog(case)
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    case.estimate('fixture.baseline', [region('base.rewritten', b, 7, 60)])
+    estimate_with_calls(case, 'fixture.candidate', [region('cand.intrinsic', c, 7, 4)],
+                        [call(0, 'cand.intrinsic', '_mm512_i32gather_ps', 2)])
+    report = attributed_with(case, library)
+    path = case.records.path / 'intrinsics' / 'mm512_i32gather_ps.yaml'
+    assert report['catalog'] == [{'kind': 'intrinsic', 'id': 'mm512_i32gather_ps',
+                                  'sha256': digest(yaml.safe_load(path.read_text()))}]
+    assert case.records.validate().returncode == 0
+    path.write_text(path.read_text().replace('updated: \'2026-09-23\'', 'updated: \'2026-10-11\''))
+    changed = case.records.validate()
+    assert changed.returncode == 1 and 'catalog' in changed.stdout + changed.stderr
+
+
+# Iterations (ticket 06, F13). Three loops: A (lines 3-4), B (lines 7-8), C (lines 11-12).
+# Iteration 1 rewrites B, iteration 2 rewrites A, iteration 3 rewrites C.
+ITERATION_0 = BASELINE + """void kept(float *a, int n) {
+  for (int i = 0; i < n; ++i)
+    a[i] = a[i] - 1.0f;
+}
+"""
+ITERATION_1 = ITERATION_0.replace("""  for (int i = 0; i < n; ++i)
+    a[i] = a[i] + 1.0f;""", """  for (int i = 0; i < n; i += 2)
+    a[i] += 1.0f, a[i + 1] += 1.0f;""")
+ITERATION_2 = ITERATION_1.replace("""  for (int i = 0; i < n; ++i)
+    a[i] = a[i] * 2.0f;""", """  for (int i = 0; i < n; i += 2)
+    a[i] *= 2.0f, a[i + 1] *= 2.0f;""")
+ITERATION_3 = ITERATION_2.replace("""  for (int i = 0; i < n; ++i)
+    a[i] = a[i] - 1.0f;""", """  for (int i = 0; i < n; i += 2)
+    a[i] -= 1.0f, a[i + 1] -= 1.0f;""")
+# Seconds per loop (A, B, C) in each iteration: totals 100, 75, 55, 50.
+ITERATION_SECONDS = [(40, 50, 10), (40, 25, 10), (20, 25, 10), (20, 25, 5)]
+
+
+def iterations(case, count):
+    """Writes iterations 0..count-1: source tree `fixture.it<i>.source` and estimate `fixture.it<i>`."""
+    texts = [ITERATION_0, ITERATION_1, ITERATION_2, ITERATION_3][:count]
+    for i, text in enumerate(texts):
+        root = tree(case.tmp_path, f'it{i}', text)
+        snapshot(case.records, f'fixture.it{i}.source', root)
+        a, b, c = ITERATION_SECONDS[i]
+        path = root / 'kernel.cpp'
+        case.estimate(f'fixture.it{i}', [region(f'it{i}.a', path, 3, a), region(f'it{i}.b', path, 7, b),
+                                         region(f'it{i}.c', path, 11, c)])
+
+
+def attribute_iteration(case, current, previous=None, earlier=(), rid='fixture.attribution', previous_estimate=None):
+    args = ['attribute', '--records', case.records.path, '--baseline-estimate', 'fixture.it0',
+            '--candidate-estimate', f'fixture.it{current}', '--baseline-source', 'fixture.it0.source',
+            '--candidate-source', f'fixture.it{current}.source', '--id', rid, '--format', 'json']
+    if previous is not None:
+        args += ['--previous-estimate', previous_estimate or f'fixture.it{previous}',
+                 '--previous-source', f'fixture.it{previous}.source']
+    for i in earlier:
+        args += ['--earlier-source', f'fixture.it{i}.source']
+    return run_swdb(*args)
+
+
+def attributed_iteration(case, *args, **kwargs):
+    result = attribute_iteration(case, *args, **kwargs)
+    assert result.returncode == 0, result.stdout + result.stderr
+    return json.loads(result.stdout)
+
+
+def region_facts(rows):
+    return {(r['side'], r['region']): (r['origin'], r.get('last_changed_iteration')) for r in rows}
+
+
+def test_iteration_two_reports_gain_this_iteration_and_cumulative_gain(case):
+    iterations(case, 3)
+    report = attributed_iteration(case, 2, previous=1)
+    this = report['this_iteration']
+    assert this['iteration'] == 2
+    assert this['previous_estimate']['id'] == 'fixture.it1' and this['previous_source']['id'] == 'fixture.it1.source'
+    assert this['earlier_sources'] == []
+    # B was rewritten in iteration 1 and is untouched in iteration 2: untouched this iteration, rewritten cumulatively.
+    assert region_facts(this['regions']) == {
+        ('baseline', 'it1.a'): ('agent_rewritten', 0), ('baseline', 'it1.b'): ('untouched', 1), ('baseline', 'it1.c'): ('untouched', 0),
+        ('candidate', 'it2.a'): ('agent_rewritten', 2), ('candidate', 'it2.b'): ('untouched', 1),
+        ('candidate', 'it2.c'): ('untouched', 0)}
+    assert region_facts(report['regions']) == {
+        ('baseline', 'it0.a'): ('agent_rewritten', 0), ('baseline', 'it0.b'): ('agent_rewritten', 0),
+        ('baseline', 'it0.c'): ('untouched', 0),
+        ('candidate', 'it2.a'): ('agent_rewritten', 2), ('candidate', 'it2.b'): ('agent_rewritten', 1),
+        ('candidate', 'it2.c'): ('untouched', 0)}
+    assert [(s['baseline_lines'], s['candidate_lines']) for s in this['rewrite_sites']] == [([3, 4], [3, 4])]
+    assert [(s['baseline_lines'], s['candidate_lines']) for s in report['rewrite_sites']] == [([3, 4], [3, 4]), ([7, 8], [7, 8])]
+    # This iteration (previous 75 s -> 55 s): A 40 -> 20 rewritten; B + C 35 -> 35 untouched.
+    now = groups(this)
+    assert (now['agent_rewritten']['baseline_seconds'], now['agent_rewritten']['candidate_seconds']) == (40, 20)
+    assert now['agent_rewritten']['baseline_share'] == pytest.approx(40 / 75)
+    assert now['agent_rewritten']['realized_speedup'] == pytest.approx(2.0)
+    assert (now['untouched']['baseline_seconds'], now['untouched']['candidate_seconds']) == (35, 35)
+    assert now['untouched']['drift'] == pytest.approx(1.0)
+    assert this['whole_program']['baseline_seconds'] == pytest.approx(75)
+    assert this['whole_program']['candidate_seconds'] == pytest.approx(55)
+    assert this['whole_program']['total_speedup'] == pytest.approx(75 / 55)
+    assert this['whole_program']['amdahl_ceiling'] == pytest.approx(75 / 35)
+    # Cumulative (original 100 s -> 55 s): A + B 90 -> 45 rewritten; C 10 -> 10 untouched.
+    total = groups(report)
+    assert (total['agent_rewritten']['baseline_seconds'], total['agent_rewritten']['candidate_seconds']) == (90, 45)
+    assert total['agent_rewritten']['baseline_share'] == pytest.approx(0.9)
+    assert total['agent_rewritten']['realized_speedup'] == pytest.approx(2.0)
+    assert (total['untouched']['baseline_seconds'], total['untouched']['candidate_seconds']) == (10, 10)
+    assert report['whole_program']['total_speedup'] == pytest.approx(100 / 55)
+    assert report['whole_program']['amdahl_ceiling'] == pytest.approx(10.0)
+
+
+def test_without_a_previous_candidate_the_report_is_the_ticket_02_report(case):
+    iterations(case, 3)
+    alone = attributed_iteration(case, 2, rid='fixture.alone')
+    assert list(alone) == ['kind', 'schema_version', 'id', 'status', 'created', 'updated', 'provenance', 'format',
+                           'baseline_estimate', 'candidate_estimate', 'baseline_source', 'candidate_source',
+                           'target_description', 'input', 'threads', 'evidence_kind', 'catalog', 'rewrite_sites', 'regions',
+                           'groups', 'whole_program', 'identity_sha256']
+    assert all('last_changed_iteration' not in row for row in alone['regions'])
+    # The cumulative part of an iteration-2 report is the same comparison, plus last-changed iterations.
+    both = attributed_iteration(case, 2, previous=1, rid='fixture.both')
+    for field in ('rewrite_sites', 'groups', 'whole_program'):
+        assert both[field] == alone[field]
+    assert [{k: v for k, v in row.items() if k != 'last_changed_iteration'} for row in both['regions']] == alone['regions']
+
+
+def test_iteration_three_names_the_iteration_that_last_changed_each_region_from_earlier_sources(case):
+    iterations(case, 4)
+    report = attributed_iteration(case, 3, previous=2, earlier=[1])
+    this = report['this_iteration']
+    assert this['iteration'] == 3
+    assert [pin['id'] for pin in this['earlier_sources']] == ['fixture.it1.source']
+    assert region_facts(this['regions']) == {
+        ('baseline', 'it2.a'): ('untouched', 2), ('baseline', 'it2.b'): ('untouched', 1),
+        ('baseline', 'it2.c'): ('agent_rewritten', 0),
+        ('candidate', 'it3.a'): ('untouched', 2), ('candidate', 'it3.b'): ('untouched', 1),
+        ('candidate', 'it3.c'): ('agent_rewritten', 3)}
+    # This iteration (previous 55 s -> 50 s): C 10 -> 5 rewritten; A + B 45 -> 45 untouched.
+    now = groups(this)
+    assert (now['agent_rewritten']['baseline_seconds'], now['agent_rewritten']['candidate_seconds']) == (10, 5)
+    assert (now['untouched']['baseline_seconds'], now['untouched']['candidate_seconds']) == (45, 45)
+    assert this['whole_program']['amdahl_ceiling'] == pytest.approx(55 / 45)
+    # Cumulative: every loop was rewritten in some iteration.
+    assert groups(report)['agent_rewritten']['baseline_seconds'] == 100
+    assert groups(report)['untouched']['baseline_seconds'] == 0
+
+
+def test_iteration_two_report_validates_pins_its_previous_candidate_and_is_indexed(case):
+    iterations(case, 3)
+    attributed_iteration(case, 2, previous=1)
+    checked = case.records.validate()
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+    db = case.tmp_path / 'index.sqlite'
+
+    def sql(query):
+        rows = run_swdb('sql', query, '--records', case.records.path, '--db', db, '--format', 'json')
+        assert rows.returncode == 0, rows.stdout + rows.stderr
+        return json.loads(rows.stdout)
+    assert sql('SELECT * FROM swdb_attribution_iterations') == [
+        {'attribution': 'fixture.attribution', 'iteration': 2, 'previous_estimate': 'fixture.it1',
+         'previous_source': 'fixture.it1.source', 'earlier_sources': '[]', 'previous_seconds': 75.0, 'candidate_seconds': 55.0,
+         'total_speedup': pytest.approx(75 / 55), 'amdahl_ceiling': pytest.approx(75 / 35)}]
+    assert sql('SELECT origin, baseline_seconds, candidate_seconds, realized_speedup, drift '
+               'FROM swdb_attribution_iteration_groups ORDER BY origin') == [
+        {'origin': 'agent_rewritten', 'baseline_seconds': 40.0, 'candidate_seconds': 20.0, 'realized_speedup': 2.0, 'drift': None},
+        {'origin': 'unattributed', 'baseline_seconds': 0.0, 'candidate_seconds': 0.0, 'realized_speedup': None, 'drift': None},
+        {'origin': 'untouched', 'baseline_seconds': 35.0, 'candidate_seconds': 35.0, 'realized_speedup': 1.0, 'drift': 1.0}]
+    assert sql("SELECT side, region, origin, last_changed_iteration FROM swdb_attribution_iteration_regions "
+               "WHERE side = 'candidate' ORDER BY region") == [
+        {'side': 'candidate', 'region': 'it2.a', 'origin': 'agent_rewritten', 'last_changed_iteration': 2},
+        {'side': 'candidate', 'region': 'it2.b', 'origin': 'untouched', 'last_changed_iteration': 1},
+        {'side': 'candidate', 'region': 'it2.c', 'origin': 'untouched', 'last_changed_iteration': 0}]
+    estimate = case.records.path / 'estimates' / 'fixture.it1.yaml'
+    estimate.write_text(estimate.read_text().replace('status: draft', 'status: reviewed', 1))
+    changed = case.records.validate()
+    assert changed.returncode == 1 and 'previous_estimate' in changed.stdout + changed.stderr
+
+
+def test_previous_candidate_of_another_input_or_without_its_source_is_refused(case):
+    iterations(case, 3)
+    path = case.tmp_path / 'sources' / 'it1' / 'kernel.cpp'
+    case.estimate('fixture.it1.other-input', [region('it1.other.a', path, 3, 40)], input_id='tiny-sym-b')
+    other = attribute_iteration(case, 2, previous=1, previous_estimate='fixture.it1.other-input')
+    assert other.returncode == 1 and 'previous and candidate estimates differ in input' in other.stderr
+    alone = run_swdb('attribute', '--records', case.records.path, '--baseline-estimate', 'fixture.it0',
+                     '--candidate-estimate', 'fixture.it2', '--baseline-source', 'fixture.it0.source',
+                     '--candidate-source', 'fixture.it2.source', '--previous-estimate', 'fixture.it1', '--id', 'fixture.x')
+    assert alone.returncode == 1 and '--previous-estimate and --previous-source go together' in alone.stderr
+    assert not (case.records.path / 'attributions').exists()

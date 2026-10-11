@@ -23,7 +23,9 @@ Rules used by this version (ticket 04 added the rewrite-site edge cases):
 4. Label. A region with no path or no line is `unattributed`. A region with a piece that
    overlaps a span on its own side is `agent_rewritten`; an insertion point overlaps a piece
    only when it lies strictly inside it. It is `mixed` when some line of its pieces is
-   unchanged (F14). Every other region is `untouched`.
+   unchanged (F14). Every other region is `untouched`. Ticket 05: a region inside a site
+   becomes `offload_command`, `intrinsic` or `library_call` when it executes one (see
+   `_Catalog`); its group stays `agent_rewritten`, which lists per-origin seconds.
 5. Sites (F1). Spans that one region overlaps, on either side, merge into one rewrite site,
    so no region's time is in two sites. Untouched regions are paired across sides through the
    line diff (`matched_region`, story 14); region IDs are never compared.
@@ -37,7 +39,15 @@ Rules used by this version (ticket 04 added the rewrite-site edge cases):
 8. Identity (F43, F44). The record pins both estimates, both source records and the target
    description by content hash. Its dates are the latest `updated` date of those inputs and
    dicts are built in a fixed order, so the same inputs give a byte-identical record.
+8. Iterations (F13, ticket 06). Given the previous accepted candidate (`--previous-estimate`,
+   `--previous-source`), the top-level comparison stays cumulative (original baseline ->
+   candidate) and a `this_iteration` block repeats it against the previous candidate. The
+   candidate is iteration 2 + the number of `--earlier-source` trees (accepted candidates
+   before the previous one, oldest first). Each region row records `last_changed_iteration`:
+   the newest iteration whose diff into that region's version labels it rewritten (0 = never,
+   null = no source location). Without a previous candidate the record is the ticket 02 one.
 """
+import copy
 import difflib
 import statistics
 from pathlib import Path, PurePosixPath
@@ -48,6 +58,11 @@ from swdb.store import Store
 
 FORMAT = 'swdb.attribution.v1'
 ORIGINS = ('untouched', 'agent_rewritten', 'unattributed')
+# Ticket 05 (F2): origins a region inside a rewrite site can take, highest precedence first.
+# All of them belong to the `agent_rewritten` group; the group lists them under `origins`.
+REWRITE_ORIGINS = ('offload_command', 'intrinsic', 'library_call', 'agent_rewritten')
+REWRITE_REASONS = {'offload_command': 'offload_command_in_site', 'intrinsic': 'intrinsic_in_site',
+                   'library_call': 'library_operation_in_site', 'agent_rewritten': 'overlaps_rewrite_site'}
 SOURCE_KINDS = ('source_snapshot', 'candidate')
 SAME = ('input', 'target_description_sha256', 'threads', 'evidence_kind')
 UNATTRIBUTED_THRESHOLD = 0.1   # F24: share of an estimate's total above which the split is flagged weak
@@ -61,6 +76,12 @@ def register_cli(commands):
     sub.add_argument('--baseline-source', required=True, help='source_snapshot or candidate record the baseline counted')
     sub.add_argument('--candidate-source', required=True, help='source_snapshot or candidate record the candidate counted')
     sub.add_argument('--id', required=True)
+    sub.add_argument('--library', type=Path, default=None,
+                     help='typed library whose operations label library calls (default: beside the records folder)')
+    sub.add_argument('--previous-estimate', help='iteration 2 on: saved estimate of the previous accepted candidate')
+    sub.add_argument('--previous-source', help='iteration 2 on: source record the previous accepted candidate counted')
+    sub.add_argument('--earlier-source', action='append', default=[],
+                     help='source record of an accepted candidate before the previous one, oldest first (repeatable)')
     sub.add_argument('--format', choices=['yaml', 'json'], default='yaml')
     sub.set_defaults(analytic_handler=attribute)
 
@@ -100,6 +121,7 @@ class _Side:
         self.locations = {}
         for row in self.characterization['regions'] + [r for t in self.characterization.get('trials', []) for r in t['regions']]:
             self.locations.setdefault(row['id'], row)
+        self.calls = _executed_calls(self.characterization)
 
     def relative(self, text):
         if not text:
@@ -296,7 +318,7 @@ def _overlaps(span, lines):
     return span[0] < first <= span[1]
 
 
-def _label(side, sites):
+def _label(side, sites, catalog=None):
     rows = {}
     for region in side.estimate['regions']:
         rel, span, located = side.place(region['id'])
@@ -312,10 +334,14 @@ def _label(side, sites):
             origin, reason = 'untouched', 'outside_source_tree'
         else:
             origin, reason = 'untouched', 'no_changed_line'
+        evidence = catalog.evidence(side, region['id']) if touched and catalog is not None else []
+        if evidence:
+            origin = evidence[0]['origin']
+            reason = REWRITE_REASONS[origin]
         mixed = bool(touched) and (rel is None or any(_partly_changed(path, lines, side.name, sites) for path, lines in pieces))
         rows[region['id']] = {'side': side.name, 'region': region['id'], 'origin': origin, 'reason': reason,
                               'mixed': mixed, 'path': rel, 'lines': span, 'inlined': inlined,
-                              'sites': [s['id'] for s in touched], 'seconds': region['seconds']}
+                              'sites': [s['id'] for s in touched], 'seconds': region['seconds'], 'evidence': evidence}
     return rows
 
 
@@ -329,27 +355,118 @@ def _partly_changed(rel, lines, side_name, sites):
     return any(line not in changed for line in range(lines[0], lines[1] + 1))
 
 
+def _split(before, after, catalog=None):
+    """Ticket 04: (merged rewrite sites, labels) for one diff, `before` as baseline, `after` as candidate."""
+    raw = _sites(before, after)
+    labels = {'baseline': _label(before, raw, catalog), 'candidate': _label(after, raw, catalog)}
+    sites = _merge_sites(raw, labels)
+    _match_untouched(before, after, labels)
+    return sites, labels
+
+
+# --- Ticket 05: library, intrinsic and offload labels (F2) -------------------------------------
+#
+# Only a region inside a rewrite site is relabeled, so a baseline libc or C++ standard library
+# call outside every site stays untouched. Signals, read from the counted characterization:
+#   offload_command  the region issued a command bound by the functional observation contract
+#                    (`accelerator_calls[]` with a nonzero `execution_count`), named by its event;
+#   intrinsic        an executed call (`unmodeled_calls[]`, top level or any trial) whose name is
+#                    a saved `intrinsic` record's C `name`, plain or as an Itanium source name;
+#   library_call     an executed call naming a typed-library operation's `location.symbol` the
+#                    same way, or the region or one of its accesses located in that operation's
+#                    `location.path` (inlined library code keeps its header's file and line).
+# The highest-precedence signal names the origin; `evidence` lists every signal found.
+
+def _executed(fact):
+    return (fact or {}).get('value') != 0
+
+
+def _executed_calls(characterization):
+    """{region ID: sorted executed call names}, over the aggregate and every trial."""
+    calls = {}
+    for row in characterization.get('unmodeled_calls', []) + [
+            c for t in characterization.get('trials', []) for c in t.get('unmodeled_calls', [])]:
+        if _executed(row.get('execution_count')) and row.get('region') and row.get('name'):
+            calls.setdefault(row['region'], set()).add(row['name'])
+    return {region: sorted(names) for region, names in calls.items()}
+
+
+def _names(call, symbol):
+    """The call is `symbol` itself or carries it as an Itanium source name (`<length><symbol>`)."""
+    import re
+    return call == symbol or re.search(f'(?<![0-9]){len(symbol)}{re.escape(symbol)}', call) is not None
+
+
+class _Catalog:
+    """Saved intrinsic records and the typed library's operations, pinned when they label a region."""
+
+    def __init__(self, store, root):
+        from swdb.library import Library
+        self.intrinsics = sorted((r.data['name'], r.data['id'], artifacts.digest(r.data))
+                                 for r in store.of_kind('intrinsic') if r.data.get('name'))
+        library = Library(root) if root.exists() else None
+        self.operations = sorted((rid, data.get('location') or {}, artifacts.digest(data))
+                                 for rid, data in (library.entries.items() if library else ())
+                                 if data.get('kind') == 'library_operation')
+        self.used = {}
+
+    def _operation_located(self, side, region_id, path):
+        row = side.locations.get(region_id) or {}
+        paths = [(row.get('source_location') or {}).get('path')] + [
+            (a.get('source_location') or {}).get('path') for a in row.get('access_patterns', [])]
+        return any(p and (p == path or p.endswith('/' + path)) for p in paths)
+
+    def evidence(self, side, region_id):
+        found = set()
+        for row in [r for r in [side.locations.get(region_id)] if r] + [
+                r for t in side.characterization.get('trials', []) for r in t['regions'] if r['id'] == region_id]:
+            for command in row.get('accelerator_calls', []):
+                if _executed(command.get('execution_count')):
+                    found.add(('offload_command', command['event'], None))
+        calls = side.calls.get(region_id, [])
+        for name, rid, sha in self.intrinsics:
+            if any(_names(c, name) for c in calls):
+                found.add(('intrinsic', rid, ('intrinsic', sha)))
+        for rid, location, sha in self.operations:
+            symbol, path = location.get('symbol'), location.get('path')
+            if (symbol and any(_names(c, symbol) for c in calls)) or (
+                    path and self._operation_located(side, region_id, path)):
+                found.add(('library_call', rid, ('library_operation', sha)))
+        for _, rid, pin in found:
+            if pin:
+                self.used[rid] = {'kind': pin[0], 'id': rid, 'sha256': pin[1]}
+        return [{'origin': origin, 'name': name}
+                for origin, name, _ in sorted(found, key=lambda f: (REWRITE_ORIGINS.index(f[0]), f[1]))]
+
+    def pins(self):
+        return [self.used[rid] for rid in sorted(self.used)]
+
+
 def _missing(region):
     return sorted({m for b in region['bounds'] + region['overheads'] for m in b['missing']})
 
 
-def _group_seconds(side, labels):
-    """{origin: (median seconds or None, [unknown region reasons])} from per-trial sums."""
-    sums = {origin: [] for origin in ORIGINS}
-    unknown = {origin: {} for origin in ORIGINS}
+def _group_seconds(side, labels, origins=ORIGINS):
+    """{origin: (median seconds or None, [unknown region reasons])} from per-trial sums.
+
+    A region whose label is not one of `origins` is left out (ticket 05's per-origin split)."""
+    sums = {origin: [] for origin in origins}
+    unknown = {origin: {} for origin in origins}
     for rows in side.trials():
-        totals = {origin: 0. for origin in ORIGINS}
+        totals = {origin: 0. for origin in origins}
         for region in rows:
             origin = labels[region['id']]['origin'] if region['id'] in labels else 'unattributed'
+            if origin not in totals:
+                continue
             if region['seconds'] is None:
                 totals[origin] = None
                 unknown[origin].setdefault(region['id'], set()).update(_missing(region))
             elif totals[origin] is not None:
                 totals[origin] += region['seconds']
-        for origin in ORIGINS:
+        for origin in origins:
             sums[origin].append(totals[origin])
     result = {}
-    for origin in ORIGINS:
+    for origin in origins:
         values = sums[origin]
         seconds = None if any(v is None for v in values) else statistics.median(values)
         reasons = [{'side': side.name, 'region': rid, 'missing': sorted(missing)}
@@ -364,8 +481,28 @@ def _ratio(numerator, denominator):
     return numerator / denominator
 
 
+def _grouped(labels):
+    """Labels with every rewrite-site origin folded into the `agent_rewritten` group."""
+    return {rid: {**row, 'origin': 'agent_rewritten' if row['origin'] in REWRITE_ORIGINS else row['origin']}
+            for rid, row in labels.items()}
+
+
+def _rewrite_origins(baseline, candidate, labels):
+    """Ticket 05: per-origin seconds and shares inside the rewritten group, in precedence order."""
+    base = _group_seconds(baseline, labels['baseline'], REWRITE_ORIGINS)
+    cand = _group_seconds(candidate, labels['candidate'], REWRITE_ORIGINS)
+    rows = []
+    for origin in REWRITE_ORIGINS:
+        (b, b_unknown), (c, c_unknown) = base[origin], cand[origin]
+        rows.append({'origin': origin, 'baseline_seconds': b, 'candidate_seconds': c,
+                     'baseline_share': _ratio(b, baseline.estimate['seconds']),
+                     'candidate_share': _ratio(c, candidate.estimate['seconds']), 'unknown': b_unknown + c_unknown})
+    return rows
+
+
 def _groups(baseline, candidate, labels):
-    base, cand = _group_seconds(baseline, labels['baseline']), _group_seconds(candidate, labels['candidate'])
+    base = _group_seconds(baseline, _grouped(labels['baseline']))
+    cand = _group_seconds(candidate, _grouped(labels['candidate']))
     base_total, cand_total = baseline.estimate['seconds'], candidate.estimate['seconds']
     groups = []
     for origin in ORIGINS:
@@ -376,6 +513,8 @@ def _groups(baseline, candidate, labels):
         if origin == 'untouched':
             row['drift'] = _ratio(c, b)
         row['unknown'] = b_unknown + c_unknown
+        if origin == 'agent_rewritten':
+            row['origins'] = _rewrite_origins(baseline, candidate, labels)
         groups.append(row)
     return groups
 
@@ -425,10 +564,103 @@ def validate_record(record, ctx):
         current = ctx.store.get(pin['id'])
         if current is None or artifacts.digest(current) != pin['sha256']:
             yield Problem(record.rel, field, f'pinned record {pin["id"]!r} is missing or changed')
+    # Ticket 05: a saved intrinsic that labeled a region must be unchanged. Library operations
+    # live outside the records folder (`--library`), so their pins are kept for replay only.
+    for pin in data.get('catalog', []):
+        if pin['kind'] == 'intrinsic':
+            current = ctx.store.get(pin['id'], 'intrinsic')
+            if current is None or artifacts.digest(current) != pin['sha256']:
+                yield Problem(record.rel, 'catalog', f'pinned intrinsic {pin["id"]!r} is missing or changed')
     for field in ('baseline_estimate', 'candidate_estimate'):
         current = ctx.store.get(data[field]['id'], 'estimate')
         if current is not None and current['target_description_sha256'] != data['target_description']['sha256']:
             yield Problem(record.rel, 'target_description', 'pinned estimate used a different target description')
+    yield from _validate_iteration(record, ctx)
+
+
+def _validate_iteration(record, ctx):
+    """Ticket 06: the previous accepted candidate's estimate and every source it pins are unchanged."""
+    from swdb.problems import Problem
+    this = record.data.get('this_iteration')
+    if this is None:
+        return
+    pins = [('this_iteration.previous_estimate', this['previous_estimate']),
+            ('this_iteration.previous_source', this['previous_source'])]
+    pins += [(f'this_iteration.earlier_sources[{i}]', pin) for i, pin in enumerate(this['earlier_sources'])]
+    for field, pin in pins:
+        current = ctx.store.get(pin['id'])
+        if current is None or artifacts.digest(current) != pin['sha256']:
+            yield Problem(record.rel, field, f'pinned record {pin["id"]!r} is missing or changed')
+    current = ctx.store.get(this['previous_estimate']['id'], 'estimate')
+    if current is not None and current['target_description_sha256'] != record.data['target_description']['sha256']:
+        yield Problem(record.rel, 'this_iteration.previous_estimate', 'pinned estimate used a different target description')
+
+
+class _Tree:
+    """A verified source tree with no estimate: an accepted candidate before the previous one."""
+
+    def __init__(self, store, source_id):
+        self.source = _record(store, source_id, SOURCE_KINDS)
+        self.root = artifacts.verify(self.source['artifact'])
+        self.files = {f['path'] for f in self.source['artifact']['files']}
+
+    text = _Side.text
+
+
+def _as(side, name):
+    """The same side under another role name (the role picks the site line field)."""
+    renamed = copy.copy(side)
+    renamed.name = name
+    return renamed
+
+
+def _last_changed(side, chain, catalog=None):
+    """{region ID: iteration that last changed it}. `chain[k]` is iteration k's tree; `side` is
+    iteration len(chain). A region last changed in iteration k + 1 overlaps a site of the diff
+    from chain[k] but none from chain[k + 1]; one that overlaps none is 0, one without a source
+    location is None. Uses the labeling rules of `_label`, so it follows whatever they are."""
+    current = _as(side, 'candidate')
+    found, pending = {}, [r['id'] for r in side.estimate['regions']]
+    for k in reversed(range(len(chain))):
+        labels = _label(current, _sites(chain[k], current), catalog)
+        for rid in list(pending):
+            origin = labels[rid]['origin']
+            if origin != 'untouched':
+                found[rid] = None if origin == 'unattributed' else k + 1
+                pending.remove(rid)
+    return {**found, **{rid: 0 for rid in pending}}
+
+
+def _iteration(store, args, baseline, candidate, labels, catalog=None):
+    """F13: the `this_iteration` block (previous accepted candidate -> candidate), and every
+    region row's `last_changed_iteration`. None without a previous candidate."""
+    if args.previous_estimate is None and args.previous_source is None:
+        _require(not args.earlier_source, '--earlier-source needs --previous-estimate and --previous-source')
+        return None, []
+    _require(args.previous_estimate is not None and args.previous_source is not None,
+             '--previous-estimate and --previous-source go together')
+    previous = _Side(store, 'previous', args.previous_estimate, args.previous_source)
+    differ = [key for key in SAME if previous.estimate[key] != candidate.estimate[key]]
+    _require(not differ, 'previous and candidate estimates differ in ' + ', '.join(differ) + '; refusing to compare')
+    earlier = [_Tree(store, rid) for rid in args.earlier_source]
+    chain = [baseline, *earlier, previous]
+    before = _as(previous, 'baseline')
+    sites, rows = _split(before, candidate, catalog)
+    changed = {'previous': _last_changed(previous, chain[:-1], catalog),
+               'candidate': _last_changed(candidate, chain, catalog)}
+    for row in labels['baseline'].values():
+        row['last_changed_iteration'] = 0
+    for row in list(labels['candidate'].values()) + list(rows['candidate'].values()):
+        row['last_changed_iteration'] = changed['candidate'][row['region']]
+    for row in rows['baseline'].values():
+        row['last_changed_iteration'] = changed['previous'][row['region']]
+    groups = _groups(before, candidate, rows)
+    block = {'iteration': len(chain), 'previous_estimate': _pin(previous.estimate),
+             'previous_source': _source_pin(previous.source),
+             'earlier_sources': [_source_pin(tree.source) for tree in earlier],
+             'rewrite_sites': sites, 'regions': list(rows['baseline'].values()) + list(rows['candidate'].values()),
+             'groups': groups, 'whole_program': _whole(before, candidate, groups)}
+    return block, [previous.estimate, previous.source] + [tree.source for tree in earlier]
 
 
 def attribute(args):
@@ -438,12 +670,12 @@ def attribute(args):
     candidate = _Side(store, 'candidate', args.candidate_estimate, args.candidate_source)
     differ = [key for key in SAME if baseline.estimate[key] != candidate.estimate[key]]
     _require(not differ, 'baseline and candidate estimates differ in ' + ', '.join(differ) + '; refusing to compare')
-    raw = _sites(baseline, candidate)
-    labels = {'baseline': _label(baseline, raw), 'candidate': _label(candidate, raw)}
-    sites = _merge_sites(raw, labels)
-    _match_untouched(baseline, candidate, labels)
+    from swdb.library import default_root
+    catalog = _Catalog(store, Path(args.library) if args.library else default_root(args.records))
+    sites, labels = _split(baseline, candidate, catalog)
     groups = _groups(baseline, candidate, labels)
-    inputs = [baseline.estimate, candidate.estimate, baseline.source, candidate.source]
+    this_iteration, previous_inputs = _iteration(store, args, baseline, candidate, labels, catalog)
+    inputs = [baseline.estimate, candidate.estimate, baseline.source, candidate.source] + previous_inputs
     date = max(str(data['updated']) for data in inputs)
     record = {'kind': 'attribution', 'schema_version': '0.4', 'id': args.id, 'status': 'draft',
               'created': date, 'updated': date, **workflow.CREATION_TAGS,
@@ -456,9 +688,12 @@ def attribute(args):
                                      'sha256': baseline.estimate['target_description_sha256']},
               'input': baseline.estimate['input'], 'threads': baseline.estimate['threads'],
               'evidence_kind': baseline.estimate['evidence_kind'],
+              'catalog': catalog.pins(),
               'rewrite_sites': sites,
               'regions': list(labels['baseline'].values()) + list(labels['candidate'].values()),
               'groups': groups, 'whole_program': _whole(baseline, candidate, groups)}
+    if this_iteration is not None:
+        record['this_iteration'] = this_iteration
     record['identity_sha256'] = artifacts.digest(record)
     writer.commit(args.records, new=[record])
     return record

@@ -18,6 +18,18 @@
     "input": {"$ref": "#/$defs/id"},
     "threads": {"type": "integer", "minimum": 1},
     "evidence_kind": {"enum": ["execution", "contract_fixture"]},
+    "catalog": {
+      "type": "array",
+      "description": "Ticket 05: content hashes of the intrinsic records and typed-library operations that labeled a region.",
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["kind", "id", "sha256"],
+        "properties": {
+          "kind": {"enum": ["intrinsic", "library_operation"]},
+          "id": {"type": "string", "minLength": 1},
+          "sha256": {"$ref": "#/$defs/sha256"}
+        }
+      }
+    },
     "rewrite_sites": {
       "type": "array",
       "items": {
@@ -49,12 +61,13 @@
       "items": {
         "type": "object", "additionalProperties": false,
         "required": ["side", "region", "origin", "reason", "mixed", "path", "lines", "inlined", "sites", "seconds",
-                     "matched_region"],
+                     "evidence", "matched_region"],
         "properties": {
           "side": {"$ref": "#/$defs/side"},
           "region": {"type": "string", "minLength": 1},
           "origin": {"$ref": "#/$defs/origin"},
-          "reason": {"enum": ["overlaps_rewrite_site", "no_changed_line", "outside_source_tree", "no_source_location"]},
+          "reason": {"enum": ["overlaps_rewrite_site", "no_changed_line", "outside_source_tree", "no_source_location",
+                               "offload_command_in_site", "intrinsic_in_site", "library_operation_in_site"]},
           "mixed": {"type": "boolean"},
           "path": {"type": ["string", "null"]},
           "lines": {"oneOf": [{"$ref": "#/$defs/lines"}, {"type": "null"}]},
@@ -67,7 +80,16 @@
           },
           "sites": {"type": "array", "items": {"type": "string"}},
           "seconds": {"$ref": "#/$defs/seconds"},
-          "matched_region": {"type": ["string", "null"]}
+          "matched_region": {"type": ["string", "null"]},
+          "evidence": {
+            "type": "array",
+            "description": "Ticket 05: every library, intrinsic or offload signal of a region inside a rewrite site, highest precedence first; empty outside sites.",
+            "items": {
+              "type": "object", "additionalProperties": false, "required": ["origin", "name"],
+              "properties": {"origin": {"$ref": "#/$defs/rewrite_origin"}, "name": {"type": "string", "minLength": 1}}
+            }
+          },
+          "last_changed_iteration": {"type": ["integer", "null"], "minimum": 0}
         }
       }
     },
@@ -84,7 +106,23 @@
           "candidate_share": {"$ref": "#/$defs/ratio"},
           "realized_speedup": {"$ref": "#/$defs/ratio"},
           "drift": {"$ref": "#/$defs/ratio"},
-          "unknown": {"$ref": "#/$defs/unknown"}
+          "unknown": {"$ref": "#/$defs/unknown"},
+          "origins": {
+            "type": "array", "minItems": 4, "maxItems": 4,
+            "description": "agent_rewritten group only (ticket 05): its seconds split by the origin of each region inside a rewrite site.",
+            "items": {
+              "type": "object", "additionalProperties": false,
+              "required": ["origin", "baseline_seconds", "candidate_seconds", "baseline_share", "candidate_share", "unknown"],
+              "properties": {
+                "origin": {"$ref": "#/$defs/rewrite_origin"},
+                "baseline_seconds": {"$ref": "#/$defs/seconds"},
+                "candidate_seconds": {"$ref": "#/$defs/seconds"},
+                "baseline_share": {"$ref": "#/$defs/ratio"},
+                "candidate_share": {"$ref": "#/$defs/ratio"},
+                "unknown": {"$ref": "#/$defs/unknown"}
+              }
+            }
+          }
         }
       }
     },
@@ -102,17 +140,33 @@
         "unknown": {"$ref": "#/$defs/unknown"}
       }
     },
+    "this_iteration": {
+      "description": "Ticket 06 (F13): the previous accepted candidate -> candidate comparison, present only when one was given. Inside it, `baseline` means the previous accepted candidate.",
+      "type": "object", "additionalProperties": false,
+      "required": ["iteration", "previous_estimate", "previous_source", "earlier_sources", "rewrite_sites", "regions", "groups", "whole_program"],
+      "properties": {
+        "iteration": {"type": "integer", "minimum": 2},
+        "previous_estimate": {"$ref": "#/$defs/estimate_pin"},
+        "previous_source": {"$ref": "#/$defs/source_pin"},
+        "earlier_sources": {"type": "array", "items": {"$ref": "#/$defs/source_pin"}},
+        "rewrite_sites": {"$ref": "#/properties/rewrite_sites"},
+        "regions": {"$ref": "#/properties/regions"},
+        "groups": {"$ref": "#/properties/groups"},
+        "whole_program": {"$ref": "#/properties/whole_program"}
+      }
+    },
     "identity_sha256": {"$ref": "#/$defs/sha256"}
   },
   "required": ["format", "baseline_estimate", "candidate_estimate", "baseline_source", "candidate_source",
-               "target_description", "input", "threads", "evidence_kind", "rewrite_sites", "regions", "groups",
+               "target_description", "input", "threads", "evidence_kind", "catalog", "rewrite_sites", "regions", "groups",
                "whole_program", "identity_sha256"],
   "$defs": {
     "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "seconds": {"type": ["number", "null"], "minimum": 0},
     "ratio": {"type": ["number", "null"], "minimum": 0},
     "side": {"enum": ["baseline", "candidate"]},
-    "origin": {"enum": ["untouched", "agent_rewritten", "unattributed"]},
+    "origin": {"enum": ["untouched", "agent_rewritten", "unattributed", "library_call", "intrinsic", "offload_command"]},
+    "rewrite_origin": {"enum": ["offload_command", "intrinsic", "library_call", "agent_rewritten"]},
     "lines": {"type": "array", "items": {"type": "integer", "minimum": 0}, "minItems": 2, "maxItems": 2},
     "estimate_pin": {
       "type": "object", "additionalProperties": false, "required": ["id", "sha256"],

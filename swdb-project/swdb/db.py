@@ -655,6 +655,62 @@ def _insert_attribution(con, d, *_):
                     [(d["id"], r["side"], r["region"], r["origin"], r["reason"], r["path"],
                       r["lines"][0] if r["lines"] else None, r["lines"][1] if r["lines"] else None,
                       r["seconds"], json.dumps(r["sites"]), r["mixed"], r["matched_region"]) for r in d["regions"]])
+    _insert_attribution_iteration(con, d)
 
 
 _Insert.attribution = staticmethod(_insert_attribution)
+
+
+# Fine-grained attribution ticket 05 (2026-10-11 ET): the rewritten group split by origin.
+SCHEMA += """
+CREATE TABLE swdb_attribution_origins (attribution TEXT NOT NULL, origin TEXT NOT NULL, baseline_seconds REAL,
+    candidate_seconds REAL, baseline_share REAL, candidate_share REAL, unknown_regions INTEGER NOT NULL,
+    PRIMARY KEY (attribution, origin));
+"""
+
+
+def _insert_attribution_with_origins(con, d, *rest):
+    _insert_attribution(con, d, *rest)
+    con.executemany("INSERT INTO swdb_attribution_origins VALUES (?,?,?,?,?,?,?)",
+                    [(d["id"], o["origin"], o["baseline_seconds"], o["candidate_seconds"], o["baseline_share"],
+                      o["candidate_share"], len(o["unknown"]))
+                     for g in d["groups"] for o in g.get("origins", [])])
+
+
+_Insert.attribution = staticmethod(_insert_attribution_with_origins)
+
+
+# Fine-grained attribution ticket 06 (2026-10-11 ET): the `this_iteration` comparison (previous
+# accepted candidate -> candidate), only for reports given a previous candidate. Inside it,
+# `baseline_*` columns mean the previous accepted candidate.
+SCHEMA += """
+CREATE TABLE swdb_attribution_iterations (attribution TEXT PRIMARY KEY, iteration INTEGER NOT NULL,
+    previous_estimate TEXT NOT NULL, previous_source TEXT NOT NULL, earlier_sources TEXT NOT NULL,
+    previous_seconds REAL, candidate_seconds REAL, total_speedup REAL, amdahl_ceiling REAL);
+CREATE TABLE swdb_attribution_iteration_groups (attribution TEXT NOT NULL, origin TEXT NOT NULL, baseline_seconds REAL,
+    candidate_seconds REAL, baseline_share REAL, candidate_share REAL, realized_speedup REAL, drift REAL,
+    unknown_regions INTEGER NOT NULL, PRIMARY KEY (attribution, origin));
+CREATE TABLE swdb_attribution_iteration_regions (attribution TEXT NOT NULL, side TEXT NOT NULL, region TEXT NOT NULL,
+    origin TEXT NOT NULL, reason TEXT NOT NULL, path TEXT, first_line INTEGER, last_line INTEGER, seconds REAL,
+    sites TEXT NOT NULL, last_changed_iteration INTEGER, PRIMARY KEY (attribution, side, region));
+"""
+
+
+def _insert_attribution_iteration(con, d):
+    this = d.get("this_iteration")
+    if this is None:
+        return
+    whole = this["whole_program"]
+    con.execute("INSERT INTO swdb_attribution_iterations VALUES (?,?,?,?,?,?,?,?,?)",
+                (d["id"], this["iteration"], this["previous_estimate"]["id"], this["previous_source"]["id"],
+                 json.dumps([pin["id"] for pin in this["earlier_sources"]]), whole["baseline_seconds"],
+                 whole["candidate_seconds"], whole["total_speedup"], whole["amdahl_ceiling"]))
+    con.executemany("INSERT INTO swdb_attribution_iteration_groups VALUES (?,?,?,?,?,?,?,?,?)",
+                    [(d["id"], g["origin"], g["baseline_seconds"], g["candidate_seconds"], g["baseline_share"],
+                      g["candidate_share"], g["realized_speedup"], g.get("drift"), len(g["unknown"]))
+                     for g in this["groups"]])
+    con.executemany("INSERT INTO swdb_attribution_iteration_regions VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+                    [(d["id"], r["side"], r["region"], r["origin"], r["reason"], r["path"],
+                      r["lines"][0] if r["lines"] else None, r["lines"][1] if r["lines"] else None,
+                      r["seconds"], json.dumps(r["sites"]), r.get("last_changed_iteration"))
+                     for r in this["regions"]])
