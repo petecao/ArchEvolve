@@ -659,6 +659,25 @@ def _insert_attribution(con, d, *_):
 _Insert.attribution = staticmethod(_insert_attribution)
 
 
+# Fine-grained attribution ticket 05 (2026-10-11 ET): the rewritten group split by origin.
+SCHEMA += """
+CREATE TABLE swdb_attribution_origins (attribution TEXT NOT NULL, origin TEXT NOT NULL, baseline_seconds REAL,
+    candidate_seconds REAL, baseline_share REAL, candidate_share REAL, unknown_regions INTEGER NOT NULL,
+    PRIMARY KEY (attribution, origin));
+"""
+
+
+def _insert_attribution_with_origins(con, d, *rest):
+    _insert_attribution(con, d, *rest)
+    con.executemany("INSERT INTO swdb_attribution_origins VALUES (?,?,?,?,?,?,?)",
+                    [(d["id"], o["origin"], o["baseline_seconds"], o["candidate_seconds"], o["baseline_share"],
+                      o["candidate_share"], len(o["unknown"]))
+                     for g in d["groups"] for o in g.get("origins", [])])
+
+
+_Insert.attribution = staticmethod(_insert_attribution_with_origins)
+
+
 # Fine-grained attribution ticket 07 (2026-10-11 ET): one headroom row per region and named
 # limit (ticket 08 adds `catalog_bound` rows), and the next-iteration ranking.
 SCHEMA += """

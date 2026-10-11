@@ -1,7 +1,8 @@
 # Attribution reports (`swdb.attribution.v1`)
 
-Created: 2026-10-11 (Eastern Time), fine-grained attribution ticket 02. Updated: 2026-10-11 ET
-(ticket 07: resource floor, floor headroom and ranking).
+Created: 2026-10-11 (Eastern Time), fine-grained attribution ticket 02.
+Updated: 2026-10-11 ET (ticket 05: library, intrinsic and offload labels; ticket 07: resource
+floor, floor headroom and ranking).
 Spec: `.scratch/fine-grained-attribution-2026-10-11/spec.md`.
 
 **In one line:** `swdb attribute` takes two saved estimates and the two source trees they
@@ -52,6 +53,24 @@ Ticket 04 widens these rules. Today:
 
 A region whose ID has no catalog loop still gets a real label from its file and line.
 
+### Library, intrinsic and offload labels (ticket 05)
+
+A region **inside a rewrite site** is relabeled by what it executes. Highest precedence wins:
+
+| Origin | Signal in the counted characterization |
+|---|---|
+| `offload_command` | an `accelerator_calls[]` entry (a command bound by the functional observation contract) with a nonzero `execution_count`; named by its `event` |
+| `intrinsic` | an executed call (`unmodeled_calls[]`, aggregate or any trial) named after a saved `intrinsic` record's C `name`, plain or as an Itanium source name (`12__dxc_gather` inside a mangled name) |
+| `library_call` | an executed call naming a typed-library operation's `location.symbol` the same way, or the region or one of its accesses located in that operation's `location.path` (inlined library code keeps its header's file and line) |
+| `agent_rewritten` | none of the above |
+
+- Regions outside every site are never relabeled, so a baseline libc or C++ standard library
+  call (`strlen`, `std::sort`, `/usr/include/...`) stays `untouched`.
+- Typed-library operations come from `--library` (default: the `library/` folder beside the
+  records folder). Intrinsics come from the records folder.
+- Not detected yet: ISA intrinsics already lowered to `llvm.*` calls, and inlined library code
+  in a region whose own start line lies outside the source tree (ticket 04's inlining rule).
+
 ## Record fields
 
 Envelope fields are as for every record. `created` and `updated` are the latest `updated`
@@ -64,6 +83,7 @@ date of the four inputs, so the same inputs give a byte-identical record.
 | `baseline_source`, `candidate_source` | `{kind, id, sha256, artifact_sha256}` of each source record and its tree |
 | `target_description` | `{id, sha256}` the two estimates share |
 | `input`, `threads`, `evidence_kind` | copied from the estimates, which must agree |
+| `catalog` | `{kind, id, sha256}` of every `intrinsic` record or `library_operation` entry that labeled a region, sorted by ID; `swdb validate` re-checks intrinsic pins |
 | `rewrite_sites` | one row per changed run of lines (below) |
 | `regions` | one row per region of each estimate (below) |
 | `groups` | one row per code origin, always in the order untouched, agent_rewritten, unattributed (below) |
@@ -86,11 +106,12 @@ date of the four inputs, so the same inputs give a byte-identical record.
 |---|---|
 | `side` | `baseline` or `candidate` |
 | `region` | the estimate's region ID |
-| `origin` | `untouched`, `agent_rewritten` or `unattributed` |
-| `reason` | `overlaps_rewrite_site`, `no_changed_line`, `outside_source_tree` or `no_source_location` |
+| `origin` | `untouched`, `agent_rewritten`, `library_call`, `intrinsic`, `offload_command` or `unattributed` |
+| `reason` | `overlaps_rewrite_site`, `offload_command_in_site`, `intrinsic_in_site`, `library_operation_in_site`, `no_changed_line`, `outside_source_tree` or `no_source_location` |
 | `path`, `lines` | relative path and `[first, last]` span; null when unknown |
 | `sites` | IDs of the rewrite sites the region overlaps |
 | `seconds` | the estimate's own per-region seconds (a diagnostic median; groups do not use it) |
+| `evidence` | inside a site: every signal found, `{origin, name}`, highest precedence first (`name` is the event, intrinsic ID or library operation ID); empty otherwise |
 | `resource_floor` | the region's resource floor (below) |
 | `headroom` | list of `{limit, value, reason}`, one per named limit; today only `resource_floor` |
 
@@ -102,12 +123,13 @@ groups need not add up to the total.
 
 | Field | Meaning |
 |---|---|
-| `origin` | the code origin |
+| `origin` | the code origin group; `agent_rewritten` holds every region inside a rewrite site, whatever its origin |
 | `baseline_seconds`, `candidate_seconds` | median per-trial group sum on each side; null if any region in it is unknown |
 | `baseline_share`, `candidate_share` | group seconds ÷ that estimate's total `seconds` |
 | `realized_speedup` | baseline seconds ÷ candidate seconds |
 | `drift` | untouched group only: candidate seconds ÷ baseline seconds (1.0 = no side effect) |
 | `unknown` | `{side, region, missing}` for each unknown region; `missing` lists its bounds' reasons |
+| `origins` | `agent_rewritten` group only: one row per origin in precedence order (`offload_command`, `intrinsic`, `library_call`, `agent_rewritten`) with `origin`, `baseline_seconds`, `candidate_seconds`, `baseline_share`, `candidate_share` and `unknown`, computed the same per-trial way |
 
 A ratio is null when an operand is unknown or the denominator is 0.
 

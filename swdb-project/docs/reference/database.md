@@ -542,6 +542,22 @@ One row per region of either estimate.
 | `seconds` | the estimate's per-region seconds (diagnostic) |
 | `sites` | JSON list of the rewrite-site IDs it overlaps |
 
+### `swdb_attribution_origins`
+
+Added: 2026-10-11 (Eastern Time), fine-grained attribution ticket 05. One row per origin inside
+the `agent_rewritten` group of a report (always four: offload_command, intrinsic, library_call,
+agent_rewritten). Same per-trial-sum-then-median rule as the groups.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `origin` | code origin of regions inside rewrite sites |
+| `baseline_seconds` | that origin's seconds in the baseline |
+| `candidate_seconds` | that origin's seconds in the candidate |
+| `baseline_share` | origin ÷ baseline total |
+| `candidate_share` | origin ÷ candidate total |
+| `unknown_regions` | how many unknown regions make this origin's numbers unknown |
+
 ### `swdb_attribution_headroom`
 
 Added: 2026-10-11 (Eastern Time), fine-grained attribution ticket 07. One row per region of
