@@ -14,7 +14,7 @@ approved by Yan-Ru); 2026-10-11 15:17 ET (ticket 01 resolved; design committed).
 | # | Ticket | Status | Blocked by |
 |---|---|---|---|
 | [01](issues/01-review-and-commit-design.md) | Review and commit design | resolved ([answer](issues/01-review-and-commit-design.md#answer)) | — |
-| [02](issues/02-tracer-worked-example.md) | First working version: the worked example end to end | ready-for-agent | 01 |
+| [02](issues/02-tracer-worked-example.md) | First working version: the worked example end to end | resolved ([answer](issues/02-tracer-worked-example.md#answer)) | 01 |
 | [03](issues/03-first-real-pair.md) | First real pair: t75 BFS attribution report | ready-for-agent | 02 |
 | [04](issues/04-rewrite-site-edge-cases.md) | Rewrite-site edge cases | ready-for-agent | 02 |
 | [05](issues/05-library-intrinsic-offload-labels.md) | Library, intrinsic and offload labels | ready-for-agent | 02 |

@@ -478,3 +478,66 @@ swdb sql "select i.id from intrinsics i where not exists (select 1 from intrinsi
 swdb sql "select p.input, m.threads, m.value from metrics m join profiles p on p.id = m.profile
           where p.implementation = 'gapbs-pr-gs' and m.name = 'time_per_trial_median' order by 1, 2"
 ```
+
+## Attribution tables
+
+Added: 2026-10-11 (Eastern Time), fine-grained attribution ticket 02. One set of rows per
+`attribution` record (`swdb attribute`; format in
+[format-v0.4-attribution.md](format-v0.4-attribution.md)). These are SWDB-only tables, so
+their names start with `swdb_`. Unknown values are NULL, never 0.
+
+### `swdb_attributions`
+
+One row per attribution report.
+
+| Column | Meaning |
+|---|---|
+| `id` | report ID |
+| `baseline_estimate` | baseline estimate ID |
+| `candidate_estimate` | candidate estimate ID |
+| `baseline_source` | source record (snapshot or candidate) the baseline counted |
+| `candidate_source` | source record the candidate counted |
+| `target_description` | shared target description ID |
+| `target_description_sha256` | its content hash |
+| `input` | shared input or workload ID |
+| `threads` | shared thread count |
+| `evidence_kind` | `execution` or `contract_fixture` |
+| `baseline_seconds` | baseline estimate total (NULL if unknown) |
+| `candidate_seconds` | candidate estimate total (NULL if unknown) |
+| `total_speedup` | baseline total ÷ candidate total |
+| `amdahl_ceiling` | baseline total ÷ untouched candidate seconds |
+| `json` | the full record |
+
+### `swdb_attribution_groups`
+
+One row per code-origin group of a report (always three: untouched, agent_rewritten,
+unattributed). Seconds are per-trial sums, then medians; groups need not add up to the total.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `origin` | code origin of the group |
+| `baseline_seconds` | group seconds in the baseline |
+| `candidate_seconds` | group seconds in the candidate |
+| `baseline_share` | group ÷ baseline total |
+| `candidate_share` | group ÷ candidate total |
+| `realized_speedup` | baseline ÷ candidate group seconds |
+| `drift` | untouched group only: candidate ÷ baseline seconds; NULL for other groups |
+| `unknown_regions` | how many unknown regions make this group's numbers unknown |
+
+### `swdb_attribution_regions`
+
+One row per region of either estimate.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `side` | `baseline` or `candidate` |
+| `region` | the estimate's region ID |
+| `origin` | its code origin |
+| `reason` | why it got that origin |
+| `path` | file path relative to its source tree (NULL outside the tree or without a location) |
+| `first_line` | first line of its span |
+| `last_line` | last line of its span |
+| `seconds` | the estimate's per-region seconds (diagnostic) |
+| `sites` | JSON list of the rewrite-site IDs it overlaps |

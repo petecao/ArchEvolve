@@ -268,6 +268,8 @@ def main(argv=None):
     cpu_error_band.register_cli(commands)
     from swdb import cpu_native_validation
     cpu_native_validation.register_cli(commands)
+    from swdb import attribution
+    attribution.register_cli(commands)
 
     from swdb import archevolve
     archevolve.register_cli(commands)

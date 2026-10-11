@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "attribution",
+  "title": "Attribution report",
+  "description": "Created: 2026-10-11 ET (fine-grained attribution ticket 02). Two saved estimates split by code origin from a diff of their counted source trees. Derived from estimates; never a timing observation.",
+  "properties": {
+    "kind": {"const": "attribution"},
+    "schema_version": {"const": "0.4"},
+    "format": {"const": "swdb.attribution.v1"},
+    "baseline_estimate": {"$ref": "#/$defs/estimate_pin"},
+    "candidate_estimate": {"$ref": "#/$defs/estimate_pin"},
+    "baseline_source": {"$ref": "#/$defs/source_pin"},
+    "candidate_source": {"$ref": "#/$defs/source_pin"},
+    "target_description": {
+      "type": "object", "additionalProperties": false, "required": ["id", "sha256"],
+      "properties": {"id": {"$ref": "#/$defs/id"}, "sha256": {"$ref": "#/$defs/sha256"}}
+    },
+    "input": {"$ref": "#/$defs/id"},
+    "threads": {"type": "integer", "minimum": 1},
+    "evidence_kind": {"enum": ["execution", "contract_fixture"]},
+    "rewrite_sites": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "path", "baseline_lines", "candidate_lines", "baseline_regions", "candidate_regions"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^site\\.[1-9][0-9]*$"},
+          "path": {"type": "string", "minLength": 1},
+          "baseline_lines": {"$ref": "#/$defs/lines"},
+          "candidate_lines": {"$ref": "#/$defs/lines"},
+          "baseline_regions": {"type": "array", "items": {"type": "string"}},
+          "candidate_regions": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "regions": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["side", "region", "origin", "reason", "path", "lines", "sites", "seconds"],
+        "properties": {
+          "side": {"$ref": "#/$defs/side"},
+          "region": {"type": "string", "minLength": 1},
+          "origin": {"$ref": "#/$defs/origin"},
+          "reason": {"enum": ["overlaps_rewrite_site", "no_changed_line", "outside_source_tree", "no_source_location"]},
+          "path": {"type": ["string", "null"]},
+          "lines": {"oneOf": [{"$ref": "#/$defs/lines"}, {"type": "null"}]},
+          "sites": {"type": "array", "items": {"type": "string"}},
+          "seconds": {"$ref": "#/$defs/seconds"}
+        }
+      }
+    },
+    "groups": {
+      "type": "array", "minItems": 3, "maxItems": 3,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["origin", "baseline_seconds", "candidate_seconds", "baseline_share", "candidate_share", "realized_speedup", "unknown"],
+        "properties": {
+          "origin": {"$ref": "#/$defs/origin"},
+          "baseline_seconds": {"$ref": "#/$defs/seconds"},
+          "candidate_seconds": {"$ref": "#/$defs/seconds"},
+          "baseline_share": {"$ref": "#/$defs/ratio"},
+          "candidate_share": {"$ref": "#/$defs/ratio"},
+          "realized_speedup": {"$ref": "#/$defs/ratio"},
+          "drift": {"$ref": "#/$defs/ratio"},
+          "unknown": {"$ref": "#/$defs/unknown"}
+        }
+      }
+    },
+    "whole_program": {
+      "type": "object", "additionalProperties": false,
+      "required": ["baseline_seconds", "candidate_seconds", "total_speedup", "amdahl_ceiling", "unknown"],
+      "properties": {
+        "baseline_seconds": {"$ref": "#/$defs/seconds"},
+        "candidate_seconds": {"$ref": "#/$defs/seconds"},
+        "total_speedup": {"$ref": "#/$defs/ratio"},
+        "amdahl_ceiling": {"$ref": "#/$defs/ratio"},
+        "unknown": {"$ref": "#/$defs/unknown"}
+      }
+    },
+    "identity_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "required": ["format", "baseline_estimate", "candidate_estimate", "baseline_source", "candidate_source",
+               "target_description", "input", "threads", "evidence_kind", "rewrite_sites", "regions", "groups",
+               "whole_program", "identity_sha256"],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "seconds": {"type": ["number", "null"], "minimum": 0},
+    "ratio": {"type": ["number", "null"], "minimum": 0},
+    "side": {"enum": ["baseline", "candidate"]},
+    "origin": {"enum": ["untouched", "agent_rewritten", "unattributed"]},
+    "lines": {"type": "array", "items": {"type": "integer", "minimum": 0}, "minItems": 2, "maxItems": 2},
+    "estimate_pin": {
+      "type": "object", "additionalProperties": false, "required": ["id", "sha256"],
+      "properties": {"id": {"$ref": "#/$defs/id", "x-ref": "estimate"}, "sha256": {"$ref": "#/$defs/sha256"}}
+    },
+    "source_pin": {
+      "type": "object", "additionalProperties": false, "required": ["kind", "id", "sha256", "artifact_sha256"],
+      "properties": {
+        "kind": {"enum": ["source_snapshot", "candidate"]},
+        "id": {"$ref": "#/$defs/id"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "artifact_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "unknown": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["side", "region", "missing"],
+        "properties": {
+          "side": {"$ref": "#/$defs/side"},
+          "region": {"type": "string", "minLength": 1},
+          "missing": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}

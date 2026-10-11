@@ -621,3 +621,39 @@ def compare(db_path, implementation, baseline, profile, baseline_profile, protoc
         return compare_records(records, implementation, baseline, profile, baseline_profile, protocol)
     finally:
         con.close()
+
+
+# Fine-grained attribution ticket 02 (2026-10-11 ET): attribution reports, appended as one
+# additive block. SWDB-only tables carry the `swdb_` prefix (LANL-shaped database rule);
+# unknown values are NULL. Documented in docs/reference/database.md.
+SCHEMA += """
+CREATE TABLE swdb_attributions (id TEXT PRIMARY KEY, baseline_estimate TEXT NOT NULL, candidate_estimate TEXT NOT NULL,
+    baseline_source TEXT NOT NULL, candidate_source TEXT NOT NULL, target_description TEXT NOT NULL,
+    target_description_sha256 TEXT NOT NULL, input TEXT NOT NULL, threads INTEGER NOT NULL, evidence_kind TEXT NOT NULL,
+    baseline_seconds REAL, candidate_seconds REAL, total_speedup REAL, amdahl_ceiling REAL, json TEXT NOT NULL);
+CREATE TABLE swdb_attribution_groups (attribution TEXT NOT NULL, origin TEXT NOT NULL, baseline_seconds REAL,
+    candidate_seconds REAL, baseline_share REAL, candidate_share REAL, realized_speedup REAL, drift REAL,
+    unknown_regions INTEGER NOT NULL, PRIMARY KEY (attribution, origin));
+CREATE TABLE swdb_attribution_regions (attribution TEXT NOT NULL, side TEXT NOT NULL, region TEXT NOT NULL,
+    origin TEXT NOT NULL, reason TEXT NOT NULL, path TEXT, first_line INTEGER, last_line INTEGER, seconds REAL,
+    sites TEXT NOT NULL, PRIMARY KEY (attribution, side, region));
+"""
+
+
+def _insert_attribution(con, d, *_):
+    whole = d["whole_program"]
+    con.execute("INSERT INTO swdb_attributions VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                (d["id"], d["baseline_estimate"]["id"], d["candidate_estimate"]["id"], d["baseline_source"]["id"],
+                 d["candidate_source"]["id"], d["target_description"]["id"], d["target_description"]["sha256"],
+                 d["input"], d["threads"], d["evidence_kind"], whole["baseline_seconds"], whole["candidate_seconds"],
+                 whole["total_speedup"], whole["amdahl_ceiling"], json.dumps(d)))
+    con.executemany("INSERT INTO swdb_attribution_groups VALUES (?,?,?,?,?,?,?,?,?)",
+                    [(d["id"], g["origin"], g["baseline_seconds"], g["candidate_seconds"], g["baseline_share"],
+                      g["candidate_share"], g["realized_speedup"], g.get("drift"), len(g["unknown"])) for g in d["groups"]])
+    con.executemany("INSERT INTO swdb_attribution_regions VALUES (?,?,?,?,?,?,?,?,?,?)",
+                    [(d["id"], r["side"], r["region"], r["origin"], r["reason"], r["path"],
+                      r["lines"][0] if r["lines"] else None, r["lines"][1] if r["lines"] else None,
+                      r["seconds"], json.dumps(r["sites"])) for r in d["regions"]])
+
+
+_Insert.attribution = staticmethod(_insert_attribution)
