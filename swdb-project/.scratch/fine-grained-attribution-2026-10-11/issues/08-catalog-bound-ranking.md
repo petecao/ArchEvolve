@@ -2,7 +2,7 @@
 
 Created: 2026-10-11 15:14 ET
 **Type:** task
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 07 — Resource floor headroom
 **Spec:** `../spec.md` (F6 (catalog), F7, F12, F21; seam 1)
 **Time estimate:** about 3–4 hours
