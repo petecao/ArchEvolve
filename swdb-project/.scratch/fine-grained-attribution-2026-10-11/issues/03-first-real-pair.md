@@ -47,3 +47,26 @@ ROI `gapbs.functional_trial_lambda.v1`. **Planned ticket-09 timing input: the sa
 **Stop rule (LR-01).** If either estimate's `seconds` is null, stop after step 3, keep the
 estimates as evidence, and close on a negative report naming each missing piece. The target
 description and the estimator are not changed to make the number appear.
+
+### Plan amendment a2 (2026-10-11 19:34 ET, before any count or estimate)
+
+Attempt a1 was stopped at 19:32 ET during step 1 (`freeze-protocol` was still validating the
+copied store). No protocol, count or estimate was written. Three premises of the plan above were
+wrong, found by reading the code and decisions F26 and risks B2/B5:
+
+- **Baseline (F26):** a source-baseline *candidate* of the snapshot, not the implementation.
+  `typed-library-bfs-scalar-profile-20261003-a1.baseline` has the snapshot's exact tree
+  (`2bf9b1b8…c6af`), so it is reused.
+- **Adapter (B2):** native candidates count only through `registered-cpu` with a prospective
+  native evaluation request (evaluator v3, LLVM 22 `clang++`), one fresh-process slot.
+- **Input (B5, F18):** the t75 re-evaluation workload `bfs-20261004-uniform22.2f83a134a6bef789`
+  (scale 22, uniform). **Planned ticket-09 timing input: this same workload ID, T1, through the two
+  prospective requests below.** The g16 input above is withdrawn.
+
+Prospective requests (copied into this ticket's `evidence/` folder):
+`fga03.t75-baseline.uniform22.t1.request.a1` and `fga03.t75-candidate.uniform22.t1.request.a1`
+(sources `[0, 1234, 7777]`, 20 repetitions, counted slot = source position 0, repetition 0).
+
+New order: (1) count baseline, (2) count candidate, (3) freeze the fresh protocol on `d0c80a8a`
+(one per side only if the counted run arguments differ), (4) estimate baseline, (5) estimate
+candidate, (6) `swdb attribute` only if both totals are known. Stop rule unchanged.
