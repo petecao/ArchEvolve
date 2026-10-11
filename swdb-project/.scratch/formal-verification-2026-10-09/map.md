@@ -1,9 +1,9 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-09 17:55 ET (ticket 14 pointer: gem5 wait rule implemented, with the dispatch stall)
+Updated: 2026-10-11 14:56 ET (ticket 07 resolved: verifiers installed)
 **Type:** wayfinder map
-**Status:** charted; research 02–06 and 14 resolved
+**Status:** charted; research 02–06 and 14, task 07 resolved
 
 ## Destination
 
@@ -65,6 +65,11 @@ concept is the next effort.
   defaults, including the dispatch stall on tiles (IF.cc:193-212). Calibration and Peter's and BC's
   read offloads certify. Memory timing stays open. See the
   [evidence note](evidence/strict-gem5-wait-rule-redeclaration-20261009.md).
+- [Install the shortlisted verifiers on the Mac](issues/07-install-verifiers.md): all four run
+  and pass a safe smoke program but not a seeded bug: ESBMC 8.5, CBMC 6.11, crux-llvm 0.12
+  (only on prebuilt clang-22 bitcode with `--no-compile`), and Frama-C 33.0 + RPP 0.0.4 (opam
+  switch `framac-33`; use `-then-last`). WP reports a bug as timeout, never as refuted. The
+  install's z3 upgrade broke the LLVM 22 the analytic evaluator needs; repaired, but fragile.
 
 ## Tickets
 
@@ -76,7 +81,7 @@ concept is the next effort.
 | 04 | [How do LLMs build proof hints for existing verifiers?](issues/04-llm-proof-hints.md) | research | resolved | — |
 | 05 | [How do verifiers model an accelerator's command interface?](issues/05-accelerator-interface-verification.md) | research | resolved | — |
 | 06 | [Which papers are closest to ours?](issues/06-closest-prior-work.md) | research | resolved | — |
-| 07 | [Install the shortlisted verifiers on the Mac](issues/07-install-verifiers.md) | task | ready-for-agent | 02 |
+| 07 | [Install the shortlisted verifiers on the Mac](issues/07-install-verifiers.md) | task | resolved | — |
 | 08 | [Can an off-the-shelf verifier tell a real DX100 wait bug from a safe one?](issues/08-wrong-tile-prototype.md) | prototype | ready-for-human | 07, 14 |
 | 09 | [What does the "proven" level assert about a candidate artifact?](issues/09-what-proven-asserts.md) | grilling | ready-for-human | 03 |
 | 10 | [What does a proven rewrite contract prove once?](issues/10-proven-rewrite-contract.md) | grilling | ready-for-human | 03, 09 |

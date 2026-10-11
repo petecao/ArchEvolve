@@ -1,0 +1,21 @@
+CBMC version 6.11.0 (cbmc-6.11.0) 64-bit arm64 macos
+Type-checking smoke
+Generating GOTO Program
+Adding CPROVER library (arm64)
+Removal of function pointers and virtual functions
+Generic Property Instrumentation
+Starting Bounded Model Checking
+Passing problem to propositional reduction
+converting SSA
+Running propositional reduction
+SAT checker: instance is SATISFIABLE
+Running propositional reduction
+SAT checker inconsistent: instance is UNSATISFIABLE
+
+** Results:
+smoke.c function main
+[main.overflow.1] line 9 arithmetic overflow on signed + in x + 1: SUCCESS
+[main.assertion.1] line 11 assertion y != 42: FAILURE
+
+** 1 of 2 failed (2 iterations)
+VERIFICATION FAILED
