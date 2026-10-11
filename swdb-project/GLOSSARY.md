@@ -1,6 +1,6 @@
 # EvolveSWDB — ArchEvolve's research database
 
-Updated: 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
+Updated: 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
 
 The Software Database is the ArchEvolve component that knows the applications:
 what their kernels compute, how their code touches memory, what profiling
@@ -338,6 +338,35 @@ _Avoid_: mechanism family (the hardware catalog's classification), component mod
 The mechanism models and parameter values, each with its basis, that describe one hardware target
 to the estimator.
 _Avoid_: parameter sheet, hardware config
+
+**Rewrite site**:
+One contiguous changed span of a candidate artifact's source diff against its baseline, together
+with the baseline regions it replaces and the candidate regions and calls that replace them.
+_Avoid_: hunk (in prose), patch site
+
+**Code origin**:
+The label saying where a candidate region's code came from: untouched, agent-rewritten, library
+call, intrinsic, offload command, or unattributed.
+_Avoid_: provenance (alone), modified/unmodified
+
+**Resource floor**:
+The lowest time a region's counted useful work could take on a target description's own rates,
+ignoring latency and overheads. It is a limit, never an estimate of a real rewrite.
+_Avoid_: roofline (alone), theoretical peak, ideal time
+
+**Catalog bound**:
+The lowest estimate a region could reach with a typed-library entry the site finder matches to it.
+_Avoid_: achievable speed, best known
+
+**Headroom**:
+A region's current estimate divided by its resource floor or catalog bound; the report always names
+which limit.
+_Avoid_: potential, slack
+
+**Remaining gain bound**:
+The most a region could still shorten a program's time if it reached its catalog bound; an upper
+limit, never an expected value.
+_Avoid_: expected gain, expected future gain, opportunity
 
 **Paired estimate**:
 An estimate made for a candidate artifact or baseline in an Extensa campaign before its timing,
