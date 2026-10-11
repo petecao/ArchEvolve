@@ -507,6 +507,7 @@ One row per attribution report.
 | `total_speedup` | baseline total ÷ candidate total |
 | `amdahl_ceiling` | baseline total ÷ untouched candidate seconds |
 | `json` | the full record |
+| `unattributed_flagged` | 1 when unattributed time is above 10% of either total, 0 when not, NULL when unknown (ticket 04) |
 
 ### `swdb_attribution_groups`
 
@@ -541,3 +542,5 @@ One row per region of either estimate.
 | `last_line` | last line of its span |
 | `seconds` | the estimate's per-region seconds (diagnostic) |
 | `sites` | JSON list of the rewrite-site IDs it overlaps |
+| `mixed` | 1 when it is rewritten but some of its lines are unchanged (added 2026-10-11 ET, ticket 04) |
+| `matched_region` | the other side's region at the same untouched code, or NULL (ticket 04) |

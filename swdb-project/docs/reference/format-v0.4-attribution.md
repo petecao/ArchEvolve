@@ -1,6 +1,7 @@
 # Attribution reports (`swdb.attribution.v1`)
 
-Created: 2026-10-11 (Eastern Time), fine-grained attribution ticket 02.
+Created: 2026-10-11 (Eastern Time), fine-grained attribution ticket 02. Updated: 2026-10-11 ET
+(ticket 04: merged sites, `mixed`, inlined pieces, matched regions, unattributed flag).
 Spec: `.scratch/fine-grained-attribution-2026-10-11/spec.md`.
 
 **In one line:** `swdb attribute` takes two saved estimates and the two source trees they
@@ -9,7 +10,8 @@ counted, and says how much time is in untouched, agent-rewritten and unattribute
 ## What it does, in order
 
 1. Diffs the two source trees itself (never a stored candidate diff).
-2. Turns each changed run of lines into one **rewrite site**.
+2. Turns each changed run of lines into a span, and merges spans one region overlaps into one
+   **rewrite site**.
 3. Labels every region of both estimates with a **code origin** by file and line.
 4. Sums each origin group per trial, then takes the median per group.
 5. Writes one validated `attribution` record and indexes it into SQLite.
@@ -37,14 +39,17 @@ It refuses (exit 1, nothing written) when:
 
 ## Labeling rules (this version)
 
-Ticket 04 widens these rules. Today:
-
 | Rule | What it means |
 |---|---|
-| Path | A region's path is made relative to its own side's tree. A path in neither tree (for example a system header) cannot have changed, so the region is `untouched`. |
-| Span | `[min, max]` of the region's start line and its access patterns' lines in the same file. |
-| Rewritten | The span overlaps a rewrite site on the same side. |
+| Path | A region's path is made relative to its own side's tree. A path in neither tree (for example a system header) cannot have changed. |
+| Home span | `[min, max]` of the region's start line and its accesses that lie in the same file **and** inside the region's own lexical function. Without a recognizable function, every same-file access counts. |
+| Inlined pieces | Accesses in another file or another function are inlined code (the LLVM pass keeps their own file and line). They form `inlined` pieces, one per file and enclosing function, `[min, max]` of their lines. Files outside the tree add none. |
+| Rewritten | Some piece (home or inlined) overlaps a changed span on the same side. An insertion point overlaps only when strictly inside. |
+| Mixed | A rewritten region with at least one unchanged line in its pieces. Its whole time stays in the rewritten group (F14). |
+| Merged sites | Changed spans that one region overlaps, on either side, merge into one site (transitively). A region is in at most one site, so no time is counted twice. |
+| Matched | An untouched region is paired with the other side's untouched region whose home span and inlined pieces equal its own carried through the line diff, with the same kind. Only one-to-one pairs are kept. |
 | Unattributed | The region has no source path or no line. |
+| Unattributed flag | `unattributed_flagged` is true when the unattributed share of either estimate's total is above 0.1 (F24). The report is still written. |
 | Region IDs | Never compared across sides; they embed subject IDs and lines. |
 
 A region whose ID has no catalog loop still gets a real label from its file and line.
@@ -71,9 +76,10 @@ date of the four inputs, so the same inputs give a byte-identical record.
 
 | Field | Meaning |
 |---|---|
-| `id` | `site.<n>`, numbered in path then line order |
-| `path` | file path relative to the source tree |
-| `baseline_lines`, `candidate_lines` | `[first, last]` changed lines on each side; an empty side is `[p, p - 1]`, the insertion point before line `p` |
+| `id` | `site.<n>`, numbered by the site's first span, in path then line order |
+| `path` | file path relative to the source tree; null when the spans lie in several files |
+| `baseline_lines`, `candidate_lines` | envelope `[min first, max last]` of the spans on each side (a single span: its changed lines; an empty side is `[p, p - 1]`, the insertion point before line `p`); null when the spans lie in several files |
+| `spans` | the merged changed runs, each `{path, baseline_lines, candidate_lines}` |
 | `baseline_regions`, `candidate_regions` | region IDs whose span overlaps the site on that side |
 
 ### `regions` rows
@@ -84,9 +90,12 @@ date of the four inputs, so the same inputs give a byte-identical record.
 | `region` | the estimate's region ID |
 | `origin` | `untouched`, `agent_rewritten` or `unattributed` |
 | `reason` | `overlaps_rewrite_site`, `no_changed_line`, `outside_source_tree` or `no_source_location` |
-| `path`, `lines` | relative path and `[first, last]` span; null when unknown |
-| `sites` | IDs of the rewrite sites the region overlaps |
+| `mixed` | true when the region is rewritten but some line of its pieces is unchanged |
+| `path`, `lines` | relative path and `[first, last]` home span; null when unknown |
+| `inlined` | `[{path, lines}]` inlined pieces, by their own file and line |
+| `sites` | the one merged rewrite site the region overlaps, or empty |
 | `seconds` | the estimate's own per-region seconds (a diagnostic median; groups do not use it) |
+| `matched_region` | the other side's region at the same untouched code, or null |
 
 ### `groups` rows
 
@@ -112,6 +121,8 @@ A ratio is null when an operand is unknown or the denominator is 0.
 | `baseline_seconds`, `candidate_seconds` | the estimates' own totals |
 | `total_speedup` | baseline total ÷ candidate total |
 | `amdahl_ceiling` | baseline total ÷ untouched candidate seconds: the most any further work on the rewritten part could give |
+| `unattributed_threshold` | 0.1 |
+| `unattributed_flagged` | true when either side's unattributed share is above the threshold; null when neither known share is above it but one is unknown; else false |
 | `unknown` | every unknown region of both sides, as in `groups` |
 
 ## Worked example (the test fixture)

@@ -73,3 +73,17 @@ def enclosing_function(text, line):
         if span and span[0] <= line <= span[1]:
             return match.group(1)
     return None
+
+
+def function_spans(text):
+    """1-based `(first, last)` lines of each top-level definition, in the order `enclosing_function`
+    tries them, so the first span containing a line is that line's enclosing function.
+
+    Added 2026-10-11 ET (fine-grained attribution ticket 04): one scan per file for callers that
+    look up many lines."""
+    spans = []
+    for match in re.finditer(r"^[A-Za-z_][\w:<>,\s\*&]*?\b([A-Za-z_]\w*)\s*\(", code_only(text), re.M):
+        span = function_span(text, match.group(1))
+        if span and span not in spans:
+            spans.append(span)
+    return spans
