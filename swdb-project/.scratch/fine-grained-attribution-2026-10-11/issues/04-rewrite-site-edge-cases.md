@@ -2,7 +2,7 @@
 
 Created: 2026-10-11 15:14 ET
 **Type:** task
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 02 — First working version
 **Spec:** `../spec.md` (F1, F2, F14, F24; seam 1)
 **Time estimate:** about 3–4 hours
