@@ -49,7 +49,8 @@
       "type": "array",
       "items": {
         "type": "object", "additionalProperties": false,
-        "required": ["side", "region", "origin", "reason", "path", "lines", "sites", "seconds", "evidence"],
+        "required": ["side", "region", "origin", "reason", "path", "lines", "sites", "seconds", "evidence",
+                     "resource_floor", "headroom"],
         "properties": {
           "side": {"$ref": "#/$defs/side"},
           "region": {"type": "string", "minLength": 1},
@@ -68,7 +69,9 @@
               "properties": {"origin": {"$ref": "#/$defs/rewrite_origin"}, "name": {"type": "string", "minLength": 1}}
             }
           },
-          "last_changed_iteration": {"type": ["integer", "null"], "minimum": 0}
+          "last_changed_iteration": {"type": ["integer", "null"], "minimum": 0},
+          "resource_floor": {"$ref": "#/$defs/resource_floor"},
+          "headroom": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/headroom"}}
         }
       }
     },
@@ -131,11 +134,12 @@
         "whole_program": {"$ref": "#/properties/whole_program"}
       }
     },
+    "ranking": {"type": "array", "items": {"$ref": "#/$defs/rank"}},
     "identity_sha256": {"$ref": "#/$defs/sha256"}
   },
   "required": ["format", "baseline_estimate", "candidate_estimate", "baseline_source", "candidate_source",
                "target_description", "input", "threads", "evidence_kind", "catalog", "rewrite_sites", "regions", "groups",
-               "whole_program", "identity_sha256"],
+               "whole_program", "ranking", "identity_sha256"],
   "$defs": {
     "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "seconds": {"type": ["number", "null"], "minimum": 0},
@@ -155,6 +159,47 @@
         "id": {"$ref": "#/$defs/id"},
         "sha256": {"$ref": "#/$defs/sha256"},
         "artifact_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "resource_floor": {
+      "description": "Ticket 07 (2026-10-11 ET): max(compute bound, useful-bytes bandwidth bound) at the target description's own rates; null with reasons when a count or rate is missing.",
+      "type": "object", "additionalProperties": false, "required": ["seconds", "limiting_term", "terms", "missing"],
+      "properties": {
+        "seconds": {"$ref": "#/$defs/seconds"},
+        "limiting_term": {"enum": ["compute_throughput", "streaming_bandwidth", null]},
+        "terms": {
+          "type": "array", "minItems": 2, "maxItems": 2,
+          "items": {
+            "type": "object", "additionalProperties": false, "required": ["model", "in_description", "seconds", "missing"],
+            "properties": {
+              "model": {"enum": ["compute_throughput", "streaming_bandwidth"]},
+              "in_description": {"type": "boolean"},
+              "seconds": {"$ref": "#/$defs/seconds"},
+              "missing": {"type": "array", "items": {"type": "string"}}
+            }
+          }
+        },
+        "missing": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "headroom": {
+      "type": "object", "additionalProperties": false, "required": ["limit", "value", "reason"],
+      "properties": {
+        "limit": {"enum": ["resource_floor"]},
+        "value": {"$ref": "#/$defs/ratio"},
+        "reason": {"enum": ["unknown_estimate", "unknown_limit", "zero_limit", null]}
+      }
+    },
+    "rank": {
+      "type": "object", "additionalProperties": false, "required": ["position", "side", "region", "tier", "limit", "value", "reason"],
+      "properties": {
+        "position": {"type": "integer", "minimum": 1},
+        "side": {"const": "candidate"},
+        "region": {"type": "string", "minLength": 1},
+        "tier": {"enum": ["floor_headroom", "unknown"]},
+        "limit": {"enum": ["resource_floor"]},
+        "value": {"$ref": "#/$defs/ratio"},
+        "reason": {"enum": ["unknown_estimate", "unknown_limit", "zero_limit", null]}
       }
     },
     "unknown": {

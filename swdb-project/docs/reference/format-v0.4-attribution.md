@@ -1,7 +1,8 @@
 # Attribution reports (`swdb.attribution.v1`)
 
 Created: 2026-10-11 (Eastern Time), fine-grained attribution ticket 02.
-Updated: 2026-10-11 ET (ticket 05: library, intrinsic and offload labels).
+Updated: 2026-10-11 ET (ticket 05: library, intrinsic and offload labels; ticket 07: resource
+floor, floor headroom and ranking; ticket 06 + 07 merge: floors in `this_iteration`).
 Spec: `.scratch/fine-grained-attribution-2026-10-11/spec.md`.
 
 **In one line:** `swdb attribute` takes two saved estimates and the two source trees they
@@ -13,7 +14,9 @@ counted, and says how much time is in untouched, agent-rewritten and unattribute
 2. Turns each changed run of lines into one **rewrite site**.
 3. Labels every region of both estimates with a **code origin** by file and line.
 4. Sums each origin group per trial, then takes the median per group.
-5. Writes one validated `attribution` record and indexes it into SQLite.
+5. Computes each region's **resource floor** and **headroom**, and ranks the candidate's
+   regions by floor headroom (ticket 07).
+6. Writes one validated `attribution` record and indexes it into SQLite.
 
 It only reads saved records. It never re-estimates and never binds a protocol.
 
@@ -85,6 +88,7 @@ date of the four inputs, so the same inputs give a byte-identical record.
 | `regions` | one row per region of each estimate (below) |
 | `groups` | one row per code origin, always in the order untouched, agent_rewritten, unattributed (below) |
 | `whole_program` | totals and whole-program ratios (below) |
+| `ranking` | the candidate's regions in next-iteration order (below) |
 | `identity_sha256` | content hash of the record without this field; `swdb validate` checks it |
 
 ### `rewrite_sites` rows
@@ -108,6 +112,8 @@ date of the four inputs, so the same inputs give a byte-identical record.
 | `sites` | IDs of the rewrite sites the region overlaps |
 | `seconds` | the estimate's own per-region seconds (a diagnostic median; groups do not use it) |
 | `evidence` | inside a site: every signal found, `{origin, name}`, highest precedence first (`name` is the event, intrinsic ID or library operation ID); empty otherwise |
+| `resource_floor` | the region's resource floor (below) |
+| `headroom` | list of `{limit, value, reason}`, one per named limit; today only `resource_floor` |
 
 ### `groups` rows
 
@@ -135,6 +141,56 @@ A ratio is null when an operand is unknown or the denominator is 0.
 | `total_speedup` | baseline total ÷ candidate total |
 | `amdahl_ceiling` | baseline total ÷ untouched candidate seconds: the most any further work on the rewritten part could give |
 | `unknown` | every unknown region of both sides, as in `groups` |
+
+### Resource floor (ticket 07)
+
+**In one line:** the fastest the region's counted work could run at the target description's
+own rates, ignoring latency and every overhead. It is a limit, never an estimate.
+
+- Floor = max(compute bound, useful-bytes bandwidth bound), spec F6.
+- Both terms come from the unchanged `compute_throughput` and `streaming_bandwidth` mechanism
+  models, called exactly as the estimator calls them, on the region's own counts.
+- Only the estimate's pinned target description is read (`target_description_snapshot`, checked
+  against its hash). No other description, no `cache_fit` hit bandwidth, no latency, row, queue or
+  overhead mechanism, and no theoretical-peak parameter.
+- If the description lacks a model, that term has no rates: zero work gives 0 s, any work gives
+  an unknown term naming the missing rate (for example `bytes_per_s`). The floor is then unknown,
+  never 0 and never borrowed from another description.
+- Trials follow the estimate's rule: floor per trial (a region absent from a trial counts 0 s),
+  then the median. So the floor is never above the region's own `seconds`; `swdb validate`
+  rejects a record where it is.
+
+| Field | Meaning |
+|---|---|
+| `seconds` | the floor; null when a term is unknown |
+| `limiting_term` | the term with the larger median, `compute_throughput` or `streaming_bandwidth`; null when unknown |
+| `terms` | `{model, in_description, seconds, missing}` for the two terms, in that order; `in_description` is false when the description has no such mechanism |
+| `missing` | union of the terms' missing counts and rates |
+
+### `headroom` entries
+
+| Field | Meaning |
+|---|---|
+| `limit` | the named limit: `resource_floor` (ticket 08 adds `catalog_bound`) |
+| `value` | region `seconds` ÷ the limit's seconds; null when it cannot be a number |
+| `reason` | null, or why `value` is null: `unknown_estimate`, `unknown_limit` or `zero_limit` |
+
+### `ranking` rows
+
+Only candidate regions are ranked: they are what the next iteration starts from. Known floor
+headrooms come first, largest first (ties by region ID). Regions whose headroom is null follow
+in region-ID order, in their own tier, never mixed with known ones (F7). Ticket 08 puts a
+remaining-gain-bound tier before the floor tier.
+
+| Field | Meaning |
+|---|---|
+| `position` | 1-based place in the whole list |
+| `side` | always `candidate` |
+| `region` | the candidate estimate's region ID |
+| `tier` | `floor_headroom`, or `unknown` for a null headroom |
+| `limit` | the limit the value uses: `resource_floor` |
+| `value` | the floor headroom; null in the `unknown` tier |
+| `reason` | the headroom's null reason, else null |
 
 ## Worked example (the test fixture)
 
@@ -175,6 +231,9 @@ python -m swdb attribute ... \
    previous accepted candidate → candidate. Inside it, `baseline` means the previous accepted
    candidate (`side: baseline`, `baseline_lines`, `baseline_seconds`, …).
 3. Every region row, in both comparisons, gets `last_changed_iteration`.
+4. `this_iteration` region rows also carry `resource_floor` and `headroom` (same row shape).
+   The previous candidate's floors come from its own estimate; the candidate's equal the
+   cumulative ones. There is one top-level `ranking`: the candidate is the same in both.
 
 | `this_iteration` field | Meaning |
 |---|---|

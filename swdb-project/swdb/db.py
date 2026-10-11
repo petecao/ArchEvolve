@@ -713,3 +713,33 @@ def _insert_attribution_iteration(con, d):
                       r["lines"][0] if r["lines"] else None, r["lines"][1] if r["lines"] else None,
                       r["seconds"], json.dumps(r["sites"]), r.get("last_changed_iteration"))
                      for r in this["regions"]])
+
+
+# Fine-grained attribution ticket 07 (2026-10-11 ET): one headroom row per region and named
+# limit (ticket 08 adds `catalog_bound` rows), and the next-iteration ranking. Headroom rows
+# come from the cumulative `regions`; `this_iteration` region floors stay in the JSON column.
+SCHEMA += """
+CREATE TABLE swdb_attribution_headroom (attribution TEXT NOT NULL, side TEXT NOT NULL, region TEXT NOT NULL,
+    limit_name TEXT NOT NULL, limit_seconds REAL, limiting_term TEXT, headroom REAL, reason TEXT,
+    missing TEXT NOT NULL, PRIMARY KEY (attribution, side, region, limit_name));
+CREATE TABLE swdb_attribution_ranking (attribution TEXT NOT NULL, position INTEGER NOT NULL, side TEXT NOT NULL,
+    region TEXT NOT NULL, tier TEXT NOT NULL, limit_name TEXT NOT NULL, value REAL, reason TEXT,
+    PRIMARY KEY (attribution, position));
+"""
+
+
+_insert_attribution_before_headroom = _Insert.attribution  # chain, so other tickets' inserts keep running
+
+
+def _insert_attribution_headroom(con, d, *rest):
+    _insert_attribution_before_headroom(con, d, *rest)
+    floors = [(d["id"], r["side"], r["region"], h["limit"], r["resource_floor"]["seconds"],
+               r["resource_floor"]["limiting_term"], h["value"], h["reason"], json.dumps(r["resource_floor"]["missing"]))
+              for r in d["regions"] for h in r["headroom"] if h["limit"] == "resource_floor"]
+    con.executemany("INSERT INTO swdb_attribution_headroom VALUES (?,?,?,?,?,?,?,?,?)", floors)
+    con.executemany("INSERT INTO swdb_attribution_ranking VALUES (?,?,?,?,?,?,?,?)",
+                    [(d["id"], r["position"], r["side"], r["region"], r["tier"], r["limit"], r["value"], r["reason"])
+                     for r in d["ranking"]])
+
+
+_Insert.attribution = staticmethod(_insert_attribution_headroom)

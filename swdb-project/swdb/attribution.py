@@ -41,6 +41,14 @@ Rules used by this version (ticket 04 widens the matching rules):
    before the previous one, oldest first). Each region row records `last_changed_iteration`:
    the newest iteration whose diff into that region's version labels it rewritten (0 = never,
    null = no source location). Without a previous candidate the record is the ticket 02 one.
+9. Resource floor (ticket 07, F6). Each region's floor is max(compute bound, useful-bytes
+   bandwidth bound) from the unchanged mechanism models at the pinned description's own
+   rates, per trial then median. A missing rate gives an unknown floor naming it; no other
+   description's rate is borrowed. Headroom = region seconds ÷ named limit. `this_iteration`
+   region rows carry floors too (same row shape; the previous candidate's from its own estimate).
+10. Ranking (F7, floor-only tier). Candidate regions by floor headroom, largest first;
+    unknown headrooms follow and are never ranked against known ones. One top-level ranking:
+    the candidate is the same in both comparisons, so its floors are too.
 """
 import copy
 import difflib
@@ -364,6 +372,97 @@ def _whole(baseline, candidate, groups):
             'unknown': [reason for g in groups for reason in g['unknown']]}
 
 
+FLOOR_MODELS = ('compute_throughput', 'streaming_bandwidth')
+
+
+def _floor_terms(region, target):
+    """The two floor terms of one counted region, from the description's own mechanisms only (F6).
+
+    The unchanged mechanism models are called exactly as the estimator calls them, so each term
+    equals that model's bound in the estimate. A model the description lacks is run with no
+    rates: zero work gives 0 s, any work gives an unknown term naming the missing rate. No other
+    description's rate and no latency, row, queue or overhead mechanism is read.
+    """
+    from swdb import analytic_models
+    models = [m['model'] for m in target['mechanisms']]
+    terms = []
+    for model in FLOOR_MODELS:
+        own = [m for m in target['mechanisms']
+               if m['model'] == model and m.get('accounting', 'resource_bound') == 'resource_bound']
+        results = [analytic_models.evaluate(region, m, models, target['threads']) for m in own or [{'model': model, 'parameters': {}}]]
+        seconds = None if any(r['seconds'] is None for r in results) else max(r['seconds'] for r in results)
+        terms.append({'model': model, 'in_description': bool(own), 'seconds': seconds,
+                      'missing': sorted({m for r in results for m in r['missing']})})
+    return terms
+
+
+def _counted_trials(side, store):
+    """Per-trial counted regions by ID, reconciled the way the estimator reconciles them."""
+    from swdb.analytic_trial_scope import reconcile_trial
+    trials = side.characterization.get('trials') or []
+    if not trials:
+        return [{r['id']: r for r in side.characterization['regions']}]
+    return [{r['id']: r for r in reconcile_trial(side.characterization, trial, store)[0]['regions']} for trial in trials]
+
+
+def _median(values):
+    return None if any(v is None for v in values) else statistics.median(values)
+
+
+def _resource_floor(region_id, counted, target):
+    """Median over trials of max(terms) (a region absent from a trial counts 0 s), like the estimate."""
+    per_trial = [_floor_terms(t[region_id], target) if region_id in t else None for t in counted]
+    terms = []
+    for i, model in enumerate(FLOOR_MODELS):
+        rows = [t[i] for t in per_trial if t is not None]
+        terms.append({'model': model, 'in_description': all(r['in_description'] for r in rows) if rows else True,
+                      'seconds': _median([t[i]['seconds'] if t else 0. for t in per_trial]),
+                      'missing': sorted({m for r in rows for m in r['missing']})})
+    floors = [None if t and any(x['seconds'] is None for x in t) else max((x['seconds'] for x in t), default=0.) if t else 0.
+              for t in per_trial]
+    seconds = _median(floors)
+    limiting = None if seconds is None else max(terms, key=lambda t: t['seconds'])['model']
+    return {'seconds': seconds, 'limiting_term': limiting, 'terms': terms,
+            'missing': sorted({m for t in terms for m in t['missing']})}
+
+
+def _headroom(limit, estimate, bound):
+    """Estimate ÷ the named limit; null with a reason when it cannot be a number."""
+    reason = ('unknown_estimate' if estimate is None else 'unknown_limit' if bound is None
+              else 'zero_limit' if bound == 0 else None)
+    return {'limit': limit, 'value': None if reason else estimate / bound, 'reason': reason}
+
+
+def _add_floors(side, labels, store):
+    """Annotate each region row of one side with its resource floor and floor headroom."""
+    counted = _counted_trials(side, store)
+    target = side.estimate['target_description_snapshot']
+    _require(artifacts.digest(target) == side.estimate['target_description_sha256'],
+             f'{side.name} estimate target description snapshot differs from the hash it pins')
+    for row in labels.values():
+        floor = _resource_floor(row['region'], counted, target)
+        row['resource_floor'] = floor
+        row['headroom'] = [_headroom('resource_floor', row['seconds'], floor['seconds'])]
+
+
+def _ranking(labels):
+    """Candidate regions for the next iteration, by floor headroom (F7, floor-only tier).
+
+    Known headrooms come first, largest first (ties by region ID); unknown ones follow in
+    region-ID order and are never ranked against known ones. A later tier (the remaining gain
+    bound of ticket 08) goes before the floor tier; positions are 1-based over the whole list.
+    """
+    def floor(row):
+        return next(h for h in row['headroom'] if h['limit'] == 'resource_floor')
+    rows = list(labels.values())
+    known = sorted((r for r in rows if floor(r)['value'] is not None), key=lambda r: (-floor(r)['value'], r['region']))
+    unknown = sorted((r for r in rows if floor(r)['value'] is None), key=lambda r: r['region'])
+    entries = [('floor_headroom', r) for r in known] + [('unknown', r) for r in unknown]
+    return [{'position': i, 'side': row['side'], 'region': row['region'], 'tier': tier, 'limit': 'resource_floor',
+             'value': floor(row)['value'], 'reason': floor(row)['reason']}
+            for i, (tier, row) in enumerate(entries, start=1)]
+
+
 def _pin(data):
     return {'id': data['id'], 'sha256': artifacts.digest(data)}
 
@@ -371,6 +470,20 @@ def _pin(data):
 def _source_pin(data):
     return {'kind': data['kind'], 'id': data['id'], 'sha256': artifacts.digest(data),
             'artifact_sha256': data['artifact']['sha256']}
+
+
+def _floor_problems(record):
+    """A resource floor is a lower limit: never above its region's known estimate (ticket 07)."""
+    from swdb.problems import Problem
+    blocks = [('regions', record.data['regions'])]
+    if 'this_iteration' in record.data:
+        blocks.append(('this_iteration.regions', record.data['this_iteration']['regions']))
+    for field, rows in blocks:
+        for i, row in enumerate(rows):
+            floor, seconds = row['resource_floor']['seconds'], row['seconds']
+            if floor is not None and seconds is not None and floor > seconds * (1 + 1e-9) + 1e-12:
+                yield Problem(record.rel, f'{field}[{i}].resource_floor',
+                              f'resource floor {floor} s exceeds the region estimate {seconds} s')
 
 
 def validate_record(record, ctx):
@@ -395,6 +508,7 @@ def validate_record(record, ctx):
             current = ctx.store.get(pin['id'], 'intrinsic')
             if current is None or artifacts.digest(current) != pin['sha256']:
                 yield Problem(record.rel, 'catalog', f'pinned intrinsic {pin["id"]!r} is missing or changed')
+    yield from _floor_problems(record)
     for field in ('baseline_estimate', 'candidate_estimate'):
         current = ctx.store.get(data[field]['id'], 'estimate')
         if current is not None and current['target_description_sha256'] != data['target_description']['sha256']:
@@ -479,6 +593,8 @@ def _iteration(store, args, baseline, candidate, labels, catalog=None):
         row['last_changed_iteration'] = changed['candidate'][row['region']]
     for row in rows['baseline'].values():
         row['last_changed_iteration'] = changed['previous'][row['region']]
+    _add_floors(before, rows['baseline'], store)
+    _add_floors(candidate, rows['candidate'], store)
     groups = _groups(before, candidate, rows)
     block = {'iteration': len(chain), 'previous_estimate': _pin(previous.estimate),
              'previous_source': _source_pin(previous.source),
@@ -499,6 +615,8 @@ def attribute(args):
     from swdb.library import default_root
     catalog = _Catalog(store, Path(args.library) if args.library else default_root(args.records))
     labels = {'baseline': _label(baseline, sites, catalog), 'candidate': _label(candidate, sites, catalog)}
+    _add_floors(baseline, labels['baseline'], store)
+    _add_floors(candidate, labels['candidate'], store)
     groups = _groups(baseline, candidate, labels)
     this_iteration, previous_inputs = _iteration(store, args, baseline, candidate, labels, catalog)
     inputs = [baseline.estimate, candidate.estimate, baseline.source, candidate.source] + previous_inputs
@@ -517,7 +635,8 @@ def attribute(args):
               'catalog': catalog.pins(),
               'rewrite_sites': sites,
               'regions': list(labels['baseline'].values()) + list(labels['candidate'].values()),
-              'groups': groups, 'whole_program': _whole(baseline, candidate, groups)}
+              'groups': groups, 'whole_program': _whole(baseline, candidate, groups),
+              'ranking': _ranking(labels['candidate'])}
     if this_iteration is not None:
         record['this_iteration'] = this_iteration
     record['identity_sha256'] = artifacts.digest(record)
