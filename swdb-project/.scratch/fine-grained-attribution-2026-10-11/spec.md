@@ -1,7 +1,7 @@
 # Spec: Fine-grained estimate attribution and headroom
 
 Created: 2026-10-11 14:51 ET
-Updated: 2026-10-11 15:11 ET (rewritten to the full spec template after three grilling rounds;
+Updated: 2026-10-11 19:18 ET (ticket 08: decision F25 recorded); 2026-10-11 15:11 ET (rewritten to the full spec template after three grilling rounds;
 decisions F1–F24 unchanged; test seams confirmed by Yan-Ru); 2026-10-11 15:08 ET (grilling round 3);
 2026-10-11 15:04 ET (round 2); 2026-10-11 14:59 ET (round 1)
 **Type:** spec
@@ -187,7 +187,7 @@ A new **attribution report**, produced by one command from saved records only:
   floor reuses the existing compute and streaming-bandwidth models as they are. No frozen protocol
   needs refreshing.
 
-**Decisions F1–F24** (Yan-Ru, 2026-10-11; numbers kept for references in tickets)
+**Decisions F1–F25** (Yan-Ru, 2026-10-11; numbers kept for references in tickets; F25 recorded by ticket 08)
 
 | # | Decision |
 |---|---|
@@ -214,6 +214,7 @@ A new **attribution report**, produced by one command from saved records only:
 | F22 | New record kind under the records tree plus generated `swdb_` SQLite tables. |
 | F23 | A failed split check saves the report as `split_unverified`; the site finder ignores its ranking. |
 | F24 | Unattributed time above 10% of the total is flagged, not refused. |
+| F25 | An entry's mechanism models come from mapping its `uses_intrinsics` to the target description's offload mechanisms (through `hardware_operations`). Models that lack counts (`address_stream_counts`, `accelerator_calls`) give unknown `needs_rewritten_counts`; models runnable on the baseline counts give a numeric bound; no match gives `no_catalog_match`. |
 
 **Record shape (decision-level, not final field names)**
 
