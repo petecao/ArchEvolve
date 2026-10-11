@@ -301,3 +301,155 @@ def test_validate_rejects_an_edited_report_or_a_changed_pinned_estimate(case):
     estimate.write_text(estimate.read_text().replace('status: draft', 'status: accepted', 1))
     changed = case.records.validate()
     assert changed.returncode == 1 and 'candidate_estimate' in changed.stdout + changed.stderr
+
+
+# Resource floor and floor headroom (ticket 07, spec F6, F7). The floor is
+# max(compute bound, useful-bytes bandwidth bound) at the target description's own rates.
+def rate(value, unit):
+    return {'value': value, 'basis': 'reported', 'source': 'Hand-computed attribution fixture; not a measurement.', 'unit': unit}
+
+
+# Every rate has a `theoretical_peak_*` twin a million times faster: a floor that read one would be ~0 s.
+COMPUTE = {'model': 'compute_throughput', 'parameters': {
+    **{c + '_ops_per_s': rate(1.0 if c == 'floating_point' else 1e9, 'operations/s') for c in ('integer', 'floating_point', 'branch', 'atomic')},
+    'theoretical_peak_floating_point_ops_per_s': rate(1e6, 'operations/s')}}
+BANDWIDTH = {'model': 'streaming_bandwidth', 'parameters': {
+    'bytes_per_s': rate(2.0, 'bytes/s'), 'theoretical_peak_bytes_per_s': rate(2e6, 'bytes/s')}}
+LATENCY = {'model': 'requests_in_flight_latency', 'parameters': {
+    'dependent_latency_s': rate(6.0, 'seconds/load'), 'effective_requests_per_thread': rate(1.0, 'requests/thread')}}
+
+
+def use_target(case, mechanisms):
+    """Re-point the case at a description with these mechanisms and a protocol frozen on it."""
+    data = yaml.safe_load(case.target.read_text())
+    data['mechanisms'] = mechanisms
+    case.target = case.tmp_path / 'floor-target.yaml'
+    case.target.write_text(yaml.safe_dump(data, sort_keys=False))
+    case.target_sha256 = digest(data)
+    freeze = case.tmp_path / 'floor-freeze.yaml'
+    freeze.write_text(yaml.safe_dump({'message_version': '1.0', 'id': 'fixture.floor.protocol', 'version': 1,
+        'settings': {'mode': 'estimated', 'estimator_version': 'swdb.analytic.v1', 'target_description': str(case.target),
+                     'inputs': ['tiny-sym', 'tiny-sym-b'], 'roi': 'fixture.stream.v1', 'threads': 1}}, sort_keys=False))
+    result = run_swdb('freeze-protocol', freeze, '--records', case.records.path, '--format', 'json')
+    assert result.returncode == 0, result.stdout + result.stderr
+    case.protocol = json.loads(result.stdout)['id']
+
+
+def work(rid, path, line, flops, stream_bytes=0, requests=0, scope='per_call'):
+    """A loop with `flops` fp ops (1 s each), `stream_bytes` streamed (2 B/s) and `requests` dependent loads (6 s each)."""
+    row = region(rid, path, line, flops, scope)
+    stream = row['access_patterns'][0]
+    stream['bytes_accessed'] = count(stream_bytes, scope)
+    stream['element_count'] = count(stream_bytes // 4, scope)
+    row['active_workers'] = {'value': 1, 'basis': 'measured'}
+    if requests:
+        row['access_patterns'].append({**stream, 'id': stream['id'] + '.gather',
+            'address_shape': {'value': 'single_valued_indirect', 'basis': 'reported'},
+            'element_count': count(requests, scope), 'bytes_accessed': count(4 * requests, scope), 'address_expression': 'a[idx[i]]'})
+    return row
+
+
+def rows(report, side):
+    return {r['region']: r for r in report['regions'] if r['side'] == side}
+
+
+def test_resource_floor_is_below_the_estimate_and_headroom_names_its_limit(case):
+    use_target(case, [COMPUTE, BANDWIDTH, LATENCY])
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    # Baseline rewritten loop: compute 10 s, bandwidth 16 B / 2 = 8 s, latency 10 x 6 = 60 s -> estimate 60 s, floor 10 s.
+    case.estimate('fixture.baseline', [work('base.untouched', b, 3, 40), work('base.rewritten', b, 7, 10, 16, 10)])
+    # Candidate rewritten loop: compute 4 s, bandwidth 8 s, latency 5 x 6 = 30 s -> estimate 30 s, floor 8 s (bandwidth).
+    case.estimate('fixture.candidate', [work('cand.untouched', c, 3, 40), work('cand.rewritten', c, 7, 4, 16, 5)])
+    report = attributed(case)
+    base, cand = rows(report, 'baseline'), rows(report, 'candidate')
+    assert base['base.rewritten']['seconds'] == pytest.approx(60)
+    assert base['base.rewritten']['resource_floor']['seconds'] == pytest.approx(10)
+    assert base['base.rewritten']['resource_floor']['limiting_term'] == 'compute_throughput'
+    floor = cand['cand.rewritten']['resource_floor']
+    assert cand['cand.rewritten']['seconds'] == pytest.approx(30)
+    assert floor['seconds'] == pytest.approx(8) and floor['limiting_term'] == 'streaming_bandwidth'
+    assert {t['model']: t['seconds'] for t in floor['terms']} == pytest.approx({'compute_throughput': 4, 'streaming_bandwidth': 8})
+    assert floor['missing'] == []
+    assert cand['cand.rewritten']['headroom'] == [{'limit': 'resource_floor', 'value': pytest.approx(3.75), 'reason': None}]
+    assert cand['cand.untouched']['headroom'] == [{'limit': 'resource_floor', 'value': pytest.approx(1.0), 'reason': None}]
+    for row in report['regions']:
+        assert row['resource_floor']['seconds'] <= row['seconds'] + 1e-12
+    # Candidate regions only, by floor headroom: the rewritten loop (3.75) before the untouched one (1.0).
+    assert [(r['position'], r['side'], r['region'], r['tier'], r['limit']) for r in report['ranking']] == [
+        (1, 'candidate', 'cand.rewritten', 'floor_headroom', 'resource_floor'),
+        (2, 'candidate', 'cand.untouched', 'floor_headroom', 'resource_floor')]
+    assert [r['value'] for r in report['ranking']] == pytest.approx([3.75, 1.0])
+
+
+def test_a_missing_bandwidth_rate_gives_an_unknown_floor_with_a_reason_not_zero(case):
+    # Like the BFS services description: memory is priced by another mechanism, and there is no
+    # streaming bandwidth rate. The cache's hit `bytes_per_s` must not stand in for one.
+    cache = {'model': 'cache_fit', 'parameters': {'capacity_bytes': rate(1e9, 'bytes'), 'bytes_per_s': rate(1000.0, 'bytes/s'),
+                                                  'cold_bytes_per_s': rate(1000.0, 'bytes/s')}}
+    use_target(case, [COMPUTE, LATENCY, cache])
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    case.estimate('fixture.baseline', [work('base.untouched', b, 3, 40), work('base.rewritten', b, 7, 10, 16, 10)])
+    case.estimate('fixture.candidate', [work('cand.untouched', c, 3, 40), work('cand.rewritten', c, 7, 4, 16, 5)])
+    report = attributed(case)
+    cand = rows(report, 'candidate')
+    # The estimate itself is known (30 s of latency) because the description prices no bandwidth.
+    assert cand['cand.rewritten']['seconds'] == pytest.approx(30)
+    floor = cand['cand.rewritten']['resource_floor']
+    assert floor['seconds'] is None and floor['limiting_term'] is None
+    assert floor['missing'] == ['bytes_per_s']
+    assert floor['terms'] == [
+        {'model': 'compute_throughput', 'in_description': True, 'seconds': pytest.approx(4), 'missing': []},
+        {'model': 'streaming_bandwidth', 'in_description': False, 'seconds': None, 'missing': ['bytes_per_s']}]
+    assert cand['cand.rewritten']['headroom'] == [{'limit': 'resource_floor', 'value': None, 'reason': 'unknown_limit'}]
+    # A loop that moves no bytes needs no bandwidth rate: its floor is its compute bound.
+    assert cand['cand.untouched']['resource_floor']['seconds'] == pytest.approx(40)
+    assert [(r['region'], r['tier'], r['value'], r['reason']) for r in report['ranking']] == [
+        ('cand.untouched', 'floor_headroom', pytest.approx(1.0), None), ('cand.rewritten', 'unknown', None, 'unknown_limit')]
+
+
+def test_floor_follows_the_estimate_trial_rule_and_stays_below_it(case):
+    use_target(case, [COMPUTE, BANDWIDTH, LATENCY])
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    base = [[work('base.loop', b, 7, 10, 0, 0, 'per_trial')]] * 3
+    # Candidate trials (flops, bytes, requests) -> (floor, estimate): (4, 16, 5) -> (8, 30); (20, 0, 1) -> (20, 20);
+    # (1, 4, 0) -> (2, 2). Medians: floor 8 s, estimate 20 s, so the headroom is 2.5. A floor from medianed
+    # counts (4, 4, 1) would be 4 s; one from the top-level rows (the last trial's counts) would be 2 s.
+    cand = [[work('cand.loop', c, 7, f, n, r, 'per_trial')] for f, n, r in ((4, 16, 5), (20, 0, 1), (1, 4, 0))]
+    case.estimate('fixture.baseline', base[0], trials=base)
+    case.estimate('fixture.candidate', cand[2], trials=cand)
+    row = rows(attributed(case), 'candidate')['cand.loop']
+    assert row['seconds'] == pytest.approx(20)
+    assert row['resource_floor']['seconds'] == pytest.approx(8)
+    assert row['headroom'][0]['value'] == pytest.approx(2.5)
+
+
+def test_floors_and_ranking_validate_and_are_indexed_and_a_floor_above_its_estimate_is_rejected(case):
+    use_target(case, [COMPUTE, BANDWIDTH, LATENCY])
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    case.estimate('fixture.baseline', [work('base.untouched', b, 3, 40), work('base.rewritten', b, 7, 10, 16, 10)])
+    case.estimate('fixture.candidate', [work('cand.untouched', c, 3, 40), work('cand.rewritten', c, 7, 4, 16, 5)])
+    attributed(case)
+    checked = case.records.validate()
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+    db = case.tmp_path / 'index.sqlite'
+    query = lambda sql: json.loads(run_swdb('sql', sql, '--records', case.records.path, '--db', db, '--format', 'json').stdout)
+    assert query("SELECT side, region, limit_name, limit_seconds, limiting_term, headroom, reason FROM swdb_attribution_headroom "
+                 "WHERE side = 'candidate' ORDER BY region") == [
+        {'side': 'candidate', 'region': 'cand.rewritten', 'limit_name': 'resource_floor', 'limit_seconds': 8.0,
+         'limiting_term': 'streaming_bandwidth', 'headroom': 3.75, 'reason': None},
+        {'side': 'candidate', 'region': 'cand.untouched', 'limit_name': 'resource_floor', 'limit_seconds': 40.0,
+         'limiting_term': 'compute_throughput', 'headroom': 1.0, 'reason': None}]
+    assert query('SELECT attribution, position, region, tier, limit_name, value FROM swdb_attribution_ranking ORDER BY position') == [
+        {'attribution': 'fixture.attribution', 'position': 1, 'region': 'cand.rewritten', 'tier': 'floor_headroom',
+         'limit_name': 'resource_floor', 'value': 3.75},
+        {'attribution': 'fixture.attribution', 'position': 2, 'region': 'cand.untouched', 'tier': 'floor_headroom',
+         'limit_name': 'resource_floor', 'value': 1.0}]
+    # A hand edit that lifts a floor above its estimate is caught even with a recomputed identity hash.
+    path = case.records.path / 'attributions' / 'fixture.attribution.yaml'
+    data = yaml.safe_load(path.read_text())
+    next(r for r in data['regions'] if r['region'] == 'cand.rewritten')['resource_floor']['seconds'] = 31.0
+    data.pop('identity_sha256')
+    data['identity_sha256'] = digest(data)
+    case.records.write('attributions/fixture.attribution.yaml', data)
+    lifted = case.records.validate()
+    assert lifted.returncode == 1 and 'resource floor' in lifted.stdout + lifted.stderr

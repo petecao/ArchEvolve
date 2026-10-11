@@ -541,3 +541,35 @@ One row per region of either estimate.
 | `last_line` | last line of its span |
 | `seconds` | the estimate's per-region seconds (diagnostic) |
 | `sites` | JSON list of the rewrite-site IDs it overlaps |
+
+### `swdb_attribution_headroom`
+
+Added: 2026-10-11 (Eastern Time), fine-grained attribution ticket 07. One row per region of
+either estimate and named limit (today only `resource_floor`; ticket 08 adds `catalog_bound`).
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `side` | `baseline` or `candidate` |
+| `region` | the estimate's region ID |
+| `limit_name` | the named limit, e.g. `resource_floor` |
+| `limit_seconds` | the limit's seconds (NULL if unknown) |
+| `limiting_term` | for the floor: `compute_throughput` or `streaming_bandwidth` (NULL if unknown) |
+| `headroom` | region seconds ÷ limit seconds (NULL if it cannot be a number) |
+| `reason` | why `headroom` is NULL: `unknown_estimate`, `unknown_limit` or `zero_limit` |
+| `missing` | JSON list of the missing counts and rates behind an unknown limit |
+
+### `swdb_attribution_ranking`
+
+Added: 2026-10-11 (Eastern Time), ticket 07. The candidate's regions in next-iteration order.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `position` | 1-based place in the order |
+| `side` | always `candidate` |
+| `region` | the candidate estimate's region ID |
+| `tier` | `floor_headroom`, or `unknown` (ranked after every known value) |
+| `limit_name` | the limit the value uses, e.g. `resource_floor` |
+| `value` | the ranking value (floor headroom); NULL in the `unknown` tier |
+| `reason` | why the value is NULL |
