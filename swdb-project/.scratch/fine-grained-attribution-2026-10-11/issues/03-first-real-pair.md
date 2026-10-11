@@ -15,3 +15,35 @@ Created: 2026-10-11 15:14 ET
 - [ ] A real attribution report saved and validated, or a negative report.
 - [ ] Record shares of rewritten, untouched and unattributed time in the map's current state.
 - [ ] Follow the mbit10 rules: lane lease, `df -h` before large runs, raw output outside git.
+
+## Prospective plan (recorded before any estimate or timing)
+
+Recorded: 2026-10-11 19:19 ET on branch `fga/03-real-pair`, before any command below ran.
+Code under test: integration branch `yanrujhou/fine-grained-attribution` at `d0c80a8a`, checked
+out on mbit10 as a separate worktree `/data1/yanruj/ArchEvolve-fga03` (the shared clone stays on
+`yanrujhou_main`). Raw output: `/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/`
+(`/data1` had 23 GB free; the worktree takes about 2 GB of it).
+
+**Pair (F9/F16, F26).** Baseline = the scalar-only source snapshot the candidate was cut from,
+`bfs-dx100-scalar-only-20260929-a1.source` (implementation `dx100-bfs-scalar`). Candidate =
+`extensa-native-bfs-20261005-a8.it1.kronecker.a0` (contract `bfs_tdstep_frontier_staging`).
+
+**Target description (F9).** `mbit10.cpu.lanl20261006.t1.services.v1`
+(sha256 `9fec46b1…ca76b`), the BFS/BC g16/g17 CPU description. Unchanged; T1.
+
+**Input (F18).** `dx100-functional-kron-g16-k16`, run arguments `-g 16 -k 16 -n 5`, threads 1,
+ROI `gapbs.functional_trial_lambda.v1`. **Planned ticket-09 timing input: the same ID,
+`dx100-functional-kron-g16-k16`, T1, on mbit10.** Not the a8 campaign's scale-22 workloads
+(`bfs-20261004-kronecker22.*`): those are a different input, so they cannot be used (risks B5).
+
+**Order (LR-02).**
+
+1. Freeze a fresh estimate protocol on `d0c80a8a` (F27).
+2. Characterize, then estimate, the **baseline** (snapshot).
+3. Characterize, then estimate, the **candidate**.
+4. `swdb attribute` on the pair; `swdb validate` the records.
+5. No timing in this ticket. Ticket 09 times afterwards.
+
+**Stop rule (LR-01).** If either estimate's `seconds` is null, stop after step 3, keep the
+estimates as evidence, and close on a negative report naming each missing piece. The target
+description and the estimator are not changed to make the number appear.
