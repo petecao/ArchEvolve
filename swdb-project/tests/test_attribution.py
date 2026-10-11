@@ -9,7 +9,7 @@ import json
 import pytest
 import yaml
 
-from conftest import run_swdb
+from conftest import REPO, run_swdb
 from testkit.analytic import digest, fixture_characterization, target_description
 
 # Baseline kernel: `untouched` loop at lines 3-4, `rewritten` loop at lines 7-8.
@@ -824,7 +824,7 @@ def test_without_a_previous_candidate_the_report_is_the_ticket_02_report(case):
     assert list(alone) == ['kind', 'schema_version', 'id', 'status', 'created', 'updated', 'provenance', 'format',
                            'baseline_estimate', 'candidate_estimate', 'baseline_source', 'candidate_source',
                            'target_description', 'input', 'threads', 'evidence_kind', 'catalog', 'rewrite_sites', 'regions',
-                           'groups', 'whole_program', 'ranking', 'identity_sha256']
+                           'groups', 'whole_program', 'ranking', 'ranking_rule', 'identity_sha256']
     assert all('last_changed_iteration' not in row for row in alone['regions'])
     # The cumulative part of an iteration-2 report is the same comparison, plus last-changed iterations.
     both = attributed_iteration(case, 2, previous=1, rid='fixture.both')
@@ -965,8 +965,10 @@ def test_resource_floor_is_below_the_estimate_and_headroom_names_its_limit(case)
     assert floor['seconds'] == pytest.approx(8) and floor['limiting_term'] == 'streaming_bandwidth'
     assert {t['model']: t['seconds'] for t in floor['terms']} == pytest.approx({'compute_throughput': 4, 'streaming_bandwidth': 8})
     assert floor['missing'] == []
-    assert cand['cand.rewritten']['headroom'] == [{'limit': 'resource_floor', 'value': pytest.approx(3.75), 'reason': None}]
-    assert cand['cand.untouched']['headroom'] == [{'limit': 'resource_floor', 'value': pytest.approx(1.0), 'reason': None}]
+    # Without site-finder regions the catalog headroom is null and says why (ticket 08).
+    no_catalog = {'limit': 'catalog_bound', 'value': None, 'reason': 'no_site_finder'}
+    assert cand['cand.rewritten']['headroom'] == [{'limit': 'resource_floor', 'value': pytest.approx(3.75), 'reason': None}, no_catalog]
+    assert cand['cand.untouched']['headroom'] == [{'limit': 'resource_floor', 'value': pytest.approx(1.0), 'reason': None}, no_catalog]
     for row in report['regions']:
         assert row['resource_floor']['seconds'] <= row['seconds'] + 1e-12
     # Candidate regions only, by floor headroom: the rewritten loop (3.75) before the untouched one (1.0).
@@ -995,7 +997,7 @@ def test_a_missing_bandwidth_rate_gives_an_unknown_floor_with_a_reason_not_zero(
     assert floor['terms'] == [
         {'model': 'compute_throughput', 'in_description': True, 'seconds': pytest.approx(4), 'missing': []},
         {'model': 'streaming_bandwidth', 'in_description': False, 'seconds': None, 'missing': ['bytes_per_s']}]
-    assert cand['cand.rewritten']['headroom'] == [{'limit': 'resource_floor', 'value': None, 'reason': 'unknown_limit'}]
+    assert cand['cand.rewritten']['headroom'][0] == {'limit': 'resource_floor', 'value': None, 'reason': 'unknown_limit'}
     # A loop that moves no bytes needs no bandwidth rate: its floor is its compute bound.
     assert cand['cand.untouched']['resource_floor']['seconds'] == pytest.approx(40)
     assert [(r['region'], r['tier'], r['value'], r['reason']) for r in report['ranking']] == [
@@ -1029,7 +1031,7 @@ def test_floors_and_ranking_validate_and_are_indexed_and_a_floor_above_its_estim
     db = case.tmp_path / 'index.sqlite'
     query = lambda sql: json.loads(run_swdb('sql', sql, '--records', case.records.path, '--db', db, '--format', 'json').stdout)
     assert query("SELECT side, region, limit_name, limit_seconds, limiting_term, headroom, reason FROM swdb_attribution_headroom "
-                 "WHERE side = 'candidate' ORDER BY region") == [
+                 "WHERE side = 'candidate' AND limit_name = 'resource_floor' ORDER BY region") == [
         {'side': 'candidate', 'region': 'cand.rewritten', 'limit_name': 'resource_floor', 'limit_seconds': 8.0,
          'limiting_term': 'streaming_bandwidth', 'headroom': 3.75, 'reason': None},
         {'side': 'candidate', 'region': 'cand.untouched', 'limit_name': 'resource_floor', 'limit_seconds': 40.0,
@@ -1048,3 +1050,179 @@ def test_floors_and_ranking_validate_and_are_indexed_and_a_floor_above_its_estim
     case.records.write('attributions/fixture.attribution.yaml', data)
     lifted = case.records.validate()
     assert lifted.returncode == 1 and 'resource floor' in lifted.stdout + lifted.stderr
+
+
+# --- Ticket 08: catalog bound and full ranking (2026-10-11 ET; spec F6, F7, F21, F25) ----------
+#
+# The description prices host compute (1 fp op/s) and one offload mechanism, `fetch_queue`
+# (1 s per logical line request), at full overlap, and declares the DX100 functional
+# observation commands (copied from the repo's description). The fixture library has an
+# offload operation whose intrinsic provides `dx100.functional.v1.gather` (so it reaches
+# `fetch_queue`) and a plain CPU operation with no intrinsic (so it reaches no mechanism).
+# Site-finder lines name a full-source revision (70-71, 30-31): the join is by function.
+DX100_DESCRIPTION = REPO / 'records' / 'target_descriptions' / 'dx100-e4fc4af-functional-analytic-v1.t1.yaml'
+A8_SUMMARY = REPO / 'records' / 'campaign_summaries' / 'extensa-native-bfs-20261005-a8.summary.yaml'
+QUEUE = {'model': 'fetch_queue', 'selector': {'domain': 'offload'}, 'parameters': {
+    'queue_entries': rate(1, 'entries'), 'fetch_latency_s': rate(1.0, 'seconds/request'),
+    'admission_requests_per_s': rate(1.0, 'requests/s')}}
+
+
+def offload_target(case):
+    data = yaml.safe_load(case.target.read_text())
+    dx100 = yaml.safe_load(DX100_DESCRIPTION.read_text())
+    data['functional_observation'] = dx100['functional_observation']
+    data['dram_address_layout'] = dx100['dram_address_layout']
+    data['composition_contract'] = {'format': 'swdb.composition-contract.v1', 'resource_domain_overlap': 'full_overlap',
+                                    'basis': 'inferred', 'source': 'Declared hand-computed overlap fixture premise.'}
+    case.target.write_text(yaml.safe_dump(data, sort_keys=False))
+    use_target(case, [COMPUTE, QUEUE])
+
+
+def logical(case, requests):
+    """Logical line requests counted for the case's description (requests x 1 s in `fetch_queue`)."""
+    fraction = {'value': 0.0 if requests else None, 'basis': 'reported' if requests else 'unknown', 'scope': 'per_call'}
+    return {case.target_sha256: {
+        'format': 'swdb.logical-address-counts.v1', 'target_description_sha256': case.target_sha256,
+        'level': 'derived_logical_transactions', 'state': 'complete', 'scope': 'per_call', 'missing': [],
+        **{name: '0' * 64 for name in ('layout_sha256', 'request_policy_sha256', 'placement_assumption_sha256', 'window_policy_sha256')},
+        'line_requests': count(requests), 'row_groups': count(requests), 'grouped_row_hits': count(0),
+        'grouped_row_hit_fraction': fraction, 'windows': count(0), 'staged_bytes': count(0),
+        'notes': ['Logical hand-counted attribution fixture; no hardware evidence.']}}
+
+
+def offloaded(case, rid, path, line, flops, requests=None):
+    row = region(rid, path, line, flops)
+    row['active_workers'] = {'value': 1, 'basis': 'measured'}
+    if requests is not None:
+        row['address_stream_counts'] = logical(case, requests)
+    return row
+
+
+def catalog_library(case):
+    root = case.tmp_path / 'catalog-bound-library'
+    entries = {'intrinsics/fixture_gather.yaml': {'id': 'intrinsic.fixture_gather', 'kind': 'intrinsic',
+                                                  'hardware_operations': ['dx100.functional.v1.gather']},
+               'library_operations/fixture_offload.yaml': {'id': 'operation.fixture_offload', 'kind': 'library_operation',
+                                                           'uses_intrinsics': ['intrinsic.fixture_gather'], 'uses_library_operations': []},
+               'library_operations/fixture_cpu.yaml': {'id': 'operation.fixture_cpu', 'kind': 'library_operation',
+                                                       'uses_intrinsics': [], 'uses_library_operations': []}}
+    for rel, data in entries.items():
+        (root / rel).parent.mkdir(parents=True, exist_ok=True)
+        (root / rel).write_text(yaml.safe_dump(data, sort_keys=False))
+    return root, {data['id']: digest(data) for data in entries.values()}
+
+
+def site_finder_summary(case, shas):
+    """A saved campaign summary whose one iteration chose two site-finder regions."""
+    data = yaml.safe_load(A8_SUMMARY.read_text())
+    data['id'], data['campaign'] = 'extensa-native-bfs-20261011-z9.summary', 'extensa-native-bfs-20261011-z9'
+
+    def chosen(function, lines, entry):
+        return {'id': f'stub-impl/{function}:{lines[0]}-{lines[1]}', 'reason': f'{entry} applies (fixture)',
+                'why': {'query_sha256': 'a' * 64, 'statements': [f'{function}-loop'],
+                        'source': {'path': 'kernel.cpp', 'revision': 'full-source-fixture', 'lines': lines},
+                        'applications': [{'entry': entry, 'contract': None, 'kind': 'library_operation',
+                                          'content_sha256': shas[entry], 'pattern_key': [], 'statements': [f'{function}-loop'],
+                                          'legality': []}]}}
+    data['iterations'] = [{'index': 1, 'started': '2026-10-11T00:00:00+00:00', 'ended': '2026-10-11T00:00:00+00:00',
+                           'regions': [chosen('rewritten', [70, 71], 'operation.fixture_offload'),
+                                       chosen('untouched', [30, 31], 'operation.fixture_cpu')],
+                           'provider_calls': [], 'candidates': [], 'feedback_reasons': [], 'improved_classes': [],
+                           'site_finder': {'query_sha256': 'a' * 64}}]
+    case.records.write('campaign_summaries/extensa-native-bfs-20261011-z9.summary.yaml', data)
+
+
+def catalog_case(case):
+    offload_target(case)
+    library, shas = catalog_library(case)
+    site_finder_summary(case, shas)
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    # Baseline: the rewritten loop has no logical offload counts, so neither its estimate nor
+    # the offload entry can be computed (`needs_rewritten_counts`).
+    case.estimate('fixture.baseline', [offloaded(case, 'base.untouched', b, 3, 40, 0), offloaded(case, 'base.rewritten', b, 7, 60)])
+    # Candidate (total 80 s): rewritten loop max(30 s compute, 6 s queue) = 30 s; `cand.mixed` sits
+    # in `rewritten` but carries an access inlined from `untouched` (line 4): max(10, 5) = 10 s.
+    mixed = offloaded(case, 'cand.mixed', c, 8, 10, 5)
+    mixed['access_patterns'].append({**mixed['access_patterns'][0], 'id': 'cand.mixed.inlined',
+                                     'source_location': {'function': 'fixture', 'line': 4, 'path': str(c)}})
+    case.estimate('fixture.candidate', [offloaded(case, 'cand.untouched', c, 3, 40, 0),
+                                        offloaded(case, 'cand.rewritten', c, 7, 30, 6), mixed])
+    result = run_swdb('attribute', '--records', case.records.path, '--baseline-estimate', 'fixture.baseline',
+        '--candidate-estimate', 'fixture.candidate', '--baseline-source', 'fixture.baseline.source',
+        '--candidate-source', 'fixture.candidate.source', '--library', library, '--site-finder', 'extensa-native-bfs-20261011-z9.summary',
+        '--id', 'fixture.attribution', '--format', 'json')
+    assert result.returncode == 0, result.stdout + result.stderr
+    return json.loads(result.stdout)
+
+
+def test_catalog_bound_is_numeric_unknown_or_no_match_and_ranks_remaining_gain_before_floor_only_regions(case):
+    report = catalog_case(case)
+    base, cand = rows(report, 'baseline'), rows(report, 'candidate')
+    assert (cand['cand.rewritten']['seconds'], cand['cand.mixed']['seconds'], cand['cand.untouched']['seconds']) == (30, 10, 40)
+    # Evaluable entry: its offload mechanism runs on the region's own counts -> 6 s.
+    bound = cand['cand.rewritten']['catalog_bound']
+    assert (bound['seconds'], bound['entry'], bound['reason'], bound['mixed']) == (pytest.approx(6), 'operation.fixture_offload', None, False)
+    assert bound['site_finder_regions'] == ['stub-impl/rewritten:70-71']
+    assert [(e['entry'], e['seconds'], e['reason']) for e in bound['entries']] == [('operation.fixture_offload', pytest.approx(6), None)]
+    assert [(m['model'], m['accounting'], m['seconds']) for m in bound['entries'][0]['mechanisms']] == [
+        ('fetch_queue', 'resource_bound', pytest.approx(6))]
+    assert cand['cand.rewritten']['headroom'][1] == {'limit': 'catalog_bound', 'value': pytest.approx(5.0), 'reason': None}
+    # Partial overlap (F21): both functions joined, flagged mixed; the lowest known entry wins.
+    mixed = cand['cand.mixed']['catalog_bound']
+    assert (mixed['seconds'], mixed['entry'], mixed['mixed']) == (pytest.approx(5), 'operation.fixture_offload', True)
+    assert mixed['site_finder_regions'] == ['stub-impl/rewritten:70-71', 'stub-impl/untouched:30-31']
+    assert [(e['entry'], e['reason']) for e in mixed['entries']] == [
+        ('operation.fixture_cpu', 'no_offload_mechanism'), ('operation.fixture_offload', None)]
+    # No match: the plain CPU operation reaches no offload mechanism; never infinite headroom.
+    none = cand['cand.untouched']['catalog_bound']
+    assert (none['seconds'], none['entry'], none['reason']) == (None, None, 'no_catalog_match')
+    assert cand['cand.untouched']['headroom'][1] == {'limit': 'catalog_bound', 'value': None, 'reason': 'no_catalog_match'}
+    # Needs rewritten counts: unknown with a named reason, never free.
+    needs = base['base.rewritten']['catalog_bound']
+    assert (needs['seconds'], needs['reason']) == (None, 'needs_rewritten_counts')
+    assert needs['entries'][0]['reason'] == 'needs_rewritten_counts'
+    assert 'address_stream_counts.requested_target_description' in needs['missing']
+    # Ranking (F7): 30/80 x (1 - 6/30) = 0.3 and 10/80 x (1 - 5/10) = 0.0625, then the floor-only
+    # region, whose floor headroom (1.0) is larger but never compared with them.
+    assert [(r['position'], r['region'], r['tier'], r['limit']) for r in report['ranking']] == [
+        (1, 'cand.rewritten', 'remaining_gain_bound', 'catalog_bound'),
+        (2, 'cand.mixed', 'remaining_gain_bound', 'catalog_bound'),
+        (3, 'cand.untouched', 'floor_headroom', 'resource_floor')]
+    assert [r['value'] for r in report['ranking']] == pytest.approx([0.3, 0.0625, 1.0])
+    assert report['ranking_rule']['remaining_gain_bound'].startswith('Upper limit, never an expected gain')
+    assert report['site_finder']['campaign_summary']['id'] == 'extensa-native-bfs-20261011-z9.summary'
+    assert report['site_finder']['iteration'] == 1
+    assert [(r['id'], r['function'], r['entries']) for r in report['site_finder']['regions']] == [
+        ('stub-impl/rewritten:70-71', 'rewritten', ['operation.fixture_offload']),
+        ('stub-impl/untouched:30-31', 'untouched', ['operation.fixture_cpu'])]
+
+
+def test_catalog_bounds_validate_are_indexed_and_pin_the_site_finder_summary(case):
+    catalog_case(case)
+    checked = case.records.validate()
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+    db = case.tmp_path / 'index.sqlite'
+    query = lambda sql: json.loads(run_swdb('sql', sql, '--records', case.records.path, '--db', db, '--format', 'json').stdout)
+    assert query("SELECT region, limit_seconds, limiting_term, headroom, reason FROM swdb_attribution_headroom "
+                 "WHERE side = 'candidate' AND limit_name = 'catalog_bound' ORDER BY region") == [
+        {'region': 'cand.mixed', 'limit_seconds': 5.0, 'limiting_term': 'operation.fixture_offload', 'headroom': 2.0, 'reason': None},
+        {'region': 'cand.rewritten', 'limit_seconds': 6.0, 'limiting_term': 'operation.fixture_offload', 'headroom': 5.0, 'reason': None},
+        {'region': 'cand.untouched', 'limit_seconds': None, 'limiting_term': None, 'headroom': None, 'reason': 'no_catalog_match'}]
+    assert query("SELECT side, region, entry, seconds, reason, mixed FROM swdb_attribution_catalog ORDER BY side, region, entry") == [
+        {'side': 'baseline', 'region': 'base.rewritten', 'entry': 'operation.fixture_offload', 'seconds': None,
+         'reason': 'needs_rewritten_counts', 'mixed': 0},
+        {'side': 'baseline', 'region': 'base.untouched', 'entry': 'operation.fixture_cpu', 'seconds': None,
+         'reason': 'no_offload_mechanism', 'mixed': 0},
+        {'side': 'candidate', 'region': 'cand.mixed', 'entry': 'operation.fixture_cpu', 'seconds': None,
+         'reason': 'no_offload_mechanism', 'mixed': 1},
+        {'side': 'candidate', 'region': 'cand.mixed', 'entry': 'operation.fixture_offload', 'seconds': 5.0, 'reason': None, 'mixed': 1},
+        {'side': 'candidate', 'region': 'cand.rewritten', 'entry': 'operation.fixture_offload', 'seconds': 6.0, 'reason': None, 'mixed': 0},
+        {'side': 'candidate', 'region': 'cand.untouched', 'entry': 'operation.fixture_cpu', 'seconds': None,
+         'reason': 'no_offload_mechanism', 'mixed': 0}]
+    assert query("SELECT tier, region FROM swdb_attribution_ranking ORDER BY position") == [
+        {'tier': 'remaining_gain_bound', 'region': 'cand.rewritten'}, {'tier': 'remaining_gain_bound', 'region': 'cand.mixed'},
+        {'tier': 'floor_headroom', 'region': 'cand.untouched'}]
+    summary = case.records.path / 'campaign_summaries' / 'extensa-native-bfs-20261011-z9.summary.yaml'
+    summary.write_text(summary.read_text().replace('status: draft', 'status: accepted', 1))
+    changed = case.records.validate()
+    assert changed.returncode == 1 and 'site_finder' in changed.stdout + changed.stderr

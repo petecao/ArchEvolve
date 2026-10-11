@@ -717,7 +717,7 @@ def _insert_attribution_iteration(con, d):
 
 
 # Fine-grained attribution ticket 07 (2026-10-11 ET): one headroom row per region and named
-# limit (ticket 08 adds `catalog_bound` rows), and the next-iteration ranking. Headroom rows
+# limit (ticket 08 adds `catalog_bound` rows below), and the next-iteration ranking. Headroom rows
 # come from the cumulative `regions`; `this_iteration` region floors stay in the JSON column.
 SCHEMA += """
 CREATE TABLE swdb_attribution_headroom (attribution TEXT NOT NULL, side TEXT NOT NULL, region TEXT NOT NULL,
@@ -744,3 +744,33 @@ def _insert_attribution_headroom(con, d, *rest):
 
 
 _Insert.attribution = staticmethod(_insert_attribution_headroom)
+
+
+# Fine-grained attribution ticket 08 (2026-10-11 ET): one `catalog_bound` headroom row per
+# region (`limiting_term` holds the entry that gives the bound), and one row per region and
+# site-finder-matched entry with that entry's own estimate or unknown reason. Rows come from
+# the cumulative `regions`; `this_iteration` catalog bounds stay in the JSON column.
+SCHEMA += """
+CREATE TABLE swdb_attribution_catalog (attribution TEXT NOT NULL, side TEXT NOT NULL, region TEXT NOT NULL,
+    entry TEXT NOT NULL, kind TEXT, seconds REAL, reason TEXT, site_finder_regions TEXT NOT NULL, mixed INTEGER NOT NULL,
+    missing TEXT NOT NULL, PRIMARY KEY (attribution, side, region, entry));
+"""
+
+
+_insert_attribution_before_catalog = _Insert.attribution  # chain, so other tickets' inserts keep running
+
+
+def _insert_attribution_catalog(con, d, *rest):
+    _insert_attribution_before_catalog(con, d, *rest)
+    rows = [r for r in d["regions"] if "catalog_bound" in r]
+    con.executemany("INSERT INTO swdb_attribution_headroom VALUES (?,?,?,?,?,?,?,?,?)",
+                    [(d["id"], r["side"], r["region"], h["limit"], r["catalog_bound"]["seconds"], r["catalog_bound"]["entry"],
+                      h["value"], h["reason"], json.dumps(r["catalog_bound"]["missing"]))
+                     for r in rows for h in r["headroom"] if h["limit"] == "catalog_bound"])
+    con.executemany("INSERT INTO swdb_attribution_catalog VALUES (?,?,?,?,?,?,?,?,?,?)",
+                    [(d["id"], r["side"], r["region"], e["entry"], e["kind"], e["seconds"], e["reason"],
+                      json.dumps(e["site_finder_regions"]), int(r["catalog_bound"]["mixed"]), json.dumps(e["missing"]))
+                     for r in rows for e in r["catalog_bound"]["entries"]])
+
+
+_Insert.attribution = staticmethod(_insert_attribution_catalog)

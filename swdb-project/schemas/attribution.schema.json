@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "attribution",
   "title": "Attribution report",
-  "description": "Created: 2026-10-11 ET (fine-grained attribution ticket 02). Two saved estimates split by code origin from a diff of their counted source trees. Derived from estimates; never a timing observation.",
+  "description": "Created: 2026-10-11 ET (fine-grained attribution ticket 02; ticket 08 added catalog bounds and the remaining-gain-bound ranking). Two saved estimates split by code origin from a diff of their counted source trees. Derived from estimates; never a timing observation.",
   "properties": {
     "kind": {"const": "attribution"},
     "schema_version": {"const": "0.4"},
@@ -27,6 +27,32 @@
           "kind": {"enum": ["intrinsic", "library_operation"]},
           "id": {"type": "string", "minLength": 1},
           "sha256": {"$ref": "#/$defs/sha256"}
+        }
+      }
+    },
+    "site_finder": {
+      "description": "Ticket 08 (2026-10-11 ET): the saved campaign summary iteration whose site-finder regions gave catalog bounds; absent when none was given.",
+      "type": "object", "additionalProperties": false, "required": ["campaign_summary", "iteration", "query_sha256", "regions"],
+      "properties": {
+        "campaign_summary": {
+          "type": "object", "additionalProperties": false, "required": ["id", "sha256"],
+          "properties": {"id": {"$ref": "#/$defs/id", "x-ref": "campaign_summary"}, "sha256": {"$ref": "#/$defs/sha256"}}
+        },
+        "iteration": {"type": "integer", "minimum": 0},
+        "query_sha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+        "regions": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false, "required": ["id", "function", "path", "revision", "lines", "entries"],
+            "properties": {
+              "id": {"type": "string", "minLength": 1},
+              "function": {"type": ["string", "null"]},
+              "path": {"type": ["string", "null"]},
+              "revision": {"type": ["string", "null"]},
+              "lines": {"oneOf": [{"$ref": "#/$defs/lines"}, {"type": "null"}]},
+              "entries": {"type": "array", "items": {"type": "string", "minLength": 1}}
+            }
+          }
         }
       }
     },
@@ -61,7 +87,7 @@
       "items": {
         "type": "object", "additionalProperties": false,
         "required": ["side", "region", "origin", "reason", "mixed", "path", "lines", "inlined", "sites", "seconds",
-                     "evidence", "matched_region", "resource_floor", "headroom"],
+                     "evidence", "matched_region", "resource_floor", "catalog_bound", "headroom"],
         "properties": {
           "side": {"$ref": "#/$defs/side"},
           "region": {"type": "string", "minLength": 1},
@@ -91,6 +117,7 @@
           },
           "last_changed_iteration": {"type": ["integer", "null"], "minimum": 0},
           "resource_floor": {"$ref": "#/$defs/resource_floor"},
+          "catalog_bound": {"$ref": "#/$defs/catalog_bound"},
           "headroom": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/headroom"}}
         }
       }
@@ -158,11 +185,20 @@
       }
     },
     "ranking": {"type": "array", "items": {"$ref": "#/$defs/rank"}},
+    "ranking_rule": {
+      "description": "Ticket 08: how each ranking tier is ordered; the remaining gain bound is an upper limit, never an expected gain.",
+      "type": "object", "additionalProperties": false, "required": ["remaining_gain_bound", "floor_headroom", "unknown"],
+      "properties": {
+        "remaining_gain_bound": {"type": "string", "pattern": "^Upper limit"},
+        "floor_headroom": {"type": "string", "minLength": 1},
+        "unknown": {"type": "string", "minLength": 1}
+      }
+    },
     "identity_sha256": {"$ref": "#/$defs/sha256"}
   },
   "required": ["format", "baseline_estimate", "candidate_estimate", "baseline_source", "candidate_source",
                "target_description", "input", "threads", "evidence_kind", "catalog", "rewrite_sites", "regions", "groups",
-               "whole_program", "ranking", "identity_sha256"],
+               "whole_program", "ranking", "ranking_rule", "identity_sha256"],
   "$defs": {
     "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "seconds": {"type": ["number", "null"], "minimum": 0},
@@ -205,12 +241,54 @@
         "missing": {"type": "array", "items": {"type": "string"}}
       }
     },
+    "catalog_bound": {
+      "description": "Ticket 08 (2026-10-11 ET, F6, F21, F25): the lowest known estimate among the site-finder-matched entries whose offload mechanism models run on the region's own counts; null with a reason otherwise.",
+      "type": "object", "additionalProperties": false,
+      "required": ["seconds", "entry", "reason", "mixed", "site_finder_regions", "entries", "missing"],
+      "properties": {
+        "seconds": {"$ref": "#/$defs/seconds"},
+        "entry": {"type": ["string", "null"]},
+        "reason": {"enum": ["needs_rewritten_counts", "unknown_catalog_entry", "no_catalog_match", "no_site_finder", null]},
+        "mixed": {"type": "boolean"},
+        "site_finder_regions": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["entry", "kind", "content_sha256", "site_finder_regions", "seconds", "reason", "mechanisms", "missing"],
+            "properties": {
+              "entry": {"type": "string", "minLength": 1},
+              "kind": {"type": ["string", "null"]},
+              "content_sha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+              "site_finder_regions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+              "seconds": {"$ref": "#/$defs/seconds"},
+              "reason": {"enum": ["needs_rewritten_counts", "missing_inputs", "no_offload_mechanism", "entry_changed", "not_in_library", null]},
+              "mechanisms": {
+                "type": "array",
+                "items": {
+                  "type": "object", "additionalProperties": false, "required": ["model", "accounting", "seconds", "missing"],
+                  "properties": {
+                    "model": {"type": "string", "minLength": 1},
+                    "accounting": {"enum": ["resource_bound", "additive_overhead"]},
+                    "seconds": {"$ref": "#/$defs/seconds"},
+                    "missing": {"type": "array", "items": {"type": "string"}}
+                  }
+                }
+              },
+              "missing": {"type": "array", "items": {"type": "string"}}
+            }
+          }
+        },
+        "missing": {"type": "array", "items": {"type": "string"}}
+      }
+    },
     "headroom": {
       "type": "object", "additionalProperties": false, "required": ["limit", "value", "reason"],
       "properties": {
-        "limit": {"enum": ["resource_floor"]},
+        "limit": {"enum": ["resource_floor", "catalog_bound"]},
         "value": {"$ref": "#/$defs/ratio"},
-        "reason": {"enum": ["unknown_estimate", "unknown_limit", "zero_limit", null]}
+        "reason": {"enum": ["unknown_estimate", "unknown_limit", "zero_limit", "needs_rewritten_counts",
+                             "unknown_catalog_entry", "no_catalog_match", "no_site_finder", null]}
       }
     },
     "rank": {
@@ -219,10 +297,10 @@
         "position": {"type": "integer", "minimum": 1},
         "side": {"const": "candidate"},
         "region": {"type": "string", "minLength": 1},
-        "tier": {"enum": ["floor_headroom", "unknown"]},
-        "limit": {"enum": ["resource_floor"]},
+        "tier": {"enum": ["remaining_gain_bound", "floor_headroom", "unknown"]},
+        "limit": {"enum": ["catalog_bound", "resource_floor"]},
         "value": {"$ref": "#/$defs/ratio"},
-        "reason": {"enum": ["unknown_estimate", "unknown_limit", "zero_limit", null]}
+        "reason": {"enum": ["unknown_estimate", "unknown_limit", "zero_limit", "unknown_share", "zero_total", null]}
       }
     },
     "unknown": {

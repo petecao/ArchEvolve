@@ -10,6 +10,8 @@ Updated: 2026-10-06 (Eastern Time): one record/index access interface (analytic-
 
 Updated: 2026-10-07 (Eastern Time): current evidence-basis interpretation.
 
+Updated: 2026-10-11 (Eastern Time): attribution catalog bounds and full ranking (fine-grained attribution ticket 08).
+
 Run commands inside `ArchEvolve/swdb-project/`. [The database builder](../../swdb/db.py)
 writes `build/swdb.sqlite` beside `records/` by default (another records folder
 `X` gets `build/swdb-X.sqlite`). It recreates every table in a temporary file,
@@ -617,8 +619,8 @@ Same columns as `swdb_attribution_regions` for the this-iteration comparison (`s
 ### `swdb_attribution_headroom`
 
 Added: 2026-10-11 (Eastern Time), fine-grained attribution ticket 07. One row per region of
-either estimate and named limit (today only `resource_floor`; ticket 08 adds `catalog_bound`).
-Rows come from the cumulative `regions`; the `this_iteration` rows' floors stay in the
+either estimate and named limit: `resource_floor` and, since ticket 08, `catalog_bound`.
+Rows come from the cumulative `regions`; the `this_iteration` rows' limits stay in the
 report JSON (`swdb_attributions.json`).
 
 | Column | Meaning |
@@ -626,11 +628,11 @@ report JSON (`swdb_attributions.json`).
 | `attribution` | report ID |
 | `side` | `baseline` or `candidate` |
 | `region` | the estimate's region ID |
-| `limit_name` | the named limit, e.g. `resource_floor` |
+| `limit_name` | the named limit: `resource_floor` or `catalog_bound` |
 | `limit_seconds` | the limit's seconds (NULL if unknown) |
-| `limiting_term` | for the floor: `compute_throughput` or `streaming_bandwidth` (NULL if unknown) |
+| `limiting_term` | for the floor: `compute_throughput` or `streaming_bandwidth`; for the catalog bound: the entry that gives it (NULL if unknown) |
 | `headroom` | region seconds ÷ limit seconds (NULL if it cannot be a number) |
-| `reason` | why `headroom` is NULL: `unknown_estimate`, `unknown_limit` or `zero_limit` |
+| `reason` | why `headroom` is NULL: `unknown_estimate`, `zero_limit`, `unknown_limit` (floor), or the catalog bound's reason (`needs_rewritten_counts`, `unknown_catalog_entry`, `no_catalog_match`, `no_site_finder`) |
 | `missing` | JSON list of the missing counts and rates behind an unknown limit |
 
 ### `swdb_attribution_ranking`
@@ -643,7 +645,26 @@ Added: 2026-10-11 (Eastern Time), ticket 07. The candidate's regions in next-ite
 | `position` | 1-based place in the order |
 | `side` | always `candidate` |
 | `region` | the candidate estimate's region ID |
-| `tier` | `floor_headroom`, or `unknown` (ranked after every known value) |
-| `limit_name` | the limit the value uses, e.g. `resource_floor` |
-| `value` | the ranking value (floor headroom); NULL in the `unknown` tier |
+| `tier` | `remaining_gain_bound` (ticket 08), then `floor_headroom`, then `unknown` (ranked after every known value); tiers are never compared |
+| `limit_name` | the limit the value uses: `catalog_bound` or `resource_floor` |
+| `value` | the ranking value: remaining gain bound (an upper limit, never an expected gain) or floor headroom; NULL in the `unknown` tier |
 | `reason` | why the value is NULL |
+
+### `swdb_attribution_catalog`
+
+Added: 2026-10-11 (Eastern Time), ticket 08. One row per region of either estimate and
+site-finder-matched entry: that entry's own estimate on the region, or why it has none. Rows
+come from the cumulative `regions`.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `side` | `baseline` or `candidate` |
+| `region` | the estimate's region ID |
+| `entry` | library entry ID |
+| `kind` | `library_operation` or `rewrite_contract` (as the site finder recorded it) |
+| `seconds` | the entry's estimate on the region's own counts (NULL if unknown) |
+| `reason` | why `seconds` is NULL: `needs_rewritten_counts`, `missing_inputs`, `no_offload_mechanism`, `entry_changed` or `not_in_library` |
+| `site_finder_regions` | JSON list of the joined site-finder region IDs that apply the entry |
+| `mixed` | 1 when some joined site-finder region only partly covers the region |
+| `missing` | JSON list of the entry's missing counts and rates |

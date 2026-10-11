@@ -51,9 +51,20 @@ Rules used by this version (ticket 04 added the rewrite-site edge cases):
    rates, per trial then median. A missing rate gives an unknown floor naming it; no other
    description's rate is borrowed. Headroom = region seconds ÷ named limit. `this_iteration`
    region rows carry floors too (same row shape; the previous candidate's from its own estimate).
-10. Ranking (F7, floor-only tier). Candidate regions by floor headroom, largest first;
-    unknown headrooms follow and are never ranked against known ones. One top-level ranking:
-    the candidate is the same in both comparisons, so its floors are too.
+10. Ranking (F7). Candidate regions with a known catalog bound first, by remaining gain bound
+    (an upper limit, never an expected gain); then regions without one, by floor headroom;
+    then every null value. Tiers are never ranked against each other. One top-level ranking:
+    the candidate is the same in both comparisons, so its limits are too.
+11. Catalog bound (ticket 08, F6, F21, F25). Given a saved campaign summary's site-finder
+    regions (`--site-finder`), each region joins the site-finder regions whose function it
+    overlaps (the function's span in that side's own tree, found by name: site-finder lines
+    name the full-source revision; partial overlap is `mixed`). Each joined entry's mechanism
+    models are the pinned description's offload mechanisms reached from the entry's
+    `uses_intrinsics` through their `hardware_operations` and the description's functional
+    observation commands. They run unchanged on the region's own counts, per trial then
+    median. The bound is the lowest known entry; otherwise `needs_rewritten_counts` (a model
+    lacks offload counts only a rewrite produces), `unknown_catalog_entry` or
+    `no_catalog_match`; `no_site_finder` when none was given.
 """
 import copy
 import difflib
@@ -90,6 +101,9 @@ def register_cli(commands):
     sub.add_argument('--previous-source', help='iteration 2 on: source record the previous accepted candidate counted')
     sub.add_argument('--earlier-source', action='append', default=[],
                      help='source record of an accepted candidate before the previous one, oldest first (repeatable)')
+    sub.add_argument('--site-finder', help='saved campaign_summary whose site-finder regions give catalog bounds (ticket 08)')
+    sub.add_argument('--site-finder-iteration', type=int, default=None,
+                     help='campaign iteration index whose site-finder regions to use (default: the last one that has them)')
     sub.add_argument('--format', choices=['yaml', 'json'], default='yaml')
     sub.set_defaults(analytic_handler=attribute)
 
@@ -413,6 +427,7 @@ class _Catalog:
         self.intrinsics = sorted((r.data['name'], r.data['id'], artifacts.digest(r.data))
                                  for r in store.of_kind('intrinsic') if r.data.get('name'))
         library = Library(root) if root.exists() else None
+        self.library = library
         self.operations = sorted((rid, data.get('location') or {}, artifacts.digest(data))
                                  for rid, data in (library.entries.items() if library else ())
                                  if data.get('kind') == 'library_operation')
@@ -592,15 +607,221 @@ def _resource_floor(region_id, counted, target):
             'missing': sorted({m for t in terms for m in t['missing']})}
 
 
-def _headroom(limit, estimate, bound):
-    """Estimate ÷ the named limit; null with a reason when it cannot be a number."""
-    reason = ('unknown_estimate' if estimate is None else 'unknown_limit' if bound is None
+def _headroom(limit, estimate, bound, unknown_limit='unknown_limit'):
+    """Estimate ÷ the named limit; null with a reason when it cannot be a number.
+    `unknown_limit` names why the limit is unknown (ticket 08: the catalog bound's own reason)."""
+    reason = ('unknown_estimate' if estimate is None else unknown_limit if bound is None
               else 'zero_limit' if bound == 0 else None)
     return {'limit': limit, 'value': None if reason else estimate / bound, 'reason': reason}
 
 
-def _add_floors(side, labels, store):
-    """Annotate each region row of one side with its resource floor and floor headroom."""
+# --- Ticket 08: catalog bound (F6, F21, F25) ---------------------------------------------------
+#
+# Site-finder regions come from a saved campaign summary: one iteration's chosen `regions`
+# rows, each with `why.source` (path, full-source revision and lines) and `why.applications`
+# (the entries that apply). Their lines name the full-source revision, not either tree
+# attributed here (risks C1, C2), so a site-finder region is placed in each side's own tree by
+# the function its ID names (`<implementation>/<function>:<first>-<last>`), as ticket 73's
+# `workspace_region_lines` does. An estimate region joins it when one of its pieces (home span
+# or inlined piece) overlaps that function's span; `mixed` when some piece lies outside (F21).
+
+COUNT_GAPS = ('address_stream_counts', 'accelerator_calls')   # offload counts only a rewrite produces
+UNKNOWN_ENTRY = ('missing_inputs', 'entry_changed', 'not_in_library')
+SITE_FINDER_REGION = r'^.+/(?P<function>[A-Za-z_]\w*):[0-9]+-[0-9]+$'
+RANKING_RULE = {
+    'remaining_gain_bound': 'Upper limit, never an expected gain: share x max(0, 1 - catalog bound / estimate), '
+                            'share = region seconds / candidate total seconds. Regions with a known catalog bound only; '
+                            'largest first.',
+    'floor_headroom': 'Regions without a known catalog bound: estimate / resource floor, largest first. Never ranked '
+                      'against the remaining_gain_bound tier.',
+    'unknown': 'Regions whose ranking value is null, in region-ID order, after every known value.'}
+
+
+class _SiteFinder:
+    """One iteration's site-finder regions from a saved campaign summary."""
+
+    def __init__(self, store, summary_id, iteration=None):
+        import re
+        self.summary = _record(store, summary_id, ('campaign_summary',))
+        with_why = [it for it in self.summary.get('iterations', [])
+                    if any(isinstance(r.get('why'), dict) for r in it.get('regions', []))]
+        if iteration is None:
+            _require(with_why, f'campaign summary {summary_id!r} records no site-finder region with its why')
+            chosen = with_why[-1]
+        else:
+            chosen = next((it for it in with_why if it.get('index') == iteration), None)
+            _require(chosen is not None, f'campaign summary {summary_id!r} iteration {iteration} records no site-finder region')
+        self.iteration = chosen['index']
+        self.query_sha256 = (chosen.get('site_finder') or {}).get('query_sha256')
+        self.regions = []
+        for row in sorted((r for r in chosen['regions'] if isinstance(r.get('why'), dict)), key=lambda r: r['id']):
+            match = re.match(SITE_FINDER_REGION, row['id'])
+            source = row['why'].get('source') or {}
+            self.regions.append({
+                'id': row['id'], 'function': match['function'] if match else None, 'path': source.get('path'),
+                'revision': source.get('revision'), 'lines': source.get('lines'),
+                'applications': sorted(({'entry': a['entry'], 'kind': a.get('kind'), 'content_sha256': a.get('content_sha256')}
+                                        for a in row['why'].get('applications', [])), key=lambda a: a['entry'])})
+
+    def block(self):
+        return {'campaign_summary': _pin(self.summary), 'iteration': self.iteration, 'query_sha256': self.query_sha256,
+                'regions': [{k: r[k] for k in ('id', 'function', 'path', 'revision', 'lines')}
+                            | {'entries': [a['entry'] for a in r['applications']]} for r in self.regions]}
+
+
+def _tree_file(side, path):
+    """The one file of the side's tree that is `path`, or ends with it, or that `path` ends with."""
+    if not path:
+        return None
+    if path in side.files:
+        return path
+    matches = sorted(f for f in side.files if f.endswith('/' + path) or path.endswith('/' + f))
+    return matches[0] if len(matches) == 1 else None
+
+
+def _joins(side, labels, finder):
+    """{region ID: [(site-finder region, mixed)]} for one side (F21, risks C1/C2)."""
+    placed = []
+    for sf in finder.regions:
+        rel = _tree_file(side, sf['path'])
+        span = cpp_lexical.function_span('\n'.join(side.text(rel)), sf['function']) if rel and sf['function'] else None
+        if span:
+            placed.append((sf, rel, span))
+    joins = {}
+    for row in labels.values():
+        pieces = ([(row['path'], row['lines'])] if row['path'] and row['lines'] else []) + [
+            (p['path'], p['lines']) for p in row['inlined']]
+        for sf, rel, span in placed:
+            if any(path == rel and _overlaps(span, lines) for path, lines in pieces):
+                inside = all(path == rel and span[0] <= lines[0] and lines[1] <= span[1] for path, lines in pieces)
+                joins.setdefault(row['region'], []).append((sf, not inside))
+    return joins
+
+
+class _Bounds:
+    """Catalog bounds of one attribution: the site finder, the typed library and per-entry models."""
+
+    def __init__(self, finder, library):
+        self.finder, self.library = finder, library
+
+    def _hardware_operations(self, entry_id):
+        """Hardware operations of every intrinsic the entry uses, directly or through library operations."""
+        seen, pending, found = set(), [entry_id], set()
+        while pending:
+            data = self.library.get(pending.pop()) if self.library else None
+            if data is None:
+                continue
+            if data.get('kind') == 'intrinsic':
+                found.update(data.get('hardware_operations', []))
+                continue
+            for ref in data.get('uses_intrinsics', []) + data.get('uses_library_operations', []):
+                if ref not in seen:
+                    seen.add(ref)
+                    pending.append(ref)
+        return found
+
+    def mechanisms(self, application, target):
+        """(the entry's mechanisms in the description, reason when there are none or the entry cannot be read).
+
+        F25: the entry's intrinsics' hardware operations select the description's functional
+        observation commands whose operations they all provide; those commands' events select
+        the offload mechanisms (`selector.domain: offload`, or `selector.event_ids` naming one)."""
+        entry = self.library.get(application['entry']) if self.library else None
+        if entry is None:
+            return [], 'not_in_library'
+        if application.get('content_sha256') and artifacts.digest(entry) != application['content_sha256']:
+            return [], 'entry_changed'
+        operations = self._hardware_operations(application['entry'])
+        commands = (target.get('functional_observation') or {}).get('commands', [])
+        events = {c['event'] for c in commands if c.get('hardware_operations') and set(c['hardware_operations']) <= operations}
+        own = [m for m in target['mechanisms'] if events and (
+            (m.get('selector') or {}).get('domain') == 'offload' or set((m.get('selector') or {}).get('event_ids') or []) & events)]
+        return own, None if own else 'no_offload_mechanism'
+
+
+def _entry_trial(region, calls, mechanisms, side, target):
+    """One trial: (seconds, per-mechanism results) composed as the estimator composes a region."""
+    from swdb import analytic_composition, analytic_models
+    target_sha = side.estimate['target_description_sha256']
+    context = {'target_description_sha256': target_sha,
+               'logical_count_target_description_sha256': (side.estimate.get('count_reuse') or {}).get(
+                   'counted_target_description_sha256') or target_sha,
+               'configured_threads': target['threads'],
+               'observation_contract': side.characterization.get('observation_contract'),
+               'characterization_id': side.characterization['id'],
+               'characterization_sha256': side.estimate['characterization_sha256'],
+               'composition_contract': target.get('composition_contract'),
+               'source_calls': calls, 'source_accesses': region['access_patterns']}
+    models = [m['model'] for m in target['mechanisms']]
+    results = [analytic_models.evaluate(region, m, models, target['threads'],
+                                        context={**context, 'selected_domain': analytic_composition.domain(m)})
+               for m in mechanisms]
+    bounds = [r for r, m in zip(results, mechanisms) if m.get('accounting', 'resource_bound') != 'additive_overhead']
+    overheads = [r for r, m in zip(results, mechanisms) if m.get('accounting', 'resource_bound') == 'additive_overhead']
+    if any(r['seconds'] is None for r in results):
+        return None, results
+    return max((r['seconds'] for r in bounds), default=0.) + sum(r['seconds'] for r in overheads), results
+
+
+def _entry_bound(region_id, counted, calls, mechanisms, side, target):
+    """Median over trials of the entry's composed seconds on the region's own counts (absent = 0 s)."""
+    per_trial = [_entry_trial(t[region_id], calls.get(region_id, []), mechanisms, side, target) if region_id in t else None
+                 for t in counted]
+    rows = []
+    for i, mechanism in enumerate(mechanisms):
+        results = [t[1][i] for t in per_trial if t is not None]
+        rows.append({'model': mechanism['model'], 'accounting': mechanism.get('accounting', 'resource_bound'),
+                     'seconds': _median([t[1][i]['seconds'] if t else 0. for t in per_trial]),
+                     'missing': sorted({m for r in results for m in r['missing']})})
+    seconds = _median([t[0] if t else 0. for t in per_trial])
+    missing = sorted({m for r in rows for m in r['missing']})
+    reason = None
+    if seconds is None:
+        reason = 'needs_rewritten_counts' if any(m.startswith(COUNT_GAPS) for m in missing) else 'missing_inputs'
+    return {'seconds': seconds, 'reason': reason, 'mechanisms': rows, 'missing': missing}
+
+
+def _add_catalog(side, labels, store, bounds, counted, target):
+    """Annotate each region row of one side with its catalog bound and catalog headroom."""
+    if bounds is None or bounds.finder is None:
+        for row in labels.values():
+            row['catalog_bound'] = {'seconds': None, 'entry': None, 'reason': 'no_site_finder', 'mixed': False,
+                                    'site_finder_regions': [], 'entries': [], 'missing': []}
+            row['headroom'].append(_headroom('catalog_bound', row['seconds'], None, 'no_site_finder'))
+        return
+    joins = _joins(side, labels, bounds.finder)
+    calls = {}
+    for call in side.characterization.get('unmodeled_calls', []):
+        calls.setdefault(call.get('region'), []).append(call)
+    for row in labels.values():
+        joined = joins.get(row['region'], [])
+        entries = {}
+        for sf, _ in joined:
+            for application in sf['applications']:
+                entries.setdefault(application['entry'], (application, []))[1].append(sf['id'])
+        evaluated = []
+        for entry_id in sorted(entries):
+            application, regions = entries[entry_id]
+            mechanisms, reason = bounds.mechanisms(application, target)
+            result = (_entry_bound(row['region'], counted, calls, mechanisms, side, target) if mechanisms
+                      else {'seconds': None, 'reason': reason, 'mechanisms': [], 'missing': []})
+            evaluated.append({'entry': entry_id, 'kind': application.get('kind'),
+                              'content_sha256': application.get('content_sha256'),
+                              'site_finder_regions': sorted(set(regions)), **result})
+        known = [e for e in evaluated if e['seconds'] is not None]
+        best = min(known, key=lambda e: (e['seconds'], e['entry'])) if known else None
+        reasons = {e['reason'] for e in evaluated}
+        reason = (None if best else 'needs_rewritten_counts' if 'needs_rewritten_counts' in reasons
+                  else 'unknown_catalog_entry' if reasons & set(UNKNOWN_ENTRY) else 'no_catalog_match')
+        row['catalog_bound'] = {'seconds': best['seconds'] if best else None, 'entry': best['entry'] if best else None,
+                                'reason': reason, 'mixed': any(mixed for _, mixed in joined),
+                                'site_finder_regions': sorted({sf['id'] for sf, _ in joined}), 'entries': evaluated,
+                                'missing': sorted({m for e in evaluated for m in e['missing']})}
+        row['headroom'].append(_headroom('catalog_bound', row['seconds'], row['catalog_bound']['seconds'], reason))
+
+
+def _add_limits(side, labels, store, bounds=None):
+    """Annotate each region row of one side with its resource floor, catalog bound and both headrooms."""
     counted = _counted_trials(side, store)
     target = side.estimate['target_description_snapshot']
     _require(artifacts.digest(target) == side.estimate['target_description_sha256'],
@@ -609,24 +830,48 @@ def _add_floors(side, labels, store):
         floor = _resource_floor(row['region'], counted, target)
         row['resource_floor'] = floor
         row['headroom'] = [_headroom('resource_floor', row['seconds'], floor['seconds'])]
+    _add_catalog(side, labels, store, bounds, counted, target)
 
 
-def _ranking(labels):
-    """Candidate regions for the next iteration, by floor headroom (F7, floor-only tier).
+def _remaining_gain_bound(estimate, bound, total):
+    """F7: share x max(0, 1 - bound / estimate), or (None, reason). An upper limit, never an expected gain."""
+    if estimate is None:
+        return None, 'unknown_estimate'
+    if total is None:
+        return None, 'unknown_share'
+    if total == 0:
+        return None, 'zero_total'
+    if estimate == 0:
+        return 0., None
+    return estimate / total * max(0., 1 - bound / estimate), None
 
-    Known headrooms come first, largest first (ties by region ID); unknown ones follow in
-    region-ID order and are never ranked against known ones. A later tier (the remaining gain
-    bound of ticket 08) goes before the floor tier; positions are 1-based over the whole list.
+
+def _ranking(labels, total):
+    """Candidate regions for the next iteration (F7), in three tiers never ranked against each other.
+
+    1. `remaining_gain_bound`: regions with a known catalog bound, largest first.
+    2. `floor_headroom`: regions without one (floor-only), by floor headroom, largest first.
+    3. `unknown`: every null value, in region-ID order: a known catalog bound whose remaining
+       gain bound is null (limit `catalog_bound`), or a floor-only region with a null floor
+       headroom (limit `resource_floor`).
+    Ties go by region ID; positions are 1-based over the whole list.
     """
-    def floor(row):
-        return next(h for h in row['headroom'] if h['limit'] == 'resource_floor')
-    rows = list(labels.values())
-    known = sorted((r for r in rows if floor(r)['value'] is not None), key=lambda r: (-floor(r)['value'], r['region']))
-    unknown = sorted((r for r in rows if floor(r)['value'] is None), key=lambda r: r['region'])
-    entries = [('floor_headroom', r) for r in known] + [('unknown', r) for r in unknown]
-    return [{'position': i, 'side': row['side'], 'region': row['region'], 'tier': tier, 'limit': 'resource_floor',
-             'value': floor(row)['value'], 'reason': floor(row)['reason']}
-            for i, (tier, row) in enumerate(entries, start=1)]
+    def limit(row, name):
+        return next(h for h in row['headroom'] if h['limit'] == name)
+    gains, floors, unknown = [], [], []
+    for row in labels.values():
+        if row['catalog_bound']['seconds'] is not None:
+            value, reason = _remaining_gain_bound(row['seconds'], row['catalog_bound']['seconds'], total)
+            (gains if value is not None else unknown).append((row, 'catalog_bound', value, reason))
+        else:
+            floor = limit(row, 'resource_floor')
+            (floors if floor['value'] is not None else unknown).append((row, 'resource_floor', floor['value'], floor['reason']))
+    entries = ([('remaining_gain_bound', *e) for e in sorted(gains, key=lambda e: (-e[2], e[0]['region']))]
+               + [('floor_headroom', *e) for e in sorted(floors, key=lambda e: (-e[2], e[0]['region']))]
+               + [('unknown', *e) for e in sorted(unknown, key=lambda e: e[0]['region'])])
+    return [{'position': i, 'side': row['side'], 'region': row['region'], 'tier': tier, 'limit': name,
+             'value': value, 'reason': reason}
+            for i, (tier, row, name, value, reason) in enumerate(entries, start=1)]
 
 
 def _unattributed_flagged(groups):
@@ -685,6 +930,11 @@ def validate_record(record, ctx):
             if current is None or artifacts.digest(current) != pin['sha256']:
                 yield Problem(record.rel, 'catalog', f'pinned intrinsic {pin["id"]!r} is missing or changed')
     yield from _floor_problems(record)
+    finder = data.get('site_finder')
+    if finder is not None:   # ticket 08: the site-finder regions that gave catalog bounds are unchanged
+        current = ctx.store.get(finder['campaign_summary']['id'], 'campaign_summary')
+        if current is None or artifacts.digest(current) != finder['campaign_summary']['sha256']:
+            yield Problem(record.rel, 'site_finder', f'pinned campaign summary {finder["campaign_summary"]["id"]!r} is missing or changed')
     for field in ('baseline_estimate', 'candidate_estimate'):
         current = ctx.store.get(data[field]['id'], 'estimate')
         if current is not None and current['target_description_sha256'] != data['target_description']['sha256']:
@@ -745,7 +995,7 @@ def _last_changed(side, chain, catalog=None):
     return {**found, **{rid: 0 for rid in pending}}
 
 
-def _iteration(store, args, baseline, candidate, labels, catalog=None):
+def _iteration(store, args, baseline, candidate, labels, catalog=None, bounds=None):
     """F13: the `this_iteration` block (previous accepted candidate -> candidate), and every
     region row's `last_changed_iteration`. None without a previous candidate."""
     if args.previous_estimate is None and args.previous_source is None:
@@ -768,8 +1018,8 @@ def _iteration(store, args, baseline, candidate, labels, catalog=None):
         row['last_changed_iteration'] = changed['candidate'][row['region']]
     for row in rows['baseline'].values():
         row['last_changed_iteration'] = changed['previous'][row['region']]
-    _add_floors(before, rows['baseline'], store)
-    _add_floors(candidate, rows['candidate'], store)
+    _add_limits(before, rows['baseline'], store, bounds)
+    _add_limits(candidate, rows['candidate'], store, bounds)
     groups = _groups(before, candidate, rows)
     block = {'iteration': len(chain), 'previous_estimate': _pin(previous.estimate),
              'previous_source': _source_pin(previous.source),
@@ -788,12 +1038,16 @@ def attribute(args):
     _require(not differ, 'baseline and candidate estimates differ in ' + ', '.join(differ) + '; refusing to compare')
     from swdb.library import default_root
     catalog = _Catalog(store, Path(args.library) if args.library else default_root(args.records))
+    finder = _SiteFinder(store, args.site_finder, args.site_finder_iteration) if args.site_finder else None
+    _require(finder is not None or args.site_finder_iteration is None, '--site-finder-iteration needs --site-finder')
+    bounds = _Bounds(finder, catalog.library)
     sites, labels = _split(baseline, candidate, catalog)
-    _add_floors(baseline, labels['baseline'], store)
-    _add_floors(candidate, labels['candidate'], store)
+    _add_limits(baseline, labels['baseline'], store, bounds)
+    _add_limits(candidate, labels['candidate'], store, bounds)
     groups = _groups(baseline, candidate, labels)
-    this_iteration, previous_inputs = _iteration(store, args, baseline, candidate, labels, catalog)
-    inputs = [baseline.estimate, candidate.estimate, baseline.source, candidate.source] + previous_inputs
+    this_iteration, previous_inputs = _iteration(store, args, baseline, candidate, labels, catalog, bounds)
+    inputs = [baseline.estimate, candidate.estimate, baseline.source, candidate.source] + previous_inputs + (
+        [finder.summary] if finder else [])
     date = max(str(data['updated']) for data in inputs)
     record = {'kind': 'attribution', 'schema_version': '0.4', 'id': args.id, 'status': 'draft',
               'created': date, 'updated': date, **workflow.CREATION_TAGS,
@@ -807,10 +1061,12 @@ def attribute(args):
               'input': baseline.estimate['input'], 'threads': baseline.estimate['threads'],
               'evidence_kind': baseline.estimate['evidence_kind'],
               'catalog': catalog.pins(),
+              **({'site_finder': finder.block()} if finder else {}),
               'rewrite_sites': sites,
               'regions': list(labels['baseline'].values()) + list(labels['candidate'].values()),
               'groups': groups, 'whole_program': _whole(baseline, candidate, groups),
-              'ranking': _ranking(labels['candidate'])}
+              'ranking': _ranking(labels['candidate'], candidate.estimate['seconds']),
+              'ranking_rule': dict(RANKING_RULE)}
     if this_iteration is not None:
         record['this_iteration'] = this_iteration
     record['identity_sha256'] = artifacts.digest(record)

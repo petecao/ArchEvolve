@@ -3,7 +3,8 @@
 Created: 2026-10-11 (Eastern Time), fine-grained attribution ticket 02.
 Updated: 2026-10-11 ET (ticket 05: library, intrinsic and offload labels; ticket 07: resource
 floor, floor headroom and ranking; ticket 06 + 07 merge: floors in `this_iteration`; ticket 04:
-merged sites, `mixed`, inlined pieces, matched regions, unattributed flag).
+merged sites, `mixed`, inlined pieces, matched regions, unattributed flag; ticket 08: catalog
+bound, remaining gain bound and the full ranking).
 Spec: `.scratch/fine-grained-attribution-2026-10-11/spec.md`.
 
 **In one line:** `swdb attribute` takes two saved estimates and the two source trees they
@@ -16,9 +17,10 @@ counted, and says how much time is in untouched, agent-rewritten and unattribute
    **rewrite site**.
 3. Labels every region of both estimates with a **code origin** by file and line.
 4. Sums each origin group per trial, then takes the median per group.
-5. Computes each region's **resource floor** and **headroom**, and ranks the candidate's
-   regions by floor headroom (ticket 07).
-6. Writes one validated `attribution` record and indexes it into SQLite.
+5. Computes each region's **resource floor** and **headroom** (ticket 07).
+6. Given site-finder regions, computes each region's **catalog bound**, and ranks the
+   candidate's regions by **remaining gain bound**, then floor headroom (ticket 08).
+7. Writes one validated `attribution` record and indexes it into SQLite.
 
 It only reads saved records. It never re-estimates and never binds a protocol.
 
@@ -29,8 +31,14 @@ python -m swdb attribute --records records \
   --baseline-estimate <estimate ID> --candidate-estimate <estimate ID> \
   --baseline-source <source_snapshot or candidate ID> \
   --candidate-source <source_snapshot or candidate ID> \
-  --id <new report ID> --format json
+  --id <new report ID> --format json \
+  [--site-finder <campaign_summary ID> [--site-finder-iteration <index>]]
 ```
+
+`--site-finder` (ticket 08) names a saved campaign summary; its site-finder regions give the
+catalog bounds. `--site-finder-iteration` picks the iteration (default: the last one whose
+region rows carry their `why`). Without `--site-finder`, every catalog bound is null with
+reason `no_site_finder`, and the ranking is floor-only.
 
 It refuses (exit 1, nothing written) when:
 
@@ -39,7 +47,9 @@ It refuses (exit 1, nothing written) when:
 - a source record is not the one its estimate counted (a `candidate` source must be the
   estimate's candidate subject; a `source_snapshot` must name the implementation subject);
 - a source tree on disk no longer matches its recorded artifact hash;
-- a characterization differs from the hash its estimate pins.
+- a characterization differs from the hash its estimate pins;
+- `--site-finder` is not a saved `campaign_summary`, or the chosen iteration has no site-finder
+  region with its `why`; `--site-finder-iteration` comes without `--site-finder`.
 
 ## Labeling rules (this version)
 
@@ -89,11 +99,13 @@ date of the four inputs, so the same inputs give a byte-identical record.
 | `target_description` | `{id, sha256}` the two estimates share |
 | `input`, `threads`, `evidence_kind` | copied from the estimates, which must agree |
 | `catalog` | `{kind, id, sha256}` of every `intrinsic` record or `library_operation` entry that labeled a region, sorted by ID; `swdb validate` re-checks intrinsic pins |
+| `site_finder` | ticket 08, only with `--site-finder`: the site-finder regions that gave catalog bounds (below); `swdb validate` re-checks the summary pin |
 | `rewrite_sites` | one row per changed run of lines (below) |
 | `regions` | one row per region of each estimate (below) |
 | `groups` | one row per code origin, always in the order untouched, agent_rewritten, unattributed (below) |
 | `whole_program` | totals and whole-program ratios (below) |
 | `ranking` | the candidate's regions in next-iteration order (below) |
+| `ranking_rule` | ticket 08: one fixed sentence per ranking tier, keyed `remaining_gain_bound`, `floor_headroom` and `unknown`; the first says the remaining gain bound is an **upper limit, never an expected gain** |
 | `identity_sha256` | content hash of the record without this field; `swdb validate` checks it |
 
 ### `rewrite_sites` rows
@@ -122,7 +134,8 @@ date of the four inputs, so the same inputs give a byte-identical record.
 | `evidence` | inside a site: every signal found, `{origin, name}`, highest precedence first (`name` is the event, intrinsic ID or library operation ID); empty otherwise |
 | `matched_region` | the other side's region at the same untouched code, or null |
 | `resource_floor` | the region's resource floor (below) |
-| `headroom` | list of `{limit, value, reason}`, one per named limit; today only `resource_floor` |
+| `catalog_bound` | the region's catalog bound (below, ticket 08) |
+| `headroom` | list of `{limit, value, reason}`, one per named limit: `resource_floor`, then `catalog_bound` |
 
 ### `groups` rows
 
@@ -182,26 +195,106 @@ own rates, ignoring latency and every overhead. It is a limit, never an estimate
 
 | Field | Meaning |
 |---|---|
-| `limit` | the named limit: `resource_floor` (ticket 08 adds `catalog_bound`) |
+| `limit` | the named limit: `resource_floor` or `catalog_bound` |
 | `value` | region `seconds` ÷ the limit's seconds; null when it cannot be a number |
-| `reason` | null, or why `value` is null: `unknown_estimate`, `unknown_limit` or `zero_limit` |
+| `reason` | null, or why `value` is null: `unknown_estimate` (checked first), `zero_limit`, or why the limit is unknown: `unknown_limit` for the floor; the catalog bound's own `reason` (`needs_rewritten_counts`, `unknown_catalog_entry`, `no_catalog_match`, `no_site_finder`) |
+
+### Catalog bound (ticket 08)
+
+**In one line:** the best estimate a known catalog entry, matched to the region by the site
+finder, reaches on the region's own counts. It is a limit for the next rewrite, never an
+estimate of it (spec F6, F21, F25).
+
+1. **Site-finder regions.** One iteration of the saved campaign summary: its chosen `regions`
+   rows, each with `why.source` and the entries in `why.applications`.
+2. **Join (F21).** Site-finder lines name the full-source revision, not either tree attributed
+   here. So each site-finder region is placed in each side's own tree by the function its ID
+   names (`<implementation>/<function>:<first>-<last>`): that function's lexical span in the
+   file at `why.source.path`. A region joins it when one of its pieces (home span or inlined
+   piece) overlaps that span. It is `mixed` when some piece lies outside the span.
+3. **Mechanisms (F25).** An entry's `uses_intrinsics` (directly, or through
+   `uses_library_operations`) give hardware operations. The pinned description's functional
+   observation commands whose operations they all provide give events. The entry's mechanisms
+   are the description's offload mechanisms: `selector.domain: offload`, or `selector.event_ids`
+   naming one of those events. No host mechanism is used.
+4. **Entry estimate.** The unchanged mechanism models run on the region's own counts with the
+   estimator's context, composed as the estimator composes a region (max of resource bounds plus
+   additive overheads), per trial, then the median (a region absent from a trial counts 0 s).
+5. **Bound.** The lowest known entry estimate (ties by entry ID). Otherwise null, with a reason.
+
+| Region `reason` | When |
+|---|---|
+| null | some entry estimate is known |
+| `needs_rewritten_counts` | an entry's model lacks offload counts only a rewrite produces (a `missing` item starting `address_stream_counts` or `accelerator_calls`) |
+| `unknown_catalog_entry` | an entry could not be evaluated for another reason: a missing rate or other input, an entry changed since the site finder pinned it, or one not in the library |
+| `no_catalog_match` | no site-finder region joins the region, or no joined entry reaches an offload mechanism of the description |
+| `no_site_finder` | no `--site-finder` was given |
+
+`catalog_bound` fields:
+
+| Field | Meaning |
+|---|---|
+| `seconds` | the bound; null with `reason` |
+| `entry` | the entry that gives it, or null |
+| `reason` | as in the table above |
+| `mixed` | true when some joined site-finder region only partly covers the region |
+| `site_finder_regions` | IDs of the joined site-finder regions |
+| `entries` | one row per joined entry, by entry ID (below) |
+| `missing` | union of the entries' missing counts and rates |
+
+`entries` rows:
+
+| Field | Meaning |
+|---|---|
+| `entry` | library entry ID |
+| `kind` | the site finder's entry kind (`library_operation` or `rewrite_contract`) |
+| `content_sha256` | the entry content hash the site finder recorded |
+| `site_finder_regions` | the joined site-finder regions that apply this entry |
+| `seconds` | the entry's estimate on the region; null with `reason` |
+| `reason` | null, `needs_rewritten_counts`, `missing_inputs`, `no_offload_mechanism`, `entry_changed` (library content differs from `content_sha256`) or `not_in_library` |
+| `mechanisms` | `{model, accounting, seconds, missing}` per mechanism used, `accounting` = `resource_bound` or `additive_overhead` |
+| `missing` | union of the mechanisms' missing items |
+
+Known limits of this version: the join is per function, so every region of the function joins;
+offload entries on code that has no offload counts are always `needs_rewritten_counts` (no
+projection model, out of scope); on a CPU-only description every entry is `no_catalog_match`.
+
+### `site_finder`
+
+| Field | Meaning |
+|---|---|
+| `campaign_summary` | `{id, sha256}` of the saved campaign summary |
+| `iteration` | the campaign iteration `index` whose regions were used |
+| `query_sha256` | that iteration's site-finder query hash, or null |
+| `regions` | one row per site-finder region: `id`, `function` (from the ID; null if none), `path`, `revision` and `lines` (from `why.source`, full-source revision), `entries` (applied entry IDs) |
 
 ### `ranking` rows
 
-Only candidate regions are ranked: they are what the next iteration starts from. Known floor
-headrooms come first, largest first (ties by region ID). Regions whose headroom is null follow
-in region-ID order, in their own tier, never mixed with known ones (F7). Ticket 08 puts a
-remaining-gain-bound tier before the floor tier.
+Only candidate regions are ranked: they are what the next iteration starts from. Three tiers,
+never ranked against each other (F7):
+
+1. `remaining_gain_bound`: regions with a known catalog bound, largest first.
+   Remaining gain bound = share × max(0, 1 − catalog bound ÷ estimate), with share = region
+   `seconds` ÷ the candidate total. It is an **upper limit** on the share of the total a known
+   entry could remove, **never an expected gain** (F12). An entry slower than the current code
+   gives 0. A region of 0 s gives 0.
+2. `floor_headroom`: regions without a known catalog bound (floor-only), by floor headroom,
+   largest first.
+3. `unknown`: every null value, in region-ID order. A region with a known catalog bound whose
+   remaining gain bound is null stays here with limit `catalog_bound`; it never joins the
+   floor tier.
+
+Ties go by region ID.
 
 | Field | Meaning |
 |---|---|
 | `position` | 1-based place in the whole list |
 | `side` | always `candidate` |
 | `region` | the candidate estimate's region ID |
-| `tier` | `floor_headroom`, or `unknown` for a null headroom |
-| `limit` | the limit the value uses: `resource_floor` |
-| `value` | the floor headroom; null in the `unknown` tier |
-| `reason` | the headroom's null reason, else null |
+| `tier` | `remaining_gain_bound`, `floor_headroom` or `unknown` |
+| `limit` | the limit the value uses: `catalog_bound` or `resource_floor` |
+| `value` | the remaining gain bound or floor headroom; null in the `unknown` tier |
+| `reason` | why the value is null: the floor headroom's reason, or `unknown_estimate`, `unknown_share` (candidate total unknown) or `zero_total`; else null |
 
 ## Worked example (the test fixture)
 
