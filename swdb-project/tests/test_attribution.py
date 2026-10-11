@@ -301,3 +301,177 @@ def test_validate_rejects_an_edited_report_or_a_changed_pinned_estimate(case):
     estimate.write_text(estimate.read_text().replace('status: draft', 'status: accepted', 1))
     changed = case.records.validate()
     assert changed.returncode == 1 and 'candidate_estimate' in changed.stdout + changed.stderr
+
+
+# Iterations (ticket 06, F13). Three loops: A (lines 3-4), B (lines 7-8), C (lines 11-12).
+# Iteration 1 rewrites B, iteration 2 rewrites A, iteration 3 rewrites C.
+ITERATION_0 = BASELINE + """void kept(float *a, int n) {
+  for (int i = 0; i < n; ++i)
+    a[i] = a[i] - 1.0f;
+}
+"""
+ITERATION_1 = ITERATION_0.replace("""  for (int i = 0; i < n; ++i)
+    a[i] = a[i] + 1.0f;""", """  for (int i = 0; i < n; i += 2)
+    a[i] += 1.0f, a[i + 1] += 1.0f;""")
+ITERATION_2 = ITERATION_1.replace("""  for (int i = 0; i < n; ++i)
+    a[i] = a[i] * 2.0f;""", """  for (int i = 0; i < n; i += 2)
+    a[i] *= 2.0f, a[i + 1] *= 2.0f;""")
+ITERATION_3 = ITERATION_2.replace("""  for (int i = 0; i < n; ++i)
+    a[i] = a[i] - 1.0f;""", """  for (int i = 0; i < n; i += 2)
+    a[i] -= 1.0f, a[i + 1] -= 1.0f;""")
+# Seconds per loop (A, B, C) in each iteration: totals 100, 75, 55, 50.
+ITERATION_SECONDS = [(40, 50, 10), (40, 25, 10), (20, 25, 10), (20, 25, 5)]
+
+
+def iterations(case, count):
+    """Writes iterations 0..count-1: source tree `fixture.it<i>.source` and estimate `fixture.it<i>`."""
+    texts = [ITERATION_0, ITERATION_1, ITERATION_2, ITERATION_3][:count]
+    for i, text in enumerate(texts):
+        root = tree(case.tmp_path, f'it{i}', text)
+        snapshot(case.records, f'fixture.it{i}.source', root)
+        a, b, c = ITERATION_SECONDS[i]
+        path = root / 'kernel.cpp'
+        case.estimate(f'fixture.it{i}', [region(f'it{i}.a', path, 3, a), region(f'it{i}.b', path, 7, b),
+                                         region(f'it{i}.c', path, 11, c)])
+
+
+def attribute_iteration(case, current, previous=None, earlier=(), rid='fixture.attribution', previous_estimate=None):
+    args = ['attribute', '--records', case.records.path, '--baseline-estimate', 'fixture.it0',
+            '--candidate-estimate', f'fixture.it{current}', '--baseline-source', 'fixture.it0.source',
+            '--candidate-source', f'fixture.it{current}.source', '--id', rid, '--format', 'json']
+    if previous is not None:
+        args += ['--previous-estimate', previous_estimate or f'fixture.it{previous}',
+                 '--previous-source', f'fixture.it{previous}.source']
+    for i in earlier:
+        args += ['--earlier-source', f'fixture.it{i}.source']
+    return run_swdb(*args)
+
+
+def attributed_iteration(case, *args, **kwargs):
+    result = attribute_iteration(case, *args, **kwargs)
+    assert result.returncode == 0, result.stdout + result.stderr
+    return json.loads(result.stdout)
+
+
+def region_facts(rows):
+    return {(r['side'], r['region']): (r['origin'], r.get('last_changed_iteration')) for r in rows}
+
+
+def test_iteration_two_reports_gain_this_iteration_and_cumulative_gain(case):
+    iterations(case, 3)
+    report = attributed_iteration(case, 2, previous=1)
+    this = report['this_iteration']
+    assert this['iteration'] == 2
+    assert this['previous_estimate']['id'] == 'fixture.it1' and this['previous_source']['id'] == 'fixture.it1.source'
+    assert this['earlier_sources'] == []
+    # B was rewritten in iteration 1 and is untouched in iteration 2: untouched this iteration, rewritten cumulatively.
+    assert region_facts(this['regions']) == {
+        ('baseline', 'it1.a'): ('agent_rewritten', 0), ('baseline', 'it1.b'): ('untouched', 1), ('baseline', 'it1.c'): ('untouched', 0),
+        ('candidate', 'it2.a'): ('agent_rewritten', 2), ('candidate', 'it2.b'): ('untouched', 1),
+        ('candidate', 'it2.c'): ('untouched', 0)}
+    assert region_facts(report['regions']) == {
+        ('baseline', 'it0.a'): ('agent_rewritten', 0), ('baseline', 'it0.b'): ('agent_rewritten', 0),
+        ('baseline', 'it0.c'): ('untouched', 0),
+        ('candidate', 'it2.a'): ('agent_rewritten', 2), ('candidate', 'it2.b'): ('agent_rewritten', 1),
+        ('candidate', 'it2.c'): ('untouched', 0)}
+    assert [(s['baseline_lines'], s['candidate_lines']) for s in this['rewrite_sites']] == [([3, 4], [3, 4])]
+    assert [(s['baseline_lines'], s['candidate_lines']) for s in report['rewrite_sites']] == [([3, 4], [3, 4]), ([7, 8], [7, 8])]
+    # This iteration (previous 75 s -> 55 s): A 40 -> 20 rewritten; B + C 35 -> 35 untouched.
+    now = groups(this)
+    assert (now['agent_rewritten']['baseline_seconds'], now['agent_rewritten']['candidate_seconds']) == (40, 20)
+    assert now['agent_rewritten']['baseline_share'] == pytest.approx(40 / 75)
+    assert now['agent_rewritten']['realized_speedup'] == pytest.approx(2.0)
+    assert (now['untouched']['baseline_seconds'], now['untouched']['candidate_seconds']) == (35, 35)
+    assert now['untouched']['drift'] == pytest.approx(1.0)
+    assert this['whole_program']['baseline_seconds'] == pytest.approx(75)
+    assert this['whole_program']['candidate_seconds'] == pytest.approx(55)
+    assert this['whole_program']['total_speedup'] == pytest.approx(75 / 55)
+    assert this['whole_program']['amdahl_ceiling'] == pytest.approx(75 / 35)
+    # Cumulative (original 100 s -> 55 s): A + B 90 -> 45 rewritten; C 10 -> 10 untouched.
+    total = groups(report)
+    assert (total['agent_rewritten']['baseline_seconds'], total['agent_rewritten']['candidate_seconds']) == (90, 45)
+    assert total['agent_rewritten']['baseline_share'] == pytest.approx(0.9)
+    assert total['agent_rewritten']['realized_speedup'] == pytest.approx(2.0)
+    assert (total['untouched']['baseline_seconds'], total['untouched']['candidate_seconds']) == (10, 10)
+    assert report['whole_program']['total_speedup'] == pytest.approx(100 / 55)
+    assert report['whole_program']['amdahl_ceiling'] == pytest.approx(10.0)
+
+
+def test_without_a_previous_candidate_the_report_is_the_ticket_02_report(case):
+    iterations(case, 3)
+    alone = attributed_iteration(case, 2, rid='fixture.alone')
+    assert list(alone) == ['kind', 'schema_version', 'id', 'status', 'created', 'updated', 'provenance', 'format',
+                           'baseline_estimate', 'candidate_estimate', 'baseline_source', 'candidate_source',
+                           'target_description', 'input', 'threads', 'evidence_kind', 'rewrite_sites', 'regions',
+                           'groups', 'whole_program', 'identity_sha256']
+    assert all('last_changed_iteration' not in row for row in alone['regions'])
+    # The cumulative part of an iteration-2 report is the same comparison, plus last-changed iterations.
+    both = attributed_iteration(case, 2, previous=1, rid='fixture.both')
+    for field in ('rewrite_sites', 'groups', 'whole_program'):
+        assert both[field] == alone[field]
+    assert [{k: v for k, v in row.items() if k != 'last_changed_iteration'} for row in both['regions']] == alone['regions']
+
+
+def test_iteration_three_names_the_iteration_that_last_changed_each_region_from_earlier_sources(case):
+    iterations(case, 4)
+    report = attributed_iteration(case, 3, previous=2, earlier=[1])
+    this = report['this_iteration']
+    assert this['iteration'] == 3
+    assert [pin['id'] for pin in this['earlier_sources']] == ['fixture.it1.source']
+    assert region_facts(this['regions']) == {
+        ('baseline', 'it2.a'): ('untouched', 2), ('baseline', 'it2.b'): ('untouched', 1),
+        ('baseline', 'it2.c'): ('agent_rewritten', 0),
+        ('candidate', 'it3.a'): ('untouched', 2), ('candidate', 'it3.b'): ('untouched', 1),
+        ('candidate', 'it3.c'): ('agent_rewritten', 3)}
+    # This iteration (previous 55 s -> 50 s): C 10 -> 5 rewritten; A + B 45 -> 45 untouched.
+    now = groups(this)
+    assert (now['agent_rewritten']['baseline_seconds'], now['agent_rewritten']['candidate_seconds']) == (10, 5)
+    assert (now['untouched']['baseline_seconds'], now['untouched']['candidate_seconds']) == (45, 45)
+    assert this['whole_program']['amdahl_ceiling'] == pytest.approx(55 / 45)
+    # Cumulative: every loop was rewritten in some iteration.
+    assert groups(report)['agent_rewritten']['baseline_seconds'] == 100
+    assert groups(report)['untouched']['baseline_seconds'] == 0
+
+
+def test_iteration_two_report_validates_pins_its_previous_candidate_and_is_indexed(case):
+    iterations(case, 3)
+    attributed_iteration(case, 2, previous=1)
+    checked = case.records.validate()
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+    db = case.tmp_path / 'index.sqlite'
+
+    def sql(query):
+        rows = run_swdb('sql', query, '--records', case.records.path, '--db', db, '--format', 'json')
+        assert rows.returncode == 0, rows.stdout + rows.stderr
+        return json.loads(rows.stdout)
+    assert sql('SELECT * FROM swdb_attribution_iterations') == [
+        {'attribution': 'fixture.attribution', 'iteration': 2, 'previous_estimate': 'fixture.it1',
+         'previous_source': 'fixture.it1.source', 'earlier_sources': '[]', 'previous_seconds': 75.0, 'candidate_seconds': 55.0,
+         'total_speedup': pytest.approx(75 / 55), 'amdahl_ceiling': pytest.approx(75 / 35)}]
+    assert sql('SELECT origin, baseline_seconds, candidate_seconds, realized_speedup, drift '
+               'FROM swdb_attribution_iteration_groups ORDER BY origin') == [
+        {'origin': 'agent_rewritten', 'baseline_seconds': 40.0, 'candidate_seconds': 20.0, 'realized_speedup': 2.0, 'drift': None},
+        {'origin': 'unattributed', 'baseline_seconds': 0.0, 'candidate_seconds': 0.0, 'realized_speedup': None, 'drift': None},
+        {'origin': 'untouched', 'baseline_seconds': 35.0, 'candidate_seconds': 35.0, 'realized_speedup': 1.0, 'drift': 1.0}]
+    assert sql("SELECT side, region, origin, last_changed_iteration FROM swdb_attribution_iteration_regions "
+               "WHERE side = 'candidate' ORDER BY region") == [
+        {'side': 'candidate', 'region': 'it2.a', 'origin': 'agent_rewritten', 'last_changed_iteration': 2},
+        {'side': 'candidate', 'region': 'it2.b', 'origin': 'untouched', 'last_changed_iteration': 1},
+        {'side': 'candidate', 'region': 'it2.c', 'origin': 'untouched', 'last_changed_iteration': 0}]
+    estimate = case.records.path / 'estimates' / 'fixture.it1.yaml'
+    estimate.write_text(estimate.read_text().replace('status: draft', 'status: reviewed', 1))
+    changed = case.records.validate()
+    assert changed.returncode == 1 and 'previous_estimate' in changed.stdout + changed.stderr
+
+
+def test_previous_candidate_of_another_input_or_without_its_source_is_refused(case):
+    iterations(case, 3)
+    path = case.tmp_path / 'sources' / 'it1' / 'kernel.cpp'
+    case.estimate('fixture.it1.other-input', [region('it1.other.a', path, 3, 40)], input_id='tiny-sym-b')
+    other = attribute_iteration(case, 2, previous=1, previous_estimate='fixture.it1.other-input')
+    assert other.returncode == 1 and 'previous and candidate estimates differ in input' in other.stderr
+    alone = run_swdb('attribute', '--records', case.records.path, '--baseline-estimate', 'fixture.it0',
+                     '--candidate-estimate', 'fixture.it2', '--baseline-source', 'fixture.it0.source',
+                     '--candidate-source', 'fixture.it2.source', '--previous-estimate', 'fixture.it1', '--id', 'fixture.x')
+    assert alone.returncode == 1 and '--previous-estimate and --previous-source go together' in alone.stderr
+    assert not (case.records.path / 'attributions').exists()

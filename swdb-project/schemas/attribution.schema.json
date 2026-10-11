@@ -46,7 +46,8 @@
           "path": {"type": ["string", "null"]},
           "lines": {"oneOf": [{"$ref": "#/$defs/lines"}, {"type": "null"}]},
           "sites": {"type": "array", "items": {"type": "string"}},
-          "seconds": {"$ref": "#/$defs/seconds"}
+          "seconds": {"$ref": "#/$defs/seconds"},
+          "last_changed_iteration": {"type": ["integer", "null"], "minimum": 0}
         }
       }
     },
@@ -76,6 +77,21 @@
         "total_speedup": {"$ref": "#/$defs/ratio"},
         "amdahl_ceiling": {"$ref": "#/$defs/ratio"},
         "unknown": {"$ref": "#/$defs/unknown"}
+      }
+    },
+    "this_iteration": {
+      "description": "Ticket 06 (F13): the previous accepted candidate -> candidate comparison, present only when one was given. Inside it, `baseline` means the previous accepted candidate.",
+      "type": "object", "additionalProperties": false,
+      "required": ["iteration", "previous_estimate", "previous_source", "earlier_sources", "rewrite_sites", "regions", "groups", "whole_program"],
+      "properties": {
+        "iteration": {"type": "integer", "minimum": 2},
+        "previous_estimate": {"$ref": "#/$defs/estimate_pin"},
+        "previous_source": {"$ref": "#/$defs/source_pin"},
+        "earlier_sources": {"type": "array", "items": {"$ref": "#/$defs/source_pin"}},
+        "rewrite_sites": {"$ref": "#/properties/rewrite_sites"},
+        "regions": {"$ref": "#/properties/regions"},
+        "groups": {"$ref": "#/properties/groups"},
+        "whole_program": {"$ref": "#/properties/whole_program"}
       }
     },
     "identity_sha256": {"$ref": "#/$defs/sha256"}

@@ -127,3 +127,61 @@ Baseline 100 s: untouched 40 s, rewritten 60 s. The candidate's rewritten part t
 | Amdahl ceiling | 100 / 40 = 2.5 |
 
 The SQLite tables are in [database.md](database.md#attribution-tables).
+
+## Iterations: two baselines (ticket 06, added 2026-10-11 ET)
+
+From iteration 2 on, pass the **previous accepted candidate** too. Nothing in the records marks
+a candidate as accepted, so you name it:
+
+```sh
+python -m swdb attribute ... \
+  --previous-estimate <estimate ID> --previous-source <source_snapshot or candidate ID> \
+  [--earlier-source <source ID> ...]
+```
+
+- `--earlier-source` (repeatable, oldest first): accepted candidates before the previous one.
+  Only their source trees are read. The candidate is iteration 2 + their count.
+- Refused when only one of the two `--previous-*` flags is given, when `--earlier-source` comes
+  without them, or when the previous estimate differs from the candidate's in `input`,
+  `target_description_sha256`, `threads` or `evidence_kind`.
+
+**What changes in the record** (without `--previous-*`, nothing does):
+
+1. The top-level `rewrite_sites`, `regions`, `groups` and `whole_program` stay the
+   **cumulative** comparison: original baseline → candidate.
+2. A new `this_iteration` block holds the same four fields for **gain this iteration**:
+   previous accepted candidate → candidate. Inside it, `baseline` means the previous accepted
+   candidate (`side: baseline`, `baseline_lines`, `baseline_seconds`, …).
+3. Every region row, in both comparisons, gets `last_changed_iteration`.
+
+| `this_iteration` field | Meaning |
+|---|---|
+| `iteration` | the candidate's iteration number (2 or more) |
+| `previous_estimate` | `{id, sha256}` of the previous accepted candidate's estimate |
+| `previous_source` | `{kind, id, sha256, artifact_sha256}` of the source it counted |
+| `earlier_sources` | the same pins for each `--earlier-source`, oldest first (index 0 = iteration 1) |
+| `rewrite_sites`, `regions`, `groups`, `whole_program` | as above, previous → candidate |
+
+**`last_changed_iteration`** (region rows): the newest iteration that changed the region's code.
+
+- Original baseline regions: 0.
+- Other regions: the newest iteration *k* + 1 such that diffing iteration *k*'s tree against the
+  region's own version labels the region rewritten. 0 if no diff touches it; null if it has
+  no source location (it cannot be placed).
+- It uses the same labeling rules as the report, so it follows them when they change.
+
+Worked example (the test fixture). Loops A, B, C. Iteration 1 rewrites B; iteration 2 rewrites A.
+
+| Seconds | A | B | C | Total |
+|---|---|---|---|---|
+| Original | 40 | 50 | 10 | 100 |
+| Iteration 1 (previous) | 40 | 25 | 10 | 75 |
+| Iteration 2 (candidate) | 20 | 25 | 10 | 55 |
+
+| Comparison | Rewritten | Untouched | Total speedup | Amdahl ceiling |
+|---|---|---|---|---|
+| This iteration | A: 40 → 20 | B + C: 35 → 35 | 75 / 55 | 75 / 35 |
+| Cumulative | A + B: 90 → 45 | C: 10 → 10 | 100 / 55 | 100 / 10 |
+
+B is untouched this iteration but rewritten cumulatively; its `last_changed_iteration` is 1.
+A's is 2, C's is 0.
