@@ -2,7 +2,7 @@
 
 Created: 2026-10-11 15:14 ET
 **Type:** task
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 01 — Review and commit design
 **Spec:** `../spec.md` (F1, F3–F5, F8, F17, F18, F22; seam 1)
 **Time estimate:** about half a day
