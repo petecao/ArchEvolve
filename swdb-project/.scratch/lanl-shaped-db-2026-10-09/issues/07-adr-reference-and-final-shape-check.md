@@ -20,3 +20,11 @@ About 1.5 h.
 - [ ] A test fails if any slide table is missing or has a wrong column
 - [ ] A build of the repository records still takes about a second
 - [ ] The full test suite passes
+
+## Comments
+
+**2026-10-11 19:15 ET — Yan-Ru's decision (build speed).** The "about a second" premise was false
+before this work: a build of the repository records takes ~170 s (plus ~530 s validation), peaks
+at 4.9 GB RAM and writes a 952 MB file, mostly estimate JSON. Yan-Ru dropped the build-speed
+criterion from this effort. The checkbox "A build of the repository records still takes about a
+second" no longer applies. Spec user story 34 is void for the same reason.
