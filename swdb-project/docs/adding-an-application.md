@@ -1,6 +1,6 @@
 # Adding records
 
-Updated: 2026-10-07 (Eastern Time).
+Updated: 2026-10-11 (Eastern Time).
 
 [Guide](README.md) · [Application field checklist](reference/adding-an-application.md)
 · [Strategy field checklist](reference/adding-a-strategy.md)
@@ -91,7 +91,7 @@ authoring interface. Use the [typed-library reference](reference/bfs-typed-libra
 for content pins, certification, review attribution, and shared/experimental tiers.
 
 ```sh
-python3 -m swdb sql "select id, target, json_extract(json, '$.effect') from strategies"
+python3 -m swdb sql "select id, target, json_extract(json, '$.effect') from swdb_strategies"
 python3 -m swdb add my-strategy.yaml --agent
 python3 -m swdb find --strategy STRATEGY_ID
 ```

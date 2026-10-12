@@ -3,6 +3,7 @@
 Navigation updated: 2026-09-28 (Eastern Time).
 
 Created: 2026-09-25 (Eastern Time)
+Updated: 2026-10-11 (Eastern Time): the records table is `swdb_records`.
 Updated: 2026-10-05 22:30 (Eastern Time): BC coverage labels and no BC race result in new records (ticket 80);
 2026-10-03 (Eastern Time)
 
@@ -10,7 +11,7 @@ Format 0.4 adds source ownership and workflow records. Existing 0.2 and 0.3 reco
 retain their meaning; see [source identity](bfs-source-identity.md). The envelope's
 `schema_version` versions database records. Independent `message_version: "1.0"`
 versions the provisional ensemble handoff. YAML remains authoritative; the SQLite
-`records` table carries every new kind for retrieval after an index rebuild.
+`swdb_records` table carries every new kind for retrieval after an index rebuild.
 
 Public messages may use YAML syntax, but their values must round-trip through
 JSON without changing object keys or value types. Binary tags, sets, nonfinite
