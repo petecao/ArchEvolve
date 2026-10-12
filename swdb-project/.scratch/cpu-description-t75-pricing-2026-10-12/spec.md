@@ -4,7 +4,7 @@ Created: 2026-10-12 00:42 ET
 Updated: 2026-10-12 00:55 ET (aligned with the fine-grained final fixes F40–F47 at `1aa8feeb`:
 memmove bins, OpenMP projection group, source-0 later-date timing, split rule v2)
 **Type:** spec
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** None
 Owner: Yan-Ru Jhou
 Builds on: the fine-grained attribution effort (`.scratch/fine-grained-attribution-2026-10-11/`,
