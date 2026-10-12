@@ -2,7 +2,7 @@
 
 Created: 2026-10-09
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** resolved
 **Blocked by:** 03
 **Spec:** `../spec.md`
 
@@ -19,3 +19,15 @@ About 2 h.
 - [ ] A fixture clause tied to a statement links to the matching `definitions` row
 - [ ] A contract with no stated link has no link rows
 - [ ] Deleting every `swdb_` table leaves LANL tables untouched and the foreign-key check clean
+
+## Answer
+
+Resolved 2026-10-11 22:00 ET on `lanl-shaped-db` (commit 1ac6c92a). Built in
+`swdb/lanl_contracts.py`. The four `swdb_contract_*` tables (`contract` → `swdb_library_entries`,
+the LANL row id, `clause`, `record_id`, `record_field`) hold only stated ties: a certification's
+`candidate.contract` + `candidate.snapshot` links the contract to the snapshot's implementation
+and its kernel; a statement fact `legality:<contract>:<clause>` links the contract to that
+statement's function (`definitions`), the arrays of the steps it names (`data_structures`), and
+its implementation and kernel. A link is a tie, not a verdict. Site-finder matches and proposal
+offers are not links. Contracts the library lacks get no link. Tests:
+`tests/test_lanl_contracts.py` (9 pass).

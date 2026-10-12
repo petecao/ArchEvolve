@@ -30,3 +30,8 @@ is the gap between the authors' model and the strict layer handled?
 - 2026-10-09: settled in 01 (amended): proofs use a gem5-matching wait rule (14). This ticket still
   decides the rest: the hazards/function split, evidence for `maa_*` contracts, and memory
   effects that land after the call.
+- 2026-10-11: input from 08: no verifier ran on the strict layer as written; proofs ran on
+  `prototype/08-wrong-tile/port/strict_port.hpp`, an array port with both wait rules. The only
+  evidence that it matches today is differential: 11 fixture scenarios x 2 rules x 3 tile sizes,
+  0 diffs. In 08's harness, P1 (hazard) depends only on the control-flow shape, not on data.
+  That supports the hazards/function split from 05.

@@ -1,9 +1,9 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-11 14:56 ET (ticket 07 resolved: verifiers installed)
+Updated: 2026-10-11 18:58 ET (ticket 08 resolved: crux-llvm separates the bug at one lane)
 **Type:** wayfinder map
-**Status:** charted; research 02–06 and 14, task 07 resolved
+**Status:** charted; research 02–06 and 14, task 07, prototype 08 resolved
 
 ## Destination
 
@@ -70,6 +70,11 @@ concept is the next effort.
   (only on prebuilt clang-22 bitcode with `--no-compile`), and Frama-C 33.0 + RPP 0.0.4 (opam
   switch `framac-33`; use `-then-last`). WP reports a bug as timeout, never as refuted. The
   install's z3 upgrade broke the LLVM 22 the analytic evaluator needs; repaired, but fragile.
+- [Can an off-the-shelf verifier tell a real DX100 wait bug from a safe one?](issues/08-wrong-tile-prototype.md):
+  yes at one lane, with crux-llvm on an array port of the strict layer (66-run differential
+  match). The authors' wait is proven under the gem5 rule and refuted under the old one. Three
+  seeded bugs are refuted. ESBMC timed out on the header and on the port. Two lanes do not
+  finish in 15 minutes.
 
 ## Tickets
 
@@ -82,7 +87,7 @@ concept is the next effort.
 | 05 | [How do verifiers model an accelerator's command interface?](issues/05-accelerator-interface-verification.md) | research | resolved | — |
 | 06 | [Which papers are closest to ours?](issues/06-closest-prior-work.md) | research | resolved | — |
 | 07 | [Install the shortlisted verifiers on the Mac](issues/07-install-verifiers.md) | task | resolved | — |
-| 08 | [Can an off-the-shelf verifier tell a real DX100 wait bug from a safe one?](issues/08-wrong-tile-prototype.md) | prototype | ready-for-human | 07, 14 |
+| 08 | [Can an off-the-shelf verifier tell a real DX100 wait bug from a safe one?](issues/08-wrong-tile-prototype.md) | prototype | resolved | — |
 | 09 | [What does the "proven" level assert about a candidate artifact?](issues/09-what-proven-asserts.md) | grilling | ready-for-human | 03 |
 | 10 | [What does a proven rewrite contract prove once?](issues/10-proven-rewrite-contract.md) | grilling | ready-for-human | 03, 09 |
 | 11 | [Which verifiers form the bounded and unbounded tiers?](issues/11-verifier-choice.md) | grilling | ready-for-human | 02, 08, 09 |
@@ -92,6 +97,9 @@ concept is the next effort.
 
 ## Not yet specified
 
+- **Scaling past one lane:** what bound a proven-within-bounds verdict needs (2-lane tiles, more
+  edges), and which engine or encoding reaches it. 08 showed crux-llvm cannot prove 2 lanes in
+  15 minutes on the Mac. Waits on 11 (verifier choice) and 09 (what bounds a verdict declares).
 - **Where real DX100 bugs may hide:** the two corners where the strict layer is looser than gem5
   (a range loop finishing early; memory effects applied at the call), and the same wait-on-source
   idiom in `apps/dx100/benchmarks/gapbs/src/pr.cc:242-245`.

@@ -1,6 +1,6 @@
 # EvolveSWDB — ArchEvolve's research database
 
-Updated: 2026-10-11 22:10 ET (review fix: rewrite site reworded to merged spans); 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
+Updated: 2026-10-11 22:10 ET (review fix: rewrite site reworded to merged spans); 2026-10-11 21:52 ET (ADR 0015: LANL core, guessed column, SWDB extension; crosswalk now historical); 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
 
 The Software Database is the ArchEvolve component that knows the applications:
 what their kernels compute, how their code touches memory, what profiling
@@ -526,12 +526,29 @@ LANL's kernel database, which fills ArchEvolve's Software Database role for the 
 _Avoid_: LANL DB (in prose), bootstrap database
 
 **Research database**:
-EvolveSWDB's own records, kept for Yan-Ru's research and compatible with the main database.
+EvolveSWDB's own records, kept for Yan-Ru's research; its generated file takes the main
+database's shape (a LANL core plus the SWDB extension).
 _Avoid_: our database, local database, preliminary database
 
+**LANL core**:
+The part of the research database's generated file that has the main database's tables, with the
+table and column names LANL has shown, and only those columns plus IDs and the links between them.
+_Avoid_: main schema (LANL's full schema is unseen), LANL DB
+
+**Guessed column**:
+A LANL core column, or a whole table, that LANL has not shown but a link needs; it is listed as
+guessed until LANL's own schema confirms or replaces it.
+_Avoid_: assumed column, extra column
+
+**SWDB extension**:
+Everything in the research database's generated file that the main database lacks, kept in
+tables prefixed `swdb_`. The LANL core never depends on it, so it can be merged in or dropped.
+_Avoid_: separable extension (older wording), research tables
+
 **Crosswalk**:
-The table that maps each main-database table and field to a research-database record kind and
-field, or marks it as having no counterpart.
+The 2026-10-06 draft that maps each main-database table and field to a research-database record
+kind and field, or marks it as having no counterpart. Since ADR 0015 it is a historical record,
+not the migration plan: the research database takes the main database's shape instead.
 _Avoid_: schema mapping (alone), adapter (which is code)
 
 ### Legacy identifiers

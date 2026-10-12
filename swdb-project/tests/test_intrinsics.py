@@ -1,6 +1,7 @@
 """Intrinsic records: schema, rules, `swdb add`, and the database. Created 2026-09-23.
 Updated: 2026-10-03 ET.
-Each rule has a passing case (the seed records) and a failing case."""
+Each rule has a passing case (the seed records) and a failing case. Updated 2026-10-11 ET: `swdb_` table names;
+the fixture copies the record closure, not the ~1 GB catalog (LR-03)."""
 
 import json
 
@@ -18,7 +19,7 @@ def rejected(result, *fragments):
 
 @pytest.fixture
 def repo(records):
-    return records.copy_repo()
+    return records.copy_closure()
 
 
 def edit(records, rel, change):
@@ -89,7 +90,7 @@ def test_add_writes_intrinsics_to_their_folder_and_the_database_lists_them(repo,
     result = repo.swdb("add", new_intrinsic(repo, tmp_path))
     assert result.returncode == 0, result.stderr
     assert (repo.path / "intrinsics" / "mm512_i32scatter_ps.yaml").is_file()
-    rows = json.loads(repo.swdb("sql", "select id, memory_kind, lanes from intrinsics order by id", "--format", "json").stdout)
+    rows = json.loads(repo.swdb("sql", "select id, memory_kind, lanes from swdb_intrinsics order by id", "--format", "json").stdout)
     legacy = [{"id": "mm512_i32gather_ps", "memory_kind": "gather", "lanes": 16},
               {"id": "mm512_i32scatter_ps", "memory_kind": "scatter", "lanes": 16},
               {"id": "mm_prefetch", "memory_kind": "prefetch", "lanes": None}]

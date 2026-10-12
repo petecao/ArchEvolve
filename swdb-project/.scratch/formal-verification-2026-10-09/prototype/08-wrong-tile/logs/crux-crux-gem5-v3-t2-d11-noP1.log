@@ -1,0 +1,14 @@
+[Crux] Encountered the following warnings during parsing:
+[Crux] Are you sure you're using a supported version of LLVM/Clang?
+[Crux] Check here: https://github.com/GaloisInc/llvm-pretty-bc-parser
+[Crux] Found counterexample for verification goal
+[Crux]   tdstep_harness.cpp:163:7: error: in main
+[Crux]   Call to assert()
+[Crux]   Details:
+[Crux]     pushed == (reachable ? 1 : 0) && "P2_pushed_exactly_once"
+[Crux] Found counterexample for verification goal
+[Crux]   tdstep_harness.cpp:163:7: error: in main
+[Crux]   Call to assert()
+[Crux]   Details:
+[Crux]     pushed == (reachable ? 1 : 0) && "P2_pushed_exactly_once"
+[Crux] Overall status: Invalid.

@@ -1,0 +1,181 @@
+Target: 64-bit little-endian aarch64-unknown-macos with esbmclibc
+Parsing state_only.cpp
+Converting
+Generating GOTO Program
+GOTO program creation time: 0.448s
+GOTO program processing time: 0.009s
+Starting Bounded Model Checking
+WARNING: no body for function defer_lock_t#
+WARNING: no body for function try_to_lock_t#
+WARNING: no body for function adopt_lock_t#
+WARNING: no body for function allocator#
+WARNING: no body for function allocator#
+WARNING: no body for function allocator#
+WARNING: no body for function allocator#
+WARNING: no body for function allocator#
+WARNING: no body for function allocator#
+WARNING: no body for function allocator#
+WARNING: no body for function allocator#
+WARNING: no body for function allocator#
+WARNING: no body for function allocator#
+WARNING: no body for function allocator#
+WARNING: no body for function allocator#
+WARNING: no body for function allocator#
+WARNING: no body for function allocator#
+WARNING: no body for function allocator#
+WARNING: no body for function allocator#
+WARNING: no body for function allocator#
+WARNING: no body for function allocator#
+WARNING: no body for function allocator#
+Symex completed in: 0.355s (5162 assignments)
+Caching time: 0.008s (removed 1048 assertions)
+Slicing time: 0.021s (removed 2572 assignments)
+Generated 2448 VCC(s), 1102 remaining after simplification (1542 assignments)
+No solver specified; defaulting to bitwuzla
+Encoding remaining VCC(s) using bit-vector/floating-point arithmetic
+Encoding to solver time: 0.029s
+Solving with solver Bitwuzla 0.9.1
+Runtime decision procedure: 10.290s
+BMC program time: 10.709s
+
+** Results:
+../../../../library/dx100/strict/MAA_functional.hpp, function Op
+  PASSED       [Op.assertion.1]                                    line   53  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [Op.null-pointer-dereference.1]                     line   53  dereference failure: NULL pointer
+  PASSED       [Op.heap-array-bounds-violated.1]                   line   53  dereference failure: array bounds violated: heap object
+  PASSED       [Op.invalidated-dynamic-object.1]                   line   53  dereference failure: invalidated dynamic object
+../../../../library/dx100/strict/MAA_functional.hpp, function Reg
+  PASSED       [Reg.assertion.1]                                   line   51  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [Reg.null-pointer-dereference.1]                    line   51  dereference failure: NULL pointer
+  PASSED       [Reg.heap-array-bounds-violated.1]                  line   51  dereference failure: array bounds violated: heap object
+  PASSED       [Reg.invalidated-dynamic-object.1]                  line   51  dereference failure: invalidated dynamic object
+../../../../library/dx100/strict/MAA_functional.hpp, function State
+  PASSED       [State.object-out-of-bounds.1]                      line   57  dereference failure: Access to object out of bounds
+  PASSED       [State.assertion.1]                                 line   57  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [State.assertion.2]                                 line   57  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [State.null-pointer-dereference.1]                  line   57  dereference failure: NULL pointer
+  PASSED       [State.heap-array-bounds-violated.1]                line   57  dereference failure: array bounds violated: heap object
+  PASSED       [State.invalidated-dynamic-object.1]                line   57  dereference failure: invalidated dynamic object
+../../../../library/dx100/strict/MAA_functional.hpp, function Tile
+  PASSED       [Tile.assertion.1]                                  line   49  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [Tile.null-pointer-dereference.1]                   line   49  dereference failure: NULL pointer
+  PASSED       [Tile.heap-array-bounds-violated.1]                 line   49  dereference failure: array bounds violated: heap object
+  PASSED       [Tile.invalidated-dynamic-object.1]                 line   49  dereference failure: invalidated dynamic object
+/esbmc-vfs/cpp/ios, function ios
+  PASSED       [ios.object-out-of-bounds.1]                        line  166  dereference failure: Access to object out of bounds
+  PASSED       [ios.assertion.1]                                   line  166  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [ios.object-out-of-bounds.2]                        line  167  dereference failure: Access to object out of bounds
+  PASSED       [ios.assertion.2]                                   line  167  dereference failure: Incorrect alignment when accessing data object
+/esbmc-vfs/cpp/ios, function ios_base
+  PASSED       [ios_base.object-out-of-bounds.1]                   line  209  dereference failure: Access to object out of bounds
+  PASSED       [ios_base.assertion.1]                              line  209  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [ios_base.object-out-of-bounds.2]                   line  210  dereference failure: Access to object out of bounds
+  PASSED       [ios_base.assertion.2]                              line  210  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [ios_base.object-out-of-bounds.3]                   line  211  dereference failure: Access to object out of bounds
+  PASSED       [ios_base.assertion.3]                              line  211  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [ios_base.object-out-of-bounds.4]                   line  213  dereference failure: Access to object out of bounds
+  PASSED       [ios_base.assertion.4]                              line  213  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [ios_base.object-out-of-bounds.5]                   line  214  dereference failure: Access to object out of bounds
+  PASSED       [ios_base.assertion.5]                              line  214  dereference failure: Incorrect alignment when accessing data object
+/esbmc-vfs/cpp/istream, function istream
+  PASSED       [istream.object-out-of-bounds.1]                    line   37  dereference failure: Access to object out of bounds
+  PASSED       [istream.assertion.1]                               line   37  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [istream.object-out-of-bounds.2]                    line   39  dereference failure: Access to object out of bounds
+  PASSED       [istream.assertion.2]                               line   39  dereference failure: Incorrect alignment when accessing data object
+/esbmc-vfs/cpp/ostream, function ostream
+  PASSED       [ostream.object-out-of-bounds.1]                    line   35  dereference failure: Access to object out of bounds
+  PASSED       [ostream.assertion.1]                               line   35  dereference failure: Incorrect alignment when accessing data object
+/esbmc-vfs/cpp/vector, function __value_init_range
+  PASSED       [__value_init_range.object-out-of-bounds.1]         line 1066  dereference failure: Access to object out of bounds
+  PASSED       [__value_init_range.assertion.1]                    line 1066  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [__value_init_range.null-pointer-dereference.1]     line 1066  dereference failure: NULL pointer
+  PASSED       [__value_init_range.heap-array-bounds-violated.1]   line 1066  dereference failure: array bounds violated: heap object
+  PASSED       [__value_init_range.invalid-pointer-dereference.1]  line 1066  dereference failure: invalid pointer
+  PASSED       [__value_init_range.invalidated-dynamic-object.1]   line 1066  dereference failure: invalidated dynamic object
+/esbmc-vfs/cpp/vector, function operator[]
+  PASSED       [operator[].assertion.1]                            line  723  assertion 0 <= i
+  PASSED       [operator[].assertion.2]                            line  724  assertion i < _size
+  PASSED       [operator[].object-out-of-bounds.1]                 line  724  dereference failure: Access to object out of bounds
+  PASSED       [operator[].assertion.3]                            line  724  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [operator[].assertion.4]                            line  725  assertion _size <= VECTOR_CAPACITY
+  PASSED       [operator[].object-out-of-bounds.2]                 line  725  dereference failure: Access to object out of bounds
+  PASSED       [operator[].assertion.5]                            line  725  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [operator[].object-out-of-bounds.3]                 line  726  dereference failure: Access to object out of bounds
+  PASSED       [operator[].assertion.6]                            line  726  dereference failure: Incorrect alignment when accessing data object
+/esbmc-vfs/cpp/vector, function vector
+  PASSED       [vector.object-out-of-bounds.1]                     line  325  dereference failure: Access to object out of bounds
+  PASSED       [vector.assertion.1]                                line  325  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [vector.null-pointer-dereference.1]                 line  325  dereference failure: NULL pointer
+  PASSED       [vector.heap-array-bounds-violated.1]               line  325  dereference failure: array bounds violated: heap object
+  PASSED       [vector.invalidated-dynamic-object.1]               line  325  dereference failure: invalidated dynamic object
+  PASSED       [vector.object-out-of-bounds.2]                     line  326  dereference failure: Access to object out of bounds
+  PASSED       [vector.assertion.2]                                line  326  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [vector.null-pointer-dereference.2]                 line  326  dereference failure: NULL pointer
+  PASSED       [vector.heap-array-bounds-violated.2]               line  326  dereference failure: array bounds violated: heap object
+  PASSED       [vector.invalidated-dynamic-object.2]               line  326  dereference failure: invalidated dynamic object
+  PASSED       [vector.object-out-of-bounds.3]                     line  327  dereference failure: Access to object out of bounds
+  PASSED       [vector.assertion.3]                                line  327  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [vector.null-pointer-dereference.3]                 line  327  dereference failure: NULL pointer
+  PASSED       [vector.heap-array-bounds-violated.3]               line  327  dereference failure: array bounds violated: heap object
+  PASSED       [vector.invalidated-dynamic-object.3]               line  327  dereference failure: invalidated dynamic object
+  PASSED       [vector.object-out-of-bounds.4]                     line  328  dereference failure: Access to object out of bounds
+  PASSED       [vector.assertion.4]                                line  328  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [vector.null-pointer-dereference.4]                 line  328  dereference failure: NULL pointer
+  PASSED       [vector.heap-array-bounds-violated.4]               line  328  dereference failure: array bounds violated: heap object
+  PASSED       [vector.invalidated-dynamic-object.4]               line  328  dereference failure: invalidated dynamic object
+  PASSED       [vector.object-out-of-bounds.5]                     line  329  dereference failure: Access to object out of bounds
+  PASSED       [vector.assertion.5]                                line  329  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [vector.null-pointer-dereference.5]                 line  329  dereference failure: NULL pointer
+  PASSED       [vector.heap-array-bounds-violated.5]               line  329  dereference failure: array bounds violated: heap object
+  PASSED       [vector.invalidated-dynamic-object.5]               line  329  dereference failure: invalidated dynamic object
+  PASSED       [vector.object-out-of-bounds.6]                     line  379  dereference failure: Access to object out of bounds
+  PASSED       [vector.assertion.6]                                line  379  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [vector.null-pointer-dereference.6]                 line  379  dereference failure: NULL pointer
+  PASSED       [vector.heap-array-bounds-violated.6]               line  379  dereference failure: array bounds violated: heap object
+  PASSED       [vector.invalidated-dynamic-object.6]               line  379  dereference failure: invalidated dynamic object
+  PASSED       [vector.object-out-of-bounds.7]                     line  380  dereference failure: Access to object out of bounds
+  PASSED       [vector.assertion.7]                                line  380  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [vector.null-pointer-dereference.7]                 line  380  dereference failure: NULL pointer
+  PASSED       [vector.heap-array-bounds-violated.7]               line  380  dereference failure: array bounds violated: heap object
+  PASSED       [vector.invalidated-dynamic-object.7]               line  380  dereference failure: invalidated dynamic object
+  PASSED       [vector.object-out-of-bounds.8]                     line  381  dereference failure: Access to object out of bounds
+  PASSED       [vector.assertion.8]                                line  381  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [vector.null-pointer-dereference.8]                 line  381  dereference failure: NULL pointer
+  PASSED       [vector.heap-array-bounds-violated.8]               line  381  dereference failure: array bounds violated: heap object
+  PASSED       [vector.invalidated-dynamic-object.8]               line  381  dereference failure: invalidated dynamic object
+  PASSED       [vector.object-out-of-bounds.9]                     line  386  dereference failure: Access to object out of bounds
+  PASSED       [vector.assertion.9]                                line  386  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [vector.null-pointer-dereference.9]                 line  386  dereference failure: NULL pointer
+  PASSED       [vector.heap-array-bounds-violated.9]               line  386  dereference failure: array bounds violated: heap object
+  PASSED       [vector.invalidated-dynamic-object.9]               line  386  dereference failure: invalidated dynamic object
+  PASSED       [vector.object-out-of-bounds.10]                    line  387  dereference failure: Access to object out of bounds
+  PASSED       [vector.assertion.10]                               line  387  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [vector.null-pointer-dereference.10]                line  387  dereference failure: NULL pointer
+  PASSED       [vector.heap-array-bounds-violated.10]              line  387  dereference failure: array bounds violated: heap object
+  PASSED       [vector.invalidated-dynamic-object.10]              line  387  dereference failure: invalidated dynamic object
+state_only.cpp, function main
+  PASSED       [main.assertion.1]                                  line    4  assertion swdb_strict::state().tile_count == 0
+  PASSED       [main.object-out-of-bounds.1]                       line    4  dereference failure: Access to object out of bounds
+  PASSED       [main.assertion.2]                                  line    4  dereference failure: Incorrect alignment when accessing data object
+/esbmc-vfs/libc/library/pthread_lib.c, function __ESBMC_mutex_clear
+  PASSED       [__ESBMC_mutex_clear.object-out-of-bounds.1]        line  471  dereference failure: Access to object out of bounds
+  PASSED       [__ESBMC_mutex_clear.assertion.1]                   line  471  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [__ESBMC_mutex_clear.object-out-of-bounds.2]        line  473  dereference failure: Access to object out of bounds
+  PASSED       [__ESBMC_mutex_clear.assertion.2]                   line  473  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [__ESBMC_mutex_clear.object-out-of-bounds.3]        line  474  dereference failure: Access to object out of bounds
+  PASSED       [__ESBMC_mutex_clear.assertion.3]                   line  474  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [__ESBMC_mutex_clear.object-out-of-bounds.4]        line  475  dereference failure: Access to object out of bounds
+  PASSED       [__ESBMC_mutex_clear.assertion.4]                   line  475  dereference failure: Incorrect alignment when accessing data object
+  PASSED       [__ESBMC_mutex_clear.object-out-of-bounds.5]        line  476  dereference failure: Access to object out of bounds
+  PASSED       [__ESBMC_mutex_clear.assertion.5]                   line  476  dereference failure: Incorrect alignment when accessing data object
+/esbmc-vfs/libc/library/pthread_lib.c, function pthread_mutex_init
+  PASSED       [pthread_mutex_init.object-out-of-bounds.1]         line  490  dereference failure: Access to object out of bounds
+  PASSED       [pthread_mutex_init.assertion.1]                    line  490  dereference failure: Incorrect alignment when accessing data object
+
+** 0 of 118 properties failed, 118 passed
+
+VERIFICATION SUCCESSFUL
+ESBMC version 8.5.0 64-bit aarch64 macos
+real 11.48
+user 11.02
+sys 0.31

@@ -2,7 +2,7 @@
 
 Created: 2026-10-09 14:19 ET
 **Type:** ticket map
-**Status:** ready-for-agent (implementation starts only on Yan-Ru's explicit go-ahead)
+**Status:** resolved (all 7 tickets resolved 2026-10-11; merged into `yanrujhou_main` 17d99199)
 **Spec:** [spec.md](spec.md)
 
 Each ticket is checkable on its own through `swdb build`, `swdb sql` and the existing query
@@ -11,12 +11,48 @@ time (about 2 working days).
 
 | # | Ticket | Status | Blocked by | Time |
 |---|---|---|---|---|
-| 01 | [Rename every current table to swdb_ (no behavior change)](issues/01-rename-current-tables-to-swdb-prefix.md) | ready-for-agent | — | 2 h |
-| 02 | [First LANL slice: kernels and kernel_variants](issues/02-first-lanl-slice-kernels-and-variants.md) | ready-for-agent | 01 | 3 h |
-| 03 | [Source tables](issues/03-source-tables.md) | ready-for-agent | 02 | 3 h |
-| 04 | [Hardware and performance tables, measured results only](issues/04-hardware-and-performance-tables.md) | ready-for-agent | 02 | 3 h |
-| 05 | [Validation tables and the empty tables](issues/05-validation-and-empty-tables.md) | ready-for-agent | 02 | 2 h |
-| 06 | [Contract link tables](issues/06-contract-link-tables.md) | ready-for-agent | 03 | 2 h |
-| 07 | [ADR 0015, database reference, final shape check](issues/07-adr-reference-and-final-shape-check.md) | ready-for-agent | 03, 04, 05, 06 | 1.5 h |
+| 01 | [Rename every current table to swdb_ (no behavior change)](issues/01-rename-current-tables-to-swdb-prefix.md) | resolved | — | 2 h |
+| 02 | [First LANL slice: kernels and kernel_variants](issues/02-first-lanl-slice-kernels-and-variants.md) | resolved | 01 | 3 h |
+| 03 | [Source tables](issues/03-source-tables.md) | resolved | 02 | 3 h |
+| 04 | [Hardware and performance tables, measured results only](issues/04-hardware-and-performance-tables.md) | resolved | 02 | 3 h |
+| 05 | [Validation tables and the empty tables](issues/05-validation-and-empty-tables.md) | resolved | 02 | 2 h |
+| 06 | [Contract link tables](issues/06-contract-link-tables.md) | resolved | 03 | 2 h |
+| 07 | [ADR 0015, database reference, final shape check](issues/07-adr-reference-and-final-shape-check.md) | resolved | 03, 04, 05, 06 | 1.5 h |
 
 ## Context pointers
+
+- 2026-10-11 19:15 ET: implementation started on integration branch `lanl-shaped-db` (from
+  `yanrujhou_main` @ f2624d73). Yan-Ru's decisions: catalog-copying test fixtures may move to the
+  record-closure helper (ticket 01 comment); build-speed criterion dropped (ticket 07 comment).
+- 2026-10-11 21:20 ET: ticket 02 resolved — LANL group-module pattern (`swdb/lanl.py`,
+  `swdb/lanl_<group>.py`, `tests/testkit/lanl.py`); see [02](issues/02-first-lanl-slice-kernels-and-variants.md#answer).
+  Ticket 01 merged (42cff8c2) pending its full-suite report and five fixture fixes. ADR 0015
+  (ticket 07 part 1) merged early (1b4f57cd).
+- 2026-10-11 21:40 ET: tickets 04 and 05 resolved — measured-only performance tables and
+  `swdb_estimates` ([04](issues/04-hardware-and-performance-tables.md#answer)); validation tables
+  from outcomes that actually ran, four empty slide tables ([05](issues/05-validation-and-empty-tables.md#answer)).
+- 2026-10-11 21:55 ET: ticket 03 resolved — source tables from stated code paths, snapshots,
+  functions and arrays ([03](issues/03-source-tables.md#answer)). Ticket 06 claimed.
+- 2026-10-11 21:45 ET: ticket 01 resolved — rename verified byte-identical on 289 queries
+  ([01](issues/01-rename-current-tables-to-swdb-prefix.md#answer)). Open data issue outside this
+  effort: `library/contract.bc_read_offload` changed after its review, so its tier is `experimental`.
+- 2026-10-11 22:00 ET: ticket 06 resolved — contract links from stated ties only
+  ([06](issues/06-contract-link-tables.md#answer)). Ticket 07 claimed.
+- 2026-10-11 22:05 ET: ticket 07 resolved — reference doc, glossary, whole-core shape test
+  ([07](issues/07-adr-reference-and-final-shape-check.md#answer)). Spec's "16 slide tables"
+  corrected to 15. Code review of the branch done; fixes in progress (branch `lanl/08-review-fixes`).
+- 2026-10-11 23:25 ET: **done.** `lanl-shaped-db` merged into `yanrujhou_main` (17d99199) after the
+  code review (9 findings fixed, 1 kept by decision; merge cc3225a2).
+  - Full-catalog check on the merged code: `swdb build` of all 705 records OK in 172 s (same as
+    before); 16 core tables; `foreign_key_check` clean; every core row has an origin; after
+    dropping every `swdb_` table, 16 tables remain and the FK check is clean.
+  - Tests: all LANL and DB test files pass. A full suite (140 full-catalog-copy tests deselected)
+    ran 699 of ~5000 tests before it was stopped: 644 passed; 52 errors were all
+    `swdb source-snapshot` 600 s timeouts, which time out the same way on the base branch; 3
+    failures are pre-existing (two `test_bfs_acceptance_report` tests fail identically on base;
+    `test_bc_certification` tier, see below).
+  - Follow-ups outside this effort (not ticketed yet): (1) `library/contract.bc_read_offload` and
+    `contract.bfs_read_offload` changed in 87e8646e after their reviews, so their tier is
+    `experimental` — needs a new promotion review by Yan-Ru; (2) run the full suite on mbit10, since
+    ~125 catalog-copying tests take ~10 min each on the Mac; (3) evaluation timings could also feed
+    `performance_runs` (ticket 04 answer).

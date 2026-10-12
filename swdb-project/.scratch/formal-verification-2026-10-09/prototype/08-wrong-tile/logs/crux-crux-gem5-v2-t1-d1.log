@@ -1,0 +1,20 @@
+[Crux] Encountered the following warnings during parsing:
+[Crux] Are you sure you're using a supported version of LLVM/Clang?
+[Crux] Check here: https://github.com/GaloisInc/llvm-pretty-bc-parser
+[Crux] Found counterexample for verification goal
+[Crux]   tdstep_harness.cpp:139:7: error: in main
+[Crux]   Call to assert()
+[Crux]   Details:
+[Crux]     cpu_may_read(tile0) && cpu_may_read(tile4) && cpu_may_read(tile5) && "P1_cpu_reads_finished_data"
+[Crux] Overall status: Invalid.
+[Crux] Using pointer width: 64 for file /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/formal-verification-2026-10-09/prototype/08-wrong-tile/bc/crux-gem5-v2-t1-d1.bc
+[Crux] Simulating function main
+[Crux] Attempting to prove verification conditions.
+[Crux] *** debug executable: /Users/yanrujhou/CLionProjects/ArchEvolve/swdb-project/.scratch/formal-verification-2026-10-09/prototype/08-wrong-tile/crux-out/crux-gem5-v2-t1-d1/debug-139
+[Crux] *** break on line: 139
+[Crux] Goal status:
+[Crux]   Total: 10
+[Crux]   Proved: 9
+[Crux]   Disproved: 1
+[Crux]   Incomplete: 0
+[Crux]   Unknown: 0
