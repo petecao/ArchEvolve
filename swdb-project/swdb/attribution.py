@@ -77,6 +77,7 @@ Rules used by this version (ticket 04 added the rewrite-site edge cases):
 """
 import copy
 import difflib
+import re
 import statistics
 from pathlib import Path, PurePosixPath
 
@@ -111,6 +112,9 @@ def register_cli(commands):
     sub.add_argument('--earlier-source', action='append', default=[],
                      help='source record of an accepted candidate before the previous one, oldest first (repeatable)')
     sub.add_argument('--site-finder', help='saved campaign_summary whose site-finder regions give catalog bounds (ticket 08)')
+    sub.add_argument('--site-finder-source', default=None,
+                     help='source_snapshot or candidate record of the full-source revision the site-finder lines name; '
+                          'without it a site-finder region joins its whole function (join: function)')
     sub.add_argument('--site-finder-iteration', type=int, default=None,
                      help='campaign iteration index whose site-finder regions to use (default: the last one that has them)')
     sub.add_argument('--baseline-profile', help='ticket 09: saved region_profile (`swdb bfs-profile`) timing the baseline tree')
@@ -426,7 +430,6 @@ def _executed_calls(characterization):
 
 def _names(call, symbol):
     """The call is `symbol` itself or carries it as an Itanium source name (`<length><symbol>`)."""
-    import re
     return call == symbol or re.search(f'(?<![0-9]){len(symbol)}{re.escape(symbol)}', call) is not None
 
 
@@ -588,13 +591,25 @@ def _floor_terms(region, target):
     return terms
 
 
+def _calls_by_region(calls):
+    found = {}
+    for call in calls:
+        found.setdefault(call.get('region'), []).append(call)
+    return found
+
+
 def _counted_trials(side, store):
-    """Per-trial counted regions by ID, reconciled the way the estimator reconciles them."""
+    """(per-trial counted regions by ID, per-trial executed calls by region ID), reconciled the way
+    the estimator reconciles them: each trial's regions are estimated with that trial's own
+    `unmodeled_calls` (review fix S8), a single-run characterization with its aggregate ones."""
     from swdb.analytic_trial_scope import reconcile_trial
     trials = side.characterization.get('trials') or []
     if not trials:
-        return [{r['id']: r for r in side.characterization['regions']}]
-    return [{r['id']: r for r in reconcile_trial(side.characterization, trial, store)[0]['regions']} for trial in trials]
+        return ([{r['id']: r for r in side.characterization['regions']}],
+                [_calls_by_region(side.characterization.get('unmodeled_calls', []))])
+    reconciled = [reconcile_trial(side.characterization, trial, store)[0] for trial in trials]
+    return ([{r['id']: r for r in t['regions']} for t in reconciled],
+            [_calls_by_region(t.get('unmodeled_calls', [])) for t in reconciled])
 
 
 def _median(values):
@@ -626,33 +641,45 @@ def _headroom(limit, estimate, bound, unknown_limit='unknown_limit'):
     return {'limit': limit, 'value': None if reason else estimate / bound, 'reason': reason}
 
 
-# --- Ticket 08: catalog bound (F6, F21, F25) ---------------------------------------------------
+# --- Ticket 08: catalog bound (F6, F21, F25; review fixes F30-F36) ------------------------------
 #
 # Site-finder regions come from a saved campaign summary: one iteration's chosen `regions`
 # rows, each with `why.source` (path, full-source revision and lines) and `why.applications`
 # (the entries that apply). Their lines name the full-source revision, not either tree
-# attributed here (risks C1, C2), so a site-finder region is placed in each side's own tree by
-# the function its ID names (`<implementation>/<function>:<first>-<last>`), as ticket 73's
-# `workspace_region_lines` does. An estimate region joins it when one of its pieces (home span
-# or inlined piece) overlaps that function's span; `mixed` when some piece lies outside (F21).
+# attributed here (risks C1, C2). F21 (review fix F30): each site-finder region's lines are
+# moved into each tree by their offset inside the function the region ID names
+# (`<implementation>/<function>:<first>-<last>`): offset from the function's first line in the
+# revision tree (`--site-finder-source`), added to the same definition's first line in the tree.
+# The moved lines are kept when the function's text is the same in both trees or they stay
+# inside the tree's definition. An estimate region joins a site-finder region when one of its
+# pieces (home span or inlined piece) overlaps the moved lines; `mixed` when some line of its
+# pieces lies outside every joined span. When the lines cannot be moved (no revision tree, or it
+# lacks the file or function), the whole function joins, recorded as `join: function` with the
+# reason. A site-finder region that cannot be placed at all is listed with its reason and makes
+# the bound of every region it could have joined unknown (`site_finder_unplaced`, F31).
 
 COUNT_GAPS = ('address_stream_counts', 'accelerator_calls')   # offload counts only a rewrite produces
-UNKNOWN_ENTRY = ('missing_inputs', 'entry_changed', 'not_in_library')
+UNKNOWN_ENTRY = ('missing_inputs', 'entry_changed', 'entry_unhashed', 'not_in_library')
+FLOOR_TIER_REASONS = ('no_catalog_match', 'no_site_finder')   # F36: the only null bounds ranked by floor headroom
 SITE_FINDER_REGION = r'^.+/(?P<function>[A-Za-z_]\w*):[0-9]+-[0-9]+$'
 RANKING_RULE = {
     'remaining_gain_bound': 'Upper limit, never an expected gain: share x max(0, 1 - catalog bound / estimate), '
                             'share = region seconds / candidate total seconds. Regions with a known catalog bound only; '
-                            'largest first.',
-    'floor_headroom': 'Regions without a known catalog bound: estimate / resource floor, largest first. Never ranked '
-                      'against the remaining_gain_bound tier.',
-    'unknown': 'Regions whose ranking value is null, in region-ID order, after every known value.'}
+                            'largest first. Clamped at 0 (F29): an entry slower than the region\'s estimate offers no '
+                            'gain, the same as a region already at its bound. Ties (for example at 0) go by floor '
+                            'headroom, largest first and null last, then by region ID.',
+    'floor_headroom': 'Regions whose catalog bound is no_catalog_match or no_site_finder: estimate / resource floor, '
+                      'largest first. Never ranked against the remaining_gain_bound tier.',
+    'unknown': 'Regions whose ranking value is null, in region-ID order, after every known value: an unknown catalog '
+               'bound (its reason, for example needs_rewritten_counts, unknown_catalog_entry, no_baseline_counts or '
+               'site_finder_unplaced), or a null remaining gain bound or floor headroom.'}
 
 
 class _SiteFinder:
-    """One iteration's site-finder regions from a saved campaign summary."""
+    """One iteration's site-finder regions from a saved campaign summary, and where each one lies
+    in every attributed tree."""
 
-    def __init__(self, store, summary_id, iteration=None):
-        import re
+    def __init__(self, store, summary_id, iteration=None, revision_id=None):
         self.summary = _record(store, summary_id, ('campaign_summary',))
         with_why = [it for it in self.summary.get('iterations', [])
                     if any(isinstance(r.get('why'), dict) for r in it.get('regions', []))]
@@ -668,6 +695,8 @@ class _SiteFinder:
         params = ((chosen.get('site_finder') or {}).get('parameters')
                   or (self.summary.get('site_finder') or {}).get('parameters') or {})
         self.kernel, self.target = params.get('kernel'), params.get('target')
+        self.revision = _Tree(store, revision_id) if revision_id else None
+        self.placements = {}
         self.regions = []
         for row in sorted((r for r in chosen['regions'] if isinstance(r.get('why'), dict)), key=lambda r: r['id']):
             match = re.match(SITE_FINDER_REGION, row['id'])
@@ -678,11 +707,24 @@ class _SiteFinder:
                 'applications': sorted(({'entry': a['entry'], 'kind': a.get('kind'), 'content_sha256': a.get('content_sha256')}
                                         for a in row['why'].get('applications', [])), key=lambda a: a['entry'])})
 
+    def place(self, side):
+        """[(site-finder region, placement)] in one tree, computed once per source record."""
+        key = side.source['id']
+        if key not in self.placements:
+            self.placements[key] = {sf['id']: _placement(sf, side, self.revision) for sf in self.regions}
+        return [(sf, self.placements[key][sf['id']]) for sf in self.regions]
+
     def block(self):
-        return {'campaign_summary': _pin(self.summary), 'iteration': self.iteration, 'query_sha256': self.query_sha256,
-                'kernel': self.kernel, 'target': self.target,
-                'regions': [{k: r[k] for k in ('id', 'function', 'path', 'revision', 'lines')}
-                            | {'entries': [a['entry'] for a in r['applications']]} for r in self.regions]}
+        block = {'campaign_summary': _pin(self.summary), 'iteration': self.iteration, 'query_sha256': self.query_sha256,
+                 'kernel': self.kernel, 'target': self.target,
+                 'regions': [{k: r[k] for k in ('id', 'function', 'path', 'revision', 'lines')}
+                             | {'entries': [a['entry'] for a in r['applications']],
+                                'placements': [{'source': source, **self.placements[source][r['id']]}
+                                               for source in sorted(self.placements)]}
+                             for r in self.regions]}
+        if self.revision is not None:
+            block['revision_source'] = _source_pin(self.revision.source)
+        return block
 
 
 def _tree_file(side, path):
@@ -695,23 +737,80 @@ def _tree_file(side, path):
     return matches[0] if len(matches) == 1 else None
 
 
+def _moved_lines(sf, rel, definitions, lines, revision):
+    """(the site-finder lines moved into the tree by function-relative offset, None) or (None, reason)."""
+    if revision is None:
+        return None, 'no_revision_tree'
+    if revision.source.get('revision') != sf['revision']:
+        return None, 'revision_mismatch'
+    rev_rel = _tree_file(revision, sf['path'])
+    if rev_rel is None:
+        return None, 'file_not_in_revision_tree'
+    span = sf['lines']
+    if not (isinstance(span, list) and len(span) == 2 and all(isinstance(x, int) for x in span) and 1 <= span[0] <= span[1]):
+        return None, 'no_site_finder_lines'
+    rev_lines = revision.text(rev_rel)
+    rev_definitions = cpp_lexical.definition_spans('\n'.join(rev_lines), sf['function'])
+    inside = [i for i, d in enumerate(rev_definitions) if d[0] <= span[0] and span[1] <= d[1]]
+    if not inside:
+        return None, 'lines_outside_function_in_revision'
+    if len(rev_definitions) != len(definitions):
+        return None, 'definitions_differ'
+    i = max(inside, key=lambda k: rev_definitions[k][0])   # the innermost definition holding the lines
+    source, target = rev_definitions[i], definitions[i]
+    moved = [target[0] + span[0] - source[0], target[0] + span[1] - source[0]]
+    same_text = rev_lines[source[0] - 1:source[1]] == lines[target[0] - 1:target[1]]
+    if not same_text and not (target[0] <= moved[0] and moved[1] <= target[1]):
+        return None, 'moved_lines_outside_function'
+    return moved, None
+
+
+def _placement(sf, side, revision):
+    """Where one site-finder region lies in one tree: `{join, path, lines, reason}`.
+
+    `join` is `lines` (moved lines), `function` (the whole definition; `reason` says why the lines
+    could not be moved) or null (unplaced; `reason` says why)."""
+    unplaced = {'join': None, 'path': None, 'lines': None}
+    if sf['function'] is None:
+        return {**unplaced, 'reason': 'unrecognized_region_id'}
+    rel = _tree_file(side, sf['path'])
+    if rel is None:
+        return {**unplaced, 'reason': 'file_not_in_tree'}
+    lines = side.text(rel)
+    definitions = cpp_lexical.definition_spans('\n'.join(lines), sf['function'])
+    if not definitions:
+        return {**unplaced, 'path': rel, 'reason': 'function_not_in_tree'}
+    moved, reason = _moved_lines(sf, rel, definitions, lines, revision)
+    if moved is not None:
+        return {'join': 'lines', 'path': rel, 'lines': moved, 'reason': None}
+    if len(definitions) != 1:
+        return {**unplaced, 'path': rel, 'reason': 'ambiguous_function'}
+    return {'join': 'function', 'path': rel, 'lines': list(definitions[0]), 'reason': reason}
+
+
+def _pieces(row):
+    return ([(row['path'], row['lines'])] if row['path'] and row['lines'] else []) + [
+        (p['path'], p['lines']) for p in row['inlined']]
+
+
 def _joins(side, labels, finder):
-    """{region ID: [(site-finder region, mixed)]} for one side (F21, risks C1/C2)."""
-    placed = []
-    for sf in finder.regions:
-        rel = _tree_file(side, sf['path'])
-        span = cpp_lexical.function_span('\n'.join(side.text(rel)), sf['function']) if rel and sf['function'] else None
-        if span:
-            placed.append((sf, rel, span))
-    joins = {}
+    """({region ID: [(site-finder region, placement)]}, {region ID: [unplaced site-finder region IDs]},
+    {region ID: mixed}) for one side (F21, F30, F31)."""
+    placed = finder.place(side)
+    joins, unplaced, mixed = {}, {}, {}
     for row in labels.values():
-        pieces = ([(row['path'], row['lines'])] if row['path'] and row['lines'] else []) + [
-            (p['path'], p['lines']) for p in row['inlined']]
-        for sf, rel, span in placed:
-            if any(path == rel and _overlaps(span, lines) for path, lines in pieces):
-                inside = all(path == rel and span[0] <= lines[0] and lines[1] <= span[1] for path, lines in pieces)
-                joins.setdefault(row['region'], []).append((sf, not inside))
-    return joins
+        pieces = _pieces(row)
+        for sf, where in placed:
+            if where['join'] is None:
+                if any(path is not None and (where['path'] is None or path == where['path']) for path, _ in pieces):
+                    unplaced.setdefault(row['region'], []).append(sf['id'])
+            elif any(path == where['path'] and _overlaps(where['lines'], lines) for path, lines in pieces):
+                joins.setdefault(row['region'], []).append((sf, where))
+        spans = [(where['path'], where['lines']) for _, where in joins.get(row['region'], [])]
+        mixed[row['region']] = bool(spans) and any(
+            not any(path == p and s[0] <= line <= s[1] for p, s in spans)
+            for path, lines in pieces for line in range(lines[0], lines[1] + 1))
+    return joins, unplaced, mixed
 
 
 class _Bounds:
@@ -741,11 +840,16 @@ class _Bounds:
 
         F25: the entry's intrinsics' hardware operations select the description's functional
         observation commands whose operations they all provide; those commands' events select
-        the offload mechanisms (`selector.domain: offload`, or `selector.event_ids` naming one)."""
+        the offload mechanisms (`selector.domain: offload`, or `selector.event_ids` naming one).
+        F28: operation families are never mapped onto each other (an `dx100.mmio.v1.*` entry
+        reaches no `dx100.functional.v1.*` command). F32: an application without the
+        `content_sha256` the site finder saw is `entry_unhashed`, never evaluated."""
         entry = self.library.get(application['entry']) if self.library else None
         if entry is None:
             return [], 'not_in_library'
-        if application.get('content_sha256') and artifacts.digest(entry) != application['content_sha256']:
+        if not application.get('content_sha256'):
+            return [], 'entry_unhashed'
+        if artifacts.digest(entry) != application['content_sha256']:
             return [], 'entry_changed'
         operations = self._hardware_operations(application['entry'])
         commands = (target.get('functional_observation') or {}).get('commands', [])
@@ -779,10 +883,12 @@ def _entry_trial(region, calls, mechanisms, side, target):
     return max((r['seconds'] for r in bounds), default=0.) + sum(r['seconds'] for r in overheads), results
 
 
-def _entry_bound(region_id, counted, calls, mechanisms, side, target):
-    """Median over trials of the entry's composed seconds on the region's own counts (absent = 0 s)."""
-    per_trial = [_entry_trial(t[region_id], calls.get(region_id, []), mechanisms, side, target) if region_id in t else None
-                 for t in counted]
+def _entry_bound(region_id, counts, mechanisms, side, target):
+    """Median over trials of the entry's composed seconds on the region's own counts (absent = 0 s).
+    `counts` is `_counted_trials(side)`: each trial's regions and that trial's own calls (S8)."""
+    trials, calls = counts
+    per_trial = [_entry_trial(t[region_id], c.get(region_id, []), mechanisms, side, target) if region_id in t else None
+                 for t, c in zip(trials, calls)]
     rows = []
     for i, mechanism in enumerate(mechanisms):
         results = [t[1][i] for t in per_trial if t is not None]
@@ -797,20 +903,37 @@ def _entry_bound(region_id, counted, calls, mechanisms, side, target):
     return {'seconds': seconds, 'reason': reason, 'mechanisms': rows, 'missing': missing}
 
 
-def _add_catalog(side, labels, store, bounds, counted, target):
-    """Annotate each region row of one side with its catalog bound and catalog headroom."""
+def _catalog_reason(evaluated, unplaced):
+    """The null bound's reason (F6, F31, F35): an unknown before a missing match."""
+    reasons = {e['reason'] for e in evaluated}
+    if 'needs_rewritten_counts' in reasons:
+        return 'needs_rewritten_counts'
+    if reasons & set(UNKNOWN_ENTRY):
+        return 'unknown_catalog_entry'
+    if 'no_baseline_counts' in reasons:
+        return 'no_baseline_counts'
+    return 'site_finder_unplaced' if unplaced else 'no_catalog_match'
+
+
+def _add_catalog(side, labels, bounds, counts, target, baseline=None):
+    """Annotate each region row of one side with its catalog bound and catalog headroom.
+
+    F35 (review fix S3, spec F6): an entry runs on the region's baseline counts. A baseline row
+    uses its own; a candidate row uses those of its `matched_region` on the baseline side
+    (`baseline` = (that side, its counts)); a candidate row with no matched region has none, so
+    an entry with mechanisms gives `no_baseline_counts`."""
     if bounds is None or bounds.finder is None:
         for row in labels.values():
             row['catalog_bound'] = {'seconds': None, 'entry': None, 'reason': 'no_site_finder', 'mixed': False,
-                                    'site_finder_regions': [], 'entries': [], 'missing': []}
+                                    'site_finder_regions': [], 'joins': [], 'unplaced_site_finder_regions': [],
+                                    'entries': [], 'missing': []}
             row['headroom'].append(_headroom('catalog_bound', row['seconds'], None, 'no_site_finder'))
         return
-    joins = _joins(side, labels, bounds.finder)
-    calls = {}
-    for call in side.characterization.get('unmodeled_calls', []):
-        calls.setdefault(call.get('region'), []).append(call)
+    joins, unplaced, mixed = _joins(side, labels, bounds.finder)
     for row in labels.values():
         joined = joins.get(row['region'], [])
+        source_side, source_counts = (side, counts) if baseline is None else baseline
+        region_id = row['region'] if baseline is None else row['matched_region']
         entries = {}
         for sf, _ in joined:
             for application in sf['applications']:
@@ -819,34 +942,43 @@ def _add_catalog(side, labels, store, bounds, counted, target):
         for entry_id in sorted(entries):
             application, regions = entries[entry_id]
             mechanisms, reason = bounds.mechanisms(application, target)
-            result = (_entry_bound(row['region'], counted, calls, mechanisms, side, target) if mechanisms
-                      else {'seconds': None, 'reason': reason, 'mechanisms': [], 'missing': []})
+            if mechanisms and region_id is None:
+                result = {'seconds': None, 'reason': 'no_baseline_counts', 'mechanisms': [], 'missing': []}
+            elif mechanisms:
+                result = _entry_bound(region_id, source_counts, mechanisms, source_side, target)
+            else:
+                result = {'seconds': None, 'reason': reason, 'mechanisms': [], 'missing': []}
             evaluated.append({'entry': entry_id, 'kind': application.get('kind'),
                               'content_sha256': application.get('content_sha256'),
                               'site_finder_regions': sorted(set(regions)), **result})
         known = [e for e in evaluated if e['seconds'] is not None]
         best = min(known, key=lambda e: (e['seconds'], e['entry'])) if known else None
-        reasons = {e['reason'] for e in evaluated}
-        reason = (None if best else 'needs_rewritten_counts' if 'needs_rewritten_counts' in reasons
-                  else 'unknown_catalog_entry' if reasons & set(UNKNOWN_ENTRY) else 'no_catalog_match')
+        reason = None if best else _catalog_reason(evaluated, unplaced.get(row['region']))
         row['catalog_bound'] = {'seconds': best['seconds'] if best else None, 'entry': best['entry'] if best else None,
-                                'reason': reason, 'mixed': any(mixed for _, mixed in joined),
-                                'site_finder_regions': sorted({sf['id'] for sf, _ in joined}), 'entries': evaluated,
+                                'reason': reason, 'mixed': mixed[row['region']],
+                                'site_finder_regions': sorted({sf['id'] for sf, _ in joined}),
+                                'joins': [{'site_finder_region': sf['id'], 'join': where['join'], 'path': where['path'],
+                                           'lines': where['lines'], 'reason': where['reason']}
+                                          for sf, where in sorted(joined, key=lambda j: j[0]['id'])],
+                                'unplaced_site_finder_regions': sorted(unplaced.get(row['region'], [])),
+                                'entries': evaluated,
                                 'missing': sorted({m for e in evaluated for m in e['missing']})}
         row['headroom'].append(_headroom('catalog_bound', row['seconds'], row['catalog_bound']['seconds'], reason))
 
 
-def _add_limits(side, labels, store, bounds=None):
-    """Annotate each region row of one side with its resource floor, catalog bound and both headrooms."""
-    counted = _counted_trials(side, store)
+def _add_limits(side, labels, store, bounds=None, baseline=None):
+    """Annotate each region row of one side with its resource floor, catalog bound and both
+    headrooms; returns the side's per-trial counts, which the other side's rows read (F35)."""
+    counts = _counted_trials(side, store)
     target = side.estimate['target_description_snapshot']
     _require(artifacts.digest(target) == side.estimate['target_description_sha256'],
              f'{side.name} estimate target description snapshot differs from the hash it pins')
     for row in labels.values():
-        floor = _resource_floor(row['region'], counted, target)
+        floor = _resource_floor(row['region'], counts[0], target)
         row['resource_floor'] = floor
         row['headroom'] = [_headroom('resource_floor', row['seconds'], floor['seconds'])]
-    _add_catalog(side, labels, store, bounds, counted, target)
+    _add_catalog(side, labels, bounds, counts, target, baseline)
+    return counts
 
 
 def _remaining_gain_bound(estimate, bound, total):
@@ -865,24 +997,32 @@ def _remaining_gain_bound(estimate, bound, total):
 def _ranking(labels, total):
     """Candidate regions for the next iteration (F7), in three tiers never ranked against each other.
 
-    1. `remaining_gain_bound`: regions with a known catalog bound, largest first.
-    2. `floor_headroom`: regions without one (floor-only), by floor headroom, largest first.
-    3. `unknown`: every null value, in region-ID order: a known catalog bound whose remaining
-       gain bound is null (limit `catalog_bound`), or a floor-only region with a null floor
-       headroom (limit `resource_floor`).
-    Ties go by region ID; positions are 1-based over the whole list.
+    1. `remaining_gain_bound`: regions with a known catalog bound, largest first; ties (for
+       example at the 0 clamp, F29) by floor headroom, largest first and null last.
+    2. `floor_headroom`: regions whose bound is `no_catalog_match` or `no_site_finder`
+       (floor-only), by floor headroom, largest first.
+    3. `unknown`: every null value, in region-ID order: an unknown catalog bound (limit
+       `catalog_bound`, its reason, F36), a known one whose remaining gain bound is null, or a
+       floor-only region with a null floor headroom (limit `resource_floor`).
+    Remaining ties go by region ID; positions are 1-based over the whole list.
     """
     def limit(row, name):
         return next(h for h in row['headroom'] if h['limit'] == name)
+    def tie(row):   # F29: equal remaining gain bounds (for example 0) go by floor headroom, null last
+        value = limit(row, 'resource_floor')['value']
+        return (value is None, -(value or 0.))
     gains, floors, unknown = [], [], []
     for row in labels.values():
-        if row['catalog_bound']['seconds'] is not None:
-            value, reason = _remaining_gain_bound(row['seconds'], row['catalog_bound']['seconds'], total)
+        bound = row['catalog_bound']
+        if bound['seconds'] is not None:
+            value, reason = _remaining_gain_bound(row['seconds'], bound['seconds'], total)
             (gains if value is not None else unknown).append((row, 'catalog_bound', value, reason))
+        elif bound['reason'] not in FLOOR_TIER_REASONS:   # F36: an unknown bound is never floor-only
+            unknown.append((row, 'catalog_bound', None, bound['reason']))
         else:
             floor = limit(row, 'resource_floor')
             (floors if floor['value'] is not None else unknown).append((row, 'resource_floor', floor['value'], floor['reason']))
-    entries = ([('remaining_gain_bound', *e) for e in sorted(gains, key=lambda e: (-e[2], e[0]['region']))]
+    entries = ([('remaining_gain_bound', *e) for e in sorted(gains, key=lambda e: (-e[2], *tie(e[0]), e[0]['region']))]
                + [('floor_headroom', *e) for e in sorted(floors, key=lambda e: (-e[2], e[0]['region']))]
                + [('unknown', *e) for e in sorted(unknown, key=lambda e: e[0]['region'])])
     return [{'position': i, 'side': row['side'], 'region': row['region'], 'tier': tier, 'limit': name,
@@ -951,6 +1091,11 @@ def validate_record(record, ctx):
         current = ctx.store.get(finder['campaign_summary']['id'], 'campaign_summary')
         if current is None or artifacts.digest(current) != finder['campaign_summary']['sha256']:
             yield Problem(record.rel, 'site_finder', f'pinned campaign summary {finder["campaign_summary"]["id"]!r} is missing or changed')
+        revision = finder.get('revision_source')
+        if revision is not None:   # review fix F30: the revision tree that moved the site-finder lines is unchanged
+            current = ctx.store.get(revision['id'])
+            if current is None or artifacts.digest(current) != revision['sha256']:
+                yield Problem(record.rel, 'site_finder.revision_source', f'pinned revision source {revision["id"]!r} is missing or changed')
     for field in ('baseline_estimate', 'candidate_estimate'):
         current = ctx.store.get(data[field]['id'], 'estimate')
         if current is not None and current['target_description_sha256'] != data['target_description']['sha256']:
@@ -1192,8 +1337,8 @@ def _iteration(store, args, baseline, candidate, labels, catalog=None, bounds=No
         row['last_changed_iteration'] = changed['candidate'][row['region']]
     for row in rows['baseline'].values():
         row['last_changed_iteration'] = changed['previous'][row['region']]
-    _add_limits(before, rows['baseline'], store, bounds)
-    _add_limits(candidate, rows['candidate'], store, bounds)
+    counts = _add_limits(before, rows['baseline'], store, bounds)
+    _add_limits(candidate, rows['candidate'], store, bounds, (before, counts))
     groups = _groups(before, candidate, rows)
     block = {'iteration': len(chain), 'previous_estimate': _pin(previous.estimate),
              'previous_source': _source_pin(previous.source),
@@ -1216,16 +1361,19 @@ def attribute(args):
                 for rid, side in ((args.baseline_profile, baseline), (args.candidate_profile, candidate))] if args.baseline_profile else []
     from swdb.library import default_root
     catalog = _Catalog(store, Path(args.library) if args.library else default_root(args.records))
-    finder = _SiteFinder(store, args.site_finder, args.site_finder_iteration) if args.site_finder else None
+    finder = (_SiteFinder(store, args.site_finder, args.site_finder_iteration, args.site_finder_source)
+              if args.site_finder else None)
     _require(finder is not None or args.site_finder_iteration is None, '--site-finder-iteration needs --site-finder')
+    _require(finder is not None or args.site_finder_source is None, '--site-finder-source needs --site-finder')
     bounds = _Bounds(finder, catalog.library)
     sites, labels = _split(baseline, candidate, catalog)
-    _add_limits(baseline, labels['baseline'], store, bounds)
-    _add_limits(candidate, labels['candidate'], store, bounds)
+    counts = _add_limits(baseline, labels['baseline'], store, bounds)
+    _add_limits(candidate, labels['candidate'], store, bounds, (baseline, counts))
     groups = _groups(baseline, candidate, labels)
     this_iteration, previous_inputs = _iteration(store, args, baseline, candidate, labels, catalog, bounds)
     inputs = [baseline.estimate, candidate.estimate, baseline.source, candidate.source] + previous_inputs + (
-        [finder.summary] if finder else []) + [p.data for p in profiles]
+        [finder.summary] if finder else []) + ([finder.revision.source] if finder and finder.revision else []) + [
+        p.data for p in profiles]
     date = max(str(data['updated']) for data in inputs)
     record = {'kind': 'attribution', 'schema_version': '0.4', 'id': args.id, 'status': 'draft',
               'created': date, 'updated': date, **workflow.CREATION_TAGS,

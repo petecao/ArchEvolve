@@ -20,9 +20,8 @@ def code_only(text):
     return LEXICAL.sub(lambda m: re.sub(r"[^\n]", " ", m.group()), text)
 
 
-def body_spans(code, function):
-    """Character spans of the bodies of every definition of `function` in lexically blanked `code`."""
-    spans = []
+def _definitions(code, function):
+    """(name offset, body start, body end) of every definition of `function` in blanked `code`."""
     for match in re.finditer(r"\b" + re.escape(function) + r"\s*\(", code):
         depth, i = 0, match.end() - 1
         while i < len(code):                 # the parameter list
@@ -40,8 +39,23 @@ def body_spans(code, function):
             if depth == 0:
                 break
             j += 1
-        spans.append((start, j))
-    return spans
+        yield match.start(), start, j
+
+
+def body_spans(code, function):
+    """Character spans of the bodies of every definition of `function` in lexically blanked `code`."""
+    return [(start, end) for _, start, end in _definitions(code, function)]
+
+
+def definition_spans(text, name):
+    """1-based `(first, last)` lines of every definition of function `name`, in source order.
+
+    Added 2026-10-11 ET (fine-grained attribution review fix, finding 2): unlike `function_span`,
+    a definition may start at any column (a member defined inside its class) and every overload
+    is listed, so a caller can tell which definition a line belongs to. `first` is the line of
+    the name, `last` the line of the body's closing brace."""
+    code = code_only(text)
+    return [(code.count("\n", 0, at) + 1, code.count("\n", 0, end) + 1) for at, _, end in _definitions(code, name)]
 
 
 def function_span(text, name):

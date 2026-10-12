@@ -39,6 +39,12 @@
           "properties": {"id": {"$ref": "#/$defs/id", "x-ref": "campaign_summary"}, "sha256": {"$ref": "#/$defs/sha256"}}
         },
         "iteration": {"type": "integer", "minimum": 0},
+        "revision_source": {
+          "description": "Review fix F30: the source record of the full-source revision the site-finder lines name (`--site-finder-source`).",
+          "type": "object", "additionalProperties": false, "required": ["kind", "id", "sha256", "artifact_sha256"],
+          "properties": {"kind": {"enum": ["source_snapshot", "candidate"]}, "id": {"$ref": "#/$defs/id"},
+                         "sha256": {"$ref": "#/$defs/sha256"}, "artifact_sha256": {"$ref": "#/$defs/sha256"}}
+        },
         "query_sha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
         "kernel": {"description": "Ticket 10: the site-finder kernel parameter of the pinned iteration (or summary); null when not recorded.", "type": ["string", "null"]},
         "target": {"description": "Ticket 10: the site-finder target binding (native_cpu, dx100_gem5); null when not recorded.", "type": ["string", "null"]},
@@ -52,7 +58,23 @@
               "path": {"type": ["string", "null"]},
               "revision": {"type": ["string", "null"]},
               "lines": {"oneOf": [{"$ref": "#/$defs/lines"}, {"type": "null"}]},
-              "entries": {"type": "array", "items": {"type": "string", "minLength": 1}}
+              "entries": {"type": "array", "items": {"type": "string", "minLength": 1}},
+              "placements": {
+                "description": "Review fix F30, F31: where the region lies in every attributed tree, one row per source record.",
+                "type": "array",
+                "items": {
+                  "type": "object", "additionalProperties": false, "required": ["source", "join", "path", "lines", "reason"],
+                  "properties": {
+                    "source": {"$ref": "#/$defs/id"},
+                    "join": {"enum": ["lines", "function", null]},
+                    "path": {"type": ["string", "null"]},
+                    "lines": {"oneOf": [{"$ref": "#/$defs/lines"}, {"type": "null"}]},
+                    "reason": {"enum": ["no_revision_tree", "revision_mismatch", "file_not_in_revision_tree", "no_site_finder_lines",
+                                        "lines_outside_function_in_revision", "definitions_differ", "moved_lines_outside_function",
+                                        "unrecognized_region_id", "file_not_in_tree", "function_not_in_tree", "ambiguous_function", null]}
+                  }
+                }
+              }
             }
           }
         }
@@ -341,16 +363,39 @@
         "missing": {"type": "array", "items": {"type": "string"}}
       }
     },
+    "function_join_reason": {
+      "description": "Review fix F30: why a site-finder region's lines could not be moved into the tree; null for a line join.",
+      "enum": ["no_revision_tree", "revision_mismatch", "file_not_in_revision_tree", "no_site_finder_lines",
+               "lines_outside_function_in_revision", "definitions_differ", "moved_lines_outside_function", null]
+    },
     "catalog_bound": {
       "description": "Ticket 08 (2026-10-11 ET, F6, F21, F25): the lowest known estimate among the site-finder-matched entries whose offload mechanism models run on the region's own counts; null with a reason otherwise.",
       "type": "object", "additionalProperties": false,
-      "required": ["seconds", "entry", "reason", "mixed", "site_finder_regions", "entries", "missing"],
+      "required": ["seconds", "entry", "reason", "mixed", "site_finder_regions", "joins", "unplaced_site_finder_regions", "entries", "missing"],
       "properties": {
         "seconds": {"$ref": "#/$defs/seconds"},
         "entry": {"type": ["string", "null"]},
-        "reason": {"enum": ["needs_rewritten_counts", "unknown_catalog_entry", "no_catalog_match", "no_site_finder", null]},
-        "mixed": {"type": "boolean"},
+        "reason": {"enum": ["needs_rewritten_counts", "unknown_catalog_entry", "no_baseline_counts", "site_finder_unplaced", "no_catalog_match", "no_site_finder", null]},
+        "mixed": {"description": "Review fix F30: some line of the region's pieces lies outside every joined site-finder span.", "type": "boolean"},
         "site_finder_regions": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "joins": {
+          "description": "Review fix F30 (2026-10-11 ET): each joined site-finder region and where it lies in this side's tree.",
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false, "required": ["site_finder_region", "join", "path", "lines", "reason"],
+            "properties": {
+              "site_finder_region": {"type": "string", "minLength": 1},
+              "join": {"enum": ["lines", "function"]},
+              "path": {"type": "string", "minLength": 1},
+              "lines": {"$ref": "#/$defs/lines"},
+              "reason": {"$ref": "#/$defs/function_join_reason"}
+            }
+          }
+        },
+        "unplaced_site_finder_regions": {
+          "description": "Review fix F31: site-finder regions that could not be placed in this tree and could have joined this region.",
+          "type": "array", "items": {"type": "string", "minLength": 1}
+        },
         "entries": {
           "type": "array",
           "items": {
@@ -362,7 +407,8 @@
               "content_sha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
               "site_finder_regions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
               "seconds": {"$ref": "#/$defs/seconds"},
-              "reason": {"enum": ["needs_rewritten_counts", "missing_inputs", "no_offload_mechanism", "entry_changed", "not_in_library", null]},
+              "reason": {"enum": ["needs_rewritten_counts", "missing_inputs", "no_offload_mechanism", "entry_changed", "entry_unhashed",
+                                  "not_in_library", "no_baseline_counts", null]},
               "mechanisms": {
                 "type": "array",
                 "items": {
@@ -387,8 +433,7 @@
       "properties": {
         "limit": {"enum": ["resource_floor", "catalog_bound"]},
         "value": {"$ref": "#/$defs/ratio"},
-        "reason": {"enum": ["unknown_estimate", "unknown_limit", "zero_limit", "needs_rewritten_counts",
-                             "unknown_catalog_entry", "no_catalog_match", "no_site_finder", null]}
+        "reason": {"enum": ["unknown_estimate", "unknown_limit", "zero_limit", "needs_rewritten_counts", "unknown_catalog_entry", "no_baseline_counts", "site_finder_unplaced", "no_catalog_match", "no_site_finder", null]}
       }
     },
     "rank": {
@@ -400,7 +445,8 @@
         "tier": {"enum": ["remaining_gain_bound", "floor_headroom", "unknown"]},
         "limit": {"enum": ["catalog_bound", "resource_floor"]},
         "value": {"$ref": "#/$defs/ratio"},
-        "reason": {"enum": ["unknown_estimate", "unknown_limit", "zero_limit", "unknown_share", "zero_total", null]}
+        "reason": {"enum": ["unknown_estimate", "unknown_limit", "zero_limit", "unknown_share", "zero_total",
+                            "needs_rewritten_counts", "unknown_catalog_entry", "no_baseline_counts", "site_finder_unplaced", null]}
       }
     },
     "unknown": {
