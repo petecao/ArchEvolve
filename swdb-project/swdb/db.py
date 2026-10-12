@@ -182,6 +182,10 @@ def build(records_dir, db_path, library=None):
                          context["comparison_baseline"], json.dumps(context)))
     _library(con, records_dir, store, library)
     lanl.build(con, store)
+    tables = [name for (name,) in con.execute(
+        "SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%' ORDER BY rowid")]
+    lanl_rows = {name: con.execute(f'SELECT count(*) FROM "{name}"').fetchone()[0]
+                 for name in tables if not name.startswith("swdb_")}
     broken = con.execute("PRAGMA foreign_key_check").fetchall()
     con.commit()
     con.close()
@@ -190,7 +194,9 @@ def build(records_dir, db_path, library=None):
         raise _failure("database build broke its foreign keys (table, rowid, parent, key): "
                        + "; ".join(map(str, broken[:5])))
     tmp.replace(db_path)
-    return {"records": len(store.records), "seconds": time.monotonic() - started}
+    # lanl_rows: rows per LANL core table, so a build reports the core without a second query
+    return {"records": len(store.records), "seconds": time.monotonic() - started,
+            "lanl_rows": lanl_rows, "swdb_tables": len(tables) - len(lanl_rows)}
 
 
 def _library(con, records_dir, store, library_root=None):
