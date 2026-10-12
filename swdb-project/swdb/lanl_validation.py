@@ -59,8 +59,7 @@ GUESSED = [
 #: Correctness outcome -> `passed`. A profile is written only when its check passed (`complete`)
 #: or, with `--allow-unverified`, timed out (not established). An evaluation's `unverified` is
 #: not established either. Anything not established is NULL, never 0.
-# A timed-out check stays NULL even if its output matched so far: `swdb_profiles.correctness` is
-# `not_established` for it, and unknown is not true.
+# timed_out stays NULL even if output matched: swdb_profiles.correctness is not_established; unknown isn't true.
 _PROFILE_PASSED = {"complete": 1}
 _EVALUATION_PASSED = {"passed": 1, "failed": 0}
 
