@@ -196,6 +196,88 @@
         "unknown": {"type": "string", "minLength": 1}
       }
     },
+    "split_check": {
+      "description": "Ticket 09 (2026-10-11 ET, F15, F18, F19, F23): measured region thread-CPU shares from one region_profile per side against the estimated group shares, under the rule fixed before timing; absent when no profiles were given.",
+      "type": "object", "additionalProperties": false,
+      "required": ["verdict", "rule", "reasons", "profiles", "measured_shares", "gaps", "regions"],
+      "properties": {
+        "verdict": {"enum": ["passed", "split_unverified"]},
+        "rule": {
+          "type": "object", "additionalProperties": false,
+          "required": ["id", "max_abs_share_gap", "tolerance", "statement", "estimated_share", "measured_share"],
+          "properties": {
+            "id": {"const": "swdb.split_check.v1"},
+            "max_abs_share_gap": {"const": 0.1},
+            "tolerance": {"const": 1e-9},
+            "statement": {"type": "string", "minLength": 1},
+            "estimated_share": {"type": "string", "minLength": 1},
+            "measured_share": {"type": "string", "minLength": 1}
+          }
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false, "required": ["side", "origin", "reason"],
+            "properties": {
+              "side": {"$ref": "#/$defs/side"},
+              "origin": {"anyOf": [{"enum": ["untouched", "agent_rewritten", "unattributed"]}, {"type": "null"}]},
+              "reason": {"enum": ["gap_above_rule", "unknown_estimated_share", "no_measured_time"]}
+            }
+          }
+        },
+        "profiles": {
+          "type": "object", "additionalProperties": false, "required": ["baseline", "candidate"],
+          "properties": {"baseline": {"$ref": "#/$defs/profile_pin"}, "candidate": {"$ref": "#/$defs/profile_pin"}}
+        },
+        "measured_shares": {
+          "type": "array", "minItems": 6, "maxItems": 6,
+          "items": {
+            "type": "object", "additionalProperties": false, "required": ["side", "origin", "seconds", "share"],
+            "properties": {
+              "side": {"$ref": "#/$defs/side"},
+              "origin": {"enum": ["untouched", "agent_rewritten", "unattributed"]},
+              "seconds": {"type": "number", "minimum": 0},
+              "share": {"$ref": "#/$defs/ratio"}
+            }
+          }
+        },
+        "gaps": {
+          "type": "array", "minItems": 6, "maxItems": 6,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["side", "origin", "estimated_share", "measured_share", "gap", "within_rule"],
+            "properties": {
+              "side": {"$ref": "#/$defs/side"},
+              "origin": {"enum": ["untouched", "agent_rewritten", "unattributed"]},
+              "estimated_share": {"$ref": "#/$defs/ratio"},
+              "measured_share": {"$ref": "#/$defs/ratio"},
+              "gap": {"type": ["number", "null"]},
+              "within_rule": {"type": ["boolean", "null"]}
+            }
+          }
+        },
+        "regions": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["side", "region", "kind", "path", "lines", "origin", "reason", "mixed", "exclusive_lines", "sites", "seconds"],
+            "properties": {
+              "side": {"$ref": "#/$defs/side"},
+              "region": {"type": "string", "minLength": 1},
+              "kind": {"type": ["string", "null"]},
+              "path": {"type": ["string", "null"]},
+              "lines": {"anyOf": [{"$ref": "#/$defs/lines"}, {"type": "null"}]},
+              "origin": {"enum": ["untouched", "agent_rewritten", "unattributed"]},
+              "reason": {"enum": ["overlaps_rewrite_site", "no_changed_line", "outside_source_tree", "no_source_location"]},
+              "mixed": {"type": "boolean"},
+              "exclusive_lines": {"type": "array", "items": {"$ref": "#/$defs/lines"}},
+              "sites": {"type": "array", "items": {"type": "string"}},
+              "seconds": {"type": "number", "minimum": 0}
+            }
+          }
+        }
+      }
+    },
     "identity_sha256": {"$ref": "#/$defs/sha256"}
   },
   "required": ["format", "baseline_estimate", "candidate_estimate", "baseline_source", "candidate_source",
@@ -203,6 +285,22 @@
                "whole_program", "ranking", "ranking_rule", "identity_sha256"],
   "$defs": {
     "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "profile_pin": {
+      "description": "Ticket 09: one side's region_profile, by content hash, with the input, threads and host load recorded with its run.",
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "sha256", "evaluation", "machine", "workload", "threads", "lane", "load_average", "primary_load_average"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id", "x-ref": "region_profile"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "evaluation": {"type": ["string", "null"]},
+        "machine": {"type": ["string", "null"]},
+        "workload": {"$ref": "#/$defs/id"},
+        "threads": {"type": "integer", "minimum": 1},
+        "lane": {"type": ["string", "null"]},
+        "load_average": {"type": ["array", "null"], "items": {"type": "number"}},
+        "primary_load_average": {"type": ["array", "null"], "items": {"type": "number"}}
+      }
+    },
     "seconds": {"type": ["number", "null"], "minimum": 0},
     "ratio": {"type": ["number", "null"], "minimum": 0},
     "side": {"enum": ["baseline", "candidate"]},

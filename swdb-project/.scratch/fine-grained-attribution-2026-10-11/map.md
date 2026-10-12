@@ -21,7 +21,7 @@ approved by Yan-Ru); 2026-10-11 15:17 ET (ticket 01 resolved; design committed).
 | [06](issues/06-iteration-two-baselines.md) | Iteration 2: two baselines | resolved ([answer](issues/06-iteration-two-baselines.md#answer)) | 02 |
 | [07](issues/07-resource-floor.md) | Resource floor headroom | resolved ([answer](issues/07-resource-floor.md#answer)) | 02 |
 | [08](issues/08-catalog-bound-ranking.md) | Catalog bound and full ranking | resolved ([answer](issues/08-catalog-bound-ranking.md#answer)) | 07 |
-| [09](issues/09-split-check.md) | Split check on the real pair | ready-for-agent | 03 |
+| [09](issues/09-split-check.md) | Split check on the real pair | claimed: code half done 2026-10-11 21:28 ET, mbit10 run open ([progress](issues/09-split-check.md#progress)) | 03 |
 | [10](issues/10-site-finder-ordering.md) | Site finder uses the ranking | resolved ([answer](issues/10-site-finder-ordering.md#answer)) | 08, 09 |
 
 Frontier after 02: 03–07 can run in parallel. Estimated total: about 3 days of agent work.

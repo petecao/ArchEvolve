@@ -776,6 +776,42 @@ def _insert_attribution_catalog(con, d, *rest):
 _Insert.attribution = staticmethod(_insert_attribution_catalog)
 
 
+# Fine-grained attribution ticket 09 (2026-10-11 ET): the split check, only for reports given
+# region profiles. One verdict row per report, one gap row per side and group; the measured
+# scopes stay in the JSON column. `within_rule` is NULL when a share is unknown.
+SCHEMA += """
+CREATE TABLE swdb_attribution_split_checks (attribution TEXT PRIMARY KEY, verdict TEXT NOT NULL, rule_id TEXT NOT NULL,
+    max_abs_share_gap REAL NOT NULL, baseline_profile TEXT NOT NULL, candidate_profile TEXT NOT NULL, reasons TEXT NOT NULL,
+    baseline_load_average TEXT, candidate_load_average TEXT);
+CREATE TABLE swdb_attribution_split_gaps (attribution TEXT NOT NULL, side TEXT NOT NULL, origin TEXT NOT NULL,
+    estimated_share REAL, measured_share REAL, measured_seconds REAL NOT NULL, gap REAL, within_rule INTEGER,
+    PRIMARY KEY (attribution, side, origin));
+"""
+
+
+_insert_attribution_before_split = _Insert.attribution  # chain, so other tickets' inserts keep running
+
+
+def _insert_attribution_split(con, d, *rest):
+    _insert_attribution_before_split(con, d, *rest)
+    check = d.get("split_check")
+    if check is None:
+        return
+    profiles = check["profiles"]
+    con.execute("INSERT INTO swdb_attribution_split_checks VALUES (?,?,?,?,?,?,?,?,?)",
+                (d["id"], check["verdict"], check["rule"]["id"], check["rule"]["max_abs_share_gap"],
+                 profiles["baseline"]["id"], profiles["candidate"]["id"], json.dumps(check["reasons"]),
+                 json.dumps(profiles["baseline"]["load_average"]), json.dumps(profiles["candidate"]["load_average"])))
+    seconds = {(m["side"], m["origin"]): m["seconds"] for m in check["measured_shares"]}
+    con.executemany("INSERT INTO swdb_attribution_split_gaps VALUES (?,?,?,?,?,?,?,?)",
+                    [(d["id"], g["side"], g["origin"], g["estimated_share"], g["measured_share"],
+                      seconds[g["side"], g["origin"]], g["gap"], None if g["within_rule"] is None else int(g["within_rule"]))
+                     for g in check["gaps"]])
+
+
+_Insert.attribution = staticmethod(_insert_attribution_split)
+
+
 # Fine-grained attribution ticket 10 (2026-10-11 ET): what the site finder needs to order its
 # regions by a report's ranking (spec F20, F23); the verdict comes from ticket 09's
 # `swdb_attribution_split_checks` (no row = not checked).

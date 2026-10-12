@@ -65,6 +65,15 @@ Rules used by this version (ticket 04 added the rewrite-site edge cases):
     median. The bound is the lowest known entry; otherwise `needs_rewritten_counts` (a model
     lacks offload counts only a rewrite produces), `unknown_catalog_entry` or
     `no_catalog_match`; `no_site_finder` when none was given.
+12. Split check (ticket 09, F15, F18, F19, F23). Given one `region_profile` per side
+    (`--baseline-profile`, `--candidate-profile`), each measured source scope's exclusive
+    thread-CPU seconds go to a group by file and line with the report's own rewrite sites: a
+    scope's exclusive lines are its lines minus those of scopes nested inside it, and the
+    labeling rules of `_label` apply to them. Measured share = group seconds / all measured
+    scopes' seconds on that side. The fixed rule `SPLIT_RULE` passes when every group of both
+    sides is within 0.1 of its estimated share; otherwise, or when a share is unknown, the
+    report is `split_unverified`. A profile of another tree, input or thread count, or one
+    dated before an estimate, is refused.
 """
 import copy
 import difflib
@@ -104,6 +113,8 @@ def register_cli(commands):
     sub.add_argument('--site-finder', help='saved campaign_summary whose site-finder regions give catalog bounds (ticket 08)')
     sub.add_argument('--site-finder-iteration', type=int, default=None,
                      help='campaign iteration index whose site-finder regions to use (default: the last one that has them)')
+    sub.add_argument('--baseline-profile', help='ticket 09: saved region_profile (`swdb bfs-profile`) timing the baseline tree')
+    sub.add_argument('--candidate-profile', help='ticket 09: saved region_profile (`swdb bfs-profile`) timing the candidate tree')
     sub.add_argument('--format', choices=['yaml', 'json'], default='yaml')
     sub.set_defaults(analytic_handler=attribute)
 
@@ -945,6 +956,24 @@ def validate_record(record, ctx):
         if current is not None and current['target_description_sha256'] != data['target_description']['sha256']:
             yield Problem(record.rel, 'target_description', 'pinned estimate used a different target description')
     yield from _validate_iteration(record, ctx)
+    yield from _validate_split_check(record, ctx)
+
+
+def _validate_split_check(record, ctx):
+    """Ticket 09: both timed profiles are unchanged and the verdict follows the gaps under the fixed rule."""
+    from swdb.problems import Problem
+    check = record.data.get('split_check')
+    if check is None:
+        return
+    for side, pin in sorted(check['profiles'].items()):
+        current = ctx.store.get(pin['id'], 'region_profile')
+        if current is None or artifacts.digest(current) != pin['sha256']:
+            yield Problem(record.rel, f'split_check.profiles.{side}', f'pinned region profile {pin["id"]!r} is missing or changed')
+    if check['rule'] != SPLIT_RULE:
+        yield Problem(record.rel, 'split_check.rule', 'split-check rule differs from the fixed rule')
+    passed = not check['reasons'] and all(g['within_rule'] is True for g in check['gaps'])
+    if check['verdict'] != ('passed' if passed else 'split_unverified'):
+        yield Problem(record.rel, 'split_check.verdict', 'split-check verdict does not follow its gaps and reasons')
 
 
 def _validate_iteration(record, ctx):
@@ -963,6 +992,138 @@ def _validate_iteration(record, ctx):
     current = ctx.store.get(this['previous_estimate']['id'], 'estimate')
     if current is not None and current['target_description_sha256'] != record.data['target_description']['sha256']:
         yield Problem(record.rel, 'this_iteration.previous_estimate', 'pinned estimate used a different target description')
+
+
+# --- Ticket 09: split check (F15, F18, F19, F23) -------------------------------------------------
+#
+# The rule is fixed before any timing and recorded in every checked report. A measured scope is
+# one `swdb bfs-profile` source region (function or loop of the timed translation unit) with its
+# accumulated exclusive thread-CPU seconds. Exclusive time lies on the scope's own lines, so
+# lines of scopes nested inside it are removed before it is labeled.
+
+SPLIT_RULE = {
+    'id': 'swdb.split_check.v1',
+    'max_abs_share_gap': 0.1,
+    'tolerance': 1e-9,
+    'statement': 'Passed when, for every group (untouched, agent_rewritten, unattributed) on both sides, '
+                 '|measured share - estimated share| <= 0.1 (10 percentage points, compared with a 1e-9 float '
+                 'tolerance). Otherwise, or when a share is unknown, split_unverified. Fixed before timing (F19).',
+    'estimated_share': "the report's group share: group seconds / that estimate's total seconds",
+    'measured_share': "group exclusive thread-CPU seconds / the sum of every measured scope's exclusive "
+                      "thread-CPU seconds in that side's region_profile"}
+PROFILE_DONE = ('partial', 'complete')   # `swdb bfs-profile` ends a successful run as `partial`
+
+
+def _runs(lines):
+    """Sorted line numbers as contiguous `[first, last]` runs."""
+    runs = []
+    for line in lines:
+        if runs and line == runs[-1][1] + 1:
+            runs[-1][1] = line
+        else:
+            runs.append([line, line])
+    return runs
+
+
+def _nested(inner, outer):
+    if inner is outer or inner.get('path') != outer.get('path'):
+        return False
+    a, b = inner.get('byte_range'), outer.get('byte_range')
+    if a and b:
+        return b[0] <= a[0] and a[1] <= b[1] and a != b
+    return outer['lines'][0] <= inner['lines'][0] and inner['lines'][1] <= outer['lines'][1] and inner['lines'] != outer['lines']
+
+
+class _Profile:
+    """One side's saved region profile, checked against the attributed estimate and tree (F18)."""
+
+    def __init__(self, store, rid, side, estimates):
+        self.data = data = _record(store, rid, ('region_profile',))
+        name = side.name
+        state = data['outcome']['state']
+        _require(state in PROFILE_DONE, f'{name} profile {rid!r} did not finish (outcome {state!r}); refusing to compare')
+        context = data.get('context') or {}
+        _require(context.get('candidate_sha256') == side.source['artifact']['sha256'],
+                 f'{name} profile {rid!r} timed another source tree than the {name} source; refusing to compare')
+        self.workload = (context.get('workload') or {}).get('id')
+        _require(self.workload == side.estimate['input'],
+                 f'{name} profile {rid!r} timed input {self.workload!r}, not the estimates\' input '
+                 f'{side.estimate["input"]!r}; refusing to compare')
+        _require(context.get('threads') == side.estimate['threads'],
+                 f'{name} profile {rid!r} ran {context.get("threads")!r} threads, not the estimates\' '
+                 f'{side.estimate["threads"]}; refusing to compare')
+        latest = max(str(e['created']) for e in estimates)
+        _require(str(data['created']) >= latest,
+                 f'{name} profile {rid!r} is dated {data["created"]}, before an estimate ({latest}): the split '
+                 'check must be prospective (LR-02); refusing to compare')
+        self.rows = [r for r in data['regions'] if r.get('basis') == 'measured']
+        _require(self.rows and len(self.rows) == len(data['regions']) and all(
+            isinstance((r.get('metrics') or {}).get('exclusive_thread_cpu_seconds'), (int, float)) for r in self.rows),
+                 f'{name} profile {rid!r} has no measured exclusive thread-CPU seconds for every region')
+        self.context = context
+
+    def pin(self):
+        context = self.context
+        return {'id': self.data['id'], 'sha256': artifacts.digest(self.data), 'evaluation': self.data.get('evaluation'),
+                'machine': self.data.get('machine'), 'workload': self.workload, 'threads': context['threads'],
+                'lane': context.get('lane'), 'load_average': context.get('load_average'),
+                'primary_load_average': context.get('primary_load_average')}
+
+
+def _scope_label(side, row, rows, sites):
+    """The `_label` rules on one measured scope's exclusive lines."""
+    lines = row.get('lines')
+    if not row.get('path') or not lines:
+        return {'origin': 'unattributed', 'reason': 'no_source_location', 'mixed': False, 'exclusive_lines': [], 'sites': []}
+    own = set(range(lines[0], lines[1] + 1))
+    for other in rows:
+        if other.get('lines') and _nested(other, row):
+            own -= set(range(other['lines'][0], other['lines'][1] + 1))
+    runs = _runs(sorted(own)) or [list(lines)]
+    rel = side.relative(row['path'])
+    key = side.name + '_lines'
+    touched = [s for s in sites if any(span['path'] == rel and _overlaps(run, span[key])
+                                       for span in s['spans'] for run in runs)] if rel else []
+    if touched:
+        origin, reason = 'agent_rewritten', 'overlaps_rewrite_site'
+    else:
+        origin, reason = 'untouched', 'outside_source_tree' if rel is None else 'no_changed_line'
+    changed = {line for s in touched for span in s['spans'] if span['path'] == rel
+               for line in range(span[key][0], span[key][1] + 1)}
+    mixed = bool(touched) and any(line not in changed for run in runs for line in range(run[0], run[1] + 1))
+    return {'origin': origin, 'reason': reason, 'mixed': mixed, 'exclusive_lines': runs, 'sites': [s['id'] for s in touched]}
+
+
+def _split_check(sides, profiles, sites, groups):
+    """F19: the split_check block; `sides` and `profiles` are in baseline, candidate order."""
+    regions, measured, gaps, reasons = [], [], [], []
+    estimated = {g['origin']: g for g in groups}
+    for side, profile in zip(sides, profiles):
+        seconds = {origin: 0. for origin in ORIGINS}
+        for row in profile.rows:
+            label = _scope_label(side, row, profile.rows, sites)
+            value = row['metrics']['exclusive_thread_cpu_seconds']
+            seconds[label['origin']] += value
+            regions.append({'side': side.name, 'region': row['id'], 'kind': row.get('kind'), 'path': row.get('path'),
+                            'lines': row.get('lines'), **label, 'seconds': value})
+        total = sum(seconds.values())
+        if total <= 0:
+            reasons.append({'side': side.name, 'origin': None, 'reason': 'no_measured_time'})
+        for origin in ORIGINS:
+            share = seconds[origin] / total if total > 0 else None
+            measured.append({'side': side.name, 'origin': origin, 'seconds': seconds[origin], 'share': share})
+            expected = estimated[origin][side.name + '_share']
+            if expected is None:
+                reasons.append({'side': side.name, 'origin': origin, 'reason': 'unknown_estimated_share'})
+            gap = None if share is None or expected is None else share - expected
+            within = None if gap is None else abs(gap) <= SPLIT_RULE['max_abs_share_gap'] + SPLIT_RULE['tolerance']
+            if within is False:
+                reasons.append({'side': side.name, 'origin': origin, 'reason': 'gap_above_rule'})
+            gaps.append({'side': side.name, 'origin': origin, 'estimated_share': expected, 'measured_share': share,
+                         'gap': gap, 'within_rule': within})
+    return {'verdict': 'split_unverified' if reasons else 'passed', 'rule': dict(SPLIT_RULE), 'reasons': reasons,
+            'profiles': {side.name: profile.pin() for side, profile in zip(sides, profiles)},
+            'measured_shares': measured, 'gaps': gaps, 'regions': regions}
 
 
 class _Tree:
@@ -1041,6 +1202,10 @@ def attribute(args):
     candidate = _Side(store, 'candidate', args.candidate_estimate, args.candidate_source)
     differ = [key for key in SAME if baseline.estimate[key] != candidate.estimate[key]]
     _require(not differ, 'baseline and candidate estimates differ in ' + ', '.join(differ) + '; refusing to compare')
+    _require((args.baseline_profile is None) == (args.candidate_profile is None),
+             '--baseline-profile and --candidate-profile go together')
+    profiles = [_Profile(store, rid, side, [baseline.estimate, candidate.estimate])
+                for rid, side in ((args.baseline_profile, baseline), (args.candidate_profile, candidate))] if args.baseline_profile else []
     from swdb.library import default_root
     catalog = _Catalog(store, Path(args.library) if args.library else default_root(args.records))
     finder = _SiteFinder(store, args.site_finder, args.site_finder_iteration) if args.site_finder else None
@@ -1052,7 +1217,7 @@ def attribute(args):
     groups = _groups(baseline, candidate, labels)
     this_iteration, previous_inputs = _iteration(store, args, baseline, candidate, labels, catalog, bounds)
     inputs = [baseline.estimate, candidate.estimate, baseline.source, candidate.source] + previous_inputs + (
-        [finder.summary] if finder else [])
+        [finder.summary] if finder else []) + [p.data for p in profiles]
     date = max(str(data['updated']) for data in inputs)
     record = {'kind': 'attribution', 'schema_version': '0.4', 'id': args.id, 'status': 'draft',
               'created': date, 'updated': date, **workflow.CREATION_TAGS,
@@ -1074,6 +1239,8 @@ def attribute(args):
               'ranking_rule': dict(RANKING_RULE)}
     if this_iteration is not None:
         record['this_iteration'] = this_iteration
+    if profiles:
+        record['split_check'] = _split_check((baseline, candidate), profiles, sites, groups)
     record['identity_sha256'] = artifacts.digest(record)
     writer.commit(args.records, new=[record])
     return record

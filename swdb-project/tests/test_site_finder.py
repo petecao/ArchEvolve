@@ -374,7 +374,11 @@ def attribution_report(records, rid, ranked, *, verdict="passed", created="2026-
                          "limit": "resource_floor", "value": float(len(rows) - i), "reason": None}
                         for i, r in enumerate(rows, start=1)]}
     if verdict is not None:
-        data["split_check"] = {"verdict": verdict}
+        # ticket 09's block, only the parts its index rows read; the measured shares are not needed here
+        data["split_check"] = {"verdict": verdict, "rule": {"id": "swdb.split_check.v1", "max_abs_share_gap": 0.1},
+                               "profiles": {side: {"id": f"fixture.{side}.profile", "load_average": None}
+                                            for side in ("baseline", "candidate")},
+                               "reasons": [], "measured_shares": [], "gaps": []}
     path = records / "attributions" / f"{rid}.yaml"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(yaml.safe_dump(data, sort_keys=False))
@@ -439,8 +443,8 @@ def test_reports_created_on_the_same_date_are_broken_by_the_greatest_id(tmp_path
 
 #: sha256 of the rewriting role's prompt.txt in the native query campaign below, pinned before
 #: ticket 10 changed the site finder (2026-10-11 ET). The ranking reaches the agent only as order.
-#: A campaign with a report in its team store needs a valid report, which needs ticket 09's
-#: `split_check` schema; until then the order is checked through `site_finder.find` above.
+#: The campaign validates its team store, so a hand-written report cannot sit there; the order
+#: itself is checked through `site_finder.find` above, which the campaign calls.
 REWRITE_PROMPT_SHA256 = "8b6f410943238b3f2b67330bb3eb1468cb47a49da28a2c2f90588ebef5aa9979"
 
 

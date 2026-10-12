@@ -4,8 +4,8 @@ Created: 2026-10-11 (Eastern Time), fine-grained attribution ticket 02.
 Updated: 2026-10-11 ET (ticket 05: library, intrinsic and offload labels; ticket 07: resource
 floor, floor headroom and ranking; ticket 06 + 07 merge: floors in `this_iteration`; ticket 04:
 merged sites, `mixed`, inlined pieces, matched regions, unattributed flag; ticket 08: catalog
-bound, remaining gain bound and the full ranking; ticket 10, 2026-10-11 21:31 ET: `site_finder.kernel`
-and `site_finder.target`).
+bound, remaining gain bound and the full ranking; ticket 09, 2026-10-11 21:17 ET: the split check;
+ticket 10, 2026-10-11 21:31 ET: `site_finder.kernel` and `site_finder.target`).
 Spec: `.scratch/fine-grained-attribution-2026-10-11/spec.md`.
 
 **In one line:** `swdb attribute` takes two saved estimates and the two source trees they
@@ -107,6 +107,7 @@ date of the four inputs, so the same inputs give a byte-identical record.
 | `whole_program` | totals and whole-program ratios (below) |
 | `ranking` | the candidate's regions in next-iteration order (below) |
 | `ranking_rule` | ticket 08: one fixed sentence per ranking tier, keyed `remaining_gain_bound`, `floor_headroom` and `unknown`; the first says the remaining gain bound is an **upper limit, never an expected gain** |
+| `split_check` | ticket 09, only with `--baseline-profile` and `--candidate-profile`: measured against estimated group shares ([below](#split-check-ticket-09)); absent = not checked |
 | `identity_sha256` | content hash of the record without this field; `swdb validate` checks it |
 
 ### `rewrite_sites` rows
@@ -373,3 +374,84 @@ Worked example (the test fixture). Loops A, B, C. Iteration 1 rewrites B; iterat
 
 B is untouched this iteration but rewritten cumulatively; its `last_changed_iteration` is 1.
 A's is 2, C's is 0.
+
+## Split check (ticket 09)
+
+Added: 2026-10-11 21:17 ET. Spec F15, F18, F19, F23.
+
+**In one line:** time each side natively with `swdb bfs-profile`, then pass both region
+profiles to `swdb attribute`; the report says whether the measured split matches the estimated
+one.
+
+```sh
+python -m swdb attribute ... \
+  --baseline-profile <region_profile ID> --candidate-profile <region_profile ID>
+```
+
+Use the same flags as the unchecked report, plus the two profiles. Without them the record
+has no `split_check` and is otherwise byte-identical.
+
+**The rule** (fixed before timing, F19; recorded in every checked report as `rule`):
+
+- For each group (untouched, agent_rewritten, unattributed) on **both** sides:
+  gap = measured share − estimated share.
+- `passed` when every |gap| ≤ 0.1 (10 percentage points; 1e-9 float tolerance).
+- `split_unverified` otherwise, or when any share is unknown (F23). The report is still
+  saved; the site finder ignores its ranking.
+
+**Shares:**
+
+| Share | Formula |
+|---|---|
+| Estimated | the report's group share: group seconds ÷ that estimate's total `seconds` |
+| Measured | group exclusive thread-CPU seconds ÷ all measured scopes' exclusive thread-CPU seconds in that side's profile |
+
+**How a measured scope gets its group.** A scope is one `bfs-profile` source region (function or
+loop) with its accumulated `exclusive_thread_cpu_seconds`.
+
+1. Its **exclusive lines** are its `lines` minus the lines of scopes nested inside it (by
+   `byte_range`). Exclusive time is spent there. If nothing is left, its full span is used.
+2. The report's own labeling rules then apply to those lines with the report's merged rewrite
+   sites: any overlap on its side is `agent_rewritten` (`mixed` when some line is unchanged);
+   otherwise `untouched` (`no_changed_line`, or `outside_source_tree` when the path is in
+   neither tree); no path or lines is `unattributed`.
+
+Example: a function at lines 6-9 holding a rewritten loop at 7-8 keeps its own time on lines 6
+and 9, so that time is untouched.
+
+**Refused** (exit 1, nothing written) when:
+
+- only one of the two profile flags is given;
+- a profile did not finish (`outcome.state` not `partial` or `complete`; `bfs-profile` ends a
+  good run as `partial`);
+- a profile timed another tree (`context.candidate_sha256` ≠ that side's source
+  `artifact_sha256`);
+- a profile timed another input (`context.workload.id` ≠ the estimates' `input`, F18) or
+  another thread count;
+- a profile is dated before either estimate (`created`, day precision): the check must be
+  prospective (LR-02);
+- a profile region is not `basis: measured` with numeric `exclusive_thread_cpu_seconds`
+  (simulated profiles are not timings).
+
+`swdb validate` re-checks both profile pins, that `rule` equals the fixed rule, and that
+`verdict` follows `gaps` and `reasons`.
+
+### `split_check`
+
+| Field | Meaning |
+|---|---|
+| `verdict` | `passed` or `split_unverified` |
+| `rule` | the fixed rule: `id` (`swdb.split_check.v1`), `max_abs_share_gap` (0.1), `tolerance` (1e-9), `statement`, and the definitions `estimated_share` and `measured_share` |
+| `reasons` | why it is unverified: `{side, origin, reason}` with `reason` = `gap_above_rule`, `unknown_estimated_share` or `no_measured_time` (`origin` null); empty when passed |
+| `profiles` | `baseline` and `candidate` profile pins (below) |
+| `measured_shares` | six rows, baseline then candidate, groups in report order: `side`, `origin`, `seconds` (measured exclusive thread-CPU seconds) and `share` (null when nothing was measured) |
+| `gaps` | six rows in the same order: `{side, origin, estimated_share, measured_share, gap, within_rule}`; `gap` and `within_rule` are null when a share is unknown |
+| `regions` | one row per measured scope: `side`, `region` (profile region ID), `kind`, `path`, `lines`, `origin`, `reason`, `mixed`, `exclusive_lines` (`[first, last]` runs), `sites`, `seconds` |
+
+Profile pin fields: `id`, `sha256` (record content hash), `evaluation`, `machine`, `workload`,
+`threads`, `lane`, `load_average` (host load recorded with the profile run),
+`primary_load_average` (load during the primary evaluation).
+
+Known limits: a profile covers only the timed translation unit's own scopes; time in inlined
+header code is charged to the enclosing scope. Per-group measured shares always add to 1;
+estimated shares need not (F4).
