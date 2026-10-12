@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "attribution",
   "title": "Attribution report",
-  "description": "Created: 2026-10-11 ET (fine-grained attribution ticket 02; ticket 08 added catalog bounds and the remaining-gain-bound ranking). Two saved estimates split by code origin from a diff of their counted source trees. Derived from estimates; never a timing observation.",
+  "description": "Created: 2026-10-11 ET (fine-grained attribution ticket 02; ticket 08 added catalog bounds and the remaining-gain-bound ranking). Updated: 2026-10-12 ET (final review: split_check rule v2, ranking_rule.comparison). Two saved estimates split by code origin from a diff of their counted source trees. Derived from estimates; never a timing observation.",
   "properties": {
     "kind": {"const": "attribution"},
     "schema_version": {"const": "0.4"},
@@ -226,7 +226,7 @@
       }
     },
     "split_check": {
-      "description": "Ticket 09 (2026-10-11 ET, F15, F18, F19, F23): measured region thread-CPU shares from one region_profile per side against the estimated group shares, under the rule fixed before timing; absent when no profiles were given.",
+      "description": "Ticket 09 (2026-10-11 ET, F15, F18, F19, F23; final review F40, 2026-10-12 ET): measured region thread-CPU shares from one region_profile per side against estimated group shares that keep each region's call time in its own group, under the rule fixed before timing; absent when no profiles were given.",
       "type": "object", "additionalProperties": false,
       "required": ["verdict", "rule", "reasons", "profiles", "measured_shares", "gaps", "regions"],
       "properties": {
@@ -376,7 +376,7 @@
                "lines_outside_function_in_revision", "definitions_differ", "moved_lines_outside_function", null]
     },
     "catalog_bound": {
-      "description": "Ticket 08 (2026-10-11 ET, F6, F21, F25): the lowest known estimate among the site-finder-matched entries whose offload mechanism models run on the region's own counts; null with a reason otherwise.",
+      "description": "Ticket 08 (2026-10-11 ET, F6, F21, F25; F35): the lowest known estimate among the site-finder-matched entries whose offload mechanism models run on the region's baseline counts (a candidate row reads its matched baseline region's); null with a reason otherwise.",
       "type": "object", "additionalProperties": false,
       "required": ["seconds", "entry", "reason", "mixed", "site_finder_regions", "joins", "unplaced_site_finder_regions", "entries", "missing"],
       "properties": {

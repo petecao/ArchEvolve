@@ -1,6 +1,7 @@
 # The SQLite database
 
-Updated: 2026-10-11 23:28 ET: measured native evaluation timings of an implementation feed
+Updated: 2026-10-12 00:36 ET: attribution final review fixes (headroom reasons point to one list,
+split-check rule v2 and its estimated share). 2026-10-11 23:28 ET: measured native evaluation timings of an implementation feed
 `performance_runs` (LANL-shaped-db follow-up ticket 03). 2026-10-11 23:24 ET: attribution tables
 listed in the `swdb_` extension groups. 2026-10-11 22:07 ET: LANL-shaped-db review fixes (record-field path syntax, which
 evaluations reach `Validation_results`, `swdb_estimates.base_kernel_variant_id`). 2026-10-11 21:50 ET:
@@ -1056,7 +1057,7 @@ report JSON (`swdb_attributions.json`).
 | `limit_seconds` | the limit's seconds (NULL if unknown) |
 | `limiting_term` | for the floor: `compute_throughput` or `streaming_bandwidth`; for the catalog bound: the entry that gives it (NULL if unknown) |
 | `headroom` | region seconds ÷ limit seconds (NULL if it cannot be a number) |
-| `reason` | why `headroom` is NULL: `unknown_estimate`, `zero_limit`, `unknown_limit` (floor), or the catalog bound's reason (`needs_rewritten_counts`, `unknown_catalog_entry`, `no_catalog_match`, `no_site_finder`) |
+| `reason` | why `headroom` is NULL: `unknown_estimate`, `zero_limit`, `unknown_limit` (floor), or the catalog bound's own reason (one list, in [format-v0.4-attribution.md § Catalog bound](format-v0.4-attribution.md#catalog-bound-ticket-08); the schema's `catalog_bound.reason` enum is the checked copy) |
 | `missing` | JSON list of the missing counts and rates behind an unknown limit |
 
 ### `swdb_attribution_ranking`
@@ -1102,7 +1103,7 @@ Added: 2026-10-11 21:17 ET, ticket 09. One row per report that has a `split_chec
 |---|---|
 | `attribution` | report ID |
 | `verdict` | `passed` or `split_unverified` |
-| `rule_id` | `swdb.split_check.v1` |
+| `rule_id` | `swdb.split_check.v2` (final review F40: estimated shares keep call time in the region's own group) |
 | `max_abs_share_gap` | 0.1, the fixed pass threshold (10 percentage points) |
 | `baseline_profile` | baseline region profile ID |
 | `candidate_profile` | candidate region profile ID |
@@ -1120,7 +1121,7 @@ six). The measured scopes stay in the JSON column.
 | `attribution` | report ID |
 | `side` | `baseline` or `candidate` |
 | `origin` | `untouched`, `agent_rewritten` or `unattributed` |
-| `estimated_share` | the report's group share (NULL if unknown) |
+| `estimated_share` | the split-check estimated share: each region's full seconds, calls included, under its own group (F40), not the `swdb_attribution_groups` share (NULL if unknown) |
 | `measured_share` | measured exclusive thread-CPU share (NULL if nothing was measured) |
 | `measured_seconds` | measured exclusive thread-CPU seconds of the group |
 | `gap` | measured − estimated share (NULL if either is unknown) |

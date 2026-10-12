@@ -8,7 +8,10 @@ bound, remaining gain bound and the full ranking; ticket 09, 2026-10-11 21:17 ET
 ticket 10, 2026-10-11 21:31 ET: `site_finder.kernel` and `site_finder.target`; review fixes,
 2026-10-11 22:10 ET: line join with `joins`, `placements` and `--site-finder-source`, baseline
 counts, `unmodeled_calls`, unbound offload commands, unknown bounds in the `unknown` tier, the
-0 clamp's tie rule, `schema_version` and `model`).
+0 clamp's tie rule, `schema_version` and `model`; final review fixes, 2026-10-12 00:35 ET:
+split-check rule `swdb.split_check.v2` with call time in the region's own group, profile order,
+machine, sources and seed checks, `estimator_sha256` compared, `ranking_rule.comparison`, the
+floor's bandwidth term, and merged-site wording).
 Spec: `.scratch/fine-grained-attribution-2026-10-11/spec.md`.
 
 **In one line:** `swdb attribute` takes two saved estimates and the two source trees they
@@ -46,8 +49,9 @@ reason `no_site_finder`, and the ranking is floor-only.
 
 It refuses (exit 1, nothing written) when:
 
-- the two estimates differ in `input`, `target_description_sha256`, `threads` or
-  `evidence_kind`;
+- the two estimates differ in `input`, `target_description_sha256`, `threads`,
+  `evidence_kind` or `estimator_sha256` (spec F47: drift and speedup must not mix an estimator
+  change with the code change);
 - a source record is not the one its estimate counted (a `candidate` source must be the
   estimate's candidate subject; a `source_snapshot` must name the implementation subject);
 - a source tree on disk no longer matches its recorded artifact hash;
@@ -108,12 +112,12 @@ made), so the same inputs give a byte-identical record. Inside an Extensa campai
 | `input`, `threads`, `evidence_kind` | copied from the estimates, which must agree |
 | `catalog` | `{kind, id, sha256}` of every `intrinsic` record or `library_operation` entry that labeled a region, sorted by ID; `swdb validate` re-checks intrinsic pins |
 | `site_finder` | ticket 08, only with `--site-finder`: the site-finder regions that gave catalog bounds (below); `swdb validate` re-checks the summary pin and the revision-source pin |
-| `rewrite_sites` | one row per changed run of lines (below) |
+| `rewrite_sites` | one row per rewrite site: the changed runs one region overlaps, merged into one site (below) |
 | `regions` | one row per region of each estimate (below) |
 | `groups` | one row per code origin, always in the order untouched, agent_rewritten, unattributed (below) |
 | `whole_program` | totals and whole-program ratios (below) |
 | `ranking` | the candidate's regions in next-iteration order (below) |
-| `ranking_rule` | ticket 08: one fixed sentence per ranking tier, keyed `remaining_gain_bound`, `floor_headroom` and `unknown`; the first says the remaining gain bound is an **upper limit, never an expected gain** |
+| `ranking_rule` | ticket 08: one fixed sentence per ranking tier, keyed `remaining_gain_bound`, `floor_headroom` and `unknown`, plus `comparison` (F45: which comparison is ranked); the first says the remaining gain bound is an **upper limit, never an expected gain** |
 | `split_check` | ticket 09, only with `--baseline-profile` and `--candidate-profile`: measured against estimated group shares ([below](#split-check-ticket-09)); absent = not checked |
 | `identity_sha256` | content hash of the record without this field; `swdb validate` checks it |
 
@@ -126,6 +130,11 @@ made), so the same inputs give a byte-identical record. Inside an Extensa campai
 | `baseline_lines`, `candidate_lines` | envelope `[min first, max last]` of the spans on each side (a single span: its changed lines; an empty side is `[p, p - 1]`, the insertion point before line `p`); null when the spans lie in several files |
 | `spans` | the merged changed runs, each `{path, baseline_lines, candidate_lines}` |
 | `baseline_regions`, `candidate_regions` | region IDs whose span overlaps the site on that side |
+
+A site has no iteration field (final review L13): a cumulative site can merge changes from
+several iterations, so one number would be wrong. Each region row's `last_changed_iteration`
+says which iteration last changed it, and every site in `this_iteration.rewrite_sites` was made
+by `this_iteration.iteration`.
 
 ### `regions` rows
 
@@ -140,7 +149,7 @@ made), so the same inputs give a byte-identical record. Inside an Extensa campai
 | `inlined` | `[{path, lines}]` inlined pieces, by their own file and line |
 | `sites` | the one merged rewrite site the region overlaps, or empty |
 | `seconds` | the estimate's own per-region seconds (a diagnostic median; groups do not use it) |
-| `unmodeled_calls` | review fix (F2): `{seconds, missing}`, the median seconds inside the region's calls (estimate rows `unmodeled_calls` or rows that cover calls), which the `unattributed` group counts; null when no estimate row prices a call |
+| `unmodeled_calls` | review fix (F2): `{seconds, missing}`, the median seconds inside the region's calls (estimate rows `unmodeled_calls` or rows that cover calls), which the `unattributed` group counts; null when no estimate row prices a call. Call time is the region minus its own time, so an unknown own time makes it unknown too, and `missing` then also names the own-time items |
 | `evidence` | inside a site: every signal found, `{origin, name}`, highest precedence first (`name` is the event, intrinsic ID or library operation ID); empty otherwise |
 | `matched_region` | the other side's region at the same untouched code, or null |
 | `resource_floor` | the region's resource floor (below) |
@@ -160,7 +169,7 @@ groups need not add up to the total.
 | `baseline_share`, `candidate_share` | group seconds ÷ that estimate's total `seconds` |
 | `realized_speedup` | baseline seconds ÷ candidate seconds |
 | `drift` | untouched group only: candidate seconds ÷ baseline seconds (1.0 = no side effect) |
-| `unknown` | `{side, region, missing}` for each unknown region; `missing` lists its bounds' reasons |
+| `unknown` | `{side, region, missing}` for each unknown region; `missing` lists its bounds' reasons (for `unattributed`, those of the region's call time, as in `unmodeled_calls`) |
 | `origins` | `agent_rewritten` group only: one row per origin in precedence order (`offload_command`, `intrinsic`, `library_call`, `agent_rewritten`) with `origin`, `baseline_seconds`, `candidate_seconds`, `baseline_share`, `candidate_share` and `unknown`, computed the same per-trial way |
 
 A ratio is null when an operand is unknown or the denominator is 0.
@@ -193,6 +202,10 @@ own rates, ignoring latency and every overhead. It is a limit, never an estimate
 - Trials follow the estimate's rule: floor per trial (a region absent from a trial counts 0 s),
   then the median. So the floor is never above the region's own `seconds`; `swdb validate`
   rejects a record where it is.
+- The bandwidth term is the `streaming_bandwidth` model's own bound, as the estimator computes
+  it: when the description also has a `cache_fit` or latency model, that bound leaves out the
+  bytes those models cover (for example gathers). The floor is then looser than a full
+  useful-bytes bound, but still a valid lower limit (final review L3).
 
 | Field | Meaning |
 |---|---|
@@ -304,7 +317,7 @@ projection model, out of scope); on a CPU-only description every entry is `no_ca
 | `iteration` | the campaign iteration `index` whose regions were used |
 | `query_sha256` | that iteration's site-finder query hash, or null |
 | `kernel` | ticket 10: the site-finder `kernel` parameter of that iteration (else the summary's), or null |
-| `target` | ticket 10: the site-finder target binding (`native_cpu`, `dx100_gem5`), or null. The site finder reads the latest report for its kernel and target and reorders its chosen regions by `ranking` only when `split_check.verdict` is `passed` |
+| `target` | ticket 10: the site-finder target binding (`native_cpu`, `dx100_gem5`), or null. The site finder reads the latest report for its kernel and target and reorders its chosen regions by `ranking` only when `split_check.verdict` is `passed`; a ranking row in the `unknown` tier gives no position (F42). Its `ordering` block (`attribution`, `split_check`, `applied`, `matched_regions`, `rule`, `query_sha256`) is saved in the campaign summary's iteration `site_finder` row (F46) |
 | `revision_source` | review fix: `{kind, id, sha256, artifact_sha256}` of the `--site-finder-source` record; absent without it |
 | `regions` | one row per site-finder region: `id`, `function` (from the ID; null if none), `path`, `revision` and `lines` (from `why.source`, full-source revision), `entries` (applied entry IDs), `placements` (below) |
 
@@ -374,7 +387,7 @@ python -m swdb attribute ... \
   Only their source trees are read. The candidate is iteration 2 + their count.
 - Refused when only one of the two `--previous-*` flags is given, when `--earlier-source` comes
   without them, or when the previous estimate differs from the candidate's in `input`,
-  `target_description_sha256`, `threads` or `evidence_kind`.
+  `target_description_sha256`, `threads`, `evidence_kind` or `estimator_sha256`.
 
 **What changes in the record** (without `--previous-*`, nothing does):
 
@@ -384,9 +397,13 @@ python -m swdb attribute ... \
    previous accepted candidate → candidate. Inside it, `baseline` means the previous accepted
    candidate (`side: baseline`, `baseline_lines`, `baseline_seconds`, …).
 3. Every region row, in both comparisons, gets `last_changed_iteration`.
-4. `this_iteration` region rows also carry `resource_floor` and `headroom` (same row shape).
-   The previous candidate's floors come from its own estimate; the candidate's equal the
-   cumulative ones. There is one top-level `ranking`: the candidate is the same in both.
+4. `this_iteration` region rows also carry `resource_floor`, `catalog_bound` and `headroom`
+   (same row shape). The previous candidate's floors come from its own estimate; the candidate's
+   floors equal the cumulative ones. Its catalog bounds can differ: a candidate row's bound runs
+   on its matched region's counts (F35), and in `this_iteration` that match is the previous
+   candidate. There is one top-level `ranking`, over the cumulative comparison's candidate
+   regions; the `this_iteration` bounds are informational and never ranked
+   (`ranking_rule.comparison`, F45).
 
 | `this_iteration` field | Meaning |
 |---|---|
@@ -448,7 +465,7 @@ has no `split_check` and is otherwise byte-identical.
 
 | Share | Formula |
 |---|---|
-| Estimated | the report's group share: group seconds ÷ that estimate's total `seconds` |
+| Estimated | group seconds ÷ that estimate's total `seconds`, where each region keeps its **full** seconds, time inside its calls included, under its own group (F40). This differs from the report's `groups` (F33 moves call time to `unattributed`): a measured scope's exclusive time holds its callees (libc, OpenMP runtime, allocator), which are not instrumented scopes, so only this grouping compares like with like |
 | Measured | group exclusive thread-CPU seconds ÷ all measured scopes' exclusive thread-CPU seconds in that side's profile |
 
 **How a measured scope gets its group.** A scope is one `bfs-profile` source region (function or
@@ -473,8 +490,14 @@ and 9, so that time is untouched.
   `artifact_sha256`);
 - a profile timed another input (`context.workload.id` ≠ the estimates' `input`, F18) or
   another thread count;
-- a profile is dated before either estimate (`created`, day precision): the check must be
-  prospective (LR-02);
+- a profile ran on another machine than the one that counted its estimate (`machine` ≠ the
+  characterization's `host.machine`), timed other BFS sources than the characterization's
+  trials counted (`context.sources`; a single-run count records none, so it is refused), or
+  used another input generator seed (`context.workload.generator.parameters.seed` ≠ the counted
+  workload's) (F44);
+- a profile is not dated strictly after both estimates (`created`): estimate records carry
+  only a date, so no full-timestamp order exists, and only a later day shows the check is
+  prospective (LR-02, F43);
 - a profile region is not `basis: measured` with numeric `exclusive_thread_cpu_seconds`
   (simulated profiles are not timings).
 
@@ -486,11 +509,11 @@ and 9, so that time is untouched.
 | Field | Meaning |
 |---|---|
 | `verdict` | `passed` or `split_unverified` |
-| `rule` | the fixed rule: `id` (`swdb.split_check.v1`), `max_abs_share_gap` (0.1), `tolerance` (1e-9), `statement`, and the definitions `estimated_share` and `measured_share` |
+| `rule` | the fixed rule: `id` (`swdb.split_check.v2`; v1 used the report's F33 group shares, F40), `max_abs_share_gap` (0.1), `tolerance` (1e-9), `statement`, and the definitions `estimated_share` and `measured_share` |
 | `reasons` | why it is unverified: `{side, origin, reason}` with `reason` = `gap_above_rule`, `unknown_estimated_share` or `no_measured_time` (`origin` null); empty when passed |
 | `profiles` | `baseline` and `candidate` profile pins (below) |
 | `measured_shares` | six rows, baseline then candidate, groups in report order: `side`, `origin`, `seconds` (measured exclusive thread-CPU seconds) and `share` (null when nothing was measured) |
-| `gaps` | six rows in the same order: `{side, origin, estimated_share, measured_share, gap, within_rule}`; `gap` and `within_rule` are null when a share is unknown |
+| `gaps` | six rows in the same order: `{side, origin, estimated_share, measured_share, gap, within_rule}`; `estimated_share` is the split-check share above, not the group row's; `gap` and `within_rule` are null when a share is unknown |
 | `regions` | one row per measured scope: `side`, `region` (profile region ID), `kind`, `path`, `lines`, `origin`, `reason`, `mixed`, `exclusive_lines` (`[first, last]` runs), `sites`, `seconds` |
 
 Profile pin fields: `id`, `sha256` (record content hash), `evaluation`, `machine`, `workload`,

@@ -1,14 +1,90 @@
 {
- "created": "2026-10-11 ET",
- "commit": "d0c80a8a88b8d0f7fe97ccb9643ed3b157e212b1",
+ "format": "fga03.unknowns-summary.v2",
+ "generated_by": "unknowns_summary.py beside this file (reads only the two saved estimate records)",
+ "rule": "missing_counts[item] = unknown regions (seconds null) whose bounds or overheads name the item; checked against every trial and against parameter_report.structural_missing",
+ "groups": [
+  {
+   "group": "characterization_allowlist",
+   "what": "the description accepts only the four gapbs g16/g17 counts (risk B1)",
+   "max_regions_on_a_side": 19,
+   "items": [
+    "memory_scenario.characterization_allowlist",
+    "service_scope.characterization_allowlist"
+   ]
+  },
+  {
+   "group": "call_costs",
+   "what": "opaque calls with no service rate in the description",
+   "max_regions_on_a_side": 7,
+   "items": [
+    "call_cost._ZNKSt5ctypeIcE13_M_widen_initEv",
+    "call_cost._ZNSo3putEc",
+    "call_cost._ZNSo5flushEv",
+    "call_cost._ZNSo9_M_insertImEERSoT_",
+    "call_cost._ZNSt6chrono3_V212system_clock3nowEv",
+    "call_cost._ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l",
+    "call_cost._ZdaPv",
+    "call_cost._Znam",
+    "call_cost.__kmpc_for_static_fini",
+    "call_cost.__kmpc_for_static_init_4",
+    "call_cost.__kmpc_for_static_init_8u",
+    "call_cost.__kmpc_fork_call",
+    "call_cost.indirect-call",
+    "call_cost.llvm.memcpy.p0.p0.i64",
+    "call_cost.llvm.memmove.p0.p0.i64",
+    "call_cost.malloc",
+    "call_cost.strlen"
+   ]
+  },
+  {
+   "group": "openmp_projection",
+   "what": "no exact OpenMP characterization/static-site projection for these counts",
+   "max_regions_on_a_side": 5,
+   "items": [
+    "openmp.exact_characterization_projection"
+   ]
+  },
+  {
+   "group": "call_shape_bins",
+   "what": "allocation and bulk-copy size bins with no constructed rate",
+   "max_regions_on_a_side": 2,
+   "items": [
+    "call_shape.cost._ZdaPv.16777216",
+    "call_shape.cost._ZdaPv.16777220",
+    "call_shape.cost._Znam.16777216",
+    "call_shape.cost._Znam.16777220",
+    "call_shape.cost.llvm.memmove.p0.p0.i64.140",
+    "call_shape.cost.llvm.memmove.p0.p0.i64.14496",
+    "call_shape.cost.llvm.memmove.p0.p0.i64.30164",
+    "call_shape.cost.llvm.memmove.p0.p0.i64.4388",
+    "call_shape.cost.llvm.memmove.p0.p0.i64.7300",
+    "call_shape.cost.llvm.memmove.p0.p0.i64.9044"
+   ]
+  },
+  {
+   "group": "memory_scenario_cells",
+   "what": "memory-scenario cells and access primitives with no constructed rate",
+   "max_regions_on_a_side": 2,
+   "items": [
+    "memory_scenario.cell.write.1",
+    "memory_scenario.cell.write.2",
+    "memory_scenario.primitive.access.107",
+    "memory_scenario.primitive.access.109",
+    "memory_scenario.primitive.access.113"
+   ]
+  }
+ ],
  "sides": {
   "baseline": {
    "estimate": "fga03.t75-baseline.uniform22.t1.estimate.a2",
+   "estimate_sha256": "70f3bb707c317bd9f577fb6d78424882a00391a848dee59a7c3f498c14be85fb",
+   "created": "2026-10-11",
    "seconds": null,
    "input": "bfs-20261004-uniform22.2f83a134a6bef789",
    "threads": 1,
    "target_description_sha256": "9fec46b1ab4c8ac2e8e501e61cf137c075ec40b6eef128a247cf28dd54fca76b",
    "protocol": "fga03.t75-baseline.uniform22.t1.estimate.protocol.a2.6ac95ee72d9e4798",
+   "estimator_sha256": "859c6a21fa7634d0310bd43133d427a5d77da5d4503ee7f130e9fd450b3300a4",
    "regions": 286,
    "unknown_regions": 16,
    "known_region_seconds_sum": 0.0,
@@ -33,41 +109,75 @@
    "missing_counts": {
     "memory_scenario.characterization_allowlist": 16,
     "service_scope.characterization_allowlist": 16,
+    "openmp.exact_characterization_projection": 5,
     "call_cost.__kmpc_for_static_fini": 3,
-    "call_cost._ZdaPv": 2,
-    "call_cost._Znam": 2,
-    "call_cost.llvm.memmove.p0.p0.i64": 2,
-    "call_cost.__kmpc_for_static_init_4": 2,
     "call_cost._ZNSo3putEc": 2,
     "call_cost._ZNSo5flushEv": 2,
     "call_cost._ZNSt6chrono3_V212system_clock3nowEv": 2,
     "call_cost._ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l": 2,
+    "call_cost._ZdaPv": 2,
+    "call_cost._Znam": 2,
+    "call_cost.__kmpc_for_static_init_4": 2,
     "call_cost.__kmpc_fork_call": 2,
     "call_cost.llvm.memcpy.p0.p0.i64": 2,
+    "call_cost.llvm.memmove.p0.p0.i64": 2,
     "call_cost.strlen": 2,
-    "call_cost.malloc": 1,
-    "memory_scenario.cell.write.1": 1,
-    "memory_scenario.primitive.access.113": 1,
-    "memory_scenario.cell.write.2": 1,
-    "memory_scenario.primitive.access.107": 1,
-    "memory_scenario.primitive.access.109": 1,
+    "call_cost._ZNKSt5ctypeIcE13_M_widen_initEv": 1,
+    "call_cost._ZNSo9_M_insertImEERSoT_": 1,
     "call_cost.__kmpc_for_static_init_8u": 1,
+    "call_cost.indirect-call": 1,
+    "call_cost.malloc": 1,
     "call_shape.cost._ZdaPv.16777216": 1,
     "call_shape.cost._ZdaPv.16777220": 1,
     "call_shape.cost._Znam.16777216": 1,
     "call_shape.cost._Znam.16777220": 1,
-    "call_cost._ZNKSt5ctypeIcE13_M_widen_initEv": 1,
-    "call_cost.indirect-call": 1,
-    "call_cost._ZNSo9_M_insertImEERSoT_": 1
-   }
+    "call_shape.cost.llvm.memmove.p0.p0.i64.140": 1,
+    "call_shape.cost.llvm.memmove.p0.p0.i64.14496": 1,
+    "call_shape.cost.llvm.memmove.p0.p0.i64.30164": 1,
+    "call_shape.cost.llvm.memmove.p0.p0.i64.4388": 1,
+    "call_shape.cost.llvm.memmove.p0.p0.i64.7300": 1,
+    "call_shape.cost.llvm.memmove.p0.p0.i64.9044": 1,
+    "memory_scenario.cell.write.1": 1,
+    "memory_scenario.cell.write.2": 1,
+    "memory_scenario.primitive.access.107": 1,
+    "memory_scenario.primitive.access.109": 1,
+    "memory_scenario.primitive.access.113": 1
+   },
+   "groups": {
+    "call_costs": {
+     "regions": 7,
+     "items": 17
+    },
+    "call_shape_bins": {
+     "regions": 2,
+     "items": 10
+    },
+    "characterization_allowlist": {
+     "regions": 16,
+     "items": 2
+    },
+    "memory_scenario_cells": {
+     "regions": 2,
+     "items": 5
+    },
+    "openmp_projection": {
+     "regions": 5,
+     "items": 1
+    }
+   },
+   "agrees_with_parameter_report": true,
+   "trials_agree": true
   },
   "candidate": {
    "estimate": "fga03.t75-candidate.uniform22.t1.estimate.a2",
+   "estimate_sha256": "3122baa1f3a4ff6dea85540fe63dec3df41a3e1ca8db1ed446e1f019629146c5",
+   "created": "2026-10-11",
    "seconds": null,
    "input": "bfs-20261004-uniform22.2f83a134a6bef789",
    "threads": 1,
    "target_description_sha256": "9fec46b1ab4c8ac2e8e501e61cf137c075ec40b6eef128a247cf28dd54fca76b",
    "protocol": "fga03.t75-candidate.uniform22.t1.estimate.protocol.a2.d305b51d59a092bc",
+   "estimator_sha256": "859c6a21fa7634d0310bd43133d427a5d77da5d4503ee7f130e9fd450b3300a4",
    "regions": 289,
    "unknown_regions": 19,
    "known_region_seconds_sum": 0.0,
@@ -95,33 +205,64 @@
    "missing_counts": {
     "memory_scenario.characterization_allowlist": 19,
     "service_scope.characterization_allowlist": 19,
+    "openmp.exact_characterization_projection": 5,
     "call_cost.__kmpc_for_static_fini": 3,
-    "call_cost._ZdaPv": 2,
-    "call_cost._Znam": 2,
-    "call_cost.llvm.memmove.p0.p0.i64": 2,
-    "call_cost.__kmpc_for_static_init_4": 2,
     "call_cost._ZNSo3putEc": 2,
     "call_cost._ZNSo5flushEv": 2,
     "call_cost._ZNSt6chrono3_V212system_clock3nowEv": 2,
     "call_cost._ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l": 2,
+    "call_cost._ZdaPv": 2,
+    "call_cost._Znam": 2,
+    "call_cost.__kmpc_for_static_init_4": 2,
     "call_cost.__kmpc_fork_call": 2,
     "call_cost.llvm.memcpy.p0.p0.i64": 2,
+    "call_cost.llvm.memmove.p0.p0.i64": 2,
     "call_cost.strlen": 2,
-    "call_cost.malloc": 1,
-    "memory_scenario.cell.write.1": 1,
-    "memory_scenario.primitive.access.113": 1,
-    "memory_scenario.cell.write.2": 1,
-    "memory_scenario.primitive.access.107": 1,
-    "memory_scenario.primitive.access.109": 1,
+    "call_cost._ZNKSt5ctypeIcE13_M_widen_initEv": 1,
+    "call_cost._ZNSo9_M_insertImEERSoT_": 1,
     "call_cost.__kmpc_for_static_init_8u": 1,
+    "call_cost.indirect-call": 1,
+    "call_cost.malloc": 1,
     "call_shape.cost._ZdaPv.16777216": 1,
     "call_shape.cost._ZdaPv.16777220": 1,
     "call_shape.cost._Znam.16777216": 1,
     "call_shape.cost._Znam.16777220": 1,
-    "call_cost._ZNKSt5ctypeIcE13_M_widen_initEv": 1,
-    "call_cost.indirect-call": 1,
-    "call_cost._ZNSo9_M_insertImEERSoT_": 1
-   }
+    "call_shape.cost.llvm.memmove.p0.p0.i64.140": 1,
+    "call_shape.cost.llvm.memmove.p0.p0.i64.14496": 1,
+    "call_shape.cost.llvm.memmove.p0.p0.i64.30164": 1,
+    "call_shape.cost.llvm.memmove.p0.p0.i64.4388": 1,
+    "call_shape.cost.llvm.memmove.p0.p0.i64.7300": 1,
+    "call_shape.cost.llvm.memmove.p0.p0.i64.9044": 1,
+    "memory_scenario.cell.write.1": 1,
+    "memory_scenario.cell.write.2": 1,
+    "memory_scenario.primitive.access.107": 1,
+    "memory_scenario.primitive.access.109": 1,
+    "memory_scenario.primitive.access.113": 1
+   },
+   "groups": {
+    "call_costs": {
+     "regions": 7,
+     "items": 17
+    },
+    "call_shape_bins": {
+     "regions": 2,
+     "items": 10
+    },
+    "characterization_allowlist": {
+     "regions": 19,
+     "items": 2
+    },
+    "memory_scenario_cells": {
+     "regions": 2,
+     "items": 5
+    },
+    "openmp_projection": {
+     "regions": 5,
+     "items": 1
+    }
+   },
+   "agrees_with_parameter_report": true,
+   "trials_agree": true
   }
  }
 }

@@ -1,6 +1,6 @@
 # EvolveSWDB — ArchEvolve's research database
 
-Updated: 2026-10-11 22:10 ET (review fix: rewrite site reworded to merged spans); 2026-10-11 21:52 ET (ADR 0015: LANL core, guessed column, SWDB extension; crosswalk now historical); 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
+Updated: 2026-10-12 00:37 ET (final review of fine-grained attribution: code origin and catalog bound reworded; attribution report, split check, site-finder region and measured scope added); 2026-10-11 22:10 ET (review fix: rewrite site reworded to merged spans); 2026-10-11 21:52 ET (ADR 0015: LANL core, guessed column, SWDB extension; crosswalk now historical); 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom, remaining gain bound); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
 
 The Software Database is the ArchEvolve component that knows the applications:
 what their kernels compute, how their code touches memory, what profiling
@@ -342,12 +342,12 @@ _Avoid_: parameter sheet, hardware config
 **Rewrite site**:
 One or more changed spans of a candidate artifact's source diff against its baseline, merged when
 one region overlaps several of them (possibly in several files), together with the baseline regions
-it replaces and the candidate regions and calls that replace them. (Reworded 2026-10-11 ET.)
+it replaces and the candidate regions and calls that replace them.
 _Avoid_: hunk (in prose), patch site
 
 **Code origin**:
-The label saying where a candidate region's code came from: untouched, agent-rewritten, library
-call, intrinsic, offload command, or unattributed.
+The label saying where a region's code came from, given to the regions of both estimates in a
+comparison: untouched, agent-rewritten, library call, intrinsic, offload command, or unattributed.
 _Avoid_: provenance (alone), modified/unmodified
 
 **Resource floor**:
@@ -356,7 +356,8 @@ ignoring latency and overheads. It is a limit, never an estimate of a real rewri
 _Avoid_: roofline (alone), theoretical peak, ideal time
 
 **Catalog bound**:
-The lowest estimate a region could reach with a typed-library entry the site finder matches to it.
+The lowest estimate a region could reach with a typed-library entry the site finder matches to it,
+computed on the region's baseline counts.
 _Avoid_: achievable speed, best known
 
 **Headroom**:
@@ -368,6 +369,28 @@ _Avoid_: potential, slack
 The most a region could still shorten a program's time if it reached its catalog bound; an upper
 limit, never an expected value.
 _Avoid_: expected gain, expected future gain, opportunity
+
+**Attribution report**:
+The record that splits two saved estimates, of a baseline and a candidate, by code origin, with
+each region's headroom and a ranking for the next iteration. It is derived from estimates, never
+a timing.
+_Avoid_: breakdown (alone), attribution (alone)
+
+**Split check**:
+The comparison of an attribution report's estimated group shares with the shares measured by native
+timing of the same pair, under a pass rule fixed before the timing. A report that fails it, or that
+cannot be checked, is split-unverified, and nothing uses its ranking.
+_Avoid_: validation (alone), agreement check
+
+**Site-finder region**:
+A region the site finder chose, named by implementation, function and lines of the full-source
+revision, with the library entries that apply to it.
+_Avoid_: candidate site, hotspot
+
+**Measured scope**:
+One function or loop of a timed translation unit with its measured exclusive thread-CPU time; the
+split check gives it a code origin by its own lines.
+_Avoid_: profile region, measured region (alone)
 
 **Paired estimate**:
 An estimate made for a candidate artifact or baseline in an Extensa campaign before its timing,
