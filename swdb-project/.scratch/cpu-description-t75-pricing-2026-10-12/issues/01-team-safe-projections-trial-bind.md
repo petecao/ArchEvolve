@@ -2,7 +2,7 @@
 
 Created: 2026-10-12 01:10 ET
 **Type:** task
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** None — can start immediately
 **Spec:** `../spec.md` (C3, C4, C7 projections)
 **Code map:** `../notes/binder.md`, `../notes/openmp.md`, `../notes/ops.md`
