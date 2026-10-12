@@ -118,6 +118,11 @@ split, and rewritten/untouched/unattributed shares are **unknown**.
 - `workload_characterizations/fga03.t75-{baseline,candidate}.uniform22.t1.characterization.a2`
 - `estimates/fga03.t75-{baseline,candidate}.uniform22.t1.estimate.a2`
 
+Validated on mbit10 at `d0c80a8a` against the copied store: `OK: 711 record(s) valid`
+([`validate-mbit10-a2.txt`](../evidence/03-first-real-pair/validate-mbit10-a2.txt)). Copied byte
+for byte to the Mac (SHA-256 checked); not re-validated on the Mac (a whole-store check needs about
+7 GB of RAM for about 50 min).
+
 **For ticket 09.** Its F19 check has no estimated shares to compare, so it closes on the same
 missing pieces with verdict `split_unverified`. If it is reopened after a new description: time
 the same workload ID with the two prospective requests in
