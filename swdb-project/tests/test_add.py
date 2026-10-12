@@ -45,7 +45,8 @@ def test_added_implementation_shows_up_in_implementations(repo, tmp_path):
     assert repo.swdb("add", path).returncode == 0
     found = json.loads(repo.swdb("implementations", "gapbs-pr", "--require", "loop_carried_dependencies=false",
                                  "--format", "json").stdout)
-    assert [f["implementation"] for f in found] == ["gapbs-pr-jacobi", "gapbs-pr-jacobi-copy"]
+    # 2026-10-11 ET: gapbs-pr-jacobi-analytic-v1 is a gapbs-pr variant since 728fea38 (2026-10-06)
+    assert [f["implementation"] for f in found] == ["gapbs-pr-jacobi", "gapbs-pr-jacobi-analytic-v1", "gapbs-pr-jacobi-copy"]
     assert (repo.path / "implementations" / "gapbs-pr-jacobi-copy.yaml").is_file()
 
 

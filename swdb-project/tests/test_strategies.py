@@ -293,8 +293,11 @@ def test_strategies_query_names_a_missing_pattern(repo):
 def test_find_strategy_lists_legal_and_undetermined_patterns_only(repo):
     unknown_loop_dependencies(repo)
     found = query(repo, "find", "--strategy", "packing", "--kernel", "gapbs-pr")
+    # 2026-10-11 ET: gapbs-pr-jacobi-analytic-v1 is a gapbs-pr variant since 728fea38 (2026-10-06)
     assert found == [{"implementation": "gapbs-pr-jacobi", "pattern": "gather-contrib", "outcome": "undetermined",
-                      "unknown_fields": ["loop_carried_dependencies"]}]   # gapbs-pr-gs's gather is illegal
+                      "unknown_fields": ["loop_carried_dependencies"]},
+                     {"implementation": "gapbs-pr-jacobi-analytic-v1", "pattern": "gather-contrib", "outcome": "legal",
+                      "unknown_fields": []}]   # gapbs-pr-gs's gather is illegal
 
 
 def test_find_strategy_across_kernels(repo):

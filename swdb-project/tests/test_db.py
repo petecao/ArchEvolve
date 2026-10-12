@@ -56,8 +56,10 @@ def test_build_refuses_invalid_records(repo):
 
 def test_find_by_address_shape(repo):
     found = out(repo.swdb("find", "--shape", "ranged_indirect", "--kernel", "gapbs-pr", "--format", "json"))
+    # 2026-10-11 ET: gapbs-pr-jacobi-analytic-v1 is a gapbs-pr variant since 728fea38 (2026-10-06)
     assert {(f["implementation"], f["pattern"]) for f in found} == {
-        ("gapbs-pr-gs", "gather-contrib"), ("gapbs-pr-jacobi", "gather-contrib")}
+        ("gapbs-pr-gs", "gather-contrib"), ("gapbs-pr-jacobi", "gather-contrib"),
+        ("gapbs-pr-jacobi-analytic-v1", "gather-contrib")}
 
 
 def test_find_by_update_kind_and_semantic_value(repo):
@@ -78,12 +80,14 @@ def test_find_with_unknown_semantic_field_is_a_usage_error(repo):
 def test_implementations_meeting_a_requirement(repo):
     found = out(repo.swdb("implementations", "gapbs-pr", "--require", "loop_carried_dependencies=false",
                           "--format", "json"))
-    assert [f["implementation"] for f in found] == ["gapbs-pr-jacobi"]
+    # 2026-10-11 ET: gapbs-pr-jacobi-analytic-v1 is a gapbs-pr variant since 728fea38 (2026-10-06)
+    assert [f["implementation"] for f in found] == ["gapbs-pr-jacobi", "gapbs-pr-jacobi-analytic-v1"]
 
 
 def test_implementations_without_requirements(repo):
     found = out(repo.swdb("implementations", "gapbs-pr", "--format", "json"))
-    assert [f["implementation"] for f in found] == ["gapbs-pr-gs", "gapbs-pr-jacobi"]
+    # 2026-10-11 ET: gapbs-pr-jacobi-analytic-v1 is a gapbs-pr variant since 728fea38 (2026-10-06)
+    assert [f["implementation"] for f in found] == ["gapbs-pr-gs", "gapbs-pr-jacobi", "gapbs-pr-jacobi-analytic-v1"]
     assert found[0]["baseline"] is True
 
 
