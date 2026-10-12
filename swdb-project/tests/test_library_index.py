@@ -78,7 +78,9 @@ def test_library_entries_clauses_and_dependencies_are_indexed(repo):
     assert contract["kind"] == "rewrite_contract" and contract["derived_from"] == "contract.bfs_read_offload"
     assert contract["tier"] == "shared"   # promoted by ticket 43 (review.contract.bc_read_offload.30a3747420b3)
     parent = next(row for row in rows if row["id"] == "contract.bfs_read_offload")
-    assert parent["tier"] == "shared" and parent["status"] == "evaluated_on_target"
+    # 2026-10-11 ET, Yan-Ru (option B): 87e8646e re-pinned the catalog hash only; the gem5 target run
+    # pins the old content, so the current content may be certified without a new target run.
+    assert parent["tier"] == "shared" and parent["status"] in {"certified", "evaluated_on_target"}
     dependencies = {row["dependency"] for row in _sql(
         repo, "select dependency from swdb_library_dependencies where entry = 'contract.bc_read_offload'")}
     assert "contract.bfs_read_offload" in dependencies and "intrinsic.dxc_gather" in dependencies

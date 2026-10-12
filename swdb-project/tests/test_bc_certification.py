@@ -92,7 +92,10 @@ def test_derived_contract_cites_bfs_adds_bc_l1_and_is_shared():
     # raise its status (updated 2026-10-04 ET).
     state = library.state(contract['id'])
     assert state['tier'] == 'shared' and state['status'] in {'certified', 'evaluated_on_target'}
-    assert library.state(parent['id']) == {'tier': 'shared', 'status': 'evaluated_on_target'}
+    # 2026-10-11 ET, Yan-Ru (option B): after the 87e8646e hash-only re-pin the parent may be certified
+    # without a new target run on its current content.
+    parent_state = library.state(parent['id'])
+    assert parent_state['tier'] == 'shared' and parent_state['status'] in {'certified', 'evaluated_on_target'}
 
 
 @pytest.mark.parametrize('change, message', [
