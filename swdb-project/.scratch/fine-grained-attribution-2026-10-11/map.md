@@ -1,6 +1,6 @@
 # Map: Fine-grained estimate attribution and headroom
 
-Created: 2026-10-11 14:51 ET. Updated: 2026-10-12 00:38 ET (final review fixes F40–F47; current state
+Created: 2026-10-11 14:51 ET. Updated: 2026-10-12 00:47 ET (final fixes merged into yanrujhou_main; follow-up moved to its own spec); 2026-10-12 00:38 ET (final review fixes F40–F47; current state
 cut to checkpoint, blocker and next action); 2026-10-11 23:32 ET (all tickets resolved; code on
 yanrujhou_main); 2026-10-11 15:17 ET (ticket 01 resolved; design committed); 2026-10-11 15:14 ET
 (tickets re-cut into vertical slices 02–10, approved by Yan-Ru). Spec: [spec.md](spec.md).
@@ -8,12 +8,13 @@ yanrujhou_main); 2026-10-11 15:17 ET (ticket 01 resolved; design committed); 202
 ## Current state
 
 - **Checkpoint (2026-10-12 00:38 ET):** all tickets 01–10 resolved; spec closed. Final review fixes
-  (F40–F47) are on branch `fga/final-fixes`, not yet merged into `yanrujhou_main`.
+  (F40–F47) are merged into `yanrujhou_main`.
 - **Blocker:** none for this spec. The real split stays `split_unverified`: both t75 estimates are
   unknown, so the rewritten, untouched and unattributed shares are **unknown**
   ([ticket 03](issues/03-first-real-pair.md#answer) lists every missing piece).
-- **Next action:** none; the spec is closed. The optional follow-up ticket (extend the CPU
-  description, then rerun 03 and 09) was declined by Yan-Ru on 2026-10-11.
+- **Next action:** none for this spec; it is closed. The follow-up (extend the CPU description,
+  then rerun 03 and 09 from the saved prospective requests) is its own spec, opened 2026-10-12
+  00:42 ET: [cpu-description-t75-pricing-2026-10-12](../cpu-description-t75-pricing-2026-10-12/spec.md).
 
 ## Tickets
 

@@ -1,6 +1,6 @@
 # 09: Split check on the real pair
 
-Created: 2026-10-11 15:14 ET. Updated: 2026-10-12 00:41 ET (final review fixes: rule v2, profile checks,
+Created: 2026-10-11 15:14 ET. Updated: 2026-10-12 00:47 ET (rerun moved to the follow-up spec); 2026-10-12 00:41 ET (final review fixes: rule v2, profile checks,
 boxes, full missing-piece list, Progress marked historical); 2026-10-11 23:32 ET (resolved: split_unverified, no timing, LR-01); 2026-10-11 21:28 ET (code half built; progress note added;
 the real mbit10 run is still open); 2026-10-11 21:17 ET (claimed for the code half).
 **Type:** task
@@ -89,8 +89,8 @@ python3 -m swdb attribute --records records \
 - **No attribution record exists** (`records/attributions/` has none): the `split_unverified`
   verdict is this Answer only. The site finder therefore sees no report, which also keeps
   today's order, so the outcome is the same as a saved `split_unverified` report (F23).
-- The split-check code is in place and tested (see Progress). No rerun is planned: Yan-Ru
-  declined the optional follow-up ticket on 2026-10-11.
+- The split-check code is in place and tested (see Progress). The rerun belongs to the
+  follow-up spec [cpu-description-t75-pricing-2026-10-12](../../cpu-description-t75-pricing-2026-10-12/spec.md).
 
 **Final review fix (2026-10-12 00:41 ET, branch `fga/final-fixes`).**
 - H1 (F40): the split check now compares like with like. Its estimated shares keep each region's

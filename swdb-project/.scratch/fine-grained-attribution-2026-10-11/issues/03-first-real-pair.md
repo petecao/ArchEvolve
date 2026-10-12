@@ -1,6 +1,6 @@
 # 03: First real pair: t75 BFS attribution report
 
-Created: 2026-10-11 15:14 ET. Updated: 2026-10-12 00:40 ET (final review fixes: every missing piece,
+Created: 2026-10-11 15:14 ET. Updated: 2026-10-12 00:47 ET (rerun moved to the follow-up spec); 2026-10-12 00:40 ET (final review fixes: every missing piece,
 boxes ticked, retention and HEAD validation recorded); 2026-10-11 23:17 ET (resolved, negative);
 2026-10-11 19:34 ET (plan amendment a2); 2026-10-11 19:19 ET (prospective plan).
 **Type:** task
@@ -133,8 +133,8 @@ for byte to the Mac (SHA-256 checked); not re-validated on the Mac (a whole-stor
 7 GB of RAM for about 50 min).
 
 **For ticket 09.** Its F19 check has no estimated shares to compare, so it closes on the same
-missing pieces with verdict `split_unverified`. No rerun is planned: Yan-Ru declined the optional
-follow-up ticket on 2026-10-11. For the record, a rerun would have to time source 0 only (the
+missing pieces with verdict `split_unverified`. The rerun belongs to the follow-up spec
+[cpu-description-t75-pricing-2026-10-12](../../cpu-description-t75-pricing-2026-10-12/spec.md) (opened 2026-10-12 00:42 ET). For the record, a rerun would have to time source 0 only (the
 counted source, F44), not the requests' `[0, 1234, 7777]`, on a later day than the estimates (F43).
 
 **Plan changes, for the record.** Attempt a1 (g16 input, implementation baseline) was stopped
@@ -158,6 +158,6 @@ before it wrote anything; see the a2 amendment above. `attribute` stays out of
   | `swdb-protected-cpu-wrapper-8yok3jhh` | 4 | 16 815 389 | `7a16e1d3534de88ec110f21eedc79c4b752e0372b1ad8720f9a668e8ac00ca69` |
   | `swdb-protected-cpu-wrapper-bjvc5lh_` | 4 | 16 815 409 | `6dc0b113b8ba4a285475efb35a4588f61da5e312a1925dd1b967dd780bb51029` |
 
-  Their only planned reader, the ticket 09 rerun, is gone (follow-up declined), so they are
-  disposable; they stay until Yan-Ru authorizes removal (LR-06: remove only authorized output).
+  Their remaining reader is the rerun in the follow-up spec (cpu-description-t75-pricing-2026-10-12),
+  so they stay; remove them after that spec's last reader (LR-06).
   The `/data1/yanruj/ArchEvolve-fga03` worktree no longer exists (already removed).
