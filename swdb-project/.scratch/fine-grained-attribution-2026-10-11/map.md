@@ -8,6 +8,11 @@ approved by Yan-Ru); 2026-10-11 15:17 ET (ticket 01 resolved; design committed).
 - **Checkpoint:** design committed (2026-10-11 15:17 ET); ticket 01 resolved; spec ready-for-agent (F1–F24).
 - **Blocker:** none. Yan-Ru starts implementation in a fresh session.
 - **Next action:** start ticket 02 (first working version).
+- **Ticket 03 (2026-10-11 23:17 ET):** negative. Both t75 estimates (uniform22, T1) are unknown, so
+  rewritten / untouched / unattributed shares are **unknown**. Main missing piece: the CPU
+  description's characterization allowlist (risk B1), plus uncosted OpenMP/allocator/bulk/clock/
+  iostream calls. Ticket 09 has no estimated shares: `split_unverified`. Kept on mbit10 for a
+  rerun: `/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/a2/{baseline,candidate}-counted`.
 
 ## Tickets
 
@@ -15,7 +20,7 @@ approved by Yan-Ru); 2026-10-11 15:17 ET (ticket 01 resolved; design committed).
 |---|---|---|---|
 | [01](issues/01-review-and-commit-design.md) | Review and commit design | resolved ([answer](issues/01-review-and-commit-design.md#answer)) | — |
 | [02](issues/02-tracer-worked-example.md) | First working version: the worked example end to end | resolved ([answer](issues/02-tracer-worked-example.md#answer)) | 01 |
-| [03](issues/03-first-real-pair.md) | First real pair: t75 BFS attribution report | ready-for-agent | 02 |
+| [03](issues/03-first-real-pair.md) | First real pair: t75 BFS attribution report | resolved, negative: both estimates unknown ([answer](issues/03-first-real-pair.md#answer)) | 02 |
 | [04](issues/04-rewrite-site-edge-cases.md) | Rewrite-site edge cases | resolved ([answer](issues/04-rewrite-site-edge-cases.md#answer)) | 02 |
 | [05](issues/05-library-intrinsic-offload-labels.md) | Library, intrinsic and offload labels | resolved ([answer](issues/05-library-intrinsic-offload-labels.md#answer)) | 02 |
 | [06](issues/06-iteration-two-baselines.md) | Iteration 2: two baselines | resolved ([answer](issues/06-iteration-two-baselines.md#answer)) | 02 |

@@ -1,0 +1,20 @@
+message_version: '1.0'
+id: fga03.t75-baseline.uniform22.t1.estimate.protocol.a2
+version: 1
+settings:
+  mode: estimated
+  estimator_version: swdb.analytic.v1
+  target_description: mbit10.cpu.lanl20261006.t1.services.v1
+  threads: 1
+  roi: bfs.complete_call.v1
+  sources:
+  - typed-library-bfs-scalar-profile-20261003-a1.baseline
+  inputs:
+  - bfs-20261004-uniform22.2f83a134a6bef789
+  input_run_arguments:
+    bfs-20261004-uniform22.2f83a134a6bef789:
+    - /data/yanruj/EvolveSWDB_runs/bfs-workloads-20260925/bfs-20260925-uniform22/graph-dx100.sg
+    - '4'
+    - '0'
+    - /data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/a2/swdb-protected-cpu-wrapper-8yok3jhh/counted-result.json
+    - /data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/a2/swdb-protected-cpu-wrapper-8yok3jhh/counted.parents.i32

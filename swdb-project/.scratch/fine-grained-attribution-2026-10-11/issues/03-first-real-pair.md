@@ -2,7 +2,7 @@
 
 Created: 2026-10-11 15:14 ET
 **Type:** task
-**Status:** ready-for-agent
+**Status:** resolved
 **Blocked by:** 02 — First working version
 **Spec:** `../spec.md` (F9, F16, F18; LR-01, LR-02)
 **Time estimate:** about half a day of agent work on mbit10; 30 min if it ends on a negative report
@@ -70,3 +70,60 @@ Prospective requests (copied into this ticket's `evidence/` folder):
 New order: (1) count baseline, (2) count candidate, (3) freeze the fresh protocol on `d0c80a8a`
 (one per side only if the counted run arguments differ), (4) estimate baseline, (5) estimate
 candidate, (6) `swdb attribute` only if both totals are known. Stop rule unchanged.
+
+## Answer
+
+Resolved 2026-10-11 23:17 ET on branch `fga/03-real-pair`. **Negative result (LR-01): both
+estimates are unknown, so no attribution report was made.** No timing was run.
+
+**What ran** (mbit10, lane 1 `mbit10-evaluation-node1` generation 552, 19:35–23:16 ET, load ≈1–2,
+code `d0c80a8a` in `/data1/yanruj/ArchEvolve-fga03`). Order, from
+[`order.log`](../evidence/03-first-real-pair/order.log):
+
+1. 19:35–20:07 count baseline `typed-library-bfs-scalar-profile-20261003-a1.baseline` (F26).
+2. 20:07–20:39 count candidate `extensa-native-bfs-20261005-a8.it1.kronecker.a0`.
+3. 20:39–22:25 freeze two fresh protocols (F27; the counted run arguments name each side's own
+   wrapper folder, so one protocol per side). Each freeze took about 50 min (whole-store check).
+4. 22:25–22:50 estimate baseline; 22:50–23:16 estimate candidate.
+
+Both counts: `registered-cpu-sg`, binding `verified`, evidence `execution`, ROI
+`bfs.complete_call.v1`, T1, workload `bfs-20261004-uniform22.2f83a134a6bef789`, slot = source 0,
+repetition 0, counted correctness passed.
+
+**Result.** Both estimates have `seconds: null`. Every region that ran is unknown: 16 of 286
+regions (baseline) and 19 of 289 (candidate); the other regions are 0 s. So there is no share to
+split, and rewritten/untouched/unattributed shares are **unknown**.
+
+**Missing pieces** (counts per side in [`unknowns-summary.json`](../evidence/03-first-real-pair/unknowns-summary.json)):
+
+1. **Characterization allowlist (risk B1).** `native_service_costs` and `memory_service_scenario`
+   in `mbit10.cpu.lanl20261006.t1.services.v1` accept only the four gapbs g16/g17
+   characterizations. Both new counts fail it in every unknown region
+   (`service_scope.characterization_allowlist`, `memory_scenario.characterization_allowlist`).
+   Fixing it needs a new target description with a prospective allowlist that names these counts,
+   frozen before any timing. Not done here: the ticket forbids changing the description.
+2. **Call costs with no service rate:** OpenMP (`__kmpc_fork_call`, `__kmpc_for_static_init_4/8u`,
+   `__kmpc_for_static_fini`), allocator (`_Znam`, `_ZdaPv`, `malloc`, and two allocation-size
+   bins at 16 777 216 / 16 777 220 bytes), `llvm.memcpy`/`llvm.memmove`, `system_clock::now`,
+   iostream output (`ostream` put/flush/insert, `ctype::_M_widen_init`), `strlen`, one
+   `indirect-call`.
+3. **Memory-scenario cells/primitives** with no constructed rate: `write.1`, `write.2` cells and
+   three access primitives (107, 109, 113).
+4. **Bandwidth rate (risk B3):** not reached; the description has no `bytes_per_s`, so the
+   resource floor would also stay unknown.
+
+**Records added** (master copies, under `records/`):
+- `protocols/fga03.t75-baseline.uniform22.t1.estimate.protocol.a2.6ac95ee72d9e4798`
+- `protocols/fga03.t75-candidate.uniform22.t1.estimate.protocol.a2.d305b51d59a092bc`
+- `workload_characterizations/fga03.t75-{baseline,candidate}.uniform22.t1.characterization.a2`
+- `estimates/fga03.t75-{baseline,candidate}.uniform22.t1.estimate.a2`
+
+**For ticket 09.** Its F19 check has no estimated shares to compare, so it closes on the same
+missing pieces with verdict `split_unverified`. If it is reopened after a new description: time
+the same workload ID with the two prospective requests in
+[`evidence/03-first-real-pair/`](../evidence/03-first-real-pair/) (LLVM 22 `clang++`, evaluator v3,
+sources `[0, 1234, 7777]`, 20 repetitions). The counted SG binaries are kept on mbit10 (see map).
+
+**Plan changes, for the record.** Attempt a1 (g16 input, implementation baseline) was stopped
+before it wrote anything; see the a2 amendment above. `attribute` stays out of
+`archevolve.EVIDENCE_COMMANDS` (not decided here; nothing to attribute).
