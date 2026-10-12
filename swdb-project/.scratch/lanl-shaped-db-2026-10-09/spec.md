@@ -2,7 +2,7 @@
 
 Created: 2026-10-09 14:15 ET
 **Type:** spec
-**Status:** ready-for-agent (implementation starts only on Yan-Ru's explicit go-ahead)
+**Status:** resolved (all 7 tickets resolved 2026-10-11; merged into `yanrujhou_main` 17d99199)
 **Blocked by:** None
 Owner: Yan-Ru Jhou
 Supersedes: [lanl-crosswalk-v1 spec](../lanl-crosswalk-v1-2026-10-09/spec.md) (wontfix; it only

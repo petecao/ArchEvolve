@@ -2,7 +2,7 @@
 
 Created: 2026-10-09 14:19 ET
 **Type:** ticket map
-**Status:** ready-for-agent (implementation starts only on Yan-Ru's explicit go-ahead)
+**Status:** resolved (all 7 tickets resolved 2026-10-11; merged into `yanrujhou_main` 17d99199)
 **Spec:** [spec.md](spec.md)
 
 Each ticket is checkable on its own through `swdb build`, `swdb sql` and the existing query
@@ -41,3 +41,18 @@ time (about 2 working days).
 - 2026-10-11 22:05 ET: ticket 07 resolved — reference doc, glossary, whole-core shape test
   ([07](issues/07-adr-reference-and-final-shape-check.md#answer)). Spec's "16 slide tables"
   corrected to 15. Code review of the branch done; fixes in progress (branch `lanl/08-review-fixes`).
+- 2026-10-11 23:25 ET: **done.** `lanl-shaped-db` merged into `yanrujhou_main` (17d99199) after the
+  code review (9 findings fixed, 1 kept by decision; merge cc3225a2).
+  - Full-catalog check on the merged code: `swdb build` of all 705 records OK in 172 s (same as
+    before); 16 core tables; `foreign_key_check` clean; every core row has an origin; after
+    dropping every `swdb_` table, 16 tables remain and the FK check is clean.
+  - Tests: all LANL and DB test files pass. A full suite (140 full-catalog-copy tests deselected)
+    ran 699 of ~5000 tests before it was stopped: 644 passed; 52 errors were all
+    `swdb source-snapshot` 600 s timeouts, which time out the same way on the base branch; 3
+    failures are pre-existing (two `test_bfs_acceptance_report` tests fail identically on base;
+    `test_bc_certification` tier, see below).
+  - Follow-ups outside this effort (not ticketed yet): (1) `library/contract.bc_read_offload` and
+    `contract.bfs_read_offload` changed in 87e8646e after their reviews, so their tier is
+    `experimental` — needs a new promotion review by Yan-Ru; (2) run the full suite on mbit10, since
+    ~125 catalog-copying tests take ~10 min each on the Mac; (3) evaluation timings could also feed
+    `performance_runs` (ticket 04 answer).
