@@ -3,6 +3,10 @@
 Date: 2026-10-06 ET
 Status: proposed (decided by Yan-Ru on 2026-10-06; no access to the main database yet)
 
+Amended 2026-10-11 ET by [ADR 0015](0015-research-database-takes-the-main-database-shape.md): the
+research database takes the main database's shape, replacing "crosswalk instead of a shared schema".
+The other rules below stay.
+
 Narrows [ADR 0002](0002-yaml-in-git-is-the-master-copy-sqlite-is-generated.md): YAML in git stays the
 master copy of the research database, not of the team's kernel data.
 
