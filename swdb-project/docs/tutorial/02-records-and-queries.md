@@ -1,6 +1,6 @@
 # 2. Read records and ask useful questions
 
-Updated: 2026-10-11 (Eastern Time). Reading budget: 7 minutes.
+Updated: 2026-10-11 21:53 ET. Reading budget: 7 minutes.
 
 [Tutorial](README.md) · [Previous](01-overview.md) · [Next](03-components.md)
 
@@ -39,9 +39,10 @@ Learn record groups by purpose; optional references cover every field:
 | Retain research/evidence custody | `certification`, `review`, `campaign_summary`, `paired_estimate`, `agreement_policy`, `agreement_report`, `team_claim`, `retention` | Which tests, reviews, research comparisons, and artifacts support reuse? |
 
 Typed-library entries live in `library/`, outside the record envelope. SQLite
-indexes their normative content and derived evidence state separately. LANL's
-main database is not connected; the [crosswalk](../compatibility/README.md) is
-validated compatibility metadata, not an import.
+indexes their normative content and derived evidence state separately. The
+generated file has LANL's tables (the [LANL core](../reference/database.md#lanl-core))
+plus `swdb_` tables for everything else. LANL's main database itself is not
+connected: nothing is imported from or exported to it.
 
 A BFS `workload` binds graph representations and ordered traversal sources. A
 **workload view** exports the retained historical SPARTA 0.1 format.
