@@ -11,6 +11,7 @@ Updated: 2026-10-06 (Eastern Time): one record/index access interface (analytic-
 Updated: 2026-10-07 (Eastern Time): current evidence-basis interpretation.
 
 Updated: 2026-10-11 (Eastern Time): attribution catalog bounds and full ranking (fine-grained attribution ticket 08).
+Updated: 2026-10-11 21:17 ET: attribution split-check tables (fine-grained attribution ticket 09).
 
 Run commands inside `ArchEvolve/swdb-project/`. [The database builder](../../swdb/db.py)
 writes `build/swdb.sqlite` beside `records/` by default (another records folder
@@ -668,3 +669,36 @@ come from the cumulative `regions`.
 | `site_finder_regions` | JSON list of the joined site-finder region IDs that apply the entry |
 | `mixed` | 1 when some joined site-finder region only partly covers the region |
 | `missing` | JSON list of the entry's missing counts and rates |
+
+### `swdb_attribution_split_checks`
+
+Added: 2026-10-11 21:17 ET, ticket 09. One row per report that has a `split_check` (made with
+`--baseline-profile` and `--candidate-profile`). No row = not checked.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `verdict` | `passed` or `split_unverified` |
+| `rule_id` | `swdb.split_check.v1` |
+| `max_abs_share_gap` | 0.1, the fixed pass threshold (10 percentage points) |
+| `baseline_profile` | baseline region profile ID |
+| `candidate_profile` | candidate region profile ID |
+| `reasons` | JSON list of `{side, origin, reason}` why it is unverified; `[]` when passed |
+| `baseline_load_average` | JSON host load recorded with the baseline profile run (NULL if none) |
+| `candidate_load_average` | JSON host load recorded with the candidate profile run (NULL if none) |
+
+### `swdb_attribution_split_gaps`
+
+Added: 2026-10-11 21:17 ET, ticket 09. One row per side and group of a checked report (always
+six). The measured scopes stay in the JSON column.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `side` | `baseline` or `candidate` |
+| `origin` | `untouched`, `agent_rewritten` or `unattributed` |
+| `estimated_share` | the report's group share (NULL if unknown) |
+| `measured_share` | measured exclusive thread-CPU share (NULL if nothing was measured) |
+| `measured_seconds` | measured exclusive thread-CPU seconds of the group |
+| `gap` | measured − estimated share (NULL if either is unknown) |
+| `within_rule` | 1 when \|gap\| ≤ 0.1, 0 when not, NULL when unknown |

@@ -1226,3 +1226,191 @@ def test_catalog_bounds_validate_are_indexed_and_pin_the_site_finder_summary(cas
     summary.write_text(summary.read_text().replace('status: draft', 'status: accepted', 1))
     changed = case.records.validate()
     assert changed.returncode == 1 and 'site_finder' in changed.stdout + changed.stderr
+
+
+# --- Ticket 09: split check against measured region thread-CPU time (2026-10-11 ET; F15, F18, F19, F23)
+#
+# A `region_profile` from `swdb bfs-profile` per side gives each source scope's exclusive
+# thread-CPU seconds by file and line. The fixture kernel's scopes (lines of BASELINE):
+#   function `untouched` [2, 5] > loop [3, 4];  function `rewritten` [6, 9] > loop [7, 8].
+# The rewrite site is lines 7-8 on both sides. A function's exclusive time lies on its lines
+# outside its nested loop ([2, 5] minus [3, 4] = {2, 5}; [6, 9] minus [7, 8] = {6, 9}), so both
+# functions' own time is untouched; only the loop at 7-8 is rewritten.
+
+SCOPES = [('function', 'untouched', [2, 5], [0, 70]), ('loop', 'for', [3, 4], [20, 50]),
+          ('function', 'rewritten', [6, 9], [80, 150]), ('loop', 'for', [7, 8], [100, 140])]
+
+
+def region_profile(case, rid, side, seconds, workload='tiny-sym', created=None, tree=None):
+    """A measured profile of one side's tree; `seconds` = exclusive s per SCOPES row."""
+    source = case.records.read(f'source_snapshots/fixture.{tree or side}.source.yaml')
+    estimate = case.records.read(f'estimates/fixture.{side}.yaml')
+    day = created or str(estimate['created'])
+    regions = []
+    for (kind, name, lines, byte_range), value in zip(SCOPES, seconds):
+        regions.append({'id': f'{kind}:kernel.cpp:{byte_range[0]}:{side}', 'kind': kind, 'name': name, 'path': 'kernel.cpp',
+                        'lines': lines, 'byte_range': byte_range, 'function': 'rewritten' if lines[0] >= 6 else 'untouched',
+                        'metrics': {'inclusive_thread_cpu_seconds': value, 'exclusive_thread_cpu_seconds': value, 'invocations': 1},
+                        'basis': 'measured', 'source_artifact_sha256': source['artifact']['sha256']})
+    case.records.write(f'region_profiles/{rid}.yaml', {'kind': 'region_profile', 'schema_version': '0.4', 'id': rid,
+        'status': 'draft', 'created': day, 'updated': day, 'message_version': '1.0',
+        'producer': {'name': 'attribution-fixture', 'role': 'operator', 'test_client': True},
+        'provenance': [{'id': 'fixture', 'kind': 'source_code', 'description': 'Split-check contract fixture counters.'}],
+        'request': {'message_version': '1.0', 'fixture': True}, 'machine': 'testhost',
+        'context': {'candidate_sha256': source['artifact']['sha256'], 'threads': 1, 'workload': {'id': workload},
+                    'load_average': [1.5, 1.25, 1.0], 'lane': None},
+        'outcome': {'state': 'partial', 'stage': 'profiling', 'reason': 'fixture'}, 'stages': [], 'regions': regions,
+        'dynamic_memory': [], 'executions': [], 'raw_artifacts': [], 'reasons': [], 'gain_claim': False})
+
+
+def split_case(case, baseline=(1, 41, 1, 57), candidate=(0, 40, 0, 40)):
+    case.worked_example()
+    region_profile(case, 'fixture.baseline.profile', 'baseline', baseline)
+    region_profile(case, 'fixture.candidate.profile', 'candidate', candidate)
+
+
+def split_checked(case, rid='fixture.attribution', *profiles):
+    flags = profiles or ('--baseline-profile', 'fixture.baseline.profile', '--candidate-profile', 'fixture.candidate.profile')
+    return run_swdb('attribute', '--records', case.records.path, '--baseline-estimate', 'fixture.baseline',
+        '--candidate-estimate', 'fixture.candidate', '--baseline-source', 'fixture.baseline.source',
+        '--candidate-source', 'fixture.candidate.source', *flags, '--id', rid, '--format', 'json')
+
+
+def gaps(report):
+    return {(g['side'], g['origin']): g for g in report['split_check']['gaps']}
+
+
+def test_split_check_passes_when_every_measured_share_is_within_ten_points_of_its_estimate(case):
+    # Estimated shares (worked example): baseline untouched 40/100, rewritten 60/100;
+    # candidate untouched 40/70, rewritten 30/70; unattributed 0 on both.
+    # Measured baseline: untouched 1 + 41 + 1 = 43 of 100 s, rewritten 57 (the loop at 7-8).
+    # Measured candidate: untouched 40 of 80 s, rewritten 40 of 80 s.
+    split_case(case)
+    result = split_checked(case)
+    assert result.returncode == 0, result.stdout + result.stderr
+    report = json.loads(result.stdout)
+    check = report['split_check']
+    assert check['verdict'] == 'passed' and check['reasons'] == []
+    assert check['rule']['max_abs_share_gap'] == 0.1
+    found = gaps(report)
+    assert found['baseline', 'untouched']['measured_share'] == pytest.approx(0.43)
+    assert found['baseline', 'untouched']['gap'] == pytest.approx(0.03)
+    assert found['baseline', 'agent_rewritten']['measured_share'] == pytest.approx(0.57)
+    assert found['baseline', 'agent_rewritten']['gap'] == pytest.approx(-0.03)
+    assert found['candidate', 'untouched']['measured_share'] == pytest.approx(0.5)
+    assert found['candidate', 'untouched']['gap'] == pytest.approx(0.5 - 4 / 7)
+    assert found['candidate', 'agent_rewritten']['gap'] == pytest.approx(0.5 - 3 / 7)
+    assert found['candidate', 'unattributed']['measured_share'] == 0 and found['candidate', 'unattributed']['gap'] == 0
+    assert all(g['within_rule'] for g in check['gaps'])
+    measured = {(m['side'], m['origin']): m['seconds'] for m in check['measured_shares']}
+    assert measured['baseline', 'untouched'] == pytest.approx(43) and measured['candidate', 'agent_rewritten'] == pytest.approx(40)
+    scopes = {(r['side'], tuple(r['lines'])): r['origin'] for r in check['regions']}
+    assert scopes['baseline', (6, 9)] == 'untouched' and scopes['baseline', (7, 8)] == 'agent_rewritten'
+    assert check['profiles']['candidate']['load_average'] == [1.5, 1.25, 1.0]
+
+
+def test_a_gap_above_ten_points_saves_a_valid_split_unverified_report(case):
+    # Candidate measured: untouched 40 of 50 s = 0.8 against 40/70; rewritten 10 of 50 s = 0.2 against 30/70.
+    split_case(case, candidate=(0, 40, 0, 10))
+    result = split_checked(case)
+    assert result.returncode == 0, result.stdout + result.stderr
+    report = json.loads(result.stdout)
+    check = report['split_check']
+    assert check['verdict'] == 'split_unverified'
+    assert check['reasons'] == [{'side': 'candidate', 'origin': 'untouched', 'reason': 'gap_above_rule'},
+                                {'side': 'candidate', 'origin': 'agent_rewritten', 'reason': 'gap_above_rule'}]
+    found = gaps(report)
+    assert found['candidate', 'untouched']['gap'] == pytest.approx(0.8 - 4 / 7)
+    assert found['candidate', 'untouched']['within_rule'] is False
+    assert found['baseline', 'untouched']['within_rule'] is True
+    checked = case.records.validate()
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+
+
+def test_an_unknown_estimated_share_makes_the_split_unverified_with_its_reason(case):
+    # The candidate's rewritten loop is unknown, so its total and every candidate share are unknown.
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    case.estimate('fixture.baseline', [region('base.loop.untouched', b, 3, 40), region('base.loop.rewritten', b, 7, 60)])
+    case.estimate('fixture.candidate', [region('cand.loop.untouched', c, 3, 40), region('cand.loop.rewritten', c, 7, None)])
+    region_profile(case, 'fixture.baseline.profile', 'baseline', (1, 41, 1, 57))
+    region_profile(case, 'fixture.candidate.profile', 'candidate', (0, 40, 0, 40))
+    result = split_checked(case)
+    assert result.returncode == 0, result.stdout + result.stderr
+    report = json.loads(result.stdout)
+    check = report['split_check']
+    assert check['verdict'] == 'split_unverified'
+    assert [r for r in check['reasons'] if r['side'] == 'candidate'] == [
+        {'side': 'candidate', 'origin': origin, 'reason': 'unknown_estimated_share'}
+        for origin in ('untouched', 'agent_rewritten', 'unattributed')]
+    found = gaps(report)
+    assert found['candidate', 'agent_rewritten']['gap'] is None and found['candidate', 'agent_rewritten']['within_rule'] is None
+    assert found['candidate', 'agent_rewritten']['measured_share'] == pytest.approx(0.5)
+    assert found['baseline', 'agent_rewritten']['within_rule'] is True
+
+
+@pytest.mark.parametrize('profile, message', [
+    ({'workload': 'tiny-sym-b'}, "input 'tiny-sym-b'"),         # F18: another input
+    ({'tree': 'baseline'}, 'another source tree'),               # the baseline tree timed as the candidate
+    ({'created': '2026-01-01'}, 'prospective'),                  # timed before the estimates were saved
+])
+def test_a_profile_of_another_input_tree_or_an_earlier_date_is_refused_and_nothing_is_written(case, profile, message):
+    case.worked_example()
+    region_profile(case, 'fixture.baseline.profile', 'baseline', (1, 41, 1, 57))
+    region_profile(case, 'fixture.candidate.profile', 'candidate', (0, 40, 0, 40), **profile)
+    result = split_checked(case)
+    assert result.returncode == 1
+    assert message in result.stderr and 'refusing' in result.stderr
+    assert not (case.records.path / 'attributions').exists()
+
+
+def test_one_profile_alone_is_refused(case):
+    split_case(case)
+    result = split_checked(case, 'fixture.attribution', '--baseline-profile', 'fixture.baseline.profile')
+    assert result.returncode == 1 and 'go together' in result.stderr
+    assert not (case.records.path / 'attributions').exists()
+
+
+def test_split_check_is_byte_identical_validated_indexed_and_pins_its_profiles(case):
+    split_case(case, candidate=(0, 40, 0, 10))
+    first = split_checked(case)
+    assert first.returncode == 0, first.stdout + first.stderr
+    path = case.records.path / 'attributions' / 'fixture.attribution.yaml'
+    written = path.read_bytes()
+    path.unlink()
+    assert split_checked(case).stdout == first.stdout and path.read_bytes() == written
+    # Without profiles the report has no split_check (absent = not checked).
+    assert 'split_check' not in attributed(case, rid='fixture.unchecked')
+    checked = case.records.validate()
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+    db = case.tmp_path / 'index.sqlite'
+
+    def query(sql):
+        rows = run_swdb('sql', sql, '--records', case.records.path, '--db', db, '--format', 'json')
+        assert rows.returncode == 0, rows.stdout + rows.stderr
+        return json.loads(rows.stdout)
+    assert query('SELECT attribution, verdict, max_abs_share_gap, baseline_profile, candidate_profile FROM swdb_attribution_split_checks') == [
+        {'attribution': 'fixture.attribution', 'verdict': 'split_unverified', 'max_abs_share_gap': 0.1,
+         'baseline_profile': 'fixture.baseline.profile', 'candidate_profile': 'fixture.candidate.profile'}]
+    rows = query("SELECT side, origin, estimated_share, measured_share, measured_seconds, within_rule FROM swdb_attribution_split_gaps "
+                 "WHERE side = 'candidate' ORDER BY origin")
+    assert rows == [
+        {'side': 'candidate', 'origin': 'agent_rewritten', 'estimated_share': pytest.approx(3 / 7), 'measured_share': 0.2,
+         'measured_seconds': 10.0, 'within_rule': 0},
+        {'side': 'candidate', 'origin': 'unattributed', 'estimated_share': 0.0, 'measured_share': 0.0, 'measured_seconds': 0.0,
+         'within_rule': 1},
+        {'side': 'candidate', 'origin': 'untouched', 'estimated_share': pytest.approx(4 / 7), 'measured_share': 0.8,
+         'measured_seconds': 40.0, 'within_rule': 0}]
+    # A changed profile, or a verdict edited to disagree with its gaps, fails validation.
+    original = path.read_text()
+    profile = case.records.path / 'region_profiles' / 'fixture.candidate.profile.yaml'
+    profile.write_text(profile.read_text().replace('status: draft', 'status: accepted', 1))
+    changed = case.records.validate()
+    assert changed.returncode == 1 and 'split_check' in changed.stdout + changed.stderr
+    profile.write_text(profile.read_text().replace('status: accepted', 'status: draft', 1))
+    data = yaml.safe_load(original)
+    data['split_check']['verdict'] = 'passed'
+    data.pop('identity_sha256')
+    data['identity_sha256'] = digest(data)
+    path.write_text(yaml.safe_dump(data, sort_keys=False))
+    edited = case.records.validate()
+    assert edited.returncode == 1 and 'verdict' in edited.stdout + edited.stderr
