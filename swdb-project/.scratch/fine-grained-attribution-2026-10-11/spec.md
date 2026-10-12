@@ -5,7 +5,7 @@ Updated: 2026-10-11 22:10 ET (review fix pass: decisions F26-F39 recorded); 2026
 decisions F1–F24 unchanged; test seams confirmed by Yan-Ru); 2026-10-11 15:08 ET (grilling round 3);
 2026-10-11 15:04 ET (round 2); 2026-10-11 14:59 ET (round 1)
 **Type:** spec
-**Status:** ready-for-agent (implementation starts only on Yan-Ru's explicit go-ahead, in a fresh session)
+**Status:** resolved (2026-10-11 23:32 ET; all tickets 02–10 resolved, see [map.md](map.md))
 **Blocked by:** None
 Owner: Yan-Ru Jhou
 Builds on: ADR 0013 (ArchEvolve mode estimates speed) and the closed analytic-eval spec

@@ -1,9 +1,9 @@
 # 09: Split check on the real pair
 
-Created: 2026-10-11 15:14 ET. Updated: 2026-10-11 21:28 ET (code half built; progress note added;
+Created: 2026-10-11 15:14 ET. Updated: 2026-10-11 23:32 ET (resolved: split_unverified, no timing, LR-01); 2026-10-11 21:28 ET (code half built; progress note added;
 the real mbit10 run is still open); 2026-10-11 21:17 ET (claimed for the code half).
 **Type:** task
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 03 — First real pair
 **Spec:** `../spec.md` (F15, F19, F23; LR-02)
 **Time estimate:** about half a day of agent work on mbit10
@@ -58,3 +58,22 @@ python3 -m swdb attribute --records records \
 
 5. `swdb validate`, then write `## Answer` with the verdict and the six gaps
    (`split_check.gaps`).
+
+## Answer
+
+2026-10-11 23:32 ET — **resolved on a supported negative result (LR-01): `split_unverified`, no timing run.**
+
+- Ticket 03 ended negative: both t75 estimates (uniform22, T1) have `seconds: null`
+  ([03 answer](03-first-real-pair.md#answer)). With no estimated group shares there is nothing to
+  compare, so F19 cannot pass. Per F23 the verdict is `split_unverified`; no attribution ranking may
+  steer the site finder (ticket 10 already ignores anything but `passed`).
+- No native timing was started: timing without estimates would not be prospective (LR-02) and could
+  not change the verdict.
+- Missing pieces (same as ticket 03): the CPU description's characterization allowlist (risk B1);
+  uncosted OpenMP `__kmpc_*`, allocator, `llvm.memcpy/memmove`, clock, iostream, `strlen` and one
+  indirect call; memory-scenario write cells and access primitives 107/109/113; no bandwidth rate (B3).
+- The split-check code is in place and tested (see Progress). To rerun once those pieces exist:
+  re-estimate with ticket 03's saved prospective requests
+  (`fga03.t75-{baseline,candidate}.uniform22.t1.request.a1.yaml`), then follow the five Progress steps.
+  Counted binaries are kept on mbit10 at
+  `/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/a2/`.
