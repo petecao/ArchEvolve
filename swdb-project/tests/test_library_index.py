@@ -1,11 +1,11 @@
 """Typed-library JSON schema, SQLite tables and staleness. Created: 2026-10-03 ET (ticket 46).
 Updated: 2026-10-04 ET (entry count excludes certification profiles; BC contract shared since ticket 43).
 Updated: 2026-10-11 ET: `swdb_` table names; the fixture copies the closure of the records that
-derive library tier and status (reviews, certifications, evaluations), not the ~1 GB catalog."""
+derive library tier and status (reviews, certifications, evaluations), not the ~1 GB catalog; their
+IDs come from the shared `testkit.record_ids` helper (LANL-shaped-db review fixes)."""
 
 import json
 import os
-import re
 import shutil
 import time
 
@@ -16,6 +16,7 @@ from conftest import REPO
 from swdb import db
 from swdb.library import Library, entry_validator
 from swdb.store import Store
+from testkit.record_ids import record_ids
 
 
 def out(result):
@@ -24,9 +25,7 @@ def out(result):
 
 
 #: Every record that can change a library entry's derived tier or status (`Library.state`).
-STATE_ROOTS = [re.search(rb"^id:[ \t]*(.+?)[ \t]*$", path.read_bytes(), re.M).group(1).decode()
-               for kind in ("reviews", "certifications", "evaluations")
-               for path in sorted((REPO / "records" / kind).glob("*.yaml"))]
+STATE_ROOTS = record_ids(REPO / "records", "reviews", "certifications", "evaluations")
 
 
 @pytest.fixture

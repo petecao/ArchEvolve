@@ -11,7 +11,7 @@ import shutil
 import pytest
 
 from conftest import REPO, make_records
-from testkit.lanl import assert_foreign_keys_clean, assert_separable, sql
+from testkit.lanl import assert_foreign_keys_clean, assert_record_fields_resolve, assert_separable, sql
 
 #: contract.bfs_read_offload and contract.bfs_tdstep_frontier_staging, each certified on the
 #: scalar-only BFS snapshot of dx100-bfs-scalar.
@@ -84,17 +84,43 @@ def test_a_clause_tied_to_a_statement_links_to_the_statements_function(built):
     assert {(r["definition_id"], r["record_id"]) for r in rows} == {(tdstep["id"], "dx100-bfs-scalar")}
 
 
+#: The array each `legality:` clause of dx100-bfs-scalar's statements links to (`step_index_base: 0`):
+#: bfs-td-frontier (L5, frontier_threshold, chunk_size, schedule) names td-frontier-read step 0,
+#: queue.shared; bfs-td-row-bounds (L1) names step 1 of two patterns, VertexOffsets both times;
+#: bfs-td-parent-read (L2, L3, L4) names td-parent-read step 3, parent.
+CLAUSE_ARRAYS = {"L5": "queue.shared", "frontier_threshold": "queue.shared", "chunk_size": "queue.shared",
+                 "schedule": "queue.shared", "L1": "VertexOffsets", "L2": "parent", "L3": "parent", "L4": "parent"}
+
+
+def data_structure_links(records):
+    return sql(records, "select l.contract, l.clause, d.name, k.slug as kernel, l.record_id "
+                        "from swdb_contract_data_structures l join data_structures d on d.id = l.data_structure_id "
+                        "join kernels k on k.id = d.kernel_id")
+
+
 def test_a_clause_tied_to_a_statement_links_to_the_arrays_of_the_steps_that_statement_names(built):
-    # bfs-td-frontier (L5, frontier_threshold, chunk_size, schedule) names td-frontier-read step 0,
-    # queue.shared; bfs-td-row-bounds (L1) names step 1 of two patterns, VertexOffsets both times;
-    # bfs-td-parent-read (L2, L3, L4) names td-parent-read step 3, parent.
-    expected = {"L5": "queue.shared", "frontier_threshold": "queue.shared", "chunk_size": "queue.shared",
-                "schedule": "queue.shared", "L1": "VertexOffsets", "L2": "parent", "L3": "parent", "L4": "parent"}
-    rows = sql(built, "select l.contract, l.clause, d.name, k.slug as kernel, l.record_id from swdb_contract_data_structures l "
-                      "join data_structures d on d.id = l.data_structure_id join kernels k on k.id = d.kernel_id")
-    assert sorted((r["clause"], r["name"]) for r in rows) == sorted(expected.items())
+    rows = data_structure_links(built)
+    assert sorted((r["clause"], r["name"]) for r in rows) == sorted(CLAUSE_ARRAYS.items())
     assert {(r["contract"], r["kernel"], r["record_id"]) for r in rows} == {
         ("contract.bfs_read_offload", "gapbs-bfs", "dx100-bfs-scalar")}
+
+
+def test_statement_steps_counted_from_one_link_the_same_arrays(tmp_path):
+    # The same statements written with `step_index_base: 1`: every step number is one higher,
+    # and each still names the same array.
+    records = make_records(tmp_path).copy_closure(*CERTIFICATIONS)
+    shutil.copytree(REPO / "library", records.path.parent / "library")
+    impl = records.read("implementations/dx100-bfs-scalar.yaml")
+    statements = impl["extensions"]["statements"]
+    assert statements["step_index_base"] == 0
+    statements["step_index_base"] = 1
+    for annotation in statements["annotations"]:
+        for ref in annotation.get("access_pattern_steps") or []:
+            ref["step"] += 1
+    records.write("implementations/dx100-bfs-scalar.yaml", impl)
+    result = records.swdb("build")
+    assert result.returncode == 0, result.stderr
+    assert sorted((r["clause"], r["name"]) for r in data_structure_links(records)) == sorted(CLAUSE_ARRAYS.items())
 
 
 def test_a_clause_tied_to_a_statement_links_to_its_implementation_and_kernel(built):
@@ -128,6 +154,10 @@ def test_without_the_library_no_contract_is_linked(tmp_path):
     assert result.returncode == 0, result.stderr
     assert linked_contracts(records) == set()
     assert_foreign_keys_clean(records)
+
+
+def test_every_record_field_names_a_field_of_its_record(built):
+    assert_record_fields_resolve(built)
 
 
 def test_a_build_passes_the_foreign_key_check(built):

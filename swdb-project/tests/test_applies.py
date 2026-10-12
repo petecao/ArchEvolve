@@ -2,13 +2,13 @@
 `swdb implementations <kernel> --applies <strategy>`. Created 2026-09-23. Uses a fixture
 derived implementation and fixture profiles in a temporary records folder.
 Updated 2026-10-11 ET: `swdb_` table names; the fixture copies the closure of every profile (the
-fixture profiles are relabeled copies of them), not the ~1 GB catalog."""
-
-import re
+fixture profiles are relabeled copies of them), not the ~1 GB catalog. Profile IDs come from the
+shared `testkit.record_ids` helper (LANL-shaped-db review fixes)."""
 
 import pytest
 
 from conftest import REPO
+from testkit.record_ids import record_ids
 
 from test_strategies import edit, passes, query, rejected
 
@@ -18,8 +18,7 @@ BASE_PROFILES = "profiles/gapbs-pr-jacobi.{}.mbit10.20260922t{}z.yaml"
 
 
 #: Every repository profile; the tests relabel some of them as profiles of a derived implementation.
-PROFILES = [re.search(rb"^id:[ \t]*(.+?)[ \t]*$", path.read_bytes(), re.M).group(1).decode()
-            for path in sorted((REPO / "records" / "profiles").glob("*.yaml"))]
+PROFILES = record_ids(REPO / "records", "profiles")
 
 
 @pytest.fixture

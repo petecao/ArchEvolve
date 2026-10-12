@@ -31,6 +31,18 @@ CREATE TABLE data_structures (id INTEGER PRIMARY KEY, kernel_id INTEGER NOT NULL
 
 GUESSED = []
 
+#: The `record_field` of the definitions row an implementation's statements' function produced.
+_STATEMENT_FUNCTION = "extensions.statements.function"
+
+
+def statement_function(con, implementation):
+    """The `definitions.id` of the function an implementation's statements are in (its
+    `extensions.statements.function`), or None. Later groups (the contract links) read it here
+    rather than knowing how this group records it."""
+    row = con.execute("SELECT row_id FROM swdb_row_origins WHERE table_name = 'definitions' AND record_id = ? "
+                      "AND record_field = ?", (implementation, _STATEMENT_FUNCTION)).fetchone()
+    return None if row is None else row[0]
+
 
 def fill(rows, store):
     files, functions, arrays = _SourceFiles(rows), _Definitions(rows), {}
@@ -43,11 +55,9 @@ def fill(rows, store):
         # `kind` is the layout the records state; `unknown` states nothing, and records that
         # disagree leave it unknown too.
         layouts = {layout for layout, _, _ in named if layout not in (None, "unknown")}
-        row = rows.add("data_structures", {"kernel_id": kernel, "name": name,
-                                           "kind": layouts.pop() if len(layouts) == 1 else None},
-                       *named[0][1:])
-        for _, record_id, field in named[1:]:
-            rows.origin("data_structures", row, record_id, field)
+        values = {"kernel_id": kernel, "name": name, "kind": layouts.pop() if len(layouts) == 1 else None}
+        for _, record_id, field in named:
+            rows.add_once("data_structures", (kernel, name), values, record_id, field)
     for record in sorted(store.of_kind("source_snapshot"), key=lambda r: r.id):
         impl = store.get(record.data.get("implementation"), "implementation") or {}
         kernel = rows.id_of("kernels", impl.get("kernel"))
@@ -74,10 +84,9 @@ def _implementation(rows, files, functions, record, kernel, application):
         sources = [files.add(kernel, _code_path(a["source"], application), language, record.id,
                              f"extensions.statements.annotations[{i}].source")
                    for i, a in enumerate(statements.get("annotations") or []) if (a.get("source") or {}).get("path")]
-        where = sources[0] if len(set(sources)) == 1 else None
         if placed.get(statements["function"]) is None:
-            placed[statements["function"]] = where
-        functions.add(where, statements["function"], record.id, "extensions.statements.function")
+            placed[statements["function"]] = sources[0] if len(set(sources)) == 1 else None
+        functions.add(placed[statements["function"]], statements["function"], record.id, _STATEMENT_FUNCTION)
     for i, name in enumerate((impl.get("run") or {}).get("kernel_symbols") or []):
         functions.add(placed.get(name), name, record.id, f"run.kernel_symbols[{i}]")
 
@@ -111,21 +120,17 @@ class _SourceFiles:
     """`source_files` rows, one per (kernel, path); a path several records name gets one origin each."""
 
     def __init__(self, rows):
-        self.rows, self.ids = rows, {}
+        self.rows = rows
 
     def add(self, kernel, path, language, record_id, field):
         """The row of `path` for `kernel`, added if new. `language` is NULL unless a record names
         the file as code of an application that states its language."""
-        key = (kernel, path)
-        if key not in self.ids:
-            self.ids[key] = self.rows.add("source_files", {"kernel_id": kernel, "path": path, "language": language},
-                                          record_id, field)
-            return self.ids[key]
-        self.rows.origin("source_files", self.ids[key], record_id, field)
+        row = self.rows.add_once("source_files", (kernel, path),
+                                 {"kernel_id": kernel, "path": path, "language": language}, record_id, field)
         if language is not None:
             self.rows.con.execute("UPDATE source_files SET language = ? WHERE id = ? AND language IS NULL",
-                                  (language, self.ids[key]))
-        return self.ids[key]
+                                  (language, row))
+        return row
 
 
 def _code_path(code, application):
@@ -143,13 +148,9 @@ class _Definitions:
     such names are the same function."""
 
     def __init__(self, rows):
-        self.rows, self.ids = rows, {}
+        self.rows = rows
 
     def add(self, source_file, name, record_id, field):
         key = (source_file, name) if source_file is not None else (None, record_id, name)
-        if key in self.ids:
-            self.rows.origin("definitions", self.ids[key], record_id, field)
-        else:
-            self.ids[key] = self.rows.add("definitions", {"source_file_id": source_file, "name": name,
-                                                          "kind": "function"}, record_id, field)
-        return self.ids[key]
+        return self.rows.add_once("definitions", key, {"source_file_id": source_file, "name": name,
+                                                       "kind": "function"}, record_id, field)

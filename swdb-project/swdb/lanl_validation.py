@@ -5,8 +5,13 @@ nothing for yet (`physics_assets`, `kernel_dependencies`, `code_chunks`, `embedd
 Table names keep the slide's capitalization.
 
 - A correctness outcome (a profile's `correctness` part, an evaluation's `correctness.state`)
-  counts when it names an implementation and an input record (a profile's `input`; an
-  evaluation's `request.workload.id` when that is a `workload` record).
+  counts when what ran is an implementation (a kernel variant) and it names an input record.
+  A profile runs its `implementation`. An evaluation runs the candidate its request names; that
+  is an implementation only when the candidate is the implementation's unchanged source
+  (`artifact_role: source_baseline`). A rewrite candidate's outcome is not its baseline's and
+  stays in the `swdb_` tables (review fix, 2026-10-11 ET). The input record is a profile's
+  `input`, or the `workload` record an evaluation's `request.workload.id` names
+  (`request.workload` when it is a bare ID).
 - `Validation_definition`: one row per (kernel, input) pair a counted outcome ran, named
   `<kernel>/<input>`; `input_json` is the input's `generator` or the workload's `definition`.
   No record states an expected output, so `expected_output_json` is NULL.
@@ -14,8 +19,7 @@ Table names keep the slide's capitalization.
   was not established. No record states an error, so `max_abs_error` is NULL.
 - `physics_assets`, `kernel_dependencies`, `code_chunks`, `embeddings`: created with the slide's
   columns so the database has LANL's full shape; nothing fills them. `code_chunks.source_file_id`
-  references `source_files` (ticket 03's group, which runs earlier); SQLite allows the declared
-  link before that table exists, and an empty table never fails the foreign-key check.
+  references `source_files`, which ticket 03's group (`ORDER` 30) creates before this one.
 """
 
 import json
@@ -55,6 +59,7 @@ GUESSED = [
 #: Correctness outcome -> `passed`. A profile is written only when its check passed (`complete`)
 #: or, with `--allow-unverified`, timed out (not established). An evaluation's `unverified` is
 #: not established either. Anything not established is NULL, never 0.
+# timed_out stays NULL even if output matched: swdb_profiles.correctness is not_established; unknown isn't true.
 _PROFILE_PASSED = {"complete": 1}
 _EVALUATION_PASSED = {"passed": 1, "failed": 0}
 
@@ -66,15 +71,30 @@ def _outcomes(store):
         parts = record.data.get("parts") or []
         index = next((i for i, part in enumerate(parts) if part.get("part") == "correctness"), None)
         if index is not None:
-            yield (record.id, f"parts.{index}.outcome", record.data.get("implementation"), record.data.get("input"),
+            yield (record.id, f"parts[{index}].outcome", record.data.get("implementation"), record.data.get("input"),
                    "input", _PROFILE_PASSED.get(parts[index].get("outcome")))
     for record in store.of_kind("evaluation"):
-        workload = (record.data.get("request") or {}).get("workload")
+        request = record.data.get("request") or {}
+        workload = request.get("workload")
         state = (record.data.get("correctness") or {}).get("state")
         if state is not None:
-            yield (record.id, "correctness.state", record.data.get("implementation"),
-                   workload.get("id") if isinstance(workload, dict) else workload, "request.workload.id",
-                   _EVALUATION_PASSED.get(state))
+            named, field = (workload.get("id"), "request.workload.id") if isinstance(workload, dict) \
+                else (workload, "request.workload")
+            yield (record.id, "correctness.state", _evaluated_implementation(store, record.data, request), named,
+                   field, _EVALUATION_PASSED.get(state))
+
+
+def _evaluated_implementation(store, evaluation, request):
+    """The implementation an evaluation ran, or None when it ran something else. An evaluation
+    runs the candidate its request names; only a candidate that is the implementation's unchanged
+    source (`artifact_role: source_baseline`) is that implementation. A rewrite candidate's
+    outcome is not its baseline's, so it stays in the `swdb_` tables."""
+    if request.get("candidate") is None:
+        return evaluation.get("implementation")
+    candidate = store.get(request["candidate"], "candidate") if isinstance(request["candidate"], str) else None
+    if candidate is None or candidate.get("artifact_role") != "source_baseline":
+        return None
+    return candidate.get("implementation")
 
 
 def _fixture_input(store, input_id):
