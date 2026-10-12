@@ -100,15 +100,10 @@ def make_records(tmp_path):
             whole, as in the native-acceptance `minimal_view`; other records are kept only
             when a kept record mentions their ID. Non-YAML record-root files are copied.
             The copied store is still fully validated by the command under test."""
-            import re
             from swdb.access import read_record, record_files
+            from testkit.record_ids import record_id
             source = REPO / "records"
-            pattern = re.compile(rb"^id:[ \t]*(.+?)[ \t]*$", re.M)
-            where = {}
-            for path, rel in record_files(source):
-                ids = pattern.findall(path.read_bytes())
-                assert len(ids) == 1, f"{rel}: expected one top-level id, found {ids[:3]}"
-                where[ids[0].decode()] = Path(rel)
+            where = {record_id(path): Path(rel) for path, rel in record_files(source)}
             assert all(root in where for root in roots), roots
 
             def strings(value):
