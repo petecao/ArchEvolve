@@ -806,7 +806,7 @@ All four tables have the same columns; only the LANL column differs.
 | Table | Linked LANL row |
 |---|---|
 | `swdb_contract_definitions` | the function holding the statement: the `definitions` row the implementation's `extensions.statements.function` produced |
-| `swdb_contract_data_structures` | each array (`data_structures` row of the implementation's kernel) that a step the statement names reads or writes |
+| `swdb_contract_data_structures` | each array (`data_structures` row of the implementation's kernel) that a step the statement names reads or writes; step numbers count from the statements' `step_index_base` (0 or 1) |
 | `swdb_contract_kernels` | the kernel of the linked implementation |
 | `swdb_contract_kernel_variants` | the implementation itself |
 

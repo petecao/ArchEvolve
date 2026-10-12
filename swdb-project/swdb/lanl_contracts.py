@@ -13,8 +13,8 @@ A link is made only from a record that ties a rewrite contract to code:
 - a statement fact `legality:<contract>:<clause>` on an implementation's statement: the contract
   links, for that clause, to the statement's function (`definitions`, the row the implementation's
   `extensions.statements.function` produced, as `lanl_sources.statement_function` reports it),
-  to the arrays of the access-pattern steps the statement names (`data_structures`), and to the
-  implementation and its kernel.
+  to the arrays of the access-pattern steps the statement names (`data_structures`; `step`
+  counts from the statements' `step_index_base`, 0 or 1), and to the implementation and its kernel.
 
 A link says that a record ties the contract to the row, not that the contract holds there: a
 certification links whatever its verdict, and a fact whatever its value (both stay readable
@@ -69,7 +69,7 @@ def _statements(rows, links, record):
             field = f"extensions.statements.annotations[{i}].annotation_facts[{j}]"
             if function is not None:
                 links.add("definitions", contract, function, clause, record.id, field)
-            for array in _step_arrays(record.data, annotation):
+            for array in _step_arrays(record.data, annotation, statements.get("step_index_base", 0)):
                 structure = rows.con.execute("SELECT d.id FROM data_structures d JOIN kernel_variants v "
                                              "ON v.kernel_id = d.kernel_id WHERE v.slug = ? AND d.name = ?",
                                              (record.id, array)).fetchone()
@@ -78,14 +78,20 @@ def _statements(rows, links, record):
             links.variant(rows, contract, record.id, clause, record.id, field)
 
 
-def _step_arrays(impl, annotation):
-    """The array names of the access-pattern steps a statement names (`step` is a 0-based
-    position in the pattern's `steps`)."""
+def _step_arrays(impl, annotation, base):
+    """The array names of the access-pattern steps a statement names. `step` is a position in the
+    pattern's `steps` counted from `base`, the statements' `step_index_base` (0 or 1); any other
+    base states no position, so no array."""
+    if base not in (0, 1) or isinstance(base, bool):
+        return
     patterns = {p.get("id"): p.get("steps") or [] for p in impl.get("access_patterns") or []}
     for ref in annotation.get("access_pattern_steps") or []:
         steps, step = patterns.get(ref.get("pattern"), []), ref.get("step")
-        if isinstance(step, int) and 0 <= step < len(steps) and (steps[step].get("array") or {}).get("name"):
-            yield steps[step]["array"]["name"]
+        if not isinstance(step, int) or isinstance(step, bool):
+            continue
+        position = step - base
+        if 0 <= position < len(steps) and (steps[position].get("array") or {}).get("name"):
+            yield steps[position]["array"]["name"]
 
 
 class _Links:
