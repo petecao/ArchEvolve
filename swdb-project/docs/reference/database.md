@@ -652,7 +652,8 @@ One row per estimate record. Never copied into the LANL performance tables
 | Column | Meaning |
 |---|---|
 | `id` | estimate ID (`swdb_records.id`) |
-| `kernel_variant_id` | the estimated implementation (`kernel_variants.id`): the subject itself, or for a candidate subject the implementation the candidate record names; NULL when neither resolves |
+| `kernel_variant_id` | the estimated implementation (`kernel_variants.id`), only when the subject is an implementation; NULL for a candidate subject, so an estimate of a candidate never reads as one of its baseline |
+| `base_kernel_variant_id` | for a candidate subject, the implementation the candidate rewrites, as its record names it (`kernel_variants.id`); NULL for an implementation subject or when the candidate does not resolve |
 | `subject_kind` | `implementation` or `candidate` |
 | `subject_id` | the subject's ID |
 | `target` | the machine or hardware target estimated for |

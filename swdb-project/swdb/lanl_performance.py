@@ -17,8 +17,10 @@ Only measurements on real machines reach LANL's performance tables:
 - `performance_metrics`: profile metrics with basis `measured` and a numeric value, each on the
   run with its thread count. Simulated (cachegrind), inferred and unknown metrics, histograms,
   and metrics that name no single run stay in `swdb_metrics` only.
-- `swdb_estimates` (extension): one row per estimate record, linked to the kernel variant its
-  subject states (spec D4). Estimates never reach the LANL tables.
+- `swdb_estimates` (extension): one row per estimate record (spec D4). `kernel_variant_id` is
+  the estimated implementation; for a candidate subject it is NULL and `base_kernel_variant_id`
+  holds the implementation the candidate rewrites (review fix, 2026-10-11 ET). Estimates never
+  reach the LANL tables.
 """
 
 import json
@@ -35,7 +37,8 @@ CREATE TABLE performance_runs (id INTEGER PRIMARY KEY, elapsed_seconds REAL, thr
 CREATE TABLE performance_metrics (id INTEGER PRIMARY KEY, metric_name TEXT, metric_value REAL,
     performance_run_id INTEGER REFERENCES performance_runs(id));
 CREATE TABLE swdb_estimates (id TEXT PRIMARY KEY REFERENCES swdb_records(id),
-    kernel_variant_id INTEGER REFERENCES kernel_variants(id), subject_kind TEXT, subject_id TEXT, target TEXT,
+    kernel_variant_id INTEGER REFERENCES kernel_variants(id),
+    base_kernel_variant_id INTEGER REFERENCES kernel_variants(id), subject_kind TEXT, subject_id TEXT, target TEXT,
     input TEXT, threads INTEGER, seconds REAL, ratio REAL, verdict TEXT, estimator_version TEXT);
 """
 
@@ -56,17 +59,20 @@ def fill(rows, store):
 
 
 def _estimates(rows, store):
-    """One `swdb_estimates` row per estimate record, linked to the variant its subject states:
-    an implementation subject is that implementation; a candidate subject is the implementation
-    the candidate record names. Anything else is NULL."""
+    """One `swdb_estimates` row per estimate record. `kernel_variant_id` is the estimated
+    implementation, set only when the subject is one. A candidate subject is a rewrite, not the
+    implementation it names: that implementation is its base (`base_kernel_variant_id`), so an
+    estimate of a candidate never reads as an estimate of the baseline. Anything else is NULL."""
     for record in sorted(store.of_kind("estimate"), key=lambda r: r.id):
         estimate = record.data
         subject = estimate.get("subject") or {}
         implementation = subject.get("id") if subject.get("kind") == "implementation" else None
+        base = None
         if subject.get("kind") == "candidate":
-            implementation = (store.get(subject.get("id"), "candidate") or {}).get("implementation")
-        rows.con.execute("INSERT INTO swdb_estimates VALUES (?,?,?,?,?,?,?,?,?,?,?)", (
-            record.id, rows.id_of("kernel_variants", implementation), subject.get("kind"), subject.get("id"),
+            base = (store.get(subject.get("id"), "candidate") or {}).get("implementation")
+        rows.con.execute("INSERT INTO swdb_estimates VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", (
+            record.id, rows.id_of("kernel_variants", implementation), rows.id_of("kernel_variants", base),
+            subject.get("kind"), subject.get("id"),
             estimate.get("target"), estimate.get("input"), estimate.get("threads"), estimate.get("seconds"),
             estimate.get("ratio"), estimate.get("verdict"), estimate.get("estimator_version")))
 

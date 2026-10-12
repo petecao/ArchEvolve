@@ -185,8 +185,9 @@ def test_an_estimate_never_reaches_the_performance_tables(built):
 
 
 def estimate_rows(built):
-    return {r["id"]: r for r in sql(built, "select e.*, v.slug as variant from swdb_estimates e "
-                                           "left join kernel_variants v on v.id = e.kernel_variant_id")}
+    return {r["id"]: r for r in sql(built, "select e.*, v.slug as variant, b.slug as base_variant "
+                                           "from swdb_estimates e left join kernel_variants v on v.id = e.kernel_variant_id "
+                                           "left join kernel_variants b on b.id = e.base_kernel_variant_id")}
 
 
 def test_each_estimate_is_one_swdb_estimates_row(built):
@@ -201,13 +202,22 @@ def test_each_estimate_is_one_swdb_estimates_row(built):
 
 
 def test_an_estimate_of_an_implementation_links_to_its_variant(built):
-    assert estimate_rows(built)[ESTIMATE]["variant"] == "gapbs-bfs-do"
+    row = estimate_rows(built)[ESTIMATE]
+    assert (row["variant"], row["base_variant"]) == ("gapbs-bfs-do", None)
 
 
-def test_an_estimate_of_a_candidate_links_to_the_implementation_the_candidate_names(built):
+def test_an_estimate_of_a_candidate_is_not_an_estimate_of_its_base_implementation(built):
+    # The candidate rewrites the implementation it names; that implementation is its base, not
+    # what was estimated, so it is `base_kernel_variant_id` and `kernel_variant_id` stays NULL.
     named = built.read(f"candidates/{CANDIDATE}.yaml")["implementation"]
     row = estimate_rows(built)[BY_CANDIDATE]
-    assert (row["subject_kind"], row["subject_id"], row["variant"]) == ("candidate", CANDIDATE, named)
+    assert (row["subject_kind"], row["subject_id"]) == ("candidate", CANDIDATE)
+    assert (row["variant"], row["base_variant"]) == (None, named)
+
+
+def test_base_kernel_variant_id_links_to_kernel_variants(built):
+    links = {row["from"]: row["table"] for row in sql(built, "select * from pragma_foreign_key_list('swdb_estimates')")}
+    assert (links["kernel_variant_id"], links["base_kernel_variant_id"]) == ("kernel_variants", "kernel_variants")
 
 
 def test_an_estimate_whose_subject_names_no_implementation_has_no_variant(records):
@@ -220,8 +230,8 @@ def test_an_estimate_whose_subject_names_no_implementation_has_no_variant(record
                                             "subject": {"kind": "candidate", "id": "no-such-candidate"}})
     path = records.path.parent / "build" / "unvalidated.sqlite"
     db.build(records.path, path)
-    assert db.sql(path, "select id, subject_id, kernel_variant_id from swdb_estimates") == [
-        {"id": "orphan", "subject_id": "no-such-candidate", "kernel_variant_id": None}]
+    assert db.sql(path, "select id, subject_id, kernel_variant_id, base_kernel_variant_id from swdb_estimates") == [
+        {"id": "orphan", "subject_id": "no-such-candidate", "kernel_variant_id": None, "base_kernel_variant_id": None}]
 
 
 def test_every_performance_row_names_its_record(built):
