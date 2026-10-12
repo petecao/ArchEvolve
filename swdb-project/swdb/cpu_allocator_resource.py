@@ -1,4 +1,4 @@
-"""Immutable constructed total-cell resource recipe. Created: 2026-10-06 ET.
+"""Immutable constructed total-cell resource recipe. Created: 2026-10-06 ET. Updated: 2026-10-12 ET.
 
 Gross exact allocator-event costs include measured loop control. Transfer is inferred, never
 physical instruction latency or a proven application upper bound.
@@ -24,6 +24,11 @@ KIND='cpu_allocator_resource_calibration'
 NATIVE_SOURCE={'CpuAllocatorWork.h':'6a4f4198d6ac45ca0c23ba130f423f3f47cf50b2ca9637376c0a8db77af4fe55',
     'CpuAllocatorTimer.cpp':'da4bd29ab0ff509742fca87750a173ff5827eedbd429e22cd0c210533b5a8c83',
     'CpuAllocatorCount.cpp':'6711bec276c97492543a370cc891b365b03948dc1cba3d1f154fdc58f3cbdf8f'}
+# allocator_v2 (2026-10-12): malloc/free ops and exact bins up to 32 MiB. Same gross recipe; its own pins.
+NATIVE_SOURCE_V2={'CpuAllocatorWork.h':'81e925cc3bf65397bd7405d0acddd3943b0b4de0c0b8defd5a39b69e7c1342d8',
+    'CpuAllocatorTimer.cpp':'576026c6e9093f286e8c6f89e3c2adc201a4aa07424d287c65a9269405af8efb',
+    'CpuAllocatorCount.cpp':'3a4070ccc3f8298e1f7fdca1ffa64a68342e0c584847f4cae73854b878ce03ff'}
+NATIVE_SOURCES={'allocator_v1':NATIVE_SOURCE,'allocator_v2':NATIVE_SOURCE_V2}
 RECIPE={'id':'gross_allocator_loop_resource_v1','denominator':'source_normalized_exact_allocator_events',
     'elapsed':'gross_uninstrumented_work_loop_only','includes_loop_control':True,
     'composition':'max_with_counted_compute_resource','transfer_basis':'inferred',
@@ -33,18 +38,20 @@ RECIPE={'id':'gross_allocator_loop_resource_v1','denominator':'source_normalized
 
 
 def _services(source, identifier):
-    if source.get('settings',{}).get('group')!='allocator_v1':
-        raise Failure('total-cell recipe requires independent allocator_v1 calibration')
-    from swdb.cpu_allocator_calibration import NAMES,ABI,REGIME
-    if source['evidence_kind']=='native' and source.get('context',{}).get('source_sha256')!=NATIVE_SOURCE:
+    group=source.get('settings',{}).get('group')
+    if group not in NATIVE_SOURCES:
+        raise Failure('total-cell recipe requires independent allocator_v1 or allocator_v2 calibration')
+    from swdb.cpu_allocator_calibration import ABI,GROUPS,REGIME,operations
+    names=operations(group);cap=GROUPS[group]['size_cap']
+    if source['evidence_kind']=='native' and source.get('context',{}).get('source_sha256')!=NATIVE_SOURCES[group]:
         raise Failure('resource requires frozen allocator source identity for this recipe version')
     result=[];seen=set()
     for service in source['services']:
         if service['unit']!='seconds/call':
             raise Failure('total-cell recipe requires exact allocator event units')
         scope=service.get('scope',{});op=scope.get('operation');size=scope.get('size_bytes')
-        if (op not in NAMES or scope.get('event_abi')!=ABI[NAMES.index(op)] or type(size) is not int or
-            not 0<size<=1048576 or scope.get('worker_scope')!='serial' or scope.get('allocator_regime')!=REGIME or
+        if (op not in names or scope.get('event_abi')!=ABI[names.index(op)] or type(size) is not int or
+            not 0<size<=cap or scope.get('worker_scope')!='serial' or scope.get('allocator_regime')!=REGIME or
             scope.get('transfer_basis')!='inferred' or scope.get('payload_touch') is not False or
             service['id']!=f'allocator.{op}.{size}' or (op,size) in seen or
             {'operation':op,'size_bytes':size} not in source['settings'].get('cells',[])):
