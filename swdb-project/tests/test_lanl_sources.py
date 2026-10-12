@@ -218,5 +218,29 @@ def test_records_that_disagree_on_a_layout_leave_the_kind_unknown(records):
     assert sql(records, "select kind from data_structures where name = 'g.in_index_'") == [{"kind": "array_of_pointers"}]
 
 
+def test_a_statement_function_already_placed_by_the_implementation_is_that_one_definition(records):
+    # stub-impl's `function` StubKernel is in code[0]. Its statements name StubKernel too, from two
+    # source files, so they place it nowhere themselves: the implementation's placement holds,
+    # and no second, file-less StubKernel row appears. Built without validation: the statements
+    # are minimal.
+    from swdb import db
+
+    records.add_stub()
+    impl = records.read("implementations/stub-impl.yaml")
+    impl["extensions"] = {"statements": {"function": "StubKernel", "annotations": [
+        {"id": f"s{i}", "source": {"root": "records", "path": f"implementations/stub-impl/part{i}.cc"}}
+        for i in range(2)]}}
+    records.write("implementations/stub-impl.yaml", impl)
+    path = records.path.parent / "build" / "unvalidated.sqlite"
+    db.build(records.path, path)
+    rows = db.sql(path, "select d.id, s.path from definitions d left join source_files s on s.id = d.source_file_id "
+                        "where d.name = 'StubKernel'")
+    assert [row["path"] for row in rows] == ["records/implementations/stub-impl/stub_bench.py"]
+    origins = db.sql(path, f"select record_field from swdb_row_origins where table_name = 'definitions' "
+                           f"and row_id = {rows[0]['id']} order by record_field")
+    assert [o["record_field"] for o in origins] == ["extensions.statements.function", "function",
+                                                    "run.kernel_symbols[0]"]
+
+
 def _implementation_files(records):
     return [path.relative_to(records.path) for path in sorted((records.path / "implementations").glob("*.yaml"))]

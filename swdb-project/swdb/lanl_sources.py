@@ -74,10 +74,10 @@ def _implementation(rows, files, functions, record, kernel, application):
         sources = [files.add(kernel, _code_path(a["source"], application), language, record.id,
                              f"extensions.statements.annotations[{i}].source")
                    for i, a in enumerate(statements.get("annotations") or []) if (a.get("source") or {}).get("path")]
-        where = sources[0] if len(set(sources)) == 1 else None
         if placed.get(statements["function"]) is None:
-            placed[statements["function"]] = where
-        functions.add(where, statements["function"], record.id, "extensions.statements.function")
+            placed[statements["function"]] = sources[0] if len(set(sources)) == 1 else None
+        functions.add(placed[statements["function"]], statements["function"], record.id,
+                      "extensions.statements.function")
     for i, name in enumerate((impl.get("run") or {}).get("kernel_symbols") or []):
         functions.add(placed.get(name), name, record.id, f"run.kernel_symbols[{i}]")
 
