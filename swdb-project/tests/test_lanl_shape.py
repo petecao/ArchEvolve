@@ -16,8 +16,7 @@ def test_the_lanl_core_is_exactly_the_slide_tables_and_kernel_variants_with_thei
     result = records.swdb("build")
     assert result.returncode == 0, result.stderr
 
-    # The slide's appendix lists 15 tables (5 + 6 + 2 + 2); the spec's "16 slide tables" counts
-    # the guessed kernel_variants with them.
+    # 15 slide tables (the appendix lists 5 + 6 + 2 + 2) + the guessed kernel_variants.
     assert len(LANL_COLUMNS) == 16 and "kernel_variants" in LANL_COLUMNS
     tables = {row["name"] for row in sql(records, "select name from sqlite_master where type = 'table'")}
     assert {table for table in tables if not table.startswith("swdb_")} == set(LANL_COLUMNS)

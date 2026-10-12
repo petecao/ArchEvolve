@@ -23,8 +23,9 @@ import re
 import shutil
 import sqlite3
 
-#: Every LANL table: `id`, the slide's columns, and the guessed link columns of the spec's
-#: layout rules. Slide capitalization is kept (`Validation_definition`, `Validation_results`).
+#: Every LANL table (15 slide tables + the guessed `kernel_variants`): `id`, the slide's columns,
+#: and the guessed link columns of the spec's layout rules. Slide capitalization is kept
+#: (`Validation_definition`, `Validation_results`).
 LANL_COLUMNS = {
     "kernels": {"id", "slug", "name", "category"},
     "kernel_variants": {"id", "kernel_id", "slug"},

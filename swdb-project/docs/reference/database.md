@@ -821,7 +821,7 @@ sqlite3 lanl-only.sqlite "select 'DROP TABLE \"' || name || '\";' from sqlite_ma
 sqlite3 lanl-only.sqlite "pragma foreign_key_check"   # prints nothing
 ```
 
-- **Left:** the 16 LANL tables and their rows. Every foreign key still resolves.
+- **Left:** the 16 LANL tables (15 slide tables + the guessed `kernel_variants`) and their rows. Every foreign key still resolves.
 - **Lost:** full records, row origins, the guessed-column list, estimates, simulated metrics,
   library, contracts and contract links.
 - **Use a copy.** `swdb` treats a file without `swdb_meta` as stale and rebuilds it.
