@@ -2,7 +2,7 @@
 
 Created: 2026-10-11 15:14 ET
 **Type:** task
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 08 — Catalog bound and full ranking; 09 — Split check
 **Spec:** `../spec.md` (F20, F23; seam 2)
 **Time estimate:** about 2–3 hours
