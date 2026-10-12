@@ -217,11 +217,12 @@
     "ranking": {"type": "array", "items": {"$ref": "#/$defs/rank"}},
     "ranking_rule": {
       "description": "Ticket 08: how each ranking tier is ordered; the remaining gain bound is an upper limit, never an expected gain.",
-      "type": "object", "additionalProperties": false, "required": ["remaining_gain_bound", "floor_headroom", "unknown"],
+      "type": "object", "additionalProperties": false, "required": ["remaining_gain_bound", "floor_headroom", "unknown", "comparison"],
       "properties": {
         "remaining_gain_bound": {"type": "string", "pattern": "^Upper limit"},
         "floor_headroom": {"type": "string", "minLength": 1},
-        "unknown": {"type": "string", "minLength": 1}
+        "unknown": {"type": "string", "minLength": 1},
+        "comparison": {"description": "Final review M4 (F45, 2026-10-12 ET): which comparison the one ranking ranks; this_iteration limits are informational.", "type": "string", "minLength": 1}
       }
     },
     "split_check": {

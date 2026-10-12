@@ -1,4 +1,6 @@
-"""Fine-grained estimate attribution: `swdb attribute`. Created: 2026-10-11 ET.
+"""Fine-grained estimate attribution: `swdb attribute`. Created: 2026-10-11 ET. Updated: 2026-10-12 ET
+(final review fixes F40-F47: split-check shares, profile order and identity, comparable estimators,
+one ranking).
 
 Spec: `.scratch/fine-grained-attribution-2026-10-11/spec.md` (ticket 02, the narrowest path).
 The command is the public interface; everything below it may change.
@@ -25,7 +27,7 @@ Rules used by this version (ticket 04 added the rewrite-site edge cases):
    only when it lies strictly inside it. It is `mixed` when some line of its pieces is
    unchanged (F14). Every other region is `untouched`. Ticket 05: a region inside a site
    becomes `offload_command`, `intrinsic` or `library_call` when it executes one (see
-   `_Catalog`); its group stays `agent_rewritten`, which lists per-origin seconds. Review fix
+   `_OriginSignals`); its group stays `agent_rewritten`, which lists per-origin seconds. Review fix
    F34: `offload_command` needs a command the pinned description's functional observation
    contract names; a region inside a site that executes any other command is `unattributed`
    (`unbound_offload_command`).
@@ -37,11 +39,12 @@ Rules used by this version (ticket 04 added the rewrite-site edge cases):
    trial. Group medians are never rescaled to the estimate's total. Whole-program totals are
    the estimates' own `seconds`. Review fix F33 (F2): a region's seconds inside calls (its
    `unmodeled_calls` or call-covering estimate rows) go to `unattributed` per trial; the
-   region's group keeps the seconds recomposed without those rows.
+   region's group keeps the seconds recomposed without those rows. The split check alone keeps
+   them in the region's group (F40, rule 13).
 7. Unknowns (F8). An unknown region makes its group's seconds unknown and lists the region
    with its bounds' `missing` reasons; every ratio that depends on an unknown is null.
    Unattributed time above 10% of either total sets `unattributed_flagged` (F24).
-8. Identity (F43, F44). The record pins both estimates, both source records and the target
+8. Identity (stories 43, 44). The record pins both estimates, both source records and the target
    description by content hash. Its dates are the latest `updated` date of those inputs (so
    `created` is the newest input's date, not the day the report was made) and dicts are built
    in a fixed order, so the same inputs give a byte-identical record. One caveat: under
@@ -64,8 +67,10 @@ Rules used by this version (ticket 04 added the rewrite-site edge cases):
     (an upper limit, never an expected gain; clamped at 0, ties by floor headroom, F29); then
     regions whose bound is `no_catalog_match` or `no_site_finder`, by floor headroom; then
     every null value, including every unknown catalog bound with its reason (F36). Tiers are
-    never ranked against each other. One top-level ranking: the candidate is the same in both
-    comparisons, so its limits are too.
+    never ranked against each other. One top-level ranking, over the cumulative comparison's
+    candidate regions (F45). A candidate row's catalog bound runs on its matched region's counts
+    (F35), and the match differs per comparison, so the `this_iteration` bounds can differ from
+    the ranked ones; they are informational (`ranking_rule.comparison`).
 12. Catalog bound (ticket 08, F6, F21, F25; review fixes F30-F32, F35). Given a saved
     Extensa campaign summary's site-finder regions (`--site-finder`), each site-finder region's
     lines are moved from the full-source revision (`--site-finder-source`) into each tree by
@@ -87,10 +92,13 @@ Rules used by this version (ticket 04 added the rewrite-site edge cases):
     thread-CPU seconds go to a group by file and line with the report's own rewrite sites: a
     scope's exclusive lines are its lines minus those of scopes nested inside it, and the
     labeling rules of `_label` apply to them. Measured share = group seconds / all measured
-    scopes' seconds on that side. The fixed rule `SPLIT_RULE` passes when every group of both
-    sides is within 0.1 of its estimated share; otherwise, or when a share is unknown, the
-    report is `split_unverified`. A profile of another tree, input or thread count, or one
-    dated before an estimate, is refused.
+    scopes' seconds on that side. Estimated share (F40): group seconds with every region's full
+    seconds, call time included, under its own label, / that estimate's total, because measured
+    exclusive time holds the scope's uninstrumented callees. The fixed rule `SPLIT_RULE`
+    (`swdb.split_check.v2`) passes when every group of both sides is within 0.1 of its estimated
+    share; otherwise, or when a share is unknown, the report is `split_unverified`. Refused: a
+    profile of another tree, input, thread count, machine, counted BFS sources or input seed
+    (F18, F44), or one not dated strictly after both estimates (F43: estimates carry only a date).
 """
 import copy
 import difflib
@@ -110,7 +118,7 @@ REWRITE_ORIGINS = ('offload_command', 'intrinsic', 'library_call', 'agent_rewrit
 REWRITE_REASONS = {'offload_command': 'offload_command_in_site', 'intrinsic': 'intrinsic_in_site',
                    'library_call': 'library_operation_in_site', 'agent_rewritten': 'overlaps_rewrite_site'}
 SOURCE_KINDS = ('source_snapshot', 'candidate')
-# Fields two compared estimates must share. F43 (final review M8): `estimator_sha256` too, so drift and
+# Fields two compared estimates must share. F47 (final review M8): `estimator_sha256` too, so drift and
 # realized speedup never mix an estimator change with the code change (F27).
 COMPARABLE = ('input', 'target_description_sha256', 'threads', 'evidence_kind', 'estimator_sha256')
 UNATTRIBUTED_THRESHOLD = 0.1   # F24: share of an estimate's total above which the split is flagged weak
@@ -456,9 +464,19 @@ def _executed_calls(characterization):
     return {region: sorted(names) for region, names in calls.items()}
 
 
-def _names(call, symbol):
+def _calls_symbol(call, symbol):
     """The call is `symbol` itself or carries it as an Itanium source name (`<length><symbol>`)."""
     return call == symbol or re.search(f'(?<![0-9]){len(symbol)}{re.escape(symbol)}', call) is not None
+
+
+def _observation_commands(target):
+    """The pinned description's functional observation commands (F2, F25)."""
+    return (target.get('functional_observation') or {}).get('commands', [])
+
+
+def _bound_events(target):
+    """Events of the commands the description's functional observation contract binds (F34)."""
+    return {c.get('event') for c in _observation_commands(target)}
 
 
 def _region_commands(side, region_id):
@@ -468,7 +486,7 @@ def _region_commands(side, region_id):
     return [c for row in rows for c in row.get('accelerator_calls', []) if _executed(c.get('execution_count'))]
 
 
-class _Catalog:
+class _OriginSignals:
     """Saved intrinsic records and the typed library's operations, pinned when they label a region."""
 
     def __init__(self, store, root):
@@ -492,24 +510,22 @@ class _Catalog:
     def unbound_commands(side, region_id):
         """F2 (review fix F34): executed commands whose event no functional observation command of
         the side's pinned description names. Their time cannot be placed in any origin."""
-        target = side.estimate['target_description_snapshot']
-        bound = {c.get('event') for c in (target.get('functional_observation') or {}).get('commands', [])}
+        bound = _bound_events(side.estimate['target_description_snapshot'])
         return sorted({c['event'] for c in _region_commands(side, region_id) if c['event'] not in bound})
 
     def evidence(self, side, region_id):
         found = set()
-        target = side.estimate['target_description_snapshot']
-        bound = {c.get('event') for c in (target.get('functional_observation') or {}).get('commands', [])}
+        bound = _bound_events(side.estimate['target_description_snapshot'])
         for command in _region_commands(side, region_id):
             if command['event'] in bound:
                 found.add(('offload_command', command['event'], None))
         calls = side.calls.get(region_id, [])
         for name, rid, sha in self.intrinsics:
-            if any(_names(c, name) for c in calls):
+            if any(_calls_symbol(c, name) for c in calls):
                 found.add(('intrinsic', rid, ('intrinsic', sha)))
         for rid, location, sha in self.operations:
             symbol, path = location.get('symbol'), location.get('path')
-            if (symbol and any(_names(c, symbol) for c in calls)) or (
+            if (symbol and any(_calls_symbol(c, symbol) for c in calls)) or (
                     path and self._operation_located(side, region_id, path)):
                 found.add(('library_call', rid, ('library_operation', sha)))
         for _, rid, pin in found:
@@ -698,7 +714,7 @@ def _calls_by_region(calls):
 def _counted_trials(side, store):
     """(per-trial counted regions by ID, per-trial executed calls by region ID), reconciled the way
     the estimator reconciles them: each trial's regions are estimated with that trial's own
-    `unmodeled_calls` (review fix S8), a single-run characterization with its aggregate ones."""
+    `unmodeled_calls` (review fix F38), a single-run characterization with its aggregate ones."""
     from swdb.analytic_trial_scope import reconcile_trial
     trials = side.characterization.get('trials') or []
     if not trials:
@@ -766,10 +782,16 @@ RANKING_RULE = {
                             'gain, the same as a region already at its bound. Ties (for example at 0) go by floor '
                             'headroom, largest first and null last, then by region ID.',
     'floor_headroom': 'Regions whose catalog bound is no_catalog_match or no_site_finder: estimate / resource floor, '
-                      'largest first. Never ranked against the remaining_gain_bound tier.',
+                      'largest first. Never ranked against the remaining_gain_bound tier. The floor\'s bandwidth term '
+                      'is the streaming_bandwidth model\'s own bound, which leaves out bytes a cache_fit or latency model '
+                      'of the description covers, so the floor is a looser but still valid lower limit (F6).',
     'unknown': 'Regions whose ranking value is null, in region-ID order, after every known value: an unknown catalog '
                'bound (its reason, for example needs_rewritten_counts, unknown_catalog_entry, no_baseline_counts or '
-               'site_finder_unplaced), or a null remaining gain bound or floor headroom.'}
+               'site_finder_unplaced), or a null remaining gain bound or floor headroom.',
+    'comparison': 'One ranking over the candidate regions of the cumulative comparison (original baseline -> '
+                  'candidate), whose catalog bounds run on the original baseline\'s counts (F35). The this_iteration '
+                  'catalog bounds and floors run on the previous candidate\'s counts; they are informational and never '
+                  'ranked (F45).'}
 
 
 class _SiteFinder:
@@ -825,12 +847,15 @@ class _SiteFinder:
 
 
 def _tree_file(side, path):
-    """The one file of the side's tree that is `path`, or ends with it, or that `path` ends with."""
+    """The one file of the tree that `path` names (`_Side.relative`: the file itself, or the one file
+    `path` ends with), else the one file that ends with `path` (a site-finder path relative to a
+    deeper root)."""
     if not path:
         return None
-    if path in side.files:
-        return path
-    matches = sorted(f for f in side.files if f.endswith('/' + path) or path.endswith('/' + f))
+    rel = _Side.relative(side, path)
+    if rel is not None:
+        return rel
+    matches = [f for f in side.files if f.endswith('/' + path)]
     return matches[0] if len(matches) == 1 else None
 
 
@@ -949,8 +974,8 @@ class _Bounds:
         if artifacts.digest(entry) != application['content_sha256']:
             return [], 'entry_changed'
         operations = self._hardware_operations(application['entry'])
-        commands = (target.get('functional_observation') or {}).get('commands', [])
-        events = {c['event'] for c in commands if c.get('hardware_operations') and set(c['hardware_operations']) <= operations}
+        events = {c['event'] for c in _observation_commands(target)
+                  if c.get('hardware_operations') and set(c['hardware_operations']) <= operations}
         own = [m for m in target['mechanisms'] if events and (
             (m.get('selector') or {}).get('domain') == 'offload' or set((m.get('selector') or {}).get('event_ids') or []) & events)]
         return own, None if own else 'no_offload_mechanism'
@@ -981,8 +1006,8 @@ def _entry_trial(region, calls, mechanisms, side, target):
 
 
 def _entry_bound(region_id, counts, mechanisms, side, target):
-    """Median over trials of the entry's composed seconds on the region's own counts (absent = 0 s).
-    `counts` is `_counted_trials(side)`: each trial's regions and that trial's own calls (S8)."""
+    """Median over trials of the entry's composed seconds on the region's baseline counts (F35; absent = 0 s).
+    `counts` is `_counted_trials(side)`: each trial's regions and that trial's own calls (F38)."""
     trials, calls = counts
     per_trial = [_entry_trial(t[region_id], c.get(region_id, []), mechanisms, side, target) if region_id in t else None
                  for t, c in zip(trials, calls)]
@@ -1015,7 +1040,7 @@ def _catalog_reason(evaluated, unplaced):
 def _add_catalog(side, labels, bounds, counts, target, baseline=None):
     """Annotate each region row of one side with its catalog bound and catalog headroom.
 
-    F35 (review fix S3, spec F6): an entry runs on the region's baseline counts. A baseline row
+    F35 (spec F6): an entry runs on the region's baseline counts. A baseline row
     uses its own; a candidate row uses those of its `matched_region` on the baseline side
     (`baseline` = (that side, its counts)); a candidate row with no matched region has none, so
     an entry with mechanisms gives `no_baseline_counts`."""
@@ -1160,6 +1185,14 @@ def _floor_problems(record):
                               f'resource floor {floor} s exceeds the region estimate {seconds} s')
 
 
+def _pin_problems(record, ctx, field, pin, kind=None, what='record'):
+    """A problem when the record `pin` names is missing or no longer has the pinned content hash."""
+    from swdb.problems import Problem
+    current = ctx.store.get(pin['id'], kind) if kind else ctx.store.get(pin['id'])
+    if current is None or artifacts.digest(current) != pin['sha256']:
+        yield Problem(record.rel, field, f'pinned {what} {pin["id"]!r} is missing or changed')
+
+
 def validate_record(record, ctx):
     """`swdb validate`: the report is unedited and every pinned input is unchanged."""
     from swdb.problems import Problem
@@ -1171,28 +1204,19 @@ def validate_record(record, ctx):
     if data['identity_sha256'] != expected:
         yield Problem(record.rel, 'identity_sha256', 'attribution report differs from its content identity')
     for field in ('baseline_estimate', 'candidate_estimate', 'baseline_source', 'candidate_source'):
-        pin = data[field]
-        current = ctx.store.get(pin['id'])
-        if current is None or artifacts.digest(current) != pin['sha256']:
-            yield Problem(record.rel, field, f'pinned record {pin["id"]!r} is missing or changed')
+        yield from _pin_problems(record, ctx, field, data[field])
     # Ticket 05: a saved intrinsic that labeled a region must be unchanged. Library operations
     # live outside the records folder (`--library`), so their pins are kept for replay only.
     for pin in data.get('catalog', []):
         if pin['kind'] == 'intrinsic':
-            current = ctx.store.get(pin['id'], 'intrinsic')
-            if current is None or artifacts.digest(current) != pin['sha256']:
-                yield Problem(record.rel, 'catalog', f'pinned intrinsic {pin["id"]!r} is missing or changed')
+            yield from _pin_problems(record, ctx, 'catalog', pin, 'intrinsic', 'intrinsic')
     yield from _floor_problems(record)
     finder = data.get('site_finder')
     if finder is not None:   # ticket 08: the site-finder regions that gave catalog bounds are unchanged
-        current = ctx.store.get(finder['campaign_summary']['id'], 'campaign_summary')
-        if current is None or artifacts.digest(current) != finder['campaign_summary']['sha256']:
-            yield Problem(record.rel, 'site_finder', f'pinned campaign summary {finder["campaign_summary"]["id"]!r} is missing or changed')
-        revision = finder.get('revision_source')
-        if revision is not None:   # review fix F30: the revision tree that moved the site-finder lines is unchanged
-            current = ctx.store.get(revision['id'])
-            if current is None or artifacts.digest(current) != revision['sha256']:
-                yield Problem(record.rel, 'site_finder.revision_source', f'pinned revision source {revision["id"]!r} is missing or changed')
+        yield from _pin_problems(record, ctx, 'site_finder', finder['campaign_summary'], 'campaign_summary', 'campaign summary')
+        if finder.get('revision_source') is not None:   # review fix F30: the revision tree that moved the lines
+            yield from _pin_problems(record, ctx, 'site_finder.revision_source', finder['revision_source'],
+                                     what='revision source')
     for field in ('baseline_estimate', 'candidate_estimate'):
         current = ctx.store.get(data[field]['id'], 'estimate')
         if current is not None and current['target_description_sha256'] != data['target_description']['sha256']:
@@ -1208,9 +1232,7 @@ def _validate_split_check(record, ctx):
     if check is None:
         return
     for side, pin in sorted(check['profiles'].items()):
-        current = ctx.store.get(pin['id'], 'region_profile')
-        if current is None or artifacts.digest(current) != pin['sha256']:
-            yield Problem(record.rel, f'split_check.profiles.{side}', f'pinned region profile {pin["id"]!r} is missing or changed')
+        yield from _pin_problems(record, ctx, f'split_check.profiles.{side}', pin, 'region_profile', 'region profile')
     if check['rule'] != SPLIT_RULE:
         yield Problem(record.rel, 'split_check.rule', 'split-check rule differs from the fixed rule')
     passed = not check['reasons'] and all(g['within_rule'] is True for g in check['gaps'])
@@ -1228,9 +1250,7 @@ def _validate_iteration(record, ctx):
             ('this_iteration.previous_source', this['previous_source'])]
     pins += [(f'this_iteration.earlier_sources[{i}]', pin) for i, pin in enumerate(this['earlier_sources'])]
     for field, pin in pins:
-        current = ctx.store.get(pin['id'])
-        if current is None or artifacts.digest(current) != pin['sha256']:
-            yield Problem(record.rel, field, f'pinned record {pin["id"]!r} is missing or changed')
+        yield from _pin_problems(record, ctx, field, pin)
     current = ctx.store.get(this['previous_estimate']['id'], 'estimate')
     if current is not None and current['target_description_sha256'] != record.data['target_description']['sha256']:
         yield Problem(record.rel, 'this_iteration.previous_estimate', 'pinned estimate used a different target description')
@@ -1285,7 +1305,7 @@ def _seed(workload):
 
 
 def _check_identity(store, rid, side, data):
-    """F42 (final review M3, F18): the profile ran on the machine that counted its estimate, timed
+    """F44 (final review M3, F18): the profile ran on the machine that counted its estimate, timed
     exactly the BFS sources the characterization counted, and used the counted input's generator seed."""
     name, characterization, context = side.name, side.characterization, data.get('context') or {}
     counted_on = (characterization.get('host') or {}).get('machine')
@@ -1324,7 +1344,7 @@ class _Profile:
                  f'{name} profile {rid!r} ran {context.get("threads")!r} threads, not the estimates\' '
                  f'{side.estimate["threads"]}; refusing to compare')
         _check_identity(store, rid, side, data)
-        # F41 (final review M2): estimate records carry only a date (the envelope's `created`), so
+        # F43 (final review M2): estimate records carry only a date (the envelope's `created`), so
         # no full-timestamp order exists; the profile must be dated strictly after every estimate.
         latest = max(str(e['created']) for e in estimates)
         _require(str(data['created']) > latest,
@@ -1432,7 +1452,7 @@ def _last_changed(side, chain, known=None):
     from chain[k] but none from chain[k + 1]; one that overlaps none is 0, one without a source
     location is None. Uses the labeling rules of `_label`, so it follows whatever they are.
 
-    Review fix (finding 1): labels here never read the catalog, so a call seen only in an earlier
+    Review fix F39: labels here never read the catalog, so a call seen only in an earlier
     diff pins nothing in the report. `known[k]` are labels the caller already made for the diff
     chain[k] -> side (any catalog origin only changes the name of a touched origin), so no diff is
     labeled twice."""
@@ -1495,7 +1515,7 @@ def attribute(args):
     profiles = [_Profile(store, rid, side, [baseline.estimate, candidate.estimate])
                 for rid, side in ((args.baseline_profile, baseline), (args.candidate_profile, candidate))] if args.baseline_profile else []
     from swdb.library import default_root
-    catalog = _Catalog(store, Path(args.library) if args.library else default_root(args.records))
+    catalog = _OriginSignals(store, Path(args.library) if args.library else default_root(args.records))
     finder = (_SiteFinder(store, args.site_finder, args.site_finder_iteration, args.site_finder_source)
               if args.site_finder else None)
     _require(finder is not None or args.site_finder_iteration is None, '--site-finder-iteration needs --site-finder')

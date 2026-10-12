@@ -898,6 +898,10 @@ def test_iteration_two_reports_gain_this_iteration_and_cumulative_gain(case):
     assert (total['untouched']['baseline_seconds'], total['untouched']['candidate_seconds']) == (10, 10)
     assert report['whole_program']['total_speedup'] == pytest.approx(100 / 55)
     assert report['whole_program']['amdahl_ceiling'] == pytest.approx(10.0)
+    # Final review M4: one ranking, over the cumulative comparison's candidate regions; the
+    # this_iteration limits are informational.
+    assert 'cumulative' in report['ranking_rule']['comparison']
+    assert 'this_iteration' in report['ranking_rule']['comparison'] and 'informational' in report['ranking_rule']['comparison']
 
 
 def test_without_a_previous_candidate_the_report_is_the_ticket_02_report(case):
@@ -1325,6 +1329,10 @@ def test_catalog_bound_runs_on_baseline_counts_and_ranks_known_bounds_before_flo
         (4, 'cand.rewritten', 'unknown', 'catalog_bound', 'no_baseline_counts')]
     assert [r['value'] for r in report['ranking']] == [pytest.approx(0.4), pytest.approx(1.0), None, None]
     assert 'Clamped at 0' in report['ranking_rule']['remaining_gain_bound']
+    # Final review L4 (story 29): the report calls the remaining gain bound an upper limit.
+    assert report['ranking_rule']['remaining_gain_bound'].startswith('Upper limit, never an expected gain')
+    # Final review L3 (F6): the floor's bandwidth term is the streaming model's own bound.
+    assert 'cache_fit' in report['ranking_rule']['floor_headroom'] and 'lower limit' in report['ranking_rule']['floor_headroom']
     finder = report['site_finder']
     assert (finder['campaign_summary']['id'], finder['iteration']) == ('extensa-native-bfs-20261011-z9.summary', 1)
     assert finder['revision_source']['id'] == 'fixture.revision.source'

@@ -350,9 +350,11 @@ STAGING, REGROUP = f"{IMPL}/TDStep:240-241", f"{IMPL}/TDStep:241-241"
 
 
 def attribution_report(records, rid, ranked, *, verdict="passed", created="2026-10-11",
-                       kernel="gapbs-bfs", target="native_cpu"):
+                       kernel="gapbs-bfs", target="native_cpu", tiers=None):
     """A report whose ranking lists one candidate region per site-finder region in `ranked`, best
-    first. `verdict` None leaves `split_check` out (not checked)."""
+    first. `verdict` None leaves `split_check` out (not checked). `tiers` gives each row's ranking
+    tier (default: all `floor_headroom`); an `unknown` row has no value, as in a real report."""
+    tiers = tiers or ["floor_headroom"] * len(ranked)
     rows = [{"side": "candidate", "region": f"cand.{i}", "origin": "agent_rewritten", "reason": "fixture",
              "path": "bfs.cc", "lines": [240, 241], "seconds": 1.0, "sites": [], "mixed": False,
              "matched_region": None, "headroom": [],
@@ -371,12 +373,14 @@ def attribution_report(records, rid, ranked, *, verdict="passed", created="2026-
             "regions": rows, "groups": [],
             "whole_program": {"baseline_seconds": None, "candidate_seconds": None, "total_speedup": None,
                               "amdahl_ceiling": None, "unattributed_flagged": None},
-            "ranking": [{"position": i, "side": "candidate", "region": r["region"], "tier": "floor_headroom",
-                         "limit": "resource_floor", "value": float(len(rows) - i), "reason": None}
-                        for i, r in enumerate(rows, start=1)]}
+            "ranking": [{"position": i, "side": "candidate", "region": r["region"], "tier": tier,
+                         "limit": "resource_floor" if tier == "floor_headroom" else "catalog_bound",
+                         "value": float(len(rows) - i) if tier != "unknown" else None,
+                         "reason": "no_baseline_counts" if tier == "unknown" else None}
+                        for i, (r, tier) in enumerate(zip(rows, tiers), start=1)]}
     if verdict is not None:
         # ticket 09's block, only the parts its index rows read; the measured shares are not needed here
-        data["split_check"] = {"verdict": verdict, "rule": {"id": "swdb.split_check.v1", "max_abs_share_gap": 0.1},
+        data["split_check"] = {"verdict": verdict, "rule": {"id": "swdb.split_check.v2", "max_abs_share_gap": 0.1},
                                "profiles": {side: {"id": f"fixture.{side}.profile", "load_average": None}
                                             for side in ("baseline", "candidate")},
                                "reasons": [], "measured_shares": [], "gaps": []}
@@ -397,7 +401,8 @@ def test_a_passed_report_orders_regions_by_its_ranking_and_changes_nothing_else(
     # the ranked region first; an unranked one keeps today's relative order after it
     assert [r["id"] for r in ranked["regions"]] == [REGROUP, STAGING]
     assert ranked["ordering"] == {"attribution": "fixture.attribution", "split_check": "passed", "applied": True,
-                                  "rule": site_finder.ORDERING_RULE, "query_sha256": site_finder.ORDERING_QUERY_SHA256}
+                                  "matched_regions": 1, "rule": site_finder.ORDERING_RULE,
+                                  "query_sha256": site_finder.ORDERING_QUERY_SHA256}
     # eligibility, legality and recorded reasons are unchanged: only the order moved
     assert sorted(ranked["regions"], key=lambda r: r["id"]) == sorted(today["regions"], key=lambda r: r["id"])
     assert ranked["rejected"] == today["rejected"]
@@ -415,10 +420,25 @@ def test_an_unverified_or_unchecked_report_keeps_todays_order_byte_identical(tmp
     assert kept["ordering"]["split_check"] == verdict
 
 
+def test_unknown_tier_rows_give_no_position_and_the_block_says_nothing_moved(tmp_path, records):
+    # Final review M1 (F7, F36): an `unknown`-tier row is only in region-ID order, so it gives no
+    # position. L2: a passed report that moves nothing says so with `matched_regions: 0`.
+    attribution_report(records, "fixture.attribution", [REGROUP], tiers=["unknown"])
+    result = native(tmp_path, records, "unknown")
+    assert [r["id"] for r in result["regions"]] == [STAGING, REGROUP]
+    assert (result["ordering"]["applied"], result["ordering"]["matched_regions"]) == (True, 0)
+    assert "unknown tier" in result["ordering"]["rule"]
+    # a known row for another region still moves that one ahead
+    attribution_report(records, "fixture.attribution.b", [STAGING, REGROUP], tiers=["unknown", "floor_headroom"])
+    mixed = native(tmp_path, records, "mixed")
+    assert [r["id"] for r in mixed["regions"]] == [REGROUP, STAGING]
+    assert (mixed["ordering"]["attribution"], mixed["ordering"]["matched_regions"]) == ("fixture.attribution.b", 1)
+
+
 def test_without_a_report_the_order_is_todays(tmp_path, records):
     result = native(tmp_path, records, "none")
     assert [r["id"] for r in result["regions"]] == [STAGING, REGROUP]
-    assert result["ordering"] == {"attribution": None, "split_check": None, "applied": False,
+    assert result["ordering"] == {"attribution": None, "split_check": None, "applied": False, "matched_regions": 0,
                                   "rule": site_finder.ORDERING_RULE, "query_sha256": site_finder.ORDERING_QUERY_SHA256}
 
 
@@ -466,7 +486,14 @@ def test_campaign_without_a_report_keeps_todays_order_and_the_rewrite_prompt_is_
     assert [r["id"] for r in call["regions"]["regions"]] == [STAGING, REGROUP]
     (it,) = json.loads(result.stdout)["iterations"]
     assert sorted(r["id"] for r in it["regions"]) == [STAGING, REGROUP]
+    # Final review M5 (F37): the summary saves the ordering block, so a reordered iteration names its report.
+    assert it["site_finder"]["ordering"] == {"attribution": None, "split_check": None, "applied": False,
+                                             "matched_regions": 0, "rule": site_finder.ORDERING_RULE,
+                                             "query_sha256": site_finder.ORDERING_QUERY_SHA256}
     prompts = sorted(campaign_team["root"].rglob("prompt.txt"))
     assert len(prompts) == 1 and "Agent role: extensa_rewriting." in prompts[0].read_text()
     digests = {hashlib.sha256(p.read_bytes()).hexdigest() for p in prompts}
     assert digests == {REWRITE_PROMPT_SHA256}
+    # Final review L5 (story 33, F20): the prompt names the workspace files, never a region, so a
+    # passed report's order reaches the agent only through REGIONS.json and the prompt hash holds.
+    assert STAGING not in prompts[0].read_text() and REGROUP not in prompts[0].read_text()

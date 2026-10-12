@@ -789,9 +789,12 @@ class Campaign:
             return [{"id": r, "reason": "fixed region list (campaign file)"} for r in self.data["regions"]]
         from swdb import site_finder
         result = self._find_sites()
+        # Fine-grained attribution F37 (final review M5, 2026-10-12 ET): the ordering block names the
+        # attribution report, its verdict and ORDERING_QUERY_SHA256 behind this iteration's region order.
         row["site_finder"] = {"format": result["format"], "query_sha256": result["query_sha256"],
                               "parameters": result["parameters"], "database": result["database"],
-                              "rejected": [{k: r[k] for k in ("entry", "region", "reason")} for r in result["rejected"]]}
+                              "rejected": [{k: r[k] for k in ("entry", "region", "reason")} for r in result["rejected"]],
+                              "ordering": result["ordering"]}
         self.state["site_finder"] = {"format": result["format"], "query_sha256": result["query_sha256"],
                                      "parameters": result["parameters"]}
         if not result["regions"]:

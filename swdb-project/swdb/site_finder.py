@@ -42,6 +42,9 @@ function of the query's rows, so the same database gives the same ordered region
    report's ranking when its split check passed (`ORDERING_RULE`). Steps 1-6 never see it.
    Review fix F37 (2026-10-11 ET): "latest" is the report with the newest inputs, then the greatest
    ID, and the ordering block records `ORDERING_QUERY_SHA256` beside the rule.
+   Final review fixes (2026-10-12 ET): F42, a ranking row in the `unknown` tier gives no position
+   (that tier is only region-ID order), so `ORDERING_QUERY_SHA256` changed; the block counts the
+   chosen regions that took a position (`matched_regions`); campaigns save the block (F37, F46).
 """
 from __future__ import annotations
 
@@ -177,7 +180,8 @@ ORDERING_RULE = ("The latest attribution report for the Extensa campaign's kerne
                  "regions only when its split check passed. Latest means newest inputs, not generation time: the "
                  "greatest `created` (a report's `created` is the latest `updated` date of its inputs), then the "
                  "greatest record ID. A region takes the best "
-                 "ranking position of any ranked region joined to it; unranked regions follow in today's order. "
+                 "ranking position of any ranked region joined to it; a ranking row in the unknown tier gives no "
+                 "position (that tier is only region-ID order). Regions without a position follow in today's order. "
                  "Any other verdict, or no report, keeps today's order. The chosen set never changes.")
 
 ORDERING_QUERY = """\
@@ -190,7 +194,7 @@ WITH latest AS (
 )
 SELECT l.attribution, l.split_check_verdict, j.site_finder_region, min(k.position) AS position
 FROM latest l
-LEFT JOIN swdb_attribution_ranking k ON k.attribution = l.attribution
+LEFT JOIN swdb_attribution_ranking k ON k.attribution = l.attribution AND k.tier <> 'unknown'
 LEFT JOIN swdb_attribution_site_finder_regions j
   ON j.attribution = k.attribution AND j.side = k.side AND j.region = k.region
 GROUP BY l.attribution, l.split_check_verdict, j.site_finder_region
@@ -204,11 +208,13 @@ def ranked(regions, rows):
     report = rows[0]["attribution"] if rows else None
     verdict = rows[0]["split_check_verdict"] if rows else None
     applied = verdict == "passed"
-    ordering = {"attribution": report, "split_check": verdict, "applied": applied, "rule": ORDERING_RULE,
-                "query_sha256": ORDERING_QUERY_SHA256}
+    position = {r["site_finder_region"]: r["position"] for r in rows
+                if applied and r["site_finder_region"] is not None and r["position"] is not None}
+    ordering = {"attribution": report, "split_check": verdict, "applied": applied,
+                "matched_regions": sum(1 for region in regions if region["id"] in position),
+                "rule": ORDERING_RULE, "query_sha256": ORDERING_QUERY_SHA256}
     if not applied:
         return regions, ordering
-    position = {r["site_finder_region"]: r["position"] for r in rows if r["site_finder_region"] is not None}
     keyed = sorted(enumerate(regions), key=lambda ir: (ir[1]["id"] not in position, position.get(ir[1]["id"], 0), ir[0]))
     return [region for _, region in keyed], ordering
 
