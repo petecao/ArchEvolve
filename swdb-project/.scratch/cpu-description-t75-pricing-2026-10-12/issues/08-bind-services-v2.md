@@ -2,7 +2,7 @@
 
 Created: 2026-10-12 01:10 ET
 **Type:** task
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 03, 07
 **Spec:** `../spec.md` (C1, C2, C9, C11, C12, C14; user stories 2–5, 19, 21, 23)
 **Code map:** `../notes/binder.md`
