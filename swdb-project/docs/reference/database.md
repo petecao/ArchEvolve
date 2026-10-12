@@ -131,7 +131,56 @@ Not built yet (LANL-shaped-db ticket 04).
 
 ### Validation tables and the empty tables
 
-Not built yet (LANL-shaped-db ticket 05).
+Added 2026-10-11 ET (LANL-shaped-db ticket 05). Code:
+[`swdb/lanl_validation.py`](../../swdb/lanl_validation.py). The two validation tables keep the
+slide's capitalization.
+
+**Which outcomes count.** A correctness outcome is a profile's `correctness` part or an
+evaluation's `correctness.state`. It becomes a `Validation_results` row only when it names both
+an implementation (the kernel variant) and an input record: a profile's `input`, or an
+evaluation's `request.workload.id` when that is a `workload` record. Outcomes missing either
+(for example the dx100 smoke evaluations, which name no implementation) have no row.
+
+#### `Validation_definition`
+
+One test case per (kernel, input) pair that at least one correctness outcome ran: the kernel's
+`correctness_check` with that input. Pairs no outcome ran are not listed. Origins: the kernel
+(`correctness_check`), the input (`generator` or `definition`), and each profile or evaluation
+that ran the pair.
+
+| Column | Meaning |
+|---|---|
+| `id` | integer ID (build-local), in `name` order |
+| `kernel_id` | the kernel of the outcome's implementation (`kernels.id`) |
+| `name` | `<kernel ID>/<input ID>`, for example `gapbs-bfs/kron-g16-k16` |
+| `input_json` | an input record's `generator`, or a workload record's `definition`, as JSON; NULL when the record has none |
+| `expected_output_json` | always NULL: no record states an expected output (checks are verifiers, not reference outputs) |
+
+#### `Validation_results`
+
+One row per counted correctness outcome. Origin: the profile (`parts.<n>.outcome`) or
+evaluation (`correctness.state`).
+
+| Column | Meaning |
+|---|---|
+| `id` | integer ID (build-local), in record-ID order |
+| `fixture_id` | guessed: the test case (`Validation_definition.id`); the slide shows no fixtures table |
+| `kernel_variant_id` | the implementation that ran (`kernel_variants.id`) |
+| `passed` | 1 for a profile check `complete` or an evaluation `passed`; 0 for an evaluation `failed`; NULL when correctness was not established (a profile check that timed out, an evaluation `unverified`). Never 0 for unknown |
+| `max_abs_error` | always NULL: no record states one |
+
+#### Tables with nothing to fill yet
+
+Created empty with the slide's columns so the database has LANL's full shape. The slide gives
+no column names for the search tables (`code_chunks`, `embeddings`); all their columns are
+guessed and listed in `swdb_guessed_columns`.
+
+| Table | Columns |
+|---|---|
+| `physics_assets` | `id`, `kernel_id` (`kernels.id`), `asset_type`, `name`, `format` |
+| `kernel_dependencies` | `id`, `kernel_id` and `depends_on_kernel_id` (both `kernels.id`), `dependency_type` |
+| `code_chunks` | `id`, `source_file_id` (`source_files.id`), `line_start`, `line_end`, `content` (text) |
+| `embeddings` | `id`, `code_chunk_id` (`code_chunks.id`), `vector` (BLOB; the slide says 768 float32 dimensions) |
 
 ### Contract link tables
 
