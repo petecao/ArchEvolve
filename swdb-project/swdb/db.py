@@ -641,7 +641,7 @@ CREATE TABLE swdb_attribution_regions (attribution TEXT NOT NULL, side TEXT NOT 
 """
 
 
-def _insert_attribution(con, d, *_):
+def _insert_attribution_report(con, d):
     whole = d["whole_program"]
     con.execute("INSERT INTO swdb_attributions VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                 (d["id"], d["baseline_estimate"]["id"], d["candidate_estimate"]["id"], d["baseline_source"]["id"],
@@ -654,11 +654,7 @@ def _insert_attribution(con, d, *_):
     con.executemany("INSERT INTO swdb_attribution_regions VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
                     [(d["id"], r["side"], r["region"], r["origin"], r["reason"], r["path"],
                       r["lines"][0] if r["lines"] else None, r["lines"][1] if r["lines"] else None,
-                      r["seconds"], json.dumps(r["sites"]), r["mixed"], r["matched_region"]) for r in d["regions"]])
-    _insert_attribution_iteration(con, d)
-
-
-_Insert.attribution = staticmethod(_insert_attribution)
+                      r["seconds"], json.dumps(r["sites"]), int(r["mixed"]), r["matched_region"]) for r in d["regions"]])
 
 
 # Fine-grained attribution ticket 05 (2026-10-11 ET): the rewritten group split by origin.
@@ -669,15 +665,11 @@ CREATE TABLE swdb_attribution_origins (attribution TEXT NOT NULL, origin TEXT NO
 """
 
 
-def _insert_attribution_with_origins(con, d, *rest):
-    _insert_attribution(con, d, *rest)
+def _insert_attribution_origins(con, d):
     con.executemany("INSERT INTO swdb_attribution_origins VALUES (?,?,?,?,?,?,?)",
                     [(d["id"], o["origin"], o["baseline_seconds"], o["candidate_seconds"], o["baseline_share"],
                       o["candidate_share"], len(o["unknown"]))
                      for g in d["groups"] for o in g.get("origins", [])])
-
-
-_Insert.attribution = staticmethod(_insert_attribution_with_origins)
 
 
 # Fine-grained attribution ticket 06 (2026-10-11 ET): the `this_iteration` comparison (previous
@@ -729,11 +721,7 @@ CREATE TABLE swdb_attribution_ranking (attribution TEXT NOT NULL, position INTEG
 """
 
 
-_insert_attribution_before_headroom = _Insert.attribution  # chain, so other tickets' inserts keep running
-
-
-def _insert_attribution_headroom(con, d, *rest):
-    _insert_attribution_before_headroom(con, d, *rest)
+def _insert_attribution_headroom(con, d):
     floors = [(d["id"], r["side"], r["region"], h["limit"], r["resource_floor"]["seconds"],
                r["resource_floor"]["limiting_term"], h["value"], h["reason"], json.dumps(r["resource_floor"]["missing"]))
               for r in d["regions"] for h in r["headroom"] if h["limit"] == "resource_floor"]
@@ -741,9 +729,6 @@ def _insert_attribution_headroom(con, d, *rest):
     con.executemany("INSERT INTO swdb_attribution_ranking VALUES (?,?,?,?,?,?,?,?)",
                     [(d["id"], r["position"], r["side"], r["region"], r["tier"], r["limit"], r["value"], r["reason"])
                      for r in d["ranking"]])
-
-
-_Insert.attribution = staticmethod(_insert_attribution_headroom)
 
 
 # Fine-grained attribution ticket 08 (2026-10-11 ET): one `catalog_bound` headroom row per
@@ -757,11 +742,7 @@ CREATE TABLE swdb_attribution_catalog (attribution TEXT NOT NULL, side TEXT NOT 
 """
 
 
-_insert_attribution_before_catalog = _Insert.attribution  # chain, so other tickets' inserts keep running
-
-
-def _insert_attribution_catalog(con, d, *rest):
-    _insert_attribution_before_catalog(con, d, *rest)
+def _insert_attribution_catalog(con, d):
     rows = [r for r in d["regions"] if "catalog_bound" in r]
     con.executemany("INSERT INTO swdb_attribution_headroom VALUES (?,?,?,?,?,?,?,?,?)",
                     [(d["id"], r["side"], r["region"], h["limit"], r["catalog_bound"]["seconds"], r["catalog_bound"]["entry"],
@@ -771,9 +752,6 @@ def _insert_attribution_catalog(con, d, *rest):
                     [(d["id"], r["side"], r["region"], e["entry"], e["kind"], e["seconds"], e["reason"],
                       json.dumps(e["site_finder_regions"]), int(r["catalog_bound"]["mixed"]), json.dumps(e["missing"]))
                      for r in rows for e in r["catalog_bound"]["entries"]])
-
-
-_Insert.attribution = staticmethod(_insert_attribution_catalog)
 
 
 # Fine-grained attribution ticket 09 (2026-10-11 ET): the split check, only for reports given
@@ -789,11 +767,7 @@ CREATE TABLE swdb_attribution_split_gaps (attribution TEXT NOT NULL, side TEXT N
 """
 
 
-_insert_attribution_before_split = _Insert.attribution  # chain, so other tickets' inserts keep running
-
-
-def _insert_attribution_split(con, d, *rest):
-    _insert_attribution_before_split(con, d, *rest)
+def _insert_attribution_split(con, d):
     check = d.get("split_check")
     if check is None:
         return
@@ -809,9 +783,6 @@ def _insert_attribution_split(con, d, *rest):
                      for g in check["gaps"]])
 
 
-_Insert.attribution = staticmethod(_insert_attribution_split)
-
-
 # Fine-grained attribution ticket 10 (2026-10-11 ET): what the site finder needs to order its
 # regions by a report's ranking (spec F20, F23); the verdict comes from ticket 09's
 # `swdb_attribution_split_checks` (no row = not checked).
@@ -825,11 +796,7 @@ CREATE TABLE swdb_attribution_site_finder_regions (attribution TEXT NOT NULL, si
 """
 
 
-_insert_attribution_before_site_finder = _Insert.attribution  # chain, so other tickets' inserts keep running
-
-
-def _insert_attribution_site_finder(con, d, *rest):
-    _insert_attribution_before_site_finder(con, d, *rest)
+def _insert_attribution_site_finder(con, d):
     finder = d.get("site_finder")
     if finder is None:
         return
@@ -841,4 +808,16 @@ def _insert_attribution_site_finder(con, d, *rest):
                             for sf in (r.get("catalog_bound") or {}).get("site_finder_regions", [])}))
 
 
-_Insert.attribution = staticmethod(_insert_attribution_site_finder)
+# Review fix (2026-10-11 ET, finding 10): one explicit, ordered list of the attribution inserts,
+# each run exactly once per report, instead of six chained reassignments of `_Insert.attribution`.
+_ATTRIBUTION_INSERTS = (_insert_attribution_report, _insert_attribution_iteration, _insert_attribution_origins,
+                        _insert_attribution_headroom, _insert_attribution_catalog, _insert_attribution_split,
+                        _insert_attribution_site_finder)
+
+
+def _insert_attribution(con, d, *_):
+    for insert in _ATTRIBUTION_INSERTS:
+        insert(con, d)
+
+
+_Insert.attribution = staticmethod(_insert_attribution)

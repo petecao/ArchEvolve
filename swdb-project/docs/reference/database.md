@@ -666,10 +666,10 @@ come from the cumulative `regions`.
 | `region` | the estimate's region ID |
 | `entry` | library entry ID |
 | `kind` | `library_operation` or `rewrite_contract` (as the site finder recorded it) |
-| `seconds` | the entry's estimate on the region's own counts (NULL if unknown) |
-| `reason` | why `seconds` is NULL: `needs_rewritten_counts`, `missing_inputs`, `no_offload_mechanism`, `entry_changed` or `not_in_library` |
+| `seconds` | the entry's estimate on the region's baseline counts (a candidate row reads its matched baseline region's; review fix 2026-10-11 ET) (NULL if unknown) |
+| `reason` | why `seconds` is NULL: `needs_rewritten_counts`, `missing_inputs`, `no_offload_mechanism`, `entry_changed`, `entry_unhashed`, `not_in_library` or `no_baseline_counts` |
 | `site_finder_regions` | JSON list of the joined site-finder region IDs that apply the entry |
-| `mixed` | 1 when some joined site-finder region only partly covers the region |
+| `mixed` | 1 when some line of the region lies outside every joined site-finder span (review fix 2026-10-11 ET: spans are the site-finder lines moved into the tree, or the whole function when they cannot be moved) |
 | `missing` | JSON list of the entry's missing counts and rates |
 
 ### `swdb_attribution_split_checks`
@@ -708,17 +708,17 @@ six). The measured scopes stay in the JSON column.
 ### `swdb_attribution_site_finder`
 
 Added: 2026-10-11 21:31 ET, ticket 10. One row per report made with `--site-finder`: how the
-site finder finds the latest report for its campaign's kernel and target. The verdict it acts on
+site finder finds the latest report for its Extensa campaign's kernel and target. The verdict it acts on
 is `swdb_attribution_split_checks.verdict` (no row = not checked: today's order).
 
 | Column | Meaning |
 |---|---|
 | `attribution` | report ID |
-| `campaign_summary` | the pinned campaign summary ID |
+| `campaign_summary` | the pinned Extensa campaign summary ID |
 | `iteration` | the pinned iteration `index` |
 | `kernel` | the site-finder `kernel` parameter that iteration ran under (NULL if not recorded) |
 | `target` | the site-finder target binding (`native_cpu`, `dx100_gem5`; NULL if not recorded) |
-| `created` | the report's `created` date; the latest report is the greatest `created`, then the greatest ID |
+| `created` | the report's `created` date, which is the latest `updated` date of its inputs (not the day it was made); the latest report is the greatest `created` (newest inputs), then the greatest ID |
 
 ### `swdb_attribution_site_finder_regions`
 

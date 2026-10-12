@@ -25,47 +25,64 @@ Rules used by this version (ticket 04 added the rewrite-site edge cases):
    only when it lies strictly inside it. It is `mixed` when some line of its pieces is
    unchanged (F14). Every other region is `untouched`. Ticket 05: a region inside a site
    becomes `offload_command`, `intrinsic` or `library_call` when it executes one (see
-   `_Catalog`); its group stays `agent_rewritten`, which lists per-origin seconds.
+   `_Catalog`); its group stays `agent_rewritten`, which lists per-origin seconds. Review fix
+   F34: `offload_command` needs a command the pinned description's functional observation
+   contract names; a region inside a site that executes any other command is `unattributed`
+   (`unbound_offload_command`).
 5. Sites (F1). Spans that one region overlaps, on either side, merge into one rewrite site,
    so no region's time is in two sites. Untouched regions are paired across sides through the
    line diff (`matched_region`, story 14); region IDs are never compared.
 6. Groups (F4). Each side's group seconds are summed per estimate trial (a region absent from
    a trial counts 0 s), then the median is taken per group; a single-run estimate is one
    trial. Group medians are never rescaled to the estimate's total. Whole-program totals are
-   the estimates' own `seconds`.
+   the estimates' own `seconds`. Review fix F33 (F2): a region's seconds inside calls (its
+   `unmodeled_calls` or call-covering estimate rows) go to `unattributed` per trial; the
+   region's group keeps the seconds recomposed without those rows.
 7. Unknowns (F8). An unknown region makes its group's seconds unknown and lists the region
    with its bounds' `missing` reasons; every ratio that depends on an unknown is null.
    Unattributed time above 10% of either total sets `unattributed_flagged` (F24).
 8. Identity (F43, F44). The record pins both estimates, both source records and the target
-   description by content hash. Its dates are the latest `updated` date of those inputs and
-   dicts are built in a fixed order, so the same inputs give a byte-identical record.
-8. Iterations (F13, ticket 06). Given the previous accepted candidate (`--previous-estimate`,
+   description by content hash. Its dates are the latest `updated` date of those inputs (so
+   `created` is the newest input's date, not the day the report was made) and dicts are built
+   in a fixed order, so the same inputs give a byte-identical record. One caveat: under
+   `SWDB_EXTENSA_CAMPAIGN` the record carries `workflow.CREATION_TAGS` (`mode`, `campaign`),
+   which enter `identity_sha256`, so the same inputs give other bytes inside an Extensa
+   campaign than outside one.
+9. Iterations (F13, ticket 06). Given the previous accepted candidate (`--previous-estimate`,
    `--previous-source`), the top-level comparison stays cumulative (original baseline ->
    candidate) and a `this_iteration` block repeats it against the previous candidate. The
    candidate is iteration 2 + the number of `--earlier-source` trees (accepted candidates
    before the previous one, oldest first). Each region row records `last_changed_iteration`:
    the newest iteration whose diff into that region's version labels it rewritten (0 = never,
    null = no source location). Without a previous candidate the record is the ticket 02 one.
-9. Resource floor (ticket 07, F6). Each region's floor is max(compute bound, useful-bytes
+10. Resource floor (ticket 07, F6). Each region's floor is max(compute bound, useful-bytes
    bandwidth bound) from the unchanged mechanism models at the pinned description's own
    rates, per trial then median. A missing rate gives an unknown floor naming it; no other
    description's rate is borrowed. Headroom = region seconds ÷ named limit. `this_iteration`
    region rows carry floors too (same row shape; the previous candidate's from its own estimate).
-10. Ranking (F7). Candidate regions with a known catalog bound first, by remaining gain bound
-    (an upper limit, never an expected gain); then regions without one, by floor headroom;
-    then every null value. Tiers are never ranked against each other. One top-level ranking:
-    the candidate is the same in both comparisons, so its limits are too.
-11. Catalog bound (ticket 08, F6, F21, F25). Given a saved campaign summary's site-finder
-    regions (`--site-finder`), each region joins the site-finder regions whose function it
-    overlaps (the function's span in that side's own tree, found by name: site-finder lines
-    name the full-source revision; partial overlap is `mixed`). Each joined entry's mechanism
-    models are the pinned description's offload mechanisms reached from the entry's
-    `uses_intrinsics` through their `hardware_operations` and the description's functional
-    observation commands. They run unchanged on the region's own counts, per trial then
-    median. The bound is the lowest known entry; otherwise `needs_rewritten_counts` (a model
-    lacks offload counts only a rewrite produces), `unknown_catalog_entry` or
-    `no_catalog_match`; `no_site_finder` when none was given.
-12. Split check (ticket 09, F15, F18, F19, F23). Given one `region_profile` per side
+11. Ranking (F7). Candidate regions with a known catalog bound first, by remaining gain bound
+    (an upper limit, never an expected gain; clamped at 0, ties by floor headroom, F29); then
+    regions whose bound is `no_catalog_match` or `no_site_finder`, by floor headroom; then
+    every null value, including every unknown catalog bound with its reason (F36). Tiers are
+    never ranked against each other. One top-level ranking: the candidate is the same in both
+    comparisons, so its limits are too.
+12. Catalog bound (ticket 08, F6, F21, F25; review fixes F30-F32, F35). Given a saved
+    Extensa campaign summary's site-finder regions (`--site-finder`), each site-finder region's
+    lines are moved from the full-source revision (`--site-finder-source`) into each tree by
+    their offset inside the named function; a region joins when one of its pieces overlaps the
+    moved lines, `mixed` when some line of its pieces lies outside every joined span. Without
+    a way to move them, the whole function joins (`join: function`, with the reason); a
+    site-finder region that cannot be placed makes the bounds it could reach
+    `site_finder_unplaced`. Each joined entry's mechanism models are the pinned description's
+    offload mechanisms reached from the entry's `uses_intrinsics` through their
+    `hardware_operations` and the description's functional observation commands. They run
+    unchanged on the region's baseline counts (a candidate row reads its `matched_region`'s;
+    none gives `no_baseline_counts`), per trial with that trial's calls, then median. The bound
+    is the lowest known entry; otherwise `needs_rewritten_counts` (a model lacks offload counts
+    only a rewrite produces), `unknown_catalog_entry` (also an entry with no hash,
+    `entry_unhashed`), `no_baseline_counts`, `site_finder_unplaced` or `no_catalog_match`;
+    `no_site_finder` when none was given.
+13. Split check (ticket 09, F15, F18, F19, F23). Given one `region_profile` per side
     (`--baseline-profile`, `--candidate-profile`), each measured source scope's exclusive
     thread-CPU seconds go to a group by file and line with the report's own rewrite sites: a
     scope's exclusive lines are its lines minus those of scopes nested inside it, and the
@@ -111,12 +128,12 @@ def register_cli(commands):
     sub.add_argument('--previous-source', help='iteration 2 on: source record the previous accepted candidate counted')
     sub.add_argument('--earlier-source', action='append', default=[],
                      help='source record of an accepted candidate before the previous one, oldest first (repeatable)')
-    sub.add_argument('--site-finder', help='saved campaign_summary whose site-finder regions give catalog bounds (ticket 08)')
+    sub.add_argument('--site-finder', help='saved Extensa campaign summary whose site-finder regions give catalog bounds (ticket 08)')
     sub.add_argument('--site-finder-source', default=None,
                      help='source_snapshot or candidate record of the full-source revision the site-finder lines name; '
                           'without it a site-finder region joins its whole function (join: function)')
     sub.add_argument('--site-finder-iteration', type=int, default=None,
-                     help='campaign iteration index whose site-finder regions to use (default: the last one that has them)')
+                     help='Extensa campaign summary iteration index whose site-finder regions to use (default: the last one that has them)')
     sub.add_argument('--baseline-profile', help='ticket 09: saved region_profile (`swdb bfs-profile`) timing the baseline tree')
     sub.add_argument('--candidate-profile', help='ticket 09: saved region_profile (`swdb bfs-profile`) timing the candidate tree')
     sub.add_argument('--format', choices=['yaml', 'json'], default='yaml')
@@ -711,7 +728,7 @@ def _headroom(limit, estimate, bound, unknown_limit='unknown_limit'):
 
 # --- Ticket 08: catalog bound (F6, F21, F25; review fixes F30-F36) ------------------------------
 #
-# Site-finder regions come from a saved campaign summary: one iteration's chosen `regions`
+# Site-finder regions come from a saved Extensa campaign summary: one iteration's chosen `regions`
 # rows, each with `why.source` (path, full-source revision and lines) and `why.applications`
 # (the entries that apply). Their lines name the full-source revision, not either tree
 # attributed here (risks C1, C2). F21 (review fix F30): each site-finder region's lines are

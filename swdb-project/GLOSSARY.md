@@ -1,6 +1,6 @@
 # EvolveSWDB — ArchEvolve's research database
 
-Updated: 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
+Updated: 2026-10-11 22:10 ET (review fix: rewrite site reworded to merged spans); 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
 
 The Software Database is the ArchEvolve component that knows the applications:
 what their kernels compute, how their code touches memory, what profiling
@@ -340,8 +340,9 @@ to the estimator.
 _Avoid_: parameter sheet, hardware config
 
 **Rewrite site**:
-One contiguous changed span of a candidate artifact's source diff against its baseline, together
-with the baseline regions it replaces and the candidate regions and calls that replace them.
+One or more changed spans of a candidate artifact's source diff against its baseline, merged when
+one region overlaps several of them (possibly in several files), together with the baseline regions
+it replaces and the candidate regions and calls that replace them. (Reworded 2026-10-11 ET.)
 _Avoid_: hunk (in prose), patch site
 
 **Code origin**:
