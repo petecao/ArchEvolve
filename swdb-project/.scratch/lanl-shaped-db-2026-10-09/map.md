@@ -17,7 +17,7 @@ time (about 2 working days).
 | 04 | [Hardware and performance tables, measured results only](issues/04-hardware-and-performance-tables.md) | resolved | 02 | 3 h |
 | 05 | [Validation tables and the empty tables](issues/05-validation-and-empty-tables.md) | resolved | 02 | 2 h |
 | 06 | [Contract link tables](issues/06-contract-link-tables.md) | resolved | 03 | 2 h |
-| 07 | [ADR 0015, database reference, final shape check](issues/07-adr-reference-and-final-shape-check.md) | claimed | 03, 04, 05, 06 | 1.5 h |
+| 07 | [ADR 0015, database reference, final shape check](issues/07-adr-reference-and-final-shape-check.md) | resolved | 03, 04, 05, 06 | 1.5 h |
 
 ## Context pointers
 
@@ -38,3 +38,6 @@ time (about 2 working days).
   effort: `library/contract.bc_read_offload` changed after its review, so its tier is `experimental`.
 - 2026-10-11 22:00 ET: ticket 06 resolved — contract links from stated ties only
   ([06](issues/06-contract-link-tables.md#answer)). Ticket 07 claimed.
+- 2026-10-11 22:05 ET: ticket 07 resolved — reference doc, glossary, whole-core shape test
+  ([07](issues/07-adr-reference-and-final-shape-check.md#answer)). Spec's "16 slide tables"
+  corrected to 15. Code review of the branch done; fixes in progress (branch `lanl/08-review-fixes`).
