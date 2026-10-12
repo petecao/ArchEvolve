@@ -130,7 +130,7 @@ def test_extensa_tagged_native_service_record_never_enters_team_binding(records,
     records.write('cpu_service_calibrations/fixture.research.service.yaml',data)
     result=bind(records,'--target-description','fixture.cpu.base','--characterization','fixture.counts',
         '--calibration',data['id'],'--id','fixture.cpu.research.mixed','--fixture')
-    assert result.returncode!=0 and 'Extensa research evidence' in result.stderr
+    assert result.returncode!=0 and 'Extensa campaign' in result.stderr and 'never enter team' in result.stderr
     assert not (records.path/'target_descriptions/fixture.cpu.research.mixed.yaml').exists()
 
 
