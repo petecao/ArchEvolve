@@ -77,3 +77,18 @@ Resolved 2026-10-11 19:30 ET on branch `fga/08-catalog-bound` (from integration 
 from attribution fields). The documented-tables test in `test_db.py` timed out on the Mac
 (its whole-catalog build exceeds the 600 s subprocess limit); instead every `swdb_attribution*`
 table and column from `db.SCHEMA` was checked against `database.md` by script: none missing.
+
+**Review fix (2026-10-11 22:10 ET, branch `fga/review-fixes`).** Supersedes two "revisable"
+decisions above.
+- F30 (finding 2): the join is by moved lines, not by function. New `--site-finder-source`
+  names the revision tree; lines move by offset inside the function (`cpp_lexical.definition_spans`:
+  any column, every overload). Without a way to move them the whole function joins, recorded as
+  `join: function` with its reason. New fields `catalog_bound.joins`, `site_finder.regions[].placements`,
+  `site_finder.revision_source` (pinned, re-checked by `swdb validate`).
+- F31 (finding 3): an unplaced site-finder region gives `site_finder_unplaced`, never `no_catalog_match`.
+- F32 (finding 4): no `content_sha256` -> `entry_unhashed`; tests now cover `entry_changed`,
+  `not_in_library` and `entry_unhashed`. F28 test: an MMIO entry on a functional description is `no_catalog_match`.
+- F35: entries run on baseline counts (a candidate row through `matched_region`; none -> `no_baseline_counts`).
+- F36: unknown bounds rank in the `unknown` tier with their reason; only `no_catalog_match`/`no_site_finder` are floor-only.
+- F29: the 0 clamp stays and is stated in `ranking_rule`; ties go by floor headroom, then ID.
+- F38: entries use each trial's own `unmodeled_calls`.

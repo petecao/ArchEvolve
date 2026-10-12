@@ -61,3 +61,7 @@ python3 -m pytest -q tests/test_attribution.py
 
 Doc coverage checked with `tests/test_format_doc.py` (no attribution field in its 2
 pre-existing failures) and an in-memory `db.SCHEMA` check against `database.md`.
+
+**Review fix (2026-10-11 22:10 ET, branch `fga/review-fixes`).** F39: last-changed labels read no
+catalog, so an intrinsic seen only in an earlier diff no longer enters the report's `catalog` pins;
+the two diffs the report already labels are reused, not labeled again (finding 1).

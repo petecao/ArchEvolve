@@ -48,3 +48,6 @@ Resolved 2026-10-11 18:36 ET on branch `fga/04-rewrite-sites`.
 
 **Test command** (from `swdb-project/`): `python3 -m pytest -q tests/test_attribution.py tests/test_format_doc.py tests/test_crosswalk.py`
 (5 new tests; `test_format_doc.py` keeps its 2 pre-existing failures, none from attribution fields).
+
+**Review fix (2026-10-11 22:10 ET, branch `fga/review-fixes`).** The glossary's "Rewrite site"
+now says one or more changed spans, merged when one region overlaps several (finding 7).

@@ -46,3 +46,7 @@ report (pins the prompt hash and today's order); the order itself is tested thro
 **Tests:** 6 new in `tests/test_site_finder.py` (hand-written fixture reports), including the rewrite
 prompt sha256 pinned on the native query campaign before the change; 1 new in `tests/test_attribution.py`.
 `python3 -m pytest -q tests/test_site_finder.py tests/test_attribution.py` (from `swdb-project/`).
+
+**Review fix (2026-10-11 22:10 ET, branch `fga/review-fixes`).** F37 (finding 6): `ORDERING_RULE`
+now says "latest" means newest inputs, then the greatest ID (not generation time), and the
+ordering block records `query_sha256` (`ORDERING_QUERY_SHA256`). Keying on iteration was not done.

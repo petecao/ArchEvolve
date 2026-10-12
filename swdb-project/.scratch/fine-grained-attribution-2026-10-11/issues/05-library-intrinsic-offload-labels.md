@@ -53,3 +53,12 @@ Resolved 2026-10-11 16:43 ET on branch `fga/05-origin-labels`.
 
 **Test command** (from `swdb-project/`): `python3 -m pytest -q tests/test_attribution.py`
 (11 passed, about 37 s). `tests/test_format_doc.py` fails only on its two pre-existing non-attribution fields.
+
+**Review fix (2026-10-11 22:10 ET, branch `fga/review-fixes`).**
+- F34: `offload_command` needs a command the pinned description's functional observation
+  contract names; an unbound executed command inside a site makes the region `unattributed`
+  (`unbound_offload_command`).
+- F33: a region's seconds inside unmodeled calls go to the `unattributed` group per trial; the
+  region keeps the rest (new region field `unmodeled_calls`).
+- `db.py`: the six chained `_Insert.attribution` reassignments are one ordered list
+  (`_ATTRIBUTION_INSERTS`); `mixed` is stored as `int` everywhere.
