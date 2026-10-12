@@ -38,6 +38,8 @@ function of the query's rows, so the same database gives the same ordered region
 7. Order only (fine-grained attribution ticket 10, 2026-10-11 ET): `ORDERING_QUERY` reads the
    `swdb_attribution*` tables and `ranked` reorders the chosen regions by the latest attribution
    report's ranking when its split check passed (`ORDERING_RULE`). Steps 1-6 never see it.
+   Review fix F37 (2026-10-11 ET): "latest" is the report with the newest inputs, then the greatest
+   ID, and the ordering block records `ORDERING_QUERY_SHA256` beside the rule.
 """
 from __future__ import annotations
 
@@ -169,8 +171,10 @@ def find(records_dir, campaign, *, library=None, db_path):
 
 # --- order by the latest attribution report (fine-grained attribution ticket 10, 2026-10-11 ET) --
 
-ORDERING_RULE = ("The latest attribution report for the campaign's kernel and target (greatest `created`, then "
-                 "greatest ID) orders the chosen regions only when its split check passed: a region takes the best "
+ORDERING_RULE = ("The latest attribution report for the Extensa campaign's kernel and target orders the chosen "
+                 "regions only when its split check passed. Latest means newest inputs, not generation time: the "
+                 "greatest `created` (a report's `created` is the latest `updated` date of its inputs), then the "
+                 "greatest record ID. A region takes the best "
                  "ranking position of any ranked region joined to it; unranked regions follow in today's order. "
                  "Any other verdict, or no report, keeps today's order. The chosen set never changes.")
 
@@ -190,6 +194,7 @@ LEFT JOIN swdb_attribution_site_finder_regions j
 GROUP BY l.attribution, l.split_check_verdict, j.site_finder_region
 ORDER BY j.site_finder_region
 """
+ORDERING_QUERY_SHA256 = hashlib.sha256(ORDERING_QUERY.encode()).hexdigest()
 
 
 def ranked(regions, rows):
@@ -197,7 +202,8 @@ def ranked(regions, rows):
     report = rows[0]["attribution"] if rows else None
     verdict = rows[0]["split_check_verdict"] if rows else None
     applied = verdict == "passed"
-    ordering = {"attribution": report, "split_check": verdict, "applied": applied, "rule": ORDERING_RULE}
+    ordering = {"attribution": report, "split_check": verdict, "applied": applied, "rule": ORDERING_RULE,
+                "query_sha256": ORDERING_QUERY_SHA256}
     if not applied:
         return regions, ordering
     position = {r["site_finder_region"]: r["position"] for r in rows if r["site_finder_region"] is not None}

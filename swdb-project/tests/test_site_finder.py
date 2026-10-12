@@ -7,6 +7,7 @@ Updated 2026-10-05 ET (code review T4): the implementation, application and kern
 read as committed at a pinned commit (`testkit.pinned`), not from the live checkout.
 """
 
+import hashlib
 import json
 import shutil
 
@@ -396,7 +397,7 @@ def test_a_passed_report_orders_regions_by_its_ranking_and_changes_nothing_else(
     # the ranked region first; an unranked one keeps today's relative order after it
     assert [r["id"] for r in ranked["regions"]] == [REGROUP, STAGING]
     assert ranked["ordering"] == {"attribution": "fixture.attribution", "split_check": "passed", "applied": True,
-                                  "rule": site_finder.ORDERING_RULE}
+                                  "rule": site_finder.ORDERING_RULE, "query_sha256": site_finder.ORDERING_QUERY_SHA256}
     # eligibility, legality and recorded reasons are unchanged: only the order moved
     assert sorted(ranked["regions"], key=lambda r: r["id"]) == sorted(today["regions"], key=lambda r: r["id"])
     assert ranked["rejected"] == today["rejected"]
@@ -418,7 +419,7 @@ def test_without_a_report_the_order_is_todays(tmp_path, records):
     result = native(tmp_path, records, "none")
     assert [r["id"] for r in result["regions"]] == [STAGING, REGROUP]
     assert result["ordering"] == {"attribution": None, "split_check": None, "applied": False,
-                                  "rule": site_finder.ORDERING_RULE}
+                                  "rule": site_finder.ORDERING_RULE, "query_sha256": site_finder.ORDERING_QUERY_SHA256}
 
 
 def test_only_the_latest_report_for_the_campaigns_kernel_and_target_counts(tmp_path, records):
@@ -437,7 +438,11 @@ def test_reports_created_on_the_same_date_are_broken_by_the_greatest_id(tmp_path
     attribution_report(records, "fixture.a", [STAGING])
     attribution_report(records, "fixture.b", [REGROUP])
     result = native(tmp_path, records, "tie")
+    # Review fix F37: "latest" is the newest inputs (`created`), then the greatest record ID; the
+    # ordering query's own hash is recorded beside the rule.
     assert result["ordering"]["attribution"] == "fixture.b"
+    assert "newest inputs" in result["ordering"]["rule"]
+    assert result["ordering"]["query_sha256"] == hashlib.sha256(site_finder.ORDERING_QUERY.encode()).hexdigest()
     assert [r["id"] for r in result["regions"]] == [REGROUP, STAGING]
 
 
