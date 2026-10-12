@@ -31,6 +31,9 @@ Graph: 01–06 start now → 07 (needs 01, 02, 04, 05, 06) → 08 (needs 03, 07)
 
 - Ticket 03 resolved (2026-10-12 01:20 ET): floor-only rate field `resource_floor_mechanisms` ([answer](issues/03-floor-only-bandwidth-rate.md#answer)).
 - Code map (2026-10-12 01:02 ET, `e2611242`): [notes/index.md](notes/index.md).
+- Ticket 01 resolved (2026-10-12 05:40 ET, branch `cpud/01-trial-bind`): team-safe passes; t75 projections
+  committed; the trial leaves 6 unknown regions per side, exactly the gaps tickets 02 and 04–07 cover
+  (07 list confirmed, no free); projector pure-intrinsic fix ([answer](issues/01-team-safe-projections-trial-bind.md#answer)).
 - Ticket 02 resolved (2026-10-12 01:23 ET): `memory_v2` = 1- and 2-byte writes at 8 MiB, run with `--group memory_v2` ([answer](issues/02-memory-v2-store-cells.md#answer)).
 - Ticket 04 resolved (2026-10-12): `allocator_v2` with malloc/free, exact bins up to 32 MiB and `--cell`; ticket-07 command in [04 answer](issues/04-allocator-v2-malloc-large-bins.md#answer).
 - Ticket 05 resolved (2026-10-12 01:40 ET): OpenMP set a2 adds class 22 `_8u`; ticket-07 command in [05 answer](issues/05-openmp-profiles-a2.md#answer).
