@@ -1,6 +1,6 @@
 """`swdb build`, `sql`, `find`, and `implementations` (ADR 0002). Updated 2026-10-11 ET: tables carry
 the `swdb_` prefix (LANL-shaped-db ticket 01); the fixture copies the record closure, not the
-~1 GB catalog (LR-03, Yan-Ru's ticket 01 decision)."""
+~1 GB catalog (LR-03, Yan-Ru's ticket 01 decision). LANL tables: tests/test_lanl_*.py."""
 
 import json
 import re
@@ -147,10 +147,13 @@ def table_names(repo):
 
 
 def test_a_fresh_build_names_every_table_with_the_swdb_prefix(repo):
+    # 2026-10-11 ET (ticket 02): the LANL core tables are the only unprefixed ones
+    from testkit.lanl import LANL_COLUMNS
+
     assert repo.swdb("build").returncode == 0
     tables = table_names(repo)
     assert {f"swdb_{name}" for name in UNPREFIXED} <= tables
-    assert sorted(t for t in tables if not t.startswith("swdb_")) == []
+    assert sorted(t for t in tables if not t.startswith("swdb_") and t not in LANL_COLUMNS) == []
 
 
 def test_a_database_file_from_before_the_swdb_prefix_is_rebuilt(repo):
@@ -158,7 +161,11 @@ def test_a_database_file_from_before_the_swdb_prefix_is_rebuilt(repo):
 
     assert repo.swdb("build").returncode == 0
     # turn the fresh file into the old layout: same stamps in meta, tables without the prefix
+    # (and, since ticket 02, without the LANL tables, whose names the old tables used)
     con = sqlite3.connect(repo.path.parent / "build" / "swdb.sqlite")
+    for table in [r[0] for r in con.execute("select name from sqlite_master where type = 'table' order by rowid desc")]:
+        if not table.startswith("swdb_") or table.removeprefix("swdb_") not in UNPREFIXED:
+            con.execute(f'DROP TABLE "{table}"')
     for table in [r[0] for r in con.execute("select name from sqlite_master where type = 'table'")]:
         con.execute(f'ALTER TABLE "{table}" RENAME TO "{table.removeprefix("swdb_")}"')
     con.commit()

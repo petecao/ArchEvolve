@@ -5,6 +5,8 @@ cannot drift from them. Tables are documented in docs/reference/database.md.
 Updated: 2026-10-06 ET: all connections are owned by swdb.access (ADR 0014).
 Updated: 2026-10-11 ET: every table carries the `swdb_` prefix (LANL-shaped-db ticket 01), which
 frees the LANL table names; a file with the old names has no `swdb_meta`, so it reads as stale.
+Updated: 2026-10-11 ET: `swdb.lanl` adds the LANL core after the `swdb_` tables, and a build
+fails if `PRAGMA foreign_key_check` reports a row (LANL-shaped-db ticket 02).
 """
 
 import hashlib
@@ -14,7 +16,7 @@ import sqlite3
 import time
 from pathlib import Path
 
-from swdb import access
+from swdb import access, lanl
 from swdb.store import Record, Store, record_files
 from swdb.strategy import SEMANTIC_FIELDS, entry, pattern_outcome
 
@@ -179,8 +181,14 @@ def build(records_dir, db_path, library=None):
                         (rec.id, context["application"], context["source_ancestor"], context["source_baseline"],
                          context["comparison_baseline"], json.dumps(context)))
     _library(con, records_dir, store, library)
+    lanl.build(con, store)
+    broken = con.execute("PRAGMA foreign_key_check").fetchall()
     con.commit()
     con.close()
+    if broken:
+        tmp.unlink()
+        raise _failure("database build broke its foreign keys (table, rowid, parent, key): "
+                       + "; ".join(map(str, broken[:5])))
     tmp.replace(db_path)
     return {"records": len(store.records), "seconds": time.monotonic() - started}
 
