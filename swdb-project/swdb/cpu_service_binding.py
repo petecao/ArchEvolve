@@ -15,8 +15,7 @@ from swdb.cli import Failure
 from swdb.cpu_service_calibration import identity, validate_record
 from swdb.store import Store, Record
 
-ALLOCATOR_FIELDS={'_Znam':'known_length_bins','_Znwm':'known_length_bins',
-                  '_ZdaPv':'allocation_lifetime_size_bins','_ZdlPv':'allocation_lifetime_size_bins'}
+from swdb.analytic_cpu_service import ALLOCATOR_FIELDS  # one ABI table for binder and evaluator (2026-10-12 ET)
 
 
 def _library_hashes(libraries, prefix):
@@ -212,11 +211,12 @@ def _bulk_binding(args,target,char,cells,scopes):
 
 def _allocator_resource_binding(args,target,char,cells,scopes):
     from swdb.analytic_cpu_service import ALLOCATOR_RESOURCE_ASSUMPTION
+    from swdb.cpu_allocator_calibration import GROUPS
     parameters={}; selectors={}; rows=[]
     for calibration,service in cells:
         scope=service['scope'];abi=scope.get('event_abi');size=scope.get('size_bytes')
         if (service.get('cost_basis')!='gross_allocator_loop_resource_v1' or abi not in ALLOCATOR_FIELDS or
-            type(size) is not int or size<=0 or size>1048576 or scope.get('allocator_regime')!='fresh_process_repeated_allocate_free_batches'):
+            type(size) is not int or size<=0 or size>GROUPS['allocator_v2']['size_cap'] or scope.get('allocator_regime')!='fresh_process_repeated_allocate_free_batches'):
             raise Failure('unsupported exact gross allocator ABI/size/regime')
         selection=selectors.setdefault(abi,{'name':abi,'unit':'seconds/call','bin_kind':ALLOCATOR_FIELDS[abi],
             'bins':[],'scope_assumption':copy.deepcopy(ALLOCATOR_RESOURCE_ASSUMPTION)})

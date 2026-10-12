@@ -4,7 +4,7 @@ import json
 import yaml
 
 from conftest import run_swdb
-from testkit.cpu_service import fixture_receipt, save_receipt, bind
+from testkit.cpu_service import fixture_receipt, save_receipt, bind, allocator_v2_estimate
 from testkit.analytic import target_description, fixture_characterization, digest
 
 
@@ -154,3 +154,21 @@ def test_memory_cells_move_the_measured_bandwidth_rate_to_the_floor_only_carrier
         'carried_from':{'description':{'id':'fixture.memory.base','sha256':digest(base)},
                         'calibrations':[{'id':'fixture.memory.costs','sha256':digest(calibration)}]}}]
     assert records.validate().returncode==0
+
+
+# Allocator v2 (2026-10-12 ET, cpu-description ticket 04): malloc and exact large bins.
+def test_malloc_and_16_mib_array_bins_bind_beside_v1_cells_and_price_exact_sizes(records,tmp_path):
+    import pytest
+    bound,resource=allocator_v2_estimate(records,tmp_path,[(64,2)])
+    calls={c['name']:sorted(b['bytes'] for b in c['bins']) for c in bound['mechanisms'][-1]['selector']['calls']}
+    assert calls=={'_Znam':[65536,16777216],'malloc':[64],'_ZdaPv':[16777216]}
+    # malloc 2 x .2 s + new[] (.4 s at 16 MiB + .2 s at 64 KiB) + delete[] .1 s at 16 MiB.
+    assert resource['seconds']==pytest.approx(1.1)
+    assert sorted(c['site'] for c in resource['inputs']['covered_calls'])==[29,30,31]
+    assert records.validate().returncode==0
+
+
+def test_an_allocator_size_without_an_exact_bin_stays_unknown(records,tmp_path):
+    _,resource=allocator_v2_estimate(records,tmp_path,[(64,1),(128,1)])
+    assert resource['seconds'] is None
+    assert 'call_shape.cost.malloc.128' in resource['missing']
