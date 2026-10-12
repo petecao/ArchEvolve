@@ -117,8 +117,7 @@ def test_the_search_tables_link_to_source_files_and_code_chunks(built):
 
 def test_every_link_target_table_exists(built):
     tables = {row["name"] for row in sql(built, "select name from sqlite_master where type = 'table'")}
-    if "source_files" not in tables:
-        pytest.skip("source_files comes from LANL-shaped-db ticket 03 (swdb/lanl_sources.py), built in parallel")
+    assert "source_files" in tables   # built by swdb/lanl_sources.py, which runs before this group
     for table in (*VALIDATION, *EMPTY):
         targets = {row["table"] for row in sql(built, f"select * from pragma_foreign_key_list('{table}')")}
         assert targets <= tables, (table, targets - tables)

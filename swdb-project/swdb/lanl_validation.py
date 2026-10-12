@@ -14,8 +14,7 @@ Table names keep the slide's capitalization.
   was not established. No record states an error, so `max_abs_error` is NULL.
 - `physics_assets`, `kernel_dependencies`, `code_chunks`, `embeddings`: created with the slide's
   columns so the database has LANL's full shape; nothing fills them. `code_chunks.source_file_id`
-  references `source_files` (ticket 03's group, which runs earlier); SQLite allows the declared
-  link before that table exists, and an empty table never fails the foreign-key check.
+  references `source_files`, which ticket 03's group (`ORDER` 30) creates before this one.
 """
 
 import json
