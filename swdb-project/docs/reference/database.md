@@ -127,7 +127,79 @@ Not built yet (LANL-shaped-db ticket 03).
 
 ### Hardware and performance tables
 
-Not built yet (LANL-shaped-db ticket 04).
+Added 2026-10-11 ET (LANL-shaped-db ticket 04). Code: [`swdb/lanl_performance.py`](../../swdb/lanl_performance.py).
+
+**Only measurements on real machines.** Analytic estimates go to `swdb_estimates` (spec D4).
+Simulated metrics (cachegrind) and inferred or unknown ones stay in `swdb_metrics`. Hardware
+targets (a modeled DX100) are not machines.
+
+#### `hardware_profiles`
+
+One row per machine record.
+
+| Column | Meaning |
+|---|---|
+| `id` | integer ID (build-local) |
+| `cpu_model` | `cpu.model` |
+| `cores` | physical cores: `cpu.sockets` × `cpu.cores_per_socket` (not hyperthreads) |
+| `memory_gb` | `memory_bytes` in GiB (2^30 bytes), unrounded |
+
+#### `run_configs`
+
+What a measured run ran with. Runs with identical parameters, commit and variant share one row,
+with one origin per run.
+
+| Column | Meaning |
+|---|---|
+| `id` | integer ID (build-local) |
+| `label` | `<implementation> on <input>, <threads> threads` (a name, not a key) |
+| `parameters_json` | JSON: `input`, `input_arguments` (the input's generator arguments), `threads`, `trials`, `compiler`, `compiler_version`, `flags`, `omp_places`, `omp_proc_bind`, `binding`; null where the profile does not say |
+| `git_commit` | the application's source revision (`build.application_commit`), or NULL |
+| `kernel_variant_id` | guessed link: the profiled implementation (`kernel_variants.id`) |
+
+#### `performance_runs`
+
+One row per `timing[]` entry of a profile: one benchmark process at one thread count.
+
+| Column | Meaning |
+|---|---|
+| `id` | integer ID (build-local) |
+| `elapsed_seconds` | median time per trial (`median_s`); min, max and spread stay in the profile |
+| `throughput_value` | NULL: no record states a throughput |
+| `hardware_profile_id` | guessed link: the profile's machine (`hardware_profiles.id`) |
+| `run_config_id` | guessed link: `run_configs.id` |
+| `kernel_variant_id` | guessed link: the profiled implementation (`kernel_variants.id`) |
+
+#### `performance_metrics`
+
+One row per profile metric with basis `measured`, a numeric value, and a thread count that
+names exactly one run of the profile. Histograms and metrics without a thread count (host load,
+index features of the input) stay in `swdb_metrics` only.
+
+| Column | Meaning |
+|---|---|
+| `id` | integer ID (build-local) |
+| `metric_name` | metric name (vocabulary `metrics`) |
+| `metric_value` | the measured value |
+| `performance_run_id` | guessed link: the run at the metric's thread count (`performance_runs.id`) |
+
+#### `swdb_estimates`
+
+Extension table: one row per estimate record. Never copied into the LANL performance tables.
+
+| Column | Meaning |
+|---|---|
+| `id` | estimate ID (`swdb_records.id`) |
+| `kernel_variant_id` | the estimated implementation (`kernel_variants.id`): the subject itself, or for a candidate subject the implementation the candidate record names; NULL when neither resolves |
+| `subject_kind` | `implementation` or `candidate` |
+| `subject_id` | the subject's ID |
+| `target` | the machine or hardware target estimated for |
+| `input` | input ID |
+| `threads` | thread count |
+| `seconds` | estimated seconds, or NULL when unknown |
+| `ratio` | estimated ratio to the baseline, or NULL |
+| `verdict` | `estimated_gain`, `within_error` or `estimated_no_gain` |
+| `estimator_version` | estimator version |
 
 ### Validation tables and the empty tables
 
