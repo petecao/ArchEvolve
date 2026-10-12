@@ -93,8 +93,8 @@ def calibrate(args):
     from swdb.cpu_service_calibration import identity
     if not args.llvm_bin:
         raise Failure('library-call services require LLVM22 and a separate count proof')
-    if args.size or args.count_build_cap_mib != 64:
-        raise Failure('--size and --count-build-cap-mib apply to the allocator service group')
+    if args.size or getattr(args, 'cell', None) or args.count_build_cap_mib != 64:
+        raise Failure('--size, --cell and --count-build-cap-mib apply to the allocator service group')
     if (type(args.repetitions) is not int or not 3 <= args.repetitions <= 11 or not math.isfinite(args.min_trial_s)
             or not 0 < args.min_trial_s <= .2 or not math.isfinite(args.max_wall_s) or not 0 < args.max_wall_s <= 900):
         raise Failure('library-call caps are 3–11 repetitions, 0.2s trials and 900s wall')

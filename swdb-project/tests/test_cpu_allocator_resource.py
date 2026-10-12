@@ -108,6 +108,15 @@ def test_gross_allocator_derivation_refuses_an_abi_that_disagrees_with_operation
     assert not (records.path/'cpu_allocator_resource_calibrations/fixture.allocator.resource.yaml').exists()
 
 
+def test_allocator_v2_pins_the_shared_source_the_runner_copies():
+    """2026-10-12 ET guard: an edit to the native allocator source needs a new pinned group, never a silent v2 change."""
+    from pathlib import Path
+    from swdb import artifacts
+    from swdb.cpu_allocator_resource import NATIVE_SOURCE_V2
+    native=Path(__file__).resolve().parents[1]/'swdb/native'
+    assert {name:artifacts.file_hash(native/name) for name in NATIVE_SOURCE_V2}==NATIVE_SOURCE_V2
+
+
 def test_native_allocator_resource_refuses_unrecognized_shared_work_source(records,tmp_path):
     import copy
     from conftest import REPO

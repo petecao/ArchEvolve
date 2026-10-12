@@ -1012,15 +1012,20 @@ LATENCY = {'model': 'requests_in_flight_latency', 'parameters': {
     'dependent_latency_s': rate(6.0, 'seconds/load'), 'effective_requests_per_thread': rate(1.0, 'requests/thread')}}
 
 
-def use_target(case, mechanisms):
-    """Re-point the case at a description with these mechanisms and a protocol frozen on it."""
+def use_target(case, mechanisms, floor_only=None):
+    """Re-point the case at a description with these mechanisms and a protocol frozen on it;
+    `floor_only` sets its `resource_floor_mechanisms` (rates only the resource floor reads)."""
     data = yaml.safe_load(case.target.read_text())
     data['mechanisms'] = mechanisms
-    case.target = case.tmp_path / 'floor-target.yaml'
+    data.pop('resource_floor_mechanisms', None)
+    if floor_only is not None:
+        data['resource_floor_mechanisms'] = floor_only
+    name = 'floor' if floor_only is None else 'floor-rate'
+    case.target = case.tmp_path / f'{name}-target.yaml'
     case.target.write_text(yaml.safe_dump(data, sort_keys=False))
     case.target_sha256 = digest(data)
-    freeze = case.tmp_path / 'floor-freeze.yaml'
-    freeze.write_text(yaml.safe_dump({'message_version': '1.0', 'id': 'fixture.floor.protocol', 'version': 1,
+    freeze = case.tmp_path / f'{name}-freeze.yaml'
+    freeze.write_text(yaml.safe_dump({'message_version': '1.0', 'id': f'fixture.{name}.protocol', 'version': 1,
         'settings': {'mode': 'estimated', 'estimator_version': 'swdb.analytic.v1', 'target_description': str(case.target),
                      'inputs': ['tiny-sym', 'tiny-sym-b'], 'roi': 'fixture.stream.v1', 'threads': 1}}, sort_keys=False))
     result = run_swdb('freeze-protocol', freeze, '--records', case.records.path, '--format', 'json')
@@ -1100,6 +1105,39 @@ def test_a_missing_bandwidth_rate_gives_an_unknown_floor_with_a_reason_not_zero(
     assert cand['cand.untouched']['resource_floor']['seconds'] == pytest.approx(40)
     assert [(r['region'], r['tier'], r['value'], r['reason']) for r in report['ranking']] == [
         ('cand.untouched', 'floor_headroom', pytest.approx(1.0), None), ('cand.rewritten', 'unknown', None, 'unknown_limit')]
+
+
+def test_a_floor_only_bandwidth_rate_makes_the_floor_numeric_and_leaves_every_estimate_unchanged(case):
+    # Like services.v2 (C11): memory is priced by another mechanism; the measured bandwidth rate is
+    # carried for the resource floor only, so the estimator must never read it.
+    cache = {'model': 'cache_fit', 'parameters': {'capacity_bytes': rate(1e9, 'bytes'), 'bytes_per_s': rate(1000.0, 'bytes/s'),
+                                                  'cold_bytes_per_s': rate(1000.0, 'bytes/s')}}
+    floor_only = [{'model': 'streaming_bandwidth', 'parameters': {'bytes_per_s': rate(2.0, 'bytes/s')}}]
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    base = [work('base.untouched', b, 3, 40), work('base.rewritten', b, 7, 10, 16, 10)]
+    cand = [work('cand.untouched', c, 3, 40), work('cand.rewritten', c, 7, 4, 16, 5)]
+    use_target(case, [COMPUTE, LATENCY, cache])
+    without = case.estimate('fixture.candidate.without', cand)
+    use_target(case, [COMPUTE, LATENCY, cache], floor_only=floor_only)
+    case.estimate('fixture.baseline', base)
+    with_rate = case.estimate('fixture.candidate', cand)
+    # Seam 1, check 5: identical seconds, total and per region, bound by bound.
+    assert with_rate['seconds'] == without['seconds'] == pytest.approx(70)
+    assert [(r['id'], r['seconds'], [(x['model'], x['seconds']) for x in r['bounds'] + r['overheads']]) for r in with_rate['regions']] == \
+        [(r['id'], r['seconds'], [(x['model'], x['seconds']) for x in r['bounds'] + r['overheads']]) for r in without['regions']]
+    assert all(x['model'] != 'streaming_bandwidth' for r in with_rate['regions'] for x in r['bounds'] + r['overheads'])
+    # Seam 3: the floor is numeric (16 B / 2 B/s = 8 s > 4 s compute) and below the 30 s estimate.
+    report = attributed(case)
+    row = rows(report, 'candidate')['cand.rewritten']
+    assert row['seconds'] == pytest.approx(30)
+    floor = row['resource_floor']
+    assert floor['seconds'] == pytest.approx(8) and floor['limiting_term'] == 'streaming_bandwidth' and floor['missing'] == []
+    assert floor['terms'] == [
+        {'model': 'compute_throughput', 'in_description': True, 'seconds': pytest.approx(4), 'missing': []},
+        {'model': 'streaming_bandwidth', 'in_description': True, 'seconds': pytest.approx(8), 'missing': []}]
+    assert row['headroom'][0] == {'limit': 'resource_floor', 'value': pytest.approx(3.75), 'reason': None}
+    for r in report['regions']:
+        assert r['resource_floor']['seconds'] <= r['seconds'] + 1e-12
 
 
 def test_floor_follows_the_estimate_trial_rule_and_stays_below_it(case):

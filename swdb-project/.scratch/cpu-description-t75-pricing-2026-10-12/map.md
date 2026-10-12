@@ -29,7 +29,10 @@ Graph: 01–06 start now → 07 (needs 01, 02, 04, 05, 06) → 08 (needs 03, 07)
 
 ## Context pointers
 
+- Ticket 03 resolved (2026-10-12 01:20 ET): floor-only rate field `resource_floor_mechanisms` ([answer](issues/03-floor-only-bandwidth-rate.md#answer)).
 - Code map (2026-10-12 01:02 ET, `e2611242`): [notes/index.md](notes/index.md).
+- Ticket 02 resolved (2026-10-12 01:23 ET): `memory_v2` = 1- and 2-byte writes at 8 MiB, run with `--group memory_v2` ([answer](issues/02-memory-v2-store-cells.md#answer)).
+- Ticket 04 resolved (2026-10-12): `allocator_v2` with malloc/free, exact bins up to 32 MiB and `--cell`; ticket-07 command in [04 answer](issues/04-allocator-v2-malloc-large-bins.md#answer).
 - 06 resolved 2026-10-12 01:24 ET: `--service-group library_call` (7 paired services incl. `indirect-call`); t75 indirect call is the virtual `do_widen` after `_M_widen_init`; ticket-07 command in [06 answer](issues/06-library-call-and-indirect-call.md#answer).
 
 - Origin: fine-grained attribution tickets 03 and 09 closed negative

@@ -89,3 +89,66 @@ def fixture_receipt():
 def bind(records, *args):
     return subprocess.run([sys.executable, "-m", "swdb.cpu_service_binding", "--records", str(records.path),
         *map(str, args), "--format", "json"], capture_output=True, text=True)
+
+
+# Allocator v2 (2026-10-12 ET, cpu-description ticket 04): malloc and exact large bins.
+def gross_allocator_resource(records,tmp_path,identifier,group,cells,receipt=None):
+    """Import an allocator receipt (hand cells (operation, ABI, bytes, s/call) unless a runner receipt is given); derive its gross resource."""
+    if receipt is None:receipt=hand_allocator_receipt(tmp_path,group,cells)
+    imported=run_swdb('import-cpu-service-calibration','--records',records.path,'--receipt',receipt,
+        '--id',identifier+'.source','--fixture','--format','json')
+    assert imported.returncode==0,imported.stderr+imported.stdout
+    derived=subprocess.run([sys.executable,'-m','swdb.cpu_allocator_resource','--records',str(records.path),
+        '--source-calibration',identifier+'.source','--id',identifier,'--fixture','--format','json'],capture_output=True,text=True)
+    assert derived.returncode==0,derived.stderr+derived.stdout
+    return identifier
+
+
+def hand_allocator_receipt(tmp_path,group,cells):
+    raw=fixture_receipt();raw['machine']='testhost'
+    raw['settings'].update(group=group,sizes=sorted({c[2] for c in cells}),min_trial_s=.05,
+        cells=[{'operation':op,'size_bytes':size} for op,_,size,_ in cells])
+    raw['services']=[{'id':f'allocator.{op}.{size}','unit':'seconds/call','event_definition':f'Hand fixture {abi} event.',
+        'scope':{'worker_scope':'serial','operation':op,'event_abi':abi,'size_bytes':size,
+            'allocator_regime':'fresh_process_repeated_allocate_free_batches','transfer_basis':'inferred','payload_touch':False},
+        'denominator':{'level':'source_normalized_work','basis':'reported','proof':'Hand-computed fixture, not native count evidence.'},
+        'trials':[{'events':10,'gross_seconds':10*rate*k,'driver_seconds':.00001,'order':order}
+            for k,order in [(1.,'service_first'),(1.1,'driver_first'),(.9,'service_first')]]} for op,abi,size,rate in cells]
+    return save_receipt(tmp_path,raw)
+
+
+def allocator_v2_estimate(records,tmp_path,malloc_bins,receipt=None):
+    """Bind v1 + v2 gross allocator resources, then estimate a malloc / 16 MiB new[] / delete[] fixture."""
+    def per_run(n):return {**fact(n),'scope':'per_run'}
+    def setup(char,target):
+        target['mechanisms']=target['mechanisms'][:1]
+        rows=[(29,'malloc','known_length_bins',malloc_bins),
+              (30,'_Znam','known_length_bins',[(16777216,1),(65536,1)]),
+              (31,'_ZdaPv','allocation_lifetime_size_bins',[(16777216,1)])]
+        char['unmodeled_calls']=[{'site':site,'region':'fixture.region','name':name,'body_counted':False,
+            'cost_accounting':'opaque_callee','execution_count':per_run(sum(n for _,n in bins))} for site,name,_,bins in rows]
+        char['regions'][0]['call_shape_counts']={'format':'swdb.call-shape-counts.v1','scope':'per_run','calls':[{
+            'site':site,'name':name,'event':'allocation','execution_count':per_run(sum(n for _,n in bins)),'body_counted':False,
+            'known_length_bins':[],'allocation_lifetime_size_bins':[],**{field:[{'bytes':b,'execution_count':per_run(n)} for b,n in bins]},
+            'unknown_lengths':per_run(0),'unknown_free_lifetimes':per_run(0),'scope':'per_run','missing':[]} for site,name,field,bins in rows]}
+    clock_case(records,tmp_path,shaped=True,setup=setup)
+    target=yaml.safe_load((tmp_path/'target.yaml').read_text());target['id']='fixture.allocator.base'
+    records.write('target_descriptions/fixture.allocator.base.yaml',target)
+    v1=gross_allocator_resource(records,tmp_path,'fixture.allocator.v1','allocator_v1',[('new_array','_Znam',65536,.2)])
+    v2=gross_allocator_resource(records,tmp_path,'fixture.allocator.v2','allocator_v2',[
+        ('malloc','malloc',64,.2),('new_array','_Znam',16777216,.4),('delete_array','_ZdaPv',16777216,.1)],receipt=receipt)
+    outcome=bind(records,'--target-description',target['id'],'--characterization','fixture.counts',
+        '--calibration',v1,'--calibration',v2,'--id','fixture.allocator.bound','--fixture')
+    assert outcome.returncode==0,outcome.stderr+outcome.stdout
+    bound=json.loads(outcome.stdout)
+    request=tmp_path/'allocator-v2-freeze.yaml'
+    request.write_text(yaml.safe_dump({'message_version':'1.0','id':'fixture.allocator.v2.protocol','version':1,
+        'settings':{'mode':'estimated','estimator_version':'swdb.analytic.v1','target_description':bound['id'],
+                    'inputs':['tiny-sym'],'roi':'fixture.stream.v1','threads':1}}))
+    frozen=run_swdb('freeze-protocol',request,'--records',records.path,'--format','json')
+    assert frozen.returncode==0,frozen.stderr+frozen.stdout
+    result=run_swdb('estimate','--records',records.path,'--characterization','fixture.counts','--target-description',
+        bound['id'],'--protocol',json.loads(frozen.stdout)['id'],'--id','fixture.allocator.v2.estimate','--format','json')
+    assert result.returncode==0,result.stderr+result.stdout
+    estimate=json.loads(result.stdout)
+    return bound,next(b for b in estimate['regions'][0]['bounds'] if b['model']=='native_service_costs')

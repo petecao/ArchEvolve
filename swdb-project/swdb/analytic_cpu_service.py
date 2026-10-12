@@ -122,6 +122,9 @@ def _rate(mechanism,name,unit='seconds/call'):
     return None if fact.get('basis')=='unknown' else parameter(mechanism,name,unit)
 
 
+# Exact allocator ABIs and their shape-bin field; malloc/free added 2026-10-12 ET (allocator_v2).
+ALLOCATOR_FIELDS={'_Znam':'known_length_bins','_Znwm':'known_length_bins','malloc':'known_length_bins',
+    '_ZdaPv':'allocation_lifetime_size_bins','_ZdlPv':'allocation_lifetime_size_bins','free':'allocation_lifetime_size_bins'}
 ALLOCATOR_RESOURCE_ASSUMPTION={'regime':'fresh_process_repeated_allocate_free_batches','transfer_basis':'inferred',
     'cost_basis':'gross_allocator_loop_resource_v1','includes_loop_control':True,'composition':'max_with_counted_compute_resource'}
 
@@ -151,8 +154,6 @@ def _bulk_profile_parameters(item,selection,mechanism):
 
 def _shape_parameters(selection,mechanism):
     missing=[]
-    allocator_fields={'_Znam':'known_length_bins','_Znwm':'known_length_bins',
-        '_ZdaPv':'allocation_lifetime_size_bins','_ZdlPv':'allocation_lifetime_size_bins'}
     bulk=selection['name'] in BULK_ABIS
     if bulk:
         if selection['bin_kind']!='known_length_bins':missing.append('selector.calls.bulk_abi_bin_kind')
@@ -160,7 +161,7 @@ def _shape_parameters(selection,mechanism):
         if selection['scope_assumption'] not in (BULK_ASSUMPTION,BULK_RESOURCE_ASSUMPTION) or selection['scope_assumption'].get('physical_upper_bound') is not False:
             missing.append('selector.calls.explicit_constructed_bulk_transfer')
     else:
-        if allocator_fields.get(selection['name']) != selection['bin_kind']:
+        if ALLOCATOR_FIELDS.get(selection['name']) != selection['bin_kind']:
             missing.append('selector.calls.allocator_abi_bin_kind')
         if selection['scope_assumption'] not in ({'regime':'fresh_process_repeated_allocate_free_batches','transfer_basis':'inferred'},ALLOCATOR_RESOURCE_ASSUMPTION):
             missing.append('selector.calls.explicit_allocator_regime_transfer')
@@ -209,7 +210,7 @@ def _memory_construction(item,mechanism):
     if kind=='compare-and-swap':required.add('outcome_policy')
     if not isinstance(construction,dict) or set(construction)-{'cost_basis'}!=required:return None,['memory_scenario.explicit_construction']
     if construction.get('cost_basis','paired_driver_subtraction') not in ('paired_driver_subtraction','gross_constructed_resource_v1'):return None,['memory_scenario.resource_recipe']
-    size=construction['footprint_bytes'];small=width==1
+    size=construction['footprint_bytes'];small=width==1 and kind=='read'  # 2026-10-12: 1-byte writes are resident (memory_v2)
     if (expected is None or construction['primitive'] not in ((expected,'floating_monotonic_add') if kind=='add-update' and width==8 else (expected,)) or construction['regime']!=('fixed_small_byte_read_constructed_requests' if small else 'resident_serial_constructed_requests') or
         construction['transfer_basis']!='inferred' or construction['physical_cache_level']!='unverified' or type(size) is not int or size<64 or size>8388608 or size&(size-1) or
         (small and (kind!='read' or size!=256))):return None,['memory_scenario.supported_construction']
