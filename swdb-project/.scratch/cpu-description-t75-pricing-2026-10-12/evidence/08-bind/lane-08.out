@@ -1,0 +1,17 @@
+hostlock: acquired lease=mbit10-evaluation-node0 mode=measure generation=519 pid=2940101 by cpud0809-job-08 at 2026-10-12T21:20:37Z
+socket_lane: node 0, cpus 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62, policy bind:0, lease generation 519, aligned to no_gapbs_batch_running, load1 7.39, starting at 2026-10-12T21:20:37Z
+{"aligned_cell_age_s": "", "aligned_to": "no_gapbs_batch_running", "command": ["bash", "/data/yanruj/EvolveSWDB_runs/cpud0809-20261012-a1/scripts/job-08.sh", "/data/yanruj/ArchEvolve-cpud0809-b8be5305"], "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62", "ended_utc": "", "exit_code": -1, "host": "mbit10", "job": "cpud0809-job-08", "lease_generation": 519, "lease_name": "mbit10-evaluation-node0", "load1_at_start": 7.39, "load1_max": 32, "node": 0, "numa_memory_policy": "bind:0", "numactl": "--cpunodebind=0 --membind=0", "preregistration_sha256": null, "started_utc": "2026-10-12T21:20:37Z"}
+2026-10-12 17:20:38 ET 08 start commit=b8be53053df1485e6dd370d847a07246189c490d
+2026-10-12 17:20:39 ET 08 scratch store copied (1.1G)
+2026-10-12 17:20:39 ET 08 step bind begin
+2026-10-12 17:40:59 ET 08 step bind end rc=0
+cee03869aa2ab624d0eb1ef54b8807603d2a222d749113c7d65d847549c45c6d  records/target_descriptions/mbit10.cpu.lanl20261006.t1.services.v1.yaml
+cee03869aa2ab624d0eb1ef54b8807603d2a222d749113c7d65d847549c45c6d  /data/yanruj/EvolveSWDB_runs/cpud0809-20261012-a1/records08/target_descriptions/mbit10.cpu.lanl20261006.t1.services.v1.yaml
+70fc555390552fad5c150e53d9ff9ecc9d3262a1a8d3f9eb908aab7b10e4b66a  /data/yanruj/EvolveSWDB_runs/cpud0809-20261012-a1/records08/target_descriptions/mbit10.cpu.lanl20261006.t1.services.v2.yaml
+2026-10-12 17:40:59 ET 08 services.v1 byte-identical
+2026-10-12 17:40:59 ET 08 step validate begin
+2026-10-12 17:54:45 ET 08 step validate end rc=0
+2026-10-12 17:54:45 ET 08 job 08 done
+{"aligned_cell_age_s": "", "aligned_to": "no_gapbs_batch_running", "command": ["bash", "/data/yanruj/EvolveSWDB_runs/cpud0809-20261012-a1/scripts/job-08.sh", "/data/yanruj/ArchEvolve-cpud0809-b8be5305"], "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62", "ended_utc": "2026-10-12T21:54:45Z", "exit_code": 0, "host": "mbit10", "job": "cpud0809-job-08", "lease_generation": 519, "lease_name": "mbit10-evaluation-node0", "load1_at_start": 7.39, "load1_max": 32, "node": 0, "numa_memory_policy": "bind:0", "numactl": "--cpunodebind=0 --membind=0", "preregistration_sha256": null, "started_utc": "2026-10-12T21:20:37Z"}
+hostlock: released lease=mbit10-evaluation-node0 generation=519 pid=2940101 at 2026-10-12T21:54:45Z
+lane_rc=0

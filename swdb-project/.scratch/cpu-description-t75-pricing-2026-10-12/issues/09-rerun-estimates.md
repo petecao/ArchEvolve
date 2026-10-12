@@ -2,7 +2,7 @@
 
 Created: 2026-10-12 01:10 ET
 **Type:** task
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 08
 **Spec:** `../spec.md` (C13 (estimate half); user stories 1, 24, 25, 27, 28)
 **Code map:** `../notes/ops.md`

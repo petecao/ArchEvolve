@@ -42,6 +42,9 @@ Graph: 01–06 start now → 07 (needs 01, 02, 04, 05, 06) → 08 (needs 03, 07)
   whole store valid; ticket 08 binds `resource.memory-v2.a1`, `resource.allocator-v2.a1`, `service.openmp.a2`,
   `service.library-call.a1`, `resource.bulk-total.a3`; library-call pilot fix `f2d41156`; memmove 30 164 B bin is
   702 ns (noisy disjoint profile) ([answer](issues/07-calibration-runs-mbit10.md#answer), [runbook](evidence/07-calibrations/README.md)).
+- Ticket 08 resolved (2026-10-12 17:55 ET, branch `cpud/08-09-bind-estimate`): `services.v2` bound on mbit10
+  (sha256 `70fc5553…`), 6-member allowlist, 252 compatibility rows with 0 missing, floor-only 15 071 467 834 B/s;
+  whole store `OK: 723`; `services.v1` unchanged ([answer](issues/08-bind-services-v2.md#answer), [runbook](evidence/08-bind/README.md)).
 
 - Origin: fine-grained attribution tickets 03 and 09 closed negative
   ([03 answer](../fine-grained-attribution-2026-10-11/issues/03-first-real-pair.md#answer),
