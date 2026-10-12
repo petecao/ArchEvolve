@@ -1,0 +1,49 @@
+2026-10-12T14:50:09Z 2026-10-12 10:50:09 ET [job-b node1] start openmp-a2-count
+2026-10-12T15:01:44Z 2026-10-12 11:01:44 ET [job-b node1] end openmp-a2-count rc=0
+2026-10-12T15:01:44Z 2026-10-12 11:01:44 ET [job-b node1] start openmp-a2-elapsed
+2026-10-12T15:13:25Z 2026-10-12 11:13:25 ET [job-b node1] end openmp-a2-elapsed rc=0
+2026-10-12T15:13:25Z 2026-10-12 11:13:25 ET [job-b node1] start openmp-a2-validate
+2026-10-12T15:13:25Z 2026-10-12 11:13:25 ET [job-b node1] end openmp-a2-validate rc=0
+2026-10-12T15:13:25Z 2026-10-12 11:13:25 ET [job-b node1] start libcall-count
+2026-10-12T15:24:50Z 2026-10-12 11:24:50 ET [job-b node1] end libcall-count rc=0
+2026-10-12T15:24:50Z 2026-10-12 11:24:50 ET [job-b node1] start libcall-elapsed
+2026-10-12T15:39:31Z 2026-10-12 11:39:31 ET [job-b node1] end libcall-elapsed rc=1
+2026-10-12T15:39:43Z 2026-10-12 11:39:44 ET [job-a node1] start memory-v2-count
+2026-10-12T15:42:35Z 2026-10-12 11:42:35 ET [job-i node0] start import-openmp-a2
+2026-10-12T15:51:35Z 2026-10-12 11:51:35 ET [job-a node1] end memory-v2-count rc=0
+2026-10-12T15:51:35Z 2026-10-12 11:51:35 ET [job-a node1] start memory-v2-elapsed
+2026-10-12T16:03:35Z 2026-10-12 12:03:35 ET [job-a node1] end memory-v2-elapsed rc=0
+2026-10-12T16:03:35Z 2026-10-12 12:03:35 ET [job-a node1] start allocator-v2-count
+2026-10-12T16:04:13Z 2026-10-12 12:04:13 ET [job-i node0] end import-openmp-a2 rc=0
+2026-10-12T16:05:38Z 2026-10-12 12:05:38 ET [job-i node0] start import-memory-v2
+2026-10-12T16:17:31Z 2026-10-12 12:17:31 ET [job-a node1] end allocator-v2-count rc=0
+2026-10-12T16:17:31Z 2026-10-12 12:17:31 ET [job-a node1] start allocator-v2-elapsed
+2026-10-12T16:26:48Z 2026-10-12 12:26:48 ET [job-i node0] end import-memory-v2 rc=0
+2026-10-12T16:26:48Z 2026-10-12 12:26:48 ET [job-i node0] start resource-memory-v2
+2026-10-12T16:31:34Z 2026-10-12 12:31:34 ET [job-a node1] end allocator-v2-elapsed rc=0
+2026-10-12T16:31:34Z 2026-10-12 12:31:34 ET [job-a node1] start bulk-a3-count
+2026-10-12T16:43:04Z 2026-10-12 12:43:04 ET [job-a node1] end bulk-a3-count rc=0
+2026-10-12T16:43:04Z 2026-10-12 12:43:05 ET [job-a node1] start bulk-a3-elapsed
+2026-10-12T16:48:03Z 2026-10-12 12:48:03 ET [job-i node0] end resource-memory-v2 rc=0
+2026-10-12T16:48:13Z 2026-10-12 12:48:13 ET [job-i node0] start import-allocator-v2
+2026-10-12T16:54:59Z 2026-10-12 12:54:59 ET [job-a node1] end bulk-a3-elapsed rc=0
+2026-10-12T16:55:00Z 2026-10-12 12:55:00 ET [job-t node1] start openmp-native-tests
+2026-10-12T16:55:00Z 2026-10-12 12:55:00 ET [job-i node0] start import-bulk-a3
+2026-10-12T16:55:02Z 2026-10-12 12:55:02 ET [job-t node1] end openmp-native-tests rc=1
+2026-10-12T16:55:07Z 2026-10-12 12:55:07 ET [job-l node1] start libcall-count-2
+2026-10-12T17:06:32Z 2026-10-12 13:06:32 ET [job-l node1] end libcall-count-2 rc=0
+2026-10-12T17:06:32Z 2026-10-12 13:06:32 ET [job-l node1] start libcall-elapsed-2
+2026-10-12T17:09:53Z 2026-10-12 13:09:53 ET [job-i node0] end import-allocator-v2 rc=0
+2026-10-12T17:09:53Z 2026-10-12 13:09:53 ET [job-i node0] start resource-allocator-v2
+2026-10-12T17:16:51Z 2026-10-12 13:16:51 ET [job-i node0] end import-bulk-a3 rc=0
+2026-10-12T17:16:51Z 2026-10-12 13:16:51 ET [job-i node0] start resource-bulk-a3
+2026-10-12T17:21:22Z 2026-10-12 13:21:22 ET [job-l node1] end libcall-elapsed-2 rc=0
+2026-10-12T17:31:27Z 2026-10-12 13:31:27 ET [job-i node0] end resource-allocator-v2 rc=0
+2026-10-12T17:38:31Z 2026-10-12 13:38:31 ET [job-i node0] end resource-bulk-a3 rc=0
+2026-10-12T17:38:32Z 2026-10-12 13:38:32 ET [job-i node0] start import-library-call
+2026-10-12T17:59:50Z 2026-10-12 13:59:50 ET [job-i node0] end import-library-call rc=0
+2026-10-12T17:59:50Z 2026-10-12 13:59:50 ET [job-v node0] merged records-c imports into records-b
+2026-10-12T17:59:50Z 2026-10-12 13:59:50 ET [job-v node0] start targeted-validate
+2026-10-12T18:05:56Z 2026-10-12 14:05:56 ET [job-v node0] end targeted-validate rc=0
+2026-10-12T18:05:56Z 2026-10-12 14:05:56 ET [job-v node0] start whole-validate
+2026-10-12T18:20:29Z 2026-10-12 14:20:29 ET [job-v node0] end whole-validate rc=0
