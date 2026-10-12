@@ -739,16 +739,20 @@ ITERATION_3 = ITERATION_2.replace("""  for (int i = 0; i < n; ++i)
 ITERATION_SECONDS = [(40, 50, 10), (40, 25, 10), (20, 25, 10), (20, 25, 5)]
 
 
-def iterations(case, count):
-    """Writes iterations 0..count-1: source tree `fixture.it<i>.source` and estimate `fixture.it<i>`."""
+def iterations(case, count, calls=None):
+    """Writes iterations 0..count-1: source tree `fixture.it<i>.source` and estimate `fixture.it<i>`.
+    `calls` maps an iteration index to the executed calls its characterization records."""
     texts = [ITERATION_0, ITERATION_1, ITERATION_2, ITERATION_3][:count]
     for i, text in enumerate(texts):
         root = tree(case.tmp_path, f'it{i}', text)
         snapshot(case.records, f'fixture.it{i}.source', root)
         a, b, c = ITERATION_SECONDS[i]
         path = root / 'kernel.cpp'
-        case.estimate(f'fixture.it{i}', [region(f'it{i}.a', path, 3, a), region(f'it{i}.b', path, 7, b),
-                                         region(f'it{i}.c', path, 11, c)])
+        loops = [region(f'it{i}.a', path, 3, a), region(f'it{i}.b', path, 7, b), region(f'it{i}.c', path, 11, c)]
+        if (calls or {}).get(i):
+            estimate_with_calls(case, f'fixture.it{i}', loops, calls[i])
+        else:
+            case.estimate(f'fixture.it{i}', loops)
 
 
 def attribute_iteration(case, current, previous=None, earlier=(), rid='fixture.attribution', previous_estimate=None):
@@ -852,6 +856,18 @@ def test_iteration_three_names_the_iteration_that_last_changed_each_region_from_
     # Cumulative: every loop was rewritten in some iteration.
     assert groups(report)['agent_rewritten']['baseline_seconds'] == 100
     assert groups(report)['untouched']['baseline_seconds'] == 0
+
+
+def test_an_intrinsic_seen_only_in_an_earlier_diff_is_not_pinned_by_the_report(case):
+    # Review fix (finding 1): previous loop B calls the intrinsic and was rewritten in iteration 1
+    # (baseline -> previous), but no row of this report labels it: B is untouched this iteration,
+    # and the candidate's B calls nothing. So the report pins no intrinsic.
+    catalog(case)
+    iterations(case, 3, calls={1: [call(0, 'it1.b', '_mm512_i32gather_ps', 2)]})
+    report = attributed_iteration(case, 2, previous=1)
+    assert all(r['evidence'] == [] for r in report['regions'] + report['this_iteration']['regions'])
+    assert report['catalog'] == []
+    assert region_facts(report['this_iteration']['regions'])[('baseline', 'it1.b')] == ('untouched', 1)
 
 
 def test_iteration_two_report_validates_pins_its_previous_candidate_and_is_indexed(case):

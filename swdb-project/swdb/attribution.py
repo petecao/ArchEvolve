@@ -1144,19 +1144,27 @@ def _as(side, name):
     return renamed
 
 
-def _last_changed(side, chain, catalog=None):
+def _last_changed(side, chain, known=None):
     """{region ID: iteration that last changed it}. `chain[k]` is iteration k's tree; `side` is
     iteration len(chain). A region last changed in iteration k + 1 overlaps a site of the diff
     from chain[k] but none from chain[k + 1]; one that overlaps none is 0, one without a source
-    location is None. Uses the labeling rules of `_label`, so it follows whatever they are."""
+    location is None. Uses the labeling rules of `_label`, so it follows whatever they are.
+
+    Review fix (finding 1): labels here never read the catalog, so a call seen only in an earlier
+    diff pins nothing in the report. `known[k]` are labels the caller already made for the diff
+    chain[k] -> side (any catalog origin only changes the name of a touched origin), so no diff is
+    labeled twice."""
     current = _as(side, 'candidate')
     found, pending = {}, [r['id'] for r in side.estimate['regions']]
     for k in reversed(range(len(chain))):
-        labels = _label(current, _sites(chain[k], current), catalog)
+        labels = (known or {}).get(k) or _label(current, _sites(chain[k], current))
         for rid in list(pending):
-            origin = labels[rid]['origin']
-            if origin != 'untouched':
-                found[rid] = None if origin == 'unattributed' else k + 1
+            row = labels[rid]
+            if row['reason'] == 'no_source_location':
+                found[rid] = None
+                pending.remove(rid)
+            elif row['sites']:
+                found[rid] = k + 1
                 pending.remove(rid)
     return {**found, **{rid: 0 for rid in pending}}
 
@@ -1176,8 +1184,8 @@ def _iteration(store, args, baseline, candidate, labels, catalog=None, bounds=No
     chain = [baseline, *earlier, previous]
     before = _as(previous, 'baseline')
     sites, rows = _split(before, candidate, catalog)
-    changed = {'previous': _last_changed(previous, chain[:-1], catalog),
-               'candidate': _last_changed(candidate, chain, catalog)}
+    changed = {'previous': _last_changed(previous, chain[:-1]),
+               'candidate': _last_changed(candidate, chain, {0: labels['candidate'], len(chain) - 1: rows['candidate']})}
     for row in labels['baseline'].values():
         row['last_changed_iteration'] = 0
     for row in list(labels['candidate'].values()) + list(rows['candidate'].values()):
