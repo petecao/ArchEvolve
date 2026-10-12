@@ -1,7 +1,8 @@
 # Attribution reports (`swdb.attribution.v1`)
 
 Created: 2026-10-11 (Eastern Time), fine-grained attribution ticket 02.
-Updated: 2026-10-11 ET (ticket 05: library, intrinsic and offload labels; ticket 07: resource
+Updated: 2026-10-12 ET (cpu-description ticket 03: floor reads
+`resource_floor_mechanisms`); 2026-10-11 ET (ticket 05: library, intrinsic and offload labels; ticket 07: resource
 floor, floor headroom and ranking; ticket 06 + 07 merge: floors in `this_iteration`; ticket 04:
 merged sites, `mixed`, inlined pieces, matched regions, unattributed flag; ticket 08: catalog
 bound, remaining gain bound and the full ranking; ticket 09, 2026-10-11 21:17 ET: the split check;
@@ -194,7 +195,9 @@ own rates, ignoring latency and every overhead. It is a limit, never an estimate
 - Both terms come from the unchanged `compute_throughput` and `streaming_bandwidth` mechanism
   models, called exactly as the estimator calls them, on the region's own counts.
 - Only the estimate's pinned target description is read (`target_description_snapshot`, checked
-  against its hash). No other description, no `cache_fit` hit bandwidth, no latency, row, queue or
+  against its hash). Its rates are its `resource_bound` mechanisms plus its
+  `resource_floor_mechanisms` (2026-10-12 ET): floor-only rates the estimator never reads, such
+  as the measured bandwidth `services.v2` carries. A term from one has `in_description: true`. No other description, no `cache_fit` hit bandwidth, no latency, row, queue or
   overhead mechanism, and no theoretical-peak parameter.
 - If the description lacks a model, that term has no rates: zero work gives 0 s, any work gives
   an unknown term naming the missing rate (for example `bytes_per_s`). The floor is then unknown,

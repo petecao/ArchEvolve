@@ -32,7 +32,9 @@ def register_cli(commands):
     run.add_argument('--count-only', action='store_true', help='emit ABI/count proof only; no elapsed calibration')
     run.add_argument('--service-group', choices=['clock', 'allocator'], default='clock')
     run.add_argument('--count-build-cap-mib', type=int, default=64, help='allocator counted build artifacts cap,1–64MiB; timed data stays25MiB')
-    run.add_argument('--size', type=int, action='append', help='exact allocator byte bin; repeat, <=1MiB')
+    run.add_argument('--size', type=int, action='append', help='exact allocator byte bin for the four C++ ABIs; repeat, <=32MiB')
+    run.add_argument('--cell', action='append', metavar='OPERATION:BYTES',
+        help='exact allocator cell, e.g. malloc:64 or new_array:16777216; repeat; excludes --size (2026-10-12 ET)')
     run.add_argument('--compiler', default='c++')
     run.add_argument('--machine', default='mbit10')
     run.add_argument('--lane', help='exact socket lease-name claim, e.g. mbit10-evaluation-node0; verified from live OS/lease state')
@@ -141,8 +143,8 @@ def calibrate(args):
     if args.service_group == 'allocator':
         from swdb.cpu_allocator_calibration import calibrate
         return calibrate(args)
-    if args.size or args.count_build_cap_mib != 64:
-        raise Failure('--size and --count-build-cap-mib apply to the allocator service group')
+    if args.size or args.cell or args.count_build_cap_mib != 64:
+        raise Failure('--size, --cell and --count-build-cap-mib apply to the allocator service group')
     from swdb.cpu_calibration import _command
     from swdb.cpu_service_controls import snapshot
     if not 3 <= args.repetitions <= 11 or not math.isfinite(args.max_wall_s) or not 0 < args.max_wall_s <= 900 or not math.isfinite(args.min_trial_s) or not 0 < args.min_trial_s <= .2:
