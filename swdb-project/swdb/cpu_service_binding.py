@@ -99,12 +99,12 @@ def _memory_binding(args,target,char,cells,scopes):
     selected={};parameters={};compatibility=[]
     for calibration,service in cells:
         scope=service.get('scope',{});op=scope.get('operation');width=scope.get('element_bytes');size=scope.get('footprint_bytes')
-        if op not in MEMORY_KINDS or type(width) is not int or width not in (1,4,8) or type(size) is not int:
+        if op not in MEMORY_KINDS or type(width) is not int or width not in (1,2,4,8) or type(size) is not int:
             raise Failure('unsupported constructed memory service cell')
         if op=='floating-add-update':
             from swdb.cpu_float_memory_calibration import PRIMITIVE
             if width!=8 or scope.get('source_primitive')!=PRIMITIVE:raise Failure('unsupported exact floating monotonic primitive')
-        small=width==1
+        small=width==1 and op=='read'  # 2026-10-12: narrow writes (memory_v2) are resident cells
         regime='fixed_small_byte_read_constructed_requests' if small else 'resident_serial_constructed_requests'
         if scope.get('update_kind')!=MEMORY_KINDS[op] or scope.get('memory_regime')!=regime or scope.get('worker_scope')!='serial' or scope.get('transfer_basis')!='inferred' or (small and (op!='read' or size!=256)):
             raise Failure('unsupported memory construction regime/primitive/width')
