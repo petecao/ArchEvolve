@@ -30,6 +30,9 @@ Graph: 01–06 start now → 07 (needs 01, 02, 04, 05, 06) → 08 (needs 03, 07)
 ## Context pointers
 
 - Code map (2026-10-12 01:02 ET, `e2611242`): [notes/index.md](notes/index.md).
+- Ticket 01 resolved (2026-10-12 05:40 ET, branch `cpud/01-trial-bind`): team-safe passes; t75 projections
+  committed; the trial leaves 6 unknown regions per side, all covered by tickets 02 and 04–07; projector
+  pure-intrinsic fix; 06 must also name `_ZNSo9_M_insertImEERSoT_` ([answer](issues/01-team-safe-projections-trial-bind.md#answer)).
 
 - Origin: fine-grained attribution tickets 03 and 09 closed negative
   ([03 answer](../fine-grained-attribution-2026-10-11/issues/03-first-real-pair.md#answer),
