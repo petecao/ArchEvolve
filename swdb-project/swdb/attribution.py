@@ -375,6 +375,8 @@ def _label(side, sites, catalog=None):
         if evidence:
             origin = evidence[0]['origin']
             reason = REWRITE_REASONS[origin]
+        if touched and catalog is not None and catalog.unbound_commands(side, region['id']):
+            origin, reason = 'unattributed', 'unbound_offload_command'   # F34: beats every other signal
         mixed = bool(touched) and (rel is None or any(_partly_changed(path, lines, side.name, sites) for path, lines in pieces))
         rows[region['id']] = {'side': side.name, 'region': region['id'], 'origin': origin, 'reason': reason,
                               'mixed': mixed, 'path': rel, 'lines': span, 'inlined': inlined,
@@ -433,6 +435,13 @@ def _names(call, symbol):
     return call == symbol or re.search(f'(?<![0-9]){len(symbol)}{re.escape(symbol)}', call) is not None
 
 
+def _region_commands(side, region_id):
+    """The region's executed `accelerator_calls`, over the aggregate and every trial."""
+    rows = [r for r in [side.locations.get(region_id)] if r] + [
+        r for t in side.characterization.get('trials', []) for r in t['regions'] if r['id'] == region_id]
+    return [c for row in rows for c in row.get('accelerator_calls', []) if _executed(c.get('execution_count'))]
+
+
 class _Catalog:
     """Saved intrinsic records and the typed library's operations, pinned when they label a region."""
 
@@ -453,13 +462,21 @@ class _Catalog:
             (a.get('source_location') or {}).get('path') for a in row.get('access_patterns', [])]
         return any(p and (p == path or p.endswith('/' + path)) for p in paths)
 
+    @staticmethod
+    def unbound_commands(side, region_id):
+        """F2 (review fix F34): executed commands whose event no functional observation command of
+        the side's pinned description names. Their time cannot be placed in any origin."""
+        target = side.estimate['target_description_snapshot']
+        bound = {c.get('event') for c in (target.get('functional_observation') or {}).get('commands', [])}
+        return sorted({c['event'] for c in _region_commands(side, region_id) if c['event'] not in bound})
+
     def evidence(self, side, region_id):
         found = set()
-        for row in [r for r in [side.locations.get(region_id)] if r] + [
-                r for t in side.characterization.get('trials', []) for r in t['regions'] if r['id'] == region_id]:
-            for command in row.get('accelerator_calls', []):
-                if _executed(command.get('execution_count')):
-                    found.add(('offload_command', command['event'], None))
+        target = side.estimate['target_description_snapshot']
+        bound = {c.get('event') for c in (target.get('functional_observation') or {}).get('commands', [])}
+        for command in _region_commands(side, region_id):
+            if command['event'] in bound:
+                found.add(('offload_command', command['event'], None))
         calls = side.calls.get(region_id, [])
         for name, rid, sha in self.intrinsics:
             if any(_names(c, name) for c in calls):

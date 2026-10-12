@@ -117,7 +117,7 @@
           "region": {"type": "string", "minLength": 1},
           "origin": {"$ref": "#/$defs/origin"},
           "reason": {"enum": ["overlaps_rewrite_site", "no_changed_line", "outside_source_tree", "no_source_location",
-                               "offload_command_in_site", "intrinsic_in_site", "library_operation_in_site"]},
+                               "offload_command_in_site", "intrinsic_in_site", "library_operation_in_site", "unbound_offload_command"]},
           "mixed": {"type": "boolean"},
           "path": {"type": ["string", "null"]},
           "lines": {"oneOf": [{"$ref": "#/$defs/lines"}, {"type": "null"}]},

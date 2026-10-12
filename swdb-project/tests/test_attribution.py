@@ -579,7 +579,20 @@ def call(site, region_id, name, executions, line=7):
             'operations_per_execution': 0, 'execution_count': count(executions)}
 
 
-def offload(row, event='fixture.gather', executions=4):
+BOUND_EVENT = 'dx100.functional.gather'   # a command of the DX100 functional observation contract
+
+
+def bind_offload_events(case):
+    """Re-freeze the case on its description plus the DX100 functional observation commands, so an
+    accelerator call naming one of their events is bound by the contract (F2, review fix F34)."""
+    data = yaml.safe_load(case.target.read_text())
+    dx100 = yaml.safe_load((REPO / 'records' / 'target_descriptions' / 'dx100-e4fc4af-functional-analytic-v1.t1.yaml').read_text())
+    data['functional_observation'] = dx100['functional_observation']
+    case.target.write_text(yaml.safe_dump(data, sort_keys=False))
+    use_target(case, data['mechanisms'])
+
+
+def offload(row, event=BOUND_EVENT, executions=4):
     """Mark a counted region as issuing one functional-observation command."""
     row['accelerator_calls'].append({'site': 0, 'event': event, 'intrinsic': '__dxc_gather',
         'hardware_operations': ['dx100.mmio.v1.indirect-load.i32'], 'execution_count': count(executions),
@@ -626,6 +639,7 @@ def attributed_with(case, library):
 
 
 def test_offload_command_beats_intrinsic_beats_library_call_inside_one_site(case):
+    bind_offload_events(case)
     library = catalog(case)
     b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
     case.estimate('fixture.baseline', [region('base.untouched', b, 3, 40), region('base.rewritten', b, 7, 60)])
@@ -644,7 +658,7 @@ def test_offload_command_beats_intrinsic_beats_library_call_inside_one_site(case
                       'cand.untouched': 'untouched', 'cand.offload': 'offload_command', 'cand.intrinsic': 'intrinsic',
                       'cand.library': 'library_call', 'cand.plain': 'agent_rewritten'}
     evidence = {r['region']: r['evidence'] for r in report['regions'] if r['side'] == 'candidate'}
-    assert evidence['cand.offload'] == [{'origin': 'offload_command', 'name': 'fixture.gather'},
+    assert evidence['cand.offload'] == [{'origin': 'offload_command', 'name': BOUND_EVENT},
                                         {'origin': 'library_call', 'name': 'operation.fixture_stage'}]
     assert evidence['cand.intrinsic'] == [{'origin': 'intrinsic', 'name': 'mm512_i32gather_ps'},
                                           {'origin': 'library_call', 'name': 'operation.fixture_stage'}]
@@ -652,6 +666,7 @@ def test_offload_command_beats_intrinsic_beats_library_call_inside_one_site(case
 
 
 def test_rewritten_group_splits_seconds_by_origin_and_baseline_std_calls_stay_untouched(case):
+    bind_offload_events(case)
     library = catalog(case)
     b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
     header = case.tmp_path / 'catalog' / 'library_operations' / 'fixture_stage.hh'
@@ -701,6 +716,23 @@ def test_rewritten_group_splits_seconds_by_origin_and_baseline_std_calls_stay_un
         {'origin': 'intrinsic', 'baseline_seconds': 0.0, 'candidate_seconds': 0.0},
         {'origin': 'library_call', 'baseline_seconds': 0.0, 'candidate_seconds': 10.0},
         {'origin': 'offload_command', 'baseline_seconds': 0.0, 'candidate_seconds': 5.0}]
+
+
+def test_an_offload_command_the_contract_does_not_bind_is_unattributed_with_a_reason(case):
+    # F2 (review fix F34): `offload_command` needs a command named by the description's
+    # functional observation contract. This description binds none, so the executed command's
+    # time cannot be placed: the region is unattributed, and so is its group time.
+    library = catalog(case)
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    case.estimate('fixture.baseline', [region('base.untouched', b, 3, 40), region('base.rewritten', b, 7, 60)])
+    case.estimate('fixture.candidate', [region('cand.untouched', c, 3, 40), offload(region('cand.offload', c, 7, 5)),
+                                        region('cand.plain', c, 8, 15)])
+    report = attributed_with(case, library)
+    labels = {r['region']: (r['origin'], r['reason']) for r in report['regions']}
+    assert labels['cand.offload'] == ('unattributed', 'unbound_offload_command')
+    assert labels['cand.plain'] == ('agent_rewritten', 'overlaps_rewrite_site')
+    split = groups(report)
+    assert (split['unattributed']['candidate_seconds'], split['agent_rewritten']['candidate_seconds']) == (5, 15)
 
 
 def test_validate_rejects_a_changed_intrinsic_that_labeled_a_region(case):
