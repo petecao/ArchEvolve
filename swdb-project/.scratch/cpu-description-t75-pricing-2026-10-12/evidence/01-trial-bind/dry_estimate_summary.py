@@ -49,8 +49,9 @@ def main():
     parser.add_argument('--target-description', required=True)
     parser.add_argument('--side', action='append', required=True, metavar='SIDE=CHARACTERIZATION,PROTOCOL')
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--detail', type=Path, help='optional: unknown regions with each term that names a missing item')
     args = parser.parse_args()
-    sides, timing = {}, {}
+    sides, timing, details = {}, {}, {}
     for item in args.side:
         side, rest = item.split('=', 1)
         characterization, protocol = rest.split(',', 1)
@@ -59,6 +60,11 @@ def main():
                               f'cpud01.t75-{side}.uniform22.t1.estimate.trial-dry-a1')
         sides[side] = summary_rule.side_summary(record)
         sides[side]['persisted'] = False
+        details[side] = [{'region': r['id'], 'terms': [
+            {'model': b.get('model'), 'state': b.get('state'), 'missing': b['missing'],
+             'inputs': json.dumps(b.get('inputs'), default=str)[:20000]}
+            for b in r['bounds'] + r['overheads'] if b['missing']]}
+            for r in record['regions'] if r['seconds'] is None]
         timing[side] = round(time.monotonic() - start, 1)
         print(f'{side}: seconds={record["seconds"]} unknown={sides[side]["unknown_regions"]}/{sides[side]["regions"]} '
               f'in {timing[side]} s', file=sys.stderr, flush=True)
@@ -80,6 +86,8 @@ def main():
                            'items': items[name]} for name in sorted(reach, key=lambda n: (-reach[n], n))],
                'sides': sides}
     args.output.write_text(json.dumps(summary, indent=1) + '\n')
+    if args.detail:
+        args.detail.write_text(json.dumps(details, indent=1) + '\n')
 
 
 if __name__ == '__main__':

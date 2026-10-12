@@ -23,7 +23,7 @@ log "step dry-estimates begin"
 python3 "$E/dry_estimate_summary.py" --records "$RAW/records" --target-description "$TD" \
   --side "baseline=fga03.t75-baseline.uniform22.t1.characterization.a2,$BP" \
   --side "candidate=fga03.t75-candidate.uniform22.t1.characterization.a2,$CP" \
-  --output "$OUT/unknowns-summary-trial.json" 2> "$OUT/dry.stderr"
+  --output "$OUT/unknowns-summary-trial.json" --detail "$OUT/unknown-regions-trial.json" 2> "$OUT/dry.stderr"
 rc=$?
 log "step dry-estimates end rc=$rc"
 { TZ=America/New_York date; uptime; df -h /data1 /data; } > "$OUT/env-end-d.txt" 2>&1
