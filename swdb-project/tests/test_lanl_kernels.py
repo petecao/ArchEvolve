@@ -15,6 +15,7 @@ def built(tmp_path_factory):
     records = make_records(tmp_path_factory.mktemp("lanl-kernels")).copy_closure()
     result = records.swdb("build")
     assert result.returncode == 0, result.stderr
+    records.build_stdout = result.stdout
     return records
 
 
@@ -94,3 +95,13 @@ def test_category_is_null_when_the_application_states_no_domain(records):
     path = records.path.parent / "build" / "unvalidated.sqlite"
     db.build(records.path, path)
     assert db.sql(path, "select slug, category from kernels") == [{"slug": "stub-kernel", "category": None}]
+
+
+def test_build_reports_rows_per_lanl_table(built):
+    # Added 2026-10-12 ET: the build summary names each LANL table's row count (weekly-deck retro).
+    line = next(line for line in built.build_stdout.splitlines() if line.startswith("LANL core: "))
+    for table in ("kernels", "kernel_variants"):
+        count = sql(built, f"select count(*) as n from {table}")[0]["n"]
+        assert f"{table} {count}" in line
+    tables = sql(built, "select count(*) as n from sqlite_master where type = 'table' and name like 'swdb%'")[0]["n"]
+    assert line.startswith("LANL core: 16 tables (") and line.endswith(f"swdb_ extension: {tables} tables")

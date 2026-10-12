@@ -437,6 +437,8 @@ def _dispatch(args):
         _require_valid(records)
         info = db.build(records, db_path)
         print(f"OK: built {db_path} from {info['records']} record(s) in {info['seconds']:.2f} s")
+        rows = ", ".join(f"{table} {count}" for table, count in info["lanl_rows"].items())
+        print(f"LANL core: {len(info['lanl_rows'])} tables ({rows}); swdb_ extension: {info['swdb_tables']} tables")
         return 0
     if args.command == "sql":
         _ensure_db(records, db_path)
