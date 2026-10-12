@@ -169,3 +169,91 @@ def test_byte_read_uses_independently_counted_verified_small_cycle_not_widened_a
     unsupported=run_memory(records,'--output',tmp_path/'byte-large','--fixture','--operation','read',
         '--element-bytes','1','--footprint-bytes','32768')
     assert unsupported.returncode!=0 and not (tmp_path/'byte-large').exists()
+
+
+def test_narrow_store_cells_form_a_separate_memory_v2_group_at_the_resident_footprint(records,tmp_path):
+    # 2026-10-12 ET (cpud ticket 02): 1- and 2-byte writes at 8 MiB; v1 keeps its 1-byte read-only rule.
+    output=tmp_path/'narrow-stores'
+    result=run_memory(records,'--output',output,'--fixture','--group','memory_v2','--operation','write',
+        '--element-bytes','1','--element-bytes','2','--footprint-bytes','8388608','--repetitions','3',
+        '--min-trial-s','.002','--max-wall-s','120')
+    assert result.returncode==0,result.stderr+result.stdout
+    raw=json.loads((output/'receipt.json').read_text())
+    assert raw['settings']['group']=='memory_v2'
+    assert {(s['scope']['operation'],s['scope']['element_bytes']) for s in raw['services']}=={('write',1),('write',2)}
+    for service in raw['services']:
+        width=service['scope']['element_bytes']
+        assert service['id']==f'memory.write.{width}.8388608'
+        assert service['scope']['memory_regime']=='resident_serial_constructed_requests'
+        assert service['scope']['footprint_bytes']==8388608
+        assert all(t['batch_events']==8388608//width and t['cycle_verified_elements'] is None for t in service['trials'])
+    for width in ('1','2'):
+        refused=run_memory(records,'--output',tmp_path/('v1-write'+width),'--fixture','--operation','write',
+            '--element-bytes',width,'--footprint-bytes','8388608')
+        assert refused.returncode!=0 and not (tmp_path/('v1-write'+width)).exists()
+    for args in (('--operation','read','--element-bytes','2'),('--operation','add-update','--element-bytes','1'),
+                 ('--operation','write','--element-bytes','4')):
+        refused=run_memory(records,'--output',tmp_path/'v2-other','--fixture','--group','memory_v2',*args,'--footprint-bytes','8388608')
+        assert refused.returncode!=0 and not (tmp_path/'v2-other').exists(),args
+
+
+def test_narrow_stores_are_counted_as_exact_one_and_two_byte_writes(records,tmp_path,llvm22):
+    records.copy_repo('applications','kernels','implementations','inputs','machines','profiles',
+        'hardware_targets','strategies','operations','intrinsics')
+    output=tmp_path/'narrow-counted'
+    result=run_memory(records,'--output',output,'--fixture','--group','memory_v2','--llvm-bin',llvm22,
+        '--footprint-bytes','8388608','--repetitions','3','--min-trial-s','.002','--max-wall-s','240')
+    assert result.returncode==0,result.stderr+result.stdout
+    raw=json.loads((output/'receipt.json').read_text())
+    assert raw['context']['optimized_work']['retained_primitives']=={'1':['volatile_write'],'2':['volatile_write']}
+    assert {s['scope']['element_bytes'] for s in raw['services']}=={1,2}
+    for service in raw['services']:
+        points=service['denominator']['proof']['points']
+        assert len(points)==8 and {p['element_bytes'] for p in points}=={1,2}
+        for p in points:
+            expected=[{'update_kind':'write','element_bytes':p['element_bytes'],'requests':p['events']}] if p['invoke'] else []
+            assert p['requests_by_kind_width']==expected and p['operation_counts']['atomic']==0
+
+
+def narrow_admission_receipt():
+    """Synthetic memory_v2 admission input (writes 1 and 2 bytes at 8 MiB); never measured."""
+    import copy
+    raw=native_admission_receipt();template=raw['services'][2]
+    assert template['scope']['operation']=='write'
+    raw['settings'].update(group='memory_v2',operations=['write'],element_bytes=[1,2],footprint_bytes=[8388608])
+    raw['context']['optimized_work']['retained_primitives']={'1':['volatile_write'],'2':['volatile_write']}
+    points=[]
+    for width in (1,2):
+        for invoke in (True,False):
+            for n in (3,5):
+                points.append({'operation':'write','element_bytes':width,'invoke':invoke,'events':n,'requests':n if invoke else 0,
+                    'opaque_events':0,'checked_success_events':None,
+                    'requests_by_kind_width':[{'update_kind':'write','element_bytes':width,'requests':n}] if invoke else [],
+                    'operation_counts':{'integer':n,'floating_point':0,'branch':n,'atomic':0},'characterization_sha256':'a'*64})
+    services=[]
+    for width in (1,2):
+        service=copy.deepcopy(template);elements=8388608//width
+        service['id']=f'memory.write.{width}.8388608'
+        service['scope'].update(element_bytes=width,footprint_bytes=8388608)
+        service['denominator']['proof']['points']=copy.deepcopy(points)
+        for t in service['trials']:t.update(events=elements*2,batch_events=elements,batches=2)
+        services.append(service)
+    raw['services']=services
+    return raw
+
+
+def test_native_memory_v2_receipt_admits_narrow_writes_and_keeps_its_own_matrix(records,tmp_path):
+    import copy
+    records.copy_repo('machines')
+    raw=narrow_admission_receipt()
+    accepted=import_memory(records,tmp_path,raw,'synthetic.memory.narrow')
+    assert accepted.returncode==0,accepted.stderr+accepted.stdout
+    assert {s['id'] for s in json.loads(accepted.stdout)['services']}=={'memory.write.1.8388608','memory.write.2.8388608'}
+    assert run_swdb('validate','--records',records.path).returncode==0
+    v1_tag=copy.deepcopy(raw);v1_tag['settings']['group']='memory_v1'
+    small_regime=copy.deepcopy(raw);small_regime['services'][0]['scope']['memory_regime']='fixed_small_byte_read_constructed_requests'
+    read_proof=copy.deepcopy(raw);read_proof['context']['optimized_work']['retained_primitives']['1']=['volatile_read']
+    wide=copy.deepcopy(raw);wide['settings']['element_bytes']=[1,2,4]
+    for i,data in enumerate((v1_tag,small_regime,read_proof,wide)):
+        refused=import_memory(records,tmp_path,data,'synthetic.invalid.narrow.'+str(i))
+        assert refused.returncode!=0,(i,refused.stdout)

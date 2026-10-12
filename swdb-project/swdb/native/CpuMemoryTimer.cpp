@@ -1,4 +1,5 @@
 // Created: 2026-10-06 ET. Prepared resident-cell/driver pairs, no application timing.
+// Updated: 2026-10-12 ET: 1/2-byte resident writes (memory_v2).
 #include "CpuMemoryWork.h"
 #include <algorithm>
 #include <chrono>
@@ -59,8 +60,10 @@ int main(int argc,char **argv) {
   const int width=std::atoi(argv[1]);const auto elements=std::strtoull(argv[2],nullptr,10);
   const auto batches=std::strtoull(argv[3],nullptr,10);const int operation=std::atoi(argv[4]);
   const std::string order=argv[5];
-  if ((width!=1 && width!=4 && width!=8) || elements<8 || (elements&(elements-1)) || elements*width>8388608 ||
-      !batches || elements*batches>134217728 || operation<0 || operation>4 || (width==1 && (operation!=0 || elements>256)) ||
+  const bool narrow_store=(width==1 || width==2) && operation==1;
+  if ((width!=1 && width!=2 && width!=4 && width!=8) || elements<8 || (elements&(elements-1)) || elements*width>8388608 ||
+      !batches || elements*batches>134217728 || operation<0 || operation>4 ||
+      (!narrow_store && (width==2 || (width==1 && (operation!=0 || elements>256)))) ||
       (order!="service_first" && order!="driver_first")) return 2;
-  return width==1 ? timed<std::uint8_t>(elements,batches,operation,order) : width==4 ? timed<std::uint32_t>(elements,batches,operation,order) : timed<std::uint64_t>(elements,batches,operation,order);
+  return width==1 ? timed<std::uint8_t>(elements,batches,operation,order) : width==2 ? timed<std::uint16_t>(elements,batches,operation,order) : width==4 ? timed<std::uint32_t>(elements,batches,operation,order) : timed<std::uint64_t>(elements,batches,operation,order);
 }

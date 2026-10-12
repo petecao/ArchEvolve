@@ -210,7 +210,7 @@ def _memory_construction(item,mechanism):
     if kind=='compare-and-swap':required.add('outcome_policy')
     if not isinstance(construction,dict) or set(construction)-{'cost_basis'}!=required:return None,['memory_scenario.explicit_construction']
     if construction.get('cost_basis','paired_driver_subtraction') not in ('paired_driver_subtraction','gross_constructed_resource_v1'):return None,['memory_scenario.resource_recipe']
-    size=construction['footprint_bytes'];small=width==1
+    size=construction['footprint_bytes'];small=width==1 and kind=='read'  # 2026-10-12: 1-byte writes are resident (memory_v2)
     if (expected is None or construction['primitive'] not in ((expected,'floating_monotonic_add') if kind=='add-update' and width==8 else (expected,)) or construction['regime']!=('fixed_small_byte_read_constructed_requests' if small else 'resident_serial_constructed_requests') or
         construction['transfer_basis']!='inferred' or construction['physical_cache_level']!='unverified' or type(size) is not int or size<64 or size>8388608 or size&(size-1) or
         (small and (kind!='read' or size!=256))):return None,['memory_scenario.supported_construction']
