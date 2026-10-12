@@ -16,6 +16,8 @@ ticket 01).
 Updated: 2026-10-11 (Eastern Time): the LANL core starts with `kernels` and `kernel_variants`,
 plus `swdb_row_origins` and `swdb_guessed_columns` (LANL-shaped-db ticket 02).
 
+Updated: 2026-10-11 (Eastern Time): contract link tables (LANL-shaped-db ticket 06).
+
 Run commands inside `ArchEvolve/swdb-project/`. [The database builder](../../swdb/db.py)
 writes `build/swdb.sqlite` beside `records/` by default (another records folder
 `X` gets `build/swdb-X.sqlite`). It recreates every table in a temporary file,
@@ -305,7 +307,44 @@ guessed and listed in `swdb_guessed_columns`.
 
 ### Contract link tables
 
-Not built yet (LANL-shaped-db ticket 06).
+Added 2026-10-11 ET (LANL-shaped-db ticket 06). Code:
+[`swdb/lanl_contracts.py`](../../swdb/lanl_contracts.py).
+
+Four `swdb_` extension tables say which LANL rows a rewrite contract is tied to. They point at
+LANL rows; no LANL table points back, so dropping them leaves the LANL core intact.
+
+**Only links a record states.** Two kinds of record state one:
+
+| Record | What it states | Links made |
+|---|---|---|
+| certification | `candidate.contract` was certified on `candidate.snapshot`, a source snapshot of one implementation | contract → that implementation (`kernel_variants`) and its kernel |
+| implementation | a statement fact `legality:<contract>:<clause>` on one of its statements | contract and clause → the statement's function (`definitions`), the arrays of the access-pattern steps the statement names (`data_structures`), the implementation and its kernel |
+
+- **A link is a tie, not a verdict.** A certification links whatever its verdict; a fact links
+  whatever its value. Read the verdict or value through `record_id` and `record_field`, or in
+  `swdb_statement_facts`.
+- **The contract must be in the library** (`swdb_library_entries`, kind `rewrite_contract`).
+  A record naming any other ID makes no link.
+- **Not links:** the site finder's matches (recorded in campaign summaries) are inference, and a
+  proposal's offered library is an offer. Lowerings, intrinsics and library operations never link.
+- No `swdb_row_origins` entries: each link row names its own record.
+
+All four tables have the same columns; only the LANL column differs.
+
+| Column | Meaning |
+|---|---|
+| `contract` | the contract ID (`swdb_library_entries.id`) |
+| `definition_id` / `data_structure_id` / `kernel_id` / `kernel_variant_id` | the linked LANL row (`definitions.id`, `data_structures.id`, `kernels.id`, `kernel_variants.id`) |
+| `clause` | the clause a statement fact names; NULL for a certification |
+| `record_id` | the record that states the link (`swdb_records.id`) |
+| `record_field` | the field that states it: `candidate`, or `extensions.statements.annotations[<i>].annotation_facts[<j>]` |
+
+| Table | Linked LANL row |
+|---|---|
+| `swdb_contract_definitions` | the function holding the statement: the `definitions` row the implementation's `extensions.statements.function` produced |
+| `swdb_contract_data_structures` | each array (`data_structures` row of the implementation's kernel) that a step the statement names reads or writes |
+| `swdb_contract_kernels` | the kernel of the linked implementation |
+| `swdb_contract_kernel_variants` | the implementation itself |
 
 ### `swdb_row_origins`
 
