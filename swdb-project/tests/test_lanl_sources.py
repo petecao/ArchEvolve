@@ -8,7 +8,7 @@ import pytest
 
 from conftest import make_records
 from testkit.lanl import (assert_foreign_keys_clean, assert_guessed_listed, assert_lanl_shape, assert_origins,
-                          assert_separable, sql)
+                          assert_record_fields_resolve, assert_separable, sql)
 
 TABLES = ("source_files", "executables", "definitions", "data_structures")
 SNAPSHOT = "typed-library-bfs-scalar-profile-20261003-a2.package.v1.source"
@@ -156,6 +156,10 @@ def test_every_source_table_row_names_its_record(built):
     for table in TABLES:
         assert sql(built, f"select count(*) as n from {table}")[0]["n"] > 0, table
     assert_origins(built, *TABLES)
+
+
+def test_every_record_field_names_a_field_of_its_record(built):
+    assert_record_fields_resolve(built)
 
 
 def test_a_build_passes_the_foreign_key_check(built):

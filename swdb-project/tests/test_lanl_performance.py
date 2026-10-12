@@ -11,7 +11,7 @@ import pytest
 
 from conftest import make_records, read_yaml
 from testkit.lanl import (assert_foreign_keys_clean, assert_guessed_listed, assert_lanl_shape, assert_origins,
-                          assert_separable, sql)
+                          assert_record_fields_resolve, assert_separable, sql)
 
 ESTIMATE = "lanl.bound-v2.fixture.20261006.estimate"
 CANDIDATE = "bfs-functional-read-offload-20261006-a1.proposal.candidate-1"
@@ -152,14 +152,14 @@ def test_only_measured_per_run_metrics_reach_performance_metrics(built):
         for i, metric in enumerate(profile["metrics"]):
             number = isinstance(metric["value"], (int, float)) and not isinstance(metric["value"], bool)
             if metric["basis"] == "measured" and number and metric.get("threads") in threads:
-                expected.append((profile["id"], f"metrics.{i}", metric["name"], metric["value"]))
+                expected.append((profile["id"], f"metrics[{i}]", metric["name"], metric["value"]))
     got = [(r["record_id"], r["record_field"], r["metric_name"], r["metric_value"]) for r in metric_rows(built)]
     assert sorted(got) == sorted(expected) and expected
 
 
 def test_simulated_and_estimated_metrics_never_appear(built):
     profile = built.read(f"profiles/{PROFILE}.yaml")
-    other = {f"metrics.{i}" for i, m in enumerate(profile["metrics"]) if m["basis"] != "measured"}
+    other = {f"metrics[{i}]" for i, m in enumerate(profile["metrics"]) if m["basis"] != "measured"}
     assert any(m["basis"] == "simulated" and "cachegrind" in (m.get("tool") or "") for m in profile["metrics"])
     rows = metric_rows(built)
     assert not other & {r["record_field"] for r in rows if r["record_id"] == PROFILE}
@@ -226,6 +226,10 @@ def test_an_estimate_whose_subject_names_no_implementation_has_no_variant(record
 
 def test_every_performance_row_names_its_record(built):
     assert_origins(built, *TABLES)
+
+
+def test_every_record_field_names_a_field_of_its_record(built):
+    assert_record_fields_resolve(built)
 
 
 def test_a_build_passes_the_foreign_key_check(built):

@@ -48,7 +48,8 @@ class Rows:
 
     def add(self, table, values, record_id, record_field="id"):
         """Insert one row (`values`: column -> value, `id` left out) and return its new `id`.
-        `record_id` and `record_field` name the YAML record and field the row was read from."""
+        `record_id` and `record_field` name the YAML record and field the row was read from;
+        `record_field` is a dotted path with bracketed list indexes (`code[0]`, `parts[2].outcome`)."""
         names = list(values)
         cursor = self.con.execute(f'INSERT INTO "{table}" ({", ".join(names)}) VALUES ({", ".join("?" * len(names))})',
                                   [values[name] for name in names])

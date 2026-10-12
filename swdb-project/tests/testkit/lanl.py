@@ -1,4 +1,6 @@
 """Shared checks for the LANL-shaped database (LANL-shaped-db spec). Created 2026-10-11 ET.
+Updated 2026-10-11 ET (review fixes): `assert_record_fields_resolve` checks every origin's
+`record_field` against the stored record.
 
 The expected shape is transcribed from the spec's appendix (the `DB_current_work` slide) and
 its layout rules, independently of the builder. Every LANL table group's test calls the same
@@ -7,6 +9,7 @@ helpers with its own table names:
     assert_lanl_shape(records, "source_files", "executables")
     assert_guessed_listed(records, "source_files")
     assert_origins(records, "source_files")
+    assert_record_fields_resolve(records)
     assert_foreign_keys_clean(records)
     assert_separable(records, tmp_path)
 
@@ -16,6 +19,7 @@ because `swdb sql` is read-only.
 """
 
 import json
+import re
 import shutil
 import sqlite3
 
@@ -96,6 +100,49 @@ def assert_origins(records, *tables):
         dangling = sql(records, f"select row_id from swdb_row_origins o where table_name = '{table}' "
                                 f'and not exists (select 1 from "{table}" t where t.id = o.row_id)')
         assert dangling == [], f"{table} origins without a row: {dangling[:5]}"
+
+
+#: One step of a `record_field` path: a key, then any number of `[<index>]`.
+_STEP = re.compile(r"([A-Za-z_][A-Za-z0-9_]*)((?:\[\d+\])*)")
+
+
+def resolve(data, path):
+    """The value at `path` in a record's JSON, for the one path syntax every LANL group uses:
+    dotted keys with bracketed list indexes (`code[0]`, `parts[0].outcome`,
+    `access_patterns[1].steps[2].array`). Raises KeyError if `path` does not name a field."""
+    value = data
+    for step in path.split("."):
+        match = _STEP.fullmatch(step)
+        if match is None:
+            raise KeyError(f"{path!r}: {step!r} is not `key` or `key[<index>]`")
+        if not isinstance(value, dict) or match[1] not in value:
+            raise KeyError(f"{path!r}: no key {match[1]!r}")
+        value = value[match[1]]
+        for index in map(int, re.findall(r"\d+", match[2])):
+            if not isinstance(value, list) or index >= len(value):
+                raise KeyError(f"{path!r}: no index [{index}] under {match[1]!r}")
+            value = value[index]
+    return value
+
+
+def assert_record_fields_resolve(records):
+    """Every `record_field` of `swdb_row_origins` and of the contract link tables names a field of
+    the record JSON stored in `swdb_records`, in the one syntax `resolve` reads."""
+    tables = [row["name"] for row in sql(records, "select name from sqlite_master where type = 'table' "
+                                                  "and (name = 'swdb_row_origins' or name like 'swdb_contract_%')")]
+    fields = {(row["record_id"], row["record_field"]) for table in tables
+              for row in sql(records, f"select distinct record_id, record_field from {table}")}
+    assert fields, "no record fields to check"
+    ids = sorted({record_id for record_id, _ in fields})
+    stored = {row["id"]: json.loads(row["json"]) for row in sql(
+        records, f"select id, json from swdb_records where id in ({', '.join(repr(i) for i in ids)})")}
+    unresolved = []
+    for record_id, field in sorted(fields):
+        try:
+            resolve(stored[record_id], field)
+        except KeyError as error:
+            unresolved.append((record_id, str(error)))
+    assert unresolved == [], f"{len(unresolved)} record fields do not resolve: {unresolved[:5]}"
 
 
 def assert_foreign_keys_clean(records):

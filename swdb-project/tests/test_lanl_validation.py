@@ -11,7 +11,7 @@ import pytest
 
 from conftest import make_records
 from testkit.lanl import (assert_foreign_keys_clean, assert_guessed_listed, assert_lanl_shape, assert_origins,
-                          assert_separable, sql)
+                          assert_record_fields_resolve, assert_separable, resolve, sql)
 
 VALIDATION = ("Validation_definition", "Validation_results")
 EMPTY = ("physics_assets", "kernel_dependencies", "code_chunks", "embeddings")
@@ -123,9 +123,35 @@ def test_every_link_target_table_exists(built):
         assert targets <= tables, (table, targets - tables)
 
 
+def test_every_record_field_names_a_field_of_its_record(built):
+    assert_record_fields_resolve(built)
+
+
 def test_a_build_passes_the_foreign_key_check(built):
     assert_foreign_keys_clean(built)
 
 
 def test_deleting_every_swdb_table_leaves_a_consistent_lanl_database(built, tmp_path):
     assert_separable(built, tmp_path)
+
+
+def test_a_workload_named_by_a_bare_id_has_that_field_as_its_origin(records):
+    # The evaluation format also allows `request.workload: <id>`; the origin then names
+    # `request.workload` itself, which resolves, not `request.workload.id`. Built without
+    # validation: the fixture evaluation is minimal.
+    from swdb import db
+
+    records.add_stub()
+    records.write("workloads/stub-workload.yaml", {"kind": "workload", "id": "stub-workload",
+                                                   "definition": {"graph": "tiny"}})
+    records.write("evaluations/stub-evaluation.yaml", {
+        "kind": "evaluation", "id": "stub-evaluation", "implementation": "stub-impl",
+        "request": {"workload": "stub-workload"}, "correctness": {"state": "passed"}})
+    path = records.path.parent / "build" / "unvalidated.sqlite"
+    db.build(records.path, path)
+    origins = db.sql(path, "select o.record_field from swdb_row_origins o join Validation_definition d "
+                           "on o.table_name = 'Validation_definition' and o.row_id = d.id "
+                           "where o.record_id = 'stub-evaluation'")
+    assert origins == [{"record_field": "request.workload"}]
+    stored = json.loads(db.sql(path, "select json from swdb_records where id = 'stub-evaluation'")[0]["json"])
+    assert resolve(stored, "request.workload") == "stub-workload"

@@ -7,7 +7,7 @@ import pytest
 
 from conftest import make_records, read_yaml
 from testkit.lanl import (assert_foreign_keys_clean, assert_guessed_listed, assert_lanl_shape, assert_origins,
-                          assert_separable, sql)
+                          assert_record_fields_resolve, assert_separable, sql)
 
 
 @pytest.fixture(scope="module")
@@ -63,6 +63,10 @@ def test_integer_ids_follow_record_id_order(built):
     for table in ("kernels", "kernel_variants"):
         slugs = [r["slug"] for r in sql(built, f"select slug from {table} order by id")]
         assert slugs == sorted(slugs), table
+
+
+def test_every_record_field_names_a_field_of_its_record(built):
+    assert_record_fields_resolve(built)
 
 
 def test_a_build_passes_the_foreign_key_check(built):

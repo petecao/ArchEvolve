@@ -11,7 +11,7 @@ import shutil
 import pytest
 
 from conftest import REPO, make_records
-from testkit.lanl import assert_foreign_keys_clean, assert_separable, sql
+from testkit.lanl import assert_foreign_keys_clean, assert_record_fields_resolve, assert_separable, sql
 
 #: contract.bfs_read_offload and contract.bfs_tdstep_frontier_staging, each certified on the
 #: scalar-only BFS snapshot of dx100-bfs-scalar.
@@ -128,6 +128,10 @@ def test_without_the_library_no_contract_is_linked(tmp_path):
     assert result.returncode == 0, result.stderr
     assert linked_contracts(records) == set()
     assert_foreign_keys_clean(records)
+
+
+def test_every_record_field_names_a_field_of_its_record(built):
+    assert_record_fields_resolve(built)
 
 
 def test_a_build_passes_the_foreign_key_check(built):

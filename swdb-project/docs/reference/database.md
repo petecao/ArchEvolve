@@ -1,6 +1,8 @@
 # The SQLite database
 
-Updated: 2026-10-11 21:50 ET: rewritten for the LANL-shaped layout
+Updated: 2026-10-11 22:07 ET: LANL-shaped-db review fixes (record-field path syntax, which
+evaluations reach `Validation_results`, `swdb_estimates.base_kernel_variant_id`). 2026-10-11 21:50 ET:
+rewritten for the LANL-shaped layout
 ([ADR 0015](../adr/0015-research-database-takes-the-main-database-shape.md), LANL-shaped-db
 tickets 01–07). Earlier updates: 2026-09-28 navigation; 2026-10-03 typed library and statements;
 2026-10-04 site-finder facts and pattern keys; 2026-10-06 access interface; 2026-10-07
@@ -287,7 +289,7 @@ keep the slide's capitalization.
 **Which outcomes count.** A correctness outcome is a profile's `correctness` part or an
 evaluation's `correctness.state`. It becomes a `Validation_results` row only when it names both
 an implementation (the kernel variant) and an input record: a profile's `input`, or an
-evaluation's `request.workload.id` when that is a `workload` record. Outcomes missing either
+evaluation's `request.workload.id` (or `request.workload`, when it is a bare ID) naming a `workload` record. Outcomes missing either
 (for example the dx100 smoke evaluations, which name no implementation) have no row.
 
 #### `Validation_definition`
@@ -307,7 +309,7 @@ that ran the pair.
 
 #### `Validation_results`
 
-One row per counted correctness outcome. Origin: the profile (`parts.<n>.outcome`) or
+One row per counted correctness outcome. Origin: the profile (`parts[<n>].outcome`) or
 evaluation (`correctness.state`).
 
 | Column | Meaning |
@@ -398,7 +400,7 @@ The YAML record behind every LANL row. A row several records name has one origin
 | `table_name` | the LANL table, for example `kernel_variants` |
 | `row_id` | the row's `id` in that table |
 | `record_id` | the record it was read from (`swdb_records.id`) |
-| `record_field` | the record field it was read from; `id` when the row stands for the whole record |
+| `record_field` | the record field it was read from, as a dotted path with bracketed list indexes (`code[0]`, `timing[2]`, `parts[0].outcome`, `access_patterns[1].steps[2].array`); `id` when the row stands for the whole record |
 
 ### `swdb_guessed_columns`
 

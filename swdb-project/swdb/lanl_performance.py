@@ -96,7 +96,7 @@ def _runs(rows, store, machines):
         arguments = ((store.get(profile.get("input"), "input") or {}).get("generator") or {}).get("arguments")
         runs = {}   # threads -> [performance_runs.id] of this profile
         for i, timing in enumerate(profile.get("timing") or []):
-            field = f"timing.{i}"
+            field = f"timing[{i}]"
             parameters = json.dumps({
                 "input": profile.get("input"), "input_arguments": arguments,
                 "threads": timing.get("threads"), "trials": timing.get("trials"),
@@ -132,4 +132,4 @@ def _metrics(rows, record, runs):
         run = runs.get(metric.get("threads"), [])
         if len(run) == 1:
             rows.add("performance_metrics", {"metric_name": metric.get("name"), "metric_value": value,
-                                             "performance_run_id": run[0]}, record.id, f"metrics.{i}")
+                                             "performance_run_id": run[0]}, record.id, f"metrics[{i}]")

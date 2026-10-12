@@ -6,7 +6,8 @@ Table names keep the slide's capitalization.
 
 - A correctness outcome (a profile's `correctness` part, an evaluation's `correctness.state`)
   counts when it names an implementation and an input record (a profile's `input`; an
-  evaluation's `request.workload.id` when that is a `workload` record).
+  evaluation's `request.workload.id`, or `request.workload` when it is a bare ID, naming a
+  `workload` record).
 - `Validation_definition`: one row per (kernel, input) pair a counted outcome ran, named
   `<kernel>/<input>`; `input_json` is the input's `generator` or the workload's `definition`.
   No record states an expected output, so `expected_output_json` is NULL.
@@ -65,14 +66,15 @@ def _outcomes(store):
         parts = record.data.get("parts") or []
         index = next((i for i, part in enumerate(parts) if part.get("part") == "correctness"), None)
         if index is not None:
-            yield (record.id, f"parts.{index}.outcome", record.data.get("implementation"), record.data.get("input"),
+            yield (record.id, f"parts[{index}].outcome", record.data.get("implementation"), record.data.get("input"),
                    "input", _PROFILE_PASSED.get(parts[index].get("outcome")))
     for record in store.of_kind("evaluation"):
         workload = (record.data.get("request") or {}).get("workload")
         state = (record.data.get("correctness") or {}).get("state")
         if state is not None:
-            yield (record.id, "correctness.state", record.data.get("implementation"),
-                   workload.get("id") if isinstance(workload, dict) else workload, "request.workload.id",
+            named, field = (workload.get("id"), "request.workload.id") if isinstance(workload, dict) \
+                else (workload, "request.workload")
+            yield (record.id, "correctness.state", record.data.get("implementation"), named, field,
                    _EVALUATION_PASSED.get(state))
 
 
