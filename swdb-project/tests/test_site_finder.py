@@ -7,6 +7,7 @@ Updated 2026-10-05 ET (code review T4): the implementation, application and kern
 read as committed at a pinned commit (`testkit.pinned`), not from the live checkout.
 """
 
+import hashlib
 import json
 import shutil
 
@@ -339,3 +340,133 @@ def test_campaign_refuses_when_the_query_chooses_no_region(campaign_team, source
     assert result.returncode != 0
     assert "regions: query chose no region" in result.stderr and "L4: no recorded fact" in result.stderr
     assert not (campaign_team["root"] / "provider-log.jsonl").exists()
+
+
+# --- order by the latest attribution report's ranking (fine-grained attribution ticket 10) ----
+# Created 2026-10-11 ET. Spec F20/F23, seam 2. The reports are hand-written fixture attribution
+# records (never evidence); only the fields the SQLite index reads are filled in.
+
+STAGING, REGROUP = f"{IMPL}/TDStep:240-241", f"{IMPL}/TDStep:241-241"
+
+
+def attribution_report(records, rid, ranked, *, verdict="passed", created="2026-10-11",
+                       kernel="gapbs-bfs", target="native_cpu"):
+    """A report whose ranking lists one candidate region per site-finder region in `ranked`, best
+    first. `verdict` None leaves `split_check` out (not checked)."""
+    rows = [{"side": "candidate", "region": f"cand.{i}", "origin": "agent_rewritten", "reason": "fixture",
+             "path": "bfs.cc", "lines": [240, 241], "seconds": 1.0, "sites": [], "mixed": False,
+             "matched_region": None, "headroom": [],
+             "resource_floor": {"seconds": None, "limiting_term": None, "missing": []},
+             "catalog_bound": {"seconds": None, "entry": None, "reason": "no_catalog_match", "mixed": False,
+                               "site_finder_regions": [sf], "entries": [], "missing": []}}
+            for i, sf in enumerate(ranked)]
+    data = {"kind": "attribution", "schema_version": "0.4", "id": rid, "status": "draft",
+            "created": created, "updated": created,
+            "baseline_estimate": {"id": "fixture.baseline"}, "candidate_estimate": {"id": "fixture.candidate"},
+            "baseline_source": {"id": "fixture.baseline.source"}, "candidate_source": {"id": "fixture.candidate.source"},
+            "target_description": {"id": "fixture.target", "sha256": "0" * 64},
+            "input": "fixture-input", "threads": 1, "evidence_kind": "contract_fixture",
+            "site_finder": {"campaign_summary": {"id": "fixture.summary", "sha256": "0" * 64}, "iteration": 1,
+                            "query_sha256": None, "kernel": kernel, "target": target, "regions": []},
+            "regions": rows, "groups": [],
+            "whole_program": {"baseline_seconds": None, "candidate_seconds": None, "total_speedup": None,
+                              "amdahl_ceiling": None, "unattributed_flagged": None},
+            "ranking": [{"position": i, "side": "candidate", "region": r["region"], "tier": "floor_headroom",
+                         "limit": "resource_floor", "value": float(len(rows) - i), "reason": None}
+                        for i, r in enumerate(rows, start=1)]}
+    if verdict is not None:
+        # ticket 09's block, only the parts its index rows read; the measured shares are not needed here
+        data["split_check"] = {"verdict": verdict, "rule": {"id": "swdb.split_check.v1", "max_abs_share_gap": 0.1},
+                               "profiles": {side: {"id": f"fixture.{side}.profile", "load_average": None}
+                                            for side in ("baseline", "candidate")},
+                               "reasons": [], "measured_shares": [], "gaps": []}
+    path = records / "attributions" / f"{rid}.yaml"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(yaml.safe_dump(data, sort_keys=False))
+
+
+def native(tmp_path, records, name):
+    return site_finder.find(records, campaign("native_cpu"), library=LIBRARY, db_path=tmp_path / f"{name}.sqlite")
+
+
+def test_a_passed_report_orders_regions_by_its_ranking_and_changes_nothing_else(tmp_path, records):
+    today = native(tmp_path, records, "today")
+    assert [r["id"] for r in today["regions"]] == [STAGING, REGROUP]
+    attribution_report(records, "fixture.attribution", [REGROUP])
+    ranked = native(tmp_path, records, "ranked")
+    # the ranked region first; an unranked one keeps today's relative order after it
+    assert [r["id"] for r in ranked["regions"]] == [REGROUP, STAGING]
+    assert ranked["ordering"] == {"attribution": "fixture.attribution", "split_check": "passed", "applied": True,
+                                  "rule": site_finder.ORDERING_RULE, "query_sha256": site_finder.ORDERING_QUERY_SHA256}
+    # eligibility, legality and recorded reasons are unchanged: only the order moved
+    assert sorted(ranked["regions"], key=lambda r: r["id"]) == sorted(today["regions"], key=lambda r: r["id"])
+    assert ranked["rejected"] == today["rejected"]
+    assert sorted(site_finder.region_rows(ranked), key=lambda r: r["id"]) == site_finder.region_rows(today)
+
+
+@pytest.mark.parametrize("verdict", ["split_unverified", None])
+def test_an_unverified_or_unchecked_report_keeps_todays_order_byte_identical(tmp_path, records, verdict):
+    today = native(tmp_path, records, "today")
+    attribution_report(records, "fixture.attribution", [REGROUP], verdict=verdict)
+    kept = native(tmp_path, records, "kept")
+    assert json.dumps(site_finder.region_rows(kept)) == json.dumps(site_finder.region_rows(today))
+    assert json.dumps(kept["regions"]) == json.dumps(today["regions"]) and kept["rejected"] == today["rejected"]
+    assert kept["ordering"]["attribution"] == "fixture.attribution" and kept["ordering"]["applied"] is False
+    assert kept["ordering"]["split_check"] == verdict
+
+
+def test_without_a_report_the_order_is_todays(tmp_path, records):
+    result = native(tmp_path, records, "none")
+    assert [r["id"] for r in result["regions"]] == [STAGING, REGROUP]
+    assert result["ordering"] == {"attribution": None, "split_check": None, "applied": False,
+                                  "rule": site_finder.ORDERING_RULE, "query_sha256": site_finder.ORDERING_QUERY_SHA256}
+
+
+def test_only_the_latest_report_for_the_campaigns_kernel_and_target_counts(tmp_path, records):
+    # an older passed report is superseded by a newer unverified one: today's order, no fallback
+    attribution_report(records, "fixture.old", [REGROUP], created="2026-10-10")
+    attribution_report(records, "fixture.new", [REGROUP], verdict="split_unverified", created="2026-10-11")
+    # newer reports for another target or kernel are never read
+    attribution_report(records, "fixture.gem5", [REGROUP], created="2026-10-12", target="dx100_gem5")
+    attribution_report(records, "fixture.other", [REGROUP], created="2026-10-12", kernel="gapbs-bc")
+    result = native(tmp_path, records, "latest")
+    assert result["ordering"]["attribution"] == "fixture.new"
+    assert [r["id"] for r in result["regions"]] == [STAGING, REGROUP]
+
+
+def test_reports_created_on_the_same_date_are_broken_by_the_greatest_id(tmp_path, records):
+    attribution_report(records, "fixture.a", [STAGING])
+    attribution_report(records, "fixture.b", [REGROUP])
+    result = native(tmp_path, records, "tie")
+    # Review fix F37: "latest" is the newest inputs (`created`), then the greatest record ID; the
+    # ordering query's own hash is recorded beside the rule.
+    assert result["ordering"]["attribution"] == "fixture.b"
+    assert "newest inputs" in result["ordering"]["rule"]
+    assert result["ordering"]["query_sha256"] == hashlib.sha256(site_finder.ORDERING_QUERY.encode()).hexdigest()
+    assert [r["id"] for r in result["regions"]] == [REGROUP, STAGING]
+
+
+#: sha256 of the rewriting role's prompt.txt in the native query campaign below, pinned before
+#: ticket 10 changed the site finder (2026-10-11 ET). The ranking reaches the agent only as order.
+#: The campaign validates its team store, so a hand-written report cannot sit there; the order
+#: itself is checked through `site_finder.find` above, which the campaign calls.
+REWRITE_PROMPT_SHA256 = "8b6f410943238b3f2b67330bb3eb1468cb47a49da28a2c2f90588ebef5aa9979"
+
+
+def test_campaign_without_a_report_keeps_todays_order_and_the_rewrite_prompt_is_unchanged(campaign_team, source_records):
+    import hashlib
+    add_bfs_implementation(campaign_team, None, source_records)
+    config = provider(campaign_team, {"rewriting": [rewrite(contracts=())]})
+    path = campaign_file(campaign_team, regions="query", budgets={"provider_calls_setup": 0},
+                         library={"allowed_tiers": ["shared", "experimental"], "contracts": []})
+    result = run_swdb("campaign", path, "--records", campaign_team["records"], "--provider-config", config,
+                      "--fixture", fixture_file(campaign_team), "--format", "json")
+    assert result.returncode == 0, result.stderr + result.stdout
+    (call,) = [entry for entry in log(campaign_team) if entry["role"] == "rewriting"]
+    assert [r["id"] for r in call["regions"]["regions"]] == [STAGING, REGROUP]
+    (it,) = json.loads(result.stdout)["iterations"]
+    assert sorted(r["id"] for r in it["regions"]) == [STAGING, REGROUP]
+    prompts = sorted(campaign_team["root"].rglob("prompt.txt"))
+    assert len(prompts) == 1 and "Agent role: extensa_rewriting." in prompts[0].read_text()
+    digests = {hashlib.sha256(p.read_bytes()).hexdigest() for p in prompts}
+    assert digests == {REWRITE_PROMPT_SHA256}

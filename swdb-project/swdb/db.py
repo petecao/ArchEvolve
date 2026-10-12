@@ -631,3 +631,203 @@ def compare(db_path, implementation, baseline, profile, baseline_profile, protoc
         return compare_records(records, implementation, baseline, profile, baseline_profile, protocol)
     finally:
         con.close()
+
+
+# Fine-grained attribution ticket 02 (2026-10-11 ET): attribution reports, appended as one
+# additive block. SWDB-only tables carry the `swdb_` prefix (LANL-shaped database rule);
+# unknown values are NULL. Documented in docs/reference/database.md.
+SCHEMA += """
+CREATE TABLE swdb_attributions (id TEXT PRIMARY KEY, baseline_estimate TEXT NOT NULL, candidate_estimate TEXT NOT NULL,
+    baseline_source TEXT NOT NULL, candidate_source TEXT NOT NULL, target_description TEXT NOT NULL,
+    target_description_sha256 TEXT NOT NULL, input TEXT NOT NULL, threads INTEGER NOT NULL, evidence_kind TEXT NOT NULL,
+    baseline_seconds REAL, candidate_seconds REAL, total_speedup REAL, amdahl_ceiling REAL, json TEXT NOT NULL,
+    unattributed_flagged INTEGER);
+CREATE TABLE swdb_attribution_groups (attribution TEXT NOT NULL, origin TEXT NOT NULL, baseline_seconds REAL,
+    candidate_seconds REAL, baseline_share REAL, candidate_share REAL, realized_speedup REAL, drift REAL,
+    unknown_regions INTEGER NOT NULL, PRIMARY KEY (attribution, origin));
+CREATE TABLE swdb_attribution_regions (attribution TEXT NOT NULL, side TEXT NOT NULL, region TEXT NOT NULL,
+    origin TEXT NOT NULL, reason TEXT NOT NULL, path TEXT, first_line INTEGER, last_line INTEGER, seconds REAL,
+    sites TEXT NOT NULL, mixed INTEGER NOT NULL, matched_region TEXT, PRIMARY KEY (attribution, side, region));
+"""
+
+
+def _insert_attribution_report(con, d):
+    whole = d["whole_program"]
+    con.execute("INSERT INTO swdb_attributions VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                (d["id"], d["baseline_estimate"]["id"], d["candidate_estimate"]["id"], d["baseline_source"]["id"],
+                 d["candidate_source"]["id"], d["target_description"]["id"], d["target_description"]["sha256"],
+                 d["input"], d["threads"], d["evidence_kind"], whole["baseline_seconds"], whole["candidate_seconds"],
+                 whole["total_speedup"], whole["amdahl_ceiling"], json.dumps(d), whole["unattributed_flagged"]))
+    con.executemany("INSERT INTO swdb_attribution_groups VALUES (?,?,?,?,?,?,?,?,?)",
+                    [(d["id"], g["origin"], g["baseline_seconds"], g["candidate_seconds"], g["baseline_share"],
+                      g["candidate_share"], g["realized_speedup"], g.get("drift"), len(g["unknown"])) for g in d["groups"]])
+    con.executemany("INSERT INTO swdb_attribution_regions VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+                    [(d["id"], r["side"], r["region"], r["origin"], r["reason"], r["path"],
+                      r["lines"][0] if r["lines"] else None, r["lines"][1] if r["lines"] else None,
+                      r["seconds"], json.dumps(r["sites"]), int(r["mixed"]), r["matched_region"]) for r in d["regions"]])
+
+
+# Fine-grained attribution ticket 05 (2026-10-11 ET): the rewritten group split by origin.
+SCHEMA += """
+CREATE TABLE swdb_attribution_origins (attribution TEXT NOT NULL, origin TEXT NOT NULL, baseline_seconds REAL,
+    candidate_seconds REAL, baseline_share REAL, candidate_share REAL, unknown_regions INTEGER NOT NULL,
+    PRIMARY KEY (attribution, origin));
+"""
+
+
+def _insert_attribution_origins(con, d):
+    con.executemany("INSERT INTO swdb_attribution_origins VALUES (?,?,?,?,?,?,?)",
+                    [(d["id"], o["origin"], o["baseline_seconds"], o["candidate_seconds"], o["baseline_share"],
+                      o["candidate_share"], len(o["unknown"]))
+                     for g in d["groups"] for o in g.get("origins", [])])
+
+
+# Fine-grained attribution ticket 06 (2026-10-11 ET): the `this_iteration` comparison (previous
+# accepted candidate -> candidate), only for reports given a previous candidate. Inside it,
+# `baseline_*` columns mean the previous accepted candidate.
+SCHEMA += """
+CREATE TABLE swdb_attribution_iterations (attribution TEXT PRIMARY KEY, iteration INTEGER NOT NULL,
+    previous_estimate TEXT NOT NULL, previous_source TEXT NOT NULL, earlier_sources TEXT NOT NULL,
+    previous_seconds REAL, candidate_seconds REAL, total_speedup REAL, amdahl_ceiling REAL);
+CREATE TABLE swdb_attribution_iteration_groups (attribution TEXT NOT NULL, origin TEXT NOT NULL, baseline_seconds REAL,
+    candidate_seconds REAL, baseline_share REAL, candidate_share REAL, realized_speedup REAL, drift REAL,
+    unknown_regions INTEGER NOT NULL, PRIMARY KEY (attribution, origin));
+CREATE TABLE swdb_attribution_iteration_regions (attribution TEXT NOT NULL, side TEXT NOT NULL, region TEXT NOT NULL,
+    origin TEXT NOT NULL, reason TEXT NOT NULL, path TEXT, first_line INTEGER, last_line INTEGER, seconds REAL,
+    sites TEXT NOT NULL, last_changed_iteration INTEGER, PRIMARY KEY (attribution, side, region));
+"""
+
+
+def _insert_attribution_iteration(con, d):
+    this = d.get("this_iteration")
+    if this is None:
+        return
+    whole = this["whole_program"]
+    con.execute("INSERT INTO swdb_attribution_iterations VALUES (?,?,?,?,?,?,?,?,?)",
+                (d["id"], this["iteration"], this["previous_estimate"]["id"], this["previous_source"]["id"],
+                 json.dumps([pin["id"] for pin in this["earlier_sources"]]), whole["baseline_seconds"],
+                 whole["candidate_seconds"], whole["total_speedup"], whole["amdahl_ceiling"]))
+    con.executemany("INSERT INTO swdb_attribution_iteration_groups VALUES (?,?,?,?,?,?,?,?,?)",
+                    [(d["id"], g["origin"], g["baseline_seconds"], g["candidate_seconds"], g["baseline_share"],
+                      g["candidate_share"], g["realized_speedup"], g.get("drift"), len(g["unknown"]))
+                     for g in this["groups"]])
+    con.executemany("INSERT INTO swdb_attribution_iteration_regions VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+                    [(d["id"], r["side"], r["region"], r["origin"], r["reason"], r["path"],
+                      r["lines"][0] if r["lines"] else None, r["lines"][1] if r["lines"] else None,
+                      r["seconds"], json.dumps(r["sites"]), r.get("last_changed_iteration"))
+                     for r in this["regions"]])
+
+
+# Fine-grained attribution ticket 07 (2026-10-11 ET): one headroom row per region and named
+# limit (ticket 08 adds `catalog_bound` rows below), and the next-iteration ranking. Headroom rows
+# come from the cumulative `regions`; `this_iteration` region floors stay in the JSON column.
+SCHEMA += """
+CREATE TABLE swdb_attribution_headroom (attribution TEXT NOT NULL, side TEXT NOT NULL, region TEXT NOT NULL,
+    limit_name TEXT NOT NULL, limit_seconds REAL, limiting_term TEXT, headroom REAL, reason TEXT,
+    missing TEXT NOT NULL, PRIMARY KEY (attribution, side, region, limit_name));
+CREATE TABLE swdb_attribution_ranking (attribution TEXT NOT NULL, position INTEGER NOT NULL, side TEXT NOT NULL,
+    region TEXT NOT NULL, tier TEXT NOT NULL, limit_name TEXT NOT NULL, value REAL, reason TEXT,
+    PRIMARY KEY (attribution, position));
+"""
+
+
+def _insert_attribution_headroom(con, d):
+    floors = [(d["id"], r["side"], r["region"], h["limit"], r["resource_floor"]["seconds"],
+               r["resource_floor"]["limiting_term"], h["value"], h["reason"], json.dumps(r["resource_floor"]["missing"]))
+              for r in d["regions"] for h in r["headroom"] if h["limit"] == "resource_floor"]
+    con.executemany("INSERT INTO swdb_attribution_headroom VALUES (?,?,?,?,?,?,?,?,?)", floors)
+    con.executemany("INSERT INTO swdb_attribution_ranking VALUES (?,?,?,?,?,?,?,?)",
+                    [(d["id"], r["position"], r["side"], r["region"], r["tier"], r["limit"], r["value"], r["reason"])
+                     for r in d["ranking"]])
+
+
+# Fine-grained attribution ticket 08 (2026-10-11 ET): one `catalog_bound` headroom row per
+# region (`limiting_term` holds the entry that gives the bound), and one row per region and
+# site-finder-matched entry with that entry's own estimate or unknown reason. Rows come from
+# the cumulative `regions`; `this_iteration` catalog bounds stay in the JSON column.
+SCHEMA += """
+CREATE TABLE swdb_attribution_catalog (attribution TEXT NOT NULL, side TEXT NOT NULL, region TEXT NOT NULL,
+    entry TEXT NOT NULL, kind TEXT, seconds REAL, reason TEXT, site_finder_regions TEXT NOT NULL, mixed INTEGER NOT NULL,
+    missing TEXT NOT NULL, PRIMARY KEY (attribution, side, region, entry));
+"""
+
+
+def _insert_attribution_catalog(con, d):
+    rows = [r for r in d["regions"] if "catalog_bound" in r]
+    con.executemany("INSERT INTO swdb_attribution_headroom VALUES (?,?,?,?,?,?,?,?,?)",
+                    [(d["id"], r["side"], r["region"], h["limit"], r["catalog_bound"]["seconds"], r["catalog_bound"]["entry"],
+                      h["value"], h["reason"], json.dumps(r["catalog_bound"]["missing"]))
+                     for r in rows for h in r["headroom"] if h["limit"] == "catalog_bound"])
+    con.executemany("INSERT INTO swdb_attribution_catalog VALUES (?,?,?,?,?,?,?,?,?,?)",
+                    [(d["id"], r["side"], r["region"], e["entry"], e["kind"], e["seconds"], e["reason"],
+                      json.dumps(e["site_finder_regions"]), int(r["catalog_bound"]["mixed"]), json.dumps(e["missing"]))
+                     for r in rows for e in r["catalog_bound"]["entries"]])
+
+
+# Fine-grained attribution ticket 09 (2026-10-11 ET): the split check, only for reports given
+# region profiles. One verdict row per report, one gap row per side and group; the measured
+# scopes stay in the JSON column. `within_rule` is NULL when a share is unknown.
+SCHEMA += """
+CREATE TABLE swdb_attribution_split_checks (attribution TEXT PRIMARY KEY, verdict TEXT NOT NULL, rule_id TEXT NOT NULL,
+    max_abs_share_gap REAL NOT NULL, baseline_profile TEXT NOT NULL, candidate_profile TEXT NOT NULL, reasons TEXT NOT NULL,
+    baseline_load_average TEXT, candidate_load_average TEXT);
+CREATE TABLE swdb_attribution_split_gaps (attribution TEXT NOT NULL, side TEXT NOT NULL, origin TEXT NOT NULL,
+    estimated_share REAL, measured_share REAL, measured_seconds REAL NOT NULL, gap REAL, within_rule INTEGER,
+    PRIMARY KEY (attribution, side, origin));
+"""
+
+
+def _insert_attribution_split(con, d):
+    check = d.get("split_check")
+    if check is None:
+        return
+    profiles = check["profiles"]
+    con.execute("INSERT INTO swdb_attribution_split_checks VALUES (?,?,?,?,?,?,?,?,?)",
+                (d["id"], check["verdict"], check["rule"]["id"], check["rule"]["max_abs_share_gap"],
+                 profiles["baseline"]["id"], profiles["candidate"]["id"], json.dumps(check["reasons"]),
+                 json.dumps(profiles["baseline"]["load_average"]), json.dumps(profiles["candidate"]["load_average"])))
+    seconds = {(m["side"], m["origin"]): m["seconds"] for m in check["measured_shares"]}
+    con.executemany("INSERT INTO swdb_attribution_split_gaps VALUES (?,?,?,?,?,?,?,?)",
+                    [(d["id"], g["side"], g["origin"], g["estimated_share"], g["measured_share"],
+                      seconds[g["side"], g["origin"]], g["gap"], None if g["within_rule"] is None else int(g["within_rule"]))
+                     for g in check["gaps"]])
+
+
+# Fine-grained attribution ticket 10 (2026-10-11 ET): what the site finder needs to order its
+# regions by a report's ranking (spec F20, F23); the verdict comes from ticket 09's
+# `swdb_attribution_split_checks` (no row = not checked).
+# One `swdb_attribution_site_finder` row per report given `--site-finder`, with the kernel and
+# target its pinned summary ran under; one join row per cumulative region and site-finder region.
+SCHEMA += """
+CREATE TABLE swdb_attribution_site_finder (attribution TEXT PRIMARY KEY, campaign_summary TEXT NOT NULL,
+    iteration INTEGER NOT NULL, kernel TEXT, target TEXT, created TEXT NOT NULL);
+CREATE TABLE swdb_attribution_site_finder_regions (attribution TEXT NOT NULL, side TEXT NOT NULL, region TEXT NOT NULL,
+    site_finder_region TEXT NOT NULL, PRIMARY KEY (attribution, side, region, site_finder_region));
+"""
+
+
+def _insert_attribution_site_finder(con, d):
+    finder = d.get("site_finder")
+    if finder is None:
+        return
+    con.execute("INSERT INTO swdb_attribution_site_finder VALUES (?,?,?,?,?,?)",
+                (d["id"], finder["campaign_summary"]["id"], finder["iteration"], finder.get("kernel"),
+                 finder.get("target"), str(d["created"])))
+    con.executemany("INSERT INTO swdb_attribution_site_finder_regions VALUES (?,?,?,?)",
+                    sorted({(d["id"], r["side"], r["region"], sf) for r in d["regions"]
+                            for sf in (r.get("catalog_bound") or {}).get("site_finder_regions", [])}))
+
+
+# Review fix (2026-10-11 ET, finding 10): one explicit, ordered list of the attribution inserts,
+# each run exactly once per report, instead of six chained reassignments of `_Insert.attribution`.
+_ATTRIBUTION_INSERTS = (_insert_attribution_report, _insert_attribution_iteration, _insert_attribution_origins,
+                        _insert_attribution_headroom, _insert_attribution_catalog, _insert_attribution_split,
+                        _insert_attribution_site_finder)
+
+
+def _insert_attribution(con, d, *_):
+    for insert in _ATTRIBUTION_INSERTS:
+        insert(con, d)
+
+
+_Insert.attribution = staticmethod(_insert_attribution)

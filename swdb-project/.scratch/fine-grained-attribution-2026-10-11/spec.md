@@ -1,7 +1,7 @@
 # Spec: Fine-grained estimate attribution and headroom
 
 Created: 2026-10-11 14:51 ET
-Updated: 2026-10-11 15:11 ET (rewritten to the full spec template after three grilling rounds;
+Updated: 2026-10-11 22:10 ET (review fix pass: decisions F26-F39 recorded); 2026-10-11 19:18 ET (ticket 08: decision F25 recorded); 2026-10-11 15:11 ET (rewritten to the full spec template after three grilling rounds;
 decisions F1–F24 unchanged; test seams confirmed by Yan-Ru); 2026-10-11 15:08 ET (grilling round 3);
 2026-10-11 15:04 ET (round 2); 2026-10-11 14:59 ET (round 1)
 **Type:** spec
@@ -187,7 +187,7 @@ A new **attribution report**, produced by one command from saved records only:
   floor reuses the existing compute and streaming-bandwidth models as they are. No frozen protocol
   needs refreshing.
 
-**Decisions F1–F24** (Yan-Ru, 2026-10-11; numbers kept for references in tickets)
+**Decisions F1–F39** (Yan-Ru, 2026-10-11; numbers kept for references in tickets; F25 recorded by ticket 08; F26–F39 recorded by the review fix pass on `fga/review-fixes`)
 
 | # | Decision |
 |---|---|
@@ -214,6 +214,21 @@ A new **attribution report**, produced by one command from saved records only:
 | F22 | New record kind under the records tree plus generated `swdb_` SQLite tables. |
 | F23 | A failed split check saves the report as `split_unverified`; the site finder ignores its ranking. |
 | F24 | Unattributed time above 10% of the total is flagged, not refused. |
+| F25 | An entry's mechanism models come from mapping its `uses_intrinsics` to the target description's offload mechanisms (through `hardware_operations`). Models that lack counts (`address_stream_counts`, `accelerator_calls`) give unknown `needs_rewritten_counts`; models runnable on the baseline counts give a numeric bound; no match gives `no_catalog_match`. |
+| F26 | Real-pair baseline (tickets 03, 09): pair the t75 candidate with a source-baseline candidate of the scalar-only snapshot `bfs-dx100-scalar-only-20260929-a1.source` (reuse `typed-library-bfs-scalar-profile-20261003-a1.baseline` if it matches, else make one with `swdb baseline-candidate`), for both the estimate and the ticket 09 timing; not the full-fork a8 baseline `bfs-native-pilot-20260925-dx10018-a1.baseline`. |
+| F27 | Real-pair protocol (ticket 03): freeze a fresh estimate protocol for the real pair on the pinned code commit, then estimate both sides with no code change in between. Existing frozen protocols and their records stay untouched; `estimate_protocol` is not changed. |
+| F28 | `dx100.mmio.v1.*` and `dx100.functional.v1.*` operations are never mapped onto each other. An MMIO-intrinsic entry against a functional description gives `no_catalog_match`; offload entries get no catalog bound until a rewrite exists (Out of Scope: offload catalog bounds need a projection model). |
+| F29 | The remaining gain bound clamps at 0: an entry slower than the region's estimate offers no gain, the same as a region already at its bound (F7 reads share × max(0, 1 − catalog bound ÷ estimate)). The clamp is stated in the record's `ranking_rule`. Ties (for example at 0) go by floor headroom, largest first, null last, then by region ID. |
+| F30 | F21 as written: each site-finder region's lines move from its revision (a saved source record of that revision, `--site-finder-source`) into each tree by their offset inside the named function (definitions found at any column, counted in order). They are kept when the function's text matches in both trees or the moved lines stay inside the tree's definition. Overlap joins; `mixed` = some line of the region lies outside every joined span. Only when the lines cannot be moved does the whole function join, recorded as `join: function` with its reason, never silently. |
+| F31 | A site-finder region that cannot be placed in a tree (no function in its ID, file or function missing, ambiguous definitions) is listed with its reason, and every region it could have joined has an unknown bound `site_finder_unplaced` unless another entry gives a known one; never `no_catalog_match`. |
+| F32 | An application with no `content_sha256` is `entry_unhashed` (unknown), never evaluated against whatever entry version is current. |
+| F33 | (F2) Time inside unmodeled calls belongs to `unattributed`, per trial: a region's call rows (`unmodeled_calls`, or rows that cover calls) move to the unattributed group, and the region's group keeps the region recomposed without them. |
+| F34 | (F2) `offload_command` needs a command the pinned description's functional observation contract names. A region inside a site that executes any other command is `unattributed`, reason `unbound_offload_command`. |
+| F35 | (F6) The catalog bound runs on baseline counts: a baseline row on its own, a candidate row on its `matched_region`'s; a candidate row with no matched region is unknown, `no_baseline_counts`. |
+| F36 | (F7) A region whose catalog bound is unknown (`needs_rewritten_counts`, `unknown_catalog_entry` incl. `entry_changed`/`entry_unhashed`, `no_baseline_counts`, `site_finder_unplaced`) ranks in the `unknown` tier with its reason, never in `floor_headroom`. Only `no_catalog_match` (and `no_site_finder`) regions enter the floor tier. |
+| F37 | (F20, F23) The site finder's "latest" report is the one with the newest inputs (a report's `created` is the latest `updated` date of its inputs, not its generation time), then the greatest record ID. The ordering block records `ORDERING_QUERY_SHA256` beside the rule. |
+| F38 | Catalog-bound entries run each trial with that trial's own `unmodeled_calls`, as the estimator does; a single-run characterization uses its aggregate calls. |
+| F39 | (F13) Only labels of comparisons the report shows pin catalog entries: last-changed iterations read no catalog, so a call seen only in an earlier diff pins nothing. Each diff is labeled once. |
 
 **Record shape (decision-level, not final field names)**
 

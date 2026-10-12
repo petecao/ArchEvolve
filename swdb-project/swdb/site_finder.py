@@ -6,7 +6,9 @@ finder is a query and costs no provider call). Updated 2026-10-05 ET: `swdb.db.m
 the statement-fact prefix `legality:` lives only in `QUERY` (its sha256 is recorded). It reads only the SQLite index (ADR 0002,
 ticket 46): `swdb_access_patterns`, `swdb_steps`, `swdb_statements`, `swdb_statement_steps`,
 `swdb_statement_facts`, `swdb_library_entries`, `swdb_library_dependencies`, `swdb_library_clauses`,
-`swdb_library_pattern_keys` and `swdb_library_pattern_key_steps`. It never reads library YAML.
+`swdb_library_pattern_keys` and `swdb_library_pattern_key_steps`; for order only (2026-10-11 ET)
+`swdb_attribution_split_checks`, `swdb_attribution_site_finder`,
+`swdb_attribution_site_finder_regions` and `swdb_attribution_ranking`. It never reads library YAML.
 Updated 2026-10-11 ET: those tables gained the `swdb_` prefix (LANL-shaped-db ticket 01), so
 `QUERY_SHA256` changed; summaries recorded before then keep the old hash.
 
@@ -35,6 +37,11 @@ function of the query's rows, so the same database gives the same ordered region
 6. The entry applies to the region only when 4 and 5 hold. Chosen regions are those with at
    least one applying entry, ordered by implementation, function, first line, last line;
    every other considered site is reported under `rejected` with its reason.
+7. Order only (fine-grained attribution ticket 10, 2026-10-11 ET): `ORDERING_QUERY` reads the
+   `swdb_attribution*` tables and `ranked` reorders the chosen regions by the latest attribution
+   report's ranking when its split check passed (`ORDERING_RULE`). Steps 1-6 never see it.
+   Review fix F37 (2026-10-11 ET): "latest" is the report with the newest inputs, then the greatest
+   ID, and the ordering block records `ORDERING_QUERY_SHA256` beside the rule.
 """
 from __future__ import annotations
 
@@ -156,9 +163,54 @@ def find(records_dir, campaign, *, library=None, db_path):
         db.build(records_dir, db_path, library)
     params = parameters(campaign)
     result = assemble(run_query(db_path, params))
+    result["regions"], ordering = ranked(result["regions"], access.query(db_path, ORDERING_QUERY, {
+        "kernel": params["kernel"], "target": params["target"]}))
     meta = dict(db.meta(db_path))
     return {"format": FORMAT, "query_sha256": QUERY_SHA256, "parameters": params,
-            "database": {"fingerprint": meta.get("fingerprint"), "builder": meta.get("builder")}, **result}
+            "database": {"fingerprint": meta.get("fingerprint"), "builder": meta.get("builder")}, **result,
+            "ordering": ordering}
+
+
+# --- order by the latest attribution report (fine-grained attribution ticket 10, 2026-10-11 ET) --
+
+ORDERING_RULE = ("The latest attribution report for the Extensa campaign's kernel and target orders the chosen "
+                 "regions only when its split check passed. Latest means newest inputs, not generation time: the "
+                 "greatest `created` (a report's `created` is the latest `updated` date of its inputs), then the "
+                 "greatest record ID. A region takes the best "
+                 "ranking position of any ranked region joined to it; unranked regions follow in today's order. "
+                 "Any other verdict, or no report, keeps today's order. The chosen set never changes.")
+
+ORDERING_QUERY = """\
+-- swdb site finder ordering (fine-grained attribution ticket 10). Parameters: :kernel, :target.
+WITH latest AS (
+  SELECT f.attribution, c.verdict AS split_check_verdict FROM swdb_attribution_site_finder f
+  LEFT JOIN swdb_attribution_split_checks c ON c.attribution = f.attribution
+  WHERE f.kernel = :kernel AND f.target = :target
+  ORDER BY f.created DESC, f.attribution DESC LIMIT 1
+)
+SELECT l.attribution, l.split_check_verdict, j.site_finder_region, min(k.position) AS position
+FROM latest l
+LEFT JOIN swdb_attribution_ranking k ON k.attribution = l.attribution
+LEFT JOIN swdb_attribution_site_finder_regions j
+  ON j.attribution = k.attribution AND j.side = k.side AND j.region = k.region
+GROUP BY l.attribution, l.split_check_verdict, j.site_finder_region
+ORDER BY j.site_finder_region
+"""
+ORDERING_QUERY_SHA256 = hashlib.sha256(ORDERING_QUERY.encode()).hexdigest()
+
+
+def ranked(regions, rows):
+    """(regions in ranking order, the ordering block). A pure function of the ordering rows."""
+    report = rows[0]["attribution"] if rows else None
+    verdict = rows[0]["split_check_verdict"] if rows else None
+    applied = verdict == "passed"
+    ordering = {"attribution": report, "split_check": verdict, "applied": applied, "rule": ORDERING_RULE,
+                "query_sha256": ORDERING_QUERY_SHA256}
+    if not applied:
+        return regions, ordering
+    position = {r["site_finder_region"]: r["position"] for r in rows if r["site_finder_region"] is not None}
+    keyed = sorted(enumerate(regions), key=lambda ir: (ir[1]["id"] not in position, position.get(ir[1]["id"], 0), ir[0]))
+    return [region for _, region in keyed], ordering
 
 
 # --- assembly (pure) ----------------------------------------------------------------------

@@ -1,7 +1,8 @@
 # The SQLite database
 
 Updated: 2026-10-11 23:28 ET: measured native evaluation timings of an implementation feed
-`performance_runs` (LANL-shaped-db follow-up ticket 03). 2026-10-11 22:07 ET: LANL-shaped-db review fixes (record-field path syntax, which
+`performance_runs` (LANL-shaped-db follow-up ticket 03). 2026-10-11 23:24 ET: attribution tables
+listed in the `swdb_` extension groups. 2026-10-11 22:07 ET: LANL-shaped-db review fixes (record-field path syntax, which
 evaluations reach `Validation_results`, `swdb_estimates.base_kernel_variant_id`). 2026-10-11 21:50 ET:
 rewritten for the LANL-shaped layout
 ([ADR 0015](../adr/0015-research-database-takes-the-main-database-shape.md), LANL-shaped-db
@@ -34,6 +35,11 @@ Five rules hold for the whole file:
 Raw SQL written before 2026-10-11 must use the new names (`profiles` → `swdb_profiles`, …).
 
 ## Building and reading the file
+
+Updated: 2026-10-11 (Eastern Time): attribution catalog bounds and full ranking (fine-grained attribution ticket 08).
+Updated: 2026-10-11 21:17 ET: attribution split-check tables (fine-grained attribution ticket 09).
+
+Updated: 2026-10-11 21:31 ET: site-finder lookup tables (fine-grained attribution ticket 10).
 
 Run commands inside `ArchEvolve/swdb-project/`. [The database builder](../../swdb/db.py)
 writes `build/swdb.sqlite` beside `records/` by default (another records folder
@@ -393,6 +399,7 @@ rows; no LANL table points back. A file built before the prefix (2026-10-11) has
 | Typed library | `swdb_library_entries`, `swdb_library_dependencies`, `swdb_library_clauses`, `swdb_library_pattern_keys`, `swdb_library_pattern_key_steps` |
 | Statement observations | `swdb_statements`, `swdb_statement_steps`, `swdb_statement_facts` |
 | Contract links | `swdb_contract_definitions`, `swdb_contract_data_structures`, `swdb_contract_kernels`, `swdb_contract_kernel_variants` |
+| Attribution reports | the `swdb_attribution*` tables ([Attribution tables](#attribution-tables)) |
 
 `swdb_kernels` and `kernels` describe the same kernel records: join them on
 `swdb_kernels.id = kernels.slug`. Likewise `swdb_implementations.id = kernel_variants.slug`.
@@ -897,3 +904,252 @@ swdb sql "select i.id from swdb_intrinsics i where not exists (select 1 from swd
 swdb sql "select p.input, m.threads, m.value from swdb_metrics m join swdb_profiles p on p.id = m.profile
           where p.implementation = 'gapbs-pr-gs' and m.name = 'time_per_trial_median' order by 1, 2"
 ```
+
+## Attribution tables
+
+Added: 2026-10-11 (Eastern Time), fine-grained attribution ticket 02. One set of rows per
+`attribution` record (`swdb attribute`; format in
+[format-v0.4-attribution.md](format-v0.4-attribution.md)). These are SWDB-only tables, so
+their names start with `swdb_`. Unknown values are NULL, never 0.
+
+### `swdb_attributions`
+
+One row per attribution report.
+
+| Column | Meaning |
+|---|---|
+| `id` | report ID |
+| `baseline_estimate` | baseline estimate ID |
+| `candidate_estimate` | candidate estimate ID |
+| `baseline_source` | source record (snapshot or candidate) the baseline counted |
+| `candidate_source` | source record the candidate counted |
+| `target_description` | shared target description ID |
+| `target_description_sha256` | its content hash |
+| `input` | shared input or workload ID |
+| `threads` | shared thread count |
+| `evidence_kind` | `execution` or `contract_fixture` |
+| `baseline_seconds` | baseline estimate total (NULL if unknown) |
+| `candidate_seconds` | candidate estimate total (NULL if unknown) |
+| `total_speedup` | baseline total ÷ candidate total |
+| `amdahl_ceiling` | baseline total ÷ untouched candidate seconds |
+| `json` | the full record |
+| `unattributed_flagged` | 1 when unattributed time is above 10% of either total, 0 when not, NULL when unknown (ticket 04) |
+
+### `swdb_attribution_groups`
+
+One row per code-origin group of a report (always three: untouched, agent_rewritten,
+unattributed). Seconds are per-trial sums, then medians; groups need not add up to the total.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `origin` | code origin of the group |
+| `baseline_seconds` | group seconds in the baseline |
+| `candidate_seconds` | group seconds in the candidate |
+| `baseline_share` | group ÷ baseline total |
+| `candidate_share` | group ÷ candidate total |
+| `realized_speedup` | baseline ÷ candidate group seconds |
+| `drift` | untouched group only: candidate ÷ baseline seconds; NULL for other groups |
+| `unknown_regions` | how many unknown regions make this group's numbers unknown |
+
+### `swdb_attribution_regions`
+
+One row per region of either estimate.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `side` | `baseline` or `candidate` |
+| `region` | the estimate's region ID |
+| `origin` | its code origin |
+| `reason` | why it got that origin |
+| `path` | file path relative to its source tree (NULL outside the tree or without a location) |
+| `first_line` | first line of its span |
+| `last_line` | last line of its span |
+| `seconds` | the estimate's per-region seconds (diagnostic) |
+| `sites` | JSON list of the rewrite-site IDs it overlaps |
+| `mixed` | 1 when it is rewritten but some of its lines are unchanged (added 2026-10-11 ET, ticket 04) |
+| `matched_region` | the other side's region at the same untouched code, or NULL (ticket 04) |
+
+### `swdb_attribution_origins`
+
+Added: 2026-10-11 (Eastern Time), fine-grained attribution ticket 05. One row per origin inside
+the `agent_rewritten` group of a report (always four: offload_command, intrinsic, library_call,
+agent_rewritten). Same per-trial-sum-then-median rule as the groups.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `origin` | code origin of regions inside rewrite sites |
+| `baseline_seconds` | that origin's seconds in the baseline |
+| `candidate_seconds` | that origin's seconds in the candidate |
+| `baseline_share` | origin ÷ baseline total |
+| `candidate_share` | origin ÷ candidate total |
+| `unknown_regions` | how many unknown regions make this origin's numbers unknown |
+
+### `swdb_attribution_iterations`
+
+Added 2026-10-11 ET (ticket 06). One row per report given a previous accepted candidate
+(`this_iteration` in the record); none otherwise.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `iteration` | the candidate's iteration number (2 or more) |
+| `previous_estimate` | previous accepted candidate's estimate ID |
+| `previous_source` | source record the previous candidate counted |
+| `earlier_sources` | JSON list of earlier accepted candidates' source IDs, oldest first |
+| `previous_seconds` | previous candidate's estimate total (NULL if unknown) |
+| `candidate_seconds` | candidate estimate total (NULL if unknown) |
+| `total_speedup` | previous total ÷ candidate total (gain this iteration) |
+| `amdahl_ceiling` | previous total ÷ candidate seconds untouched this iteration |
+
+### `swdb_attribution_iteration_groups`
+
+Same columns as `swdb_attribution_groups`, for the this-iteration comparison: `baseline_*`
+means the previous accepted candidate. `swdb_attribution_groups` stays cumulative.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `origin` | code origin of the group (this iteration) |
+| `baseline_seconds` | group seconds in the previous candidate |
+| `candidate_seconds` | group seconds in the candidate |
+| `baseline_share` | group ÷ previous total |
+| `candidate_share` | group ÷ candidate total |
+| `realized_speedup` | previous ÷ candidate group seconds |
+| `drift` | untouched group only: candidate ÷ previous seconds |
+| `unknown_regions` | how many unknown regions make this group's numbers unknown |
+
+### `swdb_attribution_iteration_regions`
+
+Same columns as `swdb_attribution_regions` for the this-iteration comparison (`side`
+`baseline` = the previous candidate), plus the last-changed iteration.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `side` | `baseline` (previous candidate) or `candidate` |
+| `region` | the estimate's region ID |
+| `origin` | its code origin this iteration |
+| `reason` | why it got that origin |
+| `path` | file path relative to its source tree |
+| `first_line` | first line of its span |
+| `last_line` | last line of its span |
+| `seconds` | the estimate's per-region seconds (diagnostic) |
+| `sites` | JSON list of this iteration's rewrite-site IDs it overlaps |
+| `last_changed_iteration` | iteration that last changed the region (0 = never; NULL = no source location) |
+
+### `swdb_attribution_headroom`
+
+Added: 2026-10-11 (Eastern Time), fine-grained attribution ticket 07. One row per region of
+either estimate and named limit: `resource_floor` and, since ticket 08, `catalog_bound`.
+Rows come from the cumulative `regions`; the `this_iteration` rows' limits stay in the
+report JSON (`swdb_attributions.json`).
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `side` | `baseline` or `candidate` |
+| `region` | the estimate's region ID |
+| `limit_name` | the named limit: `resource_floor` or `catalog_bound` |
+| `limit_seconds` | the limit's seconds (NULL if unknown) |
+| `limiting_term` | for the floor: `compute_throughput` or `streaming_bandwidth`; for the catalog bound: the entry that gives it (NULL if unknown) |
+| `headroom` | region seconds ÷ limit seconds (NULL if it cannot be a number) |
+| `reason` | why `headroom` is NULL: `unknown_estimate`, `zero_limit`, `unknown_limit` (floor), or the catalog bound's reason (`needs_rewritten_counts`, `unknown_catalog_entry`, `no_catalog_match`, `no_site_finder`) |
+| `missing` | JSON list of the missing counts and rates behind an unknown limit |
+
+### `swdb_attribution_ranking`
+
+Added: 2026-10-11 (Eastern Time), ticket 07. The candidate's regions in next-iteration order.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `position` | 1-based place in the order |
+| `side` | always `candidate` |
+| `region` | the candidate estimate's region ID |
+| `tier` | `remaining_gain_bound` (ticket 08), then `floor_headroom`, then `unknown` (ranked after every known value); tiers are never compared |
+| `limit_name` | the limit the value uses: `catalog_bound` or `resource_floor` |
+| `value` | the ranking value: remaining gain bound (an upper limit, never an expected gain) or floor headroom; NULL in the `unknown` tier |
+| `reason` | why the value is NULL |
+
+### `swdb_attribution_catalog`
+
+Added: 2026-10-11 (Eastern Time), ticket 08. One row per region of either estimate and
+site-finder-matched entry: that entry's own estimate on the region, or why it has none. Rows
+come from the cumulative `regions`.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `side` | `baseline` or `candidate` |
+| `region` | the estimate's region ID |
+| `entry` | library entry ID |
+| `kind` | `library_operation` or `rewrite_contract` (as the site finder recorded it) |
+| `seconds` | the entry's estimate on the region's baseline counts (a candidate row reads its matched baseline region's; review fix 2026-10-11 ET) (NULL if unknown) |
+| `reason` | why `seconds` is NULL: `needs_rewritten_counts`, `missing_inputs`, `no_offload_mechanism`, `entry_changed`, `entry_unhashed`, `not_in_library` or `no_baseline_counts` |
+| `site_finder_regions` | JSON list of the joined site-finder region IDs that apply the entry |
+| `mixed` | 1 when some line of the region lies outside every joined site-finder span (review fix 2026-10-11 ET: spans are the site-finder lines moved into the tree, or the whole function when they cannot be moved) |
+| `missing` | JSON list of the entry's missing counts and rates |
+
+### `swdb_attribution_split_checks`
+
+Added: 2026-10-11 21:17 ET, ticket 09. One row per report that has a `split_check` (made with
+`--baseline-profile` and `--candidate-profile`). No row = not checked.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `verdict` | `passed` or `split_unverified` |
+| `rule_id` | `swdb.split_check.v1` |
+| `max_abs_share_gap` | 0.1, the fixed pass threshold (10 percentage points) |
+| `baseline_profile` | baseline region profile ID |
+| `candidate_profile` | candidate region profile ID |
+| `reasons` | JSON list of `{side, origin, reason}` why it is unverified; `[]` when passed |
+| `baseline_load_average` | JSON host load recorded with the baseline profile run (NULL if none) |
+| `candidate_load_average` | JSON host load recorded with the candidate profile run (NULL if none) |
+
+### `swdb_attribution_split_gaps`
+
+Added: 2026-10-11 21:17 ET, ticket 09. One row per side and group of a checked report (always
+six). The measured scopes stay in the JSON column.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `side` | `baseline` or `candidate` |
+| `origin` | `untouched`, `agent_rewritten` or `unattributed` |
+| `estimated_share` | the report's group share (NULL if unknown) |
+| `measured_share` | measured exclusive thread-CPU share (NULL if nothing was measured) |
+| `measured_seconds` | measured exclusive thread-CPU seconds of the group |
+| `gap` | measured − estimated share (NULL if either is unknown) |
+| `within_rule` | 1 when \|gap\| ≤ 0.1, 0 when not, NULL when unknown |
+
+### `swdb_attribution_site_finder`
+
+Added: 2026-10-11 21:31 ET, ticket 10. One row per report made with `--site-finder`: how the
+site finder finds the latest report for its Extensa campaign's kernel and target. The verdict it acts on
+is `swdb_attribution_split_checks.verdict` (no row = not checked: today's order).
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `campaign_summary` | the pinned Extensa campaign summary ID |
+| `iteration` | the pinned iteration `index` |
+| `kernel` | the site-finder `kernel` parameter that iteration ran under (NULL if not recorded) |
+| `target` | the site-finder target binding (`native_cpu`, `dx100_gem5`; NULL if not recorded) |
+| `created` | the report's `created` date, which is the latest `updated` date of its inputs (not the day it was made); the latest report is the greatest `created` (newest inputs), then the greatest ID |
+
+### `swdb_attribution_site_finder_regions`
+
+Added: 2026-10-11 21:31 ET, ticket 10. One row per cumulative region and joined site-finder
+region (a region's `catalog_bound.site_finder_regions`), so a ranking row maps back to
+site-finder region IDs.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `side` | `baseline` or `candidate` |
+| `region` | the estimate's region ID |
+| `site_finder_region` | a joined site-finder region ID |

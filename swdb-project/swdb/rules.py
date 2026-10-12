@@ -140,6 +140,9 @@ def check(record, ctx):
     elif kind == "region_profile":
         from swdb.callgrind_lines import validate_record
         yield from validate_record(record, ctx)
+    elif kind == "attribution":   # fine-grained attribution ticket 02 (2026-10-11 ET)
+        from swdb.attribution import validate_record
+        yield from validate_record(record, ctx)
     elif kind == "profile_package":
         from swdb.cli import Failure
         from swdb.profile_package import verify
