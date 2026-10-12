@@ -11,7 +11,7 @@ time (about 2 working days).
 
 | # | Ticket | Status | Blocked by | Time |
 |---|---|---|---|---|
-| 01 | [Rename every current table to swdb_ (no behavior change)](issues/01-rename-current-tables-to-swdb-prefix.md) | claimed | — | 2 h |
+| 01 | [Rename every current table to swdb_ (no behavior change)](issues/01-rename-current-tables-to-swdb-prefix.md) | resolved | — | 2 h |
 | 02 | [First LANL slice: kernels and kernel_variants](issues/02-first-lanl-slice-kernels-and-variants.md) | resolved | 01 | 3 h |
 | 03 | [Source tables](issues/03-source-tables.md) | resolved | 02 | 3 h |
 | 04 | [Hardware and performance tables, measured results only](issues/04-hardware-and-performance-tables.md) | resolved | 02 | 3 h |
@@ -33,3 +33,6 @@ time (about 2 working days).
   from outcomes that actually ran, four empty slide tables ([05](issues/05-validation-and-empty-tables.md#answer)).
 - 2026-10-11 21:55 ET: ticket 03 resolved — source tables from stated code paths, snapshots,
   functions and arrays ([03](issues/03-source-tables.md#answer)). Ticket 06 claimed.
+- 2026-10-11 21:45 ET: ticket 01 resolved — rename verified byte-identical on 289 queries
+  ([01](issues/01-rename-current-tables-to-swdb-prefix.md#answer)). Open data issue outside this
+  effort: `library/contract.bc_read_offload` changed after its review, so its tier is `experimental`.
