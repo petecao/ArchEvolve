@@ -73,6 +73,25 @@ def _command_runner(args):
     return command
 
 
+# 2026-10-12 ET (ticket 07): the pilot needs headroom, as in the OpenMP and allocator runners.
+# On mbit10 the strlen pilot's driver took 0.052 s but every later trial 0.042-0.046 s (warm
+# code), so a pilot that only just met min_trial_s gave a receipt the validator refuses.
+PILOT_HEADROOM = 1.25
+
+
+def pilot_batches(timer, min_trial_s, pilot_path):
+    """Double the batch count until both paired pilot durations reach PILOT_HEADROOM x min_trial_s."""
+    batches = 1
+    while True:
+        pilot = timer(batches, 'service_first')
+        pilot_path.write_text(json.dumps(pilot))
+        if min(pilot['gross_seconds'], pilot['driver_seconds']) >= min_trial_s * PILOT_HEADROOM:
+            return batches
+        if batches * BATCH_EVENTS >= EVENT_CAP:
+            raise Failure('library-call pilot could not resolve both paired durations within its event cap')
+        batches = min(2 * batches, EVENT_CAP // BATCH_EVENTS)
+
+
 def budget(output, *, addition=0):
     data, build = addition, 0
     for p in output.rglob('*'):
@@ -152,15 +171,7 @@ def calibrate(args):
             if trial.get('batch_events') != BATCH_EVENTS or trial.get('events') != BATCH_EVENTS * batches:
                 raise Failure('library-call timer event denominator differs')
             return trial
-        batches = 1
-        while True:
-            pilot = timer(batches, 'service_first')
-            (output / f'pilot-library-{index}.json').write_text(json.dumps(pilot))
-            if min(pilot['gross_seconds'], pilot['driver_seconds']) >= args.min_trial_s:
-                break
-            if batches * BATCH_EVENTS >= EVENT_CAP:
-                raise Failure('library-call pilot could not resolve both paired durations within its event cap')
-            batches = min(2 * batches, EVENT_CAP // BATCH_EVENTS)
+        batches = pilot_batches(timer, args.min_trial_s, output / f'pilot-library-{index}.json')
         trials = [timer(batches, 'service_first' if i % 2 == 0 else 'driver_first') for i in range(args.repetitions)]
         abi = counted['cells'][index]['event_abi']
         services.append({'id': service_id, 'unit': 'seconds/call', 'event_definition': definition,

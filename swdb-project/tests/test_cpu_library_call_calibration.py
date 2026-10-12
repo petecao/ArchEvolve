@@ -164,3 +164,20 @@ def test_native_import_admits_only_the_exact_t75_abis_with_counted_coefficients(
         service['denominator']['proof']['points'][1]['other_uncovered_calls'] = {'_ZNSo3putEc': 0}
     rejected = imported(raw, 'synthetic.native.unpaired')
     assert rejected.returncode != 0 and 'outside the selected events' in rejected.stderr
+
+
+def test_pilot_keeps_headroom_so_warm_trials_still_resolve_min_trial(tmp_path):
+    """2026-10-12 ET (ticket 07, mbit10): the strlen pilot driver took 0.052 s, then every warm
+    trial 0.042-0.046 s and the validator refused the receipt. The pilot now keeps 1.25x headroom."""
+    from swdb.cpu_library_call_calibration import BATCH_EVENTS, pilot_batches
+    per_event = .052 / (32768 * BATCH_EVENTS)   # cold pilot rate measured on mbit10
+    seen = []
+
+    def timer(batches, order):
+        seen.append(batches)
+        seconds = batches * BATCH_EVENTS * per_event
+        return {'gross_seconds': 2 * seconds, 'driver_seconds': seconds, 'order': order}
+    batches = pilot_batches(timer, .05, tmp_path / 'pilot.json')
+    assert batches == 65536 and seen[-2:] == [32768, 65536]
+    assert batches * BATCH_EVENTS * per_event * .8 >= .05   # a trial 20% faster than the pilot still resolves
+    assert json.loads((tmp_path / 'pilot.json').read_text())['driver_seconds'] >= .0625
