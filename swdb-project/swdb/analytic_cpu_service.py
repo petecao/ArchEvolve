@@ -32,7 +32,7 @@ def _scope_missing(selector,context,prefix,*,required=False):
 
 def native_service_costs(region, mechanism, *, context=None):
     selector = mechanism.get('selector', {})
-    missing = ['selector.' + key for key in sorted(set(selector) - {'domain', 'worker_scope', 'calls', 'characterization_sha256','characterization_allowlist','openmp_projections','calibration_admission','resource_recipe'})]
+    missing = ['selector.' + key for key in sorted(set(selector) - {'domain', 'worker_scope', 'calls', 'characterization_sha256','characterization_allowlist','openmp_projections','openmp_profile_set','calibration_admission','resource_recipe'})]
     if selector.get('domain') != 'host' or selector.get('worker_scope') != 'serial_T1':
         missing.append('selector.host_serial_T1')
     missing.extend(_scope_missing(selector,context,'service_scope'))

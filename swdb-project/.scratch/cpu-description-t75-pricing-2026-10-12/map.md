@@ -30,6 +30,7 @@ Graph: 01–06 start now → 07 (needs 01, 02, 04, 05, 06) → 08 (needs 03, 07)
 ## Context pointers
 
 - Code map (2026-10-12 01:02 ET, `e2611242`): [notes/index.md](notes/index.md).
+- 05 resolved (2026-10-12 01:40 ET): OpenMP set a2 adds class 22 `_8u`; ticket-07 command in [05 answer](issues/05-openmp-profiles-a2.md#answer).
 
 - Origin: fine-grained attribution tickets 03 and 09 closed negative
   ([03 answer](../fine-grained-attribution-2026-10-11/issues/03-first-real-pair.md#answer),
