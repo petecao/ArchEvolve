@@ -2,8 +2,11 @@
 (LANL-shaped-db ticket 05). Created 2026-10-11 ET.
 
 Built once from a small record closure (LR-03), never the ~1 GB catalog. The roots give one
-correctness outcome of each kind: profiles that passed and one whose check timed out, and
-evaluations of one fixture workload that passed, failed and stayed unverified."""
+correctness outcome of each kind: profiles that passed and one whose check timed out;
+evaluations of an implementation's unchanged source that passed and stayed unverified, plus a
+fixture copy of the passing one that failed; and evaluations of a rewrite candidate (passed,
+failed, unverified), which stay out of `Validation_results`.
+Updated 2026-10-11 ET (review fixes): candidate evaluations no longer count."""
 
 import json
 
@@ -19,15 +22,28 @@ EMPTY = ("physics_assets", "kernel_dependencies", "code_chunks", "embeddings")
 PASSED_PROFILE = "gapbs-bfs-do.kron-g16-k16.mbit10.20260922t221109z"
 TIMED_OUT_PROFILE = "gapbs-tc-ordered.kron-g22-k16.mbit10.20260922t233432z"
 FIXTURE = "bfs-contract-20260925-a3.workload.584a833b37d4d8a1"
-PASSED_EVALUATION = "bfs-contract-20260925-a3.candidate.evaluation"
-FAILED_EVALUATION = "bfs-contract-20260925-a3.incorrect"
-UNVERIFIED_EVALUATION = "bfs-contract-20260925-a3.timeout"
+REFERENCE = "bfs-contract-20260925-a3.independent-reference"
+#: Evaluations of an implementation: their candidate is the implementation's unchanged source
+#: (`artifact_role: source_baseline`).
+PASSED_EVALUATION = "bfs-contract-20260925-a3.baseline.evaluation"
+FAILED_EVALUATION = "bfs-contract-20260925-a3.baseline.failed"   # fixture, written below
+UNVERIFIED_EVALUATION = "bfs-native-pilot-20260925-upstream18-a1.uniform-random.evaluation"
+#: Evaluations of a rewrite candidate of gapbs-bfs-do (the candidate, not gapbs-bfs-do, was run).
+CANDIDATE_EVALUATIONS = ("bfs-contract-20260925-a3.candidate.evaluation", "bfs-contract-20260925-a3.incorrect",
+                         "bfs-contract-20260925-a3.timeout")
 
 
 @pytest.fixture(scope="module")
 def built(tmp_path_factory):
     records = make_records(tmp_path_factory.mktemp("lanl-validation")).copy_closure(
-        PASSED_PROFILE, TIMED_OUT_PROFILE, PASSED_EVALUATION, FAILED_EVALUATION, UNVERIFIED_EVALUATION)
+        PASSED_PROFILE, TIMED_OUT_PROFILE, PASSED_EVALUATION, UNVERIFIED_EVALUATION, *CANDIDATE_EVALUATIONS)
+    # No evaluation of an implementation failed its check, so the passing one is copied with
+    # the correctness and outcome of the candidate evaluation that failed.
+    failed = records.read(f"evaluations/{PASSED_EVALUATION}.yaml")
+    incorrect = records.read(f"evaluations/{CANDIDATE_EVALUATIONS[1]}.yaml")
+    failed["id"] = failed["request"]["id"] = FAILED_EVALUATION
+    failed["correctness"], failed["outcome"] = incorrect["correctness"], incorrect["outcome"]
+    records.write(f"evaluations/{FAILED_EVALUATION}.yaml", failed)
     result = records.swdb("build")
     assert result.returncode == 0, result.stderr
     return records
@@ -54,9 +70,9 @@ def results(built):
 
 def test_a_passing_and_a_failing_fixture_outcome_have_the_right_passed_value(built):
     found = results(built)
-    assert found[PASSED_EVALUATION] == {"fixture": f"gapbs-bfs/{FIXTURE}", "variant": "gapbs-bfs-do",
+    assert found[PASSED_EVALUATION] == {"fixture": f"gapbs-bfs/{FIXTURE}", "variant": REFERENCE,
                                         "passed": 1, "max_abs_error": None}
-    assert found[FAILED_EVALUATION] == {"fixture": f"gapbs-bfs/{FIXTURE}", "variant": "gapbs-bfs-do",
+    assert found[FAILED_EVALUATION] == {"fixture": f"gapbs-bfs/{FIXTURE}", "variant": REFERENCE,
                                         "passed": 0, "max_abs_error": None}
     assert found[PASSED_PROFILE] == {"fixture": "gapbs-bfs/kron-g16-k16", "variant": "gapbs-bfs-do",
                                      "passed": 1, "max_abs_error": None}
@@ -66,6 +82,15 @@ def test_an_outcome_whose_correctness_was_not_established_is_null_never_false(bu
     found = results(built)
     assert found[TIMED_OUT_PROFILE]["passed"] is None
     assert found[UNVERIFIED_EVALUATION]["passed"] is None
+
+
+def test_an_evaluation_of_a_rewrite_candidate_has_no_result_row(built):
+    # Each names gapbs-bfs-do as its `implementation`, but what ran was the candidate's rewrite:
+    # its outcome is not gapbs-bfs-do's and stays in the swdb_ tables only.
+    found = results(built)
+    for evaluation in CANDIDATE_EVALUATIONS:
+        assert built.read(f"evaluations/{evaluation}.yaml")["implementation"] == "gapbs-bfs-do"
+        assert evaluation not in found, evaluation
 
 
 def test_an_outcome_without_a_kernel_variant_or_an_input_record_has_no_result_row(built):

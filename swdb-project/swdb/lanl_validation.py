@@ -5,9 +5,13 @@ nothing for yet (`physics_assets`, `kernel_dependencies`, `code_chunks`, `embedd
 Table names keep the slide's capitalization.
 
 - A correctness outcome (a profile's `correctness` part, an evaluation's `correctness.state`)
-  counts when it names an implementation and an input record (a profile's `input`; an
-  evaluation's `request.workload.id`, or `request.workload` when it is a bare ID, naming a
-  `workload` record).
+  counts when what ran is an implementation (a kernel variant) and it names an input record.
+  A profile runs its `implementation`. An evaluation runs the candidate its request names; that
+  is an implementation only when the candidate is the implementation's unchanged source
+  (`artifact_role: source_baseline`). A rewrite candidate's outcome is not its baseline's and
+  stays in the `swdb_` tables (review fix, 2026-10-11 ET). The input record is a profile's
+  `input`, or the `workload` record an evaluation's `request.workload.id` names
+  (`request.workload` when it is a bare ID).
 - `Validation_definition`: one row per (kernel, input) pair a counted outcome ran, named
   `<kernel>/<input>`; `input_json` is the input's `generator` or the workload's `definition`.
   No record states an expected output, so `expected_output_json` is NULL.
@@ -69,13 +73,27 @@ def _outcomes(store):
             yield (record.id, f"parts[{index}].outcome", record.data.get("implementation"), record.data.get("input"),
                    "input", _PROFILE_PASSED.get(parts[index].get("outcome")))
     for record in store.of_kind("evaluation"):
-        workload = (record.data.get("request") or {}).get("workload")
+        request = record.data.get("request") or {}
+        workload = request.get("workload")
         state = (record.data.get("correctness") or {}).get("state")
         if state is not None:
             named, field = (workload.get("id"), "request.workload.id") if isinstance(workload, dict) \
                 else (workload, "request.workload")
-            yield (record.id, "correctness.state", record.data.get("implementation"), named, field,
-                   _EVALUATION_PASSED.get(state))
+            yield (record.id, "correctness.state", _evaluated_implementation(store, record.data, request), named,
+                   field, _EVALUATION_PASSED.get(state))
+
+
+def _evaluated_implementation(store, evaluation, request):
+    """The implementation an evaluation ran, or None when it ran something else. An evaluation
+    runs the candidate its request names; only a candidate that is the implementation's unchanged
+    source (`artifact_role: source_baseline`) is that implementation. A rewrite candidate's
+    outcome is not its baseline's, so it stays in the `swdb_` tables."""
+    if request.get("candidate") is None:
+        return evaluation.get("implementation")
+    candidate = store.get(request["candidate"], "candidate") if isinstance(request["candidate"], str) else None
+    if candidate is None or candidate.get("artifact_role") != "source_baseline":
+        return None
+    return candidate.get("implementation")
 
 
 def _fixture_input(store, input_id):

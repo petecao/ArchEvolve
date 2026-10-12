@@ -287,10 +287,19 @@ Code: [`swdb/lanl_validation.py`](../../swdb/lanl_validation.py). The two valida
 keep the slide's capitalization.
 
 **Which outcomes count.** A correctness outcome is a profile's `correctness` part or an
-evaluation's `correctness.state`. It becomes a `Validation_results` row only when it names both
-an implementation (the kernel variant) and an input record: a profile's `input`, or an
-evaluation's `request.workload.id` (or `request.workload`, when it is a bare ID) naming a `workload` record. Outcomes missing either
-(for example the dx100 smoke evaluations, which name no implementation) have no row.
+evaluation's `correctness.state`. It becomes a `Validation_results` row only when what ran is an
+implementation (the kernel variant) and it names an input record:
+
+- **What ran.** A profile runs its `implementation`. An evaluation runs the candidate its
+  `request.candidate` names. That is an implementation only when the candidate is the
+  implementation's unchanged source (`artifact_role: source_baseline`). An evaluation of a
+  rewrite candidate gets no row, even though its record names the baseline as
+  `implementation`: the rewrite's outcome is not the baseline's. It stays in the `swdb_` tables.
+- **Input.** A profile's `input`, or the `workload` record an evaluation's `request.workload.id`
+  names (`request.workload` when it is a bare ID).
+
+Outcomes missing either (for example the dx100 smoke evaluations, which name no implementation)
+have no row.
 
 #### `Validation_definition`
 
