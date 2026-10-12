@@ -1,6 +1,7 @@
 """Optimization strategies: schema, rules, `swdb add`, and the legality queries
 (`swdb strategies`, `swdb find --strategy`). Created 2026-09-23. Each rule has a passing
-case and a failing case; every test runs swdb as a separate process."""
+case and a failing case; every test runs swdb as a separate process. Updated 2026-10-11 ET: `swdb_` table names;
+the fixture copies the record closure, not the ~1 GB catalog (LR-03)."""
 
 import copy
 import json
@@ -24,7 +25,7 @@ def passes(result):
 
 @pytest.fixture
 def repo(records):
-    return records.copy_repo()
+    return records.copy_closure()
 
 
 def edit(records, rel, change):
@@ -191,7 +192,7 @@ def test_add_writes_a_strategy_to_its_folder(repo, tmp_path):
     path.write_text(yaml.safe_dump(other_strategy(repo), sort_keys=False))
     passes(repo.swdb("add", path))
     assert (repo.path / "strategies" / "gather-hoist.yaml").is_file()
-    rows = query(repo, "sql", "select id, target from strategies where id in ('gather-hoist', 'packing') order by id")
+    rows = query(repo, "sql", "select id, target from swdb_strategies where id in ('gather-hoist', 'packing') order by id")
     assert rows == [{"id": "gather-hoist", "target": "access_pattern"}, {"id": "packing", "target": "access_pattern"}]
 
 
@@ -292,8 +293,11 @@ def test_strategies_query_names_a_missing_pattern(repo):
 def test_find_strategy_lists_legal_and_undetermined_patterns_only(repo):
     unknown_loop_dependencies(repo)
     found = query(repo, "find", "--strategy", "packing", "--kernel", "gapbs-pr")
+    # 2026-10-11 ET: gapbs-pr-jacobi-analytic-v1 is a gapbs-pr variant since 728fea38 (2026-10-06)
     assert found == [{"implementation": "gapbs-pr-jacobi", "pattern": "gather-contrib", "outcome": "undetermined",
-                      "unknown_fields": ["loop_carried_dependencies"]}]   # gapbs-pr-gs's gather is illegal
+                      "unknown_fields": ["loop_carried_dependencies"]},
+                     {"implementation": "gapbs-pr-jacobi-analytic-v1", "pattern": "gather-contrib", "outcome": "legal",
+                      "unknown_fields": []}]   # gapbs-pr-gs's gather is illegal
 
 
 def test_find_strategy_across_kernels(repo):

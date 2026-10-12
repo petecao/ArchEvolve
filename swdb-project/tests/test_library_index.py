@@ -1,5 +1,8 @@
 """Typed-library JSON schema, SQLite tables and staleness. Created: 2026-10-03 ET (ticket 46).
-Updated: 2026-10-04 ET (entry count excludes certification profiles; BC contract shared since ticket 43)."""
+Updated: 2026-10-04 ET (entry count excludes certification profiles; BC contract shared since ticket 43).
+Updated: 2026-10-11 ET: `swdb_` table names; the fixture copies the closure of the records that
+derive library tier and status (reviews, certifications, evaluations), not the ~1 GB catalog; their
+IDs come from the shared `testkit.record_ids` helper (LANL-shaped-db review fixes)."""
 
 import json
 import os
@@ -13,6 +16,7 @@ from conftest import REPO
 from swdb import db
 from swdb.library import Library, entry_validator
 from swdb.store import Store
+from testkit.record_ids import record_ids
 
 
 def out(result):
@@ -20,10 +24,14 @@ def out(result):
     return json.loads(result.stdout)
 
 
+#: Every record that can change a library entry's derived tier or status (`Library.state`).
+STATE_ROOTS = record_ids(REPO / "records", "reviews", "certifications", "evaluations")
+
+
 @pytest.fixture
 def repo(records):
     """A records copy with the repository library beside it, as `default_root` expects."""
-    records.copy_repo()
+    records.copy_closure(*STATE_ROOTS)
     shutil.copytree(REPO / "library", records.path.parent / "library")
     return records
 
@@ -57,7 +65,7 @@ def test_schema_shape_errors_are_reported_by_field(tmp_path, change, field):
 
 
 def test_library_entries_clauses_and_dependencies_are_indexed(repo):
-    rows = _sql(repo, "select id, kind, tier, status, derived_from from library_entries order by id")
+    rows = _sql(repo, "select id, kind, tier, status, derived_from from swdb_library_entries order by id")
     # Every entry YAML of every kind is indexed. Certification profiles (`profiles/`, tickets
     # 49-51) are inputs to `swdb certify --profile`, not library entries (2026-10-04 ET).
     library_root = repo.path.parent / "library"
@@ -72,18 +80,18 @@ def test_library_entries_clauses_and_dependencies_are_indexed(repo):
     parent = next(row for row in rows if row["id"] == "contract.bfs_read_offload")
     assert parent["tier"] == "shared" and parent["status"] == "evaluated_on_target"
     dependencies = {row["dependency"] for row in _sql(
-        repo, "select dependency from library_dependencies where entry = 'contract.bc_read_offload'")}
+        repo, "select dependency from swdb_library_dependencies where entry = 'contract.bc_read_offload'")}
     assert "contract.bfs_read_offload" in dependencies and "intrinsic.dxc_gather" in dependencies
-    clause = _sql(repo, "select role, discharge_mode, negative_control from library_clauses "
+    clause = _sql(repo, "select role, discharge_mode, negative_control from swdb_library_clauses "
                         "where entry = 'contract.bc_read_offload' and clause = 'BC-L1'")
     assert clause == [{"role": "legality", "discharge_mode": "differential_test", "negative_control": "stale_depth_hint"}]
     library = Library(repo.path.parent / "library", Store(repo.path))
-    hashes = {row["id"]: row["content_sha256"] for row in _sql(repo, "select id, content_sha256 from library_entries")}
+    hashes = {row["id"]: row["content_sha256"] for row in _sql(repo, "select id, content_sha256 from swdb_library_entries")}
     assert hashes == {entry_id: library.content_sha256(entry_id) for entry_id in library.entries}
 
 
 def test_statements_index_covers_statement_annotations(repo):
-    rows = _sql(repo, "select statement, function, path, first_line, last_line, code, agent_claims from statements "
+    rows = _sql(repo, "select statement, function, path, first_line, last_line, code, agent_claims from swdb_statements "
                       "where implementation = 'dx100-bfs-scalar' order by first_line")
     implementation = repo.read("implementations/dx100-bfs-scalar.yaml")
     annotations = implementation["extensions"]["statements"]["annotations"]
@@ -93,7 +101,7 @@ def test_statements_index_covers_statement_annotations(repo):
     first = next(a for a in annotations if a["id"] == "bfs-td-frontier")
     row = next(r for r in rows if r["statement"] == "bfs-td-frontier")
     assert row["code"] == first["code"] and row["agent_claims"] == len(first["agent_claims"])
-    steps = _sql(repo, "select pattern, step from statement_steps where statement = 'bfs-td-frontier'")
+    steps = _sql(repo, "select pattern, step from swdb_statement_steps where statement = 'bfs-td-frontier'")
     assert steps == [{"pattern": step["pattern"], "step": step["step"]} for step in first["access_pattern_steps"]]
 
 
@@ -101,12 +109,12 @@ def test_library_changes_make_the_index_stale_and_queries_rebuild(repo):
     database = repo.path.parent / "build" / "swdb.sqlite"
     assert repo.swdb("build").returncode == 0
     assert not db.is_stale(repo.path, database)
-    meta = {row["key"]: row["value"] for row in _sql(repo, "select key, value from meta")}
+    meta = {row["key"]: row["value"] for row in _sql(repo, "select key, value from swdb_meta")}
     assert meta["library_dir"] == str((repo.path.parent / "library").resolve())
     entry = repo.path.parent / "library/rewrite_contracts/bc_read_offload.yaml"
     entry.write_text(entry.read_text().replace("experimental until Yan-Ru reviews it", "experimental until reviewed"))
     assert db.is_stale(repo.path, database)
-    _sql(repo, "select count(*) from library_entries")  # any query refreshes the stale index
+    _sql(repo, "select count(*) from swdb_library_entries")  # any query refreshes the stale index
     assert not db.is_stale(repo.path, database)
     # Pinned code outside the YAML counts too, and so does a new file.
     code = repo.path.parent / "library/dx100/bc_read_offload.inc"
@@ -120,5 +128,5 @@ def test_library_changes_make_the_index_stale_and_queries_rebuild(repo):
 
 def test_records_without_a_library_index_no_library_rows(records):
     records.copy_repo("applications")
-    assert _sql(records, "select count(*) as n from library_entries") == [{"n": 0}]
-    assert _sql(records, "select count(*) as n from statements") == [{"n": 0}]
+    assert _sql(records, "select count(*) as n from swdb_library_entries") == [{"n": 0}]
+    assert _sql(records, "select count(*) as n from swdb_statements") == [{"n": 0}]

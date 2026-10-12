@@ -1,6 +1,12 @@
 # Main-database crosswalk v0
 
 Date: 2026-10-06 ET
+Updated: 2026-10-11 21:53 ET
+
+> **Historical.** Since [ADR 0015](../adr/0015-research-database-takes-the-main-database-shape.md)
+> the generated database takes the main database's shape instead (see the
+> [LANL core](../reference/database.md#lanl-core)). This draft is kept as written and is no
+> longer the migration plan.
 
 [The crosswalk](lanl-crosswalk-v0.yaml) is a versioned compatibility draft from slides
 8–9 of the ArchEvolve overview deck dated 2026-10-06. It is separate from research

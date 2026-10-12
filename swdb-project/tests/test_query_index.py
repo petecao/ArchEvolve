@@ -1,4 +1,4 @@
-"""Public queries use one freshness-checked SQLite snapshot. Updated: 2026-10-06 ET."""
+"""Public queries use one freshness-checked SQLite snapshot. Updated: 2026-10-06 ET. Updated 2026-10-11 ET: `swdb_` table names."""
 import copy
 import json
 from pathlib import Path
@@ -23,10 +23,10 @@ def test_custom_index_refreshes_and_never_uses_default(records,tmp_path):
     assert selected.is_file() and not db.default_path(records.path).exists()
     second=application(records,'after')
     assert workflow.get_record(args)==second
-    assert json.loads(db.sql(selected,'SELECT json FROM records')[0]['json'])==second
+    assert json.loads(db.sql(selected,'SELECT json FROM swdb_records')[0]['json'])==second
     records.write_text('applications/fixture-app.yaml','not: [valid')
     with pytest.raises(Failure,match='validation error'):workflow.get_record(args)
-    assert json.loads(db.sql(selected,'SELECT json FROM records')[0]['json'])==second
+    assert json.loads(db.sql(selected,'SELECT json FROM swdb_records')[0]['json'])==second
 
 
 def test_index_for_different_records_root_is_rebuilt(records,tmp_path):
@@ -49,7 +49,7 @@ def test_all_query_entrypoints_honor_selected_index(records,tmp_path,command,arg
     result=run_swdb(command,*args,'--records',records.path,'--db',selected,'--format','json')
     assert result.returncode==(0 if command=='get' else 1),result.stderr
     assert selected.is_file() and not db.default_path(records.path).exists()
-    assert db.sql(selected,'SELECT id FROM records')==[{'id':'fixture-app'}]
+    assert db.sql(selected,'SELECT id FROM swdb_records')==[{'id':'fixture-app'}]
 
 
 def test_chain_root_and_ancestors_share_one_sqlite_snapshot(records,tmp_path,monkeypatch):

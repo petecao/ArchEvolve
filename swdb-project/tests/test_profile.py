@@ -182,7 +182,7 @@ def test_correctness_timeout_with_allow_unverified_is_recorded_as_incomplete(rec
     part = next(p for p in prof["parts"] if p["part"] == "correctness")
     assert part["outcome"] == "timed_out" and part["timeout_s"] == 1
     assert prof["complete"] is False and len(prof["timing"]) == 4
-    rows = records.swdb("sql", "select correctness from profiles", "--format", "json")
+    rows = records.swdb("sql", "select correctness from swdb_profiles", "--format", "json")
     assert '"not_established"' in rows.stdout
     view = records.swdb("view", "stub-impl", "tiny-sym", "testhost")
     assert "not verified here" in view.stdout

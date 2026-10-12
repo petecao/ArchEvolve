@@ -1,6 +1,6 @@
 # 2. Read records and ask useful questions
 
-Updated: 2026-10-07 (Eastern Time). Reading budget: 7 minutes.
+Updated: 2026-10-11 21:53 ET. Reading budget: 7 minutes.
 
 [Tutorial](README.md) · [Previous](01-overview.md) · [Next](03-components.md)
 
@@ -39,9 +39,10 @@ Learn record groups by purpose; optional references cover every field:
 | Retain research/evidence custody | `certification`, `review`, `campaign_summary`, `paired_estimate`, `agreement_policy`, `agreement_report`, `team_claim`, `retention` | Which tests, reviews, research comparisons, and artifacts support reuse? |
 
 Typed-library entries live in `library/`, outside the record envelope. SQLite
-indexes their normative content and derived evidence state separately. LANL's
-main database is not connected; the [crosswalk](../compatibility/README.md) is
-validated compatibility metadata, not an import.
+indexes their normative content and derived evidence state separately. The
+generated file has LANL's tables (the [LANL core](../reference/database.md#lanl-core))
+plus `swdb_` tables for everything else. LANL's main database itself is not
+connected: nothing is imported from or exported to it.
 
 A BFS `workload` binds graph representations and ordered traversal sources. A
 **workload view** exports the retained historical SPARTA 0.1 format.
@@ -119,27 +120,27 @@ PageRank chain without printing the whole implementation:
 ```sh
 python3 -B -m swdb sql "
   SELECT position, array_name, address_shape
-  FROM steps
+  FROM swdb_steps
   WHERE implementation = 'gapbs-pr-jacobi' AND pattern = 'gather-contrib'
   ORDER BY position"
 ```
 
 Expected rows are `g.in_index_`, `g.in_neighbors_`, and `outgoing_contrib`, in
-that order. Dedicated tables support common catalog joins. The `records.json`
+that order. Dedicated tables support common catalog joins. The `swdb_records.json`
 column also retains every record kind, including workflow records:
 
 ```sh
 python3 -B -m swdb sql "
   SELECT id, json_extract(json, '$.outcome.state') AS state
-  FROM records WHERE kind = 'evaluation' ORDER BY id LIMIT 5"
+  FROM swdb_records WHERE kind = 'evaluation' ORDER BY id LIMIT 5"
 ```
 
 Some semantic/property columns contain JSON text, so compare `'false'`,
 `'true'`, and `'null'` as documented, checking the associated basis. Use
 [`database.md`](../reference/database.md) for exact columns.
 
-The typed-library tables include `library_entries`, `library_dependencies`,
-`library_clauses`, `library_pattern_keys`, and `library_pattern_key_steps`.
+The typed-library tables include `swdb_library_entries`, `swdb_library_dependencies`,
+`swdb_library_clauses`, `swdb_library_pattern_keys`, and `swdb_library_pattern_key_steps`.
 `get contract.bfs_read_offload --format json` returns normative content with its
 hash, current tier/status, and review attribution. A shared tier is a review
 decision; certification and target evaluation are separate evidence states.

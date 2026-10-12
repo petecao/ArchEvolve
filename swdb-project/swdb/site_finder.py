@@ -4,9 +4,11 @@ Created 2026-10-04 ET. Updated 2026-10-06 ET: query I/O goes through swdb.access
 Original SWDB code (spec "Site finder"; design decision D7: the site
 finder is a query and costs no provider call). Updated 2026-10-05 ET: `swdb.db.meta` is public;
 the statement-fact prefix `legality:` lives only in `QUERY` (its sha256 is recorded). It reads only the SQLite index (ADR 0002,
-ticket 46): `access_patterns`, `steps`, `statements`, `statement_steps`, `statement_facts`,
-`library_entries`, `library_dependencies`, `library_clauses`, `library_pattern_keys` and
-`library_pattern_key_steps`. It never reads library YAML.
+ticket 46): `swdb_access_patterns`, `swdb_steps`, `swdb_statements`, `swdb_statement_steps`,
+`swdb_statement_facts`, `swdb_library_entries`, `swdb_library_dependencies`, `swdb_library_clauses`,
+`swdb_library_pattern_keys` and `swdb_library_pattern_key_steps`. It never reads library YAML.
+Updated 2026-10-11 ET: those tables gained the `swdb_` prefix (LANL-shaped-db ticket 01), so
+`QUERY_SHA256` changed; summaries recorded before then keep the old hash.
 
 Decision procedure (the summary records `QUERY`'s sha256 and `FORMAT`; `assemble` is a pure
 function of the query's rows, so the same database gives the same ordered region list):
@@ -17,7 +19,7 @@ function of the query's rows, so the same database gives the same ordered region
    to `dx100_gem5` when it has a lowering and every lowering uses a DX100 interface.
 2. Key-pattern match (ADR 0003): key pattern k of entry E matches access pattern P of the
    campaign's kernel exactly when P's chain has as many steps as k, every step i has k's
-   role and address shape at position i (relational division over `steps`), and P's update
+   role and address shape at position i (relational division over `swdb_steps`), and P's update
    kind equals k's. Arrays are matched by role, never by name.
 3. Region: for entry E in function F of implementation I, the statements (statements index)
    that perform a step of any access pattern matching any key pattern of E. Its ID is
@@ -55,38 +57,38 @@ WITH
 eligible AS (
   SELECT e.id AS entry, e.kind, e.tier, e.status, e.content_sha256, e.derived_from,
          json_extract(e.json, '$.pattern_key') AS pattern_key,
-         (SELECT count(*) FROM library_pattern_keys k WHERE k.entry = e.id) AS key_count
-  FROM library_entries e
+         (SELECT count(*) FROM swdb_library_pattern_keys k WHERE k.entry = e.id) AS key_count
+  FROM swdb_library_entries e
   WHERE e.kind IN ('rewrite_contract', 'library_operation')
     AND e.tier IN (SELECT value FROM json_each(:tiers))
     AND (e.kind = 'library_operation' OR e.id IN (SELECT value FROM json_each(:contracts)))
-    AND EXISTS (SELECT 1 FROM library_pattern_keys k WHERE k.entry = e.id)
+    AND EXISTS (SELECT 1 FROM swdb_library_pattern_keys k WHERE k.entry = e.id)
     AND CASE WHEN json_array_length(:interfaces) = 0 THEN
-          NOT EXISTS (SELECT 1 FROM library_dependencies d JOIN library_entries l ON l.id = d.dependency
+          NOT EXISTS (SELECT 1 FROM swdb_library_dependencies d JOIN swdb_library_entries l ON l.id = d.dependency
                       WHERE d.entry = e.id AND l.kind = 'lowering')
         ELSE
-          EXISTS (SELECT 1 FROM library_dependencies d JOIN library_entries l ON l.id = d.dependency
+          EXISTS (SELECT 1 FROM swdb_library_dependencies d JOIN swdb_library_entries l ON l.id = d.dependency
                   WHERE d.entry = e.id AND l.kind = 'lowering')
-          AND NOT EXISTS (SELECT 1 FROM library_dependencies d JOIN library_entries l ON l.id = d.dependency
+          AND NOT EXISTS (SELECT 1 FROM swdb_library_dependencies d JOIN swdb_library_entries l ON l.id = d.dependency
                           WHERE d.entry = e.id AND l.kind = 'lowering'
                             AND coalesce(json_extract(l.json, '$.interface.id'), '')
                                 NOT IN (SELECT value FROM json_each(:interfaces)))
         END
 ),
 chain_lengths AS (
-  SELECT implementation, pattern, count(*) AS step_count FROM steps GROUP BY implementation, pattern
+  SELECT implementation, pattern, count(*) AS step_count FROM swdb_steps GROUP BY implementation, pattern
 ),
 key_matches AS (
   SELECT k.entry, k.key_position, p.implementation, p.pattern, p.pattern_class
   FROM eligible el
-  JOIN library_pattern_keys k ON k.entry = el.entry
-  JOIN access_patterns p ON p.kernel = :kernel AND p.update_kind = k.update_kind
+  JOIN swdb_library_pattern_keys k ON k.entry = el.entry
+  JOIN swdb_access_patterns p ON p.kernel = :kernel AND p.update_kind = k.update_kind
   JOIN chain_lengths n ON n.implementation = p.implementation AND n.pattern = p.pattern
                       AND n.step_count = k.step_count
   WHERE NOT EXISTS (
-    SELECT 1 FROM library_pattern_key_steps ks
+    SELECT 1 FROM swdb_library_pattern_key_steps ks
     WHERE ks.entry = k.entry AND ks.key_position = k.key_position
-      AND NOT EXISTS (SELECT 1 FROM steps s
+      AND NOT EXISTS (SELECT 1 FROM swdb_steps s
                       WHERE s.implementation = p.implementation AND s.pattern = p.pattern
                         AND s.position = ks.step AND s.role = ks.role AND s.address_shape = ks.address_shape))
 ),
@@ -94,8 +96,8 @@ sites AS (
   SELECT DISTINCT m.entry, m.key_position, m.implementation, st.function, m.pattern, m.pattern_class,
          st.statement, st.path, st.revision, st.first_line, st.last_line
   FROM key_matches m
-  JOIN statement_steps ss ON ss.implementation = m.implementation AND ss.pattern = m.pattern
-  JOIN statements st ON st.implementation = ss.implementation AND st.statement = ss.statement
+  JOIN swdb_statement_steps ss ON ss.implementation = m.implementation AND ss.pattern = m.pattern
+  JOIN swdb_statements st ON st.implementation = ss.implementation AND st.statement = ss.statement
 ),
 regions AS (
   SELECT DISTINCT entry, implementation, function FROM sites
@@ -103,14 +105,14 @@ regions AS (
 clauses AS (
   SELECT r.entry, r.implementation, r.function, c.clause, c.discharge_mode,
          (SELECT json_group_array(json_array(f.statement, f.value, f.basis, f.evidence))
-          FROM statement_facts f
+          FROM swdb_statement_facts f
           WHERE f.implementation = r.implementation
             AND f.field = 'legality:' || r.entry || ':' || c.clause
             AND f.statement IN (SELECT s.statement FROM sites s
                                 WHERE s.entry = r.entry AND s.implementation = r.implementation
                                   AND s.function IS r.function)) AS detail
   FROM regions r
-  JOIN library_clauses c ON c.entry = r.entry AND c.role = 'legality'
+  JOIN swdb_library_clauses c ON c.entry = r.entry AND c.role = 'legality'
 )
 SELECT 'entry' AS row_kind, entry, kind, tier, status, content_sha256, derived_from, key_count,
        NULL AS implementation, NULL AS function, NULL AS key_position, NULL AS pattern, NULL AS pattern_class,

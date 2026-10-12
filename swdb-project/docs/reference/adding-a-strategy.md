@@ -3,6 +3,7 @@
 Navigation updated: 2026-09-28 (Eastern Time).
 
 Created: 2026-09-23
+Updated: 2026-10-11 (Eastern Time): the strategies table is `swdb_strategies`.
 
 A procedure for a collaborator (or the SW Ensemble Agent) who wants to record a new
 technique or a new intrinsic. The full field reference is [format-v0.3.md](format-v0.3.md),
@@ -15,7 +16,7 @@ sections 11 and 12. The words are in [GLOSSARY.md](../../GLOSSARY.md), and the i
    reference. Read the source and note what it says about the technique, what it requires,
    and when it helps. A claim you cannot find in the source is left out, not paraphrased.
 2. **Check for a duplicate.** A strategy is its target plus its effect. List the existing
-   ones with `swdb sql "select id, target, json_extract(json, '$.effect') from strategies"`.
+   ones with `swdb sql "select id, target, json_extract(json, '$.effect') from swdb_strategies"`.
    If one has the same target and the same effect items, it is the same strategy. Link to
    it (or improve it) instead of adding a second record. Different distances, tile sizes, or
    lane counts are parameters of one strategy, not new strategies.

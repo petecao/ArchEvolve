@@ -1,5 +1,6 @@
 """The remaining effect kinds and target types, the seed strategies, common intrinsics, the
-prefetch update kind, and the loop and input strategy queries. Created 2026-09-23."""
+prefetch update kind, and the loop and input strategy queries. Created 2026-09-23. Updated 2026-10-11 ET: `swdb_` table names;
+the fixture copies the record closure, not the ~1 GB catalog (LR-03)."""
 
 import json
 
@@ -18,12 +19,12 @@ GS = "implementations/gapbs-pr-gs.yaml"
 
 @pytest.fixture
 def repo(records):
-    return records.copy_repo()
+    return records.copy_closure()
 
 
 def test_all_five_seeds_validate_and_are_not_duplicates(repo):
     passes(repo.validate())
-    rows = query(repo, "sql", "select id, target from strategies order by id")
+    rows = query(repo, "sql", "select id, target from swdb_strategies order by id")
     assert [r["id"] for r in rows] == SEEDS
     assert {r["id"]: r["target"] for r in rows}["loop_tiling"] == "loop"
     assert {r["id"]: r["target"] for r in rows}["vertex_reordering"] == "input"
@@ -107,7 +108,7 @@ def test_common_intrinsics_must_resolve(repo):
 
 
 def test_common_intrinsics_are_in_the_database(repo):
-    rows = query(repo, "sql", "select strategy, intrinsic from strategy_intrinsics order by strategy")
+    rows = query(repo, "sql", "select strategy, intrinsic from swdb_strategy_intrinsics order by strategy")
     assert rows == [{"strategy": "simd_gather", "intrinsic": "mm512_i32gather_ps"},
                     {"strategy": "software_prefetch", "intrinsic": "mm_prefetch"}]
 
