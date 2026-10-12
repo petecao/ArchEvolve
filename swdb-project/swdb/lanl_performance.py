@@ -9,10 +9,14 @@ Only measurements on real machines reach LANL's performance tables:
   `memory_gb` is the record's `memory_bytes` in GiB (2**30 bytes), unrounded.
 - `performance_runs`: one row per `timing[]` entry of a profile, that is one benchmark process
   at one thread count. `elapsed_seconds` is the entry's median time per trial; no record states
-  a throughput, so `throughput_value` is NULL.
+  a throughput, so `throughput_value` is NULL. Also one row per finished evaluation of an
+  implementation on a machine record with measured native trials (follow-up ticket 03,
+  2026-10-11 ET): `elapsed_seconds` is the median of those trials; gem5 (simulated),
+  contract-fixture and rewrite-candidate timings, aggregates and unfinished evaluations stay out.
 - `run_configs`: what such a run ran with. `parameters_json` holds the input (and its generator
   arguments), threads, trials, compiler, flags and OpenMP binding; `git_commit` is the
-  application's source revision (`build.application_commit`). Runs with identical
+  application's source revision (`build.application_commit`; an evaluation's
+  `context.source_revision`). Runs with identical
   parameters, commit and variant share one row.
 - `performance_metrics`: profile metrics with basis `measured` and a numeric value, each on the
   run with its thread count. Simulated (cachegrind), inferred and unknown metrics, histograms,
@@ -24,6 +28,9 @@ Only measurements on real machines reach LANL's performance tables:
 """
 
 import json
+import statistics
+
+from swdb.lanl import evaluated_implementation, evaluation_workload
 
 ORDER = 40
 
@@ -55,7 +62,59 @@ GUESSED = [
 def fill(rows, store):
     machines = _hardware_profiles(rows, store)
     _runs(rows, store, machines)
+    _evaluation_runs(rows, store, machines)
     _estimates(rows, store)
+
+
+def _measured_trials(evaluation):
+    """(index, entry) of each `timing[]` entry of an evaluation that is a native wall-clock
+    measurement of an executed trial; simulated (gem5) and contract-fixture entries are left out."""
+    return [(i, timing) for i, timing in enumerate(evaluation.get("timing") or [])
+            if timing.get("basis") == "measured" and timing.get("quantity") == "native_roi_wall_seconds"
+            and timing.get("evidence_kind") == "execution"]
+
+
+def _evaluation_runs(rows, store, machines):
+    """One `performance_runs` row per finished evaluation of an implementation (see
+    `lanl.evaluated_implementation`) on a machine record with measured native trials. Its
+    `elapsed_seconds` is the median of those trials (one trial is one process at one source and
+    repetition), matching a profile entry's median per trial. An aggregate (`component_evaluations`)
+    repeats its components' trials and is left out, so no trial is counted twice."""
+    for record in sorted(store.of_kind("evaluation"), key=lambda r: r.id):
+        evaluation = record.data
+        implementation = evaluated_implementation(store, evaluation)
+        variant = rows.id_of("kernel_variants", implementation) if isinstance(implementation, str) else None
+        trials = _measured_trials(evaluation)
+        if (variant is None or not trials or not isinstance(evaluation.get("machine"), str)
+                or evaluation["machine"] not in machines
+                or (evaluation.get("outcome") or {}).get("state") != "complete"
+                or evaluation.get("component_evaluations")):
+            continue
+        request, context = evaluation.get("request") or {}, evaluation.get("context") or {}
+        build = evaluation.get("build") or {}
+        environment = build.get("execution_environment") or {}
+        workload, _ = evaluation_workload(evaluation)
+        threads = context.get("threads", request.get("threads"))
+        commit = context.get("source_revision")
+        parameters = json.dumps({
+            "input": workload, "threads": threads, "trials": len(trials),
+            "sources": context.get("sources", request.get("sources")),
+            "repetitions": context.get("repetitions", request.get("repetitions")),
+            "roi": context.get("roi", request.get("roi")),
+            "compiler": build.get("compiler"), "compiler_version": build.get("compiler_version"),
+            "flags": build.get("flags"), "omp_places": environment.get("OMP_PLACES"),
+            "omp_proc_bind": environment.get("OMP_PROC_BIND"),
+            "lane": (request.get("target_configuration") or {}).get("lane")}, sort_keys=True)
+        first, *rest = [f"timing[{i}]" for i, _ in trials]
+        config = rows.add_once("run_configs", (variant, parameters, commit), {
+            "label": f"{implementation} on {workload}, {threads} threads",
+            "parameters_json": parameters, "git_commit": commit, "kernel_variant_id": variant}, record.id, "request")
+        run = rows.add("performance_runs", {
+            "elapsed_seconds": statistics.median(timing["duration_s"] for _, timing in trials),
+            "throughput_value": None, "hardware_profile_id": machines[evaluation["machine"]],
+            "run_config_id": config, "kernel_variant_id": variant}, record.id, first)
+        for field in rest:
+            rows.origin("performance_runs", run, record.id, field)
 
 
 def _estimates(rows, store):

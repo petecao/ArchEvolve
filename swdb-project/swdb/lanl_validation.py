@@ -6,7 +6,8 @@ Table names keep the slide's capitalization.
 
 - A correctness outcome (a profile's `correctness` part, an evaluation's `correctness.state`)
   counts when what ran is an implementation (a kernel variant) and it names an input record.
-  A profile runs its `implementation`. An evaluation runs the candidate its request names; that
+  A profile runs its `implementation`. An evaluation runs the candidate its request names (shared
+  rule: `lanl.evaluated_implementation`, also used by `performance_runs`); that
   is an implementation only when the candidate is the implementation's unchanged source
   (`artifact_role: source_baseline`). A rewrite candidate's outcome is not its baseline's and
   stays in the `swdb_` tables (review fix, 2026-10-11 ET). The input record is a profile's
@@ -23,6 +24,8 @@ Table names keep the slide's capitalization.
 """
 
 import json
+
+from swdb.lanl import evaluated_implementation, evaluation_workload
 
 ORDER = 50
 
@@ -74,27 +77,11 @@ def _outcomes(store):
             yield (record.id, f"parts[{index}].outcome", record.data.get("implementation"), record.data.get("input"),
                    "input", _PROFILE_PASSED.get(parts[index].get("outcome")))
     for record in store.of_kind("evaluation"):
-        request = record.data.get("request") or {}
-        workload = request.get("workload")
         state = (record.data.get("correctness") or {}).get("state")
         if state is not None:
-            named, field = (workload.get("id"), "request.workload.id") if isinstance(workload, dict) \
-                else (workload, "request.workload")
-            yield (record.id, "correctness.state", _evaluated_implementation(store, record.data, request), named,
+            named, field = evaluation_workload(record.data)
+            yield (record.id, "correctness.state", evaluated_implementation(store, record.data), named,
                    field, _EVALUATION_PASSED.get(state))
-
-
-def _evaluated_implementation(store, evaluation, request):
-    """The implementation an evaluation ran, or None when it ran something else. An evaluation
-    runs the candidate its request names; only a candidate that is the implementation's unchanged
-    source (`artifact_role: source_baseline`) is that implementation. A rewrite candidate's
-    outcome is not its baseline's, so it stays in the `swdb_` tables."""
-    if request.get("candidate") is None:
-        return evaluation.get("implementation")
-    candidate = store.get(request["candidate"], "candidate") if isinstance(request["candidate"], str) else None
-    if candidate is None or candidate.get("artifact_role") != "source_baseline":
-        return None
-    return candidate.get("implementation")
 
 
 def _fixture_input(store, input_id):
