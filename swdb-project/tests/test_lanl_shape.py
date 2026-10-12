@@ -29,3 +29,22 @@ def test_the_lanl_core_is_exactly_the_slide_tables_and_kernel_variants_with_thei
     for row in sql(records, "select table_name, column_name from swdb_guessed_columns"):
         listed.setdefault(row["table_name"], set()).add(row["column_name"])
     assert listed == GUESSED_COLUMNS
+
+
+def test_add_once_inserts_one_row_per_key_and_an_origin_per_call():
+    # `Rows.add_once` is the one way a LANL group stores a row several records name.
+    import sqlite3
+
+    from swdb import lanl
+
+    con = sqlite3.connect(":memory:")
+    con.executescript(lanl.SCHEMA)
+    con.execute("CREATE TABLE things (id INTEGER PRIMARY KEY, name TEXT)")
+    rows = lanl.Rows(con)
+    first = rows.add_once("things", ("a",), {"name": "a"}, "rec-1", "code[0]")
+    again = rows.add_once("things", ("a",), {"name": "a"}, "rec-2", "code[3]")
+    other = rows.add_once("things", ("b",), {"name": "b"}, "rec-1", "code[1]")
+    assert first == again != other
+    assert con.execute("SELECT id, name FROM things ORDER BY id").fetchall() == [(first, "a"), (other, "b")]
+    assert sorted(con.execute("SELECT row_id, record_id, record_field FROM swdb_row_origins")) == sorted([
+        (first, "rec-1", "code[0]"), (first, "rec-2", "code[3]"), (other, "rec-1", "code[1]")])

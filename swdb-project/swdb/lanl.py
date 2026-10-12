@@ -10,7 +10,8 @@ Each LANL table group is one module `swdb/lanl_<group>.py` with:
   integer IDs of the groups before it (ticket number x 10 by convention: kernels are 20);
 - `SCHEMA`: the group's `CREATE TABLE` statements, with declared foreign keys;
 - `GUESSED`: (table, column, reason) for each column the slide does not show;
-- `fill(rows, store)`: inserts the rows through `rows.add`, which records each row's origin.
+- `fill(rows, store)`: inserts the rows through `rows.add` (or `rows.add_once` for a row several
+  records name), which records each row's origin.
 
 A new group is a new file; nothing else needs editing. Being top-level `swdb/*.py`, each
 group file is part of `db.BUILDER`, so changing one makes older database files stale.
@@ -46,6 +47,7 @@ class Rows:
 
     def __init__(self, con):
         self.con = con
+        self._once = {}   # (table, key) -> id, for add_once
 
     def add(self, table, values, record_id, record_field="id"):
         """Insert one row (`values`: column -> value, `id` left out) and return its new `id`.
@@ -56,6 +58,15 @@ class Rows:
                                   [values[name] for name in names])
         self.origin(table, cursor.lastrowid, record_id, record_field)
         return cursor.lastrowid
+
+    def add_once(self, table, key, values, record_id, record_field="id"):
+        """The `id` of the row of `table` for `key`: inserted with `values` on the first call for
+        that key; on a later call, `record_id` and `record_field` only add an origin to it."""
+        if (table, key) not in self._once:
+            self._once[table, key] = self.add(table, values, record_id, record_field)
+        else:
+            self.origin(table, self._once[table, key], record_id, record_field)
+        return self._once[table, key]
 
     def origin(self, table, row_id, record_id, record_field="id"):
         """One more origin for an existing row (a row that several records name)."""

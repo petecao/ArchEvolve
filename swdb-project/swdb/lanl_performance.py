@@ -93,7 +93,6 @@ def _hardware_profiles(rows, store):
 
 
 def _runs(rows, store, machines):
-    configs = {}   # (variant, parameters, commit) -> run_configs.id
     for record in sorted(store.of_kind("profile"), key=lambda r: r.id):
         profile = record.data
         build, environment = profile.get("build") or {}, profile.get("environment") or {}
@@ -110,18 +109,12 @@ def _runs(rows, store, machines):
                 "flags": build.get("flags"), "omp_places": environment.get("omp_places"),
                 "omp_proc_bind": environment.get("omp_proc_bind"), "binding": environment.get("binding")},
                 sort_keys=True)
-            key = (variant, parameters, commit)
-            if key in configs:
-                rows.origin("run_configs", configs[key], record.id, field)
-            else:
-                configs[key] = rows.add("run_configs", {
-                    "label": f"{profile.get('implementation')} on {profile.get('input')}, "
-                             f"{timing.get('threads')} threads",
-                    "parameters_json": parameters, "git_commit": commit, "kernel_variant_id": variant},
-                    record.id, field)
+            config = rows.add_once("run_configs", (variant, parameters, commit), {
+                "label": f"{profile.get('implementation')} on {profile.get('input')}, {timing.get('threads')} threads",
+                "parameters_json": parameters, "git_commit": commit, "kernel_variant_id": variant}, record.id, field)
             run = rows.add("performance_runs", {
                 "elapsed_seconds": timing.get("median_s"), "throughput_value": None,
-                "hardware_profile_id": machines.get(profile.get("machine")), "run_config_id": configs[key],
+                "hardware_profile_id": machines.get(profile.get("machine")), "run_config_id": config,
                 "kernel_variant_id": variant}, record.id, field)
             runs.setdefault(timing.get("threads"), []).append(run)
         _metrics(rows, record, runs)
