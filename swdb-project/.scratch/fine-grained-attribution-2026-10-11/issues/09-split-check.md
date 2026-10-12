@@ -1,8 +1,8 @@
 # 09: Split check on the real pair
 
-Created: 2026-10-11 15:14 ET
+Created: 2026-10-11 15:14 ET. Updated: 2026-10-11 21:17 ET (claimed for the code half).
 **Type:** task
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 03 — First real pair
 **Spec:** `../spec.md` (F15, F19, F23; LR-02)
 **Time estimate:** about half a day of agent work on mbit10
