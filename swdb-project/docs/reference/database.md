@@ -13,6 +13,9 @@ Updated: 2026-10-07 (Eastern Time): current evidence-basis interpretation.
 Updated: 2026-10-11 (Eastern Time): every table name carries the `swdb_` prefix (LANL-shaped-db
 ticket 01).
 
+Updated: 2026-10-11 (Eastern Time): the LANL core starts with `kernels` and `kernel_variants`,
+plus `swdb_row_origins` and `swdb_guessed_columns` (LANL-shaped-db ticket 02).
+
 Run commands inside `ArchEvolve/swdb-project/`. [The database builder](../../swdb/db.py)
 writes `build/swdb.sqlite` beside `records/` by default (another records folder
 `X` gets `build/swdb-X.sqlite`). It recreates every table in a temporary file,
@@ -79,10 +82,87 @@ unverified; this refactor supplies the boundary without assuming that schema.
 Contributions to the main database must use its ingest inputs, and
 `create_index` must never open the main database for writing.
 
+## LANL core
+
+The database also holds LANL's tables, with LANL's names and only the columns LANL's
+`DB_current_work` slide shows (transcribed in the
+[LANL-shaped-db spec](../../.scratch/lanl-shaped-db-2026-10-09/spec.md) appendix).
+
+- **Integer IDs.** Every LANL table has an `id` primary key, assigned at build time in record-ID
+  order. IDs change between builds; the stable key is `slug` (or `swdb_row_origins`).
+- **Unknown is NULL.** A value the records do not state is NULL, never a default.
+- **Drop-ready.** LANL tables never reference a `swdb_` table. Delete every `swdb_` table and
+  `PRAGMA foreign_key_check` is still clean.
+- **Checked.** Foreign keys are declared, and every build fails if
+  `PRAGMA foreign_key_check` reports a row.
+- **Code.** Each table group is one module `swdb/lanl_<group>.py`; [`swdb/lanl.py`](../../swdb/lanl.py)
+  runs them in order.
+
+### `kernels`
+
+One row per kernel record.
+
+| Column | Meaning |
+|---|---|
+| `id` | integer ID (build-local) |
+| `slug` | the SWDB kernel ID, for example `gapbs-bfs` |
+| `name` | kernel name |
+| `category` | the domain of the kernel's application (vocabulary `domains`), or NULL when not stated |
+
+### `kernel_variants`
+
+Guessed: not on the slide (spec D3). One row per implementation record; it fills the slot
+that `Validation_results.kernel_variant_id` implies. All its columns are listed in
+`swdb_guessed_columns`.
+
+| Column | Meaning |
+|---|---|
+| `id` | integer ID (build-local) |
+| `kernel_id` | the implementation's kernel (`kernels.id`) |
+| `slug` | the SWDB implementation ID, for example `gapbs-bfs-do` |
+
+### Source tables
+
+Not built yet (LANL-shaped-db ticket 03).
+
+### Hardware and performance tables
+
+Not built yet (LANL-shaped-db ticket 04).
+
+### Validation tables and the empty tables
+
+Not built yet (LANL-shaped-db ticket 05).
+
+### Contract link tables
+
+Not built yet (LANL-shaped-db ticket 06).
+
+### `swdb_row_origins`
+
+The YAML record behind every LANL row. A row several records name has one origin per record.
+
+| Column | Meaning |
+|---|---|
+| `table_name` | the LANL table, for example `kernel_variants` |
+| `row_id` | the row's `id` in that table |
+| `record_id` | the record it was read from (`swdb_records.id`) |
+| `record_field` | the record field it was read from; `id` when the row stands for the whole record |
+
+### `swdb_guessed_columns`
+
+LANL-side tables and columns the slide does not show. Check these first against LANL's real
+`schema.sql`.
+
+| Column | Meaning |
+|---|---|
+| `table_name` | the LANL table |
+| `column_name` | the guessed column (every column, for a guessed table such as `kernel_variants`) |
+| `reason` | why it exists and what it links to |
+
 ## Tables
 
-Every table SWDB generates is named `swdb_<name>`, which leaves unprefixed names free for
-the LANL-shaped tables. Columns and contents are as listed; a file built before the prefix
+Every SWDB-only table is named `swdb_<name>`; unprefixed names belong to the
+[LANL core](#lanl-core). Columns and contents are as listed; a file built before the prefix
 (2026-10-11) has no `swdb_meta`, so every command treats it as stale and rebuilds it.
 
 ### `swdb_meta`
