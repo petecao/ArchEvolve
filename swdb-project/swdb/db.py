@@ -774,3 +774,35 @@ def _insert_attribution_catalog(con, d, *rest):
 
 
 _Insert.attribution = staticmethod(_insert_attribution_catalog)
+
+
+# Fine-grained attribution ticket 10 (2026-10-11 ET): what the site finder needs to order its
+# regions by a report's ranking (spec F20, F23); the verdict comes from ticket 09's
+# `swdb_attribution_split_checks` (no row = not checked).
+# One `swdb_attribution_site_finder` row per report given `--site-finder`, with the kernel and
+# target its pinned summary ran under; one join row per cumulative region and site-finder region.
+SCHEMA += """
+CREATE TABLE swdb_attribution_site_finder (attribution TEXT PRIMARY KEY, campaign_summary TEXT NOT NULL,
+    iteration INTEGER NOT NULL, kernel TEXT, target TEXT, created TEXT NOT NULL);
+CREATE TABLE swdb_attribution_site_finder_regions (attribution TEXT NOT NULL, side TEXT NOT NULL, region TEXT NOT NULL,
+    site_finder_region TEXT NOT NULL, PRIMARY KEY (attribution, side, region, site_finder_region));
+"""
+
+
+_insert_attribution_before_site_finder = _Insert.attribution  # chain, so other tickets' inserts keep running
+
+
+def _insert_attribution_site_finder(con, d, *rest):
+    _insert_attribution_before_site_finder(con, d, *rest)
+    finder = d.get("site_finder")
+    if finder is None:
+        return
+    con.execute("INSERT INTO swdb_attribution_site_finder VALUES (?,?,?,?,?,?)",
+                (d["id"], finder["campaign_summary"]["id"], finder["iteration"], finder.get("kernel"),
+                 finder.get("target"), str(d["created"])))
+    con.executemany("INSERT INTO swdb_attribution_site_finder_regions VALUES (?,?,?,?)",
+                    sorted({(d["id"], r["side"], r["region"], sf) for r in d["regions"]
+                            for sf in (r.get("catalog_bound") or {}).get("site_finder_regions", [])}))
+
+
+_Insert.attribution = staticmethod(_insert_attribution_site_finder)

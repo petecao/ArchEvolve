@@ -653,6 +653,10 @@ class _SiteFinder:
             _require(chosen is not None, f'campaign summary {summary_id!r} iteration {iteration} records no site-finder region')
         self.iteration = chosen['index']
         self.query_sha256 = (chosen.get('site_finder') or {}).get('query_sha256')
+        # Ticket 10: the kernel and target the site finder ran under, so it can find this report again.
+        params = ((chosen.get('site_finder') or {}).get('parameters')
+                  or (self.summary.get('site_finder') or {}).get('parameters') or {})
+        self.kernel, self.target = params.get('kernel'), params.get('target')
         self.regions = []
         for row in sorted((r for r in chosen['regions'] if isinstance(r.get('why'), dict)), key=lambda r: r['id']):
             match = re.match(SITE_FINDER_REGION, row['id'])
@@ -665,6 +669,7 @@ class _SiteFinder:
 
     def block(self):
         return {'campaign_summary': _pin(self.summary), 'iteration': self.iteration, 'query_sha256': self.query_sha256,
+                'kernel': self.kernel, 'target': self.target,
                 'regions': [{k: r[k] for k in ('id', 'function', 'path', 'revision', 'lines')}
                             | {'entries': [a['entry'] for a in r['applications']]} for r in self.regions]}
 

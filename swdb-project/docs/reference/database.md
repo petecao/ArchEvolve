@@ -12,6 +12,8 @@ Updated: 2026-10-07 (Eastern Time): current evidence-basis interpretation.
 
 Updated: 2026-10-11 (Eastern Time): attribution catalog bounds and full ranking (fine-grained attribution ticket 08).
 
+Updated: 2026-10-11 21:31 ET: site-finder lookup tables (fine-grained attribution ticket 10).
+
 Run commands inside `ArchEvolve/swdb-project/`. [The database builder](../../swdb/db.py)
 writes `build/swdb.sqlite` beside `records/` by default (another records folder
 `X` gets `build/swdb-X.sqlite`). It recreates every table in a temporary file,
@@ -668,3 +670,30 @@ come from the cumulative `regions`.
 | `site_finder_regions` | JSON list of the joined site-finder region IDs that apply the entry |
 | `mixed` | 1 when some joined site-finder region only partly covers the region |
 | `missing` | JSON list of the entry's missing counts and rates |
+
+### `swdb_attribution_site_finder`
+
+Added: 2026-10-11 (Eastern Time), ticket 10. One row per report made with `--site-finder`:
+how the site finder finds the latest report for its campaign's kernel and target.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `campaign_summary` | the pinned campaign summary ID |
+| `iteration` | the pinned iteration `index` |
+| `kernel` | the site-finder `kernel` parameter that iteration ran under (NULL if not recorded) |
+| `target` | the site-finder target binding (`native_cpu`, `dx100_gem5`; NULL if not recorded) |
+| `created` | the report's `created` date; the latest report is the greatest `created`, then the greatest ID |
+
+### `swdb_attribution_site_finder_regions`
+
+Added: 2026-10-11 (Eastern Time), ticket 10. One row per cumulative region and joined
+site-finder region (a region's `catalog_bound.site_finder_regions`), so a ranking row maps back
+to site-finder region IDs.
+
+| Column | Meaning |
+|---|---|
+| `attribution` | report ID |
+| `side` | `baseline` or `candidate` |
+| `region` | the estimate's region ID |
+| `site_finder_region` | a joined site-finder region ID |

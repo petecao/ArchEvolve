@@ -1226,3 +1226,23 @@ def test_catalog_bounds_validate_are_indexed_and_pin_the_site_finder_summary(cas
     summary.write_text(summary.read_text().replace('status: draft', 'status: accepted', 1))
     changed = case.records.validate()
     assert changed.returncode == 1 and 'site_finder' in changed.stdout + changed.stderr
+
+
+def test_a_site_finder_report_records_its_kernel_and_target_and_is_indexed_for_the_site_finder(case):
+    """Ticket 10 (2026-10-11 ET): the site finder finds the latest report by kernel and target and
+    maps its ranked regions back to site-finder region IDs through the index alone."""
+    report = catalog_case(case)
+    # the fixture summary is the a8 native summary: its site finder ran on gapbs-bfs, native_cpu
+    assert (report['site_finder']['kernel'], report['site_finder']['target']) == ('gapbs-bfs', 'native_cpu')
+    assert 'split_check' not in report
+    db = case.tmp_path / 'index.sqlite'
+    query = lambda sql: json.loads(run_swdb('sql', sql, '--records', case.records.path, '--db', db, '--format', 'json').stdout)
+    assert query("SELECT campaign_summary, iteration, kernel, target FROM swdb_attribution_site_finder") == [
+        {'campaign_summary': 'extensa-native-bfs-20261011-z9.summary', 'iteration': 1, 'kernel': 'gapbs-bfs',
+         'target': 'native_cpu'}]
+    assert query("SELECT region, site_finder_region FROM swdb_attribution_site_finder_regions "
+                 "WHERE side = 'candidate' ORDER BY region, site_finder_region") == [
+        {'region': 'cand.mixed', 'site_finder_region': 'stub-impl/rewritten:70-71'},
+        {'region': 'cand.mixed', 'site_finder_region': 'stub-impl/untouched:30-31'},
+        {'region': 'cand.rewritten', 'site_finder_region': 'stub-impl/rewritten:70-71'},
+        {'region': 'cand.untouched', 'site_finder_region': 'stub-impl/untouched:30-31'}]

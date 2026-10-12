@@ -4,7 +4,8 @@ Created: 2026-10-11 (Eastern Time), fine-grained attribution ticket 02.
 Updated: 2026-10-11 ET (ticket 05: library, intrinsic and offload labels; ticket 07: resource
 floor, floor headroom and ranking; ticket 06 + 07 merge: floors in `this_iteration`; ticket 04:
 merged sites, `mixed`, inlined pieces, matched regions, unattributed flag; ticket 08: catalog
-bound, remaining gain bound and the full ranking).
+bound, remaining gain bound and the full ranking; ticket 10, 2026-10-11 21:31 ET: `site_finder.kernel`
+and `site_finder.target`).
 Spec: `.scratch/fine-grained-attribution-2026-10-11/spec.md`.
 
 **In one line:** `swdb attribute` takes two saved estimates and the two source trees they
@@ -266,6 +267,8 @@ projection model, out of scope); on a CPU-only description every entry is `no_ca
 | `campaign_summary` | `{id, sha256}` of the saved campaign summary |
 | `iteration` | the campaign iteration `index` whose regions were used |
 | `query_sha256` | that iteration's site-finder query hash, or null |
+| `kernel` | ticket 10: the site-finder `kernel` parameter of that iteration (else the summary's), or null |
+| `target` | ticket 10: the site-finder target binding (`native_cpu`, `dx100_gem5`), or null. The site finder reads the latest report for its kernel and target and reorders its chosen regions by `ranking` only when `split_check.verdict` is `passed` |
 | `regions` | one row per site-finder region: `id`, `function` (from the ID; null if none), `path`, `revision` and `lines` (from `why.source`, full-source revision), `entries` (applied entry IDs) |
 
 ### `ranking` rows

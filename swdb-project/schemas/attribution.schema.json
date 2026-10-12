@@ -32,7 +32,7 @@
     },
     "site_finder": {
       "description": "Ticket 08 (2026-10-11 ET): the saved campaign summary iteration whose site-finder regions gave catalog bounds; absent when none was given.",
-      "type": "object", "additionalProperties": false, "required": ["campaign_summary", "iteration", "query_sha256", "regions"],
+      "type": "object", "additionalProperties": false, "required": ["campaign_summary", "iteration", "query_sha256", "kernel", "target", "regions"],
       "properties": {
         "campaign_summary": {
           "type": "object", "additionalProperties": false, "required": ["id", "sha256"],
@@ -40,6 +40,8 @@
         },
         "iteration": {"type": "integer", "minimum": 0},
         "query_sha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+        "kernel": {"description": "Ticket 10: the site-finder kernel parameter of the pinned iteration (or summary); null when not recorded.", "type": ["string", "null"]},
+        "target": {"description": "Ticket 10: the site-finder target binding (native_cpu, dx100_gem5); null when not recorded.", "type": ["string", "null"]},
         "regions": {
           "type": "array",
           "items": {
