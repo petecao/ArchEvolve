@@ -15,8 +15,7 @@ from swdb.cli import Failure
 from swdb.cpu_service_calibration import identity, validate_record
 from swdb.store import Store, Record
 
-ALLOCATOR_FIELDS={'_Znam':'known_length_bins','_Znwm':'known_length_bins',
-                  '_ZdaPv':'allocation_lifetime_size_bins','_ZdlPv':'allocation_lifetime_size_bins'}
+from swdb.analytic_cpu_service import ALLOCATOR_FIELDS  # one ABI table for binder and evaluator (2026-10-12 ET)
 
 
 def _library_hashes(libraries, prefix):
@@ -99,12 +98,12 @@ def _memory_binding(args,target,char,cells,scopes):
     selected={};parameters={};compatibility=[]
     for calibration,service in cells:
         scope=service.get('scope',{});op=scope.get('operation');width=scope.get('element_bytes');size=scope.get('footprint_bytes')
-        if op not in MEMORY_KINDS or type(width) is not int or width not in (1,4,8) or type(size) is not int:
+        if op not in MEMORY_KINDS or type(width) is not int or width not in (1,2,4,8) or type(size) is not int:
             raise Failure('unsupported constructed memory service cell')
         if op=='floating-add-update':
             from swdb.cpu_float_memory_calibration import PRIMITIVE
             if width!=8 or scope.get('source_primitive')!=PRIMITIVE:raise Failure('unsupported exact floating monotonic primitive')
-        small=width==1
+        small=width==1 and op=='read'  # 2026-10-12: narrow writes (memory_v2) are resident cells
         regime='fixed_small_byte_read_constructed_requests' if small else 'resident_serial_constructed_requests'
         if scope.get('update_kind')!=MEMORY_KINDS[op] or scope.get('memory_regime')!=regime or scope.get('worker_scope')!='serial' or scope.get('transfer_basis')!='inferred' or (small and (op!='read' or size!=256)):
             raise Failure('unsupported memory construction regime/primitive/width')
@@ -212,11 +211,12 @@ def _bulk_binding(args,target,char,cells,scopes):
 
 def _allocator_resource_binding(args,target,char,cells,scopes):
     from swdb.analytic_cpu_service import ALLOCATOR_RESOURCE_ASSUMPTION
+    from swdb.cpu_allocator_calibration import GROUPS
     parameters={}; selectors={}; rows=[]
     for calibration,service in cells:
         scope=service['scope'];abi=scope.get('event_abi');size=scope.get('size_bytes')
         if (service.get('cost_basis')!='gross_allocator_loop_resource_v1' or abi not in ALLOCATOR_FIELDS or
-            type(size) is not int or size<=0 or size>1048576 or scope.get('allocator_regime')!='fresh_process_repeated_allocate_free_batches'):
+            type(size) is not int or size<=0 or size>GROUPS['allocator_v2']['size_cap'] or scope.get('allocator_regime')!='fresh_process_repeated_allocate_free_batches'):
             raise Failure('unsupported exact gross allocator ABI/size/regime')
         selection=selectors.setdefault(abi,{'name':abi,'unit':'seconds/call','bin_kind':ALLOCATOR_FIELDS[abi],
             'bins':[],'scope_assumption':copy.deepcopy(ALLOCATOR_RESOURCE_ASSUMPTION)})
@@ -233,6 +233,24 @@ def _allocator_resource_binding(args,target,char,cells,scopes):
     return mechanism,rows
 
 
+def _floor_only_bandwidth(store,target):
+    """C11 (2026-10-12 ET, cpu-description ticket 03): the base's measured streaming_bandwidth rate,
+    which memory cells supersede as an estimate mechanism, kept verbatim for the attribution resource
+    floor only. The estimator never reads `resource_floor_mechanisms`, so estimates are unchanged."""
+    carried=[]
+    for mechanism in target['mechanisms']:
+        if (mechanism['model']!='streaming_bandwidth' or mechanism.get('selector')
+                or mechanism.get('accounting','resource_bound')!='resource_bound'):continue
+        calibrations=[]
+        for identifier in target['calibration_sources']:
+            record=store.get(identifier)
+            if record is None:raise Failure('floor-only bandwidth rate needs a resolvable base calibration '+repr(identifier))
+            calibrations.append({'id':identifier,'sha256':artifacts.digest(record)})
+        carried.append({'model':'streaming_bandwidth','parameters':copy.deepcopy(mechanism['parameters']),
+            'carried_from':{'description':{'id':target['id'],'sha256':artifacts.digest(target)},'calibrations':calibrations}})
+    return carried
+
+
 def bind(args):
     from swdb.archevolve import require_team_safe
     from swdb import workflow
@@ -247,7 +265,7 @@ def bind(args):
     require_team_safe(store,target,*scopes,*args.calibration,command='bind-cpu-services')
     result=copy.deepcopy(target)
     result.update(id=args.id,created=writer.today(),updated=writer.today())
-    parameters={}; selectors={}; proofs=[]; rows=[]; memory_cells=[];bulk_cells=[];allocator_resource_cells=[];openmp_cells=[];openmp_documents=[]
+    parameters={}; selectors={}; proofs=[]; rows=[]; memory_cells=[];bulk_cells=[];allocator_resource_cells=[];openmp_cells=[];openmp_documents=[];openmp_set='a1'
     for identifier in args.calibration:
         found=store.by_id.get(identifier)
         if found is None:
@@ -304,7 +322,7 @@ def bind(args):
                 selectors[abi]={'name':abi,'parameter':param,'unit':'seconds/call'}
     if openmp_cells:
         from swdb.cpu_openmp_binding import binding as openmp_binding
-        selected,known,openmp_rows,openmp_documents=openmp_binding(args,target,char,scopes,openmp_cells)
+        selected,known,openmp_rows,openmp_documents,openmp_set=openmp_binding(args,target,char,scopes,openmp_cells)
         if set(selectors)&set(selected):raise Failure('ambiguous scalar/OpenMP ABI selection')
         selectors.update(selected);parameters.update(known);rows.extend(openmp_rows)
     elif args.openmp_projection or args.openmp_next_policy is not None:
@@ -326,9 +344,11 @@ def bind(args):
         if target.get('extensions',{}).get('cpu_services_binding'):raise Failure('bind memory services from an unbound immutable base description')
         memory,memory_rows=_memory_binding(args,target,char,memory_cells,scopes);rows.extend(memory_rows)
         removed=[m['model'] for m in result['mechanisms'] if m['model'] in MEMORY_MODELS]
+        floor_only=_floor_only_bandwidth(store,target)
+        if floor_only:result['resource_floor_mechanisms']=floor_only
         result['mechanisms']=[m for m in result['mechanisms'] if m['model'] not in MEMORY_MODELS]
     if selectors:result['mechanisms'].append({'model':'native_service_costs','accounting':'additive_overhead',
-        'selector':{'domain':'host','worker_scope':'serial_T1','characterization_sha256':artifacts.digest(char),'calls':list(selectors.values()),**({'openmp_projections':openmp_documents} if openmp_documents else {})},'parameters':parameters})
+        'selector':{'domain':'host','worker_scope':'serial_T1','characterization_sha256':artifacts.digest(char),'calls':list(selectors.values()),**({'openmp_projections':openmp_documents} if openmp_documents else {}),**({'openmp_profile_set':openmp_set} if openmp_set!='a1' else {})},'parameters':parameters})
     if memory_cells:result['mechanisms'].append(memory)
     if allocator_resource:result['mechanisms'].append(allocator_resource)
     if len(scopes)>1:

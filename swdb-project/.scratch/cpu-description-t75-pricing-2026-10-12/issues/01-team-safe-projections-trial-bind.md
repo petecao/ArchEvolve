@@ -117,12 +117,23 @@ OpenMP sites (`fork_call` n=2/4/7, `static_init_4`, `fini`). Every other region 
 - **05:** `_8u` is needed. Exactly one site (84) per side. Mirror the `_8` profile literals.
 - **06:**
   - The call list is 6 library ABIs: `strlen`, `_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l`,
-    **`_ZNSo9_M_insertImEERSoT_`** (`ostream::_M_insert<unsigned long>`), `_ZNSo3putEc`, `_ZNSo5flushEv`,
+    `_ZNSo9_M_insertImEERSoT_` (`ostream::_M_insert<unsigned long>`), `_ZNSo3putEc`, `_ZNSo5flushEv`,
     `_ZNKSt5ctypeIcE13_M_widen_initEv`.
   - Plus `indirect-call` (1 site, 1 execution).
-  - Ticket 06's "ostream put/flush/insert" must name **both** insert symbols.
 - **07:** the bulk batch for the six memmove sizes is needed.
 - **Ticket 08 bind:** add the two projections from this folder.
+
+**Checked against the resolved tickets** (after merging `cpud/integration`, 2026-10-12 05:45 ET):
+
+- **02:** measures exactly write widths 1 and 2. Matches.
+- **04:** its ticket-07 `--cell` list is exactly malloc 64/128/6 144/2 097 152 and
+  `new_array`/`delete_array` 16 777 216/16 777 220. Matches. Its extra `free` support is harmless;
+  ticket 07 need not measure `free`.
+- **05:** with set `a2`, `profile_indexes` maps t75 site 84 to class 22 on both sides. All 9 sites
+  per side now match a class.
+- **06:** its 7 paired services already include `_ZNSo9_M_insertImEERSoT_`. Matches.
+
+So ticket 07's planned list is exactly the confirmed gaps: nothing to add and nothing to drop.
 
 ### 6. Run notes and assumptions
 

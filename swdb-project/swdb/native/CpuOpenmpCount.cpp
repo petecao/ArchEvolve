@@ -12,7 +12,7 @@ extern "C" __attribute__((noinline)) void service_openmp_matrix(int p,std::int32
 struct Task { std::uint64_t n;bool invoke; };
 static void team(std::int32_t *gtid,std::int32_t *,Task *t) {
   if(omp_get_num_threads()!=1 || omp_get_level()!=1 || omp_get_active_level()!=0)std::abort();
-  for(int p=6;p<22;++p)service_openmp_matrix(p,*gtid,t->n,t->invoke);
+  for(int p=6;p<23;++p)service_openmp_matrix(p,*gtid,t->n,t->invoke);
 }
 int main(int argc,char **argv) {
   if(argc!=3)return 2;Task t={std::strtoull(argv[1],0,10),std::atoi(argv[2])!=0};
