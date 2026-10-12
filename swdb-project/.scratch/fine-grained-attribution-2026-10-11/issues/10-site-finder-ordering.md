@@ -1,6 +1,6 @@
 # 10: Site finder uses the ranking
 
-Created: 2026-10-11 15:14 ET. Updated: 2026-10-11 21:31 ET (resolved; Answer added).
+Created: 2026-10-11 15:14 ET. Updated: 2026-10-12 00:42 ET (final review fix note); 2026-10-11 22:10 ET (review fix note); 2026-10-11 21:31 ET (resolved; Answer added).
 **Type:** task
 **Status:** resolved
 **Blocked by:** 08 — Catalog bound and full ranking; 09 — Split check
@@ -50,3 +50,14 @@ prompt sha256 pinned on the native query campaign before the change; 1 new in `t
 **Review fix (2026-10-11 22:10 ET, branch `fga/review-fixes`).** F37 (finding 6): `ORDERING_RULE`
 now says "latest" means newest inputs, then the greatest ID (not generation time), and the
 ordering block records `query_sha256` (`ORDERING_QUERY_SHA256`). Keying on iteration was not done.
+
+**Final review fix (2026-10-12 00:42 ET, branch `fga/final-fixes`).**
+- M1 (F42): a ranking row in the `unknown` tier gives no position (that tier is only region-ID
+  order); `ORDERING_QUERY` joins `k.tier <> 'unknown'`, so `ORDERING_QUERY_SHA256` changed.
+- L2: the ordering block adds `matched_regions`, the number of chosen regions that took a position
+  (0 when nothing moved).
+- M5 (F46): campaigns now save the ordering block in each iteration's `site_finder` row, so the
+  Answer's "summaries are unchanged" no longer holds: summaries gain `site_finder.ordering`.
+- L5 (story 33, F20): the rewrite prompt names workspace files, never a region, so a passed
+  report's order reaches the agent only through `REGIONS.json` and the prompt hash holds; the
+  campaign test now asserts that the prompt contains no region ID.

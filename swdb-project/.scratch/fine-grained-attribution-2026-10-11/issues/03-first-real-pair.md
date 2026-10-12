@@ -1,6 +1,8 @@
 # 03: First real pair: t75 BFS attribution report
 
-Created: 2026-10-11 15:14 ET
+Created: 2026-10-11 15:14 ET. Updated: 2026-10-12 00:40 ET (final review fixes: every missing piece,
+boxes ticked, retention and HEAD validation recorded); 2026-10-11 23:17 ET (resolved, negative);
+2026-10-11 19:34 ET (plan amendment a2); 2026-10-11 19:19 ET (prospective plan).
 **Type:** task
 **Status:** resolved
 **Blocked by:** 02 — First working version
@@ -11,10 +13,16 @@ Created: 2026-10-11 15:14 ET
 
 ## Acceptance
 
-- [ ] Both estimates saved before timing, order recorded, same input as the planned timing.
-- [ ] A real attribution report saved and validated, or a negative report.
-- [ ] Record shares of rewritten, untouched and unattributed time in the map's current state.
-- [ ] Follow the mbit10 rules: lane lease, `df -h` before large runs, raw output outside git.
+- [x] Both estimates saved before timing, order recorded, same input as the planned timing.
+  ([`order.log`](../evidence/03-first-real-pair/order.log): estimates end 22:50 and 23:16 ET; no
+  timing ran; workload `bfs-20261004-uniform22.2f83a134a6bef789` in both requests. A timing must now
+  also time source 0 only, the counted source, F44.)
+- [x] A real attribution report saved and validated, or a negative report. (Negative; see Answer.)
+- [x] Record shares of rewritten, untouched and unattributed time in the map's current state.
+  ([map](../map.md#current-state): unknown.)
+- [x] Follow the mbit10 rules: lane lease, `df -h` before large runs, raw output outside git.
+  ([`lane-a2.json`](../evidence/03-first-real-pair/lane-a2.json), node 1, generation 552;
+  [`env-start-a2.txt`](../evidence/03-first-real-pair/env-start-a2.txt); raw output on `/data`.)
 
 ## Prospective plan (recorded before any estimate or timing)
 
@@ -94,23 +102,24 @@ repetition 0, counted correctness passed.
 regions (baseline) and 19 of 289 (candidate); the other regions are 0 s. So there is no share to
 split, and rewritten/untouched/unattributed shares are **unknown**.
 
-**Missing pieces** (counts per side in [`unknowns-summary.json`](../evidence/03-first-real-pair/unknowns-summary.json)):
+**Missing pieces** (corrected 2026-10-12, final review H2, F41). Five groups, the same on both sides.
+Every item, with its region count per side, is in
+[`unknowns-summary.json`](../evidence/03-first-real-pair/unknowns-summary.json), made by the
+deterministic script [`unknowns_summary.py`](../evidence/03-first-real-pair/unknowns_summary.py)
+from the two saved estimates (it checks every trial and the estimates' own
+`parameter_report.structural_missing`; 35 items per side).
 
-1. **Characterization allowlist (risk B1).** `native_service_costs` and `memory_service_scenario`
-   in `mbit10.cpu.lanl20261006.t1.services.v1` accept only the four gapbs g16/g17
-   characterizations. Both new counts fail it in every unknown region
-   (`service_scope.characterization_allowlist`, `memory_scenario.characterization_allowlist`).
-   Fixing it needs a new target description with a prospective allowlist that names these counts,
-   frozen before any timing. Not done here: the ticket forbids changing the description.
-2. **Call costs with no service rate:** OpenMP (`__kmpc_fork_call`, `__kmpc_for_static_init_4/8u`,
-   `__kmpc_for_static_fini`), allocator (`_Znam`, `_ZdaPv`, `malloc`, and two allocation-size
-   bins at 16 777 216 / 16 777 220 bytes), `llvm.memcpy`/`llvm.memmove`, `system_clock::now`,
-   iostream output (`ostream` put/flush/insert, `ctype::_M_widen_init`), `strlen`, one
-   `indirect-call`.
-3. **Memory-scenario cells/primitives** with no constructed rate: `write.1`, `write.2` cells and
-   three access primitives (107, 109, 113).
-4. **Bandwidth rate (risk B3):** not reached; the description has no `bytes_per_s`, so the
-   resource floor would also stay unknown.
+| # | Group (regions, baseline / candidate) | What is missing |
+|---|---|---|
+| 1 | Characterization allowlist (16 / 19, every unknown region) | `native_service_costs` and `memory_service_scenario` in `mbit10.cpu.lanl20261006.t1.services.v1` accept only the four gapbs g16/g17 counts (risk B1) |
+| 2 | Call costs (7 / 7; 17 calls) | no service rate for OpenMP runtime (`__kmpc_*`), allocator (`_Znam`, `_ZdaPv`, `malloc`), `llvm.memcpy`/`llvm.memmove`, `system_clock::now`, iostream and `ctype`, `strlen`, one `indirect-call` |
+| 3 | OpenMP projection (5 / 5) | `openmp.exact_characterization_projection`: no exact OpenMP characterization/static-site projection for these counts; the estimates mark it `required_for_total` |
+| 4 | Call-shape size bins (2 / 2; 10 bins) | `_Znam`/`_ZdaPv` at 16 777 216 and 16 777 220 bytes, and six `llvm.memmove` bins (140, 4388, 7300, 9044, 14496, 30164 bytes) |
+| 5 | Memory-scenario cells (2 / 2; 5 items) | write cells 1 and 2, access primitives 107, 109 and 113 |
+
+Fixing them needs a new target description, frozen before any timing; not done here (the ticket
+forbids changing the description). Not an estimate gap: the description has no `bytes_per_s`
+(risk B3), so the resource floor would stay unknown too.
 
 **Records added** (master copies, under `records/`):
 - `protocols/fga03.t75-baseline.uniform22.t1.estimate.protocol.a2.6ac95ee72d9e4798`
@@ -124,11 +133,31 @@ for byte to the Mac (SHA-256 checked); not re-validated on the Mac (a whole-stor
 7 GB of RAM for about 50 min).
 
 **For ticket 09.** Its F19 check has no estimated shares to compare, so it closes on the same
-missing pieces with verdict `split_unverified`. If it is reopened after a new description: time
-the same workload ID with the two prospective requests in
-[`evidence/03-first-real-pair/`](../evidence/03-first-real-pair/) (LLVM 22 `clang++`, evaluator v3,
-sources `[0, 1234, 7777]`, 20 repetitions). The counted SG binaries are kept on mbit10 (see map).
+missing pieces with verdict `split_unverified`. No rerun is planned: Yan-Ru declined the optional
+follow-up ticket on 2026-10-11. For the record, a rerun would have to time source 0 only (the
+counted source, F44), not the requests' `[0, 1234, 7777]`, on a later day than the estimates (F43).
 
 **Plan changes, for the record.** Attempt a1 (g16 input, implementation baseline) was stopped
 before it wrote anything; see the a2 amendment above. `attribute` stays out of
 `archevolve.EVIDENCE_COMMANDS` (not decided here; nothing to attribute).
+
+**Final review fix (2026-10-12 00:40 ET, branch `fga/final-fixes`).**
+- H2 (F41): the missing-piece list above was incomplete; it now has the OpenMP projection and the
+  six `llvm.memmove` size bins, from a deterministic script.
+- L15: the fga03 records validate at `yanrujhou_main` HEAD too: whole-store `swdb validate` at
+  `528eadb6` on mbit10, `OK: 713 record(s) valid`
+  ([`validate-mbit10-head-528eadb6.txt`](../evidence/03-first-real-pair/validate-mbit10-head-528eadb6.txt)).
+- L9 (LR-06), checked on mbit10 2026-10-12 00:09 ET. Kept in
+  `/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/` (65.7 MB in all; `/data` had 57 GB
+  free), manifest SHA-256 = sha256 of `sha256sum` over the folder's sorted files:
+
+  | Folder (`a2/`) | Files | Bytes | Manifest SHA-256 |
+  |---|---|---|---|
+  | `baseline-counted` | 13 | 15 978 104 | `6a73000552ddb612b1b02aa3de3ab91b40d70872ddb105e46ca8f626daabe133` |
+  | `candidate-counted` | 13 | 16 103 834 | `5e3789357eedd9595c45190f90d43d68c629f44937364360a07f8664257d1201` |
+  | `swdb-protected-cpu-wrapper-8yok3jhh` | 4 | 16 815 389 | `7a16e1d3534de88ec110f21eedc79c4b752e0372b1ad8720f9a668e8ac00ca69` |
+  | `swdb-protected-cpu-wrapper-bjvc5lh_` | 4 | 16 815 409 | `6dc0b113b8ba4a285475efb35a4588f61da5e312a1925dd1b967dd780bb51029` |
+
+  Their only planned reader, the ticket 09 rerun, is gone (follow-up declined), so they are
+  disposable; they stay until Yan-Ru authorizes removal (LR-06: remove only authorized output).
+  The `/data1/yanruj/ArchEvolve-fga03` worktree no longer exists (already removed).

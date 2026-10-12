@@ -1,7 +1,7 @@
 # 05: Library, intrinsic and offload labels
 
 Created: 2026-10-11 15:14 ET
-Updated: 2026-10-11 16:43 ET (resolved)
+Updated: 2026-10-12 00:42 ET (final review fix note); 2026-10-11 22:10 ET (review fix note); 2026-10-11 16:43 ET (resolved)
 **Type:** task
 **Status:** resolved
 **Blocked by:** 02 — First working version
@@ -62,3 +62,9 @@ Resolved 2026-10-11 16:43 ET on branch `fga/05-origin-labels`.
   region keeps the rest (new region field `unmodeled_calls`).
 - `db.py`: the six chained `_Insert.attribution` reassignments are one ordered list
   (`_ATTRIBUTION_INSERTS`); `mixed` is stored as `int` everywhere.
+
+**Final review fix (2026-10-12 00:42 ET, branch `fga/final-fixes`).** L1: when a region's own work is unknown, its call time is
+unknown too, and `unmodeled_calls.missing` and the `unattributed` group's `unknown` now name the
+own-work items instead of an empty list. H1 (F40): the split check keeps call time in the
+region's own group; the report's groups keep F33. L14: `_Catalog` is `_OriginSignals`, `_names`
+is `_calls_symbol`, and one helper gives the bound events.

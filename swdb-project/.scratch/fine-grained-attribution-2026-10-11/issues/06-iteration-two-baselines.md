@@ -1,6 +1,6 @@
 # 06: Iteration 2: two baselines
 
-Created: 2026-10-11 15:14 ET
+Created: 2026-10-11 15:14 ET. Updated: 2026-10-12 00:42 ET (final review fix note); 2026-10-11 22:10 ET (review fix note); 2026-10-11 16:43 ET (resolved).
 **Type:** task
 **Status:** resolved
 **Blocked by:** 02 — First working version
@@ -65,3 +65,10 @@ pre-existing failures) and an in-memory `db.SCHEMA` check against `database.md`.
 **Review fix (2026-10-11 22:10 ET, branch `fga/review-fixes`).** F39: last-changed labels read no
 catalog, so an intrinsic seen only in an earlier diff no longer enters the report's `catalog` pins;
 the two diffs the report already labels are reused, not labeled again (finding 1).
+
+**Final review fix (2026-10-12 00:42 ET, branch `fga/final-fixes`).** M4 (F45): one top-level ranking, over the cumulative
+comparison's candidate regions. A candidate row's catalog bound runs on its matched region's
+counts (F35), and that match differs per comparison, so the `this_iteration` bounds are
+informational; `ranking_rule.comparison` and the format doc say so (the docstring no longer claims
+the two comparisons give the same limits). The previous candidate must also share
+`estimator_sha256` (F47). L13: no per-site iteration field.

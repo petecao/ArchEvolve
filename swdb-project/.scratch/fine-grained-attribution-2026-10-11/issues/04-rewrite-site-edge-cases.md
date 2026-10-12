@@ -1,6 +1,6 @@
 # 04: Rewrite-site edge cases
 
-Created: 2026-10-11 15:14 ET
+Created: 2026-10-11 15:14 ET. Updated: 2026-10-12 00:42 ET (final review fix note); 2026-10-11 22:10 ET (review fix note); 2026-10-11 18:36 ET (resolved).
 **Type:** task
 **Status:** resolved
 **Blocked by:** 02 — First working version
@@ -51,3 +51,7 @@ Resolved 2026-10-11 18:36 ET on branch `fga/04-rewrite-sites`.
 
 **Review fix (2026-10-11 22:10 ET, branch `fga/review-fixes`).** The glossary's "Rewrite site"
 now says one or more changed spans, merged when one region overlaps several (finding 7).
+
+**Final review fix (2026-10-12 00:42 ET, branch `fga/final-fixes`).** M7: the format doc's `rewrite_sites` row now says one row per
+merged rewrite site, not per changed run. L13: sites carry no iteration field; the format doc and
+the spec's record-shape note say why (a cumulative site can merge several iterations).

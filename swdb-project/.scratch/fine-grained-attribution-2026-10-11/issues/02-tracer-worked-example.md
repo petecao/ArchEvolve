@@ -1,6 +1,6 @@
 # 02: First working version: the worked example end to end
 
-Created: 2026-10-11 15:14 ET. Updated: 2026-10-11 16:10 ET (resolved; Answer added).
+Created: 2026-10-11 15:14 ET. Updated: 2026-10-12 00:42 ET (final review fix note); 2026-10-11 16:10 ET (resolved; Answer added).
 **Type:** task
 **Status:** resolved
 **Blocked by:** 01 — Review and commit design
@@ -79,3 +79,10 @@ Resolved 2026-10-11 16:10 ET on branch `fga/02-tracer`.
 python3 -m pytest -q tests/test_attribution.py tests/test_format_doc.py tests/test_crosswalk.py \
   tests/test_validate_application.py "tests/test_db.py::test_every_table_and_column_is_documented"
 ```
+
+**Final review fix (2026-10-12 00:42 ET, branch `fga/final-fixes`).**
+- M8 (F47): the two estimates must also share `estimator_sha256`, else the command refuses
+  (`COMPARABLE` replaces `SAME`).
+- L1 (F8): an unknown `unattributed` group never lists an empty reason; call time left unknown by
+  the region's own work names that work's missing items.
+- L11: the module docstring cites stories 43/44 (not "F43, F44") and F35/F38/F39.

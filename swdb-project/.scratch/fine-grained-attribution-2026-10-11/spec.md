@@ -1,11 +1,14 @@
 # Spec: Fine-grained estimate attribution and headroom
 
 Created: 2026-10-11 14:51 ET
-Updated: 2026-10-11 22:10 ET (review fix pass: decisions F26-F39 recorded); 2026-10-11 19:18 ET (ticket 08: decision F25 recorded); 2026-10-11 15:11 ET (rewritten to the full spec template after three grilling rounds;
+Updated: 2026-10-12 00:37 ET (final review fix pass on `fga/final-fixes`: decisions F40–F47 recorded,
+record-shape note and story 38 scope corrected; status unchanged); 2026-10-11 23:32 ET (status resolved:
+tickets 02–10 resolved); 2026-10-11 22:10 ET (review fix pass: decisions F26-F39 recorded); 2026-10-11 19:18 ET (ticket 08: decision F25 recorded); 2026-10-11 15:11 ET (rewritten to the full spec template after three grilling rounds;
 decisions F1–F24 unchanged; test seams confirmed by Yan-Ru); 2026-10-11 15:08 ET (grilling round 3);
 2026-10-11 15:04 ET (round 2); 2026-10-11 14:59 ET (round 1)
 **Type:** spec
-**Status:** resolved (2026-10-11 23:32 ET; all tickets 02–10 resolved, see [map.md](map.md))
+**Status:** resolved (2026-10-11 23:32 ET; all tickets 02–10 resolved, see [map.md](map.md); final review
+fixes F40–F47 on 2026-10-12 00:37 ET)
 **Blocked by:** None
 Owner: Yan-Ru Jhou
 Builds on: ADR 0013 (ArchEvolve mode estimates speed) and the closed analytic-eval spec
@@ -153,7 +156,8 @@ A new **attribution report**, produced by one command from saved records only:
 37. As Yan-Ru, I want the pass rule (every group within 10 percentage points) fixed before timing, so
     that the result cannot be tuned afterward.
 38. As Scott, I want a breakdown figure (rewritten gain, untouched drift, Amdahl ceiling, headroom)
-    with its split-check verdict, so that I can judge how much to trust it.
+    with its split-check verdict, so that I can judge how much to trust it. (This spec delivers the
+    figure's data; drawing it is Out of Scope, final review L12, 2026-10-12 ET.)
 39. As Yan-Ru, I want an input mismatch between the two estimates or the timing refused, so that a
     share comparison is never made across inputs.
 40. As Yan-Ru, I want a negative report naming the missing pieces if an estimate comes out unknown,
@@ -187,7 +191,7 @@ A new **attribution report**, produced by one command from saved records only:
   floor reuses the existing compute and streaming-bandwidth models as they are. No frozen protocol
   needs refreshing.
 
-**Decisions F1–F39** (Yan-Ru, 2026-10-11; numbers kept for references in tickets; F25 recorded by ticket 08; F26–F39 recorded by the review fix pass on `fga/review-fixes`)
+**Decisions F1–F47** (Yan-Ru, 2026-10-11 and 2026-10-12; numbers kept for references in tickets; F25 recorded by ticket 08; F26–F39 recorded by the review fix pass on `fga/review-fixes`; F40–F47 recorded by the final review fix pass on `fga/final-fixes`, 2026-10-12 ET)
 
 | # | Decision |
 |---|---|
@@ -229,19 +233,31 @@ A new **attribution report**, produced by one command from saved records only:
 | F37 | (F20, F23) The site finder's "latest" report is the one with the newest inputs (a report's `created` is the latest `updated` date of its inputs, not its generation time), then the greatest record ID. The ordering block records `ORDERING_QUERY_SHA256` beside the rule. |
 | F38 | Catalog-bound entries run each trial with that trial's own `unmodeled_calls`, as the estimator does; a single-run characterization uses its aggregate calls. |
 | F39 | (F13) Only labels of comparisons the report shows pin catalog entries: last-changed iterations read no catalog, so a call seen only in an earlier diff pins nothing. Each diff is labeled once. |
+| F40 | (F19, F33) The split check's estimated shares keep each region's full seconds, call time included, under its own group; the report's groups keep F33. Rule `swdb.split_check.v2`; `swdb validate` refuses any other rule. Why: measured exclusive thread-CPU time holds a scope's uninstrumented callees, so only this compares like with like. |
+| F41 | (story 40, LR-01) The 03/09 negative names every missing piece of the saved estimates, collected by a deterministic script over the two estimate records (`evidence/03-first-real-pair/unknowns_summary.py`), grouped, with the full list in `unknowns-summary.json`. Why: an incomplete list would send a rerun after the wrong premises. |
+| F42 | (F7, F20) The site finder takes no position from a ranking row in the `unknown` tier (`ORDERING_QUERY_SHA256` changed). Why: that tier is only region-ID order, not a ranking. |
+| F43 | (story 35, LR-02) The pre-timing order check compares full timestamps when the records carry them; otherwise dates, with the profile dated strictly after both estimates. Estimate records carry only a date (the envelope's `created`), so the date rule is the one that runs. Why: a same-day date cannot show which came first. |
+| F44 | (F18) A profile is refused when its machine, its timed BFS sources or its input generator seed differ from the estimate's characterization (`host.machine`, the trials' `sources`, the counted workload's seed); a single-run count records no sources and is refused. Why: never compare across machines, roots or inputs. |
+| F45 | (F7, F13) One top-level ranking, over the cumulative comparison's candidate regions; the `this_iteration` catalog bounds and floors are informational (`ranking_rule.comparison`). Why: one ranking for the site finder; F35's baseline counts differ per comparison. |
+| F46 | (F37) Campaign summaries save the site finder's `ordering` block in each iteration's `site_finder` row. Why: an iteration a report reordered must name that report, its verdict and the query hash. |
+| F47 | (F27) Compared estimates must share `estimator_sha256`, like input, target description, threads and evidence kind. Why: drift and realized speedup must not mix an estimator change with the code change. |
 
 **Record shape (decision-level, not final field names)**
 
 - Identity: hashes of the baseline estimate, candidate estimate, previous candidate (if any), both
   source snapshots and the target description; the input ID.
-- Rewrite sites: each with its baseline and candidate line spans, replaced and replacing regions,
-  and the iteration that made it.
+- Rewrite sites: each with its baseline and candidate line spans, replaced and replacing regions.
+  No per-site iteration (final review L13, 2026-10-12 ET): a cumulative site can merge several
+  iterations' changes; each region records `last_changed_iteration`, and every `this_iteration`
+  site was made by that iteration.
 - Regions: ID, code origin, `mixed` flag, last-changed iteration, baseline and candidate seconds,
   resource floor, catalog bound with its entry or unknown reason, and both headrooms.
 - Groups: the F5 fields for both F13 baselines.
 - Whole program: total speedup, Amdahl ceiling, unattributed flag.
 - Ranking: ordered region IDs with their remaining gain bound or floor headroom.
 - Split check: absent, `passed` or `split_unverified`, with the measured shares and the rule.
+  Since F23, a negative closed without a report saves no `split_unverified` record: the site
+  finder then sees no report, which keeps today's order (the same outcome).
 
 ## Testing Decisions
 
@@ -284,6 +300,9 @@ expected values, then validation) and the site finder tests. Fixture counts carr
 - Splitting a partly rewritten region by operation share (F14).
 - Extensa-mode agreement studies and any gem5 use.
 - Per-region native timing beyond the one BFS pair.
+- Drawing Scott's breakdown figure (story 38; moved here by the final review, L12, 2026-10-12 ET).
+  The attribution report and its `swdb_attribution*` tables hold the figure's data and the
+  split-check verdict; drawing it is paper work outside this spec.
 
 ## Further Notes
 

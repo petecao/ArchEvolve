@@ -1,6 +1,6 @@
 # 07: Resource floor headroom
 
-Created: 2026-10-11 15:14 ET. Updated: 2026-10-11 16:42 ET (resolved).
+Created: 2026-10-11 15:14 ET. Updated: 2026-10-12 00:42 ET (final review fix note); 2026-10-11 16:42 ET (resolved).
 **Type:** task
 **Status:** resolved
 **Blocked by:** 02 — First working version
@@ -74,3 +74,7 @@ Result: 12 attribution tests pass (about 40 s). `test_format_doc.py` keeps its 2
 failures, none for attribution fields. The documented-tables test in `test_db.py` was not run
 (it copies the whole catalog); new tables and columns were checked by hand against `database.md`.
 
+**Final review fix (2026-10-12 00:42 ET, branch `fga/final-fixes`).** L3: the floor's bandwidth term is the `streaming_bandwidth`
+model's own bound, which leaves out bytes a `cache_fit` or latency model covers, so the floor is
+looser but still a valid lower limit. `ranking_rule.floor_headroom` and the format doc state it;
+the floor itself is unchanged.

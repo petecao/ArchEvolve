@@ -1,21 +1,19 @@
 # Map: Fine-grained estimate attribution and headroom
 
-Created: 2026-10-11 14:51 ET. Updated: 2026-10-11 15:14 ET (tickets re-cut into vertical slices 02–10,
-approved by Yan-Ru); 2026-10-11 23:32 ET (all tickets resolved; code on yanrujhou_main); 2026-10-11 15:17 ET (ticket 01 resolved; design committed). Spec: [spec.md](spec.md).
+Created: 2026-10-11 14:51 ET. Updated: 2026-10-12 00:38 ET (final review fixes F40–F47; current state
+cut to checkpoint, blocker and next action); 2026-10-11 23:32 ET (all tickets resolved; code on
+yanrujhou_main); 2026-10-11 15:17 ET (ticket 01 resolved; design committed); 2026-10-11 15:14 ET
+(tickets re-cut into vertical slices 02–10, approved by Yan-Ru). Spec: [spec.md](spec.md).
 
 ## Current state
 
-- **Checkpoint (2026-10-11 23:32 ET):** all tickets 01–10 resolved. `swdb attribute` and the site-finder
-  ordering are on `yanrujhou_main`; decisions F1–F39 in the spec. 03 and 09 closed negative.
-- **Blocker:** the real split stays unverified until the CPU target description can price the t75
-  characterizations (allowlist, uncosted calls, bandwidth rate; see ticket 03).
-- **Next action (separate ticket, not opened):** extend the CPU description, then rerun 03 and 09 from the
-  saved prospective requests.
-- **Ticket 03 (2026-10-11 23:17 ET):** negative. Both t75 estimates (uniform22, T1) are unknown, so
-  rewritten / untouched / unattributed shares are **unknown**. Main missing piece: the CPU
-  description's characterization allowlist (risk B1), plus uncosted OpenMP/allocator/bulk/clock/
-  iostream calls. Ticket 09 has no estimated shares: `split_unverified`. Kept on mbit10 for a
-  rerun: `/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/a2/{baseline,candidate}-counted`.
+- **Checkpoint (2026-10-12 00:38 ET):** all tickets 01–10 resolved; spec closed. Final review fixes
+  (F40–F47) are on branch `fga/final-fixes`, not yet merged into `yanrujhou_main`.
+- **Blocker:** none for this spec. The real split stays `split_unverified`: both t75 estimates are
+  unknown, so the rewritten, untouched and unattributed shares are **unknown**
+  ([ticket 03](issues/03-first-real-pair.md#answer) lists every missing piece).
+- **Next action:** none; the spec is closed. The optional follow-up ticket (extend the CPU
+  description, then rerun 03 and 09) was declined by Yan-Ru on 2026-10-11.
 
 ## Tickets
 
@@ -31,5 +29,3 @@ approved by Yan-Ru); 2026-10-11 23:32 ET (all tickets resolved; code on yanrujho
 | [08](issues/08-catalog-bound-ranking.md) | Catalog bound and full ranking | resolved ([answer](issues/08-catalog-bound-ranking.md#answer)) | 07 |
 | [09](issues/09-split-check.md) | Split check on the real pair | resolved, negative: `split_unverified`, no timing ([answer](issues/09-split-check.md#answer)) | 03 |
 | [10](issues/10-site-finder-ordering.md) | Site finder uses the ranking | resolved ([answer](issues/10-site-finder-ordering.md#answer)) | 08, 09 |
-
-Frontier after 02: 03–07 can run in parallel. Estimated total: about 3 days of agent work.

@@ -1,6 +1,6 @@
 # 08: Catalog bound and full ranking
 
-Created: 2026-10-11 15:14 ET. Updated: 2026-10-11 19:30 ET (resolved).
+Created: 2026-10-11 15:14 ET. Updated: 2026-10-12 00:42 ET (final review fix note); 2026-10-11 22:10 ET (review fix note); 2026-10-11 19:30 ET (resolved).
 **Type:** task
 **Status:** resolved
 **Blocked by:** 07 — Resource floor headroom
@@ -92,3 +92,11 @@ decisions above.
 - F36: unknown bounds rank in the `unknown` tier with their reason; only `no_catalog_match`/`no_site_finder` are floor-only.
 - F29: the 0 clamp stays and is stated in `ranking_rule`; ties go by floor headroom, then ID.
 - F38: entries use each trial's own `unmodeled_calls`.
+
+**Final review fix (2026-10-12 00:42 ET, branch `fga/final-fixes`).**
+- L4: a test now asserts `ranking_rule.remaining_gain_bound` starts "Upper limit, never an
+  expected gain" (box 5).
+- M4 (F45): new `ranking_rule.comparison`: one ranking over the cumulative comparison;
+  `this_iteration` bounds are informational.
+- M7: the schema's `catalog_bound` description says "baseline counts" (F35); `database.md`'s
+  headroom reasons point to the format doc's one list instead of a stale copy.
