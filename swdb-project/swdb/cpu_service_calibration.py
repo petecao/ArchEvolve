@@ -30,7 +30,7 @@ def register_cli(commands):
     run.add_argument('--output', type=Path, required=True)
     run.add_argument('--fixture', action='store_true')
     run.add_argument('--count-only', action='store_true', help='emit ABI/count proof only; no elapsed calibration')
-    run.add_argument('--service-group', choices=['clock', 'allocator'], default='clock')
+    run.add_argument('--service-group', choices=['clock', 'allocator', 'library_call'], default='clock')
     run.add_argument('--count-build-cap-mib', type=int, default=64, help='allocator counted build artifacts cap,1–64MiB; timed data stays25MiB')
     run.add_argument('--size', type=int, action='append', help='exact allocator byte bin; repeat, <=1MiB')
     run.add_argument('--compiler', default='c++')
@@ -140,6 +140,9 @@ def validate_record(record, ctx):
 def calibrate(args):
     if args.service_group == 'allocator':
         from swdb.cpu_allocator_calibration import calibrate
+        return calibrate(args)
+    if args.service_group == 'library_call':
+        from swdb.cpu_library_call_calibration import calibrate
         return calibrate(args)
     if args.size or args.count_build_cap_mib != 64:
         raise Failure('--size and --count-build-cap-mib apply to the allocator service group')
