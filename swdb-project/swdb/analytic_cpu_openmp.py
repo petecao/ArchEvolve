@@ -1,7 +1,9 @@
-"""Exact static OpenMP ABI classes with explicit inferred legal T1 transfer.2026-10-06 ET."""
+"""Exact static OpenMP ABI classes with explicit inferred legal T1 transfer.2026-10-06 ET.
+
+Profile sets 2026-10-12 ET: a bound selector without `openmp_profile_set` uses set a1."""
 import math
 from swdb.cpu_openmp_calibration import check_signature
-from swdb.cpu_openmp_profiles import PROFILES, STATE, PROBE
+from swdb.cpu_openmp_profiles import PROFILE_SETS, STATE, PROBE
 from swdb.cpu_service_calibration import identity
 from swdb.cli import Failure
 
@@ -10,12 +12,12 @@ ASSUMPTION={'regime':STATE,'transfer_basis':'inferred','probe_kind':PROBE,'dynam
     'physical_instruction_latency':False,'physical_upper_bound':False}
 
 
-def profile_indexes(signature):
-    """Only supported literal ABI classes and source outlined/caller context."""
+def profile_indexes(signature,profiles=PROFILE_SETS['a1']):
+    """Only supported literal ABI classes of one profile set and source outlined/caller context."""
     if not isinstance(signature,dict) or not isinstance(signature.get('llvm_function'),str):return []
     result=[]
     outlined='.omp_outlined' in signature.get('llvm_function','')
-    for profile in PROFILES:
+    for profile in profiles:
         try:check_signature(signature,profile)
         except (Failure,KeyError,TypeError,ValueError,AttributeError):continue
         if (profile['context']=='serialized_team')!=outlined:continue
@@ -35,7 +37,9 @@ def cost(region,call,selection,mechanism,context):
         document.get('all_source_json_sites_cross_checked') is not True):return unknown('sealed_projection')
     signatures=[c for c in document.get('calls',[]) if isinstance(c,dict) and c.get('site')==call.get('site') and c.get('region')==region['id'] and c.get('name')==call['name']]
     if len(signatures)!=1:return unknown('exact_static_site')
-    indexes=profile_indexes(signatures[0])
+    profile_set=mechanism.get('selector',{}).get('openmp_profile_set','a1')
+    if profile_set not in PROFILE_SETS:return unknown('profile_set')
+    indexes=profile_indexes(signatures[0],PROFILE_SETS[profile_set])
     if not indexes:return unknown('unsupported_abi_class')
     rows=selection.get('abi_sites')
     if not isinstance(rows,list):return unknown('site_classes')

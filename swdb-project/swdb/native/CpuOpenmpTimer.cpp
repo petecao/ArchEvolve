@@ -27,7 +27,7 @@ static void run(Task &t) {
 }
 int main(int argc,char **argv) {
   if(argc!=4)return 2;int p=std::atoi(argv[1]);std::uint64_t n=std::strtoull(argv[2],0,10);bool first=std::atoi(argv[3])!=0;
-  if(p<0 || p>=22 || n==0 || n>16777216)return 2;
+  if(p<0 || p>=23 || n==0 || n>16777216)return 2;
   Task warm={p,16,true,0.,0,0,0,0};run(warm);warm.invoke=false;run(warm);
   Task a={p,n,true,0.,0,0,0,0},b={p,n,false,0.,0,0,0,0};
   if(first){run(a);run(b);}else{run(b);run(a);}

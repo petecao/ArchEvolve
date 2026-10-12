@@ -1,4 +1,4 @@
-// Legal serialized-team OpenMP event probes. Created2026-10-06 ET.
+// Legal serialized-team OpenMP event probes. Created2026-10-06 ET; a2 event 22 (_8u) 2026-10-12 ET.
 #pragma once
 #include <cstddef>
 #include <cstdint>
@@ -10,6 +10,7 @@ void __kmpc_fork_call(const SwdbIdent *,std::int32_t,SwdbMicrotask,...);
 void __kmpc_barrier(const SwdbIdent *,std::int32_t);
 void __kmpc_for_static_init_4(const SwdbIdent *,std::int32_t,std::int32_t,std::int32_t *,std::int32_t *,std::int32_t *,std::int32_t *,std::int32_t,std::int32_t);
 void __kmpc_for_static_init_8(const SwdbIdent *,std::int32_t,std::int32_t,std::int32_t *,std::int64_t *,std::int64_t *,std::int64_t *,std::int64_t,std::int64_t);
+void __kmpc_for_static_init_8u(const SwdbIdent *,std::int32_t,std::int32_t,std::int32_t *,std::uint64_t *,std::uint64_t *,std::int64_t *,std::int64_t,std::int64_t);
 void __kmpc_for_static_fini(const SwdbIdent *,std::int32_t);
 std::int32_t __kmpc_reduce_nowait(const SwdbIdent *,std::int32_t,std::int32_t,std::size_t,void *,void (*)(void *,void *),std::int32_t *);
 void __kmpc_end_reduce_nowait(const SwdbIdent *,std::int32_t,std::int32_t *);
@@ -30,8 +31,9 @@ static const SwdbIdent swdb_loc514={0,514,0,0,";swdb;event;1;1;;"};
 struct SwdbOmpState {
   std::int32_t gtid,last,lo4,hi4,stride4,result;
   std::int64_t lo8,hi8,stride8,reduced;
+  std::uint64_t lo8u,hi8u;
   void *reduction[1]; std::int32_t lock[8];
-  explicit SwdbOmpState(std::int32_t g):gtid(g),last(0),lo4(0),hi4(31),stride4(1),result(0),lo8(0),hi8(31),stride8(1),reduced(1),reduction{&reduced},lock{} {}
+  explicit SwdbOmpState(std::int32_t g):gtid(g),last(0),lo4(0),hi4(31),stride4(1),result(0),lo8(0),hi8(31),stride8(1),reduced(1),lo8u(0),hi8u(31),reduction{&reduced},lock{} {}
 };
 static void swdb_empty_task(std::int32_t *,std::int32_t *,...) { asm volatile("" ::: "memory"); }
 static void swdb_reduce(void *lhs,void *rhs) {
@@ -68,13 +70,14 @@ static SWDB_OMP_VIS std::int32_t swdb_openmp_event(int p,SwdbOmpState &s) {
     case 19: return __kmpc_dispatch_next_8(&swdb_loc2,s.gtid,&s.last,&s.lo8,&s.hi8,&s.stride8); // SWDB_OMP_EVENT 19
     case 20: return __kmpc_dispatch_next_8(&swdb_loc2,s.gtid,&s.last,&s.lo8,&s.hi8,&s.stride8); // SWDB_OMP_EVENT 20
     case 21: __kmpc_dispatch_deinit(&swdb_loc2,s.gtid);break; // SWDB_OMP_EVENT 21
+    case 22: __kmpc_for_static_init_8u(&swdb_loc514,s.gtid,34,&s.last,&s.lo8u,&s.hi8u,&s.stride8,1,1);break; // SWDB_OMP_EVENT 22
     default:std::abort();
   }
   return 0;
 }
 #undef SWDB_OMP_VIS
 static __attribute__((noinline)) void swdb_openmp_prepare(int p,SwdbOmpState &s) {
-  s.lo4=0;s.hi4=31;s.stride4=1;s.lo8=0;s.hi8=31;s.stride8=1;s.last=0;
+  s.lo4=0;s.hi4=31;s.stride4=1;s.lo8=0;s.hi8=31;s.stride8=1;s.lo8u=0;s.hi8u=31;s.last=0;
   if(p==10)swdb_openmp_event(9,s);
   if(p==12 && swdb_openmp_event(11,s)!=1)std::abort();
   if(p==14 && swdb_openmp_event(13,s)!=1)std::abort();
@@ -85,7 +88,7 @@ static __attribute__((noinline)) void swdb_openmp_prepare(int p,SwdbOmpState &s)
   if(p==21)while(swdb_openmp_event(17,s)){}
 }
 static __attribute__((noinline)) void swdb_openmp_cleanup(int p,SwdbOmpState &s) {
-  if(p==8 || p==9)swdb_openmp_event(10,s);
+  if(p==8 || p==9 || p==22)swdb_openmp_event(10,s);
   if(p==11) { if(s.result!=1)std::abort();swdb_openmp_event(12,s); }
   if(p==13) { if(s.result!=1)std::abort();swdb_openmp_event(14,s); }
   if(p==15 || p==17) { while(swdb_openmp_event(17,s)){};swdb_openmp_event(21,s); }

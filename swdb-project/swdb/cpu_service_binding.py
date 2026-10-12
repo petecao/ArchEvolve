@@ -265,7 +265,7 @@ def bind(args):
     require_team_safe(store,target,*scopes,*args.calibration,command='bind-cpu-services')
     result=copy.deepcopy(target)
     result.update(id=args.id,created=writer.today(),updated=writer.today())
-    parameters={}; selectors={}; proofs=[]; rows=[]; memory_cells=[];bulk_cells=[];allocator_resource_cells=[];openmp_cells=[];openmp_documents=[]
+    parameters={}; selectors={}; proofs=[]; rows=[]; memory_cells=[];bulk_cells=[];allocator_resource_cells=[];openmp_cells=[];openmp_documents=[];openmp_set='a1'
     for identifier in args.calibration:
         found=store.by_id.get(identifier)
         if found is None:
@@ -322,7 +322,7 @@ def bind(args):
                 selectors[abi]={'name':abi,'parameter':param,'unit':'seconds/call'}
     if openmp_cells:
         from swdb.cpu_openmp_binding import binding as openmp_binding
-        selected,known,openmp_rows,openmp_documents=openmp_binding(args,target,char,scopes,openmp_cells)
+        selected,known,openmp_rows,openmp_documents,openmp_set=openmp_binding(args,target,char,scopes,openmp_cells)
         if set(selectors)&set(selected):raise Failure('ambiguous scalar/OpenMP ABI selection')
         selectors.update(selected);parameters.update(known);rows.extend(openmp_rows)
     elif args.openmp_projection or args.openmp_next_policy is not None:
@@ -348,7 +348,7 @@ def bind(args):
         if floor_only:result['resource_floor_mechanisms']=floor_only
         result['mechanisms']=[m for m in result['mechanisms'] if m['model'] not in MEMORY_MODELS]
     if selectors:result['mechanisms'].append({'model':'native_service_costs','accounting':'additive_overhead',
-        'selector':{'domain':'host','worker_scope':'serial_T1','characterization_sha256':artifacts.digest(char),'calls':list(selectors.values()),**({'openmp_projections':openmp_documents} if openmp_documents else {})},'parameters':parameters})
+        'selector':{'domain':'host','worker_scope':'serial_T1','characterization_sha256':artifacts.digest(char),'calls':list(selectors.values()),**({'openmp_projections':openmp_documents} if openmp_documents else {}),**({'openmp_profile_set':openmp_set} if openmp_set!='a1' else {})},'parameters':parameters})
     if memory_cells:result['mechanisms'].append(memory)
     if allocator_resource:result['mechanisms'].append(allocator_resource)
     if len(scopes)>1:
