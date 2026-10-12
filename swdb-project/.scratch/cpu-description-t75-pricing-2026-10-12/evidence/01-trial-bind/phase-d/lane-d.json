@@ -1,0 +1,26 @@
+{
+ "socket_lane": {
+  "aligned_cell_age_s": "",
+  "aligned_to": "no_gapbs_batch_running",
+  "command": [
+   "timeout",
+   "7200",
+   "bash",
+   "/data1/yanruj/ArchEvolve-cpud01-trial-20261012/swdb-project/.scratch/cpu-description-t75-pricing-2026-10-12/evidence/01-trial-bind/run-trial-dry.sh"
+  ],
+  "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+  "ended_utc": "2026-10-12T09:38:19Z",
+  "exit_code": 0,
+  "host": "mbit10",
+  "job": "cpud01-trial-dry",
+  "lease_generation": 557,
+  "lease_name": "mbit10-evaluation-node1",
+  "load1_at_start": 0.94,
+  "load1_max": 32,
+  "node": 1,
+  "numa_memory_policy": "bind:1",
+  "numactl": "--cpunodebind=1 --membind=1",
+  "preregistration_sha256": null,
+  "started_utc": "2026-10-12T09:25:57Z"
+ }
+}
