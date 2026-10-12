@@ -1,0 +1,29 @@
+== job-t-end 2026-10-12T19:44:28Z / 2026-10-12 15:44 ET
+ 15:44:28 up 73 days,  8:03,  9 users,  load average: 13.05, 12.88, 12.49
+-- users
+yanruj 
+-- df
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sdd1       1.8T  1.7T   22G  99% /data1
+/dev/sdb1       1.8T  1.7T   57G  97% /data
+-- governor
+cat: /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor: No such file or directory
+-- no_turbo
+cat: /sys/devices/system/cpu/intel_pstate/no_turbo: No such file or directory
+-- source HEAD
+598232ca6969f4207d27b135f4c702019e4c1776
+dirty files: 0
+-- numactl
+policy: bind
+preferred node: 0
+physcpubind: 0 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50 52 54 56 58 60 62 
+cpubind: 0 
+nodebind: 0 
+membind: 0 
+preferred: 0 
+-- uname
+Linux mbit10 6.8.0-136-generic #136-Ubuntu SMP PREEMPT_DYNAMIC Wed Jul  1 21:53:05 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+-- leases
+"lease_name":"mbit10-evaluation-node0"	"state":"held"
+"lease_name":"mbit10-evaluation-node1"	"state":"held"
+"lease_name":"mbit10-evaluation"	"state":"released"

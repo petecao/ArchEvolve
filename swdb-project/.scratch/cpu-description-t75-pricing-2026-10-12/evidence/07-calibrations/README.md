@@ -28,7 +28,8 @@ Pass each of these to `bind-cpu-services` with `--calibration`, beside the `serv
 | `cpud07-calib-b` | node1 | 558 | OpenMP a2 count + elapsed (`--profile 22`) + receipt check; library-call count + elapsed (**failed**, see below) | `598232ca` |
 | `cpud07-calib-a` | node1 | 559 | memory_v2, allocator v2, bulk a3 (count, then elapsed, each) | `598232ca` |
 | `cpud07-calib-l` | node1 | 561 | library-call count + elapsed, attempt 2 | `f2d41156` |
-| `cpud07-calib-t` | see the ticket Answer | | the two native OpenMP tests | |
+| `cpud07-calib-t` (attempt 1) | node1 | 560 | the two native OpenMP tests (failed: no libstdc++ headers) | `598232ca` |
+| tests attempt 2 | socket 0, `numactl`, no lease | — | same tests with the wrapper bin folder (failed: 240 s helper timeout) | `598232ca` |
 
 - Node0 was held all day by another session's full test suite (`swdb-full-suite-20261012-a2`,
   `pytest -n 6`). So every measurement ran in the node1 lane, one job at a time. Host load1 was

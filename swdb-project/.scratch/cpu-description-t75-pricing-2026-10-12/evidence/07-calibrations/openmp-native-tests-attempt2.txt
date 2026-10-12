@@ -1,0 +1,11 @@
+tests/test_cpu_openmp_calibration.py::test_count_only_matrix_proves_exact_selected_event_scope_without_elapsed FAILED [ 50%]
+tests/test_cpu_openmp_calibration.py::test_portable_probe_retains_every_legal_event_and_is_imported_only_as_fixture FAILED [100%]
+>           raise TimeoutExpired(
+E           subprocess.TimeoutExpired: Command '['/data1/yanruj/venvs/swdb-test/bin/python', '-m', 'swdb.cpu_openmp_calibration', '--records', '/data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1/pytest-bt/test_count_only_matrix_proves_0/records', '--output', '/data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1/pytest-bt/test_count_only_matrix_proves_0/openmp-count', '--fixture', '--llvm-bin', '/data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1/llvm22-gcc13-bin', '--count-only', '--max-wall-s', '180']' timed out after 240 seconds
+/usr/lib/python3.12/subprocess.py:1253: TimeoutExpired
+>           raise TimeoutExpired(
+E           subprocess.TimeoutExpired: Command '['/data1/yanruj/venvs/swdb-test/bin/python', '-m', 'swdb.cpu_openmp_calibration', '--records', '/data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1/pytest-bt/test_portable_probe_retains_ev0/records', '--output', '/data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1/pytest-bt/test_portable_probe_retains_ev0/openmp-elapsed', '--fixture', '--llvm-bin', '/data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1/llvm22-gcc13-bin', '--machine', 'testhost', '--repetitions', '3', '--min-trial-s', '.0002', '--max-wall-s', '180']' timed out after 240 seconds
+/usr/lib/python3.12/subprocess.py:1253: TimeoutExpired
+FAILED tests/test_cpu_openmp_calibration.py::test_count_only_matrix_proves_exact_selected_event_scope_without_elapsed
+FAILED tests/test_cpu_openmp_calibration.py::test_portable_probe_retains_every_legal_event_and_is_imported_only_as_fixture
+======================== 2 failed in 482.18s (0:08:02) =========================

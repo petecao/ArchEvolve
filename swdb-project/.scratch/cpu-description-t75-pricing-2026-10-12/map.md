@@ -38,6 +38,10 @@ Graph: 01–06 start now → 07 (needs 01, 02, 04, 05, 06) → 08 (needs 03, 07)
 - Ticket 04 resolved (2026-10-12): `allocator_v2` with malloc/free, exact bins up to 32 MiB and `--cell`; ticket-07 command in [04 answer](issues/04-allocator-v2-malloc-large-bins.md#answer).
 - Ticket 05 resolved (2026-10-12 01:40 ET): OpenMP set a2 adds class 22 `_8u`; ticket-07 command in [05 answer](issues/05-openmp-profiles-a2.md#answer).
 - 06 resolved 2026-10-12 01:24 ET: `--service-group library_call` (7 paired services incl. `indirect-call`); t75 indirect call is the virtual `do_widen` after `_M_widen_init`; ticket-07 command in [06 answer](issues/06-library-call-and-indirect-call.md#answer).
+- Ticket 07 resolved (2026-10-12 15:50 ET, branch `cpud/07-calibrations`): 8 records on mbit10 (node1 lane),
+  whole store valid; ticket 08 binds `resource.memory-v2.a1`, `resource.allocator-v2.a1`, `service.openmp.a2`,
+  `service.library-call.a1`, `resource.bulk-total.a3`; library-call pilot fix `f2d41156`; memmove 30 164 B bin is
+  702 ns (noisy disjoint profile) ([answer](issues/07-calibration-runs-mbit10.md#answer), [runbook](evidence/07-calibrations/README.md)).
 
 - Origin: fine-grained attribution tickets 03 and 09 closed negative
   ([03 answer](../fine-grained-attribution-2026-10-11/issues/03-first-real-pair.md#answer),
