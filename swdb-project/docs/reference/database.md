@@ -1,6 +1,7 @@
 # The SQLite database
 
-Updated: 2026-10-11 22:07 ET: LANL-shaped-db review fixes (record-field path syntax, which
+Updated: 2026-10-11 23:28 ET: measured native evaluation timings of an implementation feed
+`performance_runs` (LANL-shaped-db follow-up ticket 03). 2026-10-11 22:07 ET: LANL-shaped-db review fixes (record-field path syntax, which
 evaluations reach `Validation_results`, `swdb_estimates.base_kernel_variant_id`). 2026-10-11 21:50 ET:
 rewritten for the LANL-shaped layout
 ([ADR 0015](../adr/0015-research-database-takes-the-main-database-shape.md), LANL-shaped-db
@@ -126,8 +127,8 @@ appendix.
 | `definitions` | source code | functions records name | `lanl_sources.py` |
 | `data_structures` | source code | arrays access-pattern steps name | `lanl_sources.py` |
 | `hardware_profiles` | performance | machine records (never hardware targets) | `lanl_performance.py` |
-| `run_configs` | performance | what measured profiles ran with | `lanl_performance.py` |
-| `performance_runs` | performance | measured profile timings | `lanl_performance.py` |
+| `run_configs` | performance | what measured profiles and evaluations ran with | `lanl_performance.py` |
+| `performance_runs` | performance | measured profile timings and measured native evaluation timings | `lanl_performance.py` |
 | `performance_metrics` | performance | profile metrics with basis `measured` | `lanl_performance.py` |
 | `Validation_definition` | correctness | kernel check × input that an outcome ran | `lanl_validation.py` |
 | `Validation_results` | correctness | correctness outcomes of profiles and evaluations | `lanl_validation.py` |
@@ -141,6 +142,8 @@ on real machines:
 
 - **Analytic estimates** go to [`swdb_estimates`](#swdb_estimates) (spec D4, [ADR 0013](../adr/0013-archevolve-mode-estimates-speed.md)).
 - **Simulated metrics** (cachegrind), inferred and unknown ones stay in `swdb_metrics`.
+- **Simulated timings** (an evaluation's gem5 `timing[]` entries, basis `simulated`) and
+  contract-fixture timings stay in the evaluation record ([ADR 0013](../adr/0013-archevolve-mode-estimates-speed.md)).
 - **Hardware targets** (a modeled DX100) are not machines, so they never become
   `hardware_profiles` rows.
 
@@ -251,22 +254,35 @@ with one origin per run.
 |---|---|
 | `id` | integer ID (build-local) |
 | `label` | `<implementation> on <input>, <threads> threads` (a name, not a key) |
-| `parameters_json` | JSON: `input`, `input_arguments` (the input's generator arguments), `threads`, `trials`, `compiler`, `compiler_version`, `flags`, `omp_places`, `omp_proc_bind`, `binding`; null where the profile does not say |
-| `git_commit` | the application's source revision (`build.application_commit`), or NULL |
-| `kernel_variant_id` | guessed link: the profiled implementation (`kernel_variants.id`) |
+| `parameters_json` | JSON. From a profile: `input`, `input_arguments` (the input's generator arguments), `threads`, `trials`, `compiler`, `compiler_version`, `flags`, `omp_places`, `omp_proc_bind`, `binding`. From an evaluation: `input` (the workload ID), `threads`, `trials` (measured trials), `sources`, `repetitions`, `roi`, `compiler`, `compiler_version`, `flags`, `omp_places`, `omp_proc_bind` (from `build.execution_environment`), `lane`. Null where the record does not say |
+| `git_commit` | the application's source revision (a profile's `build.application_commit`, an evaluation's `context.source_revision`), or NULL |
+| `kernel_variant_id` | guessed link: the profiled or evaluated implementation (`kernel_variants.id`) |
 
 #### `performance_runs`
 
 One row per `timing[]` entry of a profile: one benchmark process at one thread count.
 
+Also one row per evaluation whose timings are a measured native run of an implementation.
+Its origins name each trial (`timing[<i>]`) it summarizes. An evaluation counts only when all
+of these hold:
+
+- **What ran is an implementation**: the same rule as [`Validation_results`](#validation-tables-and-the-empty-tables)
+  (unchanged `source_baseline` candidate, or no candidate). A rewrite candidate's timings never count.
+- **Real machine**: its `machine` is a machine record (so a `hardware_profiles` row).
+- **Measured native trials**: `timing[]` entries with basis `measured`, quantity
+  `native_roi_wall_seconds` and evidence kind `execution`. gem5 (`simulated`) and
+  contract-fixture entries never count.
+- **Finished**: `outcome.state` is `complete`.
+- **Not an aggregate**: an aggregate (`component_evaluations`) repeats its components' trials.
+
 | Column | Meaning |
 |---|---|
 | `id` | integer ID (build-local) |
-| `elapsed_seconds` | median time per trial (`median_s`); min, max and spread stay in the profile |
+| `elapsed_seconds` | median time per trial: a profile entry's `median_s`; for an evaluation, the median `duration_s` of its measured trials (all sources and repetitions; equals `summary.median_roi_seconds`). Min, max and spread stay in the record |
 | `throughput_value` | NULL: no record states a throughput |
-| `hardware_profile_id` | guessed link: the profile's machine (`hardware_profiles.id`) |
+| `hardware_profile_id` | guessed link: the profile's or evaluation's machine (`hardware_profiles.id`) |
 | `run_config_id` | guessed link: `run_configs.id` |
-| `kernel_variant_id` | guessed link: the profiled implementation (`kernel_variants.id`) |
+| `kernel_variant_id` | guessed link: the profiled or evaluated implementation (`kernel_variants.id`) |
 
 #### `performance_metrics`
 
@@ -291,7 +307,7 @@ evaluation's `correctness.state`. It becomes a `Validation_results` row only whe
 implementation (the kernel variant) and it names an input record:
 
 - **What ran.** A profile runs its `implementation`. An evaluation runs the candidate its
-  `request.candidate` names. That is an implementation only when the candidate is the
+  `request.candidate` names (an aggregate, which has none, names it as `candidate`). That is an implementation only when the candidate is the
   implementation's unchanged source (`artifact_role: source_baseline`). An evaluation of a
   rewrite candidate gets no row, even though its record names the baseline as
   `implementation`: the rewrite's outcome is not the baseline's. It stays in the `swdb_` tables.

@@ -79,6 +79,35 @@ class Rows:
         return None if row is None else row[0]
 
 
+def evaluated_implementation(store, evaluation):
+    """The implementation an evaluation ran, or None when it ran something else. Shared by the
+    groups that count an evaluation's outcome or timing as an implementation's (`Validation_results`,
+    `performance_runs`). An evaluation runs the candidate its `request.candidate` names (an
+    aggregate, which has no request candidate, names it as `candidate`); with no candidate it ran
+    its `implementation`. Only a candidate that is the implementation's unchanged source
+    (`artifact_role: source_baseline`) is that implementation. A rewrite candidate's results are
+    not its baseline's, so they stay in the `swdb_` tables."""
+    request = evaluation.get("request") or {}
+    named = request.get("candidate")
+    if named is None:
+        named = evaluation.get("candidate")
+    if named is None:
+        return evaluation.get("implementation")
+    candidate = store.get(named, "candidate") if isinstance(named, str) else None
+    if candidate is None or candidate.get("artifact_role") != "source_baseline":
+        return None
+    return candidate.get("implementation")
+
+
+def evaluation_workload(evaluation):
+    """(workload ID, the record field naming it) of an evaluation: `request.workload.id`, or
+    `request.workload` when it is a bare ID."""
+    workload = (evaluation.get("request") or {}).get("workload")
+    if isinstance(workload, dict):
+        return workload.get("id"), "request.workload.id"
+    return workload, "request.workload"
+
+
 def build(con, store):
     """Create and fill every LANL table group, after the `swdb_` tables are filled."""
     con.executescript(SCHEMA)

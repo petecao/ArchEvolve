@@ -19,12 +19,24 @@ PROFILE = "gapbs-pr-jacobi.kron-g16-k16.mbit10.20260922t212416z"
 REPEAT = "gapbs-pr-jacobi.kron-g16-k16.mbit10.20260922t212417z"
 NO_COMMIT = "gapbs-pr-jacobi.kron-g16-k16.mbit10.20260922t212418z"
 BY_CANDIDATE ="lanl.bound-v2.fixture.20261006.candidate-subject.estimate"
+#: Evaluations (follow-up ticket 03). NATIVE ran the unchanged source of dx100-bfs-scalar on
+#: mbit10: 15 measured trials (3 sources x 5 repetitions), 4 threads.
+NATIVE = "bfs-native-pilot-20260925-dx10018-a1.kronecker.evaluation"
+#: Measured on mbit10, but what ran is a rewrite candidate of dx100-bfs-scalar.
+REWRITE = "bfs-native-acceptance-20260927-dx100-patch-b2.kronecker.candidate-1.evaluation"
+#: The unchanged source of dx100-bfs-scalar, timed on gem5 (basis simulated).
+GEM5 = "typed-library-bfs-gem5-20261003-a2.timed.w0.baseline.evaluation"
+#: The unchanged source of a reference implementation, with contract-fixture (not executed) timings.
+FIXTURE = "bfs-contract-20260925-a3.baseline.evaluation"
+#: A native evaluation of an implementation that never finished (outcome state `running`).
+UNFINISHED = "bfs-native-acceptance-20260927-dx100-patch-b1.uniform-random.candidate-1.baseline.evaluation"
+EVALUATIONS = (NATIVE, REWRITE, GEM5, FIXTURE, UNFINISHED)
 TABLES = ("hardware_profiles", "run_configs", "performance_runs", "performance_metrics")
 
 
 @pytest.fixture(scope="module")
 def built(tmp_path_factory):
-    records = make_records(tmp_path_factory.mktemp("lanl-performance")).copy_closure(ESTIMATE, CANDIDATE, PROFILE)
+    records = make_records(tmp_path_factory.mktemp("lanl-performance")).copy_closure(ESTIMATE, CANDIDATE, PROFILE, *EVALUATIONS)
     # a repeat of PROFILE a second later: same implementation, input, build and binding
     repeat = records.read(f"profiles/{PROFILE}.yaml")
     repeat["id"] = REPEAT
@@ -80,6 +92,7 @@ def test_each_measured_timing_of_a_profile_is_one_performance_run(built):
     rows = sql(built, "select p.elapsed_seconds, p.throughput_value, o.record_id, v.slug as variant, h.cpu_model "
                       "from performance_runs p "
                       "join swdb_row_origins o on o.table_name = 'performance_runs' and o.row_id = p.id "
+                      "join swdb_records r on r.id = o.record_id and r.kind = 'profile' "
                       "left join kernel_variants v on v.id = p.kernel_variant_id "
                       "left join hardware_profiles h on h.id = p.hardware_profile_id")
     profiles = records_of(built, "profiles")
@@ -181,7 +194,10 @@ def test_an_estimate_never_reaches_the_performance_tables(built):
     kinds = sql(built, "select distinct o.table_name, r.kind from swdb_row_origins o join swdb_records r "
                        "on r.id = o.record_id where o.table_name in "
                        "('run_configs', 'performance_runs', 'performance_metrics')")
-    assert {(r["table_name"], r["kind"]) for r in kinds} == {(t, "profile") for t in TABLES[1:]}
+    # runs and their configs come from profiles and evaluations; metrics from profiles only
+    assert {(r["table_name"], r["kind"]) for r in kinds} == {
+        ("run_configs", "profile"), ("performance_runs", "profile"), ("performance_metrics", "profile"),
+        ("run_configs", "evaluation"), ("performance_runs", "evaluation")}
 
 
 def estimate_rows(built):
@@ -248,3 +264,74 @@ def test_a_build_passes_the_foreign_key_check(built):
 
 def test_deleting_every_swdb_table_leaves_a_consistent_lanl_database(built, tmp_path):
     assert_separable(built, tmp_path)
+
+
+def evaluation_runs(built):
+    """{evaluation ID: [its performance_runs rows, with variant, CPU model and run config]}."""
+    rows = sql(built, "select distinct p.id, p.elapsed_seconds, p.throughput_value, o.record_id, v.slug as variant, "
+                      "h.cpu_model, c.label, c.parameters_json, c.git_commit, cv.slug as config_variant "
+                      "from performance_runs p join swdb_row_origins o "
+                      "on o.table_name = 'performance_runs' and o.row_id = p.id "
+                      "join swdb_records r on r.id = o.record_id and r.kind = 'evaluation' "
+                      "left join kernel_variants v on v.id = p.kernel_variant_id "
+                      "left join hardware_profiles h on h.id = p.hardware_profile_id "
+                      "left join run_configs c on c.id = p.run_config_id "
+                      "left join kernel_variants cv on cv.id = c.kernel_variant_id")
+    runs = {}
+    for row in rows:
+        runs.setdefault(row["record_id"], []).append(row)
+    return runs
+
+
+def test_a_measured_native_evaluation_of_an_implementation_is_one_performance_run(built):
+    runs = evaluation_runs(built)[NATIVE]
+    assert len(runs) == 1
+    run = runs[0]
+    # median of the 15 measured trials (records/evaluations/<NATIVE>.yaml: summary.median_roi_seconds)
+    assert run["elapsed_seconds"] == pytest.approx(0.020373133)
+    assert run["throughput_value"] is None
+    assert (run["variant"], run["config_variant"]) == ("dx100-bfs-scalar", "dx100-bfs-scalar")
+    assert run["cpu_model"] == "Intel(R) Xeon(R) Gold 6326 CPU @ 2.90GHz"   # machine mbit10
+
+
+def test_an_evaluation_run_config_names_what_the_evaluation_ran_with(built):
+    run = evaluation_runs(built)[NATIVE][0]
+    assert run["label"] == "dx100-bfs-scalar on bfs-20260925-kronecker18.48de8267ac2098d5, 4 threads"
+    assert run["git_commit"] == "e4fc4afdf894f295442cef3604667a469fab8e62"   # context.source_revision
+    parameters = json.loads(run["parameters_json"])
+    assert parameters["input"] == "bfs-20260925-kronecker18.48de8267ac2098d5"
+    assert (parameters["threads"], parameters["trials"], parameters["repetitions"]) == (4, 15, 5)
+    assert parameters["sources"] == [0, 1234, 7777]
+    assert parameters["roi"] == "bfs.complete_call.v1"
+    assert parameters["compiler"] == "/usr/bin/g++"
+    assert parameters["flags"] == ["-std=c++11", "-O3", "-Wall", "-fopenmp", "-pthread", "-DFUNC"]
+    assert (parameters["omp_places"], parameters["omp_proc_bind"]) == ("cores", "close")
+    assert parameters["lane"] == "mbit10-evaluation-node1"
+
+
+def test_an_evaluation_run_names_each_trial_it_summarizes(built):
+    run = evaluation_runs(built)[NATIVE][0]
+    fields = sql(built, "select record_field from swdb_row_origins where table_name = 'performance_runs' "
+                        f"and row_id = {run['id']}")
+    assert sorted(r["record_field"] for r in fields) == sorted(f"timing[{i}]" for i in range(15))
+
+
+def test_simulated_fixture_unfinished_and_rewrite_timings_never_become_runs(built):
+    runs = evaluation_runs(built)
+    for evaluation in (REWRITE, GEM5, FIXTURE, UNFINISHED):
+        assert built.read(f"evaluations/{evaluation}.yaml")["timing"], evaluation   # each has timings
+        assert evaluation not in runs, evaluation
+    # the rewrite's timings are measured on mbit10, and its record names the baseline as implementation
+    rewrite = built.read(f"evaluations/{REWRITE}.yaml")
+    assert {t["basis"] for t in rewrite["timing"]} == {"measured"}
+    assert rewrite["implementation"] == "dx100-bfs-scalar"
+
+
+def test_every_evaluation_run_is_a_finished_measured_execution_on_a_machine(built):
+    machines = {m["id"] for m in records_of(built, "machines")}
+    runs = evaluation_runs(built)
+    assert NATIVE in runs
+    for evaluation in runs:
+        record = built.read(f"evaluations/{evaluation}.yaml")
+        assert record["machine"] in machines and record["outcome"]["state"] == "complete", evaluation
+        assert {(t["basis"], t["evidence_kind"]) for t in record["timing"]} == {("measured", "execution")}, evaluation
