@@ -3,6 +3,7 @@ Created: 2026-10-11 ET. Fixture counts and snapshots are contract fixtures, neve
 evidence: each test writes two tiny source trees, counts them by hand, estimates them through
 `swdb estimate`, and checks the attribution record against hand-computed values.
 """
+import datetime
 import hashlib
 import json
 
@@ -75,6 +76,7 @@ def characterization(records, rid, regions, trials=None, input_id='tiny-sym'):
     (records.path / 'workload_characterizations/fixture.counts.yaml').unlink()
     data['id'] = rid
     data['regions'] = regions
+    data['host']['machine'] = 'testhost'   # the machine the fixture region profiles name (M3)
     if trials is not None:
         data['trials'] = [{'position': i, 'sources': [i], 'regions': rows, 'unmodeled_calls': []}
                           for i, rows in enumerate(trials)]
@@ -118,9 +120,16 @@ class Case:
         assert result.returncode == 0, result.stdout + result.stderr
         return json.loads(result.stdout)
 
-    def worked_example(self):
-        """Baseline 100 s: untouched 40 s, rewritten 60 s. Candidate: rewritten 30 s."""
+    def worked_example(self, one_trial=False):
+        """Baseline 100 s: untouched 40 s, rewritten 60 s. Candidate: rewritten 30 s.
+        `one_trial`: counted as one trial of source 0, as a split check's profiles require (M3)."""
         b, c = self.base_root / 'kernel.cpp', self.cand_root / 'kernel.cpp'
+        if one_trial:
+            estimate_one_trial(self, 'fixture.baseline', [region('base.loop.untouched', b, 3, 40, 'per_trial'),
+                                                          region('base.loop.rewritten', b, 7, 60, 'per_trial')])
+            estimate_one_trial(self, 'fixture.candidate', [region('cand.loop.untouched', c, 3, 40, 'per_trial'),
+                                                           region('cand.loop.rewritten', c, 7, 30, 'per_trial')])
+            return
         self.estimate('fixture.baseline', [region('base.loop.untouched', b, 3, 40), region('base.loop.rewritten', b, 7, 60)])
         self.estimate('fixture.candidate', [region('cand.loop.untouched', c, 3, 40), region('cand.loop.rewritten', c, 7, 30)])
 
@@ -240,6 +249,20 @@ def test_estimates_of_different_inputs_are_refused_and_nothing_is_written(case):
     result = case.attribute()
     assert result.returncode == 1
     assert 'input' in result.stderr and 'refusing' in result.stderr
+    assert not (case.records.path / 'attributions').exists()
+
+
+def test_estimates_made_by_different_estimator_code_are_refused(case):
+    # Final review M8 (F27): drift and realized speedup would mix an estimator change with the
+    # code change, so both estimates must come from the same estimator code.
+    case.worked_example()
+    path = case.records.path / 'estimates' / 'fixture.candidate.yaml'
+    data = yaml.safe_load(path.read_text())
+    data['estimator_sha256'] = 'f' * 64
+    path.write_text(yaml.safe_dump(data, sort_keys=False))
+    result = case.attribute()
+    assert result.returncode == 1
+    assert 'estimator_sha256' in result.stderr and 'refusing' in result.stderr
     assert not (case.records.path / 'attributions').exists()
 
 
@@ -1424,30 +1447,34 @@ SCOPES = [('function', 'untouched', [2, 5], [0, 70]), ('loop', 'for', [3, 4], [2
           ('function', 'rewritten', [6, 9], [80, 150]), ('loop', 'for', [7, 8], [100, 140])]
 
 
-def region_profile(case, rid, side, seconds, workload='tiny-sym', created=None, tree=None):
-    """A measured profile of one side's tree; `seconds` = exclusive s per SCOPES row."""
+def region_profile(case, rid, side, seconds, workload='tiny-sym', created=None, tree=None, machine='testhost',
+                   sources=(0,), seed=None):
+    """A measured profile of one side's tree; `seconds` = exclusive s per SCOPES row. By default
+    it is dated the day after its estimate (final review M2: estimates carry only a date, so a
+    profile must be dated strictly later) and times source 0 on `testhost`, as the estimate counted."""
     source = case.records.read(f'source_snapshots/fixture.{tree or side}.source.yaml')
     estimate = case.records.read(f'estimates/fixture.{side}.yaml')
-    day = created or str(estimate['created'])
+    day = created or str(datetime.date.fromisoformat(str(estimate['created'])[:10]) + datetime.timedelta(days=1))
     regions = []
     for (kind, name, lines, byte_range), value in zip(SCOPES, seconds):
         regions.append({'id': f'{kind}:kernel.cpp:{byte_range[0]}:{side}', 'kind': kind, 'name': name, 'path': 'kernel.cpp',
                         'lines': lines, 'byte_range': byte_range, 'function': 'rewritten' if lines[0] >= 6 else 'untouched',
                         'metrics': {'inclusive_thread_cpu_seconds': value, 'exclusive_thread_cpu_seconds': value, 'invocations': 1},
                         'basis': 'measured', 'source_artifact_sha256': source['artifact']['sha256']})
+    timed = {'id': workload, **({} if seed is None else {'generator': {'parameters': {'seed': seed}}})}
     case.records.write(f'region_profiles/{rid}.yaml', {'kind': 'region_profile', 'schema_version': '0.4', 'id': rid,
         'status': 'draft', 'created': day, 'updated': day, 'message_version': '1.0',
         'producer': {'name': 'attribution-fixture', 'role': 'operator', 'test_client': True},
         'provenance': [{'id': 'fixture', 'kind': 'source_code', 'description': 'Split-check contract fixture counters.'}],
-        'request': {'message_version': '1.0', 'fixture': True}, 'machine': 'testhost',
-        'context': {'candidate_sha256': source['artifact']['sha256'], 'threads': 1, 'workload': {'id': workload},
-                    'load_average': [1.5, 1.25, 1.0], 'lane': None},
+        'request': {'message_version': '1.0', 'fixture': True}, 'machine': machine,
+        'context': {'candidate_sha256': source['artifact']['sha256'], 'threads': 1, 'workload': timed,
+                    'sources': list(sources), 'load_average': [1.5, 1.25, 1.0], 'lane': None},
         'outcome': {'state': 'partial', 'stage': 'profiling', 'reason': 'fixture'}, 'stages': [], 'regions': regions,
         'dynamic_memory': [], 'executions': [], 'raw_artifacts': [], 'reasons': [], 'gain_claim': False})
 
 
 def split_case(case, baseline=(1, 41, 1, 57), candidate=(0, 40, 0, 40)):
-    case.worked_example()
+    case.worked_example(one_trial=True)
     region_profile(case, 'fixture.baseline.profile', 'baseline', baseline)
     region_profile(case, 'fixture.candidate.profile', 'candidate', candidate)
 
@@ -1513,8 +1540,10 @@ def test_a_gap_above_ten_points_saves_a_valid_split_unverified_report(case):
 def test_an_unknown_estimated_share_makes_the_split_unverified_with_its_reason(case):
     # The candidate's rewritten loop is unknown, so its total and every candidate share are unknown.
     b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
-    case.estimate('fixture.baseline', [region('base.loop.untouched', b, 3, 40), region('base.loop.rewritten', b, 7, 60)])
-    case.estimate('fixture.candidate', [region('cand.loop.untouched', c, 3, 40), region('cand.loop.rewritten', c, 7, None)])
+    estimate_one_trial(case, 'fixture.baseline', [region('base.loop.untouched', b, 3, 40, 'per_trial'),
+                                                  region('base.loop.rewritten', b, 7, 60, 'per_trial')])
+    estimate_one_trial(case, 'fixture.candidate', [region('cand.loop.untouched', c, 3, 40, 'per_trial'),
+                                                   region('cand.loop.rewritten', c, 7, None, 'per_trial')])
     region_profile(case, 'fixture.baseline.profile', 'baseline', (1, 41, 1, 57))
     region_profile(case, 'fixture.candidate.profile', 'candidate', (0, 40, 0, 40))
     result = split_checked(case)
@@ -1535,14 +1564,33 @@ def test_an_unknown_estimated_share_makes_the_split_unverified_with_its_reason(c
     ({'workload': 'tiny-sym-b'}, "input 'tiny-sym-b'"),         # F18: another input
     ({'tree': 'baseline'}, 'another source tree'),               # the baseline tree timed as the candidate
     ({'created': '2026-01-01'}, 'prospective'),                  # timed before the estimates were saved
+    ({'created': 'same day'}, 'prospective'),                    # M2: date-only estimates need a strictly later date
+    ({'machine': 'otherhost'}, "machine 'otherhost'"),           # M3 (F18): another machine than the one counted
+    ({'sources': (0, 1234, 7777)}, 'sources [0, 1234, 7777]'),   # M3: BFS sources the estimate did not count
+    ({'seed': 27491095}, 'seed 27491095'),                       # M3: another input generator seed
 ])
-def test_a_profile_of_another_input_tree_or_an_earlier_date_is_refused_and_nothing_is_written(case, profile, message):
-    case.worked_example()
+def test_a_profile_of_another_input_tree_machine_sources_seed_or_date_is_refused_and_nothing_is_written(case, profile, message):
+    case.worked_example(one_trial=True)
+    if profile.get('created') == 'same day':
+        profile = {'created': str(case.records.read('estimates/fixture.candidate.yaml')['created'])}
+    case.records.write('machines/otherhost.yaml', {**case.records.read('machines/testhost.yaml'), 'id': 'otherhost'})
     region_profile(case, 'fixture.baseline.profile', 'baseline', (1, 41, 1, 57))
     region_profile(case, 'fixture.candidate.profile', 'candidate', (0, 40, 0, 40), **profile)
     result = split_checked(case)
     assert result.returncode == 1
     assert message in result.stderr and 'refusing' in result.stderr
+    assert not (case.records.path / 'attributions').exists()
+
+
+def test_a_profile_against_estimates_that_record_no_counted_sources_is_refused(case):
+    # M3: a single-run characterization names no counted BFS sources, so a timing cannot be shown
+    # to cover the same ones.
+    case.worked_example()
+    region_profile(case, 'fixture.baseline.profile', 'baseline', (1, 41, 1, 57))
+    region_profile(case, 'fixture.candidate.profile', 'candidate', (0, 40, 0, 40))
+    result = split_checked(case)
+    assert result.returncode == 1
+    assert 'records no counted sources' in result.stderr and 'refusing' in result.stderr
     assert not (case.records.path / 'attributions').exists()
 
 
@@ -1597,6 +1645,97 @@ def test_split_check_is_byte_identical_validated_indexed_and_pins_its_profiles(c
     path.write_text(yaml.safe_dump(data, sort_keys=False))
     edited = case.records.validate()
     assert edited.returncode == 1 and 'verdict' in edited.stdout + edited.stderr
+
+
+# --- Final review fixes (2026-10-12 ET) ------------------------------------------------------------
+
+# A host service model that prices the opaque `fixture.clock.abi` call at 5 s per execution.
+SERVICE = {'model': 'native_service_costs', 'accounting': 'additive_overhead',
+           'selector': {'domain': 'host', 'worker_scope': 'serial_T1',
+                        'calls': [{'name': 'fixture.clock.abi', 'parameter': 'clock_s', 'unit': 'seconds/call'}]},
+           'parameters': {'clock_s': rate(5.0, 'seconds/call')}}
+
+
+def clock_call(region_id, executions=3, line=3):
+    """An opaque call nobody counted, priced by SERVICE (executions x 5 s)."""
+    return {**call(0, region_id, 'fixture.clock.abi', executions, line=line), 'body_counted': False}
+
+
+def serial(row):
+    """A counted region observed with one worker, as the serial T1 service model requires."""
+    row['active_workers'] = {'value': 1, 'basis': 'measured'}
+    row['worker_context'] = {'team_sizes': [1], 'measurement': 'Hand fixture.'}
+    return row
+
+
+def estimate_one_trial(case, rid, regions, calls=()):
+    """`Case.estimate` with one counted trial (source 0) that holds the regions and calls."""
+    characterization(case.records, rid + '.counts', regions, trials=[regions])
+    path = case.records.path / 'workload_characterizations' / (rid + '.counts.yaml')
+    data = yaml.safe_load(path.read_text())
+    data['unmodeled_calls'] = list(calls)
+    data['trials'][0]['unmodeled_calls'] = list(calls)
+    data.pop('identity_sha256')
+    data['identity_sha256'] = digest(data)
+    path.write_text(yaml.safe_dump(data, sort_keys=False))
+    result = run_swdb('estimate', '--records', case.records.path, '--characterization', rid + '.counts',
+        '--target-description', case.target, '--protocol', case.protocol, '--id', rid, '--format', 'json')
+    assert result.returncode == 0, result.stdout + result.stderr
+    return json.loads(result.stdout)
+
+
+def test_split_check_counts_a_regions_call_time_in_its_own_group_like_the_measured_scope(case):
+    # H1: the candidate's untouched loop runs 25 s of its own work and 3 clock calls (15 s).
+    # The report's groups follow F33 (the calls' 15 s are unattributed), but a measured scope's
+    # exclusive time holds its callees, so the split check folds the call time back:
+    # estimated candidate shares are untouched 40/70, rewritten 30/70, unattributed 0.
+    use_target(case, [COMPUTE, SERVICE])
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    estimate_one_trial(case, 'fixture.baseline', [region('base.loop.untouched', b, 3, 40, 'per_trial'),
+                                                  region('base.loop.rewritten', b, 7, 60, 'per_trial')])
+    cand = estimate_one_trial(case, 'fixture.candidate',
+                              [serial(region('cand.loop.untouched', c, 3, 25, 'per_trial')),
+                               region('cand.loop.rewritten', c, 7, 30, 'per_trial')],
+                              [clock_call('cand.loop.untouched')])
+    assert cand['seconds'] == pytest.approx(70)
+    region_profile(case, 'fixture.baseline.profile', 'baseline', (1, 41, 1, 57))
+    region_profile(case, 'fixture.candidate.profile', 'candidate', (0, 40, 0, 30))
+    result = split_checked(case)
+    assert result.returncode == 0, result.stdout + result.stderr
+    report = json.loads(result.stdout)
+    split = groups(report)
+    assert (split['untouched']['candidate_seconds'], split['unattributed']['candidate_seconds']) == (
+        pytest.approx(25), pytest.approx(15))
+    check = report['split_check']
+    assert check['rule']['id'] == 'swdb.split_check.v2'
+    assert check['verdict'] == 'passed' and check['reasons'] == []
+    found = gaps(report)
+    assert found['candidate', 'untouched']['estimated_share'] == pytest.approx(40 / 70)
+    assert found['candidate', 'agent_rewritten']['estimated_share'] == pytest.approx(30 / 70)
+    assert found['candidate', 'unattributed']['estimated_share'] == 0
+    assert all(g['gap'] == pytest.approx(0) for g in check['gaps'] if g['side'] == 'candidate')
+    checked = case.records.validate()
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+
+
+def test_call_time_left_unknown_by_the_regions_own_work_names_that_work_as_missing(case):
+    # L1: the loop's own floating-point count is unknown but its clock calls are priced (15 s).
+    # The call time is the region minus its own time, so it is unknown too, and the unattributed
+    # group must say why: the own-work item, never an empty list.
+    use_target(case, [COMPUTE, SERVICE])
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    case.estimate('fixture.baseline', [region('base.loop.untouched', b, 3, 40), region('base.loop.rewritten', b, 7, 60)])
+    estimate_with_calls(case, 'fixture.candidate', [serial(region('cand.loop.untouched', c, 3, None)),
+                                                    region('cand.loop.rewritten', c, 7, 30)],
+                        [clock_call('cand.loop.untouched')])
+    report = attributed(case)
+    split = groups(report)
+    expected = [{'side': 'candidate', 'region': 'cand.loop.untouched', 'missing': ['operation_counts.floating_point']}]
+    assert split['untouched']['unknown'] == expected
+    assert split['unattributed']['candidate_seconds'] is None
+    assert split['unattributed']['unknown'] == expected
+    assert rows(report, 'candidate')['cand.loop.untouched']['unmodeled_calls'] == {
+        'seconds': None, 'missing': ['operation_counts.floating_point']}
 
 
 def test_a_site_finder_report_records_its_kernel_and_target_and_is_indexed_for_the_site_finder(case):

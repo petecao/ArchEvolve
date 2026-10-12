@@ -234,7 +234,7 @@
           "type": "object", "additionalProperties": false,
           "required": ["id", "max_abs_share_gap", "tolerance", "statement", "estimated_share", "measured_share"],
           "properties": {
-            "id": {"const": "swdb.split_check.v1"},
+            "id": {"const": "swdb.split_check.v2"},
             "max_abs_share_gap": {"const": 0.1},
             "tolerance": {"const": 1e-9},
             "statement": {"type": "string", "minLength": 1},

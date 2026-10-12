@@ -110,7 +110,9 @@ REWRITE_ORIGINS = ('offload_command', 'intrinsic', 'library_call', 'agent_rewrit
 REWRITE_REASONS = {'offload_command': 'offload_command_in_site', 'intrinsic': 'intrinsic_in_site',
                    'library_call': 'library_operation_in_site', 'agent_rewritten': 'overlaps_rewrite_site'}
 SOURCE_KINDS = ('source_snapshot', 'candidate')
-SAME = ('input', 'target_description_sha256', 'threads', 'evidence_kind')
+# Fields two compared estimates must share. F43 (final review M8): `estimator_sha256` too, so drift and
+# realized speedup never mix an estimator change with the code change (F27).
+COMPARABLE = ('input', 'target_description_sha256', 'threads', 'evidence_kind', 'estimator_sha256')
 UNATTRIBUTED_THRESHOLD = 0.1   # F24: share of an estimate's total above which the split is flagged weak
 
 
@@ -143,6 +145,12 @@ def register_cli(commands):
 def _require(condition, message):
     if not condition:
         raise Failure(message)
+
+
+def _require_comparable(first, second, names):
+    """Refuse two estimates that differ in any `COMPARABLE` field; `names` is how the message calls them."""
+    differ = [key for key in COMPARABLE if first.get(key) != second.get(key)]
+    _require(not differ, f'{names} estimates differ in ' + ', '.join(differ) + '; refusing to compare')
 
 
 def _record(store, rid, kinds):
@@ -524,12 +532,14 @@ def _is_call_row(row):
 
 
 def _call_part(region, target):
-    """F2 (review fix F33): (own seconds, seconds inside calls, the call rows' missing inputs) of
-    one estimated region row, or None when no row prices a call.
+    """F2 (review fix F33): (own seconds, own missing inputs, seconds inside calls, their missing
+    inputs) of one estimated region row, or None when no row prices a call.
 
     Own seconds recompose the region as the estimator does without its call rows (max of the
     resource bounds, domain composition, plus additive overheads); the calls hold the rest. An
-    unknown call row leaves the call time unknown and the region's own time known."""
+    unknown call row leaves the call time unknown and the region's own time known. The call time
+    is the region minus its own time, so an unknown own time leaves it unknown too, and its
+    missing inputs then name the own-time items as well (final review L1)."""
     calls = [b for b in region['bounds'] + region['overheads'] if _is_call_row(b)]
     if not calls:
         return None
@@ -539,8 +549,10 @@ def _call_part(region, target):
     overheads = [o for o in region['overheads'] if not _is_call_row(o)]
     own = (None if any(b['seconds'] is None for b in bounds + overheads)
            else max((b['seconds'] for b in bounds), default=0.) + sum(o['seconds'] for o in overheads))
+    own_missing = {m for b in region['bounds'] + region['overheads'] if not _is_call_row(b) for m in b['missing']}
     inside = None if region['seconds'] is None or own is None else max(0., region['seconds'] - own)
-    return own, inside, sorted({m for b in calls for m in b['missing']})
+    inside_missing = {m for b in calls for m in b['missing']} | (own_missing if own is None else set())
+    return own, sorted(own_missing), inside, sorted(inside_missing)
 
 
 def _unmodeled_calls(side, region_id):
@@ -551,16 +563,17 @@ def _unmodeled_calls(side, region_id):
              for r in (next((x for x in rows if x['id'] == region_id), None) for rows in side.trials())]
     if all(p is None for p in parts):
         return None
-    return {'seconds': _median([p[1] if p else 0. for p in parts]),
-            'missing': sorted({m for p in parts if p for m in p[2]})}
+    return {'seconds': _median([p[2] if p else 0. for p in parts]),
+            'missing': sorted({m for p in parts if p for m in p[3]})}
 
 
-def _group_seconds(side, labels, origins=ORIGINS):
+def _group_seconds(side, labels, origins=ORIGINS, calls_apart=True):
     """{origin: (median seconds or None, [unknown region reasons])} from per-trial sums.
 
     A region whose label is not one of `origins` is left out (ticket 05's per-origin split).
     F33: a region's seconds inside calls go to `unattributed` (when it is one of `origins`); the
-    region's group keeps its own seconds."""
+    region's group keeps its own seconds. With `calls_apart` False (the split check, F40) every
+    region keeps its full seconds, calls included, under its own label."""
     target = side.estimate['target_description_snapshot']
     sums = {origin: [] for origin in origins}
     unknown = {origin: {} for origin in origins}
@@ -577,14 +590,13 @@ def _group_seconds(side, labels, origins=ORIGINS):
         totals = {origin: 0. for origin in origins}
         for region in rows:
             origin = labels[region['id']]['origin'] if region['id'] in labels else 'unattributed'
-            part = _call_part(region, target)
+            part = _call_part(region, target) if calls_apart else None
             if part is None:
                 add(totals, origin, region['id'], region['seconds'], _missing(region))
                 continue
-            own, inside, call_missing = part
-            add(totals, origin, region['id'], own,
-                sorted({m for b in region['bounds'] + region['overheads'] if not _is_call_row(b) for m in b['missing']}))
-            add(totals, 'unattributed', region['id'], inside, call_missing)
+            own, own_missing, inside, inside_missing = part
+            add(totals, origin, region['id'], own, own_missing)
+            add(totals, 'unattributed', region['id'], inside, inside_missing)
         for origin in origins:
             sums[origin].append(totals[origin])
     result = {}
@@ -1232,13 +1244,16 @@ def _validate_iteration(record, ctx):
 # lines of scopes nested inside it are removed before it is labeled.
 
 SPLIT_RULE = {
-    'id': 'swdb.split_check.v1',
+    'id': 'swdb.split_check.v2',
     'max_abs_share_gap': 0.1,
     'tolerance': 1e-9,
     'statement': 'Passed when, for every group (untouched, agent_rewritten, unattributed) on both sides, '
                  '|measured share - estimated share| <= 0.1 (10 percentage points, compared with a 1e-9 float '
                  'tolerance). Otherwise, or when a share is unknown, split_unverified. Fixed before timing (F19).',
-    'estimated_share': "the report's group share: group seconds / that estimate's total seconds",
+    'estimated_share': "group seconds / that estimate's total seconds, where each estimated region keeps its full "
+                       "seconds, time inside its calls included, under its own group label (F40). Measured "
+                       "exclusive time holds the scope's uninstrumented callees, so the report's F33 move of call "
+                       "time to unattributed is not applied here; the report's groups keep it",
     'measured_share': "group exclusive thread-CPU seconds / the sum of every measured scope's exclusive "
                       "thread-CPU seconds in that side's region_profile"}
 PROFILE_DONE = ('partial', 'complete')   # `swdb bfs-profile` ends a successful run as `partial`
@@ -1264,6 +1279,32 @@ def _nested(inner, outer):
     return outer['lines'][0] <= inner['lines'][0] and inner['lines'][1] <= outer['lines'][1] and inner['lines'] != outer['lines']
 
 
+def _seed(workload):
+    """The input generator's seed in a workload definition (or a profile's copy of it), or None."""
+    return (((workload or {}).get('generator') or {}).get('parameters') or {}).get('seed')
+
+
+def _check_identity(store, rid, side, data):
+    """F42 (final review M3, F18): the profile ran on the machine that counted its estimate, timed
+    exactly the BFS sources the characterization counted, and used the counted input's generator seed."""
+    name, characterization, context = side.name, side.characterization, data.get('context') or {}
+    counted_on = (characterization.get('host') or {}).get('machine')
+    _require(data.get('machine') == counted_on,
+             f'{name} profile {rid!r} ran on machine {data.get("machine")!r}, not {counted_on!r} where its estimate '
+             'was counted; refusing to compare')
+    trials = characterization.get('trials') or []
+    _require(trials, f'{name} estimate\'s characterization records no counted sources (a single-run count); '
+                     'refusing to compare')
+    counted = sorted({source for trial in trials for source in trial['sources']})
+    timed = sorted(set(context.get('sources') or []))
+    _require(timed == counted, f'{name} profile {rid!r} timed sources {timed}, not the counted sources {counted}; '
+                               'refusing to compare')
+    expected = _seed((store.get(characterization['input']) or {}).get('definition'))
+    found = _seed(context.get('workload'))
+    _require(found == expected, f'{name} profile {rid!r} timed input seed {found!r}, not the counted input\'s seed '
+                                f'{expected!r}; refusing to compare')
+
+
 class _Profile:
     """One side's saved region profile, checked against the attributed estimate and tree (F18)."""
 
@@ -1282,10 +1323,14 @@ class _Profile:
         _require(context.get('threads') == side.estimate['threads'],
                  f'{name} profile {rid!r} ran {context.get("threads")!r} threads, not the estimates\' '
                  f'{side.estimate["threads"]}; refusing to compare')
+        _check_identity(store, rid, side, data)
+        # F41 (final review M2): estimate records carry only a date (the envelope's `created`), so
+        # no full-timestamp order exists; the profile must be dated strictly after every estimate.
         latest = max(str(e['created']) for e in estimates)
-        _require(str(data['created']) >= latest,
-                 f'{name} profile {rid!r} is dated {data["created"]}, before an estimate ({latest}): the split '
-                 'check must be prospective (LR-02); refusing to compare')
+        _require(str(data['created']) > latest,
+                 f'{name} profile {rid!r} is dated {data["created"]}, not after every estimate ({latest}): '
+                 'estimates carry only a date, so the split check is prospective (LR-02) only for a profile '
+                 'dated a later day; refusing to compare')
         self.rows = [r for r in data['regions'] if r.get('basis') == 'measured']
         _require(self.rows and len(self.rows) == len(data['regions']) and all(
             isinstance((r.get('metrics') or {}).get('exclusive_thread_cpu_seconds'), (int, float)) for r in self.rows),
@@ -1324,11 +1369,18 @@ def _scope_label(side, row, rows, sites):
     return {'origin': origin, 'reason': reason, 'mixed': mixed, 'exclusive_lines': runs, 'sites': [s['id'] for s in touched]}
 
 
-def _split_check(sides, profiles, sites, groups):
+def _split_shares(side, labels):
+    """F40 (final review H1): {origin: estimated share} for the split check. Every region keeps its
+    full seconds, calls included, under its own group, as a measured scope's exclusive time does."""
+    seconds = _group_seconds(side, _grouped(labels), calls_apart=False)
+    return {origin: _ratio(seconds[origin][0], side.estimate['seconds']) for origin in ORIGINS}
+
+
+def _split_check(sides, profiles, sites, labels):
     """F19: the split_check block; `sides` and `profiles` are in baseline, candidate order."""
     regions, measured, gaps, reasons = [], [], [], []
-    estimated = {g['origin']: g for g in groups}
     for side, profile in zip(sides, profiles):
+        estimated = _split_shares(side, labels[side.name])
         seconds = {origin: 0. for origin in ORIGINS}
         for row in profile.rows:
             label = _scope_label(side, row, profile.rows, sites)
@@ -1342,7 +1394,7 @@ def _split_check(sides, profiles, sites, groups):
         for origin in ORIGINS:
             share = seconds[origin] / total if total > 0 else None
             measured.append({'side': side.name, 'origin': origin, 'seconds': seconds[origin], 'share': share})
-            expected = estimated[origin][side.name + '_share']
+            expected = estimated[origin]
             if expected is None:
                 reasons.append({'side': side.name, 'origin': origin, 'reason': 'unknown_estimated_share'})
             gap = None if share is None or expected is None else share - expected
@@ -1408,8 +1460,7 @@ def _iteration(store, args, baseline, candidate, labels, catalog=None, bounds=No
     _require(args.previous_estimate is not None and args.previous_source is not None,
              '--previous-estimate and --previous-source go together')
     previous = _Side(store, 'previous', args.previous_estimate, args.previous_source)
-    differ = [key for key in SAME if previous.estimate[key] != candidate.estimate[key]]
-    _require(not differ, 'previous and candidate estimates differ in ' + ', '.join(differ) + '; refusing to compare')
+    _require_comparable(previous.estimate, candidate.estimate, 'previous and candidate')
     earlier = [_Tree(store, rid) for rid in args.earlier_source]
     chain = [baseline, *earlier, previous]
     before = _as(previous, 'baseline')
@@ -1438,8 +1489,7 @@ def attribute(args):
     store = Store(args.records)
     baseline = _Side(store, 'baseline', args.baseline_estimate, args.baseline_source)
     candidate = _Side(store, 'candidate', args.candidate_estimate, args.candidate_source)
-    differ = [key for key in SAME if baseline.estimate[key] != candidate.estimate[key]]
-    _require(not differ, 'baseline and candidate estimates differ in ' + ', '.join(differ) + '; refusing to compare')
+    _require_comparable(baseline.estimate, candidate.estimate, 'baseline and candidate')
     _require((args.baseline_profile is None) == (args.candidate_profile is None),
              '--baseline-profile and --candidate-profile go together')
     profiles = [_Profile(store, rid, side, [baseline.estimate, candidate.estimate])
@@ -1481,7 +1531,7 @@ def attribute(args):
     if this_iteration is not None:
         record['this_iteration'] = this_iteration
     if profiles:
-        record['split_check'] = _split_check((baseline, candidate), profiles, sites, groups)
+        record['split_check'] = _split_check((baseline, candidate), profiles, sites, labels)
     record['identity_sha256'] = artifacts.digest(record)
     writer.commit(args.records, new=[record])
     return record
