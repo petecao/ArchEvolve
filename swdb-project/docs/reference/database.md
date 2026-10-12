@@ -123,7 +123,56 @@ that `Validation_results.kernel_variant_id` implies. All its columns are listed 
 
 ### Source tables
 
-Not built yet (LANL-shaped-db ticket 03).
+Updated: 2026-10-11 (Eastern Time), LANL-shaped-db ticket 03. Only what records name; no
+column is guessed. Code: [`swdb/lanl_sources.py`](../../swdb/lanl_sources.py).
+
+#### `source_files`
+
+One row per (kernel, path). A file several records name has one origin per mention.
+
+| Column | Meaning |
+|---|---|
+| `id` | integer ID (build-local) |
+| `kernel_id` | the kernel (`kernels.id`) of the implementation that names the file |
+| `path` | implementation code and statement sources: `<application source.local_path>/<path>` (for example `apps/gapbs/src/bfs.cc`), or `records/<path>` for code kept beside its record. Source snapshot files: `<artifact.path>/<path>`, the retained tree the snapshot record names |
+| `language` | the application's `language`, only for files a record names as code (implementation `code`, statement sources, a snapshot's `context.code`); NULL for other retained files (LICENSE, Makefile, inputs) and when the application states none |
+
+#### `executables`
+
+One row per implementation build. The record names a program (`-o {binary}`) but no binary
+file.
+
+| Column | Meaning |
+|---|---|
+| `id` | integer ID (build-local) |
+| `kernel_id` | the implementation's kernel (`kernels.id`) |
+| `name` | the implementation ID, the program's only stated name |
+| `kind` | NULL: no record classifies its program |
+| `path` | NULL: the binary's location depends on each run |
+
+#### `definitions`
+
+Functions records name: an implementation's `function` and `run.kernel_symbols`, its
+statements' `function`, and each `kind: function` region of a source snapshot. One row per
+(source file, name).
+
+| Column | Meaning |
+|---|---|
+| `id` | integer ID (build-local) |
+| `source_file_id` | the file (`source_files.id`) a record places it in: `code[0]` for the implementation's `function` (the format puts the kernel function there), the statements' source file, or the snapshot region's file. NULL when no record states the file (most other kernel symbols); such a row is kept per record |
+| `name` | the function name |
+| `kind` | always `function` |
+
+#### `data_structures`
+
+Arrays named by implementation access-pattern steps, one row per (kernel, array name).
+
+| Column | Meaning |
+|---|---|
+| `id` | integer ID (build-local) |
+| `kernel_id` | the implementation's kernel (`kernels.id`) |
+| `name` | the array name, for example `g.in_index_` |
+| `kind` | the stated `layout` (vocabulary `layouts`); NULL when it is `unknown` or records disagree |
 
 ### Hardware and performance tables
 
