@@ -1,0 +1,60 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /data1/yanruj/venvs/swdb-test/bin/python
+rootdir: /data/yanruj/ArchEvolve-cpud07-598232ca/swdb-project
+configfile: pyproject.toml
+plugins: xdist-3.8.0
+collecting ... collected 2 items
+
+tests/test_cpu_openmp_calibration.py::test_count_only_matrix_proves_exact_selected_event_scope_without_elapsed FAILED [ 50%]
+tests/test_cpu_openmp_calibration.py::test_portable_probe_retains_every_legal_event_and_is_imported_only_as_fixture FAILED [100%]
+
+=================================== FAILURES ===================================
+___ test_count_only_matrix_proves_exact_selected_event_scope_without_elapsed ___
+
+records = <conftest.make_records.<locals>.Records object at 0x7e4e876efd10>
+tmp_path = PosixPath('/data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1/pytest-bt/test_count_only_matrix_proves_0')
+llvm22 = PosixPath('/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin')
+
+    def test_count_only_matrix_proves_exact_selected_event_scope_without_elapsed(records,tmp_path,llvm22):
+        records.copy_repo();output=tmp_path/'openmp-count'
+        result=run_openmp(records,output,llvm22,'--count-only','--max-wall-s','180')
+>       assert result.returncode==0,result.stderr+result.stdout
+E       AssertionError: calibration command failed (1): clang++: warning: future releases of the clang compiler will prefer GCC installations containing libstdc++ include directories; '/usr/lib/gcc/x86_64-linux-gnu/13' would be chosen over '/usr/lib/gcc/x86_64-linux-gnu/14' [-Wgcc-install-dir-libstdcxx]
+E         In file included from /data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1/pytest-bt/test_count_only_matrix_proves_0/openmp-count/CpuOpenmpTimer.cpp:2:
+E         /data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1/pytest-bt/test_count_only_matrix_proves_0/openmp-count/CpuOpenmpWork.h:3:10: fatal error: 'cstddef' file not found
+E             3 | #include <cstddef>
+E               |          ^~~~~~~~~
+E         1 error generated.
+E         
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/data1/yanruj/venvs/swdb-test/bin/python', '-m', 'swdb.cpu_openmp_calibration', '--records', '/data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1/pytest-bt/test_count_only_matrix_proves_0/records', '--output', '/data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1/pytest-bt/test_count_only_matrix_proves_0/openmp-count', '--fixture', '--llvm-bin', '/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin', '--count-only', '--max-wall-s', '180'], returncode=1, stdout='', stderr="calibration command failed (1): clang++: warning: future releases of the clang compiler will prefer GCC installations containing libstdc++ include directories; '/usr/lib/gcc/x86_64-linux-gnu/13' would be chosen over '/usr/lib/gcc/x86_64-linux-gnu/14' [-Wgcc-install-dir-libstdcxx]\nIn file included from /data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1/pytest-bt/test_count_only_matrix_proves_0/openmp-count/CpuOpenmpTimer.cpp:2:\n/data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1/pytest-bt/test_count_only_matrix_proves_0/openmp-count/CpuOpenmpWork.h:3:10: fatal error: 'cstddef' file not found\n    3 | #include <cstddef>\n      |          ^~~~~~~~~\n1 error generated.\n\n").returncode
+
+tests/test_cpu_openmp_calibration.py:21: AssertionError
+_ test_portable_probe_retains_every_legal_event_and_is_imported_only_as_fixture _
+
+records = <conftest.make_records.<locals>.Records object at 0x7e4e877a3fe0>
+tmp_path = PosixPath('/data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1/pytest-bt/test_portable_probe_retains_ev0')
+llvm22 = PosixPath('/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin')
+
+    def test_portable_probe_retains_every_legal_event_and_is_imported_only_as_fixture(records,tmp_path,llvm22):
+        from conftest import make_records, run_swdb
+        records.copy_repo();output=tmp_path/'openmp-elapsed'
+        result=run_openmp(records,output,llvm22,'--machine','testhost','--repetitions','3','--min-trial-s','.0002','--max-wall-s','180')
+>       assert result.returncode==0,result.stderr+result.stdout
+E       AssertionError: calibration command failed (1): clang++: warning: future releases of the clang compiler will prefer GCC installations containing libstdc++ include directories; '/usr/lib/gcc/x86_64-linux-gnu/13' would be chosen over '/usr/lib/gcc/x86_64-linux-gnu/14' [-Wgcc-install-dir-libstdcxx]
+E         In file included from /data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1/pytest-bt/test_portable_probe_retains_ev0/openmp-elapsed/CpuOpenmpTimer.cpp:2:
+E         /data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1/pytest-bt/test_portable_probe_retains_ev0/openmp-elapsed/CpuOpenmpWork.h:3:10: fatal error: 'cstddef' file not found
+E             3 | #include <cstddef>
+E               |          ^~~~~~~~~
+E         1 error generated.
+E         
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/data1/yanruj/venvs/swdb-test/bin/python', '-m', 'swdb.cpu_openmp_calibration', '--records', '/data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1/pytest-bt/test_portable_probe_retains_ev0/records', '--output', '/data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1/pytest-bt/test_portable_probe_retains_ev0/openmp-elapsed', '--fixture', '--llvm-bin', '/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin', '--machine', 'testhost', '--repetitions', '3', '--min-trial-s', '.0002', '--max-wall-s', '180'], returncode=1, stdout='', stderr="calibration command failed (1): clang++: warning: future releases of the clang compiler will prefer GCC installations containing libstdc++ include directories; '/usr/lib/gcc/x86_64-linux-gnu/13' would be chosen over '/usr/lib/gcc/x86_64-linux-gnu/14' [-Wgcc-install-dir-libstdcxx]\nIn file included from /data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1/pytest-bt/test_portable_probe_retains_ev0/openmp-elapsed/CpuOpenmpTimer.cpp:2:\n/data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1/pytest-bt/test_portable_probe_retains_ev0/openmp-elapsed/CpuOpenmpWork.h:3:10: fatal error: 'cstddef' file not found\n    3 | #include <cstddef>\n      |          ^~~~~~~~~\n1 error generated.\n\n").returncode
+
+tests/test_cpu_openmp_calibration.py:65: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_cpu_openmp_calibration.py::test_count_only_matrix_proves_exact_selected_event_scope_without_elapsed
+FAILED tests/test_cpu_openmp_calibration.py::test_portable_probe_retains_every_legal_event_and_is_imported_only_as_fixture
+============================== 2 failed in 2.11s ===============================

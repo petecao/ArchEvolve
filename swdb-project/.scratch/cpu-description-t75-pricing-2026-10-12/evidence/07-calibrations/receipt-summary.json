@@ -1,0 +1,898 @@
+{
+ "format": "cpud07.receipt-summary.v1",
+ "raw_root": "/data/yanruj/EvolveSWDB_runs/cpud07-20261012-a1",
+ "receipts": {
+  "memory-v2.elapsed": {
+   "file_sha256": "48bc8d16f4bb75be189969a6ecf58e87e62bb05dcdcc72194e29868221926bd5",
+   "identity_sha256": "6a454d4fffba9a12cc3453fc990374199be5d7f46b9fc3876a2164da4beec791",
+   "group": "memory_v2",
+   "commit": "598232ca6969f4207d27b135f4c702019e4c1776",
+   "dirty": false,
+   "lane": "mbit10-evaluation-node1 (verified: affinity, bind:1, lease held, generation 559)",
+   "cpus": [
+    1
+   ],
+   "start_load": [
+    8.0830078125,
+    8.08349609375,
+    7.75341796875
+   ],
+   "end_load": [
+    8.1689453125,
+    8.18994140625,
+    7.93701171875
+   ],
+   "services": [
+    {
+     "id": "memory.write.1.8388608",
+     "event_abi": null,
+     "trials": 7,
+     "events_per_trial": [
+      134217728
+     ],
+     "gross_per_event": {
+      "median_ns": 0.6944195777177811,
+      "min_ns": 0.6933160945773125,
+      "max_ns": 0.6953092217445374,
+      "spread_over_median": 0.0028702058973845467
+     },
+     "paired_per_event": {
+      "median_ns": 0.0003759637475014889,
+      "min_ns": -0.00015701353549964583,
+      "max_ns": 0.09550475329160694,
+      "spread_over_median": 254.4441251658918
+     },
+     "nonpositive_paired_trials": 2
+    },
+    {
+     "id": "memory.write.2.8388608",
+     "event_abi": null,
+     "trials": 7,
+     "events_per_trial": [
+      134217728
+     ],
+     "gross_per_event": {
+      "median_ns": 0.5752358734607695,
+      "min_ns": 0.5750694200396534,
+      "max_ns": 0.5826448723673822,
+      "spread_over_median": 0.013169297460801293
+     },
+     "paired_per_event": {
+      "median_ns": 0.00027787685394281314,
+      "min_ns": -0.0024980530142785576,
+      "max_ns": 0.005296178162097752,
+      "spread_over_median": 28.049227799233527
+     },
+     "nonpositive_paired_trials": 1
+    }
+   ]
+  },
+  "allocator-v2.elapsed": {
+   "file_sha256": "a2719d7e9d35545b427e399acbac842cef79d5444a6e74c04c6ece74c104dab4",
+   "identity_sha256": "d679dab1dc735acab00678504950f0117091f3320a1ab2fad775af00aa76d42f",
+   "group": "allocator_v2",
+   "commit": "598232ca6969f4207d27b135f4c702019e4c1776",
+   "dirty": false,
+   "lane": "mbit10-evaluation-node1 (verified: affinity, bind:1, lease held, generation 559)",
+   "cpus": [
+    1
+   ],
+   "start_load": [
+    8.24072265625,
+    8.26513671875,
+    8.1650390625
+   ],
+   "end_load": [
+    8.11767578125,
+    8.1982421875,
+    8.162109375
+   ],
+   "services": [
+    {
+     "id": "allocator.new_array.16777216",
+     "event_abi": "_Znam",
+     "trials": 7,
+     "events_per_trial": [
+      65536
+     ],
+     "gross_per_event": {
+      "median_ns": 1637.5830230712936,
+      "min_ns": 1618.2265167236421,
+      "max_ns": 1664.8295288085856,
+      "spread_over_median": 0.028458411835229774
+     },
+     "paired_per_event": {
+      "median_ns": 1632.6998443603575,
+      "min_ns": 1613.2606964111435,
+      "max_ns": 1659.8091278076104,
+      "spread_over_median": 0.028510097282886126
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "allocator.new_array.16777220",
+     "event_abi": "_Znam",
+     "trials": 7,
+     "events_per_trial": [
+      49152
+     ],
+     "gross_per_event": {
+      "median_ns": 1701.7249348958358,
+      "min_ns": 1673.680521647134,
+      "max_ns": 1779.6433919270853,
+      "spread_over_median": 0.06226791892570897
+     },
+     "paired_per_event": {
+      "median_ns": 1694.9469401041708,
+      "min_ns": 1662.207071940108,
+      "max_ns": 1773.1508789062536,
+      "spread_over_median": 0.0654556224393236
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "allocator.delete_array.16777216",
+     "event_abi": "_ZdaPv",
+     "trials": 7,
+     "events_per_trial": [
+      65536
+     ],
+     "gross_per_event": {
+      "median_ns": 1460.2663116455092,
+      "min_ns": 1441.286499023446,
+      "max_ns": 1484.5309295654315,
+      "spread_over_median": 0.02961407121229506
+     },
+     "paired_per_event": {
+      "median_ns": 1454.6589050292982,
+      "min_ns": 1435.7503814697352,
+      "max_ns": 1476.184219360353,
+      "spread_over_median": 0.027796095531964854
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "allocator.delete_array.16777220",
+     "event_abi": "_ZdaPv",
+     "trials": 7,
+     "events_per_trial": [
+      49152
+     ],
+     "gross_per_event": {
+      "median_ns": 1607.2545166015743,
+      "min_ns": 1571.3908487955694,
+      "max_ns": 1620.1252644856763,
+      "spread_over_median": 0.030321529780580427
+     },
+     "paired_per_event": {
+      "median_ns": 1600.4409383138145,
+      "min_ns": 1564.5523885091116,
+      "max_ns": 1613.2760823567708,
+      "spread_over_median": 0.03044391872341965
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "allocator.malloc.64",
+     "event_abi": "malloc",
+     "trials": 7,
+     "events_per_trial": [
+      8388608
+     ],
+     "gross_per_event": {
+      "median_ns": 8.10460710525513,
+      "min_ns": 7.988375663757321,
+      "max_ns": 8.23918831348419,
+      "spread_over_median": 0.0309469227156291
+     },
+     "paired_per_event": {
+      "median_ns": 7.691884636878971,
+      "min_ns": 7.568997621536255,
+      "max_ns": 7.843641757965085,
+      "spread_over_median": 0.03570570144955646
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "allocator.malloc.128",
+     "event_abi": "malloc",
+     "trials": 7,
+     "events_per_trial": [
+      2097152
+     ],
+     "gross_per_event": {
+      "median_ns": 48.55143785476684,
+      "min_ns": 48.08179712295533,
+      "max_ns": 48.89197826385498,
+      "spread_over_median": 0.0166870679159528
+     },
+     "paired_per_event": {
+      "median_ns": 48.14216423034667,
+      "min_ns": 47.633059501647956,
+      "max_ns": 48.484570026397705,
+      "spread_over_median": 0.01768741680734405
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "allocator.malloc.6144",
+     "event_abi": "malloc",
+     "trials": 7,
+     "events_per_trial": [
+      87376
+     ],
+     "gross_per_event": {
+      "median_ns": 1318.0687030763595,
+      "min_ns": 1299.235636788134,
+      "max_ns": 1335.8792574620034,
+      "spread_over_median": 0.027800994430975813
+     },
+     "paired_per_event": {
+      "median_ns": 1317.6621726789965,
+      "min_ns": 1298.820374015748,
+      "max_ns": 1335.4550334187877,
+      "spread_over_median": 0.027802770818377658
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "allocator.malloc.2097152",
+     "event_abi": "malloc",
+     "trials": 7,
+     "events_per_trial": [
+      65536
+     ],
+     "gross_per_event": {
+      "median_ns": 1666.4766845703114,
+      "min_ns": 1657.529205322264,
+      "max_ns": 1678.6116790771487,
+      "spread_over_median": 0.012650926322632927
+     },
+     "paired_per_event": {
+      "median_ns": 1665.5843048095692,
+      "min_ns": 1656.6237945556625,
+      "max_ns": 1677.726043701172,
+      "spread_over_median": 0.012669577327652868
+     },
+     "nonpositive_paired_trials": 0
+    }
+   ]
+  },
+  "openmp-a2.elapsed": {
+   "file_sha256": "b1c1a683c9b2343bc24d1122b4f74257ade54858ea329fef73ecb7c827f6cd0f",
+   "identity_sha256": "c98e6a2ce718fa0b829a5e8dd044d6abc07686ce1f7943bd5d9736d5669370b4",
+   "group": "openmp_v2",
+   "commit": "598232ca6969f4207d27b135f4c702019e4c1776",
+   "dirty": false,
+   "lane": "mbit10-evaluation-node1 (verified: affinity, bind:1, lease held, generation 558)",
+   "cpus": [
+    1
+   ],
+   "start_load": [
+    7.02099609375,
+    7.00634765625,
+    5.1669921875
+   ],
+   "end_load": [
+    7.13671875,
+    7.056640625,
+    5.8017578125
+   ],
+   "services": [
+    {
+     "id": "openmp.22",
+     "event_abi": "__kmpc_for_static_init_8u",
+     "trials": 7,
+     "events_per_trial": [
+      4194304
+     ],
+     "gross_per_event": {
+      "median_ns": 23.647854329139534,
+      "min_ns": 23.570668698342622,
+      "max_ns": 25.589106083361205,
+      "spread_over_median": 0.08535393346581173
+     },
+     "paired_per_event": {
+      "median_ns": 6.374493599965722,
+      "min_ns": 6.277483702741853,
+      "max_ns": 8.344829082981986,
+      "spread_over_median": 0.32431523348791974
+     },
+     "nonpositive_paired_trials": 0
+    }
+   ]
+  },
+  "library-call-2.elapsed": {
+   "file_sha256": "2fe8d2ad88b391f0750d252e6f27481ab7f654ab6fd51ddb75861e3299b2c399",
+   "identity_sha256": "c8777cb9a852a78de582d75a33378b0fa3acc115735f197b00e933dc100fa130",
+   "group": "library_call_v1",
+   "commit": "f2d411567b0c02c8f71bd6cf23189edef4a3f0a3",
+   "dirty": false,
+   "lane": "mbit10-evaluation-node1 (verified: affinity, bind:1, lease held, generation 561)",
+   "cpus": [
+    1
+   ],
+   "start_load": [
+    9.02978515625,
+    9.02685546875,
+    8.74560546875
+   ],
+   "end_load": [
+    9.0087890625,
+    9.0478515625,
+    8.9130859375
+   ],
+   "services": [
+    {
+     "id": "library.strlen",
+     "event_abi": "strlen",
+     "trials": 7,
+     "events_per_trial": [
+      67108864
+     ],
+     "gross_per_event": {
+      "median_ns": 2.9066672921161345,
+      "min_ns": 2.900836586950104,
+      "max_ns": 2.9172652810792914,
+      "spread_over_median": 0.005652072452099228
+     },
+     "paired_per_event": {
+      "median_ns": 1.6236029118279995,
+      "min_ns": 1.6127916872484611,
+      "max_ns": 1.6743572056282863,
+      "spread_over_median": 0.03791907364252581
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "library.ostream_put",
+     "event_abi": "_ZNSo3putEc",
+     "trials": 7,
+     "events_per_trial": [
+      67108864
+     ],
+     "gross_per_event": {
+      "median_ns": 9.555140435693552,
+      "min_ns": 9.538918912409123,
+      "max_ns": 9.604909345506712,
+      "spread_over_median": 0.006906275584509487
+     },
+     "paired_per_event": {
+      "median_ns": 8.374842613932685,
+      "min_ns": 8.359010517595186,
+      "max_ns": 8.428231328724342,
+      "spread_over_median": 0.008265326803156576
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "library.ostream_flush",
+     "event_abi": "_ZNSo5flushEv",
+     "trials": 7,
+     "events_per_trial": [
+      8388608
+     ],
+     "gross_per_event": {
+      "median_ns": 1437.0840613841924,
+      "min_ns": 1430.478232264515,
+      "max_ns": 1440.2406235933315,
+      "spread_over_median": 0.006793194351771696
+     },
+     "paired_per_event": {
+      "median_ns": 1427.2421833276655,
+      "min_ns": 1421.1818097829782,
+      "max_ns": 1430.9539259672179,
+      "spread_over_median": 0.006846852130908537
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "library.ostream_insert",
+     "event_abi": "_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l",
+     "trials": 7,
+     "events_per_trial": [
+      67108864
+     ],
+     "gross_per_event": {
+      "median_ns": 24.64888937771353,
+      "min_ns": 24.492339283228045,
+      "max_ns": 25.13179147243453,
+      "spread_over_median": 0.02594243413598375
+     },
+     "paired_per_event": {
+      "median_ns": 23.18368883430862,
+      "min_ns": 23.02656768262318,
+      "max_ns": 23.668796852229352,
+      "spread_over_median": 0.027701768005778376
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "library.ostream_insert_unsigned_long",
+     "event_abi": "_ZNSo9_M_insertImEERSoT_",
+     "trials": 7,
+     "events_per_trial": [
+      67108864
+     ],
+     "gross_per_event": {
+      "median_ns": 33.62380552291901,
+      "min_ns": 33.35025300085586,
+      "max_ns": 33.734426349401964,
+      "spread_over_median": 0.01142563557489778
+     },
+     "paired_per_event": {
+      "median_ns": 32.441447019576906,
+      "min_ns": 32.16960860788845,
+      "max_ns": 32.5265971273199,
+      "spread_over_median": 0.01100408743222906
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "library.ctype_widen_init",
+     "event_abi": "_ZNKSt5ctypeIcE13_M_widen_initEv",
+     "trials": 7,
+     "events_per_trial": [
+      16777216
+     ],
+     "gross_per_event": {
+      "median_ns": 54.14502632617932,
+      "min_ns": 54.01746171712889,
+      "max_ns": 54.401945471763696,
+      "spread_over_median": 0.007100998572216152
+     },
+     "paired_per_event": {
+      "median_ns": 49.23444986343472,
+      "min_ns": 49.08845865726555,
+      "max_ns": 49.47185337543535,
+      "spread_over_median": 0.007787123025305579
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "library.indirect_call",
+     "event_abi": "indirect-call",
+     "trials": 7,
+     "events_per_trial": [
+      67108864
+     ],
+     "gross_per_event": {
+      "median_ns": 2.325028538704652,
+      "min_ns": 2.3229323923590797,
+      "max_ns": 2.3276256173831227,
+      "spread_over_median": 0.002018566630867115
+     },
+     "paired_per_event": {
+      "median_ns": 0.576594769953914,
+      "min_ns": 0.5668144822088396,
+      "max_ns": 0.5794085711226677,
+      "spread_over_median": 0.021842183748622627
+     },
+     "nonpositive_paired_trials": 0
+    }
+   ]
+  },
+  "bulk.a3.elapsed": {
+   "file_sha256": "c4f95e3a6d748fafd6d1e56e38050a70b563bee4efe18d49f19b3a2dd6b23c7f",
+   "identity_sha256": "e270536b928f5310f7c08282745b21416576ced5daf41a3ab35dcd082ebab6b8",
+   "group": "bulk_total_v2",
+   "commit": "598232ca6969f4207d27b135f4c702019e4c1776",
+   "dirty": false,
+   "lane": "mbit10-evaluation-node1 (verified: affinity, bind:1, lease held, generation 559)",
+   "cpus": [
+    1
+   ],
+   "start_load": [
+    7.89990234375,
+    7.9775390625,
+    8.04443359375
+   ],
+   "end_load": [
+    8.115234375,
+    8.04150390625,
+    8.03662109375
+   ],
+   "services": [
+    {
+     "id": "bulk.0.8",
+     "event_abi": "memcpy",
+     "trials": 7,
+     "events_per_trial": [
+      134217728
+     ],
+     "gross_per_event": {
+      "median_ns": 0.6929062008857727,
+      "min_ns": 0.6926618069410324,
+      "max_ns": 0.6930354908108711,
+      "spread_over_median": 0.0005392993587890966
+     },
+     "paired_per_event": {
+      "median_ns": 0.00021404027938836634,
+      "min_ns": -0.00038295984268193686,
+      "max_ns": 0.00037357956171038407,
+      "spread_over_median": 3.534565580619593
+     },
+     "nonpositive_paired_trials": 3
+    },
+    {
+     "id": "bulk.1.140",
+     "event_abi": "memmove",
+     "trials": 7,
+     "events_per_trial": [
+      16777216
+     ],
+     "gross_per_event": {
+      "median_ns": 4.505801856517792,
+      "min_ns": 4.504607558250427,
+      "max_ns": 4.508334398269653,
+      "spread_over_median": 0.0008271202635853827
+     },
+     "paired_per_event": {
+      "median_ns": 3.812715470790863,
+      "min_ns": 3.8101536035537715,
+      "max_ns": 3.8155812621116643,
+      "spread_over_median": 0.0014235676906588122
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "bulk.1.4388",
+     "event_abi": "memmove",
+     "trials": 7,
+     "events_per_trial": [
+      2097152
+     ],
+     "gross_per_event": {
+      "median_ns": 33.12297058105469,
+      "min_ns": 33.02448272705078,
+      "max_ns": 33.24057960510254,
+      "spread_over_median": 0.0065240790382295995
+     },
+     "paired_per_event": {
+      "median_ns": 32.41983461380005,
+      "min_ns": 32.32809019088745,
+      "max_ns": 32.54676866531372,
+      "spread_over_median": 0.006745206353803744
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "bulk.1.7300",
+     "event_abi": "memmove",
+     "trials": 7,
+     "events_per_trial": [
+      2097152
+     ],
+     "gross_per_event": {
+      "median_ns": 55.56740665435791,
+      "min_ns": 55.46173715591431,
+      "max_ns": 56.31009578704834,
+      "spread_over_median": 0.015267198564997277
+     },
+     "paired_per_event": {
+      "median_ns": 54.86173486709594,
+      "min_ns": 54.76851987838745,
+      "max_ns": 55.616472244262695,
+      "spread_over_median": 0.01545617118979985
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "bulk.1.9044",
+     "event_abi": "memmove",
+     "trials": 7,
+     "events_per_trial": [
+      2097152
+     ],
+     "gross_per_event": {
+      "median_ns": 57.02277088165283,
+      "min_ns": 56.665485858917236,
+      "max_ns": 57.126368045806885,
+      "spread_over_median": 0.008082423561039874
+     },
+     "paired_per_event": {
+      "median_ns": 56.32925033569336,
+      "min_ns": 55.9692587852478,
+      "max_ns": 56.43235969543457,
+      "spread_over_median": 0.00822132209157626
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "bulk.1.14496",
+     "event_abi": "memmove",
+     "trials": 7,
+     "events_per_trial": [
+      1048576
+     ],
+     "gross_per_event": {
+      "median_ns": 84.951247215271,
+      "min_ns": 84.84634017944336,
+      "max_ns": 85.13155746459961,
+      "spread_over_median": 0.0033574231633527987
+     },
+     "paired_per_event": {
+      "median_ns": 84.25313091278078,
+      "min_ns": 84.15234088897704,
+      "max_ns": 84.43245792388917,
+      "spread_over_median": 0.003324707721569537
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "bulk.1.30164",
+     "event_abi": "memmove",
+     "trials": 7,
+     "events_per_trial": [
+      131072
+     ],
+     "gross_per_event": {
+      "median_ns": 701.8826065063477,
+      "min_ns": 644.0333862304688,
+      "max_ns": 778.3871536254883,
+      "spread_over_median": 0.19141914352853323
+     },
+     "paired_per_event": {
+      "median_ns": 701.1902008056641,
+      "min_ns": 643.4601593017578,
+      "max_ns": 777.6954116821289,
+      "spread_over_median": 0.19143914479428764
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "bulk.2.140",
+     "event_abi": "memmove",
+     "trials": 7,
+     "events_per_trial": [
+      8388608
+     ],
+     "gross_per_event": {
+      "median_ns": 9.18802535533905,
+      "min_ns": 9.186767339706421,
+      "max_ns": 9.226484537124634,
+      "spread_over_median": 0.004322713083843727
+     },
+     "paired_per_event": {
+      "median_ns": 8.613973379135132,
+      "min_ns": 8.606969118118286,
+      "max_ns": 8.652402400970459,
+      "spread_over_median": 0.005274370009341055
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "bulk.2.4388",
+     "event_abi": "memmove",
+     "trials": 7,
+     "events_per_trial": [
+      2097152
+     ],
+     "gross_per_event": {
+      "median_ns": 46.2932186126709,
+      "min_ns": 46.149757862091064,
+      "max_ns": 46.43840980529785,
+      "spread_over_median": 0.006235296483096048
+     },
+     "paired_per_event": {
+      "median_ns": 45.71293926239014,
+      "min_ns": 45.57593870162964,
+      "max_ns": 45.86299133300781,
+      "spread_over_median": 0.006279461264358933
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "bulk.2.7300",
+     "event_abi": "memmove",
+     "trials": 7,
+     "events_per_trial": [
+      1048576
+     ],
+     "gross_per_event": {
+      "median_ns": 67.42126178741455,
+      "min_ns": 66.73115348815918,
+      "max_ns": 67.70537281036377,
+      "spread_over_median": 0.01444973434754741
+     },
+     "paired_per_event": {
+      "median_ns": 66.84656810760497,
+      "min_ns": 66.15627861022949,
+      "max_ns": 67.1307783126831,
+      "spread_over_median": 0.014578156067562496
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "bulk.2.9044",
+     "event_abi": "memmove",
+     "trials": 7,
+     "events_per_trial": [
+      1048576
+     ],
+     "gross_per_event": {
+      "median_ns": 84.73921775817871,
+      "min_ns": 83.76741886138916,
+      "max_ns": 84.93329238891602,
+      "spread_over_median": 0.013758370189986097
+     },
+     "paired_per_event": {
+      "median_ns": 84.1605920791626,
+      "min_ns": 83.19280338287352,
+      "max_ns": 84.3588056564331,
+      "spread_over_median": 0.01385449228378553
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "bulk.2.14496",
+     "event_abi": "memmove",
+     "trials": 7,
+     "events_per_trial": [
+      524288
+     ],
+     "gross_per_event": {
+      "median_ns": 136.7689723968506,
+      "min_ns": 135.6502685546875,
+      "max_ns": 137.67544555664062,
+      "spread_over_median": 0.014807283892408141
+     },
+     "paired_per_event": {
+      "median_ns": 136.18292427062988,
+      "min_ns": 135.07726097106936,
+      "max_ns": 137.1025695800781,
+      "spread_over_median": 0.014871971797168544
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "bulk.2.30164",
+     "event_abi": "memmove",
+     "trials": 7,
+     "events_per_trial": [
+      262144
+     ],
+     "gross_per_event": {
+      "median_ns": 281.0011100769043,
+      "min_ns": 280.1963806152344,
+      "max_ns": 281.68469619750977,
+      "spread_over_median": 0.005296475810604752
+     },
+     "paired_per_event": {
+      "median_ns": 280.4281311035156,
+      "min_ns": 279.6231384277343,
+      "max_ns": 281.1117057800293,
+      "spread_over_median": 0.005308195531016405
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "bulk.3.140",
+     "event_abi": "memmove",
+     "trials": 7,
+     "events_per_trial": [
+      8388608
+     ],
+     "gross_per_event": {
+      "median_ns": 9.202107667922974,
+      "min_ns": 9.183996200561523,
+      "max_ns": 9.22468614578247,
+      "spread_over_median": 0.004421807121729912
+     },
+     "paired_per_event": {
+      "median_ns": 8.615284442901611,
+      "min_ns": 8.60683560371399,
+      "max_ns": 8.650545001029968,
+      "spread_over_median": 0.00507347117853932
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "bulk.3.4388",
+     "event_abi": "memmove",
+     "trials": 7,
+     "events_per_trial": [
+      2097152
+     ],
+     "gross_per_event": {
+      "median_ns": 44.88784694671631,
+      "min_ns": 44.39974403381348,
+      "max_ns": 45.4436411857605,
+      "spread_over_median": 0.0232556743740945
+     },
+     "paired_per_event": {
+      "median_ns": 44.31389379501342,
+      "min_ns": 43.8248496055603,
+      "max_ns": 44.868613719940186,
+      "spread_over_median": 0.023553879494501523
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "bulk.3.7300",
+     "event_abi": "memmove",
+     "trials": 7,
+     "events_per_trial": [
+      1048576
+     ],
+     "gross_per_event": {
+      "median_ns": 69.09849071502686,
+      "min_ns": 68.79855918884277,
+      "max_ns": 69.66817283630371,
+      "spread_over_median": 0.01258513230118679
+     },
+     "paired_per_event": {
+      "median_ns": 68.52159214019775,
+      "min_ns": 68.22212219238281,
+      "max_ns": 69.0918140411377,
+      "spread_over_median": 0.012692230603390848
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "bulk.3.9044",
+     "event_abi": "memmove",
+     "trials": 7,
+     "events_per_trial": [
+      1048576
+     ],
+     "gross_per_event": {
+      "median_ns": 86.56657981872559,
+      "min_ns": 85.02553939819336,
+      "max_ns": 86.7168321609497,
+      "spread_over_median": 0.019537479317052717
+     },
+     "paired_per_event": {
+      "median_ns": 85.98703956604004,
+      "min_ns": 84.45013999938965,
+      "max_ns": 86.14401340484619,
+      "spread_over_median": 0.019699171107706418
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "bulk.3.14496",
+     "event_abi": "memmove",
+     "trials": 7,
+     "events_per_trial": [
+      524288
+     ],
+     "gross_per_event": {
+      "median_ns": 135.66435432434082,
+      "min_ns": 134.3484706878662,
+      "max_ns": 137.0404815673828,
+      "spread_over_median": 0.01984317024854332
+     },
+     "paired_per_event": {
+      "median_ns": 135.09149551391604,
+      "min_ns": 133.77545166015625,
+      "max_ns": 136.46762657165527,
+      "spread_over_median": 0.019928529928974804
+     },
+     "nonpositive_paired_trials": 0
+    },
+    {
+     "id": "bulk.3.30164",
+     "event_abi": "memmove",
+     "trials": 7,
+     "events_per_trial": [
+      262144
+     ],
+     "gross_per_event": {
+      "median_ns": 282.7561340332031,
+      "min_ns": 281.7157669067383,
+      "max_ns": 283.8306999206543,
+      "spread_over_median": 0.007479706925359475
+     },
+     "paired_per_event": {
+      "median_ns": 282.1831932067871,
+      "min_ns": 281.12563323974615,
+      "max_ns": 283.2574615478516,
+      "spread_over_median": 0.00755476711379918
+     },
+     "nonpositive_paired_trials": 0
+    }
+   ]
+  }
+ }
+}
