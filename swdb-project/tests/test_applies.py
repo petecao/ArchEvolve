@@ -1,8 +1,14 @@
 """Implementations that apply strategies: the `applies` field, its rules, and
 `swdb implementations <kernel> --applies <strategy>`. Created 2026-09-23. Uses a fixture
-derived implementation and fixture profiles in a temporary records folder."""
+derived implementation and fixture profiles in a temporary records folder.
+Updated 2026-10-11 ET: `swdb_` table names; the fixture copies the closure of every profile (the
+fixture profiles are relabeled copies of them), not the ~1 GB catalog."""
+
+import re
 
 import pytest
+
+from conftest import REPO
 
 from test_strategies import edit, passes, query, rejected
 
@@ -11,9 +17,14 @@ PACKED = "implementations/gapbs-pr-jacobi-packed.yaml"
 BASE_PROFILES = "profiles/gapbs-pr-jacobi.{}.mbit10.20260922t{}z.yaml"
 
 
+#: Every repository profile; the tests relabel some of them as profiles of a derived implementation.
+PROFILES = [re.search(rb"^id:[ \t]*(.+?)[ \t]*$", path.read_bytes(), re.M).group(1).decode()
+            for path in sorted((REPO / "records" / "profiles").glob("*.yaml"))]
+
+
 @pytest.fixture
 def repo(records):
-    return records.copy_repo()
+    return records.copy_closure(*PROFILES)
 
 
 def derived(repo, applies=None, **changes):
@@ -149,7 +160,7 @@ def test_implementations_applies_leaves_out_implementations_that_do_not_apply_it
 def test_applied_strategies_are_in_the_database(repo):
     derived(repo, [{"strategy": "packing", "target": "gather-contrib", "parameters": {}},
                    {"strategy": "software_prefetch", "target": "gather-contrib", "parameters": {"distance": 16}}])
-    rows = query(repo, "sql", "select position, strategy, parameters_json from applied_strategies order by position")
+    rows = query(repo, "sql", "select position, strategy, parameters_json from swdb_applied_strategies order by position")
     assert rows == [{"position": 0, "strategy": "packing", "parameters_json": "{}"},
                     {"position": 1, "strategy": "software_prefetch", "parameters_json": '{"distance": 16}'}]
 
@@ -160,8 +171,8 @@ def test_a_database_built_by_an_older_tool_is_rebuilt(repo):
     db = repo.path.parent / "build" / "swdb.sqlite"
     passes(repo.swdb("build"))
     con = sqlite3.connect(db)
-    con.execute("DROP TABLE applied_strategies")
-    con.execute("UPDATE meta SET value = 'old' WHERE key = 'builder'")
+    con.execute("DROP TABLE swdb_applied_strategies")
+    con.execute("UPDATE swdb_meta SET value = 'old' WHERE key = 'builder'")
     con.commit()
     con.close()
     result = repo.swdb("implementations", "gapbs-pr", "--applies", "packing")

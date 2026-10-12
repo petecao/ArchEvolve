@@ -1,4 +1,4 @@
-"""Fresh, fully validated writes with no cross-request cache. Updated: 2026-09-25."""
+"""Fresh, fully validated writes with no cross-request cache. Updated: 2026-09-25. Updated 2026-10-11 ET: `swdb_` table names."""
 import copy
 import json
 from concurrent.futures import ThreadPoolExecutor
@@ -27,12 +27,12 @@ def test_persist_creates_then_replaces_original_path_and_refreshes_index(records
     assert yamlio.load(path)['hostname'] == data['hostname']
     assert not (records.path / 'machines/write-test.yaml').exists()
     assert not db.is_stale(records.path, index)
-    assert json.loads(db.sql(index, "SELECT json FROM records WHERE id='write-test'")[0]['json'])['hostname'] == data['hostname']
+    assert json.loads(db.sql(index, "SELECT json FROM swdb_records WHERE id='write-test'")[0]['json'])['hostname'] == data['hostname']
     fresh = copy.deepcopy(data)
     fresh['id'] = 'another-write'
     workflow.persist(records.path, fresh, index)
     assert (records.path / 'machines/another-write.yaml').is_file()
-    assert json.loads(db.sql(index, "SELECT json FROM records WHERE id='another-write'")[0]['json'])['hostname'] == fresh['hostname']
+    assert json.loads(db.sql(index, "SELECT json FROM swdb_records WHERE id='another-write'")[0]['json'])['hostname'] == fresh['hostname']
 
 
 def test_each_upsert_revalidates_unrelated_current_records_and_writes_nothing_on_failure(records):

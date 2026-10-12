@@ -10,11 +10,14 @@ Updated: 2026-10-06 (Eastern Time): one record/index access interface (analytic-
 
 Updated: 2026-10-07 (Eastern Time): current evidence-basis interpretation.
 
+Updated: 2026-10-11 (Eastern Time): every table name carries the `swdb_` prefix (LANL-shaped-db
+ticket 01).
+
 Run commands inside `ArchEvolve/swdb-project/`. [The database builder](../../swdb/db.py)
 writes `build/swdb.sqlite` beside `records/` by default (another records folder
 `X` gets `build/swdb-X.sqlite`). It recreates every table in a temporary file,
 then replaces the selected index. YAML remains authoritative (ADR 0002).
-The `meta` table names the records folder and a fingerprint of its files (path,
+The `swdb_meta` table names the records folder and a fingerprint of its files (path,
 size, and modification time of each); `swdb find`, `swdb implementations`, `swdb strategies`, and `swdb sql`
 rebuild the file first unless the folder and the fingerprint match the folder being queried
 and the file was built by the same `swdb` code (so a newer `swdb` never queries a file that
@@ -78,14 +81,18 @@ Contributions to the main database must use its ingest inputs, and
 
 ## Tables
 
-### `meta`
+Every table SWDB generates is named `swdb_<name>`, which leaves unprefixed names free for
+the LANL-shaped tables. Columns and contents are as listed; a file built before the prefix
+(2026-10-11) has no `swdb_meta`, so every command treats it as stale and rebuilds it.
+
+### `swdb_meta`
 
 | Column | Meaning |
 |---|---|
 | `key` | `records_dir` (the absolute records folder the file was built from), `library_dir`, `fingerprint`, or `builder` |
 | `value` | the folder; the typed library folder it uses (`library/` beside `records/`); the sha256 over every record file's and every library file's path, size, and modification time, so an edited library entry or pinned code file makes the index stale; or the sha256 of the `swdb` package's code, so any change to the tool rebuilds the file |
 
-### `records`
+### `swdb_records`
 
 One row per record, whatever its kind.
 
@@ -97,7 +104,7 @@ One row per record, whatever its kind.
 | `path` | file path relative to the records folder |
 | `json` | the whole record as JSON (query it with `json_extract`) |
 
-### `applications`
+### `swdb_applications`
 
 | Column | Meaning |
 |---|---|
@@ -109,7 +116,7 @@ One row per record, whatever its kind.
 | `domain` | domain (vocabulary `domains`) |
 | `json` | the whole record |
 
-### `kernels`
+### `swdb_kernels`
 
 | Column | Meaning |
 |---|---|
@@ -119,7 +126,7 @@ One row per record, whatever its kind.
 | `baseline_implementation` | ID of the baseline implementation |
 | `json` | the whole record, including the correctness check |
 
-### `implementations`
+### `swdb_implementations`
 
 | Column | Meaning |
 |---|---|
@@ -131,12 +138,12 @@ One row per record, whatever its kind.
 | `is_baseline` | 1 if the kernel names it as its baseline |
 | `json` | the whole record: code, build, run, loops, access patterns |
 
-### `access_patterns`
+### `swdb_access_patterns`
 
-The adjacent `implementation_contexts` table stores each implementation's resolved
+The adjacent `swdb_implementation_contexts` table stores each implementation's resolved
 `application`, `source_ancestor`, `source_baseline`, `comparison_baseline`, and full
 context `json`. These are regenerated from authoritative source records. Its
-`implementation` key identifies the same row in `implementations`; the older
+`implementation` key identifies the same row in `swdb_implementations`; the older
 `is_baseline` column retains its historical kernel-default meaning.
 
 One row per access pattern of each implementation.
@@ -159,7 +166,7 @@ One row per access pattern of each implementation.
 | `numerical_requirement`, `numerical_requirement_basis` | semantic value (vocabulary `numerical_requirements`) and basis |
 | `semantics_json` | all semantic facts with notes and evidence |
 
-### `steps`
+### `swdb_steps`
 
 One row per step of each access pattern's chain, in order.
 
@@ -178,7 +185,7 @@ One row per step of each access pattern's chain, in order.
 | `stride` | stride in elements, for `stream` steps |
 | `index_transform` | index transform, for `single_valued_indirect` steps |
 
-### `inputs`
+### `swdb_inputs`
 
 | Column | Meaning |
 |---|---|
@@ -188,7 +195,7 @@ One row per step of each access pattern's chain, in order.
 | `file_path` | file path (null for a generated input) |
 | `json` | the whole record |
 
-### `input_properties`
+### `swdb_input_properties`
 
 | Column | Meaning |
 |---|---|
@@ -197,7 +204,7 @@ One row per step of each access pattern's chain, in order.
 | `value` | value as JSON text |
 | `basis` | basis of the value |
 
-### `machines`
+### `swdb_machines`
 
 | Column | Meaning |
 |---|---|
@@ -210,7 +217,7 @@ One row per step of each access pattern's chain, in order.
 | `counters_available` | 1 if hardware counters are available to the profiling user, 0 if not, NULL if unknown |
 | `json` | the whole record |
 
-### `machine_flags`
+### `swdb_machine_flags`
 
 One row per ISA flag of each machine (`cpu.flags`; empty for a 0.2 machine without flags).
 
@@ -219,7 +226,7 @@ One row per ISA flag of each machine (`cpu.flags`; empty for a 0.2 machine witho
 | `machine` | machine ID |
 | `flag` | one `lscpu` flag name, e.g. `avx512f` |
 
-### `strategies`
+### `swdb_strategies`
 
 | Column | Meaning |
 |---|---|
@@ -228,7 +235,7 @@ One row per ISA flag of each machine (`cpu.flags`; empty for a 0.2 machine witho
 | `target` | vocabulary `strategy_targets` |
 | `json` | the whole record: effect, parameters, preconditions, benefits_when |
 
-### `strategy_effects`
+### `swdb_strategy_effects`
 
 One row per effect item, in order.
 
@@ -239,14 +246,14 @@ One row per effect item, in order.
 | `kind` | vocabulary `effect_kinds` |
 | `json` | the effect item |
 
-### `strategy_intrinsics`
+### `swdb_strategy_intrinsics`
 
 | Column | Meaning |
 |---|---|
 | `strategy` | strategy ID |
 | `intrinsic` | one ID from its `common_intrinsics` |
 
-### `applied_strategies`
+### `swdb_applied_strategies`
 
 One row per `applies` item of each implementation.
 
@@ -258,35 +265,35 @@ One row per `applies` item of each implementation.
 | `target` | loop or access-pattern ID, or `input` |
 | `parameters_json` | the parameter values as JSON |
 
-### `implementation_intrinsics`
+### `swdb_implementation_intrinsics`
 
 | Column | Meaning |
 |---|---|
 | `implementation` | implementation ID |
 | `intrinsic` | one ID from its `uses_intrinsics` |
 
-### `intrinsics`
+### `swdb_intrinsics`
 
 | Column | Meaning |
 |---|---|
 | `id` | intrinsic ID (the C name without leading underscores) |
 | `name` | exact C name |
 | `isa_family` | vocabulary `isa_families` |
-| `isa_extensions` | JSON list of the extensions it needs (also one row each in `intrinsic_extensions`) |
+| `isa_extensions` | JSON list of the extensions it needs (also one row each in `swdb_intrinsic_extensions`) |
 | `header` | the header that declares it |
 | `memory_kind` | vocabulary `intrinsic_memory_kinds` |
 | `address_shape` | the address shape the instruction forms, or null |
 | `element_bits`, `lanes` | element width and elements per call, or null |
 | `json` | the whole record |
 
-### `intrinsic_extensions`
+### `swdb_intrinsic_extensions`
 
 | Column | Meaning |
 |---|---|
 | `intrinsic` | intrinsic ID |
 | `extension` | one ISA extension it needs (vocabulary `isa_extensions`) |
 
-### `profiles`
+### `swdb_profiles`
 
 | Column | Meaning |
 |---|---|
@@ -302,7 +309,7 @@ One row per `applies` item of each implementation.
 | `memory_limit` | bandwidth or latency, for `memory_bound` |
 | `json` | the whole record: build, environment, parts, timing, counts, metrics |
 
-### `metrics`
+### `swdb_metrics`
 
 One row per metric of each profile.
 
@@ -319,7 +326,7 @@ One row per metric of each profile.
 | `scope` | count scope, where one applies |
 | `tool` | the tool that produced it |
 
-### `library_entries`
+### `swdb_library_entries`
 
 One row per typed library entry (ADR 0007), read from the library folder's YAML
 (`schemas/library/library_entry.schema.json` gives the entry shape). The YAML
@@ -337,7 +344,7 @@ and `swdb submit` derive them.
 | `derived_from` | for a derived rewrite contract, the contract it cites (`provenance.derived_from`), else null |
 | `json` | the whole entry |
 
-### `library_dependencies`
+### `swdb_library_dependencies`
 
 | Column | Meaning |
 |---|---|
@@ -345,7 +352,7 @@ and `swdb submit` derive them.
 | `dependency` | an entry in its dependency closure (intrinsics, lowerings, operations, a cited contract) |
 | `content_sha256` | that dependency's current content hash |
 
-### `library_clauses`
+### `swdb_library_clauses`
 
 | Column | Meaning |
 |---|---|
@@ -356,7 +363,7 @@ and `swdb submit` derive them.
 | `negative_control` | the named control that must be rejected, or `none` |
 | `statement` | the natural-language statement |
 
-### `statements`
+### `swdb_statements`
 
 The statements index: one row per statement annotation of an implementation
 (`extensions.statements.annotations`, ticket 35).
@@ -375,7 +382,7 @@ The statements index: one row per statement annotation of an implementation
 | `agent_claims` | number of retained agent claims (claims stay in `json`) |
 | `json` | the whole annotation, with its claims and facts |
 
-### `statement_steps`
+### `swdb_statement_steps`
 
 | Column | Meaning |
 |---|---|
@@ -384,7 +391,7 @@ The statements index: one row per statement annotation of an implementation
 | `pattern` | access-pattern ID the statement realizes |
 | `step` | step position in that access pattern |
 
-### `statement_facts`
+### `swdb_statement_facts`
 
 Recorded facts on statements (`annotation_facts` of a statement annotation; agent claims are
 never copied here). The query site finder (ticket 55, `swdb/site_finder.py`) reads legality
@@ -400,7 +407,7 @@ facts, whose field is `legality:<entry id>:<clause id>` and whose value is true 
 | `basis` | its basis (measured, simulated, reported, code_reading or inferred) |
 | `evidence` | the evidence text the fact cites |
 
-### `library_pattern_keys`
+### `swdb_library_pattern_keys`
 
 One row per pattern of a library entry's `pattern_key` (rewrite contracts and library
 operations), in key order.
@@ -412,7 +419,7 @@ operations), in key order.
 | `update_kind` | the update kind it matches |
 | `step_count` | the chain length it matches (the longer of its roles and address shapes) |
 
-### `library_pattern_key_steps`
+### `swdb_library_pattern_key_steps`
 
 One row per step of a key pattern; a step missing its role or shape (a malformed key) has a
 null there and never matches.
@@ -467,14 +474,14 @@ list only strategies of that target.
 
 ```
 # the kernels whose implementations include a ranged-indirect gather
-swdb sql "select distinct kernel, implementation from steps join access_patterns using (implementation, pattern)
+swdb sql "select distinct kernel, implementation from swdb_steps join swdb_access_patterns using (implementation, pattern)
           where address_shape = 'ranged_indirect'"
 
 # intrinsics a machine can run (every extension is among its flags)
-swdb sql "select i.id from intrinsics i where not exists (select 1 from intrinsic_extensions e
-          where e.intrinsic = i.id and e.extension not in (select flag from machine_flags where machine = 'mbit10'))"
+swdb sql "select i.id from swdb_intrinsics i where not exists (select 1 from swdb_intrinsic_extensions e
+          where e.intrinsic = i.id and e.extension not in (select flag from swdb_machine_flags where machine = 'mbit10'))"
 
 # median time per thread count for one implementation on every input
-swdb sql "select p.input, m.threads, m.value from metrics m join profiles p on p.id = m.profile
+swdb sql "select p.input, m.threads, m.value from swdb_metrics m join swdb_profiles p on p.id = m.profile
           where p.implementation = 'gapbs-pr-gs' and m.name = 'time_per_trial_median' order by 1, 2"
 ```

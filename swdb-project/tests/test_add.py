@@ -1,4 +1,5 @@
-"""`swdb add`: validate, write to the canonical place, rebuild. Created 2026-09-22."""
+"""`swdb add`: validate, write to the canonical place, rebuild. Created 2026-09-22. Updated 2026-10-11 ET: `swdb_` table names;
+the fixture copies the record closure, not the ~1 GB catalog (LR-03)."""
 
 import json
 
@@ -8,7 +9,7 @@ import yaml
 
 @pytest.fixture
 def repo(records):
-    return records.copy_repo()
+    return records.copy_closure()
 
 
 def new_input(repo, tmp_path, **changes):
@@ -30,7 +31,7 @@ def test_add_writes_the_canonical_file_and_the_next_queries_see_it(repo, tmp_pat
     assert (repo.path / "inputs" / "kron-g18-k16.yaml").is_file()
     assert repo.validate().returncode == 0
     assert repo.swdb("build").returncode == 0
-    rows = json.loads(repo.swdb("sql", "select id from inputs where id = 'kron-g18-k16'", "--format", "json").stdout)
+    rows = json.loads(repo.swdb("sql", "select id from swdb_inputs where id = 'kron-g18-k16'", "--format", "json").stdout)
     assert rows == [{"id": "kron-g18-k16"}]
     view = repo.swdb("view", "gapbs-pr-gs", "kron-g18-k16", "mbit10")
     assert view.returncode == 0 and "gapbs-pr-gs@kron-g18-k16@mbit10" in view.stdout

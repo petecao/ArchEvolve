@@ -1,6 +1,6 @@
 # Records and queries
 
-Updated: 2026-10-07 (Eastern Time).
+Updated: 2026-10-11 (Eastern Time): tables carry the `swdb_` prefix.
 
 [Guide](README.md) · [Complete table and query reference](reference/database.md)
 
@@ -56,7 +56,7 @@ python3 -m swdb profile-strategies PACKAGE_ID
 python3 -m swdb strategy-regions loop_tiling --package PACKAGE_ID
 
 # Inspect all stored record kinds.
-python3 -m swdb sql 'select kind, count(*) from records group by kind'
+python3 -m swdb sql 'select kind, count(*) from swdb_records group by kind'
 ```
 
 Uppercase IDs are placeholders. `implementations KERNEL --applies STRATEGY`
@@ -69,16 +69,16 @@ does not replace the frozen evaluation workflow's gain decision.
 
 | Group | Tables |
 |---|---|
-| All records and index metadata | `records`, `meta` |
-| Source and computation | `applications`, `kernels`, `implementations`, `implementation_contexts` |
-| Memory access | `access_patterns`, `steps` |
-| Inputs and machines | `inputs`, `input_properties`, `machines`, `machine_flags` |
-| Strategies and intrinsics | `strategies`, `strategy_effects`, `strategy_intrinsics`, `applied_strategies`, `implementation_intrinsics`, `intrinsics`, `intrinsic_extensions` |
-| Measurements | `profiles`, `metrics` |
-| Typed library | `library_entries`, `library_dependencies`, `library_clauses`, `library_pattern_keys`, `library_pattern_key_steps` |
-| Statement observations | `statements`, `statement_steps`, `statement_facts` |
+| All records and index metadata | `swdb_records`, `swdb_meta` |
+| Source and computation | `swdb_applications`, `swdb_kernels`, `swdb_implementations`, `swdb_implementation_contexts` |
+| Memory access | `swdb_access_patterns`, `swdb_steps` |
+| Inputs and machines | `swdb_inputs`, `swdb_input_properties`, `swdb_machines`, `swdb_machine_flags` |
+| Strategies and intrinsics | `swdb_strategies`, `swdb_strategy_effects`, `swdb_strategy_intrinsics`, `swdb_applied_strategies`, `swdb_implementation_intrinsics`, `swdb_intrinsics`, `swdb_intrinsic_extensions` |
+| Measurements | `swdb_profiles`, `swdb_metrics` |
+| Typed library | `swdb_library_entries`, `swdb_library_dependencies`, `swdb_library_clauses`, `swdb_library_pattern_keys`, `swdb_library_pattern_key_steps` |
+| Statement observations | `swdb_statements`, `swdb_statement_steps`, `swdb_statement_facts` |
 
-The `records.json` column contains every record kind, including workflow records.
+The `swdb_records.json` column contains every record kind, including workflow records.
 Use `json_extract` for fields without a dedicated table. In semantic/property
 columns stored as JSON text, distinguish `'true'`, `'false'`, and `'null'` and
 check the accompanying basis. See the reference for exact columns and joins.
