@@ -2,7 +2,7 @@
 
 Created: 2026-10-09
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 02
 **Spec:** `../spec.md`
 
@@ -22,3 +22,16 @@ About 2 h.
 - [ ] `expected_output_json` and `max_abs_error` are NULL when records do not state them
 - [ ] The four empty tables have no rows; the guessed search-table columns are listed
 - [ ] Origins, foreign-key and separability checks stay clean
+
+## Answer
+
+Resolved 2026-10-11 21:40 ET on `lanl-shaped-db` (commit 92493e81, merge f7c93d56).
+Built in `swdb/lanl_validation.py`. `Validation_definition`: one row per (kernel, input) pair a
+profile or evaluation actually ran; `name` = `<kernel>/<input>`, `input_json` = the input's
+`generator` or the workload's `definition`, `expected_output_json` NULL (no record states one).
+`Validation_results`: one row per correctness outcome naming an implementation and an input
+record; `passed` 1 / 0 / NULL (not established), `max_abs_error` NULL. Outcomes without an
+implementation or input record get no row. `physics_assets`, `kernel_dependencies`,
+`code_chunks`, `embeddings` are created empty; `fixture_id` and the search-table columns are
+listed as guessed. Tests: `tests/test_lanl_validation.py` (12 pass; the `code_chunks` →
+`source_files` target check runs once ticket 03 is merged).

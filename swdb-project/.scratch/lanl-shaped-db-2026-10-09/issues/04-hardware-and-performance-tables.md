@@ -2,7 +2,7 @@
 
 Created: 2026-10-09
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 02
 **Spec:** `../spec.md`
 
@@ -24,3 +24,17 @@ About 3 h.
 - [ ] A hardware target (for example DX100) never appears in `hardware_profiles`
 - [ ] Each estimate appears in `swdb_estimates` linked to its kernel variant
 - [ ] Origins, foreign-key and separability checks stay clean
+
+## Answer
+
+Resolved 2026-10-11 21:40 ET on `lanl-shaped-db` (commit 8093fe52, merge 51ce1ac7).
+Built in `swdb/lanl_performance.py`. `hardware_profiles`: one row per machine record (never a
+hardware target); `cores` = sockets × cores_per_socket (physical), `memory_gb` = bytes / 2^30.
+`performance_runs`: one row per profile `timing[]` entry, `elapsed_seconds` = median per-trial
+time, `throughput_value` NULL (no record states one). `run_configs`: distinct (variant,
+parameters, commit), `git_commit` = `build.application_commit` or NULL. `performance_metrics`:
+numeric `measured` metrics tied to exactly one run's thread count; simulated, estimated,
+histogram and run-less metrics stay in `swdb_metrics`. `swdb_estimates`: one row per estimate,
+linked to the stated implementation (for a candidate subject, the implementation the candidate
+names), else NULL. Five guessed link columns listed. Evaluation timings are not included (spec
+names profiles only; possible follow-up). Tests: `tests/test_lanl_performance.py` (22 pass).
