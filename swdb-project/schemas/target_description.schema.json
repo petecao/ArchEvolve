@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "target_description",
-  "description": "Updated: 2026-10-06 ET. Mechanism rates describe the frozen target/thread configuration, not per-thread rates.",
+  "description": "Updated: 2026-10-12 ET (resource_floor_mechanisms); 2026-10-06 ET. Mechanism rates describe the frozen target/thread configuration, not per-thread rates.",
   "properties": {
     "kind": {
       "const": "target_description"
@@ -170,6 +170,52 @@
         "type": "string"
       }
     },
+    "resource_floor_mechanisms": {
+      "description": "Added 2026-10-12 ET (cpu-description ticket 03, C11). Rates the attribution resource floor reads and the estimator never reads: adding one leaves every estimate's seconds unchanged. Same shape as a resource_bound mechanism. The CPU service binder carries the base description's measured streaming_bandwidth here when memory service cells supersede it.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "model",
+          "parameters"
+        ],
+        "properties": {
+          "model": {
+            "enum": [
+              "streaming_bandwidth"
+            ]
+          },
+          "parameters": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+              "$ref": "#/$defs/parameter"
+            }
+          },
+          "carried_from": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "description",
+              "calibrations"
+            ],
+            "properties": {
+              "description": {
+                "$ref": "#/$defs/pin"
+              },
+              "calibrations": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/pin"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "functional_observation": {
       "$ref": "#/$defs/functional_observation"
     },
@@ -253,6 +299,23 @@
     "calibration_sources"
   ],
   "$defs": {
+    "pin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "sha256"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
     "parameter": {
       "type": "object",
       "additionalProperties": false,
