@@ -1,4 +1,5 @@
-// Created: 2026-10-06 ET. Split allocator/driver elapsed; preparations untimed.
+// Created: 2026-10-06 ET. Updated: 2026-10-12 ET (allocator_v2: ops 4/5, sizes <=32MiB).
+// Split allocator/driver elapsed; preparations untimed.
 #include "CpuAllocatorWork.h"
 #include <chrono>
 #include <cstdlib>
@@ -14,9 +15,9 @@ int main(int argc, char **argv) {
   const auto batches = std::strtoull(argv[3], nullptr, 10);
   const auto operation = std::atoi(argv[4]);
   const bool first = std::string(argv[5]) == "service_first";
-  if (!bytes || bytes > 1048576 || !n || n > 65536 ||
+  if (!bytes || bytes > 33554432 || !n || n > 65536 ||
       n * bytes > 67108864 || !batches || n * batches > 16777216 ||
-      operation < 0 || operation > 3 ||
+      operation < 0 || operation > 5 ||
       (!first && std::string(argv[5]) != "driver_first")) return 2;
   std::vector<void *> pointers(n, nullptr);
   char sentinel = 0;

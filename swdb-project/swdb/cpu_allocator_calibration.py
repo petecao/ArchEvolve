@@ -1,6 +1,8 @@
-"""Exact-size constructed allocator costs. Created: 2026-10-06 ET.
+"""Exact-size constructed allocator costs. Created: 2026-10-06 ET. Updated: 2026-10-12 ET.
 
 Application allocator-state transfer remains inferred, never measured by this runner.
+Group allocator_v2 (2026-10-12) adds malloc/free and exact bins up to 32 MiB, and lets a run
+request exact (operation, size) cells. allocator_v1 receipts keep their own four-ABI rules.
 """
 import json
 import math
@@ -21,8 +23,14 @@ from swdb.cpu_service_native import loaded_libraries, prepare
 from swdb.extensa_boundary import closure
 from swdb.store import Store
 
-NAMES = ('new_array', 'delete_array', 'new_scalar', 'delete_scalar')
-ABI = ('_Znam', '_ZdaPv', '_Znwm', '_ZdlPv')
+# Even operation allocates, the next odd one releases it (the native source pairs op and op^1).
+NAMES = ('new_array', 'delete_array', 'new_scalar', 'delete_scalar', 'malloc', 'free')
+ABI = ('_Znam', '_ZdaPv', '_Znwm', '_ZdlPv', 'malloc', 'free')
+GROUP = 'allocator_v2'
+# Operations and exact-size cap per receipt group. 32 MiB is glibc's 64-bit dynamic mmap-threshold
+# maximum; every bin stays an exact size, never an interpolated range.
+GROUPS = {'allocator_v1': {'operations': 4, 'size_cap': 1048576},
+          'allocator_v2': {'operations': 6, 'size_cap': 32 * 1024**2}}
 SOURCES = ('CpuAllocatorWork.h', 'CpuAllocatorTimer.cpp', 'CpuAllocatorCount.cpp')
 SIZES = (8,16,32,64,128,8192,65536,227416,262144,524288)
 PAYLOAD_CAP, EVENT_CAP, RAW_CAP = 64 * 1024**2, 16777216, 25 * 1024**2
@@ -52,7 +60,29 @@ def raw_budget(output, count_cap, *, add_build=0, add_timed=0):
         raise Failure('allocator timed data exceeds25MiB; partial evidence retained')
 
 
-def count_proof(args, output, command):
+def operations(group):
+    return NAMES[:GROUPS[group]['operations']]
+
+
+def requested_cells(args):
+    """Exact (operation index, size) cells: --cell OP:SIZE, else the four C++ ABIs at each --size, else the default split."""
+    if getattr(args, 'cell', None):
+        if args.size:
+            raise Failure('allocator --cell and --size are exclusive; --cell names exact operation:size cells')
+        cells = []
+        for item in args.cell:
+            op, _, size = item.partition(':')
+            if op not in NAMES or not re.fullmatch('[1-9][0-9]*', size):
+                raise Failure('allocator --cell requires OPERATION:BYTES with OPERATION in ' + ','.join(NAMES))
+            if (NAMES.index(op), int(size)) in cells:
+                raise Failure('allocator --cell repeats an exact cell')
+            cells.append((NAMES.index(op), int(size)))
+        return sorted(cells)
+    sizes = sorted(set(args.size or SIZES))
+    return [(op, size) for op in range(4) for size in sizes if args.size or (size >= 8192 if op < 2 else size <= 128)]
+
+
+def count_proof(args, output, command, ops, sizes):
     store = Store(args.records)
     seeds = ['gapbs-bfs-do','kron-g16-k16']
     if any(store.get(k) is None for k in seeds):
@@ -65,8 +95,9 @@ def count_proof(args, output, command):
         destination.parent.mkdir(parents=True,exist_ok=True)
         destination.write_bytes(access.read_record_bytes(Path(args.records) / relative))
     rows=[]
-    for op,name in enumerate(NAMES):
-        for size in sorted({min(args.size or SIZES), max(args.size or SIZES)}):
+    for op in ops:
+        name=NAMES[op]
+        for size in sorted({min(sizes), max(sizes)}):
             for invoke in (True,False):
                 for n in (3,5):
                     key=f'{name}.{size}.{int(invoke)}.{n}'
@@ -110,9 +141,12 @@ def count_proof(args, output, command):
 def calibrate(args):
     if type(args.count_build_cap_mib) is not int or not 1<=args.count_build_cap_mib<=64:
         raise Failure('allocator count-build cap must be1–64MiB; timed data cap stays25MiB')
-    sizes=sorted(set(args.size or SIZES))
-    if not sizes or len(sizes)>10 or any(type(s) is not int or not 0<s<=1048576 for s in sizes):
-        raise Failure('allocator sizes require at most10 positive exact bins <=1MiB')
+    cells=requested_cells(args)
+    sizes=sorted({size for _,size in cells})
+    ops=sorted({op for op,_ in cells})
+    cap=GROUPS[GROUP]['size_cap']
+    if not sizes or len(sizes)>10 or any(type(s) is not int or not 0<s<=cap for s in sizes):
+        raise Failure('allocator sizes require at most10 positive exact bins <=32MiB')
     if not 3<=args.repetitions<=11 or not math.isfinite(args.max_wall_s) or not 0<args.max_wall_s<=900 or not math.isfinite(args.min_trial_s) or not 0<args.min_trial_s<=.2:
         raise Failure('allocator caps are3–11reps,900s wall and0.2s gross trial')
     if any(not f.startswith(('--gcc-install-dir=','--gcc-toolchain=','--sysroot=','-resource-dir=','-stdlib=')) for f in args.toolchain_flag):
@@ -146,10 +180,11 @@ def calibrate(args):
     if args.llvm_bin:
         command([compiler,*flags,'-S','-emit-llvm',output/SOURCES[2],'-o',output/'allocator-optimized.ll'])
         body=re.search(r'define[^\n]*@service_allocator\([^\n]*\).*?\n}',(output/'allocator-optimized.ll').read_text(),re.S)
-        if not body or any(not re.search(r'(?:call|invoke)[^\n]*@'+name+r'\(',body.group(0)) for name in ABI):
-            raise Failure('optimized allocator did not retain all four exact ABI calls')
-        optimized={'ir_sha256':artifacts.file_hash(output/'allocator-optimized.ll'),'retained_event_abis':list(ABI)}
-    proof=count_proof(args,output,command) if args.llvm_bin else None
+        retained=[ABI[op] for op in ops]
+        if not body or any(not re.search(r'(?:call|invoke)[^\n]*@'+name+r'\(',body.group(0)) for name in retained):
+            raise Failure('optimized allocator did not retain every requested exact ABI call')
+        optimized={'ir_sha256':artifacts.file_hash(output/'allocator-optimized.ll'),'retained_event_abis':retained}
+    proof=count_proof(args,output,command,ops,sizes) if args.llvm_bin else None
     context={'compiler_version':version,'flags':flags,'host':socket.gethostname(),'architecture':platform.machine(),
         'source_sha256':{n:artifacts.file_hash(output/n) for n in SOURCES},'binary_sha256':artifacts.file_hash(binary),
         'instrumented_timer':False,'allocator_environment':controls(),'allocator_environment_scope':CONTROL_SCOPE,
@@ -175,7 +210,6 @@ def calibrate(args):
         if native: argv=['taskset','-c',native['cpus'][0],*argv]
         return json.loads(command(argv).stdout)
     services=[]
-    cells=[(op,size) for op in range(4) for size in sizes if args.size or (size>=8192 if op<2 else size<=128)]
     for op,size in cells:
             name=NAMES[op]
             n=min(65536,PAYLOAD_CAP//size)
@@ -197,7 +231,7 @@ def calibrate(args):
             (output/'partial-trials.json').write_text(json.dumps(services,indent=2))
             raw_budget(output, args.count_build_cap_mib * 1024**2)
     raw={'format':'swdb.cpu-service-calibration.v1','evidence_kind':'fixture' if args.fixture else 'native',
-        'machine':args.machine,'threads':1,'context':context,'settings':{'group':'allocator_v1',
+        'machine':args.machine,'threads':1,'context':context,'settings':{'group':GROUP,
             'repetitions':args.repetitions,'min_trial_s':args.min_trial_s,'trial_resolution_scope':'gross_aggregate_only; paired driver retained',
             'max_wall_s':args.max_wall_s,'live_payload_cap_bytes':PAYLOAD_CAP,'batch_event_cap':65536,
             'event_cap':EVENT_CAP,'timed_data_cap_bytes':RAW_CAP,'count_build_cap_bytes':args.count_build_cap_mib * 1024**2,'sizes':sizes,
@@ -216,6 +250,7 @@ def calibrate(args):
 
 def validate(raw):
     c,s=raw['context'],raw['settings']
+    group=s.get('group')
     def require(ok,reason):
         if not ok: raise Failure('native allocator: '+reason)
     require(raw['threads']==1 and c.get('system')=='Linux' and c.get('architecture')=='x86_64','Linux/x86 serial scope differs')
@@ -230,12 +265,17 @@ def validate(raw):
     libs=c.get('loaded_libraries',{})
     require(any(k.startswith('libstdc++') for k in libs) and any(k.startswith('libc.so') for k in libs) and all(re.fullmatch('[0-9a-f]{64}',str(v.get('sha256'))) for v in libs.values()),'C/C++ identities missing')
     require(isinstance(c.get('allocator_environment'),dict) and c.get('allocator_environment_scope')==CONTROL_SCOPE,'allocator controls scope missing')
-    optimized=c.get('optimized_event_proof',{})
-    require(optimized.get('retained_event_abis')==list(ABI) and re.fullmatch('[0-9a-f]{64}',str(optimized.get('ir_sha256'))),'optimized ABI proof missing')
-    sizes=s['sizes']
-    require(0<len(sizes)<=10 and sizes==sorted(set(sizes)) and all(type(n) is int and 0<n<=1048576 for n in sizes),'size matrix differs')
+    require(group in GROUPS,'allocator group differs')
+    names=operations(group)
     cells=s['cells']
-    require(isinstance(cells,list) and 0<len(cells)<=40 and all(p.get('operation') in NAMES and p.get('size_bytes') in sizes for p in cells) and
+    require(isinstance(cells,list) and all(isinstance(p,dict) and p.get('operation') in names for p in cells),'split matrix incomplete')
+    # allocator_v1 proves and retains all four C++ ABIs; v2 exactly the operations its cells request.
+    proved=names if group=='allocator_v1' else tuple(n for n in names if any(p['operation']==n for p in cells))
+    optimized=c.get('optimized_event_proof',{})
+    require(optimized.get('retained_event_abis')==[ABI[NAMES.index(n)] for n in proved] and re.fullmatch('[0-9a-f]{64}',str(optimized.get('ir_sha256'))),'optimized ABI proof missing')
+    sizes=s['sizes']
+    require(0<len(sizes)<=10 and sizes==sorted(set(sizes)) and all(type(n) is int and 0<n<=GROUPS[group]['size_cap'] for n in sizes),'size matrix differs')
+    require(0<len(cells)<=10*len(names) and all(p.get('size_bytes') in sizes for p in cells) and
         len({(p['operation'],p['size_bytes']) for p in cells})==len(cells) and len(raw['services'])==len(cells),'split matrix incomplete')
     seen=set()
     for service in raw['services']:
@@ -249,7 +289,7 @@ def validate(raw):
             proof['format']=='swdb.cpu-allocator-count-proof.v1','counted denominator missing')
         require(proof['source_sha256']==c['source_sha256'][SOURCES[0]] and proof['count_driver_sha256']==c['source_sha256'][SOURCES[2]] and proof['pipeline']==PIPELINE,'count/timing source or recipe differs')
         points=proof['points']
-        expected={(o,z,invoke,n) for o in NAMES for z in {min(sizes),max(sizes)} for invoke in (True,False) for n in (3,5)}
+        expected={(o,z,invoke,n) for o in proved for z in {min(sizes),max(sizes)} for invoke in (True,False) for n in (3,5)}
         require({(p['operation'],p['size_bytes'],p['invoke'],p['events']) for p in points}==expected and len(points)==len(expected),'count matrix incomplete')
         require(all(p['opaque_events']==(p['events'] if p['invoke'] else 0) and p['event_size_bins']==([{'bytes':p['size_bytes'],'events':p['events']}] if p['invoke'] else []) and p['event_abi']==ABI[NAMES.index(p['operation'])] and re.fullmatch('[0-9a-f]{64}',str(p['characterization_sha256'])) for p in points),'event coefficient differs')
         require(all(re.fullmatch('[0-9a-f]{64}',str(proof.get(k))) for k in ('plugin_source_sha256','runtime_source_sha256')),'observer identity missing')
