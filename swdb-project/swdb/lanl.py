@@ -25,6 +25,7 @@ SCHEMA = """
 CREATE TABLE swdb_row_origins (table_name TEXT NOT NULL, row_id INTEGER NOT NULL,
     record_id TEXT NOT NULL REFERENCES swdb_records(id), record_field TEXT NOT NULL,
     PRIMARY KEY (table_name, row_id, record_id, record_field));
+CREATE INDEX swdb_row_origins_by_record ON swdb_row_origins (table_name, record_id, record_field);
 CREATE TABLE swdb_guessed_columns (table_name TEXT NOT NULL, column_name TEXT NOT NULL, reason TEXT NOT NULL,
     PRIMARY KEY (table_name, column_name));
 """

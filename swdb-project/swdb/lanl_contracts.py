@@ -12,15 +12,19 @@ A link is made only from a record that ties a rewrite contract to code:
   links to the snapshot's implementation (`kernel_variants`) and that implementation's kernel;
 - a statement fact `legality:<contract>:<clause>` on an implementation's statement: the contract
   links, for that clause, to the statement's function (`definitions`, the row the implementation's
-  `extensions.statements.function` produced), to the arrays of the access-pattern steps the
-  statement names (`data_structures`), and to the implementation and its kernel.
+  `extensions.statements.function` produced, as `lanl_sources.statement_function` reports it),
+  to the arrays of the access-pattern steps the statement names (`data_structures`), and to the
+  implementation and its kernel.
 
 A link says that a record ties the contract to the row, not that the contract holds there: a
 certification links whatever its verdict, and a fact whatever its value (both stay readable
-through `record_id` and `record_field`, and in `swdb_statement_facts`). A contract the library does not hold (kind `rewrite_contract`) gets no link: the link would have
-no contract row to point to. The site finder's matches (recorded in campaign summaries) and a
+through `record_id` and `record_field`, and in `swdb_statement_facts`). A contract the library
+does not hold (kind `rewrite_contract`) gets no link: the link would have no contract row to
+point to. The site finder's matches (recorded in campaign summaries) and a
 proposal's offered library are not links: the first is inference, the second an offer.
 """
+
+from swdb.lanl_sources import statement_function
 
 ORDER = 60
 
@@ -56,9 +60,7 @@ def fill(rows, store):
 def _statements(rows, links, record):
     """The links an implementation's statement facts state, one set per `legality:` fact."""
     statements = (record.data.get("extensions") or {}).get("statements") or {}
-    function = rows.con.execute("SELECT row_id FROM swdb_row_origins WHERE table_name = 'definitions' "
-                                "AND record_id = ? AND record_field = 'extensions.statements.function'",
-                                (record.id,)).fetchone()
+    function = statement_function(rows.con, record.id)
     for i, annotation in enumerate(statements.get("annotations") or []):
         for j, fact in enumerate(annotation.get("annotation_facts") or []):
             contract, clause = links.legality(fact.get("field") if isinstance(fact, dict) else None)
@@ -66,7 +68,7 @@ def _statements(rows, links, record):
                 continue
             field = f"extensions.statements.annotations[{i}].annotation_facts[{j}]"
             if function is not None:
-                links.add("definitions", contract, function[0], clause, record.id, field)
+                links.add("definitions", contract, function, clause, record.id, field)
             for array in _step_arrays(record.data, annotation):
                 structure = rows.con.execute("SELECT d.id FROM data_structures d JOIN kernel_variants v "
                                              "ON v.kernel_id = d.kernel_id WHERE v.slug = ? AND d.name = ?",

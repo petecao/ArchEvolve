@@ -31,6 +31,18 @@ CREATE TABLE data_structures (id INTEGER PRIMARY KEY, kernel_id INTEGER NOT NULL
 
 GUESSED = []
 
+#: The `record_field` of the definitions row an implementation's statements' function produced.
+_STATEMENT_FUNCTION = "extensions.statements.function"
+
+
+def statement_function(con, implementation):
+    """The `definitions.id` of the function an implementation's statements are in (its
+    `extensions.statements.function`), or None. Later groups (the contract links) read it here
+    rather than knowing how this group records it."""
+    row = con.execute("SELECT row_id FROM swdb_row_origins WHERE table_name = 'definitions' AND record_id = ? "
+                      "AND record_field = ?", (implementation, _STATEMENT_FUNCTION)).fetchone()
+    return None if row is None else row[0]
+
 
 def fill(rows, store):
     files, functions, arrays = _SourceFiles(rows), _Definitions(rows), {}
@@ -76,8 +88,7 @@ def _implementation(rows, files, functions, record, kernel, application):
                    for i, a in enumerate(statements.get("annotations") or []) if (a.get("source") or {}).get("path")]
         if placed.get(statements["function"]) is None:
             placed[statements["function"]] = sources[0] if len(set(sources)) == 1 else None
-        functions.add(placed[statements["function"]], statements["function"], record.id,
-                      "extensions.statements.function")
+        functions.add(placed[statements["function"]], statements["function"], record.id, _STATEMENT_FUNCTION)
     for i, name in enumerate((impl.get("run") or {}).get("kernel_symbols") or []):
         functions.add(placed.get(name), name, record.id, f"run.kernel_symbols[{i}]")
 
