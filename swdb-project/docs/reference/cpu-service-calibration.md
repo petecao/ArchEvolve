@@ -1,6 +1,7 @@
 # Independent native service calibration
 
-Created: 2026-10-06 ET. Updated: 2026-10-09 23:10 ET (code review notes on held-out
+Created: 2026-10-06 ET. Updated: 2026-10-12 ET (cpu-description ticket 03: floor-only
+bandwidth rate); 2026-10-09 23:10 ET (code review notes on held-out
 inputs, the D25 helper and the superseded memory models). Ticket 11 is resolved.
 
 `import-cpu-service-calibration` retains service/driver elapsed trials and their
@@ -353,7 +354,17 @@ scenario, not the measured ticket 07 bandwidth and concurrency. See
 `cpu-native-error.md`.) Its extension
 records exactly which mechanisms were superseded and pins the immutable base.
 The earlier measured descriptions remain unchanged; stream rates are never copied
-into dependent-memory or allocator service parameters. Compute rates and typed
+into dependent-memory or allocator service parameters.
+
+**Floor-only bandwidth rate** (2026-10-12 ET, cpu-description ticket 03, C11). The
+base's measured `streaming_bandwidth` mechanism is not dropped: the binder copies it
+verbatim into the fresh description's `resource_floor_mechanisms`, with
+`carried_from` pinning the base description and its `calibration_sources`
+(`{id, sha256}` each). The estimator never reads that field, so every estimate's
+seconds stay the same; only the attribution resource floor reads it
+([format-v0.4-attribution.md](format-v0.4-attribution.md#resource-floor-ticket-07)).
+A bind without memory cells keeps `streaming_bandwidth` as an estimate mechanism and
+writes no `resource_floor_mechanisms`. Compute rates and typed
 calibration lineage remain available in the fresh description. Context mismatch
 makes service costs unknown. Exact source primitive/type/order evidence is
 required before consuming ordinary store, integer-add or integer-CAS costs;

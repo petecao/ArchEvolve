@@ -29,6 +29,7 @@ Graph: 01–06 start now → 07 (needs 01, 02, 04, 05, 06) → 08 (needs 03, 07)
 
 ## Context pointers
 
+- Ticket 03 resolved (2026-10-12 01:20 ET): floor-only rate field `resource_floor_mechanisms` ([answer](issues/03-floor-only-bandwidth-rate.md#answer)).
 - Code map (2026-10-12 01:02 ET, `e2611242`): [notes/index.md](notes/index.md).
 
 - Origin: fine-grained attribution tickets 03 and 09 closed negative

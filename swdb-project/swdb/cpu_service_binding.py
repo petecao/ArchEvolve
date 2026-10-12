@@ -233,6 +233,24 @@ def _allocator_resource_binding(args,target,char,cells,scopes):
     return mechanism,rows
 
 
+def _floor_only_bandwidth(store,target):
+    """C11 (2026-10-12 ET, cpu-description ticket 03): the base's measured streaming_bandwidth rate,
+    which memory cells supersede as an estimate mechanism, kept verbatim for the attribution resource
+    floor only. The estimator never reads `resource_floor_mechanisms`, so estimates are unchanged."""
+    carried=[]
+    for mechanism in target['mechanisms']:
+        if (mechanism['model']!='streaming_bandwidth' or mechanism.get('selector')
+                or mechanism.get('accounting','resource_bound')!='resource_bound'):continue
+        calibrations=[]
+        for identifier in target['calibration_sources']:
+            record=store.get(identifier)
+            if record is None:raise Failure('floor-only bandwidth rate needs a resolvable base calibration '+repr(identifier))
+            calibrations.append({'id':identifier,'sha256':artifacts.digest(record)})
+        carried.append({'model':'streaming_bandwidth','parameters':copy.deepcopy(mechanism['parameters']),
+            'carried_from':{'description':{'id':target['id'],'sha256':artifacts.digest(target)},'calibrations':calibrations}})
+    return carried
+
+
 def bind(args):
     from swdb.archevolve import require_team_safe
     from swdb import workflow
@@ -326,6 +344,8 @@ def bind(args):
         if target.get('extensions',{}).get('cpu_services_binding'):raise Failure('bind memory services from an unbound immutable base description')
         memory,memory_rows=_memory_binding(args,target,char,memory_cells,scopes);rows.extend(memory_rows)
         removed=[m['model'] for m in result['mechanisms'] if m['model'] in MEMORY_MODELS]
+        floor_only=_floor_only_bandwidth(store,target)
+        if floor_only:result['resource_floor_mechanisms']=floor_only
         result['mechanisms']=[m for m in result['mechanisms'] if m['model'] not in MEMORY_MODELS]
     if selectors:result['mechanisms'].append({'model':'native_service_costs','accounting':'additive_overhead',
         'selector':{'domain':'host','worker_scope':'serial_T1','characterization_sha256':artifacts.digest(char),'calls':list(selectors.values()),**({'openmp_projections':openmp_documents} if openmp_documents else {})},'parameters':parameters})

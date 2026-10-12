@@ -25,6 +25,9 @@ def test_binding_pins_typed_receipt_and_preserves_original_target(records,tmp_pa
     assert outcome.returncode==0,outcome.stderr+outcome.stdout
     data=json.loads(outcome.stdout)
     assert data['calibration_sources']==['fixture.clock.cost','fixture.counts']
+    # No memory cells: streaming_bandwidth stays an estimate mechanism, so nothing is floor-only.
+    assert [m['model'] for m in data['mechanisms']][:2]==['compute_throughput','streaming_bandwidth']
+    assert 'resource_floor_mechanisms' not in data
     model=data['mechanisms'][-1]
     assert model['model']=='native_service_costs' and model['parameters']['service_0']['value']==.1
     assert model['parameters']['service_0']['basis']=='reported'
@@ -129,3 +132,25 @@ def test_extensa_tagged_native_service_record_never_enters_team_binding(records,
         '--calibration',data['id'],'--id','fixture.cpu.research.mixed','--fixture')
     assert result.returncode!=0 and 'Extensa research evidence' in result.stderr
     assert not (records.path/'target_descriptions/fixture.cpu.research.mixed.yaml').exists()
+
+
+def test_memory_cells_move_the_measured_bandwidth_rate_to_the_floor_only_carrier(records,tmp_path):
+    # C11 (cpu-description ticket 03, 2026-10-12 ET): memory cells supersede streaming_bandwidth as an
+    # estimate mechanism; its rate is kept, pinned to its source, for the attribution resource floor only.
+    from test_cpu_memory_service_binding import setup,run_bind
+    setup(records,tmp_path)
+    base=records.read('target_descriptions/fixture.memory.base.yaml')
+    base['calibration_sources']=['fixture.memory.costs']
+    records.write('target_descriptions/fixture.memory.base.yaml',base)
+    calibration=records.read('cpu_service_calibrations/fixture.memory.costs.yaml')
+    outcome=run_bind(records,'--target-description','fixture.memory.base','--characterization','fixture.counts',
+        '--calibration','fixture.memory.costs','--memory-footprint-bytes','8388608',
+        '--memory-cas-policy','max_constructed_success_failure_median','--id','fixture.memory.floor','--fixture')
+    assert outcome.returncode==0,outcome.stderr+outcome.stdout
+    target=json.loads(outcome.stdout)
+    assert all(m['model']!='streaming_bandwidth' for m in target['mechanisms'])
+    rate={'value':32.0,'basis':'reported','source':'Hand-computed test fixture; not mbit10 measurement.','unit':'bytes/s'}
+    assert target['resource_floor_mechanisms']==[{'model':'streaming_bandwidth','parameters':{'bytes_per_s':rate},
+        'carried_from':{'description':{'id':'fixture.memory.base','sha256':digest(base)},
+                        'calibrations':[{'id':'fixture.memory.costs','sha256':digest(calibration)}]}}]
+    assert records.validate().returncode==0

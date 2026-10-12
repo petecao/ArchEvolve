@@ -684,19 +684,25 @@ FLOOR_MODELS = ('compute_throughput', 'streaming_bandwidth')
 
 
 def _floor_terms(region, target):
-    """The two floor terms of one counted region, from the description's own mechanisms only (F6).
+    """The two floor terms of one counted region, from the description's own rates only (F6).
 
     The unchanged mechanism models are called exactly as the estimator calls them, so each term
     equals that model's bound in the estimate. A model the description lacks is run with no
     rates: zero work gives 0 s, any work gives an unknown term naming the missing rate. No other
     description's rate and no latency, row, queue or overhead mechanism is read.
+
+    The description's own rates are its `resource_bound` mechanisms plus its
+    `resource_floor_mechanisms` (2026-10-12 ET, cpu-description ticket 03, C11): rates the
+    estimator never reads, so a term from one is a floor term only, not a bound in the estimate.
     """
     from swdb import analytic_models
     models = [m['model'] for m in target['mechanisms']]
+    floor_only = target.get('resource_floor_mechanisms') or []
     terms = []
     for model in FLOOR_MODELS:
         own = [m for m in target['mechanisms']
                if m['model'] == model and m.get('accounting', 'resource_bound') == 'resource_bound']
+        own += [m for m in floor_only if m['model'] == model]
         results = [analytic_models.evaluate(region, m, models, target['threads']) for m in own or [{'model': model, 'parameters': {}}]]
         seconds = None if any(r['seconds'] is None for r in results) else max(r['seconds'] for r in results)
         terms.append({'model': model, 'in_description': bool(own), 'seconds': seconds,
