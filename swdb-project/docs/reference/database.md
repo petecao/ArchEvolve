@@ -1,22 +1,36 @@
 # The SQLite database
 
-Navigation updated: 2026-09-28 (Eastern Time).
+Updated: 2026-10-11 21:50 ET: rewritten for the LANL-shaped layout
+([ADR 0015](../adr/0015-research-database-takes-the-main-database-shape.md), LANL-shaped-db
+tickets 01–07). Earlier updates: 2026-09-28 navigation; 2026-10-03 typed library and statements;
+2026-10-04 site-finder facts and pattern keys; 2026-10-06 access interface; 2026-10-07
+evidence basis.
 
-Updated: 2026-10-03 (Eastern Time): typed-library and statements tables (ticket 46).
+## At a glance
 
-Updated: 2026-10-04 (Eastern Time): statement facts and pattern-key tables for the query site finder (ticket 55).
+The generated file has two parts:
 
-Updated: 2026-10-06 (Eastern Time): one record/index access interface (analytic-evaluation ticket 02).
+| Part | Tables | What it is |
+|---|---|---|
+| [LANL core](#lanl-core) | 16 unprefixed tables | LANL's tables, names and columns from the `DB_current_work` slide (15 tables), plus the guessed `kernel_variants` |
+| [`swdb_` extension](#the-swdb_-extension) | every `swdb_` table | everything SWDB has that LANL lacks: full records, research tables, library, contracts, estimates, row origins |
 
-Updated: 2026-10-07 (Eastern Time): current evidence-basis interpretation.
+Five rules hold for the whole file:
 
-Updated: 2026-10-11 (Eastern Time): every table name carries the `swdb_` prefix (LANL-shaped-db
-ticket 01).
+1. **YAML is the master copy** ([ADR 0002](../adr/0002-yaml-in-git-is-the-master-copy-sqlite-is-generated.md)).
+   The file is regenerated; no record is rewritten for it.
+2. **LANL tables hold only the slide's columns**, plus `id` and link columns. Columns the slide
+   does not show are [guessed](#guessed-columns) and listed in `swdb_guessed_columns`.
+3. **Measured only.** LANL's performance tables hold real-machine measurements. Estimates and
+   simulated numbers stay in `swdb_` tables ([details](#measured-only)).
+4. **Unknown is NULL**, never false or zero.
+5. **Drop-ready.** No LANL table points at a `swdb_` table. [Delete every `swdb_`
+   table](#dropping-the-extension) and you have a LANL-shaped database that passes
+   `PRAGMA foreign_key_check`.
 
-Updated: 2026-10-11 (Eastern Time): the LANL core starts with `kernels` and `kernel_variants`,
-plus `swdb_row_origins` and `swdb_guessed_columns` (LANL-shaped-db ticket 02).
+Raw SQL written before 2026-10-11 must use the new names (`profiles` → `swdb_profiles`, …).
 
-Updated: 2026-10-11 (Eastern Time): contract link tables (LANL-shaped-db ticket 06).
+## Building and reading the file
 
 Run commands inside `ArchEvolve/swdb-project/`. [The database builder](../../swdb/db.py)
 writes `build/swdb.sqlite` beside `records/` by default (another records folder
@@ -78,27 +92,62 @@ the generated database.
 
 A future main-database adapter belongs behind this interface (ADR 0014). It must
 preserve record IDs, safe read behavior, snapshot lifetime, and the documented
-research query relations, either by translating queries or by exposing a
-read-only projection through the crosswalk. The actual main schema is still
-unverified; this refactor supplies the boundary without assuming that schema.
-Contributions to the main database must use its ingest inputs, and
-`create_index` must never open the main database for writing.
+research query relations. Since ADR 0015 the generated file already has the main
+database's table shape (the [LANL core](#lanl-core)); the main database's full
+schema is still unseen, so the guessed columns stay unverified. Contributions to
+the main database must use its ingest inputs, and `create_index` must never open
+the main database for writing.
 
 ## LANL core
 
-The database also holds LANL's tables, with LANL's names and only the columns LANL's
-`DB_current_work` slide shows (transcribed in the
-[LANL-shaped-db spec](../../.scratch/lanl-shaped-db-2026-10-09/spec.md) appendix).
+LANL's tables, with LANL's names (capitalization kept: `Validation_definition`,
+`Validation_results`) and only the columns LANL's `DB_current_work` slide shows. The slide is
+transcribed in the [LANL-shaped-db spec](../../.scratch/lanl-shaped-db-2026-10-09/spec.md)
+appendix.
 
 - **Integer IDs.** Every LANL table has an `id` primary key, assigned at build time in record-ID
-  order. IDs change between builds; the stable key is `slug` (or `swdb_row_origins`).
-- **Unknown is NULL.** A value the records do not state is NULL, never a default.
-- **Drop-ready.** LANL tables never reference a `swdb_` table. Delete every `swdb_` table and
-  `PRAGMA foreign_key_check` is still clean.
+  order. IDs change between builds. The stable keys are `kernels.slug`, `kernel_variants.slug`,
+  and `swdb_row_origins`.
+- **Every row has an origin.** `swdb_row_origins` names the YAML record (and field) behind each
+  LANL row.
 - **Checked.** Foreign keys are declared, and every build fails if
   `PRAGMA foreign_key_check` reports a row.
 - **Code.** Each table group is one module `swdb/lanl_<group>.py`; [`swdb/lanl.py`](../../swdb/lanl.py)
-  runs them in order.
+  runs them in order. Shape test: [`tests/test_lanl_shape.py`](../../tests/test_lanl_shape.py).
+
+| Table | Slide group | Filled from | Code |
+|---|---|---|---|
+| `kernels` | source code | kernel records | `lanl_kernels.py` |
+| `kernel_variants` | guessed (not on the slide) | implementation records | `lanl_kernels.py` |
+| `source_files` | source code | implementation code, statement sources, source snapshot files | `lanl_sources.py` |
+| `executables` | source code | implementation builds | `lanl_sources.py` |
+| `definitions` | source code | functions records name | `lanl_sources.py` |
+| `data_structures` | source code | arrays access-pattern steps name | `lanl_sources.py` |
+| `hardware_profiles` | performance | machine records (never hardware targets) | `lanl_performance.py` |
+| `run_configs` | performance | what measured profiles ran with | `lanl_performance.py` |
+| `performance_runs` | performance | measured profile timings | `lanl_performance.py` |
+| `performance_metrics` | performance | profile metrics with basis `measured` | `lanl_performance.py` |
+| `Validation_definition` | correctness | kernel check × input that an outcome ran | `lanl_validation.py` |
+| `Validation_results` | correctness | correctness outcomes of profiles and evaluations | `lanl_validation.py` |
+| `physics_assets`, `kernel_dependencies` | unlabeled | nothing yet: empty | `lanl_validation.py` |
+| `code_chunks`, `embeddings` | semantic search | nothing yet: empty | `lanl_validation.py` |
+
+### Measured only
+
+LANL's performance tables (`performance_runs`, `performance_metrics`) hold only measurements
+on real machines:
+
+- **Analytic estimates** go to [`swdb_estimates`](#swdb_estimates) (spec D4, [ADR 0013](../adr/0013-archevolve-mode-estimates-speed.md)).
+- **Simulated metrics** (cachegrind), inferred and unknown ones stay in `swdb_metrics`.
+- **Hardware targets** (a modeled DX100) are not machines, so they never become
+  `hardware_profiles` rows.
+
+### Unknown is NULL
+
+A value the records do not state, or whose basis is unknown, is NULL. It is never `0`,
+`false`, or a default. Examples: `kernels.category` without a stated domain,
+`executables.path`, `performance_runs.throughput_value`, `Validation_results.passed` for an
+outcome whose correctness was not established.
 
 ### `kernels`
 
@@ -125,8 +174,8 @@ that `Validation_results.kernel_variant_id` implies. All its columns are listed 
 
 ### Source tables
 
-Updated: 2026-10-11 (Eastern Time), LANL-shaped-db ticket 03. Only what records name; no
-column is guessed. Code: [`swdb/lanl_sources.py`](../../swdb/lanl_sources.py).
+Only what records name; no column is guessed. Code:
+[`swdb/lanl_sources.py`](../../swdb/lanl_sources.py).
 
 #### `source_files`
 
@@ -178,11 +227,7 @@ Arrays named by implementation access-pattern steps, one row per (kernel, array 
 
 ### Hardware and performance tables
 
-Added 2026-10-11 ET (LANL-shaped-db ticket 04). Code: [`swdb/lanl_performance.py`](../../swdb/lanl_performance.py).
-
-**Only measurements on real machines.** Analytic estimates go to `swdb_estimates` (spec D4).
-Simulated metrics (cachegrind) and inferred or unknown ones stay in `swdb_metrics`. Hardware
-targets (a modeled DX100) are not machines.
+[Measured only](#measured-only). Code: [`swdb/lanl_performance.py`](../../swdb/lanl_performance.py).
 
 #### `hardware_profiles`
 
@@ -234,29 +279,10 @@ index features of the input) stay in `swdb_metrics` only.
 | `metric_value` | the measured value |
 | `performance_run_id` | guessed link: the run at the metric's thread count (`performance_runs.id`) |
 
-#### `swdb_estimates`
-
-Extension table: one row per estimate record. Never copied into the LANL performance tables.
-
-| Column | Meaning |
-|---|---|
-| `id` | estimate ID (`swdb_records.id`) |
-| `kernel_variant_id` | the estimated implementation (`kernel_variants.id`): the subject itself, or for a candidate subject the implementation the candidate record names; NULL when neither resolves |
-| `subject_kind` | `implementation` or `candidate` |
-| `subject_id` | the subject's ID |
-| `target` | the machine or hardware target estimated for |
-| `input` | input ID |
-| `threads` | thread count |
-| `seconds` | estimated seconds, or NULL when unknown |
-| `ratio` | estimated ratio to the baseline, or NULL |
-| `verdict` | `estimated_gain`, `within_error` or `estimated_no_gain` |
-| `estimator_version` | estimator version |
-
 ### Validation tables and the empty tables
 
-Added 2026-10-11 ET (LANL-shaped-db ticket 05). Code:
-[`swdb/lanl_validation.py`](../../swdb/lanl_validation.py). The two validation tables keep the
-slide's capitalization.
+Code: [`swdb/lanl_validation.py`](../../swdb/lanl_validation.py). The two validation tables
+keep the slide's capitalization.
 
 **Which outcomes count.** A correctness outcome is a profile's `correctness` part or an
 evaluation's `correctness.state`. It becomes a `Validation_results` row only when it names both
@@ -305,74 +331,44 @@ guessed and listed in `swdb_guessed_columns`.
 | `code_chunks` | `id`, `source_file_id` (`source_files.id`), `line_start`, `line_end`, `content` (text) |
 | `embeddings` | `id`, `code_chunk_id` (`code_chunks.id`), `vector` (BLOB; the slide says 768 float32 dimensions) |
 
-### Contract link tables
+## Guessed columns
 
-Added 2026-10-11 ET (LANL-shaped-db ticket 06). Code:
-[`swdb/lanl_contracts.py`](../../swdb/lanl_contracts.py).
+The slide shows table names and key columns only. Where a link needs a column the slide does
+not show, or the slide gives no column names, the column is a guess. Each guess is a row of
+[`swdb_guessed_columns`](#swdb_guessed_columns), with its reason. When LANL's `schema.sql`
+arrives, check these first.
 
-Four `swdb_` extension tables say which LANL rows a rewrite contract is tied to. They point at
-LANL rows; no LANL table points back, so dropping them leaves the LANL core intact.
-
-**Only links a record states.** Two kinds of record state one:
-
-| Record | What it states | Links made |
+| Table | Guessed | Why |
 |---|---|---|
-| certification | `candidate.contract` was certified on `candidate.snapshot`, a source snapshot of one implementation | contract → that implementation (`kernel_variants`) and its kernel |
-| implementation | a statement fact `legality:<contract>:<clause>` on one of its statements | contract and clause → the statement's function (`definitions`), the arrays of the access-pattern steps the statement names (`data_structures`), the implementation and its kernel |
+| `kernel_variants` | the whole table: `id`, `kernel_id`, `slug` | not on the slide; fills the slot `Validation_results.kernel_variant_id` implies (spec D3) |
+| `run_configs` | `kernel_variant_id` | link column, named by the slide's `<table singular>_id` pattern |
+| `performance_runs` | `hardware_profile_id`, `run_config_id`, `kernel_variant_id` | link columns, same pattern |
+| `performance_metrics` | `performance_run_id` | link column, same pattern |
+| `Validation_results` | `fixture_id` (its target) | on the slide, but no fixtures table is shown; here it links to `Validation_definition.id` |
+| `code_chunks` | every column | the slide gives only a data type (TEXT) and a size (line_start to line_end) |
+| `embeddings` | every column | the slide gives only a data type (BLOB, 768 float32 dimensions) |
 
-- **A link is a tie, not a verdict.** A certification links whatever its verdict; a fact links
-  whatever its value. Read the verdict or value through `record_id` and `record_field`, or in
-  `swdb_statement_facts`.
-- **The contract must be in the library** (`swdb_library_entries`, kind `rewrite_contract`).
-  A record naming any other ID makes no link.
-- **Not links:** the site finder's matches (recorded in campaign summaries) are inference, and a
-  proposal's offered library is an offer. Lowerings, intrinsics and library operations never link.
-- No `swdb_row_origins` entries: each link row names its own record.
+## The `swdb_` extension
 
-All four tables have the same columns; only the LANL column differs.
+Every table SWDB has and LANL lacks is named `swdb_<name>`. Extension tables may point at LANL
+rows; no LANL table points back. A file built before the prefix (2026-10-11) has no
+`swdb_meta`, so every command treats it as stale and rebuilds it.
 
-| Column | Meaning |
+| Group | Tables |
 |---|---|
-| `contract` | the contract ID (`swdb_library_entries.id`) |
-| `definition_id` / `data_structure_id` / `kernel_id` / `kernel_variant_id` | the linked LANL row (`definitions.id`, `data_structures.id`, `kernels.id`, `kernel_variants.id`) |
-| `clause` | the clause a statement fact names; NULL for a certification |
-| `record_id` | the record that states the link (`swdb_records.id`) |
-| `record_field` | the field that states it: `candidate`, or `extensions.statements.annotations[<i>].annotation_facts[<j>]` |
+| Index bookkeeping | `swdb_meta`, `swdb_records` |
+| Ties to the LANL core | `swdb_row_origins`, `swdb_guessed_columns` |
+| Source and computation | `swdb_applications`, `swdb_kernels`, `swdb_implementations`, `swdb_implementation_contexts` |
+| Memory access | `swdb_access_patterns`, `swdb_steps` |
+| Inputs and machines | `swdb_inputs`, `swdb_input_properties`, `swdb_machines`, `swdb_machine_flags` |
+| Strategies and intrinsics | `swdb_strategies`, `swdb_strategy_effects`, `swdb_strategy_intrinsics`, `swdb_applied_strategies`, `swdb_implementation_intrinsics`, `swdb_intrinsics`, `swdb_intrinsic_extensions` |
+| Measurements and estimates | `swdb_profiles`, `swdb_metrics`, `swdb_estimates` |
+| Typed library | `swdb_library_entries`, `swdb_library_dependencies`, `swdb_library_clauses`, `swdb_library_pattern_keys`, `swdb_library_pattern_key_steps` |
+| Statement observations | `swdb_statements`, `swdb_statement_steps`, `swdb_statement_facts` |
+| Contract links | `swdb_contract_definitions`, `swdb_contract_data_structures`, `swdb_contract_kernels`, `swdb_contract_kernel_variants` |
 
-| Table | Linked LANL row |
-|---|---|
-| `swdb_contract_definitions` | the function holding the statement: the `definitions` row the implementation's `extensions.statements.function` produced |
-| `swdb_contract_data_structures` | each array (`data_structures` row of the implementation's kernel) that a step the statement names reads or writes |
-| `swdb_contract_kernels` | the kernel of the linked implementation |
-| `swdb_contract_kernel_variants` | the implementation itself |
-
-### `swdb_row_origins`
-
-The YAML record behind every LANL row. A row several records name has one origin per record.
-
-| Column | Meaning |
-|---|---|
-| `table_name` | the LANL table, for example `kernel_variants` |
-| `row_id` | the row's `id` in that table |
-| `record_id` | the record it was read from (`swdb_records.id`) |
-| `record_field` | the record field it was read from; `id` when the row stands for the whole record |
-
-### `swdb_guessed_columns`
-
-LANL-side tables and columns the slide does not show. Check these first against LANL's real
-`schema.sql`.
-
-| Column | Meaning |
-|---|---|
-| `table_name` | the LANL table |
-| `column_name` | the guessed column (every column, for a guessed table such as `kernel_variants`) |
-| `reason` | why it exists and what it links to |
-
-## Tables
-
-Every SWDB-only table is named `swdb_<name>`; unprefixed names belong to the
-[LANL core](#lanl-core). Columns and contents are as listed; a file built before the prefix
-(2026-10-11) has no `swdb_meta`, so every command treats it as stale and rebuilds it.
+`swdb_kernels` and `kernels` describe the same kernel records: join them on
+`swdb_kernels.id = kernels.slug`. Likewise `swdb_implementations.id = kernel_variants.slug`.
 
 ### `swdb_meta`
 
@@ -392,6 +388,28 @@ One row per record, whatever its kind.
 | `status` | draft, reviewed, or deprecated |
 | `path` | file path relative to the records folder |
 | `json` | the whole record as JSON (query it with `json_extract`) |
+
+### `swdb_row_origins`
+
+The YAML record behind every LANL row. A row several records name has one origin per record.
+
+| Column | Meaning |
+|---|---|
+| `table_name` | the LANL table, for example `kernel_variants` |
+| `row_id` | the row's `id` in that table |
+| `record_id` | the record it was read from (`swdb_records.id`) |
+| `record_field` | the record field it was read from; `id` when the row stands for the whole record |
+
+### `swdb_guessed_columns`
+
+LANL-side tables and columns the slide does not show; summary in
+[Guessed columns](#guessed-columns). Check these first against LANL's real `schema.sql`.
+
+| Column | Meaning |
+|---|---|
+| `table_name` | the LANL table |
+| `column_name` | the guessed column (every column, for a guessed table such as `kernel_variants`) |
+| `reason` | why it exists and what it links to |
 
 ### `swdb_applications`
 
@@ -615,6 +633,25 @@ One row per metric of each profile.
 | `scope` | count scope, where one applies |
 | `tool` | the tool that produced it |
 
+### `swdb_estimates`
+
+One row per estimate record. Never copied into the LANL performance tables
+([measured only](#measured-only)). Code: [`swdb/lanl_performance.py`](../../swdb/lanl_performance.py).
+
+| Column | Meaning |
+|---|---|
+| `id` | estimate ID (`swdb_records.id`) |
+| `kernel_variant_id` | the estimated implementation (`kernel_variants.id`): the subject itself, or for a candidate subject the implementation the candidate record names; NULL when neither resolves |
+| `subject_kind` | `implementation` or `candidate` |
+| `subject_id` | the subject's ID |
+| `target` | the machine or hardware target estimated for |
+| `input` | input ID |
+| `threads` | thread count |
+| `seconds` | estimated seconds, or NULL when unknown |
+| `ratio` | estimated ratio to the baseline, or NULL |
+| `verdict` | `estimated_gain`, `within_error` or `estimated_no_gain` |
+| `estimator_version` | estimator version |
+
 ### `swdb_library_entries`
 
 One row per typed library entry (ADR 0007), read from the library folder's YAML
@@ -720,6 +757,64 @@ null there and never matches.
 | `step` | step position in the chain (0 first) |
 | `role` | the array role at that step (index, offsets or target) |
 | `address_shape` | the address shape at that step |
+
+### Contract link tables
+
+Code: [`swdb/lanl_contracts.py`](../../swdb/lanl_contracts.py).
+
+Four `swdb_` extension tables say which LANL rows a rewrite contract is tied to. They point at
+LANL rows; no LANL table points back, so dropping them leaves the LANL core intact.
+
+**Only links a record states.** Two kinds of record state one:
+
+| Record | What it states | Links made |
+|---|---|---|
+| certification | `candidate.contract` was certified on `candidate.snapshot`, a source snapshot of one implementation | contract → that implementation (`kernel_variants`) and its kernel |
+| implementation | a statement fact `legality:<contract>:<clause>` on one of its statements | contract and clause → the statement's function (`definitions`), the arrays of the access-pattern steps the statement names (`data_structures`), the implementation and its kernel |
+
+- **A link is a tie, not a verdict.** A certification links whatever its verdict; a fact links
+  whatever its value. Read the verdict or value through `record_id` and `record_field`, or in
+  `swdb_statement_facts`.
+- **The contract must be in the library** (`swdb_library_entries`, kind `rewrite_contract`).
+  A record naming any other ID makes no link.
+- **Not links:** the site finder's matches (recorded in campaign summaries) are inference, and a
+  proposal's offered library is an offer. Lowerings, intrinsics and library operations never link.
+- No `swdb_row_origins` entries: each link row names its own record.
+
+All four tables have the same columns; only the LANL column differs.
+
+| Column | Meaning |
+|---|---|
+| `contract` | the contract ID (`swdb_library_entries.id`) |
+| `definition_id` / `data_structure_id` / `kernel_id` / `kernel_variant_id` | the linked LANL row (`definitions.id`, `data_structures.id`, `kernels.id`, `kernel_variants.id`) |
+| `clause` | the clause a statement fact names; NULL for a certification |
+| `record_id` | the record that states the link (`swdb_records.id`) |
+| `record_field` | the field that states it: `candidate`, or `extensions.statements.annotations[<i>].annotation_facts[<j>]` |
+
+| Table | Linked LANL row |
+|---|---|
+| `swdb_contract_definitions` | the function holding the statement: the `definitions` row the implementation's `extensions.statements.function` produced |
+| `swdb_contract_data_structures` | each array (`data_structures` row of the implementation's kernel) that a step the statement names reads or writes |
+| `swdb_contract_kernels` | the kernel of the linked implementation |
+| `swdb_contract_kernel_variants` | the implementation itself |
+
+## Dropping the extension
+
+To get a LANL-only database, delete every `swdb_` table from a copy:
+
+```sh
+cp build/swdb.sqlite lanl-only.sqlite
+sqlite3 lanl-only.sqlite "select 'DROP TABLE \"' || name || '\";' from sqlite_master
+  where type = 'table' and name like 'swdb\_%' escape '\'" | sqlite3 lanl-only.sqlite
+sqlite3 lanl-only.sqlite "pragma foreign_key_check"   # prints nothing
+```
+
+- **Left:** the 16 LANL tables and their rows. Every foreign key still resolves.
+- **Lost:** full records, row origins, the guessed-column list, estimates, simulated metrics,
+  library, contracts and contract links.
+- **Use a copy.** `swdb` treats a file without `swdb_meta` as stale and rebuilds it.
+- **Tested:** `assert_separable` in [`tests/testkit/lanl.py`](../../tests/testkit/lanl.py),
+  called by each table group's test (`tests/test_lanl_<group>.py`).
 
 ## Queries
 

@@ -1,6 +1,6 @@
 # 3. Find the component that owns your task
 
-Updated: 2026-10-07 (Eastern Time). Reading budget: 7 minutes.
+Updated: 2026-10-11 21:53 ET (ADR 0015: the database takes the main database's shape); 2026-10-07. Reading budget: 7 minutes.
 
 [Tutorial](README.md) · [Previous](02-records-and-queries.md) · [Next](04-bfs-workflow.md)
 
@@ -44,9 +44,11 @@ survived. Fix the cause and rebuild instead of resubmitting its ID.
 | [View](../../swdb/view.py), [formulas](../../swdb/formula.py), [comparison](../../swdb/comparison.py) | Historical workload export, size/count formulas, ordinary profile ratios |
 | [Machine](../../swdb/machine.py), [profiler](../../swdb/profile.py) | Host capture, build/check/time, footprints, index features, separate Cachegrind diagnostics |
 
-The [crosswalk validator](../../swdb/crosswalk.py) checks compatibility metadata
-against a standalone schema. It does not connect to or import LANL's database.
-That future adapter belongs behind `access.py`.
+The [LANL core builder](../../swdb/lanl.py) fills LANL's tables in the generated
+file from the records, one `swdb/lanl_<group>.py` module per table group. The
+[crosswalk validator](../../swdb/crosswalk.py) checks the 2026-10-06 compatibility
+draft, now historical (ADR 0015). Neither connects to or imports LANL's database;
+that future adapter belongs behind `access.py`.
 
 ## Source, contracts, and execution
 

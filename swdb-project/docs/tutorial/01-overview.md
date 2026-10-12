@@ -1,6 +1,6 @@
 # 1. Understand EvolveSWDB in 10 minutes
 
-Updated: 2026-10-07 (Eastern Time).
+Updated: 2026-10-11 21:53 ET (ADR 0015: the database takes the main database's shape); 2026-10-07.
 
 [Tutorial](README.md) · Next: [Records and queries](02-records-and-queries.md)
 
@@ -27,8 +27,9 @@ flowchart TD
 SW means software; HW means hardware. A producer selects intent; a rewrite
 provider edits source; an evaluator checks it. ArchEvolve mode estimates speed
 and excludes gem5 simulator execution evidence. Extensa mode adds research loops
-and timed evaluation. The main-database crosswalk is a draft; import from Los
-Alamos National Laboratory (LANL) is unimplemented.
+and timed evaluation. The generated database takes the shape of the main database
+from Los Alamos National Laboratory (LANL): a LANL core plus `swdb_` tables. Import
+from and export to LANL's database are unimplemented.
 
 ## Five ideas to learn first
 
