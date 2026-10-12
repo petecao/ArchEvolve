@@ -380,7 +380,8 @@ def _label(side, sites, catalog=None):
         mixed = bool(touched) and (rel is None or any(_partly_changed(path, lines, side.name, sites) for path, lines in pieces))
         rows[region['id']] = {'side': side.name, 'region': region['id'], 'origin': origin, 'reason': reason,
                               'mixed': mixed, 'path': rel, 'lines': span, 'inlined': inlined,
-                              'sites': [s['id'] for s in touched], 'seconds': region['seconds'], 'evidence': evidence}
+                              'sites': [s['id'] for s in touched], 'seconds': region['seconds'],
+                              'unmodeled_calls': _unmodeled_calls(side, region['id']), 'evidence': evidence}
     return rows
 
 
@@ -500,23 +501,73 @@ def _missing(region):
     return sorted({m for b in region['bounds'] + region['overheads'] for m in b['missing']})
 
 
+def _is_call_row(row):
+    """A bound or overhead that prices executed calls: uncovered ones, or ones a model covered."""
+    return row['model'] == 'unmodeled_calls' or bool((row.get('inputs') or {}).get('covered_calls'))
+
+
+def _call_part(region, target):
+    """F2 (review fix F33): (own seconds, seconds inside calls, the call rows' missing inputs) of
+    one estimated region row, or None when no row prices a call.
+
+    Own seconds recompose the region as the estimator does without its call rows (max of the
+    resource bounds, domain composition, plus additive overheads); the calls hold the rest. An
+    unknown call row leaves the call time unknown and the region's own time known."""
+    calls = [b for b in region['bounds'] + region['overheads'] if _is_call_row(b)]
+    if not calls:
+        return None
+    from swdb import analytic_composition
+    bounds = [b for b in region['bounds'] if not _is_call_row(b) and b['model'] != 'domain_composition']
+    bounds += analytic_composition.resource_composition(bounds, target)
+    overheads = [o for o in region['overheads'] if not _is_call_row(o)]
+    own = (None if any(b['seconds'] is None for b in bounds + overheads)
+           else max((b['seconds'] for b in bounds), default=0.) + sum(o['seconds'] for o in overheads))
+    inside = None if region['seconds'] is None or own is None else max(0., region['seconds'] - own)
+    return own, inside, sorted({m for b in calls for m in b['missing']})
+
+
+def _unmodeled_calls(side, region_id):
+    """The region row's `unmodeled_calls`: median seconds inside calls over trials (a trial without
+    call rows counts 0 s) with their missing inputs, or None when no trial prices a call."""
+    target = side.estimate['target_description_snapshot']
+    parts = [_call_part(r, target) if r else None
+             for r in (next((x for x in rows if x['id'] == region_id), None) for rows in side.trials())]
+    if all(p is None for p in parts):
+        return None
+    return {'seconds': _median([p[1] if p else 0. for p in parts]),
+            'missing': sorted({m for p in parts if p for m in p[2]})}
+
+
 def _group_seconds(side, labels, origins=ORIGINS):
     """{origin: (median seconds or None, [unknown region reasons])} from per-trial sums.
 
-    A region whose label is not one of `origins` is left out (ticket 05's per-origin split)."""
+    A region whose label is not one of `origins` is left out (ticket 05's per-origin split).
+    F33: a region's seconds inside calls go to `unattributed` (when it is one of `origins`); the
+    region's group keeps its own seconds."""
+    target = side.estimate['target_description_snapshot']
     sums = {origin: [] for origin in origins}
     unknown = {origin: {} for origin in origins}
+
+    def add(totals, origin, rid, seconds, missing):
+        if origin not in totals:
+            return
+        if seconds is None:
+            totals[origin] = None
+            unknown[origin].setdefault(rid, set()).update(missing)
+        elif totals[origin] is not None:
+            totals[origin] += seconds
     for rows in side.trials():
         totals = {origin: 0. for origin in origins}
         for region in rows:
             origin = labels[region['id']]['origin'] if region['id'] in labels else 'unattributed'
-            if origin not in totals:
+            part = _call_part(region, target)
+            if part is None:
+                add(totals, origin, region['id'], region['seconds'], _missing(region))
                 continue
-            if region['seconds'] is None:
-                totals[origin] = None
-                unknown[origin].setdefault(region['id'], set()).update(_missing(region))
-            elif totals[origin] is not None:
-                totals[origin] += region['seconds']
+            own, inside, call_missing = part
+            add(totals, origin, region['id'], own,
+                sorted({m for b in region['bounds'] + region['overheads'] if not _is_call_row(b) for m in b['missing']}))
+            add(totals, 'unattributed', region['id'], inside, call_missing)
         for origin in origins:
             sums[origin].append(totals[origin])
     result = {}

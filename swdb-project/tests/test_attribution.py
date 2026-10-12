@@ -735,6 +735,29 @@ def test_an_offload_command_the_contract_does_not_bind_is_unattributed_with_a_re
     assert (split['unattributed']['candidate_seconds'], split['agent_rewritten']['candidate_seconds']) == (5, 15)
 
 
+def test_time_inside_unmodeled_calls_goes_to_unattributed_and_the_region_keeps_the_rest(case):
+    # F2 (review fix F33): the untouched candidate loop also calls an opaque function whose body
+    # nobody counted. Its own 40 s stay untouched; the call's unknown time is unattributed.
+    b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
+    case.estimate('fixture.baseline', [region('base.untouched', b, 3, 40), region('base.rewritten', b, 7, 60)])
+    opaque = {**call(0, 'cand.untouched', 'opaque_helper', 3, line=3), 'body_counted': False}
+    estimate_with_calls(case, 'fixture.candidate', [region('cand.untouched', c, 3, 40), region('cand.rewritten', c, 7, 30)],
+                        [opaque])
+    report = attributed(case)
+    row = rows(report, 'candidate')['cand.untouched']
+    assert (row['origin'], row['seconds']) == ('untouched', None)
+    assert row['unmodeled_calls'] == {'seconds': None, 'missing': ['call_cost.opaque_helper']}
+    assert rows(report, 'baseline')['base.untouched']['unmodeled_calls'] is None
+    split = groups(report)
+    assert (split['untouched']['candidate_seconds'], split['untouched']['drift']) == (pytest.approx(40), pytest.approx(1.0))
+    assert split['untouched']['unknown'] == []
+    assert split['unattributed']['candidate_seconds'] is None
+    assert split['unattributed']['unknown'] == [{'side': 'candidate', 'region': 'cand.untouched', 'missing': ['call_cost.opaque_helper']}]
+    # The total stays unknown, but the Amdahl ceiling (100 s / 40 s untouched) no longer is.
+    assert report['whole_program']['candidate_seconds'] is None
+    assert report['whole_program']['amdahl_ceiling'] == pytest.approx(2.5)
+
+
 def test_validate_rejects_a_changed_intrinsic_that_labeled_a_region(case):
     library = catalog(case)
     b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'

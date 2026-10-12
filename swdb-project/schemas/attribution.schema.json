@@ -121,6 +121,12 @@
           "mixed": {"type": "boolean"},
           "path": {"type": ["string", "null"]},
           "lines": {"oneOf": [{"$ref": "#/$defs/lines"}, {"type": "null"}]},
+          "unmodeled_calls": {
+            "description": "Review fix F33 (2026-10-11 ET): the region's seconds inside priced or unpriced calls (median over trials), counted in the unattributed group; null when no estimate row prices a call.",
+            "oneOf": [{"type": "null"}, {
+              "type": "object", "additionalProperties": false, "required": ["seconds", "missing"],
+              "properties": {"seconds": {"$ref": "#/$defs/seconds"}, "missing": {"type": "array", "items": {"type": "string"}}}}]
+          },
           "inlined": {
             "type": "array",
             "items": {
