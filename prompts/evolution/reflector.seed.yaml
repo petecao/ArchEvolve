@@ -1,0 +1,18 @@
+# Seed data for the offline runtime. No model invokes this automatically.
+evidence_selection: >-
+  Inspect development observations, including unsuccessful and inconclusive
+  attempts. Follow their candidate, evaluation and strategy-decision bindings.
+  Do not request hidden tasks or infer a performance result from placeholders.
+diagnosis: >-
+  Separate hardware/mapping failures from missing evidence, software lowering
+  and infrastructure failures. Identify what a previous strategy decision
+  predicted and what its downstream observations actually support.
+generalization: >-
+  Propose a conditional lesson with explicit resource, ordering and completion
+  obligations. Cite successful cases and known counterexamples. Preserve
+  uncertainty and restrict the lesson to its observed scope.
+revision_method: >-
+  Propose one small revision to the requested artifact: hardware-search strategy,
+  reflector procedure, or learned rule. Explain the expected downstream benefit
+  through the permitted fields. Retain existing behavior when evidence is weak.
+  The coordinator controls trials, review, acceptance and rollback.

@@ -1,6 +1,8 @@
 # Architecture evolution and adaptive search prompts
 
-**October 8 design proposal.** Build a hardware-design search loop with a separate, slower loop that proposes and tests changes to its search instructions. The current catalog matcher supplies seeds. Peter/Yan-Ru and the evaluator retain their existing responsibilities. This document specifies the next system; no live model or evaluator is connected by this change.
+**October 11 implementation update:** the [offline runtime](offline-runtime.md) now implements persistent experiment memory, reviewed learned rules, strategy/reflector trials, activation and rollback. Its executable demo is scripted and synthetic; it establishes control flow, not learned improvements.
+
+**October 8 design proposal (original scope).** Build a hardware-design search loop with a separate, slower loop that proposes and tests changes to its search instructions. The current catalog matcher supplies seeds. Peter/Yan-Ru and the evaluator retain their existing responsibilities. This document specifies the next system; no live model or evaluator is connected by this change.
 
 The first example is the [BFS MAPLE/DX100 sketch](../bfs-maple-dx100-hybrid/README.md). It supplies a human-understood composition for testing the proposal process. It is not a known performance winner.
 
@@ -100,7 +102,7 @@ Each proposed strategy has a parent ID, content hash, fixed core/task/policy pin
 
 The [BFS walkthrough](bfs-walkthrough.yaml) is a hand-authored, unscored example of candidate and prompt changes. The [experiment plan](experiment-plan.md) defines the ablations. [Prompt drafts](../../../prompts/evolution/core.md) and [ordinary YAML record templates](records.template.yaml) make the design concrete without a new DSL.
 
-## Integration and what is implemented now
+## Original October 8 integration and implementation scope
 
 - Josh's coordinator chooses parents/mutations, assembles prompt context, records lineage, consumes feedback and presents frontiers/prompt revisions.
 - Peter supplies features/source/IR placement and derives concrete intrinsic specifications.
@@ -111,3 +113,5 @@ The [BFS walkthrough](bfs-walkthrough.yaml) is a hand-authored, unscored example
 Storage can begin as append-only versioned files plus an index, behind an adapter to the team's eventual database. Preserve candidate, operation, requirement and source-region IDs and content pins. This is a local hardware-search coordinator design, not an assertion of ownership over the project-wide controller.
 
 This change adds the design, prompt drafts, a worked iteration, diagrams and small **offline reference-policy functions** in `archevolve/evolution_policy.py`. They check comparison cohorts, exclude placeholder/invalid records, compute point Pareto membership and validate the editable prompt envelope. They do not resolve evidence files, authenticate evaluator claims, generate candidates, run LLMs, rewrite software, execute benchmarks, update a database or promote prompts. The existing forward pipeline remains independent.
+
+The October 11 addition implements the bounded runtime described in [offline-runtime.md](offline-runtime.md). The October 8 reference functions remain independent and are reused by the runtime. The original BFS walkthrough and manifest remain historical artifacts; the runtime has its own synthetic example and tests.

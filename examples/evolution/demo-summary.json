@@ -1,0 +1,45 @@
+{
+  "synthetic": true,
+  "hardware_improvement_claimed": false,
+  "learned_by_model": false,
+  "fixed_reflector_trial": "284b049f86924a9c8a1c175b996bb8ba3b97ea4e2b1c676a8ba72df8e710ca57",
+  "reflector_trial": "3ba7c179ca76da24ef70758d1d7ebbfc8d88c61f5b02843aeb4b4bdb15023977",
+  "accepted_strategy_trial": "5a3541f71bbfa31321c421fd00be7d0c583e27a93f55f4771291010c3ddf5890",
+  "revised_reflector": "fd9a9760a9c8de119e87bfef6dc237cd5f8f6f34f02f458a681a765b2d5a4427",
+  "recursive_revision": "3610ec4e823b402befafbd67d9eb7869ba3e33fdb1511cd7419e6f041b06b397",
+  "recursive_trial": "c0ec4219a5c69b279eaa153989b5729065db636fb19cf3c9217d5aea9d83b34d",
+  "rollback_restored_seed": true,
+  "usage": {
+    "calls": 29,
+    "tokens": 580,
+    "evaluations": 20
+  },
+  "note": "Scripted, synthetic control-flow fixture only; scores do not describe hardware performance or model learning.",
+  "trials": {
+    "fixed_reflector_trial": {
+      "status": "completed",
+      "eligible_for_review": false,
+      "mean_relative_gain": 0.0,
+      "synthetic": true
+    },
+    "reflector_trial": {
+      "status": "completed",
+      "eligible_for_review": true,
+      "mean_relative_gain": 0.09999999999999998,
+      "synthetic": true
+    },
+    "accepted_strategy_trial": {
+      "status": "completed",
+      "eligible_for_review": true,
+      "mean_relative_gain": 0.09999999999999998,
+      "synthetic": true
+    },
+    "recursive_trial": {
+      "status": "completed",
+      "eligible_for_review": false,
+      "mean_relative_gain": 0.0,
+      "synthetic": true
+    }
+  },
+  "events": 142
+}

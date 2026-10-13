@@ -171,3 +171,7 @@ The repository contains the offline normalizer, operation-evidence selector, Eri
 - [Eric: Taxonomy Draft 3](https://docs.google.com/document/d/1G3a_2qzG1-G7z3qMtZVTO6HvCXEQQ_YF2J9OTEZAazg/edit).
 
 Source documents provide evidence, not authorization to create repositories, send messages, or change accounts/server access.
+
+## October 11: offline evolution and reflector trials
+
+The separate [offline evolution runtime](designs/evolution-loop/offline-runtime.md) adds persistent experiment history, learned rules linked to catalog snapshots, and versioned strategy/reflector comparisons with review and rollback. Its synthetic demo makes no hardware-performance or autonomous-learning claim. The forward matcher and Peter/Yan-Ru handoff remain unchanged; the runtime has no live model or evaluator connection.
