@@ -1,5 +1,6 @@
 """Public proposal 1.1 library gates and actual tree reproduction, 2026-10-03 ET.
-Updated 2026-10-05 ET (code review T4: the tree reproduction reads commit-pinned records and library).
+Updated 2026-10-05 ET (code review T4: the tree reproduction reads commit-pinned records and library);
+2026-10-13 ET (suite fix: and the repository-root files that library pins, such as the hardware catalog).
 
 Temporary execution-envelope receipts below are clearly marked synthetic test
 doubles. They test gate branches, and never represent execution or real promotion.
@@ -13,7 +14,7 @@ import shutil
 import pytest
 import yaml
 
-from testkit.pinned import pinned_folder
+from testkit.pinned import pinned_folder, pinned_repository_view
 from test_typed_library import entry as contract_entry
 from swdb import artifacts
 from swdb.library import Library
@@ -325,7 +326,7 @@ def test_shipped_lowering_path_must_be_new(library_submit):
     assert_retained_rejection(library_submit, existing, 'may add only its declared lowering files')
 
 
-def test_actual_dx100_submit_reproduces_the_certified_tree(records, tmp_path):
+def test_actual_dx100_submit_reproduces_the_certified_tree(records, tmp_path, monkeypatch):
     """Actual delivery bytes/proposal flow; review state remains an explicit test fixture.
 
     2026-10-05 ET (code review T4): the records and library are read as committed at a pinned
@@ -333,12 +334,18 @@ def test_actual_dx100_submit_reproduces_the_certified_tree(records, tmp_path):
     from swdb import certification
     shutil.copytree(pinned_folder('records', tmp_path / 'pinned'), records.path, dirs_exist_ok=True)
     root = pinned_folder('library', records.path.parent)
+    # 2026-10-13 ET: the pinned library's catalog pins name the catalog as committed then; the
+    # live repository catalog changed upstream (4849bcdc), so read those files pinned too.
+    from swdb import paths
+    home = pinned_repository_view(root, tmp_path)
+    monkeypatch.setattr(paths, 'HOME', home)
+    view = {'SWDB_HOME': str(home)}
     store = Store(records.path)
     source_folder = tmp_path / 'dx100-reconstruction'; source_folder.mkdir()
     tree, source = certification.materialize_snapshot(store, certification.DEFAULT_SNAPSHOT, source_folder)
     source['artifact']['path'] = str(tree)
     records.write('source_snapshots/' + source['id'] + '.yaml', source)
-    package = records.swdb('fixture-package', source['id'], '--id', 'dx100-library-package', '--format', 'json')
+    package = records.swdb('fixture-package', source['id'], '--id', 'dx100-library-package', '--format', 'json', env=view)
     assert package.returncode == 0, package.stderr
     library = Library(root, Store(records.path))
     assert not library.validate()
@@ -370,10 +377,10 @@ def test_actual_dx100_submit_reproduces_the_certified_tree(records, tmp_path):
                                        'lowerings': lowerings}]},
     }
     path = tmp_path / 'dx100-proposal.yaml'; path.write_text(yaml.safe_dump(data))
-    result = records.swdb('submit', path, '--runs-dir', tmp_path / 'delivery-runs', '--format', 'json')
+    result = records.swdb('submit', path, '--runs-dir', tmp_path / 'delivery-runs', '--format', 'json', env=view)
     assert result.returncode == 0, result.stderr
     proposal = json.loads(result.stdout)
-    got = records.swdb('get', proposal['candidate'], '--format', 'json')
+    got = records.swdb('get', proposal['candidate'], '--format', 'json', env=view)
     assert got.returncode == 0, got.stderr
     candidate = json.loads(got.stdout)
     certificates = [record.data for record in store.of_kind('certification')
