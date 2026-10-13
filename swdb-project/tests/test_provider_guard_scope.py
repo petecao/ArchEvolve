@@ -19,7 +19,9 @@ import sys
 import pytest
 
 from conftest import REPO
-from swdb import profile, provider_adapters, provider_guard, provider_roles
+from swdb import host_identity, profile, provider_adapters, provider_guard, provider_roles
+from swdb import rewrite as rewrite_module
+from swdb.cli import Failure
 from swdb.extensa import search as S
 from testkit.extensa import campaign_file, fixture_file, log, provider, replay, rewrite, run
 
@@ -143,6 +145,43 @@ def test_the_copied_launcher_runs_on_the_standard_library_alone(tmp_path):
     assert (result.returncode, result.stderr.splitlines()) == (
         78, ["provider guard refused: usage: launch.py policy.json "
              "[--inner|--subreaper|--provider-root] -- command [args]"])
+
+
+def _harness_config(tmp_path, **fields):
+    path = tmp_path / "harness.yaml"
+    path.write_text(json.dumps({"kind": "external_fixture", "command": [sys.executable, "-c", "pass"],
+                                "confinement": HARNESS, **fields}))
+    return path
+
+
+HARNESS = provider_guard.UNCONFINED_HARNESS
+
+
+def test_an_unconfined_harness_is_accepted_only_for_a_fixture_on_a_fixture_host(tmp_path, monkeypatch):
+    # 2026-10-13 ET: the testkit's campaign provider reads and writes harness files outside the
+    # guard's roots by design; it may opt out of confinement only on a fixture host.
+    assert rewrite_module.configuration(_harness_config(tmp_path))["confinement"] == HARNESS
+    with pytest.raises(Failure, match="unconfined harness applies only to external_fixture"):
+        rewrite_module.configuration(_harness_config(tmp_path, kind="codex", command=["codex"]))
+    with pytest.raises(Failure, match="provider confinement must be"):
+        rewrite_module.configuration(_harness_config(tmp_path, confinement="none"))
+    monkeypatch.delenv(host_identity.FIXTURE_HOST_ENV)
+    with pytest.raises(Failure, match="unconfined harness requires a fixture host"):
+        rewrite_module.configuration(_harness_config(tmp_path))
+
+
+def test_the_guard_runs_an_unconfined_harness_unenforced_only_on_a_fixture_host(tmp_path, monkeypatch):
+    for name in ("workspace", "home", "call"):
+        (tmp_path / name).mkdir()
+    folders = [tmp_path / name for name in ("workspace", "home", "call")]
+    config = {"kind": "external_fixture", "command": [sys.executable, "-c", "pass"], "confinement": HARNESS}
+    guard = provider_guard.context(config, *folders, fixture=True)["guard"]
+    assert guard == {"enforced": False, "reason": "unconfined harness fixture on a fixture host"}
+    with pytest.raises(Failure, match="requires an external_fixture on a fixture host"):
+        provider_guard.context({**config, "kind": "codex"}, *folders, fixture=False)
+    monkeypatch.delenv(host_identity.FIXTURE_HOST_ENV)
+    with pytest.raises(Failure, match="requires an external_fixture on a fixture host"):
+        provider_guard.context(config, *folders, fixture=True)
 
 
 def test_the_lane_cpu_check_parses_kernel_cpu_lists_with_the_profile_parser():

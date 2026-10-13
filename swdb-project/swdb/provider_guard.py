@@ -57,6 +57,12 @@ LIMITS = {"threads": TOOL_THREADS, "runtime_threads": RUNTIME_THREADS, "memory_b
 RESOURCE_REASON = "provider resource limit exceeded"
 #: The overrun-record scope of a guard runtime limit (persisted in `resource-overrun.json`).
 RUNTIME_SCOPE = "runtime"
+#: 2026-10-13 ET: the provider-configuration `confinement` value of a test harness fixture that
+#: reads and writes harness files outside the guard's roots by design (the campaign testkit's
+#: plan, call counter, log and replayed observer receipts). Accepted only for `external_fixture`
+#: on a fixture host (`host_identity.fixture_override`); it runs on the unenforced fixture path
+#: on every OS. Real providers and every other fixture keep the enforced Linux guard.
+UNCONFINED_HARNESS = "unconfined_harness"
 
 
 def resource_scope(rows, runtime_keys, limits):
@@ -556,6 +562,13 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
     from swdb.cli import Failure
     workspace, home, folder = (Path(p).resolve() for p in (workspace, home, folder))
     kind = config.get("resolved_kind", config.get("kind"))
+    if "confinement" in config:
+        from swdb import host_identity  # evaluator only; never at module level (standalone launcher)
+        if (not fixture or config["confinement"] != UNCONFINED_HARNESS
+                or host_identity.fixture_override() is None):
+            raise Failure("provider unconfined harness requires an external_fixture on a fixture host")
+        return {"cwd": workspace, "env": _environment(home, workspace, kind),
+                "guard": {"enforced": False, "reason": "unconfined harness fixture on a fixture host"}}
     if sys.platform != "linux" and fixture:
         return {"cwd": workspace, "env": _environment(home, workspace, kind),
                 "guard": {"enforced": False, "reason": "non-Linux fixture"}}

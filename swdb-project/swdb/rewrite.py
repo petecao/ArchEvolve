@@ -18,7 +18,7 @@ import threading
 import time
 from pathlib import Path
 
-from swdb import artifacts, yamlio, provider_adapters
+from swdb import artifacts, host_identity, yamlio, provider_adapters, provider_guard
 from swdb.cli import Failure
 from swdb.processes import stop_group
 
@@ -81,11 +81,19 @@ def configuration(path):
     if {"model", "effort", "model_reasoning_effort"} & set(data):
         raise Failure("provider model and effort are pinned in code and cannot be overridden")
     allowed = {"kind", "command", "timeout_s", "max_repairs", "total_seconds", "budget_usd",
-               "output_format", "edit_format", "workspace", "emulates"}
+               "output_format", "edit_format", "workspace", "emulates", "confinement"}
     if set(data) - allowed:
         raise Failure("unknown provider configuration fields")
     if "emulates" in data and (data["kind"] != "external_fixture" or data["emulates"] not in provider_adapters.PINS):
         raise Failure("provider emulates applies only to external_fixture and must be codex or claude")
+    if "confinement" in data:
+        # 2026-10-13 ET: a test harness fixture may run unconfined only on a fixture host.
+        if data["confinement"] != provider_guard.UNCONFINED_HARNESS:
+            raise Failure(f"provider confinement must be {provider_guard.UNCONFINED_HARNESS} when present")
+        if data["kind"] != "external_fixture":
+            raise Failure("provider unconfined harness applies only to external_fixture")
+        if host_identity.fixture_override() is None:
+            raise Failure(f"provider unconfined harness requires a fixture host ({host_identity.FIXTURE_HOST_ENV})")
     if not isinstance(data.setdefault("workspace", True), bool):
         raise Failure("provider workspace must be a boolean")
     if data.get("output_format", "json") not in OUTPUT_FORMATS:
