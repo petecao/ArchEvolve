@@ -22,3 +22,8 @@ tier, and what is the fallback when the primary tool cannot read the code?
   and refuted at one lane on the port, but cannot run libc++ 22 code, and no safe 2-lane run
   finished in 15 minutes. CBMC cannot parse libc++ 22 headers. Running 6 crux jobs at once
   exhausted the Mac's 36 GB of RAM: run one at a time, or on mbit10 under `ulimit -v`.
+- 2026-10-12 22:25 ET: input from 09: the tiers must also cover (1) machine-checked lifting
+  lemmas (induction over a kernel's driver loop, with the proof unit replaced by its claim);
+  (2) equality over real arithmetic for floating-point kernels (PR, BC), rounding in the
+  assumption set; (3) for proven unbounded, a proof for any thread count, since thread count is
+  a bound. The evaluation covers other GAPBS kernels, not only BFS.

@@ -33,3 +33,8 @@ How does the proof-hint loop work?
 - 2026-10-09: input from 02: ESBMC and CBMC have no lemma construct and their ghost variables
   are ordinary variables; Frama-C/WP accepts `axiom` and `admit` without proof, so the checker
   must reject both.
+- 2026-10-12 22:25 ET: input from 09: the checker must inventory every `assume` in a harness and
+  map each one to a proof at the real call site or to a reduction listed in the assumption set;
+  an unmapped `assume` voids the verdict. 08's harness already has one
+  (`../prototype/08-wrong-tile/tdstep_harness.cpp:74` assumes `parent[v] >= -1`; real callers pass
+  `-out_degree`).

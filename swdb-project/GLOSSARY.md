@@ -1,6 +1,6 @@
 # EvolveSWDB — ArchEvolve's research database
 
-Updated: 2026-10-12 00:37 ET (final review of fine-grained attribution: code origin and catalog bound reworded; attribution report, split check, site-finder region and measured scope added); 2026-10-11 22:10 ET (review fix: rewrite site reworded to merged spans); 2026-10-11 21:52 ET (ADR 0015: LANL core, guessed column, SWDB extension; crosswalk now historical); 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom, remaining gain bound); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
+Updated: 2026-10-12 22:25 ET (formal-verification ticket 09: certification level and formal verifier sharpened; proof unit, unit relation, output relation, lifting lemma, assumption set added); 2026-10-12 00:37 ET (final review of fine-grained attribution: code origin and catalog bound reworded; attribution report, split check, site-finder region and measured scope added); 2026-10-11 22:10 ET (review fix: rewrite site reworded to merged spans); 2026-10-11 21:52 ET (ADR 0015: LANL core, guessed column, SWDB extension; crosswalk now historical); 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom, remaining gain bound); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
 
 The Software Database is the ArchEvolve component that knows the applications:
 what their kernels compute, how their code touches memory, what profiling
@@ -25,6 +25,12 @@ _Avoid_: hot loop, function, hotspot
 The test (a verifier plus a stated tolerance) that decides whether a piece of code
 computes a given kernel.
 _Avoid_: validation, equivalence proof
+
+**Output relation**:
+Which differences between a kernel's final output and its baseline implementation's are
+acceptable (for BFS, a different but valid parent); stated once per kernel, beside its
+correctness check.
+_Avoid_: equivalence (alone), unit relation (for the final output)
 
 **Implementation**:
 Code that realizes a kernel and passes that kernel's correctness check on the hardware
@@ -141,6 +147,12 @@ A property a rewrite must keep beyond passing the kernel's correctness check, su
 enqueuing each discovered vertex once; a rewrite contract states it as a clause with role
 preservation.
 _Avoid_: correctness check (for these), invariant (alone)
+
+**Unit relation**:
+What a rewrite contract requires one proof unit of a candidate artifact to preserve relative to
+the same unit of the baseline implementation, and what may differ (for BFS, the next-frontier set
+but not its order).
+_Avoid_: output relation (for one unit), equivalence (alone)
 
 **Clause**:
 One condition in a typed-library entry, with an ID and a role (precondition, postcondition,
@@ -260,7 +272,9 @@ _Avoid_: verification, validation
 
 **Certification level**:
 How a candidate artifact ranks by certification in Extensa-mode selection: proven unbounded,
-proven within bounds (its bounds recorded), certified, then uncertified.
+proven within bounds (its bounds recorded, thread count among them), certified, then
+uncertified. A proven level applies only to a certified candidate artifact, and is the weakest
+level among its proof units.
 _Avoid_: trust level, proof level
 
 **Certified lowering**:
@@ -510,9 +524,25 @@ new label; the same label in two families names two procedures.
 _Avoid_: version (alone) when the family is not clear; certify level
 
 **Formal verifier**:
-A tool, such as CBMC or Z3, that proves or refutes a formal predicate about code within declared
-bounds.
+A tool, such as CBMC or Z3, that proves or refutes a formal predicate about code, for all inputs
+or within declared bounds.
 _Avoid_: checker, prover (alone), verifier (alone, for this tool)
+
+**Proof unit**:
+One call of the function that holds a rewrite site: the scope a formal verifier proves for a
+candidate artifact, with every precondition it assumes either proven at each real call or listed
+in the assumption set.
+_Avoid_: harness (for this scope), proof scope
+
+**Lifting lemma**:
+A machine-checked lemma, proven once per rewrite contract and kernel, that a whole kernel run meets
+the kernel's output relation when every call of the proof unit meets the contract's unit relation.
+_Avoid_: composition proof, induction (alone)
+
+**Assumption set**:
+Everything a proven verdict depends on without proving it, each entry with its kind: an assumed
+clause, the trusted accelerator semantics, a building-block summary, a reduction, or a trusted tool.
+_Avoid_: trusted base (alone), assumptions (alone)
 
 **Proof hint**:
 A ghost variable, loop invariant, lemma or intermediate assertion added to help a formal verifier

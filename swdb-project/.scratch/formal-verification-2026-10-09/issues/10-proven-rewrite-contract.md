@@ -26,3 +26,8 @@ not.
   in 01 to "contract parts proven once, plus a small per-instance proof". Decide here.
 - 2026-10-09: input from 06: LPG (2026) could not prove its generalized rules for all bitwidths
   and fell back to per-width checks; consider applying the two proven levels to contracts too.
+- 2026-10-12 22:25 ET: input from 09: every rewrite contract must state (1) a unit relation (what
+  one proof unit must preserve relative to the baseline, and what may differ), (2) its bound
+  dimensions, thread count always among them, and (3) a machine-checked lifting lemma per kernel
+  it applies to, linking the unit relation to the kernel's output relation. Decide here which of
+  these the contract proves once. The method must be general across GAPBS kernels (map Notes).
