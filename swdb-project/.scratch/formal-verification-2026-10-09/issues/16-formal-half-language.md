@@ -119,6 +119,7 @@ The language must be general: the same source covers the BC, PR and SSSP contrac
   ordered list of required enabling contracts (ID and version range), checked against the
   predecessor's lineage record. See `17-enabling-rewrites.md`, Answer items 2, 4, 5.
 - 2026-10-13 16:49 ET: Yan-Ru confirmed the shared understanding ("agree").
+- 2026-10-13 16:53 ET: Yan-Ru accepted Answer item 13 (ticket 17's inputs) ("ok").
 
 ## Answer
 
@@ -259,7 +260,7 @@ re-checked in this session, an E-ACSL test on the Mac's Frama-C 33, and the gem5
     ghost encoding serve every contract and kernel. BC, PR and SSSP relations are predicates per
     item 3; their floats are `real` per 11, item 6.
 
-13. **Ticket 17's inputs fit the frame** (checked after the grilling; not grilled separately):
+13. **Ticket 17's inputs fit the frame** (checked after the grilling; Yan-Ru accepted 2026-10-13 16:53 ET):
     a catalog enabling contract's relational template and an offload-only contract's lockstep
     relation are two-sided predicates (item 3), with predecessor and result as the two sides;
     the lockstep relation compares per-thread ghost logs of shared actions (kind, arguments,
