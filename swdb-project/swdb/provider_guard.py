@@ -1,4 +1,4 @@
-"""Linux Landlock boundary and external resource observation. Updated: 2026-10-05 ET (code review).
+"""Linux Landlock boundary and external resource observation. Updated: 2026-10-13 ET.
 
 The standalone entry point imports only the standard library. It fails closed if
 ABI 4 is unavailable; the evaluator stays outside the confined process tree.
@@ -14,6 +14,9 @@ cap is recorded as a guard runtime limit (`guard_runtime_limit`), not as the mod
 check reuses the profile's CPU-list parser, the lane check is public (`verified_lane`), and a
 prompt-only session places its login through `provider_login.start`. Persisted values are
 unchanged: an overrun record still carries `scope: runtime`.
+2026-10-13 ET: this file is copied into each call folder as `guard/launch.py` and run with the
+provider's scrubbed environment, where `swdb` is not importable. Its module level imports only the
+standard library; evaluator-only helpers import `swdb` modules inside the function that uses them.
 """
 import ctypes
 import errno
@@ -29,7 +32,6 @@ import socket
 import sys
 import time
 from pathlib import Path
-from swdb import host_identity
 
 
 class GuardError(RuntimeError):
@@ -492,6 +494,7 @@ def restrict(policy, inner=False):
 
 def verified_lane():
     """The verified socket lane this process runs in on mbit10 (public since 2026-10-05 ET, J5)."""
+    from swdb import host_identity  # evaluator only; never at module level (standalone launcher)
     if host_identity.short_name() != "mbit10":
         raise GuardError("real rewrite providers require a verified socket lane on mbit10")
     # Reuse the evaluator's kernel-backed verification: exact socket affinity,
@@ -559,6 +562,7 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
     try:
         if abi() < 4:
             raise GuardError("SWDB provider guard requires Linux Landlock ABI >= 4; refusing unguarded session")
+        from swdb import host_identity  # evaluator only; never at module level (standalone launcher)
         lane = verified_lane() if not fixture or host_identity.short_name() == "mbit10" else None
         tracer = shutil.which("strace")
         if not tracer:

@@ -13,6 +13,8 @@ replays them into its call folder exactly where the observer wrote them on mbit1
 import hashlib
 import json
 import shutil
+import subprocess
+import sys
 
 import pytest
 
@@ -127,6 +129,20 @@ def test_guard_runtime_limit_refuses_anything_but_a_runtime_only_stop(tmp_path):
     assert provider_guard.guard_runtime_limit(_write(tmp_path / "d", audit, v2)) is None
     runtime = {**v2, "scope": "runtime", "reason": "provider resource limit exceeded by the provider runtime"}
     assert provider_guard.guard_runtime_limit(_write(tmp_path / "e", audit, runtime)) == runtime["reason"]
+
+
+def test_the_copied_launcher_runs_on_the_standard_library_alone(tmp_path):
+    # 2026-10-13 ET: the guard copies this module into each call folder as `guard/launch.py`
+    # and runs it with the provider's scrubbed environment, where `swdb` is not importable.
+    # A module-level `from swdb import ...` made every Linux launch die with
+    # ModuleNotFoundError before the ownership handshake ("handshake is missing").
+    launcher = tmp_path / "launch.py"
+    shutil.copyfile(provider_guard.__file__, launcher)
+    result = subprocess.run([sys.executable, "-I", str(launcher)], cwd=tmp_path,
+                            env={"PATH": "/usr/bin:/bin"}, capture_output=True, text=True, timeout=60)
+    assert (result.returncode, result.stderr.splitlines()) == (
+        78, ["provider guard refused: usage: launch.py policy.json "
+             "[--inner|--subreaper|--provider-root] -- command [args]"])
 
 
 def test_the_lane_cpu_check_parses_kernel_cpu_lists_with_the_profile_parser():
