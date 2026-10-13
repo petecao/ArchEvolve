@@ -1,6 +1,6 @@
 # Analytic estimator: portable inputs and source counts
 
-Updated: 2026-10-12 ET (`resource_floor_mechanisms`, cpu-description ticket 03); 2026-10-09 (Eastern Time): code review of tickets 04, 05 and 14. See
+Updated: 2026-10-13 ET (field index: count labels, target-description policy and CPU error-band v2 fields); 2026-10-12 ET (`resource_floor_mechanisms`, cpu-description ticket 03); 2026-10-09 (Eastern Time): code review of tickets 04, 05 and 14. See
 [Code review corrections](#code-review-corrections-2026-10-09-et) for what changed.
 
 `swdb characterize` compiles a buildable C/C++ translation unit, analyzes its LLVM IR,
@@ -283,6 +283,12 @@ Counting receipt: `level`, `passes`, `native_runs`, `binary_sha256`, `counts_sha
 Compiler receipt: `llvm_version`, `llvm_bin`, `source_ir_sha256`, `optimized_ir_sha256`, `optimized_facts`, `mapping_note`, `loops`, `ir_lanes`, `address_expression`, `observed_address_span_bytes`.
 
 Estimate report: `bounds`, `overheads`, `limiting_bound`, `baseline`, `ratio`, `error_band`, `llm_parameters`, `scope`, `evidence_kind`.
+
+Count labels: `top_level_counts` under `counting`; its `trial_position` names the trial whose counts the top-level regions repeat (see [Workload characterization v1](#workload-characterization-v1)).
+
+Target description: `dram_address_layout_provenance` (`basis`, `source` of a declared layout's bit positions) and `outside_operand_policy`, whose `unknown_events` lists the events for which an outside-operand target access makes the command's counts unknown (see [analytic model context](../analytic-model-context-v1.md)).
+
+CPU error band v2 (`swdb.cpu-error-band.v2`): `large_errors` rows, one per known error above the large-error threshold, each with `direction` (`over_prediction` or `under_prediction`) and up to five `dominant_regions`. They are forecast-only (see [CPU native error](cpu-native-error.md)).
 
 Envelope and portable fields: `architecture`, `atomic`, `branch`, `characterization`, `floating_point`, `format`, `id`, `integer`, `kind`, `line`, `machine`, `mapped`, `notes`, `protocol`, `schema_version`, `system`, `target_description`, `verdict`.
 
