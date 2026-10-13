@@ -1,7 +1,8 @@
 # Register of learned agent rules
 
-Updated: 2026-10-09 ET. Owner: Yan-Ru Jhou. Origin: the 2026-10-08–09 LANL
-analytic-evaluator session and its retrospective.
+Updated: 2026-10-12 20:10 ET. Owner: Yan-Ru Jhou. Origin: the 2026-10-08–09 LANL
+analytic-evaluator session and its retrospective; revised after the 2026-10-11–12
+LANL-shaped-db session retrospective.
 
 The executable instructions are in
 [learned-workflow.md](../../../.claude/rules/learned-workflow.md); their audit
@@ -38,6 +39,7 @@ commit. Scheduled audits may remain quiet.
 | LR-04 | active | The recurring checks are wired into the normal commit/CI workflow; required checks and their navigation pointers cover this reminder. |
 | LR-05 | active | Current status and resume summaries have one authoritative update path; contradiction/staleness checks prevent older prose overriding current tickets. |
 | LR-06 | active | Output lifecycle tooling enforces destination capacity and verified disposable cleanup while preserving every required future reader. |
+| LR-07 | active | A committed full-suite runner enforces memory-sized workers, the machine-wide lock and incremental results, and long runs post scheduled status tables without manual queries. |
 
 Partial improvements justify narrowing an instruction; they do not automatically
 retire the entire lesson. New lessons need a concrete observed incident, a trigger,
@@ -72,6 +74,21 @@ it instead of adding another nearly identical rule.
   validation and custody bodies remained. A hash does not supply those bodies to
   their future readers.
 
+- **2026-10-11–12 LANL-shaped-db session** (map:
+  [lanl-shaped-db](../../.scratch/lanl-shaped-db-2026-10-09/map.md), follow-ups:
+  [map](../../.scratch/lanl-shaped-db-followups-2026-10-11/map.md)):
+  - **LR-01:** tickets closed against their criteria, but three follow-ups were split into
+    new tickets that Yan-Ru then asked to finish; Yan-Ru wants in-ticket completion.
+  - **LR-03:** pytest-xdist was found missing after a costly run; an mbit10 suite was
+    rerun after mass setup errors before their cause (the `mbit10` host guard) was named.
+    About 140 full-catalog-copy tests remain.
+  - **LR-06:** on mbit10 the suite wrote ~850 MB of source snapshots to
+    `/data1/yanruj/EvolveSWDB_sources`, outside its temp folder (2026-10-12, ticket 02).
+  - **LR-07 (new):** a full-suite run helped exhaust the Mac's RAM (restart, 2026-10-11
+    ~18:30 ET); a `-n 16` mbit10 run hit node-0 OOM kills; an overnight stall went
+    unnoticed for ~9 h because the session heartbeat did not fire; one run lost all
+    results to a timeout; Yan-Ru had to ask for status repeatedly.
+
 ## Audit procedure
 
 1. Read current rule files, this register, repository instructions and Git status.
@@ -99,3 +116,8 @@ date alone is not an actionable defect or permission to remove a rule.
 
 - 2026-10-09 ET: introduced six active lessons, their retirement evidence and
   read-only weekly/on-demand audit procedure. Existing owner rules were preserved.
+- 2026-10-12 20:10 ET (Yan-Ru approved): revised LR-01 (finish in-ticket; new tickets
+  only on request), LR-03 (tool preflight incl. xdist; diagnose mass failures before a
+  rerun), LR-06 (count output written outside temp folders); added LR-07 (long-running
+  jobs: memory-sized workers, incremental results, 30-minute status tables). LR-02, LR-04
+  and LR-05 kept unchanged.
