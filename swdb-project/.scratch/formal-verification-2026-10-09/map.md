@@ -1,7 +1,8 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-13 19:48 ET (ticket 18 resolved: evaluation claims and subjects);
+Updated: 2026-10-13 19:56 ET (ticket 20 resolved: the authors' DX100 PR keeps stale sums);
+2026-10-13 19:48 ET (ticket 18 resolved: evaluation claims and subjects);
 2026-10-13 17:53 ET (ticket 21 resolved: relational alignment research);
 2026-10-13 17:32 ET (ticket 22 resolved: counterexample-guided LLM repair prior work);
 2026-10-13 17:04 ET (all fog graduated into tickets 18–27; ticket 18 claimed);
@@ -16,7 +17,7 @@ Extensa Probata; ticket 15 added); 2026-10-12 22:52 ET (ticket 10 resolved: what
 2026-10-11 18:58 ET (ticket 08 resolved: crux-llvm separates the bug at one lane)
 **Type:** wayfinder map
 **Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–13 and 15–17 resolved;
-18–27 graduated from fog 2026-10-13 (18, 21, 22 resolved)
+18–27 graduated from fog 2026-10-13 (18, 20, 21, 22 resolved)
 
 ## Destination
 
@@ -180,6 +181,12 @@ concept is the next effort.
   certified Codex candidates plus the authors' code, repairs and seeded faults; held-out contracts
   drafted blind to the authors' code. Freeze the method version first; fix the authors'-code guard
   first. Cut RQ5, then PR.
+- [Does the authors' DX100 PageRank keep stale `incoming_totals` across iterations?](issues/20-dx100-pr-reset-check.md):
+  yes. From iteration 2 the sums carry over: on a 1024-vertex Kronecker graph at 20 iterations the
+  baseline passes GAPBS's verifier and the DX100 code fails (error 15679); smallest case 2 vertices,
+  1 edge, 2 iterations; a one-line reset fixes it. Latent in the authors' runs (default 1 iteration,
+  where the output is correct). Same code upstream. Meets 13's bug bar (functional model, no gem5).
+  SWDB has no PR check yet; one needs >= 2 iterations and a per-vertex reference.
 
 ## Tickets
 
@@ -204,7 +211,7 @@ concept is the next effort.
 | 17 | [How do enabling rewrites chain with offloading rewrites?](issues/17-enabling-rewrites.md) | grilling | resolved | 15 |
 | 18 | [What does the evaluation set out to show, and on which kernels and candidate artifacts?](issues/18-evaluation-claims-and-subjects.md) | grilling | resolved | — |
 | 19 | [How are a bounded verdict's bounds chosen, and when are they enough?](issues/19-bounded-verdict-bounds.md) | grilling | claimed | — |
-| 20 | [Does the authors' DX100 PageRank keep stale `incoming_totals` across iterations?](issues/20-dx100-pr-reset-check.md) | task | ready-for-agent | — |
+| 20 | [Does the authors' DX100 PageRank keep stale `incoming_totals` across iterations?](issues/20-dx100-pr-reset-check.md) | task | resolved | — |
 | 21 | [Which methods find a relational proof's alignment automatically, and can a wrong one make a proof unsound?](issues/21-relational-alignment-research.md) | research | resolved | — |
 | 22 | [Which LLM repair loops driven by model-checker counterexamples exist, and how close are they to ours?](issues/22-cex-guided-llm-repair-research.md) | research | resolved | — |
 | 23 | [Which baselines, ablations and metrics answer each research question, and how are runs repeated?](issues/23-evaluation-baselines-and-metrics.md) | grilling | ready-for-human | 18, 22 |
