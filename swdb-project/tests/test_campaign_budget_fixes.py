@@ -50,7 +50,8 @@ def test_capacity_backoff_is_charged_to_lane_hours(campaign_team):
     summary = run(campaign_team, path, fixture_file(campaign_team), config, env={"SWDB_CAPACITY_BACKOFF_S": "0.3"})
     used = summary["budgets"]["used"]
     assert used["provider_calls_uncounted"] == 1 and summary["stop_reason"] == "max_iterations"
-    assert used["provider_wait_hours"] >= 0.3 / 3600
+    # The summary rounds hours to 6 decimals (2026-10-13 ET): a precise 0.3 s wait reads 8.3e-05 h.
+    assert used["provider_wait_hours"] >= round(0.3 / 3600, 6)
     assert used["lane_hours"] >= used["provider_wait_hours"]
 
 
