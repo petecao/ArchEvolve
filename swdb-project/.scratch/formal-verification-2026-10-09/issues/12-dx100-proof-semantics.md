@@ -217,3 +217,14 @@ The question in Comments about 01 decision 9.1 was settled by 01's amendment (20
 
 Glossary: proof semantics added; functional model sharpened; the assumption-set kind "trusted
 accelerator semantics" now reads "the accelerator's proof semantics".
+
+## Later changes
+
+- 2026-10-13 16:50 ET, from [16](16-formal-half-language.md) (items 9-11): new rule: an 8-byte operand
+  occupies tiles t and t+1, and ownership and hazards cover both, because gem5's dispatch stall
+  compares only t (`SPD.cc:124-133` at `e4fc4af`); no proof-of-concept kernel uses 8-byte tile
+  data. The proof semantics is written in ACSL with fixed-size ghost arrays (per tile, per
+  register, 32 command slots per thread as an encoding bound). Reference semantics for proofs
+  become ACSL definitions in the logic library, proven against the lowered
+  `library/dx100/reference.hpp`; per-call intrinsic summaries replace the whole-loop
+  `range_loop` reference (`reference.hpp:9`).

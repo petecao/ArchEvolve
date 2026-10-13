@@ -1,7 +1,8 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-13 16:47 ET (ticket 17 resolved: enabling rewrites and rewrite chains);
+Updated: 2026-10-13 16:49 ET (ticket 16 resolved: ACSL formal halves in a YAML frame);
+2026-10-13 16:47 ET (ticket 17 resolved: enabling rewrites and rewrite chains);
 2026-10-13 16:09 ET (ticket 15 resolved: concurrency proofs for any thread count;
 ticket 17 added; VerCors out of scope); 2026-10-13 15:22 ET (ticket 13 resolved: the proof-hint loop);
 2026-10-13 14:19 ET (ticket 12 resolved: the proof semantics; ticket 16 added);
@@ -10,7 +11,7 @@ Extensa Probata; ticket 15 added); 2026-10-12 22:52 ET (ticket 10 resolved: what
 2026-10-12 22:25 ET (ticket 09 resolved: what proven asserts; generality requirement added);
 2026-10-11 18:58 ET (ticket 08 resolved: crux-llvm separates the bug at one lane)
 **Type:** wayfinder map
-**Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–13, 15 and 17 resolved
+**Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–13 and 15–17 resolved
 
 ## Destination
 
@@ -138,6 +139,15 @@ concept is the next effort.
   Reads that race on purpose are history reads (RC11); any other race refutes. CIVL gives proven
   within bounds for threads <= k, GenMC refutes, both must agree. All three proof-of-concept
   candidates race at N > 1 as written and go to repair. VerCors out; enabling rewrites to 17.
+- [What language do formal halves and the proof semantics share?](issues/16-formal-half-language.md):
+  ACSL inside a YAML frame: WP reads it as is; our translators make the SAWScript specs and C
+  stubs; the Extensa grammar stays for runtime probes. First-order ACSL with bounded quantifiers
+  and primitive recursion only; the C lowering keeps C++ names; relations are two-sided
+  predicates. Every clause names its proof placement (BFS read offload: all per candidate except
+  L5); sharing classes per barrier interval are per candidate. The C++ subset is defined by
+  construct and includes a modeled `std::vector`. Ghost hazard state in fixed-size arrays (32
+  command slots); new 8-byte tile-pair rule. An agent drafts missing formal halves behind five
+  gates; our own check mode replaces E-ACSL, which drops `\old` under quantifiers.
 - [How do enabling rewrites chain with offloading rewrites?](issues/17-enabling-rewrites.md):
   matching and splitting: a catalog of five recurring reshapes (chunking, fallback, phase split,
   buffers, edge-loop flattening), each with a template proven once; offloads become offload-only
@@ -167,7 +177,7 @@ concept is the next effort.
 | 13 | [How does the proof-hint loop work?](issues/13-proof-hint-loop.md) | grilling | resolved | 04, 09, 11 |
 | 14 | [Does a DX100 wait on a store's source tile cover the store's result?](issues/14-dx100-wait-rule.md) | research | resolved | — |
 | 15 | [How do proofs cover concurrency for any thread count?](issues/15-concurrency-proofs.md) | grilling | resolved | 11, 12 |
-| 16 | [What language do formal halves and the proof semantics share?](issues/16-formal-half-language.md) | grilling | ready-for-human | 11, 12 |
+| 16 | [What language do formal halves and the proof semantics share?](issues/16-formal-half-language.md) | grilling | resolved | 11, 12 |
 | 17 | [How do enabling rewrites chain with offloading rewrites?](issues/17-enabling-rewrites.md) | grilling | resolved | 15 |
 
 ## Not yet specified
@@ -185,7 +195,9 @@ concept is the next effort.
   and the two gem5 corners research 12 could not rule out. (Peter's plain store after the CAS is
   a data race, refuted at N > 1 per 15.) Per 17 (read from code, not run): DX100 PR never resets
   `incoming_totals` between iterations (`apps/dx100/benchmarks/gapbs/src/pr.cc:140-141,183,242`;
-  the baseline resets, `:100`); scores look wrong from iteration 2. Needs a run check.
+  the baseline resets, `:100`); scores look wrong from iteration 2. Needs a run check. Per 16:
+  8-byte operands use tiles t and t+1, but gem5's stall compares only t (`SPD.cc:124-133` at
+  `e4fc4af`); now a proof-semantics rule; no proof-of-concept kernel uses 8-byte tile data.
 - **Evaluation plan:** kernels beyond BFS, required by the generality note (the DX100 authors'
   code covers bfs top-down and bottom-up (`bfs_bu.cc`), bc, pr and sssp; cc and tc have none;
   Extensa campaign artifacts), baselines (testing-only certification, verifier without hints,
@@ -205,7 +217,9 @@ concept is the next effort.
   citation (counterexample-guided LLM repair for C) for positioning. Per 17: Peter's read offload
   chained (catalog rewrites plus an offload-only read offload) vs bundled, comparing proof time
   and hint rounds; then, only if that passes, upstream GAPBS `TDStep` as an "any input" demo; the
-  five catalog templates' proofs (about one month).
+  five catalog templates' proofs (about one month). Per 16: C-lowering subset coverage including
+  `std::vector`; agreement of the SAWScript, C-stub and ACSL forms on fixtures; how many
+  formal-half drafts each gate rejects; ghost-capacity failures.
 - **Records:** how proven verdicts, bounds, hints and counterexamples are stored in the research
   database and shown in ArchEvolve mode. Per 09, a verdict also carries its assumption set (each
   entry with its kind), a value or "unbounded" per bound dimension, and the cap from proven
@@ -219,7 +233,10 @@ concept is the next effort.
   parallel composition theorem's version and status (Rocq-checked or written); the OpenMP runtime
   and RC11 entries. Per 17: per rewrite in a rewrite chain, its contract hash, predecessor snapshot
   hash, result hash, certification record and proof route; derived implementations' contract
-  lineage (`applies` lists only strategies today).
+  lineage (`applies` lists only strategies today). Per 16: the formal-half language and translator
+  versions, the C lowering's naming-rule version, logic-library hashes and `\false`-check
+  results, the standard-library model version and its two entries (standard library, allocation
+  succeeds), ghost capacity K, and gate results per formal half.
 - **Extensa-mode loop:** the proving budget per iteration, and how ranking by proven level
   changes selection. Per 13: lane-hours proofs may use on mbit10 per campaign (proof jobs run
   inside a socket lane), and the counterexample-guided repair budget per refuted candidate. Per

@@ -270,3 +270,12 @@ minimize human effort, construct proofs automatically, about one month of work p
 Glossary: enabling rewrite, shared action, sharing class, history read, parallel composition
 theorem added.
 
+
+## Later changes
+
+- 2026-10-13 16:50 ET, from [16](16-formal-half-language.md) (item 4): item 2's "sharing class per array
+  between barriers" is per candidate artifact, not per rewrite contract, because a candidate
+  chooses its own barriers (the authors' `TDStepMAA` adds one). The contract states, per array
+  of the proof unit's interface, the shared-action kinds it allows and whether its reads are
+  history reads; the C lowering proposes each interval's class and WP proves it. Shared-action
+  kinds and sharing classes map one to one onto the Rocq development's constructors.
