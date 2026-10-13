@@ -4,15 +4,13 @@ Created: 2026-10-12 00:42 ET. Spec: [spec.md](spec.md).
 
 ## Current state
 
-- **Checkpoint (2026-10-12 20:55 ET):** tickets 01–08 resolved; `services.v2` bound (ticket 08).
-  Ticket 09 (`.a3` estimates + attribute) is claimed and running; ticket 10 is ready-for-agent.
-  Code-review fixes (tip `c9f9df67`) are on branch `cpud/review-fixes`: F1 floor-only bandwidth is
-  numeric on `services.v2`; F2–F7 and test fixes are listed in [evidence/review-fixes.md](evidence/review-fixes.md).
-  Integration branch `cpud/integration` (base `yanrujhou_main`).
-- **Blocker:** none for the effort. The review fixes still have to be fast-forwarded into
-  `cpud/integration` (see the review-fixes note).
-- **Next action:** finish ticket 09, then ticket 10 (timing and split check) on a later Eastern day
-  than both `.a3` estimates.
+- **Checkpoint (2026-10-12 21:55 ET):** tickets 01–09 resolved; both t75 `.a3` estimates are
+  numeric (26.643 s / 20.770 s) and the unchecked attribution report has numeric shares and floor.
+  Code-review fixes (F1–F7, [evidence/review-fixes.md](evidence/review-fixes.md)) are in
+  `cpud/integration` `4324b546`. Integration branch `cpud/integration` (base `yanrujhou_main`).
+- **Blocker:** none.
+- **Next action:** ticket 10 (timing and split check) on **2026-10-13 ET or later** (both `.a3`
+  estimates are dated 2026-10-12).
 
 ## Tickets
 
@@ -49,6 +47,11 @@ Graph: 01–06 start now → 07 (needs 01, 02, 04, 05, 06) → 08 (needs 03, 07)
 - Ticket 08 resolved (2026-10-12 17:55 ET, branch `cpud/08-09-bind-estimate`): `services.v2` bound on mbit10
   (sha256 `70fc5553…`), 6-member allowlist, 252 compatibility rows with 0 missing, floor-only 15 071 467 834 B/s;
   whole store `OK: 723`; `services.v1` unchanged ([answer](issues/08-bind-services-v2.md#answer), [runbook](evidence/08-bind/README.md)).
+- Ticket 09 resolved (2026-10-12 21:55 ET, branch `cpud/08-09-bind-estimate`): `.a3` estimates 26.643 s (baseline) and
+  20.770 s (candidate), 0 unknown regions, frozen and estimated at `c9f9df67`; attribution (F1 floor code, `4324b546`)
+  rewritten 93.50%/91.67%, untouched 6.49%/8.33%, unattributed <0.002%, speedup 1.283x, floor 0.197/0.206 s;
+  later estimate ended 2026-10-12 20:40 ET, so ticket 10 times on 2026-10-13 ET or later
+  ([answer](issues/09-rerun-estimates.md#answer), [runbook](evidence/09-rerun-03/README.md)).
 
 - Code-review fixes (2026-10-12 20:55 ET, branch `cpud/review-fixes`): F1 floor-only bandwidth numeric on
   `services.v2`; F2–F6, test-store fixes, T2 combined test; raw lane logs replaced by hashes

@@ -1,0 +1,50 @@
+{
+ "format": "fga03.unknowns-summary.v2",
+ "generated_by": "cpu-description-t75-pricing-2026-10-12/evidence/01-trial-bind/unknowns_summary.py (parameterized copy; reads only the named estimate records)",
+ "records": "/data/yanruj/EvolveSWDB_runs/cpud0809-20261012-a1/records09",
+ "note": "cpud ticket 09: mbit10.cpu.lanl20261006.t1.services.v2 estimates .a3 (store copy /data/yanruj/EvolveSWDB_runs/cpud0809-20261012-a1/records09)",
+ "rule": "missing_counts[item] = unknown regions (seconds null) whose bounds or overheads name the item; checked against every trial and against parameter_report.structural_missing",
+ "groups": [],
+ "sides": {
+  "baseline": {
+   "estimate": "fga03.t75-baseline.uniform22.t1.estimate.a3",
+   "estimate_sha256": "e4303d53cb2648edeaefd67ca965c7e33d230774448d75f4a207f57653b2ee59",
+   "created": "2026-10-12",
+   "seconds": 26.64257775905623,
+   "input": "bfs-20261004-uniform22.2f83a134a6bef789",
+   "threads": 1,
+   "target_description": "mbit10.cpu.lanl20261006.t1.services.v2",
+   "target_description_sha256": "edd7913d919a2978f36c7ceb289817c10e030b7035f8b4eef46f6dcc6cee073b",
+   "protocol": "fga03.t75-baseline.uniform22.t1.estimate.protocol.a3.badeda2d2d43b04b",
+   "estimator_sha256": "fcc40da106ac76d409abb684002a00eac89e856a63e0f60ef4fb3699ba26500e",
+   "regions": 286,
+   "unknown_regions": 0,
+   "known_region_seconds_sum": 26.64257775905623,
+   "unknown_region_ids": [],
+   "missing_counts": {},
+   "groups": {},
+   "agrees_with_parameter_report": true,
+   "trials_agree": true
+  },
+  "candidate": {
+   "estimate": "fga03.t75-candidate.uniform22.t1.estimate.a3",
+   "estimate_sha256": "38a3b319c5f1ea614145193872a37b2e4b5b6ab254a04b84d26e2eda2d36f4a2",
+   "created": "2026-10-12",
+   "seconds": 20.77006203415677,
+   "input": "bfs-20261004-uniform22.2f83a134a6bef789",
+   "threads": 1,
+   "target_description": "mbit10.cpu.lanl20261006.t1.services.v2",
+   "target_description_sha256": "edd7913d919a2978f36c7ceb289817c10e030b7035f8b4eef46f6dcc6cee073b",
+   "protocol": "fga03.t75-candidate.uniform22.t1.estimate.protocol.a3.40eae3eb40b5a110",
+   "estimator_sha256": "fcc40da106ac76d409abb684002a00eac89e856a63e0f60ef4fb3699ba26500e",
+   "regions": 289,
+   "unknown_regions": 0,
+   "known_region_seconds_sum": 20.77006203415677,
+   "unknown_region_ids": [],
+   "missing_counts": {},
+   "groups": {},
+   "agrees_with_parameter_report": true,
+   "trials_agree": true
+  }
+ }
+}
