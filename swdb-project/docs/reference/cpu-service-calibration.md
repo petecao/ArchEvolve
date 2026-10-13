@@ -360,8 +360,10 @@ into dependent-memory or allocator service parameters.
 **Floor-only bandwidth rate** (2026-10-12 ET, cpu-description ticket 03, C11). The
 base's measured `streaming_bandwidth` mechanism is not dropped: the binder copies it
 verbatim into the fresh description's `resource_floor_mechanisms`, with
-`carried_from` pinning the base description and its `calibration_sources`
-(`{id, sha256}` each). The estimator never reads that field, so every estimate's
+`carried_from` pinning the base description and the base calibration source that
+produced the rate (`{id, sha256}` each). Since review F6 (2026-10-12 ET) that is only a
+source whose `receipt_sha256` the `bytes_per_s` source text names, not every base
+`calibration_sources` entry; a hand rate pins none. The estimator never reads that field, so every estimate's
 seconds stay the same; only the attribution resource floor reads it
 ([format-v0.4-attribution.md](format-v0.4-attribution.md#resource-floor-ticket-07)).
 A bind without memory cells keeps `streaming_bandwidth` as an estimate mechanism and
