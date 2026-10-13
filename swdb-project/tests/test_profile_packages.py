@@ -191,6 +191,41 @@ def test_query_rejects_changed_package_under_retained_identity(package_setup, tm
     assert result.returncode == 1 and "retained identity" in result.stderr
 
 
+FUNCTIONAL_OFFLOAD = "dx100_read_offload.functional-v1"
+GEM5_OFFLOAD = "dx100_read_offload"
+EXTENSA = ("--mode", "extensa", "--campaign", "extensa-gem5-bfs-20261004-f1")
+
+
+def test_archevolve_package_from_live_catalog_passes_the_guard(package_setup, tmp_path):
+    """2026-10-13 ET (ADR 0013): the seed holds the live strategies, intrinsics and operations,
+    gem5-backed ones included. An ArchEvolve package offers the functional DX100 offload, and
+    every later ArchEvolve command naming the package is admitted."""
+    records, request, _, _, _ = package_setup
+    assert (records.path / "strategies" / f"{GEM5_OFFLOAD}.yaml").is_file()
+    package = _assemble(records, tmp_path, request)
+    offered = {row["strategy"] for row in package["strategies"]}
+    assert FUNCTIONAL_OFFLOAD in offered and GEM5_OFFLOAD not in offered
+    interfaces = {row["id"] for row in package["hardware"]["intrinsic_interfaces"]}
+    assert "dxc_gather.functional-v1" in interfaces and "dxc_gather" not in interfaces
+    functional = next(row for row in package["strategies"] if row["strategy"] == FUNCTIONAL_OFFLOAD)
+    assert functional["effect"][0]["hardware_operations"] == ["dx100.functional.v1.gather"]
+    for args in (("profile-strategies", package["id"]), ("profile-strategies", package["id"], "--mode", "archevolve"),
+                 ("strategy-regions", FUNCTIONAL_OFFLOAD, "--package", package["id"])):
+        result = records.swdb(*args, "--format", "json")
+        assert result.returncode == 0, result.stderr
+
+
+def test_archevolve_guard_still_refuses_the_gem5_offload_extensa_keeps_it(package_setup, tmp_path):
+    records, request, _, _, _ = package_setup
+    package = _assemble(records, tmp_path, request)
+    refused = records.swdb("strategy-regions", GEM5_OFFLOAD, "--package", package["id"], "--format", "json")
+    assert refused.returncode == 1
+    assert "ADR 0013" in refused.stderr and "dx100-gem5-se" in refused.stderr
+    extensa = records.swdb("strategy-regions", GEM5_OFFLOAD, *EXTENSA, "--format", "json")
+    assert extensa.returncode == 0, extensa.stderr
+    assert json.loads(extensa.stdout)["effect"][0]["hardware_operations"] == ["dx100.mmio.v1.indirect-load.i32"]
+
+
 def test_raw_add_cannot_claim_assembled_completeness(package_setup, tmp_path):
     records, request, _, _, _ = package_setup
     package = _assemble(records, tmp_path, request)
