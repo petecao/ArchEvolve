@@ -31,6 +31,19 @@ Created: 2026-10-12 01:10 ET
 
 Resolved 2026-10-12 01:24 ET on branch `cpud/06-library-calls`. Paths relative to `swdb-project/`.
 
+**Known limitations (added 2026-10-12 ET, code review F2/F3/F4, branch `cpud/review-fixes`)**
+
+- `indirect-call` is priced as call overhead only, at every site with that name. Characterize
+  also names inline asm and calls to uncounted callees `indirect-call`, so their real work is
+  missing from the estimate. t75 exposure: 1 candidate site (`DOBFS:178`), 0 in g16. Not fixed
+  (a Characterize change would change counts); pinned by
+  `test_every_indirect_call_site_is_priced_as_call_overhead_only`.
+- The `ostream_insert` and `_M_insert<unsigned long>` rates include amortized `write(2)` drains
+  (about 4–8 ns, inferred); `ostream_put` does not.
+- A native `calibrate` run now refuses fixture caps (< 7 repetitions, < 0.05 s trials) up front.
+- Details: `docs/reference/cpu-service-calibration.md`, section "Known limits of the 2026-10-12
+  families".
+
 **What exists now**
 
 - Runner: `swdb cpu-service-calibrate --service-group library_call` →

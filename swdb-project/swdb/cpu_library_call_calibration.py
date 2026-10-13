@@ -1,4 +1,4 @@
-"""Library-call service family: paired per-call receipts. Created: 2026-10-12 ET.
+"""Library-call service family: paired per-call receipts. Created: 2026-10-12 ET. Updated: 2026-10-12 ET (review F4: native caps first).
 
 Spec C8/C9 of .scratch/cpu-description-t75-pricing-2026-10-12. Modeled on the clock
 service: one shared source, a paired driver per service, a separate LLVM count proof with
@@ -114,6 +114,11 @@ def calibrate(args):
         raise Failure('library-call services require LLVM22 and a separate count proof')
     if args.size or getattr(args, 'cell', None) or args.count_build_cap_mib != 64:
         raise Failure('--size, --cell and --count-build-cap-mib apply to the allocator service group')
+    # Review F4 (2026-10-12 ET): the native validator admits only these caps; refuse them first,
+    # before the store, lane and host checks, not after a run the import would reject.
+    if not args.fixture and (type(args.repetitions) is not int or not 7 <= args.repetitions <= 11
+                             or not math.isfinite(args.min_trial_s) or not .05 <= args.min_trial_s <= .2):
+        raise Failure('native library-call caps are 7–11 repetitions and 0.05–0.2s trials')
     if (type(args.repetitions) is not int or not 3 <= args.repetitions <= 11 or not math.isfinite(args.min_trial_s)
             or not 0 < args.min_trial_s <= .2 or not math.isfinite(args.max_wall_s) or not 0 < args.max_wall_s <= 900):
         raise Failure('library-call caps are 3–11 repetitions, 0.2s trials and 900s wall')

@@ -1,5 +1,5 @@
-"""Fine-grained estimate attribution: `swdb attribute`. Created: 2026-10-11 ET. Updated: 2026-10-12 ET
-(final review fixes F40-F47: split-check shares, profile order and identity, comparable estimators,
+"""Fine-grained estimate attribution: `swdb attribute`. Created: 2026-10-11 ET. Updated: 2026-10-12 ET (cpu-description review F1: floor-only memory coverage;
+final review fixes F40-F47: split-check shares, profile order and identity, comparable estimators,
 one ranking).
 
 Spec: `.scratch/fine-grained-attribution-2026-10-11/spec.md` (ticket 02, the narrowest path).
@@ -694,16 +694,25 @@ def _floor_terms(region, target):
     The description's own rates are its `resource_bound` mechanisms plus its
     `resource_floor_mechanisms` (2026-10-12 ET, cpu-description ticket 03, C11): rates the
     estimator never reads, so a term from one is a floor term only, not a bound in the estimate.
+
+    Review F1 (2026-10-12 ET): a floor-only rate also treats `memory_service_scenario` as covering
+    non-stream bytes. The services binder strips every other memory model, so without this every
+    indirect access left the bandwidth term unknown. As in the estimator, covered non-stream bytes
+    are left out of the streamed bytes (the scenario prices them), so the term only gets smaller and
+    the floor stays a lower bound.
     """
     from swdb import analytic_models
     models = [m['model'] for m in target['mechanisms']]
     floor_only = target.get('resource_floor_mechanisms') or []
+    floor_covering = analytic_models.NONSTREAM_COVERING | {'memory_service_scenario'}
     terms = []
     for model in FLOOR_MODELS:
         own = [m for m in target['mechanisms']
                if m['model'] == model and m.get('accounting', 'resource_bound') == 'resource_bound']
-        own += [m for m in floor_only if m['model'] == model]
-        results = [analytic_models.evaluate(region, m, models, target['threads']) for m in own or [{'model': model, 'parameters': {}}]]
+        own = [(m, analytic_models.NONSTREAM_COVERING) for m in own]
+        own += [(m, floor_covering) for m in floor_only if m['model'] == model]
+        results = [analytic_models.evaluate(region, m, models, target['threads'], covering=covering)
+                   for m, covering in own or [({'model': model, 'parameters': {}}, analytic_models.NONSTREAM_COVERING)]]
         seconds = None if any(r['seconds'] is None for r in results) else max(r['seconds'] for r in results)
         terms.append({'model': model, 'in_description': bool(own), 'seconds': seconds,
                       'missing': sorted({m for r in results for m in r['missing']})})

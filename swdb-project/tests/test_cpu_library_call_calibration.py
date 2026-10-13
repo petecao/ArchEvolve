@@ -18,10 +18,10 @@ def runner(records, output, llvm, *extra):
         '--max-wall-s', '300', *extra, timeout=400)
 
 
-def test_runner_counts_one_selected_event_per_iteration_and_times_paired_drivers(records, tmp_path, llvm22):
+def test_runner_counts_one_selected_event_per_iteration_and_times_paired_drivers(records, tmp_path, llvm22, toolchain_flags):
     records.copy_closure('gapbs-bfs-do', 'kron-g16-k16')
     output = tmp_path / 'library-calls'
-    result = runner(records, output, llvm22)
+    result = runner(records, output, llvm22, *toolchain_flags)
     assert result.returncode == 0, result.stderr + result.stdout
     raw = json.loads((output / 'receipt.json').read_text())
     assert raw['evidence_kind'] == 'fixture' and raw['settings']['group'] == 'library_call_v1'
@@ -102,14 +102,16 @@ def bind_fixture(records, tmp_path, calibration, calls):
     return json.loads(outcome.stdout)
 
 
-def bound_estimate(records, tmp_path, drop=()):
+def bound_estimate(records, tmp_path, drop=(), calls=None):
+    """The fixture region's estimate under bound hand receipts; `calls` (name, executions) default to T75's."""
     import yaml
     from testkit.analytic import freeze_protocol
     from testkit.cpu_service import save_receipt
     imported = run_swdb('import-cpu-service-calibration', '--records', records.path, '--receipt',
         save_receipt(tmp_path, hand_receipt(drop)), '--id', 'fixture.library.calls', '--fixture')
     assert imported.returncode == 0, imported.stderr + imported.stdout
-    bound = bind_fixture(records, tmp_path, 'fixture.library.calls', [(name, count) for name, _ns, count in T75])
+    calls = [(name, count) for name, _ns, count in T75] if calls is None else calls
+    bound = bind_fixture(records, tmp_path, 'fixture.library.calls', calls)
     path = tmp_path / 'bound.yaml'
     path.write_text(yaml.safe_dump(bound, sort_keys=False))
     protocol = freeze_protocol(records.path, tmp_path, path, roi='fixture.stream.v1', input_id='tiny-sym')
@@ -127,6 +129,21 @@ def test_bound_library_call_receipts_price_every_t75_print_call(records, tmp_pat
     assert service['seconds'] == pytest.approx(7.994e-6)
     assert len(service['inputs']['covered_calls']) == 7
     assert region['seconds'] is not None
+    assert not any(b['model'] == 'unmodeled_calls' for b in region['bounds'])
+
+
+def test_every_indirect_call_site_is_priced_as_call_overhead_only(records, tmp_path):
+    """Review F2/T3 (2026-10-12 ET), a known limitation pinned on purpose. Characterize names every
+    indirect call site `indirect-call`: a virtual call to a counted body, a call to an uncounted
+    callee, and inline asm alike. The one scalar selector prices each execution at the measured
+    call overhead (hand rate 1 ns) and nothing more, whatever the site really runs."""
+    import pytest
+    region = bound_estimate(records, tmp_path, calls=[('indirect-call', 1000), ('indirect-call', 3)])
+    service = next(o for o in region['overheads'] if o['model'] == 'native_service_costs')
+    assert service['seconds'] == pytest.approx(1003e-9)
+    assert len(service['inputs']['covered_calls']) == 2
+    # The region adds exactly that overhead to its 2 s of counted compute (32 fp ops at 16 ops/s).
+    assert region['seconds'] == pytest.approx(2 + 1003e-9)
     assert not any(b['model'] == 'unmodeled_calls' for b in region['bounds'])
 
 
@@ -181,3 +198,16 @@ def test_pilot_keeps_headroom_so_warm_trials_still_resolve_min_trial(tmp_path):
     assert batches == 65536 and seen[-2:] == [32768, 65536]
     assert batches * BATCH_EVENTS * per_event * .8 >= .05   # a trial 20% faster than the pilot still resolves
     assert json.loads((tmp_path / 'pilot.json').read_text())['driver_seconds'] >= .0625
+
+
+def test_native_run_refuses_fixture_sampling_caps_before_any_work(tmp_path):
+    """Review F4 (2026-10-12 ET): native validation admits only 7-11 repetitions and trials of at
+    least 0.05 s, so a native run with fixture caps is refused first, before the store, lane or
+    host checks, and nothing is written."""
+    (tmp_path / 'records').mkdir()
+    for caps in (('--repetitions', '3'), ('--min-trial-s', '.002'), ('--repetitions', '12')):
+        output = tmp_path / ('native-' + caps[1])
+        refused = run_swdb('cpu-service-calibrate', '--service-group', 'library_call', '--records', tmp_path / 'records',
+                           '--output', output, '--machine', 'mbit10', '--llvm-bin', tmp_path, *caps)
+        assert refused.returncode != 0 and 'native library-call caps' in refused.stderr, refused.stderr
+        assert not output.exists()
