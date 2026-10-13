@@ -1,4 +1,8 @@
-"""Public typed-library shape, evidence and promotion behavior. Updated: 2026-10-03 ET."""
+"""Public typed-library shape, evidence and promotion behavior. Updated: 2026-10-13 ET (suite fix:
+the target-state cases read records and library as committed at the testkit.pinned evidence commit;
+the live library was re-pinned to a new hardware catalog in 87e8646e and changed in 13c40568 and
+c3de51f4, so its entries no longer carry the content hashes the historical certifications bind);
+2026-10-03 ET."""
 import copy
 import json
 import pytest
@@ -248,11 +252,14 @@ def test_target_status_cannot_reinterpret_a_stale_contract(library, changed):
 
 
 @pytest.fixture(scope='module')
-def public_preparation_state_records():
-    """Published prepare/build receipts; no remote execution. Updated: 2026-10-03 ET."""
-    from swdb import paths
+def public_preparation_state_records(tmp_path_factory):
+    """Published prepare/build receipts; no remote execution. Updated: 2026-10-13 ET (records and
+    library pinned at the evidence commit, read through PINNED); 2026-10-03 ET."""
     from swdb.store import Store
-    store = Store(paths.RECORDS)
+    from testkit.pinned import pinned_folder
+    folder = tmp_path_factory.mktemp('pinned-typed-library')
+    PINNED.update(records=pinned_folder('records', folder), library=pinned_folder('library', folder))
+    store = Store(PINNED['records'])
     run = 'typed-library-bfs-gem5-20261003-a1'
     builds = [store.get(run + '.' + name + '.build', 'evaluation') for name in
               ('baseline.primary', 'candidate.primary', 'candidate.diagnostic')]
@@ -266,6 +273,10 @@ def public_preparation_state_records():
     # target-state derivation from unrelated historical evaluations.
     records = [row.data for row in store.records if row.data['kind'] != 'evaluation']
     return records, builds, proposal['request']['library'], candidate, execution, checkpoint
+
+
+#: The pinned records and library folders the target-state cases read (set by the fixture above).
+PINNED = {}
 
 
 @pytest.mark.parametrize('case', ['prepare', 'failed-compile', 'discovery', 'collection', 'package'])
@@ -287,9 +298,9 @@ def test_public_preparation_processes_do_not_establish_target_state(public_prepa
         build['correctness'] = {'state': 'failed' if case == 'discovery' else 'passed', 'checks': [
             {'passed': True, 'continuation': {'normal_exit_observed': True},
              'coverage': {'read_only_executed': {'state': 'observed'}}}]}
-    store = Store(paths.RECORDS, indexed_records=[Record(str(i), row)
+    store = Store(PINNED['records'], indexed_records=[Record(str(i), row)
                   for i, row in enumerate(records + builds)])
-    lib = Library(paths.HOME / 'library', store)
+    lib = Library(PINNED['library'], store)
     cited = [section['contract']] + section['entries']
     assert cited
     assert {pin['id']: lib.state(pin['id']) for pin in cited} == {
@@ -334,9 +345,9 @@ def test_public_execution_stage_retains_witness_and_completion_rules(public_prep
         execution['correctness'] = {'state': 'unverified', 'checks': []}
         simulation = next(stage for stage in execution['stages'] if stage['stage'] == 'simulation')
         simulation['state'] = state
-    store = Store(paths.RECORDS, indexed_records=[Record(str(i), row)
+    store = Store(PINNED['records'], indexed_records=[Record(str(i), row)
                   for i, row in enumerate(records + builds + [execution])])
-    lib = Library(paths.HOME / 'library', store)
+    lib = Library(PINNED['library'], store)
     cited = [section['contract']] + section['entries']
     assert {pin['id']: lib.state(pin['id'])['status'] for pin in cited} == {
         pin['id']: expected for pin in cited}
@@ -370,9 +381,9 @@ def test_public_checkpoint_guest_attempt_remains_inconclusive(public_preparation
             execution['correctness'] = {'state': 'passed', 'checks': [
                 {'passed': True, 'continuation': {'normal_exit_observed': True},
                  'coverage': {'read_only_executed': {'state': 'observed'}}}]}
-    store = Store(paths.RECORDS, indexed_records=[Record(str(i), row)
+    store = Store(PINNED['records'], indexed_records=[Record(str(i), row)
                   for i, row in enumerate(records + builds + [execution])])
-    lib = Library(paths.HOME / 'library', store)
+    lib = Library(PINNED['library'], store)
     cited = [section['contract']] + section['entries']
     assert {pin['id']: lib.state(pin['id']) for pin in cited} == {
         pin['id']: {'tier': 'shared', 'status': 'inconclusive'} for pin in cited}
