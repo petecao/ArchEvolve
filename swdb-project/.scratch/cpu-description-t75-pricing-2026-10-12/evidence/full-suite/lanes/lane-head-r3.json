@@ -1,0 +1,27 @@
+{
+ "socket_lane": {
+  "aligned_cell_age_s": "",
+  "aligned_to": "no_gapbs_batch_running",
+  "command": [
+   "bash",
+   "/data/yanruj/EvolveSWDB_runs/cpud-fullsuite-20261013/run_suite.sh",
+   "head-r3",
+   "/data/yanruj/ArchEvolve-cpud-head-07b63e3e",
+   "/data/yanruj/EvolveSWDB_runs/cpud-fullsuite-20261013/head-r3-ids.txt"
+  ],
+  "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+  "ended_utc": "2026-10-13T18:40:15Z",
+  "exit_code": 3,
+  "host": "mbit10",
+  "job": "cpud-suite-head-r3",
+  "lease_generation": 526,
+  "lease_name": "mbit10-evaluation-node0",
+  "load1_at_start": 10.58,
+  "load1_max": 32,
+  "node": 0,
+  "numa_memory_policy": "bind:0",
+  "numactl": "--cpunodebind=0 --membind=0",
+  "preregistration_sha256": null,
+  "started_utc": "2026-10-13T14:35:04Z"
+ }
+}
