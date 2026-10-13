@@ -53,3 +53,10 @@ How does the proof-hint loop work?
   experimental cutpoint loop invariants, so hints mostly target WP. ESBMC and RPP are out.
   (4) The checker allows only `assume`s a summary generates. (5) A racy candidate artifact is
   refuted, and the counterexample goes to the rewriting LLM, not the hint agent (provisional).
+- 2026-10-13 14:19 ET: input from 12: (1) a hazard is an assertion failure at an unready read, not
+  a fixed or arbitrary value; on the C++ path the harness generator places a probe before each
+  tile read loop, in the C lowering a check sits at each read. The checker must confirm these
+  probes are present and generated, not hint-written. (2) A refutation replays on the strict
+  layer before it counts as a bug, but rules only the proof semantics has (memory footprints,
+  timing-dependent `get_tile_ready`, the other-thread read rule) cannot replay there until the
+  strict layer catches up. Decide how such a refutation is reported.

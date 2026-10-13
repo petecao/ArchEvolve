@@ -45,3 +45,19 @@ The method must be general: GAPBS `bc.cc:106-107` and `sssp.cc:157-160` use the 
 - 2026-10-13: blocked by 12 because the proof needs the DX100 store inside `critical` to be
   complete and visible to other cores before the lock is released; ticket 12 decides that
   semantics.
+- 2026-10-13 14:19 ET: input from 12 (now resolved, so this ticket is unblocked):
+  - **Overlap rule** (12, item 4): a CPU access by another thread that overlaps an unfinished DX100
+    command's footprint is allowed when DX100 only reads; the read returns some value the location
+    held while the command ran, never older than the stores made before the command was issued.
+    The contract must tolerate it (BFS read offload: the CAS recheck, L4); prove it here. When
+    DX100 writes, the overlap is a hazard. Same-thread overlaps with a write are hazards.
+  - **Tile ownership** is a proof obligation: the device does not enforce it (research 12).
+  - **Store inside `critical`:** finishing before the lock is released is proven by the wait rule;
+    the next thread's DX100 load seeing it is a cited rule plus two gem5-corner assumption entries;
+    the CPU reads after `omp barrier` rest on the entry "no stale CPU copy survives a DX100 store"
+    (owner Eric). One DX100 instance is an assumption entry. Details: 12, item 7.
+  - **Peter's read offload races too:** it keeps the plain store `parent[v]=u` after a successful
+    CAS (`library/dx100/bfs_read_offload.inc:53,63`) beside other threads' CAS and relaxed loads
+    of the same `parent[v]`, the race class 11 found in the authors' fallback path
+    (`apps/dx100/benchmarks/gapbs/src/bfs.cc:205-210`). Decide here what 01 decision 9.2
+    ("should be proven") means at threads > 1.

@@ -1,6 +1,6 @@
 # EvolveSWDB — ArchEvolve's research database
 
-Updated: 2026-10-12 23:51 ET (formal-verification ticket 11: Extensa Probata, verifier lineup, bounded verifier, unbounded verifier added); 2026-10-12 22:50 ET (formal-verification ticket 10: unit postcondition, relational template, contract proof, reference instance, summary added; negative control and certification level sharpened); 2026-10-12 22:25 ET (formal-verification ticket 09: certification level and formal verifier sharpened; proof unit, unit relation, output relation, lifting lemma, assumption set added); 2026-10-12 00:37 ET (final review of fine-grained attribution: code origin and catalog bound reworded; attribution report, split check, site-finder region and measured scope added); 2026-10-11 22:10 ET (review fix: rewrite site reworded to merged spans); 2026-10-11 21:52 ET (ADR 0015: LANL core, guessed column, SWDB extension; crosswalk now historical); 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom, remaining gain bound); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
+Updated: 2026-10-13 14:05 ET (formal-verification ticket 12: proof semantics added; functional model and assumption set sharpened); 2026-10-12 23:51 ET (formal-verification ticket 11: Extensa Probata, verifier lineup, bounded verifier, unbounded verifier added); 2026-10-12 22:50 ET (formal-verification ticket 10: unit postcondition, relational template, contract proof, reference instance, summary added; negative control and certification level sharpened); 2026-10-12 22:25 ET (formal-verification ticket 09: certification level and formal verifier sharpened; proof unit, unit relation, output relation, lifting lemma, assumption set added); 2026-10-12 00:37 ET (final review of fine-grained attribution: code origin and catalog bound reworded; attribution report, split check, site-finder region and measured scope added); 2026-10-11 22:10 ET (review fix: rewrite site reworded to merged spans); 2026-10-11 21:52 ET (ADR 0015: LANL core, guessed column, SWDB extension; crosswalk now historical); 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom, remaining gain bound); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
 
 The Software Database is the ArchEvolve component that knows the applications:
 what their kernels compute, how their code touches memory, what profiling
@@ -271,7 +271,8 @@ _Avoid_: oracle (alone), golden model, spec (alone)
 
 **Functional model**:
 The DX100 authors' untimed model of DX100's programming interface, which completes every
-operation at once.
+operation at once. It shows what each operation computes, not how the device runs it (timing,
+ready bits, order, memory traffic): a testing aid, never the semantics proofs trust.
 _Avoid_: simulator (alone), emulator
 
 **Strict layer**:
@@ -279,6 +280,12 @@ A drop-in replacement for the functional model's interface, with the same calls,
 hazards the plain model hides: reads before a covering wait, tiles shared between threads,
 truncation, and accesses outside registered memory regions.
 _Avoid_: shim, mock
+
+**Proof semantics**:
+The description of an accelerator's programming interface that proofs trust: what each call
+computes and which uses of its results are hazards. Each rule cites the device source or is marked
+assumed with an owner. The strict layer is its executable counterpart for testing.
+_Avoid_: proof edition, logical model, device model
 
 **Certification**:
 The certification command's test of a lowering or library operation against its reference
@@ -591,7 +598,8 @@ _Avoid_: stub, model (alone), abstraction (alone)
 
 **Assumption set**:
 Everything a proven verdict depends on without proving it, each entry with its kind: an assumed
-clause, the trusted accelerator semantics, a building-block summary, a reduction, or a trusted tool.
+clause, the accelerator's proof semantics, a building-block summary, a reduction, or a trusted
+tool.
 _Avoid_: trusted base (alone), assumptions (alone)
 
 **Proof hint**:

@@ -1,12 +1,13 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-13 00:35 ET (ticket 11 resolved: verifier lineup, concurrency, the name
+Updated: 2026-10-13 14:19 ET (ticket 12 resolved: the proof semantics; ticket 16 added);
+2026-10-13 00:35 ET (ticket 11 resolved: verifier lineup, concurrency, the name
 Extensa Probata; ticket 15 added); 2026-10-12 22:52 ET (ticket 10 resolved: what a contract proves once);
 2026-10-12 22:25 ET (ticket 09 resolved: what proven asserts; generality requirement added);
 2026-10-11 18:58 ET (ticket 08 resolved: crux-llvm separates the bug at one lane)
 **Type:** wayfinder map
-**Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–11 resolved
+**Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–12 resolved
 
 ## Destination
 
@@ -105,6 +106,14 @@ concept is the next effort.
   level, CIVL refutes, VerCors cross-checks. Undefined behavior is a proof obligation; the
   baseline is its single-thread run; the authors' racy fallback path is refuted at N > 1. Name:
   Extensa Probata.
+- [What semantics do DX100 proofs trust?](issues/12-dx100-proof-semantics.md):
+  a separate **proof semantics**: one contract per `maa_*` call over ghost hazard state, each rule
+  citing gem5 source or marked assumed. The functional model is a testing aid; the strict layer is
+  the executable counterpart, kept in agreement by fixtures and semantics negative controls.
+  Values as if finished at issue plus hazard assertions, joined by a reduction lemma. Unready
+  reads and per-element memory-footprint overlaps are hazards, except another thread's write
+  beside a DX100 read (Peter's pattern). Stops at the `maa_*` calls. L3, L5 become cited rules;
+  stale CPU copies after a DX100 store stay assumed (owner Eric).
 
 ## Tickets
 
@@ -121,10 +130,11 @@ concept is the next effort.
 | 09 | [What does the "proven" level assert about a candidate artifact?](issues/09-what-proven-asserts.md) | grilling | resolved | 03 |
 | 10 | [What does a proven rewrite contract prove once?](issues/10-proven-rewrite-contract.md) | grilling | resolved | 03, 09 |
 | 11 | [Which verifiers form the bounded and unbounded tiers?](issues/11-verifier-choice.md) | grilling | resolved | 02, 08, 09 |
-| 12 | [What semantics do DX100 proofs trust?](issues/12-dx100-proof-semantics.md) | grilling | ready-for-human | 05, 08, 14 |
+| 12 | [What semantics do DX100 proofs trust?](issues/12-dx100-proof-semantics.md) | grilling | resolved | 05, 08, 14 |
 | 13 | [How does the proof-hint loop work?](issues/13-proof-hint-loop.md) | grilling | ready-for-human | 04, 09, 11 |
 | 14 | [Does a DX100 wait on a store's source tile cover the store's result?](issues/14-dx100-wait-rule.md) | research | resolved | — |
 | 15 | [How do proofs cover concurrency for any thread count?](issues/15-concurrency-proofs.md) | grilling | ready-for-human | 11, 12 |
+| 16 | [What language do formal halves and the proof semantics share?](issues/16-formal-half-language.md) | grilling | ready-for-human | 11, 12 |
 
 ## Not yet specified
 
@@ -134,14 +144,12 @@ concept is the next effort.
   included); 11 chose SAW, whose summaries are native `llvm_verify` overrides, as the bounded
   verifier. 10's hypothesis: summaries in place of the inlined strict-layer port bring 2 lanes
   under 15 minutes.
-- **Where real DX100 bugs may hide:** the two corners where the strict layer is looser than gem5
-  (a range loop finishing early; memory effects applied at the call), and the same wait-on-source
-  idiom in `apps/dx100/benchmarks/gapbs/src/pr.cc:242-245`.
-- **Formal-half language:** what language clause formal halves use so the chosen verifier checks
-  them, and how legality clauses L2–L5 (natural language only today) get formal halves. Per 11,
-  formal halves generate SAWScript specs, C call stubs and ACSL contracts, and the C lowering
-  needs a declared C++ subset. Per 10, each clause also names its proof placement (once, per
-  candidate, assumed).
+- **Where real DX100 bugs may hide:** per 12, the strict layer's two looser corners are closed
+  for proofs (the range-loop corner is in certify 1.7; memory timing is in the proof semantics),
+  and the wait-on-source idiom in `apps/dx100/benchmarks/gapbs/src/pr.cc:242-245` is safe under
+  the gem5 rule. Left: stale CPU copies after a DX100 store (assumed, owner Eric; research 12),
+  the two gem5 corners research 12 could not rule out, and the plain store after CAS in Peter's
+  read offload (ticket 15).
 - **Evaluation plan:** kernels beyond BFS, required by the generality note (the DX100 authors'
   code covers bfs top-down and bottom-up (`bfs_bu.cc`), bc, pr and sssp; cc and tc have none;
   Extensa campaign artifacts), baselines (testing-only certification, verifier without hints,
@@ -150,13 +158,16 @@ concept is the next effort.
   lemma. Per 10, each contract also needs a reference instance and a contract proof. Per 11: the
   hypothesis "a proven candidate artifact vs. the authors' code at every thread count, with
   performance compared" (the authors' fallback path races); the reduction-vs-VerCors comparison;
-  CIVL team-size bounds.
+  CIVL team-size bounds. Per 12: the semantics negative controls, and the strict layer catching
+  up to the proof semantics (memory footprints, the other-thread read rule) as a new certify
+  version.
 - **Records:** how proven verdicts, bounds, hints and counterexamples are stored in the research
   database and shown in ArchEvolve mode. Per 09, a verdict also carries its assumption set (each
   entry with its kind), a value or "unbounded" per bound dimension, and the cap from proven
   dependencies. Per 10, each once-proven part records its level and the content hashes it holds
   for; a changed hash reopens it. Per 11, every "not proven" records its failure class, and every
-  verdict its verifier lineup versions, solvers and flags.
+  verdict its verifier lineup versions, solvers and flags. Per 12, every verdict names the proof
+  semantics version and its agreement evidence (fixture differences, semantics controls).
 - **Extensa-mode loop:** the proving budget per iteration, and how ranking by proven level
   changes selection.
 
