@@ -1,4 +1,6 @@
-"""Workspace/audit contracts via public submit and repair. Updated: 2026-10-05 ET (shared tests/testkit); 2026-09-30.
+"""Workspace/audit contracts via public submit and repair. Updated: 2026-10-13 ET (suite fix: the DX100
+required-operation proposal names the gem5-backed target, so it runs in explicit Extensa fixture mode
+under ADR 0013); 2026-10-05 ET (shared tests/testkit); 2026-09-30.
 
 Fixtures emulate both real CLI event formats; no real model is invoked.
 """
@@ -1040,6 +1042,7 @@ def test_repair_cannot_switch_from_fixture_to_real_classification(proposal_setup
 
 def test_required_dx100_operation_headers_resolve_in_snapshot(records, tmp_path, workspace_provider):
     from test_capabilities import source_only_target, leaf
+    from test_dx100 import EXTENSA
     source_only_target(records)
     runs = tmp_path / "runs"
     result = records.swdb("source-snapshot", "dx100-bfs-scalar", "--id", "dx-source", "--runs-dir", runs,
@@ -1061,7 +1064,8 @@ def test_required_dx100_operation_headers_resolve_in_snapshot(records, tmp_path,
     path.write_text(yaml.safe_dump(request))
     config = workspace_provider(edits=[{"path": "benchmarks/gapbs/src/bfs.cc", "old": "int beta = 18",
                                         "new": "int beta = 17"}])
-    result = records.swdb("submit", path, "--provider-config", config, "--runs-dir", runs, "--format", "json")
+    result = records.swdb("submit", path, "--provider-config", config, "--runs-dir", runs, "--format", "json",
+                          *EXTENSA)
     proposal = json.loads(result.stdout)
     assert result.returncode == 0, (result.stderr, proposal["outcome"])
     manifest = proposal["attempts"][0]["provider"]["workspace_manifest"]

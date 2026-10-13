@@ -1,6 +1,7 @@
 """Profile-package fixtures: one evaluated candidate artifact per module and package
 assembly helpers. Created 2026-10-05 ET (code review T1), from
-tests/test_profile_packages.py."""
+tests/test_profile_packages.py. Updated 2026-10-13 ET (suite fix: the seed keeps only the
+strategies ADR 0013 admits in ArchEvolve mode)."""
 
 import copy
 import hashlib
@@ -22,6 +23,28 @@ def _read(records, rid):
     return json.loads(result.stdout)
 
 
+def _team_safe_strategies(records):
+    """Drop strategies and intrinsics whose closure ADR 0013 refuses in ArchEvolve mode.
+
+    2026-10-13 ET (suite fix): these are team (ArchEvolve-mode) package workflows. A strategy
+    that pins gem5-backed operations (today the DX100 MMIO offload and its intrinsics) makes every later
+    `profile-strategies`, `submit` and `add` naming the package refuse, which is the guard's
+    job, not what these fixtures test. The filter asks the guard itself; no strategy is named."""
+    from swdb.archevolve import require_team_safe
+    from swdb.cli import Failure
+    from swdb.store import Store
+    store = Store(records.path)
+    refused = []
+    for kind in ("strategies", "intrinsics"):
+        for path in sorted((records.path / kind).glob("*.yaml")):
+            try:
+                require_team_safe(store, records.read(f"{kind}/{path.name}")["id"], command="fixture")
+            except Failure:
+                refused.append(path)
+    for path in refused:
+        path.unlink()
+
+
 @pytest.fixture(scope="module")
 def package_seed(tmp_path_factory):
     tmp = tmp_path_factory.mktemp("package-seed")
@@ -29,6 +52,7 @@ def package_seed(tmp_path_factory):
     proposal = build_proposal_setup(records, tmp)
     records, runs, evaluate, base = build_evaluation_setup(proposal, tmp)
     records.copy_repo("strategies", "intrinsics", "operations")
+    _team_safe_strategies(records)
     evaluated = records.swdb("evaluate", evaluate(id="package-evaluation"), "--runs-dir", runs, "--format", "json")
     assert evaluated.returncode == 0, evaluated.stderr
     evaluation = json.loads(evaluated.stdout)

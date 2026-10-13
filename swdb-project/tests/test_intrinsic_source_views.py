@@ -1,4 +1,6 @@
-"""Immutable source-only views preserve historical intrinsic identities. 2026-10-06 ET."""
+"""Immutable source-only views preserve historical intrinsic identities. 2026-10-06 ET.
+Updated 2026-10-13 ET (suite fix: the functional fixture operation also takes the functional
+source model, since the 2026-10-10 ADR 0013 guard reads `model` as an identity field)."""
 import copy
 import hashlib
 import pytest
@@ -50,7 +52,9 @@ def production_request(records,tmp_path,*,old_operation=False):
     records.add_stub()
     if not old_operation:
         operation=records.read('operations/dx100.mmio.v1.indirect-load.i32.yaml')
-        operation.update(id='fixture.functional.operation',backend='functional-source')
+        functional=records.read('operations/dx100.functional.v1.gather.yaml')
+        operation.update(id='fixture.functional.operation',backend='functional-source',
+            model=functional['model'],interface=functional['interface'])
         records.write('operations/fixture.functional.operation.yaml',operation)
         data['hardware_operations']=[operation['id']]
         records.write('intrinsics/dxc_gather.functional-v1.yaml',data)

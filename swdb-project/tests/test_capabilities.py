@@ -1,4 +1,7 @@
-"""Public capability/proposal checks; no fixture establishes acceleration. Updated 2026-09-26."""
+"""Public capability/proposal checks; no fixture establishes acceleration. Updated 2026-10-13 ET
+(suite fix: the DX100 target names the gem5 backend, so ADR 0013 ArchEvolve mode refuses its
+proposals; the capability contract runs in explicit Extensa fixture mode and the default refusal
+is asserted once); 2026-09-26."""
 
 import copy
 import difflib
@@ -9,6 +12,7 @@ import pytest
 import yaml
 
 from conftest import REPO, run_swdb
+from test_dx100 import EXTENSA
 
 
 TARGET = "dx100-e4fc4af-4c"
@@ -82,13 +86,25 @@ def proposal_case(records, tmp_path):
             change(current)
         path = tmp_path / f"{current['id']}.yaml"
         path.write_text(yaml.safe_dump(current))
-        command = records.swdb("submit", path, "--runs-dir", runs, "--format", "json")
+        command = records.swdb("submit", path, "--runs-dir", runs, "--format", "json", *EXTENSA)
         assert command.returncode in {0, 1}, command.stderr
         result = json.loads(command.stdout)
         retrieved = output(records.swdb("get", current["id"], "--format", "json"))
         assert retrieved == result
         return result
     return submit
+
+
+def test_archevolve_mode_refuses_a_proposal_for_the_gem5_backed_target(records, proposal_case, tmp_path):
+    """ADR 0013: the default (ArchEvolve) submit refuses the DX100 gem5 target before any record."""
+    proposal_case(lambda request: request.update(id="extensa-control"))
+    request = yaml.safe_load((tmp_path / "extensa-control.yaml").read_text())
+    request["id"] = "team-proposal"
+    path = tmp_path / "team-proposal.yaml"
+    path.write_text(yaml.safe_dump(request))
+    refused = records.swdb("submit", path, "--runs-dir", tmp_path / "runs", "--format", "json")
+    assert refused.returncode == 1 and "ADR 0013" in refused.stderr and TARGET in refused.stderr
+    assert records.swdb("get", "team-proposal", "--format", "json").returncode != 0
 
 
 def test_supported_sequence_creates_candidate_without_executable_claim(proposal_case):

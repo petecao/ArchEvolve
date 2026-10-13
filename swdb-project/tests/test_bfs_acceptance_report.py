@@ -1,6 +1,8 @@
 """The public acceptance report over the actual retained records. Created 2026-09-27 ET.
 Updated 2026-10-05 ET (code review T4): the records are read as committed at a pinned commit
-(`testkit.pinned`), not from the live checkout.
+(`testkit.pinned`), not from the live checkout. Updated 2026-10-13 ET (suite fix: the retained
+proposal's lineage pins gem5 records, so its handoff renders in explicit Extensa mode under ADR 0013,
+as the checked-in examples already do).
 
 These tests read the repository's real T18/T19 native evidence through the
 public `bfs-coverage` and `handoff-message` commands. Raw artifacts stay on
@@ -145,7 +147,8 @@ def test_evaluation_message_separates_completed_and_incomplete_without_claims(ac
 def test_proposal_message_retains_provider_capture_and_edit_format(actual, tmp_path):
     records, _ = actual
     done = run_swdb("handoff-message", "rewrite_proposal", "bfs-campaign-preparation-20260925-a1.upstream-annotated-context6",
-                    "--records", records, "--db", tmp_path / "m.sqlite", "--format", "json")
+                    "--records", records, "--db", tmp_path / "m.sqlite", "--format", "json",
+                    "--mode", "extensa", "--campaign", "extensa-gem5-bfs-20261004-a7")
     assert done.returncode == 0, done.stderr
     body = json.loads(done.stdout)
     handling = body["content"]["handling"]
