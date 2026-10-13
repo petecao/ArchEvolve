@@ -27,3 +27,10 @@ tier, and what is the fallback when the primary tool cannot read the code?
   (2) equality over real arithmetic for floating-point kernels (PR, BC), rounding in the
   assumption set; (3) for proven unbounded, a proof for any thread count, since thread count is
   a bound. The evaluation covers other GAPBS kernels, not only BFS.
+- 2026-10-12 22:52 ET: input from 10: the tiers must (1) use summaries, a library entry's proven clauses in
+  place of its code, inside candidate proofs (function contracts that replace calls); (2) run
+  two routes: a single-program proof of a unit postcondition (BFS; what 08 did with P2) and a
+  paired-program proof under a relational template (PR, BC); (3) prove contract parts once,
+  ideally for all graph sizes and knob values, else within recorded bounds. Hypothesis to test
+  in the proof of concept: 08's safe 2-lane case proves in under 15 minutes on the Mac once
+  summaries replace the inlined strict-layer port.

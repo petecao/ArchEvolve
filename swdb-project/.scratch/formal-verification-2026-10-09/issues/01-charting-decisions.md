@@ -52,3 +52,8 @@ Decided with Yan-Ru in the charting session, 2026-10-09 ET.
   gem5-matching wait rule; seeded real bugs (negative controls, a deleted wait) must be refuted.
   The strict layer's false alarm on a correct expert rewrite is paper evidence that hardware
   semantics must be explicit and checked against the device model.
+- 2026-10-12 22:52 ET: ticket 10 (Yan-Ru) rewords decision 2(a) to "contract parts proven once, plus one small
+  proof per candidate artifact". Building-block proofs live with library entries (summaries);
+  the contract proof covers its unit postcondition or relational template on a reference
+  instance, its lifting lemma per kernel, and its negative controls refuted. Never say
+  "proven contract" alone (the split decision 5 promised).

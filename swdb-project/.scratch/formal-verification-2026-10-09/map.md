@@ -1,10 +1,11 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-12 22:25 ET (ticket 09 resolved: what proven asserts; generality requirement added);
+Updated: 2026-10-12 22:52 ET (ticket 10 resolved: what a contract proves once);
+2026-10-12 22:25 ET (ticket 09 resolved: what proven asserts; generality requirement added);
 2026-10-11 18:58 ET (ticket 08 resolved: crux-llvm separates the bug at one lane)
 **Type:** wayfinder map
-**Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09 resolved
+**Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–10 resolved
 
 ## Destination
 
@@ -86,6 +87,13 @@ concept is the next effort.
   relation. Proven requires certified; every verdict lists its assumption set and per-dimension
   bounds (threads always a bound). Floating point compares over real arithmetic. 08's harness
   `assume` on `parent[]` misses real inputs.
+- [What does a proven rewrite contract prove once?](issues/10-proven-rewrite-contract.md):
+  staged hybrid. Building blocks are proven once with their library entry and used as summaries.
+  The contract proof holds a unit postcondition (BFS) or relational template (PR, BC), proven on a
+  reference instance, its lifting lemma per kernel, and its negative controls refuted. Per
+  candidate: one automatic proof unit. Each clause names its proof placement; each part carries
+  its own level, per content-hash set. Scale is a hypothesis: 2 lanes in under 15 minutes with
+  summaries.
 
 ## Tickets
 
@@ -100,7 +108,7 @@ concept is the next effort.
 | 07 | [Install the shortlisted verifiers on the Mac](issues/07-install-verifiers.md) | task | resolved | — |
 | 08 | [Can an off-the-shelf verifier tell a real DX100 wait bug from a safe one?](issues/08-wrong-tile-prototype.md) | prototype | resolved | — |
 | 09 | [What does the "proven" level assert about a candidate artifact?](issues/09-what-proven-asserts.md) | grilling | resolved | 03 |
-| 10 | [What does a proven rewrite contract prove once?](issues/10-proven-rewrite-contract.md) | grilling | ready-for-human | 03, 09 |
+| 10 | [What does a proven rewrite contract prove once?](issues/10-proven-rewrite-contract.md) | grilling | resolved | 03, 09 |
 | 11 | [Which verifiers form the bounded and unbounded tiers?](issues/11-verifier-choice.md) | grilling | ready-for-human | 02, 08, 09 |
 | 12 | [What semantics do DX100 proofs trust?](issues/12-dx100-proof-semantics.md) | grilling | ready-for-human | 05, 08, 14 |
 | 13 | [How does the proof-hint loop work?](issues/13-proof-hint-loop.md) | grilling | ready-for-human | 04, 09, 11 |
@@ -111,7 +119,8 @@ concept is the next effort.
 - **Scaling past one lane:** what bound a proven-within-bounds verdict needs (2-lane tiles, more
   edges), and which engine or encoding reaches it. 08 showed crux-llvm cannot prove 2 lanes in
   15 minutes on the Mac. 09 settled how bounds are declared (per contract dimension, threads
-  included); which bound is worth reaching still waits on 11 (verifier choice).
+  included); which bound is worth reaching still waits on 11 (verifier choice). 10's hypothesis:
+  summaries in place of the inlined strict-layer port bring 2 lanes under 15 minutes.
 - **Where real DX100 bugs may hide:** the two corners where the strict layer is looser than gem5
   (a range loop finishing early; memory effects applied at the call), and the same wait-on-source
   idiom in `apps/dx100/benchmarks/gapbs/src/pr.cc:242-245`.
@@ -120,19 +129,19 @@ concept is the next effort.
   Per 09, proven unbounded needs a proof for any thread count.
 - **Formal-half language:** what language clause formal halves use so the chosen verifier checks
   them, and how legality clauses L2–L5 (natural language only today) get formal halves. Waits on
-  verifier choice.
-- **Vacuity guard:** whether every negative control of a rewrite contract must also be refuted by
-  the formal verifier, so a proof that also holds for broken code is caught.
+  verifier choice. Per 10, each clause also names its proof placement (once, per candidate,
+  assumed).
 - **Evaluation plan:** kernels beyond BFS, required by the generality note (the DX100 authors'
   code covers bfs top-down and bottom-up (`bfs_bu.cc`), bc, pr and sssp; cc and tc have none;
   Extensa campaign artifacts), baselines (testing-only certification, verifier without hints,
   hints without contracts), metrics (proof rate, time, hint rounds, bugs found). Per 09, each
   evaluated kernel needs an output relation and, per contract, a unit relation and a lifting
-  lemma.
+  lemma. Per 10, each contract also needs a reference instance and a contract proof.
 - **Records:** how proven verdicts, bounds, hints and counterexamples are stored in the research
   database and shown in ArchEvolve mode. Per 09, a verdict also carries its assumption set (each
   entry with its kind), a value or "unbounded" per bound dimension, and the cap from proven
-  dependencies.
+  dependencies. Per 10, each once-proven part records its level and the content hashes it holds
+  for; a changed hash reopens it.
 - **Extensa-mode loop:** the proving budget per iteration, and how ranking by proven level
   changes selection.
 

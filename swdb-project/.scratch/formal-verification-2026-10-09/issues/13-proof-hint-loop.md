@@ -38,3 +38,9 @@ How does the proof-hint loop work?
   an unmapped `assume` voids the verdict. 08's harness already has one
   (`../prototype/08-wrong-tile/tdstep_harness.cpp:74` assumes `parent[v] >= -1`; real callers pass
   `-out_degree`).
+- 2026-10-12 22:52 ET: input from 10: (1) contract proofs may be human-assisted (Yan-Ru writes hints or
+  proofs, reviewed at promotion) under the same hint rules; candidate proofs stay fully
+  automatic. (2) Each clause names its proof placement (once, per candidate, or assumed); the
+  checker confirms every clause is covered by a proof or the assumption set. (3) Negative
+  controls are refuted once per contract on its reference instance; vacuity checks per
+  candidate stay here.

@@ -1,6 +1,6 @@
 # EvolveSWDB — ArchEvolve's research database
 
-Updated: 2026-10-12 22:25 ET (formal-verification ticket 09: certification level and formal verifier sharpened; proof unit, unit relation, output relation, lifting lemma, assumption set added); 2026-10-12 00:37 ET (final review of fine-grained attribution: code origin and catalog bound reworded; attribution report, split check, site-finder region and measured scope added); 2026-10-11 22:10 ET (review fix: rewrite site reworded to merged spans); 2026-10-11 21:52 ET (ADR 0015: LANL core, guessed column, SWDB extension; crosswalk now historical); 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom, remaining gain bound); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
+Updated: 2026-10-12 22:50 ET (formal-verification ticket 10: unit postcondition, relational template, contract proof, reference instance, summary added; negative control and certification level sharpened); 2026-10-12 22:25 ET (formal-verification ticket 09: certification level and formal verifier sharpened; proof unit, unit relation, output relation, lifting lemma, assumption set added); 2026-10-12 00:37 ET (final review of fine-grained attribution: code origin and catalog bound reworded; attribution report, split check, site-finder region and measured scope added); 2026-10-11 22:10 ET (review fix: rewrite site reworded to merged spans); 2026-10-11 21:52 ET (ADR 0015: LANL core, guessed column, SWDB extension; crosswalk now historical); 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom, remaining gain bound); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
 
 The Software Database is the ArchEvolve component that knows the applications:
 what their kernels compute, how their code touches memory, what profiling
@@ -154,6 +154,17 @@ the same unit of the baseline implementation, and what may differ (for BFS, the 
 but not its order).
 _Avoid_: output relation (for one unit), equivalence (alone)
 
+**Unit postcondition**:
+A postcondition a rewrite contract states for one proof unit, strong enough that any two units
+meeting it from the same starting state satisfy the contract's unit relation.
+_Avoid_: postcondition (alone) when a clause with role postcondition is meant
+
+**Relational template**:
+The alignment between the steps of a baseline unit and of a candidate artifact's unit, with the
+coupling invariant that links their states, which a rewrite contract supplies when it has no unit
+postcondition.
+_Avoid_: template (alone), product program (for the template)
+
 **Clause**:
 One condition in a typed-library entry, with an ID and a role (precondition, postcondition,
 frame, legality, or preservation), written in natural language and, where a formal language
@@ -274,7 +285,7 @@ _Avoid_: verification, validation
 How a candidate artifact ranks by certification in Extensa-mode selection: proven unbounded,
 proven within bounds (its bounds recorded, thread count among them), certified, then
 uncertified. A proven level applies only to a certified candidate artifact, and is the weakest
-level among its proof units.
+level among its proof units and the proven parts they depend on.
 _Avoid_: trust level, proof level
 
 **Certified lowering**:
@@ -489,8 +500,8 @@ Any run file a record names as evidence, kept whatever its size.
 _Avoid_: small files
 
 **Negative control**:
-A deliberately broken copy of code that a test must reject. A test that misses its
-negative controls is not trusted. A control counts as rejected only when the check that fires is
+A deliberately broken copy of code that a test, or a formal verifier's proof setup, must reject.
+A test or proof setup that misses its negative controls is not trusted. A control counts as rejected only when the check that fires is
 attributable to the break itself, not to anything else the code under test does.
 _Avoid_: mutant (alone), fault injection
 
@@ -538,6 +549,24 @@ _Avoid_: harness (for this scope), proof scope
 A machine-checked lemma, proven once per rewrite contract and kernel, that a whole kernel run meets
 the kernel's output relation when every call of the proof unit meets the contract's unit relation.
 _Avoid_: composition proof, induction (alone)
+
+**Contract proof**:
+The proofs a rewrite contract carries, made once and reused by every candidate artifact that applies
+it: its unit postcondition or relational template proven on its reference instance, its lifting lemma
+per kernel, and its negative controls refuted. Its level is the weakest among these parts, and it
+holds for one set of content hashes.
+_Avoid_: proven contract (alone), contract verification
+
+**Reference instance**:
+The code on which a contract proof is checked: the rewrite contract's own library code applied to
+the baseline implementation or, when it has none, its first certified candidate artifact.
+_Avoid_: reference implementation, golden candidate
+
+**Summary**:
+The proven clauses of a lowering or library operation, used in place of its code inside a candidate
+artifact's proof. It is proven once with that library entry and reused by every rewrite contract
+that calls it.
+_Avoid_: stub, model (alone), abstraction (alone)
 
 **Assumption set**:
 Everything a proven verdict depends on without proving it, each entry with its kind: an assumed

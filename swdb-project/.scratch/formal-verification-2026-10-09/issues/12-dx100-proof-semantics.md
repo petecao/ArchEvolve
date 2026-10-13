@@ -35,3 +35,8 @@ is the gap between the authors' model and the strict layer handled?
   evidence that it matches today is differential: 11 fixture scenarios x 2 rules x 3 tile sizes,
   0 diffs. In 08's harness, P1 (hazard) depends only on the control-flow shape, not on data.
   That supports the hazards/function split from 05.
+- 2026-10-12 22:52 ET: input from 10: each DX100 lowering is proven once against the semantics this ticket
+  picks, and its proven clauses become a summary used in every candidate proof. The summary must
+  carry hazard state (which tiles are ready after which wait), so hazard freedom can be proven
+  without the inlined port. 10's scale hypothesis depends on such summaries. Who signs off on
+  the semantics also signs off on what the summaries may claim.
