@@ -1,4 +1,4 @@
-"""Reusable region-to-seconds mechanism models. Updated: 2026-10-09 ET (code review F2: stride-0 streams).
+"""Reusable region-to-seconds mechanism models. Updated: 2026-10-12 ET (cpu-description review F1: `covering` for floor-only rates); 2026-10-09 ET (code review F2: stride-0 streams).
 
 No kernel/target IDs enter these formulas. Parameters are aggregate rates for the
 frozen target and thread configuration. A required unknown is never replaced by zero.
@@ -240,7 +240,15 @@ MODELS = {'compute_throughput':compute_throughput,'streaming_bandwidth':streamin
           'memory_service_scenario':memory_service_scenario,'reorder_window_rows':reorder_window_rows,'fetch_queue':fetch_queue,'tile_staging':tile_staging}
 
 
-def evaluate(region,mechanism,models=(),target_threads=1, *, context=None):
+# Models that price non-stream accesses, so a streaming-bandwidth bound may charge their bytes as useful
+# bytes instead of leaving them unclassified. The estimator uses only these two.
+NONSTREAM_COVERING=frozenset({'requests_in_flight_latency','cache_fit'})
+
+
+def evaluate(region,mechanism,models=(),target_threads=1, *, context=None, covering=NONSTREAM_COVERING):
+    """`covering`: models whose presence in `models` covers non-stream bytes for a streaming-bandwidth
+    mechanism. The estimator keeps the default; the attribution floor widens it for floor-only rates
+    (2026-10-12 ET, cpu-description review F1)."""
     implementation=MODELS.get(mechanism['model'])
     if implementation is None:
         return bound(mechanism['model'],None,'unsupported mechanism model',mechanism['parameters'],['mechanism_model.'+mechanism['model']])
@@ -250,7 +258,7 @@ def evaluate(region,mechanism,models=(),target_threads=1, *, context=None):
         return bound(mechanism['model'],None,'unsupported selector for established mechanism',mechanism['parameters'],
                      ['selector.'+key for key in sorted(mechanism['selector'])])
     if mechanism['model']=='streaming_bandwidth':
-        result=implementation(region,mechanism,covered_nonstream=bool(set(models)&{'requests_in_flight_latency','cache_fit'}))
+        result=implementation(region,mechanism,covered_nonstream=bool(set(models)&set(covering)))
         uses_rate=result['inputs']['bytes']>0
     else:
         result=implementation(region,mechanism)

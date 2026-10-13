@@ -266,6 +266,30 @@ def test_estimates_made_by_different_estimator_code_are_refused(case):
     assert not (case.records.path / 'attributions').exists()
 
 
+def test_estimates_made_by_the_same_older_estimator_code_are_still_attributed(case):
+    # Review 2026-10-12 ET: `swdb attribute` never re-estimates, so two estimates made at an earlier
+    # commit (equal `estimator_sha256`, not today's code) are compared like any other pair.
+    from swdb.bfs_protocol import _identity_payload
+    case.worked_example()
+    # Rewrite the frozen protocol and both estimates as the earlier commit wrote them: same content,
+    # another estimator bundle hash, hence another protocol identity and ID.
+    old = next((case.records.path / 'protocols').glob(case.protocol + '.yaml'))
+    protocol = yaml.safe_load(old.read_text())
+    protocol['settings']['estimator_sha256'] = 'e' * 64
+    protocol['identity_sha256'] = digest(_identity_payload(protocol))
+    protocol['id'] = protocol['requested_id'] + '.' + protocol['identity_sha256'][:16]
+    old.unlink()
+    case.records.write(f"protocols/{protocol['id']}.yaml", protocol)
+    for name in ('fixture.baseline', 'fixture.candidate'):
+        path = case.records.path / 'estimates' / f'{name}.yaml'
+        data = yaml.safe_load(path.read_text())
+        data.update(estimator_sha256='e' * 64, protocol=protocol['id'], protocol_sha256=protocol['identity_sha256'])
+        path.write_text(yaml.safe_dump(data, sort_keys=False))
+    assert case.records.validate().returncode == 0
+    report = attributed(case)
+    assert report['whole_program']['total_speedup'] == pytest.approx(100 / 70)
+
+
 def test_identical_inputs_give_a_byte_identical_record_that_pins_its_inputs(case):
     case.worked_example()
     first = attributed(case)
@@ -1107,37 +1131,57 @@ def test_a_missing_bandwidth_rate_gives_an_unknown_floor_with_a_reason_not_zero(
         ('cand.untouched', 'floor_headroom', pytest.approx(1.0), None), ('cand.rewritten', 'unknown', None, 'unknown_limit')]
 
 
+# Like services.v2 (C11, review F1 2026-10-12 ET): memory is priced by `memory_service_scenario`; the
+# binder strips every other memory model, so no latency or cache mechanism covers non-stream bytes.
+MEMORY_SCENARIO = {'model': 'memory_service_scenario', 'selector': {
+    'domain': 'host', 'worker_scope': 'serial_T1', 'scenario': 'resident_serial_constructed_requests',
+    'transfer_basis': 'inferred', 'object_scope': 'logical_requests_and_bounded_referent_views', 'requests': []},
+    'parameters': {}}
+
+
 def test_a_floor_only_bandwidth_rate_makes_the_floor_numeric_and_leaves_every_estimate_unchanged(case):
-    # Like services.v2 (C11): memory is priced by another mechanism; the measured bandwidth rate is
-    # carried for the resource floor only, so the estimator must never read it.
-    cache = {'model': 'cache_fit', 'parameters': {'capacity_bytes': rate(1e9, 'bytes'), 'bytes_per_s': rate(1000.0, 'bytes/s'),
-                                                  'cold_bytes_per_s': rate(1000.0, 'bytes/s')}}
+    # Services.v2-shaped description (review F1): compute plus a memory service scenario, and the measured
+    # bandwidth rate carried for the resource floor only, so the estimator must never read it. The rewritten
+    # loops have an indirect access (a gather): the scenario covers it, as latency or a cache would in the estimator.
     floor_only = [{'model': 'streaming_bandwidth', 'parameters': {'bytes_per_s': rate(2.0, 'bytes/s')}}]
     b, c = case.base_root / 'kernel.cpp', case.cand_root / 'kernel.cpp'
     base = [work('base.untouched', b, 3, 40), work('base.rewritten', b, 7, 10, 16, 10)]
     cand = [work('cand.untouched', c, 3, 40), work('cand.rewritten', c, 7, 4, 16, 5)]
-    use_target(case, [COMPUTE, LATENCY, cache])
+    use_target(case, [COMPUTE, MEMORY_SCENARIO])
     without = case.estimate('fixture.candidate.without', cand)
-    use_target(case, [COMPUTE, LATENCY, cache], floor_only=floor_only)
+    use_target(case, [COMPUTE, MEMORY_SCENARIO], floor_only=floor_only)
     case.estimate('fixture.baseline', base)
     with_rate = case.estimate('fixture.candidate', cand)
     # Seam 1, check 5: identical seconds, total and per region, bound by bound.
-    assert with_rate['seconds'] == without['seconds'] == pytest.approx(70)
+    assert with_rate['seconds'] == without['seconds']
     assert [(r['id'], r['seconds'], [(x['model'], x['seconds']) for x in r['bounds'] + r['overheads']]) for r in with_rate['regions']] == \
         [(r['id'], r['seconds'], [(x['model'], x['seconds']) for x in r['bounds'] + r['overheads']]) for r in without['regions']]
     assert all(x['model'] != 'streaming_bandwidth' for r in with_rate['regions'] for x in r['bounds'] + r['overheads'])
-    # Seam 3: the floor is numeric (16 B / 2 B/s = 8 s > 4 s compute) and below the 30 s estimate.
+    # Seam 3: the floor is numeric: the covered gather adds no streamed bytes, so 16 B / 2 B/s = 8 s > 4 s compute.
     report = attributed(case)
-    row = rows(report, 'candidate')['cand.rewritten']
-    assert row['seconds'] == pytest.approx(30)
-    floor = row['resource_floor']
+    floor = rows(report, 'candidate')['cand.rewritten']['resource_floor']
     assert floor['seconds'] == pytest.approx(8) and floor['limiting_term'] == 'streaming_bandwidth' and floor['missing'] == []
     assert floor['terms'] == [
         {'model': 'compute_throughput', 'in_description': True, 'seconds': pytest.approx(4), 'missing': []},
         {'model': 'streaming_bandwidth', 'in_description': True, 'seconds': pytest.approx(8), 'missing': []}]
-    assert row['headroom'][0] == {'limit': 'resource_floor', 'value': pytest.approx(3.75), 'reason': None}
+    # Baseline: 16 B / 2 B/s = 8 s < 10 s compute.
+    assert rows(report, 'baseline')['base.rewritten']['resource_floor']['seconds'] == pytest.approx(10)
     for r in report['regions']:
-        assert r['resource_floor']['seconds'] <= r['seconds'] + 1e-12
+        assert r['resource_floor']['seconds'] is not None
+        if r['seconds'] is not None:
+            assert r['resource_floor']['seconds'] <= r['seconds'] + 1e-12
+
+
+def test_every_floor_term_of_the_t75_candidate_is_numeric_on_the_committed_services_v2():
+    # Review F1 on the real records: on `services.v2` indirect accesses left the bandwidth term unknown
+    # (9 of 260 regions, e.g. TDStep:96). Every counted region of every trial now has a number.
+    from swdb import yamlio
+    from swdb.attribution import _floor_terms
+    target = yamlio.load(REPO / 'records/target_descriptions/mbit10.cpu.lanl20261006.t1.services.v2.yaml')
+    char = yamlio.load(REPO / 'records/workload_characterizations/fga03.t75-candidate.uniform22.t1.characterization.a2.yaml')
+    terms = [(trial['position'], r['id'], t) for trial in char['trials'] for r in trial['regions']
+             for t in _floor_terms(r, target)]
+    assert terms and [(p, rid, t['missing']) for p, rid, t in terms if t['seconds'] is None] == []
 
 
 def test_floor_follows_the_estimate_trial_rule_and_stays_below_it(case):
