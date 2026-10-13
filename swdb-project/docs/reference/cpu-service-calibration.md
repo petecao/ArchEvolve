@@ -1,6 +1,7 @@
 # Independent native service calibration
 
-Created: 2026-10-06 ET. Updated: 2026-10-12 ET (cpu-description ticket 03: floor-only
+Created: 2026-10-06 ET. Updated: 2026-10-12 ET (review F2, F3, F5: known limits of the new
+families; cpu-description ticket 03: floor-only
 bandwidth rate); 2026-10-09 23:10 ET (code review notes on held-out
 inputs, the D25 helper and the superseded memory models). Ticket 11 is resolved.
 
@@ -622,3 +623,54 @@ BC PBFS executes a floating64 monotonic `atomicrmw fadd` alongside integer seq_c
 `memory_service_scenario` partitions the unchanged bucket using the existing sealed source-site counts and exact primitive semantics. Each executed site must match exactly one construction; their sum must equal the bucket and useful-byte totals. The floating construction is `floating_monotonic_add`, restricted to scalar64 floating fadd/monotonic/nonvolatile. Different floating operations/orders and absent semantics remain unknown. No new application observation is synthesized or required.
 
 The prospectively frozen `gross_constructed_resource_v1` may derive the separate floating resource from its typed calibration, retaining full paired residual/spread and driver diagnostics. Gross includes constructed loop work, composes by maximum with compute, and establishes no physical latency, application residency/operand-state correspondence or proven upper bound. See `11-float-memory-preregistration.json` and `11-float-memory-runbook.md` for exact native caps/commands. Native rates remain unknown until actual mbit10 evidence passes.
+
+
+## Known limits of the 2026-10-12 families (cpu-description review)
+
+Added 2026-10-12 ET from the code review of `cpud/integration` at `c9f9df67` (findings F2, F3,
+F5). Nothing below changes a committed receipt, record or native source. It says what the
+committed rates do and do not include.
+
+### `indirect-call` is call overhead only (F2)
+
+- `library.indirect_call` (receipt `service.library-call.a1`, 0.58 ns) times one indirect call
+  to a counted, trivially small callee. Its driver inlines the same body.
+- The bound selector prices **every** executed `indirect-call` site at that rate and nothing more.
+- Characterize gives the same name `indirect-call` to three different things: a virtual call
+  whose body is counted, a call to a callee it did not count, and inline asm. For the last two,
+  the work behind the call is not in the estimate at all. The name alone cannot tell them apart.
+- t75 exposure: the candidate has 1 such site (`DOBFS:178`, the virtual `do_widen`); g16 has 0.
+- Pinned on purpose by
+  `tests/test_cpu_library_call_calibration.py::test_every_indirect_call_site_is_priced_as_call_overhead_only`.
+  A fix belongs in Characterize (separate names). That would change counts, so it is not done.
+
+### `ostream_insert` and `_M_insert` rates include buffer drains (F3)
+
+- The timer writes into `stdout` reopened on a regular file (fully buffered, about 4 KiB). It
+  drains and truncates the file between batches, outside the timed window. One batch is 1 024 calls.
+- `ostream_put` writes 1 KiB per batch. The buffer never fills inside the window, so its rate
+  (8.37 ns) has no `write(2)` in it.
+- `ostream_insert` writes 16 KiB per batch (16 B per call) and `_M_insert<unsigned long>` about
+  7 KiB (7 digits per call). Both fill the buffer inside the window, so each rate includes its
+  share of `write(2)` drains: an estimated 4–8 ns of the measured 23.2 ns and 32.4 ns (inferred,
+  not separately measured).
+- Read them as "per call, including amortized drains to a regular file". An application that
+  writes to a terminal or pipe drains differently. The native source
+  (`swdb/native/CpuLibraryCallWork.h`, `CpuLibraryCallTimer.cpp`) stays as measured.
+
+### Allocator v2: glibc regime per measured bin (F5)
+
+The receipt (`service.allocator-v2.a1`) does not record the glibc regime. It follows from the bin
+size in a fresh process that repeats allocate/free (inferred from glibc `malloc.c`, not measured):
+
+| Regime | Rule | Measured bins in `allocator-v2.a1` |
+|---|---|---|
+| Heap bins | request ≤ 128 KiB (initial `M_MMAP_THRESHOLD`) | `malloc` 64, 128, 6 144 B |
+| brk heap after one mmap | larger, chunk ≤ 32 MiB: the first call is mmap; its free raises the dynamic threshold, so later calls come from the brk heap and may fault in fresh pages after a trim | `malloc` 2 097 152 B; `new[]`/`delete[]` 16 777 216 and 16 777 220 B |
+| mmap every call | chunk > 32 MiB (`DEFAULT_MMAP_THRESHOLD_MAX`, 64-bit), including a request of exactly 32 MiB | none |
+
+- So the 32 MiB size cap of group `allocator_v2` is not one regime: a 32 MiB bin would measure
+  mmap/munmap, while every bin up to 16 MiB measures the brk heap.
+- The application's own allocator state is a separate transfer (`transfer_basis: inferred`), as
+  for every allocator cell. The 6 144 B cell (1.32 µs) likely includes trim and page-fault work
+  (ticket 07 answer).
