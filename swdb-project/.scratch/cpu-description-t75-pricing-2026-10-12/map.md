@@ -1,15 +1,18 @@
 # Map: CPU target description that can price the t75 BFS pair
 
-Created: 2026-10-12 00:42 ET. Updated: 2026-10-13 01:55 ET. Spec: [spec.md](spec.md).
+Created: 2026-10-12 00:42 ET. Updated: 2026-10-13 02:20 ET. Spec: [spec.md](spec.md).
 
 ## Current state
 
-- **Checkpoint (2026-10-13 01:55 ET):** all tickets 01–10 resolved. Ticket 10 split check:
-  `split_unverified` (gaps 35–42 pp), mostly profiler guard overhead (5–6x). Native t75 medians
-  1.686 s / 1.247 s against estimates 26.643 s / 20.770 s. Branch `cpud/10-split-check`.
-- **Blocker:** none.
-- **Next action:** main session merges `cpud/10-split-check` into `cpud/integration`. A useful
-  split check needs lower-overhead region timing (new ticket, not opened).
+- **Checkpoint (2026-10-13 02:20 ET):** spec closed. Tickets 01–10 resolved; two review-fix rounds
+  merged (`4324b546`, `c1b9b856`). `cpud/integration` = `c1b9b856`. Both t75 estimates are numeric
+  (26.643 s / 20.770 s, 0 unknown regions); shares 93.5/6.5 and 91.7/8.3 (rewritten/untouched).
+  Split check `split_unverified` (profiler overhead 5–6x).
+- **Blocker:** none for this spec. The estimates are ~16x the native medians (1.686 s / 1.247 s), so
+  the shares are not paper-ready.
+- **Next action:** after the full suite passes, merge `cpud/integration` into `yanrujhou_main`.
+  Follow-ups need their own specs: (a) why the estimate is ~16x high; (b) lower-overhead region timing
+  for the split check.
 
 ## Tickets
 
@@ -67,3 +70,6 @@ Graph: 01–06 start now → 07 (needs 01, 02, 04, 05, 06) → 08 (needs 03, 07)
   [map](../fine-grained-attribution-2026-10-11/map.md)).
 - `services.v1` build: analytic-eval ticket 11 and its runbook
   (`../lanl-db-analytic-eval-2026-10-06/evidence/11-native-model-band-runbook.md`).
+- Code review round 1 (2026-10-12 21:04 ET, `4324b546`): F1 floor fix (0/260 unknown floor terms on services.v2), store-closure tests, early refusals, docs ([evidence](evidence/review-fixes.md)).
+- Code review round 2 (2026-10-13 02:10 ET, `c1b9b856`): ticket-10 profiler fixes (verifier identity before build, primary template/verifier check, shared toolchain link, gzipped parents, SG re-hash).
+- Spec closed 2026-10-13 02:20 ET; done-when met (numeric estimates and shares). Split check unverified.
