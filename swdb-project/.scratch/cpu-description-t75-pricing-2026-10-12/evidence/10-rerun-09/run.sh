@@ -62,9 +62,10 @@ done
 # Guard: both .a3 estimates exist with numeric seconds, and today (ET) is strictly later than both (F43).
 python3 - "$BES" "$CES" <<'PY' || { log "guard refused"; exit 15; }
 import sys
+from pathlib import Path
 from swdb.store import Store
 from swdb.writer import today
-store = Store('records')
+store = Store(Path('records'))
 dates = []
 for rid in sys.argv[1:]:
     e = store.get(rid, 'estimate')
