@@ -26,6 +26,15 @@ from swdb import callgrind_lines
 from swdb.cli import Failure, _require_valid
 
 RUNTIME = paths.HOME / "tools/bfs_profile/runtime.hpp"
+# Metadata-parser-only omp.h (see `_discovery_settings`): read the next omp.h with _OPENMP
+# lowered below its declare-variant block, then restore the compiler's value.
+OMP_PARSER_SHIM = """/* SWDB discovery parser shim; never used by a build. */
+#pragma push_macro("_OPENMP")
+#undef _OPENMP
+#define _OPENMP 201511
+#include_next <omp.h>
+#pragma pop_macro("_OPENMP")
+"""
 METRICS = {
     "Dr": "executed data read references",
     "Dw": "executed data write references",
@@ -103,6 +112,18 @@ def _discovery_settings(request, compiler, flags, includes, macro_log):
         found = sorted(parent.glob("*")) if parent.is_dir() else []
         if found: resource = str(found[-1])
     arguments = [f for f in flags if f != "-fopenmp"] + [f"-I{p}" for p in includes]
+    # 2026-10-12 ET (cpud ticket 10): Clang's omp.h (the resource slot below) defines
+    # omp_is_initial_device twice inside `#pragma omp begin declare variant` blocks when
+    # _OPENMP >= 201811. With OpenMP parsing disabled those pragmas are ignored, so the two
+    # static definitions collide with omp.h's own extern declaration and discovery fails. A
+    # parser-only shim lowers _OPENMP while omp.h alone is read; the source keeps the actual
+    # compiler's value. Builds never see the shim. GCC's 201511 never needs it.
+    openmp = re.search(r"^#define _OPENMP (\d+)$", macro_log.read_text(), re.M)
+    if openmp and int(openmp.group(1)) >= 201811:
+        shim = macro_log.parent / "parser-shims"
+        shim.mkdir(exist_ok=True)
+        (shim / "omp.h").write_text(OMP_PARSER_SHIM)
+        arguments += ["-isystem", str(shim)]
     # A standalone libclang distribution need not find the GCC C++ standard
     # library chosen by the real compiler. Preserve its reported search paths
     # explicitly rather than silently discovering against another standard library.

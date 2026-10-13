@@ -224,6 +224,9 @@ def discover(source, arguments, library, kernel_name="BFS"):
                                          and region["function"] in r["helpers"]})
         adaptations = (["GNU __restrict__ erased for source inventory only; alias semantics are not inferred; actual builds retain original source and qualifiers"]
                        if "-D__restrict__=" in arguments else [])
+        if any(str(a).endswith("/parser-shims") for a in arguments):   # 2026-10-12 ET (cpud ticket 10)
+            adaptations.append("omp.h read with _OPENMP lowered to 201511 (parser shim) so its declare-variant "
+                               "definitions do not collide while OpenMP parsing is off; the source keeps the compiler's _OPENMP")
         return {"backend": "libclang-cindex", "version": string(lib.clang_getClangVersion()),
                 "library": str(library), "arguments": arguments, "diagnostics": diagnostics,
                 "parser_adaptations": adaptations,

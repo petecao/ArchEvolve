@@ -176,6 +176,47 @@ for(int i=0;i<4;++i) for(int j=0;j<4;++j) a[i*4+j]=i+j;
     assert result['unresolved'] and not any(r['kind']=='loop' for r in result['regions'])
 
 
+@pytest.mark.parametrize('level,shimmed', [('202011', True), ('201511', False)])
+def test_clang_omp_declare_variant_header_parses_through_the_shim(tmp_path, level, shimmed):
+    """cpud ticket 10 (2026-10-12 ET): Clang's omp.h defines omp_is_initial_device in two declare-variant
+    blocks when _OPENMP >= 201811; with OpenMP parsing off they collide. The parser shim lowers
+    _OPENMP for omp.h only; the source still sees the compiler's value. GCC's 201511 needs no shim."""
+    library,parse_args=compiler_inventory()
+    headers=tmp_path/'clang-include';headers.mkdir()
+    (headers/'omp.h').write_text('''#ifndef __OMP_H
+#define __OMP_H
+extern int omp_is_initial_device(void);
+#if defined(_OPENMP) && _OPENMP >= 201811
+#pragma omp begin declare variant match(device={kind(host)})
+static inline int omp_is_initial_device(void) { return 1; }
+#pragma omp end declare variant
+#pragma omp begin declare variant match(device={kind(nohost)})
+static inline int omp_is_initial_device(void) { return 0; }
+#pragma omp end declare variant
+#endif
+#endif
+''')
+    log=tmp_path/'run'/'002-preprocessor_identity.log';log.parent.mkdir()
+    log.write_text(f'#define _OPENMP {level}\n#include <...> search starts here:\n {headers}\nEnd of search list.\n')
+    from swdb.bfs_profiling import _discovery_settings
+    found,arguments=_discovery_settings({'library':str(library)},'clang++',['-std=c++11','-fopenmp'],[],log)
+    assert ('-D_OPENMP='+level) in arguments
+    shim=log.parent/'parser-shims'
+    assert (str(shim) in arguments)==shimmed==(shim/'omp.h').is_file()
+    if shimmed: assert arguments.index(str(shim))<arguments.index(str(headers))
+    source=tmp_path/'uses-omp.cc'
+    source.write_text('#include <omp.h>\n#if _OPENMP != '+level+'\n#error lost compiler value\n#endif\n'
+                      'int f(){int s=omp_is_initial_device();for(int i=0;i<3;++i)s+=i;return s;}\n')
+    extra=[a for a in parse_args if a not in ('-std=c++11','-fno-openmp','-Wno-unknown-pragmas')]
+    if shimmed:
+        unshimmed=[a for i,a in enumerate(arguments) if str(shim) not in (a,arguments[i+1] if i+1<len(arguments) else None)]
+        with pytest.raises(ValueError,match='omp_is_initial_device'):
+            discover(source,[*unshimmed,*extra],found)
+    result=discover(source,[*arguments,*extra],found)
+    assert any(r['kind']=='loop' for r in result['regions'])
+    assert any('parser shim' in a for a in result['parser_adaptations'])==shimmed
+
+
 @pytest.mark.parametrize('directives', [
     '#if __GNUC__ >= 13\nint CompilerChosen(){return 13;}\n#else\nint MetadataChosen(){return 4;}\n#endif',
     '#define COMPILER_VERSION __GNUC_MINOR__\n#if COMPILER_VERSION > 0\nint f(){return 1;}\n#endif',
