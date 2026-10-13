@@ -16,7 +16,7 @@ from scripts import bfs_native_one_thread_pilot as client
 from swdb import artifacts, bfs_native
 from swdb.store import Store
 from testkit.profile_packages import _assemble
-from testkit.native_pilot import plan, write_ref
+from testkit.native_pilot import plan, plan_record_view, write_ref
 
 
 @pytest.fixture
@@ -33,9 +33,9 @@ def timer(state, value=None):
                         (state.wall+timedelta(seconds=18240)).isoformat())
 
 
-def test_fixed_new_scope_preserves_old_failed_records_and_thread_only_requests():
+def test_fixed_new_scope_preserves_old_failed_records_and_thread_only_requests(tmp_path):
     value = plan(); client.validate_plan(value)
-    store = Store(client.ROOT/'records'); machine = store.get('mbit10', 'machine')
+    store = Store(plan_record_view(tmp_path, value)); machine = store.get('mbit10', 'machine')
     old_plan = (client.ROOT/value['historical_plan']['path']).read_bytes()
     assert client.history(value, store) == value['historical_records']
     assert len(value['historical_records']) == 12

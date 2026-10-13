@@ -2,6 +2,8 @@
 
 import hashlib
 
+import pytest
+
 from conftest import REPO, read_yaml, run_swdb
 
 RECORDS = REPO / "records"
@@ -96,6 +98,7 @@ def test_mbit10_machine_record():
     assert m["capture"]["command"].startswith("ssh mbit10")
 
 
+@pytest.mark.whole_store
 def test_repo_records_validate():
     result = run_swdb("validate")
     assert result.returncode == 0, result.stderr

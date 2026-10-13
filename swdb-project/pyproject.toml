@@ -29,4 +29,10 @@ include = ["swdb*"]
 testpaths = ["tests"]
 # 2026-09-27 ET: never write .pytest_cache into a checkout. A stray cache in a
 # runtime checkout failed native readback a2's root-entry admission.
-addopts = "-p no:cacheprovider"
+# 2026-10-13 ET (suite closure): tests that validate the whole real ~1.3 GB records store
+# are marked `whole_store` and deselected by default (each takes many minutes). Run them with
+# `python -m pytest -m whole_store` (a later `-m` on the command line replaces this one).
+addopts = "-p no:cacheprovider -m 'not whole_store'"
+markers = [
+    "whole_store: validates the whole real records store; opt-in with `-m whole_store`",
+]

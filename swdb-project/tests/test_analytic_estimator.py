@@ -24,6 +24,7 @@ def copied_records(records):
     return records.copy_closure('gapbs-bfs-do', 'kron-g16-k16').path
 
 
+@pytest.mark.whole_store
 def test_estimated_fact_validates_without_changing_existing_records(whole_records):
     copied_records = whole_records
     path = copied_records / 'inputs' / 'kron-g16-k16.yaml'

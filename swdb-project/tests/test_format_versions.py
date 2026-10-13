@@ -10,8 +10,9 @@ def repo(records):
     return records.copy_repo()
 
 
-def test_every_repo_record_validates_unchanged(repo):
-    result = repo.validate()
+@pytest.mark.whole_store
+def test_every_repo_record_validates_unchanged(records):
+    result = records.copy_whole().validate()
     assert result.returncode == 0, result.stderr
 
 

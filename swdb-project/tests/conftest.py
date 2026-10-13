@@ -8,6 +8,7 @@ fails the test and reports; it never deletes files from the real checkout.
 """
 
 import copy
+import functools
 import os
 import shutil
 import socket
@@ -53,6 +54,34 @@ def load_fixture(name):
         return copy.deepcopy(yaml.safe_load(fh))
 
 
+@functools.lru_cache(maxsize=1)
+def _catalog_index():
+    """{record ID: path relative to the checkout's records/}, read once per test process."""
+    from swdb.access import record_files
+    from testkit.record_ids import record_id
+    return {record_id(path): Path(rel) for path, rel in record_files(REPO / "records")}
+
+
+def _strings(value):
+    if isinstance(value, str):
+        yield value
+    elif isinstance(value, dict):
+        for key, item in value.items():
+            yield key
+            yield from _strings(item)
+    elif isinstance(value, list):
+        for item in value:
+            yield from _strings(item)
+
+
+@functools.lru_cache(maxsize=None)
+def _catalog_refs(rid):
+    """The catalog IDs that record `rid` mentions (parsed once per test process)."""
+    from swdb.access import read_record
+    where = _catalog_index()
+    return frozenset(text for text in _strings(read_record(REPO / "records" / where[rid])) if text in where)
+
+
 def make_records(tmp_path):
     """An empty records folder under `tmp_path` with helpers to write records into it.
 
@@ -85,12 +114,24 @@ def make_records(tmp_path):
             return read_yaml(self.path / relpath)
 
         def copy_repo(self, *kinds):
-            """Copy the repo's own records (all, or only these kind folders) into this folder."""
+            """Copy these kind folders of the repo's own records into this folder.
+
+            2026-10-13 ET (suite closure): with no kinds this no longer copies the whole
+            ~1.3 GB store (every swdb command then revalidated all of it and timed out at
+            600 s); it copies the reference-closed minimal view `copy_closure()` instead.
+            A test that needs more names its roots with `copy_closure(...)`; a test of the
+            whole real store uses `copy_whole()` and is marked `whole_store`."""
+            if not kinds:
+                return self.copy_closure()
             source = REPO / "records"
-            for folder in kinds or [p.name for p in source.iterdir() if p.is_dir()]:
+            for folder in kinds:
                 if (source / folder).exists():
                     shutil.copytree(source / folder, self.path / folder, dirs_exist_ok=True)
             return self
+
+        def copy_whole(self):
+            """Copy every record of the real store (~1.3 GB). Only for `whole_store` tests."""
+            return self.copy_repo(*sorted(p.name for p in (REPO / "records").iterdir() if p.is_dir()))
 
         def copy_closure(self, *roots):
             """Copy only the repo records that `roots` reach through exact ID references.
@@ -99,24 +140,12 @@ def make_records(tmp_path):
             and revalidate unrelated estimates for minutes. Small catalog kinds are kept
             whole, as in the native-acceptance `minimal_view`; other records are kept only
             when a kept record mentions their ID. Non-YAML record-root files are copied.
-            The copied store is still fully validated by the command under test."""
-            from swdb.access import read_record, record_files
-            from testkit.record_ids import record_id
+            The copied store is still fully validated by the command under test.
+            2026-10-13 ET: the ID index and each record's references are read once per
+            test process (`_catalog_refs`); the checkout's records are guarded read-only."""
             source = REPO / "records"
-            where = {record_id(path): Path(rel) for path, rel in record_files(source)}
+            where, refs = _catalog_index(), _catalog_refs
             assert all(root in where for root in roots), roots
-
-            def strings(value):
-                if isinstance(value, str):
-                    yield value
-                elif isinstance(value, dict):
-                    for key, item in value.items():
-                        yield key
-                        yield from strings(item)
-                elif isinstance(value, list):
-                    for item in value:
-                        yield from strings(item)
-
             whole = {"applications", "kernels", "implementations", "operations", "intrinsics",
                      "hardware_targets", "machines", "workloads", "inputs", "strategies"}
             keep, queue = set(), [*roots, *(rid for rid, rel in where.items() if rel.parts[0] in whole)]
@@ -125,7 +154,7 @@ def make_records(tmp_path):
                 if rid in keep:
                     continue
                 keep.add(rid)
-                queue.extend(text for text in strings(read_record(source / where[rid])) if text in where and text not in keep)
+                queue.extend(text for text in refs(rid) if text not in keep)
             for rid in keep:
                 (self.path / where[rid]).parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(source / where[rid], self.path / where[rid])
@@ -155,6 +184,15 @@ def make_records(tmp_path):
     rec = Records()
     rec.path.mkdir()
     return rec
+
+
+def record_view(folder, *roots):
+    """A records folder under `folder` with the reference closure of `roots` (see `copy_closure`).
+
+    2026-10-13 ET (suite closure): for in-process `Store(...)` readers of real evidence, which
+    otherwise parse the whole ~1.3 GB checkout store (minutes) for a few records."""
+    Path(folder).mkdir(parents=True, exist_ok=True)
+    return make_records(folder).copy_closure(*roots).path
 
 
 @pytest.fixture
