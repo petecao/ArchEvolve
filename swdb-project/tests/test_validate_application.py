@@ -1,5 +1,7 @@
 """`swdb validate` on application records: each rule has a passing and a failing case."""
 
+import pytest
+
 from conftest import FIXTURES, load_fixture, run_swdb
 
 
@@ -9,6 +11,7 @@ def assert_rejected(result, *fragments):
         assert fragment in result.stderr, f"{fragment!r} not in stderr:\n{result.stderr}"
 
 
+@pytest.mark.whole_store
 def test_repo_records_are_valid():
     result = run_swdb("validate")
     assert result.returncode == 0, result.stderr

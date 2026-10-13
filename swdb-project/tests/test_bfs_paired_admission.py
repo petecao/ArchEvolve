@@ -14,12 +14,13 @@ from swdb import artifacts
 from swdb.cli import Failure
 from swdb.store import Store
 from test_bfs_native_paired_pilot import driver_receipt_fixture
+from testkit.real_store import real_store
 
 
 @pytest.fixture
 def admission_case(tmp_path, monkeypatch):
     plan, receipt, _ = driver_receipt_fixture(tmp_path, monkeypatch)
-    original = Store(driver.ROOT / 'records')
+    original = real_store()
     additions, firsts = {}, []
     for cell, entry, stage in zip(plan['cells'], receipt['cells'], receipt['stages'][5:]):
         first = original.get(cell['first_evaluation'], 'evaluation')

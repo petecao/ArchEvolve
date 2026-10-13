@@ -29,6 +29,7 @@ import socket
 import sys
 import time
 from pathlib import Path
+from swdb import host_identity
 
 
 class GuardError(RuntimeError):
@@ -491,7 +492,7 @@ def restrict(policy, inner=False):
 
 def verified_lane():
     """The verified socket lane this process runs in on mbit10 (public since 2026-10-05 ET, J5)."""
-    if socket.gethostname().split(".")[0] != "mbit10":
+    if host_identity.short_name() != "mbit10":
         raise GuardError("real rewrite providers require a verified socket lane on mbit10")
     # Reuse the evaluator's kernel-backed verification: exact socket affinity,
     # memory binding, ancestor launcher, lease descriptor and generation.
@@ -558,7 +559,7 @@ def context(config, workspace, home, folder, *, login_path=None, fixture=False):
     try:
         if abi() < 4:
             raise GuardError("SWDB provider guard requires Linux Landlock ABI >= 4; refusing unguarded session")
-        lane = verified_lane() if not fixture or socket.gethostname().split(".")[0] == "mbit10" else None
+        lane = verified_lane() if not fixture or host_identity.short_name() == "mbit10" else None
         tracer = shutil.which("strace")
         if not tracer:
             raise GuardError("SWDB provider guard requires strace for outbound connection auditing")

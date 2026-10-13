@@ -19,6 +19,7 @@ from pathlib import Path
 
 from swdb import artifacts
 from swdb.bfs_protocol import _fail, _get, _positive, _integer, _geomean, _timestamp, _check_verifier_identity
+from swdb import host_identity
 
 
 def _raw(reference, host, *, verify_hash=True, store=None):
@@ -27,7 +28,7 @@ def _raw(reference, host, *, verify_hash=True, store=None):
         from swdb.retention import retained
         if retained(store, reference):
             return None
-        remote = host and host != socket.gethostname().split(".")[0] and str(path).startswith(("/data/", "/data1/"))
+        remote = host and host != host_identity.short_name() and str(path).startswith(("/data/", "/data1/"))
         _fail(remote, "diagnostic raw artifact is unavailable locally")
         return None  # Metadata retrieval never pretends to recheck remote raw bytes.
     _fail(path.is_file() and not path.is_symlink() and (not verify_hash or artifacts.file_hash(path) == reference["sha256"]),

@@ -8,7 +8,7 @@ DESCRIPTION='dx100-e4fc4af-functional-analytic-v1.t4'
 
 
 def test_fresh_functional_target_validates_and_freezes_code_only_dependencies(records,tmp_path):
-    records.copy_repo()
+    records.copy_closure(DESCRIPTION)
     checked=run_swdb('validate','--records',records.path,'--library',REPO/'library')
     assert checked.returncode==0,checked.stdout+checked.stderr
     request=tmp_path/'freeze.yaml'

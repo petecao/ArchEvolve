@@ -16,6 +16,7 @@ import pytest
 from conftest import REPO
 from swdb import campaign, campaign_targets, cpp_lexical, yamlio
 from swdb.store import Store
+from testkit.real_store import real_store
 
 A8 = REPO / "campaigns/extensa/extensa-native-bfs-20261005-a8.yaml"
 GEM5 = REPO / "campaigns/extensa/extensa-gem5-bfs-20261004-a7.yaml"
@@ -42,7 +43,7 @@ def test_fixture_comparisons_are_judged_from_their_numbers():
 def test_frozen_speed_rule_matches_the_team_protocol_derived_from_a8():
     """apply_speed_rule's output feeds frozen protocol identities: the team protocol that copies a8's fork
     settings (ticket 75) has exactly the profitability and analysis the rule writes."""
-    store = Store(REPO / "records")
+    store = real_store()
     team = store.get("bfs-native-scale22-ci-team-20261005.9f1ed533a09ae832", "protocol")["settings"]
     frozen = copy.deepcopy(store.get(campaign_targets.NATIVE_TEMPLATES["fork_scalar_tdstep"], "protocol")["settings"])
     campaign.SpeedRule.apply(frozen, campaign.protocol_settings(yamlio.load(A8)))

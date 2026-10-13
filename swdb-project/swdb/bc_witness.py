@@ -29,6 +29,7 @@ from pathlib import Path
 
 from swdb import dx100_witness as w
 from swdb.sg_graph import application_graph
+from swdb import host_identity
 
 CHECKER = "dx100.bc.verifier.v2"
 ROI = "bc.complete_call.v1"
@@ -204,7 +205,7 @@ def validate_record_witness(evaluation, store=None):
         w._need(all(isinstance(host, str) and host and host == host.strip() for host in hosts), "invalid execution host identity")
         w._need(len({host.split(".")[0] for host in hosts}) <= 1, "inconsistent execution host identities")
         host = hosts[0].split(".")[0] if hosts else None
-        remote = host is not None and host != socket.gethostname().split(".")[0]
+        remote = host is not None and host != host_identity.short_name()
         rows = []
         for kind, reference, checked in _verify_artifacts(evaluation, available_only=True):
             w._need(not Path(reference["path"]).is_symlink(), f"{kind} artifact is a symlink")

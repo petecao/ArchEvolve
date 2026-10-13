@@ -22,6 +22,7 @@ from yaml import YAMLError
 from swdb import access, artifacts, paths, writer
 from swdb.cli import Failure
 from swdb.store import Store
+from swdb import host_identity
 
 
 def register_cli(commands):
@@ -455,7 +456,7 @@ def calibrate(args):
     lane = None
     machine = store.get(args.machine, 'machine')
     if not args.fixture:
-        if not machine or socket.gethostname().split('.')[0] != machine['hostname']:
+        if not machine or host_identity.short_name() != machine['hostname']:
             raise Failure('native calibration must run on its registered machine')
         from swdb.profile import _verified_lane
         lane = _verified_lane(machine, args.lane)
@@ -482,7 +483,7 @@ def calibrate(args):
     binary = output / 'cpu-calibration'
     _command([compiler, native / 'CpuCalibration.cpp', '-o', binary, *flags], remaining())
     context = {'compiler': compiler, 'compiler_version': version, 'flags': flags,
-        'host': socket.gethostname(), 'architecture': platform.machine(), 'runtime': 'std::thread; physical-core pinning on Linux',
+        'host': host_identity.full_name(), 'architecture': platform.machine(), 'runtime': 'std::thread; physical-core pinning on Linux',
         'lane': lane, 'cpus': cpus[:max(threads)], 'machine_sha256': artifacts.digest(machine) if machine else None,
         # The checkout's own commit, whatever the caller's working directory (F5).
         'commit': _command(['git', '-C', paths.HOME.parent, 'rev-parse', 'HEAD'], remaining()).stdout.strip(),

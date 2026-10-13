@@ -8,6 +8,7 @@ from pathlib import Path
 from swdb import artifacts, paths
 from swdb.cli import Failure
 from swdb.store import Store
+from swdb import host_identity
 
 
 def environment(args, output):
@@ -22,7 +23,7 @@ def environment(args, output):
         raise Failure('native service calibration requires its registered Linux x86_64 target')
     if not args.llvm_bin:
         raise Failure('native CPU evidence requires LLVM22')
-    if not machine or socket.gethostname().split('.')[0] != machine['hostname']:
+    if not machine or host_identity.short_name() != machine['hostname']:
         raise Failure('native service calibration must run on its registered machine')
     from swdb.profile import _verified_lane
     from swdb.cpu_calibration import _physical_cpus, _host_state

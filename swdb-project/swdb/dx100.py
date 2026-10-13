@@ -21,6 +21,7 @@ from swdb import artifacts, bfs_protocol, kernels, paths, profile, workflow
 from swdb.bfs_native import Session, StageFailure, Stopped, _integer, _now
 from swdb.cli import Failure, _require_valid
 from swdb.processes import stop_group
+from swdb import host_identity
 
 REVISION = "e4fc4afdf894f295442cef3604667a469fab8e62"
 ROI = "bfs.dx100.traversal.v1"
@@ -120,7 +121,7 @@ def _prepare(args, action, store, request, data):
     machine = store.get(request["machine"], "machine")
     if not target or target["model"]["revision"] != REVISION or target["backend"]["id"] != "dx100-gem5-se":
         raise Failure("DX100 target/model/backend is unsupported")
-    host = socket.gethostname().split(".")[0]
+    host = host_identity.short_name()
     if not machine or machine["hostname"] != host:
         raise Failure("execution host differs from requested machine")
     if host == "mbit10" and not profile.lane_required(machine):

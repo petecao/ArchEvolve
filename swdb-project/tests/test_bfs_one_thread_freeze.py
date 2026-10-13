@@ -23,6 +23,7 @@ from swdb.cli import Failure
 from swdb.store import Store
 from test_bfs_freeze_pilot import aa_control
 from test_bfs_paired_freeze import paired_review, SAMPLING
+from testkit.real_store import real_store
 
 
 PLAN = json.loads(one.driver.PLAN.read_text())
@@ -566,7 +567,7 @@ def test_resealed_unselected_control_failure_still_blocks_new_qualification(qual
 @pytest.fixture
 def historical_metadata(monkeypatch):
     """Actual imported metadata only; remote driver/terminal bytes are stubbed."""
-    store=Store(one.driver.ROOT/'records')
+    store=real_store()
     old_plan=json.loads((one.driver.ROOT/PLAN['historical_plan']['path']).read_text())
     driver_ref={'path':'synthetic-old-driver','sha256':'a'*64}
     receipt={'state':'complete','cells':[{'id':cell['id'],'pair_sha256':artifacts.digest(store.get(cell['id']))}

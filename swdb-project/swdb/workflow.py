@@ -24,6 +24,7 @@ from jsonschema import Draft202012Validator
 from swdb import artifacts, db, writer, yamlio
 from swdb.cli import Failure, _require_valid
 from swdb.store import Store
+from swdb import host_identity
 
 VERSION = "1.0"
 OPERATOR = {"name": "swdb", "role": "operator", "test_client": False}
@@ -46,7 +47,7 @@ def message_from_text(raw):
 
 def _source_destination(runs_dir, rid):
     """Keep source on mbit10's build volume, scoped by run (2026-09-29)."""
-    if socket.gethostname().split('.')[0] == 'mbit10':
+    if host_identity.short_name() == 'mbit10':
         # Independent record stores can use the same snapshot ID. Namespace by
         # the run directory so fixtures and separate campaigns cannot collide.
         namespace = hashlib.sha256(str(Path(runs_dir).resolve()).encode()).hexdigest()[:16]

@@ -18,6 +18,7 @@ from swdb.bfs_protocol import _request
 from swdb.cli import Failure, _require_valid
 from swdb.dx100 import _file
 from swdb.bfs_native import StageFailure
+from swdb import host_identity
 
 
 def _trial(evaluation, *, require_explicit=False):
@@ -284,7 +285,7 @@ def collect(args):
             raise Failure("evaluation does not identify DX100 execution")
         context = evaluation["context"]
         preflight = None
-        if socket.gethostname().split('.')[0] == 'mbit10':
+        if host_identity.short_name() == 'mbit10':
             from swdb import profile
             from swdb.dispatch_preflight import check
             machine = store.get(evaluation['machine'], 'machine')

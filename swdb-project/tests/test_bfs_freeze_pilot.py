@@ -109,7 +109,7 @@ def test_public_native_metadata_query_preserves_the_verifiable_lane_shape(record
     rid = 'bfs-native-smoke-20260925-a1.evaluation'
     # Query a copy of retained metadata only; its old changed candidate is never
     # admitted as a baseline pilot or reclassified into empirical freeze evidence.
-    records.copy_repo()
+    records.copy_closure(rid)
     result = records.swdb('get', rid, '--format', 'json')
     assert result.returncode == 0, result.stderr
     context = json.loads(result.stdout)['context']

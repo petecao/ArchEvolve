@@ -41,6 +41,7 @@ from swdb import bfs_native_scalable as scalable
 from swdb.cli import Failure, _require_valid
 from swdb.store import Store
 from swdb.vocab import load_all
+from swdb import host_identity
 
 # BFS aliases kept for scripts that pin the BFS driver template; new code asks
 # the kernel plug-in (kernels.BFS.native_roi / native_driver).
@@ -600,7 +601,7 @@ def evaluation_steps(args, *, request=None, pairing=None, reuse=None, deadline=N
         if not machine:
             raise Failure("native target machine does not exist")
         data["machine"] = machine["id"]
-        host = socket.gethostname().split(".")[0]
+        host = host_identity.short_name()
         if machine["hostname"] != host:
             raise Failure(f"current host {host!r} differs from machine {machine['hostname']!r}")
         if host == "mbit10" and not profile.lane_required(machine):
