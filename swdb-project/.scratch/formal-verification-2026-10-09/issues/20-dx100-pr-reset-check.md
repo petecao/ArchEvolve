@@ -75,6 +75,13 @@ Resolved 2026-10-13 19:56 ET, AFK on the Mac. Evidence, commands and the full ru
    reset), so it does not depend on the model beyond `maa_indirect_rmw_vector(..., ADD_OP)`
    adding into memory. Internal finding only: no message to the authors or the team.
 
+**Re-check (Yan-Ru asked "are you sure?"):** the claim holds only for runs of 2 or more
+iterations. The authors' settings (1 iteration) produce correct scores. gem5's indirect RMW was
+read, not run (upstream `e4fc4afd`, `src/mem/MAA/IndirectAccess.cc:898-1023`). It copies the memory
+line into `new_data`, does `new_data[wid] += SPD[src][itr]` for every data type, and writes the line
+back (`:1145-1158`). So gem5 also adds into memory, as the functional model does. The defect does
+not depend on which model runs it.
+
 **Inputs passed on:**
 - **Ticket 18 (resolved):** confirmed. The authors' PR as written is a held-out candidate that
   must fail certification or be refuted, and it serves as motivating evidence. The one-line reset
