@@ -8,6 +8,8 @@
 #   checked attribute (swdb.split_check.v2) -> whole-store validate.
 # Usage: bash run.sh <checkout root> <lane node 0|1> <raw folder>
 #   --check   parse arguments and print the plan; run nothing.
+# Exit codes avoid socket_lane.sh's 2/4/5: 12 setup, 13 dirty checkout, 15 guard refused,
+# 16/17 scratch store, 11 evaluate, 21 bfs-profile, 31 attribute, 41 validate.
 set -uo pipefail
 CHECK=0
 if [ "${1:-}" = "--check" ]; then CHECK=1; shift; fi
@@ -42,14 +44,14 @@ if [ $CHECK -eq 1 ]; then
   exit 0
 fi
 export PYTHONDONTWRITEBYTECODE=1
-cd "$SRC" || exit 3
-mkdir -p "$RAW/runs" || exit 3
+cd "$SRC" || exit 12
+mkdir -p "$RAW/runs" || exit 12
 log() { echo "$(TZ=America/New_York date '+%Y-%m-%d %H:%M:%S ET') 10 $*" | tee -a "$RAW/order.log"; }
 step() { local name=$1; shift; log "step $name begin"; /usr/bin/time -v "$@" > "$RAW/$name.out" 2> "$RAW/$name.stderr"; local rc=$?; log "step $name end rc=$rc"; return $rc; }
 envsnap() { { TZ=America/New_York date; uptime; who | awk '{print $1}' | sort -u | tr '\n' ' '; echo; df -h /data1 /data;
   cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor; cat /sys/devices/system/cpu/intel_pstate/no_turbo;
   uname -a; numactl --show; git rev-parse HEAD; } > "$RAW/env-$1.txt" 2>&1; }
-test -z "$(git status --porcelain)" || { log "dirty checkout"; exit 4; }
+test -z "$(git status --porcelain)" || { log "dirty checkout"; exit 13; }
 log "start commit=$(git rev-parse HEAD) lane=$LANE"
 envsnap 10-start
 # Kept counted binaries/wrappers (ticket 03): the .a3 protocols' run arguments name the wrappers.
@@ -58,7 +60,7 @@ for d in baseline-counted candidate-counted swdb-protected-cpu-wrapper-8yok3jhh 
   ( cd "$KEPT/$d" && echo "$d files=$(find . -type f | wc -l) bytes=$(find . -type f -printf '%s\n' | awk '{s+=$1} END {print s}') manifest=$(find . -type f | sort | xargs sha256sum | sha256sum | cut -d' ' -f1)" ) >> "$RAW/kept-identity-before.txt" 2>&1
 done
 # Guard: both .a3 estimates exist with numeric seconds, and today (ET) is strictly later than both (F43).
-python3 - "$BES" "$CES" <<'PY' || { log "guard refused"; exit 5; }
+python3 - "$BES" "$CES" <<'PY' || { log "guard refused"; exit 15; }
 import sys
 from swdb.store import Store
 from swdb.writer import today
@@ -72,8 +74,8 @@ for rid in sys.argv[1:]:
 assert today() > max(dates), f'today {today()} is not after the estimates ({max(dates)})'
 print('guard ok: today', today(), 'estimates', dates)
 PY
-test ! -e "$S" || { log "scratch store exists"; exit 6; }
-cp -a records "$S" || exit 7
+test ! -e "$S" || { log "scratch store exists"; exit 16; }
+cp -a records "$S" || exit 17
 log "scratch store copied ($(du -sh "$S" | cut -f1))"
 for side in baseline candidate; do
   step "evaluate-$side" timeout 10800 python3 -m swdb evaluate "$EV/cpud10.t75-$side.uniform22.t1.s0.evaluation.a1.request.yaml" \
