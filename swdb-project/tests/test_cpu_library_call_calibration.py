@@ -181,3 +181,16 @@ def test_pilot_keeps_headroom_so_warm_trials_still_resolve_min_trial(tmp_path):
     assert batches == 65536 and seen[-2:] == [32768, 65536]
     assert batches * BATCH_EVENTS * per_event * .8 >= .05   # a trial 20% faster than the pilot still resolves
     assert json.loads((tmp_path / 'pilot.json').read_text())['driver_seconds'] >= .0625
+
+
+def test_native_run_refuses_fixture_sampling_caps_before_any_work(tmp_path):
+    """Review F4 (2026-10-12 ET): native validation admits only 7-11 repetitions and trials of at
+    least 0.05 s, so a native run with fixture caps is refused first, before the store, lane or
+    host checks, and nothing is written."""
+    (tmp_path / 'records').mkdir()
+    for caps in (('--repetitions', '3'), ('--min-trial-s', '.002'), ('--repetitions', '12')):
+        output = tmp_path / ('native-' + caps[1])
+        refused = run_swdb('cpu-service-calibrate', '--service-group', 'library_call', '--records', tmp_path / 'records',
+                           '--output', output, '--machine', 'mbit10', '--llvm-bin', tmp_path, *caps)
+        assert refused.returncode != 0 and 'native library-call caps' in refused.stderr, refused.stderr
+        assert not output.exists()
