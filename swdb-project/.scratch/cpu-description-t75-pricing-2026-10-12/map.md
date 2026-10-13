@@ -1,16 +1,15 @@
 # Map: CPU target description that can price the t75 BFS pair
 
-Created: 2026-10-12 00:42 ET. Spec: [spec.md](spec.md).
+Created: 2026-10-12 00:42 ET. Updated: 2026-10-13 01:55 ET. Spec: [spec.md](spec.md).
 
 ## Current state
 
-- **Checkpoint (2026-10-12 21:55 ET):** tickets 01–09 resolved; both t75 `.a3` estimates are
-  numeric (26.643 s / 20.770 s) and the unchecked attribution report has numeric shares and floor.
-  Code-review fixes (F1–F7, [evidence/review-fixes.md](evidence/review-fixes.md)) are in
-  `cpud/integration` `4324b546`. Integration branch `cpud/integration` (base `yanrujhou_main`).
+- **Checkpoint (2026-10-13 01:55 ET):** all tickets 01–10 resolved. Ticket 10 split check:
+  `split_unverified` (gaps 35–42 pp), mostly profiler guard overhead (5–6x). Native t75 medians
+  1.686 s / 1.247 s against estimates 26.643 s / 20.770 s. Branch `cpud/10-split-check`.
 - **Blocker:** none.
-- **Next action:** ticket 10 (timing and split check) on **2026-10-13 ET or later** (both `.a3`
-  estimates are dated 2026-10-12).
+- **Next action:** main session merges `cpud/10-split-check` into `cpud/integration`. A useful
+  split check needs lower-overhead region timing (new ticket, not opened).
 
 ## Tickets
 
@@ -52,6 +51,12 @@ Graph: 01–06 start now → 07 (needs 01, 02, 04, 05, 06) → 08 (needs 03, 07)
   rewritten 93.50%/91.67%, untouched 6.49%/8.33%, unattributed <0.002%, speedup 1.283x, floor 0.197/0.206 s;
   later estimate ended 2026-10-12 20:40 ET, so ticket 10 times on 2026-10-13 ET or later
   ([answer](issues/09-rerun-estimates.md#answer), [runbook](evidence/09-rerun-03/README.md)).
+
+- Ticket 10 resolved (2026-10-13 01:55 ET, branch `cpud/10-split-check`): verdict `split_unverified`;
+  untouched estimated/measured 6.49%/41.43% (baseline), 8.33%/50.81% (candidate); guards inflate tight loops
+  5–6x; native medians 1.686/1.247 s (estimates ~16x high, speedup 1.352x measured vs 1.283x); floor 0.197/0.206 s;
+  bfs-profile now reads v3 evaluations; record views; kept binaries removed (LR-06)
+  ([answer](issues/10-rerun-split-check.md#answer), [runbook](evidence/10-rerun-09/README.md)).
 
 - Code-review fixes (2026-10-12 20:55 ET, branch `cpud/review-fixes`): F1 floor-only bandwidth numeric on
   `services.v2`; F2–F6, test-store fixes, T2 combined test; raw lane logs replaced by hashes
