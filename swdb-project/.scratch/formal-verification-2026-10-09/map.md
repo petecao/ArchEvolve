@@ -1,7 +1,8 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-13 16:09 ET (ticket 15 resolved: concurrency proofs for any thread count;
+Updated: 2026-10-13 16:47 ET (ticket 17 resolved: enabling rewrites and rewrite chains);
+2026-10-13 16:09 ET (ticket 15 resolved: concurrency proofs for any thread count;
 ticket 17 added; VerCors out of scope); 2026-10-13 15:22 ET (ticket 13 resolved: the proof-hint loop);
 2026-10-13 14:19 ET (ticket 12 resolved: the proof semantics; ticket 16 added);
 2026-10-13 00:35 ET (ticket 11 resolved: verifier lineup, concurrency, the name
@@ -9,7 +10,7 @@ Extensa Probata; ticket 15 added); 2026-10-12 22:52 ET (ticket 10 resolved: what
 2026-10-12 22:25 ET (ticket 09 resolved: what proven asserts; generality requirement added);
 2026-10-11 18:58 ET (ticket 08 resolved: crux-llvm separates the bug at one lane)
 **Type:** wayfinder map
-**Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–13 and 15 resolved
+**Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–13, 15 and 17 resolved
 
 ## Destination
 
@@ -137,6 +138,15 @@ concept is the next effort.
   Reads that race on purpose are history reads (RC11); any other race refutes. CIVL gives proven
   within bounds for threads <= k, GenMC refutes, both must agree. All three proof-of-concept
   candidates race at N > 1 as written and go to repair. VerCors out; enabling rewrites to 17.
+- [How do enabling rewrites chain with offloading rewrites?](issues/17-enabling-rewrites.md):
+  matching and splitting: a catalog of five recurring reshapes (chunking, fallback, phase split,
+  buffers, edge-loop flattening), each with a template proven once; offloads become offload-only
+  contracts that name the enabling contracts they need; bundled contracts stay legal. BFS proves
+  the final candidate against the baseline directly; a rewrite that changes the thread split is
+  proven against the baseline, one that keeps it per thread against its predecessor; a failed
+  rewrite falls back to a bounded direct check. Certified enabling results become derived
+  implementations; each rewrite is certified alone. The race fix stays repair. Proof of concept:
+  Peter's read offload, chained vs bundled.
 
 ## Tickets
 
@@ -158,7 +168,7 @@ concept is the next effort.
 | 14 | [Does a DX100 wait on a store's source tile cover the store's result?](issues/14-dx100-wait-rule.md) | research | resolved | — |
 | 15 | [How do proofs cover concurrency for any thread count?](issues/15-concurrency-proofs.md) | grilling | resolved | 11, 12 |
 | 16 | [What language do formal halves and the proof semantics share?](issues/16-formal-half-language.md) | grilling | ready-for-human | 11, 12 |
-| 17 | [How do enabling rewrites chain with offloading rewrites?](issues/17-enabling-rewrites.md) | grilling | ready-for-human | 15 |
+| 17 | [How do enabling rewrites chain with offloading rewrites?](issues/17-enabling-rewrites.md) | grilling | resolved | 15 |
 
 ## Not yet specified
 
@@ -173,7 +183,9 @@ concept is the next effort.
   and the wait-on-source idiom in `apps/dx100/benchmarks/gapbs/src/pr.cc:242-245` is safe under
   the gem5 rule. Left: stale CPU copies after a DX100 store (assumed, owner Eric; research 12),
   and the two gem5 corners research 12 could not rule out. (Peter's plain store after the CAS is
-  a data race, refuted at N > 1 per 15.)
+  a data race, refuted at N > 1 per 15.) Per 17 (read from code, not run): DX100 PR never resets
+  `incoming_totals` between iterations (`apps/dx100/benchmarks/gapbs/src/pr.cc:140-141,183,242`;
+  the baseline resets, `:100`); scores look wrong from iteration 2. Needs a run check.
 - **Evaluation plan:** kernels beyond BFS, required by the generality note (the DX100 authors'
   code covers bfs top-down and bottom-up (`bfs_bu.cc`), bc, pr and sssp; cc and tc have none;
   Extensa campaign artifacts), baselines (testing-only certification, verifier without hints,
@@ -190,7 +202,10 @@ concept is the next effort.
   time); calibration on public C suites plus the BFS proof of concept, held-out kernels for the
   evaluation, recalibration on mbit10; seeds on and off (a paper feature, Yan-Ru); escape-hatch
   attempts by rule; C-lowering subset coverage on campaign candidates; check the ESBMC-AI
-  citation (counterexample-guided LLM repair for C) for positioning.
+  citation (counterexample-guided LLM repair for C) for positioning. Per 17: Peter's read offload
+  chained (catalog rewrites plus an offload-only read offload) vs bundled, comparing proof time
+  and hint rounds; then, only if that passes, upstream GAPBS `TDStep` as an "any input" demo; the
+  five catalog templates' proofs (about one month).
 - **Records:** how proven verdicts, bounds, hints and counterexamples are stored in the research
   database and shown in ArchEvolve mode. Per 09, a verdict also carries its assumption set (each
   entry with its kind), a value or "unbounded" per bound dimension, and the cap from proven
@@ -202,10 +217,18 @@ concept is the next effort.
   refutation replay status, and the hint vocabulary and check versions. Per 15: CIVL and GenMC
   settings (version, k or thread count, input and loop bounds, flags, memory-model encoding); the
   parallel composition theorem's version and status (Rocq-checked or written); the OpenMP runtime
-  and RC11 entries.
+  and RC11 entries. Per 17: per rewrite in a rewrite chain, its contract hash, predecessor snapshot
+  hash, result hash, certification record and proof route; derived implementations' contract
+  lineage (`applies` lists only strategies today).
 - **Extensa-mode loop:** the proving budget per iteration, and how ranking by proven level
   changes selection. Per 13: lane-hours proofs may use on mbit10 per campaign (proof jobs run
-  inside a socket lane), and the counterexample-guided repair budget per refuted candidate.
+  inside a socket lane), and the counterexample-guided repair budget per refuted candidate. Per
+  17: an iteration may start from a certified derived implementation; only final candidate
+  artifacts are ranked and use lane-hours.
+- **Direct unbounded proofs without a template** (from 17): a final candidate artifact whose chain
+  fails to prove reaches at most proven within bounds, because a direct relational proof needs an
+  alignment nothing supplies. An "alignment" proof-hint kind would add an unbounded route (it
+  widens 13's vocabulary).
 
 ## Out of scope
 

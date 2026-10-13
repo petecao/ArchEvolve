@@ -1,6 +1,6 @@
 # EvolveSWDB — ArchEvolve's research database
 
-Updated: 2026-10-13 16:09 ET (formal-verification ticket 15: enabling rewrite, shared action, sharing class, history read, parallel composition theorem added); 2026-10-13 15:22 ET (formal-verification ticket 13: proof-hint agent, counterexample-guided repair, proof-hint loop, hint set, proof setup check, proof hint check added; proof hint sharpened); 2026-10-13 14:05 ET (formal-verification ticket 12: proof semantics added; functional model and assumption set sharpened); 2026-10-12 23:51 ET (formal-verification ticket 11: Extensa Probata, verifier lineup, bounded verifier, unbounded verifier added); 2026-10-12 22:50 ET (formal-verification ticket 10: unit postcondition, relational template, contract proof, reference instance, summary added; negative control and certification level sharpened); 2026-10-12 22:25 ET (formal-verification ticket 09: certification level and formal verifier sharpened; proof unit, unit relation, output relation, lifting lemma, assumption set added); 2026-10-12 00:37 ET (final review of fine-grained attribution: code origin and catalog bound reworded; attribution report, split check, site-finder region and measured scope added); 2026-10-11 22:10 ET (review fix: rewrite site reworded to merged spans); 2026-10-11 21:52 ET (ADR 0015: LANL core, guessed column, SWDB extension; crosswalk now historical); 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom, remaining gain bound); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
+Updated: 2026-10-13 16:47 ET (formal-verification ticket 17: rewrite chain, predecessor, derived implementation, offload-only contract added; enabling rewrite sharpened); 2026-10-13 16:09 ET (formal-verification ticket 15: enabling rewrite, shared action, sharing class, history read, parallel composition theorem added); 2026-10-13 15:22 ET (formal-verification ticket 13: proof-hint agent, counterexample-guided repair, proof-hint loop, hint set, proof setup check, proof hint check added; proof hint sharpened); 2026-10-13 14:05 ET (formal-verification ticket 12: proof semantics added; functional model and assumption set sharpened); 2026-10-12 23:51 ET (formal-verification ticket 11: Extensa Probata, verifier lineup, bounded verifier, unbounded verifier added); 2026-10-12 22:50 ET (formal-verification ticket 10: unit postcondition, relational template, contract proof, reference instance, summary added; negative control and certification level sharpened); 2026-10-12 22:25 ET (formal-verification ticket 09: certification level and formal verifier sharpened; proof unit, unit relation, output relation, lifting lemma, assumption set added); 2026-10-12 00:37 ET (final review of fine-grained attribution: code origin and catalog bound reworded; attribution report, split check, site-finder region and measured scope added); 2026-10-11 22:10 ET (review fix: rewrite site reworded to merged spans); 2026-10-11 21:52 ET (ADR 0015: LANL core, guessed column, SWDB extension; crosswalk now historical); 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom, remaining gain bound); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
 
 The Software Database is the ArchEvolve component that knows the applications:
 what their kernels compute, how their code touches memory, what profiling
@@ -40,6 +40,11 @@ _Avoid_: option, variant, alternative
 **Baseline implementation**:
 An implementation of a kernel as found in a particular application's source.
 _Avoid_: original, vanilla, reference implementation
+
+**Derived implementation**:
+An implementation made by a certified rewrite of another implementation, recorded with what it came
+from. It is never a baseline implementation.
+_Avoid_: equivalent baseline, normalized baseline, intermediate
 
 **Region**:
 A portion of one implementation's code identified for profiling or rewriting,
@@ -145,8 +150,23 @@ _Avoid_: sub-contract, contract variant
 **Enabling rewrite**:
 A rewrite whose contract offloads nothing and only reshapes code, so that a rewrite contract that
 does offload can then match. Its result is a candidate artifact, compared against the baseline
-implementation like any other.
+implementation like any other. Once certified, its result is a derived implementation.
 _Avoid_: equivalent baseline, normalized baseline, enabling transformation
+
+**Offload-only contract**:
+A rewrite contract that only offloads: it keeps its predecessor's thread split and loop order, and
+names, in order, the enabling rewrite contracts it requires.
+_Avoid_: thin contract
+
+**Rewrite chain**:
+An ordered sequence of rewrites from a baseline implementation to a final candidate artifact, each
+applying one rewrite contract to the result of the one before.
+_Avoid_: chain (alone), which names an access pattern's steps; pipeline, stack
+
+**Predecessor**:
+The code one rewrite in a rewrite chain is applied to: the baseline implementation or a derived
+implementation.
+_Avoid_: parent (names a repair's earlier candidate artifact), base
 
 **Preservation obligation**:
 A property a rewrite must keep beyond passing the kernel's correctness check, such as
