@@ -21,7 +21,12 @@ BASELINE_SUBJECT='dx100-bfs-scalar'
 
 
 def current_certification():
-    """A repository execution certificate of CANDIDATE that today's candidate procedure accepts, or None."""
+    """A repository execution certificate of CANDIDATE that today's candidate procedure accepts, or None.
+
+    Same currency test as `functional_evaluation._certified`: procedure family/version and the
+    exact source and kernel/result-check rows. 2026-10-13 ET: the kernel rows were missing here,
+    so a certificate whose pinned BFS result check (`swdb/bfs_native.py`) changed was taken as
+    current and the positive path failed instead of skipping."""
     from swdb import certification_procedures as procedures, kernels
     proc=procedures.procedure(procedures.CANDIDATE)
     implementation=yaml.safe_load((REPO/'records/implementations'/(BASELINE_SUBJECT+'.yaml')).read_text())
@@ -32,8 +37,11 @@ def current_certification():
         data=yaml.safe_load(path.read_text())
         command=data.get('command',{})
         if (data.get('candidate',{}).get('id')==CANDIDATE and data.get('verdict')=='certified'
-                and data.get('evidence_kind')=='execution' and command.get('version')==proc.version
-                and command.get('sources_sha256')==manifest['sources_sha256']):
+                and data.get('evidence_kind')=='execution' and command.get('family')==proc.family
+                and command.get('version')==proc.version and command.get('sources_match_version') is True
+                and command.get('sources_sha256')==manifest['sources_sha256']
+                and command.get('sources')==manifest['sources']
+                and command.get('kernel_sources')==manifest['kernel_sources']):
             return data['id']
     return None
 
@@ -148,8 +156,10 @@ def test_dx100_functional_estimate_shows_a_known_ratio_and_stays_within_error(re
 def test_strict_certified_candidate_gets_estimated_handoff_without_target_timing(records,tmp_path):
     current=current_certification()
     if current is None:
-        pytest.skip('needs a certificate of '+CANDIDATE+' under the current default candidate procedure; '
-                    'the retained '+CERTIFICATION+' is historical 1.6 (ticket 12 code review, 2026-10-09 ET)')
+        pytest.skip('needs a certificate of '+CANDIDATE+' under the current default candidate procedure '
+                    'and kernel result check; the retained '+CERTIFICATION+' is historical 1.6 (ticket 12 '
+                    'code review, 2026-10-09 ET), and the 1.7 certificate pins swdb/bfs_native.py as of '
+                    '2026-10-10 (changed 2026-10-13 by 8db9654a); certify again on mbit10')
     path=prepared(records,tmp_path,certification=current,flops=32)
     request=json.loads(path.read_text())
     request['baseline']=baseline_estimate(records,request)['id'];path.write_text(json.dumps(request))
@@ -255,7 +265,10 @@ def test_stale_certification_is_unverified_and_team_refuses_gem5_before_writes(r
     request.update(id='fixture.functional.obsolete-evaluation',certification=stale['id'])
     path.write_text(json.dumps(request))
     done=run_swdb('evaluate-functional',path,'--records',records.path,'--format','json')
-    assert done.returncode==1 and 'certify again' in json.loads(done.stdout)['outcome']['reason'],done.stdout+done.stderr
+    # Without a current certificate the historical one refuses first on its dependency pins
+    # (2026-10-13 ET), which equally means it is not reusable.
+    reasons=('certify again',) if current else ('certify again','normative contract or dependency changed')
+    assert done.returncode==1 and any(reason in json.loads(done.stdout)['outcome']['reason'] for reason in reasons),done.stdout+done.stderr
     target_path=Path(request['target_description'])
     target=yaml.safe_load(target_path.read_text());target['target']='dx100-e4fc4af-4c'
     target_path.write_text(yaml.safe_dump(target,sort_keys=False))
