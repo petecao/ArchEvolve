@@ -1,10 +1,15 @@
-"""Legal native OpenMP probe scope through public commands,2026-10-06 ET; a2 set 2026-10-12 ET."""
+"""Legal native OpenMP probe scope through public commands,2026-10-06 ET; a2 set 2026-10-12 ET.
+Updated 2026-10-12 ET (cpud review 8a/8b): the native tests copy only the record closure of the
+runner's count seeds, not the 1.1 GB store, and pass `SWDB_TOOLCHAIN_FLAGS` (Linux headers)."""
 import copy
 import json
 import os
 import subprocess
 import sys
 from pathlib import Path
+
+# The records the OpenMP count step reads (`swdb/cpu_openmp_calibration.py`, its `seeds`).
+COUNT_SEEDS = ('gapbs-bfs-do', 'kron-g16-k16')
 
 
 def run_openmp(records, output, llvm, *args, env_controls=None):
@@ -15,9 +20,9 @@ def run_openmp(records, output, llvm, *args, env_controls=None):
         capture_output=True,text=True,env=env,timeout=240)
 
 
-def test_count_only_matrix_proves_exact_selected_event_scope_without_elapsed(records,tmp_path,llvm22):
-    records.copy_repo();output=tmp_path/'openmp-count'
-    result=run_openmp(records,output,llvm22,'--count-only','--max-wall-s','180')
+def test_count_only_matrix_proves_exact_selected_event_scope_without_elapsed(records,tmp_path,llvm22,toolchain_flags):
+    records.copy_closure(*COUNT_SEEDS);output=tmp_path/'openmp-count'
+    result=run_openmp(records,output,llvm22,'--count-only','--max-wall-s','180',*toolchain_flags)
     assert result.returncode==0,result.stderr+result.stdout
     raw=json.loads((output/'count-proof.json').read_text());proof=raw['count_proof']
     assert raw['format']=='swdb.cpu-openmp-count-only.v1' and raw['timings_collected'] is False
@@ -58,10 +63,10 @@ def test_public_native_admission_checks_actual_runtime_abi_and_return_scope(tmp_
     rejected=validate();assert rejected.returncode!=0 and 'coefficient' in rejected.stderr
 
 
-def test_portable_probe_retains_every_legal_event_and_is_imported_only_as_fixture(records,tmp_path,llvm22):
+def test_portable_probe_retains_every_legal_event_and_is_imported_only_as_fixture(records,tmp_path,llvm22,toolchain_flags):
     from conftest import make_records, run_swdb
-    records.copy_repo();output=tmp_path/'openmp-elapsed'
-    result=run_openmp(records,output,llvm22,'--machine','testhost','--repetitions','3','--min-trial-s','.0002','--max-wall-s','180')
+    records.copy_closure(*COUNT_SEEDS);output=tmp_path/'openmp-elapsed'
+    result=run_openmp(records,output,llvm22,'--machine','testhost','--repetitions','3','--min-trial-s','.0002','--max-wall-s','180',*toolchain_flags)
     assert result.returncode==0,result.stderr+result.stdout
     raw=json.loads((output/'receipt.json').read_text())
     assert raw['evidence_kind']=='fixture' and len(raw['services'])==23 and raw['settings']['group']=='openmp_v2'

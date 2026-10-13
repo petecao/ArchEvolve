@@ -1,4 +1,4 @@
-"""Exact-size constructed allocator costs. Created: 2026-10-06 ET. Updated: 2026-10-12 ET.
+"""Exact-size constructed allocator costs. Created: 2026-10-06 ET. Updated: 2026-10-12 ET (review F5: regime comment).
 
 Application allocator-state transfer remains inferred, never measured by this runner.
 Group allocator_v2 (2026-10-12) adds malloc/free and exact bins up to 32 MiB, and lets a run
@@ -27,8 +27,15 @@ from swdb.store import Store
 NAMES = ('new_array', 'delete_array', 'new_scalar', 'delete_scalar', 'malloc', 'free')
 ABI = ('_Znam', '_ZdaPv', '_Znwm', '_ZdlPv', 'malloc', 'free')
 GROUP = 'allocator_v2'
-# Operations and exact-size cap per receipt group. 32 MiB is glibc's 64-bit dynamic mmap-threshold
-# maximum; every bin stays an exact size, never an interpolated range.
+# Operations and exact-size cap per receipt group; every bin stays an exact size, never an
+# interpolated range. The cap is not one glibc regime (review F5, 2026-10-12 ET; inferred from
+# glibc malloc.c, not measured by this runner). In a fresh process that repeats allocate/free:
+# - request <= 128 KiB (initial M_MMAP_THRESHOLD): ordinary heap bins from the first call;
+# - larger, with chunk (request + header) <= 32 MiB (DEFAULT_MMAP_THRESHOLD_MAX on 64-bit): the
+#   first call is mmap, its free raises the dynamic threshold to that chunk, so every later call
+#   comes from the brk heap and may fault in fresh pages after a trim (16 MiB bins are here);
+# - chunk > 32 MiB, which includes a request of exactly 32 MiB: mmap/munmap on every call.
+# docs/reference/cpu-service-calibration.md lists the regime of each measured bin.
 GROUPS = {'allocator_v1': {'operations': 4, 'size_cap': 1048576},
           'allocator_v2': {'operations': 6, 'size_cap': 32 * 1024**2}}
 SOURCES = ('CpuAllocatorWork.h', 'CpuAllocatorTimer.cpp', 'CpuAllocatorCount.cpp')

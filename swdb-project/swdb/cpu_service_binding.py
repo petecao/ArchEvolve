@@ -236,16 +236,24 @@ def _allocator_resource_binding(args,target,char,cells,scopes):
 def _floor_only_bandwidth(store,target):
     """C11 (2026-10-12 ET, cpu-description ticket 03): the base's measured streaming_bandwidth rate,
     which memory cells supersede as an estimate mechanism, kept verbatim for the attribution resource
-    floor only. The estimator never reads `resource_floor_mechanisms`, so estimates are unchanged."""
+    floor only. The estimator never reads `resource_floor_mechanisms`, so estimates are unchanged.
+
+    Review F6 (2026-10-12 ET): `carried_from.calibrations` pins only the base calibration sources that
+    produced the rate: a record whose `receipt_sha256` the `bytes_per_s` source names. A rate with no
+    named producer (a hand fixture) pins none. services.v2's base lists exactly its producer, so its
+    binding is unchanged."""
     carried=[]
     for mechanism in target['mechanisms']:
         if (mechanism['model']!='streaming_bandwidth' or mechanism.get('selector')
                 or mechanism.get('accounting','resource_bound')!='resource_bound'):continue
+        source=str((mechanism['parameters'].get('bytes_per_s') or {}).get('source',''))
         calibrations=[]
         for identifier in target['calibration_sources']:
             record=store.get(identifier)
             if record is None:raise Failure('floor-only bandwidth rate needs a resolvable base calibration '+repr(identifier))
-            calibrations.append({'id':identifier,'sha256':artifacts.digest(record)})
+            receipt=record.get('receipt_sha256')
+            if isinstance(receipt,str) and len(receipt)==64 and receipt in source:
+                calibrations.append({'id':identifier,'sha256':artifacts.digest(record)})
         carried.append({'model':'streaming_bandwidth','parameters':copy.deepcopy(mechanism['parameters']),
             'carried_from':{'description':{'id':target['id'],'sha256':artifacts.digest(target)},'calibrations':calibrations}})
     return carried

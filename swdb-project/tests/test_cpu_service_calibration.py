@@ -1,10 +1,15 @@
-"""Native service calibration through public commands. Created: 2026-10-06 ET."""
+"""Native service calibration through public commands. Created: 2026-10-06 ET.
+Updated 2026-10-12 ET (cpud review 8a/8b): the clock count tests copy only the record closure of
+the count seeds, not the 1.1 GB store, and pass `SWDB_TOOLCHAIN_FLAGS` (Linux headers)."""
 import json
 
 import pytest
 
 from conftest import run_swdb
 from testkit.cpu_service import fixture_receipt, save_receipt
+
+# The records the clock count proof reads (`swdb/cpu_service_counts.py`, its `seeds`).
+COUNT_SEEDS = ('gapbs-bfs-do', 'kron-g16-k16')
 
 
 def test_import_service_fixture_retains_paired_trials_and_reported_cost(records, tmp_path):
@@ -60,12 +65,12 @@ def test_portable_service_runner_is_bounded_and_imports_only_as_fixture(records,
     assert excessive.returncode != 0 and not (tmp_path / 'unbounded').exists()
 
 
-def test_portable_clock_receipt_binds_separate_source_normalized_call_counts(records, tmp_path, llvm22):
-    records.copy_repo()
+def test_portable_clock_receipt_binds_separate_source_normalized_call_counts(records, tmp_path, llvm22, toolchain_flags):
+    records.copy_closure(*COUNT_SEEDS)
     output = tmp_path / 'counted-service'
     result = run_swdb('cpu-service-calibrate', '--records', records.path, '--output', output,
         '--fixture', '--llvm-bin', llvm22, '--repetitions', '3', '--min-trial-s', '.002',
-        '--max-wall-s', '120')
+        '--max-wall-s', '120', *toolchain_flags)
     assert result.returncode == 0, result.stdout + result.stderr
     data = json.loads((output / 'receipt.json').read_text())
     proof = data['services'][0]['denominator']['proof']
@@ -90,11 +95,11 @@ def test_service_runner_records_explicit_fixture_target_and_rejects_native_on_wr
     assert refused.returncode != 0 and not (tmp_path / 'native-refused').exists()
 
 
-def test_count_only_service_receipt_contains_no_elapsed_calibration(records, tmp_path, llvm22):
-    records.copy_repo()
+def test_count_only_service_receipt_contains_no_elapsed_calibration(records, tmp_path, llvm22, toolchain_flags):
+    records.copy_closure(*COUNT_SEEDS)
     output = tmp_path / 'count-only'
     result = run_swdb('cpu-service-calibrate', '--records', records.path, '--output', output,
-        '--fixture', '--llvm-bin', llvm22, '--count-only', '--max-wall-s', '120')
+        '--fixture', '--llvm-bin', llvm22, '--count-only', '--max-wall-s', '120', *toolchain_flags)
     assert result.returncode == 0, result.stdout + result.stderr
     data = json.loads((output / 'count-proof.json').read_text())
     assert data['format'] == 'swdb.cpu-service-count-only.v1'
