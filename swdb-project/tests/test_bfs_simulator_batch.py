@@ -17,6 +17,7 @@ from swdb.store import Store
 from scripts import bfs_simulator_batch as batch
 from scripts import bfs_dx100_coverage_a2 as coverage_a2
 from swdb import artifacts
+from testkit.real_store import real_store
 
 
 def plan(kind='t15'):
@@ -876,7 +877,7 @@ def test_routes_plan_binds_frozen_protocols_and_grouped_drivers():
         assert row['sources'] == [0, 1234, 7777] and row['protocol_key'] in {'t17', 't20'}
     assert groups == {g: ['baseline', 'candidate'] for g in
                       ('t17.kronecker18', 't17.uniform18', 't20.kronecker18', 't20.uniform18')}
-    store = Store(REPO / 'records')
+    store = real_store()
     for key, ref in value['protocol_requests'].items():
         frozen = [r for r in store.of_kind('protocol')
                   if r.data.get('requested_id') == f'bfs-{key}-controlled-simulator-20260928'
@@ -910,7 +911,7 @@ def test_route_series_command_uses_retained_primary_build_not_author_binary(tmp_
 def test_routes_a2_binds_v2_source0_protocols():
     value = json.loads(batch.plan_path('t17-t20-routes-a2').read_text()); batch.validate_plan(value, 't17-t20-routes-a2')
     assert batch.is_pilot(value) and all(row['sources'] == [0] for row in value['series']) and len(value['series']) == 8
-    store = Store(REPO / 'records')
+    store = real_store()
     for key, ref in value['protocol_requests'].items():
         request = json.loads((REPO / ref['path']).read_text())
         assert request['version'] == 2 and request['supersedes'].startswith(f'bfs-{key}-controlled-simulator-20260928.')
