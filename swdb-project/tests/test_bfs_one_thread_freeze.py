@@ -253,7 +253,8 @@ def readback_case(tmp_path, monkeypatch):
     (checkout/one.PLAN_RELATIVE).write_text(json.dumps(PLAN))
     for folder in ('scripts','swdb'):
         (checkout/folder).mkdir(); (checkout/folder/'__init__.py').write_text('')
-    for name in ('store.py', 'yamlio.py', 'problems.py'):
+    # 2026-10-13 ET: store.py reads through swdb.access since bb11cb13 (2026-10-06).
+    for name in ('store.py', 'access.py', 'yamlio.py', 'problems.py'):
         (checkout/'swdb'/name).write_bytes((one.driver.ROOT/'swdb'/name).read_bytes())
     records = tmp_path/'records'; records.mkdir()
     write(records/'fixture.yaml', {'kind':'machine', 'id':'reader-contract-fixture', 'test_client':True})

@@ -1,6 +1,7 @@
 # Extensa-mode record fields (format 0.4 addition)
 
 Created: 2026-10-03 (Eastern Time)
+Updated: 2026-10-13 (Eastern Time): D35 field named alone so the format check finds it
 Updated: 2026-10-09 23:50 (Eastern Time): agreement report v2, `paired_range` (D29), ledger coverage, D35 start gate, open D30 interpretations
 Updated: 2026-10-09 (Eastern Time): artifact-receipt fields and certification failure boundary
 Updated: 2026-10-04 (Eastern Time): site-finder fields (ticket 55); campaign isolation and gem5 approval fields
@@ -294,7 +295,7 @@ numeric paired estimate, recorded before its timing, that the strict audit admit
 
 | Field | Meaning |
 |---|---|
-| `paired_estimates.numeric_pairing_check` (campaign file) | ID of that `paired_estimate` record in the team store |
+| `numeric_pairing_check` under `paired_estimates` (campaign file) | ID of that `paired_estimate` record in the team store |
 
 `swdb campaign` refuses a new campaign on a real target unless the named record has
 numeric seconds, `evidence_kind: execution` and `eligible_for_agreement: true`. The

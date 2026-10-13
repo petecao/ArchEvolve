@@ -1,5 +1,7 @@
 """First-evaluation command admission and immutable request plans. 2026-10-03 ET.
 Updated 2026-10-05 ET (code review P15: the shared operator frame and budgets).
+Updated 2026-10-13 ET (suite fix: receipt selection reads records and library pinned at the
+testkit.pinned evidence commit; the live gem5 driver correctly refuses since the library changed).
 
 These do not execute gem5 or produce target evidence. The driver's public
 entry point has no fixture option and must refuse the local Mac before writes.
@@ -130,12 +132,23 @@ def test_prepare_budget_admits_serial_gcc_without_weakening_gem5_budget():
     assert driver.stage_budgets(args) == (48, 8)
 
 
-def test_prepare_ignores_a_newer_receipt_without_current_dependencies(monkeypatch):
-    """Test-only shared state; no review or dispatch is recorded."""
+def test_prepare_ignores_a_newer_receipt_without_current_dependencies(monkeypatch, tmp_path):
+    """Test-only shared state; no review or dispatch is recorded.
+
+    2026-10-13 ET: the live library changed after its gem5 certifications (lowering 1.2 in
+    13c40568/c3de51f4, catalog re-pin 87e8646e); its only current contract certification is the
+    functional candidate's, so the live driver refuses, as it should. Selection is tested on the
+    records and library as committed at the pinned evidence commit, and the repository files that
+    library pins."""
+    from swdb import paths
     from swdb.library import Library
     from swdb.store import Record
-    store = Store(driver.PROJECT / 'records')
-    lib = Library(driver.PROJECT / 'library')
+    from testkit.pinned import pinned_folder, pinned_repository_view
+    records = pinned_folder('records', tmp_path)
+    pinned_library = pinned_folder('library', tmp_path)
+    monkeypatch.setattr(paths, 'HOME', pinned_repository_view(pinned_library, tmp_path))
+    store = Store(records)
+    lib = Library(pinned_library)
     receipts = [row for row in store.of_kind('certification')
                 if row.data.get('entry', {}).get('id') == driver.CONTRACT
                 and row.data.get('candidate') and lib.current_certification(row.data)]

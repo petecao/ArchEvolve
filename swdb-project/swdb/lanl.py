@@ -86,13 +86,18 @@ def evaluated_implementation(store, evaluation):
     aggregate, which has no request candidate, names it as `candidate`); with no candidate it ran
     its `implementation`. Only a candidate that is the implementation's unchanged source
     (`artifact_role: source_baseline`) is that implementation. A rewrite candidate's results are
-    not its baseline's, so they stay in the `swdb_` tables."""
-    request = evaluation.get("request") or {}
-    named = request.get("candidate")
+    not its baseline's, so they stay in the `swdb_` tables.
+
+    2026-10-13 ET: a malformed retained request (not a mapping, kept for diagnosis) names no
+    candidate SWDB can read, so such an evaluation is no implementation's (None) unless it names
+    its `candidate` itself; it stays visible in the `swdb_` tables instead of failing the build."""
+    request = evaluation.get("request")
+    malformed = request is not None and not isinstance(request, dict)
+    named = None if malformed else (request or {}).get("candidate")
     if named is None:
         named = evaluation.get("candidate")
     if named is None:
-        return evaluation.get("implementation")
+        return None if malformed else evaluation.get("implementation")
     candidate = store.get(named, "candidate") if isinstance(named, str) else None
     if candidate is None or candidate.get("artifact_role") != "source_baseline":
         return None
@@ -101,8 +106,11 @@ def evaluated_implementation(store, evaluation):
 
 def evaluation_workload(evaluation):
     """(workload ID, the record field naming it) of an evaluation: `request.workload.id`, or
-    `request.workload` when it is a bare ID."""
-    workload = (evaluation.get("request") or {}).get("workload")
+    `request.workload` when it is a bare ID; (None, "request") when the request is malformed."""
+    request = evaluation.get("request") or {}
+    if not isinstance(request, dict):
+        return None, "request"
+    workload = request.get("workload")
     if isinstance(workload, dict):
         return workload.get("id"), "request.workload.id"
     return workload, "request.workload"
