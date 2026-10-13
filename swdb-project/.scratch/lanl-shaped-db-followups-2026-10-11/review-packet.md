@@ -4,7 +4,7 @@
 it needs a new certification first (Mac, about 30–60 min, no gem5). (3) Decide on the BFS
 `evaluated_on_target` assertion. Without that decision, both tests still fail after promotion.
 
-Prepared 2026-10-11 23:27 ET. Updated 2026-10-13 18:05 ET: BFS evidence now `certification.d710ac88…` (the 10-10 certificate `df1986d8…` went stale when `swdb/bfs_native.py` changed at 8db9654a; see `.scratch/lanl-db-analytic-eval-2026-10-06/evidence/12-functional-bfs-recert17-mbit10-20261013-a1/`). Read-only check of `yanrujhou_main` @ 680298a3, `swdb-project/`.
+Prepared 2026-10-11 23:27 ET. Updated 2026-10-13 18:45 ET: BFS evidence now `certification.d710ac88…` (the 10-10 certificate `df1986d8…` went stale when `swdb/bfs_native.py` changed at 8db9654a; see `.scratch/lanl-db-analytic-eval-2026-10-06/evidence/12-functional-bfs-recert17-mbit10-20261013-a1/`). Read-only check of `yanrujhou_main` @ 680298a3, `swdb-project/`.
 Ticket: `swdb-project/.scratch/lanl-shaped-db-followups-2026-10-11/issues/01-re-review-read-offload-contracts.md`.
 
 ---
