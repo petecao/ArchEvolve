@@ -18,10 +18,10 @@ def runner(records, output, llvm, *extra):
         '--max-wall-s', '300', *extra, timeout=400)
 
 
-def test_runner_counts_one_selected_event_per_iteration_and_times_paired_drivers(records, tmp_path, llvm22):
+def test_runner_counts_one_selected_event_per_iteration_and_times_paired_drivers(records, tmp_path, llvm22, toolchain_flags):
     records.copy_closure('gapbs-bfs-do', 'kron-g16-k16')
     output = tmp_path / 'library-calls'
-    result = runner(records, output, llvm22)
+    result = runner(records, output, llvm22, *toolchain_flags)
     assert result.returncode == 0, result.stderr + result.stdout
     raw = json.loads((output / 'receipt.json').read_text())
     assert raw['evidence_kind'] == 'fixture' and raw['settings']['group'] == 'library_call_v1'
