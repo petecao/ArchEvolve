@@ -1,4 +1,4 @@
-// Read-only OpenMP ABI projection. Updated: 2026-10-06 ET.
+// Read-only OpenMP ABI projection. Updated: 2026-10-12 ET (pure intrinsics are operations).
 // Site enumeration/cross-check follows the verified normalized-root projector
 // (a9dbe11); no passes, addresses, pointee reads, runtime bodies or costs.
 #include "llvm/ADT/StringExtras.h"
@@ -18,6 +18,24 @@
 using namespace llvm;
 
 static int fail(StringRef reason) { errs()<<"openmp-projector: "<<reason<<'\n';return 2; }
+// 2026-10-12 ET (cpud 01): mirror Characterize.cpp `pureOperation` (added ba29ceec). The count
+// pass prices these intrinsics as operations and gives them no call site, so they are not
+// call sites here either. Keep the two lists identical.
+static bool pureOperation(Intrinsic::ID id) {
+  switch(id) {
+    case Intrinsic::fabs:case Intrinsic::sqrt:case Intrinsic::copysign:
+    case Intrinsic::minnum:case Intrinsic::maxnum:case Intrinsic::minimum:case Intrinsic::maximum:
+    case Intrinsic::minimumnum:case Intrinsic::maximumnum:
+    case Intrinsic::floor:case Intrinsic::ceil:case Intrinsic::trunc:case Intrinsic::rint:
+    case Intrinsic::nearbyint:case Intrinsic::round:case Intrinsic::roundeven:
+    case Intrinsic::smax:case Intrinsic::smin:case Intrinsic::umax:case Intrinsic::umin:case Intrinsic::abs:
+    case Intrinsic::ctpop:case Intrinsic::ctlz:case Intrinsic::cttz:case Intrinsic::bswap:case Intrinsic::bitreverse:
+    case Intrinsic::fshl:case Intrinsic::fshr:
+      return true;
+    default:
+      return false;
+  }
+}
 static std::string filePath(const DIFile *file) {
   if(!file)return "";
   SmallString<256> path(file->getFilename());
@@ -119,7 +137,8 @@ int main(int argc,char **argv) {
       auto *call=dyn_cast<CallBase>(&inst);if(!call)continue;
       auto *callee=call->getCalledFunction();StringRef name=callee?callee->getName():"indirect-call";
       if(callee && (name.starts_with("llvm.fmuladd") || name.starts_with("llvm.fma") || name.starts_with("__swdb_") ||
-         name.starts_with("llvm.lifetime.") || name.starts_with("llvm.dbg.") || name=="llvm.assume"))continue;
+         name.starts_with("llvm.lifetime.") || name.starts_with("llvm.dbg.") || name=="llvm.assume" ||
+         pureOperation(callee->getIntrinsicID())))continue;
       if(callSite>=calls->size())return fail("too many enumerated call sites");
       auto *row=(*calls)[callSite].getAsObject();unsigned line=callee && inst.getDebugLoc()?inst.getDebugLoc().getLine():0;
       if(!row || row->getInteger("site")!=int64_t(callSite) || row->getString("name")!=name || row->getInteger("line")!=int64_t(line)) {

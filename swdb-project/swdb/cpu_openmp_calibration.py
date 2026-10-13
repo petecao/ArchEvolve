@@ -1,4 +1,7 @@
-"""Bounded independently counted legal OpenMP event probes.2026-10-06 ET."""
+"""Bounded independently counted legal OpenMP event probes.2026-10-06 ET.
+
+Versioned 2026-10-12 ET: collection uses profile set a2 (receipt group openmp_v2) and may time
+a selected subset (`--profile`); a1 (openmp_v1) receipts stay admissible unchanged."""
 import argparse
 import copy
 import json
@@ -18,7 +21,10 @@ from swdb.cpu_service_calibration import identity
 from swdb.cpu_service_controls import snapshot
 from swdb.cpu_service_native import prepare, loaded_libraries
 from swdb.cpu_memory_calibration import budget, COUNT_CAP, TIMED_CAP, PIPELINE
-from swdb.cpu_openmp_profiles import PROFILES, PROBE, STATE, EVENT_CAP
+from swdb.cpu_openmp_profiles import PROFILE_SETS, GROUPS, SETS_BY_GROUP, PROBE, STATE, EVENT_CAP
+
+COLLECTED='a2'
+PROFILES=PROFILE_SETS[COLLECTED]
 from swdb.extensa_boundary import closure
 from swdb.store import Store
 
@@ -34,6 +40,8 @@ def calibrate(args):
     if any(not f.startswith(('--gcc-install-dir=','--gcc-toolchain=','--sysroot=','-resource-dir=','-stdlib=')) for f in args.toolchain_flag):raise Failure('OpenMP flags may select headers/libraries only')
     environment={k:v for k,v in os.environ.items() if k.startswith(tuple(OMP_SCOPE['prefixes']))}
     if any(environment.get(k)!=v for k,v in REQUIRED.items()):raise Failure('OpenMP probes require exact serial controls '+str(REQUIRED))
+    measured=sorted(set(args.profile)) if args.profile else [p['index'] for p in PROFILES]
+    if not measured or any(i not in range(len(PROFILES)) for i in measured):raise Failure('OpenMP --profile must name a2 class indexes 0..'+str(len(PROFILES)-1))
     output=args.output.resolve()
     if output.exists() or output.is_relative_to(paths.HOME.resolve()):raise Failure('OpenMP probes need a new external raw folder')
     native=prepare(args,output);deadline=time.monotonic()+args.max_wall_s
@@ -69,7 +77,7 @@ def calibrate(args):
         (output/'count-proof.json').write_text(payload)
         return {'count_proof':str(output/'count-proof.json'),'identity_sha256':raw['identity_sha256'],'timings_collected':False}
     services=[]
-    for profile in PROFILES:
+    for profile in (PROFILES[i] for i in measured):
         op=profile['index']
         def timer(n,first):
             argv=[binary,op,n,int(first)]
@@ -93,7 +101,7 @@ def calibrate(args):
             'denominator':{'level':'selected_source_normalized_event','basis':'measured','proof':counted},'trials':trials})
         (output/'partial-trials.json').write_text(json.dumps(services,indent=2));budget(output)
     raw={'format':'swdb.cpu-service-calibration.v1','evidence_kind':'fixture' if args.fixture else 'native','machine':args.machine,'threads':1,'context':context,
-        'settings':{'group':'openmp_v1','repetitions':args.repetitions,'min_trial_s':args.min_trial_s,'max_wall_s':args.max_wall_s,
+        'settings':{'group':GROUPS[COLLECTED],'measured_profiles':measured,'repetitions':args.repetitions,'min_trial_s':args.min_trial_s,'max_wall_s':args.max_wall_s,
             'event_cap':EVENT_CAP,'count_build_cap_bytes':COUNT_CAP,'timed_data_cap_bytes':TIMED_CAP,'requested_helper_payload_cap_bytes':4096},'services':services}
     if native:unchanged();context['end_state']=_host_state();validate(raw)
     raw['identity_sha256']=identity(raw);payload=json.dumps(raw,indent=2);budget(output,addition=len(payload.encode()));(output/'receipt.json').write_text(payload)
@@ -106,7 +114,7 @@ def proof(args,output,command):
         relative=store.path_of(key);destination=copied/relative;destination.parent.mkdir(parents=True,exist_ok=True)
         destination.write_bytes(access.read_record_bytes(Path(args.records)/relative))
     lines={i+1:int(m.group(1)) for i,line in enumerate((output/SOURCES[0]).read_text().splitlines()) if (m:=re.search(r'SWDB_OMP_EVENT (\d+)$',line))}
-    if set(lines.values())!=set(range(22)):raise Failure('OpenMP source profile markers differ')
+    if set(lines.values())!=set(range(len(PROFILES))):raise Failure('OpenMP source profile markers differ')
     points=[];static_projection=None
     for invoke in (True,False):
         for n in (3,5):
@@ -118,7 +126,7 @@ def proof(args,output,command):
                 '--run-arg='+str(n),'--run-arg='+str(int(invoke))]+['--toolchain-flag='+f for f in args.toolchain_flag]
             char=json.loads(command(argv).stdout)
             if {'version':char['counting']['pipeline_version'],'passes':char['counting']['passes']}!=PIPELINE:raise Failure('OpenMP count recipe differs')
-            cells={i:0 for i in range(22)};sites={i:[] for i in cells};diagnostics=[]
+            cells={i:0 for i in range(len(PROFILES))};sites={i:[] for i in cells};diagnostics=[]
             regions={r['id']:r['source_location'] for r in char['regions']}
             if static_projection is None:
                 projection_output=directory/'abi-projection'
@@ -173,7 +181,12 @@ def validate(raw):
     def require(condition,reason):
         if not condition:raise Failure('native OpenMP: '+reason)
     def hashed(value):return bool(re.fullmatch('[0-9a-f]{64}',str(value)))
-    require(raw.get('format')=='swdb.cpu-service-calibration.v1' and raw.get('evidence_kind')=='native' and s.get('group')=='openmp_v1','native receipt classification differs')
+    require(raw.get('format')=='swdb.cpu-service-calibration.v1' and raw.get('evidence_kind')=='native' and s.get('group') in SETS_BY_GROUP,'native receipt classification differs')
+    PROFILES=PROFILE_SETS[SETS_BY_GROUP[s['group']]]
+    if s['group']=='openmp_v1':measured=list(range(len(PROFILES)));require('measured_profiles' not in s,'a1 receipts time the full matrix')
+    else:
+        measured=s.get('measured_profiles')
+        require(isinstance(measured,list) and measured and all(type(i) is int for i in measured) and measured==sorted(set(measured)) and set(measured)<=set(range(len(PROFILES))),'measured profile subset differs')
     require(raw['threads']==1 and c.get('system')=='Linux' and c.get('architecture')=='x86_64','Linux/x86 serial context differs')
     require(c.get('host','').split('.')[0]==raw['machine'] and c.get('dirty') is False and re.fullmatch('[0-9a-f]{40}',str(c.get('commit'))),'clean source/host identity missing')
     require('(verified:' in str(c.get('lane')) and len(c.get('cpus',[]))==1 and type(c['cpus'][0]) is int,'verified physical core missing')
@@ -185,8 +198,8 @@ def validate(raw):
     require(all(any(k.startswith(prefix) for k in libs) for prefix in ('libc.so','libstdc++','libomp')) and all(hashed(v.get('sha256')) for v in libs.values()),'actual C/C++/libomp hashes missing')
     require(valid(c) and c.get('openmp_environment_scope')==OMP_SCOPE and all(c.get('openmp_environment',{}).get(k)==v for k,v in REQUIRED.items()),'control/environment scope differs')
     require(c.get('optimized_work',{}).get('retained_abis')==sorted({p['name'] for p in PROFILES}) and hashed(c['optimized_work'].get('ir_sha256')),'optimized events elided')
-    require(len(raw['services'])==22,'full prospective matrix missing')
-    for profile,service in zip(PROFILES,raw['services']):
+    require(len(raw['services'])==len(measured),'full prospective matrix missing')
+    for profile,service in zip((PROFILES[i] for i in measured),raw['services']):
         scope=service['scope'];proof=service['denominator']['proof']
         require(service['id']==profile['id'] and service['unit']=='seconds/call' and scope=={'event_abi':profile['name'],'worker_scope':'serial','openmp_regime':STATE,'abi_profile':profile,'probe_kind':PROBE,'warm_sequences':16,'transfer_basis':'inferred','dynamic_bounds':'constructed0..31; application bounds unverified'},'ABI/probe/state construction differs')
         require(service['denominator']['level']=='selected_source_normalized_event' and service['denominator']['basis']=='measured' and proof['format']=='swdb.cpu-openmp-count-proof.v1' and proof['pipeline']==PIPELINE and proof['profiles']==PROFILES and proof['source_sha256']==c['source_sha256'][SOURCES[0]] and proof['count_driver_sha256']==c['source_sha256'][SOURCES[2]],'count/timed event source differs')
@@ -194,10 +207,10 @@ def validate(raw):
         projection=proof['static_projection']
         require(projection.get('format')=='swdb.openmp-call-projection.v1' and projection.get('identity_sha256')==identity(projection) and projection['characterization']['sha256']==proof['points'][0]['characterization_sha256'] and hashed(projection.get('source_ir_sha256')) and hashed(projection.get('source_json_sha256')),'static ABI projection identity differs')
         projected={call['site']:call for call in projection['calls']}
-        require(len(projected)==22,'static exact event projection incomplete')
+        require(len(projected)==len(PROFILES),'static exact event projection incomplete')
         for point in proof['points']:
             require(point['normalized_ir_sha256']==projection['source_ir_sha256'] and point['source_map_sha256']==projection['source_json_sha256'],'service/driver event IR or source map differs')
-            require(all(hashed(point.get(k)) for k in ('characterization_sha256','normalized_ir_sha256','source_map_sha256')) and len(point['cells'])==22,'count artifact identity missing')
+            require(all(hashed(point.get(k)) for k in ('characterization_sha256','normalized_ir_sha256','source_map_sha256')) and len(point['cells'])==len(PROFILES),'count artifact identity missing')
             for i,cell in enumerate(point['cells']):
                 require(cell['index']==i and cell['event_abi']==PROFILES[i]['name'] and type(cell['executions']) is int and cell['executions']==(point['events'] if point['invoke'] else 0) and len(cell['source_sites'])==1,'selected event coefficient differs')
                 signature=projected.get(cell['source_sites'][0],{})
@@ -216,6 +229,7 @@ def main():
     p.add_argument('--llvm-bin',type=Path);p.add_argument('--toolchain-flag',action='append',default=[])
     p.add_argument('--fixture',action='store_true');p.add_argument('--count-only',action='store_true')
     p.add_argument('--machine',default='mbit10');p.add_argument('--lane')
+    p.add_argument('--profile',type=int,action='append',default=[],help='time only these a2 class indexes (count proof always covers all); default all')
     p.add_argument('--repetitions',type=int,default=7);p.add_argument('--min-trial-s',type=float,default=.05);p.add_argument('--max-wall-s',type=float,default=900)
     args=p.parse_args()
     try:

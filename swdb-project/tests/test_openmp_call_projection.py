@@ -76,6 +76,11 @@ def filtered_openmp(tmp_path_factory):
                                function='fixture_openmp', filename='openmp_abi_filtered.cpp')
 
 
+@pytest.fixture(scope='module')
+def pure_openmp(tmp_path_factory):
+    return build_static_openmp(tmp_path_factory.mktemp('openmp-pure'), filename='openmp_abi_pure.cpp')
+
+
 def project(fixture, output, **paths):
     return subprocess.run([sys.executable, '-m', 'scripts.openmp_call_projection',
         '--llvm-bin', str(fixture['llvm']), '--source-ir', str(paths.get('ir', fixture['ir'])),
@@ -231,3 +236,31 @@ def test_function_filter_must_equal_persisted_count_selection(filtered_openmp, t
         assert result.returncode == 2
         assert 'function selection differs from characterization coverage.function' in result.stderr
         assert not output.exists()
+
+
+def test_projector_pure_intrinsic_list_equals_the_count_pass_list():
+    """The two C++ files must skip the same intrinsics, or site numbering drifts (cpud 01)."""
+    import re
+
+    def cases(name):
+        text = (REPO / 'swdb/llvm' / name).read_text()
+        body = text[text.index('pureOperation(Intrinsic::ID id)'):]
+        body = body[:body.index('default:')]
+        return set(re.findall(r'case Intrinsic::(\w+):', body))
+    assert cases('OpenMPCallProjection.cpp') == cases('Characterize.cpp')
+    assert 'ctlz' in cases('Characterize.cpp')
+
+
+def test_pure_intrinsics_counted_as_operations_are_not_call_sites(pure_openmp, tmp_path):
+    """2026-10-12 ET (cpud 01): Characterize counts llvm.ctlz/ctpop/fabs as operations, so the
+    projector's call enumeration must skip them like the counted source map does."""
+    text = command([pure_openmp['llvm'] / 'opt', '-S', pure_openmp['ir'], '-o', '-']).stdout
+    assert '@llvm.ctlz.i64' in text and '@llvm.ctpop.i64' in text and '@llvm.fabs.f64' in text
+    result = project(pure_openmp, tmp_path / 'projection')
+    assert result.returncode == 0, result.stderr + result.stdout
+    proof = json.loads(result.stdout)
+    assert proof['all_source_json_sites_cross_checked'] is True
+    assert proof['enumerated_call_sites'] == 7
+    assert [call['name'] for call in proof['calls']] == [
+        '__kmpc_fork_call', '__kmpc_for_static_init_8', '__kmpc_dispatch_init_4',
+        '__kmpc_reduce_nowait', '__kmpc_barrier', '__kmpc_global_thread_num']

@@ -1,0 +1,3029 @@
+kind: cpu_allocator_resource_calibration
+schema_version: '0.4'
+id: mbit10.cpu.lanl20261006.resource.allocator-v2.a1
+status: draft
+created: '2026-10-12'
+updated: '2026-10-12'
+provenance:
+- id: total-cell-resource
+  kind: source_code
+  description: Distinct inferred total-cell recipe frozen after independent service collection and before
+    application timing over independently measured/event-counted cells; includes measured loop control,
+    conditional maximum with counted compute resources, never application timing.
+  uri: null
+format: swdb.cpu-allocator-resource-calibration.v1
+recipe:
+  id: gross_allocator_loop_resource_v1
+  denominator: source_normalized_exact_allocator_events
+  elapsed: gross_uninstrumented_work_loop_only
+  includes_loop_control: true
+  composition: max_with_counted_compute_resource
+  transfer_basis: inferred
+  physical_instruction_latency: false
+  proven_application_upper_bound: false
+  freeze_scope: after_independent_service_collection_before_application_timing
+  minimum_gross_window_s: 0.05
+  paired_rates_used: false
+frozen_ns: 1791825355886028752
+source_calibration: mbit10.cpu.lanl20261006.service.allocator-v2.a1
+source_calibration_sha256: 0065500125853aa54805b96674605798cd4bc4082ce3e5f8f03a41b131aef737
+source_receipt_sha256: d679dab1dc735acab00678504950f0117091f3320a1ab2fad775af00aa76d42f
+calibration_sources:
+- mbit10.cpu.lanl20261006.service.allocator-v2.a1
+target: mbit10
+threads: 1
+backend: native
+evidence_kind: native
+context:
+  compiler_version: |-
+    clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)
+    Target: x86_64-unknown-linux-gnu
+    Thread model: posix
+    InstalledDir: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin
+  flags:
+  - -O3
+  - -std=c++11
+  - --gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13
+  host: mbit10
+  architecture: x86_64
+  source_sha256:
+    CpuAllocatorWork.h: 81e925cc3bf65397bd7405d0acddd3943b0b4de0c0b8defd5a39b69e7c1342d8
+    CpuAllocatorTimer.cpp: 576026c6e9093f286e8c6f89e3c2adc201a4aa07424d287c65a9269405af8efb
+    CpuAllocatorCount.cpp: 3a4070ccc3f8298e1f7fdca1ffa64a68342e0c584847f4cae73854b878ce03ff
+  binary_sha256: 1429730252b71d422d38af85cd18671320d86c3d1967d370dbb6b0c64b8f23c1
+  instrumented_timer: false
+  allocator_environment:
+    LD_LIBRARY_PATH: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu
+  allocator_environment_scope: GLIBC_TUNABLES,MALLOC_*,LD_PRELOAD,LD_AUDIT,library_search
+  runtime_identity_method: dynamic_linker_resolution_preexecution
+  optimized_event_proof:
+    ir_sha256: a954ed5c6b185320e7f24561b5b95792f99da5fddc295004c32583dca273f392
+    retained_event_abis: [_Znam, _ZdaPv, malloc]
+  lane: 'mbit10-evaluation-node1 (verified: affinity, bind:1, lease held, generation 559)'
+  cpus: [1]
+  machine_sha256: fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79
+  system: Linux
+  start_state:
+    load: [8.24072265625, 8.26513671875, 8.1650390625]
+    time_ns: 1791822178705001693
+    available_memory: |-
+      MemTotal:       131426264 kB
+      MemFree:        30347492 kB
+      MemAvailable:   100451552 kB
+      Buffers:         7859856 kB
+      Cached:         35221320 kB
+      SwapCached:            0 kB
+      Active:         24927216 kB
+      Inactive:       41433008 kB
+      Active(anon):   23266136 kB
+      Inactive(anon):    43264 kB
+      Active(file):    1661080 kB
+      Inactive(file): 41389744 kB
+      Unevictable:       39252 kB
+      Mlocked:           36180 kB
+      SwapTotal:             0 kB
+      SwapFree:              0 kB
+      Zswap:                 0 kB
+      Zswapped:              0 kB
+      Dirty:               800 kB
+      Writeback:             0 kB
+      AnonPages:      23319264 kB
+      Mapped:           991236 kB
+      Shmem:             15420 kB
+      KReclaimable:   28371836 kB
+      Slab:           30863708 kB
+      SReclaimable:   28308752 kB
+      SUnreclaim:      2554956 kB
+      KernelStack:       22288 kB
+      PageTables:        68072 kB
+      SecPageTables:         0 kB
+      NFS_Unstable:          0 kB
+      Bounce:                0 kB
+      WritebackTmp:          0 kB
+      CommitLimit:    65713132 kB
+      Committed_AS:   26642360 kB
+      VmallocTotal:   13743895347199 kB
+      VmallocUsed:      428864 kB
+      VmallocChunk:          0 kB
+      Percpu:           396800 kB
+      HardwareCorrupted:     8 kB
+      AnonHugePages:         0 kB
+      ShmemHugePages:        0 kB
+      ShmemPmdMapped:        0 kB
+      FileHugePages:         0 kB
+      FilePmdMapped:         0 kB
+      Unaccepted:            0 kB
+      HugePages_Total:       0
+      HugePages_Free:        0
+      HugePages_Rsvd:        0
+      HugePages_Surp:        0
+      Hugepagesize:       2048 kB
+      Hugetlb:               0 kB
+      DirectMap4k:    40570852 kB
+      DirectMap2M:    90988544 kB
+      DirectMap1G:     4194304 kB
+    governor: null
+    no_turbo: null
+  free_disk_bytes: 88923152384
+  commit: 598232ca6969f4207d27b135f4c702019e4c1776
+  dirty: false
+  loaded_libraries:
+    libstdc++.so.6.0.33:
+      path: /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33
+      sha256: 1fd75fe70354a416d75aef22bcae68c47bd25d20e2d0568c30b1a9838cf62f11
+    libm.so.6:
+      path: /usr/lib/x86_64-linux-gnu/libm.so.6
+      sha256: fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0
+    libgcc_s.so.1:
+      path: /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+      sha256: d93224d2b0dab4247598be683adca02f5cf00586f99c187579cd7e92058fb7cb
+    libc.so.6:
+      path: /usr/lib/x86_64-linux-gnu/libc.so.6
+      sha256: 3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf
+    ld-linux-x86-64.so.2:
+      path: /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+      sha256: c20a2dc8917c755f02b94049356320fe1f62ac7d9f8994731f807d9df39302da
+  end_state:
+    load: [8.11767578125, 8.1982421875, 8.162109375]
+    time_ns: 1791822692650288868
+    available_memory: |-
+      MemTotal:       131426264 kB
+      MemFree:        37051352 kB
+      MemAvailable:   107410280 kB
+      Buffers:         7882472 kB
+      Cached:         35441096 kB
+      SwapCached:            0 kB
+      Active:         17263540 kB
+      Inactive:       41675412 kB
+      Active(anon):   15602444 kB
+      Inactive(anon):    43248 kB
+      Active(file):    1661096 kB
+      Inactive(file): 41632164 kB
+      Unevictable:       39252 kB
+      Mlocked:           36180 kB
+      SwapTotal:             0 kB
+      SwapFree:              0 kB
+      Zswap:                 0 kB
+      Zswapped:              0 kB
+      Dirty:                 0 kB
+      Writeback:             0 kB
+      AnonPages:      15654660 kB
+      Mapped:           991836 kB
+      Shmem:             15416 kB
+      KReclaimable:   28384268 kB
+      Slab:           30876892 kB
+      SReclaimable:   28321184 kB
+      SUnreclaim:      2555708 kB
+      KernelStack:       22768 kB
+      PageTables:        53216 kB
+      SecPageTables:         0 kB
+      NFS_Unstable:          0 kB
+      Bounce:                0 kB
+      WritebackTmp:          0 kB
+      CommitLimit:    65713132 kB
+      Committed_AS:   18901788 kB
+      VmallocTotal:   13743895347199 kB
+      VmallocUsed:      429344 kB
+      VmallocChunk:          0 kB
+      Percpu:           396800 kB
+      HardwareCorrupted:     8 kB
+      AnonHugePages:         0 kB
+      ShmemHugePages:        0 kB
+      ShmemPmdMapped:        0 kB
+      FileHugePages:         0 kB
+      FilePmdMapped:         0 kB
+      Unaccepted:            0 kB
+      HugePages_Total:       0
+      HugePages_Free:        0
+      HugePages_Rsvd:        0
+      HugePages_Surp:        0
+      Hugepagesize:       2048 kB
+      Hugetlb:               0 kB
+      DirectMap4k:    40570852 kB
+      DirectMap2M:    90988544 kB
+      DirectMap1G:     4194304 kB
+    governor: null
+    no_turbo: null
+settings:
+  group: allocator_v2
+  repetitions: 7
+  min_trial_s: 0.05
+  trial_resolution_scope: gross_aggregate_only; paired driver retained
+  max_wall_s: 900.0
+  live_payload_cap_bytes: 67108864
+  batch_event_cap: 65536
+  event_cap: 16777216
+  timed_data_cap_bytes: 26214400
+  count_build_cap_bytes: 67108864
+  sizes: [64, 128, 6144, 2097152, 16777216, 16777220]
+  cells:
+  - operation: new_array
+    size_bytes: 16777216
+  - operation: new_array
+    size_bytes: 16777220
+  - operation: delete_array
+    size_bytes: 16777216
+  - operation: delete_array
+    size_bytes: 16777220
+  - operation: malloc
+    size_bytes: 64
+  - operation: malloc
+    size_bytes: 128
+  - operation: malloc
+    size_bytes: 6144
+  - operation: malloc
+    size_bytes: 2097152
+services:
+- id: allocator.new_array.16777216
+  unit: seconds/call
+  event_definition: One _Znam opaque call of 16777216 bytes/lifetime; gross minus conditional driver.
+    Untimed preparations/cleanup, payload touch excluded.
+  scope:
+    worker_scope: serial
+    operation: new_array
+    event_abi: _Znam
+    size_bytes: 16777216
+    allocator_regime: fresh_process_repeated_allocate_free_batches
+    transfer_basis: inferred
+    cache_state: unobserved
+    payload_touch: false
+    runtime: hash-bound C/C++ allocator libraries
+  denominator:
+    level: source_normalized_work
+    basis: measured
+    proof:
+      format: swdb.cpu-allocator-count-proof.v1
+      pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      points:
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: new_array
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _Znam
+        characterization_sha256: b8c9cfa3e93443a40935761b9358f2c12c3a563313009f014821e13397db3390
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: new_array
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _Znam
+        characterization_sha256: 1a4af4ea499179be606dbe317707e2c236e280ad75436b569a1d9e199781aa7b
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: fb1e7a2aa4e8bd4aff18d8a2dffe94ba2bb1e987e86fbe4d04bf6050f3f58f8f
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: 0c8eafad38001182af0b32e3aadf1ed04e8579b6e61c1383ca1882f7a71d091a
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: new_array
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _Znam
+        characterization_sha256: 57af27d5d014a33ac6db478bbd03a6a163861503e9997bcf85d9db705a4317b6
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: new_array
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _Znam
+        characterization_sha256: 5918931edb2ab5793b5491f7e2bed33d03c57dd3c1c53d9c2f2bd1eced01cbb0
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: f025ecdbad08acd76cc31d61753b2e2bcd62a4073c2e53a4f4586ed76f30a321
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: 6ad2ba927fd0cca1ee1228c5058ac742d6c587963204d81c199e6660636f34d7
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: delete_array
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _ZdaPv
+        characterization_sha256: d39c9f1bf9e3eed6ec6f04878441131b8d9d7ad3d2ec3c329bbb6974f954bfc3
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: delete_array
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _ZdaPv
+        characterization_sha256: 0f31acde2019f517d3d0c3fd73548387d3584fe7990417a6d9b1fb2b4358e054
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: e30d7441ed4d33a64ce1495362783bb5f1b67eabc58e4ff1ff3bbc9e0a585510
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: 1efd010ec323bb4636249fc81ac78516207b50c34f1026569fd9a53a54854dcb
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _ZdaPv
+        characterization_sha256: d88d28e0730978028533eaa5662f0d3e1cfeefc11a1bd17ffd60d05c8892e380
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _ZdaPv
+        characterization_sha256: 3b57a1c5408f7cd3dd647f01483d79f7501a80557546d156cf5f310a5e37852e
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: 4ef3b0a450dc91c17d6ecfa0fb1a82411853bf1e2b4734efde193f4258c5912a
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: e4b5eab94e26c44cb3fb883ba88570012413bbb29762f9648087300a3aac1627
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: malloc
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: malloc
+        characterization_sha256: 9234fa0414edd340de32fc009376a865d5bb544be9988a317469ed561de457e2
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: malloc
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: malloc
+        characterization_sha256: 34b43a987987e1d0f00c498b0e7f9372ce24cd8eace22ae7b12c87c823f58316
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 61e28471b505cfac5964603997a1631999474224e086d10a148ed60f8f266092
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: db0844ac935b5c895ca3db8fb04f2409ef14ff99558de5df9af2cafe6949a772
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: malloc
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: malloc
+        characterization_sha256: fa72bff6b602cf1b761c2e197e452c0dea526b7302cc5fc42506c60e60ba0562
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: malloc
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: malloc
+        characterization_sha256: f282874a999b7e37e74cc79b34993410ef5b5d7b3b831e141d618718b3a5a2d5
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 4c38ff6a5daead1845efe191c32a0443d48bffb1fc4c402646e2341e4fab9d13
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 5f4aec747e07697ae95a8abba74d59bf5d9da10f1ee31860c37cbd9e99c18b99
+      source_sha256: 81e925cc3bf65397bd7405d0acddd3943b0b4de0c0b8defd5a39b69e7c1342d8
+      count_driver_sha256: 3a4070ccc3f8298e1f7fdca1ffa64a68342e0c584847f4cae73854b878ce03ff
+      plugin_source_sha256: 3ccefd011f2d155832b7188b341c3f64a610cfc3c696b825afed01fd5c0a029f
+      runtime_source_sha256: 43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e
+  trials:
+  - events: 65536
+    batch_events: 4
+    batches: 16384
+    gross_seconds: 0.1073206410000003
+    driver_seconds: 0.00032002399999991204
+    order: service_first
+    checksum: 0
+  - events: 65536
+    batch_events: 4
+    batches: 16384
+    gross_seconds: 0.10636249199999968
+    driver_seconds: 0.0003349949999999127
+    order: driver_first
+    checksum: 0
+  - events: 65536
+    batch_events: 4
+    batches: 16384
+    gross_seconds: 0.10871636400000109
+    driver_seconds: 0.0003191709999999118
+    order: service_first
+    checksum: 0
+  - events: 65536
+    batch_events: 4
+    batches: 16384
+    gross_seconds: 0.10605209300000061
+    driver_seconds: 0.0003254399999999128
+    order: driver_first
+    checksum: 0
+  - events: 65536
+    batch_events: 4
+    batches: 16384
+    gross_seconds: 0.10734340300000009
+    driver_seconds: 0.00031906699999991134
+    order: service_first
+    checksum: 0
+  - events: 65536
+    batch_events: 4
+    batches: 16384
+    gross_seconds: 0.10665379700000044
+    driver_seconds: 0.00031922699999991223
+    order: driver_first
+    checksum: 0
+  - events: 65536
+    batch_events: 4
+    batches: 16384
+    gross_seconds: 0.10910626799999947
+    driver_seconds: 0.00032901699999991855
+    order: service_first
+    checksum: 0
+  seconds_per_event:
+    values: [1.6375830230712936e-06, 1.622962829589839e-06, 1.6588800659179854e-06, 1.6182265167236421e-06,
+      1.637930343627931e-06, 1.627407791137702e-06, 1.6648295288085856e-06]
+    median: 1.6375830230712936e-06
+    min: 1.6182265167236421e-06
+    max: 1.6648295288085856e-06
+    spread: 4.6603012084943456e-08
+    repetitions: 7
+  missing: []
+  parameter:
+    value: 1.6375830230712936e-06
+    basis: inferred
+    unit: seconds/call
+    source: Constructed total-cell resource mbit10.cpu.lanl20261006.resource.allocator-v2.a1; mbit10.cpu.lanl20261006.service.allocator-v2.a1/allocator.new_array.16777216;
+      gross uninstrumented elapsed / exactly proved logical allocator events, includes measured loop control;
+      inferred transfer and maximum with counted compute resources, no physical latency or upper-bound
+      claim.
+  paired_residual:
+    parameter:
+      value: 1.6326998443603574e-06
+      basis: measured
+      source: Service calibration mbit10.cpu.lanl20261006.service.allocator-v2.a1; allocator.new_array.16777216;
+        paired elapsed/work trials.
+      unit: seconds/call
+    seconds_per_event:
+      values: [1.6326998443603574e-06, 1.6178512115478481e-06, 1.6540099029541196e-06, 1.6132606964111435e-06,
+        1.6330617675781277e-06, 1.6225367736816487e-06, 1.6598091278076103e-06]
+      median: 1.6326998443603574e-06
+      min: 1.6132606964111435e-06
+      max: 1.6598091278076103e-06
+      spread: 4.654843139646682e-08
+      repetitions: 7
+    missing: []
+  paired_admission:
+    admitted: false
+    minimum_window_s: 0.05
+    missing:
+    - paired_driver_window_resolution
+  cost_basis: gross_allocator_loop_resource_v1
+  gross_seconds_per_event:
+    values: [1.6375830230712936e-06, 1.622962829589839e-06, 1.6588800659179854e-06, 1.6182265167236421e-06,
+      1.637930343627931e-06, 1.627407791137702e-06, 1.6648295288085856e-06]
+    median: 1.6375830230712936e-06
+    min: 1.6182265167236421e-06
+    max: 1.6648295288085856e-06
+    spread: 4.6603012084943456e-08
+    repetitions: 7
+  driver_seconds_per_event:
+    values: [4.883178710936158e-09, 5.1116180419908555e-09, 4.8701629638658414e-09, 4.9658203124986695e-09,
+      4.868576049803335e-09, 4.871017456053348e-09, 5.02040100097532e-09]
+    median: 4.883178710936158e-09
+    min: 4.868576049803335e-09
+    max: 5.1116180419908555e-09
+    spread: 2.430419921875209e-10
+    repetitions: 7
+- id: allocator.new_array.16777220
+  unit: seconds/call
+  event_definition: One _Znam opaque call of 16777220 bytes/lifetime; gross minus conditional driver.
+    Untimed preparations/cleanup, payload touch excluded.
+  scope:
+    worker_scope: serial
+    operation: new_array
+    event_abi: _Znam
+    size_bytes: 16777220
+    allocator_regime: fresh_process_repeated_allocate_free_batches
+    transfer_basis: inferred
+    cache_state: unobserved
+    payload_touch: false
+    runtime: hash-bound C/C++ allocator libraries
+  denominator:
+    level: source_normalized_work
+    basis: measured
+    proof:
+      format: swdb.cpu-allocator-count-proof.v1
+      pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      points:
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: new_array
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _Znam
+        characterization_sha256: b8c9cfa3e93443a40935761b9358f2c12c3a563313009f014821e13397db3390
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: new_array
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _Znam
+        characterization_sha256: 1a4af4ea499179be606dbe317707e2c236e280ad75436b569a1d9e199781aa7b
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: fb1e7a2aa4e8bd4aff18d8a2dffe94ba2bb1e987e86fbe4d04bf6050f3f58f8f
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: 0c8eafad38001182af0b32e3aadf1ed04e8579b6e61c1383ca1882f7a71d091a
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: new_array
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _Znam
+        characterization_sha256: 57af27d5d014a33ac6db478bbd03a6a163861503e9997bcf85d9db705a4317b6
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: new_array
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _Znam
+        characterization_sha256: 5918931edb2ab5793b5491f7e2bed33d03c57dd3c1c53d9c2f2bd1eced01cbb0
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: f025ecdbad08acd76cc31d61753b2e2bcd62a4073c2e53a4f4586ed76f30a321
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: 6ad2ba927fd0cca1ee1228c5058ac742d6c587963204d81c199e6660636f34d7
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: delete_array
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _ZdaPv
+        characterization_sha256: d39c9f1bf9e3eed6ec6f04878441131b8d9d7ad3d2ec3c329bbb6974f954bfc3
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: delete_array
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _ZdaPv
+        characterization_sha256: 0f31acde2019f517d3d0c3fd73548387d3584fe7990417a6d9b1fb2b4358e054
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: e30d7441ed4d33a64ce1495362783bb5f1b67eabc58e4ff1ff3bbc9e0a585510
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: 1efd010ec323bb4636249fc81ac78516207b50c34f1026569fd9a53a54854dcb
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _ZdaPv
+        characterization_sha256: d88d28e0730978028533eaa5662f0d3e1cfeefc11a1bd17ffd60d05c8892e380
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _ZdaPv
+        characterization_sha256: 3b57a1c5408f7cd3dd647f01483d79f7501a80557546d156cf5f310a5e37852e
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: 4ef3b0a450dc91c17d6ecfa0fb1a82411853bf1e2b4734efde193f4258c5912a
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: e4b5eab94e26c44cb3fb883ba88570012413bbb29762f9648087300a3aac1627
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: malloc
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: malloc
+        characterization_sha256: 9234fa0414edd340de32fc009376a865d5bb544be9988a317469ed561de457e2
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: malloc
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: malloc
+        characterization_sha256: 34b43a987987e1d0f00c498b0e7f9372ce24cd8eace22ae7b12c87c823f58316
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 61e28471b505cfac5964603997a1631999474224e086d10a148ed60f8f266092
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: db0844ac935b5c895ca3db8fb04f2409ef14ff99558de5df9af2cafe6949a772
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: malloc
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: malloc
+        characterization_sha256: fa72bff6b602cf1b761c2e197e452c0dea526b7302cc5fc42506c60e60ba0562
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: malloc
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: malloc
+        characterization_sha256: f282874a999b7e37e74cc79b34993410ef5b5d7b3b831e141d618718b3a5a2d5
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 4c38ff6a5daead1845efe191c32a0443d48bffb1fc4c402646e2341e4fab9d13
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 5f4aec747e07697ae95a8abba74d59bf5d9da10f1ee31860c37cbd9e99c18b99
+      source_sha256: 81e925cc3bf65397bd7405d0acddd3943b0b4de0c0b8defd5a39b69e7c1342d8
+      count_driver_sha256: 3a4070ccc3f8298e1f7fdca1ffa64a68342e0c584847f4cae73854b878ce03ff
+      plugin_source_sha256: 3ccefd011f2d155832b7188b341c3f64a610cfc3c696b825afed01fd5c0a029f
+      runtime_source_sha256: 43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e
+  trials:
+  - events: 49152
+    batch_events: 3
+    batches: 16384
+    gross_seconds: 0.08364318400000012
+    driver_seconds: 0.00033315199999991334
+    order: service_first
+    checksum: 0
+  - events: 49152
+    batch_events: 3
+    batches: 16384
+    gross_seconds: 0.0830001150000001
+    driver_seconds: 0.0003394330000000174
+    order: driver_first
+    checksum: 0
+  - events: 49152
+    batch_events: 3
+    batches: 16384
+    gross_seconds: 0.08371374400000023
+    driver_seconds: 0.0003306909999999143
+    order: service_first
+    checksum: 0
+  - events: 49152
+    batch_events: 3
+    batches: 16384
+    gross_seconds: 0.0830312709999988
+    driver_seconds: 0.00032861499999991525
+    order: driver_first
+    checksum: 0
+  - events: 49152
+    batch_events: 3
+    batches: 16384
+    gross_seconds: 0.08747303200000009
+    driver_seconds: 0.00031911999999991207
+    order: service_first
+    checksum: 0
+  - events: 49152
+    batch_events: 3
+    batches: 16384
+    gross_seconds: 0.08226474499999993
+    driver_seconds: 0.000563942999999736
+    order: driver_first
+    checksum: 0
+  - events: 49152
+    batch_events: 3
+    batches: 16384
+    gross_seconds: 0.0843596600000001
+    driver_seconds: 0.000339868000000016
+    order: service_first
+    checksum: 0
+  seconds_per_event:
+    values: [1.7017249348958358e-06, 1.6886416625976581e-06, 1.703160481770838e-06, 1.68927553304034e-06,
+      1.7796433919270852e-06, 1.673680521647134e-06, 1.7163016764322938e-06]
+    median: 1.7017249348958358e-06
+    min: 1.673680521647134e-06
+    max: 1.7796433919270852e-06
+    spread: 1.0596287027995128e-07
+    repetitions: 7
+  missing: []
+  parameter:
+    value: 1.7017249348958358e-06
+    basis: inferred
+    unit: seconds/call
+    source: Constructed total-cell resource mbit10.cpu.lanl20261006.resource.allocator-v2.a1; mbit10.cpu.lanl20261006.service.allocator-v2.a1/allocator.new_array.16777220;
+      gross uninstrumented elapsed / exactly proved logical allocator events, includes measured loop control;
+      inferred transfer and maximum with counted compute resources, no physical latency or upper-bound
+      claim.
+  paired_residual:
+    parameter:
+      value: 1.6949469401041707e-06
+      basis: measured
+      source: Service calibration mbit10.cpu.lanl20261006.service.allocator-v2.a1; allocator.new_array.16777220;
+        paired elapsed/work trials.
+      unit: seconds/call
+    seconds_per_event:
+      values: [1.6949469401041707e-06, 1.681735880533856e-06, 1.6964325561523502e-06, 1.682589843749977e-06,
+        1.7731508789062536e-06, 1.6622070719401082e-06, 1.7093870442708349e-06]
+      median: 1.6949469401041707e-06
+      min: 1.6622070719401082e-06
+      max: 1.7731508789062536e-06
+      spread: 1.1094380696614542e-07
+      repetitions: 7
+    missing: []
+  paired_admission:
+    admitted: false
+    minimum_window_s: 0.05
+    missing:
+    - paired_driver_window_resolution
+  cost_basis: gross_allocator_loop_resource_v1
+  gross_seconds_per_event:
+    values: [1.7017249348958358e-06, 1.6886416625976581e-06, 1.703160481770838e-06, 1.68927553304034e-06,
+      1.7796433919270852e-06, 1.673680521647134e-06, 1.7163016764322938e-06]
+    median: 1.7017249348958358e-06
+    min: 1.673680521647134e-06
+    max: 1.7796433919270852e-06
+    spread: 1.0596287027995128e-07
+    repetitions: 7
+  driver_seconds_per_event:
+    values: [6.777994791664903e-09, 6.905782063802437e-09, 6.727925618487839e-09, 6.685689290362859e-09,
+      6.4925130208315446e-09, 1.147344970702588e-08, 6.914632161458659e-09]
+    median: 6.777994791664903e-09
+    min: 6.4925130208315446e-09
+    max: 1.147344970702588e-08
+    spread: 4.980936686194335e-09
+    repetitions: 7
+- id: allocator.delete_array.16777216
+  unit: seconds/call
+  event_definition: One _ZdaPv opaque call of 16777216 bytes/lifetime; gross minus conditional driver.
+    Untimed preparations/cleanup, payload touch excluded.
+  scope:
+    worker_scope: serial
+    operation: delete_array
+    event_abi: _ZdaPv
+    size_bytes: 16777216
+    allocator_regime: fresh_process_repeated_allocate_free_batches
+    transfer_basis: inferred
+    cache_state: unobserved
+    payload_touch: false
+    runtime: hash-bound C/C++ allocator libraries
+  denominator:
+    level: source_normalized_work
+    basis: measured
+    proof:
+      format: swdb.cpu-allocator-count-proof.v1
+      pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      points:
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: new_array
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _Znam
+        characterization_sha256: b8c9cfa3e93443a40935761b9358f2c12c3a563313009f014821e13397db3390
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: new_array
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _Znam
+        characterization_sha256: 1a4af4ea499179be606dbe317707e2c236e280ad75436b569a1d9e199781aa7b
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: fb1e7a2aa4e8bd4aff18d8a2dffe94ba2bb1e987e86fbe4d04bf6050f3f58f8f
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: 0c8eafad38001182af0b32e3aadf1ed04e8579b6e61c1383ca1882f7a71d091a
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: new_array
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _Znam
+        characterization_sha256: 57af27d5d014a33ac6db478bbd03a6a163861503e9997bcf85d9db705a4317b6
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: new_array
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _Znam
+        characterization_sha256: 5918931edb2ab5793b5491f7e2bed33d03c57dd3c1c53d9c2f2bd1eced01cbb0
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: f025ecdbad08acd76cc31d61753b2e2bcd62a4073c2e53a4f4586ed76f30a321
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: 6ad2ba927fd0cca1ee1228c5058ac742d6c587963204d81c199e6660636f34d7
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: delete_array
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _ZdaPv
+        characterization_sha256: d39c9f1bf9e3eed6ec6f04878441131b8d9d7ad3d2ec3c329bbb6974f954bfc3
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: delete_array
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _ZdaPv
+        characterization_sha256: 0f31acde2019f517d3d0c3fd73548387d3584fe7990417a6d9b1fb2b4358e054
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: e30d7441ed4d33a64ce1495362783bb5f1b67eabc58e4ff1ff3bbc9e0a585510
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: 1efd010ec323bb4636249fc81ac78516207b50c34f1026569fd9a53a54854dcb
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _ZdaPv
+        characterization_sha256: d88d28e0730978028533eaa5662f0d3e1cfeefc11a1bd17ffd60d05c8892e380
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _ZdaPv
+        characterization_sha256: 3b57a1c5408f7cd3dd647f01483d79f7501a80557546d156cf5f310a5e37852e
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: 4ef3b0a450dc91c17d6ecfa0fb1a82411853bf1e2b4734efde193f4258c5912a
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: e4b5eab94e26c44cb3fb883ba88570012413bbb29762f9648087300a3aac1627
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: malloc
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: malloc
+        characterization_sha256: 9234fa0414edd340de32fc009376a865d5bb544be9988a317469ed561de457e2
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: malloc
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: malloc
+        characterization_sha256: 34b43a987987e1d0f00c498b0e7f9372ce24cd8eace22ae7b12c87c823f58316
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 61e28471b505cfac5964603997a1631999474224e086d10a148ed60f8f266092
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: db0844ac935b5c895ca3db8fb04f2409ef14ff99558de5df9af2cafe6949a772
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: malloc
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: malloc
+        characterization_sha256: fa72bff6b602cf1b761c2e197e452c0dea526b7302cc5fc42506c60e60ba0562
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: malloc
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: malloc
+        characterization_sha256: f282874a999b7e37e74cc79b34993410ef5b5d7b3b831e141d618718b3a5a2d5
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 4c38ff6a5daead1845efe191c32a0443d48bffb1fc4c402646e2341e4fab9d13
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 5f4aec747e07697ae95a8abba74d59bf5d9da10f1ee31860c37cbd9e99c18b99
+      source_sha256: 81e925cc3bf65397bd7405d0acddd3943b0b4de0c0b8defd5a39b69e7c1342d8
+      count_driver_sha256: 3a4070ccc3f8298e1f7fdca1ffa64a68342e0c584847f4cae73854b878ce03ff
+      plugin_source_sha256: 3ccefd011f2d155832b7188b341c3f64a610cfc3c696b825afed01fd5c0a029f
+      runtime_source_sha256: 43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e
+  trials:
+  - events: 65536
+    batch_events: 4
+    batches: 16384
+    gross_seconds: 0.09487477400000048
+    driver_seconds: 0.00037877600000000113
+    order: service_first
+    checksum: 0
+  - events: 65536
+    batch_events: 4
+    batches: 16384
+    gross_seconds: 0.09631493700000067
+    driver_seconds: 0.0003689200000000073
+    order: driver_first
+    checksum: 201326592
+  - events: 65536
+    batch_events: 4
+    batches: 16384
+    gross_seconds: 0.09498637400000014
+    driver_seconds: 0.00035426599999997403
+    order: service_first
+    checksum: 0
+  - events: 65536
+    batch_events: 4
+    batches: 16384
+    gross_seconds: 0.09570001300000008
+    driver_seconds: 0.0003674869999999974
+    order: driver_first
+    checksum: 201326592
+  - events: 65536
+    batch_events: 4
+    batches: 16384
+    gross_seconds: 0.09445615200000056
+    driver_seconds: 0.0003628149999999835
+    order: service_first
+    checksum: 0
+  - events: 65536
+    batch_events: 4
+    batches: 16384
+    gross_seconds: 0.0958569270000011
+    driver_seconds: 0.0003606479999999829
+    order: driver_first
+    checksum: 0
+  - events: 65536
+    batch_events: 4
+    batches: 16384
+    gross_seconds: 0.09729021900000012
+    driver_seconds: 0.000547010000000035
+    order: service_first
+    checksum: 0
+  seconds_per_event:
+    values: [1.4476741638183667e-06, 1.4696493072509868e-06, 1.4493770446777365e-06, 1.460266311645509e-06,
+      1.441286499023446e-06, 1.4626606292724778e-06, 1.4845309295654316e-06]
+    median: 1.460266311645509e-06
+    min: 1.441286499023446e-06
+    max: 1.4845309295654316e-06
+    spread: 4.324443054198556e-08
+    repetitions: 7
+  missing: []
+  parameter:
+    value: 1.460266311645509e-06
+    basis: inferred
+    unit: seconds/call
+    source: Constructed total-cell resource mbit10.cpu.lanl20261006.resource.allocator-v2.a1; mbit10.cpu.lanl20261006.service.allocator-v2.a1/allocator.delete_array.16777216;
+      gross uninstrumented elapsed / exactly proved logical allocator events, includes measured loop control;
+      inferred transfer and maximum with counted compute resources, no physical latency or upper-bound
+      claim.
+  paired_residual:
+    parameter:
+      value: 1.4546589050292982e-06
+      basis: measured
+      source: Service calibration mbit10.cpu.lanl20261006.service.allocator-v2.a1; allocator.delete_array.16777216;
+        paired elapsed/work trials.
+      unit: seconds/call
+    seconds_per_event:
+      values: [1.4418945007324293e-06, 1.4640200347900491e-06, 1.4439713745117212e-06, 1.4546589050292982e-06,
+        1.4357503814697352e-06, 1.4571575775146656e-06, 1.476184219360353e-06]
+      median: 1.4546589050292982e-06
+      min: 1.4357503814697352e-06
+      max: 1.476184219360353e-06
+      spread: 4.043383789061776e-08
+      repetitions: 7
+    missing: []
+  paired_admission:
+    admitted: false
+    minimum_window_s: 0.05
+    missing:
+    - paired_driver_window_resolution
+  cost_basis: gross_allocator_loop_resource_v1
+  gross_seconds_per_event:
+    values: [1.4476741638183667e-06, 1.4696493072509868e-06, 1.4493770446777365e-06, 1.460266311645509e-06,
+      1.441286499023446e-06, 1.4626606292724778e-06, 1.4845309295654316e-06]
+    median: 1.460266311645509e-06
+    min: 1.441286499023446e-06
+    max: 1.4845309295654316e-06
+    spread: 4.324443054198556e-08
+    repetitions: 7
+  driver_seconds_per_event:
+    values: [5.779663085937517e-09, 5.629272460937611e-09, 5.405670166015229e-09, 5.607406616210898e-09,
+      5.536117553710686e-09, 5.503051757812239e-09, 8.34671020507866e-09]
+    median: 5.607406616210898e-09
+    min: 5.405670166015229e-09
+    max: 8.34671020507866e-09
+    spread: 2.9410400390634307e-09
+    repetitions: 7
+- id: allocator.delete_array.16777220
+  unit: seconds/call
+  event_definition: One _ZdaPv opaque call of 16777220 bytes/lifetime; gross minus conditional driver.
+    Untimed preparations/cleanup, payload touch excluded.
+  scope:
+    worker_scope: serial
+    operation: delete_array
+    event_abi: _ZdaPv
+    size_bytes: 16777220
+    allocator_regime: fresh_process_repeated_allocate_free_batches
+    transfer_basis: inferred
+    cache_state: unobserved
+    payload_touch: false
+    runtime: hash-bound C/C++ allocator libraries
+  denominator:
+    level: source_normalized_work
+    basis: measured
+    proof:
+      format: swdb.cpu-allocator-count-proof.v1
+      pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      points:
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: new_array
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _Znam
+        characterization_sha256: b8c9cfa3e93443a40935761b9358f2c12c3a563313009f014821e13397db3390
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: new_array
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _Znam
+        characterization_sha256: 1a4af4ea499179be606dbe317707e2c236e280ad75436b569a1d9e199781aa7b
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: fb1e7a2aa4e8bd4aff18d8a2dffe94ba2bb1e987e86fbe4d04bf6050f3f58f8f
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: 0c8eafad38001182af0b32e3aadf1ed04e8579b6e61c1383ca1882f7a71d091a
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: new_array
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _Znam
+        characterization_sha256: 57af27d5d014a33ac6db478bbd03a6a163861503e9997bcf85d9db705a4317b6
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: new_array
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _Znam
+        characterization_sha256: 5918931edb2ab5793b5491f7e2bed33d03c57dd3c1c53d9c2f2bd1eced01cbb0
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: f025ecdbad08acd76cc31d61753b2e2bcd62a4073c2e53a4f4586ed76f30a321
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: 6ad2ba927fd0cca1ee1228c5058ac742d6c587963204d81c199e6660636f34d7
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: delete_array
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _ZdaPv
+        characterization_sha256: d39c9f1bf9e3eed6ec6f04878441131b8d9d7ad3d2ec3c329bbb6974f954bfc3
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: delete_array
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _ZdaPv
+        characterization_sha256: 0f31acde2019f517d3d0c3fd73548387d3584fe7990417a6d9b1fb2b4358e054
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: e30d7441ed4d33a64ce1495362783bb5f1b67eabc58e4ff1ff3bbc9e0a585510
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: 1efd010ec323bb4636249fc81ac78516207b50c34f1026569fd9a53a54854dcb
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _ZdaPv
+        characterization_sha256: d88d28e0730978028533eaa5662f0d3e1cfeefc11a1bd17ffd60d05c8892e380
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _ZdaPv
+        characterization_sha256: 3b57a1c5408f7cd3dd647f01483d79f7501a80557546d156cf5f310a5e37852e
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: 4ef3b0a450dc91c17d6ecfa0fb1a82411853bf1e2b4734efde193f4258c5912a
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: e4b5eab94e26c44cb3fb883ba88570012413bbb29762f9648087300a3aac1627
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: malloc
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: malloc
+        characterization_sha256: 9234fa0414edd340de32fc009376a865d5bb544be9988a317469ed561de457e2
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: malloc
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: malloc
+        characterization_sha256: 34b43a987987e1d0f00c498b0e7f9372ce24cd8eace22ae7b12c87c823f58316
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 61e28471b505cfac5964603997a1631999474224e086d10a148ed60f8f266092
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: db0844ac935b5c895ca3db8fb04f2409ef14ff99558de5df9af2cafe6949a772
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: malloc
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: malloc
+        characterization_sha256: fa72bff6b602cf1b761c2e197e452c0dea526b7302cc5fc42506c60e60ba0562
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: malloc
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: malloc
+        characterization_sha256: f282874a999b7e37e74cc79b34993410ef5b5d7b3b831e141d618718b3a5a2d5
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 4c38ff6a5daead1845efe191c32a0443d48bffb1fc4c402646e2341e4fab9d13
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 5f4aec747e07697ae95a8abba74d59bf5d9da10f1ee31860c37cbd9e99c18b99
+      source_sha256: 81e925cc3bf65397bd7405d0acddd3943b0b4de0c0b8defd5a39b69e7c1342d8
+      count_driver_sha256: 3a4070ccc3f8298e1f7fdca1ffa64a68342e0c584847f4cae73854b878ce03ff
+      plugin_source_sha256: 3ccefd011f2d155832b7188b341c3f64a610cfc3c696b825afed01fd5c0a029f
+      runtime_source_sha256: 43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e
+  trials:
+  - events: 49152
+    batch_events: 3
+    batches: 16384
+    gross_seconds: 0.07899977400000058
+    driver_seconds: 0.00033490099999996896
+    order: service_first
+    checksum: 0
+  - events: 49152
+    batch_events: 3
+    batches: 16384
+    gross_seconds: 0.07902519500000003
+    driver_seconds: 0.00034022899999995414
+    order: driver_first
+    checksum: 25534423622352
+  - events: 49152
+    batch_events: 3
+    batches: 16384
+    gross_seconds: 0.07963239699999997
+    driver_seconds: 0.00033665099999996914
+    order: service_first
+    checksum: 0
+  - events: 49152
+    batch_events: 3
+    batches: 16384
+    gross_seconds: 0.07723700299999982
+    driver_seconds: 0.0003361239999999633
+    order: driver_first
+    checksum: 40645325558480
+  - events: 49152
+    batch_events: 3
+    batches: 16384
+    gross_seconds: 0.07956903500000026
+    driver_seconds: 0.0003273719999999188
+    order: service_first
+    checksum: 0
+  - events: 49152
+    batch_events: 3
+    batches: 16384
+    gross_seconds: 0.07828729600000028
+    driver_seconds: 0.0003391689999999486
+    order: driver_first
+    checksum: 47623759499984
+  - events: 49152
+    batch_events: 3
+    batches: 16384
+    gross_seconds: 0.07769426400000035
+    driver_seconds: 0.00034261499999996183
+    order: service_first
+    checksum: 0
+  seconds_per_event:
+    values: [1.6072545166015743e-06, 1.6077717081705735e-06, 1.6201252644856763e-06, 1.5713908487955693e-06,
+      1.6188361612955781e-06, 1.592759114583339e-06, 1.580693847656257e-06]
+    median: 1.6072545166015743e-06
+    min: 1.5713908487955693e-06
+    max: 1.6201252644856763e-06
+    spread: 4.873441569010703e-08
+    repetitions: 7
+  missing: []
+  parameter:
+    value: 1.6072545166015743e-06
+    basis: inferred
+    unit: seconds/call
+    source: Constructed total-cell resource mbit10.cpu.lanl20261006.resource.allocator-v2.a1; mbit10.cpu.lanl20261006.service.allocator-v2.a1/allocator.delete_array.16777220;
+      gross uninstrumented elapsed / exactly proved logical allocator events, includes measured loop control;
+      inferred transfer and maximum with counted compute resources, no physical latency or upper-bound
+      claim.
+  paired_residual:
+    parameter:
+      value: 1.6004409383138145e-06
+      basis: measured
+      source: Service calibration mbit10.cpu.lanl20261006.service.allocator-v2.a1; allocator.delete_array.16777220;
+        paired elapsed/work trials.
+      unit: seconds/call
+    seconds_per_event:
+      values: [1.6004409383138145e-06, 1.600849731445314e-06, 1.6132760823567708e-06, 1.5645523885091116e-06,
+        1.6121757609049547e-06, 1.5858587036132882e-06, 1.5737233276367266e-06]
+      median: 1.6004409383138145e-06
+      min: 1.5645523885091116e-06
+      max: 1.6132760823567708e-06
+      spread: 4.8723693847659253e-08
+      repetitions: 7
+    missing: []
+  paired_admission:
+    admitted: false
+    minimum_window_s: 0.05
+    missing:
+    - paired_driver_window_resolution
+  cost_basis: gross_allocator_loop_resource_v1
+  gross_seconds_per_event:
+    values: [1.6072545166015743e-06, 1.6077717081705735e-06, 1.6201252644856763e-06, 1.5713908487955693e-06,
+      1.6188361612955781e-06, 1.592759114583339e-06, 1.580693847656257e-06]
+    median: 1.6072545166015743e-06
+    min: 1.5713908487955693e-06
+    max: 1.6201252644856763e-06
+    spread: 4.873441569010703e-08
+    repetitions: 7
+  driver_seconds_per_event:
+    values: [6.813578287759785e-09, 6.9219767252594836e-09, 6.849182128905622e-09, 6.838460286457586e-09,
+      6.660400390623348e-09, 6.900410970051038e-09, 6.970520019530474e-09]
+    median: 6.849182128905622e-09
+    min: 6.660400390623348e-09
+    max: 6.970520019530474e-09
+    spread: 3.1011962890712604e-10
+    repetitions: 7
+- id: allocator.malloc.64
+  unit: seconds/call
+  event_definition: One malloc opaque call of 64 bytes/lifetime; gross minus conditional driver. Untimed
+    preparations/cleanup, payload touch excluded.
+  scope:
+    worker_scope: serial
+    operation: malloc
+    event_abi: malloc
+    size_bytes: 64
+    allocator_regime: fresh_process_repeated_allocate_free_batches
+    transfer_basis: inferred
+    cache_state: unobserved
+    payload_touch: false
+    runtime: hash-bound C/C++ allocator libraries
+  denominator:
+    level: source_normalized_work
+    basis: measured
+    proof:
+      format: swdb.cpu-allocator-count-proof.v1
+      pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      points:
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: new_array
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _Znam
+        characterization_sha256: b8c9cfa3e93443a40935761b9358f2c12c3a563313009f014821e13397db3390
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: new_array
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _Znam
+        characterization_sha256: 1a4af4ea499179be606dbe317707e2c236e280ad75436b569a1d9e199781aa7b
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: fb1e7a2aa4e8bd4aff18d8a2dffe94ba2bb1e987e86fbe4d04bf6050f3f58f8f
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: 0c8eafad38001182af0b32e3aadf1ed04e8579b6e61c1383ca1882f7a71d091a
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: new_array
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _Znam
+        characterization_sha256: 57af27d5d014a33ac6db478bbd03a6a163861503e9997bcf85d9db705a4317b6
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: new_array
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _Znam
+        characterization_sha256: 5918931edb2ab5793b5491f7e2bed33d03c57dd3c1c53d9c2f2bd1eced01cbb0
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: f025ecdbad08acd76cc31d61753b2e2bcd62a4073c2e53a4f4586ed76f30a321
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: 6ad2ba927fd0cca1ee1228c5058ac742d6c587963204d81c199e6660636f34d7
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: delete_array
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _ZdaPv
+        characterization_sha256: d39c9f1bf9e3eed6ec6f04878441131b8d9d7ad3d2ec3c329bbb6974f954bfc3
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: delete_array
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _ZdaPv
+        characterization_sha256: 0f31acde2019f517d3d0c3fd73548387d3584fe7990417a6d9b1fb2b4358e054
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: e30d7441ed4d33a64ce1495362783bb5f1b67eabc58e4ff1ff3bbc9e0a585510
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: 1efd010ec323bb4636249fc81ac78516207b50c34f1026569fd9a53a54854dcb
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _ZdaPv
+        characterization_sha256: d88d28e0730978028533eaa5662f0d3e1cfeefc11a1bd17ffd60d05c8892e380
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _ZdaPv
+        characterization_sha256: 3b57a1c5408f7cd3dd647f01483d79f7501a80557546d156cf5f310a5e37852e
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: 4ef3b0a450dc91c17d6ecfa0fb1a82411853bf1e2b4734efde193f4258c5912a
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: e4b5eab94e26c44cb3fb883ba88570012413bbb29762f9648087300a3aac1627
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: malloc
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: malloc
+        characterization_sha256: 9234fa0414edd340de32fc009376a865d5bb544be9988a317469ed561de457e2
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: malloc
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: malloc
+        characterization_sha256: 34b43a987987e1d0f00c498b0e7f9372ce24cd8eace22ae7b12c87c823f58316
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 61e28471b505cfac5964603997a1631999474224e086d10a148ed60f8f266092
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: db0844ac935b5c895ca3db8fb04f2409ef14ff99558de5df9af2cafe6949a772
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: malloc
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: malloc
+        characterization_sha256: fa72bff6b602cf1b761c2e197e452c0dea526b7302cc5fc42506c60e60ba0562
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: malloc
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: malloc
+        characterization_sha256: f282874a999b7e37e74cc79b34993410ef5b5d7b3b831e141d618718b3a5a2d5
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 4c38ff6a5daead1845efe191c32a0443d48bffb1fc4c402646e2341e4fab9d13
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 5f4aec747e07697ae95a8abba74d59bf5d9da10f1ee31860c37cbd9e99c18b99
+      source_sha256: 81e925cc3bf65397bd7405d0acddd3943b0b4de0c0b8defd5a39b69e7c1342d8
+      count_driver_sha256: 3a4070ccc3f8298e1f7fdca1ffa64a68342e0c584847f4cae73854b878ce03ff
+      plugin_source_sha256: 3ccefd011f2d155832b7188b341c3f64a610cfc3c696b825afed01fd5c0a029f
+      runtime_source_sha256: 43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e
+  trials:
+  - events: 8388608
+    batch_events: 65536
+    batches: 128
+    gross_seconds: 0.068849696
+    driver_seconds: 0.0033074639999999995
+    order: service_first
+    checksum: 0
+  - events: 8388608
+    batch_events: 65536
+    batches: 128
+    gross_seconds: 0.06798637200000003
+    driver_seconds: 0.0034621669999999986
+    order: driver_first
+    checksum: 0
+  - events: 8388608
+    batch_events: 65536
+    batches: 128
+    gross_seconds: 0.06750060499999999
+    driver_seconds: 0.0033129779999999994
+    order: service_first
+    checksum: 0
+  - events: 8388608
+    batch_events: 65536
+    batches: 128
+    gross_seconds: 0.06701135199999997
+    driver_seconds: 0.0034520139999999985
+    order: driver_first
+    checksum: 0
+  - events: 8388608
+    batch_events: 65536
+    batches: 128
+    gross_seconds: 0.06911532099999998
+    driver_seconds: 0.003318085000000001
+    order: service_first
+    checksum: 0
+  - events: 8388608
+    batch_events: 65536
+    batches: 128
+    gross_seconds: 0.06851016300000003
+    driver_seconds: 0.003451596
+    order: driver_first
+    checksum: 0
+  - events: 8388608
+    batch_events: 65536
+    batches: 128
+    gross_seconds: 0.067337606
+    driver_seconds: 0.003844251999999998
+    order: service_first
+    checksum: 0
+  seconds_per_event:
+    values: [8.207523345947266e-09, 8.10460710525513e-09, 8.046699166297912e-09, 7.98837566375732e-09,
+      8.23918831348419e-09, 8.167047858238223e-09, 8.027268171310424e-09]
+    median: 8.10460710525513e-09
+    min: 7.98837566375732e-09
+    max: 8.23918831348419e-09
+    spread: 2.50812649726869e-10
+    repetitions: 7
+  missing: []
+  parameter:
+    value: 8.10460710525513e-09
+    basis: inferred
+    unit: seconds/call
+    source: Constructed total-cell resource mbit10.cpu.lanl20261006.resource.allocator-v2.a1; mbit10.cpu.lanl20261006.service.allocator-v2.a1/allocator.malloc.64;
+      gross uninstrumented elapsed / exactly proved logical allocator events, includes measured loop control;
+      inferred transfer and maximum with counted compute resources, no physical latency or upper-bound
+      claim.
+  paired_residual:
+    parameter:
+      value: 7.69188463687897e-09
+      basis: measured
+      source: Service calibration mbit10.cpu.lanl20261006.service.allocator-v2.a1; allocator.malloc.64;
+        paired elapsed/work trials.
+      unit: seconds/call
+    seconds_per_event:
+      values: [7.813242912292481e-09, 7.69188463687897e-09, 7.651761412620544e-09, 7.57686352729797e-09,
+        7.843641757965086e-09, 7.755585551261905e-09, 7.568997621536255e-09]
+      median: 7.69188463687897e-09
+      min: 7.568997621536255e-09
+      max: 7.843641757965086e-09
+      spread: 2.7464413642883054e-10
+      repetitions: 7
+    missing: []
+  paired_admission:
+    admitted: false
+    minimum_window_s: 0.05
+    missing:
+    - paired_driver_window_resolution
+  cost_basis: gross_allocator_loop_resource_v1
+  gross_seconds_per_event:
+    values: [8.207523345947266e-09, 8.10460710525513e-09, 8.046699166297912e-09, 7.98837566375732e-09,
+      8.23918831348419e-09, 8.167047858238223e-09, 8.027268171310424e-09]
+    median: 8.10460710525513e-09
+    min: 7.98837566375732e-09
+    max: 8.23918831348419e-09
+    spread: 2.50812649726869e-10
+    repetitions: 7
+  driver_seconds_per_event:
+    values: [3.942804336547851e-10, 4.127224683761595e-10, 3.949377536773681e-10, 4.115121364593504e-10,
+      3.955465555191041e-10, 4.1146230697631835e-10, 4.582705497741697e-10]
+    median: 4.1146230697631835e-10
+    min: 3.942804336547851e-10
+    max: 4.582705497741697e-10
+    spread: 6.399011611938459e-11
+    repetitions: 7
+- id: allocator.malloc.128
+  unit: seconds/call
+  event_definition: One malloc opaque call of 128 bytes/lifetime; gross minus conditional driver. Untimed
+    preparations/cleanup, payload touch excluded.
+  scope:
+    worker_scope: serial
+    operation: malloc
+    event_abi: malloc
+    size_bytes: 128
+    allocator_regime: fresh_process_repeated_allocate_free_batches
+    transfer_basis: inferred
+    cache_state: unobserved
+    payload_touch: false
+    runtime: hash-bound C/C++ allocator libraries
+  denominator:
+    level: source_normalized_work
+    basis: measured
+    proof:
+      format: swdb.cpu-allocator-count-proof.v1
+      pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      points:
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: new_array
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _Znam
+        characterization_sha256: b8c9cfa3e93443a40935761b9358f2c12c3a563313009f014821e13397db3390
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: new_array
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _Znam
+        characterization_sha256: 1a4af4ea499179be606dbe317707e2c236e280ad75436b569a1d9e199781aa7b
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: fb1e7a2aa4e8bd4aff18d8a2dffe94ba2bb1e987e86fbe4d04bf6050f3f58f8f
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: 0c8eafad38001182af0b32e3aadf1ed04e8579b6e61c1383ca1882f7a71d091a
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: new_array
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _Znam
+        characterization_sha256: 57af27d5d014a33ac6db478bbd03a6a163861503e9997bcf85d9db705a4317b6
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: new_array
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _Znam
+        characterization_sha256: 5918931edb2ab5793b5491f7e2bed33d03c57dd3c1c53d9c2f2bd1eced01cbb0
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: f025ecdbad08acd76cc31d61753b2e2bcd62a4073c2e53a4f4586ed76f30a321
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: 6ad2ba927fd0cca1ee1228c5058ac742d6c587963204d81c199e6660636f34d7
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: delete_array
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _ZdaPv
+        characterization_sha256: d39c9f1bf9e3eed6ec6f04878441131b8d9d7ad3d2ec3c329bbb6974f954bfc3
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: delete_array
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _ZdaPv
+        characterization_sha256: 0f31acde2019f517d3d0c3fd73548387d3584fe7990417a6d9b1fb2b4358e054
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: e30d7441ed4d33a64ce1495362783bb5f1b67eabc58e4ff1ff3bbc9e0a585510
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: 1efd010ec323bb4636249fc81ac78516207b50c34f1026569fd9a53a54854dcb
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _ZdaPv
+        characterization_sha256: d88d28e0730978028533eaa5662f0d3e1cfeefc11a1bd17ffd60d05c8892e380
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _ZdaPv
+        characterization_sha256: 3b57a1c5408f7cd3dd647f01483d79f7501a80557546d156cf5f310a5e37852e
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: 4ef3b0a450dc91c17d6ecfa0fb1a82411853bf1e2b4734efde193f4258c5912a
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: e4b5eab94e26c44cb3fb883ba88570012413bbb29762f9648087300a3aac1627
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: malloc
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: malloc
+        characterization_sha256: 9234fa0414edd340de32fc009376a865d5bb544be9988a317469ed561de457e2
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: malloc
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: malloc
+        characterization_sha256: 34b43a987987e1d0f00c498b0e7f9372ce24cd8eace22ae7b12c87c823f58316
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 61e28471b505cfac5964603997a1631999474224e086d10a148ed60f8f266092
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: db0844ac935b5c895ca3db8fb04f2409ef14ff99558de5df9af2cafe6949a772
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: malloc
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: malloc
+        characterization_sha256: fa72bff6b602cf1b761c2e197e452c0dea526b7302cc5fc42506c60e60ba0562
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: malloc
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: malloc
+        characterization_sha256: f282874a999b7e37e74cc79b34993410ef5b5d7b3b831e141d618718b3a5a2d5
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 4c38ff6a5daead1845efe191c32a0443d48bffb1fc4c402646e2341e4fab9d13
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 5f4aec747e07697ae95a8abba74d59bf5d9da10f1ee31860c37cbd9e99c18b99
+      source_sha256: 81e925cc3bf65397bd7405d0acddd3943b0b4de0c0b8defd5a39b69e7c1342d8
+      count_driver_sha256: 3a4070ccc3f8298e1f7fdca1ffa64a68342e0c584847f4cae73854b878ce03ff
+      plugin_source_sha256: 3ccefd011f2d155832b7188b341c3f64a610cfc3c696b825afed01fd5c0a029f
+      runtime_source_sha256: 43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e
+  trials:
+  - events: 2097152
+    batch_events: 65536
+    batches: 32
+    gross_seconds: 0.10083483700000001
+    driver_seconds: 0.0008336359999999999
+    order: service_first
+    checksum: 0
+  - events: 2097152
+    batch_events: 65536
+    batches: 32
+    gross_seconds: 0.10120692800000002
+    driver_seconds: 0.0013131620000000003
+    order: driver_first
+    checksum: 0
+  - events: 2097152
+    batch_events: 65536
+    batches: 32
+    gross_seconds: 0.10248561100000002
+    driver_seconds: 0.0008294340000000001
+    order: service_first
+    checksum: 0
+  - events: 2097152
+    batch_events: 65536
+    batches: 32
+    gross_seconds: 0.10253391
+    driver_seconds: 0.000854397
+    order: driver_first
+    checksum: 0
+  - events: 2097152
+    batch_events: 65536
+    batches: 32
+    gross_seconds: 0.10214978899999999
+    driver_seconds: 0.0008339120000000002
+    order: service_first
+    checksum: 0
+  - events: 2097152
+    batch_events: 65536
+    batches: 32
+    gross_seconds: 0.10181974499999999
+    driver_seconds: 0.0008583090000000002
+    order: driver_first
+    checksum: 0
+  - events: 2097152
+    batch_events: 65536
+    batches: 32
+    gross_seconds: 0.10089965499999996
+    driver_seconds: 0.0008306629999999999
+    order: service_first
+    checksum: 0
+  seconds_per_event:
+    values: [4.808179712295533e-08, 4.825922393798829e-08, 4.8868947505950936e-08, 4.889197826385498e-08,
+      4.8708815097808834e-08, 4.855143785476684e-08, 4.8112704753875715e-08]
+    median: 4.855143785476684e-08
+    min: 4.808179712295533e-08
+    max: 4.889197826385498e-08
+    spread: 8.10181140899656e-10
+    repetitions: 7
+  missing: []
+  parameter:
+    value: 4.855143785476684e-08
+    basis: inferred
+    unit: seconds/call
+    source: Constructed total-cell resource mbit10.cpu.lanl20261006.resource.allocator-v2.a1; mbit10.cpu.lanl20261006.service.allocator-v2.a1/allocator.malloc.128;
+      gross uninstrumented elapsed / exactly proved logical allocator events, includes measured loop control;
+      inferred transfer and maximum with counted compute resources, no physical latency or upper-bound
+      claim.
+  paired_residual:
+    parameter:
+      value: 4.8142164230346674e-08
+      basis: measured
+      source: Service calibration mbit10.cpu.lanl20261006.service.allocator-v2.a1; allocator.malloc.128;
+        paired elapsed/work trials.
+      unit: seconds/call
+    seconds_per_event:
+      values: [4.768428850173951e-08, 4.7633059501647953e-08, 4.8473442554473884e-08, 4.8484570026397705e-08,
+        4.8311174869537346e-08, 4.8142164230346674e-08, 4.7716613769531235e-08]
+      median: 4.8142164230346674e-08
+      min: 4.7633059501647953e-08
+      max: 4.8484570026397705e-08
+      spread: 8.515105247497512e-10
+      repetitions: 7
+    missing: []
+  paired_admission:
+    admitted: false
+    minimum_window_s: 0.05
+    missing:
+    - paired_driver_window_resolution
+  cost_basis: gross_allocator_loop_resource_v1
+  gross_seconds_per_event:
+    values: [4.808179712295533e-08, 4.825922393798829e-08, 4.8868947505950936e-08, 4.889197826385498e-08,
+      4.8708815097808834e-08, 4.855143785476684e-08, 4.8112704753875715e-08]
+    median: 4.855143785476684e-08
+    min: 4.808179712295533e-08
+    max: 4.889197826385498e-08
+    spread: 8.10181140899656e-10
+    repetitions: 7
+  driver_seconds_per_event:
+    values: [3.9750862121582027e-10, 6.261644363403322e-10, 3.9550495147705083e-10, 4.074082374572754e-10,
+      3.976402282714845e-10, 4.0927362442016613e-10, 3.960909843444824e-10]
+    median: 3.976402282714845e-10
+    min: 3.9550495147705083e-10
+    max: 6.261644363403322e-10
+    spread: 2.3065948486328135e-10
+    repetitions: 7
+- id: allocator.malloc.6144
+  unit: seconds/call
+  event_definition: One malloc opaque call of 6144 bytes/lifetime; gross minus conditional driver. Untimed
+    preparations/cleanup, payload touch excluded.
+  scope:
+    worker_scope: serial
+    operation: malloc
+    event_abi: malloc
+    size_bytes: 6144
+    allocator_regime: fresh_process_repeated_allocate_free_batches
+    transfer_basis: inferred
+    cache_state: unobserved
+    payload_touch: false
+    runtime: hash-bound C/C++ allocator libraries
+  denominator:
+    level: source_normalized_work
+    basis: measured
+    proof:
+      format: swdb.cpu-allocator-count-proof.v1
+      pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      points:
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: new_array
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _Znam
+        characterization_sha256: b8c9cfa3e93443a40935761b9358f2c12c3a563313009f014821e13397db3390
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: new_array
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _Znam
+        characterization_sha256: 1a4af4ea499179be606dbe317707e2c236e280ad75436b569a1d9e199781aa7b
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: fb1e7a2aa4e8bd4aff18d8a2dffe94ba2bb1e987e86fbe4d04bf6050f3f58f8f
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: 0c8eafad38001182af0b32e3aadf1ed04e8579b6e61c1383ca1882f7a71d091a
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: new_array
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _Znam
+        characterization_sha256: 57af27d5d014a33ac6db478bbd03a6a163861503e9997bcf85d9db705a4317b6
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: new_array
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _Znam
+        characterization_sha256: 5918931edb2ab5793b5491f7e2bed33d03c57dd3c1c53d9c2f2bd1eced01cbb0
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: f025ecdbad08acd76cc31d61753b2e2bcd62a4073c2e53a4f4586ed76f30a321
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: 6ad2ba927fd0cca1ee1228c5058ac742d6c587963204d81c199e6660636f34d7
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: delete_array
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _ZdaPv
+        characterization_sha256: d39c9f1bf9e3eed6ec6f04878441131b8d9d7ad3d2ec3c329bbb6974f954bfc3
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: delete_array
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _ZdaPv
+        characterization_sha256: 0f31acde2019f517d3d0c3fd73548387d3584fe7990417a6d9b1fb2b4358e054
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: e30d7441ed4d33a64ce1495362783bb5f1b67eabc58e4ff1ff3bbc9e0a585510
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: 1efd010ec323bb4636249fc81ac78516207b50c34f1026569fd9a53a54854dcb
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _ZdaPv
+        characterization_sha256: d88d28e0730978028533eaa5662f0d3e1cfeefc11a1bd17ffd60d05c8892e380
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _ZdaPv
+        characterization_sha256: 3b57a1c5408f7cd3dd647f01483d79f7501a80557546d156cf5f310a5e37852e
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: 4ef3b0a450dc91c17d6ecfa0fb1a82411853bf1e2b4734efde193f4258c5912a
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: e4b5eab94e26c44cb3fb883ba88570012413bbb29762f9648087300a3aac1627
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: malloc
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: malloc
+        characterization_sha256: 9234fa0414edd340de32fc009376a865d5bb544be9988a317469ed561de457e2
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: malloc
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: malloc
+        characterization_sha256: 34b43a987987e1d0f00c498b0e7f9372ce24cd8eace22ae7b12c87c823f58316
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 61e28471b505cfac5964603997a1631999474224e086d10a148ed60f8f266092
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: db0844ac935b5c895ca3db8fb04f2409ef14ff99558de5df9af2cafe6949a772
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: malloc
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: malloc
+        characterization_sha256: fa72bff6b602cf1b761c2e197e452c0dea526b7302cc5fc42506c60e60ba0562
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: malloc
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: malloc
+        characterization_sha256: f282874a999b7e37e74cc79b34993410ef5b5d7b3b831e141d618718b3a5a2d5
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 4c38ff6a5daead1845efe191c32a0443d48bffb1fc4c402646e2341e4fab9d13
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 5f4aec747e07697ae95a8abba74d59bf5d9da10f1ee31860c37cbd9e99c18b99
+      source_sha256: 81e925cc3bf65397bd7405d0acddd3943b0b4de0c0b8defd5a39b69e7c1342d8
+      count_driver_sha256: 3a4070ccc3f8298e1f7fdca1ffa64a68342e0c584847f4cae73854b878ce03ff
+      plugin_source_sha256: 3ccefd011f2d155832b7188b341c3f64a610cfc3c696b825afed01fd5c0a029f
+      runtime_source_sha256: 43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e
+  trials:
+  - events: 87376
+    batch_events: 10922
+    batches: 8
+    gross_seconds: 0.1135837
+    driver_seconds: 3.7375e-05
+    order: service_first
+    checksum: 0
+  - events: 87376
+    batch_events: 10922
+    batches: 8
+    gross_seconds: 0.114084965
+    driver_seconds: 3.5442000000000004e-05
+    order: driver_first
+    checksum: 0
+  - events: 87376
+    batch_events: 10922
+    batches: 8
+    gross_seconds: 0.11352201299999999
+    driver_seconds: 3.6284e-05
+    order: service_first
+    checksum: 0
+  - events: 87376
+    batch_events: 10922
+    batches: 8
+    gross_seconds: 0.115167571
+    driver_seconds: 3.552100000000001e-05
+    order: driver_first
+    checksum: 0
+  - events: 87376
+    batch_events: 10922
+    batches: 8
+    gross_seconds: 0.116723786
+    driver_seconds: 3.7066999999999996e-05
+    order: service_first
+    checksum: 0
+  - events: 87376
+    batch_events: 10922
+    batches: 8
+    gross_seconds: 0.11611863
+    driver_seconds: 3.576e-05
+    order: driver_first
+    checksum: 0
+  - events: 87376
+    batch_events: 10922
+    batches: 8
+    gross_seconds: 0.116294682
+    driver_seconds: 3.7223e-05
+    order: service_first
+    checksum: 0
+  seconds_per_event:
+    values: [1.2999416315693097e-06, 1.3056785043947995e-06, 1.299235636788134e-06, 1.3180687030763596e-06,
+      1.3358792574620033e-06, 1.3289533739241897e-06, 1.3309682521516205e-06]
+    median: 1.3180687030763596e-06
+    min: 1.299235636788134e-06
+    max: 1.3358792574620033e-06
+    spread: 3.664362067386939e-08
+    repetitions: 7
+  missing: []
+  parameter:
+    value: 1.3180687030763596e-06
+    basis: inferred
+    unit: seconds/call
+    source: Constructed total-cell resource mbit10.cpu.lanl20261006.resource.allocator-v2.a1; mbit10.cpu.lanl20261006.service.allocator-v2.a1/allocator.malloc.6144;
+      gross uninstrumented elapsed / exactly proved logical allocator events, includes measured loop control;
+      inferred transfer and maximum with counted compute resources, no physical latency or upper-bound
+      claim.
+  paired_residual:
+    parameter:
+      value: 1.3176621726789965e-06
+      basis: measured
+      source: Service calibration mbit10.cpu.lanl20261006.service.allocator-v2.a1; allocator.malloc.6144;
+        paired elapsed/work trials.
+      unit: seconds/call
+    seconds_per_event:
+      values: [1.2995138825306718e-06, 1.3052728781358724e-06, 1.298820374015748e-06, 1.3176621726789965e-06,
+        1.3354550334187877e-06, 1.3285441082219374e-06, 1.3305422427211132e-06]
+      median: 1.3176621726789965e-06
+      min: 1.298820374015748e-06
+      max: 1.3354550334187877e-06
+      spread: 3.663465940303971e-08
+      repetitions: 7
+    missing: []
+  paired_admission:
+    admitted: false
+    minimum_window_s: 0.05
+    missing:
+    - paired_driver_window_resolution
+  cost_basis: gross_allocator_loop_resource_v1
+  gross_seconds_per_event:
+    values: [1.2999416315693097e-06, 1.3056785043947995e-06, 1.299235636788134e-06, 1.3180687030763596e-06,
+      1.3358792574620033e-06, 1.3289533739241897e-06, 1.3309682521516205e-06]
+    median: 1.3180687030763596e-06
+    min: 1.299235636788134e-06
+    max: 1.3358792574620033e-06
+    spread: 3.664362067386939e-08
+    repetitions: 7
+  driver_seconds_per_event:
+    values: [4.2774903863761214e-10, 4.056262589269365e-10, 4.152627723860099e-10, 4.065303973631204e-10,
+      4.2422404321552827e-10, 4.092657022523348e-10, 4.260094305072331e-10]
+    median: 4.152627723860099e-10
+    min: 4.056262589269365e-10
+    max: 4.2774903863761214e-10
+    spread: 2.212277971067564e-11
+    repetitions: 7
+- id: allocator.malloc.2097152
+  unit: seconds/call
+  event_definition: One malloc opaque call of 2097152 bytes/lifetime; gross minus conditional driver.
+    Untimed preparations/cleanup, payload touch excluded.
+  scope:
+    worker_scope: serial
+    operation: malloc
+    event_abi: malloc
+    size_bytes: 2097152
+    allocator_regime: fresh_process_repeated_allocate_free_batches
+    transfer_basis: inferred
+    cache_state: unobserved
+    payload_touch: false
+    runtime: hash-bound C/C++ allocator libraries
+  denominator:
+    level: source_normalized_work
+    basis: measured
+    proof:
+      format: swdb.cpu-allocator-count-proof.v1
+      pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      points:
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: new_array
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _Znam
+        characterization_sha256: b8c9cfa3e93443a40935761b9358f2c12c3a563313009f014821e13397db3390
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: new_array
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _Znam
+        characterization_sha256: 1a4af4ea499179be606dbe317707e2c236e280ad75436b569a1d9e199781aa7b
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: fb1e7a2aa4e8bd4aff18d8a2dffe94ba2bb1e987e86fbe4d04bf6050f3f58f8f
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: 0c8eafad38001182af0b32e3aadf1ed04e8579b6e61c1383ca1882f7a71d091a
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: new_array
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _Znam
+        characterization_sha256: 57af27d5d014a33ac6db478bbd03a6a163861503e9997bcf85d9db705a4317b6
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: new_array
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _Znam
+        characterization_sha256: 5918931edb2ab5793b5491f7e2bed33d03c57dd3c1c53d9c2f2bd1eced01cbb0
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: f025ecdbad08acd76cc31d61753b2e2bcd62a4073c2e53a4f4586ed76f30a321
+      - event_size_bins: []
+        operation: new_array
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _Znam
+        characterization_sha256: 6ad2ba927fd0cca1ee1228c5058ac742d6c587963204d81c199e6660636f34d7
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: delete_array
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _ZdaPv
+        characterization_sha256: d39c9f1bf9e3eed6ec6f04878441131b8d9d7ad3d2ec3c329bbb6974f954bfc3
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: delete_array
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _ZdaPv
+        characterization_sha256: 0f31acde2019f517d3d0c3fd73548387d3584fe7990417a6d9b1fb2b4358e054
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: e30d7441ed4d33a64ce1495362783bb5f1b67eabc58e4ff1ff3bbc9e0a585510
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: 1efd010ec323bb4636249fc81ac78516207b50c34f1026569fd9a53a54854dcb
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: _ZdaPv
+        characterization_sha256: d88d28e0730978028533eaa5662f0d3e1cfeefc11a1bd17ffd60d05c8892e380
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: _ZdaPv
+        characterization_sha256: 3b57a1c5408f7cd3dd647f01483d79f7501a80557546d156cf5f310a5e37852e
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: 4ef3b0a450dc91c17d6ecfa0fb1a82411853bf1e2b4734efde193f4258c5912a
+      - event_size_bins: []
+        operation: delete_array
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: _ZdaPv
+        characterization_sha256: e4b5eab94e26c44cb3fb883ba88570012413bbb29762f9648087300a3aac1627
+      - event_size_bins:
+        - bytes: 64
+          events: 3
+        operation: malloc
+        size_bytes: 64
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: malloc
+        characterization_sha256: 9234fa0414edd340de32fc009376a865d5bb544be9988a317469ed561de457e2
+      - event_size_bins:
+        - bytes: 64
+          events: 5
+        operation: malloc
+        size_bytes: 64
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: malloc
+        characterization_sha256: 34b43a987987e1d0f00c498b0e7f9372ce24cd8eace22ae7b12c87c823f58316
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 64
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 61e28471b505cfac5964603997a1631999474224e086d10a148ed60f8f266092
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 64
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: db0844ac935b5c895ca3db8fb04f2409ef14ff99558de5df9af2cafe6949a772
+      - event_size_bins:
+        - bytes: 16777220
+          events: 3
+        operation: malloc
+        size_bytes: 16777220
+        invoke: true
+        events: 3
+        opaque_events: 3
+        event_abi: malloc
+        characterization_sha256: fa72bff6b602cf1b761c2e197e452c0dea526b7302cc5fc42506c60e60ba0562
+      - event_size_bins:
+        - bytes: 16777220
+          events: 5
+        operation: malloc
+        size_bytes: 16777220
+        invoke: true
+        events: 5
+        opaque_events: 5
+        event_abi: malloc
+        characterization_sha256: f282874a999b7e37e74cc79b34993410ef5b5d7b3b831e141d618718b3a5a2d5
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 16777220
+        invoke: false
+        events: 3
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 4c38ff6a5daead1845efe191c32a0443d48bffb1fc4c402646e2341e4fab9d13
+      - event_size_bins: []
+        operation: malloc
+        size_bytes: 16777220
+        invoke: false
+        events: 5
+        opaque_events: 0
+        event_abi: malloc
+        characterization_sha256: 5f4aec747e07697ae95a8abba74d59bf5d9da10f1ee31860c37cbd9e99c18b99
+      source_sha256: 81e925cc3bf65397bd7405d0acddd3943b0b4de0c0b8defd5a39b69e7c1342d8
+      count_driver_sha256: 3a4070ccc3f8298e1f7fdca1ffa64a68342e0c584847f4cae73854b878ce03ff
+      plugin_source_sha256: 3ccefd011f2d155832b7188b341c3f64a610cfc3c696b825afed01fd5c0a029f
+      runtime_source_sha256: 43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e
+  trials:
+  - events: 65536
+    batch_events: 32
+    batches: 2048
+    gross_seconds: 0.11000542500000005
+    driver_seconds: 5.981000000000049e-05
+    order: service_first
+    checksum: 0
+  - events: 65536
+    batch_events: 32
+    batches: 2048
+    gross_seconds: 0.10866881599999989
+    driver_seconds: 5.761800000000061e-05
+    order: driver_first
+    checksum: 0
+  - events: 65536
+    batch_events: 32
+    batches: 2048
+    gross_seconds: 0.1086278339999999
+    driver_seconds: 5.933700000000177e-05
+    order: service_first
+    checksum: 0
+  - events: 65536
+    batch_events: 32
+    batches: 2048
+    gross_seconds: 0.10926466500000002
+    driver_seconds: 5.759700000000072e-05
+    order: driver_first
+    checksum: 0
+  - events: 65536
+    batch_events: 32
+    batches: 2048
+    gross_seconds: 0.11000949500000001
+    driver_seconds: 5.8041000000001005e-05
+    order: service_first
+    checksum: 0
+  - events: 65536
+    batch_events: 32
+    batches: 2048
+    gross_seconds: 0.10921421599999992
+    driver_seconds: 5.848300000000128e-05
+    order: driver_first
+    checksum: 0
+  - events: 65536
+    batch_events: 32
+    batches: 2048
+    gross_seconds: 0.10897029100000001
+    driver_seconds: 5.828700000000095e-05
+    order: service_first
+    checksum: 0
+  seconds_per_event:
+    values: [1.6785495758056648e-06, 1.6581545410156233e-06, 1.657529205322264e-06, 1.667246475219727e-06,
+      1.6786116790771486e-06, 1.6664766845703113e-06, 1.6627546844482424e-06]
+    median: 1.6664766845703113e-06
+    min: 1.657529205322264e-06
+    max: 1.6786116790771486e-06
+    spread: 2.1082473754884602e-08
+    repetitions: 7
+  missing: []
+  parameter:
+    value: 1.6664766845703113e-06
+    basis: inferred
+    unit: seconds/call
+    source: Constructed total-cell resource mbit10.cpu.lanl20261006.resource.allocator-v2.a1; mbit10.cpu.lanl20261006.service.allocator-v2.a1/allocator.malloc.2097152;
+      gross uninstrumented elapsed / exactly proved logical allocator events, includes measured loop control;
+      inferred transfer and maximum with counted compute resources, no physical latency or upper-bound
+      claim.
+  paired_residual:
+    parameter:
+      value: 1.6655843048095691e-06
+      basis: measured
+      source: Service calibration mbit10.cpu.lanl20261006.service.allocator-v2.a1; allocator.malloc.2097152;
+        paired elapsed/work trials.
+      unit: seconds/call
+    seconds_per_event:
+      values: [1.6776369476318365e-06, 1.6572753601074203e-06, 1.6566237945556624e-06, 1.666367614746094e-06,
+        1.6777260437011721e-06, 1.6655843048095691e-06, 1.6618652954101564e-06]
+      median: 1.6655843048095691e-06
+      min: 1.6566237945556624e-06
+      max: 1.6777260437011721e-06
+      spread: 2.110224914550978e-08
+      repetitions: 7
+    missing: []
+  paired_admission:
+    admitted: false
+    minimum_window_s: 0.05
+    missing:
+    - paired_driver_window_resolution
+  cost_basis: gross_allocator_loop_resource_v1
+  gross_seconds_per_event:
+    values: [1.6785495758056648e-06, 1.6581545410156233e-06, 1.657529205322264e-06, 1.667246475219727e-06,
+      1.6786116790771486e-06, 1.6664766845703113e-06, 1.6627546844482424e-06]
+    median: 1.6664766845703113e-06
+    min: 1.657529205322264e-06
+    max: 1.6786116790771486e-06
+    spread: 2.1082473754884602e-08
+    repetitions: 7
+  driver_seconds_per_event:
+    values: [9.126281738281325e-10, 8.791809082031344e-10, 9.054107666015896e-10, 8.788604736328235e-10,
+      8.856353759765778e-10, 8.923797607422071e-10, 8.89389038085952e-10]
+    median: 8.89389038085952e-10
+    min: 8.788604736328235e-10
+    max: 9.126281738281325e-10
+    spread: 3.3767700195308995e-11
+    repetitions: 7
+identity_sha256: 3478e983e176f46cd1799d2474a13614db2b7fd36a28d132d4d2df27adec3223

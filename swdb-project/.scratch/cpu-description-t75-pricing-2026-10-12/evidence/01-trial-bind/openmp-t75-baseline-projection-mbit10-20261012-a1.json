@@ -1,0 +1,692 @@
+{
+  "all_source_json_sites_cross_checked": true,
+  "calls": [
+    {
+      "argument_count": 9,
+      "callee_parameter_count": 9,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiES5_R12SlidingQueueIiEii.omp_outlined",
+      "name": "__kmpc_for_static_init_8u",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        },
+        {
+          "bits": 32,
+          "index": 2,
+          "kind": "integer",
+          "signed_decimal": "34",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 5,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 6,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 64,
+          "index": 7,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        },
+        {
+          "bits": 64,
+          "index": 8,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        }
+      ],
+      "region": "typed-library-bfs-scalar-profile-20261003-a1.baseline/serial.12991577463451192595",
+      "site": 84,
+      "source_location": {
+        "column": 1,
+        "line": 75,
+        "path": "/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a1.baseline/source/benchmarks/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0
+      ]
+    },
+    {
+      "argument_count": 2,
+      "callee_parameter_count": 2,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiES5_R12SlidingQueueIiEii.omp_outlined",
+      "name": "__kmpc_for_static_fini",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        }
+      ],
+      "region": "typed-library-bfs-scalar-profile-20261003-a1.baseline/serial.12991577463451192595",
+      "site": 85,
+      "source_location": {
+        "column": 23,
+        "line": 75,
+        "path": "/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a1.baseline/source/benchmarks/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0
+      ]
+    },
+    {
+      "argument_count": 9,
+      "callee_parameter_count": 9,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined",
+      "name": "__kmpc_for_static_init_4",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        },
+        {
+          "bits": 32,
+          "index": 2,
+          "kind": "integer",
+          "signed_decimal": "34",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 5,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 6,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 7,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        },
+        {
+          "bits": 32,
+          "index": 8,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        }
+      ],
+      "region": "typed-library-bfs-scalar-profile-20261003-a1.baseline/serial.15390188451096923551",
+      "site": 128,
+      "source_location": {
+        "column": 1,
+        "line": 145,
+        "path": "/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a1.baseline/source/benchmarks/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0
+      ]
+    },
+    {
+      "argument_count": 2,
+      "callee_parameter_count": 2,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined",
+      "name": "__kmpc_for_static_fini",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        }
+      ],
+      "region": "typed-library-bfs-scalar-profile-20261003-a1.baseline/serial.15390188451096923551",
+      "site": 129,
+      "source_location": {
+        "column": 25,
+        "line": 145,
+        "path": "/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a1.baseline/source/benchmarks/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0
+      ]
+    },
+    {
+      "argument_count": 5,
+      "callee_parameter_count": 3,
+      "callee_variadic": true,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "2",
+        "state": "constant"
+      },
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+      "name": "__kmpc_fork_call",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": "2",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 2,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        }
+      ],
+      "region": "typed-library-bfs-scalar-profile-20261003-a1.baseline/serial.995486541436624707",
+      "site": 151,
+      "source_location": {
+        "column": 1,
+        "line": 145,
+        "path": "/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a1.baseline/source/benchmarks/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0
+      ]
+    },
+    {
+      "argument_count": 7,
+      "callee_parameter_count": 3,
+      "callee_variadic": true,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "2",
+        "state": "constant"
+      },
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+      "name": "__kmpc_fork_call",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": "4",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 2,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 5,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 6,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        }
+      ],
+      "region": "unmapped.typed-library-bfs-scalar-profile-20261003-a1.baseline.DOBFS.180.0.995486541436624707",
+      "site": 178,
+      "source_location": {
+        "column": 1,
+        "line": 72,
+        "path": "/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a1.baseline/source/benchmarks/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0
+      ]
+    },
+    {
+      "argument_count": 5,
+      "callee_parameter_count": 3,
+      "callee_variadic": true,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "2",
+        "state": "constant"
+      },
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+      "name": "__kmpc_fork_call",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": "2",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 2,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        }
+      ],
+      "region": "typed-library-bfs-scalar-profile-20261003-a1.baseline/serial.995486541436624707",
+      "site": 187,
+      "source_location": {
+        "column": 1,
+        "line": 190,
+        "path": "/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a1.baseline/source/benchmarks/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0
+      ]
+    },
+    {
+      "argument_count": 9,
+      "callee_parameter_count": 9,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined",
+      "name": "__kmpc_for_static_init_4",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        },
+        {
+          "bits": 32,
+          "index": 2,
+          "kind": "integer",
+          "signed_decimal": "34",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 5,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 6,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 7,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        },
+        {
+          "bits": 32,
+          "index": 8,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        }
+      ],
+      "region": "typed-library-bfs-scalar-profile-20261003-a1.baseline/serial.9867237533740053636",
+      "site": 199,
+      "source_location": {
+        "column": 1,
+        "line": 190,
+        "path": "/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a1.baseline/source/benchmarks/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0
+      ]
+    },
+    {
+      "argument_count": 2,
+      "callee_parameter_count": 2,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined",
+      "name": "__kmpc_for_static_fini",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        }
+      ],
+      "region": "typed-library-bfs-scalar-profile-20261003-a1.baseline/serial.9867237533740053636",
+      "site": 200,
+      "source_location": {
+        "column": 25,
+        "line": 190,
+        "path": "/data1/yanruj/EvolveSWDB_sources/d9edd7d0042ae3e6/typed-library-bfs-scalar-profile-20261003-a1.baseline/source/benchmarks/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0
+      ]
+    }
+  ],
+  "enumerated_access_sites": 4644,
+  "enumerated_call_sites": 1530,
+  "source_ir_sha256": "4d90c1c453ff1dcd2d06ef207d315465bf6863a2f2cbae2887cc770fa2e1605f",
+  "source_json_sha256": "9bc1ad7f0a6110308624dbeecb738e33e3c154dd107aefdd04e2c9b2d4355b93",
+  "format": "swdb.openmp-call-projection.v1",
+  "updated": "2026-10-06 ET",
+  "basis": "code_reading",
+  "scope": "Exact-source static ABI facts for the all-trial executed-site union; no addresses, runtime internals, prewarm/residency state, timings or costs.",
+  "characterization": {
+    "id": "fga03.t75-baseline.uniform22.t1.characterization.a2",
+    "identity_sha256": "5bd6663bcd5e2deef93639e649ec2ebf53352b2297a4c378d3c7de234d0f9537",
+    "sha256": "ad4fa3cbbfbb2f5f67bf386285b00da85f9ca04bba271fd8983f3f443f0ddd4c",
+    "file_sha256": "dc01b18134fed374537672f6d3b7d2355341a4c679d213b0c1376aa64e231f4e",
+    "execution_receipt_source_ir_sha256": "4d90c1c453ff1dcd2d06ef207d315465bf6863a2f2cbae2887cc770fa2e1605f"
+  },
+  "receipt": {
+    "llvm_version": "22.1.8",
+    "compiler_version": "clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin",
+    "compiler_sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113",
+    "wrapper_argv": [
+      "/usr/bin/python3",
+      "/data1/yanruj/ArchEvolve-cpud01-trial-20261012/swdb-project/scripts/openmp_call_projection.py",
+      "--characterization",
+      "/data/yanruj/EvolveSWDB_runs/cpud01-trial-20261012-a1/projection-baseline/characterization.yaml",
+      "--source-ir",
+      "/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/a2/baseline-counted/normalized.bc",
+      "--source-map",
+      "/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/a2/baseline-counted/source.json",
+      "--llvm-bin",
+      "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin",
+      "--toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13",
+      "--timeout-s",
+      "180",
+      "--output-directory",
+      "/data/yanruj/EvolveSWDB_runs/cpud01-trial-20261012-a1/projection-baseline/projection"
+    ],
+    "compiler_argv": [
+      "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang++",
+      "--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13",
+      "/data1/yanruj/ArchEvolve-cpud01-trial-20261012/swdb-project/swdb/llvm/OpenMPCallProjection.cpp",
+      "-I/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/include",
+      "-std=c++17",
+      "-D_GNU_SOURCE",
+      "-D_GLIBCXX_USE_CXX11_ABI=1",
+      "-D__STDC_CONSTANT_MACROS",
+      "-D__STDC_FORMAT_MACROS",
+      "-D__STDC_LIMIT_MACROS",
+      "-fno-exceptions",
+      "-fno-rtti",
+      "-L/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib",
+      "-lLLVMAnalysis",
+      "-lLLVMProfileData",
+      "-lLLVMSymbolize",
+      "-lLLVMDebugInfoBTF",
+      "-lLLVMDebugInfoPDB",
+      "-lLLVMDebugInfoMSF",
+      "-lLLVMDebugInfoCodeView",
+      "-lLLVMDebugInfoGSYM",
+      "-lLLVMDebugInfoDWARF",
+      "-lLLVMObject",
+      "-lLLVMTextAPI",
+      "-lLLVMMCParser",
+      "-lLLVMMC",
+      "-lLLVMDebugInfoDWARFLowLevel",
+      "-lLLVMFrontendHLSL",
+      "-lLLVMIRReader",
+      "-lLLVMBitReader",
+      "-lLLVMAsmParser",
+      "-lLLVMCore",
+      "-lLLVMRemarks",
+      "-lLLVMBitstreamReader",
+      "-lLLVMBinaryFormat",
+      "-lLLVMTargetParser",
+      "-lLLVMSupport",
+      "-lLLVMDemangle",
+      "-lrt",
+      "-ldl",
+      "-lm",
+      "-lz",
+      "/usr/lib/x86_64-linux-gnu/libzstd.a",
+      "-lxml2",
+      "-std=c++17",
+      "-O2",
+      "-o",
+      "/data/yanruj/EvolveSWDB_runs/cpud01-trial-20261012-a1/projection-baseline/projection/openmp-projector"
+    ],
+    "projection_argv": [
+      "/data/yanruj/EvolveSWDB_runs/cpud01-trial-20261012-a1/projection-baseline/projection/openmp-projector",
+      "/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/a2/baseline-counted/normalized.bc",
+      "/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/a2/baseline-counted/source.json",
+      "/data/yanruj/EvolveSWDB_runs/cpud01-trial-20261012-a1/projection-baseline/projection/static.json",
+      "84,85,128,129,151,178,187,199,200",
+      "4d90c1c453ff1dcd2d06ef207d315465bf6863a2f2cbae2887cc770fa2e1605f"
+    ],
+    "projector_source_sha256": "db19854dadbf8979ce3934fe2e219af28863c126234717d66eeabfc625cbd193",
+    "projector_binary_sha256": "974ae0f52c471942a8a1b573b00940eb3005676639a7f9a1be60ee59e3a997db",
+    "wrapper_sha256": "3192ce0c6ca60cbc30d66afeee23b02ae1a0f3434b584310d954a1835f00f822",
+    "inputs_byte_identical_after_projection": true,
+    "application_execution": false,
+    "raw_ir_exported": false,
+    "characterization_runtime_validation": "Required separately before model admission; this proof adds only static ABI facts."
+  },
+  "identity_sha256": "3de0c61d6b497514af6f5f22f292ce734a2a5eee6681f87b3fbec7242c342ea5"
+}

@@ -1,0 +1,2009 @@
+kind: cpu_service_calibration
+schema_version: '0.4'
+id: mbit10.cpu.lanl20261006.service.library-call.a1
+status: draft
+created: '2026-10-12'
+updated: '2026-10-12'
+provenance:
+- id: cpu-service
+  kind: measurement
+  description: Independent service/driver elapsed and counted work; not application timing or CPU accuracy
+    evidence.
+  uri: null
+format: swdb.cpu-service-calibration-record.v1
+backend: native
+evidence_kind: native
+receipt_sha256: c8777cb9a852a78de582d75a33378b0fa3acc115735f197b00e933dc100fa130
+target: mbit10
+threads: 1
+context:
+  compiler_version: |-
+    clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)
+    Target: x86_64-unknown-linux-gnu
+    Thread model: posix
+    InstalledDir: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin
+  compiler_sha256: 31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113
+  flags:
+  - -O3
+  - -std=c++17
+  - --gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13
+  host: mbit10
+  architecture: x86_64
+  instrumented_timer: false
+  source_sha256:
+    CpuLibraryCallWork.h: 62770adae5e9f8794c8d16b0469dfc90c2b3ada1d1feea30f069c0638521a14c
+    CpuLibraryCallTimer.cpp: 563839ee8f9160a0d91009454031ef5ab5ceb248721fef436e097b7dbb258f30
+    CpuLibraryCallCount.cpp: 0047ff8fc0a3d971510c1b1c7c74dbbb57c363e9336b12a52f4a8e8fc000005e
+  binary_sha256: 83e126662415f4c82562c45e10f593f18b40cf65a975c17f081c062920e0f020
+  control_environment:
+    GLIBC_TUNABLES: null
+    LD_PRELOAD: null
+    LD_AUDIT: null
+    LD_LIBRARY_PATH: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/x86_64-unknown-linux-gnu
+    DYLD_LIBRARY_PATH: null
+    DYLD_INSERT_LIBRARIES: null
+  control_environment_scope:
+    format: swdb.service-control-environment.v1
+    prefixes: [MALLOC_]
+    exact_variables: [GLIBC_TUNABLES, LD_PRELOAD, LD_AUDIT, LD_LIBRARY_PATH, DYLD_LIBRARY_PATH, DYLD_INSERT_LIBRARIES]
+    absence_semantics: null_or_absent_is_unset_under_declared_scope
+  lane: 'mbit10-evaluation-node1 (verified: affinity, bind:1, lease held, generation 561)'
+  cpus: [1]
+  machine_sha256: fcb0123f0bdb9bc004348eb8c6444f03304b6612e0cb2e26a82e621b07d82a79
+  system: Linux
+  start_state:
+    load: [9.02978515625, 9.02685546875, 8.74560546875]
+    time_ns: 1791825118735976433
+    available_memory: |-
+      MemTotal:       131426264 kB
+      MemFree:        18913300 kB
+      MemAvailable:   95982260 kB
+      Buffers:         7900580 kB
+      Cached:         41956520 kB
+      SwapCached:            0 kB
+      Active:         29487928 kB
+      Inactive:       48206068 kB
+      Active(anon):   27824036 kB
+      Inactive(anon):    43232 kB
+      Active(file):    1663892 kB
+      Inactive(file): 48162836 kB
+      Unevictable:       39252 kB
+      Mlocked:           36180 kB
+      SwapTotal:             0 kB
+      SwapFree:              0 kB
+      Zswap:                 0 kB
+      Zswapped:              0 kB
+      Dirty:                44 kB
+      Writeback:             0 kB
+      AnonPages:      27876964 kB
+      Mapped:           992080 kB
+      Shmem:             15424 kB
+      KReclaimable:   28560832 kB
+      Slab:           31055372 kB
+      SReclaimable:   28497748 kB
+      SUnreclaim:      2557624 kB
+      KernelStack:       22112 kB
+      PageTables:        80464 kB
+      SecPageTables:         0 kB
+      NFS_Unstable:          0 kB
+      Bounce:                0 kB
+      WritebackTmp:          0 kB
+      CommitLimit:    65713132 kB
+      Committed_AS:   31223664 kB
+      VmallocTotal:   13743895347199 kB
+      VmallocUsed:      428720 kB
+      VmallocChunk:          0 kB
+      Percpu:           396800 kB
+      HardwareCorrupted:     8 kB
+      AnonHugePages:         0 kB
+      ShmemHugePages:        0 kB
+      ShmemPmdMapped:        0 kB
+      FileHugePages:         0 kB
+      FilePmdMapped:         0 kB
+      Unaccepted:            0 kB
+      HugePages_Total:       0
+      HugePages_Free:        0
+      HugePages_Rsvd:        0
+      HugePages_Surp:        0
+      Hugepagesize:       2048 kB
+      Hugetlb:               0 kB
+      DirectMap4k:    40572900 kB
+      DirectMap2M:    90986496 kB
+      DirectMap1G:     4194304 kB
+    governor: null
+    no_turbo: null
+  free_disk_bytes: 82038071296
+  commit: f2d411567b0c02c8f71bd6cf23189edef4a3f0a3
+  dirty: false
+  loaded_libraries:
+    libstdc++.so.6.0.33:
+      path: /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33
+      sha256: 1fd75fe70354a416d75aef22bcae68c47bd25d20e2d0568c30b1a9838cf62f11
+    libm.so.6:
+      path: /usr/lib/x86_64-linux-gnu/libm.so.6
+      sha256: fce00b6f25f459cf4ae0b7fae4257909a1a8a86f9149e7c029a5d617baf1ccd0
+    libgcc_s.so.1:
+      path: /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+      sha256: d93224d2b0dab4247598be683adca02f5cf00586f99c187579cd7e92058fb7cb
+    libc.so.6:
+      path: /usr/lib/x86_64-linux-gnu/libc.so.6
+      sha256: 3a15d66867d83762c7f2f1e37359cb8f6c5743edb369c65285cb0b1c4f7498bf
+    ld-linux-x86-64.so.2:
+      path: /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+      sha256: c20a2dc8917c755f02b94049356320fe1f62ac7d9f8994731f807d9df39302da
+  end_state:
+    load: [9.0087890625, 9.0478515625, 8.9130859375]
+    time_ns: 1791825682043219872
+    available_memory: |-
+      MemTotal:       131426264 kB
+      MemFree:        14662984 kB
+      MemAvailable:   92770252 kB
+      Buffers:         7901680 kB
+      Cached:         42966324 kB
+      SwapCached:            0 kB
+      Active:         32851996 kB
+      Inactive:       49217024 kB
+      Active(anon):   31188084 kB
+      Inactive(anon):    43232 kB
+      Active(file):    1663912 kB
+      Inactive(file): 49173792 kB
+      Unevictable:       39252 kB
+      Mlocked:           36180 kB
+      SwapTotal:             0 kB
+      SwapFree:              0 kB
+      Zswap:                 0 kB
+      Zswapped:              0 kB
+      Dirty:                32 kB
+      Writeback:             0 kB
+      AnonPages:      31240720 kB
+      Mapped:           992212 kB
+      Shmem:             15424 kB
+      KReclaimable:   28588164 kB
+      Slab:           31082064 kB
+      SReclaimable:   28525080 kB
+      SUnreclaim:      2556984 kB
+      KernelStack:       22464 kB
+      PageTables:        84260 kB
+      SecPageTables:         0 kB
+      NFS_Unstable:          0 kB
+      Bounce:                0 kB
+      WritebackTmp:          0 kB
+      CommitLimit:    65713132 kB
+      Committed_AS:   34616636 kB
+      VmallocTotal:   13743895347199 kB
+      VmallocUsed:      428960 kB
+      VmallocChunk:          0 kB
+      Percpu:           396800 kB
+      HardwareCorrupted:     8 kB
+      AnonHugePages:         0 kB
+      ShmemHugePages:        0 kB
+      ShmemPmdMapped:        0 kB
+      FileHugePages:         0 kB
+      FilePmdMapped:         0 kB
+      Unaccepted:            0 kB
+      HugePages_Total:       0
+      HugePages_Free:        0
+      HugePages_Rsvd:        0
+      HugePages_Surp:        0
+      Hugepagesize:       2048 kB
+      Hugetlb:               0 kB
+      DirectMap4k:    40572900 kB
+      DirectMap2M:    90986496 kB
+      DirectMap1G:     4194304 kB
+    governor: null
+    no_turbo: null
+settings:
+  group: library_call_v1
+  repetitions: 7
+  min_trial_s: 0.05
+  max_wall_s: 900.0
+  event_cap: 134217728
+  batch_events: 1024
+  timed_data_cap_bytes: 26214400
+  count_build_cap_bytes: 67108864
+  resident_payload_bytes: 0
+services:
+- id: library.strlen
+  unit: seconds/call
+  event_definition: One strlen of a constructed 16-byte string; driver uses the known length. Application
+    string lengths are not measured.
+  scope:
+    event_abi: strlen
+    worker_scope: serial
+    transfer_basis: inferred
+    cache_state: steady_repeated_calls
+    stdout_sink: regular_file
+    stream: std::cout, sync_with_stdio(true), stdout reopened onto a regular file (fully buffered), flushed
+      and truncated between untimed batches
+    length_bytes: 16
+    length_transfer: inferred; application lengths unknown
+  denominator:
+    level: selected_source_normalized_event
+    basis: measured
+    proof:
+      format: swdb.cpu-library-call-count-proof.v1
+      pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      coefficients: op k runs (k + 1) * events iterations in the count driver; one selected event per
+        iteration
+      cells:
+      - index: 0
+        event_abi: strlen
+      - index: 1
+        event_abi: _ZNSo3putEc
+      - index: 2
+        event_abi: _ZNSo5flushEv
+      - index: 3
+        event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+      - index: 4
+        event_abi: _ZNSo9_M_insertImEERSoT_
+      - index: 5
+        event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+      - index: 6
+        event_abi: indirect-call
+      points:
+      - events: 3
+        invoke: true
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 3
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 6
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 9
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 12
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 15
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 18
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 21
+          source_sites: [12]
+        other_uncovered_calls:
+          _ZNSo3putEc: 9
+          indirect-call: 18
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        characterization_sha256: 8c0b49fc0eda09014a9a5fabfa556acaeda754235fc49cf1ae14a16a39707541
+      - events: 3
+        invoke: false
+        other_uncovered_calls:
+          _ZNSo3putEc: 9
+          indirect-call: 18
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 0
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 0
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 0
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 0
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 0
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 0
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 0
+          source_sites: [12]
+        characterization_sha256: 90c0b51092defaf5797564b3bec10c3fce77e46a5cf88063fedbd8ffa1c5d3f8
+      - events: 5
+        invoke: true
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 5
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 10
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 15
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 20
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 25
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 30
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 35
+          source_sites: [12]
+        other_uncovered_calls:
+          _ZNSo3putEc: 15
+          indirect-call: 30
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        characterization_sha256: 31ed539bb8416495977a0f3c708951d3645336306309e377f91f6f595ea87aa2
+      - events: 5
+        invoke: false
+        other_uncovered_calls:
+          _ZNSo3putEc: 15
+          indirect-call: 30
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 0
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 0
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 0
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 0
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 0
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 0
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 0
+          source_sites: [12]
+        characterization_sha256: 22bf316971ed8b16ab51fdf19bc4088241854632b6a7e1b726e2c52ac0b28ab2
+      source_sha256: 62770adae5e9f8794c8d16b0469dfc90c2b3ada1d1feea30f069c0638521a14c
+      count_driver_sha256: 0047ff8fc0a3d971510c1b1c7c74dbbb57c363e9336b12a52f4a8e8fc000005e
+      plugin_source_sha256: 3ccefd011f2d155832b7188b341c3f64a610cfc3c696b825afed01fd5c0a029f
+      runtime_source_sha256: 43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e
+  trials:
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.19577435899987194
+    driver_seconds: 0.08594457199998666
+    order: service_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.19489753799984239
+    driver_seconds: 0.08642184599993402
+    order: driver_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.19577433299983688
+    driver_seconds: 0.08571833999994743
+    order: service_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.1946718479998587
+    driver_seconds: 0.08230763799993
+    order: driver_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.19576638299984453
+    driver_seconds: 0.08680823599997532
+    order: service_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.19506313999986993
+    driver_seconds: 0.0867468849999703
+    order: driver_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.19490594999985847
+    driver_seconds: 0.08667333199997096
+    order: service_first
+    checksum: 0
+  seconds_per_event:
+    values: [1.6365913599712444e-09, 1.6164137721048052e-09, 1.6399620920403218e-09, 1.6743572056282863e-09,
+      1.6236029118279995e-09, 1.6140379756674116e-09, 1.612791687248461e-09]
+    median: 1.6236029118279995e-09
+    min: 1.612791687248461e-09
+    max: 1.6743572056282863e-09
+    spread: 6.156551837982524e-11
+    repetitions: 7
+  missing: []
+  parameter:
+    value: 1.6236029118279995e-09
+    basis: measured
+    source: Service calibration mbit10.cpu.lanl20261006.service.library-call.a1; library.strlen; paired
+      elapsed/work trials.
+    unit: seconds/call
+- id: library.ostream_put
+  unit: seconds/call
+  event_definition: One ostream::put of one byte into the buffered stdout file; driver skips it. Buffer
+    drain to the file happens outside the timed window.
+  scope:
+    event_abi: _ZNSo3putEc
+    worker_scope: serial
+    transfer_basis: inferred
+    cache_state: steady_repeated_calls
+    stdout_sink: regular_file
+    stream: std::cout, sync_with_stdio(true), stdout reopened onto a regular file (fully buffered), flushed
+      and truncated between untimed batches
+  denominator:
+    level: selected_source_normalized_event
+    basis: measured
+    proof:
+      format: swdb.cpu-library-call-count-proof.v1
+      pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      coefficients: op k runs (k + 1) * events iterations in the count driver; one selected event per
+        iteration
+      cells:
+      - index: 0
+        event_abi: strlen
+      - index: 1
+        event_abi: _ZNSo3putEc
+      - index: 2
+        event_abi: _ZNSo5flushEv
+      - index: 3
+        event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+      - index: 4
+        event_abi: _ZNSo9_M_insertImEERSoT_
+      - index: 5
+        event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+      - index: 6
+        event_abi: indirect-call
+      points:
+      - events: 3
+        invoke: true
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 3
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 6
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 9
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 12
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 15
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 18
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 21
+          source_sites: [12]
+        other_uncovered_calls:
+          _ZNSo3putEc: 9
+          indirect-call: 18
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        characterization_sha256: 8c0b49fc0eda09014a9a5fabfa556acaeda754235fc49cf1ae14a16a39707541
+      - events: 3
+        invoke: false
+        other_uncovered_calls:
+          _ZNSo3putEc: 9
+          indirect-call: 18
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 0
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 0
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 0
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 0
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 0
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 0
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 0
+          source_sites: [12]
+        characterization_sha256: 90c0b51092defaf5797564b3bec10c3fce77e46a5cf88063fedbd8ffa1c5d3f8
+      - events: 5
+        invoke: true
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 5
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 10
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 15
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 20
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 25
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 30
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 35
+          source_sites: [12]
+        other_uncovered_calls:
+          _ZNSo3putEc: 15
+          indirect-call: 30
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        characterization_sha256: 31ed539bb8416495977a0f3c708951d3645336306309e377f91f6f595ea87aa2
+      - events: 5
+        invoke: false
+        other_uncovered_calls:
+          _ZNSo3putEc: 15
+          indirect-call: 30
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 0
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 0
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 0
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 0
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 0
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 0
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 0
+          source_sites: [12]
+        characterization_sha256: 22bf316971ed8b16ab51fdf19bc4088241854632b6a7e1b726e2c52ac0b28ab2
+      source_sha256: 62770adae5e9f8794c8d16b0469dfc90c2b3ada1d1feea30f069c0638521a14c
+      count_driver_sha256: 0047ff8fc0a3d971510c1b1c7c74dbbb57c363e9336b12a52f4a8e8fc000005e
+      plugin_source_sha256: 3ccefd011f2d155832b7188b341c3f64a610cfc3c696b825afed01fd5c0a029f
+      runtime_source_sha256: 43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e
+  trials:
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.6412954199999148
+    driver_seconds: 0.07911179300002386
+    order: service_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.6401460119998917
+    driver_seconds: 0.07918231200002683
+    order: driver_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.6408960689999469
+    driver_seconds: 0.07946343900007351
+    order: service_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.6412346199998593
+    driver_seconds: 0.07920844600004627
+    order: driver_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.644574554999939
+    driver_seconds: 0.07896552500003787
+    order: service_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.6403393179998477
+    driver_seconds: 0.07917490200004809
+    order: driver_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.6437436709998514
+    driver_seconds: 0.07952997400002366
+    order: service_first
+    checksum: 0
+  seconds_per_event:
+    values: [8.377188846467301e-09, 8.359010517595186e-09, 8.365998119113943e-09, 8.374842613932684e-09,
+      8.428231328724342e-09, 8.362001419064397e-09, 8.407439246771152e-09]
+    median: 8.374842613932684e-09
+    min: 8.359010517595186e-09
+    max: 8.428231328724342e-09
+    spread: 6.92208111291557e-11
+    repetitions: 7
+  missing: []
+  parameter:
+    value: 8.374842613932684e-09
+    basis: measured
+    source: Service calibration mbit10.cpu.lanl20261006.service.library-call.a1; library.ostream_put;
+      paired elapsed/work trials.
+    unit: seconds/call
+- id: library.ostream_flush
+  unit: seconds/call
+  event_definition: One ostream::flush after a one-byte put (non-empty buffer, one write(2) to a regular
+    file); driver does the put only. Cost depends on where stdout goes; measured to a file like the timed
+    run.
+  scope:
+    event_abi: _ZNSo5flushEv
+    worker_scope: serial
+    transfer_basis: inferred
+    cache_state: steady_repeated_calls
+    stdout_sink: regular_file
+    stream: std::cout, sync_with_stdio(true), stdout reopened onto a regular file (fully buffered), flushed
+      and truncated between untimed batches
+    pending_bytes: 1
+  denominator:
+    level: selected_source_normalized_event
+    basis: measured
+    proof:
+      format: swdb.cpu-library-call-count-proof.v1
+      pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      coefficients: op k runs (k + 1) * events iterations in the count driver; one selected event per
+        iteration
+      cells:
+      - index: 0
+        event_abi: strlen
+      - index: 1
+        event_abi: _ZNSo3putEc
+      - index: 2
+        event_abi: _ZNSo5flushEv
+      - index: 3
+        event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+      - index: 4
+        event_abi: _ZNSo9_M_insertImEERSoT_
+      - index: 5
+        event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+      - index: 6
+        event_abi: indirect-call
+      points:
+      - events: 3
+        invoke: true
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 3
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 6
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 9
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 12
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 15
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 18
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 21
+          source_sites: [12]
+        other_uncovered_calls:
+          _ZNSo3putEc: 9
+          indirect-call: 18
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        characterization_sha256: 8c0b49fc0eda09014a9a5fabfa556acaeda754235fc49cf1ae14a16a39707541
+      - events: 3
+        invoke: false
+        other_uncovered_calls:
+          _ZNSo3putEc: 9
+          indirect-call: 18
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 0
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 0
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 0
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 0
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 0
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 0
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 0
+          source_sites: [12]
+        characterization_sha256: 90c0b51092defaf5797564b3bec10c3fce77e46a5cf88063fedbd8ffa1c5d3f8
+      - events: 5
+        invoke: true
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 5
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 10
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 15
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 20
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 25
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 30
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 35
+          source_sites: [12]
+        other_uncovered_calls:
+          _ZNSo3putEc: 15
+          indirect-call: 30
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        characterization_sha256: 31ed539bb8416495977a0f3c708951d3645336306309e377f91f6f595ea87aa2
+      - events: 5
+        invoke: false
+        other_uncovered_calls:
+          _ZNSo3putEc: 15
+          indirect-call: 30
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 0
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 0
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 0
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 0
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 0
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 0
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 0
+          source_sites: [12]
+        characterization_sha256: 22bf316971ed8b16ab51fdf19bc4088241854632b6a7e1b726e2c52ac0b28ab2
+      source_sha256: 62770adae5e9f8794c8d16b0469dfc90c2b3ada1d1feea30f069c0638521a14c
+      count_driver_sha256: 0047ff8fc0a3d971510c1b1c7c74dbbb57c363e9336b12a52f4a8e8fc000005e
+      plugin_source_sha256: 3ccefd011f2d155832b7188b341c3f64a610cfc3c696b825afed01fd5c0a029f
+      runtime_source_sha256: 43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e
+  trials:
+  - events: 8388608
+    batch_events: 1024
+    batches: 8192
+    gross_seconds: 12.061161151000041
+    driver_seconds: 0.07761913600000493
+    order: service_first
+    checksum: 0
+  - events: 8388608
+    batch_events: 1024
+    batches: 8192
+    gross_seconds: 12.045445589000021
+    driver_seconds: 0.07789762300000569
+    order: driver_first
+    checksum: 0
+  - events: 8388608
+    batch_events: 1024
+    batches: 8192
+    gross_seconds: 12.04817698100001
+    driver_seconds: 0.07785093999999715
+    order: service_first
+    checksum: 0
+  - events: 8388608
+    batch_events: 1024
+    batches: 8192
+    gross_seconds: 11.99972114299997
+    driver_seconds: 0.07798404400000167
+    order: driver_first
+    checksum: 0
+  - events: 8388608
+    batch_events: 1024
+    batches: 8192
+    gross_seconds: 12.081614017000009
+    driver_seconds: 0.07790246599999706
+    order: service_first
+    checksum: 0
+  - events: 8388608
+    batch_events: 1024
+    batches: 8192
+    gross_seconds: 12.055134853999927
+    driver_seconds: 0.08255965700000545
+    order: driver_first
+    checksum: 0
+  - events: 8388608
+    batch_events: 1024
+    batches: 8192
+    gross_seconds: 12.066345955000033
+    driver_seconds: 0.07776367300000335
+    order: service_first
+    checksum: 0
+  seconds_per_event:
+    values: [1.428549529910092e-06, 1.426642890691759e-06, 1.4269740630388275e-06, 1.4211818097829782e-06,
+      1.4309539259672178e-06, 1.4272421833276655e-06, 1.4291503765583074e-06]
+    median: 1.4272421833276655e-06
+    min: 1.4211818097829782e-06
+    max: 1.4309539259672178e-06
+    spread: 9.77211618423958e-09
+    repetitions: 7
+  missing: []
+  parameter:
+    value: 1.4272421833276655e-06
+    basis: measured
+    source: Service calibration mbit10.cpu.lanl20261006.service.library-call.a1; library.ostream_flush;
+      paired elapsed/work trials.
+    unit: seconds/call
+- id: library.ostream_insert
+  unit: seconds/call
+  event_definition: One __ostream_insert of a constructed 16-byte string into the buffered stdout file;
+    driver skips it.
+  scope:
+    event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+    worker_scope: serial
+    transfer_basis: inferred
+    cache_state: steady_repeated_calls
+    stdout_sink: regular_file
+    stream: std::cout, sync_with_stdio(true), stdout reopened onto a regular file (fully buffered), flushed
+      and truncated between untimed batches
+    length_bytes: 16
+    length_transfer: inferred; application lengths unknown
+  denominator:
+    level: selected_source_normalized_event
+    basis: measured
+    proof:
+      format: swdb.cpu-library-call-count-proof.v1
+      pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      coefficients: op k runs (k + 1) * events iterations in the count driver; one selected event per
+        iteration
+      cells:
+      - index: 0
+        event_abi: strlen
+      - index: 1
+        event_abi: _ZNSo3putEc
+      - index: 2
+        event_abi: _ZNSo5flushEv
+      - index: 3
+        event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+      - index: 4
+        event_abi: _ZNSo9_M_insertImEERSoT_
+      - index: 5
+        event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+      - index: 6
+        event_abi: indirect-call
+      points:
+      - events: 3
+        invoke: true
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 3
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 6
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 9
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 12
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 15
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 18
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 21
+          source_sites: [12]
+        other_uncovered_calls:
+          _ZNSo3putEc: 9
+          indirect-call: 18
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        characterization_sha256: 8c0b49fc0eda09014a9a5fabfa556acaeda754235fc49cf1ae14a16a39707541
+      - events: 3
+        invoke: false
+        other_uncovered_calls:
+          _ZNSo3putEc: 9
+          indirect-call: 18
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 0
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 0
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 0
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 0
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 0
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 0
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 0
+          source_sites: [12]
+        characterization_sha256: 90c0b51092defaf5797564b3bec10c3fce77e46a5cf88063fedbd8ffa1c5d3f8
+      - events: 5
+        invoke: true
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 5
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 10
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 15
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 20
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 25
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 30
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 35
+          source_sites: [12]
+        other_uncovered_calls:
+          _ZNSo3putEc: 15
+          indirect-call: 30
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        characterization_sha256: 31ed539bb8416495977a0f3c708951d3645336306309e377f91f6f595ea87aa2
+      - events: 5
+        invoke: false
+        other_uncovered_calls:
+          _ZNSo3putEc: 15
+          indirect-call: 30
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 0
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 0
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 0
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 0
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 0
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 0
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 0
+          source_sites: [12]
+        characterization_sha256: 22bf316971ed8b16ab51fdf19bc4088241854632b6a7e1b726e2c52ac0b28ab2
+      source_sha256: 62770adae5e9f8794c8d16b0469dfc90c2b3ada1d1feea30f069c0638521a14c
+      count_driver_sha256: 0047ff8fc0a3d971510c1b1c7c74dbbb57c363e9336b12a52f4a8e8fc000005e
+      plugin_source_sha256: 3ccefd011f2d155832b7188b341c3f64a610cfc3c696b825afed01fd5c0a029f
+      runtime_source_sha256: 43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e
+  trials:
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 1.6474427009999972
+    driver_seconds: 0.09826352400008091
+    order: service_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 1.6805101469999906
+    driver_seconds: 0.09867326800008587
+    order: driver_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 1.6532694370000027
+    driver_seconds: 0.09818401000008505
+    order: service_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 1.6436530660000084
+    driver_seconds: 0.09836626700005431
+    order: driver_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 1.6865659759999685
+    driver_seconds: 0.09817990700008078
+    order: service_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 1.6560492929999886
+    driver_seconds: 0.0983403910000713
+    order: driver_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 1.654158965000022
+    driver_seconds: 0.09832794400008628
+    order: service_first
+    checksum: 0
+  seconds_per_event:
+    values: [2.3084568634628003e-08, 2.357120631635047e-08, 2.3172578617929186e-08, 2.302656768262318e-08,
+      2.366879685222935e-08, 2.321167144179221e-08, 2.3183688834308617e-08]
+    median: 2.3183688834308617e-08
+    min: 2.302656768262318e-08
+    max: 2.366879685222935e-08
+    spread: 6.422291696061719e-10
+    repetitions: 7
+  missing: []
+  parameter:
+    value: 2.3183688834308617e-08
+    basis: measured
+    source: Service calibration mbit10.cpu.lanl20261006.service.library-call.a1; library.ostream_insert;
+      paired elapsed/work trials.
+    unit: seconds/call
+- id: library.ostream_insert_unsigned_long
+  unit: seconds/call
+  event_definition: One operator<<(unsigned long) (_M_insert<unsigned long>) of a 7-digit value into the
+    buffered stdout file; driver skips it.
+  scope:
+    event_abi: _ZNSo9_M_insertImEERSoT_
+    worker_scope: serial
+    transfer_basis: inferred
+    cache_state: steady_repeated_calls
+    stdout_sink: regular_file
+    stream: std::cout, sync_with_stdio(true), stdout reopened onto a regular file (fully buffered), flushed
+      and truncated between untimed batches
+    digits: 7
+  denominator:
+    level: selected_source_normalized_event
+    basis: measured
+    proof:
+      format: swdb.cpu-library-call-count-proof.v1
+      pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      coefficients: op k runs (k + 1) * events iterations in the count driver; one selected event per
+        iteration
+      cells:
+      - index: 0
+        event_abi: strlen
+      - index: 1
+        event_abi: _ZNSo3putEc
+      - index: 2
+        event_abi: _ZNSo5flushEv
+      - index: 3
+        event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+      - index: 4
+        event_abi: _ZNSo9_M_insertImEERSoT_
+      - index: 5
+        event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+      - index: 6
+        event_abi: indirect-call
+      points:
+      - events: 3
+        invoke: true
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 3
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 6
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 9
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 12
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 15
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 18
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 21
+          source_sites: [12]
+        other_uncovered_calls:
+          _ZNSo3putEc: 9
+          indirect-call: 18
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        characterization_sha256: 8c0b49fc0eda09014a9a5fabfa556acaeda754235fc49cf1ae14a16a39707541
+      - events: 3
+        invoke: false
+        other_uncovered_calls:
+          _ZNSo3putEc: 9
+          indirect-call: 18
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 0
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 0
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 0
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 0
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 0
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 0
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 0
+          source_sites: [12]
+        characterization_sha256: 90c0b51092defaf5797564b3bec10c3fce77e46a5cf88063fedbd8ffa1c5d3f8
+      - events: 5
+        invoke: true
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 5
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 10
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 15
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 20
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 25
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 30
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 35
+          source_sites: [12]
+        other_uncovered_calls:
+          _ZNSo3putEc: 15
+          indirect-call: 30
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        characterization_sha256: 31ed539bb8416495977a0f3c708951d3645336306309e377f91f6f595ea87aa2
+      - events: 5
+        invoke: false
+        other_uncovered_calls:
+          _ZNSo3putEc: 15
+          indirect-call: 30
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 0
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 0
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 0
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 0
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 0
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 0
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 0
+          source_sites: [12]
+        characterization_sha256: 22bf316971ed8b16ab51fdf19bc4088241854632b6a7e1b726e2c52ac0b28ab2
+      source_sha256: 62770adae5e9f8794c8d16b0469dfc90c2b3ada1d1feea30f069c0638521a14c
+      count_driver_sha256: 0047ff8fc0a3d971510c1b1c7c74dbbb57c363e9336b12a52f4a8e8fc000005e
+      plugin_source_sha256: 3ccefd011f2d155832b7188b341c3f64a610cfc3c696b825afed01fd5c0a029f
+      runtime_source_sha256: 43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e
+  trials:
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 2.2380975930000275
+    driver_seconds: 0.07923170400001212
+    order: service_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 2.2564553920000203
+    driver_seconds: 0.07934673600002853
+    order: driver_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 2.239705900999992
+    driver_seconds: 0.07925713200001895
+    order: service_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 2.263879030000033
+    driver_seconds: 0.08105604699993081
+    order: driver_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 2.2581273710000236
+    driver_seconds: 0.07909436400002352
+    order: service_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 2.257643671000029
+    driver_seconds: 0.07922205800001998
+    order: driver_first
+    checksum: 0
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 2.246666671000032
+    driver_seconds: 0.07917200300002732
+    order: service_first
+    checksum: 0
+  seconds_per_event:
+    values: [3.216960860788845e-08, 3.24414470195769e-08, 3.219319535791833e-08, 3.25265971273199e-08,
+      3.247012208402157e-08, 3.246101160347475e-08, 3.229818743467338e-08]
+    median: 3.24414470195769e-08
+    min: 3.216960860788845e-08
+    max: 3.25265971273199e-08
+    spread: 3.569885194314511e-10
+    repetitions: 7
+  missing: []
+  parameter:
+    value: 3.24414470195769e-08
+    basis: measured
+    source: Service calibration mbit10.cpu.lanl20261006.service.library-call.a1; library.ostream_insert_unsigned_long;
+      paired elapsed/work trials.
+    unit: seconds/call
+- id: library.ctype_widen_init
+  unit: seconds/call
+  event_definition: One uncached ctype<char>::_M_widen_init (cache flag cleared each iteration) plus its
+    virtual do_widen; the driver makes one virtual do_widen(range) without it, so the dispatch is not
+    in this rate.
+  scope:
+    event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+    worker_scope: serial
+    transfer_basis: inferred
+    cache_state: steady_repeated_calls
+    stdout_sink: regular_file
+    stream: std::cout, sync_with_stdio(true), stdout reopened onto a regular file (fully buffered), flushed
+      and truncated between untimed batches
+    facet_state: uncached each iteration; the application calls it once (first call), so warm-cache and
+      first-call state differ (inferred)
+  denominator:
+    level: selected_source_normalized_event
+    basis: measured
+    proof:
+      format: swdb.cpu-library-call-count-proof.v1
+      pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      coefficients: op k runs (k + 1) * events iterations in the count driver; one selected event per
+        iteration
+      cells:
+      - index: 0
+        event_abi: strlen
+      - index: 1
+        event_abi: _ZNSo3putEc
+      - index: 2
+        event_abi: _ZNSo5flushEv
+      - index: 3
+        event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+      - index: 4
+        event_abi: _ZNSo9_M_insertImEERSoT_
+      - index: 5
+        event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+      - index: 6
+        event_abi: indirect-call
+      points:
+      - events: 3
+        invoke: true
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 3
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 6
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 9
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 12
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 15
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 18
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 21
+          source_sites: [12]
+        other_uncovered_calls:
+          _ZNSo3putEc: 9
+          indirect-call: 18
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        characterization_sha256: 8c0b49fc0eda09014a9a5fabfa556acaeda754235fc49cf1ae14a16a39707541
+      - events: 3
+        invoke: false
+        other_uncovered_calls:
+          _ZNSo3putEc: 9
+          indirect-call: 18
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 0
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 0
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 0
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 0
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 0
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 0
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 0
+          source_sites: [12]
+        characterization_sha256: 90c0b51092defaf5797564b3bec10c3fce77e46a5cf88063fedbd8ffa1c5d3f8
+      - events: 5
+        invoke: true
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 5
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 10
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 15
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 20
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 25
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 30
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 35
+          source_sites: [12]
+        other_uncovered_calls:
+          _ZNSo3putEc: 15
+          indirect-call: 30
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        characterization_sha256: 31ed539bb8416495977a0f3c708951d3645336306309e377f91f6f595ea87aa2
+      - events: 5
+        invoke: false
+        other_uncovered_calls:
+          _ZNSo3putEc: 15
+          indirect-call: 30
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 0
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 0
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 0
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 0
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 0
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 0
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 0
+          source_sites: [12]
+        characterization_sha256: 22bf316971ed8b16ab51fdf19bc4088241854632b6a7e1b726e2c52ac0b28ab2
+      source_sha256: 62770adae5e9f8794c8d16b0469dfc90c2b3ada1d1feea30f069c0638521a14c
+      count_driver_sha256: 0047ff8fc0a3d971510c1b1c7c74dbbb57c363e9336b12a52f4a8e8fc000005e
+      plugin_source_sha256: 3ccefd011f2d155832b7188b341c3f64a610cfc3c696b825afed01fd5c0a029f
+      runtime_source_sha256: 43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e
+  trials:
+  - events: 16777216
+    batch_events: 1024
+    batches: 16384
+    gross_seconds: 0.9100421239999978
+    driver_seconds: 0.08242571399997801
+    order: service_first
+    checksum: 0
+  - events: 16777216
+    batch_events: 1024
+    batches: 16384
+    gross_seconds: 0.9127131900000014
+    driver_seconds: 0.08271321999999334
+    order: driver_first
+    checksum: 0
+  - events: 16777216
+    batch_events: 1024
+    batches: 16384
+    gross_seconds: 0.9068310010000002
+    driver_seconds: 0.08237214599998353
+    order: service_first
+    checksum: 0
+  - events: 16777216
+    batch_events: 1024
+    batches: 16384
+    gross_seconds: 0.9081905760000056
+    driver_seconds: 0.08270077499998636
+    order: driver_first
+    checksum: 0
+  - events: 16777216
+    batch_events: 1024
+    batches: 16384
+    gross_seconds: 0.9084028019999969
+    driver_seconds: 0.08238580199998215
+    order: service_first
+    checksum: 0
+  - events: 16777216
+    batch_events: 1024
+    batches: 16384
+    gross_seconds: 0.9062626230000023
+    driver_seconds: 0.0826949489999882
+    order: driver_first
+    checksum: 0
+  - events: 16777216
+    batch_events: 1024
+    batches: 16384
+    gross_seconds: 0.908467972000001
+    driver_seconds: 0.08241794999998041
+    order: service_first
+    checksum: 0
+  seconds_per_event:
+    values: [4.932978212833523e-08, 4.9471853375435354e-08, 4.914157718420128e-08, 4.920302635431404e-08,
+      4.923444986343472e-08, 4.908845865726555e-08, 4.9236418128014835e-08]
+    median: 4.923444986343472e-08
+    min: 4.908845865726555e-08
+    max: 4.9471853375435354e-08
+    spread: 3.833947181698056e-10
+    repetitions: 7
+  missing: []
+  parameter:
+    value: 4.923444986343472e-08
+    basis: measured
+    source: Service calibration mbit10.cpu.lanl20261006.service.library-call.a1; library.ctype_widen_init;
+      paired elapsed/work trials.
+    unit: seconds/call
+- id: library.indirect_call
+  unit: seconds/call
+  event_definition: 'Call overhead only: one indirect call to a counted, trivially small callee; the driver
+    inlines the same body, so the callee work stays where it is defined.'
+  scope:
+    event_abi: indirect-call
+    worker_scope: serial
+    transfer_basis: inferred
+    cache_state: steady_repeated_calls
+    stdout_sink: regular_file
+    stream: std::cout, sync_with_stdio(true), stdout reopened onto a regular file (fully buffered), flushed
+      and truncated between untimed batches
+    callee: counted trivially small body; the scalar selector prices every executed indirect site
+  denominator:
+    level: selected_source_normalized_event
+    basis: measured
+    proof:
+      format: swdb.cpu-library-call-count-proof.v1
+      pipeline:
+        version: source-normalized-v2
+        passes:
+        - function(sroa,mem2reg),cgscc(inline),function(loop-simplify)
+      coefficients: op k runs (k + 1) * events iterations in the count driver; one selected event per
+        iteration
+      cells:
+      - index: 0
+        event_abi: strlen
+      - index: 1
+        event_abi: _ZNSo3putEc
+      - index: 2
+        event_abi: _ZNSo5flushEv
+      - index: 3
+        event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+      - index: 4
+        event_abi: _ZNSo9_M_insertImEERSoT_
+      - index: 5
+        event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+      - index: 6
+        event_abi: indirect-call
+      points:
+      - events: 3
+        invoke: true
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 3
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 6
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 9
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 12
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 15
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 18
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 21
+          source_sites: [12]
+        other_uncovered_calls:
+          _ZNSo3putEc: 9
+          indirect-call: 18
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        characterization_sha256: 8c0b49fc0eda09014a9a5fabfa556acaeda754235fc49cf1ae14a16a39707541
+      - events: 3
+        invoke: false
+        other_uncovered_calls:
+          _ZNSo3putEc: 9
+          indirect-call: 18
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 0
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 0
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 0
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 0
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 0
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 0
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 0
+          source_sites: [12]
+        characterization_sha256: 90c0b51092defaf5797564b3bec10c3fce77e46a5cf88063fedbd8ffa1c5d3f8
+      - events: 5
+        invoke: true
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 5
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 10
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 15
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 20
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 25
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 30
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 35
+          source_sites: [12]
+        other_uncovered_calls:
+          _ZNSo3putEc: 15
+          indirect-call: 30
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        characterization_sha256: 31ed539bb8416495977a0f3c708951d3645336306309e377f91f6f595ea87aa2
+      - events: 5
+        invoke: false
+        other_uncovered_calls:
+          _ZNSo3putEc: 15
+          indirect-call: 30
+          llvm.memcpy.p0.p0.i64: 0
+          _ZNKSt5ctypeIcE13_M_widen_initEv: 0
+        cells:
+        - index: 0
+          event_abi: strlen
+          executions: 0
+          source_sites: [0]
+        - index: 1
+          event_abi: _ZNSo3putEc
+          executions: 0
+          source_sites: [1]
+        - index: 2
+          event_abi: _ZNSo5flushEv
+          executions: 0
+          source_sites: [3]
+        - index: 3
+          event_abi: _ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l
+          executions: 0
+          source_sites: [4]
+        - index: 4
+          event_abi: _ZNSo9_M_insertImEERSoT_
+          executions: 0
+          source_sites: [5]
+        - index: 5
+          event_abi: _ZNKSt5ctypeIcE13_M_widen_initEv
+          executions: 0
+          source_sites: [6]
+        - index: 6
+          event_abi: indirect-call
+          executions: 0
+          source_sites: [12]
+        characterization_sha256: 22bf316971ed8b16ab51fdf19bc4088241854632b6a7e1b726e2c52ac0b28ab2
+      source_sha256: 62770adae5e9f8794c8d16b0469dfc90c2b3ada1d1feea30f069c0638521a14c
+      count_driver_sha256: 0047ff8fc0a3d971510c1b1c7c74dbbb57c363e9336b12a52f4a8e8fc000005e
+      plugin_source_sha256: 3ccefd011f2d155832b7188b341c3f64a610cfc3c696b825afed01fd5c0a029f
+      runtime_source_sha256: 43762b5079564a7f2fbc930befbdde85a5498ca82b635e82f5cc0476ffa9099e
+  trials:
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.15601670600003567
+    driver_seconds: 0.11721252000010932
+    order: service_first
+    checksum: 2048
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.15620431099988002
+    driver_seconds: 0.11816603500009659
+    order: driver_first
+    checksum: 2048
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.15596594300004543
+    driver_seconds: 0.11727132300009693
+    order: service_first
+    checksum: 2048
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.15588935400002013
+    driver_seconds: 0.11734117800010406
+    order: driver_first
+    checksum: 2048
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.15606755600000144
+    driver_seconds: 0.11724439300010545
+    order: service_first
+    checksum: 2048
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.15603002400004923
+    driver_seconds: 0.11780410700010893
+    order: driver_first
+    checksum: 2048
+  - events: 67108864
+    batch_events: 1024
+    batches: 65536
+    gross_seconds: 0.1561230800000137
+    driver_seconds: 0.11723962900010827
+    order: service_first
+    checksum: 2048
+  seconds_per_event:
+    values: [5.782274305809491e-10, 5.668144822088396e-10, 5.76594769953914e-10, 5.744125843035589e-10,
+      5.785102099164723e-10, 5.696105509987518e-10, 5.794085711226677e-10]
+    median: 5.76594769953914e-10
+    min: 5.668144822088396e-10
+    max: 5.794085711226677e-10
+    spread: 1.2594088913828182e-11
+    repetitions: 7
+  missing: []
+  parameter:
+    value: 5.76594769953914e-10
+    basis: measured
+    source: Service calibration mbit10.cpu.lanl20261006.service.library-call.a1; library.indirect_call;
+      paired elapsed/work trials.
+    unit: seconds/call
+identity_sha256: e4675540bdbccd8bf5b8f5e568c7e80a1a2eb26d64e195dd73b1e876bbd6777f

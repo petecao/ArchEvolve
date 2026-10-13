@@ -4,7 +4,7 @@ import json
 import yaml
 
 from conftest import run_swdb
-from testkit.cpu_service import fixture_receipt, save_receipt, bind
+from testkit.cpu_service import fixture_receipt, save_receipt, bind, allocator_v2_estimate
 from testkit.analytic import target_description, fixture_characterization, digest
 
 
@@ -25,6 +25,9 @@ def test_binding_pins_typed_receipt_and_preserves_original_target(records,tmp_pa
     assert outcome.returncode==0,outcome.stderr+outcome.stdout
     data=json.loads(outcome.stdout)
     assert data['calibration_sources']==['fixture.clock.cost','fixture.counts']
+    # No memory cells: streaming_bandwidth stays an estimate mechanism, so nothing is floor-only.
+    assert [m['model'] for m in data['mechanisms']][:2]==['compute_throughput','streaming_bandwidth']
+    assert 'resource_floor_mechanisms' not in data
     model=data['mechanisms'][-1]
     assert model['model']=='native_service_costs' and model['parameters']['service_0']['value']==.1
     assert model['parameters']['service_0']['basis']=='reported'
@@ -127,5 +130,70 @@ def test_extensa_tagged_native_service_record_never_enters_team_binding(records,
     records.write('cpu_service_calibrations/fixture.research.service.yaml',data)
     result=bind(records,'--target-description','fixture.cpu.base','--characterization','fixture.counts',
         '--calibration',data['id'],'--id','fixture.cpu.research.mixed','--fixture')
-    assert result.returncode!=0 and 'Extensa research evidence' in result.stderr
+    assert result.returncode!=0 and 'Extensa campaign' in result.stderr and 'never enter team' in result.stderr
     assert not (records.path/'target_descriptions/fixture.cpu.research.mixed.yaml').exists()
+
+
+def test_memory_cells_move_the_measured_bandwidth_rate_to_the_floor_only_carrier(records,tmp_path):
+    # C11 (cpu-description ticket 03, 2026-10-12 ET): memory cells supersede streaming_bandwidth as an
+    # estimate mechanism; its rate is kept, pinned to its source, for the attribution resource floor only.
+    # Review F6 (2026-10-12 ET): `carried_from.calibrations` pins only the base calibration that
+    # produced `bytes_per_s` (the CPU calibration whose receipt the rate's source names), not every
+    # base calibration source. Here the base also lists an unrelated service calibration.
+    from conftest import REPO
+    from test_cpu_memory_service_binding import setup,run_bind
+    setup(records,tmp_path)
+    producer='mbit10.cpu.lanl20261006a2.v2.calibration.t1'
+    cpu=yaml.safe_load((REPO/'records/cpu_calibrations'/f'{producer}.yaml').read_text())
+    records.write(f'cpu_calibrations/{producer}.yaml',cpu)
+    records.copy_repo('machines')
+    source=f"CPU calibration {cpu['receipt_sha256']}; threads=1; useful source-element bytes"
+    base=records.read('target_descriptions/fixture.memory.base.yaml')
+    base['calibration_sources']=[producer,'fixture.memory.costs']
+    bandwidth=next(m for m in base['mechanisms'] if m['model']=='streaming_bandwidth')
+    bandwidth['parameters']['bytes_per_s']['source']=source
+    records.write('target_descriptions/fixture.memory.base.yaml',base)
+    outcome=run_bind(records,'--target-description','fixture.memory.base','--characterization','fixture.counts',
+        '--calibration','fixture.memory.costs','--memory-footprint-bytes','8388608',
+        '--memory-cas-policy','max_constructed_success_failure_median','--id','fixture.memory.floor','--fixture')
+    assert outcome.returncode==0,outcome.stderr+outcome.stdout
+    target=json.loads(outcome.stdout)
+    assert all(m['model']!='streaming_bandwidth' for m in target['mechanisms'])
+    rate={'value':32.0,'basis':'reported','source':source,'unit':'bytes/s'}
+    assert target['resource_floor_mechanisms']==[{'model':'streaming_bandwidth','parameters':{'bytes_per_s':rate},
+        'carried_from':{'description':{'id':'fixture.memory.base','sha256':digest(base)},
+                        'calibrations':[{'id':producer,'sha256':digest(cpu)}]}}]
+    assert records.validate().returncode==0
+
+
+def test_the_committed_services_v2_floor_only_carrier_is_what_the_binder_still_produces():
+    # Review F6 (2026-10-12 ET): pinning only the producer must not change the committed services.v2.
+    from conftest import REPO
+    from swdb import yamlio
+    from swdb.cpu_service_binding import _floor_only_bandwidth
+    v2=yamlio.load(REPO/'records/target_descriptions/mbit10.cpu.lanl20261006.t1.services.v2.yaml')
+    base_id=v2['resource_floor_mechanisms'][0]['carried_from']['description']['id']
+    base=yamlio.load(REPO/'records/target_descriptions'/f'{base_id}.yaml')
+    calibrations={c:yamlio.load(REPO/'records/cpu_calibrations'/f'{c}.yaml') for c in base['calibration_sources']}
+
+    class Store:
+        get=staticmethod(calibrations.get)
+    assert _floor_only_bandwidth(Store,base)==v2['resource_floor_mechanisms']
+
+
+# Allocator v2 (2026-10-12 ET, cpu-description ticket 04): malloc and exact large bins.
+def test_malloc_and_16_mib_array_bins_bind_beside_v1_cells_and_price_exact_sizes(records,tmp_path):
+    import pytest
+    bound,resource=allocator_v2_estimate(records,tmp_path,[(64,2)])
+    calls={c['name']:sorted(b['bytes'] for b in c['bins']) for c in bound['mechanisms'][-1]['selector']['calls']}
+    assert calls=={'_Znam':[65536,16777216],'malloc':[64],'_ZdaPv':[16777216]}
+    # malloc 2 x .2 s + new[] (.4 s at 16 MiB + .2 s at 64 KiB) + delete[] .1 s at 16 MiB.
+    assert resource['seconds']==pytest.approx(1.1)
+    assert sorted(c['site'] for c in resource['inputs']['covered_calls'])==[29,30,31]
+    assert records.validate().returncode==0
+
+
+def test_an_allocator_size_without_an_exact_bin_stays_unknown(records,tmp_path):
+    _,resource=allocator_v2_estimate(records,tmp_path,[(64,1),(128,1)])
+    assert resource['seconds'] is None
+    assert 'call_shape.cost.malloc.128' in resource['missing']

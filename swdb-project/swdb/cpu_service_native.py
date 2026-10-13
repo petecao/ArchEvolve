@@ -67,16 +67,19 @@ def validate(raw):
     if raw.get('settings', {}).get('group') == 'bulk_total_v2':
         from swdb.cpu_bulk_total_calibration import validate
         return validate(raw)
-    if raw.get('settings', {}).get('group') == 'openmp_v1':
+    if raw.get('settings', {}).get('group') in ('openmp_v1', 'openmp_v2'):
         from swdb.cpu_openmp_calibration import validate
         return validate(raw)
     if raw.get('settings', {}).get('group') == 'bulk_v1':
         from swdb.cpu_bulk_calibration import validate
         return validate(raw)
-    if raw.get('settings', {}).get('group') == 'memory_v1':
+    if raw.get('settings', {}).get('group') in ('memory_v1', 'memory_v2'):
         from swdb.cpu_memory_calibration import validate
         return validate(raw)
-    if raw.get('settings', {}).get('group') == 'allocator_v1':
+    if raw.get('settings', {}).get('group') == 'library_call_v1':
+        from swdb.cpu_library_call_calibration import validate
+        return validate(raw)
+    if raw.get('settings', {}).get('group') in ('allocator_v1', 'allocator_v2'):
         from swdb.cpu_allocator_calibration import validate
         return validate(raw)
     context, settings = raw['context'], raw['settings']

@@ -1,6 +1,6 @@
 # Analytic estimator: portable inputs and source counts
 
-Updated: 2026-10-09 (Eastern Time): code review of tickets 04, 05 and 14. See
+Updated: 2026-10-12 ET (`resource_floor_mechanisms`, cpu-description ticket 03); 2026-10-09 (Eastern Time): code review of tickets 04, 05 and 14. See
 [Code review corrections](#code-review-corrections-2026-10-09-et) for what changed.
 
 `swdb characterize` compiles a buildable C/C++ translation unit, analyzes its LLVM IR,
@@ -162,6 +162,15 @@ counted work is never free. A non-stream access stays unknown in the streaming m
 a latency/cache mechanism must cover it before the overall time can be claimed. The
 first slice models useful element bytes, not cache-line bus traffic, write allocation,
 reordering, cache residency or accelerator timing. Those need additional mechanism models.
+
+**Floor-only rates** (2026-10-12 ET, cpu-description ticket 03). An optional
+`resource_floor_mechanisms` list holds rates that the estimator never reads; only the
+attribution resource floor reads them. Adding one never changes an estimate's seconds.
+Each item has the mechanism shape (`model`, `parameters`); `model` is
+`streaming_bandwidth` only. An optional `carried_from` pins where the rate came from:
+`description` and `calibrations`, each `{id, sha256}`. The CPU service binder writes it
+when memory service cells supersede the base's `streaming_bandwidth`
+([cpu-service-calibration.md](cpu-service-calibration.md)).
 
 ## Estimates and composition
 

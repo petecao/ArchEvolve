@@ -1,10 +1,10 @@
 # Spec: CPU target description that can price the t75 BFS pair
 
 Created: 2026-10-12 00:42 ET
-Updated: 2026-10-12 00:55 ET (aligned with the fine-grained final fixes F40–F47 at `1aa8feeb`:
+Updated: 2026-10-13 02:20 ET (closed; see map.md). Earlier: 2026-10-12 00:55 ET (aligned with the fine-grained final fixes F40–F47 at `1aa8feeb`:
 memmove bins, OpenMP projection group, source-0 later-date timing, split rule v2)
 **Type:** spec
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** None
 Owner: Yan-Ru Jhou
 Builds on: the fine-grained attribution effort (`.scratch/fine-grained-attribution-2026-10-11/`,

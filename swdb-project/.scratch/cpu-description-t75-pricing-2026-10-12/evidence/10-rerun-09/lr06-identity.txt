@@ -1,0 +1,58 @@
+/usr/bin/lsof
+## identity 2026-10-13 01:47:14 ET
+/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/a2/baseline-counted files=13 bytes=15978104 manifest_en_US=6a73000552ddb612b1b02aa3de3ab91b40d70872ddb105e46ca8f626daabe133 manifest_C=6a73000552ddb612b1b02aa3de3ab91b40d70872ddb105e46ca8f626daabe133
+    d316000d74fa082abff1a97f30032814a3433cbf2fdf50466cfea15144a59ec8  ./Characterize.so
+    2e57e59e0ce992f2f8af87989744ad950da36eac5d6ae78c957fbc6ec4ffc8dc  ./counted
+    f5a72cf4b1cf4d40f3fa1412632cbdad236972f98f478da7e1296ef47cb37d77  ./counts.json
+    4976414537e04583c0e810e4160eca7fee7ca31d927e075119016182155fcc3f  ./instrumented.bc
+    b92cf339d91bb7afff27bd304d29d3a70f722a0efdaefe827cdd4e4540ab45d9  ./llvm-sha256.o
+    4d90c1c453ff1dcd2d06ef207d315465bf6863a2f2cbae2887cc770fa2e1605f  ./normalized.bc
+    14fa43732161b692b4b4417754bb3b138b506eeaf4f6978aa5452aa5b013fc5e  ./optimized.bc
+    16bd95926e8a5877520360c13eee4b9d9780548f411751cf1e3795dd29b45724  ./optimized.json
+    31a3fe540b840ad217f42b9467c6f26fa5f7d2ff7d98aaead86616b1cdc78370  ./regions.json
+    0037603246d482274ccfb9637a938ddb91fb7b74d40d72102627d1d04910e7f3  ./source.bc
+    9bc1ad7f0a6110308624dbeecb738e33e3c154dd107aefdd04e2c9b2d4355b93  ./source.json
+    e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./stderr.txt
+    3fe8e96fd3e9f625ff2e27d100d7d0d339f99c53082e37f2a61cc64a16cf9559  ./stdout.txt
+/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/a2/candidate-counted files=13 bytes=16103834 manifest_en_US=5e3789357eedd9595c45190f90d43d68c629f44937364360a07f8664257d1201 manifest_C=5e3789357eedd9595c45190f90d43d68c629f44937364360a07f8664257d1201
+    d316000d74fa082abff1a97f30032814a3433cbf2fdf50466cfea15144a59ec8  ./Characterize.so
+    b297cc60fa8ccf818d271880dacd41d6d1328c7cfb05887a7336d678470fb2d6  ./counted
+    fd8b34dd6fbbe304c64f0e6b3e413ce9d7fc69e338e5d4858d6352e2c5e400d5  ./counts.json
+    d532381fedff62f377a720c6278de4d5eea2fc954ca6f91fa9421b3f60a578f0  ./instrumented.bc
+    b92cf339d91bb7afff27bd304d29d3a70f722a0efdaefe827cdd4e4540ab45d9  ./llvm-sha256.o
+    f56aebc81d6b053cdb9934f355f29d9f7f173f9809101cb5cef21b1bb51f6f29  ./normalized.bc
+    39f244739dbd63ed5ed15b042d81b9a4605820a4e4d8778db4b5d3881309cb68  ./optimized.bc
+    cdbf1f57f1753658bfdb57723569cfa02af5c54c6b114a9b268cb95ee5a49b6d  ./optimized.json
+    31a3fe540b840ad217f42b9467c6f26fa5f7d2ff7d98aaead86616b1cdc78370  ./regions.json
+    f4ebc0196634c3b5b1a080ec2dd0117e3ee8b64cd00d61bdfadf5ce510c4c66c  ./source.bc
+    e2e2faa84fe75ac023dd3b85d9afb3122424590b6a4cba27734ba5598964c78a  ./source.json
+    e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./stderr.txt
+    3fe8e96fd3e9f625ff2e27d100d7d0d339f99c53082e37f2a61cc64a16cf9559  ./stdout.txt
+/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/a2/swdb-protected-cpu-wrapper-8yok3jhh files=4 bytes=16815389 manifest_en_US=7a16e1d3534de88ec110f21eedc79c4b752e0372b1ad8720f9a668e8ac00ca69 manifest_C=e147fcd32397d3308b5188817c88174e5f1d1040cf8a524350a4d810388a6939
+    da20a6ccbe8a746a221c2141232a333ccbf1eaecb8ec1aa36eadfd472252dee7  ./bfs-verify
+    774076703585934c4637f8d5e9e09064693033ca0fb6f06bc19b1d7852c8fa07  ./counted-result.json
+    1ce9371be951f759addac5d834f494ff84c877b8c44c47fee1998a3fa70cbe99  ./counted.parents.i32
+    424a4896f97863b1e7afc82f086aab209b955fe09c4db2b18138455c0c43f08c  ./counting_driver.cc
+/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/a2/swdb-protected-cpu-wrapper-bjvc5lh_ files=4 bytes=16815409 manifest_en_US=6dc0b113b8ba4a285475efb35a4588f61da5e312a1925dd1b967dd780bb51029 manifest_C=3267f6f5c2e44ae9008a942bbee016350ed631af31ecdd59469dbbfc56c3cd51
+    da20a6ccbe8a746a221c2141232a333ccbf1eaecb8ec1aa36eadfd472252dee7  ./bfs-verify
+    bfc810ea2e108c6b343a25cf75a759b5c20e6ce3720ec645b94761b563b71c6d  ./counted-result.json
+    1ce9371be951f759addac5d834f494ff84c877b8c44c47fee1998a3fa70cbe99  ./counted.parents.i32
+    d3a7d731f6589e41c47c04ec03c6857567e7fad38867eaa9df43a2693806fd21  ./counting_driver.cc
+/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1 total files=59 bytes=65738321
+/data/yanruj/EvolveSWDB_runs/cpud10-20261013-a1 files=10 bytes=1243024478 manifest_C=31aaa4d5e1962d3455ced78f10ab20df57e82019dc07bd1fdc2a6cdf57e7b4f8
+/data/yanruj/EvolveSWDB_runs/cpud10-20261013-a2 files=1201 bytes=1792159659 manifest_C=fefa1b3a2a241b2d1d7f1fe6452608a795db9dc36f5385b9c98db98903e3ffa9
+/data/yanruj/EvolveSWDB_runs/cpud10-precheck-20261012 files=16 bytes=389931 manifest_C=9e610038742f1762e8f7a16dd9ca7d6507fd9839957e4a07b67be0078c155a5e
+/data1/yanruj/EvolveSWDB_builds/cpud10.t75-baseline.uniform22.t1.s0.evaluation.a1 files=3 bytes=150197 manifest_C=062520489128221104519eeb5a859301b627ea5cfb4415c181162c7ef4de4221
+/data1/yanruj/EvolveSWDB_builds/cpud10.t75-baseline.uniform22.t1.s0.profile.a1 files=5 bytes=164079 manifest_C=96ae57d084e0a807863e02f7e720832fe29fe2ffaf28e18aa86a5d8fbdca879d
+/data1/yanruj/EvolveSWDB_builds/cpud10.t75-candidate.uniform22.t1.s0.evaluation.a1 files=3 bytes=150217 manifest_C=11c24d0743f74feca94762e12c1762dc486835f605d98535ce9843f0513dd2f8
+/data1/yanruj/EvolveSWDB_builds/cpud10.t75-candidate.uniform22.t1.s0.profile.a1 files=5 bytes=169486 manifest_C=8c8d7c65509d98abe38baf3ea6853b41e36c5d74306df2a0ad3bd5205611e468
+## no-use check 2026-10-13 01:47:18 ET
+leases: "state":"released" "state":"released" "state":"held" 
+/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1 open_files=0 processes_naming_path=0
+/data/yanruj/EvolveSWDB_runs/cpud10-20261013-a1 open_files=0 processes_naming_path=0
+/data/yanruj/EvolveSWDB_runs/cpud10-20261013-a2 open_files=0 processes_naming_path=0
+/data/yanruj/EvolveSWDB_runs/cpud10-precheck-20261012 open_files=0 processes_naming_path=0
+/data1/yanruj/EvolveSWDB_builds/cpud10.t75-baseline.uniform22.t1.s0.evaluation.a1 open_files=0 processes_naming_path=0
+/data1/yanruj/EvolveSWDB_builds/cpud10.t75-baseline.uniform22.t1.s0.profile.a1 open_files=0 processes_naming_path=0
+/data1/yanruj/EvolveSWDB_builds/cpud10.t75-candidate.uniform22.t1.s0.evaluation.a1 open_files=0 processes_naming_path=0
+/data1/yanruj/EvolveSWDB_builds/cpud10.t75-candidate.uniform22.t1.s0.profile.a1 open_files=0 processes_naming_path=0

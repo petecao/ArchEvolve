@@ -3,6 +3,13 @@
 Updated: 2026-10-03. Diagnostic artifacts never replace primary native ROI timing.
 2026-10-03 ET (ticket 38): the trusted driver, trial check and per-line function
 come from the primary evaluation's kernel plug-in (BFS unchanged).
+2026-10-12 ET (cpud ticket 10): region timing of a scalable (v2/v3) evaluation. The region
+binary is built from the evaluation's own SG driver template with the evaluation's toolchain
+flags and runtime library paths; each execution reads the registered SG file and is checked
+by the scalable trial-record check and the compiled verifier. Memory collection stays v1-only.
+2026-10-13 ET (code review): a scalable profile requires the primary's driver template and
+verifier identity, re-hashes the SG input before each verification and keeps parent vectors
+gzip-deduplicated as the primary does; every diagnostic binary links like the primary.
 """
 import copy
 import itertools
@@ -17,6 +24,7 @@ import uuid
 from pathlib import Path
 
 from swdb import artifacts, bfs_discovery, bfs_native as native, db, kernels, paths, profile, workflow
+from swdb import bfs_native_scalable as scalable
 from swdb import callgrind_lines
 from swdb.cli import Failure, _require_valid
 
@@ -98,10 +106,23 @@ def _discovery_settings(request, compiler, flags, includes, macro_log):
         found = sorted(parent.glob("*")) if parent.is_dir() else []
         if found: resource = str(found[-1])
     arguments = [f for f in flags if f != "-fopenmp"] + [f"-I{p}" for p in includes]
+    macros = macro_log.read_text()
+    openmp = re.search(r"^#define _OPENMP (\d+)$", macros, re.M)
+    # 2026-10-12 ET (cpud ticket 10): Clang's omp.h (the resource slot below) defines
+    # omp_is_initial_device twice inside `#pragma omp begin declare variant` blocks when
+    # _OPENMP >= 201811. With OpenMP parsing disabled those pragmas are ignored, so the two
+    # static definitions collide with omp.h's own extern declaration and discovery fails. A
+    # parser-only shim lowers _OPENMP while omp.h alone is read; the source keeps the actual
+    # compiler's value. Builds never see the shim. GCC's 201511 never needs it.
+    if openmp and int(openmp.group(1)) >= 201811:
+        shim = macro_log.parent / bfs_discovery.OMP_SHIM_DIRECTORY
+        shim.mkdir(exist_ok=True)
+        (shim / "omp.h").write_text(bfs_discovery.OMP_PARSER_SHIM)
+        arguments += ["-isystem", str(shim)]
     # A standalone libclang distribution need not find the GCC C++ standard
     # library chosen by the real compiler. Preserve its reported search paths
     # explicitly rather than silently discovering against another standard library.
-    search = re.search(r"#include <\.\.\.> search starts here:\n(.*?)End of search list\.", macro_log.read_text(), re.S)
+    search = re.search(r"#include <\.\.\.> search starts here:\n(.*?)End of search list\.", macros, re.S)
     if search:
         seen_headers = set()
         for line in search.group(1).splitlines():
@@ -118,12 +139,10 @@ def _discovery_settings(request, compiler, flags, includes, macro_log):
                 arguments += ["-iframework" if framework else "-isystem", entry]
     # CIndex suppresses OpenMP captured loop bodies. Keep exact feature-selection
     # macro from the actual compiler while disabling only the metadata parser.
-    macro = re.search(r"^#define _OPENMP (\d+)$", macro_log.read_text(), re.M)
-    if macro: arguments.append("-D_OPENMP=" + macro.group(1))
+    if openmp: arguments.append("-D_OPENMP=" + openmp.group(1))
     # GCC accepts a prefix __restrict__ qualifier that Clang rejects as a
     # qualification of the pointee. Inventory control-flow/source extents only;
     # do not infer alias semantics from this metadata-only parser adaptation.
-    macros = macro_log.read_text()
     if re.search(r"^#define __GNUC__ ", macros, re.M) and not re.search(r"^#define __clang__ ", macros, re.M):
         arguments.append("-D__restrict__=")
     arguments += ["-fno-openmp", "-Wno-unknown-pragmas"]
@@ -151,6 +170,74 @@ def _trial_output(output, graph, source, threads, plugin=None, application=None)
     return {"correctness": check, "output_sha256": digest, "diagnostic_wall_seconds": duration}
 
 
+def _select_libraries(env, libraries):
+    """The primary build's runtime library directories in both loader variables, as the primary
+    evaluation sets them (code review 2026-10-13 ET)."""
+    for name in ("LD_LIBRARY_PATH", "DYLD_LIBRARY_PATH"):
+        if libraries:
+            env[name] = os.pathsep.join(libraries + ([env[name]] if env.get(name) else []))
+
+
+def _primary_link(build):
+    """The primary build's toolchain selection and runtime library link flags (code review
+    2026-10-13 ET): every diagnostic binary links like the primary; empty when it selected none."""
+    libraries = list(build.get("run_library_paths") or [])
+    return [*(build.get("toolchain_flags") or []),
+            *(flag for directory in libraries for flag in ("-L" + directory, "-Wl,-rpath," + directory))]
+
+
+def _check_scalable_primary(evaluation, driver_template):
+    """A scalable profile times the primary's own driver template and checks each run with the
+    primary's compiled verifier (code review 2026-10-13 ET)."""
+    if artifacts.file_hash(driver_template) != evaluation["build"].get("template_sha256"):
+        raise Failure("scalable driver template changed since the primary evaluation")
+    recorded = evaluation["build"].get("verifier") or {}
+    if any(value != recorded.get(key) for key, value in scalable.verifier_identity().items()):
+        raise Failure("compiled verifier source or flags changed since the primary evaluation")
+
+
+def _build_verifier(session, build_folder, budget):
+    """Build the compiled verifier; its identity is taken before the build, as the primary does."""
+    identity = scalable.verifier_identity()
+    binary = build_folder / "bfs-verify"
+    command = scalable.build_command(binary)
+    session.execute("verifier_build", command, min(300, budget["build_seconds"]))
+    if not binary.is_file() or artifacts.file_hash(scalable.VERIFIER_SOURCE) != identity["source_sha256"]:
+        raise Failure("compiled verifier build failed or its source changed")
+    return {**identity, "compiler": command[0], "command": command,
+            "binary": str(binary), "binary_sha256": artifacts.file_hash(binary)}
+
+
+def _scalable_trial_output(output, parents, graph_input, source, threads, vertices, evaluator, verifier, timeout,
+                           retained, plugin=None):
+    """One region execution of a scalable evaluation, checked as the primary evaluation checks a trial.
+
+    The parent vector is kept as the primary keeps it: gzip, one copy per distinct vector
+    (``retained``: raw sha256 -> kept copy)."""
+    plugin = plugin or kernels.BFS
+    value, digest = native.json_observation(output, scalable.TRIAL_RECORD_LIMIT, "diagnostic trial record")
+    problem = scalable.check_trial_record(value, source, threads, plugin.native_roi, vertices, evaluator)
+    if problem: raise native.StageFailure(*problem)
+    duration = value.get("duration_s")
+    if isinstance(duration, bool) or not isinstance(duration, (float, int)) or not math.isfinite(duration) or duration <= 0:
+        raise native.StageFailure("missing_observation", "diagnostic duration missing or invalid")
+    if not parents.is_file() or parents.is_symlink():
+        raise native.StageFailure("missing_observation", "diagnostic parent vector missing or unsafe")
+    parents_hash = artifacts.file_hash(parents)
+    if artifacts.file_hash(graph_input["path"]) != graph_input["sha256"]:
+        raise Failure("registered SG input changed before verification")
+    if artifacts.file_hash(verifier["binary"]) != verifier["binary_sha256"]:
+        raise Failure("compiled verifier changed after build")
+    check = scalable.run_verifier(verifier["binary"], graph_input, source, parents, timeout)
+    if artifacts.file_hash(parents) != parents_hash:
+        raise Failure("diagnostic parent vector changed during verification")
+    if not check["passed"]: raise native.StageFailure("incorrect", check["reason"])
+    check.update(parents_sha256=parents_hash, verifier=scalable.VERIFIER_V2)
+    kept, _, kept_hash = scalable.compress_parents(parents, retained)
+    return {"correctness": check, "output_sha256": digest, "diagnostic_wall_seconds": duration,
+            "parents_output": str(kept), "parents_sha256": parents_hash, "parents_gzip_sha256": kept_hash}
+
+
 def _region_observations(path, regions):
     value, digest = native.json_observation(path, len(regions)*256+4096, "region counter output")
     if (value.get("format") != "swdb.bfs.regions.v1" or value.get("clock") != "CLOCK_THREAD_CPUTIME_ID"
@@ -168,9 +255,9 @@ def _region_observations(path, regions):
     return rows, digest
 
 
-def _wrapper(source, prefix, start, end, after, plugin=None):
+def _wrapper(source, prefix, start, end, after, plugin=None, driver=None):
     plugin = plugin or kernels.BFS
-    template = Path(plugin.native_driver).read_text()
+    template = Path(driver or plugin.native_driver).read_text()
     template = prefix + "\n" + template.replace("#include SWDB_SOURCE_INCLUDE", "#include " + json.dumps(str(source)))
     anchor = plugin.driver_call_anchor
     template = template.replace(anchor, start + "\n        " + anchor)
@@ -221,9 +308,19 @@ def run(args):
             raise Failure("profiling requires a complete independently checked native evaluation")
         if evaluation["evidence_kind"] != "execution":
             raise Failure("contract-fixture timing cannot authorize an execution profile")
-        plugin = kernels.by_native_verifier(evaluation["context"].get("verifier"))
+        evaluator = evaluation["context"].get("evaluator")
+        sg = scalable.is_scalable(evaluator)      # v2/v3: registered SG input and compiled verifier
+        plugin = kernels.BFS if sg else kernels.by_native_verifier(evaluation["context"].get("verifier"))
+        driver_template = scalable.driver_for(evaluator) if sg else plugin.native_driver
+        if sg:
+            _check_scalable_primary(evaluation, driver_template)
         env, actual_runtime = native.runtime_environment(evaluation["context"]["threads"],
             evaluation.get("build", {}).get("native_runtime"), required=True)
+        # The primary build's toolchain selection (e.g. LLVM 22 --gcc-install-dir) and runtime
+        # library paths; empty for evaluations that selected none, so v1 builds are unchanged.
+        toolchain = list(evaluation.get("build", {}).get("toolchain_flags") or [])
+        libraries = list(evaluation.get("build", {}).get("run_library_paths") or [])
+        _select_libraries(env, libraries)
         for key in ("candidate", "source_snapshot", "implementation", "machine"):
             data[key] = evaluation[key]
         data["evaluation"] = evaluation["id"]
@@ -234,7 +331,7 @@ def run(args):
         artifacts.check_protections(root, candidate["protections"])
         native._protect_driver_macros(candidate, root, extra_text=RUNTIME.read_text() +
             "\n#include <valgrind/callgrind.h>\nCALLGRIND_START_INSTRUMENTATION CALLGRIND_STOP_INSTRUMENTATION CALLGRIND_ZERO_STATS CALLGRIND_DUMP_STATS",
-            driver=plugin.native_driver)
+            driver=driver_template)
         machine = store.get(data["machine"], "machine")
         host = socket.gethostname().split(".")[0]
         if artifacts.digest(machine) != evaluation["context"]["machine_sha256"]:
@@ -260,6 +357,8 @@ def run(args):
             raise Failure("per_line must be boolean")
         if request.get("per_line") and request.get("memory") is False:
             raise Failure("per_line requires memory collection")
+        if sg and request.get("memory", True):
+            raise Failure("scalable evaluations support region timing only; set memory: false")
         folder = artifacts.external_directory(args.runs_dir) / rid
         if host == "mbit10" and not any(base in folder.parents for base in (Path("/data1/yanruj"), Path("/data/yanruj"))):
             raise Failure("mbit10 raw artifacts require /data1/yanruj or /data/yanruj")
@@ -283,19 +382,27 @@ def run(args):
             session.save()
         if candidate["artifact"]["sha256"] != evaluation["context"]["candidate_sha256"]:
             raise Failure("evaluation source identity differs from candidate artifact")
-        graph_path = Path(evaluation["context"]["workload"]["canonical_path"])
-        if artifacts.file_hash(graph_path) != evaluation["context"]["workload"]["canonical_file_sha256"]:
-            raise Failure("evaluation canonical graph changed")
-        graph, facts = native.read_canonical_graph(graph_path)
-        if facts["canonical_sha256"] != evaluation["context"]["workload"]["canonical_sha256"]:
-            raise Failure("canonical graph identity differs")
+        if sg:
+            graph_input = evaluation["context"]["workload"]["graph_input"]
+            graph_path, graph_sha256 = Path(graph_input["path"]), graph_input["sha256"]
+            if artifacts.file_hash(graph_path) != graph_sha256:
+                raise Failure("registered SG input changed since the primary evaluation")
+            graph = {"num_vertices": evaluation["context"]["workload"]["num_vertices"]}
+        else:
+            graph_path = Path(evaluation["context"]["workload"]["canonical_path"])
+            graph_sha256 = evaluation["context"]["workload"]["canonical_file_sha256"]
+            if artifacts.file_hash(graph_path) != graph_sha256:
+                raise Failure("evaluation canonical graph changed")
+            graph, facts = native.read_canonical_graph(graph_path)
+            if facts["canonical_sha256"] != evaluation["context"]["workload"]["canonical_sha256"]:
+                raise Failure("canonical graph identity differs")
         compiler, flags, includes, source, adapter = native._compile_settings(evaluation["request"], candidate, root, plugin)
         if compiler != evaluation["build"]["compiler"] or flags != evaluation["build"]["flags"]:
             raise Failure("diagnostic build compiler/settings differ from resolved primary build")
         version = session.execute("compiler_identity", [compiler, "--version"], 30)
         if version.read_text(errors="replace").splitlines()[:2] != evaluation["build"]["compiler_version"]:
             raise Failure("compiler version changed since primary evaluation")
-        macro = session.execute("preprocessor_identity", [compiler, *flags, "-dM", "-E", "-v", "-x", "c++", "/dev/null"], 30)
+        macro = session.execute("preprocessor_identity", [compiler, *flags, *toolchain, "-dM", "-E", "-v", "-x", "c++", "/dev/null"], 30)
         library, arguments = _discovery_settings(request, compiler, flags, includes, macro)
         discovery_request = folder / "discovery-request.json"
         discovery_request.write_text(json.dumps({"source": str(source), "arguments": arguments, "library": str(library),
@@ -316,14 +423,22 @@ def run(args):
         runtime.write_bytes(RUNTIME.read_bytes())
         prefix = f'#define SWDB_REGION_COUNT {len(rows)}\n#include ' + json.dumps(str(runtime))
         driver = build_folder / "regions_driver.cc"
+        trial_argument = 4 if sg else 3      # the driver argument naming the trial output
         driver.write_text(_wrapper(diagnostic_source, prefix, "::swdb_profile::start();", "::swdb_profile::stop();",
-            '::swdb_profile::write((std::string(argv[3]) + ".regions.json").c_str());', plugin))
+            f'::swdb_profile::write((std::string(argv[{trial_argument}]) + ".regions.json").c_str());', plugin, driver_template))
         binary = build_folder / f"{plugin.binary_stem}-regions"
-        command = [compiler, *flags, *(f"-I{p}" for p in includes), str(driver), "-o", str(binary)]
+        command = [compiler, *flags, *(f"-I{p}" for p in includes), str(driver), "-o", str(binary), *_primary_link(evaluation["build"])]
         data["build"] = {"directory": str(build_folder), "compiler": compiler, "compiler_version": evaluation["build"]["compiler_version"], "flags": flags,
             "command": command, "wrapper_sha256": artifacts.file_hash(driver), "runtime_sha256": artifacts.file_hash(runtime),
             "instrumented_source_sha256": artifacts.file_hash(diagnostic_source), "native_runtime": actual_runtime}
+        if toolchain or libraries:
+            data["build"].update(toolchain_flags=toolchain, run_library_paths=libraries)
+        if sg:
+            data["build"]["driver_template_sha256"] = artifacts.file_hash(driver_template)
         session.execute("region_build", command, budget["build_seconds"])
+        verifier = _build_verifier(session, build_folder, budget) if sg else None
+        if verifier: data["build"]["verifier"] = verifier
+        retained_parents = {}
         binary_hash = artifacts.file_hash(binary)
         data["artifacts"] = {"primary_binary_sha256": evaluation["build"]["binary_sha256"],
             "region_binary": {"path": str(binary), "sha256": binary_hash, "difference": "automatic source scope guards; original build flags retained"}}
@@ -345,10 +460,17 @@ def run(args):
         for repetition in range(repetitions):
             for position, source_id in enumerate(evaluation["context"]["sources"]):
                 output = folder / f"regions-{repetition}-{position}.json"
-                if artifacts.file_hash(binary) != binary_hash or artifacts.file_hash(graph_path) != evaluation["context"]["workload"]["canonical_file_sha256"]:
+                if artifacts.file_hash(binary) != binary_hash or artifacts.file_hash(graph_path) != graph_sha256:
                     raise Failure("diagnostic binary or graph changed")
-                session.execute("region_execution", [str(binary), str(graph_path), str(source_id), str(output)], budget["run_seconds"], env)
-                check = _trial_output(output, graph, source_id, threads, plugin, data["context"].get("application"))
+                if sg:
+                    parents = folder / f"regions-{repetition}-{position}.parents.i32"
+                    session.execute("region_execution", [str(binary), str(graph_path), str(graph_input["offset_bytes"]),
+                                    str(source_id), str(output), str(parents)], budget["run_seconds"], env)
+                    check = _scalable_trial_output(output, parents, graph_input, source_id, threads, graph["num_vertices"],
+                        evaluator, verifier, max(1.0, min(budget["run_seconds"] * 5, session.remaining())), retained_parents, plugin)
+                else:
+                    session.execute("region_execution", [str(binary), str(graph_path), str(source_id), str(output)], budget["run_seconds"], env)
+                    check = _trial_output(output, graph, source_id, threads, plugin, data["context"].get("application"))
                 counters, counter_hash = _region_observations(Path(str(output)+".regions.json"), rows)
                 for row, observed in zip(rows, counters):
                     row["metrics"]["inclusive_thread_cpu_seconds"] += observed["inclusive_ns"] / 1e9
@@ -423,10 +545,10 @@ def _memory(session, data, request, source, includes, compiler, flags, graph_pat
     binary = build_folder / f"{plugin.binary_stem}-memory"
     memory_flags = list(flags)
     if "-g" not in memory_flags: memory_flags.append("-g")
-    command = [compiler, *memory_flags, *(f"-I{p}" for p in includes), str(driver), "-o", str(binary)]
+    command = [compiler, *memory_flags, *(f"-I{p}" for p in includes), str(driver), "-o", str(binary), *_primary_link(data["build"])]
     session.execute("memory_build", command, budget["build_seconds"])
     binary_hash = artifacts.file_hash(binary)
-    data["artifacts"]["memory_binary"] = {"path": str(binary), "sha256": binary_hash, "flags": memory_flags,
+    data["artifacts"]["memory_binary"] = {"path": str(binary), "sha256": binary_hash, "flags": memory_flags, "command": command,
         "wrapper_sha256": artifacts.file_hash(driver), "difference": "original candidate source; client ROI guards and debug info, no region guards"}
     for repetition, (position, source_id) in itertools.product(
             range(data["context"]["repetitions"]), enumerate(data["context"]["sources"])):
@@ -509,11 +631,11 @@ def _per_line_memory(session, data, source, includes, compiler, flags,
     driver.write_text(_wrapper(source_file, "#include <valgrind/callgrind.h>",
         "CALLGRIND_START_INSTRUMENTATION;", "CALLGRIND_DUMP_STATS; CALLGRIND_STOP_INSTRUMENTATION;", "", plugin))
     binary = build / f"{stem}-statements"
-    command = [compiler, *flags, *(f"-I{p}" for p in includes), str(driver), "-o", str(binary)]
+    command = [compiler, *flags, *(f"-I{p}" for p in includes), str(driver), "-o", str(binary), *_primary_link(data["build"])]
     session.execute("statement_memory_build", command, budget["build_seconds"])
     binary_hash = artifacts.file_hash(binary)
     data["artifacts"]["statement_binary"] = {"path": str(binary), "sha256": binary_hash,
-        "flags": flags, "wrapper_sha256": artifacts.file_hash(driver),
+        "flags": flags, "command": command, "wrapper_sha256": artifacts.file_hash(driver),
         "instrumented_source_sha256": artifacts.file_hash(source_file),
         "difference": f"debug info; original debug line map; {function} noinline; one complete-call instrumentation interval"}
     line_collector = {**collector, "initial_state": f"empty model caches at the complete {name} call boundary",

@@ -1,9 +1,11 @@
-"""Exact outcome-free ABI projection and typed probe binding.2026-10-06 ET."""
+"""Exact outcome-free ABI projection and typed probe binding.2026-10-06 ET; profile sets a1/a2 2026-10-12 ET."""
 import copy,math
 from swdb import access,artifacts
 from swdb.cli import Failure
 from swdb.cpu_service_calibration import identity
-from swdb.cpu_openmp_profiles import PROFILES
+from swdb.cpu_openmp_profiles import PROFILE_SETS
+
+PROFILES=PROFILE_SETS['a2']
 from swdb.analytic_cpu_openmp import ASSUMPTION,profile_indexes
 
 
@@ -45,12 +47,13 @@ def binding(args,target,char,scopes,cells):
         if missing:fact.update(value=None,basis='unknown')
         parameters[name]=fact;profiles[index]=name
         rows.append({'calibration':calibration['id'],'service':service['id'],'parameter':name,'missing':missing,'scopes':scope_rows})
-    if set(profiles)!=set(range(22)):raise Failure('OpenMP full22-class independent matrix required')
+    profile_set='a2' if len(PROFILE_SETS['a1']) in profiles else 'a1'
+    if set(profiles)!=set(range(len(PROFILE_SETS[profile_set]))):raise Failure('OpenMP full independent matrix required: all 22 a1 classes, plus class 22 for a2')
     selectors={}
     for selected in scopes:
         document=paired[selected['id']];sha=document['characterization']['sha256']
         for signature in document['calls']:
-            indexes=profile_indexes(signature)
+            indexes=profile_indexes(signature,PROFILE_SETS[profile_set])
             sources=[{'profile_index':index,'parameter':profiles[index]} for index in indexes]
             if len(indexes)==1:name=profiles[indexes[0]]
             else:
@@ -62,4 +65,4 @@ def binding(args,target,char,scopes,cells):
             item=selectors.setdefault(signature['name'],{'name':signature['name'],'unit':'seconds/call','scope_assumption':copy.deepcopy(ASSUMPTION),'abi_sites':[]})
             item['abi_sites'].append({'characterization_sha256':sha,'site':signature['site'],'region':signature['region'],
                 'profile_indexes':indexes,'parameter':name,'source_parameters':sources})
-    return selectors,parameters,rows,documents
+    return selectors,parameters,rows,documents,profile_set

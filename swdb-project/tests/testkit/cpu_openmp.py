@@ -1,13 +1,16 @@
-"""Synthetic OpenMP admission fixtures; never measurement evidence.2026-10-06 ET."""
+"""Synthetic OpenMP admission fixtures; never measurement evidence.2026-10-06 ET; a2 set 2026-10-12 ET."""
 import copy
-from swdb.cpu_openmp_profiles import PROFILES, STATE, PROBE, EVENT_CAP
+from swdb.cpu_openmp_profiles import PROFILE_SETS, GROUPS, STATE, PROBE, EVENT_CAP
 from swdb.cpu_service_calibration import identity
 from swdb.cpu_service_controls import SCOPE
 from swdb.cpu_openmp_calibration import SOURCES, OMP_SCOPE, REQUIRED
 from swdb.cpu_memory_calibration import PIPELINE, COUNT_CAP, TIMED_CAP
 
 
-def native_receipt():
+def native_receipt(profile_set='a1',measured=None):
+    """Receipt for one profile set; `measured` selects the timed class indexes (default: all)."""
+    PROFILES=PROFILE_SETS[profile_set]
+    measured=[p['index'] for p in PROFILES] if measured is None else measured
     calls=[]
     for profile in PROFILES:
         operands=[{'index':i,'kind':'pointer','bits':None,'state':'redacted','signed_decimal':None} for i in range(profile['argument_count'])]
@@ -25,7 +28,7 @@ def native_receipt():
             proof['points'].append({'events':n,'invoke':invoke,'characterization_sha256':'a'*64,'normalized_ir_sha256':'b'*64,'source_map_sha256':'c'*64,
                 'cells':[{'index':p['index'],'event_abi':p['name'],'executions':n if invoke else 0,'source_sites':[p['index']]} for p in PROFILES]})
     services=[]
-    for p in PROFILES:
+    for p in (PROFILES[i] for i in measured):
         services.append({'id':p['id'],'unit':'seconds/call','event_definition':'Synthetic exact event fixture only.',
             'scope':{'event_abi':p['name'],'worker_scope':'serial','openmp_regime':STATE,'abi_profile':copy.deepcopy(p),
                 'probe_kind':PROBE,'warm_sequences':16,'transfer_basis':'inferred','dynamic_bounds':'constructed0..31; application bounds unverified'},
@@ -42,8 +45,9 @@ def native_receipt():
             'control_environment_scope':copy.deepcopy(SCOPE),'control_environment':{key:None for key in SCOPE['exact_variables']},
             'openmp_environment_scope':copy.deepcopy(OMP_SCOPE),'openmp_environment':copy.deepcopy(REQUIRED),
             'optimized_work':{'ir_sha256':'a'*64,'retained_abis':sorted({p['name'] for p in PROFILES})}},
-        'settings':{'group':'openmp_v1','repetitions':7,'min_trial_s':.05,'max_wall_s':900,'event_cap':EVENT_CAP,
+        'settings':{'group':GROUPS[profile_set],'repetitions':7,'min_trial_s':.05,'max_wall_s':900,'event_cap':EVENT_CAP,
             'count_build_cap_bytes':COUNT_CAP,'timed_data_cap_bytes':TIMED_CAP,'requested_helper_payload_cap_bytes':4096},'services':services}
+    if profile_set!='a1':raw['settings']['measured_profiles']=list(measured)
     raw['context']['compiler_version']='clang version 22.1.8'
     raw['identity_sha256']=identity(raw)
     return raw

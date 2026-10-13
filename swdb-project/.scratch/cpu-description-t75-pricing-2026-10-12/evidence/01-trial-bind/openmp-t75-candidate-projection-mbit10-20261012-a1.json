@@ -1,0 +1,713 @@
+{
+  "all_source_json_sites_cross_checked": true,
+  "calls": [
+    {
+      "argument_count": 9,
+      "callee_parameter_count": 9,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiES5_R12SlidingQueueIiEii.omp_outlined",
+      "name": "__kmpc_for_static_init_8u",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        },
+        {
+          "bits": 32,
+          "index": 2,
+          "kind": "integer",
+          "signed_decimal": "34",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 5,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 6,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 64,
+          "index": 7,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        },
+        {
+          "bits": 64,
+          "index": 8,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        }
+      ],
+      "region": "extensa-native-bfs-20261005-a8.it1.kronecker.a0/serial.12991577463451192595",
+      "site": 84,
+      "source_location": {
+        "column": 1,
+        "line": 83,
+        "path": "/data/yanruj/EvolveSWDB_runs/extensa/extensa-native-bfs-20261005-a8/sources/extensa-native-bfs-20261005-a8.it1.kronecker.a0/source/benchmarks/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0
+      ]
+    },
+    {
+      "argument_count": 2,
+      "callee_parameter_count": 2,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z6TDStepRK8CSRGraphIiiLb1EER7pvectorIiES5_R12SlidingQueueIiEii.omp_outlined",
+      "name": "__kmpc_for_static_fini",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        }
+      ],
+      "region": "extensa-native-bfs-20261005-a8.it1.kronecker.a0/serial.12991577463451192595",
+      "site": 85,
+      "source_location": {
+        "column": 40,
+        "line": 83,
+        "path": "/data/yanruj/EvolveSWDB_runs/extensa/extensa-native-bfs-20261005-a8/sources/extensa-native-bfs-20261005-a8.it1.kronecker.a0/source/benchmarks/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0
+      ]
+    },
+    {
+      "argument_count": 9,
+      "callee_parameter_count": 9,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined",
+      "name": "__kmpc_for_static_init_4",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        },
+        {
+          "bits": 32,
+          "index": 2,
+          "kind": "integer",
+          "signed_decimal": "34",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 5,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 6,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 7,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        },
+        {
+          "bits": 32,
+          "index": 8,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        }
+      ],
+      "region": "extensa-native-bfs-20261005-a8.it1.kronecker.a0/serial.15390188451096923551",
+      "site": 128,
+      "source_location": {
+        "column": 1,
+        "line": 172,
+        "path": "/data/yanruj/EvolveSWDB_runs/extensa/extensa-native-bfs-20261005-a8/sources/extensa-native-bfs-20261005-a8.it1.kronecker.a0/source/benchmarks/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0
+      ]
+    },
+    {
+      "argument_count": 2,
+      "callee_parameter_count": 2,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z10InitParentRK8CSRGraphIiiLb1EE.omp_outlined",
+      "name": "__kmpc_for_static_fini",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        }
+      ],
+      "region": "extensa-native-bfs-20261005-a8.it1.kronecker.a0/serial.15390188451096923551",
+      "site": 129,
+      "source_location": {
+        "column": 25,
+        "line": 172,
+        "path": "/data/yanruj/EvolveSWDB_runs/extensa/extensa-native-bfs-20261005-a8/sources/extensa-native-bfs-20261005-a8.it1.kronecker.a0/source/benchmarks/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0
+      ]
+    },
+    {
+      "argument_count": 5,
+      "callee_parameter_count": 3,
+      "callee_variadic": true,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "2",
+        "state": "constant"
+      },
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+      "name": "__kmpc_fork_call",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": "2",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 2,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        }
+      ],
+      "region": "extensa-native-bfs-20261005-a8.it1.kronecker.a0/serial.995486541436624707",
+      "site": 151,
+      "source_location": {
+        "column": 1,
+        "line": 172,
+        "path": "/data/yanruj/EvolveSWDB_runs/extensa/extensa-native-bfs-20261005-a8/sources/extensa-native-bfs-20261005-a8.it1.kronecker.a0/source/benchmarks/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0
+      ]
+    },
+    {
+      "argument_count": 10,
+      "callee_parameter_count": 3,
+      "callee_variadic": true,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "2",
+        "state": "constant"
+      },
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+      "name": "__kmpc_fork_call",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": "7",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 2,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 5,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 6,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 7,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 8,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 9,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        }
+      ],
+      "region": "unmapped.extensa-native-bfs-20261005-a8.it1.kronecker.a0.DOBFS.207.0.995486541436624707",
+      "site": 178,
+      "source_location": {
+        "column": 1,
+        "line": 80,
+        "path": "/data/yanruj/EvolveSWDB_runs/extensa/extensa-native-bfs-20261005-a8/sources/extensa-native-bfs-20261005-a8.it1.kronecker.a0/source/benchmarks/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0
+      ]
+    },
+    {
+      "argument_count": 5,
+      "callee_parameter_count": 3,
+      "callee_variadic": true,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "2",
+        "state": "constant"
+      },
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii",
+      "name": "__kmpc_fork_call",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": "2",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 2,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        }
+      ],
+      "region": "extensa-native-bfs-20261005-a8.it1.kronecker.a0/serial.995486541436624707",
+      "site": 187,
+      "source_location": {
+        "column": 1,
+        "line": 217,
+        "path": "/data/yanruj/EvolveSWDB_runs/extensa/extensa-native-bfs-20261005-a8/sources/extensa-native-bfs-20261005-a8.it1.kronecker.a0/source/benchmarks/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0
+      ]
+    },
+    {
+      "argument_count": 9,
+      "callee_parameter_count": 9,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined",
+      "name": "__kmpc_for_static_init_4",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        },
+        {
+          "bits": 32,
+          "index": 2,
+          "kind": "integer",
+          "signed_decimal": "34",
+          "state": "constant"
+        },
+        {
+          "bits": null,
+          "index": 3,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 4,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 5,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": null,
+          "index": 6,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 7,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        },
+        {
+          "bits": 32,
+          "index": 8,
+          "kind": "integer",
+          "signed_decimal": "1",
+          "state": "constant"
+        }
+      ],
+      "region": "extensa-native-bfs-20261005-a8.it1.kronecker.a0/serial.9867237533740053636",
+      "site": 199,
+      "source_location": {
+        "column": 1,
+        "line": 217,
+        "path": "/data/yanruj/EvolveSWDB_runs/extensa/extensa-native-bfs-20261005-a8/sources/extensa-native-bfs-20261005-a8.it1.kronecker.a0/source/benchmarks/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0
+      ]
+    },
+    {
+      "argument_count": 2,
+      "callee_parameter_count": 2,
+      "callee_variadic": false,
+      "ident_flags": {
+        "basis": "code_reading",
+        "bits": 32,
+        "scope": "immutable direct ident_t initializer only; no runtime pointee read",
+        "signed_decimal": "514",
+        "state": "constant"
+      },
+      "llvm_function": "_Z5DOBFSRK8CSRGraphIiiLb1EEibii.omp_outlined",
+      "name": "__kmpc_for_static_fini",
+      "operands": [
+        {
+          "bits": null,
+          "index": 0,
+          "kind": "pointer",
+          "signed_decimal": null,
+          "state": "redacted"
+        },
+        {
+          "bits": 32,
+          "index": 1,
+          "kind": "integer",
+          "signed_decimal": null,
+          "state": "dynamic"
+        }
+      ],
+      "region": "extensa-native-bfs-20261005-a8.it1.kronecker.a0/serial.9867237533740053636",
+      "site": 200,
+      "source_location": {
+        "column": 25,
+        "line": 217,
+        "path": "/data/yanruj/EvolveSWDB_runs/extensa/extensa-native-bfs-20261005-a8/sources/extensa-native-bfs-20261005-a8.it1.kronecker.a0/source/benchmarks/gapbs/src/bfs.cc"
+      },
+      "execution_trial_positions": [
+        0
+      ]
+    }
+  ],
+  "enumerated_access_sites": 4671,
+  "enumerated_call_sites": 1530,
+  "source_ir_sha256": "f56aebc81d6b053cdb9934f355f29d9f7f173f9809101cb5cef21b1bb51f6f29",
+  "source_json_sha256": "e2e2faa84fe75ac023dd3b85d9afb3122424590b6a4cba27734ba5598964c78a",
+  "format": "swdb.openmp-call-projection.v1",
+  "updated": "2026-10-06 ET",
+  "basis": "code_reading",
+  "scope": "Exact-source static ABI facts for the all-trial executed-site union; no addresses, runtime internals, prewarm/residency state, timings or costs.",
+  "characterization": {
+    "id": "fga03.t75-candidate.uniform22.t1.characterization.a2",
+    "identity_sha256": "1227813b770ceb8866354675d33df699fbcdd455a2ec5feb8e790c0c1f994c86",
+    "sha256": "e9defe7093d5c4d4a73e5f4dc4bf8b27b27a20a5e75caa7b6439e498d3eae837",
+    "file_sha256": "acd8ec5513f5b88de3579a3481fc27d99e8fcb5499a15748580994c51c683066",
+    "execution_receipt_source_ir_sha256": "f56aebc81d6b053cdb9934f355f29d9f7f173f9809101cb5cef21b1bb51f6f29"
+  },
+  "receipt": {
+    "llvm_version": "22.1.8",
+    "compiler_version": "clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)\nTarget: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin",
+    "compiler_sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113",
+    "wrapper_argv": [
+      "/usr/bin/python3",
+      "/data1/yanruj/ArchEvolve-cpud01-trial-20261012/swdb-project/scripts/openmp_call_projection.py",
+      "--characterization",
+      "/data/yanruj/EvolveSWDB_runs/cpud01-trial-20261012-a1/projection-candidate/characterization.yaml",
+      "--source-ir",
+      "/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/a2/candidate-counted/normalized.bc",
+      "--source-map",
+      "/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/a2/candidate-counted/source.json",
+      "--llvm-bin",
+      "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin",
+      "--toolchain-flag=--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13",
+      "--timeout-s",
+      "180",
+      "--output-directory",
+      "/data/yanruj/EvolveSWDB_runs/cpud01-trial-20261012-a1/projection-candidate/projection"
+    ],
+    "compiler_argv": [
+      "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang++",
+      "--gcc-install-dir=/usr/lib/gcc/x86_64-linux-gnu/13",
+      "/data1/yanruj/ArchEvolve-cpud01-trial-20261012/swdb-project/swdb/llvm/OpenMPCallProjection.cpp",
+      "-I/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/include",
+      "-std=c++17",
+      "-D_GNU_SOURCE",
+      "-D_GLIBCXX_USE_CXX11_ABI=1",
+      "-D__STDC_CONSTANT_MACROS",
+      "-D__STDC_FORMAT_MACROS",
+      "-D__STDC_LIMIT_MACROS",
+      "-fno-exceptions",
+      "-fno-rtti",
+      "-L/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib",
+      "-lLLVMAnalysis",
+      "-lLLVMProfileData",
+      "-lLLVMSymbolize",
+      "-lLLVMDebugInfoBTF",
+      "-lLLVMDebugInfoPDB",
+      "-lLLVMDebugInfoMSF",
+      "-lLLVMDebugInfoCodeView",
+      "-lLLVMDebugInfoGSYM",
+      "-lLLVMDebugInfoDWARF",
+      "-lLLVMObject",
+      "-lLLVMTextAPI",
+      "-lLLVMMCParser",
+      "-lLLVMMC",
+      "-lLLVMDebugInfoDWARFLowLevel",
+      "-lLLVMFrontendHLSL",
+      "-lLLVMIRReader",
+      "-lLLVMBitReader",
+      "-lLLVMAsmParser",
+      "-lLLVMCore",
+      "-lLLVMRemarks",
+      "-lLLVMBitstreamReader",
+      "-lLLVMBinaryFormat",
+      "-lLLVMTargetParser",
+      "-lLLVMSupport",
+      "-lLLVMDemangle",
+      "-lrt",
+      "-ldl",
+      "-lm",
+      "-lz",
+      "/usr/lib/x86_64-linux-gnu/libzstd.a",
+      "-lxml2",
+      "-std=c++17",
+      "-O2",
+      "-o",
+      "/data/yanruj/EvolveSWDB_runs/cpud01-trial-20261012-a1/projection-candidate/projection/openmp-projector"
+    ],
+    "projection_argv": [
+      "/data/yanruj/EvolveSWDB_runs/cpud01-trial-20261012-a1/projection-candidate/projection/openmp-projector",
+      "/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/a2/candidate-counted/normalized.bc",
+      "/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/a2/candidate-counted/source.json",
+      "/data/yanruj/EvolveSWDB_runs/cpud01-trial-20261012-a1/projection-candidate/projection/static.json",
+      "84,85,128,129,151,178,187,199,200",
+      "f56aebc81d6b053cdb9934f355f29d9f7f173f9809101cb5cef21b1bb51f6f29"
+    ],
+    "projector_source_sha256": "db19854dadbf8979ce3934fe2e219af28863c126234717d66eeabfc625cbd193",
+    "projector_binary_sha256": "974ae0f52c471942a8a1b573b00940eb3005676639a7f9a1be60ee59e3a997db",
+    "wrapper_sha256": "3192ce0c6ca60cbc30d66afeee23b02ae1a0f3434b584310d954a1835f00f822",
+    "inputs_byte_identical_after_projection": true,
+    "application_execution": false,
+    "raw_ir_exported": false,
+    "characterization_runtime_validation": "Required separately before model admission; this proof adds only static ABI facts."
+  },
+  "identity_sha256": "dd58595c4fc7c5817d47f720099147f526378221be84b320f3acbeb9c675fd78"
+}

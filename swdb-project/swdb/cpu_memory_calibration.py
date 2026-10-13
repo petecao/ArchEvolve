@@ -1,4 +1,7 @@
-"""Independent conditional memory request cells. Created: 2026-10-06 ET."""
+"""Independent conditional memory request cells. Created: 2026-10-06 ET.
+
+Updated 2026-10-12 ET: group memory_v2 adds 1- and 2-byte resident writes; memory_v1 rules unchanged.
+"""
 import argparse
 import json
 import math
@@ -25,6 +28,17 @@ SOURCES=('CpuMemoryWork.h','CpuMemoryTimer.cpp','CpuMemoryCount.cpp')
 PIPELINE={'version':'source-normalized-v2','passes':['function(sroa,mem2reg),cgscc(inline),function(loop-simplify)']}
 COUNT_CAP,TIMED_CAP,EVENT_CAP=64*1024**2,25*1024**2,134217728
 PRIMITIVES=['volatile_read','volatile_write','seq_cst_add','seq_cst_compare_exchange']
+SMALL_REGIME,RESIDENT_REGIME='fixed_small_byte_read_constructed_requests','resident_serial_constructed_requests'
+# memory_v1: 1-byte reads only on the fixed 256 B ring. memory_v2: narrow writes only, so no
+# (operation, width) cell collides with a v1 cell when both receipts bind together.
+GROUPS={'memory_v1':{'operations':NAMES,'widths':(1,4,8),'function':'service_memory',
+            'retained':{'1':['volatile_read'],'4':PRIMITIVES,'8':PRIMITIVES}},
+        'memory_v2':{'operations':('write',),'widths':(1,2),'function':'service_store',
+            'retained':{'1':['volatile_write'],'2':['volatile_write']}}}
+
+
+def regime(operation,width):
+    return SMALL_REGIME if width==1 and operation=='read' else RESIDENT_REGIME
 
 
 def budget(output,*,addition=0,timed=True):
@@ -37,7 +51,7 @@ def budget(output,*,addition=0,timed=True):
     if build>COUNT_CAP or data>TIMED_CAP:raise Failure('memory count-build/timed-data budget exceeded; partial sealed artifacts retained')
 
 
-def proof(args,output,command,operations,widths):
+def proof(args,output,command,operations,widths,group='memory_v1'):
     store=Store(args.records);seeds=['gapbs-bfs-do','kron-g16-k16']
     if any(store.get(k) is None for k in seeds):raise Failure('memory count proof needs registered carrier/input')
     copied=output/'count-records';copied.mkdir()
@@ -52,7 +66,7 @@ def proof(args,output,command,operations,widths):
                 for n in (3,5):
                     key=f'{name}.{width}.{int(invoke)}.{n}'
                     argv=[sys.executable,'-m','swdb','characterize','--records',copied,'--source',output/SOURCES[2],
-                        '--implementation',seeds[0],'--input',seeds[1],'--function','service_memory'+str(width*8),'--threads','1',
+                        '--implementation',seeds[0],'--input',seeds[1],'--function',GROUPS[group]['function']+str(width*8),'--threads','1',
                         '--fixture','--counting-pipeline','source-normalized-v2','--id','calibration.memory.'+key,
                         '--roi','constructed-memory-service','--llvm-bin',args.llvm_bin,'--output',output/('count-'+key),
                         '--format','json','--timeout-s','60','--build-flag=-std=c++11']
@@ -85,11 +99,18 @@ def proof(args,output,command,operations,widths):
 
 
 def calibrate(args):
-    operations=list(dict.fromkeys(args.operation or NAMES));widths=sorted(set(args.element_bytes or (4,8)))
-    footprints=sorted(set(args.footprint_bytes or (32768,8388608)))
+    group=args.group;table=GROUPS[group]
+    if group=='memory_v1':
+        operations=list(dict.fromkeys(args.operation or NAMES));widths=sorted(set(args.element_bytes or (4,8)))
+        footprints=sorted(set(args.footprint_bytes or (32768,8388608)))
+    else:
+        operations=list(dict.fromkeys(args.operation or table['operations']));widths=sorted(set(args.element_bytes or table['widths']))
+        footprints=sorted(set(args.footprint_bytes or (8388608,)))
+    if any(o not in table['operations'] for o in operations) or any(w not in table['widths'] for w in widths):
+        raise Failure(group+' supports operations '+str(list(table['operations']))+' at widths '+str(list(table['widths'])))
     if any(f<64 or f>8388608 or f&(f-1) for f in footprints) or len(footprints)>2:
         raise Failure('memory footprints require at most2 power-of-two bins from64B to8MiB')
-    if 1 in widths and (operations!=['read'] or any(f>256 for f in footprints)):
+    if group=='memory_v1' and 1 in widths and (operations!=['read'] or any(f>256 for f in footprints)):
         raise Failure('one-byte reads require a separate read-only fixed-small ring <=256B')
     if not 3<=args.repetitions<=11 or not math.isfinite(args.max_wall_s) or not 0<args.max_wall_s<=900 or not math.isfinite(args.min_trial_s) or not 0<args.min_trial_s<=.2:
         raise Failure('memory caps are3–11reps,900s wall and0.2s gross trial')
@@ -116,8 +137,8 @@ def calibrate(args):
     optimized=None
     if args.llvm_bin:
         command([compiler,*flags,'-S','-emit-llvm',output/SOURCES[1],'-o',output/'memory-optimized.ll'])
-        optimized=optimized_proof(output/'memory-optimized.ll')
-    counted=proof(args,output,command,operations,widths) if args.llvm_bin else None
+        optimized=optimized_proof(output/'memory-optimized.ll',group)
+    counted=proof(args,output,command,operations,widths,group) if args.llvm_bin else None
     context={'compiler_version':version,'flags':flags,'host':socket.gethostname(),'architecture':platform.machine(),
         'source_sha256':{name:artifacts.file_hash(output/name) for name in SOURCES},'binary_sha256':artifacts.file_hash(binary),
         'compiler_sha256':artifacts.file_hash(Path(shutil.which(str(compiler)) or compiler).resolve()),
@@ -152,7 +173,7 @@ def calibrate(args):
                 trials=[timer(width,elements,batches,op,'service_first' if r%2==0 else 'driver_first') for r in range(args.repetitions)]
                 services.append({'id':f'memory.{name}.{width}.{footprint}','unit':'seconds/request',
                     'event_definition':'One exact logical source request; shared body gross minus conditional-loop driver. Preparation is untimed; no application residency or physical latency claim.',
-                    'scope':{'worker_scope':'serial','memory_regime':'fixed_small_byte_read_constructed_requests' if width==1 else 'resident_serial_constructed_requests','operation':name,
+                    'scope':{'worker_scope':'serial','memory_regime':regime(name,width),'operation':name,
                         'update_kind':KINDS[op],'element_bytes':width,'footprint_bytes':footprint,'transfer_basis':'inferred',
                         'construction':'dependent permuted-ring read; sequential volatile write; uncontended seq_cst add/CAS; deterministic success/failure cells',
                         'cache_state':'prepared buffers and repeated calls; physical cache level unverified','first_touch':'preparation excluded'},
@@ -160,7 +181,7 @@ def calibrate(args):
                         'proof':counted or 'Portable shared-source construction only; no native counting proof.'},'trials':trials})
                 (output/'partial-trials.json').write_text(json.dumps(services,indent=2));budget(output)
     raw={'format':'swdb.cpu-service-calibration.v1','evidence_kind':'fixture' if args.fixture else 'native','machine':args.machine,
-        'threads':1,'context':context,'settings':{'group':'memory_v1','repetitions':args.repetitions,'min_trial_s':args.min_trial_s,
+        'threads':1,'context':context,'settings':{'group':group,'repetitions':args.repetitions,'min_trial_s':args.min_trial_s,
         'max_wall_s':args.max_wall_s,'event_cap':EVENT_CAP,'count_build_cap_bytes':COUNT_CAP,'timed_data_cap_bytes':TIMED_CAP,
         'live_payload_cap_bytes':16*1024**2,'operations':operations,'element_bytes':widths,'footprint_bytes':footprints,
         'trial_resolution_scope':'gross_aggregate_only; paired driver retained'},'services':services}
@@ -170,16 +191,18 @@ def calibrate(args):
     return {'receipt':str(output/'receipt.json'),'receipt_sha256':raw['identity_sha256'],'services':len(services),'evidence_kind':raw['evidence_kind']}
 
 
-def optimized_proof(ir_path):
-    text=ir_path.read_text();retained={}
-    for width,bits in ((1,8),(4,32),(8,64)):
-        body=re.search(r'define[^\n]*@service_memory'+str(bits)+r'\([^\n]*\).*?\n}',text,re.S)
+def optimized_proof(ir_path,group='memory_v1'):
+    text=ir_path.read_text();retained={};table=GROUPS[group]
+    for width in table['widths']:
+        bits=8*width
+        body=re.search(r'define[^\n]*@'+table['function']+str(bits)+r'\([^\n]*\).*?\n}',text,re.S)
         if not body:raise Failure('optimized memory typed wrapper missing')
         patterns=(r'load volatile i'+str(bits)+r',',r'store volatile i'+str(bits)+r' ',
             r'atomicrmw add [^\n]*i'+str(bits)+r' 1 seq_cst',r'cmpxchg [^\n]*i'+str(bits)+r' [^\n]*seq_cst seq_cst')
-        if any(not re.search(pattern,body.group(0)) for pattern in (patterns[:1] if width==1 else patterns)):
+        expected=table['retained'][str(width)]
+        if any(not re.search(patterns[PRIMITIVES.index(name)],body.group(0)) for name in expected):
             raise Failure('optimized memory did not retain every typed primitive')
-        retained[str(width)]=['volatile_read'] if width==1 else list(PRIMITIVES)
+        retained[str(width)]=list(expected)
     return {'ir_sha256':artifacts.file_hash(ir_path),'retained_primitives':retained,
         'scope':'Actual O3 typed wrapper lowering; normalized request numerator proof is independent.'}
 
@@ -187,6 +210,8 @@ def optimized_proof(ir_path):
 def validate(raw):
     from swdb.cpu_service_controls import valid
     c,s=raw['context'],raw['settings']
+    table=GROUPS.get(s.get('group'))
+    if table is None:raise Failure('native memory: unknown memory group')
     def require(ok,reason):
         if not ok:raise Failure('native memory: '+reason)
     def hashed(value):return bool(re.fullmatch('[0-9a-f]{64}',str(value)))
@@ -203,12 +228,12 @@ def validate(raw):
     require(any(k.startswith('libstdc++') for k in libs) and any(k.startswith('libc.so') for k in libs) and all(hashed(v.get('sha256')) for v in libs.values()),'C/C++ identities missing')
     require(valid(c),'control declaration missing')
     optimized=c.get('optimized_work',{})
-    require(hashed(optimized.get('ir_sha256')) and optimized.get('retained_primitives')=={'1':['volatile_read'],'4':PRIMITIVES,'8':PRIMITIVES},'optimized typed primitive proof missing')
+    require(hashed(optimized.get('ir_sha256')) and optimized.get('retained_primitives')==table['retained'],'optimized typed primitive proof missing')
     operations,widths,footprints=s['operations'],s['element_bytes'],s['footprint_bytes']
-    require(isinstance(operations,list) and 0<len(operations)<=5 and len(set(operations))==len(operations) and all(o in NAMES for o in operations),'operation matrix differs')
-    require(isinstance(widths,list) and widths==sorted(set(widths)) and widths and all(type(w) is int and w in (1,4,8) for w in widths),'width matrix differs')
+    require(isinstance(operations,list) and 0<len(operations)<=5 and len(set(operations))==len(operations) and all(o in table['operations'] for o in operations),'operation matrix differs')
+    require(isinstance(widths,list) and widths==sorted(set(widths)) and widths and all(type(w) is int and w in table['widths'] for w in widths),'width matrix differs')
     require(isinstance(footprints,list) and footprints==sorted(set(footprints)) and 0<len(footprints)<=2 and all(type(f) is int and 64<=f<=8388608 and not f&(f-1) for f in footprints),'footprint matrix differs')
-    require(1 not in widths or (operations==['read'] and max(footprints)<=256),'one-byte construction cannot cover a larger footprint or other primitive')
+    require(s['group']!='memory_v1' or 1 not in widths or (operations==['read'] and max(footprints)<=256),'one-byte construction cannot cover a larger footprint or other primitive')
     expected={(o,w,f) for o in operations for w in widths for f in footprints};seen=set()
     require(len(raw['services'])==len(expected),'service matrix incomplete')
     expected_points={(o,w,invoke,n) for o in operations for w in widths for invoke in (True,False) for n in (3,5)}
@@ -216,7 +241,7 @@ def validate(raw):
         scope=service['scope'];op,width,footprint=scope['operation'],scope['element_bytes'],scope['footprint_bytes']
         require((op,width,footprint) in expected and (op,width,footprint) not in seen,'duplicate/unsupported cell')
         seen.add((op,width,footprint));kind=KINDS[NAMES.index(op)]
-        require(service['id']==f'memory.{op}.{width}.{footprint}' and service['unit']=='seconds/request' and scope['update_kind']==kind and scope['worker_scope']=='serial' and scope['memory_regime']==('fixed_small_byte_read_constructed_requests' if width==1 else 'resident_serial_constructed_requests') and scope['transfer_basis']=='inferred' and scope['cache_state']=='prepared buffers and repeated calls; physical cache level unverified' and scope['first_touch']=='preparation excluded','cell service scope differs')
+        require(service['id']==f'memory.{op}.{width}.{footprint}' and service['unit']=='seconds/request' and scope['update_kind']==kind and scope['worker_scope']=='serial' and scope['memory_regime']==regime(op,width) and scope['transfer_basis']=='inferred' and scope['cache_state']=='prepared buffers and repeated calls; physical cache level unverified' and scope['first_touch']=='preparation excluded','cell service scope differs')
         denominator=service['denominator'];proof=denominator['proof']
         require(denominator['level']=='source_normalized_work' and denominator['basis']=='measured' and proof['format']=='swdb.cpu-memory-count-proof.v1','counted denominator missing')
         require(proof['source_sha256']==c['source_sha256'][SOURCES[0]] and proof['count_driver_sha256']==c['source_sha256'][SOURCES[2]] and proof['pipeline']==PIPELINE and all(hashed(proof.get(k)) for k in ('plugin_source_sha256','runtime_source_sha256')),'count/timing source or recipe differs')
@@ -246,7 +271,8 @@ def main():
     parser=argparse.ArgumentParser(description='bounded independent logical memory service/driver cells; no application timing')
     parser.add_argument('--records',type=Path,default=paths.RECORDS);parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--fixture',action='store_true');parser.add_argument('--count-only',action='store_true')
-    parser.add_argument('--operation',choices=NAMES,action='append');parser.add_argument('--element-bytes',choices=(1,4,8),type=int,action='append')
+    parser.add_argument('--operation',choices=NAMES,action='append');parser.add_argument('--element-bytes',choices=(1,2,4,8),type=int,action='append')
+    parser.add_argument('--group',choices=tuple(GROUPS),default='memory_v1')
     parser.add_argument('--footprint-bytes',type=int,action='append');parser.add_argument('--compiler',default='c++')
     parser.add_argument('--machine',default='mbit10');parser.add_argument('--lane');parser.add_argument('--llvm-bin',type=Path)
     parser.add_argument('--toolchain-flag',action='append',default=[]);parser.add_argument('--repetitions',type=int,default=7)
