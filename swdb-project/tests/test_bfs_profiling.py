@@ -565,3 +565,98 @@ int main(){return 99;}
     retained = json.loads(rejected.stdout)
     assert 'runtime inputs are unknown' in retained['outcome']['reason']
     assert not retained['executions']
+
+
+def test_public_profile_of_a_scalable_v3_evaluation_times_regions_on_the_sg_input(records,tmp_path):
+    """cpud ticket 10 (2026-10-12 ET): `bfs-profile` of a scalable v3 evaluation builds the region
+    binary from the v3 SG driver, runs it on the registered SG file and checks each execution with
+    the compiled verifier. Memory collection is refused for scalable evaluations."""
+    import socket
+    from swdb import artifacts
+    from swdb import bfs_native_scalable as scalable
+    from testkit.bfs_protocol import _command, _payload, _workload_request
+    library,parse_args=compiler_inventory()
+    compiler=find_cxx()
+    if not compiler: pytest.skip('C++ compiler unavailable')
+    records.copy_repo('applications','kernels','implementations','machines')
+    graph={'num_vertices':6,'directed':True,'edges':[[0,1],[0,2],[1,3],[2,3],[4,5]]}
+    registration=_workload_request(records,tmp_path,graph)   # copies applications: before the toy app
+    keep={'applications/gapbs.yaml','applications/dx100-gapbs.yaml','kernels/gapbs-bfs.yaml','implementations/gapbs-bfs-do.yaml','machines/mbit10.yaml'}
+    for p in records.path.rglob('*.yaml'):
+        if p.relative_to(records.path).as_posix() not in keep: p.unlink()
+    source=tmp_path/'toy-app';(source/'src').mkdir(parents=True)
+    toy='''#include <cstdint>
+#include <queue>
+#include <vector>
+using NodeID=int32_t;
+struct Graph {
+ int64_t n; NodeID**idx; NodeID*neigh; NodeID**inv; NodeID*ineigh;
+ Graph(int64_t n,NodeID**i,NodeID*e):n(n),idx(i),neigh(e),inv(nullptr),ineigh(nullptr){}
+ Graph(int64_t n,NodeID**i,NodeID*e,NodeID**ii,NodeID*ie):n(n),idx(i),neigh(e),inv(ii),ineigh(ie){}
+ ~Graph(){delete[]idx;delete[]neigh;delete[]inv;delete[]ineigh;}
+ int64_t num_nodes()const{return n;}
+};
+void UncataloguedHelper(){volatile int sink=0;for(int i=0;i<100;++i)sink+=i;}
+std::vector<NodeID> DOBFS(const Graph&g,NodeID source,bool){
+ UncataloguedHelper();std::vector<NodeID>p(g.num_nodes(),-1);p[source]=source;
+ std::queue<NodeID>q;q.push(source);
+ while(!q.empty()){NodeID u=q.front();q.pop();for(NodeID*v=g.idx[u];v!=g.idx[u+1];++v)if(p[*v]<0){p[*v]=u;q.push(*v);}}
+ return p;
+}
+bool BFSVerifier(){return true;}
+int main(){return 99;}
+'''
+    (source/'src/bfs.cc').write_text(toy)
+    app=records.read('applications/gapbs.yaml');app['source']['local_path']=str(source)
+    records.write('applications/gapbs.yaml',app)
+    impl=records.read('implementations/gapbs-bfs-do.yaml')
+    impl['verification']={'status':'unchecked','evidence':[],'scope':'Compiled toy integration fixture; not workload acceptance.'}
+    impl['code']=[{'root':'application','path':'src/bfs.cc','lines':[1,len(toy.splitlines())]}]
+    verifier_line=toy.splitlines().index('bool BFSVerifier(){return true;}')+1
+    impl['evaluator']['verifier']['code']={'root':'application','path':'src/bfs.cc','lines':[verifier_line,verifier_line]}
+    for loop in impl['loops']:
+        if loop.get('code'): loop['code']={'root':'application','path':'src/bfs.cc','lines':[15,15]}
+    kernel=records.read('kernels/gapbs-bfs.yaml')
+    kernel['correctness_check']['verifier']['code']=impl['evaluator']['verifier']['code']
+    records.write('kernels/gapbs-bfs.yaml',kernel)
+    impl['build'].update(compiler=compiler,flags='-std=c++11 -O2')
+    records.write('implementations/gapbs-bfs-do.yaml',impl)
+    machine=records.read('machines/mbit10.yaml');machine.update(id='toy-host',hostname=socket.gethostname().split('.')[0],lane_required=False)
+    records.write('machines/toy-host.yaml',machine)
+    runs=tmp_path/'runs'
+    libraries=tmp_path/'lib';libraries.mkdir()   # the primary build's runtime library selection is kept
+    def call(command,*args):
+        result=records.swdb(command,*args,'--format','json')
+        assert result.returncode==0,result.stderr+'\n'+result.stdout
+        return json.loads(result.stdout)
+    workload=_command(records,'register-workload',_payload(tmp_path,'register',registration))
+    snapshot=call('source-snapshot','gapbs-bfs-do','--id','toy-source','--runs-dir',runs)
+    candidate=call('baseline-candidate',snapshot['id'],'--id','toy-candidate','--runs-dir',runs)
+    request={'message_version':'1.0','id':'toy-sg-evaluation','candidate':candidate['id'],'machine':'toy-host','threads':1,
+        'evaluator':scalable.EVALUATOR_V3,'sources':[0],'repetitions':2,'roi':'bfs.complete_call.v1',
+        'budget':{'build_seconds':60,'run_seconds':10,'total_seconds':300},'workload':{'id':workload['id']},
+        'build':{'run_library_paths':[str(libraries)]}}
+    evaluation=call('evaluate',_payload(tmp_path,'evaluation',request),'--runs-dir',runs)
+    assert evaluation['correctness']['state']=='passed' and evaluation['context']['evaluator']==scalable.EVALUATOR_V3
+    profile={'message_version':'1.0','id':'toy-sg-profile-memory','evaluation':evaluation['id'],
+        'discovery':{'library':library,'arguments':parse_args},
+        'budget':{'discovery_seconds':30,'build_seconds':60,'run_seconds':10,'total_seconds':300}}
+    refused=records.swdb('bfs-profile',_payload(tmp_path,'profile-memory',profile),'--runs-dir',runs,'--format','json')
+    assert refused.returncode==1 and 'region timing only' in json.loads(refused.stdout)['outcome']['reason']
+    profile.update(id='toy-sg-profile',memory=False)
+    result=call('bfs-profile',_payload(tmp_path,'profile',profile),'--runs-dir',runs)
+    assert result['outcome']['state']=='partial',result['outcome']
+    assert result['context']['sources']==[0] and result['context']['evaluator']==scalable.EVALUATOR_V3
+    assert result['context']['workload']['graph_input']==evaluation['context']['workload']['graph_input']
+    assert result['build']['driver_template_sha256']==artifacts.file_hash(scalable.DRIVER_V3)
+    assert result['build']['verifier']['id']==scalable.VERIFIER_V2
+    assert result['build']['run_library_paths']==evaluation['build']['run_library_paths']==[str(libraries.resolve())]
+    assert '-Wl,-rpath,'+str(libraries.resolve()) in result['build']['command']
+    assert len(result['executions'])==1
+    execution=result['executions'][0]
+    assert execution['correctness']['passed'] is True
+    assert execution['parents_sha256']==evaluation['timing'][0]['parents_sha256']
+    helper=[r for r in result['regions'] if r['kind']=='function' and r.get('name')=='UncataloguedHelper']
+    assert helper and helper[0]['metrics']['invocations']==1
+    assert all(r['basis']=='measured' and isinstance(r['metrics']['exclusive_thread_cpu_seconds'],float) for r in result['regions'])
+    assert records.validate().returncode==0

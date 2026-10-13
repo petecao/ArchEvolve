@@ -2,7 +2,17 @@
 
 Navigation updated: 2026-09-28 (Eastern Time).
 
-Updated: 2026-09-26 (Eastern Time).
+Updated: 2026-09-26 (Eastern Time). Scalable evaluations: 2026-10-12 ET.
+
+**Scalable evaluations (v2/v3, added 2026-10-12 ET, cpud ticket 10).** A profile of a
+`swdb.native.evaluator.scalable.v2`/`v3` evaluation builds the region binary from that
+evaluator's SG driver template, with the evaluation's own `toolchain_flags` and
+`run_library_paths` (rpath and `LD_LIBRARY_PATH`), and runs it on the registered SG file. Each
+execution is checked like a primary trial: the trial-record check and the compiled verifier
+(`build.verifier`, built in the profile's build folder). The record adds
+`build.driver_template_sha256`, and each execution adds `parents_output` and `parents_sha256`.
+Only region timing is supported: a request must set `memory: false` (Callgrind collection is
+v1-only), otherwise the profile fails before it builds anything.
 
 Future real mbit10 collections retain a bounded `swdb.host-observation.v1`
 receipt with read-only load, users, disk/memory, CPU/NUMA, governor/turbo, kernel,
