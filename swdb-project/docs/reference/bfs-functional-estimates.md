@@ -1,6 +1,6 @@
 # Functional correctness with estimated speed
 
-Updated: 2026-10-10 ET (code review of tickets 06/12: current-procedure certificate,
+Updated: 2026-10-13 ET (current 1.7 certificate re-issued); 2026-10-10 ET (code review of tickets 06/12: current-procedure certificate,
 tests and team lineage); 2026-10-09 ET.
 
 `evaluate-functional` combines an exact current strict-functional certification
@@ -47,13 +47,15 @@ candidate procedure is 1.7, so `evaluate-functional` refuses it (`incompatible`,
 "certify again"). A fresh estimate protocol alone does not make that certificate reusable.
 See the [procedure rules](bfs-typed-library.md#handle-a-certification-refusal-at-the-right-boundary).
 
-**Tests (2026-10-10 ET):** `tests/test_functional_evaluation.py` runs on a copied record
+**Tests (2026-10-10 ET; certificate refreshed 2026-10-13 ET):** `tests/test_functional_evaluation.py` runs on a copied record
 closure. It checks the stale-certificate refusal and handoff under a no-child sentinel (the
 sentinel proves it loaded and blocks `subprocess` and `os` spawn/exec/fork routes), the gem5
 refusal before writes, and a known ratio (2.0) staying `within_error` on the DX100 functional
 target. The positive path (complete evaluation, 1.1 handoff with that ratio) uses the 1.7
-execution certificate `certification.df1986d8f0d64a28b19fd23ae672055c` (mbit10,
-2026-10-10 ET); it skips only if no current-procedure certificate exists.
+execution certificate `certification.d710ac885e764f8a8687ee18533d9f1c` (mbit10,
+2026-10-13 ET, at `311b3928`); it skips only if no current-procedure certificate exists.
+The earlier 1.7 certificate `certification.df1986d8…` (2026-10-10) is stale: its pinned
+result check (`swdb/bfs_native.py`) changed in `8db9654a`.
 
 ```sh
 python3 -m swdb evaluate-functional request.yaml --records /path/to/records --library /path/to/library --format json
