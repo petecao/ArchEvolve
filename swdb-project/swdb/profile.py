@@ -38,6 +38,7 @@ from swdb.machine import llc_bytes
 from swdb.rules import implementation_symbols, resolve_code
 from swdb.store import Store
 from swdb.validate import validate_records
+from swdb import host_identity
 
 TRIAL_TIME = re.compile(r"^Trial Time:\s+([0-9.eE+-]+)\s*$", re.M)
 GRAPH_LINE = re.compile(r"^Graph has (\d+) nodes and (\d+) (un)?directed edges", re.M)
@@ -159,7 +160,7 @@ def _run(args, records_dir):
                       "formulas use; add them (unknown is fine) before profiling")
     if args.trials < 1:
         raise Failure("--trials must be at least 1")
-    host = socket.gethostname().split(".")[0]
+    host = host_identity.short_name()
     if host != machine["hostname"]:
         raise Failure(f"this host is {host!r}, but machine record {machine['id']!r} is for {machine['hostname']!r}")
 
@@ -799,7 +800,7 @@ def recompute_cachegrind(records_dir, profile_id, reason):
     prof = _get(store, profile_id, "profile")
     impl = _get(store, prof["implementation"], "implementation")
     machine = _get(store, prof["machine"], "machine")
-    host = socket.gethostname().split(".")[0]
+    host = host_identity.short_name()
     if host != prof["runs_folder"]["host"]:
         raise Failure(f"the raw output of {profile_id} is on {prof['runs_folder']['host']}, not {host}")
     raw = Path(prof["runs_folder"]["path"]) / "cachegrind.out"

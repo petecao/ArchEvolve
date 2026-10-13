@@ -50,6 +50,7 @@ from swdb import access, artifacts, certification_common, certification_feedback
 from swdb.cli import Failure, UsageError
 from swdb.cpp_lexical import body_spans, code_only, enclosing_function, function_span  # noqa: F401
 from swdb.extensa_boundary import MODE
+from swdb import host_identity
 
 #: BFS names from the kernel plug-in (code review S1, 2026-10-05 ET): the scalar-only snapshot every
 #: candidate artifact starts from, its translation unit, and the timed function of `bfs.complete_call.v1`.
@@ -208,7 +209,7 @@ class Host:
         root = self.marker_root(runs_root)
         root.mkdir(parents=True, exist_ok=True)
         (root / f"{lane}.json").write_text(json.dumps({"lane": lane, "campaign": campaign, "target": target,
-                                                       "pid": os.getpid(), "host": socket.gethostname()}))
+                                                       "pid": os.getpid(), "host": host_identity.full_name()}))
 
     def unmark(self, runs_root, lane):
         path = self.marker_root(runs_root) / f"{lane}.json"
@@ -742,7 +743,7 @@ class NativeAdapter(TargetAdapter):
                 "build": {"compiler": self._compiler(role, side), "flags": list(NATIVE_FLAGS)},
                 "budget": {"build_seconds": 300, "run_seconds": 120, "total_seconds": 7200},
                 "build_directory": str(paths.BUILD_ROOT / self.cid / rid)
-                if socket.gethostname().split(".")[0] == "mbit10" else str(self.folder / "builds" / rid)}
+                if host_identity.short_name() == "mbit10" else str(self.folder / "builds" / rid)}
 
     def _compiler(self, role, side):
         """The compiler the role's frozen protocol names (copied from its template; code review

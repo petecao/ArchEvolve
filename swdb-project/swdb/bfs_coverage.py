@@ -8,6 +8,7 @@ from pathlib import Path
 
 from swdb import artifacts, bfs_protocol as protocol, db, paths, profile_package
 from swdb.cli import Failure
+from swdb import host_identity
 
 SOURCES = ("dx100-bfs-scalar", "gapbs-bfs-do")
 FAMILIES = ("kronecker", "uniform_random")
@@ -72,7 +73,7 @@ def _directory_refs(value):
 
 def _availability(records, host, store=None):
     result = []
-    local = socket.gethostname().split(".")[0]
+    local = host_identity.short_name()
     for name, expected, kind in sorted(set(ref for record in records for ref in _artifact_refs(record))):
         path = Path(name)
         if not path.is_absolute():
@@ -210,7 +211,7 @@ def _fixture_comparison(store, comparison):
 
 
 def _local_host():
-    return socket.gethostname().split(".")[0]
+    return host_identity.short_name()
 
 
 def _raw_reachable(baseline, candidate):
@@ -784,7 +785,7 @@ def report(args):
         handoff["path"] = str(paths.HOME / handoff["path"])
     proposal_ids = {a["proposal"] for a in good}
     producers = [store.get(rid, "proposal").get("request", {}).get("producer", {}) for rid in proposal_ids]
-    handoff_artifacts = _availability([handoff], socket.gethostname().split(".")[0])
+    handoff_artifacts = _availability([handoff], host_identity.short_name())
     contracts = {"profile_package": "1.0", "rewrite_proposal": "1.0", "evaluation_result": "1.0"}
     handoff_ok = (all_cells and {p.get("role") for p in producers} >= {"sw", "hw"}
                   and all(p.get("test_client") is True for p in producers)

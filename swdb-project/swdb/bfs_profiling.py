@@ -27,6 +27,7 @@ from swdb import artifacts, bfs_discovery, bfs_native as native, db, kernels, pa
 from swdb import bfs_native_scalable as scalable
 from swdb import callgrind_lines
 from swdb.cli import Failure, _require_valid
+from swdb import host_identity
 
 RUNTIME = paths.HOME / "tools/bfs_profile/runtime.hpp"
 METRICS = {
@@ -333,7 +334,7 @@ def run(args):
             "\n#include <valgrind/callgrind.h>\nCALLGRIND_START_INSTRUMENTATION CALLGRIND_STOP_INSTRUMENTATION CALLGRIND_ZERO_STATS CALLGRIND_DUMP_STATS",
             driver=driver_template)
         machine = store.get(data["machine"], "machine")
-        host = socket.gethostname().split(".")[0]
+        host = host_identity.short_name()
         if artifacts.digest(machine) != evaluation["context"]["machine_sha256"]:
             raise Failure("machine record changed since the primary evaluation")
         if host != machine["hostname"] or host != evaluation["context"]["host"]:

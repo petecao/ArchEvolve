@@ -19,6 +19,8 @@ from pathlib import Path
 import pytest
 import yaml
 
+from swdb import host_identity
+
 REPO = Path(__file__).resolve().parents[1]
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
 DB_COMMANDS = {"build", "sql", "find", "implementations", "add", "profile"}
@@ -27,6 +29,37 @@ pytest.register_assert_rewrite("testkit")
 pytest_plugins = ["testkit.certification_records", "testkit.proposals", "testkit.bfs_native", "testkit.bfs_protocol", "testkit.extensa",
                   "testkit.extensa_targets", "testkit.bfs_native_scalable", "testkit.provider_workspace",
                   "testkit.toolchain", "testkit.native_pilot", "testkit.profile_packages", "testkit.analytic"]
+
+
+#: 2026-10-13 ET: the suite runs as this fixture host on every machine, mbit10 included.
+FIXTURE_HOST = "swdb-fixture-host"
+REAL_GETHOSTNAME = socket.gethostname
+
+
+@pytest.fixture(scope="session", autouse=True)
+def fixture_host():
+    """Run the whole suite as `FIXTURE_HOST`, never as the machine it happens to run on.
+
+    On mbit10 the real host name switches on lab policy (socket lanes, `/data1/yanruj`
+    build and source roots, NUMA preflight) that a test's fixture machine does not carry,
+    and shared `/data1` source snapshots collide across tests and runs. `swdb` child
+    processes get the fixture name through `host_identity.FIXTURE_HOST_ENV`; this process
+    gets it through `socket.gethostname`, which a test may still patch to `mbit10` to
+    opt into lab behavior. Session scope, so module-scoped seeds see it too. A test that
+    needs the real host requests `real_host`."""
+    with pytest.MonkeyPatch.context() as patch:
+        patch.setenv(host_identity.FIXTURE_HOST_ENV, FIXTURE_HOST)
+        patch.setattr(host_identity, "_FIXTURE_HOST", None)    # in-process: socket.gethostname decides
+        patch.setattr(socket, "gethostname", lambda: FIXTURE_HOST)
+        yield FIXTURE_HOST
+
+
+@pytest.fixture
+def real_host(monkeypatch):
+    """Opt out of the fixture host: this test and its `swdb` children see the real host."""
+    monkeypatch.delenv(host_identity.FIXTURE_HOST_ENV, raising=False)
+    monkeypatch.setattr(socket, "gethostname", REAL_GETHOSTNAME)
+    return REAL_GETHOSTNAME().split(".")[0]
 
 
 def run_swdb(*args, env=None, timeout=600):

@@ -1,7 +1,9 @@
-"""Public observer callback protocol; independent lifecycle fixtures. Updated: 2026-10-06 ET."""
+"""Public observer callback protocol; independent lifecycle fixtures. Updated: 2026-10-13 ET
+(the compiler comes from `SWDB_LLVM_BIN`, as in `testkit.analytic`; the module skips without it)."""
 import json
 import os
 import subprocess
+from pathlib import Path
 import pytest
 from conftest import REPO
 
@@ -11,7 +13,9 @@ def callback_binary(tmp_path_factory):
     # Compile once, without instrumentation: this drives the externally exported
     # observer protocol and reads its public compact output, never internal methods.
     directory=tmp_path_factory.mktemp('scope-callbacks')
-    compiler=os.environ.get('SWDB_LLVM_BIN','/opt/homebrew/opt/llvm/bin')+'/clang++'
+    compiler=Path(os.environ.get('SWDB_LLVM_BIN','/opt/homebrew/opt/llvm/bin'))/'clang++'
+    if not compiler.is_file():
+        pytest.skip(f'clang++ not found at {compiler}; set SWDB_LLVM_BIN to an LLVM bin directory')
     binary=directory/'observer'
     built=subprocess.run([compiler,'-O2','-std=c++11',
         str(REPO/'tests/fixtures/analytic/object_scope_callbacks.cpp'),
