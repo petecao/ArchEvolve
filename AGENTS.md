@@ -17,3 +17,10 @@ These rules apply when `git config user.name` is `Yan-Ru Jhou` or `$USER` is `ya
   `swdb-project/`, even when they are uncommitted or look broken. Report them instead.
 - **`main`:** merging into or from `main`, pushing to it, or opening a PR against it needs
   approval each time.
+
+## General
+
+- Criticism is welcome.
+  - Please tell me when I am wrong or mistaken, or even when you think I might be wrong or mistaken.
+  - Please tell me if there is a better approach than the one I am taking.
+  - Please tell me if there is a relevant standard or convention that I appear to be unaware of.
