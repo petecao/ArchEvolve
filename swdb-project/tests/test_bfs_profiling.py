@@ -441,7 +441,22 @@ def test_public_writer_requires_one_truthful_statement_dump_coordinate(records, 
         assert 'validation failed; nothing written' in result.stderr
 
 
-def test_public_profile_rejects_fixture_execution_and_retains_reason(evaluation_setup,tmp_path):
+@pytest.fixture
+def small_evaluation_setup(records, tmp_path):
+    """The contract-fixture evaluation setup over the four catalog records it needs.
+
+    2026-10-13 ET: the shared `evaluation_setup` copies the whole ~1.3 GB store, so its
+    `source-snapshot` (which validates the store) ran past the 600 s command limit, at base
+    4a19375a as well. Same remedy as `copy_closure` elsewhere: copy only what is needed."""
+    from testkit.bfs_native import build_evaluation_setup
+    from testkit.native_catalog import seed_native_contract_records
+    from testkit.proposals import build_proposal_setup
+    seed_native_contract_records(records)
+    return build_evaluation_setup(build_proposal_setup(records, tmp_path, copy_all=False), tmp_path)
+
+
+def test_public_profile_rejects_fixture_execution_and_retains_reason(small_evaluation_setup,tmp_path):
+    evaluation_setup=small_evaluation_setup
     records,runs,_,_=evaluation_setup
     _,evaluation=evaluate(evaluation_setup,sources=[0])
     path=tmp_path/'profile.yaml';path.write_text(yaml.safe_dump({'message_version':'1.0','id':'profile-fixture-rejected','evaluation':evaluation['id']}))
@@ -684,7 +699,10 @@ int main(){return 99;}
         'budget':{'discovery_seconds':30,'build_seconds':60,'run_seconds':10,'total_seconds':300}}
     refused=records.swdb('bfs-profile',_payload(tmp_path,'profile-memory',profile),'--runs-dir',runs,'--format','json')
     assert refused.returncode==1 and 'region timing only' in json.loads(refused.stdout)['outcome']['reason']
-    profile.update(id='toy-sg-profile',memory=False)
+    profile.update(id='toy-sg-profile-memory-text',memory='false')   # a string is not a boolean
+    refused=records.swdb('bfs-profile',_payload(tmp_path,'profile-memory-text',profile),'--runs-dir',runs,'--format','json')
+    assert refused.returncode==1 and 'memory must be boolean' in json.loads(refused.stdout)['outcome']['reason']
+    profile.update(id='toy-sg-profile',memory=False,repetitions=2)
     result=call('bfs-profile',_payload(tmp_path,'profile',profile),'--runs-dir',runs)
     assert result['outcome']['state']=='partial',result['outcome']
     assert result['context']['sources']==[0] and result['context']['evaluator']==scalable.EVALUATOR_V3
@@ -693,11 +711,134 @@ int main(){return 99;}
     assert result['build']['verifier']['id']==scalable.VERIFIER_V2
     assert result['build']['run_library_paths']==evaluation['build']['run_library_paths']==[str(libraries.resolve())]
     assert '-Wl,-rpath,'+str(libraries.resolve()) in result['build']['command']
-    assert len(result['executions'])==1
+    assert len(result['executions'])==2
     execution=result['executions'][0]
     assert execution['correctness']['passed'] is True
     assert execution['parents_sha256']==evaluation['timing'][0]['parents_sha256']
+    # Parent vectors are kept as the primary keeps them: gzip, one copy per distinct vector.
+    kept={e['parents_output'] for e in result['executions']}
+    assert len(kept)==1 and all(p.endswith('.gz') and Path(p).is_file() for p in kept)
+    assert all(e['parents_gzip_sha256']==artifacts.file_hash(e['parents_output']) for e in result['executions'])
+    assert not list((runs/'toy-sg-profile').glob('*.parents.i32'))
     helper=[r for r in result['regions'] if r['kind']=='function' and r.get('name')=='UncataloguedHelper']
-    assert helper and helper[0]['metrics']['invocations']==1
+    assert helper and helper[0]['metrics']['invocations']==2
     assert all(r['basis']=='measured' and isinstance(r['metrics']['exclusive_thread_cpu_seconds'],float) for r in result['regions'])
     assert records.validate().returncode==0
+
+
+# Code review of cpud ticket 10 (2026-10-13 ET): toolchain, verifier and SG-input bindings.
+
+def test_memory_binary_keeps_the_primary_toolchain_and_runtime_library_selection(tmp_path):
+    """A v1 evaluation built with LLVM 22 `--gcc-install-dir` and runtime library paths: the
+    Callgrind binary must link like the primary and region binaries, not with the default GCC."""
+    from swdb.bfs_profiling import _memory
+    source = tmp_path/'source.cc'; source.write_text('/* contract fixture */')
+    build = tmp_path/'build'; build.mkdir()
+    libraries = tmp_path/'lib'; libraries.mkdir()
+    data = {'build':{'directory':str(build),'toolchain_flags':['--gcc-install-dir=/fixture/gcc/13'],
+                     'run_library_paths':[str(libraries)]},'artifacts':{},'executions':[],'dynamic_memory':[],
+            'context':{'sources':[0],'repetitions':1,'threads':1,'candidate_sha256':'fixture'}}
+    built = []
+    class FixtureSession:
+        folder = tmp_path
+        def execute(self, stage, command, timeout, env=None, **details):
+            if stage=='memory_collector_identity':
+                path=tmp_path/'version.log'; path.write_text('fixture collector'); return path
+            if stage=='memory_build':
+                built.append(command); Path(command[command.index('-o')+1]).write_text('fixture binary')
+            if stage=='memory_execution':
+                Path(command[-1]).write_text(json.dumps({'format':'swdb.bfs.native.trial.v1','roi':'bfs.complete_call.v1',
+                    'source':0,'configured_threads':1,'duration_s':0.01,'parents':[0,0]}))
+                raw = Path(next(c.split('=',1)[1] for c in command if c.startswith('--callgrind-out-file=')))
+                raw.write_text('desc: Trigger: Client Request\nevents: Ir Dr Dw D1mr D1mw DLmr DLmw\nsummary: 100 1 2 0 0 0 0\ntotals: 100 1 2 0 0 0 0\n')
+        def save(self): pass
+    _memory(FixtureSession(),data,{'memory_model':{'collector':shutil.which('python3')}},source,[], 'fixture-cxx',['-O2'],
+            tmp_path/'unused-graph',{'num_vertices':2,'adjacency':[[1],[0]]},{},{'build_seconds':1,'run_seconds':1})
+    [command] = built
+    assert '--gcc-install-dir=/fixture/gcc/13' in command
+    assert '-L'+str(libraries) in command and '-Wl,-rpath,'+str(libraries) in command
+    assert data['artifacts']['memory_binary']['command']==command
+
+
+def test_runtime_library_selection_reaches_both_loader_variables():
+    """The region run sees the primary's library directories through rpath and both loader
+    variables, as the primary evaluation sets them (LD_ on Linux, DYLD_ on macOS)."""
+    from swdb.bfs_profiling import _select_libraries
+    from swdb.bfs_profiling import _primary_link
+    env = {'LD_LIBRARY_PATH':'/already'}
+    _select_libraries(env, ['/lib/a','/lib/b'])
+    assert env=={'LD_LIBRARY_PATH':'/lib/a:/lib/b:/already','DYLD_LIBRARY_PATH':'/lib/a:/lib/b'}
+    untouched = {}
+    _select_libraries(untouched, [])
+    assert untouched=={}
+    assert _primary_link({'toolchain_flags':['--gcc-install-dir=/g'],'run_library_paths':['/lib/a']})==[
+        '--gcc-install-dir=/g','-L/lib/a','-Wl,-rpath,/lib/a']
+    assert _primary_link({})==[]
+
+
+@pytest.mark.parametrize('change,message', [
+    ({}, None),
+    ({'template_sha256':'0'*64}, 'driver template'),
+    ({'verifier':{'id':'swdb.bfs.structural.compiled.v2','source':'tools/bfs_native/bfs_verify.cc',
+                  'source_sha256':'0'*64,'flags':['-std=c++11','-O2']}}, 'verifier'),
+])
+def test_scalable_profile_uses_the_primary_driver_and_verifier(change, message):
+    """A scalable profile times the primary's driver template and checks with its verifier;
+    either one changing since the primary evaluation refuses the profile."""
+    from swdb import artifacts
+    from swdb import bfs_native_scalable as scalable
+    from swdb.bfs_profiling import _check_scalable_primary
+    primary = {'build':{'template_sha256':artifacts.file_hash(scalable.DRIVER_V3),
+                        'verifier':scalable.verifier_identity(), **change}}
+    if message is None:
+        _check_scalable_primary(primary, scalable.DRIVER_V3)
+    else:
+        with pytest.raises(Failure, match=message):
+            _check_scalable_primary(primary, scalable.DRIVER_V3)
+
+
+def test_scalable_verifier_source_changing_during_its_build_is_refused(tmp_path, monkeypatch):
+    """The verifier identity is taken before the build, so an edit during the build is caught."""
+    from swdb import artifacts, bfs_native_scalable as scalable, paths
+    from swdb.bfs_profiling import _build_verifier
+    home = tmp_path/'home'; copy = home/'tools/bfs_native/bfs_verify.cc'; copy.parent.mkdir(parents=True)
+    copy.write_bytes(scalable.VERIFIER_SOURCE.read_bytes())
+    before = artifacts.file_hash(copy)
+    monkeypatch.setattr(paths, 'HOME', home); monkeypatch.setattr(scalable, 'VERIFIER_SOURCE', copy)
+    class FixtureSession:
+        def __init__(self, edit): self.edit = edit
+        def execute(self, stage, command, timeout, env=None, **details):
+            assert stage=='verifier_build'
+            Path(command[command.index('-o')+1]).write_text('fixture verifier')
+            if self.edit: copy.write_text(copy.read_text()+'\n// edited during the build\n')
+    build = tmp_path/'build'; build.mkdir()
+    verifier = _build_verifier(FixtureSession(False), build, {'build_seconds':10})
+    assert verifier['source_sha256']==before and Path(verifier['binary']).is_file()
+    with pytest.raises(Failure, match='source changed'):
+        _build_verifier(FixtureSession(True), build, {'build_seconds':10})
+
+
+def test_scalable_region_trial_rechecks_the_sg_input_before_verification(tmp_path):
+    """The primary re-hashes the registered SG file right before verification; so does the profile."""
+    from swdb import artifacts
+    from swdb import bfs_native_scalable as scalable
+    from swdb.bfs_profiling import _scalable_trial_output
+    graph = tmp_path/'graph.sg'; graph.write_bytes(b'fixture graph')
+    graph_input = {'path':str(graph),'offset_bytes':8,'sha256':artifacts.file_hash(graph)}
+    output = tmp_path/'trial.json'
+    output.write_text(json.dumps({'format':scalable.TRIAL_FORMAT_V3,'source':0,'roi':'bfs.complete_call.v1',
+        'configured_threads':1,'num_vertices':2,'parents_encoding':'int32le','parents_saturated':0,'duration_s':0.01}))
+    parents = tmp_path/'trial.parents.i32'; parents.write_bytes(b'\0'*8)
+    graph.write_bytes(b'replaced after the region execution')
+    with pytest.raises(Failure, match='SG input changed'):
+        _scalable_trial_output(output, parents, graph_input, 0, 1, 2, scalable.EVALUATOR_V3,
+                               {'binary':str(tmp_path/'missing-verifier'),'binary_sha256':'0'*64}, 5, {})
+
+
+def test_only_the_written_omp_shim_counts_as_a_parser_adaptation(tmp_path):
+    """A user include directory that merely ends in `/parser-shims` is not the omp.h shim."""
+    library,parse_args=compiler_inventory()
+    source=tmp_path/'plain.cc'; source.write_text('int f(){int s=0;for(int i=0;i<3;++i)s+=i;return s;}\n')
+    lookalike=tmp_path/'user'/'parser-shims'; lookalike.mkdir(parents=True)
+    result=discover(source,[*parse_args,'-isystem',str(lookalike)],library)
+    assert not any('parser shim' in a for a in result['parser_adaptations'])

@@ -40,6 +40,30 @@ def _compiler_sensitive(name):
                         "__has_c_attribute", "__has_declspec_attribute", "__is_identifier"})
 
 
+# Metadata-parser-only omp.h (cpud ticket 10, 2026-10-12 ET; written by
+# `bfs_profiling._discovery_settings`): read the next omp.h with _OPENMP lowered below its
+# declare-variant block, then restore the compiler's value. Never used by a build.
+OMP_SHIM_DIRECTORY = "parser-shims"
+OMP_SHIM_LEVEL = 201511
+OMP_PARSER_SHIM = f"""/* SWDB discovery parser shim; never used by a build. */
+#pragma push_macro("_OPENMP")
+#undef _OPENMP
+#define _OPENMP {OMP_SHIM_LEVEL}
+#include_next <omp.h>
+#pragma pop_macro("_OPENMP")
+"""
+
+
+def _uses_omp_shim(arguments):
+    """True only for an -isystem directory holding this exact shim (code review 2026-10-13 ET)."""
+    for flag, value in zip(arguments, arguments[1:]):
+        if flag == "-isystem" and Path(value).name == OMP_SHIM_DIRECTORY:
+            header = Path(value) / "omp.h"
+            if header.is_file() and header.read_text(errors="replace") == OMP_PARSER_SHIM:
+                return True
+    return False
+
+
 def discover(source, arguments, library, kernel_name="BFS"):
     """Return only compiler-resolved editable extents, fail on any parse error."""
     source = Path(source).resolve()
@@ -224,8 +248,8 @@ def discover(source, arguments, library, kernel_name="BFS"):
                                          and region["function"] in r["helpers"]})
         adaptations = (["GNU __restrict__ erased for source inventory only; alias semantics are not inferred; actual builds retain original source and qualifiers"]
                        if "-D__restrict__=" in arguments else [])
-        if any(str(a).endswith("/parser-shims") for a in arguments):   # 2026-10-12 ET (cpud ticket 10)
-            adaptations.append("omp.h read with _OPENMP lowered to 201511 (parser shim) so its declare-variant "
+        if _uses_omp_shim(arguments):   # 2026-10-12 ET (cpud ticket 10)
+            adaptations.append(f"omp.h read with _OPENMP lowered to {OMP_SHIM_LEVEL} (parser shim) so its declare-variant "
                                "definitions do not collide while OpenMP parsing is off; the source keeps the compiler's _OPENMP")
         return {"backend": "libclang-cindex", "version": string(lib.clang_getClangVersion()),
                 "library": str(library), "arguments": arguments, "diagnostics": diagnostics,
