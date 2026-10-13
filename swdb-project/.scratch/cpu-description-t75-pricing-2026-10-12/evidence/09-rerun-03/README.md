@@ -56,3 +56,11 @@ See `mbit10-sha256-09.txt` and `mbit10-sha256-09b.txt`.
   `step-times.txt`.
 - Unknowns summary: `unknowns-summary-a3.json` (ticket 01's parameterized script): 0 unknown
   regions on both sides.
+
+## Cleanup (LR-06, 2026-10-12 21:52 ET)
+
+After every record above was committed with a matching sha256, I deleted the raw root
+`/data/yanruj/EvolveSWDB_runs/cpud0809-20261012-a1/` (3.7 GB: two store copies, estimate JSON,
+a 1.1 GB `build/` folder) and the three worktrees `/data/yanruj/ArchEvolve-cpud0809-{b8be5305,c9f9df67,4324b546}`.
+Kept for ticket 10: `/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/` (untouched, 63 MB in `a2/`).
+No other session's folder was touched. Free space after: `/data1` 22 GB, `/data` 63 GB.
