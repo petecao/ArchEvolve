@@ -14,9 +14,17 @@ from scripts import bfs_native_one_thread_pilot as client
 from swdb import artifacts, yamlio
 from swdb.store import Store
 
+from conftest import record_view
+
 
 def plan():
     return yamlio.load(client.PLAN)
+
+
+def plan_record_view(folder, value):
+    """The real records the plan reads (machine, historical records, first evaluations), as a
+    reference-closed copy: `Store` over the whole checkout parses ~1.3 GB per call (2026-10-13 ET)."""
+    return record_view(folder, 'mbit10', *value['historical_records'], *(cell['first_evaluation'] for cell in value['cells']))
 
 
 def write_ref(path, value):
@@ -27,7 +35,7 @@ def write_ref(path, value):
 def build_reader_fixture(tmp_path,monkeypatch):
     # The orchestrator reader is tested independently from raw BFS correctness;
     # pair validation is replaced with an explicitly synthetic failing A/A grid.
-    value=plan(); real=Store(client.ROOT/'records'); records={}; checks={}
+    value=plan(); real=Store(plan_record_view(tmp_path/'real-view', value)); records={}; checks={}
     class Records:
         def get(self,rid,*args): return records[rid] if rid in records else real.get(rid,*args)
     store=Records(); began=datetime(2026,9,26,14,tzinfo=client.ET); ended=began+timedelta(seconds=10)

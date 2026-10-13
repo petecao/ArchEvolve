@@ -155,6 +155,7 @@ def test_proposal_message_retains_provider_capture_and_edit_format(actual, tmp_p
     assert body["content"]["payload"]["kind"] == "annotated_source" and body["content"]["payload"]["sha256"]
 
 
+@pytest.mark.whole_store  # renders from the real ~1.3 GB checkout records
 def test_checked_in_handoff_examples_are_current():
     done = subprocess.run([sys.executable, "scripts/bfs_handoff_examples.py", "--check",
                            "--mode", "extensa", "--campaign", "extensa-gem5-bfs-20261004-a7"],

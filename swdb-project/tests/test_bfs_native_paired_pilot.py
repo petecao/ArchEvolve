@@ -15,12 +15,13 @@ from scripts import bfs_native_paired_pilot as driver
 from scripts import bfs_process
 from swdb import artifacts, bfs_native, bfs_native_pair, bfs_protocol, yamlio
 from swdb.store import Store
+from testkit.real_store import lazy_store_seam, real_store
 
 
 def test_all_retained_first_blocks_generate_the_exact_new_unchanged_pair_requests():
     plan = yamlio.load(driver.PLAN)
     driver.validate_plan(plan)
-    store = Store(driver.ROOT / 'records')
+    store = real_store()
     machine = store.get('mbit10', 'machine')
     for cell in plan['cells']:
         first = store.get(cell['first_evaluation'], 'evaluation')
@@ -196,7 +197,8 @@ def driver_receipt_fixture(tmp_path, monkeypatch):
     folder = runs / (driver.RUN_ID + '.driver')
     folder.mkdir(parents=True)
     monkeypatch.setattr(driver.previous, 'raw_root', lambda value: Path(value).resolve())
-    store = Store(driver.ROOT / 'records')
+    lazy_store_seam(monkeypatch, driver)
+    store = real_store()
     machine = store.get('mbit10', 'machine')
     started = datetime(2026, 9, 26, 9, 0, tzinfo=driver.DEADLINE.tzinfo)
     receipt = {'id': driver.RUN_ID, 'state': 'complete', 'role': 'paired_unchanged_native_calibration',

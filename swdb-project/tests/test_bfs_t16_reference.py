@@ -14,6 +14,7 @@ from swdb import artifacts, bfs_protocol
 from test_bfs_simulator_batch import admission
 from test_bfs_simulator_batch_admission import admit, completed, immutable, reseal  # noqa: F401
 from testkit.toolchain import load_script
+from testkit.real_store import real_store
 
 RECIPE = batch.ROOT/'.scratch/bfs-rewrite-evaluation-2026-09-25/operator-recipes/t16-reference-b1'
 
@@ -144,7 +145,7 @@ def test_one_replay_requires_declared_deterministic_simulator_basis():
     from swdb import yamlio
     from swdb.cli import Failure
     from swdb.store import Store
-    store = Store(batch.ROOT/'records')
+    store = real_store()
     request = yamlio.load(batch.PLAN_DIR/'author-reference-seal-runtime-freeze-20260927-a1.yaml')
     settings = copy.deepcopy(request['settings'])
     bfs_protocol._validate_settings(settings, store, require_simulation_identity=True)

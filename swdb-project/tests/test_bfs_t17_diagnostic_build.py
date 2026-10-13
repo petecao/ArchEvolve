@@ -62,6 +62,7 @@ def test_actual_public_get_uses_counted_db_and_record_view(worker):
     assert worker.account()['artifact_bytes']>before
 
 
+@pytest.mark.whole_store
 def test_full_git_record_view_keeps_source_dependencies_for_public_get(worker):
     shutil.copytree(build.ROOT/'records', build.RECORDS, dirs_exist_ok=True)
     rows = build.record_inventory()

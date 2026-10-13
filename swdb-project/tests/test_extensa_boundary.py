@@ -55,6 +55,7 @@ def test_every_record_kind_accepts_only_paired_extensa_tags(repo, tags, ok, fiel
         assert KRON in result.stderr and field in result.stderr
 
 
+@pytest.mark.whole_store
 def test_repository_records_revalidate_unchanged():
     result = run_swdb("validate")
     assert result.returncode == 0, result.stderr
