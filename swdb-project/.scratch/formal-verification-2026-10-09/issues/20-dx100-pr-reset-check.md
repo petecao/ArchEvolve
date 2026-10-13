@@ -77,9 +77,9 @@ Resolved 2026-10-13 19:56 ET, AFK on the Mac. Evidence, commands and the full ru
 
 **Re-check (Yan-Ru asked "are you sure?"):** the claim holds only for runs of 2 or more
 iterations. The authors' settings (1 iteration) produce correct scores. gem5's indirect RMW was
-read, not run (upstream `e4fc4afd`, `src/mem/MAA/IndirectAccess.cc:898-1023`). It copies the memory
-line into `new_data`, does `new_data[wid] += SPD[src][itr]` for every data type, and writes the line
-back (`:1145-1158`). So gem5 also adds into memory, as the functional model does. The defect does
+read, not run (upstream `e4fc4afd`, `src/mem/MAA/IndirectAccess.cc`). It copies the memory line
+into `new_data` (`:901`), adds the tile value for `float` (`:975-980`, the same for every data
+type), and writes the line back (`:1145-1158`). So gem5 also adds into memory, as the functional model does. The defect does
 not depend on which model runs it.
 
 **Inputs passed on:**
