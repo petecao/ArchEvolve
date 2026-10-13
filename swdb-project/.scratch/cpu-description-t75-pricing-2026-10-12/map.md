@@ -4,11 +4,15 @@ Created: 2026-10-12 00:42 ET. Spec: [spec.md](spec.md).
 
 ## Current state
 
-- **Checkpoint (2026-10-12 01:12 ET):** 10 tickets cut from the code map in [notes/](notes/index.md)
-  (it records 10 places where the code differs from the spec; tickets 01, 03 and 05 record those decisions). Implementation on
-  integration branch `cpud/integration` (base `yanrujhou_main`).
-- **Blocker:** none.
-- **Next action:** frontier 01–06 in parallel; 07 (mbit10 calibrations) after 01, 02, 04, 05, 06.
+- **Checkpoint (2026-10-12 20:55 ET):** tickets 01–08 resolved; `services.v2` bound (ticket 08).
+  Ticket 09 (`.a3` estimates + attribute) is claimed and running; ticket 10 is ready-for-agent.
+  Code-review fixes (tip `c9f9df67`) are on branch `cpud/review-fixes`: F1 floor-only bandwidth is
+  numeric on `services.v2`; F2–F7 and test fixes are listed in [evidence/review-fixes.md](evidence/review-fixes.md).
+  Integration branch `cpud/integration` (base `yanrujhou_main`).
+- **Blocker:** none for the effort. The review fixes still have to be fast-forwarded into
+  `cpud/integration` (see the review-fixes note).
+- **Next action:** finish ticket 09, then ticket 10 (timing and split check) on a later Eastern day
+  than both `.a3` estimates.
 
 ## Tickets
 
@@ -45,6 +49,10 @@ Graph: 01–06 start now → 07 (needs 01, 02, 04, 05, 06) → 08 (needs 03, 07)
 - Ticket 08 resolved (2026-10-12 17:55 ET, branch `cpud/08-09-bind-estimate`): `services.v2` bound on mbit10
   (sha256 `70fc5553…`), 6-member allowlist, 252 compatibility rows with 0 missing, floor-only 15 071 467 834 B/s;
   whole store `OK: 723`; `services.v1` unchanged ([answer](issues/08-bind-services-v2.md#answer), [runbook](evidence/08-bind/README.md)).
+
+- Code-review fixes (2026-10-12 20:55 ET, branch `cpud/review-fixes`): F1 floor-only bandwidth numeric on
+  `services.v2`; F2–F6, test-store fixes, T2 combined test; raw lane logs replaced by hashes
+  ([review fixes](evidence/review-fixes.md), [raw logs](evidence/raw-logs.md)).
 
 - Origin: fine-grained attribution tickets 03 and 09 closed negative
   ([03 answer](../fine-grained-attribution-2026-10-11/issues/03-first-real-pair.md#answer),
