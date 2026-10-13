@@ -1,21 +1,27 @@
 - Weekly working logs
 
+## Weekly progress (read before planning a deck)
+
+1. `git log --since=<previous weeklog date> -- swdb-project`: commit and merge subjects name the efforts.
+2. The current-state section of each `.scratch/*/map.md` that the log touches.
+3. The previous week's `speaker-notes.md`: last week's next steps.
+
 ## Making Slides
 - The target audience is my professor, an expert in compiler and computer architecture.
+
+- **Core parts**: cover Yan-Ru's own core parts of the week, one section each.
+
+- **Sparse**: one claim per slide, at most 55 body words; every detail goes to the speaker notes. Before export run `python3 weeklogs/tools/check_slide_words.py <project>/svg_output` (from `swdb-project/`).
 
 - The slides must be easy to follow, better with illustration and example.
 
 - Nice to include benchmark results and analysis.
 
-- When illustrate concepts or features, be sure to mention the motivation, the problem, the solution, and the result.
-
-- show what we have done, what we are working, and what is the future work (for our weekly meetings).
+- When illustrate concepts or features, it's good to mention the motivation, the problem, the solution, and the result.
 
 - For benchmark, show the setup, the result, and the analysis.
 
 - It's not bad to show our limitations and what we have learned from it.
-
-- Information flow is important. People should know what we have done, what we are working on, and what is the future work.
 
 - The smallest font is 15pt.
 
@@ -27,11 +33,7 @@
 
 - Make it top-tier conference level.
 
-- Make it simple and easy to follow
-
 - Do not use very big texts to highlight things.
-
-- Always use simple examples to illustrate the concepts.
 
 - It's great to use simple examples to explain things.
 
@@ -50,14 +52,12 @@
 - Assume your reader is intelligent but attention-constrained. Make the path to understanding as short and frictionless as possible.
 
 
-## Typical Meeting 
+## Building a deck
 
-- Weekly meeting for 30 mins
-
-- Monthly meeting for 45 mins
+Build each deck fresh with ppt-master. Its preview pages cannot bind a port in the sandbox:
+confirm in chat and check pages with `rsvg-convert`.
 
 ## Visual style — UMich palette (use this for all decks under weeklyLogs/)
-- Reference deck: `Apr29/slides/build_deck.js`.
 
 ### Palette
 - `blue: 00274C` — Michigan Blue, the primary color (header bar, primary box borders, body emphasis text)
