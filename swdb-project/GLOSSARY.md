@@ -1,6 +1,6 @@
 # EvolveSWDB — ArchEvolve's research database
 
-Updated: 2026-10-13 14:05 ET (formal-verification ticket 12: proof semantics added; functional model and assumption set sharpened); 2026-10-12 23:51 ET (formal-verification ticket 11: Extensa Probata, verifier lineup, bounded verifier, unbounded verifier added); 2026-10-12 22:50 ET (formal-verification ticket 10: unit postcondition, relational template, contract proof, reference instance, summary added; negative control and certification level sharpened); 2026-10-12 22:25 ET (formal-verification ticket 09: certification level and formal verifier sharpened; proof unit, unit relation, output relation, lifting lemma, assumption set added); 2026-10-12 00:37 ET (final review of fine-grained attribution: code origin and catalog bound reworded; attribution report, split check, site-finder region and measured scope added); 2026-10-11 22:10 ET (review fix: rewrite site reworded to merged spans); 2026-10-11 21:52 ET (ADR 0015: LANL core, guessed column, SWDB extension; crosswalk now historical); 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom, remaining gain bound); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
+Updated: 2026-10-13 15:22 ET (formal-verification ticket 13: proof-hint agent, counterexample-guided repair, proof-hint loop, hint set, proof setup check, proof hint check added; proof hint sharpened); 2026-10-13 14:05 ET (formal-verification ticket 12: proof semantics added; functional model and assumption set sharpened); 2026-10-12 23:51 ET (formal-verification ticket 11: Extensa Probata, verifier lineup, bounded verifier, unbounded verifier added); 2026-10-12 22:50 ET (formal-verification ticket 10: unit postcondition, relational template, contract proof, reference instance, summary added; negative control and certification level sharpened); 2026-10-12 22:25 ET (formal-verification ticket 09: certification level and formal verifier sharpened; proof unit, unit relation, output relation, lifting lemma, assumption set added); 2026-10-12 00:37 ET (final review of fine-grained attribution: code origin and catalog bound reworded; attribution report, split check, site-finder region and measured scope added); 2026-10-11 22:10 ET (review fix: rewrite site reworded to merged spans); 2026-10-11 21:52 ET (ADR 0015: LANL core, guessed column, SWDB extension; crosswalk now historical); 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom, remaining gain bound); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
 
 The Software Database is the ArchEvolve component that knows the applications:
 what their kernels compute, how their code touches memory, what profiling
@@ -603,10 +603,44 @@ tool.
 _Avoid_: trusted base (alone), assumptions (alone)
 
 **Proof hint**:
-A ghost variable, loop invariant, lemma or intermediate assertion added to help a formal verifier
-reach a verdict. Each hint must itself be proven; an assumption, or a change to the code under
-proof or to its rewrite contract, is never a proof hint.
+A ghost declaration or statement, loop invariant with its frame and variant, non-recursive
+definition, lemma, tactic hint or intermediate assertion added to help a formal verifier reach a
+verdict. Each hint must itself be proven; an assumption, a recursive definition, or a change to the
+code under proof or to its rewrite contract, is never a proof hint.
 _Avoid_: partial proof, auxiliary variable, annotation (alone)
+
+**Proof-hint agent**:
+A coding agent in the proof-hinting role that writes proof hints for one candidate artifact's proof
+unit. It never edits code, and its provider kind is part of the record.
+_Avoid_: proving agent, prover agent, hint LLM
+
+**Counterexample-guided repair**:
+The loop in which a bounded verifier's counterexample against a candidate artifact goes to the
+rewriting role as correctness-repair feedback, and the repaired candidate artifact is certified and
+proven again.
+_Avoid_: refinement loop, counterexample-guided refinement, CEGAR
+
+**Proof-hint loop**:
+The loop, per proof unit of one candidate artifact, in which hint sets are tried, checked and
+proven by the unbounded verifier until the unit is proven or the budget is spent. It never changes
+the candidate artifact's code.
+_Avoid_: proof loop (alone), proof search, refinement loop
+
+**Hint set**:
+The proof hints for one proof unit in one round, each placed at an anchor of the code under proof
+and recorded with its provenance: proof-hint agent, seed, or human.
+_Avoid_: hint overlay, annotations
+
+**Proof setup check**:
+The deterministic check, before every formal-verifier run, that a proof unit's inputs, summaries
+and settings are the frozen ones, that every assumption in it comes from a summary, and that every
+clause has a proof placement.
+_Avoid_: preflight, harness check
+
+**Proof hint check**:
+The deterministic check that rejects a hint set using any kind outside the allowed proof hints, or
+whose removal does not leave the code under proof unchanged.
+_Avoid_: hint checker, cheat filter
 
 **Profiling agent**:
 A coding agent in the profiling role that produces profiling evidence for a region: statement

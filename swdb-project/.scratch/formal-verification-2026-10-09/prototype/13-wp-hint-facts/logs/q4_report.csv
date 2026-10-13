@@ -1,0 +1,31 @@
+directory	file	line	function	property kind	status	property
+.	q4_status.c	11	full	postcondition	Valid	FULL: \result ≡ 3
+.	q4_status.c	12	full	postcondition	Valid	\false
+.	q4_status.c	12	full	termination clause	Valid	\true
+.	q4_status.c	12	full	assigns clause	Valid	assigns \nothing;
+.	q4_status.c	14	dep_admit	postcondition	Valid	\result ≡ 1
+.	q4_status.c	15	dep_admit	postcondition	Valid	\false
+.	q4_status.c	15	dep_admit	termination clause	Valid	\true
+.	q4_status.c	15	dep_admit	assigns clause	Valid	assigns \nothing;
+.	q4_status.c	15	dep_admit	user hypothesis	Considered valid	v ≡ 1
+.	q4_status.c	19	dep_axiom	postcondition	Valid	\false
+.	q4_status.c	19	dep_axiom	termination clause	Valid	\true
+.	q4_status.c	19	dep_axiom	assigns clause	Valid	assigns \nothing;
+.	q4_status.c	19	dep_axiom	user assertion	Valid	h(0) ≡ 10
+.	q4_status.c	22	dep_admitlemma	postcondition	Valid	\false
+.	q4_status.c	22	dep_admitlemma	termination clause	Valid	\true
+.	q4_status.c	22	dep_admitlemma	assigns clause	Valid	assigns \nothing;
+.	q4_status.c	22	dep_admitlemma	user assertion	Valid	h(1) ≡ 11
+.	q4_status.c	25	dep_lemma	postcondition	Valid	\false
+.	q4_status.c	25	dep_lemma	termination clause	Valid	\true
+.	q4_status.c	25	dep_lemma	assigns clause	Valid	assigns \nothing;
+.	q4_status.c	25	dep_lemma	user assertion	Valid	h(2) ≡ 12
+.	q4_status.c	28	dep_assert	postcondition	Valid	\false
+.	q4_status.c	28	dep_assert	termination clause	Valid	\true
+.	q4_status.c	28	dep_assert	assigns clause	Valid	assigns \nothing;
+.	q4_status.c	28	dep_assert	user assertion	Unknown	v ≡ 5
+.	q4_status.c	29	dep_assert	user assertion	Partially proven	v > 4
+.	q4_status.c	32	before_late	postcondition	Valid	\false
+.	q4_status.c	32	before_late	termination clause	Valid	\true
+.	q4_status.c	32	before_late	assigns clause	Valid	assigns \nothing;
+.	q4_status.c	32	before_late	user assertion	Valid	h(3) ≡ 13

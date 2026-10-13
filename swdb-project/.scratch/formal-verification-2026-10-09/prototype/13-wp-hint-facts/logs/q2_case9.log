@@ -1,0 +1,23 @@
+== q2_case9: frama-c q2_logic.c -cpp-extra-args=-DCASE=9 -wp -wp-cache none -wp-timeout 5 -wp-prover alt-ergo -then -report
+[kernel] Parsing q2_logic.c (with preprocessing)
+[wp] Running WP plugin...
+[wp] 1 goal scheduled
+[wp] [Timeout] typed_lemma_L_false (Alt-Ergo)
+[wp] Proved goals:    0 / 1
+  Qed:             0
+  Timeout:         1
+[report] Computing properties status...
+--------------------------------------------------------------------------------
+--- Global Properties
+--------------------------------------------------------------------------------
+
+[    -    ] Lemma 'L_false'
+            tried with Wp.typed (v1).
+
+--------------------------------------------------------------------------------
+--- Status Report Summary
+--------------------------------------------------------------------------------
+     1 To be validated
+     1 Total
+--------------------------------------------------------------------------------
+exit=0

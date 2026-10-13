@@ -1,0 +1,12 @@
+== q2_case5_task: frama-c q2_logic.c -cpp-extra-args=-DCASE=5 -wp -wp-cache none -wp-gen -wp-prover alt-ergo -wp-msg-key print-generated
+[kernel] Parsing q2_logic.c (with preprocessing)
+[wp] Running WP plugin...
+[wp] Warning: Missing RTE guards
+[wp] 3 goals scheduled
+[wp] [Generated] Goal typed_f_assigns (Qed)
+[wp] User Error: After simplification inductive ib appear ill-formed (hint: check cases premises)
+[wp] Warning: Goal Property: running prover Alt-Ergo:2.6.4 failed ([User Error])
+[wp] User Error: After simplification inductive ib appear ill-formed (hint: check cases premises)
+[wp] Warning: Goal Property: running prover Alt-Ergo:2.6.4 failed ([User Error])
+[wp] 3 goals generated
+exit=0

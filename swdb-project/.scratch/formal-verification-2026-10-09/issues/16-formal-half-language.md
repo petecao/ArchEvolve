@@ -31,3 +31,7 @@ The language must be general: the same source covers the BC, PR and SSSP contrac
   11 (three generated forms from one source; only summary-generated `assume`s allowed), 12 (the
   proof semantics' rules, ghost hazard state and footprints come from the same source; the three
   forms must give the same verdict on every fixture scenario).
+- 2026-10-13 15:22 ET: input from 13: proof hints are ACSL records on the C lowering, for WP only. The
+  hint vocabulary bans recursive and inductive definitions (WP turns recursive ones into
+  unchecked axioms; `../research/13-wp-hint-facts.md`); only the contract's logic library, reviewed
+  at promotion, may hold them. Decide where that library lives and in which language.

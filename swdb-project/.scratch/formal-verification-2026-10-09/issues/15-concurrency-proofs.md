@@ -61,3 +61,6 @@ The method must be general: GAPBS `bc.cc:106-107` and `sssp.cc:157-160` use the 
     of the same `parent[v]`, the race class 11 found in the authors' fallback path
     (`apps/dx100/benchmarks/gapbs/src/bfs.cc:205-210`). Decide here what 01 decision 9.2
     ("should be proven") means at threads > 1.
+- 2026-10-13 15:22 ET: input from 13: the reduction program for symbolic N runs through the proof-hint
+  loop with the same vocabulary and checks; CIVL counterexamples go to counterexample-guided
+  repair (the rewriting role), never to the proof-hint agent.

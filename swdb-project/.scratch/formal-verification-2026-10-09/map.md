@@ -1,13 +1,14 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-13 14:19 ET (ticket 12 resolved: the proof semantics; ticket 16 added);
+Updated: 2026-10-13 15:22 ET (ticket 13 resolved: the proof-hint loop);
+2026-10-13 14:19 ET (ticket 12 resolved: the proof semantics; ticket 16 added);
 2026-10-13 00:35 ET (ticket 11 resolved: verifier lineup, concurrency, the name
 Extensa Probata; ticket 15 added); 2026-10-12 22:52 ET (ticket 10 resolved: what a contract proves once);
 2026-10-12 22:25 ET (ticket 09 resolved: what proven asserts; generality requirement added);
 2026-10-11 18:58 ET (ticket 08 resolved: crux-llvm separates the bug at one lane)
 **Type:** wayfinder map
-**Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–12 resolved
+**Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–13 resolved
 
 ## Destination
 
@@ -114,6 +115,14 @@ concept is the next effort.
   reads and per-element memory-footprint overlaps are hazards, except another thread's write
   beside a DX100 read (Peter's pattern). Stops at the `maa_*` calls. L3, L5 become cited rules;
   stale CPU copies after a DX100 store stay assumed (owner Eric).
+- [How does the proof-hint loop work?](issues/13-proof-hint-loop.md):
+  three loops kept apart: Extensa mode (rewrites for speed), counterexample-guided repair
+  (refutation → rewriting role) and the proof-hint loop (never changes code). A new
+  `proof_hinting` role (default Codex) writes anchored ACSL records on the C lowering, for WP only;
+  SAW stays hint-free. A versioned vocabulary, three checks (setup, hint, per-property verdict
+  reading; WP's `[ Valid ]` and cache can mislead), hint seeds (a paper feature), and refutations
+  called "bug" only with a whole-kernel reproduction. Budget starts at 10 rounds / 60 min,
+  calibrated then frozen. Proof of concept on the Mac; final evaluation on mbit10.
 
 ## Tickets
 
@@ -131,7 +140,7 @@ concept is the next effort.
 | 10 | [What does a proven rewrite contract prove once?](issues/10-proven-rewrite-contract.md) | grilling | resolved | 03, 09 |
 | 11 | [Which verifiers form the bounded and unbounded tiers?](issues/11-verifier-choice.md) | grilling | resolved | 02, 08, 09 |
 | 12 | [What semantics do DX100 proofs trust?](issues/12-dx100-proof-semantics.md) | grilling | resolved | 05, 08, 14 |
-| 13 | [How does the proof-hint loop work?](issues/13-proof-hint-loop.md) | grilling | ready-for-human | 04, 09, 11 |
+| 13 | [How does the proof-hint loop work?](issues/13-proof-hint-loop.md) | grilling | resolved | 04, 09, 11 |
 | 14 | [Does a DX100 wait on a store's source tile cover the store's result?](issues/14-dx100-wait-rule.md) | research | resolved | — |
 | 15 | [How do proofs cover concurrency for any thread count?](issues/15-concurrency-proofs.md) | grilling | ready-for-human | 11, 12 |
 | 16 | [What language do formal halves and the proof semantics share?](issues/16-formal-half-language.md) | grilling | ready-for-human | 11, 12 |
@@ -160,16 +169,23 @@ concept is the next effort.
   performance compared" (the authors' fallback path races); the reduction-vs-VerCors comparison;
   CIVL team-size bounds. Per 12: the semantics negative controls, and the strict layer catching
   up to the proof semantics (memory footprints, the other-thread read rule) as a new certify
-  version.
+  version. Per 13: the proof rate as a curve over the budget (no-hint baseline at equal wall
+  time); calibration on public C suites plus the BFS proof of concept, held-out kernels for the
+  evaluation, recalibration on mbit10; seeds on and off (a paper feature, Yan-Ru); escape-hatch
+  attempts by rule; C-lowering subset coverage on campaign candidates; check the ESBMC-AI
+  citation (counterexample-guided LLM repair for C) for positioning.
 - **Records:** how proven verdicts, bounds, hints and counterexamples are stored in the research
   database and shown in ArchEvolve mode. Per 09, a verdict also carries its assumption set (each
   entry with its kind), a value or "unbounded" per bound dimension, and the cap from proven
   dependencies. Per 10, each once-proven part records its level and the content hashes it holds
   for; a changed hash reopens it. Per 11, every "not proven" records its failure class, and every
   verdict its verifier lineup versions, solvers and flags. Per 12, every verdict names the proof
-  semantics version and its agreement evidence (fixture differences, semantics controls).
+  semantics version and its agreement evidence (fixture differences, semantics controls). Per
+  13: hint sets with provenance, rejections by rule, rounds, provider calls, tokens and time,
+  refutation replay status, and the hint vocabulary and check versions.
 - **Extensa-mode loop:** the proving budget per iteration, and how ranking by proven level
-  changes selection.
+  changes selection. Per 13: lane-hours proofs may use on mbit10 per campaign (proof jobs run
+  inside a socket lane), and the counterexample-guided repair budget per refuted candidate.
 
 ## Out of scope
 

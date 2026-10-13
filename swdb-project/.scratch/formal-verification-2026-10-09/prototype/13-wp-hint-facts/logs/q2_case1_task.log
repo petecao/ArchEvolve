@@ -1,0 +1,102 @@
+== q2_case1_task: frama-c q2_logic.c -cpp-extra-args=-DCASE=1 -wp -wp-cache none -wp-gen -wp-prover alt-ergo -wp-msg-key print-generated
+[kernel] Parsing q2_logic.c (with preprocessing)
+[wp] Running WP plugin...
+[wp] Warning: Missing RTE guards
+[wp] 4 goals scheduled
+[wp] [Generated] Goal typed_f_assigns (Qed)
+---------------------------------------------
+--- Context 'typed_f' Cluster 'Axiomatic' 
+---------------------------------------------
+theory Axiomatic
+  
+  (* use why3.BuiltIn.BuiltIn *)
+  
+  (* use bool.Bool *)
+  
+  (* use int.Int *)
+  
+  (* use int.ComputerDivision *)
+  
+  (* use real.RealInfix *)
+  
+  (* use frama_c_wp.qed.Qed *)
+  
+  (* use map.Map *)
+  
+  function L_sq (x:int) : int = x * x
+  
+  predicate P_is_pos (x:int) = 0 < x
+  
+  lemma Q_L_sq : forall x:int. P_is_pos x -> 0 < L_sq x
+  
+end
+[wp:print-generated] 
+  theory WP
+    
+    (* use why3.BuiltIn.BuiltIn *)
+    
+    (* use bool.Bool *)
+    
+    (* use int.Int *)
+    
+    (* use int.ComputerDivision *)
+    
+    (* use real.RealInfix *)
+    
+    (* use frama_c_wp.qed.Qed *)
+    
+    (* use map.Map *)
+    
+    (* use Axiomatic *)
+    
+    goal wp_goal : P_is_pos (L_sq 1)
+    
+  end
+[wp:print-generated] 
+  theory WP1
+    
+    (* use why3.BuiltIn.BuiltIn *)
+    
+    (* use bool.Bool *)
+    
+    (* use int.Int *)
+    
+    (* use int.ComputerDivision *)
+    
+    (* use real.RealInfix *)
+    
+    (* use frama_c_wp.qed.Qed *)
+    
+    (* use map.Map *)
+    
+    (* use Axiomatic *)
+    
+    goal wp_goal : not P_is_pos (L_sq 1)
+    
+  end
+[wp:print-generated] 
+  theory WP2
+    
+    (* use why3.BuiltIn.BuiltIn *)
+    
+    (* use bool.Bool1 *)
+    
+    (* use int.Int1 *)
+    
+    (* use int.ComputerDivision1 *)
+    
+    (* use real.RealInfix1 *)
+    
+    (* use frama_c_wp.qed.Qed1 *)
+    
+    (* use map.Map1 *)
+    
+    predicate P_is_pos1 (x:int) = 0 <' x
+    
+    function L_sq1 (x:int) : int = x *' x
+    
+    goal wp_goal : forall i:int. P_is_pos1 i -> 0 <' L_sq1 i
+    
+  end
+[wp] 4 goals generated
+exit=0
