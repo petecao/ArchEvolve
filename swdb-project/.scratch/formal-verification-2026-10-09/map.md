@@ -1,11 +1,12 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-12 22:52 ET (ticket 10 resolved: what a contract proves once);
+Updated: 2026-10-13 00:35 ET (ticket 11 resolved: verifier lineup, concurrency, the name
+Extensa Probata; ticket 15 added); 2026-10-12 22:52 ET (ticket 10 resolved: what a contract proves once);
 2026-10-12 22:25 ET (ticket 09 resolved: what proven asserts; generality requirement added);
 2026-10-11 18:58 ET (ticket 08 resolved: crux-llvm separates the bug at one lane)
 **Type:** wayfinder map
-**Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–10 resolved
+**Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–11 resolved
 
 ## Destination
 
@@ -32,6 +33,8 @@ concept is the next effort.
   Every method decision must say what changes that outcome.
 - **Research output:** `research/NN-<slug>.md`, linked from each research ticket's answer.
 - **Disk:** tool installs keep at least 50 GB free on the Mac.
+- **Name (Yan-Ru, 2026-10-13):** the paper's system is **Extensa Probata** (Probata after first
+  use): Extensa's loop plus the proven levels. "Extensa mode" stays the SWDB mode name.
 - **Generality (Yan-Ru, 2026-10-12):** the method must be general, not BFS-specific. The
   evaluation covers other GAPBS kernels. Every claim and method decision must say how it applies
   beyond BFS.
@@ -94,6 +97,14 @@ concept is the next effort.
   candidate: one automatic proof unit. Each clause names its proof placement; each part carries
   its own level, per content-hash set. Scale is a hypothesis: 2 lanes in under 15 minutes with
   summaries.
+- [Which verifiers form the bounded and unbounded tiers?](issues/11-verifier-choice.md):
+  roles, not tools: the bounded verifier (SAW 1.6; crux-llvm, CBMC fallbacks; ESBMC out) is the
+  only refuter; the unbounded verifier (WP on our deterministic C lowering) proves, and its
+  timeout triggers hints. One summary source, own product programs (RPP out), real-arithmetic
+  floats, failures root-caused. Concurrency for any N (`NUM_CORES` = N): reduction in WP sets the
+  level, CIVL refutes, VerCors cross-checks. Undefined behavior is a proof obligation; the
+  baseline is its single-thread run; the authors' racy fallback path is refuted at N > 1. Name:
+  Extensa Probata.
 
 ## Tickets
 
@@ -109,39 +120,43 @@ concept is the next effort.
 | 08 | [Can an off-the-shelf verifier tell a real DX100 wait bug from a safe one?](issues/08-wrong-tile-prototype.md) | prototype | resolved | — |
 | 09 | [What does the "proven" level assert about a candidate artifact?](issues/09-what-proven-asserts.md) | grilling | resolved | 03 |
 | 10 | [What does a proven rewrite contract prove once?](issues/10-proven-rewrite-contract.md) | grilling | resolved | 03, 09 |
-| 11 | [Which verifiers form the bounded and unbounded tiers?](issues/11-verifier-choice.md) | grilling | ready-for-human | 02, 08, 09 |
+| 11 | [Which verifiers form the bounded and unbounded tiers?](issues/11-verifier-choice.md) | grilling | resolved | 02, 08, 09 |
 | 12 | [What semantics do DX100 proofs trust?](issues/12-dx100-proof-semantics.md) | grilling | ready-for-human | 05, 08, 14 |
 | 13 | [How does the proof-hint loop work?](issues/13-proof-hint-loop.md) | grilling | ready-for-human | 04, 09, 11 |
 | 14 | [Does a DX100 wait on a store's source tile cover the store's result?](issues/14-dx100-wait-rule.md) | research | resolved | — |
+| 15 | [How do proofs cover concurrency for any thread count?](issues/15-concurrency-proofs.md) | grilling | ready-for-human | 11, 12 |
 
 ## Not yet specified
 
 - **Scaling past one lane:** what bound a proven-within-bounds verdict needs (2-lane tiles, more
   edges), and which engine or encoding reaches it. 08 showed crux-llvm cannot prove 2 lanes in
   15 minutes on the Mac. 09 settled how bounds are declared (per contract dimension, threads
-  included); which bound is worth reaching still waits on 11 (verifier choice). 10's hypothesis:
-  summaries in place of the inlined strict-layer port bring 2 lanes under 15 minutes.
+  included); 11 chose SAW, whose summaries are native `llvm_verify` overrides, as the bounded
+  verifier. 10's hypothesis: summaries in place of the inlined strict-layer port bring 2 lanes
+  under 15 minutes.
 - **Where real DX100 bugs may hide:** the two corners where the strict layer is looser than gem5
   (a range loop finishing early; memory effects applied at the call), and the same wait-on-source
   idiom in `apps/dx100/benchmarks/gapbs/src/pr.cc:242-245`.
-- **Concurrency phase:** after single-thread proofs, the OpenMP hazards: parent compare-and-swap
-  races, tiles shared between threads, the parent-gather race case. Which verifier handles threads.
-  Per 09, proven unbounded needs a proof for any thread count.
 - **Formal-half language:** what language clause formal halves use so the chosen verifier checks
-  them, and how legality clauses L2–L5 (natural language only today) get formal halves. Waits on
-  verifier choice. Per 10, each clause also names its proof placement (once, per candidate,
-  assumed).
+  them, and how legality clauses L2–L5 (natural language only today) get formal halves. Per 11,
+  formal halves generate SAWScript specs, C call stubs and ACSL contracts, and the C lowering
+  needs a declared C++ subset. Per 10, each clause also names its proof placement (once, per
+  candidate, assumed).
 - **Evaluation plan:** kernels beyond BFS, required by the generality note (the DX100 authors'
   code covers bfs top-down and bottom-up (`bfs_bu.cc`), bc, pr and sssp; cc and tc have none;
   Extensa campaign artifacts), baselines (testing-only certification, verifier without hints,
   hints without contracts), metrics (proof rate, time, hint rounds, bugs found). Per 09, each
   evaluated kernel needs an output relation and, per contract, a unit relation and a lifting
-  lemma. Per 10, each contract also needs a reference instance and a contract proof.
+  lemma. Per 10, each contract also needs a reference instance and a contract proof. Per 11: the
+  hypothesis "a proven candidate artifact vs. the authors' code at every thread count, with
+  performance compared" (the authors' fallback path races); the reduction-vs-VerCors comparison;
+  CIVL team-size bounds.
 - **Records:** how proven verdicts, bounds, hints and counterexamples are stored in the research
   database and shown in ArchEvolve mode. Per 09, a verdict also carries its assumption set (each
   entry with its kind), a value or "unbounded" per bound dimension, and the cap from proven
   dependencies. Per 10, each once-proven part records its level and the content hashes it holds
-  for; a changed hash reopens it.
+  for; a changed hash reopens it. Per 11, every "not proven" records its failure class, and every
+  verdict its verifier lineup versions, solvers and flags.
 - **Extensa-mode loop:** the proving budget per iteration, and how ranking by proven level
   changes selection.
 

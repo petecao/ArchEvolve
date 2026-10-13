@@ -7,6 +7,8 @@ Release and commit dates come from the GitHub API, queried 2026-10-09. Nothing w
 
 ---
 
+> **Errata (2026-10-13 00:35 ET):** four statements below are corrected in [`11-verifier-facts.md`](11-verifier-facts.md): VerCors 2.4.0 rejects `omp parallel` blocks (only single `parallel for` loops with iteration contracts verify); SAW 1.6 has experimental cutpoint loop invariants for bitcode; crux-llvm 0.12 supports LLVM 3.6-21; CBMC's contract flags live in `goto-instrument`.
+
 ## TL;DR
 
 - **No tool reads `bfs.cc` whole** (it pulls in `<iostream>`, the gapbs CLI and graph

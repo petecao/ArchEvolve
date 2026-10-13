@@ -44,3 +44,12 @@ How does the proof-hint loop work?
   checker confirms every clause is covered by a proof or the assumption set. (3) Negative
   controls are refuted once per contract on its reference instance; vacuity checks per
   candidate stay here.
+- 2026-10-13 00:35 ET: input from 11: (1) the trigger includes the unbounded verifier's timeout and
+  "unknown": "not proven yet", never a bug or a proof. (2) Every "not proven" carries a failure
+  class; only timeout (and proven-within-bounds verdicts) go to the hint loop; parse errors,
+  unsupported constructs, memory and crashes have fixed handlers; an unclassified failure stops
+  the batch. (3) Hint vocabulary per tool: WP (the unbounded verifier) has ghost code, lemmas,
+  loop invariants, assertions and `Wp.induction` scripts; SAW (the bounded verifier) has only
+  experimental cutpoint loop invariants, so hints mostly target WP. ESBMC and RPP are out.
+  (4) The checker allows only `assume`s a summary generates. (5) A racy candidate artifact is
+  refuted, and the counterexample goes to the rewriting LLM, not the hint agent (provisional).

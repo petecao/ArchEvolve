@@ -40,3 +40,12 @@ is the gap between the authors' model and the strict layer handled?
   carry hazard state (which tiles are ready after which wait), so hazard freedom can be proven
   without the inlined port. 10's scale hypothesis depends on such summaries. Who signs off on
   the semantics also signs off on what the summaries may claim.
+- 2026-10-13 00:35 ET: input from 11: (1) the concurrency proof needs the DX100 store issued inside
+  `critical` (`apps/dx100/benchmarks/gapbs/src/bfs.cc:170-187`) to be complete **and visible to
+  other cores** before the lock is released. Research 14 confirmed completion on gem5, not
+  cross-core visibility. Until this ticket decides, it is an assumption-set entry (trusted
+  accelerator semantics). (2) Summaries come in three generated forms (SAWScript specs, C call
+  stubs, ACSL contracts) from one source, the formal halves; the DX100 summaries must carry hazard
+  state in all three, and per-thread tile ownership for concurrency (ticket 15). (3) Behavior
+  outside the language standard is trusted accelerator semantics; undefined behavior is a proof
+  obligation (11, item 11).

@@ -1,6 +1,6 @@
 # EvolveSWDB — ArchEvolve's research database
 
-Updated: 2026-10-12 22:50 ET (formal-verification ticket 10: unit postcondition, relational template, contract proof, reference instance, summary added; negative control and certification level sharpened); 2026-10-12 22:25 ET (formal-verification ticket 09: certification level and formal verifier sharpened; proof unit, unit relation, output relation, lifting lemma, assumption set added); 2026-10-12 00:37 ET (final review of fine-grained attribution: code origin and catalog bound reworded; attribution report, split check, site-finder region and measured scope added); 2026-10-11 22:10 ET (review fix: rewrite site reworded to merged spans); 2026-10-11 21:52 ET (ADR 0015: LANL core, guessed column, SWDB extension; crosswalk now historical); 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom, remaining gain bound); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
+Updated: 2026-10-12 23:51 ET (formal-verification ticket 11: Extensa Probata, verifier lineup, bounded verifier, unbounded verifier added); 2026-10-12 22:50 ET (formal-verification ticket 10: unit postcondition, relational template, contract proof, reference instance, summary added; negative control and certification level sharpened); 2026-10-12 22:25 ET (formal-verification ticket 09: certification level and formal verifier sharpened; proof unit, unit relation, output relation, lifting lemma, assumption set added); 2026-10-12 00:37 ET (final review of fine-grained attribution: code origin and catalog bound reworded; attribution report, split check, site-finder region and measured scope added); 2026-10-11 22:10 ET (review fix: rewrite site reworded to merged spans); 2026-10-11 21:52 ET (ADR 0015: LANL core, guessed column, SWDB extension; crosswalk now historical); 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom, remaining gain bound); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
 
 The Software Database is the ArchEvolve component that knows the applications:
 what their kernels compute, how their code touches memory, what profiling
@@ -209,6 +209,12 @@ _Avoid_: refinement mode, research mode
 Yan-Ru's published loop system for contract-guided rewrites: the AgenticRefiner folder of the
 MemAcc repository, from which Extensa mode is seeded.
 _Avoid_: LACT (for the system), refiner (alone)
+
+**Extensa Probata**:
+The system of Yan-Ru's next paper: Extensa extended with the proven certification levels, where
+each candidate artifact is proven against its rewrite contract by the verifier lineup, with proof
+hints written by an LLM. Short form after first use: Probata.
+_Avoid_: proven Extensa, Extensa 2
 
 **Extensa campaign**:
 One run of Extensa mode over chosen hardware targets, workload classes, library tier and
@@ -538,6 +544,21 @@ _Avoid_: version (alone) when the family is not clear; certify level
 A tool, such as CBMC or Z3, that proves or refutes a formal predicate about code, for all inputs
 or within declared bounds.
 _Avoid_: checker, prover (alone), verifier (alone, for this tool)
+
+**Verifier lineup**:
+The formal verifiers that fill the two roles, bounded verifier and unbounded verifier. The roles
+are fixed; the tools that fill them may change.
+_Avoid_: tier (names the typed library's tiers), verifier stack
+
+**Bounded verifier**:
+The formal-verifier role that gives proven-within-bounds verdicts and is the only source of
+refutations and counterexamples.
+_Avoid_: model checker (alone), bounded tier
+
+**Unbounded verifier**:
+The formal-verifier role that gives proven-unbounded verdicts. Its "not proven" never refutes; it
+calls for more proof hints.
+_Avoid_: deductive verifier (alone), unbounded tier
 
 **Proof unit**:
 One call of the function that holds a rewrite site: the scope a formal verifier proves for a
