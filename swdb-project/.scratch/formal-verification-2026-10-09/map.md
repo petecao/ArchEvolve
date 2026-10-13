@@ -1,14 +1,15 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-13 15:22 ET (ticket 13 resolved: the proof-hint loop);
+Updated: 2026-10-13 16:09 ET (ticket 15 resolved: concurrency proofs for any thread count;
+ticket 17 added; VerCors out of scope); 2026-10-13 15:22 ET (ticket 13 resolved: the proof-hint loop);
 2026-10-13 14:19 ET (ticket 12 resolved: the proof semantics; ticket 16 added);
 2026-10-13 00:35 ET (ticket 11 resolved: verifier lineup, concurrency, the name
 Extensa Probata; ticket 15 added); 2026-10-12 22:52 ET (ticket 10 resolved: what a contract proves once);
 2026-10-12 22:25 ET (ticket 09 resolved: what proven asserts; generality requirement added);
 2026-10-11 18:58 ET (ticket 08 resolved: crux-llvm separates the bug at one lane)
 **Type:** wayfinder map
-**Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–13 resolved
+**Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–13 and 15 resolved
 
 ## Destination
 
@@ -40,6 +41,12 @@ concept is the next effort.
 - **Generality (Yan-Ru, 2026-10-12):** the method must be general, not BFS-specific. The
   evaluation covers other GAPBS kernels. Every claim and method decision must say how it applies
   beyond BFS.
+- **Any input (Yan-Ru, 2026-10-13):** ArchEvolve must handle any input code, not only code an
+  expert already reshaped for DX100. Peter's and Josh's code is preliminary and tentative: a
+  proof-of-concept candidate, never ground truth.
+- **Automation and cost (Yan-Ru, 2026-10-13):** minimize human effort and construct proofs as
+  automatically as possible. Formal by default, but trade off: about one month of work per piece
+  (not absolute), and do the chosen option well.
 
 ## Context pointers
 
@@ -123,6 +130,13 @@ concept is the next effort.
   reading; WP's `[ Valid ]` and cache can mislead), hint seeds (a paper feature), and refutations
   called "bug" only with a whole-kernel reproduction. Budget starts at 10 rounds / 60 min,
   calibrated then frozen. Proof of concept on the Mac; final evaluation on mbit10.
+- [How do proofs cover concurrency for any thread count?](issues/15-concurrency-proofs.md):
+  WP proves one symbolic thread of N; other threads appear only through the contract's shared
+  actions (a fixed set of kinds, each with a commutativity lemma). A parallel composition theorem,
+  written by Codex in Rocq and checked there (time-boxed, written fallback), lifts it to every N.
+  Reads that race on purpose are history reads (RC11); any other race refutes. CIVL gives proven
+  within bounds for threads <= k, GenMC refutes, both must agree. All three proof-of-concept
+  candidates race at N > 1 as written and go to repair. VerCors out; enabling rewrites to 17.
 
 ## Tickets
 
@@ -142,8 +156,9 @@ concept is the next effort.
 | 12 | [What semantics do DX100 proofs trust?](issues/12-dx100-proof-semantics.md) | grilling | resolved | 05, 08, 14 |
 | 13 | [How does the proof-hint loop work?](issues/13-proof-hint-loop.md) | grilling | resolved | 04, 09, 11 |
 | 14 | [Does a DX100 wait on a store's source tile cover the store's result?](issues/14-dx100-wait-rule.md) | research | resolved | — |
-| 15 | [How do proofs cover concurrency for any thread count?](issues/15-concurrency-proofs.md) | grilling | ready-for-human | 11, 12 |
+| 15 | [How do proofs cover concurrency for any thread count?](issues/15-concurrency-proofs.md) | grilling | resolved | 11, 12 |
 | 16 | [What language do formal halves and the proof semantics share?](issues/16-formal-half-language.md) | grilling | ready-for-human | 11, 12 |
+| 17 | [How do enabling rewrites chain with offloading rewrites?](issues/17-enabling-rewrites.md) | grilling | ready-for-human | 15 |
 
 ## Not yet specified
 
@@ -157,8 +172,8 @@ concept is the next effort.
   for proofs (the range-loop corner is in certify 1.7; memory timing is in the proof semantics),
   and the wait-on-source idiom in `apps/dx100/benchmarks/gapbs/src/pr.cc:242-245` is safe under
   the gem5 rule. Left: stale CPU copies after a DX100 store (assumed, owner Eric; research 12),
-  the two gem5 corners research 12 could not rule out, and the plain store after CAS in Peter's
-  read offload (ticket 15).
+  and the two gem5 corners research 12 could not rule out. (Peter's plain store after the CAS is
+  a data race, refuted at N > 1 per 15.)
 - **Evaluation plan:** kernels beyond BFS, required by the generality note (the DX100 authors'
   code covers bfs top-down and bottom-up (`bfs_bu.cc`), bc, pr and sssp; cc and tc have none;
   Extensa campaign artifacts), baselines (testing-only certification, verifier without hints,
@@ -166,8 +181,10 @@ concept is the next effort.
   evaluated kernel needs an output relation and, per contract, a unit relation and a lifting
   lemma. Per 10, each contract also needs a reference instance and a contract proof. Per 11: the
   hypothesis "a proven candidate artifact vs. the authors' code at every thread count, with
-  performance compared" (the authors' fallback path races); the reduction-vs-VerCors comparison;
-  CIVL team-size bounds. Per 12: the semantics negative controls, and the strict layer catching
+  performance compared" (the authors' fallback path races); CIVL team-size bounds. Per 15: the
+  ladder per candidate (SAW threads = 1, CIVL threads <= k, WP every N); CIVL and GenMC agreement;
+  eight concurrency controls (seven refuted, one proven); all three candidates as written vs
+  repaired at every N; the outcome of the Rocq time-box for the parallel composition theorem. Per 12: the semantics negative controls, and the strict layer catching
   up to the proof semantics (memory footprints, the other-thread read rule) as a new certify
   version. Per 13: the proof rate as a curve over the budget (no-hint baseline at equal wall
   time); calibration on public C suites plus the BFS proof of concept, held-out kernels for the
@@ -182,7 +199,10 @@ concept is the next effort.
   verdict its verifier lineup versions, solvers and flags. Per 12, every verdict names the proof
   semantics version and its agreement evidence (fixture differences, semantics controls). Per
   13: hint sets with provenance, rejections by rule, rounds, provider calls, tokens and time,
-  refutation replay status, and the hint vocabulary and check versions.
+  refutation replay status, and the hint vocabulary and check versions. Per 15: CIVL and GenMC
+  settings (version, k or thread count, input and loop bounds, flags, memory-model encoding); the
+  parallel composition theorem's version and status (Rocq-checked or written); the OpenMP runtime
+  and RC11 entries.
 - **Extensa-mode loop:** the proving budget per iteration, and how ranking by proven level
   changes selection. Per 13: lane-hours proofs may use on mbit10 per campaign (proof jobs run
   inside a socket lane), and the counterexample-guided repair budget per refuted candidate.
@@ -195,3 +215,8 @@ Ruled at charting ([01](issues/01-charting-decisions.md)):
 - DX100 hardware versus its functional model: the strict layer is the trusted semantics.
 - Speed: proofs say nothing about performance.
 - gem5.
+
+Ruled during the route:
+
+- VerCors on a hand-written PVL model ([15](issues/15-concurrency-proofs.md), item 13): hand-made,
+  BFS only, sets no level; against "any input" and the cost rule.

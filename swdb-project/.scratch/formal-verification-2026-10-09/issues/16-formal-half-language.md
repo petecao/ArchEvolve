@@ -35,3 +35,8 @@ The language must be general: the same source covers the BC, PR and SSSP contrac
   hint vocabulary bans recursive and inductive definitions (WP turns recursive ones into
   unchecked axioms; `../research/13-wp-hint-facts.md`); only the contract's logic library, reviewed
   at promotion, may hold them. Decide where that library lives and in which language.
+- 2026-10-13 16:09 ET: input from 15: formal halves must state a contract's shared actions by kind
+  (claim, min-update, atomic add or OR, OpenMP reduction, queue reserve), a sharing class per array
+  per barrier interval (read-only, thread-owned, changed only through shared actions,
+  lock-protected), and history reads. The parallel composition theorem's statement (Rocq) uses the
+  same vocabulary, so the language must map onto it.
