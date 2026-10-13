@@ -13,6 +13,7 @@ from contextlib import contextmanager
 
 from swdb import artifacts, paths, workflow
 from swdb.cli import Failure, _require_valid
+from swdb import host_identity
 
 RUN_ROOTS = ('/data1/yanruj/EvolveSWDB_runs', '/data/yanruj/EvolveSWDB_runs')
 INPUT_KINDS = {'workload', 'source_snapshot', 'protocol'}
@@ -107,7 +108,7 @@ def listing(store, roots):
                          'sha256': artifacts.file_hash(path) if category == 'bulky' else None,
                          'proposed': category == 'bulky' and len(owners) == 1 and team_state(store, owners[0]) != 'claimed'})
     return {'format': 'swdb.prune-listing.v1', 'created_at': _now(),
-            'host': socket.gethostname().split('.')[0], 'roots': list(map(str, roots)), 'files': rows}
+            'host': host_identity.short_name(), 'roots': list(map(str, roots)), 'files': rows}
 
 
 def retained(store, reference, evaluation_id=None):
@@ -226,7 +227,7 @@ def _delete_locked(records, evaluation_id, entries, reason, *, db=None, approval
         intent = workflow.record('retention', 'prune-intent-' + uuid.uuid4().hex,
             event='prune_intent', evaluation=evaluation_id, deleted=[],
             planned=[{key: entry[key] for key in ('path', 'sha256', 'bytes')} for _, entry in checked],
-            reason=reason, occurred_at=_now(), host=socket.gethostname().split('.')[0], approval=approval)
+            reason=reason, occurred_at=_now(), host=host_identity.short_name(), approval=approval)
         # Failure here leaves every byte intact; interrupted deletion still has
         # durable intended identities. Readers never count intent as deletion.
         workflow.persist(records, intent, db, create=True)
@@ -252,7 +253,7 @@ def _delete_locked(records, evaluation_id, entries, reason, *, db=None, approval
         if deleted:
             data = workflow.record('retention', 'retention-' + uuid.uuid4().hex,
                 event='prune', evaluation=evaluation_id, deleted=deleted, reason=reason,
-                occurred_at=_now(), host=socket.gethostname().split('.')[0], approval=approval, intent=intent['id'])
+                occurred_at=_now(), host=host_identity.short_name(), approval=approval, intent=intent['id'])
             workflow.persist(records, data, db, create=True)
     return deleted
 
@@ -308,7 +309,7 @@ def prune(args):
     import hashlib
     digest = hashlib.sha256(raw).hexdigest()
     data = json.loads(raw)
-    if data.get('format') != 'swdb.prune-listing.v1' or data.get('host') != socket.gethostname().split('.')[0]:
+    if data.get('format') != 'swdb.prune-listing.v1' or data.get('host') != host_identity.short_name():
         raise Failure('prune listing format or host differs')
     if getattr(args, 'approve', None):
         approval = workflow.record('retention', 'prune-approval-' + uuid.uuid4().hex,

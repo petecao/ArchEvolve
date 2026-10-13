@@ -356,7 +356,7 @@ def test_multi_socket_machine_requires_a_lane_by_default(records, tmp_path):
 
 
 @lab_host
-def test_forged_lane_variables_are_refused(records, tmp_path):
+def test_forged_lane_variables_are_refused(records, tmp_path, real_host):
     """On mbit10 inside a real lane: forged or stale lane variables must not pass."""
     records.copy_repo("applications", "kernels", "implementations", "inputs", "machines")
     import socket as _socket
@@ -372,7 +372,7 @@ def test_forged_lane_variables_are_refused(records, tmp_path):
 
 
 @lab_host
-def test_real_gapbs_pagerank_profile_with_cachegrind(records, tmp_path):
+def test_real_gapbs_pagerank_profile_with_cachegrind(records, tmp_path, real_host):
     """On mbit10: the real baseline on a small Kronecker graph, cachegrind included."""
     records.copy_repo("applications", "kernels", "implementations", "inputs", "machines")
     import socket
