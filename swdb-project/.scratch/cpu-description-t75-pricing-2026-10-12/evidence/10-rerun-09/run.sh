@@ -1,15 +1,20 @@
 #!/usr/bin/env bash
 # cpud ticket 10: rerun fine-grained ticket 09 (split check) on the .a3 estimates.
-# Created 2026-10-12 ET. Runs on mbit10 inside ONE socket lane (socket_lane.sh), from a clean
-# detached checkout of the pushed cpud/10-split-check commit. Order (C12, F43, F44):
-#   guard (estimates exist, numeric, and dated before today ET) -> scratch store copy ->
+# Created 2026-10-12 ET. Updated 2026-10-13 ET (attempt a2: reference-closed views, see make_view.py;
+# attempt a1 spent 41 min validating and 20+ min in its first save before any trial and was stopped).
+# Runs on mbit10 inside ONE socket lane (socket_lane.sh), from a clean detached checkout of the
+# pushed cpud/10-split-check commit. Order (C12, F43, F44):
+#   guard (estimates exist, numeric, dated before today ET) ->
+#   view A (closure of both candidates, mbit10, the workload) ->
 #   evaluate baseline -> evaluate candidate (source 0 only, 20 reps, LLVM 22, evaluator v3) ->
 #   bfs-profile baseline -> bfs-profile candidate (region thread-CPU timing, memory off) ->
-#   checked attribute (swdb.split_check.v2) -> whole-store validate.
+#   full-store copy + the four new records -> view B (closure that adds both .a3 estimates) ->
+#   checked attribute (swdb.split_check.v2) on view B -> report into the full-store copy ->
+#   whole-store validate of that copy.
 # Usage: bash run.sh <checkout root> <lane node 0|1> <raw folder>
 #   --check   parse arguments and print the plan; run nothing.
 # Exit codes avoid socket_lane.sh's 2/4/5: 12 setup, 13 dirty checkout, 15 guard refused,
-# 16/17 scratch store, 11 evaluate, 21 bfs-profile, 31 attribute, 41 validate.
+# 16/17 stores, 11 evaluate, 21 bfs-profile, 31 attribute, 41 validate.
 set -uo pipefail
 CHECK=0
 if [ "${1:-}" = "--check" ]; then CHECK=1; shift; fi
@@ -23,6 +28,7 @@ EV=.scratch/cpu-description-t75-pricing-2026-10-12/evidence/10-rerun-09
 LANE=mbit10-evaluation-node$N
 BC=typed-library-bfs-scalar-profile-20261003-a1.baseline
 CC=extensa-native-bfs-20261005-a8.it1.kronecker.a0
+WL=bfs-20261004-uniform22.2f83a134a6bef789
 BES=fga03.t75-baseline.uniform22.t1.estimate.a3
 CES=fga03.t75-candidate.uniform22.t1.estimate.a3
 BEV=cpud10.t75-baseline.uniform22.t1.s0.evaluation.a1
@@ -31,10 +37,11 @@ BPR=cpud10.t75-baseline.uniform22.t1.s0.profile.a1
 CPR=cpud10.t75-candidate.uniform22.t1.s0.profile.a1
 REP=fga03.t75.uniform22.t1.attribution.a3.split-check
 KEPT=/data/yanruj/EvolveSWDB_runs/fga03-real-pair-20261011-a1/a2
-S=$RAW/records10
+VA=$RAW/view10a; VB=$RAW/view10b; S=$RAW/records10
+NEW=("evaluations/$BEV.yaml" "evaluations/$CEV.yaml" "region_profiles/$BPR.yaml" "region_profiles/$CPR.yaml")
 if [ $CHECK -eq 1 ]; then
-  printf 'checkout=%s\nsrc=%s\nlane=%s\nraw=%s\nstore=%s\nevaluations=%s %s\nprofiles=%s %s\nreport=%s\n' \
-    "$CO" "$SRC" "$LANE" "$RAW" "$S" "$BEV" "$CEV" "$BPR" "$CPR" "$REP"
+  printf 'checkout=%s\nsrc=%s\nlane=%s\nraw=%s\nviews=%s %s\nstore=%s\nevaluations=%s %s\nprofiles=%s %s\nreport=%s\n' \
+    "$CO" "$SRC" "$LANE" "$RAW" "$VA" "$VB" "$S" "$BEV" "$CEV" "$BPR" "$CPR" "$REP"
   for side in baseline candidate; do
     for kind in evaluation profile; do
       f="$SRC/$EV/cpud10.t75-$side.uniform22.t1.s0.$kind.a1.request.yaml"
@@ -75,22 +82,26 @@ for rid in sys.argv[1:]:
 assert today() > max(dates), f'today {today()} is not after the estimates ({max(dates)})'
 print('guard ok: today', today(), 'estimates', dates)
 PY
-test ! -e "$S" || { log "scratch store exists"; exit 16; }
-cp -a records "$S" || exit 17
-log "scratch store copied ($(du -sh "$S" | cut -f1))"
+step view-a python3 "$EV/make_view.py" records "$VA" "$BC" "$CC" mbit10 "$WL" || exit 16
 for side in baseline candidate; do
   step "evaluate-$side" timeout 10800 python3 -m swdb evaluate "$EV/cpud10.t75-$side.uniform22.t1.s0.evaluation.a1.request.yaml" \
-    --records "$S" --runs-dir "$RAW/runs" --lane "$LANE" --format json || exit 11
+    --records "$VA" --runs-dir "$RAW/runs" --lane "$LANE" --format json || exit 11
 done
 for side in baseline candidate; do
   step "profile-$side" timeout 14400 python3 -m swdb bfs-profile "$EV/cpud10.t75-$side.uniform22.t1.s0.profile.a1.request.yaml" \
-    --records "$S" --runs-dir "$RAW/runs" --lane "$LANE" --format json || exit 21
+    --records "$VA" --runs-dir "$RAW/runs" --lane "$LANE" --format json || exit 21
 done
-step attribute timeout 7200 python3 -m swdb attribute --records "$S" --library "$SRC/library" \
+test ! -e "$S" || { log "full-store copy exists"; exit 17; }
+cp -a records "$S" || exit 17
+for f in "${NEW[@]}"; do test ! -e "$S/$f" && cp -p "$VA/$f" "$S/$f" || exit 17; done
+log "full-store copy with the four new records ($(du -sh "$S" | cut -f1))"
+step view-b python3 "$EV/make_view.py" "$S" "$VB" "$BC" "$CC" "$BES" "$CES" mbit10 "$WL" "$BEV" "$CEV" "$BPR" "$CPR" || exit 16
+step attribute timeout 7200 python3 -m swdb attribute --records "$VB" --library "$SRC/library" \
   --baseline-estimate "$BES" --candidate-estimate "$CES" --baseline-source "$BC" --candidate-source "$CC" \
   --baseline-profile "$BPR" --candidate-profile "$CPR" --id "$REP" --format json || exit 31
+test ! -e "$S/attributions/$REP.yaml" && cp -p "$VB/attributions/$REP.yaml" "$S/attributions/$REP.yaml" || exit 17
 step validate timeout 7200 python3 -m swdb validate --records "$S" --library "$SRC/library" || exit 41
-( cd "$S" && sha256sum "evaluations/$BEV.yaml" "evaluations/$CEV.yaml" "region_profiles/$BPR.yaml" \
-  "region_profiles/$CPR.yaml" "attributions/$REP.yaml" ) > "$RAW/records-sha256.txt" 2>&1
+( cd "$S" && sha256sum "${NEW[@]}" "attributions/$REP.yaml" ) > "$RAW/records-sha256.txt" 2>&1
+( cd "$VA" && sha256sum "${NEW[@]}" ) > "$RAW/view-a-sha256.txt" 2>&1
 envsnap 10-end
 log "job 10 done"
