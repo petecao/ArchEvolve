@@ -142,6 +142,35 @@ def test_import_refuses_relabelled_native_and_invalid_trials_atomically(records,
         assert not list(records.path.rglob('bad.*.yaml'))
 
 
+def child_executables(parent):
+    """{pid: resolved executable path} of `parent`'s live children, without running `ps`.
+
+    2026-10-13 ET: `ps` is setuid on macOS and restricted sandboxes refuse to execute it,
+    so read the kernel directly: /proc on Linux, libproc on macOS."""
+    import ctypes
+    import os
+    import sys
+    from pathlib import Path
+    found = {}
+    if sys.platform == 'darwin':
+        libproc = ctypes.CDLL('/usr/lib/libproc.dylib', use_errno=True)
+        pids = (ctypes.c_int * 1024)()
+        libproc.proc_listchildpids(parent, pids, ctypes.sizeof(pids))
+        for pid in (pid for pid in pids if pid > 0):
+            path = ctypes.create_string_buffer(4096)
+            if libproc.proc_pidpath(pid, path, ctypes.sizeof(path)) > 0:
+                found[pid] = Path(os.fsdecode(path.value)).resolve()
+        return found
+    for status in Path('/proc').glob('[0-9]*/stat'):
+        try:
+            ppid = int(status.read_text().rsplit(')', 1)[1].split()[1])
+            if ppid == parent:
+                found[int(status.parent.name)] = (status.parent / 'exe').resolve(strict=True)
+        except (OSError, IndexError, ValueError):
+            continue    # exited, or not ours to read
+    return found
+
+
 def test_runner_interrupt_terminates_native_child_group(records, tmp_path):
     import os
     import signal
@@ -157,20 +186,16 @@ def test_runner_interrupt_terminates_native_child_group(records, tmp_path):
         '--repetitions', '11', '--min-trial-s', '1', '--max-wall-s', '60'],
         cwd=REPO, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     child = None
+    native = (output / 'cpu-calibration').resolve()
     try:
         deadline = time.monotonic() + 15
         while time.monotonic() < deadline and runner.poll() is None:
-            listing = subprocess.run(['ps', '-axo', 'pid=,ppid=,command='], capture_output=True,
-                                     text=True, check=True).stdout
-            for line in listing.splitlines():
-                fields = line.strip().split(None, 2)
-                if len(fields) == 3 and int(fields[1]) == runner.pid and fields[2].startswith(str(output / 'cpu-calibration') + ' '):
-                    child = int(fields[0])
-                    break
+            child = next((pid for pid, path in child_executables(runner.pid).items() if path == native), None)
             if child:
                 break
             time.sleep(.05)
         assert child is not None, 'native child never started'
+        assert os.getpgid(child) == child, 'native child must lead its own process group'
         runner.send_signal(signal.SIGTERM)
         stdout, stderr = runner.communicate(timeout=10)
         assert runner.returncode != 0
@@ -178,12 +203,12 @@ def test_runner_interrupt_terminates_native_child_group(records, tmp_path):
         deadline = time.monotonic() + 2
         while time.monotonic() < deadline:
             try:
-                os.kill(child, 0)
+                os.killpg(child, 0)    # the whole group the runner started, not only its leader
             except ProcessLookupError:
                 break
             time.sleep(.05)
         else:
-            raise AssertionError('native child survived runner termination')
+            raise AssertionError('native child group survived runner termination')
     finally:
         if runner.poll() is None:
             runner.kill()

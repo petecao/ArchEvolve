@@ -6,10 +6,20 @@ from pathlib import Path
 
 import pytest
 
-from swdb import artifacts, analytic_dx100_call as shadow
+from swdb import artifacts, host_identity, analytic_dx100_call as shadow
 from swdb.cli import Failure
 from swdb.store import Store, Record
 from testkit.bfs_protocol import _sg
+
+
+
+@pytest.fixture(autouse=True)
+def no_fixture_host_variable(monkeypatch):
+    """The shadow refuses every ambient `SWDB_*` variable, the suite's fixture-host
+    variable included (2026-10-13 ET). Clear it so each test sees only the environment
+    it sets; in-process host identity still comes from the patched `socket.gethostname`."""
+    monkeypatch.delenv(host_identity.FIXTURE_HOST_ENV, raising=False)
+
 
 GRAPH = {'num_vertices': 4, 'directed': False, 'edges': [[0, 1], [1, 2]]}
 PROGRAM = r'''
@@ -192,7 +202,8 @@ def test_count_result_refuses_missing_changed_or_failed_window(change):
 
 
 @pytest.mark.parametrize('variable,value', [('CPATH', '/tmp/headers'), ('LD_PRELOAD', '/tmp/observer'),
-                                          ('SWDB_ROI_GATED', '0'), ('CCC_OVERRIDE_OPTIONS', '+-include /tmp/observer.h')])
+                                          ('SWDB_ROI_GATED', '0'), ('CCC_OVERRIDE_OPTIONS', '+-include /tmp/observer.h'),
+                                          (host_identity.FIXTURE_HOST_ENV, 'swdb-fixture-host')])
 def test_execute_refuses_ambient_substitution_before_build(tmp_path, monkeypatch, variable, value):
     store, candidate, workload, source, _ = registered(tmp_path)
     monkeypatch.setenv(variable, value)
