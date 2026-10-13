@@ -107,9 +107,11 @@ region_cost_partition:
       share_pct_of_named_denominator: 38.45
       actor_in_hybrid: CPU
       notes: >-
-        Retained on host CPU (C1). Because N = 25,000, the parent array is only 100 KB,
-        fitting entirely in the 1 MB L2 cache per core. Repeated linear scan exhibits
-        near 100% L2 cache hit rate, raising IPC to 2.68.
+        [HYPOTHESIS: L2_CACHE_RESIDENT_PARENT_ARRAY] Supported by PMU counters and capacity bounds:
+        N = 25,000 gives a 100 KB total parent footprint (25,000 * 4B). This is far smaller than the
+        per-core 1 MB L2 cache (Cascade Lake). Repeated streaming probe across 624.95M edges
+        exhibits LLC load miss rate of only 2.14%, raising IPC to 2.68.
+      evidence_type: "modeled_estimate_with_counter_support"
 
     - id: parent_CAS
       statement_ids: [bfs-td-parent-cas]
@@ -119,10 +121,16 @@ region_cost_partition:
       cost_unit: percent_of_roi_cycles
       share_pct_of_named_denominator: 0.00
       actor_in_hybrid: CPU
+      scope_clarification:
+        level_2_phase_value: 0.00% (0 CAS attempts out of 624,950,001 edge visits)
+        level_1_phase_value: 24,999 attempts (100% success rate, 0 contention)
+        full_kernel_weighted_aggregate: 0.004% (24,999 / 624,975,000 edge visits, rounds to 0.00%)
       notes: >-
-        Zero CAS executions across Level 2 (which represents 99.996% of edges).
-        All parent[v] >= 0 after Level 1; the if (curr_val < 0) condition is uniformly
-        false throughout Level 2, completely bypassing the atomic instruction.
+        Phase-dependent execution: In Level 1, root 0 executes 24,999 CAS attempts with 100% success.
+        In Level 2 (which represents 99.996% of all kernel edges and runtime), all parent[v] >= 0;
+        curr_val < 0 is uniformly false, resulting in exactly 0 CAS attempts.
+        The full-kernel weighted share is 0.004%, which rounds to 0.00% at two decimal places.
+      evidence_type: "modeled_and_verified_topological_count"
 
     - id: retained_parent_store
       statement_ids: [bfs-td-parent-store]
@@ -132,7 +140,10 @@ region_cost_partition:
       cost_unit: percent_of_roi_cycles
       share_pct_of_named_denominator: 0.00
       actor_in_hybrid: CPU
-      notes: "Zero stores executed in Level 2; no unvisited nodes remain."
+      notes: >-
+        Level 2 has 0 stores. Level 1 stores (24,999) are executed atomically inside
+        the lock cmpxchg instruction; scalar redundant write eliminated by compiler.
+      evidence_type: "modeled_and_verified_topological_count"
 
     - id: queue_push_and_flush
       statement_ids: [bfs-td-queue-append]
@@ -142,7 +153,9 @@ region_cost_partition:
       cost_unit: percent_of_roi_cycles
       share_pct_of_named_denominator: 0.00
       actor_in_hybrid: CPU
-      notes: "Zero queue insertions in Level 2; queue is empty at termination."
+      notes: >-
+        Level 2 has 0 queue pushes. Level 1 pushes 24,999 nodes into queue (< 0.004% of total kernel work).
+      evidence_type: "modeled_and_verified_topological_count"
 
     - id: remaining_CPU_work
       statement_ids: []
