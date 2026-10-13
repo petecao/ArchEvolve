@@ -429,7 +429,10 @@ def test_batch_admission_uses_real_completed_a2_reader_fixture(tmp_path, monkeyp
 
 @pytest.mark.parametrize('fault', [None,'slow_hash','last_write_time','last_write_storage'])
 def test_final_hash_and_last_persistence_remain_inside_shared_budget(tmp_path, monkeypatch, clock, fault):
-    Path(str(tmp_path)+'.dispatch').mkdir()
+    # 2026-10-13 ET (suite fix): the runs root lives inside tmp_path. Its `.dispatch` sibling
+    # used to be tmp_path's own sibling, which outlived a passed case's removed tmp_path and
+    # collided with the next case's reused number under tmp_path_retention_policy=failed.
+    runs=tmp_path/'runs'; runs.mkdir(); Path(str(runs)+'.dispatch').mkdir()
     policy=plan(); ledger=batch.Ledger(policy,admission(policy),clock.mono,clock.wall)
     log=tmp_path/'ledger.jsonl';log.write_text('{}\n')
     receipt={'state':'complete'}; writes=[]; raw=[1024]
@@ -448,11 +451,11 @@ def test_final_hash_and_last_persistence_remain_inside_shared_budget(tmp_path, m
     monkeypatch.setattr(batch,'allocated_bytes',lambda _:raw[0])
     if fault:
         with pytest.raises(ValueError,match='common deadline|common allowance'):
-            batch.finalize_receipt(receipt,tmp_path,tmp_path,ledger,log)
+            batch.finalize_receipt(receipt,tmp_path,runs,ledger,log)
         assert json.loads((tmp_path/'driver.json').read_text())['state']=='failed'
         assert writes[-1]=='failed'
     else:
-        batch.finalize_receipt(receipt,tmp_path,tmp_path,ledger,log)
+        batch.finalize_receipt(receipt,tmp_path,runs,ledger,log)
         saved=json.loads((tmp_path/'driver.json').read_text())
         assert saved['state']=='complete' and saved['final_ledger']['charged_raw_bytes']==1024
         assert saved['ledger_artifact']['sha256']==original_hash(log)
