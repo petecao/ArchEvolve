@@ -229,6 +229,10 @@ def verdict_problems(props, extern_ok_files, extern_ok_functions=frozenset()):
     for p in props:
         if p["status"] == "Valid":
             continue
+        # t07d bug fix: WP's `\wp::strategy` / `\wp::proof` annotations are listed by -report as
+        # properties with status "-", but they are proof directives, not obligations.
+        if p["status"] == "-" and re.match(r'(strategy|proof) \("', p["property"]):
+            continue
         if p["status"] == "Extern":
             if p.get("function") in extern_ok_functions:
                 continue

@@ -60,6 +60,13 @@ def test_strategy_vocabulary_allows_wp_tactics_only_and_no_time_argument():
     assert "banned_token" in bad({**att, "text": '\\wp::proof F: admit;'})
 
 
+def test_verdict_reader_skips_strategy_directives_but_not_other_untried_properties():
+    props = H.read_report('[    -    ] strategy ("tdstep_standin.c", line 24)\n'
+                          '[    -    ] proof ("tdstep_standin.c", line 26)\n'
+                          '[    -    ] Assertion \'a\' (file tdstep_standin.c, line 90)\n')
+    assert [p["property"][:9] for p in H.verdict_problems(props, set())] == ["Assertion"]
+
+
 def test_unit_first_counts_seed_frames_as_unit_goals_and_agent_hints_as_hint_goals():
     fails = [{"goal": "typed_TDStep_ensures_a", "hint_ids": []},
              {"goal": "typed_TDStep_loop_assigns_3_part04", "hint_ids": ["seed3"]},
