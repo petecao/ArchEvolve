@@ -1,7 +1,7 @@
 """The C lowering tool: a C++ proof unit in the declared subset to C with the C++ names kept, plus anchors.
 
 Created: 2026-10-14 ET (Probata proof of concept ticket 21). Updated: 2026-10-14 ET (ticket 24: the declared
-C++ subset). Design: formal-verification map 16 items 3 and 6 (the C lowering keeps C++ names, so formal
+C++ subset; ticket 25: `std::vector<T>` and `std::pair` through their C models, swdb.std_models). Design: formal-verification map 16 items 3 and 6 (the C lowering keeps C++ names, so formal
 halves type-check unchanged; the subset by construct), 13 items 4 and 7 (stable anchors for proof hints),
 11 item 3 (the C lowering tool is a trusted tool). Format: docs/reference/format-v0.4-c-lowering-wp.md.
 
@@ -17,7 +17,9 @@ halves type-check unchanged; the subset by construct), 13 items 4 and 7 (stable 
   OpenMP and atomics get their meaning for ONE thread here (a parallel region runs as one thread; a
   CAS is a read, a compare and a write); the program for one symbolic thread of N is ticket 45.
   Anything else raises `Unsupported` naming the construct and its source line: never a crash and
-  never a partial C lowering. `std::vector` and `std::pair` models are ticket 25.
+  never a partial C lowering. `std::vector<T>` (not `bool`) and `std::pair<A, B>` (scalar or pointer
+  elements) lower to the structs and member functions of `swdb.std_models` (ticket 25); an iterator is a
+  pointer, a range-for over a vector a pointer loop; any other member reads "unsupported construct".
 - `float` and `double` (types, literals, conversions) print as the same C types: the lowering is faithful
   to IEEE semantics. What a proof means for them is the verifier's float model, a method-version choice:
   the frozen WP flags read `-wp-model +real` (floats as mathematical reals; the rounding gap is an
@@ -42,9 +44,11 @@ import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from swdb import std_models
+
 TOOL_ID = "swdb-c-lowering"
-TOOL_VERSION = "2"                   # bump on any change to what the tool prints (a new method version)
-NAMING_RULES = "kept-names.2"        # bump on any change to RULES
+TOOL_VERSION = "3"                   # bump on any change to what the tool prints (a new method version)
+NAMING_RULES = "kept-names.3"        # bump on any change to RULES
 RULES = (
     "A function, parameter, local, global or field keeps its C++ name.",
     "An unnamed parameter becomes swdb_unnamed_<n> (n counts from 1 in each function).",
@@ -70,6 +74,14 @@ RULES = (
     "new T[n] becomes (T *)malloc(sizeof(T) * (size_t)(n)); delete[] p becomes free(p).",
     "An OpenMP directive becomes a comment line `/* omp <directive> (one thread) */` before its statement.",
     "A call to a summarized function keeps its (template-instantiated) name and gets a prototype only.",
+    "std::vector<T> becomes the struct std_vector_<t> {data, size, capacity} and std::pair<A, B> the struct "
+    "std_pair_<a>_<b> {first, second} (<t> spelled as for templates); a modeled member m becomes a call of the model "
+    "function <struct>_<m> of swdb.std_models (operator[] is operator_index, = is operator_assign; constructors ctor, "
+    "ctor_default, ctor_count, ctor_count_value, copy_ctor, move_ctor; the destructor dtor, called at scope end).",
+    "A vector iterator becomes a pointer T *; a range-for over a vector becomes a block declaring clang's __rangeN, "
+    "__beginN and __endN, then `for (; __beginN != __endN; ++__beginN)` with the loop variable first in its body.",
+    "A return out of a scope that destroys objects stores its value in swdb_return, runs the destructors (innermost "
+    "first), then returns it.",
 )
 RULES_SHA256 = hashlib.sha256("\n".join((NAMING_RULES, *RULES)).encode()).hexdigest()
 OPERATOR_NAMES = {"[]": "index", "()": "call", "==": "eq", "!=": "ne", "<": "lt", "<=": "le", ">": "gt", ">=": "ge",
@@ -129,11 +141,12 @@ UNSUPPORTED_KINDS = {
     "pseudo-destructor call", "UserDefinedLiteral": "user-defined literal", "CXXFoldExpr": "fold expression",
     "CXXStdInitializerListExpr": "std::initializer_list"}
 STD_CONTAINERS = {"map", "multimap", "set", "multiset", "unordered_map", "unordered_set", "unordered_multimap",
-                  "unordered_multiset", "list", "forward_list", "deque", "vector", "array", "pair", "tuple", "string",
+                  "unordered_multiset", "list", "forward_list", "deque", "array", "tuple", "string",
                   "basic_string", "queue", "stack", "priority_queue", "bitset", "span", "optional", "variant"}
 STD_STREAMS = {"basic_ostream", "basic_istream", "basic_iostream", "basic_ostringstream", "basic_istringstream",
                "basic_stringstream", "basic_ofstream", "basic_ifstream", "basic_fstream", "ostream", "istream",
                "iostream", "ostringstream", "istringstream", "stringstream", "ofstream", "ifstream", "fstream"}
+STD_MODELED = {"vector", "pair"}       # ticket 25: modeled types (swdb.std_models), never lowered from libc++
 
 
 class LoweringError(Exception):
@@ -179,6 +192,8 @@ class Lowering:
     tool: dict = field(default_factory=dict)
     summaries: tuple = ()       # ({name, c_name, summary}) per summarized function the C calls (prototype only)
     models: tuple = ()          # C model functions the C defines (std::*, __atomic_*, __sync_*, OpenMP runtime)
+    std_models: tuple = ()      # ticket 25: the modeled std types the C uses (struct names, e.g. std_vector_int)
+    allocation: bool = False    # ticket 25: the C allocates (new[] or a std model): "allocation succeeds" applies
 
     @property
     def sha256(self):
@@ -192,6 +207,10 @@ class Lowering:
             data["summaries"] = list(self.summaries)
         if self.models:
             data["models"] = list(self.models)
+        if self.std_models:
+            data["std_models"] = {**std_models.identity(), "types": list(self.std_models)}
+        if self.allocation:
+            data["allocation"] = True
         return json.dumps(data, indent=1, sort_keys=True) + "\n"
 
     @property
@@ -533,6 +552,8 @@ class _Unit:
         self.needs_stdlib = False
         self._cache = {}
         self._pragma_text = {}
+        self.std_types = {}          # ticket 25: struct name -> {kind, cpp, element(s), members}
+        self.allocates = False       # ticket 25: new[] seen
 
     # dumps
     def dump(self, name):
@@ -551,7 +572,12 @@ class _Unit:
     # types
     def ctype(self, qual, desugared=None, name="", line=None):
         """The C declarator of a C++ type (with `name`, or abstract when name is empty)."""
-        parsed = _parse_type(qual, line)
+        try:
+            parsed = _parse_type(qual, line)
+        except Unsupported:
+            if not desugared:                     # ticket 25: `std::vector<int>::iterator` reads through its sugar
+                raise
+            parsed = _parse_type(desugared, line)
         sugared_ok = _c_known(parsed.base) and not parsed.args
         if not sugared_ok and desugared:
             parsed = _parse_type(desugared, line)
@@ -585,11 +611,13 @@ class _Unit:
             raise Unsupported(f"floating-point type {shown or base} (long double; float and double are in the subset)",
                               line)
         std = _std_name(base)
+        if std in STD_MODELED or std == "__wrap_iter":         # ticket 25
+            return self.std_type(std, args, line, shown or base)
         if std is not None:
             if std in STD_STREAMS:
                 raise Unsupported(f"stream std::{std}", line)
             if std in STD_CONTAINERS:
-                raise Unsupported(f"standard container std::{std} (std::vector and std::pair are ticket 25)", line)
+                raise Unsupported(f"standard container std::{std} (only std::vector and std::pair are modeled)", line)
             raise Unsupported(f"standard library type std::{std}", line)
         if base.startswith("(") or "unnamed" in base or "anonymous" in base:
             raise Unsupported(f"unnamed type {base}", line)
@@ -859,6 +887,79 @@ class _Unit:
         text = data[offset:end].decode(errors="replace").replace("\\\n", " ")
         return re.sub(r"\s+", " ", text).strip()
 
+    # ticket 25: std::vector<T> and std::pair<A, B> as models (swdb.std_models)
+    def std_type(self, std, args, line, shown):
+        """The C type of a modeled std type: the struct of std::vector<T> or std::pair<A, B>, or `T *` for a vector
+        iterator (libc++'s __wrap_iter<T *>)."""
+        if std == "__wrap_iter":
+            if len(args) != 1:
+                raise Unsupported(f"iterator type {shown}", line)
+            pointer = self.canonical(args[0], line)
+            if not pointer.endswith("*"):
+                raise Unsupported(f"iterator type {shown}", line)
+            return pointer
+        if std == "vector":
+            if not args or len(args) > 2 or (len(args) == 2 and not re.match(r"(std::(__\w+::)?)?allocator<", args[1])):
+                raise Unsupported(f"std::vector with an allocator other than std::allocator ({shown})", line)
+            elements = (self._std_element(args[0], line, "std::vector"),)
+            if elements[0] == "bool":
+                raise Unsupported("std::vector<bool> (a packed specialization; not modeled)", line)
+        else:
+            if len(args) != 2:
+                raise Unsupported(f"std::pair type {shown}", line)
+            elements = tuple(self._std_element(a, line, "std::pair") for a in args)
+        cname = f"std_{std}_{'_'.join(_mangle_text(e) for e in elements)}"
+        if cname not in self.std_types:
+            self.claim(cname, ("std_model", std, elements), line)
+            cpp = f"std::{std}<{', '.join(elements)}>"
+            self.std_types[cname] = {"kind": std, "cpp": cpp, "elements": elements}
+            if std == "vector":
+                fields = std_models.vector_struct_fields(elements[0])
+            else:
+                fields = [f"{_join(elements[0], 'first')};", f"{_join(elements[1], 'second')};"]
+                self.classes[cname] = {"kind": "CXXRecordDecl", "name": cname, "inner": [
+                    {"kind": "FieldDecl", "name": "first", "type": {"qualType": elements[0]}},
+                    {"kind": "FieldDecl", "name": "second", "type": {"qualType": elements[1]}}]}
+            self.struct_order.append((cname, fields))
+        return cname
+
+    def _std_element(self, arg, line, container):
+        element = self.canonical(arg, line)
+        plain = element.replace("const ", "").strip()
+        if plain != element or not (plain in INTEGER_TYPES or plain in FLOAT_TYPES or plain.endswith("*")):
+            raise Unsupported(f"{container} of {element} (model version {std_models.MODELS_VERSION} holds scalars and "
+                              "pointers)", line)
+        return element
+
+    def model_of(self, qual, desugared, line, arrow=False):
+        """(struct name, model info) when a type (through const, a reference, or one `*` if arrow) is a modeled std
+        type, else None."""
+        text = desugared or qual
+        if "vector<" not in text and "pair<" not in text:
+            return None
+        parsed = _parse_type(text, line)
+        if arrow:
+            if not parsed.pointers:
+                return None
+            parsed.pointers.pop()
+        if parsed.pointers or parsed.dims or _std_name(parsed.base) not in STD_MODELED:
+            return None
+        cname = self.base_type(parsed.base, parsed.args, line, qual)
+        return cname, self.std_types[cname]
+
+    def std_member(self, cname, member, line):
+        """The C name of a modeled member's function; defines it (with its helpers) on first use."""
+        info = self.std_types[cname]
+        if info["kind"] == "vector":
+            self.needs_stdlib = True
+            self.model("SWDB_MODEL_FAIL", std_models.MACROS, line)
+            self.model(f"{cname}_valid", std_models.vector_logic(cname, info["elements"][0]), line)
+            for name, text in std_models.vector_member(cname, info["elements"][0], member):
+                self.model(name, text, line)
+        else:
+            self.model(*std_models.pair_member(cname, *info["elements"], member), line)
+        return f"{cname}_{member}"
+
 
 def _with_params(template, instances):
     """Mark each instantiation with its template's parameter types (a bool argument prints as -1 or 0)."""
@@ -907,6 +1008,8 @@ class _Printer:
         self.scopes = []            # per open block: [(object, destructor C name)]
         self.calls = []             # C names of the lowered functions this one calls, in order of appearance
         self.omp_reductions = []
+        self.loop_bases = []        # ticket 25: len(scopes) at each enclosing loop (break/continue leave only those)
+        self.returns_ctype = "void"
 
     # positions and anchors
     def _at(self, node):
@@ -959,11 +1062,17 @@ class _Printer:
         if kind in LOOPS:
             self.loops += 1
             self.anchor(f"{self.function}.loop{self.loops}.head", "loop_head", indent)
+        loop = kind in LOOPS or kind == "CXXForRangeStmt"
+        if loop:
+            self.loop_bases.append(len(self.scopes))
         self._statement(node, kind, indent)
+        if loop:
+            self.loop_bases.pop()
         self.anchor(f"{sid}.after", "after", indent)
 
     def _exits(self, what):
-        if any(scope for scope in self.scopes):
+        base = self.loop_bases[-1] if what in ("break", "continue") and self.loop_bases else 0   # ticket 25
+        if any(scope for scope in self.scopes[base:]):
             raise Unsupported(f"{what} out of a scope that destroys an object", self.line)
 
     def _statement(self, node, kind, indent):
@@ -982,6 +1091,8 @@ class _Printer:
             self.emit(" ".join(texts), indent)
             for line in after:
                 self.emit(line, indent)
+        elif kind == "ReturnStmt" and any(scope for scope in self.scopes):
+            self._return_destroying(inner, indent)                             # ticket 25
         elif kind == "ReturnStmt":
             self._exits("return")
             if not inner:
@@ -1028,6 +1139,8 @@ class _Printer:
             self.emit("do {", indent)
             self.body(inner[0], indent + 1)
             self.emit(f"}} while ({self.expr(inner[1], top=True)});", indent)
+        elif kind == "CXXForRangeStmt":
+            self._range_for(node, indent)                                      # ticket 25
         elif kind in OMP_DIRECTIVES:
             self.omp(node, kind, indent)
         elif kind and kind.endswith("Directive") and kind.startswith("OMP"):
@@ -1037,7 +1150,11 @@ class _Printer:
         elif kind == "CXXDeleteExpr":
             self.emit(f"{self.delete(node)};", indent)
         elif kind and (kind.endswith("Expr") or kind.endswith("Operator") or kind == "ExprWithCleanups"):
-            self.emit(f"{self.expr(node, top=True)};", indent)
+            text = self.expr(node, top=True)
+            if _strip(node).get("kind") in ("CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr") and \
+                    re.fullmatch(r"\(\*[A-Za-z_]\w*\(.*\)\)", text):
+                text = text[2:-1]               # ticket 25: a call returning a reference, as a statement: no `*`
+            self.emit(f"{text};", indent)
         else:
             raise Unsupported(f"statement {kind}", self.line)
 
@@ -1137,7 +1254,11 @@ class _Printer:
             text += " = " + self.initializer(init[0], node.get("init"))
         if not parsed.pointers and not _c_known(parsed.base):
             cname = unit.base_type(parsed.base, parsed.args, self.line)
-            if cname in unit.classes:
+            if unit.std_types.get(cname, {}).get("kind") == "vector":           # ticket 25: destroyed at scope end
+                if parsed.dims:
+                    raise Unsupported(f"array of {unit.std_types[cname]['cpp']}", self.line)
+                self.scopes[-1].append((name, unit.std_member(cname, "dtor", self.line)))
+            elif cname in unit.classes:
                 dtor = self.destructor(cname)
                 if dtor and parsed.dims:
                     raise Unsupported(f"array of class {cname} with a destructor", self.line)
@@ -1154,6 +1275,8 @@ class _Printer:
                     parsed = _parse_type((child.get("type") or {}).get("desugaredQualType") or _qual(child), self.line)
                     if not parsed.pointers and not parsed.ref and not _c_known(parsed.base):
                         inner = self.unit.base_type(parsed.base, parsed.args, self.line)
+                        if self.unit.std_types.get(inner, {}).get("kind") == "vector":     # ticket 25
+                            raise Unsupported(f"class {cname} with a std::vector member (not modeled)", self.line)
                         if inner in self.unit.classes and self.destructor(inner):
                             raise Unsupported(f"class {cname} with a member that has a destructor", self.line)
             return None
@@ -1163,6 +1286,9 @@ class _Printer:
 
     def construct(self, node, target):
         """The constructor call statement for object `target` (None when the C declaration alone suffices)."""
+        model = self.unit.model_of(*_types(node), self.line)
+        if model:                                                              # ticket 25
+            return self._std_construct(model, node, target)
         cname, cls = self.unit.class_of(node, self.line)
         ctors = [c for c in _children(cls) if c.get("kind") == "CXXConstructorDecl"]
         ctor_type = (node.get("ctorType") or {}).get("qualType")
@@ -1383,6 +1509,9 @@ class _Printer:
         if callee.get("kind") != "MemberExpr":
             raise Unsupported("call through a pointer to member", self.line)
         base, arrow = _children(callee)[0], callee.get("isArrow")
+        model = self.unit.model_of(*_types(_strip(base)), self.line, arrow=arrow)
+        if model:                                                              # ticket 25
+            return self._std_member_call(model, callee.get("name"), self._object(base, arrow), args)
         cname, _ = self.unit.class_of(base, self.line, arrow=arrow)
         method = self._method(cname, callee.get("name"), None)
         return self._invoke(method, cname, [self._object(base, arrow)], args)
@@ -1394,6 +1523,9 @@ class _Printer:
             callee = _children(callee)[0]
         ref = callee.get("referencedDecl") or {}
         name = ref.get("name", "")
+        modeled = self._std_operator(name, children[1:])                       # ticket 25
+        if modeled is not None:
+            return modeled
         if ref.get("kind") == "CXXMethodDecl":
             obj = children[1]
             cname, _ = self.unit.class_of(obj, self.line)
@@ -1557,6 +1689,9 @@ class _Printer:
             return f"{model}({self.expr(args[0], top=True)}, {self.expr(args[1], top=True)})", True
         if name == "swap":
             qual, desugared = _types(_strip(args[0]))
+            model = unit.model_of(qual, desugared, self.line)                 # ticket 25: std::swap of two vectors
+            if model and model[1]["kind"] == "vector":
+                return f"{unit.std_member(model[0], 'swap', self.line)}({self.address(args[0])}, {self.address(args[1])})", True
             ctype = self._scalar(unit.ctype(qual, desugared, line=self.line), "std::swap")
             model = f"std_swap_{_mangle_text(ctype)}"
             text = (f"/*@ requires \\valid(a) && \\valid(b);\n    assigns *a, *b;\n"
@@ -1589,6 +1724,121 @@ class _Printer:
             unit.model(model, text, self.line)
             return f"{model}({', '.join(self.expr(a, top=True) for a in args)})", True
         raise Unsupported(f"standard library function std::{name}", self.line)
+
+    # ticket 25: std::vector<T> and std::pair<A, B> through swdb.std_models
+    VECTOR_CALLS = {"size": 0, "empty": 0, "data": 0, "begin": 0, "end": 0, "clear": 0, "at": 1, "push_back": 1,
+                    "resize": 1, "reserve": 1, "swap": 1}
+
+    def _std_member_call(self, model, name, obj, args):
+        cname, info = model
+        args = [a for a in args if a.get("kind") != "CXXDefaultArgExpr"]
+        if info["kind"] != "vector" or self.VECTOR_CALLS.get(name) != len(args):
+            raise Unsupported(f"{info['cpp']} member {name} (not modeled)", self.line)
+        function = self.unit.std_member(cname, name, self.line)
+        texts = [obj] + ([self.address(args[0])] if name == "swap" else [self.expr(a, top=True) for a in args])
+        call = f"{function}({', '.join(texts)})"
+        return (f"(*{call})", True) if name == "at" else (call, True)
+
+    def _std_operator(self, name, operands):
+        """An operator on a modeled type or a vector iterator (None when the operands are neither)."""
+        symbol = name[len("operator"):].strip()
+        if any("__wrap_iter<" in "".join(t or "" for t in _types(o)) for o in operands):
+            texts = [self.expr(o) for o in operands]
+            if symbol == "*" and len(texts) == 1:
+                return f"(*{texts[0]})", True
+            if symbol in ("++", "--"):
+                return (f"{symbol}{texts[0]}" if len(texts) == 1 else f"{texts[0]}{symbol}"), False
+            if symbol == "[]":
+                return f"{texts[0]}[{self.expr(operands[1], top=True)}]", True
+            if symbol in ("==", "!=", "<", "<=", ">", ">=", "+", "-", "+=", "-=") and len(texts) == 2:
+                return f"{texts[0]} {symbol} {texts[1]}", False
+            raise Unsupported(f"vector iterator operator{symbol}", self.line)
+        model = self.unit.model_of(*_types(_strip(operands[0])), self.line) if operands else None
+        if model is None:
+            return None
+        cname, info = model
+        if info["kind"] == "vector" and symbol == "[]":
+            call = f"{self.unit.std_member(cname, 'operator_index', self.line)}({self.address(operands[0])}, " \
+                   f"{self.expr(operands[1], top=True)})"
+            return f"(*{call})", True
+        if info["kind"] == "pair" and symbol == "=" and self.unit.model_of(*_types(_strip(operands[1])), self.line):
+            call = f"{self.unit.std_member(cname, 'operator_assign', self.line)}({self.address(operands[0])}, " \
+                   f"{self.address(operands[1])})"
+            return f"(*{call})", True
+        raise Unsupported(f"{info['cpp']} operator{symbol} (not modeled)", self.line)
+
+    def _std_construct(self, model, node, target):
+        cname, info = model
+        args = [a for a in _children(node) if a.get("kind") != "CXXDefaultArgExpr"]
+        _, params, _ = _return_and_params((node.get("ctorType") or {}).get("qualType", "()"), self.line)
+        same = len(args) == 1 and self.unit.model_of(*_types(_strip(args[0])), self.line) == model
+        source = None
+        if same:
+            source = _strip(args[0])
+            if source.get("kind") == "CallExpr" and \
+                    ((_children(source)[0].get("inner") or [{}])[0].get("referencedDecl") or {}).get("name") == "move":
+                source = _children(source)[1]                     # std::move(x): the move constructor's source
+        if info["kind"] == "vector":
+            if not args:
+                member, texts = "ctor", []
+            elif same:
+                member, texts = ("move_ctor" if params[0].rstrip().endswith("&&") else "copy_ctor"), [self.address(source)]
+            elif len(args) == 1 and "size_type" in params[0]:
+                member, texts = "ctor_count", [self.expr(args[0], top=True)]
+            elif len(args) == 2 and "size_type" in params[0] and "value_type" in params[1]:
+                member, texts = "ctor_count_value", [self.expr(a, top=True) for a in args]
+            else:
+                raise Unsupported(f"{info['cpp']} constructor {params} (not modeled)", self.line)
+        else:
+            if not args:
+                member, texts = "ctor_default", []
+            elif same:
+                member, texts = "copy_ctor", [self.address(source)]
+            elif len(args) == 2:
+                member, texts = "ctor", [self.expr(a, top=True) for a in args]
+            else:
+                raise Unsupported(f"{info['cpp']} constructor {params} (not modeled)", self.line)
+        function = self.unit.std_member(cname, member, self.line)
+        return f"{function}({', '.join([f'&{target}'] + texts)});"
+
+    def _range_for(self, node, indent):
+        """`for (decl : v)` over a vector, as [stmt.ranged] defines it: __range, __begin, __end, a pointer loop."""
+        parts = [c for c in node.get("inner", []) if isinstance(c, dict) and c.get("kind")]
+        if len(parts) != 7 or any(p.get("kind") != "DeclStmt" for p in (parts[0], parts[1], parts[2], parts[5])):
+            raise Unsupported("range-based for with an init statement", self.line)
+        range_stmt, begin_stmt, end_stmt, cond, step, var_stmt, loop_body = parts
+        bound = _children(_children(range_stmt)[0])
+        if not bound or not self.unit.model_of(*_types(_strip(bound[0])), self.line) or \
+                self.unit.model_of(*_types(_strip(bound[0])), self.line)[1]["kind"] != "vector":
+            raise Unsupported("range-based for over anything but a std::vector", self.line)
+        self.emit("{", indent)
+        self.scopes.append([])
+        for stmt in (range_stmt, begin_stmt, end_stmt):
+            text, extra = self.local(_children(stmt)[0])
+            if extra:
+                raise Unsupported("range-based for whose range needs a constructor call", self.line)
+            self.simple(text + ";", indent + 1)
+        self.loops += 1
+        self.anchor(f"{self.function}.loop{self.loops}.head", "loop_head", indent + 1)
+        self.emit(f"for (; {self.expr(cond, top=True)}; {self.expr(step, top=True)}) {{", indent + 1)
+        statements = loop_body.get("inner", []) if loop_body.get("kind") == "CompoundStmt" else [loop_body]
+        self.body({"kind": "CompoundStmt", "inner": [var_stmt, *statements]}, indent + 2)
+        self.emit("}", indent + 1)
+        self.scopes.pop()
+        self.emit("}", indent)
+
+    def _return_destroying(self, inner, indent):
+        """A return out of scopes that destroy objects: keep the value, destroy innermost first, return it."""
+        pending = [entry for scope in self.scopes for entry in scope]
+        if self.returns_ref:
+            raise Unsupported("return of a reference out of a scope that destroys an object", self.line)
+        self.emit("{", indent)
+        if inner:
+            self.emit(f"{_join(self.returns_ctype, 'swdb_return')} = {self.expr(inner[0], top=True)};", indent + 1)
+        for name, dtor in reversed(pending):
+            self.emit(f"{dtor}(&{name});", indent + 1)
+        self.emit("return swdb_return;" if inner else "return;", indent + 1)
+        self.emit("}", indent)
 
     def _atomic(self, node):
         name = node.get("name", "")
@@ -1685,6 +1935,7 @@ class _Printer:
                 raise Unsupported(f"new[] of class {element} with a constructor", self.line)
             self._trivial(element, cls)
         self.unit.needs_stdlib = True
+        self.unit.allocates = True                                             # ticket 25: "allocation succeeds"
         return f"({ctype})malloc(sizeof({element}) * (size_t)({self.expr(children[0], top=True)}))", True
 
     def delete(self, node):
@@ -1819,7 +2070,8 @@ def lower(source, function, includes=(), defines=(), summaries=None):
                     parameters=tuple(unit_params), source_sha256=_file_sha256(source), defines=defines,
                     tool={"id": TOOL_ID, "version": TOOL_VERSION, "naming_rules": NAMING_RULES,
                           "naming_rules_sha256": RULES_SHA256, "clang": tool.version},
-                    summaries=tuple(unit.summaries_used), models=tuple(unit.model_order))
+                    summaries=tuple(unit.summaries_used), models=tuple(unit.model_order),
+                    std_models=tuple(sorted(unit.std_types)), allocation=unit.allocates or bool(unit.std_types))
 
 
 def _callees_first(function, definitions):
@@ -1869,6 +2121,7 @@ def _define(unit, cname, node, owner):
         returns_text, _, _ = _return_and_params(_qual(node), line)
         printer.returns_ref = returns_text.rstrip().endswith("&")
         returns = unit.ctype(returns_text, None, "", line)
+        printer.returns_ctype = returns
     head = "static " if node.get("storageClass") == "static" and not owner else ""
     prototype = f"{head}{_join(returns, cname)}({', '.join(texts) or 'void'})"
     printer.anchor(f"{cname}.entry", "entry", 1)
@@ -1990,4 +2243,8 @@ def _cli(args):
         out["summaries"] = list(lowering.summaries)
     if lowering.models:
         out["models"] = list(lowering.models)
+    if lowering.std_models:
+        out["std_models"] = {**std_models.identity(), "types": list(lowering.std_models)}
+    if lowering.allocation:
+        out["allocation"] = True
     return out
