@@ -45,6 +45,13 @@ def _library_roots():
 def proof_seed(tmp_path_factory):
     """A certified fixture candidate artifact, built once per module."""
     path = tmp_path_factory.mktemp("proof-seed")
+    return path, build_proof_seed(path)
+
+
+def build_proof_seed(path):
+    """Build the seed (records/ and library/ under `path`); return the certified candidate artifact's ID.
+
+    A plain builder (T1, 2026-10-05 ET): ticket 57's mbit10 batch script builds the same seed."""
     records = make_records(path)
     copy_record_subset(REPO / "records", records.path,
                        sorted(_library_roots() | {"gapbs-bfs-do", "gapbs", "dx100-gapbs", "mbit10"}))
@@ -57,7 +64,7 @@ def proof_seed(tmp_path_factory):
     assert submitted.returncode == 0, submitted.stderr
     candidate = json.loads(submitted.stdout)["candidate"]
     _certify(records.path, path, candidate, "certification.proof-fixture-pass", "certified")
-    return path, candidate
+    return candidate
 
 
 @pytest.fixture
