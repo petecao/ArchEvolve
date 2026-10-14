@@ -59,3 +59,15 @@ static void swdb_check_p2(int nf, size_t next_end) {
     if (q >= nf && size_t(q) < next_end)
       assert(g_queue[q] >= 0 && g_queue[q] < SPIKE_V && "P2_pushed_is_a_vertex");
 }
+
+// Never verified: keeps every summarized symbol in each module, so make_overrides and
+// make_fault_overrides find them whichever calls a unit or control actually makes (a control that
+// drops every wait otherwise has no wait_ready to override).
+void swdb_summary_symbols() {
+  maa_const<int>(0, 0); wait_ready(0); (void)get_tile_size(0);
+  swdb_probe_tile_read(0); swdb_probe_cpu(0, 0);
+  maa_stream_load<int>(g_queue, 0, 0, 0, 0); maa_indirect_load<int>(g_queue, 0, 0);
+  maa_range_loop<int>(0, 0, 0, 0, 0, 0, 0);
+  maa_alu_scalar<int>(0, 0, 0, Operation_t::LT_OP); maa_indirect_store_vector<int>(g_parent, 0, 0, 0, 0);
+  (void)swdb_fault_peek_reg(0); swdb_fault_poke_reg(0, 0); (void)swdb_fault_peek_size(0);
+}

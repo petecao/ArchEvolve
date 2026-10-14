@@ -34,6 +34,7 @@ sys.exit(r.returncode)'
 # hand-derived minimum scope.
 JOBS='peter_l1|peter||gem5|l1|timeout|-
 maa_l1|maa||gem5|l1|timeout|-
+peter_cal|peter||gem5|s84-86|proven|-
 peter_s95|peter||gem5|s95-96|proven|-
 maa_s95|maa||gem5|s95-96|proven|-
 peter_dropped_wait|peter|-DSWDB_DXC_FAULT_DROPPED_WAIT|gem5|s95-96|refuted|override:_Z13get_tile_sizei
