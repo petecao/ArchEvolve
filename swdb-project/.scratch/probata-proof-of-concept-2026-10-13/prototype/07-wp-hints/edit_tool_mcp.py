@@ -7,6 +7,9 @@
 #   propose_edit(ops): check_edit, then round-mode WP on TDStep's goals and lemmas. The edit replaces
 #     the best set only if the open-goal count does not rise; otherwise it is reverted. Minutes.
 #   show_best(): the current best set and its open goals.
+#   show_goal(goal) (t07e c1): one open goal as WP generates it (no prover). Seconds to a minute.
+# t07e: two-phase acceptance (edit_core.TWO_PHASE) and the lock wait published live for the loop's
+# budget-clock deadline (loop.LIVE_FILE).
 # Reads only the stand-in, its headers and the loop's best.json. Shell stays disabled in Codex.
 # Usage (by Codex, via -c mcp_servers.probata.*): edit_tool_mcp.py --state <dir>
 import argparse, json, sys, time, traceback
@@ -14,6 +17,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import edit_core as E  # noqa: E402
+import goal_print as G  # noqa: E402
 import loop as L  # noqa: E402
 
 ap = argparse.ArgumentParser()
@@ -28,6 +32,8 @@ L.BASELINE_PASSED.update(CFG.get("baseline_passed") or [])
 ALLOWED = set(CFG["allowed_kinds"])
 E.ACCEPT[0] = CFG.get("accept", "total")
 E.CAP[0] = CFG.get("hint_cap", E.HINT_OPEN_CAP)
+E.TWO_PHASE[0] = bool(CFG.get("two_phase"))
+L.LIVE_FILE[0] = CFG.get("live_file")
 SCHEMA = {"type": "object", "required": ["ops"], "properties": {"ops": {"type": "array", "items": E.OP_SCHEMA}}}
 TOOLS = [
     {"name": "check_edit",
@@ -43,6 +49,15 @@ TOOLS = [
     {"name": "show_best", "description": "The current best hint set (with ids) and its open goals.",
      "inputSchema": {"type": "object", "properties": {}}, "annotations": {"readOnlyHint": True}},
 ]
+if CFG.get("show_goal"):
+    TOOLS.append(
+        {"name": "show_goal",
+         "description": "Print one OPEN goal of the best set as WP generates it after Qed simplification (hypotheses "
+                        "'Assume'/'Have', conclusion 'Prove'), so you can see why it fails. No prover runs; nothing "
+                        "changes. Up to about a minute.",
+         "inputSchema": {"type": "object", "required": ["goal"], "properties": {"goal": {"type": "string"}}},
+         "annotations": {"readOnlyHint": True}})
+TOOL_NAMES = {t["name"] for t in TOOLS}
 
 
 def budget_used_min():
@@ -94,8 +109,14 @@ def call(tool, args):
         record(tool, {"result": "refused: budget"})
         return (f"Budget for in-call work is spent ({budget_used_min():.1f} of {CFG['budget_min']} min used; "
                 f"{CFG['final_reserve_min']} min are kept for the final replay). Return your final answer NOW.")
-    ops = args.get("ops") or []
     tag = f"r{CFG['round']}c{N[0] + 1}"
+    if tool == "show_goal":
+        t = time.time()
+        text, rec = G.show(OUT, best, str(args.get("goal", "")), tag)
+        rec["wall_s"] = round(time.time() - t, 1)
+        record(tool, rec)
+        return text + f"\nBudget left for in-call work: {remaining_min():.1f} min."
+    ops = args.get("ops") or []
     prov = f"codex {PIN['model']} {PIN['effort']} round {CFG['round']} tool call {N[0] + 1}"
     t = time.time()
     rec, nb = E.attempt(OUT, best, ops, tag, prov, CFG["mode"], CFG["round_timeout"], ALLOWED,
@@ -105,6 +126,9 @@ def call(tool, args):
         E.save_best(OUT, nb)
     record(tool, rec)
     text = fmt_rec(rec)
+    if nb is not None and E.phase_of(nb) == 2 and E.phase_of(best) == 1:
+        text += ("\nPHASE 2 STARTS NOW: every unit goal is proven. From now on an edit is accepted only if every unit goal "
+                 "stays proven and the number of open hint goals does not rise.")
     if nb is not None and nb["n_open"] == 0:
         return text + ("\nALL goals proven in round mode. Return your final answer now with an empty ops list; "
                        "the loop runs the fresh full replay.")
@@ -139,7 +163,7 @@ for line in sys.stdin:
     elif method == "tools/call":
         p = msg.get("params") or {}
         try:
-            if p.get("name") not in ("check_edit", "propose_edit", "show_best"):
+            if p.get("name") not in TOOL_NAMES:
                 raise ValueError(f"unknown tool {p.get('name')}")
             text, err = call(p["name"], p.get("arguments") or {}), False
         except Exception as e:  # noqa: BLE001

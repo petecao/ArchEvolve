@@ -69,14 +69,38 @@ def run_dir(out, name, text):
 OWNER = ["t07"]
 
 
+LIVE_FILE = [None]  # t07e (a): when set, the lock wait is published live here for the budget-clock deadline
+
+
+def _live(pending_since, provisional=0.0):
+    if LIVE_FILE[0] is None:
+        return
+    f = Path(LIVE_FILE[0])
+    tmp = f.with_suffix(".tmp")
+    tmp.write_text(json.dumps({"settled_s": round(LOCKWAIT[0] + provisional, 1), "pending_since": pending_since}))
+    tmp.replace(f)
+
+
 def verifier(out, d, mode, owner=None, timeout=2400, extra=()):
     logf = d / f"{mode}.log"
+    for f in (logf, Path(str(logf) + ".summary.json")):
+        if f.exists():
+            f.unlink()
     t = time.time()
-    subprocess.run([VRUN, "--log", str(logf), "--timeout", str(timeout), "--owner", owner or OWNER[0], "--",
-                    str(HERE / "wp_run.sh"), mode, str(d), UNIT, *map(str, extra)], stdout=subprocess.DEVNULL)
+    p = subprocess.Popen([VRUN, "--log", str(logf), "--timeout", str(timeout), "--owner", owner or OWNER[0], "--",
+                          str(HERE / "wp_run.sh"), mode, str(d), UNIT, *map(str, extra)], stdout=subprocess.DEVNULL)
+    _live(t)
+    acquired = None
+    while p.poll() is None:
+        # verifier_run.py opens the log only after it holds the machine-wide lock.
+        if acquired is None and logf.exists():
+            acquired = time.time()
+            _live(None, acquired - t)
+        time.sleep(1.0)
     summ = json.loads(Path(str(logf) + ".summary.json").read_text())
     summ["wall_incl_lock_s"] = round(time.time() - t, 1)
     LOCKWAIT[0] += summ.get("lock_wait_s", 0)
+    _live(None)
     return logf, summ
 
 

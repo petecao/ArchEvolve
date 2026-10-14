@@ -37,6 +37,11 @@ case "$mode" in
     exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" opam exec --switch=framac-33 -- frama-c "$@" \
       -wp -wp-cache none -wp-session session -wp-prover tip,alt-ergo,z3,cvc5 -wp-script dry -wp-timeout 30 -wp-par 12 \
       -wp-smoke-tests -wp-report-json goals.json -then -report -report-untried ;;
+  # t07e method change (c1): print one goal class after Qed (no prover, nothing proven, never a verdict),
+  # for the in-call show_goal tool. $4 = WP selection, e.g. "-wp-fct TDStep -wp-prop=@invariant".
+  print) rm -rf session && mkdir session
+    exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" opam exec --switch=framac-33 -- frama-c "$@" \
+      -wp $cache_arg -wp-cache none -wp-session session -wp-prover none -wp-print ;;
   wp) smoke="" ;;
   wp-smoke) smoke="-wp-smoke-tests" ;;
   wp-rte) smoke="-wp-rte" ;;

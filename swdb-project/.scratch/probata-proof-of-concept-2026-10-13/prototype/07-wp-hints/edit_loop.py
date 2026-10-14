@@ -13,6 +13,14 @@
 # Unchanged from t07/t07c: the stand-in, the pass bar (fresh full replay with the frozen flags decides),
 # the 60-minute budget (now counted from the seed round), 10 rounds, Codex pin, Codex confinement (shell
 # off, read-only sandbox, workspace inline, MCP tool only), round mode at 10 s per prover.
+# t07e (continuation 3, 2026-10-14 ET), each a flag recorded in meta.json "method_changes_t07e":
+#   --budget-deadline (a): the Codex call deadline runs on the budget clock (lock waits excluded, published
+#       live by the in-call tool), not on the wall clock; a generous wall cap guards a hang.
+#   --two-phase (b): once the best set's unit goals reach 0, only edits that keep them at 0 and do not
+#       raise the open hint goals are accepted (edit_core.TWO_PHASE); the final replay stays reserved.
+#   --show-goal (c1): in-call tool show_goal prints an open goal as WP generates it (goal_print.py).
+#   (c2) MCP tool timeout 3600 -> 14400 s, so a tool call queued behind other tickets' verifier jobs
+#       does not surface to Codex as an error while the tool keeps running.
 # Usage: edit_loop.py --out <dir> --round0-from <earlier counted run with the same stand-in> [flags]
 import argparse, hashlib, json, os, signal, subprocess, sys, time
 from pathlib import Path
@@ -78,9 +86,9 @@ In-call tools (MCP server "probata"; you have no shell and no file access):
 - show_best(): the best set (with ids) and its open goals.
 - check_edit(ops): edit rules + proof hint check (vocabulary, anchors, Frama-C parse, WP goal generation). Seconds.
 - propose_edit(ops): check, then WP; accept or revert as above. Minutes (fewer open goals run faster; results of
-  goals your edit does not touch come from a cache).
+  goals your edit does not touch come from a cache).{tool_notes}
 Work in a loop: read the open goals, check_edit, propose_edit, read the result, repeat. In-call budget:
-{tool_budget:.0f} min from the start of this call; the tool tells you what is left.
+{tool_budget:.0f} min from the start of this call{budget_clock_note}; the tool tells you what is left.
 
 Round {round} of at most {rounds}; minutes used so far: {minutes:.1f} of {budget}.
 
@@ -100,6 +108,14 @@ ACCEPT_RULE = {
                    "  asserts, lemmas) may rise while unit goals fall, up to {cap} open hint goals; every hint goal must\n"
                    "  be proven in the end.")}
 
+PHASE2_RULE = ("\n  PHASE 2: once every unit goal is proven, the rule changes: an edit is ACCEPTED only if every unit goal\n"
+               "  stays proven and the number of open hint goals does not rise. Then close your own hint goals: add\n"
+               "  lemmas, asserts, invariants or strategies that support them, fix them, or delete hints that are not\n"
+               "  needed. The tool and the open-goal list say which phase you are in.")
+
+SHOW_GOAL_NOTE = ("\n- show_goal(goal): one open goal as WP generates it after Qed simplification (hypotheses and the\n"
+                  "  conclusion), so you can see what is missing. Up to a minute; changes nothing.")
+
 STRATEGY_NOTES = """  strategy / proof (at "global"): WP proof strategies that prune or reshape ONE goal's context, e.g.
     "\\\\wp::strategy MyProvers: \\\\prover(\\"alt-ergo\\", \\"z3\\", \\"cvc5\\");"
     "\\\\wp::strategy MyFilter: \\\\tactic(\\"Wp.filter\\", \\\\children(MyProvers));"   (drops hypotheses unrelated to the goal)
@@ -110,7 +126,23 @@ STRATEGY_NOTES = """  strategy / proof (at "global"): WP proof strategies that p
   Strategy names must be new (the seeds use names starting with "Seed")."""
 
 
-def codex_call(out, r, prompt, resume, mcp_state, deadline_s):
+TOOL_TIMEOUT_S = [3600]
+WALL_CAP_S = 5 * 3600  # t07e (a): guard only; the budget clock decides
+
+
+def live_lock_wait(mcp_state):
+    """Lock wait of the in-call tool so far (settled + the wait in progress), read from outside the tool."""
+    f = Path(mcp_state) / "lockwait_live.json"
+    try:
+        j = json.loads(f.read_text())
+    except (OSError, ValueError):
+        return 0.0
+    return j.get("settled_s", 0.0) + (time.time() - j["pending_since"] if j.get("pending_since") else 0.0)
+
+
+def codex_call(out, r, prompt, resume, mcp_state, deadline_s, budget_stop=None):
+    """deadline_s: wall-clock deadline (t07d). budget_stop (t07e a): a function returning True once the
+    budget clock (wall time minus every lock wait, including the in-call tool's live one) is spent."""
     d = out / f"codex-r{r}"
     ws = d / "workspace"
     ws.mkdir(parents=True, exist_ok=True)
@@ -121,7 +153,8 @@ def codex_call(out, r, prompt, resume, mcp_state, deadline_s):
               "--ignore-user-config", "--ignore-rules", "--skip-git-repo-check",
               "-c", "mcp_servers.probata.command=" + json.dumps(sys.executable),
               "-c", "mcp_servers.probata.args=" + json.dumps(["-I", str(HERE / "edit_tool_mcp.py"), "--state", str(mcp_state)]),
-              "-c", "mcp_servers.probata.tool_timeout_sec=3600", "-c", "mcp_servers.probata.startup_timeout_sec=60"]
+              "-c", "mcp_servers.probata.tool_timeout_sec=" + str(TOOL_TIMEOUT_S[0]),
+              "-c", "mcp_servers.probata.startup_timeout_sec=60"]
     tail = ["--json", "--output-schema", str(d / "schema.json"), "--output-last-message", str(d / "final.json"),
             "--disable", "shell_tool"]
     for f in L.CODEX_DISABLED_FEATURES:
@@ -137,9 +170,22 @@ def codex_call(out, r, prompt, resume, mcp_state, deadline_s):
         p = subprocess.Popen(argv, stdin=subprocess.PIPE, stdout=fo, stderr=fe, text=True, start_new_session=True)
         p.stdin.write(prompt)
         p.stdin.close()
-        try:
-            p.wait(timeout=deadline_s)
-        except subprocess.TimeoutExpired:
+        stop_reason = None
+        while True:
+            try:
+                p.wait(timeout=5)
+                break
+            except subprocess.TimeoutExpired:
+                pass
+            if budget_stop is None and time.time() - t > deadline_s:
+                stop_reason = "wall-clock deadline"
+            elif budget_stop is not None and budget_stop():
+                stop_reason = "budget-clock deadline"
+            elif time.time() - t > WALL_CAP_S:
+                stop_reason = "wall cap"
+            if stop_reason:
+                break
+        if stop_reason:
             killed = True
             os.killpg(p.pid, signal.SIGTERM)
             try:
@@ -159,7 +205,7 @@ def codex_call(out, r, prompt, resume, mcp_state, deadline_s):
             for k, v in (ev.get("usage") or {}).items():
                 usage[k] = usage.get(k, 0) + (v or 0)
     res = {"exit": p.returncode, "wall_s": round(time.time() - t, 1), "usage": usage, "thread": thread,
-           "killed_at_deadline": killed, "ops": None, "notes": None, "error": None}
+           "killed_at_deadline": killed, "stop_reason": stop_reason, "ops": None, "notes": None, "error": None}
     try:
         data = json.loads((d / "final.json").read_text())
         res["ops"], res["notes"] = data.get("ops") or [], data.get("notes", "")
@@ -175,7 +221,8 @@ def tool_state(out, r, a, t0, mode, allowed):
         "out": str(out), "owner": L.OWNER[0], "t0": t0, "lockwait_before_s": L.LOCKWAIT[0],
         "budget_min": a.budget_min, "final_reserve_min": a.final_reserve_min, "round_timeout": a.round_timeout,
         "round": r, "pin": L.PIN, "mode": mode, "allowed_kinds": sorted(allowed), "accept": E.ACCEPT[0], "hint_cap": E.CAP[0],
-        "baseline_passed": sorted(L.BASELINE_PASSED)}, indent=1))
+        "baseline_passed": sorted(L.BASELINE_PASSED), "two_phase": E.TWO_PHASE[0], "show_goal": a.show_goal,
+        "live_file": str(state / "lockwait_live.json") if a.budget_deadline else None}, indent=1))
     return state
 
 
@@ -187,6 +234,7 @@ def read_tool(state):
     return {"calls": len(subs), "lock_wait_s": lw,
             "check_calls": sum(1 for s in subs if s["tool"] == "check_edit"),
             "propose_calls": sum(1 for s in subs if s["tool"] == "propose_edit"),
+            "show_goal_calls": sum(1 for s in subs if s["tool"] == "show_goal"),
             "accepted": sum(1 for s in subs if str(s.get("result", "")).startswith("accepted")),
             "reverted": sum(1 for s in subs if str(s.get("result", "")).startswith("reverted")),
             "rejected": sum(1 for s in subs if "rejected" in str(s.get("result", ""))),
@@ -229,6 +277,10 @@ def main():
     ap.add_argument("--accept", default="total", choices=["total", "unit-first"],
                     help="(a') acceptance: total open goals (run 7) or unit goals first (run 8 on)")
     ap.add_argument("--hint-cap", type=int, default=E.HINT_OPEN_CAP, help="unit-first: max open hint goals")
+    ap.add_argument("--budget-deadline", action="store_true", help="t07e (a): Codex deadline on the budget clock")
+    ap.add_argument("--two-phase", action="store_true", help="t07e (b): hint-goal-only phase once unit goals are 0")
+    ap.add_argument("--show-goal", action="store_true", help="t07e (c1): in-call show_goal tool")
+    ap.add_argument("--tool-timeout-s", type=int, default=3600, help="t07e (c2): MCP tool timeout")
     ap.add_argument("--owner", default="t07d")
     ap.add_argument("--dev-effort", help="DEV ONLY (never a counted run): override the pinned effort")
     ap.add_argument("--dev-no-codex", action="store_true", help="DEV ONLY: stop after the seed round")
@@ -237,6 +289,8 @@ def main():
     assert a.monotone, "this loop implements method change (a) only"
     E.ACCEPT[0] = a.accept
     E.CAP[0] = a.hint_cap
+    E.TWO_PHASE[0] = a.two_phase
+    TOOL_TIMEOUT_S[0] = a.tool_timeout_s
     L.OWNER[0] = a.owner
     if a.dev_effort:
         L.PIN["effort"] = a.dev_effort
@@ -248,7 +302,8 @@ def main():
     if not a.strategies:
         allowed -= {"strategy", "proof"}
     standin = (L.STANDIN_DIR / L.UNIT).read_text()
-    files = ["loop.py", "hints.py", "wp_run.sh", "edit_loop.py", "edit_core.py", "edit_tool_mcp.py", "frame_seeds.py"]
+    files = ["loop.py", "hints.py", "wp_run.sh", "edit_loop.py", "edit_core.py", "edit_tool_mcp.py", "frame_seeds.py",
+             "goal_print.py"]
     meta = {"started": L.now(), "pin": L.PIN,
             "codex_version": subprocess.run([L.CODEX, "--version"], capture_output=True, text=True).stdout.strip(),
             "standin_sha256": {f: L.sha(L.STANDIN_DIR / f) for f in [L.UNIT] + L.HEADERS},
@@ -258,6 +313,9 @@ def main():
                                     "seeds": a.seeds, "frame_filter": a.frame_filter, "strategies": a.strategies,
                                     "examples": a.examples, "mode": mode, "final_mode": final_mode,
                                     "accept": a.accept, "hint_open_cap": a.hint_cap},
+            "method_changes_t07e": {"budget_clock_deadline": a.budget_deadline, "two_phase": a.two_phase,
+                                    "show_goal": a.show_goal, "mcp_tool_timeout_s": a.tool_timeout_s,
+                                    "wall_cap_s": WALL_CAP_S, "seed_frame_goals_are_unit_goals": True},
             "allowed_kinds": sorted(allowed), "harness_sha256": {f: L.sha(HERE / f) for f in files},
             "examples_sha256": {f.name: L.sha(f) for f in sorted(L.EXAMPLES.glob("*")) if f.is_file()} if a.examples else None,
             "dev": bool(a.dev_effort or a.dev_no_codex or a.dev_skip_round0)}
@@ -341,7 +399,10 @@ def main():
         if thread is None:
             prompt = PROMPT.format(
                 max_ops=E.MAX_OPS, max_text=E.MAX_TEXT, kinds=", ".join(sorted(allowed)),
-                accept_rule=ACCEPT_RULE[a.accept].format(cap=a.hint_cap),
+                accept_rule=ACCEPT_RULE[a.accept].format(cap=a.hint_cap) + (PHASE2_RULE if a.two_phase else ""),
+                tool_notes=SHOW_GOAL_NOTE if a.show_goal else "",
+                budget_clock_note=(" (time your tool calls wait for the shared verifier queue is not counted)"
+                                   if a.budget_deadline else ""),
                 strategy_notes=STRATEGY_NOTES.format(tactics=tactics) if a.strategies else "",
                 round_timeout=a.round_timeout, tool_budget=tool_budget, round=r, rounds=a.rounds, minutes=used,
                 budget=a.budget_min, best=E.best_text(best), open=E.open_text(best), examples=examples,
@@ -352,11 +413,18 @@ def main():
                       f"tool result.\n{E.open_text(best)}\nContinue with the tools; answer with your final edit "
                       "(JSON {\"ops\": [...], \"notes\": ...}) before the in-call budget ends.")
         L.log(out, f"round {r}: Codex call ({'resumed' if thread else 'new'} session, {len(prompt)} chars, best {best['n_open']} open)")
-        c = codex_call(out, r, prompt, thread, state, max(120.0, tool_budget * 60 + 120.0))
+        lw0 = L.LOCKWAIT[0]
+        limit_s = (a.budget_min - a.final_reserve_min) * 60 + 120.0  # same 2-min grace as t07d
+
+        def budget_stop(state=state, lw0=lw0, limit_s=limit_s):
+            return time.time() - t0 - lw0 - live_lock_wait(state) > limit_s
+
+        c = codex_call(out, r, prompt, thread, state, max(120.0, tool_budget * 60 + 120.0),
+                       budget_stop=budget_stop if a.budget_deadline else None)
         thread = c.get("thread") or thread
         tool = read_tool(state)
-        rec = {"round": r, "started": L.now(), "codex": {k: c[k] for k in ("exit", "wall_s", "usage", "error",
-               "killed_at_deadline")}, "codex_notes": c.get("notes"), "codex_thread": thread, "tool": tool,
+        rec = {"round": r, "started": L.now(), "phase_at_start": E.phase_of(best),
+               "codex": {k: c[k] for k in ("exit", "wall_s", "usage", "error", "killed_at_deadline", "stop_reason")}, "codex_notes": c.get("notes"), "codex_thread": thread, "tool": tool,
                "codex_calls": 1}
         best = E.load_best(out)
         if c.get("ops") and best["n_open"] > 0 and (a.budget_min - a.final_reserve_min) - budget_s(t0) / 60 > 0.5:
@@ -388,6 +456,8 @@ def main():
                "lock_wait_excluded_s": round(L.LOCKWAIT[0], 1), "best_n_open": best["n_open"],
                "best_hints": len(best["hints"]), "best_sha256": L.sha(out / "best.json"),
                "tool_calls": sum((h.get("tool") or {}).get("calls", 0) for h in history[2:]),
+               "show_goal_calls": sum((h.get("tool") or {}).get("show_goal_calls", 0) for h in history[2:]),
+               "best_unit_hint_open": list(E.split_counts(best["failing_goals"])), "phase_at_end": E.phase_of(best),
                "wp_attempts": sum((h.get("tool") or {}).get("propose_calls", 0) for h in history[2:]),
                "tokens": {}, "final": {k: v for k, v in (final or {}).items() if k != "failing_goals"} or None,
                "finished": L.now()}

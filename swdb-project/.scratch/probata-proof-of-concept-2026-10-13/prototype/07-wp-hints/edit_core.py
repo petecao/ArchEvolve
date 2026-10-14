@@ -4,6 +4,8 @@
 # (add / delete / edit), each naming the open goal it targets. An edit that passes the proof hint
 # check runs round-mode WP; it replaces the best set only when the open-goal count does not rise.
 # Otherwise it is reverted. Shared by edit_loop.py (the loop) and edit_tool_mcp.py (the in-call tool).
+# t07e (continuation 3, 2026-10-14 ET): two-phase acceptance (TWO_PHASE) and the seed-frame
+# classification fix in is_hint_goal.
 import json, time
 from pathlib import Path
 
@@ -111,16 +113,8 @@ def attempt(out, best, ops, tag, provenance, mode, round_timeout, allowed_kinds,
         return rec, None
     n_open = len(ar["failing_goals"])
     rec["n_open_after"] = n_open
-    u_old, h_old = split_counts(best["failing_goals"])
-    u_new, h_new = split_counts(ar["failing_goals"])
-    rec.update(n_unit_after=u_new, n_hint_after=h_new)
-    if ACCEPT[0] == "unit-first":
-        # t07d (a'), run 8 on: unit goals first, then the total; hint goals open capped.
-        ok = h_new <= CAP[0] and (u_new < u_old or (u_new == u_old and n_open <= best["n_open"]))
-        why = f"unit goals {u_old} -> {u_new}, hint goals {h_old} -> {h_new}, total {best['n_open']} -> {n_open}"
-    else:
-        ok = n_open <= best["n_open"]
-        why = f"open goals {best['n_open']} -> {n_open}"
+    ok, why = decide(best["failing_goals"], best["n_open"], ar["failing_goals"])
+    rec.update(zip(("n_unit_after", "n_hint_after"), split_counts(ar["failing_goals"])))
     if not ok:
         rec["result"] = f"reverted ({why})"
         rec["failing_goals"] = ar["failing_goals"]
@@ -131,16 +125,63 @@ def attempt(out, best, ops, tag, provenance, mode, round_timeout, allowed_kinds,
     return rec, nb
 
 
+def decide(old_failing, old_n_open, new_failing):
+    """Acceptance of an edit: (accepted, reason)."""
+    n_open = len(new_failing)
+    u_old, h_old = split_counts(old_failing)
+    u_new, h_new = split_counts(new_failing)
+    if TWO_PHASE[0] and u_old == 0:
+        # t07e (b) phase 2: unit goals stay at 0; open hint goals may not rise (monotone).
+        return (u_new == 0 and h_new <= h_old), f"phase 2: unit goals {u_old} -> {u_new}, hint goals {h_old} -> {h_new}"
+    if ACCEPT[0] == "unit-first":
+        # t07d (a'), run 8 on: unit goals first, then the total; hint goals open capped.
+        ok = h_new <= CAP[0] and (u_new < u_old or (u_new == u_old and n_open <= old_n_open))
+        return ok, f"unit goals {u_old} -> {u_new}, hint goals {h_old} -> {h_new}, total {old_n_open} -> {n_open}"
+    return n_open <= old_n_open, f"open goals {old_n_open} -> {n_open}"
+
+
 ACCEPT = ["total"]     # "total" (run 7) or "unit-first" (t07d a', run 8 on)
 HINT_OPEN_CAP = 15     # unit-first: at most this many open goals that belong to hints (run 8: 15; --hint-cap)
 CAP = [HINT_OPEN_CAP]
+TWO_PHASE = [False]    # t07e method change (b): phase 2 (hint goals only) once unit goals reach 0
+
+
+def is_hint_goal(g):
+    """A goal of the agent's own hints: a lemma, or a goal inside a hint block that is not a seed frame.
+    t07e bug fix: a seed `loop assigns` merged into one block with agent invariants was counted as a hint
+    goal (its hint_ids hold the agent's ids too). Seeds are method, so their goals are unit goals."""
+    name = str(g.get("goal", ""))
+    if name.startswith("typed_lemma"):
+        return True
+    kind = g.get("kind") or H.goal_kind(name)
+    if kind == "loop assigns":
+        return False
+    return any(not i.startswith(SEED_PREFIX) for i in g.get("hint_ids") or [])
 
 
 def split_counts(failing):
-    """(unit goals open, hint goals open): a hint goal sits inside a hint block or is a lemma."""
-    hint = sum(1 for g in failing if any(not i.startswith(SEED_PREFIX) for i in g.get("hint_ids") or [])
-               or str(g.get("goal", "")).startswith("typed_lemma"))
+    """(unit goals open, hint goals open)."""
+    hint = sum(1 for g in failing if is_hint_goal(g))
     return len(failing) - hint, hint
+
+
+def phase_of(best):
+    """t07e method change (b): phase 2 once the best set's unit goals are 0 (only hint goals left)."""
+    if not TWO_PHASE[0]:
+        return 1
+    return 2 if split_counts(best["failing_goals"])[0] == 0 and best["n_open"] > 0 else 1
+
+
+def phase_text(best):
+    if not TWO_PHASE[0]:
+        return ""
+    u, h = split_counts(best["failing_goals"])
+    if phase_of(best) == 2:
+        return (f"PHASE 2 (closing your own hint goals): every unit goal is proven; {h} goals of your own hints are "
+                "open. An edit is ACCEPTED only if every unit goal stays proven and the number of open hint goals "
+                "does not rise. Add lemmas, asserts, invariants or strategies that support your hints, fix them, or "
+                "delete a hint that is not needed (the edit is kept only if the unit goals stay proven).")
+    return f"PHASE 1 (unit goals first): {u} unit goals and {h} hint goals open."
 
 
 def best_text(best, limit=80):
@@ -151,6 +192,7 @@ def best_text(best, limit=80):
 
 
 def open_text(best):
-    return (f"Open goals of the best set ({best['n_open']} of {best.get('n_goals')} not proven): goal [failure class] "
+    ph = phase_text(best)
+    return (ph + "\n" if ph else "") + (f"Open goals of the best set ({best['n_open']} of {best.get('n_goals')} not proven): goal [failure class] "
             f"kind at file:line (merged file): source line | hint holding it\n"
             + L.positions_text(best["failing_goals"], best["hints"]))

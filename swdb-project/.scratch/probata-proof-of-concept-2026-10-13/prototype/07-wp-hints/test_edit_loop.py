@@ -73,3 +73,70 @@ def test_unit_first_counts_seed_frames_as_unit_goals_and_agent_hints_as_hint_goa
              {"goal": "typed_TDStep_loop_invariant_x_preserved", "hint_ids": ["seed3", "r1c4h3"]},
              {"goal": "typed_lemma_l", "hint_ids": []}]
     assert E.split_counts(fails) == (2, 2)
+
+
+# t07e (continuation 3, 2026-10-14 ET)
+def test_seed_loop_assigns_merged_with_agent_invariants_stays_a_unit_goal():
+    fails = [{"goal": "typed_TDStep_loop_assigns_3_part11", "kind": "loop assigns",
+              "hint_ids": ["seed3", "r1c5h3", "r1c7h3"]},
+             {"goal": "typed_TDStep_loop_invariant_k_ready_established", "hint_ids": ["seed3", "r1c5h3"]},
+             {"goal": "typed_TDStep_assert_td_final_idle", "hint_ids": ["r2fh1"]}]
+    assert E.split_counts(fails) == (1, 2)
+
+
+def test_two_phase_acceptance_keeps_unit_goals_at_zero_and_hint_goals_monotone():
+    unit = {"goal": "typed_TDStep_ensures_a", "hint_ids": []}
+    h1 = {"goal": "typed_TDStep_assert_a", "hint_ids": ["r1c1h1"]}
+    h2 = {"goal": "typed_TDStep_assert_b", "hint_ids": ["r1c1h2"]}
+    E.ACCEPT[0], E.CAP[0] = "unit-first", 30
+    try:
+        E.TWO_PHASE[0] = True
+        assert E.decide([h1, h2], 2, [h1])[0]                 # phase 2: hint goals fall
+        assert E.decide([h1, h2], 2, [h2, h1])[0]             # phase 2: neutral edit kept
+        assert not E.decide([h1], 1, [h1, h2])[0]             # phase 2: hint goals rise
+        assert not E.decide([h1, h2], 2, [unit])[0]           # phase 2: a unit goal reopens
+        assert E.decide([unit, h1], 2, [h1, h2])[0]           # phase 1 still unit-first
+        assert E.phase_of({"failing_goals": [h1], "n_open": 1}) == 2
+        assert E.phase_of({"failing_goals": [unit, h1], "n_open": 2}) == 1
+        E.TWO_PHASE[0] = False
+        # Finding: at 0 unit goals, unit-first already is this monotone rule; (b) changes the phase signal.
+        for old, new in [([h1, h2], [h1]), ([h1], [h1, h2]), ([h1, h2], [unit])]:
+            E.TWO_PHASE[0] = True
+            on = E.decide(old, len(old), new)[0]
+            E.TWO_PHASE[0] = False
+            assert E.decide(old, len(old), new)[0] == on
+        assert E.phase_of({"failing_goals": [h1], "n_open": 1}) == 1
+    finally:
+        E.TWO_PHASE[0], E.ACCEPT[0], E.CAP[0] = False, "total", E.HINT_OPEN_CAP
+
+
+def test_live_lock_wait_counts_the_wait_in_progress(tmp_path):
+    import time
+    import edit_loop as EL
+    assert EL.live_lock_wait(tmp_path) == 0.0
+    (tmp_path / "lockwait_live.json").write_text('{"settled_s": 30.0, "pending_since": %f}' % (time.time() - 100))
+    assert 129 < EL.live_lock_wait(tmp_path) < 140
+    (tmp_path / "lockwait_live.json").write_text('{"settled_s": 30.0, "pending_since": null}')
+    assert EL.live_lock_wait(tmp_path) == 30.0
+
+
+def test_goal_print_picks_the_goal_block_by_line_part_and_kind():
+    import goal_print as G
+    text = ("[wp] Running WP plugin...\n"
+            "Goal Preservation of Invariant 'k_ready' (file tdstep_standin.c, line 172):\n"
+            "tdstep_standin.c:81: warning from Typed Model:\n - Warning: Hide sub-term definition\n"
+            "   Reason: Cast with incompatible pointers types (source: sint32*) (target: sint8*)\n"
+            "Assume { Have: P. }\nProve: Q.\n" + "-" * 60 + "\n"
+            "Goal Establishment of Invariant 'k_ready' (file tdstep_standin.c, line 172):\nProve: R.\n" + "-" * 60 + "\n"
+            "Goal Loop assigns (\"tdstep_standin.c\", line 174) (11/16):\nProve: S.\n" + "-" * 60 + "\n"
+            "Goal Loop assigns (\"tdstep_standin.c\", line 174) (12/16):\nProve: T.\n" + "-" * 60 + "\n")
+    bl = G.blocks(text)
+    assert len(bl) == 4 and "warning" not in bl[0][1]
+    pre = G.pick(bl, {"goal": "typed_TDStep_loop_invariant_k_ready_preserved", "line": 172})
+    assert [b[1] for b in pre] == ["Assume { Have: P. }\nProve: Q."]
+    est = G.pick(bl, {"goal": "typed_TDStep_loop_invariant_k_ready_established", "line": 172})
+    assert [b[1] for b in est] == ["Prove: R."]
+    part = G.pick(bl, {"goal": "typed_TDStep_loop_assigns_3_part11", "line": 174})
+    assert [b[1] for b in part] == ["Prove: S."]
+    assert G.selection("typed_lemma_l1", "lemma") == "-wp-prop=l1"
+    assert G.selection("typed_TDStep_assigns_exit_part53", "assigns") == "-wp-fct TDStep -wp-prop=@assigns"
