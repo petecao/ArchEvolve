@@ -294,6 +294,42 @@ class TargetAdapter:
         """Read-only references shown to the provider when the campaign names contracts."""
         return {}
 
+    # the bounded gate (Probata PoC 14, 2026-10-14 ET) --------------------------------------------
+    #: The proof unit's function: the one that holds the rewrite site. Every adapter rewrites the fork's
+    #: scalar TDStep (`BASE_SOURCES`).
+    PROOF_FUNCTION = "TDStep"
+
+    def proof_function(self, contract):
+        return self.PROOF_FUNCTION
+
+    def prepare_proofs(self, store_dir):
+        """Copy the team store's contract-proof records of the campaign's contracts (with their closure).
+
+        Tickets 29, 32 and 33 write real contract proofs and minimum bounds; until then the team store has
+        none, and every certified candidate artifact skips the gate with `no_contract_proof` (O7)."""
+        from swdb import access
+        from swdb.extensa_boundary import closure
+        from swdb.store import Store
+        team, contracts = Store(self.team), set(self.campaign["library"].get("contracts") or [])
+        roots = [r.id for r in team.of_kind("proof") if (r.data.get("subject") or {}).get("kind") ==
+                 "contract_proof_part" and r.data["subject"].get("id") in contracts]
+        for rid in sorted(closure(team, roots)):
+            record = team.by_id[rid]
+            target = Path(store_dir) / record.rel
+            if not target.exists():
+                target.parent.mkdir(parents=True, exist_ok=True)
+                access.copy_record(self.team / record.rel, target)
+
+    def outside_cpp_subset(self, candidate_id, **context):
+        """True when the candidate artifact's code is outside the C++ subset (only `threads_k` is then
+        skipped). The subset check is ticket 24's; until it exists every candidate artifact reads as inside."""
+        return False
+
+    def bounded_job(self, candidate_id, contract, rung, bounds, **context):
+        """The verifier job of one rung: {adapter, script}. Real verifier adapters are tickets 22, 46, 47."""
+        raise Failure(f"no bounded verifier adapter for rung {rung} on target {self.campaign['target']} yet "
+                      "(tickets 22, 46, 47)")
+
     def restore(self, state):
         """Rebuild in-memory state when a campaign resumes."""
 
@@ -450,7 +486,15 @@ class TargetAdapter:
     def needs_header(self, contracts):
         return False
 
-    def materialize(self, iteration, cls, patch, knobs, attempt, contracts=()):
+    def predecessor_snapshot(self, start=None):
+        """The source snapshot candidate artifacts are built on (Probata PoC 19): the scalar-only snapshot.
+        A real target builds no candidate artifact on a derived implementation yet (None)."""
+        return None if start else SNAPSHOT
+
+    def materialize(self, iteration, cls, patch, knobs, attempt, contracts=(), start=None):
+        if start:
+            raise Refused("provider_output_invalid", f"This target builds candidate artifacts only from {SNAPSHOT}; "
+                                                     f"it cannot start from the derived implementation {start} yet.")
         snapshot = self._get(SNAPSHOT, "source_snapshot")
         rid = f"{self.cid}.{self._iteration_tag(iteration)}.{cls}.a{attempt}"
         tree = self.folder / "sources" / rid / "source"
@@ -553,7 +597,11 @@ class TargetAdapter:
         return {"id": rid, "sha256": identity["sha256"]}
 
     def certify(self, candidate, contracts, iteration, cls, attempt, tests=None):
-        """`swdb certify` of the candidate artifact against its rewrite contract."""
+        """`swdb certify` of the candidate artifact, once per rewrite contract.
+
+        Probata PoC ticket 02 (2026-10-14 ET): `records` links every certification record, one
+        `{"contract", "record"}` pair per contract in contract order; a contract refused before any
+        record exists has `record: None` and its `refusal` check. `record` stays the first record ID."""
         from swdb import certification
         from swdb.store import Store
         certify = self._certify or certification.certify
@@ -564,12 +612,12 @@ class TargetAdapter:
                                  library=self.library_root, candidate=candidate["id"])
             except certification_common.CandidateRefusal as exc:
                 failed_checks.append(exc.check)
-                records.append(None)
+                records.append({"contract": contract, "record": None, "refusal": exc.check})
                 continue
             except (Failure, UsageError, OSError) as exc:
                 # 2026-10-08 ET: keep the interrupted iteration; never repair or plateau on infrastructure.
                 raise _stop("infrastructure_failure", f"Certification {type(exc).__name__}: {exc}"[:2000]) from exc
-            records.append(record["id"])
+            records.append({"contract": contract, "record": record["id"]})
             if record["verdict"] != "certified":
                 # Ticket 64: a strict-layer failure names the strict check it hit
                 # (`strict_layer_assertion:range_bounds`), read from the run's own assertion line.
@@ -581,9 +629,9 @@ class TargetAdapter:
                 # 2026-10-04 ET (final code review): a failed verdict with nothing named (an empty
                 # matrix or no negative controls) must still fail, never read as certified.
                 failed_checks += named or ["certification_failed"]
-        passed = not failed_checks and len(records) == len(contracts) and all(records)
-        return {"record": next((r for r in records if r), None), "outcome": "certified" if passed else "failed",
-                "failed_checks": failed_checks or []}
+        passed = not failed_checks and len(records) == len(contracts) and all(r["record"] for r in records)
+        return {"record": next((r["record"] for r in records if r["record"]), None), "records": records,
+                "outcome": "certified" if passed else "failed", "failed_checks": failed_checks or []}
 
 
 # --- native CPU (ticket 56) ---------------------------------------------------------------------

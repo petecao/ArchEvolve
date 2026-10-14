@@ -181,6 +181,8 @@ def build(records_dir, db_path, library=None):
                         (rec.id, context["application"], context["source_ancestor"], context["source_baseline"],
                          context["comparison_baseline"], json.dumps(context)))
     _library(con, records_dir, store, library)
+    from swdb import derived     # Probata PoC 19: contract lineage and rewrite links, computed on read
+    derived.index(con, store, library_dir(records_dir, library))
     lanl.build(con, store)
     tables = [name for (name,) in con.execute(
         "SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%' ORDER BY rowid")]
@@ -837,3 +839,116 @@ def _insert_attribution(con, d, *_):
 
 
 _Insert.attribution = staticmethod(_insert_attribution)
+
+
+# Probata proof of concept ticket 04 (2026-10-14 ET): proof records (ADR 0016), in the SWDB
+# extension only; nothing enters a LANL core table. One row per record, plus its content-hash set
+# (one row per single pin, summary or build constant), assumption set and bounds. A pin that does
+# not apply has NULL ref and sha256 and its sentence in not_applicable. Unbounded is NULL value with
+# unbounded = 1. Ticket 11 (2026-10-14 ET): a skip record has NULL verdict, log_path and log_sha256,
+# its skip_reason, and no bounds or assumption rows. Ticket 10 (2026-10-14 ET): replay_label (refuted
+# records only; NULL when absent). Documented in docs/reference/database.md.
+SCHEMA += """
+CREATE TABLE swdb_proofs (id TEXT PRIMARY KEY, subject_kind TEXT NOT NULL, subject_id TEXT, candidate TEXT,
+    function TEXT, verdict TEXT, route TEXT, failure_class TEXT, skip_reason TEXT, has_counterexample INTEGER NOT NULL,
+    replay_label TEXT, evidence_kind TEXT NOT NULL, adapter TEXT, host TEXT, log_path TEXT, log_sha256 TEXT,
+    json TEXT NOT NULL);
+CREATE TABLE swdb_proof_pins (proof TEXT NOT NULL, kind TEXT NOT NULL, position INTEGER NOT NULL, ref TEXT,
+    sha256 TEXT, function TEXT, proof_record TEXT, value TEXT, not_applicable TEXT,
+    PRIMARY KEY (proof, kind, position));
+CREATE TABLE swdb_proof_assumptions (proof TEXT NOT NULL, position INTEGER NOT NULL, kind TEXT NOT NULL,
+    ref TEXT NOT NULL, sha256 TEXT NOT NULL, sentence TEXT NOT NULL, PRIMARY KEY (proof, position));
+CREATE TABLE swdb_proof_bounds (proof TEXT NOT NULL, dimension TEXT NOT NULL, value INTEGER,
+    unbounded INTEGER NOT NULL, PRIMARY KEY (proof, dimension));
+"""
+
+
+def _insert_proof(con, d, *_):
+    subject, job, log = d["subject"], d.get("job") or {}, (d.get("evidence") or {}).get("adapter_log") or {}
+    con.execute("INSERT INTO swdb_proofs VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                (d["id"], subject["kind"], subject.get("id"), subject.get("candidate"), subject.get("function"),
+                 d.get("verdict"), d.get("route"), d.get("failure_class"), d.get("skip_reason"), int("counterexample" in d),
+                 d.get("replay_label"), d["evidence_kind"], job.get("adapter"), job.get("host"), log.get("path"), log.get("sha256"), json.dumps(d)))
+    pins = []
+    for kind, pin in d["pins"].items():
+        if kind == "summaries":
+            pins += [(d["id"], kind, i, p["id"], p["sha256"], None, p["proof_record"], None, None)
+                     for i, p in enumerate(pin)]
+        elif kind == "build_constants":
+            pins += [(d["id"], kind, i, p["name"], None, None, None, json.dumps(p["value"]), None)
+                     for i, p in enumerate(pin)]
+        else:
+            pins.append((d["id"], kind, 0, pin.get("id"), pin.get("sha256"), pin.get("function"), None, None,
+                         pin.get("not_applicable")))
+    con.executemany("INSERT INTO swdb_proof_pins VALUES (?,?,?,?,?,?,?,?,?)", pins)
+    con.executemany("INSERT INTO swdb_proof_assumptions VALUES (?,?,?,?,?,?)",
+                    [(d["id"], i, a["kind"], a["reference"]["id"], a["reference"]["sha256"], a["sentence"])
+                     for i, a in enumerate(d.get("assumptions") or [])])
+    con.executemany("INSERT INTO swdb_proof_bounds VALUES (?,?,?,?)",
+                    [(d["id"], name, None if value == "unbounded" else value, int(value == "unbounded"))
+                     for name, value in (d.get("bounds") or {}).items()])
+
+
+_Insert.proof = staticmethod(_insert_proof)
+
+
+# Probata proof of concept ticket 19 (2026-10-14 ET): derived implementations' contract lineage (one row per
+# entry) and every rewrite link (derived implementations, and candidate artifacts built on one), with whether
+# it still matches and its proof route, computed on read by `swdb.derived.link_rows` (ADR 0016). SWDB
+# extension only. Documented in docs/reference/database.md.
+SCHEMA += """
+CREATE TABLE swdb_contract_lineage (implementation TEXT NOT NULL, position INTEGER NOT NULL, contract TEXT NOT NULL,
+    version TEXT, content_sha256 TEXT NOT NULL, PRIMARY KEY (implementation, position));
+CREATE TABLE swdb_rewrite_links (subject_kind TEXT NOT NULL, subject TEXT NOT NULL, position INTEGER NOT NULL,
+    contract TEXT, contract_sha256 TEXT, predecessor TEXT, predecessor_snapshot TEXT,
+    predecessor_snapshot_sha256 TEXT, result_candidate TEXT, result_snapshot TEXT, result_sha256 TEXT,
+    certification TEXT, proof_route TEXT NOT NULL, matches INTEGER NOT NULL, reason TEXT,
+    PRIMARY KEY (subject_kind, subject, position));
+"""
+# Probata proof of concept ticket 12 (2026-10-14 ET): the fields the evaluation's paired statistics
+# query, in the SWDB extension only (no LANL core table gains a field). One `swdb_proof_jobs` row per
+# proof record (ticket 12 owns its field list); worker_core is a core number or "unpinned" (NULL:
+# written before ticket 12); batch_load_end is NULL for a record that sampled the load at start only.
+# One `swdb_run_fields` row per proposal or proof record that carries a run index or provider pin
+# (S10), and one `swdb_repair_lineage` row per proposal with repair lineage. Documented in
+# docs/reference/database.md.
+SCHEMA += """
+CREATE TABLE swdb_proof_jobs (proof TEXT PRIMARY KEY, adapter TEXT NOT NULL, host TEXT NOT NULL, worker_core,
+    wall_seconds REAL NOT NULL, cpu_seconds REAL NOT NULL, batch_load_start REAL NOT NULL, batch_load_end REAL,
+    peak_rss_bytes INTEGER NOT NULL, batch TEXT NOT NULL, position INTEGER NOT NULL);
+CREATE TABLE swdb_run_fields (record TEXT PRIMARY KEY, record_kind TEXT NOT NULL, run_index INTEGER,
+    provider_kind TEXT, provider_model TEXT, provider_effort TEXT);
+CREATE TABLE swdb_repair_lineage (proposal TEXT PRIMARY KEY, refuted_candidate TEXT NOT NULL,
+    counterexample_record TEXT NOT NULL, round INTEGER NOT NULL, reverted_repair INTEGER NOT NULL);
+"""
+
+
+def _insert_run_fields(con, d):
+    pin = d.get("provider_pin") or {}
+    if "run_index" in d or pin:
+        con.execute("INSERT INTO swdb_run_fields VALUES (?,?,?,?,?,?)",
+                    (d["id"], d["kind"], d.get("run_index"), pin.get("kind"), pin.get("model"), pin.get("effort")))
+
+
+def _insert_proof_job(con, d, *_):
+    _insert_proof(con, d)
+    job = d["job"]
+    load = job["batch_load"]
+    start, end = (load["start"], load["end"]) if isinstance(load, dict) else (load, None)
+    con.execute("INSERT INTO swdb_proof_jobs VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+                (d["id"], job["adapter"], job["host"], job["worker_core"], job["wall_seconds"], job["cpu_seconds"],
+                 start, end, job["peak_rss_bytes"], job["batch"], job["position"]))
+    _insert_run_fields(con, d)
+
+
+def _insert_proposal(con, d, *_):
+    _insert_run_fields(con, d)
+    lineage = d.get("repair_lineage")
+    if lineage:
+        con.execute("INSERT INTO swdb_repair_lineage VALUES (?,?,?,?,?)",
+                    (d["id"], lineage["refuted_candidate"], lineage["counterexample_record"], lineage["round"],
+                     int(lineage["reverted_repair"])))
+
+
+_Insert.proof = staticmethod(_insert_proof_job)
+_Insert.proposal = staticmethod(_insert_proposal)

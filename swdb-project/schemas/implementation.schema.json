@@ -572,7 +572,109 @@
           }
         }
       },
-      "description": "The optimization strategies this implementation applies, in the order applied; targets refer to the final code."
+      "description": "The optimization strategies this implementation applies, in the order applied; targets refer to the final code. A derived implementation's entries from its rewrite contracts may name target `unresolved` (and parameter values `unresolved`) until the profiling agent annotates it (Probata PoC 19)."
+    },
+    "contract_lineage": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Derived implementations only (Probata PoC 19, 2026-10-14 ET): the rewrite contracts applied since the baseline implementation, in the order applied. An offload-only contract's required list is checked against it (Probata PoC 52).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "contract",
+          "version",
+          "content_sha256"
+        ],
+        "properties": {
+          "contract": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The contract's version; null while rewrite contracts carry none (Probata PoC 20 adds versions). The content hash names the exact entry."
+          },
+          "content_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "rewrite_links": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Derived implementations only (Probata PoC 19): the link of the rewrite whose result this implementation is, one per contract in contract order. Each names the hashes its certification holds for; `swdb build` reads whether they still match (and the proof route) on read.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "contract",
+          "contract_sha256",
+          "predecessor_snapshot",
+          "result",
+          "certification"
+        ],
+        "properties": {
+          "contract": {
+            "type": "string",
+            "minLength": 1
+          },
+          "contract_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "predecessor_snapshot": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "sha256"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "x-ref": "source_snapshot"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "result": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "candidate",
+              "snapshot",
+              "sha256"
+            ],
+            "properties": {
+              "candidate": {
+                "type": "string",
+                "x-ref": "candidate"
+              },
+              "snapshot": {
+                "type": "string",
+                "x-ref": "source_snapshot"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "certification": {
+            "type": "string",
+            "x-ref": "certification"
+          }
+        }
+      }
     },
     "application": {
       "type": "string",

@@ -1,0 +1,291 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "proof",
+  "title": "Proof record: one proof job, never changed (ADR 0016; Probata proof of concept ticket 04, 2026-10-14 ET)",
+  "description": "One record per proof job, written by `swdb prove` into records/proofs/ and never edited. A candidate artifact's level is computed on read from the proof records whose pins still match (swdb.proof). Documented in docs/reference/format-v0.4-proof.md.",
+  "type": "object",
+  "properties": {
+    "kind": {"const": "proof"},
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "What was proven. Only candidate_proof_unit is exercised by ticket 04; the other kinds take a text `id` (and an optional `part`) until the tickets that write them give them a shape.",
+      "required": ["kind"],
+      "properties": {
+        "kind": {"type": "string", "x-vocab": "proof_subject_kinds"},
+        "candidate": {"type": "string", "x-ref": "candidate"},
+        "function": {"type": "string", "minLength": 1, "description": "The function that holds the rewrite site; one call of it is the proof unit."},
+        "id": {"type": "string", "minLength": 1},
+        "part": {"type": "string", "x-vocab": "proof_part_names",
+                 "description": "A contract-proof part or method part (vocabulary proof_part_names; its subject_kind must match, checked in swdb.proof.validate_record). Ticket 10."}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"kind": {"const": "candidate_proof_unit"}}, "required": ["kind"]},
+          "then": {
+            "required": ["candidate", "function"],
+            "x-required-reasons": {
+              "candidate": "a candidate proof unit names its candidate artifact",
+              "function": "a candidate proof unit names the function that holds the rewrite site"
+            },
+            "not": {"required": ["id"]}
+          },
+          "else": {
+            "required": ["id"],
+            "x-required-reasons": {"id": "a subject that is not a candidate proof unit names what was proven in `id`"},
+            "properties": {
+              "candidate": {"not": {}, "x-reason": "only a candidate proof unit names a candidate artifact"},
+              "function": {"not": {}, "x-reason": "only a candidate proof unit names a function"}
+            }
+          }
+        }
+      ]
+    },
+    "route": {
+      "type": "string",
+      "enum": ["route_1", "route_3", "bounded_direct"],
+      "x-reason": "route is route_1 (direct), route_3 (lockstep) or bounded_direct; ticket 04 owns this field and adds any new value",
+      "description": "Optional proof route of a candidate proof unit (map spec, \"Proof routes\"). 61 fills bounded_direct; 62 fills route_1 and route_3 and makes it required."
+    },
+    "verdict": {"type": "string", "enum": ["proven", "refuted", "not_proven"]},
+    "skip_reason": {
+      "type": "string",
+      "x-vocab": "proof_failure_classes",
+      "description": "A skip: no verifier ran, for this reason (a value of vocabulary proof_failure_classes whose role is skip_reason; ticket 11). A skip record has no verdict, bounds, assumptions or adapter log; the level rule ignores it."
+    },
+    "counterexample": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "A refuted verdict's counterexample, inline (small; needed for replay and repair)."
+    },
+    "unreplayed_counterexample": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "Not proven only (ticket 11, from ticket 05's SAW spike): a counterexample the verifier reported that did not replay concretely on the compiled code, so it is a tool or encoding failure, never a refutation, and never reaches repair. Required exactly when failure_class is spurious_counterexample (Yan-Ru 2026-10-14 02:25 ET)."
+    },
+    "failure_class": {
+      "type": "string",
+      "x-vocab": "proof_failure_classes",
+      "description": "Why a not-proven verdict was not proven: a value of vocabulary proof_failure_classes whose role is failure_class (ticket 11; the role is checked in swdb.proof.validate_record)."
+    },
+    "pins": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The content-hash set: one pin per kind. A pin that does not apply yet is written as {not_applicable: <sentence>}, never left out.",
+      "required": ["code", "contract", "baseline_function", "reference_semantics", "proof_semantics",
+                   "method_version", "summaries", "minimum_bounds", "predecessor_snapshot", "build_constants"],
+      "x-required-reasons": {
+        "code": "the content-hash set pins the code proven (write not_applicable only when it truly does not apply)",
+        "contract": "the content-hash set pins the contract",
+        "baseline_function": "the content-hash set pins the baseline function",
+        "reference_semantics": "the content-hash set pins the reference semantics (or says not_applicable)",
+        "proof_semantics": "the content-hash set pins the proof-semantics version (or says not_applicable)",
+        "method_version": "the content-hash set pins the method version (or says not_applicable)",
+        "summaries": "the content-hash set lists every summary used (an empty list when none)",
+        "minimum_bounds": "the content-hash set pins the minimum-bounds version (or says not_applicable)",
+        "predecessor_snapshot": "the content-hash set pins the predecessor snapshot (or says not_applicable)",
+        "build_constants": "the content-hash set lists every build constant (an empty list when none)"
+      },
+      "properties": {
+        "code": {"$ref": "#/$defs/pin"},
+        "contract": {"$ref": "#/$defs/pin"},
+        "baseline_function": {"$ref": "#/$defs/pin"},
+        "reference_semantics": {"$ref": "#/$defs/pin"},
+        "proof_semantics": {"$ref": "#/$defs/pin"},
+        "method_version": {"$ref": "#/$defs/pin"},
+        "minimum_bounds": {"$ref": "#/$defs/pin"},
+        "predecessor_snapshot": {"$ref": "#/$defs/pin"},
+        "summaries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "sha256", "proof_record"],
+            "properties": {
+              "id": {"type": "string", "minLength": 1},
+              "sha256": {"$ref": "#/$defs/sha256"},
+              "proof_record": {"type": "string", "x-ref": "proof"}
+            }
+          }
+        },
+        "build_constants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "value"],
+            "properties": {"name": {"type": "string", "minLength": 1}, "value": {}}
+          }
+        }
+      }
+    },
+    "bounds": {
+      "type": "object",
+      "description": "One value or \"unbounded\" per bound dimension; the thread count is always present.",
+      "required": ["threads"],
+      "x-required-reasons": {"threads": "every proof record bounds the thread count (a value or \"unbounded\")"},
+      "propertyNames": {"pattern": "^[a-z][a-z0-9_]*$"},
+      "additionalProperties": {
+        "oneOf": [{"type": "integer", "minimum": 1}, {"const": "unbounded"}],
+        "x-reason": "a bound is a positive integer or \"unbounded\""
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "description": "The assumption set. Each entry: kind (one of seven), reference (ID and hash), one plain sentence.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "reference", "sentence"],
+        "x-required-reasons": {"sentence": "every assumption entry states itself in one plain sentence"},
+        "properties": {
+          "kind": {"type": "string", "x-vocab": "proof_assumption_kinds"},
+          "reference": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "sha256"],
+            "properties": {"id": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/sha256"}}
+          },
+          "sentence": {"type": "string", "pattern": "\\S", "x-reason": "an assumption sentence is not empty"}
+        }
+      }
+    },
+    "replay_label": {
+      "type": "string",
+      "enum": ["reproduced", "proof_semantics_only", "not_reproduced", "undefined_behavior"],
+      "x-reason": "replay_label is reproduced, proof_semantics_only, not_reproduced or undefined_behavior (O6); ticket 10 owns this field and adds any new value",
+      "description": "Refuted only, optional (ticket 10 defines it; ticket 60 fills it and makes it required on refuted records): how far the refutation's strict-layer replay reaches. undefined_behavior is O6's \"undefined behavior (no strict-layer replay)\": the refutation counts and the batch goes on."
+    },
+    "level": {"not": {}, "x-reason": "a proof record never holds a level: the level rule computes it on read (ADR 0016)"},
+    "level_rule": {"not": {}, "x-reason": "a proof record never pins the level rule (26 item 9): a rule change recomputes levels and voids no proof"},
+    "tools": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1},
+      "description": "Ticket 10 (S14): the verifiers and solvers the job used, each by the reference ID of a trusted_tool entry in the assumption set (for example frama-c-wp-33.0, z3-4.8.14). swdb validate refuses a tool with no such entry. Optional until the real adapters (21, 22) write it."
+    },
+    "run_index": {"$ref": "#/$defs/run_index"},
+    "provider_pin": {"$ref": "#/$defs/provider_pin"},
+    "job": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The job block (ticket 12 owns this one field list and its checks; 04 writes it, 57 fills it on mbit10, and neither adds a field). Proof time is a cost metric, never a speed claim.",
+      "required": ["adapter", "host", "worker_core", "wall_seconds", "cpu_seconds", "batch_load", "peak_rss_bytes",
+                   "batch", "position"],
+      "x-required-reasons": {
+        "adapter": "the job block names the verifier adapter, so a scripted record shows as such",
+        "host": "the job block names the host (mac on the Mac), so Mac and mbit10 numbers never mix",
+        "worker_core": "the job block names the worker core (\"unpinned\" when the host pins none)",
+        "wall_seconds": "the job block holds the job's wall time",
+        "cpu_seconds": "the job block holds the job's CPU time",
+        "batch_load": "the job block holds the host's batch load",
+        "peak_rss_bytes": "the job block holds the job's peak RSS (what the 8 GB RSS watchdog reads, O9)",
+        "batch": "the job block names its batch",
+        "position": "the job block holds its position in the batch"
+      },
+      "properties": {
+        "adapter": {"type": "string", "minLength": 1, "description": "The verifier adapter's name (`scripted` for contract fixtures)."},
+        "host": {"type": "string", "minLength": 1, "description": "The run host: `mac` on the Mac, the host's short name elsewhere (mbit10)."},
+        "worker_core": {"oneOf": [{"type": "integer", "minimum": 0}, {"const": "unpinned"}, {"type": "null"}], "x-reason": "worker_core is a core number, \"unpinned\", or null (written before ticket 12)", "description": "The one core the job was pinned to, or \"unpinned\" (macOS pins nothing). null: written before ticket 12 (04's form for unpinned)."},
+        "wall_seconds": {"type": "number", "minimum": 0, "x-reason": "a time is never negative", "description": "Wall time of the job."},
+        "cpu_seconds": {"type": "number", "minimum": 0, "x-reason": "a time is never negative", "description": "CPU time of the job (own process and waited children)."},
+        "batch_load": {"oneOf": [{"type": "object", "additionalProperties": false, "required": ["start", "end"], "properties": {"start": {"type": "number", "minimum": 0}, "end": {"type": "number", "minimum": 0}}}, {"type": "number", "minimum": 0}], "x-reason": "batch_load is {start, end}, each a load average of at least 0 (a bare number: written before ticket 12)", "description": "The host's 1-minute load average {start, end}, sampled when the job starts and ends. A bare number: written before ticket 12 (start only)."},
+        "peak_rss_bytes": {"type": "integer", "minimum": 0, "x-reason": "peak RSS is never negative", "description": "Largest resident set size of the job's whole process tree: what the 8 GB RSS watchdog per worker reads (O9)."},
+        "batch": {"type": "string", "minLength": 1, "description": "Batch ID; the jobs of one `swdb prove` call share it."},
+        "position": {"type": "integer", "minimum": 1, "description": "Position in the batch (57 checks interleaving from batch and position)."}
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["adapter_log"],
+      "properties": {
+        "adapter_log": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "sha256"],
+          "description": "The adapter's log in a runs folder outside the repo, on the host the job ran on.",
+          "properties": {"path": {"type": "string", "pattern": "^/"}, "sha256": {"$ref": "#/$defs/sha256"}}
+        }
+      }
+    },
+    "evidence_kind": {
+      "enum": ["contract_fixture"],
+      "x-reason": "only the scripted adapter writes proof records so far, and its records are contract_fixture evidence"
+    }
+  },
+  "required": ["subject", "pins", "job", "evidence_kind"],
+  "allOf": [
+    {
+      "if": {"required": ["skip_reason"]},
+      "then": {
+        "properties": {
+          "verdict": {"not": {}, "x-reason": "a skip record carries no verdict (no verifier ran)"},
+          "bounds": {"not": {}, "x-reason": "a skip record carries no bounds (no verifier ran)"},
+          "assumptions": {"not": {}, "x-reason": "a skip record carries no assumption set (no verifier ran)"},
+          "evidence": {"not": {}, "x-reason": "a skip record names no adapter log (no verifier ran)"}
+        }
+      },
+      "else": {
+        "required": ["verdict", "bounds", "assumptions", "evidence"],
+        "x-required-reasons": {
+          "verdict": "a proof record that is not a skip states its verdict",
+          "bounds": "a proof record that is not a skip states its bounds",
+          "assumptions": "a proof record that is not a skip states its assumption set (an empty list when none)",
+          "evidence": "a proof record that is not a skip names its adapter log"
+        }
+      }
+    },
+    {
+      "if": {"properties": {"verdict": {"const": "not_proven"}}, "required": ["verdict"]},
+      "then": {
+        "if": {"properties": {"failure_class": {"const": "spurious_counterexample"}}, "required": ["failure_class"]},
+        "then": {"required": ["unreplayed_counterexample"], "x-required-reasons": {"unreplayed_counterexample":
+          "a spurious_counterexample record holds the counterexample that did not replay"}},
+        "else": {"properties": {"unreplayed_counterexample": {"not": {},
+          "x-reason": "only a record of failure class spurious_counterexample holds an unreplayed counterexample"}}}
+      },
+      "else": {"properties": {"unreplayed_counterexample": {"not": {},
+        "x-reason": "only a not-proven record holds an unreplayed counterexample"}}}
+    },
+    {
+      "if": {"properties": {"verdict": {"const": "refuted"}}, "required": ["verdict"]},
+      "then": {"required": ["counterexample"], "x-required-reasons": {"counterexample": "a refuted record holds its counterexample inline"}},
+      "else": {"properties": {"counterexample": {"not": {}, "x-reason": "only a refuted record holds a counterexample"},
+                              "replay_label": {"not": {}, "x-reason": "only a refuted record holds a replay label"}}}
+    },
+    {
+      "if": {"properties": {"verdict": {"const": "not_proven"}}, "required": ["verdict"]},
+      "then": {"required": ["failure_class"], "x-required-reasons": {"failure_class": "a not-proven record names its failure class"}},
+      "else": {"properties": {"failure_class": {"not": {}, "x-reason": "only a not-proven record names a failure class"}}}
+    },
+    {
+      "if": {"required": ["route"]},
+      "then": {
+        "properties": {"subject": {"properties": {"kind": {"const": "candidate_proof_unit",
+          "x-reason": "only a candidate proof unit carries a proof route"}}}}
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "pin": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "sha256"],
+          "properties": {"id": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/sha256"},
+                         "function": {"type": "string", "minLength": 1}}
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["not_applicable"],
+          "properties": {"not_applicable": {"type": "string", "pattern": "\\S"}}
+        }
+      ],
+      "x-reason": "a pin is {id, sha256} or {not_applicable: <sentence>}"
+    }
+  }
+}

@@ -135,6 +135,39 @@
         "rewrite"
       ],
       "description": "Source baseline is an unchanged independently materialized snapshot, not a rewrite."
+    },
+    "predecessor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "implementation",
+        "snapshot"
+      ],
+      "description": "Probata PoC 19 (2026-10-14 ET): the derived implementation this candidate artifact was built on, and the hash of its snapshot then (the rewrite link's predecessor snapshot hash).",
+      "properties": {
+        "implementation": {
+          "type": "string",
+          "x-ref": "implementation"
+        },
+        "snapshot": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "sha256"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "x-ref": "source_snapshot"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        }
+      }
     }
   },
   "required": [

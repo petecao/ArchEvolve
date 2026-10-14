@@ -1,6 +1,9 @@
 """Role-specific inputs over the shared provider process, guard and audit.
 
-Updated: 2026-10-06 ET (strict estimation inputs); 2026-10-05 ET (code review: login via provider_login.start, public checked_inputs and
+Updated: 2026-10-14 ET (Probata PoC ticket 13: no agent role input holds a counterexample);
+2026-10-14 ET (Probata PoC ticket 01: the guard names the held-out kernels' DX100 functions
+PBFSMAA, BrandesMaa, PageRankPullMAA and DeltaStepMAA, and drops TDStepMAA2 and BCMAA, which name
+nothing); 2026-10-06 ET (strict estimation inputs); 2026-10-05 ET (code review: login via provider_login.start, public checked_inputs and
 verified_lane); 2026-10-05 ET (ticket 74: guard runtime-limit stops raise GuardInfrastructure);
 2026-10-04 ET (ticket 69: strict-mode keyword check); 2026-10-04 (login write-back). Inputs are
 built by trusted SWDB callers, never copied by walking a repository. Each file is explicit; real
@@ -23,7 +26,8 @@ from swdb.estimation_contract import OUTPUT_SCHEMA as ESTIMATION_OUTPUT_SCHEMA
 FORBIDDEN_KEYS = {"evaluator", "verification", "correctness_check", "protections",
                   "workloads", "workload", "candidates", "candidate", "input_args",
                   "canonical_path", "command", "raw_artifact", "raw_artifacts", "artifact"}
-FORBIDDEN_SOURCE = re.compile(r"\b(?:TDStepMAA|DOBFSMAA|TDStepMAA2|BCMAA)\b")
+# The DX100 authors' accelerated functions (map 18 item 6; BrandesMaa by design-spec O2 default).
+FORBIDDEN_SOURCE = re.compile(r"\b(?:TDStepMAA|DOBFSMAA|PBFSMAA|BrandesMaa|PageRankPullMAA|DeltaStepMAA)\b")
 FILE_SCHEMA = {"type": "object", "additionalProperties": False,
                "required": ["path", "content"], "properties": {
                    "path": {"type": "string"}, "content": {"type": "string"}}}
@@ -133,6 +137,8 @@ def checked_inputs(files):
     before any call opens (public since 2026-10-05 ET, J5: the ticket 58 driver checks first)."""
     if not isinstance(files, dict) or not files:
         raise Failure("agent role workspace input must be a nonempty explicit files mapping")
+    # Ticket 13: no agent role sees a counterexample; only the rewriting role's repair workspace does.
+    provider_workspace.refuse_counterexamples(files)
     result = {}
     total = 0
     for name, text in files.items():
@@ -159,6 +165,8 @@ def checked_inputs(files):
 
 
 def prepare(role, files, folder, config):
+    if isinstance(files, dict):
+        provider_workspace.refuse_counterexamples(files)
     if role.name == 'estimation':
         from swdb.estimation_parameters import checked_input_files
         if role.output_schema != ESTIMATION_OUTPUT_SCHEMA:

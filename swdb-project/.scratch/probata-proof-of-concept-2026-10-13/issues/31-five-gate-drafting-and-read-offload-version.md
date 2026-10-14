@@ -36,3 +36,11 @@ Updated: 2026-10-13 23:15 ET (review fixes)
 - Assumption (not decided in the map): the contract's bound-dimension list (map 09 item 11 as changed by map 19: threads, vertices, edges, tile lanes, knob values, frontier size; no unroll depth) goes into the new version, because ticket 33's script grows these dimensions.
 - Gate 5 happens at promotion, Yan-Ru's step (map 16 item 5). Assumption (not decided in the map): tickets 32 and 33 may start on the new version before it. If his review changes a statement, the affected records stop counting through their content hashes.
 - **BC (O8, default until Yan-Ru rules):** `bc_read_offload` stays untouched before the freeze. No new BC version, no BC formal half, no BC lowering: held-out kernels are not touched before the freeze (map 27 item 1). Evaluation 02 decides whether the old contract is retired.
+
+## Later changes
+
+- 2026-10-14 04:00 ET (main session, from ticket 13): rewriting workspaces now refuse any shown file that names
+  an authors' accelerated function (`swdb/provider_workspace.py`, `_refuse_authors_code`). The `dx100-bfs-scalar`
+  snapshot's `apps/dx100/benchmarks/gapbs/src/bfs.cc` defines `TDStepMAA` and `DOBFSMAA` (lines 66, 366), so every
+  DX100 BFS rewrite on it is refused before the provider call. This ticket's drafting workspace needs a
+  scalar-only BFS snapshot (the authors' functions removed, ticket 01's hand-off) before its first rewrite.

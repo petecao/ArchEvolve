@@ -1,0 +1,103 @@
+// Ticket 06 spike (b), 2026-10-14 ET. THROWAWAY. The harness specs SAW verifies, one per proof unit.
+// Their llvm_precond lines are the proof-unit preconditions; there is no other assume. Bounds
+// (map 19 hand minimum): threads 1, lanes 2 (TILE_SIZE 2), chunk 2, frontier <= 2, vertices 3,
+// edges <= 3; every input value symbolic within them.
+//
+// Preconditions:
+//   * CSR graph: offsets[0] = 0, nondecreasing, offsets[3] <= 3 (so 0..3 edges); each real edge's
+//     target is a vertex. (Neighbor slots past offsets[3] are free.)
+//   * parent[v] is a vertex ID or a value InitParent writes (-out_degree(v), or -1 for degree 0):
+//     -3 <= parent[v] < 3 at these bounds (map 09 item 10 widens map 08's parent >= -1).
+//   * frontier: nf in 0..2 distinct vertices, each already visited (parent >= 0), at queue[0..nf).
+//   * frontier threshold (Peter only): any value of its legality clause, >= 1.
+//   * DX100 state at entry: nothing pending (ghost g0); tile memory arbitrary.
+
+let input_globals = ["g_queue", "g_offsets", "g_neighbors", "g_parent"];
+
+let unit_inputs = do {
+  q <- llvm_fresh_var "queue" (llvm_array 8 i32);
+  o <- llvm_fresh_var "offsets" (llvm_array 4 i32);
+  n <- llvm_fresh_var "neighbors" (llvm_array 3 i32);
+  p <- llvm_fresh_var "parent" (llvm_array 3 i32);
+  td <- llvm_fresh_var "tile_memory" tiles_t;
+  nf <- llvm_fresh_var "nf" i32;
+  for input_globals llvm_alloc_global;
+  llvm_alloc_global "g_parent0";
+  llvm_alloc_global "swdb_tile_data";
+  llvm_points_to (llvm_global "g_queue") (llvm_term q);
+  llvm_points_to (llvm_global "g_offsets") (llvm_term o);
+  llvm_points_to (llvm_global "g_neighbors") (llvm_term n);
+  llvm_points_to (llvm_global "g_parent") (llvm_term p);
+  llvm_points_to (llvm_global "g_parent0") (llvm_global_initializer "g_parent0");
+  llvm_points_to TD (llvm_term td);
+  llvm_precond {{ (o @ 0 == 0) /\ (o @ 0 <=$ o @ 1) /\ (o @ 1 <=$ o @ 2) /\ (o @ 2 <=$ o @ 3) /\ (o @ 3 <=$ 3) }};
+  llvm_precond {{ and [ (e >=$ o @ 3) \/ ((x >=$ 0) /\ (x <$ 3)) | x <- n | e <- [0, 1, 2] ] }};
+  llvm_precond {{ and [ (x >=$ -3) /\ (x <$ 3) | x <- p ] }};
+  llvm_precond {{ (nf >=$ 0) /\ (nf <=$ 2) }};
+  llvm_precond {{ and [ (k >=$ nf) \/ ((u >=$ 0) /\ (u <$ 3) /\ (p @ u >=$ 0)) | u <- take`{2} q | k <- [0, 1] ] }};
+  llvm_precond {{ (nf <$ 2) \/ (q @ 0 != q @ 1) }};
+  return nf;
+};
+
+let alloc_inits names = for names (\n -> do {
+  llvm_alloc_global n;
+  llvm_points_to (llvm_global n) (llvm_global_initializer n);
+});
+
+// DX100 state at entry: g0 (nothing pending), one hazard-state global per field.
+let ghost_init = do {
+  for ["swdb_g_rdy", "swdb_g_wr", "swdb_g_outs", "swdb_g_anc", "swdb_g_named", "swdb_g_users",
+       "swdb_g_rrd", "swdb_g_rwr", "swdb_g_reg", "swdb_g_sz", "swdb_g_fp"] llvm_alloc_global;
+  ghost_post {{ g0 }};
+};
+
+// The unit-specific rest of a spec, shared by lever 1 (unit_inputs) and lever 2 (shape_inputs).
+let peter_rest nf = do {
+  th <- llvm_fresh_var "frontier_threshold" i32;
+  accel <- llvm_fresh_var "acceleration_enabled" i32;
+  llvm_alloc_global "swdb_spike_threshold";
+  llvm_points_to (llvm_global "swdb_spike_threshold") (llvm_term th);
+  llvm_precond {{ th >=$ 1 }};
+  alloc_inits ["_ZL13swdb_contexts", "_ZL25swdb_acceleration_enabled", "swdb_spike_chunks",
+               "swdb_fault_gathered", "swdb_fault_range_calls", "swdb_fault_skipped_rechecks",
+               "swdb_fault_forged_once"];
+  ghost_init;
+  llvm_execute_func [llvm_term nf, llvm_term accel];
+};
+
+let maa_rest nf = do {
+  alloc_inits ["tiles0", "tiles1", "tiles2", "tiles3", "tiles4", "tiles5", "tilesi", "tilesj",
+               "regs0", "regs1", "regs2", "regs3", "regs4", "regs5", "last_i_regs", "last_j_regs"];
+  ghost_init;
+  llvm_execute_func [llvm_term nf];
+};
+
+// Lever 1: every input symbolic within the bounds; one job per unit.
+let peter_spec gh = do { nf <- unit_inputs; peter_rest nf; };
+let maa_spec gh = do { nf <- unit_inputs; maa_rest nf; };
+
+// Lever 2 (map 19 item 4): one job per graph shape. A shape fixes the frontier (its size and its
+// vertices, in queue order) and the CSR offsets; neighbor targets, parent values, the queue past
+// the frontier, the frontier threshold and tile memory stay symbolic. shapes.py enumerates the
+// shapes and checks their number against the closed form.
+let shape_inputs nf_int frontier o = do {
+  qr <- llvm_fresh_var "queue_rest" (llvm_array (eval_int {{ 8 - (`nf_int : [32]) }}) i32);
+  n <- llvm_fresh_var "neighbors" (llvm_array 3 i32);
+  p <- llvm_fresh_var "parent" (llvm_array 3 i32);
+  td <- llvm_fresh_var "tile_memory" tiles_t;
+  for input_globals llvm_alloc_global;
+  llvm_alloc_global "g_parent0";
+  llvm_alloc_global "swdb_tile_data";
+  llvm_points_to (llvm_global "g_queue") (llvm_term {{ frontier # qr }});
+  llvm_points_to (llvm_global "g_offsets") (llvm_term o);
+  llvm_points_to (llvm_global "g_neighbors") (llvm_term n);
+  llvm_points_to (llvm_global "g_parent") (llvm_term p);
+  llvm_points_to (llvm_global "g_parent0") (llvm_global_initializer "g_parent0");
+  llvm_points_to TD (llvm_term td);
+  llvm_precond {{ and [ (e >= o @ 3) \/ ((x >=$ 0) /\ (x <$ 3)) | x <- n | e <- [0, 1, 2] ] }};
+  llvm_precond {{ and [ (x >=$ -3) /\ (x <$ 3) | x <- p ] }};
+  llvm_precond {{ and [ p @ u >=$ 0 | u <- frontier ] }};
+  return {{ `nf_int : [32] }};
+};
+let peter_shape nf_int frontier o = do { nf <- shape_inputs nf_int frontier o; peter_rest nf; };
+let maa_shape nf_int frontier o = do { nf <- shape_inputs nf_int frontier o; maa_rest nf; };

@@ -29,6 +29,23 @@ answer every per-target question (pilot, shared baseline, evidence basis, campai
 the loop has no target-string switches; the contract-fixture adapter is a `TargetAdapter` in
 `swdb.campaign_fixture` (F13). Knob ranges are checked by `swdb.library.knob_problem`.
 
+Probata PoC 19 (2026-10-14 ET): a certified candidate artifact whose every contract is an enabling contract
+becomes a derived implementation (`swdb.derived`). A campaign file may list `derived_starts`; then the
+rewrite role names a `start` (one of them, or null for the base source), the candidate artifact is built on
+that derived implementation's snapshot and certified against it, and speed is still compared against the
+root baseline roles (ADR 0005).
+
+Probata PoC 14 (2026-10-14 ET): when the campaign's library holds a method version, every certified candidate
+artifact passes the bounded gate (`swdb.bounded_gate`) after certification and before evaluation. A refuted one
+is never evaluated; its counterexample goes to counterexample-guided repair (`swdb.counterexample_repair.loop`,
+which owns the 5-round cap and the reverted-repair flag), each repair call charged to the D7 ledger as role
+`counterexample_repair`. A library without a method version runs no gate, as before.
+
+Probata PoC 17 (2026-10-14 ET): the iteration ladder (`swdb.iteration_ladder`). A new campaign records
+`rewrite_workspace: v2`; from iteration 2 its rewrite and repair workspaces (certification and counterexample)
+hold `LADDER.json`, rebuilt whole from campaign state. A state without the field is `v1` and never gains one.
+The bounded gate's outcomes reach FEEDBACK.json as `refuted` (check category only) and `proof_timeout`.
+
 Updated 2026-10-09 23:25 ET (D35, decided by Yan-Ru 2026-10-09 22:33 ET): `swdb campaign` refuses
 to start a new campaign on a real target unless its file names a passing numeric pairing check
 (`require_numeric_pairing_check`). The contract-fixture adapter and resumed campaigns are unaffected.
@@ -53,6 +70,7 @@ from swdb.cli import Failure, UsageError
 from swdb.extensa_boundary import MODE
 from swdb.extensa import search as S
 from swdb.extensa.leakage import scan_patch_additions
+from swdb.iteration_ladder import gate_feedback
 from swdb.problems import Problem
 
 FORMAT = "swdb.extensa-campaign.v1"
@@ -116,6 +134,7 @@ NATIVE_ORDER_SEED = 20260926
 SPEC_BUDGETS = {"max_iterations": 8, "plateau_iterations": 4, "lane_hours": 24,
                 "provider_calls_per_iteration": 3, "provider_calls_setup": 1, "disk_gb": 20, "lanes": 1}
 DEFAULT_MAX_REPAIRS = 2        # D7: the ArchEvolve-mode repair limit
+REPAIR_CALL = "counterexample_repair"   # Probata PoC 14: the ledger role of a counterexample repair call
 EXTENSA_SOURCE = {"repository": "MaizeHPC/MemAcc", "commit": "af3d6d7f7a69a72facdc3b95b42e78c952f44a76"}
 # 2026-10-05 ET (code review P1): provider-call outcomes, including the one login pattern, come from
 # `swdb.provider_adapters.classify`, shared with the ticket 58 driver.
@@ -401,6 +420,22 @@ def level_mix_of(evaluation):
             "slow_share": (sum(v["slow_trials"] for v in sources.values()) / total) if total else 0.0}
 
 
+def certification_links(entry):
+    """A candidate entry's certification links: one `{"contract", "record"}` pair per contract, in order.
+
+    Probata PoC ticket 02 (2026-10-14 ET). A contract refused before any record exists has `record: None`
+    and its `refusal` check. An entry saved before ticket 02 holds only `record` (the first record ID) and
+    reads as a one-pair list; its contract is named only when the entry used exactly one contract. An entry
+    without certification (no contract, or rejected before certification) has no links."""
+    certification = entry.get("certification")
+    if not certification:
+        return []
+    if "records" in certification:
+        return list(certification["records"])
+    contracts = entry.get("contracts") or []
+    return [{"contract": contracts[0] if len(contracts) == 1 else None, "record": certification.get("record")}]
+
+
 LEVEL_RANK = {"certified": 2, "uncertified": 1}
 
 
@@ -408,13 +443,14 @@ def selection_key(candidate):
     return (LEVEL_RANK[candidate["level"]], candidate["selection"]["lower"])
 
 
-def select(candidates):
-    """Per class: (best, faster_uncertified, verdict). Rejected artifacts never compete.
+def select(candidates, refuted=frozenset()):
+    """Per class: (fastest winner, faster_uncertified, verdict). Rejected artifacts never compete.
 
     Certified before uncertified, then by the lower bound (point ratio on gem5) against
     the base-source baseline; only gain artifacts can be best; an uncertified one is best
-    only when no certified one passes."""
-    eligible = [c for c in candidates if c["level"] in LEVEL_RANK and c.get("selection")]
+    only when no certified one passes. Probata PoC 15: a candidate artifact in `refuted` (the
+    level rule's refuted flag) leaves selection whatever its level or speed."""
+    eligible = [c for c in candidates if c["level"] in LEVEL_RANK and c.get("selection") and c.get("id") not in refuted]
     passing = [c for c in eligible if c["selection"]["verdict"] == "gain"]
     if not passing:
         if eligible and all(c["selection"]["verdict"] == "inconclusive" for c in eligible):
@@ -426,14 +462,57 @@ def select(candidates):
     return best, sorted(faster), "gain"
 
 
+# --- two winners per workload class (Probata PoC 15) -----------------------------------------------
+#: Winner marks (map decision 28 item 4): one row per distinct candidate artifact.
+FASTEST, BEST_PROVEN, BOTH = "fastest", "best_proven", "both"
+NO_BEST_PROVEN = "No gain candidate artifact of this class reached a proven level."
+#: `best/<class>.patch` stays the fastest winner's; the best-proven winner's, when it differs, sits beside it.
+BEST_PROVEN_SUFFIX = ".best_proven.patch"
+
+
+def best_proven_key(candidate, level):
+    """The best-proven winner's key: the proven level's rank, then the speed key selection uses."""
+    from swdb import level_rule
+    return (level_rule.rank(level), candidate["selection"]["lower"])
+
+
+def best_proven(candidates, levels):
+    """The best-proven winner of one class, or None: among certified `gain` candidate artifacts at a proven
+    level, the highest level first, then the fastest. `levels` maps a candidate ID to its level-rule result
+    (`swdb.level_rule.Rule.candidate`); a refuted one has no proven level, so it never wins."""
+    from swdb import level_rule
+    proven = [c for c in candidates if c["level"] == "certified" and (c.get("selection") or {}).get("verdict") == "gain"
+              and (levels.get(c.get("id")) or {}).get("level") in level_rule.PROVEN
+              and not levels[c["id"]]["refuted"]["flag"]]
+    return max(proven, key=lambda c: best_proven_key(c, levels[c["id"]]["level"])) if proven else None
+
+
+def winner_rows(fastest, proven, levels):
+    """The winner rows of one class: one per distinct candidate artifact, marked `fastest`, `best_proven` or
+    `both`, each with its dated level snapshot and speed (the fastest first)."""
+    rows = []
+    for mark, entry in ((FASTEST, fastest), (BEST_PROVEN, proven)):
+        if entry is None:
+            continue
+        if rows and rows[0]["candidate"] == entry["id"]:
+            rows[0]["winner"] = BOTH
+            continue
+        rows.append({"candidate": entry["id"], "winner": mark, "level_snapshot": levels[entry["id"]]["snapshot"],
+                     "ratio": entry["selection"]["ratio"], "lower": entry["selection"]["lower"]})
+    return rows
+
+
 # --- provider roles ------------------------------------------------------------------------
 
-def _roles():
+def _roles(starts=False):
+    """The provider roles. With `starts` (the campaign lists derived starts, Probata PoC 19) the rewrite
+    role also names its `start`: a listed derived implementation, or null for the base source."""
     from swdb import provider_roles
+    start = {"start": {"type": ["string", "null"]}} if starts else {}
     rewrite = provider_roles.Role("extensa_rewriting", {
         "type": "object", "additionalProperties": False,
-        "required": ["patch", "contracts", "knobs", "unresolved"],
-        "properties": {"patch": {"type": "string"},
+        "required": ["patch", "contracts", "knobs", "unresolved", *start],
+        "properties": {**start, "patch": {"type": "string"},
                        "contracts": {"type": "array", "items": {"type": "string"}},
                        # 2026-10-04 ET (ticket 57, campaign a1): strict structured output needs a fixed
                        # object shape, so knob assignments are a list of {class, name, value} rows.
@@ -496,11 +575,27 @@ def rewrite_prompt(campaign_id, iteration, classes, files):
                            "named `*_reg` is a register handle from the thread's `dxc_context` whose value is "
                            "set by `__dxc_const_i32`, never a plain value; a range-loop batch starts with "
                            "`last_i_reg` = 0 and `last_j_reg` = -1.")
-    best = sorted(f for f in files if f.startswith("best/"))
+    best = sorted(f for f in files if f.startswith("best/") and not f.endswith(BEST_PROVEN_SUFFIX))
     if best:
         history.append(" " + ", ".join(f"`{f}`" for f in best) + " hold this campaign's current per-class best patches.")
+    proven = sorted(f for f in files if f.endswith(BEST_PROVEN_SUFFIX))
+    if proven:
+        # Probata PoC 15: the best-proven winner's patch, when it is not the fastest winner's (map 25 item 4).
+        history.append(" Each `best/<class>.patch` is the class's fastest patch; " + ", ".join(f"`{f}`" for f in proven)
+                       + (" holds" if len(proven) == 1 else " hold") + " the class's best-proven patch where it is "
+                       "another one: the patch at the highest proven certification level, the fastest among equals.")
     if "FEEDBACK.json" in files:
         history.append(" `FEEDBACK.json` holds the previous iteration's feedback.")
+    if "LADDER.json" in files:
+        # Probata PoC 17 (map decision 28 item 2): the iteration ladder.
+        history.append(" `LADDER.json` is the iteration ladder: one row per earlier candidate artifact of this "
+                       "campaign with its contracts, knobs, level known now, verdict, numbers, reason codes and "
+                       "winner mark.")
+    if "STARTS.json" in files:
+        # Probata PoC 19 (2026-10-14 ET): derived starts.
+        history.append(" `STARTS.json` lists the certified derived implementations this iteration may start from, "
+                       "each with its source under `starts/`; name the one your patch applies to in `start` (null: "
+                       "the base source in `source/`).")
     if "PROTECTED.json" in files:
         # Ticket 73 (2026-10-05 ET): campaign a7's iteration 1 edited the protected verifier.
         history.append(" `PROTECTED.json` lists protected evaluator regions (for example the `BFSVerifier` "
@@ -537,9 +632,12 @@ class Campaign:
         self.query = self.data["regions"] == "query"
         self.applied_contracts = None     # query mode: contracts the site finder applied this iteration
         self.rule = SpeedRule.of(self.data)
+        self.starts = list(self.data.get("derived_starts") or [])    # Probata PoC 19
+        self.gate = None                                              # Probata PoC 14: set when the run starts
         if args.fixture:
             from swdb.campaign_fixture import FixtureAdapter
-            self.adapter = FixtureAdapter(args.fixture, self.data, self.team, self.store_dir, self.folder)
+            self.adapter = FixtureAdapter(args.fixture, self.data, self.team, self.store_dir, self.folder,
+                                          library_root=self.library_root)
         else:
             # Tickets 56/57 (2026-10-04 ET): the campaign's target selects its real adapter.
             from swdb import campaign_targets
@@ -558,6 +656,7 @@ class Campaign:
 
     def _save(self):
         self.state["ledger"] = self.ledger.to_state()
+        self.state["repair_counters"] = self._repair_counters()
         tmp = self.state_file.with_suffix(".tmp")
         tmp.write_text(json.dumps(self.state, indent=2))
         tmp.replace(self.state_file)
@@ -572,6 +671,15 @@ class Campaign:
         finally:
             workflow.CREATION_TAGS.clear()
             workflow.CREATION_TAGS.update(previous)
+
+    def _repair_counters(self):
+        """Probata PoC 14: D7's certification repair calls and 13's counterexample repair rounds (one call
+        each), two counters on one ledger; both count in the rewriting total (`provider_calls_counted`)."""
+        calls = [c for c in self.ledger.calls if c.counted]
+        found = self.state.get("counterexample_repairs") or {}
+        return {"certification_repairs": sum(1 for c in calls if c.role == "repair"),
+                "counterexample_repair_rounds": sum(1 for c in calls if c.role == REPAIR_CALL),
+                "repairs": list(found.get("repairs") or []), "reverted_repairs": list(found.get("reverted_repairs") or [])}
 
     # budgets ----------------------------------------------------------------------------
     def _step(self, step, *, job=False):
@@ -660,7 +768,8 @@ class Campaign:
         started = time.monotonic()
         outcome, response, error = S.CallOutcome.COMPLETED, None, None
         try:
-            response, _meta = provider_roles.run(_roles()[kind], files, prompt, self.provider_config, folder)
+            response, _meta = provider_roles.run(_roles(bool(self.starts))[kind], files, prompt, self.provider_config,
+                                                 folder)
         except Failure as exc:
             # P1 (2026-10-05 ET): the one classifier; uncounted stops (usage limit, capacity, guard
             # runtime limit, login) name their own outcome.
@@ -691,6 +800,12 @@ class Campaign:
     def _setup(self):
         self.store_dir.mkdir(parents=True, exist_ok=True)
         self.adapter.prepare()
+        from swdb import bounded_gate     # Probata PoC 14: a library with a method version turns the gate on
+        found = bounded_gate.method_version_of(self.library_root)
+        if found is not None:
+            gate = bounded_gate.Gate(self.store_dir, self.folder / "proofs", self.library_root, self.adapter, found)
+            gate.setup(self.team)
+            self.state["bounded_gate"] = gate.describe()
         frozen = self.adapter.freeze_protocol(protocol_settings(self.data))
         self.adapter.protocol_id = frozen["id"]
         self.state["protocol"] = {"id": frozen["id"], "identity_sha256": frozen["identity_sha256"],
@@ -853,12 +968,32 @@ class Campaign:
             files["PROTECTED.json"] = json.dumps({
                 "note": ("Evaluator inputs. A patch that changes any of these is rejected before it is "
                          "built. Never edit them."), "protected": rows}, indent=2)
+        files.update(self._start_files())
         for cls, best in self.state["bests"].items():
             if best:
                 files[f"best/{cls}.patch"] = best["patch"]
+        for cls, proven in (self.state.get("best_proven") or {}).items():
+            fastest = self.state["bests"].get(cls)
+            if proven and not (fastest and fastest["id"] == proven["id"]):      # Probata PoC 15
+                files[f"best/{cls}{BEST_PROVEN_SUFFIX}"] = proven["patch"]
         if iteration > 1:
             files["FEEDBACK.json"] = json.dumps({"feedback": self.state["feedback"]}, indent=2)
+        ladder = self._ladder(iteration)
+        if ladder is not None:
+            files["LADDER.json"] = ladder
         return files
+
+    def _ladder(self, iteration):
+        """Probata PoC 17: this iteration's `LADDER.json` text, rebuilt whole from campaign state (never from a
+        file), or None (a v1 campaign, or iteration 1). Its rewrite and repair workspaces all get this text; the
+        campaign folder keeps a copy of the latest one, which nothing reads."""
+        from swdb import iteration_ladder
+        if not iteration_ladder.shown(self.state, iteration):
+            return None
+        pool = [c for r in self.state["iterations"] for c in r["candidates"]]
+        text = iteration_ladder.render(self.state, self._levels(pool), self.data["base_source"])
+        (self.folder / iteration_ladder.FILE).write_text(text)
+        return text
 
     def _knob_problem(self, contracts, knobs):
         from swdb.library import Library, knob_problem
@@ -879,6 +1014,55 @@ class Campaign:
                 return f"contract {cid} is in a tier the campaign does not allow"
         return None
 
+    # derived implementations (Probata PoC 19) ---------------------------------------------------
+    def _start_problem(self, start):
+        from swdb import derived
+        from swdb.library import Library
+        from swdb.store import Store
+        return derived.start_problem(Store(self.store_dir), start, kernel=self.data["kernel"], listed=self.starts,
+                                     library=Library(self.library_root))
+
+    def _start_files(self):
+        """Workspace files for the listed derived starts that may be used now: `STARTS.json` and each
+        start's kernel file under `starts/<id>/` (its snapshot's region, the whole file)."""
+        from swdb import derived
+        from swdb.store import Store
+        store, rows, files = Store(self.store_dir), [], {}
+        for start in self.starts:
+            if self._start_problem(start):
+                continue
+            impl = store.get(start, "implementation")
+            region = store.get(derived.snapshot_of(impl), "source_snapshot")["regions"][0]
+            files[f"starts/{start}/{region['path']}"] = region["text"]
+            rows.append({"id": start, "derived_from": impl["origin"]["derived_from"],
+                         "contract_lineage": [e["contract"] for e in impl["contract_lineage"]],
+                         "source": f"starts/{start}/{region['path']}"})
+        if rows:
+            files["STARTS.json"] = json.dumps({
+                "note": ("Certified derived implementations this iteration may start from. Name the one your patch "
+                         "applies to in `start`, or null for the base source in `source/`."), "starts": rows}, indent=2)
+        return files
+
+    def _derive(self, entry, candidate, contracts, knobs, start):
+        """Record a certified candidate artifact whose every contract is enabling as a derived implementation."""
+        from swdb import derived
+        from swdb.library import Library
+        from swdb.store import Store
+        library = Library(self.library_root)
+        stores = [Store(self.store_dir), Store(self.team)]
+        if not contracts or not all(derived.is_enabling(library, stores, c) for c in contracts):
+            return
+        on = self.adapter.predecessor_snapshot(start)
+        try:
+            if not on:
+                raise Failure("the target names no source snapshot its candidate artifacts are built on")
+            entry["derived_implementation"] = derived.record(
+                self.store_dir, candidate_id=candidate["id"], contracts=contracts, links=certification_links(entry),
+                predecessor_snapshot=on, library=library, knobs=knobs, team_dir=self.team)
+        except Failure as exc:
+            entry["derived_implementation"] = None
+            entry["derived_note"] = f"not recorded: {exc}"[:1000]
+
     def _iteration(self, iteration, row):
         files = self._workspace(iteration)
         response = self._call("rewriting", files, rewrite_prompt(self.cid, iteration, self.classes, files), row)
@@ -891,22 +1075,65 @@ class Campaign:
         feedback = []
         for cls in self.classes:
             candidate = self._artifact(iteration, cls, response, row, feedback)
+            followers = candidate.pop("_followers", [])
             row["candidates"].append(candidate)
-        improved = []
-        for cls in self.classes:
-            pool = [c for r in self.state["iterations"] + [row] for c in r["candidates"] if c["class"] == cls]
-            best, _faster, _verdict = select(pool)
-            previous = self.state["bests"].get(cls)
-            if best and (previous is None or selection_key(best) > tuple(previous["key"])):
-                self.state["bests"][cls] = {"id": best["id"], "key": list(selection_key(best)),
-                                            "patch": best.pop("_patch", "")}
-                improved.append(cls)
-            for c in pool:
-                c.pop("_patch", None)
-        row["improved_classes"] = improved
+            row["candidates"].extend(followers)      # Probata PoC 14: candidate artifacts its repairs made
+        improved = self._winners(row)
+        row["improved_classes"] = sorted({w["class"] for w in improved}, key=self.classes.index)
+        row["improved_winners"] = improved
         row["feedback_reasons"] = sorted({f["reason_code"] for f in feedback})
         self.state["feedback"] = feedback
         return S.IterationOutcome.IMPROVED if improved else S.IterationOutcome.NOT_IMPROVED
+
+    # two winners per workload class (Probata PoC 15) ---------------------------------------------
+    def _levels(self, pool):
+        """{candidate ID: level-rule result} for every entry with an ID: the levels known now, read through the
+        level rule over the campaign store and library (what `swdb candidate-level` reports), never stored."""
+        from swdb.level_rule import Rule
+        from swdb.library import Library
+        from swdb.store import Store
+        ids = sorted({c["id"] for c in pool if c.get("id")})
+        if not ids:
+            return {}
+        store = Store(self.store_dir)
+        rule = Rule(store, Library(self.library_root, store))
+        return {cid: rule.candidate(cid) for cid in ids if store.get(cid, "candidate") is not None}
+
+    def _class_winners(self, pool, levels):
+        """(fastest winner, faster_uncertified, verdict, best-proven winner) of one class's pool."""
+        refuted = frozenset(cid for cid, result in levels.items() if result["refuted"]["flag"])
+        fastest, faster, verdict = select(pool, refuted)
+        return fastest, faster, verdict, best_proven(pool, levels)
+
+    def _winners(self, row):
+        """Recompute both winners of every class from the levels known so far (25 item 4). The iteration row
+        gets the winner rows; `state.bests` (fastest) and `state.best_proven` hold each winner's ID, key and
+        patch for the next workspace's `best/`. Returns [{class, winner}] for each winner whose key rose: the
+        fastest winner's (certified over uncertified, speed) or the best-proven winner's (proven level, speed)."""
+        patches = self.state.setdefault("patches", {})
+        for cls, kept in list(self.state["bests"].items()) + list((self.state.get("best_proven") or {}).items()):
+            if kept and kept["id"] not in patches:          # a state saved before ticket 15 kept the bests' patches
+                patches[kept["id"]] = kept.get("patch", "")
+        for c in row["candidates"]:
+            patch = c.pop("_patch", None)
+            if c.get("id") and (c.get("selection") or {}).get("verdict") == "gain" and patch is not None:
+                patches[c["id"]] = patch            # only a gain candidate artifact can ever win
+        pool = [c for r in self.state["iterations"] + [row] for c in r["candidates"]]
+        levels = self._levels(pool)
+        improved, row["winners"] = [], []
+        proven_state = self.state.setdefault("best_proven", {})
+        for cls in self.classes:
+            mine = [c for c in pool if c["class"] == cls]
+            fastest, _faster, _verdict, proven = self._class_winners(mine, levels)
+            for mark, store, entry, key in (
+                    (FASTEST, self.state["bests"], fastest, fastest and list(selection_key(fastest))),
+                    (BEST_PROVEN, proven_state, proven, proven and list(best_proven_key(proven, levels[proven["id"]]["level"])))):
+                previous = store.get(cls)
+                if entry is not None and (previous is None or tuple(key) > tuple(previous["key"])):
+                    improved.append({"class": cls, "winner": mark})
+                store[cls] = {"id": entry["id"], "key": key, "patch": patches.get(entry["id"], "")} if entry else None
+            row["winners"] += [{"class": cls, **w} for w in winner_rows(fastest, proven, levels)]
+        return improved
 
     def _artifact(self, iteration, cls, response, row, feedback):
         patch, contracts = response["patch"], list(response.get("contracts") or [])
@@ -914,12 +1141,7 @@ class Campaign:
         entry = {"id": None, "class": cls, "patch_sha256": artifacts.digest(patch), "knobs": knobs,
                  "contracts": contracts, "certification": None, "comparisons": [], "level": None,
                  "selection": None, "_patch": patch}
-
-        def reject(reason, explanation, **fields):
-            entry["level"] = "rejected"
-            entry["rejection"] = explanation
-            feedback.append(S.Feedback(reason, explanation, {"class": cls, **fields}).to_dict())
-            return entry
+        reject = self._rejector(entry, cls, feedback)
 
         claims = scan_patch_additions(patch)
         if claims:
@@ -930,70 +1152,129 @@ class Campaign:
         problem = self._knob_problem(contracts, knobs)
         if problem:     # D7: rejected before certification, never a repair call
             return reject("knob_out_of_range", problem)
+        start = response.get("start")
+        if start is not None:           # Probata PoC 19: an iteration starting from a derived implementation
+            entry["start"] = start
+            problem = self._start_problem(start)
+            if problem:
+                return reject("provider_output_invalid", problem)
         try:
-            return self._certified_and_evaluated(iteration, cls, entry, patch, knobs, contracts, row, feedback, reject)
+            return self._certified_and_evaluated(iteration, cls, entry, patch, knobs, contracts, row, feedback, reject,
+                                                 start=start)
         except Refused as refused:       # tickets 56/57: a target refusal rejects this class's artifact
             return reject(refused.reason, refused.explanation, failed_checks=refused.failed_checks)
 
-    def _certified_and_evaluated(self, iteration, cls, entry, patch, knobs, contracts, row, feedback, reject):
-        attempt = 0
-        candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt, contracts=contracts)
-        entry.update(id=candidate["id"], artifact_sha256=candidate["sha256"])
+    def _rejector(self, entry, cls, feedback):
+        def reject(reason, explanation, **fields):
+            entry["level"] = "rejected"
+            entry["rejection"] = explanation
+            entry["rejection_reason"] = reason                  # Probata PoC 17: the iteration ladder's reason code
+            if fields.get("failed_checks"):
+                entry["rejection_failed_checks"] = list(fields["failed_checks"])
+            feedback.append(S.Feedback(reason, explanation, {"class": cls, **fields}).to_dict())
+            return entry
+        return reject
+
+    def _admit(self, candidate, contracts):
         self.adapter.pairing.freeze_artifacts([candidate['id']], self.state['protocol'],
             fixture=self.adapter.evidence_kind == 'contract_fixture')
         self.adapter.admit(candidate, contracts)
+
+    def _certified_and_evaluated(self, iteration, cls, entry, patch, knobs, contracts, row, feedback, reject,
+                                 start=None):
+        attempt = 0
+        candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt, contracts=contracts,
+                                             start=start)
+        entry.update(id=candidate["id"], artifact_sha256=candidate["sha256"])
+        self._admit(candidate, contracts)
         if not contracts:
             entry["level"] = "uncertified"
             feedback.append(S.Feedback("uncertified_edit", "The edit used no rewrite contract.",
                                        {"class": cls}).to_dict())
         else:
             tests = self._test_generation(contracts, row)
-            while True:
+            done = self._certification(iteration, cls, entry, candidate, patch, knobs, contracts, row, feedback, reject,
+                                       start=start, tests=tests)
+            if done is None:
+                return entry
+            candidate, patch, knobs, attempt = done
+        if entry["level"] == "certified" and self.gate is not None:
+            # Probata PoC 14: the bounded gate, after certification and before evaluation. Refuted code is never
+            # evaluated; its counterexample goes to counterexample-guided repair (13's loop).
+            entry["bounded_gate"] = self._gate(candidate["id"], contracts, iteration, cls, attempt)
+            gate_feedback(entry, cls, feedback)
+            if entry["bounded_gate"]["refuted"]:
+                entry["_followers"] = self._counterexample_repair(iteration, cls, entry, contracts, knobs, row,
+                                                                  feedback, attempt)
+                return entry
+        if entry["level"] == "certified":
+            self._derive(entry, candidate, contracts, knobs, start)
+        self._evaluate_and_select(iteration, cls, candidate, attempt, entry, feedback)
+        return entry
+
+    def _certification(self, iteration, cls, entry, candidate, patch, knobs, contracts, row, feedback, reject, *,
+                       start=None, tests=None, attempt=0, outcome=None, numbers=None):
+        """D7: certify, and after a failure at most `max_repairs` certification repair calls.
+
+        Returns (candidate, patch, knobs, attempt) once certified, or None after `reject`. `outcome` is a
+        certification already run on `candidate` (Probata PoC 14: a counterexample repair's); `numbers`
+        hands out the next attempt number when attempts must stay unique across a repair chain."""
+        repairs = 0
+        while True:
+            if outcome is None:
                 self._step("certification", job=True)
                 started = time.monotonic()
                 outcome = self.adapter.certify(candidate, contracts, iteration, cls, attempt, tests=tests)
                 self._spent("certification", started)
-                entry["certification"] = {"record": outcome["record"], "outcome": outcome["outcome"],
-                                          "level_at_summary": outcome["outcome"]}
-                if outcome.get("failed_checks"):
-                    entry["certification"]["failed_checks"] = list(outcome["failed_checks"])
-                if outcome["outcome"] == "certified":
-                    entry["level"] = "certified"
-                    feedback.append(S.Feedback("certified", "Certification passed.", {"class": cls}).to_dict())
-                    break
-                # Ticket 64: name the failing check and its public precondition (never run output).
-                # Ticket 76 (2026-10-05 ET): surviving controls reach the provider only as one
-                # aggregate category; the campaign record keeps the detailed names.
-                public = certification_feedback.public_checks(outcome["failed_checks"])
-                named = certification_feedback.explanation(public)
-                if attempt >= self.max_repairs:
-                    return reject("certification_failed", named, failed_checks=public)
-                # 2026-10-04 ET: the repair workspace holds the failing patch, and the prompt names
-                # only the files present (the provider audit refuses reads outside them).
-                files = {**self._workspace(iteration), "CANDIDATE.patch": patch,
-                         "CERTIFICATION.json": json.dumps({"class": cls, "failed_checks": public,
-                                                           "messages": certification_feedback.messages(public)})}
-                repaired = self._call("repair", files, "Repair: `CANDIDATE.patch` failed the certification checks "
-                                      "named in `CERTIFICATION.json`; return a repaired patch.\n"
-                                      + rewrite_prompt(self.cid, iteration, self.classes, files), row)
-                if repaired is None:
-                    return reject("certification_failed", named, failed_checks=public)
-                attempt += 1
-                patch = repaired["patch"]
-                knobs = knobs_by_class(repaired).get(cls, knobs)
-                entry.update(_patch=patch, patch_sha256=artifacts.digest(patch), knobs=knobs)
-                # 2026-10-04 ET (final code review): a repaired patch passes the same leakage
-                # scan as a first rewrite before it can become a candidate or `best/` input.
-                if scan_patch_additions(patch):
-                    return reject("provider_output_invalid", "The patch text states a performance outcome.")
-                problem = self._knob_problem(contracts, knobs)
-                if problem:
-                    return reject("knob_out_of_range", problem)
-                candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt, contracts=contracts)
-                entry.update(id=candidate["id"], artifact_sha256=candidate["sha256"])
-                self.adapter.pairing.freeze_artifacts([candidate['id']], self.state['protocol'],
-                    fixture=self.adapter.evidence_kind == 'contract_fixture')
-                self.adapter.admit(candidate, contracts)
+            # Probata PoC ticket 02 (2026-10-14 ET): link every certification record, one per contract.
+            entry["certification"] = {"record": outcome["record"], "records": list(outcome["records"]),
+                                      "outcome": outcome["outcome"], "level_at_summary": outcome["outcome"]}
+            if outcome.get("failed_checks"):
+                entry["certification"]["failed_checks"] = list(outcome["failed_checks"])
+            if outcome["outcome"] == "certified":
+                entry["level"] = "certified"
+                feedback.append(S.Feedback("certified", "Certification passed.", {"class": cls}).to_dict())
+                return candidate, patch, knobs, attempt
+            # Ticket 64: name the failing check and its public precondition (never run output).
+            # Ticket 76 (2026-10-05 ET): surviving controls reach the provider only as one
+            # aggregate category; the campaign record keeps the detailed names.
+            public = certification_feedback.public_checks(outcome["failed_checks"])
+            named = certification_feedback.explanation(public)
+            if repairs >= self.max_repairs:
+                reject("certification_failed", named, failed_checks=public)
+                return None
+            # 2026-10-04 ET: the repair workspace holds the failing patch, and the prompt names
+            # only the files present (the provider audit refuses reads outside them).
+            files = {**self._workspace(iteration), "CANDIDATE.patch": patch,
+                     "CERTIFICATION.json": json.dumps({"class": cls, "failed_checks": public,
+                                                       "messages": certification_feedback.messages(public)})}
+            repaired = self._call("repair", files, "Repair: `CANDIDATE.patch` failed the certification checks "
+                                  "named in `CERTIFICATION.json`; return a repaired patch.\n"
+                                  + rewrite_prompt(self.cid, iteration, self.classes, files), row)
+            if repaired is None:
+                reject("certification_failed", named, failed_checks=public)
+                return None
+            repairs += 1
+            attempt = numbers() if numbers else attempt + 1
+            outcome = None
+            patch = repaired["patch"]
+            knobs = knobs_by_class(repaired).get(cls, knobs)
+            entry.update(_patch=patch, patch_sha256=artifacts.digest(patch), knobs=knobs)
+            # 2026-10-04 ET (final code review): a repaired patch passes the same leakage
+            # scan as a first rewrite before it can become a candidate or `best/` input.
+            if scan_patch_additions(patch):
+                reject("provider_output_invalid", "The patch text states a performance outcome.")
+                return None
+            problem = self._knob_problem(contracts, knobs)
+            if problem:
+                reject("knob_out_of_range", problem)
+                return None
+            candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt, contracts=contracts,
+                                                 start=start)
+            entry.update(id=candidate["id"], artifact_sha256=candidate["sha256"])
+            self._admit(candidate, contracts)
+
+    def _evaluate_and_select(self, iteration, cls, candidate, attempt, entry, feedback):
         self._evaluate(iteration, cls, candidate, attempt, entry)
         selection = next((c for c in entry["comparisons"] if c["baseline_role"] == self.data["base_source"]), None)
         if selection:
@@ -1002,7 +1283,164 @@ class Campaign:
                                        {"class": cls, "verdict": selection["verdict"], "ratio": selection["ratio"],
                                         "lower": selection["lower"], "spread": selection["spread"],
                                         "evidence_basis": protocol_settings(self.data)["evidence_basis"]}).to_dict())
-        return entry
+
+    # the bounded gate and counterexample-guided repair (Probata PoC 14) ----------------------------
+    def _open_gate(self):
+        """The campaign's bounded gate, or None when its state names none (no method version at setup)."""
+        recorded = self.state.get("bounded_gate")
+        if not recorded:
+            return None
+        from swdb import bounded_gate
+        found = bounded_gate.method_version_of(self.library_root)
+        gate = bounded_gate.Gate(self.store_dir, self.folder / "proofs", self.library_root, self.adapter, found) \
+            if found else None
+        if gate is None or gate.method != recorded["method_version"]:
+            raise Failure("the method version changed since the campaign started; a campaign keeps the method "
+                          f"version it started with ({recorded['method_version']['id']})")
+        return gate
+
+    def _gate(self, candidate_id, contracts, iteration, cls, attempt):
+        result = self.gate.run(candidate_id, contracts, {"iteration": iteration, "cls": cls, "attempt": attempt})
+        self.state["proof_job_hours"] = self.state.get("proof_job_hours", 0.0) + result["job_hours"]
+        return result
+
+    def _charge_repair_call(self, row):
+        """`charge` for 13's loop: one counterexample repair call on the D7 ledger, before it opens."""
+        self._step("provider")
+        total = self.budget.provider_calls_setup + self.budget.provider_calls_per_iteration * self.budget.max_iterations
+        reason = "campaign total spent" if self.ledger.counted_calls >= total else None
+        if reason is None:
+            try:
+                call = self.ledger.open_call(REPAIR_CALL, f"{self.cid}.call{len(self.ledger.calls) + 1}")
+            except S.CallRefused as exc:
+                reason = str(exc)
+        if reason is not None:
+            row.setdefault("refused_calls", []).append({"role": REPAIR_CALL, "reason": reason})
+            return None
+        started = time.monotonic()
+
+        def close(proposal):
+            from swdb import counterexample_repair
+            self._spent("provider", started)
+            attempts = (proposal or {}).get("attempts") or []
+            opened = any(counterexample_repair.call_opened(a) for a in attempts)
+            state = ((proposal or {}).get("outcome") or {}).get("state")
+            outcome = (S.CallOutcome.COMPLETED if opened and state == "candidate_created" else
+                       S.CallOutcome.FAILED if opened else
+                       S.CallOutcome.PROVIDER_CAPACITY if state == "provider_unavailable" or proposal is None else
+                       S.CallOutcome.GUARD_REFUSED)
+            self.ledger.close_call(call, outcome)
+            row["provider_calls"].append({"role": REPAIR_CALL, "invocation": call.invocation,
+                                          "proposal": (proposal or {}).get("id"), "outcome": outcome.value,
+                                          "counted": call.counted, "model": self.data["provider"]["model"],
+                                          "effort": self.data["provider"]["effort"]})
+        return close
+
+    def _counterexample_repair(self, iteration, cls, entry, contracts, knobs, row, feedback, attempt):
+        """Counterexample-guided repair of a refuted candidate artifact through 13's loop (its round cap and
+        reverted-repair flag). Returns the entries of the candidate artifacts the repairs made, in order: each
+        is certified and gated; the one that ends the loop unrefuted (repaired, or a flagged reverted repair)
+        is evaluated and competes like any other."""
+        from swdb import counterexample_repair
+        from swdb.store import Store
+        counter = iter(range(attempt + 1, attempt + 10_000))
+        numbers = lambda: next(counter)        # noqa: E731  (attempt numbers stay unique in this class)
+        patches, made = {entry["id"]: entry.get("_patch", "")}, {}
+
+        def certify(cid):
+            candidate = Store(self.store_dir).get(cid, "candidate")
+            diff = Path(candidate["diff"]).read_text()
+            info = made[cid] = {"attempt": numbers(), "ref": {"id": cid, "sha256": candidate["artifact"]["sha256"]},
+                                "patch": patches.get(candidate.get("parent_candidate"), "") + diff}
+            patches[cid] = info["patch"]
+            if scan_patch_additions(diff):      # the leakage scan a first rewrite passes, before certification
+                info["rejection"] = "The patch text states a performance outcome."
+                return
+            try:
+                self._admit(info["ref"], contracts)
+            except Refused as refused:
+                info["rejection"], info["refusal"] = refused.explanation, refused.reason
+                return
+            self._step("certification", job=True)
+            started = time.monotonic()
+            info["certification"] = self.adapter.certify(info["ref"], contracts, iteration, cls, info["attempt"])
+            self._spent("certification", started)
+
+        def gate(cid):
+            lineage = counterexample_repair.lineage(Store(self.store_dir), cid) or {}
+            if lineage.get("reverted_repair"):
+                return []           # a reverted repair applies no contract: no bounded job, it keeps its level
+            made[cid]["gate"] = self._gate(cid, contracts, iteration, cls, made[cid]["attempt"])
+            return [job["record"] for job in made[cid]["gate"]["jobs"]]
+
+        runs = self.folder / "repairs"
+        runs.mkdir(parents=True, exist_ok=True)
+        try:
+            outcome = counterexample_repair.loop(
+                self.store_dir, entry["bounded_gate"]["refutations"][0], runs_dir=runs,
+                provider_config=self.args.provider_config, certify=certify, gate=gate, setting="campaign",
+                charge=lambda: self._charge_repair_call(row), ladder=self._ladder(iteration))
+        except (Failure, KeyError) as exc:      # the refuted candidate artifact cannot be repaired here
+            entry["counterexample_repair"] = {"state": "not_started", "reason": f"{type(exc).__name__}: {exc}"[:1000]}
+            return []
+        entry["counterexample_repair"] = {key: outcome[key] for key in
+                                          ("state", "reason", "cap", "rounds", "calls", "repairs", "reverted_repairs")}
+        counters = self.state.setdefault("counterexample_repairs", {"repairs": [], "reverted_repairs": []})
+        counters["repairs"] += outcome["repairs"]
+        counters["reverted_repairs"] += outcome["reverted_repairs"]
+        followers = []
+        for link in outcome["chain"]:
+            cid = link["candidate"]
+            if not cid or cid not in made:
+                continue
+            info = made[cid]
+            follower = {"id": cid, "class": cls, "patch_sha256": artifacts.digest(info["patch"]), "knobs": dict(knobs),
+                        "contracts": list(contracts), "certification": None, "comparisons": [], "level": None,
+                        "selection": None, "artifact_sha256": info["ref"]["sha256"],
+                        "repaired_from": {"candidate": Store(self.store_dir).get(cid, "candidate")
+                                                  .get("parent_candidate"), "round": link["round"],
+                                                  "proposal": link["proposal"], "trigger": link["trigger"],
+                                                  "reverted_repair": link["reverted_repair"]},
+                        "_patch": info["patch"]}
+            followers.append(follower)
+            reject = self._rejector(follower, cls, feedback)
+            if "rejection" in info:
+                reject(info.get("refusal", "provider_output_invalid"), info["rejection"])
+                continue
+            if info.get("gate") is not None:
+                follower["bounded_gate"] = info["gate"]
+                gate_feedback(follower, cls, feedback)
+            certified = info["certification"]["outcome"] == "certified"
+            if not certified:
+                # A repair that fails certification uses D7's certification repairs, never a counterexample round.
+                try:
+                    done = self._certification(iteration, cls, follower, info["ref"], info["patch"], knobs, contracts,
+                                               row, feedback, reject, attempt=info["attempt"],
+                                               outcome=info["certification"], numbers=numbers)
+                except Refused as refused:
+                    reject(refused.reason, refused.explanation, failed_checks=refused.failed_checks)
+                    continue
+                if done is None:
+                    continue
+                candidate, _patch, _knobs, number = done
+                follower["bounded_gate"] = self._gate(candidate["id"], contracts, iteration, cls, number)
+                gate_feedback(follower, cls, feedback)
+                if follower["bounded_gate"]["refuted"]:
+                    # It has no repair lineage of its own, so 13's cap could not count a further round: the chain ends.
+                    follower["repaired_from"]["ended"] = "refuted after a certification repair"
+                    continue
+                self._evaluate_and_select(iteration, cls, candidate, number, follower, feedback)
+                continue
+            feedback.append(S.Feedback("certified", "Certification passed.", {"class": cls}).to_dict())
+            follower["certification"] = {"record": info["certification"]["record"],
+                                         "records": list(info["certification"]["records"]),
+                                         "outcome": "certified", "level_at_summary": "certified"}
+            follower["level"] = "certified"
+            if link["reverted_repair"]:
+                follower["reverted_repair"] = True       # flagged: it may compete, never counts as a repair
+            if link is outcome["chain"][-1] and outcome["state"] in ("repaired", "reverted"):
+                self._evaluate_and_select(iteration, cls, info["ref"], info["attempt"], follower, feedback)
+        return followers
 
     def _test_generation(self, contracts, row):
         """D7: one independent test-generation call per contract per campaign, at first use.
@@ -1159,7 +1597,8 @@ class Campaign:
             self.state = {"campaign": self.cid, "campaign_sha256": self.sha256, "started": _now(),
                           "lane_hours": 0.0, "iterations": [], "bests": {}, "feedback": [], "pauses": [],
                           "baselines": {}, "tested_contracts": {}, "synthesized": {}, "retentions": [],
-                          "kept_for_claims": [], "setup_done": False, "pilot": None}
+                          "kept_for_claims": [], "setup_done": False, "pilot": None,
+                          "rewrite_workspace": "v2"}      # Probata PoC 17: a record, never a campaign-file setting
             self.ledger = S.SearchLedger(self.budget)
             if self.query:
                 self._check_sites()
@@ -1170,6 +1609,7 @@ class Campaign:
                     self._setup()
                 self.adapter.protocol_id = self.state["protocol"]["id"]
                 self.adapter.restore(self.state)
+                self.gate = self._open_gate()
                 if self.adapter.HAS_PILOT and self.state["pilot"] is None:
                     self._pilot()
                 elif self.adapter.HAS_PILOT:
@@ -1302,9 +1742,13 @@ class Campaign:
             rel = str(self.file.resolve())
         per_class = []
         unstable = (self.state.get("pilot") or {}).get("unstable_classes") or []
+        iterations = copy.deepcopy(self.state["iterations"])
+        levels = self._levels([c for r in iterations for c in r["candidates"]])
+        for c in (c for r in iterations for c in r["candidates"] if c.get("id") in levels):
+            c["level_snapshot"] = levels[c["id"]]["snapshot"]        # Probata PoC 15: every candidate's level now
         for cls in self.all_classes:
             pool = [c for r in self.state["iterations"] for c in r["candidates"] if c["class"] == cls]
-            best, faster, verdict = select(pool)
+            best, faster, verdict, proven = self._class_winners(pool, levels)
             if cls in unstable:
                 verdict = "baseline_unstable"
             other = None
@@ -1315,7 +1759,11 @@ class Campaign:
             per_class.append({"class": cls, "verdict": verdict, "best": best["id"] if best else None,
                               "best_level": best["level"] if best else None,
                               "best_selection_baseline": self.data["base_source"] if best else None,
-                              "best_other_baseline": other, "faster_uncertified": faster, "label": LABEL})
+                              "best_other_baseline": other, "faster_uncertified": faster, "label": LABEL,
+                              # Probata PoC 15: both winners, each with a dated level snapshot; Yan-Ru chooses.
+                              "winners": winner_rows(best, proven, levels),
+                              "best_proven": proven["id"] if proven else None,
+                              **({} if proven else {"best_proven_note": NO_BEST_PROVEN})})
         used = {"iterations": self.ledger.iterations_completed, "lane_hours": round(self.state["lane_hours"], 6),
                 "provider_calls_counted": self.ledger.counted_calls,
                 "provider_calls_uncounted": self.ledger.uncounted_calls,
@@ -1344,7 +1792,7 @@ class Campaign:
             workload_classes=[self._class_row(c) for c in self.data["workload_classes"]],
             label=LABEL, provider=dict(self.data["provider"]), pilot=self.state.get("pilot"),
             setup={"provider_calls": self.state.get("setup_calls", [])},
-            iterations=copy.deepcopy(self.state["iterations"]), per_class=per_class,
+            iterations=iterations, per_class=per_class,
             budgets={"limits": self.budget.to_dict(), "used": used},
             pauses=copy.deepcopy(self.state["pauses"]), stop_reason=reason.value,
             stop_detail=self.state.get("stop_detail"), artifacts=artifacts_list,
@@ -1352,6 +1800,12 @@ class Campaign:
             site_finder=self.state.get("site_finder"), paired_estimates=self.adapter.pairing.summary())
         if self.state.get("interrupted_iteration"):
             record["interrupted_iteration"] = copy.deepcopy(self.state["interrupted_iteration"])
+        if self.state.get("bounded_gate"):          # Probata PoC 14
+            record["bounded_gate"] = {**copy.deepcopy(self.state["bounded_gate"]),
+                                      "proof_job_hours": round(self.state.get("proof_job_hours", 0.0), 9),
+                                      "repair_counters": self._repair_counters()}
+        from swdb.iteration_ladder import version_of           # Probata PoC 17: v1 when the state names none
+        record["rewrite_workspace"] = version_of(self.state)
         record["mode"], record["campaign"] = MODE, self.cid
         return record
 

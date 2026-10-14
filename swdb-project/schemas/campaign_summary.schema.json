@@ -111,7 +111,24 @@
           "candidates",
           "feedback_reasons",
           "improved_classes"
-        ]
+        ],
+        "properties": {
+          "candidates": {
+            "type": "array",
+            "items": {"type": "object", "properties": {"level_snapshot": {"$ref": "#/$defs/level_snapshot"}}},
+            "description": "Probata PoC 15 (2026-10-14 ET): in the summary every entry with an ID carries `level_snapshot`, its level when the summary was written."
+          },
+          "winners": {
+            "type": "array", "items": {"$ref": "#/$defs/winner_row"},
+            "description": "Probata PoC 15 (2026-10-14 ET): both winners of every class after this iteration, from the levels known then (never proven unbounded); one row per distinct candidate artifact, each with `class`."
+          },
+          "improved_winners": {
+            "type": "array",
+            "items": {"type": "object", "additionalProperties": false, "required": ["class", "winner"],
+                      "properties": {"class": {"type": "string"}, "winner": {"enum": ["fastest", "best_proven"]}}},
+            "description": "Probata PoC 15: each winner whose key rose in this iteration; an iteration improves when either winner of a class improves (the plateau test)."
+          }
+        }
       }
     },
     "per_class": {
@@ -170,6 +187,18 @@
           },
           "label": {
             "const": "single graph per class"
+          },
+          "winners": {
+            "type": "array", "maxItems": 2, "items": {"$ref": "#/$defs/winner_row"},
+            "description": "Probata PoC 15 (2026-10-14 ET): the fastest winner and the best-proven winner, one row per distinct candidate artifact (`both` when one wins both). Neither is marked as the one to promote: Yan-Ru chooses."
+          },
+          "best_proven": {
+            "type": ["string", "null"],
+            "description": "Probata PoC 15: the best-proven winner (highest proven level, then the fastest), or null when no gain candidate artifact reached a proven level."
+          },
+          "best_proven_note": {
+            "type": "string",
+            "description": "Probata PoC 15: present when `best_proven` is null; says why in plain words."
           }
         }
       }
@@ -289,6 +318,35 @@
     },
     "paired_estimates": {
       "$ref": "#/$defs/pairing_ledger"
+    },
+    "rewrite_workspace": {
+      "enum": ["v1", "v2"],
+      "description": "Probata PoC 17 (2026-10-14 ET; map decision 28 item 1): the rewrite workspace version, a record of the loop, never a campaign-file setting. `v2`: from iteration 2 every rewrite and repair workspace holds `LADDER.json` (the iteration ladder). A summary without it reads as `v1` (D8's workspace, no iteration ladder)."
+    },
+    "bounded_gate": {
+      "type": "object",
+      "description": "Probata PoC 14 (2026-10-14 ET): present when the campaign's library held a method version, so every certified candidate artifact passed the bounded gate before evaluation. The pinned method version, its budget per bounded job and k, the rungs, the proof jobs' wall hours, and the two repair counters.",
+      "required": ["method_version", "budget_minutes", "k", "rungs", "proof_job_hours", "repair_counters"],
+      "properties": {
+        "method_version": {
+          "type": "object",
+          "required": ["id", "sha256"]
+        },
+        "budget_minutes": {"type": "number", "exclusiveMinimum": 0},
+        "k": {"type": "integer", "minimum": 2},
+        "rungs": {"type": "array", "items": {"enum": ["threads_1", "threads_k"]}},
+        "proof_job_hours": {"type": "number", "minimum": 0},
+        "repair_counters": {
+          "type": "object",
+          "required": ["certification_repairs", "counterexample_repair_rounds", "repairs", "reverted_repairs"],
+          "properties": {
+            "certification_repairs": {"type": "integer", "minimum": 0},
+            "counterexample_repair_rounds": {"type": "integer", "minimum": 0},
+            "repairs": {"type": "array", "items": {"type": "string"}},
+            "reverted_repairs": {"type": "array", "items": {"type": "string"}}
+          }
+        }
+      }
     }
   },
   "required": [
@@ -314,6 +372,39 @@
     "retentions"
   ],
   "$defs": {
+    "level_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "at", "level_rule", "records"],
+      "description": "Probata PoC 15 (2026-10-14 ET; map 26 items 2, 9): a dated level snapshot, never recomputed; a later read may give another level.",
+      "x-required-reasons": {
+        "level": "a level snapshot names the level",
+        "at": "a level snapshot is dated (YYYY-MM-DD HH:MM ET)",
+        "level_rule": "a level snapshot names the level-rule version that computed it",
+        "records": "a level snapshot lists the proof records that set the level (empty when none)"
+      },
+      "properties": {
+        "level": {"enum": ["uncertified", "certified", "rejected", "proven_within_bounds_threads_1",
+                           "proven_within_bounds_threads_k", "proven_unbounded"]},
+        "at": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2} ET$"},
+        "level_rule": {"type": "string", "minLength": 1},
+        "records": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "winner_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate", "winner", "level_snapshot", "ratio", "lower"],
+      "description": "Probata PoC 15 (2026-10-14 ET): one winner of one class: the candidate artifact, its mark (map 28 item 4), its dated level snapshot and its speed against the base-source baseline.",
+      "properties": {
+        "class": {"type": "string"},
+        "candidate": {"type": "string"},
+        "winner": {"enum": ["fastest", "best_proven", "both"]},
+        "level_snapshot": {"$ref": "#/$defs/level_snapshot"},
+        "ratio": {"type": "number"},
+        "lower": {"type": "number"}
+      }
+    },
     "pairing_ledger": {
       "type": "object",
       "additionalProperties": false,

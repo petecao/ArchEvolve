@@ -1,4 +1,7 @@
-"""Derived provider workspaces and source diffs. Updated: 2026-10-05 ET (code review P7, J5).
+"""Derived provider workspaces and source diffs. Updated: 2026-10-14 ET (Probata ticket 17: a campaign's
+iteration ladder in a counterexample repair workspace); 2026-10-14 ET (Probata ticket 13:
+counterexample repair inputs, the counterexample guard, the authors'-code guard with the O5 evaluation
+repair mark); 2026-10-05 ET (code review P7, J5).
 
 Trusted source and evaluator inputs are never writable provider inputs. Workspace
 edits are converted to a patch and pass the ordinary candidate-artifact protection path.
@@ -32,6 +35,55 @@ GENERATED_DIRS = {"build", "dist", "__pycache__", ".pytest_cache", "CMakeFiles"}
 HIDDEN_DIRS = {".git", ".codex", ".claude", ".agents", "records", "inputs", "workloads",
                "evaluations", "candidates", "reference", "graphs"}
 INSTRUCTION_FILES = {"AGENTS.md", "CLAUDE.md"}
+#: Ticket 13 (2026-10-14 ET): the repair evidence kind of counterexample-guided repair and the format of
+#: the counterexample file its workspace shows.
+COUNTEREXAMPLE_REPAIR = "counterexample_repair"
+COUNTEREXAMPLE_FORMAT = "swdb.counterexample.v1"
+COUNTEREXAMPLE_FILE = ".swdb-context/counterexample.json"
+#: Ticket 17 (2026-10-14 ET): where a campaign's counterexample repair workspace shows the iteration ladder.
+LADDER_FILE = ".swdb-context/LADDER.json"
+#: Keys under which a proof record or the repair loop carries a counterexample.
+COUNTEREXAMPLE_KEYS = frozenset({"counterexample", "unreplayed_counterexample"})
+COUNTEREXAMPLE_REFUSAL = "a counterexample reaches only a rewriting-role repair workspace"
+
+
+def _holds_counterexample_key(value):
+    if isinstance(value, dict):
+        return any(k in COUNTEREXAMPLE_KEYS or _holds_counterexample_key(v) for k, v in value.items())
+    if isinstance(value, list):
+        return any(_holds_counterexample_key(v) for v in value)
+    return False
+
+
+def carries_counterexample(name, text):
+    """True when a provider-visible file carries a bounded verifier's counterexample (ticket 13).
+
+    Recognized deterministically: the counterexample file format's name anywhere in the text, or a
+    `counterexample`/`unreplayed_counterexample` key in a JSON or YAML file (a proof record, the repair
+    evidence, a context projection)."""
+    if not isinstance(text, str):
+        return False
+    if COUNTEREXAMPLE_FORMAT in text:
+        return True
+    suffix = Path(name).suffix.lower()
+    if suffix not in {".json", ".yaml", ".yml"}:
+        return False
+    try:
+        import yaml
+        parsed = json.loads(text) if suffix == ".json" else yaml.safe_load(text)
+    except (ValueError, yaml.YAMLError, RecursionError):
+        return False
+    return _holds_counterexample_key(parsed)
+
+
+def refuse_counterexamples(files, allowed=()):
+    """The guard rule of ticket 13: a counterexample goes to the rewriting role's repair workspace only.
+
+    `files` maps provider-visible names to text; `allowed` names the one counterexample file of a
+    counterexample repair workspace. Raises before any provider call opens."""
+    for name, text in files.items():
+        if name not in allowed and carries_counterexample(name, text):
+            raise Failure(f"{COUNTEREXAMPLE_REFUSAL}, never to this workspace: {name}")
 
 
 def generated_output(path, name):
@@ -277,7 +329,8 @@ def prepare(request, source, package, store, output_dir, config):
                                   "omitted_field_names": ["protections", "evaluator", "verification", "correctness_check"],
                                   "protected_fragments_redacted": bool(replacements),
                                   "notice": "Provider-visible context projection; the authoritative sealed package is retained unchanged."},
-                              "starting_files_sha256": artifacts.digest(workspace.visible), "dropped_build_outputs": []}
+                              "starting_files_sha256": artifacts.digest(workspace.visible), "dropped_build_outputs": [],
+                              "source_tree_sha256": source["artifact"].get("sha256")}
         (folder / "workspace.json").write_text(json.dumps(workspace.metadata, indent=2))
     except BaseException:
         workspace.cleanup()
@@ -285,7 +338,35 @@ def prepare(request, source, package, store, output_dir, config):
     return workspace
 
 
-def context_documents(workspace, request, repair=None):
+def evaluation_repair_mark(repair):
+    """The mark of an evaluation repair run (ticket 13, O5), from the repair evidence `swdb repair
+    --evaluation-run` builds; None for every other workspace (campaigns and ArchEvolve mode never set it)."""
+    if not isinstance(repair, dict) or repair.get("kind") != COUNTEREXAMPLE_REPAIR or repair.get("setting") != "evaluation":
+        return None
+    return {"refuted_candidate": repair.get("refuted_candidate"), "tree_sha256": repair.get("refuted_tree_sha256")}
+
+
+def _refuse_authors_code(workspace, shown, repair, store):
+    """The authors' accelerated functions never reach a rewriting workspace (map 18 item 6), except (O5) the
+    rewriting-role repair workspace of an evaluation repair run whose refuted candidate artifact is the very
+    tree this workspace shows. The guard reads the mark from the workspace manifest."""
+    from swdb.provider_roles import FORBIDDEN_SOURCE
+    mark = evaluation_repair_mark(repair)
+    workspace.metadata["evaluation_repair"] = mark
+    exempt = False
+    if mark is not None and mark["tree_sha256"] == workspace.metadata.get("source_tree_sha256"):
+        refuted = store.get(mark["refuted_candidate"], "candidate") if store is not None else None
+        exempt = (refuted or {}).get("artifact", {}).get("sha256") == mark["tree_sha256"]
+    if exempt:
+        return
+    for name, text in sorted(shown.items()):
+        found = FORBIDDEN_SOURCE.search(text)
+        if found:
+            raise Failure(f"provider workspace shows the authors' accelerated code ({found.group(0)} in {name}); "
+                          "only an evaluation repair run's workspace for that refuted candidate artifact may (O5)")
+
+
+def context_documents(workspace, request, repair=None, store=None):
     """Keep large task inputs in immutable files rather than CLI arguments."""
     def write(name, value):
         rel = f"{CONTEXT_DIR}/{name}"
@@ -297,6 +378,29 @@ def context_documents(workspace, request, repair=None):
 
     if repair is not None:
         replacements = [item for parts in workspace.redactions.values() for item in parts]
+        repair = copy.deepcopy(repair)
+        ladder = repair.pop("iteration_ladder", None)
+        if ladder is not None:
+            # Ticket 17: a campaign's iteration ladder, shown byte for byte as its rewrite workspace shows it.
+            ladder_path = workspace.root / LADDER_FILE
+            ladder_path.write_text(ladder)
+            workspace.visible[LADDER_FILE] = artifacts.file_hash(ladder_path)
+            workspace.metadata["iteration_ladder"] = {"path": LADDER_FILE, "sha256": workspace.visible[LADDER_FILE],
+                                                      "bytes": ladder_path.stat().st_size}
+            repair.setdefault("files", {})["iteration_ladder_file"] = LADDER_FILE
+        if repair.get("kind") == COUNTEREXAMPLE_REPAIR:
+            # Ticket 13: the refuted patch and the counterexample are files of their own, each hashed.
+            patch_rel = f"{CONTEXT_DIR}/refuted-candidate.diff"
+            (workspace.root / patch_rel).write_text(_sanitize(repair.pop("refuted_patch"), replacements))
+            workspace.visible[patch_rel] = artifacts.file_hash(workspace.root / patch_rel)
+            shown = {"format": COUNTEREXAMPLE_FORMAT, "proof_record": repair["proof_record"],
+                     "refuted_candidate": repair["refuted_candidate"], "bounds": repair.get("bounds"),
+                     "counterexample": repair.pop("counterexample")}
+            workspace.metadata["repair_inputs"] = {
+                "counterexample": write("counterexample.json", _sanitize(shown, replacements)),
+                "refuted_patch": {"path": patch_rel, "sha256": workspace.visible[patch_rel],
+                                  "bytes": (workspace.root / patch_rel).stat().st_size}}
+            repair.setdefault("files", {}).update(counterexample_file=COUNTEREXAMPLE_FILE, refuted_patch_file=patch_rel)
         workspace.metadata["repair_context"] = write("repair.json", _sanitize(repair, replacements, hide_evaluator=True))
     map_path = f"{CONTEXT_DIR}/workspace-map.json"
     visible = set(workspace.visible) | {map_path}
@@ -310,7 +414,17 @@ def context_documents(workspace, request, repair=None):
         "extra_files": workspace.metadata["extra_files"],
         "hidden_fragments": workspace.metadata["hidden_fragments"],
         "profile_package_projection": workspace.metadata["profile_package_projection"],
-        "repair_context": workspace.metadata.get("repair_context")})
+        "repair_context": workspace.metadata.get("repair_context"),
+        **({"repair_inputs": [{"name": key, **value} for key, value in workspace.metadata["repair_inputs"].items()]}
+           if "repair_inputs" in workspace.metadata else {})})
+    shown = {}
+    for name in workspace.visible:
+        try:
+            shown[name] = (workspace.root / name).read_text()
+        except (UnicodeDecodeError, OSError):
+            continue
+    refuse_counterexamples(shown, allowed={COUNTEREXAMPLE_FILE} if workspace.metadata.get("repair_inputs") else ())
+    _refuse_authors_code(workspace, shown, repair, store)
     workspace.metadata["visible_files"] = sorted(workspace.visible)
     workspace.metadata["immutable_files"] = sorted(immutable)
     workspace.metadata["starting_files_sha256"] = artifacts.digest(workspace.visible)
@@ -322,7 +436,9 @@ def prompt(workspace):
                  "workspace_map": f"{CONTEXT_DIR}/workspace-map.json",
                  "profile_package_context": f"{CONTEXT_DIR}/profile-package.json"}
     for key, name in (("selected_strategy", "selected-strategy.json"),
-                      ("required_operations", "required-operations.json"), ("repair", "repair.json")):
+                      ("required_operations", "required-operations.json"), ("repair", "repair.json"),
+                      ("counterexample", "counterexample.json"), ("refuted_patch", "refuted-candidate.diff"),
+                      ("iteration_ladder", "LADDER.json")):
         rel = f"{CONTEXT_DIR}/{name}"
         if rel in workspace.visible:
             locations[key] = rel
@@ -350,7 +466,14 @@ def prompt(workspace):
             "Use unresolved for requirements you cannot satisfy; include nonfatal diagnostics in interpretation. "
             "SWDB computes the source diff from your edits. A comment-only edit does not satisfy a rewrite. "
             "If a repair file is listed, read its retained failure evidence, preserve original strategy and "
-            "scope, and address only that failure.\n" + json.dumps(locations))
+            "scope, and address only that failure. If a counterexample file is listed, the bounded verifier "
+            "refuted the candidate in this workspace (its patch is the refuted_patch file): change the code so "
+            "this counterexample no longer occurs while still applying the same rewrite contract; do not "
+            "drop the offload or restore the baseline implementation."
+            + (" If an iteration_ladder file is listed, it is the campaign's iteration ladder: one row per earlier "
+               "candidate artifact with its contracts, knobs, level, verdict, numbers, reason codes and winner mark."
+               if "iteration_ladder" in locations else "")
+            + "\n" + json.dumps(locations))
 
 
 def collect_diff(workspace, editable_files):
@@ -442,7 +565,7 @@ def run(config, request, source, package, store, output_dir, repair=None, remain
     workspace = prepare(request, source, package, store, output_dir, config)
     context, metadata, response, error = None, {}, None, None
     try:
-        context_documents(workspace, request, repair)
+        context_documents(workspace, request, repair, store)
         context = provider_guard.context(config, workspace.root, workspace.home, workspace.folder,
                                          login_path=workspace.login_path, fixture=config["kind"] == "external_fixture")
         context["schema"] = FINAL_SCHEMA
