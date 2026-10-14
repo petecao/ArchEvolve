@@ -8,6 +8,7 @@ fake sysfs topology; mbit10 runs the real batch (ticket 57's Answer).
 """
 
 import json
+import os
 import shutil
 import sys
 
@@ -71,9 +72,9 @@ class Lane:
         path.write_text(yaml.safe_dump(data, sort_keys=False))
         return path
 
-    def run(self, plan, *extra, ok=True):
+    def run(self, plan, *extra, ok=True, env=None):
         result = run_swdb("prove-lane", "run", plan, "--records", self.records, "--runs-dir", self.runs,
-                          "--format", "json", *extra)
+                          "--format", "json", *extra, env=env)
         assert (result.returncode == 0) is ok, result.stderr + result.stdout
         return json.loads(result.stdout) if ok else result
 
@@ -118,7 +119,9 @@ def test_a_plan_asking_for_seven_workers_is_refused(lane):
 
 
 def test_started_without_the_lane_script_the_batch_refuses_to_run(lane):
-    result = lane.run(lane.plan([lane.prove_job("A", "s1")], machine="mbit10"), ok=False)
+    """The suite itself may run inside a lane on mbit10, so the child is started as if outside one."""
+    result = lane.run(lane.plan([lane.prove_job("A", "s1")], machine="mbit10"), ok=False,
+                      env={"LACT_SOCKET_LANE_PID": "", "LACT_SOCKET_LANE_GENERATION": ""})
     assert result.returncode == 1 and "socket_lane.sh" in result.stderr
     assert not (lane.records / "proofs").exists()
 
@@ -228,6 +231,16 @@ def test_compare_finds_matching_and_differing_verdicts(lane):
 
 
 # --- cores --------------------------------------------------------------------------------------
+
+@pytest.mark.skipif(not hasattr(os, "sched_getaffinity"), reason="the Mac pins no core (Linux, mbit10 only)")
+def test_each_worker_is_pinned_to_its_own_core_and_the_record_names_it(lane):
+    jobs = [lane.prove_job(config, f"s{n}") for n in range(3) for config in ("A", "B")]
+    batch = lane.run(lane.plan(jobs, workers=3))
+    saved = json.loads((lane.runs / batch["batch"] / "batch.json").read_text())
+    cores = saved["worker_cores"]
+    assert len(set(cores)) == 3 and all(isinstance(core, int) for core in cores)
+    for job in batch["jobs"]:
+        assert lane.record(job["record"])["job"]["worker_core"] in cores
 
 def test_workers_get_one_logical_cpu_per_physical_core(tmp_path):
     """mbit10's node 1 shape: even/odd CPUs per node, sibling i+32 of each core."""
