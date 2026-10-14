@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 15
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) (sections "Extensa mode" (iteration ladder), "Loop, modes and guards", "Testing Decisions" seams 3 and 4 and the leakage-check negative controls); decisions: [28](../../formal-verification-2026-10-09/issues/28-extensa-iteration-ladder.md) items 1-10 and its build items, [25](../../formal-verification-2026-10-09/issues/25-extensa-loop-proofs-and-ranking.md) item 4 and its Later changes
 **Time estimate:** about 2 days
