@@ -1,7 +1,7 @@
 """Certify command version tables, per-version source manifests and old-record labels.
 
 Created: 2026-10-05 ET (code-review fixes F1-F3, F6, F10, C10; agent-decided under Yan-Ru's delegation,
-revisable). Fast: nothing here compiles or runs a certification.
+revisable). Updated: 2026-10-13 ET (committed lowering 1.2 re-certifications). Fast: nothing here compiles or runs a certification.
 """
 import hashlib
 import shutil
@@ -254,14 +254,18 @@ def _committed():
 
 
 def test_every_committed_certification_has_a_known_procedure():
-    rows = {record['id']: procedures.classify(record) for record in _committed()}
+    committed = {record['id']: record for record in _committed()}
+    rows = {rid: procedures.classify(record) for rid, record in committed.items()}
     assert rows and all(row['note'] != 'unknown label' for row in rows.values()), rows
     b7954 = rows['certification.b7954f4df9dd4e228fb12437b845f190']
     assert (b7954['family'], b7954['label'], b7954['procedure']) == ('native', '1.4', '1.3')
     assert rows['certification.7f15786592134bdabbc921f16c806ce1']['procedure'] == '1.4'
     assert rows['certification.f5b8f6a732714abfad544aaa65982438']['procedure'] == '1.3'
-    lowering = [r for i, r in rows.items() if r['family'] == 'lowering_calibration']
-    assert lowering and {(r['label'], r['runnable']) for r in lowering} == {('1.0', False)}
+    # 2026-10-13 ET: records made before the version tables (no `command.family`) are the historic
+    # lowering 1.0; the 2026-10-13 re-certifications name their family and ran runnable lowering 1.2.
+    lowering = [(r, 'family' in committed[i]['command']) for i, r in rows.items() if r['family'] == 'lowering_calibration']
+    assert {(r['label'], r['runnable']) for r, named in lowering if not named} == {('1.0', False)}
+    assert {(r['label'], r['runnable']) for r, named in lowering if named} <= {('1.1', True), ('1.2', True)}
 
 
 def test_colliding_labels_resolve_by_family_and_sources():
