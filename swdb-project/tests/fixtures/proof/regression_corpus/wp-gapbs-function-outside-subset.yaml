@@ -1,0 +1,13 @@
+# Created: 2026-10-14 ET (Probata PoC 21). Regression corpus case through `swdb prove` (see wp-hint-syntax-error.yaml).
+id: wp-gapbs-function-outside-subset
+adapter: wp
+input:
+  candidate: safe
+  function: InitParent
+  contract: contract.fixture_wp_fill
+  hints: []
+failure_class: unsupported_construct
+cause: >-
+  GAPBS's InitParent takes `const Graph &` (a reference to a class) and returns pvector<NodeID>: outside
+  the core subset. The WP adapter records not proven, unsupported_construct, before any WP run (ticket 24
+  widens the subset; 22 states the skip reason outside_cpp_subset for the bounded rung).

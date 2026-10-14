@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 22
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Verifier lineup and order": fallbacks, one summary source, summary-only `assume`s, floats as reals; "Bounds": unroll depth and unwinding assertions; "Formal-half language and the C++ subset": runtime-check form; "DX100 proof semantics": the three summary forms agree; "Proof-of-concept plan": A2 exit; "Testing Decisions", seam 1; choice S1); decisions: [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) items 2, 4, 6, 9; [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md) items 1, 8; [19](../../formal-verification-2026-10-09/issues/19-bounded-verdict-bounds.md) item 5; also [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md) item 8 (form agreement)
 **Time estimate:** about 3 days

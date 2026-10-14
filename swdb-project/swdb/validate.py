@@ -18,6 +18,7 @@ class Result:
     problems: list = field(default_factory=list)
     store: Store = None
     vocabs: dict = None
+    frame: object = None   # Probata PoC 20: swdb.formal_frame.Report (unchecked and type-checked formal halves)
 
 
 def validate_records(records_dir, extra=None, replace=None, library_root=None):
@@ -29,6 +30,7 @@ def validate_records(records_dir, extra=None, replace=None, library_root=None):
     if root.exists():
         library = Library(root, result.store)
         result.problems.extend(library.validate())
+        result.frame = library.frame
         from swdb.derived import lineage_problems   # Probata PoC 19: lineage contracts are in the library
         result.problems.extend(lineage_problems(result.store, library))
         from swdb import method_version   # Probata ticket 11: library/methods/*.yaml

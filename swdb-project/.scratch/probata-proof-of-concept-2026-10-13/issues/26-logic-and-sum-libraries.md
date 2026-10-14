@@ -1,9 +1,9 @@
 # 26 — Logic and sum libraries
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-14 16:40 ET (Answer)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** resolved
 **Blocked by:** 21
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Modules", library content: logic library; "Formal-half language and the C++ subset": allowed ACSL, primitive recursion; user story 53: primitive recursion and the `\false` check; "Records and levels": the method-version file lists the shared logic library with the sum library; "Proven once vs per candidate": the "with the method" row; "Evaluation design": RQ3 counts the sum library's one-time cost; "Proof-of-concept plan": A1 (d) and A2; "Testing Decisions"); decisions: [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md) items 2, 9, 12; [24](../../formal-verification-2026-10-09/issues/24-alignment-hint-kind.md) item 4; also [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md) item 3 (a synthetic fixture, never PR)
 **Time estimate:** about 1-2 weeks
@@ -44,3 +44,103 @@ Updated: 2026-10-13 23:15 ET (review fixes)
 - The library is reviewed at promotion (13 item 12). The shared part, with the sum library, belongs to the method version.
 - Held-out kernels (BC, PR, SSSP) are never proven or used for calibration before the freeze (59 — Method-version review and freeze).
 - WP runs fail inside the Bash sandbox (the Why3 socket is blocked); run WP jobs outside it.
+
+## Answer
+
+2026-10-14 16:40 ET. **Resolved, with one acceptance box not met** (the calibration suites: they are not on the
+Mac; see "Not done"). Branch `probata-poc/t26`. Interface doc:
+[`format-v0.4-logic-library.md`](../../../docs/reference/format-v0.4-logic-library.md).
+
+**What was built**
+
+| Piece | Where |
+|---|---|
+| Shared logic files, version 1.0: CSR graph model, set helpers, accessors (`at(parent, v)`), the sum library | `library/logic/{csr_graph,sets,access,sum}.acsl` |
+| The sum library's proof hints and saved WP scripts (11 `Wp.induction`/`Wp.lemma` scripts, replayed every run) | `library/logic/proofs/sum/` |
+| Versions (`// version:` first line), an entry's own file beside its YAML (ID `logic.<entry ID>`, only that entry uses it), a Frama-C type check per file | `swdb/logic_library.py`, `swdb/formal_frame.py`, `swdb/cli.py` |
+| `pins.logic` `[{id, version, sha256}]` in every proof record whose formal halves use logic files | `swdb/proof.py`, `schemas/proof.schema.json`, `swdb/db.py` |
+| Level rule: a changed file stops the record counting; a shared file with lemmas needs a counting `logic_lemmas` record; a failed `\false` check voids its version | `swdb/level_rule.py` |
+| `swdb prove-logic` (`--lemmas`, `--false-check`, `--program`; `--file` checks a proposed version) | `swdb/logic_library.py` |
+| Part names `logic_lemmas`, `logic_false_check` (`voids: logic`), `contract_logic_lemmas`, `contract_logic_false_check` | `vocab/proof_part_names.yaml` |
+| WP adapter: `-wp-prop=-@lemma` (library lemmas are proven once, with the method); an entry's own file at `ghost.globals` | `swdb/wp_adapter.py` |
+| CSR fixture: nested pull-sum and flattened pull-sum, one seeded bug each | `tests/fixtures/logic/csr_pull_sum{,_flat}.c` |
+
+**Acceptance, box by box**
+
+- [x] Shared files with versions; `swdb validate` accepts them and Frama-C type-checks each ("4 logic file(s)
+  type-checked"). A fixture contract's own file beside its YAML loads the same way; another entry using it is refused.
+- [x] Pins: `swdb prove` writes `pins.logic` (version and sha256). Editing `access.acsl` makes the record stale
+  (pin `logic`); a re-run records the new pin and counts; the old one stays stale.
+- [x] First: `range_sum`/`sum_n` and `filtered_sum`/`fsum_n` recurse on a count `n` under `n <= 0` and pass 20's rule;
+  the control (a sum over `[lo, hi)` recursing on `hi`) is refused.
+- [x] Every file passes 20's rules in `swdb validate`; 20's negative controls are cited, not re-tested (still green
+  in `tests/test_formal_frame.py`).
+- [x] `\false` check per version: passes on all four shipped files (Alt-Ergo/Z3/CVC5 time out at 10 s each; peak
+  1.2 GB). Negative control: `logic.sum` 1.1 = 1.0 plus map 13's `pbad`, run with `--skip-subset-check`: WP proves
+  `\false` (Alt-Ergo, 18 ms), the record is refuted, the version is refused (exit 1), and a proof pinning it is void.
+  20's rule refuses the same file first without the bypass.
+- [x] Sum library over reals by count recursion; additivity, regrouping (per owner and total) and permutation
+  proven in WP with `-wp-model +real`, recorded as method part `logic_lemmas`: 17/17 goals, fresh session, scripts
+  replayed. Slowest: `REGROUP_TOTAL`, about 12.5 s (Alt-Ergo, inside its induction script); job about 66 s, 0.8 GB.
+- [x] CSR fixture: the nested unit and the flattened unit (one flat edge loop, through `REGROUP_OWNER`) prove
+  against the same `UNIT` postcondition (30 and 38 goals; slowest 0.82 s, `PARTIAL` preserved). Each seeded bug
+  reads not proven (`timeout`), never refuted.
+- [ ] **Calibration suites: not met.** Code2Inv, X509-parser and Frama-C-problems are not on the Mac (ticket 38
+  installs them). The CSR fixture carries the test, as the Notes allow when a suite is missing. Assumption: the
+  suite tasks go through `swdb prove-logic --program <task.c> --uses logic.sum` once 38 has them.
+- [x] No test, fixture or record uses BC, PR or SSSP code. Agent time on the sum library: see below.
+- [x] Every WP job ran inside the machine-wide lock (`verifier_lock` nested in `verifier_run.py`), one at a time,
+  under the 8 GB watchdog; WP tests skip without Frama-C 33.0 or clang 22.1.8.
+
+**Agent time (RQ3, the sum library's one-time cost):** spike (d) about 2.5 h (ticket 08) plus about 0.5 h here
+(port, the `\max`/`\min` rewrite the subset needed, script regeneration, replay). Ticket 26 as a whole: about
+1.1 h of agent wall time (Claude Code subagent), 2026-10-14 15:35 to 16:40 ET, of which about 25 min waited on
+the shared verifier lock.
+
+**Tests** (Mac, serial, no xdist; WP tests inside `verifier_run.py`, sandbox off):
+- `tests/test_logic_library.py`, `test_formal_frame.py`, `test_wp_adapter.py`, `test_level_rule.py`,
+  `test_proof_records.py`, `test_format_doc.py`, `test_db.py::test_every_table_and_column_is_documented`, one run
+  inside `verifier_run.py`: **234 passed, 5 failed** in 17 min (peak 1.4 GB). Log
+  `/tmp/claude/probata-runs/t26/pytest-full1.log` (sha256 `4d6188b161a0d465`...), report log
+  `/tmp/claude/probata-runs/t26/report-full1.jsonl` (`e1a0f1f01fa03ed5`...).
+- After merging the integration tip (`2b3f39dd`): the same set again, **234 passed, 5 failed** (the same 5) in
+  17 min. Log `/tmp/claude/probata-runs/t26/pytest-merged.log` (`4bb2f3642dcede24`...), report log
+  `/tmp/claude/probata-runs/t26/report-merged.jsonl` (`db8429e4cffb1229`...).
+- The 5 failures are the `test_level_rule.py` proof-semantics cases that ticket 21 found failing on the
+  integration tip before this ticket ("entry ID requires prefix semantics."; 10's fixtures vs 20's
+  `proof_semantics` kind). Same names, same message; not caused here.
+- `tests/test_formal_frame.py` changed (stale under this ticket): its fixture logic files gained the version line,
+  and its unchecked counts leave out the new per-file logic lines.
+- WP experiments and run output: `/tmp/claude/probata-runs/t26/` (e1: script generation and replay; e2: `-wp-prop`
+  check; e3: the `\false`-check design with and without `pbad`). Pytest temp folders there are disposable after merge.
+
+**Assumptions** (new; the Notes' assumptions are implemented as written):
+
+- Assumption: a file's version is its first line `// version: <dotted numbers>`; older versions live in git, and a
+  record pins version plus sha256.
+- Assumption: an entry's own file is `<entry file>.acsl` beside the YAML, ID `logic.<entry ID>`; only that entry may
+  list it; its proofs are contract-proof parts, so the level rule's contract-part rule covers them.
+- Assumption: a lemma file's hints live outside the `.acsl` (the subset refuses `\wp::` annotations in a logic file):
+  `library/logic/proofs/<name>/hints.acsl` and `script/*.json`.
+- Assumption: the `\false` check is one generated lemma that mentions every definition through uninterpreted
+  wrappers, after the file's lemmas (WP sends only mentioned definitions, research 13 Q2). Verdict `proven` = no
+  solver proved `\false` within 10 s per solver (evidence, not a consistency proof); `refuted` = WP proved it.
+- Assumption: a refuted `\false` check voids every record pinning that file sha256, even a version that is not
+  (or never was) the library's file.
+- Assumption: logic-part records carry bounds `{threads: unbounded}` (a logic fact never caps a level).
+- Assumption: the CSR fixture and calibration tasks are `calibration_program` subjects, proven by
+  `swdb prove-logic --program` on hand-written C. The C lowering refuses floating point (ticket 24's subset), so a
+  real-valued unit cannot go through `swdb prove --adapter wp` yet.
+- Assumption: the WP adapter always passes `-wp-prop=-@lemma` (hint files cannot hold lemmas, so nothing else changes).
+
+**Interface notes**
+
+- 30: write reference definitions as logic files (shared or the entry's own); prove their lemmas with
+  `swdb prove-logic --lemmas`; candidate records then pin them and depend on that record.
+- 40: the bucketed-relaxation fixture can reuse `logic.csr_graph` and `logic.sum` and the `--program` route.
+- 44: put the shared-action kinds' commutativity lemmas in a logic file with hints in `proofs/<name>/`; generate
+  scripts with `--generate-scripts`, then replay with `--lemmas`.
+- 24: float types and literals in the C lowering are what a real-valued unit needs to go through `swdb prove`.
+- 21/36: the per-candidate WP run excludes lemma goals; 36's full reading should keep that.
+- Method version (main session): `logic_library` should pin the four files (sum library = `logic.sum` 1.0) once a
+  real `library/methods/` file exists.

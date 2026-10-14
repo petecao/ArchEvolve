@@ -1,6 +1,7 @@
 # The SQLite database
 
-Updated: 2026-10-14 ET: proof-record tables (Probata proof of concept ticket 04); skip records and `skip_reason` (ticket 11);
+Updated: 2026-10-14 13:40 ET: formal-half frame tables (Probata proof of concept ticket 20).
+2026-10-14 ET: proof-record tables (Probata proof of concept ticket 04); skip records and `skip_reason` (ticket 11);
 derived-implementation tables (ticket 19).
 2026-10-14 02:57 ET: `swdb_proof_jobs`, `swdb_run_fields`, `swdb_repair_lineage` (ticket 12).
 2026-10-12 00:36 ET: attribution final review fixes (headroom reasons point to one list,
@@ -401,6 +402,7 @@ rows; no LANL table points back. A file built before the prefix (2026-10-11) has
 | Strategies and intrinsics | `swdb_strategies`, `swdb_strategy_effects`, `swdb_strategy_intrinsics`, `swdb_applied_strategies`, `swdb_implementation_intrinsics`, `swdb_intrinsics`, `swdb_intrinsic_extensions` |
 | Measurements and estimates | `swdb_profiles`, `swdb_metrics`, `swdb_estimates` |
 | Typed library | `swdb_library_entries`, `swdb_library_dependencies`, `swdb_library_clauses`, `swdb_library_pattern_keys`, `swdb_library_pattern_key_steps` |
+| Formal-half frame | `swdb_library_clause_placements`, `swdb_library_concurrency_frame`, `swdb_library_shared_actions`, `swdb_library_required_contracts`, `swdb_proof_semantics_rules` ([Formal-half frame tables](#formal-half-frame-tables)) |
 | Statement observations | `swdb_statements`, `swdb_statement_steps`, `swdb_statement_facts` |
 | Contract links | `swdb_contract_definitions`, `swdb_contract_data_structures`, `swdb_contract_kernels`, `swdb_contract_kernel_variants` |
 | Attribution reports | the `swdb_attribution*` tables ([Attribution tables](#attribution-tables)) |
@@ -703,7 +705,7 @@ and `swdb submit` derive them.
 | Column | Meaning |
 |---|---|
 | `id` | entry ID (`intrinsic.`, `lowering.`, `operation.` or `contract.` prefix) |
-| `kind` | intrinsic, lowering, library_operation, or rewrite_contract |
+| `kind` | intrinsic, lowering, library_operation, rewrite_contract, or proof_semantics (ticket 20) |
 | `path` | YAML file path relative to the library folder |
 | `content_sha256` | the normative content hash that certification and review records pin |
 | `tier` | experimental or shared (shared only through Yan-Ru's current review), or null if underivable |
@@ -729,6 +731,58 @@ and `swdb submit` derive them.
 | `discharge_mode` | how the clause is discharged (differential_test, assumed, ...) |
 | `negative_control` | the named control that must be rejected, or `none` |
 | `statement` | the natural-language statement |
+
+### Formal-half frame tables
+
+Probata proof of concept ticket 20 (2026-10-14 ET). Rows only for library entries written in the
+formal-half frame (`formal_frame: 1`); format in [format-v0.4-formal-frame.md](format-v0.4-formal-frame.md).
+
+#### `swdb_library_clause_placements`
+
+| Column | Meaning |
+|---|---|
+| `entry` | library entry ID |
+| `clause` | clause ID |
+| `placement` | `per_candidate`, `once` or `assumed` |
+| `target` | for `once`: `self` or `<entry>@<version>`; for `assumed`: the rule (`<entry>#<rule>`) or the owner; else null |
+| `assumed_kind` | for `assumed`: the assumption kind (vocabulary `proof_assumption_kinds`), else null |
+| `acsl` | the clause's formal half (`acsl.text`), or null |
+| `acsl_uses` | JSON list of the logic-library entries the formal half lists, or null |
+
+#### `swdb_library_concurrency_frame`
+
+| Column | Meaning |
+|---|---|
+| `entry` | rewrite contract ID |
+| `array_name` | an array of the proof unit's interface |
+| `history_reads` | 1 when the array's reads are history reads, else 0 |
+
+#### `swdb_library_shared_actions`
+
+| Column | Meaning |
+|---|---|
+| `entry` | rewrite contract ID |
+| `array_name` | the array |
+| `shared_action` | one shared-action kind the array allows (vocabulary `shared_action_kinds`) |
+
+#### `swdb_library_required_contracts`
+
+| Column | Meaning |
+|---|---|
+| `entry` | offload-only rewrite contract ID |
+| `position` | 0-based position in the written order |
+| `contract` | the required enabling contract |
+| `versions` | its version range (for example `>=2.0, <3.0`) |
+
+#### `swdb_proof_semantics_rules`
+
+| Column | Meaning |
+|---|---|
+| `entry` | proof-semantics entry ID |
+| `rule` | rule ID |
+| `statement` | the rule in one sentence |
+| `gem5_commit`, `gem5_path`, `gem5_lines` | the gem5 citation (`cites`), or null |
+| `owner` | the owner of an uncited rule (`assumed.owner`), or null |
 
 ### `swdb_statements`
 
@@ -1194,18 +1248,18 @@ One row per proof record.
 
 ### `swdb_proof_pins`
 
-The content-hash set: one row per single pin, per summary used and per build constant.
+The content-hash set: one row per single pin, per summary used, per build constant and per logic-library file (ticket 26).
 
 | Column | Meaning |
 |---|---|
 | `proof` | proof record ID |
-| `kind` | pin kind (`code`, `contract`, `baseline_function`, `reference_semantics`, `proof_semantics`, `method_version`, `minimum_bounds`, `predecessor_snapshot`, `summaries`, `build_constants`) |
-| `position` | 0 for a single pin; the list index for a summary or build constant |
+| `kind` | pin kind (`code`, `contract`, `baseline_function`, `reference_semantics`, `proof_semantics`, `method_version`, `minimum_bounds`, `predecessor_snapshot`, `summaries`, `build_constants`, `c_lowering`, `logic`) |
+| `position` | 0 for a single pin; the list index for a summary, build constant or logic file |
 | `ref` | the pinned ID (a build constant's name); NULL when not applicable |
 | `sha256` | the pinned hash; NULL when not applicable or a build constant |
 | `function` | `baseline_function` pin: the function named in the pinned tree (else NULL) |
 | `proof_record` | summary pin: the proof record that proved the summary (else NULL) |
-| `value` | build constant: its value as JSON (else NULL) |
+| `value` | build constant: its value as JSON; logic file: its version (else NULL) |
 | `not_applicable` | the sentence saying why a pin does not apply yet (else NULL) |
 
 ### `swdb_proof_assumptions`

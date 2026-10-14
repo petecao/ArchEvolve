@@ -36,3 +36,6 @@ Updated: 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:40 ET (revie
 - Overrun rule: A2 is about 6 weeks. At 1.5 times that, stop for a re-plan with Yan-Ru.
 - Mac: one real verifier job at a time under the ~8 GB RSS watchdog; keep at least 50 GB free; check that LLVM 22 still works after any Homebrew change. Record each large run's output destination, size budget and readers first (LR-06); post the 30-minute heartbeat for runs past 30 minutes (LR-07).
 - Assumption (not decided in the map): 35 (the hint merger) is not upstream. For the A2 exit, the spike's hints are placed at 21's anchors by hand, kept as hint records with provenance, and re-checked by 35's proof hint check once it lands (not part of the A2 exit).
+
+## Later changes
+- 2026-10-14 13:19 ET (Yan-Ru accepted ticket 09's A2 changes): the A2 exit reproduces the 14 CBMC verdicts of the 06 continuation (2 units + 12 controls) with generated stubs and lowering.

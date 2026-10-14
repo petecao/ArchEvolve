@@ -15,7 +15,7 @@
     "sequence": {"type": "integer", "minimum": 1, "description": "Order of method versions; the current one has the highest sequence."},
     "status": {"enum": ["draft", "frozen"], "x-reason": "status is draft or frozen (59 freezes one)"},
     "created": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
-    "evidence_kind": {"enum": ["contract_fixture"], "x-reason": "only contract_fixture method versions exist so far; ticket 21 adds the value for the first real one"},
+    "evidence_kind": {"enum": ["contract_fixture", "execution"], "x-reason": "evidence_kind is contract_fixture (a fixture method version, for tests) or execution (a real method version; ticket 21): proof records under a fixture method version stay contract_fixture evidence"},
     "description": {"type": "string", "pattern": "\\S"},
     "lineup": {
       "type": "array",

@@ -1,0 +1,33 @@
+// version: 1.0
+// logic.sets: set helpers over integer arrays (Probata proof of concept ticket 26, 2026-10-14 ET;
+// map 16 item 9). A set is an array prefix a[0 .. n-1] (a queue, a frontier) or a flag array
+// indexed by element (a bitmap, a visited array).
+//
+// count_of is primitive recursive on its last argument (map 16 item 2); every other definition is
+// non-recursive. The file states no lemma.
+
+// x is in the array prefix a[0 .. n-1]
+predicate in_prefix{L}(int *a, integer n, integer x) = \exists integer i; 0 <= i < n && a[i] == x;
+
+// the prefix holds no element twice
+predicate distinct_prefix{L}(int *a, integer n) =
+  \forall integer i, k; 0 <= i < k < n ==> a[i] != a[k];
+
+// every element of a[0 .. n-1] is in b[0 .. m-1]
+predicate prefix_subset{L}(int *a, integer n, int *b, integer m) =
+  \forall integer i; 0 <= i < n ==> in_prefix(b, m, a[i]);
+
+// every element of the prefix lies in [lo, hi)
+predicate prefix_in_range{L}(int *a, integer n, integer lo, integer hi) =
+  \forall integer i; 0 <= i < n ==> lo <= a[i] < hi;
+
+// how many times x occurs in a[0 .. n-1]   (primitive recursive on n)
+logic integer count_of{L}(int *a, integer x, integer n) =
+  n <= 0 ? 0 : count_of(a, x, n - 1) + (a[n - 1] == x ? 1 : 0);
+
+// flag-array sets: element v is in the set when flags[v] != 0
+predicate flag_set{L}(int *flags, integer v) = flags[v] != 0;
+
+// the flag-array set over [0, n) is the set of elements of the prefix a[0 .. m-1]
+predicate flags_match_prefix{L}(int *flags, integer n, int *a, integer m) =
+  \forall integer v; 0 <= v < n ==> (flag_set(flags, v) <==> in_prefix(a, m, v));

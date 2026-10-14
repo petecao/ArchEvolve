@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 21
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-hint loop": Hint form, Vocabulary, Three checks; "Testing Decisions", seam 1, the seven WP fact files; user stories 28, 29, 34; S1); decisions: [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md) (items 2, 4, 5, 7, 8, 12), [24](../../formal-verification-2026-10-09/issues/24-alignment-hint-kind.md) (items 1, 7: no alignment hint kind; vocabulary unchanged)
 **Time estimate:** about 3 days

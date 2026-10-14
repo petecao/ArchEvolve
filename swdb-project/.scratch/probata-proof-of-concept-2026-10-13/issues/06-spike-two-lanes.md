@@ -1,9 +1,9 @@
 # 06 — Spike (b): 2 lanes under 15 minutes
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 08:10 ET (Answer: fail after both levers); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-14 12:45 ET (Continuation: pass via fallback (CBMC)); 2026-10-14 08:10 ET (Answer: fail after both levers); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 05
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-of-concept plan", A1 row (b); "Proven once vs per candidate", scale pass bar; "Bounds"; "DX100 proof semantics"; "What a proven verdict asserts", harness `assume`s; "Further Notes", risk table); decisions: [07](../../formal-verification-2026-10-09/issues/07-install-verifiers.md), [08](../../formal-verification-2026-10-09/issues/08-wrong-tile-prototype.md), [09](../../formal-verification-2026-10-09/issues/09-what-proven-asserts.md), [10](../../formal-verification-2026-10-09/issues/10-proven-rewrite-contract.md), [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md), [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [19](../../formal-verification-2026-10-09/issues/19-bounded-verdict-bounds.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md), [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md)
 **Time estimate:** about 4 days, inside the 2-week box
@@ -28,15 +28,15 @@ Failing after both levers is a stop condition for 09 — Spike verdict.
       hand-derived minimum: threads 1 (`NUM_CORES` = 1), lanes 2 (`TILE_SIZE` = 2), chunk 2, and
       inputs symbolic up to frontier 2, vertices 3, edges 3. Every build constant is recorded
       exactly.
-- [ ] Not met (timeout at both levers; Answer). Peter's read offload: the unit is proven (BFS unit postcondition and hazard freedom) in under
+- [x] Met via fallback (CBMC 6.11, Continuation: 3.4 s). SAW: not met (timeout at both levers; Answer). Peter's read offload: the unit is proven (BFS unit postcondition and hazard freedom) in under
       15 minutes wall time. Wall time, peak RSS and solver recorded.
-- [ ] Not met (timeout at both levers). The authors' `TDStepMAA`: the unit is proven, same properties, same budget, same records.
-- [ ] Not met (no control refuted within the budget; Answer, Controls). Peter's read offload: each of the contract's seven single-thread controls (`dropped_wait`,
+- [x] Met via fallback (CBMC 6.11, Continuation: 5.6 s). SAW: not met (timeout at both levers). The authors' `TDStepMAA`: the unit is proven, same properties, same budget, same records.
+- [x] Met via fallback (CBMC 6.11, Continuation: 7 of 7 refuted at the expected check). SAW: not met (no control refuted within the budget; Answer, Controls). Peter's read offload: each of the contract's seven single-thread controls (`dropped_wait`,
       `read_before_wait`, `index_wrap`, `forged_frontier`, `dropped_continuation`,
       `chunk_off_by_one`, `skipped_cas_recheck`) is refuted at these bounds, with the same harness
       and summaries, each with a counterexample. The check that fires is attributable to the break
       (glossary: negative control).
-- [ ] Not met (as above). `TDStepMAA`: each of its single-thread controls (see the assumption below) is refuted the
+- [x] Met via fallback (CBMC 6.11, Continuation: 5 of 5 refuted at the expected check). SAW: not met (as above). `TDStepMAA`: each of its single-thread controls (see the assumption below) is refuted the
       same way.
 - [x] The harness has no `assume` beyond summary-generated ones and proof-unit preconditions. Map
       08's `parent[v] >= -1` assume is widened to every value `InitParent` writes (map
@@ -267,3 +267,220 @@ Yan-Ru chose ticket 09's proposed re-plan option 1 (2026-10-14 12:08 ET): a one-
 spike's two units, hand-lowered to C with the same summaries as C stubs, at the same minimum bounds, plus all
 12 single-thread controls. The pass bar is unchanged: both units proven and every control refuted, each job
 under 15 minutes. Every SAW result above stays in the record. The box ends 2026-10-15 12:08 ET.
+
+### Continuation Answer (2026-10-14 12:45 ET)
+
+**Verdict: pass via fallback (CBMC).** CBMC 6.11 proves both units at map 19's minimum bounds:
+Peter's `TDStep` in 3.4 s, `TDStepMAA` in 5.6 s. It uses lever 1 only: every input is symbolic,
+with no shape splitting. All 12 single-thread controls are refuted, each at its expected check,
+in 1.0-5.2 s. Peak RSS is at most 0.70 GB. Every number is a **Mac result** (host `mac`). No
+mbit10 run was needed: every batch waited 0 s for the lock.
+
+**Why CBMC scales where SAW did not.** CBMC puts every path into one SAT formula. A
+value-dependent branch (the claim `hint<0 && CAS`, the push `tile4 && tile5<0`) becomes an
+if-then-else term, not a separate path. The summaries are small bit-vector functions. SAW
+explored the branch outcomes one path at a time and paid for override matching on each path.
+
+**Prototype:** [`../prototype/06c-cbmc/`](../prototype/06c-cbmc/).
+
+| File | Role | sha256 |
+|---|---|---|
+| `dx100_stubs.h` | ticket 06's per-call summaries (`summaries.saw` over `ghost.cry`) as C stubs. Each SAW precondition is a `CHECK`: a named `__CPROVER_assert`, then `__CPROVER_assume` | `6b7653dc4b317c57324b2efa20bc514883f72ce40d55dcce87d9e049e085b014` |
+| `common.h` | inputs, queue buffer, P2 (from `unit_common.hpp`) | `bc79af83420e8a9428b56221775ef7173711fcf0e2ca81faaec69ead8e40c682` |
+| `unit_peter.c` | unit 1, hand-lowered: `bfs_read_offload.inc` (sha256 `3c5867a2b8919806…`) through `spike_lowering.hpp`'s lowering, seams and faults | `e85123ad4d6faf5a79f18b6ec2a47aea4b326bb2ab85c189c70c167aa93844cc` |
+| `unit_maa.c` | unit 2, hand-lowered: `unit_maa.cpp` (same EDIT 1, EDIT 2, PROBEs, controls) | `901316fb59326c66ebd874354d8dbe70089a9dfbe6f6b5570e3df44e823bca9c` |
+| `harness.h` | CBMC harness (one `__CPROVER_assume` per `units.saw` precondition; sanity builds); native harness of the faithfulness tests | `0b260e6a76b4f32dcf382a664ee932cf610bea85d7d89b6a70d0dfc0fe9fef90` |
+| `run_cbmc.py`, `cbmc_job.py` | job table, unwind bounds, one-at-a-time runner (900 s per job, per-job peak RSS), verdict check | `c609dcc03fe5a48533edab51f99460011d3dd65cf8c93266512e31dd2c14969e`, `5d2bbac4724d3f3b7741ebce77c877975a0b3e18762c8d32096fdf77a3eae59a` |
+| `faith/run_faith.sh`, `faith/faith_cxx.cpp`, `faith/shim/cassert` | faithfulness test 1 (C lowering vs C++) | `7b16046343b7660787258836c4f6c10aa49ea08756d7437b47af2dd2b14f8391`, `4a3d13a8612b9f9683f2cacf08c2ef55a6dfe768642a825ef10803629af82215`, `3b4b1f67a7e66e3a0002eef73b5f4a9f8922aecb833cb72955e60a39a086a8d9` |
+| `faith/stub_vectors.py`, `faith/stubcheck.cry` | faithfulness test 3 (C stubs vs `ghost.cry`) | `56c0e73e98485793c0c8c9a4665c14703beaefcb0225a723c2e614c77c2e83e8`, `5a697c73561e3a5f01c2c7cbcf6ae7032f8be7aa9f334de563d24a52fc6cbab9` |
+
+The C++ sources and the proof semantics are the files the SAW runs used: `ghost.cry` `3257cb18…`,
+`unit_peter.cpp` `bbfd3da6…` and `unit_maa.cpp` `319f3556…` (full values in the SAW table above).
+
+**Recorded setup.**
+
+- Tool: CBMC `6.11.0 (cbmc-6.11.0) 64-bit arm64 macos` (Homebrew).
+- Invocation: `cbmc unit_<unit>.c -DSWDB_CBMC [control flags] --unwind 9 --unwindset <per loop>
+  --unwinding-assertions --sat-solver cadical --slice-formula --trace`.
+- CBMC's default checks stay on: array bounds, pointers, division by zero, signed overflow and
+  undefined shifts. So SAW's memory-safety goals are kept.
+- Build constants as for SAW: `TILE_SIZE` 2, `NUM_CORES` 1, `SWDB_CHUNK_SIZE` 2, 8 tiles and 8
+  registers per core.
+- Symbolic inputs as for SAW:
+  - the frontier threshold, >= 1;
+  - a graph of 3 vertices and 0-3 edges;
+  - a frontier of 0-2 distinct visited vertices;
+  - `parent[v]` in [-3, 3);
+  - the acceleration flag;
+  - the queue past the frontier, and tile memory.
+- DX100 state at entry: g0 (nothing pending).
+
+**Unwind bounds.** CBMC's bound K is the iteration count + 1. A check on a 3-iteration loop
+confirmed this: K = 3 fails its unwinding assertion and K = 4 passes (`dev/unwind-semantics/`).
+Every fixed loop gets `--unwind 9` (8 tiles, 8 registers, P2, the 5-step range fold). Each
+data-dependent loop gets a bound derived from the sizes:
+
+| Loop | Iterations from the bounds | K |
+|---|---|---|
+| chunk loop (Peter) | ceil(frontier 2 / chunk 2) = 1 | 2 |
+| range loop (`for(;;)`, `do while`) | <= edges 3 non-empty calls + 1 empty call = 4 | 5 |
+| lane loop | <= `TILE_SIZE` = 2 | 3 |
+| CPU frontier loop / CPU edge loop | <= frontier 2 / <= out-degree 3 | 3 / 4 |
+| `TDStepMAA` `while (idx < len)` | 1 (tile path adds 2 >= len; CPU path sets idx = len) | 2 |
+| queue flush | <= pushes <= edges 3 + 1 forged duplicate = 4 | 5 |
+
+Every unwinding assertion holds in every job, so each proof is complete at these bounds.
+
+**Results.**
+
+- Runs folder: `/tmp/claude/probata-runs/t06c/`, host `mac`. Batch log `final.log`, sha256
+  `08b0da73298db9aa…`.
+- Each job log has a `.log.json` with exit code, wall time, peak RSS and sha256.
+- Bounds for every row: threads 1, lanes 2, chunk 2, vertices 3, edges <= 3, frontier <= 2,
+  `parent` in [-3, 3). Every row uses lever 1.
+
+| Subject | Verdict | Failed checks (counterexample for each) | Wall | Peak RSS | Evidence | sha256 |
+|---|---|---|---|---|---|---|
+| Peter's `TDStep` | **proven** (687 properties) | - | 3.42 s | 0.40 GB | `peter.log` | `f5c63f5ccae1bf8da12467431a3f4460e162f43fda5c4e78648e9594590525e0` |
+| `TDStepMAA` | **proven** (725 properties) | - | 5.58 s | 0.67 GB | `maa.log` | `abdec31b684f2896cc6721367bf4568ba3c3e31cb88c9756904fd34e76981908` |
+| `dropped_wait` (Peter) | refuted | `size_read_before_ready` | 1.04 s | 0.16 GB | `peter_dropped_wait.log` | `45414007fc02ce85efb2fdb871716e6e851247bedc30ae7ee685b8fcd71d52e9` |
+| `read_before_wait` (Peter) | refuted | `tile_read_before_ready` | 2.99 s | 0.38 GB | `peter_read_before_wait.log` | `c7f798d18e8a22e74771f6124617459c332f0a53a07f9fb913b05d6d6f285d7c` |
+| `index_wrap` (Peter) | refuted | `stream_bounds` | 2.89 s | 0.38 GB | `peter_index_wrap.log` | `9ee4c225f955d56f89474bb4112b4e04302e6f35773ecc7563c3daf4e115a2fe` |
+| `forged_frontier` (Peter) | refuted | `P2_reached_pushed_exactly_once` | 3.67 s | 0.41 GB | `peter_forged_frontier.log` | `0f0ca25f1e4bc19116b5d36c08cbfe8f87e6c1ca8e3485a3dd3eca26ed1ccc93` |
+| `dropped_continuation` (Peter) | refuted | `P2_reached_pushed_exactly_once`, `P2_parent_is_frontier_neighbor` | 3.38 s | 0.39 GB | `peter_dropped_continuation.log` | `0b8e785da25f247766b6b95891548018791c4b052ec81b80fafcd2c826765f64` |
+| `chunk_off_by_one` (Peter) | refuted | `tile_truncation` | 3.04 s | 0.37 GB | `peter_chunk_off_by_one.log` | `37bc6f9c293bc6f1e94b38926fda296f784e7a425e2354252e4c6f347bf0226c` |
+| `skipped_cas_recheck` (Peter) | refuted | `P2_reached_pushed_exactly_once` | 3.65 s | 0.39 GB | `peter_skipped_cas_recheck.log` | `8c87cbcbb56de1421bf21c31f32243836e191cedf4019fa672d78372c7f7ecec` |
+| `TDStepMAA` wait deleted | refuted | `tile_read_before_ready` | 5.16 s | 0.64 GB | `maa_wait_deleted.log` | `1f6f7edb51308013171685f57f44e67c575d958ee9ec07700f41bd34f58edb78` |
+| `TDStepMAA` old wait rule | refuted | `tile_read_before_ready` | 5.19 s | 0.67 GB | `maa_old_wait_rule.log` | `13d292c6188ecd96f1b6a67297302fa95676c2a78782392aa2084c384bbbc2af` |
+| `TDStepMAA` CPU read of `parent` | refuted | `cpu_access_overlaps_unfinished` | 4.97 s | 0.65 GB | `maa_cpu_read_parent.log` | `6847980133a92e9852377faa1c2f3b7a41ab8100bb79e032a451b9bd14e6f327` |
+| `TDStepMAA` wait on tile6 | refuted | `tile_read_before_ready` | 5.23 s | 0.64 GB | `maa_wait_tile6.log` | `b553b69bb39731ff64d07a00b56fce74ec8f5205bc50b5c7acbfd65696019afb` |
+| `TDStepMAA` wait on tile7 | refuted | `tile_read_before_ready` | 5.22 s | 0.63 GB | `maa_wait_tile7.log` | `5b8558cd43d94af81b8a81b37eee6a1b5f51c5064afa3330a681611d4a5b5e2b` |
+
+Each refutation is attributable:
+
+- every failed property of the job is the control's expected check (the checks `run_spike.sh`
+  names for SAW);
+- no unwinding assertion fails.
+
+Example counterexample (`TDStepMAA` wait deleted):
+
+- inputs: frontier {0, 1}, offsets [0, 3, 3, 3], neighbors [2, 1, 1], `parent` [0, 0, 0];
+- failure: the tile-0 probe passes, then the CPU reads tile 4 (the compare's result) before any
+  wait covers it.
+
+**Faithfulness checks.** All pass. Without them the verdict would not count.
+
+1. **The C lowering agrees with the C++ on concrete inputs.** `faith/run_faith.sh` compiles two
+   sides against the same stubs and the same native harness:
+   - ticket 06's C++ units, unchanged (Peter's `.inc` included as is);
+   - the C lowering.
+
+   It runs **every input of the bounded domain** on both sides:
+   - inputs: 334 CSR graphs x 216 `parent` vectors x every frontier; for Peter, also
+     acceleration off/on x threshold 1-3. Tile memory is zero.
+   - runs: 1,731,456 per Peter build and 288,576 per `TDStepMAA` build.
+   - builds: the 2 safe builds and all 12 control builds.
+   - each run prints the failed check, the failed P2 properties, a hash of the final state
+     (queue, `parent`, tile memory, the whole hazard state) and a hash of the DX100 call trace
+     (every call with its arguments, in order).
+
+   Results:
+   - **All 14 builds print identical output on both sides** (`faith/faith_summary.txt`
+     `aa67e9b200e30e47…`).
+   - The safe units fail nothing on any input.
+   - Every control fails only its expected check, on 6,480-324,648 inputs.
+   - Ticket 06's SAW concrete input (diagnostics 1 and 6: frontier {0, 1}, edges 0->2, 1->2,
+     1->0, `parent` [0, 0, -1]) gives identical full traces (`faith/concrete_peter_*.txt`
+     `409264dc1f71f946…`, `faith/concrete_maa_*.txt` `358d4593ec5bde6c…`).
+   - CBMC proves both units on that input in 0.39 s / 0.49 s (`peter_concrete.log`
+     `032fdce9bf72c0a5…`, `maa_concrete.log` `89cc90afb3494679…`).
+2. **Sanity controls** (same harness and flags):
+   - Non-vacuity: two reachability assertions are refuted in both units: the harness end, and
+     an accelerated claim that changes `parent` (`peter_sanity_reach.log` `57025d3b14439dad…`,
+     `maa_sanity_reach.log` `07e51e29c7e134de…`). So the preconditions are satisfiable and the
+     DX100 path runs.
+   - A precondition deleted, refutation expected: without "each real edge's target is a vertex",
+     both units are refuted at exactly the checks that rely on it (`peter_drop_pre_neighbor.log`
+     `4f043f05290d68f1…`, `maa_drop_pre_neighbor.log` `a8f20fa4997fb977…`):
+     - the gather's memory region (DX100 path);
+     - CBMC's bounds check on `parent[v]` (CPU path);
+     - `P2_pushed_is_a_vertex`.
+   - A precondition deleted, proof expected: without the lower bound -3 on `parent`, both units
+     still prove (4.2 s / 5.9 s). This is expected: the code treats every negative value as
+     unvisited (`peter_drop_pre_parent_lower.log` `a9ef88f41dcd248e…`,
+     `maa_drop_pre_parent_lower.log` `e5da86b038ac5551…`).
+3. **The C stubs agree with the SAW summaries** (added, not asked for).
+   - Calls: `faith/stub_vectors.py` logs 16,193 summary calls, with the state before and after
+     each. They come from the SAW concrete input plus a pseudo-random sample of the domain, over
+     all 14 builds, and include every failed check.
+   - Check: Cryptol (SAW 1.6's bundled `cryptol`) evaluates each call against `ghost.cry`'s
+     function of the same name (`faith/stubcheck.cry`). A completed call needs its precondition
+     true and an equal post-state; a failed call needs its precondition false.
+   - Result: **all 16,193 hold.**
+   - Checker sensitivity: we took one call of each summary kind and changed one tile-memory word
+     of its post-state by 1. The checker rejects every one: 10 of 10 (Peter) and 12 of 12
+     (`TDStepMAA`) (`faith/vectors/eval.log` `f887fadc1b7b05ea…`).
+
+**Encoding attempts** (each a batch of jobs of at most 15 minutes, run one at a time):
+
+| Attempt | Change | Result | Log sha256 (first 16) |
+|---|---|---|---|
+| unwind semantics | 3-iteration loop at K = 3 and K = 4 | K = 3 fails the unwinding assertion, so K = iterations + 1 | `259fbcb634979cfe` (`k3.log`) |
+| 1 (`dev/a1`) | CaDiCaL, `--slice-formula`, all 22 jobs | units proven 3.5 s / 5.5 s; 12/12 controls refuted; sanity 7/8 (see failed run 1 below; table fixed, no code change) | `9593315bbc7a2bff`, `dde29b35b1741c10` |
+| final | as attempt 1 (the verdict runs above) | 22/22 as expected | `08b0da73298db9aa` |
+| 2 (`dev/a2`) | CBMC's default SAT solver, no `--slice-formula` | units proven 2.3 s / 4.0 s; 12/12 controls refuted at the same checks. The verdict depends on neither the solver nor slicing | `44560392e7c04700` (Peter), `5b42b6bc6297662b` (`TDStepMAA`) |
+
+Neither lever 2 (shape splitting) nor value splitting was needed.
+
+**Failed and unexpected runs, root-caused:**
+
+1. Attempt 1, sanity control `*_drop_pre_neighbor`.
+   - What happened: it was refuted as intended, but the checker rejected it. The failed set also
+     held `P2_pushed_is_a_vertex`.
+   - Cause: my expected-check table left that check out. An invalid edge target is pushed on the
+     CPU path, so the check correctly fails.
+   - Class: harness expectation error.
+2. Unwind-semantics test, K = 4.
+   - What happened: "VERIFICATION FAILED" on `no body for callee nondet`.
+   - Cause: CBMC 6.11 flags any function without a body unless its name starts with `nondet_`.
+     The test file's helper was named `nondet`. The harness uses `nondet_i32`, and no unit job
+     shows this property.
+   - Class: test-file artifact.
+
+Runs folder (LR-06): `/tmp/claude/probata-runs/t06c/`, budget 500 MB, used 28 MB. Readers: this
+ticket and 09. The heartbeat file `heartbeat.md` is in the same folder.
+
+**What A2 should change.** These are proposals for Yan-Ru; the design spec is not edited here.
+
+- **The bounded verifier becomes CBMC 6.11 on the C lowering** (map 11 item 2's last fallback).
+  05's SAW decision stays as the record of spike (a).
+- **21 (C lowering) comes before the bounded adapter.**
+  - The hand lowering here is a stand-in, not 21's tool.
+  - The lowering becomes a trust point. Each bounded job should carry faithfulness test 1: a
+    differential run of the C lowering against the compiled C++ over the bounded domain.
+- **22 becomes a CBMC adapter on 21's C lowering** (no SAW translator). It should:
+  - emit the summaries as C stubs, with one named `assert` + `assume` per check, so a
+    refutation names its check;
+  - derive `--unwindset` from the sizes and keep `--unwinding-assertions` on;
+  - add the reachability sanity asserts;
+  - replay counterexamples on the C++ (Yan-Ru's `spurious_counterexample` class).
+- **30 (summaries)** generates the C stubs from one proof-semantics source, with a vector check
+  against that source like faithfulness test 3. Here, Cryptol `ghost.cry` was the source of truth.
+- **33 (minimum-bounds script, A2 exit)** reproduces these 14 verdicts with generated stubs.
+  Lever 2 is not needed at the minimum bounds.
+- **61 (SAW whole-function equivalence)** loses its tool. Options: a CBMC equivalence harness on
+  two C lowerings, or a re-plan.
+- **Unchanged:** 46/47 (CIVL, GenMC) and the k-thread controls. This box proves threads = 1 only.
+
+Assumption: the lowering replaces `__sync_bool_compare_and_swap` and `__atomic_*` with plain loads
+and stores, and drops `__restrict__`. Both changes are exact at threads = 1, the spike's bound.
+Assumption: CBMC's `nondet` inputs plus one `__CPROVER_assume` per `units.saw` precondition match
+SAW's `llvm_fresh_var` + `llvm_precond`. The proofs are of the C lowering. Faithfulness tests 1 and 3
+are the evidence that it is the same program with the same summaries.
+Assumption: faithfulness test 1 fixes tile memory to zero, because every unit writes a tile before
+it reads it. The CBMC proofs keep tile memory symbolic.
+Assumption: a `CHECK` is an assertion and then an assumption, because SAW stops a path at a failed
+precondition. A failed check is still reported. Later checks are judged only on paths where the
+earlier ones held.
+
+pass via fallback (CBMC)

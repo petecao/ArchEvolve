@@ -282,6 +282,10 @@ def main(argv=None):
     proof.register_cli(commands)
     from swdb import proof_lane     # Probata ticket 57 (2026-10-14 ET): `swdb prove-lane`
     proof_lane.register_cli(commands)
+    from swdb import c_lowering     # Probata ticket 21 (2026-10-14 ET): `swdb lower`, the C lowering tool
+    c_lowering.register_cli(commands)
+    from swdb import logic_library  # Probata ticket 26 (2026-10-14 ET): `swdb prove-logic`
+    logic_library.register_cli(commands)
 
     from swdb import archevolve
     archevolve.register_cli(commands)
@@ -336,8 +340,10 @@ def _dispatch(args):
         _emit(args.extensa_handler(args), args.format)
         return 0
     if args.command == "certify":
-        from swdb.certification import run_cli
-        return run_cli(args)
+        # 2026-10-14 ET (Probata 18's hook, suite fix): the derived-implementation hook wraps the certification
+        # command outside swdb/certification.py, whose bytes the frozen certify procedure digests hash.
+        from swdb.archevolve_proof import certify_cli
+        return certify_cli(args)
     if args.command == "validate":
         return _validate(records, args.library, args.crosswalk)
     if args.command == "promote":
@@ -524,6 +530,12 @@ def _validate(records_dir, library_root=None, crosswalk=None):
         result.problems.extend(validate_crosswalk(crosswalk))
     for problem in result.problems:
         print(problem, file=sys.stderr)
+    frame = result.frame
+    # Probata PoC 20: a formal half Frama-C could not check is reported as unchecked, never as valid.
+    for note in frame.unchecked if frame else []:
+        print(f"UNCHECKED: {note}", file=sys.stderr)
+    for note in frame.logic_unchecked if frame else []:     # Probata PoC 26: logic files type-checked alone
+        print(f"UNCHECKED: {note}", file=sys.stderr)
     if result.problems:
         files = len({problem.file for problem in result.problems})
         print(
@@ -532,6 +544,14 @@ def _validate(records_dir, library_root=None, crosswalk=None):
         )
         return 1
     suffix = "; crosswalk valid" if crosswalk is not None else ""
+    if frame and frame.checked:
+        suffix += f"; {frame.checked} acsl field(s) type-checked by Frama-C {frame.framac_version}"
+    if frame and frame.unchecked:
+        suffix += f"; {len(frame.unchecked)} acsl field(s) unchecked (no usable Frama-C 33.0 or C lowering)"
+    if frame and frame.logic_checked:
+        suffix += f"; {frame.logic_checked} logic file(s) type-checked"
+    if frame and frame.logic_unchecked:
+        suffix += f"; {len(frame.logic_unchecked)} logic file(s) unchecked (no usable Frama-C 33.0)"
     print(f"OK: {result.count} record(s) valid{suffix}")
     return 0
 

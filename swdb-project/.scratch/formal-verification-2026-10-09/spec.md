@@ -451,6 +451,10 @@ the detail and the evidence.
 
 ### Verifier lineup and order — [Verifier choice (11)][11], [Concurrency proofs (15)][15], [Bounds (19)][19]
 
+- **Later change (Yan-Ru, 2026-10-14 13:19 ET, from proof-of-concept tickets 06 and 09):** the bounded verifier at
+  threads = 1 is CBMC 6.11 on our C lowering (spike (b) passed via this fallback; SAW timed out at 2 lanes on path
+  explosion). Every CBMC job carries a C-vs-C++ differential check. SAW stays installed; its whole-function
+  equivalence role (ticket 61) needs another tool or a cut. The SAW line below is kept as history.
 - **Bounded verifier:** SAW 1.6 at threads = 1, specs generated from formal halves, summaries as
   overrides. Fallbacks in order: crux-llvm on the C++, crux-llvm on the C lowering, CBMC on the C lowering.
 - **Threads > 1:** CIVL 1.23 gives proven within bounds for threads ≤ k (minimum k = 2, runs at k = 3);

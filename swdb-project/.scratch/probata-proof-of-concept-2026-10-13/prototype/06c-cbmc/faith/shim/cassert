@@ -1,0 +1,6 @@
+// Ticket 06 continuation (CBMC box), 2026-10-14 ET. THROWAWAY. Found before libc++'s <cassert>
+// (-I faith/shim) in the faithfulness test only: the C++ units' P2 asserts are recorded, not
+// aborted, so both sides report the same failed properties.
+#undef assert
+void swdb_cxx_assert(bool ok, const char *text);
+#define assert(e) swdb_cxx_assert(static_cast<bool>(e), #e)

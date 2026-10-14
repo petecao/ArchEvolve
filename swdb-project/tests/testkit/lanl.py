@@ -1,6 +1,7 @@
 """Shared checks for the LANL-shaped database (LANL-shaped-db spec). Created 2026-10-11 ET.
 Updated 2026-10-11 ET (review fixes): `assert_record_fields_resolve` checks every origin's
-`record_field` against the stored record.
+`record_field` against the stored record. Updated 2026-10-14 ET: that check finds its tables by their
+`record_id` + `record_field` columns.
 
 The expected shape is transcribed from the spec's appendix (the `DB_current_work` slide) and
 its layout rules, independently of the builder. Every LANL table group's test calls the same
@@ -126,11 +127,24 @@ def resolve(data, path):
     return value
 
 
+#: The tables that name a record field (database reference, "Contract links"), besides any later table
+#: with the same `record_id` + `record_field` columns.
+RECORD_FIELD_TABLES = {"swdb_row_origins", "swdb_contract_definitions", "swdb_contract_data_structures",
+                       "swdb_contract_kernels", "swdb_contract_kernel_variants"}
+
+
 def assert_record_fields_resolve(records):
-    """Every `record_field` of `swdb_row_origins` and of the contract link tables names a field of
-    the record JSON stored in `swdb_records`, in the one syntax `resolve` reads."""
-    tables = [row["name"] for row in sql(records, "select name from sqlite_master where type = 'table' "
-                                                  "and (name = 'swdb_row_origins' or name like 'swdb_contract_%')")]
+    """Every `record_field` of `swdb_row_origins`, of the contract link tables and of any other table with
+    `record_id` + `record_field` columns names a field of the record JSON stored in `swdb_records`, in the one
+    syntax `resolve` reads.
+
+    Updated 2026-10-14 ET (Probata suite fix): tables are chosen by those two columns, not by the
+    `swdb_contract_` prefix, which Probata 19's `swdb_contract_lineage` shares without naming a record field."""
+    tables = [row["name"] for row in sql(
+        records, "select m.name from sqlite_master m where m.type = 'table' "
+                 "and exists (select 1 from pragma_table_info(m.name) where name = 'record_id') "
+                 "and exists (select 1 from pragma_table_info(m.name) where name = 'record_field')")]
+    assert RECORD_FIELD_TABLES <= set(tables), RECORD_FIELD_TABLES - set(tables)
     fields = {(row["record_id"], row["record_field"]) for table in tables
               for row in sql(records, f"select distinct record_id, record_field from {table}")}
     assert fields, "no record fields to check"

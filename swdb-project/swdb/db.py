@@ -76,6 +76,16 @@ CREATE TABLE swdb_library_pattern_keys (entry TEXT NOT NULL, key_position INTEGE
     step_count INTEGER NOT NULL, PRIMARY KEY (entry, key_position));
 CREATE TABLE swdb_library_pattern_key_steps (entry TEXT NOT NULL, key_position INTEGER NOT NULL, step INTEGER NOT NULL,
     role TEXT, address_shape TEXT, PRIMARY KEY (entry, key_position, step));
+CREATE TABLE swdb_library_clause_placements (entry TEXT NOT NULL, clause TEXT NOT NULL, placement TEXT NOT NULL,
+    target TEXT, assumed_kind TEXT, acsl TEXT, acsl_uses TEXT, PRIMARY KEY (entry, clause));
+CREATE TABLE swdb_library_concurrency_frame (entry TEXT NOT NULL, array_name TEXT NOT NULL, history_reads INTEGER NOT NULL,
+    PRIMARY KEY (entry, array_name));
+CREATE TABLE swdb_library_shared_actions (entry TEXT NOT NULL, array_name TEXT NOT NULL, shared_action TEXT NOT NULL,
+    PRIMARY KEY (entry, array_name, shared_action));
+CREATE TABLE swdb_library_required_contracts (entry TEXT NOT NULL, position INTEGER NOT NULL, contract TEXT NOT NULL,
+    versions TEXT NOT NULL, PRIMARY KEY (entry, position));
+CREATE TABLE swdb_proof_semantics_rules (entry TEXT NOT NULL, rule TEXT NOT NULL, statement TEXT, gem5_commit TEXT,
+    gem5_path TEXT, gem5_lines TEXT, owner TEXT, PRIMARY KEY (entry, rule));
 """
 
 
@@ -231,6 +241,7 @@ def _library(con, records_dir, store, library_root=None):
                         [(entry_id, c.get("id"), c.get("role"), c.get("discharge_mode"),
                           (c.get("negative_control") or {}).get("id"), c.get("statement"))
                          for c in clauses if isinstance(c, dict) and isinstance(c.get("id"), str)])
+        _formal_frame(con, entry_id, data, clauses)
         # Ticket 55 (2026-10-04 ET): pattern keys as rows, one per key pattern and one per
         # key step, so the site finder matches them against `swdb_steps` in SQL. A malformed key
         # pattern (not a list of equal-length roles and shapes) is indexed as written; it
@@ -247,6 +258,41 @@ def _library(con, records_dir, store, library_root=None):
                             [(entry_id, position, step, roles[step] if step < len(roles) else None,
                               shapes[step] if step < len(shapes) else None)
                              for step in range(max(len(roles), len(shapes)))])
+
+
+def _formal_frame(con, entry_id, data, clauses):
+    """Probata PoC ticket 20 (2026-10-14 ET): the formal-half frame as rows (swdb.formal_frame).
+
+    Only entries written in the frame (`formal_frame`) get rows; `swdb build` runs after validation."""
+    if data.get("formal_frame") is None:
+        return
+    for c in clauses:
+        placement = c.get("proof_placement")
+        if not isinstance(c.get("id"), str) or placement is None:
+            continue
+        if isinstance(placement, dict):
+            form = next(iter(placement))
+            assumed = placement.get("assumed") or {}
+            target = placement.get("once") or assumed.get("rule") or assumed.get("owner")
+        else:
+            form, assumed, target = placement, {}, None
+        acsl = c.get("acsl") or {}
+        con.execute("INSERT OR IGNORE INTO swdb_library_clause_placements VALUES (?,?,?,?,?,?,?)",
+                    (entry_id, c["id"], form, target, assumed.get("kind"), acsl.get("text"),
+                     json.dumps(acsl.get("uses", [])) if acsl else None))
+    for row in data.get("concurrency_frame") or []:
+        con.execute("INSERT OR IGNORE INTO swdb_library_concurrency_frame VALUES (?,?,?)",
+                    (entry_id, row["array"], int(bool(row["history_reads"]))))
+        con.executemany("INSERT OR IGNORE INTO swdb_library_shared_actions VALUES (?,?,?)",
+                        [(entry_id, row["array"], action) for action in row["shared_actions"]])
+    con.executemany("INSERT INTO swdb_library_required_contracts VALUES (?,?,?,?)",
+                    [(entry_id, position, row["contract"], row["versions"])
+                     for position, row in enumerate(data.get("required_enabling_contracts") or [])])
+    for rule in data.get("rules") or []:
+        cites, assumed = rule.get("cites") or {}, rule.get("assumed") or {}
+        con.execute("INSERT OR IGNORE INTO swdb_proof_semantics_rules VALUES (?,?,?,?,?,?,?)",
+                    (entry_id, rule["id"], rule.get("statement"), cites.get("gem5_commit"), cites.get("path"),
+                     None if cites.get("lines") is None else str(cites["lines"]), assumed.get("owner")))
 
 
 class _Insert:
@@ -876,6 +922,9 @@ def _insert_proof(con, d, *_):
                      for i, p in enumerate(pin)]
         elif kind == "build_constants":
             pins += [(d["id"], kind, i, p["name"], None, None, None, json.dumps(p["value"]), None)
+                     for i, p in enumerate(pin)]
+        elif kind == "logic":                       # Probata PoC 26: one row per logic file, value = its version
+            pins += [(d["id"], kind, i, p["id"], p["sha256"], None, None, p["version"], None)
                      for i, p in enumerate(pin)]
         else:
             pins.append((d["id"], kind, 0, pin.get("id"), pin.get("sha256"), pin.get("function"), None, None,

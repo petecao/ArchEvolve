@@ -181,3 +181,8 @@ evaluation_message`: 2 passed (`r3.jsonl`, sha256 `b8eebe740c22afe24aa7cc23d92b8
   extensa-gem5-bfs-20261004-a7` with a longer per-message timeout.
 - Under level-rule.1 the multi-thread minimum-bounds derivation caps the `threads_k` record's thread count:
   run at k = 3 with a derivation at threads 2, the level's bounds read threads 2.
+- 2026-10-14 (main session, suite fix `0105df78`): the derived-implementation hook moved out of
+  `swdb/certification.py` `run_cli` into `swdb.archevolve_proof.certify_cli` (called by `swdb/cli.py`),
+  because every frozen candidate, native and lowering_calibration procedure version hashes
+  `certification.py`; editing it broke 10 frozen digests. `certification.py` is byte-identical to `c98db87c`
+  again. The Answer's mention of `certification.run_cli` (around line 132) is superseded by this line.
