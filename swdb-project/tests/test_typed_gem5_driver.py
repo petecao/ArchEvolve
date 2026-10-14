@@ -136,8 +136,10 @@ def test_prepare_ignores_a_newer_receipt_without_current_dependencies(monkeypatc
     """Test-only shared state; no review or dispatch is recorded.
 
     2026-10-13 ET: the live library changed after its gem5 certifications (lowering 1.2 in
-    13c40568/c3de51f4, catalog re-pin 87e8646e); its only current contract certification is the
-    functional candidate's, so the live driver refuses, as it should. Selection is tested on the
+    13c40568/c3de51f4, catalog re-pin 87e8646e). The scalar-only tree has a current 1.7
+    certification again (certification.f6dd78f4..., mbit10, 2026-10-13 ET), but the pinned entries'
+    promotion reviews are stale (tier `experimental`), so the live driver still refuses, as it
+    should. Selection is tested on the
     records and library as committed at the pinned evidence commit, and the repository files that
     library pins."""
     from swdb import paths

@@ -1,4 +1,5 @@
-"""Exact evidence assembly and bidirectional strategy lookup. Updated 2026-09-27."""
+"""Exact evidence assembly and bidirectional strategy lookup. Updated 2026-10-13 ET (ArchEvolve
+packages offer only the catalog records ADR 0013 admits); 2026-09-27."""
 
 import copy
 import hashlib
@@ -133,9 +134,20 @@ def _static_rows(store, chosen, impl):
                "match_basis": "static_applicability"}
 
 
+def _mode_catalog(store, kind):
+    """The catalog records of one kind that the current mode may cite (2026-10-13 ET, ADR 0013).
+
+    In ArchEvolve mode a strategy or intrinsic whose dependency closure the guard refuses
+    (for example one pinning gem5-backed operations) is left out, so the package never makes
+    every later ArchEvolve command refuse; Extensa mode keeps the whole catalog."""
+    from swdb.archevolve import mode_admits
+    kept = [r for r in store.of_kind(kind) if mode_admits(store, r.id)]
+    return kept, sum(1 for _ in store.of_kind(kind)) - len(kept)
+
+
 def _forward(store, impl, regions, unchanged):
     found = []
-    for chosen in sorted((r.data for r in store.of_kind("strategy")), key=lambda s: s["id"]):
+    for chosen in sorted((r.data for r in _mode_catalog(store, "strategy")[0]), key=lambda s: s["id"]):
         static = list(_static_rows(store, chosen, impl))
         for region in regions:
             matches = []
@@ -466,7 +478,12 @@ def assemble(args):
     hardware["machine"] = {"id": machine["id"], "sha256": artifacts.digest(machine), "cpu": machine.get("cpu", {})}
     hardware["intrinsic_interfaces"] = []
     cpu = machine.get("cpu", {})
-    for intrinsic in store.of_kind("intrinsic"):
+    intrinsics, omitted_intrinsics = _mode_catalog(store, "intrinsic")
+    omitted_strategies = _mode_catalog(store, "strategy")[1]
+    if omitted_intrinsics or omitted_strategies:
+        hardware["mode_catalog"] = {"omitted_strategies": omitted_strategies, "omitted_intrinsics": omitted_intrinsics,
+            "rule": "ADR 0013: ArchEvolve mode omits catalog records whose dependency closure the guard refuses"}
+    for intrinsic in intrinsics:
         value = intrinsic.data
         supported = "unknown"
         if value.get("isa_family") == "x86" and cpu.get("architecture") == "x86_64" and isinstance(cpu.get("flags"), list):

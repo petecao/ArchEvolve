@@ -1,5 +1,6 @@
 """The remaining effect kinds and target types, the seed strategies, common intrinsics, the
-prefetch update kind, and the loop and input strategy queries. Created 2026-09-23. Updated 2026-10-11 ET: `swdb_` table names;
+prefetch update kind, and the loop and input strategy queries. Created 2026-09-23. Updated 2026-10-13 ET: the functional-source DX100 offload seed (ADR 0013);
+2026-10-11 ET: `swdb_` table names;
 the fixture copies the record closure, not the ~1 GB catalog (LR-03)."""
 
 import json
@@ -8,7 +9,7 @@ import pytest
 
 from test_strategies import edit, other_strategy, passes, pattern, query, rejected
 
-SEEDS = ["dx100_read_offload", "loop_tiling", "packing", "simd_gather", "software_prefetch", "vertex_reordering"]
+SEEDS = ["dx100_read_offload", "dx100_read_offload.functional-v1", "loop_tiling", "packing", "simd_gather", "software_prefetch", "vertex_reordering"]
 GATHER = "strategies/simd_gather.yaml"
 TILING = "strategies/loop_tiling.yaml"
 REORDER = "strategies/vertex_reordering.yaml"
@@ -139,7 +140,8 @@ def by_id(found):
 
 def test_pattern_query_lists_every_access_pattern_strategy(repo):
     found = by_id(query(repo, "strategies", "--pattern", "gapbs-pr-jacobi/gather-contrib"))
-    assert sorted(found) == ["dx100_read_offload", "packing", "simd_gather", "software_prefetch"]
+    assert sorted(found) == ["dx100_read_offload", "dx100_read_offload.functional-v1", "packing", "simd_gather",
+                            "software_prefetch"]
     assert all(e["outcome"] == "legal" for e in found.values())
 
 

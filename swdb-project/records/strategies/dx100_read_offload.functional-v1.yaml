@@ -1,0 +1,39 @@
+kind: strategy
+schema_version: '0.4'
+id: dx100_read_offload.functional-v1
+status: draft
+deprecated_by: null
+created: '2026-10-13'
+updated: '2026-10-13'
+provenance:
+- id: peter-v11
+  kind: human_report
+  description: Peter intrinsic specification v1.1 section 5 at ArchEvolve 0b56895;
+    performance is not reproduced.
+  uri: null
+name: DX100 read offload (functional source view)
+target: access_pattern
+effect:
+- kind: offload
+  steps:
+  - -1
+  hardware_operations:
+  - dx100.functional.v1.gather
+  note: The CPU keeps compare-and-swap and queue updates.
+parameters: []
+preconditions:
+  requires_shapes:
+  - single_valued_indirect
+  requires_update_kinds:
+  - read
+  requires_semantics: []
+  unchecked:
+  - Contract-specific bounds, ownership and completion clauses must hold.
+common_intrinsics: []
+notes:
+- Created 2026-10-13 ET; legality query does not certify a rewrite.
+- The ArchEvolve-mode DX100 read offload (ADR 0013). It names the functional-source
+  operation family, so its dependency closure holds no gem5-backed record.
+- dx100_read_offload is the same technique on the gem5-backed MMIO family (dx100.mmio.v1.*);
+  the two families are never mapped onto each other. That record, which the gem5 rewrite
+  contracts cite, is Extensa-mode only.

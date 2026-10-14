@@ -1,4 +1,5 @@
-"""New-operation gem5 provenance boundary (ADR 0013). Updated: 2026-10-10 ET
+"""New-operation gem5 provenance boundary (ADR 0013). Updated: 2026-10-13 ET (`mode_admits`,
+the guard as a predicate for catalog producers); 2026-10-10 ET
 (code review of tickets 06/12: every Extensa campaign record outside the promotable
 candidate lineage, nested `{id: ...}` reference pins, generic simulator markers and
 simulated target-description facts are refused); 2026-10-06 ET.
@@ -165,6 +166,23 @@ def require_team_safe(store, *values, command):
         rows = [f'record {owner!r}: {reason}; dependency records: {chain}' for owner, (reason, chain) in refused.items()]
         more = f'; and {len(rows) - 10} more refused records' if len(rows) > 10 else ''
         raise Failure(f'ADR 0013: ArchEvolve {command} refuses ' + '; also refuses '.join(rows[:10]) + more)
+
+
+def mode_admits(store, record_id):
+    """Whether the current mode may cite this record (2026-10-13 ET).
+
+    Extensa mode admits everything; ArchEvolve mode admits a record only when
+    :func:`require_team_safe` admits its whole dependency closure. This asks the
+    guard itself and never relaxes it: a producer that offers catalog records
+    (strategies, intrinsics) uses it to leave out what every later ArchEvolve
+    command would refuse, and any record that is still cited is still walked."""
+    if workflow.CREATION_TAGS.get('mode') == 'extensa':
+        return True
+    try:
+        require_team_safe(store, record_id, command='catalog view')
+    except Failure:
+        return False
+    return True
 
 
 def guard_cli(args):
