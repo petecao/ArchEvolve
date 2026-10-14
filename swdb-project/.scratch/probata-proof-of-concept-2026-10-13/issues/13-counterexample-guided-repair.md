@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 12
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Refutation, repair and bugs"; "Proof-hint loop" (the three loops, kept apart); "Concurrency" (repair, not hand fixes); "Extensa mode" (budgets: repair calls stay in the rewriting total); "ArchEvolve mode"; "Testing Decisions", seams 1 and 4 (seam 3's repair cases run in 14); user stories 18, 26, 48, 65, 71; S6; O1; O5); decisions: [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md) (items 6, 10), [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md) (items 10, 11), [18](../../formal-verification-2026-10-09/issues/18-evaluation-claims-and-subjects.md) (item 6), [20](../../formal-verification-2026-10-09/issues/20-dx100-pr-reset-check.md) (inputs to 18: fail certification or be refuted), [22](../../formal-verification-2026-10-09/issues/22-cex-guided-llm-repair-research.md) (items 5, 6), [23](../../formal-verification-2026-10-09/issues/23-evaluation-baselines-and-metrics.md) (items 3, 4), [25](../../formal-verification-2026-10-09/issues/25-extensa-loop-proofs-and-ranking.md) (items 2, 3, 5)
 **Time estimate:** about 2 days
