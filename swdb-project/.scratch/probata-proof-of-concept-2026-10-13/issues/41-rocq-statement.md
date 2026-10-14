@@ -1,9 +1,9 @@
 # 41 — Rocq: composition theorem statement and definitions
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 14:07 ET (statements drafted; ready for Yan-Ru's review); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-14 14:13 ET (Codex review: revise before Yan-Ru's review); 2026-10-14 14:07 ET (statements drafted); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-human
+**Status:** ready-for-agent
 **Blocked by:** 09
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Concurrency" (composition theorem, shared-action kinds, memory model, OpenMP), "Formal-half language and the C++ subset" (sharing classes, YAML frame), "DX100 proof semantics" (reduction lemma, hazards), "Modules" (Rocq development), "What a proven verdict asserts" (assumption set, seven kinds), "Proof-of-concept plan" (Rocq side track), S9); decisions: [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md)
 **Time estimate:** about 4 days plus Yan-Ru's review
@@ -167,4 +167,36 @@ rules; symbolic N with ids 0..N-1; hypothesis table with stable names; reduction
   Its first interim note claimed issued commands need not run; that is not so (`at_issue_run`
   requires a run step at `S n` for every issue; `complete_timed` requires a finish, which requires
   a run). Yan-Ru decides whether Codex should redraft.
+
+### Codex adversarial review (2026-10-14 14:12 ET): revise before Yan-Ru reviews
+
+Codex `gpt-5.6-sol`, effort `xhigh`, read-only. Output `/tmp/claude/probata-runs/t41/codex-review.md`
+(sha256 `4005d8dcbc2767795858b682a72e75dd1ed49ce451188ae8eea57712ca7b6066`). **Verdict: do not
+approve.** Status moves from ready-for-human back to **ready-for-agent**: the draft above must be
+revised first, and its hashes will change. I (Claude) checked findings 1-3 and agree they are real.
+
+- **Blocker 1 (`dx100_reduction` is false):** command metadata (`footprint`, tile roles,
+  `regions_of`, `writes_memory`) are independent parameters. A command that writes memory but
+  declares `writes_memory = false` escapes the region stall; Codex gives a two-core run whose
+  final state no at-issue twin matches. Fix: a metadata-validity premise (memory outputs imply
+  `writes_memory`; footprint agrees with tile/register/region declarations).
+- **Blocker 2 (`memory_ok` is stronger than RC11):** `sync_shared` makes SC order between RMWs on
+  different locations a happens-before edge, which forbids the RC11 store-buffering outcome with
+  SC RMWs plus relaxed loads. This was intended (M1: `__sync_*` as full fences), but then the
+  premise is not "RC11"; it must be named as the stronger `__sync` full-barrier platform
+  assumption, or `hb` must keep SC order separate.
+- **Blocker 3 (constructive):** timed `TileReady false` yields only `~ forall`, while at-issue
+  needs an explicit pending witness. Fix: state the timed rule by cases with a witness for false.
+- **Major 4-10:** commands need not have a covering wait (`complete_timed`); `DeviceQuiet` is an
+  unchecked marker (needs a `quiet_sound` obligation or waits in the composition trace); `WaitReady`
+  and `TileReady` skip the ownership check; premises do not map one-to-one (`hb` mixes RC11 and
+  OpenMP edges; `device_ok` reuses it); `obl_hazard_free` is a whole-run property, not a one-thread
+  WP obligation (split into local and pairwise parts plus a lifting lemma); a failed CAS is modeled
+  as a write; `obl_atomic_blocks` cannot cover a DX100 write inside `critical`.
+- **Minor 11-12:** the stale-read sanity example lies outside the admitted program class; the page
+  budget is unmet.
+
+Codex found no direct counterexample to `parallel_composition` over its own definitions and
+judged `obl_class_fit` non-vacuous. **Next action:** revise `Composition.v` and `Reduction.v` for
+findings 1-10 (Codex should do it, per F4), rerun the checks, then set ready-for-human.
 
