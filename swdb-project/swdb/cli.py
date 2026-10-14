@@ -280,6 +280,8 @@ def main(argv=None):
     attribution.register_cli(commands)
     from swdb import proof     # Probata proof of concept ticket 04 (2026-10-14 ET): `swdb prove`
     proof.register_cli(commands)
+    from swdb import proof_lane     # Probata ticket 57 (2026-10-14 ET): `swdb prove-lane`
+    proof_lane.register_cli(commands)
 
     from swdb import archevolve
     archevolve.register_cli(commands)

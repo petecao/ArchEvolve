@@ -4,16 +4,21 @@ Created 2026-10-03 ET in `swdb/campaign.py`; moved here 2026-10-05 ET (code revi
 `TargetAdapter`, so the Extensa campaign loop calls every adapter the same way. Fixture records are
 labeled `contract_fixture` and are never performance evidence.
 Updated 2026-10-09 ET: record copies go through `swdb.access`.
+Updated 2026-10-14 ET (Probata PoC 19): an optional `base_snapshot` in the fixture file names the team-store
+source snapshot candidate artifacts are built from. With it, a candidate artifact is a real tree (the start's
+tree with the patch applied, refused when the patch does not apply), so a certified enabling rewrite can
+become a derived implementation, and an iteration may start from one (`start`). Without it, nothing changes.
 """
 from __future__ import annotations
 
 import copy
 import json
+import shutil
 from argparse import Namespace
 from pathlib import Path
 
-from swdb import access, artifacts, workflow, yamlio
-from swdb.campaign import Stop, _now, apply_speed_rule
+from swdb import access, artifacts, derived, paths, workflow, yamlio
+from swdb.campaign import Refused, Stop, _now, apply_speed_rule
 from swdb.campaign_targets import ADAPTERS, TargetAdapter
 from swdb.cli import Failure, UsageError
 from swdb.extensa_boundary import MODE
@@ -28,12 +33,15 @@ class FixtureAdapter(TargetAdapter):
 
     evidence_kind = "contract_fixture"
 
-    def __init__(self, fixture_path, campaign, team_records, store_dir, folder):
+    def __init__(self, fixture_path, campaign, team_records, store_dir, folder, library_root=None):
         self.fx = yamlio.load(Path(fixture_path))
         if not isinstance(self.fx, dict) or self.fx.get("format") != "swdb.extensa-campaign-fixture.v1":
             raise UsageError("fixture file must have format swdb.extensa-campaign-fixture.v1")
         self.campaign, self.team, self.store_dir, self.folder = campaign, Path(team_records), Path(store_dir), Path(folder)
         self.cid = campaign["id"]
+        self.library_root = Path(library_root) if library_root else paths.HOME / "library"
+        self.base_snapshot = self.fx.get("base_snapshot")
+        self.starts = {}        # candidate artifact ID -> the derived implementation it was built on
         self.released = 0
         self.round = 0          # retries of an iteration after a pause get fresh record IDs
         self.protocol_id = None
@@ -56,9 +64,13 @@ class FixtureAdapter(TargetAdapter):
         roots = [b["candidate"] for b in self.campaign["baselines"]]
         roots += [c["workload"] for c in self.campaign["workload_classes"]]
         roots += [self.campaign["machine"], *self.fx["templates"].values()]
+        roots += [self.base_snapshot] if self.base_snapshot else []
         missing = [rid for rid in roots if rid not in team.by_id]
         if missing:
             raise Failure("team store lacks campaign inputs: " + ", ".join(missing))
+        # Probata PoC 19: listed derived starts already in the team store come along (with their snapshots,
+        # certifications and candidate artifacts); the others are made by this campaign.
+        roots += [rid for rid in self.campaign.get("derived_starts") or [] if rid in team.by_id]
         for rid in sorted(closure(team, roots)):
             record = team.by_id[rid]
             target = self.store_dir / record.rel
@@ -111,14 +123,45 @@ class FixtureAdapter(TargetAdapter):
         return {"spread": float(row)}
 
     # artifacts -----------------------------------------------------------------------
-    def materialize(self, iteration, cls, patch, knobs, attempt, contracts=()):
+    def predecessor_snapshot(self, start=None):
+        """The source snapshot a candidate artifact is built on: the start's, else the base snapshot."""
+        if start:
+            from swdb.store import Store
+            return derived.snapshot_of(Store(self.store_dir).get(start, "implementation"))
+        return self.base_snapshot
+
+    def materialize(self, iteration, cls, patch, knobs, attempt, contracts=(), start=None):
         from swdb.store import Store
-        template = Store(self.store_dir).get(self.fx["templates"]["candidate"], "candidate")
+        store = Store(self.store_dir)
+        template = store.get(self.fx["templates"]["candidate"], "candidate")
         data = copy.deepcopy(template)
         rid = f"{self.cid}.{self._iteration_tag(iteration)}.{cls}.a{attempt}"
         data.update(id=rid, kind="candidate", mode=MODE, campaign=self.cid)
-        data["artifact"] = {**data["artifact"], "sha256": artifacts.digest({"patch": patch, "knobs": knobs,
-                                                                               "class": cls})}
+        on = self.predecessor_snapshot(start)
+        if start and not on:
+            raise Refused("provider_output_invalid", f"The start {start} has no source snapshot.")
+        if on:
+            # Probata PoC 19: a real tree, the start's tree with the patch applied (knobs are not compiled in).
+            snapshot = store.get(on, "source_snapshot")
+            tree = self.folder / "sources" / rid / "source"
+            if tree.parent.exists():
+                shutil.rmtree(tree.parent)
+            tree.parent.mkdir(parents=True)
+            try:
+                artifact = workflow.apply_patch(artifacts.verify(snapshot["artifact"]), tree, patch, ["*"],
+                                                snapshot["protections"])
+            except Failure as exc:
+                raise Refused("build_failed", f"The patch does not apply to the start's source ({on}): "
+                                              f"{str(exc)[:300]}") from None
+            data.update(artifact=artifact, source_snapshot=on, implementation=snapshot["implementation"],
+                        protections=copy.deepcopy(snapshot["protections"]), context=copy.deepcopy(snapshot["context"]))
+        else:
+            data["artifact"] = {**data["artifact"], "sha256": artifacts.digest({"patch": patch, "knobs": knobs,
+                                                                                   "class": cls})}
+        if start:
+            self.starts[rid] = start
+            data["predecessor"] = {"implementation": start,
+                                   "snapshot": {"id": on, "sha256": snapshot["artifact"]["sha256"]}}
         data.setdefault("notes", []).append(f"Contract fixture candidate artifact for class {cls}; knobs {knobs}.")
         workflow.persist(self.store_dir, _fresh(data), create=True)
         return {"id": rid, "sha256": data["artifact"]["sha256"]}
@@ -127,7 +170,7 @@ class FixtureAdapter(TargetAdapter):
         from swdb.library import Library
         outcomes = self._iteration(iteration, cls).get("certification") or ["certified"]
         outcome = outcomes[min(attempt, len(outcomes) - 1)]
-        library = Library()
+        library = Library(self.library_root)
         passed = outcome == "certified"
         failed_checks = [] if passed else list(self._iteration(iteration, cls).get("failed_checks") or ["verifier"])
         # Probata PoC ticket 02 (2026-10-14 ET): one fixture certification per contract, in contract order, as
@@ -135,6 +178,17 @@ class FixtureAdapter(TargetAdapter):
         # ends in the contract's name. The fixture outcome of the attempt applies to every contract.
         base = f"certification.{self.cid}.{self._iteration_tag(iteration)}.{cls}.a{attempt}"
         links = []
+        start = self.starts.get(candidate["id"])
+        root_cells = []
+        if start:
+            # Probata PoC 19 (decision 17 item 7): a candidate artifact built on a derived implementation is
+            # certified against that implementation's snapshot, and also runs the kernel's correctness check
+            # against the root baseline implementation (a fixture cell with the attempt's outcome).
+            from swdb.store import Store
+            root = Store(self.store_dir).get(start, "implementation")["source_baseline"]
+            root_cells = [{"cell": "root_baseline_correctness", "status": "passed" if passed else "failed",
+                           "baseline": root, "check": "kernel correctness check",
+                           **({} if passed else {"failed_checks": failed_checks})}]
         for contract in contracts:
             pin = {"id": contract, "content_sha256": library.content_sha256(contract)}
             rid = base if len(contracts) == 1 else f"{base}.{contract.removeprefix('contract.')}"
@@ -142,10 +196,11 @@ class FixtureAdapter(TargetAdapter):
                 "certification", rid, entry=pin,
                 dependencies=[], candidate={"id": candidate["id"], "contract": contract,
                                             "contract_sha256": pin["content_sha256"], "tree_sha256": candidate["sha256"]},
-                command={"version": "fixture", "contracts": [contract], "test_inputs": len(tests or [])},
+                command={"version": "fixture", "contracts": [contract], "test_inputs": len(tests or []),
+                         **({"start": start} if start else {})},
                 host={"hostname": "contract-fixture"},
                 matrix=[{"cell": "fixture", "status": "passed" if passed else "failed",
-                         "failed_checks": failed_checks}],
+                         "failed_checks": failed_checks}, *root_cells],
                 negative_controls=[{"id": "fixture_control", "status": "rejected"}],
                 verdict="certified" if passed else "failed", evidence_basis="simulated",
                 evidence_kind="contract_fixture", created_at=_now())

@@ -9,6 +9,8 @@ replay-label and `tools` fields, no level fields, and the versioned level rule
 2026-10-14 02:57 ET, ticket 12: the job block's
 one field list and its checks, run fields (`run_index`, `provider_pin`) on proof records and proposals,
 repair lineage on proposals ([Run fields and repair lineage](#run-fields-and-repair-lineage-ticket-12));
+2026-10-14 03:45 ET, ticket 57: `swdb prove-lane`, proof workers in a socket lane on mbit10, the worker RSS
+watchdog, and the scripted adapter's `run` key ([Proof workers in a socket lane](#proof-workers-in-a-socket-lane-ticket-57));
 2026-10-14 ET, ticket 13: `swdb repair <proof record>` writes repair lineage ([format-v0.4-repair.md](format-v0.4-repair.md)).
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/04-proof-record-tracer.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("Records and levels"), map ticket 26,
@@ -31,6 +33,7 @@ the records whose pins still match.
 | The replay label | `replay_label` | 60 fills it and makes it required on refuted records; a new value is added in 10 first |
 | Tools used (S14) | `tools`; `Verdict.tools` | 21, 22 fill it for every real verifier and solver |
 | The job block | `job` ([below](#the-job-block-ticket-12)); `swdb.proof._job` | nobody adds a field outside ticket 12; 57 fills it on mbit10 |
+| Lane batches (ticket 57) | `swdb prove-lane` (`swdb/proof_lane.py`), the RSS watchdog (`swdb/rss_watchdog.py`), `scripts/mbit10/prove_in_lane.sh` ([below](#proof-workers-in-a-socket-lane-ticket-57)) | 58 and the evaluation's proof runs use it; a real adapter (21, 22, 46, 47) turns a tool job into a prove job |
 | Run fields, repair lineage | `run_index`, `provider_pin` (proof, proposal); `repair_lineage` (proposal) | 13 writes repair lineage ([format-v0.4-repair.md](format-v0.4-repair.md)); 37 writes run fields on its proof records |
 | SQLite tables | `swdb_proofs`, `swdb_proof_pins`, `swdb_proof_assumptions`, `swdb_proof_bounds`, `swdb_proof_jobs`, `swdb_run_fields`, `swdb_repair_lineage` | [database.md](database.md#proof-tables) |
 
@@ -85,7 +88,9 @@ An adapter is a class in `ADAPTERS` with a `name` and `run(job) -> Verdict`.
   `AdapterError`, and nothing is written.
 - **Scripted adapter (`--adapter scripted`):** reads `verdict`, `bounds`, `assumptions`,
   `counterexample`, `failure_class`, `unreplayed_counterexample`, `tools` and `peak_rss_bytes` from the YAML `--script` file. Its records are
-  `contract_fixture` evidence, never evidence about real code.
+  `contract_fixture` evidence, never evidence about real code. Ticket 57: an optional `run` (a command) is
+  run in the scratch folder first, standing in for a tool's process, so the worker watchdog has a child to
+  watch and kill.
 
 ## The record
 
@@ -147,6 +152,56 @@ schema refuses a missing field, an unknown one, a negative time, load or peak RS
 
 A skip record has the same block, with zero times. Proof time is a cost metric, never a speed claim
 (map decision 23 item 6).
+
+## Proof workers in a socket lane (ticket 57)
+
+**In one line:** one mbit10 lane job runs one batch plan with up to 6 workers, each pinned to its own
+physical core and watched by an 8 GB RSS watchdog, and fills every job-block field there.
+
+```
+swdb prove-lane leases --node <0|1> [--host mbit10] --out <leases.json>     # before dispatch
+bash scripts/mbit10/prove_in_lane.sh <node> <plan.yaml> [--records <folder>]   # on mbit10: checks, then the lane
+swdb prove-lane run <plan.yaml> --runs-dir <outside the repo> --lease-check <leases.json> [--records <folder>]
+swdb prove-lane compare <batch.json> <batch.json>                             # same verdicts? exit 1 if not
+```
+
+- **Lane entry.** `prove_in_lane.sh` refuses (exit 3) off mbit10, with a stale MemAcc lane script
+  (compared with `origin/yanrujhou_main`), a held lease for its node or a held legacy lease (the states of
+  all three are written first by `swdb prove-lane leases`), a short runs disk, or edited tracked files. It
+  then runs `swdb prove-lane run` through MemAcc's `socket_lane.sh`. On a machine whose record requires
+  lanes, `run` itself refuses (exit 1) unless `socket_lane.sh` is its ancestor and holds the node's lease
+  (`swdb.profile._verified_lane`: affinity, `bind:N`, fd 9, lease metadata), and unless `--lease-check`
+  is given.
+- **The plan** (YAML, `plan: proof_lane_batch.1`): `machine` (a machine record), `workers` (1-6; 7 or
+  more is refused, exit 2), optional `batch`, `rss_cap_bytes` (default 8 GiB, O9), `job_timeout_seconds`
+  (default 3600), and `jobs`. Each job has a `configuration`, a `subject`, and either
+  - `prove`: the arguments of one `swdb prove` call (the batch adds `--records`, `--runs-dir`, `--batch`,
+    `--position`); relative paths are relative to the plan's folder; or
+  - `tool`: a verifier with no adapter yet, run under the same worker wrapper: `command`, `inputs`
+    (copied into the job's scratch folder), `env`, `bounds`, `address_space_cap` (true adds an
+    `ulimit -v` at the RSS cap: only for tools that start under it), and `verdicts`, a list of
+    `{verdict, exit, output, counterexample, failure_class}` rules. The first rule whose exit code and
+    output pattern match gives the verdict; none matching gives `not_proven` with `unknown` (or
+    `tool_crash` on a signal).
+- **Interleaving.** A plan is interleaved when, in every prefix, no configuration runs more than once ahead
+  of another. Any other plan is reordered round-robin by configuration (each keeps its own order); the
+  batch record keeps the order given (`order.given`, `order.interleaved_as_given`), and `position` in each
+  record is the order run. Jobs start in position order.
+- **Workers and cores.** Each worker is pinned to one logical CPU per physical core of the lane (the
+  lowest of its `thread_siblings_list`), so no two workers share a core or sit on hyperthread siblings.
+  A prove job's `worker_core` is read back from its own affinity. The Mac pins nothing (`unpinned`).
+- **The RSS watchdog** (`swdb.rss_watchdog`) polls the summed RSS of a process tree every 0.1 s (Linux
+  `/proc`; macOS psutil). Above the cap it kills the tree and the job ends `not_proven`, failure class
+  `out_of_memory`; the other workers carry on. A tool job runs in its own session under it. A prove job
+  gets the cap in `SWDB_WORKER_RSS_CAP_BYTES`, and `swdb prove` watches its own tree (killing only its
+  children); its `peak_rss_bytes` is that watchdog's reading unless the adapter reports its own.
+- **Output** under `<runs-dir>/<batch>/`: `batch.json` (plan path and sha256, lane, lease check, workers
+  and cores, RSS cap, order, the host record: host, ArchEvolve commit and whether it is dirty, `df -h`,
+  load and the lane node's free memory at start and end; then one entry per job), `prove/<record id>/`
+  (adapter logs), and `jobs/<position>.json` and `.log` for tool jobs. Each job's scratch folder is
+  deleted when the job ends. A tool job's result holds the same nine job-block fields (adapter `none`).
+- **Not proof records:** tool jobs write no proof record, because no adapter maps the tool's verdict to
+  a proof unit yet (21, 22, 46, 47).
 
 ## Run fields and repair lineage (ticket 12)
 

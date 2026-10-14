@@ -42,6 +42,7 @@ from swdb.cli import Failure, UsageError
 
 VERDICTS = ("proven", "refuted", "not_proven")
 UNPINNED = "unpinned"
+OUT_OF_MEMORY = "out_of_memory"       # ticket 57: the class the worker's RSS watchdog gives (O9)
 SPURIOUS = "spurious_counterexample"   # Yan-Ru 2026-10-14 02:25 ET: the class of a counterexample that did not replay
 
 
@@ -106,7 +107,9 @@ class ScriptedAdapter:
     """The scripted verifier adapter: the verdict comes from a YAML script file.
 
     Script keys: `verdict`, `bounds`, `assumptions`, and `counterexample` (refuted) or
-    `failure_class` (not proven). It uses the scratch folder as a real tool would, and logs."""
+    `failure_class` (not proven). It uses the scratch folder as a real tool would, and logs.
+    Ticket 57: optional `run`, a command it runs in the scratch folder first, standing in for a tool's
+    process (so the worker's RSS watchdog has something to watch and, above the cap, to kill)."""
     name = "scripted"
 
     def __init__(self, script):
@@ -122,6 +125,11 @@ class ScriptedAdapter:
 
     def run(self, job):
         (job.scratch / "scripted-work.txt").write_text(f"{job.unit.candidate} {job.unit.function}\n")
+        if self.script.get("run"):          # ticket 57: a stand-in for a tool's process (watchdog fixtures)
+            import subprocess
+            with open(job.log, "ab") as log:
+                subprocess.run([str(part) for part in self.script["run"]], cwd=job.scratch, stdout=log,
+                               stderr=subprocess.STDOUT)
         verdict = Verdict(verdict=self.script.get("verdict"), bounds=self.script.get("bounds"),
                           assumptions=list(self.script.get("assumptions") or []),
                           counterexample=self.script.get("counterexample"),
@@ -241,15 +249,27 @@ def _run_job(rid, unit, pins, adapter, runs, place, failure_classes):
     job.scratch.mkdir()
     load = os.getloadavg()[0]
     wall, cpu = time.perf_counter(), _cpu_seconds()
+    watch = _worker_watch()
     try:
-        verdict = adapter.run(job)
+        with watch:
+            verdict = adapter.run(job)
     except AdapterError as exc:
         raise Failure(f"adapter {adapter.name}: {exc}") from None
     finally:
         shutil.rmtree(job.scratch, ignore_errors=True)     # never named; gone when the job ends
     wall, cpu = time.perf_counter() - wall, _cpu_seconds() - cpu
     load = {"start": round(load, 3), "end": round(os.getloadavg()[0], 3)}
-    peak = verdict.peak_rss_bytes if verdict.peak_rss_bytes is not None else _peak_rss_bytes()
+    if getattr(watch, "error", None):
+        raise Failure(f"{watch.error}; no record was written for this job. Adapter output: {job.log}")
+    if verdict.peak_rss_bytes is not None:
+        peak = verdict.peak_rss_bytes
+    elif watch.active:
+        peak = max(watch.peak, _peak_rss_bytes())                  # ticket 57: the worker watchdog's reading
+    else:
+        peak = _peak_rss_bytes()
+    if watch.tripped:                                              # ticket 57 (O9): the watchdog ended the tool
+        verdict = Verdict(verdict="not_proven", bounds=verdict.bounds, assumptions=verdict.assumptions,
+                          failure_class=OUT_OF_MEMORY, tools=verdict.tools)
     if verdict.failure_class and verdict.failure_class not in failure_classes:
         raise Failure(f"adapter {adapter.name} reported failure class {verdict.failure_class!r}, which is not a "
                       f"failure class in vocabulary {FAILURE_VOCAB}: the batch stops here (position "
@@ -376,6 +396,30 @@ def _worker_core():
     except AttributeError:
         return UNPINNED
     return next(iter(cores)) if len(cores) == 1 else UNPINNED
+
+
+class _NoWatch:
+    """Outside a lane batch: no worker watchdog."""
+    active = tripped = False
+    peak = 0
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
+
+
+def _worker_watch():
+    """Ticket 57: inside a lane batch, the worker's RSS watchdog watches this process and its children.
+
+    The batch hands the cap in SWDB_WORKER_RSS_CAP_BYTES. Above it, the watchdog kills the adapter's
+    tool processes (never this one) and the job ends not proven, failure class out_of_memory."""
+    from swdb import rss_watchdog
+    cap = rss_watchdog.cap_from_environment()
+    if cap is None:
+        return _NoWatch()
+    return rss_watchdog.TreeWatch(os.getpid(), cap, spare_root=True)
 
 
 def _cpu_seconds():
