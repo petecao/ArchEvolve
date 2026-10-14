@@ -1,4 +1,5 @@
-"""Derived provider workspaces and source diffs. Updated: 2026-10-14 ET (Probata ticket 13:
+"""Derived provider workspaces and source diffs. Updated: 2026-10-14 ET (Probata ticket 17: a campaign's
+iteration ladder in a counterexample repair workspace); 2026-10-14 ET (Probata ticket 13:
 counterexample repair inputs, the counterexample guard, the authors'-code guard with the O5 evaluation
 repair mark); 2026-10-05 ET (code review P7, J5).
 
@@ -39,6 +40,8 @@ INSTRUCTION_FILES = {"AGENTS.md", "CLAUDE.md"}
 COUNTEREXAMPLE_REPAIR = "counterexample_repair"
 COUNTEREXAMPLE_FORMAT = "swdb.counterexample.v1"
 COUNTEREXAMPLE_FILE = ".swdb-context/counterexample.json"
+#: Ticket 17 (2026-10-14 ET): where a campaign's counterexample repair workspace shows the iteration ladder.
+LADDER_FILE = ".swdb-context/LADDER.json"
 #: Keys under which a proof record or the repair loop carries a counterexample.
 COUNTEREXAMPLE_KEYS = frozenset({"counterexample", "unreplayed_counterexample"})
 COUNTEREXAMPLE_REFUSAL = "a counterexample reaches only a rewriting-role repair workspace"
@@ -376,6 +379,15 @@ def context_documents(workspace, request, repair=None, store=None):
     if repair is not None:
         replacements = [item for parts in workspace.redactions.values() for item in parts]
         repair = copy.deepcopy(repair)
+        ladder = repair.pop("iteration_ladder", None)
+        if ladder is not None:
+            # Ticket 17: a campaign's iteration ladder, shown byte for byte as its rewrite workspace shows it.
+            ladder_path = workspace.root / LADDER_FILE
+            ladder_path.write_text(ladder)
+            workspace.visible[LADDER_FILE] = artifacts.file_hash(ladder_path)
+            workspace.metadata["iteration_ladder"] = {"path": LADDER_FILE, "sha256": workspace.visible[LADDER_FILE],
+                                                      "bytes": ladder_path.stat().st_size}
+            repair.setdefault("files", {})["iteration_ladder_file"] = LADDER_FILE
         if repair.get("kind") == COUNTEREXAMPLE_REPAIR:
             # Ticket 13: the refuted patch and the counterexample are files of their own, each hashed.
             patch_rel = f"{CONTEXT_DIR}/refuted-candidate.diff"
@@ -388,7 +400,7 @@ def context_documents(workspace, request, repair=None, store=None):
                 "counterexample": write("counterexample.json", _sanitize(shown, replacements)),
                 "refuted_patch": {"path": patch_rel, "sha256": workspace.visible[patch_rel],
                                   "bytes": (workspace.root / patch_rel).stat().st_size}}
-            repair["files"] = {"counterexample_file": COUNTEREXAMPLE_FILE, "refuted_patch_file": patch_rel}
+            repair.setdefault("files", {}).update(counterexample_file=COUNTEREXAMPLE_FILE, refuted_patch_file=patch_rel)
         workspace.metadata["repair_context"] = write("repair.json", _sanitize(repair, replacements, hide_evaluator=True))
     map_path = f"{CONTEXT_DIR}/workspace-map.json"
     visible = set(workspace.visible) | {map_path}
@@ -425,7 +437,8 @@ def prompt(workspace):
                  "profile_package_context": f"{CONTEXT_DIR}/profile-package.json"}
     for key, name in (("selected_strategy", "selected-strategy.json"),
                       ("required_operations", "required-operations.json"), ("repair", "repair.json"),
-                      ("counterexample", "counterexample.json"), ("refuted_patch", "refuted-candidate.diff")):
+                      ("counterexample", "counterexample.json"), ("refuted_patch", "refuted-candidate.diff"),
+                      ("iteration_ladder", "LADDER.json")):
         rel = f"{CONTEXT_DIR}/{name}"
         if rel in workspace.visible:
             locations[key] = rel
@@ -456,7 +469,11 @@ def prompt(workspace):
             "scope, and address only that failure. If a counterexample file is listed, the bounded verifier "
             "refuted the candidate in this workspace (its patch is the refuted_patch file): change the code so "
             "this counterexample no longer occurs while still applying the same rewrite contract; do not "
-            "drop the offload or restore the baseline implementation.\n" + json.dumps(locations))
+            "drop the offload or restore the baseline implementation."
+            + (" If an iteration_ladder file is listed, it is the campaign's iteration ladder: one row per earlier "
+               "candidate artifact with its contracts, knobs, level, verdict, numbers, reason codes and winner mark."
+               if "iteration_ladder" in locations else "")
+            + "\n" + json.dumps(locations))
 
 
 def collect_diff(workspace, editable_files):

@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 06, 07, 08
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-of-concept plan": A1 row, overrun rule; "Testing Decisions", not unit tests; "Further Notes", risk table); decisions: [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) (item 2, fallbacks), [19](../../formal-verification-2026-10-09/issues/19-bounded-verdict-bounds.md) (items 4 and 8, levers and job budget), [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md)
 **Time estimate:** about half a day

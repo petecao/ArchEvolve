@@ -366,6 +366,10 @@
         }
       }
     },
+    "rewrite_workspace": {
+      "enum": ["v1", "v2"],
+      "description": "Probata PoC 17 (2026-10-14 ET; map decision 28 item 1): the rewrite workspace version, a record of the loop, never a campaign-file setting. `v2`: from iteration 2 every rewrite and repair workspace holds `LADDER.json` (the iteration ladder). A summary without it reads as `v1` (D8's workspace, no iteration ladder)."
+    },
     "bounded_gate": {
       "type": "object",
       "description": "Probata PoC 14 (2026-10-14 ET): present when the campaign's library held a method version, so every certified candidate artifact passed the bounded gate before evaluation. The pinned method version, its budget per bounded job and k, the rungs, the proof jobs' wall hours, and the two repair counters.",

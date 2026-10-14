@@ -1,0 +1,26 @@
+#!/bin/sh
+# PROTOTYPE (Probata PoC ticket 07), throwaway. Created 2026-10-14 ET.
+# Frozen WP invocation for the spike (map 13 item 7 flags): fresh run folder and session,
+# -wp-cache none, default Frama-C warning levels, x86_64 machdep, no WP environment variables.
+# Usage: wp_run.sh parse|wp|wp-smoke <run_dir> <file.c>
+#   <run_dir> must already hold <file.c> and the stand-in headers; it must not hold .frama-c/.
+# Run it through /tmp/claude/probata-tools/verifier_run.py, with the agent sandbox off (Why3 socket).
+mode="$1"; dir="$2"; file="$3"
+cd "$dir" || exit 2
+[ -e .frama-c ] && { echo "refusing: $dir/.frama-c exists (stale session)"; exit 2; }
+set -- -machdep x86_64 "$file"
+case "$mode" in
+  parse) exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" opam exec --switch=framac-33 -- frama-c "$@" -print -ocode printed.c ;;
+  # VC generation only (no prover): catches WP user errors (e.g. an infinite range in loop assigns).
+  wp-gen) rm -rf session && mkdir session
+    exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" opam exec --switch=framac-33 -- frama-c "$@" \
+      -wp -wp-cache none -wp-session session -wp-prover none ;;
+  wp) smoke="" ;;
+  wp-smoke) smoke="-wp-smoke-tests" ;;
+  wp-rte) smoke="-wp-rte" ;;
+  *) echo "usage: $0 parse|wp|wp-smoke|wp-rte <run_dir> <file.c>"; exit 2 ;;
+esac
+rm -rf session && mkdir session
+exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" opam exec --switch=framac-33 -- frama-c "$@" \
+  -wp -wp-cache none -wp-session session -wp-prover alt-ergo,z3,cvc5 -wp-timeout 30 -wp-par 12 \
+  $smoke -wp-report-json goals.json -then -report -report-untried

@@ -2,6 +2,7 @@
 
 Created: 2026-10-03 (Eastern Time)
 Updated: 2026-10-14 07:45 (Eastern Time): the WP phase after the campaign stops: `wp_phase`, `budgets.provider_calls_proof`, proof lane-hours and the proof budget lines in `budgets.used`; gate jobs now charged to lane-hours (Probata PoC ticket 16)
+Updated: 2026-10-14 07:46 (Eastern Time): the iteration ladder: `LADDER.json`, `rewrite_workspace` in campaign summaries, reasons `refuted` and `proof_timeout` (Probata PoC ticket 17)
 Updated: 2026-10-14 06:17 (Eastern Time): two winners per workload class: `winners`, `best_proven`, `level_snapshot` in campaign summaries; `best/<class>.best_proven.patch` (Probata PoC ticket 15)
 Updated: 2026-10-14 (Eastern Time): optional `derived_starts` and the entry fields `start`, `derived_implementation` (Probata PoC ticket 19; see [format-v0.4-derived.md](format-v0.4-derived.md))
 Updated: 2026-10-14 02:57 (Eastern Time): promotion pins the level: `proof_records` and `level_snapshot` on candidate reviews (Probata PoC ticket 12)
@@ -404,6 +405,44 @@ A `level_snapshot` is `{level, at: "YYYY-MM-DD HH:MM ET", level_rule, records}` 
 the proof records that set the level). It is dated, names the level-rule version, and is never recomputed:
 `swdb validate` refuses one without `at` or `level_rule`. The per-class `best`, `best_level` and the other
 `best_*` fields keep their meaning (the fastest winner), so a summary written before this ticket reads the same.
+
+## The iteration ladder (Probata PoC 17, 2026-10-14 ET)
+
+Code: `swdb/iteration_ladder.py` (`render`, `check_row`, `version_of`), `Campaign._ladder`. Design: map decision
+28; D8's leakage rules. The rewrite provider sees every earlier candidate artifact of its own campaign, as
+Extensa's loop does. On by default, no off switch.
+
+- **Where.** From iteration 2, every rewrite workspace holds `LADDER.json` beside `FEEDBACK.json` (which stays:
+  the previous iteration's explanations) and `REGIONS.json`; the rewrite prompt names it. Every repair workspace
+  of that iteration gets the same bytes: a certification repair at `LADDER.json`, a counterexample repair at
+  `.swdb-context/LADDER.json` (its prompt lists it as `iteration_ladder`). Iteration 1 and its repairs have none.
+- **Written by the loop only.** Rebuilt whole from `state.json` and the levels the level rule reads now, for each
+  workspace; never read back. The campaign folder keeps a copy of the latest file (`LADDER.json`), which nothing
+  reads. Each provider call's `workspace.json` hashes it (`input_sha256s["LADDER.json"]`; a counterexample
+  repair's `iteration_ladder: {path, sha256, bytes}`), so what each call saw is auditable.
+- **File.** `{format: "swdb.iteration-ladder.v1", note, rows}`; `format` is the renderer's version. One row per
+  earlier candidate artifact, rejected and repaired ones included, in order; an iteration whose rewrite call
+  returned nothing gets one row with class `-` and reason `provider_output_invalid`. No row cap, no gaps.
+- **Columns** (a closed set, `check_row`): `row` (1, 2, ...), `iteration`, `class`, `contracts`, `knobs`,
+  `level`, `verdict`, `ratio`, `lower`, `spread` (against the base-source baseline), `reason_codes` (the closed
+  feedback reasons), `failed_checks` (public names only: a surviving negative control only as
+  `negative_controls_not_rejected`; a refutation only as its check category `bounded_threads_1` or
+  `bounded_threads_k`), `winner` (`fastest`, `best_proven`, `both` or empty, from the last iteration's winner
+  rows) and `repair_of` (the row of the candidate artifact a counterexample repair repaired, else null). A
+  certification repair stays inside its candidate artifact's row.
+- **Levels known so far:** `rejected`, `uncertified`, `certified`, `refuted` (the level rule's refuted flag),
+  `proven_within_bounds_threads_1`, `proven_within_bounds_threads_k`. Proven unbounded never appears: a level
+  read as proven unbounded during the loop shows `proven_within_bounds_threads_k`.
+- **Never in a row:** patches, counterexamples, raw timings, workload files, evaluator inputs, other campaigns'
+  artifacts, the authors' accelerated code, or any field outside the column set (`check_row` refuses each).
+- **New feedback reasons:** `refuted` (with `failed_checks` naming the check category only) and `proof_timeout`
+  (a bounded rung ended at its wall budget) join `FEEDBACK_REASONS`; the bounded gate adds them to FEEDBACK.json.
+- **Workspace version.** A new campaign records `rewrite_workspace: v2` in `state.json` and in its summary
+  (`rewrite_workspace` in `campaign_summary`). A state or summary without it reads as `v1` (D8's workspace, no
+  iteration ladder; the 15 BFS campaigns). A resumed `v1` campaign never gains a ladder; a resumed `v2` campaign
+  rebuilds it from state. The campaign file has no such field: one that names `rewrite_workspace` is refused.
+- **Rejected entries** in `state.json` and the summary's `iterations[].candidates[]` now keep `rejection_reason`
+  (the feedback reason code) and, when the rejection named checks, `rejection_failed_checks` (public names).
 
 ## Prospective paired estimates and agreement
 

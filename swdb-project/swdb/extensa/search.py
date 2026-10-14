@@ -353,6 +353,9 @@ FEEDBACK_REASONS: tuple[str, ...] = (
     "verdict_no_gain",
     "verdict_inconclusive",
     "provider_output_invalid",
+    # Probata PoC 17 (2026-10-14 ET; map decision 28 item 4): bounded-gate outcomes.
+    "refuted",                   # the bounded gate refuted the artifact; only its check category is shown
+    "proof_timeout",             # a bounded proof job ran out of its wall budget (no level from that rung)
 )
 
 #: Structured fields a feedback item may carry. Numbers come only from the evaluator.

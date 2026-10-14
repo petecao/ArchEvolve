@@ -5,6 +5,9 @@ Created: 2026-10-14 ET (Probata proof of concept ticket 13). Design: formal-veri
 6 and 10, 15 items 10 and 11, 22 items 5 and 6, 23 items 3 and 4, 25 items 2, 3 and 5; O1, O5.
 Format: docs/reference/format-v0.4-repair.md.
 
+Updated 2026-10-14 ET (ticket 17): `loop(..., ladder=)` shows a campaign iteration's `LADDER.json` in every
+round's workspace (`.swdb-context/LADDER.json`, hashed in the workspace record).
+
 Updated 2026-10-14 ET (ticket 14): `loop(..., charge=)` lets a campaign charge each round's call to its
 own provider-call cap and lane-hours (D7) before the call opens; a refused call ends the loop
 `calls_refused`.
@@ -267,12 +270,13 @@ class BudgetSpent(Failure):
 
 
 def repair_round(records, proof_id, *, runs_dir, provider_config, setting="archevolve", db_path=None,
-                 run_index=None):
+                 run_index=None, ladder=None):
     """One round: one rewriting-role repair call on the refuted candidate artifact the proof record names.
 
     Returns the new proposal record (outcome `candidate_created` with its `candidate`, or `failed`,
     `unresolved`, `provider_unavailable` without one). Raises Failure before writing anything when the
-    record may not start a repair, and `BudgetSpent` when the cap is reached."""
+    record may not start a repair, and `BudgetSpent` when the cap is reached. `ladder` (ticket 17): a campaign's
+    `LADDER.json` text for this iteration; the workspace shows it unchanged and hashes it."""
     from swdb import provider_adapters, provider_roles, rewrite, workflow
     store, library, proof, refuted, parent, number, rounds = check(records, proof_id, setting)
     with (Path(records) / f".swdb-cex-repair.{refuted['id']}.lock").open("a") as lock:
@@ -323,6 +327,8 @@ def repair_round(records, proof_id, *, runs_dir, provider_config, setting="arche
                         "refuted_tree_sha256": refuted["artifact"]["sha256"],
                         "counterexample": copy.deepcopy(proof["counterexample"]),
                         "refuted_patch": diff.read_text(), "bounds": copy.deepcopy(proof.get("bounds"))}
+            if ladder is not None:
+                evidence["iteration_ladder"] = ladder
             response, meta = provider_roles.rewriting(config, data["request"], current_source, package, store,
                                                       folder / "provider", repair=evidence)
             workflow._provider_receipt(data, meta, folder / "provider")
@@ -376,7 +382,7 @@ LOOP_STATES = ("repaired", "reverted", "budget_spent", "certification_failed", "
 
 
 def loop(records, proof_id, *, runs_dir, provider_config, certify, gate, setting="campaign", db_path=None,
-         run_index=None, charge=None):
+         run_index=None, charge=None, ladder=None):
     """Counterexample-guided repair from one refuted proof record until it ends; the one loop for every mode.
 
     Each round: one rewriting-role repair call (`repair_round`), then `certify(candidate_id)` (the
@@ -396,6 +402,8 @@ def loop(records, proof_id, *, runs_dir, provider_config, certify, gate, setting
     callable the loop calls with the round's proposal afterward, or None to refuse the call (a campaign's
     provider-call cap and lane-hours, D7). The cap and the reverted-repair flag stay here.
 
+    `ladder` (optional, ticket 17): the campaign iteration's `LADDER.json` text; every round's workspace shows it.
+
     A spurious counterexample from the gate never continues the loop (`repairable`)."""
     from swdb.extensa_boundary import _library_for
     from swdb.store import Store
@@ -414,7 +422,7 @@ def loop(records, proof_id, *, runs_dir, provider_config, certify, gate, setting
         proposal = None
         try:
             proposal = repair_round(records, trigger, runs_dir=runs_dir, provider_config=provider_config,
-                                    setting=setting, db_path=db_path, run_index=run_index)
+                                    setting=setting, db_path=db_path, run_index=run_index, ladder=ladder)
         except BudgetSpent as spent:
             return _outcome("budget_spent", rows, rounds_cap, str(spent))
         finally:
