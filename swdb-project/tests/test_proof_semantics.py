@@ -257,11 +257,17 @@ def dx(dx_seed, tmp_path):
 
 
 def prove(dx, name, *defines, bound=None, ok=True):
+    """One `swdb prove --adapter cbmc` job. The timeout allows for waiting on the machine-wide verifier lock."""
+    import json
     function, _arrays, _requires, _assigns, default = FIXTURES[name]
     bounds = {"threads": 1, "n": bound if bound is not None else default}
     extra = [arg for define in defines for arg in ("--define", define)]
-    out = dx.prove(function, f"contract.fixture_dx_{name}", bounds, *extra, candidate="dx", ok=ok)
-    return dx.read(out) if ok else out
+    result = run_swdb("prove", "--records", dx.records, "--candidate", dx.candidates["dx"], "--function", function,
+                      "--contract", f"contract.fixture_dx_{name}", "--adapter", "cbmc", "--runs-dir", dx.runs,
+                      "--format", "json", "--bounds", json.dumps(bounds), *extra,
+                      env={"SWDB_FRAMA_C": "none"}, timeout=3600)
+    assert (result.returncode == 0) is ok, result.stderr + result.stdout
+    return dx.read(json.loads(result.stdout)) if ok else result
 
 
 def _cbmc_ready():
