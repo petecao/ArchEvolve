@@ -553,7 +553,11 @@ class TargetAdapter:
         return {"id": rid, "sha256": identity["sha256"]}
 
     def certify(self, candidate, contracts, iteration, cls, attempt, tests=None):
-        """`swdb certify` of the candidate artifact against its rewrite contract."""
+        """`swdb certify` of the candidate artifact, once per rewrite contract.
+
+        Probata PoC ticket 02 (2026-10-14 ET): `records` links every certification record, one
+        `{"contract", "record"}` pair per contract in contract order; a contract refused before any
+        record exists has `record: None` and its `refusal` check. `record` stays the first record ID."""
         from swdb import certification
         from swdb.store import Store
         certify = self._certify or certification.certify
@@ -564,12 +568,12 @@ class TargetAdapter:
                                  library=self.library_root, candidate=candidate["id"])
             except certification_common.CandidateRefusal as exc:
                 failed_checks.append(exc.check)
-                records.append(None)
+                records.append({"contract": contract, "record": None, "refusal": exc.check})
                 continue
             except (Failure, UsageError, OSError) as exc:
                 # 2026-10-08 ET: keep the interrupted iteration; never repair or plateau on infrastructure.
                 raise _stop("infrastructure_failure", f"Certification {type(exc).__name__}: {exc}"[:2000]) from exc
-            records.append(record["id"])
+            records.append({"contract": contract, "record": record["id"]})
             if record["verdict"] != "certified":
                 # Ticket 64: a strict-layer failure names the strict check it hit
                 # (`strict_layer_assertion:range_bounds`), read from the run's own assertion line.
@@ -581,9 +585,9 @@ class TargetAdapter:
                 # 2026-10-04 ET (final code review): a failed verdict with nothing named (an empty
                 # matrix or no negative controls) must still fail, never read as certified.
                 failed_checks += named or ["certification_failed"]
-        passed = not failed_checks and len(records) == len(contracts) and all(records)
-        return {"record": next((r for r in records if r), None), "outcome": "certified" if passed else "failed",
-                "failed_checks": failed_checks or []}
+        passed = not failed_checks and len(records) == len(contracts) and all(r["record"] for r in records)
+        return {"record": next((r["record"] for r in records if r["record"]), None), "records": records,
+                "outcome": "certified" if passed else "failed", "failed_checks": failed_checks or []}
 
 
 # --- native CPU (ticket 56) ---------------------------------------------------------------------

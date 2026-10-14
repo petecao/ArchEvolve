@@ -128,23 +128,30 @@ class FixtureAdapter(TargetAdapter):
         outcomes = self._iteration(iteration, cls).get("certification") or ["certified"]
         outcome = outcomes[min(attempt, len(outcomes) - 1)]
         library = Library()
-        contract = contracts[0]
-        pin = {"id": contract, "content_sha256": library.content_sha256(contract)}
         passed = outcome == "certified"
         failed_checks = [] if passed else list(self._iteration(iteration, cls).get("failed_checks") or ["verifier"])
-        record = workflow.record(
-            "certification", f"certification.{self.cid}.{self._iteration_tag(iteration)}.{cls}.a{attempt}", entry=pin,
-            dependencies=[], candidate={"id": candidate["id"], "contract": contract,
-                                        "contract_sha256": pin["content_sha256"], "tree_sha256": candidate["sha256"]},
-            command={"version": "fixture", "contracts": contracts, "test_inputs": len(tests or [])},
-            host={"hostname": "contract-fixture"},
-            matrix=[{"cell": "fixture", "status": "passed" if passed else "failed",
-                     "failed_checks": failed_checks}],
-            negative_controls=[{"id": "fixture_control", "status": "rejected"}],
-            verdict="certified" if passed else "failed", evidence_basis="simulated",
-            evidence_kind="contract_fixture", created_at=_now())
-        workflow.persist(self.store_dir, record, create=True)
-        return {"record": record["id"], "outcome": "certified" if passed else "failed",
+        # Probata PoC ticket 02 (2026-10-14 ET): one fixture certification per contract, in contract order, as
+        # the real adapters write. A single contract keeps the record ID it had before; with several, each ID
+        # ends in the contract's name. The fixture outcome of the attempt applies to every contract.
+        base = f"certification.{self.cid}.{self._iteration_tag(iteration)}.{cls}.a{attempt}"
+        links = []
+        for contract in contracts:
+            pin = {"id": contract, "content_sha256": library.content_sha256(contract)}
+            rid = base if len(contracts) == 1 else f"{base}.{contract.removeprefix('contract.')}"
+            record = workflow.record(
+                "certification", rid, entry=pin,
+                dependencies=[], candidate={"id": candidate["id"], "contract": contract,
+                                            "contract_sha256": pin["content_sha256"], "tree_sha256": candidate["sha256"]},
+                command={"version": "fixture", "contracts": [contract], "test_inputs": len(tests or [])},
+                host={"hostname": "contract-fixture"},
+                matrix=[{"cell": "fixture", "status": "passed" if passed else "failed",
+                         "failed_checks": failed_checks}],
+                negative_controls=[{"id": "fixture_control", "status": "rejected"}],
+                verdict="certified" if passed else "failed", evidence_basis="simulated",
+                evidence_kind="contract_fixture", created_at=_now())
+            workflow.persist(self.store_dir, record, create=True)
+            links.append({"contract": contract, "record": rid})
+        return {"record": links[0]["record"], "records": links, "outcome": "certified" if passed else "failed",
                 "failed_checks": failed_checks}
 
     def _evaluation(self, rid, candidate_id, role):
