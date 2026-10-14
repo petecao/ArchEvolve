@@ -116,7 +116,9 @@
             "required": ["name", "value"],
             "properties": {"name": {"type": "string", "minLength": 1}, "value": {}}
           }
-        }
+        },
+        "c_lowering": {"$ref": "#/$defs/pin",
+                       "description": "Ticket 21: the C lowering the verifier ran on, {id: <function>.c, sha256 of its text}. Optional: only adapters that run on a C lowering write it."}
       }
     },
     "bounds": {
@@ -164,6 +166,40 @@
       "items": {"type": "string", "minLength": 1},
       "description": "Ticket 10 (S14): the verifiers and solvers the job used, each by the reference ID of a trusted_tool entry in the assumption set (for example frama-c-wp-33.0, z3-4.8.14). swdb validate refuses a tool with no such entry. Optional until the real adapters (21, 22) write it."
     },
+    "goals": {
+      "type": "array",
+      "description": "Ticket 21 (minimal verdict reader): per goal of the verifier's per-goal report, its status and the solver that proved it (any one of the portfolio counts; qed is WP's simplifier) with its time.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["goal", "status", "solver", "seconds"],
+        "properties": {
+          "goal": {"type": "string", "minLength": 1}, "property": {"type": ["string", "null"]},
+          "function": {"type": ["string", "null"]}, "status": {"type": "string", "minLength": 1},
+          "solver": {"type": ["string", "null"]}, "seconds": {"type": ["number", "null"], "minimum": 0}
+        }
+      }
+    },
+    "unproven_properties": {
+      "type": "array",
+      "description": "Ticket 21: not proven only: each property of the per-property report that is not Valid (the hint loop's input, ticket 37).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["property", "status"],
+        "properties": {
+          "property": {"type": ["string", "null"]}, "kind": {"type": ["string", "null"]},
+          "function": {"type": ["string", "null"]}, "line": {"type": ["integer", "null"]},
+          "status": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "settings": {
+      "type": "object",
+      "description": "Ticket 21: the frozen settings the verifier ran with (flags, fresh session, default warning levels, machdep, time per solver, environment variables removed, RSS cap, hint count, build constants).",
+      "required": ["tool", "flags"],
+      "properties": {"tool": {"type": "string", "minLength": 1}, "flags": {"type": "array", "items": {"type": "string"}}}
+    },
     "run_index": {"$ref": "#/$defs/run_index"},
     "provider_pin": {"$ref": "#/$defs/provider_pin"},
     "job": {
@@ -206,12 +242,23 @@
           "required": ["path", "sha256"],
           "description": "The adapter's log in a runs folder outside the repo, on the host the job ran on.",
           "properties": {"path": {"type": "string", "pattern": "^/"}, "sha256": {"$ref": "#/$defs/sha256"}}
+        },
+        "reports": {
+          "type": "array",
+          "description": "Ticket 21: the verifier's own reports and inputs in the runs folder (WP input, WP log, per-goal and per-property reports, the handler's output), each by name, absolute path and sha256.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "path", "sha256"],
+            "properties": {"name": {"type": "string", "minLength": 1}, "path": {"type": "string", "pattern": "^/"},
+                           "sha256": {"$ref": "#/$defs/sha256"}}
+          }
         }
       }
     },
     "evidence_kind": {
-      "enum": ["contract_fixture"],
-      "x-reason": "only the scripted adapter writes proof records so far, and its records are contract_fixture evidence"
+      "enum": ["contract_fixture", "execution"],
+      "x-reason": "evidence_kind is contract_fixture (scripted adapter, or a contract_fixture method version) or execution (a real verifier under a real method version; ticket 21)"
     }
   },
   "required": ["subject", "pins", "job", "evidence_kind"],

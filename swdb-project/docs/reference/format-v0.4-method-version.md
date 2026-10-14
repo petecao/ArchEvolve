@@ -28,7 +28,7 @@ proof record pins it by ID and file sha256.
 
 | Field | Meaning |
 |---|---|
-| `id`, `kind` (`method_version`), `sequence`, `status`, `created`, `evidence_kind`, `description` | identity and state |
+| `id`, `kind` (`method_version`), `sequence`, `status`, `created`, `evidence_kind`, `description` | identity and state. `evidence_kind`: `contract_fixture` (tests) or `execution` (a real method version; ticket 21): proof records under a fixture method version stay `contract_fixture` evidence |
 | `lineup` | every tool, solver and front end: `{role, tool, version, flags, commit?}`. `version` is one exact version (digits and dots: no range, wildcard or `latest`); `flags` is required (an explicit `[]` passes) |
 | `civl` | CIVL settings (its k is in `budgets`) |
 | `genmc` | GenMC settings |

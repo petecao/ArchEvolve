@@ -12,7 +12,10 @@ repair lineage on proposals ([Run fields and repair lineage](#run-fields-and-rep
 2026-10-14 03:45 ET, ticket 57: `swdb prove-lane`, proof workers in a socket lane on mbit10, the worker RSS
 watchdog, and the scripted adapter's `run` key ([Proof workers in a socket lane](#proof-workers-in-a-socket-lane-ticket-57));
 2026-10-14 ET, ticket 13: `swdb repair <proof record>` writes repair lineage ([format-v0.4-repair.md](format-v0.4-repair.md));
-2026-10-14 ET, ticket 18: `swdb prove --proof-path` ([format-v0.4-archevolve-proof.md](format-v0.4-archevolve-proof.md)).
+2026-10-14 ET, ticket 18: `swdb prove --proof-path` ([format-v0.4-archevolve-proof.md](format-v0.4-archevolve-proof.md));
+2026-10-14 15:10 ET, ticket 21: the real WP adapter (`--adapter wp`), the machine-wide verifier lock, `evidence_kind`
+`execution`, and the fields `goals`, `unproven_properties`, `settings`, `pins.c_lowering`, `evidence.reports`
+([format-v0.4-c-lowering-wp.md](format-v0.4-c-lowering-wp.md)).
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/04-proof-record-tracer.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("Records and levels"), map ticket 26,
 [ADR 0016](../adr/0016-proof-records-never-change-level-computed-on-read.md).
@@ -41,6 +44,8 @@ the records whose pins still match.
 ## `swdb prove`
 
 ```
+swdb prove --candidate <candidate> --function <name> --adapter wp --contract <id> [--hint-file <file>] [--define N=V] \
+           --runs-dir <folder outside the repo>      # ticket 21: Frama-C/WP on the C lowering
 swdb prove --candidate <candidate> --function <name> --adapter scripted --script <file> [--script <file> ...] \
            --runs-dir <folder outside the repo> [--contract <id>] [--batch <id>] [--position <n>] [--id <id>] \
            [--run-index <1-3>] [--provider-kind codex|claude --provider-model <m> --provider-effort <e>] \
@@ -97,9 +102,13 @@ An adapter is a class in `ADAPTERS` with a `name` and `run(job) -> Verdict`.
 - **Out, `Verdict`:** `verdict` (`proven`, `refuted`, `not_proven`), `bounds`, `assumptions`, and
   `counterexample` (refuted only) or `failure_class` (not proven only), plus
   `unreplayed_counterexample` (with failure class `spurious_counterexample` only, and always with it; below),
+  `record_fields`, `pins` and `reports` (ticket 21: a real adapter's `goals`, `unproven_properties`, `settings`,
+  extra pins such as `c_lowering`, and its reports, which `swdb prove` names by path and sha256),
   `tools`, and `peak_rss_bytes` (ticket 12: the peak the adapter's RSS watchdog read for the job's
   process tree; else `swdb prove` measures it). A verdict that breaks these rules raises
   `AdapterError`, and nothing is written.
+- **WP adapter (`--adapter wp`, ticket 21):** Frama-C/WP 33.0 on the C lowering; `swdb prove` holds the
+  machine-wide verifier lock around its job. See [format-v0.4-c-lowering-wp.md](format-v0.4-c-lowering-wp.md).
 - **Scripted adapter (`--adapter scripted`):** reads `verdict`, `bounds`, `assumptions`,
   `counterexample`, `failure_class`, `unreplayed_counterexample`, `tools` and `peak_rss_bytes` from the YAML `--script` file. Its records are
   `contract_fixture` evidence, never evidence about real code. Ticket 57: an optional `run` (a command) is
@@ -126,8 +135,9 @@ An adapter is a class in `ADAPTERS` with a `name` and `run(job) -> Verdict`.
 | `assumptions` | absent on a skip record; otherwise list of `{kind, reference: {id, sha256}, sentence}` (`reference` and a non-empty `sentence` required); kind from vocabulary `proof_assumption_kinds` (seven kinds) |
 | `job` | required: the job block ([below](#the-job-block-ticket-12)); ticket 12 owns and validates this one list |
 | `run_index`, `provider_pin` | optional (ticket 12, S10): [run fields](#run-fields-and-repair-lineage-ticket-12); present when a provider call took part (proof hinting) or the job belongs to a repeated run |
-| `evidence` | absent on a skip record; otherwise `adapter_log`: `{path, sha256}` of the adapter log in the runs folder (absolute path) |
-| `evidence_kind` | `contract_fixture` |
+| `evidence` | absent on a skip record; otherwise `adapter_log`: `{path, sha256}` of the adapter log in the runs folder (absolute path); ticket 21: `reports`, the tool's own reports `{name, path, sha256}` |
+| `evidence_kind` | `contract_fixture` (scripted adapter, or a fixture method version) or `execution` (ticket 21: a real adapter under a method version whose `evidence_kind` is `execution`) |
+| `goals`, `unproven_properties`, `settings` | ticket 21, real adapters: per-goal results, the properties not proven, the frozen settings ([format-v0.4-c-lowering-wp.md](format-v0.4-c-lowering-wp.md)) |
 
 ### Pins
 

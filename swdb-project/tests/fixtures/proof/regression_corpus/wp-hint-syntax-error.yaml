@@ -1,0 +1,17 @@
+# Created: 2026-10-14 ET (Probata PoC 21). Regression corpus: one diagnosed failure per file, rerun by
+# tests/test_wp_adapter.py (cases through `swdb prove`) and tests/test_c_lowering.py (cases through `swdb lower`);
+# each must give its recorded class again. One corpus serves every adapter (22, 46, 47 add cases).
+id: wp-hint-syntax-error
+adapter: wp
+input:
+  candidate: safe
+  function: swdb_fixture_fill
+  contract: contract.fixture_wp_fill
+  hints:
+    - anchor: swdb_fixture_fill.loop1.head
+      acsl: "loop invariant 0 <= i <= n &&;"
+failure_class: parse_error
+cause: >-
+  A hint Frama-C's kernel cannot parse. Frama-C 33.0's default level for annot-error aborts the run
+  ("warning annot-error treated as fatal error"), so the hint is never dropped silently; the adapter reads
+  the user error as parse_error and writes a minimal reproduction (WP input, command).

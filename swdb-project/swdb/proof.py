@@ -89,6 +89,9 @@ class Verdict:
                                              # present exactly when failure_class is spurious_counterexample
     tools: tuple = ()                        # ticket 10 (S14): verifiers and solvers used, each a trusted-tool entry
     peak_rss_bytes: int = None               # ticket 12 (O9): the tree peak the adapter's RSS watchdog read, if any
+    record_fields: dict = None               # ticket 21: real-adapter fields (goals, unproven_properties, settings)
+    pins: dict = None                        # ticket 21: extra pins (c_lowering: the C lowering's {id, sha256})
+    reports: tuple = ()                      # ticket 21: (name, path) of tool reports in the runs folder
 
     def __post_init__(self):
         if self.unreplayed_counterexample and self.verdict != "not_proven":
@@ -159,6 +162,7 @@ class ScriptedAdapter:
 
 
 ADAPTERS = {"scripted": ScriptedAdapter}
+RECORD_FIELDS = ("goals", "unproven_properties", "settings")     # ticket 21: what a real adapter may add
 
 
 # --- swdb prove -----------------------------------------------------------------------
@@ -192,6 +196,11 @@ def register_cli(commands):
     run.add_argument("--provider-kind", choices=["codex", "claude"], help="provider pin: kind")
     run.add_argument("--provider-model", help="provider pin: model (for example gpt-5.6-sol)")
     run.add_argument("--provider-effort", help="provider pin: effort (for example xhigh)")
+    real = sub.add_argument_group("real adapters (ticket 21): the wp adapter")
+    real.add_argument("--hint-file", type=Path, help="wp: fixture hints {hints: [{anchor, acsl}]} placed at anchors "
+                                                     "of the C lowering (ticket 35 replaces them with hint records)")
+    real.add_argument("--define", action="append", default=[], help="wp: a build constant NAME or NAME=VALUE for "
+                                                                    "the C lowering (repeatable; pinned as build_constants)")
     from swdb import archevolve_proof      # Probata PoC 18: ArchEvolve mode's whole proof path
     archevolve_proof.register_options(sub)
     sub.add_argument("--format", choices=["yaml", "json"], default="yaml")
@@ -231,7 +240,10 @@ def prove(args):
     pins = _pins(store, candidate, unit, (), method)
     if getattr(args, "minimum_bounds", None):
         pins["minimum_bounds"] = _minimum_pin(store, args.minimum_bounds, unit)
-    adapters = [None if args.skip is not None else ADAPTERS[args.adapter](script) for script in scripts]
+    if getattr(args, "define", None):
+        pins["build_constants"] = [{"name": d.split("=", 1)[0], "value": d.split("=", 1)[1] if "=" in d else "1"}
+                                   for d in sorted(args.define)]
+    adapters = [None if args.skip is not None else _adapter(args, script, library, contract, method) for script in scripts]
     batch = args.batch
     done = []
     for offset, adapter in enumerate(adapters):
@@ -243,11 +255,22 @@ def prove(args):
         if adapter is None:
             record = _skip_record(rid, unit, pins, args.adapter, args.skip, place)
         else:
-            record = _run_job(rid, unit, pins, adapter, runs, place, listed(vocabs, "failure_class"),
+            record = _run_job(rid, unit, pins, adapter, runs, place, listed(vocabs, "failure_class"), method,
                               bounds=getattr(args, "bounds", None), budget_minutes=getattr(args, "budget_minutes", None))
         record.update(run_fields)
         done.append({"record": record, "path": _write(args.records, record)})
     return done[0] if len(done) == 1 else {"batch": batch, "jobs": done}
+
+
+def _adapter(args, script, library, contract, method):
+    """The adapter of one job: a real adapter builds itself from the call (ticket 21), the scripted one from its script."""
+    kind = ADAPTERS[args.adapter]
+    if hasattr(kind, "from_args"):
+        try:
+            return kind.from_args(args, script, library=library, contract=contract, method=method)
+        except AdapterError as exc:
+            raise Failure(f"adapter {kind.name}: {exc}") from None
+    return kind(script)
 
 
 def _run_fields(args):
@@ -287,7 +310,7 @@ def _minimum_pin(store, rid, unit):
     return {"id": rid, "sha256": artifacts.digest(record)}
 
 
-def _run_job(rid, unit, pins, adapter, runs, place, failure_classes, bounds=None, budget_minutes=None):
+def _run_job(rid, unit, pins, adapter, runs, place, failure_classes, method=None, bounds=None, budget_minutes=None):
     """Run one job through the adapter and return its record (not yet written).
 
     A failure class outside the list stops the batch: no record for this job, and the message
@@ -297,17 +320,18 @@ def _run_job(rid, unit, pins, adapter, runs, place, failure_classes, bounds=None
     job = Job(unit=unit, summaries=(), scratch=run / "scratch", log=run / "adapter.log", bounds=bounds,
               budget_seconds=None if budget_minutes is None else budget_minutes * 60)
     job.scratch.mkdir()
-    load = os.getloadavg()[0]
-    wall, cpu = time.perf_counter(), _cpu_seconds()
-    watch = _worker_watch()
-    try:
-        with watch:
-            verdict = adapter.run(job)
-    except AdapterError as exc:
-        raise Failure(f"adapter {adapter.name}: {exc}") from None
-    finally:
-        shutil.rmtree(job.scratch, ignore_errors=True)     # never named; gone when the job ends
-    wall, cpu = time.perf_counter() - wall, _cpu_seconds() - cpu
+    with _verifier_lock(adapter, rid):                # ticket 21: one real verifier job per machine
+        load = os.getloadavg()[0]
+        wall, cpu = time.perf_counter(), _cpu_seconds()
+        watch = _worker_watch()
+        try:
+            with watch:
+                verdict = adapter.run(job)
+        except AdapterError as exc:
+            raise Failure(f"adapter {adapter.name}: {exc}. Adapter output: {job.log}") from None
+        finally:
+            shutil.rmtree(job.scratch, ignore_errors=True)     # never named; gone when the job ends
+        wall, cpu = time.perf_counter() - wall, _cpu_seconds() - cpu
     load = {"start": round(load, 3), "end": round(os.getloadavg()[0], 3)}
     if getattr(watch, "error", None):
         raise Failure(f"{watch.error}; no record was written for this job. Adapter output: {job.log}")
@@ -319,7 +343,7 @@ def _run_job(rid, unit, pins, adapter, runs, place, failure_classes, bounds=None
         peak = _peak_rss_bytes()
     if watch.tripped:                                              # ticket 57 (O9): the watchdog ended the tool
         verdict = Verdict(verdict="not_proven", bounds=verdict.bounds, assumptions=verdict.assumptions,
-                          failure_class=OUT_OF_MEMORY, tools=verdict.tools)
+                          failure_class=OUT_OF_MEMORY, tools=verdict.tools, pins=verdict.pins, reports=verdict.reports)
     if verdict.failure_class and verdict.failure_class not in failure_classes:
         raise Failure(f"adapter {adapter.name} reported failure class {verdict.failure_class!r}, which is not a "
                       f"failure class in vocabulary {FAILURE_VOCAB}: the batch stops here (position "
@@ -335,12 +359,37 @@ def _run_job(rid, unit, pins, adapter, runs, place, failure_classes, bounds=None
         record["unreplayed_counterexample"] = verdict.unreplayed_counterexample
     if verdict.tools:
         record["tools"] = list(verdict.tools)
+    for key, value in (verdict.record_fields or {}).items():
+        if key not in RECORD_FIELDS:
+            raise Failure(f"adapter {adapter.name} returned field {key!r}, which a proof record does not hold")
+        if verdict.verdict == "not_proven" or key != "unproven_properties":
+            record[key] = value
+    evidence = {"adapter_log": {"path": str(job.log), "sha256": _sha256(job.log)}}
+    if verdict.reports:                                            # ticket 21: tool reports, by path and sha256
+        evidence["reports"] = [{"name": name, "path": str(Path(path).resolve()), "sha256": _sha256(path)}
+                               for name, path in verdict.reports]
     record.update(
-        pins=pins, bounds=verdict.bounds, assumptions=verdict.assumptions,
+        pins={**pins, **(verdict.pins or {})}, bounds=verdict.bounds, assumptions=verdict.assumptions,
         job=_job(adapter.name, round(wall, 6), round(cpu, 6), load, peak, place),
-        evidence={"adapter_log": {"path": str(job.log), "sha256": _sha256(job.log)}},
-        evidence_kind="contract_fixture")
+        evidence=evidence, evidence_kind=_evidence_kind(adapter, method))
     return record
+
+
+def _evidence_kind(adapter, method):
+    """Ticket 21: a real adapter under a real method version gives execution evidence; a scripted adapter or a
+    contract_fixture method version gives contract_fixture evidence (fixture records stay fixtures)."""
+    if getattr(adapter, "real", False) and method is not None and method.data.get("evidence_kind") == "execution":
+        return "execution"
+    return "contract_fixture"
+
+
+def _verifier_lock(adapter, rid):
+    """Ticket 21: the machine-wide verifier lock around a real adapter's job (the scripted adapter takes none)."""
+    import contextlib
+    if not getattr(adapter, "real", False):
+        return contextlib.nullcontext()
+    from swdb import verifier_lock
+    return verifier_lock.hold(f"swdb prove {rid}")
 
 
 def _skip_record(rid, unit, pins, adapter_name, reason, place):
@@ -570,3 +619,8 @@ def validate_promotion(record, ctx):
         if proof is not None and (subject.get("kind") != "candidate_proof_unit" or subject.get("candidate") != candidate):
             about = subject.get("candidate") or subject.get("id") or "-"
             yield Problem(record.rel, where, f"{rid} is about {about}, not the reviewed candidate artifact {candidate}")
+
+
+# --- real adapters (ticket 21 on) ------------------------------------------------------------------
+from swdb import wp_adapter as _wp_adapter   # noqa: E402  (it imports Verdict and AdapterError from here)
+ADAPTERS[_wp_adapter.NAME] = _wp_adapter.WpAdapter

@@ -12,6 +12,7 @@ import shutil
 import subprocess
 
 import pytest
+import yaml
 
 from conftest import FIXTURES, REPO, run_swdb
 
@@ -146,6 +147,21 @@ def test_the_spike_b_unit_is_refused_cleanly_until_ticket_24_widens_the_subset(t
                    "--include", REPO / "library" / "dx100", ok=False)
     assert "unsupported construct" in result.stderr and "Traceback" not in result.stderr
     assert not (tmp_path / "out").exists()
+
+
+CORPUS = sorted((FIXTURES / "proof" / "regression_corpus").glob("*.yaml"))
+
+
+@pytest.mark.parametrize("case", [c for c in CORPUS if yaml.safe_load(c.read_text())["adapter"] == "c_lowering"],
+                         ids=lambda c: c.stem)
+def test_each_lowering_regression_corpus_case_gives_its_recorded_class_again(tmp_path, case):
+    data = yaml.safe_load(case.read_text())
+    assert data["cause"].strip()
+    given = data["input"]
+    extra = [arg for folder in given.get("include", []) for arg in ("--include", REPO / folder)]
+    result = lower(REPO / given["source"], given["function"], tmp_path / "out", *extra, ok=False)
+    words = {"unsupported_construct": "unsupported construct", "parse_error": "parse error"}[data["failure_class"]]
+    assert words in result.stderr
 
 
 def test_cpp_that_does_not_parse_is_a_parse_error(tmp_path):
