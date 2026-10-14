@@ -1,7 +1,8 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-13 20:10 ET (ticket 19 resolved: minimum bounds from negative controls);
+Updated: 2026-10-13 20:12 ET (ticket 23 resolved: baselines, metrics and run protocol);
+2026-10-13 20:10 ET (ticket 19 resolved: minimum bounds from negative controls);
 2026-10-13 19:56 ET (ticket 20 resolved: the authors' DX100 PR keeps stale sums);
 2026-10-13 19:48 ET (ticket 18 resolved: evaluation claims and subjects);
 2026-10-13 17:53 ET (ticket 21 resolved: relational alignment research);
@@ -18,7 +19,7 @@ Extensa Probata; ticket 15 added); 2026-10-12 22:52 ET (ticket 10 resolved: what
 2026-10-11 18:58 ET (ticket 08 resolved: crux-llvm separates the bug at one lane)
 **Type:** wayfinder map
 **Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–13 and 15–17 resolved;
-18–27 graduated from fog 2026-10-13 (18, 19, 20, 21, 22 resolved)
+18–27 graduated from fog 2026-10-13 (18–23 resolved)
 
 ## Destination
 
@@ -195,6 +196,15 @@ concept is the next effort.
   withdrawn. Build constants recorded exactly; Extensa mode proves at the minimum only; one level,
   CIVL above SAW, larger bounds never ranked; 15 min per job, frozen; small-scope curve to 23.
 
+- [Which baselines, ablations and metrics answer each research question, and how are runs repeated?](issues/23-evaluation-baselines-and-metrics.md):
+  one primary metric per RQ, judged on the pooled held-out point estimate with its Wilson interval.
+  Baselines: testing-only certification (its false acceptances), WP alone at equal wall time, no
+  contract (whole-function proof; unbounded half per 24), and three repair mirrors (safety-only,
+  verdict only, ask again); LLOR and DR.FIX cited. A reverted repair never counts; repair budget 5
+  rounds. LLM loops run 3 times on a frozen population; mbit10 lanes run 6 pinned proof workers.
+  Codex is the one default provider for every agentic task; Claude (`claude-sonnet-5-5`, `high`) is
+  only a cut-first sensitivity check on BFS and SSSP.
+
 ## Tickets
 
 | # | Ticket | Type | Status | Blocked by |
@@ -221,7 +231,7 @@ concept is the next effort.
 | 20 | [Does the authors' DX100 PageRank keep stale `incoming_totals` across iterations?](issues/20-dx100-pr-reset-check.md) | task | resolved | — |
 | 21 | [Which methods find a relational proof's alignment automatically, and can a wrong one make a proof unsound?](issues/21-relational-alignment-research.md) | research | resolved | — |
 | 22 | [Which LLM repair loops driven by model-checker counterexamples exist, and how close are they to ours?](issues/22-cex-guided-llm-repair-research.md) | research | resolved | — |
-| 23 | [Which baselines, ablations and metrics answer each research question, and how are runs repeated?](issues/23-evaluation-baselines-and-metrics.md) | grilling | ready-for-human | 18, 22 |
+| 23 | [Which baselines, ablations and metrics answer each research question, and how are runs repeated?](issues/23-evaluation-baselines-and-metrics.md) | grilling | resolved | 18, 22 |
 | 24 | [Should the proof-hint loop gain an alignment hint kind for direct unbounded proofs?](issues/24-alignment-hint-kind.md) | grilling | ready-for-human | 21 |
 | 25 | [How does the Extensa-mode loop budget proofs and rank candidate artifacts by certification level?](issues/25-extensa-loop-proofs-and-ranking.md) | grilling | ready-for-human | 19 |
 | 26 | [How are proof verdicts and their evidence recorded, and what does ArchEvolve mode show?](issues/26-proof-records.md) | grilling | ready-for-human | 23, 25 |
