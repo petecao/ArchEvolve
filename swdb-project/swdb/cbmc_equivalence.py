@@ -33,7 +33,7 @@ import re
 import subprocess
 from pathlib import Path
 
-from swdb import c_lowering, cbmc_translator as tr, rss_watchdog, yamlio
+from swdb import c_lowering, cbmc_product as product, cbmc_translator as tr, rss_watchdog, yamlio
 from swdb.cbmc_adapter import (DEFAULT_CAP_BYTES, DEFAULT_WALL_SECONDS, DISAGREEMENT, FROZEN, SANITIZERS, CbmcAdapter,
                                Code, _Log, _compile, _domain, _inputs, _sizes, read_outcome)
 from swdb.proof import AdapterError
@@ -138,6 +138,28 @@ class EquivalenceAdapter(CbmcAdapter):
                    defines=getattr(args, "define", None) or (), spec=args.swdb_equivalence,
                    unwindset=getattr(args, "unwindset", None) or ())
 
+    def _tools(self):
+        """22's checks, plus the product-program generator: the method version must list it as a translator."""
+        tools = super()._tools()
+        found = product.identity()
+        if found not in ((self.method.data.get("c_lowering") or {}).get("translators") or []):
+            raise AdapterError(f"the CBMC product-program generator {found['id']} (sha256 {found['sha256'][:12]}...) is "
+                               f"not a translator of method version {self.method.id}: whole-function equivalence needs "
+                               "a method version that lists it")
+        tools["identities"]["product"] = (found["id"], found["sha256"], found["id"])
+        return tools
+
+    def _verdict(self, verdict, context, failure_class=None, counterexample=None, unreplayed=None):
+        """22's verdict, plus the product-program generator as a trusted-tool entry and in `tools`."""
+        import dataclasses
+        found = super()._verdict(verdict, context, failure_class=failure_class, counterexample=counterexample,
+                                 unreplayed=unreplayed)
+        ident, sha, version = context["tools"]["identities"]["product"]
+        entry = {"kind": "trusted_tool", "reference": {"id": ident, "sha256": sha},
+                 "sentence": f"The CBMC product-program generator ({version}) builds a harness that runs both "
+                             "functions on the same inputs and compares every output location."}
+        return dataclasses.replace(found, assumptions=[*found.assumptions, entry], tools=(*found.tools, ident))
+
     def run(self, job):
         from swdb.wp_adapter import _unit_source
         out = Path(job.log).parent / "cbmc"
@@ -225,8 +247,8 @@ class EquivalenceAdapter(CbmcAdapter):
                                                                     ("baseline", base_globals, cand_globals))
                      for name, ctype in mine.items() if name not in theirs and ctype]
         names = {name for name, _ctype in common} | {name for name, _ctype, _side in one_sided}
-        harness, plan, compared = tr.product_harness(unit, other, rows, sizes=sizes, cap=cap, compared_globals=common,
-                                                     one_sided=one_sided)
+        harness, plan, compared = product.product_harness(unit, other, rows, sizes=sizes, cap=cap,
+                                                          compared_globals=common, one_sided=one_sided)
         renames = list(base.functions) + [name for name, _ctype, _line in base.globals]
         unwind = cap + 1
         loops = [self._loop(entry) for entry in self.unwindset]
@@ -234,8 +256,8 @@ class EquivalenceAdapter(CbmcAdapter):
                                    compared=compared, formal_halves=[c.name for c in rows],
                                    uncompared_globals=sorted((set(cand_globals) | set(base_globals)) - names))
         return {"harness": harness, "plan": plan, "unwind": unwind, "loops": loops, "compared": compared,
-                "c": tr.prelude() + cand.c_text() + tr.renamed(base.c_text(), renames) + harness,
-                "cxx": tr.prelude() + cand.cxx_text() + tr.renamed(base.cxx_text(), renames) + harness,
+                "c": tr.prelude() + cand.c_text() + product.renamed(base.c_text(), renames) + harness,
+                "cxx": tr.prelude() + cand.cxx_text() + product.renamed(base.cxx_text(), renames) + harness,
                 "codes": (cand, base)}
 
     @staticmethod
@@ -245,7 +267,7 @@ class EquivalenceAdapter(CbmcAdapter):
         if not match or int(match.group(3)) < 1:
             raise AdapterError(f"--unwindset {text!r}: give side:<function>.<loop number>=K (side candidate or "
                                "baseline, K >= 1; loop numbers from `cbmc --show-loops`)")
-        loop = match.group(2) if match.group(1) == "candidate" else tr.BASELINE_PREFIX + match.group(2)
+        loop = match.group(2) if match.group(1) == "candidate" else product.BASELINE_PREFIX + match.group(2)
         return loop, int(match.group(3))
 
     # --- the differential run (both sides' C lowering against their C++) -------------------------------------
@@ -342,7 +364,7 @@ class EquivalenceAdapter(CbmcAdapter):
                             *built["codes"][0].cxx_defines()])
         if problem:
             return self._not_proven("parse_error", f"the C++ replay does not compile: {problem}", context)
-        order = {f"{tr.EQUAL}{loc}": k for k, loc in enumerate(built["compared"])}
+        order = {f"{product.EQUAL}{loc}": k for k, loc in enumerate(built["compared"])}
         failures = sorted(outcome["failures"], key=lambda f: (f["property"] not in order, order.get(f["property"], 0)))
         tries = []
         for failure in failures:

@@ -49,7 +49,7 @@ def build_equivalence_seed(path):
     import shutil
 
     from conftest import FIXTURES, REPO
-    from swdb import c_lowering
+    from swdb import c_lowering, cbmc_product
     records = make_records(path)
     copy_record_subset(REPO / "records", records.path,
                        sorted(_library_roots() | {"gapbs-bfs-do", "gapbs", "dx100-gapbs", "mbit10"}))
@@ -57,7 +57,9 @@ def build_equivalence_seed(path):
     methods = path / "library" / "methods"
     methods.mkdir(exist_ok=True)
     shutil.copy(FIXTURES / "proof" / "methods" / "contract-fixture-1.yaml", methods)
-    (methods / "cbmc-fixture.yaml").write_text(yaml.safe_dump(method_version(c_lowering.identity()), sort_keys=False))
+    method = method_version(c_lowering.identity())
+    method["c_lowering"]["translators"].append(cbmc_product.identity())        # the product-program generator
+    (methods / "cbmc-fixture.yaml").write_text(yaml.safe_dump(method, sort_keys=False))
     (path / "library" / "proof_units").mkdir()
     (path / "library" / "proof_units" / "cbmc_fixture_units.cc").write_text(UNITS)
     contracts = _contracts()
@@ -147,7 +149,7 @@ def test_an_equal_pair_proves_within_bounds_at_one_thread_on_the_bounded_direct_
     assert settings["formal_halves"] == [f"{REL}#fill_pre", f"{REL}#fill_post.assigns1", f"{REL}#fill_post.ensures1"]
     assert settings["agreement"]["verdict"] == "agree" and settings["agreement"]["domain"]["n"]["values"] == [-1, 0, 1, 2, 3]
     assert settings["bounds_origin"] == {"kind": "passed"}
-    assert set(record["tools"]) == TRUSTED
+    assert set(record["tools"]) == TRUSTED | {"swdb-cbmc-product-1"}
     job_c = open(seed.report(record, "cbmc_input")).read()
     assert "swdb_next()" in job_c and "swdb_base_swdb_fixture_fill(" in job_c       # symbolic inputs, both copies
     assert all(g["status"] == "success" for g in record["goals"] if g["property"].startswith("swdb_equal."))
@@ -291,6 +293,19 @@ def test_loops_with_different_trip_counts_unwind_each_copy_to_its_own_bound(seed
     record = seed.prove("slow", "no_contract_baseline", "--unwindset", f"candidate:{FUNCTION}.0=7")
     assert record["verdict"] == "proven"
     assert record["settings"]["unwindset"] == [f"{FUNCTION}.0:7"]
+
+
+@needs_cbmc
+def test_a_method_version_that_does_not_list_the_product_generator_runs_no_whole_function_job(seed):
+    path = seed.root / "library" / "methods" / "cbmc-fixture.yaml"
+    data = yaml.safe_load(path.read_text())
+    data["c_lowering"]["translators"] = [t for t in data["c_lowering"]["translators"]
+                                         if not t["id"].startswith("swdb-cbmc-product")]
+    data.update(id="method.cbmc-no-product", sequence=3)
+    (path.parent / "cbmc-no-product.yaml").write_text(yaml.safe_dump(data, sort_keys=False))
+    result = seed.prove("split", "bounded_direct", ok=False)
+    assert "swdb-cbmc-product-1" in result.stderr and "method.cbmc-no-product" in result.stderr
+    assert not list((seed.records / "proofs").glob("*.yaml"))
 
 
 # --- budget and failures -------------------------------------------------------------------------------------------

@@ -161,7 +161,13 @@ nothing. Scripted faults for tests: `SWDB_CBMC` (a stand-in `cbmc` command line;
 the baseline's on the same symbolic inputs, at one thread and within bounds, and compares every output. Equal:
 proven within bounds, threads = 1. Unequal: refuted, with the concrete inputs, the first differing location and
 both values. Never more (no alignment exists: map 24 item 1). Code: `swdb/cbmc_equivalence.py`,
-`cbmc_translator.product_harness`; tests: `tests/test_cbmc_equivalence.py`.
+`swdb/cbmc_product.py` (the product-program generator); tests: `tests/test_cbmc_equivalence.py`.
+
+**Method version.** The product-program generator is its own trusted tool, `swdb-cbmc-product-1` (ID plus the
+sha256 of `swdb/cbmc_product.py`), kept out of `swdb/cbmc_translator.py` so the translator's sha256, which
+`method.probata-draft-1` pins, did not change. A whole-function job runs only under a method version whose
+`c_lowering.translators` lists it (else nothing runs); `method.probata-draft-1` does not, so a new draft must add
+it. Records name it in `tools` and in the assumption set.
 
 ```
 swdb prove --candidate <c> --function <f> --adapter cbmc --whole-function bounded_direct --contract <contract> \

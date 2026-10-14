@@ -124,7 +124,7 @@ equality is asserted at the end; no alignment hints (map 24).
 | Piece | Where |
 |---|---|
 | `swdb prove --adapter cbmc --whole-function bounded_direct\|no_contract_baseline` (`--baseline-candidate`, `--borrowed-bounds`, `--unwindset`) | `swdb/proof.py`, `swdb/cbmc_equivalence.py` |
-| Product harness (one input draw, a copy of every array per call, one `swdb_equal.<location>` property per output) and baseline renaming | `swdb/cbmc_translator.py` (`product_harness`, `renamed`; `harness` split into helpers, its output byte-identical) |
+| Product harness (one input draw, a copy of every array per call, one `swdb_equal.<location>` property per output) and baseline renaming | `swdb/cbmc_product.py`, its own trusted tool `swdb-cbmc-product-1` (the method version must list it; `swdb/cbmc_translator.py` is unchanged, so `method.probata-draft-1`'s translator pin still holds) |
 | Route cap: schema (`route: bounded_direct` needs `threads: 1`, no `unbounded`); the level rule never counts one above | `schemas/proof.schema.json`, `swdb/level_rule.py` |
 | No-contract baseline = measurement (`baseline_measurements`), never a level or the refuted flag | `swdb/level_rule.py` (`is_baseline_measurement`) |
 | `relational_template: {reason}` on a contract (the route guard reads it); pin `baseline_c_lowering` | `schemas/library/library_entry.schema.json`, `schemas/proof.schema.json` |
@@ -192,8 +192,14 @@ equality is asserted at the end; no alignment hints (map 24).
 - Assumption: a failing built-in check (overflow, bounds) in either copy is a refutation when it replays under the
   sanitizers; `counterexample.function` names the copy. Found while testing: a candidate loop bound `2 * n`
   overflows at `n = INT_MIN` and is refuted although its outputs agree elsewhere (fixture now guards `n > 0`).
-- Assumption: the translator stays `swdb-cbmc-translator-1` (its existing outputs are byte-identical; the
-  module's sha256 pin changes anyway).
+- Assumption: the product-program generator is a separate trusted tool (`swdb/cbmc_product.py`,
+  `swdb-cbmc-product-1`), not an extension of 22's translator: `method.probata-draft-1` pins the translator's
+  sha256 and a method-version file is never edited in place. It reuses the translator's printers.
+  **Needs the main session:** no committed method version lists `swdb-cbmc-product-1`, so a real whole-function
+  job refuses to run until a new draft (next sequence) adds it (fixture method versions in the tests list it).
+- Side finding: under a long verifier-lock queue (8 waiters), `test_a_job_over_its_budget_is_timeout_at_unchanged_bounds`
+  failed once because `run_swdb`'s 600 s subprocess timeout counts the lock wait; alone it passes. 22's tests share
+  this exposure.
 - Open point for the main session: `level-rule.1` is kept. The changes (measurements left out, the
   `bounded_direct` cap, a candidate as baseline pin) change no level an earlier record gives, but the level-rule
   doc's versioning rule, read strictly, asks for `level-rule.2` (5 test files and 2 handoff examples name `.1`).
