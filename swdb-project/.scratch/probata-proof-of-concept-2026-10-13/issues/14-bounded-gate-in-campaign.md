@@ -197,3 +197,4 @@ The fixture tests raise the cap through the approval entry.
   total (`provider_calls_per_iteration`, default 3). So a refuted candidate gets at most 2 counterexample rounds
   per iteration unless an approval entry raises the cap, and the loop then ends `calls_refused`. No separate
   repair cap. Code unchanged.
+- 2026-10-14 16:47 EDT (main session, under Yan-Ru's delegation): with CBMC on the C lowering as the bounded verifier (22), code outside the C++ subset skips both bounded rungs and stays certified (no SAW-on-C++ fallback any more). Sound and conservative; ticket 24 widens the subset to shrink this set.
