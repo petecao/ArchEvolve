@@ -1,7 +1,8 @@
 """Command line: `swdb <command>`. Exit 0 = success, 1 = the check or command failed,
 2 = usage error. Errors go to stderr; results (YAML or JSON) go to stdout.
 
-Updated: 2026-10-06 ET (ticket 03): validate accepts a standalone slide-based crosswalk.
+Updated: 2026-10-14 ET (Probata ticket 04): registers `swdb prove`.
+2026-10-06 ET (ticket 03): validate accepts a standalone slide-based crosswalk.
 2026-10-05 ET (code review): the `campaign` and library-operation commands register here
 directly; `promote` states who performed a review and `correct-review` corrects an earlier
 attribution (spec review C1)."""
@@ -270,6 +271,8 @@ def main(argv=None):
     cpu_native_validation.register_cli(commands)
     from swdb import attribution
     attribution.register_cli(commands)
+    from swdb import proof     # Probata proof of concept ticket 04 (2026-10-14 ET): `swdb prove`
+    proof.register_cli(commands)
 
     from swdb import archevolve
     archevolve.register_cli(commands)

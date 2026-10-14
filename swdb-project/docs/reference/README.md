@@ -1,6 +1,6 @@
 # Reference
 
-Updated: 2026-10-11 21:53 ET (ADR 0015: the database takes the main database's shape); 2026-10-07.
+Updated: 2026-10-14 ET (proof records); 2026-10-11 21:53 ET (ADR 0015: the database takes the main database's shape); 2026-10-07.
 
 Use the [tutorial](../tutorial/README.md) first. Open these documents when you need
 exact fields, invariants, or a target-specific procedure. Navigation was updated
@@ -24,6 +24,7 @@ original paths and context.
 | Freeze unknown numerical parameters | [Estimation role](estimation-role.md) |
 | Run research loops and inspect agreement | [Extensa fields and commands](format-v0.4-extensa.md) |
 | Inspect reusable certified rewrites | [Typed library](bfs-typed-library.md) |
+| Write proof records and read proven levels | [Proof records](format-v0.4-proof.md) |
 | Check main-database compatibility | [LANL core and `swdb_` extension](database.md#at-a-glance); the [crosswalk draft](../compatibility/README.md) is historical |
 | Write catalog records | [Format 0.3](format-v0.3.md), [format 0.4 additions](format-v0.4.md) |
 | Add source, loops, access patterns, inputs | [Application checklist](adding-an-application.md) |

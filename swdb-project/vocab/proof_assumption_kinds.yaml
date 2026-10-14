@@ -1,0 +1,18 @@
+# Created: 2026-10-14 ET (Probata proof of concept ticket 04; kinds decided in formal-verification map 26 item 4).
+name: proof_assumption_kinds
+description: The seven kinds of entry in a proof record's assumption set; each entry also has a reference (ID and hash) and one plain sentence.
+values:
+  - value: assumed_clause
+    meaning: A contract or library clause the proof assumes instead of proving.
+  - value: proof_semantics
+    meaning: The accelerator behaves as its versioned proof semantics says.
+  - value: summary
+    meaning: A building-block summary used in place of the code it summarizes, not proven in this job.
+  - value: reduction
+    meaning: A reduction that narrows what was checked (for example a symmetry), with its own obligation.
+  - value: trusted_tool
+    meaning: A tool whose output is trusted without checking (for example the compiler or a verifier).
+  - value: written_proof
+    meaning: A lemma or theorem written down but not yet machine-checked.
+  - value: platform_choice
+    meaning: Behavior the platform fixes by choice (for example float rounding or the RC11 memory model).
