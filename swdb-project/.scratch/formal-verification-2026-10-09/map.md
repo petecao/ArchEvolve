@@ -1,7 +1,12 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-13 21:09 ET (ticket 26 resolved: immutable proof records, level computed on read; ADR 0016);
+Updated: 2026-10-13 22:10 ET (spec settled: test seams, O1 and S1–S6 accepted; notes on tickets 11, 24, 26, 27);
+2026-10-13 21:51 ET (destination reached: [spec.md](spec.md) written; out-of-scope line on the
+trusted semantics corrected per ticket 12);
+2026-10-13 21:33 ET (ticket 28 resolved: iteration ladder on by default; frontier empty);
+2026-10-13 21:29 ET (ticket 27 resolved: two efforts split at the freeze; staged proof of concept);
+2026-10-13 21:09 ET (ticket 26 resolved: immutable proof records, level computed on read; ADR 0016);
 2026-10-13 21:03 ET (ticket 28 added: Extensa-mode iteration ladder);
 2026-10-13 20:42 ET (ticket 24 resolved: no alignment hint kind; unit postconditions for every kernel);
 2026-10-13 20:40 ET (ticket 25 resolved: two winners, bounded gate, proof budgets);
@@ -23,7 +28,8 @@ Extensa Probata; ticket 15 added); 2026-10-12 22:52 ET (ticket 10 resolved: what
 2026-10-11 18:58 ET (ticket 08 resolved: crux-llvm separates the bug at one lane)
 **Type:** wayfinder map
 **Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–13 and 15–17 resolved;
-18–27 graduated from fog 2026-10-13 (18–26 resolved)
+18–27 graduated from fog 2026-10-13, 28 added (18–28 resolved; no open tickets). Destination reached:
+[spec.md](spec.md) (2026-10-13 21:46 ET; test seams and open point O1 settled with Yan-Ru 22:10 ET)
 
 ## Destination
 
@@ -232,6 +238,22 @@ concept is the next effort.
   seven assumption kinds (written proof, platform choice added); one failure-class list. Proofs stay
   in `swdb_` tables, never the LANL core. The team's handoff gains a plain-words level block.
 
+- [In what order does the proof of concept build its pieces, and what closes each stage?](issues/27-proof-of-concept-stages.md):
+  two efforts split at the method-version freeze: the proof of concept (build, calibrate on BFS and
+  public suites, Mac then mbit10) and the evaluation (held-out contracts, RQ1-RQ5). Main track A0-A6,
+  about 5 months: setup, a 2-week kill-test spike first (SAW on clang 22, 2 lanes under 15 min, WP on
+  one BFS unit, sums on a synthetic fixture; else stop and re-plan), foundations, hint loop,
+  concurrency, chains, mbit10 and freeze. Side tracks: Rocq, strict-layer catch-up, and the Extensa
+  track from day 1. Exit check per stage; overrun at 1.5x re-plans; cut order 9b, strict layer, A5,
+  Extensa exit. RQ3 reworded; held-out kernels untouched (synthetic PR- and SSSP-like fixtures).
+- [How should the Extensa-mode rewrite workspace show earlier candidate artifacts, and what keeps campaigns with and without it comparable?](issues/28-extensa-iteration-ladder.md):
+  the iteration ladder (`LADDER.json`), on in every new campaign with no off switch, as in Extensa.
+  The loop writes one row per earlier candidate artifact (rejected and repaired ones included, no
+  gaps): contracts, knobs, level known so far, verdict, ratio, winner mark; no patches, D8's leakage
+  rules, a refutation only as its category. `FEEDBACK.json` stays. The loop records
+  `rewrite_workspace: v2`; the 15 old campaigns are `v1`. RQ5 uses only ladder campaigns, no ablation,
+  and claims nothing about the ladder's effect; the LLM population sees no ladder. D8 note; no ADR.
+
 ## Tickets
 
 | # | Ticket | Type | Status | Blocked by |
@@ -262,8 +284,8 @@ concept is the next effort.
 | 24 | [Should the proof-hint loop gain an alignment hint kind for direct unbounded proofs?](issues/24-alignment-hint-kind.md) | grilling | resolved | 21 |
 | 25 | [How does the Extensa-mode loop budget proofs and rank candidate artifacts by certification level?](issues/25-extensa-loop-proofs-and-ranking.md) | grilling | resolved | 19 |
 | 26 | [How are proof verdicts and their evidence recorded, and what does ArchEvolve mode show?](issues/26-proof-records.md) | grilling | resolved | 23, 25 |
-| 27 | [In what order does the proof of concept build its pieces, and what closes each stage?](issues/27-proof-of-concept-stages.md) | grilling | ready-for-human | 18, 19, 24 |
-| 28 | [How should the Extensa-mode rewrite workspace show earlier candidate artifacts, and what keeps campaigns with and without it comparable?](issues/28-extensa-iteration-ladder.md) | grilling | ready-for-human | 25 |
+| 27 | [In what order does the proof of concept build its pieces, and what closes each stage?](issues/27-proof-of-concept-stages.md) | grilling | resolved | 18, 19, 24 |
+| 28 | [How should the Extensa-mode rewrite workspace show earlier candidate artifacts, and what keeps campaigns with and without it comparable?](issues/28-extensa-iteration-ladder.md) | grilling | resolved | 25 |
 
 ## Not yet specified
 
@@ -284,7 +306,9 @@ Empty since 2026-10-13 17:04 ET. Each patch graduated into tickets:
 Ruled at charting ([01](issues/01-charting-decisions.md)):
 
 - Compiler correctness: gcc and clang are trusted.
-- DX100 hardware versus its functional model: the strict layer is the trusted semantics.
+- DX100 hardware versus its proof semantics: proofs trust the proof semantics, each rule cited to gem5
+  source or assumed with an owner. (Was "versus its functional model: the strict layer is the trusted
+  semantics"; changed by [12](issues/12-dx100-proof-semantics.md) item 1, noted 2026-10-13 21:51 ET.)
 - Speed: proofs say nothing about performance.
 - gem5.
 

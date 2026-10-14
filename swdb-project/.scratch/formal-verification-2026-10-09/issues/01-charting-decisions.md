@@ -63,3 +63,11 @@ Decided with Yan-Ru in the charting session, 2026-10-09 ET.
   version (9.1, its fallback path; 11 item 12) and Codex's (9.3, a plain read of `parent[v]`) are
   likewise refuted at threads > 1 as written. Peter's and Josh's code
   is preliminary: a proof-of-concept candidate, never ground truth.
+
+## Later changes
+
+- 2026-10-13 21:51 ET, recorded while writing the map's [spec](../spec.md): decision 10's "the strict
+  layer is the trusted semantics" was replaced by [12](12-dx100-proof-semantics.md) item 1. Proofs trust
+  the proof semantics, each rule cited to gem5 source or assumed with an owner; the strict layer is its
+  executable counterpart for certification. The out-of-scope item now reads "DX100 hardware versus its
+  proof semantics".

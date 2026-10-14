@@ -192,3 +192,13 @@ Glossary: method version added.
   file, `library/methods/<version>.yaml`, which includes the verifier lineup and the shared logic
   library but not the proof semantics (its own version) or the level rule (versioned apart, so a rule
   change recomputes levels without voiding proofs). Catalog templates left it (24).
+- 2026-10-13 21:29 ET, from [27](27-proof-of-concept-stages.md) (item 6): RQ3 is reworded "What does a contract proven once buy each
+  candidate, and at what one-time cost?" Its bars stand; the contract's gap over the no-contract
+  baseline is reported in three parts (seeds, route 3 vs route 1, refutations only the bounded rung
+  gives), with no speed claim unless the proof of concept's BFS run (stage A3) shows a gap. If A5 is
+  cut, the "chained <= bundled" bar goes with it.
+- 2026-10-13 21:32 ET, from [28](28-extensa-iteration-ladder.md) (items 1, 9): every new Extensa campaign shows each
+  rewrite call an iteration ladder (all earlier candidate artifacts with levels and winner marks). RQ5
+  uses only such campaigns; the a7 worked example is labeled "no ladder (v1)"; no ladder ablation, and
+  the paper states that it does not measure whether the ladder or its level column changes the speed
+  gap. Item 6's LLM population comes from independent calls with no ladder.

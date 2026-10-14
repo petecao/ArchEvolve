@@ -152,3 +152,9 @@ finding, not fixed here).
 
 **Glossary** (Q13, accepted 2026-10-13 21:11 ET): proof record and content-hash set added; assumption
 set and method version sharpened.
+
+## Later changes
+
+- 2026-10-13 22:10 ET, from the map's [spec](../spec.md) (S3, accepted by Yan-Ru): item 10's failure-class
+  list adds "unknown" (13 item 3 sends WP goals with class timeout or unknown to the hint loop) and
+  "ghost capacity" (16 item 10). Without them either one would stop the batch.
