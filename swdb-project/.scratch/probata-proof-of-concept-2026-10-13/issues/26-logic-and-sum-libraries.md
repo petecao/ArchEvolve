@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 21
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Modules", library content: logic library; "Formal-half language and the C++ subset": allowed ACSL, primitive recursion; user story 53: primitive recursion and the `\false` check; "Records and levels": the method-version file lists the shared logic library with the sum library; "Proven once vs per candidate": the "with the method" row; "Evaluation design": RQ3 counts the sum library's one-time cost; "Proof-of-concept plan": A1 (d) and A2; "Testing Decisions"); decisions: [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md) items 2, 9, 12; [24](../../formal-verification-2026-10-09/issues/24-alignment-hint-kind.md) item 4; also [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md) item 3 (a synthetic fixture, never PR)
 **Time estimate:** about 1-2 weeks

@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 21
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Verifier lineup and order": bounded verifier, cross-check of the C lowering, pinned versions, failure classes, one summary source; "Bounds": build constants, 15 minutes per bounded job; "Formal-half language and the C++ subset": the translators; "Further Notes": main risks; "Testing Decisions", seam 1; choice S1); decisions: [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) items 1, 2, 3, 4, 8; [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md) items 1, 3; [19](../../formal-verification-2026-10-09/issues/19-bounded-verdict-bounds.md) items 2, 8
 **Time estimate:** about 3 days

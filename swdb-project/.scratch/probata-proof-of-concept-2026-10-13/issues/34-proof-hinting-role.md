@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 01, 21
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-hint loop": Workspace; "Loop, modes and guards (changed)": Provider guard and workspaces; "Providers and machines"; "Testing Decisions", seam 4; user stories 27, 28, 77, 80, 85; O3); decisions: [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md) (items 1, 6, 10, 13), [18](../../formal-verification-2026-10-09/issues/18-evaluation-claims-and-subjects.md) (item 6, the guard), [23](../../formal-verification-2026-10-09/issues/23-evaluation-baselines-and-metrics.md) (item 7, the Codex pin)
 **Time estimate:** about 2 days
