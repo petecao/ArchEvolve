@@ -319,6 +319,53 @@
     "paired_estimates": {
       "$ref": "#/$defs/pairing_ledger"
     },
+    "wp_phase": {
+      "type": "object",
+      "description": "Probata PoC 16 (2026-10-14 ET): present with bounded_gate. The WP phase after the campaign stopped: not_started in the stop-time summary, ended in the summary rewritten once at its end.",
+      "required": ["state"],
+      "properties": {
+        "state": {"enum": ["not_started", "running", "ended"]},
+        "started": {"type": "string"},
+        "ended": {"type": "string"},
+        "end_reason": {"enum": ["classes_done", "lane_hours", "no_proof_call_budget", "failure"]},
+        "end_detail": {"type": "string"},
+        "method_version": {"type": "object", "required": ["id", "sha256"]},
+        "budgets": {"type": "object"},
+        "waits": {"type": "array", "items": {"type": "object", "required": ["for", "seconds", "until"]}},
+        "provider_calls": {"type": "array", "items": {"type": "object"}},
+        "classes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["class", "order", "state", "proven", "tried", "jobs"],
+            "properties": {
+              "class": {"type": "string"},
+              "order": {"type": "array", "items": {"type": "string"}},
+              "state": {"enum": ["running", "proven_unbounded", "order_spent", "unfinished"]},
+              "proven": {"type": ["string", "null"]},
+              "tried": {"type": "array", "items": {"type": "string"}},
+              "jobs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["candidate", "contract", "position"],
+                  "properties": {
+                    "candidate": {"type": "string"}, "contract": {"type": "string"},
+                    "position": {"type": "integer", "minimum": 1},
+                    "record": {"type": "string"}, "verdict": {"enum": ["proven", "refuted", "not_proven"]},
+                    "failure_class": {"type": "string"}, "skip_reason": {"type": "string"},
+                    "stages": {"type": "array", "items": {"type": ["string", "integer"]}},
+                    "hint_calls": {"type": "integer", "minimum": 0},
+                    "started": {"type": "string"}, "ended": {"type": "string"},
+                    "lane_hours": {"type": "number", "minimum": 0}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "rewrite_workspace": {
       "enum": ["v1", "v2"],
       "description": "Probata PoC 17 (2026-10-14 ET; map decision 28 item 1): the rewrite workspace version, a record of the loop, never a campaign-file setting. `v2`: from iteration 2 every rewrite and repair workspace holds `LADDER.json` (the iteration ladder). A summary without it reads as `v1` (D8's workspace, no iteration ladder)."

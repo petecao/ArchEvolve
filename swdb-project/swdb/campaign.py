@@ -41,6 +41,11 @@ is never evaluated; its counterexample goes to counterexample-guided repair (`sw
 which owns the 5-round cap and the reverted-repair flag), each repair call charged to the D7 ledger as role
 `counterexample_repair`. A library without a method version runs no gate, as before.
 
+Probata PoC 16 (2026-10-14 ET): such a campaign, once stopped and its first summary written, runs the WP phase
+(`swdb.wp_phase`: the unbounded rung on each class's `gain` candidate artifacts, fastest first) and then rewrites
+its summary once. Proof-hint calls have their own cap, `budgets.provider_calls_proof`; every proof job is charged
+to the lane-hours and reported on its own line.
+
 Probata PoC 17 (2026-10-14 ET): the iteration ladder (`swdb.iteration_ladder`). A new campaign records
 `rewrite_workspace: v2`; from iteration 2 its rewrite and repair workspaces (certification and counterexample)
 hold `LADDER.json`, rebuilt whole from campaign state. A state without the field is `v1` and never gains one.
@@ -132,7 +137,8 @@ NATIVE_ORDER_SEED = 20260926
 #: The spec's budget defaults (D5). A campaign may exceed one only with an approval
 #: entry naming it. These are limits for validation, never values the loop assumes.
 SPEC_BUDGETS = {"max_iterations": 8, "plateau_iterations": 4, "lane_hours": 24,
-                "provider_calls_per_iteration": 3, "provider_calls_setup": 1, "disk_gb": 20, "lanes": 1}
+                "provider_calls_per_iteration": 3, "provider_calls_setup": 1, "disk_gb": 20, "lanes": 1,
+                "provider_calls_proof": 30}     # Probata PoC 16: the WP phase's proof-hint calls (25 item 2)
 DEFAULT_MAX_REPAIRS = 2        # D7: the ArchEvolve-mode repair limit
 REPAIR_CALL = "counterexample_repair"   # Probata PoC 14: the ledger role of a counterexample repair call
 EXTENSA_SOURCE = {"repository": "MaizeHPC/MemAcc", "commit": "af3d6d7f7a69a72facdc3b95b42e78c952f44a76"}
@@ -209,7 +215,7 @@ def campaign_problems(data):
     approval = data.get("approval") or {}
     raised = set(approval.get("raised_budgets") or [])
     for key, limit in SPEC_BUDGETS.items():
-        if key == "lanes":
+        if key == "lanes" or key not in data["budgets"]:
             continue
         if data["budgets"][key] > limit and key not in raised:
             problems.append(f"budgets.{key}: {data['budgets'][key]} exceeds the spec default {limit} "
@@ -706,6 +712,9 @@ class Campaign:
         if not hours and started is not None:
             hours = (time.monotonic() - started) / 3600
         self.state["lane_hours"] += hours
+        if step == "evaluation" and started is not None:     # Probata PoC 16: checked against proof jobs
+            from swdb import wp_phase
+            wp_phase.evaluation_spent(self, started, hours)
 
     # provider calls (D7) -------------------------------------------------------------------
     def _call(self, kind, files, prompt, iteration_row):
@@ -1300,8 +1309,13 @@ class Campaign:
         return gate
 
     def _gate(self, candidate_id, contracts, iteration, cls, attempt):
+        from swdb import wp_phase
+        started, started_at = time.monotonic(), _now()
         result = self.gate.run(candidate_id, contracts, {"iteration": iteration, "cls": cls, "attempt": attempt})
         self.state["proof_job_hours"] = self.state.get("proof_job_hours", 0.0) + result["job_hours"]
+        if any("skip_reason" not in job for job in result["jobs"]):
+            # Probata PoC 16: a gate that ran a verifier holds the lane; charged to lane-hours and proof lane-hours.
+            wp_phase.proof_spent(self, started, started_at, f"bounded gate {candidate_id}")
         return result
 
     def _charge_repair_call(self, row):
@@ -1583,6 +1597,9 @@ class Campaign:
         if resumed:
             if not self.args.resume:
                 raise Failure(f"campaign {self.cid} already has state at {self.state_file}; use --resume")
+            from swdb import wp_phase
+            if resumed.get("stopped") and wp_phase.resumable(resumed):
+                return self._resume_wp_phase(resumed)       # Probata PoC 16: an interrupted WP phase continues
             if resumed.get("stopped"):
                 raise Failure(f"campaign {self.cid} already stopped ({resumed['stop_reason']})")
             self.state = resumed
@@ -1600,6 +1617,8 @@ class Campaign:
                           "kept_for_claims": [], "setup_done": False, "pilot": None,
                           "rewrite_workspace": "v2"}      # Probata PoC 17: a record, never a campaign-file setting
             self.ledger = S.SearchLedger(self.budget)
+            from swdb import wp_phase
+            wp_phase.require_budget(self)               # Probata PoC 16
             if self.query:
                 self._check_sites()
         with self._tags():
@@ -1731,8 +1750,33 @@ class Campaign:
         writer.commit(self.team, new=[copy.deepcopy(summary)])
         self.state["stopped"] = True
         self.state["stop_reason"] = reason.value
+        self.state.setdefault("summary_writes", []).append({"when": "stop", "at": _now()})
+        self._save()
+        return self._after_stop(summary, reason)
+
+    # the WP phase (Probata PoC 16) -----------------------------------------------------------------
+    def _after_stop(self, summary, reason):
+        """With a bounded gate (a method version), the WP phase runs; then the summary is rewritten once,
+        replacing the stop-time one in the campaign store and the team store (git keeps the first)."""
+        if self.gate is None:
+            return summary
+        from swdb import wp_phase
+        wp_phase.Phase(self).run()
+        summary = self.summary(reason)
+        workflow.persist(self.store_dir, copy.deepcopy(summary))
+        writer.commit(self.team, upsert=[copy.deepcopy(summary)])
+        self.state["summary_writes"].append({"when": "wp_phase_end", "at": _now()})
         self._save()
         return summary
+
+    def _resume_wp_phase(self, resumed):
+        self.state = resumed
+        self.ledger = S.SearchLedger.from_state(self.budget, resumed["ledger"])
+        with self._tags():
+            self.adapter.protocol_id = self.state["protocol"]["id"]
+            self.adapter.restore(self.state)
+            self.gate = self._open_gate()
+            return self._after_stop(None, S.StopReason(self.state["stop_reason"]))
 
     def summary(self, reason):
         commit = subprocess.run(["git", "rev-parse", "HEAD"], cwd=paths.HOME, capture_output=True, text=True)
@@ -1804,6 +1848,8 @@ class Campaign:
             record["bounded_gate"] = {**copy.deepcopy(self.state["bounded_gate"]),
                                       "proof_job_hours": round(self.state.get("proof_job_hours", 0.0), 9),
                                       "repair_counters": self._repair_counters()}
+            from swdb import wp_phase                # Probata PoC 16: the WP phase and the proof budget lines
+            wp_phase.summary_fields(self, record)
         from swdb.iteration_ladder import version_of           # Probata PoC 17: v1 when the state names none
         record["rewrite_workspace"] = version_of(self.state)
         record["mode"], record["campaign"] = MODE, self.cid

@@ -13,12 +13,15 @@ retains its own patch (`diff`), which a counterexample repair shows. The fixture
 `contract_proofs` (contract-fixture contract proofs and minimum bounds, written into the campaign store when
 the gate is set up) and `proof` (the proof unit's function); a class row's `proof` scripts the bounded
 verdicts per rung and attempt and says whether the code is inside the C++ subset.
+Updated 2026-10-14 ET (Probata PoC 16, the WP phase): a class row's `proof.wp` scripts the WP job (`proven_at`,
+`unit_postcondition`); `open_timing_step: {seconds}` scripts a timing step still open when the phase starts.
 """
 from __future__ import annotations
 
 import copy
 import json
 import shutil
+import time
 from argparse import Namespace
 from pathlib import Path
 
@@ -361,6 +364,34 @@ class FixtureAdapter(TargetAdapter):
         path.write_text(yamlio.dumps(script))
         return {"adapter": "scripted", "script": path}
 
+    # the WP phase (Probata PoC 16) ----------------------------------------------------------------
+    def wp_plan(self, candidate_id, contract, iteration, cls):
+        """The class row's `proof.wp`: `proven_at` (`wp`, `seeds`, a hint round, or absent: never) and
+        `unit_postcondition` (default true)."""
+        spec = self._proof_spec(iteration, cls, contract).get("wp")
+        if spec is None:
+            raise Failure(f"the fixture scripts no WP job (proof.wp) for class {cls} in iteration {iteration}")
+        return {"proven_at": spec.get("proven_at"), "unit_postcondition": spec.get("unit_postcondition", True)}
+
+    def wp_job(self, candidate_id, contract, proven, iteration, cls):
+        script = dict(SCRIPTED["unbounded" if proven else "hint_budget_spent"])
+        path = self.folder / "proof-scripts" / f"{candidate_id}.{contract}.wp.yaml"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(yamlio.dumps(script))
+        return {"adapter": "scripted", "script": path}
+
+    def open_timing_steps(self):
+        """`open_timing_step: {seconds: S}` scripts a timing step that is open when the WP phase first asks and
+        closes S seconds later."""
+        spec = self.fx.get("open_timing_step")
+        if not spec:
+            return []
+        if getattr(self, "_timing_open", None) is None:
+            self._timing_open = (time.monotonic(), _now())
+        if time.monotonic() - self._timing_open[0] >= float(spec["seconds"]):
+            return []
+        return [{"what": "scripted timing step", "kind": "timing_step", "started": self._timing_open[1]}]
+
     # budgets and host ----------------------------------------------------------------------
     def step_hours(self, step):
         return float((self.fx.get("step_hours") or {}).get(step, 0.0))
@@ -397,6 +428,11 @@ SCRIPTED = {
     "timeout": {"verdict": "not_proven", "failure_class": "timeout", "assumptions": [FIXTURE_ASSUMPTION]},
     "spurious": {"verdict": "not_proven", "failure_class": "spurious_counterexample",
                  "unreplayed_counterexample": FIXTURE_COUNTEREXAMPLE, "assumptions": [FIXTURE_ASSUMPTION]},
+    # Probata PoC 16: the WP job (route 1, WP on the C lowering per thread for symbolic N).
+    "unbounded": {"verdict": "proven", "assumptions": [FIXTURE_ASSUMPTION],
+                  "bounds": {"threads": "unbounded", "vertices": "unbounded", "edges": "unbounded"}},
+    "hint_budget_spent": {"verdict": "not_proven", "failure_class": "hint_budget_spent", "assumptions": [FIXTURE_ASSUMPTION],
+                          "bounds": {"threads": "unbounded", "vertices": "unbounded", "edges": "unbounded"}},
 }
 
 
