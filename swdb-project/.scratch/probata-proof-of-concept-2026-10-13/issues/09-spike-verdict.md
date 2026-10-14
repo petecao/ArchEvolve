@@ -289,3 +289,9 @@ All Mac results. Paths are under this effort's `prototype/` folder.
   repeated.
 - Runs folders (LR-06): `/tmp/claude/probata-runs/t05` to `t08` (about 30 MB) stay until Yan-Ru
   decides the re-plan. Readers now: this re-plan and the main session. Nothing was deleted.
+
+## Decisions (Yan-Ru, 2026-10-14 12:08 ET)
+
+- (b): proposed re-plan option 1 accepted: the one-day CBMC box runs as a continuation of ticket 06. A2
+  stays stopped until that box and (c)'s continuation report back.
+- (c): continues inside A1's box as ticket 07's continuation (main session, 09:20 ET).

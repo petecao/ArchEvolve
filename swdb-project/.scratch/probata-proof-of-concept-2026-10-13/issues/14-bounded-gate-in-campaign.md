@@ -190,3 +190,10 @@ adapters' proposals have no `profile_package` or `constraints.editable_files`, s
 in the rewriting total, so without an approval entry raising it a refuted candidate artifact gets at most 2
 counterexample rounds per iteration (fewer with two classes), not 5; the loop then ends `calls_refused`.
 The fixture tests raise the cap through the approval entry.
+
+## Later changes
+
+- 2026-10-14 12:08 ET: **decided by Yan-Ru** (option 1 of the side finding): repair calls stay in the rewriting
+  total (`provider_calls_per_iteration`, default 3). So a refuted candidate gets at most 2 counterexample rounds
+  per iteration unless an approval entry raises the cap, and the loop then ends `calls_refused`. No separate
+  repair cap. Code unchanged.
