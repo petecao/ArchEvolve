@@ -4,7 +4,9 @@ Created: 2026-10-14 (Eastern Time), Probata proof of concept ticket 04 (the proo
 Updated: 2026-10-14 ET, ticket 11: batches, skips, the failure-class vocabulary, the method-version pin
 ([format-v0.4-method-version.md](format-v0.4-method-version.md)); 2026-10-14 02:15 ET, ticket 10: the
 replay-label and `tools` fields, no level fields, and the versioned level rule
-([format-v0.4-level-rule.md](format-v0.4-level-rule.md)); 2026-10-14 02:57 ET, ticket 12: the job block's
+([format-v0.4-level-rule.md](format-v0.4-level-rule.md)); 2026-10-14 02:26 ET: failure class
+`spurious_counterexample` and its tie to `unreplayed_counterexample` (Yan-Ru's decision of 02:25 ET);
+2026-10-14 02:57 ET, ticket 12: the job block's
 one field list and its checks, run fields (`run_index`, `provider_pin`) on proof records and proposals,
 repair lineage on proposals ([Run fields and repair lineage](#run-fields-and-repair-lineage-ticket-12)).
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/04-proof-record-tracer.md`; design:
@@ -75,10 +77,11 @@ An adapter is a class in `ADAPTERS` with a `name` and `run(job) -> Verdict`.
   `scratch` (a folder the adapter may use; deleted after the job; never named by the record) and
   `log` (the log file the adapter appends to; kept as evidence).
 - **Out, `Verdict`:** `verdict` (`proven`, `refuted`, `not_proven`), `bounds`, `assumptions`, and
-  `counterexample` (refuted only) or `failure_class` (not proven only), plus the optional
-  `unreplayed_counterexample` (not proven only; below), `tools`, and `peak_rss_bytes` (ticket 12: the
-  peak the adapter's RSS watchdog read for the job's process tree; else `swdb prove` measures it). A
-  verdict that breaks these rules raises `AdapterError`, and nothing is written.
+  `counterexample` (refuted only) or `failure_class` (not proven only), plus
+  `unreplayed_counterexample` (with failure class `spurious_counterexample` only, and always with it; below),
+  `tools`, and `peak_rss_bytes` (ticket 12: the peak the adapter's RSS watchdog read for the job's
+  process tree; else `swdb prove` measures it). A verdict that breaks these rules raises
+  `AdapterError`, and nothing is written.
 - **Scripted adapter (`--adapter scripted`):** reads `verdict`, `bounds`, `assumptions`,
   `counterexample`, `failure_class`, `unreplayed_counterexample`, `tools` and `peak_rss_bytes` from the YAML `--script` file. Its records are
   `contract_fixture` evidence, never evidence about real code.
@@ -87,16 +90,16 @@ An adapter is a class in `ADAPTERS` with a `name` and `run(job) -> Verdict`.
 
 | Field | Meaning |
 |---|---|
-| `subject` | `{kind: candidate_proof_unit, candidate, function}`; any other kind (vocabulary `proof_subject_kinds`) has `{kind, id}` and an optional `part` |
+| `subject` | `{kind: candidate_proof_unit, candidate, function}`; any other kind (vocabulary `proof_subject_kinds`) has `{kind, id}` and an optional `part`, a value of vocabulary `proof_part_names` whose `subject_kind` is the subject's kind (ticket 10; a new part is added there first) |
 | `route` | optional; `route_1`, `route_3` or `bounded_direct`; only on a candidate proof unit |
 | `verdict` | `proven`, `refuted` or `not_proven`; absent on a skip record |
 | `skip_reason` | a skip record only: why no verifier ran (vocabulary `proof_failure_classes`, role `skip_reason`): `no_contract_proof`, `no_minimum_bounds`, `outside_cpp_subset` |
 | `counterexample` | refuted only, required: the counterexample, inline |
-| `failure_class` | not proven only, required: a value of vocabulary `proof_failure_classes` whose role is `failure_class` (twelve classes; each entry has its `handler`) |
+| `failure_class` | not proven only, required: a value of vocabulary `proof_failure_classes` whose role is `failure_class` (thirteen classes; each entry has its `handler`). `spurious_counterexample`: the verifier reported a counterexample that does not replay concretely on the compiled code, so the refutation comes from the tool or the spec encoding, not the program; never sent to repair (handler: fix the encoding, add the case to the regression corpus, rerun) |
 | `replay_label` | refuted only, optional (ticket 10 owns it; 60 fills it and makes it required): `reproduced`, `proof_semantics_only`, `not_reproduced` or `undefined_behavior` (O6: "undefined behavior (no strict-layer replay)"; the refutation counts). Any other value, or a label on a record that is not refuted (a skip included), fails `swdb validate` |
 | `tools` | optional (ticket 10, S14): the verifiers and solvers the job used, each the reference ID of a `trusted_tool` entry in the assumption set; `swdb validate` names any tool without one. Adapters report it in `Verdict.tools`; the scripted adapter reads `tools` from its script |
 | `level`, `level_rule` | never present: a proof record holds no level and never pins the level rule (26 item 9); `swdb validate` refuses either |
-| `unreplayed_counterexample` | not proven only, optional: a counterexample the verifier reported that did not replay concretely on the compiled code. It is a tool or encoding failure, never a refutation, and never reaches repair (input from ticket 05's SAW spike; the replay itself is built by the adapter tickets) |
+| `unreplayed_counterexample` | not proven only; required when `failure_class` is `spurious_counterexample` and refused under any other class or verdict: the counterexample the verifier reported that did not replay concretely on the compiled code. It is a tool or encoding failure, never a refutation, and never reaches repair (input from ticket 05's SAW spike; class decided by Yan-Ru 2026-10-14 02:25 ET; the replay itself is built by the adapter tickets 22, 46, 47) |
 | `pins` | the content-hash set, all ten kinds required (below) |
 | `bounds` | `{dimension: positive integer or "unbounded"}`; `threads` required; absent on a skip record |
 | `assumptions` | absent on a skip record; otherwise list of `{kind, reference: {id, sha256}, sentence}` (`reference` and a non-empty `sentence` required); kind from vocabulary `proof_assumption_kinds` (seven kinds) |

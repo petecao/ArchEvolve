@@ -16,7 +16,8 @@
         "candidate": {"type": "string", "x-ref": "candidate"},
         "function": {"type": "string", "minLength": 1, "description": "The function that holds the rewrite site; one call of it is the proof unit."},
         "id": {"type": "string", "minLength": 1},
-        "part": {"type": "string", "minLength": 1}
+        "part": {"type": "string", "x-vocab": "proof_part_names",
+                 "description": "A contract-proof part or method part (vocabulary proof_part_names; its subject_kind must match, checked in swdb.proof.validate_record). Ticket 10."}
       },
       "allOf": [
         {
@@ -60,7 +61,7 @@
     "unreplayed_counterexample": {
       "type": "object",
       "minProperties": 1,
-      "description": "Not proven only, optional (ticket 11, from ticket 05's SAW spike): a counterexample the verifier reported that did not replay concretely on the compiled code, so it is a tool or encoding failure, never a refutation, and never reaches repair."
+      "description": "Not proven only (ticket 11, from ticket 05's SAW spike): a counterexample the verifier reported that did not replay concretely on the compiled code, so it is a tool or encoding failure, never a refutation, and never reaches repair. Required exactly when failure_class is spurious_counterexample (Yan-Ru 2026-10-14 02:25 ET)."
     },
     "failure_class": {
       "type": "string",
@@ -237,6 +238,13 @@
     },
     {
       "if": {"properties": {"verdict": {"const": "not_proven"}}, "required": ["verdict"]},
+      "then": {
+        "if": {"properties": {"failure_class": {"const": "spurious_counterexample"}}, "required": ["failure_class"]},
+        "then": {"required": ["unreplayed_counterexample"], "x-required-reasons": {"unreplayed_counterexample":
+          "a spurious_counterexample record holds the counterexample that did not replay"}},
+        "else": {"properties": {"unreplayed_counterexample": {"not": {},
+          "x-reason": "only a record of failure class spurious_counterexample holds an unreplayed counterexample"}}}
+      },
       "else": {"properties": {"unreplayed_counterexample": {"not": {},
         "x-reason": "only a not-proven record holds an unreplayed counterexample"}}}
     },

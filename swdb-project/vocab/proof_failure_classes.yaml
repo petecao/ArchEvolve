@@ -3,6 +3,8 @@
 # reasons. A proof record's failure_class must be a failure_class value here and its skip_reason a
 # skip_reason value; an adapter reporting anything else stops the `swdb prove` batch. Handlers are text
 # here; the adapter tickets (21, 22, 46, 47) build them.
+# Updated: 2026-10-14 02:26 ET (spurious_counterexample added: Yan-Ru's decision of 2026-10-14 02:25 ET,
+# from ticket 05's SAW spike; it replaces ticket 11's nearest-class assumption).
 name: proof_failure_classes
 description: Why a proof job ended "not proven" (role failure_class) or ran no verifier (role skip_reason), each with its handler.
 fields: [role, handler]
@@ -55,6 +57,10 @@ values:
     role: failure_class
     meaning: The bounded check ran below the contract's minimum bounds, so it gives no level.
     handler: Rerun at the minimum bounds; the candidate keeps its certification level.
+  - value: spurious_counterexample
+    role: failure_class
+    meaning: The verifier reported a counterexample that does not replay concretely on the compiled code, so the refutation comes from the tool or the spec encoding, not the program. The record holds it in unreplayed_counterexample.
+    handler: Never send to repair; fix the encoding (translator, spec placement or adapter), add the case to the regression corpus, rerun.
   - value: no_contract_proof
     role: skip_reason
     meaning: The rewrite contract has no contract proof, so no contract seeds and no bounded rung run.

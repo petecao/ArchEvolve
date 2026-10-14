@@ -436,6 +436,47 @@ def test_a_negative_control_that_proves_voids_the_contract_proof(seed):
     assert any(p.get("failed") == failed and p["pin"] == "contract" for p in pins), pins
 
 
+# --- part names are one list (vocabulary proof_part_names) ------------------------------------------
+
+def test_the_part_vocabulary_holds_every_part_the_level_rule_reads_with_its_subject_kind_and_void():
+    from swdb import paths, vocab
+    vocabs, problems = vocab.load_all(paths.VOCAB)
+    assert not problems
+    entries = vocabs.entries["proof_part_names"]
+    read = {"negative_controls": ("contract_proof_part", "contract"),
+            "minimum_bounds_derivation": ("contract_proof_part", "none"),
+            "semantics_controls": ("method_part", "proof_semantics"),
+            "concurrency_controls": ("method_part", "method_version"),
+            "civl_genmc_agreement": ("method_part", "method_version")}
+    for name, (kind, voids) in read.items():
+        assert (entries[name]["subject_kind"], entries[name]["voids"]) == (kind, voids)
+    assert {"unit_postcondition", "lifting_lemma", "composition_theorem"} <= set(entries)
+
+
+@pytest.mark.parametrize("subject, reason", [
+    ({"kind": "contract_proof_part", "id": CONTRACT, "part": "negative_control"}, "proof_part_names"),
+    ({"kind": "method_part", "id": "method.contract-fixture-1", "part": "made_up_check"}, "proof_part_names"),
+    ({"kind": "contract_proof_part", "id": CONTRACT, "part": "semantics_controls"}, "method_part"),
+    ({"kind": "method_part", "id": "method.contract-fixture-1", "part": "negative_controls"}, "contract_proof_part"),
+])
+def test_validate_refuses_an_unlisted_part_name_or_one_of_another_subject_kind(seed, subject, reason):
+    seed.proof("part", subject=subject, pins={"code": NA, "baseline_function": NA})
+    result = seed.validate()
+    assert result.returncode == 1
+    problem = [line for line in result.stderr.splitlines() if "proof.t10.part" in line and "subject.part" in line]
+    assert problem and reason in problem[0], result.stderr
+
+
+@pytest.mark.parametrize("subject", [
+    {"kind": "contract_proof_part", "id": CONTRACT, "part": "lifting_lemma"},
+    {"kind": "method_part", "id": "method.contract-fixture-1", "part": "concurrency_controls"},
+])
+def test_control_validate_accepts_a_listed_part_of_its_subject_kind(seed, subject):
+    seed.proof("part", subject=subject, pins={"code": NA, "baseline_function": NA})
+    result = seed.validate()
+    assert result.returncode == 0, result.stderr
+
+
 # --- failed method parts void their version ------------------------------------------------------
 
 WRONG = {"control": "fixture-control", "expected": "refuted", "got": "proven"}

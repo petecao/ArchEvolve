@@ -220,7 +220,7 @@ def test_repair_lineage_naming_a_missing_proof_record_fails(seed):
 
 @pytest.mark.parametrize("script", [
     {"verdict": "proven"},
-    {"verdict": "not_proven", "failure_class": "unknown", "unreplayed_counterexample": COUNTEREXAMPLE},
+    {"verdict": "not_proven", "failure_class": "spurious_counterexample", "unreplayed_counterexample": COUNTEREXAMPLE},
 ])
 def test_repair_lineage_naming_a_record_that_is_not_a_refutation_fails(seed, script):
     """A counterexample that did not replay is never a refutation and never reaches repair."""

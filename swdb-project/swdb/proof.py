@@ -17,6 +17,8 @@ map ticket 26 and ADR 0016. Format: docs/reference/format-v0.4-proof.md.
 - Ticket 11 (2026-10-14 ET): one call runs a batch (one job per script, or one skip); every record
   pins the current method version (swdb.method_version); a failure class outside vocabulary
   proof_failure_classes stops the batch; `validate_record` checks the class, skip reason and pin.
+  Updated 2026-10-14 02:26 ET (Yan-Ru's decision of 02:25 ET): an unreplayed counterexample goes with
+  failure class spurious_counterexample and no other, both ways; repair never takes that class.
 - Ticket 12 (2026-10-14 ET): the job block's one field list (`_job`), run fields (`--run-index`,
   `--provider-*`), and the cross-record checks of repair lineage (`validate_proposal`) and of the proof
   records a promotion review cites (`validate_promotion`).
@@ -40,6 +42,7 @@ from swdb.cli import Failure, UsageError
 
 VERDICTS = ("proven", "refuted", "not_proven")
 UNPINNED = "unpinned"
+SPURIOUS = "spurious_counterexample"   # Yan-Ru 2026-10-14 02:25 ET: the class of a counterexample that did not replay
 
 
 # --- the adapter interface ----------------------------------------------------------
@@ -76,7 +79,8 @@ class Verdict:
     assumptions: list = field(default_factory=list)
     counterexample: dict = None
     failure_class: str = None
-    unreplayed_counterexample: dict = None   # ticket 11: a reported counterexample that did not replay
+    unreplayed_counterexample: dict = None   # ticket 11: a reported counterexample that did not replay;
+                                             # present exactly when failure_class is spurious_counterexample
     tools: tuple = ()                        # ticket 10 (S14): verifiers and solvers used, each a trusted-tool entry
     peak_rss_bytes: int = None               # ticket 12 (O9): the tree peak the adapter's RSS watchdog read, if any
 
@@ -90,6 +94,10 @@ class Verdict:
             raise AdapterError("a refuted verdict, and only a refuted verdict, carries a counterexample")
         if (self.verdict == "not_proven") != bool(self.failure_class):
             raise AdapterError("a not-proven verdict, and only a not-proven verdict, carries a failure class")
+        if self.verdict == "not_proven" and \
+                (self.failure_class == SPURIOUS) != bool(self.unreplayed_counterexample):
+            raise AdapterError(f"failure class {SPURIOUS} and an unreplayed counterexample go together: a "
+                               "not-proven verdict carries both or neither")
         if not isinstance(self.bounds, dict) or "threads" not in self.bounds:
             raise AdapterError("a verdict states its bounds, the thread count always among them")
 
@@ -388,6 +396,7 @@ def _sha256(path):
 # --- swdb validate: the rules the schema cannot express (ticket 11) -----------------------
 
 FAILURE_VOCAB = "proof_failure_classes"
+PART_VOCAB = "proof_part_names"
 
 
 def listed(vocabs, role):
@@ -404,6 +413,15 @@ def validate_record(record, ctx):
         if value is not None and value not in listed(ctx.vocabs, field_name):
             yield Problem(record.rel, field_name,
                           f"{value!r} is not a {field_name.replace('_', ' ')} in vocabulary {FAILURE_VOCAB}")
+    subject = data.get("subject") or {}
+    part = subject.get("part")
+    if part is not None:                                             # ticket 10: one list of part names
+        entry = ctx.vocabs.entries.get(PART_VOCAB, {}).get(part)
+        if entry is None:
+            yield Problem(record.rel, "subject.part", f"{part!r} is not a part name in vocabulary {PART_VOCAB}")
+        elif entry.get("subject_kind") != subject.get("kind"):
+            yield Problem(record.rel, "subject.part", f"part {part!r} belongs to a {entry.get('subject_kind')} "
+                          f"subject (vocabulary {PART_VOCAB}), not to {subject.get('kind')}")
     trusted = {(a.get("reference") or {}).get("id") for a in data.get("assumptions") or []
                if isinstance(a, dict) and a.get("kind") == "trusted_tool"}
     for position, tool in enumerate(data.get("tools") or []):      # ticket 10, S14

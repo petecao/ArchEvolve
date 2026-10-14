@@ -38,9 +38,7 @@ UNBOUNDED = "unbounded"
 ORDER = ("uncertified", "certified", "proven_within_bounds_threads_1", "proven_within_bounds_threads_k",
          "proven_unbounded")
 PROVEN = ORDER[2:]
-SEMANTICS_PARTS = {"semantics_controls"}                                # void the proof-semantics version
-CONCURRENCY_PARTS = {"concurrency_controls", "civl_genmc_agreement"}    # void the method version
-NEGATIVE_CONTROLS_PART = "negative_controls"                            # void the contract content
+PART_VOCAB = "proof_part_names"          # part names and what a failed part voids (read, never hard-coded)
 MINIMUM_PART = "minimum_bounds_derivation"
 PROOF_SEMANTICS_FOLDER = "proof_semantics"
 BELOW_MINIMUM = "bounded check below minimum"
@@ -227,18 +225,17 @@ class Rule:
         proof-semantics version it pins (12 item 9); a concurrency control with the wrong verdict or
         a CIVL-GenMC contradiction voids the method version it pins (15 items 9, 12); a negative
         control that proves voids the contract content it pins (10 item 2)."""
+        from swdb import paths, vocab
+        vocabs, _problems = vocab.load_all(paths.VOCAB)
+        parts = vocabs.entries.get(PART_VOCAB, {})
         voids = {}
         for rid, record in sorted(self.proofs.items()):
             subject = record.get("subject") or {}
             if record.get("verdict") != "refuted" or list(self.pin_problems(record)):
                 continue
-            part, kind = subject.get("part"), None
-            if subject.get("kind") == "method_part" and part in SEMANTICS_PARTS:
-                kind = "proof_semantics"
-            elif subject.get("kind") == "method_part" and part in CONCURRENCY_PARTS:
-                kind = "method_version"
-            elif subject.get("kind") == "contract_proof_part" and part == NEGATIVE_CONTROLS_PART:
-                kind = "contract"
+            entry = parts.get(subject.get("part")) or {}
+            kind = entry.get("voids") if entry.get("subject_kind") == subject.get("kind") else None
+            kind = None if kind == "none" else kind
             pin = ((record.get("pins") or {}).get(kind) or {}) if kind else {}
             if kind and pin and not _not_applicable(pin):
                 voids.setdefault((kind, pin.get("id"), pin.get("sha256")), rid)

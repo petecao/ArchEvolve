@@ -206,9 +206,10 @@ through `verifier_run.py`). Test scratch only: `/tmp/claude/probata-runs/t10/pyt
   (`swdb.artifacts.digest`), whose `bounds` are the minimum (33); predecessor snapshot = the
   predecessor candidate artifact's tree sha256 (62); build constants = the value each dependency record
   pins for the same name (no global "current" constant exists).
-- Assumption: the minimum-bounds derivation caps only the records that pin it, not every record of the
+- Decided by Yan-Ru 2026-10-14 02:43 ET: the minimum-bounds derivation caps only the records that pin it, not every record of the
   contract. Otherwise its bounded level would cap every route-1 WP proof of that contract at proven
-  within bounds, which contradicts the design (route-1 WP reaches proven unbounded).
+  within bounds, which contradicts the design (route-1 WP reaches proven unbounded). Recorded in the
+  design spec's "What a proven verdict asserts" (cap rule).
 - Assumption: contract-proof parts are grouped by `subject.part`; within a part the highest counting
   record counts; a part whose records all stopped counting stops its dependents (10 item 6); a part
   with only unproven counting records does not cap.
@@ -228,8 +229,17 @@ through `verifier_run.py`). Test scratch only: `/tmp/claude/probata-runs/t10/pyt
 
 - Design gap: decision 10 item 5 makes every contract-proof part cap, and 33 makes the minimum-bounds
   derivation a contract-proof part whose bounds are bounded by nature. Read literally, no proof of a
-  contract with a minimum-bounds record could read proven unbounded. Handled by the assumption above
-  (it caps only what pins it); Yan-Ru may want to confirm.
+  contract with a minimum-bounds record could read proven unbounded. Handled by the rule above
+  (it caps only what pins it); Yan-Ru decided it 2026-10-14 02:43 ET.
 - The part names (`semantics_controls`, `concurrency_controls`, `civl_genmc_agreement`,
   `negative_controls`, `minimum_bounds_derivation`, `unit_postcondition`, `lifting_lemma`) are free
   text in the schema; 29, 32, 33 and 48 must write exactly these, or a vocabulary should pin them.
+
+2026-10-14 02:35 ET (follow-up, LR-04): the part names are now one list, `vocab/proof_part_names.yaml`
+(fields `subject_kind`, `voids`). The schema's `subject.part` uses it (`x-vocab`), `swdb validate` refuses
+an unlisted part or one of another subject kind (`swdb.proof.validate_record`), and `swdb.level_rule`
+reads what a failed part voids from it. Tickets 29, 32, 33, 42, 43 and 48 add any new part there first.
+Tests: 7 more in `tests/test_level_rule.py`.
+
+2026-10-14 02:43 ET: Yan-Ru accepted the minimum-bounds cap reading (it caps only the records that pin it); the
+Answer's line now reads "Decided", and the design spec's cap rule carries a dated later-change line.
