@@ -1,0 +1,69 @@
+# Created: 2026-10-14 15:43 ET (Probata proof of concept, fix-21). The first real method version: a DRAFT.
+# Never edited in place: a change (including the freeze) is a new file with the next sequence.
+# A draft is never current: it is used only when named (`swdb prove --method-version method.probata-draft-1`,
+# or a campaign file's `method_version`). Ticket 59 freezes a method version after Yan-Ru's review.
+# Lineup: the Mac installs of ticket 03 and ticket 21; CBMC 6.11 on the C lowering is the bounded verifier
+# (Yan-Ru 2026-10-14 13:19 ET; SAW and crux-llvm are no longer in the lineup). Budgets: starting values of
+# ticket 11 (map 25 item 2, 13 item 11, 15 item 9). Frama-C/WP runs one prover at a time (-wp-par 1:
+# hard goals on the Mac, ticket 08). The machdep is frozen too (ticket 59's list).
+id: method.probata-draft-1
+kind: method_version
+sequence: 1
+status: draft
+created: '2026-10-14'
+evidence_kind: execution
+description: >-
+  First real Probata method version (draft): the Mac verifier lineup with CBMC 6.11 as the bounded verifier,
+  the starting budgets, and the C lowering tool of ticket 21; sections later tickets build are marked
+  not_yet_built.
+lineup:
+  - {role: front_end, tool: clang, version: '22.1.8', flags: ['-std=c++17', '-fopenmp']}
+  - {role: bounded_verifier, tool: cbmc, version: '6.11',
+     flags: ['--unwinding-assertions', '--sat-solver', 'cadical', '--slice-formula', '--trace']}
+  - {role: concurrent_bounded_verifier, tool: civl, version: '1.23', flags: ['verify']}
+  - {role: second_refuter, tool: genmc, version: '0.19.0', flags: ['--rc11', '--disable-mm-detector', '--print-error-trace']}
+  - {role: unbounded_verifier, tool: frama-c-wp, version: '33.0',
+     flags: ['-wp', '-wp-rte', '-wp-cache', 'none', '-wp-model', '+real', '-wp-par', '1', '-machdep', 'x86_64']}
+  - {role: solver, tool: alt-ergo, version: '2.6.4', flags: []}
+  - {role: solver, tool: z3, version: '5.1.0', flags: []}
+  - {role: solver, tool: cvc5, version: '1.2.1', flags: []}
+  - {role: proof_assistant, tool: rocq, version: '9.3.0', flags: []}
+civl:
+  java: {tool: openjdk, version: '21.0.12.1', flags: ['-Xmx4g']}
+  memory_model: sequential_consistency
+  result_line: "All errors marked with '+' are absent"
+  exit_code: CIVL exits 0 even on a bug; the verdict is read from its result line (ticket 03)
+genmc:
+  memory_model: rc11
+  memory_model_detector: disabled
+  error_exit_code: 42
+openmp_runtime: {name: libomp, version: '22.1.8'}
+c_lowering:
+  # The subset is what the C lowering tool accepts at this version (ticket 24 widens it: a new tool version).
+  subset: {id: swdb-c-lowering-1.subset, sha256: '2614c7dad7187fc65dd2a2f6d8956568296e8aacb57f51cdf7ed927da732a8ac'}
+  translators: [{id: swdb-c-lowering-1, sha256: '2614c7dad7187fc65dd2a2f6d8956568296e8aacb57f51cdf7ed927da732a8ac'}]
+  naming_rules: {id: format-v0.4-c-lowering-wp.kept-names, sha256: 'c633a950412a552abd14756d07e3721b9e8374e0ae950679db21ae8a1dc0e7c5'}
+acsl_version:
+  not_yet_built: The ACSL language version Frama-C 33.0 implements is confirmed by the proof setup check (ticket 36).
+proof_hint_vocabulary: [loop_invariant, loop_assigns, loop_variant, assert, ghost_declaration, ghost_statement,
+                        non_recursive_definition, same_run_lemma, wp_strategy]
+checks:
+  not_yet_built: Ticket 36 builds the proof setup check and the verdict reading, ticket 35 the proof hint check.
+budgets:
+  hint_rounds: 10
+  hint_loop_wall_minutes: 60
+  bounded_job_minutes: 15
+  counterexample_repair_rounds: 5
+  wp_seconds_per_solver: 30
+  civl_k: 3
+prompts:
+  not_yet_built: Tickets 34 and 37 write the proof-hint agent prompts.
+shared_action_kinds: [claim, min_update, atomic_add_or, openmp_reduction, queue_reserve]
+sharing_classes: [read_only, thread_owned, shared_actions_only, lock_protected]
+logic_library:
+  not_yet_built: Ticket 26 writes the shared logic library (library/logic/), the sum library included.
+models:
+  not_yet_built: Ticket 25 writes the std::vector and std::pair models.
+rocq_development:
+  not_yet_built: Tickets 41-43 write the Rocq development (parallel composition theorem, DX100 reduction lemma).
+ghost_capacity_k: 32

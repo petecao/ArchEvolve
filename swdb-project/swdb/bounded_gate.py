@@ -41,10 +41,18 @@ MINIMUM_PART = "minimum_bounds_derivation"
 NO_CONTRACT_PROOF, NO_MINIMUM_BOUNDS, OUTSIDE_SUBSET = "no_contract_proof", "no_minimum_bounds", "outside_cpp_subset"
 
 
-def method_version_of(library_root):
-    """The current method version of the campaign's library, or None when it has none (no gate)."""
+def method_version_of(library_root, pinned=None):
+    """The method version the campaign's gate runs under, or None (no gate).
+
+    fix-21 (2026-10-14 ET): the one the campaign file pins (`method_version`, draft or frozen; a pin with
+    no file is refused), else the current frozen one. A library holding only drafts keeps the gate off."""
     from swdb import method_version
-    return method_version.current(Path(library_root))
+    if pinned is None:
+        return method_version.current(Path(library_root))
+    try:
+        return method_version.select(Path(library_root), pinned)
+    except LookupError as exc:
+        raise Failure(f"campaign file refused:\n  method_version: {exc}") from None
 
 
 def budgets(found):
@@ -86,7 +94,7 @@ class Gate:
         else:
             beside.symlink_to(target, target_is_directory=True)
         self._copy_library_records(Path(team_dir))
-        self.adapter.prepare_proofs(self.store_dir)
+        self.adapter.prepare_proofs(self.store_dir, method=dict(self.method))    # fix-21: the gate's method version
 
     def _copy_library_records(self, team_dir):
         from swdb import access
@@ -201,7 +209,8 @@ class Gate:
         args = Namespace(records=self.store_dir, candidate=candidate_id,
                          function=self.adapter.proof_function(row["contract"]), contract=row["contract"],
                          adapter=adapter, script=[script] if script else None, skip=skip, runs_dir=self.runs_dir,
-                         batch=batch, position=row["position"], id=None, run_index=None, provider_kind=None,
+                         batch=batch, position=row["position"], id=None, method_version=self.method["id"],
+                         run_index=None, provider_kind=None,
                          provider_model=None, provider_effort=None, format="json",
                          bounds=row.get("bounds"), minimum_bounds=row.get("minimum_bounds"),
                          budget_minutes=None if skip else self.minutes)

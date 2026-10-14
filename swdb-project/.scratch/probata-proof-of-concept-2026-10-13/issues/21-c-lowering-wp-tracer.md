@@ -1,7 +1,7 @@
 # 21 — C lowering and WP adapter (A2 tracer)
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-13 23:15 ET (review fixes); 2026-10-14 15:30 ET (resolved)
+Updated: 2026-10-13 23:15 ET (review fixes); 2026-10-14 15:30 ET (resolved); 2026-10-14 15:45 ET (fix-21: method-version lifecycle, first real draft)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 04, 10, 11, 20
@@ -170,3 +170,37 @@ units are outside the core subset (ticket 24). Branch `probata-poc/t21`. Interfa
 - 34/35/37: anchors in `<f>.anchors.json`; `WpAdapter._input` places hints; retry from `goals` and
   `unproven_properties`; handler output lists `for_hint_loop`.
 - 36: replace `wp_adapter.read_outcome`; keep the class table in the doc.
+
+**Later changes** (2026-10-14 15:45 ET, follow-up branch `probata-poc/fix-21`)
+
+- Assumption (main-session decision, 2026-10-14): method versions get a lifecycle, `status: draft | frozen`.
+  - `method_version.current()` returns the highest-sequence **frozen** version. A draft never becomes current.
+  - A draft is used only when named: `swdb prove --method-version <id>`, or the campaign file's new optional
+    `method_version`. The bounded gate and the WP phase then run under it, and the gate passes it to `swdb prove`.
+  - The bounded gate stays off unless the campaign pins a method version or a frozen one exists.
+  - Ticket 59 is the freeze: it flips the status and fills in the review.
+- Assumption (not decided above): the freeze is a **new file** (`status: frozen`, next `sequence`), not an
+  in-place edit. A status flip changes the file's bytes, so records that pin the draft would otherwise fail
+  `swdb validate`. Records under the draft stop counting at the freeze; 59 replays them.
+- Assumption: the level rule (still `level-rule.1`) counts a record under the current frozen version, or under
+  a draft whose `sequence` is higher than that version's. Two frozen files never share a `sequence`; a draft may.
+- Assumption: the repair cap reads the method version the refuted proof record pins (else the current one).
+  ArchEvolve mode has no campaign file, so it uses the current frozen version only.
+- Interface change: `TargetAdapter.prepare_proofs(store_dir, method=None)` gets the gate's method-version pin
+  (22/46/47/55: contract-proof records pin that one).
+- The first real draft is committed: `library/methods/probata-draft-1.yaml` (`method.probata-draft-1`,
+  sequence 1, `evidence_kind: execution`).
+  - Lineup: clang 22.1.8; CBMC 6.11 as the bounded verifier (Yan-Ru, 13:19 ET; SAW and crux-llvm left the
+    lineup); CIVL 1.23; GenMC 0.19.0; Frama-C/WP 33.0 with Alt-Ergo 2.6.4, Z3 5.1.0 and CVC5 1.2.1;
+    Rocq 9.3.0.
+  - Budgets: ticket 11's starting values (tickets 11 and 16). Ghost capacity K = 32 (design spec).
+  - WP flags add `-wp-par 1` (ticket 08) and `-machdep x86_64` to the frozen pair. The adapter also appends
+    both itself, so they appear twice on the command line (harmless).
+  - The C-lowering translator is `swdb/c_lowering.py` at that commit. Tickets 22 and 24 change the tool, so
+    they write the next draft before running the WP adapter with `--method-version`.
+  - `not_yet_built`: `acsl_version` (36 confirms it), `checks` (35, 36), `prompts` (34, 37), `logic_library`
+    (26), `models` (25), `rocq_development` (41-43).
+- The contract fixture `tests/fixtures/proof/methods/contract-fixture-1.yaml` is now `frozen`, so it stays
+  the current method version of test seeds. `tests/test_wp_adapter.py::method_version` takes its lineup
+  from the committed draft.
+- The side finding is fixed: `test_level_rule.py`'s proof-semantics fixtures now write ticket 20 entries.

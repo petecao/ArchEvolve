@@ -217,10 +217,10 @@ def proof_semantics(seed, name, sequence, target="dx100"):
     return {"id": ident, "sha256": _sha(path)}
 
 
-def method_version(seed, name, sequence):
+def method_version(seed, name, sequence, status="frozen"):
     source = seed.library / "methods" / "contract-fixture-1.yaml"
     data = yaml.safe_load(source.read_text())
-    data.update(id=f"method.{name}", sequence=sequence)
+    data.update(id=f"method.{name}", sequence=sequence, status=status)
     path = seed.library / "methods" / f"{name}.yaml"
     path.write_text(yaml.safe_dump(data, sort_keys=False))
     return {"id": f"method.{name}", "sha256": _sha(path)}
@@ -531,6 +531,29 @@ def test_control_a_failed_check_of_an_older_method_version_leaves_the_current_on
     method_part(seed, "failed", old["id"], "concurrency_controls", {"method_version": old})
     seed.proof("unit", bounds=TOP, pins={"method_version": current})
     assert seed.level()["level"] == "proven_unbounded"
+
+
+# --- draft method versions (fix-21, 2026-10-14): used only when named; never supersede ------------
+
+def test_a_record_under_a_draft_newer_than_the_current_frozen_version_counts(seed):
+    draft = method_version(seed, "contract-fixture-2", 2, status="draft")
+    seed.proof("unit", bounds=TOP, pins={"method_version": draft})
+    assert seed.level()["level"] == "proven_unbounded"
+
+
+def test_control_a_newer_draft_never_stops_a_record_under_the_current_frozen_version(seed):
+    method_version(seed, "contract-fixture-2", 2, status="draft")
+    seed.proof("unit", bounds=TOP)                               # pins frozen contract-fixture-1
+    assert seed.level()["level"] == "proven_unbounded"
+
+
+def test_a_record_under_a_draft_that_a_frozen_version_superseded_stops_counting(seed):
+    draft = method_version(seed, "contract-fixture-2", 2, status="draft")
+    method_version(seed, "contract-fixture-3", 3)                # the freeze: a new frozen file, sequence 3
+    seed.proof("unit", bounds=TOP, pins={"method_version": draft})
+    level = seed.level()
+    assert level["level"] == "certified"
+    assert [p["pin"] for p in level["stale_proofs"][0]["pins"]] == ["method_version"]
 
 
 # --- assumption entries never cap; verifiers and solvers are entries (S14) ----------------------

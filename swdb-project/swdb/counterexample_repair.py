@@ -76,14 +76,16 @@ def repairable(proof):
 
 # --- the cap: the method version's per-candidate budget ---------------------------------------
 
-def cap(records):
-    """`budgets.counterexample_repair_rounds` of the current method version (25 item 2)."""
+def cap(records, proof=None):
+    """`budgets.counterexample_repair_rounds` of the method version (25 item 2): the one the refuted proof
+    record pins (fix-21: a campaign may run under a named draft), else the current frozen one."""
     from swdb import method_version
     from swdb.library import default_root
-    found = method_version.current(default_root(records))
-    if found is None:
-        raise Failure("no method version beside the records: the repair cap is its "
-                      "budgets.counterexample_repair_rounds")
+    pinned = ((proof or {}).get("pins") or {}).get("method_version") or {}
+    try:
+        found = method_version.select(default_root(records), pinned.get("id"))
+    except LookupError as exc:
+        raise Failure(f"{exc}: the repair cap is the method version's budgets.counterexample_repair_rounds") from None
     rounds = (found.data.get("budgets") or {}).get("counterexample_repair_rounds")
     if not isinstance(rounds, int) or isinstance(rounds, bool) or rounds < 1:
         raise Failure(f"method version {found.id} has no budgets.counterexample_repair_rounds")
@@ -250,7 +252,7 @@ def check(records, proof_id, setting):
                       "request, intent and profile package")
     previous = lineage(store, refuted_id)
     number = (previous["round"] if previous else 0) + 1
-    rounds, method = cap(records)
+    rounds, method = cap(records, proof)
     if number > rounds:
         raise BudgetSpent(rounds, method, refuted_id)
     opened = _opened_calls(store, refuted_id, number)
@@ -408,7 +410,7 @@ def loop(records, proof_id, *, runs_dir, provider_config, certify, gate, setting
     from swdb.extensa_boundary import _library_for
     from swdb.store import Store
     rows, trigger = [], proof_id
-    rounds_cap, _method = cap(records)
+    rounds_cap, _method = cap(records, Store(records).get(proof_id, "proof"))
     while True:
         closer = None
         if charge is not None:

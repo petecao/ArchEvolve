@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "extensa_campaign",
   "title": "Extensa campaign file (swdb.extensa-campaign.v1)",
-  "description": "Created 2026-10-03 ET (ticket 52, decision D5). An input file under campaigns/extensa/, not a record; checked by swdb validate and swdb campaign. Updated 2026-10-05 ET: the ID pattern is the envelope's $defs.extensa_campaign_id, added when swdb.campaign loads this schema. Updated 2026-10-09 ET: paired_estimates.numeric_pairing_check (D35).",
+  "description": "Created 2026-10-03 ET (ticket 52, decision D5). An input file under campaigns/extensa/, not a record; checked by swdb validate and swdb campaign. Updated 2026-10-05 ET: the ID pattern is the envelope's $defs.extensa_campaign_id, added when swdb.campaign loads this schema. Updated 2026-10-09 ET: paired_estimates.numeric_pairing_check (D35). Updated 2026-10-14 ET (Probata PoC fix-21): optional method_version pin.",
   "type": "object",
   "additionalProperties": false,
   "required": ["format", "id", "created", "mode", "kernel", "target", "machine", "base_source", "baselines",
@@ -87,6 +87,10 @@
       "description": "Default enabled; explicit legacy opt-out never produces eligible paired evidence."
     },
     "runs_root": {"type": "string", "minLength": 1},
+    "method_version": {
+      "type": "string", "pattern": "^method\\.[a-z0-9][a-z0-9._-]*$",
+      "description": "Probata PoC fix-21 (2026-10-14 ET): the method version (library/methods/, draft or frozen) the campaign's bounded gate and WP phase run under. Without it the campaign uses the current frozen method version, and a library holding only drafts keeps the gate off. A pin with no file is refused."
+    },
     "derived_starts": {
       "type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$"},
       "description": "Probata PoC 19 (2026-10-14 ET): the certified derived implementations of this kernel an iteration may start from (the rewrite role names its `start`: one of these, or null for the base source). An ID may name a derived implementation this campaign records in an earlier iteration."

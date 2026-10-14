@@ -269,11 +269,9 @@ class Rule:
 
     def current_method(self, ident):
         from swdb import method_version
-        if "method_version" not in self._current:
-            found = method_version.current(self.library_root)
-            self._current["method_version"] = method_version.pin(found) if found else {}
-        current = self._current["method_version"]
-        return current.get("sha256") if current.get("id") == ident else None
+        if "method_version" not in self._current:       # the current frozen version and newer drafts (fix-21)
+            self._current["method_version"] = method_version.counting(self.library_root)
+        return self._current["method_version"].get(ident)
 
     def current_version(self, folder, ident):
         """The file sha256 of version `ident` in library/<folder>/ while it is current in its line, else None."""
