@@ -1,7 +1,7 @@
 # Spec: Extensa Probata — proven certification levels
 
 Created: 2026-10-13 21:46 ET
-Updated: 2026-10-14 02:26 ET (Yan-Ru added failure class spurious counterexample, 02:25 ET); 2026-10-14 00:20 ET (Yan-Ru approved the defaults of O2–O10); 2026-10-13 23:07 ET (cutting the build tickets surfaced corrections S7–S14 and open points O2–O10,
+Updated: 2026-10-14 02:43 ET (Yan-Ru decided the minimum-bounds cap, from proof-of-concept ticket 10); 2026-10-14 02:26 ET (Yan-Ru added failure class spurious counterexample, 02:25 ET); 2026-10-14 00:20 ET (Yan-Ru approved the defaults of O2–O10); 2026-10-13 23:07 ET (cutting the build tickets surfaced corrections S7–S14 and open points O2–O10,
 defaults applied); 2026-10-13 22:10 ET (Yan-Ru accepted the test seams and O1's default, with no objection to
 choices S1–S6); 2026-10-13 22:08 ET (review pass against all 28 tickets: 8 corrections, 8 omissions
 filled; the old open point O2 became choice S6, since tickets 13 and 25 already decide it)
@@ -399,6 +399,11 @@ the detail and the evidence.
 - **Assumption set, seven kinds** ([26]): assumed clause, proof semantics, summary, reduction, trusted
   tool, written proof, platform choice. Each entry: kind, reference (ID and hash), one plain sentence.
 - **Cap rule:** a proven dependency caps the level; an unproven one is an assumption entry and does not.
+  Later change (2026-10-14 02:43 ET, decided by Yan-Ru, from proof-of-concept ticket 10): the minimum-bounds
+  derivation (proof-of-concept ticket 33's contract-proof part, bounded by nature) caps only the proof records that pin it
+  (their `minimum_bounds` pin), not every record of the contract. Read with [10] item 5 literally, it
+  would cap every route-1 WP proof of the contract at proven within bounds. The other contract-proof
+  parts still cap every candidate proof of the same contract content.
 
 ### Proven once vs per candidate — [What a contract proves once (10)][10]
 

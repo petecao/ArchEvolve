@@ -1,6 +1,7 @@
 # The level rule (`swdb candidate-level`)
 
-Created: 2026-10-14 02:15 ET, Probata proof of concept ticket 10.
+Created: 2026-10-14 02:15 ET, Probata proof of concept ticket 10. Updated: 2026-10-14 ET, part names
+pinned in vocabulary `proof_part_names`.
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/10-level-rule.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("Records and levels", S11, S14, O1, O6, O7), map 26,
 [ADR 0016](../adr/0016-proof-records-never-change-level-computed-on-read.md). Code: `swdb/level_rule.py`.
@@ -67,7 +68,9 @@ counting records are all unproven does not cap. With no contract-proof records a
 
 ### Voids
 
-A counting refuted record of these subjects voids what it pins, even while it is current. Every other
+A counting refuted record of these subjects voids what it pins, even while it is current. The level
+rule reads which part voids what from vocabulary `proof_part_names` (field `voids`), the one list of
+part names; `swdb validate` refuses an unlisted part or one of another subject kind. Every other
 record that pins the voided version or content stops counting, and the output names the failed record.
 
 | Subject (`kind`, `part`) | Voids |

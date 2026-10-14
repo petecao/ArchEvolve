@@ -79,7 +79,7 @@ An adapter is a class in `ADAPTERS` with a `name` and `run(job) -> Verdict`.
 
 | Field | Meaning |
 |---|---|
-| `subject` | `{kind: candidate_proof_unit, candidate, function}`; any other kind (vocabulary `proof_subject_kinds`) has `{kind, id}` and an optional `part` |
+| `subject` | `{kind: candidate_proof_unit, candidate, function}`; any other kind (vocabulary `proof_subject_kinds`) has `{kind, id}` and an optional `part`, a value of vocabulary `proof_part_names` whose `subject_kind` is the subject's kind (ticket 10; a new part is added there first) |
 | `route` | optional; `route_1`, `route_3` or `bounded_direct`; only on a candidate proof unit |
 | `verdict` | `proven`, `refuted` or `not_proven`; absent on a skip record |
 | `skip_reason` | a skip record only: why no verifier ran (vocabulary `proof_failure_classes`, role `skip_reason`): `no_contract_proof`, `no_minimum_bounds`, `outside_cpp_subset` |
