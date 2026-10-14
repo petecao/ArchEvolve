@@ -1,9 +1,9 @@
 # 34 — proof_hinting role and workspace
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-14 16:40 ET (Answer); 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 01, 21
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-hint loop": Workspace; "Loop, modes and guards (changed)": Provider guard and workspaces; "Providers and machines"; "Testing Decisions", seam 4; user stories 27, 28, 77, 80, 85; O3); decisions: [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md) (items 1, 6, 10, 13), [18](../../formal-verification-2026-10-09/issues/18-evaluation-claims-and-subjects.md) (item 6, the guard), [23](../../formal-verification-2026-10-09/issues/23-evaluation-baselines-and-metrics.md) (item 7, the Codex pin)
 **Time estimate:** about 2 days
@@ -93,3 +93,107 @@ and every hidden-material control is refused.
   on the Mac the role runs in Codex's own sandbox over the frozen workspace, read-only; it builds
   nothing (criterion "Mac confinement"). 03 —
   New verifiers on the Mac records this in the ADR 0006 exception.
+
+## Answer
+
+2026-10-14 16:40 ET. **Resolved.** Every acceptance box is met with a scripted provider (an `external_fixture`
+emulating Codex), a stand-in `frama-c` and a scripted proof hint check. No real Codex call or real WP run was
+made; none is required by the boxes. Branch `probata-poc/t34`. Interface doc:
+[`format-v0.4-proof-hinting.md`](../../../docs/reference/format-v0.4-proof-hinting.md).
+
+**What was built**
+
+| Piece | Where |
+|---|---|
+| Role `proof_hinting` in `provider_roles.ROLES`, hints-only schema `HINT_OUTPUT_SCHEMA`; `provider_roles.run` dispatches to it | `swdb/provider_roles.py` |
+| Workspace (fixed layout, read-only, `workspace.json`), visibility rules, narrow authors' exception, O3 confinement, role audit, hint set | `swdb/proof_hinting.py` |
+| Frozen wrapper: MCP stdio server (`list_workspace`, `read_workspace_file`, `check_hints`, `prove_hints`) | `swdb/proof_hint_wrapper.py` |
+| Rewriting workspaces refuse hint records (`refuse_hint_records`, in `context_documents` and the prompt-only route) | `swdb/provider_workspace.py`, `swdb/rewrite.py` |
+| `rewrite.configuration_from(mapping)` (the default Codex config has no file) | `swdb/rewrite.py` |
+| Tests and fixtures (scripted provider, stand-in `frama-c`, scripted check) | `tests/test_proof_hinting.py`, `tests/fixtures/proof_hinting/` |
+
+**Acceptance, box by box**
+
+- Launch: `provider_roles.run("proof_hinting", Inputs(...), None, config, folder)` goes through
+  `rewrite.interpret` (pins, output check, retained call folder). `default_config()` is Codex at
+  `PINS["codex"]` (`gpt-5.6-sol`, `xhigh`). The hint set records `provider` (kind, resolved kind, model,
+  effort, classification, CLI version) and per-hint provenance.
+- Visible set: a test compares the tree under `workspace/` with `workspace.json` `visible_files` (path to
+  sha256): equal, and exactly the ten layout files.
+- Hidden material: one control each (evaluator code, workload input, test, negative control, another
+  candidate artifact, counterexample) refuses before the call folder exists and names the file. Also refused:
+  a second proof unit, a proof unit whose bytes are not the candidate's, a file outside the layout.
+- Narrow exception: `TDStepMAA` is visible when `Candidate.authors_function == "TDStepMAA"` and the proof unit
+  is `TDStepMAA`. Controls: refused when the record does not say so; `DOBFSMAA` and `PBFSMAA` beside it are
+  refused; a record naming `DOBFSMAA` for a `TDStepMAA` unit is refused; every other role still refuses all six
+  guarded names. Ticket 01's rewriting tests (`test_provider_authors_guard.py`, `test_counterexample_repair.py`)
+  still pass.
+- Output: the schema has only `hints: [{anchor, kind, text}]` and passes the strict check; a provider that
+  returns `files` or `verdict` fails the output check.
+- Frozen wrapper: inside the one call the scripted provider starts the wrapper from the Codex argv's
+  `-c mcp_servers.swdb_proof_hint.*`, reads a file, gets a check rejection by rule, and runs WP; the stand-in
+  `frama-c` saw exactly the plan's frozen flags and the merged hint. Wrapper and plan hashes are in
+  `workspace.json`. Refused: `-wp-cache update` and `-kernel-warn-key ghost:bad-use=inactive` on the wrapper's
+  command line, as tool arguments, and in the plan's method flags. A changed check hash is refused. Answers say
+  "never a verdict"; the hint set carries no wrapper result.
+- No leak: a rewriting workspace refuses a hint set or hint records in repair evidence (including a
+  counterexample repair) and among its files (JSON, YAML, format marker); the prompt-only route refuses one
+  before any call. A rewriting workspace without hints is unchanged (provider workspace suite: 656 passed).
+- Inputs immutable: files and folders are written read-only; a provider that tries to edit the lowering and
+  the proof unit changes nothing, and `audit.json` lists both attempts; the call fails.
+- Mac confinement: the Codex argv has `--sandbox read-only`, `--disable shell_tool`, no
+  `--dangerously-bypass-approvals-and-sandbox`, the wrapper as the only MCP server (checked on the real Codex
+  adapter's argv too). A provider that starts a build (`clang++ ...`, code `build`) and one that writes
+  outside the workspace (`external_write`) are refused, each recorded in `audit.json`. Real Codex on Linux and
+  Claude refuse to start.
+- Mac memory rule: each `prove_hints` WP run holds the machine-wide verifier lock: with another process
+  holding it, the wrapper's WP started only after release (wait recorded in `calls.jsonl`). It runs under
+  `rss_watchdog` at the plan's cap (8 GiB default); with a 200 MB cap the stand-in's 600 MB job is reported
+  `out_of_memory`.
+
+**Tests** (Mac, serial, no xdist, `-m "not whole_store"`; report logs in `/tmp/claude/probata-runs/t34/`):
+
+- `tests/test_proof_hinting.py`: 53 passed (`r1.jsonl`).
+- `test_format_doc.py`, `test_provider_role_schemas.py`, `test_provider_authors_guard.py`,
+  `test_provider_pins.py`, `test_provider_guard.py`, `test_provider_guard_scope.py`, `test_provider_login.py`,
+  `test_provider_outcomes.py`, `test_provider_capacity.py`, `test_estimation_role.py`, `test_rewrite_stream.py`:
+  187 passed, 15 skipped (Linux-only guard cases) (`r2.jsonl`).
+- `test_counterexample_repair.py`: 47 passed (`r3.jsonl`). `test_provider_workspace.py`: 656 passed (`r4.jsonl`).
+
+**Assumptions** (the ticket's Notes assumptions are implemented as written; these are new):
+
+- Assumption: with the shell off, the agent reads its workspace through the wrapper's `list_workspace` and
+  `read_workspace_file` tools (only `workspace.json`'s files, hash-checked), not inline in the prompt (Codex's
+  argv prompt limit is 96 KiB; t07c's workspace was about 75 KB).
+- Assumption: "only through the wrapper" is enforced by having no shell at all (ticket 07: Codex's macOS
+  sandbox does not restrict reads) plus the role's own event audit: any command, file change or other tool
+  fails the call. The Landlock audit (`provider_audit`) is not used, because it refuses every MCP tool call.
+- Assumption: the Why3 socket risk does not apply: the wrapper is an MCP server Codex starts outside its
+  shell sandbox, as in t07c runs 5 and 6, where WP ran through it under `-s read-only`. WP scratch and
+  `TMPDIR` live in `<call>/wrapper/scratch-N`, outside the read-only workspace, deleted after each job.
+- Assumption: the proof hint check plugs in as `check(base, anchors, hints) -> {passed, rejections, merged}`
+  (a file path and function, hash-pinned in `workspace.json`); `base` is the WP input without hints (the
+  caller's `WpAdapter._input` output). Tested with a scripted check until 35 lands.
+- Assumption: the authors' code exception is `Candidate.authors_function`, which must equal the proof unit's
+  function; the caller sets it from the candidate artifact's record.
+- Assumption: real Codex on Linux refuses to start for now (its Landlock roots must admit the wrapper's
+  verifiers); that belongs with the mbit10 tickets (57/58).
+- Assumption: the role drops Codex's `features.code_mode.direct_only_tool_namespaces` override, which might
+  hide MCP tools; t07c's working argv did not set it.
+
+**Not done, and why**
+
+- No real Codex call: the confined real argv is unit-tested but not run. First real use (37 or 39) should do one
+  low-cost call to confirm Codex 0.153 starts the MCP server with these `-c` options under `--sandbox read-only`
+  and the adapter's other flags (`--ephemeral`, `--ignore-user-config`, `sqlite_home`).
+
+**Interface notes**
+
+- 35: provide `check(base, anchors, hints) -> {"passed", "rejections": [{"hint", "rule", "detail"}], "merged"}`;
+  pass it as `wrapper_plan(..., check=(path, "check"))`. The hint set's record shape (`provenance`) is 35's to
+  finalize.
+- 37: build `Inputs(workspace_files(...), Candidate(...), wrapper_plan(...))`, call
+  `provider_roles.run("proof_hinting", inputs, None, config, round_folder)` once per round; charge it through
+  `Phase.charge_hint`. Do not hold the verifier lock across the call (the wrapper would take the nested lock).
+  `metadata["wrapper_calls"]` counts in-call tool uses (not provider calls). A unit file that defines other
+  authors' functions is refused: snapshot only the candidate's function.

@@ -1,6 +1,7 @@
 """Bounded instruction interpretation through an operator-selected provider.
 
-Updated: 2026-10-14 ET (Probata ticket 13: the prompt-only route refuses a counterexample and the
+Updated: 2026-10-14 ET (Probata ticket 34: `configuration_from`; the prompt-only route refuses hint
+records); 2026-10-14 ET (Probata ticket 13: the prompt-only route refuses a counterexample and the
 authors' accelerated functions); 2026-09-30 (repairs keep the provider classification; usage limits are read only
 from failed sessions). 2026-09-29: pinned adapters, workspace/guard seam and audit. Providers
 return proposed edits; SWDB applies protections. 2026-09-28: stream-json stdout cap
@@ -73,7 +74,12 @@ def require_code_change(before, after):
 def configuration(path):
     if path is None:
         raise Failure("instruction and annotated-source routes require --provider-config")
-    data = yamlio.load(Path(path))
+    return configuration_from(yamlio.load(Path(path)))
+
+
+def configuration_from(data):
+    """A provider configuration from its mapping (2026-10-14 ET, Probata ticket 34: the proof_hinting role's
+    default Codex configuration has no file); the same checks as `configuration`."""
     if not isinstance(data, dict):
         raise Failure("provider configuration must be an object")
     data.setdefault("kind", "codex")
@@ -585,6 +591,7 @@ def call(config, request, source, package, store, folder, repair=None, remaining
     if isinstance(repair, dict) and repair.get("kind") == provider_workspace.COUNTEREXAMPLE_REPAIR:
         raise Failure("counterexample-guided repair needs the guarded provider workspace (workspace: true)")
     provider_workspace.refuse_counterexamples({"request.json": json.dumps({"request": request, "repair": repair})})
+    provider_workspace.refuse_hint_records({"request.json": json.dumps({"request": request, "repair": repair})})
     prompt = prompt_for(request, source, package, repair=repair,
                         edit_format=config.get("edit_format", "patch"))
     from swdb.provider_roles import FORBIDDEN_SOURCE
