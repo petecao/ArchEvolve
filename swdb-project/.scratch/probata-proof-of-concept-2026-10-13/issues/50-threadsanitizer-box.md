@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 03
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Evaluation design" (Baselines: a ThreadSanitizer repair baseline runs only if it installs within one day), "Proof-of-concept plan" (A4; time-boxed items end on their fallbacks), "Providers and machines" (Mac rules), "Further Notes" (risk: a Homebrew change breaks LLVM 22)); decisions: [23](../../formal-verification-2026-10-09/issues/23-evaluation-baselines-and-metrics.md), [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md)
 **Time estimate:** 1 day (box)
