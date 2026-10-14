@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 02, 11, 13
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Solution" (one candidate artifact's path, steps 1-3); "Bounds" (minimum bounds, Extensa mode proves at the minimum only, 15 minutes per bounded job); "Verifier lineup and order" (order per candidate; skip reasons); "Extensa mode" (bounded gate); "Testing Decisions", seam 3; user stories 22, 64, 65; S6; S8; O7); decisions: [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) (item 3), [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md) (item 9), [19](../../formal-verification-2026-10-09/issues/19-bounded-verdict-bounds.md) (items 1, 3, 6, 7, 8), [25](../../formal-verification-2026-10-09/issues/25-extensa-loop-proofs-and-ranking.md) (items 1, 3); [ADR 0010 proof note](../../../docs/adr/0010-extensa-mode-loop.md) ("Bounded gate")
 **Time estimate:** about 2 days
