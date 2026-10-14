@@ -97,8 +97,8 @@ ACCEPT_RULE = {
     "unit-first": ("The edit is ACCEPTED (it becomes the best set) when it lowers the number of open UNIT goals\n"
                    "  (the stand-in's own goals: postcondition, hazard checks, call preconditions, frames, termination),\n"
                    "  or keeps that number and does not raise the total. Open goals of your own hints (invariants,\n"
-                   "  asserts, lemmas) may rise while unit goals fall, up to %d open hint goals; every hint goal must be\n"
-                   "  proven in the end." % E.HINT_OPEN_CAP)}
+                   "  asserts, lemmas) may rise while unit goals fall, up to {cap} open hint goals; every hint goal must\n"
+                   "  be proven in the end.")}
 
 STRATEGY_NOTES = """  strategy / proof (at "global"): WP proof strategies that prune or reshape ONE goal's context, e.g.
     "\\\\wp::strategy MyProvers: \\\\prover(\\"alt-ergo\\", \\"z3\\", \\"cvc5\\");"
@@ -174,7 +174,7 @@ def tool_state(out, r, a, t0, mode, allowed):
     (state / "config.json").write_text(json.dumps({
         "out": str(out), "owner": L.OWNER[0], "t0": t0, "lockwait_before_s": L.LOCKWAIT[0],
         "budget_min": a.budget_min, "final_reserve_min": a.final_reserve_min, "round_timeout": a.round_timeout,
-        "round": r, "pin": L.PIN, "mode": mode, "allowed_kinds": sorted(allowed), "accept": E.ACCEPT[0],
+        "round": r, "pin": L.PIN, "mode": mode, "allowed_kinds": sorted(allowed), "accept": E.ACCEPT[0], "hint_cap": E.CAP[0],
         "baseline_passed": sorted(L.BASELINE_PASSED)}, indent=1))
     return state
 
@@ -228,6 +228,7 @@ def main():
     ap.add_argument("--examples", action="store_true", help="t07c (b): syntax-checked examples in the prompt")
     ap.add_argument("--accept", default="total", choices=["total", "unit-first"],
                     help="(a') acceptance: total open goals (run 7) or unit goals first (run 8 on)")
+    ap.add_argument("--hint-cap", type=int, default=E.HINT_OPEN_CAP, help="unit-first: max open hint goals")
     ap.add_argument("--owner", default="t07d")
     ap.add_argument("--dev-effort", help="DEV ONLY (never a counted run): override the pinned effort")
     ap.add_argument("--dev-no-codex", action="store_true", help="DEV ONLY: stop after the seed round")
@@ -235,6 +236,7 @@ def main():
     a = ap.parse_args()
     assert a.monotone, "this loop implements method change (a) only"
     E.ACCEPT[0] = a.accept
+    E.CAP[0] = a.hint_cap
     L.OWNER[0] = a.owner
     if a.dev_effort:
         L.PIN["effort"] = a.dev_effort
@@ -255,7 +257,7 @@ def main():
             "method_changes_t07d": {"monotone": a.monotone, "max_ops": E.MAX_OPS, "max_text": E.MAX_TEXT,
                                     "seeds": a.seeds, "frame_filter": a.frame_filter, "strategies": a.strategies,
                                     "examples": a.examples, "mode": mode, "final_mode": final_mode,
-                                    "accept": a.accept, "hint_open_cap": E.HINT_OPEN_CAP},
+                                    "accept": a.accept, "hint_open_cap": a.hint_cap},
             "allowed_kinds": sorted(allowed), "harness_sha256": {f: L.sha(HERE / f) for f in files},
             "examples_sha256": {f.name: L.sha(f) for f in sorted(L.EXAMPLES.glob("*")) if f.is_file()} if a.examples else None,
             "dev": bool(a.dev_effort or a.dev_no_codex or a.dev_skip_round0)}
@@ -339,7 +341,7 @@ def main():
         if thread is None:
             prompt = PROMPT.format(
                 max_ops=E.MAX_OPS, max_text=E.MAX_TEXT, kinds=", ".join(sorted(allowed)),
-                accept_rule=ACCEPT_RULE[a.accept],
+                accept_rule=ACCEPT_RULE[a.accept].format(cap=a.hint_cap),
                 strategy_notes=STRATEGY_NOTES.format(tactics=tactics) if a.strategies else "",
                 round_timeout=a.round_timeout, tool_budget=tool_budget, round=r, rounds=a.rounds, minutes=used,
                 budget=a.budget_min, best=E.best_text(best), open=E.open_text(best), examples=examples,

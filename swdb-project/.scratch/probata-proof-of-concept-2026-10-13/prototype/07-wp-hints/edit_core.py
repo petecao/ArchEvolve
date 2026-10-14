@@ -116,7 +116,7 @@ def attempt(out, best, ops, tag, provenance, mode, round_timeout, allowed_kinds,
     rec.update(n_unit_after=u_new, n_hint_after=h_new)
     if ACCEPT[0] == "unit-first":
         # t07d (a'), run 8 on: unit goals first, then the total; hint goals open capped.
-        ok = h_new <= HINT_OPEN_CAP and (u_new < u_old or (u_new == u_old and n_open <= best["n_open"]))
+        ok = h_new <= CAP[0] and (u_new < u_old or (u_new == u_old and n_open <= best["n_open"]))
         why = f"unit goals {u_old} -> {u_new}, hint goals {h_old} -> {h_new}, total {best['n_open']} -> {n_open}"
     else:
         ok = n_open <= best["n_open"]
@@ -132,7 +132,8 @@ def attempt(out, best, ops, tag, provenance, mode, round_timeout, allowed_kinds,
 
 
 ACCEPT = ["total"]     # "total" (run 7) or "unit-first" (t07d a', run 8 on)
-HINT_OPEN_CAP = 15     # unit-first: at most this many open goals that belong to hints
+HINT_OPEN_CAP = 15     # unit-first: at most this many open goals that belong to hints (run 8: 15; --hint-cap)
+CAP = [HINT_OPEN_CAP]
 
 
 def split_counts(failing):

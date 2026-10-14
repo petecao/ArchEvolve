@@ -27,6 +27,7 @@ PIN = CFG.get("pin") or L.PIN
 L.BASELINE_PASSED.update(CFG.get("baseline_passed") or [])
 ALLOWED = set(CFG["allowed_kinds"])
 E.ACCEPT[0] = CFG.get("accept", "total")
+E.CAP[0] = CFG.get("hint_cap", E.HINT_OPEN_CAP)
 SCHEMA = {"type": "object", "required": ["ops"], "properties": {"ops": {"type": "array", "items": E.OP_SCHEMA}}}
 TOOLS = [
     {"name": "check_edit",
