@@ -6,7 +6,7 @@
 # Otherwise it is reverted. Shared by edit_loop.py (the loop) and edit_tool_mcp.py (the in-call tool).
 # t07e (continuation 3, 2026-10-14 ET): two-phase acceptance (TWO_PHASE) and the seed-frame
 # classification fix in is_hint_goal.
-import json, time
+import hashlib, json, time
 from pathlib import Path
 
 import hints as H
@@ -90,11 +90,26 @@ def attempt(out, best, ops, tag, provenance, mode, round_timeout, allowed_kinds,
     if probs:
         rec.update(result="edit rejected (edit rules)", problems=[list(p) for p in probs])
         return rec, None
-    hs = apply(ops, best, tag, provenance)
     chk = {}
     standin = (L.STANDIN_DIR / L.UNIT).read_text()
     t = time.time()
-    d = L.precheck(Path(out), f"attempt-{tag}", standin, hs, chk)
+    # t07e (c3): an edit identical to one check_edit just passed against the same best set runs WP in that
+    # check's folder (same merged file, same hint ids), with no second check.
+    key = hashlib.sha256(json.dumps([best["hints"], ops], sort_keys=True).encode()).hexdigest()
+    prev = PASSED_CHECKS.get(key) if run_wp else None
+    d = None
+    if prev is not None:
+        hs = apply(ops, best, prev["tag"], provenance)
+        merged = H.merge(standin, hs).encode()
+        pd = Path(prev["dir"])
+        if (pd / L.UNIT).exists() and not (pd / ".frama-c").exists() and (pd / L.UNIT).read_bytes() == merged:
+            d = pd
+            rec["check_reused_from"] = str(pd)
+    if d is None:
+        hs = apply(ops, best, tag, provenance)
+        d = L.precheck(Path(out), f"attempt-{tag}", standin, hs, chk)
+        if d is not None and not run_wp:
+            PASSED_CHECKS[key] = {"dir": str(d), "tag": tag}
     rec["check_wall_s"] = round(time.time() - t, 1)
     if d is None:
         rec.update(result="edit rejected (proof hint check)", check=chk.get("outcome"),
@@ -143,6 +158,7 @@ def decide(old_failing, old_n_open, new_failing):
 ACCEPT = ["total"]     # "total" (run 7) or "unit-first" (t07d a', run 8 on)
 HINT_OPEN_CAP = 15     # unit-first: at most this many open goals that belong to hints (run 8: 15; --hint-cap)
 CAP = [HINT_OPEN_CAP]
+PASSED_CHECKS = {}     # t07e (c3): merged-file sha256 -> folder where the proof hint check passed
 TWO_PHASE = [False]    # t07e method change (b): phase 2 (hint goals only) once unit goals reach 0
 
 

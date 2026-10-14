@@ -11,7 +11,7 @@ import loop as L
 
 TAGS = {"assigns": "@assigns", "loop assigns": "@assigns", "loop invariant established": "@invariant",
         "loop invariant preserved": "@invariant", "assert": "@assert", "check": "@check", "ensures": "@ensures",
-        "loop variant": "@variant", "terminates": "@terminates"}
+        "loop variant": "@variant"}  # t07e run 10: "@terminates" selects nothing in Frama-C 33; print all of TDStep
 MAX_CHARS = 14000
 _NOISE = re.compile(r"^(\S+:\d+: warning from Typed Model:|\s+- Warning: Hide sub-term definition|\s+Reason: Cast with)")
 
@@ -70,6 +70,14 @@ def pick(bl, g):
             if 1 <= k <= len(pre):
                 cand = [b for b in cand if f'line {pre[k - 1]}) in' in b[0]]
         return cand[:2]
+    m = re.search(r"_ensures_(\w+)$", name)
+    if m:  # 'Goal Post-condition '<name>' in 'TDStep':' carries no line (t07e run 10)
+        return [b for b in bl if f"Post-condition '{m.group(1)}'" in b[0]][:1]
+    if re.search(r"_terminates(_part\d+)?$", name):  # 'Goal Termination-condition (...) in 'TDStep' (k/n):'
+        cand = [b for b in bl if b[0].startswith("Goal Termination-condition")]
+        m = re.search(r"_part(\d+)$", name)
+        k = int(m.group(1)) if m else 1
+        return [b for b in cand if re.search(rf"\({k}/\d+\):$", b[0].rstrip())][:1] or cand[:1]
     cand = [b for b in bl if re.search(rf"line {line}\b", b[0])]
     if name.endswith("_established"):
         cand = [b for b in cand if "Establishment" in b[0]] or cand
