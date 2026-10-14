@@ -2,6 +2,10 @@
 // Hand-made C stand-in for the C lowering (ticket 21) of one TDStep call with Peter's read offload
 // (library/dx100/bfs_read_offload.inc, GEM5 build), threads = 1. C++ names are kept (map 16 item 3).
 // The lowering inserts a hazard check (`check hazard_*`) at each tile-pointer read (map 12 item 3).
+// Stand-in fix (t07c, 2026-10-14 ET): TDStep's assigns names queue->shared[queue->shared_in .. 2^65 - 1]
+// instead of the infinite range [queue->shared_in ..]; WP 33 proves no write into an infinite assigns range
+// (dev probe t07c/dev/assigns-probe). 2^65 - 1 lies above every index the queue can write: a size_t
+// shared_in plus at most SWDB_LQUEUE_CAPACITY buffered entries. Same frame for every reachable index.
 // Every data dimension is symbolic; TILE_SIZE, SWDB_CHUNK_SIZE and SWDB_FRONTIER_THRESHOLD are
 // symbolic constants limited by their legality clauses (map 19 item 2).
 // `/* @anchor ... */` comments are hint anchors: `global` (definitions), `stmt:<name>` (assert,
@@ -46,7 +50,7 @@ extern const unsigned SWDB_CHUNK_SIZE;        /* knob: symbolic, 1 .. TILE_SIZE 
       \base_addr(dxc_tile_data[t]) != \base_addr(&swdb_lqueue_storage[0]) &&
       (\forall integer t2; 0 <= t2 < t ==> \base_addr(dxc_tile_data[t]) != \base_addr(dxc_tile_data[t2]));
     requires dx100_idle: dxc_idle;
-    assigns parent->start_[0 .. num_nodes - 1], queue->shared_in, queue->shared[queue->shared_in ..],
+    assigns parent->start_[0 .. num_nodes - 1], queue->shared_in, queue->shared[queue->shared_in .. 36893488147419103231],
       swdb_lqueue_storage[0 .. SWDB_LQUEUE_CAPACITY - 1],
       dxc_tile_data[0 .. DXC_NUM_TILES - 1][0 .. TILE_SIZE - 1], dxc_tile_len[0 .. DXC_NUM_TILES - 1],
       dxc_reg[0 .. DXC_NUM_REGS - 1], dxc_pending[0 .. DXC_NUM_TILES - 1],

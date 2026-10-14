@@ -535,7 +535,11 @@ def pick_tool_result(out, r, turn, c):
             c["tool"]["fallback_from_submission"] = best["n"]
             c["error"] = None
     # Reuse the tool's round-mode run of the exact returned set (proven or not): same flags, same files.
-    for s in reversed(subs):
+    # Any earlier call of this run counts too (a resubmitted set is not re-proven).
+    allsubs = []
+    for g in sorted(out.glob("tool-r*-t*/submissions.jsonl"), key=lambda x: x.stat().st_mtime):
+        allsubs += [json.loads(x) for x in g.read_text().splitlines() if x.strip()]
+    for s in reversed(allsubs):
         if s["result"] in ("all proven (round mode)", "not all proven") and s.get("dir") \
                 and same_set(c["hints"], s["hints"]):
             c["proved_dir"] = s["dir"]
@@ -700,7 +704,14 @@ def main():
         elif budget_s(t0) / 60 >= a.budget_min:
             rec["outcome"] = "budget spent before the WP run"
         elif a.round_mode:
-            round_wp(out, r, standin, c["hints"], rec, d, a, t0, proved_dir=c.get("proved_dir"))
+            pd = c.get("proved_dir")
+            if pd is None:  # t07c: a set identical to an earlier round's reuses that round-mode run
+                for h in reversed(history[1:]):
+                    rw = h.get("round_wp") or {}
+                    if rw.get("exit") == 0 and rw.get("log") and same_set(c["hints"], h.get("hints")):
+                        pd = rec["reused_round_of"] = str(Path(rw["log"]).parent)
+                        break
+            round_wp(out, r, standin, c["hints"], rec, d, a, t0, proved_dir=pd)
             proven = rec.get("proven", False)
         else:
             wp_round(out, f"round-{r}", standin, c["hints"], rec, d=d,

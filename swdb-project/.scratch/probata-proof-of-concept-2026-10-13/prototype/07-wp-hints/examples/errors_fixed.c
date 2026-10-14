@@ -26,3 +26,22 @@ void fill(struct sq *q) {
     /*@ ghost td_chunk_end++; */
   }
 }
+
+/* Item 5: a loop that appends at a moving end. The loop assigns range starts where the function's
+   assigns starts and ends at the function's own finite bound, so it covers every index the loop can
+   write and stays inside the function's assigns. */
+/*@ requires \valid(q) && q->shared_in <= 1000;
+    requires \valid(q->shared + (q->shared_in .. q->shared_in + 9));
+    requires \separated(q, q->shared + (q->shared_in .. q->shared_in + 9));
+    assigns q->shared_in, q->shared[q->shared_in .. 18446744073709551615];
+*/
+void push10(struct sq *q) {
+  /*@ loop invariant 0 <= t <= 10;
+      loop invariant q->shared_in == \at(q->shared_in, Pre) + t;
+      loop assigns t, q->shared_in, q->shared[\at(q->shared_in, Pre) .. 18446744073709551615];
+      loop variant 10 - t; */
+  for (int t = 0; t < 10; ++t) {
+    q->shared[q->shared_in] = t;
+    q->shared_in++;
+  }
+}

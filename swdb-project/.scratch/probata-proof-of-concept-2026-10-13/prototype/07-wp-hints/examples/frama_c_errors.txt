@@ -15,8 +15,11 @@
    Give it a label parameter: `lemma l{L}: \forall int *a; ... a[0] ...;` /
    `predicate p{L}(int *a, integer n) = ...;` Logic over plain integers needs no label.
 5. `loop assigns queue->shared[queue->shared_in ..];` (an infinite range)
-   WP: "User Error: Invalid infinite range" (WP aborts; the whole set is lost). In `loop assigns` use a
-   finite range: `queue->shared[0 .. 1073741823]` or a bound you know. (Function `assigns` may use
-   infinite ranges; loop assigns may not.)
+   WP: "User Error: Invalid infinite range" (WP aborts; the whole set is lost). A loop assigns range must
+   be finite, must cover every index the loop can write, and must lie inside the function's `assigns`
+   (WP checks that inclusion). For an append at a moving end, start where the function's assigns starts
+   and end at the function's own finite upper bound: if the function says `a[n .. B]`, write
+   `loop assigns a[\at(n, Pre) .. B];` (checked: errors_fixed.c, push10). A bound such as
+   `a[0 .. 1073741823]` or `a[k .. max_size - 1]` fails: it leaves the function's assigns or misses writes.
 6. Loop hints at a "loop:*" anchor are joined into ONE `/*@ ... */` block in the order given. Give
    at most one `loop variant` per loop and put it last (ACSL grammar).
