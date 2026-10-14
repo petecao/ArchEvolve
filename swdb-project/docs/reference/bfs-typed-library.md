@@ -1,6 +1,7 @@
 # Typed library and content-bound certification
 
 Created: 2026-10-03 ET
+Updated: 2026-10-13 ET (one DX100 offload strategy per operation family; mode catalog in packages)
 Updated: 2026-10-09 ET (current defaults, procedure fingerprints, and campaign failure handling)
 Updated: 2026-10-05 ET (certification version tables, record identity fields, evidence basis); 2026-10-05 ET (ticket 75 native-CPU certification under command 1.3 and 1.4); 2026-10-04 ET (control observed checks and clause comparison; ticket 70 certification isolation)
 
@@ -21,6 +22,15 @@ An `offload` strategy effect carries `steps` (positions in the matched access ch
 and `hardware_operations` (operation record IDs). Only access-pattern targets allow
 this effect. Legality checks every selected step and reports the contract's unchecked
 conditions separately. The `dx100_read_offload` strategy leaves CPU arbitration intact.
+
+Added 2026-10-13 ET (ADR 0013): the DX100 read offload has one strategy per operation family.
+`dx100_read_offload` names the gem5-backed MMIO operation (`dx100.mmio.v1.*`); the gem5
+rewrite contracts cite it, so it is Extensa-mode only. `dx100_read_offload.functional-v1`
+names the functional-source operation (`dx100.functional.v1.*`) and is the ArchEvolve-mode
+strategy. In ArchEvolve mode a profile package offers only the strategies and intrinsics
+whose dependency closure the ADR 0013 guard admits (`swdb.archevolve.mode_admits`); the
+package's `hardware.mode_catalog` counts what it left out. The guard itself is unchanged: an
+ArchEvolve command that still names a gem5-backed record is refused.
 
 `swdb certify ENTRY_ID --runs-dir DIR` runs strict functional builds and differential
 checks. Candidate certification adds `--snapshot ID --patch FILE` or `--candidate ID`;

@@ -1,0 +1,282 @@
+kind: certification
+schema_version: '0.4'
+id: certification.3305ce37a3d9468ebc41608eb9160dae
+status: draft
+created: '2026-10-13'
+updated: '2026-10-13'
+message_version: '1.0'
+producer:
+  name: swdb
+  role: operator
+  test_client: false
+provenance:
+- id: workflow
+  kind: agent_run
+  description: Created through the public SWDB workflow.
+  uri: null
+entry:
+  id: lowering.dxc_tile_pointer.dx100-mmio.1.0-e4fc4af
+  content_sha256: f835f2bf3e98798d8847431dacdeae411fbdd59d1308a853d7ce12588bc8c99a
+dependencies:
+- id: intrinsic.dxc_tile_pointer
+  content_sha256: 9f541d0b1afa9fced4eec71b96b32a2be8af48a25f7f9e515bc26cd58b2ff996
+command:
+  version: '1.2'
+  family: lowering_calibration
+  sources_sha256: 0c9bab290e8d46c7bd7a9f7a4a23f751bb910353b5005264e81de1cb61dd41b3
+  sources:
+  - path: swdb/certification.py
+    sha256: d367488b77df43a7e747ad55974d1b5fc787f63c42611984dacb3c0c03a7abf6
+  - path: library/dx100/strict/MAA_functional.hpp
+    sha256: a24a81631c9365b114395bab65c73048269765a2862a98f4ccb4609eb80fbfa5
+  - path: library/dx100/strict/gem5/m5ops.h
+    sha256: b1eb7d074231782a943faa9cc249f6027152b6c727c5f70b71808e122e97867f
+  - path: swdb/certification_procedures.py#lowering_calibration/1.2
+    sha256: 79c0210aa1f6ee0e6f5f41e154b09f4a282b43557d978f7168c10c8be879270b
+  sources_match_version: true
+  code:
+    git_commit: f20f04ede3e808d80386fef81a90d4e86f58385c
+    sources_differ_from_commit: false
+host:
+  hostname: YanRus-Mac-Studio.local
+  system: Darwin
+  architecture: arm64
+  compiler: /opt/homebrew/bin/g++-16
+matrix:
+- operation: tile_pointer
+  tile_size: 16384
+  threads: 4
+  status: passed
+  run:
+    command:
+    - /private/tmp/claude-501/swdb-cert/certify-aef7a214c665404f8f8fc576175ea79e/tile_pointer-16384
+    - tile_pointer
+    returncode: 0
+    stdout: |
+      SWDB_DIFFERENTIAL_PASS:tile_pointer
+    stderr: ''
+    timeout: false
+    seconds: 0.6329
+    log: /private/tmp/claude-501/swdb-cert/certify-aef7a214c665404f8f8fc576175ea79e/tile_pointer-16384.positive.json
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/apps/dx100/include
+    - -DFUNC
+    - -DGEM5
+    - -DSWDB_STRICT
+    - -DSWDB_DXC_LOWERING_HEADER="/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/dxc_lowering.hpp"
+    - -DSWDB_DXC_REFERENCE_HEADER="/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/reference.hpp"
+    - -DSWDB_STRICT_WAIT_RULE_GEM5
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/claude-501/swdb-cert/certify-aef7a214c665404f8f8fc576175ea79e/tile_pointer-16384
+    returncode: 0
+    stdout: ''
+    stderr: |
+      as: error: couldn't create cache file '/var/folders/x0/g9dhnccj0jjbxh_gblp35zvr0000gn/T/xcrun_db-9XZoTWNq' (errno=Operation not permitted)
+    timeout: false
+    seconds: 1.2652
+    log: /private/tmp/claude-501/swdb-cert/certify-aef7a214c665404f8f8fc576175ea79e/tile_pointer-16384.build.json
+  certification_inputs:
+    lowering: /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/dxc_lowering.hpp
+    driver: /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/drivers/differential.cc
+    reference: /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/reference.hpp
+    input_set:
+      operation: tile_pointer
+      seeds: [0]
+      tile_sizes: [16384, 1024]
+      threads: 4
+      indices: [repeated, zero, tail]
+      long_rows: false
+    build_defines:
+      strict: [FUNC, GEM5, SWDB_STRICT]
+      tile_sizes: [16384, 1024]
+      core_count: 4
+    source_pins:
+    - path: /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/dxc_lowering.hpp
+      sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+    - path: /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/drivers/differential.cc
+      sha256: 5a30fd75e7a23db709eb7e112d9202f46037cadc8b8c9d667ac472fd77f5e976
+    - path: /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/reference.hpp
+      sha256: 75b80bc3d0027b1700e2fc1f075683e617d059ca4bbef761bfeb31839d9fa897
+- operation: tile_pointer
+  tile_size: 1024
+  threads: 4
+  status: passed
+  run:
+    command:
+    - /private/tmp/claude-501/swdb-cert/certify-aef7a214c665404f8f8fc576175ea79e/tile_pointer-1024
+    - tile_pointer
+    returncode: 0
+    stdout: |
+      SWDB_DIFFERENTIAL_PASS:tile_pointer
+    stderr: ''
+    timeout: false
+    seconds: 0.1337
+    log: /private/tmp/claude-501/swdb-cert/certify-aef7a214c665404f8f8fc576175ea79e/tile_pointer-1024.positive.json
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/apps/dx100/include
+    - -DFUNC
+    - -DGEM5
+    - -DSWDB_STRICT
+    - -DSWDB_DXC_LOWERING_HEADER="/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/dxc_lowering.hpp"
+    - -DSWDB_DXC_REFERENCE_HEADER="/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/reference.hpp"
+    - -DSWDB_STRICT_WAIT_RULE_GEM5
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/claude-501/swdb-cert/certify-aef7a214c665404f8f8fc576175ea79e/tile_pointer-1024
+    returncode: 0
+    stdout: ''
+    stderr: |
+      as: error: couldn't create cache file '/var/folders/x0/g9dhnccj0jjbxh_gblp35zvr0000gn/T/xcrun_db-ykvTWErM' (errno=Operation not permitted)
+    timeout: false
+    seconds: 1.0494
+    log: /private/tmp/claude-501/swdb-cert/certify-aef7a214c665404f8f8fc576175ea79e/tile_pointer-1024.build.json
+  certification_inputs:
+    lowering: /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/dxc_lowering.hpp
+    driver: /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/drivers/differential.cc
+    reference: /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/reference.hpp
+    input_set:
+      operation: tile_pointer
+      seeds: [0]
+      tile_sizes: [16384, 1024]
+      threads: 4
+      indices: [repeated, zero, tail]
+      long_rows: false
+    build_defines:
+      strict: [FUNC, GEM5, SWDB_STRICT]
+      tile_sizes: [16384, 1024]
+      core_count: 4
+    source_pins:
+    - path: /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/dxc_lowering.hpp
+      sha256: 7c18bd44f329e445ba99abfd09423e40b3d685dc52a951267a61ade8417c627c
+    - path: /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/drivers/differential.cc
+      sha256: 5a30fd75e7a23db709eb7e112d9202f46037cadc8b8c9d667ac472fd77f5e976
+    - path: /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/reference.hpp
+      sha256: 75b80bc3d0027b1700e2fc1f075683e617d059ca4bbef761bfeb31839d9fa897
+negative_controls:
+- id: read_before_wait
+  tile_size: 16384
+  status: rejected
+  reason: reference_semantics
+  expected_check: reference_semantics
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=16384
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/apps/dx100/include
+    - -DFUNC
+    - -DGEM5
+    - -DSWDB_STRICT
+    - -DSWDB_DXC_LOWERING_HEADER="/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/dxc_lowering.hpp"
+    - -DSWDB_DXC_REFERENCE_HEADER="/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/reference.hpp"
+    - -DSWDB_STRICT_WAIT_RULE_GEM5
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/claude-501/swdb-cert/certify-aef7a214c665404f8f8fc576175ea79e/tile_pointer-16384-read_before_wait
+    returncode: 0
+    stdout: ''
+    stderr: |
+      as: error: couldn't create cache file '/var/folders/x0/g9dhnccj0jjbxh_gblp35zvr0000gn/T/xcrun_db-P0Bora9u' (errno=Operation not permitted)
+    timeout: false
+    seconds: 1.0413
+    log: /private/tmp/claude-501/swdb-cert/certify-aef7a214c665404f8f8fc576175ea79e/tile_pointer-16384-read_before_wait.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/swdb-cert/certify-aef7a214c665404f8f8fc576175ea79e/tile_pointer-16384-read_before_wait
+    - tile_pointer
+    - read_before_wait
+    returncode: 87
+    stdout: ''
+    stderr: |
+      SWDB_DIFFERENTIAL_MISMATCH:reference_semantics
+    timeout: false
+    seconds: 0.5121
+    log: /private/tmp/claude-501/swdb-cert/certify-aef7a214c665404f8f8fc576175ea79e/tile_pointer-16384-read_before_wait.run.json
+- id: read_before_wait
+  tile_size: 1024
+  status: rejected
+  reason: reference_semantics
+  expected_check: reference_semantics
+  build:
+    command:
+    - /opt/homebrew/bin/g++-16
+    - -std=c++11
+    - -O1
+    - -g
+    - -fopenmp
+    - -DFUNC
+    - -DGEM5
+    - -DTILE_SIZE=1024
+    - -DNUM_CORES=4
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/strict
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/apps/dx100/benchmarks/API
+    - -I/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/apps/dx100/include
+    - -DFUNC
+    - -DGEM5
+    - -DSWDB_STRICT
+    - -DSWDB_DXC_LOWERING_HEADER="/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/dxc_lowering.hpp"
+    - -DSWDB_DXC_REFERENCE_HEADER="/Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/reference.hpp"
+    - -DSWDB_STRICT_WAIT_RULE_GEM5
+    - /Users/yanrujhou/CLionProjects/ArchEvolve/.claude/worktrees/agent-a6636b1b10cb60b3d/swdb-project/library/dx100/drivers/differential.cc
+    - -o
+    - /private/tmp/claude-501/swdb-cert/certify-aef7a214c665404f8f8fc576175ea79e/tile_pointer-1024-read_before_wait
+    returncode: 0
+    stdout: ''
+    stderr: |
+      as: error: couldn't create cache file '/var/folders/x0/g9dhnccj0jjbxh_gblp35zvr0000gn/T/xcrun_db-dGyBZ3pi' (errno=Operation not permitted)
+    timeout: false
+    seconds: 1.0436
+    log: /private/tmp/claude-501/swdb-cert/certify-aef7a214c665404f8f8fc576175ea79e/tile_pointer-1024-read_before_wait.build.json
+  run:
+    command:
+    - /private/tmp/claude-501/swdb-cert/certify-aef7a214c665404f8f8fc576175ea79e/tile_pointer-1024-read_before_wait
+    - tile_pointer
+    - read_before_wait
+    returncode: 87
+    stdout: ''
+    stderr: |
+      SWDB_DIFFERENTIAL_MISMATCH:reference_semantics
+    timeout: false
+    seconds: 0.3958
+    log: /private/tmp/claude-501/swdb-cert/certify-aef7a214c665404f8f8fc576175ea79e/tile_pointer-1024-read_before_wait.run.json
+verdict: certified
+evidence_basis: simulated
+evidence_kind: execution
+created_at: '2026-10-13T23:15:40.011862+00:00'
