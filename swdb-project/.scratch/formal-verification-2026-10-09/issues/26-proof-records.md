@@ -36,3 +36,8 @@ what the team sees:
   record ID (`swdb/campaign_targets.py:555-586`; 17's side findings).
 - 2026-10-13 20:10 ET: input from 19 (resolved): each verdict records its build constants, the
   minimum-bounds version, the bounds used, the shape-split count check and the failure class.
+- 2026-10-13 20:43 ET: input from 25 (resolved): per candidate artifact: the bounded gate's result per
+  level, refutation and repair lineage (reverted-repair flag), the WP verdict; per class: the fastest
+  winner and the best-proven winner, recomputed after WP; per campaign: proof lane-hours, proof-hint
+  and repair call counts, and any approval entry that raised a budget. ArchEvolve mode reports its one
+  final candidate's level, never a ranking.

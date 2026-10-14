@@ -149,3 +149,7 @@ per-candidate vacuity → ticket 13. The map's "Vacuity guard" fog is settled by
   in under 15 minutes with summaries. The 1-lane fallback is withdrawn: at 1 lane `skipped_cas_recheck`
   cannot fire, so a 1-lane setup voids the contract proof (item 2). If 2 lanes fail, candidates stay
   certified and the proof of concept tries 19's levers.
+- 2026-10-13 20:41 ET, from [24](24-alignment-hint-kind.md) (item 2): item 2.3's split changes: PR and BC state a unit
+  postcondition (sums over CSR ranges, real arithmetic) instead of a relational template. Drafting
+  rule: every contract states a unit postcondition; a relational template needs a recorded reason.
+  Templates stay legal for a kernel with no summary.

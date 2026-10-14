@@ -250,3 +250,13 @@ comment).
 
 Glossary: rewrite chain, predecessor, derived implementation, offload-only contract added; enabling
 rewrite sharpened.
+
+## Later changes
+
+- 2026-10-13 20:41 ET, from [24](24-alignment-hint-kind.md) (item 3): enabling rewrites and rewrite chains are unchanged. Item 2's
+  catalog relational templates are not built in this effort: a derived implementation is proven once
+  by route 1 (direct, against the kernel's unit postcondition), which every evaluated kernel now has.
+  Item 4.3 (offload-only rewrite per thread against its proven predecessor) stays; per final
+  candidate, route 3 when its predecessor is proven, else route 1. Item 4.4's bounded-only fallback
+  becomes route 1 on every evaluated kernel. Item 9a compares per-candidate proof time of chained
+  (route 3) vs direct (route 1) vs bundled.

@@ -230,3 +230,6 @@ added; proof hint sharpened.
 
 - 2026-10-13 19:48 ET, from [18](18-evaluation-claims-and-subjects.md) (item 3): the held-out kernels
   are BC, PR and SSSP; BFS bottom-up is dropped (the authors' `bfs_bu.cc` is an unbuilt fragment).
+- 2026-10-13 20:43 ET, from [25](25-extensa-loop-proofs-and-ranking.md) (item 2): item 11's proof-hint
+  calls are counted in the campaign's call ledger but under their own cap, `provider_calls_proof`
+  (default 30), never in the rewriting total.

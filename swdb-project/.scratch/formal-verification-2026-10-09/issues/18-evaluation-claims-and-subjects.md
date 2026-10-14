@@ -176,3 +176,9 @@ understanding confirmed "yes"). Facts: the code re-checked in this session (path
   goes to the motivation.
 
 Glossary: method version added.
+
+## Later changes
+- 2026-10-13 20:43 ET, from [25](25-extensa-loop-proofs-and-ranking.md) (items 4, 6): RQ5 runs only on
+  new campaigns, once D35 has lifted; item 1's fallback retrospective becomes a labeled worked example
+  (the 15 BFS campaigns hold 3 certified candidate artifacts, all in a7). RQ5 compares each class's
+  fastest winner with its best-proven winner.

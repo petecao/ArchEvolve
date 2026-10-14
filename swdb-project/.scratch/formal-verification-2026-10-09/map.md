@@ -1,7 +1,8 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-13 20:12 ET (ticket 23 resolved: baselines, metrics and run protocol);
+Updated: 2026-10-13 20:40 ET (ticket 25 resolved: two winners, bounded gate, proof budgets);
+2026-10-13 20:12 ET (ticket 23 resolved: baselines, metrics and run protocol);
 2026-10-13 20:10 ET (ticket 19 resolved: minimum bounds from negative controls);
 2026-10-13 19:56 ET (ticket 20 resolved: the authors' DX100 PR keeps stale sums);
 2026-10-13 19:48 ET (ticket 18 resolved: evaluation claims and subjects);
@@ -19,7 +20,7 @@ Extensa Probata; ticket 15 added); 2026-10-12 22:52 ET (ticket 10 resolved: what
 2026-10-11 18:58 ET (ticket 08 resolved: crux-llvm separates the bug at one lane)
 **Type:** wayfinder map
 **Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–13 and 15–17 resolved;
-18–27 graduated from fog 2026-10-13 (18–23 resolved)
+18–27 graduated from fog 2026-10-13 (18–23 and 25 resolved)
 
 ## Destination
 
@@ -204,6 +205,13 @@ concept is the next effort.
   rounds. LLM loops run 3 times on a frozen population; mbit10 lanes run 6 pinned proof workers.
   Codex is the one default provider for every agentic task; Claude (`claude-sonnet-5-5`, `high`) is
   only a cut-first sensitivity check on BFS and SSSP.
+- [How does the Extensa-mode loop budget proofs and rank candidate artifacts by certification level?](issues/25-extensa-loop-proofs-and-ranking.md):
+  two winners per workload class, the fastest and the best-proven (highest proven level, then
+  fastest), both tracked in the loop; Yan-Ru picks which to promote. A bounded gate runs before
+  evaluation (refuted code is never evaluated and goes to 5 repair rounds); WP runs after the campaign
+  stops, on gain candidates fastest first. Hint calls get their own cap (30); proofs share lane-hours,
+  reported apart; budgets may be raised by approval. Same gate and proofs in ArchEvolve mode. RQ5
+  only on new campaigns. ADR 0010 proof note.
 
 ## Tickets
 
@@ -233,7 +241,7 @@ concept is the next effort.
 | 22 | [Which LLM repair loops driven by model-checker counterexamples exist, and how close are they to ours?](issues/22-cex-guided-llm-repair-research.md) | research | resolved | — |
 | 23 | [Which baselines, ablations and metrics answer each research question, and how are runs repeated?](issues/23-evaluation-baselines-and-metrics.md) | grilling | resolved | 18, 22 |
 | 24 | [Should the proof-hint loop gain an alignment hint kind for direct unbounded proofs?](issues/24-alignment-hint-kind.md) | grilling | ready-for-human | 21 |
-| 25 | [How does the Extensa-mode loop budget proofs and rank candidate artifacts by certification level?](issues/25-extensa-loop-proofs-and-ranking.md) | grilling | ready-for-human | 19 |
+| 25 | [How does the Extensa-mode loop budget proofs and rank candidate artifacts by certification level?](issues/25-extensa-loop-proofs-and-ranking.md) | grilling | resolved | 19 |
 | 26 | [How are proof verdicts and their evidence recorded, and what does ArchEvolve mode show?](issues/26-proof-records.md) | grilling | ready-for-human | 23, 25 |
 | 27 | [In what order does the proof of concept build its pieces, and what closes each stage?](issues/27-proof-of-concept-stages.md) | grilling | ready-for-human | 18, 19, 24 |
 

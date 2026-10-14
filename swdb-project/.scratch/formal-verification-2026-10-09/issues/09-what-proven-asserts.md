@@ -120,3 +120,7 @@ certification level and formal verifier sharpened.
   dimension list. With concrete sizes it follows from the size bounds; a fallback that needs an unwind
   limit gets one computed from them, with unwinding assertions always on. Tile lanes, thread count and
   knob values are build constants (glossary), recorded exactly.
+- 2026-10-13 20:41 ET, from [24](24-alignment-hint-kind.md) (item 2): item 3's "kernels without a clean definition (PR, BC)" is
+  withdrawn. Over real arithmetic (item 4) PR and BC have unit postconditions (sums over CSR ranges),
+  and SSSP's is its shortest distances, so (C) applies to every evaluated kernel. A unit postcondition
+  may allow several outcomes (glossary).

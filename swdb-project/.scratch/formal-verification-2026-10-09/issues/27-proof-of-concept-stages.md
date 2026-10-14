@@ -43,3 +43,9 @@ across tickets but not ordered or costed as a whole. Decide:
   the reference instance to confirm 19's hand derivation (lanes 2, chunk 2, frontier 2, vertices 3,
   edges 3). Lever order: per-call summaries, then shape splitting. 10 item 9's pass bar has no 1-lane
   fallback.
+- 2026-10-13 20:43 ET: input from 25 (resolved): build items: the bounded gate and counterexample
+  repair before evaluation (`swdb/campaign.py:938-1003`); the WP phase after the campaign stops; the
+  best-proven winner in selection, in the workspace and in the plateau test (`swdb/campaign.py:404-425,
+  856-858,893-909`); `provider_calls_proof` in budget validation; iterations from a derived
+  implementation (17 item 8). Measure how often campaign candidates are refuted at N > 1 and how many
+  repair calls that uses.

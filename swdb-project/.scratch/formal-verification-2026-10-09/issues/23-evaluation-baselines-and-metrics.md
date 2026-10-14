@@ -154,3 +154,12 @@ then PR.
 - **Ticket 27:** the ThreadSanitizer time box; the 6-worker lane job as a build item.
 
 Glossary: reverted repair added.
+
+## Later changes
+
+- 2026-10-13 20:41 ET, from [24](24-alignment-hint-kind.md) (items 3, 7): item 2's no-contract baseline uses route 1 for its
+  unbounded half: WP against the kernel's unit postcondition, no alignment. Consequence for RQ3:
+  with contracts, a candidate's (B) proof is also route 1, so the no-contract baseline differs mainly
+  by the contract's formal halves, its hint seeds and route 3; RQ3 reports that difference as such.
+  Item 8's chained vs bundled ablation adds direct (route 1). New reported numbers: route used per
+  candidate; candidates that would have needed an alignment (expected 0).
