@@ -336,8 +336,10 @@ def _dispatch(args):
         _emit(args.extensa_handler(args), args.format)
         return 0
     if args.command == "certify":
-        from swdb.certification import run_cli
-        return run_cli(args)
+        # 2026-10-14 ET (Probata 18's hook, suite fix): the derived-implementation hook wraps the certification
+        # command outside swdb/certification.py, whose bytes the frozen certify procedure digests hash.
+        from swdb.archevolve_proof import certify_cli
+        return certify_cli(args)
     if args.command == "validate":
         return _validate(records, args.library, args.crosswalk)
     if args.command == "promote":

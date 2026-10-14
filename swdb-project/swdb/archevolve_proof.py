@@ -335,6 +335,35 @@ def record_derived(store_dir, certification, library_root=None):
     return {"derived_implementation": rid}
 
 
+def certify_cli(args):
+    """`swdb certify`: the certification command, then `record_derived` on its record.
+
+    Moved here from `swdb.certification.run_cli` (2026-10-14 ET, suite fix): every certify procedure version's
+    frozen source digest hashes swdb/certification.py, so the hook must live outside it. The non-profile body
+    repeats `certification.run_cli`'s; a library-operation profile run has no hook and goes to it unchanged."""
+    import json
+    from swdb import certification
+    from swdb.store import Store
+    if getattr(args, "profile", None):
+        return certification.run_cli(args)
+    try:
+        sizes = tuple(int(x) for x in args.tile_sizes.split(","))
+        sources = tuple(int(x) for x in args.sources.split(","))
+    except ValueError:
+        raise UsageError("tile sizes and sources must be comma-separated integers") from None
+    record = certification.certify(Store(Path(args.records)), args.entry_id, runs_dir=args.runs_dir,
+                                   library=args.library, candidate=args.candidate, snapshot=args.snapshot,
+                                   patch=args.patch, calibrate=args.calibrate, tile_sizes=sizes,
+                                   threads=args.threads, sources=sources,
+                                   candidate_record=getattr(args, "candidate_record", None),
+                                   version=getattr(args, "command_version", None))
+    output = {"id": record["id"], "verdict": record["verdict"], "matrix_cells": len(record["matrix"]),
+              "negative_controls": len(record["negative_controls"])}
+    output.update(record_derived(Path(args.records), record, args.library) or {})
+    print(json.dumps(output, indent=2))
+    return 0 if record["verdict"] == "certified" else 1
+
+
 def certify_candidate(store_dir, candidate_id, contract, *, runs_dir=None, library_root=None):
     """The certification command on one candidate artifact, then its derived-implementation hook."""
     from swdb import certification
