@@ -224,3 +224,11 @@ rewriting LLM → ticket 13; the concurrency design → new ticket 15; the Q31 h
 A-vs-B comparison and CIVL bounds → the map's "Evaluation plan" fog; failure class and lineup
 versions per verdict → the "Records" fog.
 
+## Later changes
+
+- 2026-10-13 16:09 ET, from [15](15-concurrency-proofs.md): item 10 changed. (A) proves one symbolic
+  thread t of N, not all N, through a parallel composition theorem (item 1 there); (C) CIVL now also
+  gives proven within bounds for threads <= k, so (A) is no longer "the only method that sets the
+  level", only the only one for every N; (B) VerCors is out of scope. Item 11's provisional rule
+  (a racy candidate artifact is refuted) was kept with the finding that all three proof-of-concept
+  candidates race at N > 1 as written.

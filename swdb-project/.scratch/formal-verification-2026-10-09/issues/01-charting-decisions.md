@@ -57,3 +57,9 @@ Decided with Yan-Ru in the charting session, 2026-10-09 ET.
   the contract proof covers its unit postcondition or relational template on a reference
   instance, its lifting lemma per kernel, and its negative controls refuted. Never say
   "proven contract" alone (the split decision 5 promised).
+- 2026-10-13 16:09 ET: ticket 15 (Yan-Ru) settles decision 9.2 at threads > 1: Peter's read offload as
+  written proves at one thread and is refuted at threads > 1 (a plain store races with other
+  threads' CAS); its next version, without that store, should prove at every thread count. The authors'
+  version (9.1, its fallback path; 11 item 12) and Codex's (9.3, a plain read of `parent[v]`) are
+  likewise refuted at threads > 1 as written. Peter's and Josh's code
+  is preliminary: a proof-of-concept candidate, never ground truth.

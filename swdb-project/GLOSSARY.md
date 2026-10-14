@@ -1,6 +1,6 @@
 # EvolveSWDB — ArchEvolve's research database
 
-Updated: 2026-10-13 15:22 ET (formal-verification ticket 13: proof-hint agent, counterexample-guided repair, proof-hint loop, hint set, proof setup check, proof hint check added; proof hint sharpened); 2026-10-13 14:05 ET (formal-verification ticket 12: proof semantics added; functional model and assumption set sharpened); 2026-10-12 23:51 ET (formal-verification ticket 11: Extensa Probata, verifier lineup, bounded verifier, unbounded verifier added); 2026-10-12 22:50 ET (formal-verification ticket 10: unit postcondition, relational template, contract proof, reference instance, summary added; negative control and certification level sharpened); 2026-10-12 22:25 ET (formal-verification ticket 09: certification level and formal verifier sharpened; proof unit, unit relation, output relation, lifting lemma, assumption set added); 2026-10-12 00:37 ET (final review of fine-grained attribution: code origin and catalog bound reworded; attribution report, split check, site-finder region and measured scope added); 2026-10-11 22:10 ET (review fix: rewrite site reworded to merged spans); 2026-10-11 21:52 ET (ADR 0015: LANL core, guessed column, SWDB extension; crosswalk now historical); 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom, remaining gain bound); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
+Updated: 2026-10-13 19:46 ET (formal-verification ticket 18: method version added); 2026-10-13 16:47 ET (formal-verification ticket 17: rewrite chain, predecessor, derived implementation, offload-only contract added; enabling rewrite sharpened); 2026-10-13 16:38 ET (formal-verification ticket 16: formal half sharpened; C lowering, proof placement, logic library added); 2026-10-13 16:09 ET (formal-verification ticket 15: enabling rewrite, shared action, sharing class, history read, parallel composition theorem added); 2026-10-13 15:22 ET (formal-verification ticket 13: proof-hint agent, counterexample-guided repair, proof-hint loop, hint set, proof setup check, proof hint check added; proof hint sharpened); 2026-10-13 14:05 ET (formal-verification ticket 12: proof semantics added; functional model and assumption set sharpened); 2026-10-12 23:51 ET (formal-verification ticket 11: Extensa Probata, verifier lineup, bounded verifier, unbounded verifier added); 2026-10-12 22:50 ET (formal-verification ticket 10: unit postcondition, relational template, contract proof, reference instance, summary added; negative control and certification level sharpened); 2026-10-12 22:25 ET (formal-verification ticket 09: certification level and formal verifier sharpened; proof unit, unit relation, output relation, lifting lemma, assumption set added); 2026-10-12 00:37 ET (final review of fine-grained attribution: code origin and catalog bound reworded; attribution report, split check, site-finder region and measured scope added); 2026-10-11 22:10 ET (review fix: rewrite site reworded to merged spans); 2026-10-11 21:52 ET (ADR 0015: LANL core, guessed column, SWDB extension; crosswalk now historical); 2026-10-11 14:51 ET (fine-grained attribution design: rewrite site, code origin, resource floor, catalog bound, headroom, remaining gain bound); 2026-10-09 23:45 ET (code review of tickets 16/17: paired estimate widened to baselines and untimed artifacts; numeric pairing check for D35); 2026-10-09 14:04 ET (formal-verification charting: certification level, proof hint); 2026-10-06 ET, before the 16:01 ET commit (design session and grilling: estimator, estimate, workload characterization, mechanism model, target description, paired estimate, screening, functional-target correctness; databases group; retitled as the research database); 2026-10-05 17:10 ET (code review: A/A pilot); 2026-10-05 (ticket 76: seam witness; attributed negative-control rejection; certification review fixes: library fault, driver fault, certification evaluator process, certify command version, legacy identifiers)
 
 The Software Database is the ArchEvolve component that knows the applications:
 what their kernels compute, how their code touches memory, what profiling
@@ -40,6 +40,11 @@ _Avoid_: option, variant, alternative
 **Baseline implementation**:
 An implementation of a kernel as found in a particular application's source.
 _Avoid_: original, vanilla, reference implementation
+
+**Derived implementation**:
+An implementation made by a certified rewrite of another implementation, recorded with what it came
+from. It is never a baseline implementation.
+_Avoid_: equivalent baseline, normalized baseline, intermediate
 
 **Region**:
 A portion of one implementation's code identified for profiling or rewriting,
@@ -142,6 +147,27 @@ A rewrite contract with its own ID that cites a parent contract and adds kernel-
 clauses.
 _Avoid_: sub-contract, contract variant
 
+**Enabling rewrite**:
+A rewrite whose contract offloads nothing and only reshapes code, so that a rewrite contract that
+does offload can then match. Its result is a candidate artifact, compared against the baseline
+implementation like any other. Once certified, its result is a derived implementation.
+_Avoid_: equivalent baseline, normalized baseline, enabling transformation
+
+**Offload-only contract**:
+A rewrite contract that only offloads: it keeps its predecessor's thread split and loop order, and
+names, in order, the enabling rewrite contracts it requires.
+_Avoid_: thin contract
+
+**Rewrite chain**:
+An ordered sequence of rewrites from a baseline implementation to a final candidate artifact, each
+applying one rewrite contract to the result of the one before.
+_Avoid_: chain (alone), which names an access pattern's steps; pipeline, stack
+
+**Predecessor**:
+The code one rewrite in a rewrite chain is applied to: the baseline implementation or a derived
+implementation.
+_Avoid_: parent (names a repair's earlier candidate artifact), base
+
 **Preservation obligation**:
 A property a rewrite must keep beyond passing the kernel's correctness check, such as
 enqueuing each discovered vertex once; a rewrite contract states it as a clause with role
@@ -172,8 +198,9 @@ can express it, also as a formal half.
 _Avoid_: rule (alone), assertion (for the condition)
 
 **Formal half**:
-The part of a clause written as a predicate in the ported Extensa grammar or as a pinned
-reference into reference semantics; a clause without one is natural-language only.
+The part of a clause written in a formal language: an ACSL formula, the form verifiers read; a
+predicate in the ported Extensa grammar, used only for runtime probes; or a pinned reference into
+reference semantics. A clause without one is natural-language only.
 _Avoid_: formalization
 
 **Formal label**:
@@ -262,6 +289,11 @@ Code that realizes one intrinsic over one hardware interface version, such as `_
 written with DX100's `maa_*` calls. The hardware targets it is tested on are evidence about it,
 not separate lowerings.
 _Avoid_: implementation or intrinsic implementation (for this code), backend, shim, wrapper
+
+**C lowering**:
+The C program made mechanically from a proof unit written in the declared C++ subset, keeping its
+C++ names; the form the unbounded verifier reads. It contains calls to lowerings but is not one.
+_Avoid_: lowering (alone), port (for a hand-made version), translation
 
 **Reference semantics**:
 The executable description of what an intrinsic or library operation computes, such as the
@@ -585,6 +617,11 @@ per kernel, and its negative controls refuted. Its level is the weakest among th
 holds for one set of content hashes.
 _Avoid_: proven contract (alone), contract verification
 
+**Proof placement**:
+Where a clause's proof comes from, named by the clause itself: proven once with a named library
+entry, proven in each candidate artifact's proof unit, or assumed as an entry of the assumption set.
+_Avoid_: proof scope (names the proof unit), discharge mode (how certification tests the clause)
+
 **Reference instance**:
 The code on which a contract proof is checked: the rewrite contract's own library code applied to
 the baseline implementation or, when it has none, its first certified candidate artifact.
@@ -596,11 +633,38 @@ artifact's proof. It is proven once with that library entry and reused by every 
 that calls it.
 _Avoid_: stub, model (alone), abstraction (alone)
 
+**Logic library**:
+The formal definitions and lemmas that formal halves and proofs may use, either shared by several
+rewrite contracts or owned by one; the only place recursive or inductive definitions may appear.
+_Avoid_: axioms, theory (alone), prelude
+
 **Assumption set**:
 Everything a proven verdict depends on without proving it, each entry with its kind: an assumed
 clause, the accelerator's proof semantics, a building-block summary, a reduction, or a trusted
 tool.
 _Avoid_: trusted base (alone), assumptions (alone)
+
+**Shared action**:
+One of a fixed set of kinds of step, such as claiming a write-once location or atomically adding to
+one, through which the threads of a parallel region may change memory they share. A rewrite
+contract lists the shared actions its code may use.
+_Avoid_: atomic (alone), shared write, interference
+
+**Sharing class**:
+How the threads of a parallel region may touch one array between two barriers: read-only, owned by
+one thread, changed only through shared actions, or guarded by a lock.
+_Avoid_: data-sharing attribute (OpenMP's private and shared clauses), ownership (alone)
+
+**History read**:
+The proof meaning of a read that other threads may race with by design: it returns some value the
+location already held, never older than the newest write the reading thread has already seen.
+_Avoid_: stale read, relaxed read (for the proof meaning)
+
+**Parallel composition theorem**:
+The theorem, stated once for the method, that a parallel region whose threads are each proven alone,
+touching shared memory only through shared actions and their sharing classes, ends as some serial
+order of those shared actions would.
+_Avoid_: reduction (alone), composition proof (names the lifting lemma), concurrency proof
 
 **Proof hint**:
 A ghost declaration or statement, loop invariant with its frame and variant, non-recursive
@@ -641,6 +705,14 @@ _Avoid_: preflight, harness check
 The deterministic check that rejects a hint set using any kind outside the allowed proof hints, or
 whose removal does not leave the code under proof unchanged.
 _Avoid_: hint checker, cheat filter
+
+**Method version**:
+The versioned set of everything a candidate artifact's proofs use apart from the rewrite contract
+and the candidate itself: the C-lowering subset and translators, the proof-hint vocabulary, the
+proof setup check, the proof hint check and the verdict reading, the budgets, the prompts, the
+catalog templates, the shared-action kinds and the bounded verifiers' settings. Changing any part
+makes a new method version.
+_Avoid_: toolchain version
 
 **Profiling agent**:
 A coding agent in the profiling role that produces profiling evidence for a region: statement

@@ -4,7 +4,7 @@
 it needs a new certification first (Mac, about 30–60 min, no gem5). (3) Decide on the BFS
 `evaluated_on_target` assertion. Without that decision, both tests still fail after promotion.
 
-Prepared 2026-10-11 23:27 ET. Read-only check of `yanrujhou_main` @ 680298a3, `swdb-project/`.
+Prepared 2026-10-11 23:27 ET. Updated 2026-10-13 18:45 ET: BFS evidence now `certification.d710ac88…` (the 10-10 certificate `df1986d8…` went stale when `swdb/bfs_native.py` changed at 8db9654a; see `.scratch/lanl-db-analytic-eval-2026-10-06/evidence/12-functional-bfs-recert17-mbit10-20261013-a1/`). Read-only check of `yanrujhou_main` @ 680298a3, `swdb-project/`.
 Ticket: `swdb-project/.scratch/lanl-shaped-db-followups-2026-10-11/issues/01-re-review-read-offload-contracts.md`.
 
 ---
@@ -58,7 +58,7 @@ dependency closure to match the current library.
 
 | Contract | Current certification | Current state |
 |---|---|---|
-| BFS | **`certification.df1986d8f0d64a28b19fd23ae672055c`** (e2d28a7e): procedure 1.7, mbit10 node 0, 10/10 cells, 20 controls, `verdict: certified`, `evidence_basis: simulated` (strict functional model, not gem5) | `experimental` / `certified` |
+| BFS | **`certification.d710ac885e764f8a8687ee18533d9f1c`** (311b3928, re-certified 2026-10-13; replaces the now-stale `df1986d8…`): procedure 1.7, mbit10 node 0, 10/10 cells, 20 controls, `verdict: certified`, `evidence_basis: simulated` (strict functional model, not gem5) | `experimental` / `certified` |
 | BC | **none.** Its two certifications (`1e389a95…` 1.0, `1e424fce…` 1.6) pin `969276…` and the old BFS/intrinsic hashes | `experimental` / `draft` |
 
 The 7 older BFS certifications all pin `867fac…`, so none of them counts now.
@@ -94,7 +94,7 @@ provenance `human_report`. It does not commit to git. Run it from the main check
 
 ```bash
 cd swdb-project
-# 1. BFS (parent). Evidence will be [certification.df1986d8f0d64a28b19fd23ae672055c]
+# 1. BFS (parent). Evidence will be [certification.d710ac885e764f8a8687ee18533d9f1c]
 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m swdb promote contract.bfs_read_offload
 
 # 2. BC: only after the certify run in section 2 lands a certified record
@@ -138,6 +138,6 @@ pins `3b2d7428…`. So after promotion, BFS = `{shared, certified}`.
 ## Before you sign: checklist
 - [ ] Diff above is pin-only (catalog sha + BC `derived_from` hash).
 - [ ] Cited catalog claims are unchanged. The added DX100 text is descriptive only.
-- [ ] BFS evidence `certification.df1986d8…` is procedure 1.7, strict functional, certified.
+- [ ] BFS evidence `certification.d710ac88…` is procedure 1.7, strict functional, certified.
 - [ ] Approve the BC certify run (Mac) → then promote BC.
 - [ ] Pick A or B for `evaluated_on_target`.

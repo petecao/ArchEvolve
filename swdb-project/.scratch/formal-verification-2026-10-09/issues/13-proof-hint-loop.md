@@ -225,3 +225,8 @@ rejections by rule, replay status, vocabulary and check versions → "Records"; 
 proofs and the repair budget per campaign → "Extensa-mode loop". Glossary: proof-hint agent,
 counterexample-guided repair, proof-hint loop, hint set, proof setup check, proof hint check
 added; proof hint sharpened.
+
+## Later changes
+
+- 2026-10-13 19:48 ET, from [18](18-evaluation-claims-and-subjects.md) (item 3): the held-out kernels
+  are BC, PR and SSSP; BFS bottom-up is dropped (the authors' `bfs_bu.cc` is an unbuilt fragment).

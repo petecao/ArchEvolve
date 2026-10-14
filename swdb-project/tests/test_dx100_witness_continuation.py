@@ -307,7 +307,9 @@ def test_public_driver_preserves_failure_and_blocks_retry_after_stage_failure(tm
     # Model the pre-launch catalog in an owned fixture. Published a3 evidence
     # and historical runtime pins must remain untouched in the real repository.
     original_root = continuation.ROOT
-    records.copy_repo()
+    # The driver reads the retained failed a1 record and the a6 prior evaluation;
+    # name them, since the default copy holds only the reference closure (2026-10-13 ET).
+    records.copy_closure(continuation.FAILED_ID, continuation.PRIOR_ID)
     for rid in (continuation.EXPIRED_ID, continuation.PROBE_ID):
         (records.path/'evaluations'/(rid+'.yaml')).unlink(missing_ok=True)
     fixture_root = records.path.parent

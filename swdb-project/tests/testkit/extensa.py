@@ -1,6 +1,9 @@
 """Extensa campaign fixtures: a seeded team store, campaign and fixture files, and the fixture
 provider. Created 2026-10-05 ET (code review T1/T2), moved from tests/test_extensa_campaign.py.
 Updated 2026-10-05 ET (ticket 80): the provider log also keeps each call's REGIONS.json.
+Updated 2026-10-13 ET: the fixture provider declares `confinement: unconfined_harness`. It reads
+and writes harness files outside the provider guard's roots (plan, call counter, log, replayed
+receipts in the call folder), so it takes the unenforced fixture path on every OS, Linux included.
 
 Every provider here is an external_fixture; every number comes from the fixture file and is
 labeled contract_fixture, never evidence. `campaign_team` (renamed from `team`) is the seeded
@@ -15,6 +18,7 @@ import pytest
 import yaml
 
 from conftest import REPO, run_swdb
+from swdb import provider_guard
 from testkit.bfs_protocol import _command, _payload, _workload_request
 
 CID = "extensa-native-bfs-20261004-a1"
@@ -171,7 +175,8 @@ print(json.dumps(item))
 """)
     config = team["root"] / "provider.yaml"
     config.write_text(yaml.safe_dump({"kind": "external_fixture", "command": [sys.executable, str(program)],
-                                      "timeout_s": 60, "total_seconds": 600}))
+                                      "timeout_s": 60, "total_seconds": 600,
+                                      "confinement": provider_guard.UNCONFINED_HARNESS}))
     return config
 
 

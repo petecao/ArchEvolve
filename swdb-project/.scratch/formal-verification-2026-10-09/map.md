@@ -1,14 +1,23 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-13 15:22 ET (ticket 13 resolved: the proof-hint loop);
+Updated: 2026-10-13 19:56 ET (ticket 20 resolved: the authors' DX100 PR keeps stale sums);
+2026-10-13 19:48 ET (ticket 18 resolved: evaluation claims and subjects);
+2026-10-13 17:53 ET (ticket 21 resolved: relational alignment research);
+2026-10-13 17:32 ET (ticket 22 resolved: counterexample-guided LLM repair prior work);
+2026-10-13 17:04 ET (all fog graduated into tickets 18–27; ticket 18 claimed);
+2026-10-13 16:49 ET (ticket 16 resolved: ACSL formal halves in a YAML frame);
+2026-10-13 16:47 ET (ticket 17 resolved: enabling rewrites and rewrite chains);
+2026-10-13 16:09 ET (ticket 15 resolved: concurrency proofs for any thread count;
+ticket 17 added; VerCors out of scope); 2026-10-13 15:22 ET (ticket 13 resolved: the proof-hint loop);
 2026-10-13 14:19 ET (ticket 12 resolved: the proof semantics; ticket 16 added);
 2026-10-13 00:35 ET (ticket 11 resolved: verifier lineup, concurrency, the name
 Extensa Probata; ticket 15 added); 2026-10-12 22:52 ET (ticket 10 resolved: what a contract proves once);
 2026-10-12 22:25 ET (ticket 09 resolved: what proven asserts; generality requirement added);
 2026-10-11 18:58 ET (ticket 08 resolved: crux-llvm separates the bug at one lane)
 **Type:** wayfinder map
-**Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–13 resolved
+**Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–13 and 15–17 resolved;
+18–27 graduated from fog 2026-10-13 (18, 20, 21, 22 resolved)
 
 ## Destination
 
@@ -40,6 +49,12 @@ concept is the next effort.
 - **Generality (Yan-Ru, 2026-10-12):** the method must be general, not BFS-specific. The
   evaluation covers other GAPBS kernels. Every claim and method decision must say how it applies
   beyond BFS.
+- **Any input (Yan-Ru, 2026-10-13):** ArchEvolve must handle any input code, not only code an
+  expert already reshaped for DX100. Peter's and Josh's code is preliminary and tentative: a
+  proof-of-concept candidate, never ground truth.
+- **Automation and cost (Yan-Ru, 2026-10-13):** minimize human effort and construct proofs as
+  automatically as possible. Formal by default, but trade off: about one month of work per piece
+  (not absolute), and do the chosen option well.
 
 ## Context pointers
 
@@ -123,6 +138,55 @@ concept is the next effort.
   reading; WP's `[ Valid ]` and cache can mislead), hint seeds (a paper feature), and refutations
   called "bug" only with a whole-kernel reproduction. Budget starts at 10 rounds / 60 min,
   calibrated then frozen. Proof of concept on the Mac; final evaluation on mbit10.
+- [How do proofs cover concurrency for any thread count?](issues/15-concurrency-proofs.md):
+  WP proves one symbolic thread of N; other threads appear only through the contract's shared
+  actions (a fixed set of kinds, each with a commutativity lemma). A parallel composition theorem,
+  written by Codex in Rocq and checked there (time-boxed, written fallback), lifts it to every N.
+  Reads that race on purpose are history reads (RC11); any other race refutes. CIVL gives proven
+  within bounds for threads <= k, GenMC refutes, both must agree. All three proof-of-concept
+  candidates race at N > 1 as written and go to repair. VerCors out; enabling rewrites to 17.
+- [What language do formal halves and the proof semantics share?](issues/16-formal-half-language.md):
+  ACSL inside a YAML frame: WP reads it as is; our translators make the SAWScript specs and C
+  stubs; the Extensa grammar stays for runtime probes. First-order ACSL with bounded quantifiers
+  and primitive recursion only; the C lowering keeps C++ names; relations are two-sided
+  predicates. Every clause names its proof placement (BFS read offload: all per candidate except
+  L5); sharing classes per barrier interval are per candidate. The C++ subset is defined by
+  construct and includes a modeled `std::vector`. Ghost hazard state in fixed-size arrays (32
+  command slots); new 8-byte tile-pair rule. An agent drafts missing formal halves behind five
+  gates; our own check mode replaces E-ACSL, which drops `\old` under quantifiers.
+- [How do enabling rewrites chain with offloading rewrites?](issues/17-enabling-rewrites.md):
+  matching and splitting: a catalog of five recurring reshapes (chunking, fallback, phase split,
+  buffers, edge-loop flattening), each with a template proven once; offloads become offload-only
+  contracts that name the enabling contracts they need; bundled contracts stay legal. BFS proves
+  the final candidate against the baseline directly; a rewrite that changes the thread split is
+  proven against the baseline, one that keeps it per thread against its predecessor; a failed
+  rewrite falls back to a bounded direct check. Certified enabling results become derived
+  implementations; each rewrite is certified alone. The race fix stays repair. Proof of concept:
+  Peter's read offload, chained vs bundled.
+- [Which methods find a relational proof's alignment automatically, and can a wrong one make a proof unsound?](issues/21-relational-alignment-research.md):
+  a wrong alignment only fails, provided guard agreement, adequacy and fairness are proven (WP can
+  state all three with 13's kinds); assumed, proofs go vacuous. Aligners all guess and check; no
+  LLM-proposed alignment found. Costly (45 CPU-hours per TSVC pair). Loop flattening and unbounded
+  reordering are known blind spots, which questions 17's catalog estimate (risk to 27).
+- [Which LLM repair loops driven by model-checker counterexamples exist, and how close are they to ours?](issues/22-cex-guided-llm-repair-research.md):
+  ESBMC-AI is AST 2025 (cite that, not the preprint): safety-only repair, rechecked by ESBMC at
+  unwind bound 1. Closest new work: T-LLM Compiler (bounded CBMC equivalence plus an LLM judge; 33.8% false
+  acceptance). Relational loops exist, all per program; LLM race repair only for Java and Go; no
+  accelerator-hazard repair. The term is already used (Orvalho et al.; AuthFix). Five mirror
+  baselines go to 23.
+- [What does the evaluation set out to show, and on which kernels and candidate artifacts?](issues/18-evaluation-claims-and-subjects.md):
+  five research questions (automation, hints and seeds, once vs per candidate, refutation and
+  repair, end to end for BFS), each with a pass bar fixed at the freeze. BFS calibrates; BC, PR and
+  SSSP are held out (BFS bottom-up, CC, TC dropped), against the fork's baselines. Per contract, 20
+  certified Codex candidates plus the authors' code, repairs and seeded faults; held-out contracts
+  drafted blind to the authors' code. Freeze the method version first; fix the authors'-code guard
+  first. Cut RQ5, then PR.
+- [Does the authors' DX100 PageRank keep stale `incoming_totals` across iterations?](issues/20-dx100-pr-reset-check.md):
+  yes. From iteration 2 the sums carry over: on a 1024-vertex Kronecker graph at 20 iterations the
+  baseline passes GAPBS's verifier and the DX100 code fails (error 15679); smallest case 2 vertices,
+  1 edge, 2 iterations; a one-line reset fixes it. Latent in the authors' runs (default 1 iteration,
+  where the output is correct). Same code upstream. Meets 13's bug bar (functional model, no gem5).
+  SWDB has no PR check yet; one needs >= 2 iterations and a per-vertex reference.
 
 ## Tickets
 
@@ -142,50 +206,33 @@ concept is the next effort.
 | 12 | [What semantics do DX100 proofs trust?](issues/12-dx100-proof-semantics.md) | grilling | resolved | 05, 08, 14 |
 | 13 | [How does the proof-hint loop work?](issues/13-proof-hint-loop.md) | grilling | resolved | 04, 09, 11 |
 | 14 | [Does a DX100 wait on a store's source tile cover the store's result?](issues/14-dx100-wait-rule.md) | research | resolved | — |
-| 15 | [How do proofs cover concurrency for any thread count?](issues/15-concurrency-proofs.md) | grilling | ready-for-human | 11, 12 |
-| 16 | [What language do formal halves and the proof semantics share?](issues/16-formal-half-language.md) | grilling | ready-for-human | 11, 12 |
+| 15 | [How do proofs cover concurrency for any thread count?](issues/15-concurrency-proofs.md) | grilling | resolved | 11, 12 |
+| 16 | [What language do formal halves and the proof semantics share?](issues/16-formal-half-language.md) | grilling | resolved | 11, 12 |
+| 17 | [How do enabling rewrites chain with offloading rewrites?](issues/17-enabling-rewrites.md) | grilling | resolved | 15 |
+| 18 | [What does the evaluation set out to show, and on which kernels and candidate artifacts?](issues/18-evaluation-claims-and-subjects.md) | grilling | resolved | — |
+| 19 | [How are a bounded verdict's bounds chosen, and when are they enough?](issues/19-bounded-verdict-bounds.md) | grilling | claimed | — |
+| 20 | [Does the authors' DX100 PageRank keep stale `incoming_totals` across iterations?](issues/20-dx100-pr-reset-check.md) | task | resolved | — |
+| 21 | [Which methods find a relational proof's alignment automatically, and can a wrong one make a proof unsound?](issues/21-relational-alignment-research.md) | research | resolved | — |
+| 22 | [Which LLM repair loops driven by model-checker counterexamples exist, and how close are they to ours?](issues/22-cex-guided-llm-repair-research.md) | research | resolved | — |
+| 23 | [Which baselines, ablations and metrics answer each research question, and how are runs repeated?](issues/23-evaluation-baselines-and-metrics.md) | grilling | ready-for-human | 18, 22 |
+| 24 | [Should the proof-hint loop gain an alignment hint kind for direct unbounded proofs?](issues/24-alignment-hint-kind.md) | grilling | ready-for-human | 21 |
+| 25 | [How does the Extensa-mode loop budget proofs and rank candidate artifacts by certification level?](issues/25-extensa-loop-proofs-and-ranking.md) | grilling | ready-for-human | 19 |
+| 26 | [How are proof verdicts and their evidence recorded, and what does ArchEvolve mode show?](issues/26-proof-records.md) | grilling | ready-for-human | 23, 25 |
+| 27 | [In what order does the proof of concept build its pieces, and what closes each stage?](issues/27-proof-of-concept-stages.md) | grilling | ready-for-human | 18, 19, 24 |
 
 ## Not yet specified
 
-- **Scaling past one lane:** what bound a proven-within-bounds verdict needs (2-lane tiles, more
-  edges), and which engine or encoding reaches it. 08 showed crux-llvm cannot prove 2 lanes in
-  15 minutes on the Mac. 09 settled how bounds are declared (per contract dimension, threads
-  included); 11 chose SAW, whose summaries are native `llvm_verify` overrides, as the bounded
-  verifier. 10's hypothesis: summaries in place of the inlined strict-layer port bring 2 lanes
-  under 15 minutes.
-- **Where real DX100 bugs may hide:** per 12, the strict layer's two looser corners are closed
-  for proofs (the range-loop corner is in certify 1.7; memory timing is in the proof semantics),
-  and the wait-on-source idiom in `apps/dx100/benchmarks/gapbs/src/pr.cc:242-245` is safe under
-  the gem5 rule. Left: stale CPU copies after a DX100 store (assumed, owner Eric; research 12),
-  the two gem5 corners research 12 could not rule out, and the plain store after CAS in Peter's
-  read offload (ticket 15).
-- **Evaluation plan:** kernels beyond BFS, required by the generality note (the DX100 authors'
-  code covers bfs top-down and bottom-up (`bfs_bu.cc`), bc, pr and sssp; cc and tc have none;
-  Extensa campaign artifacts), baselines (testing-only certification, verifier without hints,
-  hints without contracts), metrics (proof rate, time, hint rounds, bugs found). Per 09, each
-  evaluated kernel needs an output relation and, per contract, a unit relation and a lifting
-  lemma. Per 10, each contract also needs a reference instance and a contract proof. Per 11: the
-  hypothesis "a proven candidate artifact vs. the authors' code at every thread count, with
-  performance compared" (the authors' fallback path races); the reduction-vs-VerCors comparison;
-  CIVL team-size bounds. Per 12: the semantics negative controls, and the strict layer catching
-  up to the proof semantics (memory footprints, the other-thread read rule) as a new certify
-  version. Per 13: the proof rate as a curve over the budget (no-hint baseline at equal wall
-  time); calibration on public C suites plus the BFS proof of concept, held-out kernels for the
-  evaluation, recalibration on mbit10; seeds on and off (a paper feature, Yan-Ru); escape-hatch
-  attempts by rule; C-lowering subset coverage on campaign candidates; check the ESBMC-AI
-  citation (counterexample-guided LLM repair for C) for positioning.
-- **Records:** how proven verdicts, bounds, hints and counterexamples are stored in the research
-  database and shown in ArchEvolve mode. Per 09, a verdict also carries its assumption set (each
-  entry with its kind), a value or "unbounded" per bound dimension, and the cap from proven
-  dependencies. Per 10, each once-proven part records its level and the content hashes it holds
-  for; a changed hash reopens it. Per 11, every "not proven" records its failure class, and every
-  verdict its verifier lineup versions, solvers and flags. Per 12, every verdict names the proof
-  semantics version and its agreement evidence (fixture differences, semantics controls). Per
-  13: hint sets with provenance, rejections by rule, rounds, provider calls, tokens and time,
-  refutation replay status, and the hint vocabulary and check versions.
-- **Extensa-mode loop:** the proving budget per iteration, and how ranking by proven level
-  changes selection. Per 13: lane-hours proofs may use on mbit10 per campaign (proof jobs run
-  inside a socket lane), and the counterexample-guided repair budget per refuted candidate.
+Empty since 2026-10-13 17:04 ET. Each patch graduated into tickets:
+
+- **Scaling past one lane** → 19 (bounds policy); 10 item 9's 2-lane pass bar → 27.
+- **Where real DX100 bugs may hide** → 20 (the PR `incoming_totals` run check). The rest is decided:
+  stale CPU copies and the two gem5 corners are assumption entries (12 item 7, owner Eric); the
+  8-byte tile pair is a proof-semantics rule (16 item 11); Peter's plain store is a race (15).
+- **Evaluation plan** → 18 (claims, kernels, candidates, split), 23 (baselines, ablations, metrics,
+  protocol), 27 (proof-of-concept stages); the ESBMC-AI check → 22.
+- **Records** → 26.
+- **Extensa-mode loop** → 25.
+- **Direct unbounded proofs without a template** → 21 (research), 24 (decision).
 
 ## Out of scope
 
@@ -195,3 +242,8 @@ Ruled at charting ([01](issues/01-charting-decisions.md)):
 - DX100 hardware versus its functional model: the strict layer is the trusted semantics.
 - Speed: proofs say nothing about performance.
 - gem5.
+
+Ruled during the route:
+
+- VerCors on a hand-written PVL model ([15](issues/15-concurrency-proofs.md), item 13): hand-made,
+  BFS only, sets no level; against "any input" and the cost rule.

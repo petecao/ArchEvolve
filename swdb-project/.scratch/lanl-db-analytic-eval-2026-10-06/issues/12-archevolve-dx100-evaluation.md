@@ -72,3 +72,13 @@ on mbit10 (`certification.df1986d8f0d64a28b19fd23ae672055c`, node 0, lease gener
 library catalog re-pin (`87e8646e`). The positive path now runs: `tests/test_functional_evaluation.py`
 3 passed, with a complete evaluation and a 1.1 handoff carrying ratio 2.0 as `within_error`.
 The test's closure now includes a second target description for the legacy-request tamper case.
+
+**2026-10-13 17:53 ET (re-certification, pre-approved):** `8db9654a` changed one line of
+`swdb/bfs_native.py`, which the result-check pin `result_check:swdb.bfs.structural.v1` hashes,
+so `certification.df1986d8…` went stale and the positive-path test skipped. The same command
+was re-run at `311b3928` on mbit10 node 0 (lease generation 539, 17:12–17:52 ET, load1 0.34):
+`certification.d710ac885e764f8a8687ee18533d9f1c`, procedure 1.7, `verdict: certified`, 10 matrix
+cells, 20 negative controls. Record sha256 `a2e64069…519b5b`, identical on mbit10 and here.
+Against the old record, only `code.git_commit` and the result-check hash differ. Compact
+evidence: [`evidence/12-functional-bfs-recert17-mbit10-20261013-a1/`](../evidence/12-functional-bfs-recert17-mbit10-20261013-a1/).
+Raw output deleted after the hash manifest was taken.

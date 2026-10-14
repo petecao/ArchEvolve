@@ -45,6 +45,10 @@ def run_git(repo, *args, env=None):
 def deployment(tmp_path):
     base = tmp_path.resolve() / "private-base"
     base.mkdir(mode=0o700)
+    # 2026-10-13 ET: give the tree the creator group, as Linux does for new files. On macOS
+    # (BSD semantics) a new entry takes its parent directory's group, so a basetemp under
+    # /private/tmp (group wheel) made every fixture path wheel rather than os.getgid().
+    os.chown(base, -1, os.getgid())
     repo = base / "repository"
     repo.mkdir()
     target = base / "protected-baseline"
