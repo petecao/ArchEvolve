@@ -41,6 +41,11 @@ is never evaluated; its counterexample goes to counterexample-guided repair (`sw
 which owns the 5-round cap and the reverted-repair flag), each repair call charged to the D7 ledger as role
 `counterexample_repair`. A library without a method version runs no gate, as before.
 
+Probata PoC 17 (2026-10-14 ET): the iteration ladder (`swdb.iteration_ladder`). A new campaign records
+`rewrite_workspace: v2`; from iteration 2 its rewrite and repair workspaces (certification and counterexample)
+hold `LADDER.json`, rebuilt whole from campaign state. A state without the field is `v1` and never gains one.
+The bounded gate's outcomes reach FEEDBACK.json as `refuted` (check category only) and `proof_timeout`.
+
 Updated 2026-10-09 23:25 ET (D35, decided by Yan-Ru 2026-10-09 22:33 ET): `swdb campaign` refuses
 to start a new campaign on a real target unless its file names a passing numeric pairing check
 (`require_numeric_pairing_check`). The contract-fixture adapter and resumed campaigns are unaffected.
@@ -65,6 +70,7 @@ from swdb.cli import Failure, UsageError
 from swdb.extensa_boundary import MODE
 from swdb.extensa import search as S
 from swdb.extensa.leakage import scan_patch_additions
+from swdb.iteration_ladder import gate_feedback
 from swdb.problems import Problem
 
 FORMAT = "swdb.extensa-campaign.v1"
@@ -580,6 +586,11 @@ def rewrite_prompt(campaign_id, iteration, classes, files):
                        "another one: the patch at the highest proven certification level, the fastest among equals.")
     if "FEEDBACK.json" in files:
         history.append(" `FEEDBACK.json` holds the previous iteration's feedback.")
+    if "LADDER.json" in files:
+        # Probata PoC 17 (map decision 28 item 2): the iteration ladder.
+        history.append(" `LADDER.json` is the iteration ladder: one row per earlier candidate artifact of this "
+                       "campaign with its contracts, knobs, level known now, verdict, numbers, reason codes and "
+                       "winner mark.")
     if "STARTS.json" in files:
         # Probata PoC 19 (2026-10-14 ET): derived starts.
         history.append(" `STARTS.json` lists the certified derived implementations this iteration may start from, "
@@ -967,7 +978,22 @@ class Campaign:
                 files[f"best/{cls}{BEST_PROVEN_SUFFIX}"] = proven["patch"]
         if iteration > 1:
             files["FEEDBACK.json"] = json.dumps({"feedback": self.state["feedback"]}, indent=2)
+        ladder = self._ladder(iteration)
+        if ladder is not None:
+            files["LADDER.json"] = ladder
         return files
+
+    def _ladder(self, iteration):
+        """Probata PoC 17: this iteration's `LADDER.json` text, rebuilt whole from campaign state (never from a
+        file), or None (a v1 campaign, or iteration 1). Its rewrite and repair workspaces all get this text; the
+        campaign folder keeps a copy of the latest one, which nothing reads."""
+        from swdb import iteration_ladder
+        if not iteration_ladder.shown(self.state, iteration):
+            return None
+        pool = [c for r in self.state["iterations"] for c in r["candidates"]]
+        text = iteration_ladder.render(self.state, self._levels(pool), self.data["base_source"])
+        (self.folder / iteration_ladder.FILE).write_text(text)
+        return text
 
     def _knob_problem(self, contracts, knobs):
         from swdb.library import Library, knob_problem
@@ -1142,6 +1168,9 @@ class Campaign:
         def reject(reason, explanation, **fields):
             entry["level"] = "rejected"
             entry["rejection"] = explanation
+            entry["rejection_reason"] = reason                  # Probata PoC 17: the iteration ladder's reason code
+            if fields.get("failed_checks"):
+                entry["rejection_failed_checks"] = list(fields["failed_checks"])
             feedback.append(S.Feedback(reason, explanation, {"class": cls, **fields}).to_dict())
             return entry
         return reject
@@ -1173,6 +1202,7 @@ class Campaign:
             # Probata PoC 14: the bounded gate, after certification and before evaluation. Refuted code is never
             # evaluated; its counterexample goes to counterexample-guided repair (13's loop).
             entry["bounded_gate"] = self._gate(candidate["id"], contracts, iteration, cls, attempt)
+            gate_feedback(entry, cls, feedback)
             if entry["bounded_gate"]["refuted"]:
                 entry["_followers"] = self._counterexample_repair(iteration, cls, entry, contracts, knobs, row,
                                                                   feedback, attempt)
@@ -1349,7 +1379,7 @@ class Campaign:
             outcome = counterexample_repair.loop(
                 self.store_dir, entry["bounded_gate"]["refutations"][0], runs_dir=runs,
                 provider_config=self.args.provider_config, certify=certify, gate=gate, setting="campaign",
-                charge=lambda: self._charge_repair_call(row))
+                charge=lambda: self._charge_repair_call(row), ladder=self._ladder(iteration))
         except (Failure, KeyError) as exc:      # the refuted candidate artifact cannot be repaired here
             entry["counterexample_repair"] = {"state": "not_started", "reason": f"{type(exc).__name__}: {exc}"[:1000]}
             return []
@@ -1379,6 +1409,7 @@ class Campaign:
                 continue
             if info.get("gate") is not None:
                 follower["bounded_gate"] = info["gate"]
+                gate_feedback(follower, cls, feedback)
             certified = info["certification"]["outcome"] == "certified"
             if not certified:
                 # A repair that fails certification uses D7's certification repairs, never a counterexample round.
@@ -1393,6 +1424,7 @@ class Campaign:
                     continue
                 candidate, _patch, _knobs, number = done
                 follower["bounded_gate"] = self._gate(candidate["id"], contracts, iteration, cls, number)
+                gate_feedback(follower, cls, feedback)
                 if follower["bounded_gate"]["refuted"]:
                     # It has no repair lineage of its own, so 13's cap could not count a further round: the chain ends.
                     follower["repaired_from"]["ended"] = "refuted after a certification repair"
@@ -1565,7 +1597,8 @@ class Campaign:
             self.state = {"campaign": self.cid, "campaign_sha256": self.sha256, "started": _now(),
                           "lane_hours": 0.0, "iterations": [], "bests": {}, "feedback": [], "pauses": [],
                           "baselines": {}, "tested_contracts": {}, "synthesized": {}, "retentions": [],
-                          "kept_for_claims": [], "setup_done": False, "pilot": None}
+                          "kept_for_claims": [], "setup_done": False, "pilot": None,
+                          "rewrite_workspace": "v2"}      # Probata PoC 17: a record, never a campaign-file setting
             self.ledger = S.SearchLedger(self.budget)
             if self.query:
                 self._check_sites()
@@ -1771,6 +1804,8 @@ class Campaign:
             record["bounded_gate"] = {**copy.deepcopy(self.state["bounded_gate"]),
                                       "proof_job_hours": round(self.state.get("proof_job_hours", 0.0), 9),
                                       "repair_counters": self._repair_counters()}
+        from swdb.iteration_ladder import version_of           # Probata PoC 17: v1 when the state names none
+        record["rewrite_workspace"] = version_of(self.state)
         record["mode"], record["campaign"] = MODE, self.cid
         return record
 

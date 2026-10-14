@@ -5,6 +5,8 @@ Updated 2026-10-14 ET (Probata PoC 14): a workspace holding `.swdb-context/count
 counterexample repair call (role `counterexample_repair`; it edits the workspace tree, `edit_workspace`, and
 answers `{interpretation, unresolved}`).
 Updated 2026-10-14 ET (Probata PoC 15): the provider log also keeps the text of each `best/` patch it sees.
+Updated 2026-10-14 ET (Probata PoC 17): the provider log also keeps the text of the iteration ladder it sees
+(`LADDER.json`, or `.swdb-context/LADDER.json` in a counterexample repair workspace), or null.
 Updated 2026-10-13 ET: the fixture provider declares `confinement: unconfined_harness`. It reads
 and writes harness files outside the provider guard's roots (plan, call counter, log, replayed
 receipts in the call folder), so it takes the unenforced fixture path on every OS, Linux included.
@@ -175,7 +177,9 @@ i = counts.get(role, 0); counts[role] = i + 1; state.write_text(json.dumps(count
 with open({str(team['root'] / 'provider-log.jsonl')!r}, 'a') as log:
     log.write(json.dumps({{'role': role, 'files': sorted(str(p) for p in Path('.').rglob('*') if p.is_file()),
                           'regions': json.loads(Path('REGIONS.json').read_text()) if Path('REGIONS.json').exists() else None,
-                          'best': {{str(p): p.read_text() for p in sorted(Path('best').glob('*'))}} if Path('best').is_dir() else {{}}}}) + '\\n')
+                          'best': {{str(p): p.read_text() for p in sorted(Path('best').glob('*'))}} if Path('best').is_dir() else {{}},
+                          'ladder': next((p.read_text() for p in (Path('LADDER.json'), Path('.swdb-context/LADDER.json'))
+                                          if p.is_file()), None)}}) + '\\n')
 items = plan[role]; item = items[min(i, len(items) - 1)]
 if isinstance(item, dict) and {REPLAY!r} in item:
     directive = item[{REPLAY!r}]
