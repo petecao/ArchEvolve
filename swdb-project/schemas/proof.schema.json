@@ -16,7 +16,8 @@
         "candidate": {"type": "string", "x-ref": "candidate"},
         "function": {"type": "string", "minLength": 1, "description": "The function that holds the rewrite site; one call of it is the proof unit."},
         "id": {"type": "string", "minLength": 1},
-        "part": {"type": "string", "minLength": 1}
+        "part": {"type": "string", "x-vocab": "proof_part_names",
+                 "description": "A contract-proof part or method part (vocabulary proof_part_names; its subject_kind must match, checked in swdb.proof.validate_record). Ticket 10."}
       },
       "allOf": [
         {

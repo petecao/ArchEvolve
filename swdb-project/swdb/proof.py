@@ -354,6 +354,7 @@ def _sha256(path):
 # --- swdb validate: the rules the schema cannot express (ticket 11) -----------------------
 
 FAILURE_VOCAB = "proof_failure_classes"
+PART_VOCAB = "proof_part_names"
 
 
 def listed(vocabs, role):
@@ -370,6 +371,15 @@ def validate_record(record, ctx):
         if value is not None and value not in listed(ctx.vocabs, field_name):
             yield Problem(record.rel, field_name,
                           f"{value!r} is not a {field_name.replace('_', ' ')} in vocabulary {FAILURE_VOCAB}")
+    subject = data.get("subject") or {}
+    part = subject.get("part")
+    if part is not None:                                             # ticket 10: one list of part names
+        entry = ctx.vocabs.entries.get(PART_VOCAB, {}).get(part)
+        if entry is None:
+            yield Problem(record.rel, "subject.part", f"{part!r} is not a part name in vocabulary {PART_VOCAB}")
+        elif entry.get("subject_kind") != subject.get("kind"):
+            yield Problem(record.rel, "subject.part", f"part {part!r} belongs to a {entry.get('subject_kind')} "
+                          f"subject (vocabulary {PART_VOCAB}), not to {subject.get('kind')}")
     trusted = {(a.get("reference") or {}).get("id") for a in data.get("assumptions") or []
                if isinstance(a, dict) and a.get("kind") == "trusted_tool"}
     for position, tool in enumerate(data.get("tools") or []):      # ticket 10, S14
