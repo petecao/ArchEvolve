@@ -1,7 +1,7 @@
 # 07 — Spike (c): WP with agent hints
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 03
@@ -290,3 +290,150 @@ Reopened. Ticket 09 found (c) is "fail so far": this ticket's own assumption say
 only "when the box ends", and A1's 2-week box runs to about 2026-10-27 ET. So (c) continues inside the
 box, with every earlier counted run kept in the record. Each method change made here is recorded as one
 (it belongs in the method version), and each new counted run is reported, pass or fail.
+
+### Continuation results (2026-10-14 12:35 ET, branch `probata-poc/t07c`)
+
+**Verdict: fail so far.** Three more counted runs (4, 5, 6), all failed. The best one ended with 50
+goals open. No hint set reached the fresh full replay, so no run met the pass bar. The bar and budget
+did not change. The box is still open (about 2026-10-27 ET). All numbers are Mac results (host `mac`).
+
+**Biggest finding: the stand-in could not be proven in runs 1-5.**
+
+- WP 33 cannot prove any write into an infinite `assigns` range. Even a single direct write
+  `q->shared[q->shared_in] = 1` under `assigns q->shared[q->shared_in ..]` times out with all three
+  provers (`dev/assigns-probe/p.c`, variant D).
+- TDStep's contract had `assigns ... queue->shared[queue->shared_in ..]`, so its function-assigns goals
+  for the queue writes were unprovable whatever the hints.
+- Stand-in fix before run 6: the range is now `[queue->shared_in .. 2^65 - 1]`. That bound lies above
+  every index the queue can write (a `size_t` `shared_in` plus at most 16384 buffered entries), so the
+  frame is unchanged for every index the code can reach.
+- A probe with the same `push_back` contract proves every frame goal under the new bound
+  (`dev/assigns-probe/q.c`, 22 of 24 goals). The 2 open goals are separation preconditions of the
+  probe's own harness.
+
+#### Every counted run (continuation)
+
+Every run started with no hints in a fresh Codex session. All runs used Codex `gpt-5.6-sol` `xhigh`
+(the `PINS["codex"]` pin), Codex CLI 0.153.0, shell off, `-s read-only`, workspace inline. None reached
+the final replay.
+
+| Run | Folder | Method | Rounds / Codex calls | Budget-min | Lock wait excluded | Best open goals (round mode, 10 s) | Outcome |
+|---|---|---|---|---|---|---|---|
+| 4 | `t07c/counted-4/` | (a)(b)(c) + one Codex session | 10 / 11 | 59.85 | 6.0 min | 11, but only under an unproven `assert !accelerate`; 95 in round 1 | **fail**: 10-round cap, 0 final replays |
+| 5 | `t07c/counted-5/` | + (d) in-call tool, (e) context feedback | 8 / 8 (19 tool calls, 6 WP) | 60.99 | 0.2 min | 50 | **fail**: budget spent, 0 final replays |
+| 6 | `t07c/counted-6/` | + stand-in fix, corrected loop-assigns example | 10 / 10 (17 tool calls, 7 WP) | 47.28 | 1.3 min | 51 | **fail**: 10-round cap, 0 final replays |
+
+- Runs 4 and 5 reused run 1's no-hint run (same stand-in hashes; `goals.json` hash checked). Run 6
+  had its own no-hint run on the fixed stand-in: 15.3 min, 3.6 GB. It left 105 goals open, all
+  timeouts, and passed 139 of 139 smoke tests.
+- Tokens:
+  - Run 4: input 1,960,417 (1,745,664 cached), output 109,357.
+  - Run 5: input 6,612,808 (5,831,808 cached), output 64,961.
+  - Run 6: input 13,123,849 (12,812,160 cached), output 50,548.
+- Peak WP RSS was 3.5 GB (round mode). The highest in-call WP run reached 3.2 GB. The 8 GB watchdog
+  never fired.
+- Hint rules held in every run:
+  - The vocabulary check rejected 0 sets, so 0 escape-hatch attempts.
+  - Every hint has Codex provenance (round, turn or tool call). The implementing agent wrote none.
+  - Last sets: run 4, 47 hints; run 5, 45; run 6, 26.
+- Not run: the negative control and the final-unit smoke tests. Both need a proven unit.
+- Uncounted runs: `dev/tool-plumbing/` used effort `low` to test the harness and is not a hint run.
+  The diagnostics in `dev/` re-ran recorded Codex sets on probes. None of them fed a counted run.
+
+#### Method changes, each with its reason (they belong in the method version)
+
+| # | Change | Since | Reason |
+|---|---|---|---|
+| a | Hint rounds run WP only on TDStep's goals and the lemmas, with no smoke tests, 10 s per prover and a run-local cache (`wp_run.sh round`). Only a set that proves everything there gets one fresh full replay (`wp-smoke`: all functions, 30 s, `-wp-cache none`), and only that replay is the verdict. | run 4 | One no-hint round takes 260 s instead of 905 s. |
+| b | Prompt adds two files: `examples/acsl_examples.c`, a CSR frontier traversal (generic, not BFS) that WP proves in full with its smoke tests passing, and `examples/frama_c_errors.txt`, which lists the 6 Frama-C/WP errors runs 1-3 hit and their fixes. | run 4 | Frama-C rejected every first attempt in runs 1-3. In runs 4-6 the vocabulary check rejected no set. In run 4, round 1 still needed 1 repair turn for a syntax slip. |
+| b' | Error 5's loop-assigns advice was corrected: use the function's own finite bound as the end of the range. | run 6 | The run 4-5 example (`a[0 .. 1073741823]`) led to frame goals that could not be proven. |
+| c | Open goals are fed back with kind, merged-file line, source line and the hint that holds them. | run 4 | Codex could not tell which hint a goal belonged to. |
+| — | One Codex session (`exec resume`) for the whole run; later rounds send only the feedback. | run 4 | Rounds 2+ no longer resend the roughly 75 KB workspace. |
+| d | An in-call check tool (map 13 item 6), given to Codex as an MCP server, with the shell still off. `check_hints` runs the proof hint check. `prove_hints` runs the check, then round-mode WP. Codex is stopped 15 min before the budget ends, which keeps time for the final replay. | run 5 | Run-3 rounds were mostly round trips (Codex alone took 8-15 min per call). The tool sees only the stand-in, so confinement does not change. |
+| e | A context note in the prompt, and REGRESSION marks on goals the no-hint run had proven. | run 5 | In run 4, Codex's hints made trivial goals time out (below). |
+| — | A set identical to one already run reuses that round-mode run. | run 6 | In run 5, rounds 3-6 re-proved the same set (2.6 min each). |
+
+On "seed hints for the CSR loop invariants": a counted run must have no hints from the implementing
+agent. So the seeds went in only as prompt examples on a different function (change b). No hint was
+placed in the stand-in.
+
+#### What blocks a pass now (largest first)
+
+1. **Codex does not converge on this unit within one budget.** With the tool, open goals per WP
+   attempt went:
+   - run 5: 58 → 50 → 71 → 87 → 74 → 56;
+   - run 6: 51 → 55 → 69 → 70 → 95 → 74 → 67.
+
+   Codex rewrites large parts of each set, and its first set is often its best. After the in-call
+   budget ran out, Codex returned the same set every round. The 10-round cap ended runs 4 and 6.
+2. **Hypothesis load.** Trivial goals time out once hints are added.
+   - Example: the call precondition `dxc_reg_ok(c.reg[2])` is proven in 0.03 s with no hints. With
+     run 4's hints it times out with all three provers.
+   - The cause is two asserted predicate towers above that goal, not the lemmas: removing the 5 lemmas
+     left the goal open (`dev/diag-nolemma/`).
+   - The frame goals hit the same wall. In TDStep, the loop-assigns goals for the 2-D ghost ranges
+     `dxc_dep[0..7][0..7]` and `dxc_tile_data[0..7][0..TILE_SIZE-1]` time out. The same ranges prove at
+     once in a small probe (`dev/assigns-probe/r.c`, 25 of 25).
+   - In run 6's best set, 34 of the 51 open goals are `assigns` or `loop assigns`. 9 are the
+     postconditions.
+3. **Cost per attempt.** A WP attempt takes 3-6.5 min in round mode, so about 7 attempts fit in one
+   budget.
+
+#### Other findings
+
+- **Correction to ticket 09:** smoke tests do not "pass by timing out at 30 s". They use WP's
+  `-wp-smoke-timeout`, which defaults to 2 s; `wp_run.sh` leaves it at that default. So they cost
+  little. The cost of a pass is the real goals that time out: about 90 CPU-s each at 30 s, with
+  3 provers.
+- An unproven assertion still serves as a hypothesis for later goals. Run 4's rounds 4-10 got down to
+  11 open goals only "under" `assert !accelerate` (Codex was testing whether the static
+  `swdb_acceleration_enabled` is zero). Such a set can never pass the replay. Since run 5 the prompt
+  says so.
+- Codex calls MCP tools with the shell disabled: a probe could not read `/etc/hosts`. Its attempt to
+  use MCP `resources/read` is refused by the server.
+
+#### Assumptions (not decided in the map)
+
+- Assumption: making the stand-in's infinite `assigns` range finite (bound 2^65 - 1) is a stand-in
+  fix, which this ticket allows between runs, and not a change of the unit's contract. The frame is
+  the same for every index a `size_t`-indexed queue can reach.
+- Assumption: Codex's tool calls inside one provider call are not provider calls. Map 13 item 11
+  counts 10 rounds of one provider call each. Item 6 lets the agent run the frozen wrapper inside a
+  call.
+- Assumption: the 15-minute reserve for the final replay is part of the 60-minute budget, not added
+  to it.
+
+#### Next levers (input to the re-plan; none was run)
+
+- Let the vocabulary allow WP's `Wp.filter`/`Wp.clear` tactics through `\wp::strategy` hints, so a
+  hint can prune hypotheses. The hint check now rejects the token `for`, which strategy attachment
+  may need, so check that first.
+- Keep the best set and require changes to it to be small (diff-limited rounds). That would stop the
+  oscillation.
+- Split the unit's proof into per-loop lemmas or functions. That needs ticket 21's lowering, not hints.
+- Run on mbit10 inside a lane with more provers in parallel. That shortens each attempt but does not
+  fix 1 or 2.
+
+#### Evidence (Mac, `/tmp/claude/probata-runs/t07c/`, 61 MB; LR-06 record in `README.md`)
+
+| File | sha256 |
+|---|---|
+| `counted-4/history.json` | `c51fd046059032e74f9169a6b6b0e2d601f66dba2abd783e1ced00fea6f3b152` |
+| `counted-4/summary.json` | `a95a2b3406454307d01ef31552ad6d96468a216381e79f12c69473b2962c63d1` |
+| `counted-5/history.json` | `268f6219b626897773d71197151fe2498476b9bb47f905ef362dfcef16ce9535` |
+| `counted-5/summary.json` | `fe45abf66a9705e41854cca6a7f9a893eac404fd29c354a37c666ad39a623bfa` |
+| `counted-6/history.json` | `7957e3a82a53982036ff3685315a9d41c14b0bccbb261f037b22444f8df90d2c` |
+| `counted-6/summary.json` | `a8952cc2b536a639697f0068d441dcdab5b1d0923440e5f55d7aa1fdb5723105` |
+| `counted-6/round-0/goals.json` (no-hint run, fixed stand-in) | `2ad8c9a9e518acea56a7892a24bb1a58f4a52858415af00b360b0770eea4b3be` |
+| `counted-6/round-0/wp-smoke.log` | `a4cf174702cefb73e0c18274653a068d15ba113e68c35d54f21fe6112c2f5878` |
+| `dev/assigns-probe/run.log` (infinite-range probe) | `f07a3feaca4d7621b9764aeffd62c3673ae3772e8e7ae9e947a075ef64a284cb` |
+| `dev/assigns-probe/runq.log` (fixed-bound probe) | `fe2eb77abdc7a72d02affc9724ef10a48cc04e505fd1f6ffc95535863dad963d` |
+| `dev/diag-nolemma/goals.json` (context diagnosis) | `a9ab0b8303923def01a91057ce3e651beb4ee7704f411b2adba0ab7866747d1c` |
+| `dev/cal-nohint/goals.json` (round-mode calibration) | `c5eda81478f93384c24cdc1e8b8a8a369d15e75ba621f8f38c9ad6796bf86c6b` |
+
+- Stand-in after the fix: `standin/tdstep_standin.c`, sha256
+  `4228c0c19bf250ac6a20726ac35425c4b7e4a2a2c45dc6892d19d1094f44a0e8`. The headers are unchanged.
+- Harness hashes per run are in each `meta.json`: `loop_sha256`, `tool_sha256`, `wp_run_sha256` and
+  `examples_sha256`.
+- Tests: `test_hints.py` and `test_loop_tool.py`, 15 passed. The heartbeat table is in
+  `heartbeat.md`.

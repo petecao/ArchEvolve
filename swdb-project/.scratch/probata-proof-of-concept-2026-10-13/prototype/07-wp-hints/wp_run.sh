@@ -2,12 +2,13 @@
 # PROTOTYPE (Probata PoC ticket 07), throwaway. Created 2026-10-14 ET.
 # Frozen WP invocation for the spike (map 13 item 7 flags): fresh run folder and session,
 # -wp-cache none, default Frama-C warning levels, x86_64 machdep, no WP environment variables.
-# Usage: wp_run.sh parse|wp|wp-smoke <run_dir> <file.c>
+# Usage: wp_run.sh parse|wp-gen|wp|wp-smoke <run_dir> <file.c>  |  wp_run.sh round <run_dir> <file.c> <cache_dir> [timeout_s]
 #   <run_dir> must already hold <file.c> and the stand-in headers; it must not hold .frama-c/.
 # Run it through /tmp/claude/probata-tools/verifier_run.py, with the agent sandbox off (Why3 socket).
 mode="$1"; dir="$2"; file="$3"
 cd "$dir" || exit 2
 [ -e .frama-c ] && { echo "refusing: $dir/.frama-c exists (stale session)"; exit 2; }
+cache_arg="$4"; tmo_arg="${5:-10}"
 set -- -machdep x86_64 "$file"
 case "$mode" in
   parse) exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" opam exec --switch=framac-33 -- frama-c "$@" -print -ocode printed.c ;;
@@ -15,6 +16,14 @@ case "$mode" in
   wp-gen) rm -rf session && mkdir session
     exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" opam exec --switch=framac-33 -- frama-c "$@" \
       -wp -wp-cache none -wp-session session -wp-prover none ;;
+  # t07c method change (a): hint-round runs. TDStep's goals plus global lemmas only, no smoke tests,
+  # a shorter per-prover timeout, and a run-local cache. Never a verdict: the verdict is read only
+  # from a fresh full `wp-smoke` replay (no cache). Usage: wp_run.sh round <run_dir> <file.c> <cache_dir> <timeout_s>
+  round) [ -n "$cache_arg" ] || { echo "round needs <cache_dir>"; exit 2; }; rm -rf session && mkdir session
+    exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" opam exec --switch=framac-33 -- frama-c "$@" \
+      -wp -wp-fct TDStep -wp-cache update -wp-cache-dir "$cache_arg" -wp-session session \
+      -wp-prover alt-ergo,z3,cvc5 -wp-timeout "$tmo_arg" -wp-par 12 -wp-report-json goals.json \
+      -then -wp-fct= -wp-prop=@lemma -wp-report-json lemmas.json -then -report -report-untried ;;
   wp) smoke="" ;;
   wp-smoke) smoke="-wp-smoke-tests" ;;
   wp-rte) smoke="-wp-rte" ;;

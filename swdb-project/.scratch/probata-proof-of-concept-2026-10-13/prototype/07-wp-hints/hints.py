@@ -189,3 +189,63 @@ def verdict_problems(props, extern_ok_files, extern_ok_functions=frozenset()):
 def smoke_failures(goals):
     """A smoke goal WP proves Valid signals dead code (S7)."""
     return [g for g in goals if g.get("smoke") and not g.get("passed")]
+
+
+# ---- t07c method change (c): failing goals with their source positions --------------------------
+
+def hint_block_at(merged_lines, n):
+    """Hint ids of the `// >>> hint` block that holds 1-based line n, or of the loop block right
+    above the loop head at line n; [] when line n is stand-in code."""
+    k = n - 1
+    if not (0 <= k < len(merged_lines)):
+        return []
+    for j in range(k, -1, -1):
+        s = merged_lines[j].strip()
+        if s == END and j != k:
+            if j == k - 1 and merged_lines[k].strip().startswith(("for", "while", "do")):
+                continue  # the loop block right above a loop head belongs to that loop's goals
+            return []
+        if s.startswith(BEGIN):
+            return s[len(BEGIN):].split()
+    return []
+
+
+_KINDS = ("loop_invariant", "loop_assigns", "loop_variant", "assigns", "assert", "ensures", "call",
+          "terminates", "check", "exits", "lemma")
+
+
+def goal_kind(goal):
+    """A short kind label from WP's goal name (typed_<function>_<kind>...)."""
+    for k in _KINDS:
+        m = re.search(r"_" + k + r"(?:_|$)", goal)
+        if m:
+            if k == "loop_invariant":
+                tail = "established" if goal.endswith("established") else "preserved" if goal.endswith("preserved") else ""
+                return ("loop invariant " + tail).strip()
+            if k == "call":
+                return "call-site precondition"
+            return k.replace("_", " ")
+    return goal
+
+
+def goal_positions(goals, merged, unit="tdstep_standin.c", headers=None):
+    """Each non-smoke goal not passed, with kind, file:line, the source line and the hint holding it."""
+    lines = merged.splitlines()
+    headers = headers or {}
+    out = []
+    for g in goals:
+        if g.get("smoke") or g.get("passed"):
+            continue
+        f = (g.get("file") or "").split("/")[-1]
+        n = int(g.get("line") or 0)
+        if f == unit:
+            src = lines[n - 1].strip() if 0 < n <= len(lines) else ""
+            ids = hint_block_at(lines, n)
+        else:
+            hl = headers.get(f, "").splitlines()
+            src = hl[n - 1].strip() if 0 < n <= len(hl) else ""
+            ids = []
+        out.append({"goal": g.get("goal"), "kind": goal_kind(g.get("goal", "")), "file": f, "line": n,
+                    "source": src[:300], "hint_ids": ids, "failure_class": g.get("verdict"),
+                    "function": g.get("function")})
+    return out
