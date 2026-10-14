@@ -321,14 +321,32 @@ class TargetAdapter:
                 access.copy_record(self.team / record.rel, target)
 
     def outside_cpp_subset(self, candidate_id, **context):
-        """True when the candidate artifact's code is outside the C++ subset (only `threads_k` is then
-        skipped). The subset check is ticket 24's; until it exists every candidate artifact reads as inside."""
+        """True when the candidate artifact's proof function has no C lowering (outside the C++ subset): every
+        bounded rung is then skipped (ticket 22: CBMC, CIVL and GenMC all read the C lowering)."""
+        from swdb import c_lowering
+        from swdb.store import Store
+        from swdb.wp_adapter import _unit_source
+        from swdb.proof import AdapterError
+        candidate = Store(self.store_dir).get(candidate_id, "candidate") or {}
+        tree = (candidate.get("artifact") or {}).get("path")
+        if not tree:
+            raise Failure(f"candidate {candidate_id} names no artifact tree to lower")
+        try:
+            c_lowering.lower(_unit_source(Path(tree), self.PROOF_FUNCTION), self.PROOF_FUNCTION)
+        except (c_lowering.Unsupported, c_lowering.ParseError):
+            return True
+        except (c_lowering.LoweringError, AdapterError) as exc:
+            raise Failure(f"cannot tell whether {candidate_id} is inside the C++ subset: {exc}") from None
         return False
 
     def bounded_job(self, candidate_id, contract, rung, bounds, **context):
-        """The verifier job of one rung: {adapter, script}. Real verifier adapters are tickets 22, 46, 47."""
+        """The verifier job of one rung: {adapter, script}. Ticket 22: the one-thread rung is CBMC on the C
+        lowering (`swdb prove --adapter cbmc` with the gate's bounds and budget); threads > 1 waits for CIVL and
+        GenMC (tickets 46, 47)."""
+        if rung == "threads_1":
+            return {"adapter": "cbmc"}
         raise Failure(f"no bounded verifier adapter for rung {rung} on target {self.campaign['target']} yet "
-                      "(tickets 22, 46, 47)")
+                      "(tickets 46, 47)")
 
     # the WP phase (Probata PoC 16) ------------------------------------------------------------------
     def wp_plan(self, candidate_id, contract, **context):

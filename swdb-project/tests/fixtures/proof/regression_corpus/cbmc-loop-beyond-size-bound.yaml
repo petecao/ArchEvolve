@@ -1,0 +1,12 @@
+# Created: 2026-10-14 ET (Probata PoC 22). Regression corpus case through `swdb prove --adapter cbmc`.
+id: cbmc-loop-beyond-size-bound
+adapter: cbmc
+input:
+  function: swdb_fixture_twice
+  contract: contract.fixture_cbmc_twice
+  bounds: {threads: 1, n: 2}
+failure_class: unwinding_bound_too_small
+cause: >-
+  The loop runs 2n times, but the adapter's unwinding bound comes from the largest size bound (K = 2 + 1), so
+  CBMC's unwinding assertion for that loop fails. The verdict is not proven, never proven; a per-loop bound
+  derived from the sizes (ticket 33's minimum-bounds script) would cover it.

@@ -8,7 +8,7 @@ Format: docs/reference/format-v0.4-extensa.md ("The bounded gate").
 Right after certification and before speed evaluation, each certified candidate artifact runs the two
 bounded rungs through `swdb prove`, once per rewrite contract it applies (one proof unit per contract):
 
-- `threads_1`: one thread (SAW's rung), at the contract's single-thread minimum bounds;
+- `threads_1`: one thread (CBMC's rung on the C lowering, ticket 22), at the contract's single-thread minimum bounds;
 - `threads_k`: threads <= k (CIVL's rung, GenMC the second refuter), at the multi-thread minimum bounds
   with the thread count raised to k, the method version's `civl_k`: the one decided exception to
   "minimum only" (19 item 6, 15 item 9). No other dimension runs above the minimum.
@@ -19,8 +19,9 @@ timeout is not proven for that rung only: no bounded level from it, no retry at 
 
 Skips (O7) skip only the steps that need the missing piece and keep the level: no contract proof (no
 counting proven contract-proof part of the contract's current content) skips both rungs; no minimum
-bounds for a rung skips that rung; code outside the C++ subset skips only `threads_k` (CIVL and GenMC
-read the C lowering; SAW reads the C++ bitcode). Each skip is a skip record.
+bounds for a rung skips that rung; code outside the C++ subset skips both rungs (ticket 22, 2026-10-14 ET:
+CBMC, CIVL and GenMC all read the C lowering, and code outside the subset has none). Each skip is a skip
+record.
 
 The gate stores no level: whether the candidate artifact is refuted is read by the level rule
 (`swdb.level_rule`, the refuted flag) from the records just written. Nothing here repairs: a refuted
@@ -154,7 +155,7 @@ class Gate:
                 minimum = proof["minimum"][rung]
                 if not proof["parts"]:
                     row["skip_reason"] = NO_CONTRACT_PROOF
-                elif rung == "threads_k" and outside:
+                elif outside:                           # ticket 22: every bounded rung reads the C lowering
                     row["skip_reason"] = OUTSIDE_SUBSET
                 elif minimum is None:
                     row["skip_reason"] = NO_MINIMUM_BOUNDS

@@ -419,13 +419,15 @@ def test_no_contract_proof_and_no_minimum_bounds_skip_both_rungs_and_keep_the_le
         assert level(store, entry["id"])["level"] == "certified"
 
 
-def test_code_outside_the_cpp_subset_runs_only_the_one_thread_rung(team):
+def test_code_outside_the_cpp_subset_skips_both_bounded_rungs(team):
+    """Ticket 22 (2026-10-14 ET): CBMC, the one-thread rung, reads the C lowering too, so code outside the
+    subset (no C lowering) skips both rungs and keeps its certification level."""
     fixture = gate_fixture(team, kronecker={"proof": {"cpp_subset": False}})
     summary, store = gate_campaign(team, {"rewriting": [rewrite(contracts=[READ], patch=ALPHA)]}, fixture=fixture)
     (kron,), (control,) = entries(summary)["kronecker"], entries(summary)["uniform_random"]
     jobs = {j["rung"]: j for j in kron["bounded_gate"]["jobs"]}
-    assert jobs["threads_1"]["verdict"] == "proven" and jobs["threads_k"]["skip_reason"] == "outside_cpp_subset"
-    assert kron["comparisons"] and level(store, kron["id"])["level"] == "proven_within_bounds_threads_1"
+    assert jobs["threads_1"]["skip_reason"] == jobs["threads_k"]["skip_reason"] == "outside_cpp_subset"
+    assert kron["comparisons"] and level(store, kron["id"])["level"] == "certified"
     # Control: the same candidate artifact with a contract proof, minimum bounds and subset code runs both.
     assert {j["rung"]: j.get("verdict") for j in control["bounded_gate"]["jobs"]} == \
         {"threads_1": "proven", "threads_k": "proven"}
