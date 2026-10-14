@@ -156,7 +156,8 @@ class CbmcAdapter:
             raise AdapterError(str(exc)) from None
         code = Code(lowering, source, self.defines)
         code.apply_fault(os.environ.get("SWDB_CBMC_LOWERING_FAULT"))
-        context["pins"] = {"c_lowering": {"id": f"{lowering.function}.c", "sha256": code.c_sha256}}
+        context["pins"] = {"c_lowering": {"id": f"{lowering.function}.c", "sha256": code.c_sha256},
+                           "naming_rules": c_lowering.naming_rules()}           # ticket 24
         try:
             built = self._build(job, entry, code, sizes, summary_job, context)
         except tr.Untranslatable as exc:
