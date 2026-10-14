@@ -1,0 +1,254 @@
+// Ticket 06 spike (b), 2026-10-14 ET. THROWAWAY per-call summaries of the DX100 maa_* calls the
+// two proof units make, as SAW specs used as llvm_unsafe_assume_spec overrides. Each summary's
+// pre/post ghost state and values come from ghost.cry (map 12's proof semantics, reduced).
+// Overrides that name a global allocate it in their spec (SAW: "Global symbol not allocated").
+// The hazard state is a harness global, not a SAW ghost variable (attempt 1 used SAW ghost state:
+// timeout), so ticket 05's ghost-line ordering pitfall does not arise here.
+// Needs: import "ghost.cry"; the harness globals swdb_g_<field> (unit_common.hpp).
+
+let i32 = llvm_int 32;
+let tiles_t = llvm_array 8 (llvm_array 2 i32);
+let TD = llvm_global "swdb_tile_data";
+// The hazard state is 11 harness globals swdb_g_<field> (unit_common.hpp), one per field: rdy,
+// wr, outs, anc, named, users, rrd, rwr, reg, sz, fp (fpr then fpw). A summary reads and writes
+// only the fields it needs. (Attempt 4: one 81-word global read in slices failed in SAW 1.6 with
+// "Error when loading through pointer" after slice writes; separate globals avoid untyped slices.)
+let slice_pre name gname len = do {
+  v <- llvm_fresh_var name (llvm_array len i32);
+  llvm_alloc_global gname;
+  llvm_points_to (llvm_global gname) (llvm_term v);
+  return v;
+};
+let slice_post gname v = llvm_points_to (llvm_global gname) (llvm_term v);
+let ghost_pre name = do {
+  a <- slice_pre "rdy" "swdb_g_rdy" 1;  b <- slice_pre "wr" "swdb_g_wr" 8;  c <- slice_pre "outs" "swdb_g_outs" 8;
+  d <- slice_pre "anc" "swdb_g_anc" 8;  e <- slice_pre "named" "swdb_g_named" 8;  f <- slice_pre "users" "swdb_g_users" 8;
+  h <- slice_pre "rrd" "swdb_g_rrd" 8;  i <- slice_pre "rwr" "swdb_g_rwr" 8;  j <- slice_pre "reg" "swdb_g_reg" 8;
+  k <- slice_pre "sz" "swdb_g_sz" 8;  l <- slice_pre "fp" "swdb_g_fp" 8;
+  return {{ unpack (a # b # c # d # e # f # h # i # j # k # l) }};
+};
+let ghost_post t = do {
+  let w = {{ pack t }};
+  slice_post "swdb_g_rdy" {{ take`{1} w }};  slice_post "swdb_g_wr" {{ take`{8} (drop`{1} w) }};
+  slice_post "swdb_g_outs" {{ take`{8} (drop`{9} w) }};  slice_post "swdb_g_anc" {{ take`{8} (drop`{17} w) }};
+  slice_post "swdb_g_named" {{ take`{8} (drop`{25} w) }};  slice_post "swdb_g_users" {{ take`{8} (drop`{33} w) }};
+  slice_post "swdb_g_rrd" {{ take`{8} (drop`{41} w) }};  slice_post "swdb_g_rwr" {{ take`{8} (drop`{49} w) }};
+  slice_post "swdb_g_reg" {{ take`{8} (drop`{57} w) }};  slice_post "swdb_g_sz" {{ take`{8} (drop`{65} w) }};
+  slice_post "swdb_g_fp" {{ drop`{73} w }};
+};
+
+// ---- calls that only touch ghost state
+let const_spec gh = do {
+  g <- ghost_pre "const_g";
+  v <- llvm_fresh_var "const_value" i32;
+  r <- llvm_fresh_var "const_reg" i32;
+  llvm_precond {{ r < 8 }};
+  llvm_execute_func [llvm_term v, llvm_term r];
+  ghost_post {{ constR g r v }};
+};
+
+let wait_spec gh old_rule = do {
+  g <- ghost_pre "wait_g";
+  t <- llvm_fresh_var "wait_tile" i32;
+  llvm_precond {{ t < 8 }};
+  llvm_execute_func [llvm_term t];
+  if old_rule then ghost_post {{ waitOld g t }} else ghost_post {{ waitT g t }};
+};
+
+// Calls that need only part of the hazard state touch only those fields (attempt 4: once SAW has
+// merged paths, every word an override reads costs time, so a probe reads 1-9 words, not 81).
+
+// get_tile_size: an unready size read is a hazard (map 12 item 3).
+let tile_size_spec gh = do {
+  rdy <- slice_pre "size_rdy" "swdb_g_rdy" 1;
+  sz <- slice_pre "size_sz" "swdb_g_sz" 8;
+  t <- llvm_fresh_var "size_tile" i32;
+  llvm_precond {{ t < 8 }};
+  llvm_precond {{ readyW rdy t }};   // HAZARD CHECK: tile size read before ready
+  llvm_execute_func [llvm_term t];
+  slice_post "swdb_g_rdy" rdy;
+  slice_post "swdb_g_sz" sz;
+  llvm_return (llvm_term {{ drop (sz @ t) : [16] }});
+};
+
+// Probes placed by the harness.
+let probe_tile_spec gh = do {
+  rdy <- slice_pre "probe_rdy" "swdb_g_rdy" 1;
+  t <- llvm_fresh_var "probe_tile" i32;
+  llvm_precond {{ t < 8 }};
+  llvm_precond {{ readyW rdy t }};   // HAZARD CHECK: CPU reads tile before ready
+  llvm_execute_func [llvm_term t];
+  slice_post "swdb_g_rdy" rdy;
+};
+
+let probe_cpu_spec gh = do {
+  rdy <- slice_pre "cpu_rdy" "swdb_g_rdy" 1;
+  fp <- slice_pre "cpu_fp" "swdb_g_fp" 8;
+  m <- llvm_fresh_var "cpu_region" i32;
+  w <- llvm_fresh_var "cpu_write" i32;
+  llvm_precond {{ m < 4 }};
+  llvm_precond {{ cpuOkW rdy fp m (w != 0) }};   // HAZARD CHECK: CPU access overlaps an unfinished command
+  llvm_execute_func [llvm_term m, llvm_term w];
+  slice_post "swdb_g_rdy" rdy;
+  slice_post "swdb_g_fp" fp;
+};
+
+// Fault tooling only (seams.cc pokes the strict layer's state the same way).
+let peek_reg_spec gh = do {
+  reg <- slice_pre "peek_reg_values" "swdb_g_reg" 8;
+  r <- llvm_fresh_var "peek_reg" i32;
+  llvm_precond {{ r < 8 }};
+  llvm_execute_func [llvm_term r];
+  slice_post "swdb_g_reg" reg;
+  llvm_return (llvm_term {{ reg @ r }});
+};
+let poke_reg_spec gh = do {
+  reg <- slice_pre "poke_reg_values" "swdb_g_reg" 8;
+  r <- llvm_fresh_var "poke_reg" i32;
+  v <- llvm_fresh_var "poke_value" i32;
+  llvm_precond {{ r < 8 }};
+  llvm_execute_func [llvm_term r, llvm_term v];
+  slice_post "swdb_g_reg" {{ update reg r v }};
+};
+let peek_size_spec gh = do {
+  sz <- slice_pre "peeksz_sz" "swdb_g_sz" 8;
+  t <- llvm_fresh_var "peeksz_tile" i32;
+  llvm_precond {{ t < 8 }};
+  llvm_execute_func [llvm_term t];
+  slice_post "swdb_g_sz" sz;
+  llvm_return (llvm_term {{ sz @ t }});
+};
+
+// ---- maa_stream_load, as three overrides (spike_api.hpp)
+let stream_bounds_spec gh = do {
+  reg <- slice_pre "sb_reg_values" "swdb_g_reg" 8;
+  lo <- llvm_fresh_var "sb_lo" i32; hi <- llvm_fresh_var "sb_hi" i32; st <- llvm_fresh_var "sb_st" i32;
+  llvm_precond {{ lo < 8 /\ hi < 8 /\ st < 8 }};
+  // CHECK stream_bounds: begin >= 0, end >= begin, stride > 0
+  llvm_precond {{ (reg @ lo >=$ 0) /\ (reg @ hi >=$ reg @ lo) /\ (reg @ st >$ 0) }};
+  llvm_execute_func [llvm_term lo, llvm_term hi, llvm_term st];
+  slice_post "swdb_g_reg" reg;
+};
+let stream_capacity_spec gh = do {
+  reg <- slice_pre "sc_reg_values" "swdb_g_reg" 8;
+  lo <- llvm_fresh_var "sc_lo" i32; hi <- llvm_fresh_var "sc_hi" i32; st <- llvm_fresh_var "sc_st" i32;
+  llvm_precond {{ lo < 8 /\ hi < 8 /\ st < 8 }};
+  llvm_precond {{ streamNR reg lo hi st <= 2 }};   // CHECK tile_truncation: n <= TILE_SIZE
+  llvm_execute_func [llvm_term lo, llvm_term hi, llvm_term st];
+  slice_post "swdb_g_reg" reg;
+};
+// One instance per memory region the units pass (global name, its length, element offset, region id).
+let stream_spec gh gname len off m = do {
+  g <- ghost_pre "st_g";
+  td <- llvm_fresh_var "st_td" tiles_t;
+  mem <- llvm_fresh_var "st_mem" (llvm_array len i32);
+  lo <- llvm_fresh_var "st_lo" i32; hi <- llvm_fresh_var "st_hi" i32; st <- llvm_fresh_var "st_st" i32;
+  dst <- llvm_fresh_var "st_dst" i32; cond <- llvm_fresh_var "st_cond" i32;
+  llvm_alloc_global "swdb_tile_data";
+  llvm_alloc_global gname;
+  llvm_points_to TD (llvm_term td);
+  llvm_points_to (llvm_global gname) (llvm_term mem);
+  llvm_precond {{ lo < 8 /\ hi < 8 /\ st < 8 /\ dst < 8 /\ cond == -1 }};
+  llvm_precond {{ streamOk g mem (`off : [64]) lo hi st }};   // CHECK memory_region (and the two above)
+  llvm_execute_func [llvm_elem (llvm_global gname) off, llvm_term lo, llvm_term hi, llvm_term st, llvm_term dst, llvm_term cond];
+  ghost_post {{ streamG g (`m : [32]) lo hi st dst }};
+  llvm_points_to TD (llvm_term {{ update td dst (streamVals g mem (`off : [64]) lo hi st (td @ dst)) }});
+  llvm_points_to (llvm_global gname) (llvm_term mem);
+};
+
+// ---- maa_indirect_load (gather), one override per region (spike_api.hpp dispatches)
+let gather_spec gh gname len off m = do {
+  g <- ghost_pre "ga_g";
+  td <- llvm_fresh_var "ga_td" tiles_t;
+  mem <- llvm_fresh_var "ga_mem" (llvm_array len i32);
+  ix <- llvm_fresh_var "ga_index" i32; dst <- llvm_fresh_var "ga_dst" i32; cond <- llvm_fresh_var "ga_cond" i32;
+  llvm_alloc_global "swdb_tile_data";
+  llvm_alloc_global gname;
+  llvm_points_to TD (llvm_term td);
+  llvm_points_to (llvm_global gname) (llvm_term mem);
+  llvm_precond {{ ix < 8 /\ dst < 8 /\ cond == -1 }};
+  llvm_precond {{ gatherOk g mem (`off : [64]) td ix }};   // CHECK memory_region
+  llvm_execute_func [llvm_elem (llvm_global gname) off, llvm_term ix, llvm_term dst, llvm_term cond];
+  ghost_post {{ gatherG g (`m : [32]) ix dst }};
+  llvm_points_to TD (llvm_term {{ update td dst (gatherVals g mem (`off : [64]) td ix dst) }});
+  llvm_points_to (llvm_global gname) (llvm_term mem);
+};
+
+// ---- maa_range_loop
+let range_spec gh = do {
+  g <- ghost_pre "rl_g";
+  td <- llvm_fresh_var "rl_td" tiles_t;
+  li <- llvm_fresh_var "rl_last_i" i32; lj <- llvm_fresh_var "rl_last_j" i32;
+  lo <- llvm_fresh_var "rl_min" i32; up <- llvm_fresh_var "rl_max" i32; st <- llvm_fresh_var "rl_stride" i32;
+  rows <- llvm_fresh_var "rl_rows" i32; cols <- llvm_fresh_var "rl_cols" i32; cond <- llvm_fresh_var "rl_cond" i32;
+  llvm_alloc_global "swdb_tile_data";
+  llvm_points_to TD (llvm_term td);
+  llvm_precond {{ li < 8 /\ lj < 8 /\ lo < 8 /\ up < 8 /\ st < 8 /\ rows < 8 /\ cols < 8 /\ rows != cols /\ cond == -1 }};
+  llvm_precond {{ rangeOk g td li lj lo up st }};   // CHECK range_bounds, byte_offset_overflow
+  llvm_execute_func (map llvm_term [li, lj, lo, up, st, rows, cols, cond]);
+  ghost_post {{ rangeG g td li lj lo up st rows cols }};
+  llvm_points_to TD (llvm_term {{ rangeTiles g td li lj lo up st rows cols }});
+};
+
+// ---- maa_alu_scalar, LT_OP only
+let alu_spec gh = do {
+  g <- ghost_pre "alu_g";
+  td <- llvm_fresh_var "alu_td" tiles_t;
+  src <- llvm_fresh_var "alu_src" i32; r <- llvm_fresh_var "alu_reg" i32; dst <- llvm_fresh_var "alu_dst" i32;
+  op <- llvm_fresh_var "alu_op" i32; cond <- llvm_fresh_var "alu_cond" i32;
+  llvm_alloc_global "swdb_tile_data";
+  llvm_points_to TD (llvm_term td);
+  llvm_precond {{ src < 8 /\ r < 8 /\ dst < 8 /\ op == 13 /\ cond == -1 }};
+  llvm_execute_func (map llvm_term [src, r, dst, op, cond]);
+  ghost_post {{ aluG g src r dst }};
+  llvm_points_to TD (llvm_term {{ update td dst (aluVals g td src r dst) }});
+};
+
+// ---- maa_indirect_store_vector with a condition and a destination tile, per region
+let store_spec gh gname len off m = do {
+  g <- ghost_pre "so_g";
+  td <- llvm_fresh_var "so_td" tiles_t;
+  mem <- llvm_fresh_var "so_mem" (llvm_array len i32);
+  ix <- llvm_fresh_var "so_index" i32; sr <- llvm_fresh_var "so_src" i32;
+  cd <- llvm_fresh_var "so_cond" i32; dst <- llvm_fresh_var "so_dst" i32;
+  llvm_alloc_global "swdb_tile_data";
+  llvm_alloc_global gname;
+  llvm_points_to TD (llvm_term td);
+  llvm_points_to (llvm_global gname) (llvm_term mem);
+  llvm_precond {{ ix < 8 /\ sr < 8 /\ cd < 8 /\ dst < 8 }};
+  llvm_precond {{ storeOk g mem (`off : [64]) td ix sr cd }};   // CHECK store_size, memory_region
+  llvm_execute_func [llvm_elem (llvm_global gname) off, llvm_term ix, llvm_term sr, llvm_term cd, llvm_term dst];
+  ghost_post {{ storeG g (`m : [32]) ix sr cd dst }};
+  llvm_points_to TD (llvm_term {{ update td dst (storeDst g mem (`off : [64]) td ix sr cd dst) }});
+  llvm_points_to (llvm_global gname) (llvm_term {{ storeMem g mem (`off : [64]) td ix sr cd }});
+};
+
+// All overrides for one module. faults: also the fault-tooling summaries (seams).
+let make_overrides mod gh old_rule = do {
+  o_const <- llvm_unsafe_assume_spec mod "_Z9maa_constIiEvT_i" (const_spec gh);
+  o_wait <- llvm_unsafe_assume_spec mod "_Z10wait_readyi" (wait_spec gh old_rule);
+  o_size <- llvm_unsafe_assume_spec mod "_Z13get_tile_sizei" (tile_size_spec gh);
+  o_ptile <- llvm_unsafe_assume_spec mod "_Z20swdb_probe_tile_readi" (probe_tile_spec gh);
+  o_pcpu <- llvm_unsafe_assume_spec mod "_Z14swdb_probe_cpuii" (probe_cpu_spec gh);
+  o_sb <- llvm_unsafe_assume_spec mod "_Z21swdb_ps_stream_boundsiii" (stream_bounds_spec gh);
+  o_sc <- llvm_unsafe_assume_spec mod "_Z23swdb_ps_stream_capacityiii" (stream_capacity_spec gh);
+  o_sq <- llvm_unsafe_assume_spec mod "_Z19swdb_ps_stream_loadIiEvPT_iiiii" (stream_spec gh "g_queue" 8 0 0);
+  o_g1 <- llvm_unsafe_assume_spec mod "_Z22swdb_ps_gather_offsetsPiiii" (gather_spec gh "g_offsets" 4 0 1);
+  o_g2 <- llvm_unsafe_assume_spec mod "_Z23swdb_ps_gather_offsets1Piiii" (gather_spec gh "g_offsets" 4 1 1);
+  o_g3 <- llvm_unsafe_assume_spec mod "_Z24swdb_ps_gather_neighborsPiiii" (gather_spec gh "g_neighbors" 3 0 2);
+  o_g4 <- llvm_unsafe_assume_spec mod "_Z20swdb_ps_gather_queuePiiii" (gather_spec gh "g_queue" 8 0 0);
+  o_g5 <- llvm_unsafe_assume_spec mod "_Z21swdb_ps_gather_parentPiiii" (gather_spec gh "g_parent" 3 0 3);
+  o_range <- llvm_unsafe_assume_spec mod "_Z14maa_range_loopIiEviiiiiiii" (range_spec gh);
+  return [o_const, o_wait, o_size, o_ptile, o_pcpu, o_sb, o_sc, o_sq, o_g1, o_g2, o_g3, o_g4, o_g5, o_range];
+};
+let make_maa_overrides mod gh = do {
+  o_alu <- llvm_unsafe_assume_spec mod "_Z14maa_alu_scalarIiEviii11Operation_ti" (alu_spec gh);
+  o_store <- llvm_unsafe_assume_spec mod "_Z25maa_indirect_store_vectorIiEvPT_iiii" (store_spec gh "g_parent" 3 0 3);
+  return [o_alu, o_store];
+};
+let make_fault_overrides mod gh = do {
+  o_peek <- llvm_unsafe_assume_spec mod "_Z19swdb_fault_peek_regi" (peek_reg_spec gh);
+  o_poke <- llvm_unsafe_assume_spec mod "_Z19swdb_fault_poke_regii" (poke_reg_spec gh);
+  o_psz <- llvm_unsafe_assume_spec mod "_Z20swdb_fault_peek_sizei" (peek_size_spec gh);
+  return [o_peek, o_poke, o_psz];
+};
