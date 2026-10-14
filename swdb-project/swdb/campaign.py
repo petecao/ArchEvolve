@@ -510,11 +510,15 @@ def winner_rows(fastest, proven, levels):
 
 # --- provider roles ------------------------------------------------------------------------
 
-def _roles(starts=False):
+def _roles(starts=False, new_contracts=False):
     """The provider roles. With `starts` (the campaign lists derived starts, Probata PoC 19) the rewrite
-    role also names its `start`: a listed derived implementation, or null for the base source."""
-    from swdb import provider_roles
+    role also names its `start`: a listed derived implementation, or null for the base source. With
+    `new_contracts` (the campaign file sets `library.new_enabling_contracts`, Probata PoC 63) it also answers
+    `new_contract`: the YAML text of a new enabling contract its patch applies, or null."""
+    from swdb import experimental_contracts, provider_roles
     start = {"start": {"type": ["string", "null"]}} if starts else {}
+    if new_contracts:
+        start[experimental_contracts.FIELD] = {"type": ["string", "null"]}
     rewrite = provider_roles.Role("extensa_rewriting", {
         "type": "object", "additionalProperties": False,
         "required": ["patch", "contracts", "knobs", "unresolved", *start],
@@ -602,6 +606,10 @@ def rewrite_prompt(campaign_id, iteration, classes, files):
         history.append(" `STARTS.json` lists the certified derived implementations this iteration may start from, "
                        "each with its source under `starts/`; name the one your patch applies to in `start` (null: "
                        "the base source in `source/`).")
+    if "NEW_CONTRACT.json" in files:
+        # Probata PoC 63 (2026-10-14 ET): the rewriting role may write a new experimental enabling contract.
+        history.append(" `NEW_CONTRACT.json` says when and how to write a new enabling contract in `new_contract` "
+                       "(null when you write none).")
     if "PROTECTED.json" in files:
         # Ticket 73 (2026-10-05 ET): campaign a7's iteration 1 edited the protected verifier.
         history.append(" `PROTECTED.json` lists protected evaluator regions (for example the `BFSVerifier` "
@@ -639,6 +647,7 @@ class Campaign:
         self.applied_contracts = None     # query mode: contracts the site finder applied this iteration
         self.rule = SpeedRule.of(self.data)
         self.starts = list(self.data.get("derived_starts") or [])    # Probata PoC 19
+        self.new_contracts = bool(self.data["library"].get("new_enabling_contracts"))    # Probata PoC 63
         self.gate = None                                              # Probata PoC 14: set when the run starts
         if args.fixture:
             from swdb.campaign_fixture import FixtureAdapter
@@ -777,7 +786,7 @@ class Campaign:
         started = time.monotonic()
         outcome, response, error = S.CallOutcome.COMPLETED, None, None
         try:
-            response, _meta = provider_roles.run(_roles(bool(self.starts))[kind], files, prompt, self.provider_config,
+            response, _meta = provider_roles.run(_roles(bool(self.starts), self.new_contracts)[kind], files, prompt, self.provider_config,
                                                  folder)
         except Failure as exc:
             # P1 (2026-10-05 ET): the one classifier; uncounted stops (usage limit, capacity, guard
@@ -948,7 +957,7 @@ class Campaign:
         from swdb.library import Library
         library = Library(self.library_root)
         files = {f"source/{k}": v for k, v in self.adapter.source_files().items()}
-        for cid in self.data["library"]["contracts"]:
+        for cid in self._contracts():
             path = library.files.get(cid)
             if path is None:
                 raise Failure(f"campaign contract {cid} is not in the library")
@@ -978,6 +987,9 @@ class Campaign:
                 "note": ("Evaluator inputs. A patch that changes any of these is rejected before it is "
                          "built. Never edit them."), "protected": rows}, indent=2)
         files.update(self._start_files())
+        if self.new_contracts:          # Probata PoC 63
+            from swdb import experimental_contracts
+            files[experimental_contracts.NOTE_FILE] = json.dumps({"note": experimental_contracts.NOTE}, indent=2)
         for cls, best in self.state["bests"].items():
             if best:
                 files[f"best/{cls}.patch"] = best["patch"]
@@ -1008,14 +1020,21 @@ class Campaign:
         from swdb.library import Library, knob_problem
         return knob_problem(Library(self.library_root), contracts, knobs)
 
+    def _contracts(self):
+        """The campaign file's contracts, then the new enabling contracts this campaign added (Probata PoC 63)."""
+        added = [c for c in (self.state or {}).get("new_contracts") or {} if c not in self.data["library"]["contracts"]]
+        return list(self.data["library"]["contracts"]) + added
+
     def _contract_tier_problem(self, contracts):
         from swdb.library import Library
         from swdb.store import Store
         library = Library(self.library_root, Store(self.team))
+        added = (self.state or {}).get("new_contracts") or {}
         for cid in contracts:
-            if cid not in self.data["library"]["contracts"]:
+            if cid not in self._contracts():
                 return f"contract {cid} is outside the campaign's contracts"
-            if self.applied_contracts is not None and cid not in self.applied_contracts:
+            # A new contract is the rewriting role's own: no site-finder region can name it yet.
+            if self.applied_contracts is not None and cid not in self.applied_contracts and cid not in added:
                 return f"contract {cid} applies to no region the site finder chose"
             if library.get(cid) is None:
                 return f"contract {cid} is not in the library"
@@ -1052,6 +1071,28 @@ class Campaign:
                          "applies to in `start`, or null for the base source in `source/`."), "starts": rows}, indent=2)
         return files
 
+    # experimental enabling contracts (Probata PoC 63) -----------------------------------------
+    def _new_contract(self, response, iteration, row):
+        """Admit the rewrite answer's new enabling contract into the campaign's library, once per answer; the
+        iteration row's `new_contract` says whether it was added or why it was refused."""
+        from swdb import experimental_contracts
+        text = response.get(experimental_contracts.FIELD)
+        if not self.new_contracts or text is None:
+            return
+        known = self.state.setdefault("new_contracts", {})
+        try:
+            added = experimental_contracts.admit(
+                text, library_root=self.library_root, team_dir=self.team,
+                allowed_tiers=self.data["library"]["allowed_tiers"], contracts=list(response.get("contracts") or []),
+                campaign=self.cid, iteration=iteration, known={c: v["content_sha256"] for c, v in known.items()})
+        except Failure as exc:
+            row["new_contract"] = {"state": "refused", "reason": str(exc)[:1000]}
+            return
+        known.setdefault(added["contract"], {"iteration": iteration, "content_sha256": added["content_sha256"],
+                                             "path": added["path"]})
+        row["new_contract"] = {"contract": added["contract"], "state": "added",
+                               "content_sha256": added["content_sha256"], "path": added["path"]}
+
     def _derive(self, entry, candidate, contracts, knobs, start):
         """Record a certified candidate artifact whose every contract is enabling as a derived implementation."""
         from swdb import derived
@@ -1080,6 +1121,7 @@ class Campaign:
             self.state["feedback"] = [S.Feedback("provider_output_invalid",
                                                  "The rewrite call returned no usable output.").to_dict()]
             return S.IterationOutcome.NOT_IMPROVED
+        self._new_contract(response, iteration, row)
         self._synthesis(iteration, row)
         feedback = []
         for cls in self.classes:
@@ -1155,6 +1197,9 @@ class Campaign:
         claims = scan_patch_additions(patch)
         if claims:
             return reject("provider_output_invalid", "The patch text states a performance outcome.")
+        refused = row.get("new_contract") or {}
+        if refused.get("state") == "refused":            # Probata PoC 63: refused before certification
+            return reject("provider_output_invalid", refused["reason"])
         problem = self._contract_tier_problem(contracts)
         if problem:
             return reject("provider_output_invalid", problem)
