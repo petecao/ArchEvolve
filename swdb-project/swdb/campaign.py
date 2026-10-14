@@ -401,6 +401,22 @@ def level_mix_of(evaluation):
             "slow_share": (sum(v["slow_trials"] for v in sources.values()) / total) if total else 0.0}
 
 
+def certification_links(entry):
+    """A candidate entry's certification links: one `{"contract", "record"}` pair per contract, in order.
+
+    Probata PoC ticket 02 (2026-10-14 ET). A contract refused before any record exists has `record: None`
+    and its `refusal` check. An entry saved before ticket 02 holds only `record` (the first record ID) and
+    reads as a one-pair list; its contract is named only when the entry used exactly one contract. An entry
+    without certification (no contract, or rejected before certification) has no links."""
+    certification = entry.get("certification")
+    if not certification:
+        return []
+    if "records" in certification:
+        return list(certification["records"])
+    contracts = entry.get("contracts") or []
+    return [{"contract": contracts[0] if len(contracts) == 1 else None, "record": certification.get("record")}]
+
+
 LEVEL_RANK = {"certified": 2, "uncertified": 1}
 
 
@@ -953,8 +969,9 @@ class Campaign:
                 started = time.monotonic()
                 outcome = self.adapter.certify(candidate, contracts, iteration, cls, attempt, tests=tests)
                 self._spent("certification", started)
-                entry["certification"] = {"record": outcome["record"], "outcome": outcome["outcome"],
-                                          "level_at_summary": outcome["outcome"]}
+                # Probata PoC ticket 02 (2026-10-14 ET): link every certification record, one per contract.
+                entry["certification"] = {"record": outcome["record"], "records": list(outcome["records"]),
+                                          "outcome": outcome["outcome"], "level_at_summary": outcome["outcome"]}
                 if outcome.get("failed_checks"):
                     entry["certification"]["failed_checks"] = list(outcome["failed_checks"])
                 if outcome["outcome"] == "certified":
