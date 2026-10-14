@@ -110,7 +110,14 @@ adapter; seam 2 `swdb candidate-level`; seam 4 `swdb validate`, `swdb build`, `s
 (tracking, `best/` contents, summary), summary validation and promotion, plateau and its control, unchanged
 fastest rule (ungated), negative controls (a)-(d). The fixture provider now logs the text of each `best/` file
 (`tests/testkit/extensa.py`). Mutation check: with best-proven improvements ignored, the plateau test fails.
-Run logs and hashes: see the final report line below.
+Serial, no xdist, after merging the integration tip: `test_two_winners_campaign`, `test_format_doc`,
+`test_bounded_gate_campaign`, `test_extensa_selection`: 37 passed in 25 min
+(`/tmp/claude/probata-runs/t15/final-1.jsonl`, sha256
+`dbc5a9916ba62e777beb64b83b2e6551f81e2fcb89b9d91ab90b383ec8d2296b`). Regression (`test_extensa_campaign`,
+`test_campaign_certification_links`, `test_campaign_budget_fixes`, `test_campaign_candidate_records`,
+`test_campaign_structure`, `test_extensa_pairing`, `test_extensa_boundary`, `test_promotion_level_snapshot`,
+`test_derived_implementations`): 118 passed in 28 min (`/tmp/claude/probata-runs/t15/final-2.jsonl`, sha256
+`23ca452d269fcba640421a9af284e097eb9de7310f127ae259d517be8e41dcfd`).
 
 **Assumptions** (the ticket's three are implemented as written: `best/<class>.patch` stays the fastest
 winner's, the `best*` summary fields keep meaning fastest, both winners use today's speed key):
