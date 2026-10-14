@@ -400,9 +400,11 @@ def test_code_outside_the_cpp_subset_runs_only_the_one_thread_rung(team):
 # --- no change when nothing is gated ------------------------------------------------------------------------
 
 #: Run-specific fields (times, paths, random record IDs, a protocol identity that hashes paths, pairing records);
-#: what the gate could change (iterations, entries, comparisons, selection, budgets) is compared.
+#: what the gate could change (iterations, entries, comparisons, selection, budgets) is compared. Ticket 16
+#: (2026-10-14 ET): a gated campaign also reports its WP phase and the proof budget lines.
 VOLATILE = {"started", "ended", "created", "updated", "at", "disk_gb_peak", "swdb_commit", "campaign_file",
-            "bounded_gate", "protocol", "paired_estimates", "retentions"}
+            "bounded_gate", "protocol", "paired_estimates", "retentions", "wp_phase", "proof_lane_hours",
+            "provider_calls_proof", "certification_repair_calls", "counterexample_repair_calls"}
 
 
 def _stable(value):

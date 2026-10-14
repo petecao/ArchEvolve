@@ -1,4 +1,5 @@
-"""Public strict-functional evaluation and estimate handoff. Updated: 2026-10-10 ET (code review of
+"""Public strict-functional evaluation and estimate handoff. Updated: 2026-10-14 ET (Probata PoC 18: evaluation
+results render as format 1.2, 1.1 plus the certification_level block); 2026-10-10 ET (code review of
 ticket 12: copied record closure; the no-child sentinel proves it loaded and also blocks os-level spawns;
 the historical certificate is refused as stale; the positive path needs a current-procedure certificate;
 a known ratio stays within_error); 2026-10-06 ET."""
@@ -181,7 +182,7 @@ def test_strict_certified_candidate_gets_estimated_handoff_without_target_timing
     assert rendered.returncode==0,rendered.stdout+rendered.stderr
     assert not child.exists()
     message=json.loads(rendered.stdout)
-    assert message['format_version']=='1.1'
+    assert message['format_version']=='1.2'
     assert message['content']['correctness']['scope']=='functional-target'
     assert message['content']['estimate']['ratio']==pytest.approx(2.0)
     assert message['content']['estimate']['verdict']=='within_error'
@@ -250,7 +251,7 @@ def test_stale_certification_is_unverified_and_team_refuses_gem5_before_writes(r
     assert rendered.returncode==0,rendered.stdout+rendered.stderr
     assert not child.exists()
     message=json.loads(rendered.stdout)
-    assert message['format_version']=='1.1' and message['content']['estimate'] is None
+    assert message['format_version']=='1.2' and message['content']['estimate'] is None
     assert message['content']['correctness']['scope']=='functional-target'
     assert message['content']['correctness']['hardware_correctness_claim'] is False
     # The same request with a version label alone changed is equally stale. Start from the

@@ -43,19 +43,40 @@ def is_enabling(library, stores, contract_id):
     Strategy records are read from the first of `stores` that has them; a contract whose strategy
     records no store has is not known to be enabling (False)."""
     entry = library.get(contract_id) if library is not None else None
-    if not entry or entry.get("kind") != "rewrite_contract":
-        return False
+    return enabling_problem(entry, stores) is None
+
+
+def enabling_problem(entry, stores):
+    """Why a rewrite-contract entry (a mapping, in a library or not yet) is not enabling, or None.
+
+    Probata PoC 63: the loop asks this of a new contract before it enters the library."""
+    if not isinstance(entry, dict) or entry.get("kind") != "rewrite_contract":
+        return "it is not a rewrite contract"
     for sid in entry.get("strategies") or []:
         strategy = next((s.get(sid, "strategy") for s in stores if s.get(sid, "strategy") is not None), None)
         if strategy is None:
-            return False
+            return f"no store holds its strategy record {sid}"
         if any(effect.get("kind") == "offload" for effect in strategy.get("effect") or []):
-            return False
-    return True
+            return f"its strategy {sid} has an offload effect"
+    return None
 
 
 def is_derived(data):
     return isinstance(data, dict) and (data.get("origin") or {}).get("kind") == "derived"
+
+
+def root_implementation(store, impl_id):
+    """The implementation a rewrite chain started from: `impl_id` followed back through `origin.derived_from`
+    while it names a derived implementation (Probata PoC 63: what leaves SWDB names no derived implementation,
+    which enters the main database only through promotion)."""
+    seen = set()
+    while impl_id and impl_id not in seen:
+        seen.add(impl_id)
+        impl = store.get(impl_id, "implementation")
+        if not is_derived(impl) or not impl["origin"].get("derived_from"):
+            return impl_id
+        impl_id = impl["origin"]["derived_from"]
+    return impl_id
 
 
 def snapshot_of(impl):

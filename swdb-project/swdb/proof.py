@@ -192,6 +192,8 @@ def register_cli(commands):
     run.add_argument("--provider-kind", choices=["codex", "claude"], help="provider pin: kind")
     run.add_argument("--provider-model", help="provider pin: model (for example gpt-5.6-sol)")
     run.add_argument("--provider-effort", help="provider pin: effort (for example xhigh)")
+    from swdb import archevolve_proof      # Probata PoC 18: ArchEvolve mode's whole proof path
+    archevolve_proof.register_options(sub)
     sub.add_argument("--format", choices=["yaml", "json"], default="yaml")
     sub.set_defaults(analytic_handler=prove)
 
@@ -199,7 +201,11 @@ def register_cli(commands):
 def prove(args):
     """Run the batch (one job per --script, or one skip) and write one record per job, in order.
 
-    Output: {record, path} for a one-job batch, else {batch, jobs: [{record, path}, ...]}."""
+    Output: {record, path} for a one-job batch, else {batch, jobs: [{record, path}, ...]}. With
+    `--proof-path` (ticket 18), ArchEvolve mode's proof path runs instead (`swdb.archevolve_proof`)."""
+    if getattr(args, "proof_path", None):
+        from swdb import archevolve_proof
+        return archevolve_proof.run_cli(args)
     from swdb import vocab
     from swdb.cli import _require_valid
     store = _require_valid(args.records)

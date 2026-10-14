@@ -1,6 +1,7 @@
 """Render the provisional D06 handoff messages from authoritative records.
 
-Created: 2026-09-27 (Eastern Time).
+Created: 2026-09-27 (Eastern Time). Updated: 2026-10-14 ET (Probata PoC 18: evaluation results carry the
+`certification_level` block, format 1.2, `swdb.handoff_level`).
 
 Three linked messages (profile package, rewrite proposal, evaluation result) are
 the provisional collaborator contract of spec decision D06. They are views of
@@ -20,6 +21,9 @@ from swdb import artifacts, db
 from swdb.cli import Failure
 
 FORMAT_VERSION = "1.0"
+#: Probata PoC 18 (2026-10-14 ET): 1.2 adds the certification_level block to every evaluation result (1.0
+#: content, or 1.1's functional-evaluation additions); docs/bfs-handoff-contract-v1.2.md.
+EVALUATION_RESULT_VERSION = "1.2"
 KINDS = {"profile_package": "profile_package", "rewrite_proposal": "proposal", "evaluation_result": "evaluation"}
 PAYLOAD_INLINE_BYTES = 4096
 
@@ -205,6 +209,7 @@ def _result_class(data, candidate):
 
 
 def evaluation_result(store, data):
+    from swdb.derived import root_implementation
     from swdb.functional_evaluation import verify
     verify(data, store)
     context = _mapping(data.get("context"))
@@ -224,7 +229,10 @@ def evaluation_result(store, data):
         "proposal": proposal.get("id"), "candidate": data.get("candidate"),
         "candidate_state": _mapping(candidate).get("state"),
         "software_hardware_pair": {
-            "implementation": data.get("implementation"), "candidate_sha256": context.get("candidate_sha256"),
+            # Probata PoC 63: a candidate artifact built on a derived implementation names the implementation its
+            # rewrite chain started from; a derived implementation enters the main database only through promotion.
+            "implementation": root_implementation(store, data.get("implementation")),
+            "candidate_sha256": context.get("candidate_sha256"),
             "binary_sha256": _mapping(data.get("build")).get("binary_sha256"), "target": context.get("target"),
             "basis": context.get("basis"), "backend_configuration": context.get("backend_configuration"),
             "model": context.get("model"), "threads": context.get("threads"),
@@ -282,9 +290,12 @@ def evaluation_result(store, data):
                        _ref(store, _mapping(context.get("certification")).get("id") or _mapping(data.get("request")).get("certification"), "certification"),
                        _ref(store, analytic_estimate.get("characterization"), "workload_characterization"),
                        _ref(store, _mapping(analytic_estimate.get("baseline")).get("id"), "estimate")])
+    # Probata PoC 18 (2026-10-14 ET): every evaluation result carries the certification_level block, a dated
+    # snapshot of the level rule in fixed template sentences; it never changes the claim or the result class.
+    from swdb import handoff_level
+    content["certification_level"] = handoff_level.render(store, data.get("candidate"))
     envelope = _envelope("evaluation_result", data, inputs, content, submission=proposal.get("producer"))
-    if functional:
-        envelope["format_version"] = "1.1"
+    envelope["format_version"] = EVALUATION_RESULT_VERSION
     return envelope
 
 
@@ -292,11 +303,20 @@ def message(args):
     kind = args.message
     if kind not in KINDS:
         raise Failure(f"unknown handoff message kind: {kind}")
-    store = db.query_store(args.records, getattr(args, "db", None))
-    data = store.get(args.id, KINDS[kind])
+    return render(db.query_store(args.records, getattr(args, "db", None)), kind, args.id)
+
+
+def render(store, kind, rid):
+    """One message from an already validated store snapshot (`db.query_store`).
+
+    2026-10-14 ET: the example driver renders every message from one snapshot, so the whole store is
+    validated once rather than once per message (each validation of the full store takes minutes)."""
+    if kind not in KINDS:
+        raise Failure(f"unknown handoff message kind: {kind}")
+    data = store.get(rid, KINDS[kind])
     if data is None:
-        raise Failure(f"{KINDS[kind]} record {args.id!r} does not exist")
+        raise Failure(f"{KINDS[kind]} record {rid!r} does not exist")
     from swdb.extensa_boundary import require_team_inputs
-    require_team_inputs(store, [args.id], command="handoff-message")
+    require_team_inputs(store, [rid], command="handoff-message")
     return {"profile_package": profile_package, "rewrite_proposal": rewrite_proposal,
             "evaluation_result": evaluation_result}[kind](store, data)

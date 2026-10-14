@@ -1,6 +1,7 @@
 # Functional evaluation-result handoff, format 1.1
 
-Updated: 2026-10-06 ET. This additive extension applies only to evaluations
+Updated: 2026-10-06 ET; 2026-10-14 ET: every evaluation result now renders as
+[format 1.2](bfs-handoff-contract-v1.2.md), which adds the `certification_level` block. This additive extension applies only to evaluations
 produced by `swdb.strict-functional-estimate.v1`. Other evaluations and message
 kinds retain [the format 1.0 contract](bfs-handoff-contract-v1.md).
 

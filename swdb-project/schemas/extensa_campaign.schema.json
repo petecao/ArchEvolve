@@ -52,7 +52,8 @@
       "properties": {
         "allowed_tiers": {"type": "array", "minItems": 1, "items": {"enum": ["shared", "experimental"]}},
         "contracts": {"type": "array", "items": {"type": "string"}},
-        "synthesize": {"type": "array", "items": {"type": "string"}}
+        "synthesize": {"type": "array", "items": {"type": "string"}},
+        "new_enabling_contracts": {"type": "boolean", "description": "Probata PoC 63: the rewriting role may write a new experimental enabling contract beside its patch (its answer then carries `new_contract`); the loop adds it to the campaign's library only when allowed_tiers include experimental."}
       }
     },
     "regions": {"oneOf": [{"const": "query"},
@@ -73,7 +74,9 @@
         "provider_calls_setup": {"type": "integer", "minimum": 0},
         "disk_gb": {"type": "number", "exclusiveMinimum": 0},
         "lanes": {"enum": [1, 2]},
-        "max_repairs": {"type": "integer", "minimum": 0, "maximum": 5}
+        "max_repairs": {"type": "integer", "minimum": 0, "maximum": 5},
+        "provider_calls_proof": {"type": "integer", "minimum": 0,
+                                 "description": "Probata PoC 16 (2026-10-14 ET): the WP phase's proof-hint calls, apart from the rewriting total; above the spec default 30 only with an approval entry naming it. Required when the campaign's library holds a method version."}
       }
     },
     "paired_estimates": {

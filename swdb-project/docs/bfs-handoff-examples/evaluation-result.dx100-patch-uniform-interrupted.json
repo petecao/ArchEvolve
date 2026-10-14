@@ -2,6 +2,25 @@
   "content": {
     "candidate": "bfs-campaign-preparation-20260925-a1.dx100-patch.candidate-1",
     "candidate_state": "unverified",
+    "certification_level": {
+      "assumptions": [],
+      "bounds": null,
+      "candidate": "bfs-campaign-preparation-20260925-a1.dx100-patch.candidate-1",
+      "failures": [],
+      "highest_level_reached": "uncertified",
+      "level": "uncertified",
+      "level_words": "uncertified",
+      "proof_records": [],
+      "proven": false,
+      "snapshot": {
+        "at": "2026-10-14 11:24 ET",
+        "level": "uncertified",
+        "level_rule": "level-rule.1",
+        "records": []
+      },
+      "speed": "Says nothing about speed.",
+      "text": "Not proven. Highest level reached: uncertified. No proof attempt yet. Says nothing about speed."
+    },
     "comparison": {
       "comparison_baseline": "dx100-bfs-scalar",
       "protocol": "bfs-native-one-thread-dx100-scalar-20260927.0d2d6da657751ff3",
@@ -142,7 +161,7 @@
     ]
   },
   "format": "swdb.bfs.handoff.evaluation_result",
-  "format_version": "1.0",
+  "format_version": "1.2",
   "id": "evaluation_result/bfs-native-acceptance-20260927-dx100-patch-b1.uniform-random.candidate-1.evaluation",
   "inputs": [
     {

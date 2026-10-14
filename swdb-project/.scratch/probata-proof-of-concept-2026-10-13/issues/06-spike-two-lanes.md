@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-14 08:10 ET (Answer: fail after both levers); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** resolved
+**Status:** claimed
 **Blocked by:** 05
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-of-concept plan", A1 row (b); "Proven once vs per candidate", scale pass bar; "Bounds"; "DX100 proof semantics"; "What a proven verdict asserts", harness `assume`s; "Further Notes", risk table); decisions: [07](../../formal-verification-2026-10-09/issues/07-install-verifiers.md), [08](../../formal-verification-2026-10-09/issues/08-wrong-tile-prototype.md), [09](../../formal-verification-2026-10-09/issues/09-what-proven-asserts.md), [10](../../formal-verification-2026-10-09/issues/10-proven-rewrite-contract.md), [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md), [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [19](../../formal-verification-2026-10-09/issues/19-bounded-verdict-bounds.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md), [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md)
 **Time estimate:** about 4 days, inside the 2-week box
@@ -259,3 +259,11 @@ wall time is SAW's `time`. A batch's peak RSS is per SAW process.
 Assumption: verdicts go in this Answer, not in `proof` records (ticket Notes).
 
 fail after both levers
+
+## Continuation: CBMC box (2026-10-14 12:08 ET)
+
+Yan-Ru chose ticket 09's proposed re-plan option 1 (2026-10-14 12:08 ET): a one-day box running CBMC 6.11
+(SAT-based bounded model checking; the design's last bounded fallback, "CBMC on the C lowering") on this
+spike's two units, hand-lowered to C with the same summaries as C stubs, at the same minimum bounds, plus all
+12 single-thread controls. The pass bar is unchanged: both units proven and every control refuted, each job
+under 15 minutes. Every SAW result above stays in the record. The box ends 2026-10-15 12:08 ET.

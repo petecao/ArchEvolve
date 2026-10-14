@@ -41,6 +41,11 @@ is never evaluated; its counterexample goes to counterexample-guided repair (`sw
 which owns the 5-round cap and the reverted-repair flag), each repair call charged to the D7 ledger as role
 `counterexample_repair`. A library without a method version runs no gate, as before.
 
+Probata PoC 16 (2026-10-14 ET): such a campaign, once stopped and its first summary written, runs the WP phase
+(`swdb.wp_phase`: the unbounded rung on each class's `gain` candidate artifacts, fastest first) and then rewrites
+its summary once. Proof-hint calls have their own cap, `budgets.provider_calls_proof`; every proof job is charged
+to the lane-hours and reported on its own line.
+
 Probata PoC 17 (2026-10-14 ET): the iteration ladder (`swdb.iteration_ladder`). A new campaign records
 `rewrite_workspace: v2`; from iteration 2 its rewrite and repair workspaces (certification and counterexample)
 hold `LADDER.json`, rebuilt whole from campaign state. A state without the field is `v1` and never gains one.
@@ -132,7 +137,8 @@ NATIVE_ORDER_SEED = 20260926
 #: The spec's budget defaults (D5). A campaign may exceed one only with an approval
 #: entry naming it. These are limits for validation, never values the loop assumes.
 SPEC_BUDGETS = {"max_iterations": 8, "plateau_iterations": 4, "lane_hours": 24,
-                "provider_calls_per_iteration": 3, "provider_calls_setup": 1, "disk_gb": 20, "lanes": 1}
+                "provider_calls_per_iteration": 3, "provider_calls_setup": 1, "disk_gb": 20, "lanes": 1,
+                "provider_calls_proof": 30}     # Probata PoC 16: the WP phase's proof-hint calls (25 item 2)
 DEFAULT_MAX_REPAIRS = 2        # D7: the ArchEvolve-mode repair limit
 REPAIR_CALL = "counterexample_repair"   # Probata PoC 14: the ledger role of a counterexample repair call
 EXTENSA_SOURCE = {"repository": "MaizeHPC/MemAcc", "commit": "af3d6d7f7a69a72facdc3b95b42e78c952f44a76"}
@@ -209,7 +215,7 @@ def campaign_problems(data):
     approval = data.get("approval") or {}
     raised = set(approval.get("raised_budgets") or [])
     for key, limit in SPEC_BUDGETS.items():
-        if key == "lanes":
+        if key == "lanes" or key not in data["budgets"]:
             continue
         if data["budgets"][key] > limit and key not in raised:
             problems.append(f"budgets.{key}: {data['budgets'][key]} exceeds the spec default {limit} "
@@ -504,11 +510,15 @@ def winner_rows(fastest, proven, levels):
 
 # --- provider roles ------------------------------------------------------------------------
 
-def _roles(starts=False):
+def _roles(starts=False, new_contracts=False):
     """The provider roles. With `starts` (the campaign lists derived starts, Probata PoC 19) the rewrite
-    role also names its `start`: a listed derived implementation, or null for the base source."""
-    from swdb import provider_roles
+    role also names its `start`: a listed derived implementation, or null for the base source. With
+    `new_contracts` (the campaign file sets `library.new_enabling_contracts`, Probata PoC 63) it also answers
+    `new_contract`: the YAML text of a new enabling contract its patch applies, or null."""
+    from swdb import experimental_contracts, provider_roles
     start = {"start": {"type": ["string", "null"]}} if starts else {}
+    if new_contracts:
+        start[experimental_contracts.FIELD] = {"type": ["string", "null"]}
     rewrite = provider_roles.Role("extensa_rewriting", {
         "type": "object", "additionalProperties": False,
         "required": ["patch", "contracts", "knobs", "unresolved", *start],
@@ -596,6 +606,10 @@ def rewrite_prompt(campaign_id, iteration, classes, files):
         history.append(" `STARTS.json` lists the certified derived implementations this iteration may start from, "
                        "each with its source under `starts/`; name the one your patch applies to in `start` (null: "
                        "the base source in `source/`).")
+    if "NEW_CONTRACT.json" in files:
+        # Probata PoC 63 (2026-10-14 ET): the rewriting role may write a new experimental enabling contract.
+        history.append(" `NEW_CONTRACT.json` says when and how to write a new enabling contract in `new_contract` "
+                       "(null when you write none).")
     if "PROTECTED.json" in files:
         # Ticket 73 (2026-10-05 ET): campaign a7's iteration 1 edited the protected verifier.
         history.append(" `PROTECTED.json` lists protected evaluator regions (for example the `BFSVerifier` "
@@ -633,6 +647,7 @@ class Campaign:
         self.applied_contracts = None     # query mode: contracts the site finder applied this iteration
         self.rule = SpeedRule.of(self.data)
         self.starts = list(self.data.get("derived_starts") or [])    # Probata PoC 19
+        self.new_contracts = bool(self.data["library"].get("new_enabling_contracts"))    # Probata PoC 63
         self.gate = None                                              # Probata PoC 14: set when the run starts
         if args.fixture:
             from swdb.campaign_fixture import FixtureAdapter
@@ -706,6 +721,9 @@ class Campaign:
         if not hours and started is not None:
             hours = (time.monotonic() - started) / 3600
         self.state["lane_hours"] += hours
+        if step == "evaluation" and started is not None:     # Probata PoC 16: checked against proof jobs
+            from swdb import wp_phase
+            wp_phase.evaluation_spent(self, started, hours)
 
     # provider calls (D7) -------------------------------------------------------------------
     def _call(self, kind, files, prompt, iteration_row):
@@ -768,7 +786,7 @@ class Campaign:
         started = time.monotonic()
         outcome, response, error = S.CallOutcome.COMPLETED, None, None
         try:
-            response, _meta = provider_roles.run(_roles(bool(self.starts))[kind], files, prompt, self.provider_config,
+            response, _meta = provider_roles.run(_roles(bool(self.starts), self.new_contracts)[kind], files, prompt, self.provider_config,
                                                  folder)
         except Failure as exc:
             # P1 (2026-10-05 ET): the one classifier; uncounted stops (usage limit, capacity, guard
@@ -939,7 +957,7 @@ class Campaign:
         from swdb.library import Library
         library = Library(self.library_root)
         files = {f"source/{k}": v for k, v in self.adapter.source_files().items()}
-        for cid in self.data["library"]["contracts"]:
+        for cid in self._contracts():
             path = library.files.get(cid)
             if path is None:
                 raise Failure(f"campaign contract {cid} is not in the library")
@@ -969,6 +987,9 @@ class Campaign:
                 "note": ("Evaluator inputs. A patch that changes any of these is rejected before it is "
                          "built. Never edit them."), "protected": rows}, indent=2)
         files.update(self._start_files())
+        if self.new_contracts:          # Probata PoC 63
+            from swdb import experimental_contracts
+            files[experimental_contracts.NOTE_FILE] = json.dumps({"note": experimental_contracts.NOTE}, indent=2)
         for cls, best in self.state["bests"].items():
             if best:
                 files[f"best/{cls}.patch"] = best["patch"]
@@ -999,14 +1020,21 @@ class Campaign:
         from swdb.library import Library, knob_problem
         return knob_problem(Library(self.library_root), contracts, knobs)
 
+    def _contracts(self):
+        """The campaign file's contracts, then the new enabling contracts this campaign added (Probata PoC 63)."""
+        added = [c for c in (self.state or {}).get("new_contracts") or {} if c not in self.data["library"]["contracts"]]
+        return list(self.data["library"]["contracts"]) + added
+
     def _contract_tier_problem(self, contracts):
         from swdb.library import Library
         from swdb.store import Store
         library = Library(self.library_root, Store(self.team))
+        added = (self.state or {}).get("new_contracts") or {}
         for cid in contracts:
-            if cid not in self.data["library"]["contracts"]:
+            if cid not in self._contracts():
                 return f"contract {cid} is outside the campaign's contracts"
-            if self.applied_contracts is not None and cid not in self.applied_contracts:
+            # A new contract is the rewriting role's own: no site-finder region can name it yet.
+            if self.applied_contracts is not None and cid not in self.applied_contracts and cid not in added:
                 return f"contract {cid} applies to no region the site finder chose"
             if library.get(cid) is None:
                 return f"contract {cid} is not in the library"
@@ -1043,6 +1071,28 @@ class Campaign:
                          "applies to in `start`, or null for the base source in `source/`."), "starts": rows}, indent=2)
         return files
 
+    # experimental enabling contracts (Probata PoC 63) -----------------------------------------
+    def _new_contract(self, response, iteration, row):
+        """Admit the rewrite answer's new enabling contract into the campaign's library, once per answer; the
+        iteration row's `new_contract` says whether it was added or why it was refused."""
+        from swdb import experimental_contracts
+        text = response.get(experimental_contracts.FIELD)
+        if not self.new_contracts or text is None:
+            return
+        known = self.state.setdefault("new_contracts", {})
+        try:
+            added = experimental_contracts.admit(
+                text, library_root=self.library_root, team_dir=self.team,
+                allowed_tiers=self.data["library"]["allowed_tiers"], contracts=list(response.get("contracts") or []),
+                campaign=self.cid, iteration=iteration, known={c: v["content_sha256"] for c, v in known.items()})
+        except Failure as exc:
+            row["new_contract"] = {"state": "refused", "reason": str(exc)[:1000]}
+            return
+        known.setdefault(added["contract"], {"iteration": iteration, "content_sha256": added["content_sha256"],
+                                             "path": added["path"]})
+        row["new_contract"] = {"contract": added["contract"], "state": "added",
+                               "content_sha256": added["content_sha256"], "path": added["path"]}
+
     def _derive(self, entry, candidate, contracts, knobs, start):
         """Record a certified candidate artifact whose every contract is enabling as a derived implementation."""
         from swdb import derived
@@ -1071,6 +1121,7 @@ class Campaign:
             self.state["feedback"] = [S.Feedback("provider_output_invalid",
                                                  "The rewrite call returned no usable output.").to_dict()]
             return S.IterationOutcome.NOT_IMPROVED
+        self._new_contract(response, iteration, row)
         self._synthesis(iteration, row)
         feedback = []
         for cls in self.classes:
@@ -1146,6 +1197,9 @@ class Campaign:
         claims = scan_patch_additions(patch)
         if claims:
             return reject("provider_output_invalid", "The patch text states a performance outcome.")
+        refused = row.get("new_contract") or {}
+        if refused.get("state") == "refused":            # Probata PoC 63: refused before certification
+            return reject("provider_output_invalid", refused["reason"])
         problem = self._contract_tier_problem(contracts)
         if problem:
             return reject("provider_output_invalid", problem)
@@ -1300,8 +1354,13 @@ class Campaign:
         return gate
 
     def _gate(self, candidate_id, contracts, iteration, cls, attempt):
+        from swdb import wp_phase
+        started, started_at = time.monotonic(), _now()
         result = self.gate.run(candidate_id, contracts, {"iteration": iteration, "cls": cls, "attempt": attempt})
         self.state["proof_job_hours"] = self.state.get("proof_job_hours", 0.0) + result["job_hours"]
+        if any("skip_reason" not in job for job in result["jobs"]):
+            # Probata PoC 16: a gate that ran a verifier holds the lane; charged to lane-hours and proof lane-hours.
+            wp_phase.proof_spent(self, started, started_at, f"bounded gate {candidate_id}")
         return result
 
     def _charge_repair_call(self, row):
@@ -1583,6 +1642,9 @@ class Campaign:
         if resumed:
             if not self.args.resume:
                 raise Failure(f"campaign {self.cid} already has state at {self.state_file}; use --resume")
+            from swdb import wp_phase
+            if resumed.get("stopped") and wp_phase.resumable(resumed):
+                return self._resume_wp_phase(resumed)       # Probata PoC 16: an interrupted WP phase continues
             if resumed.get("stopped"):
                 raise Failure(f"campaign {self.cid} already stopped ({resumed['stop_reason']})")
             self.state = resumed
@@ -1600,6 +1662,8 @@ class Campaign:
                           "kept_for_claims": [], "setup_done": False, "pilot": None,
                           "rewrite_workspace": "v2"}      # Probata PoC 17: a record, never a campaign-file setting
             self.ledger = S.SearchLedger(self.budget)
+            from swdb import wp_phase
+            wp_phase.require_budget(self)               # Probata PoC 16
             if self.query:
                 self._check_sites()
         with self._tags():
@@ -1731,8 +1795,33 @@ class Campaign:
         writer.commit(self.team, new=[copy.deepcopy(summary)])
         self.state["stopped"] = True
         self.state["stop_reason"] = reason.value
+        self.state.setdefault("summary_writes", []).append({"when": "stop", "at": _now()})
+        self._save()
+        return self._after_stop(summary, reason)
+
+    # the WP phase (Probata PoC 16) -----------------------------------------------------------------
+    def _after_stop(self, summary, reason):
+        """With a bounded gate (a method version), the WP phase runs; then the summary is rewritten once,
+        replacing the stop-time one in the campaign store and the team store (git keeps the first)."""
+        if self.gate is None:
+            return summary
+        from swdb import wp_phase
+        wp_phase.Phase(self).run()
+        summary = self.summary(reason)
+        workflow.persist(self.store_dir, copy.deepcopy(summary))
+        writer.commit(self.team, upsert=[copy.deepcopy(summary)])
+        self.state["summary_writes"].append({"when": "wp_phase_end", "at": _now()})
         self._save()
         return summary
+
+    def _resume_wp_phase(self, resumed):
+        self.state = resumed
+        self.ledger = S.SearchLedger.from_state(self.budget, resumed["ledger"])
+        with self._tags():
+            self.adapter.protocol_id = self.state["protocol"]["id"]
+            self.adapter.restore(self.state)
+            self.gate = self._open_gate()
+            return self._after_stop(None, S.StopReason(self.state["stop_reason"]))
 
     def summary(self, reason):
         commit = subprocess.run(["git", "rev-parse", "HEAD"], cwd=paths.HOME, capture_output=True, text=True)
@@ -1804,6 +1893,8 @@ class Campaign:
             record["bounded_gate"] = {**copy.deepcopy(self.state["bounded_gate"]),
                                       "proof_job_hours": round(self.state.get("proof_job_hours", 0.0), 9),
                                       "repair_counters": self._repair_counters()}
+            from swdb import wp_phase                # Probata PoC 16: the WP phase and the proof budget lines
+            wp_phase.summary_fields(self, record)
         from swdb.iteration_ladder import version_of           # Probata PoC 17: v1 when the state names none
         record["rewrite_workspace"] = version_of(self.state)
         record["mode"], record["campaign"] = MODE, self.cid
