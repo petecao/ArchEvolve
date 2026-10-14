@@ -17,7 +17,17 @@ KINDS = {
     "logic": ("global", "logic"),
     "lemma": ("global", "lemma"),
     "strategy": ("global", "\\wp::strategy"),
+    # t07d method change (c): a strategy acts only through its attachment `\wp::proof S: targets;`.
+    # Assumption (not decided in map 13 item 5): the attachment is part of the allowed strategy hint.
+    "proof": ("global", "\\wp::proof"),
 }
+# t07d (c): strategies may only reshape a goal with WP's own tactics (each sound: WP proves every
+# subgoal) and the three pinned provers at the run's own timeout. No \auto, no prover time argument.
+STRATEGY_TACTICS = {"Wp.filter", "Wp.clear", "Wp.split", "Wp.unfold", "Wp.instance", "Wp.lemma", "Wp.range",
+                    "Wp.cut", "Wp.separated", "Wp.array", "Wp.compound"}
+STRATEGY_WORDS = {"\\wp::strategy", "\\tactic", "\\param", "\\children", "\\child", "\\pattern", "\\goal",
+                  "\\when", "\\ingoal", "\\incontext", "\\select", "\\prover", "\\default", "\\true", "\\false"}
+STRATEGY_PROVERS = {"alt-ergo", "z3", "cvc5", "Alt-Ergo", "Z3", "CVC5"}
 # Map 13 item 5's rejected kinds and other escape hatches, as whole tokens.
 BANNED = ["admit", "axiom", "axiomatic", "inductive", "requires", "ensures", "assumes", "behavior",
           "behaviors", "complete", "disjoint", "decreases", "terminates", "exits", "breaks",
@@ -31,8 +41,12 @@ def anchors(text):
     return {m.group(1) for ln in text.splitlines() if (m := ANCHOR_RE.match(ln))}
 
 
+LOOP_ORDER = {"loop_invariant": 0, "loop_assigns": 1, "loop_variant": 2}  # t07d: Frama-C wants variants last
+
+
 def _block(kind_group, hs):
     if kind_group == "loop":
+        hs = sorted(hs, key=lambda h: LOOP_ORDER.get(h.get("kind"), 1))
         body = "\n    ".join(h["text"].strip() for h in hs)
         return ["/*@ " + body + " */"]
     return ["/*@ " + h["text"].strip() + " */" for h in hs]
@@ -99,6 +113,42 @@ def _defined_name(kind, text):
     return m.group(1) if m else None
 
 
+def strategy_problems(kind, text, hints):
+    """t07d (c): the narrow strategy vocabulary. Returns [(rule, detail)]."""
+    t = " ".join(text.split())
+    out = []
+    if kind == "strategy":
+        m = re.fullmatch(r"\\wp::strategy\s+([A-Za-z_]\w*)\s*:\s*(.+?)\s*;", t)
+        if not m:
+            return [("strategy_form", "expected `\\wp::strategy Name: alternatives;`")]
+        body = m.group(2)
+        for w in set(re.findall(r"\\[A-Za-z_]\w*", body)):
+            if w not in STRATEGY_WORDS:
+                out.append(("strategy_word", w))
+        for tac in re.findall(r"\\tactic\s*\(\s*\"([^\"]*)\"", body):
+            if tac not in STRATEGY_TACTICS:
+                out.append(("strategy_tactic", tac))
+        for pv in re.findall(r"\\prover\s*\(([^)]*)\)", body):
+            args = [a.strip() for a in pv.split(",") if a.strip()]
+            if any(not re.fullmatch(r"\"[^\"]*\"", a) for a in args):
+                out.append(("strategy_prover_timeout", pv))  # no time argument: the run's timeout holds
+            if any(a.strip('"') not in STRATEGY_PROVERS for a in args):
+                out.append(("strategy_prover", pv))
+    else:
+        m = re.fullmatch(r"\\wp::proof\s+([A-Za-z_]\w*)\s*:\s*(.+?)\s*;", t)
+        if not m:
+            return [("proof_form", "expected `\\wp::proof StrategyName: target, ...;`")]
+        defined = {mm.group(1) for h in hints if h.get("kind") == "strategy"
+                   for mm in [re.match(r"\s*\\wp::strategy\s+([A-Za-z_]\w*)", str(h.get("text", "")))] if mm}
+        if m.group(1) not in defined:
+            out.append(("proof_unknown_strategy", m.group(1)))
+        targets = re.findall(r"\"([^\"]*)\"|([A-Za-z_]\w*)", m.group(2))
+        names = [x for a, b in targets for x in ((a.split(",") if a else [b]))]
+        if any(n.strip().lstrip("+-") == "smoke" for n in names):
+            out.append(("proof_smoke", "strategies may not target smoke tests"))
+    return out
+
+
 def check(standin, hints):
     """Return one {id, rule, detail} per violation; an empty list accepts the hint set."""
     known = anchors(standin)
@@ -121,10 +171,14 @@ def check(standin, hints):
             rej(h, "anchor_kind_mismatch", f"{kind} at {anchor}")
         if not text.strip().startswith(lead):
             rej(h, "kind_text_mismatch", f"{kind} must start with '{lead}'")
-        tokens = WORD.findall(text)
-        hits = sorted({t for t in tokens if t in BANNED and not (kind == "loop_invariant" and t == "invariant")})
+        tokens = WORD.findall(re.sub(r'"[^"]*"', '""', text) if kind in ("strategy", "proof") else text)
+        hits = sorted({t for t in tokens if t in BANNED and not (kind == "loop_invariant" and t == "invariant")
+                       and not (kind == "proof" and t == "\\wp::proof")})
         if hits:
             rej(h, "banned_token", ",".join(hits))
+        if kind in ("strategy", "proof"):
+            for rule, detail in strategy_problems(kind, text, hints):
+                rej(h, rule, detail)
         if kind in ("predicate", "logic"):
             name = _defined_name(kind, text)
             body = text.split("=", 1)[1] if "=" in text else text
