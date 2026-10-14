@@ -844,11 +844,12 @@ _Insert.attribution = staticmethod(_insert_attribution)
 # (one row per single pin, summary or build constant), assumption set and bounds. A pin that does
 # not apply has NULL ref and sha256 and its sentence in not_applicable. Unbounded is NULL value with
 # unbounded = 1. Ticket 11 (2026-10-14 ET): a skip record has NULL verdict, log_path and log_sha256,
-# its skip_reason, and no bounds or assumption rows. Documented in docs/reference/database.md.
+# its skip_reason, and no bounds or assumption rows. Ticket 10 (2026-10-14 ET): replay_label (refuted
+# records only; NULL when absent). Documented in docs/reference/database.md.
 SCHEMA += """
 CREATE TABLE swdb_proofs (id TEXT PRIMARY KEY, subject_kind TEXT NOT NULL, subject_id TEXT, candidate TEXT,
     function TEXT, verdict TEXT, route TEXT, failure_class TEXT, skip_reason TEXT, has_counterexample INTEGER NOT NULL,
-    evidence_kind TEXT NOT NULL, adapter TEXT, host TEXT, log_path TEXT, log_sha256 TEXT,
+    replay_label TEXT, evidence_kind TEXT NOT NULL, adapter TEXT, host TEXT, log_path TEXT, log_sha256 TEXT,
     json TEXT NOT NULL);
 CREATE TABLE swdb_proof_pins (proof TEXT NOT NULL, kind TEXT NOT NULL, position INTEGER NOT NULL, ref TEXT,
     sha256 TEXT, function TEXT, proof_record TEXT, value TEXT, not_applicable TEXT,
@@ -862,10 +863,10 @@ CREATE TABLE swdb_proof_bounds (proof TEXT NOT NULL, dimension TEXT NOT NULL, va
 
 def _insert_proof(con, d, *_):
     subject, job, log = d["subject"], d.get("job") or {}, (d.get("evidence") or {}).get("adapter_log") or {}
-    con.execute("INSERT INTO swdb_proofs VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+    con.execute("INSERT INTO swdb_proofs VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                 (d["id"], subject["kind"], subject.get("id"), subject.get("candidate"), subject.get("function"),
                  d.get("verdict"), d.get("route"), d.get("failure_class"), d.get("skip_reason"), int("counterexample" in d),
-                 d["evidence_kind"], job.get("adapter"), job.get("host"), log.get("path"), log.get("sha256"), json.dumps(d)))
+                 d.get("replay_label"), d["evidence_kind"], job.get("adapter"), job.get("host"), log.get("path"), log.get("sha256"), json.dumps(d)))
     pins = []
     for kind, pin in d["pins"].items():
         if kind == "summaries":

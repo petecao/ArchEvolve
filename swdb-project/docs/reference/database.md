@@ -1181,6 +1181,7 @@ One row per proof record.
 | `failure_class` | a not-proven record's failure class (vocabulary `proof_failure_classes`, role `failure_class`; else NULL) |
 | `skip_reason` | a skip record's skip reason (vocabulary `proof_failure_classes`, role `skip_reason`; else NULL) |
 | `has_counterexample` | 1 when the record holds a counterexample inline (refuted), else 0 |
+| `replay_label` | a refuted record's replay label (`reproduced`, `proof_semantics_only`, `not_reproduced`, `undefined_behavior`); NULL when absent (ticket 10, 2026-10-14 ET) |
 | `evidence_kind` | `contract_fixture` (the scripted adapter) |
 | `adapter` | the job block's adapter |
 | `host` | the job block's host (`mac` on the Mac) |

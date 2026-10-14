@@ -149,6 +149,20 @@
         }
       }
     },
+    "replay_label": {
+      "type": "string",
+      "enum": ["reproduced", "proof_semantics_only", "not_reproduced", "undefined_behavior"],
+      "x-reason": "replay_label is reproduced, proof_semantics_only, not_reproduced or undefined_behavior (O6); ticket 10 owns this field and adds any new value",
+      "description": "Refuted only, optional (ticket 10 defines it; ticket 60 fills it and makes it required on refuted records): how far the refutation's strict-layer replay reaches. undefined_behavior is O6's \"undefined behavior (no strict-layer replay)\": the refutation counts and the batch goes on."
+    },
+    "level": {"not": {}, "x-reason": "a proof record never holds a level: the level rule computes it on read (ADR 0016)"},
+    "level_rule": {"not": {}, "x-reason": "a proof record never pins the level rule (26 item 9): a rule change recomputes levels and voids no proof"},
+    "tools": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1},
+      "description": "Ticket 10 (S14): the verifiers and solvers the job used, each by the reference ID of a trusted_tool entry in the assumption set (for example frama-c-wp-33.0, z3-4.8.14). swdb validate refuses a tool with no such entry. Optional until the real adapters (21, 22) write it."
+    },
     "job": {
       "type": "object",
       "description": "The job block: adapter, host, worker_core, wall_seconds, cpu_seconds, batch_load, peak_rss_bytes, batch, position. Ticket 12 owns the field list and its validation; ticket 04 only writes it."
@@ -202,7 +216,8 @@
     {
       "if": {"properties": {"verdict": {"const": "refuted"}}, "required": ["verdict"]},
       "then": {"required": ["counterexample"], "x-required-reasons": {"counterexample": "a refuted record holds its counterexample inline"}},
-      "else": {"properties": {"counterexample": {"not": {}, "x-reason": "only a refuted record holds a counterexample"}}}
+      "else": {"properties": {"counterexample": {"not": {}, "x-reason": "only a refuted record holds a counterexample"},
+                              "replay_label": {"not": {}, "x-reason": "only a refuted record holds a replay label"}}}
     },
     {
       "if": {"properties": {"verdict": {"const": "not_proven"}}, "required": ["verdict"]},
