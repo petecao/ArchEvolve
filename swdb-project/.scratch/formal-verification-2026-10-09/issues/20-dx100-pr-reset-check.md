@@ -57,9 +57,13 @@ Resolved 2026-10-13 19:56 ET, AFK on the Mac. Evidence, commands and the full ru
 4. **At 1 iteration the output is correct** (bit-identical top scores and error). That is the
    authors' setting: `pr.cc:304` sets the default `max_iters` to 1 (upstream GAPBS uses 20), and
    neither `run_pr.sh` nor `scripts/sim.py` passes `-i`. Their published PR runs compute correct
-   scores; the defect is latent. Their own check could not have shown it: at 1 iteration
-   `PRVerifier` (tolerance 1e-4) fails the baseline too. Inputs already at the fixed point also hide
-   it, because the loop exits when the first iteration's error is below tolerance (`pr.cc:260`).
+   scores; the defect is latent. GAPBS's `PRVerifier` (`pr.cc:285-301`) is a convergence test,
+   not a comparison with a reference: it runs one more PageRank step and passes if the scores move
+   by less than 1e-4 in total. After 1 iteration the scores have not converged, so it reports FAIL
+   for the correct baseline too (`-g 6`: 0.19991; `-g 10`: 0.28401). `run_pr.sh` passes `-v`, so at
+   the authors' setting a FAIL is expected and cannot tell correct code from wrong code (inferred:
+   their graphs were not run here). Inputs already at the fixed point also hide the defect, because
+   the loop exits when the first iteration's error is below tolerance (`pr.cc:260`).
 5. **Upstream has the same code.** The snapshot is `arkhadem/DX100` `e4fc4afd`, which is upstream
    HEAD today, and `pr.cc` matches `SHA256SUMS`.
 6. **SWDB certification would not catch it today, because it has no PR check.** `swdb/kernels/`
