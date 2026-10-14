@@ -3,7 +3,7 @@
 Created: 2026-10-13 23:15 ET
 Updated: 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 18, 19
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof routes" (a new experimental enabling contract for any input; route 1 for its results); "ArchEvolve mode" (shared contracts only; one rewrite proposal per rewrite; promotion); "Modules", table "Loop, modes and guards" (implementation records); "Verifier lineup and order" (skip reasons); "Testing Decisions", seams 1, 3 and 4; O7, O10); decisions: [17](../../formal-verification-2026-10-09/issues/17-enabling-rewrites.md) items 5, 6, 8 and Later changes; [24](../../formal-verification-2026-10-09/issues/24-alignment-hint-kind.md) item 3; [25](../../formal-verification-2026-10-09/issues/25-extensa-loop-proofs-and-ranking.md) items 1, 5; [ADR 0007](../../../docs/adr/0007-typed-library.md) (ArchEvolve mode accepts only shared certified entries)
 **Time estimate:** about 2 days
