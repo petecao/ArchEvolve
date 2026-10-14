@@ -2,7 +2,8 @@
 
 Created: 2026-10-14 (Eastern Time), Probata proof of concept ticket 04 (the proof record tracer).
 Updated: 2026-10-14 ET, ticket 11: batches, skips, the failure-class vocabulary, the method-version pin
-([format-v0.4-method-version.md](format-v0.4-method-version.md)).
+([format-v0.4-method-version.md](format-v0.4-method-version.md)); 2026-10-14 02:26 ET: failure class
+`spurious_counterexample` and its tie to `unreplayed_counterexample` (Yan-Ru's decision of 02:25 ET).
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/04-proof-record-tracer.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("Records and levels"), map ticket 26,
 [ADR 0016](../adr/0016-proof-records-never-change-level-computed-on-read.md).
@@ -63,8 +64,8 @@ An adapter is a class in `ADAPTERS` with a `name` and `run(job) -> Verdict`.
   `scratch` (a folder the adapter may use; deleted after the job; never named by the record) and
   `log` (the log file the adapter appends to; kept as evidence).
 - **Out, `Verdict`:** `verdict` (`proven`, `refuted`, `not_proven`), `bounds`, `assumptions`, and
-  `counterexample` (refuted only) or `failure_class` (not proven only), plus the optional
-  `unreplayed_counterexample` (not proven only; below). A verdict that breaks
+  `counterexample` (refuted only) or `failure_class` (not proven only), plus
+  `unreplayed_counterexample` (with failure class `spurious_counterexample` only, and always with it; below). A verdict that breaks
   these rules raises `AdapterError`, and nothing is written.
 - **Scripted adapter (`--adapter scripted`):** reads `verdict`, `bounds`, `assumptions`,
   `counterexample`, `failure_class` and `unreplayed_counterexample` from the YAML `--script` file. Its records are
@@ -79,8 +80,8 @@ An adapter is a class in `ADAPTERS` with a `name` and `run(job) -> Verdict`.
 | `verdict` | `proven`, `refuted` or `not_proven`; absent on a skip record |
 | `skip_reason` | a skip record only: why no verifier ran (vocabulary `proof_failure_classes`, role `skip_reason`): `no_contract_proof`, `no_minimum_bounds`, `outside_cpp_subset` |
 | `counterexample` | refuted only, required: the counterexample, inline |
-| `failure_class` | not proven only, required: a value of vocabulary `proof_failure_classes` whose role is `failure_class` (twelve classes; each entry has its `handler`) |
-| `unreplayed_counterexample` | not proven only, optional: a counterexample the verifier reported that did not replay concretely on the compiled code. It is a tool or encoding failure, never a refutation, and never reaches repair (input from ticket 05's SAW spike; the replay itself is built by the adapter tickets) |
+| `failure_class` | not proven only, required: a value of vocabulary `proof_failure_classes` whose role is `failure_class` (thirteen classes; each entry has its `handler`). `spurious_counterexample`: the verifier reported a counterexample that does not replay concretely on the compiled code, so the refutation comes from the tool or the spec encoding, not the program; never sent to repair (handler: fix the encoding, add the case to the regression corpus, rerun) |
+| `unreplayed_counterexample` | not proven only; required when `failure_class` is `spurious_counterexample` and refused under any other class or verdict: the counterexample the verifier reported that did not replay concretely on the compiled code. It is a tool or encoding failure, never a refutation, and never reaches repair (input from ticket 05's SAW spike; class decided by Yan-Ru 2026-10-14 02:25 ET; the replay itself is built by the adapter tickets 22, 46, 47) |
 | `pins` | the content-hash set, all ten kinds required (below) |
 | `bounds` | `{dimension: positive integer or "unbounded"}`; `threads` required; absent on a skip record |
 | `assumptions` | absent on a skip record; otherwise list of `{kind, reference: {id, sha256}, sentence}` (`reference` and a non-empty `sentence` required); kind from vocabulary `proof_assumption_kinds` (seven kinds) |

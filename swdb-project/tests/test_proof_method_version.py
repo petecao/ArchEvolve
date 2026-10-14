@@ -1,6 +1,7 @@
 """The method-version file and the failure-class vocabulary (Probata proof of concept, ticket 11).
 
-Created: 2026-10-14 ET. Seams 1 and 4 of the formal-verification map's spec: `swdb validate`,
+Created: 2026-10-14 ET. Updated: 2026-10-14 02:26 ET (failure class spurious_counterexample,
+tied to the unreplayed_counterexample field; Yan-Ru's decision of 02:25 ET). Seams 1 and 4 of the formal-verification map's spec: `swdb validate`,
 `swdb prove` (scripted adapter) and `swdb build`. Fixture method-version file only (evidence_kind
 contract_fixture); no real verifier runs.
 """
@@ -18,8 +19,10 @@ FAILURE_CLASSES = {"parse_error", "unsupported_construct", "unwinding_bound_too_
                    "out_of_memory", "solver_error", "tool_crash", "vacuous_pass",      # 11 item 9
                    "unknown", "ghost_capacity",                                         # S3
                    "hint_budget_spent",                                                 # 13
-                   "below_minimum_bounds"}                                              # 19
+                   "below_minimum_bounds",                                              # 19
+                   "spurious_counterexample"}                    # Yan-Ru 2026-10-14 02:25 ET (from 05)
 SKIP_REASONS = {"no_contract_proof", "no_minimum_bounds", "outside_cpp_subset"}         # 25
+UNREPLAYED = {"inputs": {"vertices": 3}, "replay": "the compiled code met the unit relation on these inputs"}
 
 
 # --- the failure-class vocabulary --------------------------------------------------------
@@ -237,7 +240,8 @@ def _build_rows(seed, query):
 
 def test_prove_writes_one_not_proven_record_per_listed_failure_class_that_validates_and_builds(seed):
     for value in sorted(FAILURE_CLASSES):
-        seed.prove(seed.script(value, verdict="not_proven", failure_class=value))
+        extra = {"unreplayed_counterexample": UNREPLAYED} if value == "spurious_counterexample" else {}
+        seed.prove(seed.script(value, verdict="not_proven", failure_class=value, **extra))
     records = [seed.read(path) for path in seed.proof_files()]
     assert sorted(r["failure_class"] for r in records) == sorted(FAILURE_CLASSES)
     assert {r["verdict"] for r in records} == {"not_proven"}
@@ -314,16 +318,27 @@ def test_control_the_same_batch_with_a_listed_class_runs_to_the_end(seed):
     assert seed.swdb("validate").returncode == 0
 
 
-# --- a counterexample that does not replay (input from ticket 05) ------------------------------
+# --- a counterexample that does not replay (input from ticket 05; class: Yan-Ru 2026-10-14 02:25 ET) ---
 
-UNREPLAYED = {"inputs": {"vertices": 3}, "replay": "the compiled code met the unit relation on these inputs"}
-
-
-def test_a_not_proven_record_can_carry_a_counterexample_that_did_not_replay(seed):
-    record = seed.prove(seed.script("np", verdict="not_proven", failure_class="unsupported_construct",
+def test_a_spurious_counterexample_record_carries_the_counterexample_that_did_not_replay(seed):
+    record = seed.prove(seed.script("np", verdict="not_proven", failure_class="spurious_counterexample",
                                     unreplayed_counterexample=UNREPLAYED))["record"]
+    assert record["failure_class"] == "spurious_counterexample"
     assert record["unreplayed_counterexample"] == UNREPLAYED and "counterexample" not in record
     assert seed.swdb("validate").returncode == 0
+
+
+def test_prove_refuses_a_spurious_counterexample_without_the_counterexample_that_did_not_replay(seed):
+    result = seed.prove(seed.script("np", verdict="not_proven", failure_class="spurious_counterexample"), ok=False)
+    assert result.returncode == 1 and "unreplayed counterexample" in result.stderr
+    assert not seed.proof_files()
+
+
+def test_prove_refuses_an_unreplayed_counterexample_under_any_other_failure_class(seed):
+    result = seed.prove(seed.script("np", verdict="not_proven", failure_class="unsupported_construct",
+                                    unreplayed_counterexample=UNREPLAYED), ok=False)
+    assert result.returncode == 1 and "spurious_counterexample" in result.stderr
+    assert not seed.proof_files()
 
 
 def test_a_refutation_never_carries_an_unreplayed_counterexample(seed):
@@ -344,6 +359,25 @@ def _problems(seed, path, field):
     result = seed.swdb("validate")
     assert result.returncode == 1, result.stdout + result.stderr
     return [line for line in result.stderr.splitlines() if path.name in line and field in line]
+
+
+@pytest.mark.parametrize("script, change, field, reason", [
+    ({"failure_class": "spurious_counterexample", "unreplayed_counterexample": UNREPLAYED},
+     lambda r: r.pop("unreplayed_counterexample"), "unreplayed_counterexample", "did not replay"),
+    ({"failure_class": "timeout"},
+     lambda r: r.update(unreplayed_counterexample=UNREPLAYED), "unreplayed_counterexample", "spurious_counterexample"),
+    ({"verdict": "proven", "failure_class": None},
+     lambda r: r.update(unreplayed_counterexample=UNREPLAYED), "unreplayed_counterexample", "only a not-proven"),
+])
+def test_validate_ties_an_unreplayed_counterexample_to_the_spurious_counterexample_class(seed, script, change,
+                                                                                         field, reason):
+    script = {"verdict": "not_proven", **script}
+    if script["failure_class"] is None:
+        del script["failure_class"]
+    path = seed.records / seed.prove(seed.script("np", **script))["path"]
+    _rewrite(path, change)
+    problems = _problems(seed, path, field)
+    assert problems and reason in problems[0], problems
 
 
 @pytest.mark.parametrize("value", ["cosmic_ray", "no_contract_proof"])

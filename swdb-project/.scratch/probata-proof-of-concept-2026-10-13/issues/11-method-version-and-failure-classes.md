@@ -1,7 +1,7 @@
 # 11 — Method-version file and failure classes
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 01:45 ET (resolved, Answer); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-14 02:26 ET (Later changes: class spurious_counterexample); 2026-10-14 01:45 ET (resolved, Answer); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** resolved
 **Blocked by:** 04
@@ -164,3 +164,14 @@ is a real pin). Serial, no xdist, no real verifier, nothing through `verifier_ru
 
 **Side findings:** none. The repository library has no `methods/` folder yet, so a real
 `swdb prove` refuses to run until 21 writes the first real draft method version.
+
+## Later changes
+
+- 2026-10-14 02:26 ET: Yan-Ru decided (2026-10-14 02:25 ET) to add a failure class for false
+  refutations caused by the tool or the spec encoding. New class `spurious_counterexample` in
+  `vocab/proof_failure_classes.yaml` (handler: never send to repair; fix the encoding (translator,
+  spec placement or adapter), add the case to the regression corpus, rerun). It replaces the
+  Answer's nearest-class assumption: a not-proven record carries `unreplayed_counterexample` exactly
+  when its failure class is `spurious_counterexample` (`Verdict` and `schemas/proof.schema.json`
+  refuse either without the other). Ticket 13's repair must skip this class. Branch
+  `probata-poc/t11-spurious`; tests in `tests/test_proof_method_version.py`.
