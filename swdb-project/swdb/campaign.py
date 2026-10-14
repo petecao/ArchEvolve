@@ -437,13 +437,14 @@ def selection_key(candidate):
     return (LEVEL_RANK[candidate["level"]], candidate["selection"]["lower"])
 
 
-def select(candidates):
-    """Per class: (best, faster_uncertified, verdict). Rejected artifacts never compete.
+def select(candidates, refuted=frozenset()):
+    """Per class: (fastest winner, faster_uncertified, verdict). Rejected artifacts never compete.
 
     Certified before uncertified, then by the lower bound (point ratio on gem5) against
     the base-source baseline; only gain artifacts can be best; an uncertified one is best
-    only when no certified one passes."""
-    eligible = [c for c in candidates if c["level"] in LEVEL_RANK and c.get("selection")]
+    only when no certified one passes. Probata PoC 15: a candidate artifact in `refuted` (the
+    level rule's refuted flag) leaves selection whatever its level or speed."""
+    eligible = [c for c in candidates if c["level"] in LEVEL_RANK and c.get("selection") and c.get("id") not in refuted]
     passing = [c for c in eligible if c["selection"]["verdict"] == "gain"]
     if not passing:
         if eligible and all(c["selection"]["verdict"] == "inconclusive" for c in eligible):
@@ -453,6 +454,46 @@ def select(candidates):
     faster = [c["id"] for c in passing if c["level"] == "uncertified" and best["level"] == "certified"
               and c["selection"]["lower"] > best["selection"]["lower"]]
     return best, sorted(faster), "gain"
+
+
+# --- two winners per workload class (Probata PoC 15) -----------------------------------------------
+#: Winner marks (map decision 28 item 4): one row per distinct candidate artifact.
+FASTEST, BEST_PROVEN, BOTH = "fastest", "best_proven", "both"
+NO_BEST_PROVEN = "No gain candidate artifact of this class reached a proven level."
+#: `best/<class>.patch` stays the fastest winner's; the best-proven winner's, when it differs, sits beside it.
+BEST_PROVEN_SUFFIX = ".best_proven.patch"
+
+
+def best_proven_key(candidate, level):
+    """The best-proven winner's key: the proven level's rank, then the speed key selection uses."""
+    from swdb import level_rule
+    return (level_rule.rank(level), candidate["selection"]["lower"])
+
+
+def best_proven(candidates, levels):
+    """The best-proven winner of one class, or None: among certified `gain` candidate artifacts at a proven
+    level, the highest level first, then the fastest. `levels` maps a candidate ID to its level-rule result
+    (`swdb.level_rule.Rule.candidate`); a refuted one has no proven level, so it never wins."""
+    from swdb import level_rule
+    proven = [c for c in candidates if c["level"] == "certified" and (c.get("selection") or {}).get("verdict") == "gain"
+              and (levels.get(c.get("id")) or {}).get("level") in level_rule.PROVEN
+              and not levels[c["id"]]["refuted"]["flag"]]
+    return max(proven, key=lambda c: best_proven_key(c, levels[c["id"]]["level"])) if proven else None
+
+
+def winner_rows(fastest, proven, levels):
+    """The winner rows of one class: one per distinct candidate artifact, marked `fastest`, `best_proven` or
+    `both`, each with its dated level snapshot and speed (the fastest first)."""
+    rows = []
+    for mark, entry in ((FASTEST, fastest), (BEST_PROVEN, proven)):
+        if entry is None:
+            continue
+        if rows and rows[0]["candidate"] == entry["id"]:
+            rows[0]["winner"] = BOTH
+            continue
+        rows.append({"candidate": entry["id"], "winner": mark, "level_snapshot": levels[entry["id"]]["snapshot"],
+                     "ratio": entry["selection"]["ratio"], "lower": entry["selection"]["lower"]})
+    return rows
 
 
 # --- provider roles ------------------------------------------------------------------------
@@ -528,9 +569,15 @@ def rewrite_prompt(campaign_id, iteration, classes, files):
                            "named `*_reg` is a register handle from the thread's `dxc_context` whose value is "
                            "set by `__dxc_const_i32`, never a plain value; a range-loop batch starts with "
                            "`last_i_reg` = 0 and `last_j_reg` = -1.")
-    best = sorted(f for f in files if f.startswith("best/"))
+    best = sorted(f for f in files if f.startswith("best/") and not f.endswith(BEST_PROVEN_SUFFIX))
     if best:
         history.append(" " + ", ".join(f"`{f}`" for f in best) + " hold this campaign's current per-class best patches.")
+    proven = sorted(f for f in files if f.endswith(BEST_PROVEN_SUFFIX))
+    if proven:
+        # Probata PoC 15: the best-proven winner's patch, when it is not the fastest winner's (map 25 item 4).
+        history.append(" Each `best/<class>.patch` is the class's fastest patch; " + ", ".join(f"`{f}`" for f in proven)
+                       + (" holds" if len(proven) == 1 else " hold") + " the class's best-proven patch where it is "
+                       "another one: the patch at the highest proven certification level, the fastest among equals.")
     if "FEEDBACK.json" in files:
         history.append(" `FEEDBACK.json` holds the previous iteration's feedback.")
     if "STARTS.json" in files:
@@ -914,6 +961,10 @@ class Campaign:
         for cls, best in self.state["bests"].items():
             if best:
                 files[f"best/{cls}.patch"] = best["patch"]
+        for cls, proven in (self.state.get("best_proven") or {}).items():
+            fastest = self.state["bests"].get(cls)
+            if proven and not (fastest and fastest["id"] == proven["id"]):      # Probata PoC 15
+                files[f"best/{cls}{BEST_PROVEN_SUFFIX}"] = proven["patch"]
         if iteration > 1:
             files["FEEDBACK.json"] = json.dumps({"feedback": self.state["feedback"]}, indent=2)
         return files
@@ -1001,21 +1052,62 @@ class Campaign:
             followers = candidate.pop("_followers", [])
             row["candidates"].append(candidate)
             row["candidates"].extend(followers)      # Probata PoC 14: candidate artifacts its repairs made
-        improved = []
-        for cls in self.classes:
-            pool = [c for r in self.state["iterations"] + [row] for c in r["candidates"] if c["class"] == cls]
-            best, _faster, _verdict = select(pool)
-            previous = self.state["bests"].get(cls)
-            if best and (previous is None or selection_key(best) > tuple(previous["key"])):
-                self.state["bests"][cls] = {"id": best["id"], "key": list(selection_key(best)),
-                                            "patch": best.pop("_patch", "")}
-                improved.append(cls)
-            for c in pool:
-                c.pop("_patch", None)
-        row["improved_classes"] = improved
+        improved = self._winners(row)
+        row["improved_classes"] = sorted({w["class"] for w in improved}, key=self.classes.index)
+        row["improved_winners"] = improved
         row["feedback_reasons"] = sorted({f["reason_code"] for f in feedback})
         self.state["feedback"] = feedback
         return S.IterationOutcome.IMPROVED if improved else S.IterationOutcome.NOT_IMPROVED
+
+    # two winners per workload class (Probata PoC 15) ---------------------------------------------
+    def _levels(self, pool):
+        """{candidate ID: level-rule result} for every entry with an ID: the levels known now, read through the
+        level rule over the campaign store and library (what `swdb candidate-level` reports), never stored."""
+        from swdb.level_rule import Rule
+        from swdb.library import Library
+        from swdb.store import Store
+        ids = sorted({c["id"] for c in pool if c.get("id")})
+        if not ids:
+            return {}
+        store = Store(self.store_dir)
+        rule = Rule(store, Library(self.library_root, store))
+        return {cid: rule.candidate(cid) for cid in ids if store.get(cid, "candidate") is not None}
+
+    def _class_winners(self, pool, levels):
+        """(fastest winner, faster_uncertified, verdict, best-proven winner) of one class's pool."""
+        refuted = frozenset(cid for cid, result in levels.items() if result["refuted"]["flag"])
+        fastest, faster, verdict = select(pool, refuted)
+        return fastest, faster, verdict, best_proven(pool, levels)
+
+    def _winners(self, row):
+        """Recompute both winners of every class from the levels known so far (25 item 4). The iteration row
+        gets the winner rows; `state.bests` (fastest) and `state.best_proven` hold each winner's ID, key and
+        patch for the next workspace's `best/`. Returns [{class, winner}] for each winner whose key rose: the
+        fastest winner's (certified over uncertified, speed) or the best-proven winner's (proven level, speed)."""
+        patches = self.state.setdefault("patches", {})
+        for cls, kept in list(self.state["bests"].items()) + list((self.state.get("best_proven") or {}).items()):
+            if kept and kept["id"] not in patches:          # a state saved before ticket 15 kept the bests' patches
+                patches[kept["id"]] = kept.get("patch", "")
+        for c in row["candidates"]:
+            patch = c.pop("_patch", None)
+            if c.get("id") and (c.get("selection") or {}).get("verdict") == "gain" and patch is not None:
+                patches[c["id"]] = patch            # only a gain candidate artifact can ever win
+        pool = [c for r in self.state["iterations"] + [row] for c in r["candidates"]]
+        levels = self._levels(pool)
+        improved, row["winners"] = [], []
+        proven_state = self.state.setdefault("best_proven", {})
+        for cls in self.classes:
+            mine = [c for c in pool if c["class"] == cls]
+            fastest, _faster, _verdict, proven = self._class_winners(mine, levels)
+            for mark, store, entry, key in (
+                    (FASTEST, self.state["bests"], fastest, fastest and list(selection_key(fastest))),
+                    (BEST_PROVEN, proven_state, proven, proven and list(best_proven_key(proven, levels[proven["id"]]["level"])))):
+                previous = store.get(cls)
+                if entry is not None and (previous is None or tuple(key) > tuple(previous["key"])):
+                    improved.append({"class": cls, "winner": mark})
+                store[cls] = {"id": entry["id"], "key": key, "patch": patches.get(entry["id"], "")} if entry else None
+            row["winners"] += [{"class": cls, **w} for w in winner_rows(fastest, proven, levels)]
+        return improved
 
     def _artifact(self, iteration, cls, response, row, feedback):
         patch, contracts = response["patch"], list(response.get("contracts") or [])
@@ -1617,9 +1709,13 @@ class Campaign:
             rel = str(self.file.resolve())
         per_class = []
         unstable = (self.state.get("pilot") or {}).get("unstable_classes") or []
+        iterations = copy.deepcopy(self.state["iterations"])
+        levels = self._levels([c for r in iterations for c in r["candidates"]])
+        for c in (c for r in iterations for c in r["candidates"] if c.get("id") in levels):
+            c["level_snapshot"] = levels[c["id"]]["snapshot"]        # Probata PoC 15: every candidate's level now
         for cls in self.all_classes:
             pool = [c for r in self.state["iterations"] for c in r["candidates"] if c["class"] == cls]
-            best, faster, verdict = select(pool)
+            best, faster, verdict, proven = self._class_winners(pool, levels)
             if cls in unstable:
                 verdict = "baseline_unstable"
             other = None
@@ -1630,7 +1726,11 @@ class Campaign:
             per_class.append({"class": cls, "verdict": verdict, "best": best["id"] if best else None,
                               "best_level": best["level"] if best else None,
                               "best_selection_baseline": self.data["base_source"] if best else None,
-                              "best_other_baseline": other, "faster_uncertified": faster, "label": LABEL})
+                              "best_other_baseline": other, "faster_uncertified": faster, "label": LABEL,
+                              # Probata PoC 15: both winners, each with a dated level snapshot; Yan-Ru chooses.
+                              "winners": winner_rows(best, proven, levels),
+                              "best_proven": proven["id"] if proven else None,
+                              **({} if proven else {"best_proven_note": NO_BEST_PROVEN})})
         used = {"iterations": self.ledger.iterations_completed, "lane_hours": round(self.state["lane_hours"], 6),
                 "provider_calls_counted": self.ledger.counted_calls,
                 "provider_calls_uncounted": self.ledger.uncounted_calls,
@@ -1659,7 +1759,7 @@ class Campaign:
             workload_classes=[self._class_row(c) for c in self.data["workload_classes"]],
             label=LABEL, provider=dict(self.data["provider"]), pilot=self.state.get("pilot"),
             setup={"provider_calls": self.state.get("setup_calls", [])},
-            iterations=copy.deepcopy(self.state["iterations"]), per_class=per_class,
+            iterations=iterations, per_class=per_class,
             budgets={"limits": self.budget.to_dict(), "used": used},
             pauses=copy.deepcopy(self.state["pauses"]), stop_reason=reason.value,
             stop_detail=self.state.get("stop_detail"), artifacts=artifacts_list,

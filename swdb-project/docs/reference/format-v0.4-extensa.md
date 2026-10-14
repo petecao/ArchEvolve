@@ -1,6 +1,7 @@
 # Extensa-mode record fields (format 0.4 addition)
 
 Created: 2026-10-03 (Eastern Time)
+Updated: 2026-10-14 06:17 (Eastern Time): two winners per workload class: `winners`, `best_proven`, `level_snapshot` in campaign summaries; `best/<class>.best_proven.patch` (Probata PoC ticket 15)
 Updated: 2026-10-14 (Eastern Time): optional `derived_starts` and the entry fields `start`, `derived_implementation` (Probata PoC ticket 19; see [format-v0.4-derived.md](format-v0.4-derived.md))
 Updated: 2026-10-14 02:57 (Eastern Time): promotion pins the level: `proof_records` and `level_snapshot` on candidate reviews (Probata PoC ticket 12)
 Updated: 2026-10-14 (Eastern Time): per-contract certification links of a candidate entry (Probata PoC ticket 02)
@@ -221,7 +222,9 @@ spreads), `setup` (the profiling call), `iterations` (each with `index`, `starte
 `best_other_baseline`, `faster_uncertified`, `label`), `budgets` (`limits`, `used`),
 `pauses` (`at`, `reason` usage_limit or login, `resumed_at`), `stop_reason`,
 `stop_detail`, `artifacts`, `retentions` and `library_entries`. Candidate records never
-store a certification level; the summary's `level_at_summary` is a snapshot.
+store a certification level; the summary's `level_at_summary` is a snapshot. Since Probata PoC 15 the
+per-class `best` fields name the fastest winner, and the summary adds the best-proven winner and dated level
+snapshots (see "Two winners per workload class" below).
 
 Each candidate entry's `certification` (null without a contract) holds `outcome`, `level_at_summary`,
 `failed_checks` when failed, `record` (the first certification record ID) and, since 2026-10-14 (Probata PoC
@@ -302,6 +305,46 @@ per-contract overrides under `contracts`. A fixture candidate artifact retains i
 real targets read contract proofs from the team store (none exist before tickets 29, 32, 33), name
 `TDStep` as the proof function, read every candidate artifact as inside the C++ subset (ticket 24), and
 have no bounded verifier adapter yet (22, 46, 47).
+
+## Two winners per workload class (Probata PoC 15, 2026-10-14 ET)
+
+Code: `swdb/campaign.py` (`select`, `best_proven`, `winner_rows`, `Campaign._winners`). Design: map decision
+25 item 4. Each class has two winners; Yan-Ru chooses which to promote (`swdb promote` accepts either).
+
+- **Fastest winner** (unchanged rule): the fastest `gain` candidate artifact that is not refuted; certified
+  beats uncertified, then the lower bound (point ratio on gem5). `faster_uncertified` stays. Key:
+  (certified over uncertified, lower bound).
+- **Best-proven winner**: among certified `gain` candidate artifacts at a proven level, the highest level
+  first (proven unbounded; proven within bounds, threads ≤ k; proven within bounds, threads = 1), then the
+  fastest. Bounds above the minimum are never ranked. None when no `gain` candidate artifact reached a proven
+  level. Key: (level rank, lower bound).
+- **Levels known so far.** Both winners are recomputed after every iteration through the level rule over the
+  campaign store and library (what `swdb candidate-level` reports), never stored: the bounded gate gives the
+  within-bounds levels; proven unbounded waits for the WP phase (ticket 16). A candidate artifact with a counting
+  refutation (the level rule's refuted flag) wins neither, even one evaluated before the refutation was
+  written; one whose proof records stopped counting (a changed pin) drops to the level it still has.
+- **`best/`.** The next rewrite workspace holds `best/<class>.patch`, the fastest winner's patch, and, when
+  the best-proven winner is another candidate artifact, `best/<class>.best_proven.patch`; the prompt says
+  which is which. `state.json` keeps `bests` (fastest) and `best_proven` (`{id, key, patch}` per class) and
+  `patches` (the patch of every `gain` candidate artifact, since a winner can come from any earlier iteration).
+- **Plateau.** An iteration improves when either winner of a class improves: its key rises above the key
+  after the previous iteration. A winner that drops out is not an improvement.
+
+Summary fields (`campaign_summary`):
+
+| Field | Meaning |
+|---|---|
+| `winners` (in `per_class`) | one row per distinct winner: `candidate`, `winner` (`fastest`, `best_proven`, or `both` when one candidate artifact wins both, reported once), `level_snapshot`, `ratio`, `lower`. No row is marked as the one to promote |
+| `best_proven` (in `per_class`) | the best-proven winner's ID, or null |
+| `best_proven_note` (in `per_class`) | present when `best_proven` is null: no `gain` candidate artifact of the class reached a proven level |
+| `winners` (in each of `iterations`) | the winner rows of every class after that iteration (each with `class`), from the levels known then |
+| `improved_winners` (in each of `iterations`) | `{class, winner}` for each winner whose key rose in that iteration; `improved_classes` lists their classes |
+| `level_snapshot` (in each entry of an iteration's `candidates`) | each entry with an ID: its level when the summary was written |
+
+A `level_snapshot` is `{level, at: "YYYY-MM-DD HH:MM ET", level_rule, records}` (`swdb.level_rule.snapshot`;
+the proof records that set the level). It is dated, names the level-rule version, and is never recomputed:
+`swdb validate` refuses one without `at` or `level_rule`. The per-class `best`, `best_level` and the other
+`best_*` fields keep their meaning (the fastest winner), so a summary written before this ticket reads the same.
 
 ## Prospective paired estimates and agreement
 

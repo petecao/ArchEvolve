@@ -4,6 +4,7 @@ Updated 2026-10-05 ET (ticket 80): the provider log also keeps each call's REGIO
 Updated 2026-10-14 ET (Probata PoC 14): a workspace holding `.swdb-context/counterexample.json` is a
 counterexample repair call (role `counterexample_repair`; it edits the workspace tree, `edit_workspace`, and
 answers `{interpretation, unresolved}`).
+Updated 2026-10-14 ET (Probata PoC 15): the provider log also keeps the text of each `best/` patch it sees.
 Updated 2026-10-13 ET: the fixture provider declares `confinement: unconfined_harness`. It reads
 and writes harness files outside the provider guard's roots (plan, call counter, log, replayed
 receipts in the call folder), so it takes the unenforced fixture path on every OS, Linux included.
@@ -173,7 +174,8 @@ role = ('counterexample_repair' if Path('.swdb-context/counterexample.json').exi
 i = counts.get(role, 0); counts[role] = i + 1; state.write_text(json.dumps(counts))
 with open({str(team['root'] / 'provider-log.jsonl')!r}, 'a') as log:
     log.write(json.dumps({{'role': role, 'files': sorted(str(p) for p in Path('.').rglob('*') if p.is_file()),
-                          'regions': json.loads(Path('REGIONS.json').read_text()) if Path('REGIONS.json').exists() else None}}) + '\\n')
+                          'regions': json.loads(Path('REGIONS.json').read_text()) if Path('REGIONS.json').exists() else None,
+                          'best': {{str(p): p.read_text() for p in sorted(Path('best').glob('*'))}} if Path('best').is_dir() else {{}}}}) + '\\n')
 items = plan[role]; item = items[min(i, len(items) - 1)]
 if isinstance(item, dict) and {REPLAY!r} in item:
     directive = item[{REPLAY!r}]
