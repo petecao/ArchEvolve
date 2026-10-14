@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 04
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Modules", table "Records and levels" (method-version file, failure-class vocabulary); "Records and levels" (method-version file contents); "Verifier lineup and order" (failure classes, skip reasons); "Extensa mode" (per-candidate budgets belong to the method version); "Testing Decisions", seams 1 and 4; user stories 21, 61; S3; S8; O7); decisions: [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) (items 8, 9), [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md) (items 3, 5, 7, 10, 11), [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md) (items 4, 5, 9), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md) (items 1, 3, 6, 7, 10), [18](../../formal-verification-2026-10-09/issues/18-evaluation-claims-and-subjects.md) (item 7), [19](../../formal-verification-2026-10-09/issues/19-bounded-verdict-bounds.md) (items 1, 8), [25](../../formal-verification-2026-10-09/issues/25-extensa-loop-proofs-and-ranking.md) (item 2), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md) (items 3, 10 and its Later changes)
 **Time estimate:** about 1 day

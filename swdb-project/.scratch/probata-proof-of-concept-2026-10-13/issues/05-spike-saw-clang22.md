@@ -2,7 +2,7 @@
 
 Created: 2026-10-13 22:17 ET
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 03
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-of-concept plan", A1 row (a); "Verifier lineup and order"; "DX100 proof semantics", encoding bullet; "Further Notes", risk table); decisions: [07](../../formal-verification-2026-10-09/issues/07-install-verifiers.md), [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md), [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md)
 **Time estimate:** about 2-3 days, inside the 2-week box

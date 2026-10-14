@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-13 23:40 ET (review fixes, round 3)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 03
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Verifier lineup and order" (pinned versions), "Providers and machines" (mbit10), "Proof-of-concept plan" (A6)); decisions: [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md) item 13; [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md) items 2, 5; [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) items 2, 3, 8; [07](../../formal-verification-2026-10-09/issues/07-install-verifiers.md) (smoke programs)
 **Time estimate:** about 2 days
