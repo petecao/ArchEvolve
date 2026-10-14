@@ -102,7 +102,10 @@ its CBMC form (translations below). Branch `probata-poc/t22`. Interface doc:
 `test_format_doc.py`, `test_proof_records.py`, `test_proof_method_version.py`: **142 passed** in 293 s. Log
 `/tmp/claude/probata-runs/t22/pytest-4.log` (sha256 `29128cba38222936`...), report log `report-4.jsonl`
 (`6d1c1f4d4be0fbcf`...). Gate and ArchEvolve proof path: `test_bounded_gate_campaign.py`,
-`test_archevolve_proof_path.py` (see the main session's merge run). Runs: `/tmp/claude/probata-runs/t22/`.
+`test_archevolve_proof_path.py` (no verifier, `SWDB_FRAMA_C=none`): 40 passed, 1 failed only because this
+ticket edited `swdb/proof.py` during the run (estimator identity); after merging the integration tip
+(2b3f39dd): `test_cbmc_adapter.py` + `test_format_doc.py` **31 passed** (`pytest-final.log`) and the two gate
+cases **2 passed** (`pytest-gate.log`). Runs: `/tmp/claude/probata-runs/t22/` (pytest temp folders deleted).
 
 **SAW to CBMC translations** (each an Assumption; not decided in the map beyond 13:19 ET's change):
 
