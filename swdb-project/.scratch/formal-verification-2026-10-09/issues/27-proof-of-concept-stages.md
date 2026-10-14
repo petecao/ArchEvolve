@@ -55,3 +55,7 @@ across tickets but not ordered or costed as a whole. Decide:
   856-858,893-909`); `provider_calls_proof` in budget validation; iterations from a derived
   implementation (17 item 8). Measure how often campaign candidates are refuted at N > 1 and how many
   repair calls that uses.
+- 2026-10-13 20:49 ET: Yan-Ru (after 24): revisit RQ3's contract-vs-no-contract claim while working
+  this ticket. Since 24, the no-contract baseline also proves by route 1, so a contract's measured
+  advantage is only its formal halves, its hint seeds and route 3 (23, Later changes). Decide whether
+  a proof-of-concept stage measures that gap early, and whether RQ3's hypothesis needs rewording.
