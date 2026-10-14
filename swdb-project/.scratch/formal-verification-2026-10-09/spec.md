@@ -1,12 +1,12 @@
 # Spec: Extensa Probata — proven certification levels
 
 Created: 2026-10-13 21:46 ET
-Updated: 2026-10-13 23:07 ET (cutting the build tickets surfaced corrections S7–S14 and open points O2–O10,
+Updated: 2026-10-14 00:20 ET (Yan-Ru approved the defaults of O2–O10); 2026-10-13 23:07 ET (cutting the build tickets surfaced corrections S7–S14 and open points O2–O10,
 defaults applied); 2026-10-13 22:10 ET (Yan-Ru accepted the test seams and O1's default, with no objection to
 choices S1–S6); 2026-10-13 22:08 ET (review pass against all 28 tickets: 8 corrections, 8 omissions
 filled; the old open point O2 became choice S6, since tickets 13 and 25 already decide it)
 **Type:** spec
-**Status:** ready-for-agent (open points O2–O10 have defaults applied, awaiting Yan-Ru)
+**Status:** ready-for-agent
 **Blocked by:** None
 Owner: Yan-Ru Jhou
 Map and tickets: [map.md](map.md). This spec is the map's destination. Each decision lives in its ticket;
@@ -912,9 +912,9 @@ Writing and reviewing the build tickets (75 in the end: 63 proof-of-concept, 12 
 | S13 | Hint seeds from a human-assisted contract proof keep provenance "seed"; the per-candidate step still counts as automatic. | [13] item 9 |
 | S14 | Verifiers and solvers are trusted-tool entries in every assumption set. | [09] item 8 |
 
-**Open points, defaults applied until Yan-Ru rules:**
+**Open points, decided: Yan-Ru approved every default below on 2026-10-14 00:20 ET:**
 
-| # | Point | Default |
+| # | Point | Decision |
 |---|---|---|
 | O2 | BC's built code also has `BrandesMaa`, a DX100 driver that calls `PBFSMAA`, which the guard list does not name. | The guard names it too (user story 77: every authors' DX100 function). |
 | O3 | ADR 0006 confines providers with a Linux-only launcher; nothing says how the `proof_hinting` role is confined on the Mac. | Codex's own sandbox over the frozen workspace; the role builds nothing ([13] item 13). Recorded in the ADR 0006 exception (proof-of-concept 03). |

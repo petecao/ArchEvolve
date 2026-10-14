@@ -1,7 +1,7 @@
 # Spec: Extensa Probata proof of concept
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-13 23:07 ET (review: tickets 60–63 added, stage table corrected, Rocq box clarified)
+Updated: 2026-10-14 00:20 ET (O2–O10 decided); 2026-10-13 23:07 ET (review: tickets 60–63 added, stage table corrected, Rocq box clarified)
 **Type:** spec
 **Status:** ready-for-agent
 **Blocked by:** None
@@ -39,6 +39,9 @@ Tickets: [`issues/`](issues/), 01–63 (see "Numbering" below).
 **Numbering:** 01–59 come blockers first. Tickets 60–63 were added by the review on 2026-10-13 and break
 that order: 46, 48, 55, 58 and 59 wait on some of them. A frontier scan still works, because a blocked ticket is
 skipped whatever its number.
+
+**O2–O10 are decided** (Yan-Ru approved the defaults, 2026-10-14 00:20 ET). Where a ticket says "O<n>
+default" or "until Yan-Ru rules" for one of them, read it as decided.
 
 ## Rules for every ticket
 

@@ -1,7 +1,7 @@
 # Spec: Extensa Probata evaluation
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-13 23:07 ET (cut-edge rule)
+Updated: 2026-10-14 00:20 ET (O2–O10 decided); 2026-10-13 23:07 ET (cut-edge rule)
 **Type:** spec
 **Status:** ready-for-agent
 **Blocked by:** [proof-of-concept ticket 59, method-version review and freeze](../probata-proof-of-concept-2026-10-13/issues/)
@@ -19,6 +19,9 @@ Tickets: [`issues/`](issues/), 01–12, numbered so blockers come first. Prose e
 3. **Held-out kernels:** BC, PR and SSSP. Their contracts are drafted blind to the authors' DX100 code.
 4. **Values these tickets cite** (budgets, pass bars, k, minimum bounds) are the frozen ones in the
    method-version file, not the design spec's starting values.
+
+**O2–O10 are decided** (Yan-Ru approved the defaults, 2026-10-14 00:20 ET). Where a ticket says "O<n>
+default" or "until Yan-Ru rules" for one of them, read it as decided.
 
 ## Rules for every ticket
 
