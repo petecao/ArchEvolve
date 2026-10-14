@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** resolved
+**Status:** claimed
 **Blocked by:** 03
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-of-concept plan", A1 row (c); "Proof-hint loop"; "Verifier lineup and order", unbounded verifier; "Providers and machines"); decisions: [07](../../formal-verification-2026-10-09/issues/07-install-verifiers.md), [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md), [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [19](../../formal-verification-2026-10-09/issues/19-bounded-verdict-bounds.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md), [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md)
 **Time estimate:** about 3 days, inside the 2-week box
@@ -283,3 +283,10 @@ headers: `gapbs_models.h` `401d8ccf…3eed3e`, `bfs_unit.h` `1bcbf4da…f7b235`.
 WP rerun on only the goals a round touched; or an agent that runs the parse and goal-generation
 checks itself inside one call, as map 13 item 6 allows on mbit10 under Landlock. No uncounted
 continuation was run, so it is not known whether run 3's 99 open goals can be closed at all.
+
+## Continuation inside the box (2026-10-14 09:20 ET, main session)
+
+Reopened. Ticket 09 found (c) is "fail so far": this ticket's own assumption says a counted run fails
+only "when the box ends", and A1's 2-week box runs to about 2026-10-27 ET. So (c) continues inside the
+box, with every earlier counted run kept in the record. Each method change made here is recorded as one
+(it belongs in the method version), and each new counted run is reported, pass or fail.
