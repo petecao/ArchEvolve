@@ -295,3 +295,13 @@ All Mac results. Paths are under this effort's `prototype/` folder.
 - (b): proposed re-plan option 1 accepted: the one-day CBMC box runs as a continuation of ticket 06. A2
   stays stopped until that box and (c)'s continuation report back.
 - (c): continues inside A1's box as ticket 07's continuation (main session, 09:20 ET).
+- 2026-10-14 12:46 ET (main session): the CBMC box passed. Spike (b) now reads **pass via fallback (CBMC)**:
+  both units proven (Peter 3.43 s / 0.41 GB, `TDStepMAA` 5.6 s / 0.68 GB), 12 of 12 controls refuted with
+  the expected check, C-vs-C++ differential identical over the whole bounded domain (14 builds), sanity
+  controls behave. The main session re-ran `peter`, `maa` and two controls: same verdicts
+  (`/tmp/claude/probata-runs/t06c-recheck/`). Stop condition (b) is now "no". Condition (c) is still open
+  inside the box (ticket 07, continuation 2). Proposed A2 changes, awaiting Yan-Ru: CBMC 6.11 on the C
+  lowering becomes the bounded verifier at threads = 1; 21 before the bounded adapter, every job with a
+  C-vs-C++ differential check; 22 becomes a CBMC adapter; 30 generates the stubs from one proof-semantics
+  source; 33 reproduces these 14 verdicts with generated stubs; 61 loses SAW equivalence (needs a new tool
+  or a cut).
