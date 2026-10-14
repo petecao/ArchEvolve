@@ -288,9 +288,9 @@ gated and evaluated, and if refuted ends the chain (it has no repair lineage of 
 **Two counters, one rewriting total.** Every counterexample repair call is charged to the D7 ledger before
 it opens (role `counterexample_repair` in the iteration's `provider_calls`; the per-iteration and campaign
 caps and lane-hours apply; a refused call ends the loop `calls_refused`). `state.json` and the summary's
-`bounded_gate.repair_counters` hold `certification_repairs` (D7 calls, role `repair`),
+`bounded_gate` block hold `repair_counters`: `certification_repairs` (D7 calls, role `repair`),
 `counterexample_repair_rounds`, `repairs` and `reverted_repairs`; both kinds of call count in
-`budgets.used.provider_calls_counted`. `bounded_gate.proof_job_hours` is the gate's proof-job wall time; it
+`budgets.used.provider_calls_counted`. The block's `proof_job_hours` is the gate's proof-job wall time; it
 is not charged to `lane_hours` (ticket 16 reports proof lane-hours apart).
 
 **Contract fixture** (`swdb campaign --fixture`, with `base_snapshot`): `contract_proofs: {contract: {parts
