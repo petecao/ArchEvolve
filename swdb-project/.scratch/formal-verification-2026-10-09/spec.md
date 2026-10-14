@@ -1,11 +1,12 @@
 # Spec: Extensa Probata — proven certification levels
 
 Created: 2026-10-13 21:46 ET
-Updated: 2026-10-13 22:10 ET (Yan-Ru accepted the test seams and O1's default, with no objection to
+Updated: 2026-10-13 23:07 ET (cutting the build tickets surfaced corrections S7–S14 and open points O2–O10,
+defaults applied); 2026-10-13 22:10 ET (Yan-Ru accepted the test seams and O1's default, with no objection to
 choices S1–S6); 2026-10-13 22:08 ET (review pass against all 28 tickets: 8 corrections, 8 omissions
 filled; the old open point O2 became choice S6, since tickets 13 and 25 already decide it)
 **Type:** spec
-**Status:** ready-for-agent
+**Status:** ready-for-agent (open points O2–O10 have defaults applied, awaiting Yan-Ru)
 **Blocked by:** None
 Owner: Yan-Ru Jhou
 Map and tickets: [map.md](map.md). This spec is the map's destination. Each decision lives in its ticket;
@@ -378,7 +379,7 @@ the detail and the evidence.
 | Campaign loop | Bounded gate and counterexample repair before evaluation; WP phase after the campaign stops; two winners in selection, workspace and plateau test; `provider_calls_proof`; start from a derived implementation; iteration ladder (`LADDER.json`, `rewrite_workspace: v2`). | [25], [17], [28] |
 | Campaign adapter | Returns every certification record ID, one per contract (today only the first). | [17], [26] |
 | Handoff envelope | Gains the `certification_level` block. | [26] |
-| Provider guard and workspaces | The guard names `PBFSMAA`, `PageRankPullMAA` and `DeltaStepMAA` and drops two names that exist nowhere (`TDStepMAA2`, `BCMAA`). The new `proof_hinting` workspace may show the authors' code only when it is the candidate; hint records never enter a rewriting workspace. | [18], [13] |
+| Provider guard and workspaces | The guard names `PBFSMAA`, `PageRankPullMAA`, `DeltaStepMAA` and (O2) `BrandesMaa`, and drops two names that exist nowhere (`TDStepMAA2`, `BCMAA`). The new `proof_hinting` workspace may show the authors' code only when it is the candidate; hint records never enter a rewriting workspace. | [18], [13] |
 | Implementation records | Carry their contract lineage (today `applies` lists only strategies). | [17] |
 | Proposals | Carry repair lineage (refuted candidate, counterexample record, round, reverted-repair flag), run index and provider pin. | [26], [23] |
 
@@ -603,7 +604,8 @@ the detail and the evidence.
     WP environment variables);
   - *proof hint check* every round: anchors exist, kinds allowed, ACSL parsed and its syntax tree checked,
     erase-and-diff;
-  - *verdict reading:* WP's per-property report; every goal Valid, no `Extern`.
+  - *verdict reading:* WP's per-property report; every goal Valid, no `Extern` outside summary and
+    `maa_*` contracts, every smoke test passed (S7).
 - **Workspace:** the read-only C lowering with anchors; the candidate's C++ proof unit (the authors' code
   only when it is the candidate); the formal halves and unit postcondition; summaries as ACSL; failing
   goals with kind and failure class; earlier rejected hints; seeds. Hidden: the evaluator, workload inputs,
@@ -643,7 +645,8 @@ the detail and the evidence.
 - **Method-version file contents:** verifier lineup with versions and flags; CIVL and GenMC settings; the
   OpenMP runtime; C-lowering subset, translators and naming rules; ACSL language version; proof-hint
   vocabulary; the three checks; budgets; prompts; shared-action kinds; shared logic library (with the sum
-  library); `std::vector` model; ghost capacity K. Frozen by Yan-Ru's review at the freeze.
+  library); `std::vector` and `std::pair` models; sharing-class names; the Rocq development; CIVL's k among
+  the budgets (S8); ghost capacity K. Frozen by Yan-Ru's review at the freeze.
 - **Campaign summary:** both winners per class with dated level snapshots; proof lane-hours, proof-hint
   calls and repair calls used. Written when the campaign stops, rewritten once when the WP phase ends.
 - **Promotion review** cites the proof record IDs and the level snapshot at promotion.
@@ -891,6 +894,37 @@ no contract is uncertified. [23] item 3 also counts a repair only if it still ma
   an exception, and the authors' code would carry a level that no contract's checks tested.
 - **Where it matters:** only when the authors' code fails to match its kernel's contract; a held-out
   contract is drafted blind, so this is known only after the freeze.
+
+### Found while cutting the build tickets (2026-10-13 23:07 ET)
+
+Writing and reviewing the build tickets (75 in the end: 63 proof-of-concept, 12 evaluation) surfaced these. The tickets already follow them.
+
+**Corrections and readings (no new decision):**
+
+| # | Correction or reading | Evidence |
+|---|---|---|
+| S7 | Verdict reading: WP prints the contracts of summaries and `maa_*` calls (body-less) as `Extern`, so "no `Extern`" means none outside those contracts, each of which is an assumption entry. "Every smoke goal Valid" means every smoke test passed: a smoke goal WP proves Valid signals dead code. | research 13, Q6 and Q7 |
+| S8 | The method-version file also lists the sharing-class names, the `std::pair` model and the Rocq development, and its budgets include CIVL's k. | [15] item 9, [16] items 4 and 7 |
+| S9 | One 2-week Rocq box covers the composition theorem proof and the DX100 reduction lemma together; the statement review comes before the box. | [27] item 4 |
+| S10 | Run index and provider pin also go on proof records: a proof-hint run has no proposal. | [26] item 6, [23] item 5 |
+| S11 | When one proof unit has counting proof records by two routes, its level is the higher one (any valid proof counts); weakest-of applies across proof units and dependencies. | [26] item 2 |
+| S12 | A concurrency negative control applied to Peter's code as written (which races) counts only the violation caused by its break. | glossary, "Negative control" |
+| S13 | Hint seeds from a human-assisted contract proof keep provenance "seed"; the per-candidate step still counts as automatic. | [13] item 9 |
+| S14 | Verifiers and solvers are trusted-tool entries in every assumption set. | [09] item 8 |
+
+**Open points, defaults applied until Yan-Ru rules:**
+
+| # | Point | Default |
+|---|---|---|
+| O2 | BC's built code also has `BrandesMaa`, a DX100 driver that calls `PBFSMAA`, which the guard list does not name. | The guard names it too (user story 77: every authors' DX100 function). |
+| O3 | ADR 0006 confines providers with a Linux-only launcher; nothing says how the `proof_hinting` role is confined on the Mac. | Codex's own sandbox over the frozen workspace; the role builds nothing ([13] item 13). Recorded in the ADR 0006 exception (proof-of-concept 03). |
+| O4 | CIVL has no fallback if it will not run. | GenMC alone refutes, labeled; the threads ≤ k rung stays unavailable until CIVL runs. |
+| O5 | RQ4 repairs the authors' code, but the guard hides it from the rewriting role. | The rewriting role may see the authors' code only when it is the refuted candidate under repair, in the evaluation, never in a campaign. The authors' PageRank counts as caught when it fails certification or is refuted ([20]). |
+| O6 | A data race is undefined behavior, not a strict-layer rule, so its refutation cannot replay on the strict layer, and "not reproduced" would stop every batch. | New replay label "undefined behavior (no strict-layer replay)": the refutation counts and the batch goes on; "bug" still needs a whole-kernel reproduction (a real input plus a schedule). |
+| O7 | Skip reasons do not say which steps they skip. | A skip skips only the steps that need the missing piece. No contract proof: no contract seeds and no bounded rung; route-1 WP still runs when the proof unit has a unit postcondition (matches S6). |
+| O8 | The `bc_read_offload` counterpart in proof-of-concept 31 would touch BC before the freeze, and the evaluation drafts a new blind BC contract anyway. | `bc_read_offload` stays untouched before the freeze; evaluation 02 decides whether the old contract is retired. |
+| O9 | The mbit10 memory cap is an "RSS cap" ([23] item 6) but set with `ulimit -v` ([19] item 8); JVM and GHC tools may not start under a virtual-memory cap. | An 8 GB RSS watchdog per worker; `ulimit -v` only for tools that start under it. |
+| O10 | [24]'s drafting rule ("every contract states a unit postcondition") was written for kernel contracts; a kernel-independent enabling contract has no kernel unit to state one for. | The rule governs kernel contracts. An enabling contract states none and records why: route 1 proves its results ([24] item 3). |
 
 ## Testing Decisions
 
