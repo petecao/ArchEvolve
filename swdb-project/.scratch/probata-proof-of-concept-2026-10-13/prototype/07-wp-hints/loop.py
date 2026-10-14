@@ -11,7 +11,7 @@
 #   --examples: syntax-checked ACSL examples and the Frama-C errors runs 1-3 hit, in the prompt.
 #   --positions: failing goals go back with kind, file:line, source line and the hint holding them.
 #   --resume-rounds: one Codex session for the whole run (later rounds send only the feedback).
-import argparse, hashlib, json, os, shutil, subprocess, sys, time
+import argparse, hashlib, json, os, shutil, signal, subprocess, sys, time
 from pathlib import Path
 
 import hints as H
@@ -28,7 +28,7 @@ EXAMPLES = HERE / "examples"
 sys.path.insert(0, str(HERE.parents[3]))
 from swdb.provider_adapters import PINS, CODEX_DISABLED_FEATURES  # noqa: E402
 
-PIN = PINS["codex"]
+PIN = dict(PINS["codex"])
 LOCKWAIT = [0.0]  # seconds spent waiting for the machine-wide verifier lock (other tickets), not counted
 HINT_SCHEMA = {
     "type": "object", "additionalProperties": False, "required": ["hints", "notes"],
@@ -168,6 +168,14 @@ WP goal generation). Then WP proves TDStep's goals and your lemmas (Alt-Ergo, Z3
 each per goal, no smoke tests). When every one of them is proven, the loop runs ONE fresh full WP run with
 the final settings (all functions, 30 s per prover, smoke tests); only that run decides. Keep hints few and
 targeted: every assertion and invariant is itself a goal, and large quantified contexts make provers time out.
+{context_note}"""
+
+CONTEXT_NOTE = """WP context facts (method change e): WP puts EVERY global lemma into the hypotheses of EVERY goal of
+TDStep, and every assertion/invariant above a goal as well. Quantified lemmas and large predicate towers slow
+down unrelated goals: with an earlier hint set, the call precondition of `__dxc_const_i32(1, c.reg[2])`, proven
+in 0.03 s with no hints, timed out at 30 s for all three provers. Prefer local `assert`s next to the use site,
+predicates that are small and non-nested, and lemmas only when a goal needs them. A goal marked REGRESSION in
+the feedback was proven without hints and fails now because of context.
 """
 
 EXAMPLE_NOTES = """
@@ -179,23 +187,48 @@ It is an unrelated CSR frontier traversal; it only shows working syntax and comm
 """
 
 
+TOOL_NOTES = """
+In-call tools (MCP server "probata"; you have no shell and no file access):
+- check_hints(hints): the proof hint check (vocabulary, anchors, erase-and-diff, Frama-C parse, WP goal
+  generation) on a COMPLETE hint set. Seconds. Use it until your set passes before anything else.
+- prove_hints(hints): the same check, then WP on TDStep's goals and your lemmas ({round_timeout} s per prover,
+  no smoke tests). Minutes (a set with ~100 unproven goals takes about 4-5 min; fewer unproven goals are faster).
+  It returns every goal not proven with kind, merged-file line, source line and the hint that holds it.
+Work in a loop: check_hints until clean, prove_hints, read the unproven goals, fix the hints, prove_hints
+again. When prove_hints answers "ALL ... goals proven", return exactly that set at once. Return your best
+set in any case before the in-call budget ends ({tool_budget:.0f} min from the start of this call; the tool
+tells you what is left). Your final JSON answer is the hint set the loop uses.
+"""
+
+
 def examples_text():
     return EXAMPLE_NOTES.format(examples=(EXAMPLES / "acsl_examples.c").read_text(),
                                 errors=(EXAMPLES / "frama_c_errors.txt").read_text())
 
 
-def method_notes(a):
+def method_notes(a, tool_budget=0.0):
     parts = []
+    if getattr(a, "tool", False):
+        parts.append(TOOL_NOTES.format(round_timeout=a.round_timeout, tool_budget=tool_budget))
     if a.round_mode:
-        parts.append(ROUND_NOTES.format(round_timeout=a.round_timeout))
+        parts.append(ROUND_NOTES.format(round_timeout=a.round_timeout,
+                                        context_note=CONTEXT_NOTE if getattr(a, "context_note", False) else ""))
     if a.examples:
         parts.append(examples_text())
     return "\n".join(parts)
 
 
+BASELINE_PASSED = set()  # t07c (e): goals the no-hint run proved; failing again = context regression
+
+
 def positions_text(failing, hint_set):
     by_id = {h["id"]: h for h in hint_set or []}
     out = []
+    n_reg = sum(1 for g in failing if g["goal"] in BASELINE_PASSED)
+    if n_reg:
+        out.append(f"  ({n_reg} goals marked REGRESSION were proven by WP with NO hints; your hints made them fail, "
+                   "most likely through context: every global lemma and every earlier assertion is a hypothesis "
+                   "of these goals)")
     for g in failing:
         where = f"{g['file']}:{g['line']}"
         hint = ""
@@ -204,7 +237,8 @@ def positions_text(failing, hint_set):
             exact = [h for h in hs if h["text"].strip()[:50] and h["text"].strip()[:50] in g["source"]]
             pick = exact or hs
             hint = " | in your hint " + ", ".join(f"{h['id']} ({h['kind']} at {h['anchor']})" for h in pick[:3])
-        out.append(f"  - {g['goal']} [{g['failure_class']}] {g['kind']} at {where}: {g['source'][:200]}{hint}")
+        reg = " | REGRESSION (proven without hints)" if g["goal"] in BASELINE_PASSED else ""
+        out.append(f"  - {g['goal']} [{g['failure_class']}] {g['kind']} at {where}: {g['source'][:200]}{hint}{reg}")
     return "\n".join(out)
 
 
@@ -252,7 +286,14 @@ def feedback_text(history, resumed=False):
     return "\n".join(lines)
 
 
-def codex_call(out, r, prompt, resume=None, turn=0, keep_session=False):
+def mcp_args(state):
+    """t07c method change (d): the in-call hint check tool (map 13 item 6) as an MCP server; shell stays off."""
+    return ["-c", "mcp_servers.probata.command=" + json.dumps(sys.executable),
+            "-c", "mcp_servers.probata.args=" + json.dumps(["-I", str(HERE / "hint_tool_mcp.py"), "--state", str(state)]),
+            "-c", "mcp_servers.probata.tool_timeout_sec=3600", "-c", "mcp_servers.probata.startup_timeout_sec=60"]
+
+
+def codex_call(out, r, prompt, resume=None, turn=0, keep_session=False, mcp_state=None, deadline_s=None):
     d = out / f"codex-r{r}" / (f"turn{turn}" if keep_session else "")
     ws = out / f"codex-r{r}" / "workspace"
     ws.mkdir(parents=True, exist_ok=True)
@@ -266,6 +307,8 @@ def codex_call(out, r, prompt, resume=None, turn=0, keep_session=False):
               "--ignore-user-config", "--ignore-rules", "--skip-git-repo-check"]
     if not keep_session:
         common.append("--ephemeral")
+    if mcp_state is not None:
+        common += mcp_args(mcp_state)
     tail = ["--json", "--output-schema", str(d / "schema.json"), "--output-last-message", str(d / "final.json"),
             "--disable", "shell_tool"]
     for f in CODEX_DISABLED_FEATURES:
@@ -276,12 +319,27 @@ def codex_call(out, r, prompt, resume=None, turn=0, keep_session=False):
         argv = [CODEX, "exec", *common, "-s", "read-only", "-C", str(ws), *tail, "-"]
     (d / "argv.json").write_text(json.dumps(argv[:-1]))
     t = time.time()
-    p = subprocess.run(argv, input=prompt, capture_output=True, text=True)
+    killed = False
+    with open(d / "stdout.jsonl", "w") as fo, open(d / "stderr.txt", "w") as fe:
+        p = subprocess.Popen(argv, stdin=subprocess.PIPE, stdout=fo, stderr=fe, text=True, start_new_session=True)
+        p.stdin.write(prompt)
+        p.stdin.close()
+        try:
+            p.wait(timeout=deadline_s)
+        except subprocess.TimeoutExpired:
+            # Budget deadline: stop Codex and its MCP server; verifier_run.py kills its own job tree on SIGTERM.
+            killed = True
+            os.killpg(p.pid, signal.SIGTERM)
+            try:
+                p.wait(timeout=60)
+            except subprocess.TimeoutExpired:
+                os.killpg(p.pid, signal.SIGKILL)
+                p.wait()
     wall = time.time() - t
-    (d / "stdout.jsonl").write_text(p.stdout)
-    (d / "stderr.txt").write_text(p.stderr)
+    stdout = (d / "stdout.jsonl").read_text(errors="replace")
+    stderr = (d / "stderr.txt").read_text(errors="replace")
     usage, thread = {}, resume
-    for ln in p.stdout.splitlines():
+    for ln in stdout.splitlines():
         try:
             ev = json.loads(ln)
         except ValueError:
@@ -292,7 +350,7 @@ def codex_call(out, r, prompt, resume=None, turn=0, keep_session=False):
             for k, v in (ev.get("usage") or {}).items():
                 usage[k] = usage.get(k, 0) + (v or 0)
     res = {"exit": p.returncode, "wall_s": round(wall, 1), "usage": usage, "hints": None, "error": None,
-           "thread": thread}
+           "thread": thread, "killed_at_deadline": killed}
     try:
         data = json.loads((d / "final.json").read_text())
         tag = f"r{r}t{turn}" if keep_session else f"r{r}"
@@ -301,7 +359,7 @@ def codex_call(out, r, prompt, resume=None, turn=0, keep_session=False):
                         for i, h in enumerate(data["hints"], 1)]
         res["notes"] = data.get("notes", "")
     except Exception as e:  # noqa: BLE001
-        res["error"] = f"{type(e).__name__}: {e}; stderr tail: {p.stderr[-800:]}"
+        res["error"] = f"{type(e).__name__}: {e}; stderr tail: {stderr[-800:]}"
     return res
 
 
@@ -374,10 +432,18 @@ def wp_round(out, name, standin, hint_set, record, mode="wp-smoke", timeout=7200
     return a
 
 
-def round_wp(out, r, standin, hint_set, rec, d, a, t0):
-    """t07c method change (a): round-mode WP on TDStep + lemmas; when all proven, one fresh full replay."""
-    wlog, ws = verifier(out, d, "round", timeout=max(60, int(a.budget_min * 60 - budget_s(t0)) + 60),
-                        extra=(out / "round-cache", a.round_timeout))
+def round_wp(out, r, standin, hint_set, rec, d, a, t0, proved_dir=None):
+    """t07c method change (a): round-mode WP on TDStep + lemmas; when all proven, one fresh full replay.
+    proved_dir: the in-call tool's round-mode run of this exact set (method change d), reused."""
+    if proved_dir is not None:
+        d = Path(proved_dir)
+        wlog = d / "round.log"
+        ws = json.loads(Path(str(wlog) + ".summary.json").read_text())
+        ws["wall_s"] = 0.0  # already counted inside the Codex call
+        rec["round_wp_reused_from_tool"] = str(d)
+    else:
+        wlog, ws = verifier(out, d, "round", timeout=max(60, int(a.budget_min * 60 - budget_s(t0)) + 60),
+                            extra=(out / "round-cache", a.round_timeout))
     ar = assess_round(d, wlog)
     rec["round_wp"] = {"exit": ws["exit_code"], "wall_s": ws["wall_s"], "peak_rss_mb": ws["peak_rss_mb"],
                        "log": str(wlog), "log_sha256": ws["log_sha256"], "timed_out": ws.get("timed_out"),
@@ -419,6 +485,57 @@ def budget_s(t0):
     return time.time() - t0 - LOCKWAIT[0]
 
 
+def tool_kw(out, r, turn, a, t0, standin):
+    """t07c (d): state folder and deadline for one Codex call with the in-call tool."""
+    if not a.tool:
+        return {}
+    state = out / f"tool-r{r}-t{turn}"
+    state.mkdir(parents=True, exist_ok=True)
+    (state / "config.json").write_text(json.dumps({
+        "out": str(out), "standin": str(STANDIN_DIR / UNIT), "owner": OWNER[0], "t0": t0,
+        "lockwait_before_s": LOCKWAIT[0], "budget_min": a.budget_min, "final_reserve_min": a.final_reserve_min,
+        "round_timeout": a.round_timeout, "round": f"{r}t{turn}", "pin": PIN,
+        "baseline_passed": sorted(BASELINE_PASSED)}, indent=1))
+    left = (a.budget_min - a.final_reserve_min) * 60 - budget_s(t0)
+    return {"mcp_state": state, "deadline_s": max(120.0, left + 120.0)}  # +120 s: the tool refuses at 0 first
+
+
+def same_set(h1, h2):
+    key = lambda hs: [(h["anchor"], h["kind"], h["text"].strip()) for h in hs or []]  # noqa: E731
+    return key(h1) == key(h2)
+
+
+def pick_tool_result(out, r, turn, c):
+    """t07c (d): read the tool's submissions; count its lock waits; fall back to its best set when
+    Codex was stopped at the deadline; reuse its round-mode run when Codex returns a set it proved."""
+    state = out / f"tool-r{r}-t{turn}"
+    subs = []
+    f = state / "submissions.jsonl"
+    if f.exists():
+        subs = [json.loads(x) for x in f.read_text().splitlines() if x.strip()]
+    lw = max((s.get("lockwait_total_s", 0) for s in subs), default=0.0)
+    LOCKWAIT[0] += lw
+    c["tool"] = {"calls": len(subs), "check_calls": sum(1 for s in subs if s["tool"] == "check_hints"),
+                 "prove_calls": sum(1 for s in subs if s["tool"] == "prove_hints"),
+                 "results": [[s["n"], s["tool"], s["result"], s.get("n_failing"), s.get("wall_s")] for s in subs],
+                 "lock_wait_s": lw, "submissions": str(f)}
+    proved = [s for s in subs if s["result"] == "all proven (round mode)"]
+    if c["hints"] is None and subs:
+        prove = [s for s in subs if s["tool"] == "prove_hints" and s.get("n_failing") is not None]
+        best = proved[-1] if proved else (min(prove, key=lambda s: (s["n_failing"], -s["n"])) if prove else
+                                           next((s for s in reversed(subs) if s["result"] == "check passed"), None))
+        if best is not None:
+            c["hints"] = best["hints"]
+            c["tool"]["fallback_from_submission"] = best["n"]
+            c["error"] = None
+    # Reuse the tool's round-mode run of the exact returned set (proven or not): same flags, same files.
+    for s in reversed(subs):
+        if s["result"] in ("all proven (round mode)", "not all proven") and s.get("dir") \
+                and same_set(c["hints"], s["hints"]):
+            c["proved_dir"] = s["dir"]
+            break
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True)
@@ -435,9 +552,17 @@ def main():
     ap.add_argument("--examples", action="store_true", help="t07c (b): syntax-checked examples in the prompt")
     ap.add_argument("--positions", action="store_true", help="t07c (c): failing goals with source positions")
     ap.add_argument("--resume-rounds", action="store_true", help="t07c: one Codex session for all rounds")
+    ap.add_argument("--tool", action="store_true", help="t07c (d): in-call hint check tool (MCP), map 13 item 6")
+    ap.add_argument("--final-reserve-min", type=float, default=15,
+                    help="t07c (d): minutes kept for the final replay; Codex is stopped before them")
+    ap.add_argument("--context-note", action="store_true",
+                    help="t07c (e): prompt note on WP context, REGRESSION marks for goals proven without hints")
     ap.add_argument("--owner", default="t07")
+    ap.add_argument("--dev-effort", help="DEV ONLY (plumbing tests, never a counted run): override the pinned effort")
     a = ap.parse_args()
     OWNER[0] = a.owner
+    if a.dev_effort:
+        PIN["effort"] = a.dev_effort
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
     standin = Path(a.variant).read_text() if a.variant else (STANDIN_DIR / UNIT).read_text()
@@ -460,9 +585,12 @@ def main():
             "repair_turns": a.repair_turns,
             "method_changes_t07c": {"round_mode": a.round_mode, "round_timeout_s": a.round_timeout,
                                     "examples": a.examples, "positions": a.positions,
-                                    "resume_rounds": a.resume_rounds},
+                                    "resume_rounds": a.resume_rounds, "tool": a.tool,
+                                    "final_reserve_min": a.final_reserve_min,
+                                    "context_note": a.context_note},
             "examples_sha256": {f.name: sha(f) for f in sorted(EXAMPLES.glob("*")) if f.is_file()} if a.examples else None,
-            "loop_sha256": sha(HERE / "loop.py"), "hints_sha256": sha(HERE / "hints.py")}
+            "loop_sha256": sha(HERE / "loop.py"), "hints_sha256": sha(HERE / "hints.py"),
+            "tool_sha256": sha(HERE / "hint_tool_mcp.py") if a.tool else None}
     (out / "meta.json").write_text(json.dumps(meta, indent=1))
     history = []
     if a.round0_from:
@@ -477,6 +605,7 @@ def main():
         log(out, "round 0: WP with no hints")
         wp_round(out, "round-0", standin, [], rec)
         rec["elapsed_min"] = round((time.time() - t_start) / 60, 2)
+    gj = None
     if a.positions and rec.get("wp", {}).get("goals_json"):
         gj = Path(rec["wp"]["goals_json"])
         if not gj.exists() and a.round0_from:  # t07's run folders were renamed after the runs
@@ -485,6 +614,8 @@ def main():
         if gj.exists():
             rec["failing_goals"] = H.goal_positions(json.loads(gj.read_text()), standin, UNIT, headers_text())
             rec["positions"] = True
+    if a.context_note and gj is not None and gj.exists():
+        BASELINE_PASSED.update(g["goal"] for g in json.loads(gj.read_text()) if g.get("passed") and not g.get("smoke"))
     history.append(rec)
     (out / "history.json").write_text(json.dumps(history, indent=1))
     log(out, f"round 0 (no hints, before the counted loop): {rec['outcome']} in {rec['elapsed_min']} min")
@@ -503,20 +634,27 @@ def main():
             log(out, f"budget spent at {elapsed:.1f} min")
             break
         r += 1
+        tool_budget = a.budget_min - a.final_reserve_min - elapsed
         if a.resume_rounds and thread:
-            prompt = (f"Round {r} of at most {a.rounds}; minutes used so far: {elapsed:.1f} of {a.budget_min}.\n"
+            prompt = (f"Round {r} of at most {a.rounds}; minutes used so far: {elapsed:.1f} of {a.budget_min}"
+                      + (f"; in-call budget for this call {tool_budget:.0f} min" if a.tool else "") + ".\n"
                       + feedback_text(history, resumed=True)
                       + "\nReturn the COMPLETE hint set for this round in the same JSON format (it replaces the previous set).")
             log(out, f"round {r}: Codex call, resumed session ({len(prompt)} chars)")
-            c = codex_call(out, r, prompt, resume=thread, turn=0, keep_session=True)
+            c = codex_call(out, r, prompt, resume=thread, turn=0, keep_session=True,
+                           **tool_kw(out, r, 0, a, t0, standin))
         else:
             prompt = PROMPT.format(round=r, rounds=a.rounds, minutes=elapsed, budget=a.budget_min,
-                                   method_notes=method_notes(a), feedback=feedback_text(history),
+                                   method_notes=method_notes(a, tool_budget), feedback=feedback_text(history),
                                    files=workspace_files(standin))
             log(out, f"round {r}: Codex call ({len(prompt)} chars)")
-            c = codex_call(out, r, prompt, keep_session=keep)
+            c = codex_call(out, r, prompt, keep_session=keep, **tool_kw(out, r, 0, a, t0, standin))
+        if a.tool:
+            pick_tool_result(out, r, 0, c)
         rec = {"round": r, "started": now(), "codex": {k: c[k] for k in ("exit", "wall_s", "usage", "error")},
                "codex_notes": c.get("notes"), "hints": c["hints"], "turns": []}
+        if a.tool:
+            rec["tool"] = [c.get("tool")]
         turn = 0
         while True:
             chk = {}
@@ -535,12 +673,17 @@ def main():
                       + chk.get("parse_error", "")[-3000:] + "\n" + blame_text(chk) if chk.get("parse_error") else "")
                    + "\nReturn the COMPLETE corrected hint set in the same JSON format.")
             log(out, f"round {r}: repair turn {turn} ({chk.get('outcome')})")
-            c = codex_call(out, r, msg, resume=c["thread"], turn=turn, keep_session=True)
+            c = codex_call(out, r, msg, resume=c["thread"], turn=turn, keep_session=True,
+                           **tool_kw(out, r, turn, a, t0, standin))
+            if a.tool:
+                pick_tool_result(out, r, turn, c)
             for k, v in (c.get("usage") or {}).items():
                 rec["codex"]["usage"][k] = rec["codex"]["usage"].get(k, 0) + v
             rec["codex"]["wall_s"] = round(rec["codex"]["wall_s"] + c["wall_s"], 1)
             rec["hints"] = c["hints"]
             rec["codex_notes"] = c.get("notes")
+            if a.tool:
+                rec["tool"].append(c.get("tool"))
         thread = c.get("thread") or thread
         rec["codex_thread"] = thread
         rec["codex_calls"] = turn + 1
@@ -551,7 +694,7 @@ def main():
         elif budget_s(t0) / 60 >= a.budget_min:
             rec["outcome"] = "budget spent before the WP run"
         elif a.round_mode:
-            round_wp(out, r, standin, c["hints"], rec, d, a, t0)
+            round_wp(out, r, standin, c["hints"], rec, d, a, t0, proved_dir=c.get("proved_dir"))
             proven = rec.get("proven", False)
         else:
             wp_round(out, f"round-{r}", standin, c["hints"], rec, d=d,
