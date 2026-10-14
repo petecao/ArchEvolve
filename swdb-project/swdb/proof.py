@@ -14,6 +14,9 @@ map ticket 26 and ADR 0016. Format: docs/reference/format-v0.4-proof.md.
   is `contract_fixture` evidence only.
 - The adapter's log stays in a runs folder outside the repo, named by path and sha256. The
   job's scratch folder is never named by the record and is deleted when the job ends.
+- Ticket 11 (2026-10-14 ET): one call runs a batch (one job per script, or one skip); every record
+  pins the current method version (swdb.method_version); a failure class outside vocabulary
+  proof_failure_classes stops the batch; `validate_record` checks the class, skip reason and pin.
 - `proven_level` reads a candidate artifact's proven level from the records that count,
   computed on read and never stored (ADR 0016). This tracer checks only the code pin and the
   contract pin; ticket 10 adds every other pin kind and the versioned level rule.
@@ -71,8 +74,12 @@ class Verdict:
     assumptions: list = field(default_factory=list)
     counterexample: dict = None
     failure_class: str = None
+    unreplayed_counterexample: dict = None   # ticket 11: a reported counterexample that did not replay
 
     def __post_init__(self):
+        if self.unreplayed_counterexample and self.verdict != "not_proven":
+            raise AdapterError("a counterexample that does not replay is never a refutation: only a not-proven "
+                               "verdict carries an unreplayed counterexample")
         if self.verdict not in VERDICTS:
             raise AdapterError(f"verdict must be one of {', '.join(VERDICTS)}, not {self.verdict!r}")
         if (self.verdict == "refuted") != bool(self.counterexample):
@@ -106,7 +113,8 @@ class ScriptedAdapter:
         verdict = Verdict(verdict=self.script.get("verdict"), bounds=self.script.get("bounds"),
                           assumptions=list(self.script.get("assumptions") or []),
                           counterexample=self.script.get("counterexample"),
-                          failure_class=self.script.get("failure_class"))
+                          failure_class=self.script.get("failure_class"),
+                          unreplayed_counterexample=self.script.get("unreplayed_counterexample"))
         with open(job.log, "a", encoding="utf-8") as log:
             log.write(f"adapter: scripted\nscript: {self.source}\n"
                       f"unit: {job.unit.candidate} {job.unit.function}\n"
@@ -121,25 +129,32 @@ ADAPTERS = {"scripted": ScriptedAdapter}
 # --- swdb prove -----------------------------------------------------------------------
 
 def register_cli(commands):
-    sub = commands.add_parser("prove", help="run one proof job on one candidate proof unit; write one proof record",
-                              description="run one proof job on one candidate artifact's proof unit through a "
-                                          "verifier adapter and write one proof record (never changed)")
+    sub = commands.add_parser("prove", help="run a batch of proof jobs on one candidate proof unit; one proof record each",
+                              description="run a batch of proof jobs on one candidate artifact's proof unit through a "
+                                          "verifier adapter and write one proof record per job (never changed). A "
+                                          "failure class outside vocabulary proof_failure_classes stops the batch.")
     sub.add_argument("--records", type=Path, default=paths.RECORDS)
     sub.add_argument("--candidate", required=True, help="the candidate artifact")
     sub.add_argument("--function", required=True, help="the function that holds the rewrite site")
     sub.add_argument("--contract", help="the rewrite contract (default: the one its certification records name)")
     sub.add_argument("--adapter", choices=sorted(ADAPTERS), required=True)
-    sub.add_argument("--script", type=Path, help="scripted adapter: the verdict script")
+    sub.add_argument("--script", type=Path, action="append",
+                     help="scripted adapter: a verdict script; repeat it for a batch (one job per script, in order)")
+    sub.add_argument("--skip", metavar="REASON",
+                     help="run no verifier; record one skip with this skip reason (vocabulary proof_failure_classes)")
     sub.add_argument("--runs-dir", type=Path, required=True, help="runs folder outside the repo for the adapter log")
-    sub.add_argument("--batch", help="batch ID (default: a new one for this job)")
-    sub.add_argument("--position", type=int, default=1, help="position in the batch (default 1)")
-    sub.add_argument("--id", help="proof record ID (default: a new one)")
+    sub.add_argument("--batch", help="batch ID (default: a new one for this call)")
+    sub.add_argument("--position", type=int, default=1, help="position of the first job in the batch (default 1)")
+    sub.add_argument("--id", help="proof record ID of a one-job batch (default: a new one)")
     sub.add_argument("--format", choices=["yaml", "json"], default="yaml")
     sub.set_defaults(analytic_handler=prove)
 
 
 def prove(args):
-    from swdb import workflow, writer
+    """Run the batch (one job per --script, or one skip) and write one record per job, in order.
+
+    Output: {record, path} for a one-job batch, else {batch, jobs: [{record, path}, ...]}."""
+    from swdb import vocab
     from swdb.cli import _require_valid
     store = _require_valid(args.records)
     candidate = store.get(args.candidate, "candidate")
@@ -149,14 +164,40 @@ def prove(args):
     contract = args.contract or _certified_contract(store, args.candidate, library)
     if library is None or library.get(contract) is None:
         raise Failure(f"contract {contract!r} is not in the library beside {args.records}")
+    vocabs, _problems = vocab.load_all(paths.VOCAB)
+    if args.skip is not None and args.skip not in listed(vocabs, "skip_reason"):
+        raise UsageError(f"--skip {args.skip!r} is not a skip reason in vocabulary {FAILURE_VOCAB}")
+    scripts = [None] if args.skip is not None else (args.script or [None])
+    if args.id and len(scripts) > 1:
+        raise UsageError("--id names the record of a one-job batch only")
+    method = _current_method(args.records)
     runs = _outside_repo(args.runs_dir)
-    adapter = ADAPTERS[args.adapter](args.script)
-    rid = args.id or _new_id(args.candidate)
-    if store.get(rid) is not None:
-        raise Failure(f"ID {rid!r} is already used; nothing written")
     artifact = candidate.get("artifact") or {}
     unit = ProofUnit(args.candidate, args.function, artifact.get("path"), artifact.get("sha256"),
                      contract, library.content_sha256(contract))
+    pins = _pins(store, candidate, unit, (), method)
+    adapters = [None if args.skip is not None else ADAPTERS[args.adapter](script) for script in scripts]
+    batch = args.batch
+    done = []
+    for offset, adapter in enumerate(adapters):
+        rid = args.id or _new_id(args.candidate)
+        if store.get(rid) is not None:
+            raise Failure(f"ID {rid!r} is already used; nothing written")
+        batch = batch or f"batch.{rid}"
+        place = {"batch": batch, "position": args.position + offset}
+        if adapter is None:
+            record = _skip_record(rid, unit, pins, args.adapter, args.skip, place)
+        else:
+            record = _run_job(rid, unit, pins, adapter, runs, place, listed(vocabs, "failure_class"))
+        done.append({"record": record, "path": _write(args.records, record)})
+    return done[0] if len(done) == 1 else {"batch": batch, "jobs": done}
+
+
+def _run_job(rid, unit, pins, adapter, runs, place, failure_classes):
+    """Run one job through the adapter and return its record (not yet written).
+
+    A failure class outside the list stops the batch: no record for this job, and the message
+    names the class and the adapter's raw output by path (the log stays)."""
     run = runs / rid
     run.mkdir(parents=True, exist_ok=False)
     job = Job(unit=unit, summaries=(), scratch=run / "scratch", log=run / "adapter.log")
@@ -170,32 +211,68 @@ def prove(args):
     finally:
         shutil.rmtree(job.scratch, ignore_errors=True)     # never named; gone when the job ends
     wall, cpu = time.perf_counter() - wall, _cpu_seconds() - cpu
-    record = {"kind": "proof", "schema_version": "0.4", "id": rid, "status": "draft",
-              "created": writer.today(), "updated": writer.today(),
-              "provenance": [{"id": "prove", "kind": "agent_run",
-                              "description": f"Written by swdb prove with the {adapter.name} adapter.", "uri": None}],
-              "subject": {"kind": "candidate_proof_unit", "candidate": unit.candidate, "function": unit.function},
-              "verdict": verdict.verdict}
+    if verdict.failure_class and verdict.failure_class not in failure_classes:
+        raise Failure(f"adapter {adapter.name} reported failure class {verdict.failure_class!r}, which is not a "
+                      f"failure class in vocabulary {FAILURE_VOCAB}: the batch stops here (position "
+                      f"{place['position']}); no record was written for this job and no later job started. "
+                      f"Adapter output: {job.log}")
+    record = _head(rid, unit, f"Written by swdb prove with the {adapter.name} adapter.")
+    record["verdict"] = verdict.verdict
     if verdict.counterexample:
         record["counterexample"] = verdict.counterexample
     if verdict.failure_class:
         record["failure_class"] = verdict.failure_class
+    if verdict.unreplayed_counterexample:
+        record["unreplayed_counterexample"] = verdict.unreplayed_counterexample
     record.update(
-        pins=_pins(store, candidate, unit, job.summaries),
-        bounds=verdict.bounds, assumptions=verdict.assumptions,
+        pins=pins, bounds=verdict.bounds, assumptions=verdict.assumptions,
         job={"adapter": adapter.name, "host": _host(), "worker_core": _worker_core(),
              "wall_seconds": round(wall, 6), "cpu_seconds": round(cpu, 6), "batch_load": round(load, 3),
-             "peak_rss_bytes": _peak_rss_bytes(), "batch": args.batch or f"batch.{rid}",
-             "position": args.position},
+             "peak_rss_bytes": _peak_rss_bytes(), **place},
         evidence={"adapter_log": {"path": str(job.log), "sha256": _sha256(job.log)}},
         evidence_kind="contract_fixture")
+    return record
+
+
+def _skip_record(rid, unit, pins, adapter_name, reason, place):
+    """A skip: no verifier runs; the record has its reason and no verdict, bounds, assumptions or log."""
+    record = _head(rid, unit, f"Written by swdb prove: skipped ({reason}); no verifier ran.")
+    record.update(skip_reason=reason, pins=pins,
+                  job={"adapter": adapter_name, "host": _host(), "worker_core": _worker_core(),
+                       "wall_seconds": 0.0, "cpu_seconds": 0.0, "batch_load": round(os.getloadavg()[0], 3),
+                       "peak_rss_bytes": _peak_rss_bytes(), **place},
+                  evidence_kind="contract_fixture")
+    return record
+
+
+def _head(rid, unit, description):
+    from swdb import writer
+    return {"kind": "proof", "schema_version": "0.4", "id": rid, "status": "draft",
+            "created": writer.today(), "updated": writer.today(),
+            "provenance": [{"id": "prove", "kind": "agent_run", "description": description, "uri": None}],
+            "subject": {"kind": "candidate_proof_unit", "candidate": unit.candidate, "function": unit.function}}
+
+
+def _write(records, record):
+    from swdb import workflow, writer
     for key, value in workflow.CREATION_TAGS.items():
         record[key] = value
-    written = writer.commit(args.records, new=[record])[0]
-    return {"record": record, "path": written}
+    return writer.commit(records, new=[record])[0]
 
 
-def _pins(store, candidate, unit, summaries):
+def _current_method(records):
+    """The current method version beside the records folder; `swdb prove` refuses to run without one."""
+    from swdb import method_version
+    from swdb.library import default_root
+    root = default_root(records)
+    found = method_version.current(root)
+    if found is None:
+        raise Failure(f"no method-version file in {root / method_version.FOLDER}: every proof record pins one")
+    return found
+
+
+def _pins(store, candidate, unit, summaries, method):
+    from swdb import method_version
     snapshot = store.get(candidate.get("source_snapshot") or "", "source_snapshot") or {}
     baseline = (snapshot.get("artifact") or {}).get("sha256")
     return {
@@ -205,7 +282,7 @@ def _pins(store, candidate, unit, summaries):
                               {"not_applicable": "The candidate artifact names no source snapshot to pin."}),
         "reference_semantics": {"not_applicable": "No reference-semantics definition is pinned before ticket 30."},
         "proof_semantics": {"not_applicable": "No proof-semantics version exists before ticket 27."},
-        "method_version": {"not_applicable": "No method-version file exists before ticket 11."},
+        "method_version": method_version.pin(method),
         "summaries": [dict(pin) for pin in summaries],
         "minimum_bounds": {"not_applicable": "No minimum-bounds version exists before ticket 33."},
         "predecessor_snapshot": {"not_applicable": "This proof unit has no proven predecessor."},
@@ -270,6 +347,32 @@ def _peak_rss_bytes():
 
 def _sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+# --- swdb validate: the rules the schema cannot express (ticket 11) -----------------------
+
+FAILURE_VOCAB = "proof_failure_classes"
+
+
+def listed(vocabs, role):
+    """The values of the failure-class vocabulary with this role (`failure_class` or `skip_reason`)."""
+    return {value for value, entry in vocabs.entries.get(FAILURE_VOCAB, {}).items() if entry.get("role") == role}
+
+
+def validate_record(record, ctx):
+    """A proof record's failure class and skip reason come from their role in the one list."""
+    from swdb.problems import Problem
+    data = record.data
+    for field_name in ("failure_class", "skip_reason"):
+        value = data.get(field_name)
+        if value is not None and value not in listed(ctx.vocabs, field_name):
+            yield Problem(record.rel, field_name,
+                          f"{value!r} is not a {field_name.replace('_', ' ')} in vocabulary {FAILURE_VOCAB}")
+    from swdb import method_version
+    from swdb.library import default_root
+    problem = method_version.pin_problem((data.get("pins") or {}).get("method_version"), default_root(ctx.records_dir))
+    if problem:
+        yield Problem(record.rel, "pins.method_version", problem)
 
 
 # --- proven level, computed on read ------------------------------------------------------

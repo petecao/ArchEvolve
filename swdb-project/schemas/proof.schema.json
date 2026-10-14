@@ -47,15 +47,25 @@
       "description": "Optional proof route of a candidate proof unit (map spec, \"Proof routes\"). 61 fills bounded_direct; 62 fills route_1 and route_3 and makes it required."
     },
     "verdict": {"type": "string", "enum": ["proven", "refuted", "not_proven"]},
+    "skip_reason": {
+      "type": "string",
+      "x-vocab": "proof_failure_classes",
+      "description": "A skip: no verifier ran, for this reason (a value of vocabulary proof_failure_classes whose role is skip_reason; ticket 11). A skip record has no verdict, bounds, assumptions or adapter log; the level rule ignores it."
+    },
     "counterexample": {
       "type": "object",
       "minProperties": 1,
       "description": "A refuted verdict's counterexample, inline (small; needed for replay and repair)."
     },
+    "unreplayed_counterexample": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "Not proven only, optional (ticket 11, from ticket 05's SAW spike): a counterexample the verifier reported that did not replay concretely on the compiled code, so it is a tool or encoding failure, never a refutation, and never reaches repair."
+    },
     "failure_class": {
       "type": "string",
-      "minLength": 1,
-      "description": "Why a not-proven verdict was not proven. Ticket 04 checks presence only; ticket 11 adds the vocabulary it must come from."
+      "x-vocab": "proof_failure_classes",
+      "description": "Why a not-proven verdict was not proven: a value of vocabulary proof_failure_classes whose role is failure_class (ticket 11; the role is checked in swdb.proof.validate_record)."
     },
     "pins": {
       "type": "object",
@@ -162,8 +172,33 @@
       "x-reason": "only the scripted adapter writes proof records so far, and its records are contract_fixture evidence"
     }
   },
-  "required": ["subject", "verdict", "pins", "bounds", "assumptions", "job", "evidence", "evidence_kind"],
+  "required": ["subject", "pins", "job", "evidence_kind"],
   "allOf": [
+    {
+      "if": {"required": ["skip_reason"]},
+      "then": {
+        "properties": {
+          "verdict": {"not": {}, "x-reason": "a skip record carries no verdict (no verifier ran)"},
+          "bounds": {"not": {}, "x-reason": "a skip record carries no bounds (no verifier ran)"},
+          "assumptions": {"not": {}, "x-reason": "a skip record carries no assumption set (no verifier ran)"},
+          "evidence": {"not": {}, "x-reason": "a skip record names no adapter log (no verifier ran)"}
+        }
+      },
+      "else": {
+        "required": ["verdict", "bounds", "assumptions", "evidence"],
+        "x-required-reasons": {
+          "verdict": "a proof record that is not a skip states its verdict",
+          "bounds": "a proof record that is not a skip states its bounds",
+          "assumptions": "a proof record that is not a skip states its assumption set (an empty list when none)",
+          "evidence": "a proof record that is not a skip names its adapter log"
+        }
+      }
+    },
+    {
+      "if": {"properties": {"verdict": {"const": "not_proven"}}, "required": ["verdict"]},
+      "else": {"properties": {"unreplayed_counterexample": {"not": {},
+        "x-reason": "only a not-proven record holds an unreplayed counterexample"}}}
+    },
     {
       "if": {"properties": {"verdict": {"const": "refuted"}}, "required": ["verdict"]},
       "then": {"required": ["counterexample"], "x-required-reasons": {"counterexample": "a refuted record holds its counterexample inline"}},

@@ -843,11 +843,12 @@ _Insert.attribution = staticmethod(_insert_attribution)
 # extension only; nothing enters a LANL core table. One row per record, plus its content-hash set
 # (one row per single pin, summary or build constant), assumption set and bounds. A pin that does
 # not apply has NULL ref and sha256 and its sentence in not_applicable. Unbounded is NULL value with
-# unbounded = 1. Documented in docs/reference/database.md.
+# unbounded = 1. Ticket 11 (2026-10-14 ET): a skip record has NULL verdict, log_path and log_sha256,
+# its skip_reason, and no bounds or assumption rows. Documented in docs/reference/database.md.
 SCHEMA += """
 CREATE TABLE swdb_proofs (id TEXT PRIMARY KEY, subject_kind TEXT NOT NULL, subject_id TEXT, candidate TEXT,
-    function TEXT, verdict TEXT NOT NULL, route TEXT, failure_class TEXT, has_counterexample INTEGER NOT NULL,
-    evidence_kind TEXT NOT NULL, adapter TEXT, host TEXT, log_path TEXT NOT NULL, log_sha256 TEXT NOT NULL,
+    function TEXT, verdict TEXT, route TEXT, failure_class TEXT, skip_reason TEXT, has_counterexample INTEGER NOT NULL,
+    evidence_kind TEXT NOT NULL, adapter TEXT, host TEXT, log_path TEXT, log_sha256 TEXT,
     json TEXT NOT NULL);
 CREATE TABLE swdb_proof_pins (proof TEXT NOT NULL, kind TEXT NOT NULL, position INTEGER NOT NULL, ref TEXT,
     sha256 TEXT, function TEXT, proof_record TEXT, value TEXT, not_applicable TEXT,
@@ -860,11 +861,11 @@ CREATE TABLE swdb_proof_bounds (proof TEXT NOT NULL, dimension TEXT NOT NULL, va
 
 
 def _insert_proof(con, d, *_):
-    subject, job, log = d["subject"], d.get("job") or {}, d["evidence"]["adapter_log"]
-    con.execute("INSERT INTO swdb_proofs VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+    subject, job, log = d["subject"], d.get("job") or {}, (d.get("evidence") or {}).get("adapter_log") or {}
+    con.execute("INSERT INTO swdb_proofs VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                 (d["id"], subject["kind"], subject.get("id"), subject.get("candidate"), subject.get("function"),
-                 d["verdict"], d.get("route"), d.get("failure_class"), int("counterexample" in d),
-                 d["evidence_kind"], job.get("adapter"), job.get("host"), log["path"], log["sha256"], json.dumps(d)))
+                 d.get("verdict"), d.get("route"), d.get("failure_class"), d.get("skip_reason"), int("counterexample" in d),
+                 d["evidence_kind"], job.get("adapter"), job.get("host"), log.get("path"), log.get("sha256"), json.dumps(d)))
     pins = []
     for kind, pin in d["pins"].items():
         if kind == "summaries":
@@ -879,10 +880,10 @@ def _insert_proof(con, d, *_):
     con.executemany("INSERT INTO swdb_proof_pins VALUES (?,?,?,?,?,?,?,?,?)", pins)
     con.executemany("INSERT INTO swdb_proof_assumptions VALUES (?,?,?,?,?,?)",
                     [(d["id"], i, a["kind"], a["reference"]["id"], a["reference"]["sha256"], a["sentence"])
-                     for i, a in enumerate(d["assumptions"])])
+                     for i, a in enumerate(d.get("assumptions") or [])])
     con.executemany("INSERT INTO swdb_proof_bounds VALUES (?,?,?,?)",
                     [(d["id"], name, None if value == "unbounded" else value, int(value == "unbounded"))
-                     for name, value in d["bounds"].items()])
+                     for name, value in (d.get("bounds") or {}).items()])
 
 
 _Insert.proof = staticmethod(_insert_proof)

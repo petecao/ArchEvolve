@@ -1,6 +1,6 @@
 # The SQLite database
 
-Updated: 2026-10-14 ET: proof-record tables (Probata proof of concept ticket 04).
+Updated: 2026-10-14 ET: proof-record tables (Probata proof of concept ticket 04); skip records and `skip_reason` (ticket 11).
 2026-10-12 00:36 ET: attribution final review fixes (headroom reasons point to one list,
 split-check rule v2 and its estimated share). 2026-10-11 23:28 ET: measured native evaluation timings of an implementation feed
 `performance_runs` (LANL-shaped-db follow-up ticket 03). 2026-10-11 23:24 ET: attribution tables
@@ -1176,15 +1176,16 @@ One row per proof record.
 | `subject_id` | the subject's `id` (NULL for a candidate proof unit) |
 | `candidate` | candidate proof unit: the candidate artifact (else NULL) |
 | `function` | candidate proof unit: the function that holds the rewrite site (else NULL) |
-| `verdict` | `proven`, `refuted` or `not_proven` |
+| `verdict` | `proven`, `refuted` or `not_proven`; NULL for a skip record (ticket 11) |
 | `route` | `route_1`, `route_3`, `bounded_direct`, or NULL when the record names none |
-| `failure_class` | a not-proven record's failure class (else NULL) |
+| `failure_class` | a not-proven record's failure class (vocabulary `proof_failure_classes`, role `failure_class`; else NULL) |
+| `skip_reason` | a skip record's skip reason (vocabulary `proof_failure_classes`, role `skip_reason`; else NULL) |
 | `has_counterexample` | 1 when the record holds a counterexample inline (refuted), else 0 |
 | `evidence_kind` | `contract_fixture` (the scripted adapter) |
 | `adapter` | the job block's adapter |
 | `host` | the job block's host (`mac` on the Mac) |
-| `log_path` | the adapter log's path on the run host |
-| `log_sha256` | the adapter log's sha256 |
+| `log_path` | the adapter log's path on the run host; NULL for a skip record (no adapter ran) |
+| `log_sha256` | the adapter log's sha256; NULL for a skip record |
 | `json` | the full record |
 
 ### `swdb_proof_pins`
@@ -1218,7 +1219,8 @@ The assumption set: one row per entry.
 
 ### `swdb_proof_bounds`
 
-One row per bound dimension; `threads` is always present.
+One row per bound dimension; `threads` is always present (a skip record has no rows here and none in
+`swdb_proof_assumptions`).
 
 | Column | Meaning |
 |---|---|
