@@ -120,7 +120,9 @@
         "c_lowering": {"$ref": "#/$defs/pin",
                        "description": "Ticket 21: the C lowering the verifier ran on, {id: <function>.c, sha256 of its text}. Optional: only adapters that run on a C lowering write it."},
         "translator": {"$ref": "#/$defs/pin",
-                       "description": "Ticket 22: the formal-half translator the verifier's input came from, {id: <tool>-<version>, sha256 of the translator's source} (the CBMC translator). Optional: only adapters with a translator write it."}
+                       "description": "Ticket 22: the formal-half translator the verifier's input came from, {id: <tool>-<version>, sha256 of the translator's source} (the CBMC translator). Optional: only adapters with a translator write it."},
+        "baseline_c_lowering": {"$ref": "#/$defs/pin",
+                                "description": "Ticket 61: whole-function equivalence: the baseline function's C lowering in the product program, {id: <function>.c, sha256 of its text}. Optional: only whole-function jobs write it."}
       }
     },
     "bounds": {
@@ -313,6 +315,16 @@
       "then": {
         "properties": {"subject": {"properties": {"kind": {"const": "candidate_proof_unit",
           "x-reason": "only a candidate proof unit carries a proof route"}}}}
+      }
+    },
+    {
+      "if": {"properties": {"route": {"const": "bounded_direct"}}, "required": ["route"]},
+      "then": {
+        "properties": {"bounds": {
+          "properties": {"threads": {"const": 1,
+            "x-reason": "a bounded_direct record is capped at proven within bounds, threads = 1 (ticket 61; map 24 item 1): its thread count is 1"}},
+          "additionalProperties": {"type": "integer",
+            "x-reason": "a bounded_direct record is capped at proven within bounds (ticket 61; map 24 item 1): no dimension is unbounded"}}}
       }
     }
   ],

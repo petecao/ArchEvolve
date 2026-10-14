@@ -27,6 +27,8 @@ map ticket 26 and ADR 0016. Format: docs/reference/format-v0.4-proof.md.
   may pin the minimum-bounds derivation it ran at (`--minimum-bounds`).
 - Ticket 22 (2026-10-14 ET): `--summary ENTRY` proves a library entry's summary (subject library_summary); the
   cbmc adapter (swdb.cbmc_adapter) registers itself in ADAPTERS.
+- Ticket 61 (2026-10-14 ET): `--whole-function bounded_direct|no_contract_baseline` runs whole-function equivalence
+  (swdb.cbmc_equivalence) and writes `route: bounded_direct`; the no-contract baseline's contract pin is not applicable.
 - Levels are computed on read by the versioned level rule (`swdb.level_rule`, ticket 10), which
   replaced this tracer's code-and-contract-pin rule; nothing here stores a level (ADR 0016).
 """
@@ -208,7 +210,18 @@ def register_cli(commands):
     real.add_argument("--define", action="append", default=[], help="wp, cbmc: a build constant NAME or NAME=VALUE "
                                                                     "for the C lowering (repeatable; pinned as "
                                                                     "build_constants)")
-    from swdb import archevolve_proof      # Probata PoC 18: ArchEvolve mode's whole proof path
+    whole = sub.add_argument_group("whole-function equivalence (ticket 61): cbmc on a product program of the candidate's "
+                                   "function and the baseline's; the record's route is bounded_direct")
+    whole.add_argument("--whole-function", choices=["bounded_direct", "no_contract_baseline"],
+                       help="bounded_direct: a proof unit with no unit postcondition (contract with relational_template); "
+                            "no_contract_baseline: the evaluation's baseline, never a level")
+    whole.add_argument("--baseline-candidate", help="compare against this candidate artifact's function (default: the "
+                                                    "candidate's source snapshot)")
+    whole.add_argument("--borrowed-bounds", metavar="RECORD", help="no_contract_baseline: run at this minimum-bounds "
+                                                                   "derivation record's bounds, labeled borrowed")
+    whole.add_argument("--unwindset", action="append", default=[], metavar="SIDE:LOOP=K",
+                       help="a per-loop unwinding bound for one copy, e.g. candidate:f.0=7 (repeatable)")
+    from swdb import archevolve_proof     # Probata PoC 18: ArchEvolve mode's whole proof path
     archevolve_proof.register_options(sub)
     sub.add_argument("--format", choices=["yaml", "json"], default="yaml")
     sub.set_defaults(analytic_handler=prove)
@@ -233,9 +246,17 @@ def prove(args):
     if candidate is None:
         raise Failure(f"candidate {args.candidate!r} does not exist")
     library = _library(store)
-    contract = args.contract or _certified_contract(store, args.candidate, library)
-    if library is None or library.get(contract) is None:
-        raise Failure(f"contract {contract!r} is not in the library beside {args.records}")
+    whole = getattr(args, "whole_function", None)
+    if whole:                                     # ticket 61: whole-function equivalence (route bounded_direct)
+        from swdb import cbmc_equivalence
+        if args.adapter != "cbmc" or args.skip is not None:
+            raise UsageError("--whole-function runs the cbmc adapter (no --skip)")
+        contract = cbmc_equivalence.contract(args, store, library,
+                                             lambda: _certified_contract(store, args.candidate, library))
+    else:
+        contract = args.contract or _certified_contract(store, args.candidate, library)
+        if library is None or library.get(contract) is None:
+            raise Failure(f"contract {contract!r} is not in the library beside {args.records}")
     vocabs, _problems = vocab.load_all(paths.VOCAB)
     if args.skip is not None and args.skip not in listed(vocabs, "skip_reason"):
         raise UsageError(f"--skip {args.skip!r} is not a skip reason in vocabulary {FAILURE_VOCAB}")
@@ -247,8 +268,10 @@ def prove(args):
     runs = _outside_repo(args.runs_dir)
     artifact = candidate.get("artifact") or {}
     unit = ProofUnit(args.candidate, args.function, artifact.get("path"), artifact.get("sha256"),
-                     contract, library.content_sha256(contract))
+                     contract, library.content_sha256(contract) if contract else None)
     pins = _pins(store, candidate, unit, (), method)
+    if whole:
+        pins.update(cbmc_equivalence.prepare(args, store, candidate, args.function))
     if getattr(args, "minimum_bounds", None):
         pins["minimum_bounds"] = _minimum_pin(store, args.minimum_bounds, unit)
     if getattr(args, "define", None):
@@ -268,6 +291,8 @@ def prove(args):
         else:
             record = _run_job(rid, unit, pins, adapter, runs, place, listed(vocabs, "failure_class"), method,
                               bounds=getattr(args, "bounds", None), budget_minutes=getattr(args, "budget_minutes", None))
+        if whole:
+            record["route"] = cbmc_equivalence.ROUTE
         record.update(run_fields)
         done.append({"record": record, "path": _write(args.records, record)})
     return done[0] if len(done) == 1 else {"batch": batch, "jobs": done}

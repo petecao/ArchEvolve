@@ -3,6 +3,10 @@
 Created: 2026-10-14 02:15 ET, Probata proof of concept ticket 10. Updated: 2026-10-14 ET, part names
 pinned in vocabulary `proof_part_names`.
 Updated: 2026-10-14 02:57 ET, ticket 12: `promotion` shows the approved level snapshot beside the level now.
+Updated: 2026-10-14 17:25 ET, ticket 61: no-contract-baseline records are measurements (`baseline_measurements`),
+a `bounded_direct` record above threads = 1 within bounds never counts, and a `baseline_function` pin may name a
+candidate artifact. No level that an earlier record gives changes, so the version stays `level-rule.1` (open point
+for the main session: the versioning rule below, read strictly, asks for `level-rule.2`).
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/10-level-rule.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("Records and levels", S11, S14, O1, O6, O7), map 26,
 [ADR 0016](../adr/0016-proof-records-never-change-level-computed-on-read.md). Code: `swdb/level_rule.py`.
@@ -46,7 +50,7 @@ records whose `contract` pin names that contract.
 |---|---|
 | `code` | a candidate artifact's `artifact.sha256`; otherwise a library entry's content sha256 |
 | `contract` | the contract's library content sha256 |
-| `baseline_function` | the pinned source snapshot record's `artifact.sha256` |
+| `baseline_function` | the pinned source snapshot record's `artifact.sha256` (ticket 61: or the pinned candidate artifact's, a whole-function baseline) |
 | `reference_semantics` | the pinned library entry's content sha256 |
 | `proof_semantics` | the file sha256 of the pinned version, only while it is the current version of its line in `library/proof_semantics/` (highest `sequence` per `target`) |
 | `method_version` | the file sha256 of the current method version (`swdb.method_version.current`); an older version never matches |
@@ -113,6 +117,7 @@ The existing fields keep their meaning (`candidate`, `certifications`, `counted`
 | `below_minimum` | `{record, text: "bounded check below minimum", dimensions}` |
 | `direct_proofs` | O1: counting records whose contract is not one the candidate is certified for: `{record, text: "direct proof, no matching contract: <verdict>"}` |
 | `skipped` | skip records: `{record, skip_reason}`. A skip sets no level and blocks none (O7) |
+| `baseline_measurements` | ticket 61: no-contract-baseline records (`route: bounded_direct`, contract pin not applicable): `{record, verdict, bounds}`. They set no level, never set the refuted flag, and are left out of every other list here. A `bounded_direct` record whose bounds read above proven within bounds, threads = 1 never counts (`stale_proofs`, pin `route`) |
 | `refuted` | `{flag, records: [{record, replay_label}], evidence: null, "unit-level refutation" or "bug", reproductions}` |
 | `snapshot` | `{level, at: "YYYY-MM-DD HH:MM ET", level_rule, records}`: the dated form campaign summaries, handoffs and promotion reviews store (`swdb.level_rule.snapshot`) |
 | `promotion` | null, or the current promotion `{review, attribution}`; a review written by `swdb promote` since ticket 12 adds `level_snapshot` (what Yan-Ru approved, never recomputed), `proof_records` (those that counted at promotion) and `dropped` (true when `level` now ranks below the snapshot's level, for example after a pinned proof-semantics version is superseded) |
