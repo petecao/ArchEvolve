@@ -526,6 +526,10 @@ def _validate(records_dir, library_root=None, crosswalk=None):
         result.problems.extend(validate_crosswalk(crosswalk))
     for problem in result.problems:
         print(problem, file=sys.stderr)
+    frame = result.frame
+    # Probata PoC 20: a formal half Frama-C could not check is reported as unchecked, never as valid.
+    for note in frame.unchecked if frame else []:
+        print(f"UNCHECKED: {note}", file=sys.stderr)
     if result.problems:
         files = len({problem.file for problem in result.problems})
         print(
@@ -534,6 +538,10 @@ def _validate(records_dir, library_root=None, crosswalk=None):
         )
         return 1
     suffix = "; crosswalk valid" if crosswalk is not None else ""
+    if frame and frame.checked:
+        suffix += f"; {frame.checked} acsl field(s) type-checked by Frama-C {frame.framac_version}"
+    if frame and frame.unchecked:
+        suffix += f"; {len(frame.unchecked)} acsl field(s) unchecked (no usable Frama-C 33.0)"
     print(f"OK: {result.count} record(s) valid{suffix}")
     return 0
 

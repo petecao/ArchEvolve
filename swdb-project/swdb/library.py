@@ -22,10 +22,12 @@ from pathlib import Path
 from swdb import artifacts, paths, yamlio
 from swdb.problems import Problem
 
+# Probata PoC ticket 20 (2026-10-14 ET): proof-semantics entries (the formal-half frame, swdb.formal_frame).
 KINDS = {'intrinsic': 'intrinsics', 'lowering': 'lowerings',
-         'library_operation': 'library_operations', 'rewrite_contract': 'rewrite_contracts'}
+         'library_operation': 'library_operations', 'rewrite_contract': 'rewrite_contracts',
+         'proof_semantics': 'proof_semantics'}
 PREFIXES = {'intrinsic': 'intrinsic.', 'lowering': 'lowering.',
-            'library_operation': 'operation.', 'rewrite_contract': 'contract.'}
+            'library_operation': 'operation.', 'rewrite_contract': 'contract.', 'proof_semantics': 'semantics.'}
 TEST_MODES = {'runtime_guard', 'static_assertion', 'structural', 'differential_test'}
 DISCHARGE_MODES = TEST_MODES | {'observed_on_target', 'assumed', 'not_applicable', 'open'}
 ROLES = {'precondition', 'postcondition', 'frame', 'legality', 'preservation'}
@@ -224,6 +226,7 @@ class Library:
         self.entries = {}
         self.files = {}
         self.problems = []
+        self.frame = None   # swdb.formal_frame.Report of the last validate()
         for folder in KINDS.values():
             for path in sorted((self.root / folder).rglob('*.yaml')):
                 try:
@@ -337,6 +340,7 @@ class Library:
                 'lowering': ('intrinsic','interface','location','code_sha256','build_defines','differential_test'),
                 'library_operation': ('signature','intent','location','code_sha256','reference_semantics','uses_intrinsics','differential_test'),
                 'rewrite_contract': ('pattern_key','strategies','uses_intrinsics','uses_library_operations','runtime_guards','knobs','preservation_obligations','correctness_check','execution_witness','negative_controls','requirement_map'),
+                'proof_semantics': ('formal_frame', 'version', 'rules'),
             }[kind]
             for field in ('id','kind','provenance','clauses', *required):
                 if field not in data:
@@ -393,6 +397,9 @@ class Library:
                     error(where, 'assumed clauses require owner and evidence')
                 formal = clause.get('formal')
                 if formal is None:
+                    # Ticket 20: an ACSL formal half (`acsl`, checked by swdb.formal_frame) is a formal half.
+                    if 'acsl' in clause and 'formal_label' not in clause:
+                        continue
                     if not clause.get('natural_language_only'):
                         error(where+'.formal', 'a clause without a formal half states why')
                     if 'formal_label' in clause:
@@ -501,6 +508,10 @@ class Library:
                     allowed = allowed or (isinstance(bounds,dict) and default == 'build.tile_size' and bounds.get('upper_bound') == 'build.tile_size')
                     if not allowed:
                         error('knobs', 'default is outside its allowed range')
+        # Ticket 20 (2026-10-14 ET): the formal-half frame and the logic library (swdb.formal_frame).
+        from swdb import formal_frame
+        self.frame = formal_frame.check(self)
+        found.extend(self.frame.problems)
         return found
 
     def state(self, entry_id, store=None):

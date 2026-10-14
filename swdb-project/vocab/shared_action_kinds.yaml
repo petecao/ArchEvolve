@@ -1,0 +1,17 @@
+# Created: 2026-10-14 ET (Probata proof of concept ticket 20; kinds decided in formal-verification map 15 item 5
+# and 16 item 4). A rewrite contract's concurrency frame names, per interface array, which of these its code
+# may use. Each kind has a commutativity lemma proven once in WP and one Rocq constructor; ticket 44's script
+# checks that the three lists agree. A new kind bumps the method version.
+name: shared_action_kinds
+description: The fixed kinds of step through which the threads of a parallel region may change memory they share.
+values:
+  - value: claim
+    meaning: A write-once compare-and-swap that claims an unclaimed location; a failed claim leaves it unchanged.
+  - value: min_update
+    meaning: An atomic update that lowers a location to the minimum of its value and the new value.
+  - value: atomic_add_or
+    meaning: An atomic add or bitwise OR into a location.
+  - value: openmp_reduction
+    meaning: An OpenMP reduction; each thread's private part is combined at the end of the region.
+  - value: queue_reserve
+    meaning: An atomic fetch-and-add on a queue tail that reserves slots the reserving thread then fills alone.

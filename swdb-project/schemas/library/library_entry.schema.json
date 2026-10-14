@@ -2,12 +2,12 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "library_entry.schema.json",
   "title": "Typed library entry",
-  "description": "Created 2026-10-03 ET (ticket 46). Shape of one normative typed-library YAML entry (ADR 0007): intrinsic, lowering, library operation or rewrite contract. Evidence state (tier, status, certification) is derived from records and never appears here. swdb.library checks pins, references and clause semantics after this shape.",
+  "description": "Created 2026-10-03 ET (ticket 46). Shape of one normative typed-library YAML entry (ADR 0007): intrinsic, lowering, library operation or rewrite contract. Evidence state (tier, status, certification) is derived from records and never appears here. swdb.library checks pins, references and clause semantics after this shape. Updated 2026-10-14 ET (Probata PoC ticket 20): proof_semantics entries and the formal-half frame fields; swdb.formal_frame checks their content (docs/reference/format-v0.4-formal-frame.md).",
   "type": "object",
   "required": ["id", "kind", "provenance", "clauses"],
   "properties": {
     "id": {"type": "string", "minLength": 1},
-    "kind": {"enum": ["intrinsic", "lowering", "library_operation", "rewrite_contract"]},
+    "kind": {"enum": ["intrinsic", "lowering", "library_operation", "rewrite_contract", "proof_semantics"]},
     "provenance": {"type": "object"},
     "clauses": {"type": "array", "items": {"$ref": "#/$defs/clause"}},
     "intrinsic_record": {"$ref": "#/$defs/text"},
@@ -34,7 +34,14 @@
     "knobs": {"$ref": "#/$defs/mappings"},
     "negative_controls": {"$ref": "#/$defs/mappings"},
     "requirement_map": {"$ref": "#/$defs/mappings"},
-    "pattern_key": {"type": "array", "items": {"$ref": "#/$defs/pattern"}}
+    "pattern_key": {"type": "array", "items": {"$ref": "#/$defs/pattern"}},
+    "formal_frame": {"const": 1},
+    "version": {"type": "string", "minLength": 1},
+    "proof_unit": {"type": "object"},
+    "concurrency_frame": {"$ref": "#/$defs/mappings"},
+    "contract_role": {"enum": ["offload_only", "enabling"]},
+    "required_enabling_contracts": {"$ref": "#/$defs/mappings"},
+    "rules": {"$ref": "#/$defs/mappings"}
   },
   "allOf": [
     {"if": {"properties": {"kind": {"const": "intrinsic"}}},
@@ -48,7 +55,9 @@
     {"if": {"properties": {"kind": {"const": "rewrite_contract"}}},
      "then": {"required": ["pattern_key", "strategies", "uses_intrinsics", "uses_library_operations", "runtime_guards",
                            "knobs", "preservation_obligations", "correctness_check", "execution_witness",
-                           "negative_controls", "requirement_map"]}}
+                           "negative_controls", "requirement_map"]}},
+    {"if": {"properties": {"kind": {"const": "proof_semantics"}}},
+     "then": {"required": ["formal_frame", "version", "rules"]}}
   ],
   "$defs": {
     "text": {"type": "string", "minLength": 1},
@@ -63,7 +72,9 @@
         "statement": {"type": "string", "minLength": 1},
         "discharge_mode": {"type": "string"},
         "negative_control": {"type": "object"},
-        "formal": {"type": ["object", "null"]}
+        "formal": {"type": ["object", "null"]},
+        "acsl": {"type": "object"},
+        "proof_placement": {"type": ["string", "object"]}
       }
     },
     "pattern": {

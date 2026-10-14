@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 04, 10, 11, 20
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Modules": proof command, verifier adapters, C lowering tool; "Verifier lineup and order": unbounded verifier, solver portfolio, pinned versions, failure classes; "Proof-hint loop": anchors, frozen flags, verdict reading; "Records and levels": where evidence lives; "Testing Decisions", seam 1; choices S1 and S3); decisions: [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) items 1, 3, 8, 9, 10; [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md) items 4, 6, 7; [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md) items 3, 6; also [26](../../formal-verification-2026-10-09/issues/26-proof-records.md) item 5 (where evidence lives)
 **Time estimate:** about 3 days
