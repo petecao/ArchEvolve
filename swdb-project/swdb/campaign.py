@@ -29,6 +29,12 @@ answer every per-target question (pilot, shared baseline, evidence basis, campai
 the loop has no target-string switches; the contract-fixture adapter is a `TargetAdapter` in
 `swdb.campaign_fixture` (F13). Knob ranges are checked by `swdb.library.knob_problem`.
 
+Probata PoC 19 (2026-10-14 ET): a certified candidate artifact whose every contract is an enabling contract
+becomes a derived implementation (`swdb.derived`). A campaign file may list `derived_starts`; then the
+rewrite role names a `start` (one of them, or null for the base source), the candidate artifact is built on
+that derived implementation's snapshot and certified against it, and speed is still compared against the
+root baseline roles (ADR 0005).
+
 Updated 2026-10-09 23:25 ET (D35, decided by Yan-Ru 2026-10-09 22:33 ET): `swdb campaign` refuses
 to start a new campaign on a real target unless its file names a passing numeric pairing check
 (`require_numeric_pairing_check`). The contract-fixture adapter and resumed campaigns are unaffected.
@@ -444,12 +450,15 @@ def select(candidates):
 
 # --- provider roles ------------------------------------------------------------------------
 
-def _roles():
+def _roles(starts=False):
+    """The provider roles. With `starts` (the campaign lists derived starts, Probata PoC 19) the rewrite
+    role also names its `start`: a listed derived implementation, or null for the base source."""
     from swdb import provider_roles
+    start = {"start": {"type": ["string", "null"]}} if starts else {}
     rewrite = provider_roles.Role("extensa_rewriting", {
         "type": "object", "additionalProperties": False,
-        "required": ["patch", "contracts", "knobs", "unresolved"],
-        "properties": {"patch": {"type": "string"},
+        "required": ["patch", "contracts", "knobs", "unresolved", *start],
+        "properties": {**start, "patch": {"type": "string"},
                        "contracts": {"type": "array", "items": {"type": "string"}},
                        # 2026-10-04 ET (ticket 57, campaign a1): strict structured output needs a fixed
                        # object shape, so knob assignments are a list of {class, name, value} rows.
@@ -517,6 +526,11 @@ def rewrite_prompt(campaign_id, iteration, classes, files):
         history.append(" " + ", ".join(f"`{f}`" for f in best) + " hold this campaign's current per-class best patches.")
     if "FEEDBACK.json" in files:
         history.append(" `FEEDBACK.json` holds the previous iteration's feedback.")
+    if "STARTS.json" in files:
+        # Probata PoC 19 (2026-10-14 ET): derived starts.
+        history.append(" `STARTS.json` lists the certified derived implementations this iteration may start from, "
+                       "each with its source under `starts/`; name the one your patch applies to in `start` (null: "
+                       "the base source in `source/`).")
     if "PROTECTED.json" in files:
         # Ticket 73 (2026-10-05 ET): campaign a7's iteration 1 edited the protected verifier.
         history.append(" `PROTECTED.json` lists protected evaluator regions (for example the `BFSVerifier` "
@@ -553,9 +567,11 @@ class Campaign:
         self.query = self.data["regions"] == "query"
         self.applied_contracts = None     # query mode: contracts the site finder applied this iteration
         self.rule = SpeedRule.of(self.data)
+        self.starts = list(self.data.get("derived_starts") or [])    # Probata PoC 19
         if args.fixture:
             from swdb.campaign_fixture import FixtureAdapter
-            self.adapter = FixtureAdapter(args.fixture, self.data, self.team, self.store_dir, self.folder)
+            self.adapter = FixtureAdapter(args.fixture, self.data, self.team, self.store_dir, self.folder,
+                                          library_root=self.library_root)
         else:
             # Tickets 56/57 (2026-10-04 ET): the campaign's target selects its real adapter.
             from swdb import campaign_targets
@@ -676,7 +692,8 @@ class Campaign:
         started = time.monotonic()
         outcome, response, error = S.CallOutcome.COMPLETED, None, None
         try:
-            response, _meta = provider_roles.run(_roles()[kind], files, prompt, self.provider_config, folder)
+            response, _meta = provider_roles.run(_roles(bool(self.starts))[kind], files, prompt, self.provider_config,
+                                                 folder)
         except Failure as exc:
             # P1 (2026-10-05 ET): the one classifier; uncounted stops (usage limit, capacity, guard
             # runtime limit, login) name their own outcome.
@@ -869,6 +886,7 @@ class Campaign:
             files["PROTECTED.json"] = json.dumps({
                 "note": ("Evaluator inputs. A patch that changes any of these is rejected before it is "
                          "built. Never edit them."), "protected": rows}, indent=2)
+        files.update(self._start_files())
         for cls, best in self.state["bests"].items():
             if best:
                 files[f"best/{cls}.patch"] = best["patch"]
@@ -894,6 +912,55 @@ class Campaign:
             if library.state(cid)["tier"] not in self.data["library"]["allowed_tiers"]:
                 return f"contract {cid} is in a tier the campaign does not allow"
         return None
+
+    # derived implementations (Probata PoC 19) ---------------------------------------------------
+    def _start_problem(self, start):
+        from swdb import derived
+        from swdb.library import Library
+        from swdb.store import Store
+        return derived.start_problem(Store(self.store_dir), start, kernel=self.data["kernel"], listed=self.starts,
+                                     library=Library(self.library_root))
+
+    def _start_files(self):
+        """Workspace files for the listed derived starts that may be used now: `STARTS.json` and each
+        start's kernel file under `starts/<id>/` (its snapshot's region, the whole file)."""
+        from swdb import derived
+        from swdb.store import Store
+        store, rows, files = Store(self.store_dir), [], {}
+        for start in self.starts:
+            if self._start_problem(start):
+                continue
+            impl = store.get(start, "implementation")
+            region = store.get(derived.snapshot_of(impl), "source_snapshot")["regions"][0]
+            files[f"starts/{start}/{region['path']}"] = region["text"]
+            rows.append({"id": start, "derived_from": impl["origin"]["derived_from"],
+                         "contract_lineage": [e["contract"] for e in impl["contract_lineage"]],
+                         "source": f"starts/{start}/{region['path']}"})
+        if rows:
+            files["STARTS.json"] = json.dumps({
+                "note": ("Certified derived implementations this iteration may start from. Name the one your patch "
+                         "applies to in `start`, or null for the base source in `source/`."), "starts": rows}, indent=2)
+        return files
+
+    def _derive(self, entry, candidate, contracts, knobs, start):
+        """Record a certified candidate artifact whose every contract is enabling as a derived implementation."""
+        from swdb import derived
+        from swdb.library import Library
+        from swdb.store import Store
+        library = Library(self.library_root)
+        stores = [Store(self.store_dir), Store(self.team)]
+        if not contracts or not all(derived.is_enabling(library, stores, c) for c in contracts):
+            return
+        on = self.adapter.predecessor_snapshot(start)
+        try:
+            if not on:
+                raise Failure("the target names no source snapshot its candidate artifacts are built on")
+            entry["derived_implementation"] = derived.record(
+                self.store_dir, candidate_id=candidate["id"], contracts=contracts, links=certification_links(entry),
+                predecessor_snapshot=on, library=library, knobs=knobs, team_dir=self.team)
+        except Failure as exc:
+            entry["derived_implementation"] = None
+            entry["derived_note"] = f"not recorded: {exc}"[:1000]
 
     def _iteration(self, iteration, row):
         files = self._workspace(iteration)
@@ -946,14 +1013,23 @@ class Campaign:
         problem = self._knob_problem(contracts, knobs)
         if problem:     # D7: rejected before certification, never a repair call
             return reject("knob_out_of_range", problem)
+        start = response.get("start")
+        if start is not None:           # Probata PoC 19: an iteration starting from a derived implementation
+            entry["start"] = start
+            problem = self._start_problem(start)
+            if problem:
+                return reject("provider_output_invalid", problem)
         try:
-            return self._certified_and_evaluated(iteration, cls, entry, patch, knobs, contracts, row, feedback, reject)
+            return self._certified_and_evaluated(iteration, cls, entry, patch, knobs, contracts, row, feedback, reject,
+                                                 start=start)
         except Refused as refused:       # tickets 56/57: a target refusal rejects this class's artifact
             return reject(refused.reason, refused.explanation, failed_checks=refused.failed_checks)
 
-    def _certified_and_evaluated(self, iteration, cls, entry, patch, knobs, contracts, row, feedback, reject):
+    def _certified_and_evaluated(self, iteration, cls, entry, patch, knobs, contracts, row, feedback, reject,
+                                 start=None):
         attempt = 0
-        candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt, contracts=contracts)
+        candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt, contracts=contracts,
+                                             start=start)
         entry.update(id=candidate["id"], artifact_sha256=candidate["sha256"])
         self.adapter.pairing.freeze_artifacts([candidate['id']], self.state['protocol'],
             fixture=self.adapter.evidence_kind == 'contract_fixture')
@@ -1006,11 +1082,14 @@ class Campaign:
                 problem = self._knob_problem(contracts, knobs)
                 if problem:
                     return reject("knob_out_of_range", problem)
-                candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt, contracts=contracts)
+                candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt, contracts=contracts,
+                                                     start=start)
                 entry.update(id=candidate["id"], artifact_sha256=candidate["sha256"])
                 self.adapter.pairing.freeze_artifacts([candidate['id']], self.state['protocol'],
                     fixture=self.adapter.evidence_kind == 'contract_fixture')
                 self.adapter.admit(candidate, contracts)
+        if entry["level"] == "certified":
+            self._derive(entry, candidate, contracts, knobs, start)
         self._evaluate(iteration, cls, candidate, attempt, entry)
         selection = next((c for c in entry["comparisons"] if c["baseline_role"] == self.data["base_source"]), None)
         if selection:

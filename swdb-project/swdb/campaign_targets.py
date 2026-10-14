@@ -450,7 +450,15 @@ class TargetAdapter:
     def needs_header(self, contracts):
         return False
 
-    def materialize(self, iteration, cls, patch, knobs, attempt, contracts=()):
+    def predecessor_snapshot(self, start=None):
+        """The source snapshot candidate artifacts are built on (Probata PoC 19): the scalar-only snapshot.
+        A real target builds no candidate artifact on a derived implementation yet (None)."""
+        return None if start else SNAPSHOT
+
+    def materialize(self, iteration, cls, patch, knobs, attempt, contracts=(), start=None):
+        if start:
+            raise Refused("provider_output_invalid", f"This target builds candidate artifacts only from {SNAPSHOT}; "
+                                                     f"it cannot start from the derived implementation {start} yet.")
         snapshot = self._get(SNAPSHOT, "source_snapshot")
         rid = f"{self.cid}.{self._iteration_tag(iteration)}.{cls}.a{attempt}"
         tree = self.folder / "sources" / rid / "source"

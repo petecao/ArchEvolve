@@ -29,6 +29,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from swdb import formula, isa, strategy
+from swdb.derived import UNRESOLVED, validate_implementation
 from swdb.problems import Problem
 
 
@@ -250,6 +251,7 @@ def _implementation(record, ctx):
         yield Problem(rel, "run.index_stream.pattern", f"{stream['pattern']!r} is not an access pattern of this implementation")
     yield from _required_isa(record, ctx)
     yield from _applies(record, ctx, set(loops), set(patterns))
+    yield from validate_implementation(record, ctx)     # Probata PoC 19: lineage and rewrite links
     app = ctx.application(data)
     yield from _implementation_context(record, ctx, app)
     for i, code in enumerate(data["code"]):
@@ -302,7 +304,9 @@ def _applies(record, ctx, loops, patterns):
         if chosen is None:
             continue    # missing (the schema's x-ref reports it) or invalid (reported on its own file)
         wanted, target = chosen["target"], applied["target"]
-        if wanted == "input":
+        if target == UNRESOLVED and record.data["origin"]["kind"] == "derived" and wanted != "input":
+            pass    # Probata PoC 19: the profiling agent's annotation of a derived implementation names it
+        elif wanted == "input":
             if target != "input":
                 yield Problem(record.rel, f"{where}.target",
                               f"strategy {chosen['id']!r} targets input, so its target is 'input', not {target!r}")

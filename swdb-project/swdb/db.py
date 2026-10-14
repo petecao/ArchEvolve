@@ -181,6 +181,8 @@ def build(records_dir, db_path, library=None):
                         (rec.id, context["application"], context["source_ancestor"], context["source_baseline"],
                          context["comparison_baseline"], json.dumps(context)))
     _library(con, records_dir, store, library)
+    from swdb import derived     # Probata PoC 19: contract lineage and rewrite links, computed on read
+    derived.index(con, store, library_dir(records_dir, library))
     lanl.build(con, store)
     tables = [name for (name,) in con.execute(
         "SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%' ORDER BY rowid")]
@@ -887,3 +889,18 @@ def _insert_proof(con, d, *_):
 
 
 _Insert.proof = staticmethod(_insert_proof)
+
+
+# Probata proof of concept ticket 19 (2026-10-14 ET): derived implementations' contract lineage (one row per
+# entry) and every rewrite link (derived implementations, and candidate artifacts built on one), with whether
+# it still matches and its proof route, computed on read by `swdb.derived.link_rows` (ADR 0016). SWDB
+# extension only. Documented in docs/reference/database.md.
+SCHEMA += """
+CREATE TABLE swdb_contract_lineage (implementation TEXT NOT NULL, position INTEGER NOT NULL, contract TEXT NOT NULL,
+    version TEXT, content_sha256 TEXT NOT NULL, PRIMARY KEY (implementation, position));
+CREATE TABLE swdb_rewrite_links (subject_kind TEXT NOT NULL, subject TEXT NOT NULL, position INTEGER NOT NULL,
+    contract TEXT, contract_sha256 TEXT, predecessor TEXT, predecessor_snapshot TEXT,
+    predecessor_snapshot_sha256 TEXT, result_candidate TEXT, result_snapshot TEXT, result_sha256 TEXT,
+    certification TEXT, proof_route TEXT NOT NULL, matches INTEGER NOT NULL, reason TEXT,
+    PRIMARY KEY (subject_kind, subject, position));
+"""

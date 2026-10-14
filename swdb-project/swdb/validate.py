@@ -27,7 +27,10 @@ def validate_records(records_dir, extra=None, replace=None, library_root=None):
     from swdb.library import Library, default_root
     root = library_root or default_root(records_dir)
     if root.exists():
-        result.problems.extend(Library(root, result.store).validate())
+        library = Library(root, result.store)
+        result.problems.extend(library.validate())
+        from swdb.derived import lineage_problems   # Probata PoC 19: lineage contracts are in the library
+        result.problems.extend(lineage_problems(result.store, library))
         from swdb import method_version   # Probata ticket 11: library/methods/*.yaml
         result.problems.extend(method_version.validate(root))
     from swdb.campaign import validate_campaign_dir   # ticket 52: campaigns/extensa/*.yaml
