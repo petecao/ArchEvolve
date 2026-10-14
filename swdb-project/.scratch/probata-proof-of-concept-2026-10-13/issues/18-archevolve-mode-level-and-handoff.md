@@ -98,3 +98,11 @@ never ranked. Built and tested with the scripted verifier adapter.
   fixtures only; no held-out kernel (BC, PR, SSSP).
 - Tests use the scripted adapter; no real verifier job runs. Full-suite runs on the Mac use at most 2
   test workers.
+
+## Later changes
+
+- 2026-10-14 03:20 ET (main session, from ticket 19's Answer): ticket 19 records derived implementations in the
+  Extensa campaign loop only. ArchEvolve mode does not record one yet: `swdb certify` on a rewrite proposal's
+  candidate artifact is the hook, and ticket 19 left it unwired (see its Answer, "Gap"). This ticket picks it
+  up with its ArchEvolve-mode work, using the scripted-certify pattern for the test. Interface:
+  `docs/reference/format-v0.4-derived.md`, `swdb/derived.py`.

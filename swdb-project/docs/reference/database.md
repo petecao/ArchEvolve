@@ -1,6 +1,7 @@
 # The SQLite database
 
 Updated: 2026-10-14 ET: proof-record tables (Probata proof of concept ticket 04); skip records and `skip_reason` (ticket 11);
+derived-implementation tables (ticket 19).
 2026-10-14 02:57 ET: `swdb_proof_jobs`, `swdb_run_fields`, `swdb_repair_lineage` (ticket 12).
 2026-10-12 00:36 ET: attribution final review fixes (headroom reasons point to one list,
 split-check rule v2 and its estimated share). 2026-10-11 23:28 ET: measured native evaluation timings of an implementation feed
@@ -403,6 +404,7 @@ rows; no LANL table points back. A file built before the prefix (2026-10-11) has
 | Statement observations | `swdb_statements`, `swdb_statement_steps`, `swdb_statement_facts` |
 | Contract links | `swdb_contract_definitions`, `swdb_contract_data_structures`, `swdb_contract_kernels`, `swdb_contract_kernel_variants` |
 | Attribution reports | the `swdb_attribution*` tables ([Attribution tables](#attribution-tables)) |
+| Derived implementations | `swdb_contract_lineage`, `swdb_rewrite_links` ([Derived-implementation tables](#derived-implementation-tables)) |
 | Proof records | the `swdb_proof*` tables, `swdb_run_fields` and `swdb_repair_lineage` ([Proof tables](#proof-tables)) |
 
 `swdb_kernels` and `kernels` describe the same kernel records: join them on
@@ -1276,3 +1278,45 @@ Added 2026-10-14 ET (ticket 12): one row per proposal with repair lineage.
 | `counterexample_record` | the refuted proof record holding the counterexample |
 | `round` | the repair round (>= 1) |
 | `reverted_repair` | 1 when the contract-match check flagged a reverted repair, else 0 |
+
+## Derived-implementation tables
+
+Added: 2026-10-14 (Eastern Time), Probata proof of concept ticket 19. Format in
+[format-v0.4-derived.md](format-v0.4-derived.md). SWDB extension only. Whether a link still matches
+and its proof route are computed on read by `swdb build` (ADR 0016); no record is rewritten.
+
+### `swdb_contract_lineage`
+
+One row per entry of a derived implementation's `contract_lineage`.
+
+| Column | Meaning |
+|---|---|
+| `implementation` | derived implementation ID |
+| `position` | the entry's index (0 = the first rewrite after the baseline implementation) |
+| `contract` | rewrite contract ID |
+| `version` | the contract's version (NULL while contracts carry none) |
+| `content_sha256` | the contract's content hash the rewrite was certified with |
+
+### `swdb_rewrite_links`
+
+One row per rewrite link: each link of a derived implementation, and each certified certification
+of a candidate artifact built on a derived implementation (its `predecessor`) that is not itself a
+derived implementation's result.
+
+| Column | Meaning |
+|---|---|
+| `subject_kind` | `derived_implementation` or `candidate` |
+| `subject` | the derived implementation or candidate artifact ID |
+| `position` | the link's index (one per contract of the rewrite) |
+| `contract` | rewrite contract ID |
+| `contract_sha256` | the contract content hash the certification holds for |
+| `predecessor` | the implementation the rewrite was applied to |
+| `predecessor_snapshot` | the predecessor's source snapshot ID |
+| `predecessor_snapshot_sha256` | its tree hash when the rewrite was certified |
+| `result_candidate` | the rewrite's result candidate artifact |
+| `result_snapshot` | a derived implementation's own snapshot (NULL for a candidate subject) |
+| `result_sha256` | the result's tree hash |
+| `certification` | the certification record ID for this contract |
+| `proof_route` | `route_1`, `route_3` or `bounded_direct` from the rewrite's proof record (its result candidate artifact and contract), or `none yet` |
+| `matches` | 1 while the predecessor snapshot, the contract (when the library is known) and the result are unchanged and every earlier link of the chain matches; else 0 |
+| `reason` | why it no longer matches (`; `-joined), else NULL |
