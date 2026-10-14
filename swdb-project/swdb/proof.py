@@ -17,9 +17,8 @@ map ticket 26 and ADR 0016. Format: docs/reference/format-v0.4-proof.md.
 - Ticket 11 (2026-10-14 ET): one call runs a batch (one job per script, or one skip); every record
   pins the current method version (swdb.method_version); a failure class outside vocabulary
   proof_failure_classes stops the batch; `validate_record` checks the class, skip reason and pin.
-- `proven_level` reads a candidate artifact's proven level from the records that count,
-  computed on read and never stored (ADR 0016). This tracer checks only the code pin and the
-  contract pin; ticket 10 adds every other pin kind and the versioned level rule.
+- Levels are computed on read by the versioned level rule (`swdb.level_rule`, ticket 10), which
+  replaced this tracer's code-and-contract-pin rule; nothing here stores a level (ADR 0016).
 """
 
 import datetime
@@ -37,7 +36,6 @@ from swdb import paths, yamlio
 from swdb.cli import Failure, UsageError
 
 VERDICTS = ("proven", "refuted", "not_proven")
-UNBOUNDED = "unbounded"
 
 
 # --- the adapter interface ----------------------------------------------------------
@@ -75,6 +73,7 @@ class Verdict:
     counterexample: dict = None
     failure_class: str = None
     unreplayed_counterexample: dict = None   # ticket 11: a reported counterexample that did not replay
+    tools: tuple = ()                        # ticket 10 (S14): verifiers and solvers used, each a trusted-tool entry
 
     def __post_init__(self):
         if self.unreplayed_counterexample and self.verdict != "not_proven":
@@ -114,7 +113,8 @@ class ScriptedAdapter:
                           assumptions=list(self.script.get("assumptions") or []),
                           counterexample=self.script.get("counterexample"),
                           failure_class=self.script.get("failure_class"),
-                          unreplayed_counterexample=self.script.get("unreplayed_counterexample"))
+                          unreplayed_counterexample=self.script.get("unreplayed_counterexample"),
+                          tools=tuple(self.script.get("tools") or ()))
         with open(job.log, "a", encoding="utf-8") as log:
             log.write(f"adapter: scripted\nscript: {self.source}\n"
                       f"unit: {job.unit.candidate} {job.unit.function}\n"
@@ -224,6 +224,8 @@ def _run_job(rid, unit, pins, adapter, runs, place, failure_classes):
         record["failure_class"] = verdict.failure_class
     if verdict.unreplayed_counterexample:
         record["unreplayed_counterexample"] = verdict.unreplayed_counterexample
+    if verdict.tools:
+        record["tools"] = list(verdict.tools)
     record.update(
         pins=pins, bounds=verdict.bounds, assumptions=verdict.assumptions,
         job={"adapter": adapter.name, "host": _host(), "worker_core": _worker_core(),
@@ -368,59 +370,14 @@ def validate_record(record, ctx):
         if value is not None and value not in listed(ctx.vocabs, field_name):
             yield Problem(record.rel, field_name,
                           f"{value!r} is not a {field_name.replace('_', ' ')} in vocabulary {FAILURE_VOCAB}")
+    trusted = {(a.get("reference") or {}).get("id") for a in data.get("assumptions") or []
+               if isinstance(a, dict) and a.get("kind") == "trusted_tool"}
+    for position, tool in enumerate(data.get("tools") or []):      # ticket 10, S14
+        if tool not in trusted:
+            yield Problem(record.rel, f"tools[{position}]",
+                          f"tool {tool!r} is used but the assumption set holds no trusted-tool entry for it (S14)")
     from swdb import method_version
     from swdb.library import default_root
     problem = method_version.pin_problem((data.get("pins") or {}).get("method_version"), default_root(ctx.records_dir))
     if problem:
         yield Problem(record.rel, "pins.method_version", problem)
-
-
-# --- proven level, computed on read ------------------------------------------------------
-
-def unit_records(store, candidate_id):
-    """Every proof record whose subject is one of this candidate artifact's proof units."""
-    return [r.data for r in store.of_kind("proof")
-            if (r.data.get("subject") or {}).get("kind") == "candidate_proof_unit"
-            and r.data["subject"].get("candidate") == candidate_id]
-
-
-def counts(record, candidate, library):
-    """True while a proven record's code and contract pins match the current hashes.
-
-    Tracer rule (ticket 04): only these two pins are checked; ticket 10 checks every pin kind.
-    A contract the library does not know cannot be checked, so the record does not count."""
-    if record.get("verdict") != "proven":
-        return False
-    pins = record.get("pins") or {}
-    code, contract = pins.get("code") or {}, pins.get("contract") or {}
-    if code.get("sha256") != (candidate.get("artifact") or {}).get("sha256"):
-        return False
-    if library is None or library.get(contract.get("id")) is None:
-        return False
-    return contract.get("sha256") == library.content_sha256(contract["id"])
-
-
-def bounded_level(record):
-    """`proven_unbounded` when every dimension, the thread count included, is unbounded."""
-    return ("proven_unbounded" if all(v == UNBOUNDED for v in record["bounds"].values())
-            else "proven_within_bounds")
-
-
-def proven_level(store, candidate_id, certification_level, library=None):
-    """The proven part of `swdb candidate-level` (S2), computed on read and never stored.
-
-    Proven requires certified. Returns {level, proven, proof_records}: `level` is the proven
-    level when a record counts, else `certification_level`; `proven` is None or {level, bounds,
-    records} (the best counting level, the bounds of its first record by ID, and every counting
-    record at that level); `proof_records` lists every proof record of the candidate's units."""
-    candidate = store.get(candidate_id, "candidate")
-    library = library if library is not None else _library(store)
-    records = sorted(unit_records(store, candidate_id), key=lambda r: r["id"])
-    counted = [r for r in records if counts(r, candidate, library)] if certification_level == "certified" else []
-    proven = None
-    if counted:
-        best = "proven_unbounded" if any(bounded_level(r) == "proven_unbounded" for r in counted) else "proven_within_bounds"
-        top = [r for r in counted if bounded_level(r) == best]
-        proven = {"level": best, "bounds": dict(top[0]["bounds"]), "records": [r["id"] for r in top]}
-    return {"level": proven["level"] if proven else certification_level, "proven": proven,
-            "proof_records": [r["id"] for r in records]}
