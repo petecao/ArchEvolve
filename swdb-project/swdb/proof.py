@@ -162,7 +162,8 @@ class ScriptedAdapter:
 
 
 ADAPTERS = {"scripted": ScriptedAdapter}
-RECORD_FIELDS = ("goals", "unproven_properties", "settings")     # ticket 21: what a real adapter may add
+RECORD_FIELDS = ("goals", "unproven_properties", "settings",     # ticket 21: what a real adapter may add
+                 "hint_set", "hint_check")                       # ticket 35: the hint set and its check result
 
 
 # --- swdb prove -----------------------------------------------------------------------
@@ -197,8 +198,9 @@ def register_cli(commands):
     run.add_argument("--provider-model", help="provider pin: model (for example gpt-5.6-sol)")
     run.add_argument("--provider-effort", help="provider pin: effort (for example xhigh)")
     real = sub.add_argument_group("real adapters (ticket 21): the wp adapter")
-    real.add_argument("--hint-file", type=Path, help="wp: fixture hints {hints: [{anchor, acsl}]} placed at anchors "
-                                                     "of the C lowering (ticket 35 replaces them with hint records)")
+    real.add_argument("--hint-file", type=Path, help="wp only: a hint set {hints: [{anchor, kind, text, provenance}]}; "
+                                                     "it reaches WP only when the proof hint check accepts it "
+                                                     "(ticket 35); any other adapter refuses it")
     real.add_argument("--define", action="append", default=[], help="wp: a build constant NAME or NAME=VALUE for "
                                                                     "the C lowering (repeatable; pinned as build_constants)")
     from swdb import archevolve_proof      # Probata PoC 18: ArchEvolve mode's whole proof path
@@ -228,6 +230,9 @@ def prove(args):
     vocabs, _problems = vocab.load_all(paths.VOCAB)
     if args.skip is not None and args.skip not in listed(vocabs, "skip_reason"):
         raise UsageError(f"--skip {args.skip!r} is not a skip reason in vocabulary {FAILURE_VOCAB}")
+    if getattr(args, "hint_file", None) is not None and args.adapter != "wp":     # ticket 35; map 13 item 2
+        raise UsageError(f"a hint set goes only to the WP adapter: the {args.adapter} adapter (a bounded-verifier job) "
+                         "takes no --hint-file, so no refutation depends on hint text")
     scripts = [None] if args.skip is not None else (args.script or [None])
     if args.id and len(scripts) > 1:
         raise UsageError("--id names the record of a one-job batch only")
