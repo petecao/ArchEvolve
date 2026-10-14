@@ -1,0 +1,46 @@
+// Ticket 06 spike (b), 2026-10-14 ET. THROWAWAY. Summary tests (test_summaries.cpp): the range
+// loop over shape 95 returns 2, 1, 0 lanes, with and without TDStepMAA's loop body in between.
+// Expected values come from the hand trace of the CSR loop (map 19 item 1's minimum scope).
+enable_experimental;
+enable_what4_hash_consing;
+import "ghost.cry";
+include "summaries.saw";
+include "units.saw";
+gh <- declare_ghost_state "dx100";
+m <- llvm_load_module "test.bc";
+ovs <- make_overrides m gh false;
+ovm <- make_maa_overrides m gh;
+let test_spec = do {
+  for input_globals llvm_alloc_global;
+  llvm_alloc_global "swdb_tile_data";
+  llvm_points_to (llvm_global "g_queue") (llvm_term {{ [0, 1, 0, 0, 0, 0, 0, 0] : [8][32] }});
+  llvm_points_to (llvm_global "g_offsets") (llvm_term {{ [0, 1, 3, 3] : [4][32] }});
+  llvm_points_to (llvm_global "g_neighbors") (llvm_term {{ [2, 2, 0] : [3][32] }});
+  llvm_points_to (llvm_global "g_parent") (llvm_term {{ [0, 0, -1] : [3][32] }});
+  llvm_points_to TD (llvm_term {{ zero : [8][2][32] }});
+  ghost_init;
+  llvm_execute_func [];
+  llvm_return (llvm_term {{ 210 : [32] }});
+};
+llvm_verify m "_Z20swdb_test_range_onlyv" (concat ovs ovm) true test_spec z3;
+print "TEST range_only: PASS";
+llvm_verify m "_Z20swdb_test_range_bodyv" (concat ovs ovm) true test_spec z3;
+print "TEST range_body: PASS";
+// The same with parent values symbolic (any value the unit precondition allows): the lane counts
+// do not depend on them.
+let test_spec_sym = do {
+  p <- llvm_fresh_var "parent" (llvm_array 3 i32);
+  for input_globals llvm_alloc_global;
+  llvm_alloc_global "swdb_tile_data";
+  llvm_points_to (llvm_global "g_queue") (llvm_term {{ [0, 1, 0, 0, 0, 0, 0, 0] : [8][32] }});
+  llvm_points_to (llvm_global "g_offsets") (llvm_term {{ [0, 1, 3, 3] : [4][32] }});
+  llvm_points_to (llvm_global "g_neighbors") (llvm_term {{ [2, 2, 0] : [3][32] }});
+  llvm_points_to (llvm_global "g_parent") (llvm_term p);
+  llvm_precond {{ and [ (x >=$ -3) /\ (x <$ 3) | x <- p ] }};
+  llvm_points_to TD (llvm_term {{ zero : [8][2][32] }});
+  ghost_init;
+  llvm_execute_func [];
+  llvm_return (llvm_term {{ 210 : [32] }});
+};
+llvm_verify m "_Z20swdb_test_range_bodyv" (concat ovs ovm) true test_spec_sym z3;
+print "TEST range_body_symbolic_parent: PASS";
