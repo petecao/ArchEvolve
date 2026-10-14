@@ -282,6 +282,8 @@ def main(argv=None):
     proof.register_cli(commands)
     from swdb import proof_lane     # Probata ticket 57 (2026-10-14 ET): `swdb prove-lane`
     proof_lane.register_cli(commands)
+    from swdb import c_lowering     # Probata ticket 21 (2026-10-14 ET): `swdb lower`, the C lowering tool
+    c_lowering.register_cli(commands)
 
     from swdb import archevolve
     archevolve.register_cli(commands)
@@ -541,7 +543,7 @@ def _validate(records_dir, library_root=None, crosswalk=None):
     if frame and frame.checked:
         suffix += f"; {frame.checked} acsl field(s) type-checked by Frama-C {frame.framac_version}"
     if frame and frame.unchecked:
-        suffix += f"; {len(frame.unchecked)} acsl field(s) unchecked (no usable Frama-C 33.0)"
+        suffix += f"; {len(frame.unchecked)} acsl field(s) unchecked (no usable Frama-C 33.0 or C lowering)"
     print(f"OK: {result.count} record(s) valid{suffix}")
     return 0
 

@@ -11,6 +11,7 @@ control is its own entry (or logic-library file), and the test checks that exact
 check fires for it. Frama-C cases skip when Frama-C 33.0 is missing.
 """
 import copy
+import hashlib
 import json
 import os
 import re
@@ -22,7 +23,10 @@ import yaml
 
 from conftest import make_records, run_swdb
 
-PROTOTYPE = 'int fixture_unit(int *parent, int *frontier, int *dist, int *sum, int *queue, int n);'
+# Ticket 21: the formal halves type-check against the C lowering of this baseline proof unit (kept names).
+UNIT_CC = 'int fixture_unit(int *parent, int *frontier, int *dist, int *sum, int *queue, int n) {\n  return n;\n}\n'
+UNIT_PIN = {'root': 'library', 'path': 'proof_units/fixture_unit.cc',
+            'sha256': hashlib.sha256(UNIT_CC.encode()).hexdigest()}
 GEM5 = {'gem5_commit': 'e4fc4afdf894f295442cef3604667a469fab8e62', 'path': 'src/mem/MAA/IF.cc',
         'lines': '193-212'}
 
@@ -57,7 +61,7 @@ def frame_contract(cid, *, role=None, version='1.0', clauses=None, **extra):
     data = {
         'kind': 'rewrite_contract', 'id': cid, 'formal_frame': 1, 'version': version,
         'provenance': {'origin': {'intrinsic_specification': 'fixture-20'}},
-        'proof_unit': {'prototype': PROTOTYPE},
+        'proof_unit': {'source': UNIT_PIN, 'function': 'fixture_unit'},
         'concurrency_frame': [
             {'array': 'parent', 'shared_actions': ['claim', 'min_update'], 'history_reads': True},
             {'array': 'frontier', 'shared_actions': ['queue_reserve'], 'history_reads': False},
@@ -120,6 +124,7 @@ def positive_entries():
                                                      'evidence': 'gem5 IF.cc region stall; owner Yan-Ru at promotion'}}),
     ]
     return {
+        'proof_units/fixture_unit.cc': UNIT_CC,
         'logic/graph.acsl': GRAPH,
         'rewrite_contracts/enable_a.yaml': frame_contract('contract.fixture_enable_a', role='enabling'),
         'rewrite_contracts/enable_b.yaml': frame_contract('contract.fixture_enable_b', role='enabling', version='2.1'),
@@ -220,11 +225,26 @@ def test_without_framac_every_acsl_field_is_reported_unchecked_never_valid(posit
     assert 'type-checked' not in checked.stdout
 
 
+def test_without_the_c_lowering_every_acsl_field_is_reported_unchecked_never_valid(positive):
+    """Ticket 21: the declaration comes from the C lowering tool; without clang 22.1.8 nothing is type-checked."""
+    records, root = positive
+    checked = run_swdb('validate', '--records', records.path, '--library', root, env={'SWDB_CLANG': 'none'})
+    assert checked.returncode == 0, checked.stderr
+    unchecked = [line for line in checked.stderr.splitlines() if line.startswith('UNCHECKED: ')]
+    assert len(unchecked) == 6 and all('C lowering' in line for line in unchecked), checked.stderr
+    assert 'type-checked' not in checked.stdout
+
+
 # --- negative controls: one shared library, one validate run --------------------------------
 
 def control_contract(name, text=None, *, uses=(), placement='per_candidate', **extra):
     return frame_contract(f'contract.ctl_{name}', clauses=[clause('c1', text, placement=placement, uses=uses)],
                           **extra)
+
+
+def frame_rows(changed):
+    """A full concurrency frame (every interface array of fixture_unit) with one row replaced (ticket 21)."""
+    return [changed if row['array'] == changed['array'] else row for row in frame_contract('x')['concurrency_frame']]
 
 
 #: case -> (entry, expected reason fragment or None for "passes", needs Frama-C)
@@ -269,6 +289,15 @@ def control_cases():
         # Frama-C parse and type check
         'syntax_error': (c('syntax_error', 'ensures \\result >= ;'), 'Frama-C', True),
         'type_error': (c('type_error', 'ensures \\result == undeclared_name;'), 'undeclared_name', True),
+        # ticket 21: the names are the C++ names of the baseline proof unit's C lowering, with no renaming layer
+        'name_without_cpp_counterpart': (c('name_without_cpp_counterpart', 'ensures \\result == num_nodes;'),
+                                         'num_nodes', True),
+        'hand_prototype': (c('hand_prototype', proof_unit={'prototype': 'int fixture_unit(int n);'}),
+                           'C lowering', False),
+        'source_hash': (c('source_hash', proof_unit={'source': {**UNIT_PIN, 'sha256': '0' * 64}, 'function': 'fixture_unit'}),
+                        'sha256', False),
+        'unknown_function': (c('unknown_function', proof_unit={'source': UNIT_PIN, 'function': 'no_such_unit'}),
+                             'no_such_unit', False),
         # proof placement
         'no_placement': (c('no_placement', 'ensures \\result >= 0;', placement=None), 'no proof placement', False),
         'assumed_kind': (c('assumed_kind', None, placement={'assumed': {'kind': 'hope', 'owner': 'Eric', 'evidence': 'none'}}), 'assumption kind', False),
@@ -279,9 +308,16 @@ def control_cases():
         'once_wrong_version': (c('once_wrong_version', 'ensures \\true;', placement={'once': 'contract.fixture_enable_a@9.0'}), 'not in the library', False),
         'two_placements': (c('two_placements', 'ensures \\true;', placement={'once': 'self', 'assumed': {'kind': 'summary', 'owner': 'x', 'evidence': 'y'}}), 'exactly one', False),
         # concurrency frame
-        'unknown_kind': (c('unknown_kind', concurrency_frame=[{'array': 'parent', 'shared_actions': ['teleport'], 'history_reads': False}]), 'shared-action kind', False),
-        'history_maybe': (c('history_maybe', concurrency_frame=[{'array': 'parent', 'shared_actions': ['claim'], 'history_reads': 'maybe'}]), 'yes or no', False),
+        'unknown_kind': (c('unknown_kind', concurrency_frame=frame_rows({'array': 'parent', 'shared_actions': ['teleport'], 'history_reads': False})), 'shared-action kind', False),
+        'history_maybe': (c('history_maybe', concurrency_frame=frame_rows({'array': 'parent', 'shared_actions': ['claim'], 'history_reads': 'maybe'})), 'yes or no', False),
         'no_concurrency': (c('no_concurrency', concurrency_frame=None), 'concurrency frame', False),
+        # ticket 21: the concurrency frame names every interface array (pointer parameter) and nothing else
+        'frame_missing_array': (c('frame_missing_array', concurrency_frame=[
+            {'array': a, 'shared_actions': [], 'history_reads': False} for a in ('parent', 'frontier', 'dist', 'sum')]),
+            'interface array queue', False),
+        'frame_not_an_array': (c('frame_not_an_array', concurrency_frame=[
+            {'array': a, 'shared_actions': [], 'history_reads': False}
+            for a in ('parent', 'frontier', 'dist', 'sum', 'queue', 'n')]), 'not a pointer parameter', False),
         # offload-only and enabling contracts
         'required_unknown': (c('required_unknown', contract_role='offload_only', required_enabling_contracts=[{'contract': 'contract.nowhere', 'versions': '>=1.0'}]), 'unknown', False),
         'required_bad_range': (c('required_bad_range', contract_role='offload_only', required_enabling_contracts=[{'contract': 'contract.fixture_enable_a', 'versions': 'about 2'}]), 'version range', False),
