@@ -54,7 +54,7 @@ extern const unsigned SWDB_CHUNK_SIZE;        /* knob: symbolic, 1 .. TILE_SIZE 
       swdb_lqueue_storage[0 .. SWDB_LQUEUE_CAPACITY - 1],
       dxc_tile_data[0 .. DXC_NUM_TILES - 1][0 .. TILE_SIZE - 1], dxc_tile_len[0 .. DXC_NUM_TILES - 1],
       dxc_reg[0 .. DXC_NUM_REGS - 1], dxc_pending[0 .. DXC_NUM_TILES - 1],
-      dxc_dep[0 .. DXC_NUM_TILES - 1][0 .. DXC_NUM_TILES - 1];
+      dxc_dep[0 .. DXC_NUM_TILES * DXC_NUM_TILES - 1];
     ensures visited_parent_unchanged: \forall integer v; 0 <= v < num_nodes && \old(parent->start_[v]) >= 0 ==>
       parent->start_[v] == \old(parent->start_[v]);
     ensures visited_iff_reachable: \forall integer v; 0 <= v < num_nodes && \old(parent->start_[v]) < 0 ==>

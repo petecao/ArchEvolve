@@ -24,6 +24,19 @@ case "$mode" in
       -wp -wp-fct TDStep -wp-cache update -wp-cache-dir "$cache_arg" -wp-session session \
       -wp-prover alt-ergo,z3,cvc5 -wp-timeout "$tmo_arg" -wp-par 12 -wp-report-json goals.json \
       -then -wp-fct= -wp-prop=@lemma -wp-report-json lemmas.json -then -report -report-untried ;;
+  # t07d method change (c): the same two runs with WP's strategy engine on, so `\wp::strategy` hints
+  # (with their `\wp::proof` attachment) can prune a goal's hypotheses. `tip` adds the script prover;
+  # `-wp-script dry` explores strategies from scratch and saves no script (fresh session, nothing reused).
+  # Goals without a strategy hint go to the three provers exactly as before.
+  round-s) [ -n "$cache_arg" ] || { echo "round-s needs <cache_dir>"; exit 2; }; rm -rf session && mkdir session
+    exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" opam exec --switch=framac-33 -- frama-c "$@" \
+      -wp -wp-fct TDStep -wp-cache update -wp-cache-dir "$cache_arg" -wp-session session \
+      -wp-prover tip,alt-ergo,z3,cvc5 -wp-script dry -wp-timeout "$tmo_arg" -wp-par 12 -wp-report-json goals.json \
+      -then -wp-fct= -wp-prop=@lemma -wp-report-json lemmas.json -then -report -report-untried ;;
+  wp-smoke-s) rm -rf session && mkdir session
+    exec env -i HOME="$HOME" PATH="$PATH" TMPDIR="${TMPDIR:-/tmp}" opam exec --switch=framac-33 -- frama-c "$@" \
+      -wp -wp-cache none -wp-session session -wp-prover tip,alt-ergo,z3,cvc5 -wp-script dry -wp-timeout 30 -wp-par 12 \
+      -wp-smoke-tests -wp-report-json goals.json -then -report -report-untried ;;
   wp) smoke="" ;;
   wp-smoke) smoke="-wp-smoke-tests" ;;
   wp-rte) smoke="-wp-rte" ;;
