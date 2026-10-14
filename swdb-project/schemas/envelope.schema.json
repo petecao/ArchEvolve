@@ -455,6 +455,29 @@
       "pattern": "^extensa-(native|gem5)-bfs-[0-9]{8}-[a-z][0-9]+$",
       "x-reason": "campaign must be an Extensa campaign ID extensa-(native|gem5)-bfs-YYYYMMDD-<letter><n>",
       "description": "The one Extensa campaign-ID pattern (2026-10-05 ET): record tags, review origins, campaign files (`swdb.campaign`) and the child-process tag (`swdb.workflow`) all use it."
+    },
+    "run_index": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 3,
+      "x-reason": "run_index is 1, 2 or 3 (three independent runs of an LLM configuration; map decision 23 item 5)",
+      "description": "Probata ticket 12 (2026-10-14 ET): which of the three independent runs of a configuration with an LLM this record belongs to. Absent: not part of a repeated run. One rule for proposals and proof records (S10)."
+    },
+    "provider_pin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "model", "effort"],
+      "x-required-reasons": {
+        "kind": "a provider pin names the provider kind",
+        "model": "a provider pin names its model",
+        "effort": "a provider pin names its effort"
+      },
+      "properties": {
+        "kind": {"enum": ["codex", "claude"], "x-reason": "a provider kind is codex or claude (swdb.provider_adapters.PINS)"},
+        "model": {"type": "string", "minLength": 1},
+        "effort": {"type": "string", "minLength": 1}
+      },
+      "description": "Probata ticket 12 (2026-10-14 ET): the provider kind, model and effort pinned in the run plan (map decision 23 items 5, 7), for example {kind: codex, model: gpt-5.6-sol, effort: xhigh}. One rule for proposals and proof records (S10)."
     }
   }
 }

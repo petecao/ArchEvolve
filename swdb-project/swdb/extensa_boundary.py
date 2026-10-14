@@ -335,7 +335,7 @@ def promote_candidate(args):
     workloads of the artifact's workload class. One evaluation request per workload is
     written to --output; each cites the Extensa campaign as its origin.
     """
-    from swdb import bfs_protocol
+    from swdb import bfs_protocol, level_rule
     from swdb.cli import _require_valid
 
     from swdb.library import Library, attribution_from_args, default_root, review_record
@@ -429,7 +429,9 @@ def promote_candidate(args):
         reviewer=args.reviewer,
         origin=origin, reevaluation={"team_protocol": team["id"], "protocol": derived["id"],
                                      "workload_class": args.workload_class, "workloads": workloads,
-                                     "requests": [{"id": r["id"], "sha256": r["sha256"]} for r in requests]})
+                                     "requests": [{"id": r["id"], "sha256": r["sha256"]} for r in requests]},
+        # Probata ticket 12 (2026-10-14 ET; 26 item 11): the proof records that count and the level snapshot.
+        **level_rule.promotion_pin(store, args.id, library))
     writer.commit(args.records, new=[record])
     return {"review": record, "derived_protocol": derived["id"], "requests": requests,
             "level": level}
@@ -449,6 +451,11 @@ def level_cli(args):
     result = level_rule.candidate_level(store, args.candidate)
     review = promotion(store, args.candidate)
     result["promotion"] = ({"review": review["id"], "attribution": review["attribution"]} if review else None)
+    if review and review.get("level_snapshot"):
+        # Probata ticket 12 (2026-10-14 ET; 26 item 11): what Yan-Ru approved, beside the level now.
+        approved = review["level_snapshot"]
+        result["promotion"].update(level_snapshot=approved, proof_records=review["proof_records"],
+                                   dropped=level_rule.rank(result["level"]) < level_rule.rank(approved["level"]))
     return result
 
 

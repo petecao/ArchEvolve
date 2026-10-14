@@ -164,9 +164,36 @@
       "items": {"type": "string", "minLength": 1},
       "description": "Ticket 10 (S14): the verifiers and solvers the job used, each by the reference ID of a trusted_tool entry in the assumption set (for example frama-c-wp-33.0, z3-4.8.14). swdb validate refuses a tool with no such entry. Optional until the real adapters (21, 22) write it."
     },
+    "run_index": {"$ref": "#/$defs/run_index"},
+    "provider_pin": {"$ref": "#/$defs/provider_pin"},
     "job": {
       "type": "object",
-      "description": "The job block: adapter, host, worker_core, wall_seconds, cpu_seconds, batch_load, peak_rss_bytes, batch, position. Ticket 12 owns the field list and its validation; ticket 04 only writes it."
+      "additionalProperties": false,
+      "description": "The job block (ticket 12 owns this one field list and its checks; 04 writes it, 57 fills it on mbit10, and neither adds a field). Proof time is a cost metric, never a speed claim.",
+      "required": ["adapter", "host", "worker_core", "wall_seconds", "cpu_seconds", "batch_load", "peak_rss_bytes",
+                   "batch", "position"],
+      "x-required-reasons": {
+        "adapter": "the job block names the verifier adapter, so a scripted record shows as such",
+        "host": "the job block names the host (mac on the Mac), so Mac and mbit10 numbers never mix",
+        "worker_core": "the job block names the worker core (\"unpinned\" when the host pins none)",
+        "wall_seconds": "the job block holds the job's wall time",
+        "cpu_seconds": "the job block holds the job's CPU time",
+        "batch_load": "the job block holds the host's batch load",
+        "peak_rss_bytes": "the job block holds the job's peak RSS (what the 8 GB RSS watchdog reads, O9)",
+        "batch": "the job block names its batch",
+        "position": "the job block holds its position in the batch"
+      },
+      "properties": {
+        "adapter": {"type": "string", "minLength": 1, "description": "The verifier adapter's name (`scripted` for contract fixtures)."},
+        "host": {"type": "string", "minLength": 1, "description": "The run host: `mac` on the Mac, the host's short name elsewhere (mbit10)."},
+        "worker_core": {"oneOf": [{"type": "integer", "minimum": 0}, {"const": "unpinned"}, {"type": "null"}], "x-reason": "worker_core is a core number, \"unpinned\", or null (written before ticket 12)", "description": "The one core the job was pinned to, or \"unpinned\" (macOS pins nothing). null: written before ticket 12 (04's form for unpinned)."},
+        "wall_seconds": {"type": "number", "minimum": 0, "x-reason": "a time is never negative", "description": "Wall time of the job."},
+        "cpu_seconds": {"type": "number", "minimum": 0, "x-reason": "a time is never negative", "description": "CPU time of the job (own process and waited children)."},
+        "batch_load": {"oneOf": [{"type": "object", "additionalProperties": false, "required": ["start", "end"], "properties": {"start": {"type": "number", "minimum": 0}, "end": {"type": "number", "minimum": 0}}}, {"type": "number", "minimum": 0}], "x-reason": "batch_load is {start, end}, each a load average of at least 0 (a bare number: written before ticket 12)", "description": "The host's 1-minute load average {start, end}, sampled when the job starts and ends. A bare number: written before ticket 12 (start only)."},
+        "peak_rss_bytes": {"type": "integer", "minimum": 0, "x-reason": "peak RSS is never negative", "description": "Largest resident set size of the job's whole process tree: what the 8 GB RSS watchdog per worker reads (O9)."},
+        "batch": {"type": "string", "minLength": 1, "description": "Batch ID; the jobs of one `swdb prove` call share it."},
+        "position": {"type": "integer", "minimum": 1, "description": "Position in the batch (57 checks interleaving from batch and position)."}
+      }
     },
     "evidence": {
       "type": "object",

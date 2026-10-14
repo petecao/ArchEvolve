@@ -2,6 +2,7 @@
 
 Created: 2026-10-14 02:15 ET, Probata proof of concept ticket 10. Updated: 2026-10-14 ET, part names
 pinned in vocabulary `proof_part_names`.
+Updated: 2026-10-14 02:57 ET, ticket 12: `promotion` shows the approved level snapshot beside the level now.
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/10-level-rule.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("Records and levels", S11, S14, O1, O6, O7), map 26,
 [ADR 0016](../adr/0016-proof-records-never-change-level-computed-on-read.md). Code: `swdb/level_rule.py`.
@@ -114,6 +115,7 @@ The existing fields keep their meaning (`candidate`, `certifications`, `counted`
 | `skipped` | skip records: `{record, skip_reason}`. A skip sets no level and blocks none (O7) |
 | `refuted` | `{flag, records: [{record, replay_label}], evidence: null, "unit-level refutation" or "bug", reproductions}` |
 | `snapshot` | `{level, at: "YYYY-MM-DD HH:MM ET", level_rule, records}`: the dated form campaign summaries, handoffs and promotion reviews store (`swdb.level_rule.snapshot`) |
+| `promotion` | null, or the current promotion `{review, attribution}`; a review written by `swdb promote` since ticket 12 adds `level_snapshot` (what Yan-Ru approved, never recomputed), `proof_records` (those that counted at promotion) and `dropped` (true when `level` now ranks below the snapshot's level, for example after a pinned proof-semantics version is superseded) |
 
 ## Versioning rule
 

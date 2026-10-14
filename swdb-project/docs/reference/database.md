@@ -1,6 +1,7 @@
 # The SQLite database
 
-Updated: 2026-10-14 ET: proof-record tables (Probata proof of concept ticket 04); skip records and `skip_reason` (ticket 11).
+Updated: 2026-10-14 ET: proof-record tables (Probata proof of concept ticket 04); skip records and `skip_reason` (ticket 11);
+2026-10-14 02:57 ET: `swdb_proof_jobs`, `swdb_run_fields`, `swdb_repair_lineage` (ticket 12).
 2026-10-12 00:36 ET: attribution final review fixes (headroom reasons point to one list,
 split-check rule v2 and its estimated share). 2026-10-11 23:28 ET: measured native evaluation timings of an implementation feed
 `performance_runs` (LANL-shaped-db follow-up ticket 03). 2026-10-11 23:24 ET: attribution tables
@@ -402,7 +403,7 @@ rows; no LANL table points back. A file built before the prefix (2026-10-11) has
 | Statement observations | `swdb_statements`, `swdb_statement_steps`, `swdb_statement_facts` |
 | Contract links | `swdb_contract_definitions`, `swdb_contract_data_structures`, `swdb_contract_kernels`, `swdb_contract_kernel_variants` |
 | Attribution reports | the `swdb_attribution*` tables ([Attribution tables](#attribution-tables)) |
-| Proof records | the `swdb_proof*` tables ([Proof tables](#proof-tables)) |
+| Proof records | the `swdb_proof*` tables, `swdb_run_fields` and `swdb_repair_lineage` ([Proof tables](#proof-tables)) |
 
 `swdb_kernels` and `kernels` describe the same kernel records: join them on
 `swdb_kernels.id = kernels.slug`. Likewise `swdb_implementations.id = kernel_variants.slug`.
@@ -1229,3 +1230,49 @@ One row per bound dimension; `threads` is always present (a skip record has no r
 | `dimension` | bound dimension (for example `threads`, `vertices`) |
 | `value` | the bound; NULL when unbounded |
 | `unbounded` | 1 when the dimension is unbounded, else 0 |
+
+### `swdb_proof_jobs`
+
+Added 2026-10-14 ET (ticket 12): the job block, one row per proof record (skip records included), so
+the evaluation's paired statistics can query cost per job. Proof time is a cost metric, never a speed
+claim; never mix `host` values.
+
+| Column | Meaning |
+|---|---|
+| `proof` | proof record ID |
+| `adapter` | the verifier adapter (`scripted` for contract fixtures) |
+| `host` | `mac` on the Mac, else the host's short name |
+| `worker_core` | the pinned core number, or `unpinned`; NULL for a record written before ticket 12 |
+| `wall_seconds` | the job's wall time |
+| `cpu_seconds` | the job's CPU time |
+| `batch_load_start` | the host's 1-minute load average when the job started |
+| `batch_load_end` | the same when the job ended; NULL for a record written before ticket 12 |
+| `peak_rss_bytes` | peak resident set size of the job's process tree (what the RSS watchdog reads) |
+| `batch` | batch ID |
+| `position` | position in the batch |
+
+### `swdb_run_fields`
+
+Added 2026-10-14 ET (ticket 12, S10): one row per proposal or proof record that carries a run index
+or a provider pin.
+
+| Column | Meaning |
+|---|---|
+| `record` | proposal or proof record ID |
+| `record_kind` | `proposal` or `proof` |
+| `run_index` | 1, 2 or 3; NULL when only a provider pin is given |
+| `provider_kind` | `codex` or `claude`; NULL when no pin is given |
+| `provider_model` | the pinned model |
+| `provider_effort` | the pinned effort |
+
+### `swdb_repair_lineage`
+
+Added 2026-10-14 ET (ticket 12): one row per proposal with repair lineage.
+
+| Column | Meaning |
+|---|---|
+| `proposal` | proposal ID (the repaired candidate artifact's proposal) |
+| `refuted_candidate` | the refuted candidate artifact |
+| `counterexample_record` | the refuted proof record holding the counterexample |
+| `round` | the repair round (>= 1) |
+| `reverted_repair` | 1 when the contract-match check flagged a reverted repair, else 0 |

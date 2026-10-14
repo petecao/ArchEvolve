@@ -5,7 +5,10 @@ Updated: 2026-10-14 ET, ticket 11: batches, skips, the failure-class vocabulary,
 ([format-v0.4-method-version.md](format-v0.4-method-version.md)); 2026-10-14 02:15 ET, ticket 10: the
 replay-label and `tools` fields, no level fields, and the versioned level rule
 ([format-v0.4-level-rule.md](format-v0.4-level-rule.md)); 2026-10-14 02:26 ET: failure class
-`spurious_counterexample` and its tie to `unreplayed_counterexample` (Yan-Ru's decision of 02:25 ET).
+`spurious_counterexample` and its tie to `unreplayed_counterexample` (Yan-Ru's decision of 02:25 ET);
+2026-10-14 02:57 ET, ticket 12: the job block's
+one field list and its checks, run fields (`run_index`, `provider_pin`) on proof records and proposals,
+repair lineage on proposals ([Run fields and repair lineage](#run-fields-and-repair-lineage-ticket-12)).
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/04-proof-record-tracer.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("Records and levels"), map ticket 26,
 [ADR 0016](../adr/0016-proof-records-never-change-level-computed-on-read.md).
@@ -26,13 +29,16 @@ the records whose pins still match.
 | The level on read | `swdb.level_rule` ([format-v0.4-level-rule.md](format-v0.4-level-rule.md)) | a new rule is a new `level_rule.VERSION` |
 | The replay label | `replay_label` | 60 fills it and makes it required on refuted records; a new value is added in 10 first |
 | Tools used (S14) | `tools`; `Verdict.tools` | 21, 22 fill it for every real verifier and solver |
-| SQLite tables | `swdb_proofs`, `swdb_proof_pins`, `swdb_proof_assumptions`, `swdb_proof_bounds` | [database.md](database.md#proof-tables) |
+| The job block | `job` ([below](#the-job-block-ticket-12)); `swdb.proof._job` | nobody adds a field outside ticket 12; 57 fills it on mbit10 |
+| Run fields, repair lineage | `run_index`, `provider_pin` (proof, proposal); `repair_lineage` (proposal) | 13 writes repair lineage; 37 writes run fields on its proof records |
+| SQLite tables | `swdb_proofs`, `swdb_proof_pins`, `swdb_proof_assumptions`, `swdb_proof_bounds`, `swdb_proof_jobs`, `swdb_run_fields`, `swdb_repair_lineage` | [database.md](database.md#proof-tables) |
 
 ## `swdb prove`
 
 ```
 swdb prove --candidate <candidate> --function <name> --adapter scripted --script <file> [--script <file> ...] \
-           --runs-dir <folder outside the repo> [--contract <id>] [--batch <id>] [--position <n>] [--id <id>]
+           --runs-dir <folder outside the repo> [--contract <id>] [--batch <id>] [--position <n>] [--id <id>] \
+           [--run-index <1-3>] [--provider-kind codex|claude --provider-model <m> --provider-effort <e>]
 swdb prove ... --skip <skip reason>          # run no verifier; record one skip
 ```
 
@@ -58,6 +64,9 @@ swdb prove ... --skip <skip reason>          # run no verifier; record one skip
   record was written. Each run writes a new record with a new ID; a record is never replaced
   (the record writer refuses).
 - Records written in an Extensa campaign get its `mode` and `campaign` tags, as `swdb add` does.
+- **Run fields** (ticket 12, S10): `--run-index` and the three `--provider-*` options put `run_index` and
+  `provider_pin` on every record of the batch. A provider pin needs all three (exit 2 otherwise). A
+  bounded job with no provider call passes none.
 
 ## The adapter interface
 
@@ -69,10 +78,12 @@ An adapter is a class in `ADAPTERS` with a `name` and `run(job) -> Verdict`.
   `log` (the log file the adapter appends to; kept as evidence).
 - **Out, `Verdict`:** `verdict` (`proven`, `refuted`, `not_proven`), `bounds`, `assumptions`, and
   `counterexample` (refuted only) or `failure_class` (not proven only), plus
-  `unreplayed_counterexample` (with failure class `spurious_counterexample` only, and always with it; below). A verdict that breaks
-  these rules raises `AdapterError`, and nothing is written.
+  `unreplayed_counterexample` (with failure class `spurious_counterexample` only, and always with it; below),
+  `tools`, and `peak_rss_bytes` (ticket 12: the peak the adapter's RSS watchdog read for the job's
+  process tree; else `swdb prove` measures it). A verdict that breaks these rules raises
+  `AdapterError`, and nothing is written.
 - **Scripted adapter (`--adapter scripted`):** reads `verdict`, `bounds`, `assumptions`,
-  `counterexample`, `failure_class` and `unreplayed_counterexample` from the YAML `--script` file. Its records are
+  `counterexample`, `failure_class`, `unreplayed_counterexample`, `tools` and `peak_rss_bytes` from the YAML `--script` file. Its records are
   `contract_fixture` evidence, never evidence about real code.
 
 ## The record
@@ -92,7 +103,8 @@ An adapter is a class in `ADAPTERS` with a `name` and `run(job) -> Verdict`.
 | `pins` | the content-hash set, all ten kinds required (below) |
 | `bounds` | `{dimension: positive integer or "unbounded"}`; `threads` required; absent on a skip record |
 | `assumptions` | absent on a skip record; otherwise list of `{kind, reference: {id, sha256}, sentence}` (`reference` and a non-empty `sentence` required); kind from vocabulary `proof_assumption_kinds` (seven kinds) |
-| `job` | `adapter`, `host` (`mac` on the Mac), `worker_core` (null unless pinned to one core), `wall_seconds`, `cpu_seconds`, `batch_load` (1-minute load average at start), `peak_rss_bytes`, `batch`, `position`; ticket 12 owns and validates this list |
+| `job` | required: the job block ([below](#the-job-block-ticket-12)); ticket 12 owns and validates this one list |
+| `run_index`, `provider_pin` | optional (ticket 12, S10): [run fields](#run-fields-and-repair-lineage-ticket-12); present when a provider call took part (proof hinting) or the job belongs to a repeated run |
 | `evidence` | absent on a skip record; otherwise `adapter_log`: `{path, sha256}` of the adapter log in the runs folder (absolute path) |
 | `evidence_kind` | `contract_fixture` |
 
@@ -113,6 +125,52 @@ Single pins are `{id, sha256}` (the `baseline_function` pin adds `function`) or
 | `minimum_bounds` | not applicable (ticket 33) |
 | `predecessor_snapshot` | not applicable (ticket 62) |
 | `build_constants` | `[]` (list of `{name, value}`) |
+
+## The job block (ticket 12)
+
+Ticket 12 owns this one field list: 04 writes it, 57 fills it on mbit10, and neither adds a field (a
+new field is added in ticket 12 first). Every field is required, measured or read from the run; the
+schema refuses a missing field, an unknown one, a negative time, load or peak RSS, and position 0.
+
+| Field | Meaning |
+|---|---|
+| `adapter` | the verifier adapter's name (`scripted` for contract fixtures), so a scripted record shows as such |
+| `host` | `mac` on the Mac, else the host's short name (`mbit10`); Mac and mbit10 numbers never mix |
+| `worker_core` | the one core the job was pinned to, or `unpinned` (macOS pins nothing; 57 pins on mbit10). `null`: written before ticket 12 |
+| `wall_seconds` | the job's wall time (seconds, >= 0) |
+| `cpu_seconds` | the job's CPU time: own process plus waited children (seconds, >= 0) |
+| `batch_load` | `{start, end}`: the host's 1-minute load average when the job starts (`start`) and ends (`end`), each >= 0. A bare number: written before ticket 12 (start only) |
+| `peak_rss_bytes` | largest resident set size of the job's whole process tree (solver and JVM children included): what the 8 GB RSS watchdog per worker reads (O9). An adapter reports it in `Verdict.peak_rss_bytes`; else `swdb prove` reads `getrusage` |
+| `batch` | the batch ID the jobs of one `swdb prove` call share |
+| `position` | the job's position in the batch (>= 1); 57 checks interleaving from `batch` and `position` |
+
+A skip record has the same block, with zero times. Proof time is a cost metric, never a speed claim
+(map decision 23 item 6).
+
+## Run fields and repair lineage (ticket 12)
+
+The same two run fields go on proposals and proof records (one schema rule each, `envelope.schema.json`
+`$defs`), because a proof-hint run has no proposal (S10). Both are optional: absent means the record is
+not part of a repeated LLM configuration (map decision 23 item 5 repeats only those).
+
+| Field | Meaning |
+|---|---|
+| `run_index` | 1, 2 or 3: which of the three independent runs |
+| `provider_pin` | `{kind, model, effort}`, all three required; `kind` is `codex` or `claude`. For example `{kind: codex, model: gpt-5.6-sol, effort: xhigh}` |
+
+A proposal that counterexample-guided repair (ticket 13) makes carries `repair_lineage`:
+
+| Field | Meaning |
+|---|---|
+| `refuted_candidate` | the refuted candidate artifact (must exist) |
+| `counterexample_record` | the proof record that holds the counterexample (must exist) |
+| `round` | the repair round, a positive integer (the 5-round cap is the repair loop's budget, not a schema rule) |
+| `reverted_repair` | required boolean: the deterministic contract-match check's flag. A reverted repair may compete and never counts as a repair |
+
+`swdb validate` also checks (`swdb.proof.validate_proposal`) that the counterexample record is refuted
+with its counterexample inline (an `unreplayed_counterexample` on a not-proven record never qualifies)
+and that its subject is the named refuted candidate artifact's proof unit. Proposals and proof records
+written before ticket 12 carry none of these fields and stay valid.
 
 ## The level on read (`swdb candidate-level`)
 
