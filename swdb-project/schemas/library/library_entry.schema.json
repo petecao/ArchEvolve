@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "library_entry.schema.json",
   "title": "Typed library entry",
-  "description": "Created 2026-10-03 ET (ticket 46). Shape of one normative typed-library YAML entry (ADR 0007): intrinsic, lowering, library operation or rewrite contract. Evidence state (tier, status, certification) is derived from records and never appears here. swdb.library checks pins, references and clause semantics after this shape. Updated 2026-10-14 ET (Probata PoC ticket 20): proof_semantics entries and the formal-half frame fields; swdb.formal_frame checks their content (docs/reference/format-v0.4-formal-frame.md).",
+  "description": "Created 2026-10-03 ET (ticket 46). Shape of one normative typed-library YAML entry (ADR 0007): intrinsic, lowering, library operation or rewrite contract. Evidence state (tier, status, certification) is derived from records and never appears here. swdb.library checks pins, references and clause semantics after this shape. Updated 2026-10-14 ET (Probata PoC ticket 20): proof_semantics entries and the formal-half frame fields; swdb.formal_frame checks their content (docs/reference/format-v0.4-formal-frame.md). Updated 2026-10-14 ET (ticket 27): proof-semantics version line, hardware interface, calls, inventory, ghost and model pins; swdb.proof_semantics checks them (docs/reference/format-v0.4-proof-semantics.md).",
   "type": "object",
   "required": ["id", "kind", "provenance", "clauses"],
   "properties": {
@@ -41,7 +41,17 @@
     "concurrency_frame": {"$ref": "#/$defs/mappings"},
     "contract_role": {"enum": ["offload_only", "enabling"]},
     "required_enabling_contracts": {"$ref": "#/$defs/mappings"},
-    "rules": {"$ref": "#/$defs/mappings"}
+    "rules": {"$ref": "#/$defs/mappings"},
+    "sequence": {"type": "integer", "minimum": 1},
+    "target": {"$ref": "#/$defs/text"},
+    "description": {"$ref": "#/$defs/text"},
+    "hardware_interface": {"type": "object"},
+    "constants": {"type": "object"},
+    "inventory": {"type": "object"},
+    "ghost": {"type": "object"},
+    "model": {"type": "object"},
+    "calls": {"$ref": "#/$defs/mappings"},
+    "queries": {"$ref": "#/$defs/mappings"}
   },
   "allOf": [
     {"if": {"properties": {"kind": {"const": "intrinsic"}}},
