@@ -1,7 +1,8 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-13 20:42 ET (ticket 24 resolved: no alignment hint kind; unit postconditions for every kernel);
+Updated: 2026-10-13 21:03 ET (ticket 28 added: Extensa-mode iteration ladder);
+2026-10-13 20:42 ET (ticket 24 resolved: no alignment hint kind; unit postconditions for every kernel);
 2026-10-13 20:40 ET (ticket 25 resolved: two winners, bounded gate, proof budgets);
 2026-10-13 20:12 ET (ticket 23 resolved: baselines, metrics and run protocol);
 2026-10-13 20:10 ET (ticket 19 resolved: minimum bounds from negative controls);
@@ -253,6 +254,7 @@ concept is the next effort.
 | 25 | [How does the Extensa-mode loop budget proofs and rank candidate artifacts by certification level?](issues/25-extensa-loop-proofs-and-ranking.md) | grilling | resolved | 19 |
 | 26 | [How are proof verdicts and their evidence recorded, and what does ArchEvolve mode show?](issues/26-proof-records.md) | grilling | ready-for-human | 23, 25 |
 | 27 | [In what order does the proof of concept build its pieces, and what closes each stage?](issues/27-proof-of-concept-stages.md) | grilling | ready-for-human | 18, 19, 24 |
+| 28 | [How should the Extensa-mode rewrite workspace show earlier candidate artifacts, and what keeps campaigns with and without it comparable?](issues/28-extensa-iteration-ladder.md) | grilling | ready-for-human | 25 |
 
 ## Not yet specified
 
