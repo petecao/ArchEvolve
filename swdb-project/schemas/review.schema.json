@@ -115,6 +115,32 @@
         }
       }
     },
+    "proof_records": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "x-ref": "proof"},
+      "description": "Probata ticket 12 (2026-10-14 ET), candidate reviews only: the candidate artifact's proof records that count at promotion (empty when it has none). swdb promote fills it from the level rule; each must be about the target candidate artifact."
+    },
+    "level_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "at", "level_rule", "records"],
+      "x-required-reasons": {
+        "level": "a level snapshot names the level",
+        "at": "a level snapshot is dated (YYYY-MM-DD HH:MM ET)",
+        "level_rule": "a level snapshot names the level-rule version that computed it",
+        "records": "a level snapshot lists the proof records that set the level (empty when none)"
+      },
+      "properties": {
+        "level": {"enum": ["uncertified", "certified", "rejected", "proven_within_bounds_threads_1",
+                           "proven_within_bounds_threads_k", "proven_unbounded"]},
+        "at": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2} ET$",
+               "x-reason": "a snapshot's time is YYYY-MM-DD HH:MM ET"},
+        "level_rule": {"type": "string", "minLength": 1},
+        "records": {"type": "array", "items": {"type": "string", "x-ref": "proof"}}
+      },
+      "description": "Probata ticket 12 (2026-10-14 ET), candidate reviews only: the level snapshot at promotion (swdb.level_rule.snapshot; 26 item 11). Never recomputed: `swdb candidate-level` shows it beside the current level, so a later drop shows against what was approved."
+    },
     "performed_by": {
       "enum": [
         "human",
@@ -277,6 +303,16 @@
           "review_document"
         ]
       }
+    },
+    {
+      "if": {"required": ["target_kind"], "properties": {"target_kind": {"const": "candidate"}}},
+      "else": {
+        "properties": {
+          "proof_records": {"not": {}, "x-reason": "only a candidate review cites proof records"},
+          "level_snapshot": {"not": {}, "x-reason": "only a candidate review holds a level snapshot"}
+        }
+      }
     }
-  ]
+  ],
+  "dependentRequired": {"proof_records": ["level_snapshot"], "level_snapshot": ["proof_records"]}
 }

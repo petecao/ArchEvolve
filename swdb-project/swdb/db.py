@@ -888,3 +888,52 @@ def _insert_proof(con, d, *_):
 
 
 _Insert.proof = staticmethod(_insert_proof)
+
+
+# Probata proof of concept ticket 12 (2026-10-14 ET): the fields the evaluation's paired statistics
+# query, in the SWDB extension only (no LANL core table gains a field). One `swdb_proof_jobs` row per
+# proof record (ticket 12 owns its field list); worker_core is a core number or "unpinned" (NULL:
+# written before ticket 12); batch_load_end is NULL for a record that sampled the load at start only.
+# One `swdb_run_fields` row per proposal or proof record that carries a run index or provider pin
+# (S10), and one `swdb_repair_lineage` row per proposal with repair lineage. Documented in
+# docs/reference/database.md.
+SCHEMA += """
+CREATE TABLE swdb_proof_jobs (proof TEXT PRIMARY KEY, adapter TEXT NOT NULL, host TEXT NOT NULL, worker_core,
+    wall_seconds REAL NOT NULL, cpu_seconds REAL NOT NULL, batch_load_start REAL NOT NULL, batch_load_end REAL,
+    peak_rss_bytes INTEGER NOT NULL, batch TEXT NOT NULL, position INTEGER NOT NULL);
+CREATE TABLE swdb_run_fields (record TEXT PRIMARY KEY, record_kind TEXT NOT NULL, run_index INTEGER,
+    provider_kind TEXT, provider_model TEXT, provider_effort TEXT);
+CREATE TABLE swdb_repair_lineage (proposal TEXT PRIMARY KEY, refuted_candidate TEXT NOT NULL,
+    counterexample_record TEXT NOT NULL, round INTEGER NOT NULL, reverted_repair INTEGER NOT NULL);
+"""
+
+
+def _insert_run_fields(con, d):
+    pin = d.get("provider_pin") or {}
+    if "run_index" in d or pin:
+        con.execute("INSERT INTO swdb_run_fields VALUES (?,?,?,?,?,?)",
+                    (d["id"], d["kind"], d.get("run_index"), pin.get("kind"), pin.get("model"), pin.get("effort")))
+
+
+def _insert_proof_job(con, d, *_):
+    _insert_proof(con, d)
+    job = d["job"]
+    load = job["batch_load"]
+    start, end = (load["start"], load["end"]) if isinstance(load, dict) else (load, None)
+    con.execute("INSERT INTO swdb_proof_jobs VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+                (d["id"], job["adapter"], job["host"], job["worker_core"], job["wall_seconds"], job["cpu_seconds"],
+                 start, end, job["peak_rss_bytes"], job["batch"], job["position"]))
+    _insert_run_fields(con, d)
+
+
+def _insert_proposal(con, d, *_):
+    _insert_run_fields(con, d)
+    lineage = d.get("repair_lineage")
+    if lineage:
+        con.execute("INSERT INTO swdb_repair_lineage VALUES (?,?,?,?,?)",
+                    (d["id"], lineage["refuted_candidate"], lineage["counterexample_record"], lineage["round"],
+                     int(lineage["reverted_repair"])))
+
+
+_Insert.proof = staticmethod(_insert_proof_job)
+_Insert.proposal = staticmethod(_insert_proposal)

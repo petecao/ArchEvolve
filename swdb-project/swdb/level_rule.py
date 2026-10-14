@@ -429,3 +429,15 @@ def snapshot(level, records, now=None):
 def candidate_level(store, candidate_id):
     """`swdb candidate-level`'s whole answer: certification, the proven level and the reason."""
     return Rule(store).candidate(candidate_id)
+
+
+def promotion_pin(store, candidate_id, library=None):
+    """What a promotion review stores (ticket 12; 26 item 11): {proof_records, level_snapshot}.
+
+    `proof_records` are the candidate artifact's proof records that count now (skip records aside);
+    `level_snapshot` is the dated snapshot, whose `records` set the level. Neither is recomputed later."""
+    rule = Rule(store, library)
+    result = rule.candidate(candidate_id)
+    counting = [rid for rid in result["proof_records"]
+                if rule.proofs[rid].get("verdict") is not None and rule.status(rid)["counts"]]
+    return {"proof_records": counting, "level_snapshot": result["snapshot"]}
