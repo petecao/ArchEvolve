@@ -1,9 +1,9 @@
 # 12 — Proposal and promotion fields
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-14 03:05 ET (resolved); 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** resolved
 **Blocked by:** 10
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Modules", table "Loop, modes and guards", row "Proposals"; "Records and levels" (promotion review; where things live); "Refutation, repair and bugs"; "Evaluation design" (protocol: run index, pinned provider); "Providers and machines"; "Testing Decisions", seams 2 and 4; user stories 60, 62, 71; S10; O9); decisions: [23](../../formal-verification-2026-10-09/issues/23-evaluation-baselines-and-metrics.md) (items 3, 5, 6, 7), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md) (items 5, 6, 11)
 **Time estimate:** about 1 day
@@ -21,40 +21,40 @@ was approved.
 
 ## Acceptance
 
-- [ ] **Repair lineage validates.** `swdb validate` accepts a proposal with repair lineage: the
+- [x] **Repair lineage validates.** `swdb validate` accepts a proposal with repair lineage: the
       refuted candidate artifact, the ID of the proof record that holds the counterexample, the
       round (a positive integer) and the reverted-repair flag. It rejects, one at a time: a proof
       record that does not exist; one that is not a refutation with an inline counterexample; one
       whose subject is not the named refuted candidate artifact; a missing flag; round 0.
-- [ ] **Run fields validate.** A proposal accepts run index 1, 2 or 3 and a provider pin (provider
+- [x] **Run fields validate.** A proposal accepts run index 1, 2 or 3 and a provider pin (provider
       kind, model, effort; for example Codex, `gpt-5.6-sol`, `xhigh`). Run index 0 or 4, and a pin
       without its model or effort, fail validation.
-- [ ] **Run fields on proof records (S10).** A proof record accepts the same run index and provider
+- [x] **Run fields on proof records (S10).** A proof record accepts the same run index and provider
       pin under the same rules. A proof-hint run, which has no proposal, carries both on its proof
       record. Controls: a proof record with run index 4, or a pin without its effort, fails
       validation.
-- [ ] **Job block, one field list.** Every proof record `swdb prove` writes has a job block with
+- [x] **Job block, one field list.** Every proof record `swdb prove` writes has a job block with
       adapter, host (`mac` on the Mac), worker core, wall time, CPU time, batch load, peak RSS,
       batch ID and position in the batch, each measured or read from the run (scripted adapter in
       tests). Peak RSS is what the 8 GB RSS
       watchdog per worker reads (O9). Validation rejects a record with a field missing, a negative
       time or a negative peak RSS. This list is
       the only one: 04 writes the block and 57 fills it on mbit10, and neither adds a field.
-- [ ] **Build.** `swdb build` loads the new proposal and proof-record fields into SWDB extension
+- [x] **Build.** `swdb build` loads the new proposal and proof-record fields into SWDB extension
       tables, so the evaluation's paired statistics can query them. No new field appears in a LANL
       core table.
-- [ ] **Promotion pins the level.** A new promotion review of a candidate artifact carries the proof
+- [x] **Promotion pins the level.** A new promotion review of a candidate artifact carries the proof
       record IDs that count at promotion and the level snapshot from 10 (level, date and time ET,
       level-rule version). The existing promotion command, `swdb promote`, fills both from the level
       rule. `swdb validate` rejects such a review whose snapshot has no level-rule version, or that
       cites a proof record about another candidate artifact.
-- [ ] **A later drop shows.** Promote a fixture candidate artifact at proven within bounds,
+- [x] **A later drop shows.** Promote a fixture candidate artifact at proven within bounds,
       threads = 1. Then land a new proof-semantics version, so its proof records now pin an old one.
       `swdb candidate-level` reads certified and shows the promotion snapshot beside it (proven within
       bounds, threads = 1, its date, its level-rule version).
-- [ ] **Records never change.** Running `swdb candidate-level`, `swdb build` or a promotion leaves
+- [x] **Records never change.** Running `swdb candidate-level`, `swdb build` or a promotion leaves
       every proof record and proposal byte-identical.
-- [ ] **Old records stay valid.** Proposals and reviews of candidate artifacts written before this
+- [x] **Old records stay valid.** Proposals and reviews of candidate artifacts written before this
       ticket, without the new fields, still pass `swdb validate` and `swdb build`. So does any proof
       record written before this ticket lands, by 04 or any other ticket, without run fields or any
       other field this ticket adds.
@@ -103,3 +103,67 @@ was approved.
   never mixed with mbit10 numbers.
 - Tests use fixture records with `contract_fixture` evidence and the scripted adapter; no verifier
   runs. Full-suite runs on the Mac use at most 2 test workers.
+
+## Answer
+
+2026-10-14 03:05 ET. Built test-first; every acceptance box is met. Branch `probata-poc/t12`.
+
+**What exists now** (interfaces: [`format-v0.4-proof.md`](../../../docs/reference/format-v0.4-proof.md)
+sections "The job block" and "Run fields and repair lineage";
+[`format-v0.4-extensa.md`](../../../docs/reference/format-v0.4-extensa.md) "Candidate reviews";
+[`format-v0.4-level-rule.md`](../../../docs/reference/format-v0.4-level-rule.md) `promotion`;
+[`database.md`](../../../docs/reference/database.md) proof tables):
+
+- **Job block, one list** (`schemas/proof.schema.json` `job`, closed): `adapter`, `host`, `worker_core`,
+  `wall_seconds`, `cpu_seconds`, `batch_load` `{start, end}`, `peak_rss_bytes`, `batch`, `position`, all
+  required; negative times, load or RSS and position 0 fail. `swdb prove` writes it through
+  `swdb.proof._job` (skip records too). New: `Verdict.peak_rss_bytes`, so an adapter that runs its tool
+  under the RSS watchdog reports the watchdog's tree peak; otherwise `getrusage` is read.
+- **Run fields** `run_index` (1-3) and `provider_pin` `{kind: codex|claude, model, effort}`: one rule in
+  `schemas/envelope.schema.json` `$defs`, used by `proof` and `proposal`. `swdb prove --run-index
+  --provider-kind --provider-model --provider-effort` writes them (a partial pin exits 2).
+- **Repair lineage** on proposals: `repair_lineage {refuted_candidate, counterexample_record, round,
+  reverted_repair}`; `swdb.proof.validate_proposal` checks the record is refuted with an inline
+  counterexample about the named refuted candidate artifact.
+- **Promotion:** `swdb promote` (candidate) writes `proof_records` (the counting ones) and
+  `level_snapshot` (from `swdb.level_rule.promotion_pin`) on the review; `swdb.proof.validate_promotion`
+  refuses a cited proof record about another candidate artifact; the schema refuses a snapshot
+  without `level_rule` and either field alone or on a non-candidate review. `swdb candidate-level`
+  adds `promotion.level_snapshot`, `promotion.proof_records` and `promotion.dropped`.
+- **Build:** `swdb_proof_jobs`, `swdb_run_fields` (proposal and proof rows), `swdb_repair_lineage`; no
+  LANL core table changes (tested by comparing every core table's columns and rows).
+- **Tests:** `tests/test_proof_run_fields.py`, `tests/test_promotion_level_snapshot.py`. Targeted run
+  (with 04, 10, 11, 48's test files, `test_db.py`, `test_format_doc.py`): 302 passed, 1 deselected,
+  JUnit XML `/tmp/claude/probata-runs/t12/targeted.xml`, sha256
+  `e9577a9de470c0547191e610e9c6e0515f4d586023098ab8250c0e8ccafe9b2f`.
+
+**Assumptions** (the ticket's own assumptions are implemented as written):
+
+- Assumption: field names `run_index`, `provider_pin` (`kind`, `model`, `effort`), `repair_lineage`
+  (`refuted_candidate`, `counterexample_record`, `round`, `reverted_repair`), and on reviews
+  `proof_records` and `level_snapshot`. `provider_pin.kind` is `codex` or `claude`
+  (`swdb.provider_adapters.PINS`); a new provider adds a value here.
+- Assumption: "proof record IDs that count at promotion" = the candidate artifact's non-skip proof
+  records that count under the level rule (refuted ones included); the snapshot's `records` are the
+  ones that set the level. Only candidate-proof-unit records of the reviewed candidate may be cited.
+- Assumption: `promotion.dropped` is true when the current level ranks below the snapshot's level
+  (rank order of the level rule; rejected ranks with uncertified).
+- Assumption: the legacy job forms 04 wrote before this ticket (`worker_core: null`, a bare-number
+  `batch_load`) stay valid forever; `swdb_proof_jobs.batch_load_end` is NULL for them.
+- Assumption: run index and provider pin are independent (either may appear alone); the map pairs
+  them but does not say one requires the other.
+- Assumption: no SQLite table for promotion snapshots; the acceptance asks only for the proposal and
+  proof-record fields (the review stays queryable through `swdb_records.json`).
+- The skill's seam-confirmation step had no user in the loop: the seams tested are the ticket's own,
+  `swdb validate`, `swdb prove`, `swdb build`/`sql`, `swdb promote`, `swdb candidate-level`.
+
+**For other tickets:** 13 writes `repair_lineage` (it needs a refuted record whose subject is the
+refuted candidate). 37 passes `--run-index` and the `--provider-*` options to `swdb prove` (or sets
+`run_index`/`provider_pin` on the record it writes). 57 sets `worker_core` to the pinned core and
+reports `Verdict.peak_rss_bytes` from its per-worker watchdog; it adds no field. 21/22 should report
+`Verdict.peak_rss_bytes` from `verifier_run.py`'s summary (`peak_rss_mb` x 2^20).
+
+**Side findings:** `pytest-reportlog` is not installed in the pyenv 3.12.6 interpreter, so LR-07's
+`--report-log` is unavailable; JUnit XML was used. The whole-store validation (`-m whole_store`) was
+not run here (main session's job); no repository record is a proof record, and the proposal and review
+changes are additive optional fields.

@@ -29,6 +29,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from swdb import formula, isa, strategy
+from swdb.derived import UNRESOLVED, validate_implementation
 from swdb.problems import Problem
 
 
@@ -124,6 +125,8 @@ def check(record, ctx):
     elif kind == "review" and data.get("target_kind") == "candidate":
         from swdb.extensa_boundary import validate_review
         yield from validate_review(record, ctx)
+        from swdb.proof import validate_promotion     # Probata ticket 12 (2026-10-14 ET)
+        yield from validate_promotion(record, ctx)
     elif kind == "review" and data.get("target_kind") == "review":
         from swdb.library import validate_correction     # spec review C1 (2026-10-05 ET)
         yield from validate_correction(record, ctx)
@@ -143,6 +146,12 @@ def check(record, ctx):
     elif kind == "attribution":   # fine-grained attribution ticket 02 (2026-10-11 ET)
         from swdb.attribution import validate_record
         yield from validate_record(record, ctx)
+    elif kind == "proof":   # Probata proof of concept ticket 11 (2026-10-14 ET)
+        from swdb.proof import validate_record
+        yield from validate_record(record, ctx)
+    elif kind == "proposal":   # Probata proof of concept ticket 12 (2026-10-14 ET): repair lineage
+        from swdb.proof import validate_proposal
+        yield from validate_proposal(record, ctx)
     elif kind == "profile_package":
         from swdb.cli import Failure
         from swdb.profile_package import verify
@@ -247,6 +256,7 @@ def _implementation(record, ctx):
         yield Problem(rel, "run.index_stream.pattern", f"{stream['pattern']!r} is not an access pattern of this implementation")
     yield from _required_isa(record, ctx)
     yield from _applies(record, ctx, set(loops), set(patterns))
+    yield from validate_implementation(record, ctx)     # Probata PoC 19: lineage and rewrite links
     app = ctx.application(data)
     yield from _implementation_context(record, ctx, app)
     for i, code in enumerate(data["code"]):
@@ -299,7 +309,9 @@ def _applies(record, ctx, loops, patterns):
         if chosen is None:
             continue    # missing (the schema's x-ref reports it) or invalid (reported on its own file)
         wanted, target = chosen["target"], applied["target"]
-        if wanted == "input":
+        if target == UNRESOLVED and record.data["origin"]["kind"] == "derived" and wanted != "input":
+            pass    # Probata PoC 19: the profiling agent's annotation of a derived implementation names it
+        elif wanted == "input":
             if target != "input":
                 yield Problem(record.rel, f"{where}.target",
                               f"strategy {chosen['id']!r} targets input, so its target is 'input', not {target!r}")

@@ -15,7 +15,7 @@ import sys
 import pytest
 import yaml
 
-from conftest import REPO, make_records, run_swdb
+from conftest import FIXTURES, REPO, make_records, run_swdb
 from testkit.bfs_protocol import _payload
 from testkit.proposals import build_proposal_setup
 from testkit.record_subset import copy_record_subset
@@ -45,16 +45,26 @@ def _library_roots():
 def proof_seed(tmp_path_factory):
     """A certified fixture candidate artifact, built once per module."""
     path = tmp_path_factory.mktemp("proof-seed")
+    return path, build_proof_seed(path)
+
+
+def build_proof_seed(path):
+    """Build the seed (records/ and library/ under `path`); return the certified candidate artifact's ID.
+
+    A plain builder (T1, 2026-10-05 ET): ticket 57's mbit10 batch script builds the same seed."""
     records = make_records(path)
     copy_record_subset(REPO / "records", records.path,
                        sorted(_library_roots() | {"gapbs-bfs-do", "gapbs", "dx100-gapbs", "mbit10"}))
     shutil.copytree(REPO / "library", path / "library")
+    # Ticket 11: `swdb prove` pins the current method version, so the seed's library holds the fixture one.
+    (path / "library" / "methods").mkdir(exist_ok=True)
+    shutil.copy(FIXTURES / "proof" / "methods" / "contract-fixture-1.yaml", path / "library" / "methods")
     records, runs, _snapshot, request = build_proposal_setup(records, path, copy_all=False)
     submitted = records.swdb("submit", request(), "--runs-dir", runs, "--format", "json")
     assert submitted.returncode == 0, submitted.stderr
     candidate = json.loads(submitted.stdout)["candidate"]
     _certify(records.path, path, candidate, "certification.proof-fixture-pass", "certified")
-    return path, candidate
+    return candidate
 
 
 @pytest.fixture
@@ -141,8 +151,9 @@ def test_prove_writes_one_proven_record_with_subject_pins_bounds_assumptions_and
     from swdb.library import Library
     assert record["pins"]["contract"] == {"id": CONTRACT, "sha256": Library(REPO / "library").content_sha256(CONTRACT)}
     assert record["pins"]["summaries"] == [] and record["pins"]["build_constants"] == []
-    for kind in ("method_version", "proof_semantics", "minimum_bounds", "predecessor_snapshot", "reference_semantics"):
+    for kind in ("proof_semantics", "minimum_bounds", "predecessor_snapshot", "reference_semantics"):
         assert record["pins"][kind]["not_applicable"]          # explicit, never left out
+    assert record["pins"]["method_version"]["id"] == "method.contract-fixture-1"   # ticket 11
     assert record["bounds"] == {"threads": 1, "vertices": 3, "edges": 3}
     assert record["assumptions"] == [ASSUMPTION]
     assert set(record["job"]) == JOB_FIELDS
@@ -331,9 +342,9 @@ def test_a_proven_record_at_one_thread_reads_proven_within_bounds_computed_on_re
     rid = seed.prove(seed.script())["record"]["id"]
     before = _files(seed)
     level = seed.level()
-    assert level["level"] == "proven_within_bounds"
+    assert level["level"] == "proven_within_bounds_threads_1"      # ticket 10's sub-rung names
     assert level["certification_level"] == "certified"
-    assert level["proven"] == {"level": "proven_within_bounds", "bounds": {"threads": 1, "vertices": 3, "edges": 3},
+    assert level["proven"] == {"level": "proven_within_bounds_threads_1", "bounds": {"threads": 1, "vertices": 3, "edges": 3},
                                "records": [rid]}
     assert level["proof_records"] == [rid]
     assert _files(seed) == before                          # nothing writes a level anywhere

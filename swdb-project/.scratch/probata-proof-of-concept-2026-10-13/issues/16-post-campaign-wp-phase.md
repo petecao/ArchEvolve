@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 11, 15
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) (sections "Extensa mode" (WP phase, budgets), "Records and levels" (campaign summary), "Proof-hint loop" (budget), "Verifier lineup and order" (order per candidate artifact, failure classes), "Testing Decisions" seams 1, 3 and 4; choices S1, S6; open point O7); decisions: [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md) items 3, 10, 11 and its Later changes, [25](../../formal-verification-2026-10-09/issues/25-extensa-loop-proofs-and-ranking.md) items 1, 2, 4, [26](../../formal-verification-2026-10-09/issues/26-proof-records.md) items 6, 10
 **Time estimate:** about 2 days

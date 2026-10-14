@@ -1,9 +1,9 @@
 # 11 — Method-version file and failure classes
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-14 02:26 ET (Later changes: class spurious_counterexample); 2026-10-14 01:45 ET (resolved, Answer); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 04
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Modules", table "Records and levels" (method-version file, failure-class vocabulary); "Records and levels" (method-version file contents); "Verifier lineup and order" (failure classes, skip reasons); "Extensa mode" (per-candidate budgets belong to the method version); "Testing Decisions", seams 1 and 4; user stories 21, 61; S3; S8; O7); decisions: [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) (items 8, 9), [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md) (items 3, 5, 7, 10, 11), [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md) (items 4, 5, 9), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md) (items 1, 3, 6, 7, 10), [18](../../formal-verification-2026-10-09/issues/18-evaluation-claims-and-subjects.md) (item 7), [19](../../formal-verification-2026-10-09/issues/19-bounded-verdict-bounds.md) (items 1, 8), [25](../../formal-verification-2026-10-09/issues/25-extensa-loop-proofs-and-ranking.md) (item 2), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md) (items 3, 10 and its Later changes)
 **Time estimate:** about 1 day
@@ -19,7 +19,7 @@ the list, `swdb prove` stops the batch. Yan-Ru gets "the method" as one citable 
 
 ## Acceptance
 
-- [ ] **Every section.** `swdb validate` accepts a `contract_fixture` method-version file with all
+- [x] **Every section.** `swdb validate` accepts a `contract_fixture` method-version file with all
       sections: verifier lineup (each tool, solver and front end with an exact version and its
       flags, clang 22.1.8 among them); CIVL and GenMC settings; the OpenMP runtime; the C-lowering
       subset, translators and naming rules; the ACSL language version; the proof-hint vocabulary;
@@ -29,29 +29,29 @@ the list, `swdb prove` stops the batch. Yan-Ru gets "the method" as one citable 
       the Rocq development, which holds the composition theorem and the DX100 reduction lemma (S8);
       ghost capacity K. Negative controls: removing any one section fails validation and names that
       section.
-- [ ] **Exact pins.** A lineup entry with a version range, "latest" or no flags field fails
+- [x] **Exact pins.** A lineup entry with a version range, "latest" or no flags field fails
       validation. An explicit empty flags list passes.
-- [ ] **Budgets.** The budgets section holds the per-candidate budgets 25 item 2 gives the method
+- [x] **Budgets.** The budgets section holds the per-candidate budgets 25 item 2 gives the method
       version, at their starting values: hint rounds (10), hint-loop wall time (60 min), bounded job
       time (15 min), counterexample repair rounds (5); plus WP time per solver (30 s), a hint-loop
       run-plan parameter (13 item 11); plus CIVL's k (3, calibrated; 15 item 9, S8). Removing any
       one fails validation.
-- [ ] **Pinned by every proof record.** `swdb prove` writes the method version's ID and sha256 into
+- [x] **Pinned by every proof record.** `swdb prove` writes the method version's ID and sha256 into
       every proof record. `swdb validate` rejects a proof record with no method-version pin, one that
       names a missing file, and one whose hash does not match the file. This catches a version file
       edited in place: changing any part makes a new method version (glossary), so the fix is a new
       file, never an edited record.
-- [ ] **The failure-class list.** The failure-class vocabulary holds exactly these failure
+- [x] **The failure-class list.** The failure-class vocabulary holds exactly these failure
       classes: parse error, unsupported construct, unwinding bound too small, timeout, out of memory,
       solver error, tool crash, vacuous pass (11 item 9); unknown and ghost capacity (S3); hint budget
       spent (13); below minimum bounds (19). And exactly these skip reasons: no contract proof, no
       minimum bounds, outside the C++ subset (25). `swdb validate` rejects a proof record whose
       failure class or skip reason is not on the list.
-- [ ] **Every listed class records.** With a scripted adapter, `swdb prove` writes one "not proven"
+- [x] **Every listed class records.** With a scripted adapter, `swdb prove` writes one "not proven"
       record per listed failure class; each passes `swdb validate` and `swdb build`.
-- [ ] **Skips record.** For each skip reason, `swdb prove` runs no verifier and records the skip
+- [x] **Skips record.** For each skip reason, `swdb prove` runs no verifier and records the skip
       with its reason; the result passes `swdb validate` and `swdb build`.
-- [ ] **An unlisted class stops the batch.** A scripted adapter that reports a class outside the list
+- [x] **An unlisted class stops the batch.** A scripted adapter that reports a class outside the list
       makes `swdb prove` stop: no proof record for that job, a non-zero exit whose message names the
       class and the adapter's raw output by path, and no later job in the batch starts. Control:
       the same batch with a listed class runs to the end.
@@ -103,3 +103,82 @@ the list, `swdb prove` stops the batch. Yan-Ru gets "the method" as one citable 
 - Tests use the scripted adapter; no real verifier runs. Full-suite runs on the Mac use at most 2
   test workers.
 - Assumption (not decided in the map): a draft (non-frozen) method version may mark a section "not yet built"; `swdb validate` accepts the marker only on drafts, and 59 refuses it. The ticket that lands a section writes the next draft version; 21 writes the first real draft once the lineup is installed (03).
+
+## Answer
+
+2026-10-14 01:45 ET. Built test-first; every acceptance box is met. Branch `probata-poc/t11`.
+
+**What exists now** (interfaces: [`format-v0.4-method-version.md`](../../../docs/reference/format-v0.4-method-version.md),
+[`format-v0.4-proof.md`](../../../docs/reference/format-v0.4-proof.md)):
+
+- **Method-version file kind:** `library/methods/<version>.yaml`, ID `method.<version>`, shape
+  `schemas/library/method_version.schema.json`, code `swdb/method_version.py` (`load`, `current`,
+  `pin`, `pin_problem`, `sections`, `validate`). `swdb validate` checks every file beside the records
+  (from `swdb/validate.py`) and names each missing section, part and budget. Lineup versions must
+  be one exact version (digits and dots); `flags` is required, `[]` passes. Ordering field:
+  `sequence` (the current version is the highest). No real method-version file is shipped; the
+  `contract_fixture` file is `tests/fixtures/proof/methods/contract-fixture-1.yaml`.
+- **Failure-class vocabulary:** `vocab/proof_failure_classes.yaml`, extra fields `role`
+  (`failure_class` | `skip_reason`) and `handler` (text). Twelve classes, three skip reasons, exactly
+  the ticket's list. Proof schema: `failure_class` and the new `skip_reason` use it; the role is
+  checked in `swdb.proof.validate_record` (hooked from `swdb/rules.py`).
+- **`swdb prove`** (`swdb/proof.py`): writes the current method version's `{id, sha256}` (file
+  sha256) as the `method_version` pin, and refuses to run without a method-version file. `--script`
+  repeats: one batch = the jobs of one call, positions in order, one batch ID. An adapter failure
+  class outside the list stops the batch (exit 1; message names the class and the adapter log path;
+  no record for that job; no later job). `--skip <reason>` writes a skip record (no verdict, bounds,
+  assumptions or adapter log; no runs folder).
+- **Validate:** rejects a `method_version` pin naming no file or whose sha256 differs from the file;
+  a `not_applicable` pin still passes (pre-ticket-11 records). Rejects a failure class or skip
+  reason that is not on the list in its role (a skip reason used as a failure class included).
+- **Build:** `swdb_proofs` gains `skip_reason`; `verdict`, `log_path`, `log_sha256` are nullable
+  (skip records). Documented in `docs/reference/database.md`.
+
+**Tests:** `tests/test_proof_method_version.py` (64 tests) and `tests/test_proof_records.py`
+(42, updated: its seed library now holds the fixture method version, and the `method_version` pin
+is a real pin). Serial, no xdist, no real verifier, nothing through `verifier_run.py`. Also green:
+`test_format_doc.py`, `test_db.py`, `test_validate_rules.py`, `test_provider_role_schemas.py`,
+`test_extensa_boundary.py`. Test scratch only: `/tmp/claude/probata-runs/t11/pytest/`.
+
+**Assumptions** (the map leaves these open), besides the ticket's own:
+
+- Assumption: the method-version pin's sha256 is the file's byte sha256 (any edit, a comment
+  included, is a new method version), not the parsed-content digest contract pins use.
+- Assumption: the current method version is the one with the highest `sequence` field; IDs carry no
+  order. `swdb prove` always pins the current one (no `--method-version` override yet).
+- Assumption: a skip record keeps `subject`, `pins` and `job` (wall and CPU seconds 0, the adapter
+  that would have run) and has no `evidence`; `--skip` writes exactly one record and ignores
+  `--script`.
+- Assumption: section shapes beyond what the acceptance names (CIVL and GenMC settings, OpenMP
+  runtime, prompts as `{id, sha256}` references) stay loose until the tickets that build them (25,
+  36, 41-44, 46, 47) tighten the schema. `civl_k` must be at least 2 (15 item 9); the fixture's
+  values follow the map's decisions but are not the method.
+- Assumption (input from ticket 05's SAW spike, routed by the main session): a bounded refutation
+  counts as a program refutation only after its counterexample replays concretely on the compiled
+  code (the standard spurious-counterexample check). A counterexample that does not replay is a tool
+  or encoding failure: the record is `not_proven` with the nearest listed class (for example
+  `unsupported_construct`) and carries it in the new optional field `unreplayed_counterexample`
+  (not proven only; `Verdict` refuses it on any other verdict), so it never reaches repair. The map's
+  list has no class for "refutation caused by the encoding"; adding one needs Yan-Ru (26 item 10 is
+  a closed list). The replay itself is not built here (adapter tickets 22, 46, 47).
+
+**Side findings:** none. The repository library has no `methods/` folder yet, so a real
+`swdb prove` refuses to run until 21 writes the first real draft method version.
+
+## Later changes
+
+- 2026-10-14 02:26 ET: Yan-Ru decided (2026-10-14 02:25 ET) to add a failure class for false
+  refutations caused by the tool or the spec encoding. New class `spurious_counterexample` in
+  `vocab/proof_failure_classes.yaml` (handler: never send to repair; fix the encoding (translator,
+  spec placement or adapter), add the case to the regression corpus, rerun). It replaces the
+  Answer's nearest-class assumption: a not-proven record carries `unreplayed_counterexample` exactly
+  when its failure class is `spurious_counterexample` (`Verdict` and `schemas/proof.schema.json`
+  refuse either without the other). Ticket 13's repair must skip this class. Branch
+  `probata-poc/t11-spurious`; tests in `tests/test_proof_method_version.py`.
+- 2026-10-14 02:50 ET (main session; Assumption, not decided in the map): `spurious_counterexample` and ticket 10's
+  `replay_label` do not overlap; they are two stages. Stage 1 (adapters 22, 46, 47): replay the verifier's
+  counterexample concretely on the compiled proof unit under the proof semantics. If it does not replay, the
+  record is not proven with `spurious_counterexample`. If it replays, the record is refuted. Stage 2 (ticket 60):
+  replay the refutation on the strict layer; `replay_label` says how far that reaches (`reproduced`,
+  `proof_semantics_only`, `not_reproduced`, `undefined_behavior`). So `not_reproduced` is a confirmed refutation
+  the strict layer does not show, never a spurious one.

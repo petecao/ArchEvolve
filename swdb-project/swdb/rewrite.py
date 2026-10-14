@@ -1,6 +1,7 @@
 """Bounded instruction interpretation through an operator-selected provider.
 
-Updated: 2026-09-30 (repairs keep the provider classification; usage limits are read only
+Updated: 2026-10-14 ET (Probata ticket 13: the prompt-only route refuses a counterexample and the
+authors' accelerated functions); 2026-09-30 (repairs keep the provider classification; usage limits are read only
 from failed sessions). 2026-09-29: pinned adapters, workspace/guard seam and audit. Providers
 return proposed edits; SWDB applies protections. 2026-09-28: stream-json stdout cap
 sized for partial-message amplification; signal handlers only on the main thread.
@@ -580,8 +581,17 @@ def call(config, request, source, package, store, folder, repair=None, remaining
         from swdb import provider_workspace
         return provider_workspace.run(config, request, source, package, store, folder,
                                       repair=repair, remaining_s=remaining_s)
+    from swdb import provider_workspace
+    if isinstance(repair, dict) and repair.get("kind") == provider_workspace.COUNTEREXAMPLE_REPAIR:
+        raise Failure("counterexample-guided repair needs the guarded provider workspace (workspace: true)")
+    provider_workspace.refuse_counterexamples({"request.json": json.dumps({"request": request, "repair": repair})})
     prompt = prompt_for(request, source, package, repair=repair,
                         edit_format=config.get("edit_format", "patch"))
+    from swdb.provider_roles import FORBIDDEN_SOURCE
+    found = FORBIDDEN_SOURCE.search(prompt)
+    if found:
+        raise Failure(f"provider prompt shows the authors' accelerated code ({found.group(0)}); only an evaluation "
+                      "repair run's workspace for that refuted candidate artifact may (O5)")
     response, meta, error = None, {}, None
     try:
         response, meta = interpret(config, prompt, folder, remaining_s=remaining_s)

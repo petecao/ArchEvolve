@@ -173,10 +173,17 @@ def main(argv=None):
     sub.add_argument("--runs-dir", type=Path, required=True)
     sub.add_argument("--provider-config", type=Path)
 
-    sub = command("repair", "repair a build/correctness failure or retry an unavailable initial provider", db=True, fmt=True)
-    sub.add_argument("evaluation")
+    sub = command("repair", "repair a build/correctness failure, retry an unavailable initial provider, or run one "
+                  "counterexample-guided repair round on a refuted proof record", db=True, fmt=True)
+    sub.add_argument("evaluation", metavar="trigger",
+                     help="a candidate evaluation (build or correctness failure), a proposal (provider retry) or a "
+                          "refuted proof record (counterexample-guided repair, ticket 13)")
     sub.add_argument("--runs-dir", type=Path, required=True)
     sub.add_argument("--provider-config", type=Path, required=True)
+    sub.add_argument("--evaluation-run", action="store_true",
+                     help="proof record trigger only: an evaluation repair run (O1, O5); never set by campaigns "
+                          "or ArchEvolve mode")
+    sub.add_argument("--run-index", type=int, choices=[1, 2, 3], help="proof record trigger only: run index (S10)")
 
     for name in ("dx100-build", "dx100-execute", "dx100-compile"):
         sub = command(name, "run a bounded DX100 backend stage with durable evidence", db=True, fmt=True)
@@ -273,6 +280,8 @@ def main(argv=None):
     attribution.register_cli(commands)
     from swdb import proof     # Probata proof of concept ticket 04 (2026-10-14 ET): `swdb prove`
     proof.register_cli(commands)
+    from swdb import proof_lane     # Probata ticket 57 (2026-10-14 ET): `swdb prove-lane`
+    proof_lane.register_cli(commands)
 
     from swdb import archevolve
     archevolve.register_cli(commands)

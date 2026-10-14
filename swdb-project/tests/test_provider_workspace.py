@@ -1,4 +1,5 @@
-"""Workspace/audit contracts via public submit and repair. Updated: 2026-10-13 ET (suite fix: the DX100
+"""Workspace/audit contracts via public submit and repair. Updated: 2026-10-14 ET (Probata ticket 13: the
+DX100 required-operation proposal is refused by the authors'-code guard); 2026-10-13 ET (suite fix: the DX100
 required-operation proposal names the gem5-backed target, so it runs in explicit Extensa fixture mode
 under ADR 0013); 2026-10-05 ET (shared tests/testkit); 2026-09-30.
 
@@ -1067,7 +1068,12 @@ def test_required_dx100_operation_headers_resolve_in_snapshot(records, tmp_path,
     result = records.swdb("submit", path, "--provider-config", config, "--runs-dir", runs, "--format", "json",
                           *EXTENSA)
     proposal = json.loads(result.stdout)
-    assert result.returncode == 0, (result.stderr, proposal["outcome"])
+    # 2026-10-14 ET (Probata ticket 13, O5): the DX100 BFS source holds the authors' TDStepMAA/DOBFSMAA, so
+    # the guard now refuses this ordinary rewriting workspace before the call opens; the operation headers
+    # still resolve into the workspace before the refusal.
+    assert result.returncode == 1 and "authors' accelerated code" in proposal["outcome"]["reason"], proposal["outcome"]
+    assert "candidate" not in proposal
     manifest = proposal["attempts"][0]["provider"]["workspace_manifest"]
     assert ".swdb-context/required-operations.json" in manifest["visible_files"]
     assert "include/gem5/m5ops.h" in manifest["visible_files"]
+    assert not (Path(manifest["root"]) / "build" / "received-argv.json").exists()     # the provider never ran

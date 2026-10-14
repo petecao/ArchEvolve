@@ -1,6 +1,10 @@
 """Extensa campaign fixtures: a seeded team store, campaign and fixture files, and the fixture
 provider. Created 2026-10-05 ET (code review T1/T2), moved from tests/test_extensa_campaign.py.
 Updated 2026-10-05 ET (ticket 80): the provider log also keeps each call's REGIONS.json.
+Updated 2026-10-14 ET (Probata PoC 14): a workspace holding `.swdb-context/counterexample.json` is a
+counterexample repair call (role `counterexample_repair`; it edits the workspace tree, `edit_workspace`, and
+answers `{interpretation, unresolved}`).
+Updated 2026-10-14 ET (Probata PoC 15): the provider log also keeps the text of each `best/` patch it sees.
 Updated 2026-10-13 ET: the fixture provider declares `confinement: unconfined_harness`. It reads
 and writes harness files outside the provider guard's roots (plan, call counter, log, replayed
 receipts in the call folder), so it takes the unenforced fixture path on every OS, Linux included.
@@ -28,6 +32,9 @@ PATCH = "--- a/bfs.cc\n+++ b/bfs.cc\n@@ -1 +1 @@\n-int alpha = 15;\n+int alpha =
 GIB = 1024 ** 3
 #: The plan-item key the fixture provider reads as a replay directive (see `replay`).
 REPLAY = "__swdb_replay__"
+#: Probata PoC 14: the plan-item key whose {path: [[before, after], ...]} edits the provider makes in its
+#: workspace first (a workspace-editing answer, as a counterexample repair call gives).
+EDITS = "__swdb_edits__"
 
 
 @pytest.fixture(scope="module")
@@ -138,12 +145,21 @@ def replay(*, stdout=None, stderr="", exit_code=1, call_files=None):
                      "call_files": {name: str(source) for name, source in (call_files or {}).items()}}}
 
 
+def edit_workspace(edits, interpretation="Fixture repair of the counterexample."):
+    """A workspace-editing answer: the provider replaces text in its workspace files ({path: [(before, after),
+    ...]}, each first occurrence, in order; protected placeholders stay), then answers."""
+    return {EDITS: {path: [list(pair) for pair in pairs] for path, pairs in edits.items()},
+            "interpretation": interpretation, "unresolved": []}
+
+
 def provider(team, plan):
     """A fixture provider that answers by role, in order, and logs the files it sees.
 
     A plan item is the JSON answer, `"usage_limit"` or `"login"` (the provider fails with that
     message), or a `replay(...)` directive."""
     plan = {"rewriting": [rewrite()], "repair": [rewrite()], "profiling": [{"notes": ["fixture"]}],
+            "counterexample_repair": [{"interpretation": "No fixture repair.",
+                                       "unresolved": ["the fixture plan has no counterexample repair"]}],
             "testgen": [{"tests": [{"path": "inputs.json", "content": "{}"}], "unresolved": []}], **plan}
     (team["root"] / "plan.json").write_text(json.dumps(plan))
     program = team["root"] / "provider.py"
@@ -152,12 +168,14 @@ from pathlib import Path
 plan =json.loads(Path({str(team['root'] / 'plan.json')!r}).read_text())
 state = Path({str(team['root'] / 'provider-state.json')!r})
 counts = json.loads(state.read_text()) if state.exists() else {{}}
-role = ('repair' if Path('CERTIFICATION.json').exists() else 'rewriting' if Path('REGIONS.json').exists()
+role = ('counterexample_repair' if Path('.swdb-context/counterexample.json').exists()
+        else 'repair' if Path('CERTIFICATION.json').exists() else 'rewriting' if Path('REGIONS.json').exists()
         else 'synthesis' if Path('TARGET.json').exists() else 'profiling' if Path('source').exists() else 'testgen')
 i = counts.get(role, 0); counts[role] = i + 1; state.write_text(json.dumps(counts))
 with open({str(team['root'] / 'provider-log.jsonl')!r}, 'a') as log:
     log.write(json.dumps({{'role': role, 'files': sorted(str(p) for p in Path('.').rglob('*') if p.is_file()),
-                          'regions': json.loads(Path('REGIONS.json').read_text()) if Path('REGIONS.json').exists() else None}}) + '\\n')
+                          'regions': json.loads(Path('REGIONS.json').read_text()) if Path('REGIONS.json').exists() else None,
+                          'best': {{str(p): p.read_text() for p in sorted(Path('best').glob('*'))}} if Path('best').is_dir() else {{}}}}) + '\\n')
 items = plan[role]; item = items[min(i, len(items) - 1)]
 if isinstance(item, dict) and {REPLAY!r} in item:
     directive = item[{REPLAY!r}]
@@ -171,6 +189,13 @@ if item == 'usage_limit':
     sys.stderr.write('Error: usage limit reached for this account'); sys.exit(1)
 if item == 'login':
     sys.stderr.write('Error: not logged in'); sys.exit(1)
+if isinstance(item, dict) and {EDITS!r} in item:
+    item = dict(item)
+    for name, pairs in item.pop({EDITS!r}).items():
+        text = Path(name).read_text()
+        for before, after in pairs:
+            text = text.replace(before, after, 1)
+        Path(name).write_text(text)
 print(json.dumps(item))
 """)
     config = team["root"] / "provider.yaml"
