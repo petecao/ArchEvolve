@@ -140,6 +140,10 @@ contract per group (the fixtures and seeded bugs exist), one proof record per C 
   proof's float model is the method version's WP flag (`-wp-model +real`: floats as reals, the rounding gap an
   assumption entry per map 11 item 6). `long double` stays out.
 
-**Evidence.** Targeted runs (no xdist, `-m "not whole_store"`, under `verifier_run.py`):
-`tests/test_c_lowering.py`, `tests/test_format_doc.py`, `tests/test_wp_adapter.py`; logs and report logs in
-`/tmp/claude/probata-runs/t24/` (`tests*.log`, `report-r*.jsonl`).
+**Evidence.** Targeted runs (no xdist, `-m "not whole_store"`) after merging the integration tip:
+`tests/test_c_lowering.py`, `test_format_doc.py`, `test_wp_adapter.py`, `test_cbmc_adapter.py`,
+`test_formal_frame.py`: 163 passed; 2 WP-adapter cases hit the test's 600 s subprocess timeout while
+`swdb prove` waited in the shared verifier queue (both passed in the pre-merge run r3) and were rerun alone: 2 passed
+(`tests9.log`). Logs and report logs: `/tmp/claude/probata-runs/t24/` (`tests8.log`, `report-r8.jsonl`).
+Merge note: ticket 22's CBMC adapter now also pins `naming_rules`, and its tests and doc name
+`swdb-c-lowering-2`; `c_lowering._named` stays for its `_cut`.
