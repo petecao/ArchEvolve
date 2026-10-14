@@ -172,3 +172,12 @@ two winners for the proven levels (certified still beats uncertified).
 
 Glossary: certification level and Extensa mode sharpened; fastest winner and best-proven winner added.
 ADR 0010: proof note.
+
+## Later changes
+
+- 2026-10-13 21:00 ET: Yan-Ru asked whether iteration N sees every earlier candidate artifact
+  (Extensa's meta-prompting). True in MemAcc's Extensa (`ladder.md`, `lessons.md`), not in SWDB's
+  Extensa mode (D8: one best patch per class and the previous iteration's feedback). Item 4 holds as
+  written. Yan-Ru chose to port the ladder only:
+  [typed-library ticket 81](../../typed-library-dx100-bfs-2026-10-03/issues/81-extensa-iteration-ladder.md).
+  If it lands, each ladder row carries its candidate's level and marks both winners.
