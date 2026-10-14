@@ -140,7 +140,14 @@ within bounds, not proven, refuted, uncertified; all seven templates, planted fr
 template, unknown clause, prose reference; dated snapshot kept after a method-version pin change; never
 ranked, content identical apart from the block; unresolvable records and missing speed sentence stop
 rendering; validate and build; certify hook and its two controls). Updated assertions: format 1.2 in
-`test_functional_evaluation.py` and `test_bfs_acceptance_report.py`. Runs listed below the assumptions.
+`test_functional_evaluation.py` and `test_bfs_acceptance_report.py`. Runs below.
+
+**Runs** (one worker, no xdist, `--report-log`, output under `/tmp/claude/probata-runs/t18/`, no verifier job):
+`test_archevolve_proof_path`, `test_format_doc`, `test_proof_records`, `test_level_rule`,
+`test_counterexample_repair`, `test_proof_method_version`, `test_functional_evaluation`, `test_extensa_boundary`,
+`test_bfs_package_handoff`, `test_derived_implementations`: 325 passed, 1 skipped, `-m "not whole_store"`, 17 min
+(`r2.jsonl`, sha256 `64b8b7bdf2cd84813d913d4c243df6e0b496e2ffb36ebca24a298f654fbf345a`); `test_bfs_acceptance_report -k
+evaluation_message`: 2 passed (`r3.jsonl`, sha256 `b8eebe740c22afe24aa7cc23d92b8addc16679ef7968ca5bd79ccf7bb87588af`).
 
 **Assumptions** (the map leaves these open):
 
