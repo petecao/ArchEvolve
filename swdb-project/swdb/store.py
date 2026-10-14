@@ -23,7 +23,7 @@ PLURAL = {"application": "applications", "kernel": "kernels", "implementation": 
           "campaign_summary": "campaign_summaries", "workload_characterization": "workload_characterizations",
           "target_description": "target_descriptions", "estimate": "estimates", "cpu_calibration": "cpu_calibrations", "cpu_service_calibration": "cpu_service_calibrations", "cpu_memory_resource_calibration": "cpu_memory_resource_calibrations", "cpu_bulk_resource_calibration": "cpu_bulk_resource_calibrations", "cpu_allocator_resource_calibration": "cpu_allocator_resource_calibrations", "cpu_native_validation": "cpu_native_validations", "cpu_error_band": "cpu_error_bands", "paired_estimate": "paired_estimates",
           "agreement_policy": "agreement_policies", "agreement_report": "agreement_reports",
-          "attribution": "attributions"}
+          "attribution": "attributions", "proof": "proofs"}
 
 
 @dataclass

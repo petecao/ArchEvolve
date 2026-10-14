@@ -436,10 +436,17 @@ def promote_candidate(args):
 
 
 def level_cli(args):
-    """The derived level, and the current promotion with who performed it (spec review C1)."""
+    """The derived level, and the current promotion with who performed it (spec review C1).
+
+    Probata ticket 04 (2026-10-14 ET, S2): `level` is the proven level when a proof record
+    counts (`swdb.proof.proven_level`), else the certification level, which `certification_level`
+    keeps; `proven` and `proof_records` say why. Nothing is stored."""
+    from swdb import proof
     from swdb.cli import _require_valid
     store = _require_valid(args.records)
     result = certification_level(store, args.candidate)
+    result["certification_level"] = result["level"]
+    result.update(proof.proven_level(store, args.candidate, result["level"]))
     review = promotion(store, args.candidate)
     result["promotion"] = ({"review": review["id"], "attribution": review["attribution"]} if review else None)
     return result
