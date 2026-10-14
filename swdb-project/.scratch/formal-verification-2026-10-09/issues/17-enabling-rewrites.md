@@ -260,3 +260,6 @@ rewrite sharpened.
   candidate, route 3 when its predecessor is proven, else route 1. Item 4.4's bounded-only fallback
   becomes route 1 on every evaluated kernel. Item 9a compares per-candidate proof time of chained
   (route 3) vs direct (route 1) vs bundled.
+- 2026-10-13 21:29 ET, from [27](27-proof-of-concept-stages.md) (items 2, 5, 7): item 9a is proof-of-concept stage A5; "9a passes"
+  means chained, direct and bundled reach the same level, times recorded. 9b runs only then and is
+  the first thing cut if time runs short; A5 itself is third in the cut order.

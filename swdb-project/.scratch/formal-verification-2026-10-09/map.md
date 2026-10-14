@@ -1,7 +1,8 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-13 21:09 ET (ticket 26 resolved: immutable proof records, level computed on read; ADR 0016);
+Updated: 2026-10-13 21:29 ET (ticket 27 resolved: two efforts split at the freeze; staged proof of concept);
+2026-10-13 21:09 ET (ticket 26 resolved: immutable proof records, level computed on read; ADR 0016);
 2026-10-13 21:03 ET (ticket 28 added: Extensa-mode iteration ladder);
 2026-10-13 20:42 ET (ticket 24 resolved: no alignment hint kind; unit postconditions for every kernel);
 2026-10-13 20:40 ET (ticket 25 resolved: two winners, bounded gate, proof budgets);
@@ -23,7 +24,7 @@ Extensa Probata; ticket 15 added); 2026-10-12 22:52 ET (ticket 10 resolved: what
 2026-10-11 18:58 ET (ticket 08 resolved: crux-llvm separates the bug at one lane)
 **Type:** wayfinder map
 **Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–13 and 15–17 resolved;
-18–27 graduated from fog 2026-10-13 (18–26 resolved)
+18–27 graduated from fog 2026-10-13 (18–27 resolved)
 
 ## Destination
 
@@ -232,6 +233,15 @@ concept is the next effort.
   seven assumption kinds (written proof, platform choice added); one failure-class list. Proofs stay
   in `swdb_` tables, never the LANL core. The team's handoff gains a plain-words level block.
 
+- [In what order does the proof of concept build its pieces, and what closes each stage?](issues/27-proof-of-concept-stages.md):
+  two efforts split at the method-version freeze: the proof of concept (build, calibrate on BFS and
+  public suites, Mac then mbit10) and the evaluation (held-out contracts, RQ1-RQ5). Main track A0-A6,
+  about 5 months: setup, a 2-week kill-test spike first (SAW on clang 22, 2 lanes under 15 min, WP on
+  one BFS unit, sums on a synthetic fixture; else stop and re-plan), foundations, hint loop,
+  concurrency, chains, mbit10 and freeze. Side tracks: Rocq, strict-layer catch-up, and the Extensa
+  track from day 1. Exit check per stage; overrun at 1.5x re-plans; cut order 9b, strict layer, A5,
+  Extensa exit. RQ3 reworded; held-out kernels untouched (synthetic PR- and SSSP-like fixtures).
+
 ## Tickets
 
 | # | Ticket | Type | Status | Blocked by |
@@ -262,7 +272,7 @@ concept is the next effort.
 | 24 | [Should the proof-hint loop gain an alignment hint kind for direct unbounded proofs?](issues/24-alignment-hint-kind.md) | grilling | resolved | 21 |
 | 25 | [How does the Extensa-mode loop budget proofs and rank candidate artifacts by certification level?](issues/25-extensa-loop-proofs-and-ranking.md) | grilling | resolved | 19 |
 | 26 | [How are proof verdicts and their evidence recorded, and what does ArchEvolve mode show?](issues/26-proof-records.md) | grilling | resolved | 23, 25 |
-| 27 | [In what order does the proof of concept build its pieces, and what closes each stage?](issues/27-proof-of-concept-stages.md) | grilling | ready-for-human | 18, 19, 24 |
+| 27 | [In what order does the proof of concept build its pieces, and what closes each stage?](issues/27-proof-of-concept-stages.md) | grilling | resolved | 18, 19, 24 |
 | 28 | [How should the Extensa-mode rewrite workspace show earlier candidate artifacts, and what keeps campaigns with and without it comparable?](issues/28-extensa-iteration-ladder.md) | grilling | ready-for-human | 25 |
 
 ## Not yet specified

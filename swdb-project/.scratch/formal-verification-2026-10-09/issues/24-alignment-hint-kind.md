@@ -172,3 +172,10 @@ postcondition, not a missing alignment.
   unreachable.
 
 Glossary: alignment added; unit postcondition sharpened (may allow several outcomes).
+
+## Later changes
+
+- 2026-10-13 21:29 ET, from [27](27-proof-of-concept-stages.md) (item 3): input 1's early "one PR unit" becomes one unit of a
+  synthetic CSR pull-sum fixture, because PR is held out (18 item 5; item 4 here: the sum library is
+  never tested on PR or BC). Input 2's SSSP risk is tested the same way, on a synthetic
+  bucketed-relaxation fixture, in stage A3.

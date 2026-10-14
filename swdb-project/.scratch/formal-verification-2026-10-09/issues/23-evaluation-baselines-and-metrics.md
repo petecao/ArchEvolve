@@ -163,3 +163,8 @@ Glossary: reverted repair added.
   by the contract's formal halves, its hint seeds and route 3; RQ3 reports that difference as such.
   Item 8's chained vs bundled ablation adds direct (route 1). New reported numbers: route used per
   candidate; candidates that would have needed an alignment (expected 0).
+- 2026-10-13 21:29 ET, from [27](27-proof-of-concept-stages.md) (items 6, 9): RQ3's primary metric is unchanged; its no-contract
+  baseline result is reported as a three-part gap: seeds (taken from the RQ2 seeds on/off ablation),
+  route 3 vs route 1 time, and refutations only the bounded rung gives (no minimum bounds without a
+  contract). A first BFS measurement is made before the freeze (stage A3). RQ4 also reports the N > 1
+  refutation rate and repair calls per refuted candidate on the RQ1 populations (25's measurement).

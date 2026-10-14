@@ -286,3 +286,9 @@ re-checked in this session, an E-ACSL test on the Mac's Frama-C 33, and the gem5
   the intrinsics' `result` clauses (per call); does SAW support ghost state on clang 22 bitcode.
 
 Glossary: formal half sharpened; C lowering, proof placement, logic library added.
+
+## Later changes
+
+- 2026-10-13 21:29 ET, from [27](27-proof-of-concept-stages.md) (item 4): item 11's rule stays in the proof semantics, but the
+  strict layer gets it only after the evaluation: no evaluated kernel uses 8-byte tile data. The
+  strict-layer catch-up before the freeze carries only 12 item 4's memory-timing rule.

@@ -192,3 +192,8 @@ Glossary: method version added.
   file, `library/methods/<version>.yaml`, which includes the verifier lineup and the shared logic
   library but not the proof semantics (its own version) or the level rule (versioned apart, so a rule
   change recomputes levels without voiding proofs). Catalog templates left it (24).
+- 2026-10-13 21:29 ET, from [27](27-proof-of-concept-stages.md) (item 6): RQ3 is reworded "What does a contract proven once buy each
+  candidate, and at what one-time cost?" Its bars stand; the contract's gap over the no-contract
+  baseline is reported in three parts (seeds, route 3 vs route 1, refutations only the bounded rung
+  gives), with no speed claim unless the proof of concept's BFS run (stage A3) shows a gap. If A5 is
+  cut, the "chained <= bundled" bar goes with it.
