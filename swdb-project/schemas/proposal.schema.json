@@ -109,6 +109,26 @@
     },
     "repair_budget": {
       "type": "object"
+    },
+    "run_index": {"$ref": "#/$defs/run_index"},
+    "provider_pin": {"$ref": "#/$defs/provider_pin"},
+    "repair_lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["refuted_candidate", "counterexample_record", "round", "reverted_repair"],
+      "x-required-reasons": {
+        "refuted_candidate": "repair lineage names the refuted candidate artifact",
+        "counterexample_record": "repair lineage names the proof record that holds the counterexample",
+        "round": "repair lineage names the repair round",
+        "reverted_repair": "repair lineage carries the reverted-repair flag from the contract-match check"
+      },
+      "description": "Probata ticket 12 (2026-10-14 ET): on the proposal of a candidate artifact that counterexample-guided repair (ticket 13) made. swdb.proof.validate_proposal checks that the record is a refutation with an inline counterexample about the refuted candidate artifact.",
+      "properties": {
+        "refuted_candidate": {"type": "string", "x-ref": "candidate", "description": "The refuted candidate artifact this proposal repairs."},
+        "counterexample_record": {"type": "string", "x-ref": "proof", "description": "The refuted proof record that holds the counterexample inline."},
+        "round": {"type": "integer", "minimum": 1, "x-reason": "a repair round is a positive integer (the round cap belongs to the method version's budgets, ticket 13)"},
+        "reverted_repair": {"type": "boolean", "description": "The deterministic contract-match check's flag: true when the repaired code no longer applies the refuted candidate's contract (map decision 23 item 3). A reverted repair may compete and never counts as a repair."}
+      }
     }
   },
   "required": [

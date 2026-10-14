@@ -17,9 +17,13 @@ map ticket 26 and ADR 0016. Format: docs/reference/format-v0.4-proof.md.
 - Ticket 11 (2026-10-14 ET): one call runs a batch (one job per script, or one skip); every record
   pins the current method version (swdb.method_version); a failure class outside vocabulary
   proof_failure_classes stops the batch; `validate_record` checks the class, skip reason and pin.
-- `proven_level` reads a candidate artifact's proven level from the records that count,
-  computed on read and never stored (ADR 0016). This tracer checks only the code pin and the
-  contract pin; ticket 10 adds every other pin kind and the versioned level rule.
+  Updated 2026-10-14 02:26 ET (Yan-Ru's decision of 02:25 ET): an unreplayed counterexample goes with
+  failure class spurious_counterexample and no other, both ways; repair never takes that class.
+- Ticket 12 (2026-10-14 ET): the job block's one field list (`_job`), run fields (`--run-index`,
+  `--provider-*`), and the cross-record checks of repair lineage (`validate_proposal`) and of the proof
+  records a promotion review cites (`validate_promotion`).
+- Levels are computed on read by the versioned level rule (`swdb.level_rule`, ticket 10), which
+  replaced this tracer's code-and-contract-pin rule; nothing here stores a level (ADR 0016).
 """
 
 import datetime
@@ -37,7 +41,8 @@ from swdb import paths, yamlio
 from swdb.cli import Failure, UsageError
 
 VERDICTS = ("proven", "refuted", "not_proven")
-UNBOUNDED = "unbounded"
+UNPINNED = "unpinned"
+SPURIOUS = "spurious_counterexample"   # Yan-Ru 2026-10-14 02:25 ET: the class of a counterexample that did not replay
 
 
 # --- the adapter interface ----------------------------------------------------------
@@ -74,7 +79,10 @@ class Verdict:
     assumptions: list = field(default_factory=list)
     counterexample: dict = None
     failure_class: str = None
-    unreplayed_counterexample: dict = None   # ticket 11: a reported counterexample that did not replay
+    unreplayed_counterexample: dict = None   # ticket 11: a reported counterexample that did not replay;
+                                             # present exactly when failure_class is spurious_counterexample
+    tools: tuple = ()                        # ticket 10 (S14): verifiers and solvers used, each a trusted-tool entry
+    peak_rss_bytes: int = None               # ticket 12 (O9): the tree peak the adapter's RSS watchdog read, if any
 
     def __post_init__(self):
         if self.unreplayed_counterexample and self.verdict != "not_proven":
@@ -86,6 +94,10 @@ class Verdict:
             raise AdapterError("a refuted verdict, and only a refuted verdict, carries a counterexample")
         if (self.verdict == "not_proven") != bool(self.failure_class):
             raise AdapterError("a not-proven verdict, and only a not-proven verdict, carries a failure class")
+        if self.verdict == "not_proven" and \
+                (self.failure_class == SPURIOUS) != bool(self.unreplayed_counterexample):
+            raise AdapterError(f"failure class {SPURIOUS} and an unreplayed counterexample go together: a "
+                               "not-proven verdict carries both or neither")
         if not isinstance(self.bounds, dict) or "threads" not in self.bounds:
             raise AdapterError("a verdict states its bounds, the thread count always among them")
 
@@ -114,7 +126,9 @@ class ScriptedAdapter:
                           assumptions=list(self.script.get("assumptions") or []),
                           counterexample=self.script.get("counterexample"),
                           failure_class=self.script.get("failure_class"),
-                          unreplayed_counterexample=self.script.get("unreplayed_counterexample"))
+                          unreplayed_counterexample=self.script.get("unreplayed_counterexample"),
+                          tools=tuple(self.script.get("tools") or ()),
+                          peak_rss_bytes=self.script.get("peak_rss_bytes"))
         with open(job.log, "a", encoding="utf-8") as log:
             log.write(f"adapter: scripted\nscript: {self.source}\n"
                       f"unit: {job.unit.candidate} {job.unit.function}\n"
@@ -146,6 +160,12 @@ def register_cli(commands):
     sub.add_argument("--batch", help="batch ID (default: a new one for this call)")
     sub.add_argument("--position", type=int, default=1, help="position of the first job in the batch (default 1)")
     sub.add_argument("--id", help="proof record ID of a one-job batch (default: a new one)")
+    run = sub.add_argument_group("run fields (ticket 12, S10): a proof-hint run or a repeated run carries them; a "
+                                 "bounded job with no provider call carries none")
+    run.add_argument("--run-index", type=int, help="which of the three independent runs (1-3)")
+    run.add_argument("--provider-kind", choices=["codex", "claude"], help="provider pin: kind")
+    run.add_argument("--provider-model", help="provider pin: model (for example gpt-5.6-sol)")
+    run.add_argument("--provider-effort", help="provider pin: effort (for example xhigh)")
     sub.add_argument("--format", choices=["yaml", "json"], default="yaml")
     sub.set_defaults(analytic_handler=prove)
 
@@ -170,6 +190,7 @@ def prove(args):
     scripts = [None] if args.skip is not None else (args.script or [None])
     if args.id and len(scripts) > 1:
         raise UsageError("--id names the record of a one-job batch only")
+    run_fields = _run_fields(args)
     method = _current_method(args.records)
     runs = _outside_repo(args.runs_dir)
     artifact = candidate.get("artifact") or {}
@@ -189,8 +210,24 @@ def prove(args):
             record = _skip_record(rid, unit, pins, args.adapter, args.skip, place)
         else:
             record = _run_job(rid, unit, pins, adapter, runs, place, listed(vocabs, "failure_class"))
+        record.update(run_fields)
         done.append({"record": record, "path": _write(args.records, record)})
     return done[0] if len(done) == 1 else {"batch": batch, "jobs": done}
+
+
+def _run_fields(args):
+    """{run_index, provider_pin} from the command line: each present only when given (ticket 12, S10)."""
+    fields = {}
+    if args.run_index is not None:
+        fields["run_index"] = args.run_index
+    pin = {"kind": args.provider_kind, "model": args.provider_model, "effort": args.provider_effort}
+    given = [key for key, value in pin.items() if value is not None]
+    if given and len(given) != len(pin):
+        missing = ", ".join(f"--provider-{key}" for key, value in pin.items() if value is None)
+        raise UsageError(f"a provider pin needs its kind, model and effort: also pass {missing}")
+    if given:
+        fields["provider_pin"] = pin
+    return fields
 
 
 def _run_job(rid, unit, pins, adapter, runs, place, failure_classes):
@@ -211,6 +248,8 @@ def _run_job(rid, unit, pins, adapter, runs, place, failure_classes):
     finally:
         shutil.rmtree(job.scratch, ignore_errors=True)     # never named; gone when the job ends
     wall, cpu = time.perf_counter() - wall, _cpu_seconds() - cpu
+    load = {"start": round(load, 3), "end": round(os.getloadavg()[0], 3)}
+    peak = verdict.peak_rss_bytes if verdict.peak_rss_bytes is not None else _peak_rss_bytes()
     if verdict.failure_class and verdict.failure_class not in failure_classes:
         raise Failure(f"adapter {adapter.name} reported failure class {verdict.failure_class!r}, which is not a "
                       f"failure class in vocabulary {FAILURE_VOCAB}: the batch stops here (position "
@@ -224,11 +263,11 @@ def _run_job(rid, unit, pins, adapter, runs, place, failure_classes):
         record["failure_class"] = verdict.failure_class
     if verdict.unreplayed_counterexample:
         record["unreplayed_counterexample"] = verdict.unreplayed_counterexample
+    if verdict.tools:
+        record["tools"] = list(verdict.tools)
     record.update(
         pins=pins, bounds=verdict.bounds, assumptions=verdict.assumptions,
-        job={"adapter": adapter.name, "host": _host(), "worker_core": _worker_core(),
-             "wall_seconds": round(wall, 6), "cpu_seconds": round(cpu, 6), "batch_load": round(load, 3),
-             "peak_rss_bytes": _peak_rss_bytes(), **place},
+        job=_job(adapter.name, round(wall, 6), round(cpu, 6), load, peak, place),
         evidence={"adapter_log": {"path": str(job.log), "sha256": _sha256(job.log)}},
         evidence_kind="contract_fixture")
     return record
@@ -237,10 +276,9 @@ def _run_job(rid, unit, pins, adapter, runs, place, failure_classes):
 def _skip_record(rid, unit, pins, adapter_name, reason, place):
     """A skip: no verifier runs; the record has its reason and no verdict, bounds, assumptions or log."""
     record = _head(rid, unit, f"Written by swdb prove: skipped ({reason}); no verifier ran.")
+    load = round(os.getloadavg()[0], 3)
     record.update(skip_reason=reason, pins=pins,
-                  job={"adapter": adapter_name, "host": _host(), "worker_core": _worker_core(),
-                       "wall_seconds": 0.0, "cpu_seconds": 0.0, "batch_load": round(os.getloadavg()[0], 3),
-                       "peak_rss_bytes": _peak_rss_bytes(), **place},
+                  job=_job(adapter_name, 0.0, 0.0, {"start": load, "end": load}, _peak_rss_bytes(), place),
                   evidence_kind="contract_fixture")
     return record
 
@@ -320,18 +358,24 @@ def _new_id(candidate):
     return f"proof.{candidate}.{stamp}.{uuid.uuid4().hex[:8]}"
 
 
+def _job(adapter, wall, cpu, load, peak, place):
+    """The job block: ticket 12's one field list (docs/reference/format-v0.4-proof.md, "The job block")."""
+    return {"adapter": adapter, "host": _host(), "worker_core": _worker_core(), "wall_seconds": wall,
+            "cpu_seconds": cpu, "batch_load": load, "peak_rss_bytes": peak, **place}
+
+
 def _host():
     from swdb import host_identity
     return "mac" if sys.platform == "darwin" else host_identity.short_name()
 
 
 def _worker_core():
-    """The one core the job is pinned to, else None (the Mac pins nothing; 57 pins on mbit10)."""
+    """The one core the job is pinned to, else "unpinned" (macOS pins nothing; 57 pins on mbit10)."""
     try:
         cores = os.sched_getaffinity(0)
     except AttributeError:
-        return None
-    return next(iter(cores)) if len(cores) == 1 else None
+        return UNPINNED
+    return next(iter(cores)) if len(cores) == 1 else UNPINNED
 
 
 def _cpu_seconds():
@@ -352,6 +396,7 @@ def _sha256(path):
 # --- swdb validate: the rules the schema cannot express (ticket 11) -----------------------
 
 FAILURE_VOCAB = "proof_failure_classes"
+PART_VOCAB = "proof_part_names"
 
 
 def listed(vocabs, role):
@@ -368,6 +413,21 @@ def validate_record(record, ctx):
         if value is not None and value not in listed(ctx.vocabs, field_name):
             yield Problem(record.rel, field_name,
                           f"{value!r} is not a {field_name.replace('_', ' ')} in vocabulary {FAILURE_VOCAB}")
+    subject = data.get("subject") or {}
+    part = subject.get("part")
+    if part is not None:                                             # ticket 10: one list of part names
+        entry = ctx.vocabs.entries.get(PART_VOCAB, {}).get(part)
+        if entry is None:
+            yield Problem(record.rel, "subject.part", f"{part!r} is not a part name in vocabulary {PART_VOCAB}")
+        elif entry.get("subject_kind") != subject.get("kind"):
+            yield Problem(record.rel, "subject.part", f"part {part!r} belongs to a {entry.get('subject_kind')} "
+                          f"subject (vocabulary {PART_VOCAB}), not to {subject.get('kind')}")
+    trusted = {(a.get("reference") or {}).get("id") for a in data.get("assumptions") or []
+               if isinstance(a, dict) and a.get("kind") == "trusted_tool"}
+    for position, tool in enumerate(data.get("tools") or []):      # ticket 10, S14
+        if tool not in trusted:
+            yield Problem(record.rel, f"tools[{position}]",
+                          f"tool {tool!r} is used but the assumption set holds no trusted-tool entry for it (S14)")
     from swdb import method_version
     from swdb.library import default_root
     problem = method_version.pin_problem((data.get("pins") or {}).get("method_version"), default_root(ctx.records_dir))
@@ -375,52 +435,44 @@ def validate_record(record, ctx):
         yield Problem(record.rel, "pins.method_version", problem)
 
 
-# --- proven level, computed on read ------------------------------------------------------
+# --- swdb validate: repair lineage on proposals (ticket 12) -----------------------------------
 
-def unit_records(store, candidate_id):
-    """Every proof record whose subject is one of this candidate artifact's proof units."""
-    return [r.data for r in store.of_kind("proof")
-            if (r.data.get("subject") or {}).get("kind") == "candidate_proof_unit"
-            and r.data["subject"].get("candidate") == candidate_id]
+def validate_proposal(record, ctx):
+    """Repair lineage names a refuted proof record, counterexample inline, about the refuted candidate artifact.
 
-
-def counts(record, candidate, library):
-    """True while a proven record's code and contract pins match the current hashes.
-
-    Tracer rule (ticket 04): only these two pins are checked; ticket 10 checks every pin kind.
-    A contract the library does not know cannot be checked, so the record does not count."""
-    if record.get("verdict") != "proven":
-        return False
-    pins = record.get("pins") or {}
-    code, contract = pins.get("code") or {}, pins.get("contract") or {}
-    if code.get("sha256") != (candidate.get("artifact") or {}).get("sha256"):
-        return False
-    if library is None or library.get(contract.get("id")) is None:
-        return False
-    return contract.get("sha256") == library.content_sha256(contract["id"])
-
-
-def bounded_level(record):
-    """`proven_unbounded` when every dimension, the thread count included, is unbounded."""
-    return ("proven_unbounded" if all(v == UNBOUNDED for v in record["bounds"].values())
-            else "proven_within_bounds")
+    The schema checks the fields (round >= 1, the flag present) and that both IDs exist; this checks
+    what the counterexample record is. An unreplayed counterexample (not proven) never qualifies."""
+    from swdb.problems import Problem
+    lineage = record.data.get("repair_lineage")
+    if not lineage:
+        return
+    rid, refuted = lineage["counterexample_record"], lineage["refuted_candidate"]
+    proof = ctx.store.get(rid, "proof")
+    if proof is None:
+        return                                   # the schema's x-ref already names it
+    where = "repair_lineage.counterexample_record"
+    if proof.get("verdict") != "refuted" or not proof.get("counterexample"):
+        yield Problem(record.rel, where, f"{rid} is not a refutation with an inline counterexample "
+                      f"(verdict {proof.get('verdict') or 'none'}); only a refuted proof record starts a repair")
+    subject = proof.get("subject") or {}
+    if subject.get("kind") != "candidate_proof_unit" or subject.get("candidate") != refuted:
+        about = subject.get("candidate") or subject.get("id") or "-"
+        yield Problem(record.rel, where, f"{rid} is about {about}, not the refuted candidate artifact {refuted}")
 
 
-def proven_level(store, candidate_id, certification_level, library=None):
-    """The proven part of `swdb candidate-level` (S2), computed on read and never stored.
+# --- swdb validate: what a promotion review cites (ticket 12) ----------------------------------
 
-    Proven requires certified. Returns {level, proven, proof_records}: `level` is the proven
-    level when a record counts, else `certification_level`; `proven` is None or {level, bounds,
-    records} (the best counting level, the bounds of its first record by ID, and every counting
-    record at that level); `proof_records` lists every proof record of the candidate's units."""
-    candidate = store.get(candidate_id, "candidate")
-    library = library if library is not None else _library(store)
-    records = sorted(unit_records(store, candidate_id), key=lambda r: r["id"])
-    counted = [r for r in records if counts(r, candidate, library)] if certification_level == "certified" else []
-    proven = None
-    if counted:
-        best = "proven_unbounded" if any(bounded_level(r) == "proven_unbounded" for r in counted) else "proven_within_bounds"
-        top = [r for r in counted if bounded_level(r) == best]
-        proven = {"level": best, "bounds": dict(top[0]["bounds"]), "records": [r["id"] for r in top]}
-    return {"level": proven["level"] if proven else certification_level, "proven": proven,
-            "proof_records": [r["id"] for r in records]}
+def validate_promotion(record, ctx):
+    """Every proof record a candidate review cites (`proof_records`, the snapshot's `records`) is about the
+    reviewed candidate artifact's proof unit. The schema checks that the records exist and the snapshot's shape."""
+    from swdb.problems import Problem
+    data = record.data
+    candidate = (data.get("target") or {}).get("id")
+    cited = [("proof_records", rid) for rid in data.get("proof_records") or []]
+    cited += [("level_snapshot.records", rid) for rid in (data.get("level_snapshot") or {}).get("records") or []]
+    for where, rid in cited:
+        proof = ctx.store.get(rid, "proof")
+        subject = (proof or {}).get("subject") or {}
+        if proof is not None and (subject.get("kind") != "candidate_proof_unit" or subject.get("candidate") != candidate):
+            about = subject.get("candidate") or subject.get("id") or "-"
+            yield Problem(record.rel, where, f"{rid} is about {about}, not the reviewed candidate artifact {candidate}")

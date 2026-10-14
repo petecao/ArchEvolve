@@ -335,9 +335,9 @@ def test_a_proven_record_at_one_thread_reads_proven_within_bounds_computed_on_re
     rid = seed.prove(seed.script())["record"]["id"]
     before = _files(seed)
     level = seed.level()
-    assert level["level"] == "proven_within_bounds"
+    assert level["level"] == "proven_within_bounds_threads_1"      # ticket 10's sub-rung names
     assert level["certification_level"] == "certified"
-    assert level["proven"] == {"level": "proven_within_bounds", "bounds": {"threads": 1, "vertices": 3, "edges": 3},
+    assert level["proven"] == {"level": "proven_within_bounds_threads_1", "bounds": {"threads": 1, "vertices": 3, "edges": 3},
                                "records": [rid]}
     assert level["proof_records"] == [rid]
     assert _files(seed) == before                          # nothing writes a level anywhere

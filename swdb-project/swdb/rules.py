@@ -125,6 +125,8 @@ def check(record, ctx):
     elif kind == "review" and data.get("target_kind") == "candidate":
         from swdb.extensa_boundary import validate_review
         yield from validate_review(record, ctx)
+        from swdb.proof import validate_promotion     # Probata ticket 12 (2026-10-14 ET)
+        yield from validate_promotion(record, ctx)
     elif kind == "review" and data.get("target_kind") == "review":
         from swdb.library import validate_correction     # spec review C1 (2026-10-05 ET)
         yield from validate_correction(record, ctx)
@@ -147,6 +149,9 @@ def check(record, ctx):
     elif kind == "proof":   # Probata proof of concept ticket 11 (2026-10-14 ET)
         from swdb.proof import validate_record
         yield from validate_record(record, ctx)
+    elif kind == "proposal":   # Probata proof of concept ticket 12 (2026-10-14 ET): repair lineage
+        from swdb.proof import validate_proposal
+        yield from validate_proposal(record, ctx)
     elif kind == "profile_package":
         from swdb.cli import Failure
         from swdb.profile_package import verify

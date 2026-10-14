@@ -2,6 +2,7 @@
 
 Created: 2026-10-03 (Eastern Time)
 Updated: 2026-10-14 (Eastern Time): optional `derived_starts` and the entry fields `start`, `derived_implementation` (Probata PoC ticket 19; see [format-v0.4-derived.md](format-v0.4-derived.md))
+Updated: 2026-10-14 02:57 (Eastern Time): promotion pins the level: `proof_records` and `level_snapshot` on candidate reviews (Probata PoC ticket 12)
 Updated: 2026-10-14 (Eastern Time): per-contract certification links of a candidate entry (Probata PoC ticket 02)
 Updated: 2026-10-13 (Eastern Time): D35 field named alone so the format check finds it
 Updated: 2026-10-09 23:50 (Eastern Time): agreement report v2, `paired_range` (D29), ledger coverage, D35 start gate, open D30 interpretations
@@ -70,6 +71,21 @@ records Yan-Ru's review of an Extensa candidate artifact. The review record has:
   Each request cites the campaign, candidate, review and team protocol under `origin`.
 
 A failed (rejected) candidate artifact is never promoted.
+
+Added 2026-10-14 (Eastern Time), Probata proof of concept ticket 12 (map decision 26 item 11):
+`swdb promote` also writes, from the level rule (`swdb.level_rule.promotion_pin`):
+
+- `proof_records`: the candidate artifact's proof records that count at promotion (skip records
+  aside; an empty list when it has none);
+- `level_snapshot`: `{level, at: "YYYY-MM-DD HH:MM ET", level_rule, records}`, the dated level snapshot
+  ([format-v0.4-level-rule.md](format-v0.4-level-rule.md)); `records` are the proof records that set
+  the level. It is never recomputed.
+
+The two come together (each requires the other) and only on a candidate review. `swdb validate`
+refuses a snapshot without its `level_rule` version, and a cited proof record (in either field) whose
+subject is not the reviewed candidate artifact's proof unit (`swdb.proof.validate_promotion`). Reviews
+written before ticket 12 have neither field and stay valid. `swdb candidate-level` shows the current
+promotion's snapshot beside the level computed now (`promotion.level_snapshot`, `promotion.dropped`).
 
 Added 2026-10-05 (Eastern Time), spec review C3/C18/C9:
 

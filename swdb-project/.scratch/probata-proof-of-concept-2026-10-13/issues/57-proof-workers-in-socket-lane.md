@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 04, 12, 56
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Providers and machines" (mbit10), "Records and levels" (job block, where things live), "Evaluation design" (protocol), "Bounds" (bounded-job budget), "Proof-of-concept plan" (A6); S1, O9); decisions: [23](../../formal-verification-2026-10-09/issues/23-evaluation-baselines-and-metrics.md) item 6; [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md) item 2 (A6); [26](../../formal-verification-2026-10-09/issues/26-proof-records.md) items 5, 6; [19](../../formal-verification-2026-10-09/issues/19-bounded-verdict-bounds.md) item 8
 **Time estimate:** about 2 days
