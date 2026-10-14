@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 14
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) (sections "Extensa mode", "Records and levels" (campaign summary), "Solution" (levels), "Testing Decisions" seams 2, 3 and 4; choice S2); decisions: [25](../../formal-verification-2026-10-09/issues/25-extensa-loop-proofs-and-ranking.md) item 4, [28](../../formal-verification-2026-10-09/issues/28-extensa-iteration-ladder.md) items 4-5, [26](../../formal-verification-2026-10-09/issues/26-proof-records.md) items 2, 6, 9, [19](../../formal-verification-2026-10-09/issues/19-bounded-verdict-bounds.md) item 7
 **Time estimate:** about 2 days
