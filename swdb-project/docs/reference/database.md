@@ -1,6 +1,7 @@
 # The SQLite database
 
-Updated: 2026-10-12 00:36 ET: attribution final review fixes (headroom reasons point to one list,
+Updated: 2026-10-14 ET: proof-record tables (Probata proof of concept ticket 04).
+2026-10-12 00:36 ET: attribution final review fixes (headroom reasons point to one list,
 split-check rule v2 and its estimated share). 2026-10-11 23:28 ET: measured native evaluation timings of an implementation feed
 `performance_runs` (LANL-shaped-db follow-up ticket 03). 2026-10-11 23:24 ET: attribution tables
 listed in the `swdb_` extension groups. 2026-10-11 22:07 ET: LANL-shaped-db review fixes (record-field path syntax, which
@@ -401,6 +402,7 @@ rows; no LANL table points back. A file built before the prefix (2026-10-11) has
 | Statement observations | `swdb_statements`, `swdb_statement_steps`, `swdb_statement_facts` |
 | Contract links | `swdb_contract_definitions`, `swdb_contract_data_structures`, `swdb_contract_kernels`, `swdb_contract_kernel_variants` |
 | Attribution reports | the `swdb_attribution*` tables ([Attribution tables](#attribution-tables)) |
+| Proof records | the `swdb_proof*` tables ([Proof tables](#proof-tables)) |
 
 `swdb_kernels` and `kernels` describe the same kernel records: join them on
 `swdb_kernels.id = kernels.slug`. Likewise `swdb_implementations.id = kernel_variants.slug`.
@@ -1154,3 +1156,73 @@ site-finder region IDs.
 | `side` | `baseline` or `candidate` |
 | `region` | the estimate's region ID |
 | `site_finder_region` | a joined site-finder region ID |
+
+## Proof tables
+
+Added: 2026-10-14 (Eastern Time), Probata proof of concept ticket 04. One set of rows per `proof`
+record (`swdb prove`; format in [format-v0.4-proof.md](format-v0.4-proof.md);
+[ADR 0016](../adr/0016-proof-records-never-change-level-computed-on-read.md)). SWDB extension only:
+no proof data enters a LANL core table. No level is stored here; `swdb candidate-level` computes it
+on read.
+
+### `swdb_proofs`
+
+One row per proof record.
+
+| Column | Meaning |
+|---|---|
+| `id` | proof record ID |
+| `subject_kind` | subject kind (vocabulary `proof_subject_kinds`) |
+| `subject_id` | the subject's `id` (NULL for a candidate proof unit) |
+| `candidate` | candidate proof unit: the candidate artifact (else NULL) |
+| `function` | candidate proof unit: the function that holds the rewrite site (else NULL) |
+| `verdict` | `proven`, `refuted` or `not_proven` |
+| `route` | `route_1`, `route_3`, `bounded_direct`, or NULL when the record names none |
+| `failure_class` | a not-proven record's failure class (else NULL) |
+| `has_counterexample` | 1 when the record holds a counterexample inline (refuted), else 0 |
+| `evidence_kind` | `contract_fixture` (the scripted adapter) |
+| `adapter` | the job block's adapter |
+| `host` | the job block's host (`mac` on the Mac) |
+| `log_path` | the adapter log's path on the run host |
+| `log_sha256` | the adapter log's sha256 |
+| `json` | the full record |
+
+### `swdb_proof_pins`
+
+The content-hash set: one row per single pin, per summary used and per build constant.
+
+| Column | Meaning |
+|---|---|
+| `proof` | proof record ID |
+| `kind` | pin kind (`code`, `contract`, `baseline_function`, `reference_semantics`, `proof_semantics`, `method_version`, `minimum_bounds`, `predecessor_snapshot`, `summaries`, `build_constants`) |
+| `position` | 0 for a single pin; the list index for a summary or build constant |
+| `ref` | the pinned ID (a build constant's name); NULL when not applicable |
+| `sha256` | the pinned hash; NULL when not applicable or a build constant |
+| `function` | `baseline_function` pin: the function named in the pinned tree (else NULL) |
+| `proof_record` | summary pin: the proof record that proved the summary (else NULL) |
+| `value` | build constant: its value as JSON (else NULL) |
+| `not_applicable` | the sentence saying why a pin does not apply yet (else NULL) |
+
+### `swdb_proof_assumptions`
+
+The assumption set: one row per entry.
+
+| Column | Meaning |
+|---|---|
+| `proof` | proof record ID |
+| `position` | the entry's index |
+| `kind` | one of the seven kinds (vocabulary `proof_assumption_kinds`) |
+| `ref` | the referenced ID |
+| `sha256` | the referenced hash |
+| `sentence` | the entry's plain sentence |
+
+### `swdb_proof_bounds`
+
+One row per bound dimension; `threads` is always present.
+
+| Column | Meaning |
+|---|---|
+| `proof` | proof record ID |
+| `dimension` | bound dimension (for example `threads`, `vertices`) |
+| `value` | the bound; NULL when unbounded |
+| `unbounded` | 1 when the dimension is unbounded, else 0 |

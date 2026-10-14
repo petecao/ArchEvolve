@@ -4,7 +4,7 @@ Every write validates the whole records folder as it would be afterwards and wri
 nothing unless that passes. New records go to their canonical place, derived from kind
 and ID (`<kind plural>/<id>.yaml`). Records from agents are marked draft and carry an
 `agent_run` provenance entry until a person reviews them.
-Updated: 2026-10-09 ET (bad JSON input is a reported failure); 2026-10-06 ET (record reads use the shared access layer).
+Updated: 2026-10-14 ET (a proof record is never replaced, ADR 0016); 2026-10-09 ET (bad JSON input is a reported failure); 2026-10-06 ET (record reads use the shared access layer).
 """
 
 import contextlib
@@ -116,6 +116,9 @@ def _commit(records_dir, new, replace, upsert=()):
             raise Failure(f"cannot replace {data['id']!r}: no such record")
         # Extensa mode tags are set only at creation (ticket 48, 2026-10-03 ET).
         old = store.get(data["id"]) or {}
+        if old.get("kind") == "proof":   # ADR 0016 (Probata ticket 04, 2026-10-14 ET)
+            raise Failure(f"{data['id']}: a proof record never changes; prove again for a new record; "
+                          "nothing written")
         for tag in ("mode", "campaign"):
             if old.get(tag) != data.get(tag):
                 raise Failure(f"{data['id']}: {tag} is set only when a record is created; "
