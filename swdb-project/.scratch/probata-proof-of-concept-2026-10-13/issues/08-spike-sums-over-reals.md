@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** None — can start immediately
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof-of-concept plan", A1 row (d) and "Two efforts, split at the freeze"; "Modules", logic library; "Verifier lineup and order", floats as reals; "Further Notes", risk table); decisions: [10](../../formal-verification-2026-10-09/issues/10-proven-rewrite-contract.md), [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md), [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [18](../../formal-verification-2026-10-09/issues/18-evaluation-claims-and-subjects.md), [24](../../formal-verification-2026-10-09/issues/24-alignment-hint-kind.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md), [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md)
 **Time estimate:** about 3 days, inside the 2-week box

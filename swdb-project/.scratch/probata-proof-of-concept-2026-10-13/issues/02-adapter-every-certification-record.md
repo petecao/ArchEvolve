@@ -2,7 +2,7 @@
 
 Created: 2026-10-13 22:17 ET
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** None — can start immediately
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Modules", table "Loop, modes and guards", row "Campaign adapter"; "Proof routes" (each rewrite certified alone); "Testing Decisions", seams 2, 3 and 4; "Proof-of-concept plan", Extensa track); decisions: [17](../../formal-verification-2026-10-09/issues/17-enabling-rewrites.md) (item 7; side findings), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md) (build items)
 **Time estimate:** about half a day

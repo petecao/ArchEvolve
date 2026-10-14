@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** None — can start immediately
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Modules", table "Loop, modes and guards", row "Provider guard and workspaces"; "Testing Decisions", seam 4; "Proof-of-concept plan", A0 row and exit check; "Found while cutting the build tickets", O2 and O5; user story 77); decisions: [18](../../formal-verification-2026-10-09/issues/18-evaluation-claims-and-subjects.md) (item 6), [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md) (items 2, 5)
 **Time estimate:** about 2 hours

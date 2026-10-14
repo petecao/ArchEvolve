@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** None — can start immediately
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Modules", table "Records and levels"; "Records and levels" section; "What a proven verdict asserts" (bounds, assumption set); "Testing Decisions", seams 1, 2 and 4; "Choices made while writing this spec", S1 and S2); decisions: [26](../../formal-verification-2026-10-09/issues/26-proof-records.md) (items 1, 2, 4, 5, 6), [ADR 0016](../../../docs/adr/0016-proof-records-never-change-level-computed-on-read.md)
 **Time estimate:** about 1-2 days

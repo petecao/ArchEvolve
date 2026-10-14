@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** None — can start immediately
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Modules", table "Proof machinery", row "Verifier adapters"; "Verifier lineup and order"; "Concurrency" (Rocq box); "Providers and machines"; "Proof-of-concept plan", A0 row and exit check; "Further Notes", risk "A Homebrew change breaks LLVM 22"; "Found while cutting the build tickets", O3 and O4); decisions: [07](../../formal-verification-2026-10-09/issues/07-install-verifiers.md), [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) (items 2, 7, 8), [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md) (item 13), [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md) (items 8, 9), [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md) (items 2, 5)
 **Time estimate:** about 1-2 days
