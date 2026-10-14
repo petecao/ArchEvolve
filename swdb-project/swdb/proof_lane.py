@@ -185,7 +185,10 @@ def _lane(store, plan, lease_check):
     machine = store.get(plan.get("machine") or "", "machine")
     if machine is None:
         raise Failure(f"the batch plan names machine {plan.get('machine')!r}, which is not a machine record")
-    described = _verified_lane(machine, None) or "no lane: the machine record requires none"
+    try:
+        described = _verified_lane(machine, None) or "no lane: the machine record requires none"
+    except Failure as exc:                    # name this command's entry script, not profile's
+        raise Failure(str(exc).replace("profile_in_lane.sh", "prove_in_lane.sh")) from None
     if lane_required(machine) and lease_check is None:
         raise Failure(f"machine {machine['id']!r} requires a socket lane: pass --lease-check (the output of "
                       "`swdb prove-lane leases`, taken before dispatch), as scripts/mbit10/prove_in_lane.sh does")
