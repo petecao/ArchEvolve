@@ -8,6 +8,9 @@
    5 DX100 reads, 6 per-candidate obligations, 7 conclusion, 8 theorem. *)
 From Stdlib Require Import List Arith Relations.
 From Probata Require Import Vocabulary.
+(* BEGIN t42 imports *)
+From Stdlib Require Import Lia Bool PeanoNat.
+(* END t42 imports *)
 Import ListNotations.
 
 Section Composition.
@@ -347,6 +350,608 @@ Definition serial_outcome (X Y : run) (rf' : rf_map) : Prop :=
   (forall l v, final_is X l v <-> final_is Y l v) /\  (* same final memory *)
   iterations_once Y.                               (* every iteration exactly once *)
 
+(* BEGIN t42 lemmas *)
+
+(** Small list and projection facts used throughout the proof. *)
+Lemma t42_nth_error_firstn {A : Type} (xs : list A) n i a :
+  nth_error (firstn n xs) i = Some a <->
+  i < n /\ nth_error xs i = Some a.
+Proof.
+  revert xs i.
+  induction n as [|n IH]; intros xs i.
+  - split.
+    + intro H. destruct i; inversion H.
+    + intros [Hi _]. lia.
+  - destruct xs as [|x xs].
+    + split.
+      * intro H. destruct i; inversion H.
+      * intros [_ H]. destruct i; inversion H.
+    + destruct i as [|i].
+      * simpl. split; intro H.
+        -- split; [lia | exact H].
+        -- destruct H as [_ H]. exact H.
+      * simpl. rewrite IH. split.
+        -- intros [Hi Hnth]. split; [lia | exact Hnth].
+        -- intros [Hi Hnth]. split; [lia | exact Hnth].
+Qed.
+
+Lemma t42_at_firstn (X : run) n i t e :
+  at_ (firstn n X) i t e <-> i < n /\ at_ X i t e.
+Proof.
+  unfold at_. apply t42_nth_error_firstn.
+Qed.
+
+Lemma t42_firstn_firstn_le {A : Type} (xs : list A) i n :
+  i <= n -> firstn i (firstn n xs) = firstn i xs.
+Proof.
+  revert xs n.
+  induction i as [|i IH]; intros xs n Hin; [reflexivity |].
+  destruct n as [|n]; [lia |].
+  destruct xs as [|x xs]; [reflexivity |].
+  simpl. f_equal. apply IH. lia.
+Qed.
+
+Lemma t42_firstn_succ_some {A : Type} (xs : list A) i a :
+  nth_error xs i = Some a ->
+  firstn (S i) xs = firstn i xs ++ [a].
+Proof.
+  revert xs.
+  induction i as [|i IH]; intros xs Hnth.
+  - destruct xs as [|x xs]; simpl in Hnth; [discriminate |].
+    inversion Hnth. reflexivity.
+  - destruct xs as [|x xs]; simpl in Hnth; [discriminate |].
+    simpl. f_equal. apply IH. exact Hnth.
+Qed.
+
+Lemma t42_firstn_succ_none {A : Type} (xs : list A) i :
+  nth_error xs i = None -> firstn (S i) xs = firstn i xs.
+Proof.
+  revert xs.
+  induction i as [|i IH]; intros xs Hnth.
+  - destruct xs as [|x xs]; simpl in *; [reflexivity | discriminate].
+  - destruct xs as [|x xs]; simpl in *; [reflexivity |].
+    f_equal. apply IH. exact Hnth.
+Qed.
+
+Lemma t42_at_unique (X : run) i t e t' e' :
+  at_ X i t e -> at_ X i t' e' -> t = t' /\ e = e'.
+Proof.
+  unfold at_. intros H H'. rewrite H in H'. inversion H'. auto.
+Qed.
+
+Lemma t42_proj_app (A B : run) t :
+  proj (A ++ B) t = proj A t ++ proj B t.
+Proof.
+  unfold proj. rewrite filter_app, map_app. reflexivity.
+Qed.
+
+Lemma t42_proj_snoc_same (A : run) t e :
+  proj (A ++ [(t, e)]) t = proj A t ++ [e].
+Proof.
+  rewrite t42_proj_app. unfold proj. simpl. rewrite Nat.eqb_refl. reflexivity.
+Qed.
+
+Lemma t42_proj_snoc_other (A : run) u t e :
+  u <> t -> proj (A ++ [(u, e)]) t = proj A t.
+Proof.
+  intro Hut. rewrite t42_proj_app.
+  assert (Hnil : proj [(u, e)] t = []).
+  { unfold proj. simpl. destruct (Nat.eqb u t) eqn:Hutb; [|reflexivity].
+    apply Nat.eqb_eq in Hutb. contradiction. }
+  rewrite Hnil. apply app_nil_r.
+Qed.
+
+Lemma t42_in_proj (X : run) t e :
+  In e (proj X t) <-> In (t, e) X.
+Proof.
+  unfold proj. induction X as [|[u d] X IH]; [simpl; tauto |].
+  simpl. destruct (Nat.eqb u t) eqn:Hut.
+  - apply Nat.eqb_eq in Hut. subst u. simpl. rewrite IH.
+    split; intros [H | H]; [left; congruence | right; exact H |
+                            left; congruence | right; exact H].
+  - apply Nat.eqb_neq in Hut. rewrite IH. split.
+    + intro H. right. exact H.
+    + intros [H | H]; [inversion H; contradiction | exact H].
+Qed.
+
+(** Prefixes do not change any state observed at a position they retain. *)
+Lemma t42_interval_firstn (X : run) n t i :
+  i <= n -> interval (firstn n X) t i = interval X t i.
+Proof.
+  intro Hin. unfold interval.
+  rewrite t42_firstn_firstn_le by exact Hin. reflexivity.
+Qed.
+
+Lemma t42_inside_firstn (X : run) n t i :
+  i <= n -> inside (firstn n X) t i = inside X t i.
+Proof.
+  intro Hin. unfold inside.
+  rewrite t42_firstn_firstn_le by exact Hin. reflexivity.
+Qed.
+
+Lemma t42_owned_firstn (X : run) n t i l :
+  i < n -> (owned (firstn n X) t i l <-> owned X t i l).
+Proof.
+  intro Hin. unfold owned. split.
+  - intros [j [Hji [Hat Heq]]].
+    exists j. split; [exact Hji |]. split.
+    + apply (proj1 (t42_at_firstn X n j t (Own l))) in Hat. exact (proj2 Hat).
+    + rewrite t42_interval_firstn in Heq by lia.
+      rewrite t42_interval_firstn in Heq by lia. exact Heq.
+  - intros [j [Hji [Hat Heq]]].
+    exists j. split; [exact Hji |]. split.
+    + apply (proj2 (t42_at_firstn X n j t (Own l))). split; [lia | exact Hat].
+    + rewrite t42_interval_firstn by lia.
+      rewrite t42_interval_firstn by lia. exact Heq.
+Qed.
+
+Lemma t42_fits_event_owned_mono c crit own own' e :
+  (own -> own') ->
+  fits_event c crit own e -> fits_event c crit own' e.
+Proof.
+  destruct e; simpl; intuition.
+Qed.
+
+Lemma t42_fits_firstn (X : run) n t :
+  fits (firstn n X) t <->
+  forall i e l, i < n -> at_ X i t e -> loc_of e = Some l ->
+    fits_event (cls (interval X t i) (array_of l))
+      (inside X t i = true) (owned X t i l) e.
+Proof.
+  unfold fits. split.
+  - intros Hfit i e l Hin Hat Hloc.
+    specialize (Hfit i e l).
+    rewrite t42_interval_firstn in Hfit by lia.
+    rewrite t42_inside_firstn in Hfit by lia.
+    specialize (Hfit ltac:(apply (proj2 (t42_at_firstn X n i t e)); auto) Hloc).
+    pose proof (t42_owned_firstn X n t i l Hin) as Hown.
+    eapply t42_fits_event_owned_mono; [exact (proj1 Hown) | exact Hfit].
+  - intros Hfit i e l Hat Hloc.
+    apply (proj1 (t42_at_firstn X n i t e)) in Hat.
+    destruct Hat as [Hin Hat].
+    rewrite t42_interval_firstn by lia.
+    rewrite t42_inside_firstn by lia.
+    specialize (Hfit i e l Hin Hat Hloc).
+    pose proof (t42_owned_firstn X n t i l Hin) as Hown.
+    eapply t42_fits_event_owned_mono; [exact (proj2 Hown) | exact Hfit].
+Qed.
+
+(** A1: every event in a modeled run belongs to one of the [N] threads. *)
+Lemma t42_threads_below_N :
+  obl_team_size -> forall X rf, omp_ok X rf ->
+  forall i t e, at_ X i t e -> t < N.
+Proof.
+  intros Hteam X rf Homp i t e Hat.
+  unfold obl_team_size in Hteam.
+  destruct Homp as [_ [Hthreads _]]. pose proof (Hthreads i t e Hat). lia.
+Qed.
+
+(** A2: the rely-style class premise implies that every thread fits. *)
+Lemma t42_all_fit_from_class :
+  obl_class_fit -> forall X rf, model_run X rf -> all_fit X.
+Proof.
+  intros Hclass X rf Hmodel.
+  assert (Hprefix : forall n, all_fit (firstn n X)).
+  {
+    intro n. induction n as [|n IH].
+    - intros t Ht. apply (proj2 (t42_fits_firstn X 0 t)).
+      intros i e l Hi. lia.
+    - destruct (nth_error X n) as [[owner ev] |] eqn:Hnth.
+      + intros t Ht. destruct (Nat.eq_dec t owner) as [Hto | Hto].
+        * subst t. eapply Hclass; eauto.
+          intros u Hu Huo. apply (proj2 (t42_fits_firstn X (S n) u)).
+          intros i e l Hi Hat Hloc.
+          assert (i < n \/ i = n) as [Hin | ->] by lia.
+          -- apply (proj1 (t42_fits_firstn X n u) (IH u Hu) i e l Hin Hat Hloc).
+          -- exfalso. apply Huo. symmetry.
+             exact (proj1 (t42_at_unique X n owner ev u e Hnth Hat)).
+        * apply (proj2 (t42_fits_firstn X (S n) t)).
+          intros i e l Hi Hat Hloc.
+          assert (i < n \/ i = n) as [Hin | ->] by lia.
+          -- apply (proj1 (t42_fits_firstn X n t) (IH t Ht) i e l Hin Hat Hloc).
+          -- exfalso. apply Hto. symmetry.
+             exact (proj1 (t42_at_unique X n owner ev t e Hnth Hat)).
+      + intros t Ht. apply (proj2 (t42_fits_firstn X (S n) t)).
+        intros i e l Hi Hat Hloc.
+        assert (i < n \/ i = n) as [Hin | ->] by lia.
+        * apply (proj1 (t42_fits_firstn X n t) (IH t Ht) i e l Hin Hat Hloc).
+        * unfold at_ in Hat. rewrite Hnth in Hat. discriminate.
+  }
+  specialize (Hprefix (length X)). rewrite firstn_all in Hprefix. exact Hprefix.
+Qed.
+
+(** Counting barriers directly in the global prefix makes interval arithmetic simple. *)
+Definition t42_is_barrier_of (t : nat) (p : nat * event) : bool :=
+  andb (Nat.eqb (fst p) t) (is_barrier (snd p)).
+
+Lemma t42_interval_count (X : run) t i :
+  interval X t i = length (filter (t42_is_barrier_of t) (firstn i X)).
+Proof.
+  unfold interval, proj, t42_is_barrier_of.
+  remember (firstn i X) as A. clear HeqA X i.
+  induction A as [|[u e] A IH]; [reflexivity |].
+  simpl. destruct (Nat.eqb u t) eqn:Hut; destruct e; simpl;
+    try rewrite IH; reflexivity.
+Qed.
+
+Lemma t42_filter_firstn_step {A : Type} (f : A -> bool) (xs : list A) i :
+  length (filter f (firstn i xs)) <=
+  length (filter f (firstn (S i) xs)).
+Proof.
+  revert xs. induction i as [|i IH].
+  - intros [|x xs]; simpl; apply Nat.le_0_l.
+  - intros [|x xs]; [simpl; apply Nat.le_refl |].
+    simpl. destruct (f x) eqn:Hfx; try rewrite Hfx; simpl.
+    + apply le_n_S. apply IH.
+    + apply IH.
+Qed.
+
+Lemma t42_interval_step_le (X : run) t i :
+  interval X t i <= interval X t (S i).
+Proof.
+  repeat rewrite t42_interval_count. apply t42_filter_firstn_step.
+Qed.
+
+Lemma t42_interval_mono (X : run) t i j :
+  i <= j -> interval X t i <= interval X t j.
+Proof.
+  intro Hij. induction Hij.
+  - apply Nat.le_refl.
+  - eapply Nat.le_trans; [exact IHHij | apply t42_interval_step_le].
+Qed.
+
+Lemma t42_interval_succ_barrier (X : run) t i :
+  at_ X i t Barrier -> interval X t (S i) = S (interval X t i).
+Proof.
+  intro Hat. unfold at_ in Hat.
+  repeat rewrite t42_interval_count.
+  rewrite (t42_firstn_succ_some X i (t, Barrier) Hat).
+  rewrite filter_app. unfold t42_is_barrier_of. simpl. rewrite Nat.eqb_refl.
+  simpl. rewrite length_app. simpl. lia.
+Qed.
+
+Lemma t42_barrier_interval_lt (X : run) t i j :
+  i < j -> at_ X i t Barrier -> interval X t i < interval X t j.
+Proof.
+  intros Hij Hat.
+  pose proof (t42_interval_mono X t (S i) j ltac:(lia)) as Hmono.
+  rewrite t42_interval_succ_barrier in Hmono by exact Hat. lia.
+Qed.
+
+(** A3: OpenMP's barrier condition already puts the run in interval order. *)
+Lemma t42_intervals_contiguous :
+  obl_team_size -> forall X rf, omp_ok X rf -> intervals_contiguous X.
+Proof.
+  intros Hteam X rf Homp i j t t' e e' Hij Hati Hatj.
+  destruct Homp as [_ [Hthreads [Hbarrier _]]].
+  destruct (Nat.le_gt_cases (interval X t i) (interval X t' j)) as [Hle | Hgt].
+  - exact Hle.
+  - assert (Ht' : t' < team_size) by (eapply Hthreads; eauto).
+    destruct (Hbarrier i t e (interval X t' j) t' Hati ltac:(lia) Ht')
+      as [q [Hqi [Hatq Heqq]]].
+    pose proof (t42_barrier_interval_lt X t' q j ltac:(lia) Hatq) as Hlt.
+    lia.
+Qed.
+
+(** Toolkit for the critical-section state carried by a thread projection. *)
+Lemma t42_in_crit_app (a b : list event) state :
+  in_crit (a ++ b) state = in_crit b (in_crit a state).
+Proof.
+  revert state. induction a as [|e a IH]; intro state; [reflexivity |].
+  destruct e; simpl; apply IH.
+Qed.
+
+Lemma t42_in_crit_snoc_true (tr : list event) e :
+  in_crit (tr ++ [e]) false = true ->
+  e = Enter \/ (e <> Exit /\ in_crit tr false = true).
+Proof.
+  rewrite t42_in_crit_app. destruct e; simpl; intro H;
+    try (right; split; [discriminate | exact H]).
+  - left. reflexivity.
+  - discriminate.
+Qed.
+
+Lemma t42_inside_true_witness (X : run) t m :
+  inside X t m = true ->
+  exists q, q < m /\ at_ X q t Enter /\
+    forall r, q < r < m -> ~ at_ X r t Exit.
+Proof.
+  induction m as [|m IH].
+  - unfold inside. simpl. discriminate.
+  - intro Hinside. destruct (nth_error X m) as [[u e] |] eqn:Hnth.
+    + pose proof (t42_firstn_succ_some X m (u, e) Hnth) as Hfirst.
+      destruct (Nat.eq_dec u t) as [Hut | Hut].
+      * subst u. unfold inside in Hinside. rewrite Hfirst in Hinside.
+        rewrite t42_proj_snoc_same in Hinside.
+        apply t42_in_crit_snoc_true in Hinside.
+        destruct Hinside as [He | [Hne Hprevious]].
+        -- subst e. exists m. split; [lia |]. split; [exact Hnth |].
+           intros r Hr. lia.
+        -- change (inside X t m = true) in Hprevious.
+           destruct (IH Hprevious) as [q [Hqm [Hatq Hexit]]].
+           exists q. split; [lia |]. split; [exact Hatq |].
+           intros r [Hqr Hrm] Hatr.
+           destruct (Nat.eq_dec r m) as [-> | Hneq].
+           ++ apply Hne. exact (proj2 (t42_at_unique X m t e t Exit Hnth Hatr)).
+           ++ assert (Hrl : r < m) by lia.
+              apply (Hexit r); [split; assumption | exact Hatr].
+      * unfold inside in Hinside. rewrite Hfirst in Hinside.
+        rewrite t42_proj_snoc_other in Hinside by exact Hut.
+        change (inside X t m = true) in Hinside.
+        destruct (IH Hinside) as [q [Hqm [Hatq Hexit]]].
+        exists q. split; [lia |]. split; [exact Hatq |].
+        intros r [Hqr Hrm] Hatr.
+        destruct (Nat.eq_dec r m) as [-> | Hneq].
+        -- apply Hut. exact (proj1 (t42_at_unique X m u e t Exit Hnth Hatr)).
+        -- assert (Hrl : r < m) by lia.
+           apply (Hexit r); [split; assumption | exact Hatr].
+    + unfold inside in Hinside.
+      rewrite t42_firstn_succ_none in Hinside by exact Hnth.
+      change (inside X t m = true) in Hinside.
+      destruct (IH Hinside) as [q [Hqm [Hatq Hexit]]].
+      exists q. split; [lia |]. split; [exact Hatq |].
+      intros r [Hqr Hrm] Hatr.
+      destruct (Nat.eq_dec r m) as [-> | Hneq].
+      * unfold at_ in Hatr. rewrite Hnth in Hatr. discriminate.
+      * assert (Hrl : r < m) by lia.
+        apply (Hexit r); [split; assumption | exact Hatr].
+Qed.
+
+(** A4a: no other thread can enter during a critical-section window. *)
+Lemma t42_window_no_other_enter (X : run) rf i x t u :
+  omp_ok X rf ->
+  at_ X i t Enter -> at_ X x t Exit -> i < x ->
+  (forall q, i < q < x -> ~ at_ X q t Enter /\ ~ at_ X q t Exit) ->
+  t <> u -> forall m, i < m < x -> ~ at_ X m u Enter.
+Proof.
+  intros Homp Henter Hexit Hix Hwindow Htu m Him Henteru.
+  destruct Homp as [_ [_ [_ [Hcritical _]]]].
+  destruct (Hcritical i m t u (proj1 Him) Henter Henteru Htu)
+    as [q [[Hiq Hqm] Hexitq]].
+  exact (proj2 (Hwindow q ltac:(lia)) Hexitq).
+Qed.
+
+(** A4b: another thread is outside critical throughout such a window. *)
+Lemma t42_window_other_outside (X : run) rf i x t u m :
+  omp_ok X rf ->
+  at_ X i t Enter -> at_ X x t Exit -> i < x ->
+  (forall q, i < q < x -> ~ at_ X q t Enter /\ ~ at_ X q t Exit) ->
+  t <> u -> i < m < x -> inside X u m = false.
+Proof.
+  intros Homp Henter Hexit Hix Hwindow Htu Him.
+  destruct (inside X u m) eqn:Hinside; [exfalso | reflexivity].
+  destruct (t42_inside_true_witness X u m Hinside)
+    as [q [Hqm [Henterq Hnoexit]]].
+  destruct (Nat.lt_trichotomy q i) as [Hqi | [Hqi | Hiq]].
+  - destruct Homp as [_ [_ [_ [Hcritical _]]]].
+    destruct (Hcritical q i u t Hqi Henterq Henter ltac:(congruence))
+      as [r [[Hqr Hri] Hexitr]].
+    apply (Hnoexit r); [split; [exact Hqr | lia] | exact Hexitr].
+  - subst q. apply Htu. exact (proj1 (t42_at_unique X i t Enter u Enter Henter Henterq)).
+  - eapply (t42_window_no_other_enter X rf i x t u Homp Henter Hexit Hix Hwindow Htu q);
+      [lia | exact Henterq].
+Qed.
+
+(** Position/splitting facts for isolating a window in a global run. *)
+Lemma t42_at_split (X : run) i t e :
+  at_ X i t e ->
+  exists A B, X = A ++ (t, e) :: B /\ length A = i.
+Proof.
+  revert X. induction i as [|i IH]; intros [|p X] Hat; unfold at_ in Hat; simpl in Hat.
+  - discriminate.
+  - inversion Hat. subst p. exists [], X. auto.
+  - discriminate.
+  - destruct (IH X Hat) as [A [B [HX Hlen]]].
+    subst X. exists (p :: A), B. simpl. auto.
+Qed.
+
+Lemma t42_nth_after_prefix {A : Type} (pre : list A) a rest k :
+  nth_error (pre ++ a :: rest) (S (length pre + k)) = nth_error rest k.
+Proof.
+  induction pre as [|p pre IH]; [reflexivity |]. simpl. exact IH.
+Qed.
+
+Lemma t42_two_at_split (X : run) i x t e u d :
+  i < x -> at_ X i t e -> at_ X x u d ->
+  exists A B C,
+    X = A ++ (t, e) :: B ++ (u, d) :: C /\
+    length A = i /\ x = S (i + length B).
+Proof.
+  intros Hix Hati Hatx.
+  destruct (t42_at_split X i t e Hati) as [A [R [HX HlenA]]].
+  rewrite HX in Hatx. unfold at_ in Hatx.
+  replace x with (S (length A + (x - S i))) in Hatx by lia.
+  rewrite t42_nth_after_prefix in Hatx.
+  destruct (t42_at_split R (x - S i) u d Hatx) as [B [C [HR HlenB]]].
+  exists A, B, C. subst R. split; [exact HX |]. split; [exact HlenA | lia].
+Qed.
+
+Lemma t42_nth_error_lt {A : Type} (xs : list A) i a :
+  nth_error xs i = Some a -> i < length xs.
+Proof.
+  revert i. induction xs as [|x xs IH].
+  - intros i H. destruct i; discriminate.
+  - intros [|i] H.
+    + simpl. lia.
+    + simpl in H. simpl. specialize (IH i H). lia.
+Qed.
+
+Lemma t42_nth_error_in {A : Type} (xs : list A) i a :
+  nth_error xs i = Some a -> In a xs.
+Proof.
+  revert i. induction xs as [|x xs IH]; intros [|i] H; simpl in H; try discriminate.
+  - inversion H. left. reflexivity.
+  - right. apply (IH i H).
+Qed.
+
+Lemma t42_in_nth_error {A : Type} (xs : list A) a :
+  In a xs -> exists i, nth_error xs i = Some a.
+Proof.
+  induction xs as [|x xs IH]; simpl; intro H; [contradiction |].
+  destruct H as [-> | H].
+  - exists 0. reflexivity.
+  - destruct (IH H) as [i Hi]. exists (S i). exact Hi.
+Qed.
+
+Lemma t42_nth_error_app_left {A : Type} (xs ys : list A) i :
+  i < length xs -> nth_error (xs ++ ys) i = nth_error xs i.
+Proof.
+  revert i. induction xs as [|x xs IH].
+  - intros i Hi. simpl in Hi. lia.
+  - intros [|i] Hi; [reflexivity |]. simpl. apply IH. simpl in Hi. lia.
+Qed.
+
+Lemma t42_in_middle_at (A B C : run) a b p :
+  In p B ->
+  exists m, length A < m < S (length A + length B) /\
+    nth_error (A ++ a :: B ++ b :: C) m = Some p.
+Proof.
+  revert B. induction A as [|z A IH]; intros B Hin.
+  - destruct (t42_in_nth_error B p Hin) as [k Hk].
+    exists (S k). split.
+    + pose proof (t42_nth_error_lt B k p Hk). simpl. lia.
+    + simpl. rewrite t42_nth_error_app_left by (eapply t42_nth_error_lt; eauto).
+      exact Hk.
+  - destruct (IH B Hin) as [m [Hbounds Hnth]].
+    exists (S m). simpl. split; [lia | exact Hnth].
+Qed.
+
+Lemma t42_nth_between (A B C : run) a b m p :
+  length A < m < S (length A + length B) ->
+  nth_error (A ++ a :: B ++ b :: C) m = Some p -> In p B.
+Proof.
+  revert m. induction A as [|z A IH]; intros m Hbounds Hnth.
+  - destruct m as [|m]; [simpl in Hbounds; lia |].
+    simpl in Hnth. apply (t42_nth_error_in B m p).
+    rewrite <- Hnth. symmetry. apply t42_nth_error_app_left. simpl in Hbounds. lia.
+  - destruct m as [|m]; [simpl in Hbounds; lia |].
+    simpl in Hnth, Hbounds. eapply IH; eauto. lia.
+Qed.
+
+Lemma t42_proj_cons_same (X : run) t e :
+  proj ((t, e) :: X) t = e :: proj X t.
+Proof.
+  unfold proj. simpl. rewrite Nat.eqb_refl. reflexivity.
+Qed.
+
+Lemma t42_proj_window (A B C : run) t e d :
+  proj (A ++ (t, e) :: B ++ (t, d) :: C) t =
+  proj A t ++ e :: proj B t ++ d :: proj C t.
+Proof.
+  rewrite t42_proj_app. rewrite t42_proj_cons_same.
+  rewrite t42_proj_app. rewrite t42_proj_cons_same. reflexivity.
+Qed.
+
+(** A4c, first part: the window is an actual critical block in the projection. *)
+Lemma t42_window_critical_block (X : run) i x t :
+  at_ X i t Enter -> at_ X x t Exit -> i < x ->
+  (forall q, i < q < x -> ~ at_ X q t Enter /\ ~ at_ X q t Exit) ->
+  exists blk, critical_block (proj X t) blk /\
+    forall m e, i < m < x -> at_ X m t e -> In e blk.
+Proof.
+  intros Henter Hexit Hix Hwindow.
+  destruct (t42_two_at_split X i x t Enter t Exit Hix Henter Hexit)
+    as [A [B [C [HX [HlenA HlenX]]]]].
+  exists (proj B t). split.
+  - unfold critical_block. exists (proj A t), (proj C t). split.
+    + rewrite HX. apply t42_proj_window.
+    + split; intro Hin.
+      * apply t42_in_proj in Hin.
+        destruct (t42_in_middle_at A B C (t, Enter) (t, Exit) (t, Enter) Hin)
+          as [m [Hbounds Hatm]].
+        apply (proj1 (Hwindow m ltac:(lia))). unfold at_. rewrite HX. exact Hatm.
+      * apply t42_in_proj in Hin.
+        destruct (t42_in_middle_at A B C (t, Enter) (t, Exit) (t, Exit) Hin)
+          as [m [Hbounds Hatm]].
+        apply (proj2 (Hwindow m ltac:(lia))). unfold at_. rewrite HX. exact Hatm.
+  - intros m e Hm Hatm. apply (proj2 (t42_in_proj B t e)).
+    apply (t42_nth_between A B C (t, Enter) (t, Exit) m (t, e)); [lia |].
+    rewrite <- HX. exact Hatm.
+Qed.
+
+Lemma t42_window_no_barrier (X : run) i x t :
+  obl_atomic_blocks -> program_run X -> t < N ->
+  at_ X i t Enter -> at_ X x t Exit -> i < x ->
+  (forall q, i < q < x -> ~ at_ X q t Enter /\ ~ at_ X q t Exit) ->
+  forall m, i < m < x -> ~ at_ X m t Barrier.
+Proof.
+  intros Hatomic Hprogram Ht Henter Hexit Hix Hwindow m Hm Hatm.
+  destruct (t42_window_critical_block X i x t Henter Hexit Hix Hwindow)
+    as [blk [Hblock Hmembers]].
+  destruct (Hatomic t (proj X t) blk Ht (Hprogram t) Hblock) as [_ Hnobarrier].
+  apply Hnobarrier. eapply Hmembers; eauto.
+Qed.
+
+Lemma t42_interval_step_eq (X : run) t i :
+  ~ at_ X i t Barrier -> interval X t (S i) = interval X t i.
+Proof.
+  intro Hno. destruct (nth_error X i) as [[u e] |] eqn:Hnth.
+  - assert (Hp : t42_is_barrier_of t (u, e) = false).
+    { unfold t42_is_barrier_of. change ((Nat.eqb u t && is_barrier e) = false).
+      destruct (Nat.eqb u t) eqn:Hut.
+      - apply Nat.eqb_eq in Hut. subst u. try rewrite Nat.eqb_refl. simpl.
+        destruct e; try reflexivity.
+        exfalso. apply Hno. exact Hnth.
+      - reflexivity. }
+    assert (Hnil : filter (t42_is_barrier_of t) [(u, e)] = []).
+    { change ((if t42_is_barrier_of t (u, e) then [(u, e)] else []) = []).
+      rewrite Hp. reflexivity. }
+    repeat rewrite t42_interval_count.
+    rewrite (t42_firstn_succ_some X i (u, e) Hnth).
+    rewrite filter_app. rewrite Hnil. rewrite app_nil_r. reflexivity.
+  - repeat rewrite t42_interval_count.
+    rewrite (t42_firstn_succ_none X i Hnth). reflexivity.
+Qed.
+
+Lemma t42_interval_eq_without_barrier (X : run) t i j :
+  i <= j ->
+  (forall q, i <= q < j -> ~ at_ X q t Barrier) ->
+  interval X t i = interval X t j.
+Proof.
+  revert i. induction j as [|j IH]; intros i Hij Hno.
+  - assert (i = 0) by lia. subst i. reflexivity.
+  - destruct (Nat.eq_dec i (S j)) as [-> | Hneq]; [reflexivity |].
+    assert (Hij' : i <= j) by lia.
+    transitivity (interval X t j).
+    + apply IH; [exact Hij' |]. intros q Hq. apply Hno. lia.
+    + symmetry. apply t42_interval_step_eq. apply Hno. lia.
+Qed.
+
+Lemma t42_window_same_thread_interval (X : run) i x t :
+  obl_atomic_blocks -> program_run X -> t < N ->
+  at_ X i t Enter -> at_ X x t Exit -> i < x ->
+  (forall q, i < q < x -> ~ at_ X q t Enter /\ ~ at_ X q t Exit) ->
+  forall m e, i <= m <= x -> at_ X m t e -> interval X t i = interval X t m.
+Proof.
+  intros Hatomic Hprogram Ht Henter Hexit Hix Hwindow m e Hm Hatm.
+  apply t42_interval_eq_without_barrier; [lia |].
+  intros q Hq Hatq. destruct (Nat.eq_dec q i) as [-> | Hqi].
+  - pose proof (proj2 (t42_at_unique X i t Enter t Barrier Henter Hatq)). discriminate.
+  - eapply (t42_window_no_barrier X i x t Hatomic Hprogram Ht Henter Hexit Hix Hwindow q);
+      [lia | exact Hatq].
+Qed.
+
+(** A4c, final part: every event in the window has the window's interval. *)
+Lemma t42_window_interval (X : run) i x t :
+  obl_atomic_blocks -> program_run X -> t < N -> intervals_contiguous X ->
+  at_ X i t Enter -> at_ X x t Exit -> i < x ->
+  (forall q, i < q < x -> ~ at_ X q t Enter /\ ~ at_ X q t Exit) ->
+  forall m u e, i <= m <= x -> at_ X m u e -> interval X u m = interval X t i.
+Proof.
+  intros Hatomic Hprogram Ht Hordered Henter Hexit Hix Hwindow m u e Hm Hatm.
+  pose proof (t42_window_same_thread_interval X i x t Hatomic Hprogram Ht
+    Henter Hexit Hix Hwindow x Exit ltac:(lia) Hexit) as Hend.
+  destruct (Nat.eq_dec m i) as [-> | Hmi].
+  - pose proof (proj1 (t42_at_unique X i t Enter u e Henter Hatm)) as ->. reflexivity.
+  - destruct (Nat.eq_dec m x) as [-> | Hmx].
+    + pose proof (proj1 (t42_at_unique X x t Exit u e Hexit Hatm)) as ->.
+      symmetry. exact Hend.
+    + pose proof (Hordered i m t u Enter e ltac:(lia) Henter Hatm) as Hleft.
+      pose proof (Hordered m x u t e Exit ltac:(lia) Hatm Hexit) as Hright.
+      lia.
+Qed.
+
+(* END t42 lemmas *)
 (** * 8. The parallel composition theorem.  OPEN: proof is ticket 42. *)
 Theorem parallel_composition :
   obl_class_fit -> obl_owned_disjoint -> obl_atomic_blocks -> obl_chunk_cover ->
