@@ -1,9 +1,9 @@
 # 22 — SAW adapter and SAWScript translator
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-14 16:40 ET (resolved as the CBMC adapter); 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 21
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Verifier lineup and order": bounded verifier, cross-check of the C lowering, pinned versions, failure classes, one summary source; "Bounds": build constants, 15 minutes per bounded job; "Formal-half language and the C++ subset": the translators; "Further Notes": main risks; "Testing Decisions", seam 1; choice S1); decisions: [11](../../formal-verification-2026-10-09/issues/11-verifier-choice.md) items 1, 2, 3, 4, 8; [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md) items 1, 3; [19](../../formal-verification-2026-10-09/issues/19-bounded-verdict-bounds.md) items 2, 8
 **Time estimate:** about 3 days
@@ -47,3 +47,107 @@ Updated: 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:15 ET (revie
 
 ## Later changes
 - 2026-10-14 13:19 ET (Yan-Ru accepted ticket 09's A2 changes): this ticket becomes the CBMC adapter on 21's C lowering (no longer SAW): C stubs with one named assert + assume per check, unwind bounds from the sizes with `--unwinding-assertions`, reachability asserts against vacuity, counterexample replay on the C++ (sets `spurious_counterexample` when it does not replay). Reference: `prototype/06c-cbmc/`, shared note cbmc-two-lanes.md.
+
+## Answer
+
+2026-10-14 16:40 ET. **Resolved as the CBMC adapter** (Later changes, 13:19 ET). Every acceptance box is met in
+its CBMC form (translations below). Branch `probata-poc/t22`. Interface doc:
+[`format-v0.4-cbmc.md`](../../../docs/reference/format-v0.4-cbmc.md).
+
+**What was built**
+
+| Piece | Where |
+|---|---|
+| CBMC translator (formal halves to a harness and summary stubs; one oracle; three builds: CBMC, differential, replay) | `swdb/cbmc_translator.py` |
+| CBMC adapter `swdb prove --adapter cbmc --bounds ...` (lowering, summaries, compared knobs, C-vs-C++ differential, CBMC, reader, replay, handlers) | `swdb/cbmc_adapter.py` |
+| `swdb prove --summary <entry>` (subject `library_summary`); `pins.translator` | `swdb/proof.py`, `schemas/proof.schema.json` |
+| 14's contract: `TargetAdapter.bounded_job` gives `{adapter: cbmc}` for `threads_1`; `outside_cpp_subset` reads the C lowering; outside the subset skips both rungs | `swdb/campaign_targets.py`, `swdb/bounded_gate.py` |
+| Fixtures, stand-in `cbmc`, 4 corpus cases | `tests/fixtures/proof/cbmc/`, `tests/fixtures/proof/regression_corpus/cbmc-*.yaml` |
+
+**Acceptance, box by box (CBMC form)**
+
+- Translator deterministic: two jobs give byte-identical `job.c`; `pins.translator` (ID + sha256 of the module);
+  the method version must list it in `c_lowering.translators`; trusted-tool entry `swdb-cbmc-translator-1`.
+- Summary: `swdb prove --summary contract.fixture_cbmc_clamp` writes a `library_summary` record (proven); the
+  unit `swdb_fixture_clamp_all` then pins `{id, sha256, proof_record}` in `pins.summaries`, and `job.c` holds the
+  stub, not the callee's code. Without the summary record the unit job refuses to run.
+- Override negative control: one `ensures` dropped from the callee's formal half: the summary still proves, the
+  unit no longer does.
+- Safe fixture: proven at `{threads: 1, n: 3}` (record bounds exactly these), unwind K = 4, inputs symbolic
+  (oracle), build constants in `pins.build_constants`; level `proven_within_bounds_threads_1`.
+- Compared knob: `swdb_fixture_threshold` is drawn symbolically within its range and legality clause, listed in
+  `settings.symbolic_knobs` with the clause; never a build constant. The one-value bug (`SWDB_SEEDED_KNOB_BUG`)
+  is refuted with `inputs.swdb_fixture_threshold == 3`.
+- Seeded bug (`i < n - 1`): refuted; `counterexample` inline with concrete `inputs` (n, v, a) and the oracle.
+- Smoke pair (map 07's smoke.c as `smoke_main`): safe proven; `-DBUGGY` refuted with `inputs == {x: 41}`.
+- Both forms: each job runs CBMC on the C lowering and the C-vs-C++ differential on the bounded domain; a
+  refutation is replayed on the C++. `settings.forms` names both verdicts (safe: proven / agrees; bug: refuted /
+  refuted, replayed).
+- Agreement negative control: a hand-mutated lowering (`SWDB_CBMC_LOWERING_FAULT`, loop stops one early) stops
+  the batch with `c_lowering_disagreement` and the first differing input; no record.
+- Outside the subset: GAPBS `InitParent` gives not proven, `unsupported_construct`, `settings.outside_cpp_subset`
+  names the reason, no agreement and no forms.
+- Budget: a job over `--budget-minutes` reads `timeout`, bounds unchanged; handler: never retried smaller.
+- Failure classes, each shown: `timeout`, `out_of_memory` (4 MiB cap), `unwinding_bound_too_small` (loop of 2n),
+  `vacuous_pass` (contradictory requires), `spurious_counterexample` (stand-in trace that does not replay),
+  `parse_error`, `solver_error`, `tool_crash` (stand-in), `unsupported_construct`; unclassified
+  (`unclassified_cbmc_outcome`) stops the batch. Each writes `cbmc/handler.json`.
+- Regression corpus: 4 cases (`cbmc-lowering-disagreement`, `cbmc-loop-beyond-size-bound`,
+  `cbmc-contradictory-preconditions`, `cbmc-cpp-cut-without-build-constants`), each rerun and giving its class.
+- Pins and lock: CBMC version (6.11 matches 6.11.0), solver flag, clang 22.1.8 checked against the lineup (a
+  mismatch runs nothing); CBMC and its SAT solver are trusted-tool entries; jobs take 21's lock (`real = True`;
+  two jobs started together never overlap); RSS watchdog; tests skip without CBMC or clang 22.1.8.
+
+**Tests** (Mac; serial; no xdist; inside `verifier_run.py`): `tests/test_cbmc_adapter.py` (27),
+`test_format_doc.py`, `test_proof_records.py`, `test_proof_method_version.py`: **142 passed** in 293 s. Log
+`/tmp/claude/probata-runs/t22/pytest-4.log` (sha256 `29128cba38222936`...), report log `report-4.jsonl`
+(`6d1c1f4d4be0fbcf`...). Gate and ArchEvolve proof path: `test_bounded_gate_campaign.py`,
+`test_archevolve_proof_path.py` (see the main session's merge run). Runs: `/tmp/claude/probata-runs/t22/`.
+
+**SAW to CBMC translations** (each an Assumption; not decided in the map beyond 13:19 ET's change):
+
+- Assumption: "SAWScript translator" = the CBMC translator (ACSL to C harness and stubs); "SAW override" = the C
+  stub replacing the callee's definition in the C lowering.
+- Assumption: "SAW on the C++ and on the C lowering, verdicts agree" = CBMC on the C lowering plus (a) the native
+  C-vs-C++ differential on the bounded domain every job and (b) replay of every counterexample on the C++.
+  CBMC never reads the C++ (libc++ 22). A disagreement stops the batch (the ticket's own assumption kept).
+- Assumption: "outside the subset: SAW on the C++ only" has no CBMC form: no C lowering means no bounded job;
+  directly it reads `unsupported_construct` with the reason; in the gate both rungs skip (`outside_cpp_subset`),
+  so such a candidate keeps its certification level (was: at most proven within bounds). Ticket 14's test updated.
+- Assumption: SAW's counterexample = CBMC's trace read as the oracle values `swdb_next()` returned, decoded into
+  named inputs by the native replay.
+- Assumption: SAW's solver = the SAT solver bundled in CBMC, named from the lineup's `--sat-solver` (`cadical`),
+  sha256 of the CBMC binary.
+
+**Other assumptions**
+
+- Assumption: size bounds name integer parameters of the proof unit; every interface array has the largest size
+  bound's length; one unwind K = largest bound + 1 for every loop (per-loop bounds: ticket 33).
+- Assumption: the differential domain is each size -1..bound, knobs over their range, values {-2..2} (scalars
+  also INT_MIN/INT_MAX), at most 20 000 runs (fixed-seed sample beyond).
+- Assumption: a summary is any formal-frame library entry with a `proof_unit` whose function the unit calls and
+  `once: self` formal halves; the fixture uses a rewrite-contract-shaped entry (real per-call summaries: 30).
+- Assumption: a compared knob is a contract knob that is a global of the lowering used only as a comparison
+  operand; any other use must be a `--define` build constant.
+- Assumption: CBMC runs without `--slice-formula` by default (the lineup may add it); slicing could hide oracle
+  steps and make a true counterexample read spurious.
+
+**Side findings**
+
+- Diagnosed during the work (corpus case `cbmc-cpp-cut-without-build-constants`): the C++ cut was compiled
+  without the build constants; the differential run and the replay caught it (spurious smoke bug, knob
+  disagreement). Fixed.
+- `swdb.wp_adapter` has the same circular import as the first `cbmc_adapter` draft if imported before
+  `swdb.proof`; the CBMC adapter registers itself to avoid it.
+
+**Interface notes**
+
+- 23: extend `swdb.cbmc_translator` (`stub`, `harness`, `expression`): `\old` over memory in stubs, logic calls,
+  `\separated`, check mode; the three-form check compares against these stubs.
+- 25: model calls become stubs through `tr.stub`; struct-field `assigns` are not translated yet.
+- 27: ghost hazard arrays as globals; the harness snapshots scalar globals for the frame; arrays need work.
+- 33: minimum-bounds records must use the unit's integer parameter names as dimensions; add per-loop
+  `--unwindset`; the A2 exit replays the 14 verdicts with generated stubs (needs 24's widening first).
+- 46/47: reuse `cbmc_adapter.Code` (lowering + C++ cut) and the oracle replay; `bounded_job` for `threads_k`.
+- 60: start from `counterexample.oracle` / `inputs`; `replay.form: cxx` is stage 1.
+- 61: CBMC on a product of two C lowerings with this harness is the natural replacement.

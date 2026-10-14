@@ -1,0 +1,12 @@
+# Created: 2026-10-14 ET (Probata PoC 22). Regression corpus case through `swdb prove --adapter cbmc`.
+id: cbmc-contradictory-preconditions
+adapter: cbmc
+input:
+  function: smoke_main
+  contract: contract.fixture_cbmc_vacuous
+  bounds: {threads: 1}
+failure_class: vacuous_pass
+cause: >-
+  The contract's precondition (x > 100 && x < 0) admits no input, so every property holds trivially. The
+  harness's reachability assert at its end (swdb_reach.end) holds too, which shows that no execution reaches
+  it: the adapter reads vacuous_pass instead of proven.
