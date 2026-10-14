@@ -1,7 +1,7 @@
 # 07 — Spike (c): WP with agent hints
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 03
@@ -437,3 +437,194 @@ placed in the stand-in.
   `examples_sha256`.
 - Tests: `test_hints.py` and `test_loop_tool.py`, 15 passed. The heartbeat table is in
   `heartbeat.md`.
+
+## Continuation 2 results (2026-10-14 17:10 ET, branch `probata-poc/t07d`)
+
+**Verdict: fail so far.** Three more counted runs (7, 8, 9), all failed: no best set reached 0 open
+goals in round mode, so no run reached the fresh full replay. The pass bar and the 60-minute budget did
+not change. The box is still open (about 2026-10-27 ET). All numbers are Mac results (host `mac`).
+
+**What changed, in one line each:**
+
+- The three requested method changes work as mechanisms. Open goals now fall monotonically instead of
+  oscillating (run 6: 51 → 95 → 67; runs 7-9: never worse than the best so far).
+- The frame-goal wall is gone. It was mostly a WP encoding problem, not a hint problem (below).
+- What still blocks a pass: closing the agent's own invariants and asserts (run 9 ends with 3 unit
+  goals open but 26 hint goals open) and WP attempts per budget (7-18 per run).
+
+### Biggest finding: the frame goals were a 2-D ghost array, not missing hints
+
+- Dev diagnosis (`dev/goalprint/print.log`, `dev/goals_summary.py`): 23 of the open frame goals had
+  the same shape. Each `dxc_dep[0 .. 7][0 .. 7]` range in an `assigns` or `loop assigns` became an
+  existential goal (`exists i, j. i = a /\ j = b /\ 0 <= i <= 7 ...`). Qed does not close it, and the
+  provers time out on it in TDStep's large context.
+- Frama-C rejects the whole array as an `assigns` location ("not an assignable left value").
+- **Stand-in fix** (allowed between runs; same frame and same semantics): the ghost array is now 1-D,
+  `dxc_dep[DXC_NUM_TILES * DXC_NUM_TILES]`, read as `dxc_dep[x * DXC_NUM_TILES + y]` in
+  `standin/dxc_summaries.h`. TDStep's `assigns` names `dxc_dep[0 .. DXC_NUM_TILES * DXC_NUM_TILES - 1]`.
+- Effect, before any Codex call (round mode, 10 s, frame seeds in):
+
+  | Stand-in | Open goals | Open frame goals |
+  |---|---|---|
+  | 2-D `dxc_dep` (`dev/dev-seeds-only`) | 63 of 216 | 34 |
+  | 1-D `dxc_dep` (`dev/dev-seeds3-only`) | 39 of 209 | 12 |
+
+  The 12 frame goals left need value ranges, such as `0 <= v < num_nodes` for `parent->start_[v]`.
+  Those are invariants, so they are Codex's job.
+- The no-hint run on the fixed stand-in (counted-7 round 0, frozen flags, 30 s): 103 goals open, all
+  timeouts. 139 of 139 smoke tests passed. 14.8 min, 3.7 GB.
+
+### Every counted run (continuation 2)
+
+Common to all three runs:
+- Each run started with no agent hints, in a fresh Codex session.
+- Codex `gpt-5.6-sol` `xhigh` (`PINS["codex"]`), CLI 0.153.0. Shell off, `-s read-only`, workspace
+  inline, and the in-call MCP tool only.
+- The fixed stand-in and frozen flags. Round mode at 10 s.
+- Runs 8 and 9 reused run 7's no-hint run (stand-in hashes checked).
+
+| Run | Folder | Method | Codex calls / WP attempts | Budget-min | Lock wait excluded | Best set: open goals (unit + hint) | Outcome |
+|---|---|---|---|---|---|---|---|
+| 7 | `t07d/counted-7/` | (a) total-count acceptance, (b) seeds, (c) strategies | 2 / 18 | 44.65 | 10.6 min | 22 (15 + 7); 8 of 9 `ensures` open | **fail**: in-call budget spent, 0 final replays |
+| 8 | `t07d/counted-8/` | + (a') unit-first acceptance, hint cap 15, 8-min replay reserve | 2 / 13 | 52.16 | 7.4 min | 17 (7 + 10); 4 `ensures` open | **fail**: in-call budget spent, 0 final replays |
+| 9 | `t07d/counted-9/` | + hint cap 30 | 2 / 8 | 52.19 | 45.0 min | 29 (3 + 26); 0 `ensures` open | **fail**: in-call budget spent, 0 final replays |
+
+- Trajectories of the best set's open goals (`attempts.py` on each run):
+  - run 7: 38 → 38 → 29 → 29 → 24 → 24 → 23 → 22 (5 edits reverted);
+  - run 8: 38 → 35 → 27 → 22 → 21 → 17 → 16 → 16 → 17 (3 reverted). Unit goals fell 38 → 7.
+  - run 9: 38 → 34 → 27 → 27 → 29 → 29 → 29. Unit goals fell 38 → 3.
+- Unit goals in run 9's best set: the frame goals `assigns_normal_part16` and `assigns_exit_part53`
+  (the queue flush), and one gather precondition (`call___dxc_gather_5 requires_3`). Every `ensures`
+  and every hazard check is proven in round mode, but only "under" 26 unproven hint goals. So run 9
+  is no closer to a pass than run 8; it moved the open work into the agent's own hints.
+- Tokens are lower bounds. When the in-call deadline stopped Codex (round 1 of every run), it emitted
+  no `turn.completed` event. Recorded totals:
+  - run 7: input 1,381,258 (1,292,032 cached), output 2,476;
+  - run 8: input 1,000,100 (960,896 cached), output 1,218;
+  - run 9: input 787,812 (725,376 cached), output 772.
+- Peak WP RSS 3.7 GB (no-hint run). The 8 GB watchdog never fired.
+- Hint rules held in every run:
+  - 0 vocabulary rejections, so 0 escape-hatch attempts. 5 edits were rejected: 1 by the edit rules
+    (a goal not open, run 7) and 4 by the Frama-C parse or goal-generation check (runs 8-9).
+  - Every agent hint has Codex provenance (round and tool call). The frame seeds have provenance
+    `seed: frame_seeds.py`. The implementing agent wrote no hint in a counted run.
+- Not run: the negative control and the final-unit smoke tests. Both need a proven unit.
+- **Run 9 confound:** the machine-wide verifier queue was crowded (up to 9 waiting jobs from other
+  tickets). The excluded lock wait was 45 min.
+  - `verifier_run.py` waits are excluded from the budget, but the Codex call deadline is wall-clock.
+    So Codex was stopped at 43.6 budget-min with 8 in-call minutes still unused.
+  - One `check_edit` waited 35 min in the queue, and Codex sat idle behind it.
+  - Fix for the next run: give the Codex call a budget-clock deadline, extended by measured lock waits.
+
+### Method changes, each with its reason (they belong in the method version)
+
+| # | Change | Since | Reason |
+|---|---|---|---|
+| a | **Monotone, local editing.** The loop keeps one best set (`best.json`). Codex never returns a set, only edits: at most 8 operations (`add` / `delete` / `edit`) and 6,000 characters, each naming an open goal it targets. Through the in-call tool, `propose_edit` runs the check and round-mode WP on best set + edit. An edit that raises the open-goal count is reverted. The final JSON answer is one more edit. | run 7 | Run 6: Codex rewrote its whole set each attempt (51 → 95 → 67). |
+| a' | **Unit-first acceptance.** Goals of the stand-in ("unit goals": postcondition, hazard checks, call preconditions, frames incl. seed frames, termination) count first. An edit is kept if it lowers the open unit goals, or keeps them and does not raise the total. Open goals inside the agent's own hints may rise, up to a cap (15 in run 8, 30 in run 9). | run 8 | In run 7, every one of the 5 reverted edits lowered the unit goals (for example 25 → 22, 18 → 16) but added more open invariant goals. The total count punished the necessary step of adding a not-yet-inductive invariant. |
+| — | Final-replay reserve 15 → 8 min | run 8 | Run 7 never used its reserve. A set that proves everything at 10 s replays in a few minutes. |
+| — | Hint cap 15 → 30 | run 9 | Run 8's edit #20 lowered the unit goals 8 → 7 but was reverted only because hint goals hit 21 > 15. |
+| b | **Deterministic frame seeds** (`frame_seeds.py`). Before the first Codex call, a syntactic write-set pass writes every loop's `loop assigns`. It reads clang's JSON AST plus the callees' ACSL `assigns`, substitutes the actual arguments, resolves pure getters (`ensures \result == E`), drops block-scoped locals, applies alias facts from constructor `ensures`, and widens loop-varying indices to the function frame's range at `Pre`. Nothing is BFS-specific. WP checks the seeds in a seed round (2.6 min, counted in the budget). Codex may not edit them or add `loop assigns`. | run 7 | 34 of run 6's best set's 51 open goals were frame goals. |
+| c | **Strategy hints.** New vocabulary: `\wp::strategy` plus its `\wp::proof` attachment. Tactics are limited to WP's own (Wp.filter, clear, split, unfold, instance, lemma, range, cut, separated, array, compound). `\prover` takes names only, with no time argument. No `\auto`; never on smoke tests. WP runs with the strategy engine (`wp_run.sh round-s` / `wp-smoke-s`: `-wp-prover tip,alt-ergo,z3,cvc5 -wp-script dry`, fresh session, no script saved or reused). | run 7 | Hints added hypotheses that made trivial goals time out (t07c finding 2). |
+
+On (c)'s effect, measured:
+- Codex used strategies in every run: run 7 issued 18 `strategy` and 10 `proof` operations, and the
+  final sets hold 4-8 strategy hints (`Wp.filter`, `Wp.instance` on `@requires`/`@assert`/`@invariant`
+  goals).
+- In run 8's best set, WP reports 1 goal proven by a script (40 tactic steps).
+- A generic `Wp.filter` seed on all `@assigns` goals (dev only) helped on the 2-D stand-in: 63 → 52
+  open. On the fixed stand-in it changed nothing (39 vs 39 open) and cost 105 s more per WP run, so it
+  was not used in counted runs.
+- So (c) works as a mechanism, but it was not what limited these runs.
+
+### Bug fixes (harness, not method)
+
+- The merger orders loop clauses: invariants, then `loop assigns`, then `loop variant`. Frama-C
+  rejects an invariant after a variant, and seeds come before agent hints.
+- The verdict reader skips `strategy`/`proof` entries of `-report`. WP lists them with status `-`, so
+  any set with a strategy hint could never have passed the replay. Found by reading run 8's log; no
+  replay ran, so no verdict changed. Test: `test_verdict_reader_skips_strategy_directives...`.
+
+### Uncounted (DEV) runs, all in `t07d/dev/`
+
+- `dev-seeds-only`, `dev-seeds-filter`, `dev-seeds3-only`, `dev-seeds3-filter`: WP on seeds alone, with
+  and without the filter seed, before and after the stand-in fix. No agent hints.
+- `goalprint`: `-wp-print` of TDStep's frame goals, for the diagnosis above.
+- `plumbing`: edit loop at Codex effort `low`, 22-minute budget, no no-hint run. Mechanics check only:
+  accept 39 → 31, a revert 31 → 35, and the budget stop.
+- No hint written by the implementing agent entered a counted run. The only hints written by the
+  implementing agent were the dev filter-strategy probe (`seeds_strat.json`).
+
+### Assumptions (not decided in the map)
+
+- Assumption: frame seeds are part of the method (map 13 items 3 and 9: seeds before the first
+  provider call). They are not agent hints, and the implementing agent did not write them: a
+  deterministic program did. The seed round counts in the 60-minute budget.
+- Assumption: a `\wp::strategy` hint needs its `\wp::proof` attachment to act, so the attachment is part
+  of map 13 item 5's allowed "`\wp::strategy` tactic hints". `-wp-prover tip` with `-wp-script dry` and
+  a fresh session reuses no script, so the verdict flags of item 7 still hold.
+- Assumption: flattening the 2-D ghost array is a stand-in/summary fix, which this ticket allows
+  between runs. Same state, same frame, same predicates.
+- Assumption: as in t07c, in-call tool calls are not provider calls, and the replay reserve is inside
+  the 60 minutes.
+
+### What a pass would need now (input to ticket 09; none was run)
+
+- **A budget-clock deadline for Codex**, extended by measured lock waits, or a dedicated verifier lane.
+  Run 9 lost 8 in-call minutes to the wall clock.
+- **More WP attempts per budget.** Each attempt costs 1-5 min (parse, goal generation, WP). Rerunning
+  only goals whose context changed, or mbit10 in a lane with more provers in parallel, would give more
+  than 7-18 attempts.
+- **Close the agent's own hint goals.** Run 9 proves every `ensures` under 26 unproven invariants and
+  asserts. A follow-up phase that lets only hint-goal edits through (unit goals fixed) is the natural
+  next lever.
+
+### What A3 (tickets 34-37) should adopt
+
+- **34 (role/workspace):** an edit protocol, not whole sets: ops tied to open goals, a size limit, and
+  the in-call tool (`check_edit` / `propose_edit` / `show_best`). Report open goals as unit vs hint.
+- **35 (hint records, merger, check):**
+  - add `proof` (attachment) to the strategy kind, with the narrow strategy vocabulary in
+    `hints.strategy_problems`;
+  - order loop clauses in the merger;
+  - treat seed hints as fixed records with provenance `seed`.
+- **36 (setup check / verdict reading):** skip `strategy`/`proof` directives in `-report` (status `-`).
+  Flag 2-D ghost-array ranges in `assigns` as a known WP cost. Summaries (ticket 30) should keep ghost
+  state 1-D.
+- **37 (the loop):**
+  - deterministic frame seeds before round 1 (the `frame_seeds.py` rules; ticket 21's lowering should
+    emit them from its AST);
+  - monotone best set with unit-first acceptance and a hint-goal cap;
+  - a budget-clock deadline for provider calls;
+  - a hint-goal-only closing phase.
+
+### Evidence (Mac, `/tmp/claude/probata-runs/t07d/`, 52 MB; LR-06 record in `README.md`)
+
+| File | sha256 |
+|---|---|
+| `counted-7/round-0/goals.json` (no-hint run, fixed stand-in) | `a437410a72ceb9ac3373182e93ba2e14766cc84911273391018a6e004b800709` |
+| `counted-7/round-0/wp-smoke.log` | `9ddb842acb1eb6a5f94583d7c3b87fa0781fbb232fa6ad5b143b7f25a0cf7c61` |
+| `counted-7/history.json` | `9564e5b7fd5626d71e300cd57c3a65ae0ef3aa1f417261deb1ebc1c3d71d9611` |
+| `counted-7/summary.json` | `4160d40a67a2cbda26dd28d69fe1f2078d7a7ffcce77bc9fc8d1570b5240ea3a` |
+| `counted-7/best.json` | `118206c84fc75044d8def1cc4714ca24454d6ba26e44e76fee21fc97d3caa1cd` |
+| `counted-8/history.json` | `5d12ad389cddbff64c5aa950a68dad8f05f1096c7b13f56522ba80e98f239e07` |
+| `counted-8/summary.json` | `60809d82e26f2c05719397b0466c3fbca03cb96e48c26687f3f92ded30a27eb6` |
+| `counted-8/best.json` | `53559a4cfde19dc7cf2dd37c62de1e970f8b1e0c4dac18d3c4e13c0b881fefd5` |
+| `counted-9/history.json` | `9b0bf828e9fd0b72e4f7df642fcc9969fba840af856d3a91a5ebe4037808e65c` |
+| `counted-9/summary.json` | `a88fdec2f48084397044e6639ccdaebe4887cfc49fa2a445c10673c6d17fd1e3` |
+| `counted-9/best.json` | `9308f1f967198519c299ddd229ca5ffa9dbfcaa82c88cd31c580647655da27d2` |
+| `dev/dev-seeds-only/goals.json` (2-D, seeds) | `c3996ed2792de4327e1ac1397dcb3038d329d9818d7debffce59df35d4b3e38c` |
+| `dev/dev-seeds-filter/goals.json` (2-D, seeds + filter) | `30df1b8a60964d8a1c4ac8be720f2caeaee1ac5dac603fe9a6be0bebe9f03c5c` |
+| `dev/dev-seeds3-only/goals.json` (1-D, seeds) | `43e012918ac6d6fe17793560e14d19977d27c526e715b7b1a07490cd17e58dd4` |
+| `dev/dev-seeds3-filter/goals.json` (1-D, seeds + filter) | `946dd3b3b6a0f2de4e61afe0db493028ae70656a81e91e024bd8ad976ccdf6f6` |
+| `dev/goalprint/print.log` (frame-goal diagnosis) | `9fd2178354b823ea36a2e15cc0d5aab25cf48bac6872d5b6c813f98e8ca3dfe8` |
+| `dev/plumbing/summary.json` | `b852289bae1d2569d6d97b8bd762ea5b529755eb40ba3d097ee553f4b03e78a5` |
+| `heartbeat.md` (LR-07 table, 30-min cadence) | `f6e3c66ae15ad553222b4fdfb3cae782ccf805ad0aeff6a5b092212cbb6e324b` |
+
+- Stand-in after the fix: `standin/tdstep_standin.c` `d5d599e4…40f8`, `standin/dxc_summaries.h`
+  `d708c0ef…e0d2`. The other headers are unchanged.
+- Harness hashes per run are in each `meta.json` (`harness_sha256`). Harness commits: `7af4b56a`
+  (run 7), `0642d575` (run 8), `a1053ffb` (run 9).
+- Tests: `test_edit_loop.py`, `test_hints.py` and `test_loop_tool.py`, 21 passed.
+- Analysis scripts (not in the repo): `attempts.py` (unit/hint split per attempt), `strat_use.py`,
+  `peek.py`.

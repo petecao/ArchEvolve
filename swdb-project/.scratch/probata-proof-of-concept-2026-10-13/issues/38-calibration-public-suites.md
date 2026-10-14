@@ -61,3 +61,6 @@ run. This is a calibration run, not a unit test: its records and the A3 exit jud
 - **Risk:** at up to 60 minutes per program, one verifier job at a time, plus WP alone at equal
   wall time, the full suites may not fit a week. Time a short pilot first. If the estimate exceeds
   the ticket's time, stop and ask Yan-Ru for a subset; do not pick one silently.
+
+## Later changes
+- 2026-10-14 17:02 EDT (main session): ticket 26's acceptance box "calibration suites" moves here: 26 could not run Code2Inv, X509-parser and Frama-C-problems because they are not on the Mac; this ticket installs them and runs 26's logic library against them too.
