@@ -62,7 +62,7 @@ def _crux(variant, config):
             "inputs": ["inputs/smoke_crux.cpp"], "tool": "crux-llvm",
             "verdicts": [{"verdict": "proven", "exit": 0, "output": "Overall status: Valid"},
                          {"verdict": "refuted", "output": "Overall status: Invalid",
-                          "counterexample": r"Counterexample|x\b|failed"}]}
+                          "counterexample": r"Found counterexample|error: in |Disproved:"}]}
 
 
 def _wp(variant, config):
