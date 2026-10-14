@@ -289,6 +289,31 @@
     },
     "paired_estimates": {
       "$ref": "#/$defs/pairing_ledger"
+    },
+    "bounded_gate": {
+      "type": "object",
+      "description": "Probata PoC 14 (2026-10-14 ET): present when the campaign's library held a method version, so every certified candidate artifact passed the bounded gate before evaluation. The pinned method version, its budget per bounded job and k, the rungs, the proof jobs' wall hours, and the two repair counters.",
+      "required": ["method_version", "budget_minutes", "k", "rungs", "proof_job_hours", "repair_counters"],
+      "properties": {
+        "method_version": {
+          "type": "object",
+          "required": ["id", "sha256"]
+        },
+        "budget_minutes": {"type": "number", "exclusiveMinimum": 0},
+        "k": {"type": "integer", "minimum": 2},
+        "rungs": {"type": "array", "items": {"enum": ["threads_1", "threads_k"]}},
+        "proof_job_hours": {"type": "number", "minimum": 0},
+        "repair_counters": {
+          "type": "object",
+          "required": ["certification_repairs", "counterexample_repair_rounds", "repairs", "reverted_repairs"],
+          "properties": {
+            "certification_repairs": {"type": "integer", "minimum": 0},
+            "counterexample_repair_rounds": {"type": "integer", "minimum": 0},
+            "repairs": {"type": "array", "items": {"type": "string"}},
+            "reverted_repairs": {"type": "array", "items": {"type": "string"}}
+          }
+        }
+      }
     }
   },
   "required": [

@@ -70,6 +70,12 @@ Round r repairs what round r-1 made, citing its refutation. Outcomes (never a fa
 counterexample from the gate never continues the loop. The result lists `calls`, `repairs`,
 `reverted_repairs` and the `chain` of rounds.
 
+Ticket 14 (2026-10-14 ET): optional `charge`. Before each round's call, once the cap allows the round, the
+loop calls `charge()`; it returns a callable the loop calls with the round's proposal (None if the round
+raised), or None to refuse the call, which ends the loop `calls_refused`. A campaign charges its D7 ledger
+and lane-hours here. In a campaign, `gate` returns no proof record for a flagged (reverted) repair: it
+applies no contract, so it gets no bounded job.
+
 ## The guard
 
 - **Counterexamples** (`provider_workspace.refuse_counterexamples`): any provider-visible file holding

@@ -35,6 +35,12 @@ rewrite role names a `start` (one of them, or null for the base source), the can
 that derived implementation's snapshot and certified against it, and speed is still compared against the
 root baseline roles (ADR 0005).
 
+Probata PoC 14 (2026-10-14 ET): when the campaign's library holds a method version, every certified candidate
+artifact passes the bounded gate (`swdb.bounded_gate`) after certification and before evaluation. A refuted one
+is never evaluated; its counterexample goes to counterexample-guided repair (`swdb.counterexample_repair.loop`,
+which owns the 5-round cap and the reverted-repair flag), each repair call charged to the D7 ledger as role
+`counterexample_repair`. A library without a method version runs no gate, as before.
+
 Updated 2026-10-09 23:25 ET (D35, decided by Yan-Ru 2026-10-09 22:33 ET): `swdb campaign` refuses
 to start a new campaign on a real target unless its file names a passing numeric pairing check
 (`require_numeric_pairing_check`). The contract-fixture adapter and resumed campaigns are unaffected.
@@ -122,6 +128,7 @@ NATIVE_ORDER_SEED = 20260926
 SPEC_BUDGETS = {"max_iterations": 8, "plateau_iterations": 4, "lane_hours": 24,
                 "provider_calls_per_iteration": 3, "provider_calls_setup": 1, "disk_gb": 20, "lanes": 1}
 DEFAULT_MAX_REPAIRS = 2        # D7: the ArchEvolve-mode repair limit
+REPAIR_CALL = "counterexample_repair"   # Probata PoC 14: the ledger role of a counterexample repair call
 EXTENSA_SOURCE = {"repository": "MaizeHPC/MemAcc", "commit": "af3d6d7f7a69a72facdc3b95b42e78c952f44a76"}
 # 2026-10-05 ET (code review P1): provider-call outcomes, including the one login pattern, come from
 # `swdb.provider_adapters.classify`, shared with the ticket 58 driver.
@@ -568,6 +575,7 @@ class Campaign:
         self.applied_contracts = None     # query mode: contracts the site finder applied this iteration
         self.rule = SpeedRule.of(self.data)
         self.starts = list(self.data.get("derived_starts") or [])    # Probata PoC 19
+        self.gate = None                                              # Probata PoC 14: set when the run starts
         if args.fixture:
             from swdb.campaign_fixture import FixtureAdapter
             self.adapter = FixtureAdapter(args.fixture, self.data, self.team, self.store_dir, self.folder,
@@ -590,6 +598,7 @@ class Campaign:
 
     def _save(self):
         self.state["ledger"] = self.ledger.to_state()
+        self.state["repair_counters"] = self._repair_counters()
         tmp = self.state_file.with_suffix(".tmp")
         tmp.write_text(json.dumps(self.state, indent=2))
         tmp.replace(self.state_file)
@@ -604,6 +613,15 @@ class Campaign:
         finally:
             workflow.CREATION_TAGS.clear()
             workflow.CREATION_TAGS.update(previous)
+
+    def _repair_counters(self):
+        """Probata PoC 14: D7's certification repair calls and 13's counterexample repair rounds (one call
+        each), two counters on one ledger; both count in the rewriting total (`provider_calls_counted`)."""
+        calls = [c for c in self.ledger.calls if c.counted]
+        found = self.state.get("counterexample_repairs") or {}
+        return {"certification_repairs": sum(1 for c in calls if c.role == "repair"),
+                "counterexample_repair_rounds": sum(1 for c in calls if c.role == REPAIR_CALL),
+                "repairs": list(found.get("repairs") or []), "reverted_repairs": list(found.get("reverted_repairs") or [])}
 
     # budgets ----------------------------------------------------------------------------
     def _step(self, step, *, job=False):
@@ -724,6 +742,12 @@ class Campaign:
     def _setup(self):
         self.store_dir.mkdir(parents=True, exist_ok=True)
         self.adapter.prepare()
+        from swdb import bounded_gate     # Probata PoC 14: a library with a method version turns the gate on
+        found = bounded_gate.method_version_of(self.library_root)
+        if found is not None:
+            gate = bounded_gate.Gate(self.store_dir, self.folder / "proofs", self.library_root, self.adapter, found)
+            gate.setup(self.team)
+            self.state["bounded_gate"] = gate.describe()
         frozen = self.adapter.freeze_protocol(protocol_settings(self.data))
         self.adapter.protocol_id = frozen["id"]
         self.state["protocol"] = {"id": frozen["id"], "identity_sha256": frozen["identity_sha256"],
@@ -974,7 +998,9 @@ class Campaign:
         feedback = []
         for cls in self.classes:
             candidate = self._artifact(iteration, cls, response, row, feedback)
+            followers = candidate.pop("_followers", [])
             row["candidates"].append(candidate)
+            row["candidates"].extend(followers)      # Probata PoC 14: candidate artifacts its repairs made
         improved = []
         for cls in self.classes:
             pool = [c for r in self.state["iterations"] + [row] for c in r["candidates"] if c["class"] == cls]
@@ -997,12 +1023,7 @@ class Campaign:
         entry = {"id": None, "class": cls, "patch_sha256": artifacts.digest(patch), "knobs": knobs,
                  "contracts": contracts, "certification": None, "comparisons": [], "level": None,
                  "selection": None, "_patch": patch}
-
-        def reject(reason, explanation, **fields):
-            entry["level"] = "rejected"
-            entry["rejection"] = explanation
-            feedback.append(S.Feedback(reason, explanation, {"class": cls, **fields}).to_dict())
-            return entry
+        reject = self._rejector(entry, cls, feedback)
 
         claims = scan_patch_additions(patch)
         if claims:
@@ -1025,71 +1046,113 @@ class Campaign:
         except Refused as refused:       # tickets 56/57: a target refusal rejects this class's artifact
             return reject(refused.reason, refused.explanation, failed_checks=refused.failed_checks)
 
+    def _rejector(self, entry, cls, feedback):
+        def reject(reason, explanation, **fields):
+            entry["level"] = "rejected"
+            entry["rejection"] = explanation
+            feedback.append(S.Feedback(reason, explanation, {"class": cls, **fields}).to_dict())
+            return entry
+        return reject
+
+    def _admit(self, candidate, contracts):
+        self.adapter.pairing.freeze_artifacts([candidate['id']], self.state['protocol'],
+            fixture=self.adapter.evidence_kind == 'contract_fixture')
+        self.adapter.admit(candidate, contracts)
+
     def _certified_and_evaluated(self, iteration, cls, entry, patch, knobs, contracts, row, feedback, reject,
                                  start=None):
         attempt = 0
         candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt, contracts=contracts,
                                              start=start)
         entry.update(id=candidate["id"], artifact_sha256=candidate["sha256"])
-        self.adapter.pairing.freeze_artifacts([candidate['id']], self.state['protocol'],
-            fixture=self.adapter.evidence_kind == 'contract_fixture')
-        self.adapter.admit(candidate, contracts)
+        self._admit(candidate, contracts)
         if not contracts:
             entry["level"] = "uncertified"
             feedback.append(S.Feedback("uncertified_edit", "The edit used no rewrite contract.",
                                        {"class": cls}).to_dict())
         else:
             tests = self._test_generation(contracts, row)
-            while True:
+            done = self._certification(iteration, cls, entry, candidate, patch, knobs, contracts, row, feedback, reject,
+                                       start=start, tests=tests)
+            if done is None:
+                return entry
+            candidate, patch, knobs, attempt = done
+        if entry["level"] == "certified" and self.gate is not None:
+            # Probata PoC 14: the bounded gate, after certification and before evaluation. Refuted code is never
+            # evaluated; its counterexample goes to counterexample-guided repair (13's loop).
+            entry["bounded_gate"] = self._gate(candidate["id"], contracts, iteration, cls, attempt)
+            if entry["bounded_gate"]["refuted"]:
+                entry["_followers"] = self._counterexample_repair(iteration, cls, entry, contracts, knobs, row,
+                                                                  feedback, attempt)
+                return entry
+        if entry["level"] == "certified":
+            self._derive(entry, candidate, contracts, knobs, start)
+        self._evaluate_and_select(iteration, cls, candidate, attempt, entry, feedback)
+        return entry
+
+    def _certification(self, iteration, cls, entry, candidate, patch, knobs, contracts, row, feedback, reject, *,
+                       start=None, tests=None, attempt=0, outcome=None, numbers=None):
+        """D7: certify, and after a failure at most `max_repairs` certification repair calls.
+
+        Returns (candidate, patch, knobs, attempt) once certified, or None after `reject`. `outcome` is a
+        certification already run on `candidate` (Probata PoC 14: a counterexample repair's); `numbers`
+        hands out the next attempt number when attempts must stay unique across a repair chain."""
+        repairs = 0
+        while True:
+            if outcome is None:
                 self._step("certification", job=True)
                 started = time.monotonic()
                 outcome = self.adapter.certify(candidate, contracts, iteration, cls, attempt, tests=tests)
                 self._spent("certification", started)
-                # Probata PoC ticket 02 (2026-10-14 ET): link every certification record, one per contract.
-                entry["certification"] = {"record": outcome["record"], "records": list(outcome["records"]),
-                                          "outcome": outcome["outcome"], "level_at_summary": outcome["outcome"]}
-                if outcome.get("failed_checks"):
-                    entry["certification"]["failed_checks"] = list(outcome["failed_checks"])
-                if outcome["outcome"] == "certified":
-                    entry["level"] = "certified"
-                    feedback.append(S.Feedback("certified", "Certification passed.", {"class": cls}).to_dict())
-                    break
-                # Ticket 64: name the failing check and its public precondition (never run output).
-                # Ticket 76 (2026-10-05 ET): surviving controls reach the provider only as one
-                # aggregate category; the campaign record keeps the detailed names.
-                public = certification_feedback.public_checks(outcome["failed_checks"])
-                named = certification_feedback.explanation(public)
-                if attempt >= self.max_repairs:
-                    return reject("certification_failed", named, failed_checks=public)
-                # 2026-10-04 ET: the repair workspace holds the failing patch, and the prompt names
-                # only the files present (the provider audit refuses reads outside them).
-                files = {**self._workspace(iteration), "CANDIDATE.patch": patch,
-                         "CERTIFICATION.json": json.dumps({"class": cls, "failed_checks": public,
-                                                           "messages": certification_feedback.messages(public)})}
-                repaired = self._call("repair", files, "Repair: `CANDIDATE.patch` failed the certification checks "
-                                      "named in `CERTIFICATION.json`; return a repaired patch.\n"
-                                      + rewrite_prompt(self.cid, iteration, self.classes, files), row)
-                if repaired is None:
-                    return reject("certification_failed", named, failed_checks=public)
-                attempt += 1
-                patch = repaired["patch"]
-                knobs = knobs_by_class(repaired).get(cls, knobs)
-                entry.update(_patch=patch, patch_sha256=artifacts.digest(patch), knobs=knobs)
-                # 2026-10-04 ET (final code review): a repaired patch passes the same leakage
-                # scan as a first rewrite before it can become a candidate or `best/` input.
-                if scan_patch_additions(patch):
-                    return reject("provider_output_invalid", "The patch text states a performance outcome.")
-                problem = self._knob_problem(contracts, knobs)
-                if problem:
-                    return reject("knob_out_of_range", problem)
-                candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt, contracts=contracts,
-                                                     start=start)
-                entry.update(id=candidate["id"], artifact_sha256=candidate["sha256"])
-                self.adapter.pairing.freeze_artifacts([candidate['id']], self.state['protocol'],
-                    fixture=self.adapter.evidence_kind == 'contract_fixture')
-                self.adapter.admit(candidate, contracts)
-        if entry["level"] == "certified":
-            self._derive(entry, candidate, contracts, knobs, start)
+            # Probata PoC ticket 02 (2026-10-14 ET): link every certification record, one per contract.
+            entry["certification"] = {"record": outcome["record"], "records": list(outcome["records"]),
+                                      "outcome": outcome["outcome"], "level_at_summary": outcome["outcome"]}
+            if outcome.get("failed_checks"):
+                entry["certification"]["failed_checks"] = list(outcome["failed_checks"])
+            if outcome["outcome"] == "certified":
+                entry["level"] = "certified"
+                feedback.append(S.Feedback("certified", "Certification passed.", {"class": cls}).to_dict())
+                return candidate, patch, knobs, attempt
+            # Ticket 64: name the failing check and its public precondition (never run output).
+            # Ticket 76 (2026-10-05 ET): surviving controls reach the provider only as one
+            # aggregate category; the campaign record keeps the detailed names.
+            public = certification_feedback.public_checks(outcome["failed_checks"])
+            named = certification_feedback.explanation(public)
+            if repairs >= self.max_repairs:
+                reject("certification_failed", named, failed_checks=public)
+                return None
+            # 2026-10-04 ET: the repair workspace holds the failing patch, and the prompt names
+            # only the files present (the provider audit refuses reads outside them).
+            files = {**self._workspace(iteration), "CANDIDATE.patch": patch,
+                     "CERTIFICATION.json": json.dumps({"class": cls, "failed_checks": public,
+                                                       "messages": certification_feedback.messages(public)})}
+            repaired = self._call("repair", files, "Repair: `CANDIDATE.patch` failed the certification checks "
+                                  "named in `CERTIFICATION.json`; return a repaired patch.\n"
+                                  + rewrite_prompt(self.cid, iteration, self.classes, files), row)
+            if repaired is None:
+                reject("certification_failed", named, failed_checks=public)
+                return None
+            repairs += 1
+            attempt = numbers() if numbers else attempt + 1
+            outcome = None
+            patch = repaired["patch"]
+            knobs = knobs_by_class(repaired).get(cls, knobs)
+            entry.update(_patch=patch, patch_sha256=artifacts.digest(patch), knobs=knobs)
+            # 2026-10-04 ET (final code review): a repaired patch passes the same leakage
+            # scan as a first rewrite before it can become a candidate or `best/` input.
+            if scan_patch_additions(patch):
+                reject("provider_output_invalid", "The patch text states a performance outcome.")
+                return None
+            problem = self._knob_problem(contracts, knobs)
+            if problem:
+                reject("knob_out_of_range", problem)
+                return None
+            candidate = self.adapter.materialize(iteration, cls, patch, knobs, attempt, contracts=contracts,
+                                                 start=start)
+            entry.update(id=candidate["id"], artifact_sha256=candidate["sha256"])
+            self._admit(candidate, contracts)
+
+    def _evaluate_and_select(self, iteration, cls, candidate, attempt, entry, feedback):
         self._evaluate(iteration, cls, candidate, attempt, entry)
         selection = next((c for c in entry["comparisons"] if c["baseline_role"] == self.data["base_source"]), None)
         if selection:
@@ -1098,7 +1161,162 @@ class Campaign:
                                        {"class": cls, "verdict": selection["verdict"], "ratio": selection["ratio"],
                                         "lower": selection["lower"], "spread": selection["spread"],
                                         "evidence_basis": protocol_settings(self.data)["evidence_basis"]}).to_dict())
-        return entry
+
+    # the bounded gate and counterexample-guided repair (Probata PoC 14) ----------------------------
+    def _open_gate(self):
+        """The campaign's bounded gate, or None when its state names none (no method version at setup)."""
+        recorded = self.state.get("bounded_gate")
+        if not recorded:
+            return None
+        from swdb import bounded_gate
+        found = bounded_gate.method_version_of(self.library_root)
+        gate = bounded_gate.Gate(self.store_dir, self.folder / "proofs", self.library_root, self.adapter, found) \
+            if found else None
+        if gate is None or gate.method != recorded["method_version"]:
+            raise Failure("the method version changed since the campaign started; a campaign keeps the method "
+                          f"version it started with ({recorded['method_version']['id']})")
+        return gate
+
+    def _gate(self, candidate_id, contracts, iteration, cls, attempt):
+        result = self.gate.run(candidate_id, contracts, {"iteration": iteration, "cls": cls, "attempt": attempt})
+        self.state["proof_job_hours"] = self.state.get("proof_job_hours", 0.0) + result["job_hours"]
+        return result
+
+    def _charge_repair_call(self, row):
+        """`charge` for 13's loop: one counterexample repair call on the D7 ledger, before it opens."""
+        self._step("provider")
+        total = self.budget.provider_calls_setup + self.budget.provider_calls_per_iteration * self.budget.max_iterations
+        reason = "campaign total spent" if self.ledger.counted_calls >= total else None
+        if reason is None:
+            try:
+                call = self.ledger.open_call(REPAIR_CALL, f"{self.cid}.call{len(self.ledger.calls) + 1}")
+            except S.CallRefused as exc:
+                reason = str(exc)
+        if reason is not None:
+            row.setdefault("refused_calls", []).append({"role": REPAIR_CALL, "reason": reason})
+            return None
+        started = time.monotonic()
+
+        def close(proposal):
+            from swdb import counterexample_repair
+            self._spent("provider", started)
+            attempts = (proposal or {}).get("attempts") or []
+            opened = any(counterexample_repair.call_opened(a) for a in attempts)
+            state = ((proposal or {}).get("outcome") or {}).get("state")
+            outcome = (S.CallOutcome.COMPLETED if opened and state == "candidate_created" else
+                       S.CallOutcome.FAILED if opened else
+                       S.CallOutcome.PROVIDER_CAPACITY if state == "provider_unavailable" or proposal is None else
+                       S.CallOutcome.GUARD_REFUSED)
+            self.ledger.close_call(call, outcome)
+            row["provider_calls"].append({"role": REPAIR_CALL, "invocation": call.invocation,
+                                          "proposal": (proposal or {}).get("id"), "outcome": outcome.value,
+                                          "counted": call.counted, "model": self.data["provider"]["model"],
+                                          "effort": self.data["provider"]["effort"]})
+        return close
+
+    def _counterexample_repair(self, iteration, cls, entry, contracts, knobs, row, feedback, attempt):
+        """Counterexample-guided repair of a refuted candidate artifact through 13's loop (its round cap and
+        reverted-repair flag). Returns the entries of the candidate artifacts the repairs made, in order: each
+        is certified and gated; the one that ends the loop unrefuted (repaired, or a flagged reverted repair)
+        is evaluated and competes like any other."""
+        from swdb import counterexample_repair
+        from swdb.store import Store
+        counter = iter(range(attempt + 1, attempt + 10_000))
+        numbers = lambda: next(counter)        # noqa: E731  (attempt numbers stay unique in this class)
+        patches, made = {entry["id"]: entry.get("_patch", "")}, {}
+
+        def certify(cid):
+            candidate = Store(self.store_dir).get(cid, "candidate")
+            diff = Path(candidate["diff"]).read_text()
+            info = made[cid] = {"attempt": numbers(), "ref": {"id": cid, "sha256": candidate["artifact"]["sha256"]},
+                                "patch": patches.get(candidate.get("parent_candidate"), "") + diff}
+            patches[cid] = info["patch"]
+            if scan_patch_additions(diff):      # the leakage scan a first rewrite passes, before certification
+                info["rejection"] = "The patch text states a performance outcome."
+                return
+            try:
+                self._admit(info["ref"], contracts)
+            except Refused as refused:
+                info["rejection"], info["refusal"] = refused.explanation, refused.reason
+                return
+            self._step("certification", job=True)
+            started = time.monotonic()
+            info["certification"] = self.adapter.certify(info["ref"], contracts, iteration, cls, info["attempt"])
+            self._spent("certification", started)
+
+        def gate(cid):
+            lineage = counterexample_repair.lineage(Store(self.store_dir), cid) or {}
+            if lineage.get("reverted_repair"):
+                return []           # a reverted repair applies no contract: no bounded job, it keeps its level
+            made[cid]["gate"] = self._gate(cid, contracts, iteration, cls, made[cid]["attempt"])
+            return [job["record"] for job in made[cid]["gate"]["jobs"]]
+
+        runs = self.folder / "repairs"
+        runs.mkdir(parents=True, exist_ok=True)
+        try:
+            outcome = counterexample_repair.loop(
+                self.store_dir, entry["bounded_gate"]["refutations"][0], runs_dir=runs,
+                provider_config=self.args.provider_config, certify=certify, gate=gate, setting="campaign",
+                charge=lambda: self._charge_repair_call(row))
+        except (Failure, KeyError) as exc:      # the refuted candidate artifact cannot be repaired here
+            entry["counterexample_repair"] = {"state": "not_started", "reason": f"{type(exc).__name__}: {exc}"[:1000]}
+            return []
+        entry["counterexample_repair"] = {key: outcome[key] for key in
+                                          ("state", "reason", "cap", "rounds", "calls", "repairs", "reverted_repairs")}
+        counters = self.state.setdefault("counterexample_repairs", {"repairs": [], "reverted_repairs": []})
+        counters["repairs"] += outcome["repairs"]
+        counters["reverted_repairs"] += outcome["reverted_repairs"]
+        followers = []
+        for link in outcome["chain"]:
+            cid = link["candidate"]
+            if not cid or cid not in made:
+                continue
+            info = made[cid]
+            follower = {"id": cid, "class": cls, "patch_sha256": artifacts.digest(info["patch"]), "knobs": dict(knobs),
+                        "contracts": list(contracts), "certification": None, "comparisons": [], "level": None,
+                        "selection": None, "artifact_sha256": info["ref"]["sha256"],
+                        "repaired_from": {"candidate": Store(self.store_dir).get(cid, "candidate")
+                                                  .get("parent_candidate"), "round": link["round"],
+                                                  "proposal": link["proposal"], "trigger": link["trigger"],
+                                                  "reverted_repair": link["reverted_repair"]},
+                        "_patch": info["patch"]}
+            followers.append(follower)
+            reject = self._rejector(follower, cls, feedback)
+            if "rejection" in info:
+                reject(info.get("refusal", "provider_output_invalid"), info["rejection"])
+                continue
+            if info.get("gate") is not None:
+                follower["bounded_gate"] = info["gate"]
+            certified = info["certification"]["outcome"] == "certified"
+            if not certified:
+                # A repair that fails certification uses D7's certification repairs, never a counterexample round.
+                try:
+                    done = self._certification(iteration, cls, follower, info["ref"], info["patch"], knobs, contracts,
+                                               row, feedback, reject, attempt=info["attempt"],
+                                               outcome=info["certification"], numbers=numbers)
+                except Refused as refused:
+                    reject(refused.reason, refused.explanation, failed_checks=refused.failed_checks)
+                    continue
+                if done is None:
+                    continue
+                candidate, _patch, _knobs, number = done
+                follower["bounded_gate"] = self._gate(candidate["id"], contracts, iteration, cls, number)
+                if follower["bounded_gate"]["refuted"]:
+                    # It has no repair lineage of its own, so 13's cap could not count a further round: the chain ends.
+                    follower["repaired_from"]["ended"] = "refuted after a certification repair"
+                    continue
+                self._evaluate_and_select(iteration, cls, candidate, number, follower, feedback)
+                continue
+            feedback.append(S.Feedback("certified", "Certification passed.", {"class": cls}).to_dict())
+            follower["certification"] = {"record": info["certification"]["record"],
+                                         "records": list(info["certification"]["records"]),
+                                         "outcome": "certified", "level_at_summary": "certified"}
+            follower["level"] = "certified"
+            if link["reverted_repair"]:
+                follower["reverted_repair"] = True       # flagged: it may compete, never counts as a repair
+            if link is outcome["chain"][-1] and outcome["state"] in ("repaired", "reverted"):
+                self._evaluate_and_select(iteration, cls, info["ref"], info["attempt"], follower, feedback)
+        return followers
 
     def _test_generation(self, contracts, row):
         """D7: one independent test-generation call per contract per campaign, at first use.
@@ -1266,6 +1484,7 @@ class Campaign:
                     self._setup()
                 self.adapter.protocol_id = self.state["protocol"]["id"]
                 self.adapter.restore(self.state)
+                self.gate = self._open_gate()
                 if self.adapter.HAS_PILOT and self.state["pilot"] is None:
                     self._pilot()
                 elif self.adapter.HAS_PILOT:
@@ -1448,6 +1667,10 @@ class Campaign:
             site_finder=self.state.get("site_finder"), paired_estimates=self.adapter.pairing.summary())
         if self.state.get("interrupted_iteration"):
             record["interrupted_iteration"] = copy.deepcopy(self.state["interrupted_iteration"])
+        if self.state.get("bounded_gate"):          # Probata PoC 14
+            record["bounded_gate"] = {**copy.deepcopy(self.state["bounded_gate"]),
+                                      "proof_job_hours": round(self.state.get("proof_job_hours", 0.0), 9),
+                                      "repair_counters": self._repair_counters()}
         record["mode"], record["campaign"] = MODE, self.cid
         return record
 

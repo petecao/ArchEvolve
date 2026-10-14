@@ -22,6 +22,9 @@ map ticket 26 and ADR 0016. Format: docs/reference/format-v0.4-proof.md.
 - Ticket 12 (2026-10-14 ET): the job block's one field list (`_job`), run fields (`--run-index`,
   `--provider-*`), and the cross-record checks of repair lineage (`validate_proposal`) and of the proof
   records a promotion review cites (`validate_promotion`).
+- Ticket 14 (2026-10-14 ET): a job may name the bounds it runs at (`--bounds`, the bounded gate's minimum
+  bounds) and its wall budget (`--budget-minutes`, the method version's `bounded_job_minutes`); a record
+  may pin the minimum-bounds derivation it ran at (`--minimum-bounds`).
 - Levels are computed on read by the versioned level rule (`swdb.level_rule`, ticket 10), which
   replaced this tracer's code-and-contract-pin rule; nothing here stores a level (ADR 0016).
 """
@@ -70,6 +73,8 @@ class Job:
     summaries: tuple = ()          # pins {id, sha256, proof_record} of the summaries used
     scratch: Path = None
     log: Path = None
+    bounds: dict = None            # ticket 14: the bounds the job runs at (the gate's minimum bounds), if named
+    budget_seconds: float = None   # ticket 14: the job's wall budget; a job that runs out is not proven, timeout
 
 
 @dataclass(frozen=True)
@@ -109,7 +114,9 @@ class ScriptedAdapter:
     Script keys: `verdict`, `bounds`, `assumptions`, and `counterexample` (refuted) or
     `failure_class` (not proven). It uses the scratch folder as a real tool would, and logs.
     Ticket 57: optional `run`, a command it runs in the scratch folder first, standing in for a tool's
-    process (so the worker's RSS watchdog has something to watch and, above the cap, to kill)."""
+    process (so the worker's RSS watchdog has something to watch and, above the cap, to kill).
+    Ticket 14: without `bounds` in the script, the verdict holds at the bounds the job names; a `run`
+    command that outlives the job's wall budget is killed and the verdict is not proven, timeout."""
     name = "scripted"
 
     def __init__(self, script):
@@ -125,12 +132,18 @@ class ScriptedAdapter:
 
     def run(self, job):
         (job.scratch / "scripted-work.txt").write_text(f"{job.unit.candidate} {job.unit.function}\n")
+        bounds = self.script.get("bounds") or (dict(job.bounds) if job.bounds else None)
         if self.script.get("run"):          # ticket 57: a stand-in for a tool's process (watchdog fixtures)
             import subprocess
             with open(job.log, "ab") as log:
-                subprocess.run([str(part) for part in self.script["run"]], cwd=job.scratch, stdout=log,
-                               stderr=subprocess.STDOUT)
-        verdict = Verdict(verdict=self.script.get("verdict"), bounds=self.script.get("bounds"),
+                try:
+                    subprocess.run([str(part) for part in self.script["run"]], cwd=job.scratch, stdout=log,
+                                   stderr=subprocess.STDOUT, timeout=job.budget_seconds)
+                except subprocess.TimeoutExpired:      # ticket 14: the job ran out of its wall budget
+                    log.write(f"wall budget of {job.budget_seconds} s spent\n".encode())
+                    return Verdict(verdict="not_proven", bounds=bounds, failure_class="timeout",
+                                   assumptions=list(self.script.get("assumptions") or []))
+        verdict = Verdict(verdict=self.script.get("verdict"), bounds=bounds,
                           assumptions=list(self.script.get("assumptions") or []),
                           counterexample=self.script.get("counterexample"),
                           failure_class=self.script.get("failure_class"),
@@ -168,6 +181,11 @@ def register_cli(commands):
     sub.add_argument("--batch", help="batch ID (default: a new one for this call)")
     sub.add_argument("--position", type=int, default=1, help="position of the first job in the batch (default 1)")
     sub.add_argument("--id", help="proof record ID of a one-job batch (default: a new one)")
+    gate = sub.add_argument_group("bounded jobs (ticket 14): the bounded gate names its bounds, budget and minimum")
+    gate.add_argument("--bounds", type=_bounds_argument, help="JSON object: the bounds the job runs at")
+    gate.add_argument("--minimum-bounds", metavar="RECORD",
+                      help="pin this minimum-bounds derivation record (a contract-proof part of the contract)")
+    gate.add_argument("--budget-minutes", type=float, help="the job's wall budget in minutes")
     run = sub.add_argument_group("run fields (ticket 12, S10): a proof-hint run or a repeated run carries them; a "
                                  "bounded job with no provider call carries none")
     run.add_argument("--run-index", type=int, help="which of the three independent runs (1-3)")
@@ -205,6 +223,8 @@ def prove(args):
     unit = ProofUnit(args.candidate, args.function, artifact.get("path"), artifact.get("sha256"),
                      contract, library.content_sha256(contract))
     pins = _pins(store, candidate, unit, (), method)
+    if getattr(args, "minimum_bounds", None):
+        pins["minimum_bounds"] = _minimum_pin(store, args.minimum_bounds, unit)
     adapters = [None if args.skip is not None else ADAPTERS[args.adapter](script) for script in scripts]
     batch = args.batch
     done = []
@@ -217,7 +237,8 @@ def prove(args):
         if adapter is None:
             record = _skip_record(rid, unit, pins, args.adapter, args.skip, place)
         else:
-            record = _run_job(rid, unit, pins, adapter, runs, place, listed(vocabs, "failure_class"))
+            record = _run_job(rid, unit, pins, adapter, runs, place, listed(vocabs, "failure_class"),
+                              bounds=getattr(args, "bounds", None), budget_minutes=getattr(args, "budget_minutes", None))
         record.update(run_fields)
         done.append({"record": record, "path": _write(args.records, record)})
     return done[0] if len(done) == 1 else {"batch": batch, "jobs": done}
@@ -238,14 +259,37 @@ def _run_fields(args):
     return fields
 
 
-def _run_job(rid, unit, pins, adapter, runs, place, failure_classes):
+def _bounds_argument(text):
+    import json
+    try:
+        value = json.loads(text)
+    except ValueError:
+        value = None
+    if not isinstance(value, dict) or "threads" not in value:
+        raise ValueError("--bounds is a JSON object with a threads dimension")
+    return value
+
+
+def _minimum_pin(store, rid, unit):
+    """The minimum_bounds pin (ticket 14): a minimum-bounds derivation record of the unit's contract."""
+    from swdb import artifacts
+    record = store.get(rid, "proof")
+    subject = (record or {}).get("subject") or {}
+    if record is None or subject.get("kind") != "contract_proof_part" or \
+            subject.get("part") != "minimum_bounds_derivation" or subject.get("id") != unit.contract:
+        raise Failure(f"--minimum-bounds {rid!r} is not a minimum-bounds derivation record of contract {unit.contract}")
+    return {"id": rid, "sha256": artifacts.digest(record)}
+
+
+def _run_job(rid, unit, pins, adapter, runs, place, failure_classes, bounds=None, budget_minutes=None):
     """Run one job through the adapter and return its record (not yet written).
 
     A failure class outside the list stops the batch: no record for this job, and the message
     names the class and the adapter's raw output by path (the log stays)."""
     run = runs / rid
     run.mkdir(parents=True, exist_ok=False)
-    job = Job(unit=unit, summaries=(), scratch=run / "scratch", log=run / "adapter.log")
+    job = Job(unit=unit, summaries=(), scratch=run / "scratch", log=run / "adapter.log", bounds=bounds,
+              budget_seconds=None if budget_minutes is None else budget_minutes * 60)
     job.scratch.mkdir()
     load = os.getloadavg()[0]
     wall, cpu = time.perf_counter(), _cpu_seconds()

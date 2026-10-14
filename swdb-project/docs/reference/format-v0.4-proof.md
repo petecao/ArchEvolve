@@ -42,9 +42,16 @@ the records whose pins still match.
 ```
 swdb prove --candidate <candidate> --function <name> --adapter scripted --script <file> [--script <file> ...] \
            --runs-dir <folder outside the repo> [--contract <id>] [--batch <id>] [--position <n>] [--id <id>] \
-           [--run-index <1-3>] [--provider-kind codex|claude --provider-model <m> --provider-effort <e>]
+           [--run-index <1-3>] [--provider-kind codex|claude --provider-model <m> --provider-effort <e>] \
+           [--bounds <JSON>] [--minimum-bounds <record>] [--budget-minutes <n>]
 swdb prove ... --skip <skip reason>          # run no verifier; record one skip
 ```
+
+- **Bounded jobs** (ticket 14, the bounded gate): `--bounds` names the bounds the job runs at (`Job.bounds`;
+  a scripted script without `bounds` holds its verdict there); `--minimum-bounds` pins a minimum-bounds
+  derivation record of the contract (`pins.minimum_bounds` = `{id, sha256}`, the sha256 the record's
+  content digest, as the level rule reads it; anything else exits 1); `--budget-minutes` is the job's wall
+  budget (`Job.budget_seconds`): a job that outlives it is not proven, failure class `timeout`.
 
 - **A batch** is the list of proof jobs one `swdb prove` call runs (ticket 11): one job per `--script`,
   in order, positions `--position`, `--position + 1`, ...; all share one `batch` ID. Each job's record
@@ -78,8 +85,9 @@ An adapter is a class in `ADAPTERS` with a `name` and `run(job) -> Verdict`.
 
 - **In, `Job`:** `unit` (a `ProofUnit`: candidate, function, tree path, tree sha256, contract,
   contract sha256), `summaries` (pins `{id, sha256, proof_record}`; empty in this tracer),
-  `scratch` (a folder the adapter may use; deleted after the job; never named by the record) and
-  `log` (the log file the adapter appends to; kept as evidence).
+  `scratch` (a folder the adapter may use; deleted after the job; never named by the record),
+  `log` (the log file the adapter appends to; kept as evidence), and (ticket 14) `bounds` (the bounds to
+  run at, or None) and `budget_seconds` (the wall budget, or None).
 - **Out, `Verdict`:** `verdict` (`proven`, `refuted`, `not_proven`), `bounds`, `assumptions`, and
   `counterexample` (refuted only) or `failure_class` (not proven only), plus
   `unreplayed_counterexample` (with failure class `spurious_counterexample` only, and always with it; below),
@@ -90,7 +98,8 @@ An adapter is a class in `ADAPTERS` with a `name` and `run(job) -> Verdict`.
   `counterexample`, `failure_class`, `unreplayed_counterexample`, `tools` and `peak_rss_bytes` from the YAML `--script` file. Its records are
   `contract_fixture` evidence, never evidence about real code. Ticket 57: an optional `run` (a command) is
   run in the scratch folder first, standing in for a tool's process, so the worker watchdog has a child to
-  watch and kill.
+  watch and kill. Ticket 14: a script without `bounds` holds at the job's bounds; a `run` command that
+  outlives the job's wall budget is killed and the verdict is not proven, `timeout`.
 
 ## The record
 
@@ -128,7 +137,7 @@ Single pins are `{id, sha256}` (the `baseline_function` pin adds `function`) or
 | `proof_semantics` | not applicable (ticket 27) |
 | `method_version` | the current method version's ID and file sha256 (ticket 11). `swdb validate` rejects a pin naming no file in `library/methods/` or whose sha256 does not match the file; a `not_applicable` pin (records written before ticket 11) still passes |
 | `summaries` | `[]` (list of `{id, sha256, proof_record}`; `proof_record` is the proof record of the summary) |
-| `minimum_bounds` | not applicable (ticket 33) |
+| `minimum_bounds` | not applicable, unless `--minimum-bounds` names a minimum-bounds derivation record (ticket 14; ticket 33 derives real ones) |
 | `predecessor_snapshot` | not applicable (ticket 62) |
 | `build_constants` | `[]` (list of `{name, value}`) |
 

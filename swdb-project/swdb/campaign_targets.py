@@ -294,6 +294,42 @@ class TargetAdapter:
         """Read-only references shown to the provider when the campaign names contracts."""
         return {}
 
+    # the bounded gate (Probata PoC 14, 2026-10-14 ET) --------------------------------------------
+    #: The proof unit's function: the one that holds the rewrite site. Every adapter rewrites the fork's
+    #: scalar TDStep (`BASE_SOURCES`).
+    PROOF_FUNCTION = "TDStep"
+
+    def proof_function(self, contract):
+        return self.PROOF_FUNCTION
+
+    def prepare_proofs(self, store_dir):
+        """Copy the team store's contract-proof records of the campaign's contracts (with their closure).
+
+        Tickets 29, 32 and 33 write real contract proofs and minimum bounds; until then the team store has
+        none, and every certified candidate artifact skips the gate with `no_contract_proof` (O7)."""
+        from swdb import access
+        from swdb.extensa_boundary import closure
+        from swdb.store import Store
+        team, contracts = Store(self.team), set(self.campaign["library"].get("contracts") or [])
+        roots = [r.id for r in team.of_kind("proof") if (r.data.get("subject") or {}).get("kind") ==
+                 "contract_proof_part" and r.data["subject"].get("id") in contracts]
+        for rid in sorted(closure(team, roots)):
+            record = team.by_id[rid]
+            target = Path(store_dir) / record.rel
+            if not target.exists():
+                target.parent.mkdir(parents=True, exist_ok=True)
+                access.copy_record(self.team / record.rel, target)
+
+    def outside_cpp_subset(self, candidate_id, **context):
+        """True when the candidate artifact's code is outside the C++ subset (only `threads_k` is then
+        skipped). The subset check is ticket 24's; until it exists every candidate artifact reads as inside."""
+        return False
+
+    def bounded_job(self, candidate_id, contract, rung, bounds, **context):
+        """The verifier job of one rung: {adapter, script}. Real verifier adapters are tickets 22, 46, 47."""
+        raise Failure(f"no bounded verifier adapter for rung {rung} on target {self.campaign['target']} yet "
+                      "(tickets 22, 46, 47)")
+
     def restore(self, state):
         """Rebuild in-memory state when a campaign resumes."""
 

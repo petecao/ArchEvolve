@@ -242,6 +242,67 @@ builder, and `rejected`: each considered site with `entry`, `region` and `reason
 summary carries `site_finder` (`format`, `query_sha256`, `parameters`; null for a fixed
 list). The decision procedure is documented in `swdb/site_finder.py`.
 
+## The bounded gate (Probata PoC 14, 2026-10-14 ET)
+
+Code: `swdb/bounded_gate.py`, called by `swdb/campaign.py`. Refuted code never spends evaluation time.
+
+- **On or off.** The gate is on when the campaign's library (`--library`, default the repository's) holds a
+  method version (`library/methods/`) at setup; the campaign state and summary then hold `bounded_gate`
+  (`method_version` pin, `budget_minutes` = `budgets.bounded_job_minutes`, `k` = `budgets.civl_k`, `rungs`).
+  No fallback default: without a method version the campaign runs as before and writes no `bounded_gate`.
+  A resumed campaign refuses a changed method version.
+- **Setup.** The campaign folder gets `library/` beside its `records/` (a symlink to the campaign's library),
+  so `swdb prove`, `swdb candidate-level` and the repair loop read one library and method version. The
+  records the library names (intrinsic records, hardware operations, strategies) are copied from the team
+  store. The target then writes or copies its contract proofs (`prepare_proofs`).
+- **When.** Each certified candidate artifact, right after its certification records exist and before its
+  evaluation step. Uncertified and rejected candidate artifacts get no bounded job.
+- **What.** Per rewrite contract (one proof unit each), two rungs through `swdb prove`, in one batch
+  (`batch.gate.<candidate>.<hex>`): `threads_1` at the contract's single-thread minimum bounds, and
+  `threads_k` at the multi-thread minimum bounds with `threads` = k (the one exception to "minimum only").
+  The minimum bounds are the bounds of the counting minimum-bounds derivation record of the contract's
+  current content for that rung (threads 1, or more); each record pins it (`pins.minimum_bounds`). Each
+  job's wall budget is `budget_minutes`; the rungs run in parallel. A timeout is not proven for that rung
+  only: no retry at smaller bounds, and the candidate artifact goes on to evaluation.
+- **Skips (O7).** No counting proven contract-proof part of the contract: both rungs skip,
+  `no_contract_proof`. Code outside the C++ subset: `threads_k` skips, `outside_cpp_subset`. No minimum
+  bounds for a rung: that rung skips, `no_minimum_bounds`. A skip is a skip record; the level is kept.
+- **Refuted** is read by the level rule (its refuted flag), never stored. A refuted candidate artifact gets
+  no evaluator call and cannot win; its first refutation (job order) enters
+  `swdb.counterexample_repair.loop(setting="campaign")`, which owns the round cap and the reverted-repair flag.
+
+Candidate entry fields:
+
+| Field | Meaning |
+|---|---|
+| `bounded_gate` | certified and gated entries only: `batch`, `method_version`, `budget_minutes`, `k`, `jobs` (per contract and rung: `contract`, `rung`, `position`, `record`, and `verdict` [+ `failure_class`], `bounds`, `minimum_bounds`, `wall_seconds`, or `skip_reason`), `refuted`, `refutations` (counting refuted record IDs), `job_hours` |
+| `counterexample_repair` | a refuted entry: the loop's `state` (`repaired`, `reverted`, `budget_spent`, `certification_failed`, `provider_failed`, `calls_refused`, or `not_started` when the candidate artifact cannot be repaired here), `reason`, `cap`, `rounds`, `calls`, `repairs`, `reverted_repairs` |
+| `repaired_from` | an entry a repair made: `candidate` (the refuted one), `round`, `proposal`, `trigger` (the refutation), `reverted_repair`; `ended` when its certification repair's result was refuted |
+| `reverted_repair` | `true` on a flagged repair: it gets no bounded job, keeps the level certification gives it, is evaluated and may compete, and never counts as a repair |
+
+Each repair the loop makes follows its refuted entry in the iteration's `candidates`: certified, gated and,
+when it ends the loop unrefuted (repaired, or reverted), evaluated and ranked like any other. A repair that
+fails certification uses D7's certification repairs (never a counterexample round); its certified result is
+gated and evaluated, and if refuted ends the chain (it has no repair lineage of its own).
+
+**Two counters, one rewriting total.** Every counterexample repair call is charged to the D7 ledger before
+it opens (role `counterexample_repair` in the iteration's `provider_calls`; the per-iteration and campaign
+caps and lane-hours apply; a refused call ends the loop `calls_refused`). `state.json` and the summary's
+`bounded_gate.repair_counters` hold `certification_repairs` (D7 calls, role `repair`),
+`counterexample_repair_rounds`, `repairs` and `reverted_repairs`; both kinds of call count in
+`budgets.used.provider_calls_counted`. `bounded_gate.proof_job_hours` is the gate's proof-job wall time; it
+is not charged to `lane_hours` (ticket 16 reports proof lane-hours apart).
+
+**Contract fixture** (`swdb campaign --fixture`, with `base_snapshot`): `contract_proofs: {contract: {parts
+(default [unit_postcondition]), minimum_bounds: {threads_1, threads_k}}}` writes contract-fixture
+contract-proof records into the campaign store at setup; `proof.function` names the proof unit's function;
+a class row's `proof` holds per rung a list of verdicts by attempt (`proven`, `refuted`, `timeout`,
+`spurious`, or a mapping with `verdict` and scripted-adapter keys such as `run`), `cpp_subset: false`, and
+per-contract overrides under `contracts`. A fixture candidate artifact retains its own patch (`diff`). The
+real targets read contract proofs from the team store (none exist before tickets 29, 32, 33), name
+`TDStep` as the proof function, read every candidate artifact as inside the C++ subset (ticket 24), and
+have no bounded verifier adapter yet (22, 46, 47).
+
 ## Prospective paired estimates and agreement
 
 Updated for these fields: 2026-10-07 (Eastern Time).

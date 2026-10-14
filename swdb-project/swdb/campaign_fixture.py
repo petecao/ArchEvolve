@@ -8,6 +8,11 @@ Updated 2026-10-14 ET (Probata PoC 19): an optional `base_snapshot` in the fixtu
 source snapshot candidate artifacts are built from. With it, a candidate artifact is a real tree (the start's
 tree with the patch applied, refused when the patch does not apply), so a certified enabling rewrite can
 become a derived implementation, and an iteration may start from one (`start`). Without it, nothing changes.
+Updated 2026-10-14 ET (Probata PoC 14, the bounded gate): with `base_snapshot`, a candidate artifact also
+retains its own patch (`diff`), which a counterexample repair shows. The fixture file may hold
+`contract_proofs` (contract-fixture contract proofs and minimum bounds, written into the campaign store when
+the gate is set up) and `proof` (the proof unit's function); a class row's `proof` scripts the bounded
+verdicts per rung and attempt and says whether the code is inside the C++ subset.
 """
 from __future__ import annotations
 
@@ -155,6 +160,9 @@ class FixtureAdapter(TargetAdapter):
                                               f"{str(exc)[:300]}") from None
             data.update(artifact=artifact, source_snapshot=on, implementation=snapshot["implementation"],
                         protections=copy.deepcopy(snapshot["protections"]), context=copy.deepcopy(snapshot["context"]))
+            diff = tree.parent / "candidate.diff"            # Probata PoC 14: the candidate's own patch
+            diff.write_text(patch if patch.endswith("\n") else patch + "\n")
+            data.update(diff=str(diff), diff_sha256=artifacts.file_hash(diff))
         else:
             data["artifact"] = {**data["artifact"], "sha256": artifacts.digest({"patch": patch, "knobs": knobs,
                                                                                    "class": cls})}
@@ -276,6 +284,83 @@ class FixtureAdapter(TargetAdapter):
         return {"comparison": rid, "ratio": ratio, "lower": lower, "upper": upper, "spreads": spreads,
                 "evaluations": evaluations, "baseline_evaluation": baseline_evaluation}
 
+    # the bounded gate (Probata PoC 14) --------------------------------------------------------
+    def proof_function(self, contract):
+        return (self.fx.get("proof") or {}).get("function") or self.PROOF_FUNCTION
+
+    def prepare_proofs(self, store_dir):
+        """Write the fixture file's contract-fixture contract proofs into the campaign store, once.
+
+        `contract_proofs: {contract: {parts: [part names] (default [unit_postcondition]), minimum_bounds:
+        {threads_1: bounds, threads_k: bounds}}}`: each part is a proven record over unbounded data and threads;
+        each minimum is a minimum-bounds derivation record whose bounds are the rung's minimum bounds."""
+        from swdb import method_version, proof
+        from swdb.library import Library, default_root
+        from swdb.store import Store
+        store = Store(store_dir)
+        library = Library(default_root(store_dir))
+        method = method_version.pin(method_version.current(default_root(store_dir)))
+        for contract, spec in sorted((self.fx.get("contract_proofs") or {}).items()):
+            if library.get(contract) is None:
+                raise UsageError(f"fixture contract_proofs names {contract}, which the campaign's library does not hold")
+            pin = {"id": contract, "sha256": library.content_sha256(contract)}
+            rows = [(part, {"threads": "unbounded", "vertices": "unbounded", "edges": "unbounded"})
+                    for part in (spec.get("parts") or ["unit_postcondition"])]
+            rows += [("minimum_bounds_derivation", dict(bounds)) for _rung, bounds in
+                     sorted((spec.get("minimum_bounds") or {}).items())]
+            for position, (part, bounds) in enumerate(rows, start=1):
+                tag = f"threads-{bounds['threads']}" if part == "minimum_bounds_derivation" else part
+                rid = f"proof.{self.cid}.contract-fixture.{contract.removeprefix('contract.')}.{tag}"
+                if store.get(rid) is not None:
+                    continue
+                log = self.folder / "contract-proofs" / f"{rid}.log"
+                log.parent.mkdir(parents=True, exist_ok=True)
+                log.write_text(f"contract-fixture contract proof {contract} {part}: proven at {bounds}\n")
+                record = {"kind": "proof", "schema_version": "0.4", "id": rid, "status": "draft",
+                          "created": workflow.writer.today(), "updated": workflow.writer.today(),
+                          "provenance": [{"id": "campaign-fixture", "kind": "agent_run", "uri": None,
+                                          "description": "Contract-fixture contract proof written by swdb campaign."}],
+                          "subject": {"kind": "contract_proof_part", "id": contract, "part": part},
+                          "verdict": "proven", "bounds": bounds, "assumptions": [dict(FIXTURE_ASSUMPTION)],
+                          "pins": {"code": dict(pin), "contract": dict(pin),
+                                   "baseline_function": {"not_applicable": NOT_APPLICABLE},
+                                   "reference_semantics": {"not_applicable": NOT_APPLICABLE},
+                                   "proof_semantics": {"not_applicable": NOT_APPLICABLE},
+                                   "method_version": method, "summaries": [],
+                                   "minimum_bounds": {"not_applicable": NOT_APPLICABLE},
+                                   "predecessor_snapshot": {"not_applicable": NOT_APPLICABLE}, "build_constants": []},
+                          "job": proof._job("scripted", 0.0, 0.0, {"start": 0.0, "end": 0.0}, 0,
+                                            {"batch": f"batch.{self.cid}.contract-fixture", "position": position}),
+                          "evidence": {"adapter_log": {"path": str(log), "sha256": artifacts.file_hash(log)}},
+                          "evidence_kind": "contract_fixture"}
+                proof._write(store_dir, record)
+
+    def _proof_spec(self, iteration, cls, contract=None):
+        spec = dict(self._iteration(iteration, cls).get("proof") or {})
+        return {**spec, **((spec.get("contracts") or {}).get(contract) or {})} if contract else spec
+
+    def outside_cpp_subset(self, candidate_id, iteration, cls, attempt):
+        return self._proof_spec(iteration, cls).get("cpp_subset", True) is False
+
+    def bounded_job(self, candidate_id, contract, rung, bounds, iteration, cls, attempt):
+        """The scripted adapter's job: the class row's verdict for this rung and attempt (the last repeats).
+
+        A verdict is `proven`, `refuted`, `timeout`, `spurious`, or a mapping with `verdict` set to one of
+        them plus scripted-adapter keys; `{candidate}`, `{contract}`, `{rung}` and `{store}` in a `run`
+        command are filled in."""
+        verdicts = self._proof_spec(iteration, cls, contract).get(rung) or ["proven"]
+        spec = verdicts[min(attempt, len(verdicts) - 1)]
+        spec = dict(spec) if isinstance(spec, dict) else {"verdict": spec}
+        script = dict(SCRIPTED[spec.pop("verdict")])
+        values = {"candidate": candidate_id, "contract": contract, "rung": rung, "store": str(self.store_dir)}
+        if "run" in spec:
+            spec["run"] = [str(part).format(**values) for part in spec["run"]]
+        script.update(spec)
+        path = self.folder / "proof-scripts" / f"{candidate_id}.{contract}.{rung}.yaml"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(yamlio.dumps(script))
+        return {"adapter": "scripted", "script": path}
+
     # budgets and host ----------------------------------------------------------------------
     def step_hours(self, step):
         return float((self.fx.get("step_hours") or {}).get(step, 0.0))
@@ -299,6 +384,20 @@ class FixtureAdapter(TargetAdapter):
 
     def release_lane(self):
         self.released += 1
+
+
+NOT_APPLICABLE = "A contract-fixture contract proof pins no such version."
+FIXTURE_ASSUMPTION = {"kind": "trusted_tool", "reference": {"id": "scripted-verifier", "sha256": "0" * 64},
+                      "sentence": "The scripted verifier adapter stands in for the bounded verifiers (contract fixture)."}
+FIXTURE_COUNTEREXAMPLE = {"source": 0, "graph": "3 vertices, 2 edges", "differs_at": "parent[2]"}
+#: The scripted-adapter scripts behind the fixture's verdict words (contract fixture, never evidence).
+SCRIPTED = {
+    "proven": {"verdict": "proven", "assumptions": [FIXTURE_ASSUMPTION]},
+    "refuted": {"verdict": "refuted", "counterexample": FIXTURE_COUNTEREXAMPLE, "assumptions": [FIXTURE_ASSUMPTION]},
+    "timeout": {"verdict": "not_proven", "failure_class": "timeout", "assumptions": [FIXTURE_ASSUMPTION]},
+    "spurious": {"verdict": "not_proven", "failure_class": "spurious_counterexample",
+                 "unreplayed_counterexample": FIXTURE_COUNTEREXAMPLE, "assumptions": [FIXTURE_ASSUMPTION]},
+}
 
 
 def _fresh(data):

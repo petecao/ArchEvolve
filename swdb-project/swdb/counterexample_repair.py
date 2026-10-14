@@ -5,6 +5,10 @@ Created: 2026-10-14 ET (Probata proof of concept ticket 13). Design: formal-veri
 6 and 10, 15 items 10 and 11, 22 items 5 and 6, 23 items 3 and 4, 25 items 2, 3 and 5; O1, O5.
 Format: docs/reference/format-v0.4-repair.md.
 
+Updated 2026-10-14 ET (ticket 14): `loop(..., charge=)` lets a campaign charge each round's call to its
+own provider-call cap and lane-hours (D7) before the call opens; a refused call ends the loop
+`calls_refused`.
+
 This module is the one owner, in every mode, of the round cap (`budgets.counterexample_repair_rounds`
 of the pinned method version) and of the reverted-repair flag (`contract_match`). Campaigns (14) and
 ArchEvolve mode (18) call `loop`; `swdb repair <proof record>` runs one round.
@@ -368,11 +372,11 @@ def repair_round(records, proof_id, *, runs_dir, provider_config, setting="arche
 
 # --- the loop -------------------------------------------------------------------------------
 
-LOOP_STATES = ("repaired", "reverted", "budget_spent", "certification_failed", "provider_failed")
+LOOP_STATES = ("repaired", "reverted", "budget_spent", "certification_failed", "provider_failed", "calls_refused")
 
 
 def loop(records, proof_id, *, runs_dir, provider_config, certify, gate, setting="campaign", db_path=None,
-         run_index=None):
+         run_index=None, charge=None):
     """Counterexample-guided repair from one refuted proof record until it ends; the one loop for every mode.
 
     Each round: one rewriting-role repair call (`repair_round`), then `certify(candidate_id)` (the
@@ -385,7 +389,12 @@ def loop(records, proof_id, *, runs_dir, provider_config, certify, gate, setting
     - `budget_spent`: every round's repair was refuted and the cap is reached (no further call opens);
     - `certification_failed`: the repair failed certification (the build or correctness repair cap may
       apply; this loop does not repair it);
-    - `provider_failed`: the round's call failed or stayed unresolved.
+    - `provider_failed`: the round's call failed or stayed unresolved;
+    - `calls_refused` (ticket 14): the caller's own call budget refused the round's call (`charge`).
+
+    `charge` (optional, ticket 14): called before each round's call once the round may run; it returns a
+    callable the loop calls with the round's proposal afterward, or None to refuse the call (a campaign's
+    provider-call cap and lane-hours, D7). The cap and the reverted-repair flag stay here.
 
     A spurious counterexample from the gate never continues the loop (`repairable`)."""
     from swdb.extensa_boundary import _library_for
@@ -393,11 +402,24 @@ def loop(records, proof_id, *, runs_dir, provider_config, certify, gate, setting
     rows, trigger = [], proof_id
     rounds_cap, _method = cap(records)
     while True:
+        closer = None
+        if charge is not None:
+            try:
+                check(records, trigger, setting)      # the cap first: a spent budget charges no call
+            except BudgetSpent as spent:
+                return _outcome("budget_spent", rows, rounds_cap, str(spent))
+            closer = charge()
+            if closer is None:
+                return _outcome("calls_refused", rows, rounds_cap, "the caller's call budget refused the round's call")
+        proposal = None
         try:
             proposal = repair_round(records, trigger, runs_dir=runs_dir, provider_config=provider_config,
                                     setting=setting, db_path=db_path, run_index=run_index)
         except BudgetSpent as spent:
             return _outcome("budget_spent", rows, rounds_cap, str(spent))
+        finally:
+            if closer is not None:
+                closer(proposal)
         row = {"round": proposal["repair_lineage"]["round"], "proposal": proposal["id"], "trigger": trigger,
                "candidate": proposal.get("candidate"),
                "reverted_repair": proposal["repair_lineage"]["reverted_repair"],
