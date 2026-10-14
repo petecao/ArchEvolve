@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "method_version",
   "title": "Method-version file, library/methods/<version>.yaml (Probata proof of concept ticket 11, 2026-10-14 ET)",
-  "description": "One reviewed file listing everything a candidate artifact's proofs use apart from the rewrite contract, the candidate artifact and the proof semantics (map 26 item 3, S8). Every proof record pins it by ID and file sha256. A draft may mark a section {not_yet_built: <sentence>} (swdb.method_version). Documented in docs/reference/format-v0.4-method-version.md.",
+  "description": "One reviewed file listing everything a candidate artifact's proofs use apart from the rewrite contract, the candidate artifact and the proof semantics (map 26 item 3, S8). Every proof record pins it by ID and file sha256. A draft may mark a section {not_yet_built: <sentence>} (swdb.method_version). Documented in docs/reference/format-v0.4-method-version.md. Updated 2026-10-14 ET (fix-21): status is a lifecycle (current = highest-sequence frozen; drafts only by name).",
   "type": "object",
   "additionalProperties": false,
   "required": ["id", "kind", "sequence", "status", "created", "evidence_kind", "description",
@@ -12,8 +12,8 @@
   "properties": {
     "id": {"type": "string", "pattern": "^method\\.[a-z0-9][a-z0-9._-]*$", "x-reason": "a method-version ID is method.<file name>"},
     "kind": {"const": "method_version"},
-    "sequence": {"type": "integer", "minimum": 1, "description": "Order of method versions; the current one has the highest sequence."},
-    "status": {"enum": ["draft", "frozen"], "x-reason": "status is draft or frozen (59 freezes one)"},
+    "sequence": {"type": "integer", "minimum": 1, "description": "Order of frozen method versions: the current one is the frozen file with the highest sequence (unique among frozen files). A draft is never current; its records keep counting while its sequence is higher than the current frozen one's (fix-21)."},
+    "status": {"enum": ["draft", "frozen"], "x-reason": "status is draft or frozen (59 freezes one)", "description": "Lifecycle (fix-21, 2026-10-14 ET): a frozen version can be current; a draft is used only when named (swdb prove --method-version, a campaign file's method_version). The freeze is a new file."},
     "created": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
     "evidence_kind": {"enum": ["contract_fixture", "execution"], "x-reason": "evidence_kind is contract_fixture (a fixture method version, for tests) or execution (a real method version; ticket 21): proof records under a fixture method version stay contract_fixture evidence"},
     "description": {"type": "string", "pattern": "\\S"},
@@ -87,11 +87,12 @@
     "logic_library": {
       "type": "object",
       "additionalProperties": false,
-      "description": "The shared logic library, the sum library included (24).",
+      "description": "The shared logic library, the sum library included (24). fix-21 (2026-10-14 ET): `files` pins each shared logic file as {id, version, sha256} (ticket 26's pin form); `sha256` is then the digest of that list (swdb.artifacts.digest); `sum_library` pins logic.sum the same way.",
       "required": ["id", "sha256", "sum_library"],
       "properties": {
         "id": {"type": "string", "pattern": "\\S"},
         "sha256": {"$ref": "#/$defs/sha256"},
+        "files": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/reference"}},
         "sum_library": {"$ref": "#/$defs/reference"}
       }
     },
@@ -122,8 +123,10 @@
       "type": "object",
       "additionalProperties": false,
       "required": ["id", "sha256"],
-      "properties": {"id": {"type": "string", "pattern": "\\S"}, "sha256": {"$ref": "#/$defs/sha256"}},
-      "x-reason": "a reference is {id, sha256}"
+      "properties": {"id": {"type": "string", "pattern": "\\S"}, "sha256": {"$ref": "#/$defs/sha256"},
+                     "version": {"type": "string", "pattern": "^[0-9]+(\\.[0-9]+)*$",
+                                 "x-reason": "a reference's version is one exact dotted version (a logic file's `// version:` line)"}},
+      "x-reason": "a reference is {id, sha256} with an optional version"
     },
     "names": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"}},
     "check": {

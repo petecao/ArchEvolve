@@ -15,7 +15,8 @@ map ticket 26 and ADR 0016. Format: docs/reference/format-v0.4-proof.md.
 - The adapter's log stays in a runs folder outside the repo, named by path and sha256. The
   job's scratch folder is never named by the record and is deleted when the job ends.
 - Ticket 11 (2026-10-14 ET): one call runs a batch (one job per script, or one skip); every record
-  pins the current method version (swdb.method_version); a failure class outside vocabulary
+  pins the current method version (swdb.method_version; since fix-21, 2026-10-14 ET, the frozen one, or a
+  draft named with `--method-version`); a failure class outside vocabulary
   proof_failure_classes stops the batch; `validate_record` checks the class, skip reason and pin.
   Updated 2026-10-14 02:26 ET (Yan-Ru's decision of 02:25 ET): an unreplayed counterexample goes with
   failure class spurious_counterexample and no other, both ways; repair never takes that class.
@@ -192,6 +193,9 @@ def register_cli(commands):
     sub.add_argument("--runs-dir", type=Path, required=True, help="runs folder outside the repo for the adapter log")
     sub.add_argument("--batch", help="batch ID (default: a new one for this call)")
     sub.add_argument("--position", type=int, default=1, help="position of the first job in the batch (default 1)")
+    sub.add_argument("--method-version", metavar="ID",
+                     help="run under this method version, draft or frozen (default: the current one, the frozen "
+                          "version with the highest sequence; a draft is used only when named)")
     sub.add_argument("--id", help="proof record ID of a one-job batch (default: a new one)")
     gate = sub.add_argument_group("bounded jobs (ticket 14): the bounded gate names its bounds, budget and minimum")
     gate.add_argument("--bounds", type=_bounds_argument, help="JSON object: the bounds the job runs at")
@@ -264,7 +268,7 @@ def prove(args):
     if args.id and len(scripts) > 1:
         raise UsageError("--id names the record of a one-job batch only")
     run_fields = _run_fields(args)
-    method = _current_method(args.records)
+    method = _current_method(args.records, getattr(args, "method_version", None))
     runs = _outside_repo(args.runs_dir)
     artifact = candidate.get("artifact") or {}
     unit = ProofUnit(args.candidate, args.function, artifact.get("path"), artifact.get("sha256"),
@@ -501,15 +505,15 @@ def _write(records, record):
     return writer.commit(records, new=[record])[0]
 
 
-def _current_method(records):
-    """The current method version beside the records folder; `swdb prove` refuses to run without one."""
+def _current_method(records, ident=None):
+    """The method version beside the records folder that the batch pins: the one named (`--method-version`,
+    draft or frozen), else the current frozen one; `swdb prove` refuses to run without one."""
     from swdb import method_version
     from swdb.library import default_root
-    root = default_root(records)
-    found = method_version.current(root)
-    if found is None:
-        raise Failure(f"no method-version file in {root / method_version.FOLDER}: every proof record pins one")
-    return found
+    try:
+        return method_version.select(default_root(records), ident)
+    except LookupError as exc:
+        raise Failure(f"{exc}: every proof record pins one") from None
 
 
 def _pins(store, candidate, unit, summaries, method):
