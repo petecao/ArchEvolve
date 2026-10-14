@@ -205,11 +205,11 @@ def merge(base, anchors, hints, indices=None, context=None, kinds=None):
                 if "*/" in out[-1] or position >= len(source):
                     break
         group = by_anchor.get(anchor, [])
-        for position, index in enumerate(group):
+        for rank, index in enumerate(group):
             start = len(out) + 1
             shared = anchor in loops
-            out += _lines(hints[index]["text"], indent, "/*@ " if position == 0 or not shared else "    ")
-            if not shared or position == len(group) - 1:
+            out += _lines(hints[index]["text"], indent, "/*@ " if rank == 0 or not shared else "    ")
+            if not shared or rank == len(group) - 1:
                 out[-1] += " */"
             spans[index] = (start, len(out))
         if len(out) >= first:
@@ -281,10 +281,12 @@ def check(base, anchors, hints):
 
     `base` is WP's input without hints (`wp_base`; the C lowering when there is no contract), `anchors` the
     anchors list or the whole `<f>.anchors.json` mapping, `hints` `{anchor, kind, text}` records (provenance is
-    not needed to judge). No WP goal-generation stage (the wrapper's prove_hints runs WP itself)."""
+    not needed to judge). No WP goal-generation stage (the wrapper's prove_hints runs WP itself). Its Frama-C runs
+    are one verifier job under the machine-wide verifier lock (`swdb prove` calls `judge` inside its own job)."""
     import tempfile
+    from swdb import verifier_lock
     anchors = anchors.get("anchors", []) if isinstance(anchors, dict) else anchors
-    with tempfile.TemporaryDirectory(prefix="swdb-hint-check-") as workdir:
+    with tempfile.TemporaryDirectory(prefix="swdb-hint-check-") as workdir, verifier_lock.hold("proof hint check"):
         result = judge(base, anchors, hints, workdir)
     result["passed"] = result["verdict"] == "accepted"
     return result

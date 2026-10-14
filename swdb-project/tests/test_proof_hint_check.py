@@ -226,8 +226,29 @@ def test_each_planted_bad_hint_is_rejected_by_its_rule_and_the_set_never_reaches
     assert check["verdict"] == "rejected" and not check["reached_wp"]
     assert record["settings"]["hint_count"] == 0
     wp_input = report(record, "wp_input").read_text()
-    assert not [h["text"] for h in hints if h["text"].splitlines()[0] in wp_input]
+    assert not [h["text"] for h in hints if "/*@ " + h["text"].splitlines()[0] in wp_input]   # no hint reached WP
     assert seed.swdb("validate").returncode == 0
+
+
+# --- ticket 34's frozen wrapper runs this check ----------------------------------------------------------------
+
+@needs_wp
+def test_the_proof_hinting_wrapper_runs_this_check_and_answers_each_rejection_by_rule(tmp_path, monkeypatch):
+    import test_proof_hinting as role
+    from swdb import proof_hinting
+    monkeypatch.delenv("SWDB_FRAMA_C", raising=False)                  # the real Frama-C parses the hints
+    check = Path(__file__).resolve().parent.parent / "swdb" / "hint_check.py"
+    plan = proof_hinting.wrapper_plan(base=role.LOWERING, method_flags=["-wp", "-wp-cache", "none", "-wp-model", "+real"],
+                                      seconds_per_solver=30, check=(check, "check"))
+    workspace = proof_hinting.prepare(proof_hinting.Inputs(role.files(), role.candidate(), plan), tmp_path / "prepared",
+                                      {"kind": "external_fixture", "emulates": "codex"})
+    good = {"anchor": "f.loop1.head", "kind": "loop_invariant", "text": "loop invariant 0 <= i <= n;"}
+    bad = {"anchor": "f.entry", "kind": "assert", "text": "admit n >= 0;"}
+    process, replies = role.mcp_session(workspace.folder / "wrapper", [("check_hints", {"hints": [good]}),
+                                                                       ("check_hints", {"hints": [good, bad]})])
+    texts = [r["result"]["content"][0]["text"] for r in replies]
+    assert texts[0].startswith("Proof hint check passed."), process.stderr
+    assert "FAILED" in texts[1] and "hint 1: rule admit" in texts[1] and "never a verdict" in texts[1]
 
 
 # --- WP only, and versions on every result ---------------------------------------------------------------------

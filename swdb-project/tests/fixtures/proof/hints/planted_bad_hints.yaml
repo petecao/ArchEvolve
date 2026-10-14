@@ -35,7 +35,8 @@ sets:
       - {expect: axiom, fact: q4 (axiom inside an axiomatic), anchor: ghost.globals, kind: lemma, text: "axiomatic A { logic integer h(integer x); axiom AX: h(0) == 1; }"}
       - {expect: axiom, fact: q7 (top-level axiom), anchor: ghost.globals, kind: lemma, text: "axiom AXT: \\false;"}
       - {expect: ghost_function, fact: q7 case 2 (ghost function with a body), anchor: ghost.globals, kind: ghost, text: "ghost int swdb_gf(int x) { return x; }"}
-      - {expect: ghost_function, fact: q7 case 1 (body-less ghost function), anchor: ghost.globals, kind: ghost, text: "ghost int swdb_gd(int x);"}
+      - {expect: ghost_function, fact: "q7 case 1 (body-less ghost function with a trusted contract, called)", anchor: ghost.globals, kind: ghost, text: "ghost\n  /@ assigns \\nothing; ensures \\result == 42; @/\n  int swdb_gd(int x);"}
+      - {expect: null, fact: "support (Frama-C drops an unused prototype; without a contract the kernel refuses it)", anchor: swdb_fixture_fill.s2.after, kind: ghost, text: "ghost int swdb_r = swdb_gd(0);"}
       - {expect: ghost_function, fact: q7 case 5 (volatile reader), anchor: ghost.globals, kind: ghost, text: "ghost int swdb_rd(volatile int *p) { return 0; }"}
       - {expect: bodyless_declaration, fact: q3 (logic declaration), anchor: ghost.globals, kind: logic, text: "logic integer h2(integer x);"}
       - {expect: bodyless_declaration, fact: q3 (predicate with a reads clause only), anchor: ghost.globals, kind: predicate, text: "predicate p2(integer x) reads \\nothing;"}
