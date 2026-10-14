@@ -951,6 +951,1222 @@ Proof.
       lia.
 Qed.
 
+(** Milestone 2: one adjacent transposition and its structural invariants. *)
+Fixpoint t42_sw (p i : nat) : nat :=
+  match p, i with
+  | 0, 0 => 1
+  | 0, 1 => 0
+  | 0, S (S i') => S (S i')
+  | S p', 0 => 0
+  | S p', S i' => S (t42_sw p' i')
+  end.
+
+Fixpoint t42_swap_run (X : run) (p : nat) : run :=
+  match p, X with
+  | 0, a :: b :: rest => b :: a :: rest
+  | S p', a :: rest => a :: t42_swap_run rest p'
+  | _, _ => X
+  end.
+
+Definition t42_swap_rf (p : nat) (rf : rf_map) : rf_map :=
+  fun j => option_map (t42_sw p) (rf (t42_sw p j)).
+
+Definition t42_adjacent (X : run) p t1 e1 t2 e2 : Prop :=
+  exists A B, length A = p /\ X = A ++ (t1, e1) :: (t2, e2) :: B.
+
+Definition t42_events_conflict (e1 e2 : event) : Prop :=
+  exists l, loc_of e1 = Some l /\ loc_of e2 = Some l /\
+    ((exists v, written e1 = Some (l, v)) \/
+     (exists v, written e2 = Some (l, v))).
+
+Definition t42_indep (X : run) p : Prop :=
+  exists t1 e1 t2 e2,
+    t42_adjacent X p t1 e1 t2 e2 /\ t1 <> t2 /\
+    ~ sync X p (S p) /\ ~ sync (t42_swap_run X p) p (S p) /\
+    ~ t42_events_conflict e1 e2.
+
+Lemma t42_sw_involutive p i : t42_sw p (t42_sw p i) = i.
+Proof.
+  revert i. induction p as [|p IH].
+  - intros [|[|i]]; reflexivity.
+  - intros [|i]; [reflexivity |]. simpl. rewrite IH. reflexivity.
+Qed.
+
+Lemma t42_sw_injective p i j : t42_sw p i = t42_sw p j -> i = j.
+Proof.
+  intro H. rewrite <- (t42_sw_involutive p i), <- (t42_sw_involutive p j).
+  now rewrite H.
+Qed.
+
+Lemma t42_sw_p p : t42_sw p p = S p.
+Proof.
+  induction p; simpl; [reflexivity | now rewrite IHp].
+Qed.
+
+Lemma t42_sw_Sp p : t42_sw p (S p) = p.
+Proof.
+  induction p; simpl; [reflexivity | now rewrite IHp].
+Qed.
+
+Lemma t42_sw_other p i :
+  i <> p -> i <> S p -> t42_sw p i = i.
+Proof.
+  revert i. induction p as [|p IH]; intros i Hip HiS.
+  - destruct i as [|[|i]]; [contradiction | contradiction | reflexivity].
+  - destruct i as [|i]; [reflexivity |]. simpl. f_equal.
+    apply IH.
+    + intro H. apply Hip. now f_equal.
+    + intro H. apply HiS. now f_equal.
+Qed.
+
+Lemma t42_sw_order p i j :
+  i < j -> ~ (i = p /\ j = S p) -> t42_sw p i < t42_sw p j.
+Proof.
+  intros Hij Hcross.
+  destruct (Nat.eq_dec i p) as [-> | Hip].
+  - destruct (Nat.eq_dec j (S p)) as [-> | HjS].
+    + exfalso. apply Hcross. auto.
+    + rewrite t42_sw_p, t42_sw_other by lia. lia.
+  - destruct (Nat.eq_dec i (S p)) as [-> | HiS].
+    + rewrite t42_sw_Sp, t42_sw_other by lia. lia.
+    + destruct (Nat.eq_dec j p) as [-> | Hjp].
+      * rewrite t42_sw_other by assumption. rewrite t42_sw_p. lia.
+      * destruct (Nat.eq_dec j (S p)) as [-> | HjS].
+        -- rewrite t42_sw_other by assumption. rewrite t42_sw_Sp. lia.
+        -- rewrite t42_sw_other by assumption. rewrite t42_sw_other by assumption. lia.
+Qed.
+
+Lemma t42_swap_run_length X p : length (t42_swap_run X p) = length X.
+Proof.
+  revert X. induction p as [|p IH]; intros X.
+  - destruct X as [|a [|b X]]; reflexivity.
+  - destruct X as [|a X]; [reflexivity |]. simpl. rewrite IH. reflexivity.
+Qed.
+
+Lemma t42_swap_run_split (A B : run) a b p :
+  length A = p ->
+  t42_swap_run (A ++ a :: b :: B) p = A ++ b :: a :: B.
+Proof.
+  revert p. induction A as [|x A IH]; intros p Hlen.
+  - simpl in Hlen. subst p. reflexivity.
+  - destruct p as [|p]; [simpl in Hlen; discriminate |].
+    simpl in Hlen. simpl. f_equal. apply IH. lia.
+Qed.
+
+Lemma t42_nth_error_app_here {A : Type} (pre : list A) a rest :
+  nth_error (pre ++ a :: rest) (length pre) = Some a.
+Proof.
+  induction pre as [|x pre IH]; [reflexivity |]. simpl. exact IH.
+Qed.
+
+Lemma t42_adjacent_at X p t1 e1 t2 e2 :
+  t42_adjacent X p t1 e1 t2 e2 ->
+  at_ X p t1 e1 /\ at_ X (S p) t2 e2.
+Proof.
+  intros [A [B [Hlen ->]]]. unfold at_. split.
+  - rewrite <- Hlen. apply t42_nth_error_app_here.
+  - replace (S p) with (S (length A + 0)) by lia.
+    rewrite t42_nth_after_prefix. reflexivity.
+Qed.
+
+Lemma t42_adjacent_bound X p t1 e1 t2 e2 :
+  t42_adjacent X p t1 e1 t2 e2 -> S p < length X.
+Proof.
+  intro Hadj. destruct (t42_adjacent_at X p t1 e1 t2 e2 Hadj) as [_ H].
+  unfold at_ in H. eapply t42_nth_error_lt; eauto.
+Qed.
+
+Lemma t42_adjacent_swap X p t1 e1 t2 e2 :
+  t42_adjacent X p t1 e1 t2 e2 ->
+  t42_adjacent (t42_swap_run X p) p t2 e2 t1 e1.
+Proof.
+  intros [A [B [Hlen ->]]]. exists A, B. split; [exact Hlen |].
+  rewrite t42_swap_run_split by exact Hlen. reflexivity.
+Qed.
+
+Lemma t42_swap_run_involutive X p :
+  S p < length X -> t42_swap_run (t42_swap_run X p) p = X.
+Proof.
+  revert X. induction p as [|p IH]; intros X Hbound.
+  - destruct X as [|a [|b X]]; simpl in Hbound; try lia. reflexivity.
+  - destruct X as [|a X]; simpl in Hbound; [lia |].
+    simpl. f_equal. apply IH. lia.
+Qed.
+
+Lemma t42_nth_error_swap X p i :
+  S p < length X ->
+  nth_error (t42_swap_run X p) (t42_sw p i) = nth_error X i.
+Proof.
+  revert X i. induction p as [|p IH]; intros X i Hbound.
+  - destruct X as [|a [|b X]]; simpl in Hbound; try lia.
+    destruct i as [|[|i]]; reflexivity.
+  - destruct X as [|a X]; simpl in Hbound; [lia |].
+    destruct i as [|i]; [reflexivity |]. simpl. apply IH. lia.
+Qed.
+
+Lemma t42_at_swap_iff X p t1 e1 t2 e2 i t e :
+  t42_adjacent X p t1 e1 t2 e2 ->
+  (at_ (t42_swap_run X p) (t42_sw p i) t e <-> at_ X i t e).
+Proof.
+  intro Hadj. unfold at_. rewrite t42_nth_error_swap.
+  - reflexivity.
+  - eapply t42_adjacent_bound; eauto.
+Qed.
+
+Lemma t42_at_swap_reverse X p t1 e1 t2 e2 i t e :
+  t42_adjacent X p t1 e1 t2 e2 ->
+  (at_ (t42_swap_run X p) i t e <-> at_ X (t42_sw p i) t e).
+Proof.
+  intro Hadj.
+  pose proof (t42_at_swap_iff X p t1 e1 t2 e2 (t42_sw p i) t e Hadj) as H.
+  rewrite t42_sw_involutive in H. exact H.
+Qed.
+
+Lemma t42_proj_pair_swap t1 e1 t2 e2 t :
+  t1 <> t2 ->
+  proj [(t2, e2); (t1, e1)] t = proj [(t1, e1); (t2, e2)] t.
+Proof.
+  intro Hdiff. unfold proj. simpl.
+  destruct (Nat.eqb t1 t) eqn:H1; destruct (Nat.eqb t2 t) eqn:H2;
+    try reflexivity.
+  apply Nat.eqb_eq in H1. apply Nat.eqb_eq in H2. subst. contradiction.
+Qed.
+
+Lemma t42_proj_swap X p t1 e1 t2 e2 t :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  proj (t42_swap_run X p) t = proj X t.
+Proof.
+  intros [A [B [Hlen ->]]] Hdiff.
+  rewrite t42_swap_run_split by exact Hlen.
+  change
+    (proj (A ++ ([(t2, e2); (t1, e1)] ++ B)) t =
+     proj (A ++ ([(t1, e1); (t2, e2)] ++ B)) t).
+  repeat rewrite t42_proj_app. rewrite t42_proj_pair_swap by exact Hdiff. reflexivity.
+Qed.
+
+Lemma t42_proj_cons_congr u d (A B : run) t :
+  proj A t = proj B t -> proj ((u, d) :: A) t = proj ((u, d) :: B) t.
+Proof.
+  unfold proj. simpl. destruct (Nat.eqb u t); simpl; intro H; now rewrite H.
+Qed.
+
+Lemma t42_proj_prefix_swap X p t1 e1 t2 e2 i t e :
+  at_ X p t1 e1 -> at_ X (S p) t2 e2 -> t1 <> t2 ->
+  at_ X i t e ->
+  proj (firstn (t42_sw p i) (t42_swap_run X p)) t = proj (firstn i X) t.
+Proof.
+  revert X i. induction p as [|p IH]; intros X i H1 H2 Hdiff Hi.
+  - destruct X as [|[u1 d1] [|[u2 d2] X]]; unfold at_ in H1, H2; simpl in H1, H2;
+      try discriminate.
+    inversion H1. inversion H2. subst u1 d1 u2 d2.
+    destruct i as [|[|i]].
+    + unfold at_ in Hi. simpl in Hi. inversion Hi. subst t e.
+      simpl. unfold proj. simpl. destruct (Nat.eqb t2 t1) eqn:Hb; [|reflexivity].
+      apply Nat.eqb_eq in Hb. exfalso. apply Hdiff. symmetry. exact Hb.
+    + unfold at_ in Hi. simpl in Hi. inversion Hi. subst t e.
+      simpl. unfold proj. simpl. destruct (Nat.eqb t1 t2) eqn:Hb; [|reflexivity].
+      apply Nat.eqb_eq in Hb. exfalso. apply Hdiff. exact Hb.
+    + simpl. change
+        (proj ([(t2, e2); (t1, e1)] ++ firstn i X) t =
+         proj ([(t1, e1); (t2, e2)] ++ firstn i X) t).
+      repeat rewrite t42_proj_app. rewrite t42_proj_pair_swap by exact Hdiff. reflexivity.
+  - destruct X as [|[u d] X]; unfold at_ in H1, H2, Hi; simpl in H1, H2, Hi;
+      try discriminate.
+    destruct i as [|i].
+    + reflexivity.
+    + simpl. apply t42_proj_cons_congr. apply IH; assumption.
+Qed.
+
+Lemma t42_event_order_swap X p t1 e1 t2 e2 i j t e d :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  at_ X i t e -> at_ X j t d -> i < j ->
+  t42_sw p i < t42_sw p j.
+Proof.
+  intros Hadj Hdiff Hati Hatj Hij. apply t42_sw_order; [exact Hij |].
+  intros [-> ->].
+  destruct (t42_adjacent_at X p t1 e1 t2 e2 Hadj) as [H1 H2].
+  pose proof (proj1 (t42_at_unique X p t1 e1 t e H1 Hati)) as Ht1.
+  pose proof (proj1 (t42_at_unique X (S p) t2 e2 t d H2 Hatj)) as Ht2.
+  apply Hdiff. congruence.
+Qed.
+
+Lemma t42_interval_swap X p t1 e1 t2 e2 i t e :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 -> at_ X i t e ->
+  interval (t42_swap_run X p) t (t42_sw p i) = interval X t i.
+Proof.
+  intros Hadj Hdiff Hat. unfold interval.
+  destruct (t42_adjacent_at X p t1 e1 t2 e2 Hadj) as [H1 H2].
+  rewrite (t42_proj_prefix_swap X p t1 e1 t2 e2 i t e H1 H2 Hdiff Hat).
+  reflexivity.
+Qed.
+
+Lemma t42_inside_swap X p t1 e1 t2 e2 i t e :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 -> at_ X i t e ->
+  inside (t42_swap_run X p) t (t42_sw p i) = inside X t i.
+Proof.
+  intros Hadj Hdiff Hat. unfold inside.
+  destruct (t42_adjacent_at X p t1 e1 t2 e2 Hadj) as [H1 H2].
+  rewrite (t42_proj_prefix_swap X p t1 e1 t2 e2 i t e H1 H2 Hdiff Hat).
+  reflexivity.
+Qed.
+
+Lemma t42_owned_swap X p t1 e1 t2 e2 i t e l :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 -> at_ X i t e ->
+  (owned (t42_swap_run X p) t (t42_sw p i) l <-> owned X t i l).
+Proof.
+  intros Hadj Hdiff Hati. unfold owned. split.
+  - intros [k [Hki [Hatk Heq]]].
+    exists (t42_sw p k). split.
+    + pose proof (t42_event_order_swap (t42_swap_run X p) p t2 e2 t1 e1
+        k (t42_sw p i) t (Own l) e
+        (t42_adjacent_swap X p t1 e1 t2 e2 Hadj) ltac:(congruence)
+        Hatk ltac:(apply (proj2 (t42_at_swap_iff X p t1 e1 t2 e2 i t e Hadj)); exact Hati)
+        Hki) as Hord.
+      rewrite t42_sw_involutive in Hord. exact Hord.
+    + split.
+      * apply (proj1 (t42_at_swap_reverse X p t1 e1 t2 e2 k t (Own l) Hadj)). exact Hatk.
+      * assert (HatkX : at_ X (t42_sw p k) t (Own l)).
+        { apply (proj1 (t42_at_swap_reverse X p t1 e1 t2 e2 k t (Own l) Hadj)). exact Hatk. }
+        pose proof (t42_interval_swap X p t1 e1 t2 e2 (t42_sw p k) t (Own l)
+          Hadj Hdiff HatkX) as HIk.
+        pose proof (t42_interval_swap X p t1 e1 t2 e2 i t e Hadj Hdiff Hati) as HIi.
+        rewrite t42_sw_involutive in HIk. rewrite HIk, HIi in Heq. exact Heq.
+  - intros [j [Hji [Hatj Heq]]].
+    exists (t42_sw p j). split.
+    + eapply t42_event_order_swap; eauto.
+    + split.
+      * apply (proj2 (t42_at_swap_iff X p t1 e1 t2 e2 j t (Own l) Hadj)). exact Hatj.
+      * rewrite (t42_interval_swap X p t1 e1 t2 e2 j t (Own l) Hadj Hdiff Hatj).
+        rewrite (t42_interval_swap X p t1 e1 t2 e2 i t e Hadj Hdiff Hati).
+        exact Heq.
+Qed.
+
+Lemma t42_sw_lt_length p n i :
+  S p < n -> i < n -> t42_sw p i < n.
+Proof.
+  intros Hp Hi.
+  destruct (Nat.eq_dec i p) as [-> | Hip].
+  - rewrite t42_sw_p. lia.
+  - destruct (Nat.eq_dec i (S p)) as [-> | HiS].
+    + rewrite t42_sw_Sp. lia.
+    + rewrite t42_sw_other by assumption. exact Hi.
+Qed.
+
+Lemma t42_sw_length p n :
+  S p < n -> t42_sw p n = n.
+Proof.
+  intro H. apply t42_sw_other; lia.
+Qed.
+
+Lemma t42_written_loc e l v :
+  written e = Some (l, v) -> loc_of e = Some l.
+Proof.
+  destruct e as
+    [l0 v0 | l0 v0 | l0 v0 | k f a l0 old | c l0 v0 | c l0 v0 |
+     c | l0 | | | w | w n |]; simpl; try congruence.
+  destruct (sa_new k a old); congruence.
+Qed.
+
+Lemma t42_read_value_loc e l v :
+  read_value e = Some (l, v) -> loc_of e = Some l.
+Proof.
+  destruct e; simpl; congruence.
+Qed.
+
+Lemma t42_events_conflict_sym e1 e2 :
+  t42_events_conflict e1 e2 -> t42_events_conflict e2 e1.
+Proof.
+  intros [l [H1 [H2 [Hwrite | Hwrite]]]].
+  - exists l. repeat split; auto.
+  - exists l. repeat split; auto.
+Qed.
+
+Lemma t42_access_order_swap X p t1 e1 t2 e2 i j u d v e l :
+  t42_adjacent X p t1 e1 t2 e2 ->
+  ~ t42_events_conflict e1 e2 ->
+  at_ X i u d -> at_ X j v e ->
+  loc_of d = Some l -> loc_of e = Some l ->
+  ((exists w, written d = Some (l, w)) \/
+   (exists w, written e = Some (l, w))) ->
+  i < j -> t42_sw p i < t42_sw p j.
+Proof.
+  intros Hadj Hsafe Hati Hatj Hdi Hej Hwrite Hij.
+  apply t42_sw_order; [exact Hij |].
+  intros [-> ->].
+  destruct (t42_adjacent_at X p t1 e1 t2 e2 Hadj) as [H1 H2].
+  destruct (t42_at_unique X p t1 e1 u d H1 Hati) as [_ Hd].
+  destruct (t42_at_unique X (S p) t2 e2 v e H2 Hatj) as [_ He].
+  apply Hsafe. exists l. subst d e. repeat split; assumption.
+Qed.
+
+Lemma t42_cpu_sync_swap_forward X p t1 e1 t2 e2 i j :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ sync X p (S p) ->
+  cpu_sync X i j ->
+  cpu_sync (t42_swap_run X p) (t42_sw p i) (t42_sw p j).
+Proof.
+  intros Hadj Hdiff Hnos Hcpu. inversion Hcpu; subst.
+  - eapply cpu_po.
+    + eapply t42_event_order_swap; eauto.
+    + apply (proj2 (t42_at_swap_iff X p t1 e1 t2 e2 i t e Hadj)); assumption.
+    + apply (proj2 (t42_at_swap_iff X p t1 e1 t2 e2 j t e' Hadj)); assumption.
+  - eapply cpu_fence.
+    + apply t42_sw_order; [assumption |]. intros [-> ->].
+      apply Hnos. apply sync_cpu. eapply cpu_fence; eauto.
+    + apply (proj2 (t42_at_swap_iff X p t1 e1 t2 e2 i t
+        (Shared k true a l v) Hadj)); assumption.
+    + apply (proj2 (t42_at_swap_iff X p t1 e1 t2 e2 j t'
+        (Shared k' true a' l' v') Hadj)); assumption.
+Qed.
+
+Lemma t42_cpu_sync_swap_iff X p t1 e1 t2 e2 i j :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ sync X p (S p) -> ~ sync (t42_swap_run X p) p (S p) ->
+  (cpu_sync (t42_swap_run X p) (t42_sw p i) (t42_sw p j) <->
+   cpu_sync X i j).
+Proof.
+  intros Hadj Hdiff Hnos Hnos' . split.
+  - intro H.
+    pose proof (t42_cpu_sync_swap_forward (t42_swap_run X p) p t2 e2 t1 e1
+      (t42_sw p i) (t42_sw p j)
+      (t42_adjacent_swap X p t1 e1 t2 e2 Hadj) ltac:(congruence) Hnos' H) as K.
+    rewrite (t42_swap_run_involutive X p (t42_adjacent_bound X p t1 e1 t2 e2 Hadj)) in K.
+    repeat rewrite t42_sw_involutive in K. exact K.
+  - apply (t42_cpu_sync_swap_forward X p t1 e1 t2 e2); assumption.
+Qed.
+
+Lemma t42_omp_sync_swap_forward X p t1 e1 t2 e2 i j :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ sync X p (S p) ->
+  omp_sync X i j ->
+  omp_sync (t42_swap_run X p) (t42_sw p i) (t42_sw p j).
+Proof.
+  intros Hadj Hdiff Hnos Homp. inversion Homp; subst.
+  - eapply omp_sync_barrier.
+    + apply t42_sw_order; [assumption |]. intros [-> ->].
+      apply Hnos. apply sync_omp. eapply omp_sync_barrier; eauto.
+    + apply (proj2 (t42_at_swap_iff X p t1 e1 t2 e2 i t Barrier Hadj)); assumption.
+    + apply (proj2 (t42_at_swap_iff X p t1 e1 t2 e2 j t' e Hadj)); assumption.
+    + rewrite (t42_interval_swap X p t1 e1 t2 e2 i t Barrier Hadj Hdiff ltac:(assumption)).
+      rewrite (t42_interval_swap X p t1 e1 t2 e2 j t' e Hadj Hdiff ltac:(assumption)).
+      assumption.
+  - eapply omp_sync_critical.
+    + apply t42_sw_order; [assumption |]. intros [-> ->].
+      apply Hnos. apply sync_omp. eapply omp_sync_critical; eauto.
+    + apply (proj2 (t42_at_swap_iff X p t1 e1 t2 e2 i t Exit Hadj)); assumption.
+    + apply (proj2 (t42_at_swap_iff X p t1 e1 t2 e2 j t' Enter Hadj)); assumption.
+Qed.
+
+Lemma t42_omp_sync_swap_iff X p t1 e1 t2 e2 i j :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ sync X p (S p) -> ~ sync (t42_swap_run X p) p (S p) ->
+  (omp_sync (t42_swap_run X p) (t42_sw p i) (t42_sw p j) <->
+   omp_sync X i j).
+Proof.
+  intros Hadj Hdiff Hnos Hnos'. split.
+  - intro H.
+    pose proof (t42_omp_sync_swap_forward (t42_swap_run X p) p t2 e2 t1 e1
+      (t42_sw p i) (t42_sw p j)
+      (t42_adjacent_swap X p t1 e1 t2 e2 Hadj) ltac:(congruence) Hnos' H) as K.
+    rewrite (t42_swap_run_involutive X p (t42_adjacent_bound X p t1 e1 t2 e2 Hadj)) in K.
+    repeat rewrite t42_sw_involutive in K. exact K.
+  - apply (t42_omp_sync_swap_forward X p t1 e1 t2 e2); assumption.
+Qed.
+
+Lemma t42_sync_swap_forward X p t1 e1 t2 e2 i j :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ sync X p (S p) ->
+  sync X i j -> sync (t42_swap_run X p) (t42_sw p i) (t42_sw p j).
+Proof.
+  intros Hadj Hdiff Hnos H. inversion H; subst.
+  - apply sync_cpu. eapply t42_cpu_sync_swap_forward; eauto.
+  - apply sync_omp. eapply t42_omp_sync_swap_forward; eauto.
+Qed.
+
+Lemma t42_sync_swap_iff X p t1 e1 t2 e2 i j :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ sync X p (S p) -> ~ sync (t42_swap_run X p) p (S p) ->
+  (sync (t42_swap_run X p) (t42_sw p i) (t42_sw p j) <-> sync X i j).
+Proof.
+  intros Hadj Hdiff Hnos Hnos'. split.
+  - intro H.
+    pose proof (t42_sync_swap_forward (t42_swap_run X p) p t2 e2 t1 e1
+      (t42_sw p i) (t42_sw p j)
+      (t42_adjacent_swap X p t1 e1 t2 e2 Hadj) ltac:(congruence) Hnos' H) as K.
+    rewrite (t42_swap_run_involutive X p (t42_adjacent_bound X p t1 e1 t2 e2 Hadj)) in K.
+    repeat rewrite t42_sw_involutive in K. exact K.
+  - apply (t42_sync_swap_forward X p t1 e1 t2 e2); assumption.
+Qed.
+
+Lemma t42_clos_trans_map (R S : nat -> nat -> Prop) (f : nat -> nat) :
+  (forall i j, R i j -> S (f i) (f j)) ->
+  forall i j, clos_trans nat R i j -> clos_trans nat S (f i) (f j).
+Proof.
+  intros Hmap i j H. induction H.
+  - apply t_step. now apply Hmap.
+  - eapply t_trans; eauto.
+Qed.
+
+Lemma t42_hb_cpu_swap_forward X p t1 e1 t2 e2 i j :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ sync X p (S p) -> hb_cpu X i j ->
+  hb_cpu (t42_swap_run X p) (t42_sw p i) (t42_sw p j).
+Proof.
+  intros Hadj Hdiff Hnos H. unfold hb_cpu in *.
+  eapply t42_clos_trans_map; [|exact H].
+  intros a b Hab. eapply t42_cpu_sync_swap_forward; eauto.
+Qed.
+
+Lemma t42_hb_cpu_swap_iff X p t1 e1 t2 e2 i j :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ sync X p (S p) -> ~ sync (t42_swap_run X p) p (S p) ->
+  (hb_cpu (t42_swap_run X p) (t42_sw p i) (t42_sw p j) <-> hb_cpu X i j).
+Proof.
+  intros Hadj Hdiff Hnos Hnos'. split.
+  - intro H.
+    pose proof (t42_hb_cpu_swap_forward (t42_swap_run X p) p t2 e2 t1 e1
+      (t42_sw p i) (t42_sw p j)
+      (t42_adjacent_swap X p t1 e1 t2 e2 Hadj) ltac:(congruence) Hnos' H) as K.
+    rewrite (t42_swap_run_involutive X p (t42_adjacent_bound X p t1 e1 t2 e2 Hadj)) in K.
+    repeat rewrite t42_sw_involutive in K. exact K.
+  - apply (t42_hb_cpu_swap_forward X p t1 e1 t2 e2); assumption.
+Qed.
+
+Lemma t42_hb_swap_forward X p t1 e1 t2 e2 i j :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ sync X p (S p) -> hb X i j ->
+  hb (t42_swap_run X p) (t42_sw p i) (t42_sw p j).
+Proof.
+  intros Hadj Hdiff Hnos H. unfold hb in *.
+  eapply t42_clos_trans_map; [|exact H].
+  intros a b Hab. eapply t42_sync_swap_forward; eauto.
+Qed.
+
+Lemma t42_hb_swap_iff X p t1 e1 t2 e2 i j :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ sync X p (S p) -> ~ sync (t42_swap_run X p) p (S p) ->
+  (hb (t42_swap_run X p) (t42_sw p i) (t42_sw p j) <-> hb X i j).
+Proof.
+  intros Hadj Hdiff Hnos Hnos'. split.
+  - intro H.
+    pose proof (t42_hb_swap_forward (t42_swap_run X p) p t2 e2 t1 e1
+      (t42_sw p i) (t42_sw p j)
+      (t42_adjacent_swap X p t1 e1 t2 e2 Hadj) ltac:(congruence) Hnos' H) as K.
+    rewrite (t42_swap_run_involutive X p (t42_adjacent_bound X p t1 e1 t2 e2 Hadj)) in K.
+    repeat rewrite t42_sw_involutive in K. exact K.
+  - apply (t42_hb_swap_forward X p t1 e1 t2 e2); assumption.
+Qed.
+
+Lemma t42_writes_swap X p t1 e1 t2 e2 i l v :
+  t42_adjacent X p t1 e1 t2 e2 ->
+  (writes (t42_swap_run X p) (t42_sw p i) l v <-> writes X i l v).
+Proof.
+  intro Hadj. unfold writes. split.
+  - intros [t [e [Hat Hwrite]]]. exists t, e. split; [|exact Hwrite].
+    apply (proj1 (t42_at_swap_iff X p t1 e1 t2 e2 i t e Hadj)). exact Hat.
+  - intros [t [e [Hat Hwrite]]]. exists t, e. split; [|exact Hwrite].
+    apply (proj2 (t42_at_swap_iff X p t1 e1 t2 e2 i t e Hadj)). exact Hat.
+Qed.
+
+Lemma t42_writes_order_swap X p t1 e1 t2 e2 i j l v w :
+  t42_adjacent X p t1 e1 t2 e2 ->
+  ~ t42_events_conflict e1 e2 ->
+  writes X i l v -> writes X j l w -> i < j ->
+  t42_sw p i < t42_sw p j.
+Proof.
+  intros Hadj Hsafe [u [d [Hati Hdi]]] [u' [d' [Hatj Hdj]]] Hij.
+  eapply t42_access_order_swap; eauto using t42_written_loc.
+Qed.
+
+Lemma t42_write_read_order_swap X p t1 e1 t2 e2 i j l v w t e :
+  t42_adjacent X p t1 e1 t2 e2 ->
+  ~ t42_events_conflict e1 e2 ->
+  writes X i l w -> at_ X j t e -> read_value e = Some (l, v) -> i < j ->
+  t42_sw p i < t42_sw p j.
+Proof.
+  intros Hadj Hsafe [u [d [Hati Hdi]]] Hatj Hread Hij.
+  eapply t42_access_order_swap; eauto using t42_written_loc, t42_read_value_loc.
+Qed.
+
+Lemma t42_swap_rf_apply p rf i :
+  t42_swap_rf p rf (t42_sw p i) = option_map (t42_sw p) (rf i).
+Proof.
+  unfold t42_swap_rf. rewrite t42_sw_involutive. reflexivity.
+Qed.
+
+Lemma t42_swap_rf_some p rf i s :
+  t42_swap_rf p rf (t42_sw p i) = Some (t42_sw p s) <-> rf i = Some s.
+Proof.
+  rewrite t42_swap_rf_apply. destruct (rf i) as [q|] eqn:Hq; simpl.
+  - split; intro H; [|inversion H; reflexivity].
+    inversion H. apply t42_sw_injective in H1. subst q. reflexivity.
+  - split; discriminate.
+Qed.
+
+Lemma t42_swap_rf_none p rf i :
+  t42_swap_rf p rf (t42_sw p i) = None <-> rf i = None.
+Proof.
+  rewrite t42_swap_rf_apply. destruct (rf i); simpl; split; congruence.
+Qed.
+
+Lemma t42_source_ok_read_swap_forward X rf p t1 e1 t2 e2 j t e l v :
+  t42_adjacent X p t1 e1 t2 e2 ->
+  ~ t42_events_conflict e1 e2 ->
+  at_ X j t e -> read_value e = Some (l, v) ->
+  source_ok X l v (rf j) j ->
+  source_ok (t42_swap_run X p) l v
+    (t42_swap_rf p rf (t42_sw p j)) (t42_sw p j).
+Proof.
+  intros Hadj Hsafe Hat Hread Hsource. unfold source_ok in *.
+  destruct (rf j) as [s|] eqn:Hs.
+  - destruct Hsource as [Hsj Hwrite]. rewrite t42_swap_rf_apply, Hs. simpl.
+    split.
+    + eapply t42_write_read_order_swap; eauto.
+    + apply (proj2 (t42_writes_swap X p t1 e1 t2 e2 s l v Hadj)). exact Hwrite.
+  - rewrite t42_swap_rf_apply, Hs. simpl. exact Hsource.
+Qed.
+
+Lemma t42_source_ok_length_swap_forward X rf p t1 e1 t2 e2 l v j :
+  t42_adjacent X p t1 e1 t2 e2 ->
+  source_ok X l v (rf j) (length X) ->
+  source_ok (t42_swap_run X p) l v
+    (t42_swap_rf p rf (t42_sw p j)) (length (t42_swap_run X p)).
+Proof.
+  intros Hadj Hsource. unfold source_ok in *.
+  destruct (rf j) as [s|] eqn:Hs.
+  - destruct Hsource as [Hslen Hwrite]. rewrite t42_swap_rf_apply, Hs. simpl.
+    split.
+    + rewrite t42_swap_run_length. eapply t42_sw_lt_length; eauto.
+      eapply t42_adjacent_bound; eauto.
+    + apply (proj2 (t42_writes_swap X p t1 e1 t2 e2 s l v Hadj)). exact Hwrite.
+  - rewrite t42_swap_rf_apply, Hs. simpl. exact Hsource.
+Qed.
+
+Definition t42_rf_valid (X : run) (rf : rf_map) : Prop :=
+  forall j t e l v s, at_ X j t e -> read_value e = Some (l, v) ->
+    rf j = Some s -> exists w, writes X s l w.
+
+Lemma t42_rf_valid_swap_forward X rf p t1 e1 t2 e2 :
+  t42_adjacent X p t1 e1 t2 e2 -> t42_rf_valid X rf ->
+  t42_rf_valid (t42_swap_run X p) (t42_swap_rf p rf).
+Proof.
+  intros Hadj Hvalid j t e l v s Hat Hread Hrf.
+  pose proof (proj1 (t42_at_swap_reverse X p t1 e1 t2 e2 j t e Hadj) Hat) as HatX.
+  unfold t42_swap_rf in Hrf.
+  destruct (rf (t42_sw p j)) as [q|] eqn:Hq; simpl in Hrf; [|discriminate].
+  inversion Hrf. subst s.
+  destruct (Hvalid (t42_sw p j) t e l v q HatX Hread Hq) as [w Hwrite].
+  exists w. apply (proj2 (t42_writes_swap X p t1 e1 t2 e2 q l w Hadj)). exact Hwrite.
+Qed.
+
+Lemma t42_latest_swap_forward X p t1 e1 t2 e2 j t e l v s :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ t42_events_conflict e1 e2 ->
+  at_ X j t e -> read_value e = Some (l, v) ->
+  (match s with None => True | Some q => exists w, writes X q l w end) ->
+  latest X l j s ->
+  latest (t42_swap_run X p) l (t42_sw p j) (option_map (t42_sw p) s).
+Proof.
+  intros Hadj Hdiff Hsafe Hat Hread Hsource Hlatest.
+  destruct s as [s|].
+  - simpl in Hsource, Hlatest |- *. destruct Hsource as [w Hwrites].
+    destruct Hlatest as [Hsj Hnew]. split.
+    + eapply t42_write_read_order_swap; eauto.
+    + intros q w' Hbetween Hwriteq.
+      apply (Hnew (t42_sw p q) w').
+      * split.
+        -- rewrite <- (t42_sw_involutive p s).
+           apply (t42_writes_order_swap (t42_swap_run X p) p t2 e2 t1 e1
+             (t42_sw p s) q l w w').
+           ++ apply t42_adjacent_swap. exact Hadj.
+           ++ intro Hc. apply Hsafe. now apply t42_events_conflict_sym.
+           ++ apply (proj2 (t42_writes_swap X p t1 e1 t2 e2 s l w Hadj)). exact Hwrites.
+           ++ exact Hwriteq.
+           ++ exact (proj1 Hbetween).
+        -- rewrite <- (t42_sw_involutive p j).
+           apply (t42_write_read_order_swap (t42_swap_run X p) p t2 e2 t1 e1
+             q (t42_sw p j) l v w' t e).
+           ++ apply t42_adjacent_swap. exact Hadj.
+           ++ intro Hc. apply Hsafe. now apply t42_events_conflict_sym.
+           ++ exact Hwriteq.
+           ++ apply (proj2 (t42_at_swap_iff X p t1 e1 t2 e2 j t e Hadj)). exact Hat.
+           ++ exact Hread.
+           ++ exact (proj2 Hbetween).
+      * apply (proj1 (t42_writes_swap X p t1 e1 t2 e2 (t42_sw p q) l w' Hadj)).
+        rewrite t42_sw_involutive. exact Hwriteq.
+  - simpl in Hlatest |- *. intros q w Hq Hwriteq.
+    apply (Hlatest (t42_sw p q) w).
+    + rewrite <- (t42_sw_involutive p j).
+      apply (t42_write_read_order_swap (t42_swap_run X p) p t2 e2 t1 e1
+        q (t42_sw p j) l v w t e).
+      * apply t42_adjacent_swap. exact Hadj.
+      * intro Hc. apply Hsafe. now apply t42_events_conflict_sym.
+      * exact Hwriteq.
+      * apply (proj2 (t42_at_swap_iff X p t1 e1 t2 e2 j t e Hadj)). exact Hat.
+      * exact Hread.
+      * exact Hq.
+    + apply (proj1 (t42_writes_swap X p t1 e1 t2 e2 (t42_sw p q) l w Hadj)).
+      rewrite t42_sw_involutive. exact Hwriteq.
+Qed.
+
+Lemma t42_source_latest_swap_forward X rf p t1 e1 t2 e2 j t e l v :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ t42_events_conflict e1 e2 ->
+  at_ X j t e -> read_value e = Some (l, v) ->
+  source_ok X l v (rf j) j /\ latest X l j (rf j) ->
+  source_ok (t42_swap_run X p) l v
+      (t42_swap_rf p rf (t42_sw p j)) (t42_sw p j) /\
+    latest (t42_swap_run X p) l (t42_sw p j)
+      (t42_swap_rf p rf (t42_sw p j)).
+Proof.
+  intros Hadj Hdiff Hsafe Hat Hread [Hsource Hlatest]. split.
+  - eapply t42_source_ok_read_swap_forward; eauto.
+  - rewrite t42_swap_rf_apply.
+    eapply t42_latest_swap_forward; eauto.
+    unfold source_ok in Hsource. destruct (rf j); simpl in *; intuition eauto.
+Qed.
+
+Lemma t42_not_older_swap_forward X rf p t1 e1 t2 e2 j i l v :
+  t42_adjacent X p t1 e1 t2 e2 ->
+  ~ t42_events_conflict e1 e2 ->
+  (match rf j with None => True | Some s => exists w, writes X s l w end) ->
+  writes X i l v -> not_older (rf j) i ->
+  not_older (t42_swap_rf p rf (t42_sw p j)) (t42_sw p i).
+Proof.
+  intros Hadj Hsafe Hsource Hwrite Holder.
+  unfold not_older in *. destruct (rf j) as [s|] eqn:Hs; [|contradiction].
+  simpl in Hsource, Holder |- *. rewrite t42_swap_rf_apply, Hs. simpl.
+  destruct Hsource as [w Hwrites]. destruct (Nat.eq_dec i s) as [-> | Hneq].
+  - lia.
+  - assert (i < s) by lia. eapply Nat.lt_le_incl.
+    eapply t42_writes_order_swap; eauto.
+Qed.
+
+Lemma t42_source_ok_some_write X l v s bound :
+  source_ok X l v (Some s) bound -> exists w, writes X s l w.
+Proof.
+  unfold source_ok. intros [_ Hwrite]. exists v. exact Hwrite.
+Qed.
+
+Lemma t42_model_rf_valid X rf :
+  memory_ok X rf -> device_ok X rf -> t42_rf_valid X rf.
+Proof.
+  intros [Hcpu Hshared] Hdevice j t e l v s Hat Hread Hrf.
+  destruct e as
+    [l0 v0 | l0 v0 | l0 v0 | k f a l0 old | c l0 v0 | c l0 v0 |
+     c | l0 | | | w | w n |]; simpl in Hread; try discriminate.
+  - inversion Hread. subst l0 v0. destruct (Hcpu j t l v (or_introl Hat)) as [Hsource _].
+    rewrite Hrf in Hsource. eapply t42_source_ok_some_write; eauto.
+  - inversion Hread. subst l0 v0. destruct (Hcpu j t l v (or_intror Hat)) as [Hsource _].
+    rewrite Hrf in Hsource. eapply t42_source_ok_some_write; eauto.
+  - inversion Hread. subst l0 old. destruct (Hshared j t k f a l v Hat) as [Hsource _].
+    rewrite Hrf in Hsource. eapply t42_source_ok_some_write; eauto.
+  - inversion Hread. subst l0 v0. destruct (Hdevice j t c l v Hat) as [[Hsource _] _].
+    rewrite Hrf in Hsource. eapply t42_source_ok_some_write; eauto.
+Qed.
+
+Lemma t42_seen_swap_backward
+    (H H' : nat -> nat -> Prop) X rf p t1 e1 t2 e2 j l k :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ t42_events_conflict e1 e2 ->
+  (forall a b, H' a b -> H (t42_sw p a) (t42_sw p b)) ->
+  t42_rf_valid (t42_swap_run X p) (t42_swap_rf p rf) ->
+  seen H' (t42_swap_run X p) (t42_swap_rf p rf) (t42_sw p j) l k ->
+  seen H X rf j l (t42_sw p k).
+Proof.
+  intros Hadj Hdiff Hsafe Hrel Hvalid Hseen.
+  destruct Hseen as [[wk Hwritek] Hreason]. split.
+  - exists wk. apply (proj1 (t42_writes_swap X p t1 e1 t2 e2
+      (t42_sw p k) l wk Hadj)). rewrite t42_sw_involutive. exact Hwritek.
+  - destruct Hreason as [Hedge | Hprior].
+    + left. specialize (Hrel k (t42_sw p j) Hedge).
+    rewrite t42_sw_involutive in Hrel. exact Hrel.
+    + right. destruct Hprior as
+      [r [u [d [d' [vr [s [Hrj [Hatr [Hatj [Hread [Hrfs Hks]]]]]]]]]]].
+      pose proof (proj1 (t42_at_swap_reverse X p t1 e1 t2 e2 r u d Hadj) Hatr) as HatrX.
+      pose proof (proj1 (t42_at_swap_iff X p t1 e1 t2 e2 j u d' Hadj) Hatj) as HatjX.
+      pose proof (t42_event_order_swap (t42_swap_run X p) p t2 e2 t1 e1
+        r (t42_sw p j) u d d'
+        (t42_adjacent_swap X p t1 e1 t2 e2 Hadj) ltac:(congruence)
+        Hatr Hatj Hrj) as HrjX.
+      rewrite t42_sw_involutive in HrjX.
+      destruct (Hvalid r u d l vr s Hatr Hread Hrfs) as [ws Hwrites].
+      unfold t42_swap_rf in Hrfs.
+      destruct (rf (t42_sw p r)) as [q|] eqn:Hrfq; simpl in Hrfs; [|discriminate].
+      inversion Hrfs. subst s.
+      exists (t42_sw p r), u, d, d', vr, q. repeat split; try assumption.
+      destruct (Nat.eq_dec k (t42_sw p q)) as [-> | Hneq].
+      * rewrite t42_sw_involutive. lia.
+      * assert (Hkq : k < t42_sw p q) by lia.
+        apply Nat.lt_le_incl.
+        rewrite <- (t42_sw_involutive p q).
+        apply (t42_writes_order_swap (t42_swap_run X p) p t2 e2 t1 e1
+          k (t42_sw p q) l wk ws).
+        -- apply t42_adjacent_swap. exact Hadj.
+        -- intro Hc. apply Hsafe. now apply t42_events_conflict_sym.
+        -- exact Hwritek.
+        -- exact Hwrites.
+        -- exact Hkq.
+Qed.
+
+Lemma t42_seen_not_older_swap_forward
+    (H H' : nat -> nat -> Prop) X rf p t1 e1 t2 e2 j t e l v :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ t42_events_conflict e1 e2 ->
+  (forall a b, H' a b -> H (t42_sw p a) (t42_sw p b)) ->
+  t42_rf_valid X rf -> at_ X j t e -> read_value e = Some (l, v) ->
+  (forall i, seen H X rf j l i -> not_older (rf j) i) ->
+  forall k, seen H' (t42_swap_run X p) (t42_swap_rf p rf)
+      (t42_sw p j) l k ->
+    not_older (t42_swap_rf p rf (t42_sw p j)) k.
+Proof.
+  intros Hadj Hdiff Hsafe Hrel Hvalid Hat Hread Holder k Hseen.
+  pose proof (t42_rf_valid_swap_forward X rf p t1 e1 t2 e2 Hadj Hvalid) as Hvalid'.
+  pose proof (t42_seen_swap_backward H H' X rf p t1 e1 t2 e2 j l k
+    Hadj Hdiff Hsafe Hrel Hvalid' Hseen) as HseenX.
+  pose proof (Holder (t42_sw p k) HseenX) as HoldX.
+  destruct HseenX as [[wk Hwritek] _].
+  assert (Hsource : match rf j with
+    | None => True | Some s => exists w, writes X s l w end).
+  { destruct (rf j) as [s|] eqn:Hrfj; [|exact I].
+    eapply Hvalid; eauto. }
+  pose proof (t42_not_older_swap_forward X rf p t1 e1 t2 e2 j
+    (t42_sw p k) l wk Hadj Hsafe Hsource Hwritek HoldX) as K.
+  rewrite t42_sw_involutive in K. exact K.
+Qed.
+
+Lemma t42_read_ok_swap_forward
+    (H H' : nat -> nat -> Prop) X rf p t1 e1 t2 e2 j t e l v :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ t42_events_conflict e1 e2 ->
+  (forall a b, H' a b -> H (t42_sw p a) (t42_sw p b)) ->
+  t42_rf_valid X rf -> at_ X j t e -> read_value e = Some (l, v) ->
+  read_ok H X rf j l v j ->
+  read_ok H' (t42_swap_run X p) (t42_swap_rf p rf)
+    (t42_sw p j) l v (t42_sw p j).
+Proof.
+  intros Hadj Hdiff Hsafe Hrel Hvalid Hat Hread [Hsource Holder]. split.
+  - eapply t42_source_ok_read_swap_forward; eauto.
+  - eapply t42_seen_not_older_swap_forward; eauto.
+Qed.
+
+Lemma t42_read_ok_length_swap_forward
+    (H H' : nat -> nat -> Prop) X rf p t1 e1 t2 e2 j t e l v :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ t42_events_conflict e1 e2 ->
+  (forall a b, H' a b -> H (t42_sw p a) (t42_sw p b)) ->
+  t42_rf_valid X rf -> at_ X j t e -> read_value e = Some (l, v) ->
+  read_ok H X rf j l v (length X) ->
+  read_ok H' (t42_swap_run X p) (t42_swap_rf p rf)
+    (t42_sw p j) l v (length (t42_swap_run X p)).
+Proof.
+  intros Hadj Hdiff Hsafe Hrel Hvalid Hat Hread [Hsource Holder]. split.
+  - eapply t42_source_ok_length_swap_forward; eauto.
+  - eapply t42_seen_not_older_swap_forward; eauto.
+Qed.
+
+Lemma t42_hb_cpu_swap_backward X p t1 e1 t2 e2 a b :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ sync X p (S p) -> ~ sync (t42_swap_run X p) p (S p) ->
+  hb_cpu (t42_swap_run X p) a b -> hb_cpu X (t42_sw p a) (t42_sw p b).
+Proof.
+  intros Hadj Hdiff Hnos Hnos' H.
+  pose proof (t42_hb_cpu_swap_iff X p t1 e1 t2 e2
+    (t42_sw p a) (t42_sw p b) Hadj Hdiff Hnos Hnos') as K.
+  repeat rewrite t42_sw_involutive in K. now apply (proj1 K).
+Qed.
+
+Lemma t42_hb_swap_backward X p t1 e1 t2 e2 a b :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ sync X p (S p) -> ~ sync (t42_swap_run X p) p (S p) ->
+  hb (t42_swap_run X p) a b -> hb X (t42_sw p a) (t42_sw p b).
+Proof.
+  intros Hadj Hdiff Hnos Hnos' H.
+  pose proof (t42_hb_swap_iff X p t1 e1 t2 e2
+    (t42_sw p a) (t42_sw p b) Hadj Hdiff Hnos Hnos') as K.
+  repeat rewrite t42_sw_involutive in K. now apply (proj1 K).
+Qed.
+
+Lemma t42_sw_reverse_pair p i j :
+  i < j -> ~ t42_sw p i < t42_sw p j -> i = p /\ j = S p.
+Proof.
+  intros Hij Hrev. destruct (Nat.eq_dec i p) as [-> | Hip].
+  - destruct (Nat.eq_dec j (S p)) as [-> | Hj]; [auto |].
+    exfalso. apply Hrev. apply t42_sw_order; [exact Hij |].
+    intros [_ Heq]. apply Hj. exact Heq.
+  - exfalso. apply Hrev. apply t42_sw_order; [exact Hij |].
+    intros [Hi _]. apply Hip. exact Hi.
+Qed.
+
+Lemma t42_filter_adjacent_length {A : Type} (f : A -> bool) pre a b post :
+  length (filter f (pre ++ a :: b :: post)) =
+  length (filter f (pre ++ b :: a :: post)).
+Proof.
+  repeat rewrite filter_app. simpl. destruct (f a), (f b); simpl;
+    repeat rewrite app_length; simpl; lia.
+Qed.
+
+Lemma t42_count_iter_swap X p t1 e1 t2 e2 w i :
+  t42_adjacent X p t1 e1 t2 e2 ->
+  count_iter (t42_swap_run X p) w i = count_iter X w i.
+Proof.
+  intros [A [B [Hlen ->]]]. rewrite t42_swap_run_split by exact Hlen.
+  unfold count_iter. symmetry. apply t42_filter_adjacent_length.
+Qed.
+
+Lemma t42_memory_ok_swap X rf p t1 e1 t2 e2 :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ sync X p (S p) -> ~ sync (t42_swap_run X p) p (S p) ->
+  ~ t42_events_conflict e1 e2 ->
+  memory_ok X rf -> device_ok X rf ->
+  memory_ok (t42_swap_run X p) (t42_swap_rf p rf).
+Proof.
+  intros Hadj Hdiff Hnos Hnos' Hsafe Hmemory Hdevice.
+  destruct Hmemory as [Hcpu Hshared].
+  pose proof (t42_model_rf_valid X rf (conj Hcpu Hshared) Hdevice) as Hvalid.
+  split.
+  - intros j t l v [Hat | Hat].
+    + pose proof (proj1 (t42_at_swap_reverse X p t1 e1 t2 e2 j t (Read l v) Hadj) Hat)
+        as HatX.
+      pose proof (Hcpu (t42_sw p j) t l v (or_introl HatX)) as Hok.
+      pose proof (t42_read_ok_swap_forward (hb_cpu X) (hb_cpu (t42_swap_run X p))
+        X rf p t1 e1 t2 e2 (t42_sw p j) t (Read l v) l v
+        Hadj Hdiff Hsafe
+        ltac:(intros a b H; eapply t42_hb_cpu_swap_backward; eauto)
+        Hvalid HatX ltac:(reflexivity) Hok) as K.
+      rewrite t42_sw_involutive in K. exact K.
+    + pose proof (proj1 (t42_at_swap_reverse X p t1 e1 t2 e2 j t (HistoryRead l v) Hadj) Hat)
+        as HatX.
+      pose proof (Hcpu (t42_sw p j) t l v (or_intror HatX)) as Hok.
+      pose proof (t42_read_ok_swap_forward (hb_cpu X) (hb_cpu (t42_swap_run X p))
+        X rf p t1 e1 t2 e2 (t42_sw p j) t (HistoryRead l v) l v
+        Hadj Hdiff Hsafe
+        ltac:(intros a b H; eapply t42_hb_cpu_swap_backward; eauto)
+        Hvalid HatX ltac:(reflexivity) Hok) as K.
+      rewrite t42_sw_involutive in K. exact K.
+  - intros j t k f a l old Hat.
+    pose proof (proj1 (t42_at_swap_reverse X p t1 e1 t2 e2 j t
+      (Shared k f a l old) Hadj) Hat) as HatX.
+    pose proof (Hshared (t42_sw p j) t k f a l old HatX) as Hok.
+    pose proof (t42_source_latest_swap_forward X rf p t1 e1 t2 e2
+      (t42_sw p j) t (Shared k f a l old) l old Hadj Hdiff Hsafe
+      HatX ltac:(reflexivity) Hok) as K.
+    rewrite t42_sw_involutive in K. exact K.
+Qed.
+
+Lemma t42_omp_ok_swap X rf p t1 e1 t2 e2 :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ sync X p (S p) -> ~ sync (t42_swap_run X p) p (S p) ->
+  ~ t42_events_conflict e1 e2 ->
+  memory_ok X rf -> device_ok X rf -> omp_ok X rf ->
+  omp_ok (t42_swap_run X p) (t42_swap_rf p rf).
+Proof.
+  intros Hadj Hdiff Hnos Hnos' Hsafe Hmemory Hdevice Homp.
+  destruct Homp as [Hread [Hthreads [Hbarrier [Hcritical Hiter]]]].
+  pose proof (t42_model_rf_valid X rf Hmemory Hdevice) as Hvalid.
+  repeat split.
+  - intros j t l v [Hat | Hat] i Hseen.
+    + pose proof (proj1 (t42_at_swap_reverse X p t1 e1 t2 e2 j t (Read l v) Hadj) Hat)
+        as HatX.
+      pose proof (Hread (t42_sw p j) t l v (or_introl HatX)) as Holder.
+      assert (Hseen' : seen (hb (t42_swap_run X p)) (t42_swap_run X p)
+        (t42_swap_rf p rf) (t42_sw p (t42_sw p j)) l i).
+      { rewrite t42_sw_involutive. exact Hseen. }
+      pose proof (t42_seen_not_older_swap_forward (hb X) (hb (t42_swap_run X p))
+        X rf p t1 e1 t2 e2 (t42_sw p j) t (Read l v) l v
+        Hadj Hdiff Hsafe
+        ltac:(intros a b H; eapply t42_hb_swap_backward; eauto)
+        Hvalid HatX ltac:(reflexivity) Holder i Hseen') as K.
+      rewrite t42_sw_involutive in K. exact K.
+    + pose proof (proj1 (t42_at_swap_reverse X p t1 e1 t2 e2 j t (HistoryRead l v) Hadj) Hat)
+        as HatX.
+      pose proof (Hread (t42_sw p j) t l v (or_intror HatX)) as Holder.
+      assert (Hseen' : seen (hb (t42_swap_run X p)) (t42_swap_run X p)
+        (t42_swap_rf p rf) (t42_sw p (t42_sw p j)) l i).
+      { rewrite t42_sw_involutive. exact Hseen. }
+      pose proof (t42_seen_not_older_swap_forward (hb X) (hb (t42_swap_run X p))
+        X rf p t1 e1 t2 e2 (t42_sw p j) t (HistoryRead l v) l v
+        Hadj Hdiff Hsafe
+        ltac:(intros a b H; eapply t42_hb_swap_backward; eauto)
+        Hvalid HatX ltac:(reflexivity) Holder i Hseen') as K.
+      rewrite t42_sw_involutive in K. exact K.
+  - intros i t e Hat. apply (Hthreads (t42_sw p i) t e).
+    apply (proj1 (t42_at_swap_reverse X p t1 e1 t2 e2 i t e Hadj)). exact Hat.
+  - intros j t' e' k t Hat Hk Ht.
+    pose proof (proj1 (t42_at_swap_reverse X p t1 e1 t2 e2 j t' e' Hadj) Hat) as HatX.
+    pose proof (t42_interval_swap X p t1 e1 t2 e2 (t42_sw p j) t' e'
+      Hadj Hdiff HatX) as Hint.
+    rewrite t42_sw_involutive in Hint. rewrite Hint in Hk.
+    destruct (Hbarrier (t42_sw p j) t' e' k t HatX Hk Ht) as [x [Hxj [Hatb Hix]]].
+    exists (t42_sw p x). split.
+    + rewrite <- (t42_sw_involutive p j).
+      apply t42_sw_order; [exact Hxj |]. intros [Hxp Hjsp]. subst x.
+      rewrite Hjsp in HatX, Hk.
+      apply Hnos. apply sync_omp. eapply omp_sync_barrier; eauto. lia.
+    + split.
+      * apply (proj2 (t42_at_swap_iff X p t1 e1 t2 e2 x t Barrier Hadj)). exact Hatb.
+      * rewrite (t42_interval_swap X p t1 e1 t2 e2 x t Barrier Hadj Hdiff Hatb).
+        exact Hix.
+  - intros i j t t' Hij Hati Hatj Htt'.
+    pose proof (proj1 (t42_at_swap_reverse X p t1 e1 t2 e2 i t Enter Hadj) Hati) as HatiX.
+    pose proof (proj1 (t42_at_swap_reverse X p t1 e1 t2 e2 j t' Enter Hadj) Hatj) as HatjX.
+    destruct (Nat.lt_ge_cases (t42_sw p i) (t42_sw p j)) as [Hord | Hrev].
+    + specialize (Hcritical (t42_sw p i) (t42_sw p j) t t' Hord HatiX HatjX Htt').
+      destruct Hcritical as [x [[Hix Hxj] Hatx]].
+      exists (t42_sw p x). split.
+      * split.
+        -- rewrite <- (t42_sw_involutive p i). eapply t42_event_order_swap; eauto.
+        -- rewrite <- (t42_sw_involutive p j).
+           apply t42_sw_order; [exact Hxj |]. intros [Hxp Hjsp]. subst x.
+           rewrite Hjsp in HatjX.
+           apply Hnos. apply sync_omp. eapply omp_sync_critical; eauto.
+      * apply (proj2 (t42_at_swap_iff X p t1 e1 t2 e2 x t Exit Hadj)). exact Hatx.
+    + destruct (t42_sw_reverse_pair p i j Hij ltac:(lia)) as [-> ->].
+      rewrite t42_sw_p in HatiX. rewrite t42_sw_Sp in HatjX.
+      specialize (Hcritical p (S p) t' t ltac:(lia) HatjX HatiX ltac:(congruence)).
+      destruct Hcritical as [x [[Hpx Hxsp] _]]. lia.
+  - intros Hdone w Hsplit Hreach i.
+    rewrite (t42_count_iter_swap X p t1 e1 t2 e2 w i Hadj).
+    apply Hiter.
+    + intros t Ht. rewrite <- (t42_proj_swap X p t1 e1 t2 e2 t Hadj Hdiff).
+      apply Hdone. exact Ht.
+    + exact Hsplit.
+    + intros t Ht. rewrite <- (t42_proj_swap X p t1 e1 t2 e2 t Hadj Hdiff).
+      apply Hreach. exact Ht.
+Qed.
+
+Definition t42_device_safe (X : run) (rf : rf_map) (p : nat) : Prop :=
+  forall j t c l v, at_ X j t (DeviceRead c l v) ->
+    rf j = Some p -> j < p -> ~ at_ X (S p) t (DeviceCovered c).
+
+Lemma t42_device_ok_swap X rf p t1 e1 t2 e2 :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ sync X p (S p) -> ~ sync (t42_swap_run X p) p (S p) ->
+  ~ t42_events_conflict e1 e2 -> t42_device_safe X rf p ->
+  memory_ok X rf -> device_ok X rf ->
+  device_ok (t42_swap_run X p) (t42_swap_rf p rf).
+Proof.
+  intros Hadj Hdiff Hnos Hnos' Hsafe Hdevice_safe Hmemory Hdevice.
+  pose proof (t42_model_rf_valid X rf Hmemory Hdevice) as Hvalid.
+  intros j t c l v Hat.
+  pose proof (proj1 (t42_at_swap_reverse X p t1 e1 t2 e2 j t
+    (DeviceRead c l v) Hadj) Hat) as HatX.
+  destruct (Hdevice (t42_sw p j) t c l v HatX) as [Hok Hfuture]. split.
+  - pose proof (t42_read_ok_length_swap_forward (hb X) (hb (t42_swap_run X p))
+      X rf p t1 e1 t2 e2 (t42_sw p j) t (DeviceRead c l v) l v
+      Hadj Hdiff Hsafe
+      ltac:(intros a b H; eapply t42_hb_swap_backward; eauto)
+      Hvalid HatX ltac:(reflexivity) Hok) as K.
+    rewrite t42_sw_involutive in K. exact K.
+  - intros i Hrfji Hji.
+    unfold t42_swap_rf in Hrfji.
+    destruct (rf (t42_sw p j)) as [q|] eqn:Hrfq; simpl in Hrfji; [|discriminate].
+    inversion Hrfji. subst i.
+    assert (Hwriteq : writes X q l v).
+    { destruct Hok as [Hsource _]. unfold source_ok in Hsource.
+      rewrite Hrfq in Hsource. exact (proj2 Hsource). }
+    assert (Hwriteq' : writes (t42_swap_run X p) (t42_sw p q) l v).
+    { apply (proj2 (t42_writes_swap X p t1 e1 t2 e2 q l v Hadj)). exact Hwriteq. }
+    assert (Hjq : t42_sw p j < q).
+    { rewrite <- (t42_sw_involutive p q).
+      destruct Hwriteq' as [u [d [Hatq Hd]]].
+      apply (t42_access_order_swap (t42_swap_run X p) p t2 e2 t1 e1
+        j (t42_sw p q) t (DeviceRead c l v) u d l).
+      - apply t42_adjacent_swap. exact Hadj.
+      - intro Hc. apply Hsafe. now apply t42_events_conflict_sym.
+      - exact Hat.
+      - exact Hatq.
+      - reflexivity.
+      - eapply t42_written_loc; eauto.
+      - right. exists v. exact Hd.
+      - exact Hji. }
+    destruct (Hfuture q eq_refl Hjq) as [Hnocover Hother]. split.
+    + intros r Hr Hatcov.
+      assert (Hrstrict : r < t42_sw p q).
+      { destruct (Nat.eq_dec r (t42_sw p q)) as [Heq | Hneq]; [|lia].
+        subst r. destruct Hwriteq' as [u [d [Hatq Hd]]].
+        destruct (t42_at_unique (t42_swap_run X p) (t42_sw p q)
+          u d t (DeviceCovered c) Hatq Hatcov) as [_ He].
+        subst d. simpl in Hd. discriminate. }
+      pose proof (t42_event_order_swap (t42_swap_run X p) p t2 e2 t1 e1
+        j r t (DeviceRead c l v) (DeviceCovered c)
+        (t42_adjacent_swap X p t1 e1 t2 e2 Hadj) ltac:(congruence)
+        Hat Hatcov ltac:(lia)) as Hlower.
+      assert (Hupper : t42_sw p r <= q).
+      { destruct (Nat.lt_ge_cases (t42_sw p r) q) as [Hlt | Hge]; [lia |].
+        assert (Hnot : ~ t42_sw p r < t42_sw p (t42_sw p q)).
+        { rewrite t42_sw_involutive. lia. }
+        destruct (t42_sw_reverse_pair p r (t42_sw p q) Hrstrict Hnot) as [HrP HqS].
+        assert (HqP : q = p).
+        { apply t42_sw_injective with (p := p).
+          rewrite HqS. symmetry. apply t42_sw_p. }
+        exfalso. apply (Hdevice_safe (t42_sw p j) t c l v HatX).
+        - rewrite HqP in Hrfq. exact Hrfq.
+        - lia.
+        - pose proof (proj1 (t42_at_swap_reverse X p t1 e1 t2 e2 r t
+            (DeviceCovered c) Hadj) Hatcov) as HcovX.
+          rewrite HrP, t42_sw_p in HcovX. exact HcovX. }
+      apply (Hnocover (t42_sw p r)); [lia |].
+      apply (proj1 (t42_at_swap_reverse X p t1 e1 t2 e2 r t
+        (DeviceCovered c) Hadj)). exact Hatcov.
+    + intros [d Hati]. apply Hother. exists d.
+      apply (proj1 (t42_at_swap_iff X p t1 e1 t2 e2 q t d Hadj)). exact Hati.
+Qed.
+
+Lemma t42_reads_latest_swap X rf p t1 e1 t2 e2 :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ t42_events_conflict e1 e2 ->
+  reads_latest X rf ->
+  reads_latest (t42_swap_run X p) (t42_swap_rf p rf).
+Proof.
+  intros Hadj Hdiff Hsafe Hlatest j t e l v Hat Hread Hqual.
+  pose proof (proj1 (t42_at_swap_reverse X p t1 e1 t2 e2 j t e Hadj) Hat) as HatX.
+  assert (HqualX : is_shared e = true \/
+    (cls (interval X t (t42_sw p j)) (array_of l) <> SharedActionsOnly /\
+     ~ exists c, device_cmd e = Some c /\ crosses_sync (proj X t) c)).
+  { destruct Hqual as [Hshared | [Hclass Hcross]].
+    - now left.
+    - right. split.
+      + pose proof (t42_interval_swap X p t1 e1 t2 e2 (t42_sw p j) t e
+          Hadj Hdiff HatX) as Hint.
+        rewrite t42_sw_involutive in Hint. rewrite <- Hint. exact Hclass.
+      + intros [c [Hcmd HcrossX]]. apply Hcross. exists c. split; [exact Hcmd |].
+        rewrite (t42_proj_swap X p t1 e1 t2 e2 t Hadj Hdiff). exact HcrossX. }
+  pose proof (Hlatest (t42_sw p j) t e l v HatX Hread HqualX) as Hok.
+  pose proof (t42_source_latest_swap_forward X rf p t1 e1 t2 e2
+    (t42_sw p j) t e l v Hadj Hdiff Hsafe HatX Hread Hok) as K.
+  rewrite t42_sw_involutive in K. exact K.
+Qed.
+
+Lemma t42_program_run_swap X p t1 e1 t2 e2 :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  program_run X -> program_run (t42_swap_run X p).
+Proof.
+  intros Hadj Hdiff Hprogram t. unfold program_run in Hprogram.
+  rewrite (t42_proj_swap X p t1 e1 t2 e2 t Hadj Hdiff). apply Hprogram.
+Qed.
+
+Lemma t42_complete_swap X p t1 e1 t2 e2 :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  complete X -> complete (t42_swap_run X p).
+Proof.
+  intros Hadj Hdiff Hcomplete t Ht. unfold complete in Hcomplete.
+  rewrite (t42_proj_swap X p t1 e1 t2 e2 t Hadj Hdiff). now apply Hcomplete.
+Qed.
+
+Lemma t42_all_fit_swap X p t1 e1 t2 e2 :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  all_fit X -> all_fit (t42_swap_run X p).
+Proof.
+  intros Hadj Hdiff Hfit t Ht i e l Hat Hloc.
+  pose proof (proj1 (t42_at_swap_reverse X p t1 e1 t2 e2 i t e Hadj) Hat) as HatX.
+  specialize (Hfit t Ht (t42_sw p i) e l HatX Hloc).
+  pose proof (t42_interval_swap X p t1 e1 t2 e2 (t42_sw p i) t e
+    Hadj Hdiff HatX) as Hint.
+  pose proof (t42_inside_swap X p t1 e1 t2 e2 (t42_sw p i) t e
+    Hadj Hdiff HatX) as Hinside.
+  rewrite t42_sw_involutive in Hint, Hinside. rewrite Hint, Hinside.
+  pose proof (t42_owned_swap X p t1 e1 t2 e2 (t42_sw p i) t e l
+    Hadj Hdiff HatX) as Howned.
+  rewrite t42_sw_involutive in Howned.
+  destruct e; simpl in Hfit |- *; tauto.
+Qed.
+
+Lemma t42_intervals_contiguous_swap X p t1 e1 t2 e2 :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  interval X t1 p = interval X t2 (S p) ->
+  intervals_contiguous X -> intervals_contiguous (t42_swap_run X p).
+Proof.
+  intros Hadj Hdiff Hsame Hordered i j t t' e e' Hij Hati Hatj.
+  pose proof (proj1 (t42_at_swap_reverse X p t1 e1 t2 e2 i t e Hadj) Hati) as HatiX.
+  pose proof (proj1 (t42_at_swap_reverse X p t1 e1 t2 e2 j t' e' Hadj) Hatj) as HatjX.
+  pose proof (t42_interval_swap X p t1 e1 t2 e2 (t42_sw p i) t e
+    Hadj Hdiff HatiX) as HIi.
+  pose proof (t42_interval_swap X p t1 e1 t2 e2 (t42_sw p j) t' e'
+    Hadj Hdiff HatjX) as HIj.
+  rewrite t42_sw_involutive in HIi, HIj. rewrite HIi, HIj.
+  destruct (Nat.lt_ge_cases (t42_sw p i) (t42_sw p j)) as [Hord | Hrev].
+  - eapply Hordered; eauto.
+  - destruct (t42_sw_reverse_pair p i j Hij ltac:(lia)) as [-> ->].
+    rewrite t42_sw_p in HatiX. rewrite t42_sw_Sp in HatjX.
+    rewrite t42_sw_p, t42_sw_Sp.
+    destruct (t42_adjacent_at X p t1 e1 t2 e2 Hadj) as [H1 H2].
+    destruct (t42_at_unique X (S p) t2 e2 t e H2 HatiX) as [-> _].
+    destruct (t42_at_unique X p t1 e1 t' e' H1 HatjX) as [-> _].
+    rewrite Hsame. apply Nat.le_refl.
+Qed.
+
+Lemma t42_final_is_swap_forward X p t1 e1 t2 e2 l v :
+  t42_adjacent X p t1 e1 t2 e2 ->
+  ~ t42_events_conflict e1 e2 ->
+  final_is X l v -> final_is (t42_swap_run X p) l v.
+Proof.
+  intros Hadj Hsafe Hfinal. unfold final_is in *. destruct Hfinal as [Hlast | Hinit].
+  - left. destruct Hlast as [i [Hwrite Hafter]]. exists (t42_sw p i). split.
+    + apply (proj2 (t42_writes_swap X p t1 e1 t2 e2 i l v Hadj)). exact Hwrite.
+    + intros q w Hlt Hwriteq. apply (Hafter (t42_sw p q) w).
+      * rewrite <- (t42_sw_involutive p i).
+        apply (t42_writes_order_swap (t42_swap_run X p) p t2 e2 t1 e1
+          (t42_sw p i) q l v w).
+        -- apply t42_adjacent_swap. exact Hadj.
+        -- intro Hc. apply Hsafe. now apply t42_events_conflict_sym.
+        -- apply (proj2 (t42_writes_swap X p t1 e1 t2 e2 i l v Hadj)). exact Hwrite.
+        -- exact Hwriteq.
+        -- exact Hlt.
+      * apply (proj1 (t42_writes_swap X p t1 e1 t2 e2 (t42_sw p q) l w Hadj)).
+        rewrite t42_sw_involutive. exact Hwriteq.
+  - right. destruct Hinit as [Hv Hnone]. split; [exact Hv |].
+    intros q w Hwriteq. apply (Hnone (t42_sw p q) w).
+    apply (proj1 (t42_writes_swap X p t1 e1 t2 e2 (t42_sw p q) l w Hadj)).
+    rewrite t42_sw_involutive. exact Hwriteq.
+Qed.
+
+Lemma t42_final_is_swap_iff X p t1 e1 t2 e2 l v :
+  t42_adjacent X p t1 e1 t2 e2 ->
+  ~ t42_events_conflict e1 e2 ->
+  (final_is (t42_swap_run X p) l v <-> final_is X l v).
+Proof.
+  intros Hadj Hsafe. split.
+  - intro H.
+    pose proof (t42_final_is_swap_forward (t42_swap_run X p) p t2 e2 t1 e1 l v
+      (t42_adjacent_swap X p t1 e1 t2 e2 Hadj)
+      ltac:(intro Hc; apply Hsafe; now apply t42_events_conflict_sym) H) as K.
+    rewrite (t42_swap_run_involutive X p (t42_adjacent_bound X p t1 e1 t2 e2 Hadj)) in K.
+    exact K.
+  - apply (t42_final_is_swap_forward X p t1 e1 t2 e2); assumption.
+Qed.
+
+Lemma t42_model_run_swap X rf p t1 e1 t2 e2 :
+  t42_adjacent X p t1 e1 t2 e2 -> t1 <> t2 ->
+  ~ sync X p (S p) -> ~ sync (t42_swap_run X p) p (S p) ->
+  ~ t42_events_conflict e1 e2 -> t42_device_safe X rf p ->
+  model_run X rf -> model_run (t42_swap_run X p) (t42_swap_rf p rf).
+Proof.
+  intros Hadj Hdiff Hnos Hnos' Hsafe Hdevice_safe [Hprogram [Hmemory [Hdevice Homp]]].
+  unfold model_run. split.
+  - exact (t42_program_run_swap X p t1 e1 t2 e2 Hadj Hdiff Hprogram).
+  - split.
+    + exact (t42_memory_ok_swap X rf p t1 e1 t2 e2 Hadj Hdiff Hnos Hnos'
+        Hsafe Hmemory Hdevice).
+    + split.
+      * exact (t42_device_ok_swap X rf p t1 e1 t2 e2 Hadj Hdiff Hnos Hnos'
+          Hsafe Hdevice_safe Hmemory Hdevice).
+      * exact (t42_omp_ok_swap X rf p t1 e1 t2 e2 Hadj Hdiff Hnos Hnos'
+          Hsafe Hmemory Hdevice Homp).
+Qed.
+
+Lemma t42_indep_model_all_fit_swap X rf p :
+  t42_indep X p -> t42_device_safe X rf p ->
+  model_run X rf -> all_fit X ->
+  model_run (t42_swap_run X p) (t42_swap_rf p rf) /\
+  all_fit (t42_swap_run X p).
+Proof.
+  intros [t1 [e1 [t2 [e2 [Hadj [Hdiff [Hnos [Hnos' Hsafe]]]]]]]]
+    Hdevice_safe Hmodel Hfit. split.
+  - eapply t42_model_run_swap; eauto.
+  - eapply t42_all_fit_swap; eauto.
+Qed.
+
 (* END t42 lemmas *)
 (** * 8. The parallel composition theorem.  OPEN: proof is ticket 42. *)
 Theorem parallel_composition :
