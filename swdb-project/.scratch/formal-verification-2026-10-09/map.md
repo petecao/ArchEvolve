@@ -1,7 +1,8 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-13 19:56 ET (ticket 20 resolved: the authors' DX100 PR keeps stale sums);
+Updated: 2026-10-13 20:10 ET (ticket 19 resolved: minimum bounds from negative controls);
+2026-10-13 19:56 ET (ticket 20 resolved: the authors' DX100 PR keeps stale sums);
 2026-10-13 19:48 ET (ticket 18 resolved: evaluation claims and subjects);
 2026-10-13 17:53 ET (ticket 21 resolved: relational alignment research);
 2026-10-13 17:32 ET (ticket 22 resolved: counterexample-guided LLM repair prior work);
@@ -17,7 +18,7 @@ Extensa Probata; ticket 15 added); 2026-10-12 22:52 ET (ticket 10 resolved: what
 2026-10-11 18:58 ET (ticket 08 resolved: crux-llvm separates the bug at one lane)
 **Type:** wayfinder map
 **Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–13 and 15–17 resolved;
-18–27 graduated from fog 2026-10-13 (18, 20, 21, 22 resolved)
+18–27 graduated from fog 2026-10-13 (18, 19, 20, 21, 22 resolved)
 
 ## Destination
 
@@ -187,6 +188,12 @@ concept is the next effort.
   1 edge, 2 iterations; a one-line reset fixes it. Latent in the authors' runs (default 1 iteration,
   where the output is correct). Same code upstream. Meets 13's bug bar (functional model, no gem5).
   SWDB has no PR check yet; one needs >= 2 iterations and a per-vertex reference.
+- [How are a bounded verdict's bounds chosen, and when are they enough?](issues/19-bounded-verdict-bounds.md):
+  each contract has minimum bounds, derived automatically: the smallest at which every formal-visible
+  negative control is refuted, per single- and multi-thread run; below them, no level. BFS read
+  offload needs 2 lanes (`skipped_cas_recheck` cannot fire at 1), so 10's 1-lane fallback is
+  withdrawn. Build constants recorded exactly; Extensa mode proves at the minimum only; one level,
+  CIVL above SAW, larger bounds never ranked; 15 min per job, frozen; small-scope curve to 23.
 
 ## Tickets
 
@@ -210,7 +217,7 @@ concept is the next effort.
 | 16 | [What language do formal halves and the proof semantics share?](issues/16-formal-half-language.md) | grilling | resolved | 11, 12 |
 | 17 | [How do enabling rewrites chain with offloading rewrites?](issues/17-enabling-rewrites.md) | grilling | resolved | 15 |
 | 18 | [What does the evaluation set out to show, and on which kernels and candidate artifacts?](issues/18-evaluation-claims-and-subjects.md) | grilling | resolved | — |
-| 19 | [How are a bounded verdict's bounds chosen, and when are they enough?](issues/19-bounded-verdict-bounds.md) | grilling | claimed | — |
+| 19 | [How are a bounded verdict's bounds chosen, and when are they enough?](issues/19-bounded-verdict-bounds.md) | grilling | resolved | — |
 | 20 | [Does the authors' DX100 PageRank keep stale `incoming_totals` across iterations?](issues/20-dx100-pr-reset-check.md) | task | resolved | — |
 | 21 | [Which methods find a relational proof's alignment automatically, and can a wrong one make a proof unsound?](issues/21-relational-alignment-research.md) | research | resolved | — |
 | 22 | [Which LLM repair loops driven by model-checker counterexamples exist, and how close are they to ours?](issues/22-cex-guided-llm-repair-research.md) | research | resolved | — |

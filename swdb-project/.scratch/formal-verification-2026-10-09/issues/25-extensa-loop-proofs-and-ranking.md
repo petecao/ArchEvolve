@@ -35,3 +35,7 @@ Decide:
   repair re-enters selection.
 - 2026-10-13 19:48 ET: input from 18 (resolved): RQ5 is BFS-only end to end: new campaigns if D35 has lifted, else a labeled
   retrospective; pass bars 5% of best certified speedup and <= 25% of lane-hours for proofs.
+- 2026-10-13 20:10 ET: input from 19 (resolved): proven within bounds at or above the minimum bounds is one
+  level with two sub-rungs, threads <= k (CIVL) above threads = 1 (SAW); bounds above the minimum are
+  never ranked (19 item 7). Extensa mode proves at the minimum only (19 item 3): one 15-minute job per
+  rung plus WP per candidate.

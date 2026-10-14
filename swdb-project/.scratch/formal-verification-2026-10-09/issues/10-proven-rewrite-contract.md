@@ -142,3 +142,10 @@ relational template, summary added; negative control and certification level sha
 **Inputs passed on:** summaries and the two proof routes → ticket 11; DX100 lowering summaries
 with hazard state → ticket 12; human-assisted contract proofs, proof-placement check and
 per-candidate vacuity → ticket 13. The map's "Vacuity guard" fog is settled by item 2.
+
+## Later changes
+
+- 2026-10-13 20:10 ET, from [19](19-bounded-verdict-bounds.md) (item 1): item 9's pass bar stays at 2 lanes
+  in under 15 minutes with summaries. The 1-lane fallback is withdrawn: at 1 lane `skipped_cas_recheck`
+  cannot fire, so a 1-lane setup voids the contract proof (item 2). If 2 lanes fail, candidates stay
+  certified and the proof of concept tries 19's levers.

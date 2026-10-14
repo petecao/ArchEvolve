@@ -39,3 +39,7 @@ across tickets but not ordered or costed as a whole. Decide:
   templates for flattening, phase split and chunking may need loop summaries; test one early.
 - 2026-10-13 19:48 ET: input from 18 (resolved): first build item is the authors'-code guard fix (`swdb/provider_roles.py:26`); the
   method-version freeze gates held-out runs; held-out contract work comes after it; cut RQ5, then PR.
+- 2026-10-13 20:10 ET: input from 19 (resolved): build item: the minimum-bounds derivation script, run on
+  the reference instance to confirm 19's hand derivation (lanes 2, chunk 2, frontier 2, vertices 3,
+  edges 3). Lever order: per-call summaries, then shape splitting. 10 item 9's pass bar has no 1-lane
+  fallback.

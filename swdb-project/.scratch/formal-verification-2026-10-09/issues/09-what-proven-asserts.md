@@ -113,3 +113,10 @@ arithmetic, lifting-lemma tool and thread-parametric proofs → ticket 11; check
 `assume`s → ticket 13; assumption set, bound record and cap rule → the map's "Records" fog.
 Glossary: proof unit, unit relation, output relation, lifting lemma, assumption set added;
 certification level and formal verifier sharpened.
+
+## Later changes
+
+- 2026-10-13 20:10 ET, from [19](19-bounded-verdict-bounds.md) (item 5): loop unroll depth leaves item 11's
+  dimension list. With concrete sizes it follows from the size bounds; a fallback that needs an unwind
+  limit gets one computed from them, with unwinding assertions always on. Tile lanes, thread count and
+  knob values are build constants (glossary), recorded exactly.

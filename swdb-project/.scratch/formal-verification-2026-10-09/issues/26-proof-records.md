@@ -34,3 +34,5 @@ what the team sees:
 - 2026-10-13 17:02 ET: graduated from the map's "Records" fog. Known defect to fix in the build:
   with several contracts per candidate, the campaign adapter returns only the first certification
   record ID (`swdb/campaign_targets.py:555-586`; 17's side findings).
+- 2026-10-13 20:10 ET: input from 19 (resolved): each verdict records its build constants, the
+  minimum-bounds version, the bounds used, the shape-split count check and the failure class.
