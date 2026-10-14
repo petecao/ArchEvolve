@@ -4,6 +4,13 @@
 # check -> merge -> parse -> erase-and-diff -> fresh WP run), stopping when every property is
 # Valid (Extern only in summaries) and every smoke test passed, or when 60 minutes are spent.
 # Usage: loop.py --out <runs dir> [--rounds 10] [--budget-min 60] [--variant <c file>] [--hints <json>]
+# t07c (2026-10-14 ET) method changes, each behind a flag and recorded in meta.json:
+#   --round-mode: hint rounds run WP on TDStep's goals and lemmas only, no smoke tests, a shorter
+#     per-prover timeout and a run-local cache; a set that proves there gets ONE fresh full replay
+#     with the frozen flags (wp-smoke, -wp-cache none), and only that replay is the verdict.
+#   --examples: syntax-checked ACSL examples and the Frama-C errors runs 1-3 hit, in the prompt.
+#   --positions: failing goals go back with kind, file:line, source line and the hint holding them.
+#   --resume-rounds: one Codex session for the whole run (later rounds send only the feedback).
 import argparse, hashlib, json, os, shutil, subprocess, sys, time
 from pathlib import Path
 
@@ -17,6 +24,7 @@ EXTERN_OK = {"dxc_summaries.h", "gapbs_models.h"}  # summary files (S7)
 CPP_UNIT = HERE.parents[3] / "library" / "dx100" / "bfs_read_offload.inc"
 VRUN = "/tmp/claude/probata-tools/verifier_run.py"
 CODEX = os.path.expanduser("~/.local/bin/codex")
+EXAMPLES = HERE / "examples"
 sys.path.insert(0, str(HERE.parents[3]))
 from swdb.provider_adapters import PINS, CODEX_DISABLED_FEATURES  # noqa: E402
 
@@ -58,11 +66,14 @@ def run_dir(out, name, text):
     return d
 
 
-def verifier(out, d, mode, owner="t07", timeout=2400):
+OWNER = ["t07"]
+
+
+def verifier(out, d, mode, owner=None, timeout=2400, extra=()):
     logf = d / f"{mode}.log"
     t = time.time()
-    subprocess.run([VRUN, "--log", str(logf), "--timeout", str(timeout), "--owner", owner, "--",
-                    str(HERE / "wp_run.sh"), mode, str(d), UNIT], stdout=subprocess.DEVNULL)
+    subprocess.run([VRUN, "--log", str(logf), "--timeout", str(timeout), "--owner", owner or OWNER[0], "--",
+                    str(HERE / "wp_run.sh"), mode, str(d), UNIT, *map(str, extra)], stdout=subprocess.DEVNULL)
     summ = json.loads(Path(str(logf) + ".summary.json").read_text())
     summ["wall_incl_lock_s"] = round(time.time() - t, 1)
     LOCKWAIT[0] += summ.get("lock_wait_s", 0)
@@ -91,6 +102,25 @@ def assess(d, logf):
     ok = bool(props) and not problems and not smoke and not failing
     return {"ok": ok, "n_props": len(props), "problems": problems, "smoke_failures": smoke,
             "failing_goals": failing, "n_goals": len(goals)}
+
+
+def headers_text():
+    return {h: (STANDIN_DIR / h).read_text() for h in HEADERS}
+
+
+def assess_round(d, logf):
+    """Round-mode reading (never a verdict): TDStep's goals and the lemmas from the two JSON reports."""
+    goals = []
+    for name in ("goals.json", "lemmas.json"):
+        f = d / name
+        if f.exists():
+            g = json.loads(f.read_text())
+            goals += g if isinstance(g, list) else g.get("goals", [])
+    merged = (d / UNIT).read_text()
+    failing = H.goal_positions(goals, merged, UNIT, headers_text())
+    n_td = sum(1 for g in goals if g.get("function") == "TDStep" or str(g.get("goal", "")).startswith("typed_TDStep"))
+    return {"n_goals": len(goals), "n_tdstep_goals": n_td, "failing_goals": failing,
+            "ok": n_td > 0 and not failing, "n_passed": sum(1 for g in goals if g.get("passed"))}
 
 
 PROMPT = """You are the proof-hint agent of a proof-hint loop (Frama-C 33.0 / WP, provers Alt-Ergo 2.6.4,
@@ -124,12 +154,58 @@ for this round (it replaces the previous set; copy what you want to keep).
   `check hazard_*` annotations are generated hazard checks and must be proven too.
 
 Round {round} of at most {rounds}; minutes used so far: {minutes:.1f} of {budget}.
-
+{method_notes}
 {feedback}
 
 === Workspace (read only) ===
 {files}
 """
+
+
+ROUND_NOTES = """
+How rounds are checked: each hint set first passes the proof hint check (vocabulary, Frama-C parse,
+WP goal generation). Then WP proves TDStep's goals and your lemmas (Alt-Ergo, Z3, CVC5, {round_timeout} s
+each per goal, no smoke tests). When every one of them is proven, the loop runs ONE fresh full WP run with
+the final settings (all functions, 30 s per prover, smoke tests); only that run decides. Keep hints few and
+targeted: every assertion and invariant is itself a goal, and large quantified contexts make provers time out.
+"""
+
+EXAMPLE_NOTES = """
+=== Syntax-checked ACSL examples (Frama-C 33 parses this file and WP proves all its goals) ===
+It is an unrelated CSR frontier traversal; it only shows working syntax and common invariant shapes.
+{examples}
+=== Frama-C errors earlier hint sets hit, and the fix ===
+{errors}
+"""
+
+
+def examples_text():
+    return EXAMPLE_NOTES.format(examples=(EXAMPLES / "acsl_examples.c").read_text(),
+                                errors=(EXAMPLES / "frama_c_errors.txt").read_text())
+
+
+def method_notes(a):
+    parts = []
+    if a.round_mode:
+        parts.append(ROUND_NOTES.format(round_timeout=a.round_timeout))
+    if a.examples:
+        parts.append(examples_text())
+    return "\n".join(parts)
+
+
+def positions_text(failing, hint_set):
+    by_id = {h["id"]: h for h in hint_set or []}
+    out = []
+    for g in failing:
+        where = f"{g['file']}:{g['line']}"
+        hint = ""
+        if g.get("hint_ids"):
+            hs = [by_id[i] for i in g["hint_ids"] if i in by_id]
+            exact = [h for h in hs if h["text"].strip()[:50] and h["text"].strip()[:50] in g["source"]]
+            pick = exact or hs
+            hint = " | in your hint " + ", ".join(f"{h['id']} ({h['kind']} at {h['anchor']})" for h in pick[:3])
+        out.append(f"  - {g['goal']} [{g['failure_class']}] {g['kind']} at {where}: {g['source'][:200]}{hint}")
+    return "\n".join(out)
 
 
 def workspace_files(standin_text):
@@ -140,7 +216,7 @@ def workspace_files(standin_text):
     return "\n".join(parts)
 
 
-def feedback_text(history):
+def feedback_text(history, resumed=False):
     if not history:
         return "No hints yet."
     lines = []
@@ -153,7 +229,11 @@ def feedback_text(history):
         lines.append("Frama-C rejected the merged file:\n" + last["parse_error"][-3000:])
         if last.get("blame"):
             lines.append(blame_text(last))
-    if last.get("failing_goals") is not None:
+    if last.get("failing_goals") is not None and last.get("positions"):
+        lines.append(f"Goals not proven after that round ({len(last['failing_goals'])}): goal [failure class] kind "
+                     f"at file:line (lines of the merged file, your hints included): source line | hint holding it")
+        lines.append(positions_text(last["failing_goals"], last.get("hints")))
+    elif last.get("failing_goals") is not None:
         lines.append(f"Failing goals after that round ({len(last['failing_goals'])}), with failure class:")
         lines += [f"  - {g['goal']} [{g['failure_class']}] {g.get('property') or ''}" for g in last["failing_goals"]]
     if last.get("problems"):
@@ -164,7 +244,7 @@ def feedback_text(history):
         lines += [f"  - {g.get('goal')}" for g in last["smoke_failures"]]
     if last.get("hints") is not None:
         lines.append("Hint set of that round:\n" + json.dumps(last["hints"], indent=1))
-    for h in history[:-1]:
+    for h in ([] if resumed else history[:-1]):
         if h.get("rejections") or h.get("parse_error"):
             why = "; ".join(f"{r['id']}: {r['rule']} {r.get('detail', '')}" for r in h.get("rejections") or [])
             lines.append(f"Earlier rejected hint set, round {h['round']}: {why or 'Frama-C parse error'}\n"
@@ -294,6 +374,51 @@ def wp_round(out, name, standin, hint_set, record, mode="wp-smoke", timeout=7200
     return a
 
 
+def round_wp(out, r, standin, hint_set, rec, d, a, t0):
+    """t07c method change (a): round-mode WP on TDStep + lemmas; when all proven, one fresh full replay."""
+    wlog, ws = verifier(out, d, "round", timeout=max(60, int(a.budget_min * 60 - budget_s(t0)) + 60),
+                        extra=(out / "round-cache", a.round_timeout))
+    ar = assess_round(d, wlog)
+    rec["round_wp"] = {"exit": ws["exit_code"], "wall_s": ws["wall_s"], "peak_rss_mb": ws["peak_rss_mb"],
+                       "log": str(wlog), "log_sha256": ws["log_sha256"], "timed_out": ws.get("timed_out"),
+                       "n_goals": ar["n_goals"], "n_passed": ar["n_passed"], "n_failing": len(ar["failing_goals"]),
+                       "timeout_s": a.round_timeout}
+    rec["positions"] = a.positions
+    if ws["exit_code"] != 0 or ar["n_tdstep_goals"] == 0:
+        rec.update(proven=False, failing_goals=None, parse_error=wlog.read_text(errors="replace")[-4000:],
+                   outcome="round WP run failed (exit %s, %d goals%s)" % (
+                       ws["exit_code"], ar["n_goals"], ", budget timeout" if ws.get("timed_out") else ""))
+        return
+    rec["failing_goals"] = ar["failing_goals"]
+    if not ar["ok"]:
+        rec.update(proven=False, problems=[], smoke_failures=[],
+                   outcome=f"not proven in round mode ({len(ar['failing_goals'])} goals not proven at {a.round_timeout} s)")
+        return
+    if budget_s(t0) / 60 >= a.budget_min:
+        rec.update(proven=False, outcome="round mode proved every goal; budget spent before the final replay")
+        return
+    log(out, f"round {r}: round mode proved all {ar['n_goals']} goals; fresh full replay starts")
+    fin = {}
+    d2 = run_dir(out, f"final-r{r}", (d / UNIT).read_text())
+    wp_round(out, f"final-r{r}", standin, hint_set, fin, mode="wp-smoke", d=d2,
+             timeout=max(60, int(a.budget_min * 60 - budget_s(t0)) + 60))
+    rec["final"] = {k: fin.get(k) for k in ("wp", "n_goals", "outcome", "proven")}
+    rec["final"]["n_problems"] = len(fin.get("problems") or [])
+    rec["final"]["n_smoke_failures"] = len(fin.get("smoke_failures") or [])
+    rec["proven"] = bool(fin.get("proven"))
+    rec["problems"] = fin.get("problems") or []
+    rec["smoke_failures"] = fin.get("smoke_failures") or []
+    gj = d2 / "goals.json"
+    if gj.exists():
+        goals = json.loads(gj.read_text())
+        rec["failing_goals"] = H.goal_positions(goals, (d2 / UNIT).read_text(), UNIT, headers_text())
+    rec["outcome"] = "proven (fresh full replay)" if rec["proven"] else "final replay: " + str(fin.get("outcome"))
+
+
+def budget_s(t0):
+    return time.time() - t0 - LOCKWAIT[0]
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True)
@@ -305,7 +430,14 @@ def main():
     ap.add_argument("--round0-from", help="reuse the no-hint run of an earlier counted run (same stand-in)")
     ap.add_argument("--repair-turns", type=int, default=0,
                     help="in-round repair turns after a failed hint check (same Codex session)")
+    ap.add_argument("--round-mode", action="store_true", help="t07c (a): round WP on TDStep + lemmas, final replay")
+    ap.add_argument("--round-timeout", type=int, default=10, help="t07c (a): per-prover timeout in round mode")
+    ap.add_argument("--examples", action="store_true", help="t07c (b): syntax-checked examples in the prompt")
+    ap.add_argument("--positions", action="store_true", help="t07c (c): failing goals with source positions")
+    ap.add_argument("--resume-rounds", action="store_true", help="t07c: one Codex session for all rounds")
+    ap.add_argument("--owner", default="t07")
     a = ap.parse_args()
+    OWNER[0] = a.owner
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
     standin = Path(a.variant).read_text() if a.variant else (STANDIN_DIR / UNIT).read_text()
@@ -324,7 +456,12 @@ def main():
     meta = {"started": now(), "pin": PIN, "codex_version": subprocess.run([CODEX, "--version"], capture_output=True,
             text=True).stdout.strip(), "standin_sha256": {f: sha(STANDIN_DIR / f) for f in [UNIT] + HEADERS},
             "cpp_unit_sha256": sha(CPP_UNIT), "rounds": a.rounds, "budget_min": a.budget_min,
-            "wp_flags": (HERE / "wp_run.sh").read_text(), "repair_turns": a.repair_turns,
+            "wp_flags": (HERE / "wp_run.sh").read_text(), "wp_run_sha256": sha(HERE / "wp_run.sh"),
+            "repair_turns": a.repair_turns,
+            "method_changes_t07c": {"round_mode": a.round_mode, "round_timeout_s": a.round_timeout,
+                                    "examples": a.examples, "positions": a.positions,
+                                    "resume_rounds": a.resume_rounds},
+            "examples_sha256": {f.name: sha(f) for f in sorted(EXAMPLES.glob("*")) if f.is_file()} if a.examples else None,
             "loop_sha256": sha(HERE / "loop.py"), "hints_sha256": sha(HERE / "hints.py")}
     (out / "meta.json").write_text(json.dumps(meta, indent=1))
     history = []
@@ -340,6 +477,14 @@ def main():
         log(out, "round 0: WP with no hints")
         wp_round(out, "round-0", standin, [], rec)
         rec["elapsed_min"] = round((time.time() - t_start) / 60, 2)
+    if a.positions and rec.get("wp", {}).get("goals_json"):
+        gj = Path(rec["wp"]["goals_json"])
+        if not gj.exists() and a.round0_from:  # t07's run folders were renamed after the runs
+            gj = Path(a.round0_from) / "round-0" / "goals.json"
+            assert sha(gj) == rec["wp"]["goals_sha256"], "reused round-0 goals.json changed"
+        if gj.exists():
+            rec["failing_goals"] = H.goal_positions(json.loads(gj.read_text()), standin, UNIT, headers_text())
+            rec["positions"] = True
     history.append(rec)
     (out / "history.json").write_text(json.dumps(history, indent=1))
     log(out, f"round 0 (no hints, before the counted loop): {rec['outcome']} in {rec['elapsed_min']} min")
@@ -350,17 +495,26 @@ def main():
     LOCKWAIT[0] = 0.0
     log(out, "counted loop starts (budget clock at 0)")
     r = 0
+    thread = None
+    keep = a.repair_turns > 0 or a.resume_rounds
     while not proven and r < a.rounds:
-        elapsed = (time.time() - t0 - LOCKWAIT[0]) / 60
+        elapsed = budget_s(t0) / 60
         if elapsed >= a.budget_min:
             log(out, f"budget spent at {elapsed:.1f} min")
             break
         r += 1
-        prompt = PROMPT.format(round=r, rounds=a.rounds, minutes=elapsed, budget=a.budget_min,
-                               feedback=feedback_text(history), files=workspace_files(standin))
-        log(out, f"round {r}: Codex call ({len(prompt)} chars)")
-        keep = a.repair_turns > 0
-        c = codex_call(out, r, prompt, keep_session=keep)
+        if a.resume_rounds and thread:
+            prompt = (f"Round {r} of at most {a.rounds}; minutes used so far: {elapsed:.1f} of {a.budget_min}.\n"
+                      + feedback_text(history, resumed=True)
+                      + "\nReturn the COMPLETE hint set for this round in the same JSON format (it replaces the previous set).")
+            log(out, f"round {r}: Codex call, resumed session ({len(prompt)} chars)")
+            c = codex_call(out, r, prompt, resume=thread, turn=0, keep_session=True)
+        else:
+            prompt = PROMPT.format(round=r, rounds=a.rounds, minutes=elapsed, budget=a.budget_min,
+                                   method_notes=method_notes(a), feedback=feedback_text(history),
+                                   files=workspace_files(standin))
+            log(out, f"round {r}: Codex call ({len(prompt)} chars)")
+            c = codex_call(out, r, prompt, keep_session=keep)
         rec = {"round": r, "started": now(), "codex": {k: c[k] for k in ("exit", "wall_s", "usage", "error")},
                "codex_notes": c.get("notes"), "hints": c["hints"], "turns": []}
         turn = 0
@@ -372,8 +526,7 @@ def main():
             rec["turns"].append({"turn": turn, "codex": {k: c[k] for k in ("exit", "wall_s", "usage", "error")},
                                  "n_hints": len(c["hints"] or []), "check": chk.get("outcome", "passed"),
                                  "rejections": chk.get("rejections"), "parse_error": (chk.get("parse_error") or "")[-3000:]})
-            if d is not None or c["hints"] is None or turn >= a.repair_turns or \
-                    (time.time() - t0 - LOCKWAIT[0]) / 60 >= a.budget_min:
+            if d is not None or c["hints"] is None or turn >= a.repair_turns or budget_s(t0) / 60 >= a.budget_min:
                 break
             turn += 1
             msg = ("The proof hint check rejected your hint set: " + chk.get("outcome", "") + "\n"
@@ -388,25 +541,32 @@ def main():
             rec["codex"]["wall_s"] = round(rec["codex"]["wall_s"] + c["wall_s"], 1)
             rec["hints"] = c["hints"]
             rec["codex_notes"] = c.get("notes")
+        thread = c.get("thread") or thread
+        rec["codex_thread"] = thread
         rec["codex_calls"] = turn + 1
         if c["hints"] is None:
             rec["outcome"] = f"no hint set (Codex error: {c['error']})"
         elif d is None:
             rec.update({k: v for k, v in chk.items()})
-        elif (time.time() - t0 - LOCKWAIT[0]) / 60 >= a.budget_min:
+        elif budget_s(t0) / 60 >= a.budget_min:
             rec["outcome"] = "budget spent before the WP run"
+        elif a.round_mode:
+            round_wp(out, r, standin, c["hints"], rec, d, a, t0)
+            proven = rec.get("proven", False)
         else:
             wp_round(out, f"round-{r}", standin, c["hints"], rec, d=d,
-                     timeout=max(60, int(a.budget_min * 60 - (time.time() - t0 - LOCKWAIT[0])) + 60))
+                     timeout=max(60, int(a.budget_min * 60 - budget_s(t0)) + 60))
             proven = rec.get("proven", False)
-        rec["elapsed_min"] = round((time.time() - t0 - LOCKWAIT[0]) / 60, 2)
+        rec["elapsed_min"] = round(budget_s(t0) / 60, 2)
+        rec["lock_wait_s_so_far"] = round(LOCKWAIT[0], 1)
         history.append(rec)
         (out / "history.json").write_text(json.dumps(history, indent=1))
         log(out, f"round {r}: {rec['outcome']} at {rec['elapsed_min']} min")
-    summary = {"proven": proven, "rounds": r, "codex_calls": sum(h.get("codex_calls", 1) for h in history[1:]), "elapsed_min": round((time.time() - t0 - LOCKWAIT[0]) / 60, 2),
+    summary = {"proven": proven, "rounds": r, "codex_calls": sum(h.get("codex_calls", 1) for h in history[1:]),
+               "elapsed_min": round(budget_s(t0) / 60, 2),
                "no_hint_run_min": history[0]["elapsed_min"], "lock_wait_excluded_s": round(LOCKWAIT[0], 1),
                "total_incl_no_hint_min": round((time.time() - t_start) / 60, 2),
-               "within_budget": proven and (time.time() - t0 - LOCKWAIT[0]) / 60 <= a.budget_min,
+               "within_budget": proven and budget_s(t0) / 60 <= a.budget_min,
                "tokens": {}, "finished": now()}
     for h in history:
         for k, v in ((h.get("codex") or {}).get("usage") or {}).items():

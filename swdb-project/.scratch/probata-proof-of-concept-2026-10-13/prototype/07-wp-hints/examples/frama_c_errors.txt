@@ -1,0 +1,22 @@
+1. `ghost integer td_chunk_end = begin + SWDB_CHUNK_SIZE;`
+   Frama-C: "syntax error ... before or at token: td_chunk_end". A ghost variable needs a C type:
+   `ghost int td_chunk_end = ...;` / `ghost size_t ...` / `ghost int seen[8];`. `integer` and `boolean`
+   are logic types: use them only for predicate/logic/lemma parameters and quantified variables.
+2. `assert \at(queue->shared[begin], Pre) == ...;` where `begin` is a C local (loop counter)
+   Frama-C: "unbound logic variable begin. Ignoring code annotation". `begin` does not exist at Pre.
+   Inside `\at(e, Pre)` name only parameters, globals and logic variables; pass a C local in as an
+   argument instead: `predicate same_at{L1,L2}(int *a, integer i) = \at(a[i], L1) == \at(a[i], L2);`
+   then `assert same_at{Pre, Here}(queue->shared, begin);`.
+3. A ghost local declared in one statement anchor and used in a loop invariant of an enclosing or
+   earlier loop: "unbound logic variable td_begin". Ghost locals obey C scoping: declare them at an
+   anchor in the same or an enclosing block BEFORE the annotation that uses them.
+4. A global `lemma` or `predicate` that reads memory with no label in scope:
+   "no label in the context. (\at or explicit label missing?). Ignoring global annotation".
+   Give it a label parameter: `lemma l{L}: \forall int *a; ... a[0] ...;` /
+   `predicate p{L}(int *a, integer n) = ...;` Logic over plain integers needs no label.
+5. `loop assigns queue->shared[queue->shared_in ..];` (an infinite range)
+   WP: "User Error: Invalid infinite range" (WP aborts; the whole set is lost). In `loop assigns` use a
+   finite range: `queue->shared[0 .. 1073741823]` or a bound you know. (Function `assigns` may use
+   infinite ranges; loop assigns may not.)
+6. Loop hints at a "loop:*" anchor are joined into ONE `/*@ ... */` block in the order given. Give
+   at most one `loop variant` per loop and put it last (ACSL grammar).

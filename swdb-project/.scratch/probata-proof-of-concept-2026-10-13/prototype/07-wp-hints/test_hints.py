@@ -145,6 +145,27 @@ def test_report_reader_passes_a_clean_report():
     assert H.verdict_problems(H.read_report(clean), extern_ok_files=set()) == []
 
 
+def test_failing_goals_get_their_line_and_hint():
+    hs = [rec("loop:l", "loop_invariant", "loop invariant 0 <= i <= n;", "h1"),
+          rec("stmt:entry", "assert", "assert n == n;", "h3")]
+    merged = H.merge(STANDIN, hs)
+    lines = merged.splitlines()
+    inv = next(i for i, x in enumerate(lines, 1) if "loop invariant" in x)
+    asr = next(i for i, x in enumerate(lines, 1) if "assert n == n" in x)
+    code = next(i for i, x in enumerate(lines, 1) if "s += 1" in x)
+    head = next(i for i, x in enumerate(lines, 1) if x.strip().startswith("for ("))
+    goals = [{"goal": "typed_f_loop_invariant_preserved", "file": "/x/tdstep_standin.c", "line": inv, "verdict": "timeout"},
+             {"goal": "typed_f_assert", "file": "/x/tdstep_standin.c", "line": asr, "verdict": "timeout"},
+             {"goal": "typed_f_call_g_requires", "file": "tdstep_standin.c", "line": code, "verdict": "unknown"},
+             {"goal": "typed_f_loop_assigns_part02", "file": "tdstep_standin.c", "line": head, "verdict": "timeout"},
+             {"goal": "typed_f_ensures", "file": "tdstep_standin.c", "line": 1, "verdict": "valid", "passed": True},
+             {"goal": "typed_f_wp_smoke_x", "smoke": True, "passed": False, "line": 1}]
+    pos = H.goal_positions(goals, merged, unit="tdstep_standin.c")
+    assert [p["hint_ids"] for p in pos] == [["h1"], ["h3"], [], ["h1"]]
+    assert pos[2]["source"] == "s += 1;" and pos[2]["kind"] == "call-site precondition"
+    assert pos[0]["kind"] == "loop invariant preserved" and pos[3]["kind"] == "loop assigns"
+
+
 def test_smoke_goals_must_fail_to_prove():
     goals = [{"goal": "typed_f_wp_smoke_dead_code_s3", "smoke": True, "verdict": "valid", "passed": False},
              {"goal": "typed_f_wp_smoke_default_requires", "smoke": True, "verdict": "timeout", "passed": True},
