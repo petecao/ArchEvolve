@@ -1,0 +1,16 @@
+# Created: 2026-10-14 ET (Probata PoC 22). Regression corpus case through `swdb prove --adapter cbmc` (see
+# wp-hint-syntax-error.yaml). c_lowering_disagreement is not a failure class: the batch stops, no record.
+id: cbmc-lowering-disagreement
+adapter: cbmc
+input:
+  function: swdb_fixture_fill
+  contract: contract.fixture_cbmc_fill
+  bounds: {threads: 1, n: 3}
+  lowering_fault:
+    - ["for (int i = 0; i < n; ++i)", "for (int i = 0; i < n - 1; ++i)"]
+failure_class: c_lowering_disagreement
+cause: >-
+  A hand-mutated C lowering (the fill loop stops one element early) no longer behaves like the C++. The
+  C-versus-C++ differential run on the bounded domain prints a different last element for every n >= 1, so the
+  job stops the batch before CBMC runs and names the first differing input. Handler: root-cause it as a C
+  lowering tool defect (ticket 21's tool) with the two sources in cbmc/reproduction.

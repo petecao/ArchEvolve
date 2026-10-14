@@ -1,4 +1,5 @@
-"""Derived provider workspaces and source diffs. Updated: 2026-10-14 ET (Probata ticket 17: a campaign's
+"""Derived provider workspaces and source diffs. Updated: 2026-10-14 ET (Probata ticket 34: hint records and
+proof_hinting outputs never reach a rewriting workspace); 2026-10-14 ET (Probata ticket 17: a campaign's
 iteration ladder in a counterexample repair workspace); 2026-10-14 ET (Probata ticket 13:
 counterexample repair inputs, the counterexample guard, the authors'-code guard with the O5 evaluation
 repair mark); 2026-10-05 ET (code review P7, J5).
@@ -45,6 +46,48 @@ LADDER_FILE = ".swdb-context/LADDER.json"
 #: Keys under which a proof record or the repair loop carries a counterexample.
 COUNTEREXAMPLE_KEYS = frozenset({"counterexample", "unreplayed_counterexample"})
 COUNTEREXAMPLE_REFUSAL = "a counterexample reaches only a rewriting-role repair workspace"
+#: Ticket 34 (2026-10-14 ET): the proof_hinting role's output formats, and the keys a hint record carries.
+HINT_SET_FORMAT = "swdb.proof-hint-set.v1"
+HINT_FORMATS = (HINT_SET_FORMAT, "swdb.proof-hinting-workspace.v1", "swdb.proof-hint-wrapper-plan.v1")
+HINT_RECORD_KEYS = frozenset({"anchor", "kind", "text"})
+HINT_SET_KEYS = frozenset({"hint_set", "proof_hints"})
+HINT_REFUSAL = "a hint record or proof_hinting output never reaches a rewriting workspace"
+
+
+def _holds_hint_record(value):
+    if isinstance(value, dict):
+        return (HINT_RECORD_KEYS <= set(value) or bool(HINT_SET_KEYS & set(value))
+                or any(_holds_hint_record(v) for v in value.values()))
+    if isinstance(value, list):
+        return any(_holds_hint_record(v) for v in value)
+    return False
+
+
+def carries_hint_records(name, text):
+    """True when a provider-visible file carries proof hints (ticket 34): a proof_hinting format name anywhere
+    in the text, or, in a JSON or YAML file, a record with `anchor`, `kind` and `text` or a `hint_set` or
+    `proof_hints` key."""
+    if not isinstance(text, str):
+        return False
+    if any(marker in text for marker in HINT_FORMATS):
+        return True
+    suffix = Path(name).suffix.lower()
+    if suffix not in {".json", ".yaml", ".yml"}:
+        return False
+    try:
+        import yaml
+        parsed = json.loads(text) if suffix == ".json" else yaml.safe_load(text)
+    except (ValueError, yaml.YAMLError, RecursionError):
+        return False
+    return _holds_hint_record(parsed)
+
+
+def refuse_hint_records(files):
+    """The guard rule of ticket 34 (map 13 item 6): hint records never enter a rewriting workspace, including
+    one for counterexample-guided repair. Raises before any provider call opens."""
+    for name, text in files.items():
+        if carries_hint_records(name, text):
+            raise Failure(f"{HINT_REFUSAL}: {name}")
 
 
 def _holds_counterexample_key(value):
@@ -424,6 +467,7 @@ def context_documents(workspace, request, repair=None, store=None):
         except (UnicodeDecodeError, OSError):
             continue
     refuse_counterexamples(shown, allowed={COUNTEREXAMPLE_FILE} if workspace.metadata.get("repair_inputs") else ())
+    refuse_hint_records(shown)
     _refuse_authors_code(workspace, shown, repair, store)
     workspace.metadata["visible_files"] = sorted(workspace.visible)
     workspace.metadata["immutable_files"] = sorted(immutable)

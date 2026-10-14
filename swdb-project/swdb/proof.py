@@ -25,6 +25,8 @@ map ticket 26 and ADR 0016. Format: docs/reference/format-v0.4-proof.md.
 - Ticket 14 (2026-10-14 ET): a job may name the bounds it runs at (`--bounds`, the bounded gate's minimum
   bounds) and its wall budget (`--budget-minutes`, the method version's `bounded_job_minutes`); a record
   may pin the minimum-bounds derivation it ran at (`--minimum-bounds`).
+- Ticket 22 (2026-10-14 ET): `--summary ENTRY` proves a library entry's summary (subject library_summary); the
+  cbmc adapter (swdb.cbmc_adapter) registers itself in ADAPTERS.
 - Levels are computed on read by the versioned level rule (`swdb.level_rule`, ticket 10), which
   replaced this tracer's code-and-contract-pin rule; nothing here stores a level (ADR 0016).
 """
@@ -174,8 +176,12 @@ def register_cli(commands):
                                           "verifier adapter and write one proof record per job (never changed). A "
                                           "failure class outside vocabulary proof_failure_classes stops the batch.")
     sub.add_argument("--records", type=Path, default=paths.RECORDS)
-    sub.add_argument("--candidate", required=True, help="the candidate artifact")
-    sub.add_argument("--function", required=True, help="the function that holds the rewrite site")
+    sub.add_argument("--candidate", help="the candidate artifact (required unless --summary)")
+    sub.add_argument("--summary", metavar="ENTRY",
+                     help="ticket 22: prove a library entry's summary (its proof_unit function against its `once: self` "
+                          "formal halves) instead of a candidate proof unit; the subject is library_summary")
+    sub.add_argument("--function", help="the function that holds the rewrite site (default with --summary: the "
+                                         "entry's proof_unit function)")
     sub.add_argument("--contract", help="the rewrite contract (default: the one its certification records name)")
     sub.add_argument("--adapter", choices=sorted(ADAPTERS), required=True)
     sub.add_argument("--script", type=Path, action="append",
@@ -197,12 +203,13 @@ def register_cli(commands):
     run.add_argument("--provider-kind", choices=["codex", "claude"], help="provider pin: kind")
     run.add_argument("--provider-model", help="provider pin: model (for example gpt-5.6-sol)")
     run.add_argument("--provider-effort", help="provider pin: effort (for example xhigh)")
-    real = sub.add_argument_group("real adapters (ticket 21): the wp adapter")
+    real = sub.add_argument_group("real adapters (tickets 21, 22): the wp and cbmc adapters")
     real.add_argument("--hint-file", type=Path, help="wp only: a hint set {hints: [{anchor, kind, text, provenance}]}; "
                                                      "it reaches WP only when the proof hint check accepts it "
                                                      "(ticket 35); any other adapter refuses it")
-    real.add_argument("--define", action="append", default=[], help="wp: a build constant NAME or NAME=VALUE for "
-                                                                    "the C lowering (repeatable; pinned as build_constants)")
+    real.add_argument("--define", action="append", default=[], help="wp, cbmc: a build constant NAME or NAME=VALUE "
+                                                                    "for the C lowering (repeatable; pinned as "
+                                                                    "build_constants)")
     from swdb import archevolve_proof      # Probata PoC 18: ArchEvolve mode's whole proof path
     archevolve_proof.register_options(sub)
     sub.add_argument("--format", choices=["yaml", "json"], default="yaml")
@@ -220,6 +227,10 @@ def prove(args):
     from swdb import vocab
     from swdb.cli import _require_valid
     store = _require_valid(args.records)
+    if getattr(args, "summary", None):
+        return _prove_summary(args, store)
+    if not args.candidate or not args.function:
+        raise UsageError("swdb prove needs --candidate and --function (or --summary ENTRY)")
     candidate = store.get(args.candidate, "candidate")
     if candidate is None:
         raise Failure(f"candidate {args.candidate!r} does not exist")
@@ -265,6 +276,49 @@ def prove(args):
         record.update(run_fields)
         done.append({"record": record, "path": _write(args.records, record)})
     return done[0] if len(done) == 1 else {"batch": batch, "jobs": done}
+
+
+def _prove_summary(args, store):
+    """Ticket 22: one job proving a library entry's summary; the record's subject is {library_summary, id}.
+
+    The code proven is the entry's proof_unit function in its pinned source; the code and contract pins are the
+    entry's content hash, so an edit to the entry (or its source) makes the record stop counting."""
+    from swdb import method_version, vocab
+    library = _library(store)
+    entry_id = args.summary
+    entry = library.get(entry_id) if library is not None else None
+    if entry is None:
+        raise Failure(f"library entry {entry_id!r} is not in the library beside {args.records}")
+    unit_of = entry.get("proof_unit") if isinstance(entry.get("proof_unit"), dict) else {}
+    function = args.function or unit_of.get("function")
+    if not function or function != unit_of.get("function"):
+        raise UsageError(f"--summary {entry_id}: the function is the entry's proof_unit function "
+                         f"({unit_of.get('function')}), not {function}")
+    if args.candidate or args.skip is not None or (args.script and len(args.script) > 1):
+        raise UsageError("--summary runs one job on a library entry: no --candidate, --skip or batch of scripts")
+    source = library.resolve(unit_of["source"])
+    content = library.content_sha256(entry_id)
+    unit = ProofUnit(None, function, str(Path(source).parent), _sha256(source), entry_id, content)
+    method = _current_method(args.records)
+    pins = {"code": {"id": entry_id, "sha256": content}, "contract": {"id": entry_id, "sha256": content},
+            "baseline_function": {"not_applicable": "A library summary is proven on the entry's own code."},
+            "reference_semantics": {"not_applicable": "No reference-semantics definition is pinned before ticket 30."},
+            "proof_semantics": {"not_applicable": "No proof-semantics version exists before ticket 27."},
+            "method_version": method_version.pin(method), "summaries": [],
+            "minimum_bounds": {"not_applicable": "No minimum-bounds version exists before ticket 33."},
+            "predecessor_snapshot": {"not_applicable": "A library summary has no predecessor."},
+            "build_constants": [{"name": d.split("=", 1)[0], "value": d.split("=", 1)[1] if "=" in d else "1"}
+                                for d in sorted(getattr(args, "define", None) or [])]}
+    adapter = _adapter(args, (args.script or [None])[0], library, entry_id, method)
+    vocabs, _problems = vocab.load_all(paths.VOCAB)
+    rid = args.id or _new_id(entry_id)
+    if store.get(rid) is not None:
+        raise Failure(f"ID {rid!r} is already used; nothing written")
+    place = {"batch": args.batch or f"batch.{rid}", "position": args.position}
+    record = _run_job(rid, unit, pins, adapter, _outside_repo(args.runs_dir), place, listed(vocabs, "failure_class"),
+                      method, bounds=getattr(args, "bounds", None), budget_minutes=getattr(args, "budget_minutes", None))
+    record.update(_run_fields(args))
+    return {"record": record, "path": _write(args.records, record)}
 
 
 def _adapter(args, script, library, contract, method):
@@ -412,7 +466,8 @@ def _head(rid, unit, description):
     return {"kind": "proof", "schema_version": "0.4", "id": rid, "status": "draft",
             "created": writer.today(), "updated": writer.today(),
             "provenance": [{"id": "prove", "kind": "agent_run", "description": description, "uri": None}],
-            "subject": {"kind": "candidate_proof_unit", "candidate": unit.candidate, "function": unit.function}}
+            "subject": {"kind": "candidate_proof_unit", "candidate": unit.candidate, "function": unit.function}
+            if unit.candidate is not None else {"kind": "library_summary", "id": unit.contract}}
 
 
 def _write(records, record):
@@ -629,3 +684,4 @@ def validate_promotion(record, ctx):
 # --- real adapters (ticket 21 on) ------------------------------------------------------------------
 from swdb import wp_adapter as _wp_adapter   # noqa: E402  (it imports Verdict and AdapterError from here)
 ADAPTERS[_wp_adapter.NAME] = _wp_adapter.WpAdapter
+from swdb import cbmc_adapter as _cbmc_adapter   # noqa: E402,F401  (ticket 22; it registers itself in ADAPTERS)

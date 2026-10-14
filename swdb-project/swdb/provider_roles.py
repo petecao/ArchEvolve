@@ -1,6 +1,7 @@
 """Role-specific inputs over the shared provider process, guard and audit.
 
-Updated: 2026-10-14 ET (Probata PoC ticket 13: no agent role input holds a counterexample);
+Updated: 2026-10-14 ET (Probata PoC ticket 34: role `proof_hinting`, its hints-only output schema; its
+workspace, confinement and audit live in `swdb.proof_hinting`); 2026-10-14 ET (Probata PoC ticket 13: no agent role input holds a counterexample);
 2026-10-14 ET (Probata PoC ticket 01: the guard names the held-out kernels' DX100 functions
 PBFSMAA, BrandesMaa, PageRankPullMAA and DeltaStepMAA, and drops TDStepMAA2 and BCMAA, which name
 nothing); 2026-10-06 ET (strict estimation inputs); 2026-10-05 ET (code review: login via provider_login.start, public checked_inputs and
@@ -32,6 +33,15 @@ FILE_SCHEMA = {"type": "object", "additionalProperties": False,
                "required": ["path", "content"], "properties": {
                    "path": {"type": "string"}, "content": {"type": "string"}}}
 
+#: Ticket 34 (2026-10-14 ET): the proof_hinting role returns only hint records `{anchor, kind, text}`; no code,
+#: file-edit or verdict field exists (design spec "Proof-hint loop": hint form).
+HINT_RECORD_SCHEMA = {"type": "object", "additionalProperties": False, "required": ["anchor", "kind", "text"],
+                      "properties": {"anchor": {"type": "string", "minLength": 1},
+                                     "kind": {"type": "string", "minLength": 1},
+                                     "text": {"type": "string", "minLength": 1}}}
+HINT_OUTPUT_SCHEMA = {"type": "object", "additionalProperties": False, "required": ["hints"],
+                      "properties": {"hints": {"type": "array", "items": HINT_RECORD_SCHEMA}}}
+
 
 @dataclass(frozen=True)
 class Role:
@@ -61,6 +71,7 @@ ROLES = {
                                  "properties": {"name": {"type": "string"}, "summary": {"type": "string"}}},
                        "files": {"type": "array", "items": FILE_SCHEMA},
                        "unresolved": {"type": "array", "items": {"type": "string"}}}}),
+    "proof_hinting": Role("proof_hinting", HINT_OUTPUT_SCHEMA),
 }
 
 
@@ -210,6 +221,12 @@ def run(role, files, prompt, config, folder, *, remaining_s=None):
         role = ROLES.get(role)
     if role is None:
         raise Failure("unknown agent role")
+    if role.name == "proof_hinting":
+        # Ticket 34: its own workspace (typed inputs, the narrow authors'-code exception), O3 confinement and audit.
+        from swdb import proof_hinting
+        if prompt:
+            raise Failure("the proof_hinting prompt is frozen with the method version; no prompt is added")
+        return proof_hinting.run(files, config, folder, remaining_s=remaining_s)
     if not role.read_only:
         raise Failure("rewriting requires its proposal/source workspace input builder")
     if not config.get("workspace", True):
