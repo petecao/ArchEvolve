@@ -2,7 +2,9 @@
 
 Created: 2026-10-14 (Eastern Time), Probata proof of concept ticket 04 (the proof record tracer).
 Updated: 2026-10-14 ET, ticket 11: batches, skips, the failure-class vocabulary, the method-version pin
-([format-v0.4-method-version.md](format-v0.4-method-version.md)); 2026-10-14 02:26 ET: failure class
+([format-v0.4-method-version.md](format-v0.4-method-version.md)); 2026-10-14 02:15 ET, ticket 10: the
+replay-label and `tools` fields, no level fields, and the versioned level rule
+([format-v0.4-level-rule.md](format-v0.4-level-rule.md)); 2026-10-14 02:26 ET: failure class
 `spurious_counterexample` and its tie to `unreplayed_counterexample` (Yan-Ru's decision of 02:25 ET).
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/04-proof-record-tracer.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("Records and levels"), map ticket 26,
@@ -21,7 +23,9 @@ the records whose pins still match.
 | Failure classes and skip reasons | `vocab/proof_failure_classes.yaml`; `swdb.proof.listed(vocabs, role)` | 21, 22, 46, 47 map tool failures to classes and build the handlers |
 | The method-version pin | `swdb.method_version`: `current`, `pin`, `pin_problem` | 10 (level rule), 14 and 16 (budgets), 36 (setup check) |
 | The route field | `route` | 61 fills `bounded_direct`; 62 fills `route_1`, `route_3` and makes it required |
-| The level on read | `swdb.proof.proven_level`, `swdb.proof.counts` | 10 adds every pin kind and the level rule |
+| The level on read | `swdb.level_rule` ([format-v0.4-level-rule.md](format-v0.4-level-rule.md)) | a new rule is a new `level_rule.VERSION` |
+| The replay label | `replay_label` | 60 fills it and makes it required on refuted records; a new value is added in 10 first |
+| Tools used (S14) | `tools`; `Verdict.tools` | 21, 22 fill it for every real verifier and solver |
 | SQLite tables | `swdb_proofs`, `swdb_proof_pins`, `swdb_proof_assumptions`, `swdb_proof_bounds` | [database.md](database.md#proof-tables) |
 
 ## `swdb prove`
@@ -81,6 +85,9 @@ An adapter is a class in `ADAPTERS` with a `name` and `run(job) -> Verdict`.
 | `skip_reason` | a skip record only: why no verifier ran (vocabulary `proof_failure_classes`, role `skip_reason`): `no_contract_proof`, `no_minimum_bounds`, `outside_cpp_subset` |
 | `counterexample` | refuted only, required: the counterexample, inline |
 | `failure_class` | not proven only, required: a value of vocabulary `proof_failure_classes` whose role is `failure_class` (thirteen classes; each entry has its `handler`). `spurious_counterexample`: the verifier reported a counterexample that does not replay concretely on the compiled code, so the refutation comes from the tool or the spec encoding, not the program; never sent to repair (handler: fix the encoding, add the case to the regression corpus, rerun) |
+| `replay_label` | refuted only, optional (ticket 10 owns it; 60 fills it and makes it required): `reproduced`, `proof_semantics_only`, `not_reproduced` or `undefined_behavior` (O6: "undefined behavior (no strict-layer replay)"; the refutation counts). Any other value, or a label on a record that is not refuted (a skip included), fails `swdb validate` |
+| `tools` | optional (ticket 10, S14): the verifiers and solvers the job used, each the reference ID of a `trusted_tool` entry in the assumption set; `swdb validate` names any tool without one. Adapters report it in `Verdict.tools`; the scripted adapter reads `tools` from its script |
+| `level`, `level_rule` | never present: a proof record holds no level and never pins the level rule (26 item 9); `swdb validate` refuses either |
 | `unreplayed_counterexample` | not proven only; required when `failure_class` is `spurious_counterexample` and refused under any other class or verdict: the counterexample the verifier reported that did not replay concretely on the compiled code. It is a tool or encoding failure, never a refutation, and never reaches repair (input from ticket 05's SAW spike; class decided by Yan-Ru 2026-10-14 02:25 ET; the replay itself is built by the adapter tickets 22, 46, 47) |
 | `pins` | the content-hash set, all ten kinds required (below) |
 | `bounds` | `{dimension: positive integer or "unbounded"}`; `threads` required; absent on a skip record |
@@ -109,18 +116,5 @@ Single pins are `{id, sha256}` (the `baseline_function` pin adds `function`) or
 
 ## The level on read (`swdb candidate-level`)
 
-New output fields beside the existing ones (`certifications`, `counted`, `mode`, `campaign`,
-`promotion`, `stale`):
-
-- `level`: the proven level when a proof record counts, else the certification level.
-  Values: `proven_unbounded`, `proven_within_bounds`, `certified`, `uncertified`, `rejected`.
-- `certification_level`: what certification alone gives.
-- `proven`: null, or `{level, bounds, records}`: the best counting level, the bounds of its first
-  record by ID, and every counting record at that level.
-- `proof_records`: every proof record of the candidate artifact's proof units.
-
-A record counts only when the candidate artifact is certified, its verdict is `proven`, its
-`code` pin equals the candidate's tree sha256, and its `contract` pin equals the contract's current
-content sha256 in the library beside the records (a contract the library does not know never
-counts). `proven_unbounded` needs every bound dimension, `threads` included, unbounded. Nothing
-writes a level to any record. Ticket 10 replaces this tracer rule with the versioned level rule.
+Ticket 10 replaced the tracer rule with the versioned level rule: see
+[format-v0.4-level-rule.md](format-v0.4-level-rule.md). Nothing writes a level to any record.

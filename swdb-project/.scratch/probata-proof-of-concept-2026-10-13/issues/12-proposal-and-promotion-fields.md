@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 10
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Modules", table "Loop, modes and guards", row "Proposals"; "Records and levels" (promotion review; where things live); "Refutation, repair and bugs"; "Evaluation design" (protocol: run index, pinned provider); "Providers and machines"; "Testing Decisions", seams 2 and 4; user stories 60, 62, 71; S10; O9); decisions: [23](../../formal-verification-2026-10-09/issues/23-evaluation-baselines-and-metrics.md) (items 3, 5, 6, 7), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md) (items 5, 6, 11)
 **Time estimate:** about 1 day
