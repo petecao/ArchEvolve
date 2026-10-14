@@ -155,6 +155,8 @@ def register_cli(commands):
                      help="negative controls only: run even when the file breaks the allowed-ACSL rules "
                           "(the record says so)")
     sub.add_argument("--id", help="proof record ID (default: a new one)")
+    sub.add_argument("--method-version", metavar="ID",
+                     help="run under this method version, draft or frozen (default: the current frozen one; fix-21)")
     sub.add_argument("--format", choices=["yaml", "json"], default="yaml")
     sub.set_defaults(analytic_handler=prove_logic)
 
@@ -165,7 +167,7 @@ def prove_logic(args):
     from swdb.library import Library, default_root
     store = _require_valid(args.records)
     library = Library(default_root(args.records))
-    method = proof._current_method(args.records)
+    method = proof._current_method(args.records, getattr(args, "method_version", None))
     runs = proof._outside_repo(args.runs_dir)
     found = files(library.root, library)
     if args.program is not None:

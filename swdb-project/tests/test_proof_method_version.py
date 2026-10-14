@@ -302,6 +302,32 @@ def test_the_repository_draft_holds_the_mac_lineup_and_the_starting_budgets():
     assert data["budgets"] == BUDGETS
 
 
+def test_the_repository_draft_pins_logic_sum_as_its_sum_library_and_each_shared_logic_file():
+    from swdb import artifacts, logic_library, method_version
+    root = paths.HOME / "library"
+    section = method_version.named(root, REAL_DRAFT).data["logic_library"]
+    files = logic_library.files(root)
+    assert section["sum_library"] == files["logic.sum"].pin() and section["sum_library"]["version"] == "1.0"
+    assert section["files"] and all(pin == files[pin["id"]].pin() for pin in section["files"])
+    assert section["sha256"] == artifacts.digest(section["files"])       # the library's hash: its file pins
+
+
+def test_prove_logic_also_names_a_draft_with_method_version(library):
+    result = run_swdb("prove-logic", "--records", library.records, "--runs-dir", library.records.parent / "runs",
+                      "--lemmas", "logic.sum", "--method-version", "method.never-written")
+    assert result.returncode == 1 and "method.never-written" in result.stderr, result.stderr + result.stdout
+
+
+def test_a_reference_takes_an_optional_dotted_version_and_nothing_else(library):
+    data = _method()
+    data["logic_library"]["sum_library"]["version"] = "1.0"
+    path = library.write(data)
+    assert library.validate().returncode == 0, library.validate().stderr
+    data["logic_library"]["sum_library"]["version"] = "latest"
+    path.write_text(yaml.safe_dump(data, sort_keys=False))
+    _refused(library, path, "logic_library.sum_library.version", "version")
+
+
 def test_prove_refuses_to_run_without_a_method_version_file(seed):
     _method_file(seed).unlink()
     result = seed.prove(seed.script(), ok=False)

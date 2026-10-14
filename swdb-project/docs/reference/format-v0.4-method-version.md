@@ -45,7 +45,9 @@ proof record pins it by ID and file sha256.
   `-machdep x86_64`. CBMC flags: `--sat-solver cadical` (the adapter adds `--unwind K` and
   `--unwinding-assertions`). Translators: the C lowering tool and the CBMC translator, each by its
   source sha256; a change to either tool needs a new draft before the WP or CBMC adapter accepts it.
-  Sections later tickets build are `not_yet_built`.
+  The logic library is ticket 26's four shared files at version 1.0, with `logic.sum` 1.0 as the sum
+  library; an edit to any of them needs a new draft. Sections later tickets build are `not_yet_built`.
+- **`swdb prove-logic --method-version <id>`** names a draft the same way as `swdb prove`.
 
 ## Fields
 
@@ -64,7 +66,7 @@ proof record pins it by ID and file sha256.
 | `prompts` | the prompts, as references |
 | `shared_action_kinds` | the shared-action kinds |
 | `sharing_classes` | the sharing-class names (S8) |
-| `logic_library` | `{id, sha256, sum_library}`: the shared logic library, the sum library included |
+| `logic_library` | `{id, sha256, files?, sum_library}`: the shared logic library, the sum library included. `files` pins each shared file as `{id, version, sha256}` (ticket 26's pin form; a reference may carry an exact `version`); `sha256` is then the digest of that list (`swdb.artifacts.digest`); `sum_library` pins `logic.sum` |
 | `models` | `std_vector`, `std_pair` (S8) |
 | `rocq_development` | `{id, sha256, composition_theorem, dx100_reduction_lemma}` (S8; tickets 41-43) |
 | `ghost_capacity_k` | ghost capacity K |

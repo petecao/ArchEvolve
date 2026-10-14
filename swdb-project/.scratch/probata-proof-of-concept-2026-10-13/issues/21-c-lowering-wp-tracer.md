@@ -201,8 +201,12 @@ units are outside the core subset (ticket 24). Branch `probata-poc/t21`. Interfa
   - Translators: the C lowering tool (`swdb-c-lowering-1`) and ticket 22's CBMC translator
     (`swdb-cbmc-translator-1`), each by its source sha256 after merging 22. A change to either tool (24
     widens the lowering) needs the next draft before an adapter run with `--method-version`.
-  - `not_yet_built`: `acsl_version` (36 confirms it), `checks` (35, 36), `prompts` (34, 37), `logic_library`
-    (26), `models` (25), `rocq_development` (41-43).
+  - Logic library (after merging 26): `files` pins ticket 26's four shared files at 1.0 as
+    `{id, version, sha256}`, and `sum_library` pins `logic.sum` 1.0. Assumption: the section's `sha256` is the
+    digest of the `files` list (the schema gained optional `files` and an optional reference `version`).
+  - `not_yet_built`: `acsl_version` (36 confirms it), `checks` (35, 36), `prompts` (34, 37), `models` (25),
+    `rocq_development` (41-43).
+- `swdb prove-logic` (26) takes `--method-version` too; without it, it runs under the current frozen version.
 - The contract fixture `tests/fixtures/proof/methods/contract-fixture-1.yaml` is now `frozen`, so it stays
   the current method version of test seeds. `tests/test_wp_adapter.py::method_version` takes its lineup
   from the committed draft.

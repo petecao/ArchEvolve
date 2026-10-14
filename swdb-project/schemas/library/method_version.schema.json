@@ -87,11 +87,12 @@
     "logic_library": {
       "type": "object",
       "additionalProperties": false,
-      "description": "The shared logic library, the sum library included (24).",
+      "description": "The shared logic library, the sum library included (24). fix-21 (2026-10-14 ET): `files` pins each shared logic file as {id, version, sha256} (ticket 26's pin form); `sha256` is then the digest of that list (swdb.artifacts.digest); `sum_library` pins logic.sum the same way.",
       "required": ["id", "sha256", "sum_library"],
       "properties": {
         "id": {"type": "string", "pattern": "\\S"},
         "sha256": {"$ref": "#/$defs/sha256"},
+        "files": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/reference"}},
         "sum_library": {"$ref": "#/$defs/reference"}
       }
     },
@@ -122,8 +123,10 @@
       "type": "object",
       "additionalProperties": false,
       "required": ["id", "sha256"],
-      "properties": {"id": {"type": "string", "pattern": "\\S"}, "sha256": {"$ref": "#/$defs/sha256"}},
-      "x-reason": "a reference is {id, sha256}"
+      "properties": {"id": {"type": "string", "pattern": "\\S"}, "sha256": {"$ref": "#/$defs/sha256"},
+                     "version": {"type": "string", "pattern": "^[0-9]+(\\.[0-9]+)*$",
+                                 "x-reason": "a reference's version is one exact dotted version (a logic file's `// version:` line)"}},
+      "x-reason": "a reference is {id, sha256} with an optional version"
     },
     "names": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"}},
     "check": {

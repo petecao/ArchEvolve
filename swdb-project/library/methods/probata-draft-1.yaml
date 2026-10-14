@@ -1,5 +1,7 @@
 # Created: 2026-10-14 15:43 ET (Probata proof of concept, fix-21). The first real method version: a DRAFT.
-# Never edited in place: a change (including the freeze) is a new file with the next sequence.
+# Updated before any record pinned it (same branch, unmerged): ticket 22's CBMC translator and flags, ticket 26's
+# logic library with logic.sum 1.0 as the sum library.
+# Never edited in place from now on: a change (including the freeze) is a new file with the next sequence.
 # A draft is never current: it is used only when named (`swdb prove --method-version method.probata-draft-1`,
 # or a campaign file's `method_version`). Ticket 59 freezes a method version after Yan-Ru's review.
 # Lineup: the Mac installs of ticket 03 and ticket 21; CBMC 6.11 on the C lowering is the bounded verifier
@@ -63,7 +65,16 @@ prompts:
 shared_action_kinds: [claim, min_update, atomic_add_or, openmp_reduction, queue_reserve]
 sharing_classes: [read_only, thread_owned, shared_actions_only, lock_protected]
 logic_library:
-  not_yet_built: Ticket 26 writes the shared logic library (library/logic/), the sum library included.
+  # Ticket 26's shared files (library/logic/, version 1.0), pinned as swdb prove pins them; sha256 is the
+  # digest of the `files` list (swdb.artifacts.digest).
+  id: library-logic-1.0
+  sha256: '42893946b3419945e742e225662c730c106c0b4f57f753d2efd07f53ee4e1b9c'
+  files:
+    - {id: logic.access, version: '1.0', sha256: '5dc8759e19002173e6a04422900ab178f4871391380b1981837bdeb8d058b379'}
+    - {id: logic.csr_graph, version: '1.0', sha256: '3149c52daf3b6d3196a456e0b636cd9ff2390574694dd660322a61a6cf1efc60'}
+    - {id: logic.sets, version: '1.0', sha256: '90d7762042cbfc8976a7f4dc1176d5c5bea659064512fc44c5880f65cabf9de9'}
+    - {id: logic.sum, version: '1.0', sha256: 'aaf0b33061b4883106d0d71e58d9f67da2f3538acd09290e0fd921100da04c26'}
+  sum_library: {id: logic.sum, version: '1.0', sha256: 'aaf0b33061b4883106d0d71e58d9f67da2f3538acd09290e0fd921100da04c26'}
 models:
   not_yet_built: Ticket 25 writes the std::vector and std::pair models.
 rocq_development:
