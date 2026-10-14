@@ -43,6 +43,12 @@ across tickets but not ordered or costed as a whole. Decide:
   the reference instance to confirm 19's hand derivation (lanes 2, chunk 2, frontier 2, vertices 3,
   edges 3). Lever order: per-call summaries, then shape splitting. 10 item 9's pass bar has no 1-lane
   fallback.
+- 2026-10-13 20:41 ET: input from 24 (resolved): (1) WP on real-valued sums is untested at our sizes;
+  an early stage proves the sum library's lemmas and one PR unit; (2) SSSP's per-candidate proof needs
+  delta-stepping's outer-loop invariant, from contract-proof seeds (risk); (3) build item: the sum
+  library (method level, before the freeze); (4) 21's catalog-template risk is gone (no templates
+  built); (5) SSSP contract: "delta <= least weight" precondition for the live `assert(false)`
+  (`sssp.cc:384-388`).
 - 2026-10-13 20:43 ET: input from 25 (resolved): build items: the bounded gate and counterexample
   repair before evaluation (`swdb/campaign.py:938-1003`); the WP phase after the campaign stops; the
   best-proven winner in selection, in the workspace and in the plateau test (`swdb/campaign.py:404-425,

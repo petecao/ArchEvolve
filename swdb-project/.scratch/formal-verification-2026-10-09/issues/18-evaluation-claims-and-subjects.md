@@ -178,6 +178,12 @@ understanding confirmed "yes"). Facts: the code re-checked in this session (path
 Glossary: method version added.
 
 ## Later changes
+
+- 2026-10-13 20:41 ET, from [24](24-alignment-hint-kind.md) (items 3, 5): item 5's authors' code that matches no contract may reach
+  proven unbounded by route 1 (unit postcondition plus hazard freedom), recorded as "direct, no
+  matching contract", reported apart from RQ1's rates. RQ3's "chained per-candidate proof time <=
+  bundled" compares chained (route 3), direct (route 1) and bundled; RQ3 also counts the sum
+  library's one-time cost.
 - 2026-10-13 20:43 ET, from [25](25-extensa-loop-proofs-and-ranking.md) (items 4, 6): RQ5 runs only on
   new campaigns, once D35 has lifted; item 1's fallback retrospective becomes a labeled worked example
   (the 15 BFS campaigns hold 3 certified candidate artifacts, all in a7). RQ5 compares each class's

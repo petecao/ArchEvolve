@@ -1,7 +1,8 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-13 20:40 ET (ticket 25 resolved: two winners, bounded gate, proof budgets);
+Updated: 2026-10-13 20:42 ET (ticket 24 resolved: no alignment hint kind; unit postconditions for every kernel);
+2026-10-13 20:40 ET (ticket 25 resolved: two winners, bounded gate, proof budgets);
 2026-10-13 20:12 ET (ticket 23 resolved: baselines, metrics and run protocol);
 2026-10-13 20:10 ET (ticket 19 resolved: minimum bounds from negative controls);
 2026-10-13 19:56 ET (ticket 20 resolved: the authors' DX100 PR keeps stale sums);
@@ -20,7 +21,7 @@ Extensa Probata; ticket 15 added); 2026-10-12 22:52 ET (ticket 10 resolved: what
 2026-10-11 18:58 ET (ticket 08 resolved: crux-llvm separates the bug at one lane)
 **Type:** wayfinder map
 **Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–13 and 15–17 resolved;
-18–27 graduated from fog 2026-10-13 (18–23 and 25 resolved)
+18–27 graduated from fog 2026-10-13 (18–25 resolved)
 
 ## Destination
 
@@ -213,6 +214,14 @@ concept is the next effort.
   reported apart; budgets may be raised by approval. Same gate and proofs in ArchEvolve mode. RQ5
   only on new campaigns. ADR 0010 proof note.
 
+- [Should the proof-hint loop gain an alignment hint kind for direct unbounded proofs?](issues/24-alignment-hint-kind.md):
+  no. An alignment changes the product program, so it is never a proof hint; an "alignment proposal"
+  is a stated limit and future work. The real gap was a missing unit postcondition: PR and BC get
+  sums over CSR ranges (real arithmetic), SSSP its shortest distances, so route 1 (direct) covers every
+  evaluated kernel and is every candidate's fallback. Catalog templates are not built (route 1 proves
+  derived implementations once); enabling rewrites, chains and route 3 stay. A sum library joins the
+  method version. The authors' code that matches no contract may reach proven unbounded.
+
 ## Tickets
 
 | # | Ticket | Type | Status | Blocked by |
@@ -240,7 +249,7 @@ concept is the next effort.
 | 21 | [Which methods find a relational proof's alignment automatically, and can a wrong one make a proof unsound?](issues/21-relational-alignment-research.md) | research | resolved | — |
 | 22 | [Which LLM repair loops driven by model-checker counterexamples exist, and how close are they to ours?](issues/22-cex-guided-llm-repair-research.md) | research | resolved | — |
 | 23 | [Which baselines, ablations and metrics answer each research question, and how are runs repeated?](issues/23-evaluation-baselines-and-metrics.md) | grilling | resolved | 18, 22 |
-| 24 | [Should the proof-hint loop gain an alignment hint kind for direct unbounded proofs?](issues/24-alignment-hint-kind.md) | grilling | ready-for-human | 21 |
+| 24 | [Should the proof-hint loop gain an alignment hint kind for direct unbounded proofs?](issues/24-alignment-hint-kind.md) | grilling | resolved | 21 |
 | 25 | [How does the Extensa-mode loop budget proofs and rank candidate artifacts by certification level?](issues/25-extensa-loop-proofs-and-ranking.md) | grilling | resolved | 19 |
 | 26 | [How are proof verdicts and their evidence recorded, and what does ArchEvolve mode show?](issues/26-proof-records.md) | grilling | ready-for-human | 23, 25 |
 | 27 | [In what order does the proof of concept build its pieces, and what closes each stage?](issues/27-proof-of-concept-stages.md) | grilling | ready-for-human | 18, 19, 24 |
@@ -272,3 +281,7 @@ Ruled during the route:
 
 - VerCors on a hand-written PVL model ([15](issues/15-concurrency-proofs.md), item 13): hand-made,
   BFS only, sets no level; against "any input" and the cost rule.
+- Alignment proposals (an LLM proposes a relational proof's alignment;
+  [24](issues/24-alignment-hint-kind.md), items 1-2): no evaluated kernel needs one once every kernel
+  has a unit postcondition, and it would not prove our flattening or reordering reshapes. Returns
+  only with a kernel whose unit has no unit postcondition.
