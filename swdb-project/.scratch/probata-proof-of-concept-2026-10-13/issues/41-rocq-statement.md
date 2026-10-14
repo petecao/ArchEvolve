@@ -1,9 +1,9 @@
 # 41 — Rocq: composition theorem statement and definitions
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-14 14:07 ET (statements drafted; ready for Yan-Ru's review); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** claimed
+**Status:** ready-for-human
 **Blocked by:** 09
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Concurrency" (composition theorem, shared-action kinds, memory model, OpenMP), "Formal-half language and the C++ subset" (sharing classes, YAML frame), "DX100 proof semantics" (reduction lemma, hazards), "Modules" (Rocq development), "What a proven verdict asserts" (assumption set, seven kinds), "Proof-of-concept plan" (Rocq side track), S9); decisions: [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md)
 **Time estimate:** about 4 days plus Yan-Ru's review
@@ -92,3 +92,79 @@ theorem fits on about 1-2 pages, so the review is short. The proofs are tickets 
 - The Rocq track starts after the spike verdict, so the spike's stop rule cannot waste it
   ([27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md) item 4).
 - Mac: Rocq runs as one job at a time under the ~8 GB RSS watchdog.
+
+## Answer
+
+2026-10-14 14:07 ET. **Status: ready-for-human.** Both statements and their definitions are
+written and type-check. **Yan-Ru's review is the open step**, and 42 and 43 must not start before
+it (S9). Review guide and hypothesis table: [`library/rocq/probata/HYPOTHESES.md`](../../../library/rocq/probata/HYPOTHESES.md).
+
+**What Yan-Ru reviews** (in `swdb-project/library/rocq/probata/`):
+
+| File | What | sha256 at this draft |
+|---|---|---|
+| `Vocabulary.v` | 5 shared-action kinds, 4 sharing classes (closed) | `081b558de2d94a0b37200b094d39af38eddf51546686a575f97dac2e3a6a3a3d` |
+| `Composition.v` | `parallel_composition` and its definitions | `03c5337d74e63c0011b9521ddaadca955d5e2adee4889bef47c9b01ebc3432c6` |
+| `Reduction.v` | `dx100_reduction` and its definitions | `83c1d97295bac65f11b52dfacd2394f7093b1b3cfc60b66dfd380c4bc7031d00` |
+
+Not for review: `Sanity.v` (`2b918f89…`), `negative/HistoryReadIsLatest_FALSE.v` (`45e88e90…`).
+
+**Approval record (to fill in):** date and time ET: ____; approved sha256 of the three files
+above: ____. Any change to them needs a new approval; 42 and 43 check these hashes.
+
+**Statements, one line each.**
+- `parallel_composition`: if the seven per-candidate obligations hold (`obl_class_fit`,
+  `obl_owned_disjoint`, `obl_atomic_blocks`, `obl_chunk_cover`, `obl_uniform_control`,
+  `obl_team_size`, `obl_dx100_quiet`), then every finished run of N threads that meets the RC11,
+  OpenMP and DX100-read premises has a serial twin: same events per thread, barrier intervals and
+  critical sections one after another, every read outside a shared-actions-only array and every
+  shared action reading the latest write, racing reads still history reads, same final memory,
+  every worksharing iteration exactly once.
+- `dx100_reduction`: if no at-issue run (each command runs at its issue; ghost "pending" until a
+  covering wait) has a hazard, every complete timed run that gem5's rules allow (dispatch stall,
+  region stall, out-of-order run with element readiness, finish order, wait rule) has an at-issue
+  twin with the same observations per core and the same final state.
+
+**Checks** (Rocq 9.3.0, switch `rocq-9`; all through `verifier_run.py`, output outside the repo
+in `/tmp/claude/probata-runs/t41/`; final run `compile-8.log`, sha256
+`b302f1a047d63311323436862621396fb99f3e791422ee7dd3887b23de72d257`, peak RSS 413 MB):
+- `Vocabulary.v`, `Composition.v`, `Reduction.v`, `Sanity.v` compile (exit 0).
+- `Print Assumptions` lists only the two theorems themselves: both proofs are `Admitted` with an
+  "OPEN — ticket 42/43" comment. No `Axiom` anywhere; nothing else admitted.
+- Seven sanity lemmas, all `Qed`, "Closed under the global context": enumerations have exactly 5
+  and 4 members; a history read may be stale (the model is not SC); a plain read sees the
+  thread's own write; 15 item 12's must-prove control (read, failed CAS, re-read sees the
+  winner); a same-thread read during an unfinished DX100 store is a hazard (12 item 9).
+- Negative check: `negative/HistoryReadIsLatest_FALSE.v` (history reads are SC) is rejected at
+  its unprovable branch (exit 1), as required.
+
+**Acceptance status.** Met: type-check, open proofs visibly marked, no axioms; 5 and 4 closed
+constructors; class per array per barrier interval; 15 item 3 memory model and 15 item 7 DX100
+rules; symbolic N with ids 0..N-1; hypothesis table with stable names; reduction lemma models
+12 item 2 with gem5 citations; hazard-free per 12 items 3-5. **Not met:** length is about 4.5 +
+3.5 printed pages, not about 2 (F3); Yan-Ru's approval (open); the draft is not by Codex (F4).
+
+**Assumptions** (beyond the ticket's own):
+- Assumption: the development lives in `swdb-project/library/rocq/probata/` (library content,
+  pinned by content hash in the method-version file, id `probata.rocq-development`; theorem names
+  match the fixture: `parallel_composition`, `dx100_reduction`).
+- Assumption: modeling choices M1-M10 in HYPOTHESES.md (RC11 rendering with one global order; DX100
+  effects at issue in the composition model; one-location critical sections; CAS loops as one
+  shared action; worksharing constructs numbered dynamically; SC CPU steps inside the reduction
+  lemma; 8-byte operands not modeled).
+
+**Findings for Yan-Ru** (details in HYPOTHESES.md):
+- **F1:** new per-candidate obligation `obl_dx100_quiet`: every DX100 command covered before the
+  thread's next barrier and before it leaves `critical`. Without it, a DX100 read pending across
+  a barrier can see next-interval writes (12 item 4 allows that overlap). Stricter than 12.
+- **F2:** new hazard: a DX100 memory access outside its command's registered regions escapes the
+  region stall. Registered regions are assumed disjoint.
+- **F3:** length over target (every obligation spelled out so each maps to one table row).
+- **F4:** provenance. The ticket names Codex (`gpt-5.6-sol`, `xhigh`) as drafter; this draft was
+  written by Claude (`claude-opus-5-5`, Claude Code subagent). Codex `gpt-5.6-sol` `xhigh` was
+  started read-only as an adversarial reviewer at 14:03 ET; it had not finished at commit time.
+  Its output: `/tmp/claude/probata-runs/t41/codex-review.md` (event log `codex-review.jsonl`).
+  Its first interim note claimed issued commands need not run; that is not so (`at_issue_run`
+  requires a run step at `S n` for every issue; `complete_timed` requires a finish, which requires
+  a run). Yan-Ru decides whether Codex should redraft.
+
