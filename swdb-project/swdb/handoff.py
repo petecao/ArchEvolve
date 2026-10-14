@@ -209,6 +209,7 @@ def _result_class(data, candidate):
 
 
 def evaluation_result(store, data):
+    from swdb.derived import root_implementation
     from swdb.functional_evaluation import verify
     verify(data, store)
     context = _mapping(data.get("context"))
@@ -228,7 +229,10 @@ def evaluation_result(store, data):
         "proposal": proposal.get("id"), "candidate": data.get("candidate"),
         "candidate_state": _mapping(candidate).get("state"),
         "software_hardware_pair": {
-            "implementation": data.get("implementation"), "candidate_sha256": context.get("candidate_sha256"),
+            # Probata PoC 63: a candidate artifact built on a derived implementation names the implementation its
+            # rewrite chain started from; a derived implementation enters the main database only through promotion.
+            "implementation": root_implementation(store, data.get("implementation")),
+            "candidate_sha256": context.get("candidate_sha256"),
             "binary_sha256": _mapping(data.get("build")).get("binary_sha256"), "target": context.get("target"),
             "basis": context.get("basis"), "backend_configuration": context.get("backend_configuration"),
             "model": context.get("model"), "threads": context.get("threads"),

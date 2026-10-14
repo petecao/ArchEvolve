@@ -1,6 +1,7 @@
 # Extensa-mode record fields (format 0.4 addition)
 
 Created: 2026-10-03 (Eastern Time)
+Updated: 2026-10-14 (Eastern Time): optional `library.new_enabling_contracts`, rewrite role `new_contract`, iteration row `new_contract` (Probata PoC ticket 63; see [format-v0.4-derived.md](format-v0.4-derived.md))
 Updated: 2026-10-14 07:45 (Eastern Time): the WP phase after the campaign stops: `wp_phase`, `budgets.provider_calls_proof`, proof lane-hours and the proof budget lines in `budgets.used`; gate jobs now charged to lane-hours (Probata PoC ticket 16)
 Updated: 2026-10-14 07:46 (Eastern Time): the iteration ladder: `LADDER.json`, `rewrite_workspace` in campaign summaries, reasons `refuted` and `proof_timeout` (Probata PoC ticket 17)
 Updated: 2026-10-14 06:17 (Eastern Time): two winners per workload class: `winners`, `best_proven`, `level_snapshot` in campaign summaries; `best/<class>.best_proven.patch` (Probata PoC ticket 15)

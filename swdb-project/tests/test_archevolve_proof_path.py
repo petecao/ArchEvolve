@@ -21,6 +21,7 @@ from conftest import FIXTURES, REPO, make_records, run_swdb
 from test_counterexample_repair import ANCHOR, FIXTURE_PROVIDER, _offload
 from test_proof_records import CONTRACT, FUNCTION, _certify, _library_roots
 from testkit.bfs_native import PROGRAM
+from testkit.library_promotion import promote
 from testkit.proposals import build_proposal_setup
 from testkit.record_subset import copy_record_subset
 
@@ -44,6 +45,9 @@ def path_seed(tmp_path_factory):
     (path / "library" / "methods").mkdir(exist_ok=True)
     shutil.copy(FIXTURES / "proof" / "methods" / "contract-fixture-1.yaml", path / "library" / "methods")
     records, runs, _snapshot, request = build_proposal_setup(records, path, copy_all=False)
+    # Ticket 63 (2026-10-14 ET): ArchEvolve mode's proof path takes shared certified contracts only.
+    promote(records.path, path / "library", CONTRACT)
+    promote(records.path, path / "library", STAGING)
     made = {}
     for key, rid, verdict in (("certified", "test-proposal", "certified"), ("rejected", "rejected-proposal", "failed"),
                               ("uncertified", "uncertified-proposal", None), ("staging", "staging-proposal", None)):

@@ -65,8 +65,17 @@ def certified_contracts(store_dir, candidate_id):
         raise Failure(f"candidate {candidate_id} is {level}: an uncertified or rejected candidate artifact runs no "
                       "proof step (proven requires certified)")
     _bound, counted = candidate_certifications(store, candidate_id, library)
-    return sorted({(r.get("candidate") or {}).get("contract") or (r.get("entry") or {}).get("id")
-                   for r in counted if r.get("verdict") == "certified"} - {None})
+    contracts = sorted({(r.get("candidate") or {}).get("contract") or (r.get("entry") or {}).get("id")
+                        for r in counted if r.get("verdict") == "certified"} - {None})
+    # Probata PoC 63: ArchEvolve mode uses shared certified contracts only, at every rewrite of a chain.
+    from swdb import experimental_contracts
+    problems = [experimental_contracts.shared_problem(library, c) for c in contracts]
+    problems.append(experimental_contracts.lineage_problem(library, store.get(candidate.get("implementation") or "",
+                                                                              "implementation")))
+    found = [p for p in problems if p]
+    if found:
+        raise Failure(f"candidate {candidate_id} runs no ArchEvolve-mode proof step: " + "; ".join(found))
+    return contracts
 
 
 def _method(store_dir):

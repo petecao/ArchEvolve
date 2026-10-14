@@ -374,6 +374,8 @@ def submit(args):
         data["payload_sha256"] = artifacts.digest(request["payload"])
         from swdb.library import proposal_gate
         proposal_gate(request, store)
+        from swdb.experimental_contracts import target_gate     # Probata PoC 63: shared contracts, whole chain
+        target_gate(request, store)
         source = store.get(request["source_snapshot"], "source_snapshot")
         package = store.get(request["profile_package"], "profile_package")
         if not source or not package:
