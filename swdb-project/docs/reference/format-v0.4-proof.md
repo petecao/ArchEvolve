@@ -8,7 +8,8 @@ replay-label and `tools` fields, no level fields, and the versioned level rule
 `spurious_counterexample` and its tie to `unreplayed_counterexample` (Yan-Ru's decision of 02:25 ET);
 2026-10-14 02:57 ET, ticket 12: the job block's
 one field list and its checks, run fields (`run_index`, `provider_pin`) on proof records and proposals,
-repair lineage on proposals ([Run fields and repair lineage](#run-fields-and-repair-lineage-ticket-12)).
+repair lineage on proposals ([Run fields and repair lineage](#run-fields-and-repair-lineage-ticket-12));
+2026-10-14 ET, ticket 13: `swdb repair <proof record>` writes repair lineage ([format-v0.4-repair.md](format-v0.4-repair.md)).
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/04-proof-record-tracer.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("Records and levels"), map ticket 26,
 [ADR 0016](../adr/0016-proof-records-never-change-level-computed-on-read.md).
@@ -30,7 +31,7 @@ the records whose pins still match.
 | The replay label | `replay_label` | 60 fills it and makes it required on refuted records; a new value is added in 10 first |
 | Tools used (S14) | `tools`; `Verdict.tools` | 21, 22 fill it for every real verifier and solver |
 | The job block | `job` ([below](#the-job-block-ticket-12)); `swdb.proof._job` | nobody adds a field outside ticket 12; 57 fills it on mbit10 |
-| Run fields, repair lineage | `run_index`, `provider_pin` (proof, proposal); `repair_lineage` (proposal) | 13 writes repair lineage; 37 writes run fields on its proof records |
+| Run fields, repair lineage | `run_index`, `provider_pin` (proof, proposal); `repair_lineage` (proposal) | 13 writes repair lineage ([format-v0.4-repair.md](format-v0.4-repair.md)); 37 writes run fields on its proof records |
 | SQLite tables | `swdb_proofs`, `swdb_proof_pins`, `swdb_proof_assumptions`, `swdb_proof_bounds`, `swdb_proof_jobs`, `swdb_run_fields`, `swdb_repair_lineage` | [database.md](database.md#proof-tables) |
 
 ## `swdb prove`

@@ -1,6 +1,7 @@
 """Public, durable proposal workflow. Source changes never imply correctness.
 
-Updated: 2026-10-05 ET (`swdb get` of a library entry reports who performed its current review,
+Updated: 2026-10-14 ET (Probata ticket 13: `swdb repair <proof record>` runs one
+counterexample-guided repair round); 2026-10-05 ET (`swdb get` of a library entry reports who performed its current review,
 spec review C1); 2026-09-30 (the proposal provider block describes one attempt); 2026-09-29
 (pinned repair identity and unavailable-provider retries); 2026-09-28 (patch headers
 parsed outside hunk bodies only). YAML records remain authoritative; raw artifacts are external.
@@ -479,6 +480,10 @@ def repair(args):
     from swdb import rewrite
 
     store = _require_valid(args.records)
+    if store.get(args.evaluation, "proof") is not None:
+        return _counterexample_repair(args)
+    if getattr(args, "evaluation_run", False) or getattr(args, "run_index", None) is not None:
+        raise Failure("--evaluation-run and --run-index apply only to a refuted proof record trigger")
     unavailable = store.get(args.evaluation, "proposal")
     if unavailable and unavailable.get("outcome", {}).get("state") == "provider_unavailable" and not unavailable.get("candidate"):
         return _retry_initial_provider(args, store, unavailable)
@@ -585,6 +590,21 @@ def repair(args):
             attempt.update(state=state, reason=str(exc))
             data["outcome"] = {"state": state, "stage": "repair", "reason": str(exc)}
         return persist(args.records, data, args.db)
+
+
+def _counterexample_repair(args):
+    """Ticket 13: a refuted proof record admits one counterexample-guided repair round (ArchEvolve mode's
+    bounded correctness repair, 25 item 5; the evaluation's with --evaluation-run). The cap's refusal is a
+    loop outcome, returned unresolved without writing a record."""
+    from swdb import counterexample_repair
+    setting = "evaluation" if args.evaluation_run else "archevolve"
+    try:
+        return counterexample_repair.repair_round(args.records, args.evaluation, runs_dir=args.runs_dir,
+                                                  provider_config=args.provider_config, setting=setting,
+                                                  db_path=args.db, run_index=args.run_index)
+    except counterexample_repair.BudgetSpent as spent:
+        return {"outcome": {"state": "unresolved", "stage": counterexample_repair.STAGE, "reason": str(spent)},
+                "loop": {"state": "budget_spent", "rounds": spent.rounds}}
 
 
 def _retry_initial_provider(args, store, proposal):

@@ -1,9 +1,9 @@
 # 13 — Counterexample-guided repair
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-14 04:30 ET (resolved); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 12
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Refutation, repair and bugs"; "Proof-hint loop" (the three loops, kept apart); "Concurrency" (repair, not hand fixes); "Extensa mode" (budgets: repair calls stay in the rewriting total); "ArchEvolve mode"; "Testing Decisions", seams 1 and 4 (seam 3's repair cases run in 14); user stories 18, 26, 48, 65, 71; S6; O1; O5); decisions: [13](../../formal-verification-2026-10-09/issues/13-proof-hint-loop.md) (items 6, 10), [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md) (items 10, 11), [18](../../formal-verification-2026-10-09/issues/18-evaluation-claims-and-subjects.md) (item 6), [20](../../formal-verification-2026-10-09/issues/20-dx100-pr-reset-check.md) (inputs to 18: fail certification or be refuted), [22](../../formal-verification-2026-10-09/issues/22-cex-guided-llm-repair-research.md) (items 5, 6), [23](../../formal-verification-2026-10-09/issues/23-evaluation-baselines-and-metrics.md) (items 3, 4), [25](../../formal-verification-2026-10-09/issues/25-extensa-loop-proofs-and-ranking.md) (items 2, 3, 5)
 **Time estimate:** about 2 days
@@ -140,3 +140,84 @@ refute, then repair; O5). Tested with a scripted bounded verifier and a scripted
 - Fixtures use contract-fixture code only. No held-out kernel code (BC, PR, SSSP) before 59 —
   Method-version review and freeze. Tests use the scripted verifier and provider; no real verifier
   runs. Full-suite runs on the Mac use at most 2 test workers.
+
+## Answer
+
+2026-10-14 04:30 ET. Built test-first; every acceptance box is met. Branch `probata-poc/t13`.
+Interface: [`format-v0.4-repair.md`](../../../docs/reference/format-v0.4-repair.md); code
+`swdb/counterexample_repair.py`.
+
+**What exists now:**
+
+- **`swdb repair <proof record>`** (ArchEvolve mode; `--evaluation-run` for the evaluation; `--run-index`)
+  runs one round: one rewriting-role repair call (`attempts[].call: counterexample_repair`, provider
+  receipt `role: rewriting`) in the guarded rewriting workspace over the refuted tree. The workspace shows
+  `.swdb-context/counterexample.json` (format `swdb.counterexample.v1`) and
+  `.swdb-context/refuted-candidate.diff`; the manifest's `repair_inputs` hashes both. Evaluations and
+  proposals still go to the old build/correctness and provider-retry paths unchanged.
+- **The loop for every mode:** `swdb.counterexample_repair.loop(records, proof, runs_dir=, provider_config=,
+  certify=, gate=, setting=)`: round, certify, gate, until `repaired`, `reverted`, `budget_spent`,
+  `certification_failed` or `provider_failed`. The cap is `budgets.counterexample_repair_rounds` of the
+  current method version; round r = the refuted candidate artifact's own lineage round + 1, so the cap
+  covers the whole chain whoever calls. A sixth call never opens (the CLI returns `loop.state:
+  budget_spent`, exit 1, nothing written).
+- **Spurious filter (explicit, Yan-Ru 2026-10-14):** `counterexample_repair.repairable` refuses a
+  `spurious_counterexample` record (or any record with `unreplayed_counterexample`) by name, and every
+  other non-refutation, before any record or call; a spurious record from the gate never continues the loop.
+- **New candidate artifacts:** proposal `<root proposal>.cex-repair-<round>` with `repair_lineage`,
+  `provider_pin` and `repair_budget {counterexample_repair_rounds, round, setting}`; candidate
+  `<proposal>.candidate-1`. The refuted candidate artifact's records are byte-identical afterward.
+- **Contract-match check** (`contract_match`, no LLM): `equals_baseline` (normalized content hash equals
+  the source snapshot's) or `drops_offload` (an offload call of the contract's intrinsics, read from their
+  `signature`, present in the refuted candidate's editable files is gone).
+- **Guard:** `provider_workspace.refuse_counterexamples` in every agent-role input check and every
+  rewriting workspace (and the prompt-only route), except the one counterexample file of a counterexample
+  repair workspace. The rewriting workspace (and prompt-only route) now also refuses the authors'
+  accelerated functions, except in an evaluation repair run whose refuted candidate artifact is the tree
+  shown (manifest mark `evaluation_repair {refuted_candidate, tree_sha256}`, checked against the store).
+
+**Tests:** `tests/test_counterexample_repair.py` (47 cases; scripted provider
+`tests/fixtures/counterexample_repair/provider.py`, an `external_fixture` emulating Codex). Targeted run
+(that file plus `test_provider_workspace`, `test_bfs_rewrite`, `test_provider_authors_guard`,
+`test_proof_run_fields`, `test_proof_records`, `test_proposals`, `test_estimation_role`,
+`test_statement_annotation`, `test_certification_feedback`, `test_provider_role_schemas`,
+`test_extensa_machinery`, `test_format_doc`, `test_provider_guard`): 952 passed, 15 skipped, 2 failed, one
+worker, 42 min; report log `/tmp/claude/probata-runs/t13/targeted.jsonl`, sha256
+`454fd919ac8be76f25d1b9f9421368b415c9e03ed1e123f22c5fe733024a8a54`. The 2 failures were
+`test_required_dx100_operation_headers_resolve_in_snapshot[codex|claude]`, made stale by the new
+authors'-code guard (below); updated to expect the refusal, both pass. `test_owned_process_cleanup` and
+`test_extensa_campaign`: 31 passed (`/tmp/claude/probata-runs/t13/extra.jsonl`, sha256
+`5b23dc0709fd32ed0fdd9230c9581cd15385e7b30ad73ddca1cb46d05db70ce9`). The regression control ("a
+regression still admits no repair") is the existing `test_bfs_rewrite.py::
+test_successful_evaluation_cannot_trigger_performance_tuning`, which passes.
+
+**Assumptions** (the ticket's own assumptions are implemented as written):
+
+- Assumption: the CLI runs one round per call (as `swdb repair <evaluation>` does today); the whole loop
+  is the Python API, whose `certify` and `gate` callables 14 and 18 supply. "Certified and gated before
+  anything else uses it" is enforced inside the loop; a one-round CLI caller leaves the repair
+  `unverified` until it certifies and proves it.
+- Assumption: "the repair budget is spent" is recorded as the loop's outcome (returned, and readable from
+  the lineage chain on read), not by editing an existing proposal, so no record of a refuted candidate
+  artifact changes.
+- Assumption: a repair proposal copies its parent's request, producer, snapshot and profile package; a
+  refuted candidate artifact with no proposal cannot be repaired.
+- Assumption: a counterexample is recognized by the `swdb.counterexample.v1` format name or a
+  `counterexample`/`unreplayed_counterexample` key in a JSON or YAML file; free text without either is
+  not detected.
+- Assumption: a round whose call opened is not repeated on the same refuted candidate artifact; a guard
+  refusal or provider unavailability opens no call and does not use the round.
+- Assumption: the reverted-repair check counts offload calls in the request's editable files only.
+- Assumption: a reverted repair is still certified and gated in the loop (so it competes at its level),
+  then ends the loop. A repaired candidate artifact counts as a repair only when unflagged and not refuted.
+
+**For other tickets:** 14 calls `loop(..., setting="campaign")` with its certification and bounded-gate
+steps; 18 calls it (or `swdb repair`) with `setting="archevolve"`; evaluation 06/09 use `swdb repair
+--evaluation-run` and read `loop()` outcomes (`calls`, `repairs`, `reverted_repairs`, `chain`). 16 counts
+attempts with `call: counterexample_repair` in the rewriting total. 49 passes CIVL's race trace as the
+counterexample unchanged. 17 can read `repair_lineage` for `repair_of` rows.
+
+**Side finding:** the DX100 BFS source (`apps/dx100/benchmarks/gapbs/src/bfs.cc`, implementation
+`dx100-bfs-scalar`) holds the authors' `TDStepMAA` and `DOBFSMAA`, so any ordinary rewriting submission
+on it is now refused before the call (the acceptance's "ordinary rewriting workspace" control). Ticket 01
+already refused it for agent roles. A scalar-only BFS snapshot is needed before a DX100 BFS rewrite runs.

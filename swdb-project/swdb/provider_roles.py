@@ -1,6 +1,7 @@
 """Role-specific inputs over the shared provider process, guard and audit.
 
-Updated: 2026-10-14 ET (Probata PoC ticket 01: the guard names the held-out kernels' DX100 functions
+Updated: 2026-10-14 ET (Probata PoC ticket 13: no agent role input holds a counterexample);
+2026-10-14 ET (Probata PoC ticket 01: the guard names the held-out kernels' DX100 functions
 PBFSMAA, BrandesMaa, PageRankPullMAA and DeltaStepMAA, and drops TDStepMAA2 and BCMAA, which name
 nothing); 2026-10-06 ET (strict estimation inputs); 2026-10-05 ET (code review: login via provider_login.start, public checked_inputs and
 verified_lane); 2026-10-05 ET (ticket 74: guard runtime-limit stops raise GuardInfrastructure);
@@ -136,6 +137,8 @@ def checked_inputs(files):
     before any call opens (public since 2026-10-05 ET, J5: the ticket 58 driver checks first)."""
     if not isinstance(files, dict) or not files:
         raise Failure("agent role workspace input must be a nonempty explicit files mapping")
+    # Ticket 13: no agent role sees a counterexample; only the rewriting role's repair workspace does.
+    provider_workspace.refuse_counterexamples(files)
     result = {}
     total = 0
     for name, text in files.items():
@@ -162,6 +165,8 @@ def checked_inputs(files):
 
 
 def prepare(role, files, folder, config):
+    if isinstance(files, dict):
+        provider_workspace.refuse_counterexamples(files)
     if role.name == 'estimation':
         from swdb.estimation_parameters import checked_input_files
         if role.output_schema != ESTIMATION_OUTPUT_SCHEMA:
