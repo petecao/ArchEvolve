@@ -1,6 +1,6 @@
 name: record_kinds
 description: The kinds of record the database holds; each has its own schema.
-# Updated: 2026-10-11 ET: attribution reports (fine-grained attribution ticket 02).
+# Updated: 2026-10-14 ET: proof records (Probata proof of concept ticket 04).
 values:
   - value: application
     meaning: A program that contains kernels, from one source at one version.
@@ -90,3 +90,5 @@ values:
     meaning: Research-only blind agreement report with exclusions and unchanged D30 decision.
   - value: attribution
     meaning: Two saved estimates split by code origin (untouched, agent-rewritten, unattributed) from a diff of their counted source trees.
+  - value: proof
+    meaning: One proof job's verdict on one subject, with its content-hash set, bounds and assumption set; never changed.
