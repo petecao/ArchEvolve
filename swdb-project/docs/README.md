@@ -1,6 +1,6 @@
 # EvolveSWDB guide
 
-Updated: 2026-10-11 21:53 ET (ADR 0015: the database takes the main database's shape); 2026-10-07.
+Updated: 2026-10-14 (Eastern Time).
 
 EvolveSWDB is ArchEvolve's research Software Database: it connects application
 code, memory behavior, optimization strategies, and evaluation evidence. Use it
@@ -25,6 +25,7 @@ Installation, exercises, and experiments are optional and outside these budgets.
 | Add catalog entries | [Adding records](adding-an-application.md) |
 | Rewrite and evaluate BFS | [BFS workflow](bfs-handoff.md) |
 | Estimate speed or run an Extensa loop | [Tutorial workflow](tutorial/04-bfs-workflow.md) |
+| Explain where estimated time goes | [Estimate attribution](reference/format-v0.4-attribution.md) |
 | Inspect typed rewrite contracts | [Typed library](reference/bfs-typed-library.md) |
 | Understand main-database compatibility | [LANL core and `swdb_` extension](reference/database.md#at-a-glance) |
 | Measure on mbit10 | [Profiling](mbit10-profiling.md) |

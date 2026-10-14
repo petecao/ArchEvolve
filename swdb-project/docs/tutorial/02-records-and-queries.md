@@ -1,15 +1,13 @@
 # 2. Read records and ask useful questions
 
-Updated: 2026-10-11 21:53 ET. Reading budget: 7 minutes.
+Updated: 2026-10-14 (Eastern Time). Reading budget: 7 minutes.
 
 [Tutorial](README.md) · [Previous](01-overview.md) · [Next](03-components.md)
 
 ## Records form a connected model
 
-IDs connect records independently of filenames. Access patterns and loops are
-nested inside implementation records. This diagram shows the catalog's main
-relationships; an arrow means “describes or links to,” not a SQL foreign-key
-declaration.
+IDs connect records independently of filenames. Implementations contain access
+patterns and loops. Arrows below mean “describes or links to.”
 
 ```mermaid
 flowchart TD
@@ -36,13 +34,15 @@ Learn record groups by purpose; optional references cover every field:
 | Explain and assess execution | `region_profile`, `profile_package`, `comparison_result` | Where was work observed, what was handed off, and what comparison passed? |
 | Describe a target interface | `hardware_target`, `operation` | Which model/backend and source-backed accelerator operations? |
 | Estimate and qualify time | `workload_characterization`, `target_description`, `estimate`, CPU calibration/validation/error records | What work was counted, what model applies, and what error is established? |
+| Explain estimated time | `attribution` | How much belongs to untouched, rewritten, or unattributed code? |
 | Retain research/evidence custody | `certification`, `review`, `campaign_summary`, `paired_estimate`, `agreement_policy`, `agreement_report`, `team_claim`, `retention` | Which tests, reviews, research comparisons, and artifacts support reuse? |
 
 Typed-library entries live in `library/`, outside the record envelope. SQLite
 indexes their normative content and derived evidence state separately. The
 generated file has LANL's tables (the [LANL core](../reference/database.md#lanl-core))
-plus `swdb_` tables for everything else. LANL's main database itself is not
-connected: nothing is imported from or exported to it.
+plus `swdb_` tables for everything else. The core follows a shared slide;
+`swdb_guessed_columns` identifies inferred tables/columns. LANL's actual database
+is unconnected: nothing is imported or exported.
 
 A BFS `workload` binds graph representations and ordered traversal sources. A
 **workload view** exports the retained historical SPARTA 0.1 format.
@@ -70,10 +70,9 @@ loop_carried_dependencies:
   evidence_refs: [src-gapbs-pr-spmv]
 ```
 
-The provenance ID resolves within that same record. The source explanation says
-the contribution array is filled before the vertex loop and read during it.
-Read-only sharing between threads remains sharing; it does not require atomic
-updates. Record semantics for the actual access expression and loop context.
+The provenance ID resolves within that record: the array is filled before the
+vertex loop and read during it. Read-only sharing remains sharing without
+requiring atomic updates. Describe the actual expression and loop context.
 
 | Basis | How to interpret the value |
 |---|---|
@@ -135,9 +134,8 @@ python3 -B -m swdb sql "
   FROM swdb_records WHERE kind = 'evaluation' ORDER BY id LIMIT 5"
 ```
 
-Some semantic/property columns contain JSON text, so compare `'false'`,
-`'true'`, and `'null'` as documented, checking the associated basis. Use
-[`database.md`](../reference/database.md) for exact columns.
+Some semantic/property columns contain JSON text: compare `'false'`, `'true'`,
+and `'null'`, checking their basis. See [exact columns](../reference/database.md).
 
 The typed-library tables include `swdb_library_entries`, `swdb_library_dependencies`,
 `swdb_library_clauses`, `swdb_library_pattern_keys`, and `swdb_library_pattern_key_steps`.
@@ -147,10 +145,9 @@ decision; certification and target evaluation are separate evidence states.
 
 ## What the tools preserve
 
-`get ID --chain` traverses supported relationships to expose linked source,
-proposal, candidate, evaluation, and other records. It does not make remote raw
-files available. Package queries separately report current evidence validation;
-an old package can remain sealed while a later check finds unavailable evidence.
+`get ID --chain` follows supported record relationships. It cannot retrieve remote
+raw files. Package queries check evidence separately; a sealed package can later
+have unavailable evidence.
 
 Extensa records carry `mode: extensa` and `campaign` from creation; tags cannot
 be rewritten. Retrieval preserves historical records, while new team evidence

@@ -1,6 +1,6 @@
 # 4. Follow BFS through rewrites and evidence
 
-Updated: 2026-10-09 23:50 (Eastern Time): D35 start gate. Reading budget: 9 minutes.
+Updated: 2026-10-14 (Eastern Time). Reading budget: 9 minutes.
 
 [Tutorial](README.md) · [Previous](03-components.md) · [Next](05-contributing.md)
 
@@ -16,17 +16,15 @@ graph, traversal sources, correctness scope, and speed evidence bound together.
 | Extensa research | Native timing or gem5; paired estimates assess agreement | Budgeted rewrite/certify/evaluate iterations. Rank certification first, then qualified performance, separately per workload class |
 
 [Team policy](../../swdb/archevolve.py) checks dependency records before new
-operations. Explicit research commands use `--mode extensa --campaign ID`, with
-a valid Extensa campaign ID; campaign execution sets these tags itself. Historical
-simulator records remain valid and retrievable. They cannot become new team evidence
-by omitting their mode or relabeling their basis.
+operations. Research commands use `--mode extensa --campaign ID`; campaign execution
+sets these tags itself. Historical simulator records remain retrievable, with
+their original evidence meaning.
 
 ## Bind source, workload, and policy
 
 Upstream direction-optimizing `gapbs-bfs-do` and DX100 scalar top-down
-`dx100-bfs-scalar` share kernel `gapbs-bfs`. Their application source, build, and
-evaluator contexts differ. Format `0.4` names these explicitly; older records
-resolve historical defaults through their kernel.
+`dx100-bfs-scalar` share kernel `gapbs-bfs`, with different source, build, and
+evaluator contexts. Format `0.4` names these; older records use kernel defaults.
 
 `source_ancestor` describes ancestry. `source_baseline` names the application's
 baseline. `comparison_baseline` selects the comparator, which may be another
@@ -49,25 +47,21 @@ flowchart TD
     T --> H
 ```
 
-The last branches are alternatives according to mode, not a requirement to run
-every evaluator. ROI means **region of interest**, the computation boundary whose
-work or time is assessed. Diagnostic profiles do not replace that boundary.
+Mode selects the assessment branches. **Region of interest (ROI)** names the
+computation boundary whose work or time is assessed.
 
-1. **Retain source.** `source-snapshot` records buildable source, hashes, regions,
-   context, and protections. `baseline-candidate` copies it unchanged.
-2. **Identify input.** `register-workload` checks graph representations against
-   canonical adjacency and retains an ordered source-vertex list.
-3. **Freeze policy.** `freeze-protocol` seals identities and settings. Estimated
-   protocols additionally pin the target description, input arguments, dependencies,
-   and estimator source bundle. Changes require a fresh freeze.
-4. **Assemble context.** `profile-package` joins matching source, evaluation,
-   regions, workload, target, threads, and ROI. Missing observations leave explicit
-   incompleteness reasons. Later versions retain earlier handoffs.
-5. **Rewrite and check.** Submit intent, permitted files, required operations, and
-   source/package identity. Retain the candidate artifact or rejection. Apply
-   certification and the relevant kernel check before interpreting speed evidence.
-6. **Assess.** Use explicit baseline identities and compatible evidence. Read the
-   result's scope, unknowns, and verdict; command completion alone is not a gain.
+1. **Retain source.** `source-snapshot` pins source, regions, context, and protections.
+   `baseline-candidate` copies it unchanged.
+2. **Identify input.** `register-workload` verifies graph equivalence and retains
+   ordered traversal sources.
+3. **Freeze policy.** `freeze-protocol` seals identities and settings. Estimates
+   also pin target parameters, input arguments, dependencies, and estimator code.
+4. **Assemble context.** `profile-package` joins matching observations and records
+   missing parts explicitly.
+5. **Rewrite and check.** Submit intent and source/package identity with permitted
+   files and required operations. Retain source or rejection; certify and check correctness.
+6. **Assess.** Compare compatible evidence against an explicit baseline. Read
+   scope, unknowns, and verdict before claiming gain.
 
 ## A contract gives a rewrite testable obligations
 
@@ -76,15 +70,15 @@ intrinsic over a hardware interface), library operations, and rewrite contracts.
 A contract matches access patterns by role and states applicability, legality,
 preservation obligations, and tunable knobs.
 
-Normative entries and code pins live in `library/`. Certification/review records
-derive their state. Certification tests exact content and negative controls;
-it establishes neither formal proof nor target performance. Formal clauses remain
-`stated`; no formal verifier grants `proven`.
+Entries and code pins live in `library/`. Certification/review records derive
+their state. Certification tests exact content and negative controls, without
+establishing proof or performance. Formal clauses remain `stated`. The Extensa
+Probata formal-verification workflow and its proof records are
+[proposed](../adr/0016-proof-records-never-change-level-computed-on-read.md), with no formal verifier implemented.
 
 ArchEvolve proposals that cite a library contract must pin its dependencies and
 use current shared certified entries. Experimental entries belong to Extensa.
-Candidate certification level is derived from current receipts, not stored as a
-mutable assertion. Inspect an existing contract without executing it:
+Candidate level is derived from current receipts. Inspect a contract without execution:
 
 ```sh
 # Run inside ArchEvolve/swdb-project/.
@@ -99,12 +93,10 @@ Real providers are pinned in [adapters](../../swdb/provider_adapters.py): Codex
 Real roles run on mbit10 in an owned socket lane, with evaluator inputs, workload
 data, other candidate artifacts, and authors' accelerated code hidden.
 
-The workspace route confines the process tree, audits events, computes permitted
-source edits, writes refreshed same-account login state back under a session lock,
-then removes build outputs and the login copy. Its guard has documented
-limits, including unrestricted UDP and the readable login copy during a session;
-see the optional [worker contract](../reference/bfs-rewrite-worker.md).
-Deterministic providers are fixtures. Prompt-only mode is retained separately.
+The workspace confines and audits the process tree, checks source edits, refreshes
+login state under a lock, and cleans build/login copies. Guard limits include
+unrestricted UDP and a readable session login copy; see the
+[worker contract](../reference/bfs-rewrite-worker.md). Deterministic providers are fixtures.
 
 Repair handles eligible build/correctness failures and unavailable providers,
 preserving intent and provider settings. A usage-limit failure consumes elapsed
@@ -125,17 +117,28 @@ costs, unsupported access mechanisms, or unspecified resource overlap leave the
 total `null`. For trial characterizations, it estimates each whole call and takes
 the median; diagnostic region medians need not sum to that result.
 
-`fill-target-parameters` can freeze supported numerical unknowns as estimated
-facts. It cannot supply missing source coverage, mechanisms, or composition
-premises. Estimates require a matching frozen protocol; a source-bundle change
-requires a fresh one. Without applicable error qualification, a ratio does not
-establish a qualified gain. See [analytic inputs](../reference/format-v0.4-analytic.md)
-for the optional runnable fixture and supported adapters.
+`fill-target-parameters` fills supported numerical unknowns, retaining estimated
+basis. Missing coverage, mechanisms, and overlap premises stay unknown. Estimates
+need a matching frozen protocol; estimator changes require a fresh freeze. A ratio
+needs applicable error qualification before establishing gain.
 
 For source-only DX100 targets, `evaluate-functional` joins current strict-functional
 execution certification with a frozen estimate. It retains
 `correctness_scope: functional-target`, no performance timing, and
 `hardware_correctness_claim: false`. Its handoff uses version 1.1.
+
+ArchEvolve packages offer `dx100_read_offload.functional-v1`, whose dependencies
+describe functional source. The memory-mapped I/O (MMIO) strategy
+`dx100_read_offload` depends on gem5 and belongs to Extensa. The
+[package builder](../../swdb/profile_package.py) filters
+strategies/intrinsics through team policy; changing a name cannot bridge the families.
+
+To explain two saved estimates, `attribute` diffs their retained source trees and
+groups estimated time as untouched, rewritten, or unattributed. Inputs, target description,
+threads, evidence kind, and estimator hash must match. Optional region profiles
+check estimated versus measured shares. Only a passing split check lets attribution
+reorder regions already chosen for an Extensa campaign. Bounds remain limits,
+not predicted gains. See [attribution](../reference/format-v0.4-attribution.md) for arguments.
 
 ## Timed research evidence has its own gates
 
@@ -144,10 +147,9 @@ build/source/input identities, trials, and environment. Paired collection orders
 A/A repeatability or A/B comparisons prospectively. Native `bfs.complete_call.v1`
 and the DX100 author's internal ROI differ.
 
-Extensa gem5 needs compatible model/binary/checkpoint/input identities and observed
-accelerator/completion evidence. Simulator exit and source-level operation support
-do not establish correctness. Full-tile, tail-tile, and competing-parent cases
-are separate coverage questions.
+Extensa gem5 needs compatible model/binary/checkpoint/input identities plus
+accelerator/completion witnesses. Simulator exit alone cannot establish correctness;
+full-tile, tail-tile, and competing-parent cases need separate coverage.
 
 `campaign` applies declared iteration, lane-hour, provider-call, and disk budgets.
 Native campaigns gate each workload class on an A/A pilot under their frozen
@@ -158,26 +160,22 @@ recorded review and fresh evaluation under a derived team protocol; team policy
 still applies to its dependencies.
 
 [Campaign pairing](../../swdb/extensa_pairing.py), when enabled, retains unknown
-receipts for baselines after protocol freeze and each materialized candidate
-before admission and certification, including repaired attempts. These receipts cover source
-metadata only: seconds stay `null`, and they cannot authorize timing or enter
-agreement. Timed evaluator requests retain separate forecasts. No verified
-complete-call application adapter exists; fixture agreement cannot enable screening.
+source-metadata receipts after protocol freeze and before candidate certification,
+including repairs.
+Seconds stay `null`; receipts cannot authorize timing or enter agreement. Timed
+requests have separate forecasts. No verified complete-call adapter exists.
 
-**Before a real campaign (D35, 2026-10-09):** `swdb campaign` refuses to start a new
-campaign on a real target until its file names a passing *numeric pairing check*
-(`paired_estimates.numeric_pairing_check`): one real numeric paired estimate, recorded
-before its timing, that the strict audit admits. No such check can pass yet, because the
-paired-estimate schema keeps every application estimate unknown. `--fixture` runs and
-resumed campaigns are unaffected. See the
+**Real campaigns are currently start-blocked (D35):** a new real-target campaign
+needs `paired_estimates.numeric_pairing_check`, naming a real numeric estimate
+recorded before timing and admitted by the strict audit. The schema currently
+requires unknown estimates, so none can pass. Fixtures and resumes are exempt.
+See the
 [format reference](../reference/format-v0.4-extensa.md#start-gate-d35-2026-10-09).
 
-[Certification failures](../../swdb/campaign_targets.py) distinguish candidate
-refusals from infrastructure errors. Source-scope, harness-scan, or missing
-candidate control sites remain failed checks eligible for bounded repair.
-Compiler availability, trusted-build, configuration, or trusted-file errors stop
-with `infrastructure_failure`, retaining the interrupted iteration without repair
-or plateau progress.
+[Certification](../../swdb/campaign_targets.py) sends candidate scope, harness-scan,
+and mutation-site refusals to bounded repair. Compiler, trusted-build,
+configuration, and trusted-file errors stop with `infrastructure_failure`,
+preserving the interrupted iteration without repair or plateau progress.
 
 ## Read a historical handoff without reinterpreting it
 

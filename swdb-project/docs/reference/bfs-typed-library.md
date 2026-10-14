@@ -1,6 +1,7 @@
 # Typed library and content-bound certification
 
 Created: 2026-10-03 ET
+Updated: 2026-10-14 ET (candidate 1.7 and lowering 1.2 defaults; calibration wait rule)
 Updated: 2026-10-13 ET (one DX100 offload strategy per operation family; mode catalog in packages)
 Updated: 2026-10-09 ET (current defaults, procedure fingerprints, and campaign failure handling)
 Updated: 2026-10-05 ET (certification version tables, record identity fields, evidence basis); 2026-10-05 ET (ticket 75 native-CPU certification under command 1.3 and 1.4); 2026-10-04 ET (control observed checks and clause comparison; ticket 70 certification isolation)
@@ -34,7 +35,9 @@ ArchEvolve command that still names a gem5-backed record is refused.
 
 `swdb certify ENTRY_ID --runs-dir DIR` runs strict functional builds and differential
 checks. Candidate certification adds `--snapshot ID --patch FILE` or `--candidate ID`;
-`--calibrate` runs the T17-fixed authors' calibration outside provider workspaces.
+`--calibrate` runs the pinned authors' calibration outside provider workspaces.
+Calibration under the default procedure, 1.2, uses their unmodified source; 1.1 retains
+the earlier store-wait patch.
 The matrix uses tile sizes 16,384 and 1,024 and four threads. A control is rejected
 only after successful compilation and a named semantic check failure; invalid controls
 and surviving controls block certification. Functional-model evidence is simulated
@@ -114,8 +117,8 @@ Added 2026-10-05 ET (ticket 75, command versions 1.3 and 1.4): native-CPU candid
 
 Added 2026-10-05 ET (certification code-review fixes): command versions belong to command
 families, each with its own frozen version table (`swdb/certification_procedures.py`): candidate
-artifacts on DX100 (1.3-1.6, default 1.6), native-CPU contracts (1.3-1.5, default 1.5), library operations
-(1.0-1.2, default 1.2) and lowerings with calibration (1.1). An unknown version is refused. New certification
+artifacts on DX100 (1.3–1.7, default 1.7), native-CPU contracts (1.3–1.5, default 1.5), library operations
+(1.0–1.2, default 1.2) and lowerings with calibration (1.1–1.2, default 1.2). An unknown version is refused. New certification
 records add to `command`:
 - `family` (`candidate`, `native`, `library_operation` or `lowering_calibration`), and for library
   operations `library_operation_version`, so a library-operation label is never read as a candidate
@@ -130,6 +133,17 @@ and `simulated` for functional-model runs (ADR 0008); earlier records say `simul
 Older records carry none of these fields; `swdb.certification_procedures.classify` names the
 procedure each one ran, including the labels that drifted (the native record above; DX100 1.4
 records before 93a2a94, which named record files by cell).
+
+Candidate 1.7 and lowering/calibration 1.2 compile the strict functional layer with
+`SWDB_STRICT_WAIT_RULE_GEM5`. This selects source-derived DX100 completion rules.
+Waits cover source/destination tile users; a condition-only use is excluded.
+A filled range loop need not cover its tile inputs. Destination reuse covers
+prior users, and constant-register writes wait for readers. Earlier procedures
+retain their old rule. Under the new rule, waiting on a store's source
+tile covers that store, so the store control deletes the wait (`dropped_store_wait`).
+See the [procedure table](../../swdb/certification_procedures.py) and
+[two-rule tests](../../tests/test_strict_wait_rule.py). These are functional-model
+checks; they run no gem5 simulation and establish no target timing.
 
 ## Handle a certification refusal at the right boundary
 
@@ -147,7 +161,7 @@ and trusted-file I/O failures instead stop the campaign with
 is created for that failure. A candidate compilation result remains part of the
 certification matrix; it is distinct from failure to build the trusted evaluator.
 
-The 2026-10-08 source change re-declared the frozen procedure digests in
+The 2026-10-08 and 2026-10-09 source changes re-declared the frozen procedure digests in
 [the version table](../../swdb/certification_procedures.py). Version labels alone
 do not identify the executed code: compare `sources_sha256` and `kernel_sources`.
 Historical receipts keep their recorded manifests. Functional evaluation requires
