@@ -124,3 +124,7 @@ certification level and formal verifier sharpened.
   withdrawn. Over real arithmetic (item 4) PR and BC have unit postconditions (sums over CSR ranges),
   and SSSP's is its shortest distances, so (C) applies to every evaluated kernel. A unit postcondition
   may allow several outcomes (glossary).
+- 2026-10-13 21:10 ET, from [26](26-proof-records.md) (item 4): item 8's assumption set has seven kinds,
+  adding written proof (item 6's unchecked lifting lemma) and platform choice (implementation-defined
+  behavior, rounding, the memory model). Each entry carries a reference (ID and hash) and one plain
+  sentence.

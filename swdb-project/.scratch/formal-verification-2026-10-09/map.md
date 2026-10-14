@@ -1,7 +1,8 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-13 21:03 ET (ticket 28 added: Extensa-mode iteration ladder);
+Updated: 2026-10-13 21:09 ET (ticket 26 resolved: immutable proof records, level computed on read; ADR 0016);
+2026-10-13 21:03 ET (ticket 28 added: Extensa-mode iteration ladder);
 2026-10-13 20:42 ET (ticket 24 resolved: no alignment hint kind; unit postconditions for every kernel);
 2026-10-13 20:40 ET (ticket 25 resolved: two winners, bounded gate, proof budgets);
 2026-10-13 20:12 ET (ticket 23 resolved: baselines, metrics and run protocol);
@@ -22,7 +23,7 @@ Extensa Probata; ticket 15 added); 2026-10-12 22:52 ET (ticket 10 resolved: what
 2026-10-11 18:58 ET (ticket 08 resolved: crux-llvm separates the bug at one lane)
 **Type:** wayfinder map
 **Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–13 and 15–17 resolved;
-18–27 graduated from fog 2026-10-13 (18–25 resolved)
+18–27 graduated from fog 2026-10-13 (18–26 resolved)
 
 ## Destination
 
@@ -223,6 +224,14 @@ concept is the next effort.
   derived implementations once); enabling rewrites, chains and route 3 stay. A sum library joins the
   method version. The authors' code that matches no contract may reach proven unbounded.
 
+- [How are proof verdicts and their evidence recorded, and what does ArchEvolve mode show?](issues/26-proof-records.md):
+  a new `proof` record kind, one per proof job, never edited (candidate proof units, summaries,
+  contract-proof and method parts, whole-kernel reproductions). The level is computed on read from
+  records whose content-hash set still matches; summaries, handoffs and promotion reviews keep dated
+  snapshots naming the level-rule version (ADR 0016, proposed). One reviewed method-version file;
+  seven assumption kinds (written proof, platform choice added); one failure-class list. Proofs stay
+  in `swdb_` tables, never the LANL core. The team's handoff gains a plain-words level block.
+
 ## Tickets
 
 | # | Ticket | Type | Status | Blocked by |
@@ -252,7 +261,7 @@ concept is the next effort.
 | 23 | [Which baselines, ablations and metrics answer each research question, and how are runs repeated?](issues/23-evaluation-baselines-and-metrics.md) | grilling | resolved | 18, 22 |
 | 24 | [Should the proof-hint loop gain an alignment hint kind for direct unbounded proofs?](issues/24-alignment-hint-kind.md) | grilling | resolved | 21 |
 | 25 | [How does the Extensa-mode loop budget proofs and rank candidate artifacts by certification level?](issues/25-extensa-loop-proofs-and-ranking.md) | grilling | resolved | 19 |
-| 26 | [How are proof verdicts and their evidence recorded, and what does ArchEvolve mode show?](issues/26-proof-records.md) | grilling | ready-for-human | 23, 25 |
+| 26 | [How are proof verdicts and their evidence recorded, and what does ArchEvolve mode show?](issues/26-proof-records.md) | grilling | resolved | 23, 25 |
 | 27 | [In what order does the proof of concept build its pieces, and what closes each stage?](issues/27-proof-of-concept-stages.md) | grilling | ready-for-human | 18, 19, 24 |
 | 28 | [How should the Extensa-mode rewrite workspace show earlier candidate artifacts, and what keeps campaigns with and without it comparable?](issues/28-extensa-iteration-ladder.md) | grilling | ready-for-human | 25 |
 

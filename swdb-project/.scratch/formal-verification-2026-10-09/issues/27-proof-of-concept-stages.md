@@ -59,3 +59,11 @@ across tickets but not ordered or costed as a whole. Decide:
   this ticket. Since 24, the no-contract baseline also proves by route 1, so a contract's measured
   advantage is only its formal halves, its hint seeds and route 3 (23, Later changes). Decide whether
   a proof-of-concept stage measures that gap early, and whether RQ3's hypothesis needs rewording.
+- 2026-10-13 21:10 ET: input from 26 (resolved): build items: the `proof` record schema and
+  `records/proofs/`; `swdb_proof*` tables; the versioned level rule (computed on read, ADR 0016);
+  `library/methods/<version>.yaml` and its review at the freeze; `vocab/proof_failure_classes.yaml`;
+  the handoff's `certification_level` block and its sentence templates; campaign-summary winner
+  snapshots, proof budgets used and the post-WP rewrite; repair lineage and run fields on proposals;
+  promotion-review level pins; the adapter returning every certification record ID
+  (`swdb/campaign_targets.py:585`). The record pieces precede any proof stage whose results must
+  count.

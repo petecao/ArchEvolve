@@ -188,3 +188,7 @@ Glossary: method version added.
   new campaigns, once D35 has lifted; item 1's fallback retrospective becomes a labeled worked example
   (the 15 BFS campaigns hold 3 certified candidate artifacts, all in a7). RQ5 compares each class's
   fastest winner with its best-proven winner.
+- 2026-10-13 21:10 ET, from [26](26-proof-records.md) (items 3, 9): the method version is one reviewed
+  file, `library/methods/<version>.yaml`, which includes the verifier lineup and the shared logic
+  library but not the proof semantics (its own version) or the level rule (versioned apart, so a rule
+  change recomputes levels without voiding proofs). Catalog templates left it (24).
