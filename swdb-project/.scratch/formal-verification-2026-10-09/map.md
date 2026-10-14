@@ -1,7 +1,10 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-13 21:33 ET (ticket 28 resolved: iteration ladder on by default; frontier empty);
+Updated: 2026-10-13 22:10 ET (spec settled: test seams, O1 and S1–S6 accepted; notes on tickets 11, 24, 26, 27);
+2026-10-13 21:51 ET (destination reached: [spec.md](spec.md) written; out-of-scope line on the
+trusted semantics corrected per ticket 12);
+2026-10-13 21:33 ET (ticket 28 resolved: iteration ladder on by default; frontier empty);
 2026-10-13 21:29 ET (ticket 27 resolved: two efforts split at the freeze; staged proof of concept);
 2026-10-13 21:09 ET (ticket 26 resolved: immutable proof records, level computed on read; ADR 0016);
 2026-10-13 21:03 ET (ticket 28 added: Extensa-mode iteration ladder);
@@ -25,7 +28,8 @@ Extensa Probata; ticket 15 added); 2026-10-12 22:52 ET (ticket 10 resolved: what
 2026-10-11 18:58 ET (ticket 08 resolved: crux-llvm separates the bug at one lane)
 **Type:** wayfinder map
 **Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–13 and 15–17 resolved;
-18–27 graduated from fog 2026-10-13, 28 added (18–28 resolved; no open tickets)
+18–27 graduated from fog 2026-10-13, 28 added (18–28 resolved; no open tickets). Destination reached:
+[spec.md](spec.md) (2026-10-13 21:46 ET; test seams and open point O1 settled with Yan-Ru 22:10 ET)
 
 ## Destination
 
@@ -302,7 +306,9 @@ Empty since 2026-10-13 17:04 ET. Each patch graduated into tickets:
 Ruled at charting ([01](issues/01-charting-decisions.md)):
 
 - Compiler correctness: gcc and clang are trusted.
-- DX100 hardware versus its functional model: the strict layer is the trusted semantics.
+- DX100 hardware versus its proof semantics: proofs trust the proof semantics, each rule cited to gem5
+  source or assumed with an owner. (Was "versus its functional model: the strict layer is the trusted
+  semantics"; changed by [12](issues/12-dx100-proof-semantics.md) item 1, noted 2026-10-13 21:51 ET.)
 - Speed: proofs say nothing about performance.
 - gem5.
 

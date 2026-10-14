@@ -232,3 +232,7 @@ versions per verdict → the "Records" fog.
   level", only the only one for every N; (B) VerCors is out of scope. Item 11's provisional rule
   (a racy candidate artifact is refuted) was kept with the finding that all three proof-of-concept
   candidates race at N > 1 as written.
+- 2026-10-13 22:10 ET, from the map's [spec](../spec.md) (S6, accepted by Yan-Ru): item 1's "unbounded
+  (only after bounded proves)" is an order, not a gate. As 13 item 10 and 25 item 1 already imply, WP
+  runs whenever the bounded rung did not refute; a bounded timeout or missing minimum bounds does not
+  block it. A refuted candidate never reaches WP.

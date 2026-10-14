@@ -179,3 +179,8 @@ Glossary: alignment added; unit postcondition sharpened (may allow several outco
   synthetic CSR pull-sum fixture, because PR is held out (18 item 5; item 4 here: the sum library is
   never tested on PR or BC). Input 2's SSSP risk is tested the same way, on a synthetic
   bucketed-relaxation fixture, in stage A3.
+- 2026-10-13 22:10 ET, from the map's [spec](../spec.md) (open point O1, decided by Yan-Ru): item 5's
+  "may reach proven unbounded" does not override "proven requires certified" (09 item 7; glossary).
+  Code that matches no contract keeps the level certification gives. Its direct proof is reported
+  beside it as "direct proof, no matching contract: <verdict>", apart from RQ1's rates; its refutations
+  and repairs stay RQ4 subjects, in their own row outside the repair rate.

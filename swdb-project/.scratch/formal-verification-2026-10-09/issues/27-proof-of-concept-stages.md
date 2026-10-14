@@ -263,3 +263,12 @@ evaluation).
 - **The map's design spec:** the two efforts, the stage table, exit checks, cut order and ticket list.
 - **Ticket 28** (claimed in another session): its ladder is a ticket of the Extensa track, cut with
   the track's end-to-end exit.
+
+## Later changes
+
+- 2026-10-13 22:10 ET, from the map's [spec](../spec.md) (S4, S5, accepted by Yan-Ru): A2 also carries the
+  strict-layer agreement fixtures and the semantics negative controls (per proof-semantics version, 12
+  items 8-9) and the reduction lemma's bounded check (once, 12 item 2); A2's exit adds "every semantics
+  control has its required verdict". The `bfs_read_offload` contract proof is completed in A4 on the
+  repaired library code, and parts proven earlier on Peter's code as written are re-proven then (10 item
+  6). Item 8's ticket list appears in the spec as P01-P18, with proposed blocking.
