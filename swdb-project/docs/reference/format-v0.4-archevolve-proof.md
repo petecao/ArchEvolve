@@ -1,6 +1,7 @@
 # ArchEvolve mode's proof path (`swdb prove --proof-path`)
 
 Created: 2026-10-14 (Eastern Time), Probata proof of concept ticket 18.
+Updated: 2026-10-14 16:04 (Eastern Time), ticket 22: code outside the C++ subset skips both bounded rungs.
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/18-archevolve-mode-level-and-handoff.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("ArchEvolve mode"; S1, S6; O1, O7), map decisions 25 items
 2, 3, 5 and 26 item 7. Code: `swdb/archevolve_proof.py`. The handoff block: [bfs-handoff-contract-v1.2.md](../bfs-handoff-contract-v1.2.md).
@@ -54,7 +55,7 @@ candidates:                 # row 0: the submitted candidate artifact; row r: th
     threads_k: proven
     unbounded: {proven_at: wp}   # wp, seeds, a hint round, or absent (never: hint budget spent);
                                  # also unit_postcondition (default true), bounds, assumptions, tools
-    cpp_subset: true        # false: threads_k and the unbounded rung are skipped (outside_cpp_subset)
+    cpp_subset: true        # false: both bounded rungs and the unbounded rung are skipped (outside_cpp_subset)
 ```
 
 ## `swdb certify`'s derived-implementation hook

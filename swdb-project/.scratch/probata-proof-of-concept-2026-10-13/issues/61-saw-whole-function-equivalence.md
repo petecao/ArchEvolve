@@ -3,7 +3,7 @@
 Created: 2026-10-13 23:15 ET
 Updated: 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 22
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Proof routes" (bounded direct); "Verifier lineup and order" (bounded verifier, cross-check of the lowering, pinned versions, failure classes); "Bounds" (build constants, minimum bounds, 15 minutes per bounded job); "What a proven verdict asserts" (bounds, thread count always a dimension); "Evaluation design" (baselines: no contract); "Testing Decisions", seam 1; S1); decisions: [17](../../formal-verification-2026-10-09/issues/17-enabling-rewrites.md) item 4 and Later changes; [23](../../formal-verification-2026-10-09/issues/23-evaluation-baselines-and-metrics.md) item 2 and Later changes; [24](../../formal-verification-2026-10-09/issues/24-alignment-hint-kind.md) items 1, 3
 **Time estimate:** about 3 days
