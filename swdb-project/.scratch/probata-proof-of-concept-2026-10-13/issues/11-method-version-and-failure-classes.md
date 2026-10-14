@@ -175,3 +175,10 @@ is a real pin). Serial, no xdist, no real verifier, nothing through `verifier_ru
   when its failure class is `spurious_counterexample` (`Verdict` and `schemas/proof.schema.json`
   refuse either without the other). Ticket 13's repair must skip this class. Branch
   `probata-poc/t11-spurious`; tests in `tests/test_proof_method_version.py`.
+- 2026-10-14 02:50 ET (main session; Assumption, not decided in the map): `spurious_counterexample` and ticket 10's
+  `replay_label` do not overlap; they are two stages. Stage 1 (adapters 22, 46, 47): replay the verifier's
+  counterexample concretely on the compiled proof unit under the proof semantics. If it does not replay, the
+  record is not proven with `spurious_counterexample`. If it replays, the record is refuted. Stage 2 (ticket 60):
+  replay the refutation on the strict layer; `replay_label` says how far that reaches (`reproduced`,
+  `proof_semantics_only`, `not_reproduced`, `undefined_behavior`). So `not_reproduced` is a confirmed refutation
+  the strict layer does not show, never a spurious one.
