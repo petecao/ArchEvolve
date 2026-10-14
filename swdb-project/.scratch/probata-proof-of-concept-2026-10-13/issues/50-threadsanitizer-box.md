@@ -43,3 +43,32 @@ paper only cites it.
   [07](../../formal-verification-2026-10-09/issues/07-install-verifiers.md)). Check `clang --version` first
   and keep `llvm` pinned.
 - Mac: build with a capped job count, one heavy job at a time, under the ~8 GB RSS watchdog.
+
+## Progress (box in flight, 2026-10-14 01:11 ET)
+
+Box start: **2026-10-14 01:06 ET**. Box end: 2026-10-15 01:06 ET (no extension).
+
+- **Pre-install checks (01:06 ET):** `/` has 107 GiB free (`df -h /`). `/opt/homebrew/opt/llvm/bin/clang --version`
+  = Homebrew clang 22.1.8. Pinned: `llvm`, `lld`, `z3`. No Homebrew package was installed or changed.
+- **What is there already:** brew `llvm` 22.1.8 ships `libomp.dylib` (with OMPT) and
+  `lib/clang/22/lib/darwin/libclang_rt.tsan_osx_dynamic.dylib`, but no `libarcher`. Archer since LLVM 10 uses
+  OMPT callbacks, so it does not need a separately instrumented libomp. The ticket's "instrumented libomp" is
+  the stock OMPT-enabled libomp 22.1.8.
+- **Fixtures:** tickets 45 and 46 are not done (`ready-for-agent`), so the box uses the fallback pair in
+  `../prototype/50-tsan-box/`: `racy_store_cas.c` (a plain store beside a CAS on `x`) and `racefree_cas.c` (the
+  same code with the store removed). Checker: `../prototype/50-tsan-box/run_box.py` (upstream Archer lit flags
+  `-gdwarf-4 -O1 -fsanitize=thread`, `TSAN_OPTIONS=ignore_noninstrumented_modules=1`, deflake rule of up to 10
+  runs, and every run must show Archer's "attached with TSan" line).
+- **Red run (no Archer), 01:09 ET:** TSan itself works on this macOS (Darwin 27, arm64). It reports the racy
+  fixture's race, but it also gives a **false race on the race-free fixture at 4 threads** (the `printf` read
+  after the join vs. a worker's CAS). This is the false positive that Archer exists to remove. Evidence:
+  `/tmp/claude/probata-runs/t50/red/` (`results.json` sha256 `5bd96364…a500ba`, `run.log` sha256 `f1926a14…904e1c`).
+- **Archer source:** the 39 files of `openmp/tools/archer` at tag `llvmorg-22.1.8` (tree `2b07b228`), each
+  checked against its git blob SHA-1. They are in `/tmp/claude/probata-runs/t50/src/archer-22.1.8/`
+  (`ompt-tsan.cpp` sha256 `cc00f7dd…e8fe`). There is no per-component `openmp-22.1.8.src.tar.xz` release
+  asset (404).
+- **Blocked, 01:10 ET:** the agent's permission gate denied compiling the downloaded source ("code from
+  external"). Writing into `~/opt/verifiers/` also needs the sandbox off, and that was denied too. The box is
+  **not** failed: no technical step has failed. To continue, Yan-Ru approves the build (one compile, a few
+  seconds, about 100 MB RSS), and then `run_box.py` runs with `--archer <prefix>/lib/libarcher.dylib`.
+- Disk used so far: 384 KB (`/tmp/claude/probata-runs/t50/`).
