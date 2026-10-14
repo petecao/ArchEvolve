@@ -51,3 +51,20 @@ values:
     subject_kind: method_part
     voids: method_version
     meaning: CIVL and GenMC agree; a refuted record (a contradiction) voids its method version (15 item 12).
+  # Ticket 26 (2026-10-14 ET): logic-library parts, written by `swdb prove-logic`.
+  - value: logic_lemmas
+    subject_kind: method_part
+    voids: none
+    meaning: Every lemma of one version of a shared logic-library file (subject id logic.<name>), proven by WP; a proof that uses the file depends on it (the sum library is proven once, with the method).
+  - value: logic_false_check
+    subject_kind: method_part
+    voids: logic
+    meaning: WP cannot prove \false from one version of a shared logic-library file alone (evidence, not a consistency proof); a refuted record (WP proved \false) voids every proof that pins that version.
+  - value: contract_logic_lemmas
+    subject_kind: contract_proof_part
+    voids: none
+    meaning: Every lemma of a contract's own logic file (beside its YAML), proven by WP; a contract-proof part of that contract.
+  - value: contract_logic_false_check
+    subject_kind: contract_proof_part
+    voids: logic
+    meaning: WP cannot prove \false from a contract's own logic file alone; a refuted record voids every proof that pins that version.

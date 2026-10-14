@@ -238,6 +238,10 @@ def prove(args):
     unit = ProofUnit(args.candidate, args.function, artifact.get("path"), artifact.get("sha256"),
                      contract, library.content_sha256(contract))
     pins = _pins(store, candidate, unit, (), method)
+    from swdb import logic_library                    # ticket 26: the logic files the formal halves use
+    logic = logic_library.pins(library, library.get(contract))
+    if logic:
+        pins["logic"] = logic
     if getattr(args, "minimum_bounds", None):
         pins["minimum_bounds"] = _minimum_pin(store, args.minimum_bounds, unit)
     if getattr(args, "define", None):
