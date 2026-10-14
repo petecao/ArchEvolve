@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 16
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) (sections "ArchEvolve mode", "Records and levels", "What a proven verdict asserts" (assumption set, seven kinds), "Refutation, repair and bugs", "Verifier lineup and order", "Testing Decisions" seams 1, 2 and 4; choices S1, S2, S6; open point O1); decisions: [25](../../formal-verification-2026-10-09/issues/25-extensa-loop-proofs-and-ranking.md) items 2-3, 5, [26](../../formal-verification-2026-10-09/issues/26-proof-records.md) items 2, 4, 7, 9, 10
 **Time estimate:** about 2 days
