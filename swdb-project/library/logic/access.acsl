@@ -1,0 +1,20 @@
+// version: 1.0
+// logic.access: accessors over the C lowering's arrays (Probata proof of concept ticket 26,
+// 2026-10-14 ET; map 16 item 3: "the logic library offers accessors such as at(parent, v)").
+//
+// A formal half names array elements through these accessors, so a later change of how the C
+// lowering represents an array (a struct field, a vector model) changes one definition, not every
+// clause. The definitions are non-recursive; the file states no lemma.
+
+// element i of an integer array (for example at(parent, v))
+logic integer at{L}(int *a, integer i) = a[i];
+
+// element i of a float array, read as a real (WP's -wp-model +real)
+logic real at_real{L}(float *a, integer i) = a[i];
+
+// a parent or distance array entry that marks "not reached yet" (any negative value)
+predicate unreached{L}(int *a, integer v) = a[v] < 0;
+
+// a[0 .. n-1] and b[0 .. n-1] hold the same values (a formal half states "unchanged" with its own
+// \old(a[k]); this compares two arrays of one state)
+predicate same_prefix{L}(int *a, int *b, integer n) = \forall integer k; 0 <= k < n ==> a[k] == b[k];
