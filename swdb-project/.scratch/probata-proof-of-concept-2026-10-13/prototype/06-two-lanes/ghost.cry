@@ -1,0 +1,302 @@
+// Ticket 06 spike (b), 2026-10-14 ET. THROWAWAY proof semantics for the DX100 maa_* calls
+// (map 12), in Cryptol, used by the per-call SAW summaries in summaries.saw.
+//
+// Map 12's rules encoded here:
+//   * values as if each command finished at issue (the value functions below);
+//   * an unready read is a hazard: the CPU may read a tile, or ask its size, only when the tile's
+//     writer is covered (`ready`), and may touch a memory region only when no uncovered command
+//     writes it (or, for a CPU write, reads it) (`cpuOk`, map 12 item 4, per region);
+//   * the gem5 wait rule (research 14, port in map 08): a wait on tile t covers every unfinished
+//     command that names t (inputs and outputs, not a condition tile) and, transitively, the
+//     producers of their inputs; a range loop that filled its output tile does not follow its tile
+//     inputs (RangeFuser.cc:166-168); the dispatch stall (IF.cc:193-212) covers every user of an
+//     output tile before a command is issued; a CPU register write covers the register's readers;
+//     the memory-region stall (IF.cc:213-219) covers earlier commands on a region when either writes.
+//
+// Encoding: a command is named by its first output tile (its "op id"). The dispatch stall covers
+// every command naming an output tile before the new one is issued, so at most one live command
+// carries each id; stale ids are cleared at issue. Masks: bit t (LSB = 0) <-> tile t or op id t.
+// Every command the two proof units issue writes a tile (the store has dst tile5); a store with
+// no destination tile has no id and is rejected by its summary (assumption, ticket 06 Answer).
+module ghost where
+
+type NT = 8        // tiles of one core (NUM_CORES = 1)
+type NR = 8        // scalar registers of one core
+type NM = 4        // memory regions: 0 queue, 1 offsets, 2 neighbors, 3 parent
+type TS = 2        // TILE_SIZE (build constant, "lanes = 2")
+type Mask = [NT]
+type RMask = [NR]
+type MMask = [NM]
+type Tiles = [NT][TS][32]
+
+type G = { rdy : Mask          // bit t: tile t's current writer is covered (or there is none)
+         , wr : [NT]Mask       // per tile: its writer op (one bit, or 0)
+         , outs : [NT]Mask     // per op id: the tiles the op writes
+         , anc : [NT]Mask      // per op id: its producers, transitively (followed when it is covered)
+         , named : [NT]Mask    // per tile: ops naming it (counted roles; the wait rule)
+         , users : [NT]Mask    // per tile: ops naming it, condition included (the stall)
+         , rrd : [NR]Mask      // per register: ops reading it
+         , rwr : [NR]Mask      // per register: its writer op (DX100), or 0
+         , reg : [NR][32]      // register values
+         , sz : [NT][32]       // tile sizes
+         , fpr : [NM]Mask      // per region: ops reading it
+         , fpw : [NM]Mask      // per region: ops writing it
+         }
+
+// The state lives in the harness global swdb_ghost (uint32_t[81]), never touched by program code:
+// SAW writes memory as What4 values and folds their concrete parts at every call, while a SAW
+// ghost variable keeps the whole unevaluated history of calls as one growing term (attempt 1:
+// 15-minute timeout, 3.7 GB). Layout: rdy, wr[8], outs[8], anc[8], named[8], users[8], rrd[8],
+// rwr[8], reg[8], sz[8], fpr[4], fpw[4].
+type NW = 81
+type GW = [NW][32]
+
+m8 : {n} (fin n) => [n][32] -> [n]Mask
+m8 xs = [ drop x | x <- xs ]
+
+z32 : {n} (fin n) => [n]Mask -> [n][32]
+z32 xs = [ zext x | x <- xs ]
+
+unpack : GW -> G
+unpack w = { rdy = drop (w @ 0),
+             wr = m8 (take`{8} (drop`{1} w)), outs = m8 (take`{8} (drop`{9} w)),
+             anc = m8 (take`{8} (drop`{17} w)), named = m8 (take`{8} (drop`{25} w)),
+             users = m8 (take`{8} (drop`{33} w)), rrd = m8 (take`{8} (drop`{41} w)),
+             rwr = m8 (take`{8} (drop`{49} w)), reg = take`{8} (drop`{57} w),
+             sz = take`{8} (drop`{65} w), fpr = m8 (take`{4} (drop`{73} w)),
+             fpw = m8 (drop`{77} w) }
+
+pack : G -> GW
+pack g = [zext g.rdy] # z32 g.wr # z32 g.outs # z32 g.anc # z32 g.named # z32 g.users
+         # z32 g.rrd # z32 g.rwr # g.reg # g.sz # z32 g.fpr # z32 g.fpw
+
+// The state after alloc_MAA/init_MAA: nothing pending, every tile ready.
+g0 : G
+g0 = { rdy = ~zero, wr = zero, outs = zero, anc = zero, named = zero, users = zero,
+       rrd = zero, rwr = zero, reg = zero, sz = zero, fpr = zero, fpw = zero }
+
+tbit : [32] -> Mask
+tbit t = 1 << t
+
+rbit : [32] -> RMask
+rbit r = 1 << r
+
+// OR of xs @ i over the bits i set in sel.
+orOver : {n} (fin n) => [n] -> [n]Mask -> Mask
+orOver sel xs = foldl (||) zero [ if b then x else zero | x <- xs | b <- reverse sel ]
+
+setAt : {n, a} (fin n) => [n] -> [n]a -> a -> [n]a
+setAt sel xs v = [ if b then v else x | x <- xs | b <- reverse sel ]
+
+orAt : {n} (fin n) => [n] -> [n]Mask -> Mask -> [n]Mask
+orAt sel xs v = [ if b then x || v else x | x <- xs | b <- reverse sel ]
+
+clearAll : {n} (fin n) => Mask -> [n]Mask -> [n]Mask
+clearAll c xs = [ x && ~c | x <- xs ]
+
+live : G -> Mask -> Mask
+live g m = m && ~g.rdy
+
+// Ops covered when the ops in s are covered: s plus, transitively, their producers. `anc` is the
+// transitive producer set, computed once at issue (attempt 3; attempts 1-2 iterated a fixpoint
+// here at every call). Equivalent: a covered op's producers were covered with it, and an op id is
+// cleared from every mask before it is reused.
+closure : G -> Mask -> Mask
+closure g s = s || orOver s g.anc
+
+cover : G -> Mask -> G
+cover g s = { g | rdy = g.rdy || orOver (live g (closure g s)) g.outs }
+
+// Issue one command. outs: tiles written; ins: tile inputs with counted roles; cond: condition
+// tile (a dependency, but not named for the wait rule); regIn / regOut: registers read / written;
+// rd / wrm: memory regions read / written; filled: a range loop that filled its output tile.
+issue : G -> Mask -> Mask -> Mask -> RMask -> RMask -> MMask -> MMask -> Bit -> G
+issue g outs ins cond regIn regOut rd wrm filled = g3
+  where
+    // 1. stalls: users of each output tile; earlier commands on the same regions.
+    regionLive = orOver wrm [ a || b | a <- g.fpr | b <- g.fpw ] || orOver rd g.fpw
+    g1 = cover g (orOver outs g.users || regionLive)
+    // 2. the ids of the output tiles are free again (their commands are covered).
+    c = outs
+    g2 = { g1 | wr = clearAll c g1.wr, anc = clearAll c g1.anc, named = clearAll c g1.named,
+                users = clearAll c g1.users, rrd = clearAll c g1.rrd, rwr = clearAll c g1.rwr,
+                fpr = clearAll c g1.fpr, fpw = clearAll c g1.fpw }
+    om = outs && (zero - outs)      // the op id: lowest output tile
+    tileDeps = orOver (ins || cond) g2.wr
+    regDeps = orOver regIn g2.rwr
+    deps = if filled then regDeps else tileDeps || regDeps
+    g3 = { g2 | anc = setAt om g2.anc (deps || orOver deps g2.anc), outs = setAt om g2.outs outs,
+                wr = setAt outs g2.wr om, rdy = g2.rdy && ~outs,
+                named = orAt (ins || outs) g2.named om,
+                users = orAt (ins || cond || outs) g2.users om,
+                rrd = orAt regIn g2.rrd om, rwr = setAt regOut g2.rwr om,
+                fpr = orAt rd g2.fpr om, fpw = orAt wrm g2.fpw om }
+
+// ---- hazard checks (summary preconditions)
+ready : G -> [32] -> Bit
+ready g t = g.rdy ! t
+
+cpuOk : G -> [32] -> Bit -> Bit
+cpuOk g m isWrite = (live g (g.fpw @ m) == zero) /\ (~isWrite \/ live g (g.fpr @ m) == zero)
+
+// The same checks over slices of swdb_ghost (the light summaries read only these words).
+readyW : [1][32] -> [32] -> Bit
+readyW rdy t = (drop (rdy @ 0) : Mask) ! t
+
+cpuOkW : [1][32] -> [8][32] -> [32] -> Bit -> Bit
+cpuOkW rdy fp m isWrite = (lw (fp @ (4 + m)) == zero) /\ (~isWrite \/ lw (fp @ m) == zero)
+  where lw x = (drop x : Mask) && ~(drop (rdy @ 0) : Mask)
+
+streamNR : [8][32] -> [32] -> [32] -> [32] -> [64]
+streamNR reg lo hi st = (s64 (reg @ hi) - s64 (reg @ lo) + s64 (reg @ st) - 1) / s64 (reg @ st)
+
+// ---- calls that only change ghost state
+waitT : G -> [32] -> G
+waitT g t = cover g (g.named @ t || g.wr @ t)
+
+constR : G -> [32] -> [32] -> G
+constR g r v = { g1 | rrd = setAt (rbit r) g1.rrd zero, rwr = setAt (rbit r) g1.rwr zero,
+                      reg = update g1.reg r v }
+  where g1 = cover g (g.rrd @ r)
+
+// ---- values (finish at issue)
+s64 : [32] -> [64]
+s64 x = sext x
+
+memAt : {l} (fin l, l >= 1, 64 >= width l) => [l][32] -> [64] -> [32]
+memAt mem i = if i < `l then mem @ i else 0
+
+tileAt : [TS][32] -> [64] -> [32]
+tileAt t i = if i < `TS then t @ i else 0
+
+// maa_stream_load: elements base[off + lo + k*stride], k < n, n = ceil((hi - lo) / stride).
+streamN : G -> [32] -> [32] -> [32] -> [64]
+streamN g lo hi st = (s64 (g.reg @ hi) - s64 (g.reg @ lo) + s64 (g.reg @ st) - 1) / s64 (g.reg @ st)
+
+streamOk : {l} (fin l, 64 >= width l) => G -> [l][32] -> [64] -> [32] -> [32] -> [32] -> Bit
+streamOk g _ off lo hi st =
+  (b >=$ 0) /\ (e >=$ b) /\ (s >$ 0) /\ (n <= `TS)                    // stream_bounds, capacity
+  /\ ((n == 0) \/ (off + b + (n - 1) * s < `l))                        // memory region
+  where
+    b = s64 (g.reg @ lo)
+    e = s64 (g.reg @ hi)
+    s = s64 (g.reg @ st)
+    n = streamN g lo hi st
+
+streamVals : {l} (fin l, l >= 1, 64 >= width l) => G -> [l][32] -> [64] -> [32] -> [32] -> [32] -> [TS][32] -> [TS][32]
+streamVals g mem off lo hi st old =
+  [ if k < n then memAt mem (off + s64 (g.reg @ lo) + k * s64 (g.reg @ st)) else o
+  | o <- old | k <- ks ]
+  where n = streamN g lo hi st
+
+streamG : G -> [32] -> [32] -> [32] -> [32] -> [32] -> G
+streamG g m lo hi st dst = { g1 | sz = update g1.sz dst (drop (streamN g lo hi st)) }
+  where g1 = issue g (tbit dst) zero zero (rbit lo || rbit hi || rbit st) zero (1 << m) zero False
+
+// maa_indirect_load (gather): dst[k] = base[off + idx[k]], k < size(idx).
+gatherOk : {l} (fin l, 64 >= width l) => G -> [l][32] -> [64] -> Tiles -> [32] -> Bit
+gatherOk g _ off td ix = and [ (k >= n) \/ ((i >=$ 0) /\ (off + s64 i < `l)) | i <- td @ ix | k <- ks ]
+  where n = zext (g.sz @ ix) : [64]
+
+gatherVals : {l} (fin l, l >= 1, 64 >= width l) => G -> [l][32] -> [64] -> Tiles -> [32] -> [32] -> [TS][32]
+gatherVals g mem off td ix dst =
+  [ if k < n then memAt mem (off + s64 i) else o | i <- td @ ix | o <- td @ dst | k <- ks ]
+  where n = zext (g.sz @ ix) : [64]
+
+gatherG : G -> [32] -> [32] -> [32] -> G
+gatherG g m ix dst = { g1 | sz = update g1.sz dst (g.sz @ ix) }
+  where g1 = issue g (tbit dst) (tbit ix) zero zero zero (1 << m) zero False
+
+// maa_range_loop: the CSR pairs (i, j) from (last_i, last_j), at most TS per call.
+type RS = ([64], [64], [64], [TS][32], [TS][32], Bit)   // i, j, count, rows, cols, ok
+
+// Lane indices 0 .. TS-1 (TS = 2).
+ks : [TS][64]
+ks = [0, 1]
+
+rangeRun : G -> Tiles -> [32] -> [32] -> [32] -> [32] -> [32] -> RS
+rangeRun g td li lj lo up st = foldl step (s64 (g.reg @ li), s64 (g.reg @ lj), 0, zero, zero, True) (zero : [2 * TS + 1])
+  where
+    n = zext (g.sz @ lo) : [64]
+    s = s64 (g.reg @ st)
+    step (i, j, c, is, js, ok) _ =
+      if (i < n) /\ (c < `TS) then
+        (if nx >=$ en then (i + 1, -1, c, is, js, ok')
+                      else (i, nx, c + 1, update is c (drop i), update js c (drop nx), ok'))
+      else (i, j, c, is, js, ok)
+      where
+        sta = s64 (tileAt (td @ lo) i)
+        en = s64 (tileAt (td @ up) i)
+        ok' = ok /\ (sta >=$ 0) /\ (en >=$ sta) /\ (en * 4 < 2 ^^ 32)  // byte_offset_overflow
+        nx = if j <$ sta then sta else j + s
+
+rangeOk : G -> Tiles -> [32] -> [32] -> [32] -> [32] -> [32] -> Bit
+rangeOk g td li lj lo up st =
+  (g.sz @ lo == g.sz @ up) /\ (s >$ 0) /\ (i >=$ 0) /\ (i <= n) /\ ok      // range_bounds
+  where
+    n = zext (g.sz @ lo) : [64]
+    s = s64 (g.reg @ st)
+    i = s64 (g.reg @ li)
+    (_, _, _, _, _, ok) = rangeRun g td li lj lo up st
+
+rangeTiles : G -> Tiles -> [32] -> [32] -> [32] -> [32] -> [32] -> [32] -> [32] -> Tiles
+rangeTiles g td li lj lo up st rows cols = update (update td rows rs) cols cs
+  where
+    (_, _, c, is, js, _) = rangeRun g td li lj lo up st
+    rs = [ if k < c then x else o | x <- is | o <- td @ rows | k <- ks ]
+    cs = [ if k < c then x else o | x <- js | o <- td @ cols | k <- ks ]
+
+rangeG : G -> Tiles -> [32] -> [32] -> [32] -> [32] -> [32] -> [32] -> [32] -> G
+rangeG g td li lj lo up st rows cols =
+  { g1 | sz = update (update g1.sz rows (drop c)) cols (drop c),
+         reg = update (update g1.reg li (drop i)) lj (drop j) }
+  where
+    (i, j, c, _, _, _) = rangeRun g td li lj lo up st
+    g1 = issue g (tbit rows || tbit cols) (tbit lo || tbit up) zero (rbit li || rbit lj || rbit st)
+               (rbit li || rbit lj) zero zero (c == `TS)
+
+// maa_alu_scalar with LT_OP (13), the only opcode the units use: dst[k] = src[k] <s reg.
+aluVals : G -> Tiles -> [32] -> [32] -> [32] -> [TS][32]
+aluVals g td src r dst =
+  [ if k < n then (if x <$ g.reg @ r then 1 else 0) else o | x <- td @ src | o <- td @ dst | k <- ks ]
+  where n = zext (g.sz @ src) : [64]
+
+aluG : G -> [32] -> [32] -> [32] -> G
+aluG g src r dst = { g1 | sz = update g1.sz dst (g.sz @ src) }
+  where g1 = issue g (tbit dst) (tbit src) zero (rbit r) zero zero zero False
+
+// maa_indirect_store_vector with a condition and a destination tile (old values), in order k.
+storeOk : {l} (fin l, 64 >= width l) => G -> [l][32] -> [64] -> Tiles -> [32] -> [32] -> [32] -> Bit
+storeOk g _ off td ix sr cd =
+  (g.sz @ ix == g.sz @ sr) /\                                                   // store_size
+  and [ (k >= n) \/ (c == 0) \/ ((i >=$ 0) /\ (off + s64 i < `l))                // memory region
+      | i <- td @ ix | c <- td @ cd | k <- ks ]
+  where n = zext (g.sz @ ix) : [64]
+
+storeRun : {l} (fin l, l >= 1, 64 >= width l) => G -> [l][32] -> [64] -> Tiles -> [32] -> [32] -> [32] -> ([l][32], [TS][32])
+storeRun g mem off td ix sr cd = foldl step (mem, zero) ks
+  where
+    n = zext (g.sz @ ix) : [64]
+    step (m, olds) k =
+      if (k < n) /\ (tileAt (td @ cd) k != 0)
+      then (if a < `l then update m a (tileAt (td @ sr) k) else m, update olds k (memAt m a))
+      else (m, olds)
+      where a = off + s64 (tileAt (td @ ix) k)
+
+storeDst : {l} (fin l, l >= 1, 64 >= width l) => G -> [l][32] -> [64] -> Tiles -> [32] -> [32] -> [32] -> [32] -> [TS][32]
+storeDst g mem off td ix sr cd dst = [ if k < n then x else o | x <- olds | o <- td @ dst | k <- ks ]
+  where
+    n = zext (g.sz @ ix) : [64]
+    (_, olds) = storeRun g mem off td ix sr cd
+
+storeMem : {l} (fin l, l >= 1, 64 >= width l) => G -> [l][32] -> [64] -> Tiles -> [32] -> [32] -> [32] -> [l][32]
+storeMem g mem off td ix sr cd = (storeRun g mem off td ix sr cd).0
+
+// The OLD strict-layer wait rule (before certify 1.7), for TDStepMAA's control 2 only: a wait
+// covers the tile's writer and, transitively, its producers; not the other commands naming the tile.
+waitOld : G -> [32] -> G
+waitOld g t = cover g (g.wr @ t)
+
+storeG : G -> [32] -> [32] -> [32] -> [32] -> [32] -> G
+storeG g m ix sr cd dst = { g1 | sz = update g1.sz dst (g.sz @ ix) }
+  where g1 = issue g (tbit dst) (tbit ix || tbit sr) (tbit cd) zero zero (1 << m) (1 << m) False
