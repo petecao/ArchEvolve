@@ -272,6 +272,10 @@ def prove(args):
     pins = _pins(store, candidate, unit, (), method)
     if whole:
         pins.update(cbmc_equivalence.prepare(args, store, candidate, args.function))
+    from swdb import logic_library                    # ticket 26: the logic files the formal halves use
+    logic = logic_library.pins(library, library.get(contract) if contract else None)
+    if logic:
+        pins["logic"] = logic
     if getattr(args, "minimum_bounds", None):
         pins["minimum_bounds"] = _minimum_pin(store, args.minimum_bounds, unit)
     if getattr(args, "define", None):

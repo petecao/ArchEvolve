@@ -66,8 +66,10 @@ with hint records and the proof hint check.
 
 **Frozen settings** (the record's `settings`): the lineup's frama-c-wp flags (must hold `-wp-cache none`
 and `-wp-model +real`), `-machdep x86_64`, `-wp-prover alt-ergo,z3,cvc5`, `-wp-timeout` =
-`budgets.wp_seconds_per_solver` (30), `-wp-par 1`, default Frama-C warning levels (an annotation error
-aborts), a fresh session, every `FRAMAC_WP*` environment variable removed.
+`budgets.wp_seconds_per_solver` (30), `-wp-par 1`, `-wp-prop=-@lemma` (ticket 26: logic-library lemmas
+are proven once, with the method; see [format-v0.4-logic-library.md](format-v0.4-logic-library.md)), default
+Frama-C warning levels (an annotation error aborts), a fresh session, every `FRAMAC_WP*` environment variable
+removed.
 
 **Minimal verdict reader:** proven only when every row of this run's per-property report (`-report-csv`)
 is `Valid` and every goal of its per-goal report (`-wp-report-json`) passed. The consolidated summary line

@@ -31,6 +31,7 @@ GEM5 = {'gem5_commit': 'e4fc4afdf894f295442cef3604667a469fab8e62', 'path': 'src/
         'lines': '193-212'}
 
 GRAPH = """\
+// version: 1.0
 // Fixture logic library (Probata PoC ticket 20): one non-recursive and one primitive-recursive
 // definition, and an inductive definition used only by a lemma.
 predicate in_range(integer k, integer n) = 0 <= k < n;
@@ -54,6 +55,9 @@ LOGIC_CONTROLS = {
     'bad_axiom': ('axiomatic Ax {\n  logic integer ax_f(integer x);\n'
                   '  axiom ax_f_def: \\forall integer x; ax_f(x) == x;\n}\n', 'axiom'),
 }
+# Ticket 26 (2026-10-14 ET): every logic-library file starts with its version line.
+LOGIC_CONTROLS = {name: (text if text.startswith('// version:') else '// version: 1.0\n' + text, expected)
+                  for name, (text, expected) in LOGIC_CONTROLS.items()}
 
 
 def frame_contract(cid, *, role=None, version='1.0', clauses=None, **extra):
@@ -218,7 +222,8 @@ def test_without_framac_every_acsl_field_is_reported_unchecked_never_valid(posit
     records, root = positive
     checked = run_swdb('validate', '--records', records.path, '--library', root, env={'SWDB_FRAMA_C': 'none'})
     assert checked.returncode == 0, checked.stderr
-    unchecked = [line for line in checked.stderr.splitlines() if line.startswith('UNCHECKED: ')]
+    unchecked = [line for line in checked.stderr.splitlines() if line.startswith('UNCHECKED: ')
+                 and 'logic file not type-checked' not in line]   # ticket 26 reports logic files apart
     assert len(unchecked) == 6, checked.stderr   # 4 offload clauses with acsl, one per enabling contract
     assert all('acsl' in line and 'Frama-C' in line for line in unchecked)
     assert '6 acsl field(s) unchecked' in checked.stdout
@@ -230,9 +235,10 @@ def test_without_the_c_lowering_every_acsl_field_is_reported_unchecked_never_val
     records, root = positive
     checked = run_swdb('validate', '--records', records.path, '--library', root, env={'SWDB_CLANG': 'none'})
     assert checked.returncode == 0, checked.stderr
-    unchecked = [line for line in checked.stderr.splitlines() if line.startswith('UNCHECKED: ')]
+    unchecked = [line for line in checked.stderr.splitlines() if line.startswith('UNCHECKED: ')
+                 and 'logic file not type-checked' not in line]   # ticket 26 reports logic files apart
     assert len(unchecked) == 6 and all('C lowering' in line for line in unchecked), checked.stderr
-    assert 'type-checked' not in checked.stdout
+    assert 'acsl field(s) type-checked' not in checked.stdout     # logic files need no C lowering (ticket 26)
 
 
 # --- negative controls: one shared library, one validate run --------------------------------
