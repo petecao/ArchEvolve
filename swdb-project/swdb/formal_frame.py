@@ -39,9 +39,10 @@ RANGE = re.compile(r'\s*(>=|<=|==|>|<)\s*\d+(\.\d+)*\s*(,\s*(>=|<=|==|>|<)\s*\d+
 LOGIC_FOLDER = 'logic'
 
 
-def logic_files(root):
-    """{entry ID: path} of the library's logic-library files."""
-    return {f'logic.{path.stem}': path for path in sorted((root / LOGIC_FOLDER).glob('*.acsl'))}
+def logic_files(root, library=None):
+    """{entry ID: path} of the library's logic-library files (ticket 26: with the library, each entry's own file)."""
+    from swdb import logic_library
+    return {ident: found.path for ident, found in logic_library.files(root, library).items()}
 
 
 class Report:
@@ -52,16 +53,23 @@ class Report:
         self.unchecked = []
         self.checked = 0
         self.framac_version = ''
+        self.logic_checked = 0          # ticket 26: logic files type-checked on their own
+        self.logic_unchecked = []
 
 
 def check(library):
     """Check every entry and logic-library file of `library` (a swdb.library.Library)."""
     report = Report()
     vocabs, _ = vocab.load_all(paths.VOCAB)
-    files = logic_files(library.root)
+    from swdb import logic_library
+    files = logic_files(library.root, library)
     logic = acsl_subset.LogicLibrary({entry: path.read_text() for entry, path in files.items()})
     for entry, found in logic.problems.items():
         report.problems += [Problem(str(files[entry]), where, reason) for where, reason in found]
+    for entry, path in files.items():                     # ticket 26: every logic file is versioned
+        if logic_library.version_of(path.read_text()) is None:
+            report.problems.append(Problem(str(path), 'version', f'{entry} has no version line: the first line of a '
+                                           'logic-library file is "// version: <dotted numbers>" (for example 1.0)'))
     rules = {f"{eid}#{rule.get('id')}" for eid, data in library.entries.items()
              if data.get('kind') == 'proof_semantics' and isinstance(data.get('rules'), list)
              for rule in data['rules'] if isinstance(rule, dict)}
@@ -117,6 +125,10 @@ def _entry(library, entry_id, data, error, vocabs, logic, rules, pending):
                 error(f'{where}.acsl', 'acsl takes text (the formal half) and uses (logic-library entry IDs)')
                 continue
             reasons = acsl_subset.check_formal_half(acsl['text'], acsl.get('uses', []), logic)
+            reasons += [f'uses {u}, which belongs to another entry: an entry\'s own logic file serves only that '
+                        'entry (map 16 item 9)' for u in acsl.get('uses', [])
+                        if u in logic.files and u.startswith('logic.') and library.get(u[len('logic.'):]) is not None
+                        and u != f'logic.{entry_id}']
             for reason in reasons:
                 error(f'{where}.acsl', reason)
             if not reasons:
@@ -336,6 +348,7 @@ def _interface(unit_lowering, frame, error):
 
 
 def _typecheck(library, logic, files, pending, report):
+    _typecheck_logic(logic, files, report)
     if not pending:
         return
     tool = framac.locate()
@@ -370,3 +383,23 @@ def _typecheck(library, logic, files, pending, report):
                 report.checked += 1
             else:
                 error(f'clauses[{i}].acsl', f'Frama-C {tool.version} refuses the formal half: {message}')
+
+
+def _typecheck_logic(logic, files, report):
+    """Ticket 26: Frama-C parses and type-checks every logic file that passes the subset, on its own."""
+    clean = [entry for entry in files if not logic.problems.get(entry)]
+    if not clean:
+        return
+    tool = framac.locate()
+    report.framac_version = tool.version if not tool.missing else report.framac_version
+    for entry in clean:
+        path = str(files[entry])
+        if tool.missing:
+            report.logic_unchecked.append(Problem(path, '-', f'logic file not type-checked: {tool.missing}; it is '
+                                                             'unchecked, not valid'))
+            continue
+        message = framac.typecheck(tool, f'/*@\n{logic.files[entry]}\n*/\n')
+        if message is not None:
+            report.problems.append(Problem(path, '-', f'Frama-C {tool.version} refuses the logic file: {message}'))
+        else:
+            report.logic_checked += 1
