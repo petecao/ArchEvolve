@@ -162,9 +162,11 @@ def test_proposal_message_retains_provider_capture_and_edit_format(actual, tmp_p
 
 @pytest.mark.whole_store  # renders from the real ~1.3 GB checkout records
 def test_checked_in_handoff_examples_are_current():
+    # 2026-10-14 ET: one validation (~9 min on the Mac) and one index build (~5 min) of the whole store, then
+    # every message from that snapshot; 900 s left no margin.
     done = subprocess.run([sys.executable, "scripts/bfs_handoff_examples.py", "--check",
                            "--mode", "extensa", "--campaign", "extensa-gem5-bfs-20261004-a7"],
-                          cwd=REPO, capture_output=True, text=True, timeout=900)
+                          cwd=REPO, capture_output=True, text=True, timeout=2400)
     assert done.returncode == 0, done.stderr
 
 

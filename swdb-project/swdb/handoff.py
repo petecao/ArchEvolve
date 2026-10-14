@@ -299,11 +299,20 @@ def message(args):
     kind = args.message
     if kind not in KINDS:
         raise Failure(f"unknown handoff message kind: {kind}")
-    store = db.query_store(args.records, getattr(args, "db", None))
-    data = store.get(args.id, KINDS[kind])
+    return render(db.query_store(args.records, getattr(args, "db", None)), kind, args.id)
+
+
+def render(store, kind, rid):
+    """One message from an already validated store snapshot (`db.query_store`).
+
+    2026-10-14 ET: the example driver renders every message from one snapshot, so the whole store is
+    validated once rather than once per message (each validation of the full store takes minutes)."""
+    if kind not in KINDS:
+        raise Failure(f"unknown handoff message kind: {kind}")
+    data = store.get(rid, KINDS[kind])
     if data is None:
-        raise Failure(f"{KINDS[kind]} record {args.id!r} does not exist")
+        raise Failure(f"{KINDS[kind]} record {rid!r} does not exist")
     from swdb.extensa_boundary import require_team_inputs
-    require_team_inputs(store, [args.id], command="handoff-message")
+    require_team_inputs(store, [rid], command="handoff-message")
     return {"profile_package": profile_package, "rewrite_proposal": rewrite_proposal,
             "evaluation_result": evaluation_result}[kind](store, data)

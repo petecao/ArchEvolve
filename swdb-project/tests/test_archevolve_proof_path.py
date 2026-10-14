@@ -546,6 +546,25 @@ def test_a_block_missing_the_speed_sentence_stops_rendering(seed, monkeypatch):
         _render_in_process(seed)
 
 
+def _undated(message):
+    message = copy.deepcopy(message)
+    message["content"]["certification_level"]["snapshot"].pop("at")
+    return message
+
+
+def test_several_messages_render_from_one_validated_store_exactly_as_the_command_renders_them(seed):
+    """The example driver renders every message from one validated snapshot (2026-10-14 ET): the whole store
+    is validated once, not once per message, and each message equals `swdb handoff-message`'s."""
+    from swdb import db, handoff
+    _prove(seed)
+    command = _handoff(seed)
+    store = db.query_store(seed.records, seed.root / "build" / "swdb.sqlite")
+    rendered = handoff.render(store, "evaluation_result", seed.made["evaluation"])
+    assert _undated(json.loads(json.dumps(rendered))) == _undated(command)
+    again = handoff.render(store, "evaluation_result", seed.made["evaluation_uncertified"])
+    assert again["content"]["certification_level"]["level"] == "uncertified"
+
+
 def test_the_proof_records_behind_the_block_pass_validate_and_build(seed):
     _prove(seed, unbounded={"assumptions": SEVEN})
     assert _handoff(seed)["content"]["certification_level"]["proven"] is True
