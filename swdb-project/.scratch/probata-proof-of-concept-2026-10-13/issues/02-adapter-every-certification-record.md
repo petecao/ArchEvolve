@@ -2,7 +2,7 @@
 
 Created: 2026-10-13 22:17 ET
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** None — can start immediately
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Modules", table "Loop, modes and guards", row "Campaign adapter"; "Proof routes" (each rewrite certified alone); "Testing Decisions", seams 2, 3 and 4; "Proof-of-concept plan", Extensa track); decisions: [17](../../formal-verification-2026-10-09/issues/17-enabling-rewrites.md) (item 7; side findings), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md) (build items)
 **Time estimate:** about half a day
@@ -18,23 +18,23 @@ which contract.
 
 ## Acceptance
 
-- [ ] **Two contracts, both certify.** Through the campaign loop on the native adapter and on the
+- [x] **Two contracts, both certify.** Through the campaign loop on the native adapter and on the
       gem5 adapter, with the certification command scripted the way the existing campaign tests
       script it: one certification runs per contract, and the adapter returns both record IDs, each
       paired with its contract, in contract order.
-- [ ] The campaign's entry for that candidate artifact links both record IDs. Each linked ID resolves
+- [x] The campaign's entry for that candidate artifact links both record IDs. Each linked ID resolves
       to a certification record bound to that candidate artifact and that contract.
-- [ ] **One contract fails.** Both record IDs are still returned and linked. The outcome is failed,
+- [x] **One contract fails.** Both record IDs are still returned and linked. The outcome is failed,
       the failed checks are named exactly as today, and the certification repair path runs as today.
-- [ ] **A contract refused before any record exists.** Its slot is linked with no record ID and with
+- [x] **A contract refused before any record exists.** Its slot is linked with no record ID and with
       its refusal check. The outcome is failed, as today.
-- [ ] **One contract.** One record ID; otherwise the campaign behaves as today (regression).
-- [ ] **Fixture seam.** `swdb campaign --fixture`, with a fixture iteration whose candidate artifact
+- [x] **One contract.** One record ID; otherwise the campaign behaves as today (regression).
+- [x] **Fixture seam.** `swdb campaign --fixture`, with a fixture iteration whose candidate artifact
       applies two contracts, writes two fixture certification records (`contract_fixture` evidence)
       and links both. `swdb validate` passes on the store, and `swdb candidate-level` names both
       records among its certifications.
-- [ ] A campaign saved before this change (one record per candidate entry) still loads and resumes.
-- [ ] Tests run with at most 2 test workers and start no real target run.
+- [x] A campaign saved before this change (one record per candidate entry) still loads and resumes.
+- [x] Tests run with at most 2 test workers and start no real target run.
 
 ## Notes
 
@@ -56,3 +56,41 @@ which contract.
   (scripted provider and certification command), as the native and gem5 campaign tests do today.
 - D35 still refuses every new real-target campaign. Tests use the existing campaign-test pattern;
   nothing starts a real campaign.
+
+## Answer
+
+Resolved 2026-10-14 ET on branch `probata-poc/t02`. All acceptance boxes are met.
+
+- **Adapter** (`swdb/campaign_targets.py`, `TargetAdapter.certify`, shared by native and gem5): returns
+  `records`, one `{"contract", "record"}` pair per contract in contract order. A contract refused before
+  any record exists is `{"contract", "record": None, "refusal": <check>}`. `record` (first record ID),
+  `outcome` and `failed_checks` are unchanged.
+- **Campaign entry** (`swdb/campaign.py`): `certification.records` copies the adapter's pairs.
+  `certification_links(entry)` reads any entry. An entry saved before this change (only `record`) reads as
+  a one-pair list; `contract` is named only when the entry used exactly one contract, else `None` (the old
+  `record` was the first non-refused record, not necessarily the first contract's).
+- **Contract-fixture adapter** (`swdb/campaign_fixture.py`): one `contract_fixture` certification per
+  contract. One contract keeps its old ID; with several, each ID ends in the contract's name
+  (`...a0.bfs_read_offload`). `command.contracts` now names only that record's contract.
+- **Docs:** `docs/reference/format-v0.4-extensa.md`, campaign summary section.
+- **Tests:** `tests/test_campaign_certification_links.py`, 8 tests: two contracts certify (native and gem5);
+  one fails (repairs off; repair path on); refusal slot; one contract; `--fixture` with `swdb validate` and
+  `swdb candidate-level`; resume of a pre-change `state.json`. A stale exact-dict assertion was updated in
+  `tests/test_extensa_targets.py`. Scripted certification command and fixture runners only; one test
+  worker; no real target run.
+- **Run:** the 18 campaign, Extensa and provider test files that use the Extensa testkits (plus
+  `test_extensa_boundary.py`, `test_extensa_machinery.py`): 320 passed, 1 deselected, 44 min, one worker
+  (log `/tmp/claude/probata-runs/02/wide.log`, outside the repo). Implementation commit 4c77c651.
+
+Assumption: the link is a list of `{contract, record[, refusal]}` pairs beside the kept `record`. This is
+the smallest change: old summaries and state files stay valid, and no schema constrains candidate entries.
+
+Assumption: the contract-fixture adapter applies the attempt's one fixture outcome and `failed_checks` to
+every contract. The fixture file has no per-contract outcome, and no acceptance box needs one.
+
+Assumption: seam 3 drives only the fixture adapter. The real adapters use the target-test pattern
+(`testkit.extensa_targets.run` with a scripted certify), as the ticket notes say.
+
+Side finding: the real `materialize` reuses the candidate for an identical repaired tree (ticket 80, C19).
+A repair that returns the same patch re-certifies the same candidate ID, so a scripted certify must give
+each run a unique record ID.
