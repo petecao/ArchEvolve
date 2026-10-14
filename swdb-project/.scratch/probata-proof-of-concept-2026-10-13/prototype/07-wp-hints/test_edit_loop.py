@@ -138,5 +138,14 @@ def test_goal_print_picks_the_goal_block_by_line_part_and_kind():
     assert [b[1] for b in est] == ["Prove: R."]
     part = G.pick(bl, {"goal": "typed_TDStep_loop_assigns_3_part11", "line": 174})
     assert [b[1] for b in part] == ["Prove: S."]
+    call = ("Goal Instance of 'Pre-condition (\"dxc_summaries.h\", line %d) in '__dxc_gather'' in 'TDStep' at call "
+            "'__dxc_gather' (\"tdstep_standin.c\", line 157)\n:\nProve: %s.\n" + "-" * 60 + "\n")
+    bl2 = G.blocks("".join(call % (n, p) for n, p in [(97, "A"), (98, "B"), (99, "C")]))
+    got = G.pick(bl2, {"goal": "typed_TDStep_call___dxc_gather_5_dxc_gather_requires_3", "line": 157})
+    assert [b[1] for b in got] == ["Prove: C."]
+    asg = "Goal Assigns (\"tdstep_standin.c\", line 61) in 'TDStep' (%d/%d):\nProve: %s.\n" + "-" * 60 + "\n"
+    bl3 = G.blocks(asg % (2, 2, "N") + asg % (2, 5, "E2") + asg % (5, 5, "E5"))
+    assert [b[1] for b in G.pick(bl3, {"goal": "typed_TDStep_assigns_normal_part2", "line": 61})] == ["Prove: N."]
+    assert [b[1] for b in G.pick(bl3, {"goal": "typed_TDStep_assigns_exit_part2", "line": 61})] == ["Prove: E2."]
     assert G.selection("typed_lemma_l1", "lemma") == "-wp-prop=l1"
     assert G.selection("typed_TDStep_assigns_exit_part53", "assigns") == "-wp-fct TDStep -wp-prop=@assigns"

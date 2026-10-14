@@ -25,8 +25,19 @@ def selection(goal, kind):
 
 def blocks(text):
     """[(header, body)] of the goals in a -wp-print log."""
-    out, cur = [], None
+    out, cur, pending = [], None, None
     for ln in text.splitlines():
+        if pending is not None:  # call-site headers end with a line holding only ":"
+            if ln.strip() == ":":
+                if cur:
+                    out.append(cur)
+                cur = [pending + " :", []]
+                pending = None
+                continue
+            pending = None
+        if ln.startswith("Goal ") and not ln.rstrip().endswith(":"):
+            pending = ln.rstrip()
+            continue
         if ln.startswith("Goal ") and ln.rstrip().endswith(":"):
             if cur:
                 out.append(cur)
@@ -48,6 +59,17 @@ def pick(bl, g):
     if name.startswith("typed_lemma_"):
         lem = name[len("typed_lemma_"):]
         return [b for b in bl if f"'{lem}'" in b[0]] or bl[:1]
+    if "_call_" in name:
+        # 'Instance of Pre-condition (<summary>, line L) in f ... at call f (<unit>, line N) :'; requires_K is
+        # the K-th precondition of the callee in source order.
+        cand = [b for b in bl if re.search(rf'"{L.UNIT}", line {line}\) :$', b[0])]
+        m = re.search(r"_requires_(\d+)$", name)
+        if m and cand:
+            pre = sorted({int(x.group(1)) for b in cand for x in [re.search(r'Pre-condition \("[^"]+", line (\d+)\)', b[0])] if x})
+            k = int(m.group(1))
+            if 1 <= k <= len(pre):
+                cand = [b for b in cand if f'line {pre[k - 1]}) in' in b[0]]
+        return cand[:2]
     cand = [b for b in bl if re.search(rf"line {line}\b", b[0])]
     if name.endswith("_established"):
         cand = [b for b in cand if "Establishment" in b[0]] or cand
@@ -58,6 +80,10 @@ def pick(bl, g):
         k = int(m.group(1))
         exact = [b for b in cand if re.search(rf"\({k}/\d+\):$", b[0].rstrip())]
         cand = exact or [b for b in cand if re.search(rf"\({k + 1}/\d+\):$", b[0].rstrip())] or cand
+    if len(cand) > 1 and "_assigns_normal_" in name:
+        cand = cand[:1]   # WP prints the normal-exit frame group before the exit group (checked on run 9's set)
+    elif len(cand) > 1 and "_assigns_exit_" in name:
+        cand = cand[-1:]
     if len(cand) > 1:
         toks = [t for t in name.split("_") if len(t) > 2 and t not in ("typed", "TDStep", "loop", "invariant",
                                                                           "preserved", "established", "call")]
