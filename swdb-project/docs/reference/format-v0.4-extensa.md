@@ -1,6 +1,7 @@
 # Extensa-mode record fields (format 0.4 addition)
 
 Created: 2026-10-03 (Eastern Time)
+Updated: 2026-10-14 (Eastern Time): per-contract certification links of a candidate entry (Probata PoC ticket 02)
 Updated: 2026-10-13 (Eastern Time): D35 field named alone so the format check finds it
 Updated: 2026-10-09 23:50 (Eastern Time): agreement report v2, `paired_range` (D29), ledger coverage, D35 start gate, open D30 interpretations
 Updated: 2026-10-09 (Eastern Time): artifact-receipt fields and certification failure boundary
@@ -204,6 +205,14 @@ spreads), `setup` (the profiling call), `iterations` (each with `index`, `starte
 `pauses` (`at`, `reason` usage_limit or login, `resumed_at`), `stop_reason`,
 `stop_detail`, `artifacts`, `retentions` and `library_entries`. Candidate records never
 store a certification level; the summary's `level_at_summary` is a snapshot.
+
+Each candidate entry's `certification` (null without a contract) holds `outcome`, `level_at_summary`,
+`failed_checks` when failed, `record` (the first certification record ID) and, since 2026-10-14 (Probata PoC
+ticket 02), `records`: one `{contract, record}` pair per rewrite contract, in contract order, one
+`swdb certify` run each. A contract refused before any record exists has `record: null` and its `refusal`
+check. An entry saved before then has no `records`; `swdb.campaign.certification_links` reads it as one
+pair (`contract` named only when the entry used one contract). The contract-fixture adapter writes the same
+shape: one `contract_fixture` certification per contract (a second contract's ID ends in its name).
 
 With `regions: query` (ticket 55), each iteration's `regions` row is a chosen region:
 `id` (`<implementation>/<function>:<first line>-<last line>`), a one-line `reason`, and
