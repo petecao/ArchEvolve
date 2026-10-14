@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 02, 04
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) (sections "Proof routes", "Loop, modes and guards" (implementation records, campaign loop), "Records and levels" (pins), "ArchEvolve mode", "Testing Decisions" seams 3 and 4); decisions: [17](../../formal-verification-2026-10-09/issues/17-enabling-rewrites.md) items 5-8 and its Later changes, [24](../../formal-verification-2026-10-09/issues/24-alignment-hint-kind.md) item 3, [26](../../formal-verification-2026-10-09/issues/26-proof-records.md) item 2
 **Time estimate:** about 2 days

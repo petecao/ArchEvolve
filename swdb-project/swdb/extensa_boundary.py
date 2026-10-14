@@ -436,10 +436,17 @@ def promote_candidate(args):
 
 
 def level_cli(args):
-    """The derived level, and the current promotion with who performed it (spec review C1)."""
+    """The derived level, and the current promotion with who performed it (spec review C1).
+
+    Probata ticket 04 (2026-10-14 ET, S2): `level` is the proven level when a proof record
+    counts, else the certification level, which `certification_level` keeps; `proven` and
+    `proof_records` say why. Nothing is stored.
+    Probata ticket 10 (2026-10-14 ET): the versioned level rule (`swdb.level_rule`) replaces the
+    tracer rule; format docs/reference/format-v0.4-level-rule.md."""
+    from swdb import level_rule
     from swdb.cli import _require_valid
     store = _require_valid(args.records)
-    result = certification_level(store, args.candidate)
+    result = level_rule.candidate_level(store, args.candidate)
     review = promotion(store, args.candidate)
     result["promotion"] = ({"review": review["id"], "attribution": review["attribution"]} if review else None)
     return result

@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "method_version",
+  "title": "Method-version file, library/methods/<version>.yaml (Probata proof of concept ticket 11, 2026-10-14 ET)",
+  "description": "One reviewed file listing everything a candidate artifact's proofs use apart from the rewrite contract, the candidate artifact and the proof semantics (map 26 item 3, S8). Every proof record pins it by ID and file sha256. A draft may mark a section {not_yet_built: <sentence>} (swdb.method_version). Documented in docs/reference/format-v0.4-method-version.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "kind", "sequence", "status", "created", "evidence_kind", "description",
+               "lineup", "civl", "genmc", "openmp_runtime", "c_lowering", "acsl_version", "proof_hint_vocabulary",
+               "checks", "budgets", "prompts", "shared_action_kinds", "sharing_classes", "logic_library", "models",
+               "rocq_development", "ghost_capacity_k"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^method\\.[a-z0-9][a-z0-9._-]*$", "x-reason": "a method-version ID is method.<file name>"},
+    "kind": {"const": "method_version"},
+    "sequence": {"type": "integer", "minimum": 1, "description": "Order of method versions; the current one has the highest sequence."},
+    "status": {"enum": ["draft", "frozen"], "x-reason": "status is draft or frozen (59 freezes one)"},
+    "created": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+    "evidence_kind": {"enum": ["contract_fixture"], "x-reason": "only contract_fixture method versions exist so far; ticket 21 adds the value for the first real one"},
+    "description": {"type": "string", "pattern": "\\S"},
+    "lineup": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Every tool, solver and front end the proofs use, each with one exact version and its flags (11 item 8).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["role", "tool", "version", "flags"],
+        "x-required-reasons": {
+          "version": "each lineup entry states one exact version",
+          "flags": "each lineup entry states its flags (an explicit empty list when none)"
+        },
+        "properties": {
+          "role": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+          "tool": {"type": "string", "pattern": "\\S"},
+          "version": {"type": "string", "pattern": "^[0-9]+(\\.[0-9]+)*$",
+                      "x-reason": "a lineup version is one exact version (digits and dots: no range, wildcard or \"latest\")"},
+          "flags": {"type": "array", "items": {"type": "string"}, "x-reason": "flags is a list of text flags (empty when none)"},
+          "commit": {"type": "string", "pattern": "^[0-9a-f]{7,40}$"}
+        }
+      }
+    },
+    "civl": {"type": "object", "minProperties": 1, "description": "CIVL settings (15 item 9); its k is in budgets."},
+    "genmc": {"type": "object", "minProperties": 1, "description": "GenMC settings (15 item 9)."},
+    "openmp_runtime": {"type": "object", "minProperties": 1},
+    "c_lowering": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The C-lowering subset, its translators and its naming rules (16).",
+      "required": ["subset", "translators", "naming_rules"],
+      "properties": {
+        "subset": {"$ref": "#/$defs/reference"},
+        "translators": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/reference"}},
+        "naming_rules": {"$ref": "#/$defs/reference"}
+      }
+    },
+    "acsl_version": {"type": "string", "pattern": "\\S"},
+    "proof_hint_vocabulary": {"$ref": "#/$defs/names"},
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The three checks of 13 (proof setup check, proof hint check, verdict reading), each with its version.",
+      "required": ["proof_setup_check", "proof_hint_check", "verdict_reading"],
+      "properties": {
+        "proof_setup_check": {"$ref": "#/$defs/check"},
+        "proof_hint_check": {"$ref": "#/$defs/check"},
+        "verdict_reading": {"$ref": "#/$defs/check"}
+      }
+    },
+    "budgets": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Per-candidate budgets (25 item 2): hint rounds, hint-loop wall time, bounded job time, counterexample repair rounds; WP time per solver (13 item 11); CIVL's k (15 item 9, S8).",
+      "required": ["hint_rounds", "hint_loop_wall_minutes", "bounded_job_minutes", "counterexample_repair_rounds",
+                   "wp_seconds_per_solver", "civl_k"],
+      "properties": {
+        "hint_rounds": {"$ref": "#/$defs/budget"},
+        "hint_loop_wall_minutes": {"$ref": "#/$defs/budget"},
+        "bounded_job_minutes": {"$ref": "#/$defs/budget"},
+        "counterexample_repair_rounds": {"$ref": "#/$defs/budget"},
+        "wp_seconds_per_solver": {"$ref": "#/$defs/budget"},
+        "civl_k": {"type": "integer", "minimum": 2, "x-reason": "CIVL's k is an integer of at least 2 (15 item 9)"}
+      }
+    },
+    "prompts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/reference"}},
+    "shared_action_kinds": {"$ref": "#/$defs/names"},
+    "sharing_classes": {"$ref": "#/$defs/names"},
+    "logic_library": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The shared logic library, the sum library included (24).",
+      "required": ["id", "sha256", "sum_library"],
+      "properties": {
+        "id": {"type": "string", "pattern": "\\S"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "sum_library": {"$ref": "#/$defs/reference"}
+      }
+    },
+    "models": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The std::vector and std::pair models (S8; ticket 25 writes them).",
+      "required": ["std_vector", "std_pair"],
+      "properties": {"std_vector": {"$ref": "#/$defs/reference"}, "std_pair": {"$ref": "#/$defs/reference"}}
+    },
+    "rocq_development": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The Rocq development (41-43): it holds the parallel composition theorem and the DX100 reduction lemma.",
+      "required": ["id", "sha256", "composition_theorem", "dx100_reduction_lemma"],
+      "properties": {
+        "id": {"type": "string", "pattern": "\\S"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "composition_theorem": {"type": "string", "pattern": "\\S"},
+        "dx100_reduction_lemma": {"type": "string", "pattern": "\\S"}
+      }
+    },
+    "ghost_capacity_k": {"type": "integer", "minimum": 1, "x-reason": "ghost capacity K is a positive integer (16 item 10)"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sha256"],
+      "properties": {"id": {"type": "string", "pattern": "\\S"}, "sha256": {"$ref": "#/$defs/sha256"}},
+      "x-reason": "a reference is {id, sha256}"
+    },
+    "names": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"}},
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version"],
+      "x-required-reasons": {"version": "each check has its version"},
+      "properties": {"version": {"type": "string", "pattern": "\\S"}}
+    },
+    "budget": {"type": "integer", "minimum": 1, "x-reason": "a budget is a positive integer"}
+  }
+}

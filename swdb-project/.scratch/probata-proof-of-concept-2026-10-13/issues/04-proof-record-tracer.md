@@ -1,9 +1,9 @@
 # 04 — Proof record tracer
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-14 01:12 ET (resolved; Answer); 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** None — can start immediately
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Modules", table "Records and levels"; "Records and levels" section; "What a proven verdict asserts" (bounds, assumption set); "Testing Decisions", seams 1, 2 and 4; "Choices made while writing this spec", S1 and S2); decisions: [26](../../formal-verification-2026-10-09/issues/26-proof-records.md) (items 1, 2, 4, 5, 6), [ADR 0016](../../../docs/adr/0016-proof-records-never-change-level-computed-on-read.md)
 **Time estimate:** about 1-2 days
@@ -21,7 +21,7 @@ counterexample, or not proven with a failure class. Later tickets widen each lay
 
 ## Acceptance
 
-- [ ] **Write.** `swdb prove`, with the scripted adapter set to "proven" on a certified fixture
+- [x] **Write.** `swdb prove`, with the scripted adapter set to "proven" on a certified fixture
       candidate artifact's proof unit, writes exactly one `proof` record in `records/proofs/`
       (name decided in map 26). It holds: the subject (a candidate artifact's proof unit: the
       candidate artifact's ID and the function that holds the rewrite site); the content-hash set,
@@ -33,37 +33,37 @@ counterexample, or not proven with a failure class. Later tickets widen each lay
       the fields on 12's list: adapter, host (`mac` on the Mac), worker core, wall time, CPU time,
       batch load, peak RSS, batch ID and position in the batch; and `contract_fixture` evidence. It
       has no route (optional; see below).
-- [ ] **Other verdicts.** Scripted "refuted" writes the counterexample inline in the record.
+- [x] **Other verdicts.** Scripted "refuted" writes the counterexample inline in the record.
       Scripted "not proven" writes its failure class. Each job writes one record.
-- [ ] **Never changes.** Running `swdb prove` again on the same subject writes a second record with
+- [x] **Never changes.** Running `swdb prove` again on the same subject writes a second record with
       a new ID. The first record's file is byte-identical afterward.
-- [ ] **Validate.** `swdb validate` accepts every record above and refuses each negative control: no
+- [x] **Validate.** `swdb validate` accepts every record above and refuses each negative control: no
       thread-count bound; an assumption entry whose kind is not one of the seven, or that has no
       sentence; a missing pin kind; a refuted record without a counterexample; a not-proven record
       without a failure class.
-- [ ] **Route field.** The schema has an optional route field on candidate proof-unit records, with
+- [x] **Route field.** The schema has an optional route field on candidate proof-unit records, with
       three values: route 1, route 3 and bounded direct. `swdb validate` accepts a fixture record with
       no route and one with each value. Negative controls: any other value; a route on a record
       whose subject is not a candidate proof unit (assumption; see Notes). `swdb build` loads the
       route, when present, with the record. This ticket defines and checks the field only: 61 fills
       bounded direct; 62 fills route 1 and route 3 and makes the field required on candidate
       proof-unit records.
-- [ ] **Build.** `swdb build` writes `swdb_proofs` (name decided in map 26) plus child tables for
+- [x] **Build.** `swdb build` writes `swdb_proofs` (name decided in map 26) plus child tables for
       pins, assumptions and bounds, with row counts matching the records. Every LANL core table is
       identical before and after. Rebuilding from the YAML alone gives the same tables.
-- [ ] **Level.** `swdb candidate-level` on the certified candidate artifact with the "proven" record
+- [x] **Level.** `swdb candidate-level` on the certified candidate artifact with the "proven" record
       at threads = 1 returns proven within bounds, lists the bounds and names the record ID. With
       every dimension "unbounded", thread count included, it returns proven unbounded. Nothing writes
       a level to the candidate artifact or the proof record.
-- [ ] **Level, negative controls.** The proven record gives no proven level when the candidate
+- [x] **Level, negative controls.** The proven record gives no proven level when the candidate
       artifact is uncertified or rejected (proven requires certified), when its code pin does not
       match the candidate artifact's tree hash, or when its contract pin does not match the
       contract's current content hash (the record stops counting). A refuted or not-proven record
       gives no proven level either. In each case the level is what certification gives.
-- [ ] **Evidence.** The adapter's log sits in a runs folder outside the repo, and the record names it
+- [x] **Evidence.** The adapter's log sits in a runs folder outside the repo, and the record names it
       by path and sha256. The record names no verifier scratch, and the job's scratch folder is gone
       when the job ends.
-- [ ] Tests call only public commands (`swdb prove`, `swdb validate`, `swdb build`,
+- [x] Tests call only public commands (`swdb prove`, `swdb validate`, `swdb build`,
       `swdb candidate-level`), build fixtures with the existing record-closure helper (LR-03), use no
       real verifier and run with at most 2 test workers.
 
@@ -112,3 +112,72 @@ counterexample, or not proven with a failure class. Later tickets widen each lay
   11 adds the vocabulary it must come from.
 - Assumption (not decided in the map): the field names in `swdb candidate-level`'s output for the
   proven level, its bounds and the counted proof record IDs. The existing output keeps its fields.
+
+## Answer
+
+2026-10-14 01:12 ET. Built test-first; every acceptance box is met. Branch `probata-poc/t04`.
+
+**What exists now** (full interface: [`docs/reference/format-v0.4-proof.md`](../../../docs/reference/format-v0.4-proof.md)):
+
+- **Record kind `proof`:** `schemas/proof.schema.json`, `records/proofs/<id>.yaml`, kind in
+  `vocab/record_kinds.yaml`, `swdb/store.py` and the crosswalk schema. Two new vocabularies:
+  `vocab/proof_assumption_kinds.yaml` (the seven kinds) and `vocab/proof_subject_kinds.yaml`.
+  The record writer refuses to replace a proof record (`swdb/writer.py`).
+- **`swdb prove`** (`swdb/proof.py`): `--candidate --function --adapter scripted --script
+  --runs-dir [--contract --batch --position --id]`. One job, one record, a new ID each run.
+- **Adapter interface** (`swdb/proof.py`): `ProofUnit`, `Job` (unit, summaries, scratch, log),
+  `Verdict` (verdict, bounds, assumptions, counterexample | failure_class; a bad combination
+  raises `AdapterError`), registry `ADAPTERS`. Tickets 21 and 22 add their adapters there.
+- **Route field:** optional top-level `route` (`route_1`, `route_3`, `bounded_direct`), only on a
+  `candidate_proof_unit` subject; loaded into `swdb_proofs.route`. For 19, 61, 62.
+- **Build:** `swdb_proofs`, `swdb_proof_pins`, `swdb_proof_assumptions`, `swdb_proof_bounds`
+  (`swdb/db.py`; documented in `docs/reference/database.md`). LANL core unchanged.
+- **Level on read:** `swdb.proof.proven_level` and `swdb.proof.counts`, called from
+  `swdb candidate-level` (`swdb/extensa_boundary.py`). For ticket 10 to replace with the level rule.
+
+**Tests:** `tests/test_proof_records.py`, 42 tests, public commands only, serial (no xdist), no real
+verifier. Also rerun green: `test_crosswalk.py`, `test_db.py`, `test_extensa_boundary.py`,
+`test_validate_application.py`, `test_lanl_shape.py`, `test_format_doc.py`,
+`test_statement_annotation.py`, `test_campaign_export.py`. No verifier job ran, so nothing went
+through `verifier_run.py`. Test scratch: `/tmp/claude/probata-runs/t04/` (pytest base temps only).
+
+**Assumptions** (the map leaves these open):
+
+- Assumption: `swdb prove`'s arguments are the ones above; `--contract` defaults to the one
+  contract the candidate's counting certifications name, and must be in the library beside the
+  records.
+- Assumption: job-block field names `adapter`, `host`, `worker_core`, `wall_seconds`,
+  `cpu_seconds`, `batch_load`, `peak_rss_bytes`, `batch`, `position`. On the Mac `worker_core` is
+  null (nothing is pinned); `batch_load` is the 1-minute load average at job start; `peak_rss_bytes`
+  is the swdb process's (and its children's) peak RSS; default batch `batch.<record id>`, position 1.
+  The schema leaves `job` an open object; ticket 12 owns and validates the list.
+- Assumption: route field `route`, values `route_1`, `route_3`, `bounded_direct`.
+- Assumption: pin shapes. A single pin is `{id, sha256}` or `{not_applicable: <sentence>}`;
+  `summaries` is a list of `{id, sha256, proof_record}`; `build_constants` a list of
+  `{name, value}` (empty lists, not not_applicable, when none). `swdb prove` writes code (candidate
+  tree sha256), contract (library content sha256), baseline function (the candidate's source
+  snapshot ID and tree sha256, plus the function name: a tree-level pin, since no function-level
+  hash exists yet), and not_applicable for reference semantics (30), proof semantics (27), method
+  version (11), minimum bounds (33) and predecessor snapshot (62).
+- Assumption: subject shape. `candidate_proof_unit` is `{kind, candidate, function}`; the other five
+  kinds are `{kind, id}` with an optional `part`, until the tickets that write them shape them.
+- Assumption: the adapter, not the job request, reports `bounds` and `assumptions` with its verdict
+  (WP reports threads = 1; ticket 21). The scripted script file carries both.
+- Assumption: `evidence_kind` allows only `contract_fixture`; ticket 21 adds the value for real
+  verifier records. Evidence is `evidence.adapter_log: {path, sha256}`.
+- Assumption: `swdb prove` refuses a `--runs-dir` inside the repository checkout (exit 2). The job
+  writes `<runs-dir>/<id>/adapter.log`; its scratch `<runs-dir>/<id>/scratch/` is removed in a
+  `finally`, whatever the verdict.
+- Assumption: `swdb candidate-level` output. `level` is the proven level when a record counts
+  (`proven_unbounded` or `proven_within_bounds`), else the certification level; new fields
+  `certification_level`, `proven` (`null` or `{level, bounds, records}`) and `proof_records`. With
+  several counting records at the best level, `bounds` are those of the first by ID (ticket 10
+  decides weakest-of across units and the sub-rungs).
+- Assumption: a proof record whose contract the library beside the records does not know never
+  counts (certifications count in that case; a proof pin that cannot be checked is not trusted).
+- Assumption: refuted and not-proven records may not carry the other verdict's field (validation
+  refuses a counterexample on a non-refuted record and a failure class on a non-not-proven one).
+
+**Side findings:** none blocking. In the contract-content control, editing
+`contract.bfs_read_offload` also breaks `contract.bc_read_offload`'s `derived_from` pin; the test
+re-pins it, which is expected library behavior, not a defect.

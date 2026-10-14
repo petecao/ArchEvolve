@@ -565,7 +565,8 @@ def test_expected_candidate_certificate_refusals_remain_failed_candidates(tmp_pa
     adapter._certify = refused
     adapter.store_dir = adapter.folder = adapter.library_root = tmp_path
     outcome = adapter.certify({"id": "candidate.fixture"}, [CONTRACT], 1, "kronecker", 0)
-    assert outcome == {"record": None, "outcome": "failed", "failed_checks": [check]}
+    assert outcome == {"record": None, "outcome": "failed", "failed_checks": [check],
+                       "records": [{"contract": CONTRACT, "record": None, "refusal": check}]}
     assert issubclass(common.CandidateFailure, Failure)
     assert issubclass(common.CandidateUsageError, UsageError)
 

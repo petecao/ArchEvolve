@@ -1,7 +1,7 @@
 # Rewrite providers work as tool-using agents in a guarded workspace
 
 Date: 2026-09-29 (Eastern Time)
-Updated: 2026-10-05 ET
+Updated: 2026-10-14 ET (scoped Mac exception for the Probata proof of concept)
 Status: implemented
 
 Implementation and acceptance are recorded in the
@@ -66,3 +66,13 @@ code and recorded in every receipt.
   H3; agent-decided under Yan-Ru's delegation, revisable). Stops that are not the model's
   work (usage limit, capacity, guard runtime limit, login) are uncounted and classified in one
   place. Details: [bfs-rewrite-worker.md](../reference/bfs-rewrite-worker.md#provider-login-session-lock-and-write-back).
+- 2026-10-14: **scoped exception for the Extensa Probata proof of concept** (formal-verification
+  map ticket 13 item 13; design spec open point O3, default; recorded by proof-of-concept
+  ticket 03). During the proof of concept only, proof jobs (the verifiers) and the
+  `proof_hinting` role may run on the Mac. Because the Landlock launcher is Linux-only, on
+  the Mac the `proof_hinting` provider runs in Codex's own sandbox over the frozen
+  workspace and builds nothing (O3); ticket 34 builds this confinement. Frama-C/WP runs with
+  the x86_64 machdep there. The final evaluation and its experiments run on mbit10 inside a
+  socket lane, where this ADR holds unchanged. Mac results are labeled as Mac results and
+  never mixed with mbit10 numbers. The rewrite providers themselves still run only on
+  mbit10.

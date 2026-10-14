@@ -1,6 +1,8 @@
 """Role-specific inputs over the shared provider process, guard and audit.
 
-Updated: 2026-10-06 ET (strict estimation inputs); 2026-10-05 ET (code review: login via provider_login.start, public checked_inputs and
+Updated: 2026-10-14 ET (Probata PoC ticket 01: the guard names the held-out kernels' DX100 functions
+PBFSMAA, BrandesMaa, PageRankPullMAA and DeltaStepMAA, and drops TDStepMAA2 and BCMAA, which name
+nothing); 2026-10-06 ET (strict estimation inputs); 2026-10-05 ET (code review: login via provider_login.start, public checked_inputs and
 verified_lane); 2026-10-05 ET (ticket 74: guard runtime-limit stops raise GuardInfrastructure);
 2026-10-04 ET (ticket 69: strict-mode keyword check); 2026-10-04 (login write-back). Inputs are
 built by trusted SWDB callers, never copied by walking a repository. Each file is explicit; real
@@ -23,7 +25,8 @@ from swdb.estimation_contract import OUTPUT_SCHEMA as ESTIMATION_OUTPUT_SCHEMA
 FORBIDDEN_KEYS = {"evaluator", "verification", "correctness_check", "protections",
                   "workloads", "workload", "candidates", "candidate", "input_args",
                   "canonical_path", "command", "raw_artifact", "raw_artifacts", "artifact"}
-FORBIDDEN_SOURCE = re.compile(r"\b(?:TDStepMAA|DOBFSMAA|TDStepMAA2|BCMAA)\b")
+# The DX100 authors' accelerated functions (map 18 item 6; BrandesMaa by design-spec O2 default).
+FORBIDDEN_SOURCE = re.compile(r"\b(?:TDStepMAA|DOBFSMAA|PBFSMAA|BrandesMaa|PageRankPullMAA|DeltaStepMAA)\b")
 FILE_SCHEMA = {"type": "object", "additionalProperties": False,
                "required": ["path", "content"], "properties": {
                    "path": {"type": "string"}, "content": {"type": "string"}}}
