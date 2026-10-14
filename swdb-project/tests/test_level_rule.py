@@ -199,14 +199,22 @@ def record_pin(seed, rid):
 
 
 def proof_semantics(seed, name, sequence, target="dx100"):
-    """A proof-semantics version file in library/proof_semantics/ (ticket 27 writes the real ones)."""
+    """A proof-semantics version file in library/proof_semantics/ (ticket 27 writes the real ones).
+
+    Since ticket 20 the folder holds typed-library entries of kind proof_semantics (ID prefix
+    `semantics.`, formal_frame, version, rules; no `status`), so the fixture is one such entry. The
+    level rule's version line still reads `target` and `sequence`."""
     folder = seed.library / "proof_semantics"
     folder.mkdir(exist_ok=True)
     path = folder / f"{name}.yaml"
-    path.write_text(yaml.safe_dump({"id": f"proof_semantics.{name}", "kind": "proof_semantics", "target": target,
-                                    "sequence": sequence, "status": "draft", "evidence_kind": "contract_fixture",
-                                    "description": f"Fixture proof-semantics version {name}."}, sort_keys=False))
-    return {"id": f"proof_semantics.{name}", "sha256": _sha(path)}
+    ident = f"semantics.{name}"
+    path.write_text(yaml.safe_dump({
+        "id": ident, "kind": "proof_semantics", "formal_frame": 1, "version": f"{sequence}.0",
+        "target": target, "sequence": sequence,
+        "provenance": {"origin": {"intrinsic_specification": "fixture-10"}}, "clauses": [],
+        "rules": [{"id": "wait", "statement": f"Fixture proof-semantics version {name}: a read waits for its command.",
+                   "assumed": {"owner": "fixture"}}]}, sort_keys=False))
+    return {"id": ident, "sha256": _sha(path)}
 
 
 def method_version(seed, name, sequence):
@@ -533,7 +541,7 @@ def _assume(kind, ident, sentence):
 
 SEVEN = [
     _assume("assumed_clause", "contract.bfs_read_offload#L3", "No other thread writes the frontier during the call."),
-    _assume("proof_semantics", "proof_semantics.v1", "DX100 follows its proof semantics v1."),
+    _assume("proof_semantics", "semantics.v1", "DX100 follows its proof semantics v1."),
     _assume("summary", "intrinsic.dxc_gather", "dxc_gather meets its summary, not proven in this job."),
     _assume("reduction", "lemma.dx100-reduction", "Finish-at-issue values plus hazard freedom match the hardware."),
     _assume("trusted_tool", "frama-c-wp-33.0", "Frama-C/WP 33.0 reports goals correctly."),
