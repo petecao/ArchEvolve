@@ -123,7 +123,7 @@ replays a refutation further, on the strict layer (`replay_label`).
 | `pins.translator` | `{id: swdb-cbmc-translator-<version>, sha256 of swdb/cbmc_translator.py}` |
 | `pins.summaries` | one `{id, sha256, proof_record}` per summarized callee |
 | `evidence.reports` | `differential_c`, `differential_cxx` and their outputs, `cbmc_input` (`job.c`), `cbmc_output` (CBMC's JSON), `replay_cxx`, `handler`, all under `<runs-dir>/<record>/cbmc/` |
-| `assumptions`, `tools` | one `trusted_tool` entry each: `swdb-c-lowering-1`, `clang-22.1.8`, `swdb-cbmc-translator-1`, `cbmc-6.11.0`, and the SAT solver inside CBMC (`cadical-in-cbmc-6.11.0`, from the lineup's `--sat-solver`) |
+| `assumptions`, `tools` | one `trusted_tool` entry each: `swdb-c-lowering-2`, `clang-22.1.8`, `swdb-cbmc-translator-1`, `cbmc-6.11.0`, and the SAT solver inside CBMC (`cadical-in-cbmc-6.11.0`, from the lineup's `--sat-solver`) |
 
 The method version must list both the C lowering tool and the CBMC translator (ID and sha256) in
 `c_lowering.translators`, and pin `cbmc` (`6.11` matches 6.11.0) and `clang` in its `lineup`; a mismatch runs

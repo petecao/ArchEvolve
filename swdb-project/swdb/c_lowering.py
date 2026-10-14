@@ -1,18 +1,30 @@
-"""The C lowering tool: a core-subset C++ proof unit to C with the C++ names kept, plus anchors.
+"""The C lowering tool: a C++ proof unit in the declared subset to C with the C++ names kept, plus anchors.
 
-Created: 2026-10-14 ET (Probata proof of concept ticket 21). Design: formal-verification map 16 items 3
-and 6 (the C lowering keeps C++ names, so formal halves type-check unchanged), 13 items 4 and 7 (stable
-anchors for proof hints), 11 item 3 (the C lowering tool is a trusted tool). Format:
-docs/reference/format-v0.4-c-lowering-wp.md.
+Created: 2026-10-14 ET (Probata proof of concept ticket 21). Updated: 2026-10-14 ET (ticket 24: the declared
+C++ subset). Design: formal-verification map 16 items 3 and 6 (the C lowering keeps C++ names, so formal
+halves type-check unchanged; the subset by construct), 13 items 4 and 7 (stable anchors for proof hints),
+11 item 3 (the C lowering tool is a trusted tool). Format: docs/reference/format-v0.4-c-lowering-wp.md.
 
 - Deterministic code, never an LLM. clang 22.1.8 parses the C++ (`-ast-dump=json`, one filtered dump
-  per lowered declaration); this module prints C from that syntax tree. The output names no absolute
+  per declaration name); this module prints C from that syntax tree. The output names no absolute
   path and no time, so the same input gives the same bytes.
-- The core subset (ticket 21): free functions with scalar, pointer and array parameters, global and
-  local scalars and arrays, `if`, `for`, `while`, `do`, `break`, `continue`, `return`, integer and
-  bool arithmetic, explicit casts, calls to functions defined in the same translation unit (lowered
-  too). Anything else raises `Unsupported` naming the construct and its line: never a crash and
-  never a partial C lowering (ticket 24 widens the subset; floating point comes with real-valued units).
+- The subset (ticket 24, map 16 item 6): C plus references; classes without inheritance or virtual
+  functions; member functions and operators; constructors and destructors as explicit calls;
+  instantiated templates; `new[]`/`delete[]`; `enum class`, `constexpr`, `static_assert`; `std::min`,
+  `std::max`, `std::copy`, `std::swap` through C models; OpenMP `parallel`, `for` (static, dynamic,
+  `nowait`), `critical`, `atomic`, `barrier`, `reduction`; `__sync_*` and `__atomic_*` through C models;
+  calls named in `summaries` (and every `__dxc_*` and `maa_*` call, which needs one) kept as calls.
+  OpenMP and atomics get their meaning for ONE thread here (a parallel region runs as one thread; a
+  CAS is a read, a compare and a write); the program for one symbolic thread of N is ticket 45.
+  Anything else raises `Unsupported` naming the construct and its source line: never a crash and
+  never a partial C lowering. `std::vector` and `std::pair` models are ticket 25.
+- `float` and `double` (types, literals, conversions) print as the same C types: the lowering is faithful
+  to IEEE semantics. What a proof means for them is the verifier's float model, a method-version choice:
+  the frozen WP flags read `-wp-model +real` (floats as mathematical reals; the rounding gap is an
+  assumption entry, map 11 item 6), `+float` would check IEEE rounding. `long double` stays outside.
+- Naming rules (NAMING_RULES, a pinned part of every proof record's content-hash set; RULES below):
+  C++ names are kept; a class becomes a struct of the same name and fields; references become
+  pointers; operators, member functions, constructors and destructors become named functions.
 - Anchors: `ghost.globals` (one file-scope slot), and per function `<f>.contract` (right before its
   definition), `<f>.entry`, `<f>.loopN.head` (right before each loop), `<f>.sN.before` and
   `<f>.sN.after` (around every statement, numbered in pre-order). Each is one comment line
@@ -31,14 +43,48 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 TOOL_ID = "swdb-c-lowering"
-TOOL_VERSION = "1"                   # bump on any change to what the tool prints (a new method version)
-NAMING_RULES = "kept-names.1"        # C++ names unchanged; unnamed parameters become swdb_unnamed_<n>
+TOOL_VERSION = "2"                   # bump on any change to what the tool prints (a new method version)
+NAMING_RULES = "kept-names.2"        # bump on any change to RULES
+RULES = (
+    "A function, parameter, local, global or field keeps its C++ name.",
+    "An unnamed parameter becomes swdb_unnamed_<n> (n counts from 1 in each function).",
+    "A class or struct C becomes `struct C` with the same fields in order, plus `typedef struct C C;`.",
+    "An instantiated class template C<A1, ..., An> becomes the struct C_<a1>_..._<an> (defaulted arguments "
+    "included), each argument "
+    "spelled by its C type: spaces become `_`, `*` becomes `ptr`, a negative integer -k becomes `mk`.",
+    "An instantiated function template f<A1, ..., An> becomes the function f_<a1>_..._<an> (the same spelling).",
+    "A member function m of class C becomes C_m with a first parameter `C *this` (`const C *this` for a "
+    "const member function); a static member function becomes C_m with no `this`.",
+    "A constructor of C becomes C_ctor(C *this, ...), called right after the declaration of the object; a "
+    "destructor becomes C_dtor(C *this), called at the end of the object's scope.",
+    "An operator becomes a named function: operator@ of class C is C_operator_<name>, a free operator@ is "
+    "operator_<name>, with <name> from OPERATOR_NAMES.",
+    "A reference T& becomes a pointer T*: the callee dereferences it, the caller passes an address (a "
+    "temporary bound to a reference becomes a C compound literal).",
+    "An enum or enum class becomes its underlying integer type (int if none is fixed); an enumerator is "
+    "printed as its value.",
+    "std::min, std::max, std::swap and std::copy at type T become calls of the C models std_min_<t>, "
+    "std_max_<t>, std_swap_<t>, std_copy_<t>.",
+    "__atomic_<op>(p, ...) and __sync_<op>(p, ...) at type T become calls of the C models "
+    "swdb_atomic_<op>_<t> and swdb_sync_<op>_<t> (one-thread meaning, memory order dropped).",
+    "new T[n] becomes (T *)malloc(sizeof(T) * (size_t)(n)); delete[] p becomes free(p).",
+    "An OpenMP directive becomes a comment line `/* omp <directive> (one thread) */` before its statement.",
+    "A call to a summarized function keeps its (template-instantiated) name and gets a prototype only.",
+)
+RULES_SHA256 = hashlib.sha256("\n".join((NAMING_RULES, *RULES)).encode()).hexdigest()
+OPERATOR_NAMES = {"[]": "index", "()": "call", "==": "eq", "!=": "ne", "<": "lt", "<=": "le", ">": "gt", ">=": "ge",
+                  "+": "add", "-": "sub", "*": "mul", "/": "div", "%": "mod", "&": "and", "|": "or", "^": "xor",
+                  "<<": "shl", ">>": "shr", "=": "assign", "+=": "add_assign", "-=": "sub_assign",
+                  "*=": "mul_assign", "/=": "div_assign", "%=": "mod_assign", "&=": "and_assign",
+                  "|=": "or_assign", "^=": "xor_assign", "<<=": "shl_assign", ">>=": "shr_assign", "++": "inc",
+                  "--": "dec", "!": "not", "~": "compl", "&&": "land", "||": "lor"}
 REQUIRED_CLANG = "22.1.8"
 STD = "c++17"
 ANCHOR = "/* swdb-anchor {} */"
 ANCHOR_LINE = re.compile(r"^\s*/\* swdb-anchor (\S+) \*/$")
 HEADERS = ("#include <stdbool.h>", "#include <stddef.h>", "#include <stdint.h>")
 TIMEOUT_SECONDS = 120
+SUMMARY_PREFIXES = ("__dxc_", "maa_")    # calls that always need a summary (map 16 item 6)
 _FOUND = {}
 
 INTEGER_TYPES = {"bool", "char", "signed char", "unsigned char", "short", "unsigned short", "int", "unsigned int",
@@ -46,14 +92,48 @@ INTEGER_TYPES = {"bool", "char", "signed char", "unsigned char", "short", "unsig
                  "uintptr_t", "int8_t", "int16_t", "int32_t", "int64_t", "uint8_t", "uint16_t", "uint32_t", "uint64_t",
                  "short int", "unsigned short int", "long int", "unsigned long int", "long long int",
                  "unsigned long long int", "signed", "unsigned", "signed int"}
+INTERNAL_TYPES = {"__size_t": "size_t", "__ptrdiff_t": "ptrdiff_t"}
+FLOAT_TYPES = {"float", "double"}    # printed as C float/double; WP reads them under the method version's float model
+UNSIGNED_OF = {"char": "unsigned char", "signed char": "unsigned char", "short": "unsigned short", "int": "unsigned int",
+               "long": "unsigned long", "long long": "unsigned long long", "int8_t": "uint8_t", "int16_t": "uint16_t",
+               "int32_t": "uint32_t", "int64_t": "uint64_t", "ptrdiff_t": "size_t", "intptr_t": "uintptr_t"}
 SUFFIX = {"int": "", "unsigned int": "U", "long": "L", "unsigned long": "UL", "long long": "LL",
           "unsigned long long": "ULL"}
 PASS_CASTS = {"LValueToRValue", "ArrayToPointerDecay", "FunctionToPointerDecay", "NoOp", "IntegralCast",
-              "IntegralToBoolean", "PointerToBoolean", "BitCast"}
-EXPLICIT_CASTS = {"CStyleCastExpr", "CXXStaticCastExpr", "CXXFunctionalCastExpr"}
+              "IntegralToBoolean", "PointerToBoolean", "BitCast", "FloatingCast", "IntegralToFloating",
+              "FloatingToIntegral", "FloatingToBoolean"}      # C converts implicitly exactly as C++ does
+EXPLICIT_CASTS = {"CStyleCastExpr", "CXXStaticCastExpr", "CXXFunctionalCastExpr", "CXXReinterpretCastExpr"}
 LOOPS = {"ForStmt", "WhileStmt", "DoStmt"}
 C_ONLY_KEYWORDS = {"restrict", "_Bool", "_Complex", "_Imaginary", "_Alignas", "_Alignof", "_Atomic", "_Generic",
                    "_Noreturn", "_Static_assert", "_Thread_local"}
+STD_MODELS = {"min", "max", "swap", "copy"}
+OMP_DIRECTIVES = {"OMPParallelDirective": "parallel", "OMPForDirective": "for",
+                  "OMPParallelForDirective": "parallel for", "OMPCriticalDirective": "critical",
+                  "OMPAtomicDirective": "atomic", "OMPBarrierDirective": "barrier"}
+OMP_REDUCTION_OPS = {"+": ("+=", "-="), "-": ("+=", "-="), "*": ("*=",), "&": ("&=",), "|": ("|=",), "^": ("^=",)}
+OMP_RUNTIME = {"omp_get_thread_num": 0, "omp_get_num_threads": 1, "omp_get_max_threads": 1, "omp_in_parallel": 0}
+ATOMIC_OPS = {"load_n", "store_n", "exchange_n", "compare_exchange_n", "fetch_add", "fetch_sub", "fetch_and",
+              "fetch_or", "fetch_xor", "add_fetch", "sub_fetch", "and_fetch", "or_fetch", "xor_fetch"}
+SYNC_OPS = {"bool_compare_and_swap", "val_compare_and_swap", "fetch_and_add", "fetch_and_sub", "fetch_and_and",
+            "fetch_and_or", "fetch_and_xor", "add_and_fetch", "sub_and_fetch", "and_and_fetch", "or_and_fetch",
+            "xor_and_fetch"}
+_ARITH = {"add": "+", "sub": "-", "and": "&", "or": "|", "xor": "^"}
+UNSUPPORTED_KINDS = {
+    "CXXMemberCallExpr": "member function call", "LambdaExpr": "lambda", "CXXThrowExpr": "exception (throw)",
+    "CXXTryStmt": "exception (try)", "CXXCatchStmt": "exception (catch)", "CXXTypeidExpr": "RTTI (typeid)",
+    "CXXDynamicCastExpr": "RTTI (dynamic_cast)", "CXXConstCastExpr": "const_cast",
+    "StringLiteral": "string literal", "FloatingLiteral": "floating-point literal (not float or double; "
+    "long double is outside the subset)", "CXXForRangeStmt": "range-based for", "SwitchStmt": "switch", "GotoStmt": "goto",
+    "CXXTemporaryObjectExpr": "temporary object of a class", "CXXBindTemporaryExpr": "temporary with a destructor",
+    "CoroutineBodyStmt": "coroutine", "CXXNoexceptExpr": "noexcept operator", "CXXPseudoDestructorExpr":
+    "pseudo-destructor call", "UserDefinedLiteral": "user-defined literal", "CXXFoldExpr": "fold expression",
+    "CXXStdInitializerListExpr": "std::initializer_list"}
+STD_CONTAINERS = {"map", "multimap", "set", "multiset", "unordered_map", "unordered_set", "unordered_multimap",
+                  "unordered_multiset", "list", "forward_list", "deque", "vector", "array", "pair", "tuple", "string",
+                  "basic_string", "queue", "stack", "priority_queue", "bitset", "span", "optional", "variant"}
+STD_STREAMS = {"basic_ostream", "basic_istream", "basic_iostream", "basic_ostringstream", "basic_istringstream",
+               "basic_stringstream", "basic_ofstream", "basic_ifstream", "basic_fstream", "ostream", "istream",
+               "iostream", "ostringstream", "istringstream", "stringstream", "ofstream", "ifstream", "fstream"}
 
 
 class LoweringError(Exception):
@@ -65,7 +145,8 @@ class Unsupported(LoweringError):
 
     def __init__(self, construct, line=None):
         self.construct, self.line = construct, line
-        super().__init__(f"unsupported construct: {construct}" + (f" (line {line})" if line else ""))
+        where = "" if not line else (f" (line {line})" if isinstance(line, int) else f" ({line})")
+        super().__init__(f"unsupported construct: {construct}{where}")
 
 
 class NotFound(LoweringError):
@@ -91,11 +172,13 @@ class Lowering:
     function: str
     text: str
     anchors: tuple
-    declaration: str            # the C headers plus the unit function's prototype (for type-checking formal halves)
+    declaration: str            # the C headers, types and globals plus the unit function's prototype (formal halves)
     parameters: tuple           # (name, C type, is_pointer) of the unit function
     source_sha256: str
     defines: tuple = ()
     tool: dict = field(default_factory=dict)
+    summaries: tuple = ()       # ({name, c_name, summary}) per summarized function the C calls (prototype only)
+    models: tuple = ()          # C model functions the C defines (std::*, __atomic_*, __sync_*, OpenMP runtime)
 
     @property
     def sha256(self):
@@ -105,6 +188,10 @@ class Lowering:
     def anchors_json(self):
         data = {"tool": self.tool, "function": self.function, "c_lowering_sha256": self.sha256,
                 "anchors": list(self.anchors)}
+        if self.summaries:
+            data["summaries"] = list(self.summaries)
+        if self.models:
+            data["models"] = list(self.models)
         return json.dumps(data, indent=1, sort_keys=True) + "\n"
 
     @property
@@ -159,13 +246,19 @@ def _probe(command):
 
 
 def identity():
-    """{id, sha256} of the C lowering tool itself (this module's source) and of the clang binary it runs."""
+    """{id, sha256} of the C lowering tool (this module's source), its naming rules, and the clang binary it runs."""
     tool = locate()
     here = Path(__file__)
-    found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": _file_sha256(here)}}
+    found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": _file_sha256(here)},
+             "naming_rules": naming_rules()}
     if not tool.missing:
         found["clang"] = {"id": f"clang-{tool.version}", "sha256": _file_sha256(_binary(tool.command[0]))}
     return found
+
+
+def naming_rules():
+    """{id, sha256} of the naming rules: the pin a proof record's content-hash set carries (map 16 item 3)."""
+    return {"id": NAMING_RULES, "sha256": RULES_SHA256}
 
 
 def _binary(command):
@@ -187,7 +280,8 @@ def _file_sha256(path):
 # --- clang's syntax tree -------------------------------------------------------------------
 
 def _dump(tool, source, name, includes, defines):
-    """Every top-level declaration clang's filtered dump prints for `name` (a list of JSON nodes)."""
+    """Every top-level declaration clang's filtered dump prints for `name` (a list of JSON nodes), each node's
+    location resolved (`_file`, `_line` on every location object; clang prints file and line only on change)."""
     command = [*tool.command, "-x", "c++", f"-std={STD}", "-fopenmp", "-fsyntax-only", "-Xclang", "-ast-dump=json",
                "-Xclang", f"-ast-dump-filter={name}", f"-I{Path(source).parent}"]
     command += [f"-I{folder}" for folder in includes] + [f"-D{define}" for define in defines] + [str(source)]
@@ -204,70 +298,602 @@ def _dump(tool, source, name, includes, defines):
         if at < 0:
             return found
         node, at = decoder.raw_decode(text, at)
+        _resolve_locations(node, {"file": str(source), "line": None})
         found.append(node)
 
 
 def _named(nodes, name, kinds):
+    """Top-level dump nodes of kind in `kinds` named `name` (kept for ticket 22's cbmc_adapter._cut)."""
     return [n for n in nodes if n.get("name") == name and n.get("kind") in kinds and not n.get("isImplicit")]
 
 
-# --- types -------------------------------------------------------------------------------------
+def _resolve_locations(node, state):
+    stack = [node]
+    while stack:
+        item = stack.pop()
+        if isinstance(item, dict):
+            if "offset" in item:
+                if "file" in item:
+                    state["file"] = item["file"]
+                if "line" in item:
+                    state["line"] = item["line"]
+                item["_file"], item["_line"] = state["file"], state["line"]
+            stack.extend(reversed(list(item.values())))
+        elif isinstance(item, list):
+            stack.extend(reversed(item))
+
+
+def _where(node):
+    """`<file name> line N` of a node (expansion location for a macro), or None."""
+    loc = node.get("loc") or {}
+    if not loc.get("_line"):
+        loc = (node.get("range") or {}).get("begin") or {}
+    if "expansionLoc" in loc:
+        loc = loc["expansionLoc"]
+    if not loc.get("_line"):
+        return None
+    return f"{Path(loc['_file']).name} line {loc['_line']}"
+
 
 def _qual(node):
     return (node.get("type") or {}).get("qualType", "")
 
 
-def _ctype(qual_type, name="", line=None):
-    """The C declarator of a core-subset type (with `name`, or abstract when name is empty)."""
-    text = re.sub(r"\bstd::", "", qual_type).strip()
-    if "&" in text:
-        raise Unsupported(f"reference type {qual_type}", line)
-    if re.search(r"[<>:(){}]", text):
-        raise Unsupported(f"type {qual_type}", line)
-    dims = ""
-    match = re.fullmatch(r"(.*?)\s*((?:\[\d+\])+)", text)
-    if match:
-        text, dims = match.group(1), match.group(2)
-        if not name:
-            raise Unsupported(f"array type {qual_type} outside a declaration", line)
-    parts = text.split("*")
-    words = parts[0].split()
-    base = " ".join(w for w in words if w not in ("const", "volatile"))
-    if base in ("float", "double", "long double"):
-        raise Unsupported(f"floating-point type {qual_type} (real-valued units come with later tickets)", line)
-    if base not in INTEGER_TYPES and not (base == "void" and len(parts) > 1) and not (base == "void" and not name):
-        raise Unsupported(f"type {qual_type}", line)
-    stars = ""
-    for quals in parts[1:]:
-        quals = quals.split()
-        if any(q not in ("const", "volatile") for q in quals):
-            raise Unsupported(f"type {qual_type}", line)
-        stars += "*" + ("".join(f"{q} " for q in quals))
-    head = parts[0].strip()
-    if not name:
-        return f"{head} {stars}".rstrip() if stars else head
-    return f"{head} {stars}{name}{dims}"
+def _types(node):
+    found = node.get("type") or {}
+    return found.get("qualType", ""), found.get("desugaredQualType")
 
 
-def _return_type(function_type, line):
-    """The return type of a FunctionDecl's qualType `R (P1, P2)`."""
-    depth = 0
-    for at in range(len(function_type) - 1, -1, -1):
-        char = function_type[at]
-        if char == ")":
+def _children(node):
+    return [c for c in node.get("inner", []) if isinstance(c, dict)]
+
+
+def _has_body(node):
+    return any(c.get("kind") == "CompoundStmt" for c in _children(node))
+
+
+def _strip(node):
+    """The node under no-op wrappers (implicit casts that change nothing, parentheses, cleanups)."""
+    while node.get("kind") in ("ImplicitCastExpr", "ParenExpr", "ExprWithCleanups", "ConstantExpr",
+                               "SubstNonTypeTemplateParmExpr") and \
+            (node.get("kind") != "ImplicitCastExpr" or node.get("castKind") in ("NoOp", "LValueToRValue")):
+        node = _operand(node)
+    return node
+
+
+def _operand(node):
+    """The expression a wrapper holds (a substituted template parameter also lists its parameter declaration)."""
+    return [c for c in _children(node) if not c.get("kind", "").endswith("Decl")][-1]
+
+
+def _is_std(node):
+    mangled = node.get("mangledName", "")
+    return mangled.startswith(("_ZNSt", "__ZNSt", "_ZSt", "__ZSt"))
+
+
+# --- C++ types -------------------------------------------------------------------------------------
+
+def _split_top(text, sep=","):
+    """Split at `sep` outside <>, () and []."""
+    parts, depth, start = [], 0, 0
+    for at, char in enumerate(text):
+        if char in "<([":
             depth += 1
-        elif char == "(":
+        elif char in ">)]":
             depth -= 1
-            if depth == 0:
-                return function_type[:at].strip()
-    raise Unsupported(f"function type {function_type}", line)
+        elif char == sep and depth == 0:
+            parts.append(text[start:at].strip())
+            start = at + 1
+    parts.append(text[start:].strip())
+    return [p for p in parts if p]
+
+
+def _type_tokens(text):
+    """Top-level tokens of a C++ type: words (template ids kept whole), `*`, `&`, `&&`, `[N]`, parentheses."""
+    tokens, at = [], 0
+    while at < len(text):
+        char = text[at]
+        if char.isspace():
+            at += 1
+        elif text.startswith("&&", at):
+            tokens.append("&&")
+            at += 2
+        elif char in "*&()":
+            tokens.append(char)
+            at += 1
+        elif char == "[":
+            end = text.index("]", at)
+            tokens.append(text[at:end + 1])
+            at = end + 1
+        else:
+            match = re.match(r"[A-Za-z_][\w:]*|-?\d+|\.\.\.", text[at:])
+            if not match:
+                tokens.append(char)
+                at += 1
+                continue
+            word, at = match.group(0), at + len(match.group(0))
+            while at < len(text) and text[at] == "<":                 # a template id: keep <...> with the word
+                depth, end = 0, at
+                while end < len(text):
+                    depth += {"<": 1, ">": -1}.get(text[end], 0)
+                    if depth == 0:
+                        break
+                    end += 1
+                word, at = word + text[at:end + 1], end + 1
+                while at < len(text) and text.startswith("::", at):  # Outer<T>::Inner
+                    match = re.match(r"::[A-Za-z_]\w*", text[at:])
+                    word, at = word + match.group(0), at + len(match.group(0))
+            tokens.append(word)
+    return tokens
+
+
+@dataclass
+class _CppType:
+    base: str            # "unsigned long", "pvector", "std::map"
+    args: tuple          # template arguments (raw text) or ()
+    cv: tuple            # qualifiers of the base
+    pointers: list       # qualifiers per `*`, innermost first
+    ref: str             # "", "&" or "&&"
+    dims: str            # "[8][2]"
+
+
+def _parse_type(text, line):
+    text = re.sub(r"\b(struct|class|union|typename)\s+", "", text.strip())
+    if "(lambda at" in text:
+        raise Unsupported("lambda", line)
+    if "(unnamed " in text or "(anonymous " in text:
+        raise Unsupported("unnamed type (a struct, union or enum with no name)", line)
+    if "(" in text:
+        raise Unsupported(f"type {text} (function or member pointer types are outside the subset)", line)
+    tokens = _type_tokens(text)
+    dims = ""
+    while tokens and tokens[-1].startswith("["):
+        dims = tokens.pop() + dims
+    ref = ""
+    if tokens and tokens[-1] in ("&", "&&"):
+        ref = tokens.pop()
+    star = tokens.index("*") if "*" in tokens else len(tokens)
+    head, tail = tokens[:star], tokens[star:]
+    cv = tuple(t for t in head if t in ("const", "volatile"))
+    words = [t for t in head if t not in ("const", "volatile", "enum")]
+    pointers = []
+    for token in tail:
+        if token == "*":
+            pointers.append([])
+        elif token in ("const", "volatile") and pointers:
+            pointers[-1].append(token)
+        else:
+            raise Unsupported(f"type {text}", line)
+    if not words or any(t in ("&", "&&", "...") for t in words):
+        raise Unsupported(f"type {text}", line)
+    base, args = " ".join(words), ()
+    if "<" in base:
+        if len(words) != 1 or not base.endswith(">"):
+            raise Unsupported(f"type {text}", line)
+        base, inside = base.split("<", 1)
+        args = tuple(_split_top(inside[:-1]))
+    return _CppType(base, args, cv, [tuple(p) for p in pointers], ref, dims)
+
+
+def _c_known(base):
+    plain = re.sub(r"^std::", "", base)
+    return plain in INTEGER_TYPES or plain in INTERNAL_TYPES or plain in FLOAT_TYPES or plain == "void"
+
+
+def _std_name(base):
+    return re.sub(r"^std::(__\w+::)?", "", base) if base.startswith("std::") else None
+
+
+def _mangle_text(ctext):
+    text = re.sub(r"\s*\*", " ptr", ctext.strip())
+    text = re.sub(r"\s+", "_", text)
+    return text.replace("-", "m")
+
+
+def _return_and_params(function_type, line):
+    """(return type, [parameter types], variadic) of a function type `R (P1, P2) const noexcept(...)`."""
+    depth, start = 0, None
+    for at, char in enumerate(function_type):
+        if char == "<":
+            depth += 1
+        elif char == ">":
+            depth -= 1
+        elif char == "(" and depth == 0:
+            start = at
+            break
+    if start is None:
+        raise Unsupported(f"function type {function_type}", line)
+    depth = 0
+    for end in range(start, len(function_type)):
+        depth += {"(": 1, ")": -1}.get(function_type[end], 0)
+        if depth == 0:
+            break
+    params = _split_top(function_type[start + 1:end])
+    variadic = bool(params) and params[-1] == "..."
+    params = [p for p in params if p not in ("void", "...")]
+    return function_type[:start].strip(), params, variadic
+
+
+# --- the translation unit -------------------------------------------------------------------------
+
+class _Unit:
+    """One lowering: clang dumps by name, the structs, functions, globals, models and summaries the C needs."""
+
+    def __init__(self, tool, source, includes, defines, summaries):
+        self.tool, self.source, self.includes, self.defines = tool, source, tuple(includes), defines
+        self.summaries = dict(summaries or {})
+        self._dumps = {}
+        self.structs, self.struct_order, self.classes = {}, [], {}
+        self.functions, self.order, self.pending = {}, [], []
+        self.prototypes_only = {}
+        self.globals, self.global_text = [], {}
+        self.models, self.model_order = {}, []
+        self.summaries_used = []
+        self.names = {}
+        self.needs_stdlib = False
+        self._cache = {}
+        self._pragma_text = {}
+
+    # dumps
+    def dump(self, name):
+        if name not in self._dumps:
+            self._dumps[name] = _dump(self.tool, self.source, name, self.includes, self.defines)
+        return self._dumps[name]
+
+    def claim(self, cname, key, line):
+        """Reserve a C name for one C++ entity (a name collision is outside the subset, never a silent merge)."""
+        _name(cname, line)
+        known = self.names.setdefault(cname, key)
+        if known != key:
+            raise Unsupported(f"two C++ entities lower to the same C name {cname}", line)
+        return cname
+
+    # types
+    def ctype(self, qual, desugared=None, name="", line=None):
+        """The C declarator of a C++ type (with `name`, or abstract when name is empty)."""
+        parsed = _parse_type(qual, line)
+        sugared_ok = _c_known(parsed.base) and not parsed.args
+        if not sugared_ok and desugared:
+            parsed = _parse_type(desugared, line)
+        return self._declarator(parsed, name, line, qual)
+
+    def _declarator(self, parsed, name, line, shown):
+        if parsed.ref == "&&":
+            raise Unsupported(f"rvalue reference type {shown}", line)
+        base = self.base_type(parsed.base, parsed.args, line, shown)
+        if parsed.dims and not name:
+            raise Unsupported(f"array type {shown} outside a declaration", line)
+        if base == "void" and not parsed.pointers and name:
+            raise Unsupported(f"type {shown}", line)
+        head = " ".join([*parsed.cv, base])
+        stars = "".join("*" + "".join(f"{q} " for q in quals) for quals in parsed.pointers)
+        if parsed.ref:
+            stars += "*"
+        if not name:
+            return f"{head} {stars}".rstrip() if stars else head
+        return f"{head} {stars}{name}{parsed.dims}"
+
+    def base_type(self, base, args, line, shown=""):
+        plain = re.sub(r"^std::", "", base)
+        if not args and (plain in INTEGER_TYPES or base == "void"):
+            return plain
+        if not args and plain in INTERNAL_TYPES:
+            return INTERNAL_TYPES[plain]
+        if not args and plain in FLOAT_TYPES:
+            return plain
+        if plain == "long double":
+            raise Unsupported(f"floating-point type {shown or base} (long double; float and double are in the subset)",
+                              line)
+        std = _std_name(base)
+        if std is not None:
+            if std in STD_STREAMS:
+                raise Unsupported(f"stream std::{std}", line)
+            if std in STD_CONTAINERS:
+                raise Unsupported(f"standard container std::{std} (std::vector and std::pair are ticket 25)", line)
+            raise Unsupported(f"standard library type std::{std}", line)
+        if base.startswith("(") or "unnamed" in base or "anonymous" in base:
+            raise Unsupported(f"unnamed type {base}", line)
+        if "::" in base:
+            raise Unsupported(f"type {base} inside a namespace or class", line)
+        return self.named_type(base, args, line)
+
+    def named_type(self, base, args, line):
+        nodes = [n for n in self.dump(base) if n.get("name") == base and not n.get("isImplicit")]
+        kinds = {n.get("kind") for n in nodes}
+        if "EnumDecl" in kinds:
+            enum = [n for n in nodes if n.get("kind") == "EnumDecl"][0]
+            fixed = (enum.get("fixedUnderlyingType") or {})
+            return self.ctype(fixed.get("qualType", "int"), fixed.get("desugaredQualType"), line=line) \
+                if fixed else "int"
+        if kinds & {"TypedefDecl", "TypeAliasDecl"} and not args:
+            alias = [n for n in nodes if n.get("kind") in ("TypedefDecl", "TypeAliasDecl")][0]
+            qual, desugared = _types(alias)
+            return self.ctype(qual, desugared, line=line)
+        return self.struct(base, args, line)
+
+    def canonical(self, arg, line, desugared=None):
+        """A template argument in one spelling: an integer, true/false, or a C type with every typedef resolved
+        (so pvector<int32_t> and pvector<int> are one struct, as in C++)."""
+        arg = arg.strip()
+        if re.fullmatch(r"-?\d+[uUlL]*", arg):
+            return re.sub(r"[uUlL]+$", "", arg)
+        if arg in ("true", "false"):
+            return arg
+        text = self.ctype(arg, desugared, line=line)
+        return re.sub(r"[A-Za-z_]\w*", lambda m: self._builtin(m.group(0), line), text)
+
+    def _builtin(self, word, line):
+        if word in ("bool", "char", "short", "int", "long", "signed", "unsigned", "void", "const", "volatile") or \
+                word not in INTEGER_TYPES | set(INTERNAL_TYPES.values()):
+            return word
+        key = ("typedef", word)
+        if key not in self._cache:
+            aliases = [n for n in self.dump(word) if n.get("kind") in ("TypedefDecl", "TypeAliasDecl")
+                       and n.get("name") == word]
+            if not aliases:
+                raise Unsupported(f"type {word} (no typedef)", line)
+            qual, desugared = _types(aliases[0])
+            target = desugared or qual
+            if not re.fullmatch(r"[a-z ]+", target):
+                target = re.sub(r"[A-Za-z_]\w*", lambda m: self._builtin(m.group(0), line), target)
+            self._cache[key] = target
+        return self._cache[key]
+
+    def mangle(self, args, line):
+        return "_".join(_mangle_text(self.canonical(a, line)) for a in args)
+
+    def struct(self, base, args, line):
+        """The C struct name of class `base<args>`; defines it (and the types of its fields) on first use."""
+        key = (base, tuple(self.canonical(a, line) for a in args))
+        if key in self.structs:
+            return self.structs[key]
+        node = self._class_node(base, key[1], line)
+        full = (base, self._spec_args(node, line)) if args else key   # clang prints no defaulted arguments
+        if full in self.structs:
+            self.structs[key] = self.structs[full]
+            return self.structs[full]
+        cname = base if not args else f"{base}_{'_'.join(_mangle_text(a) for a in full[1])}"
+        self.claim(cname, ("struct", full), line)
+        self.structs[key] = self.structs[full] = cname
+        self.classes[cname] = node
+        where = _where(node) or line
+        if node.get("bases"):
+            raise Unsupported(f"inheritance (class {base} has a base class)", where)
+        if node.get("tagUsed") == "union":
+            raise Unsupported(f"union {base}", where)
+        fields = []
+        for child in _children(node):
+            kind = child.get("kind")
+            if kind == "CXXMethodDecl" and child.get("virtual"):
+                raise Unsupported(f"virtual function {base}::{child.get('name')}", _where(child) or where)
+            if kind == "CXXDestructorDecl" and child.get("virtual"):
+                raise Unsupported(f"virtual destructor of {base}", _where(child) or where)
+            if kind == "VarDecl":
+                raise Unsupported(f"static data member {base}::{child.get('name')}", _where(child) or where)
+            if kind == "FieldDecl":
+                if child.get("isBitfield"):
+                    raise Unsupported(f"bit-field {base}::{child.get('name')}", _where(child) or where)
+                qual, desugared = _types(child)
+                fields.append(self.ctype(qual, desugared, _name(child.get("name"), where), where) + ";")
+        if not fields:
+            raise Unsupported(f"class {base} with no fields (C has no empty struct)", where)
+        self.struct_order.append((cname, fields))
+        return cname
+
+    def _class_node(self, base, cargs, line):
+        found = []
+        for node in self.dump(base):
+            if node.get("name") != base or node.get("isImplicit"):
+                continue
+            if node.get("kind") == "CXXRecordDecl" and not cargs and node.get("completeDefinition"):
+                found.append(node)
+            elif node.get("kind") == "ClassTemplateDecl" and cargs:
+                found += _with_params(node, [c for c in _children(node) if c.get("kind") == "ClassTemplateSpecializationDecl"])
+            elif node.get("kind") == "ClassTemplateSpecializationDecl" \
+                    and cargs:
+                found.append(node)
+        if cargs:
+            found = [n for n in found if n.get("completeDefinition") and self._spec_args(n, line)[:len(cargs)] == cargs]
+            exact = [n for n in found if len(self._spec_args(n, line)) == len(cargs)]
+            found = exact or found                       # a longer argument list: the rest are defaulted arguments
+        if not found:
+            raise Unsupported(f"type {base}" + (f"<{', '.join(cargs)}>" if cargs else "") +
+                              " (no complete class definition)", line)
+        offsets = {(_where(n), json.dumps([c.get("name") for c in _children(n)])) for n in found}
+        if len(offsets) > 1 and cargs:
+            raise Unsupported(f"class template {base}<{', '.join(cargs)}> with defaulted arguments that match more "
+                              "than one instantiation", line)
+        if len(offsets) > 1:
+            raise Unsupported(f"class {base} defined more than once", line)
+        return found[0]
+
+    def _spec_args(self, node, line):
+        out, params = [], node.get("_param_types") or []
+        for child in _children(node):
+            if child.get("kind") != "TemplateArgument":
+                continue
+            kind = _qual(child) or (params[len(out)] if len(out) < len(params) else "")
+            if "value" in child and kind == "bool":                  # clang prints a 1-bit true as -1
+                out.append("false" if str(child["value"]).lower() in ("0", "false") else "true")
+            elif "value" in child:
+                out.append(self.canonical(str(child["value"]), line))
+            elif child.get("type"):
+                qual, desugared = _types(child)
+                out.append(self.canonical(qual, line, desugared))
+            else:
+                raise Unsupported("template argument that is not a type or an integer", line)
+        return tuple(out)
+
+    def class_of(self, node, line, arrow=False):
+        """(C struct name, class node) of the class an expression's type names (through `*` if arrow)."""
+        qual, desugared = _types(node)
+        parsed = _parse_type(desugared or qual, line)
+        if arrow:
+            if not parsed.pointers:
+                raise Unsupported(f"member access through {qual}", line)
+            parsed.pointers.pop()
+        if parsed.pointers or parsed.dims:
+            raise Unsupported(f"member access on {qual}", line)
+        if _c_known(parsed.base) and not parsed.args:
+            raise Unsupported(f"member access on {qual}", line)
+        cname = self.base_type(parsed.base, parsed.args, line, qual)
+        if cname not in self.classes:
+            raise Unsupported(f"member access on {qual}", line)
+        return cname, self.classes[cname]
+
+    def field(self, cname, name, line):
+        for child in _children(self.classes[cname]):
+            if child.get("kind") == "FieldDecl" and child.get("name") == name:
+                return child
+        raise Unsupported(f"member {name} of {cname}", line)
+
+    def methods(self, cname, name, kinds=("CXXMethodDecl",)):
+        found = []
+        for child in _children(self.classes[cname]):
+            if child.get("kind") in kinds and child.get("name") == name:
+                found.append(child)
+            elif child.get("kind") == "FunctionTemplateDecl" and child.get("name") == name:
+                found += _with_params(child, [c for c in _children(child) if c.get("kind") in kinds and _instantiated(c)])
+        return found
+
+    # enums
+    def enum_value(self, ref, line):
+        name, qual = ref.get("name"), (ref.get("type") or {}).get("qualType", "")
+        key = (name, qual)
+        if key in self._cache:
+            return self._cache[key]
+        enum_name = re.sub(r"^(enum\s+)", "", qual).strip()
+        if enum_name.startswith("(") or "unnamed" in enum_name:
+            nodes = [n for n in self.dump(name) if n.get("kind") == "EnumConstantDecl" and n.get("name") == name]
+            values = [_explicit_enum_value(n) for n in nodes]
+            if len(values) != 1 or values[0] is None:
+                raise Unsupported(f"enumerator {name} of an unnamed enum without an explicit value", line)
+            self._cache[key] = values[0]
+            return values[0]
+        if "::" in enum_name:
+            raise Unsupported(f"enumerator {name} of an enum inside a namespace or class", line)
+        enums = [n for n in self.dump(enum_name) if n.get("kind") == "EnumDecl" and n.get("name") == enum_name]
+        if not enums:
+            raise Unsupported(f"enumerator {name} (no enum {enum_name})", line)
+        value = -1
+        for constant in [c for c in _children(enums[0]) if c.get("kind") == "EnumConstantDecl"]:
+            explicit = _explicit_enum_value(constant)
+            value = explicit if explicit is not None else value + 1
+            self._cache[(constant.get("name"), qual)] = value
+        if key not in self._cache:
+            raise Unsupported(f"enumerator {name}", line)
+        return self._cache[key]
+
+    # functions
+    def function_node(self, name, qual_type, line, unit=False):
+        """The one definition (or declaration, for a summary) of free function `name` of type `qual_type`."""
+        candidates, methods = [], []
+        for node in self.dump(name):
+            if node.get("name") != name or node.get("isImplicit"):
+                continue
+            if node.get("kind") == "FunctionDecl":
+                candidates.append(node)
+            elif node.get("kind") == "FunctionTemplateDecl":
+                candidates += _with_params(node, [c for c in _children(node) if c.get("kind") == "FunctionDecl" and _instantiated(c)])
+            elif node.get("kind") in ("CXXMethodDecl", "CXXConstructorDecl", "CXXDestructorDecl"):
+                methods.append(node)
+        if qual_type is not None:
+            candidates = [c for c in candidates if _qual(c) == qual_type]
+        defined = [c for c in candidates if _has_body(c)]
+        if unit and not defined:
+            if methods:
+                raise Unsupported(f"member function {name} as the proof unit (the unit is a free function)")
+            if any(n.get("kind") == "FunctionTemplateDecl" for n in self.dump(name) if n.get("name") == name):
+                raise Unsupported(f"function template {name} as the proof unit (instantiate it in a free function)")
+            raise NotFound(f"{Path(self.source).name} defines no function {name}")
+        distinct = {(c.get("mangledName"), _qual(c)) for c in defined}
+        if len(distinct) > 1:
+            raise Unsupported(f"overloaded function {name}", line)
+        return defined[0] if defined else (candidates[0] if candidates else None)
+
+    def lower_function(self, node, cname, owner=None, line=None):
+        """Queue a function (or member function of struct `owner`) for lowering; returns its C name."""
+        key = ("function", owner, node.get("mangledName") or node.get("name"), _qual(node))
+        self.claim(cname, key, line)
+        if cname not in self.functions:
+            self.functions[cname] = None
+            self.pending.append((cname, node, owner))
+        return cname
+
+    def summary(self, name, cname, qual_type, line):
+        """A summarized call: a prototype from the call's function type, recorded once."""
+        self.claim(cname, ("summary", name, qual_type), line)
+        if cname not in self.prototypes_only:
+            returns, params, variadic = _return_and_params(qual_type, line)
+            if variadic:
+                raise Unsupported(f"variadic function {name}", line)
+            texts = [self.ctype(p, name=f"swdb_unnamed_{i + 1}", line=line) for i, p in enumerate(params)]
+            self.prototypes_only[cname] = f"{_join(self.ctype(returns, line=line), cname)}({', '.join(texts) or 'void'})"
+            self.summaries_used.append({"name": name, "c_name": cname, "summary": self.summaries[name]})
+        return cname
+
+    def model(self, cname, text, line):
+        self.claim(cname, ("model", text), line)
+        if cname not in self.models:
+            self.models[cname] = text
+            self.model_order.append(cname)
+        return cname
+
+    def pragma(self, node, line):
+        """The `#pragma omp ...` source text of an OpenMP directive (clang's JSON dump omits clause kinds)."""
+        begin = (node.get("range") or {}).get("begin") or {}
+        if "expansionLoc" in begin:
+            begin = begin["expansionLoc"]
+        path, offset = begin.get("_file"), begin.get("offset")
+        if not path or offset is None:
+            raise Unsupported("OpenMP directive whose pragma text cannot be read", line)
+        if path not in self._pragma_text:
+            try:
+                self._pragma_text[path] = Path(path).read_bytes()
+            except OSError:
+                raise Unsupported("OpenMP directive whose pragma text cannot be read", line) from None
+        data = self._pragma_text[path]
+        end = offset
+        while end < len(data) and (data[end:end + 1] != b"\n" or data[end - 1:end] == b"\\"):
+            end += 1
+        text = data[offset:end].decode(errors="replace").replace("\\\n", " ")
+        return re.sub(r"\s+", " ", text).strip()
+
+
+def _with_params(template, instances):
+    """Mark each instantiation with its template's parameter types (a bool argument prints as -1 or 0)."""
+    params = [_qual(p) for p in _children(template) if p.get("kind", "").endswith("ParmDecl")]
+    for instance in instances:
+        instance["_param_types"] = params
+    return instances
+
+
+def _join(ctype, name):
+    """`int *f` rather than `int * f`."""
+    return f"{ctype}{name}" if ctype.endswith("*") else f"{ctype} {name}"
+
+
+def _instantiated(node):
+    """A FunctionDecl inside a FunctionTemplateDecl that is an instantiation (not the pattern)."""
+    return any(c.get("kind") == "TemplateArgument" for c in _children(node)) or "TemplateInstantiationPattern" in node
+
+
+def _explicit_enum_value(node):
+    stack = list(_children(node))
+    while stack:
+        item = stack.pop(0)
+        if item.get("kind") == "ConstantExpr" and "value" in item:
+            return int(item["value"])
+        stack.extend(_children(item))
+    return None
 
 
 # --- the printer ---------------------------------------------------------------------------------
 
 class _Printer:
-    def __init__(self, function):
+    def __init__(self, function, unit):
         self.function = function
+        self.unit = unit
         self.lines = []
         self.anchors = []
         self.line = None
@@ -276,12 +902,23 @@ class _Printer:
         self.callees = []
         self.globals = []
         self.local_ids = set()
+        self.ref_ids = set()        # locals and parameters of reference type (printed dereferenced)
+        self.returns_ref = False
+        self.scopes = []            # per open block: [(object, destructor C name)]
+        self.calls = []             # C names of the lowered functions this one calls, in order of appearance
+        self.omp_reductions = []
 
     # positions and anchors
     def _at(self, node):
-        loc = node.get("loc") or {}
-        begin = (node.get("range") or {}).get("begin") or {}
-        self.line = loc.get("line") or begin.get("line") or self.line
+        where = _where(node)
+        if where:
+            self.line = where
+
+    def _lower(self, node, cname, owner, line):
+        cname = self.unit.lower_function(node, cname, owner, line)
+        if cname not in self.calls and cname != self.function:
+            self.calls.append(cname)
+        return cname
 
     def anchor(self, ident, kind, indent):
         self.lines.append("  " * indent + ANCHOR.format(ident))
@@ -294,8 +931,19 @@ class _Printer:
     def body(self, node, indent):
         """A function or loop body: always braced; the caller wrote the opening line."""
         children = node.get("inner", []) if node.get("kind") == "CompoundStmt" else [node]
+        self.scopes.append([])
         for child in children:
             self.statement(child, indent)
+        for name, dtor in reversed(self.scopes.pop()):
+            self.simple(f"{dtor}(&{name});", indent)
+
+    def simple(self, text, indent):
+        """One generated statement (a constructor, destructor or member-initializer step) with its anchors."""
+        self.statements += 1
+        sid = f"{self.function}.s{self.statements}"
+        self.anchor(f"{sid}.before", "before", indent)
+        self.emit(text, indent)
+        self.anchor(f"{sid}.after", "after", indent)
 
     def statement(self, node, indent):
         self._at(node)
@@ -314,15 +962,39 @@ class _Printer:
         self._statement(node, kind, indent)
         self.anchor(f"{sid}.after", "after", indent)
 
+    def _exits(self, what):
+        if any(scope for scope in self.scopes):
+            raise Unsupported(f"{what} out of a scope that destroys an object", self.line)
+
     def _statement(self, node, kind, indent):
         inner = node.get("inner", [])
         if kind == "DeclStmt":
-            self.emit(" ".join(self.declaration(d) for d in inner), indent)
+            decls = _children(node)
+            if all(d.get("kind") in ("StaticAssertDecl", "TypedefDecl", "TypeAliasDecl", "UsingDecl") for d in decls):
+                what = "static_assert" if decls[0].get("kind") == "StaticAssertDecl" else "type alias"
+                self.emit(f"/* {what} (checked by the C++ front end) */", indent)
+                return
+            texts, after = [], []
+            for decl in decls:
+                text, extra = self.local(decl)
+                texts.append(text + ";")
+                after += extra
+            self.emit(" ".join(texts), indent)
+            for line in after:
+                self.emit(line, indent)
         elif kind == "ReturnStmt":
-            self.emit(f"return {self.expr(inner[0], top=True)};" if inner else "return;", indent)
+            self._exits("return")
+            if not inner:
+                self.emit("return;", indent)
+            elif self.returns_ref:
+                self.emit(f"return {self.address(inner[0])};", indent)
+            else:
+                self.emit(f"return {self.expr(inner[0], top=True)};", indent)
         elif kind == "BreakStmt":
+            self._exits("break")
             self.emit("break;", indent)
         elif kind == "ContinueStmt":
+            self._exits("continue")
             self.emit("continue;", indent)
         elif kind == "NullStmt":
             self.emit(";", indent)
@@ -356,20 +1028,75 @@ class _Printer:
             self.emit("do {", indent)
             self.body(inner[0], indent + 1)
             self.emit(f"}} while ({self.expr(inner[1], top=True)});", indent)
+        elif kind in OMP_DIRECTIVES:
+            self.omp(node, kind, indent)
         elif kind and kind.endswith("Directive") and kind.startswith("OMP"):
             raise Unsupported(f"OpenMP directive {kind}", self.line)
-        elif kind and (kind.endswith("Expr") or kind.endswith("Operator")):
+        elif kind in UNSUPPORTED_KINDS and not (kind.endswith("Expr") or kind.endswith("Operator")):
+            raise Unsupported(UNSUPPORTED_KINDS[kind], self.line)
+        elif kind == "CXXDeleteExpr":
+            self.emit(f"{self.delete(node)};", indent)
+        elif kind and (kind.endswith("Expr") or kind.endswith("Operator") or kind == "ExprWithCleanups"):
             self.emit(f"{self.expr(node, top=True)};", indent)
         else:
             raise Unsupported(f"statement {kind}", self.line)
 
+    # OpenMP (one thread: map 15; the symbolic-N program is ticket 45)
+    def omp(self, node, kind, indent):
+        text = self.unit.pragma(node, self.line)
+        match = re.match(r"(?:#\s*)?pragma\s+omp\s+(.*)$", text)
+        if not match:
+            raise Unsupported(f"OpenMP directive {kind} (pragma text {text!r})", self.line)
+        rest, directive = match.group(1), OMP_DIRECTIVES[kind]
+        words = directive.split()
+        for word in words:
+            rest = re.sub(rf"^\s*{word}\b", "", rest)
+        if directive == "critical":
+            rest = re.sub(r"^\s*\(\s*\w+\s*\)", "", rest)
+        if directive == "atomic":
+            rest = re.sub(r"^\s*\b(read|write|update|capture|seq_cst|relaxed|acquire|release|acq_rel)\b", "", rest)
+        reductions = []
+        for clause in re.finditer(r"(\w+)\s*(\(([^()]*(?:\([^()]*\)[^()]*)*)\))?", rest):
+            name, args = clause.group(1), (clause.group(3) or "").strip()
+            if name == "schedule" and re.fullmatch(r"(static|dynamic)\s*(,.*)?", args) and directive.endswith("for"):
+                continue
+            if name == "nowait" and directive == "for":
+                continue
+            if name == "reduction" and directive in ("parallel", "for", "parallel for"):
+                op, _, names = args.partition(":")
+                if op.strip() not in OMP_REDUCTION_OPS:
+                    raise Unsupported(f"OpenMP reduction({op.strip()}:...) (only {', '.join(OMP_REDUCTION_OPS)})",
+                                      self.line)
+                reductions += [(n.strip(), op.strip()) for n in names.split(",")]
+                continue
+            raise Unsupported(f"OpenMP clause {name}" + (f"({args})" if args else "") + f" on omp {directive}",
+                              self.line)
+        statements = [c for c in _children(node) if c.get("kind")]
+        self.emit(f"/* omp {directive} (one thread) */", indent)
+        if directive == "barrier":
+            return
+        target = statements[-1] if statements else None
+        if target and target.get("kind") == "CapturedStmt":
+            captured = _children(target)[0]
+            target = _children(captured)[0]
+        if target is None:
+            raise Unsupported(f"OpenMP directive {kind} without a statement", self.line)
+        if reductions:
+            _check_reductions(target, reductions, self.line)
+        self.statement(target, indent)
+
+    # declarations
     def declaration_list(self, node):
-        return ", ".join(self._var(d, first=i == 0) for i, d in enumerate(node.get("inner", [])))
+        texts = []
+        for i, decl in enumerate(node.get("inner", [])):
+            text, extra = self.local(decl, first=i == 0)
+            if extra:
+                raise Unsupported("a constructor call in a for initializer", self.line)
+            texts.append(text)
+        return ", ".join(texts)
 
-    def declaration(self, node):
-        return self._var(node, first=True) + ";"
-
-    def _var(self, node, first):
+    def local(self, node, first=True):
+        """(declaration text without `;`, extra statement lines) of one local variable."""
         self._at(node)
         if node.get("kind") != "VarDecl":
             raise Unsupported(f"declaration {node.get('kind')}", self.line)
@@ -377,13 +1104,94 @@ class _Printer:
             raise Unsupported(f"{node.get('storageClass') or 'thread-local'} local variable {node.get('name')}", self.line)
         self.local_ids.add(node.get("id"))
         name = _name(node.get("name"), self.line)
-        text = _ctype(_qual(node), name, self.line)
+        qual, desugared = _types(node)
+        unit = self.unit
+        text = unit.ctype(qual, desugared, name, self.line)
         if not first:                                        # for (int i = 0, j = 1; ...): repeat no type
             text = name
         init = node.get("inner", [])
-        if init:
+        extra = []
+        if qual.rstrip().endswith("&"):
+            self.ref_ids.add(node.get("id"))
+            if not init:
+                raise Unsupported(f"reference {name} with no initializer", self.line)
+            return text + " = " + self.address(init[0]), extra
+        parsed = _parse_type(desugared or qual, self.line)
+        if init and _strip(init[0]).get("kind") == "CXXConstructExpr":
+            if parsed.dims:
+                cname = unit.base_type(parsed.base, parsed.args, self.line)
+                cls = unit.classes.get(cname)
+                if cls is None or any(c.get("kind") == "CXXConstructorDecl" and not c.get("isImplicit")
+                                      for c in _children(cls)):
+                    raise Unsupported(f"array of class {cname} built by a constructor", self.line)
+                self._trivial(cname, cls)
+            else:
+                try:
+                    call = self.construct(_strip(init[0]), name)
+                except _CopyInit as copy:
+                    text += " = " + copy.text
+                else:
+                    if call:
+                        extra.append(call)
+        elif init:
             text += " = " + self.initializer(init[0], node.get("init"))
-        return text
+        if not parsed.pointers and not _c_known(parsed.base):
+            cname = unit.base_type(parsed.base, parsed.args, self.line)
+            if cname in unit.classes:
+                dtor = self.destructor(cname)
+                if dtor and parsed.dims:
+                    raise Unsupported(f"array of class {cname} with a destructor", self.line)
+                if dtor:
+                    self.scopes[-1].append((name, dtor))
+        return text, extra
+
+    def destructor(self, cname):
+        dtors = [d for d in _children(self.unit.classes[cname])
+                 if d.get("kind") == "CXXDestructorDecl" and not d.get("isImplicit")]
+        if not dtors:
+            for child in _children(self.unit.classes[cname]):     # members with destructors: outside the subset
+                if child.get("kind") == "FieldDecl":
+                    parsed = _parse_type((child.get("type") or {}).get("desugaredQualType") or _qual(child), self.line)
+                    if not parsed.pointers and not parsed.ref and not _c_known(parsed.base):
+                        inner = self.unit.base_type(parsed.base, parsed.args, self.line)
+                        if inner in self.unit.classes and self.destructor(inner):
+                            raise Unsupported(f"class {cname} with a member that has a destructor", self.line)
+            return None
+        if not _has_body(dtors[0]):
+            raise Unsupported(f"destructor of {cname} with no body", self.line)
+        return self._lower(dtors[0], f"{cname}_dtor", cname, self.line)
+
+    def construct(self, node, target):
+        """The constructor call statement for object `target` (None when the C declaration alone suffices)."""
+        cname, cls = self.unit.class_of(node, self.line)
+        ctors = [c for c in _children(cls) if c.get("kind") == "CXXConstructorDecl"]
+        ctor_type = (node.get("ctorType") or {}).get("qualType")
+        args = [a for a in _children(node)]
+        chosen = [c for c in ctors if _qual(c) == ctor_type] or \
+                 [c for c in ctors if len([p for p in _children(c) if p.get("kind") == "ParmVarDecl"]) == len(args)]
+        if len(chosen) != 1:
+            raise Unsupported(f"constructor of {cname} (not exactly one match)", self.line)
+        ctor = chosen[0]
+        if ctor.get("isImplicit") or ctor.get("explicitlyDefaulted") == "default":
+            self._trivial(cname, cls)
+            if args:                                            # implicit copy or move: a C struct copy
+                raise _CopyInit(self.expr(args[0], top=True))
+            return None
+        if ctor.get("explicitlyDefaulted") or ctor.get("isDeleted"):
+            raise Unsupported(f"special constructor of {cname}", self.line)
+        if not _has_body(ctor):
+            raise Unsupported(f"constructor of {cname} with no body", self.line)
+        if len([c for c in ctors if not c.get("isImplicit")]) > 1:
+            raise Unsupported(f"overloaded constructor of {cname}", self.line)
+        name = self._lower(ctor, f"{cname}_ctor", cname, self.line)
+        params = [p for p in _children(ctor) if p.get("kind") == "ParmVarDecl"]
+        texts = [f"&{target}"] + self.arguments(params, args)
+        return f"{name}({', '.join(texts)});"
+
+    def _trivial(self, cname, cls):
+        for child in _children(cls):
+            if child.get("kind") == "FieldDecl" and _children(child):
+                raise Unsupported(f"implicit constructor of {cname} that runs default member initializers", self.line)
 
     def initializer(self, node, style):
         if node.get("kind") == "InitListExpr":
@@ -397,77 +1205,534 @@ class _Printer:
         text, atomic = self._expr(node)
         return text if top or atomic else f"({text})"
 
+    def address(self, node):
+        """The C pointer to the object an lvalue expression names (how a reference is bound)."""
+        self._at(node)
+        node = _strip(node)
+        kind = node.get("kind")
+        if kind == "MaterializeTemporaryExpr":
+            value = _children(node)[0]
+            qual, desugared = _types(node)
+            ctype = self.unit.ctype(qual, desugared, line=self.line)
+            return f"&({ctype}){{{self.expr(value, top=True)}}}"
+        if kind == "DeclRefExpr" and self._is_ref(node):
+            return _name((node.get("referencedDecl") or {}).get("name"), self.line)
+        if kind == "UnaryOperator" and node.get("opcode") == "*":
+            return self.expr(_children(node)[0])
+        if kind in ("CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr"):
+            text, _ = self._expr(node)
+            if node.get("valueCategory") == "lvalue" and text.startswith("(*") and text.endswith(")"):
+                return text[2:-1]                            # a call returning a reference returns the pointer
+            raise Unsupported("a reference bound to the result of a call that returns a value", self.line)
+        if kind == "MemberExpr" and self._member_is_ref(node):
+            return self._member(node, deref=False)
+        return f"&{self.expr(node)}"
+
+    def _is_ref(self, node):
+        ref = node.get("referencedDecl") or {}
+        return ref.get("id") in self.ref_ids or (ref.get("type") or {}).get("qualType", "").rstrip().endswith("&")
+
     def _expr(self, node):
         self._at(node)
         kind = node.get("kind")
         inner = node.get("inner", [])
         if kind == "ImplicitCastExpr":
-            if node.get("castKind") not in PASS_CASTS:
-                raise Unsupported(f"implicit conversion {node.get('castKind')}", self.line)
+            cast = node.get("castKind")
+            if cast == "NullToPointer":
+                return "((void *)0)", True
+            if cast not in PASS_CASTS:
+                raise Unsupported(f"implicit conversion {cast}", self.line)
             return self._expr(inner[0])
         if kind in EXPLICIT_CASTS:
-            if node.get("castKind") not in PASS_CASTS | {"IntegralToBoolean"}:
-                raise Unsupported(f"cast {node.get('castKind')}", self.line)
-            return f"({_ctype(_qual(node), '', self.line)}){self.expr(inner[0])}", False
-        if kind == "ParenExpr":
+            cast = node.get("castKind")
+            if kind == "CXXReinterpretCastExpr" and cast != "BitCast":
+                raise Unsupported("reinterpret_cast other than between pointer types", self.line)
+            if cast == "ToVoid":
+                return f"(void){self.expr(inner[0])}", False
+            if cast not in PASS_CASTS | {"IntegralToBoolean"}:
+                raise Unsupported(f"cast {cast}", self.line)
+            qual, desugared = _types(node)
+            ctype = self.unit.ctype(qual, desugared, line=self.line)
+            return f"({ctype}){self.expr(inner[0])}", False
+        if kind in ("ParenExpr",):
             return f"({self.expr(inner[0], top=True)})", True
+        if kind in ("ExprWithCleanups", "ConstantExpr", "SubstNonTypeTemplateParmExpr", "CXXDefaultArgExpr",
+                    "CXXDefaultInitExpr", "MaterializeTemporaryExpr") and inner:
+            if kind == "ConstantExpr" and "value" in node and _qual(node) in SUFFIX:
+                return f"{node['value']}{SUFFIX[_qual(node)]}", True
+            return self._expr(_operand(node))
         if kind == "IntegerLiteral":
             qual = re.sub(r"\bstd::", "", _qual(node))
             if qual not in SUFFIX:
                 raise Unsupported(f"integer literal of type {_qual(node)}", self.line)
             return f"{node['value']}{SUFFIX[qual]}", True
+        if kind == "FloatingLiteral":
+            qual = _qual(node)
+            try:
+                value = repr(float(node["value"]))          # clang prints a round-trip decimal; re-spell it for C
+            except (KeyError, ValueError):
+                value = "nan"
+            if qual not in FLOAT_TYPES or value in ("inf", "-inf", "nan"):
+                raise Unsupported(f"floating-point literal {node.get('value')} of type {qual}", self.line)
+            return value + ("f" if qual == "float" else ""), True
         if kind == "CXXBoolLiteralExpr":
             return ("true" if node.get("value") else "false"), True
         if kind == "CharacterLiteral":
             return f"((char){node['value']})", True
+        if kind == "StringLiteral":
+            return node["value"], True
+        if kind == "CXXNullPtrLiteralExpr":
+            return "((void *)0)", True
+        if kind == "CXXThisExpr":
+            return "this", True
         if kind == "DeclRefExpr":
-            ref = node.get("referencedDecl") or {}
-            if ref.get("kind") == "FunctionDecl":
-                if ref.get("name") not in self.callees and ref.get("name") != self.function:
-                    self.callees.append(ref["name"])
-            elif ref.get("kind") == "VarDecl":
-                if ref.get("id") not in self.local_ids and ref.get("name") not in self.globals:
-                    self.globals.append(ref["name"])
-            elif ref.get("kind") != "ParmVarDecl":
-                raise Unsupported(f"reference to a {ref.get('kind')} ({ref.get('name')})", self.line)
-            if node.get("qualifier") or "::" in str(node.get("name", "")):
-                raise Unsupported("qualified name", self.line)
-            return _name(ref.get("name"), self.line), True
+            return self._declref(node)
         if kind == "BinaryOperator":
             return f"{self.expr(inner[0])} {node['opcode']} {self.expr(inner[1])}", False
         if kind == "CompoundAssignOperator":
             return f"{self.expr(inner[0])} {node['opcode']} {self.expr(inner[1])}", False
         if kind == "UnaryOperator":
-            operand = self.expr(inner[0])
             if node.get("opcode") in ("__extension__", "__real", "__imag", "co_await"):
                 raise Unsupported(f"operator {node.get('opcode')}", self.line)
+            if node.get("opcode") == "&":
+                return self.address(inner[0]), False
+            operand = self.expr(inner[0])
             return (f"{operand}{node['opcode']}" if node.get("isPostfix") else f"{node['opcode']}{operand}"), False
         if kind == "ArraySubscriptExpr":
             return f"{self.expr(inner[0])}[{self.expr(inner[1], top=True)}]", True
         if kind == "ConditionalOperator":
             return f"{self.expr(inner[0])} ? {self.expr(inner[1])} : {self.expr(inner[2])}", False
         if kind == "CallExpr":
-            callee = inner[0]
-            while callee.get("kind") == "ImplicitCastExpr" and callee.get("castKind") == "FunctionToPointerDecay":
-                callee = callee["inner"][0]
-            ref = callee.get("referencedDecl") or {}
-            if callee.get("kind") != "DeclRefExpr" or ref.get("kind") != "FunctionDecl":
-                raise Unsupported("call through anything but a function name", self.line)
-            if str(ref.get("name", "")).startswith("__builtin"):
-                raise Unsupported(f"builtin call {ref.get('name')}", self.line)
-            for argument in inner[1:]:
-                if argument.get("kind") == "CXXDefaultArgExpr":
-                    raise Unsupported("default argument", self.line)
-            name, _ = self._expr(callee)
-            return f"{name}({', '.join(self.expr(a, top=True) for a in inner[1:])})", True
+            return self._call(node)
+        if kind == "MemberExpr":
+            return self._member(node), True
+        if kind == "CXXMemberCallExpr":
+            return self._member_call(node)
+        if kind == "CXXOperatorCallExpr":
+            return self._operator_call(node)
+        if kind == "AtomicExpr":
+            return self._atomic(node)
+        if kind == "CXXNewExpr":
+            return self._new(node)
+        if kind == "CXXDeleteExpr":
+            return self.delete(node), False
+        if kind == "UnaryExprOrTypeTraitExpr" and node.get("name") == "sizeof" and "argType" in node:
+            arg = node["argType"]
+            size = self.unit.ctype(arg.get("qualType", ""), arg.get("desugaredQualType"), line=self.line)
+            return f"sizeof({size})", True
+        if kind in ("CXXScalarValueInitExpr", "ImplicitValueInitExpr"):
+            return "0", True
+        if kind == "CXXConstructExpr":
+            raise Unsupported("a class object constructed inside an expression", self.line)
+        if kind in UNSUPPORTED_KINDS:
+            raise Unsupported(UNSUPPORTED_KINDS[kind], self.line)
         raise Unsupported(_describe(kind), self.line)
+
+    def _declref(self, node):
+        ref = node.get("referencedDecl") or {}
+        kind = ref.get("kind")
+        if kind == "EnumConstantDecl":
+            return str(self.unit.enum_value(ref, self.line)), True
+        if kind == "FunctionDecl":
+            if ref.get("name") not in self.callees and ref.get("name") != self.function:
+                self.callees.append(ref["name"])
+        elif kind == "VarDecl":
+            if ref.get("id") not in self.local_ids and ref.get("name") not in self.globals:
+                self.globals.append(ref["name"])
+        elif kind != "ParmVarDecl":
+            raise Unsupported(f"reference to a {kind} ({ref.get('name')})", self.line)
+        if node.get("qualifier") or "::" in str(node.get("name", "")):
+            raise Unsupported("qualified name", self.line)
+        name = _name(ref.get("name"), self.line)
+        if kind in ("VarDecl", "ParmVarDecl") and self._is_ref(node):
+            return f"(*{name})", True
+        return name, True
+
+    # members
+    def _member_is_ref(self, node):
+        base = _children(node)[0]
+        cname, _ = self.unit.class_of(base, self.line, arrow=node.get("isArrow"))
+        return _qual(self.unit.field(cname, node.get("name"), self.line)).rstrip().endswith("&")
+
+    def _object(self, base, arrow):
+        """C text of a pointer to the object `base` names (`base` is already a pointer when `arrow`)."""
+        return self.expr(base) if arrow else self.address(base)
+
+    def _member(self, node, deref=True):
+        base = _children(node)[0]
+        arrow = node.get("isArrow")
+        cname, _ = self.unit.class_of(base, self.line, arrow=arrow)
+        name = _name(node.get("name"), self.line)
+        field_node = self.unit.field(cname, node.get("name"), self.line)
+        stripped = _strip(base)
+        through_pointer = (stripped.get("kind") == "DeclRefExpr" and self._is_ref(stripped)) or \
+            (stripped.get("kind") == "MemberExpr" and self._member_is_ref(stripped)) or \
+            (stripped.get("kind") in ("CallExpr", "CXXMemberCallExpr", "CXXOperatorCallExpr") and
+             stripped.get("valueCategory") == "lvalue") or \
+            (stripped.get("kind") == "UnaryOperator" and stripped.get("opcode") == "*")
+        if not arrow and not through_pointer:
+            text = f"{self.expr(base)}.{name}"
+        else:
+            text = f"{self._object(base, arrow)}->{name}"
+        if deref and _qual(field_node).rstrip().endswith("&"):
+            return f"(*{text})"
+        return text
+
+    def _member_call(self, node):
+        callee, args = _children(node)[0], _children(node)[1:]
+        if callee.get("kind") != "MemberExpr":
+            raise Unsupported("call through a pointer to member", self.line)
+        base, arrow = _children(callee)[0], callee.get("isArrow")
+        cname, _ = self.unit.class_of(base, self.line, arrow=arrow)
+        method = self._method(cname, callee.get("name"), None)
+        return self._invoke(method, cname, [self._object(base, arrow)], args)
+
+    def _operator_call(self, node):
+        children = _children(node)
+        callee = children[0]
+        while callee.get("kind") == "ImplicitCastExpr":
+            callee = _children(callee)[0]
+        ref = callee.get("referencedDecl") or {}
+        name = ref.get("name", "")
+        if ref.get("kind") == "CXXMethodDecl":
+            obj = children[1]
+            cname, _ = self.unit.class_of(obj, self.line)
+            method = self._method(cname, name, (ref.get("type") or {}).get("qualType"))
+            if method.get("isImplicit") or method.get("explicitlyDefaulted"):
+                if name == "=":
+                    return f"{self.expr(obj)} = {self.expr(children[2])}", False
+                if name == "operator=":
+                    return f"{self.expr(obj)} = {self.expr(children[2])}", False
+                raise Unsupported(f"implicit operator {name} of {cname}", self.line)
+            return self._invoke(method, cname, [self.address(obj)], children[2:])
+        if ref.get("kind") == "FunctionDecl":
+            symbol = name[len("operator"):].strip()
+            if symbol not in OPERATOR_NAMES:
+                raise Unsupported(f"operator {name}", self.line)
+            target = self.unit.function_node(name, (ref.get("type") or {}).get("qualType"), self.line)
+            if target is None or not _has_body(target):
+                raise Unsupported(f"call to a function with no body in the translation unit: {name}", self.line)
+            cname = self._lower(target, f"operator_{OPERATOR_NAMES[symbol]}", None, self.line)
+            return self._finish_call(target, cname, [], children[1:])
+        raise Unsupported(f"overloaded operator call {name}", self.line)
+
+    def _method(self, cname, name, qual_type):
+        kinds = ("CXXMethodDecl",)
+        found = self.unit.methods(cname, name, kinds)
+        if qual_type:
+            found = [m for m in found if _qual(m) == qual_type] or found
+        found = [m for m in found if not m.get("isImplicit")] or found
+        distinct = {(m.get("mangledName"), _qual(m)) for m in found}
+        if not found:
+            raise Unsupported(f"member function {name} of {cname} (not found)", self.line)
+        if len(distinct) > 1:
+            raise Unsupported(f"overloaded member function {cname}::{name}", self.line)
+        return found[0]
+
+    def _invoke(self, method, cname, this_args, args):
+        name = method.get("name", "")
+        if method.get("isImplicit") or method.get("explicitlyDefaulted"):
+            raise Unsupported(f"implicit member function {cname}::{name}", self.line)
+        if not _has_body(method):
+            raise Unsupported(f"member function {cname}::{name} with no body", self.line)
+        if name.startswith("operator"):
+            symbol = name[len("operator"):].strip()
+            if symbol not in OPERATOR_NAMES:
+                raise Unsupported(f"operator {name} of {cname}", self.line)
+            suffix = f"operator_{OPERATOR_NAMES[symbol]}"
+        else:
+            suffix = name
+        targs = [c for c in _children(method) if c.get("kind") == "TemplateArgument"]
+        if targs:
+            suffix += "_" + "_".join(_mangle_text(a) for a in self.unit._spec_args(method, self.line))
+        static = method.get("storageClass") == "static"
+        lowered = self._lower(method, f"{cname}_{suffix}", cname, self.line)
+        return self._finish_call(method, lowered, [] if static else this_args, args)
+
+    def _finish_call(self, target, cname, leading, args):
+        params = [p for p in _children(target) if p.get("kind") == "ParmVarDecl"]
+        texts = leading + self.arguments(params, args)
+        call = f"{cname}({', '.join(texts)})"
+        returns, _, _ = _return_and_params(_qual(target), self.line)
+        if returns.rstrip().endswith("&"):
+            return f"(*{call})", True
+        return call, True
+
+    def arguments(self, params, args):
+        out = []
+        for i, arg in enumerate(args):
+            qual = _qual(params[i]) if i < len(params) else ""
+            if qual.rstrip().endswith("&&"):
+                raise Unsupported("rvalue reference parameter", self.line)
+            out.append(self.address(arg) if qual.rstrip().endswith("&") else self.expr(arg, top=True))
+        return out
+
+    # calls
+    def _call(self, node):
+        inner = _children(node)
+        callee = inner[0]
+        while callee.get("kind") == "ImplicitCastExpr" and callee.get("castKind") in ("FunctionToPointerDecay",
+                                                                                       "BuiltinFnToFnPtr"):
+            callee = callee["inner"][0]
+        ref = callee.get("referencedDecl") or {}
+        if callee.get("kind") != "DeclRefExpr" or ref.get("kind") not in ("FunctionDecl", "CXXMethodDecl"):
+            raise Unsupported("call through anything but a function name", self.line)
+        name = str(ref.get("name", ""))
+        qual_type = (ref.get("type") or {}).get("qualType")
+        args = inner[1:]
+        if name.startswith("__sync_"):
+            return self._sync(name, args)
+        if name in ("__atomic_thread_fence", "__atomic_signal_fence"):
+            return "(void)0", False
+        if name.startswith("__builtin"):
+            raise Unsupported(f"builtin call {name}", self.line)
+        if ref.get("kind") == "CXXMethodDecl":
+            raise Unsupported(f"call of member function {name} without an object", self.line)
+        unit = self.unit
+        if name in unit.summaries or name.startswith(SUMMARY_PREFIXES):
+            if name not in unit.summaries:
+                raise Unsupported(f"call to {name} with no summary (__dxc_* and maa_* calls go through summaries)",
+                                  self.line)
+            cname = name
+            node_found = unit.function_node(name, qual_type, self.line) if "<" not in name else None
+            if node_found is not None and _children_kind(node_found, "TemplateArgument"):
+                cname = f"{name}_{'_'.join(_mangle_text(a) for a in unit._spec_args(node_found, self.line))}"
+            unit.summary(name, cname, qual_type, self.line)
+            returns, params, _ = _return_and_params(qual_type, self.line)
+            texts = [self.address(a) if i < len(params) and params[i].rstrip().endswith("&") else self.expr(a, top=True)
+                     for i, a in enumerate(args)]
+            call = f"{cname}({', '.join(texts)})"
+            return (f"(*{call})", True) if returns.rstrip().endswith("&") else (call, True)
+        if name in STD_MODELS:
+            target = unit.function_node(name, qual_type, self.line)
+            if target is not None and _is_std(target):
+                return self._std(name, target, args)
+        target = unit.function_node(name, qual_type, self.line)
+        if target is None or not _has_body(target):
+            if name in OMP_RUNTIME and not args:
+                return self._omp_runtime(name), True
+            raise Unsupported(f"call to a function with no body in the translation unit: {name}", self.line)
+        if _is_std(target):
+            raise Unsupported(f"standard library function std::{name}", self.line)
+        mangled = target.get("mangledName", name)
+        if mangled.startswith(("_ZN", "__ZN")):
+            raise Unsupported(f"function {name} inside a namespace or class", self.line)
+        cname = name
+        if _children_kind(target, "TemplateArgument"):
+            cname = f"{name}_{'_'.join(_mangle_text(a) for a in unit._spec_args(target, self.line))}"
+        self._lower(target, cname, None, self.line)
+        return self._finish_call(target, cname, [], args)
+
+    def _omp_runtime(self, name):
+        value = OMP_RUNTIME[name]
+        text = (f"/*@ assigns \\nothing;\n    ensures \\result == {value}; */\n"
+                f"static int {name}(void) {{ return {value}; }}")
+        return f"{self.unit.model(name, text, self.line)}()"
+
+    def _scalar(self, ctype, what):
+        plain = ctype.replace("const ", "").replace("volatile ", "").strip()
+        if plain not in INTEGER_TYPES | FLOAT_TYPES and not plain.endswith("*"):
+            raise Unsupported(f"{what} on type {ctype} (scalars and pointers only)", self.line)
+        return plain
+
+    def _pointee(self, node, what):
+        qual, desugared = _types(_strip(node))
+        ctype = self.unit.ctype(qual, desugared, line=self.line)
+        if not ctype.endswith("*"):
+            raise Unsupported(f"{what} on a non-pointer", self.line)
+        return self._scalar(ctype[:-1].strip().replace("volatile", "").strip(), what)
+
+    def _std(self, name, target, args):
+        unit = self.unit
+        if name in ("min", "max"):
+            if len(args) != 2:
+                raise Unsupported(f"std::{name} with a comparator or an initializer list", self.line)
+            qual, desugared = _types(_strip(args[0]))
+            ctype = self._scalar(unit.ctype(qual, desugared, line=self.line), f"std::{name}")
+            model = f"std_{name}_{_mangle_text(ctype)}"
+            pick = "(b < a) ? b : a" if name == "min" else "(a < b) ? b : a"
+            text = (f"/*@ assigns \\nothing;\n    ensures \\result == ({pick}); */\n"
+                    f"static {ctype} {model}({ctype} a, {ctype} b) {{ return {pick}; }}")
+            unit.model(model, text, self.line)
+            return f"{model}({self.expr(args[0], top=True)}, {self.expr(args[1], top=True)})", True
+        if name == "swap":
+            qual, desugared = _types(_strip(args[0]))
+            ctype = self._scalar(unit.ctype(qual, desugared, line=self.line), "std::swap")
+            model = f"std_swap_{_mangle_text(ctype)}"
+            text = (f"/*@ requires \\valid(a) && \\valid(b);\n    assigns *a, *b;\n"
+                    f"    ensures *a == \\old(*b) && *b == \\old(*a); */\n"
+                    f"static void {model}({ctype} *a, {ctype} *b) {{ {ctype} t = *a; *a = *b; *b = t; }}")
+            unit.model(model, text, self.line)
+            return f"{model}({self.address(args[0])}, {self.address(args[1])})", True
+        if name == "copy":
+            if len(args) != 3:
+                raise Unsupported("std::copy with an execution policy", self.line)
+            element = self._pointee(args[0], "std::copy")
+            out_element = self._pointee(args[2], "std::copy")
+            if element != out_element:
+                raise Unsupported("std::copy between different element types", self.line)
+            model = f"std_copy_{_mangle_text(element)}"
+            text = (f"/*@ requires first <= last;\n"
+                    f"    requires \\valid_read(first + (0 .. last - first - 1));\n"
+                    f"    requires \\valid(d_first + (0 .. last - first - 1));\n"
+                    f"    requires \\separated(first + (0 .. last - first - 1), d_first + (0 .. last - first - 1));\n"
+                    f"    assigns d_first[0 .. last - first - 1];\n"
+                    f"    ensures \\forall integer k; 0 <= k < last - first ==> d_first[k] == \\old(first[k]);\n"
+                    f"    ensures \\result == d_first + (last - first); */\n"
+                    f"static {element} *{model}(const {element} *first, const {element} *last, {element} *d_first) {{\n"
+                    f"  /*@ loop invariant 0 <= i <= last - first;\n"
+                    f"      loop invariant \\forall integer k; 0 <= k < i ==> d_first[k] == first[k];\n"
+                    f"      loop assigns i, d_first[0 .. last - first - 1];\n"
+                    f"      loop variant last - first - i; */\n"
+                    f"  for (ptrdiff_t i = 0; i < last - first; ++i) d_first[i] = first[i];\n"
+                    f"  return d_first + (last - first);\n}}")
+            unit.model(model, text, self.line)
+            return f"{model}({', '.join(self.expr(a, top=True) for a in args)})", True
+        raise Unsupported(f"standard library function std::{name}", self.line)
+
+    def _atomic(self, node):
+        name = node.get("name", "")
+        op = name[len("__atomic_"):] if name.startswith("__atomic_") else ""
+        if op not in ATOMIC_OPS:
+            raise Unsupported(f"atomic builtin {name}", self.line)
+        children = _children(node)
+        ptr = children[0]
+        ctype = self._pointee(ptr, name)
+        if op == "load_n":
+            values = []
+        elif op == "compare_exchange_n":
+            values = [children[2], children[4]]               # ptr, order, expected, order_fail, desired, weak
+        else:
+            values = [children[2]]                            # ptr, order, value
+        model = self._atomic_model("atomic", op, ctype)
+        texts = [self.expr(ptr, top=True)] + [self.expr(v, top=True) for v in values]
+        return f"{model}({', '.join(texts)})", True
+
+    def _sync(self, name, args):
+        if name == "__sync_synchronize":
+            return "(void)0", False
+        op = re.sub(r"_\d+$", "", name[len("__sync_"):])
+        if op not in SYNC_OPS:
+            raise Unsupported(f"atomic builtin {name}", self.line)
+        ctype = self._pointee(args[0], name)
+        model = self._atomic_model("sync", op, ctype)
+        return f"{model}({', '.join(self.expr(a, top=True) for a in args)})", True
+
+    def _atomic_model(self, family, op, ctype):
+        """A one-thread C model of an atomic builtin (map 15: a CAS is a read, a compare and a write)."""
+        model = f"swdb_{family}_{op}_{_mangle_text(ctype)}"
+        pointer = ctype.endswith("*")
+        unsigned = ctype if pointer or ctype.startswith("unsigned") or ctype.startswith("uint") or ctype == "bool" \
+            or ctype == "size_t" or ctype == "uintptr_t" else UNSIGNED_OF.get(ctype)
+        head = "/*@ requires \\valid(p);\n"
+        if op == "load_n":
+            text = (f"{head}    assigns \\nothing;\n    ensures \\result == *p; */\n"
+                    f"static {ctype} {model}({ctype} *p) {{ return *p; }}")
+        elif op == "store_n":
+            text = (f"{head}    assigns *p;\n    ensures *p == v; */\n"
+                    f"static void {model}({ctype} *p, {ctype} v) {{ *p = v; }}")
+        elif op == "exchange_n":
+            text = (f"{head}    assigns *p;\n    ensures *p == v && \\result == \\old(*p); */\n"
+                    f"static {ctype} {model}({ctype} *p, {ctype} v) {{ {ctype} old = *p; *p = v; return old; }}")
+        elif op == "compare_exchange_n":
+            text = (f"/*@ requires \\valid(p) && \\valid(e) && \\separated(p, e);\n    assigns *p, *e;\n"
+                    f"    ensures \\old(*p) == \\old(*e) ==> *p == d && *e == \\old(*e) && \\result == 1;\n"
+                    f"    ensures \\old(*p) != \\old(*e) ==> *p == \\old(*p) && *e == \\old(*p) && \\result == 0; */\n"
+                    f"static bool {model}({ctype} *p, {ctype} *e, {ctype} d) {{\n"
+                    f"  if (*p == *e) {{ *p = d; return true; }}\n  *e = *p;\n  return false;\n}}")
+        elif op == "bool_compare_and_swap":
+            text = (f"{head}    assigns *p;\n"
+                    f"    ensures \\old(*p) == o ==> *p == n && \\result == 1;\n"
+                    f"    ensures \\old(*p) != o ==> *p == \\old(*p) && \\result == 0; */\n"
+                    f"static bool {model}({ctype} *p, {ctype} o, {ctype} n) {{\n"
+                    f"  if (*p == o) {{ *p = n; return true; }}\n  return false;\n}}")
+        elif op == "val_compare_and_swap":
+            text = (f"{head}    assigns *p;\n"
+                    f"    ensures \\old(*p) == o ==> *p == n;\n    ensures \\old(*p) != o ==> *p == \\old(*p);\n"
+                    f"    ensures \\result == \\old(*p); */\n"
+                    f"static {ctype} {model}({ctype} *p, {ctype} o, {ctype} n) {{\n"
+                    f"  {ctype} old = *p;\n  if (old == o) *p = n;\n  return old;\n}}")
+        else:
+            if pointer or unsigned is None or ctype == "bool":
+                raise Unsupported(f"atomic arithmetic on type {ctype}", self.line)
+            words = op.split("_")
+            fetch_first = words[0] == "fetch"
+            arith = _ARITH[words[-1] if fetch_first else words[0]]
+            new = f"({ctype})(({unsigned})old {arith} ({unsigned})v)"
+            result = "old" if fetch_first else "*p"
+            acsl_new = f"({ctype})(\\old(*p) {arith} v)"
+            acsl_result = "\\old(*p)" if fetch_first else "*p"
+            text = (f"{head}    assigns *p;\n    ensures *p == {acsl_new};\n"
+                    f"    ensures \\result == {acsl_result}; */\n"
+                    f"static {ctype} {model}({ctype} *p, {ctype} v) {{\n"
+                    f"  {ctype} old = *p;\n  *p = {new};\n  return {result};\n}}")
+        return self.unit.model(model, text, self.line)
+
+    def _new(self, node):
+        if not node.get("isArray"):
+            raise Unsupported("new of a single object (new[] is in the subset)", self.line)
+        if node.get("initStyle") or node.get("isPlacement") or node.get("placementArgs"):
+            raise Unsupported("new[] with an initializer or a placement", self.line)
+        children = _children(node)
+        if len(children) != 1:
+            raise Unsupported("new[] with an initializer", self.line)
+        qual, desugared = _types(node)
+        ctype = self.unit.ctype(qual, desugared, line=self.line)
+        element = ctype[:-1].strip()
+        if element in self.unit.classes:
+            cls = self.unit.classes[element]
+            if any(c.get("kind") == "CXXConstructorDecl" and not c.get("isImplicit") for c in _children(cls)):
+                raise Unsupported(f"new[] of class {element} with a constructor", self.line)
+            self._trivial(element, cls)
+        self.unit.needs_stdlib = True
+        return f"({ctype})malloc(sizeof({element}) * (size_t)({self.expr(children[0], top=True)}))", True
+
+    def delete(self, node):
+        if not node.get("isArray"):
+            raise Unsupported("delete of a single object (delete[] is in the subset)", self.line)
+        target = _children(node)[0]
+        qual, desugared = _types(_strip(target))
+        element = self.unit.ctype(qual, desugared, line=self.line)[:-1].strip()
+        if element in self.unit.classes and self.destructor(element):
+            raise Unsupported(f"delete[] of class {element} with a destructor", self.line)
+        self.unit.needs_stdlib = True
+        return f"free({self.expr(target, top=True)})"
+
+
+class _CopyInit(Exception):
+    """A declaration initialized by an implicit copy constructor: printed as a C struct copy."""
+
+    def __init__(self, text):
+        super().__init__(text)
+        self.text = text
+
+
+def _children_kind(node, kind):
+    return any(c.get("kind") == kind for c in _children(node))
+
+
+def _check_reductions(target, reductions, line):
+    """At one thread a reduction is the plain update, if each use of the variable is an `op=` update."""
+    names = dict(reductions)
+    stack = [(target, None)]
+    while stack:
+        node, parent = stack.pop()
+        if node.get("kind") == "DeclRefExpr":
+            name = (node.get("referencedDecl") or {}).get("name")
+            if name in names:
+                ok = parent is not None and parent.get("kind") == "CompoundAssignOperator" and \
+                    _children(parent)[0] is node and parent.get("opcode") in OMP_REDUCTION_OPS[names[name]]
+                if not ok:
+                    raise Unsupported(f"reduction variable {name} used other than in a `{names[name]}=` update", line)
+        for child in _children(node):
+            stack.append((child, node))
 
 
 def _describe(kind):
     named = {"CXXMemberCallExpr": "member function call", "CXXOperatorCallExpr": "overloaded operator call",
              "MemberExpr": "member access (classes and structs)", "CXXThisExpr": "this",
              "CXXNewExpr": "new", "CXXDeleteExpr": "delete", "StringLiteral": "string literal",
-             "FloatingLiteral": "floating-point literal (real-valued units come with later tickets)",
+             "FloatingLiteral": "floating-point literal (long double is outside the subset)",
              "CXXNullPtrLiteralExpr": "nullptr", "LambdaExpr": "lambda", "UnaryExprOrTypeTraitExpr": "sizeof or alignof",
              "CXXReinterpretCastExpr": "reinterpret_cast", "CXXConstCastExpr": "const_cast",
              "MaterializeTemporaryExpr": "C++ temporary", "ExprWithCleanups": "C++ temporary"}
@@ -484,8 +1749,12 @@ def _name(name, line):
 
 # --- lowering ---------------------------------------------------------------------------------------
 
-def lower(source, function, includes=(), defines=()):
-    """The C lowering of `function` (and of every function and global it uses) from the C++ file `source`."""
+def lower(source, function, includes=(), defines=(), summaries=None):
+    """The C lowering of `function` (and of every function, class and global it uses) from the C++ file `source`.
+
+    `summaries` maps the C++ name of a function to the summary that stands for it ({name: summary ID or
+    text}): each call to it stays a call (with a prototype), and the lowering lists the summary as used.
+    Every `__dxc_*` and `maa_*` call needs one."""
     tool = locate()
     if tool.missing:
         raise LoweringError(tool.missing)
@@ -493,41 +1762,44 @@ def lower(source, function, includes=(), defines=()):
     if not source.is_file():
         raise LoweringError(f"no source file {source}")
     defines = tuple(sorted(defines))
-    unit = _function(tool, source, function, includes, defines, unit=True)
-    order, seen, pending_globals, definitions, prototypes = [], set(), [], {}, {}
-
-    def visit(name, node):
-        seen.add(name)
-        printer = _Printer(name)
-        prototype, params = _signature(node, printer)
-        body = [c for c in node.get("inner", []) if c.get("kind") == "CompoundStmt"][0]
-        printer.local_ids.update(p.get("id") for p in node.get("inner", []) if p.get("kind") == "ParmVarDecl")
-        printer.anchor(f"{name}.entry", "entry", 1)
-        printer.body(body, 1)
-        definitions[name] = (prototype, printer)
-        prototypes[name] = (prototype, params)
-        for callee in printer.callees:
-            if callee not in seen:
-                visit(callee, _function(tool, source, callee, includes, defines))
-        for global_name in printer.globals:
-            if global_name not in pending_globals:
-                pending_globals.append(global_name)
-        order.append(name)
-
-    visit(function, unit)
-    globals_text = [_global(tool, source, name, includes, defines) for name in pending_globals]
+    unit = _Unit(tool, source, includes, defines, summaries)
+    node = unit.function_node(function, None, None, unit=True)
+    mangled = node.get("mangledName", function)
+    if mangled.startswith(("_ZN", "__ZN")):
+        raise Unsupported(f"function {function} inside a namespace or class")
+    if _children_kind(node, "TemplateArgument"):
+        raise Unsupported(f"function template {function} as the proof unit")
+    unit.lower_function(node, function, None, None)
+    definitions = {}
+    while unit.pending:
+        cname, fnode, owner = unit.pending.pop(0)
+        definitions[cname] = _define(unit, cname, fnode, owner)
+        for global_name in definitions[cname][1].globals:
+            if global_name not in unit.globals:
+                unit.globals.append(global_name)
+                unit.global_text[global_name] = _global(unit, global_name)
+    order = _callees_first(function, definitions)
     lines = [f"/* C lowering of {function} from {source.name} (sha256 {_file_sha256(source)}) by {TOOL_ID} "
              f"{TOOL_VERSION} ({NAMING_RULES}), clang {tool.version}. Generated: do not edit. */"]
     if defines:
         lines.append(f"/* Build constants: {', '.join(defines)} */")
-    lines += list(HEADERS)
+    headers = list(HEADERS) + (["#include <stdlib.h>"] if unit.needs_stdlib else [])
+    lines += headers
+    types = [f"typedef struct {cname} {cname};" for cname, _ in unit.struct_order]
+    for cname, fields in unit.struct_order:
+        types.append(f"struct {cname} {{ {' '.join(fields)} }};")
+    lines += types
     anchors = []
     lines.append(ANCHOR.format("ghost.globals"))
     anchors.append({"id": "ghost.globals", "kind": "ghost_globals", "function": None, "line": len(lines)})
+    globals_text = [unit.global_text[name] for name in unit.globals]
     lines += globals_text
-    lines += [f"{prototypes[name][0]};" for name in order]
+    for model in unit.model_order:
+        lines += unit.models[model].splitlines()
+    lines += [f"{text};" for text in unit.prototypes_only.values()]
+    lines += [f"{definitions[name][0]};" for name in order]
     for name in order:
-        prototype, printer = definitions[name]
+        prototype, printer = definitions[name][:2]
         lines.append(ANCHOR.format(f"{name}.contract"))
         anchors.append({"id": f"{name}.contract", "kind": "contract", "function": name, "line": len(lines)})
         lines.append(f"{prototype} {{")
@@ -541,74 +1813,139 @@ def lower(source, function, includes=(), defines=()):
     ids = [a["id"] for a in anchors]
     if len(ids) != len(set(ids)):
         raise LoweringError("anchor IDs are not unique (a C lowering tool defect)")
-    unit_prototype, unit_params = prototypes[function]
-    declaration = "\n".join([*HEADERS, *globals_text, f"{unit_prototype};"]) + "\n"
+    unit_prototype, unit_params = definitions[function][0], definitions[function][2]
+    declaration = "\n".join([*headers, *types, *globals_text, f"{unit_prototype};"]) + "\n"
     return Lowering(function=function, text="\n".join(lines) + "\n", anchors=tuple(anchors), declaration=declaration,
                     parameters=tuple(unit_params), source_sha256=_file_sha256(source), defines=defines,
-                    tool={"id": TOOL_ID, "version": TOOL_VERSION, "naming_rules": NAMING_RULES, "clang": tool.version})
+                    tool={"id": TOOL_ID, "version": TOOL_VERSION, "naming_rules": NAMING_RULES,
+                          "naming_rules_sha256": RULES_SHA256, "clang": tool.version},
+                    summaries=tuple(unit.summaries_used), models=tuple(unit.model_order))
 
 
-def _function(tool, source, name, includes, defines, unit=False):
-    nodes = _dump(tool, source, name, includes, defines)
-    templates = _named(nodes, name, {"FunctionTemplateDecl"})
-    if templates:
-        raise Unsupported(f"function template {name}")
-    methods = _named(nodes, name, {"CXXMethodDecl", "CXXConstructorDecl", "CXXDestructorDecl"})
-    found = [n for n in _named(nodes, name, {"FunctionDecl"}) if any(c.get("kind") == "CompoundStmt" for c in n.get("inner", []))]
-    if not found and methods:
-        raise Unsupported(f"member function {name}")
-    if not found and unit:
-        raise NotFound(f"{Path(source).name} defines no function {name}")
-    if not found:
-        raise Unsupported(f"call to a function with no body in the translation unit: {name}")
-    if len({(n.get("loc") or {}).get("offset") for n in found}) > 1:
-        raise Unsupported(f"overloaded function {name}")
-    node = found[0]
-    mangled = node.get("mangledName", name)
-    if mangled != name and mangled.startswith("_ZN"):
-        raise Unsupported(f"function {name} inside a namespace or class")
-    return node
+def _callees_first(function, definitions):
+    order, seen = [], set()
+
+    def visit(name):
+        seen.add(name)
+        for callee in definitions[name][3]:
+            if callee not in seen and callee in definitions:
+                visit(callee)
+        order.append(name)
+
+    visit(function)
+    order += [name for name in definitions if name not in seen]
+    return order
 
 
-def _signature(node, printer):
+def _define(unit, cname, node, owner):
+    """(prototype, printer, parameters, callees) of one lowered function, method, constructor or destructor."""
+    printer = _Printer(cname, unit)
     printer._at(node)
     line = printer.line
+    kind = node.get("kind")
     if node.get("variadic"):
         raise Unsupported(f"variadic function {node.get('name')}", line)
-    for flag in ("isDeleted", "explicitlyDefaulted"):
-        if node.get(flag):
-            raise Unsupported(f"special function {node.get('name')}", line)
+    if node.get("isDeleted") or (node.get("explicitlyDefaulted") and kind != "CXXDestructorDecl"):
+        raise Unsupported(f"special function {node.get('name')}", line)
     params, texts, unnamed = [], [], 0
-    for param in [c for c in node.get("inner", []) if c.get("kind") == "ParmVarDecl"]:
-        if param.get("inner"):
-            raise Unsupported("default argument", line)
+    if owner and node.get("storageClass") != "static":
+        const = "const " if re.search(r"\)\s*const\b", _qual(node)) else ""
+        texts.append(f"{const}{owner} *this")
+    for param in [c for c in _children(node) if c.get("kind") == "ParmVarDecl"]:
         name = param.get("name")
         if not name:
             unnamed += 1
             name = f"swdb_unnamed_{unnamed}"
         name = _name(name, line)
-        ctype = _ctype(_qual(param), name, line)
-        texts.append(ctype)
-        params.append((name, _ctype(_qual(param), "", line), "*" in _qual(param)))
-    returns = _ctype(_return_type(_qual(node), line), "", line)
-    head = "static " if node.get("storageClass") == "static" else ""
-    return f"{head}{returns} {_name(node['name'], line)}({', '.join(texts) or 'void'})", params
+        qual, desugared = _types(param)
+        if qual.rstrip().endswith("&"):
+            printer.ref_ids.add(param.get("id"))
+        texts.append(unit.ctype(qual, desugared, name, line))
+        params.append((name, unit.ctype(qual, desugared, "", line), "*" in qual or qual.rstrip().endswith("&")))
+    printer.local_ids.update(p.get("id") for p in _children(node) if p.get("kind") == "ParmVarDecl")
+    if kind in ("CXXConstructorDecl", "CXXDestructorDecl"):
+        returns = "void"
+    else:
+        returns_text, _, _ = _return_and_params(_qual(node), line)
+        printer.returns_ref = returns_text.rstrip().endswith("&")
+        returns = unit.ctype(returns_text, None, "", line)
+    head = "static " if node.get("storageClass") == "static" and not owner else ""
+    prototype = f"{head}{_join(returns, cname)}({', '.join(texts) or 'void'})"
+    printer.anchor(f"{cname}.entry", "entry", 1)
+    if kind == "CXXConstructorDecl":
+        _member_inits(printer, node, owner)
+    bodies = [c for c in _children(node) if c.get("kind") == "CompoundStmt"]
+    if not bodies:
+        raise Unsupported(f"function {node.get('name')} with no body", line)
+    try:
+        printer.body(bodies[0], 1)
+    except _CopyInit:
+        raise Unsupported("a class object copied in an expression", printer.line) from None
+    return prototype, printer, params, printer.calls
 
 
-def _global(tool, source, name, includes, defines):
-    nodes = [n for n in _named(_dump(tool, source, name, includes, defines), name, {"VarDecl"})]
-    if len(nodes) != 1:
+def _member_inits(printer, node, owner):
+    for init in [c for c in _children(node) if c.get("kind") == "CXXCtorInitializer"]:
+        target = init.get("anyInit") or {}
+        if target.get("kind") != "FieldDecl":
+            raise Unsupported(f"constructor initializer of a base class or delegating constructor of {owner}",
+                              printer.line)
+        name = _name(target.get("name"), printer.line)
+        value = _children(init)[0] if _children(init) else None
+        if value is None:
+            continue
+        stripped = _strip(value)
+        field_qual = (target.get("type") or {}).get("qualType", "")
+        if field_qual.rstrip().endswith("&"):
+            printer.simple(f"this->{name} = {printer.address(value)};", 1)
+        elif stripped.get("kind") == "CXXConstructExpr":
+            try:
+                call = printer.construct(stripped, f"this->{name}")
+            except _CopyInit as copy:
+                printer.simple(f"this->{name} = {copy.text};", 1)
+                continue
+            if call:
+                printer.simple(call, 1)
+        elif stripped.get("kind") in ("ImplicitValueInitExpr", "CXXScalarValueInitExpr", "InitListExpr"):
+            parsed = _parse_type(field_qual, printer.line)
+            if parsed.dims or not (_c_known(parsed.base) or parsed.pointers):
+                raise Unsupported(f"value-initialized member {owner}::{name} that is not a scalar", printer.line)
+            printer.simple(f"this->{name} = 0;", 1)
+        else:
+            printer.simple(f"this->{name} = {printer.expr(value, top=True)};", 1)
+
+
+def _global(unit, name):
+    nodes = [n for n in unit.dump(name) if n.get("kind") == "VarDecl" and n.get("name") == name and
+             "mangledName" in n and not n.get("isImplicit")]
+    definitions = [n for n in nodes if n.get("storageClass") != "extern"] or nodes
+    if len({_where(n) for n in definitions}) != 1:
         raise Unsupported(f"global variable {name} (not one plain declaration)")
-    node = nodes[0]
-    printer = _Printer(name)
+    node = definitions[0]
+    printer = _Printer(name, unit)
     printer._at(node)
     if node.get("tls"):
         raise Unsupported(f"thread-local global {name}", printer.line)
+    qual, desugared = _types(node)
+    if qual.rstrip().endswith("&"):
+        raise Unsupported(f"global reference {name}", printer.line)
     head = "static " if node.get("storageClass") == "static" else ""
-    text = head + _ctype(_qual(node), _name(name, printer.line), printer.line)
+    text = head + unit.ctype(qual, desugared, _name(name, printer.line), printer.line)
     init = node.get("inner", [])
     if init:
-        text += " = " + printer.initializer(init[0], node.get("init"))
+        value = _strip(init[0])
+        if value.get("kind") == "CXXConstructExpr":
+            parsed = _parse_type(desugared or qual, printer.line)
+            cname = unit.base_type(parsed.base, parsed.args, printer.line)
+            cls = unit.classes.get(cname)
+            if cls is None:
+                raise Unsupported(f"global {name} built by a constructor", printer.line)
+            ctors = [c for c in _children(cls) if c.get("kind") == "CXXConstructorDecl" and not c.get("isImplicit")]
+            if ctors or _children(value):
+                raise Unsupported(f"global {name} of class {cname} built by a constructor", printer.line)
+            printer._trivial(cname, cls)
+        else:
+            text += " = " + printer.initializer(init[0], node.get("init"))
     if printer.callees or printer.globals:
         raise Unsupported(f"global {name} initialized from other functions or globals", printer.line)
     return text + ";"
@@ -617,15 +1954,17 @@ def _global(tool, source, name, includes, defines):
 # --- swdb lower ---------------------------------------------------------------------------------------
 
 def register_cli(commands):
-    sub = commands.add_parser("lower", help="C lowering of one core-subset C++ function (kept names, anchors)",
-                              description="lower one C++ function of the core subset (and what it uses) to C with the "
-                                          "C++ names kept and anchors for proof hints; write <function>.c and "
+    sub = commands.add_parser("lower", help="C lowering of one C++ function in the declared subset (kept names, anchors)",
+                              description="lower one C++ function in the declared C++ subset (and what it uses) to C "
+                                          "with the C++ names kept and anchors for proof hints; write <function>.c and "
                                           "<function>.anchors.json into --out. Deterministic: the same input gives "
                                           "the same bytes.")
     sub.add_argument("--source", type=Path, required=True, help="the C++ file that defines the function")
     sub.add_argument("--function", required=True)
     sub.add_argument("--include", type=Path, action="append", default=[], help="an include folder (repeatable)")
     sub.add_argument("--define", action="append", default=[], help="a build constant NAME or NAME=VALUE (repeatable)")
+    sub.add_argument("--summary", action="append", default=[],
+                     help="NAME=SUMMARY: calls to function NAME stay calls, standing for SUMMARY (repeatable)")
     sub.add_argument("--out", type=Path, required=True, help="the folder to write into")
     sub.add_argument("--format", choices=["yaml", "json"], default="yaml")
     sub.set_defaults(analytic_handler=_cli)
@@ -633,11 +1972,22 @@ def register_cli(commands):
 
 def _cli(args):
     from swdb.cli import Failure
+    summaries = {}
+    for item in getattr(args, "summary", []) or []:
+        name, _, summary = item.partition("=")
+        if not name or not summary:
+            raise Failure(f"--summary {item!r}: expected NAME=SUMMARY")
+        summaries[name] = summary
     try:
-        lowering = lower(args.source, args.function, args.include, args.define)
+        lowering = lower(args.source, args.function, args.include, args.define, summaries=summaries)
     except LoweringError as exc:
         raise Failure(str(exc)) from None
     c_path, a_path = lowering.write(args.out)
-    return {"function": lowering.function, "tool": lowering.tool,
-            "c_lowering": {"path": str(c_path), "sha256": lowering.sha256},
-            "anchors": {"path": str(a_path), "sha256": lowering.anchors_sha256, "count": len(lowering.anchors)}}
+    out = {"function": lowering.function, "tool": lowering.tool,
+           "c_lowering": {"path": str(c_path), "sha256": lowering.sha256},
+           "anchors": {"path": str(a_path), "sha256": lowering.anchors_sha256, "count": len(lowering.anchors)}}
+    if lowering.summaries:
+        out["summaries"] = list(lowering.summaries)
+    if lowering.models:
+        out["models"] = list(lowering.models)
+    return out
