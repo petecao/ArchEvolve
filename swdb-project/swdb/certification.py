@@ -2,8 +2,7 @@
 
 This is finite strict-functional evidence, never target timing or a formal proof.
 Controls count only after compilation and a named runtime rejection.
-Updated: 2026-10-06 ET (record reads use the shared access layer); 2026-10-14 ET (Probata PoC 18:
-`swdb certify` records a certified enabling rewrite proposal's result as a derived implementation).
+Updated: 2026-10-06 ET (record reads use the shared access layer).
 
 Ticket 42 (2026-10-03 ET): a candidate's matrix instance and pass rule come from
 the kernel plug-in named by its rewrite contract's correctness check
@@ -1295,11 +1294,6 @@ def run_cli(args):
                      tile_sizes=sizes, threads=args.threads, sources=sources,
                      candidate_record=getattr(args, 'candidate_record', None),
                      version=getattr(args, 'command_version', None))
-    output = {'id': record['id'], 'verdict': record['verdict'], 'matrix_cells': len(record['matrix']),
-              'negative_controls': len(record['negative_controls'])}
-    # Probata PoC 18 (2026-10-14 ET, ticket 19's gap): a certified enabling rewrite proposal's candidate
-    # artifact becomes a derived implementation in the store that certified it (ArchEvolve mode).
-    from swdb.archevolve_proof import record_derived
-    output.update(record_derived(Path(args.records), record, args.library) or {})
-    print(json.dumps(output, indent=2))
+    print(json.dumps({'id': record['id'], 'verdict': record['verdict'], 'matrix_cells': len(record['matrix']),
+                      'negative_controls': len(record['negative_controls'])}, indent=2))
     return 0 if record['verdict'] == 'certified' else 1
