@@ -51,3 +51,6 @@ Updated: 2026-10-13 23:15 ET (review fixes)
 - Risk: WP runs fail inside the Bash sandbox (the Why3 socket is blocked; map ticket 11's fact sweep). Run WP jobs outside it.
 - WP's "not proven" never refutes. Only the bounded verifier refutes (22).
 - Mac: keep at least 50 GB of disk free; the lock built here keeps real verifier jobs to one at a time.
+
+## Later changes
+- 2026-10-14 13:19 ET (Yan-Ru accepted ticket 09's A2 changes): the bounded verifier is now CBMC 6.11 on this ticket's C lowering, so this lowering comes before the bounded adapter (22). Each bounded job also runs a C-vs-C++ differential check on the bounded domain (pattern: `prototype/06c-cbmc/faith/`).

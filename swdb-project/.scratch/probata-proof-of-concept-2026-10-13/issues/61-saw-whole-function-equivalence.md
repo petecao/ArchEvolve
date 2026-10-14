@@ -104,3 +104,6 @@ Tested on fixtures through `swdb prove`.
   tool.
 - Mac: keep at least 50 GB of disk free; if SAW needs a Homebrew change, check that LLVM 22 still works
   for the analytic evaluator. Contract fixtures only; no held-out kernel (BC, PR, SSSP).
+
+## Later changes
+- 2026-10-14 13:19 ET (Yan-Ru accepted ticket 09's A2 changes): SAW whole-function equivalence lost its role when CBMC replaced SAW as the bounded verifier. Before starting: pick another tool (e.g. CBMC on a product program of the two C lowerings) or propose the cut to Yan-Ru.

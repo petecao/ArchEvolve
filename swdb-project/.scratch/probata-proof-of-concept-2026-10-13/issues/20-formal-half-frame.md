@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 09
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Formal-half language and the C++ subset": allowed ACSL and the YAML frame; "Proven once vs per candidate": proof placement; "Proof routes": an offload-only contract's required enabling contracts; "Concurrency": shared-action kinds and history reads; "DX100 proof semantics": a gem5 citation or an owner per rule; "What a proven verdict asserts": the seven assumption kinds; "Testing Decisions", seam 4); decisions: [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md) items 2, 4, 13; [17](../../formal-verification-2026-10-09/issues/17-enabling-rewrites.md) item 5; [10](../../formal-verification-2026-10-09/issues/10-proven-rewrite-contract.md) item 4; also [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md) item 5 (the kinds), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md) item 4 (assumption kinds), [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md) item 1 (citations)
 **Time estimate:** about 2 days

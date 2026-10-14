@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 09
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Concurrency" (composition theorem, shared-action kinds, memory model, OpenMP), "Formal-half language and the C++ subset" (sharing classes, YAML frame), "DX100 proof semantics" (reduction lemma, hazards), "Modules" (Rocq development), "What a proven verdict asserts" (assumption set, seven kinds), "Proof-of-concept plan" (Rocq side track), S9); decisions: [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md)
 **Time estimate:** about 4 days plus Yan-Ru's review

@@ -33,3 +33,6 @@ Updated: 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (revie
 - Summary proofs may be human-assisted (map 10 item 8). Assumption (not decided in the map): 35 — Hint records, merger and proof hint check does not block this ticket. Any hints used are kept as hint records with provenance and re-checked once ticket 35 lands (35 is an A3 ticket, so this is not part of ticket 33's A2 exit).
 - Risk: a summary proven only within bounds caps every candidate artifact that uses it, so each summary aims for WP. The 2-lane bar in ticket 33 depends on these summaries (map 19 item 4, lever 1).
 - Mac: one real verifier job at a time under the ~8 GB RSS watchdog; tests skip cleanly when a verifier or LLVM 22 is missing.
+
+## Later changes
+- 2026-10-14 13:19 ET (Yan-Ru accepted ticket 09's A2 changes): generate the CBMC C stubs from the one proof-semantics source, with a vector check against it (06 continuation checked 16,193 stub calls against ghost.cry).

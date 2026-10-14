@@ -44,3 +44,6 @@ Updated: 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:15 ET (revie
 - Risk: whether SAW reads clang 22 bitcode (its README claims LLVM 20) is spike (a)'s question; 09's verdict decides the tool.
 - Risk: crux-llvm 0.12 reads LLVM 3.6-21 and could not run libc++ 22 code in map ticket 08. Six crux jobs at once exhausted the Mac's 36 GB, so run one at a time.
 - Mac: keep at least 50 GB of disk free; if SAW needs a Homebrew change, check that LLVM 22 still works for the analytic evaluator.
+
+## Later changes
+- 2026-10-14 13:19 ET (Yan-Ru accepted ticket 09's A2 changes): this ticket becomes the CBMC adapter on 21's C lowering (no longer SAW): C stubs with one named assert + assume per check, unwind bounds from the sizes with `--unwinding-assertions`, reachability asserts against vacuity, counterexample replay on the C++ (sets `spurious_counterexample` when it does not replay). Reference: `prototype/06c-cbmc/`, shared note cbmc-two-lanes.md.
