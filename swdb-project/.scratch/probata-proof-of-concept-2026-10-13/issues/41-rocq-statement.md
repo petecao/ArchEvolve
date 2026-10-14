@@ -1,9 +1,9 @@
 # 41 — Rocq: composition theorem statement and definitions
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 14:07 ET (statements drafted; ready for Yan-Ru's review); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-14 14:40 ET (revised; approved by the main session under Yan-Ru's delegation; resolved); 2026-10-14 14:13 ET (Codex review: revise); 2026-10-14 14:07 ET (statements drafted); 2026-10-13 23:40 ET (review fixes, round 3); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-human
+**Status:** resolved
 **Blocked by:** 09
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Concurrency" (composition theorem, shared-action kinds, memory model, OpenMP), "Formal-half language and the C++ subset" (sharing classes, YAML frame), "DX100 proof semantics" (reduction lemma, hazards), "Modules" (Rocq development), "What a proven verdict asserts" (assumption set, seven kinds), "Proof-of-concept plan" (Rocq side track), S9); decisions: [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md)
 **Time estimate:** about 4 days plus Yan-Ru's review
@@ -95,76 +95,114 @@ theorem fits on about 1-2 pages, so the review is short. The proofs are tickets 
 
 ## Answer
 
-2026-10-14 14:07 ET. **Status: ready-for-human.** Both statements and their definitions are
-written and type-check. **Yan-Ru's review is the open step**, and 42 and 43 must not start before
-it (S9). Review guide and hypothesis table: [`library/rocq/probata/HYPOTHESES.md`](../../../library/rocq/probata/HYPOTHESES.md).
+2026-10-14 14:40 ET. **Resolved.** Both statements and their definitions are written, revised
+after four rounds of Codex adversarial review, type-checked, and approved by the main session
+under Yan-Ru's delegation (record below). Ticket 42's box may start. Review guide, hypothesis
+table, F1 candidate check and Codex dispositions:
+[`library/rocq/probata/HYPOTHESES.md`](../../../library/rocq/probata/HYPOTHESES.md).
 
-**What Yan-Ru reviews** (in `swdb-project/library/rocq/probata/`):
+### Approval record
 
-| File | What | sha256 at this draft |
-|---|---|---|
-| `Vocabulary.v` | 5 shared-action kinds, 4 sharing classes (closed) | `081b558de2d94a0b37200b094d39af38eddf51546686a575f97dac2e3a6a3a3d` |
-| `Composition.v` | `parallel_composition` and its definitions | `03c5337d74e63c0011b9521ddaadca955d5e2adee4889bef47c9b01ebc3432c6` |
-| `Reduction.v` | `dx100_reduction` and its definitions | `83c1d97295bac65f11b52dfacd2394f7093b1b3cfc60b66dfd380c4bc7031d00` |
+- **Approved by the main session under Yan-Ru's delegation, 2026-10-14 14:12 ET** (Yan-Ru,
+  2026-10-14 14:12 ET: "use formal verification research thinking to make decision for me").
+  Recorded 2026-10-14 14:40 ET. This is the main session's approval, not Yan-Ru's own reading.
+- Approved content (sha256), in `swdb-project/library/rocq/probata/`:
 
-Not for review: `Sanity.v` (`2b918f89…`), `negative/HistoryReadIsLatest_FALSE.v` (`45e88e90…`).
+  | File | sha256 |
+  |---|---|
+  | `Vocabulary.v` | `081b558de2d94a0b37200b094d39af38eddf51546686a575f97dac2e3a6a3a3d` |
+  | `Composition.v` | `e30f62402164802aaf1bed224c6be0ac62fb787c43efe61190266e5a511dd01b` |
+  | `Reduction.v` | `8a779482ff13c83a12d11fd15d34c0aadf1d8856052575e7ede38ab935188b7a` |
 
-**Approval record (to fill in):** date and time ET: ____; approved sha256 of the three files
-above: ____. Any change to them needs a new approval; 42 and 43 check these hashes.
+  Not part of the approval: `Sanity.v` (`8e73b9c3…`), `negative/HistoryReadIsLatest_FALSE.v`
+  (`16aaf7db…`), `HYPOTHESES.md` (`a7b9759a…`). Any change to the three approved files needs a
+  new approval; 42 and 43 check these hashes.
 
-**Statements, one line each.**
+### What is stated
+
 - `parallel_composition`: if the seven per-candidate obligations hold (`obl_class_fit`,
   `obl_owned_disjoint`, `obl_atomic_blocks`, `obl_chunk_cover`, `obl_uniform_control`,
-  `obl_team_size`, `obl_dx100_quiet`), then every finished run of N threads that meets the RC11,
-  OpenMP and DX100-read premises has a serial twin: same events per thread, barrier intervals and
-  critical sections one after another, every read outside a shared-actions-only array and every
-  shared action reading the latest write, racing reads still history reads, same final memory,
-  every worksharing iteration exactly once.
-- `dx100_reduction`: if no at-issue run (each command runs at its issue; ghost "pending" until a
-  covering wait) has a hazard, every complete timed run that gem5's rules allow (dispatch stall,
-  region stall, out-of-order run with element readiness, finish order, wait rule) has an at-issue
-  twin with the same observations per core and the same final state.
+  `obl_team_size`, `obl_dx100_quiet`) and the premises `memory_ok` (RC11 with fenced
+  `__sync_*`), `omp_ok` (OpenMP 5.2) and `device_ok` (DX100 proof semantics) hold, every finished
+  run of N threads has a serial twin: same events per thread, barrier intervals and critical
+  sections one after another, every shared action and every read outside a shared-actions-only
+  array (except dead DX100 reads, F1) reading the latest write, racing reads still history
+  reads, same final memory, every worksharing iteration exactly once.
+- `dx100_reduction`: if the command contracts are well formed (`contracts_ok`, proof semantics)
+  and no at-issue run has a hazard (`obl_hazard_free_own`, `obl_hazard_free_cross`), every
+  complete timed run gem5's rules allow has an at-issue twin with the same observations per core
+  and the same final state.
 
-**Checks** (Rocq 9.3.0, switch `rocq-9`; all through `verifier_run.py`, output outside the repo
-in `/tmp/claude/probata-runs/t41/`; final run `compile-8.log`, sha256
-`b302f1a047d63311323436862621396fb99f3e791422ee7dd3887b23de72d257`, peak RSS 413 MB):
+### Decisions (each decided by the main session under Yan-Ru's delegation, 2026-10-14 14:12 ET)
+
+- **F1, accepted in refined form.** `obl_dx100_quiet`: a command may stay uncovered past a
+  barrier, or past the exit of a critical section it was issued in, only if it has outputs,
+  writes tile elements only, and they are dead there; `reads_latest` excludes its reads.
+  Deviation from the decision's wording: "dead" = not read before a later command's overwrite
+  (not a *covered* overwrite), because gem5's WAW dispatch stall already finishes the old command
+  first, and both candidates' overwriting commands are covered only later. Candidate check (line
+  numbers in HYPOTHESES.md): **Peter's `TDStep` meets the rule** (`bfs_read_offload.inc:30-32`
+  uncovered on the empty-chunk path, tile-only, dead); **the authors' `TDStepMAA` meets the
+  rule** (`bfs.cc:163` uncovered on the break path, tile3 only, dead; the critical section's
+  store `:179` is covered by `:180` before the exit). The first draft's rule failed both.
+- **F2, accepted.** `in_region` is a relation; a DX100 memory access outside some registered
+  region holding it, or in none, is a hazard. No disjointness is assumed.
+- **F3, accepted.** Every definition stays explicit (Composition.v 365 lines, Reduction.v 272,
+  about 5 + 4 printed pages); a one-page plain-language summary heads HYPOTHESES.md. The
+  "about 2 printed pages" criterion is amended by this decision.
+- **F4.** Provenance: drafted by Claude (`claude-opus-5-5`, Claude Code subagent); reviewed
+  adversarially by Codex CLI 0.153.0 at the adapter pin `gpt-5.6-sol`, effort `xhigh`,
+  read-only sandbox, in four rounds. The proofs (42, 43) stay Codex's.
+- **M1-M10 accepted.** **Flag on M6, open obligation for ticket 43:** the reduction lemma orders
+  CPU steps in one global sequence while the composition theorem uses RC11; 43 must show why the
+  split is sound (issues and waits act as fences in the CPU model, or hazard freedom makes DX100
+  timing unobservable under RC11).
+
+### Findings added by this ticket
+
+- **F5:** the proof semantics' coverage rule needs `cov_stall` (a covered command covers every
+  earlier command that would have stalled its dispatch, `IF.cc:193-219`); without it
+  `bfs.cc:147` never counts as covered and the tile0 read at `:191` is a false hazard.
+- **F6:** DX100 commands write registers (the range loop's cursors); no cited gem5 rule orders
+  them device against device, so a run overlapping a pending command on a register where either
+  writes is a hazard. Both candidates wait on tile7 before the next range loop.
+- **Open for ticket 45:** the `cover_sound` lowering obligation (specified in HYPOTHESES.md):
+  command id = issue position, device events = the command's footprint, `DeviceCovered` only
+  where `Reduction.covered` holds, DX100 read values reach the thread only through outputs,
+  `Shared`'s fence flag and kind match the code. The formal bridge lemma is not written.
+
+### Codex adversarial review (`gpt-5.6-sol`, `xhigh`, read-only)
+
+Outputs in `/tmp/claude/probata-runs/t41/`. Every finding and its disposition is in
+HYPOTHESES.md; rejected ones with reasons.
+
+| Round | Output (sha256) | Result |
+|---|---|---|
+| 1 | `codex-review.md` (`4005d8dc…`) | 12 findings: reduction false (metadata), RC11 label, constructive TileReady, 7 major, 2 minor. Accepted 1, 3, 5, 6, 8, 9, 11, 12; partly 2, 7, 10; rejected 4 (commands need a covering wait: real code leaves `bfs.cc:163` uncovered). |
+| 2 | `codex-review2.md` (`7e0e2708…`) | 8 findings: reduction still false (registers). Accepted 1, 4, 5, 7, 8; partly 2, 3 (cover_sound open for 45); rejected 6 (lifting lemma: the obligations already have the rely form of `obl_class_fit`). |
+| 3 | `codex-review3.md` (`f630f68b…`) | Counterexample to `parallel_composition` (critical section touching a shared-actions-only location or holding a barrier). Accepted: both forbidden. |
+| 4 | `codex-review4.md` (`7e47aba2…`) | **No counterexample found** for either statement. |
+
+### Checks
+
+Rocq 9.3.0 (switch `rocq-9`), every compile through `verifier_run.py`; outputs outside the repo
+in `/tmp/claude/probata-runs/t41/` (final run after merging the integration tip: see the commit
+message).
 - `Vocabulary.v`, `Composition.v`, `Reduction.v`, `Sanity.v` compile (exit 0).
-- `Print Assumptions` lists only the two theorems themselves: both proofs are `Admitted` with an
-  "OPEN — ticket 42/43" comment. No `Axiom` anywhere; nothing else admitted.
-- Seven sanity lemmas, all `Qed`, "Closed under the global context": enumerations have exactly 5
-  and 4 members; a history read may be stale (the model is not SC); a plain read sees the
-  thread's own write; 15 item 12's must-prove control (read, failed CAS, re-read sees the
-  winner); a same-thread read during an unfinished DX100 store is a hazard (12 item 9).
-- Negative check: `negative/HistoryReadIsLatest_FALSE.v` (history reads are SC) is rejected at
-  its unprovable branch (exit 1), as required.
+- `Print Assumptions` lists only the two theorems themselves (`Admitted`, marked "OPEN — ticket
+  42/43"); no `Axiom` anywhere.
+- Eight sanity lemmas, all `Qed`, "Closed under the global context": 5 kinds, 4 classes; a
+  relaxed load may be stale inside the admitted program class (`stale_run_fits`,
+  `stale_history_read_allowed`, `history_read_not_always_latest`); `read_own_write`;
+  `failed_cas_reread_sees_winner` (15 item 12's must-prove control; the failed CAS writes
+  nothing); `unready_read_is_hazard` (12 item 9).
+- Negative check `negative/HistoryReadIsLatest_FALSE.v` is rejected at its unprovable branch
+  (exit 1), as required.
 
-**Acceptance status.** Met: type-check, open proofs visibly marked, no axioms; 5 and 4 closed
-constructors; class per array per barrier interval; 15 item 3 memory model and 15 item 7 DX100
-rules; symbolic N with ids 0..N-1; hypothesis table with stable names; reduction lemma models
-12 item 2 with gem5 citations; hazard-free per 12 items 3-5. **Not met:** length is about 4.5 +
-3.5 printed pages, not about 2 (F3); Yan-Ru's approval (open); the draft is not by Codex (F4).
+### Assumptions
 
-**Assumptions** (beyond the ticket's own):
 - Assumption: the development lives in `swdb-project/library/rocq/probata/` (library content,
   pinned by content hash in the method-version file, id `probata.rocq-development`; theorem names
-  match the fixture: `parallel_composition`, `dx100_reduction`).
-- Assumption: modeling choices M1-M10 in HYPOTHESES.md (RC11 rendering with one global order; DX100
-  effects at issue in the composition model; one-location critical sections; CAS loops as one
-  shared action; worksharing constructs numbered dynamically; SC CPU steps inside the reduction
-  lemma; 8-byte operands not modeled).
-
-**Findings for Yan-Ru** (details in HYPOTHESES.md):
-- **F1:** new per-candidate obligation `obl_dx100_quiet`: every DX100 command covered before the
-  thread's next barrier and before it leaves `critical`. Without it, a DX100 read pending across
-  a barrier can see next-interval writes (12 item 4 allows that overlap). Stricter than 12.
-- **F2:** new hazard: a DX100 memory access outside its command's registered regions escapes the
-  region stall. Registered regions are assumed disjoint.
-- **F3:** length over target (every obligation spelled out so each maps to one table row).
-- **F4:** provenance. The ticket names Codex (`gpt-5.6-sol`, `xhigh`) as drafter; this draft was
-  written by Claude (`claude-opus-5-5`, Claude Code subagent). Codex `gpt-5.6-sol` `xhigh` was
-  started read-only as an adversarial reviewer at 14:03 ET; it had not finished at commit time.
-  Its output: `/tmp/claude/probata-runs/t41/codex-review.md` (event log `codex-review.jsonl`).
-  Its first interim note claimed issued commands need not run; that is not so (`at_issue_run`
-  requires a run step at `S n` for every issue; `complete_timed` requires a finish, which requires
-  a run). Yan-Ru decides whether Codex should redraft.
-
+  `parallel_composition`, `dx100_reduction` as in the method-version fixture).
+- Assumption: Codex's adapter pin is taken from the ticket and design spec (`gpt-5.6-sol`,
+  `xhigh`); the CLI ran with `-m gpt-5.6-sol -c model_reasoning_effort=xhigh -s read-only`.

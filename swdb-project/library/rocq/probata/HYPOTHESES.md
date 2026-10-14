@@ -1,26 +1,52 @@
 # Probata Rocq development: review guide and hypothesis table
 
-Created: 2026-10-14 ET (ticket 41). Status: **draft, waiting for Yan-Ru's review.**
+Created: 2026-10-14 ET (ticket 41). Updated: 2026-10-14 14:35 ET (revision after Codex's review
+and the main session's decisions under Yan-Ru's delegation).
+
+## One-page summary (read this first)
+
+**What this is.** Two statements, in Rocq, that the rest of Probata leans on. No proofs yet:
+tickets 42 and 43 write them, and Rocq will check every step.
+
+**1. Parallel composition theorem** (`parallel_composition`, [`Composition.v`](Composition.v)).
+WP proves one thread t of N at a time. This theorem says why that is enough. If each thread:
+
+- touches each array only as its sharing class allows (read-only, owned, shared actions only,
+  or inside `critical`);
+- owns memory, tiles and registers no other thread owns at the same time;
+- makes each `critical` section one shared action on one location;
+- splits work by thread id so every iteration runs once;
+- reaches the same barriers and worksharing loops as every other thread;
+- runs in a team of exactly N threads;
+- lets a DX100 command stay unfinished past a barrier only if it wrote nothing anyone reads;
+
+then **every finished run has a serial twin**: each thread does exactly the same steps, barrier
+intervals and critical sections happen one after another, every read outside a
+shared-actions-only array sees the latest write, and the final memory is the same.
+
+It trusts three things, each one assumption entry: the compiler and ISA implement RC11 (with
+`__sync_*` builtins as full barriers); the OpenMP 5.2 runtime keeps its promises; and DX100 reads
+behave as the DX100 proof semantics says.
+
+**2. DX100 reduction lemma** (`dx100_reduction`, [`Reduction.v`](Reduction.v)). Proofs pretend each
+DX100 command finishes the moment it is issued. This lemma says the pretense is safe. If the
+command contracts are well formed, and no hazard occurs in the pretend world, then every timing
+gem5 allows ends with the same observations and the same memory as the pretend world.
+
+**What the review decides.** Whether these two statements say the right thing. Approval is
+recorded with the files' sha256 in ticket 41; any later change needs a new approval.
+
+**Open item carried to ticket 43 (M6).** The reduction lemma orders CPU steps in one global
+sequence; the composition theorem uses RC11. Ticket 43 must show why this split is sound:
+either issues and waits act as fences in the CPU model, or hazard freedom makes DX100 timing
+unobservable under RC11.
 
 ## What you review (and what you do not)
 
-- **Review:** two statements and their definitions.
-  - `parallel_composition` in [`Composition.v`](Composition.v): about 4.5 printed pages.
-  - `dx100_reduction` in [`Reduction.v`](Reduction.v): about 3.5 printed pages.
-  - The closed vocabularies in [`Vocabulary.v`](Vocabulary.v): 5 shared-action kinds, 4 sharing classes.
-- **Do not review:** proofs (there are none yet; tickets 42 and 43 write them), [`Sanity.v`](Sanity.v)
-  and [`negative/`](negative/) (machine checks, results below).
-- **Your approval** goes into ticket 41's Answer: date and time ET, plus the sha256 of
-  `Vocabulary.v`, `Composition.v` and `Reduction.v`. Any later change needs a new approval.
-
-## Composition theorem in one sentence
-
-If every thread's accesses fit their sharing classes, owned memory is disjoint, each critical
-section is one shared action, chunk splits cover each worksharing loop once, control is uniform,
-the team has N threads and DX100 commands finish before barriers, then every finished run of N
-threads has a **serial twin**: the same events per thread, critical sections and barrier intervals
-one after another, every read outside a shared-actions-only array returning the latest write, and
-the same final memory.
+- **Review:** `Vocabulary.v` (5 shared-action kinds, 4 sharing classes), `Composition.v`,
+  `Reduction.v`. About 5 + 4 printed pages: every definition stays explicit (F3).
+- **Do not review:** proofs (none yet), [`Sanity.v`](Sanity.v) and [`negative/`](negative/)
+  (machine checks, results at the end).
 
 ## Hypothesis table: `parallel_composition`
 
@@ -29,102 +55,170 @@ A WP obligation for a candidate is named after the hypothesis it discharges (16 
 
 | Rocq name | Kind | Discharged by | Plain sentence |
 |---|---|---|---|
-| `obl_class_fit` | per-candidate WP obligation | WP, one symbolic thread t | Whenever the other threads' accesses fit their sharing classes, thread t's accesses fit theirs too (race freedom, 15 item 2). |
+| `obl_class_fit` | per-candidate WP obligation | WP, one symbolic thread t | Whenever the other threads' accesses fit their sharing classes, thread t's accesses fit theirs too (race freedom, 15 item 2). Inside `critical`, no shared-actions-only location is touched. |
 | `obl_owned_disjoint` | per-candidate WP obligation | WP, two-copy product | No location (owned range, tile or register) is owned by two threads in the same barrier interval (15 item 2). |
-| `obl_atomic_blocks` | per-candidate WP obligation | WP, one symbolic thread t | Each critical section reads one location first, writes only it, and leaves one shared action's result there (15 item 2). |
-| `obl_chunk_cover` | per-candidate WP obligation | WP (pure arithmetic over t and N, plus thread t's loop) | Chunk splits computed from the thread id cover each loop's iteration space exactly once, and thread t runs exactly its chunk (15 items 2, 4). |
+| `obl_atomic_blocks` | per-candidate WP obligation | WP, one symbolic thread t | Each critical section names one shared action (kind, argument, location), reads that location first, writes only it, leaves the action's result there, and holds no barrier (15 item 2). |
+| `obl_chunk_cover` | per-candidate WP obligation | WP (arithmetic over t and N, plus thread t's loop) | Chunk splits computed from the thread id cover each loop's iteration space exactly once, and thread t runs exactly its chunk (15 items 2, 4). |
 | `obl_uniform_control` | per-candidate WP obligation | WP, two-copy product (GPUVerify style) | Any two threads reach the same barriers and worksharing constructs in the same order (15 item 6). |
 | `obl_team_size` | per-candidate WP obligation | WP over the run-time guard | The team has exactly N threads (15 item 4; 11's guard). |
-| `obl_dx100_quiet` | per-candidate WP obligation | WP over the ghost hazard state | Each DX100 access of thread t is covered by waits before t's next barrier, before t leaves a critical section, and before t's own conflicting CPU access (12 items 3-5, 7; **new, see F1**). |
-| `memory_ok` (premise) | assumption entry, **platform choice** | "The pinned compiler and ISA implement RC11" (15 item 3; 26 item 4) | Reads are history reads; a CAS is a sequentially consistent read-modify-write. |
-| `omp_ok` (premise) | assumption entry, **trusted tool** | "The pinned OpenMP runtime implements OpenMP 5.2" (15 item 4) | Thread ids are 0 to N-1; a barrier waits for all threads; `critical` excludes other threads; `omp for` gives each iteration to exactly one thread. |
-| `device_ok` (premise) | assumption entry, **proof semantics** | The pinned DX100 proof-semantics version (12 items 4, 7) | A DX100 read returns a value the location held while the command ran, never older than the stores made before issue. |
+| `obl_dx100_quiet` | per-candidate WP obligation | WP over the ghost hazard state | No own CPU access conflicts with a DX100 command before a wait covers it; a command may stay uncovered past a barrier or a critical exit only if it writes only tile elements that are dead there (F1, refined). |
+| `memory_ok` (premise; uses `hb_cpu`) | assumption entry, **platform choice** | "The pinned compiler and ISA implement RC11, and each `__sync_*` builtin is a fully fenced read-modify-write" (15 item 3; 26 item 4; M1). Stronger than C++ seq_cst RMWs; stated as such. | Reads are history reads over program order and the fenced-atomic order; an atomic read-modify-write reads the latest write; a failed CAS writes nothing. |
+| `omp_ok` (premise; its first clause uses `hb` with `omp_sync`) | assumption entry, **trusted tool** | "The pinned OpenMP runtime implements OpenMP 5.2" (15 item 4) | Barrier and `critical` order memory; thread ids are 0 to N-1; a barrier waits for all threads; `critical` excludes other threads; `omp for` gives each iteration to exactly one thread. |
+| `device_ok` (premise; uses `hb`) | assumption entry, **proof semantics** | The pinned DX100 proof-semantics version (12 items 4, 7) | A DX100 read returns a value the location held while the command ran, never older than the stores made before issue. |
 
 **Not hypotheses: the subject of the theorem.** `program_run X` and `complete X` say what
-"every run" ranges over: X is a finished run of the thread-indexed program. They are not facts
-about a candidate and need no evidence.
+"every run" ranges over: X is a finished run of the thread-indexed program.
 
-**Where barrier and `critical` "order memory".** That part of the OpenMP entry lives in the
-definition `hb` (edges `sync_barrier`, `sync_critical`), which `memory_ok` uses.
+**Lowering obligation outside Rocq: `cover_sound` (open, ticket 45).** The per-thread lowering
+must relate each thread's composition trace to its at-issue run: command id c = the command's
+issue position; the `DeviceRead c`/`DeviceWrite c` events are exactly the command's footprint;
+`DeviceCovered c` sits only where `Reduction.covered` covers command c; DX100 read values reach
+the thread only through the command's outputs; `Shared`'s `fence` flag and kind match the code.
+WP checks the ghost parts; the formal bridge lemma is not written yet (Codex round-2 finding
+2). The composition model has no waits, so Rocq cannot state it there.
 
-**Validity conditions of the three premises.** `omp_ok` is valid only for programs with uniform
-control (OpenMP leaves divergent barriers undefined); `obl_uniform_control` supplies that.
-`device_ok`'s bound "up to the thread's next `DeviceQuiet`" is valid only where `DeviceQuiet`
-marks a point where all of the thread's commands are covered; `obl_dx100_quiet` and the
-reduction lemma supply that.
+**Validity conditions of the premises.** `omp_ok` holds only for programs with uniform control
+(OpenMP leaves divergent barriers undefined); `obl_uniform_control` supplies that. `device_ok`'s
+bound "before the wait that covers it" relies on `cover_sound` and the reduction lemma.
 
 ## Hypothesis table: `dx100_reduction`
 
 | Rocq name | Kind | Discharged by | Plain sentence |
 |---|---|---|---|
-| `obl_hazard_free` | per-candidate WP obligation | WP over the proof semantics' ghost hazard state | No run that executes every command at its issue reaches a hazard (12 items 3-5). |
+| `contracts_ok` (premise) | assumption entry, **proof semantics** | The pinned DX100 proof-semantics version (12 item 1) | Each command's writes depend only on what it reads; a command that writes memory says so; the tile and register elements it touches lie in the tiles and registers it names. |
+| `obl_hazard_free_own` | per-candidate WP obligation | WP over the ghost hazard state, one thread | A core never reads what its own pending command writes, never writes what its pending command reads or writes, uses only its own tiles and registers, keeps DX100 memory accesses inside the registered regions the command names (F2), and never runs a command that shares a register with a pending one where either writes (F6) (12 items 3-5). |
+| `obl_hazard_free_cross` | per-candidate WP obligation | WP, two-copy product | A core never touches what another core's pending command writes, nor writes a tile another core's pending command reads (12 item 4). |
 
 **Not hypotheses: the subject.** `timed_run T` and `complete_timed T` say what "every timing
-gem5 allows" ranges over. Each clause of `timed_run` cites the gem5 source it models
-(research 14 at `e4fc4af`), so it needs no sign-off beyond the citation (12 item 11).
-
-**Hazard-free** (`hazard` in Reduction.v) is the proof semantics' own definition:
-unready read; CPU write to a tile an unfinished command reads; same-thread overlap with an
-unfinished command's footprint where either side writes; other-thread overlap with an unfinished
-DX100 write; a tile or register the thread does not own; plus one addition (F2). Device against
-device is not a hazard: `timed_run` models the region stall instead.
+gem5 allows" ranges over. Each clause cites the gem5 source it models (research 14 at
+`e4fc4af`), so it needs no sign-off beyond the citation (12 item 11).
 
 **Linked assumption entry.** "One DX100 instance" (12 item 7) is built into `timed_run`: all
-cores share one instruction file, so the dispatch and region stalls compare every core's
-unfinished commands.
+cores share one instruction file, so the stalls compare every core's unfinished commands.
 
-## Modeling choices to confirm
+## Modeling choices (all accepted by the main session, 2026-10-14 14:12 ET)
 
-Each is a choice the decisions leave open. Answer yes, or name the change.
+| # | Choice |
+|---|---|
+| M1 | `memory_ok` renders RC11 with one global order that agrees with each location's modification order. A `__sync_*` builtin is a full barrier (`sync_fence`); a relaxed atomic (plain `omp atomic`) is not (`fence = false`). |
+| M2 | In the composition model, a DX100 command's reads and writes sit at its issue. A DX100 read may still return a value another thread writes later, until a wait covers the command. |
+| M3 | A critical section implements one shared action on one location. Multi-location critical sections (the authors' batch store in `TDStepMAA`) do not meet `obl_atomic_blocks`. |
+| M4 | A CAS loop (min-update) appears as one `Shared MinUpdate` event, emitted only with WP's proof that the loop implements the kind. |
+| M5 | Worksharing constructs are numbered in the order a thread reaches them; each has a fixed iteration space. |
+| M6 | The reduction lemma orders CPU steps in one global sequence. **Flag: open obligation for ticket 43** (see the summary). |
+| M7 | A command reads each element at some time while it runs, and writes all its results at one step. |
+| M8 | 8-byte operands (tiles t and t+1) are not modeled; no proof-of-concept kernel uses them. |
+| M9 | The theorem ends at "a serial order of the shared actions"; the contract's order-independence lemma joins it through proof-record dependencies. |
+| M10 | Other threads' DX100 commands are history reads plus the owned and lock-protected classes, not a sixth shared-action kind. |
 
-| # | Choice | Why |
+## Findings and their decisions
+
+- **F1 (accepted, refined).** A command may stay uncovered past a barrier, or past the exit of
+  a critical section it was issued in, only if it writes tile elements only and those are dead
+  there: not read again before a later command overwrites them. The main session's wording
+  said "before a covered overwrite"; this uses "before a later command's overwrite", because
+  gem5's WAW dispatch stall (`IF.cc:193-212`) already finishes the old command before the
+  overwriting one dispatches, and the overwriting commands in both candidates are themselves
+  covered only later. Candidate check below.
+- **F2 (accepted).** A DX100 memory access outside some registered region holding it, or in no
+  registered region, is a hazard. `in_region` is a relation; no disjointness is assumed
+  (`TDStepMAA` uses bases `queue.shared` and `queue.shared + min` in one registered region,
+  `bfs.cc:147,163,230`).
+- **F3 (accepted).** Length about 5 + 4 pages; every definition stays explicit; this summary
+  added.
+- **F4 (provenance).** Drafted by Claude (`claude-opus-5-5`, Claude Code subagent). Reviewed
+  adversarially by Codex (`gpt-5.6-sol`, effort `xhigh`, read-only), twice. The proofs (42, 43)
+  stay Codex's.
+- **F6 (new, from Codex round 2).** DX100 commands write registers (the range loop advances its
+  cursor registers). No cited gem5 rule orders device against device on a register, so two
+  pending commands sharing a register where either writes is a hazard. Both candidates wait on
+  tile7 before the next range loop (`bfs_read_offload.inc:37`, `bfs.cc:165`), so they meet it.
+  If research finds gem5 orders register dependencies, this hazard can become a stall.
+- **F5 (new, from the candidate check).** The proof semantics' coverage rule needed a third
+  case (`cov_stall`): a covered command also covers every earlier command that would have
+  stalled its dispatch (`IF.cc:193-219`). Without it, `TDStepMAA`'s stream load `bfs.cc:147`
+  never counts as covered, and the CPU read of tile0 at `bfs.cc:191` would be an unready-read
+  hazard although gem5 orders it.
+
+### F1 check on both candidates
+
+**Peter's read offload** (`library/dx100/bfs_read_offload.inc`). Commands: `:30` stream load to
+tile0; `:31`, `:32` gathers to tile1, tile2; `:36` range loop to tile6, tile7; `:39` gather to
+tile0; `:40` to tile3; `:41` gather of `parent` to tile5. Waits `:37` (tile7), `:42` (tile3,
+tile5). Coverage: `:37` covers `:36`; `:42` covers `:40`, `:41`, then `:39` (producer of `:41`'s
+index), `:36` (producer of `:39`), and by `cov_stall` `:30`, `:31`, `:32` (`:39` writes tile0).
+On the empty-chunk path (`:38`, `count == 0`) `:30`-`:32` stay uncovered and may reach the
+region's implicit barrier after `:67`. They write tiles only, and tiles 0-2 are next read only
+after the next chunk's (or next call's) `:30`-`:32` overwrite them. Own conflicts: the CPU reads
+tiles at `:43`-`:46` and CASes `parent` at `:47` only after `:42`. No critical section.
+**Result: meets the refined rule.**
+
+**Authors' `TDStepMAA`** (`apps/dx100/benchmarks/gapbs/src/bfs.cc`). Commands: `:147` stream load
+to tile0; `:149`, `:151` to tile1, tile2; `:159` range loop to tile6, tile7; `:161` to tile0;
+`:163` to tile3. Wait `:165` (tile7) covers `:159`, `:161`, and by `cov_stall` `:147`, `:149`,
+`:151`. On the `break` path (`:167-168`) `:163` stays uncovered and may reach the barrier at
+`:197` or the region's implicit barrier after `:220`. It writes tile3 only, and tile3 is next
+read only by `:179` after the next round's `:163` overwrites it. Critical section `:170-187`:
+`:180` (`wait_ready(tile3)`) covers the store `:179`, its producers `:161`, `:163`, `:175`, and
+`:173` (producer of `:175`), so every command, including the memory-writing store, is covered
+before the exit. Own conflicts: tile reads at `:190-191` come after `:180`.
+**Result: meets the refined rule.** The first draft's rule (everything covered before a
+barrier) failed both candidates on these paths, as the main session predicted.
+
+## Codex adversarial review: disposition
+
+Round 1 (`/tmp/claude/probata-runs/t41/codex-review.md`, 12 findings):
+
+| # | Finding | Disposition |
 |---|---|---|
-| M1 | `memory_ok` renders RC11 with one global order of events that agrees with each location's modification order; a CAS (`__sync_*`) is a full fence (edge `sync_shared`). | `__sync_*` are full barriers. Every location is either race-free or written only by SC read-modify-writes (class fit), so such an order exists. Argued, not proven. |
-| M2 | In the composition model, a DX100 command's reads and writes sit at its issue. A DX100 read may still return a value another thread writes later, up to the issuing thread's next `DeviceQuiet`. | The reduction lemma licenses "at issue" for the issuing thread; 12 item 4 allows the later value for other threads. |
-| M3 | A critical section implements one shared action on **one** location. | Matches 15 item 2 literally. A critical section that stores a batch (the authors' `TDStepMAA`) does not meet `obl_atomic_blocks`; it is refuted at threads > 1 anyway (11). |
-| M4 | A CAS loop (min-update) appears as one `Shared MinUpdate` event. | The C lowering emits that event only with WP's proof that the loop implements the kind (same obligation, `atomic_blocks`). |
-| M5 | Worksharing constructs are numbered in the order a thread reaches them; each has a fixed iteration space. | The proof-of-concept regions reach each construct once. A loop whose space is computed inside the region is outside this statement. |
-| M6 | The reduction lemma orders CPU steps in one global sequence (sequential consistency). | It studies DX100 timing only. Weak CPU memory belongs to the composition theorem. The two statements are joined by the proof records, not inside Rocq. |
-| M7 | A command reads each element at some time while it runs, and writes all its results at one step. | Writes cannot be observed early: overlapping a DX100 write is a hazard, and the region stall orders device against device. |
-| M8 | 8-byte operands (tiles t and t+1, 12 Later changes) are not modeled. | No proof-of-concept kernel uses them. |
-| M9 | The theorem ends at "a serial order of the shared actions"; the contract's order-independence lemma joins it through proof-record dependencies. | Ticket 41 assumption. You may ask for a Rocq corollary. |
-| M10 | Other threads' DX100 commands are history reads plus the owned and lock-protected classes, not a sixth shared-action kind. | Ticket 41 assumption (15 items 5 and 7). |
+| 1 | `dx100_reduction` false: command metadata unconstrained | **Accepted:** `contracts_ok` premise. |
+| 2 | `memory_ok` stronger than RC11 (SC order between RMWs as hb) | **Accepted in part:** kept as decided (M1), renamed to "RC11 with `__sync_*` as full barriers", and limited to `fence = true` RMWs; relaxed `omp atomic` gets no such edge. |
+| 3 | `TileReady false` gives no witness (constructive blocker) | **Accepted:** rule split by cases. |
+| 4 | commands need not have a covering wait | **Rejected:** real code leaves commands uncovered (`bfs.cc:163` on the break path; F1 check); `complete_timed` already requires every command to finish before the run ends, and the wait rule covers every wait that occurs. |
+| 5 | `DeviceQuiet` unchecked | **Accepted:** per-command `DeviceCovered c` markers, plus the named lowering obligation `cover_sound`. |
+| 6 | `WaitReady`/`TileReady` skip ownership | **Accepted.** |
+| 7 | premises not one-to-one | **Accepted in part:** OpenMP ordering factored into `omp_sync`; `contracts_ok` separate. Rejected the rest: `device_ok` reusing `read_ok`/`hb` is a definitional dependency, not a second assumption entry. |
+| 8 | `obl_hazard_free` is a whole-run property | **Accepted:** split into `obl_hazard_free_own` (one thread) and `obl_hazard_free_cross` (pairs). |
+| 9 | failed CAS modeled as a write | **Accepted:** `sa_new` returns `option`. |
+| 10 | atomic blocks exclude DX100 in critical | **Accepted in part:** the first read may be any non-shared read (DeviceRead included); multi-location blocks stay unsupported (M3). |
+| 11 | stale-read sanity example outside the program class | **Accepted:** now a `__sync` CAS plus a relaxed load, with `stale_run_fits`. The suggested negative Rocq test of finding 1's counterexample is **rejected** for now: `contracts_ok` removes it, and building the counterexample in Rocq costs more than it checks. |
+| 12 | page budget unmet | **Accepted** as F3 (decided). |
 
-## Findings that need your decision
+Round 2 (`/tmp/claude/probata-runs/t41/codex-review2.md`, 8 findings; R2, R4, R8 judged fixed):
 
-- **F1 (new obligation).** A DX100 read issued before a barrier may finish after it. 12 item 4
-  allows an other-thread write to overlap it, so it could see a value written in the next
-  interval, and a read-only class would no longer protect it. `obl_dx100_quiet` therefore
-  requires every command to be covered before the thread's next barrier (and before leaving a
-  critical section). This is stricter than 12. The proof-of-concept candidates already wait
-  inside each chunk, so they should meet it.
-- **F2 (new hazard).** gem5's region stall compares registered regions only. A DX100 memory
-  access outside its command's registered regions escapes the stall, so `hazard` flags it.
-  `region_of` is a function, which assumes the registered regions are disjoint.
-- **F3 (length).** About 4.5 + 3.5 pages against "about 2". Every obligation and premise is
-  spelled out so that it maps to exactly one row above. Shortening would hide definitions.
-- **F4 (provenance).** The ticket says Codex drafts. This draft was written by Claude
-  (`claude-opus-5-5`, a Claude Code subagent of the main session); Codex (`gpt-5.6-sol`,
-  effort `xhigh`) was started as an adversarial reviewer; its output lands in
-  `/tmp/claude/probata-runs/t41/codex-review.md` (ticket 41's Answer). You decide whether Codex
-  should redraft.
+| # | Finding | Disposition |
+|---|---|---|
+| 1 | `dx100_reduction` still false: two commands writing one register are unordered | **Accepted:** register overlap with a pending command is a hazard (F6). |
+| 2 | `cover_sound` not formally connected (ids vs issue positions, completeness of device events) | **Accepted as an open obligation** for ticket 45 (specified above); the formal bridge lemma is out of 41's scope. |
+| 3 | dead-read exemption vacuous for a command with no outputs; reads could steer the program | **Accepted in part:** `dead_after` now requires at least one output. "Reads reach the thread only through outputs" is part of `cover_sound`. |
+| 4 | the fenced-`__sync` edge is a stronger platform axiom than RC11 | **Accepted:** stated explicitly as its own platform assumption ("fully fenced read-modify-write"), not derived from RC11. |
+| 5 | premises still not one-to-one (OpenMP edges inside `memory_ok`) | **Accepted:** `memory_ok` now uses `hb_cpu` (program order + fenced atomics) only; OpenMP's ordering is the first clause of `omp_ok`, over `hb`. `device_ok` uses `hb` by definition (its promise is about stores ordered before issue by any means). |
+| 6 | hazard split is syntactic; no lifting lemma | **Rejected:** both obligations have the rely form of `obl_class_fit` (one core, or a pair, against every environment the run allows); WP's per-thread encoding over-approximates that environment, so no separate lifting step exists. |
+| 7 | read-only critical sections pass `implements_shared_action` | **Accepted:** a named `(k, a, l, old)` is required in both cases. |
+| 8 | ticket record describes the first draft; page budget | **Accepted:** hashes refreshed; page budget amended by decision F3. |
 
-## Machine checks (ticket 41)
+Round 3 (`codex-review3.md`, truth only): **counterexample to `parallel_composition`, accepted.**
+A critical section that touched a shared-actions-only location, or held a barrier, could not be
+made contiguous in any serial twin. Fix: inside `critical` a thread touches no
+shared-actions-only location (`fits_event`), and a critical block holds no barrier
+(`obl_atomic_blocks`; OpenMP 5.2 already forbids a barrier nested in `critical`). Both candidates
+are unaffected for F1; `TDStepMAA`'s critical section already falls outside the supported class
+(M3).
+
+Round 4 (`codex-review4.md`, truth only, after that fix): **no counterexample found** for either
+statement; the round-2 and round-3 runs are excluded by the new hypotheses. Open (not truth
+findings): `cover_sound` bridge for ticket 45; M6 split for ticket 43.
+
+## Machine checks
 
 - Rocq 9.3.0 (opam switch `rocq-9`, rocq-stdlib 9.2.0) accepts `Vocabulary.v`, `Composition.v`,
-  `Reduction.v` and `Sanity.v`.
-- `Print Assumptions` lists only the two open theorems themselves (`Admitted`); no axiom is
-  declared anywhere.
-- Sanity lemmas, all `Qed`, each "Closed under the global context":
-  - the enumerations have exactly 5 and 4 members;
-  - `stale_history_read_allowed` and `history_read_not_always_latest`: a history read may return
-    a stale value (the model is not sequential consistency);
-  - `read_own_write`: a plain read after the thread's own write returns it;
-  - `failed_cas_reread_sees_winner`: 15 item 12's must-prove control (read, failed CAS, re-read
-    sees the winner);
-  - `unready_read_is_hazard`: a same-thread read during the thread's unfinished DX100 store is a
-    hazard (12 item 9).
-- Negative check: `negative/HistoryReadIsLatest_FALSE.v` claims sequential consistency for history
-  reads. Rocq rejects it at the unprovable branch, as required.
-- Build: `rocq compile -Q . Probata <file>` in a copy outside the repo, through
-  `verifier_run.py` (one verifier job at a time, 8 GB RSS watchdog).
+  `Reduction.v` and `Sanity.v`. Build: `rocq compile -Q . Probata <file>` in a copy outside the
+  repo, through `verifier_run.py`.
+- `Print Assumptions` lists only the two open theorems (`Admitted`); no axiom anywhere.
+- Sanity lemmas, all `Qed`, "Closed under the global context": enumerations have exactly 5 and 4
+  members; `stale_run_fits`, `stale_history_read_allowed`, `history_read_not_always_latest`
+  (inside the program class a relaxed load may be stale); `read_own_write`;
+  `failed_cas_reread_sees_winner` (15 item 12's must-prove control); `unready_read_is_hazard`
+  (12 item 9).
+- Negative check: `negative/HistoryReadIsLatest_FALSE.v` (history reads are SC) is rejected at
+  its unprovable branch, as required.
