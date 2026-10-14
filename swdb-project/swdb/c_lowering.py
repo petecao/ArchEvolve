@@ -302,6 +302,11 @@ def _dump(tool, source, name, includes, defines):
         found.append(node)
 
 
+def _named(nodes, name, kinds):
+    """Top-level dump nodes of kind in `kinds` named `name` (kept for ticket 22's cbmc_adapter._cut)."""
+    return [n for n in nodes if n.get("name") == name and n.get("kind") in kinds and not n.get("isImplicit")]
+
+
 def _resolve_locations(node, state):
     stack = [node]
     while stack:
