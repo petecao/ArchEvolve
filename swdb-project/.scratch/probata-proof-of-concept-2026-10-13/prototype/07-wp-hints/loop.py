@@ -168,14 +168,20 @@ WP goal generation). Then WP proves TDStep's goals and your lemmas (Alt-Ergo, Z3
 each per goal, no smoke tests). When every one of them is proven, the loop runs ONE fresh full WP run with
 the final settings (all functions, 30 s per prover, smoke tests); only that run decides. Keep hints few and
 targeted: every assertion and invariant is itself a goal, and large quantified contexts make provers time out.
+An assertion that is not proven still serves as a hypothesis for the goals after it, so a set can prove many
+goals "under" one unproven assertion (for example `assert !accelerate;`); such a set never passes, because the
+final run needs every assertion proven.
 {context_note}"""
 
-CONTEXT_NOTE = """WP context facts (method change e): WP puts EVERY global lemma into the hypotheses of EVERY goal of
-TDStep, and every assertion/invariant above a goal as well. Quantified lemmas and large predicate towers slow
-down unrelated goals: with an earlier hint set, the call precondition of `__dxc_const_i32(1, c.reg[2])`, proven
-in 0.03 s with no hints, timed out at 30 s for all three provers. Prefer local `assert`s next to the use site,
-predicates that are small and non-nested, and lemmas only when a goal needs them. A goal marked REGRESSION in
-the feedback was proven without hints and fails now because of context.
+CONTEXT_NOTE = """WP context facts (method change e): every assertion and loop invariant above a goal is a hypothesis
+of that goal, with the full definitions of every predicate it uses; every global lemma is a hypothesis of
+EVERY goal. Observed with an earlier hint set: the call precondition of `__dxc_const_i32(1, c.reg[2])`
+(prove `dxc_reg_ok(c.reg[2])` right after `c = swdb_contexts[0]`), proven in 0.03 s with no hints, timed out
+for all three provers because two assertions above it used large nested predicates over the whole queue and
+parent arrays; removing the lemmas did not help. So: keep hypotheses small near simple goals, state facts
+directly (no deep predicate towers), place an invariant only on the loop that needs it, and use lemmas only
+when a goal needs them. A goal marked REGRESSION in the feedback was proven without hints and fails now
+because of the context your hints add.
 """
 
 EXAMPLE_NOTES = """
