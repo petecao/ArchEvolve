@@ -26,6 +26,7 @@ L.OWNER[0] = CFG.get("owner", "t07d")
 PIN = CFG.get("pin") or L.PIN
 L.BASELINE_PASSED.update(CFG.get("baseline_passed") or [])
 ALLOWED = set(CFG["allowed_kinds"])
+E.ACCEPT[0] = CFG.get("accept", "total")
 SCHEMA = {"type": "object", "required": ["ops"], "properties": {"ops": {"type": "array", "items": E.OP_SCHEMA}}}
 TOOLS = [
     {"name": "check_edit",
@@ -75,7 +76,7 @@ def fmt_rec(rec):
             out.append(rec["blame_text"])
     if rec.get("log_tail"):
         out.append("WP log tail:\n" + rec["log_tail"])
-    if rec.get("result", "").startswith("reverted (open") and rec.get("failing_goals") is not None:
+    if rec.get("result", "").startswith("reverted (") and rec.get("failing_goals") is not None:
         fg = rec["failing_goals"]
         best_names = {g["goal"] for g in E.load_best(OUT)["failing_goals"]}
         new = [g for g in fg if g["goal"] not in best_names]

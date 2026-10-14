@@ -111,14 +111,35 @@ def attempt(out, best, ops, tag, provenance, mode, round_timeout, allowed_kinds,
         return rec, None
     n_open = len(ar["failing_goals"])
     rec["n_open_after"] = n_open
-    if n_open > best["n_open"]:
-        rec["result"] = f"reverted (open goals {best['n_open']} -> {n_open})"
+    u_old, h_old = split_counts(best["failing_goals"])
+    u_new, h_new = split_counts(ar["failing_goals"])
+    rec.update(n_unit_after=u_new, n_hint_after=h_new)
+    if ACCEPT[0] == "unit-first":
+        # t07d (a'), run 8 on: unit goals first, then the total; hint goals open capped.
+        ok = h_new <= HINT_OPEN_CAP and (u_new < u_old or (u_new == u_old and n_open <= best["n_open"]))
+        why = f"unit goals {u_old} -> {u_new}, hint goals {h_old} -> {h_new}, total {best['n_open']} -> {n_open}"
+    else:
+        ok = n_open <= best["n_open"]
+        why = f"open goals {best['n_open']} -> {n_open}"
+    if not ok:
+        rec["result"] = f"reverted ({why})"
         rec["failing_goals"] = ar["failing_goals"]
         return rec, None
-    rec["result"] = f"accepted (open goals {best['n_open']} -> {n_open})"
+    rec["result"] = f"accepted ({why})"
     nb = {"hints": hs, "failing_goals": ar["failing_goals"], "n_open": n_open, "n_goals": ar["n_goals"],
           "dir": str(d), "from": tag, "history": best.get("history", []) + [tag]}
     return rec, nb
+
+
+ACCEPT = ["total"]     # "total" (run 7) or "unit-first" (t07d a', run 8 on)
+HINT_OPEN_CAP = 15     # unit-first: at most this many open goals that belong to hints
+
+
+def split_counts(failing):
+    """(unit goals open, hint goals open): a hint goal sits inside a hint block or is a lemma."""
+    hint = sum(1 for g in failing if any(not i.startswith(SEED_PREFIX) for i in g.get("hint_ids") or [])
+               or str(g.get("goal", "")).startswith("typed_lemma"))
+    return len(failing) - hint, hint
 
 
 def best_text(best, limit=80):

@@ -58,3 +58,11 @@ def test_strategy_vocabulary_allows_wp_tactics_only_and_no_time_argument():
     assert "proof_smoke" in bad({**att, "text": '\\wp::proof F: "smoke";'})
     assert "proof_unknown_strategy" in bad({**att, "text": '\\wp::proof G: "@assigns";'})
     assert "banned_token" in bad({**att, "text": '\\wp::proof F: admit;'})
+
+
+def test_unit_first_counts_seed_frames_as_unit_goals_and_agent_hints_as_hint_goals():
+    fails = [{"goal": "typed_TDStep_ensures_a", "hint_ids": []},
+             {"goal": "typed_TDStep_loop_assigns_3_part04", "hint_ids": ["seed3"]},
+             {"goal": "typed_TDStep_loop_invariant_x_preserved", "hint_ids": ["seed3", "r1c4h3"]},
+             {"goal": "typed_lemma_l", "hint_ids": []}]
+    assert E.split_counts(fails) == (2, 2)
