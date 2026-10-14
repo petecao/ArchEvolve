@@ -923,6 +923,9 @@ def _insert_proof(con, d, *_):
         elif kind == "build_constants":
             pins += [(d["id"], kind, i, p["name"], None, None, None, json.dumps(p["value"]), None)
                      for i, p in enumerate(pin)]
+        elif kind == "logic":                       # Probata PoC 26: one row per logic file, value = its version
+            pins += [(d["id"], kind, i, p["id"], p["sha256"], None, None, p["version"], None)
+                     for i, p in enumerate(pin)]
         else:
             pins.append((d["id"], kind, 0, pin.get("id"), pin.get("sha256"), pin.get("function"), None, None,
                          pin.get("not_applicable")))
