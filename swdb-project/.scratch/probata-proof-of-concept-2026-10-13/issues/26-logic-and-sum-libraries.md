@@ -103,6 +103,9 @@ the shared verifier lock.
   inside `verifier_run.py`: **234 passed, 5 failed** in 17 min (peak 1.4 GB). Log
   `/tmp/claude/probata-runs/t26/pytest-full1.log` (sha256 `4d6188b161a0d465`...), report log
   `/tmp/claude/probata-runs/t26/report-full1.jsonl` (`e1a0f1f01fa03ed5`...).
+- After merging the integration tip (`2b3f39dd`): the same set again, **234 passed, 5 failed** (the same 5) in
+  17 min. Log `/tmp/claude/probata-runs/t26/pytest-merged.log` (`4bb2f3642dcede24`...), report log
+  `/tmp/claude/probata-runs/t26/report-merged.jsonl` (`db8429e4cffb1229`...).
 - The 5 failures are the `test_level_rule.py` proof-semantics cases that ticket 21 found failing on the
   integration tip before this ticket ("entry ID requires prefix semantics."; 10's fixtures vs 20's
   `proof_semantics` kind). Same names, same message; not caused here.
