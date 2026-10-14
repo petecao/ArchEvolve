@@ -1,9 +1,9 @@
 # 01 — Guard blocks the authors' held-out functions
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-14 01:22 ET (resolved); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** None — can start immediately
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Modules", table "Loop, modes and guards", row "Provider guard and workspaces"; "Testing Decisions", seam 4; "Proof-of-concept plan", A0 row and exit check; "Found while cutting the build tickets", O2 and O5; user story 77); decisions: [18](../../formal-verification-2026-10-09/issues/18-evaluation-claims-and-subjects.md) (item 6), [27](../../formal-verification-2026-10-09/issues/27-proof-of-concept-stages.md) (items 2, 5)
 **Time estimate:** about 2 hours
@@ -19,21 +19,21 @@ is the first build item of stage A0, and it must land before any held-out propos
 
 ## Acceptance
 
-- [ ] Through the provider workspace and guard seam: an agent-role input whose text names
+- [x] Through the provider workspace and guard seam: an agent-role input whose text names
       `PBFSMAA` is refused with the existing authors'-code refusal, before any provider call opens.
       The same holds for `PageRankPullMAA` and `DeltaStepMAA`. Each name has its own case, so
       dropping any one name fails a test.
-- [ ] `BrandesMaa` is refused too, with its own case (O2 default; see Notes). If Yan-Ru reverses
+- [x] `BrandesMaa` is refused too, with its own case (O2 default; see Notes). If Yan-Ru reverses
       O2, drop that case and the name.
-- [ ] `TDStepMAA` and `DOBFSMAA` stay refused, each with its own case. Today only `TDStepMAA` has
+- [x] `TDStepMAA` and `DOBFSMAA` stay refused, each with its own case. Today only `TDStepMAA` has
       one; add the `DOBFSMAA` case.
-- [ ] `TDStepMAA2` and `BCMAA` are off the guard's list. They name nothing in the authors' code, so
+- [x] `TDStepMAA2` and `BCMAA` are off the guard's list. They name nothing in the authors' code, so
       no test needs them.
-- [ ] The refusal fires for a name inside a source file and inside a JSON input.
-- [ ] Negative controls: the baseline names stay allowed. Inputs naming `PBFS`, `Brandes`,
+- [x] The refusal fires for a name inside a source file and inside a JSON input.
+- [x] Negative controls: the baseline names stay allowed. Inputs naming `PBFS`, `Brandes`,
       `PageRankPullGS`, `DeltaStep`, `TDStep` and `DOBFS` (the fork's non-DX100 functions) pass the
       guard, so held-out proposals can still see their baselines.
-- [ ] Every existing test that exercises the guard (provider guard, provider workspace, role-input
+- [x] Every existing test that exercises the guard (provider guard, provider workspace, role-input
       and certification-feedback tests) passes unchanged, run with at most 2 test workers.
 
 ## Notes
@@ -72,3 +72,39 @@ is the first build item of stage A0, and it must land before any held-out propos
 - Known limit, not fixed here: the guard matches names, so code copied under another name would
   pass. The design fixes a name list (map 18 item 6). Report any sign of copying instead of widening the
   guard silently.
+
+## Answer
+
+2026-10-14 01:22 ET. Done at commit `cffe20e1` on `probata-poc/t01`.
+
+- **Guard:** `swdb/provider_roles.py` `FORBIDDEN_SOURCE` now names `TDStepMAA`, `DOBFSMAA`, `PBFSMAA`,
+  `BrandesMaa`, `PageRankPullMAA` and `DeltaStepMAA`. `TDStepMAA2` and `BCMAA` are gone. The refusal
+  text is unchanged.
+- **Tests:** `tests/test_provider_authors_guard.py` (new, 18 cases) drives `provider_roles.run` with
+  an external fixture provider that writes a marker file when called.
+  - Each of the six names, in a source file and in a JSON input: refused with the authors'-code
+    refusal; no role folder is created and the provider is never called.
+  - Negative controls: `PBFS`, `Brandes`, `PageRankPullGS`, `DeltaStep`, `TDStep`, `DOBFS` in a
+    source file and a JSON input pass, the provider is called and the audit passes.
+  - Mutation check: dropping any one name from the guard fails exactly its 2 cases.
+- **Existing tests:** the new file plus `test_provider_guard`, `test_provider_guard_scope`,
+  `test_provider_workspace`, `test_statement_annotation` (role inputs), `test_estimation_role`,
+  `test_certification_feedback`, `test_provider_role_schemas` and `test_provider_login`: 827 passed,
+  15 skipped, 0 failed (one worker, no xdist, 35 min). JUnit:
+  `/tmp/claude/probata-runs/01/targeted.junit.xml`. No existing test changed.
+- **Name source:** the four held-out names and their line numbers come from map 18 item 6
+  (`bc.cc:130`, `pr.cc:127`, `sssp.cc:82`) and the BC snapshot script
+  (`scripts/prepare_dx100_bc_scalar_snapshot.py` checks `BrandesMaa` at line 426). The DX100
+  source is not on the Mac, so they were not rechecked here.
+- Assumption: the seam is the agent-role input check (`provider_roles.checked_inputs`, reached
+  through `prepare` and `run`). The rewriting workspace (`provider_workspace.prepare`) has no name
+  check; it relies on scalar-only source snapshots (ADR 0006). Ticket 31's drafting workspace and
+  the PR/SSSP snapshots must therefore keep the authors' functions out by construction. Not changed
+  here.
+- Side finding (no ticket opened): no workflow broke in the tests above. The records named in Notes
+  (2026-10-03 BC candidate and scalar-only snapshot, 2026-10-06 BC generality snapshot) still name
+  `PBFSMAA`/`BrandesMaa` and are now refused if handed to an agent role. In `swdb/` and `scripts/`
+  only `scripts/prepare_dx100_bc_scalar_snapshot.py` names them in code; a full trace of which
+  records each role's caller loads was not done.
+- No sign of the authors' code copied under another name.
+
