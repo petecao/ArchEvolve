@@ -1,6 +1,7 @@
 """Render the provisional D06 handoff messages from authoritative records.
 
-Created: 2026-09-27 (Eastern Time).
+Created: 2026-09-27 (Eastern Time). Updated: 2026-10-14 ET (Probata PoC 18: evaluation results carry the
+`certification_level` block, format 1.2, `swdb.handoff_level`).
 
 Three linked messages (profile package, rewrite proposal, evaluation result) are
 the provisional collaborator contract of spec decision D06. They are views of
@@ -20,6 +21,9 @@ from swdb import artifacts, db
 from swdb.cli import Failure
 
 FORMAT_VERSION = "1.0"
+#: Probata PoC 18 (2026-10-14 ET): 1.2 adds the certification_level block to every evaluation result (1.0
+#: content, or 1.1's functional-evaluation additions); docs/bfs-handoff-contract-v1.2.md.
+EVALUATION_RESULT_VERSION = "1.2"
 KINDS = {"profile_package": "profile_package", "rewrite_proposal": "proposal", "evaluation_result": "evaluation"}
 PAYLOAD_INLINE_BYTES = 4096
 
@@ -282,9 +286,12 @@ def evaluation_result(store, data):
                        _ref(store, _mapping(context.get("certification")).get("id") or _mapping(data.get("request")).get("certification"), "certification"),
                        _ref(store, analytic_estimate.get("characterization"), "workload_characterization"),
                        _ref(store, _mapping(analytic_estimate.get("baseline")).get("id"), "estimate")])
+    # Probata PoC 18 (2026-10-14 ET): every evaluation result carries the certification_level block, a dated
+    # snapshot of the level rule in fixed template sentences; it never changes the claim or the result class.
+    from swdb import handoff_level
+    content["certification_level"] = handoff_level.render(store, data.get("candidate"))
     envelope = _envelope("evaluation_result", data, inputs, content, submission=proposal.get("producer"))
-    if functional:
-        envelope["format_version"] = "1.1"
+    envelope["format_version"] = EVALUATION_RESULT_VERSION
     return envelope
 
 

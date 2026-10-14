@@ -11,7 +11,8 @@ one field list and its checks, run fields (`run_index`, `provider_pin`) on proof
 repair lineage on proposals ([Run fields and repair lineage](#run-fields-and-repair-lineage-ticket-12));
 2026-10-14 03:45 ET, ticket 57: `swdb prove-lane`, proof workers in a socket lane on mbit10, the worker RSS
 watchdog, and the scripted adapter's `run` key ([Proof workers in a socket lane](#proof-workers-in-a-socket-lane-ticket-57));
-2026-10-14 ET, ticket 13: `swdb repair <proof record>` writes repair lineage ([format-v0.4-repair.md](format-v0.4-repair.md)).
+2026-10-14 ET, ticket 13: `swdb repair <proof record>` writes repair lineage ([format-v0.4-repair.md](format-v0.4-repair.md));
+2026-10-14 ET, ticket 18: `swdb prove --proof-path` ([format-v0.4-archevolve-proof.md](format-v0.4-archevolve-proof.md)).
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/04-proof-record-tracer.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("Records and levels"), map ticket 26,
 [ADR 0016](../adr/0016-proof-records-never-change-level-computed-on-read.md).
@@ -46,6 +47,11 @@ swdb prove --candidate <candidate> --function <name> --adapter scripted --script
            [--bounds <JSON>] [--minimum-bounds <record>] [--budget-minutes <n>]
 swdb prove ... --skip <skip reason>          # run no verifier; record one skip
 ```
+
+- **ArchEvolve mode's proof path** (ticket 18): `swdb prove --proof-path bounded|unbounded --candidate <c>
+  --function <f> --adapter scripted --plan <plan> --runs-dir <d> [--provider-config <p>]` runs Extensa mode's
+  proof steps on a certified rewrite proposal's candidate artifact: the bounded gate, counterexample-guided
+  repair of a refutation, then the unbounded rung. See [format-v0.4-archevolve-proof.md](format-v0.4-archevolve-proof.md).
 
 - **Bounded jobs** (ticket 14, the bounded gate): `--bounds` names the bounds the job runs at (`Job.bounds`;
   a scripted script without `bounds` holds its verdict there); `--minimum-bounds` pins a minimum-bounds

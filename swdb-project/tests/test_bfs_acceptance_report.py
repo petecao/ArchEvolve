@@ -2,7 +2,8 @@
 Updated 2026-10-05 ET (code review T4): the records are read as committed at a pinned commit
 (`testkit.pinned`), not from the live checkout. Updated 2026-10-13 ET (suite fix: the retained
 proposal's lineage pins gem5 records, so its handoff renders in explicit Extensa mode under ADR 0013,
-as the checked-in examples already do).
+as the checked-in examples already do). Updated 2026-10-14 ET (Probata PoC 18: evaluation results render as
+format 1.2 with the certification_level block).
 
 These tests read the repository's real T18/T19 native evidence through the
 public `bfs-coverage` and `handoff-message` commands. Raw artifacts stay on
@@ -138,7 +139,8 @@ def test_evaluation_message_separates_completed_and_incomplete_without_claims(ac
     done = run_swdb("handoff-message", message, record, "--records", records, "--db", tmp_path / "m.sqlite", "--format", "json")
     assert done.returncode == 0, done.stderr
     body = json.loads(done.stdout)
-    assert body["format"] == "swdb.bfs.handoff.evaluation_result" and body["format_version"] == "1.0"
+    assert body["format"] == "swdb.bfs.handoff.evaluation_result" and body["format_version"] == "1.2"
+    assert body["content"]["certification_level"]["speed"] == "Says nothing about speed."   # Probata PoC 18
     assert body["provenance"]["test_client"] is True and body["provenance"]["live_collaborator_integration"] is False
     assert body["content"]["result_class"] == expected and body["content"]["performance_claim"] == "none"
     assert all(ref["state"] == "present" for ref in body["inputs"])

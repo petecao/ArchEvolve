@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Regenerate or check the D06 handoff example messages from actual records.
 
-Created: 2026-09-27 (Eastern Time). Updated: 2026-10-06 ET. Every example is rendered through the public
+Created: 2026-09-27 (Eastern Time). Updated: 2026-10-06 ET; 2026-10-14 ET (the check keeps the archived
+date of an evaluation result's certification_level snapshot). Every example is rendered through the public
 `swdb handoff-message` command from an existing master record, so the examples
 track the current record formats. This driver reads records only; it runs no
 evaluation, contacts no collaborator, and makes no performance claim.
@@ -33,6 +34,20 @@ def render(message, record_id, records, db, mode, campaign):
     return json.dumps(json.loads(done.stdout), indent=2, sort_keys=True) + "\n"
 
 
+def _keep_snapshot_time(text, archived):
+    """The rendered text with the archived certification_level snapshot time (2026-10-14 ET, Probata PoC 18).
+
+    An evaluation result's certification_level block is a snapshot dated when it is rendered; the check
+    compares everything else, so a re-render on another day is not stale for its date alone."""
+    try:
+        old = json.loads(archived)["content"]["certification_level"]["snapshot"]["at"]
+        message = json.loads(text)
+        message["content"]["certification_level"]["snapshot"]["at"] = old
+    except (ValueError, KeyError, TypeError):
+        return text
+    return json.dumps(message, indent=2, sort_keys=True) + "\n"
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--check", action="store_true", help="compare instead of writing")
@@ -49,7 +64,7 @@ def main(argv=None):
             text = render(row["message"], row["record"], args.records, db, args.mode, args.campaign)
             target = FOLDER / row["file"]
             if args.check:
-                if not target.is_file() or target.read_text() != text:
+                if not target.is_file() or target.read_text() != _keep_snapshot_time(text, target.read_text()):
                     stale.append(row["file"])
             else:
                 target.write_text(text)

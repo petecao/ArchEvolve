@@ -1,6 +1,7 @@
 # Derived implementations and rewrite links (format 0.4 addition)
 
-Created: 2026-10-14 (Eastern Time), Probata proof of concept ticket 19.
+Created: 2026-10-14 (Eastern Time), Probata proof of concept ticket 19. Updated: 2026-10-14 ET, ticket 18
+(ArchEvolve mode records one at `swdb certify`).
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/19-derived-implementations.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("Proof routes", "Loop, modes and guards"), map
 decision 17 items 5-8, 24 item 3, 26 item 2; ADR 0005 (the root baseline stays the comparator) and
@@ -28,6 +29,13 @@ with its own source snapshot `<candidate>.derived.source` (the candidate artifac
 command: the Extensa campaign loop writes it right after certification. A rejected or uncertified
 result, or one with an offloading contract, writes none. The campaign summary entry names it in
 `derived_implementation` (or says why not in `derived_note`).
+
+**ArchEvolve mode** (ticket 18, 2026-10-14 ET): `swdb certify <contract> --candidate <candidate>` on a rewrite
+proposal's candidate artifact (not an Extensa campaign's) records it the same way, in the store that certified
+it (the research database; nothing reaches the main database before promotion), one contract per proposal,
+with the candidate artifact's source snapshot as the predecessor snapshot. Its output adds
+`derived_implementation`, or `derived_note` with why none (an offloading contract, a failed certification, a
+refused record). The certification stands either way (`swdb.archevolve_proof.record_derived`).
 
 ## Implementation fields
 

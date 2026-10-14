@@ -1,6 +1,7 @@
 # Counterexample-guided repair (`swdb repair <proof record>`)
 
-Created: 2026-10-14 (Eastern Time), Probata proof of concept ticket 13.
+Created: 2026-10-14 (Eastern Time), Probata proof of concept ticket 13. Updated: 2026-10-14 ET, ticket 18
+(ArchEvolve mode's proof path calls the loop).
 Spec: `.scratch/probata-proof-of-concept-2026-10-13/issues/13-counterexample-guided-repair.md`; design:
 `.scratch/formal-verification-2026-10-09/spec.md` ("Refutation, repair and bugs"); glossary:
 counterexample-guided repair, reverted repair, spurious counterexample.
@@ -16,6 +17,7 @@ provider call each, and flags a repair that no longer applies the contract.
 | ArchEvolve mode (18), anyone outside campaigns | `swdb repair <proof> --runs-dir D --provider-config P` (one round) | `archevolve` |
 | The evaluation (RQ4, O1, O5) | `swdb repair <proof> --evaluation-run ...` (one round) | `evaluation` |
 | `swdb campaign` (14), ArchEvolve mode (18) | `swdb.counterexample_repair.loop(records, proof, runs_dir=, provider_config=, certify=, gate=, setting=)` | `campaign` / any |
+| ArchEvolve mode's proof path (18) | `swdb prove --proof-path bounded ... --provider-config P` calls `loop` ([format-v0.4-archevolve-proof.md](format-v0.4-archevolve-proof.md)) | `archevolve` |
 
 `swdb.counterexample_repair` owns the cap and the reverted-repair flag for every mode; callers never
 re-implement either. `--run-index N` (1-3) puts the run field on the new proposal.
