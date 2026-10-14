@@ -87,7 +87,8 @@ def campaign_file(team, *, cid=CID, target="native_cpu", **changes):
             "library": {"allowed_tiers": ["shared", "experimental"], "contracts": [CONTRACT]},
             "regions": ["tdstep"], "provider": {"name": "codex", "model": "gpt-5.6-sol", "effort": "xhigh"},
             "budgets": {"max_iterations": 1, "plateau_iterations": 4, "lane_hours": 24,
-                        "provider_calls_per_iteration": 3, "provider_calls_setup": 1, "disk_gb": 20, "lanes": 1},
+                        "provider_calls_per_iteration": 3, "provider_calls_setup": 1, "disk_gb": 20, "lanes": 1,
+                        "provider_calls_proof": 30},
             "runs_root": str(team["root"] / "runs")}
     if target == "dx100_gem5":
         data["baselines"] = data["baselines"][:1]

@@ -330,6 +330,20 @@ class TargetAdapter:
         raise Failure(f"no bounded verifier adapter for rung {rung} on target {self.campaign['target']} yet "
                       "(tickets 22, 46, 47)")
 
+    # the WP phase (Probata PoC 16) ------------------------------------------------------------------
+    def wp_plan(self, candidate_id, contract, **context):
+        """The WP job of one proof unit: {unit_postcondition, proven_at}. The real proof-hint loop is ticket 37's."""
+        raise Failure(f"no WP adapter on target {self.campaign['target']} yet (tickets 37, 55)")
+
+    def wp_job(self, candidate_id, contract, proven, **context):
+        """The WP job's verifier: {adapter, script}."""
+        raise Failure(f"no WP adapter on target {self.campaign['target']} yet (tickets 37, 55)")
+
+    def open_timing_steps(self):
+        """Timing steps and gem5 simulations of this campaign still running ({what, started, kind}). The loop
+        runs its steps one at a time, so none is open when the WP phase starts."""
+        return []
+
     def restore(self, state):
         """Rebuild in-memory state when a campaign resumes."""
 

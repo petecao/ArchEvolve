@@ -1,6 +1,7 @@
 # Extensa-mode record fields (format 0.4 addition)
 
 Created: 2026-10-03 (Eastern Time)
+Updated: 2026-10-14 07:45 (Eastern Time): the WP phase after the campaign stops: `wp_phase`, `budgets.provider_calls_proof`, proof lane-hours and the proof budget lines in `budgets.used`; gate jobs now charged to lane-hours (Probata PoC ticket 16)
 Updated: 2026-10-14 06:17 (Eastern Time): two winners per workload class: `winners`, `best_proven`, `level_snapshot` in campaign summaries; `best/<class>.best_proven.patch` (Probata PoC ticket 15)
 Updated: 2026-10-14 (Eastern Time): optional `derived_starts` and the entry fields `start`, `derived_implementation` (Probata PoC ticket 19; see [format-v0.4-derived.md](format-v0.4-derived.md))
 Updated: 2026-10-14 02:57 (Eastern Time): promotion pins the level: `proof_records` and `level_snapshot` on candidate reviews (Probata PoC ticket 12)
@@ -131,7 +132,8 @@ selection uses), `baselines` (each a `role` and its `candidate`), `protocol` (`r
 (`allowed_tiers`, `contracts`, optional `synthesize` families), `regions` (a fixed list,
 or `query`: the query site finder, ticket 55), `provider` (`name`, `model`, `effort`), `budgets`
 (`max_iterations`, `plateau_iterations`, `lane_hours`, `provider_calls_per_iteration`,
-`provider_calls_setup`, `disk_gb`, `lanes`, optional `max_repairs`), `runs_root` and an
+`provider_calls_setup`, `disk_gb`, `lanes`, optional `max_repairs`, and `provider_calls_proof`, required
+when the campaign's library holds a method version (Probata PoC 16)), `runs_root` and an
 optional `approval` (`by`, `date`, `scope`, `raised_budgets`, `two_lanes`).
 
 Added 2026-10-04 ET (tickets 56 and 64; documented by the final code review): `protocol`
@@ -293,8 +295,9 @@ it opens (role `counterexample_repair` in the iteration's `provider_calls`; the 
 caps and lane-hours apply; a refused call ends the loop `calls_refused`). `state.json` and the summary's
 `bounded_gate` block hold `repair_counters`: `certification_repairs` (D7 calls, role `repair`),
 `counterexample_repair_rounds`, `repairs` and `reverted_repairs`; both kinds of call count in
-`budgets.used.provider_calls_counted`. The block's `proof_job_hours` is the gate's proof-job wall time; it
-is not charged to `lane_hours` (ticket 16 reports proof lane-hours apart).
+`budgets.used.provider_calls_counted`. The block's `proof_job_hours` is the gate's proof-job wall time (the
+rungs' sum). Ticket 16: a gate run that ran a verifier (not only skips) is also charged to `lane_hours` as lane
+time (its elapsed time, or the fixture's `step_hours.proof`) and to the proof lane-hours line.
 
 **Contract fixture** (`swdb campaign --fixture`, with `base_snapshot`): `contract_proofs: {contract: {parts
 (default [unit_postcondition]), minimum_bounds: {threads_1, threads_k}}}` writes contract-fixture
@@ -305,6 +308,62 @@ per-contract overrides under `contracts`. A fixture candidate artifact retains i
 real targets read contract proofs from the team store (none exist before tickets 29, 32, 33), name
 `TDStep` as the proof function, read every candidate artifact as inside the C++ subset (ticket 24), and
 have no bounded verifier adapter yet (22, 46, 47).
+
+## The WP phase (Probata PoC 16, 2026-10-14 ET)
+
+Code: `swdb/wp_phase.py`, called by `swdb/campaign.py` (`Campaign._after_stop`). Design: map decisions 25
+items 1, 2, 4 and 13 items 10, 11; spec "Extensa mode". A campaign with a bounded gate (a method version)
+runs step 4 of a candidate artifact's path, the unbounded rung, after it stops.
+
+- **When.** After the stop and after the first `campaign_summary` is written (its `wp_phase.state` is
+  `not_started`). Each WP job starts only when the target reports no open timing step or gem5 simulation
+  (`open_timing_steps`); the wait is recorded in `waits`.
+- **Order and stop per class.** `order`: the certified, unrefuted `gain` candidate artifacts of the class,
+  fastest first (the lower bound). One candidate artifact at a time; the class is done (`state`
+  `proven_unbounded`, `proven` its ID) when the level rule reads one proven unbounded, or `order_spent`
+  when every one was tried. A timed-out bounded job or missing minimum bounds does not keep a candidate out.
+- **One job per proof unit.** Each rewrite contract of the candidate artifact is one `swdb prove` job and
+  one proof record (batch `batch.wp.<candidate>.<hex>`): WP alone, then the contract seeds, then proof-hint
+  rounds (`stages`: `wp`, `seeds`, round numbers). Per candidate artifact the method version's
+  `hint_rounds`, `hint_loop_wall_minutes` (the job's wall budget) and `wp_seconds_per_solver` apply (copied
+  into the block's `budgets`). Not proven after them: failure class `hint_budget_spent`; the candidate keeps
+  its level.
+- **Skips (O7).** No counting contract-proof part: no `seeds` stage; with a unit postcondition route-1 WP still
+  runs, without one a skip record `no_contract_proof`. Outside the C++ subset: a skip record
+  `outside_cpp_subset` (no hint loop). A skipped candidate artifact keeps its level; the next one is tried.
+- **Two call budgets.** Each hint round charges one call (role `proof_hint`) to the call ledger under
+  `budgets.provider_calls_proof` (spec default 30; above it only with an approval entry naming it), never
+  to the rewriting total (`provider_calls_counted`) or a per-iteration cap, so a campaign stopped by its
+  rewriting total still has its hint calls. Once the cap is spent, the remaining jobs run WP and seeds only.
+- **Lane-hours.** Every proof job (the gate's and the phase's) is charged to `lane_hours` and to
+  `proof_lane_hours`. A WP job starts only with `hint_loop_wall_minutes` of lane-hours left; otherwise the
+  phase ends (`end_reason` `lane_hours`, unfinished classes `unfinished`). A campaign stopped on its
+  lane-hours has none left: its phase ends at once. Raising lane-hours still needs the approval entry.
+- **Summary rewritten once.** When the phase ends, the summary is rewritten once, replacing the stop-time one
+  in the campaign store and the team store (git keeps the first): both winners recomputed (a candidate artifact
+  proven unbounded beats a threads ≤ k one), every `level_snapshot` dated at the phase end.
+- **Resume.** An interrupted phase (`state` `running`) continues on `--resume` from the candidate artifacts
+  already `tried`; a campaign whose phase has `ended` is refused, as a stopped campaign is. A target with no
+  WP adapter yet (the real ones, tickets 37 and 55) ends the phase with `end_reason` `failure`.
+
+Summary fields (`campaign_summary`, with `bounded_gate`):
+
+| Field | Meaning |
+|---|---|
+| `wp_phase` | `state` (`not_started`, `running`, `ended`), `started`, `ended`, `end_reason` (`classes_done`, `lane_hours`, `no_proof_call_budget`, `failure`), `end_detail`, `method_version`, `budgets`, `waits` (`for`, `seconds`, `until`), `provider_calls` (the hint calls: `role`, `invocation`, `candidate`, `outcome`, `counted`, `model`, `effort`), `classes` |
+| `classes` (in `wp_phase`) | per class: `class`, `order`, `state` (`running`, `proven_unbounded`, `order_spent`, `unfinished`), `proven`, `tried`, `jobs` |
+| `jobs` (in each of `classes`) | per proof unit: `candidate`, `contract`, `position`, `record`, and `verdict` [+ `failure_class`], `stages`, `hint_calls`, `started`, `ended`, `lane_hours`; or `skip_reason` |
+| `budgets.used` | adds `proof_lane_hours`, `provider_calls_proof` (hint calls), `certification_repair_calls` and `counterexample_repair_calls` (both also in `provider_calls_counted`); `budgets.limits` adds `provider_calls_proof` |
+
+`state.json` adds `wp_phase`, `proof_lane_hours`, `summary_writes` (`when`: `stop`, `wp_phase_end`; `at`) and
+`timeline` (`kind`: `proof_job`, `timing_step` or `gem5_simulation`; `what`, `started`, `ended`), from which
+overlap is checked.
+
+**Contract fixture:** a class row's `proof.wp` scripts the WP job: `proven_at` (`wp`, `seeds`, a hint round
+number, or absent: never) and `unit_postcondition` (default true); a row without `proof.wp` ends the phase
+(`failure`). `open_timing_step: {seconds}` scripts a timing step open when the phase first asks;
+`step_hours.proof` charges each proof job. The hint rounds are scripted (no provider runs); ticket 37's
+proof-hint loop replaces them.
 
 ## Two winners per workload class (Probata PoC 15, 2026-10-14 ET)
 
@@ -320,7 +379,7 @@ Code: `swdb/campaign.py` (`select`, `best_proven`, `winner_rows`, `Campaign._win
   level. Key: (level rank, lower bound).
 - **Levels known so far.** Both winners are recomputed after every iteration through the level rule over the
   campaign store and library (what `swdb candidate-level` reports), never stored: the bounded gate gives the
-  within-bounds levels; proven unbounded waits for the WP phase (ticket 16). A candidate artifact with a counting
+  within-bounds levels; proven unbounded waits for the WP phase (ticket 16, "The WP phase"). A candidate artifact with a counting
   refutation (the level rule's refuted flag) wins neither, even one evaluated before the refutation was
   written; one whose proof records stopped counting (a changed pin) drops to the level it still has.
 - **`best/`.** The next rewrite workspace holds `best/<class>.patch`, the fastest winner's patch, and, when

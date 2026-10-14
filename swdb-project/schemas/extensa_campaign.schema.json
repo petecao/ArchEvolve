@@ -73,7 +73,9 @@
         "provider_calls_setup": {"type": "integer", "minimum": 0},
         "disk_gb": {"type": "number", "exclusiveMinimum": 0},
         "lanes": {"enum": [1, 2]},
-        "max_repairs": {"type": "integer", "minimum": 0, "maximum": 5}
+        "max_repairs": {"type": "integer", "minimum": 0, "maximum": 5},
+        "provider_calls_proof": {"type": "integer", "minimum": 0,
+                                 "description": "Probata PoC 16 (2026-10-14 ET): the WP phase's proof-hint calls, apart from the rewriting total; above the spec default 30 only with an approval entry naming it. Required when the campaign's library holds a method version."}
       }
     },
     "paired_estimates": {

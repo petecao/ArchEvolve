@@ -36,7 +36,7 @@ from swdb.extensa.leakage import find_outcome_claims
 
 __all__ = ["StopReason", "IterationOutcome", "CallOutcome", "SearchBudget", "SearchLedger",
            "FEEDBACK_REASONS", "FEEDBACK_FIELDS", "Feedback", "FeedbackError", "RollbackPlan",
-           "plan_rollback", "apply_rollback", "BUDGET_KEYS"]
+           "plan_rollback", "apply_rollback", "BUDGET_KEYS", "PROOF_HINT_ROLE"]
 
 
 class StopReason(str, Enum):
@@ -85,6 +85,10 @@ class CallOutcome(str, Enum):
 
 UNCOUNTED_CALL_OUTCOMES = frozenset({CallOutcome.USAGE_LIMIT, CallOutcome.LOGIN, CallOutcome.PROVIDER_CAPACITY,
                                      CallOutcome.GUARD_INFRASTRUCTURE})
+
+#: SWDB addition, Probata PoC 16 (2026-10-14 ET; map decision 25 item 2): proof-hint calls are charged to this
+#: ledger under their own cap (`provider_calls_proof`), never to the rewriting total or a per-iteration cap.
+PROOF_HINT_ROLE = "proof_hint"
 
 BUDGET_KEYS = ("max_iterations", "plateau_iterations", "lane_hours", "provider_calls_per_iteration",
                "provider_calls_setup", "disk_gb", "lanes")
@@ -181,7 +185,13 @@ class SearchLedger:
     # -- state ------------------------------------------------------------
     @property
     def counted_calls(self) -> int:
-        return sum(1 for c in self.calls if c.counted)
+        """The rewriting total: counted calls, proof-hint calls aside (they have their own cap)."""
+        return sum(1 for c in self.calls if c.counted and c.role != PROOF_HINT_ROLE)
+
+    @property
+    def proof_calls(self) -> int:
+        """Counted proof-hint calls (SWDB addition, Probata PoC 16)."""
+        return sum(1 for c in self.calls if c.counted and c.role == PROOF_HINT_ROLE)
 
     @property
     def uncounted_calls(self) -> int:
@@ -253,9 +263,21 @@ class SearchLedger:
         self.calls.append(call)
         return call
 
+    def open_proof_call(self, invocation: str, cap: int) -> CallRecord:
+        """Charge one proof-hint call to its own cap, or refuse it (SWDB addition, Probata PoC 16).
+
+        It runs after the campaign stopped (the WP phase), so neither the stop nor a per-iteration cap applies."""
+        if self.proof_calls >= cap:
+            raise CallRefused(f"the campaign's {cap} proof-hint calls (provider_calls_proof) are spent")
+        call = CallRecord(len(self.calls) + 1, self.iteration, PROOF_HINT_ROLE, invocation)
+        self.calls.append(call)
+        return call
+
     def close_call(self, call: CallRecord, outcome: CallOutcome) -> CallRecord:
         call.outcome = CallOutcome(outcome).value
-        if CallOutcome(outcome) in UNCOUNTED_CALL_OUTCOMES:
+        if CallOutcome(outcome) in UNCOUNTED_CALL_OUTCOMES and call.role == PROOF_HINT_ROLE:
+            call.counted = False          # its own cap: no iteration slot to return
+        elif CallOutcome(outcome) in UNCOUNTED_CALL_OUTCOMES:
             # D7: recorded, never counted; the slot is returned for the retried iteration.
             call.counted = False
             if call.iteration == 0:
