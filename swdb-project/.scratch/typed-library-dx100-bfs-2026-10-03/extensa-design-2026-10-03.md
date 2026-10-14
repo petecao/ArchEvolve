@@ -1,7 +1,7 @@
 # Extensa-mode design decisions (ticket 47)
 
 Created: 2026-10-03 ET
-Updated: 2026-10-05 22:30 ET (ticket 80 revisions to D7, D9 and D10)
+Updated: 2026-10-13 21:32 ET (formal-verification ticket 28: D8 note, iteration ladder); 2026-10-05 22:30 ET (ticket 80 revisions to D7, D9 and D10)
 **Type:** design decisions
 **Status:** decided
 **Ticket:** [47](issues/47-extensa-design-session.md)
@@ -27,7 +27,7 @@ grammar port (ticket 10) used. The local checkout was read only.
 | D5 | Campaign file | YAML, format `swdb.extensa-campaign.v1`, JSON schema `schemas/extensa_campaign.schema.json`, tracked under `campaigns/extensa/`. |
 | D6 | Summary record | New record kind `campaign_summary`, one per campaign, written at stop. Shape below. |
 | D7 | Provider-call accounting | One rewrite call per iteration makes one patch. That patch yields one candidate artifact per class through per-class knob values, so per-class artifacts cost no extra calls. Repairs, test generation and synthesis each cost one call. The cap is 3 per iteration, and unused calls do not carry over. |
-| D8 | Rewrite workspace lineage | From iteration 2, the rewrite workspace may hold the campaign's own per-class best patches and the feedback. It never holds other campaigns' artifacts or evaluator inputs. |
+| D8 | Rewrite workspace lineage | From iteration 2, the rewrite workspace may hold the campaign's own per-class best patches and the feedback. It never holds other campaigns' artifacts or evaluator inputs. *Note 2026-10-13:* plus the iteration ladder, and up to two winner patches per class (see D8). |
 | D9 | Native base source | The acceptance native campaign rewrites the fork's scalar TDStep. Upstream direction-optimizing BFS is timed and reported as the second comparison (Q61). |
 | D10 | Record store | Records go to `<runs root>/extensa/<campaign-id>/records/` on mbit10, where `<runs root>` follows the disk rule (`/data1/yanruj/EvolveSWDB_runs`, or `/data/...` when `/data1` is low). |
 | D11 | License (Q66) | Ported files carry `Apache-2.0 WITH LLVM-exception` under the accepted Q66 assumption, pending Peter's confirmation (ticket 02). Ticket 02 no longer blocks any ticket. |
@@ -264,6 +264,19 @@ retentions: [<retention record id>]
 - Feedback per class gives the certification outcome with failed check names, the verdict, the ratio and lower bound (point ratio on gem5) and the spread. It never gives raw timings, workload files, evaluator inputs, other campaigns' artifacts or the authors' accelerated code.
 - This reads ADR 0009's "other candidate artifacts" as artifacts outside the campaign's own lineage.
 - A rejected candidate is rolled back in full before the next call (ported `plan_rollback`).
+
+**Note (2026-10-13 21:32 ET, formal-verification tickets [25](../formal-verification-2026-10-09/issues/25-extensa-loop-proofs-and-ranking.md)
+item 4 and [28](../formal-verification-2026-10-09/issues/28-extensa-iteration-ladder.md), decided with
+Yan-Ru; not yet in code):**
+
+- From iteration 2 the workspace also holds the **iteration ladder** (`LADDER.json`): one row per earlier
+  candidate artifact of the campaign, rejected ones included, with its contracts, knobs, certification
+  level, verdict, ratio, lower bound, spread, reason codes and winner mark. The loop writes it; rows
+  carry no patch and follow the feedback rules above (a refutation shows only "refuted" and its check
+  category). Every new campaign has it; the loop records `rewrite_workspace: v2` (campaigns without it
+  are `v1`).
+- `best/` holds up to two patches per class: the fastest winner's and, when it differs, the best-proven
+  winner's (replaces "at most one per class").
 
 ## D9 — Native base source and selection baseline
 

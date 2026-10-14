@@ -185,3 +185,7 @@ ADR 0010: proof note.
   proof of concept's Extensa track, started on day 1 against a stub verifier adapter (Yan-Ru's
   choice). The measurement of how often campaign candidates are refuted at N > 1 moves to the
   evaluation (RQ4 on the populations; campaign numbers with RQ5, once D35 lifts).
+- 2026-10-13 21:32 ET: [28](28-extensa-iteration-ladder.md) resolved: the iteration ladder is on in every new campaign
+  (no off switch). Each row shows its candidate's level as known in the loop (never proven unbounded) and
+  a `winner` mark (`fastest`, `best_proven`, `both`); `best/` keeps item 4's two patches; rows carry
+  no patch.

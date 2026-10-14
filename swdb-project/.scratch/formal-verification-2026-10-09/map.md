@@ -1,7 +1,8 @@
 # Map: Formally verified rewrites (the "proven" certification level)
 
 Created: 2026-10-09 14:02 ET
-Updated: 2026-10-13 21:29 ET (ticket 27 resolved: two efforts split at the freeze; staged proof of concept);
+Updated: 2026-10-13 21:33 ET (ticket 28 resolved: iteration ladder on by default; frontier empty);
+2026-10-13 21:29 ET (ticket 27 resolved: two efforts split at the freeze; staged proof of concept);
 2026-10-13 21:09 ET (ticket 26 resolved: immutable proof records, level computed on read; ADR 0016);
 2026-10-13 21:03 ET (ticket 28 added: Extensa-mode iteration ladder);
 2026-10-13 20:42 ET (ticket 24 resolved: no alignment hint kind; unit postconditions for every kernel);
@@ -24,7 +25,7 @@ Extensa Probata; ticket 15 added); 2026-10-12 22:52 ET (ticket 10 resolved: what
 2026-10-11 18:58 ET (ticket 08 resolved: crux-llvm separates the bug at one lane)
 **Type:** wayfinder map
 **Status:** charted; research 02–06 and 14, task 07, prototype 08, grilling 09–13 and 15–17 resolved;
-18–27 graduated from fog 2026-10-13 (18–27 resolved)
+18–27 graduated from fog 2026-10-13, 28 added (18–28 resolved; no open tickets)
 
 ## Destination
 
@@ -241,6 +242,13 @@ concept is the next effort.
   concurrency, chains, mbit10 and freeze. Side tracks: Rocq, strict-layer catch-up, and the Extensa
   track from day 1. Exit check per stage; overrun at 1.5x re-plans; cut order 9b, strict layer, A5,
   Extensa exit. RQ3 reworded; held-out kernels untouched (synthetic PR- and SSSP-like fixtures).
+- [How should the Extensa-mode rewrite workspace show earlier candidate artifacts, and what keeps campaigns with and without it comparable?](issues/28-extensa-iteration-ladder.md):
+  the iteration ladder (`LADDER.json`), on in every new campaign with no off switch, as in Extensa.
+  The loop writes one row per earlier candidate artifact (rejected and repaired ones included, no
+  gaps): contracts, knobs, level known so far, verdict, ratio, winner mark; no patches, D8's leakage
+  rules, a refutation only as its category. `FEEDBACK.json` stays. The loop records
+  `rewrite_workspace: v2`; the 15 old campaigns are `v1`. RQ5 uses only ladder campaigns, no ablation,
+  and claims nothing about the ladder's effect; the LLM population sees no ladder. D8 note; no ADR.
 
 ## Tickets
 
@@ -273,7 +281,7 @@ concept is the next effort.
 | 25 | [How does the Extensa-mode loop budget proofs and rank candidate artifacts by certification level?](issues/25-extensa-loop-proofs-and-ranking.md) | grilling | resolved | 19 |
 | 26 | [How are proof verdicts and their evidence recorded, and what does ArchEvolve mode show?](issues/26-proof-records.md) | grilling | resolved | 23, 25 |
 | 27 | [In what order does the proof of concept build its pieces, and what closes each stage?](issues/27-proof-of-concept-stages.md) | grilling | resolved | 18, 19, 24 |
-| 28 | [How should the Extensa-mode rewrite workspace show earlier candidate artifacts, and what keeps campaigns with and without it comparable?](issues/28-extensa-iteration-ladder.md) | grilling | ready-for-human | 25 |
+| 28 | [How should the Extensa-mode rewrite workspace show earlier candidate artifacts, and what keeps campaigns with and without it comparable?](issues/28-extensa-iteration-ladder.md) | grilling | resolved | 25 |
 
 ## Not yet specified
 
