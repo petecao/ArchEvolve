@@ -196,8 +196,11 @@ units are outside the core subset (ticket 24). Branch `probata-poc/t21`. Interfa
   - Budgets: ticket 11's starting values (tickets 11 and 16). Ghost capacity K = 32 (design spec).
   - WP flags add `-wp-par 1` (ticket 08) and `-machdep x86_64` to the frozen pair. The adapter also appends
     both itself, so they appear twice on the command line (harmless).
-  - The C-lowering translator is `swdb/c_lowering.py` at that commit. Tickets 22 and 24 change the tool, so
-    they write the next draft before running the WP adapter with `--method-version`.
+  - CBMC flags are ticket 22's tested `--sat-solver cadical`; its adapter adds `--unwind K` and
+    `--unwinding-assertions` per job.
+  - Translators: the C lowering tool (`swdb-c-lowering-1`) and ticket 22's CBMC translator
+    (`swdb-cbmc-translator-1`), each by its source sha256 after merging 22. A change to either tool (24
+    widens the lowering) needs the next draft before an adapter run with `--method-version`.
   - `not_yet_built`: `acsl_version` (36 confirms it), `checks` (35, 36), `prompts` (34, 37), `logic_library`
     (26), `models` (25), `rocq_development` (41-43).
 - The contract fixture `tests/fixtures/proof/methods/contract-fixture-1.yaml` is now `frozen`, so it stays

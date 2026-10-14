@@ -18,8 +18,8 @@ description: >-
   not_yet_built.
 lineup:
   - {role: front_end, tool: clang, version: '22.1.8', flags: ['-std=c++17', '-fopenmp']}
-  - {role: bounded_verifier, tool: cbmc, version: '6.11',
-     flags: ['--unwinding-assertions', '--sat-solver', 'cadical', '--slice-formula', '--trace']}
+  # The CBMC adapter (ticket 22) adds --unwind K and --unwinding-assertions per job itself.
+  - {role: bounded_verifier, tool: cbmc, version: '6.11', flags: ['--sat-solver', 'cadical']}
   - {role: concurrent_bounded_verifier, tool: civl, version: '1.23', flags: ['verify']}
   - {role: second_refuter, tool: genmc, version: '0.19.0', flags: ['--rc11', '--disable-mm-detector', '--print-error-trace']}
   - {role: unbounded_verifier, tool: frama-c-wp, version: '33.0',
@@ -41,7 +41,9 @@ openmp_runtime: {name: libomp, version: '22.1.8'}
 c_lowering:
   # The subset is what the C lowering tool accepts at this version (ticket 24 widens it: a new tool version).
   subset: {id: swdb-c-lowering-1.subset, sha256: '2614c7dad7187fc65dd2a2f6d8956568296e8aacb57f51cdf7ed927da732a8ac'}
-  translators: [{id: swdb-c-lowering-1, sha256: '2614c7dad7187fc65dd2a2f6d8956568296e8aacb57f51cdf7ed927da732a8ac'}]
+  translators:
+    - {id: swdb-c-lowering-1, sha256: '2614c7dad7187fc65dd2a2f6d8956568296e8aacb57f51cdf7ed927da732a8ac'}
+    - {id: swdb-cbmc-translator-1, sha256: '90a98d8a6d95293e83e0f8a69af4496bd4d367732c29b2a6738f4bebfb8eba23'}
   naming_rules: {id: format-v0.4-c-lowering-wp.kept-names, sha256: 'c633a950412a552abd14756d07e3721b9e8374e0ae950679db21ae8a1dc0e7c5'}
 acsl_version:
   not_yet_built: The ACSL language version Frama-C 33.0 implements is confirmed by the proof setup check (ticket 36).

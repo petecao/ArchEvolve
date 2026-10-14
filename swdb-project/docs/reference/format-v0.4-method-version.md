@@ -42,9 +42,10 @@ proof record pins it by ID and file sha256.
   sequence 1). The Mac lineup: clang 22.1.8; CBMC 6.11 as the bounded verifier (Yan-Ru, 2026-10-14
   13:19 ET); CIVL 1.23; GenMC 0.19.0; Frama-C/WP 33.0 with Alt-Ergo 2.6.4, Z3 5.1.0 and CVC5 1.2.1;
   Rocq 9.3.0. Starting budgets. WP flags include `-wp-par 1` (ticket 08: hard goals on the Mac) and
-  `-machdep x86_64`. Its C-lowering translator is `swdb/c_lowering.py` at that commit; a change to the
-  tool needs a new draft before the WP adapter accepts it. Sections later tickets build are
-  `not_yet_built`.
+  `-machdep x86_64`. CBMC flags: `--sat-solver cadical` (the adapter adds `--unwind K` and
+  `--unwinding-assertions`). Translators: the C lowering tool and the CBMC translator, each by its
+  source sha256; a change to either tool needs a new draft before the WP or CBMC adapter accepts it.
+  Sections later tickets build are `not_yet_built`.
 
 ## Fields
 
