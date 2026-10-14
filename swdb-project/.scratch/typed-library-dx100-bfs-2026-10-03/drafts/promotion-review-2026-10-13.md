@@ -56,3 +56,18 @@ certificate, which is how `swdb promote` works for intrinsics.
   mode.
 - **Recording.** The promotions are recorded with `performed_by: agent`, with Yan-Ru Jhou as
   `delegated_by`.
+
+## Result (2026-10-14 00:40 ET)
+
+All 20 entries are promoted. Each review record says `performed_by: agent` and names
+Yan-Ru Jhou as `delegated_by`.
+
+- **First promotion:** `lowering.dxc_wait` ran on the Mac.
+- **The other 19:** ran on mbit10, in parallel, with the same `swdb promote` command. Each
+  ran against its own copy of the store at `9e642023`.
+- **Interruption:** a SIGHUP stopped three of them partway. They were rerun from fresh
+  copies.
+- **Check:** one whole-store `swdb validate` with all 20 reviews in place gave
+  `OK: 766 record(s) valid`.
+- **Hashes:** the record sha256 values are in `promotion-review-2026-10-13.sha256`. The
+  copies on mbit10 and the Mac match.
