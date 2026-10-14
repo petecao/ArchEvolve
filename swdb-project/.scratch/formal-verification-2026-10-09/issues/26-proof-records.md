@@ -150,4 +150,5 @@ certification record ID, one per contract (`swdb/campaign_targets.py:585`). The 
 says "candidate 1.3-1.6" (`schemas/certification.schema.json:55`) while the default is 1.7 (side
 finding, not fixed here).
 
-**Open:** Q13, the glossary terms "proof record" and "content-hash set", awaits Yan-Ru.
+**Glossary** (Q13, accepted 2026-10-13 21:11 ET): proof record and content-hash set added; assumption
+set and method version sharpened.
