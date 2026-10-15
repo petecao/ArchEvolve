@@ -1,7 +1,12 @@
 # PROTOTYPE (Probata PoC ticket 07), throwaway. Created 2026-10-14 ET.
+# Updated 2026-10-15 ET: fail-closed ghost-witness ownership guard.
 # Hint records {id, anchor, kind, text}: deterministic merger, erase, the proof hint check
 # (map 13 items 4, 5, 7), and the verdict reader (map 13 item 7; design S7).
 import re
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+GHOST_HINT_RULE = "fresh-scalars-pure-indexed-reads-v1"
 
 ANCHOR_RE = re.compile(r"^\s*/\* @anchor (\S+) \*/\s*$")
 BEGIN, END = "// >>> hint", "// <<< hint"
@@ -149,10 +154,67 @@ def strategy_problems(kind, text, hints):
     return out
 
 
+def ghost_problems(base, hints):
+    """2026-10-15 safety-method change: hints own only fresh scalar witnesses.
+
+    Based on production proof_setup.check_semantics_hints, without its approved
+    store-bound write exception. Keep pure indexed RHS snapshots used by this
+    prototype; LHS writes still target only hint-owned scalar identifiers.
+    """
+    existing = set(re.findall(r"\b[A-Za-z_]\w*\b", base))
+    macros = set(re.findall(r"^\s*#\s*define\s+([A-Za-z_]\w*)", base, re.M))
+    owned, bad = set(), []
+    scalar = r"(?:(?:unsigned|signed)\s+)?(?:int|long|short|char|_Bool)"
+    for h in hints:
+        text = str(h.get("text", "")).strip()
+        visible = re.sub(r'"(?:\\.|[^"\\])*"', '""', text)
+        if h.get("kind") != "ghost" and not re.search(r"\bghost\b", visible):
+            continue
+        why = None
+        new_owned = set(owned)
+        if not text.startswith("ghost ") or not text.endswith(";"):
+            why = "ghost hints require scalar declarations or assignments"
+        elif macros.intersection(re.findall(r"\b[A-Za-z_]\w*\b", text)):
+            why = "ghost witness text may not expand a preprocessor macro"
+        else:
+            for statement in text[6:].split(";")[:-1]:
+                statement = statement.strip()
+                declaration = re.fullmatch(rf"{scalar}\s+([A-Za-z_]\w*)(?:\s*=\s*(.+))?", statement, re.S)
+                assignment = re.fullmatch(r"([A-Za-z_]\w*)\s*=\s*(.+)", statement, re.S)
+                if declaration:
+                    name, expression = declaration.groups()
+                    if name in existing or name in new_owned:
+                        why = f"ghost declaration shadows an existing name: {name}"
+                        break
+                    new_owned.add(name)
+                elif assignment:
+                    name, expression = assignment.groups()
+                    if name not in new_owned:
+                        why = f"ghost write targets trusted or unowned state: {name}"
+                        break
+                else:
+                    why = "only simple scalar ghost declarations and assignments are allowed"
+                    break
+                if expression is not None and (
+                        not re.fullmatch(r"[A-Za-z_0-9\s()\[\]+*/%<>=!~^|?:.-]+", expression)
+                        or re.search(r"\b[A-Za-z_]\w*\s*\(|[)\]]\s*\(|\+\+|--|<<=|>>=|(?<![<>=!])=(?!=)", expression)):
+                    why = "ghost witness expressions may not call, take addresses, or mutate state"
+                    break
+        if why:
+            bad.append({"id": h.get("id"), "rule": "ghost_ownership", "detail": why})
+        else:
+            owned = new_owned
+    return bad
+
+
 def check(standin, hints):
     """Return one {id, rule, detail} per violation; an empty list accepts the hint set."""
     known = anchors(standin)
-    bad = []
+    # Header-only model declarations and macros are trusted too. Include every
+    # stand-in header, not just the C unit handed to merge/erase.
+    base = standin + "\n" + "\n".join(
+        p.read_text() for p in sorted((HERE / "standin").glob("*.h")))
+    bad = ghost_problems(base, hints)
 
     def rej(h, rule, detail=""):
         bad.append({"id": h.get("id"), "rule": rule, "detail": detail})
