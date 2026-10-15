@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** claimed
+**Status:** resolved
 **Blocked by:** 22
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("DX100 proof semantics", "Formal-half language and the C++ subset", "Modules" (library content), "Testing Decisions", S1, S2, S3); decisions: [12](../../formal-verification-2026-10-09/issues/12-dx100-proof-semantics.md), [16](../../formal-verification-2026-10-09/issues/16-formal-half-language.md), [14](../../formal-verification-2026-10-09/issues/14-dx100-wait-rule.md)
 **Time estimate:** about 1 week
@@ -35,3 +35,103 @@ Updated: 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-13 23:15 ET (revie
 - Risk: SAW ghost state on clang 22 bitcode is spike (a)'s question. If ticket 09 sent the bounded verifier to its crux-llvm fallback, the ghost state goes into that path's stubs instead. Follow ticket 09's verdict.
 - Risk: splitting values from hazards rests on the reduction lemma. It is an assumption entry of kind reduction until Rocq checks it (ticket 43; map 12 item 2). Ticket 29 adds its written proof and bounded check, which do not remove the entry.
 - Fixture proof records carry `contract_fixture` evidence. Mac: one real verifier job at a time under the ~8 GB RSS watchdog; tests skip cleanly when a verifier is missing.
+
+## Answer
+
+2026-10-14 18:10 ET. **Resolved with the bounded verifier CBMC (Yan-Ru's 13:19 ET decision); the WP half of
+two boxes is not met** (below). Branch `probata-poc/t27`. Interface doc:
+[`format-v0.4-proof-semantics.md`](../../../docs/reference/format-v0.4-proof-semantics.md).
+
+**What was built**
+
+| Piece | Where |
+|---|---|
+| Proof semantics 0.1 `semantics.dx100_bfs_0_1` (13 calls, 22 rules, inventory, constants) | `library/proof_semantics/dx100_bfs_0_1.yaml` |
+| Ghost state declared once (ACSL), device state, C model (CBMC form), ACSL logic (WP form) | `library/proof_semantics/dx100_bfs/{ghost.acsl,state.h,model.h,logic.acsl}` |
+| Entry checks, call inventory, model generation (`model_for`, `covered_names`) | `swdb/proof_semantics.py`, hook in `swdb/formal_frame.py` |
+| Generated hazard probes at every tile-pointer access (C lowering) and the same probes on the C++ cut | `swdb/c_lowering.py` (`semantics=`), `swdb/cbmc_adapter.py` (`_probed`) |
+| Bounded jobs with the model: ghost init + tile havoc in the harness, model `--unwindset`, `ghost_capacity`, pin and assumptions | `swdb/cbmc_adapter.py`, `swdb/cbmc_translator.py` (`setup`, `state`) |
+| DX100 fixture units (15 units, variants by build constant) | `tests/fixtures/proof/dx100/fixture_units.cc` |
+| Entry generator (rules, contracts, inventory; rerun after a model edit) | `prototype/27-proof-semantics/gen_entry.py` |
+
+**Acceptance, box by box** (`tests/test_proof_semantics.py`)
+
+- Coverage and citations: met. Version `0.1`, sequence 1, content hash (file sha256 pinned by records). 13 calls,
+  one ACSL contract each, all type-checked by Frama-C 33.0 in `swdb validate`. 19 rules cite gem5 DX100 at
+  `e4fc4af` (file, lines; files fetched and hashed, `IF.cc` and `IndirectAccess.cc` match the witness record's
+  sha256), 3 are assumed with owner Eric (`regions`, `stream_operands`, `store_duplicate_order`). Controls refused: no citation and no owner, a citation at another commit, a call with no contract,
+  a call naming an unknown rule, an inventory call with no row, a ghost array declared again in the C model.
+- Unready read: met on CBMC. Each early read is refuted at its probe and replays on the C++; `get_tile_size`
+  before the wait is refuted (`#unready_size_read`); a CPU write into a tile an uncovered gather reads is refuted
+  (`#cpu_write_overlap@dxf_cpu_write.probe2`); the CPU read of that tile proves.
+- A probe at every tile-pointer read: met on CBMC (C lowering and C++ cut carry the same three probes; moving
+  read N refutes at `dxf_three_reads.probeN`, replayed). **WP not met:** the WP adapter does not yet take the
+  proof semantics (contracts for the calls, probes as ACSL assertions). Not run.
+- Wait rule as gem5 runs it: met. Prove: store source wait, transitive producer, dispatch stall through a
+  condition tile, register write. Refuted: range-loop exception, condition-only wait, unrelated wait.
+  "Through register producers" is replaced by F6 (see disagreements).
+- Values at issue: met for stream load, gather and range loop (proves; the wrong value is refuted at the
+  postcondition).
+- Footprints: met. `swdb_dx_in_footprint` is a query over ghost state and the current index tile (no copy);
+  member proves, an address past the indices is refuted.
+- Ghost capacity: met. 32 uncovered stream loads prove (CBMC 3.2 s); 33 end not proven, `ghost_capacity`, no
+  counterexample (`DX_NT=40 DX_TS=1`).
+- One ghost state, declared once: met for the declaration (ghost.acsl; the C globals are generated; a second
+  declaration is refused). **Agreement not met:** "SAW and WP agree" became "CBMC and WP agree"; WP was not run
+  on the fixtures (same reason as above). The C model and the ACSL contracts are two hand-written forms;
+  ticket 29 checks them against each other, ticket 30 generates the C form.
+- Versioned: met. Every record with a covered call pins `pins.proof_semantics` and lists `proof_semantics` and
+  `reduction` (`rocq.probata.dx100_reduction`, sha256 of `Reduction.v`) assumptions. Adding version 0.2
+  (sequence 2) makes the 0.1 record stop counting in `swdb candidate-level`.
+
+**Disagreements with ticket 41's Rocq statement (for the main session)**
+
+- **Rocq `covered` lacks two gem5 covers this ticket requires.** 0.1 covers at issue (a command whose dispatch
+  stalls on uncovered ones, `IF.cc:193-212`) and at a CPU register write (`IF.cc:233-249`). Rocq's `covered`
+  only starts at a wait (`cov_direct`), so its `pending` set is larger and `obl_hazard_free_own` stronger:
+  `dx100_reduction` as stated does not back proofs that rely on these two covers (fixtures
+  `stall_condition`, `register_write`). Both are already constraints of `timed_run`, so two constructors
+  (issue-stall, register-write) should keep the lemma true. Needs ticket 41's re-approval and ticket 43.
+- F6 adopted: register overlap with an uncovered command is a hazard, so "a wait covers through register
+  producers" (this ticket's text) never arises; 0.1 follows F6.
+- F5 (`cov_stall`) is subsumed: 0.1 covers stalled commands eagerly at the issue.
+- F2 and the region stall are not in 0.1 (ticket 28), and neither are CPU-versus-DX100 memory overlap hazards
+  (`hazard_own` memory clauses). So a 0.1 proof does not discharge all of `obl_hazard_free_own`; 0.1 is a
+  working version that 28 supersedes (the ticket's own assumption).
+
+**Assumptions** (not decided in the map)
+
+- Assumption: fixtures and the model use core-subset spellings of the dx100-mmio calls (`int` instantiation,
+  every operand explicit, condition `-1` when unused); the templates and default arguments wait for ticket 24.
+- Assumption: under CBMC "SAW refutes, WP not proven" reads "CBMC refutes with a C++ replay"; the C++ form is
+  the replay and the differential run (ticket 22's translation), with the probes cut into the C++ at the same
+  source ranges.
+- Assumption: a probe check is tile-granular (any uncovered writer of the tile), a write probe also refuses
+  uncovered readers; `&p[i]` counts as a write. A tile pointer used other than `p[i]`, `*p`, `*(p + i)` is
+  outside the subset.
+- Assumption: proof-semantics contracts are Frama-C type-checked but not held to the formal-half subset (ghost
+  state, bitwise operators); they are trusted, never executed by check mode. Range-loop and store contracts
+  state weaker (sound) value facts than the C model; ticket 29 compares the forms.
+- Assumption: tile contents start havocked from the oracle (part of the bounded domain); sizes and registers 0.
+- Assumption: the C lowering (version 2 after ticket 24) and the translator keep their version numbers: their
+  output is byte-identical without a proof semantics; records pin both by sha256. The covered calls reach the
+  lowering as ticket 24's `summaries` (calls kept, prototype only); probes come from `semantics=`.
+- Assumption: `get_tile_ready` is not in the inventory (strict layer only, `#ifdef SWDB_STRICT`); ticket 28.
+
+**Tests** (Mac; serial; pytest outside the lock, each CBMC job takes the lock): `tests/test_proof_semantics.py`
+29 cases; full run 25 passed, 2 failed on fixture defects (a wrong-value variant overflowed; the symbolic
+capacity bound took over 9 min), both fixed and rerun: 2 passed. After merging the integration tip (2dff3f58;
+probes ported onto ticket 24's lowering): `test_proof_semantics.py`, `test_format_doc.py`, `test_formal_frame.py`,
+`test_c_lowering.py`, `test_cbmc_adapter.py`, `test_level_rule.py` (`-m "not whole_store"`): **274 passed** in
+57 min (most of it waiting for the shared verifier lock). Logs `/tmp/claude/probata-runs/t27/pytest-final3.log`,
+report log `report-final3.jsonl`; earlier `pytest-c.log`, `pytest-e.log`. gem5 sources:
+`/tmp/claude/probata-runs/t27/gem5/`. Prove jobs in the tests allow an hour for the lock (the default 600 s timed
+out once under contention, with CBMC itself at 0.3 s).
+
+**Interface notes**
+
+- 28: supersede with `sequence: 2`; add calls, F2 regions, memory overlap probes (CPU accesses vs
+  `swdb_dx_in_footprint`), ownership; extend the inventory roles if new sources come.
+- 29: compare `model.h` with the ACSL contracts (`swdb.proof_semantics.acsl_source`) and with 23's stubs.
+- 30: generate `model.h`; `model_for` is the consumer (ghost globals already generated from `ghost.acsl`).
+- 36: probes are in `settings.proof_semantics.probes` and `Lowering.probes` (id, access, C++ range).

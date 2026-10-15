@@ -1,0 +1,34 @@
+// DX100 proof semantics 0.1 (semantics.dx100_bfs_0_1): the ghost hazard state, declared once.
+// Created: 2026-10-14 ET (Probata proof of concept ticket 27; map 16 item 10, map 12 items 2-5).
+// WP reads these declarations as written (inside one /*@ ghost ... */ block); swdb.proof_semantics
+// generates the C globals of the CBMC form from this file, so the C model declares none of them.
+// Sizes are build constants: DX_K (command slots per thread, the encoding bound K = 32), DX_NT
+// (tiles), DX_NR (scalar registers), DX_NM (registered memory regions). Slot s is bit s of a mask.
+
+// Per thread: K command slots. A slot is live while its command is uncovered (no wait covered it).
+ghost unsigned int dx_live;
+ghost int dx_kind[DX_K];              // DX_STREAM_LOAD, DX_GATHER, DX_RANGE_LOOP, DX_ALU_SCALAR, DX_STORE_VECTOR
+ghost int dx_dst1[DX_K];              // tiles in gem5's roles dst1, dst2, src1, src2, cond (-1: none)
+ghost int dx_dst2[DX_K];
+ghost int dx_src1[DX_K];
+ghost int dx_src2[DX_K];
+ghost int dx_cond[DX_K];
+ghost unsigned int dx_regs_in[DX_K];  // registers the command reads (bit r)
+ghost unsigned int dx_regs_out[DX_K]; // registers the command writes (bit r)
+ghost int dx_region[DX_K];            // registered region of its memory accesses (-1: none or not modeled yet)
+ghost int *dx_base[DX_K];             // base address of its memory accesses (0: none)
+ghost long long dx_lo[DX_K];          // stream: first element offset (range lo .. hi, step stride)
+ghost long long dx_hi[DX_K];
+ghost long long dx_stride[DX_K];
+ghost int dx_index[DX_K];             // indirect: its index tile (its footprint reads that tile's current contents)
+ghost unsigned int dx_deps[DX_K];     // live producers of its input tiles at issue (bit s)
+ghost int dx_writes_memory[DX_K];
+
+// Per tile: owner thread, uncovered writer (slot or -1), uncovered readers (slots naming it as src or cond).
+ghost int dx_tile_owner[DX_NT];
+ghost int dx_tile_writer[DX_NT];
+ghost unsigned int dx_tile_readers[DX_NT];
+
+// Per register: owner thread, uncovered writer (slot or -1).
+ghost int dx_reg_owner[DX_NR];
+ghost int dx_reg_writer[DX_NR];
