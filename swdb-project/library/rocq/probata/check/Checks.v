@@ -62,6 +62,7 @@ Print Composition.dead_after.
 Print Composition.reads_no_lock_protected.
 Print Composition.reads_class_stable.
 Print Composition.quiet_ok.
+Print Composition.reads_owner_stable.
 Print Composition.obl_dx100_quiet.
 Print Composition.intervals_contiguous.
 Print Composition.critical_sections_contiguous.

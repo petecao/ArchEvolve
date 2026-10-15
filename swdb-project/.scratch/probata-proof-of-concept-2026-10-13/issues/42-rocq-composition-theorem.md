@@ -3,7 +3,7 @@
 Created: 2026-10-13 22:17 ET
 Updated: 2026-10-15 01:41 ET (ticket 41 repaired and approved under delegation; proof may resume); 2026-10-14 22:30 ET (blocker: the approved statement is false; needs a statement decision); 2026-10-14 00:18 ET (review fixes, round 5); 2026-10-14 00:15 ET (review fixes, round 4); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
-**Status:** ready-for-agent
+**Status:** claimed
 **Blocked by:** 10, 11, 12, 41
 **Spec:** `../spec.md`; design: [map spec](../../formal-verification-2026-10-09/spec.md) ("Concurrency" (composition theorem: 2-week box, written fallback), "Records and levels" (subjects), "What a proven verdict asserts" (assumption set, cap rule), "Modules" (level rule: level computed on read), "Further Notes" (risk: the Rocq theorem does not fit 2 weeks), "Proof-of-concept plan" (Rocq side track, overrun rule), S1, S2, S8, S9); decisions: [15](../../formal-verification-2026-10-09/issues/15-concurrency-proofs.md), [26](../../formal-verification-2026-10-09/issues/26-proof-records.md)
 **Time estimate:** one 2-week box, shared with 43 (S9)
@@ -143,3 +143,115 @@ No personal human reading or external CLI review is claimed. Reconstructed state
 lemmas remain checked. This resumes the same shared box; it does not restart its clock or
 claim any unchecked step complete. Candidate compatibility and lowering discharge of
 `obl_dx100_quiet` remain ticket 45's responsibility.
+
+### Active proof resumption — 2026-10-15 ET
+
+Claimed by the ticket 42 implementer on `codex/probata-t42`, based on integration
+`a65e8cb1`. The proof seam remains the approved statement guard plus Rocq kernel
+checking; this reuses the existing acceptance harness. The shared box and its original
+2026-10-14 14:42 ET start are unchanged. Provider: the local Codex agent; no external CLI
+execution or human approval of proof steps is claimed.
+
+### Checked proof progress — 2026-10-15 01:54 ET
+
+A5 is proved: `t42_reads_latest` shows every nonracing, nonexempt original-run
+read already observes the latest write. This includes DX100 reads: an uncovered
+noncrossing command cannot source a future write from another barrier interval,
+readonly data cannot be written, ownership excludes foreign writes, and a future
+protected write would require an uncovered critical exit. The original run's
+read-age and CPU/OpenMP ordering then establish latestness. Supporting results
+also close the foreign-Exit window case introduced by the repaired bracketing premise.
+
+Evidence: `/tmp/probata-t42-resume/logs/compile-10.log.summary.json` (Rocq 9.3.0,
+exit 0, 3.43 s, peak RSS 443.3 MB, 8 GB watchdog, no kill/timeout). Eleven selected
+new lemmas, including `t42_reads_latest`, each print `Closed under the global context`
+in `assumptions-1.log` (sha256 `003974cb4fe114d51c7d2eed462e080514b2036c2028e95effd020fa8e9fb5fb`).
+The exact reconstructed statement guard still accepts `ffb5bda7…`; no approved
+definition or hypothesis changed. The theorem itself remains open, so this is
+proof progress only and does not authorize a Rocq-checked method-part record.
+Next: critical-window clearing, including the RF-sensitive coverage side condition,
+then the global serialization and iteration-count assembly.
+
+### Statement blocker: ownership handoff — 2026-10-15 ET
+
+The approved statement admits a command reading a ThreadOwned location across an
+ownership transfer while its class remains ThreadOwned. Two source/cover constraints
+then force a foreign event inside a critical section. Ticket 41 is reopened for the
+coordinator-delegated ownership-lifetime repair; its new hash requires review. The
+checked A5 and window lemmas remain useful. The shared box is not restarted and no
+fallback or method-part proof record is claimed.
+
+### Resumed after ownership repair — 2026-10-15 ET
+
+The main session independently reviewed and approved ticket 41's ownership
+lifetime repair. The exact reconstruction is now `e23f3715…`; the changed-ownership
+negative control is refused. Three sanity controls are Qed and closed: rejecting
+the exact ownership-handoff witness, accepting prior-covered handoff, and accepting
+a static owner's barrier crossing. The original shared box and all checked A5/window
+proof progress remain intact; full composition proof work resumes.
+
+The repair's first use is also Qed: `t42_future_owned_source_impossible` proves that
+an outstanding ThreadOwned device read cannot source a future foreign owner's
+write, even across a barrier, under `reads_owner_stable`. Global/thread-local
+class-lifetime transport is Qed as `t42_read_class_stable_global`. Compile:
+`/tmp/probata-t42-resume/logs/owner-proof-1.log.summary.json`, exit 0, 3.73 s,
+peak 443.6 MB. These directly address the previously open RF-sensitive swap case.
+
+### Critical-window swap safety — 2026-10-15 02:10 ET
+
+Both conditions for clearing any foreign event leftward inside a critical window
+are now Qed: `t42_window_adjacent_indep` proves nonconflict and absence of new or
+old synchronization; `t42_window_device_safe` excludes the earlier RF-source/cover
+reversal. `t42_future_source_in_critical_forbidden` combines class lifetime,
+ownership lifetime, and protected-read quietness to close that case. The four
+core results print `Closed under the global context` (log sha256
+`f0532d0e8a885018e887fe9f2fc1415078fabe8f12825919a931ee3c625a3996`).
+Rocq compile: `owner-proof-6.log.summary.json`, exit 0, 5.36 s, peak 451.7 MB,
+8 GB watchdog. No approved statement edit. Remaining: finite constructive window
+partition, global serialization, and iteration-count/conclusion assembly. The
+main theorem is still open, so this remains checked progress only.
+
+### Conclusion assembly checked — 2026-10-15 02:20 ET
+
+`t42_iterations_once` is Qed: uniform worksharing reachability, per-thread chunk
+coverage/disjointness/NoDup, and OpenMP scheduling give each global iteration
+exactly once. `t42_serialization_suffices` is Qed and assembles every serial-outcome
+conjunct from a valid observational reordering with contiguous critical sections.
+`t42_reorder` has Qed reflexivity/transitivity and the checked critical-window
+adjacent-swap interpretation. Compile `iterations-3.log.summary.json`: exit 0,
+4.46 s, peak 476.6 MB, 8 GB watchdog. The outstanding mathematical step is now
+constructive global critical-section serialization. No fallback or completed
+method-part theorem record is claimed.
+
+### Full composition theorem Qed — 2026-10-15 02:34 ET
+
+`parallel_composition` is now **Qed** against exactly the approved `e23f3715…`
+statement. The finite construction partitions each critical window with safe
+adjacent swaps, scans a closed prefix, and recurses on a strictly shorter suffix;
+unmatched final Enter events contain no completed critical section. The coordinator's
+independently checked partition helper was specialized and kernel-checked inside
+the same development. Every other serial-outcome conjunct is assembled by the
+previously checked latest-read and iteration lemmas. Composition now contains 209
+Qed proofs and no admitted theorem or axiom.
+
+- Composition source sha256:
+  `3cdbe92ddd970808e34fa4a559119d73e1d4583fdc8faa9dffc9dcf411b15a0e`.
+- Rocq 9.3.0, `theorem-1.log.summary.json`: exit 0, 4.68 s, peak 490.5 MB,
+  8 GB watchdog; no kill or timeout. Every real job used the shared verifier lock.
+- `theorem-checks.log` exactly matches `statement.expected`, then prints
+  `Closed under the global context` for `parallel_composition`. Log sha256
+  `86941c9b85e238f6cc2b2d92d66ed8e3faa8e22afb4779ffc008d296d308952c`.
+- The exact guard accepts the approved statement, and rejects added Admitted and
+  Axiom copies in the proof block. The stale-history false theorem still fails at
+  its intended value-equality branch (exit 1).
+- Sanity compiles, exit 0, peak 436.7 MB, with its regression lemmas closed under
+  the global context (`theorem-sanity.log`).
+- Shared-box accounting: original start remains 2026-10-14 14:42 ET; this resumption
+  used about 50 minutes, bringing active proof effort to roughly 8.5 hours including
+  the previously recorded 7.7 hours. No written fallback was used.
+
+**Still claimed:** the coordinator owns the authorized `swdb prove` Rocq adapter,
+real method-part record, candidate-level on-read assumption removal tests, and
+record-level negative controls. This theorem proof does not substitute for those
+remaining ticket acceptance checks. Ticket 43 may use the checked composition
+result when the coordinator advances its frontier.
