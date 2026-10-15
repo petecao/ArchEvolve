@@ -1,6 +1,6 @@
 {
   "created": "2026-10-15 ET",
-  "status": "production equivalence checked; full qualified stall replay pending",
+  "status": "production equivalence checked; single original qualified stall proved at9940b155",
   "boundary": "Equivalent finite hardware-slot expansion, no added requires/caller assertion/assumption. Entry-window qualifications remain explicit conditional contract premises. Neither this equivalence nor the kernel/effect checks establish whole-model UB/hazard correctness or ticket29 agreement.",
   "production": {
     "logic": {
@@ -554,5 +554,6 @@
   "contracts_unchanged_except": [
     "Default-geometry guard on the two 909 checked consequences",
     "Semantically equivalent memory-clear definition; model/body/source fixtures and every input requires remain unchanged"
-  ]
+  ],
+  "accepted_replay": "t27-stall-qualified-accepted-20261015.json"
 }
