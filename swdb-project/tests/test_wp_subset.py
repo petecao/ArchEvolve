@@ -1,7 +1,7 @@
 """Ticket 24's construct groups through `swdb prove --adapter wp`: each safe fixture proves, its seeded bug does not;
 each C model and each summary is proven once by its own record, and a unit's record pins them.
 
-Created: 2026-10-14 ET. Updated: 2026-10-15 ET (ticket 24: fail closed on unsupported deallocation lifetimes).
+Created: 2026-10-14 ET. Updated: 2026-10-15 ET (explicit initialized input domains under WP's mandatory RTE policy).
 Design: formal-verification map 16 item 6 (the C++
 subset), 11 items 3 and 9; format docs/reference/format-v0.4-c-lowering-wp.md.
 
@@ -44,8 +44,9 @@ SEEDED_BUGS = (
     ("  return n;\n}", "  return n + 1;\n}"),                                                       # maa_*
 )
 def _bounded(array, n, low, high):
-    """`array[0 .. n-1]` valid with every element in [low, high] (the formal-half ACSL subset has no valid_read)."""
+    """Initialized valid input elements in [low, high]; logical value bounds alone do not initialize storage."""
     return (f"requires \\valid({array} + (0 .. {n} - 1));\n"
+            f"requires \\initialized({array} + (0 .. {n} - 1));\n"
             f"requires \\forall integer j; 0 <= j < {n} ==> {low} <= {array}[j] <= {high};")
 
 
@@ -60,11 +61,13 @@ GROUPS = {
         ("swdb_class_unit.loop1.head",
          "loop invariant 0 <= i <= n;\nloop invariant -100 * i <= counter.count_ <= 100 * i;\n"
          "loop invariant bag.data == a && bag.n == n && counter.total_ == &total;\n"
+         "loop invariant \\initialized(&counter.count_);\n"
          "loop assigns i, counter.count_;\nloop variant n - i;"),
         ("Bag_scale.loop1.head",
          "loop invariant 0 <= i <= this->n;\n"
          "loop invariant \\forall integer j; 0 <= j < i ==> this->data[j] == k * \\at(this->data[j], LoopEntry);\n"
          "loop invariant \\forall integer j; i <= j < this->n ==> this->data[j] == \\at(this->data[j], LoopEntry);\n"
+         "loop invariant \\initialized(this->data + (0 .. this->n - 1));\n"
          "loop assigns i, this->data[0 .. this->n - 1];\nloop variant this->n - i;"),
         ("swdb_class_sum.loop1.head",
          "loop invariant 0 <= i <= b->n && b->n <= 4;\nloop invariant -300 * i <= s <= 300 * i;\n"
@@ -92,6 +95,7 @@ GROUPS = {
          "loop invariant n == 0 ==> maxv == 0;\nloop assigns i, hits, maxv;\nloop variant n - i;")]),
     "atomics": ("swdb_atomics_unit", [
         ("pre", "legality", "requires \\valid(p) && \\valid(e) && \\separated(p, e);\n"
+                            "requires \\initialized(p) && \\initialized(e);\n"
                             "requires -100 <= *p <= 100 && -100 <= *e <= 100 && -100 <= v <= 100;"),
         ("post", "postcondition",
          "assigns *p, *e;\nensures \\old(*p) + v == \\old(*e) ==> *p == 10;\n"

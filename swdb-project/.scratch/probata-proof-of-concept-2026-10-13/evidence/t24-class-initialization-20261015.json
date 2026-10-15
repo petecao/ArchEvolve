@@ -1,0 +1,182 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "Class construct fixture only; full combined-source construct acceptance remains pending",
+  "source_base": "cd64283997dda920766264d4bc4475ae857cf4fc",
+  "fixture_sha256": "d977a92dd4ed2ebd6911bd7650b7bd2038540ddd92a05d136c72890fa5e466ed",
+  "output_budget_bytes": 2147483648,
+  "readers": [
+    "ticket24",
+    "review",
+    "combined-source acceptance"
+  ],
+  "records": {
+    "original": {
+      "id": "proof.wp24-safe.candidate-1.20261015t080718z.5cba16fc",
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "record": "/private/tmp/probata-construct-initialization-20261015/red/records/proofs/proof.wp24-safe.candidate-1.20261015t080718z.5cba16fc.yaml",
+      "sha256": "e32e777d05c4d6cb298ad48a9cae40424f6afa9751999ae7f03be5530aeb8b01",
+      "valid_goals": 144,
+      "smoke_checks": 11,
+      "job": {
+        "adapter": "wp",
+        "host": "mac",
+        "worker_core": "unpinned",
+        "wall_seconds": 398.935422,
+        "cpu_seconds": 477.393674,
+        "batch_load": {
+          "start": 16.975,
+          "end": 35.419
+        },
+        "peak_rss_bytes": 1528102912,
+        "batch": "batch.proof.wp24-safe.candidate-1.20261015t080718z.5cba16fc",
+        "position": 1
+      },
+      "pins": {
+        "code": {
+          "id": "wp24-safe.candidate-1",
+          "sha256": "65996714e3afc586e057b062e3aa7570e9513746825a69c04c8b46892dc33348"
+        },
+        "contract": {
+          "id": "contract.fixture_wp24_classes",
+          "sha256": "0d216e42a75ff19bcc90f928f8b29f2b976e657ae10793f3f2d94a11a09c5dff"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "2cdfb5c3878240484b7859d6baa6a7b058518838bb4ab15ec3c3344004b68dfe"
+        },
+        "c_lowering": {
+          "id": "swdb_class_unit.c",
+          "sha256": "602ee1e4366a9dddf10591128eb4b76ee44392c0dbca2db5042c08aca039ecc9"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        }
+      },
+      "failed_goals": [
+        {
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_16",
+          "status": "timeout"
+        },
+        {
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_18",
+          "status": "timeout"
+        },
+        {
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_23",
+          "status": "timeout"
+        },
+        {
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_34",
+          "status": "timeout"
+        },
+        {
+          "goal": "typed_real_swdb_class_unit_assert_rte_initialization_44",
+          "status": "timeout"
+        }
+      ],
+      "unproven_property_count": 87
+    },
+    "initialized": {
+      "id": "proof.wp24-safe.candidate-1.20261015t082232z.b4d6d808",
+      "verdict": "proven",
+      "failure_class": null,
+      "record": "/private/tmp/probata-construct-initialization-20261015/red/records/proofs/proof.wp24-safe.candidate-1.20261015t082232z.b4d6d808.yaml",
+      "sha256": "5f397f64fe90c857f8dd98fd8e17002c960feb98b97ef3ec60574ab87fea7bd6",
+      "valid_goals": 153,
+      "smoke_checks": 11,
+      "job": {
+        "adapter": "wp",
+        "host": "mac",
+        "worker_core": "unpinned",
+        "wall_seconds": 98.311056,
+        "cpu_seconds": 103.718375,
+        "batch_load": {
+          "start": 10.397,
+          "end": 8.015
+        },
+        "peak_rss_bytes": 425558016,
+        "batch": "batch.proof.wp24-safe.candidate-1.20261015t082232z.b4d6d808",
+        "position": 1
+      },
+      "pins": {
+        "code": {
+          "id": "wp24-safe.candidate-1",
+          "sha256": "65996714e3afc586e057b062e3aa7570e9513746825a69c04c8b46892dc33348"
+        },
+        "contract": {
+          "id": "contract.fixture_wp24_classes",
+          "sha256": "879dacc728cb50d62ad560e82280299b54294ea67d131f0ec983fb45607cb85e"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "2cdfb5c3878240484b7859d6baa6a7b058518838bb4ab15ec3c3344004b68dfe"
+        },
+        "c_lowering": {
+          "id": "swdb_class_unit.c",
+          "sha256": "602ee1e4366a9dddf10591128eb4b76ee44392c0dbca2db5042c08aca039ecc9"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        }
+      },
+      "failed_goals": [],
+      "unproven_property_count": 0
+    },
+    "seeded_bug": {
+      "id": "proof.wp24-bug.candidate-1.20261015t082507z.2f1c41bc",
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "record": "/private/tmp/probata-construct-initialization-20261015/red/records/proofs/proof.wp24-bug.candidate-1.20261015t082507z.2f1c41bc.yaml",
+      "sha256": "776ea11db04dae10e368b84731077ac7f0a6e7d23e3a256dd6cbc1feea76f354",
+      "valid_goals": 153,
+      "smoke_checks": 11,
+      "job": {
+        "adapter": "wp",
+        "host": "mac",
+        "worker_core": "unpinned",
+        "wall_seconds": 189.012098,
+        "cpu_seconds": 217.499445,
+        "batch_load": {
+          "start": 5.075,
+          "end": 18.164
+        },
+        "peak_rss_bytes": 864206848,
+        "batch": "batch.proof.wp24-bug.candidate-1.20261015t082507z.2f1c41bc",
+        "position": 1
+      },
+      "pins": {
+        "code": {
+          "id": "wp24-bug.candidate-1",
+          "sha256": "eb32ff821d3c84909c3b861eefdd44b950b4434c607e2fb1480bd4c9dba0f99a"
+        },
+        "contract": {
+          "id": "contract.fixture_wp24_classes",
+          "sha256": "879dacc728cb50d62ad560e82280299b54294ea67d131f0ec983fb45607cb85e"
+        },
+        "method_version": {
+          "id": "method.wp-tracer-fixture",
+          "sha256": "2cdfb5c3878240484b7859d6baa6a7b058518838bb4ab15ec3c3344004b68dfe"
+        },
+        "c_lowering": {
+          "id": "swdb_class_unit.c",
+          "sha256": "e223d80347f9cc0943246a638c12641aed23d233c8b8d287e219448a7eb549f5"
+        },
+        "naming_rules": {
+          "id": "kept-names.3",
+          "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+        }
+      },
+      "failed_goals": [
+        {
+          "goal": "typed_real_swdb_class_unit_loop_invariant_6_preserved",
+          "status": "timeout"
+        }
+      ],
+      "unproven_property_count": 53
+    }
+  },
+  "intermediate_diagnostic": "Input-only diagnostic stopped after missing loop invariant reproduced; not a completed acceptance run"
+}
