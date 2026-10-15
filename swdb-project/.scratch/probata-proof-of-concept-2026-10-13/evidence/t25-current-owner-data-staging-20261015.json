@@ -230,5 +230,77 @@
     "domain": "growth allocation, frozen backing/live extents, append producer pin, pure data-model return AST and full text SHA",
     "view": "data[0] with immediate separate owner_data_live_i and owner_data_storage_i assertions, independent source/view count and root checks",
     "shared_hooks": "none; existing complete delegates exact binding to model_domains.bind_source_access"
-  }
+  },
+  "postmerge_controls": [
+    {
+      "path": "/private/tmp/probata-owner-data-postmerge.jsonl",
+      "sha256": "3e968882c3a6f8b58ce09b27a5b5cf8e6475c702a51ac56aa259a13c65edb60d",
+      "source_commit": "b6b932fc54385b537a85d92957460e50023b1293",
+      "calls": [
+        {
+          "test": "tests/test_closed_owner_data.py::test_an_immediate_data_read_carries_the_current_live_owner_domain",
+          "outcome": "passed",
+          "seconds": 5.025411750015337
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_current_owner_data_origin_does_not_admit_unchecked_offsets_or_casts[*(v.data()+n+1)]",
+          "outcome": "passed",
+          "seconds": 2.6393033750355244
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_current_owner_data_origin_does_not_admit_unchecked_offsets_or_casts[*((int *)v.data())]",
+          "outcome": "passed",
+          "seconds": 2.6256015839753672
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_a_rehashed_data_renderer_cannot_weaken_range_checks_or_change_the_returned_root[live_guard]",
+          "outcome": "passed",
+          "seconds": 3.4624540410004556
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_a_rehashed_data_renderer_cannot_weaken_range_checks_or_change_the_returned_root[backing_guard]",
+          "outcome": "passed",
+          "seconds": 3.5224347499897704
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_a_rehashed_data_renderer_cannot_weaken_range_checks_or_change_the_returned_root[returned_root]",
+          "outcome": "passed",
+          "seconds": 3.540506833989639
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_a_rehashed_data_renderer_cannot_weaken_range_checks_or_change_the_returned_root[model_contract]",
+          "outcome": "passed",
+          "seconds": 3.1189684579730965
+        },
+        {
+          "test": "tests/test_closed_owner_data.py::test_a_current_owner_data_read_does_not_revive_a_stale_captured_alias",
+          "outcome": "passed",
+          "seconds": 5.024412958009634
+        }
+      ],
+      "finish": [
+        {
+          "exitstatus": 0
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-owner-data-opaque-postmerge.jsonl",
+      "sha256": "3dd4c259ee0db7dd87631f1161a4938031b7fbc283a3162c2962f0960f3e60ba",
+      "source_commit": "b6b932fc54385b537a85d92957460e50023b1293",
+      "calls": [
+        {
+          "test": "tests/test_closed_owner_members.py::test_a_standalone_at_model_keeps_its_opaque_incoming_field_refusal",
+          "outcome": "passed",
+          "seconds": 5.580137416021898
+        }
+      ],
+      "finish": [
+        {
+          "exitstatus": 0
+        }
+      ]
+    }
+  ],
+  "postmerge_boundary": "8 new prelaunch controls PASS29.20s and standalone opaque at refusal PASS5.74s in a separate session after integration through19c64cb0. Actual safe/stale evidence remains exact67dfd7a8, not a postmerge actual WP replay."
 }

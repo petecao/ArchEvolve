@@ -332,3 +332,11 @@ whole25 completion is claimed. Frame projection remains structural and allocator
 explicit. Source/native malloc/free and original scalar contracts are unchanged. Status claimed.
 Evidence:[t25-current-owner-data-actual-20261015.json](../evidence/t25-current-owner-data-actual-20261015.json).
 Outside audit:/private/tmp/probata-owner-data-actual-67dfd7a8-audit.json.
+
+
+Data handoff validation — 2026-10-15 ET: integration through19c64cb0 merged cleanly.
+At combined b6b932fc, new8prelaunch controls PASS29.20s; standalone opaque at refusal passes
+separately1test5.74s. Both sessions use stand-in WP; actual safe/stale evidence above remains
+pinned67dfd7a8 and is not relabeled as a postmerge proof. No active job remains. No shared
+lowerer/adapter hook was added by this data slice; exact source binding stays delegated to
+model_domains and all existing source/view regeneration and helper pins remain in force.
