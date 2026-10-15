@@ -164,7 +164,47 @@ def test_a_ghost_array_declared_again_in_the_c_model_is_refused(tmp_path):
 # --- proofs that use the proof semantics: swdb prove --adapter cbmc (seam 1) ----------------------------------
 
 DX = REPO / "tests" / "fixtures" / "proof" / "dx100"
-UNITS = (DX / "fixture_units.cc").read_text()
+# Separately named frontier units leave the original dxf_load helper boundary intact.
+# Their pointer calls are direct; host values are observed through the model's tile rows.
+DIRECT_UNITS = r"""
+int dxf_direct_stream(int *q, int n) {
+  maa_const(0, 0);
+  maa_const(n, 1);
+  maa_const(1, 2);
+  maa_stream_load(q, 0, 1, 2, 0, -1);
+  wait_ready(0);
+  return get_tile_size(0) == n;
+}
+int dxf_direct_three_reads(int *q, int *base, int n) {
+  int *t0 = get_cacheable_tile_pointer(0);
+  int *t1 = get_cacheable_tile_pointer(1);
+  int *t2 = get_cacheable_tile_pointer(2);
+  maa_const(0, 0);
+  maa_const(n, 1);
+  maa_const(1, 2);
+  maa_stream_load(q, 0, 1, 2, 0, -1);
+  wait_ready(0);
+  int a = t0[0];
+  maa_indirect_load(base, 0, 1, -1);
+  wait_ready(1);
+  int b = t1[0];
+  maa_indirect_load(base, 0, 2, -1);
+  wait_ready(2);
+  int c = t2[0];
+  return (0 <= a) & (a < n) & (b == c);
+}
+int dxf_direct_offset_gather(int *q, int *offs, int n) {
+  maa_const(0, 0);
+  maa_const(n, 1);
+  maa_const(1, 2);
+  maa_stream_load(q, 0, 1, 2, 0, -1);
+  wait_ready(0);
+  maa_indirect_load(offs + 1, 0, 1, -1);
+  wait_ready(1);
+  return get_tile_size(1) == n;
+}
+"""
+UNITS = (DX / "fixture_units.cc").read_text() + DIRECT_UNITS
 BASE = ("requires 1 <= n <= 2 && \\valid(q + (0 .. n - 1)) && \\valid({arr} + (0 .. n - 1));\n"
         "requires \\forall integer k; 0 <= k < n ==> 0 <= q[k] < n;")
 Q_ONLY = ("requires 1 <= n <= 2 && \\valid(q + (0 .. n - 1));\n"
@@ -175,6 +215,11 @@ RANGE = ("requires 2 <= n <= 3 && \\valid(q + (0 .. n - 1)) && \\valid(offs + (0
          "requires \\forall integer k; 0 <= k < n - 1 ==> offs[k] <= offs[k + 1];")
 #: contract name: (function, pointer parameters, requires, assigns, size bound of n)
 FIXTURES = {
+    "direct_stream": ("dxf_direct_stream", ["q"], "requires 0 <= n <= 2 && \\valid(q + (0 .. n - 1));", "\\nothing", 2),
+    "direct_three_reads": ("dxf_direct_three_reads", ["q", "base"], BASE.format(arr="base"), "\\nothing", 2),
+    "direct_offset_gather": ("dxf_direct_offset_gather", ["q", "offs"],
+        "requires n == 2 && \\valid(q + (0 .. n - 1)) && \\valid(offs + (0 .. n - 1));\n"
+        "requires \\forall integer k; 0 <= k < n ==> 0 <= q[k] < n - 1;", "\\nothing", 2),
     "summary_wrapper": ("dxf_summary_wrapper", [], "requires 0 <= n <= 2;", "\\nothing", 2),
     "summary_caller": ("dxf_summary_caller", [], "requires 0 <= n <= 2;", "\\nothing", 2),
     "local_storage": ("dxf_local_storage", [], "requires 1 <= n <= 2;", "\\nothing", 2),
@@ -214,6 +259,9 @@ def _dx_contracts():
             ("pre", "legality", requires, "per_candidate"),
             ("post", "postcondition", f"assigns {assigns};\nensures \\result == 1;", "per_candidate")],
             [{"array": a, "shared_actions": [], "history_reads": False} for a in arrays])
+        if name in {"direct_stream", "direct_three_reads", "direct_offset_gather"}:
+            # An explicit typed input-window contract addition, independent of validity.
+            data["proof_unit"]["array_domains"] = {array: {"extent": "n"} for array in arrays}
         if name == "summary_wrapper":
             for clause in data["clauses"]:
                 clause["proof_placement"] = {"once": "self"}
@@ -499,6 +547,8 @@ def test_wp_capacity_agrees_at_32_and_leaves_33_not_proven(dx, commands):
     from test_wp_adapter import _hints
     path = dx.root / "library" / "rewrite_contracts" / "fixture_dx_capacity.yaml"
     contract = yaml.safe_load(path.read_text())
+    # The source reads q[0]; advertise its complete incoming typed window explicitly.
+    contract["proof_unit"]["array_domains"] = {"q": {"extent": "n"}}
     for clause in contract["clauses"]:
         if clause.get("acsl"):
             clause["acsl"]["text"] = clause["acsl"]["text"].replace("32 <= n <= 33", f"n == {commands}")
@@ -591,3 +641,66 @@ def test_wp_allows_fresh_scalar_witnesses_without_trusting_them_as_model_updates
     assert record["hint_check"]["verdict"] == "accepted", record["hint_check"]
     assert record["verdict"] == "not_proven" and record["failure_class"] == "unknown"
     assert record["proof_setup_check"]["runs"]
+
+
+@needs_wp
+@pytest.mark.parametrize("name", ["direct_stream", "direct_three_reads", "direct_offset_gather"])
+def test_wp_audited_dx_pointer_calls_prove_only_checked_explicit_input_windows(dx, name):
+    record = prove_wp(dx, name)
+    assert record["verdict"] == "proven", record.get("unproven_properties")
+    guards = [goal for goal in record["goals"] if "swdb_window_call" in goal["goal"] and not goal.get("smoke")]
+    assert len(guards) == {"direct_stream": 1, "direct_three_reads": 3, "direct_offset_gather": 2}[name]
+    assert all(goal["status"] == "valid" for goal in guards)
+
+
+@needs_wp
+def test_wp_dx_window_cannot_be_recovered_from_a_larger_valid_input_range(dx):
+    path = dx.root / "library/rewrite_contracts/fixture_dx_direct_stream.yaml"
+    contract = yaml.safe_load(path.read_text())
+    contract["proof_unit"]["array_domains"]["q"]["extent"] = "n - 1"
+    for clause in contract["clauses"]:
+        if clause.get("acsl"):
+            clause["acsl"]["text"] = clause["acsl"]["text"].replace("0 <= n <= 2", "n == 2")
+    path.write_text(yaml.safe_dump(contract, sort_keys=False))
+    record = prove_wp(dx, "direct_stream")
+    assert record["verdict"] == "not_proven", record
+    assert any("swdb_window_call" in goal["goal"] and goal["status"] != "valid"
+               for goal in record["goals"]), record
+
+
+@needs_wp
+def test_wp_dx_source_initializedness_is_checked_after_explicit_window_admission(dx):
+    path = dx.root / "library/rewrite_contracts/fixture_dx_direct_stream.yaml"
+    contract = yaml.safe_load(path.read_text())
+    for clause in contract["clauses"]:
+        if clause.get("acsl"):
+            clause["acsl"]["text"] = clause["acsl"]["text"].replace(
+                "requires \\initialized(q + (0 .. n - 1));", "")
+    path.write_text(yaml.safe_dump(contract, sort_keys=False))
+    record = prove_wp(dx, "direct_stream")
+    assert record["verdict"] == "not_proven", record
+    assert any("source_initialized" in goal["goal"] and goal["status"] != "valid"
+               for goal in record["goals"]), record
+
+
+@needs_wp
+def test_wp_unit_window_does_not_invent_a_domain_for_a_defined_pointer_helper(dx):
+    path = dx.root / "library/rewrite_contracts/fixture_dx_three_reads.yaml"
+    contract = yaml.safe_load(path.read_text())
+    contract["proof_unit"]["array_domains"] = {"q": {"extent": "n"}, "base": {"extent": "n"}}
+    path.write_text(yaml.safe_dump(contract, sort_keys=False))
+    record = prove_wp(dx, "three_reads")
+    assert record["verdict"] == "not_proven" and record["failure_class"] == "unsupported_construct", record
+    assert not any(report["name"] == "wp_log" for report in record["evidence"]["reports"])
+
+
+@needs_wp
+def test_wp_one_past_offset_formation_does_not_admit_a_gather_read_through_it(dx):
+    path = dx.root / "library/rewrite_contracts/fixture_dx_direct_offset_gather.yaml"
+    contract = yaml.safe_load(path.read_text())
+    contract["proof_unit"]["array_domains"]["offs"]["extent"] = "n - 1"
+    path.write_text(yaml.safe_dump(contract, sort_keys=False))
+    record = prove_wp(dx, "direct_offset_gather")
+    assert record["verdict"] == "not_proven", record
+    assert any("swdb_window_call" in goal["goal"] and goal["status"] != "valid"
+               for goal in record["goals"]), record
