@@ -100,9 +100,9 @@ swdb prove --candidate <c> --function <f> --contract <contract> --adapter wp --r
    under the RSS watchdog and the wall budget.
 5. Reads the verdict and runs the failure class's handler.
 
-**Hint file** (`--hint-file`): `{hints: [{anchor, acsl}]}`. A `loop_head` anchor takes only `loop invariant`,
-`loop assigns`, `loop variant`; `before`, `after` and `entry` take only `assert`. Ticket 35 replaces this
-with hint records and the proof hint check.
+**Hint file** (`--hint-file`): hint records `{hints: [{anchor, kind, text, provenance}]}`, merged at their
+anchors only when the proof hint check accepts the set (ticket 35, updated 2026-10-14 ET:
+[format-v0.4-proof-hints.md](format-v0.4-proof-hints.md)). Anchor lines stay in WP's input.
 
 **Frozen settings** (the record's `settings`): the lineup's frama-c-wp flags (must hold `-wp-cache none`
 and `-wp-model +real`), `-machdep x86_64`, `-wp-prover alt-ergo,z3,cvc5`, `-wp-timeout` =
@@ -161,7 +161,8 @@ WP never refutes: a not-proven record has no counterexample.
 `tests/fixtures/proof/regression_corpus/<case>.yaml`: `{id, adapter, input, failure_class, cause}`. Each
 diagnosed failure adds one case. `adapter: wp` cases rerun through `swdb prove` on the WP test seed;
 `adapter: c_lowering` cases rerun through `swdb lower`. Each must give its recorded class again. One corpus
-serves every adapter.
+serves every adapter. Ticket 35 (2026-10-14 ET): a `wp` case whose hint the proof hint check now rejects before
+WP names `hint_rule` (the check's rule) instead of `failure_class`, and reruns with the scripted WP stand-in.
 
 ## For later tickets
 

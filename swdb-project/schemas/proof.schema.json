@@ -220,6 +220,67 @@
       "required": ["tool", "flags"],
       "properties": {"tool": {"type": "string", "minLength": 1}, "flags": {"type": "array", "items": {"type": "string"}}}
     },
+    "hint_set": {
+      "type": "object",
+      "description": "Ticket 35: the hint set the job was given (records in the given order) and its hash (anchor, kind and text of each record, in canonical order).",
+      "additionalProperties": false,
+      "required": ["sha256", "hints"],
+      "properties": {
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "hints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["anchor", "kind", "text", "provenance"],
+            "x-required-reasons": {"provenance": "every hint says who wrote it: agent, seed (with its source) or human (map 13 item 9)"},
+            "properties": {
+              "anchor": {"type": "string", "minLength": 1}, "kind": {"type": "string", "minLength": 1},
+              "text": {"type": "string", "minLength": 1},
+              "provenance": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["source"],
+                "properties": {"source": {"enum": ["agent", "seed", "human"]}, "seed_source": {"type": "string", "minLength": 1}},
+                "if": {"properties": {"source": {"const": "seed"}}},
+                "then": {"required": ["seed_source"], "x-required-reasons": {"seed_source": "a seed names where it came from"}},
+                "else": {"properties": {"seed_source": {"not": {}, "x-reason": "only a seed names a seed source"}}}
+              }
+            }
+          }
+        }
+      }
+    },
+    "hint_check": {
+      "type": "object",
+      "description": "Ticket 35: the proof hint check's result (check and vocabulary versions, verdict, every rejection by rule); a rejected set never reaches WP.",
+      "additionalProperties": false,
+      "required": ["check", "vocabulary", "verdict", "merged_sha256", "rejections", "frama_c_runs", "reached_wp"],
+      "properties": {
+        "check": {"$ref": "#/$defs/tool_identity"}, "vocabulary": {"$ref": "#/$defs/tool_identity"},
+        "verdict": {"enum": ["accepted", "rejected"]},
+        "merged_sha256": {"$ref": "#/$defs/sha256"},
+        "frama_c_runs": {"type": "integer", "minimum": 0},
+        "reached_wp": {"type": "boolean"},
+        "rejections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["hint", "anchor", "kind", "rule", "detail"],
+            "properties": {
+              "hint": {"type": ["integer", "null"], "minimum": 0},
+              "anchor": {"type": ["string", "null"]}, "kind": {"type": ["string", "null"]},
+              "rule": {"type": "string", "x-vocab": "proof_hint_rules"}, "detail": {"type": "string"}
+            }
+          }
+        }
+      },
+      "if": {"properties": {"verdict": {"const": "accepted"}}},
+      "then": {"properties": {"rejections": {"maxItems": 0, "x-reason": "an accepted hint set has no rejection"}}},
+      "else": {"properties": {"rejections": {"minItems": 1, "x-reason": "a rejected hint set names each rejection"},
+                              "reached_wp": {"const": false, "x-reason": "a rejected hint set never reaches WP"}}}
+    },
     "run_index": {"$ref": "#/$defs/run_index"},
     "provider_pin": {"$ref": "#/$defs/provider_pin"},
     "job": {
@@ -346,6 +407,12 @@
   ],
   "$defs": {
     "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "tool_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sha256"],
+      "properties": {"id": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/sha256"}}
+    },
     "pin": {
       "oneOf": [
         {
