@@ -4,51 +4,52 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 13:57 ET. Frozen evaluation source `94769312` includes the reviewed original
-Bag/Counter lifetime slice (`0e4e6b74`) and runtime `bc457086`, including the
-reviewed canonical-header macro checks and selected-receiver member-window slice,
-plus native replay input flushing before sanitizer termination. Reviewed footprint
-query admission from `904a2bab` is now integrated. Historical actual
-source/method pins remain distinct from this integrated tip. **32 of 63 tickets are resolved; 07, 24, 25, 27 and 36 are claimed.**
-The other 26 tickets all have unresolved dependencies; no unclaimed ticket is
-currently eligible. Drafts 1/2 remain immutable; draft 3 is not created.
+Updated: 2026-10-15 ET. **Implementation, evaluation and provider work are paused
+by user direction.** Closeout review, documentation, merge and cleanup are still
+in progress. Root's bounded final controls at frozen `53471f7f` are closeout
+validation, not a new evaluation campaign. No implementation agents or
+verifier/provider campaigns are assigned. The progress heartbeat is **PAUSED**.
+Root will record completion of validation and cleanup separately.
 
-| Ticket | Current evidence | Next action |
+All 63 ticket files now contain **32 resolved / 31 ready-for-agent / 0 claimed**.
+The five unfinished claims (07/24/25/27/36) are released without closing any
+acceptance criteria. The dependency frontier is **07, 24, 27**; 25 waits on 24,
+36 on 27, and the other 26 open tickets retain their unresolved dependencies.
+Drafts 1/2 remain immutable; draft 3 and the final method freeze do not exist.
+
+| Ticket | Retained evidence | Remaining work after resumption |
 |---|---|---|
-| 07 | Method19 ended unproven: 27 open of 237 goals, 52.04 counted minutes; no final proof, smoke replay or covering-wait negative. Offline source/tool/log audit found no mismatches | Unlaunched method20 prototype is merged with its 158 controls and negative method19 audit. No provider launch/BFS proof or production method freeze; independent final union review pending |
-| 24 | Qualified copy and selected-receiver slices are accepted. The original Bag/Counter positive at `a70fc6fd` proves 146 ordinary + 11 smoke goals; after a test-only optional-key correction, the original seeded negative passes its expected-not-proven check with 146 ordinary Valid, one invariant timeout and 11 smoke Valid | Reviewed slice merged; 48 compiler/policy and stand-in composition controls pass, all 25 packaged artifact hashes match and runtime equals that tested composition. Full construct-group acceptance remains open |
-| 25 | Original bounded maximum at `d874c4dc`: 310 ordinary CBMC properties plus expected reachability failure; 625 native C/C++ comparisons agree. The first stale-data run refuted the memory fault, but buffered stdout lost its input metadata before sanitizer exit | The original stale-data retry at `bc457086` passes in 226.98 s, recovers n=1/a=[-1] and refutes the same heap-use-after-free; the final audit matches nine artifact references, 3,394 physical-file references and 203 source pins. Original stale iterator and unchecked at are refuted with matching source replay; guarded at proves all 119 ordinary properties at frozen 94769312. All artifact/source/certificate pins match. Broader member lifetime/origin criteria remain unmet; no new evaluation at closeout |
-| 27 | Qualified stall at `909eb6cd`: 110 ordinary Valid, one memory-domain timeout, 35 smoke Valid; the following gather initializedness gap is closed. Query at `8e377274`: safe 57 ordinary + 18 smoke proves; outside query remains not_proven with one ensures timeout and one failed smoke | Query and native same-object evidence are merged; 134 compiler union controls pass. The earlier two watchdog environment failures passed when individually rerun with process-inspection access; reviewed stall equivalence/geometry fix is frozen at 9940b155 for one full Mac rerun, still without final outcome |
-| 36 | Earlier 45 scripted setup controls pass; later member/header unions have focused controls and source-pin audits | Remain claimed pending 27 and final source/method freeze |
+| 07 | Method19 unproven: 27/237 open, 52.04 counted minutes; method20 unlaunched with 158 controls | Reviewed fresh counted run, every goal, final smoke and covering-wait negative; no qualifying BFS proof |
+| 24 | Qualified copy and original class safe/negative records; pure condition slice 72 focused controls | Full current-policy construct/dependency acceptance, embedded template-array origins, conditional access placement and broader lifetime coverage |
+| 25 | Bounded maximum and matching stale-data/iterator/at source replays accepted | Allocating member bodies, receiver domains and complete WP/bounded agreement; blocked by 24 |
+| 27 | Qualified stall at 9940b155: 111 ordinary + 35 smoke checks; distinct query/transitive evidence retained | Full qualified safe/negative, values/register/range/footprint/capacity matrix and verifier agreement |
+| 36 | Focused setup/source replay/verdict controls and two-axis review checkpoint | Independent RTE admission check before final freeze, remaining setup criteria; blocked by 27 |
 
-Coordinator working evidence remains outside the repository until its reviewed
-handoff: `/private/tmp/probata-dx-store-kernel-check-v4/manifest.json`. These are scoped
-checkpoints, not integrated acceptance claims. The merged query package retains the negative's failed smoke and original pytest
-failure; corrected expectations passed offline without upgrading the proof record.
+The final review of `53471f7f` against `150930b4` found no new runtime must-fix.
+The stale bounded-planner docstring is corrected; the inherited reliance on
+method flags for `-wp-rte` is recorded in ticket 36. Current actual methods include
+that flag; this is not evidence of a false proof. No flag-policy feature is added
+during closeout. Historical actual results are not relabeled as proofs of the
+current integrated runtime.
 
-Durable completed slices: [method19 negative audit](evidence/t07-method19-negative-20261015.json),
+Durable pointers: [review decisions](evidence/final-review-closeout-20261015.md),
+[method19 negative audit](evidence/t07-method19-negative-20261015.json),
 [unlaunched method20](evidence/t07-method20-prospective-20261015.json),
-[deferred vector domain](evidence/t25-vector-receiver-domain-deferred-20261015.json),
-[footprint query](evidence/wp-footprint-query-20261015.json),
-[original class lifetimes](evidence/t24-member-lifetimes-mac-20261015.json),
-[stale-data replay audit](evidence/t25-stale-data-replay-flush-20261015.json),
-[iterator/at controls](evidence/t25-next-controls-accepted-20261015.json),
-[bounded maximum audit](evidence/t25-bounded-max-accepted-20261015.json),
-[member-window audit](evidence/t24-member-windows-mac-20261015.json),
-[focused Linux audit](evidence/focused-parser-owner-final-20261015.json),
-[entry-hint audit](evidence/wp-source-view-entry-hints-20261015.json) and
-[nested-assignment audit](evidence/wp-nested-assignments-20261015.json).
-The bounded maximum is a contract fixture on C with native C++ differential
-agreement; the member-window slice is narrower than the full classes fixture.
-Neither establishes general C++ or member-body verification.
+[class lifetimes](evidence/t24-member-lifetimes-mac-20261015.json),
+[condition slice](evidence/t24-condition-closeout-20261015.json),
+[vector controls](evidence/t25-next-controls-accepted-20261015.json),
+[deferred vector design](evidence/t25-vector-receiver-domain-deferred-20261015.json),
+[qualified stall](evidence/t27-stall-qualified-accepted-20261015.json),
+[footprint query](evidence/wp-footprint-query-20261015.json).
 
-The next dependency frontier is 27 → 28 → 29; 30 additionally waits for 25,
-43 waits for 29, and 36 waits for 27. Held-out BC/PR/SSSP and the final method
-freeze remain gated. The last whole-effort progress table was 13:38 ET; the next is due 14:05 ET.
-The coordinator owns that table and remote dispatch. Existing authorization covers implementation, commits/pushes,
-two remote lanes and scoped BFS source export.
+## Retained host and closeout observations
 
-## Host coordination
+The observations below are historical, not current lease claims. No further
+remote evaluation is scheduled. Root owns final validation, merges and cleanup;
+retain raw proof artifacts and recovery inputs until their acceptance/audit readers
+finish. Recheck actual host state before any later dispatch.
+
+### Last accepted remote control readback
 
 Both controls at frozen **94769312** completed with zero wrapper exits and no
 watchdog/OOM failure. Iterator: 1 passed in 222.45 s, refuted with matching
@@ -216,8 +217,8 @@ and runtime-library configuration. No cross-library model agreement is inferred.
 baseline `r4` completed with 17 passed and the known use-after-delete expected failure;
 the original report and logs occupy 9.7 MiB and remain on the host.
 
-The 30-minute progress heartbeat is `probata-implementation-progress`; its reports do
-not substitute for reading incremental run artifacts.
+The historical 30-minute progress heartbeat was `probata-implementation-progress`;
+it is PAUSED for closeout. Its past reports do not replace incremental artifacts.
 
 ## Historical validation and progress reporting
 

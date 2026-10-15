@@ -5,6 +5,27 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Integration branch: `code
 
 ## Current state (resume here)
 
+Updated: 2026-10-15 ET. Implementation, evaluation and provider work are paused
+by user direction. Closeout review, documentation, merge and cleanup remain in
+progress; root's bounded final controls are closeout validation, not a new
+evaluation campaign. The progress heartbeat is **PAUSED**.
+
+- **32 resolved / 31 ready-for-agent / 0 claimed**, recomputed from all 63 tickets.
+  No ticket is force-closed. Released tickets: 07, 24, 25, 27 and 36.
+- **Dependency frontier:** 07, 24 and 27; 25 waits on 24, and 36 waits on 27.
+  No implementation agents or verifier/provider campaigns are assigned. Root owns
+  any still-active bounded final controls and the remaining closeout steps.
+- Reviewed checkpoint: `53471f7f`, compared with `yanrujhou_main` at `150930b4`.
+  Final review requested one docstring correction and recorded the inherited
+  independent RTE admission gap for ticket 36; no new runtime feature is added.
+- Qualified stall evidence is accepted: **111 ordinary + 35 smoke checks** at
+  `9940b155`. Other evidence retains its own source/method pins. Full ticket
+  acceptance, held-out work and final method freeze remain open.
+- [Current resume](resume.md), [review decisions](evidence/final-review-closeout-20261015.md),
+  [accepted stall](evidence/t27-stall-qualified-accepted-20261015.json).
+
+## Historical integration checkpoints
+
 Updated: 2026-10-15 ET. Resumed under Yan-Ru's ongoing implementation, push and mbit10 approval.
 Current integration branch: `codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
 Current dispatch, evidence and blockers: [resume.md](resume.md).
