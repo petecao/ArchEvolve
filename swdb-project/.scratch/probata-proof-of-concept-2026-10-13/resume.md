@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 17:15 ET. **Implementation is active under the user's ongoing approval.**
+Updated: 2026-10-15 17:31 ET. **Implementation is active under the user's ongoing approval.**
 Integration: `codex/probata-resume-20261015`, based on `yanrujhou_main` at `d94d629b`.
 Reviewed atomic/enum repair and float hints are published at `7c06e9ed`.
 Only `swdb/c_lowering.py` differs in production from `71771f09`; its reviewed SHA256
@@ -18,8 +18,8 @@ Drafts 1/2 remain immutable. Draft 3 and the final production freeze have not ha
 | Ticket / owner | Verified checkpoint | Active work |
 |---|---|---|
 | 07 / `ticket07` | Guard revision passes 183 controls and an actual mechanical component; runs 20–22 remain aborted. Run 23 baseline completed in 14.97 minutes: 254 ordinary goals, 103 timeouts, all 139 smoke checks passed. | Frozen `df19ff8a` run 23 started 16:41:25 ET. Fresh mechanical seed check completed; provider launched 16:58:55 ET. Independent actual prompt/argv/tool/source audit passes, and `record_design` works. Full clock remains counted; budget ends around 17:41 ET excluding recorded lock wait. No qualifying proof yet. |
-| 24 / `ticket24` | Historical Ring/allocation and corrected DXC/class/OMP pairs audited. Full finite native agreement accepted at its old source. Two field-init loop invariants pass compiler RED/GREEN and independent review. Atomic/enum refusal repair passes 86 compiler/native plus 29 public/corpus controls and independent review. | Node 0 generation 572 started 17:13:08 ET at frozen `0e7f2327`: full nine-group matrix, float first, fresh dependencies and all allocation/lifetime controls. Candidate seed is building. Prior safe float failure remains three initialization timeouts, not an accepted positive. Fresh finite native agreement is also required. |
-| 27 / `ticket27` | Frozen `71771f09`: all 11 safe cases pass, 792 ordinary + 252 smoke goals Valid, including 143 initialization and 141 RTE goals. Final audit: 15,495 physical references / 1,039 files, zero mismatches. | Node 1 generation 603 started 17:13:08 ET at the same freeze: 13-test negative profile. Capacity, bounded/native and fresh safe profiles follow as lanes release. |
+| 24 / `ticket24` | Historical Ring/allocation and corrected DXC/class/OMP pairs audited. Fresh finite native agreement at `0e7f2327` is independently accepted (112,589 defined comparisons). Two field-init loop invariants pass compiler RED/GREEN and independent review. Atomic/enum refusal repair passes 86 compiler/native plus 29 public/corpus controls and independent review. | Node 0 generation 572 started 17:13:08 ET at frozen `0e7f2327`: full nine-group matrix, float first, fresh dependencies and all allocation/lifetime controls. Candidate seed passed in 493.71 seconds. Fresh float safe passes 48 ordinary + 5 smoke goals, retaining all 12 initialization obligations; seed stays not proven with one invariant-establishment timeout, 1 passing and 4 failed smoke checks, and all 12 init obligations retained. The historical three-init-timeout record stays unchanged. |
+| 27 / `ticket27` | Frozen `71771f09`: all 11 safe cases pass, 792 ordinary + 252 smoke goals Valid, including 143 initialization and 141 RTE goals. Final audit: 15,495 physical references / 1,039 files, zero mismatches. | Node 1 generation 603 started 17:13:08 ET at the same freeze: 13-test negative profile. First unready-read control passes with 111 ordinary Valid, one exact hazard-precondition timeout and 16 Doomed smoke checks retained. Twelve cases remain; capacity, bounded/native and fresh safe profiles follow as lanes release. |
 | 36 / dependency-gated | Mandatory RTE, complete-command and mutation checks integrated; 122 compiler/scripted controls pass, 13 actual-WP cases excluded. | Waits on 27; no full setup acceptance or production method freeze. Read-only provenance fallback research remains prospective. |
 
 Accepted historical boundaries and reviewed changes:
@@ -50,6 +50,16 @@ is outside its own measurement. Wrapper bytes must match freshly fetched MemAcc
 `yanrujhou_main`; its default `main` lacks that script. CPU jobs do not use the GPU
 whose NVML driver/library diagnostic currently fails.
 
+Fresh finite native result and independent all-observation/whole-source audit are
+[published](evidence/t24-fresh-finite-agreement-0e7f2327-20261015.md). Its 47,164
+precondition and 2,207 known-UB exclusions stay separate; the allocation seed has
+zero defined comparisons. The clean producer and 349 MB raw output remain retained.
+
+The fresh float pair is accepted at its exact current source; seeded smoke failures
+remain explicit and are not called a solver refutation. Fresh standard min model
+also proves 5 ordinary + 2 smoke goals. Remaining model/caller pairs and lifetime
+controls still run.
+
 Next: audit the two active profiles at frozen `0e7f2327`: node 0's complete original
 matrix (float first; six-hour whole cap, 1800-second public-command limits) and node 1's
 negative profile (three-hour whole cap). RTE/init/smoke and per-goal limits remain
@@ -57,8 +67,8 @@ unchanged. Follow with the remaining disjoint 27 profiles as lanes release. No
 current-source proof success is claimed before actual artifacts and independent audit.
 
 The coordinator owns merges, graph updates and remote dispatch. Mac actual verification
-belongs to 07; one additional guarded native worker runs the fresh finite agreement in a separate clean Mac worktree. This chat's
-30-minute heartbeat remains active, old chat paused; last full table 16:51 ET, next due 17:21 ET.
+belongs to 07; the other guarded compiler/native slot is now free after the accepted fresh agreement run. This chat's
+30-minute heartbeat remains active, old chat paused; last full table 17:21 ET, next due 17:51 ET.
 Research-only notes remain `/private/tmp/probata-ticket25-resume-exploration.md`,
 `/private/tmp/probata-ticket25-lifetime-capabilities.md`,
 `/private/tmp/probata-ticket28-resume-exploration.md` and

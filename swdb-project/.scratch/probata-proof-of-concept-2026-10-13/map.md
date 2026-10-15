@@ -5,7 +5,7 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 17:15 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Updated: 2026-10-15 17:31 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
 Integration: `codex/probata-resume-20261015`; reviewed atomic/enum repair and float
 hints published at `7c06e9ed`. Fresh actual jobs use frozen `0e7f2327`.
 Mac counted run 23 stays frozen at `df19ff8a`, provider active after fresh baseline/seeds.
@@ -14,10 +14,14 @@ Mac counted run 23 stays frozen at `df19ff8a`, provider active after fresh basel
 - **24:** Historical Ring/allocation/DXC/class/OMP pairs audited; safe float retained
   three initializedness timeouts. Two field invariants pass RED/GREEN and review.
   Atomic/enum repair passes 115 controls and independent review; fresh full original
-  matrix, dependencies, lifetime controls and finite native agreement are required.
+  matrix, dependencies and lifetime controls remain. Fresh finite agreement passes
+  independent audit of 112,589 defined comparisons. Current float safe proves all
+  48 ordinary + 5 smoke goals with 12 initialization obligations retained; seed
+  remains not proven at invariant establishment, with four failed smoke checks retained.
 - **27:** Historical `71771f09` safe profile passes 11/11: 792 ordinary + 252 smoke
   Valid, 15,495 physical references audited without mismatch. Fresh negative,
-  capacity, bounded/native and safe profiles remain open.
+  capacity, bounded/native and safe profiles remain open. Current first negative
+  passes its exact unready-read control; twelve cases remain in that profile.
 - **07:** Run 23 active since 16:41 ET, provider launched 16:58:55 ET. Actual
   prompt/argv/tool/source audit passes; budget ends around 17:41 ET. No qualifying proof.
 - **36:** Still dependency-gated. 122 focused controls pass; 13 actual-WP cases
