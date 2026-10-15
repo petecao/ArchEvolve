@@ -232,3 +232,36 @@ at `/data/yanruj/EvolveSWDB_runs/probata-t27-20261015/branchless` on mbit10.
 - Remaining: finish the frozen focused batch, add local-storage lifetime admission controls, merge the
   audited bounded-initialization gate and current terminal checker, freeze method draft 3, then run complete
   coordinated remote safe/unsafe acceptance and update this ticket with final evidence.
+
+## Initialized-state acceptance checkpoint — 2026-10-15 06:26 ET
+
+Status remains `claimed`; final remote acceptance has not launched. The combined mandatory
+initializedness policy exposed receiver-slot and device-state proof obligations that earlier acceptance
+had not checked. The production repair at `3b092a46` names the fixed device-storage initialization
+invariant, preserves it in the explicitly trusted device call contracts, and checks selected caller-memory
+reads with `source_initialized` preconditions. This does not assume caller inputs initialized. Imported
+nonnull tile-pointer and integer/bool call results use an equivalent `+0` receiver expression for Frama-C
+33's modular-call initialization handling; arbitrary nullable pointers and floating results are excluded.
+The bounded/native model body is unchanged by this repair. Independent contract/body agreement remains
+in ticket 29's scope.
+
+- An actual public negative control removed only the caller-buffer initializedness premise while retaining
+  validity and observing only device size. The earlier setup proved it; the repaired setup returns
+  `not_proven` on the named `maa_stream_load_requires_source_initialized` obligation. This control passed
+  in three retained combined-policy runs, most recently the 06:14 run below.
+- The repaired three-read unit now proves its receiver and memory-access RTE goals, but three checked
+  `swdb_tile_read_probe_requires_initialized_read` preconditions still time out. Distinct WP static tile
+  objects from ticket 36 preserve row bounds; they do not resolve these three initialization obligations.
+- A finite expansion of the recognized initialization predicate (`880e006c`) typechecks (7 controls,
+  5.13 s), but the actual public pair still reports one pass and one failure in 582.33 s: the caller-input
+  negative passes and the safe three-read case retains those exact three timeouts. Raw outputs are at
+  `/private/tmp/probata-t27-init-finite-green`; its source is pinned to `880e006c`.
+- A separate prospective `-wp-no-filter-init` diagnostic is queued under the shared machine verifier lock
+  and 8 GiB RSS cap using that exact retained generated C input. It has no frozen-method proof record and
+  is not final acceptance. Root and ticket 25 are checking the same default WP initialization-hypothesis
+  filtering behavior against positive, wrong-postcondition, missing-validity and smoke controls before
+  choosing a prospective method flag. No running source or frozen method was changed.
+
+Remaining: settle the initialization proof policy with actual safe and negative records, merge the final
+pointer/model changes, freeze the combined method, then run the source-pinned safe and unsafe mbit10
+shards. Node 1 must be handed back for the complete constructs module after its unsafe shard finishes.
