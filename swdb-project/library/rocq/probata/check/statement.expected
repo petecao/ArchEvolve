@@ -1,0 +1,1434 @@
+Inductive shared_action_kind : Set :=
+    Claim : shared_action_kind
+  | MinUpdate : shared_action_kind
+  | AtomicAddOr : shared_action_kind
+  | OmpReduction : shared_action_kind
+  | QueueReserve : shared_action_kind.
+Inductive sharing_class : Set :=
+    ReadOnly : sharing_class
+  | ThreadOwned : sharing_class
+  | SharedActionsOnly : sharing_class
+  | LockProtected : sharing_class.
+all_shared_action_kinds =
+@cons shared_action_kind Claim
+  (@cons shared_action_kind MinUpdate
+     (@cons shared_action_kind AtomicAddOr
+        (@cons shared_action_kind OmpReduction
+           (@cons shared_action_kind QueueReserve (@nil shared_action_kind)))))
+     : list shared_action_kind
+all_sharing_classes =
+@cons sharing_class ReadOnly
+  (@cons sharing_class ThreadOwned
+     (@cons sharing_class SharedActionsOnly
+        (@cons sharing_class LockProtected (@nil sharing_class))))
+     : list sharing_class
+Inductive event (loc val arg : Type) : Type :=
+    Read : forall (_ : loc) (_ : val), event loc val arg
+  | Write : forall (_ : loc) (_ : val), event loc val arg
+  | HistoryRead : forall (_ : loc) (_ : val), event loc val arg
+  | Shared : forall (_ : shared_action_kind) (_ : bool) 
+               (_ : arg) (_ : loc) (_ : val),
+             event loc val arg
+  | DeviceRead : forall (_ : nat) (_ : loc) (_ : val), event loc val arg
+  | DeviceWrite : forall (_ : nat) (_ : loc) (_ : val), event loc val arg
+  | DeviceCovered : forall _ : nat, event loc val arg
+  | Own : forall _ : loc, event loc val arg
+  | Enter : event loc val arg
+  | Exit : event loc val arg
+  | Workshare : forall _ : nat, event loc val arg
+  | Iter : forall (_ : nat) (_ : nat), event loc val arg
+  | Barrier : event loc val arg.
+
+Arguments event (loc val arg)%_type_scope
+Arguments Read (loc val arg)%_type_scope l v
+Arguments Write (loc val arg)%_type_scope l v
+Arguments HistoryRead (loc val arg)%_type_scope l v
+Arguments Shared (loc val arg)%_type_scope k fence%_bool_scope a l old
+Arguments DeviceRead (loc val arg)%_type_scope c%_nat_scope l v
+Arguments DeviceWrite (loc val arg)%_type_scope c%_nat_scope l v
+Arguments DeviceCovered (loc val arg)%_type_scope c%_nat_scope
+Arguments Own (loc val arg)%_type_scope l
+Arguments Enter (loc val arg)%_type_scope
+Arguments Exit (loc val arg)%_type_scope
+Arguments Workshare (loc val arg)%_type_scope w%_nat_scope
+Arguments Iter (loc val arg)%_type_scope (w i)%_nat_scope
+Arguments Barrier (loc val arg)%_type_scope
+run =
+fun loc val arg : Type => list (prod nat (event loc val arg))
+     : forall (_ : Type) (_ : Type) (_ : Type), Type
+
+Arguments run (loc val arg)%_type_scope
+at_ =
+fun (loc val arg : Type) (X : run loc val arg) (i t : nat)
+  (e : event loc val arg) =>
+@eq (option (prod nat (event loc val arg)))
+  (@List.nth_error (prod nat (event loc val arg)) X i)
+  (@Some (prod nat (event loc val arg)) (@pair nat (event loc val arg) t e))
+     : forall (loc val arg : Type) (_ : run loc val arg) 
+         (_ : nat) (_ : nat) (_ : event loc val arg),
+       Prop
+
+Arguments at_ (loc val arg)%_type_scope X (i t)%_nat_scope e
+proj =
+fun (loc val arg : Type) (X : run loc val arg) (t : nat) =>
+@ListDef.map (prod nat (event loc val arg)) (event loc val arg)
+  (@snd nat (event loc val arg))
+  (@List.filter (prod nat (event loc val arg))
+     (fun p : prod nat (event loc val arg) =>
+      PeanoNat.Nat.eqb (@fst nat (event loc val arg) p) t)
+     X)
+     : forall (loc val arg : Type) (_ : run loc val arg) (_ : nat),
+       list (event loc val arg)
+
+Arguments proj (loc val arg)%_type_scope X t%_nat_scope
+program_trace =
+fun (loc val arg : Type)
+  (step : forall (_ : nat) (_ : list (event loc val arg))
+            (_ : event loc val arg),
+          Prop)
+  (t : nat) (tr : list (event loc val arg)) =>
+forall (pre : list (event loc val arg)) (e : event loc val arg)
+  (post : list (event loc val arg))
+  (_ : @eq (list (event loc val arg)) tr
+         (@app (event loc val arg) pre (@cons (event loc val arg) e post))),
+step t pre e
+     : forall (loc val arg : Type)
+         (_ : forall (_ : nat) (_ : list (event loc val arg))
+                (_ : event loc val arg),
+              Prop)
+         (_ : nat) (_ : list (event loc val arg)),
+       Prop
+
+Arguments program_trace (loc val arg)%_type_scope 
+  step%_function_scope t%_nat_scope tr%_list_scope
+program_run =
+fun (loc val arg : Type)
+  (step : forall (_ : nat) (_ : list (event loc val arg))
+            (_ : event loc val arg),
+          Prop)
+  (X : run loc val arg) =>
+forall t : nat, program_trace loc val arg step t (proj loc val arg X t)
+     : forall (loc val arg : Type)
+         (_ : forall (_ : nat) (_ : list (event loc val arg))
+                (_ : event loc val arg),
+              Prop)
+         (_ : run loc val arg),
+       Prop
+
+Arguments program_run (loc val arg)%_type_scope step%_function_scope X
+complete =
+fun (loc val arg : Type) (N : nat)
+  (done : forall (_ : nat) (_ : list (event loc val arg)), Prop)
+  (X : run loc val arg) =>
+forall (t : nat) (_ : lt t N), done t (proj loc val arg X t)
+     : forall (loc val arg : Type) (_ : nat)
+         (_ : forall (_ : nat) (_ : list (event loc val arg)), Prop)
+         (_ : run loc val arg),
+       Prop
+
+Arguments complete (loc val arg)%_type_scope N%_nat_scope
+  done%_function_scope X
+is_barrier =
+fun (loc val arg : Type) (e : event loc val arg) =>
+match e return bool with
+| Read _ _ _ _ _ => false
+| Write _ _ _ _ _ => false
+| HistoryRead _ _ _ _ _ => false
+| Shared _ _ _ _ _ _ _ _ => false
+| DeviceRead _ _ _ _ _ _ => false
+| DeviceWrite _ _ _ _ _ _ => false
+| DeviceCovered _ _ _ _ => false
+| Own _ _ _ _ => false
+| Enter _ _ _ => false
+| Exit _ _ _ => false
+| Workshare _ _ _ _ => false
+| Iter _ _ _ _ _ => false
+| Barrier _ _ _ => true
+end
+     : forall (loc val arg : Type) (_ : event loc val arg), bool
+
+Arguments is_barrier (loc val arg)%_type_scope e
+interval =
+fun (loc val arg : Type) (X : run loc val arg) (t i : nat) =>
+@length (event loc val arg)
+  (@List.filter (event loc val arg) (is_barrier loc val arg)
+     (proj loc val arg (@ListDef.firstn (prod nat (event loc val arg)) i X) t))
+     : forall (loc val arg : Type) (_ : run loc val arg) (_ : nat) (_ : nat),
+       nat
+
+Arguments interval (loc val arg)%_type_scope X (t i)%_nat_scope
+in_crit =
+fun loc val arg : Type =>
+fix in_crit (tr : list (event loc val arg)) (b : bool) {struct tr} : bool :=
+  match tr return bool with
+  | @nil _ => b
+  | @cons _ e tr' =>
+      match e return bool with
+      | Read _ _ _ _ _ => in_crit tr' b
+      | Write _ _ _ _ _ => in_crit tr' b
+      | HistoryRead _ _ _ _ _ => in_crit tr' b
+      | Shared _ _ _ _ _ _ _ _ => in_crit tr' b
+      | DeviceRead _ _ _ _ _ _ => in_crit tr' b
+      | DeviceWrite _ _ _ _ _ _ => in_crit tr' b
+      | DeviceCovered _ _ _ _ => in_crit tr' b
+      | Own _ _ _ _ => in_crit tr' b
+      | Enter _ _ _ => in_crit tr' true
+      | Exit _ _ _ => in_crit tr' false
+      | Workshare _ _ _ _ => in_crit tr' b
+      | Iter _ _ _ _ _ => in_crit tr' b
+      | Barrier _ _ _ => in_crit tr' b
+      end
+  end
+     : forall (loc val arg : Type) (_ : list (event loc val arg)) (_ : bool),
+       bool
+
+Arguments in_crit (loc val arg)%_type_scope tr%_list_scope b%_bool_scope
+inside =
+fun (loc val arg : Type) (X : run loc val arg) (t i : nat) =>
+in_crit loc val arg
+  (proj loc val arg (@ListDef.firstn (prod nat (event loc val arg)) i X) t)
+  false
+     : forall (loc val arg : Type) (_ : run loc val arg) (_ : nat) (_ : nat),
+       bool
+
+Arguments inside (loc val arg)%_type_scope X (t i)%_nat_scope
+owned =
+fun (loc val arg : Type) (X : run loc val arg) (t i : nat) (l : loc) =>
+@ex nat
+  (fun j : nat =>
+   and (lt j i)
+     (and (at_ loc val arg X j t (Own loc val arg l))
+        (@eq nat (interval loc val arg X t j) (interval loc val arg X t i))))
+     : forall (loc val arg : Type) (_ : run loc val arg) 
+         (_ : nat) (_ : nat) (_ : loc),
+       Prop
+
+Arguments owned (loc val arg)%_type_scope X (t i)%_nat_scope l
+loc_of =
+fun (loc val arg : Type) (e : event loc val arg) =>
+match e return option loc with
+| Read _ _ _ l _ => @Some loc l
+| Write _ _ _ l _ => @Some loc l
+| HistoryRead _ _ _ l _ => @Some loc l
+| Shared _ _ _ _ _ _ l _ => @Some loc l
+| DeviceRead _ _ _ _ l _ => @Some loc l
+| DeviceWrite _ _ _ _ l _ => @Some loc l
+| DeviceCovered _ _ _ _ => @None loc
+| Own _ _ _ _ => @None loc
+| Enter _ _ _ => @None loc
+| Exit _ _ _ => @None loc
+| Workshare _ _ _ _ => @None loc
+| Iter _ _ _ _ _ => @None loc
+| Barrier _ _ _ => @None loc
+end
+     : forall (loc val arg : Type) (_ : event loc val arg), option loc
+
+Arguments loc_of (loc val arg)%_type_scope e
+written =
+fun (loc val arg : Type)
+  (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+  (e : event loc val arg) =>
+match e return option (prod loc val) with
+| Read _ _ _ _ _ => @None (prod loc val)
+| Write _ _ _ l v => @Some (prod loc val) (@pair loc val l v)
+| HistoryRead _ _ _ _ _ => @None (prod loc val)
+| Shared _ _ _ k _ a l old =>
+    match sa_new k a old return option (prod loc val) with
+    | @Some _ w => @Some (prod loc val) (@pair loc val l w)
+    | @None _ => @None (prod loc val)
+    end
+| DeviceRead _ _ _ _ _ _ => @None (prod loc val)
+| DeviceWrite _ _ _ _ l v => @Some (prod loc val) (@pair loc val l v)
+| DeviceCovered _ _ _ _ => @None (prod loc val)
+| Own _ _ _ _ => @None (prod loc val)
+| Enter _ _ _ => @None (prod loc val)
+| Exit _ _ _ => @None (prod loc val)
+| Workshare _ _ _ _ => @None (prod loc val)
+| Iter _ _ _ _ _ => @None (prod loc val)
+| Barrier _ _ _ => @None (prod loc val)
+end
+     : forall (loc val arg : Type)
+         (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+         (_ : event loc val arg),
+       option (prod loc val)
+
+Arguments written (loc val arg)%_type_scope sa_new%_function_scope e
+read_value =
+fun (loc val arg : Type) (e : event loc val arg) =>
+match e return option (prod loc val) with
+| Read _ _ _ l v => @Some (prod loc val) (@pair loc val l v)
+| Write _ _ _ _ _ => @None (prod loc val)
+| HistoryRead _ _ _ l v => @Some (prod loc val) (@pair loc val l v)
+| Shared _ _ _ _ _ _ l old => @Some (prod loc val) (@pair loc val l old)
+| DeviceRead _ _ _ _ l v => @Some (prod loc val) (@pair loc val l v)
+| DeviceWrite _ _ _ _ _ _ => @None (prod loc val)
+| DeviceCovered _ _ _ _ => @None (prod loc val)
+| Own _ _ _ _ => @None (prod loc val)
+| Enter _ _ _ => @None (prod loc val)
+| Exit _ _ _ => @None (prod loc val)
+| Workshare _ _ _ _ => @None (prod loc val)
+| Iter _ _ _ _ _ => @None (prod loc val)
+| Barrier _ _ _ => @None (prod loc val)
+end
+     : forall (loc val arg : Type) (_ : event loc val arg),
+       option (prod loc val)
+
+Arguments read_value (loc val arg)%_type_scope e
+is_shared =
+fun (loc val arg : Type) (e : event loc val arg) =>
+match e return bool with
+| Read _ _ _ _ _ => false
+| Write _ _ _ _ _ => false
+| HistoryRead _ _ _ _ _ => false
+| Shared _ _ _ _ _ _ _ _ => true
+| DeviceRead _ _ _ _ _ _ => false
+| DeviceWrite _ _ _ _ _ _ => false
+| DeviceCovered _ _ _ _ => false
+| Own _ _ _ _ => false
+| Enter _ _ _ => false
+| Exit _ _ _ => false
+| Workshare _ _ _ _ => false
+| Iter _ _ _ _ _ => false
+| Barrier _ _ _ => false
+end
+     : forall (loc val arg : Type) (_ : event loc val arg), bool
+
+Arguments is_shared (loc val arg)%_type_scope e
+device_cmd =
+fun (loc val arg : Type) (e : event loc val arg) =>
+match e return option nat with
+| Read _ _ _ _ _ => @None nat
+| Write _ _ _ _ _ => @None nat
+| HistoryRead _ _ _ _ _ => @None nat
+| Shared _ _ _ _ _ _ _ _ => @None nat
+| DeviceRead _ _ _ c _ _ => @Some nat c
+| DeviceWrite _ _ _ c _ _ => @Some nat c
+| DeviceCovered _ _ _ _ => @None nat
+| Own _ _ _ _ => @None nat
+| Enter _ _ _ => @None nat
+| Exit _ _ _ => @None nat
+| Workshare _ _ _ _ => @None nat
+| Iter _ _ _ _ _ => @None nat
+| Barrier _ _ _ => @None nat
+end
+     : forall (loc val arg : Type) (_ : event loc val arg), option nat
+
+Arguments device_cmd (loc val arg)%_type_scope e
+writes =
+fun (loc val arg : Type)
+  (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+  (X : run loc val arg) (i : nat) (l : loc) (v : val) =>
+@ex nat
+  (fun t : nat =>
+   @ex (event loc val arg)
+     (fun e : event loc val arg =>
+      and (at_ loc val arg X i t e)
+        (@eq (option (prod loc val)) (written loc val arg sa_new e)
+           (@Some (prod loc val) (@pair loc val l v)))))
+     : forall (loc val arg : Type)
+         (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+         (_ : run loc val arg) (_ : nat) (_ : loc) 
+         (_ : val),
+       Prop
+
+Arguments writes (loc val arg)%_type_scope sa_new%_function_scope 
+  X i%_nat_scope l v
+Inductive
+omp_sync (loc val arg : Type) (X : run loc val arg) (i j : nat) : Prop :=
+    omp_sync_barrier : forall (t t' : nat) (e : event loc val arg)
+                         (_ : lt i j)
+                         (_ : at_ loc val arg X i t (Barrier loc val arg))
+                         (_ : at_ loc val arg X j t' e)
+                         (_ : lt (interval loc val arg X t i)
+                                (interval loc val arg X t' j)),
+                       omp_sync loc val arg X i j
+  | omp_sync_critical : forall (t t' : nat) (_ : lt i j)
+                          (_ : at_ loc val arg X i t (Exit loc val arg))
+                          (_ : at_ loc val arg X j t' (Enter loc val arg)),
+                        omp_sync loc val arg X i j.
+
+Arguments omp_sync (loc val arg)%_type_scope X (i j)%_nat_scope
+Arguments omp_sync_barrier (loc val arg)%_type_scope 
+  X (i j t t')%_nat_scope e _ _ _ _
+Arguments omp_sync_critical (loc val arg)%_type_scope 
+  X (i j t t')%_nat_scope _ _ _
+Inductive
+cpu_sync (loc val arg : Type) (X : run loc val arg) (i j : nat) : Prop :=
+    cpu_po : forall (t : nat) (e e' : event loc val arg) 
+               (_ : lt i j) (_ : at_ loc val arg X i t e)
+               (_ : at_ loc val arg X j t e'),
+             cpu_sync loc val arg X i j
+  | cpu_fence : forall (t t' : nat) (k : shared_action_kind) 
+                  (a : arg) (l : loc) (v : val) (k' : shared_action_kind)
+                  (a' : arg) (l' : loc) (v' : val) 
+                  (_ : lt i j)
+                  (_ : at_ loc val arg X i t
+                         (Shared loc val arg k true a l v))
+                  (_ : at_ loc val arg X j t'
+                         (Shared loc val arg k' true a' l' v')),
+                cpu_sync loc val arg X i j.
+
+Arguments cpu_sync (loc val arg)%_type_scope X (i j)%_nat_scope
+Arguments cpu_po (loc val arg)%_type_scope X (i j t)%_nat_scope e e' _ _ _
+Arguments cpu_fence (loc val arg)%_type_scope X (i j t t')%_nat_scope 
+  k a l v k' a' l' v' _ _ _
+hb_cpu =
+fun (loc val arg : Type) (X : run loc val arg) =>
+Relation_Operators.clos_trans nat (cpu_sync loc val arg X)
+     : forall (loc val arg : Type) (_ : run loc val arg) (_ : nat) (_ : nat),
+       Prop
+
+Arguments hb_cpu (loc val arg)%_type_scope X (_ _)%_nat_scope
+Inductive
+sync (loc val arg : Type) (X : run loc val arg) (i j : nat) : Prop :=
+    sync_cpu : forall _ : cpu_sync loc val arg X i j, sync loc val arg X i j
+  | sync_omp : forall _ : omp_sync loc val arg X i j, sync loc val arg X i j.
+
+Arguments sync (loc val arg)%_type_scope X (i j)%_nat_scope
+Arguments sync_cpu (loc val arg)%_type_scope X (i j)%_nat_scope _
+Arguments sync_omp (loc val arg)%_type_scope X (i j)%_nat_scope _
+hb =
+fun (loc val arg : Type) (X : run loc val arg) =>
+Relation_Operators.clos_trans nat (sync loc val arg X)
+     : forall (loc val arg : Type) (_ : run loc val arg) (_ : nat) (_ : nat),
+       Prop
+
+Arguments hb (loc val arg)%_type_scope X (_ _)%_nat_scope
+rf_map = forall _ : nat, option nat
+     : Set
+source_ok =
+fun (loc val arg : Type) (init : forall _ : loc, val)
+  (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+  (X : run loc val arg) (l : loc) (v : val) (s : option nat) 
+  (bound : nat) =>
+match s return Prop with
+| @Some _ i => and (lt i bound) (writes loc val arg sa_new X i l v)
+| @None _ => @eq val v (init l)
+end
+     : forall (loc val arg : Type) (_ : forall _ : loc, val)
+         (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+         (_ : run loc val arg) (_ : loc) (_ : val) 
+         (_ : option nat) (_ : nat),
+       Prop
+
+Arguments source_ok (loc val arg)%_type_scope (init sa_new)%_function_scope 
+  X l v s bound%_nat_scope
+not_older =
+fun (s : option nat) (i : nat) =>
+match s return Prop with
+| @Some _ i' => le i i'
+| @None _ => False
+end
+     : forall (_ : option nat) (_ : nat), Prop
+
+Arguments not_older s i%_nat_scope
+seen =
+fun (loc val arg : Type)
+  (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+  (H : forall (_ : nat) (_ : nat), Prop) (X : run loc val arg) 
+  (rf : rf_map) (j : nat) (l : loc) (i : nat) =>
+and (@ex val (fun v : val => writes loc val arg sa_new X i l v))
+  (or (H i j)
+     (@ex nat
+        (fun r : nat =>
+         @ex nat
+           (fun t : nat =>
+            @ex (event loc val arg)
+              (fun e : event loc val arg =>
+               @ex (event loc val arg)
+                 (fun e' : event loc val arg =>
+                  @ex val
+                    (fun v : val =>
+                     @ex nat
+                       (fun s : nat =>
+                        and (lt r j)
+                          (and (at_ loc val arg X r t e)
+                             (and (at_ loc val arg X j t e')
+                                (and
+                                   (@eq (option (prod loc val))
+                                      (read_value loc val arg e)
+                                      (@Some (prod loc val)
+                                         (@pair loc val l v)))
+                                   (and
+                                      (@eq (option nat) (rf r) (@Some nat s))
+                                      (le i s)))))))))))))
+     : forall (loc val arg : Type)
+         (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+         (_ : forall (_ : nat) (_ : nat), Prop) (_ : run loc val arg)
+         (_ : rf_map) (_ : nat) (_ : loc) (_ : nat),
+       Prop
+
+Arguments seen (loc val arg)%_type_scope (sa_new H)%_function_scope 
+  X rf j%_nat_scope l i%_nat_scope
+read_ok =
+fun (loc val arg : Type) (init : forall _ : loc, val)
+  (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+  (H : forall (_ : nat) (_ : nat), Prop) (X : run loc val arg) 
+  (rf : rf_map) (j : nat) (l : loc) (v : val) (bound : nat) =>
+and (source_ok loc val arg init sa_new X l v (rf j) bound)
+  (forall (i : nat) (_ : seen loc val arg sa_new H X rf j l i),
+   not_older (rf j) i)
+     : forall (loc val arg : Type) (_ : forall _ : loc, val)
+         (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+         (_ : forall (_ : nat) (_ : nat), Prop) (_ : run loc val arg)
+         (_ : rf_map) (_ : nat) (_ : loc) (_ : val) 
+         (_ : nat),
+       Prop
+
+Arguments read_ok (loc val arg)%_type_scope (init sa_new H)%_function_scope 
+  X rf j%_nat_scope l v bound%_nat_scope
+latest =
+fun (loc val arg : Type)
+  (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+  (X : run loc val arg) (l : loc) (j : nat) (s : option nat) =>
+match s return Prop with
+| @Some _ i =>
+    and (lt i j)
+      (forall (i' : nat) (v : val) (_ : and (lt i i') (lt i' j)),
+       not (writes loc val arg sa_new X i' l v))
+| @None _ =>
+    forall (i : nat) (v : val) (_ : lt i j),
+    not (writes loc val arg sa_new X i l v)
+end
+     : forall (loc val arg : Type)
+         (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+         (_ : run loc val arg) (_ : loc) (_ : nat) 
+         (_ : option nat),
+       Prop
+
+Arguments latest (loc val arg)%_type_scope sa_new%_function_scope 
+  X l j%_nat_scope s
+memory_ok =
+fun (loc val arg : Type) (init : forall _ : loc, val)
+  (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+  (X : run loc val arg) (rf : rf_map) =>
+and
+  (forall (j t : nat) (l : loc) (v : val)
+     (_ : or (at_ loc val arg X j t (Read loc val arg l v))
+            (at_ loc val arg X j t (HistoryRead loc val arg l v))),
+   read_ok loc val arg init sa_new (hb_cpu loc val arg X) X rf j l v j)
+  (forall (j t : nat) (k : shared_action_kind) (f : bool) 
+     (a : arg) (l : loc) (old : val)
+     (_ : at_ loc val arg X j t (Shared loc val arg k f a l old)),
+   and (source_ok loc val arg init sa_new X l old (rf j) j)
+     (latest loc val arg sa_new X l j (rf j)))
+     : forall (loc val arg : Type) (_ : forall _ : loc, val)
+         (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+         (_ : run loc val arg) (_ : rf_map),
+       Prop
+
+Arguments memory_ok (loc val arg)%_type_scope (init sa_new)%_function_scope 
+  X rf
+count_iter =
+fun (loc val arg : Type) (X : run loc val arg) (w i : nat) =>
+@length (prod nat (event loc val arg))
+  (@List.filter (prod nat (event loc val arg))
+     (fun p : prod nat (event loc val arg) =>
+      match @snd nat (event loc val arg) p return bool with
+      | Read _ _ _ _ _ => false
+      | Write _ _ _ _ _ => false
+      | HistoryRead _ _ _ _ _ => false
+      | Shared _ _ _ _ _ _ _ _ => false
+      | DeviceRead _ _ _ _ _ _ => false
+      | DeviceWrite _ _ _ _ _ _ => false
+      | DeviceCovered _ _ _ _ => false
+      | Own _ _ _ _ => false
+      | Enter _ _ _ => false
+      | Exit _ _ _ => false
+      | Workshare _ _ _ _ => false
+      | Iter _ _ _ w' i' =>
+          andb (PeanoNat.Nat.eqb w w') (PeanoNat.Nat.eqb i i')
+      | Barrier _ _ _ => false
+      end)
+     X)
+     : forall (loc val arg : Type) (_ : run loc val arg) (_ : nat) (_ : nat),
+       nat
+
+Arguments count_iter (loc val arg)%_type_scope X (w i)%_nat_scope
+omp_ok =
+fun (loc val arg : Type)
+  (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+  (team_size : nat) (space : forall _ : nat, list nat)
+  (split_by_tid : forall _ : nat, bool)
+  (done : forall (_ : nat) (_ : list (event loc val arg)), Prop)
+  (X : run loc val arg) (rf : rf_map) =>
+and
+  (forall (j t : nat) (l : loc) (v : val)
+     (_ : or (at_ loc val arg X j t (Read loc val arg l v))
+            (at_ loc val arg X j t (HistoryRead loc val arg l v)))
+     (i : nat) (_ : seen loc val arg sa_new (hb loc val arg X) X rf j l i),
+   not_older (rf j) i)
+  (and
+     (forall (i t : nat) (e : event loc val arg)
+        (_ : at_ loc val arg X i t e),
+      lt t team_size)
+     (and
+        (forall (j t' : nat) (e' : event loc val arg) 
+           (k t : nat) (_ : at_ loc val arg X j t' e')
+           (_ : lt k (interval loc val arg X t' j)) 
+           (_ : lt t team_size),
+         @ex nat
+           (fun i : nat =>
+            and (lt i j)
+              (and (at_ loc val arg X i t (Barrier loc val arg))
+                 (@eq nat (interval loc val arg X t i) k))))
+        (and
+           (forall (i j t t' : nat) (_ : lt i j)
+              (_ : at_ loc val arg X i t (Enter loc val arg))
+              (_ : at_ loc val arg X j t' (Enter loc val arg))
+              (_ : not (@eq nat t t')),
+            @ex nat
+              (fun x : nat =>
+               and (and (lt i x) (lt x j))
+                 (at_ loc val arg X x t (Exit loc val arg))))
+           (forall
+              (_ : forall (t : nat) (_ : lt t team_size),
+                   done t (proj loc val arg X t))
+              (w : nat) (_ : @eq bool (split_by_tid w) false)
+              (_ : forall (t : nat) (_ : lt t team_size),
+                   @List.In (event loc val arg) (Workshare loc val arg w)
+                     (proj loc val arg X t))
+              (i : nat),
+            @eq nat (count_iter loc val arg X w i)
+              match
+                @List.in_dec nat PeanoNat.Nat.eq_dec i (space w) return nat
+              with
+              | @left _ _ _ => S O
+              | @right _ _ _ => O
+              end))))
+     : forall (loc val arg : Type)
+         (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+         (_ : nat) (_ : forall _ : nat, list nat) 
+         (_ : forall _ : nat, bool)
+         (_ : forall (_ : nat) (_ : list (event loc val arg)), Prop)
+         (_ : run loc val arg) (_ : rf_map),
+       Prop
+
+Arguments omp_ok (loc val arg)%_type_scope sa_new%_function_scope
+  team_size%_nat_scope (space split_by_tid done)%_function_scope 
+  X rf
+device_ok =
+fun (loc val arg : Type) (init : forall _ : loc, val)
+  (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+  (X : run loc val arg) (rf : rf_map) =>
+forall (j t c : nat) (l : loc) (v : val)
+  (_ : at_ loc val arg X j t (DeviceRead loc val arg c l v)),
+and
+  (read_ok loc val arg init sa_new (hb loc val arg X) X rf j l v
+     (@length (prod nat (event loc val arg)) X))
+  (forall (i : nat) (_ : @eq (option nat) (rf j) (@Some nat i)) (_ : lt j i),
+   and
+     (forall (q : nat) (_ : and (lt j q) (le q i)),
+      not (at_ loc val arg X q t (DeviceCovered loc val arg c)))
+     (not
+        (@ex (event loc val arg)
+           (fun e : event loc val arg => at_ loc val arg X i t e))))
+     : forall (loc val arg : Type) (_ : forall _ : loc, val)
+         (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+         (_ : run loc val arg) (_ : rf_map),
+       Prop
+
+Arguments device_ok (loc val arg)%_type_scope (init sa_new)%_function_scope 
+  X rf
+model_run =
+fun (loc val arg : Type) (init : forall _ : loc, val)
+  (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+  (team_size : nat) (space : forall _ : nat, list nat)
+  (split_by_tid : forall _ : nat, bool)
+  (step : forall (_ : nat) (_ : list (event loc val arg))
+            (_ : event loc val arg),
+          Prop)
+  (done : forall (_ : nat) (_ : list (event loc val arg)), Prop)
+  (X : run loc val arg) (rf : rf_map) =>
+and (program_run loc val arg step X)
+  (and (memory_ok loc val arg init sa_new X rf)
+     (and (device_ok loc val arg init sa_new X rf)
+        (omp_ok loc val arg sa_new team_size space split_by_tid done X rf)))
+     : forall (loc val arg : Type) (_ : forall _ : loc, val)
+         (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+         (_ : nat) (_ : forall _ : nat, list nat) 
+         (_ : forall _ : nat, bool)
+         (_ : forall (_ : nat) (_ : list (event loc val arg))
+                (_ : event loc val arg),
+              Prop)
+         (_ : forall (_ : nat) (_ : list (event loc val arg)), Prop)
+         (_ : run loc val arg) (_ : rf_map),
+       Prop
+
+Arguments model_run (loc val arg)%_type_scope (init sa_new)%_function_scope
+  team_size%_nat_scope (space split_by_tid step done)%_function_scope 
+  X rf
+fits_event =
+fun (loc val arg : Type) (c : sharing_class) (crit own : Prop)
+  (e : event loc val arg) =>
+match e return Prop with
+| Read _ _ _ _ _ =>
+    or (@eq sharing_class c ReadOnly)
+      (or (and (@eq sharing_class c ThreadOwned) own)
+         (and (@eq sharing_class c LockProtected) crit))
+| Write _ _ _ _ _ =>
+    or (and (@eq sharing_class c ThreadOwned) own)
+      (and (@eq sharing_class c LockProtected) crit)
+| HistoryRead _ _ _ _ _ =>
+    or (@eq sharing_class c ReadOnly)
+      (or (and (@eq sharing_class c ThreadOwned) own)
+         (or (and (@eq sharing_class c LockProtected) crit)
+            (and (@eq sharing_class c SharedActionsOnly) (not crit))))
+| Shared _ _ _ _ _ _ _ _ =>
+    and (@eq sharing_class c SharedActionsOnly) (not crit)
+| DeviceRead _ _ _ _ _ _ =>
+    or (@eq sharing_class c ReadOnly)
+      (or (and (@eq sharing_class c ThreadOwned) own)
+         (or (and (@eq sharing_class c LockProtected) crit)
+            (and (@eq sharing_class c SharedActionsOnly) (not crit))))
+| DeviceWrite _ _ _ _ _ _ =>
+    or (and (@eq sharing_class c ThreadOwned) own)
+      (and (@eq sharing_class c LockProtected) crit)
+| DeviceCovered _ _ _ _ => True
+| Own _ _ _ _ => True
+| Enter _ _ _ => True
+| Exit _ _ _ => True
+| Workshare _ _ _ _ => True
+| Iter _ _ _ _ _ => True
+| Barrier _ _ _ => True
+end
+     : forall (loc val arg : Type) (_ : sharing_class) 
+         (_ : Prop) (_ : Prop) (_ : event loc val arg),
+       Prop
+
+Arguments fits_event (loc val arg)%_type_scope c (crit own)%_type_scope e
+fits =
+fun (loc arr val arg : Type) (array_of : forall _ : loc, arr)
+  (cls : forall (_ : nat) (_ : arr), sharing_class) 
+  (X : run loc val arg) (t : nat) =>
+forall (i : nat) (e : event loc val arg) (l : loc)
+  (_ : at_ loc val arg X i t e)
+  (_ : @eq (option loc) (loc_of loc val arg e) (@Some loc l)),
+fits_event loc val arg (cls (interval loc val arg X t i) (array_of l))
+  (@eq bool (inside loc val arg X t i) true) (owned loc val arg X t i l) e
+     : forall (loc arr val arg : Type) (_ : forall _ : loc, arr)
+         (_ : forall (_ : nat) (_ : arr), sharing_class)
+         (_ : run loc val arg) (_ : nat),
+       Prop
+
+Arguments fits (loc arr val arg)%_type_scope (array_of cls)%_function_scope 
+  X t%_nat_scope
+all_fit =
+fun (loc arr val arg : Type) (array_of : forall _ : loc, arr) 
+  (N : nat) (cls : forall (_ : nat) (_ : arr), sharing_class)
+  (X : run loc val arg) =>
+forall (t : nat) (_ : lt t N), fits loc arr val arg array_of cls X t
+     : forall (loc arr val arg : Type) (_ : forall _ : loc, arr) 
+         (_ : nat) (_ : forall (_ : nat) (_ : arr), sharing_class)
+         (_ : run loc val arg),
+       Prop
+
+Arguments all_fit (loc arr val arg)%_type_scope array_of%_function_scope
+  N%_nat_scope cls%_function_scope X
+obl_class_fit =
+fun (loc arr val arg : Type) (array_of : forall _ : loc, arr)
+  (init : forall _ : loc, val)
+  (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+  (N team_size : nat) (cls : forall (_ : nat) (_ : arr), sharing_class)
+  (space : forall _ : nat, list nat) (split_by_tid : forall _ : nat, bool)
+  (step : forall (_ : nat) (_ : list (event loc val arg))
+            (_ : event loc val arg),
+          Prop)
+  (done : forall (_ : nat) (_ : list (event loc val arg)), Prop) =>
+forall (X : run loc val arg) (rf : rf_map) (n t : nat)
+  (_ : model_run loc val arg init sa_new team_size space split_by_tid step
+         done X rf)
+  (_ : lt t N)
+  (_ : forall (t' : nat) (_ : lt t' N) (_ : not (@eq nat t' t)),
+       fits loc arr val arg array_of cls
+         (@ListDef.firstn (prod nat (event loc val arg)) n X) t'),
+fits loc arr val arg array_of cls
+  (@ListDef.firstn (prod nat (event loc val arg)) n X) t
+     : forall (loc arr val arg : Type) (_ : forall _ : loc, arr)
+         (_ : forall _ : loc, val)
+         (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+         (_ : nat) (_ : nat) (_ : forall (_ : nat) (_ : arr), sharing_class)
+         (_ : forall _ : nat, list nat) (_ : forall _ : nat, bool)
+         (_ : forall (_ : nat) (_ : list (event loc val arg))
+                (_ : event loc val arg),
+              Prop)
+         (_ : forall (_ : nat) (_ : list (event loc val arg)), Prop),
+       Prop
+
+Arguments obl_class_fit (loc arr val arg)%_type_scope
+  (array_of init sa_new)%_function_scope (N team_size)%_nat_scope
+  (cls space split_by_tid step done)%_function_scope
+obl_owned_disjoint =
+fun (loc arr val arg : Type) (array_of : forall _ : loc, arr)
+  (init : forall _ : loc, val)
+  (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+  (N team_size : nat) (cls : forall (_ : nat) (_ : arr), sharing_class)
+  (space : forall _ : nat, list nat) (split_by_tid : forall _ : nat, bool)
+  (step : forall (_ : nat) (_ : list (event loc val arg))
+            (_ : event loc val arg),
+          Prop)
+  (done : forall (_ : nat) (_ : list (event loc val arg)), Prop) =>
+forall (X : run loc val arg) (rf : rf_map) (t t' i i' : nat) 
+  (l : loc)
+  (_ : model_run loc val arg init sa_new team_size space split_by_tid step
+         done X rf)
+  (_ : all_fit loc arr val arg array_of N cls X) (_ : not (@eq nat t t'))
+  (_ : at_ loc val arg X i t (Own loc val arg l))
+  (_ : at_ loc val arg X i' t' (Own loc val arg l)),
+not (@eq nat (interval loc val arg X t i) (interval loc val arg X t' i'))
+     : forall (loc arr val arg : Type) (_ : forall _ : loc, arr)
+         (_ : forall _ : loc, val)
+         (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+         (_ : nat) (_ : nat) (_ : forall (_ : nat) (_ : arr), sharing_class)
+         (_ : forall _ : nat, list nat) (_ : forall _ : nat, bool)
+         (_ : forall (_ : nat) (_ : list (event loc val arg))
+                (_ : event loc val arg),
+              Prop)
+         (_ : forall (_ : nat) (_ : list (event loc val arg)), Prop),
+       Prop
+
+Arguments obl_owned_disjoint (loc arr val arg)%_type_scope
+  (array_of init sa_new)%_function_scope (N team_size)%_nat_scope
+  (cls space split_by_tid step done)%_function_scope
+critical_block =
+fun (loc val arg : Type) (tr blk : list (event loc val arg)) =>
+@ex (list (event loc val arg))
+  (fun pre : list (event loc val arg) =>
+   @ex (list (event loc val arg))
+     (fun post : list (event loc val arg) =>
+      and
+        (@eq (list (event loc val arg)) tr
+           (@app (event loc val arg) pre
+              (@cons (event loc val arg) (Enter loc val arg)
+                 (@app (event loc val arg) blk
+                    (@cons (event loc val arg) (Exit loc val arg) post)))))
+        (and (not (@List.In (event loc val arg) (Enter loc val arg) blk))
+           (not (@List.In (event loc val arg) (Exit loc val arg) blk)))))
+     : forall (loc val arg : Type) (_ : list (event loc val arg))
+         (_ : list (event loc val arg)),
+       Prop
+
+Arguments critical_block (loc val arg)%_type_scope (tr blk)%_list_scope
+implements_shared_action =
+fun (loc val arg : Type)
+  (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+  (blk : list (event loc val arg)) =>
+@ex shared_action_kind
+  (fun k : shared_action_kind =>
+   @ex arg
+     (fun a : arg =>
+      @ex loc
+        (fun l : loc =>
+         @ex val
+           (fun old : val =>
+            and
+              (@ex (list (event loc val arg))
+                 (fun pre : list (event loc val arg) =>
+                  @ex (event loc val arg)
+                    (fun e : event loc val arg =>
+                     @ex (list (event loc val arg))
+                       (fun post : list (event loc val arg) =>
+                        and
+                          (@eq (list (event loc val arg)) blk
+                             (@app (event loc val arg) pre
+                                (@cons (event loc val arg) e post)))
+                          (and (@eq bool (is_shared loc val arg e) false)
+                             (and
+                                (@eq (option (prod loc val))
+                                   (read_value loc val arg e)
+                                   (@Some (prod loc val)
+                                      (@pair loc val l old)))
+                                (forall (e' : event loc val arg)
+                                   (_ : @List.In (event loc val arg) e' pre),
+                                 not
+                                   (@eq (option loc) 
+                                      (loc_of loc val arg e') 
+                                      (@Some loc l)))))))))
+              match sa_new k a old return Prop with
+              | @Some _ w =>
+                  and
+                    (forall (e : event loc val arg) 
+                       (l' : loc) (v : val)
+                       (_ : @List.In (event loc val arg) e blk)
+                       (_ : @eq (option (prod loc val))
+                              (written loc val arg sa_new e)
+                              (@Some (prod loc val) (@pair loc val l' v))),
+                     @eq loc l' l)
+                    (@ex (list (event loc val arg))
+                       (fun pre : list (event loc val arg) =>
+                        @ex (event loc val arg)
+                          (fun e : event loc val arg =>
+                           @ex (list (event loc val arg))
+                             (fun post : list (event loc val arg) =>
+                              and
+                                (@eq (list (event loc val arg)) blk
+                                   (@app (event loc val arg) pre
+                                      (@cons (event loc val arg) e post)))
+                                (and
+                                   (@eq (option (prod loc val))
+                                      (written loc val arg sa_new e)
+                                      (@Some (prod loc val)
+                                         (@pair loc val l w)))
+                                   (forall (e' : event loc val arg)
+                                      (_ : @List.In 
+                                             (event loc val arg) e' post),
+                                    @eq (option (prod loc val))
+                                      (written loc val arg sa_new e')
+                                      (@None (prod loc val))))))))
+              | @None _ =>
+                  forall (e : event loc val arg)
+                    (_ : @List.In (event loc val arg) e blk),
+                  @eq (option (prod loc val)) (written loc val arg sa_new e)
+                    (@None (prod loc val))
+              end))))
+     : forall (loc val arg : Type)
+         (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+         (_ : list (event loc val arg)),
+       Prop
+
+Arguments implements_shared_action (loc val arg)%_type_scope
+  sa_new%_function_scope blk%_list_scope
+obl_atomic_blocks =
+fun (loc val arg : Type)
+  (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+  (N : nat)
+  (step : forall (_ : nat) (_ : list (event loc val arg))
+            (_ : event loc val arg),
+          Prop) =>
+forall (t : nat) (tr blk : list (event loc val arg)) 
+  (_ : lt t N) (_ : program_trace loc val arg step t tr)
+  (_ : critical_block loc val arg tr blk),
+and (implements_shared_action loc val arg sa_new blk)
+  (not (@List.In (event loc val arg) (Barrier loc val arg) blk))
+     : forall (loc val arg : Type)
+         (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+         (_ : nat)
+         (_ : forall (_ : nat) (_ : list (event loc val arg))
+                (_ : event loc val arg),
+              Prop),
+       Prop
+
+Arguments obl_atomic_blocks (loc val arg)%_type_scope 
+  sa_new%_function_scope N%_nat_scope step%_function_scope
+iters =
+fun loc val arg : Type =>
+fix iters (w : nat) (tr : list (event loc val arg)) {struct tr} : list nat :=
+  match tr return list nat with
+  | @nil _ => @nil nat
+  | @cons _ e tr' =>
+      match e return list nat with
+      | Read _ _ _ _ _ => iters w tr'
+      | Write _ _ _ _ _ => iters w tr'
+      | HistoryRead _ _ _ _ _ => iters w tr'
+      | Shared _ _ _ _ _ _ _ _ => iters w tr'
+      | DeviceRead _ _ _ _ _ _ => iters w tr'
+      | DeviceWrite _ _ _ _ _ _ => iters w tr'
+      | DeviceCovered _ _ _ _ => iters w tr'
+      | Own _ _ _ _ => iters w tr'
+      | Enter _ _ _ => iters w tr'
+      | Exit _ _ _ => iters w tr'
+      | Workshare _ _ _ _ => iters w tr'
+      | Iter _ _ _ w' i =>
+          match PeanoNat.Nat.eqb w w' return list nat with
+          | true => @cons nat i (iters w tr')
+          | false => iters w tr'
+          end
+      | Barrier _ _ _ => iters w tr'
+      end
+  end
+     : forall (loc val arg : Type) (_ : nat) (_ : list (event loc val arg)),
+       list nat
+
+Arguments iters (loc val arg)%_type_scope w%_nat_scope tr%_list_scope
+obl_chunk_cover =
+fun (loc arr val arg : Type) (array_of : forall _ : loc, arr)
+  (init : forall _ : loc, val)
+  (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+  (N team_size : nat) (cls : forall (_ : nat) (_ : arr), sharing_class)
+  (space : forall _ : nat, list nat) (split_by_tid : forall _ : nat, bool)
+  (chunk : forall (_ : nat) (_ : nat), list nat)
+  (step : forall (_ : nat) (_ : list (event loc val arg))
+            (_ : event loc val arg),
+          Prop)
+  (done : forall (_ : nat) (_ : list (event loc val arg)), Prop) =>
+and
+  (forall (w : nat) (_ : @eq bool (split_by_tid w) true),
+   and
+     (forall i : nat,
+      iff (@List.In nat i (space w))
+        (@ex nat (fun t : nat => and (lt t N) (@List.In nat i (chunk w t)))))
+     (and
+        (forall (t t' i : nat) (_ : lt t N) (_ : lt t' N)
+           (_ : not (@eq nat t t')) (_ : @List.In nat i (chunk w t)),
+         not (@List.In nat i (chunk w t')))
+        (forall t : nat, @List.NoDup nat (chunk w t))))
+  (forall (X : run loc val arg) (rf : rf_map) (t w : nat)
+     (_ : model_run loc val arg init sa_new team_size space split_by_tid step
+            done X rf)
+     (_ : complete loc val arg N done X)
+     (_ : all_fit loc arr val arg array_of N cls X) 
+     (_ : lt t N) (_ : @eq bool (split_by_tid w) true)
+     (_ : @List.In (event loc val arg) (Workshare loc val arg w)
+            (proj loc val arg X t)),
+   @eq (list nat) (iters loc val arg w (proj loc val arg X t)) (chunk w t))
+     : forall (loc arr val arg : Type) (_ : forall _ : loc, arr)
+         (_ : forall _ : loc, val)
+         (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+         (_ : nat) (_ : nat) (_ : forall (_ : nat) (_ : arr), sharing_class)
+         (_ : forall _ : nat, list nat) (_ : forall _ : nat, bool)
+         (_ : forall (_ : nat) (_ : nat), list nat)
+         (_ : forall (_ : nat) (_ : list (event loc val arg))
+                (_ : event loc val arg),
+              Prop)
+         (_ : forall (_ : nat) (_ : list (event loc val arg)), Prop),
+       Prop
+
+Arguments obl_chunk_cover (loc arr val arg)%_type_scope
+  (array_of init sa_new)%_function_scope (N team_size)%_nat_scope
+  (cls space split_by_tid chunk step done)%_function_scope
+is_sync_point =
+fun (loc val arg : Type) (e : event loc val arg) =>
+match e return bool with
+| Read _ _ _ _ _ => false
+| Write _ _ _ _ _ => false
+| HistoryRead _ _ _ _ _ => false
+| Shared _ _ _ _ _ _ _ _ => false
+| DeviceRead _ _ _ _ _ _ => false
+| DeviceWrite _ _ _ _ _ _ => false
+| DeviceCovered _ _ _ _ => false
+| Own _ _ _ _ => false
+| Enter _ _ _ => false
+| Exit _ _ _ => false
+| Workshare _ _ _ _ => true
+| Iter _ _ _ _ _ => false
+| Barrier _ _ _ => true
+end
+     : forall (loc val arg : Type) (_ : event loc val arg), bool
+
+Arguments is_sync_point (loc val arg)%_type_scope e
+obl_uniform_control =
+fun (loc arr val arg : Type) (array_of : forall _ : loc, arr)
+  (init : forall _ : loc, val)
+  (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+  (N team_size : nat) (cls : forall (_ : nat) (_ : arr), sharing_class)
+  (space : forall _ : nat, list nat) (split_by_tid : forall _ : nat, bool)
+  (step : forall (_ : nat) (_ : list (event loc val arg))
+            (_ : event loc val arg),
+          Prop)
+  (done : forall (_ : nat) (_ : list (event loc val arg)), Prop) =>
+forall (X : run loc val arg) (rf : rf_map) (t t' : nat)
+  (_ : model_run loc val arg init sa_new team_size space split_by_tid step
+         done X rf)
+  (_ : complete loc val arg N done X)
+  (_ : all_fit loc arr val arg array_of N cls X) (_ : lt t N) 
+  (_ : lt t' N),
+@eq (list (event loc val arg))
+  (@List.filter (event loc val arg) (is_sync_point loc val arg)
+     (proj loc val arg X t))
+  (@List.filter (event loc val arg) (is_sync_point loc val arg)
+     (proj loc val arg X t'))
+     : forall (loc arr val arg : Type) (_ : forall _ : loc, arr)
+         (_ : forall _ : loc, val)
+         (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+         (_ : nat) (_ : nat) (_ : forall (_ : nat) (_ : arr), sharing_class)
+         (_ : forall _ : nat, list nat) (_ : forall _ : nat, bool)
+         (_ : forall (_ : nat) (_ : list (event loc val arg))
+                (_ : event loc val arg),
+              Prop)
+         (_ : forall (_ : nat) (_ : list (event loc val arg)), Prop),
+       Prop
+
+Arguments obl_uniform_control (loc arr val arg)%_type_scope
+  (array_of init sa_new)%_function_scope (N team_size)%_nat_scope
+  (cls space split_by_tid step done)%_function_scope
+obl_team_size =
+fun N team_size : nat => @eq nat team_size N
+     : forall (_ : nat) (_ : nat), Prop
+
+Arguments obl_team_size (N team_size)%_nat_scope
+conflicts =
+fun (loc val arg : Type) (d e : event loc val arg) =>
+match d return Prop with
+| Read _ _ _ _ _ => False
+| Write _ _ _ _ _ => False
+| HistoryRead _ _ _ _ _ => False
+| Shared _ _ _ _ _ _ _ _ => False
+| DeviceRead _ _ _ _ l _ =>
+    match e return Prop with
+    | Read _ _ _ _ _ => False
+    | Write _ _ _ l' _ => @eq loc l l'
+    | HistoryRead _ _ _ _ _ => False
+    | Shared _ _ _ _ _ _ l' _ => @eq loc l l'
+    | DeviceRead _ _ _ _ _ _ => False
+    | DeviceWrite _ _ _ _ _ _ => False
+    | DeviceCovered _ _ _ _ => False
+    | Own _ _ _ _ => False
+    | Enter _ _ _ => False
+    | Exit _ _ _ => False
+    | Workshare _ _ _ _ => False
+    | Iter _ _ _ _ _ => False
+    | Barrier _ _ _ => False
+    end
+| DeviceWrite _ _ _ _ l _ =>
+    match e return Prop with
+    | Read _ _ _ l' _ => @eq loc l l'
+    | Write _ _ _ l' _ => @eq loc l l'
+    | HistoryRead _ _ _ l' _ => @eq loc l l'
+    | Shared _ _ _ _ _ _ l' _ => @eq loc l l'
+    | DeviceRead _ _ _ _ _ _ => False
+    | DeviceWrite _ _ _ _ _ _ => False
+    | DeviceCovered _ _ _ _ => False
+    | Own _ _ _ _ => False
+    | Enter _ _ _ => False
+    | Exit _ _ _ => False
+    | Workshare _ _ _ _ => False
+    | Iter _ _ _ _ _ => False
+    | Barrier _ _ _ => False
+    end
+| DeviceCovered _ _ _ _ => False
+| Own _ _ _ _ => False
+| Enter _ _ _ => False
+| Exit _ _ _ => False
+| Workshare _ _ _ _ => False
+| Iter _ _ _ _ _ => False
+| Barrier _ _ _ => False
+end
+     : forall (loc val arg : Type) (_ : event loc val arg)
+         (_ : event loc val arg),
+       Prop
+
+Arguments conflicts (loc val arg)%_type_scope d e
+covered_between =
+fun (loc val arg : Type) (tr : list (event loc val arg)) (c p q : nat) =>
+@ex nat
+  (fun m : nat =>
+   and (and (lt p m) (lt m q))
+     (@eq (option (event loc val arg))
+        (@List.nth_error (event loc val arg) tr m)
+        (@Some (event loc val arg) (DeviceCovered loc val arg c))))
+     : forall (loc val arg : Type) (_ : list (event loc val arg)) 
+         (_ : nat) (_ : nat) (_ : nat),
+       Prop
+
+Arguments covered_between (loc val arg)%_type_scope 
+  tr%_list_scope (c p q)%_nat_scope
+crosses_sync =
+fun (loc val arg : Type) (tr : list (event loc val arg)) (c : nat) =>
+@ex nat
+  (fun p : nat =>
+   @ex nat
+     (fun q : nat =>
+      @ex (event loc val arg)
+        (fun d : event loc val arg =>
+         @ex (event loc val arg)
+           (fun e : event loc val arg =>
+            and
+              (@eq (option (event loc val arg))
+                 (@List.nth_error (event loc val arg) tr p)
+                 (@Some (event loc val arg) d))
+              (and
+                 (@eq (option nat) (device_cmd loc val arg d) (@Some nat c))
+                 (and (lt p q)
+                    (and
+                       (@eq (option (event loc val arg))
+                          (@List.nth_error (event loc val arg) tr q)
+                          (@Some (event loc val arg) e))
+                       (and
+                          (or
+                             (@eq (event loc val arg) e (Barrier loc val arg))
+                             (and
+                                (@eq (event loc val arg) e (Exit loc val arg))
+                                (@eq bool
+                                   (in_crit loc val arg
+                                      (@ListDef.firstn 
+                                         (event loc val arg) p tr)
+                                      false)
+                                   true)))
+                          (not (covered_between loc val arg tr c p q))))))))))
+     : forall (loc val arg : Type) (_ : list (event loc val arg)) (_ : nat),
+       Prop
+
+Arguments crosses_sync (loc val arg)%_type_scope tr%_list_scope c%_nat_scope
+reads_loc =
+fun (loc val arg : Type) (e : event loc val arg) (l : loc) =>
+match read_value loc val arg e return Prop with
+| @Some _ p => match p return Prop with
+               | @pair _ _ l' _ => @eq loc l' l
+               end
+| @None _ => False
+end
+     : forall (loc val arg : Type) (_ : event loc val arg) (_ : loc), Prop
+
+Arguments reads_loc (loc val arg)%_type_scope e l
+dead_after =
+fun (loc val arg : Type) (is_tile : forall _ : loc, Prop)
+  (tr : list (event loc val arg)) (c : nat) =>
+and
+  (@ex nat
+     (fun p : nat =>
+      @ex loc
+        (fun l : loc =>
+         @ex val
+           (fun v : val =>
+            @eq (option (event loc val arg))
+              (@List.nth_error (event loc val arg) tr p)
+              (@Some (event loc val arg) (DeviceWrite loc val arg c l v))))))
+  (forall (p : nat) (l : loc) (v : val)
+     (_ : @eq (option (event loc val arg))
+            (@List.nth_error (event loc val arg) tr p)
+            (@Some (event loc val arg) (DeviceWrite loc val arg c l v))),
+   and (is_tile l)
+     (forall (r : nat) (e : event loc val arg) (_ : lt p r)
+        (_ : @eq (option (event loc val arg))
+               (@List.nth_error (event loc val arg) tr r)
+               (@Some (event loc val arg) e))
+        (_ : reads_loc loc val arg e l),
+      @ex nat
+        (fun w : nat =>
+         @ex nat
+           (fun c' : nat =>
+            @ex val
+              (fun v' : val =>
+               and (and (lt p w) (lt w r))
+                 (and
+                    (@eq (option (event loc val arg))
+                       (@List.nth_error (event loc val arg) tr w)
+                       (@Some (event loc val arg)
+                          (DeviceWrite loc val arg c' l v')))
+                    (not (@eq nat c' c))))))))
+     : forall (loc val arg : Type) (_ : forall _ : loc, Prop)
+         (_ : list (event loc val arg)) (_ : nat),
+       Prop
+
+Arguments dead_after (loc val arg)%_type_scope is_tile%_function_scope
+  tr%_list_scope c%_nat_scope
+quiet_ok =
+fun (loc val arg : Type) (is_tile : forall _ : loc, Prop)
+  (tr : list (event loc val arg)) =>
+and
+  (forall (p : nat) (d : event loc val arg) (c : nat)
+     (_ : @eq (option (event loc val arg))
+            (@List.nth_error (event loc val arg) tr p)
+            (@Some (event loc val arg) d))
+     (_ : @eq (option nat) (device_cmd loc val arg d) (@Some nat c))
+     (m : nat) (e : event loc val arg) (_ : lt p m)
+     (_ : @eq (option (event loc val arg))
+            (@List.nth_error (event loc val arg) tr m)
+            (@Some (event loc val arg) e))
+     (_ : conflicts loc val arg d e),
+   covered_between loc val arg tr c p m)
+  (forall (c : nat) (_ : crosses_sync loc val arg tr c),
+   dead_after loc val arg is_tile tr c)
+     : forall (loc val arg : Type) (_ : forall _ : loc, Prop)
+         (_ : list (event loc val arg)),
+       Prop
+
+Arguments quiet_ok (loc val arg)%_type_scope is_tile%_function_scope
+  tr%_list_scope
+obl_dx100_quiet =
+fun (loc arr val arg : Type) (array_of : forall _ : loc, arr)
+  (is_tile : forall _ : loc, Prop) (init : forall _ : loc, val)
+  (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+  (N team_size : nat) (cls : forall (_ : nat) (_ : arr), sharing_class)
+  (space : forall _ : nat, list nat) (split_by_tid : forall _ : nat, bool)
+  (step : forall (_ : nat) (_ : list (event loc val arg))
+            (_ : event loc val arg),
+          Prop)
+  (done : forall (_ : nat) (_ : list (event loc val arg)), Prop) =>
+forall (X : run loc val arg) (rf : rf_map) (t : nat)
+  (_ : model_run loc val arg init sa_new team_size space split_by_tid step
+         done X rf)
+  (_ : complete loc val arg N done X)
+  (_ : all_fit loc arr val arg array_of N cls X) (_ : lt t N),
+quiet_ok loc val arg is_tile (proj loc val arg X t)
+     : forall (loc arr val arg : Type) (_ : forall _ : loc, arr)
+         (_ : forall _ : loc, Prop) (_ : forall _ : loc, val)
+         (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+         (_ : nat) (_ : nat) (_ : forall (_ : nat) (_ : arr), sharing_class)
+         (_ : forall _ : nat, list nat) (_ : forall _ : nat, bool)
+         (_ : forall (_ : nat) (_ : list (event loc val arg))
+                (_ : event loc val arg),
+              Prop)
+         (_ : forall (_ : nat) (_ : list (event loc val arg)), Prop),
+       Prop
+
+Arguments obl_dx100_quiet (loc arr val arg)%_type_scope
+  (array_of is_tile init sa_new)%_function_scope (N team_size)%_nat_scope
+  (cls space split_by_tid step done)%_function_scope
+intervals_contiguous =
+fun (loc val arg : Type) (Y : run loc val arg) =>
+forall (i j t t' : nat) (e e' : event loc val arg) 
+  (_ : lt i j) (_ : at_ loc val arg Y i t e) (_ : at_ loc val arg Y j t' e'),
+le (interval loc val arg Y t i) (interval loc val arg Y t' j)
+     : forall (loc val arg : Type) (_ : run loc val arg), Prop
+
+Arguments intervals_contiguous (loc val arg)%_type_scope Y
+critical_sections_contiguous =
+fun (loc val arg : Type) (Y : run loc val arg) =>
+forall (i x t : nat) (_ : at_ loc val arg Y i t (Enter loc val arg))
+  (_ : at_ loc val arg Y x t (Exit loc val arg)) (_ : lt i x)
+  (_ : forall (m : nat) (_ : and (lt i m) (lt m x)),
+       and (not (at_ loc val arg Y m t (Enter loc val arg)))
+         (not (at_ loc val arg Y m t (Exit loc val arg))))
+  (m : nat) (_ : and (lt i m) (lt m x)),
+@ex (event loc val arg)
+  (fun e : event loc val arg => at_ loc val arg Y m t e)
+     : forall (loc val arg : Type) (_ : run loc val arg), Prop
+
+Arguments critical_sections_contiguous (loc val arg)%_type_scope Y
+reads_latest =
+fun (loc arr val arg : Type) (array_of : forall _ : loc, arr)
+  (init : forall _ : loc, val)
+  (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+  (cls : forall (_ : nat) (_ : arr), sharing_class) 
+  (Y : run loc val arg) (rf : rf_map) =>
+forall (j t : nat) (e : event loc val arg) (l : loc) 
+  (v : val) (_ : at_ loc val arg Y j t e)
+  (_ : @eq (option (prod loc val)) (read_value loc val arg e)
+         (@Some (prod loc val) (@pair loc val l v)))
+  (_ : or (@eq bool (is_shared loc val arg e) true)
+         (and
+            (not
+               (@eq sharing_class
+                  (cls (interval loc val arg Y t j) (array_of l))
+                  SharedActionsOnly))
+            (not
+               (@ex nat
+                  (fun c : nat =>
+                   and
+                     (@eq (option nat) (device_cmd loc val arg e)
+                        (@Some nat c))
+                     (crosses_sync loc val arg (proj loc val arg Y t) c)))))),
+and (source_ok loc val arg init sa_new Y l v (rf j) j)
+  (latest loc val arg sa_new Y l j (rf j))
+     : forall (loc arr val arg : Type) (_ : forall _ : loc, arr)
+         (_ : forall _ : loc, val)
+         (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+         (_ : forall (_ : nat) (_ : arr), sharing_class)
+         (_ : run loc val arg) (_ : rf_map),
+       Prop
+
+Arguments reads_latest (loc arr val arg)%_type_scope
+  (array_of init sa_new cls)%_function_scope Y rf
+final_is =
+fun (loc val arg : Type) (init : forall _ : loc, val)
+  (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+  (X : run loc val arg) (l : loc) (v : val) =>
+or
+  (@ex nat
+     (fun i : nat =>
+      and (writes loc val arg sa_new X i l v)
+        (forall (i' : nat) (v' : val) (_ : lt i i'),
+         not (writes loc val arg sa_new X i' l v'))))
+  (and (@eq val v (init l))
+     (forall (i : nat) (v' : val), not (writes loc val arg sa_new X i l v')))
+     : forall (loc val arg : Type) (_ : forall _ : loc, val)
+         (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+         (_ : run loc val arg) (_ : loc) (_ : val),
+       Prop
+
+Arguments final_is (loc val arg)%_type_scope (init sa_new)%_function_scope 
+  X l v
+iterations_once =
+fun (loc val arg : Type) (N : nat) (space : forall _ : nat, list nat)
+  (Y : run loc val arg) =>
+forall (w : nat)
+  (_ : @ex nat
+         (fun t : nat =>
+          and (lt t N)
+            (@List.In (event loc val arg) (Workshare loc val arg w)
+               (proj loc val arg Y t))))
+  (i : nat),
+@eq nat (count_iter loc val arg Y w i)
+  match @List.in_dec nat PeanoNat.Nat.eq_dec i (space w) return nat with
+  | @left _ _ _ => S O
+  | @right _ _ _ => O
+  end
+     : forall (loc val arg : Type) (_ : nat) (_ : forall _ : nat, list nat)
+         (_ : run loc val arg),
+       Prop
+
+Arguments iterations_once (loc val arg)%_type_scope 
+  N%_nat_scope space%_function_scope Y
+serial_outcome =
+fun (loc arr val arg : Type) (array_of : forall _ : loc, arr)
+  (init : forall _ : loc, val)
+  (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+  (N team_size : nat) (cls : forall (_ : nat) (_ : arr), sharing_class)
+  (space : forall _ : nat, list nat) (split_by_tid : forall _ : nat, bool)
+  (done : forall (_ : nat) (_ : list (event loc val arg)), Prop)
+  (X Y : run loc val arg) (rf' : rf_map) =>
+and
+  (forall t : nat,
+   @eq (list (event loc val arg)) (proj loc val arg Y t)
+     (proj loc val arg X t))
+  (and (intervals_contiguous loc val arg Y)
+     (and (critical_sections_contiguous loc val arg Y)
+        (and
+           (forall (t : nat) (blk : list (event loc val arg))
+              (_ : critical_block loc val arg (proj loc val arg Y t) blk),
+            implements_shared_action loc val arg sa_new blk)
+           (and (reads_latest loc arr val arg array_of init sa_new cls Y rf')
+              (and (memory_ok loc val arg init sa_new Y rf')
+                 (and
+                    (omp_ok loc val arg sa_new team_size space split_by_tid
+                       done Y rf')
+                    (and (device_ok loc val arg init sa_new Y rf')
+                       (and
+                          (forall (l : loc) (v : val),
+                           iff (final_is loc val arg init sa_new X l v)
+                             (final_is loc val arg init sa_new Y l v))
+                          (iterations_once loc val arg N space Y)))))))))
+     : forall (loc arr val arg : Type) (_ : forall _ : loc, arr)
+         (_ : forall _ : loc, val)
+         (_ : forall (_ : shared_action_kind) (_ : arg) (_ : val), option val)
+         (_ : nat) (_ : nat) (_ : forall (_ : nat) (_ : arr), sharing_class)
+         (_ : forall _ : nat, list nat) (_ : forall _ : nat, bool)
+         (_ : forall (_ : nat) (_ : list (event loc val arg)), Prop)
+         (_ : run loc val arg) (_ : run loc val arg) 
+         (_ : rf_map),
+       Prop
+
+Arguments serial_outcome (loc arr val arg)%_type_scope
+  (array_of init sa_new)%_function_scope (N team_size)%_nat_scope
+  (cls space split_by_tid done)%_function_scope X 
+  Y rf'
+parallel_composition
+     : forall (loc arr val arg : Type) (array_of : forall _ : loc, arr)
+         (is_tile : forall _ : loc, Prop) (init : forall _ : loc, val)
+         (sa_new : forall (_ : shared_action_kind) (_ : arg) (_ : val),
+                   option val)
+         (N team_size : nat)
+         (cls : forall (_ : nat) (_ : arr), sharing_class)
+         (space : forall _ : nat, list nat)
+         (split_by_tid : forall _ : nat, bool)
+         (chunk : forall (_ : nat) (_ : nat), list nat)
+         (step : forall (_ : nat) (_ : list (event loc val arg))
+                   (_ : event loc val arg),
+                 Prop)
+         (done : forall (_ : nat) (_ : list (event loc val arg)), Prop)
+         (_ : obl_class_fit loc arr val arg array_of init sa_new N team_size
+                cls space split_by_tid step done)
+         (_ : obl_owned_disjoint loc arr val arg array_of init sa_new N
+                team_size cls space split_by_tid step done)
+         (_ : obl_atomic_blocks loc val arg sa_new N step)
+         (_ : obl_chunk_cover loc arr val arg array_of init sa_new N
+                team_size cls space split_by_tid chunk step done)
+         (_ : obl_uniform_control loc arr val arg array_of init sa_new N
+                team_size cls space split_by_tid step done)
+         (_ : obl_team_size N team_size)
+         (_ : obl_dx100_quiet loc arr val arg array_of is_tile init sa_new N
+                team_size cls space split_by_tid step done)
+         (X : run loc val arg) (rf : rf_map)
+         (_ : program_run loc val arg step X)
+         (_ : memory_ok loc val arg init sa_new X rf)
+         (_ : omp_ok loc val arg sa_new team_size space split_by_tid done X
+                rf)
+         (_ : device_ok loc val arg init sa_new X rf)
+         (_ : complete loc val arg N done X),
+       @ex (run loc val arg)
+         (fun Y : run loc val arg =>
+          @ex rf_map
+            (fun rf' : rf_map =>
+             serial_outcome loc arr val arg array_of init sa_new N team_size
+               cls space split_by_tid done X Y rf'))
