@@ -647,3 +647,7 @@ All report hashes and runtime manifest entries match. Test-only assertion change
 are explicit. [Evidence](../evidence/wp-nested-initializers-20261015.json).
 Helper/nested statement-anchor hints and the full store/capacity acceptance remain
 open; this checkpoint does not resolve the ticket.
+
+### Checked scalar assignment reads — 2026-10-15 ET
+
+At frozen `71382aff`, the original local int assignment keeps its destination and later use. The safe WP fixture proves (14 ordinary/1 smoke); removing source initializedness leaves its RTE initialization obligation open (13 ordinary Valid/1 timeout, 1 smoke passed). Both controls passed in 51.39s under the 8 GiB guard. Independent source checks reject memory destinations, parameter writes, inner effects and unbraced conditional placement. Component controls: 31 passed; public stand-in admission: one passed. [Compact evidence](../evidence/wp-nested-assignments-20261015.json). This is a bounded slice checkpoint; ticket status remains claimed.
