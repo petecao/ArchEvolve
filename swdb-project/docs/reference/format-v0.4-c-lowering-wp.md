@@ -443,7 +443,9 @@ arbitrary linked runtime implementations are outside this check.
 initializedness leaves the stream-load precondition unproved.
 
 Nested entry reads (2026-10-15): a separate checked source view admits `base[q[k]]` in an
-unconditionally evaluated, effect-free return. Both bases must be direct plain `int *` entry
+unconditionally evaluated, effect-free return or one automatic plain `int` initializer.
+Initializer captures remain sibling declarations in the original block, so the declared value
+keeps its original scope and later uses. Both bases must be direct plain `int *` entry
 parameters with explicit typed windows; `k` uses the existing pure integer grammar. Every
 original inner read is captured once in a fresh automatic `int`, without coalescing repeated
 reads. The ordinary inner numerical bound, validity and initializedness obligations precede
@@ -451,7 +453,8 @@ the capture; the outer numerical bound uses that captured value. No memory read 
 inside a mathematical guard and no initializedness or array-domain premise is added.
 
 The independent checker matches the executable unit AST, exact declaration bindings and
-capture order, checks all unedited source byte regions and include dependencies, and rejects
+capture order, maps an initialized local only after independently matching its declaration,
+checks all unedited source byte regions and include dependencies, and rejects
 cached/static/TLS captures or attributes. Its closed executable closure admits local/parameter
 data and bodyless global imports. Global data, unexpanded source/header helper bodies, default
 arguments, member/indirect calls, location-dependent expressions, volatile/effectful reads,

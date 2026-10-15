@@ -292,6 +292,7 @@ def identity():
                             + wp_pointer_bounds.identity()["sha256"].encode()
                             + here.with_name("array_domains.py").read_bytes()
                             + here.with_name("vector_ownership.py").read_bytes()
+                            + here.with_name("vector_pipeline.py").read_bytes()
                             + here.with_name("model_domains.py").read_bytes()
                             + here.with_name("standard_model_view.py").read_bytes()
                             + here.with_name("helper_windows.py").read_bytes()
@@ -2497,7 +2498,7 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
     certificate = terminal_release.certify(node, source=source.read_text(), source_sha256=_file_sha256(source),
                                             models=unit.model_order, anchors=anchors, text=text)
     owner = vector_ownership.certify_origins(node, source=source.read_text(), source_sha256=_file_sha256(source),
-                                           models=unit.model_order, anchors=anchors, text=text)
+                                           models=unit.model_order, anchors=anchors, text=text, entry_windows=windows)
     models = tuple(n for n in unit.model_order if n != "SWDB_MODEL_FAIL" and not n.endswith("_valid"))
     allocation = unit.allocates or any(n.startswith("std_vector_") for n in unit.std_types) or any(n.startswith("swdb_alloc_new_array_") for n in unit.model_order)
     provenance_models = sorted(set((*models, *unit.std_types)))

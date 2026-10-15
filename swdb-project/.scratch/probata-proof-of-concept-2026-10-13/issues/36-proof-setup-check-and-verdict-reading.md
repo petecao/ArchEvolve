@@ -621,3 +621,58 @@ Two focused existing regressions also pass at `18e7a7f0` (166.98 s, peak
 5,134,909,440 bytes): original three-read source without declared entry windows
 still refuses before WP, and the existing legal one-past entry-window fixture
 still proves. The manifest includes both records and their checked report hashes.
+
+
+### Nested initializer scope — 2026-10-15 11:21 ET
+
+Frozen `f9ace980` extends the checked nested-read view to one automatic plain-int
+initializer in a braced block. Fresh read captures precede the original declaration
+in that same block. Exact original declaration locations and later references are
+independently matched; static/TLS/type/root/sibling mutations refuse before WP.
+No source memory read or input premise is removed. The existing pure-return slice
+and all ordinary bounds/initializedness checks remain active.
+
+The corrected original-policy public control fails as unsupported (3.66s); its
+new stand-in reaches WP. Thirty-one public mutation/component controls pass in
+22.80s. Actual WP produces the four expected outcomes in130.33s: safe PROVEN
+(14 ordinary Valid +1 passing smoke); each missing inner/outer window and missing
+inner initializedness remains NOT_PROVEN on its independent obligation (13 ordinary
+Valid +1 timeout +1 passing smoke). Pytest reports3passed/1failed solely because
+the last assertion guessed a prover goal spelling; the corrected semantic
+initialization-property assertion passes against all four retained records. No
+successful actual job was repeated. Two earlier test-helper API errors are retained
+and excluded from semantic RED/GREEN evidence.
+
+All report hashes and runtime manifest entries match. Test-only assertion changes
+are explicit. [Evidence](../evidence/wp-nested-initializers-20261015.json).
+Helper/nested statement-anchor hints and the full store/capacity acceptance remain
+open; this checkpoint does not resolve the ticket.
+
+
+### Original-TU parser context repair — 2026-10-15 ET
+
+Linux's original 134-pass/1-failure native shard exposed a reconstructed CAPI
+header order mismatch: its implicit driver defaults preceded captured libc++
+paths. Suppressing those defaults fixes the original compatibility-header failure.
+Independent follow-up found a second, material CPATH/CPLUS_INCLUDE_PATH ordering
+gap: repeated environment search could hide an explicit-include allocation hook
+even with identical physical dependency sets. Its public lower control reproduced
+RED; no verifier was launched. The parser now runs in an isolated child with
+include environment variables removed. All original driver queries retain the
+original environment explicitly, and worker failures refuse.
+
+At `7e663aaf`, 13 targeted Mac controls pass (36.47 s), and six Linux public
+compiler/stand-in controls pass (87.005 s; peak 374,874,112 bytes under 8 GiB).
+The earlier header-only `b5855894` checkpoint separately passes three Linux
+controls. Both reserved node-0 leases released; the frozen primary remote source
+and concurrent node-1 job were untouched. These results do not upgrade historical
+proof pins or close ticket 36.
+[Compact evidence](../evidence/stdlib-parser-context-20261015.json).
+
+
+Merged runtime `77624eec` preserves the checked owner-call and standard-copy call
+sets together, as well as all checker/lowerer source identities. Fourteen focused
+combined compiler/stand-in controls pass (100.94s, peak450,658,304bytes under8GiB),
+including both positive source views, declaration/return fault refusals, exact
+callee/request coverage and worker failures. This is composition evidence only;
+new actual caller proofs remain coordinator-owned. Ticket36 stays claimed.

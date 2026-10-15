@@ -411,3 +411,29 @@ independent obligations. Final stricter storage/attribute policy `18e7a7f0` pass
 See [ticket 36's scoped checkpoint](36-proof-setup-check-and-verdict-reading.md#nested-entry-read-checkpoint--2026-10-15-et)
 and [the hash-checked manifest](../evidence/wp-nested-entry-reads-20261015.json).
 This does not close the remaining acceptance matrix or freeze production method 3.
+
+
+### Nested initializer scope — 2026-10-15 11:21 ET
+
+Frozen `f9ace980` extends the checked nested-read view to one automatic plain-int
+initializer in a braced block. Fresh read captures precede the original declaration
+in that same block. Exact original declaration locations and later references are
+independently matched; static/TLS/type/root/sibling mutations refuse before WP.
+No source memory read or input premise is removed. The existing pure-return slice
+and all ordinary bounds/initializedness checks remain active.
+
+The corrected original-policy public control fails as unsupported (3.66s); its
+new stand-in reaches WP. Thirty-one public mutation/component controls pass in
+22.80s. Actual WP produces the four expected outcomes in130.33s: safe PROVEN
+(14 ordinary Valid +1 passing smoke); each missing inner/outer window and missing
+inner initializedness remains NOT_PROVEN on its independent obligation (13 ordinary
+Valid +1 timeout +1 passing smoke). Pytest reports3passed/1failed solely because
+the last assertion guessed a prover goal spelling; the corrected semantic
+initialization-property assertion passes against all four retained records. No
+successful actual job was repeated. Two earlier test-helper API errors are retained
+and excluded from semantic RED/GREEN evidence.
+
+All report hashes and runtime manifest entries match. Test-only assertion changes
+are explicit. [Evidence](../evidence/wp-nested-initializers-20261015.json).
+Helper/nested statement-anchor hints and the full store/capacity acceptance remain
+open; this checkpoint does not resolve the ticket.

@@ -1,0 +1,203 @@
+{
+  "created": "2026-10-15 ET",
+  "scope": "Original-TU compiler-context reconstruction only; no actual solver or whole-ticket acceptance.",
+  "original_remote": {
+    "source": "5c2a9bea695526dfadd91cac43be5709e531943d",
+    "directory": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0",
+    "outcome": "134 passed, 1 failed; original outcome retained",
+    "failure": "Handler-registration control refused because reconstructed libclang context could not resolve libc++ C compatibility headers."
+  },
+  "diagnosis": {
+    "standard_search": "CAPI FullArgv driver defaults preceded captured cc1 libc++ include paths. Suppress automatic standard search while forwarding the exact captured job.",
+    "environment_search": "CPATH/CPLUS_INCLUDE_PATH were read again by CAPI and could precede the original driver's explicit -I. Same-name guards hid a source-defined allocation hook even when physical include sets matched.",
+    "public_red": {
+      "tests": 1,
+      "failed": 1,
+      "seconds": 4.77,
+      "outcome": "Old full-TU certificate incorrectly passed; no verifier launched."
+    },
+    "repair": "Short-lived isolated Python worker removes only include environment variables from the parser process. Original driver resource/trace/macros/include commands receive original environment explicitly; baseline remains deliberately clean. Original include environment remains recorded. Worker failures, malformed reports and identity/hash mismatches refuse."
+  },
+  "mac": {
+    "source": "7e663aafa6f5871a16fb20c478df8e2160d75c3d",
+    "tests": 13,
+    "passed": 13,
+    "seconds": 36.47,
+    "coverage": [
+      "CPATH and CPLUS_INCLUDE_PATH same-name guarded header refusals",
+      "ordinary environment-only header positive and original context",
+      "compatibility headers, ordinary/GAPBS header positives, wrapper and bare-allocation controls",
+      "worker exit, timeout, malformed JSON and wrong hash refuse without environment mutation"
+    ]
+  },
+  "linux": [
+    {
+      "directory": "/data/yanruj/EvolveSWDB_runs/probata-libclang-context-fix-20261015-node0",
+      "source_commit": "b5855894f6da3744bb02a68130d0e5bf6df88509",
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 340852736,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 58.26936605013907,
+        "cpu_seconds": 58.539063999999996
+      },
+      "lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "/data1/yanruj/venvs/swdb-test/bin/python",
+          "-"
+        ],
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-10-15T15:22:19Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "probata-libclang-context-fix-20261015",
+        "lease_generation": 559,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 3.97,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-15T15:21:21Z"
+      },
+      "junit_suites": [
+        {
+          "name": "pytest",
+          "errors": "0",
+          "failures": "0",
+          "skipped": "0",
+          "tests": "3",
+          "time": "57.508",
+          "timestamp": "2026-10-15T11:21:22.059866-04:00",
+          "hostname": "mbit10"
+        }
+      ],
+      "cases": [
+        "test_original_tu_preserves_the_drivers_c_compatibility_header_order",
+        "test_a_transitive_header_new_handler_registration_refuses_before_verification[std::set_new_handler(project_handler);]",
+        "test_a_transitive_header_new_handler_registration_refuses_before_verification[auto install=std::set_new_handler; install(project_handler);]"
+      ],
+      "artifact_sha256": {
+        "lane.json": "4f133a6ddb95403717b06895b6258a0593b42561cccc7f0db2f14517c4ece489",
+        "resources.json": "63a6a43c3a0fade8ac4a6dff8ec78188e59235ebcdbe4aabd8766bb3b6843110",
+        "junit.xml": "e4396ba574860b3ee27a6db800938898322d3d086cf4fd9efbc26d22bcc39353",
+        "environment.txt": "66dc7876d65ddee66724bce736dba419dabc7f8ae4ca5a0cdd4c431f572f5fae",
+        "retention.txt": "5fa603cd651430b7e299d08021666931244adb41f858b601a6292d6a7c91f9e0",
+        "selection.json": "d8e769d08a51fb804400102205b4fd8ec9c08dfc6d9b9011997ccf08f4b57270",
+        "source-sync.log": "9d5f48f393e3f9c4272ae755613fcda533233413940167df1372ddb8bb9ef0e8",
+        "pytest.log": "0a1026f49f89eeefe9c8097ca220526a22d0b57225e4fcd78a60fe6322b706d4"
+      },
+      "output_bytes": 2887398
+    },
+    {
+      "directory": "/data/yanruj/EvolveSWDB_runs/probata-libclang-env-fix-20261015-node0",
+      "source_commit": "7e663aafa6f5871a16fb20c478df8e2160d75c3d",
+      "resources": {
+        "exit_code": 0,
+        "peak_rss_bytes": 374874112,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 87.71624174062163,
+        "cpu_seconds": 88.12680999999999
+      },
+      "lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "260",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-libclang-env-fix-20261015-node0/run.sh"
+        ],
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-10-15T15:37:10Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "probata-libclang-env-fix",
+        "lease_generation": 560,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 1.2,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-15T15:35:42Z"
+      },
+      "junit_suites": [
+        {
+          "name": "pytest",
+          "errors": "0",
+          "failures": "0",
+          "skipped": "0",
+          "tests": "6",
+          "time": "87.005",
+          "timestamp": "2026-10-15T11:35:43.754089-04:00",
+          "hostname": "mbit10"
+        }
+      ],
+      "cases": [
+        "test_environment_search_cannot_hide_an_explicit_include_allocation_hook[CPATH]",
+        "test_environment_search_cannot_hide_an_explicit_include_allocation_hook[CPLUS_INCLUDE_PATH]",
+        "test_original_include_environment_remains_in_driver_context",
+        "test_original_tu_preserves_the_drivers_c_compatibility_header_order",
+        "test_a_transitive_header_new_handler_registration_refuses_before_verification[std::set_new_handler(project_handler);]",
+        "test_a_transitive_header_new_handler_registration_refuses_before_verification[auto install=std::set_new_handler; install(project_handler);]"
+      ],
+      "artifact_sha256": {
+        "lane.json": "91407d6af819bb770a5e7e8b5f6ce1afaad53da030933080ba515be21fdbd7d9",
+        "resources.json": "848b306df3fb5cee9713aa4556949893fc6fbce89749e51930e4f1751a9ef35f",
+        "run.sh": "efa1b848572aa5de2f3fde1288d7ac4655c281047d55855fbb22e6c2256e1260",
+        "launcher.log": "b1ecda2d4f9a9f34c3570d1025ebb8a01b2284f1de798a4d298cb351ee99d3ea",
+        "junit.xml": "006336e57bc7ea44d100187efd11d987533a751026b87614dd4abab9edca08a5",
+        "finished.txt": "f50cdc74e9210d112827d6c7e2dceed8d7ff6f69c0415716f2c508b5bf6ae0a2",
+        "environment.txt": "fe872213ab1c4765a2d1de00c71a3b981577f030f42b23d2ee416f696a0cec02",
+        "retention.txt": "315be98e17cc2ab3905e2ab7f9c7e6da580f2dd34347707fafb46837eea9c359",
+        "execute.py": "0eeb82ed11ec4f05b680daf3cdbc2a90d91f0a75773e46b0df0d64342c7d42c9",
+        "selection.json": "4f08c4af2fb647578bf68ce9186244dd9417246cf75358ef1853bea75dc6c505",
+        "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+        "source-sync.log": "821df45f6dba95bb46cdb4a1448d668153d4b1bbaea5477f63bc2d435f284a03",
+        "pytest.log": "e1632df58643c500f411cc457f822778d4faa136ae6b7a2ab8ca570e5ee3a78a"
+      },
+      "output_bytes": 3762028
+    }
+  ],
+  "limits": {
+    "rss_cap_bytes": 8589934592,
+    "output_budget_bytes": 2147483648,
+    "process_timeout_seconds": 240,
+    "outer_timeout_seconds": 300,
+    "readers": [
+      "coordinator",
+      "merger",
+      "t41"
+    ],
+    "raw_outputs": "Retained on mbit10; only compact metadata transferred.",
+    "active_checkout": "Frozen /data1/yanruj/probata-t27 at 5c2a untouched. Tests use isolated Git clone."
+  },
+  "acceptance_boundary": "Real Clang and parser with explicit Frama/Why3 stand-ins. Existing historical proof identities are not upgraded. Exact substituted-call requests are a separate composed t41 checkpoint; standalone 7e refuses nonempty requests.",
+  "composition": {
+    "source_commit": "77624eec3bdae42f5a137e8c6c5a131faf38083b",
+    "tests": 14,
+    "passed": 14,
+    "pytest_seconds": 100.94,
+    "resources": {
+      "exit_code": 0,
+      "peak_rss_bytes": 450658304,
+      "out_of_memory": false,
+      "timed_out": false,
+      "wall_seconds": 101.30968262499664,
+      "cpu_seconds": 99.449658
+    },
+    "artifacts": {
+      "/private/tmp/probata-merged-parser-caller-components.xml": "c0ff8b1670a303898cd49702fc146866f8dca4d286efbb364dd18acb715dae1a",
+      "/private/tmp/probata-merged-parser-caller-components.log": "96291cd45ac660040d8760f1a09c1cd93d8cd9c968e3cb1e813b3e18ae8e1c66",
+      "/private/tmp/probata-merged-parser-caller-components.resources.json": "3674d6778d62e66b60a3f7ecc581ecb7609cbf4fc89549363df923e3f04250e0"
+    },
+    "scope": "Compiler and explicit verifier stand-ins: caller roots/alias identity, exact binding positives/refusals/request coverage, owner pipeline and nested initializer preparation, renderer storage/return faults, isolated worker failures. No actual solver."
+  }
+}
