@@ -230,6 +230,10 @@ def build_subset_seed(path):
             # Explicit typed valid-range inputs match the existing n-element
             # readability/writability requirements; validity alone is no origin.
             data["proof_unit"]["array_domains"] = {name: {"extent": "n"} for name in ("a", "b")}
+        elif group == "classes":
+            # The original Bag captures exactly a:n. Its already-required valid,
+            # initialized n-element range supplies values, not typed origin.
+            data["proof_unit"]["array_domains"] = {"a": {"extent": "n"}}
         contracts.joinpath(f"fixture_wp24_{group}.yaml").write_text(yaml.safe_dump(data, sort_keys=False))
     for name, (function, clauses, arrays) in SUMMARIES.items():
         data = _entry(summary_id(name), function, "summaries/summary_impls.cc", IMPLS, clauses, arrays, {"once": "self"})

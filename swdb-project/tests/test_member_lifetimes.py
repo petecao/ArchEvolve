@@ -155,3 +155,9 @@ def test_compound_update_does_not_admit_a_nested_scalar_assignment(tmp_path):
     lowered=c_lowering.lower(path,'unit',array_domains={'a':{'extent':'n'}},array_domain_contract='contract.fixture_member')
     with pytest.raises(wp_pointer_bounds.Refused,match='side effects/conditional'):
         wp_pointer_bounds.check(lowered)
+
+
+def test_scalar_reference_effects_cannot_change_the_referent_storage_type(tmp_path):
+    source=FIXTURE.read_text().replace('total_ += count_;','reinterpret_cast<long &>(total_) += count_;')
+    with pytest.raises(c_lowering.Unsupported,match='reinterpret_cast other than between pointer types'):
+        wp_pointer_bounds.check(lower(tmp_path,source))
