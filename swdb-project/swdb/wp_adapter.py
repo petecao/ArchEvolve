@@ -40,7 +40,7 @@ import subprocess
 from dataclasses import replace
 from pathlib import Path
 
-from swdb import artifacts, c_lowering, cpu_memory_admission, framac, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, std_models, terminal_release, vector_ownership, vocab
+from swdb import artifacts, c_lowering, cpu_memory_admission, framac, hint_check, paths, proof_semantics, proof_setup, rss_watchdog, standard_model_view, std_models, terminal_release, vector_ownership, vocab, wp_pointer_bounds
 from swdb.proof import MODEL_PREFIX, AdapterError, Verdict
 
 NAME = "wp"
@@ -107,11 +107,42 @@ class WpAdapter:
             if re.search(r"\b(?:allocates|frees)\b|\\(?:fresh|freeable)\b", text):
                 return self._not_proven("unsupported_construct",
                     "WP 33.0 does not model allocation lifetime; this C model needs allocates/frees support", context)
+            if job.unit.function == "std_vector_int_at":
+                try:
+                    view = standard_model_view.wp_view(job.unit.function, text, wp_dir)
+                    standard_model_view.check_view(job.unit.function, view, wp_dir)
+                except standard_model_view.Refused as exc:
+                    return self._not_proven("unsupported_construct", str(exc), context)
+                original = wp_dir / "standard_model_original.c"
+                original.write_text("\n".join([*c_lowering.HEADERS, text]) + "\n")
+                certificate = wp_dir / "standard_model_view.json"
+                certificate_text = json.dumps(view.certificate, indent=2) + "\n"
+                certificate.write_text(certificate_text)
+                context["standard_model_view"] = {"view": view, "original_path": original,
+                    "original_text": original.read_text(), "certificate_path": certificate,
+                    "certificate_text": certificate_text}
+                context["pins"].update(view.pins)
+                context.setdefault("assumed", []).append({"kind": "trusted_tool",
+                    "reference": standard_model_view.identity(),
+                    "sentence": "The exact audited pure defensive-at abort guard is omitted only in the WP view; "
+                                "the unchanged contract must prove its negation as at_guard_false. "
+                                "The original/native/CBMC model and the input premises are unchanged."})
+                context["reports"] += [("standard_model_original", original),
+                                       ("standard_model_view_certificate", certificate)]
+                text = view.text
             input_path = wp_dir / "wp_input.c"
-            context["wp_expected_text"] = "\n".join([*c_lowering.HEADERS, text]) + "\n"
+            context["pointer_bounds_model_source"] = "\n".join([*c_lowering.HEADERS, text]) + "\n"
+            try:
+                context["wp_expected_text"], context["pointer_bounds_report"] = wp_pointer_bounds.model_view(
+                    context["pointer_bounds_model_source"], job.scratch)
+            except wp_pointer_bounds.Refused as exc:
+                context["settings"] = {"tool": "frama-c-wp", "flags": [], "verifier_launched": False,
+                    "pointer_bounds": {"verdict": "refused", "reason": str(exc), "check": wp_pointer_bounds.identity()}}
+                return self._not_proven("unsupported_construct", str(exc), context)
             input_path.write_text(context["wp_expected_text"])
             context["reports"].append(("wp_input", input_path))
-            context["extra_flags"] = [f"-wp-fct={job.unit.function}"]
+            context["functions"] = set(context["pointer_bounds_report"]["functions"])
+            context["extra_flags"] = ["-wp-fct=" + ",".join(sorted(context["functions"]))]
             return self._wp(job, input_path, context)
         entry = self.library.get(self.contract) or {}
         unit = entry.get("proof_unit") or {}
@@ -211,6 +242,12 @@ class WpAdapter:
                                    "proof_semantics_admission": refusal}
             return self._not_proven("unsupported_construct",
                 "ordinary CPU memory interference with DX100 commands needs ticket 28's memory-hazard probes", context)
+        try:
+            wp_pointer_bounds.check(lowering)
+        except wp_pointer_bounds.Refused as exc:
+            context["settings"] = {"tool": "frama-c-wp", "flags": [], "verifier_launched": False,
+                "pointer_bounds": {"verdict": "refused", "reason": str(exc), "check": wp_pointer_bounds.identity()}}
+            return self._not_proven("unsupported_construct", str(exc), context)
         contracts = self._dependencies(dependency_lowering, context)
         refusal = cpu_memory_admission.summary_refusal(self.records, [
             pin["proof_record"] for group in ("summaries", "models") for pin in context["pins"].get(group, [])])
@@ -241,6 +278,8 @@ class WpAdapter:
         base = hint_check.wp_base(view.text if view else lowering.text, lowering.anchors,
                                   self._context(lowering, entry, summary_job, context))
         base = self._with_contracts(base, contracts)
+        context["pointer_bounds_base"] = base
+        base, context["pointer_bounds_report"] = wp_pointer_bounds.prepare(lowering, base)
         if context.get("semantics"):
             context["semantics_hint_base"] = base
             proof_setup.check_semantics_hints(base, self.hints)
@@ -306,6 +345,9 @@ class WpAdapter:
         for flag, value in FROZEN:
             if not _has_flag(flags, flag, value):
                 problems.append(f"method version {self.method.id} does not freeze {flag} {value} for frama-c-wp")
+        switch_problem = proof_setup.wp_switch_problem(flags)
+        if switch_problem:
+            problems.append(f"method version {self.method.id}: {switch_problem} for frama-c-wp")
         if problems:
             raise AdapterError("; ".join(problems))
         seconds = ((self.method.data.get("budgets") or {}).get("wp_seconds_per_solver"))
@@ -518,6 +560,10 @@ class WpAdapter:
             if not pointer:
                 continue
             for array in wp.get("separate_from") or []:
+                if array == "dx_tile_data":
+                    extra.append(f"requires \\forall integer swdb_tile; 0 <= swdb_tile < DX_NT ==> "
+                                 f"\\base_addr({name}) != \\base_addr(dx_tile_data[swdb_tile]);")
+                    continue
                 dims = next((loc.count("[") for loc in locations if loc.split("[")[0] == array), 0)
                 extra.append(f"requires \\base_addr({name}) != \\base_addr(&{array}{'[0]' * dims});")
         semantics["unit_requires"] = list(extra)
@@ -562,6 +608,7 @@ class WpAdapter:
                  f"rss cap bytes: {cap}\nwall budget seconds: {wall}")
         context["reports"].append(("wp_log", wp_log))
         context["settings"] = {"tool": "frama-c-wp", "flags": settings_flags, "session": "fresh",
+                               "pointer_bounds": context["pointer_bounds_report"],
                                "warning_levels": "default", "machdep": "x86_64",
                                "wp_seconds_per_solver": tools["seconds"], "environment_removed": removed,
                                "rss_cap_bytes": cap, "hint_count": context.get("hints_reaching_wp", 0), "build_constants": list(self.defines)}
@@ -593,6 +640,18 @@ class WpAdapter:
                 "frame_evidence": "structural relational lowering; not a WP goal",
                 "original_contract_sha256": view.certificate["original_contract_sha256"],
                 "view_contract_sha256": view.certificate["view_contract_sha256"]}
+        model_view = context.get("standard_model_view")
+        if model_view:
+            view = model_view["view"]
+            try:
+                standard_model_view.check_view(job.unit.function, view, wp_dir)
+            except standard_model_view.Refused as exc:
+                raise AdapterError(f"standard model view prelaunch check: {exc}") from None
+            if any(context["pins"].get(name) != pin for name, pin in view.pins.items()):
+                raise AdapterError("standard model view checker/certificate pins changed before launch")
+            inputs += [(model_view["original_path"], model_view["original_text"]),
+                       (model_view["certificate_path"], model_view["certificate_text"])]
+            context["settings"]["standard_model_view"] = view.certificate
         proof_setup.check_generated(job, self, context, inputs, settings_flags, command=command, scratch=scratch)
         result = rss_watchdog.run(command, log=wp_log, cap_bytes=cap, timeout=wall, cwd=scratch, env=env)
         context["peak"] = result.peak_rss_bytes

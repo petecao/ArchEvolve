@@ -44,7 +44,7 @@ import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from swdb import bounded_initialization, cpu_effects, std_models, terminal_release
+from swdb import bounded_initialization, cpu_effects, std_models, terminal_release, wp_pointer_bounds
 
 TOOL_ID = "swdb-c-lowering"
 TOOL_VERSION = "9"                   # checked WP pointer formation and integer model receiving slots
@@ -198,6 +198,7 @@ class Lowering:
     allocation: bool = False    # ticket 25: the C allocates (new[] or a std model): "allocation succeeds" applies
     cpu_effects: dict = field(default_factory=dict)  # source/model memory effects and sequenced call sites
     bounded_initialization: dict = field(default_factory=dict)
+    pointer_bounds: dict = field(default_factory=dict)
     terminal_release: dict | None = None  # checked ownership certificate; native lowering retains delete[]
 
     @property
@@ -218,6 +219,7 @@ class Lowering:
             data["allocation"] = True
         data["cpu_effects"] = self.cpu_effects
         data["bounded_initialization"] = self.bounded_initialization
+        data["pointer_bounds"] = self.pointer_bounds
         if self.terminal_release:
             data["terminal_release"] = self.terminal_release
         return json.dumps(data, indent=1, sort_keys=True) + "\n"
@@ -281,7 +283,8 @@ def identity():
     policy = admission.read_bytes() if admission.exists() else b"cpu-memory-admission:absent"
     digest = hashlib.sha256(here.read_bytes() + Path(terminal_release.__file__).read_bytes()
                             + Path(cpu_effects.__file__).read_bytes() + policy
-                            + bounded_initialization.identity()["sha256"].encode()).hexdigest()
+                            + bounded_initialization.identity()["sha256"].encode()
+                            + wp_pointer_bounds.identity()["sha256"].encode()).hexdigest()
     found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": digest},
              "naming_rules": naming_rules()}
     if not tool.missing:
@@ -559,6 +562,8 @@ class _Unit:
         self.semantics = dict(semantics or {})      # ticket 27: {tile_pointer: names}; probes at tile accesses
         self.probes = []
         self.probe_nodes = set()
+        self.pointer_sites = []
+        self.pointer_nodes = set()
         self._dumps = {}
         self.structs, self.struct_order, self.classes = {}, [], {}
         self.functions, self.order, self.pending = {}, [], []
@@ -1035,6 +1040,9 @@ class _Printer:
         self._tile_ok = 0
         self.loop_bases = []        # ticket 25: len(scopes) at each enclosing loop (break/continue leave only those)
         self.returns_ctype = "void"
+        self.pointer_contexts = []
+        self.pointer_seen = set()
+        self.pointer_rendering = False
 
     # positions and anchors
     def _at(self, node):
@@ -1090,7 +1098,11 @@ class _Printer:
         loop = kind in LOOPS or kind == "CXXForRangeStmt"
         if loop:
             self.loop_bases.append(len(self.scopes))
-        self._statement(node, kind, indent)
+        self.pointer_contexts.append((node, f"{sid}.before"))
+        try:
+            self._statement(node, kind, indent)
+        finally:
+            self.pointer_contexts.pop()
         if loop:
             self.loop_bases.pop()
         self.anchor(f"{sid}.after", "after", indent)
@@ -1418,7 +1430,50 @@ class _Printer:
     # expressions
     def expr(self, node, top=False):
         text, atomic = self._expr(node)
-        return text if top or atomic else f"({text})"
+        rendered = text if top or atomic else f"({text})"
+        if not self.pointer_rendering:
+            rendered = self._pointer_formation(node, rendered) or rendered
+        return rendered
+
+    def _pointer_formation(self, node, expression):
+        """Retain source pointer operations even when the later C AST discards their value."""
+        inner, kind = _children(node), node.get("kind")
+        pointer = lambda n: bool(re.search(r"\*\s*(?:(?:const|volatile|restrict)\s*)*$", _qual(n)))
+        base, offset, reason = None, None, ""
+        if kind == "BinaryOperator" and node.get("opcode") in ("+", "-"):
+            pointers = [child for child in inner if pointer(child)]
+            if len(pointers) == 1 and pointer(node):
+                base = pointers[0]
+                offset = next(child for child in inner if child is not base)
+            elif len(pointers) == 2:
+                base, reason = pointers[0], "pointer subtraction needs a checked same-array and representable-distance policy"
+        elif kind == "CompoundAssignOperator" and inner and pointer(inner[0]):
+            base, reason = inner[0], "pointer mutation needs a precise check placement"
+        elif kind == "UnaryOperator" and inner:
+            if node.get("opcode") in ("++", "--") and pointer(inner[0]):
+                base, reason = inner[0], "pointer mutation needs a precise check placement"
+            elif node.get("opcode") == "&" and _strip(inner[0]).get("kind") == "ArraySubscriptExpr":
+                args = _children(_strip(inner[0]))
+                base = next((arg for arg in args if pointer(arg)), None)
+                offset = next((arg for arg in args if arg is not base), None)
+        key = node.get("id") or ("generated", id(node))
+        if base is None or key in self.pointer_seen:
+            return
+        if not node.get("id"):
+            reason = reason or "pointer operation has no source AST identity"
+        self.pointer_seen.add(key)
+        self.pointer_rendering = True
+        try:
+            base_text = self.expr(base)
+            offset_text = self.expr(offset) if offset is not None else None
+        finally:
+            self.pointer_rendering = False
+        statement, anchor = self.pointer_contexts[-1] if self.pointer_contexts else (None, "")
+        row = wp_pointer_bounds.site(node, expression=expression, base=base_text, offset=offset_text,
+            statement=statement, anchor=anchor, function=self.function, line=_where(node) or self.line, reason=reason)
+        self.unit.pointer_sites.append(row)
+        self.unit.pointer_nodes.add((self.function, node.get("id")))
+        return row["normalized_expression"]
 
     def address(self, node):
         """The C pointer to the object an lvalue expression names (how a reference is bound)."""
@@ -2140,6 +2195,7 @@ def model_definition(family, op, ctype):
                        f"static void {model}({ctype} *a, {ctype} *b) {{ {ctype} t = *a; *a = *b; *b = t; }}")
     if family == "std" and op == "copy":
         return model, (f"/*@ requires \\base_addr(first) == \\base_addr(last) && first <= last;\n"
+                       f"    requires last - first <= PTRDIFF_MAX;\n"
                        f"    requires \\valid_read(first + (0 .. last - first - 1));\n"
                        f"    requires \\initialized(first + (0 .. last - first - 1));\n"
                        f"    requires \\valid(d_first + (0 .. last - first - 1));\n"
@@ -2149,14 +2205,14 @@ def model_definition(family, op, ctype):
                        f"    ensures \\forall integer k; 0 <= k < last - first ==> d_first[k] == \\old(first[k]);\n"
                        f"    ensures \\result == d_first + (last - first); */\n"
                        f"static {ctype} *{model}(const {ctype} *first, const {ctype} *last, {ctype} *d_first) {{\n"
-                       f"  const ptrdiff_t n = last - first;\n"
+                       f"  const ptrdiff_t n = first == last ? 0 : last - first;\n"
                        f"  /*@ loop invariant 0 <= i <= n;\n"
                        f"      loop invariant \\forall integer k; 0 <= k < i ==> d_first[k] == first[k];\n"
                        f"      loop invariant \\initialized(d_first + (0 .. i - 1));\n"
                        f"      loop assigns i, d_first[0 .. n - 1];\n"
                        f"      loop variant n - i; */\n"
                        f"  for (ptrdiff_t i = 0; i < n; ++i) d_first[i] = first[i];\n"
-                       f"  return d_first + n;\n}}")
+                       f"  return n == 0 ? d_first : d_first + n;\n}}")
     if family not in ("atomic", "sync") or op not in (ATOMIC_OPS if family == "atomic" else SYNC_OPS):
         raise Unsupported(f"C model {family} {op}")
     pointer = ctype.endswith("*")
@@ -2346,6 +2402,9 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
                     bounded_initialization=bounded_initialization.analyze(definition_nodes,
                         scalar_types=INTEGER_TYPES | FLOAT_TYPES, source_sha256=_file_sha256(source), text=text,
                         external_calls=unit.summaries_used, standard_types=unit.std_types),
+                    pointer_bounds=wp_pointer_bounds.inventory(
+                        wp_pointer_bounds.complete(unit.pointer_sites, definition_nodes, unit.pointer_nodes),
+                        source_sha256=_file_sha256(source), text=text),
                     terminal_release=certificate)
 
 
@@ -2527,6 +2586,7 @@ def _cli(args):
         out["allocation"] = True
     out["cpu_effects"] = lowering.cpu_effects
     out["bounded_initialization"] = lowering.bounded_initialization
+    out["pointer_bounds"] = lowering.pointer_bounds
     if lowering.terminal_release:
         out["terminal_release"] = lowering.terminal_release
     return out

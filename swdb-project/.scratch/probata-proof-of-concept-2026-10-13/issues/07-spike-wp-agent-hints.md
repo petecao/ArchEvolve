@@ -1,7 +1,7 @@
 # 07 — Spike (c): WP with agent hints
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-15 ET (run 15 not proven; 1 unit and 24 hint obligations remain; induction gap recorded); 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 03
@@ -833,3 +833,46 @@ Original output and source manifest: `/private/tmp/probata-t07-20261015-run15/`;
 2 GiB budget, 83 GiB free at preflight, readers 07/09/coordinator. This functional
 spike does not establish production RTE-initialization acceptance. Ticket 07 stays
 claimed and the shared spike box remains open; no run-15 success is claimed yet.
+
+
+**Run 15 ended 05:58:59 ET, not proven.** Two Codex calls, 41 tool calls and
+12 WP attempts used **52.75 counted minutes**, excluding 1124.2 s of verifier-slot
+wait. The best set has **57 hints and 25 open goals of 264: 1 unit frame goal plus
+24 hint obligations**. `summary.final` is null; no complete proof/smoke replay or
+negative-control success is claimed. Ticket 07 remains **claimed** and the shared
+box remains open; this checkpoint does not close the spike or start run 16.
+
+Compact metadata, source manifest and artifact hashes:
+[counted-15 evidence](../evidence/t07-counted-15.json). The summary's
+`best_sha256` is the SHA256 of the **entire final best.json file**
+(`b0b754d8f5104fed3173e7ca0b6fdf51952be7af561560139d959644a198cfcb`),
+not a hints-only digest. The evidence separately labels canonical hint-record and
+logical-formula digests and their serialization.
+
+**Offline audit boundary.** The audit copied round 1's best at `attempt-r1f`
+(55 hints); final best is `attempt-r2c1` (57 hints). They are not byte-identical.
+The final set retains every audited hint record and adds only `TDFrameUnfold` and
+its `@assigns` attachment. All logical hint formulas, all three headers, and the
+25 open goal names/failure classes are unchanged. The evidence pins both merged
+source hashes and both full best-file hashes. No offline finding steered either
+active provider call. Audit notes, finite scripts and reconciliation:
+`/private/tmp/probata-t07-run15-audit/`. No concretely false hint was identified;
+the remaining unknown/timeout outcomes stay unproved. Finite checks are not a
+full C replay or a universal proof.
+
+**Decision for the next experiment: repair the induction relationship before
+retrying.** Current outer-loop invariants retain bookkeeping and safety, but do
+not say that visitation equals reachability through the already processed
+original-frontier prefix. An abstract exit state can satisfy those invariants
+while omitting a reachable vertex; actual TDStep visits it, so this is missing
+induction information, not a false-hint or contract counterexample. The finite
+logical evaluation is `induction_gap.py` in the audit folder.
+
+A justified follow-up would relate each initially negative vertex's current
+visited state to the processed original-frontier prefix, clamped at the original
+frontier end for the last partial chunk. Inner range and batch invariants must
+refine that relation by their processed cursor/prefix and retain the equality
+between each row's tile offsets and its original frontier vertex's CSR bounds.
+`range_inputs` currently keeps bounds alone. This is a concrete induction
+experiment within the remaining shared box; it is not a prediction of success.
+No unchanged-method retry, new counted method, or new run was started here.

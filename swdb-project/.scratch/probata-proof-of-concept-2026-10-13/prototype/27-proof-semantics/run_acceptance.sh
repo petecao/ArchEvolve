@@ -3,7 +3,7 @@
 set -euo pipefail
 # Usage: run_acceptance.sh <full frozen commit SHA> <safe|unsafe|constructs> [extra pytest arguments...]
 PROBATA_EXPECTED_COMMIT="${1:?pass the full frozen commit SHA}"
-PROBATA_SHARD="${2:?pass safe or unsafe}"
+PROBATA_SHARD="${2:?pass safe, unsafe, or constructs}"
 shift 2
 case "$PROBATA_EXPECTED_COMMIT" in *[!0-9a-f]*|'') exit 2 ;; esac
 [ "${#PROBATA_EXPECTED_COMMIT}" -eq 40 ] || exit 2
