@@ -30,6 +30,7 @@ sys.path.insert(0, str(HERE.parents[3]))
 from swdb.provider_adapters import PINS, CODEX_DISABLED_FEATURES  # noqa: E402
 
 PIN = dict(PINS["codex"])
+CLOCK_KIND = ["wall"]  # method19 uses the shared suspend-inclusive monotonic clock
 LOCKWAIT = [0.0]  # seconds spent waiting for the machine-wide verifier lock (other tickets), not counted
 HINT_SCHEMA = {
     "type": "object", "additionalProperties": False, "required": ["hints", "notes"],
@@ -73,34 +74,64 @@ OWNER = ["t07"]
 LIVE_FILE = [None]  # t07e (a): when set, the lock wait is published live here for the budget-clock deadline
 
 
+def clock():
+    if CLOCK_KIND[0] == "continuous_monotonic":
+        import staged_search
+        return staged_search.clock()
+    return time.time()
+
+
 def _live(pending_since, provisional=0.0):
     if LIVE_FILE[0] is None:
         return
     f = Path(LIVE_FILE[0])
     tmp = f.with_suffix(".tmp")
-    tmp.write_text(json.dumps({"settled_s": round(LOCKWAIT[0] + provisional, 1), "pending_since": pending_since}))
+    payload = {"settled_s": LOCKWAIT[0] + provisional, "pending_since": pending_since, "clock": CLOCK_KIND[0]}
+    if CLOCK_KIND[0] == "continuous_monotonic":
+        import staged_search
+        payload["clock_info"] = staged_search.clock_info()
+    tmp.write_text(json.dumps(payload))
     tmp.replace(f)
 
 
 def verifier(out, d, mode, owner=None, timeout=2400, extra=()):
     logf = d / f"{mode}.log"
-    for f in (logf, Path(str(logf) + ".summary.json")):
-        if f.exists():
-            f.unlink()
-    t = time.time()
-    p = subprocess.Popen([VRUN, "--log", str(logf), "--timeout", str(timeout), "--owner", owner or OWNER[0], "--",
+    status = Path(str(logf) + ".wait.json")
+    for f in (logf, Path(str(logf) + ".summary.json"), status):
+        f.unlink(missing_ok=True)
+    t = clock()
+    continuous = CLOCK_KIND[0] == "continuous_monotonic"
+    runner = [sys.executable, str(HERE / "counted_verifier.py")] if continuous else [VRUN]
+    p = subprocess.Popen([*runner, "--log", str(logf), "--timeout", str(timeout), "--owner", owner or OWNER[0], "--",
                           str(HERE / "wp_run.sh"), mode, str(d), UNIT, *map(str, extra)], stdout=subprocess.DEVNULL)
-    _live(t)
     acquired = None
+    _live(None if continuous else t)
     while p.poll() is None:
-        # verifier_run.py opens the log only after it holds the machine-wide lock.
-        if acquired is None and logf.exists():
-            acquired = time.time()
-            _live(None, acquired - t)
-        time.sleep(1.0)
+        if continuous:
+            import staged_search as S
+            try:
+                progress = json.loads(status.read_text())
+                # The wait file was removed before this exact runner was launched.
+                if S.wait_seconds(progress, S.clock_info(), clock(), runner_pid=p.pid) > 0:
+                    _live(progress.get("pending_since"), progress["settled_s"])
+            except (OSError, ValueError, TypeError):
+                pass  # absent/invalid durations earn no exclusion
+        elif acquired is None and logf.exists():
+            acquired = clock()
+            _live(None, acquired-t)
+        time.sleep(0.1 if continuous else 1.0)
     summ = json.loads(Path(str(logf) + ".summary.json").read_text())
-    summ["wall_incl_lock_s"] = round(time.time() - t, 1)
-    LOCKWAIT[0] += summ.get("lock_wait_s", 0)
+    summ["wall_incl_lock_s"] = clock()-t
+    if continuous:
+        import staged_search as S
+        wait = S.wait_seconds({**summ, "settled_s": summ.get("lock_wait_s"), "pending_since": None},
+                              S.clock_info(), clock(), runner_pid=p.pid)
+        if wait > clock()-t:
+            wait = 0.0
+        summ["excluded_lock_wait_s"] = wait
+        LOCKWAIT[0] += wait
+    else:
+        LOCKWAIT[0] += summ.get("lock_wait_s", 0)
     _live(None)
     return logf, summ
 
@@ -394,7 +425,7 @@ def codex_call(out, r, prompt, resume=None, turn=0, keep_session=False, mcp_stat
     return res
 
 
-def precheck(out, name, standin, hint_set, record):
+def precheck(out, name, standin, hint_set, record, remaining_s=None):
     """Proof hint check: vocabulary and anchors, erase-and-diff, Frama-C parse and type check."""
     bad = H.check(standin, hint_set)
     if bad:
@@ -405,7 +436,10 @@ def precheck(out, name, standin, hint_set, record):
         record.update(outcome="rejected (erase-and-diff)", rejections=[{"id": "*", "rule": "erase_diff"}])
         return None
     d = run_dir(out, name, merged)
-    plog, ps = verifier(out, d, "parse", timeout=600)
+    if remaining_s is not None and remaining_s() <= 0:
+        record.update(outcome="rejected (search deadline)")
+        return None
+    plog, ps = verifier(out, d, "parse", timeout=min(600, remaining_s()) if remaining_s else 600)
     record["parse"] = {"exit": ps["exit_code"], "wall_s": ps["wall_s"]}
     if ps["exit_code"] != 0:
         err = plog.read_text(errors="replace")
@@ -414,7 +448,10 @@ def precheck(out, name, standin, hint_set, record):
         record.update(outcome="rejected (Frama-C parse/type check)", parse_error=err,
                       blame=[{**b, "hints": [by_id[i] for i in b["ids"] if i in by_id]} for b in bl])
         return None
-    glog, gs = verifier(out, d, "wp-gen", timeout=900)
+    if remaining_s is not None and remaining_s() <= 0:
+        record.update(outcome="rejected (search deadline)")
+        return None
+    glog, gs = verifier(out, d, "wp-gen", timeout=min(900, remaining_s()) if remaining_s else 900)
     record["wp_gen"] = {"exit": gs["exit_code"], "wall_s": gs["wall_s"]}
     gtxt = glog.read_text(errors="replace")
     if gs["exit_code"] != 0 or "User Error" in gtxt or "aborted" in gtxt:
@@ -437,13 +474,29 @@ def blame_text(rec):
     return "\n".join(out)
 
 
-def wp_round(out, name, standin, hint_set, record, mode="wp-smoke", timeout=7200, d=None):
+def wp_round(out, name, standin, hint_set, record, mode="wp-smoke", timeout=7200, d=None, remaining_s=None):
     if d is None:
-        d = precheck(out, name, standin, hint_set, record)
+        d = precheck(out, name, standin, hint_set, record,
+                     **({"remaining_s": remaining_s} if remaining_s else {}))
         if d is None:
             return None
+    if remaining_s is not None:
+        if remaining_s() <= 0:
+            record.update(proven=False, outcome="not proven (counted deadline)")
+            return None
+        timeout = min(timeout, remaining_s())
     wlog, ws = verifier(out, d, mode, timeout=timeout)
+    if CLOCK_KIND[0] == "continuous_monotonic":
+        import staged_search
+        try:
+            record["checked_run"] = staged_search.check_run(d, wlog, round_mode=False)
+        except RuntimeError as exc:
+            record.update(proven=False, outcome=str(exc))
+            return None
     a = assess(d, wlog)
+    completed_in_time = remaining_s is None or remaining_s() > 0
+    if not completed_in_time:
+        a = {**a, "ok": False}
     if ws["exit_code"] != 0 or a["n_goals"] == 0:
         record.update(wp={"exit": ws["exit_code"], "wall_s": ws["wall_s"], "log": str(wlog),
                           "log_sha256": ws["log_sha256"], "timed_out": ws.get("timed_out")},
@@ -460,6 +513,8 @@ def wp_round(out, name, standin, hint_set, record, mode="wp-smoke", timeout=7200
                   smoke_failures=a["smoke_failures"], proven=a["ok"],
                   outcome="proven" if a["ok"] else f"not proven ({len(a['failing_goals'])} failing goals, "
                                                     f"{len(a['problems'])} report properties not Valid)")
+    if not completed_in_time:
+        record.update(proven=False, outcome="not proven (counted deadline after completion)")
     return a
 
 
