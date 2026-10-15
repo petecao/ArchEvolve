@@ -272,7 +272,7 @@ def test_each_construct_group_safe_fixture_proves_and_its_seeded_bug_does_not(su
     safe = subset.unit(group)
     assert safe["verdict"] == "proven", (group, safe.get("failure_class"), safe.get("unproven_properties"))
     assert safe["bounds"] == {"threads": 1, "input_size": "unbounded"}
-    assert safe["pins"]["naming_rules"]["id"] == "kept-names.2"
+    assert safe["pins"]["naming_rules"]["id"] == "kept-names.3"
     bug = subset.unit(group, candidate="bug")
     assert bug["verdict"] == "not_proven" and "counterexample" not in bug
 
