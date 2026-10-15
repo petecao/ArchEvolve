@@ -410,6 +410,36 @@ original/view AST relation are freshly regenerated before WP. The source view pe
 the proof evidence. A declaration alone grants no origin permission to other helpers or models.
 
 The existing size fixture proves through this relation, while removing its original caller
+initializedness leaves the stream-load precondition unproved. Original three-read source
+`base[q[0]]` remains outside the supported scalar-offset grammar; helper certification does not
+waive that separate nested-read obligation.
+
+
+## Original standard-library source admission (2026-10-15)
+
+Standard-model and allocation substitutions retain an independent certificate for
+the complete original C++ translation unit, before helper or ownership views. The
+checker uses matching native libclang with the actual compiler driver's effective
+frontend options. It pins source, transitive headers, canonical libc++ and resource
+headers, parser and driver binaries. Project declarations that replace standard
+entities, custom allocators, allocation hooks, handler changes, shadow standard
+headers and unsupported option injection refuse admission. Ordinary project headers
+remain eligible. An explicit allocator must resolve through the admitted standard
+namespace; an unrelated global `allocator<T>` cannot stand in for `std::allocator<T>`.
+
+WP, CBMC, both Crux forms and the CBMC equivalence product bind this certificate to
+the original source. Native differential execution and the shared prelaunch check
+replay it. Changed source, header context, recorded certificate or retained report
+refuses the job. A certificate must cover the exact substituted model/type set, and
+a provenance refusal stops bounded fallback. The report is retained as
+`stdlib_provenance_unit` (or separate candidate/baseline reports for equivalence);
+settings and setup hashes preserve the binding. Generated C model-body proofs use
+their separate model-text boundary.
+
+This certifies the admitted source and compiler context. Allocation success, fresh
+storage and the stated frame for preexisting memory remain explicit premises;
+arbitrary linked runtime implementations are outside this check.
+
 initializedness leaves the stream-load precondition unproved.
 
 Nested entry reads (2026-10-15): a separate checked source view admits `base[q[k]]` in an
@@ -432,3 +462,15 @@ Records retain `nested_read_check`, `nested_read_certificate`, `nested_read_orig
 `nested_read_original_lowering`, and `nested_read_view_source` pins, the persistent source view,
 and `settings.nested_entry_reads` with an empty added-input-premise list. This supplies no
 origin permission to other source forms, helpers or models.
+
+Qualified standard range body (2026-10-15): the exact audited `std_copy_int` body may be
+proved under an explicit standard-library typed valid-range domain. Its source endpoints
+must belong to one live typed array range, and the destination supplies the same element
+count. This qualification adds no ACSL input premise and removes no original body operation.
+Named numerical assertions, ordinary validity/initializedness obligations, RTE checks and
+smoke tests remain mandatory. Records retain `standard_range_model_check` and
+`standard_range_model_certificate` pins and `settings.standard_range_model`, including the
+unchanged contract hashes, explicit range domain and original/view body hashes. Setup
+rebuilds the exact qualified input before launch. This standalone body result supplies no
+unrestricted opaque-pointer permission: WP callers still refuse importing `std_copy_int`
+until their typed roots/subobjects, endpoint offsets and destination capacity are checked.

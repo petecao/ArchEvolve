@@ -90,8 +90,11 @@ class BoundedChain:
             if verdict.failure_class:
                 attempt["failure_class"] = verdict.failure_class
             admission = ((verdict.record_fields or {}).get('settings') or {}).get('bounded_initialization') or {}
-            if admission.get('verdict') == 'refused':
-                attempt['handler'] = 'checked source initializedness/origin policy refused; no fallback may relax it'
+            standard = ((verdict.record_fields or {}).get('settings') or {}).get('stdlib_provenance') or {}
+            if admission.get('verdict') == 'refused' or standard.get('verdict') == 'refused':
+                attempt['handler'] = ('original standard declaration/header provenance refused; no fallback may relax it'
+                    if standard.get('verdict') == 'refused' else
+                    'checked source initializedness/origin policy refused; no fallback may relax it')
                 attempts.append(attempt)
                 break
             last = position == len(route) - 1

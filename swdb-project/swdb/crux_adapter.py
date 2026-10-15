@@ -155,6 +155,10 @@ class CruxAdapter:
             raise AdapterError(str(exc)) from None
         context['lowering'] = code.lowering
         context['pins']['c_lowering'] = {'id': f'{code.lowering.function}.c', 'sha256': code.c_sha256}
+        from swdb import stdlib_source_admission
+        provenance_problem = stdlib_source_admission.bind(context, code.lowering, source, defines=self.defines)
+        if provenance_problem:
+            return self._not_proven('unsupported_construct', provenance_problem, context)
         admission = bounded_initialization.check(code.lowering, max(sizes.values(), default=0), library=self.library)
         context['settings']['bounded_initialization'] = admission
         if admission['verdict'] != 'passed':

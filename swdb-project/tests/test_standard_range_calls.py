@@ -83,3 +83,36 @@ def test_prelaunch_numeric_guard_cannot_be_removed_from_an_otherwise_identical_v
     assert changed!=generated
     with pytest.raises(wp_pointer_bounds.Refused,match='missing or duplicated'):
         wp_pointer_bounds.check_input(lowered,lowered.text,report,changed)
+
+
+def test_generic_alias_policy_outside_the_exact_copy_operations_is_not_broadened(tmp_path):
+    lowered=lower(tmp_path,'int a[4]={1,2,3,4}; int b[4]={0,0,0,0}; int*p=a+1; std::copy(p,p+1,b); return p[0];')
+    assert calls(lowered)[0]['reason']==''
+    with pytest.raises(wp_pointer_bounds.Refused,match='certified array-object origin'):
+        wp_pointer_bounds.prepare(lowered,lowered.text)
+
+
+def test_source_reparse_rejects_a_self_consistent_forged_destination_extent(tmp_path):
+    import hashlib,json
+    lowered=lower(tmp_path,'int a[2]={1,2}; int b[2]={0,0}; std::copy(a,a+2,b); return 0;')
+    report=copy.deepcopy(lowered.pointer_bounds)
+    row=next(r for r in report['sites'] if r.get('kind')=='standard_range_call')
+    row['destination']['elements']='200'
+    row['predicate']=row['predicate'].rsplit('<= (2)',1)[0]+'<= (200)'
+    def digest(value):return hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+    row.pop('certificate_sha256');row['certificate_sha256']=digest(row)
+    report.pop('certificate_sha256');report['certificate_sha256']=digest(report)
+    forged=replace(lowered,pointer_bounds=report)
+    # Hashes alone are insufficient; the generator-owned source plan is authority.
+    with pytest.raises(wp_pointer_bounds.Refused,match='source closure|checked lowering'):
+        wp_pointer_bounds.recheck_source(forged,{'source':str(tmp_path/'copy.cc'),'kwargs':{}})
+
+
+def test_a_global_pointer_cannot_be_admitted_from_a_stale_initializer(tmp_path):
+    path=tmp_path/'global.cc'
+    path.write_text('#include <algorithm>\nint a[2]={1,2}; int b[2]={0,0}; int*p=a;\n'
+                    'int unit(int n){p=b; std::copy(p,p+1,b);return 0;}\n')
+    try:lowered=c_lowering.lower(path,'unit')
+    except c_lowering.Unsupported:return  # earlier exact-source admission may refuse global pointer initializers
+    with pytest.raises(wp_pointer_bounds.Refused,match='global origins|stable|origin'):
+        wp_pointer_bounds.prepare(lowered,lowered.text)

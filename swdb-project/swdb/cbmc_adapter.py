@@ -183,6 +183,10 @@ class CbmcAdapter:
             return self._not_proven("parse_error", str(exc), context)
         except c_lowering.LoweringError as exc:
             raise AdapterError(str(exc)) from None
+        from swdb import stdlib_source_admission
+        provenance_problem = stdlib_source_admission.bind(context, lowering, source, defines=self.defines)
+        if provenance_problem:
+            return self._not_proven("unsupported_construct", provenance_problem, context)
         model = None
         externals = proof_semantics.called(lowering, covered)
         if externals:
@@ -469,6 +473,11 @@ class CbmcAdapter:
 
     # --- the differential run ------------------------------------------------------------------------------
     def _differential(self, job, code, built, context):
+        from swdb import stdlib_source_admission
+        try:
+            stdlib_source_admission.recheck(context)
+        except stdlib_source_admission.Refused as exc:
+            raise AdapterError(f"proof setup check [stdlib_provenance]: {exc}") from None
         """C lowering versus C++ on every input of the bounded domain (no stubs: the real callees on both sides)."""
         out, log, scratch = context["out"], context["log"], Path(job.scratch)
         lines, sampled, domain = _domain(built["plan"])

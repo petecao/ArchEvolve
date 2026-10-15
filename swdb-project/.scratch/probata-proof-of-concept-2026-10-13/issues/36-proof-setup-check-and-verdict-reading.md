@@ -548,6 +548,38 @@ is not accepted as a proof. Raw output remains remote for its readers; only comp
 metadata is exported. [Evidence](../evidence/summary-source-binding-mbit10-20261015.json).
 This checkpoint does not close the ticket's remaining acceptance criteria.
 
+
+## Checkpoint — 2026-10-15 10:49 ET: helper/construct remote audit
+
+Frozen `1ece49b8` ran in two socket lanes from 09:57 ET. Entry-window and actual
+helper controls passed **17/17 in 1428.35s** on node 1, generation 597. Constructs
+on node 0, generation 556, stopped at its first failure: **5 passed, 1 failed in
+1268.59s**. The failure is the standalone `std_copy_int` model's uncertified opaque
+pointer origin, before WP launch, with zero goals. It is not a failing numerical
+proof or full construct acceptance. A separate qualified model-body repair is under
+review; caller range discharge remains required.
+
+All referenced artifact hashes match across 43 retained records. Both socket leases
+and the legacy lease were released at the 10:49 ET live readback; load was
+0.32/0.07/0.30, `/data1` had 21 GiB and `/data` had 97 GiB free. Raw results remain
+remote for coordinator, ticket acceptance and independent audit readers.
+[Compact audit](../evidence/helper-construct-mbit10-20261015.json). This checkpoint
+does not resolve the ticket. Recheck live state before dispatch.
+
+
+### Source gate actual acceptance — 2026-10-15 10:53 ET
+
+Frozen `00b16733` passed the actual current-owner/stale-alias pair: **2 passed in
+243.20s**, peak 651 MiB under the shared 8 GiB watchdog. The safe record has
+105 ordinary Valid goals and 11 passing smoke checks. The stale record retains
+one timed-out `alias_live_after` obligation (111 ordinary Valid plus 11 passing
+smoke checks), so it remains not proven. Both original-TU certificates and shared
+setup replays pass; all referenced artifact hashes and the prospective runtime
+manifest match. The audit resolves pytest symlink aliases before counting records.
+[Actual evidence](../evidence/stdlib-source-provenance-actual-20261015.json).
+The gate's focused admission and actual pair are accepted; wider vector/member
+acceptance and the ticket remain open.
+
 ### Nested entry-read checkpoint — 2026-10-15 ET
 
 `nested_entry_reads.py` supplies a separate checked source view for one-level

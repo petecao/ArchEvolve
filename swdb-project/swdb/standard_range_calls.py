@@ -72,6 +72,8 @@ def _origin(node, function, origins, seen=()):
     if key in seen or (function,key) in origins.unstable:
         raise Refused('std::copy pointer binding is not stable throughout the retained source closure')
     qual=str((declaration.get('type') or {}).get('qualType',''))
+    if declaration.get('id') not in origins.declarations.get(function,{}):
+        raise Refused('std::copy global origins need an exact original-TU declaration mapping')
     if declaration.get('kind')=='VarDecl' and bounds._pointer(declaration):
         initializers=_children(declaration)
         if declaration.get('storageClass') or len(initializers)!=1:
@@ -110,9 +112,9 @@ def _predicate(first,last,destination):
 def certify(sites, definitions, origins):
     """Independently bind printed model calls to every retained original call AST."""
     from swdb import c_lowering, wp_pointer_bounds as bounds
-    if not sites:return []
+    if not sites:return [], {}
     recorded={(s['function'],s['_ast_id']):s for s in sites}
-    rows=[];found=set()
+    rows=[];found=set();operation_origins={}
     for function,root in definitions.items():
         for node in bounds._walk(root):
             children=_children(node)
@@ -147,6 +149,21 @@ def certify(sites, definitions, origins):
                     model_sha256=hashlib.sha256(c_lowering.model_text(standard_range_model.NAME).encode()).hexdigest(),
                     qualification=standard_range_model.identity())
                 row['certificate_sha256']=_digest({k:v for k,v in row.items() if k!='certificate_sha256'})
+                # Override only exact pointer operations inside this fully
+                # certified call, never the generic alias-origin policy.
+                for argument in children[1:]:
+                    for part in bounds._walk(argument):
+                        if part.get('kind')=='BinaryOperator' and part.get('opcode') in {'+','-'} and any(
+                                bounds._pointer(c) for c in _children(part)):
+                            base=bounds._origin_base(part)
+                            value=_origin(base,function,origins)
+                            root=value['root']
+                            origin={'kind':root['kind'],'name':root['name'],'element_type':'int',
+                                    'elements':int(value['elements']) if root['kind']=='one_dimensional_array' else value['elements']}
+                            if root['kind']=='entry_window':
+                                origin.update(parameter=root['name'],root=root['name'],relative_offset=value['offset'],
+                                              declarations_sha256=root['declarations_sha256'])
+                            operation_origins[(function,part.get('id'))]=origin
             except (Refused,bounds.Refused) as exc:
                 row['reason']=str(exc)
             rows.append(row)
@@ -154,7 +171,7 @@ def certify(sites, definitions, origins):
         if key not in found:
             rows.append({'kind':'standard_range_call','function':key[0],'source_line':original.get('source_line'),
                          'reason':'printed std::copy call has no original-source AST counterpart'})
-    return rows
+    return rows, operation_origins
 
 
 def check_row(row):

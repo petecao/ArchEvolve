@@ -316,13 +316,11 @@ class _Origins:
         initializers = [n for n in declaration.get("inner", []) if isinstance(n, dict) and n.get("kind")]
         if len(initializers) != 1:
             return None
-        # A variable offset in an alias initializer needs a value snapshot.
-        # A fixed int array's DeclRef names its persistent root, not a scalar
-        # offset read; keep it while still refusing every scalar DeclRef.
+        # A variable offset in an alias initializer would require a value
+        # snapshot at that declaration, distinct from the unit-entry extent.
         initializer = _strip_origin(initializers[0])
         if initializer.get("kind") == "BinaryOperator" and any(
-                n.get("kind") == "DeclRefExpr" and not _pointer(n) and
-                not re.fullmatch(r"(?:const )?int\s*\[\d+\]", str((n.get("type") or {}).get("qualType", "")))
+                n.get("kind") == "DeclRefExpr" and not _pointer(n)
                 for n in _walk(initializer)):
             return None
         return self.get(initializers[0], function, (*seen, key))
@@ -425,7 +423,7 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
         except (Refused, dx_array_domains.Refused) as exc:
             rows.append({"function": key[0], "source_line": site["source_line"], "reason": str(exc)})
     from swdb import standard_range_calls
-    standard_rows = standard_range_calls.certify(standard_calls, definitions, origins)
+    standard_rows, standard_operation_origins = standard_range_calls.certify(standard_calls, definitions, origins)
     rows.extend(standard_rows)
     checked_standard = {(s["function"],s["_ast_id"]) for s in standard_calls}
     has_arithmetic = bool(rows)
@@ -462,6 +460,8 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
                 base = _origin_base(node)
                 try:
                     origin = origins.get(base, function) if base is not None else None
+                    if origin is None:
+                        origin = standard_operation_origins.get((function,node.get("id")))
                 except Refused as exc:
                     origin, reason = None, str(exc)
                 row = by_node.get((function, node.get("id"))) if operation else None

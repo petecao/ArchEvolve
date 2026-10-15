@@ -9,6 +9,22 @@ Updated: 2026-10-15 ET. Resumed under Yan-Ru's ongoing implementation, push and 
 Current integration branch: `codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
 Current dispatch, evidence and blockers: [resume.md](resume.md).
 
+- **Checkpoint 2026-10-15 10:49 ET:** frozen remote `1ece49b8` entry/helper shard
+  passed 17 checks; constructs stopped at the opaque `std_copy_int` model
+  (5 passed/1 failed). All artifact hashes match across 43 retained records.
+  [Audit](evidence/helper-construct-mbit10-20261015.json). Qualified copy-body,
+  declaration-attribute and nested-read repairs are merged as `40d2de72`.
+  The original-TU standard-source gate has 24 focused passing controls and its
+  actual safe/stale pair passed at `00b16733` (2 tests/243.20s). Run18 finished unproven with 20 open goals
+  and no final smoke proof. Counts remain 32 resolved/five claimed.
+
+- **Integration checkpoint 2026-10-15 ET:** `636b2080` includes the declaration-attribute
+  guard, qualified standalone copy model, and hardened nested-read view. Historical
+  actual proofs retain their exact source/method pins; copy callers remain closed
+  pending typed-range discharge. Tickets24/25/27/36 remain claimed.
+  [Copy evidence](evidence/t24-std-copy-qualified-body-mac-20261015.json);
+  [nested evidence](evidence/wp-nested-entry-reads-20261015.json).
+
 - **Checkpoint 2026-10-15 09:53 ET:** source-bound summary admission merged as
   `45560225`; frozen mbit10 `fddb1462` replay passed 132 native checks/1 deselected
   and 17 bounded/source-summary checks. [Remote evidence](evidence/summary-source-binding-mbit10-20261015.json).

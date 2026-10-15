@@ -482,6 +482,24 @@ is not accepted as a proof. Raw output remains remote for its readers; only comp
 metadata is exported. [Evidence](../evidence/summary-source-binding-mbit10-20261015.json).
 This checkpoint does not close the ticket's remaining acceptance criteria.
 
+
+## Checkpoint — 2026-10-15 10:49 ET: helper/construct remote audit
+
+Frozen `1ece49b8` ran in two socket lanes from 09:57 ET. Entry-window and actual
+helper controls passed **17/17 in 1428.35s** on node 1, generation 597. Constructs
+on node 0, generation 556, stopped at its first failure: **5 passed, 1 failed in
+1268.59s**. The failure is the standalone `std_copy_int` model's uncertified opaque
+pointer origin, before WP launch, with zero goals. It is not a failing numerical
+proof or full construct acceptance. A separate qualified model-body repair is under
+review; caller range discharge remains required.
+
+All referenced artifact hashes match across 43 retained records. Both socket leases
+and the legacy lease were released at the 10:49 ET live readback; load was
+0.32/0.07/0.30, `/data1` had 21 GiB and `/data` had 97 GiB free. Raw results remain
+remote for coordinator, ticket acceptance and independent audit readers.
+[Compact audit](../evidence/helper-construct-mbit10-20261015.json). This checkpoint
+does not resolve the ticket. Recheck live state before dispatch.
+
 Declaration-attribute sidefinding — 2026-10-15 ET: generic lowering accepted a local
 `__attribute__((cleanup(release_local)))` after its initializer and silently dropped its scope-exit
 callback. Public `swdb lower` RED1in0.60s; four retained-declaration RED controls in1.03s also exposed
@@ -495,3 +513,18 @@ remain admitted. Selected public controls:27PASS11.89s, including14new controls 
 groups with deterministic lowering/C compilation. Full-TU startup effects of otherwise uncalled
 functions and class/global attributes are outside this scoped repair. Status remains claimed.
 Evidence:[t24-declaration-attributes-20261015.json](../evidence/t24-declaration-attributes-20261015.json).
+
+## Integration checkpoint — 2026-10-15 ET: qualified copy body and declaration attributes
+
+Integration `636b2080` includes declaration-attribute admission `51ff3999` and the
+qualified standalone copy checkpoint `0e25002d`. The retained actual copy record at
+frozen `1f760ba8` has 36 ordinary Valid and seven smoke PASS goals; its record and eight
+named evidence report hashes were independently checked during integration. Its exact
+model body and contract hashes remain pinned. This is a body result under an explicit
+standard-library typed-range domain, not arbitrary opaque-pointer or caller acceptance;
+WP callers still refuse pending checked typed-root/subobject and range discharge.
+[Copy evidence](../evidence/t24-std-copy-qualified-body-mac-20261015.json).
+The declaration-attribute guard retains its scoped boundary and native cleanup witness;
+this integration does not claim a complete startup/global/class-attribute model.
+Ticket24 remains claimed, with current-policy construct acceptance still coordinated
+separately. Later integration method identities do not upgrade either historical record.
