@@ -508,7 +508,7 @@ def test_a_unit_using_the_models_lists_the_model_version_and_allocation_and_one_
     from swdb import std_models
     used = lower(LOWERING / "vector_pair.cc", "swdb_vector_unit", tmp_path / "vector")
     assert used["std_models"] == {**std_models.identity(), "types": ["std_pair_int_int", "std_vector_int"]}
-    assert used["std_models"]["id"] == "swdb-std-models-1" and used["allocation"] is True
+    assert used["std_models"]["id"] == "swdb-std-models-2" and used["allocation"] is True
     anchors = json.loads((tmp_path / "vector" / "swdb_vector_unit.anchors.json").read_text())
     assert anchors["std_models"] == used["std_models"] and anchors["allocation"] is True
     new_only = lower(LOWERING / "new_array.cc", "swdb_new_unit", tmp_path / "new")

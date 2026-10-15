@@ -12,6 +12,19 @@ from conftest import run_swdb
 from test_proof_semantics import dx, dx_seed, needs_cbmc, needs_wp, prove, prove_wp
 
 
+@needs_wp
+def test_opaque_once_proven_summary_cannot_hide_dx_memory_boundary(dx):
+    result = run_swdb("prove", "--records", dx.records, "--summary", "contract.fixture_dx_summary_wrapper",
+                     "--adapter", "wp", "--runs-dir", dx.runs, "--format", "json", timeout=3600)
+    assert result.returncode == 0, result.stderr + result.stdout
+    summary = dx.read(json.loads(result.stdout))
+    assert summary["verdict"] == "proven", summary.get("unproven_properties")
+    caller = prove_wp(dx, "summary_caller")
+    assert caller["verdict"] == "not_proven" and caller["failure_class"] == "memory_domain", caller
+    assert caller["settings"]["proof_semantics_admission"]["refused"]
+    assert not any(r["name"] == "wp_input" for r in caller["evidence"]["reports"])
+
+
 @needs_cbmc
 @pytest.mark.parametrize("wait", [False, True])
 def test_store_must_be_covered_before_return_in_the_bounded_model(dx, wait):
@@ -46,6 +59,7 @@ def test_store_must_be_covered_before_return_in_wp(dx, wait):
     ("cpu_memory_overlap", None),
     ("cpu_memory_overlap", "SWDB_CPU_OVERLAP_CALLEE"),
     ("cpu_memory_overlap", "SWDB_CPU_OVERLAP_ATOMIC"),
+    ("cpu_memory_overlap", "SWDB_CPU_OVERLAP_MACRO"),
     ("cpu_memory_overlap", "SWDB_CPU_OVERLAP_AFTER_COVER"),
     ("store_source_wait", "SWDB_CPU_READ_AFTER_STORE"),
 ])

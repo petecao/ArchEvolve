@@ -36,7 +36,7 @@ import re
 from pathlib import Path
 
 MODELS_ID = "swdb-std-models"
-MODELS_VERSION = "1"                 # bump on any change to a contract, a body or the struct layout
+MODELS_VERSION = "2"                 # bump on any change to a contract, a body or the struct layout
 OUT_OF_RANGE = "std.vector.at.out_of_range"     # the failed-check name; the CBMC harness prints it for the C++ too
 INDEX_PRECONDITION = "std.vector.operator_index.n_below_size"
 VECTOR_MEMBERS = ("ctor", "ctor_count", "ctor_count_value", "copy_ctor", "move_ctor", "dtor", "operator_index", "at",
@@ -120,11 +120,13 @@ def vector_logic(v, t):
     """The validity predicate of one vector struct (ACSL only)."""
     return (f"/* swdb-std-models: the representation invariant of {v} (data, size, capacity). */\n"
             f"/*@ predicate {v}_valid({v} *v) =\n"
-            f"      \\valid(v) && v->size <= v->capacity && v->capacity <= {_max(t)} &&\n"
-            f"      (v->capacity == 0 ? v->data == \\null : \\valid(v->data + (0 .. v->capacity - 1)));\n"
+            f"      \\valid(v) && \\initialized(v) && v->size <= v->capacity && v->capacity <= {_max(t)} &&\n"
+            f"      (v->capacity == 0 ? v->data == \\null : \\valid(v->data + (0 .. v->capacity - 1))) &&\n"
+            f"      \\initialized(v->data + (0 .. v->size - 1));\n"
             f"    predicate {v}_readable({v} *v) =\n"
-            f"      \\valid_read(v) && v->size <= v->capacity &&\n"
-            f"      (v->capacity == 0 ? v->data == \\null : \\valid(v->data + (0 .. v->capacity - 1)));\n*/")
+            f"      \\valid_read(v) && \\initialized(v) && v->size <= v->capacity &&\n"
+            f"      (v->capacity == 0 ? v->data == \\null : \\valid(v->data + (0 .. v->capacity - 1))) &&\n"
+            f"      \\initialized(v->data + (0 .. v->size - 1));\n*/")
 
 
 def _mangle(t):
@@ -179,6 +181,7 @@ def _helpers(v, t):
         f"  {_decl(t + ' *', 'fresh')} = swdb_alloc_{_mangle(t)}(cap);   /* allocation succeeds (assumption entry) */\n"
         f"  /*@ loop invariant 0 <= k <= this->size;\n"
         f"      loop invariant \\forall integer j; 0 <= j < k ==> fresh[j] == this->data[j];\n"
+        f"      loop invariant \\initialized(fresh + (0 .. k - 1));\n"
         f"      loop assigns k, fresh[0 .. cap - 1];\n"
         f"      loop variant this->size - k; */\n"
         f"  for (size_t k = 0; k < this->size; ++k) fresh[k] = this->data[k];\n"
@@ -223,6 +226,7 @@ def vector_member(v, t, member):
                 f"  this->capacity = n;\n"
                 f"  /*@ loop invariant 0 <= k <= n;\n"
                 f"      loop invariant \\forall integer j; 0 <= j < k ==> this->data[j] == {'value' if value else '0'};\n"
+                f"      loop invariant \\initialized(this->data + (0 .. k - 1));\n"
                 f"      loop assigns k, this->data[0 .. n - 1];\n      loop variant n - k; */\n"
                 f"  for (size_t k = 0; k < n; ++k) this->data[k] = {fill};\n"
                 f"  this->size = n;\n}}")
@@ -239,6 +243,7 @@ def vector_member(v, t, member):
                 f"  this->capacity = other->size;\n"
                 f"  /*@ loop invariant 0 <= k <= other->size;\n"
                 f"      loop invariant \\forall integer j; 0 <= j < k ==> this->data[j] == other->data[j];\n"
+                f"      loop invariant \\initialized(this->data + (0 .. k - 1));\n"
                 f"      loop assigns k, this->data[0 .. other->size - 1];\n      loop variant other->size - k; */\n"
                 f"  for (size_t k = 0; k < other->size; ++k) this->data[k] = other->data[k];\n"
                 f"  this->size = other->size;\n}}")
@@ -323,6 +328,7 @@ def vector_member(v, t, member):
                 f"  size_t k = this->size;\n"
                 f"  /*@ loop invariant this->size <= k && (k <= n || k == this->size);\n"
                 f"      loop invariant \\forall integer j; this->size <= j < k ==> this->data[j] == 0;\n"
+                f"      loop invariant \\initialized(this->data + (0 .. k - 1));\n"
                 f"      loop assigns k, this->data[this->size .. n - 1];\n      loop variant n - k; */\n"
                 f"  for (; k < n; ++k) this->data[k] = {zero};\n"
                 f"  this->size = n;\n}}")
@@ -371,18 +377,19 @@ def pair_member(p, a, b, member):
                 f"static void {p}_ctor({p} *this, {_decl(a, 'x')}, {_decl(b, 'y')}) {{ this->first = x; this->second = y; }}")
     elif member == "copy_ctor":
         text = (f"/* [pairs.pair] p2 (pair(const pair&) = default): copies first and second. */\n"
-                f"/*@ requires \\valid(this) && \\valid_read(other);\n    assigns *this;\n"
+                f"/*@ requires \\valid(this) && \\valid_read(other) && \\initialized(other);\n    assigns *this;\n"
                 f"    ensures this->first == \\old(other->first) && this->second == \\old(other->second); */\n"
                 f"static void {p}_copy_ctor({p} *this, const {p} *other) {{ *this = *other; }}")
     elif member == "operator_assign":
         text = (f"/* [pairs.pair] p15-p17: operator=(const pair& p) assigns p.first to first and p.second to second;\n"
                 f"   returns *this. */\n"
-                f"/*@ requires \\valid(this) && \\valid_read(other);\n    assigns *this;\n"
+                f"/*@ requires \\valid(this) && \\valid_read(other) && \\initialized(other);\n    assigns *this;\n"
                 f"    ensures this->first == \\old(other->first) && this->second == \\old(other->second);\n"
                 f"    ensures \\result == this; */\n"
                 f"static {p} *{p}_operator_assign({p} *this, const {p} *other) {{ *this = *other; return this; }}")
     else:
         raise KeyError(member)
+    text = text.replace("    ensures ", "    ensures \\initialized(this);\n    ensures ", 1)
     return f"{p}_{member}", text
 
 

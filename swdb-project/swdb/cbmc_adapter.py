@@ -232,6 +232,12 @@ class CbmcAdapter:
         except tr.Untranslatable as exc:
             context["settings"]["untranslatable"] = str(exc)
             return self._not_proven("unsupported_construct", f"the CBMC translator: {exc}", context)
+        refusal = cpu_memory_admission.summary_refusal(self.records, [
+            pin["proof_record"] for pin in context["pins"].get("summaries", [])])
+        if refusal:
+            context["settings"]["proof_semantics_admission"] = refusal
+            context["settings"]["verifier_launched"] = False
+            return self._not_proven("memory_domain", "opaque semantics dependency needs a checked memory boundary", context)
         problem = self._differential(job, code, built, context)
         if problem:
             return problem

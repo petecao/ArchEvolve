@@ -28,6 +28,9 @@ void dxf_load(int *q, int n, int t) {
 // 2026-10-15 ET: ordinary CPU memory effects need ticket 28's memory-hazard probes. Until then every
 // variant is refused conservatively, including an otherwise safe write after its covering wait.
 void dxf_cpu_store(int *p) { *p = 0; }
+#define DXF_CPU_TILE_MIX(tile, data) ((tile)[0] + ((data)[0] = 0))
+int dxf_summary_wrapper(int n) { get_tile_size(0); return 1; }
+int dxf_summary_caller(int n) { return dxf_summary_wrapper(n); }
 int dxf_store_exit(int *q, int *p, int n) {
   dxf_load(q, n, 0);
   wait_ready(0);
@@ -70,6 +73,8 @@ int dxf_cpu_memory_overlap(int *q, int *base, int n) {
   dxf_cpu_store(base + q[0]);
 #elif defined(SWDB_CPU_OVERLAP_ATOMIC)
   __atomic_store_n(base + q[0], 0, __ATOMIC_SEQ_CST);
+#elif defined(SWDB_CPU_OVERLAP_MACRO)
+  int mixed = DXF_CPU_TILE_MIX(t1, base);
 #else
   base[q[0]] = 0;
 #endif

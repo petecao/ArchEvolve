@@ -134,7 +134,7 @@ def test_each_level_in_rank_order(seed, bounds, expected):
     level = seed.level()
     assert level["level"] == expected
     assert level["rank"] == RANK.index(expected)
-    assert level["level_rule"] == "level-rule.3"
+    assert level["level_rule"] == "level-rule.4"
 
 
 def test_uncertified_ranks_lowest(seed):
@@ -821,16 +821,35 @@ def test_the_snapshot_names_level_time_rule_version_and_counting_records(seed):
     level = seed.level()
     snapshot = level["snapshot"]
     assert set(snapshot) == {"level", "at", "level_rule", "records"}
-    assert snapshot["level"] == "proven_unbounded" and snapshot["level_rule"] == "level-rule.3"
+    assert snapshot["level"] == "proven_unbounded" and snapshot["level_rule"] == "level-rule.4"
     assert snapshot["records"] == ["proof.t10.unit"]
     assert re.fullmatch(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2} ET", snapshot["at"])
 
 
 @pytest.mark.parametrize("field", ["level_rule", "level"])
 def test_validate_refuses_a_proof_record_that_holds_a_level_rule_field(seed, field):
-    seed.proof("unit", bounds=TOP, **{field: "level-rule.3"})
+    seed.proof("unit", bounds=TOP, **{field: "level-rule.4"})
     result = seed.validate()
     assert result.returncode == 1
     problem = [line for line in result.stderr.splitlines() if "proof.t10.unit" in line and field in line]
     assert problem and "level rule" in problem[0], result.stderr
 
+
+
+@pytest.mark.parametrize("stale", [False, True])
+def test_a_c_model_dependency_counts_current_text_and_voids_stale_text(seed, stale):
+    from swdb import c_lowering
+    import hashlib
+    name = "std_min_int"
+    pin = {"id": name, "sha256": hashlib.sha256(c_lowering.model_text(name).encode()).hexdigest()}
+    model_pin = {**pin, "sha256": "0" * 64} if stale else pin
+    rid = seed.proof("c-model", subject={"kind": "c_model", "id": name},
+                     pins={"code": model_pin, "contract": {"not_applicable": "Model contract is its text."},
+                           "baseline_function": {"not_applicable": "Model has no baseline."}},
+                     bounds={"threads": 1, "input_size": "unbounded"})
+    seed.proof("unit-model", pins={"models": [{**pin, "proof_record": rid}]}, bounds=TOP)
+    level = seed.level()
+    assert level["level"] == ("certified" if stale else "proven_within_bounds_threads_1")
+    if not stale:
+        assert level["proven"]["bounds"]["threads"] == 1
+        assert level["proof_units"][0]["records"][0]["caps"][0]["kind"] == "model"

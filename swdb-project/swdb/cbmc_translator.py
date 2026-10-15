@@ -287,6 +287,8 @@ class _Expr:
             return self.old()
         if tok == "\\valid":
             return self.valid()
+        if tok == "\\initialized":
+            return self.initialized()
         if tok == "\\separated":
             return self.separated()
         if tok == "\\result":
@@ -464,6 +466,17 @@ class _Expr:
         self.take("(")
         pointer, low, high = self.location()
         self.take(")")
+        return self.ctx.valid(pointer, low, high)
+
+    def initialized(self):
+        self.take()
+        self.take("(")
+        pointer, low, high = self.location()
+        self.take(")")
+        # The harness fills every element of its own interface buffers before evaluating requires.
+        # No initialization fact is invented for heap/global storage, summaries or poststates.
+        if self.ctx.mode != "harness" or self.ctx.post or self.ctx.is_old or pointer not in self.ctx.caps:
+            raise Untranslatable("\\initialized is supported only for harness-owned input-buffer preconditions")
         return self.ctx.valid(pointer, low, high)
 
     def separated(self):

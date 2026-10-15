@@ -193,6 +193,12 @@ class WpAdapter:
             return self._not_proven("unsupported_construct",
                 "ordinary CPU memory interference with DX100 commands needs ticket 28's memory-hazard probes", context)
         contracts = self._dependencies(dependency_lowering, context)
+        refusal = cpu_memory_admission.summary_refusal(self.records, [
+            pin["proof_record"] for group in ("summaries", "models") for pin in context["pins"].get(group, [])])
+        if refusal:
+            context["settings"] = {"tool": "frama-c-wp", "flags": [], "verifier_launched": False,
+                                   "proof_semantics_admission": refusal}
+            return self._not_proven("memory_domain", "opaque semantics dependency needs a checked memory boundary", context)
         context["lowering"] = lowering
         context["extern_contracts"] = {
             used["c_name"]: {"id": used["summary"], "sha256": self.library.content_sha256(used["summary"])}
@@ -307,16 +313,61 @@ class WpAdapter:
         return found
 
     def _proven(self, kind, ident, sha):
-        """The latest proven proof record about {kind, ident} whose code pin is `sha`, or None."""
+        """Latest counting WP proof of this text under the caller's exact method and evidence boundary."""
+        from swdb import level_rule
         from swdb.store import Store
+        if self.records is None:
+            return None
+        store = Store(self.records)
+        rule = level_rule.Rule(store, self.library)
+        expected_method = {"id": self.method.id, "sha256": self.method.sha256}
+        expected_evidence = self.method.data.get("evidence_kind")
+        memo = {}
+
+        def admissible(record_id):
+            if record_id in memo:
+                return memo[record_id]
+            memo[record_id] = False  # cyclic dependencies never bootstrap a proof
+            data = rule.proofs.get(record_id) or {}
+            pins = data.get("pins") or {}
+            if (data.get("verdict") != "proven" or pins.get("method_version") != expected_method
+                    or data.get("evidence_kind") != expected_evidence
+                    or expected_evidence not in ("execution", "contract_fixture")
+                    or (data.get("job") or {}).get("adapter") != "wp"):
+                return False
+            setup, reading = data.get("proof_setup_check") or {}, data.get("verdict_reading") or {}
+            current_checks = proof_setup.identity()
+            if (setup.get("check") != current_checks["proof_setup_check"]
+                    or reading.get("check") != current_checks["verdict_reading"]
+                    or setup.get("verdict") != "passed" or not setup.get("runs")
+                    or setup.get("method_version") != expected_method
+                    or reading.get("verdict") != "proven"):
+                return False
+            state = rule.status(record_id)
+            bounds = state.get("bounds")
+            if (not state.get("counts") or not isinstance(bounds, dict)
+                    or bounds.get("threads") not in (1, "unbounded")
+                    or any(value != "unbounded" for key, value in bounds.items() if key != "threads")):
+                return False  # a bounded dependency cannot stand for an unbounded WP call
+            for group in ("summaries", "models"):
+                for used in pins.get(group) or []:
+                    dependency = rule.proofs.get(used.get("proof_record")) or {}
+                    expected_kind = "library_summary" if group == "summaries" else "c_model"
+                    if (dependency.get("subject") != {"kind": expected_kind, "id": used.get("id")}
+                            or (dependency.get("pins") or {}).get("code") !=
+                            {k: used.get(k) for k in ("id", "sha256")}
+                            or not admissible(used.get("proof_record"))):
+                        return False
+            memo[record_id] = True
+            return True
+
         proven = []
-        if self.records is not None:
-            for record in Store(self.records).of_kind("proof"):
-                d = record.data
-                subject = d.get("subject") or {}
-                if subject.get("kind") == kind and subject.get("id") == ident and d.get("verdict") == "proven" and \
-                        ((d.get("pins") or {}).get("code") or {}).get("sha256") == sha:
-                    proven.append(((d.get("job") or {}).get("batch", ""), record.id))
+        for record in store.of_kind("proof"):
+            data = record.data
+            if (data.get("subject") == {"kind": kind, "id": ident}
+                    and (data.get("pins") or {}).get("code") == {"id": ident, "sha256": sha}
+                    and admissible(record.id)):
+                proven.append(((data.get("job") or {}).get("batch", ""), record.id))
         return sorted(proven)[-1][1] if proven else None
 
     def _dependencies(self, lowering, context):
