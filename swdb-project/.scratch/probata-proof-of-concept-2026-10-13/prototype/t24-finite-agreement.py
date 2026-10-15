@@ -280,7 +280,7 @@ def main():
                                  'signed_overflow':'-fwrapv retained from ticket22; known original overflow excluded',
                                  'system_libraries':'link-time SDK stubs and physical libraries hashed; dyld-cache runtime bytes are not independently hashed'},
                 'platform':{'uname':list(os.uname()),'system_version':pin(Path('/System/Library/CoreServices/SystemVersion.plist')) if sys.platform=='darwin' else None},
-                'sources':[],'tools':{},'tracked_status':git('status','--porcelain','--untracked-files=no')}
+                'sources':[],'tools':{'python':{**pin(Path(sys.executable).resolve()),'version':sys.version}},'tracked_status':git('status','--porcelain','--untracked-files=no')}
     for name in git('ls-files','swdb','tests/fixtures/proof/lowering','tests/test_wp_subset.py').splitlines():
         path = REPO/name
         if path.is_file():
@@ -288,7 +288,10 @@ def main():
     manifest['sources'].append(pin(Path(__file__)))
     for side,command in [('cxx',tool.command[0]),('c',tool.command[0].replace('clang++','clang'))]:
         path = Path(command).resolve()
-        manifest['tools'][side] = {**pin(path),'version':subprocess.check_output([str(path),'--version'],text=True)}
+        version = subprocess.check_output([str(path),'--version'],text=True)
+        manifest['tools'][side] = {**pin(path),'version':version}
+        configs = re.findall(r'^Configuration file: (.+)$',version,re.M)
+        manifest['tools'][side]['configuration_files'] = [pin(Path(name)) for name in configs]
     original = '\n'.join((FIXTURES/name).read_text() for name in GROUP_FILES)
     seeded = original
     for before,after in SEEDED_BUGS:
