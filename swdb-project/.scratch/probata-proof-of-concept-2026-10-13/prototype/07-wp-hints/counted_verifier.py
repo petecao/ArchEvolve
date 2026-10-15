@@ -17,9 +17,12 @@ import signal
 import subprocess
 import sys
 import time
+import uuid
 
 import psutil
 import staged_search as S
+
+RUN_TOKEN_ENV = 'SWDB_VERIFIER_RUN_TOKEN'
 
 
 def _json(path, data):
@@ -99,8 +102,48 @@ def _group(root, known):
             pass
 
 
-def _stop(process, known):
-    """Stop the owned group even after root exit; retain unconfirmed ancestry."""
+def _token_tree(token, born_after, known):
+    """Find inherited run identity even after reparenting/session changes.
+
+    Trusted toolchain descendants must preserve the marker. This does not contain
+    hostile descendants that scrub their environment. Environment values never
+    leave this comparison; only matching PID/birth identities are retained.
+    """
+    for process in psutil.process_iter(['pid', 'create_time', 'uids']):
+        try:
+            info = process.info
+            if info['uids'].real != os.getuid() or info['create_time'] < born_after:
+                continue
+            if process.status() in {psutil.STATUS_ZOMBIE, psutil.STATUS_DEAD}:
+                continue
+            for attempt in range(3):
+                try:
+                    if process.environ().get(RUN_TOKEN_ENV) == token:
+                        known[process.pid] = info['create_time']
+                    break
+                except psutil.AccessDenied:
+                    # procargs can race with exec/exit on Darwin. Retry the
+                    # inspection itself; persistent live denial fails closed.
+                    if process.status() in {psutil.STATUS_ZOMBIE, psutil.STATUS_DEAD}:
+                        break
+                    if attempt == 2:
+                        raise
+                    time.sleep(.01)
+        except psutil.NoSuchProcess:
+            pass
+        except psutil.AccessDenied:
+            # Darwin can report EACCES when procargs races with process exit.
+            # Only an independently confirmed gone/zombie process is harmless.
+            try:
+                if process.status() not in {psutil.STATUS_ZOMBIE, psutil.STATUS_DEAD}:
+                    raise
+            except psutil.NoSuchProcess:
+                pass
+        # AccessDenied/other inspection errors propagate: absence is unconfirmed.
+
+
+def _stop(process, known, *, token=None, born_after=None):
+    """Stop owned/observed/inherited-marker processes, or quarantine the lease."""
     if process is None:
         return []
     unconfirmed = []
@@ -117,15 +160,17 @@ def _stop(process, known):
         pass  # descendants may retain the original session/group after root exit
     except (psutil.Error, PermissionError):
         return ["group-leader-inspection-unconfirmed"]
-    if not root_alive and process.pid not in known:
+    if not root_alive and process.pid not in known and token is None:
         # An unsampled child might already have changed session and been
         # reparented. Draining the old group cannot establish its absence.
         unconfirmed.append("root-ancestry-never-sampled")
     try:
         _tree(process.pid, known)
         _group(process.pid, known)
-    except (psutil.Error, PermissionError):
-        unconfirmed.append("tree-inspection-unconfirmed")
+        if token is not None:
+            _token_tree(token, born_after, known)
+    except (psutil.Error, PermissionError) as exc:
+        unconfirmed.append(f"tree-inspection-unconfirmed:{type(exc).__name__}:pid={getattr(exc, 'pid', None)}")
     try:
         os.killpg(process.pid, signal.SIGKILL)
     except ProcessLookupError:
@@ -134,8 +179,10 @@ def _stop(process, known):
     while True:
         try:
             _group(process.pid, known)
-        except (psutil.Error, PermissionError):
-            unconfirmed.append("group-inspection-unconfirmed")
+            if token is not None:
+                _token_tree(token, born_after, known)
+        except (psutil.Error, PermissionError) as exc:
+            unconfirmed.append(f"group-inspection-unconfirmed:{type(exc).__name__}:pid={getattr(exc, 'pid', None)}")
         active = _running(known)
         for child in active:
             try:
@@ -183,6 +230,8 @@ def main():
     _json(status, {'runner_pid':os.getpid(),'clock_info':clock_info,'clock':clock_info['kind'], 'pending_since':queued, 'settled_s':0.0})
     taken = None
     process = None
+    token = None
+    born_after = None
     known = {}
     peak = 0
     killed = timed_out = queue_timed_out = False
@@ -236,7 +285,11 @@ def main():
             else:
                 active_start = S.clock()
                 with log.open('wb') as output:
-                    process = subprocess.Popen(command, stdout=output, stderr=subprocess.STDOUT, start_new_session=True)
+                    token = uuid.uuid4().hex
+                    born_after = time.time()-1  # identity window only; counted durations use S.clock
+                    environment = {**os.environ, RUN_TOKEN_ENV: token}
+                    process = subprocess.Popen(command, stdout=output, stderr=subprocess.STDOUT,
+                                               start_new_session=True, env=environment)
                     while process.poll() is None:
                         peak = max(peak, _tree(process.pid, known))
                         killed = peak > a.cap_gb*1024**3
@@ -244,7 +297,6 @@ def main():
                         if stopped[0] or killed or timed_out:
                             break
                         time.sleep(0.02)
-                    cleanup_failed = _stop(process, known)
                     rc = process.poll()
                     if rc is None:
                         rc = 137
@@ -259,7 +311,7 @@ def main():
         ticket.unlink(missing_ok=True)
         # Signals and exceptional exits cannot free a lease before tree cleanup.
         try:
-            cleanup_failed = _stop(process, known)
+            cleanup_failed = _stop(process, known, token=token, born_after=born_after)
         except Exception as exc:
             cleanup_failed = ['cleanup-unconfirmed']
             error = error or f'{type(exc).__name__}: {exc}'
@@ -282,6 +334,7 @@ def main():
         'timeout_s':a.timeout,'queue_timeout_s':a.queue_timeout,'lock_wait_s':wait_s,
         'runner_pid':os.getpid(),'clock':clock_info['kind'],'clock_info':clock_info,'log':str(log),
         'log_sha256':hashlib.sha256(log.read_bytes()).hexdigest(),'unconfirmed_children':cleanup_failed,'error':error,
+        'cleanup_boundary':'owned group, observed descendants, and inherited marker; trusted toolchain must preserve marker; hostile environment scrubbing unsupported',
         'finished':time.strftime('%Y-%m-%d %H:%M:%S %Z')}
     _json(str(log)+'.summary.json',summary)
     _json(status, {'runner_pid':os.getpid(),'clock_info':clock_info,'clock':clock_info['kind'],'pending_since':None,'settled_s':wait_s})

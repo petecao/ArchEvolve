@@ -582,11 +582,29 @@ WP_FAULTS = [("three_reads", "SWDB_EARLY_READ_1", "swdb_tile_read_probe"),
              ("footprint", "SWDB_OUTSIDE", None)]
 
 
+def _assert_actual_wp_run(dx, record):
+    """2026-10-15 ET: a prelaunch refusal cannot satisfy agreement acceptance."""
+    import hashlib
+    from pathlib import Path
+    assert record["proof_setup_check"]["verdict"] == "passed", record.get("proof_setup_check")
+    assert record["settings"]["verifier_launched"] is True, record.get("settings")
+    flags = record["settings"]["flags"]
+    for flag in ("-wp-rte", "-rte-initialized", "-wp-no-filter-init", "-wp-smoke-tests"):
+        assert flag in flags, flags
+    assert flags[flags.index("-rte-initialized") + 1] == "@all", flags
+    assert flags[flags.index("-wp-cache") + 1] == "none", flags
+    assert record["goals"] and any(goal.get("smoke") for goal in record["goals"]), record
+    assert record["pins"]["proof_semantics"]["id"] == ENTRY
+    for report in record["evidence"]["reports"]:
+        assert hashlib.sha256(Path(report["path"]).read_bytes()).hexdigest() == report["sha256"], report
+
+
 @needs_wp
 @pytest.mark.parametrize("name", WP_SAFE)
 def test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics(qualified_dx, name):
     dx = qualified_dx
     record = prove_wp(dx, name)
+    _assert_actual_wp_run(dx, record)
     assert record["verdict"] == "proven", (record.get("failure_class"), record.get("unproven_properties"))
     if name in {"store_source_wait", "stall_condition"}:
         assert record["hint_check"]["verdict"] == "accepted", record["hint_check"]
@@ -606,10 +624,22 @@ def test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics(qualifie
 def test_wp_leaves_every_unit_cbmc_refutes_not_proven_never_refuted(qualified_dx, name, define, call):
     dx = qualified_dx
     record = prove_wp(dx, name, *([define] if define else []))
+    _assert_actual_wp_run(dx, record)
     assert record["verdict"] == "not_proven" and "counterexample" not in record
     unproven = json.dumps(record.get("unproven_properties"))
-    if call:                                                  # the probe's (or call's) precondition is the one
-        assert call in unproven or "precondition" in unproven, unproven
+    assert any(not g.get("smoke") and g["status"] != "valid" for g in record["goals"]), record
+    if call is None:
+        assert any(not g.get("smoke") and "ensures" in g["goal"] and g["status"] != "valid"
+                   for g in record["goals"]), record
+    if call:                                                  # the named hazard obligation must remain open
+        assert any(not g.get("smoke") and call in g["goal"] and g["status"] != "valid"
+                   for g in record["goals"]), unproven
+    if name == "footprint":
+        # Retain the outside query's independent wrong-value failure even when
+        # its generated zero-offset branch also fails smoke (historical vacuous_pass).
+        assert record["failure_class"] in {"unknown", "timeout", "vacuous_pass"}, record
+        assert all(g["status"] == "valid" for g in record["goals"]
+                   if not g.get("smoke") and "ensures" not in g["goal"]), record
 
 
 @needs_wp
@@ -664,6 +694,7 @@ def test_wp_capacity_agrees_at_32_and_leaves_33_not_proven(qualified_dx, command
         "loop assigns t, " + ", ".join(locations) + ";",
         "loop variant n - t;")
     record = prove_wp(dx, "capacity", "DX_NT=40", "DX_TS=1", hints=hints)
+    _assert_actual_wp_run(dx, record)
     assert record["hint_check"]["verdict"] == "accepted", record["hint_check"]
     if commands == 32:
         assert record["verdict"] == "proven", record.get("unproven_properties")

@@ -1,0 +1,59 @@
+{
+  "files": {
+    "launch.json": {
+      "created": "2026-10-15 14:59 ET",
+      "source_commit": "159d912ea6688abe4d19dd2980fbf89e70aa5812",
+      "node": 1,
+      "purpose": "initial diagnostic; final setup hardening not integrated",
+      "storage_budget_gb": 8,
+      "readers": [
+        "root",
+        "ticket27"
+      ],
+      "raw_output_retained_remote": true,
+      "worker_limit": 1,
+      "rss_cap_bytes": 8589934592,
+      "timeout_seconds": 10800,
+      "lane_wrapper_sha256": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8",
+      "run_directory_id_note": "Directory suffix is an identifier; environment.txt gives actual start time."
+    },
+    "lane.json": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "10920",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-resume-t27-diagnostic-20261015-1512/run.sh"
+        ],
+        "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+        "ended_utc": "",
+        "exit_code": -1,
+        "host": "mbit10",
+        "job": "probata-resume-t27-diagnostic",
+        "lease_generation": 601,
+        "lease_name": "mbit10-evaluation-node1",
+        "load1_at_start": 0.09,
+        "load1_max": 32,
+        "node": 1,
+        "numa_memory_policy": "bind:1",
+        "numactl": "--cpunodebind=1 --membind=1",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-15T18:58:30Z"
+      }
+    },
+    "wrapper-sha256.txt": "00c269b43275753cbc81983180fb36c365d9275e82e350d7c5c5e039442c08e8  scripts/host/socket_lane.sh\n50745f827bac2a3db4fc56fdedc95f6fb57fb4b39cf9b269796c77c0274dc996  scripts/host/hostlock.sh\n",
+    "preflight.txt": " 14:58:28 up 76 days,  7:17, 13 users,  load average: 0.09, 0.21, 0.25\n               total        used        free      shared  buff/cache   available\nMem:           125Gi       8.5Gi        57Gi        15Mi        61Gi       116Gi\nSwap:             0B          0B          0B\nFilesystem      Size  Used Avail Use% Mounted on\n/dev/sdd1       1.8T  1.7T   21G  99% /data1\n/dev/sdb1       1.8T  1.7T   95G  95% /data\nUSER         PID %CPU %MEM COMMAND\nyanruj   3640316  300  0.0 ps -eo user,pid,pcpu,pmem,args --sort=-pcpu\nwenjieg  3637106 10.5  0.1 /data1/wenjieg/vscode-server/.vscode-server/cli/servers/Stable-16507d91be0dc1ce4f94c04d4d0430210b8685d9/server/node /data1/wenjieg/vscode-server/.vscode-server/cli/servers/Stable-16507d91be0dc1ce4f94c04d4d0430210b8685d9/server/out/server-main.js --connection-token=remotessh --accept-server-license-terms --agent-host-bridge-port=40289 --agent-host-bridge-host=127.0.0.1 --start-server --enable-remote-auto-shutdown --socket-path=/data1/wenjieg/tmp/code-477957ec-102d-453c-a089-23f509d80b04\nroot        1706  3.6  1.3 falcon-sensor-bpf\nroot     3640172  2.9  0.0 sshd: yanruj [priv]\nwenjieg  3638786  2.1  0.2 /data1/wenjieg/vscode-server/.vscode-server/extensions/anthropic.claude-code-2.1.300-linux-x64/resources/native-binary/claude --output-format stream-json --verbose --input-format stream-json --max-thinking-tokens=31999 --permission-prompt-tool=stdio --setting-sources=user,project,local --permission-mode=auto --debug --debug-to-stderr --enable-auth-status --no-chrome --replay-user-messages\nwenjieg  3637814  1.7  0.2 /data1/wenjieg/vscode-server/.vscode-server/cli/servers/Stable-16507d91be0dc1ce4f94c04d4d0430210b8685d9/server/node --dns-result-order=ipv4first /data1/wenjieg/vscode-server/.vscode-server/cli/servers/Stable-16507d91be0dc1ce4f94c04d4d0430210b8685d9/server/out/bootstrap-fork --type=extensionHost --transformURIs --useHostProxy=false\nyanruj   3640220  1.0  0.0 bash -s\nwenjieg  3637723  0.8  0.1 /data1/wenjieg/vscode-server/.vscode-server/code-16507d91be0dc1ce4f94c04d4d0430210b8685d9 command-shell --cli-data-dir /data1/wenjieg/vscode-server/.vscode-server/cli --parent-process-id 3637695 --on-host=127.0.0.1 --on-port\nroot           1  0.5  0.0 /usr/lib/systemd/systemd --system --deserialize=79 splash\nmessage+    1903  0.3  0.0 @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only\nwenjieg  3637153  0.2  0.0 /data1/wenjieg/vscode-server/.vscode-server/cli/servers/Stable-16507d91be0dc1ce4f94c04d4d0430210b8685d9/server/node /data1/wenjieg/vscode-server/.vscode-server/cli/servers/Stable-16507d91be0dc1ce4f94c04d4d0430210b8685d9/server/out/bootstrap-fork --type=ptyHost --logsPath /data1/wenjieg/vscode-server/.vscode-server/data/logs/20261015T144458\nwenjieg  3637694  0.2  0.0 sshd: wenjieg@notty\nnode_ex+    2512  0.1  0.0 /usr/local/bin/node_exporter --collector.textfile.directory=/var/lib/node_exporter/textfile_collector --collector.filesystem.mount-points-exclude=^/(sys|proc|dev|run|snap)($|/) --collector.netclass.ignored-devices=^(veth|docker|br-).*$ --web.listen-address=:9100\nwenjieg  3637916  0.1  0.0 /data1/wenjieg/vscode-server/.vscode-server/extensions/openai.chatgpt-26.825.32147-linux-x64/bin/linux-x86_64/codex -c features.code_mode_host=true app-server --analytics-default-enabled\n"
+  },
+  "sha256": {
+    "launch.json": "be29c8bb09afb715c9b101121ce536a9c977bdf53215950ec6652fb5d9eeeabb",
+    "lane.json": "e53ac081518f6941c2d99b884e8bbd6b67b3a86f79a04298f0efd2d9221d65ec",
+    "wrapper-sha256.txt": "464457f17cd801de8a0d3735074867cf17e2f599e0a59bb05688c4e7d2f11de7",
+    "preflight.txt": "1e9688e9bc23da17c0cc0dcaadcdd4858e69ac8847fa87ff422613c4fb4600d3"
+  },
+  "recorded": "2026-10-15 14:59 ET",
+  "boundary": "Active diagnostic run, not final ticket acceptance; setup hardening pending. Raw outputs remain remote."
+}
