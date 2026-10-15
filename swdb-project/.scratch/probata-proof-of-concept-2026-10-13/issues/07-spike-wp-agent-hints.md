@@ -1,7 +1,7 @@
 # 07 — Spike (c): WP with agent hints
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
+Updated: 2026-10-14 22:50 ET (continuation 3: runs 10-12 fail, verdict fail so far, effort paused); 2026-10-14 17:10 ET (continuation 2: runs 7-9 fail, verdict fail so far); 2026-10-14 12:35 ET (continuation: runs 4-6 fail, verdict fail so far); 2026-10-14 08:45 ET (resolved: spike verdict fail); 2026-10-13 23:15 ET (review fixes)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 03
@@ -628,3 +628,135 @@ On (c)'s effect, measured:
 - Tests: `test_edit_loop.py`, `test_hints.py` and `test_loop_tool.py`, 21 passed.
 - Analysis scripts (not in the repo): `attempts.py` (unit/hint split per attempt), `strat_use.py`,
   `peek.py`.
+
+## Continuation 3 results (2026-10-14 22:50 ET, branch `probata-poc/t07e`)
+
+**Verdict: fail so far.** Three more counted runs (10, 11, 12), all failed. No best set reached 0 open
+goals in round mode, so no run reached the fresh full replay. The pass bar and the 60-minute budget did
+not change. Status stays `claimed`: the A1 box runs to about 2026-10-27 ET. Yan-Ru paused the effort
+after run 12. All numbers are Mac results (host `mac`).
+
+**In one line each:**
+
+- Closest yet: runs 10 and 12 proved **every unit goal** (all 9 `ensures`, the hazard checks, frames,
+  call preconditions, termination) in round mode. 9 and 17 goals of Codex's own hints stayed open.
+- The budget-clock deadline worked. Codex used its full in-call budget in every run, despite 47-56
+  minutes of excluded lock wait per run.
+- What still blocks a pass: closing the agent's own hint goals. Phase 2 got only 4 WP attempts in
+  run 10 and 1 in run 12 before the in-call budget ended.
+
+### Every counted run (continuation 3)
+
+Common to all three runs:
+- Each run started with no agent hints, in a fresh Codex session: `gpt-5.6-sol` `xhigh`
+  (`PINS["codex"]`), CLI 0.153.0. Shell off, `-s read-only`, workspace inline, in-call MCP tool only.
+- Same stand-in as t07d (`tdstep_standin.c` `d5d599e4…40f8`, headers unchanged). Frozen flags.
+  Round mode at 10 s. Frame seeds, strategies, unit-first acceptance, hint cap 30, 8-minute replay
+  reserve.
+- Each run reused run 7's no-hint run (stand-in hashes checked). The seed round left 38 of 209 goals
+  open, at 2.6-2.7 budget-min.
+
+| Run | Folder | Harness | Codex calls / WP attempts / show_goal | Budget-min | Lock wait excluded | Best set: open (unit + hint) | Phase at end | Outcome |
+|---|---|---|---|---|---|---|---|---|
+| 10 | `t07e/counted-10/` | (a)(b)(c1)(c2) | 1 / 12 / 11 (2 failed) | 51.75 | 56.0 min | **9 (0 + 9)** | 2 | **fail**: in-call budget spent, 0 final replays |
+| 11 | `t07e/counted-11/` | + (c3), show_goal fix | 1 / 17 / 8 | 53.69 | 51.0 min | 20 (2 + 18) | 1 | **fail**: in-call budget spent, 0 final replays |
+| 12 | `t07e/counted-12/` | same as run 11 | 1 / 10 / 6 | 54.07 | 46.7 min | 17 (0 + 17) | 2 | **fail**: budget-clock deadline, 0 final replays |
+
+- Accepted-edit trajectories (open goals as unit + hint):
+  - run 10: 38+0 → 26+7 → 16+9 → 6+11 → 3+13 → 2+11 → 0+11 (phase 2 at 30.7 budget-min) → 0+9.
+    In phase 2, 3 edits were reverted: two closed hint goals but reopened unit goals (0 → 2 and 0 → 1);
+    one raised the hint goals 11 → 12.
+  - run 11: 38+0 → 33+3 → 16+8 → 11+15 → 7+17 → 4+19, then 9 neutral or near-neutral edits, and a
+    final-answer edit to 2+18. It never reached phase 2.
+  - run 12: 38+0 → 22+4 → 17+8 → 15+9 → 10+11 → 5+14 → 1+16 → 0+17 (phase 2 near 50 budget-min).
+    The budget-clock deadline stopped Codex before a second phase-2 attempt.
+- Run 10's 9 open hint goals: 5 loop invariants (2 established, 3 preserved; 3 with failure class
+  `unknown`, which suggests not inductive as written), 3 asserts and 1 loop variant.
+- Tokens:
+  - run 10: input 10,334,878 (10,054,912 cached), output 24,653;
+  - run 11: input 19,924,250 (19,565,952 cached), output 37,107;
+  - run 12: not recorded. The deadline stopped Codex, so no `turn.completed` event was emitted.
+- Peak WP RSS 4.0 GB (run 10). The 8 GB watchdog never fired.
+- Hint rules:
+  - Run 11's check rejected one attempt at a recursive definition (`recursive_definition`), so the
+    escape-hatch count is 1. Runs 10 and 12 had 0.
+  - Other rejections were Frama-C parse errors (runs 11 and 12) and one edit over the size limit
+    (run 11). Every agent hint has Codex provenance; the frame seeds have provenance `seed`.
+  - The implementing agent wrote no hint in a counted run.
+- Not run: the negative control and the final-unit smoke tests. Both need a proven unit.
+
+### Method changes, each with its reason (they belong in the method version)
+
+| # | Change | Since | Reason |
+|---|---|---|---|
+| a | **Budget-clock Codex deadline.** The loop polls every 5 s and stops Codex once wall time minus every lock wait passes the in-call budget plus 2 minutes. That includes the in-call tool's wait in progress, which `loop.verifier` publishes live in `lockwait_live.json`. A 5-hour wall cap is only a guard. | run 10 | Run 9 lost about 8 in-call minutes: its deadline ran on the wall clock during 45 minutes of lock waits. |
+| b | **Two-phase loop.** Phase 1 is run 9's method. Once the best set's unit goals reach 0, phase 2 accepts an edit only if every unit goal stays proven and the open hint goals do not rise. The tool, the open-goal list and the prompt announce the phase. The final fresh full replay stays reserved. | run 10 | The ticket asked for a hint-goal-only closing phase. Finding: at 0 unit goals, unit-first acceptance already is this monotone rule (tested). So what (b) adds is the phase signal to Codex, not a new acceptance rule. |
+| c1 | **`show_goal(goal)` in-call tool.** It prints one open goal of the best set as WP generates it after Qed: hypotheses and conclusion, no prover, at most 14,000 characters (`goal_print.py`, `wp_run.sh print`). It reads only the merged stand-in. | run 10 | To close its own invariants, Codex must see why preservation fails. Until now it saw only the goal's name and line. Codex called it 6-11 times per run. |
+| c2 | MCP tool timeout 3600 → 14400 s | run 10 | A tool call queued behind other tickets could exceed 60 minutes. Codex would then see an error while the tool kept running. |
+| c3 | `propose_edit` reuses the folder of a `check_edit` that just passed for the same best set and ops. No second check runs. | run 11 | In run 10, 10 of 12 proposals repeated the check Codex had just run. Reuse fired 8 times in run 11. |
+
+### Bug fixes (harness, not method)
+
+- **Unit vs hint split.** A seed `loop assigns` merged into one block with agent invariants was counted
+  as a hint goal. Seeds are method, so they now count as unit goals (`edit_core.is_hint_goal`).
+  - Correction to continuation 2: run 9's best set was **5 unit + 24 hint**, not 3 + 26. Its 2 seed
+    `loop assigns` goals were misclassified.
+- **show_goal matching** (between runs 10 and 11):
+  - call-site headers span two lines;
+  - the normal and exit frame groups share headers;
+  - `ensures` headers carry no line;
+  - `@terminates` selects nothing in Frama-C 33.
+
+  Run 10's 2 failed `show_goal` calls were of the last two kinds.
+
+### Uncounted (DEV) runs, all in `t07e/dev/`
+
+- `show-goal/`: `goal_print.show` on 4 goals of run 9's recorded best set, to check the goal matching.
+- `mcp_smoke.py`: tool listing and phase text on a copy of run 9's best set.
+- No hint entered a counted run from these.
+
+### Assumptions (not decided in the map)
+
+- Assumption: `show_goal` is part of map 13 item 6's in-call check wrapper. It reads only the merged
+  stand-in and proves nothing, so confinement does not change. Its run time counts in the budget.
+- Assumption: as in t07c/t07d, in-call tool calls are not provider calls, lock waits are excluded,
+  and the replay reserve is inside the 60 minutes.
+
+### What a pass would need now (input to ticket 09; none was run)
+
+- **More WP attempts per budget.** Each attempt costs 2-6 minutes. Runs reach phase 2 only at
+  30-50 budget-min, which leaves 1-4 phase-2 attempts. Options:
+  - mbit10 in a lane with more provers in parallel;
+  - rerunning only the goals whose context an edit changed.
+- **Fewer, smaller agent invariants.** Phase 1 trades unit goals for hint goals: 0+9, 2+18, 0+17 at
+  the end. Two run-10 edits closed hint goals but reopened unit goals. The unit goals depend on the
+  hints, so the two counts cannot be minimized separately.
+- **Note:** the shared verifier queue made one 60-minute budget take 1.7-1.8 hours of wall time.
+
+**Next step:** when Yan-Ru resumes (box open to about 2026-10-27 ET), decide in ticket 09 whether (c)
+gets a run with more WP attempts per budget (mbit10 lane, or goal-scoped reruns), or ends as fail.
+Run 10 shows the unit postcondition can be proven under Codex hints in round mode. What is not shown is
+closing the hints themselves within 60 minutes.
+
+### Evidence (Mac, `/tmp/claude/probata-runs/t07e/`, 67 MB; LR-06 record in `README.md`)
+
+| File | sha256 |
+|---|---|
+| `counted-10/history.json` | `b8bbe6085b6df5cf77768f9b27c6c7ffd8fa40e4152d50eb7dc1cd13c8c81f95` |
+| `counted-10/summary.json` | `ef08abb23ab162cc5bf9d5963a8a7e481317ddbf7061878b45f2a032ad7682ae` |
+| `counted-10/best.json` | `84cbc425cd4a9b4708b324ca025a3f59d39bccd8912aa5ce3a36f47603273394` |
+| `counted-10/meta.json` | `53ef613ab81aed088dce86bafba27f2ffe780c71a4eabf17cea1e2707eefd209` |
+| `counted-11/history.json` | `d557e66f08d0a90f609d65093bfb8320b59b1196abdcf1cd0a60bfa88aa5a891` |
+| `counted-11/summary.json` | `1e327649d6cb3920e14a0c4e8c02fab1ec07f7337b170fe881fd39820452daef` |
+| `counted-11/best.json` | `ca4934bd79f1b1d9871bb8332e34f4bdc5c27fdb549a7eb6499cf59407672eef` |
+| `counted-11/meta.json` | `71ef44351bf38d301ac5c0d91a03c86e39e2af5e875091c8bf32e7f9fd47f430` |
+| `counted-12/history.json` | `aff3207fbbafa3c0318a67dac8fbf9693079b6d41302a15f2a437ce7f82a451c` |
+| `counted-12/summary.json` | `b6c48b07fbdbf57f7d399b54966ec0f9311d9310f3f7b8574b1198e10a580ad2` |
+| `counted-12/best.json` | `466e766cc57f6d05d31287a3585d11bd4d7a40bc03d0db131035fa153ab5a2b9` |
+| `counted-12/meta.json` | `70239f037584a899e247df7c7cb8222980bf7fd901e8e0ba5362326f7b2b0423` |
+| `dev/show-goal/goal-d3/print.log` (call-site header probe) | `9c839ac4c91a4cb4aec64d073f9353f104dc2546c50de6fa58d3e77113099001` |
+| `heartbeat.md` (LR-07 table, 30-min cadence) | `fd07e44493d2e2d71e745034d1825cc00f41e6a1150ec763ce60ae7fc46350dd` |
+
+- Harness hashes per run are in each `meta.json` (`harness_sha256`). Harness commits: `c25a70f2`
+  (run 10) and `06ea3ae6` (runs 11-12).
+- Tests: `test_edit_loop.py`, `test_hints.py` and `test_loop_tool.py`, 26 passed.
