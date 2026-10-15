@@ -233,6 +233,9 @@ requires 0 <= tile < DX_NT;
 assigns \\nothing;
 ensures \\result == 1 <==> (dx_tile_writer[tile] >= 0 && dx_in_footprint(dx_tile_writer[tile], (int *)addr));""")]
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from contracts_wp import CALLS, QUERIES, WP  # noqa: E402,F811  (the WP-form contracts, ticket 27 WP half)
+
 SOURCES = [
     {**pin("dx100/dxc_lowering.hpp"), "role": "lowerings"},
     {**pin("dx100/bfs_read_offload.inc"), "role": "offload"},
@@ -278,6 +281,7 @@ entry = {
     "calls": [{"call": n, "prototype": p, "lowerings": lw, "used_by": used_by(n),
                "rules": r, "contract": ct + "\n"} for n, p, lw, r, ct in CALLS],
     "queries": [{"query": n, "prototype": p, "contract": ct + "\n"} for n, p, ct in QUERIES],
+    "wp": WP,
 }
 (LIB / "proof_semantics" / "dx100_bfs_0_1.yaml").write_text(
     "# DX100 proof semantics 0.1 (Probata proof of concept ticket 27). Created: 2026-10-14 ET.\n"

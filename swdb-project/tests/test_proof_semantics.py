@@ -10,6 +10,7 @@ Seams: `swdb validate --library` (seam 4) for the entry and its negative control
 clang 22.1.8 is missing; run them inside the machine-wide verifier lock (on the Mac: verifier_run.py).
 """
 import copy
+import json
 import os
 import re
 import shutil
@@ -370,6 +371,66 @@ def test_32_uncovered_commands_prove_and_33_end_not_proven_ghost_capacity(dx):
     over = prove(dx, "capacity", *sizes, bound=33)
     assert over["verdict"] == "not_proven" and over["failure_class"] == "ghost_capacity"
     assert "counterexample" not in over
+
+
+def prove_wp(dx, name, *defines):
+    """One `swdb prove --adapter wp` job (the WP form of the proof semantics), allowing for the verifier lock."""
+    import json
+    function = FIXTURES[name][0]
+    extra = [arg for define in defines for arg in ("--define", define)]
+    result = run_swdb("prove", "--records", dx.records, "--candidate", dx.candidates["dx"], "--function", function,
+                      "--contract", f"contract.fixture_dx_{name}", "--adapter", "wp", "--runs-dir", dx.runs,
+                      "--format", "json", *extra, timeout=3600)
+    assert result.returncode == 0, result.stderr + result.stdout
+    return dx.read(json.loads(result.stdout))
+
+
+def _wp_ready():
+    from swdb import c_lowering
+    from test_formal_frame import FRAMAC
+    return FRAMAC and not c_lowering.locate().missing
+
+
+needs_wp = pytest.mark.skip(reason="paused 2026-10-14: the WP form (commit 84563b2e) must be ported onto ticket 25s wp_adapter")
+#: the fixtures CBMC proves; WP must prove them too (capacity is a bounded notion: WP needs a loop invariant)
+WP_SAFE = ["three_reads", "size", "cpu_write", "transitive",
+           "register_write", "value_stream", "value_gather", "value_range", "footprint"]
+#: the variants CBMC refutes, and the WP property that stays unproven (WP never refutes)
+WP_FAULTS = [("three_reads", "SWDB_EARLY_READ_1", "swdb_tile_read_probe"),
+             ("three_reads", "SWDB_EARLY_READ_2", "swdb_tile_read_probe"),
+             ("three_reads", "SWDB_EARLY_READ_3", "swdb_tile_read_probe"),
+             ("size", "SWDB_EARLY_SIZE", "get_tile_size"),
+             ("cpu_write", "SWDB_CPU_WRITE", "swdb_tile_write_probe"),
+             ("range_exception", None, "swdb_tile_read_probe"),
+             ("condition_wait", None, "swdb_tile_read_probe"),
+             ("unrelated_wait", None, "swdb_tile_read_probe"),
+             ("value_stream", "SWDB_WRONG_VALUE", None),
+             ("value_gather", "SWDB_WRONG_VALUE", None),
+             ("value_range", "SWDB_WRONG_VALUE", None),
+             ("footprint", "SWDB_OUTSIDE", None)]
+
+
+@needs_wp
+@pytest.mark.parametrize("name", WP_SAFE)
+def test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics(dx, name):
+    record = prove_wp(dx, name)
+    assert record["verdict"] == "proven", (record.get("failure_class"), record.get("unproven_properties"))
+    assert record["pins"]["proof_semantics"]["id"] == ENTRY
+    assert {a["kind"] for a in record["assumptions"]} >= {"proof_semantics", "reduction"}
+    probes = record["settings"]["proof_semantics"]["probes"]
+    wp_input = open(dx.report(record, "wp_input")).read()
+    assert wp_input.count("SWDB_TILE_READ(&(") + wp_input.count("SWDB_TILE_WRITE(&(") == len(probes)
+    assert "ghost unsigned int dx_live;" in wp_input            # ghost.acsl as written
+
+
+@needs_wp
+@pytest.mark.parametrize("name,define,call", WP_FAULTS)
+def test_wp_leaves_every_unit_cbmc_refutes_not_proven_never_refuted(dx, name, define, call):
+    record = prove_wp(dx, name, *([define] if define else []))
+    assert record["verdict"] == "not_proven" and "counterexample" not in record
+    unproven = json.dumps(record.get("unproven_properties"))
+    if call:                                                  # the probe's (or call's) precondition is the one
+        assert call in unproven or "precondition" in unproven, unproven
 
 
 @needs_cbmc

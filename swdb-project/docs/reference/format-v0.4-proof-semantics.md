@@ -69,6 +69,23 @@ operators, and they are trusted (an assumption entry), never executed by check m
   (the entry) and `reduction` (`rocq.probata.dx100_reduction`, sha256 of `Reduction.v`; proof: ticket 43).
   `settings.proof_semantics` names the entry, the calls and every probe.
 
+## Unbounded jobs (`swdb prove --adapter wp`)
+
+- The same C lowering (same summaries, same probes). At `ghost.globals` WP gets the WP form
+  (`swdb.proof_semantics.wp_prelude`): the size constants; the probe macros, each a call of a contracted probe
+  function (`wp.probes`: `swdb_tile_read_probe` requires `dx_read_ok`, `swdb_tile_write_probe` requires
+  `dx_write_ok`); `ghost.acsl` as written inside one `/*@ ghost ... */` block; `state.h`; `logic.acsl`; and the
+  contract of every call and query the unit makes.
+- The unit's contract gets `requires dx_idle` (the ghost state g0, as CBMC's `swdb_dx_init`), one
+  `\base_addr` separation per pointer parameter and device array (`wp.separate_from`), and the ghost and device
+  state in every `assigns` clause (`swdb.proof_semantics.wp_locations`).
+- The WP contracts state a per-tile view (`dx_wait_covers`, `dx_stall_covers`, `dx_kept`, `dx_new_slot`,
+  `dx_issuable` in `logic.acsl`): consequences of the C model, with no shifts or masks for the provers (Z3,
+  Alt-Ergo and CVC5 time out on constant shift-and-mask facts). The transitive clause of a wait names tiles
+  0-7 one by one; with more tiles it claims less, never more.
+- A probe that WP cannot prove leaves the unit not proven; WP never refutes. Records pin and assume the proof
+  semantics as the CBMC adapter does. Loops need invariants (the hint loop), so the capacity fixture is CBMC only.
+
 ## For later tickets
 
 - 28: the remaining calls and rules; supersede 0.1 with `sequence: 2`.

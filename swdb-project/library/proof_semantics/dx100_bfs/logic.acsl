@@ -89,3 +89,94 @@ predicate dx_in_footprint{L}(integer s, int *addr) =
         addr == dx_base[s] + (dx_lo[s] + k * dx_stride[s])) :
      (\exists integer k; 0 <= k < dx_tile_size[dx_index[s]] && k < DX_TS &&
         addr == dx_base[s] + (unsigned int)dx_tile_data[dx_index[s]][k]));
+
+// ---- The per-tile view the WP contracts use (ticket 27, WP half). Every fact below follows from the C model;
+// the contracts state these consequences instead of the slot masks, so WP needs little bit reasoning. ----
+
+// The ghost state g0: nothing uncovered (the C model's swdb_dx_init).
+predicate dx_idle{L} =
+  (\forall integer t; 0 <= t < DX_NT ==> dx_tile_writer[t] == -1 && dx_tile_readers[t] == 0) &&
+  (\forall integer r; 0 <= r < DX_NR ==> dx_reg_writer[r] == -1 && dx_reg_named[r] == 0) && dx_count == 0;
+
+// Slot w names tile t in a counted role (src1, src2, dst1, dst2); in any role (condition too).
+predicate dx_counts{L}(integer w, integer t) =
+  0 <= w < DX_K && (dx_dst1[w] == t || dx_dst2[w] == t || dx_src1[w] == t || dx_src2[w] == t);
+predicate dx_names{L}(integer w, integer t) = dx_counts(w, t) || (0 <= w < DX_K && dx_cond[w] == t);
+// Slot w reads tile u as an input (not a range loop: coverage never passes through one).
+predicate dx_feeds{L}(integer w, integer u) =
+  0 <= w < DX_K && dx_kind[w] != DX_RANGE_LOOP && (dx_src1[w] == u || dx_src2[w] == u || dx_cond[w] == u);
+// Slot w names register r.
+predicate dx_uses_reg{L}(integer w, integer r) =
+  0 <= w < DX_K && 0 <= r && (dx_reg_a[w] == r || dx_reg_b[w] == r || dx_reg_c[w] == r);
+
+// A slot's fields are the same at L1 and L2.
+predicate dx_same_slot{L1, L2}(integer w) =
+  \at(dx_kind[w], L1) == \at(dx_kind[w], L2) && \at(dx_dst1[w], L1) == \at(dx_dst1[w], L2) &&
+  \at(dx_dst2[w], L1) == \at(dx_dst2[w], L2) && \at(dx_src1[w], L1) == \at(dx_src1[w], L2) &&
+  \at(dx_src2[w], L1) == \at(dx_src2[w], L2) && \at(dx_cond[w], L1) == \at(dx_cond[w], L2) &&
+  \at(dx_regs_in[w], L1) == \at(dx_regs_in[w], L2) && \at(dx_regs_out[w], L1) == \at(dx_regs_out[w], L2) &&
+  \at(dx_reg_a[w], L1) == \at(dx_reg_a[w], L2) && \at(dx_reg_b[w], L1) == \at(dx_reg_b[w], L2) &&
+  \at(dx_reg_c[w], L1) == \at(dx_reg_c[w], L2) &&
+  \at(dx_base[w], L1) == \at(dx_base[w], L2) && \at(dx_index[w], L1) == \at(dx_index[w], L2) &&
+  \at(dx_lo[w], L1) == \at(dx_lo[w], L2) && \at(dx_hi[w], L1) == \at(dx_hi[w], L2) &&
+  \at(dx_stride[w], L1) == \at(dx_stride[w], L2);
+
+// What survives any call: a free tile or register stays free unless the call names it; an uncovered writer
+// that stays the writer keeps its slot's fields; the count grows by at most `issued`.
+predicate dx_kept{L1, L2}(integer d1, integer d2, integer s1, integer s2, integer c, integer r1, integer r2,
+                          integer r3, integer w1, integer w2, integer issued) =
+  (\forall integer u; 0 <= u < DX_NT && \at(dx_tile_writer[u], L1) == -1 && u != d1 && u != d2 ==>
+     \at(dx_tile_writer[u], L2) == -1) &&
+  (\forall integer u; 0 <= u < DX_NT && \at(dx_tile_readers[u], L1) == 0 && u != s1 && u != s2 && u != c ==>
+     \at(dx_tile_readers[u], L2) == 0) &&
+  (\forall integer u; 0 <= u < DX_NT && \at(dx_tile_writer[u], L2) >= 0 && u != d1 && u != d2 ==>
+     \at(dx_tile_writer[u], L2) == \at(dx_tile_writer[u], L1) && dx_same_slot{L1, L2}(\at(dx_tile_writer[u], L1))) &&
+  (\forall integer r; 0 <= r < DX_NR && \at(dx_reg_writer[r], L1) == -1 && r != w1 && r != w2 ==>
+     \at(dx_reg_writer[r], L2) == -1) &&
+  (\forall integer r; 0 <= r < DX_NR && \at(dx_reg_named[r], L1) == 0 && r != r1 && r != r2 && r != r3 ==>
+     \at(dx_reg_named[r], L2) == 0) &&
+  0 <= \at(dx_count, L2) <= \at(dx_count, L1) + issued;
+
+// Tile u feeds the writer of tile v, and that writer names t in a counted role.
+predicate dx_fed_via{L}(integer u, integer t, integer v) =
+  0 <= v < DX_NT && dx_counts(dx_tile_writer[v], t) && dx_feeds(dx_tile_writer[v], u);
+
+// A wait on tile t covers the writers naming t in a counted role, and (one level) the writers they read from.
+// The second clause names tiles v = 0..7 one by one (no quantifier to instantiate); with more tiles it claims
+// less, never more.
+predicate dx_wait_covers{L1, L2}(integer t) =
+  (\forall integer u; 0 <= u < DX_NT && dx_counts{L1}(\at(dx_tile_writer[u], L1), t) ==>
+     \at(dx_tile_writer[u], L2) == -1) &&
+  (\forall integer u; 0 <= u < DX_NT &&
+     (dx_fed_via{L1}(u, t, 0) || dx_fed_via{L1}(u, t, 1) || dx_fed_via{L1}(u, t, 2) || dx_fed_via{L1}(u, t, 3) ||
+      dx_fed_via{L1}(u, t, 4) || dx_fed_via{L1}(u, t, 5) || dx_fed_via{L1}(u, t, 6) || dx_fed_via{L1}(u, t, 7)) ==>
+     \at(dx_tile_writer[u], L2) == -1);
+
+// Issuing a command with destinations d1, d2 first covers every writer naming them in any role.
+predicate dx_stall_covers{L1, L2}(integer d1, integer d2) =
+  \forall integer u; 0 <= u < DX_NT && u != d1 && u != d2 &&
+    (dx_names{L1}(\at(dx_tile_writer[u], L1), d1) || (d2 >= 0 && dx_names{L1}(\at(dx_tile_writer[u], L1), d2))) ==>
+    \at(dx_tile_writer[u], L2) == -1;
+
+// The new command's slot (the writer of d1) and its fields.
+predicate dx_new_slot{L}(integer kind, integer d1, integer d2, integer s1, integer s2, integer c, integer r1,
+                         integer r2, integer r3) =
+  0 <= dx_tile_writer[d1] < DX_K && (d2 >= 0 ==> dx_tile_writer[d2] == dx_tile_writer[d1]) &&
+  dx_kind[dx_tile_writer[d1]] == kind && dx_dst1[dx_tile_writer[d1]] == d1 && dx_dst2[dx_tile_writer[d1]] == d2 &&
+  dx_src1[dx_tile_writer[d1]] == s1 && dx_src2[dx_tile_writer[d1]] == s2 && dx_cond[dx_tile_writer[d1]] == c &&
+  (r1 >= 0 ==> dx_uses_reg(dx_tile_writer[d1], r1)) && (r2 >= 0 ==> dx_uses_reg(dx_tile_writer[d1], r2)) &&
+  (r3 >= 0 ==> dx_uses_reg(dx_tile_writer[d1], r3));
+
+// A command may issue: no register overlap with an uncovered command (F6: a read register has no uncovered
+// writer, a written one no uncovered user; -1: none), and a free slot.
+predicate dx_issuable{L}(integer r1, integer r2, integer r3, integer w1, integer w2) =
+  (r1 < 0 || dx_reg_writer[r1] == -1) && (r2 < 0 || dx_reg_writer[r2] == -1) && (r3 < 0 || dx_reg_writer[r3] == -1) &&
+  (w1 < 0 || dx_reg_named[w1] == 0) && (w2 < 0 || dx_reg_named[w2] == 0) && 0 <= dx_count < DX_K;
+
+// The probes: a tile element may be read only while its tile has no uncovered writer; written only while the
+// tile has neither an uncovered writer nor an uncovered reader.
+predicate dx_read_ok{L}(int *a) =
+  \forall integer t, k; 0 <= t < DX_NT && 0 <= k < DX_TS && a == &dx_tile_data[t][k] ==> dx_tile_writer[t] == -1;
+predicate dx_write_ok{L}(int *a) =
+  \forall integer t, k; 0 <= t < DX_NT && 0 <= k < DX_TS && a == &dx_tile_data[t][k] ==>
+    dx_tile_writer[t] == -1 && dx_tile_readers[t] == 0;
