@@ -1,5 +1,6 @@
-"""2026-10-15 ET: finite witness for the current approved composition statement.
+"""2026-10-15 ET: finite witness for the superseded ffb5bda7 composition statement.
 This is an executable model audit, not a Rocq proof of the universal negation.
+The approved e23f3715 ownership-lifetime repair rejects this witness.
 """
 from itertools import combinations
 from collections import defaultdict
@@ -145,4 +146,14 @@ for zeroes in combinations(range(18),8):
             valid &= Y[s][0]!=t and not any(u==t and d.k=='Covered' and d.c==e.c for u,d in Y[j+1:s+1])
     with_device+=valid
 assert total==43758 and with_device==0
-print({'checked_shuffles':total,'critical_contiguous_shuffles':serial,'device_valid_contiguous_shuffles':with_device,'rf':rf,'X':X})
+# The repaired global ownership-lifetime predicate rejects exactly the old
+# owner's uncovered read at 4 followed by the new owner's Own A at 9.
+handoff_violations=[]
+for i,(t,e) in enumerate(X):
+    if e.k!='DeviceRead' or cls(S[i][0][t],e.l)!='owned':continue
+    for j,(u,d) in enumerate(X[i+1:],i+1):
+        if u!=t and d.k=='Own' and d.l==e.l:
+            if not any(v==t and f.k=='Covered' and f.c==e.c for v,f in X[i+1:j]):
+                handoff_violations.append((i,j))
+assert handoff_violations==[(4,9)]
+print({'checked_shuffles':total,'critical_contiguous_shuffles':serial,'device_valid_contiguous_shuffles':with_device,'repaired_handoff_violations':handoff_violations,'rf':rf,'X':X})

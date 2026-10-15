@@ -3235,6 +3235,494 @@ Proof.
   split; [exact Hfinal |]. eapply t42_iterations_once; eauto.
 Qed.
 
+Ltac t42_reassoc := repeat progress (rewrite <- app_assoc || cbn [app]).
+Ltac t42_reassoc_in H := repeat progress (rewrite <- app_assoc in H || cbn [app] in H).
+
+Definition t42_owner (t : nat) (p : nat * event) : bool := Nat.eqb (fst p) t.
+Definition t42_window_good (t : nat) (p : nat * event) : Prop :=
+  p <> (t, Enter) /\ p <> (t, Exit).
+
+Lemma t42_shape_window (a b c : run) t :
+  Forall (t42_window_good t) b ->
+  at_ (a ++ (t,Enter) :: b ++ (t,Exit) :: c) (length a) t Enter /\
+  at_ (a ++ (t,Enter) :: b ++ (t,Exit) :: c) (S (length a + length b)) t Exit /\
+  (forall r, length a < r < S (length a + length b) ->
+    ~ at_ (a ++ (t,Enter) :: b ++ (t,Exit) :: c) r t Enter /\
+    ~ at_ (a ++ (t,Enter) :: b ++ (t,Exit) :: c) r t Exit).
+Proof.
+  intro Hg. split.
+  - unfold at_. apply t42_nth_error_app_here.
+  - split.
+    + unfold at_.
+      replace (a ++ (t,Enter) :: b ++ (t,Exit) :: c) with
+        ((a ++ (t,Enter) :: b) ++ (t,Exit) :: c) by (t42_reassoc; reflexivity).
+      replace (S (length a + length b)) with (length (a ++ (t,Enter) :: b))
+        by (rewrite length_app; simpl; lia).
+      apply t42_nth_error_app_here.
+    + intros r Hr. rewrite Forall_forall in Hg. split; intro Hat.
+      * pose proof (t42_nth_between a b c (t,Enter) (t,Exit) r (t,Enter) Hr Hat) as Hin.
+        exact (proj1 (Hg (t,Enter) Hin) eq_refl).
+      * pose proof (t42_nth_between a b c (t,Enter) (t,Exit) r (t,Exit) Hr Hat) as Hin.
+        exact (proj2 (Hg (t,Exit) Hin) eq_refl).
+Qed.
+
+Lemma t42_body_swap t (Hteam : obl_team_size) (Hdis : obl_owned_disjoint)
+  (Hatomic : obl_atomic_blocks) (Hquiet : obl_dx100_quiet) (a p : run) x y (q c : run) :
+  Forall (t42_window_good t) (p ++ x :: y :: q) ->
+  t42_owner t x = true -> t42_owner t y = false ->
+  t42_reorder (a ++ (t,Enter) :: p ++ x :: y :: q ++ (t,Exit) :: c)
+    (a ++ (t,Enter) :: p ++ y :: x :: q ++ (t,Exit) :: c).
+Proof.
+  intros Hg Hx Hy. destruct x as [u e], y as [v d].
+  unfold t42_owner in Hx, Hy. simpl in Hx, Hy.
+  apply Nat.eqb_eq in Hx. subst u. apply Nat.eqb_neq in Hy.
+  destruct (t42_shape_window a (p ++ (t,e) :: (v,d) :: q) c t Hg)
+    as [Henter [Hexit Hwindow]].
+  t42_reassoc_in Henter. t42_reassoc_in Hexit. t42_reassoc_in Hwindow.
+  set (X := a ++ (t,Enter) :: p ++ (t,e) :: (v,d) :: q ++ (t,Exit) :: c).
+  set (k := S (length a + length p)).
+  assert (Hadj : t42_adjacent X k t e v d).
+  { exists (a ++ (t,Enter) :: p), (q ++ (t,Exit) :: c). split.
+    - unfold k. rewrite length_app. simpl. lia.
+    - unfold X. t42_reassoc. reflexivity. }
+  assert (Hswap : t42_swap_run X k =
+    a ++ (t,Enter) :: p ++ (v,d) :: (t,e) :: q ++ (t,Exit) :: c).
+  { unfold X.
+    replace (a ++ (t,Enter) :: p ++ (t,e) :: (v,d) :: q ++ (t,Exit) :: c) with
+      ((a ++ (t,Enter) :: p) ++ (t,e) :: (v,d) :: (q ++ (t,Exit) :: c))
+      by (t42_reassoc; reflexivity).
+    rewrite t42_swap_run_split by (unfold k; rewrite length_app; simpl; lia).
+    t42_reassoc. reflexivity. }
+  pose proof (t42_window_swap_reorder X (length a)
+    (S (length a + length (p ++ (t,e) :: (v,d) :: q))) t k v e d
+    Hteam Hdis Hatomic Hquiet Henter Hexit ltac:(rewrite length_app; simpl; lia)
+    Hwindow ltac:(unfold k; lia) ltac:(unfold k; rewrite length_app; simpl; lia)
+    Hadj ltac:(congruence)) as Hreorder.
+  rewrite Hswap in Hreorder. exact Hreorder.
+Qed.
+
+Lemma t42_cross_enter t (Hteam : obl_team_size) (Hdis : obl_owned_disjoint)
+  (Hatomic : obl_atomic_blocks) (Hquiet : obl_dx100_quiet) (a : run) y (q c : run) :
+  Forall (t42_window_good t) (y :: q) -> t42_owner t y = false ->
+  t42_reorder (a ++ (t,Enter) :: y :: q ++ (t,Exit) :: c)
+    (a ++ y :: (t,Enter) :: q ++ (t,Exit) :: c).
+Proof.
+  intros Hg Hy. destruct y as [u d].
+  unfold t42_owner in Hy. simpl in Hy. apply Nat.eqb_neq in Hy.
+  destruct (t42_shape_window a ((u,d) :: q) c t Hg) as [Henter [Hexit Hwindow]].
+  set (X := a ++ (t,Enter) :: (u,d) :: q ++ (t,Exit) :: c).
+  assert (Hadj : t42_adjacent X (length a) t Enter u d).
+  { exists a, (q ++ (t,Exit) :: c). auto. }
+  assert (Hswap : t42_swap_run X (length a) =
+    a ++ (u,d) :: (t,Enter) :: q ++ (t,Exit) :: c).
+  { unfold X. apply t42_swap_run_split. reflexivity. }
+  pose proof (t42_window_swap_reorder X (length a)
+    (S (length a + length ((u,d) :: q))) t (length a) u Enter d
+    Hteam Hdis Hatomic Hquiet Henter Hexit ltac:(simpl; lia) Hwindow
+    ltac:(lia) ltac:(simpl; lia) Hadj ltac:(congruence)) as Hreorder.
+  rewrite Hswap in Hreorder. exact Hreorder.
+Qed.
+
+(* The following partition scripts specialize the coordinator's independently
+   kernel-checked /private/tmp/ProbataWindowPartition.v, 2026-10-15 ET. *)
+Ltac t42_transfer_good H :=
+  apply Forall_forall; intros z Hz; rewrite Forall_forall in H;
+  apply H; repeat progress (repeat rewrite in_app_iff in *; simpl in *); tauto.
+
+Lemma t42_bubble_inside t (Hteam : obl_team_size) (Hdis : obl_owned_disjoint)
+  (Hatomic : obl_atomic_blocks) (Hquiet : obl_dx100_quiet) a p xs y q c :
+  Forall (t42_window_good t) (p ++ xs ++ y :: q) -> Forall (fun x => (t42_owner t) x = true) xs -> (t42_owner t) y = false ->
+  t42_reorder (a ++ (t,Enter) :: p ++ xs ++ y :: q ++ (t,Exit) :: c)
+    (a ++ (t,Enter) :: p ++ y :: xs ++ q ++ (t,Exit) :: c).
+Proof.
+  revert p. induction xs as [|x xs IH]; intros p Hg Ho Hy.
+  - simpl. apply t42_reorder_refl.
+  - inversion Ho as [|? ? Hx Hxs]; subst.
+    pose proof (IH (p ++ [x]) ltac:(t42_transfer_good Hg) Hxs Hy) as Hfirst.
+    assert (Hsecond : t42_reorder (a ++ (t,Enter) :: p ++ x :: y :: xs ++ q ++ (t,Exit) :: c)
+      (a ++ (t,Enter) :: p ++ y :: x :: xs ++ q ++ (t,Exit) :: c)).
+    { pose proof ((t42_body_swap t Hteam Hdis Hatomic Hquiet) a p x y (xs ++ q) c ltac:(t42_transfer_good Hg) Hx Hy) as Hs.
+      t42_reassoc. t42_reassoc_in Hs. exact Hs. }
+    t42_reassoc. t42_reassoc_in Hfirst.
+    eapply t42_reorder_trans; [exact Hfirst | exact Hsecond].
+Qed.
+
+Lemma t42_bubble_across_enter t (Hteam : obl_team_size) (Hdis : obl_owned_disjoint)
+  (Hatomic : obl_atomic_blocks) (Hquiet : obl_dx100_quiet) a xs y q c :
+  Forall (t42_window_good t) (xs ++ y :: q) -> Forall (fun x => (t42_owner t) x = true) xs -> (t42_owner t) y = false ->
+  t42_reorder (a ++ (t,Enter) :: xs ++ y :: q ++ (t,Exit) :: c)
+    (a ++ y :: (t,Enter) :: xs ++ q ++ (t,Exit) :: c).
+Proof.
+  intros Hg Ho Hy.
+  pose proof (t42_bubble_inside t Hteam Hdis Hatomic Hquiet a [] xs y q c Hg Ho Hy) as Hfirst. simpl in Hfirst.
+  eapply t42_reorder_trans; [exact Hfirst |].
+  pose proof ((t42_cross_enter t Hteam Hdis Hatomic Hquiet) a y (xs ++ q) c ltac:(t42_transfer_good Hg) Hy) as Hsecond.
+  t42_reassoc. t42_reassoc_in Hsecond. exact Hsecond.
+Qed.
+
+Lemma t42_filter_own t xs : Forall (fun x => (t42_owner t) x = true) (filter (t42_owner t) xs).
+Proof.
+  apply Forall_forall. intros x Hx. apply filter_In in Hx. tauto.
+Qed.
+
+Theorem t42_clear_window t (Hteam : obl_team_size) (Hdis : obl_owned_disjoint)
+  (Hatomic : obl_atomic_blocks) (Hquiet : obl_dx100_quiet) a b q c :
+  Forall (t42_window_good t) (b ++ q) ->
+  t42_reorder (a ++ (t,Enter) :: b ++ q ++ (t,Exit) :: c)
+    (a ++ filter (fun x => negb ((t42_owner t) x)) b ++ (t,Enter) :: filter (t42_owner t) b ++ q ++ (t,Exit) :: c).
+Proof.
+  revert a q. induction b using rev_ind; intros a q Hg.
+  - simpl. apply t42_reorder_refl.
+  - pose proof (IHb a (x :: q) ltac:(t42_transfer_good Hg)) as Hfirst.
+    destruct ((t42_owner t) x) eqn:Hx.
+    + rewrite !filter_app. simpl. rewrite Hx. simpl.
+      t42_reassoc. t42_reassoc_in Hfirst. exact Hfirst.
+    + rewrite !filter_app. simpl. rewrite Hx. simpl.
+      assert (Hsecond : t42_reorder
+        ((a ++ filter (fun z => negb ((t42_owner t) z)) b) ++ (t,Enter) :: filter (t42_owner t) b ++ x :: q ++ (t,Exit) :: c)
+        ((a ++ filter (fun z => negb ((t42_owner t) z)) b) ++ x :: (t,Enter) :: filter (t42_owner t) b ++ q ++ (t,Exit) :: c)).
+      { apply (t42_bubble_across_enter t Hteam Hdis Hatomic Hquiet); [|apply (t42_filter_own t) |exact Hx].
+        apply Forall_forall. intros z Hz. rewrite in_app_iff in Hz.
+        rewrite Forall_forall in Hg. apply Hg.
+        destruct Hz as [Hz | Hz].
+        - apply filter_In in Hz. repeat progress (repeat rewrite in_app_iff in *; simpl in *); tauto.
+        - repeat progress (repeat rewrite in_app_iff in *; simpl in *); tauto. }
+      t42_reassoc. t42_reassoc_in Hfirst. t42_reassoc_in Hsecond.
+      eapply t42_reorder_trans; [exact Hfirst |exact Hsecond].
+Qed.
+
+Definition t42_closed_prefix (a : run) : Prop :=
+  forall t, in_crit (proj a t) false = false.
+
+Lemma t42_at_app_left (a b : run) i t e :
+  i < length a -> (at_ (a ++ b) i t e <-> at_ a i t e).
+Proof. intro Hi. unfold at_. rewrite t42_nth_error_app_left by exact Hi. reflexivity. Qed.
+
+Lemma t42_at_app_right (a b : run) i t e :
+  at_ (a ++ b) (length a + i) t e <-> at_ b i t e.
+Proof.
+  unfold at_. rewrite nth_error_app2 by lia.
+  replace (length a + i - length a) with i by lia. reflexivity.
+Qed.
+
+Lemma t42_inside_app_boundary (a b : run) t :
+  inside (a ++ b) t (length a) = in_crit (proj a t) false.
+Proof.
+  unfold inside. rewrite firstn_app, firstn_all, Nat.sub_diag. simpl.
+  now rewrite app_nil_r.
+Qed.
+
+Lemma t42_contiguous_append_closed (a b : run) :
+  t42_closed_prefix a -> critical_sections_contiguous a ->
+  critical_sections_contiguous b -> critical_sections_contiguous (a ++ b).
+Proof.
+  intros Hclosed Ha Hb i x t Henter Hexit Hix Hwindow m Him.
+  destruct (Nat.lt_ge_cases x (length a)) as [Hxa | Hax].
+  - pose proof (proj1 (t42_at_app_left a b i t Enter ltac:(lia)) Henter) as Hi.
+    pose proof (proj1 (t42_at_app_left a b x t Exit Hxa) Hexit) as Hx.
+    destruct (Ha i x t Hi Hx Hix ltac:(
+      intros r Hr; split; intro Hat;
+      [apply (proj1 (Hwindow r Hr)) | apply (proj2 (Hwindow r Hr))];
+      apply (proj2 (t42_at_app_left a b r t _ ltac:(lia))); exact Hat) m Him)
+      as [e He].
+    exists e. apply (proj2 (t42_at_app_left a b m t e ltac:(lia))). exact He.
+  - destruct (Nat.lt_ge_cases i (length a)) as [Hia | Hai].
+    + exfalso.
+      pose proof (t42_inside_after_enter (a ++ b) i t (length a) Henter Hia
+        ltac:(intros q Hq; apply (proj2 (Hwindow q ltac:(lia))))) as Hin.
+      rewrite t42_inside_app_boundary, Hclosed in Hin. discriminate.
+    + assert (Hi : at_ b (i - length a) t Enter).
+      { apply (proj1 (t42_at_app_right a b (i - length a) t Enter)).
+        replace (length a + (i - length a)) with i by lia. exact Henter. }
+      assert (Hx : at_ b (x - length a) t Exit).
+      { apply (proj1 (t42_at_app_right a b (x - length a) t Exit)).
+        replace (length a + (x - length a)) with x by lia. exact Hexit. }
+      destruct (Hb (i - length a) (x - length a) t Hi Hx ltac:(lia)
+        ltac:(intros r Hr; split; intro Hat;
+          [apply (proj1 (Hwindow (length a + r) ltac:(lia))) |
+           apply (proj2 (Hwindow (length a + r) ltac:(lia)))];
+          apply (proj2 (t42_at_app_right a b r t _)); exact Hat)
+        (m - length a) ltac:(lia)) as [e He].
+      exists e. replace m with (length a + (m - length a)) by lia.
+      apply (proj2 (t42_at_app_right a b (m - length a) t e)). exact He.
+Qed.
+
+Lemma t42_contiguous_single_thread X t :
+  Forall (fun p => fst p = t) X -> critical_sections_contiguous X.
+Proof.
+  intros Hall i x u Hi Hx Hix Hwindow m Him. rewrite Forall_forall in Hall.
+  pose proof (Hall (u,Enter) (t42_nth_error_in X i (u,Enter) Hi)) as Hu.
+  simpl in Hu. subst u.
+  assert (Hmx : m < length X).
+  { pose proof (t42_nth_error_lt X x (t,Exit) Hx). lia. }
+  destruct (nth_error X m) as [[u e] |] eqn:Hm.
+  - pose proof (Hall (u,e) (t42_nth_error_in X m (u,e) Hm)) as Hu.
+    simpl in Hu. subst u. now exists e.
+  - apply nth_error_None in Hm. lia.
+Qed.
+
+Lemma t42_contiguous_no_exit X :
+  (forall t, ~ In (t,Exit) X) -> critical_sections_contiguous X.
+Proof.
+  intros Hnone i x t Hi Hx Hix Hwindow m Him. exfalso.
+  apply (Hnone t). eapply t42_nth_error_in; eauto.
+Qed.
+
+Definition t42_delimiter_free (a : run) : Prop :=
+  Forall (fun p => snd p <> Enter /\ snd p <> Exit) a.
+
+Lemma t42_in_crit_free tr state :
+  Forall (fun e => e <> Enter /\ e <> Exit) tr -> in_crit tr state = state.
+Proof.
+  intro Hall. induction Hall as [|e tr [Henter Hexit] Hall IH]; [reflexivity |].
+  destruct e; simpl; try exact IH; congruence.
+Qed.
+
+Lemma t42_proj_free a t :
+  t42_delimiter_free a -> Forall (fun e => e <> Enter /\ e <> Exit) (proj a t).
+Proof.
+  intros Hall. unfold t42_delimiter_free in Hall.
+  rewrite Forall_forall in Hall |- *. intros e He.
+  apply t42_in_proj in He. exact (Hall (t,e) He).
+Qed.
+
+Lemma t42_free_filter a f :
+  t42_delimiter_free a -> t42_delimiter_free (filter f a).
+Proof.
+  intros Hall. unfold t42_delimiter_free in *. rewrite Forall_forall in Hall |- *.
+  intros e He. apply filter_In in He. exact (Hall e (proj1 He)).
+Qed.
+
+Lemma t42_closed_append_free a b :
+  t42_closed_prefix a -> t42_delimiter_free b -> t42_closed_prefix (a ++ b).
+Proof.
+  intros Ha Hb t. rewrite t42_proj_app, t42_in_crit_app, Ha.
+  apply t42_in_crit_free. now apply t42_proj_free.
+Qed.
+
+Lemma t42_free_no_exit a : t42_delimiter_free a -> forall t, ~ In (t,Exit) a.
+Proof.
+  intros Ha t Hin. unfold t42_delimiter_free in Ha. rewrite Forall_forall in Ha.
+  exact (proj2 (Ha (t,Exit) Hin) eq_refl).
+Qed.
+
+Lemma t42_proj_single_thread_nil a t u :
+  Forall (fun p => fst p = t) a -> t <> u -> proj a u = [].
+Proof.
+  intros Hall Htu. induction Hall as [|[v e] a Hv Hall IH]; [reflexivity |].
+  simpl in Hv. subst v. unfold proj in *. simpl.
+  destruct (Nat.eqb t u) eqn:Htu'; [apply Nat.eqb_eq in Htu'; contradiction |exact IH].
+Qed.
+
+Lemma t42_closed_append_block a body t :
+  t42_closed_prefix a -> Forall (fun p => fst p = t) body ->
+  t42_closed_prefix (a ++ (t,Enter) :: body ++ [(t,Exit)]).
+Proof.
+  intros Ha Hbody u. rewrite t42_proj_app, t42_in_crit_app, Ha.
+  destruct (Nat.eq_dec t u) as [<- | Htu].
+  - rewrite t42_proj_cons_same, t42_proj_app. simpl proj.
+    unfold proj at 2. simpl. rewrite Nat.eqb_refl. simpl.
+    rewrite t42_in_crit_app. reflexivity.
+  - assert (Htail : proj ((t,Enter) :: body ++ [(t,Exit)]) u = []).
+    { apply (t42_proj_single_thread_nil _ t u); [|exact Htu].
+      constructor; [reflexivity |]. apply Forall_app. split; [exact Hbody |].
+      constructor; [reflexivity | constructor]. }
+    rewrite Htail. reflexivity.
+Qed.
+
+Lemma t42_bracket_enter_outside X rf i t :
+  omp_ok X rf -> at_ X i t Enter -> inside X t i = false.
+Proof.
+  intros Homp Hat. destruct Homp as [_ [_ [_ [_ [_ Hbr]]]]].
+  destruct (t42_proj_before_at X i t Enter Hat) as [post Hproj].
+  specialize (Hbr t). rewrite Hproj in Hbr.
+  apply t42_brackets_app in Hbr. destruct Hbr as [_ Hbr].
+  change (inside X t i) with (in_crit (proj (firstn i X) t) false).
+  destruct (in_crit (proj (firstn i X) t) false); [discriminate |reflexivity].
+Qed.
+
+Definition t42_is_exit (e : event) : bool := match e with Exit => true | _ => false end.
+
+Lemma t42_split_first_exit (X : run) :
+  (forall t, ~ In (t,Exit) X) \/
+  exists a t b, X = a ++ (t,Exit) :: b /\ (forall u, ~ In (u,Exit) a).
+Proof.
+  induction X as [|[t e] X IH].
+  - left. intros u H. contradiction.
+  - destruct (t42_is_exit e) eqn:He.
+    + assert (Heq : e = Exit) by (destruct e; simpl in He; congruence).
+      subst e. right. exists [], t, X. split; [reflexivity |]. intros u H. contradiction.
+    + destruct IH as [Hnone | [a [u [b [HX Hnone]]]]].
+      * left. intros u [Hhead | Htail].
+        -- inversion Hhead. subst e. discriminate.
+        -- exact (Hnone u Htail).
+      * right. exists ((t,e) :: a), u, b. split; [simpl; now rewrite HX |].
+        intros v [Hhead | Htail].
+        -- inversion Hhead. subst e. discriminate.
+        -- exact (Hnone v Htail).
+Qed.
+
+Lemma t42_before_first_exit_free a middle c t u rf :
+  omp_ok (a ++ (t,Enter) :: middle ++ (u,Exit) :: c) rf ->
+  (forall v, ~ In (v,Exit) middle) -> t42_delimiter_free middle.
+Proof.
+  intros Homp Hnoexit. unfold t42_delimiter_free. rewrite Forall_forall.
+  intros [v e] Hin. simpl. split; [|intro He; subst e; exact (Hnoexit v Hin)].
+  intro He. subst e.
+  destruct (t42_in_middle_at a middle c (t,Enter) (u,Exit) (v,Enter) Hin)
+    as [m [Hm Hat]].
+  assert (Henter : at_ (a ++ (t,Enter) :: middle ++ (u,Exit) :: c) (length a) t Enter).
+  { unfold at_. apply t42_nth_error_app_here. }
+  destruct (Nat.eq_dec t v) as [<- | Htv].
+  - pose proof (t42_bracket_enter_outside _ rf m t Homp Hat) as Hout.
+    pose proof (t42_inside_after_enter _ (length a) t m Henter ltac:(lia)
+      ltac:(intros q Hq Hexit;
+        apply (Hnoexit t);
+        exact (t42_nth_between a middle c (t,Enter) (u,Exit) q (t,Exit) ltac:(lia) Hexit))) as Hincrit.
+    congruence.
+  - pose proof Homp as [_ [_ [_ [Hmutex _]]]].
+    destruct (Hmutex (length a) m t v ltac:(lia) Henter Hat Htv)
+      as [q [Hq Hexit]].
+    apply (Hnoexit t).
+    exact (t42_nth_between a middle c (t,Enter) (u,Exit) q (t,Exit) ltac:(lia) Hexit).
+Qed.
+
+Lemma t42_proj_cons_other X t u e :
+  t <> u -> proj ((t,e) :: X) u = proj X u.
+Proof.
+  intro Htu. unfold proj. simpl. destruct (Nat.eqb t u) eqn:Hb;
+    [apply Nat.eqb_eq in Hb; contradiction |reflexivity].
+Qed.
+
+Lemma t42_first_exit_owner a middle c t u rf :
+  t42_closed_prefix a -> t42_delimiter_free middle ->
+  omp_ok (a ++ (t,Enter) :: middle ++ (u,Exit) :: c) rf -> u = t.
+Proof.
+  intros Hclosed Hfree Homp.
+  destruct (Nat.eq_dec u t) as [Heq | Hne]; [exact Heq |]. exfalso.
+  assert (Hexit : at_ (a ++ (t,Enter) :: middle ++ (u,Exit) :: c)
+    (length (a ++ (t,Enter) :: middle)) u Exit).
+  { replace (a ++ (t,Enter) :: middle ++ (u,Exit) :: c) with
+      ((a ++ (t,Enter) :: middle) ++ (u,Exit) :: c) by (t42_reassoc; reflexivity).
+    unfold at_. apply t42_nth_error_app_here. }
+  pose proof (t42_bracket_exit_inside _ rf _ u Homp Hexit) as Hin.
+  replace (a ++ (t,Enter) :: middle ++ (u,Exit) :: c) with
+    ((a ++ (t,Enter) :: middle) ++ (u,Exit) :: c) in Hin by (t42_reassoc; reflexivity).
+  rewrite t42_inside_app_boundary, t42_proj_app, t42_in_crit_app, Hclosed in Hin.
+  rewrite t42_proj_cons_other in Hin by congruence.
+  rewrite (t42_in_crit_free (proj middle u) false (t42_proj_free middle u Hfree)) in Hin.
+  discriminate.
+Qed.
+
+Lemma t42_free_window_good a t :
+  t42_delimiter_free a -> Forall (t42_window_good t) a.
+Proof.
+  unfold t42_delimiter_free. intros Hall. rewrite Forall_forall in Hall |- *.
+  intros [u e] Hin. specialize (Hall (u,e) Hin). simpl in Hall.
+  split; intro Heq; inversion Heq; subst e; tauto.
+Qed.
+
+Lemma t42_filter_owner_thread a t :
+  Forall (fun p => fst p = t) (filter (t42_owner t) a).
+Proof.
+  rewrite Forall_forall. intros [u e] Hin. apply filter_In in Hin.
+  destruct Hin as [_ Hown]. unfold t42_owner in Hown. simpl in *.
+  now apply Nat.eqb_eq in Hown.
+Qed.
+
+Definition t42_is_enter (e : event) : bool := match e with Enter => true | _ => false end.
+
+Lemma t42_clear_suffix (Hteam : obl_team_size) (Hdis : obl_owned_disjoint)
+  (Hatomic : obl_atomic_blocks) (Hquiet : obl_dx100_quiet) :
+  forall n (a b : run) rf, length b <= n ->
+  t42_closed_prefix a -> critical_sections_contiguous a ->
+  model_run (a ++ b) rf -> all_fit (a ++ b) -> complete (a ++ b) ->
+  exists b', t42_reorder (a ++ b) (a ++ b') /\ critical_sections_contiguous (a ++ b').
+Proof.
+  induction n as [|n IH]; intros a b rf Hlen Hclosed Ha Hmodel Hfit Hcomplete.
+  - destruct b; [|simpl in Hlen; lia].
+    exists []. repeat rewrite app_nil_r. split; [apply t42_reorder_refl |exact Ha].
+  - destruct b as [|[t e] tail].
+    + exists []. repeat rewrite app_nil_r. split; [apply t42_reorder_refl |exact Ha].
+    + pose proof Hmodel as [_ [_ [_ Homp]]].
+      destruct (t42_is_enter e) eqn:Henter.
+      * assert (Heq : e = Enter) by (destruct e; simpl in Henter; congruence).
+        subst e. destruct (t42_split_first_exit tail) as [Hnone | [middle [u [c [Htail Hnone]]]]].
+        -- exists ((t,Enter) :: tail). split; [apply t42_reorder_refl |].
+           apply t42_contiguous_append_closed; [exact Hclosed |exact Ha |].
+           apply t42_contiguous_no_exit. intros u [Hbad | Hin]; [discriminate |exact (Hnone u Hin)].
+        -- subst tail.
+           pose proof (t42_before_first_exit_free a middle c t u rf Homp Hnone) as Hfree.
+           pose proof (t42_first_exit_owner a middle c t u rf Hclosed Hfree Homp) as Hu.
+           subst u.
+           pose proof (t42_clear_window t Hteam Hdis Hatomic Hquiet a middle [] c
+             ltac:(rewrite app_nil_r; now apply t42_free_window_good)) as Hpartition.
+           t42_reassoc_in Hpartition.
+           set (f := filter (fun p => negb (t42_owner t p)) middle).
+           set (o := filter (t42_owner t) middle).
+           set (p := a ++ f ++ (t,Enter) :: o ++ [(t,Exit)]).
+           assert (Hf : t42_delimiter_free f) by (unfold f; now apply t42_free_filter).
+           assert (Ho : Forall (fun z => fst z = t) o) by (unfold o; apply t42_filter_owner_thread).
+           assert (Hclosedaf : t42_closed_prefix (a ++ f)) by (now apply t42_closed_append_free).
+           assert (Hcontaf : critical_sections_contiguous (a ++ f)).
+           { apply t42_contiguous_append_closed; [exact Hclosed |exact Ha |].
+             apply t42_contiguous_no_exit. now apply t42_free_no_exit. }
+           assert (Hclosedp : t42_closed_prefix p).
+           { unfold p. replace (a ++ f ++ (t,Enter) :: o ++ [(t,Exit)]) with
+               ((a ++ f) ++ (t,Enter) :: o ++ [(t,Exit)]) by (t42_reassoc; reflexivity).
+             now apply t42_closed_append_block. }
+           assert (Hcontp : critical_sections_contiguous p).
+           { unfold p. replace (a ++ f ++ (t,Enter) :: o ++ [(t,Exit)]) with
+               ((a ++ f) ++ (t,Enter) :: o ++ [(t,Exit)]) by (t42_reassoc; reflexivity).
+             apply t42_contiguous_append_closed; [exact Hclosedaf |exact Hcontaf |].
+             apply (t42_contiguous_single_thread _ t). constructor; [reflexivity |].
+             apply Forall_app. split; [exact Ho |]. constructor; [reflexivity |constructor]. }
+           assert (Hr : t42_reorder (a ++ (t,Enter) :: middle ++ (t,Exit) :: c) (p ++ c)).
+           { unfold p, f, o. t42_reassoc. exact Hpartition. }
+           destruct (Hr rf Hmodel Hfit Hcomplete) as [rf' [Hmy [Hfy [Hcy Hobs]]]].
+           destruct (IH p c rf' ltac:(simpl in Hlen; rewrite length_app in Hlen; simpl in Hlen; lia)
+             Hclosedp Hcontp Hmy Hfy Hcy) as [c' [Hrec Hfinal]].
+           exists (f ++ (t,Enter) :: o ++ (t,Exit) :: c').
+           replace (a ++ f ++ (t,Enter) :: o ++ (t,Exit) :: c') with (p ++ c')
+             by (unfold p; t42_reassoc; reflexivity).
+           split; [eapply t42_reorder_trans; [exact Hr |exact Hrec] |exact Hfinal].
+      * destruct (t42_is_exit e) eqn:Hexit.
+        -- assert (Heq : e = Exit) by (destruct e; simpl in Hexit; congruence).
+           subst e. exfalso.
+           assert (Hat : at_ (a ++ (t,Exit) :: tail) (length a) t Exit)
+             by (unfold at_; apply t42_nth_error_app_here).
+           pose proof (t42_bracket_exit_inside _ rf _ t Homp Hat) as Hin.
+           rewrite t42_inside_app_boundary, Hclosed in Hin. discriminate.
+        -- assert (Hne : e <> Enter /\ e <> Exit)
+             by (destruct e; simpl in Henter, Hexit; intuition discriminate).
+           assert (Hfree : t42_delimiter_free [(t,e)]).
+           { constructor; [exact Hne |constructor]. }
+           set (a' := a ++ [(t,e)]).
+           assert (Hclos : t42_closed_prefix a') by (unfold a'; now apply t42_closed_append_free).
+           assert (Hcont : critical_sections_contiguous a').
+           { unfold a'. apply t42_contiguous_append_closed; [exact Hclosed |exact Ha |].
+             apply t42_contiguous_no_exit. now apply t42_free_no_exit. }
+           assert (Heq : a ++ (t,e) :: tail = a' ++ tail) by (unfold a'; t42_reassoc; reflexivity).
+           rewrite Heq in Hmodel, Hfit, Hcomplete.
+           destruct (IH a' tail rf ltac:(simpl in Hlen; lia) Hclos Hcont Hmodel Hfit Hcomplete)
+             as [tail' [Hrec Hfinal]].
+           exists ((t,e) :: tail').
+           replace (a ++ (t,e) :: tail') with (a' ++ tail') by (unfold a'; t42_reassoc; reflexivity).
+           rewrite Heq. split; assumption.
+Qed.
+
+Lemma t42_global_serialization X rf :
+  obl_team_size -> obl_owned_disjoint -> obl_atomic_blocks -> obl_dx100_quiet ->
+  model_run X rf -> all_fit X -> complete X ->
+  exists Y, t42_reorder X Y /\ critical_sections_contiguous Y.
+Proof.
+  intros Hteam Hdis Hatomic Hquiet Hmodel Hfit Hcomplete.
+  apply (t42_clear_suffix Hteam Hdis Hatomic Hquiet (length X) [] X rf);
+    try assumption; [lia | |].
+  - intro t. reflexivity.
+  - apply t42_contiguous_no_exit. intros t H. contradiction.
+Qed.
+
 (* END t42 lemmas *)
 (** * 8. The parallel composition theorem.  OPEN: proof is ticket 42. *)
 Theorem parallel_composition :
@@ -3248,7 +3736,18 @@ Theorem parallel_composition :
     complete X ->
     exists (Y : run) (rf' : rf_map), serial_outcome X Y rf'.
 Proof.
-  (* OPEN — ticket 42 proves this; it must prove exactly this approved text. *)
-Admitted.
+(* BEGIN t42 proof *)
+  intros Hclass Hdis Hatomic Hchunks Huniform Hteam Hquiet X rf
+    Hprogram Hmemory Homp Hdevice Hcomplete.
+  assert (Hmodel : model_run X rf).
+  { exact (conj Hprogram (conj Hmemory (conj Hdevice Homp))). }
+  pose proof (t42_all_fit_from_class Hclass X rf Hmodel) as Hfit.
+  destruct (t42_global_serialization X rf Hteam Hdis Hatomic Hquiet Hmodel Hfit Hcomplete)
+    as [Y [Hreorder Hcontiguous]].
+  destruct (t42_serialization_suffices X rf Y Hteam Hdis Hatomic Hchunks Huniform
+    Hmodel Hfit Hcomplete Hreorder Hcontiguous) as [rf' Hserial].
+  exists Y, rf'. exact Hserial.
+Qed.
+(* END t42 proof *)
 
 End Composition.
