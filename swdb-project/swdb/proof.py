@@ -153,19 +153,30 @@ class ScriptedAdapter:
                     log.write(f"wall budget of {job.budget_seconds} s spent\n".encode())
                     return Verdict(verdict="not_proven", bounds=bounds, failure_class="timeout",
                                    assumptions=list(self.script.get("assumptions") or []))
-        outcome = None
+        outcome, report_files = None, []
         if self.script.get("wp_reports"):
             from swdb import proof_setup
-            reports = self.script["wp_reports"]
+            reports = dict(self.script["wp_reports"])
+            for key in ("goals", "properties", "inventory"):
+                if reports.get(key) and not Path(reports[key]).is_absolute():
+                    reports[key] = str(job.scratch / reports[key])
+            saved = Path(job.log).parent / "scripted-wp"
+            saved.mkdir(exist_ok=True)
+            for key in ("goals", "properties", "inventory"):
+                if reports.get(key) and Path(reports[key]).is_file():
+                    target = saved / Path(reports[key]).name
+                    shutil.copyfile(reports[key], target)
+                    reports[key] = str(target)
+                    report_files.append((f"wp_{key}", target))
             outcome = proof_setup.read_wp_reports(reports["goals"], reports["properties"], reports.get("inventory"),
                                                    reports.get("extern_contracts"), reports.get("functions"))
         verdict = Verdict(verdict=outcome["verdict"] if outcome else self.script.get("verdict"), bounds=bounds,
-                          assumptions=list(self.script.get("assumptions") or []),
+                          assumptions=list(self.script.get("assumptions") or []) + (outcome.get("assumptions", []) if outcome else []),
                           counterexample=self.script.get("counterexample"),
                           failure_class=outcome["failure_class"] if outcome else self.script.get("failure_class"),
                           unreplayed_counterexample=self.script.get("unreplayed_counterexample"),
                           tools=tuple(self.script.get("tools") or ()),
-                          peak_rss_bytes=self.script.get("peak_rss_bytes"),
+                          peak_rss_bytes=self.script.get("peak_rss_bytes"), reports=tuple(report_files),
                           record_fields={"goals": outcome["goals"], "verdict_reading": outcome["reading"],
                                          "unproven_properties": outcome["unproven"]} if outcome else None)
         with open(job.log, "a", encoding="utf-8") as log:

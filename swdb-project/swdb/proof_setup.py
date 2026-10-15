@@ -19,6 +19,7 @@ from swdb.proof import AdapterError
 SETUP_VERSION = "1"
 READING_VERSION = "1"
 REPORT_MODULE = Path(__file__).with_name("proof_report.ml")
+_COMPILED_MODULES = {}
 _ASSUME = re.compile(r"\b(?:__CPROVER_assume|crucible_assume|llvm_assume|SWDB_ASSUME|assume)\s*\(")
 
 
@@ -51,6 +52,12 @@ def _no_assume(text, where):
 def _method(method):
     if method is not None and _sha(Path(method.path).read_bytes()) != method.sha256:
         _fail("method_version", f"method {method.id} changed after the job was planned")
+    if method is not None and method.data.get("evidence_kind") == "execution":
+        checks = method.data.get("checks") or {}
+        for name, current in identity().items():
+            frozen = checks.get(name)
+            if not isinstance(frozen, dict) or frozen.get("version") != current["version"] or frozen.get("sha256") != current["sha256"]:
+                _fail("method_version", f"{method.id} does not pin the installed {name} version and content hash")
 
 
 def begin(job, adapter, pins, method):
@@ -125,10 +132,19 @@ def _wp_flags(flags, scratch):
         values = _values(flags, name)
         if not values or any(v != expected for v in values):
             _fail("frozen_flags", f"requires only {name} {expected}, got {values}")
+    if any(str(flag).startswith("-wp-prop") for flag in flags):
+        _fail("property_selection", "WP may not suppress generated properties or global lemmas")
     if any("warn-key" in str(flag) for flag in flags):
         _fail("warning_defaults", "Frama-C warning keys must stay at their defaults")
-    if any(f.startswith(("-wp-session", "-wp-script", "-load", "-wp-cache-dir")) for f in flags):
-        _fail("fresh_session", "loading WP sessions, scripts, or caches is forbidden")
+    for index, flag in enumerate(flags):
+        if flag.startswith("-load"):
+            value = flags[index + 1] if index + 1 < len(flags) else ""
+            key = str(Path(value).resolve())
+            pinned = _COMPILED_MODULES.get(key)
+            if flag != "-load-module" or pinned is None or _sha(Path(value).read_bytes()) != pinned[0] or _sha(REPORT_MODULE.read_bytes()) != pinned[1]:
+                _fail("fresh_session", "only the checked, freshly compiled proof inventory module may be loaded")
+        if flag.startswith(("-wp-session", "-wp-script", "-wp-cache-dir")):
+            _fail("fresh_session", "loading WP sessions, scripts, or caches is forbidden")
     if any(p.name in ("wp", ".wp", "wp-session", "wp-cache") or "session" in p.name
            for p in Path(scratch).iterdir()):
         _fail("fresh_session", "the working folder contains an existing WP session")
@@ -143,7 +159,6 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
     """
     if not getattr(job, "setup", None):
         # Direct adapter usage outside prove still gets the same preflight.
-        from types import SimpleNamespace
         if getattr(job, "setup", None) is None:
             _fail("unplanned_job", "adapter invocation has no planned setup")
         method = getattr(adapter, "method", None)
@@ -159,7 +174,12 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
         fresh = Library(library_root)
         if fresh.content_sha256(job.unit.contract) != job.unit.contract_sha256:
             _fail("contract_hash", "the contract changed after planning")
-    hashes = {}
+    summary_pins = (context.get("pins") or {}).get("summaries", [])
+    if library_root is not None:
+        for summary in summary_pins:
+            if fresh.content_sha256(summary["id"]) != summary["sha256"]:
+                _fail("summary_hash", f"summary {summary['id']} differs from its pinned content")
+    hashes = {"summaries": _digest(summary_pins)}
     for path, expected in inputs:
         path = Path(path)
         actual = path.read_bytes()
@@ -172,12 +192,13 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
         pinned = (context.get("pins") or {}).get("c_lowering") or context.get("c_lowering")
         if pinned and pinned.get("sha256") != _sha(lowering.text):
             _fail("lowering_hash", "C lowering differs from its planned pin")
+        final_text = "\n".join(Path(path).read_text() for path, _expected in inputs)
         for probe in lowering.probes:
-            if f'"{probe["id"]}"' not in lowering.text:
+            if f'"{probe["id"]}"' not in lowering.text or f'"{probe["id"]}"' not in final_text:
                 _fail("hazard_probes", f"generator probe {probe['id']} is absent from C lowering")
         hashes["lowering"] = _sha(lowering.text)
     if adapter.name == "wp":
-        _wp_flags(flags, scratch or job.scratch)
+        _wp_flags(list(command) if command else flags, scratch or job.scratch)
     method = job.setup.get("method")
     tools = context.get("tools") or {}
     if method is not None:
@@ -254,10 +275,12 @@ def read_wp_reports(goals_json, properties_csv, inventory_path, extern_contracts
     for name, expected in generated.items():
         raw_goal = reported.get(name)
         if raw_goal is None:
+            direct = expected.get("passed") is True and (expected.get("smoke") or "valid" in expected.get("results", []))
             goal = {"goal": name, "property": expected.get("property"), "function": expected.get("function"),
-                    "status": "unknown", "solver": None, "seconds": None}
+                    "status": "valid" if direct else "unknown", "solver": None, "seconds": None}
             goals.append(goal)
-            unproven.append({"property": goal["property"], "goal": name, "status": "untried", "failure_class": "unknown"})
+            if not direct:
+                unproven.append({"property": goal["property"], "goal": name, "status": "untried", "failure_class": "unknown"})
             continue
         goal = _goal(raw_goal)
         goals.append(goal)
@@ -306,4 +329,5 @@ def compile_report_module(workdir):
                            "-o", str(out), str(source)], capture_output=True, text=True, timeout=120)
     if done.returncode:
         _fail("report_reader", f"cannot compile fresh inventory reader: {(done.stderr or done.stdout)[:800]}")
+    _COMPILED_MODULES[str(out.resolve())] = (_sha(out.read_bytes()), _sha(REPORT_MODULE.read_bytes()))
     return out
