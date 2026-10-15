@@ -17,7 +17,7 @@ say it is closed under the global context. Every compile uses the shared verifie
 input hash immediately before launch. Original compile logs remain outside the repository.
 
 A successful record has subject `{kind: method_part, id: rocq.probata.composition,
-part: composition_theorem}`, verdict `proven` and `method_part_status: rocq_checked`.
+part: composition_theorem}`, verdict `proven` and `method_part_status` set to `rocq_checked`.
 The lifecycle `status` remains independent. `pins.rocq_development` is `{id: rocq.probata,
 sha256: ...}`: a digest of the named development files and the trusted statement guard.
 The method version pins the same digest, both theorem names and the exact Rocq version.
