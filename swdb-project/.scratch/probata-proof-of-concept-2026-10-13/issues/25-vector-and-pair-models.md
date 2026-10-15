@@ -119,8 +119,12 @@ fixture unit, refutes stale pointers and iterators, and refutes an unchecked `at
 
 **Evidence.** Targeted runs (no xdist, `-m "not whole_store"`): `tests/test_c_lowering.py` 65 passed;
 `tests/test_std_models.py` 5 passed + 1 that timed out at 600 s in the verifier queue, rerun alone: passed
-(`report-r12.jsonl` sha256 `acd62b6245278123`..., `report-r13.jsonl` `5a6372e9772c152d`...). Post-merge numbers:
-see the commit. Runs: `/tmp/claude/probata-runs/t25/`.
+(`report-r12.jsonl` sha256 `acd62b6245278123`..., `report-r13.jsonl` `5a6372e9772c152d`...). After merging
+the integration tip (fea82f24; conflicts in `wp_adapter.py` and `test_wp_adapter.py` with ticket 35, resolved
+keeping both): `test_format_doc.py`, `test_c_lowering.py`, `test_cbmc_adapter.py`, `test_std_models.py`,
+`test_proof_method_version.py`: **182 passed** in 914 s (`report-post.jsonl` sha256 `215d3a77b1d6059e`...).
+`test_wp_adapter.py` was not rerun (real WP jobs). Runs: `/tmp/claude/probata-runs/t25/` (pytest temp folders
+deleted).
 
 **Interface notes**
 
