@@ -9,18 +9,24 @@ Updated: 2026-10-15 ET. Resumed under Yan-Ru's ongoing implementation, push and 
 Current integration branch: `codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
 Current dispatch, evidence and blockers: [resume.md](resume.md).
 
-- **Resolved: 31 of 63**, recomputed from all ticket files on 2026-10-15. The incoming map's
+- **Resolved: 32 of 63**, recomputed from all ticket files on 2026-10-15. The incoming map's
   count of 33 was stale. Partial implementations and checked auxiliary lemmas do not close tickets.
-- **Claimed:** 07, 24, 25, 27, 36, 42. Other `ready-for-agent` tickets still respect their blockers.
+- **Claimed:** 07, 24, 25, 27, 36. Other `ready-for-agent` tickets still respect their blockers.
 - **41 repaired and resolved:** the strengthened statement preserves protected reads, sharing classes
   and ownership lifetimes. Reconstructed approved hash `e23f37153fadb8c3307384b4ec074422e0af6ebc121ff673688b6d321485e513`.
-  The full composition theorem is still open in 42.
+  The full composition theorem is Qed; 42 is resolved with production record
+  `proof.probata.composition.20261015-a1`.
 - **Current blockers:** WP 33 lacks deallocation support (24/25); store-frame and strict-reader
-  acceptance are still running (27/36). Counted proof-hint run 13 is active (07).
-- **Next action:** finish these acceptance runs and the composition proof; regenerate a draft method
-  manifest only after checker and translator hashes settle. No method freeze is justified yet.
+  acceptance and conservative CPU-memory admission are still running (27/36).
+  Counted proof-hint run 13 failed with 19 goals open (07).
+- **Next action:** finish these acceptance runs; create a new draft method after lowerer and policy
+  hashes settle. Draft 2 is immutable after the composition record pinned it. No method freeze is justified yet.
 - Real Mac verifier jobs use the shared two-slot policy and 8 GiB watchdog. Validation uses a frozen
   worktree so concurrent integration merges cannot trigger checkout-integrity false alarms.
+
+- 42 — Production Rocq method-part runner, canonical subject/part checks and read-time
+  assumption discharge; checked composition record and bounded validate/build pass.
+  See [ticket 42 Answer](issues/42-rocq-composition-theorem.md#answer--2026-10-15-0314-et).
 
 ## Context pointers
 

@@ -151,3 +151,18 @@ subsequent checker changes only added the semantics hint guard.
 Status remains `claimed`: ticket 27's final real WP semantics acceptance is still a
 required dependency. This checkpoint does not assert that all ticket-27 units have
 passed, that Rocq composition is proved, or that a production campaign is proven.
+
+### Follow-up ghost expression guard — 2026-10-15 03:14 ET
+
+A public CLI negative control reproduced a shift-assignment bypass:
+`dx_store_bound = (dx_count >>= 31)` passed the old expression check and mutated
+trusted model state. The expression grammar now explicitly refuses both shift
+assignments and trigraph introducers (`??`), including line-spliced shift operators.
+Ordinary relational comparisons remain admitted. The right-shift control failed
+before the fix; the full final focus suite passed **16 tests in 205.88 s**.
+Logs: `/private/tmp/probata-ghost-shift-{red2,green}.{log,jsonl}`.
+Both check identities are now version `1`, sha256
+`5f5b3e343880fe65990a3aa47b335415cb2fee9cfa6e74fa8ceb7f80f9afe71f`.
+The production composition record in ticket 42 pins this exact checker through
+immutable `method.probata-draft-2`. Earlier checker identities above are historical.
+Ticket 27's remaining acceptance and CPU-memory admission work still block resolution.
