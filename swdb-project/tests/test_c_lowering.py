@@ -143,9 +143,26 @@ OUTSIDE = {
                         "    a[0] = n;\n  }\n  return 0;\n}\n",
     "OpenMP clause": "int swdb_outside_unit(int *a, int n) {\n  int t = 0;\n#pragma omp parallel for private(t)\n"
                      "  for (int i = 0; i < n; ++i) { t = i; a[i] = t; }\n  return 0;\n}\n",
+    # ticket 25: what the std::vector and std::pair models leave out
+    "std::vector<bool>": "#include <vector>\nint swdb_outside_unit(int n) {\n  std::vector<bool> b((unsigned)n);\n"
+                         "  return (int)b.size();\n}\n",
+    "std::vector<int> member pop_back (not modeled)": "#include <vector>\nint swdb_outside_unit(int n) {\n"
+                                                     "  std::vector<int> v((unsigned)n);\n  v.pop_back();\n"
+                                                     "  return (int)v.size();\n}\n",
+    "std::vector<int> operator= (not modeled)": "#include <vector>\nint swdb_outside_unit(int n) {\n"
+                                                "  std::vector<int> v((unsigned)n), w;\n  w = v;\n  return 0;\n}\n",
+    "std::pair<int, int> member swap (not modeled)": "#include <utility>\nint swdb_outside_unit(int n) {\n"
+                                                     "  std::pair<int, int> p(n, 1), q(1, n);\n  p.swap(q);\n"
+                                                     "  return p.first;\n}\n",
+    "std::vector of SwdbP": "#include <vector>\nstruct SwdbP { int x; };\nint swdb_outside_unit(int n) {\n"
+                            "  std::vector<SwdbP> v((unsigned)n);\n  return (int)v.size();\n}\n",
+    "range-based for over anything but a std::vector": "int swdb_outside_unit(int n) {\n  int a[3] = {n, n, n};\n"
+                                                        "  int s = 0;\n  for (int x : a) s += x;\n  return s;\n}\n",
 }
 LINE_OF = {"exception": 2, "lambda": 2, "RTTI": 3, "standard container std::map": 3, "stream": 3,
-           "OpenMP directive": 4, "OpenMP clause": 3}
+           "OpenMP directive": 4, "OpenMP clause": 3, "std::vector<bool>": 3,
+           "std::vector<int> member pop_back (not modeled)": 4, "std::vector<int> operator= (not modeled)": 4,
+           "std::pair<int, int> member swap (not modeled)": 4}
 
 
 @pytest.mark.parametrize("construct", sorted(OUTSIDE))
@@ -210,12 +227,14 @@ GROUPS = {   # construct group: (fixture, unit function, extra `swdb lower` argu
     "omp": ("omp_atomics.cc", "swdb_omp_unit", ()),
     "atomics": ("omp_atomics.cc", "swdb_atomics_unit", ()),
     "floats": ("floats.cc", "swdb_float_unit", ()),
+    "vector_pair": ("vector_pair.cc", "swdb_vector_unit", ()),          # ticket 25
     "dxc_summary": ("summaries.cc", "swdb_dxc_unit", ("--summary", "__dxc_tile_size=fixture.dxc_tile_size.1")),
     "maa_summary": ("summaries.cc", "swdb_maa_unit", ("--summary", "maa_const_i32=fixture.maa_const.1",
                                                       "--summary", "maa_indirect_load_i32=fixture.maa_indirect_load.1")),
 }
 HARNESS = {"classes": "classes_harness.inc", "templates": "templates_harness.inc", "new_array": "new_array_harness.inc",
-           "std_models": "std_models_harness.inc", "omp": "omp_atomics_harness.inc", "floats": "floats_harness.inc"}
+           "std_models": "std_models_harness.inc", "omp": "omp_atomics_harness.inc", "floats": "floats_harness.inc",
+           "vector_pair": "vector_pair_harness.inc"}
 
 
 def _c_compiler():
@@ -235,7 +254,7 @@ def test_each_construct_group_lowers_twice_to_identical_c_and_anchors_that_compi
     second = lower(LOWERING / fixture, function, tmp_path / "two", *extra)
     assert first["c_lowering"]["sha256"] == second["c_lowering"]["sha256"]
     assert first["anchors"]["sha256"] == second["anchors"]["sha256"]
-    assert first["tool"]["version"] == "2" and first["tool"]["naming_rules"] == "kept-names.2"
+    assert first["tool"]["version"] == "3" and first["tool"]["naming_rules"] == "kept-names.3"
     c_file = tmp_path / "one" / f"{function}.c"
     assert str(tmp_path) not in c_file.read_text()
     done = subprocess.run([_c_compiler(), "-std=c11", "-Wall", "-Werror", "-fsyntax-only", c_file],
@@ -374,8 +393,8 @@ def test_a_dxc_or_maa_call_with_no_summary_is_an_unsupported_construct(tmp_path,
 def test_the_naming_rules_carry_a_version_and_a_hash_that_bumping_changes():
     from swdb import c_lowering
     pin = c_lowering.identity()["naming_rules"]
-    assert pin == {"id": "kept-names.2", "sha256": c_lowering.RULES_SHA256}
-    bumped = hashlib.sha256("\n".join(("kept-names.3", *c_lowering.RULES)).encode()).hexdigest()
+    assert pin == {"id": "kept-names.3", "sha256": c_lowering.RULES_SHA256}
+    bumped = hashlib.sha256("\n".join(("kept-names.4", *c_lowering.RULES)).encode()).hexdigest()
     assert bumped != pin["sha256"]
 
 
@@ -481,3 +500,77 @@ def test_a_class_template_with_defaulted_arguments_names_every_argument(tmp_path
     text = (tmp_path / "out" / "swdb_default_unit.c").read_text()
     assert "struct SwdbPair_int_int_true { int a; int b; };" in text
     assert "int swdb_default_unit(SwdbPair_int_int_true *p)" in text
+
+
+# --- ticket 25: the std::vector and std::pair models ---------------------------------------------------------
+
+def test_a_unit_using_the_models_lists_the_model_version_and_allocation_and_one_using_neither_lists_neither(tmp_path):
+    from swdb import std_models
+    used = lower(LOWERING / "vector_pair.cc", "swdb_vector_unit", tmp_path / "vector")
+    assert used["std_models"] == {**std_models.identity(), "types": ["std_pair_int_int", "std_vector_int"]}
+    assert used["std_models"]["id"] == "swdb-std-models-1" and used["allocation"] is True
+    anchors = json.loads((tmp_path / "vector" / "swdb_vector_unit.anchors.json").read_text())
+    assert anchors["std_models"] == used["std_models"] and anchors["allocation"] is True
+    new_only = lower(LOWERING / "new_array.cc", "swdb_new_unit", tmp_path / "new")
+    assert "std_models" not in new_only and new_only["allocation"] is True        # new[]: allocation succeeds only
+    neither = lower(WP / "core_subset.cc", "swdb_core_kernel", tmp_path / "core")
+    assert "std_models" not in neither and "allocation" not in neither
+
+
+VECTOR_CITES = {"ctor": "[vector.cons]", "ctor_count": "[vector.cons]", "ctor_count_value": "[vector.cons]",
+                "copy_ctor": "[container.requirements.general]", "move_ctor": "[container.requirements.general]",
+                "dtor": "[container.requirements.general]", "operator_index": "[sequence.reqmts]",
+                "at": "[sequence.reqmts]", "data": "[vector.data]", "size": "[container.requirements.general]",
+                "empty": "[container.requirements.general]", "begin": "[container.requirements.general]",
+                "end": "[container.requirements.general]", "push_back": "[vector.modifiers]",
+                "resize": "[vector.capacity]", "reserve": "[vector.capacity]", "clear": "[sequence.reqmts]",
+                "swap": "[vector.special]"}
+
+
+def test_each_modeled_member_has_a_c_function_whose_acsl_contract_cites_its_standard_clause(tmp_path):
+    lower(LOWERING / "vector_pair.cc", "swdb_vector_unit", tmp_path)
+    text = (tmp_path / "swdb_vector_unit.c").read_text()
+    for member, clause in VECTOR_CITES.items():
+        match = re.search(rf"/\* (\[[^@]*?)\*/\n/\*@ ((?:(?!\*/).)*)\*/\nstatic [^\n]*\bstd_vector_int_{member}\(", text,
+                          re.S)
+        assert match, member
+        assert clause in match.group(1), (member, match.group(1))
+        assert "ensures" in match.group(2) and "requires" in match.group(2), member
+    for member in ("ctor", "copy_ctor", "operator_assign"):
+        match = re.search(rf"/\* (\[pairs\.pair\][^@]*?)\*/\n/\*@ ((?:(?!\*/).)*)\*/\nstatic [^\n]*\bstd_pair_int_int_"
+                          rf"{member}\(", text, re.S)
+        assert match and "ensures" in match.group(2), member
+
+
+def test_a_reallocating_member_names_the_struct_fields_and_buffer_it_writes_and_states_the_old_buffer_freed(tmp_path):
+    lower(LOWERING / "vector_pair.cc", "swdb_vector_unit", tmp_path)
+    text = (tmp_path / "swdb_vector_unit.c").read_text()
+    for member in ("push_back", "resize", "reserve"):
+        contract = re.search(rf"/\*@ ((?:(?!\*/).)*)\*/\nstatic void std_vector_int_{member}\(", text, re.S).group(1)
+        assert re.search(r"assigns \*this\b", contract), member                 # data, size and capacity
+        assert "!\\valid(\\old(this->data))" in contract, member               # growth frees the old buffer
+    assert "assigns *this, this->data[this->size];" in text                    # push_back's buffer write
+    at = re.search(r"/\*@ ((?:(?!\*/).)*)\*/\nstatic int \*std_vector_int_at\(", text, re.S).group(1)
+    assert "requires std_vector_int_readable(this) && n < this->size;" in at   # at out of range: an obligation
+
+
+def test_the_model_contracts_type_check_in_frama_c_over_the_c_lowering():
+    from swdb import c_lowering, framac
+    tool = framac.locate()
+    if tool.missing:
+        pytest.skip(tool.missing)
+    lowering = c_lowering.lower(LOWERING / "vector_pair.cc", "swdb_vector_unit")
+    assert framac.typecheck(tool, lowering.text) is None
+    wrong = lowering.text.replace("ensures \\result == this->data; */", "ensures \\result == this->buffer; */", 1)
+    assert wrong != lowering.text and framac.typecheck(tool, wrong) is not None       # a field the model lacks
+
+
+def test_changing_one_member_contract_gives_a_new_model_pin(tmp_path):
+    from swdb import std_models
+    source = open(std_models.__file__).read()
+    old = 'f"    ensures \\\\result == this->data + n; */\\n"'
+    assert source.count(old) == 2                                             # operator[] and at
+    changed = tmp_path / "std_models.py"
+    changed.write_text(source.replace(old, 'f"    ensures \\\\result == this->data; */\\n"', 1))
+    assert std_models.identity(changed)["id"] == std_models.identity()["id"]
+    assert std_models.identity(changed)["sha256"] != std_models.identity()["sha256"]

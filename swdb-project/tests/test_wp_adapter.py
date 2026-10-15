@@ -52,7 +52,7 @@ FILL_HINTS = _hints("swdb_fixture_fill.loop1.head", "loop invariant 0 <= i <= n;
                     "loop invariant \\forall integer k; 0 <= k < i ==> a[k] == v;", "loop assigns i, a[0 .. n-1];",
                     "loop variant n - i;")
 SMOKE_HINTS = _hints("count_up.loop1.head", "loop invariant 0 <= i <= n;", "loop assigns i;", "loop variant n - i;")
-TRUSTED = {"swdb-c-lowering-2", "clang-22.1.8", "frama-c-wp-33.0", "alt-ergo-2.6.4", "z3-5.1.0", "cvc5-1.2.1"}
+TRUSTED = {"swdb-c-lowering-3", "clang-22.1.8", "frama-c-wp-33.0", "alt-ergo-2.6.4", "z3-5.1.0", "cvc5-1.2.1"}
 
 
 def _tools_present():
@@ -213,7 +213,7 @@ def test_the_safe_fixture_is_proven_with_threads_1_bounds_per_goal_solvers_and_t
     assert all(a["sentence"].strip() for a in record["assumptions"])
     assert record["pins"]["c_lowering"]["id"] == "swdb_fixture_fill.c"
     from swdb import c_lowering                                   # ticket 24: the naming rules are pinned too
-    assert record["pins"]["naming_rules"] == {"id": "kept-names.2", "sha256": c_lowering.RULES_SHA256}
+    assert record["pins"]["naming_rules"] == {"id": "kept-names.3", "sha256": c_lowering.RULES_SHA256}
     settings = record["settings"]
     for flag in ("-wp-cache none", "-wp-model +real", "-machdep x86_64", "-wp-timeout 30"):
         assert flag in " ".join(settings["flags"])
