@@ -306,6 +306,9 @@ class WpAdapter:
         for flag, value in FROZEN:
             if not _has_flag(flags, flag, value):
                 problems.append(f"method version {self.method.id} does not freeze {flag} {value} for frama-c-wp")
+        switch_problem = proof_setup.wp_switch_problem(flags)
+        if switch_problem:
+            problems.append(f"method version {self.method.id}: {switch_problem} for frama-c-wp")
         if problems:
             raise AdapterError("; ".join(problems))
         seconds = ((self.method.data.get("budgets") or {}).get("wp_seconds_per_solver"))
