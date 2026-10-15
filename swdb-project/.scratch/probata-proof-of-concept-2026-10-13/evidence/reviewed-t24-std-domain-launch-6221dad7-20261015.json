@@ -1,0 +1,164 @@
+{
+  "at_utc": "2026-10-15T22:24:02.796851+00:00",
+  "audit_script": {
+    "path": "/private/tmp/probata-reviewed-launch-audit.py",
+    "sha256": "f8ba25d23865daf0abbced07d8c7b0b833911c1c5aa3f2e1b1b0b1c5ce84a82e"
+  },
+  "date_et": "2026-10-15",
+  "errors": [],
+  "files": {
+    "dispatch-argv.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/dispatch-argv.json",
+      "sha256": "ccb495dfacd60eaaa1cba6c0594ef9aa0bf806bd3e40165ab475c8ef2e4988a0"
+    },
+    "execute.py": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/execute.py",
+      "sha256": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612"
+    },
+    "lane.json": {
+      "mutable_until_exit": true,
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/lane.json",
+      "sha256_at_snapshot": "2d5aef2b6eb3f68a31605810051c058d448546efc3654b67be9e9c8f8aad2ad5"
+    },
+    "launch.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/launch.json",
+      "sha256": "85e07b7017c597c1d983a2bee66e8f1e011f951b032e482b1e966f052292f1e9"
+    },
+    "preflight.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/preflight.json",
+      "sha256": "956bafdc18ca46dccac3fa11ad608e7cfb87afd3d4c7f54715a6169c347594e9"
+    },
+    "run.sh": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/run.sh",
+      "sha256": "20026761cb988ef469f3161398cd4ec8121622fca3f84731d3656f05c86bcd9f"
+    },
+    "runtime-provenance.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/runtime-provenance.json",
+      "sha256": "42d8992de63d5fe69c5a35a3d819c5889ccac81aaf38aef7a5d95ed7e4eb4ef0"
+    },
+    "source-manifest.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/source-manifest.json",
+      "sha256": "2f4e30d04a99eaddd7cff2361f591ac065491dbe01b52e7025ba82e1c9d06f1d"
+    },
+    "watch.py": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/watch.py",
+      "sha256": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    }
+  },
+  "lane": {
+    "socket_lane": {
+      "aligned_cell_age_s": "",
+      "aligned_to": "no_gapbs_batch_running",
+      "command": [
+        "timeout",
+        "--signal=TERM",
+        "--kill-after=60",
+        "4320",
+        "bash",
+        "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/run.sh"
+      ],
+      "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+      "ended_utc": "",
+      "exit_code": -1,
+      "host": "mbit10",
+      "job": "probata-reviewed-6221dad7-t24-std-domain",
+      "lease_generation": 576,
+      "lease_name": "mbit10-evaluation-node0",
+      "load1_at_start": 2.48,
+      "load1_max": 32,
+      "node": 0,
+      "numa_memory_policy": "bind:0",
+      "numactl": "--cpunodebind=0 --membind=0",
+      "preregistration_sha256": null,
+      "started_utc": "2026-10-15T22:23:22Z"
+    }
+  },
+  "launch": {
+    "command": [
+      "/data1/yanruj/venvs/swdb-test/bin/python",
+      "/data1/yanruj/probata-reviewed-6221dad7/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/t24-std-object-domain.py",
+      "--expected-commit",
+      "6221dad752804703a0dec8aed74a825c7143b389",
+      "--from-seed",
+      "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed",
+      "--output",
+      "/data/yanruj/EvolveSWDB_runs/probata-reviewed-6221dad7-t24-std-domain/matrix",
+      "--public-timeout-seconds",
+      "1800"
+    ],
+    "created_utc": "2026-10-15T22:23:22.329122+00:00",
+    "log_name": "acceptance.log",
+    "node": 0,
+    "planned_raw_budget_bytes": 8589934592,
+    "raw_budget_enforcement": "coordinator monitors; not a filesystem quota",
+    "readers": [
+      "root",
+      "ticket24",
+      "ticket27"
+    ],
+    "reviewed_wrapper_reuse": {
+      "execute.py": "ea774376014605a6ad31356a35abccef729f42e327ce07f4075853743dbcb612",
+      "watch.py": "4485ae66aa50c65f2b579f84836576aa67b54431978da71cac6eea6a68ecd07c"
+    },
+    "rss_cap_bytes": 8589934592,
+    "rss_scope": "outer watchdog covers worker bootstrap, compiler provenance probes, inner monitor and proof process tree; trusted outer monitor excluded",
+    "source": "/data1/yanruj/probata-reviewed-6221dad7",
+    "source_commit": "6221dad752804703a0dec8aed74a825c7143b389",
+    "timeout_seconds": 4200,
+    "workers": 1
+  },
+  "launcher": {
+    "path": "/private/tmp/probata-launch-reviewed-profile.py",
+    "sha256": "223f2e19f4ed3d24b5d04547dd5f15c8165b51c1d9e47cb87937f72241d89a42"
+  },
+  "module_physical_and_git_checks": 197,
+  "runtime": {
+    "lowering_identity": {
+      "c_lowering": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "b1ddaa111bec5d19843b69fd7571530859acb1382947d96692894bfc29b0b993"
+      },
+      "clang": {
+        "id": "clang-22.1.8",
+        "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+      },
+      "naming_rules": {
+        "id": "kept-names.3",
+        "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+      }
+    },
+    "runtime": {
+      "check": {
+        "id": "swdb-stdlib-provenance-1",
+        "sha256": "4aee5a271a2f92fced7a94c04807cd2d94d36da24ea3d163f2364048bc79d937"
+      },
+      "command_executable": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+        "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+      },
+      "driver": {
+        "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+        "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+      },
+      "headers": {
+        "files": 1983,
+        "id": "llvm-standard-resource-headers",
+        "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23"
+      },
+      "parser": {
+        "id": "libclang-22.1.8",
+        "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d"
+      }
+    },
+    "tool": {
+      "command": [
+        "clang++"
+      ],
+      "missing": "",
+      "version": "22.1.8"
+    }
+  },
+  "source_branch": "HEAD",
+  "source_commit": "6221dad752804703a0dec8aed74a825c7143b389",
+  "tracked_changes": ""
+}
