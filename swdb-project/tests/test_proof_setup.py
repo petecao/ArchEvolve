@@ -247,7 +247,7 @@ def test_execution_method_must_pin_the_running_checks_version_and_content(seed, 
 @pytest.mark.parametrize("changed", ["swdb/cbmc_adapter.py", "swdb/cbmc_equivalence.py", "swdb/wp_adapter.py",
     "swdb/crux_adapter.py", "swdb/rocq_adapter.py", "swdb/proof.py", "vocab/proof_failure_classes.yaml",
     "swdb/cbmc_product.py", "swdb/rss_watchdog.py", "swdb/vocab.py", "swdb/formal_frame.py", "swdb/acsl_subset.py",
-    "swdb/framac.py", "swdb/hint_check.py", "swdb/hint_tree.ml", "swdb/vector_ownership.py"])
+    "swdb/framac.py", "swdb/hint_check.py", "swdb/hint_tree.ml", "swdb/vector_ownership.py", "swdb/standard_model_view.py"])
 def test_changed_verdict_reader_or_failure_vocabulary_invalidates_frozen_method_before_invocation(seed, changed):
     import os
     import shutil
