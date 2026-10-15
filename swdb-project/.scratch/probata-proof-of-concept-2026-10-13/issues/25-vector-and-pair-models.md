@@ -480,3 +480,27 @@ timeout and 11 smoke goals passed. Both actual records correctly report attempte
 WP invocation. This repairs the earlier prelaunch parser failure without upgrading
 its historical5c record or closing wider vector/pair acceptance. Ticket stays claimed.
 [Audited source, records and reports](../evidence/focused-parser-owner-final-20261015.json).
+
+
+### Current bounded maximum admission diagnostic — 2026-10-15 12:37 ET
+
+The smallest original bounded maximum test was replayed alone on mbit10 at frozen
+`2629bdfd`, with unchanged source/contract and n=3. It failed its expected-proven
+assertion: the adapter returned `not_proven / unsupported_construct` **before CBMC
+or native differential execution**, because the full original GAPBS TU's genuine
+`/usr/include/inttypes.h` was classified as a noncanonical standard header. The
+shadow detector's libc++ relative-name inventory includes `inttypes.h`, but the
+clean five-header baseline does not include that system C header. No bounded
+refutation or theorem failure is inferred from this admission refusal.
+
+One test failed in131.71s; guarded wall132.17s, peak439,922,688bytes under8GiB, no
+OOM/timeout. Socket0generation562 released at12:37:01ET; socket1 was left free.
+One record, two artifact references including adapter log,715 absolute physical-file
+pins and200 runtime/test/fixture/reader/schema pins match; the certificate self-hash
+and unchanged clean source check pass. Raw4.54MB-scale output remains remote for
+the coordinator/acceptance/audit readers. No broader batch ran and no contract,
+typed-origin, initializedness or smoke policy was relaxed.
+[Compact failure audit](../evidence/t25-bounded-max-current-20261015.json).
+Ticket remains claimed; a canonical C-header context repair must precede another
+current bounded acceptance attempt. Historical5488 bounded and0cc WP evidence keep
+their original source/method boundaries.
