@@ -4,7 +4,7 @@ Updated: 2026-10-15 ET.
 
 ## Current state
 
-Updated: 2026-10-15 09:53 ET. Pushed integration checkpoint is `45560225` on
+Updated: 2026-10-15 09:55 ET. Integration checkpoint `ab0c547e` includes checked helper merge `4d2fcc23` on
 `codex/probata-poc-integration`, based on `yanrujhou_main` at `150930b4`.
 The source-bound summary fix is merged: fresh callee closure, current proof/method
 and evidence, finite call bounds and pointer-buffer alignment are checked before
@@ -14,12 +14,17 @@ proof; focused actual controls and the frozen mbit10 replay now pass.
 [Remote evidence](evidence/summary-source-binding-mbit10-20261015.json).
 Historical proof records retain their original source and method pins.
 
+Helper integration verification: 36 helper/dependency controls passed in 21.52s;
+four schema-documentation checks passed in 0.28s; one public fake-WP composition
+control passed in 204.25s under an 8 GiB watchdog (peak 6,870,188,032 bytes).
+These checks establish source admission/composition, not a new actual proof.
+
 | Ticket | Current evidence | Next action |
 |---|---|---|
 | 07 | Run17 unproven; run18 launched 09:50:53 ET at isolated `996bd62c`, reviewed 85 offline controls and strict initialization/deadline policy | Finish fresh baseline, counted hint search and final proof within 60 minutes; no success claimed |
 | 24 | Frozen `fddb1462` native replay132 passed/1 deselected on mbit10 | Finish current-policy construct-group proof acceptance |
 | 25 | Qualified at/data actual pairs pass; shadow-header prelaunch control exposes source-provenance gap | Check canonical full-TU declarations/allocation hooks, then wider vector/pair acceptance |
-| 27 | Direct DX controls pass; helper safe/initialization-negative actual pair passes at `7f9e3621`, clean integration handoff `e28eb2e2` | Review/merge helper view, then ordered nested-index reads; original three_reads still refused |
+| 27 | Direct DX controls pass; helper safe/initialization-negative actual pair retains `7f9e3621` evidence; checked helper view merged as `4d2fcc23` | Complete ordered nested-index reads; original three_reads still refused |
 | 36 | Frozen remote bounded/source-summary 17 checks pass;27 proof records audited with only intended mutation mismatch | Complete general setup/verdict acceptance as helper/model coverage grows |
 | 41 /42 | Resolved; approved composition statement and 209 production Rocq Qed | Preserve exact evidence boundary; no DX reduction claim |
 
@@ -28,8 +33,8 @@ Ticket 28 remains gated by 27; 43 remains blocked by 29. Held-out kernels and me
 freeze remain gated by their dependencies. Existing user authorization covers
 implementation, commits/pushes, two remote lanes and scoped BFS source export.
 
-Next: integrate the checked helper, close source-header provenance, complete nested
-read admission and combined acceptance, then create a new method draft after runtime
+Next: close source-header provenance, complete nested-read admission and combined
+acceptance, then create a new method draft after runtime
 identities settle. Last 30-minute status table 09:35 ET; next due 10:05 ET.
 
 ## Host coordination
