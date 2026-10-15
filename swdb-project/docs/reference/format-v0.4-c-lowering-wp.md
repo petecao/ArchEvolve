@@ -287,3 +287,10 @@ rule binds return values without marking the receiving local initialized; ordina
 assignment tracks it. This preserves the pointer value under the existing nonempty allocation
 contract, adds no heap initializedness or freshness premise, and leaves native artifacts unchanged.
 An ignored unfilled-array read remains a failed initialization obligation.
+
+Automatic storage admission (2026-10-15): CPU effects also list `local_storage` for local arrays and
+aggregates, and for address-taken local or by-value parameter slots even when uninitialized. Pending
+device reads can otherwise retain addresses after those objects cease to exist. Until a checked
+ownership boundary models that lifetime, DX100 units with such storage are refused conservatively.
+Passing a caller-owned buffer pointer by value does not give the callee ownership of its pointee;
+taking the address of the pointer parameter itself exposes its callee-owned slot and is refused.
