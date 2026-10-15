@@ -13,10 +13,10 @@ pushes, remote source synchronization and two mbit10 CPU lanes.
 | Ticket | Current work | Evidence or next action |
 |---|---|---|
 | 07 | Coordinator; counted run 13 | Started 2026-10-15 01:45 ET, `/private/tmp/probata-t07-20261015`; unchanged run-10 method and pinned Codex, fresh hints, verified no-hint baseline reused. User explicitly approved this scoped BFS source export. |
-| 24 | Coordinator; reproduce construct-group WP acceptance | Node 1 baseline `r4` is active. New lifetime safety controls: 3 passed; positive safe-deallocation acceptance is still expected-failing. Keep inheritance and `omp simd` excluded as the declared subset requires. |
+| 24 | Coordinator; reproduce construct-group WP acceptance | Node 1 baseline `r4` completed: 17 passed, 1 xfailed in 1823.04 s, source `150930b4`. New lifetime safety controls: 3 passed; positive safe-deallocation acceptance is still expected-failing. Keep inheritance and `omp simd` excluded as the declared subset requires. |
 | 25 | Model recovery merged; ticket remains claimed | 65 lowering tests, 6 bounded model tests, pair constructor WP proof, matching-library admission and mismatch refusal pass. WP lifetime modeling remains an acceptance gap. |
-| 27 | `codex/probata-t27`; restore WP semantics and store cases | Node 0's first replay passed 3 safe cases, then store-frame inclusion timed out; checked index hint also failed. Broaden the frame soundly and retain explicit preservation facts before final acceptance. Output `/data/yanruj/EvolveSWDB_runs/probata-t27-20261015/`. |
-| 36 | `codex/probata-t36`; proof setup checks | Implement independent check machinery while 27 acceptance is running; resolution still depends on 27. |
+| 27 | `codex/probata-t27`; restore WP semantics and store cases | Node 0 replays source `d45a63d8` with an explicit checked ghost frame bound. The exact-index frame and a checked index assertion timed out. Capacity and insufficient-bound controls run with the safe cases. Output `/data/yanruj/EvolveSWDB_runs/probata-t27-20261015/`. |
+| 36 | `codex/probata-t36`; proof setup checks | Review found solver-order pinning must be exact; dependency provenance is being added to classify partial properties without accepting them as proofs. Resolution still depends on 27. |
 | 41 | Resolved; agent review and approval under delegation | Protected reads, read-class lifetime and ownership-handoff checks; regression lemmas and exact statement guard pass. The theorem remains open. |
 | 42 | `codex/probata-t42`; proof resumed | Approved reconstructed statement `e23f37153fadb8c3307384b4ec074422e0af6ebc121ff673688b6d321485e513`; original 122 lemmas plus additional latest-read and swap-safety lemmas checked; full theorem unchecked. |
 
@@ -52,7 +52,9 @@ the isolated native C++ versus C class fixture passes before the full WP module 
 These generic subset fixtures use libstdc++; they are not vector-model evidence.
 Vector-model admission now requires matching libc++ 22.1.8. The remote LLVM distribution
 has matching headers and libraries, but its model jobs need an explicit libc++ compiler
-and runtime-library configuration. No cross-library model agreement is inferred.
+and runtime-library configuration. No cross-library model agreement is inferred. The final
+baseline `r4` completed with 17 passed and the known use-after-delete expected failure;
+the original report and logs occupy 9.7 MiB and remain on the host.
 
 The 30-minute progress heartbeat is `probata-implementation-progress`; its reports do
 not substitute for reading incremental run artifacts.
