@@ -684,3 +684,34 @@ existing generated-branch smoke failure and does not upgrade any theorem claim.
 Exact completed records are retained in
 [`t27-composed-negative-twelve-records-independent-20261015.json`](../evidence/t27-composed-negative-twelve-records-independent-20261015.json).
 Ticket remains `claimed`, pending natural negative closure and fresh safe shards.
+
+### Current negative completion: 13/13 — 2026-10-15 ET
+
+The exact `0e7f2327` negative profile completed naturally: 13/13 tests passed,
+exit 0. All 13 actual WP records remain `not_proven`, with one intended ordinary
+timeout each (1,008/1,021 ordinary Valid). Smoke results remain explicit:
+283/318 passed and 35 failed checks, including the outside query's failed s20
+branch alongside its independent ensures timeout. No WP refutation, source
+counterexample or theorem upgrade is claimed.
+
+The final shortened store-frame case retains the named store-indices timeout,
+90/91 ordinary Valid and 29/29 smoke passed. Independent strict closure verified
+18,091 physical references / 1,084 files without mismatch, current setup/policy/
+method/lowerer/semantics, clean unchanged source and natural guard exits.
+[Exact completed negative evidence](../evidence/t27-composed-negative-completed-independent-20261015.md).
+The bounded 35 and reviewed capacity 3 profiles are accepted separately; status
+remains `claimed` until all 11 fresh safe units complete under the selected
+nonoverlapping source-qualified subsets.
+
+### Fresh safe CPU admission: 1/11 — 2026-10-15 ET
+
+The chosen CPU-only safe profile at exact `0e7f2327` completed naturally 1/1,
+exit 0, with actual `proven` record: 58/58 ordinary Valid, 19/19 smoke passed,
+11 initializedness and 9 RTE goals. Independent strict read-only admission checked
+864 physical references / 865 files without mismatch, exact collector/source/pins,
+required setup/policy and natural guard exits. The record retains its explicit
+entry-contract/unit-requires premises; it does not close general CPU/device
+overlap or source-language/ACSL agreement.
+[Exact fresh safe CPU evidence](../evidence/t27-composed-safe-cpu-completed-independent-20261015.md).
+Status remains `claimed`: ten fresh safe units remain in the selected disjoint
+Arest4/B1three/B2three subsets; original A5/B6 remain unlaunched.

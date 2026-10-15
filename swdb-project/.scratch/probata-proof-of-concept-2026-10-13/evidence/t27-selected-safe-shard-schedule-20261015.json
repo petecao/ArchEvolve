@@ -1,0 +1,141 @@
+{
+  "date_et": "2026-10-15",
+  "selected_at_et": "2026-10-15T19:28:14.193426-04:00",
+  "source_commit": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "scope": "Adaptive validation scheduling only; unchanged source/tests/acceptance. CPU1 already running under its prior prelaunch review; remaining partitions selected before launch.",
+  "replaces_unlaunched": [
+    "original safe-a five-case job",
+    "original safe-b six-case job"
+  ],
+  "max_parallel_socket_jobs": 2,
+  "workers_per_job": 1,
+  "rss_cap_bytes": 8589934592,
+  "raw_budget_bytes_per_job": 8589934592,
+  "storage_budget_enforcement": "coordinator-monitored, not a filesystem quota",
+  "shards": [
+    {
+      "kind": "t27-safe-cpu",
+      "expected_count": 1,
+      "expected_collector_ids": [
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[cpu_write]"
+      ],
+      "historical_case_seconds": 330.6945020761341,
+      "whole_seconds": 2400,
+      "outer_seconds": 2520,
+      "command_file": {
+        "path": "/private/tmp/probata-t27-safe-cpu-command-0e7f.json",
+        "sha256": "bd78793da8d34047dc698051b18513bf8ea76e5c228107e772523c0cd31533b0"
+      },
+      "argv_template": [
+        "bash",
+        "{SOURCE}/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/27-proof-semantics/run_acceptance.sh",
+        "0e7f232762e4555aa9435a3a3622923fad8ee928",
+        "wp-safe",
+        "-k",
+        "cpu_write",
+        "--maxfail=1",
+        "--junitxml={OUTPUT}/junit.xml"
+      ],
+      "state": "running_under_prior_review"
+    },
+    {
+      "kind": "t27-safe-a-rest",
+      "expected_count": 4,
+      "expected_collector_ids": [
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[store_source_wait]",
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[stall_condition]",
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[transitive]",
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[register_write]"
+      ],
+      "historical_case_seconds": 2645.9102839678526,
+      "whole_seconds": 7200,
+      "outer_seconds": 7320,
+      "command_file": {
+        "path": "/private/tmp/probata-t27-safe-a-rest-command-0e7f.json",
+        "sha256": "a07cb4f36406101d64fd8c503787a644ef007822d03669ebb5c9cc12c6e096e3"
+      },
+      "argv_template": [
+        "bash",
+        "{SOURCE}/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/27-proof-semantics/run_acceptance.sh",
+        "0e7f232762e4555aa9435a3a3622923fad8ee928",
+        "wp-safe",
+        "-k",
+        "store_source_wait or stall_condition or transitive or register_write",
+        "--maxfail=1",
+        "--junitxml={OUTPUT}/junit.xml"
+      ],
+      "state": "selected_not_launched"
+    },
+    {
+      "kind": "t27-safe-b1",
+      "expected_count": 3,
+      "expected_collector_ids": [
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[size]",
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[value_stream]",
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[value_range]"
+      ],
+      "historical_case_seconds": 1504.9952142443508,
+      "whole_seconds": 7200,
+      "outer_seconds": 7320,
+      "command_file": {
+        "path": "/private/tmp/probata-t27-safe-b1-command-0e7f.json",
+        "sha256": "ddee93a00f89038aa5bb2ee252cbe749f6bd912011174bf84852b4864920ace8"
+      },
+      "argv_template": [
+        "bash",
+        "{SOURCE}/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/27-proof-semantics/run_acceptance.sh",
+        "0e7f232762e4555aa9435a3a3622923fad8ee928",
+        "wp-safe",
+        "-k",
+        "size or value_stream or value_range",
+        "--maxfail=1",
+        "--junitxml={OUTPUT}/junit.xml"
+      ],
+      "state": "selected_not_launched"
+    },
+    {
+      "kind": "t27-safe-b2",
+      "expected_count": 3,
+      "expected_collector_ids": [
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[three_reads]",
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[value_gather]",
+        "tests/test_proof_semantics.py::test_wp_proves_every_unit_cbmc_proves_with_the_same_proof_semantics[footprint]"
+      ],
+      "historical_case_seconds": 1470.6007550153881,
+      "whole_seconds": 7200,
+      "outer_seconds": 7320,
+      "command_file": {
+        "path": "/private/tmp/probata-t27-safe-b2-command-0e7f.json",
+        "sha256": "82257973d2fc25e83832cc5686ca72cd3635cbf1343d527c0236fb96bb654686"
+      },
+      "argv_template": [
+        "bash",
+        "{SOURCE}/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/27-proof-semantics/run_acceptance.sh",
+        "0e7f232762e4555aa9435a3a3622923fad8ee928",
+        "wp-safe",
+        "-k",
+        "three_reads or value_gather or footprint",
+        "--maxfail=1",
+        "--junitxml={OUTPUT}/junit.xml"
+      ],
+      "state": "selected_not_launched"
+    }
+  ],
+  "cpu_admission": {
+    "receipt": "reviewed-t27-safe-cpu-launch-0e7f2327-20261015.json",
+    "generation": 579,
+    "created_utc": "2026-10-15T23:23:32.682489+00:00"
+  },
+  "reviews": [
+    {
+      "path": "/private/tmp/probata-t27-safe-cpu-split-launch-review-20261015.md",
+      "sha256": "20dcbf5dbfe8418aba899183f8dd96ca1fe38b5bb3bae9c5254aba95b7fa1515"
+    },
+    {
+      "path": "/private/tmp/probata-continuation-and-positive-schedule-review-20261015.md",
+      "sha256": "da501e4049a1465e4984b6005feaef662b8fd2f5699bc5f869c3f51c8be9553d"
+    }
+  ],
+  "scheduling": "After negative node1 releases, run A-rest4. After CPU node0 releases, run reviewed ticket24 continuation. B1/B2 fill naturally free lanes afterward, one per socket. Recheck both plus legacy leases and live resources before every launch.",
+  "boundary": "Historical case weights omit setup/bootstrap and runtime drift; no fresh success or ETA guarantee. Audit exact1/4/3/3 collector IDs, each full ordinary/smoke record, guards, source/runtime pins and natural cleanup before acceptance. No original A5/B6 launch."
+}

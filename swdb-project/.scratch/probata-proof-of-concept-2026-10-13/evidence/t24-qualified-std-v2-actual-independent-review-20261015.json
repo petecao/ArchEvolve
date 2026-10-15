@@ -1,0 +1,682 @@
+{
+  "acceptance_errors": [],
+  "acceptance_status": "accepted_exact_qualified_v2_pair_metadata",
+  "cold_reader_audit": {
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/cold-goal-audit-ec00c954a47024a6a8bcd50b8a66e8d90e6e81af95d606483a81538b9183dbdc.json",
+    "producer": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/cold-reader-699835368e799b5db6d74a87ef65409b4c76ff8ff91e5a93edb430d02d2770ac.py",
+      "sha256": "699835368e799b5db6d74a87ef65409b4c76ff8ff91e5a93edb430d02d2770ac"
+    },
+    "sha256": "ec00c954a47024a6a8bcd50b8a66e8d90e6e81af95d606483a81538b9183dbdc"
+  },
+  "cold_reader_errors": [],
+  "cold_reader_rows": [
+    {
+      "cold_failure_class": null,
+      "cold_verdict": "proven",
+      "initialization_goals": 5,
+      "label": "std_models_object_domain_v2:safe",
+      "ordinary_open": [],
+      "ordinary_valid": 47,
+      "reading": {
+        "check": {
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833",
+          "version": "1"
+        },
+        "verdict": "proven"
+      },
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/matrix/seed/records/proofs/proof.wp24-safe.candidate-1.20261015t231115z.d29f2b15.yaml",
+        "sha256": "f2d7c5c012cecaddb5564f000b288d59fc0d001e8b6116043c6625d546333dc9"
+      },
+      "smoke_open": [],
+      "smoke_valid": 13
+    },
+    {
+      "cold_failure_class": "vacuous_pass",
+      "cold_verdict": "not_proven",
+      "initialization_goals": 5,
+      "label": "std_models_object_domain_v2:seeded",
+      "ordinary_open": [
+        {
+          "function": "swdb_std_unit",
+          "goal": "typed_real_swdb_std_unit_ensures",
+          "property": "swdb_std_unit_ensures",
+          "seconds": null,
+          "smoke": false,
+          "solver": null,
+          "source": "wp_json",
+          "status": "timeout"
+        },
+        {
+          "function": "swdb_std_unit",
+          "goal": "typed_real_swdb_std_unit_assert_swdb_pointer_formation_2",
+          "property": "swdb_std_unit_assert_swdb_pointer_formation_2",
+          "seconds": null,
+          "smoke": false,
+          "solver": null,
+          "source": "wp_json",
+          "status": "timeout"
+        },
+        {
+          "function": "swdb_std_unit",
+          "goal": "typed_real_swdb_std_unit_assert_rte_initialization_2",
+          "property": "swdb_std_unit_assert_rte_initialization_2",
+          "seconds": null,
+          "smoke": false,
+          "solver": null,
+          "source": "wp_json",
+          "status": "timeout"
+        },
+        {
+          "function": "swdb_std_unit",
+          "goal": "typed_real_swdb_std_unit_assert_rte_signed_overflow_6",
+          "property": "swdb_std_unit_assert_rte_signed_overflow_6",
+          "seconds": null,
+          "smoke": false,
+          "solver": null,
+          "source": "wp_json",
+          "status": "timeout"
+        }
+      ],
+      "ordinary_valid": 44,
+      "reading": {
+        "check": {
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833",
+          "version": "1"
+        },
+        "verdict": "not_proven"
+      },
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/matrix/seed/records/proofs/proof.wp24-bug.candidate-1.20261015t231541z.4be5646f.yaml",
+        "sha256": "e24067e47ede4f6bf72e7e26fc06022a885ec14da04ae1fb36041b7c2c11f4dc"
+      },
+      "smoke_open": [
+        {
+          "function": "swdb_std_unit",
+          "goal": "typed_real_swdb_std_unit_wp_smoke_dead_code_s58",
+          "property": "swdb_std_unit_wp_smoke_dead_code_s58",
+          "seconds": null,
+          "smoke": true,
+          "solver": null,
+          "source": "wp_json",
+          "status": "failed_smoke"
+        },
+        {
+          "function": "swdb_std_unit",
+          "goal": "typed_real_swdb_std_unit_wp_smoke_dead_code_s70",
+          "property": "swdb_std_unit_wp_smoke_dead_code_s70",
+          "seconds": null,
+          "smoke": true,
+          "solver": null,
+          "source": "wp_json",
+          "status": "failed_smoke"
+        }
+      ],
+      "smoke_valid": 11
+    },
+    {
+      "cold_failure_class": null,
+      "cold_verdict": "proven",
+      "initialization_goals": 0,
+      "label": "dependency:std_min_int",
+      "ordinary_open": [],
+      "ordinary_valid": 5,
+      "reading": {
+        "check": {
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833",
+          "version": "1"
+        },
+        "verdict": "proven"
+      },
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.model.std_min_int.20261015t212915z.949d8187.yaml",
+        "sha256": "7028e9105fdb92ecf8ba1bc1974f456a5084676cdfc1e08161b861978bd7523a"
+      },
+      "smoke_open": [],
+      "smoke_valid": 2
+    },
+    {
+      "cold_failure_class": null,
+      "cold_verdict": "proven",
+      "initialization_goals": 0,
+      "label": "dependency:std_max_int",
+      "ordinary_open": [],
+      "ordinary_valid": 5,
+      "reading": {
+        "check": {
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833",
+          "version": "1"
+        },
+        "verdict": "proven"
+      },
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.model.std_max_int.20261015t213126z.f8b8689c.yaml",
+        "sha256": "714be0d2ec0f6017544af81a067c7a60ffafa6ae389109b313a161f73ede6707"
+      },
+      "smoke_open": [],
+      "smoke_valid": 2
+    },
+    {
+      "cold_failure_class": null,
+      "cold_verdict": "proven",
+      "initialization_goals": 3,
+      "label": "dependency:std_swap_int",
+      "ordinary_open": [],
+      "ordinary_valid": 13,
+      "reading": {
+        "check": {
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833",
+          "version": "1"
+        },
+        "verdict": "proven"
+      },
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.model.std_swap_int.20261015t213339z.c0ed4542.yaml",
+        "sha256": "c06d6a934ae68fcb72e164c38444faa6b40868119e04d4d96673ce346d6a3b32"
+      },
+      "smoke_open": [],
+      "smoke_valid": 1
+    },
+    {
+      "cold_failure_class": null,
+      "cold_verdict": "proven",
+      "initialization_goals": 7,
+      "label": "dependency:std_copy_int",
+      "ordinary_open": [],
+      "ordinary_valid": 36,
+      "reading": {
+        "check": {
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833",
+          "version": "1"
+        },
+        "verdict": "proven"
+      },
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.model.std_copy_int.20261015t213547z.ea97bd04.yaml",
+        "sha256": "ab86fab89802a166bad0263c5235b9b17f84552467a067af1da0fc3887940130"
+      },
+      "smoke_open": [],
+      "smoke_valid": 7
+    },
+    {
+      "cold_failure_class": null,
+      "cold_verdict": "proven",
+      "initialization_goals": 0,
+      "label": "dependency:std_max_long",
+      "ordinary_open": [],
+      "ordinary_valid": 5,
+      "reading": {
+        "check": {
+          "sha256": "0a2a621b677192d33284aa32d392a16bb909fa43a2ed0ec2acead508a13de833",
+          "version": "1"
+        },
+        "verdict": "proven"
+      },
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.model.std_max_long.20261015t213829z.89f04fca.yaml",
+        "sha256": "00e5e0404b786243aeba6426a2f8ae7d9bec37a14294ddd5460426d2b86d0037"
+      },
+      "smoke_open": [],
+      "smoke_valid": 2
+    }
+  ],
+  "cold_reader_status": "cold_reader_green",
+  "complete": true,
+  "completion_receipts_pending": [],
+  "counts": {
+    "artifact_file_instances_verified": 184,
+    "full_runtime_files_verified": 296,
+    "launcher_subset_files_verified": 197,
+    "physical_observation_count": 2538,
+    "report_instances_verified": 72
+  },
+  "created": "2026-10-15 ET",
+  "integrity_errors": [],
+  "limitations": [
+    "No compiler/verifier/source regeneration or proof launch.",
+    "Cold goal-reader replay is a separate final review; this checks retained goal counts, hashes and exact current reader identity.",
+    "Opaque initial and per-launch run-plan command hashes are retained, not independently regenerated from unavailable job objects.",
+    "Completed pair acceptance waits for ended lane and whole-worker resource/source receipts."
+  ],
+  "metadata_audit": {
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/qualified-std-v2-audit-3a6f3c6e15b1be5b2f36726788fa06b980f9b7df160401bc01f58da5ce97dcdc.json",
+    "producer": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/audit-0149cfca98b6b6ce817076747dd7353b0555b78dceb107b9282404a88ec33ec0.py",
+      "sha256": "0149cfca98b6b6ce817076747dd7353b0555b78dceb107b9282404a88ec33ec0"
+    },
+    "sha256": "65fd4f37ade8fb2fcbfc20c9fc3ddbefd0fc5ce6d19d424b679b2445cd18de60"
+  },
+  "method": {
+    "id": "method.wp-tracer-fixture",
+    "sha256": "ac4fe5ea50ebb15eddc88e239cb340d9fca41306df41e0cdda8432c9d0d88c5c"
+  },
+  "method_checks": {
+    "proof_hint_check": {
+      "version": "0"
+    },
+    "proof_setup_check": {
+      "version": "0"
+    },
+    "verdict_reading": {
+      "version": "0"
+    }
+  },
+  "method_evidence_kind": "contract_fixture",
+  "old_input_boundary": "Pinned old matrix, original contract/source/gap, five records/reports and candidate/baseline artifacts checked. No whole-tree cache immutability claim without a baseline.",
+  "old_source_matrix_sha256": "7088085bfe119af99c4ea7d73bf140b5e4537021c03c47bb21f8d203703ab40f",
+  "original_contract_sha256": "13fd0509e48eb0d9f45e8e6edc9a0fd5a4fec66d45f3e3cc525ee072b09c57d9",
+  "physical_header_identities": [
+    {
+      "files": 1983,
+      "resource": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/lib/clang/22",
+      "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23"
+    }
+  ],
+  "profile": {
+    "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/matrix/profile.json",
+    "sha256": "7e5e28a264f06750266a18c9138d477102593d7898b09da215150d2e90038c36"
+  },
+  "qualified_contract": {
+    "file_sha256": "292d39713b839861ea635abda98fcd4cf0cf558316a934832c204b1069c21817",
+    "id": "contract.fixture_wp24_std_models_object_domain_v2",
+    "sha256": "d586c9414b4ea374e9a0173f7b66b0de6ba0d19e3637f2da8d0bcc139baa61fe"
+  },
+  "receipt_data": {
+    "lane.json": {
+      "socket_lane": {
+        "aligned_cell_age_s": "",
+        "aligned_to": "no_gapbs_batch_running",
+        "command": [
+          "timeout",
+          "--signal=TERM",
+          "--kill-after=60",
+          "4320",
+          "bash",
+          "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/run.sh"
+        ],
+        "cpus_allowed_list": "0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62",
+        "ended_utc": "2026-10-15T23:20:20Z",
+        "exit_code": 0,
+        "host": "mbit10",
+        "job": "probata-reviewed-bf7a404c-t24-std-domain-v2",
+        "lease_generation": 578,
+        "lease_name": "mbit10-evaluation-node0",
+        "load1_at_start": 2.07,
+        "load1_max": 32,
+        "node": 0,
+        "numa_memory_policy": "bind:0",
+        "numactl": "--cpunodebind=0 --membind=0",
+        "preregistration_sha256": null,
+        "started_utc": "2026-10-15T23:09:05Z"
+      }
+    },
+    "outer-resources.json": {
+      "cpu_seconds": 836.3751589999999,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 1373044736,
+      "timed_out": false,
+      "wall_seconds": 674.9082343829796
+    },
+    "resources.json": {
+      "cpu_seconds": 700.643735,
+      "exit_code": 0,
+      "out_of_memory": false,
+      "peak_rss_bytes": 1322188800,
+      "timed_out": false,
+      "wall_seconds": 672.8495749980211
+    },
+    "source-after.json": {
+      "commit": "bf7a404c65694a18d83635c4f6f56105b005fb59",
+      "source_unchanged": true,
+      "tracked_changes": ""
+    }
+  },
+  "receipts": {
+    "acceptance.log": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/acceptance.log",
+      "sha256": "620618a4a566cc2980811a235adb514ffadb8d3f0419d6679f1182c8e83c3798"
+    },
+    "lane.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/lane.json",
+      "sha256": "e8fd8b0e904f970899cb0f9d369d1b5fe5fb4dbc4f58adb70bfb4438481212e5"
+    },
+    "launch.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/launch.json",
+      "sha256": "9ade1b3094510179d1de8b8153fdddb3dc658692172a3d5fb5531cb0e653f572"
+    },
+    "outer-resources.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/outer-resources.json",
+      "sha256": "f5648c176ca144e8efbbfcc3df86a884c81e9f5bd2ac2337532f91dad68d9757"
+    },
+    "resources.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/resources.json",
+      "sha256": "c1c8af82a384f0cb73af7968456a05dab9761b5c225233f9bb1f3b9dd75fbd45"
+    },
+    "runtime-provenance.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/runtime-provenance.json",
+      "sha256": "42d8992de63d5fe69c5a35a3d819c5889ccac81aaf38aef7a5d95ed7e4eb4ef0"
+    },
+    "source-after.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/source-after.json",
+      "sha256": "e42c98de613c7c1c94dc60aee97d1fa9721a9ac8ca14661479e8e424f88c179c"
+    },
+    "source-manifest.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/source-manifest.json",
+      "sha256": "2f4e30d04a99eaddd7cff2361f591ac065491dbe01b52e7025ba82e1c9d06f1d"
+    }
+  },
+  "retained_original_gap": {
+    "label": "std_models_original_contract_gap",
+    "original_acceptance_errors": [
+      "unexpected verdict",
+      "safe proof lacks all-goal/smoke Valid acceptance"
+    ],
+    "original_expected": "proven",
+    "record": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.wp24-safe.candidate-1.20261015t214040z.c309a2c9.yaml",
+      "sha256": "e03a86746f27c7815aeb4b3765fb3d84da21e1079f8170b4f1a21ae881b6a194"
+    },
+    "role": "retained original contract-gap negative; no unchanged-original success",
+    "verdict": "not_proven"
+  },
+  "reused_models": [
+    {
+      "acceptance_errors": [],
+      "code": {
+        "id": "std_min_int",
+        "sha256": "b3eb6c0e6792c3d4b5d2afbbb3f8da4c828de7d2467aa7eea70a743d388bc571"
+      },
+      "copied_record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/matrix/seed/records/proofs/proof.model.std_min_int.20261015t212915z.949d8187.yaml",
+        "sha256": "7028e9105fdb92ecf8ba1bc1974f456a5084676cdfc1e08161b861978bd7523a"
+      },
+      "model": "std_min_int",
+      "qualification": null,
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.model.std_min_int.20261015t212915z.949d8187.yaml",
+        "sha256": "7028e9105fdb92ecf8ba1bc1974f456a5084676cdfc1e08161b861978bd7523a"
+      }
+    },
+    {
+      "acceptance_errors": [],
+      "code": {
+        "id": "std_max_int",
+        "sha256": "2f8a32131a588ca8da62172a4d42af129a3de4eb2c5e0c11d72cdd7ec256f3f6"
+      },
+      "copied_record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/matrix/seed/records/proofs/proof.model.std_max_int.20261015t213126z.f8b8689c.yaml",
+        "sha256": "714be0d2ec0f6017544af81a067c7a60ffafa6ae389109b313a161f73ede6707"
+      },
+      "model": "std_max_int",
+      "qualification": null,
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.model.std_max_int.20261015t213126z.f8b8689c.yaml",
+        "sha256": "714be0d2ec0f6017544af81a067c7a60ffafa6ae389109b313a161f73ede6707"
+      }
+    },
+    {
+      "acceptance_errors": [],
+      "code": {
+        "id": "std_swap_int",
+        "sha256": "18c72f0fe28452c1f6fb22a3806e90a3056078a0e93edec8cb14454b28bf8483"
+      },
+      "copied_record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/matrix/seed/records/proofs/proof.model.std_swap_int.20261015t213339z.c0ed4542.yaml",
+        "sha256": "c06d6a934ae68fcb72e164c38444faa6b40868119e04d4d96673ce346d6a3b32"
+      },
+      "model": "std_swap_int",
+      "qualification": null,
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.model.std_swap_int.20261015t213339z.c0ed4542.yaml",
+        "sha256": "c06d6a934ae68fcb72e164c38444faa6b40868119e04d4d96673ce346d6a3b32"
+      }
+    },
+    {
+      "acceptance_errors": [],
+      "code": {
+        "id": "std_copy_int",
+        "sha256": "efcf958c7433473e0478d53b60d2aab648124e87df8e04f13b41f1087c94da26"
+      },
+      "copied_record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/matrix/seed/records/proofs/proof.model.std_copy_int.20261015t213547z.ea97bd04.yaml",
+        "sha256": "ab86fab89802a166bad0263c5235b9b17f84552467a067af1da0fc3887940130"
+      },
+      "model": "std_copy_int",
+      "qualification": {
+        "id": "standard-range-model-certificate-1",
+        "sha256": "900ad4ea61e5b4ac45c7efa1b5aa652b320a7c3668dc1e313f3de512b71f8b4a"
+      },
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.model.std_copy_int.20261015t213547z.ea97bd04.yaml",
+        "sha256": "ab86fab89802a166bad0263c5235b9b17f84552467a067af1da0fc3887940130"
+      }
+    },
+    {
+      "acceptance_errors": [],
+      "code": {
+        "id": "std_max_long",
+        "sha256": "208bcdd37a5da65a9d92edaad46ca3351e56ade9642fdf32f906d40d4699c750"
+      },
+      "copied_record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/matrix/seed/records/proofs/proof.model.std_max_long.20261015t213829z.89f04fca.yaml",
+        "sha256": "00e5e0404b786243aeba6426a2f8ae7d9bec37a14294ddd5460426d2b86d0037"
+      },
+      "model": "std_max_long",
+      "qualification": null,
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t24/matrix/seed/records/proofs/proof.model.std_max_long.20261015t213829z.89f04fca.yaml",
+        "sha256": "00e5e0404b786243aeba6426a2f8ae7d9bec37a14294ddd5460426d2b86d0037"
+      }
+    }
+  ],
+  "rows": [
+    {
+      "acceptance_errors": [],
+      "actual_selected_dependencies": [
+        {
+          "id": "std_min_int",
+          "proof_record": "proof.model.std_min_int.20261015t212915z.949d8187",
+          "sha256": "b3eb6c0e6792c3d4b5d2afbbb3f8da4c828de7d2467aa7eea70a743d388bc571"
+        },
+        {
+          "id": "std_max_int",
+          "proof_record": "proof.model.std_max_int.20261015t213126z.f8b8689c",
+          "sha256": "2f8a32131a588ca8da62172a4d42af129a3de4eb2c5e0c11d72cdd7ec256f3f6"
+        },
+        {
+          "id": "std_swap_int",
+          "proof_record": "proof.model.std_swap_int.20261015t213339z.c0ed4542",
+          "sha256": "18c72f0fe28452c1f6fb22a3806e90a3056078a0e93edec8cb14454b28bf8483"
+        },
+        {
+          "id": "std_copy_int",
+          "proof_record": "proof.model.std_copy_int.20261015t213547z.ea97bd04",
+          "sha256": "efcf958c7433473e0478d53b60d2aab648124e87df8e04f13b41f1087c94da26"
+        },
+        {
+          "id": "std_max_long",
+          "proof_record": "proof.model.std_max_long.20261015t213829z.89f04fca",
+          "sha256": "208bcdd37a5da65a9d92edaad46ca3351e56ade9642fdf32f906d40d4699c750"
+        }
+      ],
+      "failure_class": null,
+      "id": "proof.wp24-safe.candidate-1.20261015t231115z.d29f2b15",
+      "initialization_goals": 5,
+      "integrity_errors": [],
+      "label": "std_models_object_domain_v2:safe",
+      "ordinary_open": [],
+      "ordinary_valid": 47,
+      "range_dependency": {
+        "caller_sha256": "5f9aa721af2cfa95100151b8d72444e110ea06992d13ec45022f790d30ebce17",
+        "dependency": {
+          "check": {
+            "id": "standard-range-calls-1",
+            "sha256": "0bbacc63269090dc8e8db0e997954545ce39cbe907fcbe8100d26bafd904d19f"
+          },
+          "file_sha256": "ab86fab89802a166bad0263c5235b9b17f84552467a067af1da0fc3887940130",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/matrix/seed/records/proofs/proof.model.std_copy_int.20261015t213547z.ea97bd04.yaml",
+          "proof_record": "proof.model.std_copy_int.20261015t213547z.ea97bd04",
+          "qualification": {
+            "id": "standard-range-model-certificate-1",
+            "sha256": "900ad4ea61e5b4ac45c7efa1b5aa652b320a7c3668dc1e313f3de512b71f8b4a"
+          }
+        }
+      },
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/matrix/seed/records/proofs/proof.wp24-safe.candidate-1.20261015t231115z.d29f2b15.yaml",
+        "sha256": "f2d7c5c012cecaddb5564f000b288d59fc0d001e8b6116043c6625d546333dc9"
+      },
+      "smoke_open": [],
+      "smoke_valid": 13,
+      "verdict": "proven"
+    },
+    {
+      "acceptance_errors": [],
+      "actual_selected_dependencies": [
+        {
+          "id": "std_min_int",
+          "proof_record": "proof.model.std_min_int.20261015t212915z.949d8187",
+          "sha256": "b3eb6c0e6792c3d4b5d2afbbb3f8da4c828de7d2467aa7eea70a743d388bc571"
+        },
+        {
+          "id": "std_max_int",
+          "proof_record": "proof.model.std_max_int.20261015t213126z.f8b8689c",
+          "sha256": "2f8a32131a588ca8da62172a4d42af129a3de4eb2c5e0c11d72cdd7ec256f3f6"
+        },
+        {
+          "id": "std_swap_int",
+          "proof_record": "proof.model.std_swap_int.20261015t213339z.c0ed4542",
+          "sha256": "18c72f0fe28452c1f6fb22a3806e90a3056078a0e93edec8cb14454b28bf8483"
+        },
+        {
+          "id": "std_copy_int",
+          "proof_record": "proof.model.std_copy_int.20261015t213547z.ea97bd04",
+          "sha256": "efcf958c7433473e0478d53b60d2aab648124e87df8e04f13b41f1087c94da26"
+        },
+        {
+          "id": "std_max_long",
+          "proof_record": "proof.model.std_max_long.20261015t213829z.89f04fca",
+          "sha256": "208bcdd37a5da65a9d92edaad46ca3351e56ade9642fdf32f906d40d4699c750"
+        }
+      ],
+      "failure_class": "vacuous_pass",
+      "id": "proof.wp24-bug.candidate-1.20261015t231541z.4be5646f",
+      "initialization_goals": 5,
+      "integrity_errors": [],
+      "label": "std_models_object_domain_v2:seeded",
+      "ordinary_open": [
+        {
+          "function": "swdb_std_unit",
+          "goal": "typed_real_swdb_std_unit_ensures",
+          "property": "swdb_std_unit_ensures",
+          "seconds": null,
+          "smoke": false,
+          "solver": null,
+          "source": "wp_json",
+          "status": "timeout"
+        },
+        {
+          "function": "swdb_std_unit",
+          "goal": "typed_real_swdb_std_unit_assert_swdb_pointer_formation_2",
+          "property": "swdb_std_unit_assert_swdb_pointer_formation_2",
+          "seconds": null,
+          "smoke": false,
+          "solver": null,
+          "source": "wp_json",
+          "status": "timeout"
+        },
+        {
+          "function": "swdb_std_unit",
+          "goal": "typed_real_swdb_std_unit_assert_rte_initialization_2",
+          "property": "swdb_std_unit_assert_rte_initialization_2",
+          "seconds": null,
+          "smoke": false,
+          "solver": null,
+          "source": "wp_json",
+          "status": "timeout"
+        },
+        {
+          "function": "swdb_std_unit",
+          "goal": "typed_real_swdb_std_unit_assert_rte_signed_overflow_6",
+          "property": "swdb_std_unit_assert_rte_signed_overflow_6",
+          "seconds": null,
+          "smoke": false,
+          "solver": null,
+          "source": "wp_json",
+          "status": "timeout"
+        }
+      ],
+      "ordinary_valid": 44,
+      "range_dependency": {
+        "caller_sha256": "cb765cc0a64b71beb1e395fa09a060380f4d3138e7b551c42c187b7d231bd023",
+        "dependency": {
+          "check": {
+            "id": "standard-range-calls-1",
+            "sha256": "0bbacc63269090dc8e8db0e997954545ce39cbe907fcbe8100d26bafd904d19f"
+          },
+          "file_sha256": "ab86fab89802a166bad0263c5235b9b17f84552467a067af1da0fc3887940130",
+          "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/matrix/seed/records/proofs/proof.model.std_copy_int.20261015t213547z.ea97bd04.yaml",
+          "proof_record": "proof.model.std_copy_int.20261015t213547z.ea97bd04",
+          "qualification": {
+            "id": "standard-range-model-certificate-1",
+            "sha256": "900ad4ea61e5b4ac45c7efa1b5aa652b320a7c3668dc1e313f3de512b71f8b4a"
+          }
+        }
+      },
+      "record": {
+        "path": "/data/yanruj/EvolveSWDB_runs/probata-reviewed-bf7a404c-t24-std-domain-v2/matrix/seed/records/proofs/proof.wp24-bug.candidate-1.20261015t231541z.4be5646f.yaml",
+        "sha256": "e24067e47ede4f6bf72e7e26fc06022a885ec14da04ae1fb36041b7c2c11f4dc"
+      },
+      "smoke_open": [
+        {
+          "function": "swdb_std_unit",
+          "goal": "typed_real_swdb_std_unit_wp_smoke_dead_code_s58",
+          "property": "swdb_std_unit_wp_smoke_dead_code_s58",
+          "seconds": null,
+          "smoke": true,
+          "solver": null,
+          "source": "wp_json",
+          "status": "failed_smoke"
+        },
+        {
+          "function": "swdb_std_unit",
+          "goal": "typed_real_swdb_std_unit_wp_smoke_dead_code_s70",
+          "property": "swdb_std_unit_wp_smoke_dead_code_s70",
+          "seconds": null,
+          "smoke": true,
+          "solver": null,
+          "source": "wp_json",
+          "status": "failed_smoke"
+        }
+      ],
+      "smoke_valid": 11,
+      "verdict": "not_proven"
+    }
+  ],
+  "runtime_freeze": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "runtime_identity": {
+    "c_lowering": {
+      "id": "swdb-c-lowering-9",
+      "sha256": "b1ddaa111bec5d19843b69fd7571530859acb1382947d96692894bfc29b0b993"
+    },
+    "clang": {
+      "id": "clang-22.1.8",
+      "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+    },
+    "naming_rules": {
+      "id": "kept-names.3",
+      "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+    }
+  },
+  "source_commit": "bf7a404c65694a18d83635c4f6f56105b005fb59",
+  "success": true,
+  "verdict": "GREEN: exact qualified-v2 actual safe/seeded pair; metadata and independent cold-goal replay",
+  "auditor_correction_history": {
+    "preserved_revision2_producer_sha256": "8839bd76deb80ab5bf1f9bb3bcc6e082f2e7ece0fbb168539504c2d40910d009",
+    "preserved_revision2_receipt_sha256": "9670a0cfe032f27f1e21b9c0660fc95736f74bf1415dcf98aae7eb57ad1f81f4",
+    "correction": "Revision2 applied execution-method check-pin policy to an exact preserved contract_fixture method. Revision3 follows frozen proof_setup._method while retaining current actual record setup and reader checker requirements. No runtime/evaluation input changed."
+  },
+  "boundary": "Actual solver evidence under the exact contract_fixture method and distinct disclosed writable-neighbor v2 domain. Original contract13fd/failed recorde03a and rejected v1 admission remain unchanged. No whole-ticket, original-contract success, counterexample, exhaustive C++/C agreement or whole-tree cache immutability claim."
+}

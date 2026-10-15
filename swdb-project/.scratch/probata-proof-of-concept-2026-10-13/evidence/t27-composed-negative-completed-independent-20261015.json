@@ -1,0 +1,989 @@
+{
+  "created_utc": "2026-10-15T23:29:06.292564+00:00",
+  "scope": "Independent read-only final actual-negative record/policy/resource/physical audit; no WP refutation or source counterexample claim.",
+  "source_commit": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+  "run": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative",
+  "profile": "wp-negative",
+  "exit_code": "0",
+  "pytest": {
+    "passed": 13
+  },
+  "records": [
+    {
+      "name": "short_store_frame",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_a_store_frame_bound_that_0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t231317z.c6235023.yaml",
+      "sha256": "c15c7fee62adad4a0e112b0a61da6885fba58e4c0571d37f6167af9d3bfd8776",
+      "constants": [],
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "ordinary": {
+        "valid": 90,
+        "total": 91
+      },
+      "smoke": {
+        "valid": 29,
+        "total": 29
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_store_source_wait_call_maa_indirect_store_vector_requires_store_indices",
+          "property": "maa_indirect_store_vector_requires_store_indices_2",
+          "function": "dxf_store_source_wait",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open": [],
+      "smoke_open_count": 0,
+      "initialized_goals": 17,
+      "rte_goals": 16,
+      "errors": []
+    },
+    {
+      "name": "three_reads",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc0/records/proofs/proof.dx100-fixtures.candidate-1.20261015t211434z.dc9d8edf.yaml",
+      "sha256": "307379762508cffec749306119ed93c60b6e9f651c66900c450b447e3faa39f7",
+      "constants": [
+        "SWDB_EARLY_READ_1"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "ordinary": {
+        "valid": 111,
+        "total": 112
+      },
+      "smoke": {
+        "valid": 15,
+        "total": 31
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_three_reads_call_swdb_tile_read_probe_requires",
+          "property": "swdb_tile_read_probe_requires_2",
+          "function": "dxf_three_reads",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open": [
+        {
+          "goal": "typed_real_wait_ready_wp_smoke_dead_call_s24",
+          "property": "wait_ready_wp_smoke_dead_call_s24",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_wait_ready_wp_smoke_dead_call_s27",
+          "property": "wait_ready_wp_smoke_dead_call_s27",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_wait_ready_wp_smoke_dead_call_s33",
+          "property": "wait_ready_wp_smoke_dead_call_s33",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_maa_indirect_load_wp_smoke_dead_call_s26",
+          "property": "maa_indirect_load_wp_smoke_dead_call_s26",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_maa_indirect_load_wp_smoke_dead_call_s32",
+          "property": "maa_indirect_load_wp_smoke_dead_call_s32",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_swdb_tile_read_probe_wp_smoke_dead_call_s22",
+          "property": "swdb_tile_read_probe_wp_smoke_dead_call_s22",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_swdb_tile_read_probe_wp_smoke_dead_call_s29",
+          "property": "swdb_tile_read_probe_wp_smoke_dead_call_s29",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_swdb_tile_read_probe_wp_smoke_dead_call_s35",
+          "property": "swdb_tile_read_probe_wp_smoke_dead_call_s35",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s23",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s23",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s26",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s26",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s27",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s27",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s29",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s29",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s30",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s30",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s33",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s33",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s35",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s35",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s36",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s36",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 16,
+      "initialized_goals": 18,
+      "rte_goals": 27,
+      "errors": []
+    },
+    {
+      "name": "three_reads",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc1/records/proofs/proof.dx100-fixtures.candidate-1.20261015t212352z.983ae918.yaml",
+      "sha256": "52adbaeac42b98734dc0b54d16e4dd3454161e4c9cb3239e5cac63ca8c77b4ff",
+      "constants": [
+        "SWDB_EARLY_READ_2"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "ordinary": {
+        "valid": 111,
+        "total": 112
+      },
+      "smoke": {
+        "valid": 21,
+        "total": 31
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_three_reads_call_swdb_tile_read_probe_2_requires",
+          "property": "swdb_tile_read_probe_requires_3",
+          "function": "dxf_three_reads",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open": [
+        {
+          "goal": "typed_real_wait_ready_wp_smoke_dead_call_s30",
+          "property": "wait_ready_wp_smoke_dead_call_s30",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_wait_ready_wp_smoke_dead_call_s33",
+          "property": "wait_ready_wp_smoke_dead_call_s33",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_maa_indirect_load_wp_smoke_dead_call_s32",
+          "property": "maa_indirect_load_wp_smoke_dead_call_s32",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_swdb_tile_read_probe_wp_smoke_dead_call_s28",
+          "property": "swdb_tile_read_probe_wp_smoke_dead_call_s28",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_swdb_tile_read_probe_wp_smoke_dead_call_s35",
+          "property": "swdb_tile_read_probe_wp_smoke_dead_call_s35",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s29",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s29",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s32",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s32",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s33",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s33",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s35",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s35",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s36",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s36",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 10,
+      "initialized_goals": 18,
+      "rte_goals": 27,
+      "errors": []
+    },
+    {
+      "name": "value_range",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc10/records/proofs/proof.dx100-fixtures.candidate-1.20261015t224908z.f6878c9d.yaml",
+      "sha256": "d74537557284c5bca6aa1122999a6473e18bbe139a111b7b77af35621aedfe43",
+      "constants": [
+        "SWDB_WRONG_VALUE"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "ordinary": {
+        "valid": 106,
+        "total": 107
+      },
+      "smoke": {
+        "valid": 37,
+        "total": 37
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_value_range_ensures",
+          "property": "dxf_value_range_ensures",
+          "function": "dxf_value_range",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open": [],
+      "smoke_open_count": 0,
+      "initialized_goals": 21,
+      "rte_goals": 16,
+      "errors": []
+    },
+    {
+      "name": "footprint",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc11/records/proofs/proof.dx100-fixtures.candidate-1.20261015t230629z.0ec9f821.yaml",
+      "sha256": "45e039c3e2db08ead745ce0452739b4243192afcc23ee6ab2b2d0847e3fb4c9e",
+      "constants": [
+        "SWDB_OUTSIDE"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "ordinary": {
+        "valid": 51,
+        "total": 52
+      },
+      "smoke": {
+        "valid": 17,
+        "total": 18
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_footprint_ensures",
+          "property": "dxf_footprint_ensures",
+          "function": "dxf_footprint",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open": [
+        {
+          "goal": "typed_real_dxf_footprint_wp_smoke_dead_code_s20",
+          "property": "dxf_footprint_wp_smoke_dead_code_s20",
+          "function": "dxf_footprint",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 1,
+      "initialized_goals": 9,
+      "rte_goals": 4,
+      "errors": []
+    },
+    {
+      "name": "three_reads",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc2/records/proofs/proof.dx100-fixtures.candidate-1.20261015t213400z.7fb18b71.yaml",
+      "sha256": "21da101583c1196836a24a13cfbbf3c4e11ea93d2e021b5bd2f641ad4ee6ac8b",
+      "constants": [
+        "SWDB_EARLY_READ_3"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "ordinary": {
+        "valid": 113,
+        "total": 114
+      },
+      "smoke": {
+        "valid": 27,
+        "total": 31
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_three_reads_call_swdb_tile_read_probe_3_requires",
+          "property": "swdb_tile_read_probe_requires_4",
+          "function": "dxf_three_reads",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open": [
+        {
+          "goal": "typed_real_wait_ready_wp_smoke_dead_call_s36",
+          "property": "wait_ready_wp_smoke_dead_call_s36",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_swdb_tile_read_probe_wp_smoke_dead_call_s34",
+          "property": "swdb_tile_read_probe_wp_smoke_dead_call_s34",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s35",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s35",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_three_reads_wp_smoke_dead_code_s46",
+          "property": "dxf_three_reads_wp_smoke_dead_code_s46",
+          "function": "dxf_three_reads",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 4,
+      "initialized_goals": 18,
+      "rte_goals": 27,
+      "errors": []
+    },
+    {
+      "name": "size",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc3/records/proofs/proof.dx100-fixtures.candidate-1.20261015t214443z.cd84b489.yaml",
+      "sha256": "6af7532ecb388587c114e726c839ae47e2275dd88e3096d9c65d96cda98c22b9",
+      "constants": [
+        "SWDB_EARLY_SIZE"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "vacuous_pass",
+      "ordinary": {
+        "valid": 35,
+        "total": 36
+      },
+      "smoke": {
+        "valid": 9,
+        "total": 13
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_size_call_get_tile_size_requires_2",
+          "property": "get_tile_size_requires_4",
+          "function": "dxf_size",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open": [
+        {
+          "goal": "typed_real_wait_ready_wp_smoke_dead_call_s13",
+          "property": "wait_ready_wp_smoke_dead_call_s13",
+          "function": "dxf_size",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_get_tile_size_wp_smoke_dead_call_s11",
+          "property": "get_tile_size_wp_smoke_dead_call_s11",
+          "function": "dxf_size",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_size_wp_smoke_dead_code_s13",
+          "property": "dxf_size_wp_smoke_dead_code_s13",
+          "function": "dxf_size",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        },
+        {
+          "goal": "typed_real_dxf_size_wp_smoke_dead_code_s15",
+          "property": "dxf_size_wp_smoke_dead_code_s15",
+          "function": "dxf_size",
+          "status": "failed_smoke",
+          "solver": null,
+          "seconds": null,
+          "smoke": true,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open_count": 4,
+      "initialized_goals": 7,
+      "rte_goals": 4,
+      "errors": []
+    },
+    {
+      "name": "cpu_write",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc4/records/proofs/proof.dx100-fixtures.candidate-1.20261015t215013z.6df8753e.yaml",
+      "sha256": "1b6bfff8db05f0c26e60c75864dd22469dad14567f1ce14304f49afc14d14f4e",
+      "constants": [
+        "SWDB_CPU_WRITE"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "ordinary": {
+        "valid": 64,
+        "total": 65
+      },
+      "smoke": {
+        "valid": 21,
+        "total": 21
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_cpu_write_call_swdb_tile_write_probe_requires",
+          "property": "swdb_tile_write_probe_requires_2",
+          "function": "dxf_cpu_write",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open": [],
+      "smoke_open_count": 0,
+      "initialized_goals": 11,
+      "rte_goals": 11,
+      "errors": []
+    },
+    {
+      "name": "range_exception",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc5/records/proofs/proof.dx100-fixtures.candidate-1.20261015t215738z.c9b2ebfc.yaml",
+      "sha256": "0923a605bbc77ba2000168363d39fd3f2ae79632dc24137fdf54579f0b51720b",
+      "constants": [],
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "ordinary": {
+        "valid": 84,
+        "total": 85
+      },
+      "smoke": {
+        "valid": 27,
+        "total": 27
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_range_exception_call_swdb_tile_read_probe_requires",
+          "property": "swdb_tile_read_probe_requires_2",
+          "function": "dxf_range_exception",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open": [],
+      "smoke_open_count": 0,
+      "initialized_goals": 16,
+      "rte_goals": 11,
+      "errors": []
+    },
+    {
+      "name": "condition_wait",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc6/records/proofs/proof.dx100-fixtures.candidate-1.20261015t221236z.41b5fecc.yaml",
+      "sha256": "e330f6ee2cc1da4a0aad3d7224ed8a37cea78f09af351311fff8c3508f5856dd",
+      "constants": [],
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "ordinary": {
+        "valid": 98,
+        "total": 99
+      },
+      "smoke": {
+        "valid": 33,
+        "total": 33
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_condition_wait_call_swdb_tile_read_probe_requires",
+          "property": "swdb_tile_read_probe_requires_2",
+          "function": "dxf_condition_wait",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open": [],
+      "smoke_open_count": 0,
+      "initialized_goals": 19,
+      "rte_goals": 15,
+      "errors": []
+    },
+    {
+      "name": "unrelated_wait",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc7/records/proofs/proof.dx100-fixtures.candidate-1.20261015t222821z.54495e94.yaml",
+      "sha256": "5640b339437dfa2cd2889e5d1871cec74391e3052053cbbbb8c9f0a5d4e80483",
+      "constants": [],
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "ordinary": {
+        "valid": 42,
+        "total": 43
+      },
+      "smoke": {
+        "valid": 15,
+        "total": 15
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_unrelated_wait_call_swdb_tile_read_probe_requires",
+          "property": "swdb_tile_read_probe_requires_2",
+          "function": "dxf_unrelated_wait",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open": [],
+      "smoke_open_count": 0,
+      "initialized_goals": 8,
+      "rte_goals": 8,
+      "errors": []
+    },
+    {
+      "name": "value_stream",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc8/records/proofs/proof.dx100-fixtures.candidate-1.20261015t223429z.186d358e.yaml",
+      "sha256": "4c5549e4306a664e1b537b26b0d97fd152dd5ec8c9d2fe14add885f6bf70b215",
+      "constants": [
+        "SWDB_WRONG_VALUE"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "ordinary": {
+        "valid": 44,
+        "total": 45
+      },
+      "smoke": {
+        "valid": 15,
+        "total": 15
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_value_stream_ensures",
+          "property": "dxf_value_stream_ensures",
+          "function": "dxf_value_stream",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open": [],
+      "smoke_open_count": 0,
+      "initialized_goals": 8,
+      "rte_goals": 10,
+      "errors": []
+    },
+    {
+      "name": "value_gather",
+      "record": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/pytest/test_wp_leaves_every_unit_cbmc9/records/proofs/proof.dx100-fixtures.candidate-1.20261015t224038z.16804f8c.yaml",
+      "sha256": "3c95a1f70df6c755ad4e6d3fc3a48e3c4a9ce8d425f0bc59389bf922e02310ac",
+      "constants": [
+        "SWDB_WRONG_VALUE"
+      ],
+      "verdict": "not_proven",
+      "failure_class": "timeout",
+      "ordinary": {
+        "valid": 59,
+        "total": 60
+      },
+      "smoke": {
+        "valid": 17,
+        "total": 17
+      },
+      "ordinary_open": [
+        {
+          "goal": "typed_real_dxf_value_gather_ensures",
+          "property": "dxf_value_gather_ensures",
+          "function": "dxf_value_gather",
+          "status": "timeout",
+          "solver": null,
+          "seconds": null,
+          "smoke": false,
+          "source": "wp_json"
+        }
+      ],
+      "smoke_open": [],
+      "smoke_open_count": 0,
+      "initialized_goals": 10,
+      "rte_goals": 13,
+      "errors": []
+    }
+  ],
+  "physical_pins": {
+    "references": 18091,
+    "unique_files": 1084,
+    "mismatches": []
+  },
+  "retained_files": {
+    "lane.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/lane.json",
+      "sha256": "6a8f8116543c0e843c4819125c7e7785fdd38c8af34060cad1dff29528071c45",
+      "content": {
+        "socket_lane": {
+          "aligned_cell_age_s": "",
+          "aligned_to": "no_gapbs_batch_running",
+          "command": [
+            "timeout",
+            "--signal=TERM",
+            "--kill-after=60",
+            "10920",
+            "bash",
+            "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/run.sh"
+          ],
+          "cpus_allowed_list": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63",
+          "ended_utc": "2026-10-15T23:26:43Z",
+          "exit_code": 0,
+          "host": "mbit10",
+          "job": "probata-composed-0e7f2327-t27-negative",
+          "lease_generation": 603,
+          "lease_name": "mbit10-evaluation-node1",
+          "load1_at_start": 0.52,
+          "load1_max": 32,
+          "node": 1,
+          "numa_memory_policy": "bind:1",
+          "numactl": "--cpunodebind=1 --membind=1",
+          "preregistration_sha256": null,
+          "started_utc": "2026-10-15T21:13:08Z"
+        }
+      }
+    },
+    "resources.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/resources.json",
+      "sha256": "a9c580561b414f11bee8be702c500c0b16ed85daaff19e9b4a781a300b058cb5",
+      "content": {
+        "cpu_seconds": 8696.335412,
+        "exit_code": 0,
+        "out_of_memory": false,
+        "peak_rss_bytes": 4503732224,
+        "timed_out": false,
+        "wall_seconds": 8012.081211173907
+      }
+    },
+    "outer-resources.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/outer-resources.json",
+      "sha256": "97275cd805b76366b8ee0ef328e3510d3048214043e04f749ebd19e3cd6636b8",
+      "content": {
+        "exit_code": 0,
+        "peak_rss_bytes": 4555112448,
+        "out_of_memory": false,
+        "timed_out": false,
+        "wall_seconds": 8014.395646315999,
+        "cpu_seconds": 10295.274532
+      }
+    },
+    "source-after.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/source-after.json",
+      "sha256": "53a46be3c357337f05b0ffa45a1ddcedbb313414550758526ba87c2104ea2ad7",
+      "content": {
+        "commit": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+        "source_unchanged": true,
+        "tracked_changes": ""
+      }
+    },
+    "junit.xml": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/junit.xml",
+      "sha256": "c46e4dc2f4752a4d3852fad603398c2632ec392e59bd8b4624b6ce6a54a60a4d"
+    },
+    "runtime-provenance.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/runtime-provenance.json",
+      "sha256": "42d8992de63d5fe69c5a35a3d819c5889ccac81aaf38aef7a5d95ed7e4eb4ef0",
+      "content": {
+        "lowering_identity": {
+          "c_lowering": {
+            "id": "swdb-c-lowering-9",
+            "sha256": "b1ddaa111bec5d19843b69fd7571530859acb1382947d96692894bfc29b0b993"
+          },
+          "clang": {
+            "id": "clang-22.1.8",
+            "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+          },
+          "naming_rules": {
+            "id": "kept-names.3",
+            "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+          }
+        },
+        "runtime": {
+          "check": {
+            "id": "swdb-stdlib-provenance-1",
+            "sha256": "4aee5a271a2f92fced7a94c04807cd2d94d36da24ea3d163f2364048bc79d937"
+          },
+          "command_executable": {
+            "path": "/data/yanruj/EvolveSWDB_runs/probata-source-gate-native-20261015-1102-node0/compiler-bin/clang++",
+            "sha256": "3c053dce26cf5ef22656f1ec9efe0cdf2911a37d5a910261895ac9c42e128fe4"
+          },
+          "driver": {
+            "path": "/data1/yanruj/toolchains/LLVM-22.1.8-Linux-X64/bin/clang-22",
+            "sha256": "31a40dc31f3c15a47aa119aa148f339bf363d8f61202ddbdacbd3f24b71ba113"
+          },
+          "headers": {
+            "files": 1983,
+            "id": "llvm-standard-resource-headers",
+            "sha256": "d37aec646b1e6e1748d40690c60436f905f55852ee578e79c43a3199c4a16e23"
+          },
+          "parser": {
+            "id": "libclang-22.1.8",
+            "sha256": "8b03ee2c60f0699651869fea5135cb5a144777a10c6e4b9b7835283ac9ca3f7d"
+          }
+        },
+        "tool": {
+          "command": [
+            "clang++"
+          ],
+          "missing": "",
+          "version": "22.1.8"
+        }
+      }
+    },
+    "source-manifest.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/source-manifest.json",
+      "sha256": "2f4e30d04a99eaddd7cff2361f591ac065491dbe01b52e7025ba82e1c9d06f1d"
+    },
+    "launch.json": {
+      "path": "/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/launch.json",
+      "sha256": "1ee08fa60e2a1116cb7acadbc8b9b96b5ff5a2f3c43c500750532036b6f31da6",
+      "content": {
+        "created_utc": "2026-10-15T21:13:08.520930+00:00",
+        "source": "/data1/yanruj/probata-composed-0e7f2327",
+        "source_commit": "0e7f232762e4555aa9435a3a3622923fad8ee928",
+        "node": 1,
+        "command": [
+          "bash",
+          "/data1/yanruj/probata-composed-0e7f2327/swdb-project/.scratch/probata-proof-of-concept-2026-10-13/prototype/27-proof-semantics/run_acceptance.sh",
+          "0e7f232762e4555aa9435a3a3622923fad8ee928",
+          "wp-negative",
+          "--maxfail=1",
+          "--junitxml=/data/yanruj/EvolveSWDB_runs/probata-composed-0e7f2327-t27-negative/junit.xml"
+        ],
+        "timeout_seconds": 10800,
+        "rss_cap_bytes": 8589934592,
+        "workers": 1,
+        "rss_scope": "outer watchdog covers worker bootstrap, compiler provenance probes, inner monitor and proof process tree; trusted outer monitor excluded",
+        "planned_raw_budget_bytes": 8589934592,
+        "raw_budget_enforcement": "coordinator monitors; not a filesystem quota",
+        "readers": [
+          "root",
+          "ticket27"
+        ],
+        "log_name": "acceptance.log"
+      }
+    }
+  },
+  "errors": [],
+  "audit_script": {
+    "path": "/private/tmp/probata-t27-audit-negative-final.py",
+    "sha256": "d2fc22d951f1b7bcf3a401327596a7774ca1b7adbd8cc6c05f25352f87b22334"
+  },
+  "aggregates": {
+    "records": 13,
+    "ordinary_valid": 1008,
+    "ordinary_total": 1021,
+    "smoke_valid": 283,
+    "smoke_total": 318,
+    "failed_smoke": 35,
+    "initialized_goals": 180,
+    "rte_goals": 189
+  }
+}
