@@ -408,7 +408,14 @@ def _frama_c(base, anchors, hints, alive, workdir, tool, reject, vocab, wp_flags
             reject(index, rule, detail)
     alive = [i for i in alive if i not in bad]
     if alive and not bad and wp_flags is not None:                        # (5) WP goal generation, no prover
-        done = _run(tool, [*wp_flags, *FLAGS, UNIT, "-wp-prover", "none"], workdir, {})
+        # 2026-10-15 ET: selectors accumulate in Frama-C; a trailing none does not cancel inherited solvers.
+        generation_flags = list(wp_flags)
+        for index in range(len(generation_flags) - 1, -1, -1):
+            if generation_flags[index] == "-wp-prover":
+                del generation_flags[index:index + 2]
+            elif generation_flags[index].startswith("-wp-prover="):
+                del generation_flags[index]
+        done = _run(tool, [*generation_flags, *FLAGS, UNIT, "-wp-prover", "none"], workdir, {})
         runs += 1
         output = done.stdout + done.stderr
         if done.returncode != 0 or re.search(r"User Error|Invalid|invalid user input|aborted|Ignoring", output):
