@@ -19,10 +19,8 @@ PAIR = ("ctor_default", "ctor", "copy_ctor", "operator_assign")
 MEMBERS = tuple("std_vector_int_" + name for name in NONALLOCATING) + tuple("std_pair_int_int_" + name for name in PAIR)
 
 
-@pytest.fixture(scope="module")
-def member_subset(tmp_path_factory):
+def _member_seed(root):
     from swdb import c_lowering, std_models
-    root = tmp_path_factory.mktemp("wp-standard-members")
     records = make_records(root)
     copy_record_subset(REPO / "records", records.path, sorted(_library_roots()))
     shutil.copytree(REPO / "library", root / "library")
@@ -32,6 +30,11 @@ def member_subset(tmp_path_factory):
     method["models"].update(std_vector=std_models.identity(), std_pair=std_models.identity())
     (methods / "wp-tracer-fixture.yaml").write_text(yaml.safe_dump(method, sort_keys=False))
     return Seed(root, {})
+
+
+@pytest.fixture(scope="module")
+def member_subset(tmp_path_factory):
+    return _member_seed(tmp_path_factory.mktemp("wp-standard-members"))
 
 
 @needs_wp
@@ -46,7 +49,8 @@ def test_each_nonallocating_standard_member_satisfies_its_actual_model_contract(
 
 @needs_wp
 @pytest.mark.parametrize("override", ["missing", "opposite", "value", "duplicate"])
-def test_the_real_adapter_requires_the_canonical_initialization_filter_switch_before_verifying(member_subset, override):
+def test_the_real_adapter_requires_the_canonical_initialization_filter_switch_before_verifying(tmp_path, override):
+    member_subset = _member_seed(tmp_path)
     method_path = member_subset.root / "library" / "methods" / "wp-tracer-fixture.yaml"
     original = method_path.read_text()
     method = yaml.safe_load(original)
