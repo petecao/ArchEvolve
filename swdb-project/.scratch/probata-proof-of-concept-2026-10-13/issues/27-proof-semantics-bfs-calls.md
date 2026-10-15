@@ -291,3 +291,8 @@ Both setup checks pass and both use verdict-reader hash
 The finite expansion is absent. Final acceptance is still pending the combined ticket-36 pointer-origin
 admission update and prospective final method pin; this local checkpoint does not resolve ticket 27 or
 substitute for the coordinated remote safe/unsafe shards.
+
+The merged setup/strict-reader controls also pass (63 scripted cases, 102.29 s; real WP fact cases excluded),
+including initialization-filter override refusal and the combined pointer/ownership checker-source closure.
+Report log: `/private/tmp/probata-t27-merged-setup.jsonl`. The unfinished member-contract acceptance module
+from the policy donor branch remains with ticket 25 rather than being copied into this ticket's handoff.
