@@ -9,8 +9,8 @@ proof eligibility and actual full-candidate setup are deliberately separate.
 
 | Original group | Current compiler boundary | Retained actual evidence and remaining work |
 |---|---|---|
-| classes / enum / constexpr | Pass with existing explicit a:n metadata | Original standalone Bag/Counter safe146ordinary+11smokeValid, seeded one invariant timeout/11smokeValid at2f85/c4cf. Full original per-candidate route/current method replay remains. [Class evidence](t24-member-lifetimes-mac-20261015.json). |
-| new[] / terminal delete[] | Pass with checked terminal-release certificate | Earlier focused initialized nonescaping fixture proves49ordinary+7smoke; use-after-delete and unsupported lifetime/alias shapes refuse. Current full safe/out-of-range/seeded/refusal acceptance replay needed; do not replace with general allocator theorem. See ticket24 checked terminal release section. |
+| classes / enum / constexpr | Pass with existing explicit a:n metadata | Original standalone Bag/Counter safe 146 ordinary + 11 smoke Valid, seeded one invariant timeout/11smokeValid at2f85/c4cf. Full original per-candidate route/current method replay remains. [Class evidence](t24-member-lifetimes-mac-20261015.json). |
+| new[] / terminal delete[] | Pass with checked terminal-release certificate | Earlier focused initialized nonescaping fixture proves49 ordinary + 7 smoke; use-after-delete and unsupported lifetime/alias shapes refuse. Current full safe/out-of-range/seeded/refusal acceptance replay needed; do not replace with general allocator theorem. See ticket24 checked terminal release section. |
 | templates / two Ring instantiations | Refuse Ring_int_3_put opaque embedded items origin | Needs exact typed fixed member-array/subobject policy for live contextual receivers. No allocation flattening or validity-to-origin inference. Original source and contract remain intact. |
 | OpenMP at one thread | Missing a:n metadata; with matching explicit domain still refuses pure if(a[i]>...) condition placement | Add only typed metadata matching original initialized valid range. Narrow ordinary guard immediately before pure IfStmt condition, with exact source-node membership and no init declaration, side effects, calls, short circuit or volatile reads. No body-effect waiver. Then current safe/seeded actual pair. |
 | floats | Missing a:n metadata; adding matching explicit domain passes compiler checks | Existing requires already state valid initialized double a[0..n-1]. Add typed metadata only, then actual safe/seeded replay under the recorded real-float-model assumption. |
@@ -19,10 +19,10 @@ proof eligibility and actual full-candidate setup are deliberately separate.
 | __dxc / maa summary fixtures | Compiler shape passes with declared fixture summary mapping | Old actual summary proofs are on explicitly labeled stand-in definitions. Current import must bind exact actual callee body/closure/domain/proof method; no production DX semantics claim. Original full caller/dependency-pin replay pending. |
 | unsupported constructs / naming | Existing public refusal and deterministic lower/C-compile controls retained | Run focused current union after changes; never change a positive fixture into an expected refusal. |
 
-The frozen1ece remote construct shard stopped after5PASS/1FAIL at standalone
-std_copy_int's opaque origin before any full original group. Its14unique model
-subjects comprise13proven models plus the failed copy, and3stand-in summaries
-proved:17dependencies total, not17models plus3summaries. Qualified copy was later
+The frozen`1ece` remote construct shard stopped after5 PASS / 1 FAIL at standalone
+std_copy_int's opaque origin before any full original group. Its14 unique model
+subjects comprise13 proven models plus the failed copy, and3 stand-in summaries
+proved:17 dependencies total, not17 models plus 3 summaries. Qualified copy was later
 repaired/proven independently on Mac/Linux. These exact historical results and
 hashes remain in [remote audit](helper-construct-mbit10-20261015.json),
 [qualified body](t24-std-copy-qualified-body-mac-20261015.json), and
@@ -37,8 +37,8 @@ freshness/validity premise or dropped lifetime goal is not acceptance.
 
 ## Closeout boundary
 
-The active pure IfStmt placement slice was implemented at081c67fd, with a needed
-AtomicExpr purity hardening atef41e5f8. Its original OMP compiler tracer went RED
+The active pure IfStmt placement slice was implemented at `081c67fd`, with a needed
+AtomicExpr purity hardening at `ef41e5f8`. Its original OMP compiler tracer went RED
 at condition placement and then GREEN. A separate compiler RED showed that a
 hidden __atomic_fetch_add side effect could be treated as pure; the new explicit
 AtomicExpr refusal closes that admission gap without claiming an actual false

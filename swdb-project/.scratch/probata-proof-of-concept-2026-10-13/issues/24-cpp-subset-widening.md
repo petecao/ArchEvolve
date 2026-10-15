@@ -708,3 +708,11 @@ No _Origins or generic call exemption was changed.
 No conditional-return, template/member-array or allocator extension was started.
 These are preserved as concrete open gaps for resumption. Ticket24 remains claimed;
 this closeout slice does not close the original construct or full-method acceptance.
+
+Focused closeout validation on frozen `c00665c8` passes **72/72 in 26.31s**,
+including nine condition compiler controls, the new public fake prelaunch control,
+and retained member/class/query/standalone controls. Main-session agent source
+review is GREEN. All source pins and retained public report hashes were checked;
+no actual solver or remote job was launched. The fake records remain not_proven/
+unknown and do not establish original OMP/floats proof acceptance.
+[Condition closeout evidence](../evidence/t24-condition-closeout-20261015.json).
