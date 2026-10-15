@@ -25,7 +25,8 @@ CHECK_SOURCES = ("proof_setup.py", "proof_report.ml", "proof.py", "cbmc_adapter.
                  "cbmc_product.py", "wp_adapter.py", "crux_adapter.py", "rocq_adapter.py", "rss_watchdog.py",
                  "vocab.py", "formal_frame.py", "acsl_subset.py", "framac.py", "hint_check.py", "hint_tree.ml",
                  "wp_pointer_bounds.py", "proof_semantics.py", "vector_ownership.py", "standard_model_view.py",
-                 "array_domains.py", "model_domains.py", "dx_array_domains.py", "bounded_entry_windows.py")
+                 "array_domains.py", "model_domains.py", "dx_array_domains.py", "bounded_entry_windows.py",
+                 "bounded_chain.py")
 REQUIRED_WP_SWITCHES = (("-wp-no-filter-init", "-wp-filter-init"),)
 _COMPILED_MODULES = {}
 _ASSUME = re.compile(r"\b(?:llvm_assume|crucible_assume|__VERIFIER_assume)\b|\b(?:__CPROVER_assume|SWDB_ASSUME|assume)\s*\(")
@@ -296,14 +297,14 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
         if pin["sha256"] != _sha(baseline.text):
             _fail("lowering_hash", "baseline C lowering differs from its planned pin")
         hashes["baseline_lowering"] = _sha(baseline.text)
-    if adapter.name == "cbmc":
+    if adapter.name in {"cbmc", "crux-llvm-c", "crux-llvm-cxx"}:
         from swdb import bounded_initialization
         admissions = context.get("settings", {}).get("bounded_initialization") or {}
         sides = {"candidate": lowering, "baseline": baseline} if baseline is not None else {"unit": lowering}
         for side, lowered in sides.items():
             expected = admissions if side == "unit" else admissions.get(side, {})
             if lowered is None or not expected:
-                _fail("bounded_initialization", "CBMC has no generated initializedness admission")
+                _fail("bounded_initialization", "bounded verifier has no generated initializedness admission")
             try:
                 cap = max((value for name, value in job.bounds.items() if name != "threads"), default=0)
                 actual = bounded_initialization.check(lowered, cap, library=getattr(adapter, "library", None),
@@ -365,6 +366,13 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
             adapter.check_entry_windows(job, context, inputs)
         except (bounded_entry_windows.Refused, c_lowering.LoweringError) as exc:
             _fail('pointer_bounds', str(exc))
+    elif adapter.name in {"crux-llvm-c", "crux-llvm-cxx"}:
+        from swdb import c_lowering
+        try:
+            checked = adapter.check_source_admission(job, context, inputs)
+        except (ValueError, c_lowering.LoweringError) as exc:
+            _fail('bounded_source_admission', str(exc))
+        hashes['bounded_source_admission'] = _digest(checked)
     method = job.setup.get("method")
     tools = context.get("tools") or {}
     if method is not None:

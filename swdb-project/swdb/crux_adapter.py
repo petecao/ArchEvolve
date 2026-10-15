@@ -4,12 +4,14 @@ Created: 2026-10-14 ET (Probata proof of concept ticket 23, bounded fallbacks). 
 spec ("Verifier lineup and order": fallbacks in order, floats as reals, failure classes; "Bounds": unwinding);
 map 11 items 2, 4, 6, 9; 19 item 5. Format: docs/reference/format-v0.4-stubs-check-mode.md. Reference: map 07
 (crux-llvm on clang 22 bitcode: compile first, then `--no-compile`).
+Updated: 2026-10-15 ET: checked original-source initializedness and fresh source-view replay on both forms.
 
 One job (`swdb prove --adapter crux-llvm-cxx|crux-llvm-c --bounds '{"threads": 1, ...}'`):
 1. The code. `crux-llvm-c`: the C lowering (`swdb.c_lowering`) plus the C-versus-C++ differential run of the CBMC
    adapter (the check on the trusted C lowering tool). `crux-llvm-cxx`: the C++ itself, cut from the source by
-   clang's source ranges (`swdb.cbmc_adapter.Code` when a C lowering exists, else `swdb.cxx_cut.CxxCode`, which
-   also reads floating types). Summarized callees become the CBMC translator's stubs either way.
+   clang's source ranges after the same retained closure passes source initializedness admission. An unanalyzed
+   C++ cut is unsupported. Summarized callees become the CBMC translator's stubs either way. Before launch,
+   source analysis, admission, summaries and the exact harness/view are independently regenerated.
 2. The harness is the CBMC translator's, built with `-DSWDB_CRUX`: every oracle value is a crux symbolic value,
    CHECK/PROP/REACH are `crucible_assert` (named by the property, numbered by its line), assumes are
    `crucible_assume`. clang 22.1.8 compiles it to bitcode; crux-llvm runs it with `--no-compile`.
@@ -31,7 +33,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from swdb import c_lowering, cbmc_adapter, cbmc_translator as tr, cxx_cut, rss_watchdog
+from swdb import bounded_initialization, c_lowering, cbmc_adapter, cbmc_translator as tr, rss_watchdog
 from swdb.proof import AdapterError, Verdict
 
 TOOL = "crux-llvm"
@@ -40,6 +42,8 @@ UNCLASSIFIED = "unclassified_crux_outcome"        # not a failure class: stops t
 FROZEN = ("--no-compile", "--skip-report")
 SENTENCES = dict(cbmc_adapter.SENTENCES)
 SENTENCES.update({
+    "c_lowering": "The source analyzer and C lowering tool ({version}) inventories the retained C++ closure and "
+                  "its bounded initialized-input policy; the C form also executes that C lowering.",
     "crux": "crux-llvm {version} symbolically executes every path of the bitcode within the iteration and recursion "
             "bounds and reports every failing assertion (cut paths are reported, never dropped).",
     "solver": "The SMT solver {version} answers unsatisfiable only for unsatisfiable formulas.",
@@ -133,7 +137,7 @@ class CruxAdapter:
         context = {"job": job, "out": out, "log": log, "reports": [], "tools": tools, "bounds": dict(job.bounds),
                    "pins": {}, "settings": {"tool": TOOL, "form": self.form, "flags": [],
                                             "translator": tools["translator"]["id"],
-                                            "build_constants": list(self.defines)}}
+                                            "build_constants": list(self.defines), "verifier_launched": False}}
         if summary_job:
             source = self.library.resolve((entry.get("proof_unit") or {}).get("source"))
         else:
@@ -149,6 +153,12 @@ class CruxAdapter:
             return self._not_proven("parse_error", str(exc), context)
         except c_lowering.LoweringError as exc:
             raise AdapterError(str(exc)) from None
+        context['lowering'] = code.lowering
+        context['pins']['c_lowering'] = {'id': f'{code.lowering.function}.c', 'sha256': code.c_sha256}
+        admission = bounded_initialization.check(code.lowering, max(sizes.values(), default=0), library=self.library)
+        context['settings']['bounded_initialization'] = admission
+        if admission['verdict'] != 'passed':
+            return self._not_proven('unsupported_construct', admission['reason'], context)
         try:
             built = self._build(job, entry, code, sizes, summary_job, context)
         except c_lowering.Unsupported as exc:            # the cut's interface (a reference type, a class)
@@ -162,14 +172,64 @@ class CruxAdapter:
             return self._not_proven('unsupported_construct',
                                     'array_domains is planner-only: source-origin, operation and call alignment '
                                     'are not certified by nonnull bounded buffers', context)
+        context['source_admission_runtime'] = {'source': source, 'code': code, 'built': built,
+                                                'summary_job': summary_job}
+        try:
+            self.check_source_admission(job, context)
+        except (ValueError, c_lowering.LoweringError) as exc:
+            return self._not_proven('unsupported_construct', str(exc), context)
         if self.form == "c":
             problem = self._differential(job, code, built, context)
             if problem:
                 return problem
         return self._crux(job, code, built, context)
 
+    def check_source_admission(self, job, context, inputs=()):
+        """Rebuild the source closure, input policy and exact launched view; never trust a saved certificate."""
+        runtime = context.get('source_admission_runtime')
+        if not runtime or not context.get('lowering'):
+            raise ValueError('Crux has no generator-owned checked source plan')
+        entry = self.library.get(self.contract) or {}
+        if ((entry.get('proof_unit') or {}).get('array_domains')
+                or self.library.content_sha256(self.contract) != job.unit.contract_sha256):
+            raise ValueError('Crux source contract changed or needs unsupported array-domain admission')
+        if runtime['summary_job']:
+            source = self.library.resolve((entry.get('proof_unit') or {}).get('source'))
+        else:
+            from swdb.wp_adapter import _unit_source
+            source = _unit_source(Path(job.unit.tree), job.unit.function)
+        if source != runtime['source']:
+            raise ValueError('Crux source location changed after planning')
+        fresh = c_lowering.lower(source, job.unit.function, defines=self.defines)
+        if fresh != runtime['code'].lowering or fresh != context['lowering']:
+            raise ValueError('Crux original source/closure admission changed before launch')
+        admission = bounded_initialization.check(fresh, max(cbmc_adapter._sizes(job.bounds).values(), default=0),
+                                                 library=self.library)
+        if admission.get('verdict') != 'passed' or context['settings'].get('bounded_initialization') != admission:
+            raise ValueError('Crux checked source initializedness disappeared, changed or refused')
+        code = cbmc_adapter.Code(fresh, source, self.defines)
+        rebuilt_context = {'settings': {}, 'pins': {}}
+        built = self._build(job, entry, code, cbmc_adapter._sizes(job.bounds), runtime['summary_job'], rebuilt_context)
+        if (built != runtime['built'] or runtime['code'].text != code.text
+                or context['pins'].get('summaries') != rebuilt_context['pins'].get('summaries')):
+            raise ValueError('Crux source view, harness or imported summary changed before launch')
+        view = code.c_text(built['stubs']) if self.form == 'c' else code.cxx_text(built['stubs'])
+        text = tr.prelude() + built['logic'] + view + built['harness']
+        checked = {'check': bounded_initialization.identity(), 'source_sha256': fresh.source_sha256,
+                   'lowering_sha256': hashlib.sha256(fresh.text.encode()).hexdigest(),
+                   'input_sha256': hashlib.sha256(text.encode()).hexdigest(),
+                   'functions': list(code.functions), 'defines': list(self.defines), 'form': self.form,
+                   'scope': 'checked retained source closure; no unanalyzed C++ cut or implicit array origins'}
+        previous = context['settings'].get('source_admission')
+        if previous is not None and previous != checked:
+            raise ValueError('Crux checked source report changed before launch')
+        if inputs and (len(inputs) != 1 or Path(inputs[0][0]).read_text() != text):
+            raise ValueError('Crux launched source differs from fresh checked source view')
+        context['settings']['source_admission'] = checked
+        return checked
+
     def _code(self, source, function, context):
-        """The C lowering (form c); the C++ cut (form cxx): from the C lowering when one exists, else from clang."""
+        """Both forms require a retained source closure; the C++ form executes its original-source cut."""
         if self.form == "c":
             lowering = c_lowering.lower(source, function, defines=self.defines)
             code = cbmc_adapter.Code(lowering, source, self.defines)
@@ -182,9 +242,9 @@ class CruxAdapter:
             context["lowered"] = True
             return cbmc_adapter.Code(lowering, source, self.defines)
         except c_lowering.Unsupported as exc:
-            context["settings"]["cxx_cut"] = f"no C lowering ({exc}): the C++ is cut from clang's syntax tree"
+            context["settings"]["cxx_cut"] = f"no checked source initializedness for a C++ cut: {exc}"
             context["lowered"] = False
-            return cxx_cut.CxxCode(source, function, self.defines)
+            raise c_lowering.Unsupported(context['settings']['cxx_cut']) from None
 
     def _tools(self):
         lineup = {}
@@ -205,9 +265,7 @@ class CruxAdapter:
                             f"{(lineup.get('clang') or {}).get('version')}")
         translators = (self.method.data.get("c_lowering") or {}).get("translators") or []
         ident = c_lowering.identity()
-        names = [("CBMC translator", tr.identity())]
-        if self.form == "c":
-            names.append(("C lowering tool", ident["c_lowering"]))
+        names = [("CBMC translator", tr.identity()), ("source analyzer/C lowering tool", ident["c_lowering"])]
         for name, found in names:
             if found not in translators:
                 problems.append(f"the {name} {found['id']} (sha256 {found['sha256'][:12]}...) is not a translator of "
@@ -321,6 +379,7 @@ class CruxAdapter:
         from swdb import proof_setup
         proof_setup.check_generated(job, self, context, [(source, text)], flags,
                                     command=command, scratch=scratch, lowering=getattr(code, "lowering", None))
+        context['settings']['verifier_launched'] = True
         result = rss_watchdog.run(command, log=crux_log, cap_bytes=cap, timeout=wall + 5, cwd=scratch,
                                   env={**os.environ, "TMPDIR": str(scratch)})
         context["reports"].append(("crux_output", crux_log))
@@ -353,7 +412,7 @@ class CruxAdapter:
         identities = context["tools"]["identities"]
         assumptions, tools = [], []
         used = ["clang", "translator", "crux", "solver"]
-        if context.get("lowered") and self.form == "c":
+        if context.get("lowered"):
             used.insert(0, "c_lowering")
         for tool in used:
             ident, sha, version = identities[tool]
