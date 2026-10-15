@@ -193,6 +193,12 @@ class WpAdapter:
             return self._not_proven("unsupported_construct",
                 "ordinary CPU memory interference with DX100 commands needs ticket 28's memory-hazard probes", context)
         contracts = self._dependencies(dependency_lowering, context)
+        refusal = cpu_memory_admission.summary_refusal(self.records, [
+            pin["proof_record"] for group in ("summaries", "models") for pin in context["pins"].get(group, [])])
+        if refusal:
+            context["settings"] = {"tool": "frama-c-wp", "flags": [], "verifier_launched": False,
+                                   "proof_semantics_admission": refusal}
+            return self._not_proven("memory_domain", "opaque semantics dependency needs a checked memory boundary", context)
         context["lowering"] = lowering
         context["extern_contracts"] = {
             used["c_name"]: {"id": used["summary"], "sha256": self.library.content_sha256(used["summary"])}

@@ -175,6 +175,8 @@ RANGE = ("requires 2 <= n <= 3 && \\valid(q + (0 .. n - 1)) && \\valid(offs + (0
          "requires \\forall integer k; 0 <= k < n - 1 ==> offs[k] <= offs[k + 1];")
 #: contract name: (function, pointer parameters, requires, assigns, size bound of n)
 FIXTURES = {
+    "summary_wrapper": ("dxf_summary_wrapper", [], "requires 0 <= n <= 2;", "\\nothing", 2),
+    "summary_caller": ("dxf_summary_caller", [], "requires 0 <= n <= 2;", "\\nothing", 2),
     "three_reads": ("dxf_three_reads", ["q", "base"], BASE.format(arr="base"), "\\nothing", 2),
     "size": ("dxf_size", ["q"], "requires 0 <= n <= 2 && \\valid(q + (0 .. n - 1));", "\\nothing", 2),
     "cpu_write": ("dxf_cpu_write", ["q", "base"], BASE.format(arr="base"), "\\nothing", 2),
@@ -203,10 +205,16 @@ def _dx_contracts():
     from test_cbmc_adapter import _contract
     found = {}
     for name, (function, arrays, requires, assigns, _bound) in FIXTURES.items():
+        # The fixture supplies initialized input buffers. State this premise explicitly for WP's
+        # initialization policy; the bounded harness must justify it from its actual buffer fill.
+        requires += "\n" + "\n".join(f"requires \\initialized({a} + (0 .. n - 1));" for a in arrays)
         data = _contract(f"contract.fixture_dx_{name}", function, [
             ("pre", "legality", requires, "per_candidate"),
             ("post", "postcondition", f"assigns {assigns};\nensures \\result == 1;", "per_candidate")],
             [{"array": a, "shared_actions": [], "history_reads": False} for a in arrays])
+        if name == "summary_wrapper":
+            for clause in data["clauses"]:
+                clause["proof_placement"] = {"once": "self"}
         data["proof_unit"]["source"] = {"root": "library", "path": "proof_units/dx100_fixture_units.cc",
                                         "sha256": hashlib.sha256(UNITS.encode()).hexdigest()}
         found[name] = data
