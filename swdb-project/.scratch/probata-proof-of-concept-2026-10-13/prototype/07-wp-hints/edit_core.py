@@ -10,6 +10,7 @@ import hashlib, json, time
 from pathlib import Path
 
 import hints as H
+import staged_search as S
 import loop as L
 
 MAX_OPS = 8           # size limit per edit
@@ -84,6 +85,7 @@ def apply(ops, best, tag, provenance):
 
 # Method18 (2026-10-15 ET): bounded search debt changes exploration only.
 # best.json remains the checked incumbent; debt.json is never final-verdict input.
+STAGED = [None]  # method19 schedule; None preserves the method18 rule
 DEBT = [False]
 DEBT_HINTS, DEBT_REPAIRS, DEBT_SECONDS = 4, 4, 300.0
 COUNTED_S = [lambda: 0.0]
@@ -116,9 +118,15 @@ def rollback_debt(out, reason, *, counted_s):
     return load_best(out)
 
 
+def _stage_context():
+    return {"check": S.identity(), "schedule": STAGED[0]} if STAGED[0] is not None else None
+
+
 def load_working(out, *, counted_s, remaining_s):
     state = _debt(out)
     if state:
+        if state.get("staged_context") != _stage_context():
+            return rollback_debt(out, "staged policy or schedule changed", counted_s=counted_s)
         if state["incumbent"] != load_best(out):
             return rollback_debt(out, "incumbent changed", counted_s=counted_s)
         if counted_s - state["started_s"] >= DEBT_SECONDS or remaining_s <= 0:
@@ -145,39 +153,46 @@ def accept_candidate(out, current, candidate, *, counted_s, remaining_s):
 
     All temporary candidates remain separate. Four repairs are allowed after entry;
     the fourth may recover the original rule, but cannot retain debt. Time expiry
-    refuses even a late recovery. Unit counts may not rise relative to either state.
+    refuses even a late recovery. Method18 forbids unit growth; method19 bounds total debt.
     """
     incumbent, state = load_best(out), _debt(out)
     if remaining_s <= 0:
         rollback_debt(out, "search deadline before candidate completed", counted_s=counted_s)
         _debt_event(out, "refused", counted_s, reason="search deadline before candidate completed")
         return "reverted (search deadline)", None
-    if state and (state["incumbent"] != incumbent or
+    if state and (state.get("staged_context") != _stage_context() or state["incumbent"] != incumbent or
                   counted_s - state["started_s"] >= DEBT_SECONDS or remaining_s <= 0):
         rollback_debt(out, "expired before proposal completed", counted_s=counted_s)
         return "reverted (debt expired)", None
     u_inc, h_inc = split_counts(incumbent["failing_goals"])
     u_cur, _ = split_counts(current["failing_goals"])
     u_new, h_new = split_counts(candidate["failing_goals"])
-    units_ok = u_new <= min(u_inc, u_cur)
+    units_ok = STAGED[0] is not None or u_new <= min(u_inc, u_cur)
     recovered, why = decide(incumbent["failing_goals"], incumbent["n_open"], candidate["failing_goals"])
+    if STAGED[0] is not None:
+        recovered = candidate["n_open"] <= incumbent["n_open"]
+        why = f"method19 total open goals {incumbent['n_open']} -> {candidate['n_open']}"
     if recovered and units_ok:
         if state:
             _debt_event(out, "promote", counted_s, repairs=state["repairs"], candidate=candidate.get("from"))
             (Path(out) / "debt.json").unlink()
         return "accepted (incumbent rule recovered: " + why + ")", candidate
     fits = units_ok and h_new <= h_inc + DEBT_HINTS and (ACCEPT[0] != "unit-first" or h_new <= CAP[0])
-    if fits and (state is not None or remaining_s >= DEBT_SECONDS):
+    entry_allowed = remaining_s >= DEBT_SECONDS
+    if STAGED[0] is not None:
+        fits = candidate["n_open"] <= incumbent["n_open"] + S.TOTAL_DEBT
+        entry_allowed = S.may_enter(STAGED[0], counted_s, remaining_s)
+    if fits and (state is not None or entry_allowed):
         if state and state["repairs"] >= DEBT_REPAIRS:
             rollback_debt(out, "repair limit without recovery", counted_s=counted_s)
             return "reverted (debt repair limit)", None
         fresh = state is None
-        state = state or {"incumbent": incumbent, "started_s": counted_s, "repairs": 0}
+        state = state or {"incumbent": incumbent, "started_s": counted_s, "repairs": 0, "staged_context": _stage_context()}
         state["candidate"] = candidate
         _save_debt(out, state)
         _debt_event(out, "enter" if fresh else "retain", counted_s, repairs=state["repairs"],
                     unit_open=u_new, hint_open=h_new, candidate=candidate.get("from"))
-        return "staged (temporary hint debt; incumbent unchanged)", None
+        return "staged (temporary total debt; incumbent unchanged)" if STAGED[0] is not None else "staged (temporary hint debt; incumbent unchanged)", None
     _debt_event(out, "refused", counted_s, reason="unit regression, hint debt or final reserve")
     # A rejected repair counts, and reaching the fourth forces rollback.
     load_working(out, counted_s=counted_s, remaining_s=remaining_s)
@@ -244,7 +259,7 @@ def _checked_attempt(out, best, ops, tag, provenance, mode, round_timeout, allow
         return rec, None
     chk = {}
     standin = (L.STANDIN_DIR / L.UNIT).read_text()
-    t = time.time()
+    t = L.clock()
     # t07e (c3): an edit identical to one check_edit just passed against the same best set runs WP in that
     # check's folder (same merged file, same hint ids), with no second check.
     key = hashlib.sha256(json.dumps([best["hints"], ops], sort_keys=True).encode()).hexdigest()
@@ -263,7 +278,7 @@ def _checked_attempt(out, best, ops, tag, provenance, mode, round_timeout, allow
                        **({"remaining_s": lambda: search_remaining(out)} if DEBT[0] else {}))
         if d is not None and not run_wp:
             PASSED_CHECKS[key] = {"dir": str(d), "tag": tag}
-    rec["check_wall_s"] = round(time.time() - t, 1)
+    rec["check_wall_s"] = round(L.clock() - t, 1)
     if d is None:
         rec.update(result="edit rejected (proof hint check)", check=chk.get("outcome"),
                    rejections=chk.get("rejections"), parse_error=(chk.get("parse_error") or "")[-2500:],

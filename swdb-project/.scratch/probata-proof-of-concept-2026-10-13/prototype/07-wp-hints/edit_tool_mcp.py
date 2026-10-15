@@ -19,6 +19,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import edit_core as E  # noqa: E402
 import goal_print as G  # noqa: E402
 import loop as L  # noqa: E402
+import staged_search as S  # noqa: E402
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--state", required=True)
@@ -33,7 +34,11 @@ ALLOWED = set(CFG["allowed_kinds"])
 E.ACCEPT[0] = CFG.get("accept", "total")
 E.CAP[0] = CFG.get("hint_cap", E.HINT_OPEN_CAP)
 E.TWO_PHASE[0] = bool(CFG.get("two_phase"))
-E.DEBT[0] = bool(CFG.get("bounded_debt"))
+E.STAGED[0] = CFG.get("staged_search")
+E.DEBT[0] = bool(CFG.get("bounded_debt") or E.STAGED[0])
+L.CLOCK_KIND[0] = CFG.get("clock_kind", "wall")
+if E.STAGED[0] and (L.CLOCK_KIND[0] != "continuous_monotonic" or CFG.get("clock_info") != S.clock_info()):
+    raise RuntimeError("method19 tool clock does not match the master clock")
 L.LIVE_FILE[0] = CFG.get("live_file")
 SCHEMA = {"type": "object", "required": ["ops"], "properties": {"ops": {"type": "array", "items": E.OP_SCHEMA}}}
 TOOLS = [
@@ -63,7 +68,7 @@ TOOL_NAMES = {t["name"] for t in TOOLS}
 
 def budget_used_min():
     lw = CFG.get("lockwait_before_s", 0.0) + L.LOCKWAIT[0]
-    return (time.time() - CFG["t0"] - lw) / 60
+    return (L.clock() - CFG["t0"] - lw) / 60
 
 
 def remaining_min():
@@ -72,7 +77,9 @@ def remaining_min():
 
 E.COUNTED_S[0] = lambda: budget_used_min() * 60
 E.SEARCH_REMAINING_S[0] = lambda: remaining_min() * 60
-if E.DEBT[0]:
+if E.STAGED[0]:
+    TOOLS[1]["description"] += (" Method19: +8 total temporary goals, four repair proposals/300 counted seconds; last third recovery only; unchanged incumbent until total recovery. Every final goal and fresh smoke remains mandatory.")
+elif E.DEBT[0]:
     TOOLS[1]["description"] += (" Method18: temporary +4 hint debt uses a separate working candidate for at most "
                                 "4 repair proposals/5 counted minutes; no unit regression. Promotion recovers "
                                 "the incumbent rule; otherwise rollback. Final full proof/smoke acceptance is unchanged.")
@@ -82,7 +89,9 @@ N = [0]
 
 def record(tool, rec):
     N[0] += 1
-    rec = {"n": N[0], "tool": tool, "lockwait_total_s": round(L.LOCKWAIT[0], 1),
+    rec = {"n": N[0], "tool": tool, "lockwait_total_s": L.LOCKWAIT[0], "clock": L.CLOCK_KIND[0],
+           "clock_info": S.clock_info() if E.STAGED[0] else None,
+           "search_phase": S.phase(E.STAGED[0], budget_used_min()*60) if E.STAGED[0] else None,
            "budget_used_min": round(budget_used_min(), 2), **rec}
     with open(STATE / "submissions.jsonl", "a") as f:
         f.write(json.dumps(rec) + "\n")
@@ -111,29 +120,33 @@ def fmt_rec(rec):
 
 
 def call(tool, args):
+    phase_note = ""
+    if E.STAGED[0]:
+        phase = S.phase(E.STAGED[0], budget_used_min()*60)
+        phase_note = f"\nMETHOD19 PHASE {phase['index']+1}/3: {phase['name']}; " + phase['guidance']
     best = E.load_working(OUT, counted_s=budget_used_min() * 60, remaining_s=remaining_min() * 60) if E.DEBT[0] else E.load_best(OUT)
     if tool == "show_best":
-        return E.working_text(OUT, best) + "\n" + E.open_text(best) + E.debt_text(OUT) + f"\nBudget left for in-call work: {remaining_min():.1f} min."
+        return E.working_text(OUT, best) + "\n" + E.open_text(best) + E.debt_text(OUT) + phase_note + f"\nBudget left for in-call work: {remaining_min():.1f} min."
     if remaining_min() <= 0:
         record(tool, {"result": "refused: budget"})
         return (f"Budget for in-call work is spent ({budget_used_min():.1f} of {CFG['budget_min']} min used; "
                 f"{CFG['final_reserve_min']} min are kept for the final replay). Return your final answer NOW.")
     tag = f"r{CFG['round']}c{N[0] + 1}"
     if tool == "show_goal":
-        t = time.time()
+        t = L.clock()
         text, rec = G.show(OUT, best, str(args.get("goal", "")), tag,
                            **({"timeout_s": max(1, E.search_remaining(OUT))} if E.DEBT[0] else {}))
-        rec["wall_s"] = round(time.time() - t, 1)
+        rec["wall_s"] = round(L.clock() - t, 1)
         record(tool, rec)
         if E.DEBT[0]:
             E.load_working(OUT, counted_s=budget_used_min() * 60, remaining_s=remaining_min() * 60)
-        return text + E.debt_text(OUT) + f"\nBudget left for in-call work: {remaining_min():.1f} min."
+        return text + E.debt_text(OUT) + phase_note + f"\nBudget left for in-call work: {remaining_min():.1f} min."
     ops = args.get("ops") or []
     prov = f"codex {PIN['model']} {PIN['effort']} round {CFG['round']} tool call {N[0] + 1}"
-    t = time.time()
+    t = L.clock()
     rec, nb = E.attempt(OUT, best, ops, tag, prov, CFG["mode"], CFG["round_timeout"], ALLOWED,
                         run_wp=(tool == "propose_edit"), timeout_s=(max(1, int(remaining_min() * 60)) if E.DEBT[0] else max(60, int(remaining_min() * 60) + 120)))
-    rec["wall_s"] = round(time.time() - t, 1)
+    rec["wall_s"] = round(L.clock() - t, 1)
     if nb is not None:
         E.save_best(OUT, nb)
     record(tool, rec)
@@ -149,7 +162,7 @@ def call(tool, args):
         text += "\n" + E.open_text(cur)
         if nb is not None or rec.get("result", "").startswith("staged"):
             text += "\n" + E.working_text(OUT, cur)
-    return text + E.debt_text(OUT) + f"\nBudget left for in-call work: {remaining_min():.1f} min."
+    return text + E.debt_text(OUT) + phase_note + f"\nBudget left for in-call work: {remaining_min():.1f} min."
 
 
 def send(obj):
