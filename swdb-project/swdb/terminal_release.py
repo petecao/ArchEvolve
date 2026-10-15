@@ -48,7 +48,9 @@ def _reference(node, ident):
 def _full_initialization(statement, owner, count, params):
     """Establish initializedness syntactically instead of relying on default RTE coverage.
 
-    The first operation is exactly `for (int i=0; i<count; ++i) owner[i]=pure_scalar_expression`.
+    The first operation is exactly `for (int i=0; i<count; ++i) owner[i]=pure_scalar_expression`,
+    or its overrun negative with `i<=count`. Both cover every legitimate element;
+    the latter's extra write remains in C and must fail an ordinary RTE obligation.
     Count cannot change in this loop; neither calls, pointer reads nor assignments occur in its RHS.
     WP still must prove every RTE obligation, including the positivity assertion before allocation.
     """
@@ -64,7 +66,7 @@ def _full_initialization(statement, owner, count, params):
     if len(values) != 1 or _strip(values[0]).get("kind") != "IntegerLiteral" or _strip(values[0]).get("value") != "0":
         raise Refused("initialization starts at zero")
     conds = _children(condition)
-    if condition.get("kind") != "BinaryOperator" or condition.get("opcode") != "<" or len(conds) != 2 or not _reference(conds[0], induction["id"]):
+    if condition.get("kind") != "BinaryOperator" or condition.get("opcode") not in {"<","<="} or len(conds) != 2 or not _reference(conds[0], induction["id"]):
         raise Refused("initialization stops at the allocation count")
     bound = _strip(conds[1])
     if count.get("kind") == "DeclRefExpr":
@@ -100,6 +102,7 @@ def _full_initialization(statement, owner, count, params):
         elif kind not in ("IntegerLiteral", "ImplicitCastExpr", "ParenExpr", "CStyleCastExpr") or not _scalar(value):
             raise Refused("initialization RHS contains an unmodeled or pointer expression")
         pending.extend(_children(value))
+    return condition['opcode']
 
 
 def certify(node, *, source, source_sha256, models, anchors, text):
@@ -151,7 +154,7 @@ def _certify(node, *, source, source_sha256, models, anchors, text):
     model = "swdb_alloc_delete_array_int"
     if set(models) != {"swdb_alloc_new_array_int", model} or len([a for a in anchors if a["kind"] == "contract"]) != 1:
         raise Refused("no other calls, models, or lowered functions may be present")
-    _full_initialization(statements[1], owner, count, params)
+    fill_comparison = _full_initialization(statements[1], owner, count, params)
     local_ids = {p.get("id") for p in params}
 
     def visit(current):
@@ -224,6 +227,7 @@ def _certify(node, *, source, source_sha256, models, anchors, text):
             "release_line": line + 1, "allocation_line": allocation_sites[0] + 1, "count": count_text,
             "source_sha256": source_sha256, "checker": identity(),
             "initialization": "canonical complete fill before every array read",
+            "initialization_loop_comparison": fill_comparison,
             "scope": "one nonescaping initialized new int[] owner; terminal delete[]; scalar int parameters, locals, and return"}
 
 
