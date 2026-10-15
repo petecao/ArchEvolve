@@ -1,4 +1,4 @@
-# Created: 2026-10-14 ET (Probata PoC 21). Regression corpus case through `swdb prove` (see wp-hint-syntax-error.yaml).
+# Created: 2026-10-14 ET (Probata PoC 21). Updated: 2026-10-14 ET (ticket 24: the refusal moved). Regression corpus case through `swdb prove` (see wp-hint-syntax-error.yaml).
 id: wp-gapbs-function-outside-subset
 adapter: wp
 input:
@@ -8,6 +8,7 @@ input:
   hints: []
 failure_class: unsupported_construct
 cause: >-
-  GAPBS's InitParent takes `const Graph &` (a reference to a class) and returns pvector<NodeID>: outside
-  the core subset. The WP adapter records not proven, unsupported_construct, before any WP run (ticket 24
-  widens the subset; 22 states the skip reason outside_cpp_subset for the bounded rung).
+  GAPBS's InitParent takes `const Graph &` and returns pvector<NodeID>. Ticket 21 refused the reference;
+  since ticket 24 the lowering passes CSRGraph and refuses at `EdgePair<int>` (defaulted template
+  arguments that match two instantiations). The WP adapter records not proven, unsupported_construct,
+  before any WP run (22 states the skip reason outside_cpp_subset for the bounded rung).
