@@ -1,0 +1,10 @@
+# Created: 2026-10-15 ET (ticket24 atomic operand admission v1).
+id: lowering-atomic-erased-order-rte
+adapter: c_lowering
+input:
+  source: tests/fixtures/proof/lowering/atomic_operand_refusals.cc
+  function: erased_order_rte
+failure_class: unsupported_construct
+construct: atomic memory order
+cause: The discarded order expression contains division by z; its possible division-by-zero
+  obligation must not disappear. Never execute this refusal fixture.

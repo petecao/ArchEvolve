@@ -5,28 +5,27 @@ Spec: [spec.md](spec.md). Tickets: [issues/](issues/). Branch: `codex/probata-re
 
 ## Current state (resume here)
 
-Updated: 2026-10-15 16:51 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
-Integration: `codex/probata-resume-20261015`. Production runtime bytes match
-`71771f09`; exact remote sources: node 0 `9b75f4a2`, node 1 `71771f09`.
-Mac counted run 23 is active at `df19ff8a`, after resource component acceptance.
+Updated: 2026-10-15 17:11 ET. **Active: 32 resolved / 28 ready-for-agent / 3 claimed.**
+Integration: `codex/probata-resume-20261015`; reviewed atomic/enum repair and float
+hints published at `7c06e9ed`. Fresh combined-source actual acceptance is next.
+Mac counted run 23 stays frozen at `df19ff8a`, provider active after fresh baseline/seeds.
 [Current resume and evidence](resume.md).
 
-- **24:** Ring and allocation pairs audited; DXC/class/OMP pairs pass at `9b75f4a2`.
-  Node 0 generation 571 stopped/released after the safe float case retained three
-  initialization timeouts; diagnosis is active. No OOM/whole timeout or surviving
-  run-prefix process. Atomic refusal fix `220ef337` passes 78 focused controls,
-  pending independent review and fresh composed-source acceptance. Full nine-group
-  finite native agreement at `e48a302e` retains its accepted historical source.
-- **27:** Ten of eleven safe cases pass; final footprint case is running. Node 1 generation 602 continues; negatives,
-  capacity and bounded/native agreement remain open.
-- **07:** Fresh run 23 active from 16:41 ET after 183 controls, actual component
-  acceptance and independent readiness review. Run 22 remains aborted. No qualifying BFS proof.
-- **36:** Still dependency-gated. 122 focused compiler/scripted controls pass;
-  13 actual-WP cases excluded. Drafts 1/2, final method freeze and held-out gates remain.
+- **24:** Historical Ring/allocation/DXC/class/OMP pairs audited; safe float retained
+  three initializedness timeouts. Two field invariants pass RED/GREEN and review.
+  Atomic/enum repair passes 115 controls and independent review; fresh full original
+  matrix, dependencies, lifetime controls and finite native agreement are required.
+- **27:** Historical `71771f09` safe profile passes 11/11: 792 ordinary + 252 smoke
+  Valid, 15,495 physical references audited without mismatch. Fresh negative,
+  capacity, bounded/native and safe profiles remain open.
+- **07:** Run 23 active since 16:41 ET, provider launched 16:58:55 ET. Actual
+  prompt/argv/tool/source audit passes; budget ends around 17:41 ET. No qualifying proof.
+- **36:** Still dependency-gated. 122 focused controls pass; 13 actual-WP cases
+  excluded. Drafts 1/2, final method freeze and held-out gates remain.
 
-No whole ticket closes from these partial results. Historical records retain their
-source pins. This chat's 30-minute heartbeat is active; the old chat's remains
-paused. [Authoritative ticket index](ticket-status-20261015.md).
+Both remote lanes are released at last readback; recheck live before dispatch.
+No whole ticket closes from partial or historical results. This chat's 30-minute
+heartbeat remains active; old chat paused. [Ticket index](ticket-status-20261015.md).
 
 ## Historical integration checkpoints
 

@@ -1,0 +1,10 @@
+# Created: 2026-10-15 ET (ticket24 atomic operand admission v1).
+id: lowering-atomic-weak-spurious
+adapter: c_lowering
+input:
+  source: tests/fixtures/proof/lowering/atomic_operand_refusals.cc
+  function: weak_spurious
+failure_class: unsupported_construct
+construct: atomic weak compare-exchange
+cause: Portable weak CAS permits spurious failure even at one thread; the deterministic
+  strong model has no such branch.
