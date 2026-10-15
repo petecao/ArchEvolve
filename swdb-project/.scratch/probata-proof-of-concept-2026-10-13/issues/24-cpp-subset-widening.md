@@ -1,7 +1,7 @@
 # 24 — C++ subset widening
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (resumed: conservative lifetime refusal; supported-subset replay underway)
+Updated: 2026-10-15 ET (contextual member checkpoint; original construct acceptance remains open)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 21
@@ -619,3 +619,8 @@ frozen source snapshot remain retained. This checkpoint does **not** clear the o
 Bag/Counter constructor/destructor fixture, fixed member arrays/templates, arbitrary
 receiver summaries, or the remaining whole-ticket acceptance criteria. Status remains
 claimed. [Scoped member evidence](../evidence/t24-member-windows-mac-20261015.json).
+
+After merging canonical integer-header baseline repair `feb92b5b`, focused member
+and header composition controls pass **29/29 in 55.92s** at `6cc5147e`. This checks
+current compiler/admission composition; the actual proof records retain their
+original `1e93b9cb` runtime and method identities.

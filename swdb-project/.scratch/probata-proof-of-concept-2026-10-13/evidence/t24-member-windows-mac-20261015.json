@@ -47,7 +47,12 @@
     "actual_pytest_raw": "1 failed,1 passed: positive verdict and all goals already passed; only initialized vs initialization goal spelling assertion failed",
     "corrected_assertions_offline": "2 immutable actual records passed all corrected assertions; no verifier rerun",
     "test_only_correction": "positive test looked for initialized; actual four RTE goal names contain rte_initialization. No runtime, premise or obligation was changed. Original failed test/log/XML are retained.",
-    "corrected_test_sha256": "963671adbe12a062cbd5523a7e33cb4d1ae255d807c0df5ced815aff1debe69b"
+    "corrected_test_sha256": "963671adbe12a062cbd5523a7e33cb4d1ae255d807c0df5ced815aff1debe69b",
+    "final_composition": {
+      "source_commit": "6cc5147ecb89dc1f59777c3c0899baab9bfa48c4",
+      "result": "29 passed in55.92s",
+      "scope": "member compiler/policy/publicstandins plus three canonical integer-header baseline/shadow compiler controls after integrating feb92b5b; no actual solver replay or historical proof eligibility upgrade"
+    }
   },
   "resources": [
     {
@@ -295,6 +300,14 @@
     {
       "path": "/private/tmp/probata-member-window-actual-v2-20261015/negative-member-context.json",
       "sha256": "dc43c34711a472f9b4c3d535ebfa7399c6827c13309b7c56fa278ccc60280d25"
+    },
+    {
+      "path": "/private/tmp/probata-member-window-actual-v2-20261015/final-composition.log",
+      "sha256": "41d3634f54bc4181bc1ef9c81cd3064b77f39af96d79c7b3bb30815a4de2099c"
+    },
+    {
+      "path": "/private/tmp/probata-member-window-actual-v2-20261015/final-composition.xml",
+      "sha256": "7f99c3c7ed93f41c6186ac31b10e23176571188fe46a368ef05afc20b152e5be"
     }
   ]
 }
