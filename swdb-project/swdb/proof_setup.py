@@ -23,7 +23,8 @@ REPORT_MODULE = Path(__file__).with_name("proof_report.ml")
 # Translator, lowering, std-model and semantics bytes also have their own pins.
 CHECK_SOURCES = ("proof_setup.py", "proof_report.ml", "proof.py", "cbmc_adapter.py", "cbmc_equivalence.py",
                  "cbmc_product.py", "wp_adapter.py", "crux_adapter.py", "rocq_adapter.py", "rss_watchdog.py",
-                 "vocab.py", "formal_frame.py", "acsl_subset.py", "framac.py", "hint_check.py", "hint_tree.ml")
+                 "vocab.py", "formal_frame.py", "acsl_subset.py", "framac.py", "hint_check.py", "hint_tree.ml",
+                 "wp_pointer_bounds.py")
 _COMPILED_MODULES = {}
 _ASSUME = re.compile(r"\b(?:llvm_assume|crucible_assume|__VERIFIER_assume)\b|\b(?:__CPROVER_assume|SWDB_ASSUME|assume)\s*\(")
 
@@ -307,6 +308,22 @@ def check_generated(job, adapter, context, inputs, flags, *, command=(), scratch
             _fail("semantics_ghost_ownership", "semantics invocation has no pinned hint-free base")
         check_semantics_hints(base, getattr(adapter, "hints", []))
     if adapter.name == "wp":
+        from swdb import wp_pointer_bounds
+        try:
+            if "pointer_bounds_model_source" in context:
+                from swdb import c_lowering
+                model = c_lowering.model_text(job.unit.function)
+                fresh = "\n".join([*c_lowering.HEADERS, model]) + "\n" if model is not None else None
+                if fresh != context["pointer_bounds_model_source"]:
+                    _fail("pointer_bounds", "generated C model changed after planning")
+                generated, report = wp_pointer_bounds.model_view(fresh, scratch or job.scratch)
+                if generated != context["wp_expected_text"] or report != context["pointer_bounds_report"]:
+                    _fail("pointer_bounds", "generated C model pointer checks changed after planning")
+            else:
+                wp_pointer_bounds.check_input(lowering, context["pointer_bounds_base"], context["pointer_bounds_report"],
+                    "\n".join(Path(path).read_text() for path, _expected in inputs))
+        except (KeyError, wp_pointer_bounds.Refused) as exc:
+            _fail("pointer_bounds", str(exc))
         _wp_flags(list(command) if command else flags, scratch or job.scratch)
     elif adapter.name == "cbmc":
         check_cbmc_flags(list(command) if command else flags)
