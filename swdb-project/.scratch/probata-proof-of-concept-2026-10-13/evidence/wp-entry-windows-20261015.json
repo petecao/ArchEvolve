@@ -41,11 +41,71 @@
     {
       "path": "/private/tmp/probata-cbmc-pointers/window-imported-green.jsonl",
       "sha256": "c00b63fbce23e65ee9498133194c3d6c129aea79cbb2363ff6c019a3653ad985"
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/owner-couple-red.jsonl",
+      "sha256": "688bd23c6efb98495eb8d19437ad33feb2ff2756ef72f20b9df8843f9c1288d1"
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/owner-couple-green.jsonl",
+      "sha256": "219e82ab74d7657b6b490476993ddf8dc0764bfc8d4aeaaf6895df512827a7f3"
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/owner-couple-final.jsonl",
+      "sha256": "67ec70ce879ecfd95a439f8d06a1f17d1a0fd5f18025f5bfd1c04095281e5a89"
+    },
+    {
+      "path": "/private/tmp/probata-cbmc-pointers/owner-checker-pin.jsonl",
+      "sha256": "61e19abc7d12f868be25735b5e7239a0300185950370b3448ff3bdccc6ed1537"
     }
   ],
   "dependency_refusal": {
     "passed": 1,
     "seconds": 57.26,
     "boundary": "caller without declarations still refuses imported domain-bearing summary before dependency/verifier invocation"
+  },
+  "owner_coupling": {
+    "prelaunch_controls": 11,
+    "passed": 11,
+    "seconds": 71.22,
+    "frozen_checker_tamper": {
+      "passed": 1,
+      "seconds": 10.34
+    },
+    "actual_WP_acceptance": "pending remote checkpoint; no proof outcome inferred from fake-driver controls"
+  },
+  "identities": {
+    "lowerer": {
+      "c_lowering": {
+        "id": "swdb-c-lowering-9",
+        "sha256": "dc2b1d892c0510490a9ee687e0bcfd6190a81210ba97c21e57ffe4b9c8cd9f61"
+      },
+      "naming_rules": {
+        "id": "kept-names.3",
+        "sha256": "64db66a1f89446ce264aa756c22db9672500f430f6b2c08605b5bdd5ae156ff4"
+      },
+      "clang": {
+        "id": "clang-22.1.8",
+        "sha256": "305697d3868243dca6e4aabf4f628df7de135d701eb4fd78f6a5d7528fef4395"
+      }
+    },
+    "checks": {
+      "proof_setup_check": {
+        "version": "1",
+        "sha256": "c9730c5de111034ddf667f0369d1685de476c484962140ca872b9b7f06a48b16"
+      },
+      "verdict_reading": {
+        "version": "1",
+        "sha256": "c9730c5de111034ddf667f0369d1685de476c484962140ca872b9b7f06a48b16"
+      }
+    },
+    "owner": {
+      "id": "vector-ownership-check-1",
+      "sha256": "ac524d1e7ef1c08646891032a820ac52864639635bcc79d406657ff2ac06b0d7"
+    },
+    "owner_domains": {
+      "id": "closed-owner-model-domain-1",
+      "sha256": "bd18a37260c3d03fef7d1cf3e9469aafc0947d319b661dfb16fa93283fe9f273"
+    }
   }
 }

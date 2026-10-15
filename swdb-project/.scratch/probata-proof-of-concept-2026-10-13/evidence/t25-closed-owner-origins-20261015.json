@@ -1,0 +1,177 @@
+{
+  "created": "2026-10-15 ET",
+  "ticket": 25,
+  "status": "claimed",
+  "base": "91f98097",
+  "api_commit": "82e6af76",
+  "scope": "closed scalar noescape two-site int vector source/view origins; staging before36lowerer/adapterhooks",
+  "evidence_boundary": "Only stand-in WP prelaunch/proof-record fault controls. No actual WP model-origin acceptance or production method. Earlier implementation reports preserve their own code snapshots; final4covers current per-statement guard placement. The existing9actualownercontrols must run after36coupling and transitive helper pins.",
+  "sources": {
+    "model_domains.py": "bd18a37260c3d03fef7d1cf3e9469aafc0947d319b661dfb16fa93283fe9f273",
+    "vector_ownership.py": "ac524d1e7ef1c08646891032a820ac52864639635bcc79d406657ff2ac06b0d7"
+  },
+  "reports": [
+    {
+      "path": "/private/tmp/probata-owner-origin-red.jsonl",
+      "sha256": "863e4e0140ce6db72f126df88a3389b1c6760efc09881adcc84f4097ed3fcac7",
+      "calls": [
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_the_closed_owner_view_reports_typed_origins_for_all_source_and_generated_accesses",
+          "outcome": "failed"
+        }
+      ],
+      "finish": [
+        {
+          "exitstatus": 1,
+          "$report_type": "SessionFinish"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-owner-origin-prelaunch-green.jsonl",
+      "sha256": "d5326694b47ae971b2525cd6409f99b1df9674c8a6ef9e859ffaaa4c0597d101",
+      "calls": [
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_untracked_vector_observations_and_protocols_refuse_before_verification[clear_alias]",
+          "outcome": "passed"
+        },
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_untracked_vector_observations_and_protocols_refuse_before_verification[copied_alias]",
+          "outcome": "passed"
+        },
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_untracked_vector_observations_and_protocols_refuse_before_verification[local_address]",
+          "outcome": "passed"
+        },
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_untracked_vector_observations_and_protocols_refuse_before_verification[pointer_cast]",
+          "outcome": "passed"
+        },
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_untracked_vector_observations_and_protocols_refuse_before_verification[pointer_comparison]",
+          "outcome": "passed"
+        },
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_untracked_vector_observations_and_protocols_refuse_before_verification[second_append]",
+          "outcome": "passed"
+        },
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_untracked_vector_observations_and_protocols_refuse_before_verification[write_alias]",
+          "outcome": "passed"
+        },
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_the_closed_owner_view_reports_typed_origins_for_all_source_and_generated_accesses",
+          "outcome": "passed"
+        }
+      ],
+      "finish": [
+        {
+          "exitstatus": 0,
+          "$report_type": "SessionFinish"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-owner-origin-prelaunch-final.jsonl",
+      "sha256": "f154361c7c6f1bb95405ec267a01dfe9cd74964f108984d17515c7aeb06f50aa",
+      "calls": [
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_the_closed_owner_view_reports_typed_origins_for_all_source_and_generated_accesses",
+          "outcome": "passed"
+        }
+      ],
+      "finish": [
+        {
+          "exitstatus": 0,
+          "$report_type": "SessionFinish"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-owner-origin-tamper.jsonl",
+      "sha256": "a5e336802d7c7a2bb3929597b891488a46b7e130106d4929524bcd7f6d74c111",
+      "calls": [
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_the_closed_owner_view_reports_typed_origins_for_all_source_and_generated_accesses",
+          "outcome": "passed"
+        },
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_a_rehashed_renderer_cannot_hide_wrong_alias_origins_or_weakened_liveness[alias_offset]",
+          "outcome": "passed"
+        },
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_a_rehashed_renderer_cannot_hide_wrong_alias_origins_or_weakened_liveness[liveness_guard]",
+          "outcome": "passed"
+        }
+      ],
+      "finish": [
+        {
+          "exitstatus": 0,
+          "$report_type": "SessionFinish"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/probata-owner-origin-tamper-final.jsonl",
+      "sha256": "dd888b14a2318f451312bcf1f8a957dd7f5828377c080c66517c751711981d7e",
+      "calls": [
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_the_closed_owner_view_reports_typed_origins_for_all_source_and_generated_accesses",
+          "outcome": "passed"
+        },
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_a_rehashed_renderer_cannot_hide_wrong_alias_origins_or_weakened_liveness[alias_offset]",
+          "outcome": "passed"
+        },
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_a_rehashed_renderer_cannot_hide_wrong_alias_origins_or_weakened_liveness[liveness_guard]",
+          "outcome": "passed"
+        },
+        {
+          "test": "tests/test_vector_ownership_wp.py::test_a_rehashed_renderer_cannot_hide_wrong_alias_origins_or_weakened_liveness[range_guard_position]",
+          "outcome": "passed"
+        }
+      ],
+      "finish": [
+        {
+          "exitstatus": 0,
+          "$report_type": "SessionFinish"
+        }
+      ]
+    }
+  ],
+  "records": [
+    {
+      "path": "/private/tmp/probata-owner-origin-tamper-final/test_a_rehashed_renderer_canno0/records/proofs/proof.contract.fixture_vector_owner_safe.20261015t113309z.49b3c848.yaml",
+      "sha256": "70523fe35afd094c67f6a74812fed4e250c7c9ae38c4484d1f548edfeab64ce9",
+      "id": "proof.contract.fixture_vector_owner_safe.20261015t113309z.49b3c848",
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "verifier_report": false
+    },
+    {
+      "path": "/private/tmp/probata-owner-origin-tamper-final/test_a_rehashed_renderer_canno1/records/proofs/proof.contract.fixture_vector_owner_stale.20261015t113318z.94c853e0.yaml",
+      "sha256": "eec7ecb5503b781c4a6d9719ea93f764bf2231fc46d36ab606c5ab5e7d550615",
+      "id": "proof.contract.fixture_vector_owner_stale.20261015t113318z.94c853e0",
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "verifier_report": false
+    },
+    {
+      "path": "/private/tmp/probata-owner-origin-tamper-final/test_a_rehashed_renderer_canno2/records/proofs/proof.contract.fixture_vector_owner_safe.20261015t113329z.e4fbec3d.yaml",
+      "sha256": "6add39c7a2b2d9a275b1362ddcc38b09906de6647bdbd78c32c6a376ed9d5a54",
+      "id": "proof.contract.fixture_vector_owner_safe.20261015t113329z.e4fbec3d",
+      "verdict": "not_proven",
+      "failure_class": "unsupported_construct",
+      "verifier_report": false
+    },
+    {
+      "path": "/private/tmp/probata-owner-origin-tamper-final/wp-vector-ownership0/records/proofs/proof.contract.fixture_vector_owner_safe.20261015t113256z.12a07b16.yaml",
+      "sha256": "bd1fad51b69a676c90b9b9c1c0dcbe495cdfaad5939b3db7abfcc2feda94162b",
+      "id": "proof.contract.fixture_vector_owner_safe.20261015t113256z.12a07b16",
+      "verdict": "not_proven",
+      "failure_class": "unknown",
+      "verifier_report": true
+    }
+  ]
+}

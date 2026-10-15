@@ -44,7 +44,7 @@ import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from swdb import bounded_initialization, cpu_effects, std_models, terminal_release, wp_pointer_bounds
+from swdb import bounded_initialization, cpu_effects, std_models, terminal_release, vector_ownership, wp_pointer_bounds
 
 TOOL_ID = "swdb-c-lowering"
 TOOL_VERSION = "9"                   # checked WP pointer formation and integer model receiving slots
@@ -285,7 +285,9 @@ def identity():
                             + Path(cpu_effects.__file__).read_bytes() + policy
                             + bounded_initialization.identity()["sha256"].encode()
                             + wp_pointer_bounds.identity()["sha256"].encode()
-                            + here.with_name("array_domains.py").read_bytes()).hexdigest()
+                            + here.with_name("array_domains.py").read_bytes()
+                            + here.with_name("vector_ownership.py").read_bytes()
+                            + here.with_name("model_domains.py").read_bytes()).hexdigest()
     found = {"c_lowering": {"id": f"{TOOL_ID}-{TOOL_VERSION}", "sha256": digest},
              "naming_rules": naming_rules()}
     if not tool.missing:
@@ -2420,6 +2422,8 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
         raise Unsupported(str(exc)) from None
     certificate = terminal_release.certify(node, source=source.read_text(), source_sha256=_file_sha256(source),
                                             models=unit.model_order, anchors=anchors, text=text)
+    owner = vector_ownership.certify_origins(node, source=source.read_text(), source_sha256=_file_sha256(source),
+                                           models=unit.model_order, anchors=anchors, text=text)
     return Lowering(function=function, text=text, anchors=tuple(anchors), declaration=declaration,
                     parameters=tuple(unit_params), source_sha256=_file_sha256(source), defines=defines,
                     tool={"id": TOOL_ID, "version": TOOL_VERSION, "naming_rules": NAMING_RULES,
@@ -2436,8 +2440,9 @@ def lower(source, function, includes=(), defines=(), summaries=None, semantics=N
                             external_calls=unit.summaries_used,
                             known_pointer_calls=(semantics or {}).get("tile_pointer", ()),
                             global_nodes=unit.global_nodes.values(), known_origins=(semantics or {}).get("array_origins"),
-                            terminal=certificate, entry_windows=windows, entry_function=function),
-                        source_sha256=_file_sha256(source), text=text, entry_windows=windows, entry_contract=array_domain_contract),
+                            terminal=certificate, entry_windows=windows, entry_function=function, owner=owner),
+                        source_sha256=_file_sha256(source), text=text, entry_windows=windows,
+                        entry_contract=array_domain_contract, owner=owner),
                     terminal_release=certificate)
 
 

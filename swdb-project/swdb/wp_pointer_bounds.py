@@ -117,7 +117,8 @@ def _window_target(node, origin):
 def recheck_source(lowering, plan):
     """Freshly parse the source/closure; no candidate-supplied certificate is loaded."""
     from swdb import c_lowering
-    if not isinstance(plan, dict) or not plan.get("kwargs", {}).get("array_domains"):
+    if not isinstance(plan, dict) or not (plan.get("kwargs", {}).get("array_domains") or
+                                         (lowering.pointer_bounds or {}).get("owner")):
         raise Refused("entry windows have no generator-owned source recheck plan")
     fresh = c_lowering.lower(Path(plan["source"]), lowering.function, **plan["kwargs"])
     if fresh.pointer_bounds != lowering.pointer_bounds or fresh.text != lowering.text:
@@ -217,7 +218,7 @@ def _origin_base(node):
 
 
 def complete(sites, definitions, observed, *, external_calls=(), known_pointer_calls=(),
-             global_nodes=(), known_origins=None, terminal=None, entry_windows=None, entry_function=None):
+             global_nodes=(), known_origins=None, terminal=None, entry_windows=None, entry_function=None, owner=None):
     """Refuse source operations omitted by printing and untracked subobject origins.
 
     The printer owns normalizations. This independent closure walk ensures that
@@ -228,6 +229,24 @@ def complete(sites, definitions, observed, *, external_calls=(), known_pointer_c
     # Clang dumps for separate functions may reuse process-local AST IDs.
     by_node = {(row["function"], row.pop("_ast_id", None)): row for row in all_rows}
     rows = [row for row in all_rows if row.get("kind") != "access"]
+    if owner:
+        # The closed source grammar certifies each alias/member observation.
+        # Its independent C-view checker maps these to renamed range/liveness
+        # assertions; generic source-name guards cannot be emitted in that view.
+        from swdb import model_domains, vector_ownership
+        if owner.get("check") != model_domains.identity() or owner.get("owner_check") != vector_ownership.identity():
+            raise Refused("closed-owner source registry has stale policy bytes")
+        root = definitions.get(owner.get("function"))
+        if root is None:
+            raise Refused("closed-owner source registry has no emitted source definition")
+        for access in owner["source_accesses"]:
+            matches = [n for n in _walk(root) if n.get("kind") in {"UnaryOperator", "CXXOperatorCallExpr"}
+                       and model_domains.span(n) == (access["begin"], access["end"])]
+            if len(matches) != 1:
+                raise Refused("closed-owner access has no unique source AST binding")
+            rows.append({"function": owner["function"], "source_line": None, "admission_only": True,
+                         "reason": "", "owner_access": access,
+                         "owner_certificate_sha256": owner["certificate_sha256"]})
     origins = _Origins(definitions, global_nodes, known_origins, terminal, entry_windows, entry_function)
     has_arithmetic = bool(rows)
     external = {row.get("name") if isinstance(row, dict) else row for row in external_calls}
@@ -386,7 +405,7 @@ def normalize(expression, base, offset):
     return f"(({offset}) == 0 ? ({base}) : ({expression}))"
 
 
-def inventory(sites, *, source_sha256, text, entry_windows=None, entry_contract=None):
+def inventory(sites, *, source_sha256, text, entry_windows=None, entry_contract=None, owner=None):
     report = {"check": identity(), "source_sha256": source_sha256,
               "lowering_sha256": hashlib.sha256(text.encode()).hexdigest(), "sites": list(sites),
               "domain_boundary": "Only certified whole one-dimensional arrays, exact audited semantic rows and terminal typed allocations; "
@@ -399,6 +418,8 @@ def inventory(sites, *, source_sha256, text, entry_windows=None, entry_contract=
             "checked": "entry extent nonnegative/target byte capacity/null-empty; numerical operation bounds; ordinary RTE",
             "smoke_scope": "projected ACSL preconditions; no complete typed-domain/formal realizability proof",
             "caller_boundary": "imported domain-bearing summaries and unmodeled pointer calls are refused"}
+    if owner:
+        report["owner"] = owner
     report["certificate_sha256"] = _hash(report)
     return report
 
@@ -414,6 +435,15 @@ def check(lowering):
         from swdb import array_domains
         if report["entry_windows"].get("check") != array_domains.identity() or not report.get("entry_contract"):
             raise Refused("entry-window declaration/check/contract pin is absent or stale")
+    if report.get("owner"):
+        from swdb import model_domains, vector_ownership
+        owner = dict(report["owner"])
+        owner_digest = owner.pop("certificate_sha256", None)
+        if (owner_digest != _hash(owner) or owner.get("check") != model_domains.identity()
+                or owner.get("owner_check") != vector_ownership.identity()
+                or owner.get("source_sha256") != lowering.source_sha256
+                or owner.get("lowering_sha256") != report["lowering_sha256"]):
+            raise Refused("closed-owner source registry is absent, stale or changed")
     for row in report["sites"]:
         if row["reason"]:
             raise Refused(f"{row['function']}:{row['source_line']}: {row['reason']}")

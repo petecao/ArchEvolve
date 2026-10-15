@@ -301,3 +301,20 @@ dereference/null-empty proofs, failed frozen-extent/strict-one-past/negative-and
 invalid-nonnull-zero obligations, and four prelaunch source-binding refusals. Evidence:
 `evidence/wp-entry-windows-20261015.json`. This is a scoped checkpoint; imported calls, closed-owner
 mapping and DX100 host-footprint discharge are separate work in progress. Ticket 36 stays claimed.
+
+
+### Closed-owner source/view coupling — 2026-10-15 ET
+
+The checked vector relation now populates `pointer_bounds.owner` directly from the original AST.
+Every retained alias/member observation is bound by exact source range to the registry's
+entry-frozen allocation and independently checked renamed-view range/liveness guards. No generic
+source-name assertion is injected into the renamed view. Both checker modules contribute to the
+lowerer identity and `model_domains.py` is included in the frozen setup/reader closure. Admission
+requires the checked owner view, while prelaunch regenerates the source and both certificates.
+The new public coupling control first failed because the lowerer registry was absent; coupling and
+three rehashed renderer/guard controls subsequently passed **4/4 in 29.69s**. Actual owner WP
+acceptance is still pending on the combined source; no generic model-origin waiver is introduced.
+
+Final source/view prelaunch controls pass **11/11 in 71.22s**; changed checker-byte method refusal
+passes **1/1 in 10.34s**. Commands/log digests and combined identities are in
+`evidence/wp-entry-windows-20261015.json`.

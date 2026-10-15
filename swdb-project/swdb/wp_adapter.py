@@ -162,7 +162,7 @@ class WpAdapter:
                              "array_domain_contract": {"id": self.contract, "sha256": job.unit.contract_sha256},
                              **semantics_options}
             lowering = c_lowering.lower(source, job.unit.function, **source_kwargs)
-            if unit.get("array_domains"):
+            if unit.get("array_domains") or (lowering.pointer_bounds or {}).get("owner"):
                 context["pointer_source_plan"] = {"source": str(source), "kwargs": source_kwargs}
         except c_lowering.Unsupported as exc:
             return self._not_proven("unsupported_construct", str(exc), context)
@@ -197,7 +197,7 @@ class WpAdapter:
                     if any(c.get("acsl", {}).get("uses") for c in entry.get("clauses", []) if isinstance(c, dict)):
                         raise vector_ownership.Refused("logic-library imports are outside the scalar frame projection")
                     view = vector_ownership.wp_view(lowering, source, formal_texts, self.hints)
-                    vector_ownership.check_view(lowering, source, view, formal_texts, self.hints)
+                    vector_ownership.check_origins(lowering, source, view, formal_texts, self.hints)
                 except vector_ownership.Refused as exc:
                     return self._not_proven("unsupported_construct",
                         "WP 33.0 does not model allocation lifetime; reachable free/delete or vector growth needs "
@@ -249,6 +249,8 @@ class WpAdapter:
             return self._not_proven("unsupported_construct",
                 "ordinary CPU memory interference with DX100 commands needs ticket 28's memory-hazard probes", context)
         try:
+            if (lowering.pointer_bounds or {}).get("owner") and not context.get("vector_ownership"):
+                raise wp_pointer_bounds.Refused("closed-owner source registry requires its independently checked view")
             wp_pointer_bounds.check(lowering)
         except wp_pointer_bounds.Refused as exc:
             context["settings"] = {"tool": "frama-c-wp", "flags": [], "verifier_launched": False,
@@ -639,7 +641,7 @@ class WpAdapter:
         if owner:
             view = owner["view"]
             try:
-                vector_ownership.check_view(context["lowering"], owner["source"], view,
+                vector_ownership.check_origins(context["lowering"], owner["source"], view,
                                             owner["formal_texts"], self.hints)
             except vector_ownership.Refused as exc:
                 raise AdapterError(f"vector ownership prelaunch check: {exc}") from None
