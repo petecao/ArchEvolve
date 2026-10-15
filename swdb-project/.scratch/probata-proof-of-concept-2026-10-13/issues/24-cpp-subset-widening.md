@@ -1,7 +1,7 @@
 # 24 — C++ subset widening
 
 Created: 2026-10-13 22:17 ET
-Updated: 2026-10-15 ET (original Ring actual pair accepted; eight-group current-method matrix remains open)
+Updated: 2026-10-15 ET (original Ring/allocation actual pairs and public unsupported controls accepted; remaining matrix open)
 **Type:** slice
 **Status:** claimed
 **Blocked by:** 21
@@ -19,7 +19,7 @@ Updated: 2026-10-15 ET (original Ring actual pair accepted; eight-group current-
 - [ ] Each of `std::min`, `std::max`, `std::copy`, `std::swap` lowers to a call of its C model. Each model's ACSL contract is proven once (one proof record each, subject: a library entry's summary). A unit that uses a model pins that record.
 - [ ] An OpenMP fixture (`parallel for` with a `reduction`, a `critical` section, an `atomic`, a `barrier`) and an atomics fixture (`__sync_*`, `__atomic_*`) lower and prove at threads = 1.
 - [ ] A fixture with a `__dxc_*` call and one with a `maa_*` call keep each as a call whose contract comes from a fixture summary. The record lists the summary used.
-- [ ] Unsupported constructs: inheritance, a virtual function, an exception, a lambda, RTTI, another standard container (such as `std::map`) and a stream each read not proven, "unsupported construct", naming the construct and its source location.
+- [x] Unsupported constructs: inheritance, a virtual function, an exception, a lambda, RTTI, another standard container (such as `std::map`) and a stream each read not proven, "unsupported construct", naming the construct and its source location.
 - [ ] Naming rules carry a version. Every proof record pins it in its content-hash set, and bumping the version gives a different pin.
 - [ ] Each diagnosed failure joins 21's regression corpus. Fixtures use no BC, PR or SSSP code. Tests that need Frama-C or LLVM 22 skip cleanly.
 
